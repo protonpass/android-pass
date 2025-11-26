@@ -21,15 +21,40 @@ package proton.android.pass.features.sharing.sharingwith
 import androidx.compose.runtime.Stable
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
-import proton.android.pass.common.api.None
-import proton.android.pass.common.api.Option
+import proton.android.pass.domain.GroupId
 import proton.android.pass.domain.Share
 
 @Stable
-internal data class EnteredEmailState(
+internal data class EnteredEmailUiModel(
     val email: String,
-    val isError: Boolean
+    val isError: Boolean = false,
+    val isFocused: Boolean = false
 )
+
+@Stable
+internal data class EmailUiModel(
+    val email: String,
+    val isSelected: Boolean = false
+) : SuggestionItem {
+    override val sortKey: String = email.lowercase()
+}
+
+@Stable
+internal data class GroupSuggestionUiModel(
+    val id: GroupId,
+    val email: String,
+    val name: String,
+    val memberCount: Int,
+    val isSelected: Boolean = false,
+    val isFocused: Boolean = false
+) : SuggestionItem {
+    override val sortKey: String = name.lowercase()
+}
+
+@Stable
+internal sealed interface SuggestionItem {
+    val sortKey: String
+}
 
 @Stable
 internal enum class ErrorMessage {
@@ -43,8 +68,7 @@ internal enum class ErrorMessage {
 
 @Stable
 internal data class SharingWithUIState(
-    val enteredEmails: ImmutableList<EnteredEmailState> = persistentListOf(),
-    val selectedEmailIndex: Option<Int> = None,
+    val enteredEmails: ImmutableList<EnteredEmailUiModel> = persistentListOf(),
     val share: Share? = null,
     val event: SharingWithEvents = SharingWithEvents.Idle,
     val isLoading: Boolean = false,
@@ -54,7 +78,16 @@ internal data class SharingWithUIState(
     val isContinueEnabled: Boolean = false,
     val canOnlyPickFromSelection: Boolean = false,
     val errorMessage: ErrorMessage = ErrorMessage.None
-)
+) {
+    val selectedGroups: Set<GroupSuggestionUiModel> = (suggestionsUIState as? SuggestionsUIState.Content)
+        ?.let { content ->
+            (content.recentSortedItems + content.organizationSortedItems)
+                .filterIsInstance<GroupSuggestionUiModel>()
+                .filter { it.isSelected }
+                .toSet()
+        }
+        ?: emptySet()
+}
 
 internal sealed interface SuggestionsUIState {
 
@@ -67,8 +100,8 @@ internal sealed interface SuggestionsUIState {
     @Stable
     data class Content(
         val groupDisplayName: String = "",
-        val recentEmails: ImmutableList<Pair<String, Boolean>> = persistentListOf(),
-        val planEmails: ImmutableList<Pair<String, Boolean>> = persistentListOf()
+        val recentSortedItems: ImmutableList<SuggestionItem> = persistentListOf(),
+        val organizationSortedItems: ImmutableList<SuggestionItem> = persistentListOf()
     ) : SuggestionsUIState
 
 }

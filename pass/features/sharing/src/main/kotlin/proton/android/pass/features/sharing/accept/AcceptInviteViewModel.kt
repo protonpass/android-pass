@@ -37,19 +37,19 @@ import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
 import proton.android.pass.commonui.api.SavedStateHandleProvider
-import proton.android.pass.commonui.api.require
 import proton.android.pass.data.api.errors.CannotCreateMoreVaultsError
 import proton.android.pass.data.api.usecases.AcceptInvite
 import proton.android.pass.data.api.usecases.AcceptInviteStatus
 import proton.android.pass.data.api.usecases.GetItemById
 import proton.android.pass.data.api.usecases.RejectInvite
 import proton.android.pass.data.api.usecases.invites.ObserveInvite
+import proton.android.pass.domain.InviteId
 import proton.android.pass.domain.InviteToken
 import proton.android.pass.domain.PendingInvite
 import proton.android.pass.domain.ShareType
 import proton.android.pass.features.sharing.SharingSnackbarMessage
 import proton.android.pass.log.api.PassLogger
-import proton.android.pass.navigation.api.CommonNavArgId
+import proton.android.pass.navigation.api.CommonOptionalNavArgId
 import proton.android.pass.notifications.api.SnackbarDispatcher
 import javax.inject.Inject
 
@@ -63,9 +63,12 @@ class AcceptInviteViewModel @Inject constructor(
     private val snackbarDispatcher: SnackbarDispatcher
 ) : ViewModel() {
 
-    private val inviteToken = savedStateHandleProvider.get()
-        .require<String>(CommonNavArgId.InviteToken.key)
-        .let(::InviteToken)
+    private val inviteToken: InviteToken? = savedStateHandleProvider.get()
+        .get<String>(CommonOptionalNavArgId.InviteToken.key)
+        ?.let(::InviteToken)
+    private val inviteId: InviteId? = savedStateHandleProvider.get()
+        .get<String>(CommonOptionalNavArgId.InviteId.key)
+        ?.let(::InviteId)
 
     private val progressFlow: MutableStateFlow<AcceptInviteProgress> = MutableStateFlow(
         value = AcceptInviteProgress.Pending
@@ -75,25 +78,29 @@ class AcceptInviteViewModel @Inject constructor(
         value = AcceptInviteEvent.Idle
     )
 
-    private val pendingInviteOptionFlow: Flow<Option<PendingInvite>> = oneShot {
-        observeInvite(inviteToken).first()
+    private val pendingUserInviteOptionFlow: Flow<Option<PendingInvite>> = oneShot {
+        when {
+            inviteToken != null -> observeInvite(inviteToken).first()
+            inviteId != null -> observeInvite(inviteId).first()
+            else -> None
+        }
     }
 
     internal val stateFlow: StateFlow<AcceptInviteState> = combine(
-        pendingInviteOptionFlow,
+        pendingUserInviteOptionFlow,
         progressFlow,
         eventFlow
     ) { pendingInviteOption, progress, event ->
         when (pendingInviteOption) {
             None -> AcceptInviteState.Initial
             is Some -> when (val pendingInvite = pendingInviteOption.value) {
-                is PendingInvite.Item -> AcceptInviteState.ItemInvite(
+                is PendingInvite.UserItem, is PendingInvite.GroupItem -> AcceptInviteState.ItemInvite(
                     progress = progress,
                     event = event,
                     pendingItemInvite = pendingInvite
                 )
 
-                is PendingInvite.Vault -> AcceptInviteState.VaultInvite(
+                is PendingInvite.UserVault, is PendingInvite.GroupVault -> AcceptInviteState.VaultInvite(
                     progress = progress,
                     event = event,
                     pendingVaultInvite = pendingInvite
@@ -110,9 +117,14 @@ class AcceptInviteViewModel @Inject constructor(
         eventFlow.compareAndSet(event, AcceptInviteEvent.Idle)
     }
 
+    @Suppress("LongMethod")
     internal fun onAcceptInvite(shareType: ShareType) {
         viewModelScope.launch {
-            acceptInvite(inviteToken)
+            when {
+                inviteToken != null -> acceptInvite(inviteToken)
+                inviteId != null -> acceptInvite(inviteId)
+                else -> error("No id defined")
+            }
                 .catch { error ->
                     PassLogger.w(TAG, "There was an error accepting invite")
                     PassLogger.w(TAG, error)
@@ -142,7 +154,12 @@ class AcceptInviteViewModel @Inject constructor(
                             }
                         }
 
-                        is AcceptInviteStatus.Done -> {
+                        is AcceptInviteStatus.GroupInviteDone -> {
+                            PassLogger.i(TAG, "Invite successfully accepted")
+                            snackbarDispatcher(SharingSnackbarMessage.InviteAccepted)
+                            eventFlow.update { AcceptInviteEvent.Close }
+                        }
+                        is AcceptInviteStatus.UserInviteDone -> {
                             PassLogger.i(TAG, "Invite successfully accepted")
                             when (shareType) {
                                 ShareType.Item -> {
@@ -180,7 +197,13 @@ class AcceptInviteViewModel @Inject constructor(
         viewModelScope.launch {
             progressFlow.update { AcceptInviteProgress.Rejecting }
 
-            runCatching { rejectInvite(inviteToken) }
+            runCatching {
+                when {
+                    inviteToken != null -> rejectInvite(inviteToken)
+                    inviteId != null -> rejectInvite(inviteId)
+                    else -> error("No id defined")
+                }
+            }
                 .onFailure { error ->
                     PassLogger.w(TAG, "There was an error rejecting invite")
                     PassLogger.w(TAG, error)

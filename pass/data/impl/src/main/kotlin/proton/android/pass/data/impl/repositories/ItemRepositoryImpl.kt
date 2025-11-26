@@ -863,7 +863,12 @@ class ItemRepositoryImpl @Inject constructor(
 
         val userAddress = requireNotNull(userAddressRepository.getAddress(userId, addressId))
         val share = shareRepository.getById(userId, shareId)
-        val shareKeys = shareKeyRepository.getShareKeys(userId, addressId, shareId).first()
+        val shareKeys = shareKeyRepository.getShareKeys(
+            userId = userId,
+            addressId = addressId,
+            shareId = shareId,
+            groupEmail = share.groupEmail
+        ).first()
 
         val items = encryptionContextProvider.withEncryptionContextSuspendable {
             pendingItemRevisions.map { pendingItemRevision ->
@@ -1088,7 +1093,8 @@ class ItemRepositoryImpl @Inject constructor(
         val shareKeys = shareKeyRepository.getShareKeys(
             userId = userId,
             addressId = address.addressId,
-            shareId = shareId
+            shareId = shareId,
+            groupEmail = share.groupEmail
         ).first()
 
         val itemsToUpsert = encryptionContextProvider.withEncryptionContextSuspendable {

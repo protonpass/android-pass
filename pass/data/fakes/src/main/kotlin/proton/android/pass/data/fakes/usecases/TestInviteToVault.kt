@@ -19,7 +19,7 @@
 package proton.android.pass.data.fakes.usecases
 
 import me.proton.core.domain.entity.UserId
-import proton.android.pass.data.api.repositories.AddressPermission
+import proton.android.pass.data.api.repositories.InviteTarget
 import proton.android.pass.data.api.usecases.InviteToVault
 import proton.android.pass.domain.ShareId
 import javax.inject.Inject
@@ -37,6 +37,6 @@ class TestInviteToVault @Inject constructor() : InviteToVault {
     override suspend fun invoke(
         userId: UserId?,
         shareId: ShareId,
-        inviteAddresses: List<AddressPermission>
+        inviteTargets: List<InviteTarget>
     ): Result<Unit> = result
 }

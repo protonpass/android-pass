@@ -57,7 +57,8 @@ class GetShareAndItemKeyImpl @Inject constructor(
                 userId = userAddress.userId,
                 addressId = userAddress.addressId,
                 shareId = shareId,
-                itemId = itemId
+                itemId = itemId,
+                groupEmail = share.groupEmail
             ).first()
         }
     }

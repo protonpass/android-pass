@@ -18,6 +18,7 @@
 
 package proton.android.pass.features.sharing.sharingsummary
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -27,24 +28,30 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import me.proton.core.presentation.R
+import proton.android.pass.composecomponents.impl.R as CompR
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.composecomponents.impl.container.BoxedIcon
 import proton.android.pass.composecomponents.impl.text.Text
-import proton.android.pass.features.sharing.common.AddressPermissionUiState
+import proton.android.pass.domain.GroupId
+import proton.android.pass.features.sharing.common.GroupTargetUiState
+import proton.android.pass.features.sharing.common.InviteTargetUiState
+import proton.android.pass.features.sharing.common.UserTargetUiState
 import proton.android.pass.features.sharing.extensions.toStringResource
 import proton.android.pass.features.sharing.sharingpermissions.SharingType
 
 @Composable
 internal fun AddressRowSection(
     modifier: Modifier = Modifier,
-    address: AddressPermissionUiState,
-    isRenameAdminToManagerEnabled: Boolean
+    inviteTarget: InviteTargetUiState,
+    isRenameAdminToManagerEnabled: Boolean,
+    onGroupMembersClick: (groupId: GroupId) -> Unit
 ) {
     Row(
         modifier = modifier,
@@ -67,25 +74,68 @@ internal fun AddressRowSection(
             modifier = Modifier.weight(1f),
             verticalArrangement = Arrangement.spacedBy(space = Spacing.extraSmall)
         ) {
-            Text.Body1Regular(
-                text = address.address
-            )
+            when (inviteTarget) {
+                is UserTargetUiState -> {
+                    Text.Body1Regular(
+                        text = inviteTarget.displayName
+                    )
+                }
+
+                is GroupTargetUiState -> {
+                    if (inviteTarget.memberCount > 0) {
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.spacedBy(Spacing.extraSmall)
+                        ) {
+                            Text.Body1Regular(
+                                text = inviteTarget.displayName
+                            )
+                            val label = pluralStringResource(
+                                CompR.plurals.members_count,
+                                inviteTarget.memberCount,
+                                inviteTarget.memberCount
+                            )
+                            Text.Body1Regular(
+                                text = "($label)",
+                                color = PassTheme.colors.interactionNormMajor2,
+                                modifier = Modifier.clickable {
+                                    onGroupMembersClick(inviteTarget.groupId)
+                                }
+                            )
+                        }
+                    } else {
+                        Text.Body1Regular(
+                            text = inviteTarget.displayName
+                        )
+                    }
+                }
+            }
 
             Text.Body2Regular(
-                text = stringResource(address.permission.toStringResource(isRenameAdminToManagerEnabled)),
+                text = stringResource(
+                    inviteTarget.permission.toStringResource(
+                        isRenameAdminToManagerEnabled
+                    )
+                ),
                 color = PassTheme.colors.textWeak
             )
         }
     }
 }
 
+
 @[Preview Composable]
 internal fun AddressRowSectionPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
     PassTheme(isDark = isDark) {
         Surface {
             AddressRowSection(
-                address = AddressPermissionUiState("my@test.email", SharingType.Write),
-                isRenameAdminToManagerEnabled = true
+                inviteTarget = UserTargetUiState(
+                    displayName = "my@test.email",
+                    email = "my@test.email",
+                    permission = SharingType.Write
+                ),
+                isRenameAdminToManagerEnabled = true,
+                onGroupMembersClick = {}
             )
         }
     }

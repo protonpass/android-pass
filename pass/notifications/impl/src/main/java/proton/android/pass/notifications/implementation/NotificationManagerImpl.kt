@@ -41,7 +41,7 @@ class NotificationManagerImpl @Inject constructor(
     private val notificationManagerCompat: NotificationManagerCompat
 ) : NotificationManager {
 
-    override fun hasNotificationPermission(): Boolean = if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.TIRAMISU) {
+    override fun hasNotificationPermission(): Boolean = if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) {
         true
     } else {
         val result = ContextCompat.checkSelfPermission(
@@ -67,54 +67,41 @@ class NotificationManagerImpl @Inject constructor(
     }
 
     override fun sendReceivedInviteNotification(pendingInvite: PendingInvite) {
-        createUpdatesNotificationChannel()
-
         val (contentTitle, contentText, notificationId) = when (pendingInvite) {
-            is PendingInvite.Item -> Triple(
-                first = context.getString(R.string.new_item_invite_notification_title),
-                second = context.getString(
+            is PendingInvite.GroupItem, is PendingInvite.UserItem -> Triple(
+                context.getString(R.string.new_item_invite_notification_title),
+                context.getString(
                     R.string.new_item_invite_notification_message,
                     pendingInvite.inviterEmail
                 ),
-                third = ITEM_INVITE_RECEIVED_UNIQUE_ID
+                ITEM_INVITE_RECEIVED_UNIQUE_ID
             )
 
-            is PendingInvite.Vault -> Triple(
-                first = context.getString(R.string.new_vault_invite_notification_title),
-                second = context.getString(
+            is PendingInvite.GroupVault, is PendingInvite.UserVault -> Triple(
+                context.getString(R.string.new_vault_invite_notification_title),
+                context.getString(
                     R.string.new_vault_invite_notification_message,
                     pendingInvite.inviterEmail
                 ),
-                third = VAULT_INVITE_RECEIVED_UNIQUE_ID
+                VAULT_INVITE_RECEIVED_UNIQUE_ID
             )
         }
 
-        val pendingIntent = PendingIntent.getActivity(
-            context,
-            notificationId,
-            Intent(context, mainActivityClass).apply {
-                flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-            },
-            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+        sendInviteNotification(
+            notificationId = notificationId,
+            contentTitle = contentTitle,
+            contentText = contentText
         )
-
-        NotificationCompat.Builder(context, UPDATES_CHANNEL_ID)
-            .setSmallIcon(CoreR.drawable.ic_proton_brand_proton_pass)
-            .setContentTitle(contentTitle)
-            .setContentText(contentText)
-            .setContentIntent(pendingIntent)
-            .setAutoCancel(true)
-            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-            .also { notificationBuilder ->
-                showNotification(notificationId, notificationBuilder)
-            }
     }
 
     override fun removeReceivedInviteNotification(pendingInvite: PendingInvite) {
-        when (pendingInvite) {
-            is PendingInvite.Item -> ITEM_INVITE_RECEIVED_UNIQUE_ID
-            is PendingInvite.Vault -> VAULT_INVITE_RECEIVED_UNIQUE_ID
-        }.also(::removeNotification)
+        val id = when (pendingInvite) {
+            is PendingInvite.GroupItem,
+            is PendingInvite.UserItem -> ITEM_INVITE_RECEIVED_UNIQUE_ID
+            is PendingInvite.GroupVault,
+            is PendingInvite.UserVault -> VAULT_INVITE_RECEIVED_UNIQUE_ID
+        }
+        removeNotification(id)
     }
 
     private fun createAutofillNotificationChannel() {
@@ -131,6 +118,38 @@ class NotificationManagerImpl @Inject constructor(
         )
     }
 
+    private fun sendInviteNotification(
+        notificationId: Int,
+        contentTitle: String,
+        contentText: String
+    ) {
+        createUpdatesNotificationChannel()
+        NotificationCompat.Builder(context, UPDATES_CHANNEL_ID)
+            .setSmallIcon(CoreR.drawable.ic_proton_brand_proton_pass)
+            .setContentTitle(contentTitle)
+            .setContentText(contentText)
+            .setContentIntent(createMainActivityPendingIntent(notificationId))
+            .setAutoCancel(true)
+            .setOnlyAlertOnce(true)
+            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+            .also { notificationBuilder ->
+                showNotification(
+                    notificationId = notificationId,
+                    notificationBuilder = notificationBuilder,
+                    skipIfActive = true
+                )
+            }
+    }
+
+    private fun createMainActivityPendingIntent(requestCode: Int): PendingIntent = PendingIntent.getActivity(
+        context,
+        requestCode,
+        Intent(context, mainActivityClass).apply {
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        },
+        PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+    )
+
     private fun createNotificationChannel(channelId: String, name: String) {
         val channel = NotificationChannel(
             channelId,
@@ -142,14 +161,27 @@ class NotificationManagerImpl @Inject constructor(
         notificationManager.createNotificationChannel(channel)
     }
 
-    private fun showNotification(notificationId: Int, notificationBuilder: NotificationCompat.Builder) {
-        if (hasNotificationPermission()) {
-            notificationManagerCompat.notify(notificationId, notificationBuilder.build())
-        }
+    private fun showNotification(
+        notificationId: Int,
+        notificationBuilder: NotificationCompat.Builder,
+        skipIfActive: Boolean = false
+    ) {
+        if (!hasNotificationPermission()) return
+        if (skipIfActive && isNotificationActive(notificationId)) return
+        notificationManagerCompat.notify(notificationId, notificationBuilder.build())
     }
 
     private fun removeNotification(notificationId: Int) {
         notificationManagerCompat.cancel(notificationId)
+    }
+
+    private fun isNotificationActive(notificationId: Int): Boolean {
+        if (!hasNotificationPermission()) return false
+        return try {
+            notificationManagerCompat.activeNotifications.any { it.id == notificationId }
+        } catch (_: SecurityException) {
+            false
+        }
     }
 
     private companion object {

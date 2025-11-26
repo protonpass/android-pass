@@ -28,6 +28,7 @@ import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.Option
 import proton.android.pass.commonuimodels.api.ItemTypeUiState
 import proton.android.pass.composecomponents.impl.dialogs.PassUpgradePlanDialog
+import proton.android.pass.domain.InviteId
 import proton.android.pass.domain.InviteToken
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
@@ -129,7 +130,10 @@ sealed interface HomeNavigation {
     data object SortingBottomsheet : HomeNavigation
 
     @JvmInline
-    value class OpenInvite(val inviteToken: InviteToken) : HomeNavigation
+    value class OpenUserInvite(val inviteToken: InviteToken) : HomeNavigation
+
+    @JvmInline
+    value class OpenGroupInvite(val inviteId: InviteId) : HomeNavigation
 
     data object Finish : HomeNavigation
 

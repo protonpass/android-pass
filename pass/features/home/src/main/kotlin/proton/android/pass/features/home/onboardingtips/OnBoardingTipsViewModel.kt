@@ -67,7 +67,7 @@ class OnBoardingTipsViewModel @Inject constructor(
     private val eventFlow: MutableStateFlow<OnBoardingTipsEvent> =
         MutableStateFlow(OnBoardingTipsEvent.Unknown)
 
-    private val pendingInviteFlow: Flow<PendingInvite?> = observeInvites()
+    private val pendingUserInviteFlow: Flow<PendingInvite?> = observeInvites()
         .map { pendingInvites -> pendingInvites.firstOrNull() }
         .distinctUntilChanged()
 
@@ -108,7 +108,7 @@ class OnBoardingTipsViewModel @Inject constructor(
     }.distinctUntilChanged()
 
     private val onboardingTipPageOptionFlow = combine(
-        pendingInviteFlow,
+        pendingUserInviteFlow,
         shouldShowNotificationPermissionFlow,
         shouldShowAutofillFlow,
         shouldShowSLSyncFlow,
@@ -150,7 +150,14 @@ class OnBoardingTipsViewModel @Inject constructor(
         when (onBoardingTipPage) {
             Autofill -> autofillManager.openAutofillSelector()
             is Invite -> eventFlow.update {
-                OnBoardingTipsEvent.OpenInviteScreen(onBoardingTipPage.pendingInvite.inviteToken)
+                when (onBoardingTipPage.pendingInvite) {
+                    is PendingInvite.GroupItem,
+                    is PendingInvite.GroupVault ->
+                        OnBoardingTipsEvent.OpenGroupInviteScreen(onBoardingTipPage.pendingInvite.inviteId)
+                    is PendingInvite.UserItem,
+                    is PendingInvite.UserVault ->
+                        OnBoardingTipsEvent.OpenUserInviteScreen(onBoardingTipPage.pendingInvite.inviteToken)
+                }
             }
             NotificationPermission -> eventFlow.update { OnBoardingTipsEvent.RequestNotificationPermission }
             is SLSync -> eventFlow.update {

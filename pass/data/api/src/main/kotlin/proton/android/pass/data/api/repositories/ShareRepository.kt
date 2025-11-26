@@ -85,6 +85,8 @@ data class UpdateShareEvent(
     val shareId: String,
     val vaultId: String,
     val addressId: String,
+    val groupId: String?,
+    val groupEmail: String?,
     val targetType: Int,
     val targetId: String,
     val permission: Int,

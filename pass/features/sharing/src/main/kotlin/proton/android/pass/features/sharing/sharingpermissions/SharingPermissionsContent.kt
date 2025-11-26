@@ -35,6 +35,7 @@ import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.composecomponents.impl.buttons.LoadingCircleButton
 import proton.android.pass.composecomponents.impl.text.Text
 import proton.android.pass.composecomponents.impl.topbar.PassExtendedTopBar
+import proton.android.pass.domain.GroupId
 import proton.android.pass.features.sharing.R
 import proton.android.pass.composecomponents.impl.R as CompR
 
@@ -42,7 +43,8 @@ import proton.android.pass.composecomponents.impl.R as CompR
 internal fun SharingPermissionsContent(
     modifier: Modifier = Modifier,
     state: SharingPermissionsUIState,
-    onEvent: (SharingPermissionsUiEvent) -> Unit
+    onEvent: (SharingPermissionsUiEvent) -> Unit,
+    onGroupMembersClick: (groupId: GroupId) -> Unit
 ) {
     Scaffold(
         modifier = modifier.systemBarsPadding(),
@@ -81,16 +83,17 @@ internal fun SharingPermissionsContent(
             )
 
             LazyColumn(modifier = Modifier.fillMaxSize()) {
-                items(items = state.addresses, key = { it.address }) { addressPermission ->
+                items(items = state.inviteTargets, key = { it.email }) { inviteTarget ->
                     SharingPermissionItem(
                         modifier = Modifier.padding(vertical = Spacing.small),
-                        address = addressPermission,
+                        inviteTarget = inviteTarget,
                         isRenameAdminToManagerEnabled = state.isRenameAdminToManagerEnabled,
                         onPermissionChangeClick = {
                             onEvent(
-                                SharingPermissionsUiEvent.OnPermissionChangeClick(addressPermission)
+                                SharingPermissionsUiEvent.OnPermissionChangeClick(inviteTarget)
                             )
-                        }
+                        },
+                        onGroupMembersClick = onGroupMembersClick
                     )
                 }
             }

@@ -25,6 +25,7 @@ fun UpdateShareEvent.toResponse(): ShareResponse = ShareResponse(
     shareId = shareId,
     vaultId = vaultId,
     addressId = addressId,
+    groupId = groupId,
     targetType = targetType,
     targetId = targetId,
     permission = permission,
@@ -44,10 +45,12 @@ fun UpdateShareEvent.toResponse(): ShareResponse = ShareResponse(
     flags = flags
 )
 
-fun ShareResponse.toDomain(): UpdateShareEvent = UpdateShareEvent(
+fun ShareResponse.toDomain(groupEmail: String?): UpdateShareEvent = UpdateShareEvent(
     shareId = shareId,
     vaultId = vaultId,
     addressId = addressId,
+    groupId = groupId,
+    groupEmail = groupEmail,
     targetType = targetType,
     targetId = targetId,
     permission = permission,

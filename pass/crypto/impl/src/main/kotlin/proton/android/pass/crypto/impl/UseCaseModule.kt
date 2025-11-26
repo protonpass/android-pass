@@ -22,22 +22,26 @@ import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import proton.android.pass.crypto.api.usecases.AcceptInvite
 import proton.android.pass.crypto.api.usecases.CreateItem
 import proton.android.pass.crypto.api.usecases.CreateVault
 import proton.android.pass.crypto.api.usecases.MigrateItem
 import proton.android.pass.crypto.api.usecases.OpenItem
 import proton.android.pass.crypto.api.usecases.OpenItemKey
-import proton.android.pass.crypto.api.usecases.EncryptInviteKeys
 import proton.android.pass.crypto.api.usecases.UpdateItem
 import proton.android.pass.crypto.api.usecases.UpdateVault
-import proton.android.pass.crypto.impl.usecases.AcceptInviteImpl
+import proton.android.pass.crypto.api.usecases.invites.AcceptGroupInvite
+import proton.android.pass.crypto.api.usecases.invites.AcceptUserInvite
+import proton.android.pass.crypto.api.usecases.invites.EncryptInviteKeys
+import proton.android.pass.crypto.api.usecases.invites.OpenOrganizationKey
+import proton.android.pass.crypto.impl.usecases.AcceptGroupInviteImpl
+import proton.android.pass.crypto.impl.usecases.AcceptUserInviteImpl
 import proton.android.pass.crypto.impl.usecases.CreateItemImpl
 import proton.android.pass.crypto.impl.usecases.CreateVaultImpl
 import proton.android.pass.crypto.impl.usecases.EncryptInviteKeysImpl
 import proton.android.pass.crypto.impl.usecases.MigrateItemImpl
 import proton.android.pass.crypto.impl.usecases.OpenItemImpl
 import proton.android.pass.crypto.impl.usecases.OpenItemKeyImpl
+import proton.android.pass.crypto.impl.usecases.OpenOrganizationKeyImpl
 import proton.android.pass.crypto.impl.usecases.UpdateItemImpl
 import proton.android.pass.crypto.impl.usecases.UpdateVaultImpl
 
@@ -70,6 +74,12 @@ abstract class UseCaseModule {
     abstract fun bindEncryptInviteKeys(impl: EncryptInviteKeysImpl): EncryptInviteKeys
 
     @Binds
-    abstract fun bindAcceptInvite(impl: AcceptInviteImpl): AcceptInvite
+    abstract fun bindAcceptInvite(impl: AcceptUserInviteImpl): AcceptUserInvite
+
+    @Binds
+    abstract fun bindOpenOrganizationKey(impl: OpenOrganizationKeyImpl): OpenOrganizationKey
+
+    @Binds
+    abstract fun bindAcceptGroupInvite(impl: AcceptGroupInviteImpl): AcceptGroupInvite
 
 }

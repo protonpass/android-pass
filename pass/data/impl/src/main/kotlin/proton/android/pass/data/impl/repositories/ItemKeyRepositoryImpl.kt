@@ -43,11 +43,18 @@ class ItemKeyRepositoryImpl @Inject constructor(
         userId: UserId,
         addressId: AddressId,
         shareId: ShareId,
+        groupEmail: String?,
         itemId: ItemId
     ): Flow<Pair<ShareKey, ItemKey>> = flow {
         val response = remoteItemKeyRepository.fetchLatestItemKey(userId, shareId, itemId)
         val shareKey = shareKeyRepository
-            .getShareKeyForRotation(userId, addressId, shareId, response.keyRotation)
+            .getShareKeyForRotation(
+                userId = userId,
+                addressId = addressId,
+                shareId = shareId,
+                groupEmail = groupEmail,
+                keyRotation = response.keyRotation
+            )
             .first()
 
         if (shareKey == null) {

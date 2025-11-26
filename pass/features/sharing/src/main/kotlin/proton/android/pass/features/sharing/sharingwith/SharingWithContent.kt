@@ -184,13 +184,44 @@ internal fun SharingWithContent(
                     verticalArrangement = Arrangement.spacedBy(space = Spacing.small),
                     horizontalArrangement = Arrangement.spacedBy(space = Spacing.small)
                 ) {
+                    when (val content = state.suggestionsUIState) {
+                        is SuggestionsUIState.Content -> {
+                            (content.recentSortedItems + content.organizationSortedItems)
+                                .filterIsInstance<GroupSuggestionUiModel>()
+                                .filter { it.isSelected }
+                                .distinctBy { it.id }
+                                .forEach { group ->
+                                    val label = if (group.memberCount > 0) {
+                                        stringResource(
+                                            id = R.string.share_with_group_entry,
+                                            group.name,
+                                            group.memberCount
+                                        )
+                                    } else {
+                                        group.name
+                                    }
+                                    SharingChip(
+                                        text = label,
+                                        isError = false,
+                                        isSelected = group.isFocused,
+                                        onClick = {
+                                            if (group.memberCount > 0) {
+                                                onEvent(SharingWithUiEvent.ChipGroupClick(group.id))
+                                            }
+                                        }
+                                    )
+                                }
+                        }
+
+                        else -> {}
+                    }
+
                     state.enteredEmails.forEachIndexed { idx, emailState ->
-                        SharingWithChip(
-                            emailState = emailState,
-                            isSelected = state.selectedEmailIndex.value() == idx,
-                            onClick = {
-                                onEvent(SharingWithUiEvent.EmailClick(idx))
-                            }
+                        SharingChip(
+                            text = emailState.email,
+                            isError = emailState.isError,
+                            isSelected = emailState.isFocused,
+                            onClick = { onEvent(SharingWithUiEvent.ChipEmailClick(idx)) }
                         )
                     }
                 }
@@ -231,6 +262,12 @@ internal fun SharingWithContent(
                 state = state.suggestionsUIState,
                 onItemClicked = { email, state ->
                     onEvent(SharingWithUiEvent.InviteSuggestionToggle(email, state))
+                },
+                onGroupClicked = { groupId, isSelected ->
+                    onEvent(SharingWithUiEvent.GroupSuggestionToggle(groupId, isSelected))
+                },
+                onGroupMembersClick = { groupId ->
+                    onEvent(SharingWithUiEvent.GroupSuggestionMembersClick(groupId))
                 }
             )
         }
@@ -238,13 +275,14 @@ internal fun SharingWithContent(
 }
 
 @Composable
-private fun SharingWithChip(
+private fun SharingChip(
     modifier: Modifier = Modifier,
-    emailState: EnteredEmailState,
+    text: String,
+    isError: Boolean,
     isSelected: Boolean,
     onClick: () -> Unit
 ) {
-    val contentColor = if (emailState.isError) {
+    val contentColor = if (isError) {
         PassTheme.colors.passwordInteractionNormMajor2
     } else {
         PassTheme.colors.textNorm
@@ -254,7 +292,7 @@ private fun SharingWithChip(
         modifier = modifier
             .clip(shape = RoundedCornerShape(size = Radius.small))
             .applyIf(
-                condition = emailState.isError,
+                condition = isError,
                 ifTrue = { background(color = PassTheme.colors.passwordInteractionNormMinor1) },
                 ifFalse = { background(color = PassTheme.colors.interactionNormMinor1) }
             )
@@ -264,7 +302,7 @@ private fun SharingWithChip(
         horizontalArrangement = Arrangement.spacedBy(space = Spacing.small)
     ) {
         Text.Body2Regular(
-            text = emailState.email,
+            text = text,
             color = contentColor
         )
 
@@ -287,11 +325,9 @@ internal fun SharingWithChipPreview(
 
     PassTheme(isDark = isDark) {
         Surface {
-            SharingWithChip(
-                emailState = EnteredEmailState(
-                    email = "some@email.test",
-                    isError = isSelected
-                ),
+            SharingChip(
+                text = "some@email.test",
+                isError = isSelected,
                 isSelected = isSelected,
                 onClick = {}
             )

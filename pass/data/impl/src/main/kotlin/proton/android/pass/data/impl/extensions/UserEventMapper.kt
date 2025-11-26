@@ -69,7 +69,7 @@ fun UserEventListApiModel.toDomain(): UserEventList = UserEventList(
     groupInvitesChanged = groupInvitesChanged?.toDomain(),
     pendingAliasToCreateChanged = pendingAliasToCreateChanged?.toDomain(),
     sharesWithInvitesToCreate = sharesWithInvitesToCreate.map { it.toDomain() },
-    planChanged = planChanged,
+    refreshUser = refreshUser,
     eventsPending = eventsPending,
     fullRefresh = fullRefresh
 )

@@ -43,6 +43,7 @@ class TestShareRepository : ShareRepository {
     private val observeSharesFlow = testFlow<Result<List<Share>>>()
     private val observeUsableShareIdsFlow = testFlow<Result<List<ShareId>>>()
     private val observeVaultCountFlow = testFlow<Result<Int>>()
+    private val recreateShareMemory: MutableList<RecreateSharePayload> = mutableListOf()
 
     private var deleteVault: Result<Unit> =
         Result.failure(IllegalStateException("DeleteVaultResult not set"))
@@ -154,13 +155,25 @@ class TestShareRepository : ShareRepository {
         vault: NewVault
     ): Share = updateVaultResult.getOrThrow()
 
+    fun getRecreateShareMemory(): List<RecreateSharePayload> = recreateShareMemory.toList()
+
+    fun clearRecreateShareMemory() {
+        recreateShareMemory.clear()
+    }
+
     override suspend fun recreateShare(
         userId: UserId,
         shareId: ShareId,
         eventToken: EventToken
     ) {
-
+        recreateShareMemory.add(RecreateSharePayload(userId, shareId, eventToken))
     }
+
+    data class RecreateSharePayload(
+        val userId: UserId,
+        val shareId: ShareId,
+        val eventToken: EventToken
+    )
 
     override suspend fun deleteLocalSharesForUser(userId: UserId): Boolean = deleteSharesResult.getOrThrow()
 

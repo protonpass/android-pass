@@ -24,17 +24,21 @@ import proton.android.pass.data.impl.api.PasswordManagerApi
 import proton.android.pass.data.impl.requests.invites.AcceptInviteRequest
 import proton.android.pass.data.impl.requests.invites.InviteKeyRotation
 import proton.android.pass.domain.InviteToken
+import proton.android.pass.domain.events.EventToken
 import javax.inject.Inject
 
 class RemoteGroupInviteDataSourceImpl @Inject constructor(
     private val api: ApiProvider
 ) : RemoteGroupInviteDataSource {
 
-    override suspend fun retrievePendingGroupInvites(userId: UserId, lastToken: String?) =
-        api.get<PasswordManagerApi>(userId)
-            .invoke { retrievePendingGroupInvites(lastToken) }
-            .valueOrThrow
-            .groupInvitesApiModel
+    override suspend fun retrievePendingGroupInvites(
+        userId: UserId,
+        lastToken: String?,
+        eventToken: EventToken?
+    ) = api.get<PasswordManagerApi>(userId)
+        .invoke { retrievePendingGroupInvites(lastToken, eventToken?.token) }
+        .valueOrThrow
+        .groupInvitesApiModel
 
     override suspend fun acceptGroupInvite(
         userId: UserId,

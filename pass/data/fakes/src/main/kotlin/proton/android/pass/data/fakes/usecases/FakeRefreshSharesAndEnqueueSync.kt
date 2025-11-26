@@ -16,24 +16,23 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.data.impl
+package proton.android.pass.data.fakes.usecases
 
-import dagger.Binds
-import dagger.Module
-import dagger.hilt.InstallIn
-import dagger.hilt.components.SingletonComponent
-import proton.android.pass.data.api.work.WorkManagerFacade
-import proton.android.pass.data.api.work.WorkerLauncher
-import proton.android.pass.data.impl.work.WorkManagerFacadeImpl
-import proton.android.pass.data.impl.work.WorkerLauncherImpl
+import me.proton.core.domain.entity.UserId
+import proton.android.pass.data.api.usecases.RefreshSharesAndEnqueueSync
+import proton.android.pass.data.api.usecases.RefreshSharesResult
+import javax.inject.Inject
+import javax.inject.Singleton
 
-@Module
-@InstallIn(SingletonComponent::class)
-abstract class DataWorkModule {
+@Singleton
+class FakeRefreshSharesAndEnqueueSync @Inject constructor() : RefreshSharesAndEnqueueSync {
 
-    @Binds
-    abstract fun bindWorkerLauncher(impl: WorkerLauncherImpl): WorkerLauncher
+    private var result: RefreshSharesResult = RefreshSharesResult.NoSharesSkipped
 
-    @Binds
-    abstract fun bindWorkManagerFacade(impl: WorkManagerFacadeImpl): WorkManagerFacade
+    fun setResult(value: RefreshSharesResult) {
+        result = value
+    }
+
+    override suspend fun invoke(userId: UserId, syncType: RefreshSharesAndEnqueueSync.SyncType): RefreshSharesResult =
+        result
 }

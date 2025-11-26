@@ -16,24 +16,26 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.data.impl
+package proton.android.pass.data.fakes.usecases
 
-import dagger.Binds
-import dagger.Module
-import dagger.hilt.InstallIn
-import dagger.hilt.components.SingletonComponent
-import proton.android.pass.data.api.work.WorkManagerFacade
-import proton.android.pass.data.api.work.WorkerLauncher
-import proton.android.pass.data.impl.work.WorkManagerFacadeImpl
-import proton.android.pass.data.impl.work.WorkerLauncherImpl
+import me.proton.core.domain.entity.UserId
+import proton.android.pass.data.api.usecases.PromoteNewInviteToInvite
+import proton.android.pass.domain.ShareId
+import javax.inject.Inject
+import javax.inject.Singleton
 
-@Module
-@InstallIn(SingletonComponent::class)
-abstract class DataWorkModule {
+@Singleton
+class FakePromoteNewInviteToInvite @Inject constructor() : PromoteNewInviteToInvite {
 
-    @Binds
-    abstract fun bindWorkerLauncher(impl: WorkerLauncherImpl): WorkerLauncher
+    private val invocationMemory: MutableList<Pair<UserId, ShareId>> = mutableListOf()
 
-    @Binds
-    abstract fun bindWorkManagerFacade(impl: WorkManagerFacadeImpl): WorkManagerFacade
+    fun getInvocationMemory(): List<Pair<UserId, ShareId>> = invocationMemory.toList()
+
+    fun clearInvocationMemory() {
+        invocationMemory.clear()
+    }
+
+    override suspend fun invoke(userId: UserId, shareId: ShareId) {
+        invocationMemory.add(Pair(userId, shareId))
+    }
 }

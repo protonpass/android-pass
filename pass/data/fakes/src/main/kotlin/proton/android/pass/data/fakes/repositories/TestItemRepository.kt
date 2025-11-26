@@ -61,6 +61,8 @@ class TestItemRepository @Inject constructor() : ItemRepository {
         MutableSharedFlow(replay = 1, onBufferOverflow = BufferOverflow.DROP_OLDEST)
     private val observeItemEncryptedListFlow: MutableSharedFlow<List<ItemEncrypted>> =
         MutableSharedFlow(replay = 1, onBufferOverflow = BufferOverflow.DROP_OLDEST)
+    private val deleteLocalItemsMemory: MutableList<DeleteLocalItemsPayload> = mutableListOf()
+    private val refreshItemMemory: MutableList<RefreshItemPayload> = mutableListOf()
 
     private val encryptedSharedItemsFlow = testFlow<List<ItemEncrypted>>()
 
@@ -143,8 +145,26 @@ class TestItemRepository @Inject constructor() : ItemRepository {
         TODO("Not yet implemented")
     }
 
+
+    fun getDeleteLocalItemsMemory(): List<DeleteLocalItemsPayload> = deleteLocalItemsMemory.toList()
+
+    fun clearDeleteLocalItemsMemory() {
+        deleteLocalItemsMemory.clear()
+    }
+
     override suspend fun deleteLocalItems(userId: UserId, items: Map<ShareId, List<ItemId>>) {
-        TODO("Not yet implemented")
+        deleteLocalItemsMemory.add(DeleteLocalItemsPayload(userId, items))
+    }
+
+    data class DeleteLocalItemsPayload(
+        val userId: UserId,
+        val items: Map<ShareId, List<ItemId>>
+    )
+
+    fun getRefreshItemMemory(): List<RefreshItemPayload> = refreshItemMemory.toList()
+
+    fun clearRefreshItemMemory() {
+        refreshItemMemory.clear()
     }
 
     override suspend fun refreshItem(
@@ -153,8 +173,15 @@ class TestItemRepository @Inject constructor() : ItemRepository {
         itemId: ItemId,
         eventToken: EventToken
     ) {
-        TODO("Not yet implemented")
+        refreshItemMemory.add(RefreshItemPayload(userId, shareId, itemId, eventToken))
     }
+
+    data class RefreshItemPayload(
+        val userId: UserId,
+        val shareId: ShareId,
+        val itemId: ItemId,
+        val eventToken: EventToken
+    )
 
     override fun observeItems(
         userId: UserId,

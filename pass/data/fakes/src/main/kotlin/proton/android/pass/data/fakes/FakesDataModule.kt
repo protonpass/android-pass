@@ -104,8 +104,10 @@ import proton.android.pass.data.api.usecases.ObserveVaultsWithItemCount
 import proton.android.pass.data.api.usecases.PerformSync
 import proton.android.pass.data.api.usecases.PinItem
 import proton.android.pass.data.api.usecases.PinItems
+import proton.android.pass.data.api.usecases.PromoteNewInviteToInvite
 import proton.android.pass.data.api.usecases.RefreshContent
 import proton.android.pass.data.api.usecases.RefreshGroupInvites
+import proton.android.pass.data.api.usecases.RefreshSharesAndEnqueueSync
 import proton.android.pass.data.api.usecases.RefreshUserInvites
 import proton.android.pass.data.api.usecases.RefreshPlan
 import proton.android.pass.data.api.usecases.RejectInvite
@@ -233,6 +235,7 @@ import proton.android.pass.data.api.usecases.tooltips.DisableTooltip
 import proton.android.pass.data.api.usecases.tooltips.ObserveTooltipEnabled
 import proton.android.pass.data.api.usecases.vaults.ObserveVaultsGroupedByShareId
 import proton.android.pass.data.api.usecases.vaults.ObserveVaultsGroupedByVisibility
+import proton.android.pass.data.api.work.WorkManagerFacade
 import proton.android.pass.data.api.work.WorkerLauncher
 import proton.android.pass.data.fakes.crypto.FakeGetShareAndItemKey
 import proton.android.pass.data.fakes.repositories.FakeAliasRepository
@@ -259,7 +262,9 @@ import proton.android.pass.data.fakes.usecases.FakeObserveAddressesByUserId
 import proton.android.pass.data.fakes.usecases.FakeObserveEncryptedItems
 import proton.android.pass.data.fakes.usecases.FakeObserveInviteRecommendations
 import proton.android.pass.data.fakes.usecases.FakePinItem
+import proton.android.pass.data.fakes.usecases.FakePromoteNewInviteToInvite
 import proton.android.pass.data.fakes.usecases.FakeRefreshGroupInvites
+import proton.android.pass.data.fakes.usecases.FakeRefreshSharesAndEnqueueSync
 import proton.android.pass.data.fakes.usecases.FakeUnpinItem
 import proton.android.pass.data.fakes.usecases.FakeUpdateAliasName
 import proton.android.pass.data.fakes.usecases.TestAcceptInvite
@@ -445,6 +450,7 @@ import proton.android.pass.data.fakes.usecases.tooltips.FakeObserveTooltipEnable
 import proton.android.pass.data.fakes.usecases.vaults.FakeBatchChangeShareVisibility
 import proton.android.pass.data.fakes.usecases.vaults.FakeObserveVaultsGroupedByShareId
 import proton.android.pass.data.fakes.usecases.vaults.FakeObserveVaultsGroupedByVisibility
+import proton.android.pass.data.fakes.work.FakeWorkManagerFacade
 import proton.android.pass.data.fakes.work.FakeWorkerLauncher
 import javax.inject.Singleton
 
@@ -639,6 +645,12 @@ abstract class FakesDataModule {
 
     @Binds
     abstract fun bindRefreshGroupInvites(impl: FakeRefreshGroupInvites): RefreshGroupInvites
+
+    @Binds
+    abstract fun bindRefreshSharesAndEnqueueSync(impl: FakeRefreshSharesAndEnqueueSync): RefreshSharesAndEnqueueSync
+
+    @Binds
+    abstract fun bindPromoteNewInviteToInvite(impl: FakePromoteNewInviteToInvite): PromoteNewInviteToInvite
 
     @Binds
     abstract fun bindPerformSync(impl: TestPerformSync): PerformSync
@@ -955,6 +967,9 @@ abstract class FakesDataModule {
 
     @Binds
     abstract fun bindWorkerLauncher(impl: FakeWorkerLauncher): WorkerLauncher
+
+    @Binds
+    abstract fun bindWorkManagerFacade(impl: FakeWorkManagerFacade): WorkManagerFacade
 
     @Binds
     abstract fun bindAssetLinkRepository(impl: FakeAssetLinkRepository): AssetLinkRepository

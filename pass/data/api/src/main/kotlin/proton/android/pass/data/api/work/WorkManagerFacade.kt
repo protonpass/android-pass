@@ -16,24 +16,8 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.data.impl
+package proton.android.pass.data.api.work
 
-import dagger.Binds
-import dagger.Module
-import dagger.hilt.InstallIn
-import dagger.hilt.components.SingletonComponent
-import proton.android.pass.data.api.work.WorkManagerFacade
-import proton.android.pass.data.api.work.WorkerLauncher
-import proton.android.pass.data.impl.work.WorkManagerFacadeImpl
-import proton.android.pass.data.impl.work.WorkerLauncherImpl
-
-@Module
-@InstallIn(SingletonComponent::class)
-abstract class DataWorkModule {
-
-    @Binds
-    abstract fun bindWorkerLauncher(impl: WorkerLauncherImpl): WorkerLauncher
-
-    @Binds
-    abstract fun bindWorkManagerFacade(impl: WorkManagerFacadeImpl): WorkManagerFacade
+interface WorkManagerFacade {
+    suspend fun awaitUniqueWorkFinished(name: String)
 }

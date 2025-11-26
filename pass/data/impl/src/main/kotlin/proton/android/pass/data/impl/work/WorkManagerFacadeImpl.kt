@@ -16,24 +16,26 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.data.impl
+package proton.android.pass.data.impl.work
 
-import dagger.Binds
-import dagger.Module
-import dagger.hilt.InstallIn
-import dagger.hilt.components.SingletonComponent
+import androidx.lifecycle.asFlow
+import androidx.work.WorkManager
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.mapNotNull
 import proton.android.pass.data.api.work.WorkManagerFacade
-import proton.android.pass.data.api.work.WorkerLauncher
-import proton.android.pass.data.impl.work.WorkManagerFacadeImpl
-import proton.android.pass.data.impl.work.WorkerLauncherImpl
+import javax.inject.Inject
 
-@Module
-@InstallIn(SingletonComponent::class)
-abstract class DataWorkModule {
+class WorkManagerFacadeImpl @Inject constructor(
+    private val workManager: WorkManager
+) : WorkManagerFacade {
 
-    @Binds
-    abstract fun bindWorkerLauncher(impl: WorkerLauncherImpl): WorkerLauncher
-
-    @Binds
-    abstract fun bindWorkManagerFacade(impl: WorkManagerFacadeImpl): WorkManagerFacade
+    override suspend fun awaitUniqueWorkFinished(name: String) {
+        workManager.getWorkInfosForUniqueWorkLiveData(name)
+            .asFlow()
+            .mapNotNull { infos ->
+                if (infos.isEmpty()) null
+                else infos.first().state
+            }
+            .first { it.isFinished }
+    }
 }

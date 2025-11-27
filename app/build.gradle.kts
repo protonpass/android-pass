@@ -310,7 +310,6 @@ fun DependencyHandlerScope.addDevBlackImplementation(
 
 dependencies {
     coreLibraryDesugaring(libs.android.desugar)
-    implementation(files("../../proton-libs/gopenpgp/gopenpgp.aar"))
     implementation(libs.accompanist.navigation.material)
     implementation(libs.androidx.activity.ktx)
     implementation(libs.androidx.compose.foundationLayout)

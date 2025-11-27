@@ -75,8 +75,7 @@ plugins {
 }
 
 includeCoreBuild {
-    branch.set("main")
-    includeBuild("gopenpgp")
+    // branch.set("main")
 
     includeRepo("contents-proto-definition") {
         val config = getProtosConfig()

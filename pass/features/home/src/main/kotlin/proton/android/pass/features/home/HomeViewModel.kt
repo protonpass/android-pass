@@ -571,7 +571,7 @@ class HomeViewModel @Inject constructor(
         bottomSheetItemActionFlow,
         preferencesRepository.observeAliasTrashDialogStatusPreference(),
         observeCanCreateItems(),
-        observeHasShares(includeHidden = false)
+        observeHasShares(includeHidden = true)
     ) { homeListUiState,
         searchUiState,
         userPlan,

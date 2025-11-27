@@ -46,7 +46,11 @@ import me.proton.core.observability.domain.ObservabilityWorkerManager
 import me.proton.core.observability.domain.usecase.IsObservabilityEnabled
 import me.proton.core.observability.domain.usecase.SendObservabilityEvents
 import me.proton.core.payment.domain.PaymentManager
+import me.proton.core.payment.domain.features.IsOmnichannelEnabled
+import me.proton.core.payment.domain.repository.PaymentsRepository
 import me.proton.core.payment.domain.repository.PurchaseRepository
+import me.proton.core.payment.domain.usecase.CreatePaymentTokenForGooglePurchase
+import me.proton.core.payment.domain.usecase.FindGooglePurchaseForPaymentOrderId
 import me.proton.core.plan.domain.repository.PlansRepository
 import me.proton.core.plan.domain.usecase.PerformSubscribe
 import me.proton.core.user.domain.UserAddressManager
@@ -76,11 +80,16 @@ import proton.android.pass.account.fakes.observability.FakeIsObservabilityEnable
 import proton.android.pass.account.fakes.observability.FakeObservabilityRepository
 import proton.android.pass.account.fakes.observability.FakeObservabilityWorkerManager
 import proton.android.pass.account.fakes.observability.FakeSendObservabilityEvents
+import proton.android.pass.account.fakes.payment.FakeCreatePaymentTokenForGooglePurchase
+import proton.android.pass.account.fakes.payment.FakeFindGooglePurchaseForPaymentOrderId
+import proton.android.pass.account.fakes.payment.FakeIsOmnichannelEnabled
+import proton.android.pass.account.fakes.payment.FakePaymentsRepository
 import proton.android.pass.account.fakes.payment.FakePurchaseRepository
 import proton.android.pass.account.fakes.plan.FakePerformSubscribe
 import proton.android.pass.account.fakes.plan.FakePlansRepository
 import proton.android.pass.account.fakes.user.FakeDomainRepository
 import proton.android.pass.account.fakes.user.FakeUserAddressManager
+import java.util.Optional
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -168,6 +177,9 @@ abstract class FakesAccountModule {
     abstract fun bindPurchaseRepository(impl: FakePurchaseRepository): PurchaseRepository
 
     @Binds
+    abstract fun bindPaymentsRepository(impl: FakePaymentsRepository): PaymentsRepository
+
+    @Binds
     abstract fun bindPlansRepository(impl: FakePlansRepository): PlansRepository
 
     @Binds
@@ -188,6 +200,19 @@ abstract class FakesAccountModule {
     @Binds
     abstract fun bindDomainRepository(impl: FakeDomainRepository): DomainRepository
 
+    @Binds
+    abstract fun bindCreatePaymentTokenForGooglePurchase(
+        impl: FakeCreatePaymentTokenForGooglePurchase
+    ): CreatePaymentTokenForGooglePurchase
+
+    @Binds
+    abstract fun bindIsOmnichannelEnabled(impl: FakeIsOmnichannelEnabled): IsOmnichannelEnabled
+
+    @Binds
+    abstract fun bindFindGooglePurchaseForPaymentOrderId(
+        impl: FakeFindGooglePurchaseForPaymentOrderId
+    ): FindGooglePurchaseForPaymentOrderId
+
     companion object {
         @Provides
         fun provideAccountType(): AccountType = AccountType.External
@@ -197,6 +222,11 @@ abstract class FakesAccountModule {
 
         @Provides
         fun provideObserveEdmCode(generateEdmCode: GenerateEdmCode): ObserveEdmCode = ObserveEdmCode(generateEdmCode)
+
+        @Provides
+        fun provideOptionalFindGooglePurchase(
+            impl: FindGooglePurchaseForPaymentOrderId
+        ): Optional<FindGooglePurchaseForPaymentOrderId> = Optional.of(impl)
     }
 }
 

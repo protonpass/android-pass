@@ -10,7 +10,6 @@ import me.proton.core.payment.domain.repository.PlanQuantity
 import me.proton.core.plan.domain.entity.DynamicPlans
 import me.proton.core.plan.domain.entity.DynamicSubscription
 import me.proton.core.plan.domain.entity.Subscription
-import me.proton.core.plan.domain.entity.SubscriptionManagement
 import me.proton.core.plan.domain.repository.PlansRepository
 import javax.inject.Inject
 
@@ -40,13 +39,9 @@ class FakePlansRepository @Inject constructor() : PlansRepository {
 
     override suspend fun createOrUpdateSubscription(
         sessionUserId: SessionUserId,
-        amount: Long,
-        currency: Currency,
         payment: PaymentTokenEntity?,
-        codes: List<String>?,
         plans: PlanQuantity,
-        cycle: SubscriptionCycle,
-        subscriptionManagement: SubscriptionManagement
+        cycle: SubscriptionCycle
     ): Subscription {
         TODO("Not yet implemented")
     }

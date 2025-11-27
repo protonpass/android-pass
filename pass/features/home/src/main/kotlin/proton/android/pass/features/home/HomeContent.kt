@@ -358,6 +358,7 @@ private fun HomeDrawerIcon(
         when (selectedVaultOption) {
             None -> {
                 when (homeVaultSelection) {
+                    is VaultSelectionOption.Vault,
                     VaultSelectionOption.AllVaults -> {
                         AllVaultsIcon(
                             modifier = modifier,
@@ -375,7 +376,6 @@ private fun HomeDrawerIcon(
                             onClick = { onEvent(HomeUiEvent.DrawerIconClick) }
                         )
                     }
-
                     VaultSelectionOption.SharedByMe -> {
                         VaultIcon(
                             modifier = modifier.size(48.dp),
@@ -394,8 +394,6 @@ private fun HomeDrawerIcon(
                             onClick = { onEvent(HomeUiEvent.DrawerIconClick) }
                         )
                     }
-
-                    else -> Unit // This combination is not possible
                 }
             }
 

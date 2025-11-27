@@ -50,7 +50,6 @@ kapt {
 }
 
 dependencies {
-    compileOnly(files("../../../../proton-libs/gopenpgp/gopenpgp.aar"))
 
     api(projects.pass.data.api)
 
@@ -121,7 +120,6 @@ dependencies {
     testImplementation(projects.pass.network.fakes)
     testImplementation(projects.pass.preferences.fakes)
 
-    androidTestImplementation(files("../../../../proton-libs/gopenpgp/gopenpgp.aar"))
     androidTestImplementation(projects.pass.account.fakes)
     androidTestImplementation(projects.pass.commonTest)
     androidTestImplementation(projects.pass.common.fakes)

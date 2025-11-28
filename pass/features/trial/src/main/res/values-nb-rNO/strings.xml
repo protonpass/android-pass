@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="trial_title">Din velkomstgave</string>
+  <string name="trial_subtitle">Nyt passordadministrasjon på neste nivå</string>
+  <string name="trial_feature_1">20 hvelv</string>
+  <string name="trial_feature_3">Integrert 2FA-autentisering</string>
+  <string name="trial_feature_4">Tilpassede felt</string>
+  <string name="trial_button_text">Oppgrader nå</string>
+  <plurals name="trial_days_left">
+    <item quantity="one">%d dag igjen for å prøve premiumfunksjoner</item>
+    <item quantity="other">%d dager igjen for å prøve premiumfunksjoner</item>
+  </plurals>
+  <string name="trial_learn_more">Lær mer</string>
+</resources>

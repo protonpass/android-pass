@@ -29,7 +29,7 @@
   <string name="app_lock_ten_minutes">Nach 10 Minuten</string>
   <string name="app_lock_one_hour">Nach 1 Stunde</string>
   <string name="app_lock_four_hours">Nach 4 Stunden</string>
-    <string name="app_lock_config_none">Keine</string>
+  <string name="app_lock_config_none">Keine</string>
   <string name="app_lock_config_biometric">Biometrie</string>
   <string name="app_lock_config_pin_code">PIN-Code</string>
   <string name="app_lock_config_app_lock_time">Automatische Sperre</string>

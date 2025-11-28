@@ -27,7 +27,7 @@
   <string name="bottomsheet_edit_vault_button">Simpan</string>
   <string name="bottomsheet_cannot_create_more_vaults">Anda telah mencapai batas jumlah brankas yang dapat Anda buat. Dapatkan kemampuan untuk membuat brankas tanpa batasan jumlah dengan meningkatkan paket langganan Anda.</string>
   <string name="bottomsheet_cannot_select_not_primary_vault">Untuk dapat berinteraksi dengan brankas lainnya, Anda perlu untuk meningkatkan akun Anda.</string>
-    <string name="bottomsheet_edit">Sunting</string>
+  <string name="bottomsheet_edit">Sunting</string>
   <string name="bottomsheet_migrate">Pindahkan seluruh item ke brankas lain</string>
   <string name="bottomsheet_delete_vault">Hapus brankas</string>
   <string name="bottomsheet_share_vault">Bagikan</string>

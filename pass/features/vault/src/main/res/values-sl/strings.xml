@@ -27,7 +27,7 @@
   <string name="bottomsheet_edit_vault_button">Shrani</string>
   <string name="bottomsheet_cannot_create_more_vaults">Dosegli ste omejitev trezorjev, ki jih lahko ustvarite. Ko nadgradite svojo naročnino, ustvarite neomejene trezorje.</string>
   <string name="bottomsheet_cannot_select_not_primary_vault">Za interakcijo z drugimi trezorji morate nadgraditi svoj račun.</string>
-    <string name="bottomsheet_edit">Uredi</string>
+  <string name="bottomsheet_edit">Uredi</string>
   <string name="bottomsheet_migrate">Premaknite vse predmete v drug trezor</string>
   <string name="bottomsheet_delete_vault">Izbriši trezor</string>
   <string name="bottomsheet_share_vault">Deli</string>

@@ -29,7 +29,7 @@
   <string name="app_lock_ten_minutes">Setelah 10 menit</string>
   <string name="app_lock_one_hour">Setelah 1 jam</string>
   <string name="app_lock_four_hours">Setelah 4 jam</string>
-    <string name="app_lock_config_none">Tidak ada</string>
+  <string name="app_lock_config_none">Tidak ada</string>
   <string name="app_lock_config_biometric">Biometrik</string>
   <string name="app_lock_config_pin_code">Kode PIN</string>
   <string name="app_lock_config_app_lock_time">Penguncian otomatis</string>

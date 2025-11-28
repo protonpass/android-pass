@@ -27,7 +27,7 @@
   <string name="bottomsheet_edit_vault_button">Tallenna</string>
   <string name="bottomsheet_cannot_create_more_vaults">Luotujen holvien enimmäismäärä on saavutettu. Luo holveja rajattomasti päivittämällä tilauksesi.</string>
   <string name="bottomsheet_cannot_select_not_primary_vault">Käyttääksesi muita holvejasi, sinun on päivitettävä tilisi.</string>
-    <string name="bottomsheet_edit">Muokkaa</string>
+  <string name="bottomsheet_edit">Muokkaa</string>
   <string name="bottomsheet_migrate">Siirrä kaikki kohteet toiseen holviin</string>
   <string name="bottomsheet_delete_vault">Poista holvi</string>
   <string name="bottomsheet_share_vault">Jaa</string>

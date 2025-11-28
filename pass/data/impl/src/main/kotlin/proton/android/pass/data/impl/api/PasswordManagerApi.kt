@@ -87,6 +87,7 @@ import proton.android.pass.data.impl.responses.GetAllKeysByAddressResponse
 import proton.android.pass.data.impl.responses.GetAllSecureLinksResponse
 import proton.android.pass.data.impl.responses.GetEventsResponse
 import proton.android.pass.data.impl.responses.GetItemLatestKeyResponse
+import proton.android.pass.data.impl.responses.GetItemResponse
 import proton.android.pass.data.impl.responses.GetItemRevisionsResponse
 import proton.android.pass.data.impl.responses.GetItemsResponse
 import proton.android.pass.data.impl.responses.GetShareKeysResponse
@@ -185,7 +186,7 @@ interface PasswordManagerApi : BaseRetrofitApi {
         @Path("shareId") shareId: String,
         @Path("itemId") itemId: String,
         @Query("EventToken") eventToken: String?
-    ): GetItemsResponse
+    ): GetItemResponse
 
     @POST("$PREFIX/share/{shareId}/item")
     suspend fun createItem(@Path("shareId") shareId: String, @Body request: CreateItemRequest): ItemRevisionResponse

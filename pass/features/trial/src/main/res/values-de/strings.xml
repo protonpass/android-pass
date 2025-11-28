@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="trial_title">Dein Willkommensgeschenk</string>
+  <string name="trial_subtitle">Genieße die nächste Stufe der Passwortverwaltung</string>
+  <string name="trial_feature_1">20 Tresore</string>
+  <string name="trial_feature_3">Integrierter 2FA-Authentifikator</string>
+  <string name="trial_feature_4">Benutzerdefinierte Felder</string>
+  <string name="trial_button_text">Jetzt upgraden</string>
+  <plurals name="trial_days_left">
+    <item quantity="one">%d Tag verbleibend, um die Premiumfunktionen auszuprobieren</item>
+    <item quantity="other">%d Tage verbleibend, um die Premiumfunktionen zu testen</item>
+  </plurals>
+  <string name="trial_learn_more">Mehr erfahren</string>
+</resources>

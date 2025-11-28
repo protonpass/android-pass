@@ -29,7 +29,7 @@
   <string name="app_lock_ten_minutes">Μετά από 10 λεπτά</string>
   <string name="app_lock_one_hour">Σε 1 ώρα</string>
   <string name="app_lock_four_hours">Σε 4 ώρες</string>
-    <string name="app_lock_config_none">Κανένα</string>
+  <string name="app_lock_config_none">Κανένα</string>
   <string name="app_lock_config_biometric">Βιομετρικό</string>
   <string name="app_lock_config_pin_code">Κωδικός PIN</string>
   <string name="app_lock_config_app_lock_time">Αυτόματο κλείδωμα</string>

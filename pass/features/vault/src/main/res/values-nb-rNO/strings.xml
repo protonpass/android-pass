@@ -27,7 +27,7 @@
   <string name="bottomsheet_edit_vault_button">Lagre</string>
   <string name="bottomsheet_cannot_create_more_vaults">Du har nådd grensen for hvor mange hvelv du kan opprette. Opprett et ubegrenset antall hvelv når du oppgraderer abonnementet.</string>
   <string name="bottomsheet_cannot_select_not_primary_vault">For å samhandle med de andre hvelvene dine, må du oppgradere kontoen din.</string>
-    <string name="bottomsheet_edit">Rediger</string>
+  <string name="bottomsheet_edit">Rediger</string>
   <string name="bottomsheet_migrate">Flytt alle elementene til et annet hvelv</string>
   <string name="bottomsheet_delete_vault">Slett hvelv</string>
   <string name="bottomsheet_share_vault">Del</string>

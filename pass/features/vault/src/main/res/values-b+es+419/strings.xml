@@ -27,7 +27,7 @@
   <string name="bottomsheet_edit_vault_button">Guardar</string>
   <string name="bottomsheet_cannot_create_more_vaults">Ha alcanzado el límite de bóvedas que puede crear. Cree bóvedas ilimitadas al actualizar la suscripción.</string>
   <string name="bottomsheet_cannot_select_not_primary_vault">Para interactuar con las otras bóvedas, necesita actualizar la cuenta.</string>
-    <string name="bottomsheet_edit">Editar</string>
+  <string name="bottomsheet_edit">Editar</string>
   <string name="bottomsheet_migrate">Mover todos los elementos a otra bóveda</string>
   <string name="bottomsheet_delete_vault">Eliminar bóveda</string>
   <string name="bottomsheet_share_vault">Compartir</string>

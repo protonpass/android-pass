@@ -46,7 +46,7 @@
   <string name="home_autofill_banner_title">Насолоджуйтеся магією автозаповнення</string>
   <string name="home_autofill_banner_text">Ваше ім\'я користувача та пароль заповнюються одним дотиком.</string>
   <string name="home_autofill_banner_settings">Увімкнути автозаповнення ›</string>
-    <string name="home_drawer_all_items">Всі елементи</string>
+  <string name="home_drawer_all_items">Всі елементи</string>
   <string name="sl_sync_banner_title">Синхронізуйте свої псевдоніми з SimpleLogin</string>
   <plurals name="sl_sync_banner_text">
     <item quantity="one">У вас є псевдонім %d, який присутній у SimpleLogin, але відсутній у Proton Pass. Бажаєте синхронізувати його?</item>

@@ -36,6 +36,14 @@ data class GetItemsResponse(
 )
 
 @Serializable
+data class GetItemResponse(
+    @SerialName("Code")
+    val code: Int,
+    @SerialName("Item")
+    val item: ItemRevisionApiModel
+)
+
+@Serializable
 data class ItemsListApiModel(
     @SerialName("Total")
     val total: Long,

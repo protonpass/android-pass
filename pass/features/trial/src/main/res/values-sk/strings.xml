@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="trial_title">Váš darček na privítanie</string>
+  <string name="trial_subtitle">Užite si správu hesiel na vyššej úrovni</string>
+  <string name="trial_feature_1">20 trezorov</string>
+  <string name="trial_feature_3">Integrovaný 2FA autentifikátor</string>
+  <string name="trial_feature_4">Vlastné polia</string>
+  <string name="trial_button_text">Upgradovať teraz</string>
+  <plurals name="trial_days_left">
+    <item quantity="one">Zostáva %d deň na vyskúšanie prémiových funkcií</item>
+    <item quantity="few">Zostávajú %d dni na vyskúšanie prémiových funkcií</item>
+    <item quantity="many">Zostáva %d dní na vyskúšanie prémiových funkcií</item>
+    <item quantity="other">Zostáva %d dní na vyskúšanie prémiových funkcií</item>
+  </plurals>
+  <string name="trial_learn_more">Zistiť viac</string>
+</resources>

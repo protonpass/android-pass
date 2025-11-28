@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="trial_title">Cadoul de bun venit</string>
+  <string name="trial_subtitle">Bucurați-vă de gestionarea parolelor la un nivel superior</string>
+  <string name="trial_feature_1">20 de seifuri</string>
+  <string name="trial_feature_3">Autentificare cu doi factori integrată</string>
+  <string name="trial_feature_4">Câmpuri personale</string>
+  <string name="trial_button_text">Modificare</string>
+  <plurals name="trial_days_left">
+    <item quantity="one">Zile rămase cu funcții premium: %d</item>
+    <item quantity="few">Zile rămase cu funcții premium: %d</item>
+    <item quantity="other">Zile rămase cu funcții premium: %d</item>
+  </plurals>
+  <string name="trial_learn_more">Detalii</string>
+</resources>

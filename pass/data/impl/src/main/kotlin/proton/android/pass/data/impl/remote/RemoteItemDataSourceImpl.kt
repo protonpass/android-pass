@@ -208,8 +208,7 @@ class RemoteItemDataSourceImpl @Inject constructor(
                 itemId = itemId.id,
                 eventToken = eventToken?.token
             )
-            response.items.revisions.firstOrNull()?.toDomain()
-                ?: throw IllegalStateException("Item not found in response")
+            response.item.toDomain()
         }
         .valueOrThrow
 

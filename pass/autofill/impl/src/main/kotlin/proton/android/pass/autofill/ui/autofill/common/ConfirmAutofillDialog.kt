@@ -54,7 +54,9 @@ fun ConfirmAutofillDialog(
         onDismissRequest = onClose
     ) {
         Column(
-            modifier = Modifier.padding(horizontal = 24.dp, vertical = Spacing.medium),
+            modifier = Modifier
+                .consumeObscuredTouches()
+                .padding(horizontal = 24.dp, vertical = Spacing.medium),
             verticalArrangement = Arrangement.spacedBy(Spacing.mediumSmall)
         ) {
             ProtonDialogTitle(
@@ -76,4 +78,3 @@ fun ConfirmAutofillDialog(
         }
     }
 }
-

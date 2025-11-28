@@ -21,6 +21,7 @@ package proton.android.pass.autofill.ui.autofill
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.os.Build
 import android.view.autofill.AutofillManager
 import android.widget.RemoteViews
 import androidx.activity.compose.setContent
@@ -60,6 +61,11 @@ class AutofillActivity : FragmentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         setSecureMode()
+        runCatching {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                window.setHideOverlayWindows(true)
+            }
+        }
         super.onCreate(savedInstanceState)
 
         viewModel.register(this)

@@ -29,7 +29,7 @@
   <string name="app_lock_ten_minutes">După 10 minute</string>
   <string name="app_lock_one_hour">După o oră</string>
   <string name="app_lock_four_hours">După 4 ore</string>
-    <string name="app_lock_config_none">Fără</string>
+  <string name="app_lock_config_none">Fără</string>
   <string name="app_lock_config_biometric">Biometric</string>
   <string name="app_lock_config_pin_code">Cod PIN</string>
   <string name="app_lock_config_app_lock_time">Blocare automată</string>

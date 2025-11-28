@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="trial_title">ウェルカムギフト</string>
+  <string name="trial_subtitle">次のレベルのパスワード管理をお楽しみください</string>
+  <string name="trial_feature_1">保管庫 20 個</string>
+  <string name="trial_feature_3">統合された 2FA 認証システム</string>
+  <string name="trial_feature_4">カスタムフィールド</string>
+  <string name="trial_button_text">今すぐアップグレード</string>
+  <plurals name="trial_days_left">
+    <item quantity="other">試用期間は残り %d 日です</item>
+  </plurals>
+  <string name="trial_learn_more">より詳しく</string>
+</resources>

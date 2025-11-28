@@ -46,7 +46,7 @@
   <string name="home_autofill_banner_title">ისიამოვნეთ ავტომატური შევსების ჯადოქრობით</string>
   <string name="home_autofill_banner_text">ერთი დატყაპუნება და-ეგაა!-თქვენი მომხმარებლის სახელი და პაროლი ავტომატურად შეივსება.</string>
   <string name="home_autofill_banner_settings">ავტომატური შევსების ჩართვა ›</string>
-    <string name="home_drawer_all_items">ყველა ელემენტი</string>
+  <string name="home_drawer_all_items">ყველა ელემენტი</string>
   <string name="sl_sync_banner_title">დაასინქრონეთ თქვენი ფსევდონიმები SimpleLogin-დან</string>
   <plurals name="sl_sync_banner_text">
     <item quantity="one">გაქვთ %d ფსევდონიმი, რომელიც არსებობს SimpleLogin-ში, მაგრამ არა Paroton Pass-ში. გნებავთ მისი სინქრონიზაცია?</item>

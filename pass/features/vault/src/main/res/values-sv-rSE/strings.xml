@@ -27,7 +27,7 @@
   <string name="bottomsheet_edit_vault_button">Spara</string>
   <string name="bottomsheet_cannot_create_more_vaults">Du har nått gränsen för valv du kan skapa. Skapa ett obegränsat antal valv när du uppgraderar din prenumeration.</string>
   <string name="bottomsheet_cannot_select_not_primary_vault">För att interagera med dina andra valv måste du uppgradera ditt konto.</string>
-    <string name="bottomsheet_edit">Redigera</string>
+  <string name="bottomsheet_edit">Redigera</string>
   <string name="bottomsheet_migrate">Flytta alla objekt till annat valv</string>
   <string name="bottomsheet_delete_vault">Ta bort valv</string>
   <string name="bottomsheet_share_vault">Dela</string>

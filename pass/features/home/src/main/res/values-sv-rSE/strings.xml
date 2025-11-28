@@ -46,7 +46,7 @@
   <string name="home_autofill_banner_title">Njut av magin med autofyll</string>
   <string name="home_autofill_banner_text">Ett tryck och—vips!—Ditt användarnamn och lösenord fylls i omedelbart.</string>
   <string name="home_autofill_banner_settings">Slå på autofyll ›</string>
-    <string name="home_drawer_all_items">Alla objekt</string>
+  <string name="home_drawer_all_items">Alla objekt</string>
   <string name="sl_sync_banner_title">Synkronisera dina alias från SimpleLogin</string>
   <plurals name="sl_sync_banner_text">
     <item quantity="one">Du har %d alias som finns i SimpleLogin men saknas i Proton Pass. Vill du synkronisera det?</item>

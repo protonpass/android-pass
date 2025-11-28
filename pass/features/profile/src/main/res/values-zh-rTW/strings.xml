@@ -29,7 +29,7 @@
   <string name="app_lock_ten_minutes">10分鐘後</string>
   <string name="app_lock_one_hour">1 小時之後</string>
   <string name="app_lock_four_hours">4小時之後</string>
-    <string name="app_lock_config_none">無</string>
+  <string name="app_lock_config_none">無</string>
   <string name="app_lock_config_biometric">生物特徵辨識</string>
   <string name="app_lock_config_pin_code">PIN 碼</string>
   <string name="app_lock_config_app_lock_time">自動鎖定</string>

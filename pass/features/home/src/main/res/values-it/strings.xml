@@ -46,7 +46,7 @@
   <string name="home_autofill_banner_title">Approfitta della magia della compilazione automatica</string>
   <string name="home_autofill_banner_text">Un tocco e voilà! Il tuo nome utente e la tua password vengono compilati all\'istante.</string>
   <string name="home_autofill_banner_settings">Attiva la compilazione automatica ›</string>
-    <string name="home_drawer_all_items">Tutti gli elementi</string>
+  <string name="home_drawer_all_items">Tutti gli elementi</string>
   <string name="sl_sync_banner_title">Sincronizza i tuoi alias da SimpleLogin</string>
   <plurals name="sl_sync_banner_text">
     <item quantity="one">Hai un alias %d presente in SimpleLogin ma mancante in Proton Pass. Desideri sincronizzarlo?</item>

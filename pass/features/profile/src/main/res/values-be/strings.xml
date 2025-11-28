@@ -29,7 +29,7 @@
   <string name="app_lock_ten_minutes">Праз 10 хвілін</string>
   <string name="app_lock_one_hour">Праз 1 гадзіну</string>
   <string name="app_lock_four_hours">Праз 4 гадзіны</string>
-    <string name="app_lock_config_none">Няма</string>
+  <string name="app_lock_config_none">Няма</string>
   <string name="app_lock_config_biometric">Біяметрыі</string>
   <string name="app_lock_config_pin_code">PIN-кода</string>
   <string name="app_lock_config_app_lock_time">Аўтаматычная блакіроўка</string>

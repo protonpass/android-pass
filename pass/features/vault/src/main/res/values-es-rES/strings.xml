@@ -27,7 +27,7 @@
   <string name="bottomsheet_edit_vault_button">Guardar</string>
   <string name="bottomsheet_cannot_create_more_vaults">Has alcanzado el límite de cajas fuertes que puedes crear. Crea cajas fuertes ilimitadas al actualizar tu suscripción.</string>
   <string name="bottomsheet_cannot_select_not_primary_vault">Para interactuar con tus otras cajas fuertes, necesitas actualizar tu cuenta.</string>
-    <string name="bottomsheet_edit">Editar</string>
+  <string name="bottomsheet_edit">Editar</string>
   <string name="bottomsheet_migrate">Mover todos los elementos a otra caja fuerte</string>
   <string name="bottomsheet_delete_vault">Eliminar la caja fuerte</string>
   <string name="bottomsheet_share_vault">Compartir</string>

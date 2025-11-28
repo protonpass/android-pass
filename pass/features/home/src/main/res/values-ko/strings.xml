@@ -46,7 +46,7 @@
   <string name="home_autofill_banner_title">자동 완성의 마법을 경험해 보세요</string>
   <string name="home_autofill_banner_text">하나의 탭으로 사용자 이름과 비밀번호가 바로 입력되기 때문에 손 아프게 계속 까딱일 필요 없죠.</string>
   <string name="home_autofill_banner_settings">자동 완성을 켜세요 ›</string>
-    <string name="home_drawer_all_items">모든 항목</string>
+  <string name="home_drawer_all_items">모든 항목</string>
   <string name="sl_sync_banner_title">SimpleLogin에서 별칭 동기화</string>
   <plurals name="sl_sync_banner_text">
     <item quantity="other">SimpleLogin에 %d개의 별칭이 존재하지만 Proton Pass에는 누락된 별칭이 있어요. 해당 별칭을 연동하시겠어요?</item>

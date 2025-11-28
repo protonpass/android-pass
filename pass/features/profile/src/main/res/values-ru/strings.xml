@@ -29,7 +29,7 @@
   <string name="app_lock_ten_minutes">Через 10 минуты</string>
   <string name="app_lock_one_hour">Через 1 час</string>
   <string name="app_lock_four_hours">Через 4 часа</string>
-    <string name="app_lock_config_none">Ничего</string>
+  <string name="app_lock_config_none">Ничего</string>
   <string name="app_lock_config_biometric">Биометрический</string>
   <string name="app_lock_config_pin_code">PIN-код</string>
   <string name="app_lock_config_app_lock_time">Автоблокировка</string>

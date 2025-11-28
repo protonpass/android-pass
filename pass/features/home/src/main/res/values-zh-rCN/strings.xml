@@ -46,7 +46,7 @@
   <string name="home_autofill_banner_title">享受自动填充的魔力</string>
   <string name="home_autofill_banner_text">只需轻点一下，您的用户名和密码就会立即填入。</string>
   <string name="home_autofill_banner_settings">打开自动填充 ›</string>
-    <string name="home_drawer_all_items">所有项目</string>
+  <string name="home_drawer_all_items">所有项目</string>
   <string name="sl_sync_banner_title">从 SimpleLogin 同步您的别名</string>
   <plurals name="sl_sync_banner_text">
     <item quantity="other">您有 %d 个别名，这些别名在 SimpleLogin 中存在，但在 Proton Pass 中却不见了。您想同步它们吗？</item>

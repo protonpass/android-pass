@@ -27,7 +27,7 @@
   <string name="bottomsheet_edit_vault_button">Зберегти</string>
   <string name="bottomsheet_cannot_create_more_vaults">Ви досягли обмеження кількості сховищ. Щоб створювати сховища без обмежень, передплатіть тарифний план.</string>
   <string name="bottomsheet_cannot_select_not_primary_vault">Щоб взаємодіяти з іншими сховищами, вам потрібно передплатити тарифний план.</string>
-    <string name="bottomsheet_edit">Редагувати</string>
+  <string name="bottomsheet_edit">Редагувати</string>
   <string name="bottomsheet_migrate">Перемістити всі елементи до іншого сховища</string>
   <string name="bottomsheet_delete_vault">Видалити сховище</string>
   <string name="bottomsheet_share_vault">Поділитися</string>

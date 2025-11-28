@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="trial_title">Uw welkomstgeschenk</string>
+  <string name="trial_subtitle">Veel plezier met de volgende stap in wachtwoord management</string>
+  <string name="trial_feature_1">20 kluizen</string>
+  <string name="trial_feature_3">Geïntegreerde 2FA-authenticator</string>
+  <string name="trial_feature_4">Aangepaste velden</string>
+  <string name="trial_button_text">Upgrade nu</string>
+  <plurals name="trial_days_left">
+    <item quantity="one">%d dag over om de premiumfuncties te proberen</item>
+    <item quantity="other">%d dagen over om de premiumfuncties te proberen</item>
+  </plurals>
+  <string name="trial_learn_more">Meer informatie</string>
+</resources>

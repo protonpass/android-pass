@@ -46,7 +46,7 @@
   <string name="home_autofill_banner_title">Aproveite a mágica do preenchimento automático</string>
   <string name="home_autofill_banner_text">Um toque e ⏤ pronto! ⏤ seu nome de usuário e senha são preenchidos instantaneamente.</string>
   <string name="home_autofill_banner_settings">Ativar o preenchimento automático ›</string>
-    <string name="home_drawer_all_items">Todos os itens</string>
+  <string name="home_drawer_all_items">Todos os itens</string>
   <string name="sl_sync_banner_title">Sincronize seus aliases do SimpleLogin</string>
   <plurals name="sl_sync_banner_text">
     <item quantity="one">Você tem %d alias que está presente no SimpleLogin, mas que está ausente no Proton Pass. Você gostaria de sincroniza-lo?</item>

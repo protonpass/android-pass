@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="trial_title">Ваш вітальний подарунок</string>
+  <string name="trial_subtitle">Насолоджуйтесь керуванням паролями нового рівня</string>
+  <string name="trial_feature_1">20 сховищ</string>
+  <string name="trial_feature_3">Інтегрований автентифікатор 2FA</string>
+  <string name="trial_feature_4">Власні поля</string>
+  <string name="trial_button_text">Покращити зараз</string>
+  <plurals name="trial_days_left">
+    <item quantity="one">У вас залишився %d день, щоб спробувати преміальні функції</item>
+    <item quantity="few">У вас залишилося %d дні, щоб спробувати преміальні функції</item>
+    <item quantity="many">У вас залишилося %d днів, щоб спробувати преміальні функції</item>
+    <item quantity="other">У вас залишилося %d днів, щоб спробувати преміальні функції</item>
+  </plurals>
+  <string name="trial_learn_more">Докладніше</string>
+</resources>

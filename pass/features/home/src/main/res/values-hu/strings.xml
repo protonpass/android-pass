@@ -46,7 +46,7 @@
   <string name="home_autofill_banner_title">Használja ki az automatikus kitöltés előnyeit</string>
   <string name="home_autofill_banner_text">Egy érintés és - máris! - a felhasználóneve és jelszava kitöltésre kerül.</string>
   <string name="home_autofill_banner_settings">Automatikus kitöltés bekapcsolása ›</string>
-    <string name="home_drawer_all_items">Minden elem</string>
+  <string name="home_drawer_all_items">Minden elem</string>
   <string name="sl_sync_banner_title">Szinkronizálja az e-mail álneveit a SimpleLoginból</string>
   <plurals name="sl_sync_banner_text">
     <item quantity="one">%d e-mail álneve van, amely megtalálható a SimpleLoginban, de hiányzik a Proton Passból. Szeretné szinkronizálni?</item>

@@ -27,7 +27,7 @@
   <string name="bottomsheet_edit_vault_button">Uložit</string>
   <string name="bottomsheet_cannot_create_more_vaults">Dosáhli jste limitu trezorů, které můžete vytvořit. Po navýšení předplatného můžete vytvářet neomezený počet trezorů.</string>
   <string name="bottomsheet_cannot_select_not_primary_vault">Chcete-li používat další trezory, musíte svůj účet navýšit.</string>
-    <string name="bottomsheet_edit">Upravit</string>
+  <string name="bottomsheet_edit">Upravit</string>
   <string name="bottomsheet_migrate">Přesunout všechny položky do jiného trezoru</string>
   <string name="bottomsheet_delete_vault">Smazat trezor</string>
   <string name="bottomsheet_share_vault">Sdílet</string>

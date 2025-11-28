@@ -29,7 +29,7 @@
   <string name="app_lock_ten_minutes">10분 후</string>
   <string name="app_lock_one_hour">1시간 후</string>
   <string name="app_lock_four_hours">4시간 후</string>
-    <string name="app_lock_config_none">없음</string>
+  <string name="app_lock_config_none">없음</string>
   <string name="app_lock_config_biometric">생체 인식</string>
   <string name="app_lock_config_pin_code">PIN 코드</string>
   <string name="app_lock_config_app_lock_time">자동 잠금</string>

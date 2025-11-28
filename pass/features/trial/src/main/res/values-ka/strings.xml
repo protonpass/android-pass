@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="trial_title">თქვენი მობრძანების საჩუქარი</string>
+  <string name="trial_subtitle">ისიამოვნეთ შემდეგი დონის პაროლების მართვით</string>
+  <string name="trial_feature_1">20 საცავი</string>
+  <string name="trial_feature_3">ჩაშენებული 2FA ავთენტიკატორი</string>
+  <string name="trial_feature_4">კონფიგურირებადი ველები</string>
+  <string name="trial_button_text">ტარიფის განახლება</string>
+  <plurals name="trial_days_left">
+    <item quantity="one">ფასიანი ფუნქციების საცდელად დაგრჩათ %d დღე</item>
+    <item quantity="other">ფასიანი ფუნქციების საცდელად დაგრჩათ %d დღე</item>
+  </plurals>
+  <string name="trial_learn_more">გაიგეთ მეტი</string>
+</resources>

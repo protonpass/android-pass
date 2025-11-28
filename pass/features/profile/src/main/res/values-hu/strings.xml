@@ -29,7 +29,7 @@
   <string name="app_lock_ten_minutes">10 perc után</string>
   <string name="app_lock_one_hour">1 óra után</string>
   <string name="app_lock_four_hours">5 óra után</string>
-    <string name="app_lock_config_none">Nincs</string>
+  <string name="app_lock_config_none">Nincs</string>
   <string name="app_lock_config_biometric">Biometrikus</string>
   <string name="app_lock_config_pin_code">PIN kód</string>
   <string name="app_lock_config_app_lock_time">Automatikus zárolás</string>

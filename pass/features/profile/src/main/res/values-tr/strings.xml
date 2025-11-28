@@ -29,7 +29,7 @@
   <string name="app_lock_ten_minutes">10 dakika sonra</string>
   <string name="app_lock_one_hour">1 saat sonra</string>
   <string name="app_lock_four_hours">4 saat sonra</string>
-    <string name="app_lock_config_none">Yok</string>
+  <string name="app_lock_config_none">Yok</string>
   <string name="app_lock_config_biometric">Biyometrik</string>
   <string name="app_lock_config_pin_code">PIN kodu</string>
   <string name="app_lock_config_app_lock_time">Otomatik kilitleme</string>

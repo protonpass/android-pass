@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="trial_title">Il tuo regalo di benvenuto</string>
+  <string name="trial_subtitle">Approfitta di una gestione delle password di livello superiore</string>
+  <string name="trial_feature_1">20 casseforti</string>
+  <string name="trial_feature_3">Autenticazione 2FA integrata</string>
+  <string name="trial_feature_4">Campi personalizzati</string>
+  <string name="trial_button_text">Effettua l\'upgrade ora</string>
+  <plurals name="trial_days_left">
+    <item quantity="one">Resta %d giorno per provare le funzionalità premium</item>
+    <item quantity="other">Restano %d giorni per provare le funzionalità premium</item>
+  </plurals>
+  <string name="trial_learn_more">Scopri di più</string>
+</resources>

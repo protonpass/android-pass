@@ -19,6 +19,7 @@
 package proton.android.pass.data.impl.usecases
 
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.flatMapLatest
@@ -27,7 +28,7 @@ import me.proton.core.account.domain.entity.AccountState
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.accountmanager.domain.getAccounts
 import me.proton.core.domain.entity.UserId
-import proton.android.pass.data.api.usecases.RefreshPlan
+import proton.android.pass.data.api.usecases.RefreshUserAccess
 import proton.android.pass.data.impl.R
 import proton.android.pass.data.impl.repositories.PlanRepository
 import proton.android.pass.domain.Plan
@@ -35,17 +36,17 @@ import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.ToastManager
 import javax.inject.Inject
 
-class RefreshPlanImpl @Inject constructor(
+class RefreshUserAccessImpl @Inject constructor(
     private val planRepository: PlanRepository,
     private val accountManager: AccountManager,
     private val toastManager: ToastManager
-) : RefreshPlan {
+) : RefreshUserAccess {
 
     override suspend fun invoke(userId: UserId) {
         PassLogger.i(TAG, "Refreshing plan for $userId")
         val oldPlan: Plan? = planRepository.observePlan(userId).firstOrNull()
         planRepository.refreshPlan(userId)
-        val newPlan: Plan = planRepository.observePlan(userId).first()
+        val newPlan: Plan = planRepository.observePlan(userId).filterNotNull().first()
         val isOldPlanPaid = oldPlan?.isPaidPlan ?: false
         if (isOldPlanPaid && newPlan.isFreePlan) {
             val list = getAllActivePlans()
@@ -57,6 +58,7 @@ class RefreshPlanImpl @Inject constructor(
         .flatMapLatest { list ->
             val planFlows = list.map { account ->
                 planRepository.observePlan(account.userId)
+                    .filterNotNull()
                     .map { plan -> account.userId to plan }
             }
             combine<Pair<UserId, Plan>, List<Pair<UserId, Plan>>>(

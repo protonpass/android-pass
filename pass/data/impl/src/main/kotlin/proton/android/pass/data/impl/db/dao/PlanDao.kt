@@ -33,5 +33,5 @@ abstract class PlanDao : BaseDao<PlanEntity>() {
         LIMIT 1
         """
     )
-    abstract fun observeUserPlan(userId: String): Flow<PlanEntity>
+    abstract fun observeUserPlan(userId: String): Flow<PlanEntity?>
 }

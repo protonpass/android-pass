@@ -1,0 +1,5 @@
+## 1.36.1 (2025-12-01)
+
+### Fixes :bug:
+
+- Meta Horizon release

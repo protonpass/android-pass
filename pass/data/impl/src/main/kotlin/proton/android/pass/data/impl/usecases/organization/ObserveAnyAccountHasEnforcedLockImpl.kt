@@ -23,11 +23,13 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
-import me.proton.core.account.domain.entity.Account
 import me.proton.core.account.domain.entity.AccountState
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.accountmanager.domain.getAccounts
+import me.proton.core.user.domain.UserManager
+import me.proton.core.user.domain.extension.isOrganizationUser
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.toOption
@@ -38,22 +40,34 @@ import javax.inject.Inject
 
 class ObserveAnyAccountHasEnforcedLockImpl @Inject constructor(
     private val accountManager: AccountManager,
+    private val userManager: UserManager,
     private val repository: OrganizationSettingsRepository
 ) : ObserveAnyAccountHasEnforcedLock {
 
     override fun invoke(): Flow<Option<OrganizationSettings>> = accountManager.getAccounts(AccountState.Ready)
-        .flatMapLatest { list: List<Account> ->
-            val flows = list.map { user ->
-                repository.observe(user.userId)
-                    .onEach { if (it == null) runCatching { repository.refresh(user.userId) } }
-            }
-            if (flows.isEmpty()) {
-                flowOf(None)
-            } else {
-                combine(flows) { isEnforcedList ->
-                    isEnforcedList.firstOrNull { it?.isEnforced() ?: false }.toOption()
+        .map { accounts -> accounts.map { it.userId } }
+        .flatMapLatest { userIds ->
+            if (userIds.isEmpty()) return@flatMapLatest flowOf(None)
+
+            combine(userIds.map { id -> userManager.observeUser(id) }) { it.toList() }
+                .flatMapLatest { users ->
+                    val orgUsers = users.filterNotNull().filter { it.isOrganizationUser() }
+                    if (orgUsers.isEmpty()) return@flatMapLatest flowOf(None)
+                    combine(
+                        orgUsers.map { user ->
+                            repository.observe(user.userId)
+                                .onEach {
+                                    if (it == null) {
+                                        runCatching { repository.refresh(user.userId) }
+                                    }
+                                }
+                        }
+                    ) { settingsList ->
+                        settingsList
+                            .firstOrNull { it?.isEnforced() == true }
+                            .toOption()
+                    }
                 }
-            }
         }
         .filterNotNull()
 

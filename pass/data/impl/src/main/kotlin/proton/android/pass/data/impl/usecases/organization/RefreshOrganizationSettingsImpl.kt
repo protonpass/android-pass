@@ -19,29 +19,20 @@
 package proton.android.pass.data.impl.usecases.organization
 
 import me.proton.core.domain.entity.UserId
+import me.proton.core.user.domain.UserManager
+import me.proton.core.user.domain.extension.isOrganizationUser
 import proton.android.pass.data.api.repositories.OrganizationSettingsRepository
 import proton.android.pass.data.api.usecases.organization.RefreshOrganizationSettings
-import proton.android.pass.log.api.PassLogger
 import javax.inject.Inject
 
 class RefreshOrganizationSettingsImpl @Inject constructor(
-    private val organizationSettingsRepository: OrganizationSettingsRepository
+    private val organizationSettingsRepository: OrganizationSettingsRepository,
+    private val userManager: UserManager
 ) : RefreshOrganizationSettings {
 
     override suspend fun invoke(userId: UserId) {
-        runCatching {
-            organizationSettingsRepository.refresh(userId)
-        }.onSuccess {
-            PassLogger.i(TAG, "Organization settings refreshed")
-        }.onFailure {
-            PassLogger.w(TAG, "Could not refresh organization settings")
-            PassLogger.w(TAG, it)
-        }
-
+        val user = userManager.getUser(userId)
+        if (!user.isOrganizationUser()) return
+        organizationSettingsRepository.refresh(userId)
     }
-
-    companion object {
-        private const val TAG = "RefreshOrganizationSettingsImpl"
-    }
-
 }

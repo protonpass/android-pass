@@ -34,10 +34,10 @@ class GetUserPlanImpl @Inject constructor(
 ) : GetUserPlan {
 
     override fun invoke(userId: UserId?): Flow<Plan> = if (userId != null) {
-        planRepository.observePlan(userId)
+        planRepository.observePlan(userId).filterNotNull()
     } else {
         accountManager.getPrimaryUserId()
             .filterNotNull()
-            .flatMapLatest { planRepository.observePlan(it) }
+            .flatMapLatest { planRepository.observePlan(it).filterNotNull() }
     }
 }

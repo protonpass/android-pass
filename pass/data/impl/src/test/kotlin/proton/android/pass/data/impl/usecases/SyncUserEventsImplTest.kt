@@ -29,7 +29,7 @@ import proton.android.pass.data.fakes.usecases.FakePromoteNewInviteToInvite
 import proton.android.pass.data.fakes.usecases.FakeRefreshGroupInvites
 import proton.android.pass.data.fakes.usecases.FakeRefreshSharesAndEnqueueSync
 import proton.android.pass.data.fakes.usecases.FakeRefreshUserInvites
-import proton.android.pass.data.fakes.usecases.TestRefreshPlan
+import proton.android.pass.data.fakes.usecases.TestRefreshUserAccess
 import proton.android.pass.data.fakes.usecases.simplelogin.FakeSyncSimpleLoginPendingAliases
 import proton.android.pass.data.fakes.work.FakeWorkManagerFacade
 import proton.android.pass.data.impl.fakes.FakeUserEventRepository
@@ -52,7 +52,7 @@ internal class SyncUserEventsImplTest {
     private lateinit var itemRepository: TestItemRepository
     private lateinit var refreshSharesAndEnqueueSync: FakeRefreshSharesAndEnqueueSync
     private lateinit var workManagerFacade: FakeWorkManagerFacade
-    private lateinit var refreshPlan: TestRefreshPlan
+    private lateinit var refreshPlan: TestRefreshUserAccess
     private lateinit var refreshUserInvites: FakeRefreshUserInvites
     private lateinit var refreshGroupInvites: FakeRefreshGroupInvites
     private lateinit var syncPendingAliases: FakeSyncSimpleLoginPendingAliases
@@ -65,7 +65,7 @@ internal class SyncUserEventsImplTest {
         itemRepository = TestItemRepository()
         refreshSharesAndEnqueueSync = FakeRefreshSharesAndEnqueueSync()
         workManagerFacade = FakeWorkManagerFacade()
-        refreshPlan = TestRefreshPlan()
+        refreshPlan = TestRefreshUserAccess()
         refreshUserInvites = FakeRefreshUserInvites()
         refreshGroupInvites = FakeRefreshGroupInvites()
         syncPendingAliases = FakeSyncSimpleLoginPendingAliases()
@@ -77,7 +77,7 @@ internal class SyncUserEventsImplTest {
             itemRepository = itemRepository,
             refreshSharesAndEnqueueSync = refreshSharesAndEnqueueSync,
             workManagerFacade = workManagerFacade,
-            refreshPlan = refreshPlan,
+            refreshUserAccess = refreshPlan,
             refreshUserInvites = refreshUserInvites,
             refreshGroupInvites = refreshGroupInvites,
             syncPendingAliases = syncPendingAliases,

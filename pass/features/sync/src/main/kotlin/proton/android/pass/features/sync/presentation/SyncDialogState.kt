@@ -45,9 +45,6 @@ internal data class SyncDialogState(
 
     internal val hasSyncFinished: Boolean = hasSyncFailed || hasSyncSucceeded
 
-    internal val insertingProgress: Option<Float> =
-        insertedItems.map { it.current.toFloat() / it.total }
-
     internal val isInserting: Boolean =
         insertedItems.map { it.current > 0 && it.current != it.total }.value() ?: false
 

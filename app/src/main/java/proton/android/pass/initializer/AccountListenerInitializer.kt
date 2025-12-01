@@ -120,7 +120,15 @@ class AccountListenerInitializer : Initializer<Unit> {
         refreshPlan: RefreshPlan
     ) {
         PassLogger.i(TAG, "Account ready : ${account.userId}")
-        refreshOrganizationSettings(account.userId)
+        runCatching {
+            refreshOrganizationSettings(account.userId)
+        }.onSuccess {
+            PassLogger.i(TAG, "Organization settings refreshed for ${account.userId}")
+        }.onFailure {
+            PassLogger.w(TAG, "Could not refresh organization settings for ${account.userId}")
+            PassLogger.w(TAG, it)
+        }
+
         runCatching {
             refreshPlan(account.userId)
         }.onSuccess {

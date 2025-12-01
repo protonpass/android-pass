@@ -19,7 +19,7 @@
 package proton.android.pass.data.impl.repositories
 
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.mapNotNull
+import kotlinx.coroutines.flow.map
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.api.repositories.UserAccessDataRepository
 import proton.android.pass.data.impl.db.entities.PlanEntity
@@ -34,8 +34,8 @@ class PlanRepositoryImpl @Inject constructor(
     private val userAccessDataRepository: UserAccessDataRepository
 ) : PlanRepository {
 
-    override fun observePlan(userId: UserId): Flow<Plan> = localPlanDataSource.observePlan(userId)
-        .mapNotNull { planEntity -> planEntity?.toPlan() }
+    override fun observePlan(userId: UserId): Flow<Plan?> = localPlanDataSource.observePlan(userId)
+        .map { planEntity -> planEntity?.toPlan() }
 
     override suspend fun refreshPlan(userId: UserId) {
         userAccessDataRepository.refresh(userId)

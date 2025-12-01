@@ -21,6 +21,7 @@ package proton.android.pass.data.impl.usecases
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
@@ -58,7 +59,7 @@ class ObserveUpgradeInfoImpl @Inject constructor(
                 }
 
                 combine(
-                    planRepository.observePlan(userId = id),
+                    planRepository.observePlan(userId = id).filterNotNull(),
                     observeMFACount(includeHiddenVault = true),
                     observeItemCount(
                         itemState = null,

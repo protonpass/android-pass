@@ -6,6 +6,12 @@
 
 ### Other
 
+## 1.36.1 (2025-12-01)
+
+### Fixes :bug:
+
+- Meta Horizon release
+
 ## 1.36.0 (2025-11-25)
 
 ### Features :tada:

@@ -82,7 +82,7 @@ import proton.android.pass.biometry.ResetAuthPreferences
 import proton.android.pass.commonrust.api.CommonLibraryVersionChecker
 import proton.android.pass.data.api.usecases.GetUserPlan
 import proton.android.pass.data.api.usecases.InitialWorkerLauncher
-import proton.android.pass.data.api.usecases.RefreshPlan
+import proton.android.pass.data.api.usecases.RefreshUserAccess
 import proton.android.pass.data.api.usecases.passwordHistoryEntry.DeletePasswordHistoryEntryForUser
 import proton.android.pass.domain.Plan
 import proton.android.pass.inappupdates.api.InAppUpdatesManager
@@ -103,7 +103,7 @@ class LauncherViewModel @Inject constructor(
     private val userSettingsOrchestrator: UserSettingsOrchestrator,
     private val initialWorkerLauncher: InitialWorkerLauncher,
     private val getUserPlan: GetUserPlan,
-    private val refreshPlan: RefreshPlan,
+    private val refreshUserAccess: RefreshUserAccess,
     private val inAppUpdatesManager: InAppUpdatesManager,
     private val resetUserPreferences: ResetAuthPreferences,
     private val snackbarDispatcher: SnackbarDispatcher,
@@ -264,7 +264,7 @@ class LauncherViewModel @Inject constructor(
                                 val previousPlan: Plan? = getUserPlan(userId).firstOrNull()
                                 repeat(maxAttempts) { attempt ->
                                     delay(baseDelay * (attempt + 1))
-                                    runCatching { refreshPlan(userId) }
+                                    runCatching { refreshUserAccess(userId) }
                                         .onSuccess { PassLogger.i(TAG, "Plan refreshed") }
                                         .onFailure {
                                             PassLogger.w(TAG, "Error refreshing plan")

@@ -116,7 +116,7 @@ internal class PlanRepositoryImplTest {
         )
 
         val plan = instance.observePlan(USER_ID).first()
-        assertThat(plan.planType).isInstanceOf(PlanType.Paid::class.java)
+        assertThat(plan?.planType).isInstanceOf(PlanType.Paid::class.java)
 
         val userAccessData = userAccessDataRepository.observe(USER_ID).first()
         assertThat(userAccessData).isNotNull()
@@ -135,7 +135,7 @@ internal class PlanRepositoryImplTest {
 
         val plan = instance.observePlan(USER_ID).first()
 
-        assertThat(plan.planType).isEqualTo(expectedPlan)
+        assertThat(plan?.planType).isEqualTo(expectedPlan)
     }
 
     private fun planEntity(type: String = PlanType.PLAN_NAME_FREE, trialEnd: Instant?) = PlanEntity(

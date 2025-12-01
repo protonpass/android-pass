@@ -46,7 +46,7 @@ import proton.android.pass.commonui.api.PassAppLifecycleProvider
 import proton.android.pass.data.api.repositories.ItemSyncStatusRepository
 import proton.android.pass.data.api.repositories.toSyncMode
 import proton.android.pass.data.api.usecases.ClearUserData
-import proton.android.pass.data.api.usecases.RefreshPlan
+import proton.android.pass.data.api.usecases.RefreshUserAccess
 import proton.android.pass.data.api.usecases.ResetAppToDefaults
 import proton.android.pass.data.api.usecases.organization.RefreshOrganizationSettings
 import proton.android.pass.log.api.PassLogger
@@ -121,7 +121,7 @@ class AccountListenerInitializer : Initializer<Unit> {
         account: Account,
         featureFlagsPreferencesRepository: FeatureFlagsPreferencesRepository,
         refreshOrganizationSettings: RefreshOrganizationSettings,
-        refreshPlan: RefreshPlan
+        refreshUserAccess: RefreshUserAccess
     ) {
         val isUserEventsEnabled = featureFlagsPreferencesRepository.get<Boolean>(FeatureFlag.PASS_USER_EVENTS_V1)
             .first()
@@ -138,7 +138,7 @@ class AccountListenerInitializer : Initializer<Unit> {
             }
 
             runCatching {
-                refreshPlan(account.userId)
+                refreshUserAccess(account.userId)
             }.onSuccess {
                 PassLogger.i(TAG, "Plan refreshed for ${account.userId}")
             }.onFailure {
@@ -173,7 +173,7 @@ class AccountListenerInitializer : Initializer<Unit> {
     interface AccountListenerInitializerEntryPoint {
         fun itemSyncStatusRepository(): ItemSyncStatusRepository
         fun refreshOrganizationSettings(): RefreshOrganizationSettings
-        fun refreshPlan(): RefreshPlan
+        fun refreshPlan(): RefreshUserAccess
         fun passAppLifecycleProvider(): PassAppLifecycleProvider
         fun accountManager(): AccountManager
         fun resetAppToDefaults(): ResetAppToDefaults

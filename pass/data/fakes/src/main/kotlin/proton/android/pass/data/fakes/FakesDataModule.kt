@@ -109,7 +109,7 @@ import proton.android.pass.data.api.usecases.RefreshContent
 import proton.android.pass.data.api.usecases.RefreshGroupInvites
 import proton.android.pass.data.api.usecases.RefreshSharesAndEnqueueSync
 import proton.android.pass.data.api.usecases.RefreshUserInvites
-import proton.android.pass.data.api.usecases.RefreshPlan
+import proton.android.pass.data.api.usecases.RefreshUserAccess
 import proton.android.pass.data.api.usecases.RejectInvite
 import proton.android.pass.data.api.usecases.RemoveShareMember
 import proton.android.pass.data.api.usecases.ResendShareInvite
@@ -339,7 +339,7 @@ import proton.android.pass.data.fakes.usecases.TestPerformSync
 import proton.android.pass.data.fakes.usecases.TestPinItems
 import proton.android.pass.data.fakes.usecases.TestRefreshContent
 import proton.android.pass.data.fakes.usecases.FakeRefreshUserInvites
-import proton.android.pass.data.fakes.usecases.TestRefreshPlan
+import proton.android.pass.data.fakes.usecases.TestRefreshUserAccess
 import proton.android.pass.data.fakes.usecases.TestRejectInvite
 import proton.android.pass.data.fakes.usecases.TestRemoveShareMember
 import proton.android.pass.data.fakes.usecases.TestResendShareInvite
@@ -599,7 +599,7 @@ abstract class FakesDataModule {
     abstract fun bindCanPerformPaidAction(impl: TestCanPerformPaidAction): CanPerformPaidAction
 
     @Binds
-    abstract fun bindRefreshPlan(impl: TestRefreshPlan): RefreshPlan
+    abstract fun bindRefreshPlan(impl: TestRefreshUserAccess): RefreshUserAccess
 
     @Binds
     abstract fun bindObserveAliasDetails(impl: TestObserveAliasDetails): ObserveAliasDetails

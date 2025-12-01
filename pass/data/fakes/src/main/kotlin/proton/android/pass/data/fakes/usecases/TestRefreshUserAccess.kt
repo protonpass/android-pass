@@ -19,10 +19,10 @@
 package proton.android.pass.data.fakes.usecases
 
 import me.proton.core.domain.entity.UserId
-import proton.android.pass.data.api.usecases.RefreshPlan
+import proton.android.pass.data.api.usecases.RefreshUserAccess
 import javax.inject.Inject
 
-class TestRefreshPlan @Inject constructor() : RefreshPlan {
+class TestRefreshUserAccess @Inject constructor() : RefreshUserAccess {
 
     override suspend fun invoke(userId: UserId) {
     }

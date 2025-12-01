@@ -18,13 +18,16 @@
 
 package proton.android.pass.data.impl.usecases
 
+import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.first
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.api.repositories.ItemRepository
 import proton.android.pass.data.api.repositories.ShareRepository
 import proton.android.pass.data.api.usecases.PromoteNewInviteToInvite
 import proton.android.pass.data.api.usecases.RefreshGroupInvites
-import proton.android.pass.data.api.usecases.RefreshPlan
+import proton.android.pass.data.api.usecases.RefreshUserAccess
 import proton.android.pass.data.api.usecases.RefreshSharesAndEnqueueSync
 import proton.android.pass.data.api.usecases.RefreshSharesResult
 import proton.android.pass.data.api.usecases.RefreshUserInvites
@@ -47,7 +50,7 @@ class SyncUserEventsImpl @Inject constructor(
     private val itemRepository: ItemRepository,
     private val refreshSharesAndEnqueueSync: RefreshSharesAndEnqueueSync,
     private val workManagerFacade: WorkManagerFacade,
-    private val refreshPlan: RefreshPlan,
+    private val refreshUserAccess: RefreshUserAccess,
     private val refreshUserInvites: RefreshUserInvites,
     private val refreshGroupInvites: RefreshGroupInvites,
     private val syncPendingAliases: SyncSimpleLoginPendingAliases,
@@ -97,7 +100,7 @@ class SyncUserEventsImpl @Inject constructor(
         PassLogger.i(TAG, "Processing events for $userId")
 
         if (eventList.refreshUser) {
-            refreshPlan(userId)
+            refreshUserAccess(userId)
         }
 
         processSharesCreated(userId, eventList.sharesCreated)
@@ -165,19 +168,47 @@ class SyncUserEventsImpl @Inject constructor(
         }
     }
 
-    private suspend fun fullRefresh(userId: UserId) {
-        val result = refreshSharesAndEnqueueSync(
+    private suspend fun fullRefresh(userId: UserId) = coroutineScope {
+        PassLogger.i(TAG, "start full refresh")
+
+        refreshUserAccess(userId)
+
+        val refreshShares = refreshSharesAndEnqueueSync(
             userId = userId,
             syncType = RefreshSharesAndEnqueueSync.SyncType.FULL
         )
-        when (result) {
-            is RefreshSharesResult.SharesFound -> if (result.isWorkerEnqueued) {
-                waitForFetchItemsWorker(userId)
-            }
 
-            RefreshSharesResult.NoSharesSkipped,
-            RefreshSharesResult.NoSharesVaultCreated -> Unit
+        if (refreshShares is RefreshSharesResult.SharesFound && refreshShares.isWorkerEnqueued) {
+            PassLogger.i(TAG, "waiting worker")
+            waitForFetchItemsWorker(userId)
+            PassLogger.i(TAG, "worker finished")
         }
+
+        val userInvitesDeferred = async {
+            val result = refreshUserInvites(userId)
+            PassLogger.i(TAG, "finished refreshUserInvites")
+            result
+        }
+
+        val groupInvitesDeferred = async {
+            val result = refreshGroupInvites(userId)
+            PassLogger.i(TAG, "finished refreshGroupInvites")
+            result
+        }
+
+        val syncPendingAliasesDeferred = async {
+            val result = syncPendingAliases(userId, false)
+            PassLogger.i(TAG, "finished syncPendingAliases")
+            result
+        }
+
+        awaitAll(
+            userInvitesDeferred,
+            groupInvitesDeferred,
+            syncPendingAliasesDeferred
+        )
+
+        PassLogger.i(TAG, "end full refresh")
     }
 
     private suspend fun waitForFetchItemsWorker(userId: UserId) {

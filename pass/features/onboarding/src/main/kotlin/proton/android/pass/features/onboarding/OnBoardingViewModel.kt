@@ -27,7 +27,6 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.update
@@ -97,16 +96,16 @@ class OnBoardingViewModel @Inject constructor(
         }
     }
 
-    private suspend fun shouldShowInvitePendingAcceptance(): Boolean {
-        val userAccessData = runCatching {
-            observeUserAccessData().filterNotNull().first()
-        }.getOrElse {
+    private suspend fun shouldShowInvitePendingAcceptance(): Boolean = runCatching {
+        observeUserAccessData().first()
+    }.fold(
+        onSuccess = { it?.let { it.waitingNewUserInvites > 0 } ?: false },
+        onFailure = {
             PassLogger.w(TAG, "Error getting user access data")
             PassLogger.w(TAG, it)
-            return false
+            false
         }
-        return userAccessData.waitingNewUserInvites > 0
-    }
+    )
 
     private fun shouldShowAutofill(autofillStatus: AutofillSupportedStatus?): Boolean = when (autofillStatus) {
         is AutofillSupportedStatus.Supported -> autofillStatus.status != AutofillStatus.EnabledByOurService

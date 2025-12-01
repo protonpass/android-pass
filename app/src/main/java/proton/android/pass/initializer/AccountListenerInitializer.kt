@@ -50,6 +50,8 @@ import proton.android.pass.data.api.usecases.RefreshPlan
 import proton.android.pass.data.api.usecases.ResetAppToDefaults
 import proton.android.pass.data.api.usecases.organization.RefreshOrganizationSettings
 import proton.android.pass.log.api.PassLogger
+import proton.android.pass.preferences.FeatureFlag
+import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 
 class AccountListenerInitializer : Initializer<Unit> {
     override fun create(context: Context) {
@@ -64,6 +66,7 @@ class AccountListenerInitializer : Initializer<Unit> {
         val itemSyncStatusRepository = entryPoint.itemSyncStatusRepository()
         val refreshOrganizationSettings = entryPoint.refreshOrganizationSettings()
         val refreshPlan = entryPoint.refreshPlan()
+        val featureFlagsPreferencesRepository = entryPoint.featureFlagsPreferencesRepository()
 
         accountManager.observe(
             lifecycle = lifecycleProvider.lifecycle,
@@ -80,7 +83,7 @@ class AccountListenerInitializer : Initializer<Unit> {
             }
         }.onAccountReady { account ->
             launchInAppLifecycleScope(lifecycleProvider) {
-                onAccountReady(account, refreshOrganizationSettings, refreshPlan)
+                onAccountReady(account, featureFlagsPreferencesRepository, refreshOrganizationSettings, refreshPlan)
             }
         }
 
@@ -116,26 +119,32 @@ class AccountListenerInitializer : Initializer<Unit> {
 
     private suspend fun onAccountReady(
         account: Account,
+        featureFlagsPreferencesRepository: FeatureFlagsPreferencesRepository,
         refreshOrganizationSettings: RefreshOrganizationSettings,
         refreshPlan: RefreshPlan
     ) {
+        val isUserEventsEnabled = featureFlagsPreferencesRepository.get<Boolean>(FeatureFlag.PASS_USER_EVENTS_V1)
+            .first()
         PassLogger.i(TAG, "Account ready : ${account.userId}")
-        runCatching {
-            refreshOrganizationSettings(account.userId)
-        }.onSuccess {
-            PassLogger.i(TAG, "Organization settings refreshed for ${account.userId}")
-        }.onFailure {
-            PassLogger.w(TAG, "Could not refresh organization settings for ${account.userId}")
-            PassLogger.w(TAG, it)
-        }
 
-        runCatching {
-            refreshPlan(account.userId)
-        }.onSuccess {
-            PassLogger.i(TAG, "Plan refreshed for ${account.userId}")
-        }.onFailure {
-            PassLogger.w(TAG, "Refresh plan errored for ${account.userId}")
-            PassLogger.w(TAG, it)
+        if (!isUserEventsEnabled) {
+            runCatching {
+                refreshOrganizationSettings(account.userId)
+            }.onSuccess {
+                PassLogger.i(TAG, "Organization settings refreshed for ${account.userId}")
+            }.onFailure {
+                PassLogger.w(TAG, "Could not refresh organization settings for ${account.userId}")
+                PassLogger.w(TAG, it)
+            }
+
+            runCatching {
+                refreshPlan(account.userId)
+            }.onSuccess {
+                PassLogger.i(TAG, "Plan refreshed for ${account.userId}")
+            }.onFailure {
+                PassLogger.w(TAG, "Refresh plan errored for ${account.userId}")
+                PassLogger.w(TAG, it)
+            }
         }
     }
 
@@ -169,6 +178,7 @@ class AccountListenerInitializer : Initializer<Unit> {
         fun accountManager(): AccountManager
         fun resetAppToDefaults(): ResetAppToDefaults
         fun clearUserData(): ClearUserData
+        fun featureFlagsPreferencesRepository(): FeatureFlagsPreferencesRepository
     }
 
     companion object {

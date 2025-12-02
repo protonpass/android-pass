@@ -50,6 +50,8 @@ import proton.android.pass.domain.Plan
 import proton.android.pass.domain.Share
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.ShareSelection
+import proton.android.pass.preferences.FeatureFlag
+import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import proton.android.pass.preferences.InternalSettingsRepository
 import proton.android.pass.preferences.UserPreferencesRepository
 import proton.android.pass.preferences.value
@@ -64,7 +66,8 @@ class GetSuggestedAutofillItemsImpl @Inject constructor(
     private val getUserPlan: GetUserPlan,
     private val internalSettingsRepository: InternalSettingsRepository,
     private val assetLinkRepository: AssetLinkRepository,
-    private val userPreferencesRepository: UserPreferencesRepository
+    private val userPreferencesRepository: UserPreferencesRepository,
+    private val featureFlagsPreferencesRepository: FeatureFlagsPreferencesRepository
 ) : GetSuggestedAutofillItems {
 
     override fun invoke(
@@ -132,6 +135,11 @@ class GetSuggestedAutofillItemsImpl @Inject constructor(
     private suspend fun processCreditCardFlows(
         array: Array<Triple<List<Share>, List<ItemData.SuggestedItem>, Plan>>
     ): SuggestedAutofillItemsResult {
+        val allowCreditCreditFreeUsers =
+            featureFlagsPreferencesRepository.get<Boolean>(FeatureFlag.PASS_ALLOW_CREDIT_CARD_FREE_USERS)
+                .firstOrNull()
+                ?: false
+
         val filteredItems =
             ItemFilterProcessor.removeDuplicates(array.map { it.first to it.second }.toTypedArray())
         val sortedItems = sortSuggestions(filteredItems)
@@ -140,7 +148,8 @@ class GetSuggestedAutofillItemsImpl @Inject constructor(
             plans.all { it.isFreePlan } && sortedItems.isEmpty() ->
                 SuggestedAutofillItemsResult.Items(emptyList())
 
-            plans.all { it.isFreePlan } -> SuggestedAutofillItemsResult.ShowUpgrade
+            !allowCreditCreditFreeUsers && plans.all { it.isFreePlan } -> SuggestedAutofillItemsResult.ShowUpgrade
+            allowCreditCreditFreeUsers -> SuggestedAutofillItemsResult.Items(sortedItems)
             plans.any { it.hasPlanWithAccess } -> {
                 if (plans.any { it.isFreePlan }) {
                     val freePlanIndex = array.indexOfFirst { it.third.isFreePlan }

@@ -25,10 +25,13 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.update
 import proton.android.pass.preferences.FeatureFlag.AUTOFILL_DEBUG_MODE
 import proton.android.pass.preferences.FeatureFlag.EXTRA_LOGGING
-import proton.android.pass.preferences.FeatureFlag.PASS_HIDE_SHOW_VAULT
-import proton.android.pass.preferences.FeatureFlag.RENAME_ADMIN_TO_MANAGER
 import proton.android.pass.preferences.FeatureFlag.PASS_ALLOW_NO_VAULT
+import proton.android.pass.preferences.FeatureFlag.PASS_GROUP_SHARE
+import proton.android.pass.preferences.FeatureFlag.PASS_HIDE_SHOW_VAULT
+import proton.android.pass.preferences.FeatureFlag.PASS_MOBILE_ON_BOARDING_V2
 import proton.android.pass.preferences.FeatureFlag.PASS_USER_EVENTS_V1
+import proton.android.pass.preferences.FeatureFlag.RENAME_ADMIN_TO_MANAGER
+import proton.android.pass.preferences.FeatureFlag.PASS_ALLOW_CREDIT_CARD_FREE_USERS
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -48,6 +51,9 @@ class TestFeatureFlagsPreferenceRepository @Inject constructor() :
             PASS_HIDE_SHOW_VAULT -> it.getOrDefault(PASS_HIDE_SHOW_VAULT, false) as T
             PASS_ALLOW_NO_VAULT -> it.getOrDefault(PASS_ALLOW_NO_VAULT, false) as T
             PASS_USER_EVENTS_V1 -> it.getOrDefault(PASS_USER_EVENTS_V1, false) as T
+            PASS_GROUP_SHARE -> it.getOrDefault(PASS_GROUP_SHARE, false) as T
+            PASS_MOBILE_ON_BOARDING_V2 -> it.getOrDefault(PASS_MOBILE_ON_BOARDING_V2, false) as T
+            PASS_ALLOW_CREDIT_CARD_FREE_USERS -> it.getOrDefault(PASS_ALLOW_CREDIT_CARD_FREE_USERS, false) as T
         }
     }
 

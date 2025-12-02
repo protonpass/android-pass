@@ -59,5 +59,24 @@ enum class FeatureFlag(
         description = "Enable user events",
         key = "PassUserEventsV1",
         isEnabledDefault = false
+    ),
+    PASS_GROUP_SHARE(
+        title = "Enable group sharing",
+        description = "Enable group sharing",
+        key = "PassGroupInvitesV1",
+        isEnabledDefault = false
+    ),
+    PASS_MOBILE_ON_BOARDING_V2(
+        title = "Enable new OnBoarding",
+        description = "Enable new OnBoarding",
+        key = "PassMobileOnboardingV2",
+        isEnabledDefault = false
+    ),
+
+    PASS_ALLOW_CREDIT_CARD_FREE_USERS(
+        title = "allow credit card for free users",
+        description = "allow credit card for free users",
+        key = "PassAllowCreditCardFreeUsers",
+        isEnabledDefault = false
     )
 }

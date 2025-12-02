@@ -18,8 +18,11 @@
 
 package proton.android.pass.composecomponents.impl.bottombar
 
+import androidx.compose.animation.core.animateDpAsState
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.asPaddingValues
+import androidx.compose.foundation.layout.ime
 import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.BottomNavigation
@@ -29,7 +32,9 @@ import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -72,9 +77,20 @@ fun HomeBottomBarContent(
     onEvent: (HomeBottomBarEvent) -> Unit,
     state: HomeBottomBarState
 ) = with(state) {
-    val bottomPadding = WindowInsets.navigationBars
+    val density = LocalDensity.current
+    val imeBottom = WindowInsets.ime.getBottom(density)
+    val isKeyboardAffectingBottom = imeBottom > 0
+
+    val navigationBarsPadding = WindowInsets.navigationBars
         .asPaddingValues()
         .calculateBottomPadding()
+
+    val bottomPadding by animateDpAsState(
+        targetValue = if (isKeyboardAffectingBottom) 0.dp else navigationBarsPadding,
+        animationSpec = tween(durationMillis = 300),
+        label = "BottomBarPadding"
+    )
+
     BottomNavigation(
         modifier = modifier,
         backgroundColor = PassTheme.colors.bottomBarBackground

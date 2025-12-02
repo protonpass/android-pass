@@ -112,6 +112,8 @@ import proton.android.pass.features.selectitem.ui.SelectItemSnackbarMessage
 import proton.android.pass.features.selectitem.ui.SelectItemUiState
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.SnackbarDispatcher
+import proton.android.pass.preferences.FeatureFlag
+import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import proton.android.pass.preferences.UserPreferencesRepository
 import proton.android.pass.preferences.value
 import proton.android.pass.searchoptions.api.AutofillSearchOptionsRepository
@@ -135,7 +137,8 @@ class SelectItemViewModel @Inject constructor(
     observeAutofillShares: ObserveAutofillShares,
     observeUpgradeInfo: ObserveUpgradeInfo,
     getUserPlan: GetUserPlan,
-    clock: Clock
+    clock: Clock,
+    private val featureFlagsPreferencesRepository: FeatureFlagsPreferencesRepository
 ) : ViewModel() {
 
     private val selectItemStateFlow: MutableStateFlow<Option<SelectItemState>> =
@@ -208,8 +211,9 @@ class SelectItemViewModel @Inject constructor(
         selectItemStateFlow,
         usersAutofillSharesMapFlow,
         selectedAccountFlow,
-        usersAndPlansFlow
-    ) { selectItemState, usersAutofillShares, selectedAccount, usersAndPlans ->
+        usersAndPlansFlow,
+        featureFlagsPreferencesRepository.get<Boolean>(FeatureFlag.PASS_ALLOW_CREDIT_CARD_FREE_USERS)
+    ) { selectItemState, usersAutofillShares, selectedAccount, usersAndPlans, allowCreditCreditFreeUsers ->
         when (val state = selectItemState.value()) {
             is SelectItemState.Autofill,
             is SelectItemState.Passkey.Register -> {
@@ -218,7 +222,9 @@ class SelectItemViewModel @Inject constructor(
                     .filter { (userId, _) ->
                         if (state.itemTypeFilter == ItemTypeFilter.CreditCards) {
                             usersAndPlans.keys.find { it.userId == userId }?.let { user ->
-                                usersAndPlans[user]?.let(Plan::hasPlanWithAccess) == true
+                                usersAndPlans[user]?.let {
+                                    allowCreditCreditFreeUsers || it.hasPlanWithAccess
+                                } == true
                             } == true
                         } else {
                             true
@@ -502,7 +508,8 @@ class SelectItemViewModel @Inject constructor(
 
         val canUpgrade = upgradeInfo.getOrNull()?.isUpgradeAvailable == true
         val showCreateButton = selectItemState.map { it.showCreateButton }.value() == true
-        val isPasswordCredential = selectItemState.map { it.isPasswordCredentialCreation }.value() == true
+        val isPasswordCredential =
+            selectItemState.map { it.isPasswordCredentialCreation }.value() == true
 
         SelectItemListUiState(
             isLoading = isLoading,
@@ -532,6 +539,8 @@ class SelectItemViewModel @Inject constructor(
         pinningUiState,
         planRes,
         shares ->
+
+        println("toto caca $planRes")
         val searchIn = planRes.getOrNull()?.run {
             when (planType) {
                 is PlanType.Free -> {

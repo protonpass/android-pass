@@ -53,6 +53,7 @@ import proton.android.pass.domain.ShareRole
 import proton.android.pass.domain.ShareSelection
 import proton.android.pass.domain.VaultId
 import proton.android.pass.preferences.LastItemAutofillPreference
+import proton.android.pass.preferences.TestFeatureFlagsPreferenceRepository
 import proton.android.pass.preferences.TestInternalSettingsRepository
 import proton.android.pass.preferences.TestPreferenceRepository
 import proton.android.pass.preferences.UserPreferencesRepository
@@ -116,7 +117,8 @@ class GetSuggestedAutofillItemsImplTest {
             internalSettingsRepository = internalSettingsRepository,
             getUserPlan = getUserPlan,
             assetLinkRepository = assetLinkRepository,
-            userPreferencesRepository = userPreferencesRepository
+            userPreferencesRepository = userPreferencesRepository,
+            featureFlagsPreferencesRepository = TestFeatureFlagsPreferenceRepository()
         )
     }
 

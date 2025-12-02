@@ -41,6 +41,7 @@ import proton.android.pass.preferences.FeatureFlag.PASS_HIDE_SHOW_VAULT
 import proton.android.pass.preferences.FeatureFlag.PASS_MOBILE_ON_BOARDING_V2
 import proton.android.pass.preferences.FeatureFlag.PASS_USER_EVENTS_V1
 import proton.android.pass.preferences.FeatureFlag.RENAME_ADMIN_TO_MANAGER
+import proton.android.pass.preferences.FeatureFlag.PASS_ALLOW_CREDIT_CARD_FREE_USERS
 import java.io.IOException
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -93,6 +94,11 @@ class FeatureFlagsPreferencesRepositoryImpl @Inject constructor(
             key = featureFlag.key,
             defaultValue = featureFlag.isEnabledDefault
         ) { passMobileOnBoardingV2Enabled.value }
+
+        PASS_ALLOW_CREDIT_CARD_FREE_USERS -> getFeatureFlag(
+            key = featureFlag.key,
+            defaultValue = featureFlag.isEnabledDefault
+        ) { groupsEnabled.value }
     }
 
     override fun <T> set(featureFlag: FeatureFlag, value: T?): Result<Unit> = when (featureFlag) {
@@ -126,6 +132,10 @@ class FeatureFlagsPreferencesRepositoryImpl @Inject constructor(
 
         PASS_MOBILE_ON_BOARDING_V2 -> setFeatureFlag {
             passMobileOnBoardingV2Enabled = boolFlagPrefProto(value)
+        }
+
+        PASS_ALLOW_CREDIT_CARD_FREE_USERS -> setFeatureFlag {
+            passAllowCreditCardFreeUsers = boolFlagPrefProto(value)
         }
     }
 
@@ -225,6 +235,7 @@ class FeatureFlagsPreferencesRepositoryImpl @Inject constructor(
             PASS_USER_EVENTS_V1 -> passUserEventsV1Enabled
             PASS_GROUP_SHARE -> groupsEnabled
             PASS_MOBILE_ON_BOARDING_V2 -> passMobileOnBoardingV2Enabled
+            PASS_ALLOW_CREDIT_CARD_FREE_USERS -> passAllowCreditCardFreeUsers
         }.value
     }
 }

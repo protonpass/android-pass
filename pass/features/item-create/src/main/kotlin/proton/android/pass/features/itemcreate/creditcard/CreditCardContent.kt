@@ -37,7 +37,7 @@ internal fun CreditCardContent(
                 isLoading = state.isLoading || state.attachmentsState.loadingDraftAttachments.isNotEmpty(),
                 actionColor = PassTheme.colors.cardInteractionNormMajor1,
                 iconColor = PassTheme.colors.cardInteractionNormMajor2,
-                showUpgrade = !state.canPerformPaidAction,
+                showUpgrade = !state.allowCreditCreditFreeUsers && !state.canPerformPaidAction,
                 iconBackgroundColor = PassTheme.colors.cardInteractionNormMinor1,
                 selectedVault = selectedVault,
                 showVaultSelector = showVaultSelector,

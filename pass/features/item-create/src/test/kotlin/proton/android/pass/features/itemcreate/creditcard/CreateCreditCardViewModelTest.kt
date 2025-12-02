@@ -57,6 +57,7 @@ import proton.android.pass.features.itemcreate.common.formprocessor.FakeCreditCa
 import proton.android.pass.features.itemcreate.common.formprocessor.FormProcessingResult
 import proton.android.pass.inappreview.fakes.TestInAppReviewTriggerMetrics
 import proton.android.pass.notifications.fakes.TestSnackbarDispatcher
+import proton.android.pass.preferences.TestFeatureFlagsPreferenceRepository
 import proton.android.pass.preferences.TestInternalSettingsRepository
 import proton.android.pass.preferences.TestPreferenceRepository
 import proton.android.pass.telemetry.api.EventItemType
@@ -115,7 +116,8 @@ class CreateCreditCardViewModelTest {
             clipboardManager = TestClipboardManager(),
             getItemById = FakeGetItemById(),
             observeShare = observeShare,
-            settingsRepository = settingsRepository
+            settingsRepository = settingsRepository,
+            featureFlagsPreferencesRepository = TestFeatureFlagsPreferenceRepository()
         )
     }
 

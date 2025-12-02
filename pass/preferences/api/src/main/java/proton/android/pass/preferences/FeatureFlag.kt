@@ -71,5 +71,12 @@ enum class FeatureFlag(
         description = "Enable new OnBoarding",
         key = "PassMobileOnboardingV2",
         isEnabledDefault = false
+    ),
+
+    PASS_ALLOW_CREDIT_CARD_FREE_USERS(
+        title = "allow credit card for free users",
+        description = "allow credit card for free users",
+        key = "PassAllowCreditCardFreeUsers",
+        isEnabledDefault = false
     )
 }

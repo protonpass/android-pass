@@ -27,6 +27,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onStart
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.api.repositories.GroupInviteRepository
+import proton.android.pass.data.api.repositories.ShareRepository
 import proton.android.pass.data.api.repositories.UserInviteRepository
 import proton.android.pass.data.api.usecases.AcceptInvite
 import proton.android.pass.data.api.usecases.AcceptInviteStatus
@@ -36,12 +37,14 @@ import proton.android.pass.data.impl.repositories.FetchShareItemsStatusRepositor
 import proton.android.pass.data.impl.work.FetchShareItemsWorker
 import proton.android.pass.domain.InviteId
 import proton.android.pass.domain.InviteToken
-import proton.android.pass.domain.ShareInvite
+import proton.android.pass.domain.ItemId
+import proton.android.pass.domain.ShareId
 import proton.android.pass.notifications.api.NotificationManager
 import javax.inject.Inject
 
 class AcceptInviteImpl @Inject constructor(
     private val observeCurrentUser: ObserveCurrentUser,
+    private val shareRepository: ShareRepository,
     private val userInviteRepository: UserInviteRepository,
     private val groupInviteRepository: GroupInviteRepository,
     private val workManager: WorkManager,
@@ -53,9 +56,10 @@ class AcceptInviteImpl @Inject constructor(
         .flatMapLatest { user ->
             userInviteRepository.getInvite(user.userId, inviteToken).value()
                 ?.let { pendingInvite ->
-                    val shareInvite = userInviteRepository.acceptInvite(user.userId, inviteToken)
+                    val (shareId, itemId) = userInviteRepository.acceptInvite(user.userId, inviteToken)
                     notificationManager.removeReceivedInviteNotification(pendingInvite)
-                    downloadItems(user.userId, shareInvite)
+                    shareRepository.recreateShare(user.userId, shareId)
+                    downloadItems(user.userId, shareId, itemId)
                 }
                 ?: flowOf(AcceptInviteStatus.Error)
         }
@@ -79,8 +83,11 @@ class AcceptInviteImpl @Inject constructor(
         }
         .onStart { emit(AcceptInviteStatus.AcceptingInvite) }
 
-    private fun downloadItems(userId: UserId, shareInvite: ShareInvite): Flow<AcceptInviteStatus> {
-        val (shareId, itemId) = shareInvite
+    private fun downloadItems(
+        userId: UserId,
+        shareId: ShareId,
+        itemId: ItemId
+    ): Flow<AcceptInviteStatus> {
         val request = FetchShareItemsWorker.getRequestFor(userId, shareId)
         workManager.enqueue(request)
         return fetchShareItemsStatusRepository.observe(shareId)

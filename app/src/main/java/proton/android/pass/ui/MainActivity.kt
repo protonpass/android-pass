@@ -53,6 +53,8 @@ import me.proton.core.telemetry.presentation.ProductMetricsDelegate
 import me.proton.core.telemetry.presentation.ProductMetricsDelegateOwner
 import me.proton.core.telemetry.presentation.compose.LocalProductMetricsDelegateOwner
 import proton.android.pass.PassActivityOrchestrator
+import proton.android.pass.appconfig.api.AppConfig
+import proton.android.pass.appconfig.api.BuildFlavor.Companion.isQuest
 import proton.android.pass.autofill.di.UserPreferenceEntryPoint
 import proton.android.pass.commonui.api.BrowserUtils
 import proton.android.pass.commonui.api.PassTheme
@@ -70,10 +72,15 @@ import proton.android.pass.ui.launcher.AccountState.StepNeeded
 import proton.android.pass.ui.launcher.LauncherViewModel
 import javax.inject.Inject
 
-private const val PROTON_UPGRADE_URL = "https://account.proton.me/pass/upgrade"
+private const val PROTON_DEFAULT_UPGRADE_URL = "https://account.proton.me/pass/upgrade"
+private const val PROTON_HORIZON_UPGRADE_URL =
+    "https://go.getproton.me/aff_c?offer_id=48&aff_id=11853&url_id=1283"
 
 @AndroidEntryPoint
 class MainActivity : FragmentActivity(), ProductMetricsDelegateOwner {
+
+    @Inject
+    lateinit var appConfig: AppConfig
 
     @Inject
     lateinit var deeplinkManager: DeeplinkManager
@@ -179,14 +186,20 @@ class MainActivity : FragmentActivity(), ProductMetricsDelegateOwner {
                                             state.supportPayment -> {
                                                 launcherViewModel.upgrade()
                                             }
+
                                             !state.supportPayment &&
                                                 state.canShowWarningReloadApp -> {
                                                 showWarningReloadAppDialog = true
                                             }
+
                                             else -> {
                                                 BrowserUtils.openWebsite(
                                                     context = context,
-                                                    website = PROTON_UPGRADE_URL
+                                                    website = when {
+                                                        appConfig.flavor.isQuest() -> PROTON_HORIZON_UPGRADE_URL
+
+                                                        else -> PROTON_DEFAULT_UPGRADE_URL
+                                                    }
                                                 )
                                             }
                                         }
@@ -200,6 +213,7 @@ class MainActivity : FragmentActivity(), ProductMetricsDelegateOwner {
                                     is AppNavigation.SwitchAccount -> {
                                         launcherViewModel.switch(it.userId)
                                     }
+
                                     is AppNavigation.SecurityKeys -> launcherViewModel.securityKeys()
                                     is AppNavigation.ForceSignOutAllUsers -> launcherViewModel.disableAll()
                                 }
@@ -216,7 +230,7 @@ class MainActivity : FragmentActivity(), ProductMetricsDelegateOwner {
                             }
                             BrowserUtils.openWebsite(
                                 context = context,
-                                website = PROTON_UPGRADE_URL
+                                website = PROTON_DEFAULT_UPGRADE_URL
                             )
                         },
                         onCancelClick = {

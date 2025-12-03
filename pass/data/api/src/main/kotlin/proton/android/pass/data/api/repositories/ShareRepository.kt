@@ -67,7 +67,7 @@ interface ShareRepository {
     suspend fun recreateShare(
         userId: UserId,
         shareId: ShareId,
-        eventToken: EventToken
+        eventToken: EventToken? = null
     )
 
     suspend fun deleteLocalSharesForUser(userId: UserId): Boolean

@@ -164,7 +164,7 @@ class TestShareRepository : ShareRepository {
     override suspend fun recreateShare(
         userId: UserId,
         shareId: ShareId,
-        eventToken: EventToken
+        eventToken: EventToken?
     ) {
         recreateShareMemory.add(RecreateSharePayload(userId, shareId, eventToken))
     }
@@ -172,7 +172,7 @@ class TestShareRepository : ShareRepository {
     data class RecreateSharePayload(
         val userId: UserId,
         val shareId: ShareId,
-        val eventToken: EventToken
+        val eventToken: EventToken?
     )
 
     override suspend fun deleteLocalSharesForUser(userId: UserId): Boolean = deleteSharesResult.getOrThrow()

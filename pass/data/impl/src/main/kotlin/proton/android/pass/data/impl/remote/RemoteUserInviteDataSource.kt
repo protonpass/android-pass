@@ -38,6 +38,18 @@ interface RemoteUserInviteDataSource {
         newUserRequests: CreateNewUserInvitesRequest
     )
 
+    suspend fun sendInvitesToExistingUsers(
+        userId: UserId,
+        shareId: ShareId,
+        existingUserRequests: CreateInvitesRequest
+    )
+
+    suspend fun sendInvitesToNewUsers(
+        userId: UserId,
+        shareId: ShareId,
+        newUserRequests: CreateNewUserInvitesRequest
+    )
+
     suspend fun fetchInvites(userId: UserId, eventToken: EventToken?): List<PendingUserInviteResponse>
     suspend fun acceptInvite(
         userId: UserId,

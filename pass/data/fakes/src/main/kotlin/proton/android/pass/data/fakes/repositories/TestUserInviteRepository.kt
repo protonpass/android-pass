@@ -24,6 +24,7 @@ import kotlinx.coroutines.flow.flowOf
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
+import proton.android.pass.data.api.repositories.InviteTarget
 import proton.android.pass.data.api.repositories.UserInviteRepository
 import proton.android.pass.domain.InviteRecommendations
 import proton.android.pass.domain.InviteToken
@@ -55,6 +56,38 @@ class TestUserInviteRepository @Inject constructor() : UserInviteRepository {
         )
     )
 
+    private val existingUsersInviteCalls: MutableList<ExistingUsersInviteCall> = mutableListOf()
+    private val newUsersInviteCalls: MutableList<NewUsersInviteCall> = mutableListOf()
+    private var sendInvitesToExistingUsersResult: Result<Unit> = Result.success(Unit)
+    private var sendInvitesToNewUsersResult: Result<Unit> = Result.success(Unit)
+
+    data class ExistingUsersInviteCall(
+        val userId: UserId,
+        val shareId: ShareId,
+        val inviteTargets: List<InviteTarget>
+    )
+
+    data class NewUsersInviteCall(
+        val userId: UserId,
+        val shareId: ShareId,
+        val inviteTargets: List<InviteTarget>
+    )
+
+    fun getExistingUsersInviteCalls(): List<ExistingUsersInviteCall> = existingUsersInviteCalls.toList()
+    fun getNewUsersInviteCalls(): List<NewUsersInviteCall> = newUsersInviteCalls.toList()
+    fun clearInviteCalls() {
+        existingUsersInviteCalls.clear()
+        newUsersInviteCalls.clear()
+    }
+
+    fun setSendInvitesToExistingUsersResult(value: Result<Unit>) {
+        sendInvitesToExistingUsersResult = value
+    }
+
+    fun setSendInvitesToNewUsersResult(value: Result<Unit>) {
+        sendInvitesToNewUsersResult = value
+    }
+
     fun emitInvites(invites: List<PendingInvite>) {
         invitesFlow.tryEmit(invites)
     }
@@ -81,6 +114,24 @@ class TestUserInviteRepository @Inject constructor() : UserInviteRepository {
 
     override suspend fun rejectInvite(userId: UserId, inviteToken: InviteToken) {
         rejectResult.getOrThrow()
+    }
+
+    override suspend fun sendInvitesToExistingUsers(
+        userId: UserId,
+        shareId: ShareId,
+        inviteTargets: List<InviteTarget>
+    ) {
+        existingUsersInviteCalls.add(ExistingUsersInviteCall(userId, shareId, inviteTargets))
+        sendInvitesToExistingUsersResult.getOrThrow()
+    }
+
+    override suspend fun sendInvitesToNewUsers(
+        userId: UserId,
+        shareId: ShareId,
+        inviteTargets: List<InviteTarget>
+    ) {
+        newUsersInviteCalls.add(NewUsersInviteCall(userId, shareId, inviteTargets))
+        sendInvitesToNewUsersResult.getOrThrow()
     }
 
     override fun observeInviteRecommendations(

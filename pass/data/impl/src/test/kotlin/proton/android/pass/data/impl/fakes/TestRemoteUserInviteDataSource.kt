@@ -60,8 +60,14 @@ class TestRemoteUserInviteDataSource @Inject constructor() : RemoteUserInviteDat
         )
 
     private var memory: MutableList<InvitePayload> = mutableListOf()
+    private var existingUsersMemory: MutableList<ExistingUsersInvitePayload> = mutableListOf()
+    private var newUsersMemory: MutableList<NewUsersInvitePayload> = mutableListOf()
 
     fun getInviteMemory(): List<InvitePayload> = memory
+
+    fun getExistingUsersInviteMemory(): List<ExistingUsersInvitePayload> = existingUsersMemory
+
+    fun getNewUsersInviteMemory(): List<NewUsersInvitePayload> = newUsersMemory
 
     fun setSendInviteResult(value: Result<Unit>) {
         sendInviteResult = value
@@ -90,6 +96,24 @@ class TestRemoteUserInviteDataSource @Inject constructor() : RemoteUserInviteDat
         newUserRequests: CreateNewUserInvitesRequest
     ) {
         memory.add(InvitePayload(userId, shareId, existingUserRequests, newUserRequests))
+        sendInviteResult.getOrThrow()
+    }
+
+    override suspend fun sendInvitesToExistingUsers(
+        userId: UserId,
+        shareId: ShareId,
+        existingUserRequests: CreateInvitesRequest
+    ) {
+        existingUsersMemory.add(ExistingUsersInvitePayload(userId, shareId, existingUserRequests))
+        sendInviteResult.getOrThrow()
+    }
+
+    override suspend fun sendInvitesToNewUsers(
+        userId: UserId,
+        shareId: ShareId,
+        newUserRequests: CreateNewUserInvitesRequest
+    ) {
+        newUsersMemory.add(NewUsersInvitePayload(userId, shareId, newUserRequests))
         sendInviteResult.getOrThrow()
     }
 
@@ -123,6 +147,18 @@ class TestRemoteUserInviteDataSource @Inject constructor() : RemoteUserInviteDat
         val userId: UserId,
         val shareId: ShareId,
         val existingRequests: CreateInvitesRequest,
+        val newUserRequests: CreateNewUserInvitesRequest
+    )
+
+    data class ExistingUsersInvitePayload(
+        val userId: UserId,
+        val shareId: ShareId,
+        val existingUserRequests: CreateInvitesRequest
+    )
+
+    data class NewUsersInvitePayload(
+        val userId: UserId,
+        val shareId: ShareId,
         val newUserRequests: CreateNewUserInvitesRequest
     )
 

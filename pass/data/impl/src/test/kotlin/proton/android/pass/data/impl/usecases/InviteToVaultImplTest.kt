@@ -31,34 +31,25 @@ import org.junit.Test
 import proton.android.pass.account.fakes.TestAccountManager
 import proton.android.pass.data.api.repositories.UserTarget
 import proton.android.pass.data.api.usecases.InviteUserMode
+import proton.android.pass.data.fakes.repositories.TestUserInviteRepository
 import proton.android.pass.data.fakes.usecases.TestGetInviteUserMode
-import proton.android.pass.data.impl.fakes.TestCreateNewUserInviteSignature
-import proton.android.pass.data.impl.fakes.TestEncryptShareKeysForUser
-import proton.android.pass.data.impl.fakes.TestRemoteUserInviteDataSource
-import proton.android.pass.data.impl.fakes.TestShareKeyRepository
 import proton.android.pass.data.impl.fakes.TestShareRepository
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.ShareRole
-import proton.android.pass.test.TestUtils
 import proton.android.pass.test.domain.TestShare
 
 class InviteToVaultImplTest {
 
     private lateinit var instance: InviteToVaultImpl
 
-    private lateinit var remoteDataSource: TestRemoteUserInviteDataSource
     private lateinit var accountManager: TestAccountManager
     private lateinit var shareRepository: TestShareRepository
-    private lateinit var createNewUserInviteSignature: TestCreateNewUserInviteSignature
-    private lateinit var encryptShareKeysForUser: TestEncryptShareKeysForUser
+    private lateinit var userInviteRepository: TestUserInviteRepository
     private lateinit var getInviteUserMode: TestGetInviteUserMode
 
     @Before
     fun setup() {
-        remoteDataSource = TestRemoteUserInviteDataSource()
         accountManager = TestAccountManager()
-        createNewUserInviteSignature = TestCreateNewUserInviteSignature()
-        encryptShareKeysForUser = TestEncryptShareKeysForUser()
         getInviteUserMode = TestGetInviteUserMode()
         shareRepository = TestShareRepository().apply {
             val share = TestShare.Vault.create(
@@ -68,15 +59,12 @@ class InviteToVaultImplTest {
             setGetByIdResult(Result.success(share))
         }
 
+        userInviteRepository = TestUserInviteRepository()
+
         instance = InviteToVaultImpl(
             accountManager = accountManager,
-            encryptShareKeysForUser = encryptShareKeysForUser,
-            shareKeyRepository = TestShareKeyRepository().apply {
-                emitGetShareKeys(listOf(TestUtils.createShareKey().first))
-            },
-            remoteUserInviteDataSource = remoteDataSource,
+            userInviteRepository = userInviteRepository,
             shareRepository = shareRepository,
-            newUserInviteSignatureManager = createNewUserInviteSignature,
             getInviteUserMode = getInviteUserMode
         )
     }
@@ -94,21 +82,18 @@ class InviteToVaultImplTest {
         )
         assertThat(res.isSuccess).isTrue()
 
-        val memory = remoteDataSource.getInviteMemory()
-        assertThat(memory.size).isEqualTo(1)
+        val existingUsersCalls = userInviteRepository.getExistingUsersInviteCalls()
+        assertThat(existingUsersCalls.size).isEqualTo(1)
 
-        val memoryValue = memory.first()
-        assertThat(memoryValue.userId).isEqualTo(UserId(USER_ID))
-        assertThat(memoryValue.shareId).isEqualTo(shareId)
+        val call = existingUsersCalls.first()
+        assertThat(call.userId).isEqualTo(UserId(USER_ID))
+        assertThat(call.shareId).isEqualTo(shareId)
+        assertThat(call.inviteTargets.size).isEqualTo(1)
+        assertThat(call.inviteTargets.first().email).isEqualTo(INVITED_ADDRESS)
+        assertThat(call.inviteTargets.first().shareRole).isEqualTo(shareRole)
 
-        assertThat(memoryValue.existingRequests.invites.size).isEqualTo(1)
-
-        val firstInvite = memoryValue.existingRequests.invites.first()
-        assertThat(firstInvite.email).isEqualTo(INVITED_ADDRESS)
-        assertThat(firstInvite.shareRoleId).isEqualTo(shareRole.value)
-
-        assertThat(memoryValue.newUserRequests.invites).isEmpty()
-        assertThat(createNewUserInviteSignature.hasCreateBeenInvoked).isFalse()
+        val newUsersCalls = userInviteRepository.getNewUsersInviteCalls()
+        assertThat(newUsersCalls).isEmpty()
 
         val refreshShareMemory = shareRepository.refreshShareMemory()
         val expectedRefreshSharePayload = TestShareRepository.RefreshSharePayload(
@@ -131,22 +116,10 @@ class InviteToVaultImplTest {
     }
 
     @Test
-    fun `invite to vault returns failure if encryptShareKeysForUser fails`() = runTest {
+    fun `invite to vault returns failure if there is no user address for current user`() = runTest {
         setupAccountManager()
         setupUserAddress()
-        encryptShareKeysForUser.setResult(Result.failure(IllegalStateException("test")))
-
-        val res = instance.invoke(
-            shareId = ShareId(SHARE_ID),
-            inviteTargets = listOf(UserTarget(INVITED_ADDRESS, ShareRole.Admin))
-        )
-        assertThat(res.isFailure).isTrue()
-    }
-
-    @Test
-    fun `invite to vault returns failure if there is no user address for current user`() = runTest {
-        shareRepository.setGetAddressForShareIdResult(Result.failure(IllegalStateException("test")))
-        setupAccountManager()
+        userInviteRepository.setSendInvitesToExistingUsersResult(Result.failure(IllegalStateException("test")))
 
         val res = instance.invoke(
             shareId = ShareId(SHARE_ID),
@@ -169,21 +142,18 @@ class InviteToVaultImplTest {
         )
         assertThat(res.isSuccess).isTrue()
 
-        val memory = remoteDataSource.getInviteMemory()
-        assertThat(memory.size).isEqualTo(1)
+        val existingUsersCalls = userInviteRepository.getExistingUsersInviteCalls()
+        assertThat(existingUsersCalls).isEmpty()
 
-        val memoryValue = memory.first()
-        assertThat(memoryValue.userId).isEqualTo(UserId(USER_ID))
-        assertThat(memoryValue.shareId).isEqualTo(shareId)
+        val newUsersCalls = userInviteRepository.getNewUsersInviteCalls()
+        assertThat(newUsersCalls.size).isEqualTo(1)
 
-        assertThat(memoryValue.existingRequests.invites).isEmpty()
-
-        assertThat(memoryValue.newUserRequests.invites.size).isEqualTo(1)
-
-        val firstInvite = memoryValue.newUserRequests.invites.first()
-        assertThat(firstInvite.email).isEqualTo(INVITED_ADDRESS)
-        assertThat(firstInvite.shareRoleId).isEqualTo(shareRole.value)
-        assertThat(createNewUserInviteSignature.hasCreateBeenInvoked).isTrue()
+        val call = newUsersCalls.first()
+        assertThat(call.userId).isEqualTo(UserId(USER_ID))
+        assertThat(call.shareId).isEqualTo(shareId)
+        assertThat(call.inviteTargets.size).isEqualTo(1)
+        assertThat(call.inviteTargets.first().email).isEqualTo(INVITED_ADDRESS)
+        assertThat(call.inviteTargets.first().shareRole).isEqualTo(shareRole)
     }
 
     @Test

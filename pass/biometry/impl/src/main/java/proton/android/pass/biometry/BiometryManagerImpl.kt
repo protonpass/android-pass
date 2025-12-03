@@ -145,6 +145,7 @@ class BiometryManagerImpl @Inject constructor(
         when (biometricSystemLock) {
             BiometricSystemLockPreference.Enabled -> {
                 builder.setAllowedAuthenticators(getAllowedAuthenticators(biometricSystemLock))
+                builder.setConfirmationRequired(false)
             }
 
             BiometricSystemLockPreference.NotEnabled -> {

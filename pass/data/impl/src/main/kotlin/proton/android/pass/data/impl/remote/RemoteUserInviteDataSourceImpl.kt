@@ -18,10 +18,9 @@
 
 package proton.android.pass.data.impl.remote
 
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.coroutineScope
 import me.proton.core.domain.entity.UserId
 import me.proton.core.network.data.ApiProvider
 import me.proton.core.network.domain.ApiResult
@@ -31,9 +30,9 @@ import proton.android.pass.data.api.errors.FreeUserInviteError
 import proton.android.pass.data.api.errors.UserAlreadyInviteError
 import proton.android.pass.data.api.errors.getProtonErrorCode
 import proton.android.pass.data.impl.api.PasswordManagerApi
-import proton.android.pass.data.impl.requests.invites.AcceptInviteRequest
 import proton.android.pass.data.impl.requests.CreateInvitesRequest
 import proton.android.pass.data.impl.requests.CreateNewUserInvitesRequest
+import proton.android.pass.data.impl.requests.invites.AcceptInviteRequest
 import proton.android.pass.data.impl.responses.InviteRecommendationsOrganizationResponse
 import proton.android.pass.data.impl.responses.InviteRecommendationsSuggestedResponse
 import proton.android.pass.data.impl.responses.PendingUserInviteResponse
@@ -54,48 +53,70 @@ class RemoteUserInviteDataSourceImpl @Inject constructor(
         shareId: ShareId,
         existingUserRequests: CreateInvitesRequest,
         newUserRequests: CreateNewUserInvitesRequest
-    ) = withContext(Dispatchers.IO) {
-        val api = apiProvider.get<PasswordManagerApi>(userId)
-
-        val existingUsers = async {
-            if (existingUserRequests.invites.isNotEmpty()) {
+    ) {
+        coroutineScope {
+            val existingUsers = async {
                 try {
-                    api.invoke {
-                        inviteUsers(shareId.id, existingUserRequests)
-                    }.valueOrThrow
-
+                    sendInvitesToExistingUsers(userId, shareId, existingUserRequests)
                     Result.success(Unit)
                 } catch (error: Throwable) {
-                    val reason = when (error.getProtonErrorCode()) {
-                        ErrorCodes.FREE_USER_INVITED -> FreeUserInviteError(error.message)
-                        ErrorCodes.USER_ALREADY_INVITED -> UserAlreadyInviteError(error.message)
-                        else -> error
-                    }
-
-                    Result.failure(reason)
+                    Result.failure(error)
                 }
-            } else {
-                Result.success(Unit)
+            }
+            existingUsers.invokeOnCompletion {
+                PassLogger.d(TAG, "Existing users invites completed")
+            }
+
+            val newUsers = async {
+                try {
+                    sendInvitesToNewUsers(userId, shareId, newUserRequests)
+                    Result.success(Unit)
+                } catch (error: Throwable) {
+                    Result.failure(error)
+                }
+            }
+            newUsers.invokeOnCompletion {
+                PassLogger.d(TAG, "New users invites completed")
+            }
+
+            val results: List<Result<Unit>> = awaitAll(existingUsers, newUsers)
+            results.forEach { it.getOrThrow() }
+        }
+    }
+
+    @Suppress("TooGenericExceptionCaught")
+    override suspend fun sendInvitesToExistingUsers(
+        userId: UserId,
+        shareId: ShareId,
+        existingUserRequests: CreateInvitesRequest
+    ) {
+        if (existingUserRequests.invites.isNotEmpty()) {
+            val api = apiProvider.get<PasswordManagerApi>(userId)
+            try {
+                api.invoke {
+                    inviteUsers(shareId.id, existingUserRequests)
+                }.valueOrThrow
+            } catch (error: Throwable) {
+                val reason = when (error.getProtonErrorCode()) {
+                    ErrorCodes.FREE_USER_INVITED -> FreeUserInviteError(error.message)
+                    ErrorCodes.USER_ALREADY_INVITED -> UserAlreadyInviteError(error.message)
+                    else -> error
+                }
+                throw reason
             }
         }
-        existingUsers.invokeOnCompletion {
-            PassLogger.d(TAG, "Existing users invites completed")
-        }
+    }
 
-        val newUsers = async {
-            if (newUserRequests.invites.isNotEmpty()) {
-                val res = api.invoke { inviteNewUsers(shareId.id, newUserRequests) }
-                res.exceptionOrNull?.let { Result.failure(it) } ?: Result.success(Unit)
-            } else {
-                Result.success(Unit)
-            }
+    override suspend fun sendInvitesToNewUsers(
+        userId: UserId,
+        shareId: ShareId,
+        newUserRequests: CreateNewUserInvitesRequest
+    ) {
+        if (newUserRequests.invites.isNotEmpty()) {
+            val api = apiProvider.get<PasswordManagerApi>(userId)
+            val res = api.invoke { inviteNewUsers(shareId.id, newUserRequests) }
+            res.exceptionOrNull?.let { throw it }
         }
-        newUsers.invokeOnCompletion {
-            PassLogger.d(TAG, "New users invites completed")
-        }
-
-        val results: List<Result<Unit>> = awaitAll(existingUsers, newUsers)
-        results.forEach { it.getOrThrow() }
     }
 
     override suspend fun fetchInvites(userId: UserId, eventToken: EventToken?): List<PendingUserInviteResponse> =

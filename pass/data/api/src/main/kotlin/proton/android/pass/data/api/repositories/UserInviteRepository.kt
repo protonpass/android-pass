@@ -40,6 +40,18 @@ interface UserInviteRepository {
 
     suspend fun rejectInvite(userId: UserId, inviteToken: InviteToken)
 
+    suspend fun sendInvitesToExistingUsers(
+        userId: UserId,
+        shareId: ShareId,
+        inviteTargets: List<InviteTarget>
+    )
+
+    suspend fun sendInvitesToNewUsers(
+        userId: UserId,
+        shareId: ShareId,
+        inviteTargets: List<InviteTarget>
+    )
+
     fun observeInviteRecommendations(
         userId: UserId,
         shareId: ShareId,

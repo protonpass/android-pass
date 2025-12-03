@@ -20,25 +20,30 @@ package proton.android.pass.data.impl.repositories
 
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import me.proton.core.domain.entity.UserId
-import proton.android.pass.common.api.AppDispatchers
+import me.proton.core.user.domain.entity.UserAddress
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.some
+import proton.android.pass.common.api.transpose
 import proton.android.pass.crypto.api.context.EncryptionContext
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.repositories.GroupRepository
+import proton.android.pass.data.api.repositories.InviteTarget
+import proton.android.pass.data.api.repositories.ShareRepository
 import proton.android.pass.data.api.repositories.UserInviteRepository
 import proton.android.pass.data.api.usecases.ObserveConfirmedInviteToken
+import proton.android.pass.data.impl.crypto.EncryptShareKeysForUser
 import proton.android.pass.data.impl.crypto.EncryptUserInviteKeys
+import proton.android.pass.data.impl.crypto.NewUserInviteSignatureManager
 import proton.android.pass.data.impl.crypto.ReencryptUserInviteContents
 import proton.android.pass.data.impl.db.entities.UserInviteEntity
 import proton.android.pass.data.impl.db.entities.UserInviteKeyEntity
@@ -46,6 +51,11 @@ import proton.android.pass.data.impl.extensions.toDomain
 import proton.android.pass.data.impl.local.LocalUserInviteDataSource
 import proton.android.pass.data.impl.local.UserInviteAndKeysEntity
 import proton.android.pass.data.impl.remote.RemoteUserInviteDataSource
+import proton.android.pass.data.impl.requests.CreateInviteKey
+import proton.android.pass.data.impl.requests.CreateInviteRequest
+import proton.android.pass.data.impl.requests.CreateInvitesRequest
+import proton.android.pass.data.impl.requests.CreateNewUserInviteRequest
+import proton.android.pass.data.impl.requests.CreateNewUserInvitesRequest
 import proton.android.pass.data.impl.requests.invites.AcceptInviteRequest
 import proton.android.pass.data.impl.requests.invites.InviteKeyRotation
 import proton.android.pass.data.impl.responses.PendingUserInviteResponse
@@ -61,6 +71,7 @@ import proton.android.pass.domain.RecommendedGroup
 import proton.android.pass.domain.RecommendedItem
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.ShareInvite
+import proton.android.pass.domain.ShareRole
 import proton.android.pass.domain.ShareType
 import proton.android.pass.domain.events.EventToken
 import proton.android.pass.log.api.PassLogger
@@ -77,8 +88,11 @@ class UserInviteRepositoryImpl @Inject constructor(
     private val encryptUserInviteKeys: EncryptUserInviteKeys,
     private val observeConfirmedInviteToken: ObserveConfirmedInviteToken,
     private val groupRepository: GroupRepository,
-    private val appDispatchers: AppDispatchers,
-    private val featureFlagsPreferencesRepository: FeatureFlagsPreferencesRepository
+    private val featureFlagsPreferencesRepository: FeatureFlagsPreferencesRepository,
+    private val shareRepository: ShareRepository,
+    private val encryptShareKeysForUser: EncryptShareKeysForUser,
+    private val shareKeyRepository: ShareKeyRepository,
+    private val newUserInviteSignatureManager: NewUserInviteSignatureManager
 ) : UserInviteRepository {
 
     override suspend fun getInvite(userId: UserId, inviteToken: InviteToken): Option<PendingInvite> =
@@ -221,6 +235,135 @@ class UserInviteRepositoryImpl @Inject constructor(
         localDatasource.removeInvite(userId, inviteToken)
     }
 
+    override suspend fun sendInvitesToExistingUsers(
+        userId: UserId,
+        shareId: ShareId,
+        inviteTargets: List<InviteTarget>
+    ) {
+        if (inviteTargets.isEmpty()) return
+
+        coroutineScope {
+            val inviterUserAddress = shareRepository.getAddressForShareId(userId, shareId)
+            val share = shareRepository.getById(userId, shareId)
+
+            val requests = inviteTargets.map { target ->
+                async {
+                    buildExistingUserRequest(
+                        shareId = shareId,
+                        groupEmail = share.groupEmail,
+                        address = inviterUserAddress,
+                        targetEmail = target.email,
+                        shareRole = target.shareRole
+                    )
+                }
+            }.awaitAll().transpose().getOrThrow()
+
+            val existingUserRequests = CreateInvitesRequest(requests)
+            remoteDataSource.sendInvitesToExistingUsers(userId, shareId, existingUserRequests)
+        }
+    }
+
+    override suspend fun sendInvitesToNewUsers(
+        userId: UserId,
+        shareId: ShareId,
+        inviteTargets: List<InviteTarget>
+    ) {
+        if (inviteTargets.isEmpty()) return
+
+        coroutineScope {
+            val inviterUserAddress = shareRepository.getAddressForShareId(userId, shareId)
+            val share = shareRepository.getById(userId, shareId)
+
+            val requests = inviteTargets.map { target ->
+                async {
+                    buildNewUserRequest(
+                        userId = userId,
+                        shareId = shareId,
+                        groupEmail = share.groupEmail,
+                        address = inviterUserAddress,
+                        targetEmail = target.email,
+                        shareRole = target.shareRole
+                    )
+                }
+            }.awaitAll().transpose().getOrThrow()
+
+            val newUserRequests = CreateNewUserInvitesRequest(requests)
+            remoteDataSource.sendInvitesToNewUsers(userId, shareId, newUserRequests)
+        }
+    }
+
+    @Suppress("ReturnCount")
+    private suspend fun buildExistingUserRequest(
+        shareId: ShareId,
+        groupEmail: String?,
+        address: UserAddress,
+        targetEmail: String,
+        shareRole: ShareRole
+    ): Result<CreateInviteRequest> {
+        val encryptedKeys = encryptShareKeysForUser(
+            userAddress = address,
+            shareId = shareId,
+            groupEmail = groupEmail,
+            targetEmail = targetEmail
+        ).getOrElse {
+            return Result.failure(it)
+        }
+
+        val request = CreateInviteRequest(
+            keys = encryptedKeys.keys.map {
+                CreateInviteKey(
+                    key = it.key,
+                    keyRotation = it.keyRotation
+                )
+            },
+            email = targetEmail,
+            targetType = ShareType.Vault.value,
+            shareRoleId = shareRole.value
+        )
+
+        return Result.success(request)
+    }
+
+    @Suppress("LongParameterList")
+    private suspend fun buildNewUserRequest(
+        userId: UserId,
+        shareId: ShareId,
+        groupEmail: String?,
+        address: UserAddress,
+        targetEmail: String,
+        shareRole: ShareRole
+    ): Result<CreateNewUserInviteRequest> {
+        val vaultKeyList = shareKeyRepository.getShareKeys(
+            userId = userId,
+            addressId = address.addressId,
+            shareId = shareId,
+            groupEmail = groupEmail,
+            forceRefresh = false
+        ).firstOrNull()
+            ?: return Result.failure(IllegalStateException("No ShareKey found for share"))
+
+        val vaultKey = vaultKeyList.maxByOrNull { it.rotation }
+            ?: return Result.failure(IllegalStateException("ShareKey list is empty"))
+
+        val signature = newUserInviteSignatureManager.create(
+            inviterUserAddress = address,
+            email = targetEmail,
+            inviteKey = vaultKey
+        ).getOrElse {
+            PassLogger.w(TAG, "Failed to create new user invite signature")
+            PassLogger.w(TAG, it)
+            return Result.failure(it)
+        }
+
+        val request = CreateNewUserInviteRequest(
+            email = targetEmail,
+            targetType = ShareType.Vault.value,
+            shareRoleId = shareRole.value,
+            signature = signature
+        )
+        return Result.success(request)
+    }
+
     override fun observeInviteRecommendations(
         userId: UserId,
         shareId: ShareId,
@@ -244,9 +387,10 @@ class UserInviteRepositoryImpl @Inject constructor(
             )
         )
 
-        val isGroupsEnabled = featureFlagsPreferencesRepository.get<Boolean>(FeatureFlag.PASS_GROUP_SHARE)
-            .firstOrNull()
-            ?: false
+        val isGroupsEnabled =
+            featureFlagsPreferencesRepository.get<Boolean>(FeatureFlag.PASS_GROUP_SHARE)
+                .firstOrNull()
+                ?: false
         val groupData = if (isGroupsEnabled) fetchGroupData(userId) else GroupData()
         val recommendedItems = processSuggestedItems(suggestedResponse.suggested, groupData)
 
@@ -266,7 +410,7 @@ class UserInviteRepositoryImpl @Inject constructor(
                 organizationItems = (allGroupsAsRecommendedItems + organizationItems).distinctBy { it.email }
             )
         )
-    }.flowOn(appDispatchers.io)
+    }
 
     private suspend fun observeOrgRecommendationsRecursive(
         userId: UserId,
@@ -410,9 +554,7 @@ class UserInviteRepositoryImpl @Inject constructor(
 
 
     private companion object {
-
-        private const val TAG = "InviteRepositoryImpl"
-
+        private const val TAG = "UserInviteRepositoryImpl"
     }
 
 }

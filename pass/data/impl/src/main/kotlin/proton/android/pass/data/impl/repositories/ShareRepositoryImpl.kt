@@ -371,7 +371,7 @@ class ShareRepositoryImpl @Inject constructor(
     override suspend fun recreateShare(
         userId: UserId,
         shareId: ShareId,
-        eventToken: EventToken
+        eventToken: EventToken?
     ) {
         val shareResponse = remoteShareDataSource.retrieveShareById(userId, shareId, eventToken)
             ?: run {

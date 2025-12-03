@@ -27,6 +27,7 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
+import me.proton.core.crypto.common.keystore.EncryptedByteArray
 import me.proton.core.domain.entity.UserId
 import me.proton.core.key.domain.extension.primary
 import me.proton.core.user.domain.entity.AddressId
@@ -54,6 +55,7 @@ import proton.android.pass.data.impl.db.PassDatabase
 import proton.android.pass.data.impl.db.entities.ShareEntity
 import proton.android.pass.data.impl.db.entities.ShareKeyEntity
 import proton.android.pass.data.impl.extensions.toDomain
+import proton.android.pass.data.impl.extensions.toEntity
 import proton.android.pass.data.impl.extensions.toProto
 import proton.android.pass.data.impl.extensions.toRequest
 import proton.android.pass.data.impl.extensions.toResponse
@@ -119,10 +121,12 @@ class ShareRepositoryImpl @Inject constructor(
                 ?.groupEmail
                 ?: throw IllegalStateException("Group not found on vault create")
         }
-        val responseAsEntity = shareResponseToEntity(
-            userAddress = userAddress,
-            shareResponse = createVaultResponse,
-            key = EncryptionKeyStatus.Found(shareKey),
+        val encryptedContent = reencryptShareContents(createVaultResponse.content, shareKey)
+        val responseAsEntity = createVaultResponse.toEntity(
+            userId = userAddress.userId.id,
+            addressId = userAddress.addressId.id,
+            encryptedContent = encryptedContent,
+            isActive = true,
             groupEmail = groupEmail
         )
 
@@ -202,7 +206,24 @@ class ShareRepositoryImpl @Inject constructor(
             } else {
                 null
             }
-        }.map { (localShare, remoteShare) -> updateEntityWithResponse(localShare, remoteShare) }
+        }.map { (localShare, remoteShare) ->
+            async {
+                val shareId = ShareId(remoteShare.shareId)
+                val (encryptedContent, isActive) = getEncryptedContentAndActiveStatus(
+                    localShare = localShare,
+                    remoteShare = remoteShare,
+                    shareId = shareId
+                )
+
+                remoteShare.toEntity(
+                    userId = localShare.userId,
+                    addressId = localShare.addressId,
+                    encryptedContent = encryptedContent,
+                    isActive = isActive,
+                    groupEmail = localShare.groupEmail
+                )
+            }
+        }.awaitAll()
 
         // Delete from the local data source the shares that are not in remote response
         val toDelete = localSharesMap.keys.subtract(remoteSharesMap.keys)
@@ -274,7 +295,18 @@ class ShareRepositoryImpl @Inject constructor(
                 throw ShareNotAvailableError()
             }
 
-        val updated = updateEntityWithResponse(localShare, shareResponse)
+        val (encryptedContent, isActive) = getEncryptedContentAndActiveStatus(
+            localShare = localShare,
+            remoteShare = shareResponse,
+            shareId = shareId
+        )
+        val updated = shareResponse.toEntity(
+            userId = localShare.userId,
+            addressId = localShare.addressId,
+            encryptedContent = encryptedContent,
+            isActive = isActive,
+            groupEmail = localShare.groupEmail
+        )
         localShareDataSource.upsertShares(listOf(updated))
     }
 
@@ -321,10 +353,12 @@ class ShareRepositoryImpl @Inject constructor(
         val shareKeyAsEncryptionkey = encryptionContextProvider.withEncryptionContextSuspendable {
             EncryptionKey(decrypt(shareKey.key))
         }
-        val shareEntity = shareResponseToEntity(
-            userAddress = userAddress,
-            shareResponse = response,
-            key = EncryptionKeyStatus.Found(shareKeyAsEncryptionkey),
+        val encryptedContent = reencryptShareContents(response.content, shareKeyAsEncryptionkey)
+        val shareEntity = response.toEntity(
+            userId = userAddress.userId.id,
+            addressId = userAddress.addressId.id,
+            encryptedContent = encryptedContent,
+            isActive = true,
             groupEmail = share?.groupEmail
         )
         localShareDataSource.upsertShares(listOf(shareEntity))
@@ -364,14 +398,14 @@ class ShareRepositoryImpl @Inject constructor(
     }
 
     override suspend fun applyPendingShareEvent(userId: UserId, event: UpdateShareEvent) {
-        onShareResponseEntity(userId, event) { shareResponseEntity ->
-            localShareDataSource.upsertShares(listOf(shareResponseEntity.entity))
+        onShareResponseEntity(userId, event) { (entity, _) ->
+            localShareDataSource.upsertShares(listOf(entity))
         }
     }
 
     override suspend fun applyPendingShareEventKeys(userId: UserId, event: UpdateShareEvent) {
-        onShareResponseEntity(userId, event) { shareResponseEntity ->
-            shareKeyRepository.saveShareKeys(shareResponseEntity.keys)
+        onShareResponseEntity(userId, event) { (_, keys) ->
+            shareKeyRepository.saveShareKeys(keys)
         }
     }
 
@@ -397,7 +431,7 @@ class ShareRepositoryImpl @Inject constructor(
     private suspend fun onShareResponseEntity(
         userId: UserId,
         event: UpdateShareEvent,
-        block: suspend (ShareResponseEntity) -> Unit
+        block: suspend (Pair<ShareEntity, List<ShareKeyEntity>>) -> Unit
     ) {
         block(createShareResponseEntity(event.toResponse(), userId, event.groupEmail))
     }
@@ -408,7 +442,7 @@ class ShareRepositoryImpl @Inject constructor(
         val groups = if (shares.any { it.groupId != null }) {
             groupRepository.retrieveGroups(userId, forceRefresh = true)
         } else null
-        val entities: List<ShareResponseEntity> = shares.map { response ->
+        val entities: List<Pair<ShareEntity, List<ShareKeyEntity>>> = shares.map { response ->
             val groupEmail = if (response.groupId != null) {
                 groups?.find { it.id.id == response.groupId }
                     ?.groupEmail
@@ -417,9 +451,8 @@ class ShareRepositoryImpl @Inject constructor(
             async { createShareResponseEntity(response, userId, groupEmail) }
         }.awaitAll()
 
-        val shareEntities = entities.map { shareResponseEntity -> shareResponseEntity.entity }
-        val shareKeyEntities = entities.map { shareResponseEntity -> shareResponseEntity.keys }
-            .flatten()
+        val shareEntities = entities.map { (entity, _) -> entity }
+        val shareKeyEntities = entities.map { (_, keys) -> keys }.flatten()
 
         if (shareEntities.isNotEmpty() || shareKeyEntities.isNotEmpty()) {
             database.inTransaction("storeShares") {
@@ -444,7 +477,7 @@ class ShareRepositoryImpl @Inject constructor(
         shareResponse: ShareResponse,
         userId: UserId,
         groupEmail: String?
-    ): ShareResponseEntity {
+    ): Pair<ShareEntity, List<ShareKeyEntity>> {
         val userAddress = userAddressRepository.getAddresses(userId).primary()
             ?: throw IllegalStateException("Could not find PrimaryAddress")
         PassLogger.i(TAG, "Found primary user address")
@@ -464,28 +497,54 @@ class ShareRepositoryImpl @Inject constructor(
         // Reencrypt the share contents
         val encryptionKey =
             getEncryptionKey(shareResponse.contentKeyRotation, shareKeys)
-        return ShareResponseEntity(
-            response = shareResponse,
-            entity = shareResponseToEntity(
-                userAddress = userAddress,
-                shareResponse = shareResponse,
-                key = encryptionKey,
-                groupEmail = groupEmail
-            ),
-            keys = shareKeys.map { shareKey ->
-                ShareKeyEntity(
-                    rotation = shareKey.rotation,
-                    userId = userAddress.userId.id,
-                    addressId = userAddress.addressId.id,
-                    shareId = shareResponse.shareId,
-                    key = shareKey.responseKey,
-                    createTime = shareKey.createTime,
-                    symmetricallyEncryptedKey = shareKey.key,
-                    isActive = shareKey.isActive,
-                    userKeyId = shareKey.userKeyId
-                )
+        val (encryptedContent, isActive) = when (encryptionKey) {
+            EncryptionKeyStatus.NotFound -> null to true
+            is EncryptionKeyStatus.Found -> {
+                reencryptShareContents(shareResponse.content, encryptionKey.encryptionKey) to true
             }
-        )
+            EncryptionKeyStatus.Inactive -> null to false
+        }
+        return shareResponse.toEntity(
+            userId = userAddress.userId.id,
+            addressId = userAddress.addressId.id,
+            encryptedContent = encryptedContent,
+            isActive = isActive,
+            groupEmail = groupEmail
+        ) to shareKeys.map { shareKey ->
+            ShareKeyEntity(
+                rotation = shareKey.rotation,
+                userId = userAddress.userId.id,
+                addressId = userAddress.addressId.id,
+                shareId = shareResponse.shareId,
+                key = shareKey.responseKey,
+                createTime = shareKey.createTime,
+                symmetricallyEncryptedKey = shareKey.key,
+                isActive = shareKey.isActive,
+                userKeyId = shareKey.userKeyId
+            )
+        }
+    }
+
+    private suspend fun getEncryptedContentAndActiveStatus(
+        localShare: ShareEntity,
+        remoteShare: ShareResponse,
+        shareId: ShareId
+    ): Pair<EncryptedByteArray?, Boolean> {
+        val contentChanged = localShare.content != remoteShare.content
+
+        return if (contentChanged) {
+            val shareKey = shareKeyRepository.getLatestKeyForShare(shareId).first()
+            val encryptionKey = encryptionContextProvider.withEncryptionContextSuspendable {
+                EncryptionKey(decrypt(shareKey.key))
+            }
+            when {
+                remoteShare.contentKeyRotation == null -> null to true
+                !shareKey.isActive -> null to false
+                else -> reencryptShareContents(remoteShare.content, encryptionKey) to true
+            }
+        } else {
+            localShare.encryptedContent to localShare.isActive
+        }
     }
 
     private suspend fun getEncryptionKey(keyRotation: Long?, keys: List<ShareKey>): EncryptionKeyStatus {
@@ -502,49 +561,6 @@ class ShareRepositoryImpl @Inject constructor(
         val decrypted =
             encryptionContextProvider.withEncryptionContextSuspendable { decrypt(encryptionKey.key) }
         return EncryptionKeyStatus.Found(EncryptionKey(decrypted))
-    }
-
-    private fun shareResponseToEntity(
-        userAddress: UserAddress,
-        shareResponse: ShareResponse,
-        key: EncryptionKeyStatus,
-        groupEmail: String?
-    ): ShareEntity {
-        val (encryptedContent, isActive) = when (key) {
-            EncryptionKeyStatus.NotFound -> null to true
-            is EncryptionKeyStatus.Found -> {
-                reencryptShareContents(shareResponse.content, key.encryptionKey) to true
-            }
-
-            EncryptionKeyStatus.Inactive -> null to false
-        }
-        return ShareEntity(
-            id = shareResponse.shareId,
-            userId = userAddress.userId.id,
-            addressId = userAddress.addressId.id,
-            vaultId = shareResponse.vaultId,
-            groupId = shareResponse.groupId,
-            targetType = shareResponse.targetType,
-            targetId = shareResponse.targetId,
-            permission = shareResponse.permission,
-            content = shareResponse.content,
-            contentKeyRotation = shareResponse.contentKeyRotation,
-            contentFormatVersion = shareResponse.contentFormatVersion,
-            expirationTime = shareResponse.expirationTime,
-            createTime = shareResponse.createTime,
-            encryptedContent = encryptedContent,
-            isActive = isActive,
-            shareRoleId = shareResponse.shareRoleId,
-            owner = shareResponse.owner,
-            targetMembers = shareResponse.targetMembers,
-            shared = shareResponse.shared,
-            targetMaxMembers = shareResponse.targetMaxMembers,
-            newUserInvitesReady = shareResponse.newUserInvitesReady,
-            pendingInvites = shareResponse.pendingInvites,
-            canAutofill = shareResponse.canAutofill,
-            groupEmail = groupEmail,
-            flags = shareResponse.flags
-        )
     }
 
     private fun ShareEntity.toDomain(encryptionContext: EncryptionContext): Share = when (ShareType.from(targetType)) {
@@ -631,6 +647,9 @@ class ShareRepositoryImpl @Inject constructor(
     }
 
     private fun localShareNeedsUpdate(localShare: ShareEntity, remoteShare: ShareResponse): Boolean = when {
+        localShare.vaultId != remoteShare.vaultId -> true
+        localShare.targetType != remoteShare.targetType -> true
+        localShare.targetId != remoteShare.targetId -> true
         localShare.owner != remoteShare.owner -> true
         localShare.groupId != remoteShare.groupId -> true
         localShare.shareRoleId != remoteShare.shareRoleId -> true
@@ -643,23 +662,13 @@ class ShareRepositoryImpl @Inject constructor(
         localShare.newUserInvitesReady != remoteShare.newUserInvitesReady -> true
         localShare.canAutofill != remoteShare.canAutofill -> true
         localShare.flags != remoteShare.flags -> true
+        localShare.content != remoteShare.content -> true
+        localShare.contentKeyRotation != remoteShare.contentKeyRotation -> true
+        localShare.contentFormatVersion != remoteShare.contentFormatVersion -> true
+        localShare.createTime != remoteShare.createTime -> true
 
         else -> false
     }
-
-    private fun updateEntityWithResponse(entity: ShareEntity, response: ShareResponse): ShareEntity = entity.copy(
-        owner = response.owner,
-        groupId = response.groupId,
-        shareRoleId = response.shareRoleId,
-        targetMembers = response.targetMembers,
-        shared = response.shared,
-        permission = response.permission,
-        targetMaxMembers = response.targetMaxMembers,
-        expirationTime = response.expirationTime,
-        newUserInvitesReady = response.newUserInvitesReady,
-        pendingInvites = response.pendingInvites,
-        flags = response.flags
-    )
 
     private suspend fun refreshDefaultShareIfNeeded(userId: UserId, toDelete: Set<ShareId>) {
         if (toDelete.isEmpty()) return
@@ -679,12 +688,6 @@ class ShareRepositoryImpl @Inject constructor(
             else -> ShareId(userData.simpleLoginSyncDefaultShareId).some()
         }
     }
-
-    internal data class ShareResponseEntity(
-        val response: ShareResponse,
-        val entity: ShareEntity,
-        val keys: List<ShareKeyEntity>
-    )
 
     internal sealed interface EncryptionKeyStatus {
         data object NotFound : EncryptionKeyStatus

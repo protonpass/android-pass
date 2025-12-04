@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- Remove CAMERA permission for Quest flavor as it's not supported -->
+    <uses-permission android:name="android.permission.CAMERA"
+        tools:node="remove" />
+
+    <!-- Remove camera features for Quest flavor -->
+    <uses-feature
+        android:name="android.hardware.camera"
+        tools:node="remove" />
+    <uses-feature
+        android:name="android.hardware.camera.autofocus"
+        tools:node="remove" />
+
+</manifest>
+

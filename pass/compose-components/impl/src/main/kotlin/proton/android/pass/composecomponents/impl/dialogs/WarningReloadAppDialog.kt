@@ -16,7 +16,7 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.ui.internal
+package proton.android.pass.composecomponents.impl.dialogs
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.clickable
@@ -34,12 +34,10 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import proton.android.pass.R
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
-import proton.android.pass.composecomponents.impl.dialogs.DialogCancelConfirmSection
-import proton.android.pass.composecomponents.impl.dialogs.NoPaddingDialog
 import proton.android.pass.composecomponents.impl.text.Text
+import proton.android.pass.composecomponents.impl.R
 
 
 @Composable
@@ -88,7 +86,7 @@ fun WarningReloadAppDialog(
                 )
 
                 Text.Body1Regular(
-                    text = stringResource(id = R.string.warning_dialog_reload_app_after_purchase_reminder),
+                    text = stringResource(id = R.string.warning_dialog_item_shared_vault_reminder),
                     color = PassTheme.colors.textNorm
                 )
             }

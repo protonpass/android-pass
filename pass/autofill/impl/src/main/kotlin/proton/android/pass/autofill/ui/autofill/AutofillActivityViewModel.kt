@@ -28,9 +28,9 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.firstOrNull
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -40,6 +40,8 @@ import me.proton.core.accountmanager.domain.getAccounts
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.account.api.AccountOrchestrators
 import proton.android.pass.account.api.Orchestrator
+import proton.android.pass.appconfig.api.AppConfig
+import proton.android.pass.appconfig.api.BuildFlavor.Companion.supportPayment
 import proton.android.pass.autofill.api.suggestions.PackageNameUrlSuggestionAdapter
 import proton.android.pass.autofill.entities.AutofillAppState
 import proton.android.pass.autofill.service.R
@@ -47,6 +49,7 @@ import proton.android.pass.autofill.ui.autofill.AutofillIntentExtras.ARG_EXTRAS_
 import proton.android.pass.autofill.ui.autofill.AutofillUiState.NotValidAutofillUiState
 import proton.android.pass.autofill.ui.autofill.AutofillUiState.UninitialisedAutofillUiState
 import proton.android.pass.biometry.NeedsBiometricAuth
+import proton.android.pass.common.api.combineN
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.ToastManager
 import proton.android.pass.preferences.InternalSettingsRepository
@@ -64,7 +67,9 @@ class AutofillActivityViewModel @Inject constructor(
     private val packageNameUrlSuggestionAdapter: PackageNameUrlSuggestionAdapter,
     savedStateHandle: SavedStateHandle,
     userPreferencesRepository: UserPreferencesRepository,
-    needsBiometricAuth: NeedsBiometricAuth
+    needsBiometricAuth: NeedsBiometricAuth,
+    appConfig: AppConfig,
+    private val settingsRepository: InternalSettingsRepository
 ) : ViewModel() {
 
     private val closeScreenFlow: MutableStateFlow<Boolean> = MutableStateFlow(false)
@@ -77,13 +82,16 @@ class AutofillActivityViewModel @Inject constructor(
         .getThemePreference()
         .distinctUntilChanged()
 
-    internal val stateFlow: StateFlow<AutofillUiState> = combine(
+    internal val stateFlow: StateFlow<AutofillUiState> = combineN(
         themePreferenceState,
         needsBiometricAuth(),
         copyTotpToClipboardPreferenceState,
         closeScreenFlow,
-        savedStateHandle.getStateFlow<Bundle?>(ARG_EXTRAS_BUNDLE, null)
-    ) { themePreference, needsAuth, copyTotpToClipboard, closeScreen, extrasBundle ->
+        savedStateHandle.getStateFlow<Bundle?>(ARG_EXTRAS_BUNDLE, null),
+        flowOf(appConfig.flavor.supportPayment()),
+        settingsRepository.hasShownReloadAppWarning()
+    ) { themePreference, needsAuth, copyTotpToClipboard, closeScreen, extrasBundle,
+        supportPayment, hasShownReloadAppWarning ->
         when {
             closeScreen -> AutofillUiState.CloseScreen
             extrasBundle == null -> UninitialisedAutofillUiState
@@ -103,7 +111,9 @@ class AutofillActivityViewModel @Inject constructor(
                             needsAuth = needsAuth,
                             autofillAppState = appState,
                             copyTotpToClipboardPreference = copyTotpToClipboard.value(),
-                            selectedAutofillItem = extras.second
+                            selectedAutofillItem = extras.second,
+                            supportPayment = supportPayment,
+                            canShowWarningReloadApp = !hasShownReloadAppWarning
                         )
                     }
                 }.fold(
@@ -146,6 +156,10 @@ class AutofillActivityViewModel @Inject constructor(
                 closeScreenFlow.update { true }
             }
         }
+    }
+
+    internal fun doNotDisplayReloadAppWarningDialog() {
+        settingsRepository.setHasShownReloadAppWarning(true)
     }
 
     companion object {

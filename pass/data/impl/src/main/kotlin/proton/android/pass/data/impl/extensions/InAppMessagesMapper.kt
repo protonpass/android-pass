@@ -23,8 +23,8 @@ import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
-import proton.android.pass.common.api.toOption
 import proton.android.pass.common.api.getOrElse
+import proton.android.pass.common.api.toOption
 import proton.android.pass.data.impl.responses.CtaResponse
 import proton.android.pass.data.impl.responses.NotificationPromoContentsResponse
 import proton.android.pass.data.impl.responses.NotificationResponse

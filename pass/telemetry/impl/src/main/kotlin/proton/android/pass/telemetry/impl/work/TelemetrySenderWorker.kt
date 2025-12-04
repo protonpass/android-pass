@@ -31,6 +31,7 @@ import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
 import me.proton.core.network.domain.ApiException
 import me.proton.core.network.domain.isRetryable
+import proton.android.pass.common.api.safeRunCatching
 import proton.android.pass.data.api.repositories.TelemetryRepository
 import proton.android.pass.log.api.PassLogger
 import java.util.concurrent.TimeUnit
@@ -46,7 +47,7 @@ open class TelemetrySenderWorker @AssistedInject constructor(
 
     override suspend fun doWork(): Result {
         PassLogger.i(TAG, "Starting $TAG attempt $runAttemptCount")
-        return runCatching { telemetryRepository.sendEvents() }
+        return safeRunCatching { telemetryRepository.sendEvents() }
             .fold(
                 onSuccess = {
                     PassLogger.i(TAG, "$TAG finished  successfully")

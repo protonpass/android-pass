@@ -34,9 +34,9 @@ import kotlinx.coroutines.flow.update
 import proton.android.pass.common.api.FlowUtils.oneShot
 import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.asLoadingResult
+import proton.android.pass.common.api.safeRunCatching
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
-import proton.android.pass.domain.toItemContents
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.usecases.GetItemById
@@ -44,6 +44,7 @@ import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.Passkey
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.toItemContents
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonNavArgId
 import javax.inject.Inject
@@ -125,7 +126,7 @@ class SelectPasskeyBottomsheetViewModel @Inject constructor(
         eventFlow.update { SelectPasskeyBottomsheetEvent.Idle }
     }
 
-    private suspend fun getPasskeys(): Result<ImmutableList<Passkey>> = runCatching {
+    private suspend fun getPasskeys(): Result<ImmutableList<Passkey>> = safeRunCatching {
         getItemById(shareId, itemId)
     }.fold(
         onSuccess = { item ->

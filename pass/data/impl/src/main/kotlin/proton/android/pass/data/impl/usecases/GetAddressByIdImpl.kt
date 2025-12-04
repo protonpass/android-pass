@@ -18,11 +18,11 @@
 
 package proton.android.pass.data.impl.usecases
 
-import proton.android.pass.data.api.usecases.GetAddressById
 import me.proton.core.domain.entity.UserId
 import me.proton.core.user.domain.UserAddressManager
 import me.proton.core.user.domain.entity.AddressId
 import me.proton.core.user.domain.entity.UserAddress
+import proton.android.pass.data.api.usecases.GetAddressById
 import javax.inject.Inject
 
 class GetAddressByIdImpl @Inject constructor(

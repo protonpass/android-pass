@@ -22,6 +22,7 @@ import android.content.Context
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import proton.android.pass.common.api.safeRunCatching
 import proton.android.pass.data.api.usecases.ClearPin
 import proton.android.pass.data.impl.util.PinFileConfig
 import proton.android.pass.log.api.PassLogger
@@ -35,7 +36,7 @@ class ClearPinImpl @Inject constructor(
 ) : ClearPin {
     override suspend fun invoke() {
         withContext(Dispatchers.IO) {
-            runCatching { performPinClear() }
+            safeRunCatching { performPinClear() }
                 .onFailure {
                     PassLogger.w(TAG, "Error deleting pin file")
                     PassLogger.w(TAG, it)

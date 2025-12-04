@@ -34,6 +34,7 @@ import proton.android.pass.clipboard.api.ClipboardManager
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
+import proton.android.pass.common.api.safeRunCatching
 import proton.android.pass.common.api.some
 import proton.android.pass.commonpresentation.api.attachments.AttachmentsHandler
 import proton.android.pass.commonui.api.SavedStateHandleProvider
@@ -164,14 +165,14 @@ class UpdateNoteViewModel @Inject constructor(
     private suspend fun setupInitialState() {
         if (itemOption != None) return
         isLoadingState.update { IsLoadingState.Loading }
-        runCatching { getItemById(navShareId, navItemId) }
+        safeRunCatching { getItemById(navShareId, navItemId) }
             .onFailure {
                 PassLogger.w(TAG, it)
                 PassLogger.w(TAG, "Get item error")
                 snackbarDispatcher(InitError)
             }
             .onSuccess { item ->
-                runCatching {
+                safeRunCatching {
                     if (item.hasAttachments) {
                         attachmentsHandler.getAttachmentsForItem(item.shareId, item.id)
                     }
@@ -215,7 +216,7 @@ class UpdateNoteViewModel @Inject constructor(
             .first { userId -> userId != null }
         if (userId != null && initialItem is Some) {
             val contents = noteItemFormMutableState.toItemContents()
-            runCatching {
+            safeRunCatching {
                 val hasContentsChanged =
                     encryptionContextProvider.withEncryptionContextSuspendable {
                         !areItemContentsEqual(
@@ -239,14 +240,14 @@ class UpdateNoteViewModel @Inject constructor(
                 }
             }.onSuccess { item ->
                 snackbarDispatcher(NoteUpdated)
-                runCatching {
+                safeRunCatching {
                     renameAttachments(item.shareId, item.id)
                 }.onFailure {
                     PassLogger.w(TAG, "Error renaming attachments")
                     PassLogger.w(TAG, it)
                     snackbarDispatcher(ItemRenameAttachmentsError)
                 }
-                runCatching {
+                safeRunCatching {
                     linkAttachmentsToItem(item.shareId, item.id, item.revision)
                 }.onFailure {
                     PassLogger.w(TAG, "Link attachment error")

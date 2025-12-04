@@ -21,8 +21,6 @@ package proton.android.pass.data.impl.fakes
 import proton.android.pass.data.impl.db.PassDatabase
 import proton.android.pass.data.impl.db.dao.GroupInviteDao
 import proton.android.pass.data.impl.db.dao.GroupInviteKeyDao
-import proton.android.pass.data.impl.db.dao.UserInviteDao
-import proton.android.pass.data.impl.db.dao.UserInviteKeyDao
 import proton.android.pass.data.impl.db.dao.ItemsDao
 import proton.android.pass.data.impl.db.dao.LiveTelemetryDao
 import proton.android.pass.data.impl.db.dao.PassDataMigrationDao
@@ -36,6 +34,8 @@ import proton.android.pass.data.impl.db.dao.SharesDao
 import proton.android.pass.data.impl.db.dao.TelemetryDao
 import proton.android.pass.data.impl.db.dao.UserAccessDataDao
 import proton.android.pass.data.impl.db.dao.UserEventsDao
+import proton.android.pass.data.impl.db.dao.UserInviteDao
+import proton.android.pass.data.impl.db.dao.UserInviteKeyDao
 import proton.android.pass.data.impl.db.dao.assetlink.AssetLinkDao
 import proton.android.pass.data.impl.db.dao.assetlink.IgnoredAssetLinkDao
 import proton.android.pass.data.impl.db.dao.attachment.AttachmentDao

@@ -20,10 +20,10 @@ package proton.android.pass.searchoptions.impl
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
-import proton.android.pass.searchoptions.api.AutofillSearchOptionsRepository
-import proton.android.pass.searchoptions.api.SortingOption
 import proton.android.pass.preferences.InternalSettingsRepository
 import proton.android.pass.preferences.SortingOptionPreference
+import proton.android.pass.searchoptions.api.AutofillSearchOptionsRepository
+import proton.android.pass.searchoptions.api.SortingOption
 import javax.inject.Inject
 
 class AutofillSearchOptionsRepositoryImpl @Inject constructor(

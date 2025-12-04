@@ -20,7 +20,6 @@ package proton.android.pass.featureprofile.impl
 
 import android.content.Intent
 import android.content.Intent.ACTION_VIEW
-import androidx.compose.ui.test.hasText
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
@@ -59,7 +58,6 @@ import proton.android.pass.features.profile.SHOW_RATING_OPTION
 import proton.android.pass.test.CallChecker
 import proton.android.pass.test.HiltComponentActivity
 import proton.android.pass.test.TestConstants
-import proton.android.pass.test.waitUntilExists
 import javax.inject.Inject
 import proton.android.pass.composecomponents.impl.R as CompR
 

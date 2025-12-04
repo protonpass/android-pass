@@ -20,10 +20,10 @@ package proton.android.pass.features.itemcreate.login
 
 import proton.android.pass.common.api.Option
 import proton.android.pass.commonuimodels.api.ItemUiModel
+import proton.android.pass.domain.CustomFieldType
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.attachments.AttachmentId
-import proton.android.pass.domain.CustomFieldType
 import java.net.URI
 
 sealed interface CreateLoginNavigation {

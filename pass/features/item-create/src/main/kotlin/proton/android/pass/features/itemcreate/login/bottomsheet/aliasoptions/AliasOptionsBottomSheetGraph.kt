@@ -19,13 +19,13 @@
 package proton.android.pass.features.itemcreate.login.bottomsheet.aliasoptions
 
 import androidx.navigation.NavGraphBuilder
+import proton.android.pass.domain.ShareId
 import proton.android.pass.features.itemcreate.login.BaseLoginNavigation
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.navigation.api.NavItem
 import proton.android.pass.navigation.api.NavItemType
 import proton.android.pass.navigation.api.ShowUpgradeNavArgId
 import proton.android.pass.navigation.api.bottomSheet
-import proton.android.pass.domain.ShareId
 
 const val CLEAR_ALIAS_NAV_PARAMETER_KEY = "clearAlias"
 

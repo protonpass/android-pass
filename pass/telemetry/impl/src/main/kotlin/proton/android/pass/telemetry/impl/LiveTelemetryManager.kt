@@ -22,6 +22,7 @@ import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.onSubscription
+import proton.android.pass.common.api.safeRunCatching
 import proton.android.pass.data.api.repositories.LiveTelemetryRepository
 import proton.android.pass.data.api.usecases.ObserveCurrentUser
 import proton.android.pass.log.api.PassLogger
@@ -55,7 +56,7 @@ class LiveTelemetryManagerImpl @Inject constructor(
         mutableEventFlow
             .onSubscription { onSubscribed() }
             .collect { event ->
-                runCatching {
+                safeRunCatching {
                     performSendEvent(event)
                     onPerformed()
                 }.onSuccess {

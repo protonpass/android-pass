@@ -26,6 +26,7 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flow
 import me.proton.core.domain.entity.UserId
+import proton.android.pass.common.api.safeRunCatching
 import proton.android.pass.data.api.repositories.InAppMessagesRepository
 import proton.android.pass.data.impl.extensions.toDomain
 import proton.android.pass.data.impl.local.inappmessages.LocalInAppMessagesDataSource
@@ -64,7 +65,7 @@ class InAppMessagesRepositoryImpl @Inject constructor(
         coroutineScope {
             val allMessages = mutableListOf<InAppMessage>()
             var lastID: String? = null
-            runCatching {
+            safeRunCatching {
                 do {
                     ensureActive()
                     val response =

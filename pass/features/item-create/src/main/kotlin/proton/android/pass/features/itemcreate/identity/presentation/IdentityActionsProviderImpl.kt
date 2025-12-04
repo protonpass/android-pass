@@ -39,6 +39,7 @@ import proton.android.pass.common.api.AppDispatchers
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.combineN
+import proton.android.pass.common.api.safeRunCatching
 import proton.android.pass.common.api.some
 import proton.android.pass.common.api.toOption
 import proton.android.pass.commonpresentation.api.attachments.AttachmentsHandler
@@ -698,14 +699,14 @@ class IdentityActionsProviderImpl @Inject constructor(
     }
 
     override suspend fun onItemSavedState(item: Item) {
-        runCatching {
+        safeRunCatching {
             renameAttachments(item.shareId, item.id)
         }.onFailure {
             PassLogger.w(TAG, "Error renaming attachments")
             PassLogger.w(TAG, it)
             snackbarDispatcher(ItemRenameAttachmentsError)
         }
-        runCatching {
+        safeRunCatching {
             linkAttachmentsToItem(item.shareId, item.id, item.revision)
         }.onFailure {
             PassLogger.w(TAG, "Link attachment error")
@@ -779,7 +780,7 @@ class IdentityActionsProviderImpl @Inject constructor(
     }
 
     private suspend fun getItemAttachments(item: Item) {
-        runCatching {
+        safeRunCatching {
             if (item.hasAttachments) {
                 attachmentsHandler.getAttachmentsForItem(item.shareId, item.id)
             }

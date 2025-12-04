@@ -26,9 +26,9 @@ import proton.android.pass.common.api.toOption
 import proton.android.pass.crypto.api.context.EncryptionContext
 import proton.android.pass.data.impl.db.entities.ItemEntity
 import proton.android.pass.datamodels.api.fromParsed
-import proton.android.pass.domain.ItemFlags
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemEncrypted
+import proton.android.pass.domain.ItemFlags
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ItemType
 import proton.android.pass.domain.ShareId

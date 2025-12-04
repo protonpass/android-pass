@@ -48,6 +48,7 @@ import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.asLoadingResult
 import proton.android.pass.common.api.combineN
 import proton.android.pass.common.api.getOrNull
+import proton.android.pass.common.api.safeRunCatching
 import proton.android.pass.common.api.toOption
 import proton.android.pass.commonpresentation.api.attachments.AttachmentsHandler
 import proton.android.pass.commonui.api.SavedStateHandleProvider
@@ -364,7 +365,7 @@ open class CreateAliasViewModel @Inject constructor(
     ) {
         val userId = accountManager.getPrimaryUserId().first { userId -> userId != null }
         if (userId != null) {
-            runCatching {
+            safeRunCatching {
                 createAlias(
                     userId = userId,
                     shareId = shareId,
@@ -380,7 +381,7 @@ open class CreateAliasViewModel @Inject constructor(
                 .onFailure { onCreateAliasError(it) }
                 .onSuccess { item ->
                     snackbarDispatcher(AliasCreated)
-                    runCatching {
+                    safeRunCatching {
                         linkAttachmentsToItem(item.shareId, item.id, item.revision)
                     }.onFailure {
                         PassLogger.w(TAG, "Link attachment error")

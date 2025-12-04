@@ -36,6 +36,7 @@ import kotlinx.datetime.Instant
 import me.proton.core.crypto.common.keystore.EncryptedByteArray
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.AppDispatchers
+import proton.android.pass.common.api.safeRunCatching
 import proton.android.pass.commonrust.api.FileTypeDetector
 import proton.android.pass.commonrust.api.MimeType
 import proton.android.pass.crypto.api.Base64
@@ -330,7 +331,7 @@ class AttachmentRepositoryImpl @Inject constructor(
         .onStart {
             coroutineScope {
                 launch {
-                    runCatching { refreshActiveAttachments(userId, shareId, itemId) }
+                    safeRunCatching { refreshActiveAttachments(userId, shareId, itemId) }
                         .onSuccess { PassLogger.i(TAG, "Refreshed attachments") }
                         .onFailure {
                             PassLogger.i(
@@ -521,7 +522,7 @@ class AttachmentRepositoryImpl @Inject constructor(
         val contentUri = uri.toString().toUri()
 
         withContext(appDispatchers.io) {
-            runCatching {
+            safeRunCatching {
                 context.contentResolver.openOutputStream(contentUri)?.buffered()
                     ?.use { outputStream ->
                         val fileKey = encryptionContextProvider.withEncryptionContextSuspendable {

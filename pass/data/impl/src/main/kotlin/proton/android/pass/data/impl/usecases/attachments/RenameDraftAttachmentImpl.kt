@@ -20,6 +20,7 @@ package proton.android.pass.data.impl.usecases.attachments
 
 import kotlinx.coroutines.flow.firstOrNull
 import me.proton.core.accountmanager.domain.AccountManager
+import proton.android.pass.common.api.safeRunCatching
 import proton.android.pass.data.api.errors.UserIdNotAvailableError
 import proton.android.pass.data.api.repositories.AttachmentRepository
 import proton.android.pass.data.api.repositories.DraftAttachmentRepository
@@ -43,7 +44,7 @@ class RenameDraftAttachmentImpl @Inject constructor(
                     ?: throw UserIdNotAvailableError()
                 val attachmentId = draftAttachment.pendingAttachmentId
                 val newMetadata = draftAttachment.metadata.copy(name = newName)
-                runCatching {
+                safeRunCatching {
                     attachmentRepository.updatePendingAttachment(
                         userId = userId,
                         attachmentId = attachmentId,

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2025 Proton AG
+ * Copyright (c) 2023 Proton AG
  * This file is part of Proton AG and Proton Pass.
  *
  * Proton Pass is free software: you can redistribute it and/or modify
@@ -16,22 +16,16 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.data.fakes.usecases
+package proton.android.pass.common.api
 
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableStateFlow
-import me.proton.core.domain.entity.UserId
-import proton.android.pass.data.api.usecases.GroupMembers
-import proton.android.pass.data.api.usecases.ObserveGroupMembersByGroup
-import javax.inject.Inject
+import kotlin.coroutines.cancellation.CancellationException
 
-class FakeObserveGroupMembersByGroup @Inject constructor() : ObserveGroupMembersByGroup {
-
-    private val state = MutableStateFlow<List<GroupMembers>>(emptyList())
-
-    override fun invoke(userId: UserId?, forceRefresh: Boolean): Flow<List<GroupMembers>> = state
-
-    fun emit(value: List<GroupMembers>) {
-        state.value = value
-    }
+@Suppress("TooGenericExceptionCaught")
+suspend inline fun <R> safeRunCatching(block: suspend () -> R): Result<R> = try {
+    Result.success(block())
+} catch (e: CancellationException) {
+    throw e // Re-throw cancellation to allow proper coroutine cancellation
+} catch (e: Throwable) {
+    Result.failure(e)
 }
+

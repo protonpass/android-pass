@@ -35,6 +35,7 @@ import me.proton.core.account.domain.entity.AccountState
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.accountmanager.domain.getAccounts
 import me.proton.core.eventmanager.domain.work.EventWorkerManager
+import proton.android.pass.common.api.safeRunCatching
 import proton.android.pass.common.api.transpose
 import proton.android.pass.data.api.usecases.PerformSync
 import proton.android.pass.log.api.PassLogger
@@ -55,7 +56,7 @@ open class SyncWorker @AssistedInject constructor(
         val result = accountManager.getAccounts(AccountState.Ready)
             .mapLatest { accounts ->
                 accounts.map { account ->
-                    runCatching { performSync(account.userId) }
+                    safeRunCatching { performSync(account.userId) }
                         .onSuccess {
                             PassLogger.i(TAG, "Sync for ${account.userId} finished successfully")
                         }

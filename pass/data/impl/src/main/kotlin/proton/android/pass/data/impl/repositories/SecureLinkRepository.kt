@@ -30,6 +30,7 @@ import me.proton.core.crypto.common.keystore.EncryptedByteArray
 import me.proton.core.domain.entity.UserId
 import me.proton.core.network.domain.ApiException
 import me.proton.core.network.domain.ApiResult
+import proton.android.pass.common.api.safeRunCatching
 import proton.android.pass.crypto.api.Base64
 import proton.android.pass.crypto.api.EncryptionKey
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
@@ -154,7 +155,7 @@ class SecureLinkRepositoryImpl @Inject constructor(
     }
 
     override suspend fun deleteSecureLink(userId: UserId, secureLinkId: SecureLinkId) {
-        runCatching { remoteSecureLinkDataSource.deleteSecureLink(userId, secureLinkId) }
+        safeRunCatching { remoteSecureLinkDataSource.deleteSecureLink(userId, secureLinkId) }
             .onFailure { exception ->
                 if (exception is ApiException) {
                     val error = exception.error
@@ -183,7 +184,7 @@ class SecureLinkRepositoryImpl @Inject constructor(
         val localSecureLinks = secureLinksLocalDataSource.getAll(userId)
         emit(localSecureLinks)
 
-        runCatching { fetchSecureLinksFromRemote(userId) }
+        safeRunCatching { fetchSecureLinksFromRemote(userId) }
             .onFailure { error ->
                 if (localSecureLinks.isEmpty()) {
                     throw error

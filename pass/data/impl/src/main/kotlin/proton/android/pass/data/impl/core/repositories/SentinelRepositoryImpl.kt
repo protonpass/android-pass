@@ -26,6 +26,7 @@ import kotlinx.coroutines.flow.onStart
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Some
+import proton.android.pass.common.api.safeRunCatching
 import proton.android.pass.data.api.core.datasources.LocalSentinelDataSource
 import proton.android.pass.data.api.core.datasources.RemoteSentinelDataSource
 import proton.android.pass.data.api.core.repositories.SentinelRepository
@@ -40,14 +41,14 @@ class SentinelRepositoryImpl @Inject constructor(
 ) : SentinelRepository {
 
     override suspend fun disableSentinel() {
-        runCatching { remoteSentinelDataSource.disableSentinel() }
+        safeRunCatching { remoteSentinelDataSource.disableSentinel() }
             .onSuccess {
                 localSentinelDataSource.disableSentinel()
             }
     }
 
     override suspend fun enableSentinel() {
-        runCatching { remoteSentinelDataSource.enableSentinel() }
+        safeRunCatching { remoteSentinelDataSource.enableSentinel() }
             .onSuccess {
                 localSentinelDataSource.enableSentinel()
             }

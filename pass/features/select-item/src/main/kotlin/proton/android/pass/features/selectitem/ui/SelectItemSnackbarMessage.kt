@@ -19,9 +19,9 @@
 package proton.android.pass.features.selectitem.ui
 
 import androidx.annotation.StringRes
+import proton.android.pass.features.selectitem.R
 import proton.android.pass.notifications.api.SnackbarMessage
 import proton.android.pass.notifications.api.SnackbarType
-import proton.android.pass.features.selectitem.R
 
 enum class SelectItemSnackbarMessage(
     @StringRes override val id: Int,

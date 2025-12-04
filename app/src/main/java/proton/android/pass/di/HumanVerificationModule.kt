@@ -40,9 +40,9 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import proton.android.pass.appconfig.api.AppConfig
 import me.proton.core.humanverification.presentation.HumanVerificationApiHost
 import me.proton.core.humanverification.presentation.utils.HumanVerificationVersion
+import proton.android.pass.appconfig.api.AppConfig
 
 @Module
 @InstallIn(SingletonComponent::class)

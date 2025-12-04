@@ -26,6 +26,7 @@ import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.withContext
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.AppDispatchers
+import proton.android.pass.common.api.safeRunCatching
 import proton.android.pass.data.api.usecases.CheckIfAttachmentExists
 import proton.android.pass.data.api.usecases.CheckIfItemExists
 import proton.android.pass.data.api.usecases.CheckIfShareExists
@@ -53,21 +54,21 @@ class DirectoryCleanerImpl @Inject constructor(
     override suspend fun deleteDir(type: DirectoryType) {
         withContext(appDispatchers.io) {
             when (type) {
-                DirectoryType.CameraTemp -> runCatching {
+                DirectoryType.CameraTemp -> safeRunCatching {
                     val file = File(context.cacheDir, Camera.value)
                     file.deleteRecursively()
                 }.onFailure {
                     PassLogger.w(TAG, "Failed to delete cache directory")
                     PassLogger.w(TAG, it)
                 }
-                DirectoryType.ShareTemp -> runCatching {
+                DirectoryType.ShareTemp -> safeRunCatching {
                     val file = File(context.cacheDir, Share.value)
                     file.deleteRecursively()
                 }.onFailure {
                     PassLogger.w(TAG, "Failed to delete cache directory")
                 }
 
-                DirectoryType.OrphanedAttachments -> runCatching {
+                DirectoryType.OrphanedAttachments -> safeRunCatching {
                     val attachmentsDirectory = File(context.filesDir, Attachments.value)
 
                     coroutineScope {

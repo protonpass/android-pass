@@ -29,6 +29,7 @@ import androidx.work.WorkerParameters
 import androidx.work.workDataOf
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
+import proton.android.pass.common.api.safeRunCatching
 import proton.android.pass.data.impl.usecases.assetlink.UpdateAssetLink
 import proton.android.pass.log.api.PassLogger
 
@@ -39,7 +40,7 @@ class SingleItemAssetLinkWorker @AssistedInject constructor(
     private val updateAssetLink: UpdateAssetLink
 ) : CoroutineWorker(appContext, workerParameters) {
 
-    override suspend fun doWork(): Result = runCatching {
+    override suspend fun doWork(): Result = safeRunCatching {
         PassLogger.i(TAG, "Starting $TAG attempt $runAttemptCount")
         val inputWebsites = workerParameters.inputData.getStringArray(WEBSITES_KEY)
             ?: return Result.failure()

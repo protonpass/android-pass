@@ -45,7 +45,6 @@ import proton.android.pass.domain.CustomFieldType
 import proton.android.pass.domain.ShareId
 import proton.android.pass.features.itemcreate.ItemSavedState
 import proton.android.pass.features.itemcreate.R
-import proton.android.pass.composecomponents.impl.R as CompR
 import proton.android.pass.features.itemcreate.common.ItemSavedLaunchedEffect
 import proton.android.pass.features.itemcreate.common.ShareError.EmptyShareList
 import proton.android.pass.features.itemcreate.common.ShareError.SharesNotAvailable
@@ -63,6 +62,7 @@ import proton.android.pass.features.itemcreate.note.BaseNoteNavigation.NoteCusto
 import proton.android.pass.features.itemcreate.note.BaseNoteNavigation.OpenDraftAttachmentOptions
 import proton.android.pass.features.itemcreate.note.CreateNoteNavigation.SelectVault
 import proton.android.pass.features.itemcreate.note.NoteField.CustomField
+import proton.android.pass.composecomponents.impl.R as CompR
 
 @Suppress("ComplexMethod")
 @OptIn(ExperimentalComposeUiApi::class)

@@ -22,6 +22,7 @@ import kotlinx.coroutines.flow.first
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.asResultWithoutLoading
+import proton.android.pass.common.api.safeRunCatching
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.repositories.AliasRepository
 import proton.android.pass.data.api.repositories.PendingAttachmentLinkRepository
@@ -49,7 +50,7 @@ class UpdateAliasImpl @Inject constructor(
     ): Item {
         if (content.mailboxes is Some) {
             val mailboxes = (content.mailboxes as Some<List<AliasMailbox>>).value
-            runCatching {
+            safeRunCatching {
                 aliasRepository.updateAliasMailboxes(
                     userId,
                     item.shareId,

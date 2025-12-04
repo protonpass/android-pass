@@ -22,6 +22,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.onStart
 import proton.android.pass.common.api.combineN
+import proton.android.pass.common.api.safeRunCatching
 import proton.android.pass.commonpresentation.api.items.details.domain.ItemDetailsFieldType
 import proton.android.pass.commonpresentation.api.items.details.handlers.ItemDetailsHandlerObserver
 import proton.android.pass.commonuimodels.api.attachments.AttachmentsState
@@ -161,7 +162,7 @@ class AliasItemDetailsHandlerObserverImpl @Inject constructor(
                 callback(CreateLoginFromAlias(fieldType.alias, fieldType.shareId))
             is ItemDetailsFieldType.AliasItemAction.ToggleAlias -> {
                 isAliasStateTogglingState.emit(IsLoadingState.Loading)
-                runCatching { changeAliasStatus(fieldType.shareId, fieldType.itemId, fieldType.value) }
+                safeRunCatching { changeAliasStatus(fieldType.shareId, fieldType.itemId, fieldType.value) }
                     .onSuccess {
                         PassLogger.i(TAG, "Alias status changed successfully")
                     }

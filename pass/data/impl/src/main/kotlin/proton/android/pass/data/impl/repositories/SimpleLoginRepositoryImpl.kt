@@ -34,6 +34,7 @@ import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
+import proton.android.pass.common.api.safeRunCatching
 import proton.android.pass.common.api.some
 import proton.android.pass.crypto.api.usecases.EncryptedCreateItem
 import proton.android.pass.data.api.errors.EmailAlreadyInUseError
@@ -214,7 +215,7 @@ class SimpleLoginRepositoryImpl @Inject constructor(
 
     override suspend fun verifyAliasMailbox(mailboxId: Long, verificationCode: String) {
         withUserId { userId ->
-            runCatching {
+            safeRunCatching {
                 remoteSimpleLoginDataSource.verifySimpleLoginAliasMailbox(
                     userId = userId,
                     mailboxId = mailboxId,
@@ -236,7 +237,7 @@ class SimpleLoginRepositoryImpl @Inject constructor(
 
     override suspend fun changeAliasMailboxEmail(mailboxId: Long, email: String): SimpleLoginAliasMailbox =
         withUserId { userId ->
-            runCatching {
+            safeRunCatching {
                 val mailbox = remoteSimpleLoginDataSource.changeSimpleLoginAliasMailbox(
                     userId = userId,
                     mailboxId = mailboxId,

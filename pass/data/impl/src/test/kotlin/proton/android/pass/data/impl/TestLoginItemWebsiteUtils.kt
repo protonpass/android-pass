@@ -18,9 +18,9 @@
 
 package proton.android.pass.data.impl
 
+import org.junit.Test
 import proton.android.pass.data.impl.extensions.hasWebsite
 import proton.android.pass.test.domain.TestItemType
-import org.junit.Test
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 

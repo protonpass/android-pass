@@ -18,20 +18,21 @@
 
 package proton.android.pass.data.impl.crypto
 
+import proton.android.pass.common.api.safeRunCatching
 import proton.android.pass.log.api.PassLogger
 
 internal suspend fun <T> fetchWithForceRefresh(
     tag: String,
     initial: suspend () -> T?,
     refresh: suspend () -> T?
-): T? = runCatching {
+): T? = safeRunCatching {
     initial()?.let { return it }
     PassLogger.d(tag, "Initial fetch returned null. Retrying with force refresh.")
     refresh()
 }.onFailure {
     PassLogger.w(tag, "Initial fetch failed. Retrying with force refresh.")
     PassLogger.w(tag, it)
-    runCatching { refresh() }
+    safeRunCatching { refresh() }
         .onFailure { t ->
             PassLogger.w(tag, "Force-refresh fetch also failed.")
             PassLogger.w(tag, it)

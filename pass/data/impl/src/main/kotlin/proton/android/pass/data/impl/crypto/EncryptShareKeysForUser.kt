@@ -21,6 +21,7 @@ package proton.android.pass.data.impl.crypto
 import kotlinx.coroutines.flow.first
 import me.proton.core.key.domain.extension.primary
 import me.proton.core.user.domain.entity.UserAddress
+import proton.android.pass.common.api.safeRunCatching
 import proton.android.pass.crypto.api.usecases.invites.EncryptInviteKeys
 import proton.android.pass.crypto.api.usecases.invites.EncryptedInviteShareKeyList
 import proton.android.pass.data.api.usecases.GetAllKeysByAddress
@@ -93,7 +94,7 @@ class EncryptShareKeysForUserImpl @Inject constructor(
         val targetAddressKey = targetUserKeys.firstOrNull()?.publicKey
             ?: return Result.failure(IllegalStateException("No primary address key for target user"))
 
-        return runCatching {
+        return safeRunCatching {
             encryptInviteKeys(
                 inviterAddressKey = inviterAddressKey,
                 inviteKeys = shareKeys,

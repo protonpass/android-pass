@@ -41,6 +41,7 @@ import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.asLoadingResult
 import proton.android.pass.common.api.combineN
 import proton.android.pass.common.api.getOrNull
+import proton.android.pass.common.api.safeRunCatching
 import proton.android.pass.common.api.some
 import proton.android.pass.common.api.toOption
 import proton.android.pass.commonui.api.require
@@ -162,7 +163,7 @@ class MigrateConfirmVaultViewModel @Inject constructor(
 
     private suspend fun performAllItemsMigration(sourceShareId: ShareId, destShareId: ShareId) {
         isLoadingFlow.update { IsLoadingState.Loading }
-        runCatching {
+        safeRunCatching {
             migrateVault(
                 origin = sourceShareId,
                 dest = destShareId
@@ -187,7 +188,7 @@ class MigrateConfirmVaultViewModel @Inject constructor(
 
         isLoadingFlow.update { IsLoadingState.Loading }
 
-        runCatching {
+        safeRunCatching {
             migrateItems(
                 items = itemsToMigrate,
                 destinationShare = destShareId

@@ -63,6 +63,7 @@ import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.asLoadingResult
 import proton.android.pass.common.api.combineN
+import proton.android.pass.common.api.safeRunCatching
 import proton.android.pass.common.api.some
 import proton.android.pass.common.api.toOption
 import proton.android.pass.commonui.api.ClassHolder
@@ -294,7 +295,7 @@ class AuthViewModel @Inject constructor(
 
     private fun submitExtraPassword(password: String) {
         viewModelScope.launch {
-            runCatching {
+            safeRunCatching {
                 val encryptedPassword = encryptionContextProvider.withEncryptionContext {
                     encrypt(password)
                 }
@@ -330,7 +331,7 @@ class AuthViewModel @Inject constructor(
 
 
     private suspend fun removeExtraPasswordOnAuthenticated() {
-        runCatching { removeExtraPassword(userId.value()) }
+        safeRunCatching { removeExtraPassword(userId.value()) }
             .onSuccess {
                 PassLogger.i(TAG, "Removed extra password successfully")
                 val userId = currentUserId.firstOrNull() ?: throw UserIdNotAvailableError()

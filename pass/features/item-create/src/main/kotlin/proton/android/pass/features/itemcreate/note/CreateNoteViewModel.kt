@@ -43,6 +43,7 @@ import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.asLoadingResult
+import proton.android.pass.common.api.safeRunCatching
 import proton.android.pass.common.api.toOption
 import proton.android.pass.commonpresentation.api.attachments.AttachmentsHandler
 import proton.android.pass.commonui.api.SavedStateHandleProvider
@@ -207,7 +208,7 @@ class CreateNoteViewModel @Inject constructor(
         val userId = accountManager.getPrimaryUserId()
             .first { userId -> userId != null }
         if (userId != null) {
-            runCatching { getShare(userId, shareId) }
+            safeRunCatching { getShare(userId, shareId) }
                 .onFailure { PassLogger.e(TAG, it, "Error getting share") }
                 .mapCatching { share ->
                     val itemContents = noteItemFormState.toItemContents()
@@ -220,7 +221,7 @@ class CreateNoteViewModel @Inject constructor(
                 }
                 .onSuccess { item ->
                     snackbarDispatcher(NoteCreated)
-                    runCatching {
+                    safeRunCatching {
                         linkAttachmentsToItem(item.shareId, item.id, item.revision)
                     }.onFailure {
                         PassLogger.w(TAG, "Link attachment error")

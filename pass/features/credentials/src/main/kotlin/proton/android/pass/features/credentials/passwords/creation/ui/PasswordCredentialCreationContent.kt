@@ -34,8 +34,8 @@ import kotlinx.coroutines.Job
 import proton.android.pass.commonui.api.onBottomSheetDismissed
 import proton.android.pass.composecomponents.impl.bottomsheet.PassModalBottomSheetLayout
 import proton.android.pass.features.auth.AUTH_GRAPH
-import proton.android.pass.features.credentials.passwords.creation.navigation.passwordCredentialCreationNavGraph
 import proton.android.pass.features.credentials.passwords.creation.navigation.PasswordCredentialCreationNavEvent
+import proton.android.pass.features.credentials.passwords.creation.navigation.passwordCredentialCreationNavGraph
 import proton.android.pass.features.credentials.passwords.creation.presentation.PasswordCredentialCreationState
 import proton.android.pass.features.itemcreate.login.CREATE_LOGIN_GRAPH
 import proton.android.pass.features.selectitem.navigation.SelectItem

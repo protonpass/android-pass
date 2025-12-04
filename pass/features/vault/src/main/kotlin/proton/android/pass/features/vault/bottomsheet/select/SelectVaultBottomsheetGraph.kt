@@ -20,12 +20,12 @@ package proton.android.pass.features.vault.bottomsheet.select
 
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavType
+import proton.android.pass.domain.ShareId
 import proton.android.pass.features.vault.VaultNavigation
 import proton.android.pass.navigation.api.NavArgId
 import proton.android.pass.navigation.api.NavItem
 import proton.android.pass.navigation.api.NavItemType
 import proton.android.pass.navigation.api.bottomSheet
-import proton.android.pass.domain.ShareId
 
 object SelectedVaultArg : NavArgId {
     override val key = "selectedVault"

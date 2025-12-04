@@ -24,6 +24,7 @@ import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.domain.entity.UserId
 import me.proton.core.user.domain.extension.isOrganizationAdmin
 import me.proton.core.user.domain.repository.UserRepository
+import proton.android.pass.common.api.safeRunCatching
 import proton.android.pass.data.api.repositories.GroupInviteRepository
 import proton.android.pass.data.api.usecases.RefreshGroupInvites
 import proton.android.pass.domain.events.EventToken
@@ -41,7 +42,7 @@ class RefreshGroupInvitesImpl @Inject constructor(
     override suspend fun invoke(userId: UserId?, eventToken: EventToken?) {
         PassLogger.i(TAG, "Refreshing group invites started")
 
-        runCatching {
+        safeRunCatching {
             val currentUserId = userId ?: accountManager.getPrimaryUserId()
                 .filterNotNull()
                 .first()

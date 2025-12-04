@@ -31,6 +31,7 @@ import me.proton.android.pass.preferences.BooleanPrefProto
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.appconfig.api.AppConfig
 import proton.android.pass.common.api.Option
+import proton.android.pass.common.api.safeRunCatching
 import proton.android.pass.common.api.toOption
 import proton.android.pass.domain.ShareId
 import proton.android.pass.log.api.PassLogger
@@ -360,7 +361,7 @@ class UserPreferencesRepositoryImpl @Inject constructor(
 
     private suspend fun setPreferenceSuspend(
         mapper: suspend (UserPreferences.Builder) -> UserPreferences.Builder
-    ): Result<Unit> = runCatching {
+    ): Result<Unit> = safeRunCatching {
         withContext(Dispatchers.IO) {
             dataStore.updateData {
                 mapper(it.toBuilder()).build()

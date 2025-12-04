@@ -19,6 +19,7 @@
 package proton.android.pass.totp.impl
 
 import kotlinx.coroutines.flow.first
+import proton.android.pass.common.api.safeRunCatching
 import proton.android.pass.totp.api.GetTotpCodeFromUri
 import proton.android.pass.totp.api.TotpManager
 import javax.inject.Inject
@@ -26,7 +27,7 @@ import javax.inject.Inject
 class GetTotpCodeFromUriImpl @Inject constructor(
     private val totpManager: TotpManager
 ) : GetTotpCodeFromUri {
-    override suspend fun invoke(uri: String): Result<String> = runCatching {
+    override suspend fun invoke(uri: String): Result<String> = safeRunCatching {
         totpManager.observeCode(uri).first().code
     }
 }

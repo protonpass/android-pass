@@ -20,6 +20,7 @@ package proton.android.pass.data.impl.util
 
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.ensureActive
+import proton.android.pass.common.api.safeRunCatching
 import proton.android.pass.log.api.PassLogger
 
 private const val TAG = "PaginatedFetcher"
@@ -34,7 +35,7 @@ suspend fun <T, R> fetchAllPaginated(
         var lastToken: String? = null
         var totalFetched = 0
 
-        runCatching {
+        safeRunCatching {
             do {
                 ensureActive()
                 val response = fetchPage(lastToken)

@@ -33,6 +33,7 @@ import kotlinx.coroutines.withContext
 import kotlinx.datetime.Instant
 import me.proton.core.domain.entity.UserId
 import me.proton.core.user.domain.entity.AddressId
+import proton.android.pass.common.api.safeRunCatching
 import proton.android.pass.data.api.errors.CustomEmailDoesNotExistException
 import proton.android.pass.data.api.errors.ItemNotFoundError
 import proton.android.pass.data.api.repositories.BreachRepository
@@ -116,7 +117,7 @@ class BreachRepositoryImpl @Inject constructor(
         emailId: CustomEmailId,
         code: String
     ) {
-        runCatching {
+        safeRunCatching {
             remote.verifyCustomEmail(userId, emailId, code)
         }.onSuccess {
             PassLogger.i(TAG, "Custom email verified successfully")
@@ -280,7 +281,7 @@ class BreachRepositoryImpl @Inject constructor(
     }
 
     private suspend fun refreshProtonEmailBreachesIfNeeded(userId: UserId, id: AddressId) {
-        runCatching { localBreachesDataSource.getProtonEmailBreaches(userId, id) }
+        safeRunCatching { localBreachesDataSource.getProtonEmailBreaches(userId, id) }
             .onFailure { refreshProtonEmailBreaches(userId, id) }
     }
 
@@ -306,7 +307,7 @@ class BreachRepositoryImpl @Inject constructor(
     }
 
     private suspend fun refreshCustomEmailsIfNeeded(userId: UserId, customEmailId: CustomEmailId) {
-        runCatching { localBreachesDataSource.getCustomEmail(userId, customEmailId) }
+        safeRunCatching { localBreachesDataSource.getCustomEmail(userId, customEmailId) }
             .onFailure { refreshCustomEmails(userId) }
     }
 
@@ -321,7 +322,7 @@ class BreachRepositoryImpl @Inject constructor(
     }
 
     private suspend fun refreshCustomEmailBreachesIfNeeded(userId: UserId, customEmailId: CustomEmailId) {
-        runCatching { localBreachesDataSource.getCustomEmailBreaches(userId, customEmailId) }
+        safeRunCatching { localBreachesDataSource.getCustomEmailBreaches(userId, customEmailId) }
             .onFailure { refreshCustomEmailBreaches(userId, customEmailId) }
     }
 
@@ -343,12 +344,12 @@ class BreachRepositoryImpl @Inject constructor(
     }
 
     private suspend fun refreshProtonEmailsIfNeeded(userId: UserId, addressId: AddressId) {
-        runCatching { localBreachesDataSource.getProtonEmail(userId, addressId) }
+        safeRunCatching { localBreachesDataSource.getProtonEmail(userId, addressId) }
             .onFailure { refreshProtonEmails(userId) }
     }
 
     private suspend fun refreshAliasEmailBreachesIfNeeded(userId: UserId, aliasEmailId: AliasEmailId) {
-        runCatching { localBreachesDataSource.getAliasEmailBreaches(userId, aliasEmailId) }
+        safeRunCatching { localBreachesDataSource.getAliasEmailBreaches(userId, aliasEmailId) }
             .onFailure { refreshAliasEmailBreaches(userId, aliasEmailId) }
     }
 

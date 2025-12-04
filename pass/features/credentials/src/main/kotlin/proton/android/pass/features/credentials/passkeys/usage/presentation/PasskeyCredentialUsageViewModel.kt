@@ -30,6 +30,7 @@ import kotlinx.coroutines.flow.update
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
+import proton.android.pass.common.api.safeRunCatching
 import proton.android.pass.common.api.toOption
 import proton.android.pass.data.api.usecases.passkeys.GetPasskeyById
 import proton.android.pass.features.credentials.shared.passkeys.events.PasskeyCredentialsTelemetryEvent
@@ -71,7 +72,7 @@ internal class PasskeyCredentialUsageViewModel @Inject constructor(
         initialValue = PasskeyCredentialUsageState.NotReady
     )
 
-    private suspend fun resolveChallenge(request: PasskeyCredentialUsageRequest): Result<String> = runCatching {
+    private suspend fun resolveChallenge(request: PasskeyCredentialUsageRequest): Result<String> = safeRunCatching {
         getPasskeyById(
             shareId = request.shareId,
             itemId = request.itemId,

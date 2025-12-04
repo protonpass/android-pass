@@ -30,6 +30,7 @@ import androidx.work.workDataOf
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
 import me.proton.core.domain.entity.UserId
+import proton.android.pass.common.api.safeRunCatching
 import proton.android.pass.data.api.usecases.inappmessages.ChangeInAppMessageStatus
 import proton.android.pass.domain.inappmessages.InAppMessageId
 import proton.android.pass.domain.inappmessages.InAppMessageStatus
@@ -42,7 +43,7 @@ class ChangeInAppMessageStatusWorker @AssistedInject constructor(
     private val changeInAppMessageStatus: ChangeInAppMessageStatus
 ) : CoroutineWorker(appContext, workerParameters) {
 
-    override suspend fun doWork(): Result = runCatching {
+    override suspend fun doWork(): Result = safeRunCatching {
         PassLogger.i(TAG, "Starting $TAG attempt $runAttemptCount")
         val userId = workerParameters.inputData.getString(USER_ID_KEY)
             ?.let(::UserId)

@@ -31,6 +31,7 @@ import proton.android.pass.clipboard.api.ClipboardManager
 import proton.android.pass.common.api.AppDispatchers
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
+import proton.android.pass.common.api.safeRunCatching
 import proton.android.pass.common.api.some
 import proton.android.pass.commonpresentation.api.attachments.AttachmentsHandler
 import proton.android.pass.commonui.api.ClassHolder
@@ -241,7 +242,7 @@ class UpdateCustomItemViewModel @Inject constructor(
     }
 
     private suspend fun onItemReceived(item: Item) {
-        runCatching {
+        safeRunCatching {
             if (item.hasAttachments) {
                 attachmentsHandler.getAttachmentsForItem(item.shareId, item.id)
             }
@@ -291,7 +292,7 @@ class UpdateCustomItemViewModel @Inject constructor(
     }
 
     private suspend fun onRenameAttachments(shareId: ShareId, itemId: ItemId) {
-        runCatching {
+        safeRunCatching {
             renameAttachments(shareId, itemId)
         }.onFailure {
             PassLogger.w(TAG, "Error renaming attachments")

@@ -22,6 +22,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emitAll
 import kotlinx.coroutines.flow.flow
 import me.proton.core.domain.entity.UserId
+import proton.android.pass.common.api.safeRunCatching
 import proton.android.pass.data.api.repositories.ShareMembersRepository
 import proton.android.pass.data.impl.local.shares.LocalShareMembersDataSource
 import proton.android.pass.data.impl.remote.shares.RemoteShareMembersDataSource
@@ -71,7 +72,7 @@ class ShareMembersRepositoryImpl @Inject constructor(
         memberShareId: ShareId,
         memberShareRole: ShareRole
     ) {
-        runCatching {
+        safeRunCatching {
             remoteDataSource.updateShareMember(userId, shareId, memberShareId, memberShareRole)
         }.onFailure { error ->
             PassLogger.w(TAG, "There was an error removing a share member")
@@ -94,7 +95,7 @@ class ShareMembersRepositoryImpl @Inject constructor(
         shareId: ShareId,
         memberShareId: ShareId
     ) {
-        runCatching {
+        safeRunCatching {
             remoteDataSource.deleteShareMember(userId, shareId, memberShareId)
         }.onFailure { error ->
             PassLogger.w(TAG, "There was an error removing a share member")

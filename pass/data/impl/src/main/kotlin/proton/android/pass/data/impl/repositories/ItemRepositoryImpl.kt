@@ -379,7 +379,7 @@ class ItemRepositoryImpl @Inject constructor(
             addressId = userAddress.addressId,
             shareId = shareId,
             groupEmail = share.groupEmail
-        ).first()
+        ).firstOrNull() ?: throw IllegalStateException("No ShareKey found for item")
 
         val itemEntity = encryptionContextProvider.withEncryptionContextSuspendable {
             itemResponseToEntity(

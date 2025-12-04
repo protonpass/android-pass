@@ -18,13 +18,11 @@
 
 package proton.android.pass.uitest.flow
 
-import androidx.test.core.app.ApplicationProvider
 import dagger.hilt.android.testing.HiltAndroidTest
 import me.proton.core.auth.test.MinimalSignUpExternalTests
 import me.proton.core.test.rule.ProtonRule
 import me.proton.core.test.rule.extension.protonAndroidComposeRule
 import org.junit.Rule
-import proton.android.pass.initializer.MainInitializer
 import proton.android.pass.ui.MainActivity
 import proton.android.pass.uitest.robot.OnBoardingRobot
 import proton.android.pass.uitest.robot.Robot

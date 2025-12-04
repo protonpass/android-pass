@@ -26,6 +26,7 @@ import me.proton.core.domain.entity.UserId
 import me.proton.core.user.domain.entity.AddressId
 import me.proton.core.user.domain.extension.primary
 import me.proton.core.user.domain.repository.UserAddressRepository
+import proton.android.pass.common.api.safeRunCatching
 import proton.android.pass.data.api.ItemPendingEvent
 import proton.android.pass.data.api.PendingEventList
 import proton.android.pass.data.api.errors.ShareNotAvailableError
@@ -88,7 +89,7 @@ class ApplyPendingEventsImpl @Inject constructor(
         val eventResults = coroutineScope {
             existingShareIds.map { shareId ->
                 async {
-                    runCatching {
+                    safeRunCatching {
                         fetchItemPendingEvent(userId, shareId, address.addressId)
                     }.onFailure { error ->
                         if (error is ShareNotAvailableError) {
@@ -112,7 +113,7 @@ class ApplyPendingEventsImpl @Inject constructor(
 
     private suspend fun onShareNotAvailable(userId: UserId, shareId: ShareId) {
         PassLogger.i(TAG, "Deleting share not available")
-        runCatching {
+        safeRunCatching {
             shareRepository.deleteVault(userId, shareId)
         }.onSuccess {
             PassLogger.i(TAG, "Deleted unavailable share id: $shareId")

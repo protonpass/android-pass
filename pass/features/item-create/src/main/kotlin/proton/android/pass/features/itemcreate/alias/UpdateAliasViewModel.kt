@@ -43,6 +43,7 @@ import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.combineN
+import proton.android.pass.common.api.safeRunCatching
 import proton.android.pass.common.api.some
 import proton.android.pass.common.api.toOption
 import proton.android.pass.commonpresentation.api.attachments.AttachmentsHandler
@@ -341,7 +342,7 @@ class UpdateAliasViewModel @Inject constructor(
             val userId = accountManager.getPrimaryUserId().first { userId -> userId != null }
             val initialItem = itemOption
             if (userId != null && initialItem is Some) {
-                runCatching {
+                safeRunCatching {
                     updateAliasUseCase(
                         userId = userId,
                         item = initialItem.value,
@@ -349,14 +350,14 @@ class UpdateAliasViewModel @Inject constructor(
                     )
                 }.onSuccess { item ->
                     snackbarDispatcher(AliasUpdated)
-                    runCatching {
+                    safeRunCatching {
                         renameAttachments(item.shareId, item.id)
                     }.onFailure {
                         PassLogger.w(TAG, "Error renaming attachments")
                         PassLogger.w(TAG, it)
                         snackbarDispatcher(ItemRenameAttachmentsError)
                     }
-                    runCatching {
+                    safeRunCatching {
                         linkAttachmentsToItem(
                             shareId = item.shareId,
                             itemId = item.id,

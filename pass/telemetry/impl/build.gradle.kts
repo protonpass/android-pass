@@ -42,6 +42,7 @@ dependencies {
 
     implementation(projects.pass.data.api)
     implementation(projects.pass.log.api)
+    implementation(projects.pass.common.api)
 
     testImplementation(libs.core.test.kotlin)
     testImplementation(libs.junit)

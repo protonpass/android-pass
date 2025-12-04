@@ -25,8 +25,8 @@ import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import proton.android.pass.composecomponents.impl.dialogs.NoPaddingDialog
-import proton.android.pass.features.itemcreate.R
 import proton.android.pass.composecomponents.impl.dialogs.SingleInputDialogContent
+import proton.android.pass.features.itemcreate.R
 import proton.android.pass.features.itemcreate.common.customsection.ExtraSectionNavigation
 import proton.android.pass.features.itemcreate.identity.presentation.customsection.CustomSectionEvent
 import proton.android.pass.features.itemcreate.identity.presentation.customsection.CustomSectionNameViewModel

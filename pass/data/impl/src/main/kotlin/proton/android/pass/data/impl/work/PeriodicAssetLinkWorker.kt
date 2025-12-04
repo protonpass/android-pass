@@ -40,6 +40,7 @@ import kotlinx.datetime.minus
 import me.proton.core.account.domain.entity.AccountState
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.accountmanager.domain.getAccounts
+import proton.android.pass.common.api.safeRunCatching
 import proton.android.pass.data.api.repositories.AssetLinkRepository
 import proton.android.pass.data.api.usecases.ItemTypeFilter
 import proton.android.pass.data.api.usecases.ObserveItems
@@ -61,7 +62,7 @@ class PeriodicAssetLinkWorker @AssistedInject constructor(
     private val clock: Clock
 ) : CoroutineWorker(appContext, workerParameters) {
 
-    override suspend fun doWork(): Result = runCatching {
+    override suspend fun doWork(): Result = safeRunCatching {
         PassLogger.i(TAG, "Starting $TAG attempt $runAttemptCount")
         purgeOldData()
         val websites: Set<String> = getAllWebsites()
@@ -92,7 +93,7 @@ class PeriodicAssetLinkWorker @AssistedInject constructor(
         .first()
 
     private suspend fun purgeOldData() {
-        runCatching {
+        safeRunCatching {
             val date14DaysAgo: Instant = clock.now().minus(
                 REPEAT_DAYS, DAY, TimeZone.currentSystemDefault()
             )

@@ -18,6 +18,7 @@
 
 package proton.android.pass.data.impl.migration.itemhastotp
 
+import proton.android.pass.common.api.safeRunCatching
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.impl.db.entities.ItemEntity
 import proton.android.pass.data.impl.extensions.hasTotp
@@ -39,7 +40,7 @@ class ItemHasTotpMigratorImpl @Inject constructor(
     private val encryptionContextProvider: EncryptionContextProvider
 ) : ItemHasTotpMigrator {
 
-    override suspend fun migrate() = runCatching {
+    override suspend fun migrate() = safeRunCatching {
         val items = localItemDataSource.getItemsPendingForTotpMigration()
         if (items.isNotEmpty()) migrateItems(items)
     }.fold(

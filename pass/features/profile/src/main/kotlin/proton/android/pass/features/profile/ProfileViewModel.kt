@@ -60,6 +60,7 @@ import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.asLoadingResult
 import proton.android.pass.common.api.combineN
 import proton.android.pass.common.api.getOrNull
+import proton.android.pass.common.api.safeRunCatching
 import proton.android.pass.composecomponents.impl.bottombar.AccountType
 import proton.android.pass.data.api.usecases.ObserveItemCount
 import proton.android.pass.data.api.usecases.ObserveMFACount
@@ -368,7 +369,7 @@ class ProfileViewModel @Inject constructor(
     }
 
     private suspend fun ProfileViewModel.refreshAccount(userId: UserId) {
-        runCatching { refreshContent(userId) }
+        safeRunCatching { refreshContent(userId) }
             .onSuccess {
                 PassLogger.i(TAG, "Sync completed")
             }

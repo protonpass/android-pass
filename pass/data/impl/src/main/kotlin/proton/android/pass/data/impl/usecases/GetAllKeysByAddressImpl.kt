@@ -24,6 +24,7 @@ import me.proton.core.key.domain.entity.key.PublicAddressKey
 import me.proton.core.key.domain.repository.PublicAddressRepository
 import me.proton.core.key.domain.repository.getPublicAddressOrNull
 import me.proton.core.network.data.ApiProvider
+import proton.android.pass.common.api.safeRunCatching
 import proton.android.pass.data.api.usecases.GetAllKeysByAddress
 import proton.android.pass.data.impl.api.PasswordManagerApi
 import proton.android.pass.log.api.PassLogger
@@ -53,7 +54,7 @@ class GetAllKeysByAddressImpl @Inject constructor(
             getAllKeysByAddress(email = email)
         }
 
-        val response = runCatching { res.valueOrThrow }.getOrElse {
+        val response = safeRunCatching { res.valueOrThrow }.getOrElse {
             return Result.failure(it)
         }
 

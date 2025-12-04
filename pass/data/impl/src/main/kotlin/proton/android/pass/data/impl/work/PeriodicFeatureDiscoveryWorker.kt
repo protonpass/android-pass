@@ -29,6 +29,7 @@ import androidx.work.WorkerParameters
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
 import kotlinx.coroutines.flow.firstOrNull
+import proton.android.pass.common.api.safeRunCatching
 import proton.android.pass.data.api.ItemCountSummary
 import proton.android.pass.data.api.usecases.ObserveItemCount
 import proton.android.pass.domain.ShareSelection
@@ -47,7 +48,7 @@ class PeriodicFeatureDiscoveryWorker @AssistedInject constructor(
     private val userPreferencesRepository: UserPreferencesRepository
 ) : CoroutineWorker(appContext, workerParameters) {
 
-    override suspend fun doWork(): Result = runCatching {
+    override suspend fun doWork(): Result = safeRunCatching {
         PassLogger.i(TAG, "Starting $TAG attempt $runAttemptCount")
         val summary = observeItemCount(
             shareSelection = ShareSelection.AllShares,

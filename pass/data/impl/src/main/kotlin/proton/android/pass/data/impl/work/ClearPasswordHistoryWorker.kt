@@ -26,6 +26,7 @@ import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkerParameters
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
+import proton.android.pass.common.api.safeRunCatching
 import proton.android.pass.data.api.usecases.passwordHistoryEntry.DeleteOldPasswordHistoryEntry
 import proton.android.pass.log.api.PassLogger
 import java.util.concurrent.TimeUnit
@@ -37,7 +38,7 @@ class ClearPasswordHistoryWorker @AssistedInject constructor(
     private val deleteOldPasswordHistoryEntry: DeleteOldPasswordHistoryEntry
 ) : CoroutineWorker(appContext, workerParams) {
 
-    override suspend fun doWork(): Result = runCatching {
+    override suspend fun doWork(): Result = safeRunCatching {
         deleteOldPasswordHistoryEntry()
     }.onSuccess {
         PassLogger.i(TAG, "Finished $TAG")

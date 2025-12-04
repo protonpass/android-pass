@@ -26,9 +26,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import proton.android.pass.features.vault.launchedeffects.InAppReviewTriggerLaunchedEffect
 import proton.android.pass.features.vault.R
 import proton.android.pass.features.vault.VaultNavigation
+import proton.android.pass.features.vault.launchedeffects.InAppReviewTriggerLaunchedEffect
 
 @Composable
 fun EditVaultScreen(

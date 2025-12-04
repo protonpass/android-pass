@@ -18,8 +18,8 @@
 
 package proton.android.pass.data.impl.extensions
 
-import proton.android.pass.log.api.PassLogger
 import proton.android.pass.domain.ShareIcon
+import proton.android.pass.log.api.PassLogger
 import proton_pass_vault_v1.VaultV1
 
 private const val TAG = "ShareIconMapper"

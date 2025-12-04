@@ -38,6 +38,7 @@ import me.proton.core.user.domain.repository.UserAddressRepository
 import me.proton.core.user.domain.repository.UserRepository
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
+import proton.android.pass.common.api.safeRunCatching
 import proton.android.pass.common.api.some
 import proton.android.pass.crypto.api.EncryptionKey
 import proton.android.pass.crypto.api.context.EncryptionContext
@@ -101,7 +102,7 @@ class ShareRepositoryImpl @Inject constructor(
         val user = requireNotNull(userRepository.getUser(userId))
         val userPrimaryKey = requireNotNull(user.keys.primary()?.keyId?.id)
 
-        val (request, shareKey) = runCatching {
+        val (request, shareKey) = safeRunCatching {
             createVaultRequest(user, vault, userAddress)
         }.fold(
             onSuccess = { it },
@@ -339,7 +340,7 @@ class ShareRepositoryImpl @Inject constructor(
         val body = newVaultToBody(vault)
         val request = updateVault.createUpdateVaultRequest(shareKey, body).toRequest()
         val share = localShareDataSource.getById(userId, shareId)
-        val response = runCatching {
+        val response = safeRunCatching {
             remoteShareDataSource.updateVault(userId, shareId, request)
         }.fold(
             onSuccess = { it },

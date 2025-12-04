@@ -19,11 +19,11 @@
 package proton.android.pass.data.impl.remote
 
 import me.proton.core.domain.entity.UserId
+import proton.android.pass.data.impl.requests.CreateInvitesRequest
+import proton.android.pass.data.impl.requests.CreateNewUserInvitesRequest
 import proton.android.pass.data.impl.requests.invites.AcceptInviteRequest
 import proton.android.pass.data.impl.responses.InviteRecommendationsOrganizationResponse
 import proton.android.pass.data.impl.responses.InviteRecommendationsSuggestedResponse
-import proton.android.pass.data.impl.requests.CreateInvitesRequest
-import proton.android.pass.data.impl.requests.CreateNewUserInvitesRequest
 import proton.android.pass.data.impl.responses.PendingUserInviteResponse
 import proton.android.pass.data.impl.responses.ShareResponse
 import proton.android.pass.domain.InviteToken

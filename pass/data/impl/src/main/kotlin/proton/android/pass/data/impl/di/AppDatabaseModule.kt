@@ -25,8 +25,6 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
-import proton.android.pass.data.impl.db.AppDatabase
-import proton.android.pass.data.impl.db.PassDatabase
 import me.proton.core.account.data.db.AccountDatabase
 import me.proton.core.auth.data.db.AuthDatabase
 import me.proton.core.challenge.data.db.ChallengeDatabase
@@ -46,6 +44,8 @@ import me.proton.core.user.data.db.UserDatabase
 import me.proton.core.userrecovery.data.db.DeviceRecoveryDatabase
 import me.proton.core.usersettings.data.db.OrganizationDatabase
 import me.proton.core.usersettings.data.db.UserSettingsDatabase
+import proton.android.pass.data.impl.db.AppDatabase
+import proton.android.pass.data.impl.db.PassDatabase
 import javax.inject.Singleton
 
 @Module

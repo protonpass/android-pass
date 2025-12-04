@@ -40,18 +40,17 @@ import proton.android.pass.common.api.some
 import proton.android.pass.commonui.api.toClassHolder
 import proton.android.pass.composecomponents.impl.attachments.AttachmentContentEvent
 import proton.android.pass.composecomponents.impl.dialogs.ConfirmCloseDialog
+import proton.android.pass.composecomponents.impl.dialogs.WarningSharedItemDialog
 import proton.android.pass.domain.CustomFieldType
 import proton.android.pass.features.itemcreate.ItemSavedState
 import proton.android.pass.features.itemcreate.R
-import proton.android.pass.composecomponents.impl.R as CompR
 import proton.android.pass.features.itemcreate.alias.AliasItemFormState
+import proton.android.pass.features.itemcreate.common.DialogWarningType
 import proton.android.pass.features.itemcreate.common.ItemSavedLaunchedEffect
 import proton.android.pass.features.itemcreate.common.UICustomFieldContent
 import proton.android.pass.features.itemcreate.common.customfields.CustomFieldEvent
 import proton.android.pass.features.itemcreate.common.customfields.CustomFieldIdentifier
 import proton.android.pass.features.itemcreate.custom.createupdate.ui.DatePickerModal
-import proton.android.pass.composecomponents.impl.dialogs.WarningSharedItemDialog
-import proton.android.pass.features.itemcreate.common.DialogWarningType
 import proton.android.pass.features.itemcreate.launchedeffects.InAppReviewTriggerLaunchedEffect
 import proton.android.pass.features.itemcreate.login.BaseLoginNavigation.AddAttachment
 import proton.android.pass.features.itemcreate.login.BaseLoginNavigation.AddCustomField
@@ -61,6 +60,7 @@ import proton.android.pass.features.itemcreate.login.BaseLoginNavigation.OpenAtt
 import proton.android.pass.features.itemcreate.login.BaseLoginNavigation.OpenDraftAttachmentOptions
 import proton.android.pass.features.itemcreate.login.BaseLoginNavigation.Upgrade
 import proton.android.pass.features.itemcreate.login.dialog.ConfirmDeletePasskeyDialog
+import proton.android.pass.composecomponents.impl.R as CompR
 
 @Suppress("ComplexMethod")
 @Composable

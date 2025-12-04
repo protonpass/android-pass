@@ -43,6 +43,7 @@ import proton.android.pass.biometry.BiometryStatus
 import proton.android.pass.biometry.BiometryType
 import proton.android.pass.biometry.StoreAuthSuccessful
 import proton.android.pass.biometry.UnlockMethod
+import proton.android.pass.common.api.safeRunCatching
 import proton.android.pass.commonui.api.ClassHolder
 import proton.android.pass.data.api.usecases.ObserveUserAccessData
 import proton.android.pass.features.onboarding.OnBoardingPageName.Autofill
@@ -116,7 +117,7 @@ class OnBoardingViewModel @Inject constructor(
         }
     }
 
-    private suspend fun shouldShowInvitePendingAcceptance(): Boolean = runCatching {
+    private suspend fun shouldShowInvitePendingAcceptance(): Boolean = safeRunCatching {
         observeUserAccessData().first()
     }.fold(
         onSuccess = { it?.let { it.waitingNewUserInvites > 0 } ?: false },

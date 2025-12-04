@@ -24,6 +24,7 @@ import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.firstOrNull
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.domain.entity.UserId
+import proton.android.pass.common.api.safeRunCatching
 import proton.android.pass.common.api.transpose
 import proton.android.pass.data.api.repositories.InviteTarget
 import proton.android.pass.data.api.repositories.ShareRepository
@@ -79,7 +80,7 @@ class InviteToVaultImpl @Inject constructor(
 
         PassLogger.i(TAG, "Sending $existing existing user invites and $new new user invites")
 
-        runCatching {
+        safeRunCatching {
             if (existingUserInvites.isNotEmpty()) {
                 userInviteRepository.sendInvitesToExistingUsers(
                     id,
@@ -92,7 +93,7 @@ class InviteToVaultImpl @Inject constructor(
             }
         }.onSuccess {
             PassLogger.i(TAG, "Invites sent successfully. Refreshing share")
-            runCatching {
+            safeRunCatching {
                 shareRepository.refreshShare(id, shareId)
             }.onSuccess {
                 PassLogger.d(TAG, "Share refreshed successfully")

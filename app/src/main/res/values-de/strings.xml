@@ -10,6 +10,4 @@
   <string name="no_session_found">Keine Sitzung gefunden</string>
   <string name="auth_with_extra_password_failed">Authentifizierung mit zusätzlichem Passwort fehlgeschlagen</string>
   <string name="auth_only_1_proton_account_failed">Es ist nur ein einziges kostenloses Proton-Konto erlaubt.</string>
-  <string name="warning_dialog_reload_app_after_purchase_description">Du wirst gleich auf unsere Website weitergeleitet. Wenn du einen Abonnent kaufst, starte die App bitte neu.</string>
-  <string name="warning_dialog_reload_app_after_purchase_reminder">Nicht erneut erinnern</string>
 </resources>

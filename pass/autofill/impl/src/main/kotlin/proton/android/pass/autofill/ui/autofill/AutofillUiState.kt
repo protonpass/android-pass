@@ -32,7 +32,9 @@ internal sealed interface AutofillUiState {
         val themePreference: Int,
         val needsAuth: Boolean,
         val copyTotpToClipboardPreference: Boolean,
-        val selectedAutofillItem: Option<AutofillItem>
+        val selectedAutofillItem: Option<AutofillItem>,
+        val supportPayment: Boolean,
+        val canShowWarningReloadApp: Boolean
     ) : AutofillUiState
 
     @Immutable

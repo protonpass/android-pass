@@ -60,11 +60,11 @@ import proton.android.pass.commonui.api.BrowserUtils
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.enableEdgeToEdgeProtonPass
 import proton.android.pass.commonui.api.setSecureMode
+import proton.android.pass.composecomponents.impl.dialogs.WarningReloadAppDialog
 import proton.android.pass.composecomponents.impl.theme.isDark
 import proton.android.pass.features.welcome.WelcomeScreen
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.preferences.AllowScreenshotsPreference
-import proton.android.pass.ui.internal.WarningReloadAppDialog
 import proton.android.pass.ui.launcher.AccountState.AccountNeeded
 import proton.android.pass.ui.launcher.AccountState.PrimaryExist
 import proton.android.pass.ui.launcher.AccountState.Processing

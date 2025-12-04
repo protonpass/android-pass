@@ -10,6 +10,4 @@
   <string name="no_session_found">Nu am găsit nicio sesiune.</string>
   <string name="auth_with_extra_password_failed">Autorizarea cu parola suplimentară a eșuat.</string>
   <string name="auth_only_1_proton_account_failed">Este permis doar un cont gratuit de Proton.</string>
-  <string name="warning_dialog_reload_app_after_purchase_description">Urmează să se deschidă pagina site-ului nostru. Dacă achiziționați un plan, reporniți aplicația.</string>
-  <string name="warning_dialog_reload_app_after_purchase_reminder">Nu-mi mai reaminti</string>
 </resources>

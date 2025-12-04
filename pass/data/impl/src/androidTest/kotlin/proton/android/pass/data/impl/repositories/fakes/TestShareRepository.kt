@@ -163,11 +163,7 @@ class TestShareRepository : ShareRepository {
         vault: NewVault
     ): Share = updateVaultResult.getOrThrow()
 
-    override suspend fun recreateShare(
-        userId: UserId,
-        shareId: ShareId,
-        eventToken: EventToken
-    ) {
+    override suspend fun recreateShare(userId: UserId, shareId: ShareId, eventToken: EventToken?) {
 
     }
 

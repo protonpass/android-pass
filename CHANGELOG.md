@@ -6,17 +6,23 @@
 
 ### Other
 
+## 1.36.2 (2025-12-04)
+
+### Other
+
+- Update link.
+
 ## 1.36.1 (2025-12-01)
 
 ### Fixes :bug:
 
-- Meta Horizon release
+- Meta Horizon release.
 
 ## 1.36.0 (2025-11-25)
 
 ### Features :tada:
 
-- Password history
+- Password history.
 
 ### Fixes :bug:
 

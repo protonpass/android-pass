@@ -30,6 +30,7 @@ import proton.android.pass.autofill.debug.DebugUtils.autofillDumpDir
 import proton.android.pass.autofill.entities.AutofillNode
 import proton.android.pass.autofill.entities.InputTypeValue
 import proton.android.pass.autofill.heuristics.toAutofillNode
+import proton.android.pass.common.api.safeRunCatching
 import proton.android.pass.log.api.PassLogger
 import java.io.File
 
@@ -70,7 +71,7 @@ object AutofillDebugSaver {
         val rootViewNode = windowNode?.rootViewNode ?: return
         val packageName = Utils.getApplicationPackageName(windowNode)
 
-        runCatching {
+        safeRunCatching {
             val debugEntry = DebugAutofillEntry(
                 rootContent = rootViewNode.toAutofillNode().toDebugNode(),
                 packageName = packageName

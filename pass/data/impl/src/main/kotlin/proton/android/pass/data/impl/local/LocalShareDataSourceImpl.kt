@@ -33,7 +33,6 @@ import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.ShareRole
 import proton.android.pass.domain.ShareType
 import javax.inject.Inject
-import kotlin.collections.map
 
 class LocalShareDataSourceImpl @Inject constructor(
     private val database: PassDatabase,

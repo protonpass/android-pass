@@ -42,6 +42,7 @@ import me.proton.core.accountmanager.presentation.onAccountDisabled
 import me.proton.core.accountmanager.presentation.onAccountReady
 import me.proton.core.accountmanager.presentation.onAccountRemoved
 import me.proton.core.domain.entity.UserId
+import proton.android.pass.common.api.safeRunCatching
 import proton.android.pass.commonui.api.PassAppLifecycleProvider
 import proton.android.pass.data.api.repositories.ItemSyncStatusRepository
 import proton.android.pass.data.api.repositories.toSyncMode
@@ -128,7 +129,7 @@ class AccountListenerInitializer : Initializer<Unit> {
         PassLogger.i(TAG, "Account ready : ${account.userId}")
 
         if (!isUserEventsEnabled) {
-            runCatching {
+            safeRunCatching {
                 refreshOrganizationSettings(account.userId)
             }.onSuccess {
                 PassLogger.i(TAG, "Organization settings refreshed for ${account.userId}")
@@ -137,7 +138,7 @@ class AccountListenerInitializer : Initializer<Unit> {
                 PassLogger.w(TAG, it)
             }
 
-            runCatching {
+            safeRunCatching {
                 refreshUserAccess(account.userId)
             }.onSuccess {
                 PassLogger.i(TAG, "Plan refreshed for ${account.userId}")
@@ -156,7 +157,7 @@ class AccountListenerInitializer : Initializer<Unit> {
         val accountManager = entryPoint.accountManager()
 
         entryPoint.itemSyncStatusRepository().clear()
-        runCatching { clearUserData(account.userId) }
+        safeRunCatching { clearUserData(account.userId) }
             .onSuccess { PassLogger.i(TAG, "Cleared user data") }
             .onFailure { PassLogger.i(TAG, it, "Error clearing user data") }
 

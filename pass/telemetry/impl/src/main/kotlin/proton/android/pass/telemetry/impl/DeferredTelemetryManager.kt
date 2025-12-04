@@ -21,6 +21,7 @@ package proton.android.pass.telemetry.impl
 import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.onSubscription
+import proton.android.pass.common.api.safeRunCatching
 import proton.android.pass.data.api.repositories.TelemetryRepository
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.telemetry.api.TelemetryEvent
@@ -52,7 +53,7 @@ class DeferredTelemetryManagerImpl @Inject constructor(
         mutableEventFlow
             .onSubscription { onSubscribed() }
             .collect { event ->
-                runCatching {
+                safeRunCatching {
                     performSendEvent(event)
                     onPerformed()
                 }.onSuccess {

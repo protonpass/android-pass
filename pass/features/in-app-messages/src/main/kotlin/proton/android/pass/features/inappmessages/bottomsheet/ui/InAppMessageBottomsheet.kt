@@ -26,9 +26,9 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import proton.android.pass.commonui.api.BrowserUtils
-import proton.android.pass.features.inappmessages.navigation.InAppMessageDestination
 import proton.android.pass.features.inappmessages.bottomsheet.presentation.InAppMessageModalState
 import proton.android.pass.features.inappmessages.bottomsheet.presentation.InAppMessageModalViewModel
+import proton.android.pass.features.inappmessages.navigation.InAppMessageDestination
 
 @Composable
 fun InAppMessageBottomsheet(

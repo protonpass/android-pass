@@ -24,6 +24,7 @@ import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.asLoadingResult
+import proton.android.pass.common.api.safeRunCatching
 import proton.android.pass.common.api.toOption
 import proton.android.pass.commonpresentation.api.attachments.AttachmentsHandler
 import proton.android.pass.commonui.api.SavedStateHandleProvider
@@ -195,7 +196,7 @@ class CreateCreditCardViewModel @Inject constructor(
         val userId = accountManager.getPrimaryUserId()
             .firstOrNull { userId -> userId != null }
         if (userId != null && vault != null) {
-            runCatching {
+            safeRunCatching {
                 val sanitisedItemFormState = creditCardItemFormState.sanitise()
                 createItem(
                     userId = userId,
@@ -210,7 +211,7 @@ class CreateCreditCardViewModel @Inject constructor(
                 }
                 .onSuccess { item ->
                     snackbarDispatcher(ItemCreated)
-                    runCatching {
+                    safeRunCatching {
                         linkAttachmentsToItem(item.shareId, item.id, item.revision)
                     }.onFailure {
                         PassLogger.w(TAG, "Link attachment error")

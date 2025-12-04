@@ -39,8 +39,8 @@ import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Some
 import proton.android.pass.commonui.api.AndroidUtils
 import proton.android.pass.crypto.api.HashUtils
-import proton.android.pass.log.api.PassLogger
 import proton.android.pass.domain.entity.PackageName
+import proton.android.pass.log.api.PassLogger
 import java.io.File
 import java.io.FileOutputStream
 import javax.inject.Inject

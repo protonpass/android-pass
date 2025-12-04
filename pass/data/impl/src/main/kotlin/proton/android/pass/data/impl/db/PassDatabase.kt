@@ -21,13 +21,10 @@ package proton.android.pass.data.impl.db
 import me.proton.core.data.room.db.Database
 import proton.android.pass.data.impl.db.dao.GroupInviteDao
 import proton.android.pass.data.impl.db.dao.GroupInviteKeyDao
-import proton.android.pass.data.impl.db.dao.UserInviteDao
-import proton.android.pass.data.impl.db.dao.UserInviteKeyDao
 import proton.android.pass.data.impl.db.dao.ItemsDao
 import proton.android.pass.data.impl.db.dao.LiveTelemetryDao
 import proton.android.pass.data.impl.db.dao.PassDataMigrationDao
 import proton.android.pass.data.impl.db.dao.PassEventsDao
-import proton.android.pass.data.impl.db.dao.UserEventsDao
 import proton.android.pass.data.impl.db.dao.PassOrganizationSettingsDao
 import proton.android.pass.data.impl.db.dao.PasswordHistoryDao
 import proton.android.pass.data.impl.db.dao.PlanDao
@@ -36,6 +33,9 @@ import proton.android.pass.data.impl.db.dao.ShareKeysDao
 import proton.android.pass.data.impl.db.dao.SharesDao
 import proton.android.pass.data.impl.db.dao.TelemetryDao
 import proton.android.pass.data.impl.db.dao.UserAccessDataDao
+import proton.android.pass.data.impl.db.dao.UserEventsDao
+import proton.android.pass.data.impl.db.dao.UserInviteDao
+import proton.android.pass.data.impl.db.dao.UserInviteKeyDao
 import proton.android.pass.data.impl.db.dao.assetlink.AssetLinkDao
 import proton.android.pass.data.impl.db.dao.assetlink.IgnoredAssetLinkDao
 import proton.android.pass.data.impl.db.dao.attachment.AttachmentDao

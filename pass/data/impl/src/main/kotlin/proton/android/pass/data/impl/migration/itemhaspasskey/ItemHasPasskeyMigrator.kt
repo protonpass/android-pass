@@ -18,6 +18,7 @@
 
 package proton.android.pass.data.impl.migration.itemhaspasskey
 
+import proton.android.pass.common.api.safeRunCatching
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.impl.db.entities.ItemEntity
 import proton.android.pass.data.impl.extensions.toDomain
@@ -38,7 +39,7 @@ class ItemHasPasskeyMigratorImpl @Inject constructor(
     private val encryptionContextProvider: EncryptionContextProvider
 ) : ItemHasPasskeyMigrator {
 
-    override suspend fun migrate() = runCatching {
+    override suspend fun migrate() = safeRunCatching {
         val items = localItemDataSource.getItemsPendingForPasskeyMigration()
         if (items.isNotEmpty()) migrateItems(items)
     }.fold(

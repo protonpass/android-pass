@@ -22,6 +22,7 @@ import kotlinx.coroutines.flow.firstOrNull
 import me.proton.core.crypto.common.keystore.EncryptedString
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
+import proton.android.pass.common.api.safeRunCatching
 import proton.android.pass.features.itemcreate.common.CustomFieldValidationError.InvalidTotp
 import proton.android.pass.features.itemcreate.common.UICustomFieldContent
 import proton.android.pass.features.itemcreate.common.UIHiddenState
@@ -62,7 +63,7 @@ class UICustomFieldContentFormProcessor @Inject constructor(
                     totpManager.sanitiseToSave(originalDecrypted, decrypted).fold(
                         onSuccess = { uri ->
                             val parseSuccess = totpManager.parse(uri).isSuccess
-                            val codeSuccess = runCatching {
+                            val codeSuccess = safeRunCatching {
                                 totpManager.observeCode(uri).firstOrNull()
                             }.isSuccess
 

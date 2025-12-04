@@ -23,6 +23,7 @@ import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.sync.Semaphore
 
+import proton.android.pass.common.api.safeRunCatching
 fun maxParallelAsyncCalls(): Int {
     val availableCores = Runtime.getRuntime().availableProcessors()
     return (availableCores / 2).coerceAtLeast(1)
@@ -40,7 +41,7 @@ suspend fun <T, R> runConcurrently(
         items.map { item ->
             async {
                 semaphore.acquire()
-                val res = runCatching {
+                val res = safeRunCatching {
                     block(item)
                 }.onSuccess { res ->
                     onSuccess(item, res)

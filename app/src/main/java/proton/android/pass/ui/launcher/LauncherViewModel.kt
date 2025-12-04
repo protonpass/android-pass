@@ -79,6 +79,7 @@ import me.proton.core.usersettings.presentation.UserSettingsOrchestrator
 import proton.android.pass.appconfig.api.AppConfig
 import proton.android.pass.appconfig.api.BuildFlavor.Companion.supportPayment
 import proton.android.pass.biometry.ResetAuthPreferences
+import proton.android.pass.common.api.safeRunCatching
 import proton.android.pass.commonrust.api.CommonLibraryVersionChecker
 import proton.android.pass.data.api.usecases.GetUserPlan
 import proton.android.pass.data.api.usecases.InitialWorkerLauncher
@@ -254,7 +255,7 @@ class LauncherViewModel @Inject constructor(
                 .onUpgradeResult { result ->
                     if (result != null) {
                         viewModelScope.launch {
-                            runCatching {
+                            safeRunCatching {
                                 /*
                              We need to add a delay to refresh the plan since the BE
                              doesn't have the updated plan yet.

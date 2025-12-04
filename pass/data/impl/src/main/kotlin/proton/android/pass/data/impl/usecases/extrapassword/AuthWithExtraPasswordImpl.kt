@@ -24,6 +24,7 @@ import me.proton.core.accountmanager.domain.SessionManager
 import me.proton.core.crypto.common.keystore.EncryptedString
 import me.proton.core.crypto.common.srp.SrpCrypto
 import me.proton.core.domain.entity.UserId
+import proton.android.pass.common.api.safeRunCatching
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.errors.TooManyExtraPasswordAttemptsException
 import proton.android.pass.data.api.usecases.extrapassword.AuthWithExtraPassword
@@ -61,7 +62,7 @@ class AuthWithExtraPasswordImpl @Inject constructor(
             serverEphemeral = srpData.serverEphemeral
         )
 
-        runCatching {
+        safeRunCatching {
             remoteExtraPasswordDataSource.sendExtraPasswordAuthData(
                 userId = actualUserId,
                 request = ExtraPasswordSendSrpDataRequest(

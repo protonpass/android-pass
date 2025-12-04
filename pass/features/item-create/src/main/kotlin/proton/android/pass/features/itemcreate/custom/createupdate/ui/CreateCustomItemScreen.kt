@@ -37,7 +37,6 @@ import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
 import proton.android.pass.commonui.api.toClassHolder
-import proton.android.pass.composecomponents.impl.R as CompR
 import proton.android.pass.composecomponents.impl.attachments.AttachmentContentEvent
 import proton.android.pass.composecomponents.impl.dialogs.ConfirmCloseDialog
 import proton.android.pass.composecomponents.impl.dialogs.WarningSharedItemDialog
@@ -72,6 +71,7 @@ import proton.android.pass.features.itemcreate.custom.createupdate.presentation.
 import proton.android.pass.features.itemcreate.custom.createupdate.presentation.CreateSpecificIntent.OnVaultSelected
 import proton.android.pass.features.itemcreate.launchedeffects.InAppReviewTriggerLaunchedEffect
 import proton.android.pass.features.itemcreate.login.PerformActionAfterKeyboardHide
+import proton.android.pass.composecomponents.impl.R as CompR
 
 @Composable
 fun CreateCustomItemScreen(

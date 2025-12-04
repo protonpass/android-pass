@@ -38,6 +38,7 @@ import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.combineN
+import proton.android.pass.common.api.safeRunCatching
 import proton.android.pass.common.api.some
 import proton.android.pass.common.api.toOption
 import proton.android.pass.commonpresentation.api.attachments.AttachmentsHandler
@@ -584,7 +585,7 @@ abstract class BaseCustomItemViewModel(
         itemId: ItemId,
         revision: Long
     ) {
-        runCatching {
+        safeRunCatching {
             linkAttachmentsToItem(shareId, itemId, revision)
         }.onFailure {
             PassLogger.w(TAG, "Link attachment error")

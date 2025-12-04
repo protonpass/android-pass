@@ -43,7 +43,6 @@ import proton.android.pass.domain.foldFlags
 import proton.android.pass.domain.items.ItemCategory
 import proton.android.pass.log.api.PassLogger
 import javax.inject.Inject
-import kotlin.collections.map
 
 @Suppress("TooManyFunctions")
 class LocalItemDataSourceImpl @Inject constructor(

@@ -24,6 +24,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.mapNotNull
 import kotlinx.coroutines.flow.onStart
 import me.proton.core.domain.entity.UserId
+import proton.android.pass.common.api.safeRunCatching
 import proton.android.pass.data.api.repositories.AliasContactsRepository
 import proton.android.pass.data.impl.remote.RemoteAliasContactsDataSource
 import proton.android.pass.data.impl.requests.aliascontacts.CreateAliasContactRequest
@@ -72,7 +73,7 @@ class AliasContactsRepositoryImpl @Inject constructor(
         var lastId: ContactId? = null
         var total: Int
 
-        runCatching {
+        safeRunCatching {
             do {
                 val response = remoteDataSource.getAliasContacts(userId, shareId, itemId, lastId)
                 total = response.total
@@ -111,7 +112,7 @@ class AliasContactsRepositoryImpl @Inject constructor(
             emit(cachedContact)
         }
 
-        runCatching {
+        safeRunCatching {
             val refreshedContact = remoteDataSource.getAliasContact(userId, shareId, itemId, contactId)
                 .contact
                 .toDomain()

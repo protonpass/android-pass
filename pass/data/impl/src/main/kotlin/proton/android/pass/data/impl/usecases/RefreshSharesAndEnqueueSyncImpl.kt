@@ -28,7 +28,6 @@ import me.proton.core.domain.entity.UserId
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.repositories.ItemSyncStatus
 import proton.android.pass.data.api.repositories.ItemSyncStatusRepository
-import proton.android.pass.data.api.repositories.RefreshSharesResult as RepositoryRefreshSharesResult
 import proton.android.pass.data.api.repositories.ShareRepository
 import proton.android.pass.data.api.repositories.SyncMode
 import proton.android.pass.data.api.usecases.CreateVault
@@ -46,6 +45,7 @@ import proton.android.pass.preferences.FeatureFlag
 import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import proton.android.pass.preferences.InternalSettingsRepository
 import javax.inject.Inject
+import proton.android.pass.data.api.repositories.RefreshSharesResult as RepositoryRefreshSharesResult
 
 class RefreshSharesAndEnqueueSyncImpl @Inject constructor(
     @param:ApplicationContext private val context: Context,

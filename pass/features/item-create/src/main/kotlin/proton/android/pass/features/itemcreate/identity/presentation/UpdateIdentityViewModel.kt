@@ -31,6 +31,7 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import me.proton.core.accountmanager.domain.AccountManager
 import proton.android.pass.common.api.Some
+import proton.android.pass.common.api.safeRunCatching
 import proton.android.pass.commonui.api.ClassHolder
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
@@ -138,7 +139,7 @@ class UpdateIdentityViewModel @Inject constructor(
 
     private suspend fun getItem() {
         identityActionsProvider.updateLoadingState(IsLoadingState.Loading)
-        runCatching { getItemById(navShareId, navItemId) }
+        safeRunCatching { getItemById(navShareId, navItemId) }
             .onSuccess { item: Item ->
                 identityActionsProvider.onItemReceivedState(item)
                 getFormState().let {

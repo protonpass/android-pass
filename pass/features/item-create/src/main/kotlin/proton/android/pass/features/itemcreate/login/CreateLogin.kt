@@ -40,11 +40,11 @@ import proton.android.pass.commonui.api.OneTimeLaunchedEffect
 import proton.android.pass.commonui.api.toClassHolder
 import proton.android.pass.composecomponents.impl.attachments.AttachmentContentEvent
 import proton.android.pass.composecomponents.impl.dialogs.ConfirmCloseDialog
+import proton.android.pass.composecomponents.impl.dialogs.WarningSharedItemDialog
 import proton.android.pass.domain.CustomFieldType
 import proton.android.pass.domain.ShareId
 import proton.android.pass.features.itemcreate.ItemSavedState
 import proton.android.pass.features.itemcreate.R
-import proton.android.pass.composecomponents.impl.R as CompR
 import proton.android.pass.features.itemcreate.common.ItemSavedLaunchedEffect
 import proton.android.pass.features.itemcreate.common.ShareError.EmptyShareList
 import proton.android.pass.features.itemcreate.common.ShareError.SharesNotAvailable
@@ -53,7 +53,6 @@ import proton.android.pass.features.itemcreate.common.UICustomFieldContent
 import proton.android.pass.features.itemcreate.common.customfields.CustomFieldEvent
 import proton.android.pass.features.itemcreate.common.customfields.CustomFieldIdentifier
 import proton.android.pass.features.itemcreate.custom.createupdate.ui.DatePickerModal
-import proton.android.pass.composecomponents.impl.dialogs.WarningSharedItemDialog
 import proton.android.pass.features.itemcreate.launchedeffects.InAppReviewTriggerLaunchedEffect
 import proton.android.pass.features.itemcreate.login.BaseLoginNavigation.AddAttachment
 import proton.android.pass.features.itemcreate.login.BaseLoginNavigation.CustomFieldOptions
@@ -62,6 +61,7 @@ import proton.android.pass.features.itemcreate.login.BaseLoginNavigation.OnCreat
 import proton.android.pass.features.itemcreate.login.BaseLoginNavigation.OpenAttachmentOptions
 import proton.android.pass.features.itemcreate.login.BaseLoginNavigation.OpenDraftAttachmentOptions
 import proton.android.pass.features.itemcreate.login.LoginField.CustomField
+import proton.android.pass.composecomponents.impl.R as CompR
 
 @Suppress("ComplexMethod")
 @Composable

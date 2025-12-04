@@ -18,20 +18,27 @@
 
 package proton.android.pass.features.upsell.v1.navigation
 
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavGraphBuilder
+import proton.android.pass.features.upsell.CommonUpsellViewModel
+import proton.android.pass.features.upsell.v1.ui.UpsellScreen
 import proton.android.pass.features.upsell.v2.presentation.UpsellV2Screen
 import proton.android.pass.navigation.api.composable
 
 fun NavGraphBuilder.upsellNavGraph(onNavigated: (UpsellNavDestination) -> Unit) {
 
     composable(navItem = UpsellNavItem) {
-        // for the moment V1 is replaced by V2
-        // UpsellScreen(onNavigated = onNavigated)
-        UpsellV2Screen(
-            onPlanFinished = { onNavigated(UpsellNavDestination.CloseScreen) },
-            onSkip = { onNavigated(UpsellNavDestination.CloseScreen) },
-            onNavigateBack = { onNavigated(UpsellNavDestination.CloseScreen) }
-        )
+        val commonViewModel: CommonUpsellViewModel = hiltViewModel()
+        if (commonViewModel.supportPayment) {
+            UpsellV2Screen(
+                onPlanFinished = { onNavigated(UpsellNavDestination.CloseScreen) },
+                onSkip = { onNavigated(UpsellNavDestination.CloseScreen) },
+                onNavigateBack = { onNavigated(UpsellNavDestination.CloseScreen) }
+            )
+        } else {
+            // for quest / fdroid users : keep the classic screen
+            // they will be redirected to the website after pushing the upgrade button
+            UpsellScreen(onNavigated = onNavigated)
+        }
     }
-
 }

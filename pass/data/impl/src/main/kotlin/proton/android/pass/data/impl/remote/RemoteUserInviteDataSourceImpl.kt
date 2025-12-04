@@ -56,24 +56,14 @@ class RemoteUserInviteDataSourceImpl @Inject constructor(
     ) {
         coroutineScope {
             val existingUsers = async {
-                try {
-                    sendInvitesToExistingUsers(userId, shareId, existingUserRequests)
-                    Result.success(Unit)
-                } catch (error: Throwable) {
-                    Result.failure(error)
-                }
+                runCatching { sendInvitesToExistingUsers(userId, shareId, existingUserRequests) }
             }
             existingUsers.invokeOnCompletion {
                 PassLogger.d(TAG, "Existing users invites completed")
             }
 
             val newUsers = async {
-                try {
-                    sendInvitesToNewUsers(userId, shareId, newUserRequests)
-                    Result.success(Unit)
-                } catch (error: Throwable) {
-                    Result.failure(error)
-                }
+                runCatching { sendInvitesToNewUsers(userId, shareId, newUserRequests) }
             }
             newUsers.invokeOnCompletion {
                 PassLogger.d(TAG, "New users invites completed")
@@ -92,18 +82,18 @@ class RemoteUserInviteDataSourceImpl @Inject constructor(
     ) {
         if (existingUserRequests.invites.isNotEmpty()) {
             val api = apiProvider.get<PasswordManagerApi>(userId)
-            try {
+            runCatching {
                 api.invoke {
                     inviteUsers(shareId.id, existingUserRequests)
                 }.valueOrThrow
-            } catch (error: Throwable) {
+            }.onFailure { error ->
                 val reason = when (error.getProtonErrorCode()) {
                     ErrorCodes.FREE_USER_INVITED -> FreeUserInviteError(error.message)
                     ErrorCodes.USER_ALREADY_INVITED -> UserAlreadyInviteError(error.message)
                     else -> error
                 }
                 throw reason
-            }
+            }.getOrThrow()
         }
     }
 

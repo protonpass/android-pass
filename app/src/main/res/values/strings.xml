@@ -11,6 +11,4 @@
     <string name="no_session_found">No session found</string>
     <string name="auth_with_extra_password_failed">Auth with extra password failed</string>
     <string name="auth_only_1_proton_account_failed">Only 1 free Proton account is allowed.</string>
-    <string name="warning_dialog_reload_app_after_purchase_description">You are about to be redirected to our website. If you purchase a plan, please restart the app.</string>
-    <string name="warning_dialog_reload_app_after_purchase_reminder">Don\'t remind me again</string>
 </resources>

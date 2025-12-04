@@ -38,6 +38,7 @@ import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.asLoadingResult
+import proton.android.pass.common.api.safeRunCatching
 import proton.android.pass.common.api.toOption
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
@@ -173,7 +174,7 @@ class CreateIdentityViewModel @Inject constructor(
     fun onSubmit(shareId: ShareId) = viewModelScope.launch {
         if (!identityActionsProvider.isFormStateValid()) return@launch
         identityActionsProvider.updateLoadingState(IsLoadingState.Loading)
-        runCatching {
+        safeRunCatching {
             createItem(
                 shareId = shareId,
                 itemContents = identityActionsProvider.getFormState().toItemContents()

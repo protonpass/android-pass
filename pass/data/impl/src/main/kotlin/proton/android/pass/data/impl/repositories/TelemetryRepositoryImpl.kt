@@ -25,6 +25,7 @@ import kotlinx.serialization.json.JsonPrimitive
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.domain.entity.UserId
 import me.proton.core.telemetry.domain.usecase.IsTelemetryEnabled
+import proton.android.pass.common.api.safeRunCatching
 import proton.android.pass.data.api.repositories.TelemetryRepository
 import proton.android.pass.data.api.usecases.GetUserPlan
 import proton.android.pass.data.impl.db.entities.TelemetryEntity
@@ -67,7 +68,7 @@ class TelemetryRepositoryImpl @Inject constructor(
                 val planName = requireNotNull(getUserPlan(userId).firstOrNull())
                 val planInternalName = planName.planType.internalName
                 events.chunked(MAX_EVENT_BATCH_SIZE).forEach { eventChunk ->
-                    runCatching {
+                    safeRunCatching {
                         performSend(userId, planInternalName, eventChunk)
                     }.onSuccess {
                         val min = eventChunk.first().id
@@ -114,7 +115,7 @@ class TelemetryRepositoryImpl @Inject constructor(
         }
     )
 
-    private suspend fun shouldSendTelemetry(userId: UserId): Boolean = runCatching {
+    private suspend fun shouldSendTelemetry(userId: UserId): Boolean = safeRunCatching {
         isTelemetryEnabled(userId)
     }.getOrElse {
         PassLogger.w(TAG, "Error checking telemetry enabled")

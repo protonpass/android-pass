@@ -34,6 +34,7 @@ import proton.android.pass.biometry.AuthOverrideState
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
+import proton.android.pass.common.api.safeRunCatching
 import proton.android.pass.common.api.toOption
 import proton.android.pass.commonpresentation.api.attachments.AttachmentsHandler
 import proton.android.pass.commonpresentation.impl.R
@@ -132,7 +133,7 @@ class AttachmentsHandlerImpl @Inject constructor(
     override suspend fun openAttachment(contextHolder: ClassHolder<Context>, attachment: Attachment) {
         loadingAttachments.update { it + attachment.id }
         authOverrideState.setAuthOverride(true)
-        runCatching {
+        safeRunCatching {
             val uri = downloadAttachment(attachment)
             fileHandler.openFile(
                 contextHolder = contextHolder,
@@ -153,7 +154,7 @@ class AttachmentsHandlerImpl @Inject constructor(
     override suspend fun preloadAttachment(attachment: Attachment): Option<URI> {
         loadingAttachments.update { it + attachment.id }
         authOverrideState.setAuthOverride(true)
-        val result = runCatching {
+        val result = safeRunCatching {
             downloadAttachment(attachment)
         }.onSuccess {
             PassLogger.i(TAG, "Attachment downloaded: ${attachment.id}")
@@ -169,7 +170,7 @@ class AttachmentsHandlerImpl @Inject constructor(
     override suspend fun shareAttachment(contextHolder: ClassHolder<Context>, attachment: Attachment) {
         loadingAttachments.update { it + attachment.id }
         authOverrideState.setAuthOverride(true)
-        runCatching {
+        safeRunCatching {
             val uri = downloadAttachment(attachment)
             fileHandler.shareFile(
                 contextHolder = contextHolder,
@@ -190,7 +191,7 @@ class AttachmentsHandlerImpl @Inject constructor(
 
     override suspend fun uploadNewAttachment(fileMetadata: FileMetadata) {
         val uri = fileMetadata.uri
-        runCatching { uploadAttachment(fileMetadata) }
+        safeRunCatching { uploadAttachment(fileMetadata) }
             .onSuccess {
                 PassLogger.i(TAG, "Attachment uploaded: $uri")
             }

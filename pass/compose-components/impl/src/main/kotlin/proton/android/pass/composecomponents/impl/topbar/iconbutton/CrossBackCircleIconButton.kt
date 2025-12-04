@@ -25,8 +25,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import proton.android.pass.composecomponents.impl.R
-import me.proton.core.presentation.R as CoreR
 import proton.android.pass.composecomponents.impl.container.Circle
+import me.proton.core.presentation.R as CoreR
 
 @Composable
 fun CrossBackCircleIconButton(

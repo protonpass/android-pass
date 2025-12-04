@@ -28,6 +28,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.asLoadingResult
+import proton.android.pass.common.api.safeRunCatching
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
@@ -130,7 +131,7 @@ class CreateVaultViewModel @Inject constructor(
 
             is CreateVaultNextAction.ShareVault -> {
                 PassLogger.d(TAG, "Migrating item")
-                runCatching {
+                safeRunCatching {
                     migrateItems(
                         items = mapOf(action.shareId to listOf(action.itemId)),
                         destinationShare = newVault.id

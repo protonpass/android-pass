@@ -27,6 +27,7 @@ import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
+import proton.android.pass.common.api.safeRunCatching
 import proton.android.pass.common.api.some
 import proton.android.pass.data.api.repositories.LiveTelemetryRepository
 import proton.android.pass.data.api.usecases.GetUserPlan
@@ -117,7 +118,7 @@ class LiveTelemetryRepositoryImpl @Inject constructor(
                             }
                         )
 
-                        runCatching {
+                        safeRunCatching {
                             remote.sendEvent(
                                 userId = userId,
                                 shareId = shareId,

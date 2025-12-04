@@ -19,6 +19,7 @@
 package proton.android.pass.data.impl.migration
 
 import kotlinx.coroutines.delay
+import proton.android.pass.common.api.safeRunCatching
 import proton.android.pass.data.impl.db.AppDatabase
 import proton.android.pass.data.impl.db.PassDatabase
 import proton.android.pass.data.impl.local.LocalDataMigrationDataSource
@@ -54,7 +55,7 @@ class DataMigratorImpl @Inject constructor(
         return migrationsToExecute.isNotEmpty()
     }
 
-    override suspend fun run(): Result<Unit> = runCatching { runMigrations() }
+    override suspend fun run(): Result<Unit> = safeRunCatching { runMigrations() }
 
     private suspend fun runMigrations() {
         if (!waitForRoomToBeInitialized()) {

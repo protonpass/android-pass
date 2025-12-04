@@ -24,6 +24,7 @@ import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.withTimeout
 import me.proton.core.domain.entity.UserId
+import proton.android.pass.common.api.safeRunCatching
 import proton.android.pass.data.api.usecases.ApplyPendingEvents
 import proton.android.pass.data.api.usecases.PerformSync
 import proton.android.pass.data.api.usecases.RefreshGroupInvites
@@ -82,7 +83,7 @@ class PerformSyncImpl @Inject constructor(
         }
     }
 
-    private suspend fun performPendingEvents(userId: UserId): Result<Unit> = runCatching {
+    private suspend fun performPendingEvents(userId: UserId): Result<Unit> = safeRunCatching {
         withTimeout(2.minutes) {
             applyPendingEvents(userId)
             PassLogger.i(TAG, "Pending events for $userId finished")
@@ -91,7 +92,7 @@ class PerformSyncImpl @Inject constructor(
         PassLogger.w(TAG, "Pending events for $userId error: ${error.message}")
     }
 
-    private suspend fun performUserRefreshInvites(userId: UserId): Result<Unit> = runCatching {
+    private suspend fun performUserRefreshInvites(userId: UserId): Result<Unit> = safeRunCatching {
         withTimeout(2.minutes) {
             refreshUserInvites(userId)
             PassLogger.i(TAG, "Refresh user invites for $userId finished")
@@ -100,7 +101,7 @@ class PerformSyncImpl @Inject constructor(
         PassLogger.w(TAG, "Refresh user invites for $userId error: ${error.message}")
     }
 
-    private suspend fun performGroupRefreshInvites(userId: UserId): Result<Unit> = runCatching {
+    private suspend fun performGroupRefreshInvites(userId: UserId): Result<Unit> = safeRunCatching {
         withTimeout(2.minutes) {
             refreshGroupInvites(userId)
             PassLogger.i(TAG, "Refresh group invites for $userId finished")
@@ -109,7 +110,7 @@ class PerformSyncImpl @Inject constructor(
         PassLogger.w(TAG, "Refresh group invites for $userId error: ${error.message}")
     }
 
-    private suspend fun syncPendingSlAliases(userId: UserId): Result<Unit> = runCatching {
+    private suspend fun syncPendingSlAliases(userId: UserId): Result<Unit> = safeRunCatching {
         withTimeout(2.minutes) {
             syncPendingAliases(userId, true)
             PassLogger.i(TAG, "Pending SL aliases sync for $userId finished")

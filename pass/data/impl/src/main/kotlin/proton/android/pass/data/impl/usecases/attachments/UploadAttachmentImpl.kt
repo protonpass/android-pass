@@ -20,6 +20,7 @@ package proton.android.pass.data.impl.usecases.attachments
 
 import kotlinx.coroutines.flow.firstOrNull
 import me.proton.core.accountmanager.domain.AccountManager
+import proton.android.pass.common.api.safeRunCatching
 import proton.android.pass.data.api.errors.FileSizeExceededError
 import proton.android.pass.data.api.errors.UserIdNotAvailableError
 import proton.android.pass.data.api.repositories.AttachmentRepository
@@ -41,7 +42,7 @@ class UploadAttachmentImpl @Inject constructor(
 ) : UploadAttachment {
 
     override suspend fun invoke(metadata: FileMetadata) {
-        runCatching {
+        safeRunCatching {
             val draftAttachment = DraftAttachment.Loading(metadata)
             draftAttachmentRepository.update(draftAttachment)
             val userId = accountManager.getPrimaryUserId().firstOrNull()
@@ -50,7 +51,7 @@ class UploadAttachmentImpl @Inject constructor(
                 userId = userId,
                 metadata = metadata
             )
-            runCatching {
+            safeRunCatching {
                 attachmentRepository.uploadPendingAttachment(
                     userId = userId,
                     pendingAttachmentId = pendingAttachmentId,

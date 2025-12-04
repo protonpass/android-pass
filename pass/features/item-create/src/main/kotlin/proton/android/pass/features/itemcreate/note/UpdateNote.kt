@@ -45,7 +45,6 @@ import proton.android.pass.domain.CustomFieldType
 import proton.android.pass.features.itemcreate.ItemSavedState
 import proton.android.pass.features.itemcreate.R
 import proton.android.pass.features.itemcreate.common.DialogWarningType
-import proton.android.pass.composecomponents.impl.R as CompR
 import proton.android.pass.features.itemcreate.common.ItemSavedLaunchedEffect
 import proton.android.pass.features.itemcreate.common.UICustomFieldContent
 import proton.android.pass.features.itemcreate.common.customfields.CustomFieldEvent
@@ -58,6 +57,7 @@ import proton.android.pass.features.itemcreate.login.PerformActionAfterKeyboardH
 import proton.android.pass.features.itemcreate.note.NoteField.CustomField
 import proton.android.pass.features.itemcreate.note.UpdateNoteNavigation.NoteUpdated
 import proton.android.pass.features.itemcreate.note.UpdateNoteNavigation.OpenAttachmentOptions
+import proton.android.pass.composecomponents.impl.R as CompR
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable

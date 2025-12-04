@@ -19,9 +19,9 @@
 package proton.android.pass.data.impl.usecases
 
 import kotlinx.coroutines.flow.Flow
-import proton.android.pass.data.api.usecases.ObserveAccounts
 import me.proton.core.account.domain.entity.Account
 import me.proton.core.accountmanager.domain.AccountManager
+import proton.android.pass.data.api.usecases.ObserveAccounts
 import javax.inject.Inject
 
 class ObserveAccountsImpl @Inject constructor(

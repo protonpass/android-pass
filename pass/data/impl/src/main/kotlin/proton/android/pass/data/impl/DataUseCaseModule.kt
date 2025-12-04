@@ -100,8 +100,8 @@ import proton.android.pass.data.api.usecases.PinItems
 import proton.android.pass.data.api.usecases.PromoteNewInviteToInvite
 import proton.android.pass.data.api.usecases.RefreshContent
 import proton.android.pass.data.api.usecases.RefreshGroupInvites
-import proton.android.pass.data.api.usecases.RefreshUserAccess
 import proton.android.pass.data.api.usecases.RefreshSharesAndEnqueueSync
+import proton.android.pass.data.api.usecases.RefreshUserAccess
 import proton.android.pass.data.api.usecases.RefreshUserInvites
 import proton.android.pass.data.api.usecases.RejectInvite
 import proton.android.pass.data.api.usecases.RemoveShareMember
@@ -342,8 +342,8 @@ import proton.android.pass.data.impl.usecases.PinItemsImpl
 import proton.android.pass.data.impl.usecases.PromoteNewInviteToInviteImpl
 import proton.android.pass.data.impl.usecases.RefreshContentImpl
 import proton.android.pass.data.impl.usecases.RefreshGroupInvitesImpl
-import proton.android.pass.data.impl.usecases.RefreshUserAccessImpl
 import proton.android.pass.data.impl.usecases.RefreshSharesAndEnqueueSyncImpl
+import proton.android.pass.data.impl.usecases.RefreshUserAccessImpl
 import proton.android.pass.data.impl.usecases.RefreshUserInvitesImpl
 import proton.android.pass.data.impl.usecases.RejectInviteImpl
 import proton.android.pass.data.impl.usecases.RemoveShareMemberImpl
@@ -681,7 +681,7 @@ abstract class DataUseCaseModule {
     abstract fun bindCanPerformPaidAction(impl: CanPerformPaidActionImpl): CanPerformPaidAction
 
     @Binds
-    abstract fun bindRefreshPlan(impl: RefreshUserAccessImpl): RefreshUserAccess
+    abstract fun bindRefreshUserAccess(impl: RefreshUserAccessImpl): RefreshUserAccess
 
     @Binds
     abstract fun bindCheckMasterPassword(impl: CheckMasterPasswordImpl): CheckMasterPassword

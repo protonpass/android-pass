@@ -21,6 +21,7 @@ package proton.android.pass.data.impl.usecases
 import kotlinx.coroutines.flow.firstOrNull
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.domain.entity.UserId
+import proton.android.pass.common.api.safeRunCatching
 import proton.android.pass.data.api.errors.UserIdNotAvailableError
 import proton.android.pass.data.api.repositories.ItemSyncStatus
 import proton.android.pass.data.api.repositories.ItemSyncStatusRepository
@@ -45,7 +46,7 @@ class RefreshContentImpl @Inject constructor(
         val actualUserId = userId ?: accountManager.getPrimaryUserId().firstOrNull()
             ?: throw UserIdNotAvailableError()
 
-        runCatching {
+        safeRunCatching {
             refreshSharesAndEnqueueSync(
                 userId = actualUserId,
                 syncType = RefreshSharesAndEnqueueSync.SyncType.FULL

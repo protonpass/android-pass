@@ -28,6 +28,7 @@ import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkerParameters
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
+import proton.android.pass.common.api.safeRunCatching
 import proton.android.pass.data.api.usecases.breach.SendUserMonitorCredentialsReport
 import proton.android.pass.log.api.PassLogger
 import java.util.concurrent.TimeUnit
@@ -39,7 +40,7 @@ class PeriodicReportWorker @AssistedInject constructor(
     private val sendUserMonitorCredentialsReport: SendUserMonitorCredentialsReport
 ) : CoroutineWorker(appContext, workerParameters) {
 
-    override suspend fun doWork(): Result = runCatching {
+    override suspend fun doWork(): Result = safeRunCatching {
         PassLogger.i(TAG, "Starting $TAG attempt $runAttemptCount")
         sendUserMonitorCredentialsReport()
     }.onSuccess {

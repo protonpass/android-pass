@@ -26,7 +26,6 @@ import proton.android.pass.domain.CustomFieldType
 import proton.android.pass.features.itemcreate.ItemSavedState
 import proton.android.pass.features.itemcreate.R
 import proton.android.pass.features.itemcreate.common.DialogWarningType
-import proton.android.pass.composecomponents.impl.R as CompR
 import proton.android.pass.features.itemcreate.common.ItemSavedLaunchedEffect
 import proton.android.pass.features.itemcreate.common.UICustomFieldContent
 import proton.android.pass.features.itemcreate.common.customfields.CustomFieldEvent
@@ -43,6 +42,7 @@ import proton.android.pass.features.itemcreate.creditcard.CreditCardField.Custom
 import proton.android.pass.features.itemcreate.custom.createupdate.ui.DatePickerModal
 import proton.android.pass.features.itemcreate.launchedeffects.InAppReviewTriggerLaunchedEffect
 import proton.android.pass.features.itemcreate.login.PerformActionAfterKeyboardHide
+import proton.android.pass.composecomponents.impl.R as CompR
 
 @Suppress("ComplexMethod")
 @Composable

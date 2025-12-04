@@ -20,8 +20,8 @@ package proton.android.pass.data.impl.usecases.securelink
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
-import proton.android.pass.data.api.usecases.securelink.ObserveSecureLinks
 import proton.android.pass.data.api.usecases.securelink.ObserveActiveSecureLinks
+import proton.android.pass.data.api.usecases.securelink.ObserveSecureLinks
 import proton.android.pass.domain.securelinks.SecureLink
 import javax.inject.Inject
 

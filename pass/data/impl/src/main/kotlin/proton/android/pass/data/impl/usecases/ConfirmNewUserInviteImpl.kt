@@ -26,6 +26,7 @@ import me.proton.core.domain.entity.UserId
 import me.proton.core.network.data.ApiProvider
 import me.proton.core.user.domain.repository.UserAddressRepository
 import proton.android.pass.common.api.AppDispatchers
+import proton.android.pass.common.api.safeRunCatching
 import proton.android.pass.data.api.usecases.ConfirmNewUserInvite
 import proton.android.pass.data.api.usecases.VaultMember
 import proton.android.pass.data.impl.api.PasswordManagerApi
@@ -95,7 +96,7 @@ class ConfirmNewUserInviteImpl @Inject constructor(
         val share = localShareDataSource.getById(userId, shareId)
             ?: return Result.failure(IllegalStateException("No share with id $shareId"))
 
-        val inviterUserAddress = runCatching { userAddressRepository.getAddresses(userId) }
+        val inviterUserAddress = safeRunCatching { userAddressRepository.getAddresses(userId) }
             .fold(
                 onSuccess = { addresses ->
                     val address = addresses.firstOrNull { it.addressId.id == share.addressId }

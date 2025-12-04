@@ -37,6 +37,7 @@ import proton.android.pass.clipboard.api.ClipboardManager
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
+import proton.android.pass.common.api.safeRunCatching
 import proton.android.pass.common.api.some
 import proton.android.pass.commonpresentation.api.attachments.AttachmentsHandler
 import proton.android.pass.commonrust.api.EmailValidator
@@ -335,7 +336,7 @@ class UpdateLoginViewModel @Inject constructor(
         shareId: ShareId,
         aliasItemFormState: AliasItemFormState
     ): Result<Item> = if (aliasItemFormState.selectedSuffix != null) {
-        runCatching {
+        safeRunCatching {
             createAlias(
                 userId = userId,
                 shareId = shareId,
@@ -366,7 +367,7 @@ class UpdateLoginViewModel @Inject constructor(
         currentItem: Item,
         contents: ItemContents.Login
     ) {
-        runCatching {
+        safeRunCatching {
             val hasContentsChanged = encryptionContextProvider.withEncryptionContextSuspendable {
                 !areItemContentsEqual(
                     a = currentItem.toItemContents { decrypt(it) },
@@ -391,14 +392,14 @@ class UpdateLoginViewModel @Inject constructor(
             }
         }.onSuccess { item ->
             snackbarDispatcher(LoginSnackbarMessages.LoginUpdated)
-            runCatching {
+            safeRunCatching {
                 renameAttachments(item.shareId, item.id)
             }.onFailure {
                 PassLogger.w(TAG, "Error renaming attachments")
                 PassLogger.w(TAG, it)
                 snackbarDispatcher(ItemRenameAttachmentsError)
             }
-            runCatching {
+            safeRunCatching {
                 linkAttachmentsToItem(item.shareId, item.id, item.revision)
             }.onFailure {
                 PassLogger.w(TAG, "Link attachment error")

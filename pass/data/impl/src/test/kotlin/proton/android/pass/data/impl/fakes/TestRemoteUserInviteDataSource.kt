@@ -20,9 +20,9 @@ package proton.android.pass.data.impl.fakes
 
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.impl.remote.RemoteUserInviteDataSource
-import proton.android.pass.data.impl.requests.invites.AcceptInviteRequest
 import proton.android.pass.data.impl.requests.CreateInvitesRequest
 import proton.android.pass.data.impl.requests.CreateNewUserInvitesRequest
+import proton.android.pass.data.impl.requests.invites.AcceptInviteRequest
 import proton.android.pass.data.impl.responses.InviteRecommendationsOrganizationResponse
 import proton.android.pass.data.impl.responses.InviteRecommendationsSuggestedResponse
 import proton.android.pass.data.impl.responses.OrganizationRecommendation

@@ -92,14 +92,11 @@ import proton.android.pass.data.impl.db.entities.GroupInviteKeyEntity
 import proton.android.pass.data.impl.db.entities.IgnoredAssetLinkEntity
 import proton.android.pass.data.impl.db.entities.InAppMessageEntity
 import proton.android.pass.data.impl.db.entities.InstantConverter
-import proton.android.pass.data.impl.db.entities.UserInviteEntity
-import proton.android.pass.data.impl.db.entities.UserInviteKeyEntity
 import proton.android.pass.data.impl.db.entities.ItemEntity
 import proton.android.pass.data.impl.db.entities.LiveTelemetryEntity
 import proton.android.pass.data.impl.db.entities.PassDataMigrationEntity
 import proton.android.pass.data.impl.db.entities.PassEventEntity
 import proton.android.pass.data.impl.db.entities.PassOrganizationSettingsEntity
-import proton.android.pass.data.impl.db.entities.UserEventEntity
 import proton.android.pass.data.impl.db.entities.PasswordHistoryEntity
 import proton.android.pass.data.impl.db.entities.PlanEntity
 import proton.android.pass.data.impl.db.entities.SearchEntryEntity
@@ -107,6 +104,9 @@ import proton.android.pass.data.impl.db.entities.ShareEntity
 import proton.android.pass.data.impl.db.entities.ShareKeyEntity
 import proton.android.pass.data.impl.db.entities.TelemetryEntity
 import proton.android.pass.data.impl.db.entities.UserAccessDataEntity
+import proton.android.pass.data.impl.db.entities.UserEventEntity
+import proton.android.pass.data.impl.db.entities.UserInviteEntity
+import proton.android.pass.data.impl.db.entities.UserInviteKeyEntity
 import proton.android.pass.data.impl.db.entities.attachments.AttachmentEntity
 import proton.android.pass.data.impl.db.entities.attachments.ChunkEntity
 import proton.android.pass.data.impl.db.entities.securelinks.SecureLinkEntity

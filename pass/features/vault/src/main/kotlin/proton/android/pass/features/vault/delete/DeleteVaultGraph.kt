@@ -19,13 +19,13 @@
 package proton.android.pass.features.vault.delete
 
 import androidx.navigation.NavGraphBuilder
+import proton.android.pass.domain.ShareId
 import proton.android.pass.features.vault.VaultNavigation
 import proton.android.pass.navigation.api.CommonNavArgId
+import proton.android.pass.navigation.api.IsLastVault
 import proton.android.pass.navigation.api.NavItem
 import proton.android.pass.navigation.api.NavItemType
 import proton.android.pass.navigation.api.dialog
-import proton.android.pass.domain.ShareId
-import proton.android.pass.navigation.api.IsLastVault
 
 object DeleteVaultDialog : NavItem(
     baseRoute = "vault/delete/dialog",

@@ -22,6 +22,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emitAll
 import kotlinx.coroutines.flow.flow
 import me.proton.core.domain.entity.UserId
+import proton.android.pass.common.api.safeRunCatching
 import proton.android.pass.data.api.errors.CannotSendMoreInvitesError
 import proton.android.pass.data.api.errors.ErrorCodes
 import proton.android.pass.data.api.errors.getProtonErrorCode
@@ -83,7 +84,7 @@ class ShareInvitesRepositoryImpl @Inject constructor(
     ) {
         localDataSource.getSharePendingInvite(userId, shareId, inviteId)
             ?.also { sharePendingInvite ->
-                runCatching {
+                safeRunCatching {
                     remoteDataSource.deleteSharePendingInvite(
                         userId = userId,
                         shareId = shareId,
@@ -106,7 +107,7 @@ class ShareInvitesRepositoryImpl @Inject constructor(
         shareId: ShareId,
         inviteId: InviteId
     ) {
-        runCatching {
+        safeRunCatching {
             remoteDataSource.resendShareInvite(userId, shareId, inviteId)
         }.onFailure { error ->
             PassLogger.w(TAG, "There was an error re-sending share pending invite")

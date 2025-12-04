@@ -31,6 +31,7 @@ import dagger.assisted.AssistedInject
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
+import proton.android.pass.common.api.safeRunCatching
 import proton.android.pass.files.api.DirectoryCleaner
 import proton.android.pass.files.api.DirectoryType
 import proton.android.pass.log.api.PassLogger
@@ -43,7 +44,7 @@ class PeriodicCleanupWorker @AssistedInject constructor(
     private val directoryCleaner: DirectoryCleaner
 ) : CoroutineWorker(appContext, workerParameters) {
 
-    override suspend fun doWork(): Result = runCatching {
+    override suspend fun doWork(): Result = safeRunCatching {
         PassLogger.i(TAG, "Starting $TAG attempt $runAttemptCount")
         coroutineScope {
             listOf(

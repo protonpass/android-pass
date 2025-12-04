@@ -36,6 +36,7 @@ import androidx.work.WorkerParameters
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
 import me.proton.core.domain.entity.UserId
+import proton.android.pass.common.api.safeRunCatching
 import proton.android.pass.data.api.repositories.ItemRepository
 import proton.android.pass.data.impl.R
 import proton.android.pass.data.impl.repositories.FetchShareItemsStatus
@@ -64,7 +65,7 @@ open class FetchShareItemsWorker @AssistedInject constructor(
 
         fetchShareItemsStatusRepository.emit(shareId, FetchShareItemsStatus.NotStarted)
 
-        return runCatching {
+        return safeRunCatching {
             itemRepository.downloadItemsAndObserveProgress(
                 userId = userId,
                 shareId = shareId,

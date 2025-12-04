@@ -46,7 +46,6 @@ import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.ShareId
 import proton.android.pass.features.itemcreate.ItemSavedState
 import proton.android.pass.features.itemcreate.R
-import proton.android.pass.composecomponents.impl.R as CompR
 import proton.android.pass.features.itemcreate.alias.AliasField.CustomField
 import proton.android.pass.features.itemcreate.alias.BaseAliasNavigation.AddCustomField
 import proton.android.pass.features.itemcreate.alias.BaseAliasNavigation.CustomFieldOptions
@@ -66,6 +65,7 @@ import proton.android.pass.features.itemcreate.common.customfields.CustomFieldId
 import proton.android.pass.features.itemcreate.custom.createupdate.ui.DatePickerModal
 import proton.android.pass.features.itemcreate.launchedeffects.InAppReviewTriggerLaunchedEffect
 import proton.android.pass.features.itemcreate.login.PerformActionAfterKeyboardHide
+import proton.android.pass.composecomponents.impl.R as CompR
 
 @Composable
 fun CreateAliasScreen(

@@ -32,16 +32,14 @@ import proton.android.pass.data.impl.local.LocalEventDataSource
 import proton.android.pass.data.impl.local.LocalEventDataSourceImpl
 import proton.android.pass.data.impl.local.LocalGroupInviteDataSource
 import proton.android.pass.data.impl.local.LocalGroupInviteDataSourceImpl
-import proton.android.pass.data.impl.local.LocalUserInviteDataSource
-import proton.android.pass.data.impl.local.LocalUserInviteDataSourceImpl
 import proton.android.pass.data.impl.local.LocalItemDataSource
 import proton.android.pass.data.impl.local.LocalItemDataSourceImpl
 import proton.android.pass.data.impl.local.LocalLiveTelemetryDataSource
 import proton.android.pass.data.impl.local.LocalLiveTelemetryDataSourceImpl
 import proton.android.pass.data.impl.local.LocalOrganizationSettingsDataSource
 import proton.android.pass.data.impl.local.LocalOrganizationSettingsDataSourceImpl
-import proton.android.pass.data.impl.local.LocalPasswordHistoryEntryDataSourceImpl
 import proton.android.pass.data.impl.local.LocalPasswordHistoryEntryDataSource
+import proton.android.pass.data.impl.local.LocalPasswordHistoryEntryDataSourceImpl
 import proton.android.pass.data.impl.local.LocalPlanDataSource
 import proton.android.pass.data.impl.local.LocalPlanDataSourceImpl
 import proton.android.pass.data.impl.local.LocalSearchEntryDataSource
@@ -56,6 +54,8 @@ import proton.android.pass.data.impl.local.LocalUserAccessDataDataSource
 import proton.android.pass.data.impl.local.LocalUserAccessDataDataSourceImpl
 import proton.android.pass.data.impl.local.LocalUserEventDataSource
 import proton.android.pass.data.impl.local.LocalUserEventDataSourceImpl
+import proton.android.pass.data.impl.local.LocalUserInviteDataSource
+import proton.android.pass.data.impl.local.LocalUserInviteDataSourceImpl
 import proton.android.pass.data.impl.local.assetlink.LocalAssetLinkDataSource
 import proton.android.pass.data.impl.local.assetlink.LocalAssetLinkDataSourceImpl
 import proton.android.pass.data.impl.local.attachments.LocalAttachmentsDataSource

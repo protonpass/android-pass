@@ -28,6 +28,7 @@ import kotlinx.coroutines.flow.map
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.FlowUtils.oneShot
 import proton.android.pass.common.api.firstError
+import proton.android.pass.common.api.safeRunCatching
 import proton.android.pass.data.api.repositories.AliasItemsChangeStatusResult
 import proton.android.pass.data.api.repositories.AliasRepository
 import proton.android.pass.data.impl.extensions.toDomain
@@ -109,7 +110,7 @@ class AliasRepositoryImpl @Inject constructor(
     ): AliasItemsChangeStatusResult = coroutineScope {
         val results: List<Result<Pair<ShareId, ItemId>>> = items.map { (shareId, itemId) ->
             async {
-                runCatching {
+                safeRunCatching {
                     changeAliasStatus(userId, shareId, itemId, enabled)
                         .let { shareId to itemId }
                 }

@@ -26,6 +26,7 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.withContext
 import kotlinx.datetime.Clock
 import proton.android.pass.common.api.AppDispatchers
+import proton.android.pass.common.api.safeRunCatching
 import proton.android.pass.commonrust.api.FileType
 import proton.android.pass.commonrust.api.FileTypeDetector
 import proton.android.pass.commonrust.api.MimeType
@@ -116,7 +117,7 @@ class MetadataResolverImpl @Inject constructor(
     }
 
     private suspend fun detectMimeType(contentUri: Uri): String? = withContext(appDispatchers.io) {
-        runCatching {
+        safeRunCatching {
             context.contentResolver.openInputStream(contentUri)?.use { inputStream ->
                 val availableBytes = inputStream.available().coerceAtMost(200)
                 if (availableBytes > 0) {

@@ -31,7 +31,6 @@ import proton.android.pass.data.api.repositories.BulkMoveToVaultRepository
 import proton.android.pass.data.api.repositories.DraftAttachmentRepository
 import proton.android.pass.data.api.repositories.DraftRepository
 import proton.android.pass.data.api.repositories.InAppMessagesRepository
-import proton.android.pass.data.api.repositories.UserInviteRepository
 import proton.android.pass.data.api.repositories.ItemRepository
 import proton.android.pass.data.api.repositories.ItemSyncStatusRepository
 import proton.android.pass.data.api.repositories.MetadataResolver
@@ -39,6 +38,7 @@ import proton.android.pass.data.api.repositories.PasswordHistoryEntryRepository
 import proton.android.pass.data.api.repositories.PendingAttachmentLinkRepository
 import proton.android.pass.data.api.repositories.PendingAttachmentUpdaterRepository
 import proton.android.pass.data.api.repositories.UserAccessDataRepository
+import proton.android.pass.data.api.repositories.UserInviteRepository
 import proton.android.pass.data.api.usecases.AcceptInvite
 import proton.android.pass.data.api.usecases.ApplyPendingEvents
 import proton.android.pass.data.api.usecases.BatchChangeShareVisibility
@@ -62,7 +62,6 @@ import proton.android.pass.data.api.usecases.DeleteItems
 import proton.android.pass.data.api.usecases.DeleteVault
 import proton.android.pass.data.api.usecases.GetAllKeysByAddress
 import proton.android.pass.data.api.usecases.GetDefaultBrowser
-import proton.android.pass.data.api.usecases.ObserveGroupMembersByGroup
 import proton.android.pass.data.api.usecases.GetInviteUserMode
 import proton.android.pass.data.api.usecases.GetItemActions
 import proton.android.pass.data.api.usecases.GetItemByAliasEmail
@@ -88,6 +87,7 @@ import proton.android.pass.data.api.usecases.ObserveCurrentUser
 import proton.android.pass.data.api.usecases.ObserveCurrentUserSettings
 import proton.android.pass.data.api.usecases.ObserveEncryptedItems
 import proton.android.pass.data.api.usecases.ObserveGlobalMonitorState
+import proton.android.pass.data.api.usecases.ObserveGroupMembersByGroup
 import proton.android.pass.data.api.usecases.ObserveInviteRecommendations
 import proton.android.pass.data.api.usecases.ObserveInvites
 import proton.android.pass.data.api.usecases.ObserveItemById
@@ -108,8 +108,8 @@ import proton.android.pass.data.api.usecases.PromoteNewInviteToInvite
 import proton.android.pass.data.api.usecases.RefreshContent
 import proton.android.pass.data.api.usecases.RefreshGroupInvites
 import proton.android.pass.data.api.usecases.RefreshSharesAndEnqueueSync
-import proton.android.pass.data.api.usecases.RefreshUserInvites
 import proton.android.pass.data.api.usecases.RefreshUserAccess
+import proton.android.pass.data.api.usecases.RefreshUserInvites
 import proton.android.pass.data.api.usecases.RejectInvite
 import proton.android.pass.data.api.usecases.RemoveShareMember
 import proton.android.pass.data.api.usecases.ResendShareInvite
@@ -251,21 +251,22 @@ import proton.android.pass.data.fakes.repositories.FakeSentinelRepository
 import proton.android.pass.data.fakes.repositories.TestBulkInviteRepository
 import proton.android.pass.data.fakes.repositories.TestBulkMoveToVaultRepository
 import proton.android.pass.data.fakes.repositories.TestDraftRepository
-import proton.android.pass.data.fakes.repositories.TestUserInviteRepository
 import proton.android.pass.data.fakes.repositories.TestItemRepository
 import proton.android.pass.data.fakes.repositories.TestUserAccessDataRepository
+import proton.android.pass.data.fakes.repositories.TestUserInviteRepository
 import proton.android.pass.data.fakes.usecases.FakeCanOrganiseVaults
 import proton.android.pass.data.fakes.usecases.FakeChangeAliasStatus
-import proton.android.pass.data.fakes.usecases.FakeObserveGroupMembersByGroup
 import proton.android.pass.data.fakes.usecases.FakeGetItemById
 import proton.android.pass.data.fakes.usecases.FakeInitialWorkerLauncher
 import proton.android.pass.data.fakes.usecases.FakeObserveAddressesByUserId
 import proton.android.pass.data.fakes.usecases.FakeObserveEncryptedItems
+import proton.android.pass.data.fakes.usecases.FakeObserveGroupMembersByGroup
 import proton.android.pass.data.fakes.usecases.FakeObserveInviteRecommendations
 import proton.android.pass.data.fakes.usecases.FakePinItem
 import proton.android.pass.data.fakes.usecases.FakePromoteNewInviteToInvite
 import proton.android.pass.data.fakes.usecases.FakeRefreshGroupInvites
 import proton.android.pass.data.fakes.usecases.FakeRefreshSharesAndEnqueueSync
+import proton.android.pass.data.fakes.usecases.FakeRefreshUserInvites
 import proton.android.pass.data.fakes.usecases.FakeUnpinItem
 import proton.android.pass.data.fakes.usecases.FakeUpdateAliasName
 import proton.android.pass.data.fakes.usecases.TestAcceptInvite
@@ -339,7 +340,6 @@ import proton.android.pass.data.fakes.usecases.TestObserveVaultsWithItemCount
 import proton.android.pass.data.fakes.usecases.TestPerformSync
 import proton.android.pass.data.fakes.usecases.TestPinItems
 import proton.android.pass.data.fakes.usecases.TestRefreshContent
-import proton.android.pass.data.fakes.usecases.FakeRefreshUserInvites
 import proton.android.pass.data.fakes.usecases.TestRefreshUserAccess
 import proton.android.pass.data.fakes.usecases.TestRejectInvite
 import proton.android.pass.data.fakes.usecases.TestRemoveShareMember

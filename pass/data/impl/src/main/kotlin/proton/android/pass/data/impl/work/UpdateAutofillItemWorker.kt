@@ -28,6 +28,7 @@ import dagger.assisted.AssistedInject
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
+import proton.android.pass.common.api.safeRunCatching
 import proton.android.pass.common.api.toOption
 import proton.android.pass.data.api.repositories.ItemRepository
 import proton.android.pass.data.api.repositories.ShareRepository
@@ -72,7 +73,7 @@ class UpdateAutofillItemWorker @AssistedInject constructor(
             }
         }
 
-    private suspend fun updateItemWithPackageNameOrUrl(userId: UserId, inputData: InputData) = runCatching {
+    private suspend fun updateItemWithPackageNameOrUrl(userId: UserId, inputData: InputData) = safeRunCatching {
         val message = "Adding package and url to item [itemId=${inputData.itemId}]" +
             " [packageInfo=${inputData.packageInfo}] " +
             " [url=${inputData.url}]"
@@ -99,14 +100,14 @@ class UpdateAutofillItemWorker @AssistedInject constructor(
             }
         )
 
-    private suspend fun getUserID(inputData: InputData) = runCatching {
+    private suspend fun getUserID(inputData: InputData) = safeRunCatching {
         val userIdOption = itemRepository.findUserId(inputData.shareId, inputData.itemId)
         userIdOption.value() ?: throw IllegalStateException("User not found")
     }
 
     private suspend fun updateLastUsed(userId: UserId, inputData: InputData) {
         PassLogger.d(TAG, "Start update last used")
-        return runCatching {
+        return safeRunCatching {
             val share = shareRepository.getById(userId, inputData.shareId)
             itemRepository.updateItemLastUsed(share.vaultId, inputData.itemId)
         }.fold(

@@ -23,8 +23,6 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import proton.android.pass.appconfig.api.AppConfig
-import proton.android.pass.network.api.NetworkMonitor
 import me.proton.core.network.data.client.ExtraHeaderProviderImpl
 import me.proton.core.network.data.di.AlternativeApiPins
 import me.proton.core.network.data.di.BaseProtonApiUrl
@@ -37,6 +35,8 @@ import me.proton.core.network.domain.serverconnection.DohAlternativesListener
 import me.proton.core.util.kotlin.takeIfNotBlank
 import okhttp3.HttpUrl
 import okhttp3.HttpUrl.Companion.toHttpUrl
+import proton.android.pass.appconfig.api.AppConfig
+import proton.android.pass.network.api.NetworkMonitor
 import javax.inject.Singleton
 
 @Module

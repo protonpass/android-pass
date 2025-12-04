@@ -14,6 +14,7 @@ import me.proton.core.accountmanager.domain.AccountManager
 import proton.android.pass.clipboard.api.ClipboardManager
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
+import proton.android.pass.common.api.safeRunCatching
 import proton.android.pass.common.api.some
 import proton.android.pass.commonpresentation.api.attachments.AttachmentsHandler
 import proton.android.pass.commonui.api.SavedStateHandleProvider
@@ -207,14 +208,14 @@ class UpdateCreditCardViewModel @Inject constructor(
             }
         }.onSuccess { item ->
             snackbarDispatcher(CreditCardSnackbarMessage.ItemUpdated)
-            runCatching {
+            safeRunCatching {
                 renameAttachments(item.shareId, item.id)
             }.onFailure {
                 PassLogger.w(TAG, "Error renaming attachments")
                 PassLogger.w(TAG, it)
                 snackbarDispatcher(ItemRenameAttachmentsError)
             }
-            runCatching {
+            safeRunCatching {
                 linkAttachmentsToItem(item.shareId, item.id, item.revision)
             }.onFailure {
                 PassLogger.w(TAG, "Link attachment error")

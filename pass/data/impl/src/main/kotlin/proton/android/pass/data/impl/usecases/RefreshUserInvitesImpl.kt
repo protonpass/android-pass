@@ -22,6 +22,7 @@ import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.first
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.domain.entity.UserId
+import proton.android.pass.common.api.safeRunCatching
 import proton.android.pass.data.api.repositories.UserInviteRepository
 import proton.android.pass.data.api.usecases.RefreshUserInvites
 import proton.android.pass.domain.events.EventToken
@@ -38,7 +39,7 @@ class RefreshUserInvitesImpl @Inject constructor(
     override suspend fun invoke(userId: UserId?, eventToken: EventToken?) {
         PassLogger.i(TAG, "Refreshing user invites started")
 
-        runCatching {
+        safeRunCatching {
             val currentUserId = userId ?: accountManager.getPrimaryUserId()
                 .filterNotNull()
                 .first()

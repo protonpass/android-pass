@@ -39,6 +39,7 @@ import me.proton.core.user.domain.repository.UserAddressRepository
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
+import proton.android.pass.common.api.safeRunCatching
 import proton.android.pass.common.api.transpose
 import proton.android.pass.crypto.api.Base64
 import proton.android.pass.crypto.api.context.EncryptionContext
@@ -198,7 +199,7 @@ class ItemRepositoryImpl @Inject constructor(
     ): Item = withUserAddress(userId) { userAddress ->
         val share = shareRepository.getById(userId, shareId)
         val shareKey = shareKeyRepository.getLatestKeyForShare(shareId).first()
-        val request = runCatching {
+        val request = safeRunCatching {
             val itemBody = createItem.create(shareKey, contents)
             val aliasContents = ItemContents.Alias(
                 title = contents.title,
@@ -599,7 +600,7 @@ class ItemRepositoryImpl @Inject constructor(
                 items.map { TrashItemRevision(it.id, it.revision) }
             )
 
-            runCatching { remoteItemDataSource.sendToTrash(userId, shareId, body) }
+            safeRunCatching { remoteItemDataSource.sendToTrash(userId, shareId, body) }
                 .onSuccess { trashItemsResponse ->
                     handleTrashItemsResponse(items, trashItemsResponse)
                 }
@@ -634,7 +635,7 @@ class ItemRepositoryImpl @Inject constructor(
                 items.map { TrashItemRevision(it.id, it.revision) }
             )
 
-            runCatching { remoteItemDataSource.untrash(userId, shareId, body) }
+            safeRunCatching { remoteItemDataSource.untrash(userId, shareId, body) }
                 .onSuccess { trashItemsResponse ->
                     handleTrashItemsResponse(items, trashItemsResponse)
                 }
@@ -751,7 +752,7 @@ class ItemRepositoryImpl @Inject constructor(
                 items.map { TrashItemRevision(it.id, it.revision) }
             )
 
-            runCatching { remoteItemDataSource.delete(userId, shareId, body) }
+            safeRunCatching { remoteItemDataSource.delete(userId, shareId, body) }
                 .onSuccess {
                     localItemDataSource.delete(userId, shareId, items.map { ItemId(it.id) })
                 }
@@ -811,7 +812,7 @@ class ItemRepositoryImpl @Inject constructor(
         var sinceToken: String? = null
         var itemsRetrieved = 0
 
-        runCatching {
+        safeRunCatching {
             while (currentCoroutineContext().isActive) {
                 val page = remoteItemDataSource.getItemsPage(
                     userId = userId,
@@ -979,7 +980,7 @@ class ItemRepositoryImpl @Inject constructor(
         val destinationKey = shareKeyRepository.getLatestKeyForShare(destination.id).first()
         val migratedRevisions: List<Result<List<ItemEntity>>> = items.map { (shareId, items) ->
             async {
-                runCatching {
+                safeRunCatching {
                     val shareItems = localItemDataSource.getByIdList(userId, shareId, items)
                     migrateItemsForShare(
                         userId = userId,
@@ -1115,7 +1116,7 @@ class ItemRepositoryImpl @Inject constructor(
         userId: UserId,
         shareId: ShareId,
         revisions: List<ItemRevision>
-    ) = runCatching {
+    ) = safeRunCatching {
         val share = shareRepository.getById(userId, shareId)
         val address = shareRepository.getAddressForShareId(userId, shareId)
         val localItemsForShare = localItemDataSource.observeItems(
@@ -1168,7 +1169,7 @@ class ItemRepositoryImpl @Inject constructor(
         val userId = requireNotNull(accountManager.getPrimaryUserId().first())
 
         val pinResults: List<Result<Pair<ShareId, ItemRevision>>> = items.map { (shareId, itemId) ->
-            async { runCatching { shareId to block(userId, shareId, itemId) } }
+            async { safeRunCatching { shareId to block(userId, shareId, itemId) } }
         }.awaitAll().toList()
 
         generateItemPinningResponse(userId, items, pinResults)

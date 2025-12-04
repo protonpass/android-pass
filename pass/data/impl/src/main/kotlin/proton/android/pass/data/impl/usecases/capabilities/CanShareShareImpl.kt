@@ -19,6 +19,7 @@
 package proton.android.pass.data.impl.usecases.capabilities
 
 import kotlinx.coroutines.flow.first
+import proton.android.pass.common.api.safeRunCatching
 import proton.android.pass.data.api.usecases.GetShareById
 import proton.android.pass.data.api.usecases.GetUserPlan
 import proton.android.pass.data.api.usecases.capabilities.CanShareShare
@@ -34,7 +35,7 @@ class CanShareShareImpl @Inject constructor(
 ) : CanShareShare {
 
     override suspend fun invoke(shareId: ShareId): CanShareShareStatus {
-        val share = runCatching { getShareById(shareId = shareId) }.getOrElse { error ->
+        val share = safeRunCatching { getShareById(shareId = shareId) }.getOrElse { error ->
             PassLogger.w(TAG, "There was an error getting the share")
             PassLogger.w(TAG, error)
 

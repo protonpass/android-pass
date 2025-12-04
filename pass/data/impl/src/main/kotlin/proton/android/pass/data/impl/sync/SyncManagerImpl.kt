@@ -34,6 +34,7 @@ import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.accountmanager.domain.getAccounts
 import me.proton.core.eventmanager.domain.work.EventWorkerManager
 import me.proton.core.presentation.app.AppLifecycleProvider
+import proton.android.pass.common.api.safeRunCatching
 import proton.android.pass.data.api.usecases.PerformSync
 import proton.android.pass.data.impl.sync.SyncWorker.Companion.WORKER_UNIQUE_NAME
 import proton.android.pass.log.api.PassLogger
@@ -71,7 +72,7 @@ class SyncManagerImpl @Inject constructor(
 
                 while (currentCoroutineContext().isActive) {
                     accounts.forEach {
-                        runCatching { performSync(it.userId) }
+                        safeRunCatching { performSync(it.userId) }
                             .onSuccess { PassLogger.i(TAG, "Sync finished") }
                             .onFailure { error ->
                                 PassLogger.w(TAG, "Error in performSync")

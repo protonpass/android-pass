@@ -18,7 +18,6 @@
 
 package proton.android.pass.data.impl.repositories.fakes
 
-import kotlinx.coroutines.flow.Flow
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.account.fakes.TestKeyStoreCrypto
 import proton.android.pass.data.api.repositories.ItemRevision

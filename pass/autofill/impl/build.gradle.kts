@@ -118,6 +118,7 @@ dependencies {
     implementation(projects.pass.preferences.api)
     implementation(projects.pass.telemetry.api)
     implementation(projects.pass.totp.api)
+    implementation(projects.pass.appConfig.api)
 
     debugImplementation(libs.showkase)
     kspDebug(libs.showkaseProcessor)

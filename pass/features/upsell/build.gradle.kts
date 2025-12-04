@@ -82,6 +82,7 @@ dependencies {
     implementation(libs.kotlinx.collections)
     implementation(libs.kotlinx.datetime)
     implementation(libs.kotlinx.serialization.json)
+    implementation(projects.pass.appConfig.api)
     kapt(libs.dagger.hilt.android.compiler)
     kapt(libs.androidx.hilt.compiler)
     debugImplementation(libs.showkase)

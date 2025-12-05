@@ -27,8 +27,8 @@ import proton.android.pass.commonrust.fakes.FakePasswordScorer
 import proton.android.pass.crypto.fakes.context.FakeEncryptionContextProvider
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemId
-import proton.android.pass.test.domain.TestItem
-import proton.android.pass.test.domain.TestItemType
+import proton.android.pass.test.domain.ItemTestFactory
+import proton.android.pass.test.domain.ItemTypeTestFactory
 
 class InsecurePasswordCheckerTest {
 
@@ -59,8 +59,8 @@ class InsecurePasswordCheckerTest {
         passwordScorer.defineScore(password, PasswordScore.STRONG)
 
         val items = (0 until 10).map {
-            TestItem.create(
-                itemType = TestItemType.login(
+            ItemTestFactory.create(
+                itemType = ItemTypeTestFactory.login(
                     password = encryptionContextProvider.withEncryptionContext { encrypt(password) }
                 )
             )
@@ -157,9 +157,9 @@ class InsecurePasswordCheckerTest {
         prefix: String,
         count: Int
     ): List<Item> = (0 until count).map { idx ->
-        TestItem.create(
+        ItemTestFactory.create(
             itemId = ItemId("$prefix-$idx"),
-            itemType = TestItemType.login(
+            itemType = ItemTypeTestFactory.login(
                 password = encryptionContextProvider.withEncryptionContext {
                     encrypt(password)
                 }

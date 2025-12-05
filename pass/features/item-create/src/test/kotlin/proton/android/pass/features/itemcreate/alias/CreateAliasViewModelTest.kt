@@ -61,9 +61,9 @@ import proton.android.pass.preferences.FakePreferenceRepository
 import proton.android.pass.telemetry.api.EventItemType
 import proton.android.pass.telemetry.fakes.FakeTelemetryManager
 import proton.android.pass.test.MainDispatcherRule
-import proton.android.pass.test.domain.TestItem
-import proton.android.pass.test.domain.TestShare
-import proton.android.pass.test.domain.TestVault
+import proton.android.pass.test.domain.ItemTestFactory
+import proton.android.pass.test.domain.ShareTestFactory
+import proton.android.pass.test.domain.VaultTestFactory
 import proton.android.pass.totp.fakes.FakeTotpManager
 
 class CreateAliasViewModelTest {
@@ -88,8 +88,8 @@ class CreateAliasViewModelTest {
 
     @Before
     fun setUp() {
-        suffix = TestAliasSuffixUiModel.create()
-        mailbox = TestAliasMailboxUiModel.create()
+        suffix = AliasSuffixUiModelTestFactory.create()
+        mailbox = AliasMailboxUiModelTestFactory.create()
 
         observeVaults = FakeObserveVaultsWithItemCount()
         observeAliasOptions = FakeObserveAliasOptions()
@@ -155,7 +155,7 @@ class CreateAliasViewModelTest {
         createAlias.setResult(Result.failure(CannotCreateMoreAliasesError()))
         setupContentsForCreation()
         viewModel.createAliasUiState.test { awaitItem() }
-        viewModel.createAlias(TestShare.random().id)
+        viewModel.createAlias(ShareTestFactory.random().id)
 
         snackbarRepository.snackbarMessage.test {
             val message = awaitItem()
@@ -170,11 +170,11 @@ class CreateAliasViewModelTest {
     fun `emits success when alias is created successfully`() = runTest {
         viewModel = createAliasViewModel()
         setupAliasOptions()
-        createAlias.setResult(Result.success(TestItem.random()))
+        createAlias.setResult(Result.success(ItemTestFactory.random()))
         setupContentsForCreation()
 
         viewModel.createAliasUiState.test { awaitItem() }
-        viewModel.createAlias(TestShare.random().id)
+        viewModel.createAlias(ShareTestFactory.random().id)
         viewModel.createAliasUiState.test {
             val item = awaitItem()
 
@@ -191,11 +191,11 @@ class CreateAliasViewModelTest {
     fun `emits success when draft alias is stored successfully`() = runTest {
         viewModel = createAliasViewModel(isDraft = true)
         setupAliasOptions()
-        createAlias.setResult(Result.success(TestItem.random()))
+        createAlias.setResult(Result.success(ItemTestFactory.random()))
         setupContentsForCreation()
 
         viewModel.createAliasUiState.test { awaitItem() }
-        viewModel.createAlias(TestShare.random().id)
+        viewModel.createAlias(ShareTestFactory.random().id)
         viewModel.createAliasUiState.test {
             val item = awaitItem()
 
@@ -290,7 +290,7 @@ class CreateAliasViewModelTest {
             Result.success(
                 listOf(
                     VaultWithItemCount(
-                        vault = TestVault.create(shareId = ShareId("ShareId"), name = "name"),
+                        vault = VaultTestFactory.create(shareId = ShareId("ShareId"), name = "name"),
                         activeItemCount = 1,
                         trashedItemCount = 0
                     )

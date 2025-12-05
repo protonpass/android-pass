@@ -23,12 +23,12 @@ import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemFlag
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
-import proton.android.pass.test.domain.TestItem
+import proton.android.pass.test.domain.ItemTestFactory
 import javax.inject.Inject
 
 class FakeUpdateItemFlag @Inject constructor() : UpdateItemFlag {
 
-    private var item: Item = TestItem.random()
+    private var item: Item = ItemTestFactory.random()
 
     fun setItem(newItem: Item) {
         item = newItem

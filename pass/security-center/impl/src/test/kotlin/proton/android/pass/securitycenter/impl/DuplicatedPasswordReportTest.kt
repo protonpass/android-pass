@@ -22,7 +22,7 @@ import com.google.common.truth.Truth.assertThat
 import org.junit.Test
 import proton.android.pass.domain.Item
 import proton.android.pass.securitycenter.api.passwords.DuplicatedPasswordReport
-import proton.android.pass.test.domain.TestItem
+import proton.android.pass.test.domain.ItemTestFactory
 
 internal class DuplicatedPasswordReportTest {
 
@@ -42,8 +42,8 @@ internal class DuplicatedPasswordReportTest {
 
     @Test
     internal fun `GIVEN password duplications WHEN creating report THEN handle duplications`() {
-        val duplicatedPasswordItem1 = TestItem.random()
-        val duplicatedPasswordItem2 = TestItem.random()
+        val duplicatedPasswordItem1 = ItemTestFactory.random()
+        val duplicatedPasswordItem2 = ItemTestFactory.random()
         val duplicatedPasswordItems = setOf(duplicatedPasswordItem1, duplicatedPasswordItem2)
         val expectedDuplicationsCount = 2
         val expectedHasDuplications = true

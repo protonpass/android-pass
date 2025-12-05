@@ -29,8 +29,8 @@ import proton.android.pass.data.fakes.usecases.FakeObserveCurrentUser
 import proton.android.pass.domain.inappmessages.InAppMessageStatus
 import proton.android.pass.preferences.LastTimeUserHasSeenIAMPreference
 import proton.android.pass.preferences.FakeInternalSettingsRepository
-import proton.android.pass.test.domain.TestInAppMessage
-import proton.android.pass.test.domain.TestUser
+import proton.android.pass.test.domain.InAppMessageTestFactory
+import proton.android.pass.test.domain.UserTestFactory
 import kotlin.test.Test
 import kotlin.test.assertNull
 import kotlin.time.Duration.Companion.minutes
@@ -48,7 +48,7 @@ internal class ObserveDeliverableBannerInAppMessagesImplTest {
     fun setup() {
         userId = UserId("test-user")
         observeCurrentUser = FakeObserveCurrentUser().apply {
-            sendUser(TestUser.create())
+            sendUser(UserTestFactory.create())
         }
         inAppMessagesRepository = FakeInAppMessagesRepository()
         internalSettingsRepository = FakeInternalSettingsRepository()
@@ -76,9 +76,9 @@ internal class ObserveDeliverableBannerInAppMessagesImplTest {
         internalSettingsRepository.setLastTimeUserHasSeenIAM(
             LastTimeUserHasSeenIAMPreference(userId, now.minus(29.minutes).epochSeconds)
         )
-        val message = TestInAppMessage.createBanner(
+        val message = InAppMessageTestFactory.createBanner(
             state = InAppMessageStatus.Unread,
-            range = TestInAppMessage.createInAppMessageRange()
+            range = InAppMessageTestFactory.createInAppMessageRange()
         )
         inAppMessagesRepository.addMessage(userId, message)
         instance(userId).test {
@@ -93,9 +93,9 @@ internal class ObserveDeliverableBannerInAppMessagesImplTest {
         internalSettingsRepository.setLastTimeUserHasSeenIAM(
             LastTimeUserHasSeenIAMPreference(userId, now.minus(31.minutes).epochSeconds)
         )
-        val message = TestInAppMessage.createBanner(
+        val message = InAppMessageTestFactory.createBanner(
             state = InAppMessageStatus.Unread,
-            range = TestInAppMessage.createInAppMessageRange()
+            range = InAppMessageTestFactory.createInAppMessageRange()
         )
         inAppMessagesRepository.addMessage(userId, message)
         instance(userId).test {

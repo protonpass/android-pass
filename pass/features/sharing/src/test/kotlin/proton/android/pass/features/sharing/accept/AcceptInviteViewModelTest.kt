@@ -42,8 +42,8 @@ import proton.android.pass.features.sharing.SharingSnackbarMessage
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.notifications.fakes.FakeSnackbarDispatcher
 import proton.android.pass.test.MainDispatcherRule
-import proton.android.pass.test.domain.TestItem
-import proton.android.pass.test.domain.TestPendingInvite
+import proton.android.pass.test.domain.ItemTestFactory
+import proton.android.pass.test.domain.PendingInviteTestFactory
 
 internal class AcceptInviteViewModelTest {
 
@@ -93,8 +93,8 @@ internal class AcceptInviteViewModelTest {
 
     @Test
     fun `GIVEN item pending invite WHEN invite is shown THEN emits item invite state`() = runTest {
-        val pendingItemInvite = TestPendingInvite.Item.create()
-        val expectedState = AcceptInviteStateMother.Item.create(pendingItemInvite = pendingItemInvite)
+        val pendingItemInvite = PendingInviteTestFactory.Item.create()
+        val expectedState = AcceptInviteStateTestFactory.Item.create(pendingItemInvite = pendingItemInvite)
         observeInvite.emit(pendingItemInvite.toOption())
 
         viewModel.stateFlow.test {
@@ -106,7 +106,7 @@ internal class AcceptInviteViewModelTest {
 
     @Test
     fun `GIVEN item pending invite WHEN invite rejection fails THEN shows error message`() = runTest {
-        val pendingItemInvite = TestPendingInvite.Item.create()
+        val pendingItemInvite = PendingInviteTestFactory.Item.create()
         val rejectionResult: Result<Unit> = Result.failure(IllegalStateException("test"))
         val expectedMessage = SharingSnackbarMessage.InviteRejectError
         observeInvite.emit(pendingItemInvite.toOption())
@@ -120,9 +120,9 @@ internal class AcceptInviteViewModelTest {
 
     @Test
     fun `GIVEN item pending invite WHEN invite rejection fails THEN emits rejecting state`() = runTest {
-        val pendingItemInvite = TestPendingInvite.Item.create()
+        val pendingItemInvite = PendingInviteTestFactory.Item.create()
         val rejectionResult: Result<Unit> = Result.failure(IllegalStateException("test"))
-        val expectedState = AcceptInviteStateMother.Item.create(
+        val expectedState = AcceptInviteStateTestFactory.Item.create(
             pendingItemInvite = pendingItemInvite,
             progress = AcceptInviteProgress.Rejecting,
             event = AcceptInviteEvent.Close
@@ -141,13 +141,13 @@ internal class AcceptInviteViewModelTest {
 
     @Test
     fun `GIVEN item pending invite WHEN invite accept is done THEN shows success message`() = runTest {
-        val pendingItemInvite = TestPendingInvite.Item.create()
+        val pendingItemInvite = PendingInviteTestFactory.Item.create()
         val acceptInviteStatus = AcceptInviteStatus.UserInviteDone(
             shareId = ShareId(""),
             itemId = ItemId(""),
             items = 1
         )
-        val item = TestItem.create(
+        val item = ItemTestFactory.create(
             shareId = acceptInviteStatus.shareId,
             itemId = acceptInviteStatus.itemId,
             itemType = ItemType.Note(text = "Test note", customFields = emptyList())
@@ -166,8 +166,8 @@ internal class AcceptInviteViewModelTest {
 
     @Test
     fun `GIVEN vault pending invite WHEN invite is shown THEN emits vault invite state`() = runTest {
-        val vaultInvite = TestPendingInvite.Vault.create()
-        val expectedState = AcceptInviteStateMother.Vault.create(pendingVaultInvite = vaultInvite)
+        val vaultInvite = PendingInviteTestFactory.Vault.create()
+        val expectedState = AcceptInviteStateTestFactory.Vault.create(pendingVaultInvite = vaultInvite)
 
         observeInvite.emit(vaultInvite.toOption())
 
@@ -180,7 +180,7 @@ internal class AcceptInviteViewModelTest {
 
     @Test
     fun `GIVEN vault pending invite WHEN invite rejection fails THEN shows error message`() = runTest {
-        val pendingVaultInvite = TestPendingInvite.Vault.create()
+        val pendingVaultInvite = PendingInviteTestFactory.Vault.create()
         val rejectionResult: Result<Unit> = Result.failure(IllegalStateException("test"))
         val expectedMessage = SharingSnackbarMessage.InviteRejectError
         observeInvite.emit(pendingVaultInvite.toOption())
@@ -194,9 +194,9 @@ internal class AcceptInviteViewModelTest {
 
     @Test
     fun `GIVEN vault pending invite WHEN invite rejection fails THEN emits rejecting state`() = runTest {
-        val pendingVaultInvite = TestPendingInvite.Vault.create()
+        val pendingVaultInvite = PendingInviteTestFactory.Vault.create()
         val rejectionResult: Result<Unit> = Result.failure(IllegalStateException("test"))
-        val expectedState = AcceptInviteStateMother.Vault.create(
+        val expectedState = AcceptInviteStateTestFactory.Vault.create(
             pendingVaultInvite = pendingVaultInvite,
             progress = AcceptInviteProgress.Rejecting,
             event = AcceptInviteEvent.Close
@@ -215,19 +215,19 @@ internal class AcceptInviteViewModelTest {
 
     @Test
     fun `GIVEN item pending invite WHEN invite accept is done THEN emits done state`() = runTest {
-        val pendingItemInvite = TestPendingInvite.Item.create()
+        val pendingItemInvite = PendingInviteTestFactory.Item.create()
         val acceptInviteStatus = AcceptInviteStatus.UserInviteDone(
             shareId = ShareId(""),
             itemId = ItemId(""),
             items = 1
         )
-        val item = TestItem.create(
+        val item = ItemTestFactory.create(
             shareId = acceptInviteStatus.shareId,
             itemId = acceptInviteStatus.itemId,
             itemType = ItemType.Note(text = "Test note", emptyList())
         )
         val acceptationResult: Result<AcceptInviteStatus> = Result.success(acceptInviteStatus)
-        val expectedState = AcceptInviteStateMother.Item.create(
+        val expectedState = AcceptInviteStateTestFactory.Item.create(
             pendingItemInvite = pendingItemInvite,
             event = AcceptInviteEvent.OnItemInviteAcceptSuccess(
                 shareId = acceptInviteStatus.shareId,
@@ -250,7 +250,7 @@ internal class AcceptInviteViewModelTest {
 
     @Test
     fun `GIVEN vault pending invite WHEN invite accept fails THEN shows error message`() = runTest {
-        val pendingVaultInvite = TestPendingInvite.Vault.create()
+        val pendingVaultInvite = PendingInviteTestFactory.Vault.create()
         val acceptationResult: Result<AcceptInviteStatus> = Result.failure(IllegalStateException("test"))
         val expectedMessage = SharingSnackbarMessage.InviteAcceptError
         observeInvite.emit(pendingVaultInvite.toOption())
@@ -264,7 +264,7 @@ internal class AcceptInviteViewModelTest {
 
     @Test
     fun `GIVEN vault pending invite WHEN invite accept reach vault limit THEN shows error message`() = runTest {
-        val pendingVaultInvite = TestPendingInvite.Vault.create()
+        val pendingVaultInvite = PendingInviteTestFactory.Vault.create()
         val acceptationResult: Result<AcceptInviteStatus> = Result.failure(CannotCreateMoreVaultsError())
         val expectedMessage = SharingSnackbarMessage.InviteAcceptErrorCannotCreateMoreVaults
         observeInvite.emit(pendingVaultInvite.toOption())
@@ -278,7 +278,7 @@ internal class AcceptInviteViewModelTest {
 
     @Test
     fun `GIVEN vault pending invite WHEN invite accept is done THEN shows success message`() = runTest {
-        val pendingVaultInvite = TestPendingInvite.Vault.create()
+        val pendingVaultInvite = PendingInviteTestFactory.Vault.create()
         val acceptInviteStatus = AcceptInviteStatus.UserInviteDone(
             shareId = ShareId(""),
             itemId = ItemId(""),
@@ -297,14 +297,14 @@ internal class AcceptInviteViewModelTest {
 
     @Test
     fun `GIVEN vault pending invite WHEN invite accept is done THEN emits done state`() = runTest {
-        val pendingVaultInvite = TestPendingInvite.Vault.create()
+        val pendingVaultInvite = PendingInviteTestFactory.Vault.create()
         val acceptInviteStatus = AcceptInviteStatus.UserInviteDone(
             shareId = ShareId(""),
             itemId = ItemId(""),
             items = 1
         )
         val acceptationResult: Result<AcceptInviteStatus> = Result.success(acceptInviteStatus)
-        val expectedState = AcceptInviteStateMother.Vault.create(
+        val expectedState = AcceptInviteStateTestFactory.Vault.create(
             pendingVaultInvite = pendingVaultInvite,
             event = AcceptInviteEvent.OnVaultInviteAcceptSuccess(
                 shareId = acceptInviteStatus.shareId

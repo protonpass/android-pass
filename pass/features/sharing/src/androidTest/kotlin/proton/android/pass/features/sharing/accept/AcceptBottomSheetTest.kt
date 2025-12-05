@@ -42,8 +42,8 @@ import proton.android.pass.features.sharing.SharingNavigation
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.test.CallChecker
 import proton.android.pass.test.HiltComponentActivity
-import proton.android.pass.test.domain.TestItem
-import proton.android.pass.test.domain.TestPendingInvite
+import proton.android.pass.test.domain.ItemTestFactory
+import proton.android.pass.test.domain.PendingInviteTestFactory
 import javax.inject.Inject
 
 @HiltAndroidTest
@@ -193,7 +193,7 @@ class AcceptBottomSheetTest {
 
     @Test
     fun acceptsItemInvite() {
-        val item = TestItem.create(
+        val item = ItemTestFactory.create(
             shareId = ShareId(FakeAcceptInvite.DEFAULT_SHARE_ID),
             itemId = ItemId(FakeAcceptInvite.DEFAULT_ITEM_ID),
             itemType = ItemType.Note(text = "Test note", customFields = emptyList())
@@ -259,12 +259,12 @@ class AcceptBottomSheetTest {
 
         private const val INVITE_NAME = "AcceptBottomSheetTest.INVITE_NAME"
 
-        private val vaultInvite = TestPendingInvite.Vault.create(
+        private val vaultInvite = PendingInviteTestFactory.Vault.create(
             token = INVITE_TOKEN,
             name = INVITE_NAME
         )
 
-        private val itemInvite = TestPendingInvite.Item.create(
+        private val itemInvite = PendingInviteTestFactory.Item.create(
             inviteToken = INVITE_TOKEN,
             inviterEmail = INVITE_NAME
         )

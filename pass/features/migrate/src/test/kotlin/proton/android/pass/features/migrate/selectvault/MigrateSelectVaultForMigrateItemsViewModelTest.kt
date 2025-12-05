@@ -41,7 +41,7 @@ import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.navigation.api.CommonOptionalNavArgId
 import proton.android.pass.notifications.fakes.FakeSnackbarDispatcher
 import proton.android.pass.test.MainDispatcherRule
-import proton.android.pass.test.domain.TestVault
+import proton.android.pass.test.domain.VaultTestFactory
 
 class MigrateSelectVaultForMigrateItemsViewModelTest {
 
@@ -97,13 +97,13 @@ class MigrateSelectVaultForMigrateItemsViewModelTest {
     @Test
     fun `filters shared vaults when filter mode is set to Shared`() = runTest {
         val sharedVault = VaultWithItemCount(
-            vault = TestVault.create(shareId = ShareId("shared-vault"), name = "vault1", shared = true),
+            vault = VaultTestFactory.create(shareId = ShareId("shared-vault"), name = "vault1", shared = true),
             activeItemCount = 1,
             trashedItemCount = 0
         )
 
         val nonSharedVault = VaultWithItemCount(
-            vault = TestVault.create(shareId = ShareId("non-shared-vault"), name = "vault2"),
+            vault = VaultTestFactory.create(shareId = ShareId("non-shared-vault"), name = "vault2"),
             activeItemCount = 1,
             trashedItemCount = 0
         )
@@ -135,12 +135,12 @@ class MigrateSelectVaultForMigrateItemsViewModelTest {
 
     private fun initialVaults(): Pair<VaultWithItemCount, VaultWithItemCount> = Pair(
         VaultWithItemCount(
-            vault = TestVault.create(shareId = SHARE_ID, name = "vault1"),
+            vault = VaultTestFactory.create(shareId = SHARE_ID, name = "vault1"),
             activeItemCount = 1,
             trashedItemCount = 0
         ),
         VaultWithItemCount(
-            vault = TestVault.create(shareId = ShareId("OTHER_SHARE_ID"), name = "vault2"),
+            vault = VaultTestFactory.create(shareId = ShareId("OTHER_SHARE_ID"), name = "vault2"),
             activeItemCount = 1,
             trashedItemCount = 0
         )

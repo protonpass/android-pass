@@ -26,8 +26,8 @@ import org.junit.Test
 import proton.android.pass.account.fakes.FakeAccountManager
 import proton.android.pass.data.api.repositories.ItemRevision
 import proton.android.pass.data.fakes.repositories.FakeItemRepository
-import proton.android.pass.test.domain.items.ItemIdMother
-import proton.android.pass.test.domain.shares.ShareIdMother
+import proton.android.pass.test.domain.items.ItemIdTestFactory
+import proton.android.pass.test.domain.shares.ShareIdTestFactory
 
 internal class ObserveItemRevisionsImplTestApiModel {
 
@@ -49,8 +49,8 @@ internal class ObserveItemRevisionsImplTestApiModel {
 
     @Test
     internal fun `WHEN observing item revisions THEN emit item revisions`() = runTest {
-        val shareId = ShareIdMother.create()
-        val itemId = ItemIdMother.create()
+        val shareId = ShareIdTestFactory.create()
+        val itemId = ItemIdTestFactory.create()
         val expectedItemRevisions = emptyList<ItemRevision>()
         itemRepository.setItemRevisions(expectedItemRevisions)
 

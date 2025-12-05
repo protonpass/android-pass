@@ -24,8 +24,8 @@ import org.junit.Before
 import org.junit.Test
 import proton.android.pass.crypto.fakes.context.FakeEncryptionContextProvider
 import proton.android.pass.securitycenter.fakes.passwords.FakeSupports2fa
-import proton.android.pass.test.domain.TestItem
-import proton.android.pass.test.domain.TestItemType
+import proton.android.pass.test.domain.ItemTestFactory
+import proton.android.pass.test.domain.ItemTypeTestFactory
 
 class Missing2faCheckerTest {
 
@@ -53,7 +53,7 @@ class Missing2faCheckerTest {
     @Test
     fun `can handle non-empty list without websites nor totps`() = runTest {
         val items = (0 until 2).map {
-            TestItem.random(TestItemType.login(websites = emptyList()))
+            ItemTestFactory.random(ItemTypeTestFactory.login(websites = emptyList()))
         }
         val res = instance.invoke(items)
         assertThat(res.items).isEmpty()
@@ -62,7 +62,7 @@ class Missing2faCheckerTest {
     @Test
     fun `can handle list without totp with websites that dont support 2fa`() = runTest {
         val items = (0 until 2).map {
-            TestItem.random(TestItemType.login(websites = listOf("some.domain")))
+            ItemTestFactory.random(ItemTypeTestFactory.login(websites = listOf("some.domain")))
         }
         val res = instance.invoke(items)
         assertThat(res.items).isEmpty()
@@ -71,11 +71,11 @@ class Missing2faCheckerTest {
     @Test
     fun `can handle list with totp without websites that dont support 2fa`() = runTest {
         val items = (0 until 2).map {
-            val itemType = TestItemType.login(
+            val itemType = ItemTypeTestFactory.login(
                 websites = listOf("some.domain"),
                 primaryTotp = "some.totp"
             )
-            TestItem.random(itemType)
+            ItemTestFactory.random(itemType)
         }
         val res = instance.invoke(items)
         assertThat(res.items).isEmpty()
@@ -86,11 +86,11 @@ class Missing2faCheckerTest {
         val domain = "some.domain"
         supports2fa.setSupportsList(listOf(domain))
         val items = (0 until 2).map {
-            val itemType = TestItemType.login(
+            val itemType = ItemTypeTestFactory.login(
                 websites = listOf(domain),
                 primaryTotp = "some.totp"
             )
-            TestItem.random(itemType)
+            ItemTestFactory.random(itemType)
         }
         val res = instance.invoke(items)
         assertThat(res.items).isEmpty()
@@ -100,8 +100,8 @@ class Missing2faCheckerTest {
     fun `is able to detect missing 2fa by only taking into account the domain`() = runTest {
         val domain = "some.domain"
         supports2fa.setSupportsList(listOf(domain))
-        val item = TestItem.random(
-            TestItemType.login(websites = listOf("https://$domain"))
+        val item = ItemTestFactory.random(
+            ItemTypeTestFactory.login(websites = listOf("https://$domain"))
         )
 
         val res = instance.invoke(listOf(item))
@@ -114,20 +114,20 @@ class Missing2faCheckerTest {
         val domain = "some.domain"
         supports2fa.setSupportsList(listOf(domain))
 
-        val item1 = TestItem.random(
-            TestItemType.login(websites = listOf(domain))
+        val item1 = ItemTestFactory.random(
+            ItemTypeTestFactory.login(websites = listOf(domain))
         )
-        val item2 = TestItem.random(
-            TestItemType.login(websites = listOf("random.domain", domain))
+        val item2 = ItemTestFactory.random(
+            ItemTypeTestFactory.login(websites = listOf("random.domain", domain))
         )
-        val item3 = TestItem.random(
-            TestItemType.login(
+        val item3 = ItemTestFactory.random(
+            ItemTypeTestFactory.login(
                 websites = listOf(domain),
                 primaryTotp = "sometotp"
             )
         )
-        val item4 = TestItem.random(
-            TestItemType.login(websites = listOf("other.domain"))
+        val item4 = ItemTestFactory.random(
+            ItemTypeTestFactory.login(websites = listOf("other.domain"))
         )
 
         val res = instance.invoke(listOf(item1, item2, item3, item4))

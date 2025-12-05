@@ -40,8 +40,8 @@ import proton.android.pass.features.vault.VaultNavigation
 import proton.android.pass.navigation.api.CommonOptionalNavArgId
 import proton.android.pass.test.CallChecker
 import proton.android.pass.test.HiltComponentActivity
-import proton.android.pass.test.domain.TestItem
-import proton.android.pass.test.domain.TestShare
+import proton.android.pass.test.domain.ItemTestFactory
+import proton.android.pass.test.domain.ShareTestFactory
 import proton.android.pass.test.waitUntilExists
 import javax.inject.Inject
 import kotlin.test.assertEquals
@@ -79,7 +79,7 @@ class CreateVaultBottomSheetTest {
 
     @Test
     fun canCreateVault() {
-        createVault.setResult(Result.success(TestShare.Vault.create()))
+        createVault.setResult(Result.success(ShareTestFactory.Vault.create()))
         val vaultName = "Some vault with trailing space "
 
         val checker = CallChecker<Unit>()
@@ -116,13 +116,13 @@ class CreateVaultBottomSheetTest {
 
     @Test
     fun canCreateVaultWhenModeIsSetToCreateAndShare() {
-        val newVault = TestShare.Vault.create()
+        val newVault = ShareTestFactory.Vault.create()
         createVault.setResult(Result.success(newVault))
-        migrateItem.setResult(Result.success(MigrateItemsResult.AllMigrated(listOf(TestItem.create()))))
+        migrateItem.setResult(Result.success(MigrateItemsResult.AllMigrated(listOf(ItemTestFactory.create()))))
         savedStateHandleProvider.get().apply {
             set(CreateVaultNextActionNavArgId.key, CreateVaultNextAction.NEXT_ACTION_SHARE)
-            set(CommonOptionalNavArgId.ShareId.key, TestShare.Vault.create().id.id)
-            set(CommonOptionalNavArgId.ItemId.key, TestItem.create().id.id)
+            set(CommonOptionalNavArgId.ShareId.key, ShareTestFactory.Vault.create().id.id)
+            set(CommonOptionalNavArgId.ItemId.key, ItemTestFactory.create().id.id)
         }
 
         val checker = CallChecker<VaultNavigation.VaultShare>()

@@ -23,7 +23,7 @@ import org.junit.Test
 import proton.android.pass.domain.ItemId
 import proton.android.pass.securitycenter.api.passwords.RepeatedPasswordsGroup
 import proton.android.pass.securitycenter.api.passwords.RepeatedPasswordsReport
-import proton.android.pass.test.domain.TestItem
+import proton.android.pass.test.domain.ItemTestFactory
 
 class RepeatedPasswordsReportTest {
 
@@ -37,7 +37,7 @@ class RepeatedPasswordsReportTest {
     @Test
     fun `can handle report with single element`() {
         val key = "password"
-        val item = TestItem.create(itemId = ItemId("1"))
+        val item = ItemTestFactory.create(itemId = ItemId("1"))
         val report = RepeatedPasswordsReport(mapOf(key to listOf(item)))
         assertThat(report.repeatedPasswordsCount).isEqualTo(1)
 
@@ -50,11 +50,11 @@ class RepeatedPasswordsReportTest {
         val key1 = "password1"
         val key2 = "password2"
 
-        val item11 = TestItem.create(itemId = ItemId("11"))
-        val item12 = TestItem.create(itemId = ItemId("12"))
-        val item21 = TestItem.create(itemId = ItemId("21"))
-        val item22 = TestItem.create(itemId = ItemId("22"))
-        val item23 = TestItem.create(itemId = ItemId("23"))
+        val item11 = ItemTestFactory.create(itemId = ItemId("11"))
+        val item12 = ItemTestFactory.create(itemId = ItemId("12"))
+        val item21 = ItemTestFactory.create(itemId = ItemId("21"))
+        val item22 = ItemTestFactory.create(itemId = ItemId("22"))
+        val item23 = ItemTestFactory.create(itemId = ItemId("23"))
 
         val reportData = mapOf(
             key1 to listOf(item11, item12),
@@ -75,10 +75,10 @@ class RepeatedPasswordsReportTest {
         val key1 = "password1"
         val key2 = "password2"
 
-        val item11 = TestItem.create(itemId = ItemId("11"))
-        val item12 = TestItem.create(itemId = ItemId("12"))
-        val item21 = TestItem.create(itemId = ItemId("21"))
-        val item22 = TestItem.create(itemId = ItemId("22"))
+        val item11 = ItemTestFactory.create(itemId = ItemId("11"))
+        val item12 = ItemTestFactory.create(itemId = ItemId("12"))
+        val item21 = ItemTestFactory.create(itemId = ItemId("21"))
+        val item22 = ItemTestFactory.create(itemId = ItemId("22"))
 
         val reportData = mapOf(
             key1 to listOf(item11, item12),

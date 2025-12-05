@@ -28,7 +28,7 @@ import javax.inject.Singleton
 @Singleton
 class FakeObservePasswordConfig @Inject constructor() : ObservePasswordConfig {
 
-    private val passwordConfigFlow = MutableStateFlow(PasswordConfigMother.random())
+    private val passwordConfigFlow = MutableStateFlow(PasswordConfigTestFactory.random())
 
     override fun invoke(): Flow<PasswordConfig> = passwordConfigFlow
 

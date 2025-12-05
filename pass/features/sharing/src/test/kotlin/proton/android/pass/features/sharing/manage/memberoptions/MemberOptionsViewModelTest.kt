@@ -45,7 +45,7 @@ import proton.android.pass.navigation.api.NavParamEncoder
 import proton.android.pass.notifications.fakes.FakeSnackbarDispatcher
 import proton.android.pass.preferences.FakeFeatureFlagsPreferenceRepository
 import proton.android.pass.test.MainDispatcherRule
-import proton.android.pass.test.domain.TestVault
+import proton.android.pass.test.domain.VaultTestFactory
 
 class MemberOptionsViewModelTest {
 
@@ -264,12 +264,12 @@ class MemberOptionsViewModelTest {
     }
 
     private fun emitVault(owned: Boolean = true) {
-        val vault = TestVault.create(shareId = ShareId(USER_SHARE_ID), isOwned = owned)
+        val vault = VaultTestFactory.create(shareId = ShareId(USER_SHARE_ID), isOwned = owned)
         observeVaults.sendResult(Result.success(listOf(vault)))
     }
 
     private fun vaultWith(shareId: String, owned: Boolean) =
-        TestVault.create(shareId = ShareId(shareId), isOwned = owned)
+        VaultTestFactory.create(shareId = ShareId(shareId), isOwned = owned)
 
     companion object {
         private const val USER_SHARE_ID = "MemberOptionsViewModelTest-USER_SHARE_ID"

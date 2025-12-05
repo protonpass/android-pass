@@ -55,9 +55,9 @@ import proton.android.pass.features.item.details.shared.navigation.ItemDetailsNa
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.test.CallChecker
 import proton.android.pass.test.HiltComponentActivity
-import proton.android.pass.test.domain.TestItem
-import proton.android.pass.test.domain.TestShare
-import proton.android.pass.test.domain.TestUserAccessData
+import proton.android.pass.test.domain.ItemTestFactory
+import proton.android.pass.test.domain.ShareTestFactory
+import proton.android.pass.test.domain.UserTestFactoryAccessData
 import proton.android.pass.test.waitUntilExists
 import javax.inject.Inject
 import kotlin.test.assertEquals
@@ -363,7 +363,7 @@ class CreditCardDetailScreenTest {
         expirationDate: String = "2060-01",
         vaultName: String = "vault"
     ): String {
-        val item = TestItem.createCreditCard(
+        val item = ItemTestFactory.createCreditCard(
             shareId = ShareId(SHARE_ID),
             itemId = ItemId(ITEM_ID),
             title = title,
@@ -374,7 +374,7 @@ class CreditCardDetailScreenTest {
             verificationNumber = verificationNumber,
             expirationDate = expirationDate
         )
-        val share = TestShare.Vault.create(id = SHARE_ID)
+        val share = ShareTestFactory.Vault.create(id = SHARE_ID)
 
         observeItemById.emitValue(Result.success(item))
         getItemById.emit(Result.success(item))

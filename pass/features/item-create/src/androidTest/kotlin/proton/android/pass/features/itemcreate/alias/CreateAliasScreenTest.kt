@@ -57,8 +57,8 @@ import proton.android.pass.features.itemcreate.R
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.test.CallChecker
 import proton.android.pass.test.HiltComponentActivity
-import proton.android.pass.test.domain.TestItem
-import proton.android.pass.test.domain.TestUser
+import proton.android.pass.test.domain.ItemTestFactory
+import proton.android.pass.test.domain.UserTestFactory
 import proton.android.pass.test.waitUntilExists
 import proton.android.pass.test.writeTextAndWait
 import java.util.Date
@@ -105,7 +105,7 @@ class CreateAliasScreenTest {
     fun setup() {
         hiltRule.inject()
         accountManager.sendPrimaryUserId(USER_ID)
-        observeCurrentUser.sendUser(TestUser.create(userId = USER_ID, email = USER_EMAIL))
+        observeCurrentUser.sendUser(UserTestFactory.create(userId = USER_ID, email = USER_EMAIL))
         savedStateHandle.get().apply {
             set(CommonNavArgId.ShareId.key, SHARE_ID)
         }
@@ -140,7 +140,7 @@ class CreateAliasScreenTest {
         val expectedPrefix = "test-alias"
         val note = "A note"
 
-        createAlias.setResult(Result.success(TestItem.createAlias()))
+        createAlias.setResult(Result.success(ItemTestFactory.createAlias()))
 
         val checker = CallChecker<Unit>()
         composeTestRule.apply {

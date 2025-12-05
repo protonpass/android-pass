@@ -53,7 +53,7 @@ import proton.android.pass.features.itemcreate.R
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.test.CallChecker
 import proton.android.pass.test.HiltComponentActivity
-import proton.android.pass.test.domain.TestItem
+import proton.android.pass.test.domain.ItemTestFactory
 import proton.android.pass.test.waitUntilExists
 import proton.android.pass.test.writeTextAndWait
 import java.util.Date
@@ -131,7 +131,7 @@ class CreateCreditCardScreenTest {
         val expirationDateToBeSaved = "${expirationYear}-${expirationMonth}"
         val note = "some note"
 
-        val item = TestItem.createCreditCard(
+        val item = ItemTestFactory.createCreditCard(
             title = title,
             holder = cardHolder,
             number = cardNumber,

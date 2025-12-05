@@ -63,8 +63,8 @@ import proton.android.pass.preferences.FakePreferenceRepository
 import proton.android.pass.telemetry.api.EventItemType
 import proton.android.pass.telemetry.fakes.FakeTelemetryManager
 import proton.android.pass.test.MainDispatcherRule
-import proton.android.pass.test.domain.TestItem
-import proton.android.pass.test.domain.TestVault
+import proton.android.pass.test.domain.ItemTestFactory
+import proton.android.pass.test.domain.VaultTestFactory
 import proton.android.pass.totp.fakes.FakeTotpManager
 
 class CreateCreditCardViewModelTest {
@@ -124,7 +124,7 @@ class CreateCreditCardViewModelTest {
     @Test
     fun `create item without title should return a BlankTitle validation error`() = runTest {
         canPerformPaidAction.setResult(false)
-        val vault = TestVault.create(shareId = ShareId("shareId"), name = "Share")
+        val vault = VaultTestFactory.create(shareId = ShareId("shareId"), name = "Share")
         val vaultWithItemCount = VaultWithItemCount(
             vault = vault,
             activeItemCount = 1,
@@ -160,7 +160,7 @@ class CreateCreditCardViewModelTest {
     fun `given valid data when a create item event should return a success event`() = runTest {
         canPerformPaidAction.setResult(false)
 
-        val item = TestItem.createCreditCard()
+        val item = ItemTestFactory.createCreditCard()
         val vault = sendInitialVault(item.shareId)
         val initialState = CreateCreditCardUiState.Success(
             shareUiState = ShareUiState.Success(
@@ -249,7 +249,7 @@ class CreateCreditCardViewModelTest {
     }
 
     private fun sendInitialVault(shareId: ShareId): VaultWithItemCount {
-        val vault = TestVault.create(shareId = shareId, name = "Share")
+        val vault = VaultTestFactory.create(shareId = shareId, name = "Share")
         val vaultWithItemCount = VaultWithItemCount(
             vault = vault,
             activeItemCount = 1,

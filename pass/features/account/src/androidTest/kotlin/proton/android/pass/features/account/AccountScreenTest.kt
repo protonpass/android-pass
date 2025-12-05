@@ -35,7 +35,7 @@ import proton.android.pass.data.fakes.usecases.FakeObserveCurrentUser
 import proton.android.pass.data.fakes.usecases.FakeObserveUpgradeInfo
 import proton.android.pass.test.CallChecker
 import proton.android.pass.test.HiltComponentActivity
-import proton.android.pass.test.domain.TestUser
+import proton.android.pass.test.domain.UserTestFactory
 import proton.android.pass.test.waitUntilExists
 import javax.inject.Inject
 import proton.android.pass.composecomponents.impl.R as CompR
@@ -61,7 +61,7 @@ class AccountScreenTest {
     @Before
     fun setup() {
         hiltRule.inject()
-        observeCurrentUser.sendUser(TestUser.create(email = "test@test.test", name = "test user"))
+        observeCurrentUser.sendUser(UserTestFactory.create(email = "test@test.test", name = "test user"))
         BrowserUtils.resetLastUrl()
     }
 

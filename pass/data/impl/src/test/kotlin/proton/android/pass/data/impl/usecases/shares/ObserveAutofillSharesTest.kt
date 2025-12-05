@@ -26,7 +26,7 @@ import org.junit.Test
 import proton.android.pass.data.api.usecases.shares.ObserveAutofillShares
 import proton.android.pass.data.fakes.usecases.FakeObserveAllShares
 import proton.android.pass.domain.Share
-import proton.android.pass.test.domain.TestShare
+import proton.android.pass.test.domain.ShareTestFactory
 
 internal class ObserveAutofillSharesTest {
 
@@ -57,9 +57,9 @@ internal class ObserveAutofillSharesTest {
 
     @Test
     internal fun `GIVEN shares WHEN observeAutofillShares THEN only autofill shares are returned`() = runTest {
-        val share1 = TestShare.Vault.create(canAutofill = true)
-        val share2 = TestShare.Item.create(canAutofill = true)
-        val share3 = TestShare.Vault.create(canAutofill = false)
+        val share1 = ShareTestFactory.Vault.create(canAutofill = true)
+        val share2 = ShareTestFactory.Item.create(canAutofill = true)
+        val share3 = ShareTestFactory.Vault.create(canAutofill = false)
         val shares = listOf(share1, share2, share3)
         val expectedShares = listOf(share1, share2)
         observeAllShares.sendResult(Result.success(shares))
@@ -75,9 +75,9 @@ internal class ObserveAutofillSharesTest {
     internal fun `GIVEN shares that cannot autofill WHEN observeAutofillShares THEN no shares are returned`() =
         runTest {
             val shares = listOf(
-                TestShare.Vault.create(canAutofill = false),
-                TestShare.Item.create(canAutofill = false),
-                TestShare.Vault.create(canAutofill = false)
+                ShareTestFactory.Vault.create(canAutofill = false),
+                ShareTestFactory.Item.create(canAutofill = false),
+                ShareTestFactory.Vault.create(canAutofill = false)
             )
             observeAllShares.sendResult(Result.success(shares))
 

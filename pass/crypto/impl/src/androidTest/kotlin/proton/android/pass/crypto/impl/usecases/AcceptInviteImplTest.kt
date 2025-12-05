@@ -37,7 +37,9 @@ import proton.android.pass.crypto.api.usecases.invites.EncryptedInviteKey
 import proton.android.pass.crypto.fakes.context.FakeEncryptionContext
 import proton.android.pass.crypto.fakes.context.FakeEncryptionContextProvider
 import proton.android.pass.domain.key.ShareKey
-import proton.android.pass.test.TestUtils
+import proton.android.pass.test.UserAddressKeyTestFactory
+import proton.android.pass.test.domain.ShareKeyTestFactory
+import proton.android.pass.test.domain.UserTestFactory
 import kotlin.test.assertContentEquals
 import kotlin.test.assertEquals
 
@@ -50,10 +52,10 @@ class AcceptInviteImplTest {
     @Test
     fun canAcceptInvite() {
         val instance = AcceptUserInviteImpl(cryptoContext, FakeEncryptionContextProvider())
-        val inviterAddressKey = TestUtils.createUserAddressKey(cryptoContext, AddressId("Inviter"))
-        val invited = TestUtils.createUser()
-        val invitedUserAddressKey = TestUtils.createUserAddressKey(cryptoContext, AddressId("Invited"))
-        val (shareKey, _) = TestUtils.createShareKey()
+        val inviterAddressKey = UserAddressKeyTestFactory.createUserAddressKey(cryptoContext, AddressId("Inviter"))
+        val invited = UserTestFactory.createWithKeys()
+        val invitedUserAddressKey = UserAddressKeyTestFactory.createUserAddressKey(cryptoContext, AddressId("Invited"))
+        val (shareKey, _) = ShareKeyTestFactory.create()
 
         val shareKeys = listOf(shareKey)
 

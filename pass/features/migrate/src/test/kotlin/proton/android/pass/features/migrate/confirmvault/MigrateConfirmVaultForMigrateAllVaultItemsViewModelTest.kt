@@ -44,8 +44,8 @@ import proton.android.pass.navigation.api.DestinationShareNavArgId
 import proton.android.pass.notifications.fakes.FakeSnackbarDispatcher
 import proton.android.pass.preferences.FakeInternalSettingsRepository
 import proton.android.pass.test.MainDispatcherRule
-import proton.android.pass.test.TestSavedStateHandle
-import proton.android.pass.test.domain.TestVault
+import proton.android.pass.test.SavedStateHandleTestFactory
+import proton.android.pass.test.domain.VaultTestFactory
 
 internal class MigrateConfirmVaultForMigrateAllVaultItemsViewModelTest {
 
@@ -80,7 +80,7 @@ internal class MigrateConfirmVaultForMigrateAllVaultItemsViewModelTest {
             getVaultById = getVaultById,
             bulkMoveToVaultRepository = bulkMoveToVaultRepository,
             observeHasAssociatedSecureLinks = observeHasAssociatedSecureLinks,
-            savedStateHandle = TestSavedStateHandle.create().apply {
+            savedStateHandle = SavedStateHandleTestFactory.create().apply {
                 set(DestinationShareNavArgId.key, DESTINATION_SHARE_ID.id)
                 set(CommonOptionalNavArgId.ShareId.key, SHARE_ID.id)
                 set(MigrateModeArg.key, MODE.name)
@@ -148,7 +148,7 @@ internal class MigrateConfirmVaultForMigrateAllVaultItemsViewModelTest {
 
 
     private fun sourceVault(): VaultWithItemCount = VaultWithItemCount(
-        vault = TestVault.create(shareId = SHARE_ID),
+        vault = VaultTestFactory.create(shareId = SHARE_ID),
         activeItemCount = 1,
         trashedItemCount = 0
     )

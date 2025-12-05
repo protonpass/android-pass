@@ -12,9 +12,8 @@ import org.junit.runner.RunWith
 import proton.android.pass.crypto.fakes.context.FakeEncryptionContextProvider
 import proton.android.pass.domain.Item
 import proton.android.pass.securitycenter.impl.checkers.RepeatedPasswordCheckerImpl
-import proton.android.pass.test.TestUtils
-import proton.android.pass.test.domain.TestItem
-import proton.android.pass.test.domain.TestItemType
+import proton.android.pass.test.domain.ItemTestFactory
+import proton.android.pass.test.domain.ItemTypeTestFactory
 
 @RunWith(AndroidJUnit4::class)
 class ReusedPasswordsCheckerImplBenchmark {
@@ -46,12 +45,12 @@ class ReusedPasswordsCheckerImplBenchmark {
     private fun generateDataset(numPasswords: Int, numItems: Int): List<Item> {
         val passwords = encryptionContextProvider.withEncryptionContext {
             (0 until numPasswords).map {
-                encrypt(TestUtils.randomString())
+                encrypt(StringTestFactory.randomString())
             }
         }
 
         return (0 until numItems).map { idx ->
-            TestItem.random(TestItemType.login(password = passwords[idx % passwords.size]))
+            ItemTestFactory.random(ItemTypeTestFactory.login(password = passwords[idx % passwords.size]))
         }
     }
 }

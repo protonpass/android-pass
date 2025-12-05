@@ -34,7 +34,7 @@ import proton.android.pass.features.vault.VaultSnackbarMessage
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.notifications.fakes.FakeSnackbarDispatcher
 import proton.android.pass.test.MainDispatcherRule
-import proton.android.pass.test.domain.TestVault
+import proton.android.pass.test.domain.VaultTestFactory
 
 class LeaveShareViewModelTest {
 
@@ -126,7 +126,7 @@ class LeaveShareViewModelTest {
         getVaultById.emitValue(testVault())
     }
 
-    private fun testVault(): Vault = TestVault.create(name = VAULT_NAME)
+    private fun testVault(): Vault = VaultTestFactory.create(name = VAULT_NAME)
 
     companion object {
         private const val VAULT_NAME = "vault"

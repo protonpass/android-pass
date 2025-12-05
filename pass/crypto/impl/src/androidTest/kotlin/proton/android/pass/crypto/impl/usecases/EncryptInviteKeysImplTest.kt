@@ -33,7 +33,8 @@ import proton.android.pass.crypto.api.Base64
 import proton.android.pass.crypto.api.Constants
 import proton.android.pass.crypto.fakes.context.FakeEncryptionContext
 import proton.android.pass.crypto.fakes.context.FakeEncryptionContextProvider
-import proton.android.pass.test.TestUtils
+import proton.android.pass.test.UserAddressKeyTestFactory
+import proton.android.pass.test.domain.ShareKeyTestFactory
 import kotlin.test.assertContentEquals
 import kotlin.test.assertEquals
 
@@ -47,9 +48,9 @@ class EncryptInviteKeysImplTest {
     @Test
     fun createShareVaultRequest() {
         val instance = EncryptInviteKeysImpl(cryptoContext, FakeEncryptionContextProvider())
-        val inviterAddressKey = TestUtils.createUserAddressKey(cryptoContext, AddressId("inviter"))
-        val (shareKey, _) = TestUtils.createShareKey()
-        val targetAddressKey = TestUtils.createUserAddressKey(cryptoContext, AddressId("invited"))
+        val inviterAddressKey = UserAddressKeyTestFactory.createUserAddressKey(cryptoContext, AddressId("inviter"))
+        val (shareKey, _) = ShareKeyTestFactory.create()
+        val targetAddressKey = UserAddressKeyTestFactory.createUserAddressKey(cryptoContext, AddressId("invited"))
         val targetAddressPublicKey = cryptoContext.pgpCrypto.getPublicKey(targetAddressKey.privateKey.key)
         val shareKeyList = listOf(shareKey)
         val res = instance.invoke(

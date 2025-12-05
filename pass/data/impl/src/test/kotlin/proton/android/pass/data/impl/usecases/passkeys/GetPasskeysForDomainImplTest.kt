@@ -33,8 +33,8 @@ import proton.android.pass.domain.ByteArrayWrapper
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.Passkey
 import proton.android.pass.domain.PasskeyId
-import proton.android.pass.test.domain.TestItem
-import proton.android.pass.test.domain.TestItemType
+import proton.android.pass.test.domain.ItemTestFactory
+import proton.android.pass.test.domain.ItemTypeTestFactory
 import kotlin.time.Duration.Companion.hours
 
 class GetPasskeysForDomainImplTest {
@@ -73,10 +73,10 @@ class GetPasskeysForDomainImplTest {
         val passkeyId3 = PasskeyId("id3")
         val domain = "domain.test"
         val items = listOf(
-            TestItem.create(
+            ItemTestFactory.create(
                 keyStoreCrypto = FakeKeyStoreCrypto,
                 itemId = itemId1,
-                itemType = TestItemType.login(
+                itemType = ItemTypeTestFactory.login(
                     passkeys = listOf(
                         testPasskey(passkeyId1, domain),
                         testPasskey(passkeyId2, domain),
@@ -84,10 +84,10 @@ class GetPasskeysForDomainImplTest {
                     )
                 )
             ),
-            TestItem.create(
+            ItemTestFactory.create(
                 keyStoreCrypto = FakeKeyStoreCrypto,
                 itemId = itemId2,
-                itemType = TestItemType.login(
+                itemType = ItemTypeTestFactory.login(
                     passkeys = listOf(
                         testPasskey(passkeyId3, domain),
                         testPasskey(PasskeyId("otherone"), "other.domains")
@@ -122,10 +122,10 @@ class GetPasskeysForDomainImplTest {
         val passkeyId3 = PasskeyId("id3")
         val domain = "domain.test"
         val items = listOf(
-            TestItem.create(
+            ItemTestFactory.create(
                 keyStoreCrypto = FakeKeyStoreCrypto,
                 itemId = itemId1,
-                itemType = TestItemType.login(
+                itemType = ItemTypeTestFactory.login(
                     passkeys = listOf(
                         testPasskey(passkeyId1, domain),
                         testPasskey(passkeyId2, domain),
@@ -133,10 +133,10 @@ class GetPasskeysForDomainImplTest {
                     )
                 )
             ),
-            TestItem.create(
+            ItemTestFactory.create(
                 keyStoreCrypto = FakeKeyStoreCrypto,
                 itemId = itemId2,
-                itemType = TestItemType.login(
+                itemType = ItemTypeTestFactory.login(
                     passkeys = listOf(
                         testPasskey(passkeyId3, domain),
                         testPasskey(PasskeyId("otherone"), "other.domains")
@@ -168,10 +168,10 @@ class GetPasskeysForDomainImplTest {
         val passkeyId3 = PasskeyId("id3")
         val domain = "domain.test"
         val items = listOf(
-            TestItem.create(
+            ItemTestFactory.create(
                 keyStoreCrypto = FakeKeyStoreCrypto,
                 itemId = itemId1,
-                itemType = TestItemType.login(
+                itemType = ItemTypeTestFactory.login(
                     passkeys = listOf(
                         testPasskey(passkeyId1, "other.domain"),
                         testPasskey(passkeyId2, domain),
@@ -179,10 +179,10 @@ class GetPasskeysForDomainImplTest {
                     )
                 )
             ),
-            TestItem.create(
+            ItemTestFactory.create(
                 keyStoreCrypto = FakeKeyStoreCrypto,
                 itemId = itemId2,
-                itemType = TestItemType.login(
+                itemType = ItemTypeTestFactory.login(
                     passkeys = listOf(
                         testPasskey(passkeyId3, "other.domain"),
                         testPasskey(PasskeyId("otherone"), "other.domains")
@@ -211,20 +211,20 @@ class GetPasskeysForDomainImplTest {
         val createTime3 = Clock.System.now().minus(3.hours)
 
         val items = listOf(
-            TestItem.create(
+            ItemTestFactory.create(
                 keyStoreCrypto = FakeKeyStoreCrypto,
                 itemId = itemId1,
-                itemType = TestItemType.login(
+                itemType = ItemTypeTestFactory.login(
                     passkeys = listOf(
                         testPasskey(passkeyId1, domain, createTime2),
                         testPasskey(passkeyId2, domain, createTime3)
                     )
                 )
             ),
-            TestItem.create(
+            ItemTestFactory.create(
                 keyStoreCrypto = FakeKeyStoreCrypto,
                 itemId = itemId2,
-                itemType = TestItemType.login(
+                itemType = ItemTypeTestFactory.login(
                     passkeys = listOf(
                         testPasskey(passkeyId3, domain, createTime1)
                     )

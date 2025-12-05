@@ -22,7 +22,7 @@ import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.Vault
 import proton.android.pass.domain.VaultId
 import proton.android.pass.domain.VaultWithItemCount
-import proton.android.pass.test.domain.TestItem
+import proton.android.pass.test.domain.ItemTestFactory
 import timber.log.Timber
 import java.util.Date
 import javax.inject.Inject
@@ -99,7 +99,7 @@ class FeatureHomeApp : Application() {
     private fun createItems(itemsPerType: Int): List<Item> {
         val items = mutableListOf<Item>()
         for (i in 0..itemsPerType) {
-            val login = TestItem.createLogin(
+            val login = ItemTestFactory.createLogin(
                 shareId = ShareId(SHARE_ID),
                 itemId = ItemId("item_login_$i"),
                 title = "Login $i",
@@ -108,7 +108,7 @@ class FeatureHomeApp : Application() {
             )
             items.add(login)
 
-            val creditCard = TestItem.createCreditCard(
+            val creditCard = ItemTestFactory.createCreditCard(
                 shareId = ShareId(SHARE_ID),
                 itemId = ItemId("item_cc_$i"),
                 title = "Card $i",
@@ -117,7 +117,7 @@ class FeatureHomeApp : Application() {
             )
             items.add(creditCard)
 
-            val note = TestItem.createNote(
+            val note = ItemTestFactory.createNote(
                 shareId = ShareId(SHARE_ID),
                 itemId = ItemId("item_note_$i"),
                 title = "Note $i",
@@ -125,7 +125,7 @@ class FeatureHomeApp : Application() {
             )
             items.add(note)
 
-            val alias = TestItem.createAlias(
+            val alias = ItemTestFactory.createAlias(
                 shareId = ShareId(SHARE_ID),
                 itemId = ItemId("item_alias_$i"),
                 title = "Alias $i",

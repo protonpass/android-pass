@@ -24,9 +24,9 @@ import org.junit.Before
 import org.junit.Test
 import proton.android.pass.crypto.fakes.context.FakeEncryptionContextProvider
 import proton.android.pass.securitycenter.api.passwords.RepeatedPasswordsReport
-import proton.android.pass.test.TestUtils
-import proton.android.pass.test.domain.TestItem
-import proton.android.pass.test.domain.TestItemType
+import proton.android.pass.test.StringTestFactory
+import proton.android.pass.test.domain.ItemTestFactory
+import proton.android.pass.test.domain.ItemTypeTestFactory
 
 class RepeatedPasswordCheckerTest {
 
@@ -49,19 +49,19 @@ class RepeatedPasswordCheckerTest {
 
     @Test
     fun `can detect duplicated passwords`() = runTest {
-        val password1 = TestUtils.randomString()
-        val password2 = TestUtils.randomString()
-        val password3 = TestUtils.randomString()
+        val password1 = StringTestFactory.randomString()
+        val password2 = StringTestFactory.randomString()
+        val password3 = StringTestFactory.randomString()
 
         val encryptedPassword1 = encrypt(password1)
         val encryptedPassword2 = encrypt(password2)
 
-        val item11 = TestItem.random(TestItemType.login(password = encryptedPassword1))
-        val item12 = TestItem.random(TestItemType.login(password = encryptedPassword1))
-        val item21 = TestItem.random(TestItemType.login(password = encryptedPassword2))
-        val item22 = TestItem.random(TestItemType.login(password = encryptedPassword2))
-        val item23 = TestItem.random(TestItemType.login(password = encryptedPassword2))
-        val item3 = TestItem.random(TestItemType.login(password = encrypt(password3)))
+        val item11 = ItemTestFactory.random(ItemTypeTestFactory.login(password = encryptedPassword1))
+        val item12 = ItemTestFactory.random(ItemTypeTestFactory.login(password = encryptedPassword1))
+        val item21 = ItemTestFactory.random(ItemTypeTestFactory.login(password = encryptedPassword2))
+        val item22 = ItemTestFactory.random(ItemTypeTestFactory.login(password = encryptedPassword2))
+        val item23 = ItemTestFactory.random(ItemTypeTestFactory.login(password = encryptedPassword2))
+        val item3 = ItemTestFactory.random(ItemTypeTestFactory.login(password = encrypt(password3)))
 
         val items = listOf(
             item11, item12,

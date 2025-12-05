@@ -41,7 +41,7 @@ import proton.android.pass.domain.PlanLimit
 import proton.android.pass.domain.PlanType
 import proton.android.pass.notifications.fakes.FakeSnackbarDispatcher
 import proton.android.pass.test.MainDispatcherRule
-import proton.android.pass.test.domain.TestUser
+import proton.android.pass.test.domain.UserTestFactory
 
 internal class AccountViewModelTest {
 
@@ -101,7 +101,7 @@ internal class AccountViewModelTest {
             updatedAt = 0,
             hideUpgrade = false
         )
-        val user = TestUser.create(email = email)
+        val user = UserTestFactory.create(email = email)
         observeCurrentUser.sendUser(user)
         getUpgradeInfo.setResult(
             UpgradeInfo(

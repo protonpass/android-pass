@@ -32,8 +32,8 @@ import proton.android.pass.securitycenter.fakes.sentinel.FakeEnableSentinel
 import proton.android.pass.securitycenter.fakes.sentinel.FakeObserveCanEnableSentinel
 import proton.android.pass.securitycenter.fakes.sentinel.FakeObserveIsSentinelEnabled
 import proton.android.pass.test.MainDispatcherRule
-import proton.android.pass.test.domain.plans.PlanMother
-import proton.android.pass.test.domain.plans.PlanTypeMother
+import proton.android.pass.test.domain.plans.PlanTestFactory
+import proton.android.pass.test.domain.plans.PlanTypeTestFactory
 
 internal class SecurityCenterSentinelViewModelTest {
 
@@ -61,11 +61,11 @@ internal class SecurityCenterSentinelViewModelTest {
 
     @Test
     internal fun `WHEN view model is initialized THEN emits initial state`() = runTest {
-        val planType = PlanTypeMother.Free.create(
+        val planType = PlanTypeTestFactory.Free.create(
             name = "free",
             displayName = "Proton Free"
         )
-        val expectedState = SecurityCenterSentinelStateMother.create(
+        val expectedState = SecurityCenterSentinelStateTestFactory.create(
             planType = planType
         )
 
@@ -78,9 +78,9 @@ internal class SecurityCenterSentinelViewModelTest {
 
     @Test
     internal fun `WHEN learn more THEN emits OnLearnMore event`() = runTest {
-        val plan = PlanMother.create()
+        val plan = PlanTestFactory.create()
         getUserPlan.setResult(Result.success(plan))
-        val expectedState = SecurityCenterSentinelStateMother.create(
+        val expectedState = SecurityCenterSentinelStateTestFactory.create(
             event = SecurityCenterSentinelEvent.OnLearnMore,
             planType = plan.planType
         )
@@ -95,9 +95,9 @@ internal class SecurityCenterSentinelViewModelTest {
 
     @Test
     internal fun `WHEN enabling sentinel THEN emits OnSentinelEnableSuccess event`() = runTest {
-        val plan = PlanMother.create()
+        val plan = PlanTestFactory.create()
         getUserPlan.setResult(Result.success(plan))
-        val expectedState = SecurityCenterSentinelStateMother.create(
+        val expectedState = SecurityCenterSentinelStateTestFactory.create(
             isSentinelEnabled = true,
             event = SecurityCenterSentinelEvent.OnSentinelEnableSuccess,
             planType = plan.planType
@@ -114,9 +114,9 @@ internal class SecurityCenterSentinelViewModelTest {
 
     @Test
     internal fun `WHEN disabling sentinel THEN emits OnSentinelDisableSuccess event`() = runTest {
-        val plan = PlanMother.create()
+        val plan = PlanTestFactory.create()
         getUserPlan.setResult(Result.success(plan))
-        val expectedState = SecurityCenterSentinelStateMother.create(
+        val expectedState = SecurityCenterSentinelStateTestFactory.create(
             isSentinelEnabled = false,
             event = SecurityCenterSentinelEvent.OnSentinelDisableSuccess,
             planType = plan.planType

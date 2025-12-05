@@ -26,20 +26,20 @@ import me.proton.core.domain.entity.UserId
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import proton.android.pass.account.fakes.TestAccountManager
-import proton.android.pass.clipboard.fakes.TestClipboardManager
+import proton.android.pass.account.fakes.FakeAccountManager
+import proton.android.pass.clipboard.fakes.FakeClipboardManager
 import proton.android.pass.commonpresentation.fakes.attachments.FakeAttachmentHandler
-import proton.android.pass.commonui.fakes.TestSavedStateHandleProvider
+import proton.android.pass.commonui.fakes.FakeSavedStateHandleProvider
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
-import proton.android.pass.crypto.fakes.context.TestEncryptionContextProvider
+import proton.android.pass.crypto.fakes.context.FakeEncryptionContextProvider
 import proton.android.pass.data.api.errors.CannotCreateMoreAliasesError
-import proton.android.pass.data.fakes.repositories.TestDraftRepository
-import proton.android.pass.data.fakes.usecases.TestCanPerformPaidAction
-import proton.android.pass.data.fakes.usecases.TestCreateAlias
-import proton.android.pass.data.fakes.usecases.TestObserveAliasOptions
-import proton.android.pass.data.fakes.usecases.TestObserveDefaultVault
-import proton.android.pass.data.fakes.usecases.TestObserveUpgradeInfo
-import proton.android.pass.data.fakes.usecases.TestObserveVaultsWithItemCount
+import proton.android.pass.data.fakes.repositories.FakeDraftRepository
+import proton.android.pass.data.fakes.usecases.FakeCanPerformPaidAction
+import proton.android.pass.data.fakes.usecases.FakeCreateAlias
+import proton.android.pass.data.fakes.usecases.FakeObserveAliasOptions
+import proton.android.pass.data.fakes.usecases.FakeObserveDefaultVault
+import proton.android.pass.data.fakes.usecases.FakeObserveUpgradeInfo
+import proton.android.pass.data.fakes.usecases.FakeObserveVaultsWithItemCount
 import proton.android.pass.data.fakes.usecases.attachments.FakeLinkAttachmentsToItem
 import proton.android.pass.data.fakes.usecases.shares.FakeObserveShare
 import proton.android.pass.domain.AliasOptions
@@ -52,19 +52,19 @@ import proton.android.pass.features.itemcreate.alias.draftrepositories.SuffixDra
 import proton.android.pass.features.itemcreate.common.CustomFieldDraftRepositoryImpl
 import proton.android.pass.features.itemcreate.common.customfields.CustomFieldHandlerImpl
 import proton.android.pass.features.itemcreate.common.formprocessor.FakeAliasItemFormProcessor
-import proton.android.pass.inappreview.fakes.TestInAppReviewTriggerMetrics
+import proton.android.pass.inappreview.fakes.FakeInAppReviewTriggerMetrics
 import proton.android.pass.navigation.api.AliasOptionalNavArgId
 import proton.android.pass.navigation.api.CommonNavArgId
-import proton.android.pass.notifications.fakes.TestSnackbarDispatcher
-import proton.android.pass.preferences.TestInternalSettingsRepository
-import proton.android.pass.preferences.TestPreferenceRepository
+import proton.android.pass.notifications.fakes.FakeSnackbarDispatcher
+import proton.android.pass.preferences.FakeInternalSettingsRepository
+import proton.android.pass.preferences.FakePreferenceRepository
 import proton.android.pass.telemetry.api.EventItemType
-import proton.android.pass.telemetry.fakes.TestTelemetryManager
+import proton.android.pass.telemetry.fakes.FakeTelemetryManager
 import proton.android.pass.test.MainDispatcherRule
 import proton.android.pass.test.domain.TestItem
 import proton.android.pass.test.domain.TestShare
 import proton.android.pass.test.domain.TestVault
-import proton.android.pass.totp.fakes.TestTotpManager
+import proton.android.pass.totp.fakes.FakeTotpManager
 
 class CreateAliasViewModelTest {
 
@@ -74,34 +74,34 @@ class CreateAliasViewModelTest {
     private lateinit var suffix: AliasSuffixUiModel
     private lateinit var mailbox: AliasMailboxUiModel
     private lateinit var viewModel: CreateAliasViewModel
-    private lateinit var observeVaults: TestObserveVaultsWithItemCount
-    private lateinit var observeAliasOptions: TestObserveAliasOptions
-    private lateinit var createAlias: TestCreateAlias
-    private lateinit var snackbarRepository: TestSnackbarDispatcher
-    private lateinit var telemetryManager: TestTelemetryManager
-    private lateinit var observeUpgradeInfo: TestObserveUpgradeInfo
-    private lateinit var canPerformPaidAction: TestCanPerformPaidAction
-    private lateinit var draftRepository: TestDraftRepository
-    private lateinit var inAppReviewTriggerMetrics: TestInAppReviewTriggerMetrics
+    private lateinit var observeVaults: FakeObserveVaultsWithItemCount
+    private lateinit var observeAliasOptions: FakeObserveAliasOptions
+    private lateinit var createAlias: FakeCreateAlias
+    private lateinit var snackbarRepository: FakeSnackbarDispatcher
+    private lateinit var telemetryManager: FakeTelemetryManager
+    private lateinit var observeUpgradeInfo: FakeObserveUpgradeInfo
+    private lateinit var canPerformPaidAction: FakeCanPerformPaidAction
+    private lateinit var draftRepository: FakeDraftRepository
+    private lateinit var inAppReviewTriggerMetrics: FakeInAppReviewTriggerMetrics
     private lateinit var observeShare: FakeObserveShare
-    private lateinit var settingsRepository: TestInternalSettingsRepository
+    private lateinit var settingsRepository: FakeInternalSettingsRepository
 
     @Before
     fun setUp() {
         suffix = TestAliasSuffixUiModel.create()
         mailbox = TestAliasMailboxUiModel.create()
 
-        observeVaults = TestObserveVaultsWithItemCount()
-        observeAliasOptions = TestObserveAliasOptions()
-        createAlias = TestCreateAlias()
-        snackbarRepository = TestSnackbarDispatcher()
-        telemetryManager = TestTelemetryManager()
-        draftRepository = TestDraftRepository()
-        observeUpgradeInfo = TestObserveUpgradeInfo()
-        canPerformPaidAction = TestCanPerformPaidAction()
-        inAppReviewTriggerMetrics = TestInAppReviewTriggerMetrics()
+        observeVaults = FakeObserveVaultsWithItemCount()
+        observeAliasOptions = FakeObserveAliasOptions()
+        createAlias = FakeCreateAlias()
+        snackbarRepository = FakeSnackbarDispatcher()
+        telemetryManager = FakeTelemetryManager()
+        draftRepository = FakeDraftRepository()
+        observeUpgradeInfo = FakeObserveUpgradeInfo()
+        canPerformPaidAction = FakeCanPerformPaidAction()
+        inAppReviewTriggerMetrics = FakeInAppReviewTriggerMetrics()
         observeShare = FakeObserveShare()
-        settingsRepository = TestInternalSettingsRepository()
+        settingsRepository = FakeInternalSettingsRepository()
     }
 
 
@@ -245,14 +245,14 @@ class CreateAliasViewModelTest {
     }
 
     private fun createAliasViewModel(title: String? = null, isDraft: Boolean = false) = CreateAliasViewModel(
-        accountManager = TestAccountManager().apply {
+        accountManager = FakeAccountManager().apply {
             sendPrimaryUserId(UserId("123"))
         },
         observeAliasOptions = observeAliasOptions,
         observeVaults = observeVaults,
         createAlias = createAlias,
         snackbarDispatcher = snackbarRepository,
-        savedStateHandleProvider = TestSavedStateHandleProvider().apply {
+        savedStateHandleProvider = FakeSavedStateHandleProvider().apply {
             get()[CommonNavArgId.ShareId.key] = "123"
             title?.let {
                 get()[AliasOptionalNavArgId.Title.key] = title
@@ -261,19 +261,19 @@ class CreateAliasViewModelTest {
         telemetryManager = telemetryManager,
         observeUpgradeInfo = observeUpgradeInfo,
         draftRepository = draftRepository,
-        inAppReviewTriggerMetrics = TestInAppReviewTriggerMetrics(),
-        encryptionContextProvider = TestEncryptionContextProvider(),
-        observeDefaultVault = TestObserveDefaultVault(),
+        inAppReviewTriggerMetrics = FakeInAppReviewTriggerMetrics(),
+        encryptionContextProvider = FakeEncryptionContextProvider(),
+        observeDefaultVault = FakeObserveDefaultVault(),
         linkAttachmentsToItem = FakeLinkAttachmentsToItem(),
         attachmentsHandler = FakeAttachmentHandler(),
-        userPreferencesRepository = TestPreferenceRepository(),
+        userPreferencesRepository = FakePreferenceRepository(),
         mailboxDraftRepository = MailboxDraftRepositoryImpl(),
         suffixDraftRepository = SuffixDraftRepositoryImpl(),
-        customFieldHandler = CustomFieldHandlerImpl(TestTotpManager(), TestEncryptionContextProvider()),
+        customFieldHandler = CustomFieldHandlerImpl(FakeTotpManager(), FakeEncryptionContextProvider()),
         customFieldDraftRepository = CustomFieldDraftRepositoryImpl(),
-        canPerformPaidAction = TestCanPerformPaidAction(),
+        canPerformPaidAction = FakeCanPerformPaidAction(),
         aliasItemFormProcessor = FakeAliasItemFormProcessor(),
-        clipboardManager = TestClipboardManager(),
+        clipboardManager = FakeClipboardManager(),
         observeShare = observeShare,
         settingsRepository = settingsRepository
     ).apply {

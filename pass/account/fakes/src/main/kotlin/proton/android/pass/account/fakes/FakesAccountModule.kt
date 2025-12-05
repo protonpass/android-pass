@@ -99,22 +99,22 @@ import java.util.Optional
 abstract class FakesAccountModule {
 
     @Binds
-    abstract fun bindAccountOrchestrators(impl: TestAccountOrchestrators): AccountOrchestrators
+    abstract fun bindAccountOrchestrators(impl: FakeAccountOrchestrators): AccountOrchestrators
 
     @Binds
-    abstract fun bindAccountManager(impl: TestAccountManager): AccountManager
+    abstract fun bindAccountManager(impl: FakeAccountManager): AccountManager
 
     @Binds
-    abstract fun bindPaymentManager(impl: TestPaymentManager): PaymentManager
+    abstract fun bindPaymentManager(impl: FakePaymentManager): PaymentManager
 
     @Binds
-    abstract fun bindDeviceSettingsRepository(impl: TestDeviceSettingsRepository): DeviceSettingsRepository
+    abstract fun bindDeviceSettingsRepository(impl: FakeDeviceSettingsRepository): DeviceSettingsRepository
 
     @Binds
-    abstract fun bindPublicAddressRepository(impl: TestPublicAddressRepository): PublicAddressRepository
+    abstract fun bindPublicAddressRepository(impl: FakePublicAddressRepository): PublicAddressRepository
 
     @Binds
-    abstract fun bindFeatureFlagRepository(impl: TestFeatureFlagRepository): FeatureFlagRepository
+    abstract fun bindFeatureFlagRepository(impl: FakeFeatureFlagRepository): FeatureFlagRepository
 
     @Binds
     abstract fun bindUserManager(impl: FakeUserManager): UserManager
@@ -194,10 +194,10 @@ abstract class FakesAccountModule {
     abstract fun bindSessionManager(impl: FakeSessionManager): SessionManager
 
     @Binds
-    abstract fun bindUserRepository(impl: TestUserRepository): UserRepository
+    abstract fun bindUserRepository(impl: FakeUserRepository): UserRepository
 
     @Binds
-    abstract fun bindUserAddressRepository(impl: TestUserAddressRepository): UserAddressRepository
+    abstract fun bindUserAddressRepository(impl: FakeUserAddressRepository): UserAddressRepository
 
     @Binds
     abstract fun bindUserAddressManager(impl: FakeUserAddressManager): UserAddressManager

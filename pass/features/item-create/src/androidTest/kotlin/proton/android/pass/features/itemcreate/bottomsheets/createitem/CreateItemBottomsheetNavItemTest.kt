@@ -28,7 +28,7 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import proton.android.pass.commonui.api.PassTheme
-import proton.android.pass.commonui.fakes.TestSavedStateHandleProvider
+import proton.android.pass.commonui.fakes.FakeSavedStateHandleProvider
 import proton.android.pass.data.fakes.usecases.items.FakeObserveCanCreateItems
 import proton.android.pass.features.itemcreate.R
 import proton.android.pass.test.CallChecker
@@ -45,7 +45,7 @@ class CreateItemBottomsheetNavItemTest {
     val composeTestRule = createAndroidComposeRule<HiltComponentActivity>()
 
     @Inject
-    lateinit var savedStateHandle: TestSavedStateHandleProvider
+    lateinit var savedStateHandle: FakeSavedStateHandleProvider
 
     @Inject
     lateinit var observeCanCreateItems: FakeObserveCanCreateItems

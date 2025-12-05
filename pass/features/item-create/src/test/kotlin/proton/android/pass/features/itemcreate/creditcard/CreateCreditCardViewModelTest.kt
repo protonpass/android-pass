@@ -27,19 +27,19 @@ import me.proton.core.domain.entity.UserId
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import proton.android.pass.account.fakes.TestAccountManager
-import proton.android.pass.clipboard.fakes.TestClipboardManager
+import proton.android.pass.account.fakes.FakeAccountManager
+import proton.android.pass.clipboard.fakes.FakeClipboardManager
 import proton.android.pass.commonpresentation.fakes.attachments.FakeAttachmentHandler
-import proton.android.pass.commonui.fakes.TestSavedStateHandleProvider
+import proton.android.pass.commonui.fakes.FakeSavedStateHandleProvider
 import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
-import proton.android.pass.crypto.fakes.context.TestEncryptionContext
-import proton.android.pass.crypto.fakes.context.TestEncryptionContextProvider
+import proton.android.pass.crypto.fakes.context.FakeEncryptionContext
+import proton.android.pass.crypto.fakes.context.FakeEncryptionContextProvider
+import proton.android.pass.data.fakes.usecases.FakeCanPerformPaidAction
+import proton.android.pass.data.fakes.usecases.FakeCreateItem
 import proton.android.pass.data.fakes.usecases.FakeGetItemById
-import proton.android.pass.data.fakes.usecases.TestCanPerformPaidAction
-import proton.android.pass.data.fakes.usecases.TestCreateItem
-import proton.android.pass.data.fakes.usecases.TestObserveDefaultVault
-import proton.android.pass.data.fakes.usecases.TestObserveVaultsWithItemCount
+import proton.android.pass.data.fakes.usecases.FakeObserveDefaultVault
+import proton.android.pass.data.fakes.usecases.FakeObserveVaultsWithItemCount
 import proton.android.pass.data.fakes.usecases.attachments.FakeLinkAttachmentsToItem
 import proton.android.pass.data.fakes.usecases.shares.FakeObserveShare
 import proton.android.pass.domain.ItemState
@@ -55,17 +55,17 @@ import proton.android.pass.features.itemcreate.common.ShareUiState
 import proton.android.pass.features.itemcreate.common.customfields.CustomFieldHandlerImpl
 import proton.android.pass.features.itemcreate.common.formprocessor.FakeCreditCardItemFormProcessor
 import proton.android.pass.features.itemcreate.common.formprocessor.FormProcessingResult
-import proton.android.pass.inappreview.fakes.TestInAppReviewTriggerMetrics
-import proton.android.pass.notifications.fakes.TestSnackbarDispatcher
-import proton.android.pass.preferences.TestFeatureFlagsPreferenceRepository
-import proton.android.pass.preferences.TestInternalSettingsRepository
-import proton.android.pass.preferences.TestPreferenceRepository
+import proton.android.pass.inappreview.fakes.FakeInAppReviewTriggerMetrics
+import proton.android.pass.notifications.fakes.FakeSnackbarDispatcher
+import proton.android.pass.preferences.FakeFeatureFlagsPreferenceRepository
+import proton.android.pass.preferences.FakeInternalSettingsRepository
+import proton.android.pass.preferences.FakePreferenceRepository
 import proton.android.pass.telemetry.api.EventItemType
-import proton.android.pass.telemetry.fakes.TestTelemetryManager
+import proton.android.pass.telemetry.fakes.FakeTelemetryManager
 import proton.android.pass.test.MainDispatcherRule
 import proton.android.pass.test.domain.TestItem
 import proton.android.pass.test.domain.TestVault
-import proton.android.pass.totp.fakes.TestTotpManager
+import proton.android.pass.totp.fakes.FakeTotpManager
 
 class CreateCreditCardViewModelTest {
 
@@ -73,51 +73,51 @@ class CreateCreditCardViewModelTest {
     val dispatcherRule = MainDispatcherRule()
 
     private lateinit var instance: CreateCreditCardViewModel
-    private lateinit var totpManager: TestTotpManager
-    private lateinit var createItem: TestCreateItem
-    private lateinit var observeVaults: TestObserveVaultsWithItemCount
-    private lateinit var telemetryManager: TestTelemetryManager
-    private lateinit var snackbarDispatcher: TestSnackbarDispatcher
-    private lateinit var canPerformPaidAction: TestCanPerformPaidAction
+    private lateinit var totpManager: FakeTotpManager
+    private lateinit var createItem: FakeCreateItem
+    private lateinit var observeVaults: FakeObserveVaultsWithItemCount
+    private lateinit var telemetryManager: FakeTelemetryManager
+    private lateinit var snackbarDispatcher: FakeSnackbarDispatcher
+    private lateinit var canPerformPaidAction: FakeCanPerformPaidAction
     private lateinit var creditCardItemFormProcessor: FakeCreditCardItemFormProcessor
     private lateinit var observeShare: FakeObserveShare
-    private lateinit var settingsRepository: TestInternalSettingsRepository
+    private lateinit var settingsRepository: FakeInternalSettingsRepository
 
     @Before
     fun setUp() {
-        totpManager = TestTotpManager()
-        createItem = TestCreateItem()
-        observeVaults = TestObserveVaultsWithItemCount()
-        telemetryManager = TestTelemetryManager()
-        snackbarDispatcher = TestSnackbarDispatcher()
-        canPerformPaidAction = TestCanPerformPaidAction()
+        totpManager = FakeTotpManager()
+        createItem = FakeCreateItem()
+        observeVaults = FakeObserveVaultsWithItemCount()
+        telemetryManager = FakeTelemetryManager()
+        snackbarDispatcher = FakeSnackbarDispatcher()
+        canPerformPaidAction = FakeCanPerformPaidAction()
         creditCardItemFormProcessor = FakeCreditCardItemFormProcessor()
         observeShare = FakeObserveShare()
-        settingsRepository = TestInternalSettingsRepository()
+        settingsRepository = FakeInternalSettingsRepository()
         instance = CreateCreditCardViewModel(
-            accountManager = TestAccountManager().apply {
+            accountManager = FakeAccountManager().apply {
                 sendPrimaryUserId(UserId("user-id"))
             },
             createItem = createItem,
             snackbarDispatcher = snackbarDispatcher,
-            savedStateHandleProvider = TestSavedStateHandleProvider(),
-            encryptionContextProvider = TestEncryptionContextProvider(),
+            savedStateHandleProvider = FakeSavedStateHandleProvider(),
+            encryptionContextProvider = FakeEncryptionContextProvider(),
             observeVaults = observeVaults,
             telemetryManager = telemetryManager,
             canPerformPaidAction = canPerformPaidAction,
-            inAppReviewTriggerMetrics = TestInAppReviewTriggerMetrics(),
-            observeDefaultVault = TestObserveDefaultVault(),
+            inAppReviewTriggerMetrics = FakeInAppReviewTriggerMetrics(),
+            observeDefaultVault = FakeObserveDefaultVault(),
             linkAttachmentsToItem = FakeLinkAttachmentsToItem(),
             attachmentsHandler = FakeAttachmentHandler(),
-            userPreferencesRepository = TestPreferenceRepository(),
-            customFieldHandler = CustomFieldHandlerImpl(TestTotpManager(), TestEncryptionContextProvider()),
+            userPreferencesRepository = FakePreferenceRepository(),
+            customFieldHandler = CustomFieldHandlerImpl(FakeTotpManager(), FakeEncryptionContextProvider()),
             customFieldDraftRepository = CustomFieldDraftRepositoryImpl(),
             creditCardItemFormProcessor = creditCardItemFormProcessor,
-            clipboardManager = TestClipboardManager(),
+            clipboardManager = FakeClipboardManager(),
             getItemById = FakeGetItemById(),
             observeShare = observeShare,
             settingsRepository = settingsRepository,
-            featureFlagsPreferencesRepository = TestFeatureFlagsPreferenceRepository()
+            featureFlagsPreferencesRepository = FakeFeatureFlagsPreferenceRepository()
         )
     }
 
@@ -197,7 +197,7 @@ class CreateCreditCardViewModelTest {
                             id = item.id,
                             userId = UserId("user-id"),
                             shareId = item.shareId,
-                            contents = item.toItemContents { TestEncryptionContext.decrypt(it) },
+                            contents = item.toItemContents { FakeEncryptionContext.decrypt(it) },
                             createTime = item.createTime,
                             state = ItemState.Active.value,
                             modificationTime = item.modificationTime,

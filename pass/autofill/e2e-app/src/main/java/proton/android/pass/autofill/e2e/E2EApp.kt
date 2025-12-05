@@ -25,15 +25,15 @@ import me.proton.core.domain.entity.UserId
 import me.proton.core.util.android.sentry.TimberLogger
 import me.proton.core.util.kotlin.CoreLogger
 import proton.android.pass.account.fakes.FakeUserManager
-import proton.android.pass.account.fakes.TestAccountManager
+import proton.android.pass.account.fakes.FakeAccountManager
 import proton.android.pass.data.api.usecases.ItemData
 import proton.android.pass.data.api.usecases.ItemTypeFilter
 import proton.android.pass.data.api.usecases.SuggestedAutofillItemsResult
 import proton.android.pass.data.api.usecases.Suggestion
 import proton.android.pass.data.fakes.usecases.FakeGetItemById
-import proton.android.pass.data.fakes.usecases.TestGetSuggestedAutofillItems
-import proton.android.pass.data.fakes.usecases.TestGetUserPlan
-import proton.android.pass.data.fakes.usecases.TestObserveItems
+import proton.android.pass.data.fakes.usecases.FakeGetSuggestedAutofillItems
+import proton.android.pass.data.fakes.usecases.FakeGetUserPlan
+import proton.android.pass.data.fakes.usecases.FakeObserveItems
 import proton.android.pass.data.fakes.usecases.shares.FakeObserveAutofillShares
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ItemState
@@ -52,16 +52,16 @@ import javax.inject.Inject
 class E2EApp : Application() {
 
     @Inject
-    lateinit var accountManager: TestAccountManager
+    lateinit var accountManager: FakeAccountManager
 
     @Inject
     lateinit var userManager: FakeUserManager
 
     @Inject
-    lateinit var autofillItems: TestGetSuggestedAutofillItems
+    lateinit var autofillItems: FakeGetSuggestedAutofillItems
 
     @Inject
-    lateinit var observeItems: TestObserveItems
+    lateinit var observeItems: FakeObserveItems
 
     @Inject
     lateinit var observeAutofillShares: FakeObserveAutofillShares
@@ -70,7 +70,7 @@ class E2EApp : Application() {
     lateinit var getItemById: FakeGetItemById
 
     @Inject
-    lateinit var getUserPlan: TestGetUserPlan
+    lateinit var getUserPlan: FakeGetUserPlan
 
     override fun onCreate() {
         super.onCreate()
@@ -170,7 +170,7 @@ class E2EApp : Application() {
 
     private fun emitItems(items: List<ItemData.SuggestedItem>, filter: ItemTypeFilter) {
         observeItems.emit(
-            params = TestObserveItems.Params(
+            params = FakeObserveItems.Params(
                 userId = PRIMARY_USER_ID,
                 filter = filter,
                 selection = ShareSelection.Shares(listOf(VAULT_SHARE_ID)),
@@ -194,7 +194,7 @@ class E2EApp : Application() {
 
     private fun setupAccount() {
         accountManager.sendPrimaryUserId(PRIMARY_USER_ID)
-        accountManager.setAccounts(listOf(TestAccountManager.createAccount(PRIMARY_USER_ID)))
+        accountManager.setAccounts(listOf(FakeAccountManager.createAccount(PRIMARY_USER_ID)))
         userManager.setUser(TestUser.create(userId = PRIMARY_USER_ID))
 
         val plan = Plan(

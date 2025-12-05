@@ -32,14 +32,14 @@ import kotlinx.datetime.Clock
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import proton.android.pass.clipboard.fakes.TestClipboardManager
+import proton.android.pass.clipboard.fakes.FakeClipboardManager
 import proton.android.pass.commonui.api.PassTheme
-import proton.android.pass.commonui.fakes.TestSavedStateHandleProvider
+import proton.android.pass.commonui.fakes.FakeSavedStateHandleProvider
 import proton.android.pass.composecomponents.impl.R
-import proton.android.pass.crypto.fakes.context.TestEncryptionContext
+import proton.android.pass.crypto.fakes.context.FakeEncryptionContext
 import proton.android.pass.data.fakes.usecases.FakeGetItemById
-import proton.android.pass.data.fakes.usecases.TestObserveItemById
-import proton.android.pass.data.fakes.usecases.TestObserveUserAccessData
+import proton.android.pass.data.fakes.usecases.FakeObserveItemById
+import proton.android.pass.data.fakes.usecases.FakeObserveUserAccessData
 import proton.android.pass.data.fakes.usecases.shares.FakeObserveShare
 import proton.android.pass.domain.HiddenState
 import proton.android.pass.domain.ItemContents
@@ -55,7 +55,7 @@ import proton.android.pass.test.domain.TestShare
 import proton.android.pass.test.domain.TestUserAccessData
 import proton.android.pass.test.waitUntilExists
 import proton.android.pass.totp.api.TotpManager
-import proton.android.pass.totp.fakes.TestObserveTotpFromUri
+import proton.android.pass.totp.fakes.FakeObserveTotpFromUri
 import javax.inject.Inject
 import kotlin.test.assertEquals
 
@@ -69,25 +69,25 @@ class LoginDetailScreenTest {
     val composeTestRule = createAndroidComposeRule<HiltComponentActivity>()
 
     @Inject
-    lateinit var savedStateHandle: TestSavedStateHandleProvider
+    lateinit var savedStateHandle: FakeSavedStateHandleProvider
 
     @Inject
-    lateinit var observeItemById: TestObserveItemById
+    lateinit var observeItemById: FakeObserveItemById
 
     @Inject
     lateinit var getItemById: FakeGetItemById
 
     @Inject
-    lateinit var clipboardManager: TestClipboardManager
+    lateinit var clipboardManager: FakeClipboardManager
 
     @Inject
-    lateinit var observeTotp: TestObserveTotpFromUri
+    lateinit var observeTotp: FakeObserveTotpFromUri
 
     @Inject
     lateinit var observeShare: FakeObserveShare
 
     @Inject
-    lateinit var observeUserAccessData: TestObserveUserAccessData
+    lateinit var observeUserAccessData: FakeObserveUserAccessData
 
     @Before
     fun setup() {
@@ -276,12 +276,12 @@ class LoginDetailScreenTest {
                 title = title,
                 itemEmail = email,
                 itemUsername = username,
-                password = HiddenState.Concealed(TestEncryptionContext.encrypt(password)),
+                password = HiddenState.Concealed(FakeEncryptionContext.encrypt(password)),
                 note = note,
                 urls = urls,
                 packageInfoSet = emptySet(),
                 primaryTotp = HiddenState.Revealed(
-                    encrypted = TestEncryptionContext.encrypt(primaryTotp),
+                    encrypted = FakeEncryptionContext.encrypt(primaryTotp),
                     clearText = primaryTotp
                 ),
                 customFields = emptyList(),

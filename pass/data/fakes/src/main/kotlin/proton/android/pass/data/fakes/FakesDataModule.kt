@@ -248,12 +248,12 @@ import proton.android.pass.data.fakes.repositories.FakePasswordHistoryEntryRepos
 import proton.android.pass.data.fakes.repositories.FakePendingAttachmentLinkRepository
 import proton.android.pass.data.fakes.repositories.FakePendingAttachmentUpdaterRepository
 import proton.android.pass.data.fakes.repositories.FakeSentinelRepository
-import proton.android.pass.data.fakes.repositories.TestBulkInviteRepository
-import proton.android.pass.data.fakes.repositories.TestBulkMoveToVaultRepository
-import proton.android.pass.data.fakes.repositories.TestDraftRepository
-import proton.android.pass.data.fakes.repositories.TestItemRepository
-import proton.android.pass.data.fakes.repositories.TestUserAccessDataRepository
-import proton.android.pass.data.fakes.repositories.TestUserInviteRepository
+import proton.android.pass.data.fakes.repositories.FakeBulkInviteRepository
+import proton.android.pass.data.fakes.repositories.FakeBulkMoveToVaultRepository
+import proton.android.pass.data.fakes.repositories.FakeDraftRepository
+import proton.android.pass.data.fakes.repositories.FakeItemRepository
+import proton.android.pass.data.fakes.repositories.FakeUserAccessDataRepository
+import proton.android.pass.data.fakes.repositories.FakeUserInviteRepository
 import proton.android.pass.data.fakes.usecases.FakeCanOrganiseVaults
 import proton.android.pass.data.fakes.usecases.FakeChangeAliasStatus
 import proton.android.pass.data.fakes.usecases.FakeGetItemById
@@ -269,93 +269,93 @@ import proton.android.pass.data.fakes.usecases.FakeRefreshSharesAndEnqueueSync
 import proton.android.pass.data.fakes.usecases.FakeRefreshUserInvites
 import proton.android.pass.data.fakes.usecases.FakeUnpinItem
 import proton.android.pass.data.fakes.usecases.FakeUpdateAliasName
-import proton.android.pass.data.fakes.usecases.TestAcceptInvite
-import proton.android.pass.data.fakes.usecases.TestAddSearchEntry
-import proton.android.pass.data.fakes.usecases.TestApplyPendingEvents
-import proton.android.pass.data.fakes.usecases.TestCanCreateItemInVault
-import proton.android.pass.data.fakes.usecases.TestCanCreateVault
-import proton.android.pass.data.fakes.usecases.TestCanDisplayTotp
-import proton.android.pass.data.fakes.usecases.TestCanManageVaultAccess
-import proton.android.pass.data.fakes.usecases.TestCanMigrateVault
-import proton.android.pass.data.fakes.usecases.TestCanPerformPaidAction
-import proton.android.pass.data.fakes.usecases.TestCanShareShare
-import proton.android.pass.data.fakes.usecases.TestCancelShareInvite
-import proton.android.pass.data.fakes.usecases.TestCheckAddressesCanBeInvited
-import proton.android.pass.data.fakes.usecases.TestCheckMasterPassword
-import proton.android.pass.data.fakes.usecases.TestCheckPin
-import proton.android.pass.data.fakes.usecases.TestClearPin
-import proton.android.pass.data.fakes.usecases.TestClearTrash
-import proton.android.pass.data.fakes.usecases.TestClearUserData
-import proton.android.pass.data.fakes.usecases.TestConfirmNewUserInvite
-import proton.android.pass.data.fakes.usecases.TestCreateAlias
-import proton.android.pass.data.fakes.usecases.TestCreateItem
-import proton.android.pass.data.fakes.usecases.TestCreateLoginAndAlias
-import proton.android.pass.data.fakes.usecases.TestCreatePin
-import proton.android.pass.data.fakes.usecases.TestCreateVault
-import proton.android.pass.data.fakes.usecases.TestDeleteAllSearchEntry
-import proton.android.pass.data.fakes.usecases.TestDeleteItems
-import proton.android.pass.data.fakes.usecases.TestDeleteSearchEntry
-import proton.android.pass.data.fakes.usecases.TestDeleteVault
-import proton.android.pass.data.fakes.usecases.TestGetAllKeysByAddress
-import proton.android.pass.data.fakes.usecases.TestGetDefaultBrowser
-import proton.android.pass.data.fakes.usecases.TestGetInviteUserMode
-import proton.android.pass.data.fakes.usecases.TestGetItemActions
-import proton.android.pass.data.fakes.usecases.TestGetItemByAliasEmail
-import proton.android.pass.data.fakes.usecases.TestGetPasskeyById
-import proton.android.pass.data.fakes.usecases.TestGetShareById
-import proton.android.pass.data.fakes.usecases.TestGetSuggestedAutofillItems
-import proton.android.pass.data.fakes.usecases.TestGetUserPlan
-import proton.android.pass.data.fakes.usecases.TestGetVaultByShareId
-import proton.android.pass.data.fakes.usecases.TestGetVaultMembers
-import proton.android.pass.data.fakes.usecases.TestGetVaultWithItemCountById
-import proton.android.pass.data.fakes.usecases.TestInviteToVault
-import proton.android.pass.data.fakes.usecases.TestItemSyncStatusRepository
-import proton.android.pass.data.fakes.usecases.TestLeaveShare
-import proton.android.pass.data.fakes.usecases.TestMigrateItems
-import proton.android.pass.data.fakes.usecases.TestMigrateVault
-import proton.android.pass.data.fakes.usecases.TestObserveAliasDetails
-import proton.android.pass.data.fakes.usecases.TestObserveAliasOptions
-import proton.android.pass.data.fakes.usecases.TestObserveAllShares
-import proton.android.pass.data.fakes.usecases.TestObserveAnyAccountHasEnforcedLock
-import proton.android.pass.data.fakes.usecases.TestObserveAppNeedsUpdate
-import proton.android.pass.data.fakes.usecases.TestObserveConfirmedInviteToken
-import proton.android.pass.data.fakes.usecases.TestObserveCurrentUser
-import proton.android.pass.data.fakes.usecases.TestObserveCurrentUserSettings
-import proton.android.pass.data.fakes.usecases.TestObserveDefaultVault
-import proton.android.pass.data.fakes.usecases.TestObserveInvites
-import proton.android.pass.data.fakes.usecases.TestObserveItemById
-import proton.android.pass.data.fakes.usecases.TestObserveItemCount
-import proton.android.pass.data.fakes.usecases.TestObserveItems
-import proton.android.pass.data.fakes.usecases.TestObserveItemsWithPasskeys
-import proton.android.pass.data.fakes.usecases.TestObserveMFACount
-import proton.android.pass.data.fakes.usecases.TestObserveOrganizationSettings
-import proton.android.pass.data.fakes.usecases.TestObservePinnedItems
-import proton.android.pass.data.fakes.usecases.TestObserveSearchEntry
-import proton.android.pass.data.fakes.usecases.TestObserveUpgradeInfo
-import proton.android.pass.data.fakes.usecases.TestObserveUserAccessData
-import proton.android.pass.data.fakes.usecases.TestObserveUserEmail
-import proton.android.pass.data.fakes.usecases.TestObserveVaultWithItemCountById
-import proton.android.pass.data.fakes.usecases.TestObserveVaults
-import proton.android.pass.data.fakes.usecases.TestObserveVaultsWithItemCount
-import proton.android.pass.data.fakes.usecases.TestPerformSync
-import proton.android.pass.data.fakes.usecases.TestPinItems
-import proton.android.pass.data.fakes.usecases.TestRefreshContent
-import proton.android.pass.data.fakes.usecases.TestRefreshUserAccess
-import proton.android.pass.data.fakes.usecases.TestRejectInvite
-import proton.android.pass.data.fakes.usecases.TestRemoveShareMember
-import proton.android.pass.data.fakes.usecases.TestResendShareInvite
-import proton.android.pass.data.fakes.usecases.TestResetAppToDefaults
-import proton.android.pass.data.fakes.usecases.TestRestoreAllItems
-import proton.android.pass.data.fakes.usecases.TestRestoreItems
-import proton.android.pass.data.fakes.usecases.TestSetDefaultVault
-import proton.android.pass.data.fakes.usecases.TestTransferVaultOwnership
-import proton.android.pass.data.fakes.usecases.TestTrashItems
-import proton.android.pass.data.fakes.usecases.TestUnpinItems
-import proton.android.pass.data.fakes.usecases.TestUpdateAlias
-import proton.android.pass.data.fakes.usecases.TestUpdateAutofillItem
-import proton.android.pass.data.fakes.usecases.TestUpdateItem
-import proton.android.pass.data.fakes.usecases.TestUpdateShareMemberRole
-import proton.android.pass.data.fakes.usecases.TestUpdateVault
+import proton.android.pass.data.fakes.usecases.FakeAcceptInvite
+import proton.android.pass.data.fakes.usecases.FakeAddSearchEntry
+import proton.android.pass.data.fakes.usecases.FakeApplyPendingEvents
+import proton.android.pass.data.fakes.usecases.FakeCanCreateItemInVault
+import proton.android.pass.data.fakes.usecases.FakeCanCreateVault
+import proton.android.pass.data.fakes.usecases.FakeCanDisplayTotp
+import proton.android.pass.data.fakes.usecases.FakeCanManageVaultAccess
+import proton.android.pass.data.fakes.usecases.FakeCanMigrateVault
+import proton.android.pass.data.fakes.usecases.FakeCanPerformPaidAction
+import proton.android.pass.data.fakes.usecases.FakeCanShareShare
+import proton.android.pass.data.fakes.usecases.FakeCancelShareInvite
+import proton.android.pass.data.fakes.usecases.FakeCheckAddressesCanBeInvited
+import proton.android.pass.data.fakes.usecases.FakeCheckMasterPassword
+import proton.android.pass.data.fakes.usecases.FakeCheckPin
+import proton.android.pass.data.fakes.usecases.FakeClearPin
+import proton.android.pass.data.fakes.usecases.FakeClearTrash
+import proton.android.pass.data.fakes.usecases.FakeClearUserData
+import proton.android.pass.data.fakes.usecases.FakeConfirmNewUserInvite
+import proton.android.pass.data.fakes.usecases.FakeCreateAlias
+import proton.android.pass.data.fakes.usecases.FakeCreateItem
+import proton.android.pass.data.fakes.usecases.FakeCreateLoginAndAlias
+import proton.android.pass.data.fakes.usecases.FakeCreatePin
+import proton.android.pass.data.fakes.usecases.FakeCreateVault
+import proton.android.pass.data.fakes.usecases.FakeDeleteAllSearchEntry
+import proton.android.pass.data.fakes.usecases.FakeDeleteItems
+import proton.android.pass.data.fakes.usecases.FakeDeleteSearchEntry
+import proton.android.pass.data.fakes.usecases.FakeDeleteVault
+import proton.android.pass.data.fakes.usecases.FakeGetAllKeysByAddress
+import proton.android.pass.data.fakes.usecases.FakeGetDefaultBrowser
+import proton.android.pass.data.fakes.usecases.FakeGetInviteUserMode
+import proton.android.pass.data.fakes.usecases.FakeGetItemActions
+import proton.android.pass.data.fakes.usecases.FakeGetItemByAliasEmail
+import proton.android.pass.data.fakes.usecases.FakeGetPasskeyById
+import proton.android.pass.data.fakes.usecases.FakeGetShareById
+import proton.android.pass.data.fakes.usecases.FakeGetSuggestedAutofillItems
+import proton.android.pass.data.fakes.usecases.FakeGetUserPlan
+import proton.android.pass.data.fakes.usecases.FakeGetVaultByShareId
+import proton.android.pass.data.fakes.usecases.FakeGetVaultMembers
+import proton.android.pass.data.fakes.usecases.FakeGetVaultWithItemCountById
+import proton.android.pass.data.fakes.usecases.FakeInviteToVault
+import proton.android.pass.data.fakes.usecases.FakeItemSyncStatusRepository
+import proton.android.pass.data.fakes.usecases.FakeLeaveShare
+import proton.android.pass.data.fakes.usecases.FakeMigrateItems
+import proton.android.pass.data.fakes.usecases.FakeMigrateVault
+import proton.android.pass.data.fakes.usecases.FakeObserveAliasDetails
+import proton.android.pass.data.fakes.usecases.FakeObserveAliasOptions
+import proton.android.pass.data.fakes.usecases.FakeObserveAllShares
+import proton.android.pass.data.fakes.usecases.FakeObserveAnyAccountHasEnforcedLock
+import proton.android.pass.data.fakes.usecases.FakeObserveAppNeedsUpdate
+import proton.android.pass.data.fakes.usecases.FakeObserveConfirmedInviteToken
+import proton.android.pass.data.fakes.usecases.FakeObserveCurrentUser
+import proton.android.pass.data.fakes.usecases.FakeObserveCurrentUserSettings
+import proton.android.pass.data.fakes.usecases.FakeObserveDefaultVault
+import proton.android.pass.data.fakes.usecases.FakeObserveInvites
+import proton.android.pass.data.fakes.usecases.FakeObserveItemById
+import proton.android.pass.data.fakes.usecases.FakeObserveItemCount
+import proton.android.pass.data.fakes.usecases.FakeObserveItems
+import proton.android.pass.data.fakes.usecases.FakeObserveItemsWithPasskeys
+import proton.android.pass.data.fakes.usecases.FakeObserveMFACount
+import proton.android.pass.data.fakes.usecases.FakeObserveOrganizationSettings
+import proton.android.pass.data.fakes.usecases.FakeObservePinnedItems
+import proton.android.pass.data.fakes.usecases.FakeObserveSearchEntry
+import proton.android.pass.data.fakes.usecases.FakeObserveUpgradeInfo
+import proton.android.pass.data.fakes.usecases.FakeObserveUserAccessData
+import proton.android.pass.data.fakes.usecases.FakeObserveUserEmail
+import proton.android.pass.data.fakes.usecases.FakeObserveVaultWithItemCountById
+import proton.android.pass.data.fakes.usecases.FakeObserveVaults
+import proton.android.pass.data.fakes.usecases.FakeObserveVaultsWithItemCount
+import proton.android.pass.data.fakes.usecases.FakePerformSync
+import proton.android.pass.data.fakes.usecases.FakePinItems
+import proton.android.pass.data.fakes.usecases.FakeRefreshContent
+import proton.android.pass.data.fakes.usecases.FakeRefreshUserAccess
+import proton.android.pass.data.fakes.usecases.FakeRejectInvite
+import proton.android.pass.data.fakes.usecases.FakeRemoveShareMember
+import proton.android.pass.data.fakes.usecases.FakeResendShareInvite
+import proton.android.pass.data.fakes.usecases.FakeResetAppToDefaults
+import proton.android.pass.data.fakes.usecases.FakeRestoreAllItems
+import proton.android.pass.data.fakes.usecases.FakeRestoreItems
+import proton.android.pass.data.fakes.usecases.FakeSetDefaultVault
+import proton.android.pass.data.fakes.usecases.FakeTransferVaultOwnership
+import proton.android.pass.data.fakes.usecases.FakeTrashItems
+import proton.android.pass.data.fakes.usecases.FakeUnpinItems
+import proton.android.pass.data.fakes.usecases.FakeUpdateAlias
+import proton.android.pass.data.fakes.usecases.FakeUpdateAutofillItem
+import proton.android.pass.data.fakes.usecases.FakeUpdateItem
+import proton.android.pass.data.fakes.usecases.FakeUpdateShareMemberRole
+import proton.android.pass.data.fakes.usecases.FakeUpdateVault
 import proton.android.pass.data.fakes.usecases.accesskey.FakeAuthWithExtraPassword
 import proton.android.pass.data.fakes.usecases.accesskey.FakeCheckLocalExtraPassword
 import proton.android.pass.data.fakes.usecases.accesskey.FakeHasExtraPassword
@@ -462,182 +462,182 @@ import javax.inject.Singleton
 abstract class FakesDataModule {
 
     @Binds
-    abstract fun bindGetSuggestedAutofillItems(impl: TestGetSuggestedAutofillItems): GetSuggestedAutofillItems
+    abstract fun bindGetSuggestedAutofillItems(impl: FakeGetSuggestedAutofillItems): GetSuggestedAutofillItems
 
     @Binds
-    abstract fun bindItemRepository(impl: TestItemRepository): ItemRepository
+    abstract fun bindItemRepository(impl: FakeItemRepository): ItemRepository
 
     @Binds
     abstract fun bindAliasRepository(impl: FakeAliasRepository): AliasRepository
 
     @Binds
-    abstract fun bindDraftRepository(impl: TestDraftRepository): DraftRepository
+    abstract fun bindDraftRepository(impl: FakeDraftRepository): DraftRepository
 
     @Binds
-    abstract fun bindCreateAlias(impl: TestCreateAlias): CreateAlias
+    abstract fun bindCreateAlias(impl: FakeCreateAlias): CreateAlias
 
     @Binds
-    abstract fun bindCreateItem(impl: TestCreateItem): CreateItem
+    abstract fun bindCreateItem(impl: FakeCreateItem): CreateItem
 
     @Binds
-    abstract fun bindObserveVaults(impl: TestObserveVaults): ObserveVaults
+    abstract fun bindObserveVaults(impl: FakeObserveVaults): ObserveVaults
 
     @Binds
-    abstract fun bindObserveCurrentUser(impl: TestObserveCurrentUser): ObserveCurrentUser
+    abstract fun bindObserveCurrentUser(impl: FakeObserveCurrentUser): ObserveCurrentUser
 
     @Binds
-    abstract fun bindObserveCurrentUserSettings(impl: TestObserveCurrentUserSettings): ObserveCurrentUserSettings
+    abstract fun bindObserveCurrentUserSettings(impl: FakeObserveCurrentUserSettings): ObserveCurrentUserSettings
 
     @Binds
-    abstract fun bindObserveAliasOptions(impl: TestObserveAliasOptions): ObserveAliasOptions
+    abstract fun bindObserveAliasOptions(impl: FakeObserveAliasOptions): ObserveAliasOptions
 
     @Binds
-    abstract fun bindUpdateAlias(impl: TestUpdateAlias): UpdateAlias
+    abstract fun bindUpdateAlias(impl: FakeUpdateAlias): UpdateAlias
 
     @Binds
-    abstract fun bindUpdateAutofillItem(impl: TestUpdateAutofillItem): UpdateAutofillItem
+    abstract fun bindUpdateAutofillItem(impl: FakeUpdateAutofillItem): UpdateAutofillItem
 
     @Binds
-    abstract fun bindUpdateItem(impl: TestUpdateItem): UpdateItem
+    abstract fun bindUpdateItem(impl: FakeUpdateItem): UpdateItem
 
     @Binds
-    abstract fun bindGetShareById(impl: TestGetShareById): GetShareById
+    abstract fun bindGetShareById(impl: FakeGetShareById): GetShareById
 
     @Binds
-    abstract fun bindTrashItem(impl: TestTrashItems): TrashItems
+    abstract fun bindTrashItem(impl: FakeTrashItems): TrashItems
 
     @Binds
-    abstract fun bindUpdateVault(impl: TestUpdateVault): UpdateVault
+    abstract fun bindUpdateVault(impl: FakeUpdateVault): UpdateVault
 
     @Binds
-    abstract fun bindGetVaultByShareId(impl: TestGetVaultByShareId): GetVaultByShareId
+    abstract fun bindGetVaultByShareId(impl: FakeGetVaultByShareId): GetVaultByShareId
 
     @Binds
-    abstract fun bindObserveVaultsWithItemCount(impl: TestObserveVaultsWithItemCount): ObserveVaultsWithItemCount
+    abstract fun bindObserveVaultsWithItemCount(impl: FakeObserveVaultsWithItemCount): ObserveVaultsWithItemCount
 
     @Binds
-    abstract fun bindObserveItemCount(impl: TestObserveItemCount): ObserveItemCount
+    abstract fun bindObserveItemCount(impl: FakeObserveItemCount): ObserveItemCount
 
     @Binds
-    abstract fun bindMigrateItem(impl: TestMigrateItems): MigrateItems
+    abstract fun bindMigrateItem(impl: FakeMigrateItems): MigrateItems
 
     @Binds
-    abstract fun bindGetVaultWithItemCountById(impl: TestGetVaultWithItemCountById): GetVaultWithItemCountById
+    abstract fun bindGetVaultWithItemCountById(impl: FakeGetVaultWithItemCountById): GetVaultWithItemCountById
 
     @Binds
-    abstract fun bindCreateItemAndAlias(impl: TestCreateLoginAndAlias): CreateLoginAndAlias
+    abstract fun bindCreateItemAndAlias(impl: FakeCreateLoginAndAlias): CreateLoginAndAlias
 
     @Binds
-    abstract fun bindDeleteVault(impl: TestDeleteVault): DeleteVault
+    abstract fun bindDeleteVault(impl: FakeDeleteVault): DeleteVault
 
     @Binds
-    abstract fun bindGetUserPlan(impl: TestGetUserPlan): GetUserPlan
+    abstract fun bindGetUserPlan(impl: FakeGetUserPlan): GetUserPlan
 
 
     @Binds
     abstract fun bindGetItemById(impl: FakeGetItemById): GetItemById
 
     @Binds
-    abstract fun bindObserveItemById(impl: TestObserveItemById): ObserveItemById
+    abstract fun bindObserveItemById(impl: FakeObserveItemById): ObserveItemById
 
     @Binds
-    abstract fun bindDeleteItem(impl: TestDeleteItems): DeleteItems
+    abstract fun bindDeleteItem(impl: FakeDeleteItems): DeleteItems
 
     @Binds
-    abstract fun bindRestoreItem(impl: TestRestoreItems): RestoreItems
+    abstract fun bindRestoreItem(impl: FakeRestoreItems): RestoreItems
 
     @Binds
-    abstract fun bindRefreshContent(impl: TestRefreshContent): RefreshContent
+    abstract fun bindRefreshContent(impl: FakeRefreshContent): RefreshContent
 
     @Binds
-    abstract fun bindApplyPendingEvents(impl: TestApplyPendingEvents): ApplyPendingEvents
+    abstract fun bindApplyPendingEvents(impl: FakeApplyPendingEvents): ApplyPendingEvents
 
     @Binds
-    abstract fun bindRestoreItems(impl: TestRestoreAllItems): RestoreAllItems
+    abstract fun bindRestoreItems(impl: FakeRestoreAllItems): RestoreAllItems
 
     @Binds
-    abstract fun bindClearTrash(impl: TestClearTrash): ClearTrash
+    abstract fun bindClearTrash(impl: FakeClearTrash): ClearTrash
 
     @Binds
-    abstract fun bindAddSearchEntry(impl: TestAddSearchEntry): AddSearchEntry
+    abstract fun bindAddSearchEntry(impl: FakeAddSearchEntry): AddSearchEntry
 
     @Binds
-    abstract fun bindDeleteSearchEntry(impl: TestDeleteSearchEntry): DeleteSearchEntry
+    abstract fun bindDeleteSearchEntry(impl: FakeDeleteSearchEntry): DeleteSearchEntry
 
     @Binds
-    abstract fun bindDeleteAllSearchEntry(impl: TestDeleteAllSearchEntry): DeleteAllSearchEntry
+    abstract fun bindDeleteAllSearchEntry(impl: FakeDeleteAllSearchEntry): DeleteAllSearchEntry
 
     @Binds
-    abstract fun bindObserveSearchEntry(impl: TestObserveSearchEntry): ObserveSearchEntry
+    abstract fun bindObserveSearchEntry(impl: FakeObserveSearchEntry): ObserveSearchEntry
 
     @Binds
-    abstract fun bindObserveItems(impl: TestObserveItems): ObserveItems
+    abstract fun bindObserveItems(impl: FakeObserveItems): ObserveItems
 
     @Binds
     abstract fun bindObserveEncryptedItems(impl: FakeObserveEncryptedItems): ObserveEncryptedItems
 
     @Binds
-    abstract fun bindObservePinnedItems(impl: TestObservePinnedItems): ObservePinnedItems
+    abstract fun bindObservePinnedItems(impl: FakeObservePinnedItems): ObservePinnedItems
 
     @Binds
-    abstract fun bindItemSyncStatusRepository(impl: TestItemSyncStatusRepository): ItemSyncStatusRepository
+    abstract fun bindItemSyncStatusRepository(impl: FakeItemSyncStatusRepository): ItemSyncStatusRepository
 
     @Binds
-    abstract fun bindClearUserData(impl: TestClearUserData): ClearUserData
+    abstract fun bindClearUserData(impl: FakeClearUserData): ClearUserData
 
     @Binds
-    abstract fun bindGetUpgradeInfo(impl: TestObserveUpgradeInfo): ObserveUpgradeInfo
+    abstract fun bindGetUpgradeInfo(impl: FakeObserveUpgradeInfo): ObserveUpgradeInfo
 
     @Binds
-    abstract fun bindMigrateVault(impl: TestMigrateVault): MigrateVault
+    abstract fun bindMigrateVault(impl: FakeMigrateVault): MigrateVault
 
     @Binds
-    abstract fun bindObserveMFACount(impl: TestObserveMFACount): ObserveMFACount
+    abstract fun bindObserveMFACount(impl: FakeObserveMFACount): ObserveMFACount
 
     @Binds
-    abstract fun bindCreateVault(impl: TestCreateVault): CreateVault
+    abstract fun bindCreateVault(impl: FakeCreateVault): CreateVault
 
     @Binds
-    abstract fun bindCanPerformPaidAction(impl: TestCanPerformPaidAction): CanPerformPaidAction
+    abstract fun bindCanPerformPaidAction(impl: FakeCanPerformPaidAction): CanPerformPaidAction
 
     @Binds
-    abstract fun bindRefreshPlan(impl: TestRefreshUserAccess): RefreshUserAccess
+    abstract fun bindRefreshPlan(impl: FakeRefreshUserAccess): RefreshUserAccess
 
     @Binds
-    abstract fun bindObserveAliasDetails(impl: TestObserveAliasDetails): ObserveAliasDetails
+    abstract fun bindObserveAliasDetails(impl: FakeObserveAliasDetails): ObserveAliasDetails
 
     @Binds
-    abstract fun bindGetItemByAliasEmail(impl: TestGetItemByAliasEmail): GetItemByAliasEmail
+    abstract fun bindGetItemByAliasEmail(impl: FakeGetItemByAliasEmail): GetItemByAliasEmail
 
     @Binds
-    abstract fun bindCanDisplayTotp(impl: TestCanDisplayTotp): CanDisplayTotp
+    abstract fun bindCanDisplayTotp(impl: FakeCanDisplayTotp): CanDisplayTotp
 
     @Binds
-    abstract fun bindCheckMasterPassword(impl: TestCheckMasterPassword): CheckMasterPassword
+    abstract fun bindCheckMasterPassword(impl: FakeCheckMasterPassword): CheckMasterPassword
 
     @Binds
-    abstract fun bindObserveUserEmail(impl: TestObserveUserEmail): ObserveUserEmail
+    abstract fun bindObserveUserEmail(impl: FakeObserveUserEmail): ObserveUserEmail
 
     @Binds
-    abstract fun bindCheckPin(impl: TestCheckPin): CheckPin
+    abstract fun bindCheckPin(impl: FakeCheckPin): CheckPin
 
     @Binds
-    abstract fun bindCreatePin(impl: TestCreatePin): CreatePin
+    abstract fun bindCreatePin(impl: FakeCreatePin): CreatePin
 
     @Binds
-    abstract fun bindClearAppData(impl: TestResetAppToDefaults): ResetAppToDefaults
+    abstract fun bindClearAppData(impl: FakeResetAppToDefaults): ResetAppToDefaults
 
     @Binds
-    abstract fun bindClearPin(impl: TestClearPin): ClearPin
+    abstract fun bindClearPin(impl: FakeClearPin): ClearPin
 
     @Binds
-    abstract fun bindInviteToVault(impl: TestInviteToVault): InviteToVault
+    abstract fun bindInviteToVault(impl: FakeInviteToVault): InviteToVault
 
     @Binds
-    abstract fun bindUserInviteRepository(impl: TestUserInviteRepository): UserInviteRepository
+    abstract fun bindUserInviteRepository(impl: FakeUserInviteRepository): UserInviteRepository
 
     @Binds
-    abstract fun bindObserveInvites(impl: TestObserveInvites): ObserveInvites
+    abstract fun bindObserveInvites(impl: FakeObserveInvites): ObserveInvites
 
     @Binds
     abstract fun bindObserveInviteRecommendations(impl: FakeObserveInviteRecommendations): ObserveInviteRecommendations
@@ -655,85 +655,85 @@ abstract class FakesDataModule {
     abstract fun bindPromoteNewInviteToInvite(impl: FakePromoteNewInviteToInvite): PromoteNewInviteToInvite
 
     @Binds
-    abstract fun bindPerformSync(impl: TestPerformSync): PerformSync
+    abstract fun bindPerformSync(impl: FakePerformSync): PerformSync
 
     @Binds
-    abstract fun bindAcceptInvite(impl: TestAcceptInvite): AcceptInvite
+    abstract fun bindAcceptInvite(impl: FakeAcceptInvite): AcceptInvite
 
     @Binds
-    abstract fun bindRejectInvite(impl: TestRejectInvite): RejectInvite
+    abstract fun bindRejectInvite(impl: FakeRejectInvite): RejectInvite
 
     @Binds
-    abstract fun bindLeaveVault(impl: TestLeaveShare): LeaveShare
+    abstract fun bindLeaveVault(impl: FakeLeaveShare): LeaveShare
 
     @Binds
-    abstract fun bindCanShareShare(impl: TestCanShareShare): CanShareShare
+    abstract fun bindCanShareShare(impl: FakeCanShareShare): CanShareShare
 
     @Binds
-    abstract fun bindCanMigrateVault(impl: TestCanMigrateVault): CanMigrateVault
+    abstract fun bindCanMigrateVault(impl: FakeCanMigrateVault): CanMigrateVault
 
     @Binds
-    abstract fun bindCanManageVaultAccess(impl: TestCanManageVaultAccess): CanManageVaultAccess
+    abstract fun bindCanManageVaultAccess(impl: FakeCanManageVaultAccess): CanManageVaultAccess
 
     @Binds
-    abstract fun bindGetVaultMembers(impl: TestGetVaultMembers): GetVaultMembers
+    abstract fun bindGetVaultMembers(impl: FakeGetVaultMembers): GetVaultMembers
 
     @Binds
-    abstract fun bindRemoveMemberFromVault(impl: TestRemoveShareMember): RemoveShareMember
+    abstract fun bindRemoveMemberFromVault(impl: FakeRemoveShareMember): RemoveShareMember
 
     @Binds
-    abstract fun bindSetVaultMemberPermission(impl: TestUpdateShareMemberRole): UpdateShareMemberRole
+    abstract fun bindSetVaultMemberPermission(impl: FakeUpdateShareMemberRole): UpdateShareMemberRole
 
     @Binds
-    abstract fun bindResendInvite(impl: TestResendShareInvite): ResendShareInvite
+    abstract fun bindResendInvite(impl: FakeResendShareInvite): ResendShareInvite
 
     @Binds
-    abstract fun bindCancelInvite(impl: TestCancelShareInvite): CancelShareInvite
+    abstract fun bindCancelInvite(impl: FakeCancelShareInvite): CancelShareInvite
 
     @Binds
-    abstract fun bindTransferOwnership(impl: TestTransferVaultOwnership): TransferVaultOwnership
+    abstract fun bindTransferOwnership(impl: FakeTransferVaultOwnership): TransferVaultOwnership
 
     @Binds
-    abstract fun bindCanCreateVault(impl: TestCanCreateVault): CanCreateVault
+    abstract fun bindCanCreateVault(impl: FakeCanCreateVault): CanCreateVault
 
     @Binds
     abstract fun bindCanOrganiseVaults(impl: FakeCanOrganiseVaults): CanOrganiseVaults
 
     @Binds
-    abstract fun bindCanCreateItemInVault(impl: TestCanCreateItemInVault): CanCreateItemInVault
+    abstract fun bindCanCreateItemInVault(impl: FakeCanCreateItemInVault): CanCreateItemInVault
 
     @Binds
-    abstract fun bindGetInviteUserMode(impl: TestGetInviteUserMode): GetInviteUserMode
+    abstract fun bindGetInviteUserMode(impl: FakeGetInviteUserMode): GetInviteUserMode
 
     @Binds
-    abstract fun bindConfirmNewUserInvite(impl: TestConfirmNewUserInvite): ConfirmNewUserInvite
+    abstract fun bindConfirmNewUserInvite(impl: FakeConfirmNewUserInvite): ConfirmNewUserInvite
 
     @Binds
-    abstract fun bindUserAccessDataRepository(impl: TestUserAccessDataRepository): UserAccessDataRepository
+    abstract fun bindUserAccessDataRepository(impl: FakeUserAccessDataRepository): UserAccessDataRepository
 
     @Binds
-    abstract fun bindObserveUserAccessData(impl: TestObserveUserAccessData): ObserveUserAccessData
+    abstract fun bindObserveUserAccessData(impl: FakeObserveUserAccessData): ObserveUserAccessData
 
     @Binds
-    abstract fun bindGetAllKeysByAddress(impl: TestGetAllKeysByAddress): GetAllKeysByAddress
+    abstract fun bindGetAllKeysByAddress(impl: FakeGetAllKeysByAddress): GetAllKeysByAddress
 
     @Binds
-    abstract fun bindObserveHasConfirmedInvite(impl: TestObserveConfirmedInviteToken): ObserveConfirmedInviteToken
+    abstract fun bindObserveHasConfirmedInvite(impl: FakeObserveConfirmedInviteToken): ObserveConfirmedInviteToken
 
     @Binds
-    abstract fun bindGetItemActions(impl: TestGetItemActions): GetItemActions
+    abstract fun bindGetItemActions(impl: FakeGetItemActions): GetItemActions
 
     @Binds
-    abstract fun bindGetDefaultBrowser(impl: TestGetDefaultBrowser): GetDefaultBrowser
+    abstract fun bindGetDefaultBrowser(impl: FakeGetDefaultBrowser): GetDefaultBrowser
 
     @Binds
-    abstract fun bindObserveDefaultVault(impl: TestObserveDefaultVault): ObserveDefaultVault
+    abstract fun bindObserveDefaultVault(impl: FakeObserveDefaultVault): ObserveDefaultVault
 
     @Binds
-    abstract fun bindSetDefaultVault(impl: TestSetDefaultVault): SetDefaultVault
+    abstract fun bindSetDefaultVault(impl: FakeSetDefaultVault): SetDefaultVault
 
     @Binds
-    abstract fun bindBulkMoveToVaultRepository(impl: TestBulkMoveToVaultRepository): BulkMoveToVaultRepository
+    abstract fun bindBulkMoveToVaultRepository(impl: FakeBulkMoveToVaultRepository): BulkMoveToVaultRepository
 
     @Binds
     abstract fun bindPinItem(impl: FakePinItem): PinItem
@@ -742,20 +742,20 @@ abstract class FakesDataModule {
     abstract fun bindUnpinItem(impl: FakeUnpinItem): UnpinItem
 
     @Binds
-    abstract fun bindPinItems(impl: TestPinItems): PinItems
+    abstract fun bindPinItems(impl: FakePinItems): PinItems
 
     @Binds
-    abstract fun bindUnpinItems(impl: TestUnpinItems): UnpinItems
+    abstract fun bindUnpinItems(impl: FakeUnpinItems): UnpinItems
 
     @Binds
-    abstract fun bindBulkInviteRepository(impl: TestBulkInviteRepository): BulkInviteRepository
+    abstract fun bindBulkInviteRepository(impl: FakeBulkInviteRepository): BulkInviteRepository
 
     @Binds
-    abstract fun bindObserveAppNeedsUpdate(impl: TestObserveAppNeedsUpdate): ObserveAppNeedsUpdate
+    abstract fun bindObserveAppNeedsUpdate(impl: FakeObserveAppNeedsUpdate): ObserveAppNeedsUpdate
 
     @Binds
     abstract fun bindObserveVaultWithItemCountById(
-        impl: TestObserveVaultWithItemCountById
+        impl: FakeObserveVaultWithItemCountById
     ): ObserveVaultWithItemCountById
 
     @Binds
@@ -765,21 +765,21 @@ abstract class FakesDataModule {
     abstract fun bindGetItemCategory(impl: FakeGetItemCategory): GetItemCategory
 
     @Binds
-    abstract fun bindObserveOrganizationSettings(impl: TestObserveOrganizationSettings): ObserveOrganizationSettings
+    abstract fun bindObserveOrganizationSettings(impl: FakeObserveOrganizationSettings): ObserveOrganizationSettings
 
     @Binds
     abstract fun bindObserveAnyAccountHasEnforcedLock(
-        impl: TestObserveAnyAccountHasEnforcedLock
+        impl: FakeObserveAnyAccountHasEnforcedLock
     ): ObserveAnyAccountHasEnforcedLock
 
     @Binds
-    abstract fun bindCheckCanAddressesBeInvited(impl: TestCheckAddressesCanBeInvited): CheckCanAddressesBeInvited
+    abstract fun bindCheckCanAddressesBeInvited(impl: FakeCheckAddressesCanBeInvited): CheckCanAddressesBeInvited
 
     @Binds
-    abstract fun bindObserveItemsWithPasskeys(impl: TestObserveItemsWithPasskeys): ObserveItemsWithPasskeys
+    abstract fun bindObserveItemsWithPasskeys(impl: FakeObserveItemsWithPasskeys): ObserveItemsWithPasskeys
 
     @Binds
-    abstract fun bindGetPasskeyById(impl: TestGetPasskeyById): GetPasskeyById
+    abstract fun bindGetPasskeyById(impl: FakeGetPasskeyById): GetPasskeyById
 
     @Binds
     abstract fun bindOpenItemRevision(impl: FakeOpenItemRevision): OpenItemRevision
@@ -1032,7 +1032,7 @@ abstract class FakesDataModule {
     abstract fun bindMetadataResolver(impl: FakeMetadataResolver): MetadataResolver
 
     @Binds
-    abstract fun bindObserveAllShares(impl: TestObserveAllShares): ObserveAllShares
+    abstract fun bindObserveAllShares(impl: FakeObserveAllShares): ObserveAllShares
 
     @Binds
     abstract fun bindObserveShare(impl: FakeObserveShare): ObserveShare

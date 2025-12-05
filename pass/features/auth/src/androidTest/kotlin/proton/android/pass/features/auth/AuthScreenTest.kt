@@ -32,7 +32,7 @@ import org.junit.Rule
 import org.junit.Test
 import proton.android.pass.biometry.BiometryAuthError
 import proton.android.pass.biometry.BiometryResult
-import proton.android.pass.biometry.TestBiometryManager
+import proton.android.pass.biometry.FakeBiometryManager
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.preferences.AppLockState
 import proton.android.pass.preferences.UserPreferencesRepository
@@ -53,7 +53,7 @@ class AuthScreenTest {
     lateinit var userPreferencesRepository: UserPreferencesRepository
 
     @Inject
-    lateinit var biometryManager: TestBiometryManager
+    lateinit var biometryManager: FakeBiometryManager
 
     @Before
     fun setup() {

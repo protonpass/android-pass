@@ -30,12 +30,12 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import proton.android.pass.commonui.api.PassTheme
-import proton.android.pass.commonui.fakes.TestSavedStateHandleProvider
+import proton.android.pass.commonui.fakes.FakeSavedStateHandleProvider
 import proton.android.pass.data.api.usecases.UpgradeInfo
-import proton.android.pass.data.fakes.usecases.TestCanCreateItemInVault
-import proton.android.pass.data.fakes.usecases.TestCanPerformPaidAction
-import proton.android.pass.data.fakes.usecases.TestObserveUpgradeInfo
-import proton.android.pass.data.fakes.usecases.TestObserveVaultsWithItemCount
+import proton.android.pass.data.fakes.usecases.FakeCanCreateItemInVault
+import proton.android.pass.data.fakes.usecases.FakeCanPerformPaidAction
+import proton.android.pass.data.fakes.usecases.FakeObserveUpgradeInfo
+import proton.android.pass.data.fakes.usecases.FakeObserveVaultsWithItemCount
 import proton.android.pass.domain.Plan
 import proton.android.pass.domain.PlanLimit
 import proton.android.pass.domain.PlanType
@@ -69,19 +69,19 @@ class SelectVaultBottomSheetTest {
 
 
     @Inject
-    lateinit var observeVaultsWithItemCount: TestObserveVaultsWithItemCount
+    lateinit var observeVaultsWithItemCount: FakeObserveVaultsWithItemCount
 
     @Inject
-    lateinit var observeUpgradeInfo: TestObserveUpgradeInfo
+    lateinit var observeUpgradeInfo: FakeObserveUpgradeInfo
 
     @Inject
-    lateinit var savedStateHandle: TestSavedStateHandleProvider
+    lateinit var savedStateHandle: FakeSavedStateHandleProvider
 
     @Inject
-    lateinit var canPerformPaidAction: TestCanPerformPaidAction
+    lateinit var canPerformPaidAction: FakeCanPerformPaidAction
 
     @Inject
-    lateinit var canCreateItemInVault: TestCanCreateItemInVault
+    lateinit var canCreateItemInVault: FakeCanCreateItemInVault
 
     @Before
     fun setup() {

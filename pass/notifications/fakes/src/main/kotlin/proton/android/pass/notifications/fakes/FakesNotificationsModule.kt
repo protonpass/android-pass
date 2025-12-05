@@ -31,11 +31,11 @@ import proton.android.pass.notifications.api.ToastManager
 abstract class FakesNotificationsModule {
 
     @Binds
-    abstract fun bindSnackbarDispatcher(impl: TestSnackbarDispatcher): SnackbarDispatcher
+    abstract fun bindSnackbarDispatcher(impl: FakeSnackbarDispatcher): SnackbarDispatcher
 
     @Binds
-    abstract fun bindNotificationManager(impl: TestNotificationManager): NotificationManager
+    abstract fun bindNotificationManager(impl: FakeNotificationManager): NotificationManager
 
     @Binds
-    abstract fun bindToastManager(impl: TestToastManager): ToastManager
+    abstract fun bindToastManager(impl: FakeToastManager): ToastManager
 }

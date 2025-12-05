@@ -25,8 +25,8 @@ import kotlinx.datetime.Clock
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.FlowUtils.testFlow
 import proton.android.pass.common.api.None
-import proton.android.pass.crypto.fakes.context.TestEncryptionContext
-import proton.android.pass.crypto.fakes.context.TestEncryptionContextProvider
+import proton.android.pass.crypto.fakes.context.FakeEncryptionContext
+import proton.android.pass.crypto.fakes.context.FakeEncryptionContextProvider
 import proton.android.pass.data.api.usecases.ItemTypeFilter
 import proton.android.pass.data.api.usecases.ObserveEncryptedItems
 import proton.android.pass.datamodels.api.serializeToProto
@@ -112,9 +112,9 @@ class FakeObserveEncryptedItems @Inject constructor() : ObserveEncryptedItems {
             val now = Clock.System.now()
             val asProto = itemContents.serializeToProto(
                 itemUuid = "123",
-                encryptionContext = TestEncryptionContext
+                encryptionContext = FakeEncryptionContext
             )
-            return TestEncryptionContextProvider().withEncryptionContext {
+            return FakeEncryptionContextProvider().withEncryptionContext {
                 ItemEncrypted(
                     id = itemId,
                     userId = UserId("user-id"),
@@ -154,11 +154,11 @@ class FakeObserveEncryptedItems @Inject constructor() : ObserveEncryptedItems {
                 note = note,
                 itemEmail = email,
                 itemUsername = username,
-                password = HiddenState.Concealed(TestEncryptionContext.encrypt(password)),
+                password = HiddenState.Concealed(FakeEncryptionContext.encrypt(password)),
                 urls = emptyList(),
                 packageInfoSet = emptySet(),
                 primaryTotp = HiddenState.Revealed(
-                    TestEncryptionContext.encrypt(primaryTotp),
+                    FakeEncryptionContext.encrypt(primaryTotp),
                     primaryTotp
                 ),
                 customFields = emptyList(),
@@ -221,14 +221,14 @@ class FakeObserveEncryptedItems @Inject constructor() : ObserveEncryptedItems {
                 type = CreditCardType.Other,
                 number = number,
                 cvv = if (verificationNumber.isBlank()) {
-                    HiddenState.Empty(TestEncryptionContext.encrypt(verificationNumber))
+                    HiddenState.Empty(FakeEncryptionContext.encrypt(verificationNumber))
                 } else {
-                    HiddenState.Concealed(TestEncryptionContext.encrypt(verificationNumber))
+                    HiddenState.Concealed(FakeEncryptionContext.encrypt(verificationNumber))
                 },
                 pin = if (pin.isBlank()) {
-                    HiddenState.Empty(TestEncryptionContext.encrypt(pin))
+                    HiddenState.Empty(FakeEncryptionContext.encrypt(pin))
                 } else {
-                    HiddenState.Concealed(TestEncryptionContext.encrypt(pin))
+                    HiddenState.Concealed(FakeEncryptionContext.encrypt(pin))
                 },
                 expirationDate = expirationDate,
                 customFields = emptyList()

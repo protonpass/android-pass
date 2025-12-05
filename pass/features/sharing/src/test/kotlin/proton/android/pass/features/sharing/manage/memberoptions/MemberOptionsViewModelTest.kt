@@ -25,10 +25,10 @@ import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import proton.android.pass.commonui.fakes.TestSavedStateHandleProvider
-import proton.android.pass.data.fakes.usecases.TestObserveVaults
-import proton.android.pass.data.fakes.usecases.TestRemoveShareMember
-import proton.android.pass.data.fakes.usecases.TestUpdateShareMemberRole
+import proton.android.pass.commonui.fakes.FakeSavedStateHandleProvider
+import proton.android.pass.data.fakes.usecases.FakeObserveVaults
+import proton.android.pass.data.fakes.usecases.FakeRemoveShareMember
+import proton.android.pass.data.fakes.usecases.FakeUpdateShareMemberRole
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.ShareRole
 import proton.android.pass.features.sharing.SharingSnackbarMessage
@@ -42,8 +42,8 @@ import proton.android.pass.features.sharing.manage.bottomsheet.memberoptions.Mem
 import proton.android.pass.features.sharing.manage.bottomsheet.memberoptions.TransferOwnershipState
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.navigation.api.NavParamEncoder
-import proton.android.pass.notifications.fakes.TestSnackbarDispatcher
-import proton.android.pass.preferences.TestFeatureFlagsPreferenceRepository
+import proton.android.pass.notifications.fakes.FakeSnackbarDispatcher
+import proton.android.pass.preferences.FakeFeatureFlagsPreferenceRepository
 import proton.android.pass.test.MainDispatcherRule
 import proton.android.pass.test.domain.TestVault
 
@@ -54,18 +54,18 @@ class MemberOptionsViewModelTest {
 
     private lateinit var instance: MemberOptionsViewModel
 
-    private lateinit var snackbarDispatcher: TestSnackbarDispatcher
-    private lateinit var removeMemberFromVault: TestRemoveShareMember
-    private lateinit var setVaultMemberPermission: TestUpdateShareMemberRole
-    private lateinit var observeVaults: TestObserveVaults
+    private lateinit var snackbarDispatcher: FakeSnackbarDispatcher
+    private lateinit var removeMemberFromVault: FakeRemoveShareMember
+    private lateinit var setVaultMemberPermission: FakeUpdateShareMemberRole
+    private lateinit var observeVaults: FakeObserveVaults
 
 
     @Before
     fun setup() {
-        snackbarDispatcher = TestSnackbarDispatcher()
-        removeMemberFromVault = TestRemoveShareMember()
-        setVaultMemberPermission = TestUpdateShareMemberRole()
-        observeVaults = TestObserveVaults()
+        snackbarDispatcher = FakeSnackbarDispatcher()
+        removeMemberFromVault = FakeRemoveShareMember()
+        setVaultMemberPermission = FakeUpdateShareMemberRole()
+        observeVaults = FakeObserveVaults()
     }
 
     @Test
@@ -109,7 +109,7 @@ class MemberOptionsViewModelTest {
         }
 
         val memory = removeMemberFromVault.getMemory()
-        val expected = TestRemoveShareMember.Payload(
+        val expected = FakeRemoveShareMember.Payload(
             shareId = ShareId(USER_SHARE_ID),
             memberShareId = ShareId(MEMBER_SHARE_ID)
         )
@@ -143,7 +143,7 @@ class MemberOptionsViewModelTest {
         }
 
         val memory = setVaultMemberPermission.getMemory()
-        val expected = TestUpdateShareMemberRole.Payload(
+        val expected = FakeUpdateShareMemberRole.Payload(
             shareId = ShareId(USER_SHARE_ID),
             memberShareId = ShareId(MEMBER_SHARE_ID),
             role = ShareRole.Admin
@@ -163,7 +163,7 @@ class MemberOptionsViewModelTest {
         instance.setPermissions(MemberPermissionLevel.Admin)
 
         val memory = setVaultMemberPermission.getMemory()
-        val expected = TestUpdateShareMemberRole.Payload(
+        val expected = FakeUpdateShareMemberRole.Payload(
             shareId = ShareId(USER_SHARE_ID),
             memberShareId = ShareId(MEMBER_SHARE_ID),
             role = ShareRole.Admin
@@ -245,7 +245,7 @@ class MemberOptionsViewModelTest {
 
 
     private fun setupTest(memberRole: ShareRole = ShareRole.Read) {
-        val savedStateHandle = TestSavedStateHandleProvider()
+        val savedStateHandle = FakeSavedStateHandleProvider()
         savedStateHandle.get().apply {
             set(CommonNavArgId.ShareId.key, USER_SHARE_ID)
             set(MemberShareIdArg.key, MEMBER_SHARE_ID)
@@ -259,7 +259,7 @@ class MemberOptionsViewModelTest {
             updateShareMemberRole = setVaultMemberPermission,
             savedState = savedStateHandle,
             observeVaults = observeVaults,
-            featureFlagsPreferencesRepository = TestFeatureFlagsPreferenceRepository()
+            featureFlagsPreferencesRepository = FakeFeatureFlagsPreferenceRepository()
         )
     }
 

@@ -25,8 +25,8 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import proton.android.pass.data.fakes.repositories.FakeSentinelRepository
-import proton.android.pass.data.fakes.usecases.TestGetUserPlan
-import proton.android.pass.notifications.fakes.TestSnackbarDispatcher
+import proton.android.pass.data.fakes.usecases.FakeGetUserPlan
+import proton.android.pass.notifications.fakes.FakeSnackbarDispatcher
 import proton.android.pass.securitycenter.fakes.sentinel.FakeDisableSentinel
 import proton.android.pass.securitycenter.fakes.sentinel.FakeEnableSentinel
 import proton.android.pass.securitycenter.fakes.sentinel.FakeObserveCanEnableSentinel
@@ -42,11 +42,11 @@ internal class SecurityCenterSentinelViewModelTest {
 
     private lateinit var observeIsSentinelEnabled: FakeObserveIsSentinelEnabled
     private lateinit var observeCanEnableSentinel: FakeObserveCanEnableSentinel
-    private lateinit var getUserPlan: TestGetUserPlan
+    private lateinit var getUserPlan: FakeGetUserPlan
     private lateinit var sentinelRepository: FakeSentinelRepository
     private lateinit var enableSentinel: FakeEnableSentinel
     private lateinit var disableSentinel: FakeDisableSentinel
-    private lateinit var snackbarDispatcher: TestSnackbarDispatcher
+    private lateinit var snackbarDispatcher: FakeSnackbarDispatcher
 
     @Before
     internal fun setUp() {
@@ -54,9 +54,9 @@ internal class SecurityCenterSentinelViewModelTest {
         observeIsSentinelEnabled = FakeObserveIsSentinelEnabled(sentinelRepository)
         enableSentinel = FakeEnableSentinel(sentinelRepository)
         disableSentinel = FakeDisableSentinel(sentinelRepository)
-        getUserPlan = TestGetUserPlan()
+        getUserPlan = FakeGetUserPlan()
         observeCanEnableSentinel = FakeObserveCanEnableSentinel(sentinelRepository)
-        snackbarDispatcher = TestSnackbarDispatcher()
+        snackbarDispatcher = FakeSnackbarDispatcher()
     }
 
     @Test

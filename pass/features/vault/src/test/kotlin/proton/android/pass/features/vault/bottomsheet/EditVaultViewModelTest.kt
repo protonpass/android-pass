@@ -26,14 +26,14 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
-import proton.android.pass.crypto.fakes.context.TestEncryptionContext
-import proton.android.pass.crypto.fakes.context.TestEncryptionContextProvider
-import proton.android.pass.data.fakes.usecases.TestGetVaultByShareId
-import proton.android.pass.data.fakes.usecases.TestUpdateVault
+import proton.android.pass.crypto.fakes.context.FakeEncryptionContext
+import proton.android.pass.crypto.fakes.context.FakeEncryptionContextProvider
+import proton.android.pass.data.fakes.usecases.FakeGetVaultByShareId
+import proton.android.pass.data.fakes.usecases.FakeUpdateVault
 import proton.android.pass.domain.ShareId
 import proton.android.pass.features.vault.VaultSnackbarMessage
 import proton.android.pass.navigation.api.CommonNavArgId
-import proton.android.pass.notifications.fakes.TestSnackbarDispatcher
+import proton.android.pass.notifications.fakes.FakeSnackbarDispatcher
 import proton.android.pass.test.MainDispatcherRule
 import proton.android.pass.test.TestSavedStateHandle
 import proton.android.pass.test.domain.TestShare
@@ -44,18 +44,18 @@ class EditVaultViewModelTest {
     @get:Rule
     val dispatcher = MainDispatcherRule()
 
-    private lateinit var encryptionContextProvider: TestEncryptionContextProvider
+    private lateinit var encryptionContextProvider: FakeEncryptionContextProvider
     private lateinit var instance: EditVaultViewModel
-    private lateinit var snackbar: TestSnackbarDispatcher
-    private lateinit var updateVault: TestUpdateVault
-    private lateinit var getVaultById: TestGetVaultByShareId
+    private lateinit var snackbar: FakeSnackbarDispatcher
+    private lateinit var updateVault: FakeUpdateVault
+    private lateinit var getVaultById: FakeGetVaultByShareId
 
     @Before
     fun setup() {
-        snackbar = TestSnackbarDispatcher()
-        updateVault = TestUpdateVault()
-        getVaultById = TestGetVaultByShareId()
-        encryptionContextProvider = TestEncryptionContextProvider()
+        snackbar = FakeSnackbarDispatcher()
+        updateVault = FakeUpdateVault()
+        getVaultById = FakeGetVaultByShareId()
+        encryptionContextProvider = FakeEncryptionContextProvider()
         instance = EditVaultViewModel(
             snackbarDispatcher = snackbar,
             updateVault = updateVault,
@@ -167,7 +167,7 @@ class EditVaultViewModelTest {
         val value = updateVault.getSentValue()
         assertThat(value).isNotNull()
 
-        val name = TestEncryptionContext.decrypt(value!!.vault.name)
+        val name = FakeEncryptionContext.decrypt(value!!.vault.name)
         assertThat(name).isEqualTo(" name")
     }
 

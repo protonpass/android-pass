@@ -30,12 +30,12 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import proton.android.pass.commonui.api.PassTheme
-import proton.android.pass.commonui.fakes.TestSavedStateHandleProvider
+import proton.android.pass.commonui.fakes.FakeSavedStateHandleProvider
 import proton.android.pass.data.api.usecases.capabilities.VaultAccessData
 import proton.android.pass.data.fakes.usecases.FakeObserveEncryptedItems
-import proton.android.pass.data.fakes.usecases.TestCanManageVaultAccess
-import proton.android.pass.data.fakes.usecases.TestCanMigrateVault
-import proton.android.pass.data.fakes.usecases.TestObserveVaults
+import proton.android.pass.data.fakes.usecases.FakeCanManageVaultAccess
+import proton.android.pass.data.fakes.usecases.FakeCanMigrateVault
+import proton.android.pass.data.fakes.usecases.FakeObserveVaults
 import proton.android.pass.domain.ShareFlags
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.Vault
@@ -58,16 +58,16 @@ class VaultOptionsBottomSheetTest {
     val composeTestRule = createAndroidComposeRule<HiltComponentActivity>()
 
     @Inject
-    lateinit var observeVaults: TestObserveVaults
+    lateinit var observeVaults: FakeObserveVaults
 
     @Inject
-    lateinit var vaultAccess: TestCanManageVaultAccess
+    lateinit var vaultAccess: FakeCanManageVaultAccess
 
     @Inject
-    lateinit var migrateVault: TestCanMigrateVault
+    lateinit var migrateVault: FakeCanMigrateVault
 
     @Inject
-    lateinit var savedStateHandle: TestSavedStateHandleProvider
+    lateinit var savedStateHandle: FakeSavedStateHandleProvider
 
     @Inject
     lateinit var observeEncryptedItems: FakeObserveEncryptedItems

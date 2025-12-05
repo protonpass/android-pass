@@ -27,26 +27,26 @@ import me.proton.core.domain.entity.UserId
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import proton.android.pass.account.fakes.TestAccountManager
-import proton.android.pass.clipboard.fakes.TestClipboardManager
+import proton.android.pass.account.fakes.FakeAccountManager
+import proton.android.pass.clipboard.fakes.FakeClipboardManager
 import proton.android.pass.commonpresentation.fakes.attachments.FakeAttachmentHandler
-import proton.android.pass.commonrust.fakes.TestEmailValidator
-import proton.android.pass.commonrust.fakes.passwords.strengths.TestPasswordStrengthCalculator
-import proton.android.pass.commonui.fakes.TestSavedStateHandleProvider
+import proton.android.pass.commonrust.fakes.FakeEmailValidator
+import proton.android.pass.commonrust.fakes.passwords.strengths.FakePasswordStrengthCalculator
+import proton.android.pass.commonui.fakes.FakeSavedStateHandleProvider
 import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
-import proton.android.pass.crypto.fakes.context.TestEncryptionContext
-import proton.android.pass.crypto.fakes.context.TestEncryptionContextProvider
+import proton.android.pass.crypto.fakes.context.FakeEncryptionContext
+import proton.android.pass.crypto.fakes.context.FakeEncryptionContextProvider
 import proton.android.pass.data.api.errors.EmailNotValidatedError
-import proton.android.pass.data.fakes.repositories.TestDraftRepository
+import proton.android.pass.data.fakes.repositories.FakeDraftRepository
 import proton.android.pass.data.fakes.usecases.FakeGetItemById
-import proton.android.pass.data.fakes.usecases.TestCreateItem
-import proton.android.pass.data.fakes.usecases.TestCreateLoginAndAlias
-import proton.android.pass.data.fakes.usecases.TestObserveCurrentUser
-import proton.android.pass.data.fakes.usecases.TestObserveDefaultVault
-import proton.android.pass.data.fakes.usecases.TestObserveUpgradeInfo
-import proton.android.pass.data.fakes.usecases.TestObserveVaultsWithItemCount
+import proton.android.pass.data.fakes.usecases.FakeCreateItem
+import proton.android.pass.data.fakes.usecases.FakeCreateLoginAndAlias
+import proton.android.pass.data.fakes.usecases.FakeObserveCurrentUser
+import proton.android.pass.data.fakes.usecases.FakeObserveDefaultVault
+import proton.android.pass.data.fakes.usecases.FakeObserveUpgradeInfo
+import proton.android.pass.data.fakes.usecases.FakeObserveVaultsWithItemCount
 import proton.android.pass.data.fakes.usecases.attachments.FakeLinkAttachmentsToItem
 import proton.android.pass.data.fakes.usecases.shares.FakeObserveShare
 import proton.android.pass.data.fakes.usecases.tooltips.FakeDisableTooltip
@@ -71,19 +71,19 @@ import proton.android.pass.features.itemcreate.common.ShareUiState
 import proton.android.pass.features.itemcreate.common.customfields.CustomFieldHandlerImpl
 import proton.android.pass.features.itemcreate.common.formprocessor.FakeLoginItemFormProcessor
 import proton.android.pass.features.itemcreate.common.formprocessor.FormProcessingResult
-import proton.android.pass.inappreview.fakes.TestInAppReviewTriggerMetrics
-import proton.android.pass.notifications.fakes.TestSnackbarDispatcher
-import proton.android.pass.passkeys.fakes.TestGeneratePasskey
-import proton.android.pass.preferences.TestInternalSettingsRepository
-import proton.android.pass.preferences.TestPreferenceRepository
+import proton.android.pass.inappreview.fakes.FakeInAppReviewTriggerMetrics
+import proton.android.pass.notifications.fakes.FakeSnackbarDispatcher
+import proton.android.pass.passkeys.fakes.FakeGeneratePasskey
+import proton.android.pass.preferences.FakeInternalSettingsRepository
+import proton.android.pass.preferences.FakePreferenceRepository
 import proton.android.pass.telemetry.api.EventItemType
-import proton.android.pass.telemetry.fakes.TestTelemetryManager
+import proton.android.pass.telemetry.fakes.FakeTelemetryManager
 import proton.android.pass.test.MainDispatcherRule
 import proton.android.pass.test.TestUtils
 import proton.android.pass.test.domain.TestItem
 import proton.android.pass.test.domain.TestUser
 import proton.android.pass.test.domain.TestVault
-import proton.android.pass.totp.fakes.TestTotpManager
+import proton.android.pass.totp.fakes.FakeTotpManager
 
 internal class CreateLoginNavItemViewModelTest {
 
@@ -91,62 +91,62 @@ internal class CreateLoginNavItemViewModelTest {
     val dispatcherRule = MainDispatcherRule()
 
     private lateinit var instance: CreateLoginViewModel
-    private lateinit var totpManager: TestTotpManager
-    private lateinit var clipboardManager: TestClipboardManager
-    private lateinit var accountManager: TestAccountManager
-    private lateinit var createItem: TestCreateItem
-    private lateinit var createItemAndAlias: TestCreateLoginAndAlias
-    private lateinit var observeVaults: TestObserveVaultsWithItemCount
-    private lateinit var telemetryManager: TestTelemetryManager
-    private lateinit var snackbarDispatcher: TestSnackbarDispatcher
-    private lateinit var observeUpgradeInfo: TestObserveUpgradeInfo
+    private lateinit var totpManager: FakeTotpManager
+    private lateinit var clipboardManager: FakeClipboardManager
+    private lateinit var accountManager: FakeAccountManager
+    private lateinit var createItem: FakeCreateItem
+    private lateinit var createItemAndAlias: FakeCreateLoginAndAlias
+    private lateinit var observeVaults: FakeObserveVaultsWithItemCount
+    private lateinit var telemetryManager: FakeTelemetryManager
+    private lateinit var snackbarDispatcher: FakeSnackbarDispatcher
+    private lateinit var observeUpgradeInfo: FakeObserveUpgradeInfo
     private lateinit var encryptionContextProvider: EncryptionContextProvider
     private lateinit var loginItemFormProcessor: FakeLoginItemFormProcessor
     private lateinit var observeShare: FakeObserveShare
-    private lateinit var settingsRepository: TestInternalSettingsRepository
+    private lateinit var settingsRepository: FakeInternalSettingsRepository
 
     @Before
     fun setUp() {
-        totpManager = TestTotpManager()
-        clipboardManager = TestClipboardManager()
-        accountManager = TestAccountManager()
-        createItem = TestCreateItem()
-        createItemAndAlias = TestCreateLoginAndAlias()
-        observeVaults = TestObserveVaultsWithItemCount()
-        telemetryManager = TestTelemetryManager()
-        snackbarDispatcher = TestSnackbarDispatcher()
-        observeUpgradeInfo = TestObserveUpgradeInfo()
-        encryptionContextProvider = TestEncryptionContextProvider()
+        totpManager = FakeTotpManager()
+        clipboardManager = FakeClipboardManager()
+        accountManager = FakeAccountManager()
+        createItem = FakeCreateItem()
+        createItemAndAlias = FakeCreateLoginAndAlias()
+        observeVaults = FakeObserveVaultsWithItemCount()
+        telemetryManager = FakeTelemetryManager()
+        snackbarDispatcher = FakeSnackbarDispatcher()
+        observeUpgradeInfo = FakeObserveUpgradeInfo()
+        encryptionContextProvider = FakeEncryptionContextProvider()
         loginItemFormProcessor = FakeLoginItemFormProcessor()
         observeShare = FakeObserveShare()
-        settingsRepository = TestInternalSettingsRepository()
+        settingsRepository = FakeInternalSettingsRepository()
         instance = CreateLoginViewModel(
             accountManager = accountManager,
             createItem = createItem,
             clipboardManager = clipboardManager,
             totpManager = totpManager,
             snackbarDispatcher = snackbarDispatcher,
-            savedStateHandleProvider = TestSavedStateHandleProvider(),
+            savedStateHandleProvider = FakeSavedStateHandleProvider(),
             encryptionContextProvider = encryptionContextProvider,
-            passwordStrengthCalculator = TestPasswordStrengthCalculator(),
+            passwordStrengthCalculator = FakePasswordStrengthCalculator(),
             createLoginAndAlias = createItemAndAlias,
             observeVaults = observeVaults,
-            observeCurrentUser = TestObserveCurrentUser().apply { sendUser(TestUser.create()) },
+            observeCurrentUser = FakeObserveCurrentUser().apply { sendUser(TestUser.create()) },
             telemetryManager = telemetryManager,
-            draftRepository = TestDraftRepository(),
+            draftRepository = FakeDraftRepository(),
             observeUpgradeInfo = observeUpgradeInfo,
-            inAppReviewTriggerMetrics = TestInAppReviewTriggerMetrics(),
-            observeDefaultVault = TestObserveDefaultVault(),
-            generatePasskey = TestGeneratePasskey(),
-            emailValidator = TestEmailValidator(),
+            inAppReviewTriggerMetrics = FakeInAppReviewTriggerMetrics(),
+            observeDefaultVault = FakeObserveDefaultVault(),
+            generatePasskey = FakeGeneratePasskey(),
+            emailValidator = FakeEmailValidator(),
             observeTooltipEnabled = FakeObserveTooltipEnabled(),
             disableTooltip = FakeDisableTooltip(),
             workerLauncher = FakeWorkerLauncher(),
-            userPreferencesRepository = TestPreferenceRepository(),
+            userPreferencesRepository = FakePreferenceRepository(),
             linkAttachmentsToItem = FakeLinkAttachmentsToItem(),
             attachmentsHandler = FakeAttachmentHandler(),
             customFieldDraftRepository = CustomFieldDraftRepositoryImpl(),
-            customFieldHandler = CustomFieldHandlerImpl(TestTotpManager(), encryptionContextProvider),
+            customFieldHandler = CustomFieldHandlerImpl(FakeTotpManager(), encryptionContextProvider),
             loginItemFormProcessor = loginItemFormProcessor,
             getItemById = FakeGetItemById(),
             observeShare = observeShare,
@@ -220,7 +220,7 @@ internal class CreateLoginNavItemViewModelTest {
                             id = item.id,
                             userId = UserId("user-id"),
                             shareId = item.shareId,
-                            contents = item.toItemContents { TestEncryptionContext.decrypt(it) },
+                            contents = item.toItemContents { FakeEncryptionContext.decrypt(it) },
                             createTime = item.createTime,
                             state = ItemState.Active.value,
                             modificationTime = item.modificationTime,

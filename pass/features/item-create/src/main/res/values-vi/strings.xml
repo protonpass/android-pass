@@ -333,7 +333,7 @@
   <string name="update_custom_item_item_creation_error">Could not update custom item</string>
   <!-- Cannot create items dialog -->
   <string name="cannot_create_items_dialog_title">Cannot create items</string>
-  <string name="cannot_create_items_dialog_message">You don\'t have any vaults with editor or admin access. Try creating one in the main app or ask your organization\'s administrator for support.</string>
+  <string name="cannot_create_items_dialog_message">Bạn không có bất kỳ kho lưu trữ nào với quyền truy cập của người chỉnh sửa hoặc quản trị viên. Hãy thử tạo trong ứng dụng chính hoặc yêu cầu quản trị viên của tổ chức bạn hỗ trợ.</string>
   <string name="wifi_security_type_field_label">Security type</string>
   <string name="functionality_not_available">This functionality is not available for your device.</string>
 </resources>

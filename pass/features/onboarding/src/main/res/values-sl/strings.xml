@@ -2,6 +2,8 @@
 <resources>
   <string name="on_boarding_autofill_content">Naj Proton Pass izpolni podatke za prijavo namesto vas. Brez tipkanja ali kopiranja in lepljenja.</string>
   <string name="on_boarding_autofill_title">Takoj se prijavite v aplikacije</string>
+  <string name="on_boarding_autofill_content_v2">Proton pass fill in login details for you. No typing or copy paste required.</string>
+  <string name="on_boarding_autofill_title_v2">Enjoy the magic of AutoFill</string>
   <string name="on_boarding_autofill_button">Samodejno izpolnjevanje s Proton Pass</string>
   <string name="on_boarding_fingerprint_content">Nastavite Proton Pass za odklepanje s prstnim odtisom, tako da imate samo vi dostop.</string>
   <string name="on_boarding_fingerprint_title">Zaščitite svoje najbolj občutljive podatke</string>
@@ -11,6 +13,7 @@
   <string name="on_boarding_last_page_button">Začnite uporabljati Proton Pass</string>
   <string name="on_boarding_skip">Ne zdaj</string>
   <string name="on_boarding_tutorial">Oglejte si kratek video o uporabi Proton Pass</string>
+  <string name="on_boarding_tutorial_v2">Learn how to use Proton Pass</string>
   <string name="on_boarding_pending_invite_content">Iz varnostnih razlogov mora biti vaš dostop potrjen.</string>
   <string name="on_boarding_pending_invite_title">Čakanje na dostop do podatkov v skupni rabi</string>
   <string name="on_boarding_pending_invite_button">Izvedite več o Proton Pass</string>

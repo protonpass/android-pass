@@ -2,6 +2,8 @@
 <resources>
   <string name="on_boarding_autofill_content">Proton Pass가 로그인 상세 정보를 채울 수 있도록 해주세요. 타이핑하거나 복사해서 붙여넣을 필요가 없습니다.</string>
   <string name="on_boarding_autofill_title">앱에 즉시 로그인</string>
+  <string name="on_boarding_autofill_content_v2">Proton pass fill in login details for you. No typing or copy paste required.</string>
+  <string name="on_boarding_autofill_title_v2">Enjoy the magic of AutoFill</string>
   <string name="on_boarding_autofill_button">Proton Pass로 자동 완성</string>
   <string name="on_boarding_fingerprint_content">오직 당신만 접근할 수 있도록 Proton Pass에 지문 인식 잠금 해제를 설정하세요.</string>
   <string name="on_boarding_fingerprint_title">가장 민감한 데이터를 보호하세요.</string>
@@ -11,6 +13,7 @@
   <string name="on_boarding_last_page_button">Proton Pass 사용 시작</string>
   <string name="on_boarding_skip">다음에</string>
   <string name="on_boarding_tutorial">Proton Pass 사용 방법에 대한 짧은 영상을 시청해 보세요.</string>
+  <string name="on_boarding_tutorial_v2">Learn how to use Proton Pass</string>
   <string name="on_boarding_pending_invite_content">보안 상의 이유로, 접근이 수락되어야 합니다.</string>
   <string name="on_boarding_pending_invite_title">공유 데이터에 대한 접근 대기 중</string>
   <string name="on_boarding_pending_invite_button">Proton Pass에 대해 더 알아보기</string>

@@ -2,6 +2,8 @@
 <resources>
   <string name="on_boarding_autofill_content">Hagyja a Proton Passra a bejelentkezések kitöltését. Nem kell gépelnie vagy másolgatnia.</string>
   <string name="on_boarding_autofill_title">Azonnali bejelentkezés alkalmazásokba</string>
+  <string name="on_boarding_autofill_content_v2">Proton pass fill in login details for you. No typing or copy paste required.</string>
+  <string name="on_boarding_autofill_title_v2">Enjoy the magic of AutoFill</string>
   <string name="on_boarding_autofill_button">Automatikus kitöltés a Proton Passzal</string>
   <string name="on_boarding_fingerprint_content">Állítsa a Proton Pass alkalmazást ujjlenyomatos feloldásra, így csak ön férhet hozzá.</string>
   <string name="on_boarding_fingerprint_title">Védje az érzékeny adatait</string>
@@ -11,6 +13,7 @@
   <string name="on_boarding_last_page_button">A Proton Pass használatának elkezdése</string>
   <string name="on_boarding_skip">Most nem</string>
   <string name="on_boarding_tutorial">Nézze meg a bemutató videót a Proton Pass használatáról</string>
+  <string name="on_boarding_tutorial_v2">Learn how to use Proton Pass</string>
   <string name="on_boarding_pending_invite_content">Biztonsági okokból, az elérése jóváhagyást igényel.</string>
   <string name="on_boarding_pending_invite_title">A megosztott adatok elérése függőben van</string>
   <string name="on_boarding_pending_invite_button">További információk a Proton Passról</string>

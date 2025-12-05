@@ -26,6 +26,7 @@ import org.junit.Test
 import proton.android.pass.data.api.usecases.RefreshSharesResult
 import proton.android.pass.data.fakes.repositories.FakeItemRepository
 import proton.android.pass.data.fakes.usecases.FakePromoteNewInviteToInvite
+import proton.android.pass.data.fakes.usecases.FakeRefreshBreaches
 import proton.android.pass.data.fakes.usecases.FakeRefreshGroupInvites
 import proton.android.pass.data.fakes.usecases.FakeRefreshSharesAndEnqueueSync
 import proton.android.pass.data.fakes.usecases.FakeRefreshUserInvites
@@ -55,6 +56,7 @@ internal class SyncUserEventsImplTest {
     private lateinit var refreshPlan: FakeRefreshUserAccess
     private lateinit var refreshUserInvites: FakeRefreshUserInvites
     private lateinit var refreshGroupInvites: FakeRefreshGroupInvites
+    private lateinit var refreshBreaches: FakeRefreshBreaches
     private lateinit var syncPendingAliases: FakeSyncSimpleLoginPendingAliases
     private lateinit var promoteNewInviteToInvite: FakePromoteNewInviteToInvite
 
@@ -68,6 +70,7 @@ internal class SyncUserEventsImplTest {
         refreshPlan = FakeRefreshUserAccess()
         refreshUserInvites = FakeRefreshUserInvites()
         refreshGroupInvites = FakeRefreshGroupInvites()
+        refreshBreaches = FakeRefreshBreaches()
         syncPendingAliases = FakeSyncSimpleLoginPendingAliases()
         promoteNewInviteToInvite = FakePromoteNewInviteToInvite()
 
@@ -81,7 +84,8 @@ internal class SyncUserEventsImplTest {
             refreshUserInvites = refreshUserInvites,
             refreshGroupInvites = refreshGroupInvites,
             syncPendingAliases = syncPendingAliases,
-            promoteNewInviteToInvite = promoteNewInviteToInvite
+            promoteNewInviteToInvite = promoteNewInviteToInvite,
+            refreshBreaches = refreshBreaches
         )
     }
 
@@ -507,30 +511,30 @@ internal class SyncUserEventsImplTest {
         invitesChanged: SyncEventInvitesChanged? = null,
         groupInvitesChanged: SyncEventInvitesChanged? = null,
         pendingAliasToCreateChanged: SyncEventInvitesChanged? = null,
+        breachUpdate: SyncEventInvitesChanged? = null,
         sharesWithInvitesToCreate: List<SyncEventShare> = emptyList(),
         planChanged: Boolean = false,
         eventsPending: Boolean = false,
         fullRefresh: Boolean = false
-    ): UserEventList {
-        return UserEventList(
-            lastEventId = lastEventId,
-            itemsUpdated = itemsUpdated,
-            itemsDeleted = itemsDeleted,
-            aliasNoteChanged = emptyList(),
-            sharesCreated = sharesCreated,
-            sharesUpdated = sharesUpdated,
-            sharesDeleted = sharesDeleted,
-            foldersUpdated = emptyList(),
-            foldersDeleted = emptyList(),
-            invitesChanged = invitesChanged,
-            groupInvitesChanged = groupInvitesChanged,
-            pendingAliasToCreateChanged = pendingAliasToCreateChanged,
-            sharesWithInvitesToCreate = sharesWithInvitesToCreate,
-            refreshUser = planChanged,
-            eventsPending = eventsPending,
-            fullRefresh = fullRefresh
-        )
-    }
+    ): UserEventList = UserEventList(
+        lastEventId = lastEventId,
+        itemsUpdated = itemsUpdated,
+        itemsDeleted = itemsDeleted,
+        aliasNoteChanged = emptyList(),
+        sharesCreated = sharesCreated,
+        sharesUpdated = sharesUpdated,
+        sharesDeleted = sharesDeleted,
+        foldersUpdated = emptyList(),
+        foldersDeleted = emptyList(),
+        invitesChanged = invitesChanged,
+        groupInvitesChanged = groupInvitesChanged,
+        pendingAliasToCreateChanged = pendingAliasToCreateChanged,
+        sharesWithInvitesToCreate = sharesWithInvitesToCreate,
+        breachUpdate = breachUpdate,
+        refreshUser = planChanged,
+        eventsPending = eventsPending,
+        fullRefresh = fullRefresh
+    )
 
 
     companion object {

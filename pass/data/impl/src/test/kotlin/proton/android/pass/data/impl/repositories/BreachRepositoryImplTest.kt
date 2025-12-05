@@ -27,20 +27,21 @@ import org.junit.Before
 import org.junit.Test
 import proton.android.pass.data.api.errors.CustomEmailDoesNotExistException
 import proton.android.pass.data.api.errors.ItemNotFoundError
-import proton.android.pass.data.fakes.usecases.TestObserveItemById
-import proton.android.pass.data.impl.fakes.FakeLocalBreachesDataSource
+import proton.android.pass.data.fakes.usecases.FakeObserveItemById
+import proton.android.pass.data.fakes.usecases.FakeObserveItems
+import proton.android.pass.data.impl.fakes.FakeLocalBreachDataSource
+import proton.android.pass.data.impl.fakes.FakeLocalUserAccessDataDataSource
 import proton.android.pass.data.impl.fakes.FakeRemoteBreachDataSource
-import proton.android.pass.data.impl.fakes.TestLocalUserAccessDataDataSource
-import proton.android.pass.data.impl.responses.BreachCustomEmail
-import proton.android.pass.data.impl.responses.BreachCustomEmailDetails
+import proton.android.pass.data.impl.responses.BreachCustomEmailApiModel
+import proton.android.pass.data.impl.responses.BreachCustomEmailDetailsApiModel
 import proton.android.pass.data.impl.responses.BreachCustomEmailResponse
 import proton.android.pass.data.impl.responses.BreachCustomEmailsResponse
-import proton.android.pass.data.impl.responses.BreachDomainPeek
+import proton.android.pass.data.impl.responses.BreachDomainPeekApiModel
 import proton.android.pass.data.impl.responses.BreachEmails
 import proton.android.pass.data.impl.responses.BreachEmailsResponse
-import proton.android.pass.data.impl.responses.BreachProtonEmail
+import proton.android.pass.data.impl.responses.BreachProtonEmailApiModel
 import proton.android.pass.data.impl.responses.Breaches
-import proton.android.pass.data.impl.responses.BreachesDetails
+import proton.android.pass.data.impl.responses.BreachesDetailsApiModel
 import proton.android.pass.data.impl.responses.BreachesResponse
 import proton.android.pass.data.impl.responses.MonitorStateResponse
 import proton.android.pass.data.impl.responses.UpdateGlobalMonitorStateResponse
@@ -51,34 +52,37 @@ import proton.android.pass.domain.breach.BreachEmail
 import proton.android.pass.domain.breach.BreachEmailId
 import proton.android.pass.domain.breach.BreachId
 import proton.android.pass.domain.breach.CustomEmailId
+import proton.android.pass.preferences.FakeInternalSettingsRepository
 import proton.android.pass.preferences.IsDarkWebAliasMessageDismissedPreference
-import proton.android.pass.preferences.TestInternalSettingsRepository
-import proton.android.pass.test.domain.TestItem
+import proton.android.pass.test.domain.ItemTestFactory
 import proton.android.pass.domain.breach.BreachCustomEmail as DomainBreachCustomEmail
 import proton.android.pass.domain.breach.BreachProtonEmail as DomainBreachProtonEmail
 
 internal class BreachRepositoryImplTest {
 
     private lateinit var instance: BreachRepositoryImpl
-    private lateinit var localBreachesDataSource: FakeLocalBreachesDataSource
+    private lateinit var localBreachesDataSource: FakeLocalBreachDataSource
     private lateinit var remoteBreachDataSource: FakeRemoteBreachDataSource
-    private lateinit var localUserAccessDataDataSource: TestLocalUserAccessDataDataSource
-    private lateinit var observeItemById: TestObserveItemById
-    private lateinit var internalSettings: TestInternalSettingsRepository
+    private lateinit var localUserAccessDataDataSource: FakeLocalUserAccessDataDataSource
+    private lateinit var observeItemById: FakeObserveItemById
+    private lateinit var observeItems: FakeObserveItems
+    private lateinit var internalSettings: FakeInternalSettingsRepository
 
     @Before
     fun setup() {
-        localBreachesDataSource = FakeLocalBreachesDataSource()
+        localBreachesDataSource = FakeLocalBreachDataSource()
         remoteBreachDataSource = FakeRemoteBreachDataSource()
-        localUserAccessDataDataSource = TestLocalUserAccessDataDataSource()
-        observeItemById = TestObserveItemById()
-        internalSettings = TestInternalSettingsRepository()
+        localUserAccessDataDataSource = FakeLocalUserAccessDataDataSource()
+        observeItemById = FakeObserveItemById()
+        observeItems = FakeObserveItems()
+        internalSettings = FakeInternalSettingsRepository()
 
         instance = BreachRepositoryImpl(
             localUserAccessDataDataSource = localUserAccessDataDataSource,
-            remote = remoteBreachDataSource,
-            localBreachesDataSource = localBreachesDataSource,
+            remoteBreachDataSource = remoteBreachDataSource,
+            localBreachDataSource = localBreachesDataSource,
             observeItemById = observeItemById,
+            observeItems = observeItems,
             internalSettings = internalSettings
         )
     }
@@ -89,12 +93,13 @@ internal class BreachRepositoryImplTest {
     fun `observeAllBreaches returns breaches from remote`() = runTest {
         val breachesResponse = createBreachesResponse(
             emailsCount = 5,
-            customEmails = listOf(createBreachCustomEmailResponse("email1@test.com", "id1")),
-            protonEmails = listOf(createBreachProtonEmailResponse("email2@proton.me", "addr1"))
+            customEmails = listOf(createBreachCustomEmailResponse("email1@test.com", "id1", breachCounter = 2)),
+            protonEmails = listOf(createBreachProtonEmailResponse("email2@proton.me", "addr1", breachCounter = 3))
         )
 
         remoteBreachDataSource.setGetAllBreachesResult(Result.success(breachesResponse))
 
+        instance.refreshBreaches(TEST_USER_ID)
         val result = instance.observeAllBreaches(TEST_USER_ID).first()
 
         assertThat(result.breachesCount).isEqualTo(5)
@@ -114,6 +119,7 @@ internal class BreachRepositoryImplTest {
         )
         remoteBreachDataSource.setGetAllBreachesResult(Result.success(breachesResponse))
 
+        instance.refreshBreaches(TEST_USER_ID)
         instance.observeAllBreaches(TEST_USER_ID).first()
 
         val visibility = internalSettings.getDarkWebAliasMessageVisibility().first()
@@ -132,6 +138,7 @@ internal class BreachRepositoryImplTest {
         )
         remoteBreachDataSource.setGetAllBreachesResult(Result.success(breachesResponse))
 
+        instance.refreshBreaches(TEST_USER_ID)
         instance.observeAllBreaches(TEST_USER_ID).first()
 
         val visibility = internalSettings.getDarkWebAliasMessageVisibility().first()
@@ -165,13 +172,20 @@ internal class BreachRepositoryImplTest {
     }
 
     @Test
-    fun `observeCustomEmail triggers refresh when email not found locally`() = runTest {
+    fun `observeCustomEmail emits when data available after refreshBreaches`() = runTest {
         val customEmailId = CustomEmailId("id1")
         val customEmailResponse = createBreachCustomEmailResponse("test@example.com", "id1")
 
-        remoteBreachDataSource.setGetCustomEmailsResult(
-            Result.success(createBreachCustomEmailsResponse(listOf(customEmailResponse)))
+        remoteBreachDataSource.setGetAllBreachesResult(
+            Result.success(
+                createBreachesResponse(
+                    emailsCount = 1,
+                    customEmails = listOf(customEmailResponse)
+                )
+            )
         )
+
+        instance.refreshBreaches(TEST_USER_ID)
 
         val result = instance.observeCustomEmail(TEST_USER_ID, customEmailId).first()
 
@@ -219,7 +233,7 @@ internal class BreachRepositoryImplTest {
         val aliasEmailId = AliasEmailId(shareId, itemId)
         val aliasEmail = "alias@example.com"
 
-        val aliasItem = TestItem.createAlias(
+        val aliasItem = ItemTestFactory.createAlias(
             shareId = shareId,
             itemId = itemId,
             alias = aliasEmail
@@ -265,7 +279,7 @@ internal class BreachRepositoryImplTest {
         val aliasEmailId = AliasEmailId(shareId, itemId)
         val aliasEmail = "alias@example.com"
 
-        val aliasItem = TestItem.createAlias(
+        val aliasItem = ItemTestFactory.createAlias(
             shareId = shareId,
             itemId = itemId,
             alias = aliasEmail
@@ -677,13 +691,13 @@ internal class BreachRepositoryImplTest {
 
     private fun createBreachesResponse(
         emailsCount: Int = 0,
-        domainPeeks: List<BreachDomainPeek> = emptyList(),
-        customEmails: List<BreachCustomEmail> = emptyList(),
-        protonEmails: List<BreachProtonEmail> = emptyList(),
+        domainPeeks: List<BreachDomainPeekApiModel> = emptyList(),
+        customEmails: List<BreachCustomEmailApiModel> = emptyList(),
+        protonEmails: List<BreachProtonEmailApiModel> = emptyList(),
         hasCustomDomains: Boolean = false
     ): BreachesResponse = BreachesResponse(
         code = 1000,
-        breaches = BreachesDetails(
+        breaches = BreachesDetailsApiModel(
             emailsCount = emailsCount,
             domainPeeks = domainPeeks,
             customEmails = customEmails,
@@ -699,7 +713,7 @@ internal class BreachRepositoryImplTest {
         breachCounter: Int = 0,
         flags: Int = 0,
         lastBreachTime: Int? = null
-    ): BreachCustomEmail = BreachCustomEmail(
+    ): BreachCustomEmailApiModel = BreachCustomEmailApiModel(
         customEmailId = id,
         email = email,
         verified = verified,
@@ -714,7 +728,7 @@ internal class BreachRepositoryImplTest {
         breachCounter: Int = 0,
         flags: Int = 0,
         lastBreachTime: Int? = null
-    ): BreachProtonEmail = BreachProtonEmail(
+    ): BreachProtonEmailApiModel = BreachProtonEmailApiModel(
         addressId = addressId,
         email = email,
         breachCounter = breachCounter,
@@ -722,11 +736,12 @@ internal class BreachRepositoryImplTest {
         lastBreachTime = lastBreachTime
     )
 
-    private fun createBreachCustomEmailsResponse(customEmails: List<BreachCustomEmail>): BreachCustomEmailsResponse =
-        BreachCustomEmailsResponse(
-            code = 1000,
-            emails = BreachCustomEmailDetails(customEmails = customEmails)
-        )
+    private fun createBreachCustomEmailsResponse(
+        customEmails: List<BreachCustomEmailApiModel>
+    ): BreachCustomEmailsResponse = BreachCustomEmailsResponse(
+        code = 1000,
+        emails = BreachCustomEmailDetailsApiModel(customEmails = customEmails)
+    )
 
     private fun createBreachEmailsResponse(breaches: List<Breaches>): BreachEmailsResponse = BreachEmailsResponse(
         code = 1000,
@@ -767,4 +782,3 @@ internal class BreachRepositoryImplTest {
         private val TEST_USER_ID = UserId("test-user-id")
     }
 }
-

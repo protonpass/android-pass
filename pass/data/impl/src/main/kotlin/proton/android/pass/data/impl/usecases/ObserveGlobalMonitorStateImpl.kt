@@ -19,6 +19,7 @@
 package proton.android.pass.data.impl.usecases
 
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 import proton.android.pass.data.api.repositories.UserAccessDataRepository
@@ -42,5 +43,6 @@ class ObserveGlobalMonitorStateImpl @Inject constructor(
                         aliasMonitorEnabled = userAccessData?.aliasMonitorEnabled ?: false
                     )
                 }
+                .distinctUntilChanged()
         }
 }

@@ -112,7 +112,6 @@ class SecurityCenterBreachDetailViewModel @Inject constructor(
             id = type.customEmailId
         )
         is BreachEmailId.Proton -> observeBreachesForProtonEmail(addressId = type.addressId)
-        else -> throw IllegalStateException("Invalid state")
     }.map {
         it.firstOrNull { breach -> breach.emailId.id == selectedBreachId }
     }.asLoadingResult().distinctUntilChanged()

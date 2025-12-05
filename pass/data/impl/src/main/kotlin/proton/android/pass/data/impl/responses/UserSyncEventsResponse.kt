@@ -89,6 +89,8 @@ data class UserEventListApiModel(
     val groupInvitesChanged: SyncEventInvitesChangedApiModel?,
     @SerialName("PendingAliasToCreateChanged")
     val pendingAliasToCreateChanged: SyncEventInvitesChangedApiModel?,
+    @SerialName("BreachUpdate")
+    val breachUpdate: SyncEventInvitesChangedApiModel?,
     @SerialName("SharesWithInvitesToCreate")
     val sharesWithInvitesToCreate: List<SyncEventShareApiModel>,
     @SerialName("RefreshUser")

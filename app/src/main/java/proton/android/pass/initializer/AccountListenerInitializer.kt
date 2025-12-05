@@ -47,6 +47,7 @@ import proton.android.pass.commonui.api.PassAppLifecycleProvider
 import proton.android.pass.data.api.repositories.ItemSyncStatusRepository
 import proton.android.pass.data.api.repositories.toSyncMode
 import proton.android.pass.data.api.usecases.ClearUserData
+import proton.android.pass.data.api.usecases.RefreshBreaches
 import proton.android.pass.data.api.usecases.RefreshUserAccess
 import proton.android.pass.data.api.usecases.ResetAppToDefaults
 import proton.android.pass.data.api.usecases.organization.RefreshOrganizationSettings
@@ -55,6 +56,8 @@ import proton.android.pass.preferences.FeatureFlag
 import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 
 class AccountListenerInitializer : Initializer<Unit> {
+
+    @Suppress("LongMethod")
     override fun create(context: Context) {
         val entryPoint: AccountListenerInitializerEntryPoint =
             EntryPointAccessors.fromApplication(
@@ -66,7 +69,8 @@ class AccountListenerInitializer : Initializer<Unit> {
         val accountManager = entryPoint.accountManager()
         val itemSyncStatusRepository = entryPoint.itemSyncStatusRepository()
         val refreshOrganizationSettings = entryPoint.refreshOrganizationSettings()
-        val refreshPlan = entryPoint.refreshPlan()
+        val refreshUserAccess = entryPoint.refreshUserAccess()
+        val refreshBreaches = entryPoint.refreshBreaches()
         val featureFlagsPreferencesRepository = entryPoint.featureFlagsPreferencesRepository()
 
         accountManager.observe(
@@ -84,7 +88,13 @@ class AccountListenerInitializer : Initializer<Unit> {
             }
         }.onAccountReady { account ->
             launchInAppLifecycleScope(lifecycleProvider) {
-                onAccountReady(account, featureFlagsPreferencesRepository, refreshOrganizationSettings, refreshPlan)
+                onAccountReady(
+                    account = account,
+                    featureFlagsPreferencesRepository = featureFlagsPreferencesRepository,
+                    refreshOrganizationSettings = refreshOrganizationSettings,
+                    refreshUserAccess = refreshUserAccess,
+                    refreshBreaches = refreshBreaches
+                )
             }
         }
 
@@ -122,22 +132,30 @@ class AccountListenerInitializer : Initializer<Unit> {
         account: Account,
         featureFlagsPreferencesRepository: FeatureFlagsPreferencesRepository,
         refreshOrganizationSettings: RefreshOrganizationSettings,
-        refreshUserAccess: RefreshUserAccess
+        refreshUserAccess: RefreshUserAccess,
+        refreshBreaches: RefreshBreaches
     ) {
         val isUserEventsEnabled = featureFlagsPreferencesRepository.get<Boolean>(FeatureFlag.PASS_USER_EVENTS_V1)
             .first()
         PassLogger.i(TAG, "Account ready : ${account.userId}")
 
+        safeRunCatching {
+            refreshOrganizationSettings(account.userId)
+        }.onSuccess {
+            PassLogger.i(TAG, "Organization settings refreshed for ${account.userId}")
+        }.onFailure {
+            PassLogger.w(TAG, "Could not refresh organization settings for ${account.userId}")
+            PassLogger.w(TAG, it)
+        }
+        safeRunCatching {
+            refreshBreaches(account.userId)
+        }.onSuccess {
+            PassLogger.i(TAG, "Breaches refreshed for ${account.userId}")
+        }.onFailure {
+            PassLogger.w(TAG, "Could not refresh breaches for ${account.userId}")
+            PassLogger.w(TAG, it)
+        }
         if (!isUserEventsEnabled) {
-            safeRunCatching {
-                refreshOrganizationSettings(account.userId)
-            }.onSuccess {
-                PassLogger.i(TAG, "Organization settings refreshed for ${account.userId}")
-            }.onFailure {
-                PassLogger.w(TAG, "Could not refresh organization settings for ${account.userId}")
-                PassLogger.w(TAG, it)
-            }
-
             safeRunCatching {
                 refreshUserAccess(account.userId)
             }.onSuccess {
@@ -174,7 +192,8 @@ class AccountListenerInitializer : Initializer<Unit> {
     interface AccountListenerInitializerEntryPoint {
         fun itemSyncStatusRepository(): ItemSyncStatusRepository
         fun refreshOrganizationSettings(): RefreshOrganizationSettings
-        fun refreshPlan(): RefreshUserAccess
+        fun refreshUserAccess(): RefreshUserAccess
+        fun refreshBreaches(): RefreshBreaches
         fun passAppLifecycleProvider(): PassAppLifecycleProvider
         fun accountManager(): AccountManager
         fun resetAppToDefaults(): ResetAppToDefaults

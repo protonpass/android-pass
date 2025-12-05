@@ -19,6 +19,10 @@
 package proton.android.pass.data.impl.fakes
 
 import proton.android.pass.data.impl.db.PassDatabase
+import proton.android.pass.data.impl.db.dao.BreachCustomEmailDao
+import proton.android.pass.data.impl.db.dao.BreachDomainPeekDao
+import proton.android.pass.data.impl.db.dao.BreachEmailDao
+import proton.android.pass.data.impl.db.dao.BreachProtonEmailDao
 import proton.android.pass.data.impl.db.dao.GroupInviteDao
 import proton.android.pass.data.impl.db.dao.GroupInviteKeyDao
 import proton.android.pass.data.impl.db.dao.ItemsDao
@@ -134,6 +138,22 @@ internal class FakePassDatabase : PassDatabase {
     }
 
     override fun passwordHistoryDao(): PasswordHistoryDao {
+        throw IllegalStateException("This method should not be called")
+    }
+
+    override fun breachCustomEmailDao(): BreachCustomEmailDao {
+        throw IllegalStateException("This method should not be called")
+    }
+
+    override fun breachProtonEmailDao(): BreachProtonEmailDao {
+        throw IllegalStateException("This method should not be called")
+    }
+
+    override fun breachEmailDao(): BreachEmailDao {
+        throw IllegalStateException("This method should not be called")
+    }
+
+    override fun breachDomainPeekDao(): BreachDomainPeekDao {
         throw IllegalStateException("This method should not be called")
     }
 

@@ -98,7 +98,7 @@ class FeatureFlagsPreferencesRepositoryImpl @Inject constructor(
         PASS_ALLOW_CREDIT_CARD_FREE_USERS -> getFeatureFlag(
             key = featureFlag.key,
             defaultValue = featureFlag.isEnabledDefault
-        ) { groupsEnabled.value }
+        ) { passAllowCreditCardFreeUsers.value }
     }
 
     override fun <T> set(featureFlag: FeatureFlag, value: T?): Result<Unit> = when (featureFlag) {

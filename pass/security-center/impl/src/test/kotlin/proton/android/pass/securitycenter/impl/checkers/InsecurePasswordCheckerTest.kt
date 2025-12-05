@@ -23,8 +23,8 @@ import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Test
 import proton.android.pass.commonrust.api.PasswordScore
-import proton.android.pass.commonrust.fakes.TestPasswordScorer
-import proton.android.pass.crypto.fakes.context.TestEncryptionContextProvider
+import proton.android.pass.commonrust.fakes.FakePasswordScorer
+import proton.android.pass.crypto.fakes.context.FakeEncryptionContextProvider
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemId
 import proton.android.pass.test.domain.TestItem
@@ -34,13 +34,13 @@ class InsecurePasswordCheckerTest {
 
     private lateinit var instance: InsecurePasswordCheckerImpl
 
-    private lateinit var encryptionContextProvider: TestEncryptionContextProvider
-    private lateinit var passwordScorer: TestPasswordScorer
+    private lateinit var encryptionContextProvider: FakeEncryptionContextProvider
+    private lateinit var passwordScorer: FakePasswordScorer
 
     @Before
     fun setup() {
-        encryptionContextProvider = TestEncryptionContextProvider()
-        passwordScorer = TestPasswordScorer()
+        encryptionContextProvider = FakeEncryptionContextProvider()
+        passwordScorer = FakePasswordScorer()
         instance = InsecurePasswordCheckerImpl(
             encryptionContextProvider = encryptionContextProvider,
             passwordScorer = passwordScorer

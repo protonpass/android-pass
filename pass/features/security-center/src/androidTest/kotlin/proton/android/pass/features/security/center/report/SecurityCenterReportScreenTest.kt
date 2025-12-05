@@ -27,7 +27,7 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import proton.android.pass.commonui.api.PassTheme
-import proton.android.pass.commonui.fakes.TestSavedStateHandleProvider
+import proton.android.pass.commonui.fakes.FakeSavedStateHandleProvider
 import proton.android.pass.data.fakes.usecases.breach.FakeObserveBreachesForEmail
 import proton.android.pass.data.fakes.usecases.vaults.FakeObserveVaultsGroupedByShareId
 import proton.android.pass.features.security.center.R
@@ -50,7 +50,7 @@ class SecurityCenterReportScreenTest {
     val composeTestRule = createAndroidComposeRule<HiltComponentActivity>()
 
     @Inject
-    lateinit var savedStateHandle: TestSavedStateHandleProvider
+    lateinit var savedStateHandle: FakeSavedStateHandleProvider
 
     @Inject
     lateinit var observeBreachesForEmail: FakeObserveBreachesForEmail

@@ -25,7 +25,7 @@ import proton.android.pass.autofill.heuristics.ItemFieldMapper
 import proton.android.pass.autofill.heuristics.NodeClusterer
 import proton.android.pass.autofill.heuristics.NodeExtractor
 import proton.android.pass.autofill.heuristics.focused
-import proton.android.pass.crypto.fakes.context.TestEncryptionContext
+import proton.android.pass.crypto.fakes.context.FakeEncryptionContext
 import proton.android.pass.log.api.PassLogger
 
 const val CC_EXPIRATION_YEAR = "2025"
@@ -84,7 +84,7 @@ fun runAutofillTest(
     val focusedCluster = clusters.focused()
 
     val res = ItemFieldMapper.mapFields(
-        encryptionContext = TestEncryptionContext,
+        encryptionContext = FakeEncryptionContext,
         autofillItem = item,
         cluster = focusedCluster
     )

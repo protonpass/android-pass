@@ -25,41 +25,41 @@ import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import proton.android.pass.commonui.fakes.TestSavedStateHandleProvider
+import proton.android.pass.commonui.fakes.FakeSavedStateHandleProvider
 import proton.android.pass.data.api.repositories.UserTarget
-import proton.android.pass.data.fakes.repositories.TestBulkInviteRepository
-import proton.android.pass.data.fakes.usecases.TestGetVaultByShareId
+import proton.android.pass.data.fakes.repositories.FakeBulkInviteRepository
+import proton.android.pass.data.fakes.usecases.FakeGetVaultByShareId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.ShareRole
 import proton.android.pass.features.sharing.common.UserTargetUiState
 import proton.android.pass.navigation.api.CommonNavArgId
-import proton.android.pass.preferences.TestFeatureFlagsPreferenceRepository
+import proton.android.pass.preferences.FakeFeatureFlagsPreferenceRepository
 import proton.android.pass.test.MainDispatcherRule
 
 class SharingPermissionsViewModelTest {
 
     private lateinit var viewModel: SharingPermissionsViewModel
-    private lateinit var getVaultById: TestGetVaultByShareId
-    private lateinit var savedStateHandleProvider: TestSavedStateHandleProvider
-    private lateinit var bulkInviteRepository: TestBulkInviteRepository
+    private lateinit var getVaultById: FakeGetVaultByShareId
+    private lateinit var savedStateHandleProvider: FakeSavedStateHandleProvider
+    private lateinit var bulkInviteRepository: FakeBulkInviteRepository
 
     @get:Rule
     val dispatcherRule = MainDispatcherRule()
 
     @Before
     fun setUp() {
-        getVaultById = TestGetVaultByShareId()
-        bulkInviteRepository = TestBulkInviteRepository().apply {
+        getVaultById = FakeGetVaultByShareId()
+        bulkInviteRepository = FakeBulkInviteRepository().apply {
             runBlocking { storeInvites(listOf(UserTarget(TEST_EMAIL, ShareRole.Read))) }
         }
-        savedStateHandleProvider = TestSavedStateHandleProvider().apply {
+        savedStateHandleProvider = FakeSavedStateHandleProvider().apply {
             get()[CommonNavArgId.ShareId.key] = TEST_SHARE_ID
         }
         viewModel = SharingPermissionsViewModel(
             getVaultByShareId = getVaultById,
             savedStateHandleProvider = savedStateHandleProvider,
             bulkInviteRepository = bulkInviteRepository,
-            featureFlagsPreferencesRepository = TestFeatureFlagsPreferenceRepository()
+            featureFlagsPreferencesRepository = FakeFeatureFlagsPreferenceRepository()
         )
     }
 

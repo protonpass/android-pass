@@ -30,8 +30,8 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
-import proton.android.pass.account.fakes.TestAccountManager
-import proton.android.pass.account.fakes.TestKeyStoreCrypto
+import proton.android.pass.account.fakes.FakeAccountManager
+import proton.android.pass.account.fakes.FakeKeyStoreCrypto
 import proton.android.pass.common.api.Option
 import proton.android.pass.data.api.usecases.GetSuggestedAutofillItems
 import proton.android.pass.data.api.usecases.ItemData
@@ -39,8 +39,8 @@ import proton.android.pass.data.api.usecases.ItemTypeFilter
 import proton.android.pass.data.api.usecases.SuggestedAutofillItemsResult
 import proton.android.pass.data.api.usecases.Suggestion
 import proton.android.pass.data.fakes.repositories.FakeAssetLinkRepository
-import proton.android.pass.data.fakes.usecases.TestGetUserPlan
-import proton.android.pass.data.fakes.usecases.TestObserveItems
+import proton.android.pass.data.fakes.usecases.FakeGetUserPlan
+import proton.android.pass.data.fakes.usecases.FakeObserveItems
 import proton.android.pass.data.fakes.usecases.shares.FakeObserveAutofillShares
 import proton.android.pass.data.impl.autofill.SuggestionItemFilterer
 import proton.android.pass.data.impl.autofill.SuggestionSorter
@@ -52,10 +52,10 @@ import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.ShareRole
 import proton.android.pass.domain.ShareSelection
 import proton.android.pass.domain.VaultId
+import proton.android.pass.preferences.FakeFeatureFlagsPreferenceRepository
+import proton.android.pass.preferences.FakeInternalSettingsRepository
+import proton.android.pass.preferences.FakePreferenceRepository
 import proton.android.pass.preferences.LastItemAutofillPreference
-import proton.android.pass.preferences.TestFeatureFlagsPreferenceRepository
-import proton.android.pass.preferences.TestInternalSettingsRepository
-import proton.android.pass.preferences.TestPreferenceRepository
 import proton.android.pass.preferences.UserPreferencesRepository
 import proton.android.pass.test.MainDispatcherRule
 import proton.android.pass.test.domain.TestItem
@@ -88,26 +88,26 @@ class GetSuggestedAutofillItemsImplTest {
     @get:Rule
     val dispatcher = MainDispatcherRule()
 
-    private lateinit var accountManager: TestAccountManager
-    private lateinit var observeItems: TestObserveItems
-    private lateinit var getUserPlan: TestGetUserPlan
+    private lateinit var accountManager: FakeAccountManager
+    private lateinit var observeItems: FakeObserveItems
+    private lateinit var getUserPlan: FakeGetUserPlan
     private lateinit var filter: FakeSuggestionItemFilterer
     private lateinit var getSuggestedAutofillItems: GetSuggestedAutofillItems
     private lateinit var observeAutofillShares: FakeObserveAutofillShares
-    private lateinit var internalSettingsRepository: TestInternalSettingsRepository
+    private lateinit var internalSettingsRepository: FakeInternalSettingsRepository
     private lateinit var assetLinkRepository: FakeAssetLinkRepository
     private lateinit var userPreferencesRepository: UserPreferencesRepository
 
     @Before
     fun setUp() {
-        accountManager = TestAccountManager()
-        observeItems = TestObserveItems()
-        getUserPlan = TestGetUserPlan()
+        accountManager = FakeAccountManager()
+        observeItems = FakeObserveItems()
+        getUserPlan = FakeGetUserPlan()
         filter = FakeSuggestionItemFilterer()
         observeAutofillShares = FakeObserveAutofillShares()
-        internalSettingsRepository = TestInternalSettingsRepository()
+        internalSettingsRepository = FakeInternalSettingsRepository()
         assetLinkRepository = FakeAssetLinkRepository()
-        userPreferencesRepository = TestPreferenceRepository()
+        userPreferencesRepository = FakePreferenceRepository()
         getSuggestedAutofillItems = GetSuggestedAutofillItemsImpl(
             accountManager = accountManager,
             observeAutofillShares = observeAutofillShares,
@@ -118,7 +118,7 @@ class GetSuggestedAutofillItemsImplTest {
             getUserPlan = getUserPlan,
             assetLinkRepository = assetLinkRepository,
             userPreferencesRepository = userPreferencesRepository,
-            featureFlagsPreferencesRepository = TestFeatureFlagsPreferenceRepository()
+            featureFlagsPreferencesRepository = FakeFeatureFlagsPreferenceRepository()
         )
     }
 
@@ -130,10 +130,10 @@ class GetSuggestedAutofillItemsImplTest {
         val item1 = TestItem.create(shareId = shareId, title = fixedTitle)
         val item2 = TestItem.create()
         val vaultShare = TestShare.Vault.create(userId = userId.id, id = shareId.id)
-        accountManager.setAccounts(listOf(TestAccountManager.DEFAULT_ACCOUNT.copy(userId = userId)))
+        accountManager.setAccounts(listOf(FakeAccountManager.DEFAULT_ACCOUNT.copy(userId = userId)))
         observeAutofillShares.setValue(listOf(vaultShare), userId = userId)
         observeItems.emitValue(listOf(item1, item2))
-        filter.setFilter { TestKeyStoreCrypto.decrypt(it.title) == fixedTitle }
+        filter.setFilter { FakeKeyStoreCrypto.decrypt(it.title) == fixedTitle }
 
         val expected: List<ItemData.SuggestedItem> = listOf(item1).map {
             ItemData.SuggestedItem(it, DEFAULT_SUGGESTION)
@@ -185,7 +185,7 @@ class GetSuggestedAutofillItemsImplTest {
             )
         )
         val userId = UserId("test-user-id")
-        accountManager.setAccounts(listOf(TestAccountManager.DEFAULT_ACCOUNT.copy(userId = userId)))
+        accountManager.setAccounts(listOf(FakeAccountManager.DEFAULT_ACCOUNT.copy(userId = userId)))
         observeAutofillShares.setValue(vaultShares, userId)
 
         filter.setFilter { true }
@@ -208,7 +208,7 @@ class GetSuggestedAutofillItemsImplTest {
         val shareId = ShareId("test-share-id")
         val userId = UserId("test-user-id")
         val vaultShare = TestShare.Vault.create(userId = userId.id, id = shareId.id)
-        accountManager.setAccounts(listOf(TestAccountManager.DEFAULT_ACCOUNT.copy(userId = userId)))
+        accountManager.setAccounts(listOf(FakeAccountManager.DEFAULT_ACCOUNT.copy(userId = userId)))
         getUserPlan.setResult(Result.success(buildPlan(PlanType.Free("", ""))), userId)
         observeItems.emitValue(listOf(TestItem.createCreditCard(shareId = shareId)))
         observeAutofillShares.setValue(listOf(vaultShare), userId)
@@ -245,10 +245,10 @@ class GetSuggestedAutofillItemsImplTest {
         val paidUserId = UserId("paid-user-id")
         accountManager.setAccounts(
             listOf(
-                TestAccountManager.DEFAULT_ACCOUNT.copy(
+                FakeAccountManager.DEFAULT_ACCOUNT.copy(
                     userId = freeUserId
                 ),
-                TestAccountManager.DEFAULT_ACCOUNT.copy(
+                FakeAccountManager.DEFAULT_ACCOUNT.copy(
                     userId = paidUserId
                 )
             )
@@ -266,7 +266,7 @@ class GetSuggestedAutofillItemsImplTest {
         val freeCCItem = TestItem.createCreditCard(shareId = freeShareId)
         val paidCCItem = TestItem.createCreditCard(shareId = paidShareId)
         observeItems.emit(
-            TestObserveItems.Params(
+            FakeObserveItems.Params(
                 userId = freeUserId,
                 filter = ItemTypeFilter.CreditCards,
                 selection = ShareSelection.Shares(listOf(freeShareId))
@@ -274,7 +274,7 @@ class GetSuggestedAutofillItemsImplTest {
             listOf(freeCCItem)
         )
         observeItems.emit(
-            TestObserveItems.Params(
+            FakeObserveItems.Params(
                 userId = paidUserId,
                 filter = ItemTypeFilter.CreditCards,
                 selection = ShareSelection.Shares(listOf(paidShareId))

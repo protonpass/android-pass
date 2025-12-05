@@ -26,18 +26,18 @@ import kotlinx.datetime.Instant
 import org.junit.Before
 import org.junit.Test
 import proton.android.pass.preferences.AppUsageConfig
-import proton.android.pass.preferences.TestInternalSettingsRepository
+import proton.android.pass.preferences.FakeInternalSettingsRepository
 import proton.android.pass.test.FixedClock
 
 class InAppReviewTriggerMetricsImplTest {
 
-    private lateinit var internalSettingsRepository: TestInternalSettingsRepository
+    private lateinit var internalSettingsRepository: FakeInternalSettingsRepository
     private lateinit var clock: Clock
     private lateinit var inAppReviewTriggerMetrics: InAppReviewTriggerMetricsImpl
 
     @Before
     fun setUp() {
-        internalSettingsRepository = TestInternalSettingsRepository()
+        internalSettingsRepository = FakeInternalSettingsRepository()
         clock = FixedClock(Instant.parse("2023-08-01T00:00:00Z"))
         inAppReviewTriggerMetrics = InAppReviewTriggerMetricsImpl(
             internalSettingsRepository = internalSettingsRepository,

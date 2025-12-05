@@ -30,7 +30,7 @@ import proton.android.pass.telemetry.api.TelemetryManager
 abstract class FakesTelemetryModule {
 
     @Binds
-    abstract fun bindTelemetryManager(impl: TestTelemetryManager): TelemetryManager
+    abstract fun bindTelemetryManager(impl: FakeTelemetryManager): TelemetryManager
 
     @Binds
     abstract fun bindCanConfigureTelemetry(impl: FakeCanConfigureTelemetry): CanConfigureTelemetry

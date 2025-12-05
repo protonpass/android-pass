@@ -39,19 +39,19 @@ import org.junit.Rule
 import org.junit.Test
 import proton.android.pass.autofill.api.AutofillStatus
 import proton.android.pass.autofill.api.AutofillSupportedStatus
-import proton.android.pass.autofill.fakes.TestAutofillManager
+import proton.android.pass.autofill.fakes.FakeAutofillManager
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonuimodels.api.ItemTypeUiState
 import proton.android.pass.data.api.ItemCountSummary
 import proton.android.pass.data.api.SearchEntry
 import proton.android.pass.data.api.repositories.ItemSyncStatus
 import proton.android.pass.data.fakes.usecases.FakeObserveEncryptedItems
-import proton.android.pass.data.fakes.usecases.TestItemSyncStatusRepository
-import proton.android.pass.data.fakes.usecases.TestObserveAllShares
-import proton.android.pass.data.fakes.usecases.TestObserveItemCount
-import proton.android.pass.data.fakes.usecases.TestObserveSearchEntry
-import proton.android.pass.data.fakes.usecases.TestObserveVaultsWithItemCount
-import proton.android.pass.data.fakes.usecases.TestTrashItems
+import proton.android.pass.data.fakes.usecases.FakeItemSyncStatusRepository
+import proton.android.pass.data.fakes.usecases.FakeObserveAllShares
+import proton.android.pass.data.fakes.usecases.FakeObserveItemCount
+import proton.android.pass.data.fakes.usecases.FakeObserveSearchEntry
+import proton.android.pass.data.fakes.usecases.FakeObserveVaultsWithItemCount
+import proton.android.pass.data.fakes.usecases.FakeTrashItems
 import proton.android.pass.data.fakes.usecases.inappmessages.FakeObserveDeliverableMinimizedPromoInAppMessage
 import proton.android.pass.data.fakes.usecases.items.FakeObserveCanCreateItems
 import proton.android.pass.data.fakes.usecases.shares.FakeObserveHasShares
@@ -68,7 +68,7 @@ import proton.android.pass.domain.VaultWithItemCount
 import proton.android.pass.features.home.HomeContentTestTag.DRAWER_ICON_TEST_TAG
 import proton.android.pass.preferences.HasCompletedOnBoarding
 import proton.android.pass.preferences.HasDismissedAutofillBanner
-import proton.android.pass.preferences.TestPreferenceRepository
+import proton.android.pass.preferences.FakePreferenceRepository
 import proton.android.pass.preferences.UseFaviconsPreference
 import proton.android.pass.test.CallChecker
 import proton.android.pass.test.HiltComponentActivity
@@ -87,28 +87,28 @@ class HomeScreenTest {
     val composeTestRule = createAndroidComposeRule<HiltComponentActivity>()
 
     @Inject
-    lateinit var itemSyncStatusRepository: TestItemSyncStatusRepository
+    lateinit var itemSyncStatusRepository: FakeItemSyncStatusRepository
 
     @Inject
     lateinit var observeEncryptedItems: FakeObserveEncryptedItems
 
     @Inject
-    lateinit var observeAllShares: TestObserveAllShares
+    lateinit var observeAllShares: FakeObserveAllShares
 
     @Inject
-    lateinit var observeVaultsWithItemCount: TestObserveVaultsWithItemCount
+    lateinit var observeVaultsWithItemCount: FakeObserveVaultsWithItemCount
 
     @Inject
-    lateinit var observeSearchEntry: TestObserveSearchEntry
+    lateinit var observeSearchEntry: FakeObserveSearchEntry
 
     @Inject
-    lateinit var autofillManager: TestAutofillManager
+    lateinit var autofillManager: FakeAutofillManager
 
     @Inject
-    lateinit var preferencesRepository: TestPreferenceRepository
+    lateinit var preferencesRepository: FakePreferenceRepository
 
     @Inject
-    lateinit var trashItem: TestTrashItems
+    lateinit var trashItem: FakeTrashItems
 
     @Inject
     lateinit var observeCanCreateItems: FakeObserveCanCreateItems
@@ -120,7 +120,7 @@ class HomeScreenTest {
     lateinit var observeSharesItemsCount: FakeObserveSharesItemsCount
 
     @Inject
-    lateinit var observeItemCount: TestObserveItemCount
+    lateinit var observeItemCount: FakeObserveItemCount
 
     @Inject
     lateinit var observeDeliverableMinimizedPromoInAppMessage: FakeObserveDeliverableMinimizedPromoInAppMessage

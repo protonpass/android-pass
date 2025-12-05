@@ -25,9 +25,9 @@ import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import proton.android.pass.commonui.fakes.TestSavedStateHandleProvider
-import proton.android.pass.data.fakes.repositories.TestBulkMoveToVaultRepository
-import proton.android.pass.data.fakes.usecases.TestObserveVaultsWithItemCount
+import proton.android.pass.commonui.fakes.FakeSavedStateHandleProvider
+import proton.android.pass.data.fakes.repositories.FakeBulkMoveToVaultRepository
+import proton.android.pass.data.fakes.usecases.FakeObserveVaultsWithItemCount
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.VaultWithItemCount
@@ -36,7 +36,7 @@ import proton.android.pass.features.migrate.MigrateModeValue
 import proton.android.pass.features.migrate.MigrateVaultFilter
 import proton.android.pass.features.migrate.MigrateVaultFilterArg
 import proton.android.pass.navigation.api.CommonOptionalNavArgId
-import proton.android.pass.notifications.fakes.TestSnackbarDispatcher
+import proton.android.pass.notifications.fakes.FakeSnackbarDispatcher
 import proton.android.pass.test.MainDispatcherRule
 import proton.android.pass.test.domain.TestVault
 
@@ -46,15 +46,15 @@ class MigrateSelectVaultViewModelTest {
     val dispatcher = MainDispatcherRule()
 
     private lateinit var instance: MigrateSelectVaultViewModel
-    private lateinit var observeVaults: TestObserveVaultsWithItemCount
-    private lateinit var snackbarDispatcher: TestSnackbarDispatcher
-    private lateinit var bulkMoveToVaultRepository: TestBulkMoveToVaultRepository
+    private lateinit var observeVaults: FakeObserveVaultsWithItemCount
+    private lateinit var snackbarDispatcher: FakeSnackbarDispatcher
+    private lateinit var bulkMoveToVaultRepository: FakeBulkMoveToVaultRepository
 
     @Before
     fun setup() {
-        observeVaults = TestObserveVaultsWithItemCount()
-        snackbarDispatcher = TestSnackbarDispatcher()
-        bulkMoveToVaultRepository = TestBulkMoveToVaultRepository().apply {
+        observeVaults = FakeObserveVaultsWithItemCount()
+        snackbarDispatcher = FakeSnackbarDispatcher()
+        bulkMoveToVaultRepository = FakeBulkMoveToVaultRepository().apply {
             runBlocking { save(mapOf(SHARE_ID to listOf(ITEM_ID))) }
 
         }
@@ -62,7 +62,7 @@ class MigrateSelectVaultViewModelTest {
             observeVaults = observeVaults,
             snackbarDispatcher = snackbarDispatcher,
             bulkMoveToVaultRepository = bulkMoveToVaultRepository,
-            savedStateHandle = TestSavedStateHandleProvider().apply {
+            savedStateHandle = FakeSavedStateHandleProvider().apply {
                 get()[MigrateVaultFilterArg.key] = MigrateVaultFilter.All.name
                 get()[MigrateModeArg.key] = MigrateModeValue.SelectedItems.name
                 get()[CommonOptionalNavArgId.ItemId.key] = ITEM_ID.id

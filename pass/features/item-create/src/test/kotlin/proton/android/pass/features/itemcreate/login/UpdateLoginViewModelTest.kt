@@ -25,25 +25,25 @@ import me.proton.core.domain.entity.UserId
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import proton.android.pass.account.fakes.TestAccountManager
-import proton.android.pass.clipboard.fakes.TestClipboardManager
+import proton.android.pass.account.fakes.FakeAccountManager
+import proton.android.pass.clipboard.fakes.FakeClipboardManager
 import proton.android.pass.common.api.some
 import proton.android.pass.commonpresentation.fakes.attachments.FakeAttachmentHandler
-import proton.android.pass.commonrust.fakes.TestEmailValidator
-import proton.android.pass.commonrust.fakes.passwords.strengths.TestPasswordStrengthCalculator
-import proton.android.pass.commonui.fakes.TestSavedStateHandleProvider
+import proton.android.pass.commonrust.fakes.FakeEmailValidator
+import proton.android.pass.commonrust.fakes.passwords.strengths.FakePasswordStrengthCalculator
+import proton.android.pass.commonui.fakes.FakeSavedStateHandleProvider
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
-import proton.android.pass.crypto.fakes.context.TestEncryptionContext
-import proton.android.pass.crypto.fakes.context.TestEncryptionContextProvider
+import proton.android.pass.crypto.fakes.context.FakeEncryptionContext
+import proton.android.pass.crypto.fakes.context.FakeEncryptionContextProvider
 import proton.android.pass.data.api.errors.InvalidContentFormatVersionError
 import proton.android.pass.data.fakes.repositories.FakePendingAttachmentLinkRepository
-import proton.android.pass.data.fakes.repositories.TestDraftRepository
+import proton.android.pass.data.fakes.repositories.FakeDraftRepository
 import proton.android.pass.data.fakes.usecases.FakeGetItemById
-import proton.android.pass.data.fakes.usecases.TestCreateAlias
-import proton.android.pass.data.fakes.usecases.TestObserveCurrentUser
-import proton.android.pass.data.fakes.usecases.TestObserveItemById
-import proton.android.pass.data.fakes.usecases.TestObserveUpgradeInfo
-import proton.android.pass.data.fakes.usecases.TestUpdateItem
+import proton.android.pass.data.fakes.usecases.FakeCreateAlias
+import proton.android.pass.data.fakes.usecases.FakeObserveCurrentUser
+import proton.android.pass.data.fakes.usecases.FakeObserveItemById
+import proton.android.pass.data.fakes.usecases.FakeObserveUpgradeInfo
+import proton.android.pass.data.fakes.usecases.FakeUpdateItem
 import proton.android.pass.data.fakes.usecases.attachments.FakeLinkAttachmentsToItem
 import proton.android.pass.data.fakes.usecases.attachments.FakeRenameAttachments
 import proton.android.pass.data.fakes.usecases.shares.FakeObserveShare
@@ -59,15 +59,15 @@ import proton.android.pass.features.itemcreate.common.customfields.CustomFieldHa
 import proton.android.pass.features.itemcreate.common.formprocessor.FakeLoginItemFormProcessor
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.navigation.api.CommonOptionalNavArgId
-import proton.android.pass.notifications.fakes.TestSnackbarDispatcher
-import proton.android.pass.preferences.TestInternalSettingsRepository
-import proton.android.pass.preferences.TestPreferenceRepository
-import proton.android.pass.telemetry.fakes.TestTelemetryManager
+import proton.android.pass.notifications.fakes.FakeSnackbarDispatcher
+import proton.android.pass.preferences.FakeInternalSettingsRepository
+import proton.android.pass.preferences.FakePreferenceRepository
+import proton.android.pass.telemetry.fakes.FakeTelemetryManager
 import proton.android.pass.test.MainDispatcherRule
 import proton.android.pass.test.domain.TestItem
 import proton.android.pass.test.domain.TestUser
 import proton.android.pass.totp.api.TotpSpec
-import proton.android.pass.totp.fakes.TestTotpManager
+import proton.android.pass.totp.fakes.FakeTotpManager
 
 class UpdateLoginViewModelTest {
 
@@ -77,57 +77,57 @@ class UpdateLoginViewModelTest {
     private lateinit var instance: UpdateLoginViewModel
 
     private lateinit var getItemById: FakeGetItemById
-    private lateinit var totpManager: TestTotpManager
-    private lateinit var updateItem: TestUpdateItem
-    private lateinit var snackbarDispatcher: TestSnackbarDispatcher
+    private lateinit var totpManager: FakeTotpManager
+    private lateinit var updateItem: FakeUpdateItem
+    private lateinit var snackbarDispatcher: FakeSnackbarDispatcher
     private lateinit var encryptionContextProvider: EncryptionContextProvider
     private lateinit var observeShare: FakeObserveShare
-    private lateinit var observeItemById: TestObserveItemById
-    private lateinit var settingsRepository: TestInternalSettingsRepository
+    private lateinit var observeItemById: FakeObserveItemById
+    private lateinit var settingsRepository: FakeInternalSettingsRepository
 
     @Before
     fun setup() {
         getItemById = FakeGetItemById()
-        totpManager = TestTotpManager()
-        updateItem = TestUpdateItem()
-        snackbarDispatcher = TestSnackbarDispatcher()
-        encryptionContextProvider = TestEncryptionContextProvider()
+        totpManager = FakeTotpManager()
+        updateItem = FakeUpdateItem()
+        snackbarDispatcher = FakeSnackbarDispatcher()
+        encryptionContextProvider = FakeEncryptionContextProvider()
         observeShare = FakeObserveShare()
-        observeItemById = TestObserveItemById()
-        settingsRepository = TestInternalSettingsRepository()
+        observeItemById = FakeObserveItemById()
+        settingsRepository = FakeInternalSettingsRepository()
     }
 
     private fun createInstance(): UpdateLoginViewModel = UpdateLoginViewModel(
         getItemById = getItemById,
-        accountManager = TestAccountManager().apply {
+        accountManager = FakeAccountManager().apply {
             sendPrimaryUserId(UserId("UserId"))
         },
-        clipboardManager = TestClipboardManager(),
+        clipboardManager = FakeClipboardManager(),
         totpManager = totpManager,
         snackbarDispatcher = snackbarDispatcher,
-        savedStateHandleProvider = TestSavedStateHandleProvider().apply {
+        savedStateHandleProvider = FakeSavedStateHandleProvider().apply {
             get()[CommonOptionalNavArgId.ShareId.key] = SHARE_ID
             get()[CommonNavArgId.ItemId.key] = ITEM_ID
         },
         encryptionContextProvider = encryptionContextProvider,
-        passwordStrengthCalculator = TestPasswordStrengthCalculator(),
-        observeCurrentUser = TestObserveCurrentUser().apply { sendUser(TestUser.create()) },
-        telemetryManager = TestTelemetryManager(),
-        draftRepository = TestDraftRepository(),
-        observeUpgradeInfo = TestObserveUpgradeInfo(),
+        passwordStrengthCalculator = FakePasswordStrengthCalculator(),
+        observeCurrentUser = FakeObserveCurrentUser().apply { sendUser(TestUser.create()) },
+        telemetryManager = FakeTelemetryManager(),
+        draftRepository = FakeDraftRepository(),
+        observeUpgradeInfo = FakeObserveUpgradeInfo(),
         updateItem = updateItem,
-        createAlias = TestCreateAlias(),
-        emailValidator = TestEmailValidator(),
+        createAlias = FakeCreateAlias(),
+        emailValidator = FakeEmailValidator(),
         observeTooltipEnabled = FakeObserveTooltipEnabled(),
         disableTooltip = FakeDisableTooltip(),
-        userPreferencesRepository = TestPreferenceRepository(),
+        userPreferencesRepository = FakePreferenceRepository(),
         workerLauncher = FakeWorkerLauncher(),
         attachmentsHandler = FakeAttachmentHandler(),
         linkAttachmentsToItem = FakeLinkAttachmentsToItem(),
         renameAttachments = FakeRenameAttachments(),
         customFieldDraftRepository = CustomFieldDraftRepositoryImpl(),
         pendingAttachmentLinkRepository = FakePendingAttachmentLinkRepository(),
-        customFieldHandler = CustomFieldHandlerImpl(TestTotpManager(), encryptionContextProvider),
+        customFieldHandler = CustomFieldHandlerImpl(FakeTotpManager(), encryptionContextProvider),
         loginItemFormProcessor = FakeLoginItemFormProcessor(),
         observeShare = observeShare,
         settingsRepository = settingsRepository,
@@ -138,14 +138,14 @@ class UpdateLoginViewModelTest {
     fun `item with totp using default parameters shows only secret`() = runTest {
         val secret = "secret"
         val uri = "otpauth://totp/label?secret=$secret&algorithm=SHA1&period=30&digits=6"
-        val primaryTotp = HiddenState.Revealed(TestEncryptionContext.encrypt(uri), uri)
+        val primaryTotp = HiddenState.Revealed(FakeEncryptionContext.encrypt(uri), uri)
         val item = TestItem.create(
             itemContents = ItemContents.Login(
                 title = "item",
                 note = "note",
                 itemEmail = "user@email.com",
                 itemUsername = "username",
-                password = HiddenState.Empty(TestEncryptionContext.encrypt("password")),
+                password = HiddenState.Empty(FakeEncryptionContext.encrypt("password")),
                 urls = emptyList(),
                 packageInfoSet = emptySet(),
                 primaryTotp = primaryTotp,
@@ -159,21 +159,21 @@ class UpdateLoginViewModelTest {
         instance = createInstance()
 
         assertThat(instance.loginItemFormState.primaryTotp)
-            .isEqualTo(UIHiddenState.Revealed(TestEncryptionContext.encrypt(secret), secret))
+            .isEqualTo(UIHiddenState.Revealed(FakeEncryptionContext.encrypt(secret), secret))
     }
 
     @Test
     fun `item with totp using non-default parameters shows full URI`() = runTest {
         val secret = "secret"
         val uri = "otpauth://totp/label?secret=$secret&algorithm=SHA256&period=10&digits=8"
-        val primaryTotp = HiddenState.Revealed(TestEncryptionContext.encrypt(uri), uri)
+        val primaryTotp = HiddenState.Revealed(FakeEncryptionContext.encrypt(uri), uri)
         val item = TestItem.create(
             itemContents = ItemContents.Login(
                 title = "item",
                 note = "note",
                 itemEmail = "user@email.com",
                 itemUsername = "username",
-                password = HiddenState.Empty(TestEncryptionContext.encrypt("password")),
+                password = HiddenState.Empty(FakeEncryptionContext.encrypt("password")),
                 urls = emptyList(),
                 packageInfoSet = emptySet(),
                 primaryTotp = primaryTotp,

@@ -25,17 +25,17 @@ import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import proton.android.pass.commonui.fakes.TestSavedStateHandleProvider
+import proton.android.pass.commonui.fakes.FakeSavedStateHandleProvider
 import proton.android.pass.composecomponents.impl.uievents.IsButtonEnabled
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
-import proton.android.pass.crypto.fakes.context.TestEncryptionContext
-import proton.android.pass.crypto.fakes.context.TestEncryptionContextProvider
+import proton.android.pass.crypto.fakes.context.FakeEncryptionContext
+import proton.android.pass.crypto.fakes.context.FakeEncryptionContextProvider
 import proton.android.pass.data.api.errors.CannotCreateMoreVaultsError
 import proton.android.pass.data.api.repositories.MigrateItemsResult
-import proton.android.pass.data.fakes.usecases.TestCreateVault
-import proton.android.pass.data.fakes.usecases.TestDeleteVault
-import proton.android.pass.data.fakes.usecases.TestMigrateItems
-import proton.android.pass.data.fakes.usecases.TestObserveUpgradeInfo
+import proton.android.pass.data.fakes.usecases.FakeCreateVault
+import proton.android.pass.data.fakes.usecases.FakeDeleteVault
+import proton.android.pass.data.fakes.usecases.FakeMigrateItems
+import proton.android.pass.data.fakes.usecases.FakeObserveUpgradeInfo
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.Plan
 import proton.android.pass.domain.PlanLimit
@@ -44,7 +44,7 @@ import proton.android.pass.domain.ShareIcon
 import proton.android.pass.domain.ShareId
 import proton.android.pass.features.vault.VaultSnackbarMessage
 import proton.android.pass.navigation.api.CommonOptionalNavArgId
-import proton.android.pass.notifications.fakes.TestSnackbarDispatcher
+import proton.android.pass.notifications.fakes.FakeSnackbarDispatcher
 import proton.android.pass.test.MainDispatcherRule
 import proton.android.pass.test.TestConstants
 import proton.android.pass.test.domain.TestItem
@@ -56,23 +56,23 @@ class CreateVaultViewModelTest {
     val dispatcher = MainDispatcherRule()
 
     private lateinit var instance: CreateVaultViewModel
-    private lateinit var snackbar: TestSnackbarDispatcher
-    private lateinit var createVault: TestCreateVault
-    private lateinit var deleteVault: TestDeleteVault
-    private lateinit var migrateItem: TestMigrateItems
-    private lateinit var getUpgradeInfo: TestObserveUpgradeInfo
-    private lateinit var savedState: TestSavedStateHandleProvider
+    private lateinit var snackbar: FakeSnackbarDispatcher
+    private lateinit var createVault: FakeCreateVault
+    private lateinit var deleteVault: FakeDeleteVault
+    private lateinit var migrateItem: FakeMigrateItems
+    private lateinit var getUpgradeInfo: FakeObserveUpgradeInfo
+    private lateinit var savedState: FakeSavedStateHandleProvider
 
     @Before
     fun setup() {
-        snackbar = TestSnackbarDispatcher()
-        createVault = TestCreateVault()
-        deleteVault = TestDeleteVault()
-        migrateItem = TestMigrateItems()
-        getUpgradeInfo = TestObserveUpgradeInfo().apply {
-            setResult(TestObserveUpgradeInfo.DEFAULT)
+        snackbar = FakeSnackbarDispatcher()
+        createVault = FakeCreateVault()
+        deleteVault = FakeDeleteVault()
+        migrateItem = FakeMigrateItems()
+        getUpgradeInfo = FakeObserveUpgradeInfo().apply {
+            setResult(FakeObserveUpgradeInfo.DEFAULT)
         }
-        savedState = TestSavedStateHandleProvider().apply {
+        savedState = FakeSavedStateHandleProvider().apply {
             get()[CreateVaultNextActionNavArgId.key] = CreateVaultNextAction.NEXT_ACTION_DONE
         }
         createViewModel()
@@ -177,7 +177,7 @@ class CreateVaultViewModelTest {
     @Test
     fun `does not display upgrade ui if vault limit not reached`() = runTest {
         getUpgradeInfo.setResult(
-            TestObserveUpgradeInfo.DEFAULT.copy(
+            FakeObserveUpgradeInfo.DEFAULT.copy(
                 isUpgradeAvailable = true,
                 plan = Plan(
                     planType = TestConstants.FreePlanType,
@@ -199,7 +199,7 @@ class CreateVaultViewModelTest {
     @Test
     fun `does not display upgrade ui if vault limit reached but upgrade unavailable`() = runTest {
         getUpgradeInfo.setResult(
-            TestObserveUpgradeInfo.DEFAULT.copy(
+            FakeObserveUpgradeInfo.DEFAULT.copy(
                 isUpgradeAvailable = false,
                 plan = Plan(
                     planType = TestConstants.FreePlanType,
@@ -221,7 +221,7 @@ class CreateVaultViewModelTest {
     @Test
     fun `displays upgrade ui if plan is free`() = runTest {
         getUpgradeInfo.setResult(
-            TestObserveUpgradeInfo.DEFAULT.copy(
+            FakeObserveUpgradeInfo.DEFAULT.copy(
                 isUpgradeAvailable = true,
                 plan = Plan(
                     planType = TestConstants.FreePlanType,
@@ -255,7 +255,7 @@ class CreateVaultViewModelTest {
         assertThat(createVaultMemory.size).isEqualTo(1)
 
         val migrateItemMemory = migrateItem.memory()
-        val expectedMigrateItem = TestMigrateItems.Payload(
+        val expectedMigrateItem = FakeMigrateItems.Payload(
             items = mapOf(ShareId(SHARE_ID) to listOf(ItemId(ITEM_ID))),
             destinationShare = ShareId(NEW_SHARE_ID)
         )
@@ -314,7 +314,7 @@ class CreateVaultViewModelTest {
         assertThat(createVaultMemory.size).isEqualTo(1)
 
         val migrateItemMemory = migrateItem.memory()
-        val expectedMigrateItem = TestMigrateItems.Payload(
+        val expectedMigrateItem = FakeMigrateItems.Payload(
             items = mapOf(ShareId(SHARE_ID) to listOf(ItemId(ITEM_ID))),
             destinationShare = ShareId(NEW_SHARE_ID)
         )
@@ -344,7 +344,7 @@ class CreateVaultViewModelTest {
         assertThat(createVaultMemory.size).isEqualTo(1)
 
         val migrateItemMemory = migrateItem.memory()
-        val expectedMigrateItem = TestMigrateItems.Payload(
+        val expectedMigrateItem = FakeMigrateItems.Payload(
             items = mapOf(ShareId(SHARE_ID) to listOf(ItemId(ITEM_ID))),
             destinationShare = ShareId(NEW_SHARE_ID)
         )
@@ -367,7 +367,7 @@ class CreateVaultViewModelTest {
         assertThat(memory.size).isEqualTo(1)
 
         val item = memory.first()
-        val name = TestEncryptionContext.decrypt(item.vault.name)
+        val name = FakeEncryptionContext.decrypt(item.vault.name)
         assertThat(name).isEqualTo(" name")
     }
 
@@ -384,7 +384,7 @@ class CreateVaultViewModelTest {
             snackbarDispatcher = snackbar,
             createVault = createVault,
             deleteVault = deleteVault,
-            encryptionContextProvider = TestEncryptionContextProvider(),
+            encryptionContextProvider = FakeEncryptionContextProvider(),
             savedStateHandleProvider = savedState,
             migrateItems = migrateItem,
             observeUpgradeInfo = getUpgradeInfo

@@ -28,16 +28,16 @@ import dagger.hilt.components.SingletonComponent
 abstract class FakesBiometryModule {
 
     @Binds
-    abstract fun bindBiometryManager(impl: TestBiometryManager): BiometryManager
+    abstract fun bindBiometryManager(impl: FakeBiometryManager): BiometryManager
 
     @Binds
-    abstract fun bindAuthTimeHolder(impl: TestBiometryAuthTimeHolder): BiometryAuthTimeHolder
+    abstract fun bindAuthTimeHolder(impl: FakeBiometryAuthTimeHolder): BiometryAuthTimeHolder
 
     @Binds
-    abstract fun bindNeedsBiometricAuth(impl: TestNeedsBiometricAuth): NeedsBiometricAuth
+    abstract fun bindNeedsBiometricAuth(impl: FakeNeedsBiometricAuth): NeedsBiometricAuth
 
     @Binds
-    abstract fun bindStoreAuthSuccessful(impl: TestStoreAuthSuccessful): StoreAuthSuccessful
+    abstract fun bindStoreAuthSuccessful(impl: FakeStoreAuthSuccessful): StoreAuthSuccessful
 
     @Binds
     abstract fun bindResetAuthPreferences(impl: FakeResetAuthPreferences): ResetAuthPreferences

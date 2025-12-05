@@ -28,13 +28,13 @@ import proton.android.pass.crypto.api.context.EncryptionTag
 import proton.android.pass.crypto.api.usecases.CreateItemPayload
 import proton.android.pass.crypto.api.usecases.ItemKeyWithRotation
 import proton.android.pass.crypto.api.usecases.MigrateItem
-import proton.android.pass.crypto.fakes.context.TestEncryptionContextProvider
+import proton.android.pass.crypto.fakes.context.FakeEncryptionContextProvider
 import proton.android.pass.domain.ItemContents
 import proton.android.pass.test.TestUtils
 
 internal class MigrateItemsImplTest {
 
-    private val encryptionContextProvider = TestEncryptionContextProvider()
+    private val encryptionContextProvider = FakeEncryptionContextProvider()
     private val createItem = CreateItemImpl(encryptionContextProvider)
 
     private lateinit var migrateItem: MigrateItem

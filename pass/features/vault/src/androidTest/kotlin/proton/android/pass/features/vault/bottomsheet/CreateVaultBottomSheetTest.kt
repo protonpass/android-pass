@@ -30,11 +30,11 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import proton.android.pass.commonui.api.PassTheme
-import proton.android.pass.commonui.fakes.TestSavedStateHandleProvider
-import proton.android.pass.crypto.fakes.context.TestEncryptionContext
+import proton.android.pass.commonui.fakes.FakeSavedStateHandleProvider
+import proton.android.pass.crypto.fakes.context.FakeEncryptionContext
 import proton.android.pass.data.api.repositories.MigrateItemsResult
-import proton.android.pass.data.fakes.usecases.TestCreateVault
-import proton.android.pass.data.fakes.usecases.TestMigrateItems
+import proton.android.pass.data.fakes.usecases.FakeCreateVault
+import proton.android.pass.data.fakes.usecases.FakeMigrateItems
 import proton.android.pass.features.vault.R
 import proton.android.pass.features.vault.VaultNavigation
 import proton.android.pass.navigation.api.CommonOptionalNavArgId
@@ -58,13 +58,13 @@ class CreateVaultBottomSheetTest {
     val composeTestRule = createAndroidComposeRule<HiltComponentActivity>()
 
     @Inject
-    lateinit var createVault: TestCreateVault
+    lateinit var createVault: FakeCreateVault
 
     @Inject
-    lateinit var migrateItem: TestMigrateItems
+    lateinit var migrateItem: FakeMigrateItems
 
     @Inject
-    lateinit var savedStateHandleProvider: TestSavedStateHandleProvider
+    lateinit var savedStateHandleProvider: FakeSavedStateHandleProvider
 
     private val submitButtonMatcher: SemanticsMatcher
         get() = hasText(composeTestRule.activity.getString(R.string.bottomsheet_create_vault_button))
@@ -110,7 +110,7 @@ class CreateVaultBottomSheetTest {
         assertEquals(1, memory.size)
 
         val payload = memory.first().vault
-        val payloadVaultName = TestEncryptionContext.decrypt(payload.name)
+        val payloadVaultName = FakeEncryptionContext.decrypt(payload.name)
         assertEquals("Some vault with trailing space", payloadVaultName)
     }
 

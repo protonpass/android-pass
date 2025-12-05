@@ -35,14 +35,14 @@ import me.proton.core.domain.entity.UserId
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import proton.android.pass.account.fakes.TestAccountManager
+import proton.android.pass.account.fakes.FakeAccountManager
 import proton.android.pass.commonui.api.PassTheme
-import proton.android.pass.commonui.fakes.TestSavedStateHandleProvider
-import proton.android.pass.crypto.fakes.context.TestEncryptionContext
+import proton.android.pass.commonui.fakes.FakeSavedStateHandleProvider
+import proton.android.pass.crypto.fakes.context.FakeEncryptionContext
 import proton.android.pass.data.fakes.usecases.FakeGetItemById
-import proton.android.pass.data.fakes.usecases.TestCanPerformPaidAction
-import proton.android.pass.data.fakes.usecases.TestObserveUserAccessData
-import proton.android.pass.data.fakes.usecases.TestUpdateItem
+import proton.android.pass.data.fakes.usecases.FakeCanPerformPaidAction
+import proton.android.pass.data.fakes.usecases.FakeObserveUserAccessData
+import proton.android.pass.data.fakes.usecases.FakeUpdateItem
 import proton.android.pass.domain.CreditCardType
 import proton.android.pass.domain.HiddenState
 import proton.android.pass.domain.Item
@@ -70,22 +70,22 @@ class UpdateCreditCardScreenTest {
     val composeTestRule = createAndroidComposeRule<HiltComponentActivity>()
 
     @Inject
-    lateinit var updateItem: TestUpdateItem
+    lateinit var updateItem: FakeUpdateItem
 
     @Inject
-    lateinit var accountManager: TestAccountManager
+    lateinit var accountManager: FakeAccountManager
 
     @Inject
-    lateinit var savedStateHandle: TestSavedStateHandleProvider
+    lateinit var savedStateHandle: FakeSavedStateHandleProvider
 
     @Inject
     lateinit var getItemById: FakeGetItemById
 
     @Inject
-    lateinit var canPerformPaidAction: TestCanPerformPaidAction
+    lateinit var canPerformPaidAction: FakeCanPerformPaidAction
 
     @Inject
-    lateinit var observeUserAccessData: TestObserveUserAccessData
+    lateinit var observeUserAccessData: FakeObserveUserAccessData
 
     private lateinit var initialItem: Item
 
@@ -225,7 +225,7 @@ class UpdateCreditCardScreenTest {
         val memory = updateItem.getMemory()
         assertEquals(1, memory.size)
 
-        val expected = TestUpdateItem.Payload(
+        val expected = FakeUpdateItem.Payload(
             userId = USER_ID,
             shareId = ShareId(SHARE_ID),
             item = initialItem,
@@ -234,8 +234,8 @@ class UpdateCreditCardScreenTest {
                 note = newNote,
                 cardHolder = newCardHolder,
                 number = newNumber,
-                pin = HiddenState.Concealed(TestEncryptionContext.encrypt(newPin)),
-                cvv = HiddenState.Concealed(TestEncryptionContext.encrypt(newCvv)),
+                pin = HiddenState.Concealed(FakeEncryptionContext.encrypt(newPin)),
+                cvv = HiddenState.Concealed(FakeEncryptionContext.encrypt(newCvv)),
                 expirationDate = newItemExpirationDate,
                 type = CreditCardType.Other,
                 customFields = emptyList()

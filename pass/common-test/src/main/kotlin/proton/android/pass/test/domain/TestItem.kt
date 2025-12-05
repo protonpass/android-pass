@@ -25,10 +25,10 @@ import me.proton.core.crypto.common.keystore.KeyStoreCrypto
 import me.proton.core.crypto.common.keystore.PlainByteArray
 import me.proton.core.crypto.common.keystore.encrypt
 import me.proton.core.domain.entity.UserId
-import proton.android.pass.account.fakes.TestKeyStoreCrypto
+import proton.android.pass.account.fakes.FakeKeyStoreCrypto
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.toOption
-import proton.android.pass.crypto.fakes.context.TestEncryptionContext
+import proton.android.pass.crypto.fakes.context.FakeEncryptionContext
 import proton.android.pass.datamodels.api.fromParsed
 import proton.android.pass.datamodels.api.serializeToProto
 import proton.android.pass.domain.AddressDetailsContent
@@ -57,7 +57,7 @@ object TestItem {
         itemId: ItemId = ItemId(id = "item-id"),
         shareId: ShareId = ShareId(id = "share-id"),
         packageInfoSet: Set<PackageInfo> = emptySet(),
-        keyStoreCrypto: KeyStoreCrypto = TestKeyStoreCrypto,
+        keyStoreCrypto: KeyStoreCrypto = FakeKeyStoreCrypto,
         title: String = "item-title"
     ): Item {
         val note = "item-note"
@@ -95,7 +95,7 @@ object TestItem {
         val now = Clock.System.now()
         val asProto = itemContents.serializeToProto(
             itemUuid = "123",
-            encryptionContext = TestEncryptionContext
+            encryptionContext = FakeEncryptionContext
         )
         return Item(
             id = itemId,
@@ -103,10 +103,10 @@ object TestItem {
             itemUuid = "",
             revision = 1,
             shareId = shareId,
-            itemType = ItemType.fromParsed(TestEncryptionContext, asProto, aliasEmail),
-            title = TestKeyStoreCrypto.encrypt(itemContents.title),
-            note = TestKeyStoreCrypto.encrypt(itemContents.note),
-            content = TestKeyStoreCrypto.encrypt(PlainByteArray(asProto.toByteArray())),
+            itemType = ItemType.fromParsed(FakeEncryptionContext, asProto, aliasEmail),
+            title = FakeKeyStoreCrypto.encrypt(itemContents.title),
+            note = FakeKeyStoreCrypto.encrypt(itemContents.note),
+            content = FakeKeyStoreCrypto.encrypt(PlainByteArray(asProto.toByteArray())),
             packageInfoSet = emptySet(),
             state = ItemState.Active.value,
             modificationTime = now,
@@ -137,11 +137,11 @@ object TestItem {
             note = note,
             itemEmail = email,
             itemUsername = username,
-            password = HiddenState.Concealed(TestEncryptionContext.encrypt(password)),
+            password = HiddenState.Concealed(FakeEncryptionContext.encrypt(password)),
             urls = emptyList(),
             packageInfoSet = emptySet(),
             primaryTotp = HiddenState.Revealed(
-                TestEncryptionContext.encrypt(primaryTotp),
+                FakeEncryptionContext.encrypt(primaryTotp),
                 primaryTotp
             ),
             customFields = emptyList(),
@@ -204,14 +204,14 @@ object TestItem {
             type = CreditCardType.Other,
             number = number,
             cvv = if (verificationNumber.isBlank()) {
-                HiddenState.Empty(TestEncryptionContext.encrypt(verificationNumber))
+                HiddenState.Empty(FakeEncryptionContext.encrypt(verificationNumber))
             } else {
-                HiddenState.Concealed(TestEncryptionContext.encrypt(verificationNumber))
+                HiddenState.Concealed(FakeEncryptionContext.encrypt(verificationNumber))
             },
             pin = if (pin.isBlank()) {
-                HiddenState.Empty(TestEncryptionContext.encrypt(pin))
+                HiddenState.Empty(FakeEncryptionContext.encrypt(pin))
             } else {
-                HiddenState.Concealed(TestEncryptionContext.encrypt(pin))
+                HiddenState.Concealed(FakeEncryptionContext.encrypt(pin))
             },
             expirationDate = expirationDate,
             customFields = emptyList()
@@ -243,7 +243,7 @@ object TestItem {
                 organization = "Organization"
             ),
             contactDetailsContent = ContactDetailsContent.default {
-                TestEncryptionContext.encrypt(it)
+                FakeEncryptionContext.encrypt(it)
             },
             workDetailsContent = WorkDetailsContent.EMPTY,
             extraSectionContentList = emptyList(),
@@ -264,19 +264,19 @@ object TestItem {
         val itemTypeParam = itemType ?: ItemType.Login(
             itemEmail = randomString(),
             itemUsername = randomString(),
-            password = randomString().encrypt(TestKeyStoreCrypto),
+            password = randomString().encrypt(FakeKeyStoreCrypto),
             websites = emptyList(),
             packageInfoSet = emptySet(),
-            primaryTotp = randomString().encrypt(TestKeyStoreCrypto),
+            primaryTotp = randomString().encrypt(FakeKeyStoreCrypto),
             customFields = emptyList(),
             passkeys = emptyList()
         )
         val titleParam = title ?: randomString()
         val noteParam = note ?: randomString()
         val itemContent = if (content != null) {
-            TestKeyStoreCrypto.encrypt(PlainByteArray(content))
+            FakeKeyStoreCrypto.encrypt(PlainByteArray(content))
         } else {
-            TestKeyStoreCrypto.encrypt(PlainByteArray(byteArrayOf(0x00)))
+            FakeKeyStoreCrypto.encrypt(PlainByteArray(byteArrayOf(0x00)))
         }
         return Item(
             id = ItemId(randomString()),
@@ -285,8 +285,8 @@ object TestItem {
             revision = Random.nextLong(),
             shareId = ShareId(randomString()),
             itemType = itemTypeParam,
-            title = TestKeyStoreCrypto.encrypt(titleParam),
-            note = TestKeyStoreCrypto.encrypt(noteParam),
+            title = FakeKeyStoreCrypto.encrypt(titleParam),
+            note = FakeKeyStoreCrypto.encrypt(noteParam),
             content = itemContent,
             packageInfoSet = emptySet(),
             state = 0,

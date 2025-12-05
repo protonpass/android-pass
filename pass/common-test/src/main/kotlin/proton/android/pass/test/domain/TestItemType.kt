@@ -18,7 +18,7 @@
 
 package proton.android.pass.test.domain
 
-import proton.android.pass.account.fakes.TestKeyStoreCrypto
+import proton.android.pass.account.fakes.FakeKeyStoreCrypto
 import proton.android.pass.domain.CreditCardType
 import proton.android.pass.domain.ItemType
 import proton.android.pass.domain.Passkey
@@ -41,7 +41,7 @@ object TestItemType {
         password = password,
         websites = websites,
         packageInfoSet = packageInfoSet,
-        primaryTotp = TestKeyStoreCrypto.encrypt(primaryTotp),
+        primaryTotp = FakeKeyStoreCrypto.encrypt(primaryTotp),
         customFields = emptyList(),
         passkeys = passkeys
     )

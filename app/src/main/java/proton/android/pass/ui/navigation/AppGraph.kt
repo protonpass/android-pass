@@ -441,6 +441,7 @@ fun NavGraphBuilder.appGraph(
 
                 HomeNavigation.OnBoarding -> appNavigator.navigate(
                     destination = OnBoarding,
+                    route = OnBoarding.createRoute(comeFromUpsell = false),
                     force = true
                 )
 

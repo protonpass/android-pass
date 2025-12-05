@@ -350,4 +350,5 @@
   <string name="warning_dialog_item_shared_vault_updating">Du redigerer et element i en delt boks, og medlemmer får straks adgang til dette element.</string>
   <string name="warning_dialog_item_shared_updating">De redigerer et delt element. Ændringer vil øjeblikkeligt være synlige for alle, det er delt med.</string>
   <string name="warning_dialog_item_shared_vault_reminder">Påmind mig ikke igen</string>
+  <string name="upgrade_to_pass_plus">Upgrade to Pass Plus</string>
 </resources>

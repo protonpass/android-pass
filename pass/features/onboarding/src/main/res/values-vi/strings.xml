@@ -2,6 +2,8 @@
 <resources>
   <string name="on_boarding_autofill_content">Để Proton Pass điền thông tin đăng nhập. Không cần phải nhập bằng tay hay sao chép gì cả.</string>
   <string name="on_boarding_autofill_title">Đăng nhập vào ứng dụng ngay lập tức</string>
+  <string name="on_boarding_autofill_content_v2">Proton pass fill in login details for you. No typing or copy paste required.</string>
+  <string name="on_boarding_autofill_title_v2">Enjoy the magic of AutoFill</string>
   <string name="on_boarding_autofill_button">Tự động điền với Proton Pass</string>
   <string name="on_boarding_fingerprint_content">Thiết lập mở khóa Proton Pass với vân tay để chỉ có bạn mới có thể truy cập vào.</string>
   <string name="on_boarding_fingerprint_title">Bảo vệ dữ liệu nhạy cảm nhất của bạn</string>
@@ -11,6 +13,7 @@
   <string name="on_boarding_last_page_button">Bắt đầu dùng Proton Pass</string>
   <string name="on_boarding_skip">Không phải bây giờ</string>
   <string name="on_boarding_tutorial">Xem một đoạn video ngắn về cách sử dụng Proton Pass</string>
+  <string name="on_boarding_tutorial_v2">Learn how to use Proton Pass</string>
   <string name="on_boarding_pending_invite_content">Vì lý do bảo mật, truy cập của bạn cần được xác nhận.</string>
   <string name="on_boarding_pending_invite_title">Đang chờ truy cập vào dữ liệu được chia sẻ</string>
   <string name="on_boarding_pending_invite_button">Tìm hiểu thêm về Proton Pass</string>

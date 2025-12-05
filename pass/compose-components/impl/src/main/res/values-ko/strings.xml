@@ -331,4 +331,5 @@
   <string name="warning_dialog_item_shared_vault_updating">공유된 금고 내에서 항목을 편집하고 있습니다. 구성원들이 이 항목에 즉시 접근할 수 있게 됩니다.</string>
   <string name="warning_dialog_item_shared_updating">공유된 금고를 편집하고 있습니다. 변경 사항은 이 항목을 공유하는 모든 사용자에게 즉시 반영됩니다.</string>
   <string name="warning_dialog_item_shared_vault_reminder">다시 보지 않기</string>
+  <string name="upgrade_to_pass_plus">Upgrade to Pass Plus</string>
 </resources>

@@ -75,8 +75,8 @@ import proton.android.pass.searchoptions.fakes.FakeHomeSearchOptionsRepository
 import proton.android.pass.telemetry.fakes.FakeTelemetryManager
 import proton.android.pass.test.FixedClock
 import proton.android.pass.test.MainDispatcherRule
-import proton.android.pass.test.domain.TestShare
-import proton.android.pass.test.domain.TestUser
+import proton.android.pass.test.domain.ShareTestFactory
+import proton.android.pass.test.domain.UserTestFactory
 
 internal class HomeViewModelTest {
 
@@ -138,7 +138,7 @@ internal class HomeViewModelTest {
         bulkMoveToVaultRepository = FakeBulkMoveToVaultRepository()
         toastManager = FakeToastManager()
         observePinnedItems = FakeObservePinnedItems()
-        observeCurrentUser = FakeObserveCurrentUser().apply { sendUser(TestUser.create()) }
+        observeCurrentUser = FakeObserveCurrentUser().apply { sendUser(UserTestFactory.create()) }
         observeCanCreateItems = FakeObserveCanCreateItems()
         observeHasShares = FakeObserveHasShares()
         observeUpgradeInfo = FakeObserveUpgradeInfo()
@@ -209,7 +209,7 @@ internal class HomeViewModelTest {
         val vaultShares = items
             .map { it.shareId }
             .distinct()
-            .map { shareId -> TestShare.Vault.create(id = shareId.id) }
+            .map { shareId -> ShareTestFactory.Vault.create(id = shareId.id) }
 
         val searchEntries = items.map {
             SearchEntry(

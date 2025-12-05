@@ -47,8 +47,8 @@ import proton.android.pass.features.itemcreate.common.formprocessor.FakeLoginIte
 import proton.android.pass.notifications.fakes.FakeSnackbarDispatcher
 import proton.android.pass.preferences.FakePreferenceRepository
 import proton.android.pass.test.MainDispatcherRule
-import proton.android.pass.test.TestUtils
-import proton.android.pass.test.domain.TestUser
+import proton.android.pass.test.StringTestFactory
+import proton.android.pass.test.domain.UserTestFactory
 import proton.android.pass.totp.fakes.FakeTotpManager
 
 internal class BaseLoginViewModelTest {
@@ -69,7 +69,7 @@ internal class BaseLoginViewModelTest {
     fun setUp() {
         totpManager = FakeTotpManager()
         clipboardManager = FakeClipboardManager()
-        observeCurrentUser = FakeObserveCurrentUser().apply { sendUser(TestUser.create()) }
+        observeCurrentUser = FakeObserveCurrentUser().apply { sendUser(UserTestFactory.create()) }
         draftRepository = FakeDraftRepository()
         encryptionContextProvider = FakeEncryptionContextProvider()
         passwordStrengthCalculator = FakePasswordStrengthCalculator()
@@ -157,7 +157,7 @@ internal class BaseLoginViewModelTest {
 
     @Test
     fun `WHEN password changed by user THEN update password strength state`() = runTest {
-        val newPasswordValue = TestUtils.randomString()
+        val newPasswordValue = StringTestFactory.randomString()
         val expectedPasswordStrength = PasswordStrength.Strong
         passwordStrengthCalculator.setPasswordStrength(expectedPasswordStrength)
 
@@ -170,7 +170,7 @@ internal class BaseLoginViewModelTest {
     @Test
     fun `WHEN password changed by automatic generation THEN update password strength state`() {
         val newPasswordValue = encryptionContextProvider.withEncryptionContext {
-            encrypt(TestUtils.randomString())
+            encrypt(StringTestFactory.randomString())
         }
         val expectedPasswordStrength = PasswordStrength.Strong
         passwordStrengthCalculator.setPasswordStrength(expectedPasswordStrength)

@@ -59,7 +59,7 @@ import proton.android.pass.preferences.FakePreferenceRepository
 import proton.android.pass.telemetry.api.EventItemType
 import proton.android.pass.telemetry.fakes.FakeTelemetryManager
 import proton.android.pass.test.MainDispatcherRule
-import proton.android.pass.test.domain.TestItem
+import proton.android.pass.test.domain.ItemTestFactory
 import proton.android.pass.totp.fakes.FakeTotpManager
 
 class UpdateCreditCardViewModelTest {
@@ -127,7 +127,7 @@ class UpdateCreditCardViewModelTest {
 
     @Test
     fun `update item without title should return a BlankTitle validation error`() = runTest {
-        val item = TestItem.createCreditCard(title = "")
+        val item = ItemTestFactory.createCreditCard(title = "")
         getItemById.emit(Result.success(item))
         instance = createInstance()
         creditCardItemFormProcessor.setResult(
@@ -146,7 +146,7 @@ class UpdateCreditCardViewModelTest {
 
     @Test
     fun `can update with valid contents`() = runTest {
-        val item = TestItem.createCreditCard(title = "title")
+        val item = ItemTestFactory.createCreditCard(title = "title")
         getItemById.emit(Result.success(item))
         instance = createInstance()
         instance.onTitleChange("TitleChanged") // there needs to be a change to trigger an update
@@ -194,7 +194,7 @@ class UpdateCreditCardViewModelTest {
     }
 
     private suspend fun runTestError(exception: Throwable) {
-        val item = TestItem.createCreditCard(title = "title")
+        val item = ItemTestFactory.createCreditCard(title = "title")
         getItemById.emit(Result.success(item))
         instance = createInstance()
         instance.onTitleChange("TitleChanged") // there needs to be a change to trigger an update

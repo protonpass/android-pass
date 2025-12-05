@@ -24,10 +24,10 @@ import org.junit.Before
 import org.junit.Test
 import proton.android.pass.data.fakes.repositories.FakeItemRepository
 import proton.android.pass.data.fakes.usecases.FakeObserveCurrentUser
-import proton.android.pass.test.domain.TestItem
-import proton.android.pass.test.domain.TestUser
-import proton.android.pass.test.domain.items.ItemIdMother
-import proton.android.pass.test.domain.shares.ShareIdMother
+import proton.android.pass.test.domain.ItemTestFactory
+import proton.android.pass.test.domain.UserTestFactory
+import proton.android.pass.test.domain.items.ItemIdTestFactory
+import proton.android.pass.test.domain.shares.ShareIdTestFactory
 
 internal class GetItemCategoryImplTest {
 
@@ -40,7 +40,7 @@ internal class GetItemCategoryImplTest {
     internal fun setUp() {
         itemRepository = FakeItemRepository()
         observeCurrentUser = FakeObserveCurrentUser().apply {
-            sendUser(TestUser.create(""))
+            sendUser(UserTestFactory.create(""))
         }
 
         getItemCategoryImpl = GetItemCategoryImpl(observeCurrentUser, itemRepository)
@@ -48,9 +48,9 @@ internal class GetItemCategoryImplTest {
 
     @Test
     internal fun `WHEN requesting item category THEN return item category`() = runTest {
-        val shareId = ShareIdMother.create()
-        val itemId = ItemIdMother.create()
-        val item = TestItem.create(
+        val shareId = ShareIdTestFactory.create()
+        val itemId = ItemIdTestFactory.create()
+        val item = ItemTestFactory.create(
             shareId = shareId,
             itemId = itemId
         )

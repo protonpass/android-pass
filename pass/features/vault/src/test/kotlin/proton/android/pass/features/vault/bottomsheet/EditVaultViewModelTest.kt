@@ -35,9 +35,9 @@ import proton.android.pass.features.vault.VaultSnackbarMessage
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.notifications.fakes.FakeSnackbarDispatcher
 import proton.android.pass.test.MainDispatcherRule
-import proton.android.pass.test.TestSavedStateHandle
-import proton.android.pass.test.domain.TestShare
-import proton.android.pass.test.domain.TestVault
+import proton.android.pass.test.SavedStateHandleTestFactory
+import proton.android.pass.test.domain.ShareTestFactory
+import proton.android.pass.test.domain.VaultTestFactory
 
 class EditVaultViewModelTest {
 
@@ -61,7 +61,7 @@ class EditVaultViewModelTest {
             updateVault = updateVault,
             encryptionContextProvider = encryptionContextProvider,
             getVaultByShareId = getVaultById,
-            savedStateHandle = TestSavedStateHandle.create().apply {
+            savedStateHandle = SavedStateHandleTestFactory.create().apply {
                 set(CommonNavArgId.ShareId.key, SHARE_ID)
             }
         )
@@ -76,7 +76,7 @@ class EditVaultViewModelTest {
 
     @Test
     fun `onStart sets share contents`() = runTest {
-        val vault = TestVault.create(shareId = ShareId(SHARE_ID))
+        val vault = VaultTestFactory.create(shareId = ShareId(SHARE_ID))
 
         getVaultById.emitValue(vault)
         instance.onStart()
@@ -93,8 +93,8 @@ class EditVaultViewModelTest {
     @Test
     fun `onEditClick sends the proper values`() = runTest {
         // Given
-        val vault = TestVault.create(shareId = ShareId(SHARE_ID))
-        val vaultShare = TestShare.Vault.create(id = vault.shareId.id)
+        val vault = VaultTestFactory.create(shareId = ShareId(SHARE_ID))
+        val vaultShare = ShareTestFactory.Vault.create(id = vault.shareId.id)
         getVaultById.emitValue(vault)
         updateVault.setResult(Result.success(vaultShare))
 
@@ -125,7 +125,7 @@ class EditVaultViewModelTest {
     @Test
     fun `onEditClick sends snackbar message on error`() = runTest {
         // Given
-        val vault = TestVault.create(shareId = ShareId(SHARE_ID))
+        val vault = VaultTestFactory.create(shareId = ShareId(SHARE_ID))
         getVaultById.emitValue(vault)
         updateVault.setResult(Result.failure(IllegalStateException("test")))
 

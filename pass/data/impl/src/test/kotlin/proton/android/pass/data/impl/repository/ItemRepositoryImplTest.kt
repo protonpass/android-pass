@@ -43,9 +43,9 @@ import proton.android.pass.data.impl.repositories.ItemRepositoryImpl
 import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.Share
 import proton.android.pass.test.MainDispatcherRule
-import proton.android.pass.test.domain.TestItem
-import proton.android.pass.test.domain.TestShare
-import proton.android.pass.test.domain.TestShareKey
+import proton.android.pass.test.domain.ItemTestFactory
+import proton.android.pass.test.domain.ShareKeyTestFactory
+import proton.android.pass.test.domain.ShareTestFactory
 import kotlin.test.assertEquals
 
 class ItemRepositoryImplTest {
@@ -73,7 +73,7 @@ class ItemRepositoryImplTest {
         shareKeyRepository = FakeShareKeyRepository()
         itemKeyRepository = FakeItemKeyRepository()
 
-        share = TestShare.random()
+        share = ShareTestFactory.random()
 
         repository = ItemRepositoryImpl(
             database = FakePassDatabase(),
@@ -96,13 +96,13 @@ class ItemRepositoryImplTest {
 
     @Test
     fun `createItem stores into remote and local datasource`() = runTest {
-        shareKeyRepository.emitGetLatestKeyForShare(TestShareKey.createPrivate())
+        shareKeyRepository.emitGetLatestKeyForShare(ShareKeyTestFactory.createPrivate())
         createItem.setPayload(FakeCreateItem.createPayload())
 
         val name = "title"
         val note = "note"
         val protoItem = TestProtoItemGenerator.generate(name, note)
-        val item = TestItem.random(content = protoItem.toByteArray())
+        val item = ItemTestFactory.random(content = protoItem.toByteArray())
         remoteItemDataSource.setCreateItemResponse {
             FakeRemoteItemDataSource.createItemRevision(item)
         }

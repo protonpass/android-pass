@@ -44,8 +44,8 @@ import proton.android.pass.preferences.HasDismissedNotificationBanner
 import proton.android.pass.preferences.HasDismissedSLSyncBanner
 import proton.android.pass.preferences.FakePreferenceRepository
 import proton.android.pass.test.MainDispatcherRule
-import proton.android.pass.test.domain.TestPendingInvite
-import proton.android.pass.test.domain.TestVault
+import proton.android.pass.test.domain.PendingInviteTestFactory
+import proton.android.pass.test.domain.VaultTestFactory
 
 class OnBoardingTipsViewModelTest {
 
@@ -130,7 +130,7 @@ class OnBoardingTipsViewModelTest {
 
     @Test
     fun `Should display invite banner regardless of the state of the other conditions`() = runTest {
-        val pendingInvite = TestPendingInvite.Vault.create()
+        val pendingInvite = PendingInviteTestFactory.Vault.create()
         setupSyncStatus()
         autofillManager.emitStatus(AutofillSupportedStatus.Supported(AutofillStatus.Disabled))
         preferenceRepository.setHasDismissedAutofillBanner(HasDismissedAutofillBanner.NotDismissed)
@@ -210,7 +210,7 @@ class OnBoardingTipsViewModelTest {
             isSyncEnabled = false,
             isPreferenceEnabled = false,
             pendingAliasCount = 0,
-            defaultVault = TestVault.create(),
+            defaultVault = VaultTestFactory.create(),
             canManageAliases = false
         )
         observeSimpleLoginSyncStatus.updateSyncStatus(syncStatus)

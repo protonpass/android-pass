@@ -28,7 +28,7 @@ import proton.android.pass.crypto.api.usecases.OpenItem
 import proton.android.pass.crypto.impl.context.FakeEncryptionContextProvider
 import proton.android.pass.domain.ItemType
 import proton.android.pass.domain.key.ShareKey
-import proton.android.pass.test.domain.TestShare
+import proton.android.pass.test.domain.ShareTestFactory
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
@@ -46,7 +46,7 @@ class OpenItemImplTest {
 
     @Test
     fun canOpenItem() {
-        val share = TestShare.Vault.create()
+        val share = ShareTestFactory.Vault.create()
         val output = instance.open(
             response = REVISION,
             share = share,

@@ -22,7 +22,7 @@ import proton.android.pass.data.api.usecases.UnpinItem
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
-import proton.android.pass.test.domain.TestItem
+import proton.android.pass.test.domain.ItemTestFactory
 import javax.inject.Inject
 
 class FakeUnpinItem @Inject constructor() : UnpinItem {
@@ -34,7 +34,7 @@ class FakeUnpinItem @Inject constructor() : UnpinItem {
     }
 
     override suspend fun invoke(shareId: ShareId, itemId: ItemId): Item =
-        item?.copy(isPinned = false) ?: TestItem.random().copy(
+        item?.copy(isPinned = false) ?: ItemTestFactory.random().copy(
             id = itemId,
             shareId = shareId,
             isPinned = false

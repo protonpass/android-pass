@@ -2,6 +2,8 @@
 <resources>
   <string name="on_boarding_autofill_content">Laat Proton Pass de inloggegevens voor u invullen. Typen of kopiëren en plakken is niet nodig.</string>
   <string name="on_boarding_autofill_title">Meld u direct aan bij apps</string>
+  <string name="on_boarding_autofill_content_v2">Laat Proton Pass de inloggegevens voor u invullen. Typen of kopiëren en plakken is niet nodig.</string>
+  <string name="on_boarding_autofill_title_v2">Geniet van de magie van Automatisch aanvullen</string>
   <string name="on_boarding_autofill_button">Automatisch aanvullen met Proton Pass</string>
   <string name="on_boarding_fingerprint_content">Stel Proton Pass in om te ontgrendelen met uw vingerafdruk, zodat alleen u toegang hebt.</string>
   <string name="on_boarding_fingerprint_title">Bescherm uw meest gevoelige gegevens</string>
@@ -11,6 +13,7 @@
   <string name="on_boarding_last_page_button">Begin Proton Pass te gebruiken</string>
   <string name="on_boarding_skip">Niet nu</string>
   <string name="on_boarding_tutorial">Bekijk een korte video over het gebruik van Proton Pass</string>
+  <string name="on_boarding_tutorial_v2">Leer hoe u Proton Pass kunt gebruiken</string>
   <string name="on_boarding_pending_invite_content">Voor veiligheidsredenen dient uw toegang bevestigd te worden.</string>
   <string name="on_boarding_pending_invite_title">Toegang tot gedeelde data hangende</string>
   <string name="on_boarding_pending_invite_button">Meer informatie over Proton Pass</string>

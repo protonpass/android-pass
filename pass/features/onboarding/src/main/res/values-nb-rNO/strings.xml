@@ -2,6 +2,8 @@
 <resources>
   <string name="on_boarding_autofill_content">La Proton Pass fylle inn påloggingsdetaljer for deg. Ingen skriving eller kopier-lim inn kreves.</string>
   <string name="on_boarding_autofill_title">Logg på apper umiddelbart</string>
+  <string name="on_boarding_autofill_content_v2">Proton pass fill in login details for you. No typing or copy paste required.</string>
+  <string name="on_boarding_autofill_title_v2">Enjoy the magic of AutoFill</string>
   <string name="on_boarding_autofill_button">Autofyll med Proton Pass</string>
   <string name="on_boarding_fingerprint_content">Sett Proton Pass til å låse opp med fingeravtrykket ditt, slik at bare du har tilgang.</string>
   <string name="on_boarding_fingerprint_title">Beskytt de mest sensitive dataene dine</string>
@@ -11,6 +13,7 @@
   <string name="on_boarding_last_page_button">Begynn å bruke Proton Pass</string>
   <string name="on_boarding_skip">Ikke nå</string>
   <string name="on_boarding_tutorial">Se en kort video om hvordan du bruker Proton Pass</string>
+  <string name="on_boarding_tutorial_v2">Learn how to use Proton Pass</string>
   <string name="on_boarding_pending_invite_content">Av sikkerhetsgrunner må tilgangen din bekreftes.</string>
   <string name="on_boarding_pending_invite_title">Venter på tilgang til de delte dataene</string>
   <string name="on_boarding_pending_invite_button">Lær mer om Proton Pass</string>

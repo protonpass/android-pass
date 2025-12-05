@@ -2,6 +2,8 @@
 <resources>
   <string name="on_boarding_autofill_content">Αφήστε το Proton Pass να συμπληρώσει τα στοιχεία σύνδεσης για εσάς. Δεν απαιτείται πληκτρολόγηση ή αντιγραφή-επικόλληση.</string>
   <string name="on_boarding_autofill_title">Άμεση σύνδεση σε εφαρμογές</string>
+  <string name="on_boarding_autofill_content_v2">Αφήστε το Proton Pass να συμπληρώσει τα στοιχεία σύνδεσης για εσάς. Δεν απαιτείται πληκτρολόγηση ή αντιγραφή-επικόλληση.</string>
+  <string name="on_boarding_autofill_title_v2">Απολαύστε τη μαγεία της Αυτόματης Συμπλήρωσης</string>
   <string name="on_boarding_autofill_button">Αυτόματη συμπλήρωση με Proton Pass</string>
   <string name="on_boarding_fingerprint_content">Ρυθμίστε το Proton Pass ώστε να ξεκλειδώνει με το δακτυλικό σας αποτύπωμα, ώστε μόνο εσείς να έχετε πρόσβαση.</string>
   <string name="on_boarding_fingerprint_title">Προστατέψτε τα πιο ευαίσθητα δεδομένα σας</string>
@@ -11,6 +13,7 @@
   <string name="on_boarding_last_page_button">Ξεκινήστε να χρησιμοποιείτε το Proton Pass</string>
   <string name="on_boarding_skip">Όχι τώρα</string>
   <string name="on_boarding_tutorial">Παρακολουθήστε ένα σύντομο βίντεο σχετικά με τον τρόπο χρήσης του Proton Pass</string>
+  <string name="on_boarding_tutorial_v2">Μάθετε πώς να χρησιμοποιείτε το Proton Pass</string>
   <string name="on_boarding_pending_invite_content">Για λόγους ασφαλείας, η πρόσβασή σας πρέπει να επιβεβαιωθεί.</string>
   <string name="on_boarding_pending_invite_title">Εκκρεμής πρόσβαση στα κοινόχρηστα δεδομένα</string>
   <string name="on_boarding_pending_invite_button">Μάθετε περισσότερα για το Proton Pass</string>

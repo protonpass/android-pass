@@ -2,6 +2,8 @@
 <resources>
   <string name="on_boarding_autofill_content">Zezwalaj aplikacji Proton Pass na uzupełnianie danych logowania. Wpisywanie danych lub ich kopiowanie i wklejanie nie jest potrzebne.</string>
   <string name="on_boarding_autofill_title">Błyskawiczne logowanie do aplikacji</string>
+  <string name="on_boarding_autofill_content_v2">Proton pass fill in login details for you. No typing or copy paste required.</string>
+  <string name="on_boarding_autofill_title_v2">Enjoy the magic of AutoFill</string>
   <string name="on_boarding_autofill_button">Autouzupełnianie za pomocą Proton Pass</string>
   <string name="on_boarding_fingerprint_content">Odblokuj aplikację Proton Pass za pomocą odcisku palca.</string>
   <string name="on_boarding_fingerprint_title">Chroń swoje najbardziej poufne dane</string>
@@ -11,6 +13,7 @@
   <string name="on_boarding_last_page_button">Zacznij korzystać z Proton Pass</string>
   <string name="on_boarding_skip">Nie teraz</string>
   <string name="on_boarding_tutorial">Zobacz krótki poradnik jak używać Proton Pass</string>
+  <string name="on_boarding_tutorial_v2">Learn how to use Proton Pass</string>
   <string name="on_boarding_pending_invite_content">Ze względów bezpieczeństwa dostęp musi zostać potwierdzony.</string>
   <string name="on_boarding_pending_invite_title">Oczekujący dostęp do udostępnionych danych</string>
   <string name="on_boarding_pending_invite_button">Dowiedz się więcej o Proton Pass</string>

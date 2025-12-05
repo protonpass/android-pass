@@ -2,6 +2,8 @@
 <resources>
   <string name="on_boarding_autofill_content">Nechte Proton Pass vyplnit přihlašovací údaje za vás. Není třeba nic psát ani kopírovat.</string>
   <string name="on_boarding_autofill_title">Okamžité přihlášení do aplikací</string>
+  <string name="on_boarding_autofill_content_v2">Proton Pass vyplňuje přihlašovací údaje za vás. Není třeba nic psát ani kopírovat.</string>
+  <string name="on_boarding_autofill_title_v2">Využijte přínosu automatického vyplňování</string>
   <string name="on_boarding_autofill_button">Automatické vyplňování pomocí Proton Pass</string>
   <string name="on_boarding_fingerprint_content">Nastavte Proton Pass na odemykání otiskem prstu, abyste měli přístup jen vy.</string>
   <string name="on_boarding_fingerprint_title">Chraňte svá nejcitlivější data</string>
@@ -11,6 +13,7 @@
   <string name="on_boarding_last_page_button">Začněte používat Proton Pass</string>
   <string name="on_boarding_skip">Nyní ne</string>
   <string name="on_boarding_tutorial">Podívejte se na krátké video, jak používat Proton Pass</string>
+  <string name="on_boarding_tutorial_v2">Zjistěte, jak používat Proton Pass</string>
   <string name="on_boarding_pending_invite_content">Z bezpečnostních důvodů musí být váš přístup potvrzen.</string>
   <string name="on_boarding_pending_invite_title">Čekání na přístup ke sdíleným datům</string>
   <string name="on_boarding_pending_invite_button">Více informací o Proton Pass</string>

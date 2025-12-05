@@ -369,4 +369,5 @@
   <string name="warning_dialog_item_shared_vault_updating">Editați un articol într-un seif partajat, iar membri vor obține imediat acces la acesta.</string>
   <string name="warning_dialog_item_shared_updating">Editați un articol partajat. Modificările vor fi vizibile imediat pentru toți cei cu care este partajat.</string>
   <string name="warning_dialog_item_shared_vault_reminder">Nu-mi mai reaminti</string>
+  <string name="upgrade_to_pass_plus">Treceți la Pass Plus</string>
 </resources>

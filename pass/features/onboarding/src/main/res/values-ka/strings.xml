@@ -2,6 +2,8 @@
 <resources>
   <string name="on_boarding_autofill_content">მიეცით უფლება Proton-ს, ეს თქვენთვის გააკეთოს. კოპირება და ჩასმა აღარ დაგჭირდებათ.</string>
   <string name="on_boarding_autofill_title">შედით აპში სწრაფად</string>
+  <string name="on_boarding_autofill_content_v2">Proton pass fill in login details for you. No typing or copy paste required.</string>
+  <string name="on_boarding_autofill_title_v2">Enjoy the magic of AutoFill</string>
   <string name="on_boarding_autofill_button">ავტომატური შევსება Proton Pass-ით</string>
   <string name="on_boarding_fingerprint_content">დააყენეთ Proton Pass-ში, რომ განბლოკოს თქვენი ანაბეჭდით, რათა წვდომა მხოლოდ თქვენ გქონდეთ.</string>
   <string name="on_boarding_fingerprint_title">დაიცავით თქვენი ყველაზე მგრძნობიარე მონაცემები</string>
@@ -11,6 +13,7 @@
   <string name="on_boarding_last_page_button">Proton Pass-ის გამოყენების დაწყება</string>
   <string name="on_boarding_skip">არა ახლა</string>
   <string name="on_boarding_tutorial">უყურეთ მოკლე ვიდეოს, როგორ გამოიყენოთ Proton Pass</string>
+  <string name="on_boarding_tutorial_v2">Learn how to use Proton Pass</string>
   <string name="on_boarding_pending_invite_content">უსაფრთხოებისთვის თქვენს წვდომას დადასტურება სჭირდება.</string>
   <string name="on_boarding_pending_invite_title">გაზიარებულ მონაცემებთან წვდომის მოლოდინი</string>
   <string name="on_boarding_pending_invite_button">გაიგეთ მეტი Proton Pass-ის შესახებ</string>

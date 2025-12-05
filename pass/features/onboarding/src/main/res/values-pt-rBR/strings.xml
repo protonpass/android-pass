@@ -2,6 +2,8 @@
 <resources>
   <string name="on_boarding_autofill_content">Permita que o Proton Pass preencha os detalhes de início de sessão para você. Sem necessidade de digitar ou copiar e colar dados.</string>
   <string name="on_boarding_autofill_title">Inicie sessão nos aplicativos instantaneamente</string>
+  <string name="on_boarding_autofill_content_v2">O Proton Pass preencha os detalhes de início de sessão para você. Sem necessidade de digitar ou copiar e colar dados.</string>
+  <string name="on_boarding_autofill_title_v2">Aproveite a mágica do preenchimento automático</string>
   <string name="on_boarding_autofill_button">Beneficie do preenchimento automático com o Proton Pass.</string>
   <string name="on_boarding_fingerprint_content">Configure o Proton Pass para desbloquear com sua impressão digital, assim, apenas você terá acesso.</string>
   <string name="on_boarding_fingerprint_title">Proteja seus dados mais sensíveis</string>
@@ -11,6 +13,7 @@
   <string name="on_boarding_last_page_button">Comece a usar o Proton Pass</string>
   <string name="on_boarding_skip">Agora não</string>
   <string name="on_boarding_tutorial">Assista a um breve vídeo sobre como usar o Proton Pass</string>
+  <string name="on_boarding_tutorial_v2">Aprenda a usar o Proton Pass</string>
   <string name="on_boarding_pending_invite_content">Por motivos de segurança, é necessário confirmar seu acesso.</string>
   <string name="on_boarding_pending_invite_title">Acesso pendente para compartilhar os dados.</string>
   <string name="on_boarding_pending_invite_button">Saiba mais sobre o Proton Pass</string>

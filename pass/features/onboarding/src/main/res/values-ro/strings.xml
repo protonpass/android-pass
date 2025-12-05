@@ -2,6 +2,8 @@
 <resources>
   <string name="on_boarding_autofill_content">Permiteți Proton Pass să vă completeze detaliile de conectare. Nu este necesară tastarea sau copierea și lipirea.</string>
   <string name="on_boarding_autofill_title">Conectare instantă în aplicații</string>
+  <string name="on_boarding_autofill_content_v2">Proton Pass vă completează detaliile de conectare. Nu este necesară tastarea sau copierea și lipirea.</string>
+  <string name="on_boarding_autofill_title_v2">Bucurați-vă de magia autocompletării</string>
   <string name="on_boarding_autofill_button">Autocompletare cu Proton Pass</string>
   <string name="on_boarding_fingerprint_content">Setați deblocarea Proton Pass cu amprenta, pentru a avea acces exclusiv.</string>
   <string name="on_boarding_fingerprint_title">Protejați-vă cele mai importante date</string>
@@ -11,6 +13,7 @@
   <string name="on_boarding_last_page_button">Începeți să utilizați Proton Pass</string>
   <string name="on_boarding_skip">Nu acum</string>
   <string name="on_boarding_tutorial">Vizionați un videoclip scurt despre cum se folosește Proton Pass</string>
+  <string name="on_boarding_tutorial_v2">Aflați cum să utilizați Proton Pass</string>
   <string name="on_boarding_pending_invite_content">Din motive de securitate, accesul trebuie să vă fie confirmat.</string>
   <string name="on_boarding_pending_invite_title">În așteptarea accesului la datele partajate</string>
   <string name="on_boarding_pending_invite_button">Aflați mai multe despre Proton Pass</string>

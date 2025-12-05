@@ -335,5 +335,5 @@
   <string name="cannot_create_items_dialog_title">항목을 생성할 수 없습니다</string>
   <string name="cannot_create_items_dialog_message">편집자 또는 관리자 접근 권한이 있는 금고가 없습니다. 기본 앱에서 생성하거나 조직의 관리자에게 지원을 요청하십시오.</string>
   <string name="wifi_security_type_field_label">보안 유형</string>
-  <string name="functionality_not_available">This functionality is not available for your device.</string>
+  <string name="functionality_not_available">이 기능은 해당 기기에서 지원되지 않습니다.</string>
 </resources>

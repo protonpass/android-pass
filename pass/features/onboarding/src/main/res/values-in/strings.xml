@@ -2,6 +2,8 @@
 <resources>
   <string name="on_boarding_autofill_content">Biarkan Proton Pass mengisi rincian entri masuk Anda secara otomatis. Anda tidak lagi perlu mengetik atau menyalin.</string>
   <string name="on_boarding_autofill_title">Masuk ke aplikasi secara instan</string>
+  <string name="on_boarding_autofill_content_v2">Proton pass fill in login details for you. No typing or copy paste required.</string>
+  <string name="on_boarding_autofill_title_v2">Enjoy the magic of AutoFill</string>
   <string name="on_boarding_autofill_button">Isi otomatis dengan Proton Pass</string>
   <string name="on_boarding_fingerprint_content">Atur Proton Pass untuk membuka kunci dengan sidik jari Anda sehingga hanya Anda yang memiliki akses.</string>
   <string name="on_boarding_fingerprint_title">Lindungi data Anda yang paling sensitif</string>
@@ -11,6 +13,7 @@
   <string name="on_boarding_last_page_button">Mulai gunakan Proton Pass</string>
   <string name="on_boarding_skip">Tidak sekarang</string>
   <string name="on_boarding_tutorial">Tonton video singkat seputar cara pemakaian Proton Pass</string>
+  <string name="on_boarding_tutorial_v2">Learn how to use Proton Pass</string>
   <string name="on_boarding_pending_invite_content">Demi alasan keamanan, akses Anda perlu untuk dikonfirmasi.</string>
   <string name="on_boarding_pending_invite_title">Menunggu akses ke data yang dibagikan</string>
   <string name="on_boarding_pending_invite_button">Pelajari lebih lanjut tentang Proton Pass</string>

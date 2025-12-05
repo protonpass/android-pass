@@ -335,5 +335,5 @@
   <string name="cannot_create_items_dialog_title">Nem lehet elemeket létrehozni</string>
   <string name="cannot_create_items_dialog_message">Önnek nincs szerkesztői vagy adminisztrátori hozzáféréssel rendelkező tárolója. Próbáljon meg létrehozni egyet a főalkalmazásban, vagy kérjen támogatást a szervezet rendszergazdájától.</string>
   <string name="wifi_security_type_field_label">A biztonság típusa</string>
-  <string name="functionality_not_available">This functionality is not available for your device.</string>
+  <string name="functionality_not_available">Ez a funkció nem elérhető az eszközén.</string>
 </resources>

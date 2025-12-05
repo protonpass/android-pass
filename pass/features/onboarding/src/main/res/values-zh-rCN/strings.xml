@@ -2,6 +2,8 @@
 <resources>
   <string name="on_boarding_autofill_content">让 Proton Pass 为您填写登录信息。无需打字或复制粘贴。</string>
   <string name="on_boarding_autofill_title">瞬间登录各类应用</string>
+  <string name="on_boarding_autofill_content_v2">Proton pass fill in login details for you. No typing or copy paste required.</string>
+  <string name="on_boarding_autofill_title_v2">Enjoy the magic of AutoFill</string>
   <string name="on_boarding_autofill_button">使用 Proton Pass 自动填充</string>
   <string name="on_boarding_fingerprint_content">将 Proton Pass 设置为使用指纹解锁，这样只有您才能访问。</string>
   <string name="on_boarding_fingerprint_title">保护您最敏感的数据</string>
@@ -11,6 +13,7 @@
   <string name="on_boarding_last_page_button">开始使用 Proton Pass</string>
   <string name="on_boarding_skip">以后再说</string>
   <string name="on_boarding_tutorial">观看如何使用 Proton Pass 的简短视频</string>
+  <string name="on_boarding_tutorial_v2">Learn how to use Proton Pass</string>
   <string name="on_boarding_pending_invite_content">出于安全原因，需要确认您的访问权限.</string>
   <string name="on_boarding_pending_invite_title">等待访问共享数据</string>
   <string name="on_boarding_pending_invite_button">了解更多关于 Proton Pass 的信息</string>

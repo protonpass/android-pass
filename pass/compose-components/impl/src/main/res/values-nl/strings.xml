@@ -350,4 +350,5 @@
   <string name="warning_dialog_item_shared_vault_updating">U bewerkt een item in een gedeelde kluis en leden krijgen direct toegang tot dit item.</string>
   <string name="warning_dialog_item_shared_updating">U bent een gedeeld item aan het bewerken. Wijzigingen zullen onmiddellijk zichtbaar zijn voor iedereen waarmee het gedeeld is.</string>
   <string name="warning_dialog_item_shared_vault_reminder">Niet opnieuw herinneren</string>
+  <string name="upgrade_to_pass_plus">Opwaarderen naar Pass Plus</string>
 </resources>

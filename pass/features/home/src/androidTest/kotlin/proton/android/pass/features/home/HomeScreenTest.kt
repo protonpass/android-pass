@@ -72,7 +72,7 @@ import proton.android.pass.preferences.FakePreferenceRepository
 import proton.android.pass.preferences.UseFaviconsPreference
 import proton.android.pass.test.CallChecker
 import proton.android.pass.test.HiltComponentActivity
-import proton.android.pass.test.domain.TestShare
+import proton.android.pass.test.domain.ShareTestFactory
 import proton.android.pass.test.waitUntilExists
 import java.util.Date
 import javax.inject.Inject
@@ -259,7 +259,7 @@ class HomeScreenTest {
             .map { it.shareId }
             .distinct()
             .map { shareId ->
-                TestShare.Vault.create(
+                ShareTestFactory.Vault.create(
                     userId = "",
                     id = shareId.id,
                     vaultId = "vaultId",

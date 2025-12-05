@@ -21,14 +21,14 @@ package proton.android.pass.securitycenter.fakes.passwords
 import proton.android.pass.domain.Item
 import proton.android.pass.securitycenter.api.BreachDataResult
 import proton.android.pass.securitycenter.api.checkers.BreachedDataChecker
-import proton.android.pass.securitycenter.fakes.mother.BreachDataResultMother
+import proton.android.pass.securitycenter.fakes.mother.BreachDataResultTestFactory
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
 class FakeBreachedDataChecker @Inject constructor() : BreachedDataChecker {
 
-    private var result: BreachDataResult = BreachDataResultMother.random()
+    private var result: BreachDataResult = BreachDataResultTestFactory.random()
 
     private val memory: MutableList<List<Item>> = mutableListOf()
     fun memory(): List<List<Item>> = memory

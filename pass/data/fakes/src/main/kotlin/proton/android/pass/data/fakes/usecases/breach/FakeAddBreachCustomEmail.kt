@@ -26,5 +26,6 @@ import javax.inject.Singleton
 
 @Singleton
 class FakeAddBreachCustomEmail @Inject constructor() : AddBreachCustomEmail {
-    override suspend fun invoke(userId: UserId?, email: String): BreachCustomEmail = BreachCustomEmailMother.random()
+    override suspend fun invoke(userId: UserId?, email: String): BreachCustomEmail =
+        BreachCustomEmailTestFactory.random()
 }

@@ -75,8 +75,8 @@ import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.test.CallChecker
 import proton.android.pass.test.HiltComponentActivity
 import proton.android.pass.test.TestConstants
-import proton.android.pass.test.domain.TestItem
-import proton.android.pass.test.domain.TestUser
+import proton.android.pass.test.domain.ItemTestFactory
+import proton.android.pass.test.domain.UserTestFactory
 import proton.android.pass.test.waitUntilExists
 import proton.android.pass.test.writeTextAndWait
 import proton.android.pass.totp.api.TotpSpec
@@ -134,7 +134,7 @@ class CreateLoginScreenTest {
     fun setup() {
         hiltRule.inject()
         accountManager.sendPrimaryUserId(USER_ID)
-        observeCurrentUser.sendUser(TestUser.create(userId = USER_ID, email = USER_EMAIL))
+        observeCurrentUser.sendUser(UserTestFactory.create(userId = USER_ID, email = USER_EMAIL))
         savedStateHandle.get().apply {
             set(CommonNavArgId.ShareId.key, SHARE_ID)
         }
@@ -175,7 +175,7 @@ class CreateLoginScreenTest {
         val website2Full = "https://$website2"
         val note = "some note"
 
-        val item = TestItem.createLogin(
+        val item = ItemTestFactory.createLogin(
             title = title,
             username = email,
             note = note,
@@ -282,7 +282,7 @@ class CreateLoginScreenTest {
         val totpCustomFieldLabel = "TOTP custom field"
         val totpCustomFieldValue = "TOTPSECRET"
 
-        createItem.sendItem(Result.success(TestItem.createLogin()))
+        createItem.sendItem(Result.success(ItemTestFactory.createLogin()))
         totpManager.addSanitisedSaveResult(Result.success(totpCustomFieldValue))
 
         val textCustomField = CustomFieldContent.Text(
@@ -618,7 +618,7 @@ class CreateLoginScreenTest {
         )
 
         draftRepository.save(CreateAliasViewModel.KEY_DRAFT_ALIAS, aliasItemFormState)
-        createItemAndAlias.setResult(Result.success(TestItem.createLogin()))
+        createItemAndAlias.setResult(Result.success(ItemTestFactory.createLogin()))
 
         composeTestRule.apply {
             setContent {

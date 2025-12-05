@@ -41,7 +41,7 @@ import proton.android.pass.domain.inappmessages.InAppMessagePromoContents
 import proton.android.pass.domain.inappmessages.InAppMessagePromoThemedContents
 import proton.android.pass.domain.inappmessages.InAppMessageRange
 import proton.android.pass.domain.inappmessages.InAppMessageStatus
-import proton.android.pass.test.domain.TestInAppMessage
+import proton.android.pass.test.domain.InAppMessageTestFactory
 import kotlin.time.Duration.Companion.days
 
 internal class InAppMessagesRepositoryImplTest {
@@ -66,7 +66,10 @@ internal class InAppMessagesRepositoryImplTest {
     @Test
     fun `observeTopDeliverableUserMessage returns banner messages from local data source`() = runTest {
         val currentTimestamp = Clock.System.now().epochSeconds
-        val bannerMessage = TestInAppMessage.createBanner(id = TEST_MESSAGE_ID.value, title = TEST_MESSAGE_TITLE_1)
+        val bannerMessage = InAppMessageTestFactory.createBanner(
+            id = TEST_MESSAGE_ID.value,
+            title = TEST_MESSAGE_TITLE_1
+        )
 
         local.emitTopMessage(bannerMessage)
 
@@ -81,7 +84,10 @@ internal class InAppMessagesRepositoryImplTest {
     @Test
     fun `observeTopDeliverableUserMessage triggers refresh when refresh flag is true`() = runTest {
         val currentTimestamp = Clock.System.now().epochSeconds
-        val bannerMessage = TestInAppMessage.createBanner(id = TEST_MESSAGE_ID.value, title = TEST_MESSAGE_TITLE_1)
+        val bannerMessage = InAppMessageTestFactory.createBanner(
+            id = TEST_MESSAGE_ID.value,
+            title = TEST_MESSAGE_TITLE_1
+        )
 
         remote.setFetchResult(Result.success(createNotificationsResponse(listOf(bannerMessage))))
         local.emitTopMessage(bannerMessage)
@@ -96,7 +102,7 @@ internal class InAppMessagesRepositoryImplTest {
     @Test
     fun `observePromoMinimizedUserMessages returns promo messages from local data source`() = runTest {
         val currentTimestamp = Clock.System.now().epochSeconds
-        val promoMessage = TestInAppMessage.createPromo(
+        val promoMessage = InAppMessageTestFactory.createPromo(
             id = TEST_MESSAGE_ID.value,
             title = TEST_MESSAGE_TITLE_PROMO,
             promoContents = InAppMessagePromoContents(
@@ -117,14 +123,20 @@ internal class InAppMessagesRepositoryImplTest {
 
         local.emitPromoMessages(promoMessage)
 
-        val result = instance.observePromoMinimizedUserMessages(TEST_USER_ID, currentTimestamp).first()
+        val result = instance.observePromoMinimizedUserMessages(
+            userId = TEST_USER_ID,
+            currentTimestamp = currentTimestamp
+        ).first()
 
         assertThat(result).isEqualTo(promoMessage)
     }
 
     @Test
     fun `refreshUserMessages fetches and stores messages from remote`() = runTest {
-        val bannerMessage = TestInAppMessage.createBanner(id = TEST_MESSAGE_ID.value, title = TEST_MESSAGE_TITLE_1)
+        val bannerMessage = InAppMessageTestFactory.createBanner(
+            id = TEST_MESSAGE_ID.value,
+            title = TEST_MESSAGE_TITLE_1
+        )
         val response = createNotificationsResponse(listOf(bannerMessage))
 
         remote.setFetchResult(Result.success(response))
@@ -138,8 +150,8 @@ internal class InAppMessagesRepositoryImplTest {
     @Test
     fun `refreshUserMessages handles pagination correctly`() = runTest {
         val messages = listOf(
-            TestInAppMessage.createBanner(id = TEST_MESSAGE_ID.value, title = TEST_MESSAGE_TITLE_MESSAGE_1),
-            TestInAppMessage.createBanner(id = TEST_MESSAGE_ID_2.value, title = TEST_MESSAGE_TITLE_MESSAGE_2)
+            InAppMessageTestFactory.createBanner(id = TEST_MESSAGE_ID.value, title = TEST_MESSAGE_TITLE_MESSAGE_1),
+            InAppMessageTestFactory.createBanner(id = TEST_MESSAGE_ID_2.value, title = TEST_MESSAGE_TITLE_MESSAGE_2)
         )
 
         // Mock remote to return a single response (simplified pagination test)
@@ -163,12 +175,12 @@ internal class InAppMessagesRepositoryImplTest {
 
     @Test
     fun `refreshUserMessages preloads images from messages`() = runTest {
-        val messageWithImage = TestInAppMessage.createBanner(
+        val messageWithImage = InAppMessageTestFactory.createBanner(
             id = TEST_MESSAGE_ID.value,
             title = TEST_MESSAGE_TITLE_WITH_IMAGE,
             imageUrl = Some(TEST_IMAGE_URL)
         )
-        val promoMessage = TestInAppMessage.createPromo(
+        val promoMessage = InAppMessageTestFactory.createPromo(
             id = TEST_MESSAGE_ID_2.value,
             title = TEST_MESSAGE_TITLE_PROMO_WITH_IMAGES,
             message = Some(TEST_PROMO_MESSAGE_CONTENT),
@@ -215,8 +227,10 @@ internal class InAppMessagesRepositoryImplTest {
     @Test
     fun `changeMessageStatus updates message status remotely and locally`() = runTest {
         val newStatus = InAppMessageStatus.Read
-        val originalMessage = TestInAppMessage.createBanner(id = TEST_MESSAGE_ID.value, title = TEST_MESSAGE_TITLE)
-        val updatedMessage = originalMessage.copy(state = newStatus)
+        val originalMessage = InAppMessageTestFactory.createBanner(
+            id = TEST_MESSAGE_ID.value,
+            title = TEST_MESSAGE_TITLE
+        )
 
         local.emitUserMessage(originalMessage)
 
@@ -246,7 +260,7 @@ internal class InAppMessagesRepositoryImplTest {
         val error = RuntimeException(TEST_ERROR_LOCAL)
 
         // Set up a message in the fake so observeUserMessage returns something
-        val message = TestInAppMessage.createBanner(id = TEST_MESSAGE_ID.value, title = TEST_MESSAGE_TITLE)
+        val message = InAppMessageTestFactory.createBanner(id = TEST_MESSAGE_ID.value, title = TEST_MESSAGE_TITLE)
         local.emitUserMessage(message)
 
         // Set up the fake to throw error when updateMessage is called
@@ -262,7 +276,7 @@ internal class InAppMessagesRepositoryImplTest {
 
     @Test
     fun `observeUserMessage returns message from local data source`() = runTest {
-        val message = TestInAppMessage.createBanner(id = TEST_MESSAGE_ID.value, title = TEST_MESSAGE_TITLE)
+        val message = InAppMessageTestFactory.createBanner(id = TEST_MESSAGE_ID.value, title = TEST_MESSAGE_TITLE)
 
         local.emitUserMessage(message)
 
@@ -273,7 +287,7 @@ internal class InAppMessagesRepositoryImplTest {
 
     @Test
     fun `observeUserMessage returns distinct values only`() = runTest {
-        val message = TestInAppMessage.createBanner(id = TEST_MESSAGE_ID.value, title = TEST_MESSAGE_TITLE)
+        val message = InAppMessageTestFactory.createBanner(id = TEST_MESSAGE_ID.value, title = TEST_MESSAGE_TITLE)
 
         local.emitUserMessage(message)
         local.emitUserMessage(message) // Same message
@@ -286,7 +300,7 @@ internal class InAppMessagesRepositoryImplTest {
     @Test
     fun `observeTopDeliverableUserMessage returns distinct values only`() = runTest {
         val currentTimestamp = Clock.System.now().epochSeconds
-        val bannerMessage = TestInAppMessage.createBanner(id = TEST_MESSAGE_ID.value, title = TEST_MESSAGE_TITLE)
+        val bannerMessage = InAppMessageTestFactory.createBanner(id = TEST_MESSAGE_ID.value, title = TEST_MESSAGE_TITLE)
 
         local.emitTopMessage(bannerMessage)
         local.emitTopMessage(bannerMessage) // Same messages
@@ -302,7 +316,7 @@ internal class InAppMessagesRepositoryImplTest {
     @Test
     fun `observePromoMinimizedUserMessages returns distinct values only`() = runTest {
         val currentTimestamp = Clock.System.now().epochSeconds
-        val promoMessage = TestInAppMessage.createPromo(
+        val promoMessage = InAppMessageTestFactory.createPromo(
             id = TEST_MESSAGE_ID.value,
             title = TEST_MESSAGE_TITLE_PROMO,
             promoContents = InAppMessagePromoContents(
@@ -348,7 +362,12 @@ internal class InAppMessagesRepositoryImplTest {
 
     @Test
     fun `refreshUserMessages handles store messages failure`() = runTest {
-        val messages = listOf(TestInAppMessage.createBanner(id = TEST_MESSAGE_ID.value, title = TEST_MESSAGE_TITLE))
+        val messages = listOf(
+            InAppMessageTestFactory.createBanner(
+                id = TEST_MESSAGE_ID.value,
+                title = TEST_MESSAGE_TITLE
+            )
+        )
         val response = createNotificationsResponse(messages)
         val error = RuntimeException(TEST_ERROR_STORAGE)
 
@@ -362,8 +381,8 @@ internal class InAppMessagesRepositoryImplTest {
     @Test
     fun `refreshUserMessages handles multiple pages correctly`() = runTest {
         val messages = listOf(
-            TestInAppMessage.createBanner(id = TEST_MESSAGE_ID.value, title = TEST_MESSAGE_TITLE_MESSAGE_1),
-            TestInAppMessage.createBanner(id = TEST_MESSAGE_ID_2.value, title = TEST_MESSAGE_TITLE_MESSAGE_2)
+            InAppMessageTestFactory.createBanner(id = TEST_MESSAGE_ID.value, title = TEST_MESSAGE_TITLE_MESSAGE_1),
+            InAppMessageTestFactory.createBanner(id = TEST_MESSAGE_ID_2.value, title = TEST_MESSAGE_TITLE_MESSAGE_2)
         )
 
         // Mock remote to return all messages in one response (simplified for testing)
@@ -377,12 +396,12 @@ internal class InAppMessagesRepositoryImplTest {
 
     @Test
     fun `refreshUserMessages preloads only unique images`() = runTest {
-        val message1 = TestInAppMessage.createBanner(
+        val message1 = InAppMessageTestFactory.createBanner(
             id = TEST_MESSAGE_ID.value,
             title = TEST_MESSAGE_TITLE_MESSAGE_1,
             imageUrl = Some(TEST_IMAGE_URL_SAME)
         )
-        val message2 = TestInAppMessage.createBanner(
+        val message2 = InAppMessageTestFactory.createBanner(
             id = TEST_MESSAGE_ID_2.value,
             title = TEST_MESSAGE_TITLE_MESSAGE_2,
             imageUrl = Some(TEST_IMAGE_URL_SAME)
@@ -401,7 +420,7 @@ internal class InAppMessagesRepositoryImplTest {
 
     @Test
     fun `refreshUserMessages handles messages with no images`() = runTest {
-        val messageWithoutImage = TestInAppMessage.createBanner(
+        val messageWithoutImage = InAppMessageTestFactory.createBanner(
             id = TEST_MESSAGE_ID.value,
             title = TEST_MESSAGE_TITLE_WITHOUT_IMAGE
         )

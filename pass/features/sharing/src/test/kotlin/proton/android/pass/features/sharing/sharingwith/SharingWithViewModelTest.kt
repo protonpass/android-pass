@@ -44,7 +44,7 @@ import proton.android.pass.features.sharing.ShowEditVaultArgId
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.navigation.api.CommonOptionalNavArgId
 import proton.android.pass.test.MainDispatcherRule
-import proton.android.pass.test.domain.TestShare
+import proton.android.pass.test.domain.ShareTestFactory
 
 class SharingWithViewModelTest {
 
@@ -81,7 +81,7 @@ class SharingWithViewModelTest {
             checkCanAddressesBeInvited = checkAddressesCanBeInvited
         )
 
-        observeShare.emitValue(TestShare.random())
+        observeShare.emitValue(ShareTestFactory.random())
     }
 
     @Test
@@ -144,7 +144,7 @@ class SharingWithViewModelTest {
         val invitedEmail = "myemail@proton.me"
         checkAddressesCanBeInvited.setAddressCanBeInvited(invitedEmail)
 
-        val vaultShare = TestShare.Vault.create(id = SHARE_ID)
+        val vaultShare = ShareTestFactory.Vault.create(id = SHARE_ID)
         observeShare.emitValue(vaultShare)
         viewModel.onEmailChange(invitedEmail)
 

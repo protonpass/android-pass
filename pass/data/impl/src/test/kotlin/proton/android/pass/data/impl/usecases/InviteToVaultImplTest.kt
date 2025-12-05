@@ -36,7 +36,7 @@ import proton.android.pass.data.fakes.usecases.FakeGetInviteUserMode
 import proton.android.pass.data.impl.fakes.FakeShareRepository
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.ShareRole
-import proton.android.pass.test.domain.TestShare
+import proton.android.pass.test.domain.ShareTestFactory
 
 class InviteToVaultImplTest {
 
@@ -52,7 +52,7 @@ class InviteToVaultImplTest {
         accountManager = FakeAccountManager()
         getInviteUserMode = FakeGetInviteUserMode()
         shareRepository = FakeShareRepository().apply {
-            val share = TestShare.Vault.create(
+            val share = ShareTestFactory.Vault.create(
                 id = SHARE_ID,
                 shareRole = ShareRole.Admin
             )

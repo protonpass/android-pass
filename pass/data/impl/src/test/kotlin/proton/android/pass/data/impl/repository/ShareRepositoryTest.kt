@@ -38,7 +38,7 @@ import proton.android.pass.data.impl.fakes.FakeShareKeyRepository
 import proton.android.pass.data.impl.repositories.ShareRepositoryImpl
 import proton.android.pass.data.impl.responses.ShareResponse
 import proton.android.pass.domain.Share
-import proton.android.pass.test.domain.TestShare
+import proton.android.pass.test.domain.ShareTestFactory
 
 class ShareRepositoryTest {
 
@@ -85,11 +85,11 @@ class ShareRepositoryTest {
         val userId = UserId(USER_ID)
         // initial state: [share1(not-owner), share2, share3, share4]
         // desired state: [share1(yes-owner), share2, share3, share5]
-        val share1 = TestShare.Vault.create(id = "123", isOwner = false)
-        val share2 = TestShare.Item.create(id = "456")
-        val share3 = TestShare.Vault.create(id = "789")
-        val share4 = TestShare.Item.create(id = "654")
-        val share5 = TestShare.Vault.create(id = "321")
+        val share1 = ShareTestFactory.Vault.create(id = "123", isOwner = false)
+        val share2 = ShareTestFactory.Item.create(id = "456")
+        val share3 = ShareTestFactory.Vault.create(id = "789")
+        val share4 = ShareTestFactory.Item.create(id = "654")
+        val share5 = ShareTestFactory.Vault.create(id = "321")
 
         val asEntities = listOf(
             share1.toEntity(),

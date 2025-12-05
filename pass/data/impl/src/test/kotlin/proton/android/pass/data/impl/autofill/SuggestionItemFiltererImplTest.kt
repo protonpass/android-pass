@@ -28,8 +28,8 @@ import proton.android.pass.domain.Item
 import proton.android.pass.domain.entity.AppName
 import proton.android.pass.domain.entity.PackageInfo
 import proton.android.pass.domain.entity.PackageName
-import proton.android.pass.test.domain.TestItem
-import proton.android.pass.test.domain.TestItemType
+import proton.android.pass.test.domain.ItemTestFactory
+import proton.android.pass.test.domain.ItemTypeTestFactory
 
 class SuggestionItemFiltererImplTest {
 
@@ -52,14 +52,14 @@ class SuggestionItemFiltererImplTest {
             PackageName("my.second.package.name"),
             AppName("")
         )
-        val firstItem = TestItem.create(
-            itemType = TestItemType.login(),
+        val firstItem = ItemTestFactory.create(
+            itemType = ItemTypeTestFactory.login(),
             packageInfoSet = setOf(firstPackageInfo)
         )
         val items = listOf(
             firstItem,
-            TestItem.create(
-                itemType = TestItemType.login(),
+            ItemTestFactory.create(
+                itemType = ItemTypeTestFactory.login(),
                 packageInfoSet = setOf(secondPackageInfo)
             )
         )
@@ -78,8 +78,8 @@ class SuggestionItemFiltererImplTest {
             PackageName("my.second.package.name"),
             AppName("")
         )
-        val item = TestItem.create(
-            itemType = TestItemType.login(),
+        val item = ItemTestFactory.create(
+            itemType = ItemTypeTestFactory.login(),
             packageInfoSet = setOf(firstPackageInfo)
         )
         val items = listOf(item)
@@ -91,10 +91,10 @@ class SuggestionItemFiltererImplTest {
     @Test
     fun `given an item with a website should return the suggested element`() {
         val website = "www.proton.me"
-        val firstItem = TestItem.create(TestItemType.login(websites = listOf(website)))
+        val firstItem = ItemTestFactory.create(ItemTypeTestFactory.login(websites = listOf(website)))
         val items = listOf(
             firstItem,
-            TestItem.create(TestItemType.login(websites = listOf("${website}2")))
+            ItemTestFactory.create(ItemTypeTestFactory.login(websites = listOf("${website}2")))
         )
 
         val res = instance.filter(items, Suggestion.Url(website))
@@ -105,7 +105,7 @@ class SuggestionItemFiltererImplTest {
     fun `given an item with a website should return empty list on no matches`() {
         val domain = "www.proton.me"
         val items = listOf(
-            TestItem.create(TestItemType.login(websites = listOf(domain)))
+            ItemTestFactory.create(ItemTypeTestFactory.login(websites = listOf(domain)))
         )
 
         val res = instance.filter(items, Suggestion.Url("${domain}2"))
@@ -115,8 +115,8 @@ class SuggestionItemFiltererImplTest {
     @Test
     fun `given an item with matching domain should return the suggestion`() {
         val baseDomain = "www.proton.me"
-        val itemType = TestItemType.login(websites = listOf("https://$baseDomain/somepath"))
-        val item = TestItem.create(itemType)
+        val itemType = ItemTypeTestFactory.login(websites = listOf("https://$baseDomain/somepath"))
+        val item = ItemTestFactory.create(itemType)
         val items = listOf(item)
 
         val res = instance.filter(items, Suggestion.Url(baseDomain))
@@ -131,24 +131,24 @@ class SuggestionItemFiltererImplTest {
         val subdomain2 = "account.register"
 
         getPublicSuffixList.setTlds(setOf(tld))
-        val item1 = TestItem.create(
-            TestItemType.login(
+        val item1 = ItemTestFactory.create(
+            ItemTypeTestFactory.login(
                 websites = listOf(
                     "$subdomain1.$domain.$tld",
                     "other.random.domain"
                 )
             )
         )
-        val item2 = TestItem.create(
-            TestItemType.login(
+        val item2 = ItemTestFactory.create(
+            ItemTypeTestFactory.login(
                 websites = listOf(
                     "$subdomain2.$domain.$tld",
                     "some.other.site"
                 )
             )
         )
-        val item3 = TestItem.create(TestItemType.login(websites = listOf("$domain.$tld")))
-        val item4 = TestItem.create(TestItemType.login(websites = listOf("otherdomain.$tld")))
+        val item3 = ItemTestFactory.create(ItemTypeTestFactory.login(websites = listOf("$domain.$tld")))
+        val item4 = ItemTestFactory.create(ItemTypeTestFactory.login(websites = listOf("otherdomain.$tld")))
 
         val items = listOf(item1, item2, item3, item4)
         val res = instance.filter(items, Suggestion.Url("$domain.$tld"))
@@ -159,9 +159,9 @@ class SuggestionItemFiltererImplTest {
     fun `check items with same IP are returned`() {
         val ip = "1.2.3.4"
 
-        val item1 = TestItem.create(TestItemType.login(websites = listOf(ip)))
-        val item2 = TestItem.create(TestItemType.login(websites = listOf(ip)))
-        val item3 = TestItem.create(TestItemType.login(websites = listOf("5.6.7.8")))
+        val item1 = ItemTestFactory.create(ItemTypeTestFactory.login(websites = listOf(ip)))
+        val item2 = ItemTestFactory.create(ItemTypeTestFactory.login(websites = listOf(ip)))
+        val item3 = ItemTestFactory.create(ItemTypeTestFactory.login(websites = listOf("5.6.7.8")))
 
         val items = listOf(item1, item2, item3)
         val res = instance.filter(items, Suggestion.Url(ip))
@@ -172,8 +172,8 @@ class SuggestionItemFiltererImplTest {
     fun `check items with same final IP octet are not returned`() {
         val ip = "1.2.3.4"
 
-        val item1 = TestItem.create(TestItemType.login(websites = listOf(ip)))
-        val item2 = TestItem.create(TestItemType.login(websites = listOf("5.6.7.4")))
+        val item1 = ItemTestFactory.create(ItemTypeTestFactory.login(websites = listOf(ip)))
+        val item2 = ItemTestFactory.create(ItemTypeTestFactory.login(websites = listOf("5.6.7.4")))
 
         val items = listOf(item1, item2)
         val res = instance.filter(items, Suggestion.Url(ip))
@@ -185,8 +185,8 @@ class SuggestionItemFiltererImplTest {
         val domain = "some.domain.test"
         val httpsDomain = "https://$domain"
 
-        val item1 = TestItem.create(TestItemType.login(websites = listOf("ftp://$domain")))
-        val item2 = TestItem.create(TestItemType.login(websites = listOf(httpsDomain)))
+        val item1 = ItemTestFactory.create(ItemTypeTestFactory.login(websites = listOf("ftp://$domain")))
+        val item2 = ItemTestFactory.create(ItemTypeTestFactory.login(websites = listOf(httpsDomain)))
 
         val items = listOf(item1, item2)
         val res = instance.filter(items, Suggestion.Url(httpsDomain))

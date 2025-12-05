@@ -26,6 +26,7 @@ import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.api.repositories.ItemRepository
 import proton.android.pass.data.api.repositories.ShareRepository
 import proton.android.pass.data.api.usecases.PromoteNewInviteToInvite
+import proton.android.pass.data.api.usecases.RefreshBreaches
 import proton.android.pass.data.api.usecases.RefreshGroupInvites
 import proton.android.pass.data.api.usecases.RefreshUserAccess
 import proton.android.pass.data.api.usecases.RefreshSharesAndEnqueueSync
@@ -54,7 +55,8 @@ class SyncUserEventsImpl @Inject constructor(
     private val refreshUserInvites: RefreshUserInvites,
     private val refreshGroupInvites: RefreshGroupInvites,
     private val syncPendingAliases: SyncSimpleLoginPendingAliases,
-    private val promoteNewInviteToInvite: PromoteNewInviteToInvite
+    private val promoteNewInviteToInvite: PromoteNewInviteToInvite,
+    private val refreshBreaches: RefreshBreaches
 ) : SyncUserEvents {
 
     override suspend fun invoke(userId: UserId) {
@@ -111,6 +113,7 @@ class SyncUserEventsImpl @Inject constructor(
         processInvitesChanged(userId, eventList.invitesChanged)
         processGroupInvitesChanged(userId, eventList.groupInvitesChanged)
         processPendingAliasToCreateChanged(userId, eventList.pendingAliasToCreateChanged)
+        processBreachUpdateChanged(userId, eventList.breachUpdate)
         processNewUserInvitesChanged(userId, eventList.sharesWithInvitesToCreate)
     }
 
@@ -160,9 +163,13 @@ class SyncUserEventsImpl @Inject constructor(
         invitesChanged?.let { syncPendingAliases(userId, false) }
     }
 
+    private suspend fun processBreachUpdateChanged(userId: UserId, invitesChanged: SyncEventInvitesChanged?) {
+        invitesChanged?.let { refreshBreaches(userId) }
+    }
+
     private suspend fun processNewUserInvitesChanged(userId: UserId, sharesWithInvitesToCreate: List<SyncEventShare>) {
         if (sharesWithInvitesToCreate.isNotEmpty()) {
-            sharesWithInvitesToCreate.forEach { (shareId, token) ->
+            sharesWithInvitesToCreate.forEach { (shareId, _) ->
                 promoteNewInviteToInvite(userId, shareId)
             }
         }

@@ -19,6 +19,10 @@
 package proton.android.pass.data.impl.db
 
 import me.proton.core.data.room.db.Database
+import proton.android.pass.data.impl.db.dao.BreachCustomEmailDao
+import proton.android.pass.data.impl.db.dao.BreachDomainPeekDao
+import proton.android.pass.data.impl.db.dao.BreachEmailDao
+import proton.android.pass.data.impl.db.dao.BreachProtonEmailDao
 import proton.android.pass.data.impl.db.dao.GroupInviteDao
 import proton.android.pass.data.impl.db.dao.GroupInviteKeyDao
 import proton.android.pass.data.impl.db.dao.ItemsDao
@@ -92,6 +96,14 @@ interface PassDatabase : Database {
     fun chunkDao(): ChunkDao
 
     fun passwordHistoryDao(): PasswordHistoryDao
+
+    fun breachCustomEmailDao(): BreachCustomEmailDao
+
+    fun breachProtonEmailDao(): BreachProtonEmailDao
+
+    fun breachEmailDao(): BreachEmailDao
+
+    fun breachDomainPeekDao(): BreachDomainPeekDao
 
     suspend fun <R> inTransaction(name: String, block: suspend () -> R): R {
         PassLogger.i(TAG, "$name transaction started")

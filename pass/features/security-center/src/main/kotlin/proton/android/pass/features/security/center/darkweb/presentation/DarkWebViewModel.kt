@@ -28,6 +28,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
@@ -46,6 +47,7 @@ import proton.android.pass.common.api.map
 import proton.android.pass.common.api.some
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.data.api.usecases.ObserveGlobalMonitorState
+import proton.android.pass.data.api.usecases.RefreshBreaches
 import proton.android.pass.data.api.usecases.breach.AddBreachCustomEmail
 import proton.android.pass.data.api.usecases.breach.CustomEmailSuggestion
 import proton.android.pass.data.api.usecases.breach.ObserveBreachAliasEmails
@@ -65,6 +67,8 @@ import proton.android.pass.features.security.center.shared.presentation.EmailBre
 import proton.android.pass.features.security.center.shared.ui.DateUtils
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.SnackbarDispatcher
+import proton.android.pass.preferences.FeatureFlag
+import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import proton.android.pass.telemetry.api.TelemetryManager
 import javax.inject.Inject
 
@@ -76,6 +80,8 @@ internal class DarkWebViewModel @Inject constructor(
     observeBreachAliasEmails: ObserveBreachAliasEmails,
     observeCustomEmailSuggestions: ObserveCustomEmailSuggestions,
     observeGlobalMonitorState: ObserveGlobalMonitorState,
+    featureFlagsPreferencesRepository: FeatureFlagsPreferencesRepository,
+    refreshBreaches: RefreshBreaches,
     telemetryManager: TelemetryManager,
     private val addBreachCustomEmail: AddBreachCustomEmail,
     private val snackbarDispatcher: SnackbarDispatcher
@@ -83,6 +89,15 @@ internal class DarkWebViewModel @Inject constructor(
 
     init {
         telemetryManager.sendEvent(PassMonitorDisplayDarkWebMonitoring)
+        viewModelScope.launch {
+            val areUserEventsEnabled = featureFlagsPreferencesRepository.get<Boolean>(
+                FeatureFlag.PASS_USER_EVENTS_V1
+            ).firstOrNull()
+            areUserEventsEnabled ?: return@launch
+            if (!areUserEventsEnabled) {
+                refreshBreaches()
+            }
+        }
     }
 
     private val eventFlow: MutableStateFlow<DarkWebEvent> = MutableStateFlow(DarkWebEvent.Idle)
@@ -90,8 +105,9 @@ internal class DarkWebViewModel @Inject constructor(
         MutableStateFlow(None)
 
     private val protonEmailFlowIfEnabled = observeGlobalMonitorState()
-        .flatMapLatest { monitorState ->
-            if (monitorState.protonMonitorEnabled) {
+        .map { it.protonMonitorEnabled }
+        .flatMapLatest { protonMonitorEnabled ->
+            if (protonMonitorEnabled) {
                 observeBreachProtonEmails().map { list -> list to true }
             } else {
                 flowOf(emptyList<BreachProtonEmail>() to false)
@@ -100,8 +116,9 @@ internal class DarkWebViewModel @Inject constructor(
         .asLoadingResult()
 
     private val aliasEmailFlowIfEnabled = observeGlobalMonitorState()
-        .flatMapLatest { monitorState ->
-            if (monitorState.aliasMonitorEnabled) {
+        .map { it.protonMonitorEnabled }
+        .flatMapLatest { protonMonitorEnabled ->
+            if (protonMonitorEnabled) {
                 observeBreachAliasEmails().asLoadingResult()
                     .map { result -> result.map { it to true } }
             } else {

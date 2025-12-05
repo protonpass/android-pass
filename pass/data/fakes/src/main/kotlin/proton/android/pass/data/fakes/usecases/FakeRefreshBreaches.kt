@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2024 Proton AG
+ * Copyright (c) 2023 Proton AG
  * This file is part of Proton AG and Proton Pass.
  *
  * Proton Pass is free software: you can redistribute it and/or modify
@@ -16,14 +16,23 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.data.api.usecases.breach
+package proton.android.pass.data.fakes.usecases
 
-import kotlinx.coroutines.flow.Flow
-import proton.android.pass.domain.breach.BreachEmailId
-import proton.android.pass.domain.breach.BreachEmailReport
+import me.proton.core.domain.entity.UserId
+import proton.android.pass.data.api.usecases.RefreshBreaches
+import javax.inject.Inject
+import javax.inject.Singleton
 
-interface ObserveBreachCustomEmail {
+@Singleton
+class FakeRefreshBreaches @Inject constructor() : RefreshBreaches {
 
-    operator fun invoke(customEmailId: BreachEmailId.Custom): Flow<BreachEmailReport.Custom>
+    private var refreshResult: Result<Unit> = Result.success(Unit)
 
+    fun setRefreshResult(value: Result<Unit>) {
+        refreshResult = value
+    }
+
+    override suspend fun invoke(userId: UserId?) {
+        refreshResult.getOrThrow()
+    }
 }

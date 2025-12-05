@@ -76,4 +76,6 @@ interface BreachRepository {
         addressId: AddressId,
         enabled: Boolean
     )
+
+    suspend fun refreshBreaches(userId: UserId)
 }

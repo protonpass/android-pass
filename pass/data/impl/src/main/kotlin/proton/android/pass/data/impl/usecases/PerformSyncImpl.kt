@@ -68,7 +68,7 @@ class PerformSyncImpl @Inject constructor(
                 add(async { performPendingEvents(userId) })
                 add(async { performUserRefreshInvites(userId) })
                 if (isGroupSharingEnabled) {
-                    async { performGroupRefreshInvites(userId) }
+                    add(async { performGroupRefreshInvites(userId) })
                 }
                 add(async { syncPendingSlAliases(userId) })
             }

@@ -43,8 +43,8 @@ import proton.android.pass.clipboard.fakes.FakeClipboardManager
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.fakes.FakeSavedStateHandleProvider
 import proton.android.pass.composecomponents.impl.R
-import proton.android.pass.data.fakes.usecases.FakeGetItemById
 import proton.android.pass.data.fakes.usecases.FakeCanPerformPaidAction
+import proton.android.pass.data.fakes.usecases.FakeGetItemById
 import proton.android.pass.data.fakes.usecases.FakeObserveItemById
 import proton.android.pass.data.fakes.usecases.FakeObserveUserAccessData
 import proton.android.pass.data.fakes.usecases.shares.FakeObserveShare
@@ -57,7 +57,7 @@ import proton.android.pass.test.CallChecker
 import proton.android.pass.test.HiltComponentActivity
 import proton.android.pass.test.domain.ItemTestFactory
 import proton.android.pass.test.domain.ShareTestFactory
-import proton.android.pass.test.domain.UserTestFactoryAccessData
+import proton.android.pass.test.domain.UserAccessDataTestFactory
 import proton.android.pass.test.waitUntilExists
 import javax.inject.Inject
 import kotlin.test.assertEquals
@@ -379,7 +379,7 @@ class CreditCardDetailScreenTest {
         observeItemById.emitValue(Result.success(item))
         getItemById.emit(Result.success(item))
         observeShare.emitValue(share)
-        observeUserAccessData.sendValue(TestUserAccessData.random())
+        observeUserAccessData.sendValue(UserAccessDataTestFactory.random())
         return title
     }
 

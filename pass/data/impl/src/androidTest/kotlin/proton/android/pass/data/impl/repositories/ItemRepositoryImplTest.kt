@@ -61,8 +61,8 @@ import proton.android.pass.data.impl.repositories.fakes.FakeShareKeyRepository
 import proton.android.pass.data.impl.repositories.fakes.FakeShareRepository
 import proton.android.pass.domain.ShareId
 import proton.android.pass.test.domain.ItemTestFactory
+import proton.android.pass.test.domain.ShareKeyTestFactory
 import proton.android.pass.test.domain.ShareTestFactory
-import proton.android.pass.test.domain.ShareTestFactoryKey
 import kotlin.test.assertEquals
 
 @RunWith(AndroidJUnit4::class)
@@ -86,7 +86,7 @@ class ItemRepositoryImplTest {
 
     @Before
     fun setup() {
-        val userAddressRepository = TestUserAddressRepository()
+        val userAddressRepository = FakeUserAddressRepository()
         val userAddress = userAddressRepository.generateAddress(
             displayName = USER_ID.id,
             userId = USER_ID,
@@ -114,7 +114,7 @@ class ItemRepositoryImplTest {
             updateItem = FakeUpdateItem(),
             localItemDataSource = LocalItemDataSourceImpl(database, localShareDataSource),
             remoteItemDataSource = FakeRemoteItemDataSource(),
-            shareKeyRepository = TestShareKeyRepository().apply {
+            shareKeyRepository = FakeShareKeyRepository().apply {
                 emitGetShareKeys(listOf(ShareKeyTestFactory.createPrivate()))
             },
             openItem = FakeOpenItem().apply {

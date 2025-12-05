@@ -52,7 +52,7 @@ import proton.android.pass.test.CallChecker
 import proton.android.pass.test.HiltComponentActivity
 import proton.android.pass.test.domain.ItemTestFactory
 import proton.android.pass.test.domain.ShareTestFactory
-import proton.android.pass.test.domain.UserTestFactoryAccessData
+import proton.android.pass.test.domain.UserAccessDataTestFactory
 import proton.android.pass.test.waitUntilExists
 import proton.android.pass.totp.api.TotpManager
 import proton.android.pass.totp.fakes.FakeObserveTotpFromUri
@@ -293,7 +293,7 @@ class LoginDetailScreenTest {
         observeItemById.emitValue(Result.success(item))
         getItemById.emit(Result.success(item))
         observeShare.emitValue(share)
-        observeUserAccessData.sendValue(TestUserAccessData.random())
+        observeUserAccessData.sendValue(UserAccessDataTestFactory.random())
 
         return title
     }

@@ -10,6 +10,4 @@
   <string name="no_session_found">セッションが見つかりませんでした</string>
   <string name="auth_with_extra_password_failed">追加パスワードによる認証に失敗しました</string>
   <string name="auth_only_1_proton_account_failed">無料のProtonアカウントは1つのみ許可されています。</string>
-  <string name="warning_dialog_reload_app_after_purchase_description">当社のウェブサイトにリダイレクトされます。プランをご購入された場合は、アプリを再起動してください。</string>
-  <string name="warning_dialog_reload_app_after_purchase_reminder">次回から通知しない</string>
 </resources>

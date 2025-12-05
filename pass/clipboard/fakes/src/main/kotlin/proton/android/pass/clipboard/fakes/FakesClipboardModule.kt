@@ -29,5 +29,5 @@ import proton.android.pass.clipboard.api.ClipboardManager
 abstract class FakesClipboardModule {
 
     @Binds
-    abstract fun bindClipboardManager(impl: TestClipboardManager): ClipboardManager
+    abstract fun bindClipboardManager(impl: FakeClipboardManager): ClipboardManager
 }

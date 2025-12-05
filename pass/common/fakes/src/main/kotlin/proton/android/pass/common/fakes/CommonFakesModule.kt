@@ -29,5 +29,5 @@ import proton.android.pass.common.api.AppDispatchers
 abstract class CommonFakesModule {
 
     @Binds
-    abstract fun bindAppDispatchers(impl: TestAppDispatchers): AppDispatchers
+    abstract fun bindAppDispatchers(impl: FakeAppDispatchers): AppDispatchers
 }

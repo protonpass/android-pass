@@ -29,7 +29,7 @@ import proton.android.pass.commonrust.api.PasswordScorer
 import proton.android.pass.commonrust.api.WifiNetworkQRGenerator
 import proton.android.pass.commonrust.api.passwords.PasswordGenerator
 import proton.android.pass.commonrust.api.passwords.strengths.PasswordStrengthCalculator
-import proton.android.pass.commonrust.fakes.passwords.strengths.TestPasswordStrengthCalculator
+import proton.android.pass.commonrust.fakes.passwords.strengths.FakePasswordStrengthCalculator
 import javax.inject.Singleton
 
 @Module
@@ -37,24 +37,24 @@ import javax.inject.Singleton
 abstract class FakesCommonRustModule {
 
     @Binds
-    abstract fun bindAliasPrefixValidator(impl: TestAliasPrefixValidator): AliasPrefixValidator
+    abstract fun bindAliasPrefixValidator(impl: FakeAliasPrefixValidator): AliasPrefixValidator
 
     @Binds
-    abstract fun bindEmailValidator(impl: TestEmailValidator): EmailValidator
+    abstract fun bindEmailValidator(impl: FakeEmailValidator): EmailValidator
 
     @Binds
     abstract fun bindNewUserInviteSignatureBodyCreator(
-        impl: TestNewUserInviteSignatureBodyCreator
+        impl: FakeNewUserInviteSignatureBodyCreator
     ): NewUserInviteSignatureBodyCreator
 
     @Binds
     abstract fun bindPasswordGenerator(impl: FakePasswordGenerator): PasswordGenerator
 
     @Binds
-    abstract fun bindPasswordScorer(impl: TestPasswordScorer): PasswordScorer
+    abstract fun bindPasswordScorer(impl: FakePasswordScorer): PasswordScorer
 
     @[Binds Singleton]
-    abstract fun bindPasswordStrengthCalculator(calculator: TestPasswordStrengthCalculator): PasswordStrengthCalculator
+    abstract fun bindPasswordStrengthCalculator(calculator: FakePasswordStrengthCalculator): PasswordStrengthCalculator
 
     @[Binds Singleton]
     abstract fun bindWifiNetworkQRGenerator(calculator: FakeWifiNetworkQRGenerator): WifiNetworkQRGenerator

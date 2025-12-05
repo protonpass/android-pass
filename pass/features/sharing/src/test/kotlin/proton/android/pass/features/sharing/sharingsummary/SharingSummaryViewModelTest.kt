@@ -27,15 +27,15 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import proton.android.pass.commonui.api.toUiModel
-import proton.android.pass.commonui.fakes.TestSavedStateHandleProvider
+import proton.android.pass.commonui.fakes.FakeSavedStateHandleProvider
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
-import proton.android.pass.crypto.fakes.context.TestEncryptionContextProvider
+import proton.android.pass.crypto.fakes.context.FakeEncryptionContextProvider
 import proton.android.pass.data.api.repositories.UserTarget
-import proton.android.pass.data.fakes.repositories.TestBulkInviteRepository
-import proton.android.pass.data.fakes.usecases.TestGetUserPlan
-import proton.android.pass.data.fakes.usecases.TestGetVaultWithItemCountById
-import proton.android.pass.data.fakes.usecases.TestInviteToVault
-import proton.android.pass.data.fakes.usecases.TestObserveItemById
+import proton.android.pass.data.fakes.repositories.FakeBulkInviteRepository
+import proton.android.pass.data.fakes.usecases.FakeGetUserPlan
+import proton.android.pass.data.fakes.usecases.FakeGetVaultWithItemCountById
+import proton.android.pass.data.fakes.usecases.FakeInviteToVault
+import proton.android.pass.data.fakes.usecases.FakeObserveItemById
 import proton.android.pass.data.fakes.usecases.invites.FakeInviteToItem
 import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.ItemId
@@ -47,9 +47,9 @@ import proton.android.pass.features.sharing.SharingSnackbarMessage.InviteSentErr
 import proton.android.pass.features.sharing.SharingSnackbarMessage.InviteSentSuccess
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.navigation.api.CommonOptionalNavArgId
-import proton.android.pass.notifications.fakes.TestSnackbarDispatcher
-import proton.android.pass.preferences.TestFeatureFlagsPreferenceRepository
-import proton.android.pass.preferences.TestPreferenceRepository
+import proton.android.pass.notifications.fakes.FakeSnackbarDispatcher
+import proton.android.pass.preferences.FakeFeatureFlagsPreferenceRepository
+import proton.android.pass.preferences.FakePreferenceRepository
 import proton.android.pass.preferences.UseFaviconsPreference
 import proton.android.pass.test.MainDispatcherRule
 import proton.android.pass.test.domain.TestItem
@@ -57,14 +57,14 @@ import proton.android.pass.test.domain.TestVault
 
 internal class SharingSummaryViewModelTest {
 
-    private lateinit var getVaultWithItemCountById: TestGetVaultWithItemCountById
-    private lateinit var inviteToVault: TestInviteToVault
-    private lateinit var snackbarDispatcher: TestSnackbarDispatcher
-    private lateinit var savedStateHandleProvider: TestSavedStateHandleProvider
-    private lateinit var bulkInviteRepository: TestBulkInviteRepository
-    private lateinit var observeItemById: TestObserveItemById
-    private lateinit var encryptionContextProvider: TestEncryptionContextProvider
-    private lateinit var userPreferencesRepository: TestPreferenceRepository
+    private lateinit var getVaultWithItemCountById: FakeGetVaultWithItemCountById
+    private lateinit var inviteToVault: FakeInviteToVault
+    private lateinit var snackbarDispatcher: FakeSnackbarDispatcher
+    private lateinit var savedStateHandleProvider: FakeSavedStateHandleProvider
+    private lateinit var bulkInviteRepository: FakeBulkInviteRepository
+    private lateinit var observeItemById: FakeObserveItemById
+    private lateinit var encryptionContextProvider: FakeEncryptionContextProvider
+    private lateinit var userPreferencesRepository: FakePreferenceRepository
     private lateinit var inviteToItem: FakeInviteToItem
 
     @get:Rule
@@ -72,19 +72,19 @@ internal class SharingSummaryViewModelTest {
 
     @Before
     fun setUp() {
-        getVaultWithItemCountById = TestGetVaultWithItemCountById()
-        inviteToVault = TestInviteToVault()
-        snackbarDispatcher = TestSnackbarDispatcher()
-        bulkInviteRepository = TestBulkInviteRepository().apply {
+        getVaultWithItemCountById = FakeGetVaultWithItemCountById()
+        inviteToVault = FakeInviteToVault()
+        snackbarDispatcher = FakeSnackbarDispatcher()
+        bulkInviteRepository = FakeBulkInviteRepository().apply {
             runBlocking { storeInvites(listOf(UserTarget(TEST_EMAIL, ShareRole.Read))) }
         }
 
-        savedStateHandleProvider = TestSavedStateHandleProvider().apply {
+        savedStateHandleProvider = FakeSavedStateHandleProvider().apply {
             get()[CommonNavArgId.ShareId.key] = TEST_SHARE_ID
         }
-        observeItemById = TestObserveItemById()
-        encryptionContextProvider = TestEncryptionContextProvider()
-        userPreferencesRepository = TestPreferenceRepository()
+        observeItemById = FakeObserveItemById()
+        encryptionContextProvider = FakeEncryptionContextProvider()
+        userPreferencesRepository = FakePreferenceRepository()
         inviteToItem = FakeInviteToItem()
     }
 
@@ -264,12 +264,12 @@ internal class SharingSummaryViewModelTest {
             snackbarDispatcher = snackbarDispatcher,
             savedStateHandleProvider = savedStateHandleProvider,
             bulkInviteRepository = bulkInviteRepository,
-            getUserPlan = TestGetUserPlan(),
+            getUserPlan = FakeGetUserPlan(),
             observeItemById = observeItemById,
             inviteToItem = inviteToItem,
             encryptionContextProvider = encryptionContextProvider,
             userPreferencesRepository = userPreferencesRepository,
-            featureFlagsPreferencesRepository = TestFeatureFlagsPreferenceRepository()
+            featureFlagsPreferencesRepository = FakeFeatureFlagsPreferenceRepository()
         )
     }
 

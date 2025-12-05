@@ -27,7 +27,7 @@ import proton.android.pass.common.api.None
 import proton.android.pass.common.api.some
 import proton.android.pass.data.api.usecases.ItemData
 import proton.android.pass.data.api.usecases.Suggestion
-import proton.android.pass.data.fakes.usecases.TestGetPublicSuffixList
+import proton.android.pass.data.fakes.usecases.FakeGetPublicSuffixList
 import proton.android.pass.data.impl.url.HostParserImpl
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
@@ -39,12 +39,12 @@ import kotlin.time.Duration.Companion.minutes
 
 class SuggestionSorterImplTest {
 
-    private lateinit var publicSuffixList: TestGetPublicSuffixList
+    private lateinit var publicSuffixList: FakeGetPublicSuffixList
     private lateinit var instance: SuggestionSorterImpl
 
     @Before
     fun setup() {
-        publicSuffixList = TestGetPublicSuffixList()
+        publicSuffixList = FakeGetPublicSuffixList()
         instance = SuggestionSorterImpl(HostParserImpl(publicSuffixList))
     }
 

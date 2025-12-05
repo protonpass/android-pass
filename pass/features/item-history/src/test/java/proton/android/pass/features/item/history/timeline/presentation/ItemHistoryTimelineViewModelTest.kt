@@ -25,12 +25,12 @@ import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import proton.android.pass.commonui.fakes.TestSavedStateHandleProvider
+import proton.android.pass.commonui.fakes.FakeSavedStateHandleProvider
 import proton.android.pass.data.api.repositories.ItemRevision
 import proton.android.pass.data.fakes.usecases.items.FakeGetItemCategory
 import proton.android.pass.data.fakes.usecases.items.FakeObserveItemRevisions
 import proton.android.pass.navigation.api.CommonNavArgId
-import proton.android.pass.notifications.fakes.TestSnackbarDispatcher
+import proton.android.pass.notifications.fakes.FakeSnackbarDispatcher
 import proton.android.pass.test.MainDispatcherRule
 import proton.android.pass.test.domain.items.ItemCategoryMother
 import proton.android.pass.test.domain.items.ItemIdMother
@@ -44,17 +44,17 @@ internal class ItemHistoryTimelineViewModelTest {
     private val shareId = ShareIdMother.create()
     private val itemId = ItemIdMother.create()
 
-    private lateinit var savedStateHandleProvider: TestSavedStateHandleProvider
+    private lateinit var savedStateHandleProvider: FakeSavedStateHandleProvider
     private lateinit var observeItemRevisions: FakeObserveItemRevisions
     private lateinit var getItemCategory: FakeGetItemCategory
-    private lateinit var snackbarDispatcher: TestSnackbarDispatcher
+    private lateinit var snackbarDispatcher: FakeSnackbarDispatcher
 
     @Before
     internal fun setUp() {
-        savedStateHandleProvider = TestSavedStateHandleProvider()
+        savedStateHandleProvider = FakeSavedStateHandleProvider()
         observeItemRevisions = FakeObserveItemRevisions()
         getItemCategory = FakeGetItemCategory()
-        snackbarDispatcher = TestSnackbarDispatcher()
+        snackbarDispatcher = FakeSnackbarDispatcher()
 
         savedStateHandleProvider.get().apply {
             set(CommonNavArgId.ShareId.key, shareId.id)

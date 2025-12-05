@@ -27,76 +27,76 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import proton.android.pass.account.fakes.FakeUserManager
-import proton.android.pass.account.fakes.TestAccountManager
+import proton.android.pass.account.fakes.FakeAccountManager
 import proton.android.pass.biometry.BiometryAuthError
 import proton.android.pass.biometry.BiometryResult
 import proton.android.pass.biometry.BiometryStartupError
 import proton.android.pass.biometry.BiometryStatus
-import proton.android.pass.biometry.TestBiometryManager
-import proton.android.pass.biometry.TestStoreAuthSuccessful
+import proton.android.pass.biometry.FakeBiometryManager
+import proton.android.pass.biometry.FakeStoreAuthSuccessful
 import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.some
-import proton.android.pass.common.fakes.TestAppDispatchers
+import proton.android.pass.common.fakes.FakeAppDispatchers
 import proton.android.pass.commonui.api.ClassHolder
-import proton.android.pass.commonui.fakes.TestSavedStateHandleProvider
+import proton.android.pass.commonui.fakes.FakeSavedStateHandleProvider
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
-import proton.android.pass.crypto.fakes.context.TestEncryptionContextProvider
-import proton.android.pass.data.fakes.usecases.TestCheckMasterPassword
-import proton.android.pass.data.fakes.usecases.TestObserveUserEmail
+import proton.android.pass.crypto.fakes.context.FakeEncryptionContextProvider
+import proton.android.pass.data.fakes.usecases.FakeCheckMasterPassword
+import proton.android.pass.data.fakes.usecases.FakeObserveUserEmail
 import proton.android.pass.data.fakes.usecases.accesskey.FakeAuthWithExtraPassword
 import proton.android.pass.data.fakes.usecases.accesskey.FakeCheckLocalExtraPassword
 import proton.android.pass.data.fakes.usecases.accesskey.FakeHasExtraPassword
 import proton.android.pass.data.fakes.usecases.accesskey.FakeRemoveExtraPassword
 import proton.android.pass.features.auth.AuthViewModel.Companion.MAX_WRONG_PASSWORD_ATTEMPTS
-import proton.android.pass.notifications.fakes.TestSnackbarDispatcher
+import proton.android.pass.notifications.fakes.FakeSnackbarDispatcher
 import proton.android.pass.preferences.AppLockState
 import proton.android.pass.preferences.AppLockTypePreference
-import proton.android.pass.preferences.TestInternalSettingsRepository
-import proton.android.pass.preferences.TestPreferenceRepository
+import proton.android.pass.preferences.FakeInternalSettingsRepository
+import proton.android.pass.preferences.FakePreferenceRepository
 import proton.android.pass.test.MainDispatcherRule
 
 internal class AuthViewModelTest {
 
     private lateinit var viewModel: AuthViewModel
-    private lateinit var preferenceRepository: TestPreferenceRepository
-    private lateinit var biometryManager: TestBiometryManager
-    private lateinit var checkMasterPassword: TestCheckMasterPassword
+    private lateinit var preferenceRepository: FakePreferenceRepository
+    private lateinit var biometryManager: FakeBiometryManager
+    private lateinit var checkMasterPassword: FakeCheckMasterPassword
     private lateinit var userManager: FakeUserManager
-    private lateinit var accountManager: TestAccountManager
-    private lateinit var internalSettingsRepository: TestInternalSettingsRepository
+    private lateinit var accountManager: FakeAccountManager
+    private lateinit var internalSettingsRepository: FakeInternalSettingsRepository
 
     @get:Rule
     internal val dispatcherRule = MainDispatcherRule()
 
     @Before
     internal fun setUp() {
-        preferenceRepository = TestPreferenceRepository()
-        biometryManager = TestBiometryManager()
-        checkMasterPassword = TestCheckMasterPassword()
+        preferenceRepository = FakePreferenceRepository()
+        biometryManager = FakeBiometryManager()
+        checkMasterPassword = FakeCheckMasterPassword()
         userManager = FakeUserManager()
-        accountManager = TestAccountManager()
-        internalSettingsRepository = TestInternalSettingsRepository()
+        accountManager = FakeAccountManager()
+        internalSettingsRepository = FakeInternalSettingsRepository()
         viewModel = AuthViewModel(
             preferenceRepository = preferenceRepository,
             biometryManager = biometryManager,
             checkMasterPassword = checkMasterPassword,
-            storeAuthSuccessful = TestStoreAuthSuccessful(),
+            storeAuthSuccessful = FakeStoreAuthSuccessful(),
             internalSettingsRepository = internalSettingsRepository,
-            observeUserEmail = TestObserveUserEmail().apply {
+            observeUserEmail = FakeObserveUserEmail().apply {
                 emit(USER_EMAIL)
             },
-            savedStateHandleProvider = TestSavedStateHandleProvider(),
-            encryptionContextProvider = TestEncryptionContextProvider(),
+            savedStateHandleProvider = FakeSavedStateHandleProvider(),
+            encryptionContextProvider = FakeEncryptionContextProvider(),
             authWithExtraPassword = FakeAuthWithExtraPassword(),
             removeExtraPassword = FakeRemoveExtraPassword(),
-            snackbarDispatcher = TestSnackbarDispatcher(),
+            snackbarDispatcher = FakeSnackbarDispatcher(),
             hasExtraPassword = FakeHasExtraPassword(),
             checkLocalExtraPassword = FakeCheckLocalExtraPassword(),
             userManager = userManager,
             accountManager = accountManager,
-            appDispatchers = TestAppDispatchers()
+            appDispatchers = FakeAppDispatchers()
         )
     }
 
@@ -105,13 +105,13 @@ internal class AuthViewModelTest {
         val expectedState = AuthState.Initial.copy(
             event = None,
             content = AuthStateContent.default(USER_EMAIL.some()).copy(
-                userId = UserId(TestAccountManager.USER_ID).some(),
+                userId = UserId(FakeAccountManager.USER_ID).some(),
                 authMethod = Some(AuthMethod.Fingerprint),
                 showExtraPassword = LoadingResult.Success(false),
                 showPinOrBiometry = true,
                 accountSwitcherState = AccountSwitcherState(
                     accounts = persistentMapOf(
-                        UserId(TestAccountManager.USER_ID) to
+                        UserId(FakeAccountManager.USER_ID) to
                             AccountItem(
                                 FakeUserManager.EMAIL,
                                 true
@@ -198,13 +198,13 @@ internal class AuthViewModelTest {
                 AuthState(
                     event = None,
                     content = AuthStateContent.default(USER_EMAIL.some()).copy(
-                        userId = UserId(TestAccountManager.USER_ID).some(),
+                        userId = UserId(FakeAccountManager.USER_ID).some(),
                         authMethod = Some(AuthMethod.Fingerprint),
                         showExtraPassword = LoadingResult.Success(false),
                         showPinOrBiometry = true,
                         accountSwitcherState = AccountSwitcherState(
                             accounts = persistentMapOf(
-                                UserId(TestAccountManager.USER_ID) to
+                                UserId(FakeAccountManager.USER_ID) to
                                     AccountItem(
                                         FakeUserManager.EMAIL,
                                         true
@@ -251,7 +251,7 @@ internal class AuthViewModelTest {
             skipItems(1)
             viewModel.onSignOut()
             assertThat(awaitItem().event)
-                .isEqualTo(AuthEvent.SignOut(UserId(TestAccountManager.USER_ID)).some())
+                .isEqualTo(AuthEvent.SignOut(UserId(FakeAccountManager.USER_ID)).some())
         }
     }
 
@@ -338,7 +338,7 @@ internal class AuthViewModelTest {
             val stateError = awaitItem()
             assertThat(stateError.content.isLoadingState).isEqualTo(IsLoadingState.NotLoading)
             assertThat(stateError.event)
-                .isEqualTo(AuthEvent.ForceSignOut(UserId(TestAccountManager.USER_ID)).some())
+                .isEqualTo(AuthEvent.ForceSignOut(UserId(FakeAccountManager.USER_ID)).some())
         }
     }
 

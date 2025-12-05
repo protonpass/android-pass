@@ -9,7 +9,7 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-import proton.android.pass.crypto.fakes.context.TestEncryptionContextProvider
+import proton.android.pass.crypto.fakes.context.FakeEncryptionContextProvider
 import proton.android.pass.domain.Item
 import proton.android.pass.securitycenter.impl.checkers.RepeatedPasswordCheckerImpl
 import proton.android.pass.test.TestUtils
@@ -23,11 +23,11 @@ class ReusedPasswordsCheckerImplBenchmark {
     val benchmarkRule = BenchmarkRule()
 
     private lateinit var instance: RepeatedPasswordCheckerImpl
-    private lateinit var encryptionContextProvider: TestEncryptionContextProvider
+    private lateinit var encryptionContextProvider: FakeEncryptionContextProvider
 
     @Before
     fun setup() {
-        encryptionContextProvider = TestEncryptionContextProvider()
+        encryptionContextProvider = FakeEncryptionContextProvider()
         instance = RepeatedPasswordCheckerImpl(
             encryptionContextProvider = encryptionContextProvider
         )

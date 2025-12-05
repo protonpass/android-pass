@@ -25,14 +25,14 @@ import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import proton.android.pass.commonui.fakes.TestSavedStateHandleProvider
+import proton.android.pass.commonui.fakes.FakeSavedStateHandleProvider
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
-import proton.android.pass.data.fakes.usecases.TestGetVaultByShareId
-import proton.android.pass.data.fakes.usecases.TestLeaveShare
+import proton.android.pass.data.fakes.usecases.FakeGetVaultByShareId
+import proton.android.pass.data.fakes.usecases.FakeLeaveShare
 import proton.android.pass.domain.Vault
 import proton.android.pass.features.vault.VaultSnackbarMessage
 import proton.android.pass.navigation.api.CommonNavArgId
-import proton.android.pass.notifications.fakes.TestSnackbarDispatcher
+import proton.android.pass.notifications.fakes.FakeSnackbarDispatcher
 import proton.android.pass.test.MainDispatcherRule
 import proton.android.pass.test.domain.TestVault
 
@@ -42,19 +42,19 @@ class LeaveShareViewModelTest {
     val dispatcher = MainDispatcherRule()
 
     private lateinit var instance: LeaveVaultViewModel
-    private lateinit var getVaultById: TestGetVaultByShareId
-    private lateinit var leaveVault: TestLeaveShare
-    private lateinit var snackbarDispatcher: TestSnackbarDispatcher
+    private lateinit var getVaultById: FakeGetVaultByShareId
+    private lateinit var leaveVault: FakeLeaveShare
+    private lateinit var snackbarDispatcher: FakeSnackbarDispatcher
 
     @Before
     fun setup() {
-        getVaultById = TestGetVaultByShareId()
-        leaveVault = TestLeaveShare()
-        snackbarDispatcher = TestSnackbarDispatcher()
+        getVaultById = FakeGetVaultByShareId()
+        leaveVault = FakeLeaveShare()
+        snackbarDispatcher = FakeSnackbarDispatcher()
         instance = LeaveVaultViewModel(
             getVaultByShareId = getVaultById,
             leaveShare = leaveVault,
-            savedStateHandle = TestSavedStateHandleProvider().apply {
+            savedStateHandle = FakeSavedStateHandleProvider().apply {
                 get()[CommonNavArgId.ShareId.key] = "123"
             },
             snackbarDispatcher = snackbarDispatcher

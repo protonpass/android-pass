@@ -28,51 +28,51 @@ import me.proton.core.domain.entity.UserId
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import proton.android.pass.clipboard.fakes.TestClipboardManager
-import proton.android.pass.common.fakes.TestAppDispatchers
+import proton.android.pass.clipboard.fakes.FakeClipboardManager
+import proton.android.pass.common.fakes.FakeAppDispatchers
 import proton.android.pass.commonui.api.DateFormatUtils
 import proton.android.pass.commonui.api.GroupedItemList
 import proton.android.pass.commonui.api.GroupingKeys
 import proton.android.pass.commonui.api.toUiModel
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
-import proton.android.pass.crypto.fakes.context.TestEncryptionContextProvider
+import proton.android.pass.crypto.fakes.context.FakeEncryptionContextProvider
 import proton.android.pass.data.api.SearchEntry
-import proton.android.pass.data.fakes.repositories.TestBulkMoveToVaultRepository
+import proton.android.pass.data.fakes.repositories.FakeBulkMoveToVaultRepository
 import proton.android.pass.data.fakes.usecases.FakeChangeAliasStatus
 import proton.android.pass.data.fakes.usecases.FakeObserveEncryptedItems
 import proton.android.pass.data.fakes.usecases.FakePinItem
 import proton.android.pass.data.fakes.usecases.FakeUnpinItem
-import proton.android.pass.data.fakes.usecases.TestAddSearchEntry
-import proton.android.pass.data.fakes.usecases.TestClearTrash
-import proton.android.pass.data.fakes.usecases.TestDeleteAllSearchEntry
-import proton.android.pass.data.fakes.usecases.TestDeleteItems
-import proton.android.pass.data.fakes.usecases.TestDeleteSearchEntry
-import proton.android.pass.data.fakes.usecases.TestGetUserPlan
-import proton.android.pass.data.fakes.usecases.TestObserveAllShares
-import proton.android.pass.data.fakes.usecases.TestObserveAppNeedsUpdate
-import proton.android.pass.data.fakes.usecases.TestObserveCurrentUser
-import proton.android.pass.data.fakes.usecases.TestObservePinnedItems
-import proton.android.pass.data.fakes.usecases.TestObserveSearchEntry
-import proton.android.pass.data.fakes.usecases.TestObserveUpgradeInfo
-import proton.android.pass.data.fakes.usecases.TestPerformSync
-import proton.android.pass.data.fakes.usecases.TestPinItems
-import proton.android.pass.data.fakes.usecases.TestRestoreAllItems
-import proton.android.pass.data.fakes.usecases.TestRestoreItems
-import proton.android.pass.data.fakes.usecases.TestTrashItems
-import proton.android.pass.data.fakes.usecases.TestUnpinItems
+import proton.android.pass.data.fakes.usecases.FakeAddSearchEntry
+import proton.android.pass.data.fakes.usecases.FakeClearTrash
+import proton.android.pass.data.fakes.usecases.FakeDeleteAllSearchEntry
+import proton.android.pass.data.fakes.usecases.FakeDeleteItems
+import proton.android.pass.data.fakes.usecases.FakeDeleteSearchEntry
+import proton.android.pass.data.fakes.usecases.FakeGetUserPlan
+import proton.android.pass.data.fakes.usecases.FakeObserveAllShares
+import proton.android.pass.data.fakes.usecases.FakeObserveAppNeedsUpdate
+import proton.android.pass.data.fakes.usecases.FakeObserveCurrentUser
+import proton.android.pass.data.fakes.usecases.FakeObservePinnedItems
+import proton.android.pass.data.fakes.usecases.FakeObserveSearchEntry
+import proton.android.pass.data.fakes.usecases.FakeObserveUpgradeInfo
+import proton.android.pass.data.fakes.usecases.FakePerformSync
+import proton.android.pass.data.fakes.usecases.FakePinItems
+import proton.android.pass.data.fakes.usecases.FakeRestoreAllItems
+import proton.android.pass.data.fakes.usecases.FakeRestoreItems
+import proton.android.pass.data.fakes.usecases.FakeTrashItems
+import proton.android.pass.data.fakes.usecases.FakeUnpinItems
 import proton.android.pass.data.fakes.usecases.inappmessages.FakeObserveDeliverableMinimizedPromoInAppMessage
 import proton.android.pass.data.fakes.usecases.items.FakeObserveCanCreateItems
 import proton.android.pass.data.fakes.usecases.shares.FakeObserveEncryptedSharedItems
 import proton.android.pass.data.fakes.usecases.shares.FakeObserveHasShares
 import proton.android.pass.domain.ItemEncrypted
 import proton.android.pass.domain.ShareId
-import proton.android.pass.notifications.fakes.TestSnackbarDispatcher
-import proton.android.pass.notifications.fakes.TestToastManager
-import proton.android.pass.preferences.TestPreferenceRepository
+import proton.android.pass.notifications.fakes.FakeSnackbarDispatcher
+import proton.android.pass.notifications.fakes.FakeToastManager
+import proton.android.pass.preferences.FakePreferenceRepository
 import proton.android.pass.preferences.UseFaviconsPreference
 import proton.android.pass.searchoptions.api.VaultSelectionOption
-import proton.android.pass.searchoptions.fakes.TestHomeSearchOptionsRepository
-import proton.android.pass.telemetry.fakes.TestTelemetryManager
+import proton.android.pass.searchoptions.fakes.FakeHomeSearchOptionsRepository
+import proton.android.pass.telemetry.fakes.FakeTelemetryManager
 import proton.android.pass.test.FixedClock
 import proton.android.pass.test.MainDispatcherRule
 import proton.android.pass.test.domain.TestShare
@@ -85,63 +85,63 @@ internal class HomeViewModelTest {
 
     private lateinit var instance: HomeViewModel
 
-    private lateinit var trashItems: TestTrashItems
-    private lateinit var snackbarDispatcher: TestSnackbarDispatcher
-    private lateinit var clipboardManager: TestClipboardManager
-    private lateinit var performSync: TestPerformSync
-    private lateinit var encryptionContextProvider: TestEncryptionContextProvider
-    private lateinit var restoreItems: TestRestoreItems
-    private lateinit var restoreAllItems: TestRestoreAllItems
-    private lateinit var deleteItems: TestDeleteItems
-    private lateinit var clearTrash: TestClearTrash
-    private lateinit var addSearchEntry: TestAddSearchEntry
-    private lateinit var deleteSearchEntry: TestDeleteSearchEntry
-    private lateinit var deleteAllSearchEntry: TestDeleteAllSearchEntry
-    private lateinit var observeSearchEntry: TestObserveSearchEntry
-    private lateinit var telemetryManager: TestTelemetryManager
-    private lateinit var searchOptionsRepository: TestHomeSearchOptionsRepository
-    private lateinit var observeAllShares: TestObserveAllShares
+    private lateinit var trashItems: FakeTrashItems
+    private lateinit var snackbarDispatcher: FakeSnackbarDispatcher
+    private lateinit var clipboardManager: FakeClipboardManager
+    private lateinit var performSync: FakePerformSync
+    private lateinit var encryptionContextProvider: FakeEncryptionContextProvider
+    private lateinit var restoreItems: FakeRestoreItems
+    private lateinit var restoreAllItems: FakeRestoreAllItems
+    private lateinit var deleteItems: FakeDeleteItems
+    private lateinit var clearTrash: FakeClearTrash
+    private lateinit var addSearchEntry: FakeAddSearchEntry
+    private lateinit var deleteSearchEntry: FakeDeleteSearchEntry
+    private lateinit var deleteAllSearchEntry: FakeDeleteAllSearchEntry
+    private lateinit var observeSearchEntry: FakeObserveSearchEntry
+    private lateinit var telemetryManager: FakeTelemetryManager
+    private lateinit var searchOptionsRepository: FakeHomeSearchOptionsRepository
+    private lateinit var observeAllShares: FakeObserveAllShares
     private lateinit var clock: FixedClock
     private lateinit var observeEncryptedItems: FakeObserveEncryptedItems
-    private lateinit var observePinnedItems: TestObservePinnedItems
-    private lateinit var preferencesRepository: TestPreferenceRepository
-    private lateinit var getUserPlan: TestGetUserPlan
-    private lateinit var bulkMoveToVaultRepository: TestBulkMoveToVaultRepository
-    private lateinit var toastManager: TestToastManager
-    private lateinit var observeCurrentUser: TestObserveCurrentUser
+    private lateinit var observePinnedItems: FakeObservePinnedItems
+    private lateinit var preferencesRepository: FakePreferenceRepository
+    private lateinit var getUserPlan: FakeGetUserPlan
+    private lateinit var bulkMoveToVaultRepository: FakeBulkMoveToVaultRepository
+    private lateinit var toastManager: FakeToastManager
+    private lateinit var observeCurrentUser: FakeObserveCurrentUser
     private lateinit var observeCanCreateItems: FakeObserveCanCreateItems
     private lateinit var observeHasShares: FakeObserveHasShares
-    private lateinit var observeUpgradeInfo: TestObserveUpgradeInfo
+    private lateinit var observeUpgradeInfo: FakeObserveUpgradeInfo
 
     @Before
     internal fun setup() {
-        trashItems = TestTrashItems()
-        snackbarDispatcher = TestSnackbarDispatcher()
-        clipboardManager = TestClipboardManager()
-        performSync = TestPerformSync()
-        encryptionContextProvider = TestEncryptionContextProvider()
-        restoreItems = TestRestoreItems()
-        restoreAllItems = TestRestoreAllItems()
-        deleteItems = TestDeleteItems()
-        clearTrash = TestClearTrash()
-        addSearchEntry = TestAddSearchEntry()
-        deleteSearchEntry = TestDeleteSearchEntry()
-        deleteAllSearchEntry = TestDeleteAllSearchEntry()
-        observeSearchEntry = TestObserveSearchEntry()
-        telemetryManager = TestTelemetryManager()
-        searchOptionsRepository = TestHomeSearchOptionsRepository()
-        observeAllShares = TestObserveAllShares()
+        trashItems = FakeTrashItems()
+        snackbarDispatcher = FakeSnackbarDispatcher()
+        clipboardManager = FakeClipboardManager()
+        performSync = FakePerformSync()
+        encryptionContextProvider = FakeEncryptionContextProvider()
+        restoreItems = FakeRestoreItems()
+        restoreAllItems = FakeRestoreAllItems()
+        deleteItems = FakeDeleteItems()
+        clearTrash = FakeClearTrash()
+        addSearchEntry = FakeAddSearchEntry()
+        deleteSearchEntry = FakeDeleteSearchEntry()
+        deleteAllSearchEntry = FakeDeleteAllSearchEntry()
+        observeSearchEntry = FakeObserveSearchEntry()
+        telemetryManager = FakeTelemetryManager()
+        searchOptionsRepository = FakeHomeSearchOptionsRepository()
+        observeAllShares = FakeObserveAllShares()
         clock = FixedClock(Clock.System.now())
         observeEncryptedItems = FakeObserveEncryptedItems()
-        preferencesRepository = TestPreferenceRepository()
-        getUserPlan = TestGetUserPlan()
-        bulkMoveToVaultRepository = TestBulkMoveToVaultRepository()
-        toastManager = TestToastManager()
-        observePinnedItems = TestObservePinnedItems()
-        observeCurrentUser = TestObserveCurrentUser().apply { sendUser(TestUser.create()) }
+        preferencesRepository = FakePreferenceRepository()
+        getUserPlan = FakeGetUserPlan()
+        bulkMoveToVaultRepository = FakeBulkMoveToVaultRepository()
+        toastManager = FakeToastManager()
+        observePinnedItems = FakeObservePinnedItems()
+        observeCurrentUser = FakeObserveCurrentUser().apply { sendUser(TestUser.create()) }
         observeCanCreateItems = FakeObserveCanCreateItems()
         observeHasShares = FakeObserveHasShares()
-        observeUpgradeInfo = TestObserveUpgradeInfo()
+        observeUpgradeInfo = FakeObserveUpgradeInfo()
         createViewModel()
     }
 
@@ -269,10 +269,10 @@ internal class HomeViewModelTest {
             toastManager = toastManager,
             pinItem = FakePinItem(),
             unpinItem = FakeUnpinItem(),
-            pinItems = TestPinItems(),
-            unpinItems = TestUnpinItems(),
-            observeAppNeedsUpdate = TestObserveAppNeedsUpdate(),
-            appDispatchers = TestAppDispatchers(),
+            pinItems = FakePinItems(),
+            unpinItems = FakeUnpinItems(),
+            observeAppNeedsUpdate = FakeObserveAppNeedsUpdate(),
+            appDispatchers = FakeAppDispatchers(),
             observeCurrentUser = observeCurrentUser,
             changeAliasStatus = FakeChangeAliasStatus(),
             observeEncryptedSharedItems = FakeObserveEncryptedSharedItems(),

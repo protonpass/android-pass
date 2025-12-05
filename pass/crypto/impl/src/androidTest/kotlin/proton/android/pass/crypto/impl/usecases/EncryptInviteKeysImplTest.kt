@@ -28,11 +28,11 @@ import me.proton.core.key.domain.entity.key.PublicKey
 import me.proton.core.key.domain.publicKey
 import me.proton.core.user.domain.entity.AddressId
 import org.junit.Test
-import proton.android.pass.account.fakes.TestKeyStoreCrypto
+import proton.android.pass.account.fakes.FakeKeyStoreCrypto
 import proton.android.pass.crypto.api.Base64
 import proton.android.pass.crypto.api.Constants
-import proton.android.pass.crypto.fakes.context.TestEncryptionContext
-import proton.android.pass.crypto.fakes.context.TestEncryptionContextProvider
+import proton.android.pass.crypto.fakes.context.FakeEncryptionContext
+import proton.android.pass.crypto.fakes.context.FakeEncryptionContextProvider
 import proton.android.pass.test.TestUtils
 import kotlin.test.assertContentEquals
 import kotlin.test.assertEquals
@@ -40,13 +40,13 @@ import kotlin.test.assertEquals
 class EncryptInviteKeysImplTest {
 
     private val cryptoContext: CryptoContext = AndroidCryptoContext(
-        keyStoreCrypto = TestKeyStoreCrypto,
+        keyStoreCrypto = FakeKeyStoreCrypto,
         pgpCrypto = GOpenPGPCrypto(),
     )
 
     @Test
     fun createShareVaultRequest() {
-        val instance = EncryptInviteKeysImpl(cryptoContext, TestEncryptionContextProvider())
+        val instance = EncryptInviteKeysImpl(cryptoContext, FakeEncryptionContextProvider())
         val inviterAddressKey = TestUtils.createUserAddressKey(cryptoContext, AddressId("inviter"))
         val (shareKey, _) = TestUtils.createShareKey()
         val targetAddressKey = TestUtils.createUserAddressKey(cryptoContext, AddressId("invited"))
@@ -89,7 +89,7 @@ class EncryptInviteKeysImplTest {
             )
             assertEquals(decryptedData.status, VerificationStatus.Success)
 
-            val decryptedOriginalShareKey = TestEncryptionContext.decrypt(originalShareKey.key)
+            val decryptedOriginalShareKey = FakeEncryptionContext.decrypt(originalShareKey.key)
             assertContentEquals(decryptedOriginalShareKey, decryptedData.data)
         }
     }

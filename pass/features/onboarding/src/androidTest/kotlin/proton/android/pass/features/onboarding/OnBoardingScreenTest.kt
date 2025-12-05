@@ -30,10 +30,10 @@ import org.junit.Rule
 import org.junit.Test
 import proton.android.pass.autofill.api.AutofillStatus
 import proton.android.pass.autofill.api.AutofillSupportedStatus
-import proton.android.pass.autofill.fakes.TestAutofillManager
+import proton.android.pass.autofill.fakes.FakeAutofillManager
 import proton.android.pass.biometry.BiometryStatus
-import proton.android.pass.biometry.TestBiometryManager
-import proton.android.pass.data.fakes.usecases.TestObserveUserAccessData
+import proton.android.pass.biometry.FakeBiometryManager
+import proton.android.pass.data.fakes.usecases.FakeObserveUserAccessData
 import proton.android.pass.domain.UserAccessData
 import proton.android.pass.test.CallChecker
 import proton.android.pass.test.HiltComponentActivity
@@ -61,13 +61,13 @@ class OnBoardingScreenTest {
     }
 
     @Inject
-    lateinit var autofillManager: TestAutofillManager
+    lateinit var autofillManager: FakeAutofillManager
 
     @Inject
-    lateinit var biometryManager: TestBiometryManager
+    lateinit var biometryManager: FakeBiometryManager
 
     @Inject
-    lateinit var observeUserAccessData: TestObserveUserAccessData
+    lateinit var observeUserAccessData: FakeObserveUserAccessData
 
     @Before
     fun setup() {

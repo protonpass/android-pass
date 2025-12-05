@@ -28,13 +28,13 @@ import dagger.hilt.components.SingletonComponent
 abstract class FakesPreferenceModule {
 
     @Binds
-    abstract fun bindUserPreferencesRepository(impl: TestPreferenceRepository): UserPreferencesRepository
+    abstract fun bindUserPreferencesRepository(impl: FakePreferenceRepository): UserPreferencesRepository
 
     @Binds
     abstract fun bindFeatureFlagsPreferencesRepository(
-        impl: TestFeatureFlagsPreferenceRepository
+        impl: FakeFeatureFlagsPreferenceRepository
     ): FeatureFlagsPreferencesRepository
 
     @Binds
-    abstract fun bindInternalSettingsRepository(impl: TestInternalSettingsRepository): InternalSettingsRepository
+    abstract fun bindInternalSettingsRepository(impl: FakeInternalSettingsRepository): InternalSettingsRepository
 }

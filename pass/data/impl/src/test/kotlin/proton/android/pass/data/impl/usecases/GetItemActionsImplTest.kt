@@ -25,9 +25,9 @@ import org.junit.Test
 import proton.android.pass.data.api.usecases.ItemActions
 import proton.android.pass.data.api.usecases.capabilities.CanShareShareStatus
 import proton.android.pass.data.fakes.usecases.FakeGetItemById
-import proton.android.pass.data.fakes.usecases.TestCanShareShare
-import proton.android.pass.data.fakes.usecases.TestGetUserPlan
-import proton.android.pass.data.fakes.usecases.TestObserveAllShares
+import proton.android.pass.data.fakes.usecases.FakeCanShareShare
+import proton.android.pass.data.fakes.usecases.FakeGetUserPlan
+import proton.android.pass.data.fakes.usecases.FakeObserveAllShares
 import proton.android.pass.data.fakes.usecases.organizations.FakeObserveOrganizationSharingPolicy
 import proton.android.pass.data.fakes.usecases.shares.FakeObserveShare
 import proton.android.pass.domain.ItemId
@@ -47,19 +47,19 @@ internal class GetItemActionsImplTest {
 
     private lateinit var instance: GetItemActionsImpl
     private lateinit var getItemById: FakeGetItemById
-    private lateinit var observeUserPlan: TestGetUserPlan
-    private lateinit var canShareVault: TestCanShareShare
+    private lateinit var observeUserPlan: FakeGetUserPlan
+    private lateinit var canShareVault: FakeCanShareShare
     private lateinit var observeShare: FakeObserveShare
-    private lateinit var observeAllShares: TestObserveAllShares
+    private lateinit var observeAllShares: FakeObserveAllShares
     private lateinit var observeOrganizationSharingPolicy: FakeObserveOrganizationSharingPolicy
 
     @Before
     fun setup() {
         getItemById = FakeGetItemById()
-        observeUserPlan = TestGetUserPlan()
-        canShareVault = TestCanShareShare()
+        observeUserPlan = FakeGetUserPlan()
+        canShareVault = FakeCanShareShare()
         observeShare = FakeObserveShare()
-        observeAllShares = TestObserveAllShares()
+        observeAllShares = FakeObserveAllShares()
         observeOrganizationSharingPolicy = FakeObserveOrganizationSharingPolicy()
 
         setDefaultState()

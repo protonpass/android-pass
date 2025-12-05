@@ -20,7 +20,7 @@ package proton.android.pass.autofill
 
 import org.junit.Test
 import proton.android.pass.autofill.entities.AutofillItem
-import proton.android.pass.crypto.fakes.context.TestEncryptionContext
+import proton.android.pass.crypto.fakes.context.FakeEncryptionContext
 
 class CreditCardAutofillTest : BaseAutofillTest() {
 
@@ -81,7 +81,7 @@ class CreditCardAutofillTest : BaseAutofillTest() {
                 number = ExpectedAutofill.CC_NUMBER.value,
                 cardHolder = ExpectedAutofill.CC_CARDHOLDER_NAME.assertedValue,
                 expiration = CC_EXPIRATION,
-                cvv = TestEncryptionContext.encrypt(ExpectedAutofill.CC_CVV.value),
+                cvv = FakeEncryptionContext.encrypt(ExpectedAutofill.CC_CVV.value),
                 itemId = "itemID",
                 shareId = "shareID"
             )

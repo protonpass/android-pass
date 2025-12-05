@@ -33,14 +33,14 @@ import me.proton.core.domain.entity.UserId
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import proton.android.pass.account.fakes.TestAccountManager
+import proton.android.pass.account.fakes.FakeAccountManager
 import proton.android.pass.commonui.api.PassTheme
-import proton.android.pass.commonui.fakes.TestSavedStateHandleProvider
-import proton.android.pass.crypto.fakes.context.TestEncryptionContext
-import proton.android.pass.data.fakes.usecases.TestCanPerformPaidAction
-import proton.android.pass.data.fakes.usecases.TestCreateItem
-import proton.android.pass.data.fakes.usecases.TestObserveUserAccessData
-import proton.android.pass.data.fakes.usecases.TestObserveVaultsWithItemCount
+import proton.android.pass.commonui.fakes.FakeSavedStateHandleProvider
+import proton.android.pass.crypto.fakes.context.FakeEncryptionContext
+import proton.android.pass.data.fakes.usecases.FakeCanPerformPaidAction
+import proton.android.pass.data.fakes.usecases.FakeCreateItem
+import proton.android.pass.data.fakes.usecases.FakeObserveUserAccessData
+import proton.android.pass.data.fakes.usecases.FakeObserveVaultsWithItemCount
 import proton.android.pass.domain.CreditCardType
 import proton.android.pass.domain.HiddenState
 import proton.android.pass.domain.ItemContents
@@ -71,22 +71,22 @@ class CreateCreditCardScreenTest {
     val composeTestRule = createAndroidComposeRule<HiltComponentActivity>()
 
     @Inject
-    lateinit var createItem: TestCreateItem
+    lateinit var createItem: FakeCreateItem
 
     @Inject
-    lateinit var accountManager: TestAccountManager
+    lateinit var accountManager: FakeAccountManager
 
     @Inject
-    lateinit var savedStateHandle: TestSavedStateHandleProvider
+    lateinit var savedStateHandle: FakeSavedStateHandleProvider
 
     @Inject
-    lateinit var observeVaults: TestObserveVaultsWithItemCount
+    lateinit var observeVaults: FakeObserveVaultsWithItemCount
 
     @Inject
-    lateinit var canPerformPaidAction: TestCanPerformPaidAction
+    lateinit var canPerformPaidAction: FakeCanPerformPaidAction
 
     @Inject
-    lateinit var observeUserAccessData: TestObserveUserAccessData
+    lateinit var observeUserAccessData: FakeObserveUserAccessData
 
     @Before
     fun setup() {
@@ -207,15 +207,15 @@ class CreateCreditCardScreenTest {
         val memory = createItem.memory()
         assertEquals(1, memory.size)
 
-        val expected = TestCreateItem.Payload(
+        val expected = FakeCreateItem.Payload(
             userId = USER_ID,
             shareId = ShareId(SHARE_ID),
             itemContents = ItemContents.CreditCard(
                 title = title,
                 cardHolder = cardHolder,
                 number = cardNumber,
-                cvv = HiddenState.Concealed(encrypted= TestEncryptionContext.encrypt(cvv)),
-                pin = HiddenState.Concealed(encrypted= TestEncryptionContext.encrypt(pin)),
+                cvv = HiddenState.Concealed(encrypted= FakeEncryptionContext.encrypt(cvv)),
+                pin = HiddenState.Concealed(encrypted= FakeEncryptionContext.encrypt(pin)),
                 note = note,
                 expirationDate = expirationDateToBeSaved,
                 type = CreditCardType.Other,

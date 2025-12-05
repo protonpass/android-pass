@@ -22,8 +22,8 @@ import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Test
-import proton.android.pass.data.fakes.repositories.TestItemRepository
-import proton.android.pass.data.fakes.usecases.TestObserveCurrentUser
+import proton.android.pass.data.fakes.repositories.FakeItemRepository
+import proton.android.pass.data.fakes.usecases.FakeObserveCurrentUser
 import proton.android.pass.test.domain.TestItem
 import proton.android.pass.test.domain.TestUser
 import proton.android.pass.test.domain.items.ItemIdMother
@@ -31,15 +31,15 @@ import proton.android.pass.test.domain.shares.ShareIdMother
 
 internal class GetItemCategoryImplTest {
 
-    private lateinit var itemRepository: TestItemRepository
-    private lateinit var observeCurrentUser: TestObserveCurrentUser
+    private lateinit var itemRepository: FakeItemRepository
+    private lateinit var observeCurrentUser: FakeObserveCurrentUser
 
     private lateinit var getItemCategoryImpl: GetItemCategoryImpl
 
     @Before
     internal fun setUp() {
-        itemRepository = TestItemRepository()
-        observeCurrentUser = TestObserveCurrentUser().apply {
+        itemRepository = FakeItemRepository()
+        observeCurrentUser = FakeObserveCurrentUser().apply {
             sendUser(TestUser.create(""))
         }
 

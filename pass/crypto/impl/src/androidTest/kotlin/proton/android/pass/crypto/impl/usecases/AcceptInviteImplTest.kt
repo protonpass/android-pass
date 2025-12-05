@@ -30,12 +30,12 @@ import me.proton.core.user.domain.entity.AddressId
 import me.proton.core.user.domain.entity.User
 import me.proton.core.user.domain.entity.UserAddressKey
 import org.junit.Test
-import proton.android.pass.account.fakes.TestKeyStoreCrypto
+import proton.android.pass.account.fakes.FakeKeyStoreCrypto
 import proton.android.pass.crypto.api.Base64
 import proton.android.pass.crypto.api.usecases.invites.EncryptedInviteAcceptKey
 import proton.android.pass.crypto.api.usecases.invites.EncryptedInviteKey
-import proton.android.pass.crypto.fakes.context.TestEncryptionContext
-import proton.android.pass.crypto.fakes.context.TestEncryptionContextProvider
+import proton.android.pass.crypto.fakes.context.FakeEncryptionContext
+import proton.android.pass.crypto.fakes.context.FakeEncryptionContextProvider
 import proton.android.pass.domain.key.ShareKey
 import proton.android.pass.test.TestUtils
 import kotlin.test.assertContentEquals
@@ -43,13 +43,13 @@ import kotlin.test.assertEquals
 
 class AcceptInviteImplTest {
     private val cryptoContext: CryptoContext = AndroidCryptoContext(
-        keyStoreCrypto = TestKeyStoreCrypto,
+        keyStoreCrypto = FakeKeyStoreCrypto,
         pgpCrypto = GOpenPGPCrypto(),
     )
 
     @Test
     fun canAcceptInvite() {
-        val instance = AcceptUserInviteImpl(cryptoContext, TestEncryptionContextProvider())
+        val instance = AcceptUserInviteImpl(cryptoContext, FakeEncryptionContextProvider())
         val inviterAddressKey = TestUtils.createUserAddressKey(cryptoContext, AddressId("Inviter"))
         val invited = TestUtils.createUser()
         val invitedUserAddressKey = TestUtils.createUserAddressKey(cryptoContext, AddressId("Invited"))
@@ -85,7 +85,7 @@ class AcceptInviteImplTest {
         reencrypted: EncryptedInviteAcceptKey,
         invitedUser: User
     ) {
-        val decryptedOriginal = TestEncryptionContext.decrypt(original.key)
+        val decryptedOriginal = FakeEncryptionContext.decrypt(original.key)
         val decodedKey = Base64.decodeBase64(reencrypted.key)
         invitedUser.useKeys(cryptoContext) {
             val res = decryptAndVerifyData(message = getArmored(decodedKey))
@@ -99,7 +99,7 @@ class AcceptInviteImplTest {
         invitedUserAddressKey: UserAddressKey,
         shareKeys: List<ShareKey>
     ) : List<EncryptedInviteKey> {
-        val instance = EncryptInviteKeysImpl(cryptoContext, TestEncryptionContextProvider())
+        val instance = EncryptInviteKeysImpl(cryptoContext, FakeEncryptionContextProvider())
         val res = instance.invoke(
             inviterAddressKey = inviterAddressKey.privateKey,
             targetAddressKey = invitedUserAddressKey.privateKey.publicKey(cryptoContext),

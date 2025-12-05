@@ -31,14 +31,14 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import proton.android.pass.commonui.api.PassTheme
-import proton.android.pass.data.fakes.usecases.TestObserveVaults
+import proton.android.pass.data.fakes.usecases.FakeObserveVaults
 import proton.android.pass.domain.ShareFlags
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.Vault
 import proton.android.pass.domain.VaultId
-import proton.android.pass.image.fakes.TestClearIconCache
+import proton.android.pass.image.fakes.FakeClearIconCache
 import proton.android.pass.preferences.CopyTotpToClipboard
-import proton.android.pass.preferences.TestPreferenceRepository
+import proton.android.pass.preferences.FakePreferenceRepository
 import proton.android.pass.preferences.ThemePreference
 import proton.android.pass.preferences.UseFaviconsPreference
 import proton.android.pass.test.CallChecker
@@ -57,13 +57,13 @@ class SettingsScreenTest {
     val composeTestRule = createAndroidComposeRule<HiltComponentActivity>()
 
     @Inject
-    lateinit var preferenceRepository: TestPreferenceRepository
+    lateinit var preferenceRepository: FakePreferenceRepository
 
     @Inject
-    lateinit var clearIconCache: TestClearIconCache
+    lateinit var clearIconCache: FakeClearIconCache
 
     @Inject
-    lateinit var observeVaults: TestObserveVaults
+    lateinit var observeVaults: FakeObserveVaults
 
     @Before
     fun setup() {

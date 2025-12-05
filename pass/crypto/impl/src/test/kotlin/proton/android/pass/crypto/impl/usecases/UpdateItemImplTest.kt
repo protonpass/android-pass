@@ -22,8 +22,8 @@ import me.proton.core.crypto.common.keystore.EncryptedByteArray
 import org.junit.Test
 import proton.android.pass.crypto.api.Base64
 import proton.android.pass.crypto.api.context.EncryptionTag
-import proton.android.pass.crypto.fakes.context.TestEncryptionContext
-import proton.android.pass.crypto.fakes.context.TestEncryptionContextProvider
+import proton.android.pass.crypto.fakes.context.FakeEncryptionContext
+import proton.android.pass.crypto.fakes.context.FakeEncryptionContextProvider
 import proton.android.pass.datamodels.api.serializeToProto
 import proton.android.pass.domain.ItemContents
 import proton.android.pass.test.TestUtils
@@ -32,7 +32,7 @@ import kotlin.random.Random
 import kotlin.test.assertEquals
 
 class UpdateItemImplTest {
-    private val encryptionContextProvider = TestEncryptionContextProvider()
+    private val encryptionContextProvider = FakeEncryptionContextProvider()
 
     @Test
     fun canUpdateItem() {
@@ -48,7 +48,7 @@ class UpdateItemImplTest {
         )
         val body = instance.createRequest(
             itemKey,
-            contents.serializeToProto(encryptionContext = TestEncryptionContext),
+            contents.serializeToProto(encryptionContext = FakeEncryptionContext),
             lastRevision
         )
 

@@ -26,9 +26,9 @@ import kotlinx.datetime.Instant
 import me.proton.core.domain.entity.UserId
 import org.junit.Before
 import org.junit.Test
-import proton.android.pass.data.fakes.repositories.TestUserAccessDataRepository
+import proton.android.pass.data.fakes.repositories.FakeUserAccessDataRepository
 import proton.android.pass.data.impl.db.entities.PlanEntity
-import proton.android.pass.data.impl.fakes.TestLocalPlanDataSource
+import proton.android.pass.data.impl.fakes.FakeLocalPlanDataSource
 import proton.android.pass.data.impl.repositories.PlanRepositoryImpl
 import proton.android.pass.data.impl.responses.AccessResponse
 import proton.android.pass.data.impl.responses.MonitorResponse
@@ -42,15 +42,15 @@ import proton.android.pass.test.FixedClock
 internal class PlanRepositoryImplTest {
 
     private lateinit var instance: PlanRepositoryImpl
-    private lateinit var local: TestLocalPlanDataSource
+    private lateinit var local: FakeLocalPlanDataSource
     private lateinit var clock: FixedClock
-    private lateinit var userAccessDataRepository: TestUserAccessDataRepository
+    private lateinit var userAccessDataRepository: FakeUserAccessDataRepository
 
     @Before
     fun setup() {
-        local = TestLocalPlanDataSource()
+        local = FakeLocalPlanDataSource()
         clock = FixedClock(Clock.System.now())
-        userAccessDataRepository = TestUserAccessDataRepository()
+        userAccessDataRepository = FakeUserAccessDataRepository()
         instance = PlanRepositoryImpl(
             localPlanDataSource = local,
             userAccessDataRepository = userAccessDataRepository

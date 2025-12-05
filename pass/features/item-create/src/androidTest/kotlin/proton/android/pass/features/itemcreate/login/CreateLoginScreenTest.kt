@@ -37,21 +37,21 @@ import me.proton.core.domain.entity.UserId
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import proton.android.pass.account.fakes.TestAccountManager
+import proton.android.pass.account.fakes.FakeAccountManager
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.some
 import proton.android.pass.commonui.api.PassTheme
-import proton.android.pass.commonui.fakes.TestSavedStateHandleProvider
-import proton.android.pass.crypto.fakes.context.TestEncryptionContext
+import proton.android.pass.commonui.fakes.FakeSavedStateHandleProvider
+import proton.android.pass.crypto.fakes.context.FakeEncryptionContext
 import proton.android.pass.data.api.usecases.UpgradeInfo
-import proton.android.pass.data.fakes.repositories.TestDraftRepository
-import proton.android.pass.data.fakes.usecases.TestCanPerformPaidAction
-import proton.android.pass.data.fakes.usecases.TestCreateItem
-import proton.android.pass.data.fakes.usecases.TestCreateLoginAndAlias
-import proton.android.pass.data.fakes.usecases.TestObserveCurrentUser
-import proton.android.pass.data.fakes.usecases.TestObserveUpgradeInfo
-import proton.android.pass.data.fakes.usecases.TestObserveUserAccessData
-import proton.android.pass.data.fakes.usecases.TestObserveVaultsWithItemCount
+import proton.android.pass.data.fakes.repositories.FakeDraftRepository
+import proton.android.pass.data.fakes.usecases.FakeCanPerformPaidAction
+import proton.android.pass.data.fakes.usecases.FakeCreateItem
+import proton.android.pass.data.fakes.usecases.FakeCreateLoginAndAlias
+import proton.android.pass.data.fakes.usecases.FakeObserveCurrentUser
+import proton.android.pass.data.fakes.usecases.FakeObserveUpgradeInfo
+import proton.android.pass.data.fakes.usecases.FakeObserveUserAccessData
+import proton.android.pass.data.fakes.usecases.FakeObserveVaultsWithItemCount
 import proton.android.pass.domain.AliasSuffix
 import proton.android.pass.domain.CustomFieldContent
 import proton.android.pass.domain.CustomFieldType
@@ -80,7 +80,7 @@ import proton.android.pass.test.domain.TestUser
 import proton.android.pass.test.waitUntilExists
 import proton.android.pass.test.writeTextAndWait
 import proton.android.pass.totp.api.TotpSpec
-import proton.android.pass.totp.fakes.TestTotpManager
+import proton.android.pass.totp.fakes.FakeTotpManager
 import java.util.Date
 import javax.inject.Inject
 import proton.android.pass.composecomponents.impl.R as CompR
@@ -95,40 +95,40 @@ class CreateLoginScreenTest {
     val composeTestRule = createAndroidComposeRule<HiltComponentActivity>()
 
     @Inject
-    lateinit var createItem: TestCreateItem
+    lateinit var createItem: FakeCreateItem
 
     @Inject
-    lateinit var createItemAndAlias: TestCreateLoginAndAlias
+    lateinit var createItemAndAlias: FakeCreateLoginAndAlias
 
     @Inject
-    lateinit var accountManager: TestAccountManager
+    lateinit var accountManager: FakeAccountManager
 
     @Inject
-    lateinit var observeCurrentUser: TestObserveCurrentUser
+    lateinit var observeCurrentUser: FakeObserveCurrentUser
 
     @Inject
-    lateinit var savedStateHandle: TestSavedStateHandleProvider
+    lateinit var savedStateHandle: FakeSavedStateHandleProvider
 
     @Inject
-    lateinit var observeVaults: TestObserveVaultsWithItemCount
+    lateinit var observeVaults: FakeObserveVaultsWithItemCount
 
     @Inject
-    lateinit var canPerformPaidAction: TestCanPerformPaidAction
+    lateinit var canPerformPaidAction: FakeCanPerformPaidAction
 
     @Inject
-    lateinit var observeUpgradeInfo: TestObserveUpgradeInfo
+    lateinit var observeUpgradeInfo: FakeObserveUpgradeInfo
 
     @Inject
-    lateinit var observeUserAccessData: TestObserveUserAccessData
+    lateinit var observeUserAccessData: FakeObserveUserAccessData
 
     @Inject
-    lateinit var draftRepository: TestDraftRepository
+    lateinit var draftRepository: FakeDraftRepository
 
     @Inject
     lateinit var customFieldDraftRepository: CustomFieldDraftRepository
 
     @Inject
-    lateinit var totpManager: TestTotpManager
+    lateinit var totpManager: FakeTotpManager
 
     @Before
     fun setup() {
@@ -252,7 +252,7 @@ class CreateLoginScreenTest {
         val memory = createItem.memory()
         assertThat(memory.size).isEqualTo(1)
 
-        val expected = TestCreateItem.Payload(
+        val expected = FakeCreateItem.Payload(
             userId = USER_ID,
             shareId = ShareId(SHARE_ID),
             itemContents = ItemContents.Login(
@@ -262,8 +262,8 @@ class CreateLoginScreenTest {
                 note = note,
                 customFields = persistentListOf(),
                 packageInfoSet = emptySet(),
-                primaryTotp = HiddenState.Revealed(TestEncryptionContext.encrypt(totp), totp),
-                password = HiddenState.Concealed(TestEncryptionContext.encrypt(password)),
+                primaryTotp = HiddenState.Revealed(FakeEncryptionContext.encrypt(totp), totp),
+                password = HiddenState.Concealed(FakeEncryptionContext.encrypt(password)),
                 urls = listOf(website1Full, website2Full),
                 passkeys = emptyList()
 
@@ -293,7 +293,7 @@ class CreateLoginScreenTest {
         val hiddenCustomField = CustomFieldContent.Hidden(
             label = hiddenCustomFieldLabel,
             value = HiddenState.Concealed(
-                TestEncryptionContext.encrypt(
+                FakeEncryptionContext.encrypt(
                     hiddenCustomFieldValue
                 )
             )
@@ -302,7 +302,7 @@ class CreateLoginScreenTest {
         val totpCustomField = CustomFieldContent.Totp(
             label = totpCustomFieldLabel,
             value = HiddenState.Revealed(
-                TestEncryptionContext.encrypt(
+                FakeEncryptionContext.encrypt(
                     totpCustomFieldValue
                 ), totpCustomFieldValue
             )
@@ -401,8 +401,8 @@ class CreateLoginScreenTest {
                 totpCustomField
             ),
             packageInfoSet = emptySet(),
-            primaryTotp = HiddenState.Empty(TestEncryptionContext.encrypt("")),
-            password = HiddenState.Empty(TestEncryptionContext.encrypt("")),
+            primaryTotp = HiddenState.Empty(FakeEncryptionContext.encrypt("")),
+            password = HiddenState.Empty(FakeEncryptionContext.encrypt("")),
             urls = emptyList(),
             passkeys = emptyList()
         )

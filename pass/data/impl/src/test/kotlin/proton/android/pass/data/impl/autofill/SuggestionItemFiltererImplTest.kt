@@ -22,7 +22,7 @@ import com.google.common.truth.Truth.assertThat
 import org.junit.Before
 import org.junit.Test
 import proton.android.pass.data.api.usecases.Suggestion
-import proton.android.pass.data.fakes.usecases.TestGetPublicSuffixList
+import proton.android.pass.data.fakes.usecases.FakeGetPublicSuffixList
 import proton.android.pass.data.impl.url.HostParserImpl
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.entity.AppName
@@ -34,11 +34,11 @@ import proton.android.pass.test.domain.TestItemType
 class SuggestionItemFiltererImplTest {
 
     private lateinit var instance: SuggestionItemFiltererImpl
-    private lateinit var getPublicSuffixList: TestGetPublicSuffixList
+    private lateinit var getPublicSuffixList: FakeGetPublicSuffixList
 
     @Before
     fun setup() {
-        getPublicSuffixList = TestGetPublicSuffixList()
+        getPublicSuffixList = FakeGetPublicSuffixList()
         instance = SuggestionItemFiltererImpl(HostParserImpl(getPublicSuffixList))
     }
 

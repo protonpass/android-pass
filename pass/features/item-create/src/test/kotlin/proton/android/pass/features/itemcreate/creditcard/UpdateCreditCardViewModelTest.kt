@@ -27,19 +27,19 @@ import me.proton.core.domain.entity.UserId
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import proton.android.pass.account.fakes.TestAccountManager
-import proton.android.pass.clipboard.fakes.TestClipboardManager
+import proton.android.pass.account.fakes.FakeAccountManager
+import proton.android.pass.clipboard.fakes.FakeClipboardManager
 import proton.android.pass.commonpresentation.fakes.attachments.FakeAttachmentHandler
-import proton.android.pass.commonui.fakes.TestSavedStateHandleProvider
+import proton.android.pass.commonui.fakes.FakeSavedStateHandleProvider
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
-import proton.android.pass.crypto.fakes.context.TestEncryptionContextProvider
+import proton.android.pass.crypto.fakes.context.FakeEncryptionContextProvider
 import proton.android.pass.data.api.errors.InvalidContentFormatVersionError
 import proton.android.pass.data.api.repositories.PendingAttachmentLinkRepository
 import proton.android.pass.data.fakes.repositories.FakePendingAttachmentLinkRepository
+import proton.android.pass.data.fakes.usecases.FakeCanPerformPaidAction
 import proton.android.pass.data.fakes.usecases.FakeGetItemById
-import proton.android.pass.data.fakes.usecases.TestCanPerformPaidAction
-import proton.android.pass.data.fakes.usecases.TestObserveItemById
-import proton.android.pass.data.fakes.usecases.TestUpdateItem
+import proton.android.pass.data.fakes.usecases.FakeObserveItemById
+import proton.android.pass.data.fakes.usecases.FakeUpdateItem
 import proton.android.pass.data.fakes.usecases.attachments.FakeLinkAttachmentsToItem
 import proton.android.pass.data.fakes.usecases.attachments.FakeRenameAttachments
 import proton.android.pass.data.fakes.usecases.shares.FakeObserveShare
@@ -52,15 +52,15 @@ import proton.android.pass.features.itemcreate.common.formprocessor.FakeCreditCa
 import proton.android.pass.features.itemcreate.common.formprocessor.FormProcessingResult
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.navigation.api.CommonOptionalNavArgId
-import proton.android.pass.notifications.fakes.TestSnackbarDispatcher
-import proton.android.pass.preferences.TestFeatureFlagsPreferenceRepository
-import proton.android.pass.preferences.TestInternalSettingsRepository
-import proton.android.pass.preferences.TestPreferenceRepository
+import proton.android.pass.notifications.fakes.FakeSnackbarDispatcher
+import proton.android.pass.preferences.FakeFeatureFlagsPreferenceRepository
+import proton.android.pass.preferences.FakeInternalSettingsRepository
+import proton.android.pass.preferences.FakePreferenceRepository
 import proton.android.pass.telemetry.api.EventItemType
-import proton.android.pass.telemetry.fakes.TestTelemetryManager
+import proton.android.pass.telemetry.fakes.FakeTelemetryManager
 import proton.android.pass.test.MainDispatcherRule
 import proton.android.pass.test.domain.TestItem
-import proton.android.pass.totp.fakes.TestTotpManager
+import proton.android.pass.totp.fakes.FakeTotpManager
 
 class UpdateCreditCardViewModelTest {
 
@@ -69,60 +69,60 @@ class UpdateCreditCardViewModelTest {
 
     private lateinit var instance: UpdateCreditCardViewModel
 
-    private lateinit var telemetryManager: TestTelemetryManager
-    private lateinit var snackbarDispatcher: TestSnackbarDispatcher
+    private lateinit var telemetryManager: FakeTelemetryManager
+    private lateinit var snackbarDispatcher: FakeSnackbarDispatcher
     private lateinit var getItemById: FakeGetItemById
-    private lateinit var updateItem: TestUpdateItem
-    private lateinit var accountManager: TestAccountManager
+    private lateinit var updateItem: FakeUpdateItem
+    private lateinit var accountManager: FakeAccountManager
     private lateinit var pendingAttachmentLinkRepository: PendingAttachmentLinkRepository
     private lateinit var creditCardItemFormProcessor: FakeCreditCardItemFormProcessor
     private lateinit var observeShare: FakeObserveShare
-    private lateinit var observeItemById: TestObserveItemById
-    private lateinit var settingsRepository: TestInternalSettingsRepository
+    private lateinit var observeItemById: FakeObserveItemById
+    private lateinit var settingsRepository: FakeInternalSettingsRepository
 
     @Before
     fun setup() {
-        telemetryManager = TestTelemetryManager()
-        snackbarDispatcher = TestSnackbarDispatcher()
+        telemetryManager = FakeTelemetryManager()
+        snackbarDispatcher = FakeSnackbarDispatcher()
         getItemById = FakeGetItemById()
-        updateItem = TestUpdateItem()
+        updateItem = FakeUpdateItem()
         pendingAttachmentLinkRepository = FakePendingAttachmentLinkRepository()
         creditCardItemFormProcessor = FakeCreditCardItemFormProcessor()
-        accountManager = TestAccountManager()
+        accountManager = FakeAccountManager()
         accountManager.sendPrimaryUserId(UserId("user-id"))
         observeShare = FakeObserveShare()
-        observeItemById = TestObserveItemById()
-        settingsRepository = TestInternalSettingsRepository()
+        observeItemById = FakeObserveItemById()
+        settingsRepository = FakeInternalSettingsRepository()
     }
 
     private fun createInstance(): UpdateCreditCardViewModel = UpdateCreditCardViewModel(
         accountManager = accountManager,
         snackbarDispatcher = snackbarDispatcher,
-        savedStateHandleProvider = TestSavedStateHandleProvider().apply {
+        savedStateHandleProvider = FakeSavedStateHandleProvider().apply {
             get()[CommonOptionalNavArgId.ShareId.key] = SHARE_ID
             get()[CommonNavArgId.ItemId.key] = ITEM_ID
         },
-        encryptionContextProvider = TestEncryptionContextProvider(),
+        encryptionContextProvider = FakeEncryptionContextProvider(),
         telemetryManager = telemetryManager,
         getItemById = getItemById,
         updateItem = updateItem,
-        canPerformPaidAction = TestCanPerformPaidAction().apply { setResult(true) },
+        canPerformPaidAction = FakeCanPerformPaidAction().apply { setResult(true) },
         attachmentsHandler = FakeAttachmentHandler(),
         linkAttachmentsToItem = FakeLinkAttachmentsToItem(),
         renameAttachments = FakeRenameAttachments(),
-        userPreferencesRepository = TestPreferenceRepository(),
+        userPreferencesRepository = FakePreferenceRepository(),
         pendingAttachmentLinkRepository = pendingAttachmentLinkRepository,
         customFieldHandler = CustomFieldHandlerImpl(
-            TestTotpManager(),
-            TestEncryptionContextProvider()
+            FakeTotpManager(),
+            FakeEncryptionContextProvider()
         ),
         customFieldDraftRepository = CustomFieldDraftRepositoryImpl(),
         creditCardItemFormProcessor = creditCardItemFormProcessor,
-        clipboardManager = TestClipboardManager(),
+        clipboardManager = FakeClipboardManager(),
         observeShare = observeShare,
         observeItemById = observeItemById,
         settingsRepository = settingsRepository,
-        featureFlagsPreferencesRepository = TestFeatureFlagsPreferenceRepository()
+        featureFlagsPreferencesRepository = FakeFeatureFlagsPreferenceRepository()
     )
 
     @Test

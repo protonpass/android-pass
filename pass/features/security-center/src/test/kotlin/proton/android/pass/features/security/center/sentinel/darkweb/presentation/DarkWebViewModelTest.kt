@@ -51,8 +51,8 @@ import proton.android.pass.features.security.center.darkweb.presentation.DarkWeb
 import proton.android.pass.features.security.center.darkweb.presentation.DarkWebViewModel
 import proton.android.pass.features.security.center.shared.presentation.EmailBreachUiState
 import proton.android.pass.features.security.center.shared.ui.DateUtils
-import proton.android.pass.notifications.fakes.TestSnackbarDispatcher
-import proton.android.pass.telemetry.fakes.TestTelemetryManager
+import proton.android.pass.notifications.fakes.FakeSnackbarDispatcher
+import proton.android.pass.telemetry.fakes.FakeTelemetryManager
 import proton.android.pass.test.MainDispatcherRule
 
 class DarkWebViewModelTest {
@@ -81,9 +81,9 @@ class DarkWebViewModelTest {
             observeBreachCustomEmails = observeBreachCustomEmails,
             observeCustomEmailSuggestions = observeCustomEmailSuggestions,
             observeGlobalMonitorState = observeGlobalMonitorState,
-            telemetryManager = TestTelemetryManager(),
+            telemetryManager = FakeTelemetryManager(),
             addBreachCustomEmail = FakeAddBreachCustomEmail(),
-            snackbarDispatcher = TestSnackbarDispatcher()
+            snackbarDispatcher = FakeSnackbarDispatcher()
         )
     }
 

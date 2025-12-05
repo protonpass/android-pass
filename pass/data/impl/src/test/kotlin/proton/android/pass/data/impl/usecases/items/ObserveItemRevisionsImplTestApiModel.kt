@@ -23,23 +23,23 @@ import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Test
-import proton.android.pass.account.fakes.TestAccountManager
+import proton.android.pass.account.fakes.FakeAccountManager
 import proton.android.pass.data.api.repositories.ItemRevision
-import proton.android.pass.data.fakes.repositories.TestItemRepository
+import proton.android.pass.data.fakes.repositories.FakeItemRepository
 import proton.android.pass.test.domain.items.ItemIdMother
 import proton.android.pass.test.domain.shares.ShareIdMother
 
 internal class ObserveItemRevisionsImplTestApiModel {
 
-    private lateinit var accountManager: TestAccountManager
-    private lateinit var itemRepository: TestItemRepository
+    private lateinit var accountManager: FakeAccountManager
+    private lateinit var itemRepository: FakeItemRepository
 
     private lateinit var observeItemRevisionsImpl: ObserveItemRevisionsImpl
 
     @Before
     internal fun setUp() {
-        accountManager = TestAccountManager()
-        itemRepository = TestItemRepository()
+        accountManager = FakeAccountManager()
+        itemRepository = FakeItemRepository()
 
         observeItemRevisionsImpl = ObserveItemRevisionsImpl(
             accountManager = accountManager,

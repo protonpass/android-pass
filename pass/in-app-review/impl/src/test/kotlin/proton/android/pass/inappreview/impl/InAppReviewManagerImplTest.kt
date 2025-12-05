@@ -24,7 +24,7 @@ import kotlinx.coroutines.test.runTest
 import kotlinx.datetime.Clock
 import org.junit.Before
 import org.junit.Test
-import proton.android.pass.data.fakes.usecases.TestGetUserPlan
+import proton.android.pass.data.fakes.usecases.FakeGetUserPlan
 import proton.android.pass.domain.Plan
 import proton.android.pass.domain.PlanLimit
 import proton.android.pass.domain.PlanType
@@ -35,18 +35,18 @@ import proton.android.pass.inappreview.impl.InAppReviewManagerImpl.Companion.PAI
 import proton.android.pass.inappreview.impl.InAppReviewManagerImpl.Companion.PAID_USER_ITEM_CREATED_TRIGGER
 import proton.android.pass.inappreview.impl.InAppReviewManagerImpl.Companion.TIMES_USED
 import proton.android.pass.preferences.AppUsageConfig
-import proton.android.pass.preferences.TestInternalSettingsRepository
+import proton.android.pass.preferences.FakeInternalSettingsRepository
 
 class InAppReviewManagerImplTest {
 
-    private lateinit var getUserPlan: TestGetUserPlan
-    private lateinit var internalSettingsRepository: TestInternalSettingsRepository
+    private lateinit var getUserPlan: FakeGetUserPlan
+    private lateinit var internalSettingsRepository: FakeInternalSettingsRepository
     private lateinit var inAppReviewManager: InAppReviewManager
 
     @Before
     fun setUp() {
-        getUserPlan = TestGetUserPlan()
-        internalSettingsRepository = TestInternalSettingsRepository()
+        getUserPlan = FakeGetUserPlan()
+        internalSettingsRepository = FakeInternalSettingsRepository()
         inAppReviewManager = InAppReviewManagerImpl(
             getUserPlan = getUserPlan,
             internalSettingsRepository = internalSettingsRepository

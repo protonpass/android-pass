@@ -21,7 +21,7 @@ package proton.android.pass.autofill.ui.autofill.select
 import com.google.common.truth.Truth.assertThat
 import org.junit.Test
 import proton.android.pass.autofill.ui.autofill.AutofillAppViewModel.Companion.shouldAskForAssociation
-import proton.android.pass.crypto.fakes.context.TestEncryptionContext
+import proton.android.pass.crypto.fakes.context.FakeEncryptionContext
 import proton.android.pass.domain.HiddenState
 import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.entity.AppName
@@ -86,7 +86,7 @@ class ShouldAskForAssociationTest {
             note = "note",
             itemEmail = "user@email.com",
             itemUsername = "username",
-            password = HiddenState.Empty(TestEncryptionContext.encrypt("")),
+            password = HiddenState.Empty(FakeEncryptionContext.encrypt("")),
             urls = mutableListOf<String>().apply { url?.let { add(it) } },
             customFields = emptyList(),
             packageInfoSet = mutableSetOf<PackageInfo>().apply {
@@ -94,7 +94,7 @@ class ShouldAskForAssociationTest {
                     add(PackageInfo(it, AppName("app name")))
                 }
             },
-            primaryTotp = HiddenState.Empty(TestEncryptionContext.encrypt("")),
+            primaryTotp = HiddenState.Empty(FakeEncryptionContext.encrypt("")),
             passkeys = emptyList()
         )
 

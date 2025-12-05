@@ -33,11 +33,11 @@ import org.junit.Test
 import proton.android.pass.biometry.BiometryAuthError
 import proton.android.pass.biometry.BiometryResult
 import proton.android.pass.biometry.BiometryStatus
-import proton.android.pass.biometry.TestBiometryManager
-import proton.android.pass.common.fakes.TestAppDispatchers
+import proton.android.pass.biometry.FakeBiometryManager
+import proton.android.pass.common.fakes.FakeAppDispatchers
 import proton.android.pass.commonui.api.PassTheme
-import proton.android.pass.data.fakes.usecases.TestCheckMasterPassword
-import proton.android.pass.data.fakes.usecases.TestObserveUserEmail
+import proton.android.pass.data.fakes.usecases.FakeCheckMasterPassword
+import proton.android.pass.data.fakes.usecases.FakeObserveUserEmail
 import proton.android.pass.preferences.AppLockState
 import proton.android.pass.preferences.AppLockTypePreference
 import proton.android.pass.preferences.BiometricSystemLockPreference
@@ -63,13 +63,13 @@ class AuthScreenMasterPasswordTest {
     lateinit var userPreferencesRepository: UserPreferencesRepository
 
     @Inject
-    lateinit var biometryManager: TestBiometryManager
+    lateinit var biometryManager: FakeBiometryManager
 
     @Inject
-    lateinit var checkMasterPassword: TestCheckMasterPassword
+    lateinit var checkMasterPassword: FakeCheckMasterPassword
 
     @Inject
-    lateinit var appDispatchers: TestAppDispatchers
+    lateinit var appDispatchers: FakeAppDispatchers
 
     @Before
     fun setup() {
@@ -94,7 +94,7 @@ class AuthScreenMasterPasswordTest {
                 }
             }
 
-            onNodeWithText(TestObserveUserEmail.DEFAULT_EMAIL, substring = true).assertExists()
+            onNodeWithText(FakeObserveUserEmail.DEFAULT_EMAIL, substring = true).assertExists()
         }
     }
 

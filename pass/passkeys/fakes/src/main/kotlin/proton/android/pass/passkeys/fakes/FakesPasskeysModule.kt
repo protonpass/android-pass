@@ -14,15 +14,15 @@ import proton.android.pass.passkeys.api.ParseCreatePasskeyRequest
 abstract class FakesPasskeysModule {
 
     @Binds
-    abstract fun bindAuthenticateWithPasskey(impl: TestAuthenticateWithPasskey): AuthenticateWithPasskey
+    abstract fun bindAuthenticateWithPasskey(impl: FakeAuthenticateWithPasskey): AuthenticateWithPasskey
 
     @Binds
-    abstract fun bindGeneratePasskey(impl: TestGeneratePasskey): GeneratePasskey
+    abstract fun bindGeneratePasskey(impl: FakeGeneratePasskey): GeneratePasskey
 
     @Binds
-    abstract fun bindParseCreatePasskeyRequest(impl: TestParseCreatePasskeyRequest): ParseCreatePasskeyRequest
+    abstract fun bindParseCreatePasskeyRequest(impl: FakeParseCreatePasskeyRequest): ParseCreatePasskeyRequest
 
     @Binds
-    abstract fun bindCheckPasskeySupport(impl: TestCheckPasskeySupport): CheckPasskeySupport
+    abstract fun bindCheckPasskeySupport(impl: FakeCheckPasskeySupport): CheckPasskeySupport
 }
 

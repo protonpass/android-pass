@@ -23,21 +23,21 @@ import me.proton.core.domain.entity.UserId
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import proton.android.pass.account.fakes.TestAccountManager
-import proton.android.pass.account.fakes.TestUserAddressRepository
+import proton.android.pass.account.fakes.FakeAccountManager
+import proton.android.pass.account.fakes.FakeUserAddressRepository
 import proton.android.pass.crypto.api.usecases.OpenItemOutput
-import proton.android.pass.crypto.fakes.context.TestEncryptionContextProvider
-import proton.android.pass.crypto.fakes.usecases.TestCreateItem
-import proton.android.pass.crypto.fakes.usecases.TestMigrateItem
-import proton.android.pass.crypto.fakes.usecases.TestOpenItem
-import proton.android.pass.crypto.fakes.usecases.TestUpdateItem
+import proton.android.pass.crypto.fakes.context.FakeEncryptionContextProvider
+import proton.android.pass.crypto.fakes.usecases.FakeCreateItem
+import proton.android.pass.crypto.fakes.usecases.FakeMigrateItem
+import proton.android.pass.crypto.fakes.usecases.FakeOpenItem
+import proton.android.pass.crypto.fakes.usecases.FakeUpdateItem
 import proton.android.pass.data.fakes.crypto.FakeGetShareAndItemKey
-import proton.android.pass.data.impl.fakes.TestItemKeyRepository
-import proton.android.pass.data.impl.fakes.TestLocalItemDataSource
-import proton.android.pass.data.impl.fakes.TestPassDatabase
-import proton.android.pass.data.impl.fakes.TestRemoteItemDataSource
-import proton.android.pass.data.impl.fakes.TestShareKeyRepository
-import proton.android.pass.data.impl.fakes.TestShareRepository
+import proton.android.pass.data.impl.fakes.FakeItemKeyRepository
+import proton.android.pass.data.impl.fakes.FakeLocalItemDataSource
+import proton.android.pass.data.impl.fakes.FakePassDatabase
+import proton.android.pass.data.impl.fakes.FakeRemoteItemDataSource
+import proton.android.pass.data.impl.fakes.FakeShareKeyRepository
+import proton.android.pass.data.impl.fakes.FakeShareRepository
 import proton.android.pass.data.impl.generator.TestProtoItemGenerator
 import proton.android.pass.data.impl.repositories.ItemRepositoryImpl
 import proton.android.pass.domain.ItemContents
@@ -54,42 +54,42 @@ class ItemRepositoryImplTest {
     val mainDispatcher = MainDispatcherRule()
 
     private lateinit var repository: ItemRepositoryImpl
-    private lateinit var createItem: TestCreateItem
-    private lateinit var openItem: TestOpenItem
-    private lateinit var localItemDataSource: TestLocalItemDataSource
-    private lateinit var remoteItemDataSource: TestRemoteItemDataSource
-    private lateinit var shareKeyRepository: TestShareKeyRepository
-    private lateinit var itemKeyRepository: TestItemKeyRepository
+    private lateinit var createItem: FakeCreateItem
+    private lateinit var openItem: FakeOpenItem
+    private lateinit var localItemDataSource: FakeLocalItemDataSource
+    private lateinit var remoteItemDataSource: FakeRemoteItemDataSource
+    private lateinit var shareKeyRepository: FakeShareKeyRepository
+    private lateinit var itemKeyRepository: FakeItemKeyRepository
 
     private val userId = UserId("test-123")
     private lateinit var share: Share
 
     @Before
     fun setUp() {
-        createItem = TestCreateItem()
-        openItem = TestOpenItem()
-        localItemDataSource = TestLocalItemDataSource()
-        remoteItemDataSource = TestRemoteItemDataSource()
-        shareKeyRepository = TestShareKeyRepository()
-        itemKeyRepository = TestItemKeyRepository()
+        createItem = FakeCreateItem()
+        openItem = FakeOpenItem()
+        localItemDataSource = FakeLocalItemDataSource()
+        remoteItemDataSource = FakeRemoteItemDataSource()
+        shareKeyRepository = FakeShareKeyRepository()
+        itemKeyRepository = FakeItemKeyRepository()
 
         share = TestShare.random()
 
         repository = ItemRepositoryImpl(
-            database = TestPassDatabase(),
-            accountManager = TestAccountManager(),
-            userAddressRepository = TestUserAddressRepository().apply {
+            database = FakePassDatabase(),
+            accountManager = FakeAccountManager(),
+            userAddressRepository = FakeUserAddressRepository().apply {
                 setAddresses(listOf(generateAddress("test1", userId)))
             },
-            shareRepository = TestShareRepository(),
+            shareRepository = FakeShareRepository(),
             createItem = createItem,
-            updateItem = TestUpdateItem(),
+            updateItem = FakeUpdateItem(),
             localItemDataSource = localItemDataSource,
             remoteItemDataSource = remoteItemDataSource,
             openItem = openItem,
-            encryptionContextProvider = TestEncryptionContextProvider(),
+            encryptionContextProvider = FakeEncryptionContextProvider(),
             shareKeyRepository = shareKeyRepository,
-            migrateItem = TestMigrateItem(),
+            migrateItem = FakeMigrateItem(),
             getShareAndItemKey = FakeGetShareAndItemKey()
         )
     }
@@ -97,14 +97,14 @@ class ItemRepositoryImplTest {
     @Test
     fun `createItem stores into remote and local datasource`() = runTest {
         shareKeyRepository.emitGetLatestKeyForShare(TestShareKey.createPrivate())
-        createItem.setPayload(TestCreateItem.createPayload())
+        createItem.setPayload(FakeCreateItem.createPayload())
 
         val name = "title"
         val note = "note"
         val protoItem = TestProtoItemGenerator.generate(name, note)
         val item = TestItem.random(content = protoItem.toByteArray())
         remoteItemDataSource.setCreateItemResponse {
-            TestRemoteItemDataSource.createItemRevision(item)
+            FakeRemoteItemDataSource.createItemRevision(item)
         }
         openItem.setOutput(OpenItemOutput(item = item, itemKey = null))
 

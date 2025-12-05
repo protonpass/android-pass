@@ -24,7 +24,7 @@ import proton.android.pass.crypto.api.Base64
 import proton.android.pass.crypto.api.EncryptionKey
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.crypto.api.usecases.EncryptedItemKey
-import proton.android.pass.crypto.impl.context.TestEncryptionContextProvider
+import proton.android.pass.crypto.impl.context.FakeEncryptionContextProvider
 import proton.android.pass.domain.key.ShareKey
 import kotlin.test.assertContentEquals
 import kotlin.test.assertEquals
@@ -37,7 +37,7 @@ class OpenItemKeyImplTest {
 
     @Before
     fun setup() {
-        encryptionContextProvider = TestEncryptionContextProvider(EncryptionKey.generate())
+        encryptionContextProvider = FakeEncryptionContextProvider(EncryptionKey.generate())
         instance = OpenItemKeyImpl(encryptionContextProvider)
     }
 

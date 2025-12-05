@@ -21,7 +21,7 @@ package proton.android.pass.crypto.impl.usecases
 import me.proton.core.crypto.common.keystore.EncryptedByteArray
 import org.junit.Test
 import proton.android.pass.crypto.api.Base64
-import proton.android.pass.crypto.fakes.context.TestEncryptionContextProvider
+import proton.android.pass.crypto.fakes.context.FakeEncryptionContextProvider
 import proton.android.pass.crypto.impl.Constants
 import proton.android.pass.domain.ItemContents
 import proton.android.pass.test.TestUtils
@@ -30,7 +30,7 @@ import kotlin.test.assertEquals
 
 class CreateItemImplTest {
 
-    private val encryptionContextProvider = TestEncryptionContextProvider()
+    private val encryptionContextProvider = FakeEncryptionContextProvider()
 
     @Test
     fun testCanCreateItem() {

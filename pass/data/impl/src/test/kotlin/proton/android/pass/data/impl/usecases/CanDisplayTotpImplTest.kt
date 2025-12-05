@@ -25,10 +25,10 @@ import kotlinx.datetime.Clock
 import me.proton.core.domain.entity.UserId
 import org.junit.Before
 import org.junit.Test
-import proton.android.pass.account.fakes.TestAccountManager
-import proton.android.pass.data.fakes.usecases.TestGetUserPlan
-import proton.android.pass.data.impl.fakes.TestLocalItemDataSource
-import proton.android.pass.data.impl.fakes.TestShareRepository
+import proton.android.pass.account.fakes.FakeAccountManager
+import proton.android.pass.data.fakes.usecases.FakeGetUserPlan
+import proton.android.pass.data.impl.fakes.FakeLocalItemDataSource
+import proton.android.pass.data.impl.fakes.FakeShareRepository
 import proton.android.pass.data.impl.local.ItemWithTotp
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.Plan
@@ -41,22 +41,22 @@ import kotlin.time.Duration.Companion.days
 internal class CanDisplayTotpImplTest {
 
     private lateinit var instance: CanDisplayTotpImpl
-    private lateinit var getUserPlan: TestGetUserPlan
-    private lateinit var dataSource: TestLocalItemDataSource
-    private lateinit var shareRepository: TestShareRepository
+    private lateinit var getUserPlan: FakeGetUserPlan
+    private lateinit var dataSource: FakeLocalItemDataSource
+    private lateinit var shareRepository: FakeShareRepository
 
     @Before
     fun setup() {
-        getUserPlan = TestGetUserPlan()
-        dataSource = TestLocalItemDataSource()
-        shareRepository = TestShareRepository().apply {
+        getUserPlan = FakeGetUserPlan()
+        dataSource = FakeLocalItemDataSource()
+        shareRepository = FakeShareRepository().apply {
             setUsableShareIdsResult(Result.success(emptyList()))
         }
         instance = CanDisplayTotpImpl(
             getUserPlan = getUserPlan,
             localItemDataSource = dataSource,
             shareRepository = shareRepository,
-            accountManager = TestAccountManager().apply { sendPrimaryUserId(USER_ID) }
+            accountManager = FakeAccountManager().apply { sendPrimaryUserId(USER_ID) }
         )
     }
 

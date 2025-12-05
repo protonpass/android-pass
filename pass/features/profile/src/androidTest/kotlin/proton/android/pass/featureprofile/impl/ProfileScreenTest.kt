@@ -38,15 +38,15 @@ import org.junit.Rule
 import org.junit.Test
 import proton.android.pass.autofill.api.AutofillStatus
 import proton.android.pass.autofill.api.AutofillSupportedStatus
-import proton.android.pass.autofill.fakes.TestAutofillManager
+import proton.android.pass.autofill.fakes.FakeAutofillManager
 import proton.android.pass.commonui.api.AppUrls.PASS_STORE
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.data.api.ItemCountSummary
 import proton.android.pass.data.api.usecases.UpgradeInfo
-import proton.android.pass.data.fakes.usecases.TestObserveItemCount
-import proton.android.pass.data.fakes.usecases.TestObserveMFACount
-import proton.android.pass.data.fakes.usecases.TestObserveUpgradeInfo
-import proton.android.pass.data.fakes.usecases.TestObserveUserAccessData
+import proton.android.pass.data.fakes.usecases.FakeObserveItemCount
+import proton.android.pass.data.fakes.usecases.FakeObserveMFACount
+import proton.android.pass.data.fakes.usecases.FakeObserveUpgradeInfo
+import proton.android.pass.data.fakes.usecases.FakeObserveUserAccessData
 import proton.android.pass.domain.Plan
 import proton.android.pass.domain.PlanLimit
 import proton.android.pass.domain.PlanType
@@ -74,19 +74,19 @@ class ProfileScreenTest {
     val intentsRule = IntentsRule()
 
     @Inject
-    lateinit var observeUpgradeInfo: TestObserveUpgradeInfo
+    lateinit var observeUpgradeInfo: FakeObserveUpgradeInfo
 
     @Inject
-    lateinit var autofillManager: TestAutofillManager
+    lateinit var autofillManager: FakeAutofillManager
 
     @Inject
-    lateinit var observeItemCount: TestObserveItemCount
+    lateinit var observeItemCount: FakeObserveItemCount
 
     @Inject
-    lateinit var observeMfaCount: TestObserveMFACount
+    lateinit var observeMfaCount: FakeObserveMFACount
 
     @Inject
-    lateinit var observeUserAccessData: TestObserveUserAccessData
+    lateinit var observeUserAccessData: FakeObserveUserAccessData
 
     @Before
     fun setup() {

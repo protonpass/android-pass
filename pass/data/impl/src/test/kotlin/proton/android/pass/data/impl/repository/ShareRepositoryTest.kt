@@ -23,18 +23,18 @@ import kotlinx.coroutines.test.runTest
 import me.proton.core.domain.entity.UserId
 import org.junit.Before
 import org.junit.Test
-import proton.android.pass.account.fakes.TestUserAddressRepository
-import proton.android.pass.account.fakes.TestUserRepository
-import proton.android.pass.crypto.fakes.context.TestEncryptionContextProvider
-import proton.android.pass.crypto.fakes.usecases.TestCreateVault
+import proton.android.pass.account.fakes.FakeUserAddressRepository
+import proton.android.pass.account.fakes.FakeUserRepository
+import proton.android.pass.crypto.fakes.context.FakeEncryptionContextProvider
+import proton.android.pass.crypto.fakes.usecases.FakeCreateVault
 import proton.android.pass.data.fakes.repositories.FakeGroupRepository
-import proton.android.pass.data.fakes.repositories.TestUserAccessDataRepository
+import proton.android.pass.data.fakes.repositories.FakeUserAccessDataRepository
 import proton.android.pass.data.impl.db.entities.ShareEntity
-import proton.android.pass.data.impl.fakes.TestLocalShareDataSource
-import proton.android.pass.data.impl.fakes.TestPassDatabase
-import proton.android.pass.data.impl.fakes.TestReencryptShareContents
-import proton.android.pass.data.impl.fakes.TestRemoteShareDataSource
-import proton.android.pass.data.impl.fakes.TestShareKeyRepository
+import proton.android.pass.data.impl.fakes.FakeLocalShareDataSource
+import proton.android.pass.data.impl.fakes.FakePassDatabase
+import proton.android.pass.data.impl.fakes.FakeReencryptShareContents
+import proton.android.pass.data.impl.fakes.FakeRemoteShareDataSource
+import proton.android.pass.data.impl.fakes.FakeShareKeyRepository
 import proton.android.pass.data.impl.repositories.ShareRepositoryImpl
 import proton.android.pass.data.impl.responses.ShareResponse
 import proton.android.pass.domain.Share
@@ -42,37 +42,37 @@ import proton.android.pass.test.domain.TestShare
 
 class ShareRepositoryTest {
 
-    private val encryptionContextProvider = TestEncryptionContextProvider()
+    private val encryptionContextProvider = FakeEncryptionContextProvider()
 
     private lateinit var instance: ShareRepositoryImpl
-    private lateinit var remote: TestRemoteShareDataSource
-    private lateinit var local: TestLocalShareDataSource
+    private lateinit var remote: FakeRemoteShareDataSource
+    private lateinit var local: FakeLocalShareDataSource
 
     @Before
     fun setup() {
-        remote = TestRemoteShareDataSource()
-        local = TestLocalShareDataSource()
+        remote = FakeRemoteShareDataSource()
+        local = FakeLocalShareDataSource()
 
         instance = ShareRepositoryImpl(
-            database = TestPassDatabase(),
-            userRepository = TestUserRepository(),
-            userAddressRepository = TestUserAddressRepository().apply {
+            database = FakePassDatabase(),
+            userRepository = FakeUserRepository(),
+            userAddressRepository = FakeUserAddressRepository().apply {
                 setAddresses(listOf(generateAddress("address1", UserId(USER_ID))))
             },
             remoteShareDataSource = remote,
             localShareDataSource = local,
-            reencryptShareContents = TestReencryptShareContents().apply {
+            reencryptShareContents = FakeReencryptShareContents().apply {
                 setResponse(Result.success(null))
             },
-            createVault = TestCreateVault().apply {
-                setResult(Result.success(TestCreateVault.generateOutput()))
+            createVault = FakeCreateVault().apply {
+                setResult(Result.success(FakeCreateVault.generateOutput()))
             },
-            updateVault = proton.android.pass.crypto.fakes.usecases.TestUpdateVault(),
+            updateVault = proton.android.pass.crypto.fakes.usecases.FakeUpdateVault(),
             encryptionContextProvider = encryptionContextProvider,
-            shareKeyRepository = TestShareKeyRepository().apply {
+            shareKeyRepository = FakeShareKeyRepository().apply {
                 emitGetShareKeys(listOf())
             },
-            userAccessDataRepository = TestUserAccessDataRepository().apply {
+            userAccessDataRepository = FakeUserAccessDataRepository().apply {
                 sendValue(null)
             },
             groupRepository = FakeGroupRepository()

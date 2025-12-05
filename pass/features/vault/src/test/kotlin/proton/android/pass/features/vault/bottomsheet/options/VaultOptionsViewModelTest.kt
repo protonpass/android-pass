@@ -24,18 +24,18 @@ import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import proton.android.pass.commonui.fakes.TestSavedStateHandleProvider
+import proton.android.pass.commonui.fakes.FakeSavedStateHandleProvider
 import proton.android.pass.data.api.usecases.capabilities.VaultAccessData
 import proton.android.pass.data.fakes.usecases.FakeObserveEncryptedItems
-import proton.android.pass.data.fakes.usecases.TestCanManageVaultAccess
-import proton.android.pass.data.fakes.usecases.TestCanMigrateVault
-import proton.android.pass.data.fakes.usecases.TestCanShareShare
-import proton.android.pass.data.fakes.usecases.TestObserveVaults
+import proton.android.pass.data.fakes.usecases.FakeCanManageVaultAccess
+import proton.android.pass.data.fakes.usecases.FakeCanMigrateVault
+import proton.android.pass.data.fakes.usecases.FakeCanShareShare
+import proton.android.pass.data.fakes.usecases.FakeObserveVaults
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.Vault
 import proton.android.pass.navigation.api.CommonNavArgId
-import proton.android.pass.notifications.fakes.TestSnackbarDispatcher
-import proton.android.pass.preferences.TestFeatureFlagsPreferenceRepository
+import proton.android.pass.notifications.fakes.FakeSnackbarDispatcher
+import proton.android.pass.preferences.FakeFeatureFlagsPreferenceRepository
 import proton.android.pass.test.MainDispatcherRule
 import proton.android.pass.test.TestUtils
 import proton.android.pass.test.domain.TestVault
@@ -47,19 +47,19 @@ class VaultOptionsViewModelTest {
 
     private lateinit var instance: VaultOptionsViewModel
 
-    private lateinit var snackbarDispatcher: TestSnackbarDispatcher
-    private lateinit var canMigrateVault: TestCanMigrateVault
-    private lateinit var canShareVault: TestCanShareShare
-    private lateinit var canManageVaultAccess: TestCanManageVaultAccess
-    private lateinit var observeVaults: TestObserveVaults
+    private lateinit var snackbarDispatcher: FakeSnackbarDispatcher
+    private lateinit var canMigrateVault: FakeCanMigrateVault
+    private lateinit var canShareVault: FakeCanShareShare
+    private lateinit var canManageVaultAccess: FakeCanManageVaultAccess
+    private lateinit var observeVaults: FakeObserveVaults
 
     @Before
     fun setup() {
-        snackbarDispatcher = TestSnackbarDispatcher()
-        canShareVault = TestCanShareShare()
-        canMigrateVault = TestCanMigrateVault()
-        canManageVaultAccess = TestCanManageVaultAccess()
-        observeVaults = TestObserveVaults()
+        snackbarDispatcher = FakeSnackbarDispatcher()
+        canShareVault = FakeCanShareShare()
+        canMigrateVault = FakeCanMigrateVault()
+        canManageVaultAccess = FakeCanManageVaultAccess()
+        observeVaults = FakeObserveVaults()
         setNavShareId(ShareId(SHARE_ID))
     }
 
@@ -334,7 +334,7 @@ class VaultOptionsViewModelTest {
     private fun setNavShareId(shareId: ShareId) {
         instance = VaultOptionsViewModel(
             snackbarDispatcher = snackbarDispatcher,
-            savedStateHandle = TestSavedStateHandleProvider().apply {
+            savedStateHandle = FakeSavedStateHandleProvider().apply {
                 get()[CommonNavArgId.ShareId.key] = shareId.id
             },
             canMigrateVault = canMigrateVault,
@@ -342,7 +342,7 @@ class VaultOptionsViewModelTest {
             canShareShare = canShareVault,
             canManageVaultAccess = canManageVaultAccess,
             observeEncryptedItems = FakeObserveEncryptedItems(),
-            preferencesRepository = TestFeatureFlagsPreferenceRepository()
+            preferencesRepository = FakeFeatureFlagsPreferenceRepository()
         )
     }
 

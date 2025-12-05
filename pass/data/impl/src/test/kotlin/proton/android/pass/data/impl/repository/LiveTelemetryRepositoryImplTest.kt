@@ -24,7 +24,7 @@ import me.proton.core.domain.entity.UserId
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import proton.android.pass.data.fakes.usecases.TestGetUserPlan
+import proton.android.pass.data.fakes.usecases.FakeGetUserPlan
 import proton.android.pass.data.impl.db.entities.LiveTelemetryEntity
 import proton.android.pass.data.impl.fakes.FakeLocalLiveTelemetryDataSource
 import proton.android.pass.data.impl.fakes.FakeRemoteLiveTelemetryDataSource
@@ -53,7 +53,7 @@ class LiveTelemetryRepositoryImplTest {
 
     private lateinit var networkMonitor: FakeNetworkMonitor
     private lateinit var clock: FixedClock
-    private lateinit var getUserPlan: TestGetUserPlan
+    private lateinit var getUserPlan: FakeGetUserPlan
     private lateinit var local: FakeLocalLiveTelemetryDataSource
     private lateinit var remote: FakeRemoteLiveTelemetryDataSource
 
@@ -61,7 +61,7 @@ class LiveTelemetryRepositoryImplTest {
     fun setup() {
         clock = FixedClock()
         networkMonitor = FakeNetworkMonitor()
-        getUserPlan = TestGetUserPlan()
+        getUserPlan = FakeGetUserPlan()
         local = FakeLocalLiveTelemetryDataSource()
         remote = FakeRemoteLiveTelemetryDataSource()
 

@@ -24,16 +24,16 @@ import me.proton.core.domain.entity.UserId
 import org.junit.Before
 import org.junit.Test
 import proton.android.pass.data.api.usecases.RefreshSharesResult
-import proton.android.pass.data.fakes.repositories.TestItemRepository
+import proton.android.pass.data.fakes.repositories.FakeItemRepository
 import proton.android.pass.data.fakes.usecases.FakePromoteNewInviteToInvite
 import proton.android.pass.data.fakes.usecases.FakeRefreshGroupInvites
 import proton.android.pass.data.fakes.usecases.FakeRefreshSharesAndEnqueueSync
 import proton.android.pass.data.fakes.usecases.FakeRefreshUserInvites
-import proton.android.pass.data.fakes.usecases.TestRefreshUserAccess
+import proton.android.pass.data.fakes.usecases.FakeRefreshUserAccess
 import proton.android.pass.data.fakes.usecases.simplelogin.FakeSyncSimpleLoginPendingAliases
 import proton.android.pass.data.fakes.work.FakeWorkManagerFacade
 import proton.android.pass.data.impl.fakes.FakeUserEventRepository
-import proton.android.pass.data.impl.fakes.TestShareRepository
+import proton.android.pass.data.impl.fakes.FakeShareRepository
 import proton.android.pass.data.impl.work.FetchItemsWorker
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
@@ -48,11 +48,11 @@ internal class SyncUserEventsImplTest {
 
     private lateinit var instance: SyncUserEventsImpl
     private lateinit var userEventRepository: FakeUserEventRepository
-    private lateinit var shareRepository: TestShareRepository
-    private lateinit var itemRepository: TestItemRepository
+    private lateinit var shareRepository: FakeShareRepository
+    private lateinit var itemRepository: FakeItemRepository
     private lateinit var refreshSharesAndEnqueueSync: FakeRefreshSharesAndEnqueueSync
     private lateinit var workManagerFacade: FakeWorkManagerFacade
-    private lateinit var refreshPlan: TestRefreshUserAccess
+    private lateinit var refreshPlan: FakeRefreshUserAccess
     private lateinit var refreshUserInvites: FakeRefreshUserInvites
     private lateinit var refreshGroupInvites: FakeRefreshGroupInvites
     private lateinit var syncPendingAliases: FakeSyncSimpleLoginPendingAliases
@@ -61,11 +61,11 @@ internal class SyncUserEventsImplTest {
     @Before
     fun setup() {
         userEventRepository = FakeUserEventRepository()
-        shareRepository = TestShareRepository()
-        itemRepository = TestItemRepository()
+        shareRepository = FakeShareRepository()
+        itemRepository = FakeItemRepository()
         refreshSharesAndEnqueueSync = FakeRefreshSharesAndEnqueueSync()
         workManagerFacade = FakeWorkManagerFacade()
-        refreshPlan = TestRefreshUserAccess()
+        refreshPlan = FakeRefreshUserAccess()
         refreshUserInvites = FakeRefreshUserInvites()
         refreshGroupInvites = FakeRefreshGroupInvites()
         syncPendingAliases = FakeSyncSimpleLoginPendingAliases()

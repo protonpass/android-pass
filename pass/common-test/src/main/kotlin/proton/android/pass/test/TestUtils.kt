@@ -33,17 +33,17 @@ import me.proton.core.user.domain.entity.User
 import me.proton.core.user.domain.entity.UserAddress
 import me.proton.core.user.domain.entity.UserAddressKey
 import me.proton.core.user.domain.entity.UserKey
-import proton.android.pass.account.fakes.TestKeyStoreCrypto
+import proton.android.pass.account.fakes.FakeKeyStoreCrypto
 import proton.android.pass.crypto.api.Base64
 import proton.android.pass.crypto.api.EncryptionKey
-import proton.android.pass.crypto.fakes.context.TestEncryptionContext
+import proton.android.pass.crypto.fakes.context.FakeEncryptionContext
 import proton.android.pass.domain.key.ItemKey
 import proton.android.pass.domain.key.ShareKey
 
 object TestUtils {
 
     private val cryptoContext: CryptoContext = AndroidCryptoContext(
-        keyStoreCrypto = TestKeyStoreCrypto,
+        keyStoreCrypto = FakeKeyStoreCrypto,
         pgpCrypto = GOpenPGPCrypto()
     )
 
@@ -118,7 +118,7 @@ object TestUtils {
         val key = EncryptionKey.generate()
         return ShareKey(
             rotation = 1,
-            key = TestEncryptionContext.encrypt(key.value()),
+            key = FakeEncryptionContext.encrypt(key.value()),
             responseKey = Base64.encodeBase64String(key.value()),
             createTime = 123_456_789,
             isActive = true,
@@ -130,7 +130,7 @@ object TestUtils {
         val key = EncryptionKey.generate()
         return ItemKey(
             rotation = 1,
-            key = TestEncryptionContext.encrypt(key.value()),
+            key = FakeEncryptionContext.encrypt(key.value()),
             responseKey = Base64.encodeBase64String(key.value())
         ) to key
     }

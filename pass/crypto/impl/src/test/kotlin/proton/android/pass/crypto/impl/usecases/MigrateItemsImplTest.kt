@@ -30,7 +30,8 @@ import proton.android.pass.crypto.api.usecases.ItemKeyWithRotation
 import proton.android.pass.crypto.api.usecases.MigrateItem
 import proton.android.pass.crypto.fakes.context.FakeEncryptionContextProvider
 import proton.android.pass.domain.ItemContents
-import proton.android.pass.test.TestUtils
+import proton.android.pass.test.StringTestFactory
+import proton.android.pass.test.domain.ShareKeyTestFactory
 
 internal class MigrateItemsImplTest {
 
@@ -46,14 +47,14 @@ internal class MigrateItemsImplTest {
 
     @Test
     internal fun `WHEN migrating an item THEN item keys should be migrated`() {
-        val sourceShareKey = TestUtils.createShareKey().first
+        val sourceShareKey = ShareKeyTestFactory.create().first
         val itemContents = ItemContents.Note(
-            title = TestUtils.randomString(),
-            note = TestUtils.randomString(),
+            title = StringTestFactory.randomString(),
+            note = StringTestFactory.randomString(),
             customFields = emptyList()
         )
         val item: CreateItemPayload = createItem.create(sourceShareKey, itemContents)
-        val (destinationShareKey, decryptedDestinationShareKey) = TestUtils.createShareKey()
+        val (destinationShareKey, decryptedDestinationShareKey) = ShareKeyTestFactory.create()
         val encryptedItemKey = encryptionContextProvider.withEncryptionContext {
             encrypt(item.request.itemKey.toByteArray())
         }

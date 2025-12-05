@@ -38,7 +38,7 @@ import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ItemStateValues
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.events.EventToken
-import proton.android.pass.test.domain.TestItem
+import proton.android.pass.test.domain.ItemTestFactory
 
 class FakeRemoteItemDataSource : RemoteItemDataSource {
 
@@ -91,7 +91,7 @@ class FakeRemoteItemDataSource : RemoteItemDataSource {
         shareId: ShareId,
         itemId: ItemId,
         body: UpdateItemFlagsRequest
-    ): ItemRevision = TestItem.create(
+    ): ItemRevision = ItemTestFactory.create(
         shareId = shareId,
         itemId = itemId
     ).let(::createItemRevision)
@@ -181,7 +181,7 @@ class FakeRemoteItemDataSource : RemoteItemDataSource {
         itemId: ItemId
     ): List<ItemRevision> = listOf(
         createItemRevision(
-            TestItem.create(
+            ItemTestFactory.create(
                 shareId = shareId,
                 itemId = itemId
             )
@@ -193,7 +193,7 @@ class FakeRemoteItemDataSource : RemoteItemDataSource {
         shareId: ShareId,
         itemId: ItemId
     ): ItemRevision = createItemRevision(
-        TestItem.create(
+        ItemTestFactory.create(
             shareId = shareId,
             itemId = itemId
         )

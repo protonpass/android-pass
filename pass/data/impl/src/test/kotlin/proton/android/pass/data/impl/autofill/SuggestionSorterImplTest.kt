@@ -32,8 +32,8 @@ import proton.android.pass.data.impl.url.HostParserImpl
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.preferences.LastItemAutofillPreference
-import proton.android.pass.test.domain.TestItem
-import proton.android.pass.test.domain.TestItemType
+import proton.android.pass.test.domain.ItemTestFactory
+import proton.android.pass.test.domain.ItemTypeTestFactory
 import kotlin.test.assertEquals
 import kotlin.time.Duration.Companion.minutes
 
@@ -51,8 +51,8 @@ class SuggestionSorterImplTest {
     @Test
     fun `none url just returns the same list`() {
         val list = listOf(
-            TestItem.random(TestItemType.login()),
-            TestItem.random(TestItemType.login())
+            ItemTestFactory.random(ItemTypeTestFactory.login()),
+            ItemTestFactory.random(ItemTypeTestFactory.login())
         ).map { ItemData.SuggestedItem(it, DEFAULT_SUGGESTION) }
 
         val res = instance.sort(items = list, lastItemAutofill = None)
@@ -62,8 +62,8 @@ class SuggestionSorterImplTest {
     @Test
     fun `invalid url just returns the same list`() {
         val list = listOf(
-            TestItem.random(TestItemType.login()),
-            TestItem.random(TestItemType.login())
+            ItemTestFactory.random(ItemTypeTestFactory.login()),
+            ItemTestFactory.random(ItemTypeTestFactory.login())
         ).map { ItemData.SuggestedItem(it, Suggestion.Url("some invalid url")) }
 
         val res = instance.sort(items = list, lastItemAutofill = None)
@@ -74,8 +74,8 @@ class SuggestionSorterImplTest {
     fun `using an ip returns the same list`() {
         val ip = "1.2.3.4"
         val list = listOf(
-            TestItem.random(TestItemType.login(websites = listOf(ip))),
-            TestItem.random(TestItemType.login(websites = listOf(ip)))
+            ItemTestFactory.random(ItemTypeTestFactory.login(websites = listOf(ip))),
+            ItemTestFactory.random(ItemTypeTestFactory.login(websites = listOf(ip)))
         ).map { ItemData.SuggestedItem(it, Suggestion.Url(ip)) }
 
         val res = instance.sort(items = list, lastItemAutofill = None)
@@ -86,9 +86,9 @@ class SuggestionSorterImplTest {
     fun `sort with domain`() {
         val tld = "sometld"
         val domain = "somedomain.$tld"
-        val item1 = TestItem.random(TestItemType.login(websites = listOf("subd.$domain")))
-        val item2 = TestItem.random(TestItemType.login(websites = listOf("a.b.$domain")))
-        val item3 = TestItem.random(TestItemType.login(websites = listOf(domain)))
+        val item1 = ItemTestFactory.random(ItemTypeTestFactory.login(websites = listOf("subd.$domain")))
+        val item2 = ItemTestFactory.random(ItemTypeTestFactory.login(websites = listOf("a.b.$domain")))
+        val item3 = ItemTestFactory.random(ItemTypeTestFactory.login(websites = listOf(domain)))
         publicSuffixList.setTlds(setOf(tld))
 
         val items = listOf(item1, item2, item3)
@@ -111,10 +111,10 @@ class SuggestionSorterImplTest {
         val tld = "sometld"
         val domain = "somedomain.$tld"
         val subdomain = "somesubdomain.$domain"
-        val item1 = TestItem.random(TestItemType.login(websites = listOf("other.$domain")))
-        val item2 = TestItem.random(TestItemType.login(websites = listOf("random.$domain")))
-        val item3 = TestItem.random(TestItemType.login(websites = listOf(subdomain)))
-        val item4 = TestItem.random(TestItemType.login(websites = listOf(domain)))
+        val item1 = ItemTestFactory.random(ItemTypeTestFactory.login(websites = listOf("other.$domain")))
+        val item2 = ItemTestFactory.random(ItemTypeTestFactory.login(websites = listOf("random.$domain")))
+        val item3 = ItemTestFactory.random(ItemTypeTestFactory.login(websites = listOf(subdomain)))
+        val item4 = ItemTestFactory.random(ItemTypeTestFactory.login(websites = listOf(domain)))
         publicSuffixList.setTlds(setOf(tld))
 
 
@@ -140,12 +140,12 @@ class SuggestionSorterImplTest {
         val currentTime = Clock.System.now().epochSeconds
         val notTooOldTime = currentTime - 10
         val lastItemAutofillPreference = LastItemAutofillPreference(notTooOldTime, shareId, itemId)
-        val item1 = TestItem.create(
+        val item1 = ItemTestFactory.create(
             itemId = ItemId(itemId),
             shareId = ShareId(shareId),
-            itemType = TestItemType.login()
+            itemType = ItemTypeTestFactory.login()
         )
-        val item2 = TestItem.random(TestItemType.login())
+        val item2 = ItemTestFactory.random(ItemTypeTestFactory.login())
 
         val items = listOf(item2, item1)
             .map { ItemData.SuggestedItem(it, DEFAULT_SUGGESTION) }
@@ -166,12 +166,12 @@ class SuggestionSorterImplTest {
         val currentTime = Clock.System.now().epochSeconds
         val tooOldTime = currentTime - 2.minutes.inWholeSeconds
         val lastItemAutofillPreference = LastItemAutofillPreference(tooOldTime, shareId, itemId)
-        val item1 = TestItem.create(
+        val item1 = ItemTestFactory.create(
             itemId = ItemId(itemId),
             shareId = ShareId(shareId),
-            itemType = TestItemType.login()
+            itemType = ItemTypeTestFactory.login()
         )
-        val item2 = TestItem.create(itemType = TestItemType.login())
+        val item2 = ItemTestFactory.create(itemType = ItemTypeTestFactory.login())
 
         val items = listOf(item2, item1)
             .map { ItemData.SuggestedItem(it, DEFAULT_SUGGESTION) }
@@ -188,20 +188,20 @@ class SuggestionSorterImplTest {
     @Test
     fun `sort credit cards`() {
         val currentTime = Clock.System.now()
-        val card1 = TestItem.random(
-            itemType = TestItemType.creditCard(),
+        val card1 = ItemTestFactory.random(
+            itemType = ItemTypeTestFactory.creditCard(),
             lastAutofillTime = currentTime.toEpochMilliseconds()
         )
-        val card2 = TestItem.random(
-            itemType = TestItemType.creditCard(),
+        val card2 = ItemTestFactory.random(
+            itemType = ItemTypeTestFactory.creditCard(),
             lastAutofillTime = currentTime.minus(60, DateTimeUnit.SECOND).toEpochMilliseconds()
         )
-        val card3 = TestItem.random(
-            itemType = TestItemType.creditCard(),
+        val card3 = ItemTestFactory.random(
+            itemType = ItemTypeTestFactory.creditCard(),
             modificationTime = currentTime.minus(120, DateTimeUnit.SECOND).toEpochMilliseconds()
         )
-        val card4 = TestItem.random(
-            itemType = TestItemType.creditCard(),
+        val card4 = ItemTestFactory.random(
+            itemType = ItemTypeTestFactory.creditCard(),
             modificationTime = currentTime.minus(180, DateTimeUnit.SECOND).toEpochMilliseconds()
         )
 
@@ -225,9 +225,9 @@ class SuggestionSorterImplTest {
         val regularUrlSuggestion = Suggestion.Url("https://$domain")
         val dalSuggestion = Suggestion.Url("https://dal.$domain", isDALSuggestion = true)
 
-        val item1 = ItemData.SuggestedItem(TestItem.random(TestItemType.login()), packageNameSuggestion)
-        val item2 = ItemData.SuggestedItem(TestItem.random(TestItemType.login()), regularUrlSuggestion)
-        val item3 = ItemData.SuggestedItem(TestItem.random(TestItemType.login()), dalSuggestion)
+        val item1 = ItemData.SuggestedItem(ItemTestFactory.random(ItemTypeTestFactory.login()), packageNameSuggestion)
+        val item2 = ItemData.SuggestedItem(ItemTestFactory.random(ItemTypeTestFactory.login()), regularUrlSuggestion)
+        val item3 = ItemData.SuggestedItem(ItemTestFactory.random(ItemTypeTestFactory.login()), dalSuggestion)
 
         val items = listOf(item3, item1, item2)
 

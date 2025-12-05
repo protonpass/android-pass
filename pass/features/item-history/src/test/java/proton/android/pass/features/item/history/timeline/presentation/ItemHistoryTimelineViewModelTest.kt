@@ -32,17 +32,17 @@ import proton.android.pass.data.fakes.usecases.items.FakeObserveItemRevisions
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.notifications.fakes.FakeSnackbarDispatcher
 import proton.android.pass.test.MainDispatcherRule
-import proton.android.pass.test.domain.items.ItemCategoryMother
-import proton.android.pass.test.domain.items.ItemIdMother
-import proton.android.pass.test.domain.shares.ShareIdMother
+import proton.android.pass.test.domain.items.ItemCategoryTestFactory
+import proton.android.pass.test.domain.items.ItemIdTestFactory
+import proton.android.pass.test.domain.shares.ShareIdTestFactory
 
 internal class ItemHistoryTimelineViewModelTest {
 
     @get:Rule
     internal val dispatcherRule = MainDispatcherRule()
 
-    private val shareId = ShareIdMother.create()
-    private val itemId = ItemIdMother.create()
+    private val shareId = ShareIdTestFactory.create()
+    private val itemId = ItemIdTestFactory.create()
 
     private lateinit var savedStateHandleProvider: FakeSavedStateHandleProvider
     private lateinit var observeItemRevisions: FakeObserveItemRevisions
@@ -64,7 +64,7 @@ internal class ItemHistoryTimelineViewModelTest {
 
     @Test
     internal fun `WHEN view model is initialized THEN emit initial state Loading`() = runTest {
-        val expectedInitialState = ItemHistoryTimelineStateMother.Loading.create()
+        val expectedInitialState = ItemHistoryTimelineStateTestFactory.Loading.create()
 
         val viewModel = createViewModel()
 
@@ -78,8 +78,8 @@ internal class ItemHistoryTimelineViewModelTest {
     @Test
     internal fun `WHEN item revisions successfully fetched THEN update state to Success`() = runTest {
         val itemRevisions = persistentListOf<ItemRevision>()
-        val itemCategory = ItemCategoryMother.random()
-        val expectedUpdatedState = ItemHistoryTimelineStateMother.Success.create(
+        val itemCategory = ItemCategoryTestFactory.random()
+        val expectedUpdatedState = ItemHistoryTimelineStateTestFactory.Success.create(
             shareId = shareId,
             itemId = itemId,
             itemRevisions = itemRevisions,
@@ -100,7 +100,7 @@ internal class ItemHistoryTimelineViewModelTest {
     @Test
     internal fun `WHEN an error occurred fetching item revisions THEN update state to Error`() = runTest {
         val error = Throwable()
-        val expectedUpdatedState = ItemHistoryTimelineStateMother.Error.create()
+        val expectedUpdatedState = ItemHistoryTimelineStateTestFactory.Error.create()
         observeItemRevisions.setItemRevisionsError(error)
 
         val viewModel = createViewModel()

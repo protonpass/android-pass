@@ -26,7 +26,8 @@ import proton.android.pass.crypto.fakes.context.FakeEncryptionContext
 import proton.android.pass.crypto.fakes.context.FakeEncryptionContextProvider
 import proton.android.pass.datamodels.api.serializeToProto
 import proton.android.pass.domain.ItemContents
-import proton.android.pass.test.TestUtils
+import proton.android.pass.test.StringTestFactory
+import proton.android.pass.test.domain.ItemKeyTestFactory
 import proton_pass_item_v1.ItemV1
 import kotlin.random.Random
 import kotlin.test.assertEquals
@@ -40,10 +41,10 @@ class UpdateItemImplTest {
 
         val lastRevision = Random.nextLong()
 
-        val (itemKey, decryptedItemKey) = TestUtils.createItemKey()
+        val (itemKey, decryptedItemKey) = ItemKeyTestFactory.create()
         val contents = ItemContents.Note(
-            title = TestUtils.randomString(),
-            note = TestUtils.randomString(),
+            title = StringTestFactory.randomString(),
+            note = StringTestFactory.randomString(),
             customFields = emptyList()
         )
         val body = instance.createRequest(

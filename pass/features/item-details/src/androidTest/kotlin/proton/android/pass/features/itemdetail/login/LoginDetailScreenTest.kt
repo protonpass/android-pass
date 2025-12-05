@@ -50,9 +50,9 @@ import proton.android.pass.features.item.details.shared.navigation.ItemDetailsNa
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.test.CallChecker
 import proton.android.pass.test.HiltComponentActivity
-import proton.android.pass.test.domain.TestItem
-import proton.android.pass.test.domain.TestShare
-import proton.android.pass.test.domain.TestUserAccessData
+import proton.android.pass.test.domain.ItemTestFactory
+import proton.android.pass.test.domain.ShareTestFactory
+import proton.android.pass.test.domain.UserTestFactoryAccessData
 import proton.android.pass.test.waitUntilExists
 import proton.android.pass.totp.api.TotpManager
 import proton.android.pass.totp.fakes.FakeObserveTotpFromUri
@@ -269,7 +269,7 @@ class LoginDetailScreenTest {
         primaryTotp: String = "",
         vaultName: String = "vault"
     ): String {
-        val item = TestItem.create(
+        val item = ItemTestFactory.create(
             shareId = ShareId(SHARE_ID),
             itemId = ItemId(ITEM_ID),
             itemContents = ItemContents.Login(
@@ -288,7 +288,7 @@ class LoginDetailScreenTest {
                 passkeys = emptyList()
             )
         )
-        val share = TestShare.Vault.create(id = SHARE_ID)
+        val share = ShareTestFactory.Vault.create(id = SHARE_ID)
 
         observeItemById.emitValue(Result.success(item))
         getItemById.emit(Result.success(item))

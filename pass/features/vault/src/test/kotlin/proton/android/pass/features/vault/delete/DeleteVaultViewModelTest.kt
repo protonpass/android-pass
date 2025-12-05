@@ -36,8 +36,8 @@ import proton.android.pass.navigation.api.IsLastVault
 import proton.android.pass.notifications.fakes.FakeSnackbarDispatcher
 import proton.android.pass.preferences.FakeInternalSettingsRepository
 import proton.android.pass.test.MainDispatcherRule
-import proton.android.pass.test.TestSavedStateHandle
-import proton.android.pass.test.domain.TestVault
+import proton.android.pass.test.SavedStateHandleTestFactory
+import proton.android.pass.test.domain.VaultTestFactory
 
 class DeleteVaultViewModelTest {
 
@@ -60,7 +60,7 @@ class DeleteVaultViewModelTest {
         instance = DeleteVaultViewModel(
             getVaultByShareId = getVaultById,
             deleteVault = deleteVault,
-            savedStateHandle = TestSavedStateHandle.create().apply {
+            savedStateHandle = SavedStateHandleTestFactory.create().apply {
                 set(CommonNavArgId.ShareId.key, "123")
                 set(IsLastVault.key, false)
             },
@@ -148,7 +148,7 @@ class DeleteVaultViewModelTest {
     }
 
     private fun performSetup() {
-        getVaultById.emitValue(TestVault.create(name = VAULT_NAME))
+        getVaultById.emitValue(VaultTestFactory.create(name = VAULT_NAME))
         observeEncryptedItems.emitValue(emptyList())
         instance.onStart()
     }

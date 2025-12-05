@@ -31,12 +31,12 @@ import proton.android.pass.securitycenter.api.Missing2faResult
 import proton.android.pass.securitycenter.api.SecurityAnalysis
 import proton.android.pass.securitycenter.api.passwords.InsecurePasswordsReport
 import proton.android.pass.securitycenter.api.passwords.Missing2faReport
-import proton.android.pass.securitycenter.fakes.mother.BreachDataResultMother
+import proton.android.pass.securitycenter.fakes.mother.BreachDataResultTestFactory
 import proton.android.pass.securitycenter.fakes.passwords.FakeBreachedDataChecker
 import proton.android.pass.securitycenter.fakes.passwords.FakeInsecurePasswordChecker
 import proton.android.pass.securitycenter.fakes.passwords.FakeMissing2faChecker
 import proton.android.pass.securitycenter.fakes.passwords.FakeRepeatedPasswordChecker
-import proton.android.pass.test.domain.TestItem
+import proton.android.pass.test.domain.ItemTestFactory
 
 class ObserveSecurityAnalysisImplTest {
 
@@ -84,7 +84,7 @@ class ObserveSecurityAnalysisImplTest {
     @Test
     fun `can emit partial errors`() = runTest {
         val missing2fa = Missing2faReport(emptyList())
-        val breachData = BreachDataResultMother.random()
+        val breachData = BreachDataResultTestFactory.random()
         val insecure = InsecurePasswordsReport(emptyList(), emptyList())
         val error = IllegalStateException("test")
         repeatedPasswordChecker.setResult(Result.failure(error))
@@ -93,8 +93,8 @@ class ObserveSecurityAnalysisImplTest {
         insecurePasswordChecker.setResult(insecure)
 
         val monitoredItems = listOf(
-            TestItem.random(),
-            TestItem.random()
+            ItemTestFactory.random(),
+            ItemTestFactory.random()
         )
 
         observeMonitoredItems.emitMonitoredItems(monitoredItems)
@@ -116,8 +116,8 @@ class ObserveSecurityAnalysisImplTest {
     @Test
     fun `checkers are properly called`() = runTest {
         val monitoredItems = listOf(
-            TestItem.random(),
-            TestItem.random()
+            ItemTestFactory.random(),
+            ItemTestFactory.random()
         )
         observeMonitoredItems.emitMonitoredItems(monitoredItems)
 

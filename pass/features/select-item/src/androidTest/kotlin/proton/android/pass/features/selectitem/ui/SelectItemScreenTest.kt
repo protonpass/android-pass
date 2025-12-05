@@ -67,8 +67,8 @@ import proton.android.pass.searchoptions.impl.SearchOptionsModule
 import proton.android.pass.test.CallChecker
 import proton.android.pass.test.HiltComponentActivity
 import proton.android.pass.test.TestConstants
-import proton.android.pass.test.domain.TestItem
-import proton.android.pass.test.domain.TestShare
+import proton.android.pass.test.domain.ItemTestFactory
+import proton.android.pass.test.domain.ShareTestFactory
 import proton.android.pass.test.waitUntilExists
 import javax.inject.Inject
 
@@ -344,7 +344,7 @@ class SelectItemScreenTest {
         accountManager.setAccounts(listOf(FakeAccountManager.DEFAULT_ACCOUNT.copy(userId = userId)))
         userManager.setUser(FakeUserManager.DEFAULT_USER.copy(userId = userId))
         val vaultShares = (0 until sharesCount).map {
-            TestShare.Vault.create(
+            ShareTestFactory.Vault.create(
                 userId = userId.id,
                 id = "shareid-test-$it",
                 vaultId = "vaultid-test-$it",
@@ -356,7 +356,7 @@ class SelectItemScreenTest {
 
         val shareId = vaultShares.first().id
         val suggestionsList = (0 until suggestions).map {
-            val item = TestItem.create(
+            val item = ItemTestFactory.create(
                 shareId = shareId,
                 itemId = ItemId("itemid-suggestion-$it"),
                 itemContents = ItemContents.Login(
@@ -382,7 +382,7 @@ class SelectItemScreenTest {
         )
 
         val otherItemsList = (0 until otherItems).map {
-            TestItem.create(
+            ItemTestFactory.create(
                 shareId = shareId,
                 itemId = ItemId("itemid-other-$it"),
                 itemContents = ItemContents.Login(

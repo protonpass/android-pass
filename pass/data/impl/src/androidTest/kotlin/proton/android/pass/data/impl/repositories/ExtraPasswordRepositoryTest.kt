@@ -24,18 +24,18 @@ import kotlinx.coroutines.test.runTest
 import me.proton.core.domain.entity.UserId
 import org.junit.Test
 import org.junit.runner.RunWith
-import proton.android.pass.common.fakes.TestAppDispatchers
-import proton.android.pass.crypto.fakes.context.TestEncryptionContextProvider
+import proton.android.pass.common.fakes.FakeAppDispatchers
+import proton.android.pass.crypto.fakes.context.FakeEncryptionContextProvider
 
 @RunWith(AndroidJUnit4::class)
 class ExtraPasswordRepositoryTest {
 
     @Test
     fun shouldEncryptAndDecryptExtraPassword() = runTest {
-        val encryptionContextProvider = TestEncryptionContextProvider()
+        val encryptionContextProvider = FakeEncryptionContextProvider()
 
         val repository = ExtraPasswordRepositoryImpl(
-            appDispatchers = TestAppDispatchers(),
+            appDispatchers = FakeAppDispatchers(),
             appContext = InstrumentationRegistry.getInstrumentation().targetContext,
             encryptionContextProvider = encryptionContextProvider
         )

@@ -24,20 +24,20 @@ import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import proton.android.pass.clipboard.fakes.TestClipboardManager
+import proton.android.pass.clipboard.fakes.FakeClipboardManager
 import proton.android.pass.commonpresentation.fakes.attachments.FakeAttachmentHandler
-import proton.android.pass.commonui.fakes.TestSavedStateHandleProvider
-import proton.android.pass.crypto.fakes.context.TestEncryptionContext
-import proton.android.pass.crypto.fakes.context.TestEncryptionContextProvider
-import proton.android.pass.data.fakes.usecases.TestCanPerformPaidAction
+import proton.android.pass.commonui.fakes.FakeSavedStateHandleProvider
+import proton.android.pass.crypto.fakes.context.FakeEncryptionContext
+import proton.android.pass.crypto.fakes.context.FakeEncryptionContextProvider
+import proton.android.pass.data.fakes.usecases.FakeCanPerformPaidAction
 import proton.android.pass.features.itemcreate.common.CustomFieldDraftRepositoryImpl
 import proton.android.pass.features.itemcreate.common.UIHiddenState
 import proton.android.pass.features.itemcreate.common.customfields.CustomFieldHandlerImpl
 import proton.android.pass.features.itemcreate.common.formprocessor.FakeCreditCardItemFormProcessor
-import proton.android.pass.preferences.TestFeatureFlagsPreferenceRepository
-import proton.android.pass.preferences.TestPreferenceRepository
+import proton.android.pass.preferences.FakeFeatureFlagsPreferenceRepository
+import proton.android.pass.preferences.FakePreferenceRepository
 import proton.android.pass.test.MainDispatcherRule
-import proton.android.pass.totp.fakes.TestTotpManager
+import proton.android.pass.totp.fakes.FakeTotpManager
 
 class BaseCreditCardViewModelTest {
 
@@ -45,24 +45,24 @@ class BaseCreditCardViewModelTest {
     val dispatcherRule = MainDispatcherRule()
 
     private lateinit var instance: BaseCreditCardViewModel
-    private lateinit var canPerformPaidAction: TestCanPerformPaidAction
+    private lateinit var canPerformPaidAction: FakeCanPerformPaidAction
 
     @Before
     fun setUp() {
-        canPerformPaidAction = TestCanPerformPaidAction().apply {
+        canPerformPaidAction = FakeCanPerformPaidAction().apply {
             setResult(true)
         }
         instance = object : BaseCreditCardViewModel(
-            encryptionContextProvider = TestEncryptionContextProvider(),
+            encryptionContextProvider = FakeEncryptionContextProvider(),
             canPerformPaidAction = canPerformPaidAction,
-            savedStateHandleProvider = TestSavedStateHandleProvider(),
+            savedStateHandleProvider = FakeSavedStateHandleProvider(),
             attachmentsHandler = FakeAttachmentHandler(),
-            userPreferencesRepository = TestPreferenceRepository(),
-            customFieldHandler = CustomFieldHandlerImpl(TestTotpManager(), TestEncryptionContextProvider()),
+            userPreferencesRepository = FakePreferenceRepository(),
+            customFieldHandler = CustomFieldHandlerImpl(FakeTotpManager(), FakeEncryptionContextProvider()),
             customFieldDraftRepository = CustomFieldDraftRepositoryImpl(),
             creditCardItemFormProcessor = FakeCreditCardItemFormProcessor(),
-            clipboardManager = TestClipboardManager(),
-            featureFlagsPreferencesRepository = TestFeatureFlagsPreferenceRepository()
+            clipboardManager = FakeClipboardManager(),
+            featureFlagsPreferencesRepository = FakeFeatureFlagsPreferenceRepository()
         ) {}
     }
 
@@ -98,7 +98,7 @@ class BaseCreditCardViewModelTest {
     @Test
     fun `when the pin has changed the state should hold it`() = runTest {
         val pin = "7894"
-        val encryptedPin = TestEncryptionContext.encrypt(pin)
+        val encryptedPin = FakeEncryptionContext.encrypt(pin)
         instance.onPinChanged(pin)
         assertThat(instance.creditCardItemFormState.pin)
             .isEqualTo(UIHiddenState.Revealed(encryptedPin, pin))
@@ -107,7 +107,7 @@ class BaseCreditCardViewModelTest {
     @Test
     fun `when the cvv has changed the state should hold it`() = runTest {
         val cvv = "7894"
-        val encryptedCVV = TestEncryptionContext.encrypt(cvv)
+        val encryptedCVV = FakeEncryptionContext.encrypt(cvv)
         instance.onCVVChanged(cvv)
         assertThat(instance.creditCardItemFormState.cvv)
             .isEqualTo(UIHiddenState.Revealed(encryptedCVV, cvv))
@@ -117,7 +117,7 @@ class BaseCreditCardViewModelTest {
     fun `cannot enter a pin with more than max digits`() = runTest {
         val rightPin = "1".repeat(BaseCreditCardViewModel.PIN_MAX_LENGTH)
         val tooLongPin = "${rightPin}1"
-        val encryptedPin = TestEncryptionContext.encrypt(rightPin)
+        val encryptedPin = FakeEncryptionContext.encrypt(rightPin)
         instance.onPinChanged(rightPin)
         instance.onPinChanged(tooLongPin)
         assertThat(instance.creditCardItemFormState.pin)
@@ -128,7 +128,7 @@ class BaseCreditCardViewModelTest {
     fun `cannot enter a cvv with more than max digits`() = runTest {
         val rightCvv = "1".repeat(BaseCreditCardViewModel.CVV_MAX_LENGTH)
         val tooLongCvv = "${rightCvv}1"
-        val encryptedCvv = TestEncryptionContext.encrypt(rightCvv)
+        val encryptedCvv = FakeEncryptionContext.encrypt(rightCvv)
         instance.onCVVChanged(rightCvv)
         instance.onCVVChanged(tooLongCvv)
         assertThat(instance.creditCardItemFormState.cvv)

@@ -27,14 +27,14 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import proton.android.pass.common.api.None
-import proton.android.pass.commonrust.fakes.TestEmailValidator
-import proton.android.pass.commonui.fakes.TestSavedStateHandleProvider
+import proton.android.pass.commonrust.fakes.FakeEmailValidator
+import proton.android.pass.commonui.fakes.FakeSavedStateHandleProvider
 import proton.android.pass.data.api.repositories.UserTarget
 import proton.android.pass.data.api.usecases.CanAddressesBeInvitedResult
-import proton.android.pass.data.fakes.repositories.TestBulkInviteRepository
+import proton.android.pass.data.fakes.repositories.FakeBulkInviteRepository
 import proton.android.pass.data.fakes.usecases.FakeObserveInviteRecommendations
-import proton.android.pass.data.fakes.usecases.TestCheckAddressesCanBeInvited
-import proton.android.pass.data.fakes.usecases.TestObserveOrganizationSettings
+import proton.android.pass.data.fakes.usecases.FakeCheckAddressesCanBeInvited
+import proton.android.pass.data.fakes.usecases.FakeObserveOrganizationSettings
 import proton.android.pass.data.fakes.usecases.shares.FakeObserveShare
 import proton.android.pass.domain.InviteRecommendations
 import proton.android.pass.domain.RecommendedEmail
@@ -50,11 +50,11 @@ class SharingWithViewModelTest {
 
     private lateinit var viewModel: SharingWithViewModel
     private lateinit var observeShare: FakeObserveShare
-    private lateinit var emailValidator: TestEmailValidator
+    private lateinit var emailValidator: FakeEmailValidator
     private lateinit var observeInviteRecommendations: FakeObserveInviteRecommendations
-    private lateinit var savedStateHandleProvider: TestSavedStateHandleProvider
-    private lateinit var bulkInviteRepository: TestBulkInviteRepository
-    private lateinit var checkAddressesCanBeInvited: TestCheckAddressesCanBeInvited
+    private lateinit var savedStateHandleProvider: FakeSavedStateHandleProvider
+    private lateinit var bulkInviteRepository: FakeBulkInviteRepository
+    private lateinit var checkAddressesCanBeInvited: FakeCheckAddressesCanBeInvited
 
     @get:Rule
     val dispatcherRule = MainDispatcherRule()
@@ -62,11 +62,11 @@ class SharingWithViewModelTest {
     @Before
     fun setUp() {
         observeShare = FakeObserveShare()
-        emailValidator = TestEmailValidator()
+        emailValidator = FakeEmailValidator()
         observeInviteRecommendations = FakeObserveInviteRecommendations()
-        bulkInviteRepository = TestBulkInviteRepository()
-        checkAddressesCanBeInvited = TestCheckAddressesCanBeInvited()
-        savedStateHandleProvider = TestSavedStateHandleProvider().apply {
+        bulkInviteRepository = FakeBulkInviteRepository()
+        checkAddressesCanBeInvited = FakeCheckAddressesCanBeInvited()
+        savedStateHandleProvider = FakeSavedStateHandleProvider().apply {
             get()[CommonNavArgId.ShareId.key] = SHARE_ID
             get()[ShowEditVaultArgId.key] = false
             get()[CommonOptionalNavArgId.ItemId.key] = null
@@ -77,7 +77,7 @@ class SharingWithViewModelTest {
             emailValidator = emailValidator,
             observeInviteRecommendations = observeInviteRecommendations,
             bulkInviteRepository = bulkInviteRepository,
-            observeOrganizationSettings = TestObserveOrganizationSettings(),
+            observeOrganizationSettings = FakeObserveOrganizationSettings(),
             checkCanAddressesBeInvited = checkAddressesCanBeInvited
         )
 

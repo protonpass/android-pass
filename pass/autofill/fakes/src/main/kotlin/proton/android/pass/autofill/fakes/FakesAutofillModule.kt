@@ -29,5 +29,5 @@ import proton.android.pass.autofill.api.AutofillManager
 abstract class FakesAutofillModule {
 
     @Binds
-    abstract fun bindAutofillManager(impl: TestAutofillManager): AutofillManager
+    abstract fun bindAutofillManager(impl: FakeAutofillManager): AutofillManager
 }

@@ -28,10 +28,10 @@ import org.junit.Rule
 import org.junit.Test
 import proton.android.pass.common.api.some
 import proton.android.pass.commonui.api.PassTheme
-import proton.android.pass.commonui.fakes.TestSavedStateHandleProvider
+import proton.android.pass.commonui.fakes.FakeSavedStateHandleProvider
 import proton.android.pass.data.fakes.usecases.FakeGetItemById
-import proton.android.pass.data.fakes.usecases.TestAcceptInvite
-import proton.android.pass.data.fakes.usecases.TestRejectInvite
+import proton.android.pass.data.fakes.usecases.FakeAcceptInvite
+import proton.android.pass.data.fakes.usecases.FakeRejectInvite
 import proton.android.pass.data.fakes.usecases.invites.FakeObserveInvite
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ItemType
@@ -59,16 +59,16 @@ class AcceptBottomSheetTest {
     lateinit var observeInvite: FakeObserveInvite
 
     @Inject
-    lateinit var acceptInvite: TestAcceptInvite
+    lateinit var acceptInvite: FakeAcceptInvite
 
     @Inject
-    lateinit var rejectInvite: TestRejectInvite
+    lateinit var rejectInvite: FakeRejectInvite
 
     @Inject
     lateinit var getItemById: FakeGetItemById
 
     @Inject
-    lateinit var savedStateHandle: TestSavedStateHandleProvider
+    lateinit var savedStateHandle: FakeSavedStateHandleProvider
 
     @Before
     fun setup() {
@@ -117,7 +117,7 @@ class AcceptBottomSheetTest {
             val checker = CallChecker<Unit>()
             val acceptButtonText = activity.getString(R.string.sharing_vault_invitation_accept)
             val expectedNavigation = SharingNavigation.ManageSharedVault(
-                sharedVaultId = ShareId(TestAcceptInvite.DEFAULT_SHARE_ID)
+                sharedVaultId = ShareId(FakeAcceptInvite.DEFAULT_SHARE_ID)
             )
 
             setContent {
@@ -194,8 +194,8 @@ class AcceptBottomSheetTest {
     @Test
     fun acceptsItemInvite() {
         val item = TestItem.create(
-            shareId = ShareId(TestAcceptInvite.DEFAULT_SHARE_ID),
-            itemId = ItemId(TestAcceptInvite.DEFAULT_ITEM_ID),
+            shareId = ShareId(FakeAcceptInvite.DEFAULT_SHARE_ID),
+            itemId = ItemId(FakeAcceptInvite.DEFAULT_ITEM_ID),
             itemType = ItemType.Note(text = "Test note", customFields = emptyList())
         )
         observeInvite.emit(itemInvite.some())
@@ -205,8 +205,8 @@ class AcceptBottomSheetTest {
             val checker = CallChecker<Unit>()
             val acceptButtonText = activity.getString(R.string.sharing_item_invitation_accept)
             val expectedNavigation = SharingNavigation.SharedItemDetails(
-                shareId = ShareId(TestAcceptInvite.DEFAULT_SHARE_ID),
-                itemId = ItemId(TestAcceptInvite.DEFAULT_ITEM_ID),
+                shareId = ShareId(FakeAcceptInvite.DEFAULT_SHARE_ID),
+                itemId = ItemId(FakeAcceptInvite.DEFAULT_ITEM_ID),
                 itemCategory = ItemCategory.Note
             )
 

@@ -29,17 +29,17 @@ import org.junit.Test
 import proton.android.pass.account.fakes.FakeAccountRepository
 import proton.android.pass.account.fakes.FakeIsFido2Enabled
 import proton.android.pass.account.fakes.FakeUserSettingsRepository
-import proton.android.pass.account.fakes.TestAccountManager
+import proton.android.pass.account.fakes.FakeAccountManager
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.data.api.usecases.UpgradeInfo
-import proton.android.pass.data.fakes.usecases.TestObserveCurrentUser
-import proton.android.pass.data.fakes.usecases.TestObserveCurrentUserSettings
-import proton.android.pass.data.fakes.usecases.TestObserveUpgradeInfo
+import proton.android.pass.data.fakes.usecases.FakeObserveCurrentUser
+import proton.android.pass.data.fakes.usecases.FakeObserveCurrentUserSettings
+import proton.android.pass.data.fakes.usecases.FakeObserveUpgradeInfo
 import proton.android.pass.data.fakes.usecases.accesskey.FakeHasExtraPassword
 import proton.android.pass.domain.Plan
 import proton.android.pass.domain.PlanLimit
 import proton.android.pass.domain.PlanType
-import proton.android.pass.notifications.fakes.TestSnackbarDispatcher
+import proton.android.pass.notifications.fakes.FakeSnackbarDispatcher
 import proton.android.pass.test.MainDispatcherRule
 import proton.android.pass.test.domain.TestUser
 
@@ -49,19 +49,19 @@ internal class AccountViewModelTest {
     val dispatcher = MainDispatcherRule()
 
     private lateinit var instance: AccountViewModel
-    private lateinit var observeCurrentUser: TestObserveCurrentUser
-    private lateinit var observeCurrentUserSettings: TestObserveCurrentUserSettings
-    private lateinit var getUpgradeInfo: TestObserveUpgradeInfo
-    private lateinit var snackbarDispatcher: TestSnackbarDispatcher
+    private lateinit var observeCurrentUser: FakeObserveCurrentUser
+    private lateinit var observeCurrentUserSettings: FakeObserveCurrentUserSettings
+    private lateinit var getUpgradeInfo: FakeObserveUpgradeInfo
+    private lateinit var snackbarDispatcher: FakeSnackbarDispatcher
 
     private lateinit var observeRegisteredSecurityKeys: ObserveRegisteredSecurityKeys
 
     @Before
     fun setup() {
-        observeCurrentUser = TestObserveCurrentUser()
-        observeCurrentUserSettings = TestObserveCurrentUserSettings()
-        getUpgradeInfo = TestObserveUpgradeInfo()
-        snackbarDispatcher = TestSnackbarDispatcher()
+        observeCurrentUser = FakeObserveCurrentUser()
+        observeCurrentUserSettings = FakeObserveCurrentUserSettings()
+        getUpgradeInfo = FakeObserveUpgradeInfo()
+        snackbarDispatcher = FakeSnackbarDispatcher()
         observeRegisteredSecurityKeys = ObserveRegisteredSecurityKeys(
             accountRepository = FakeAccountRepository(),
             isFido2Enabled = FakeIsFido2Enabled(),
@@ -73,7 +73,7 @@ internal class AccountViewModelTest {
             observeUpgradeInfo = getUpgradeInfo,
             observeCurrentUserSettings = observeCurrentUserSettings,
             hasExtraPassword = FakeHasExtraPassword(),
-            accountManager = TestAccountManager(),
+            accountManager = FakeAccountManager(),
             isFido2Enabled = FakeIsFido2Enabled(),
             observeRegisteredSecurityKeys = observeRegisteredSecurityKeys
         )

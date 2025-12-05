@@ -24,7 +24,7 @@ import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Test
 import proton.android.pass.common.api.LoadingResult
-import proton.android.pass.common.fakes.TestAppDispatchers
+import proton.android.pass.common.fakes.FakeAppDispatchers
 import proton.android.pass.data.fakes.usecases.items.FakeObserveMonitoredItems
 import proton.android.pass.securitycenter.api.InsecurePasswordsResult
 import proton.android.pass.securitycenter.api.Missing2faResult
@@ -62,7 +62,7 @@ class ObserveSecurityAnalysisImplTest {
             insecurePasswordChecker = insecurePasswordChecker,
             breachedDataChecker = breachedDataChecker,
             observeMonitoredItems = observeMonitoredItems,
-            dispatchers = TestAppDispatchers()
+            dispatchers = FakeAppDispatchers()
         )
     }
 

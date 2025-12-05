@@ -31,11 +31,11 @@ import proton.android.pass.totp.api.TotpManager
 abstract class FakesTotpModule {
 
     @Binds
-    abstract fun bindTotpManager(impl: TestTotpManager): TotpManager
+    abstract fun bindTotpManager(impl: FakeTotpManager): TotpManager
 
     @Binds
-    abstract fun bindGetCodeFromUri(impl: TestGetTotpCodeFromUri): GetTotpCodeFromUri
+    abstract fun bindGetCodeFromUri(impl: FakeGetTotpCodeFromUri): GetTotpCodeFromUri
 
     @Binds
-    abstract fun bindObserveTotpFromUri(impl: TestObserveTotpFromUri): ObserveTotpFromUri
+    abstract fun bindObserveTotpFromUri(impl: FakeObserveTotpFromUri): ObserveTotpFromUri
 }

@@ -23,7 +23,7 @@ import org.junit.Test
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.some
 import proton.android.pass.data.api.url.HostInfo
-import proton.android.pass.data.fakes.usecases.TestGetPublicSuffixList
+import proton.android.pass.data.fakes.usecases.FakeGetPublicSuffixList
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
 import kotlin.test.assertNotNull
@@ -31,12 +31,12 @@ import kotlin.test.assertTrue
 
 class HostParserImplTest {
 
-    private lateinit var publicSuffixList: TestGetPublicSuffixList
+    private lateinit var publicSuffixList: FakeGetPublicSuffixList
     private lateinit var instance: HostParserImpl
 
     @Before
     fun setup() {
-        publicSuffixList = TestGetPublicSuffixList()
+        publicSuffixList = FakeGetPublicSuffixList()
         instance = HostParserImpl(publicSuffixList)
     }
 

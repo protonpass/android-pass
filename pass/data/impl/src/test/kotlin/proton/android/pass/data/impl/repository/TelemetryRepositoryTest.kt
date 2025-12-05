@@ -25,12 +25,12 @@ import me.proton.core.domain.entity.UserId
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import proton.android.pass.account.fakes.TestAccountManager
-import proton.android.pass.data.fakes.usecases.TestGetUserPlan
+import proton.android.pass.account.fakes.FakeAccountManager
+import proton.android.pass.data.fakes.usecases.FakeGetUserPlan
 import proton.android.pass.data.impl.db.entities.TelemetryEntity
 import proton.android.pass.data.impl.fakes.FakeIsTelemetryEnabled
-import proton.android.pass.data.impl.fakes.TestLocalTelemetryDataSource
-import proton.android.pass.data.impl.fakes.TestRemoteTelemetryDataSource
+import proton.android.pass.data.impl.fakes.FakeLocalTelemetryDataSource
+import proton.android.pass.data.impl.fakes.FakeRemoteTelemetryDataSource
 import proton.android.pass.data.impl.repositories.TelemetryRepositoryImpl
 import proton.android.pass.data.impl.util.DimensionsSerializer
 import proton.android.pass.domain.Plan
@@ -45,19 +45,19 @@ class TelemetryRepositoryTest {
     val dispatcher = MainDispatcherRule()
 
     private lateinit var instance: TelemetryRepositoryImpl
-    private lateinit var accountManager: TestAccountManager
-    private lateinit var getUserPlan: TestGetUserPlan
-    private lateinit var localDataSource: TestLocalTelemetryDataSource
-    private lateinit var remoteDataSource: TestRemoteTelemetryDataSource
+    private lateinit var accountManager: FakeAccountManager
+    private lateinit var getUserPlan: FakeGetUserPlan
+    private lateinit var localDataSource: FakeLocalTelemetryDataSource
+    private lateinit var remoteDataSource: FakeRemoteTelemetryDataSource
     private lateinit var clock: Clock
     private lateinit var telemetryEnabled: FakeIsTelemetryEnabled
 
     @Before
     fun setup() {
-        accountManager = TestAccountManager()
-        getUserPlan = TestGetUserPlan()
-        localDataSource = TestLocalTelemetryDataSource()
-        remoteDataSource = TestRemoteTelemetryDataSource()
+        accountManager = FakeAccountManager()
+        getUserPlan = FakeGetUserPlan()
+        localDataSource = FakeLocalTelemetryDataSource()
+        remoteDataSource = FakeRemoteTelemetryDataSource()
         clock = FixedClock(Clock.System.now())
         telemetryEnabled = FakeIsTelemetryEnabled()
 
@@ -141,7 +141,7 @@ class TelemetryRepositoryTest {
         // Verify removals
         val operations = localDataSource.getOperationMemory()
         val removalOperations =
-            operations.filterIsInstance<TestLocalTelemetryDataSource.Operation.RemoveInRange>()
+            operations.filterIsInstance<FakeLocalTelemetryDataSource.Operation.RemoveInRange>()
         assertThat(removalOperations.size).isEqualTo(2)
 
         assertThat(removalOperations[0].min).isEqualTo(0)
@@ -192,7 +192,7 @@ class TelemetryRepositoryTest {
         // Verify removals
         val operations = localDataSource.getOperationMemory()
         val removalOperations = operations
-            .filterIsInstance<TestLocalTelemetryDataSource.Operation.RemoveInRange>()
+            .filterIsInstance<FakeLocalTelemetryDataSource.Operation.RemoveInRange>()
         assertThat(removalOperations).isEmpty() // No removals should have been called
     }
 

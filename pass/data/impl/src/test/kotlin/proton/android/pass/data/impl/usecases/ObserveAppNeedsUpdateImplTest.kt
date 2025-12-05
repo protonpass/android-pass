@@ -24,21 +24,21 @@ import kotlinx.coroutines.test.runTest
 import me.proton.core.domain.entity.UserId
 import org.junit.Before
 import org.junit.Test
-import proton.android.pass.account.fakes.TestAccountManager
-import proton.android.pass.data.fakes.repositories.TestUserAccessDataRepository
+import proton.android.pass.account.fakes.FakeAccountManager
+import proton.android.pass.data.fakes.repositories.FakeUserAccessDataRepository
 import proton.android.pass.domain.UserAccessData
 
 class ObserveAppNeedsUpdateImplTest {
 
     private lateinit var instance: ObserveAppNeedsUpdateImpl
 
-    private lateinit var accountManager: TestAccountManager
-    private lateinit var userAccessDataRepository: TestUserAccessDataRepository
+    private lateinit var accountManager: FakeAccountManager
+    private lateinit var userAccessDataRepository: FakeUserAccessDataRepository
 
     @Before
     fun setup() {
-        accountManager = TestAccountManager()
-        userAccessDataRepository = TestUserAccessDataRepository()
+        accountManager = FakeAccountManager()
+        userAccessDataRepository = FakeUserAccessDataRepository()
         instance = ObserveAppNeedsUpdateImpl(
             accountManager = accountManager,
             userAccessDataRepository = userAccessDataRepository

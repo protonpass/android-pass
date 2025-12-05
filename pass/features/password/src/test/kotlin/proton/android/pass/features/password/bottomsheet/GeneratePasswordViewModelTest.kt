@@ -24,20 +24,20 @@ import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import proton.android.pass.clipboard.fakes.TestClipboardManager
+import proton.android.pass.clipboard.fakes.FakeClipboardManager
 import proton.android.pass.common.api.PasswordStrength
 import proton.android.pass.commonrust.fakes.FakePasswordGenerator
-import proton.android.pass.commonrust.fakes.passwords.strengths.TestPasswordStrengthCalculator
+import proton.android.pass.commonrust.fakes.passwords.strengths.FakePasswordStrengthCalculator
 import proton.android.pass.commonui.api.SavedStateHandleProvider
-import proton.android.pass.commonui.fakes.TestSavedStateHandleProvider
-import proton.android.pass.crypto.fakes.context.TestEncryptionContextProvider
-import proton.android.pass.data.fakes.repositories.TestDraftRepository
+import proton.android.pass.commonui.fakes.FakeSavedStateHandleProvider
+import proton.android.pass.crypto.fakes.context.FakeEncryptionContextProvider
+import proton.android.pass.data.fakes.repositories.FakeDraftRepository
 import proton.android.pass.data.fakes.usecases.passwordHistoryEntry.FakeAddOnePasswordHistoryEntryToUser
 import proton.android.pass.data.fakes.usecases.passwords.FakeObservePasswordConfig
 import proton.android.pass.data.fakes.usecases.passwords.FakeUpdatePasswordConfig
 import proton.android.pass.features.password.GeneratePasswordBottomsheetMode
 import proton.android.pass.features.password.GeneratePasswordBottomsheetModeValue
-import proton.android.pass.notifications.fakes.TestSnackbarDispatcher
+import proton.android.pass.notifications.fakes.FakeSnackbarDispatcher
 import proton.android.pass.test.FixedClock
 import proton.android.pass.test.MainDispatcherRule
 
@@ -47,24 +47,24 @@ internal class GeneratePasswordViewModelTest {
     internal val dispatcherRule = MainDispatcherRule()
 
     private lateinit var stateHandleProvider: SavedStateHandleProvider
-    private lateinit var passwordStrengthCalculator: TestPasswordStrengthCalculator
+    private lateinit var passwordStrengthCalculator: FakePasswordStrengthCalculator
     private lateinit var viewModel: GeneratePasswordViewModel
 
     @Before
     internal fun setUp() {
-        stateHandleProvider = TestSavedStateHandleProvider()
+        stateHandleProvider = FakeSavedStateHandleProvider()
         stateHandleProvider.get()[GeneratePasswordBottomsheetMode.key] =
             GeneratePasswordBottomsheetModeValue.CancelConfirm.name
 
-        passwordStrengthCalculator = TestPasswordStrengthCalculator()
+        passwordStrengthCalculator = FakePasswordStrengthCalculator()
 
         viewModel = GeneratePasswordViewModel(
             stateHandleProvider = stateHandleProvider,
             passwordStrengthCalculator = passwordStrengthCalculator,
-            snackbarDispatcher = TestSnackbarDispatcher(),
-            clipboardManager = TestClipboardManager(),
-            draftRepository = TestDraftRepository(),
-            encryptionContextProvider = TestEncryptionContextProvider(),
+            snackbarDispatcher = FakeSnackbarDispatcher(),
+            clipboardManager = FakeClipboardManager(),
+            draftRepository = FakeDraftRepository(),
+            encryptionContextProvider = FakeEncryptionContextProvider(),
             passwordGenerator = FakePasswordGenerator(),
             observePasswordConfig = FakeObservePasswordConfig(),
             updatePasswordConfig = FakeUpdatePasswordConfig(),

@@ -31,8 +31,8 @@ import org.junit.Rule
 import org.junit.Test
 import proton.android.pass.commonui.api.BrowserUtils
 import proton.android.pass.commonui.api.PassTheme
-import proton.android.pass.data.fakes.usecases.TestObserveCurrentUser
-import proton.android.pass.data.fakes.usecases.TestObserveUpgradeInfo
+import proton.android.pass.data.fakes.usecases.FakeObserveCurrentUser
+import proton.android.pass.data.fakes.usecases.FakeObserveUpgradeInfo
 import proton.android.pass.test.CallChecker
 import proton.android.pass.test.HiltComponentActivity
 import proton.android.pass.test.domain.TestUser
@@ -53,10 +53,10 @@ class AccountScreenTest {
     val intentsRule = IntentsRule()
 
     @Inject
-    lateinit var observeUpgradeInfo: TestObserveUpgradeInfo
+    lateinit var observeUpgradeInfo: FakeObserveUpgradeInfo
 
     @Inject
-    lateinit var observeCurrentUser: TestObserveCurrentUser
+    lateinit var observeCurrentUser: FakeObserveCurrentUser
 
     @Before
     fun setup() {
@@ -141,7 +141,7 @@ class AccountScreenTest {
 
     @Test
     fun accountScreenOnManageSubscription() {
-        val updated = TestObserveUpgradeInfo.DEFAULT.copy(
+        val updated = FakeObserveUpgradeInfo.DEFAULT.copy(
             isUpgradeAvailable = true,
             isSubscriptionAvailable = true
         )
@@ -170,7 +170,7 @@ class AccountScreenTest {
 
     @Test
     fun accountScreenDoesNotShowManageSubscriptionIfSubscriptionNotAvailable() {
-        val updated = TestObserveUpgradeInfo.DEFAULT.copy(
+        val updated = FakeObserveUpgradeInfo.DEFAULT.copy(
             isUpgradeAvailable = true,
             isSubscriptionAvailable = false
         )

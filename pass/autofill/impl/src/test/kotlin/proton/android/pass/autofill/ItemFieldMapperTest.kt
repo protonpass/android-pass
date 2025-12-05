@@ -27,14 +27,14 @@ import proton.android.pass.autofill.entities.DatasetMapping
 import proton.android.pass.autofill.entities.FieldType
 import proton.android.pass.autofill.heuristics.ItemFieldMapper
 import proton.android.pass.autofill.heuristics.NodeCluster
-import proton.android.pass.crypto.fakes.context.TestEncryptionContext
+import proton.android.pass.crypto.fakes.context.FakeEncryptionContext
 
 class ItemFieldMapperTest {
 
     @Test
     fun `can handle empty list`() {
         val res = ItemFieldMapper.mapFields(
-            encryptionContext = TestEncryptionContext,
+            encryptionContext = FakeEncryptionContext,
             autofillItem = autofillItem(),
             cluster = NodeCluster.Empty
         )
@@ -46,7 +46,7 @@ class ItemFieldMapperTest {
         val itemAutofillId = TestAutofillId(123)
         val item = autofillItem()
         val res = ItemFieldMapper.mapFields(
-            encryptionContext = TestEncryptionContext,
+            encryptionContext = FakeEncryptionContext,
             autofillItem = item,
             cluster = NodeCluster.Login.OnlyUsername(field(itemAutofillId, FieldType.Username))
         )
@@ -64,7 +64,7 @@ class ItemFieldMapperTest {
         val itemAutofillId = TestAutofillId(123)
         val item = autofillItem()
         val res = ItemFieldMapper.mapFields(
-            encryptionContext = TestEncryptionContext,
+            encryptionContext = FakeEncryptionContext,
             autofillItem = item,
             cluster = NodeCluster.Login.OnlyUsername(field(itemAutofillId, FieldType.Email))
         )
@@ -82,9 +82,9 @@ class ItemFieldMapperTest {
         val itemAutofillId = TestAutofillId(123)
 
         val password = "somepassword"
-        val item = autofillItem(password = TestEncryptionContext.encrypt(password))
+        val item = autofillItem(password = FakeEncryptionContext.encrypt(password))
         val res = ItemFieldMapper.mapFields(
-            encryptionContext = TestEncryptionContext,
+            encryptionContext = FakeEncryptionContext,
             autofillItem = item,
             cluster = NodeCluster.Login.OnlyPassword(field(itemAutofillId, FieldType.Password))
         )
@@ -106,10 +106,10 @@ class ItemFieldMapperTest {
         val password = "somepassword"
         val item = autofillItem(
             username = username,
-            password = TestEncryptionContext.encrypt(password)
+            password = FakeEncryptionContext.encrypt(password)
         )
         val res = ItemFieldMapper.mapFields(
-            encryptionContext = TestEncryptionContext,
+            encryptionContext = FakeEncryptionContext,
             autofillItem = item,
             cluster = NodeCluster.Login.UsernameAndPassword(
                 username = field(usernameAutofillId, FieldType.Username),
@@ -146,7 +146,7 @@ class ItemFieldMapperTest {
         shareId: String = "ShareId-123",
         username: String = "username",
         email: String = "email",
-        password: String = TestEncryptionContext.encrypt("password")
+        password: String = FakeEncryptionContext.encrypt("password")
     ) = AutofillItem.Login(
         itemId = itemId,
         shareId = shareId,

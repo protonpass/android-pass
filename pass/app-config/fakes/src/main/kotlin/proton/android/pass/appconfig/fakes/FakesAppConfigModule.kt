@@ -29,5 +29,5 @@ import proton.android.pass.appconfig.api.AppConfig
 abstract class FakesAppConfigModule {
 
     @Binds
-    abstract fun bindAppConfig(impl: TestAppConfig): AppConfig
+    abstract fun bindAppConfig(impl: FakeAppConfig): AppConfig
 }

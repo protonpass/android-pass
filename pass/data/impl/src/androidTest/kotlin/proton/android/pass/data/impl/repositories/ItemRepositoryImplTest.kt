@@ -40,14 +40,14 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-import proton.android.pass.account.fakes.TestAccountManager
-import proton.android.pass.account.fakes.TestUserAddressRepository
+import proton.android.pass.account.fakes.FakeAccountManager
+import proton.android.pass.account.fakes.FakeUserAddressRepository
 import proton.android.pass.crypto.api.usecases.OpenItemOutput
-import proton.android.pass.crypto.fakes.context.TestEncryptionContextProvider
-import proton.android.pass.crypto.fakes.usecases.TestCreateItem
-import proton.android.pass.crypto.fakes.usecases.TestMigrateItem
-import proton.android.pass.crypto.fakes.usecases.TestOpenItem
-import proton.android.pass.crypto.fakes.usecases.TestUpdateItem
+import proton.android.pass.crypto.fakes.context.FakeEncryptionContextProvider
+import proton.android.pass.crypto.fakes.usecases.FakeCreateItem
+import proton.android.pass.crypto.fakes.usecases.FakeMigrateItem
+import proton.android.pass.crypto.fakes.usecases.FakeOpenItem
+import proton.android.pass.crypto.fakes.usecases.FakeUpdateItem
 import proton.android.pass.data.api.repositories.ItemRevision
 import proton.android.pass.data.fakes.crypto.FakeGetShareAndItemKey
 import proton.android.pass.data.impl.db.AppDatabase
@@ -56,9 +56,9 @@ import proton.android.pass.data.impl.db.entities.ShareEntity
 import proton.android.pass.data.impl.local.LocalItemDataSourceImpl
 import proton.android.pass.data.impl.local.LocalShareDataSource
 import proton.android.pass.data.impl.local.LocalShareDataSourceImpl
-import proton.android.pass.data.impl.repositories.fakes.TestRemoteItemDataSource
-import proton.android.pass.data.impl.repositories.fakes.TestShareKeyRepository
-import proton.android.pass.data.impl.repositories.fakes.TestShareRepository
+import proton.android.pass.data.impl.repositories.fakes.FakeRemoteItemDataSource
+import proton.android.pass.data.impl.repositories.fakes.FakeShareKeyRepository
+import proton.android.pass.data.impl.repositories.fakes.FakeShareRepository
 import proton.android.pass.domain.ShareId
 import proton.android.pass.test.domain.TestItem
 import proton.android.pass.test.domain.TestShare
@@ -81,7 +81,7 @@ class ItemRepositoryImplTest {
 
     private lateinit var database: PassDatabase
     private lateinit var localShareDataSource: LocalShareDataSource
-    private lateinit var shareRepository: TestShareRepository
+    private lateinit var shareRepository: FakeShareRepository
     private lateinit var instance: ItemRepositoryImpl
 
     @Before
@@ -93,7 +93,7 @@ class ItemRepositoryImplTest {
             addressId = ADDRESS_ID
         )
 
-        shareRepository = TestShareRepository().apply {
+        shareRepository = FakeShareRepository().apply {
             setGetAddressForShareIdResult(Result.success(userAddress))
         }
 
@@ -105,30 +105,30 @@ class ItemRepositoryImplTest {
 
         instance = ItemRepositoryImpl(
             database = database,
-            accountManager = TestAccountManager(),
+            accountManager = FakeAccountManager(),
             userAddressRepository = userAddressRepository.apply {
                 setAddress(userAddress)
             },
             shareRepository = shareRepository,
-            createItem = TestCreateItem(),
-            updateItem = TestUpdateItem(),
+            createItem = FakeCreateItem(),
+            updateItem = FakeUpdateItem(),
             localItemDataSource = LocalItemDataSourceImpl(database, localShareDataSource),
-            remoteItemDataSource = TestRemoteItemDataSource(),
+            remoteItemDataSource = FakeRemoteItemDataSource(),
             shareKeyRepository = TestShareKeyRepository().apply {
                 emitGetShareKeys(listOf(TestShareKey.createPrivate()))
             },
-            openItem = TestOpenItem().apply {
+            openItem = FakeOpenItem().apply {
                 setOutput(
                     value = OpenItemOutput(
                         item = TestItem.create(),
-                        itemKey = TestEncryptionContextProvider().withEncryptionContext {
+                        itemKey = FakeEncryptionContextProvider().withEncryptionContext {
                             encrypt(byteArrayOf(1, 3, 4))
                         }
                     )
                 )
             },
-            migrateItem = TestMigrateItem(),
-            encryptionContextProvider = TestEncryptionContextProvider(),
+            migrateItem = FakeMigrateItem(),
+            encryptionContextProvider = FakeEncryptionContextProvider(),
             getShareAndItemKey = FakeGetShareAndItemKey()
         )
     }

@@ -29,42 +29,42 @@ import proton.android.pass.autofill.entities.AutofillData
 import proton.android.pass.autofill.entities.AutofillItem
 import proton.android.pass.autofill.extensions.PackageNameUrlSuggestionAdapterImpl
 import proton.android.pass.autofill.heuristics.NodeCluster
-import proton.android.pass.clipboard.fakes.TestClipboardManager
+import proton.android.pass.clipboard.fakes.FakeClipboardManager
 import proton.android.pass.common.api.None
-import proton.android.pass.crypto.fakes.context.TestEncryptionContextProvider
+import proton.android.pass.crypto.fakes.context.FakeEncryptionContextProvider
 import proton.android.pass.data.fakes.usecases.FakeGetItemById
-import proton.android.pass.data.fakes.usecases.TestUpdateAutofillItem
+import proton.android.pass.data.fakes.usecases.FakeUpdateAutofillItem
 import proton.android.pass.domain.entity.AppName
 import proton.android.pass.domain.entity.PackageInfo
 import proton.android.pass.domain.entity.PackageName
-import proton.android.pass.inappreview.fakes.TestInAppReviewTriggerMetrics
-import proton.android.pass.notifications.fakes.TestToastManager
-import proton.android.pass.preferences.TestInternalSettingsRepository
-import proton.android.pass.preferences.TestPreferenceRepository
-import proton.android.pass.telemetry.fakes.TestTelemetryManager
-import proton.android.pass.totp.fakes.TestGetTotpCodeFromUri
+import proton.android.pass.inappreview.fakes.FakeInAppReviewTriggerMetrics
+import proton.android.pass.notifications.fakes.FakeToastManager
+import proton.android.pass.preferences.FakeInternalSettingsRepository
+import proton.android.pass.preferences.FakePreferenceRepository
+import proton.android.pass.telemetry.fakes.FakeTelemetryManager
+import proton.android.pass.totp.fakes.FakeGetTotpCodeFromUri
 
 class AutofillAppViewModelTest {
 
     private lateinit var instance: AutofillAppViewModel
 
-    private lateinit var updateAutofillItem: TestUpdateAutofillItem
+    private lateinit var updateAutofillItem: FakeUpdateAutofillItem
 
     @Before
     fun setup() {
-        updateAutofillItem = TestUpdateAutofillItem()
+        updateAutofillItem = FakeUpdateAutofillItem()
 
         instance = AutofillAppViewModel(
-            encryptionContextProvider = TestEncryptionContextProvider(),
-            clipboardManager = TestClipboardManager(),
-            getTotpCodeFromUri = TestGetTotpCodeFromUri(),
-            toastManager = TestToastManager(),
+            encryptionContextProvider = FakeEncryptionContextProvider(),
+            clipboardManager = FakeClipboardManager(),
+            getTotpCodeFromUri = FakeGetTotpCodeFromUri(),
+            toastManager = FakeToastManager(),
             updateAutofillItem = updateAutofillItem,
-            preferenceRepository = TestPreferenceRepository(),
-            telemetryManager = TestTelemetryManager(),
-            inAppReviewTriggerMetrics = TestInAppReviewTriggerMetrics(),
+            preferenceRepository = FakePreferenceRepository(),
+            telemetryManager = FakeTelemetryManager(),
+            inAppReviewTriggerMetrics = FakeInAppReviewTriggerMetrics(),
             getItemById = FakeGetItemById(),
-            internalSettingsRepository = TestInternalSettingsRepository(),
+            internalSettingsRepository = FakeInternalSettingsRepository(),
             clock = Clock.System
         )
     }

@@ -24,19 +24,19 @@ import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Test
 import proton.android.pass.data.api.usecases.shares.ObserveAutofillShares
-import proton.android.pass.data.fakes.usecases.TestObserveAllShares
+import proton.android.pass.data.fakes.usecases.FakeObserveAllShares
 import proton.android.pass.domain.Share
 import proton.android.pass.test.domain.TestShare
 
 internal class ObserveAutofillSharesTest {
 
-    private lateinit var observeAllShares: TestObserveAllShares
+    private lateinit var observeAllShares: FakeObserveAllShares
 
     private lateinit var observeAutofillShares: ObserveAutofillShares
 
     @Before
     internal fun setup() {
-        observeAllShares = TestObserveAllShares()
+        observeAllShares = FakeObserveAllShares()
 
         observeAutofillShares = ObserveAutofillSharesImpl(
             observeAllShares = observeAllShares

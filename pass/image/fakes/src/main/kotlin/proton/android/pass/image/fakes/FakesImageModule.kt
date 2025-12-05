@@ -29,6 +29,6 @@ import proton.android.pass.image.api.ClearIconCache
 abstract class FakesImageModule {
 
     @Binds
-    abstract fun bindClearIconCache(impl: TestClearIconCache): ClearIconCache
+    abstract fun bindClearIconCache(impl: FakeClearIconCache): ClearIconCache
 }
 

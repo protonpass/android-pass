@@ -25,16 +25,16 @@ import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import proton.android.pass.account.fakes.TestAccountManager
+import proton.android.pass.account.fakes.FakeAccountManager
 import proton.android.pass.composecomponents.impl.uievents.IsButtonEnabled
 import proton.android.pass.data.fakes.usecases.FakeObserveEncryptedItems
-import proton.android.pass.data.fakes.usecases.TestDeleteVault
-import proton.android.pass.data.fakes.usecases.TestGetVaultByShareId
+import proton.android.pass.data.fakes.usecases.FakeDeleteVault
+import proton.android.pass.data.fakes.usecases.FakeGetVaultByShareId
 import proton.android.pass.features.vault.VaultSnackbarMessage
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.navigation.api.IsLastVault
-import proton.android.pass.notifications.fakes.TestSnackbarDispatcher
-import proton.android.pass.preferences.TestInternalSettingsRepository
+import proton.android.pass.notifications.fakes.FakeSnackbarDispatcher
+import proton.android.pass.preferences.FakeInternalSettingsRepository
 import proton.android.pass.test.MainDispatcherRule
 import proton.android.pass.test.TestSavedStateHandle
 import proton.android.pass.test.domain.TestVault
@@ -45,16 +45,16 @@ class DeleteVaultViewModelTest {
     val dispatcher = MainDispatcherRule()
 
     private lateinit var instance: DeleteVaultViewModel
-    private lateinit var getVaultById: TestGetVaultByShareId
-    private lateinit var deleteVault: TestDeleteVault
-    private lateinit var snackbarDispatcher: TestSnackbarDispatcher
+    private lateinit var getVaultById: FakeGetVaultByShareId
+    private lateinit var deleteVault: FakeDeleteVault
+    private lateinit var snackbarDispatcher: FakeSnackbarDispatcher
     private lateinit var observeEncryptedItems: FakeObserveEncryptedItems
 
     @Before
     fun setup() {
-        getVaultById = TestGetVaultByShareId()
-        deleteVault = TestDeleteVault()
-        snackbarDispatcher = TestSnackbarDispatcher()
+        getVaultById = FakeGetVaultByShareId()
+        deleteVault = FakeDeleteVault()
+        snackbarDispatcher = FakeSnackbarDispatcher()
         observeEncryptedItems = FakeObserveEncryptedItems()
 
         instance = DeleteVaultViewModel(
@@ -66,8 +66,8 @@ class DeleteVaultViewModelTest {
             },
             snackbarDispatcher = snackbarDispatcher,
             observeEncryptedItems = observeEncryptedItems,
-            internalSettingsRepository = TestInternalSettingsRepository(),
-            accountManager = TestAccountManager()
+            internalSettingsRepository = FakeInternalSettingsRepository(),
+            accountManager = FakeAccountManager()
         )
     }
 

@@ -98,6 +98,7 @@ import proton.android.pass.data.api.usecases.PerformSync
 import proton.android.pass.data.api.usecases.PinItem
 import proton.android.pass.data.api.usecases.PinItems
 import proton.android.pass.data.api.usecases.PromoteNewInviteToInvite
+import proton.android.pass.data.api.usecases.RefreshBreaches
 import proton.android.pass.data.api.usecases.RefreshContent
 import proton.android.pass.data.api.usecases.RefreshGroupInvites
 import proton.android.pass.data.api.usecases.RefreshSharesAndEnqueueSync
@@ -144,7 +145,6 @@ import proton.android.pass.data.api.usecases.breach.AddBreachCustomEmail
 import proton.android.pass.data.api.usecases.breach.MarkEmailBreachAsResolved
 import proton.android.pass.data.api.usecases.breach.ObserveAllBreachByUserId
 import proton.android.pass.data.api.usecases.breach.ObserveBreachAliasEmails
-import proton.android.pass.data.api.usecases.breach.ObserveBreachCustomEmail
 import proton.android.pass.data.api.usecases.breach.ObserveBreachCustomEmails
 import proton.android.pass.data.api.usecases.breach.ObserveBreachEmailReport
 import proton.android.pass.data.api.usecases.breach.ObserveBreachProtonEmails
@@ -340,6 +340,7 @@ import proton.android.pass.data.impl.usecases.PerformSyncImpl
 import proton.android.pass.data.impl.usecases.PinItemImpl
 import proton.android.pass.data.impl.usecases.PinItemsImpl
 import proton.android.pass.data.impl.usecases.PromoteNewInviteToInviteImpl
+import proton.android.pass.data.impl.usecases.RefreshBreachesImpl
 import proton.android.pass.data.impl.usecases.RefreshContentImpl
 import proton.android.pass.data.impl.usecases.RefreshGroupInvitesImpl
 import proton.android.pass.data.impl.usecases.RefreshSharesAndEnqueueSyncImpl
@@ -388,7 +389,6 @@ import proton.android.pass.data.impl.usecases.breach.AddBreachCustomEmailImpl
 import proton.android.pass.data.impl.usecases.breach.MarkEmailBreachAsResolvedImpl
 import proton.android.pass.data.impl.usecases.breach.ObserveAllBreachByUserIdImpl
 import proton.android.pass.data.impl.usecases.breach.ObserveBreachAliasEmailsImpl
-import proton.android.pass.data.impl.usecases.breach.ObserveBreachCustomEmailImpl
 import proton.android.pass.data.impl.usecases.breach.ObserveBreachCustomEmailsImpl
 import proton.android.pass.data.impl.usecases.breach.ObserveBreachEmailReportImpl
 import proton.android.pass.data.impl.usecases.breach.ObserveBreachProtonEmailsImpl
@@ -717,6 +717,9 @@ abstract class DataUseCaseModule {
     abstract fun bindRefreshGroupInvites(impl: RefreshGroupInvitesImpl): RefreshGroupInvites
 
     @Binds
+    abstract fun bindRefreshBreaches(impl: RefreshBreachesImpl): RefreshBreaches
+
+    @Binds
     abstract fun bindSyncUserEvents(impl: SyncUserEventsImpl): SyncUserEvents
 
     @Binds
@@ -863,9 +866,6 @@ abstract class DataUseCaseModule {
 
     @[Binds Singleton]
     abstract fun bindObserveBreachEmailReport(impl: ObserveBreachEmailReportImpl): ObserveBreachEmailReport
-
-    @[Binds Singleton]
-    abstract fun bindObserveBreachCustomEmail(impl: ObserveBreachCustomEmailImpl): ObserveBreachCustomEmail
 
     @Binds
     abstract fun bindObserveBreachCustomEmails(impl: ObserveBreachCustomEmailsImpl): ObserveBreachCustomEmails

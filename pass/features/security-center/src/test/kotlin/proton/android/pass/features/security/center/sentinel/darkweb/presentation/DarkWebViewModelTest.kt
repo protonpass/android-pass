@@ -28,7 +28,9 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
+import proton.android.pass.data.api.usecases.RefreshBreaches
 import proton.android.pass.data.api.usecases.breach.CustomEmailSuggestion
+import proton.android.pass.data.fakes.usecases.FakeRefreshBreaches
 import proton.android.pass.data.fakes.usecases.breach.BreachCustomEmailTestFactory
 import proton.android.pass.data.fakes.usecases.breach.FakeAddBreachCustomEmail
 import proton.android.pass.data.fakes.usecases.breach.FakeObserveBreachAliasEmails
@@ -52,6 +54,7 @@ import proton.android.pass.features.security.center.darkweb.presentation.DarkWeb
 import proton.android.pass.features.security.center.shared.presentation.EmailBreachUiState
 import proton.android.pass.features.security.center.shared.ui.DateUtils
 import proton.android.pass.notifications.fakes.FakeSnackbarDispatcher
+import proton.android.pass.preferences.FakeFeatureFlagsPreferenceRepository
 import proton.android.pass.telemetry.fakes.FakeTelemetryManager
 import proton.android.pass.test.MainDispatcherRule
 
@@ -67,6 +70,8 @@ class DarkWebViewModelTest {
     private lateinit var observeCustomEmailSuggestions: FakeObserveCustomEmailSuggestions
     private lateinit var observeGlobalMonitorState: FakeObserveGlobalMonitorState
     private lateinit var observeBreachAliasEmails: FakeObserveBreachAliasEmails
+    private lateinit var featureFlagsPreferenceRepository: FakeFeatureFlagsPreferenceRepository
+    private lateinit var refreshBreaches: FakeRefreshBreaches
 
     @Before
     fun setUp() {
@@ -75,6 +80,8 @@ class DarkWebViewModelTest {
         observeCustomEmailSuggestions = FakeObserveCustomEmailSuggestions()
         observeGlobalMonitorState = FakeObserveGlobalMonitorState()
         observeBreachAliasEmails = FakeObserveBreachAliasEmails()
+        featureFlagsPreferenceRepository = FakeFeatureFlagsPreferenceRepository()
+        refreshBreaches = FakeRefreshBreaches()
         instance = DarkWebViewModel(
             observeBreachProtonEmails = observeBreachProtonEmails,
             observeBreachAliasEmails = observeBreachAliasEmails,
@@ -83,7 +90,9 @@ class DarkWebViewModelTest {
             observeGlobalMonitorState = observeGlobalMonitorState,
             telemetryManager = FakeTelemetryManager(),
             addBreachCustomEmail = FakeAddBreachCustomEmail(),
-            snackbarDispatcher = FakeSnackbarDispatcher()
+            snackbarDispatcher = FakeSnackbarDispatcher(),
+            featureFlagsPreferencesRepository = featureFlagsPreferenceRepository,
+            refreshBreaches = refreshBreaches
         )
     }
 

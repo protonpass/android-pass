@@ -26,7 +26,7 @@ data class BreachesResponse(
     @SerialName("Code")
     val code: Int,
     @SerialName("Breaches")
-    val breaches: BreachesDetails
+    val breaches: BreachesDetailsApiModel
 )
 
 @Serializable
@@ -34,7 +34,7 @@ data class BreachCustomEmailsResponse(
     @SerialName("Code")
     val code: Int,
     @SerialName("Emails")
-    val emails: BreachCustomEmailDetails
+    val emails: BreachCustomEmailDetailsApiModel
 )
 
 @Serializable
@@ -42,25 +42,25 @@ data class BreachCustomEmailResponse(
     @SerialName("Code")
     val code: Int,
     @SerialName("Email")
-    val email: BreachCustomEmail
+    val email: BreachCustomEmailApiModel
 )
 
 @Serializable
-data class BreachesDetails(
+data class BreachesDetailsApiModel(
     @SerialName("EmailsCount")
     val emailsCount: Int,
     @SerialName("DomainsPeek")
-    val domainPeeks: List<BreachDomainPeek>,
+    val domainPeeks: List<BreachDomainPeekApiModel>,
     @SerialName("CustomEmails")
-    val customEmails: List<BreachCustomEmail>,
+    val customEmails: List<BreachCustomEmailApiModel>,
     @SerialName("Addresses")
-    val protonEmails: List<BreachProtonEmail>,
+    val protonEmails: List<BreachProtonEmailApiModel>,
     @SerialName("HasCustomDomains")
     val hasCustomDomains: Boolean
 )
 
 @Serializable
-data class BreachDomainPeek(
+data class BreachDomainPeekApiModel(
     @SerialName("Domain")
     val domain: String,
     @SerialName("BreachTime")
@@ -68,13 +68,13 @@ data class BreachDomainPeek(
 )
 
 @Serializable
-data class BreachCustomEmailDetails(
+data class BreachCustomEmailDetailsApiModel(
     @SerialName("CustomEmails")
-    val customEmails: List<BreachCustomEmail>
+    val customEmails: List<BreachCustomEmailApiModel>
 )
 
 @Serializable
-data class BreachCustomEmail(
+data class BreachCustomEmailApiModel(
     @SerialName("CustomEmailID")
     val customEmailId: String,
     @SerialName("Email")
@@ -90,7 +90,7 @@ data class BreachCustomEmail(
 )
 
 @Serializable
-data class BreachProtonEmail(
+data class BreachProtonEmailApiModel(
     @SerialName("AddressID")
     val addressId: String,
     @SerialName("Email")

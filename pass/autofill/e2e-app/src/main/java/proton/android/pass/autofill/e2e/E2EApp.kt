@@ -42,9 +42,9 @@ import proton.android.pass.domain.PlanLimit
 import proton.android.pass.domain.PlanType
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.ShareSelection
-import proton.android.pass.test.domain.TestItem
-import proton.android.pass.test.domain.TestShare
-import proton.android.pass.test.domain.TestUser
+import proton.android.pass.test.domain.ItemTestFactory
+import proton.android.pass.test.domain.ShareTestFactory
+import proton.android.pass.test.domain.UserTestFactory
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -81,7 +81,7 @@ class E2EApp : Application() {
     }
 
     private fun setupVault() {
-        val vaultShare = TestShare.Vault.create(
+        val vaultShare = ShareTestFactory.Vault.create(
             id = VAULT_SHARE_ID.id,
             userId = PRIMARY_USER_ID.id
         )
@@ -97,14 +97,14 @@ class E2EApp : Application() {
 
     private fun setupLogins() {
         val logins = listOf(
-            TestItem.createLogin(
+            ItemTestFactory.createLogin(
                 shareId = VAULT_SHARE_ID,
                 itemId = ItemId("item1"),
                 title = "Item1",
                 username = "user1",
                 password = "pass1"
             ),
-            TestItem.createLogin(
+            ItemTestFactory.createLogin(
                 shareId = VAULT_SHARE_ID,
                 itemId = ItemId("item2"),
                 title = "Item2",
@@ -121,7 +121,7 @@ class E2EApp : Application() {
 
     private fun setupCreditCards() {
         val creditCards = listOf(
-            TestItem.createCreditCard(
+            ItemTestFactory.createCreditCard(
                 shareId = VAULT_SHARE_ID,
                 itemId = ItemId("ccItem1"),
                 holder = "FirstName LastName",
@@ -130,7 +130,7 @@ class E2EApp : Application() {
                 expirationDate = "2025-12",
                 title = "First CreditCard"
             ),
-            TestItem.createCreditCard(
+            ItemTestFactory.createCreditCard(
                 shareId = VAULT_SHARE_ID,
                 itemId = ItemId("ccItem2"),
                 holder = "SecondName SecondLast",
@@ -149,12 +149,12 @@ class E2EApp : Application() {
 
     private fun setupIdentities() {
         val identities = listOf(
-            TestItem.createIdentity(
+            ItemTestFactory.createIdentity(
                 shareId = VAULT_SHARE_ID,
                 itemId = ItemId("identity1"),
                 fullName = "Peter Parker"
             ),
-            TestItem.createIdentity(
+            ItemTestFactory.createIdentity(
                 shareId = VAULT_SHARE_ID,
                 itemId = ItemId("identity2"),
                 fullName = "Tony Stark"
@@ -195,7 +195,7 @@ class E2EApp : Application() {
     private fun setupAccount() {
         accountManager.sendPrimaryUserId(PRIMARY_USER_ID)
         accountManager.setAccounts(listOf(FakeAccountManager.createAccount(PRIMARY_USER_ID)))
-        userManager.setUser(TestUser.create(userId = PRIMARY_USER_ID))
+        userManager.setUser(UserTestFactory.create(userId = PRIMARY_USER_ID))
 
         val plan = Plan(
             planType = PlanType.Paid.Plus(name = "plus", displayName = "plus"),

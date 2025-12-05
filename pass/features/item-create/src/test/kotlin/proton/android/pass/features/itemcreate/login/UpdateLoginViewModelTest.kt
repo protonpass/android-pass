@@ -64,8 +64,8 @@ import proton.android.pass.preferences.FakeInternalSettingsRepository
 import proton.android.pass.preferences.FakePreferenceRepository
 import proton.android.pass.telemetry.fakes.FakeTelemetryManager
 import proton.android.pass.test.MainDispatcherRule
-import proton.android.pass.test.domain.TestItem
-import proton.android.pass.test.domain.TestUser
+import proton.android.pass.test.domain.ItemTestFactory
+import proton.android.pass.test.domain.UserTestFactory
 import proton.android.pass.totp.api.TotpSpec
 import proton.android.pass.totp.fakes.FakeTotpManager
 
@@ -111,7 +111,7 @@ class UpdateLoginViewModelTest {
         },
         encryptionContextProvider = encryptionContextProvider,
         passwordStrengthCalculator = FakePasswordStrengthCalculator(),
-        observeCurrentUser = FakeObserveCurrentUser().apply { sendUser(TestUser.create()) },
+        observeCurrentUser = FakeObserveCurrentUser().apply { sendUser(UserTestFactory.create()) },
         telemetryManager = FakeTelemetryManager(),
         draftRepository = FakeDraftRepository(),
         observeUpgradeInfo = FakeObserveUpgradeInfo(),
@@ -139,7 +139,7 @@ class UpdateLoginViewModelTest {
         val secret = "secret"
         val uri = "otpauth://totp/label?secret=$secret&algorithm=SHA1&period=30&digits=6"
         val primaryTotp = HiddenState.Revealed(FakeEncryptionContext.encrypt(uri), uri)
-        val item = TestItem.create(
+        val item = ItemTestFactory.create(
             itemContents = ItemContents.Login(
                 title = "item",
                 note = "note",
@@ -167,7 +167,7 @@ class UpdateLoginViewModelTest {
         val secret = "secret"
         val uri = "otpauth://totp/label?secret=$secret&algorithm=SHA256&period=10&digits=8"
         val primaryTotp = HiddenState.Revealed(FakeEncryptionContext.encrypt(uri), uri)
-        val item = TestItem.create(
+        val item = ItemTestFactory.create(
             itemContents = ItemContents.Login(
                 title = "item",
                 note = "note",
@@ -192,7 +192,7 @@ class UpdateLoginViewModelTest {
     fun `if error is InvalidContentFormatVersionError shows right snackbar message`() = runTest {
         updateItem.setResult(Result.failure(InvalidContentFormatVersionError()))
 
-        val item = TestItem.createLogin(shareId = ShareId(SHARE_ID))
+        val item = ItemTestFactory.createLogin(shareId = ShareId(SHARE_ID))
         getItemById.emit(Result.success(item))
         instance = createInstance()
 

@@ -40,8 +40,8 @@ import proton.android.pass.domain.ShareRole
 import proton.android.pass.domain.organizations.OrganizationItemShareMode
 import proton.android.pass.domain.organizations.OrganizationSecureLinkMode
 import proton.android.pass.domain.organizations.OrganizationSharingPolicy
-import proton.android.pass.test.domain.TestItem
-import proton.android.pass.test.domain.TestShare
+import proton.android.pass.test.domain.ItemTestFactory
+import proton.android.pass.test.domain.ShareTestFactory
 
 internal class GetItemActionsImplTest {
 
@@ -76,7 +76,7 @@ internal class GetItemActionsImplTest {
 
     @Test
     fun `can perform all actions if vault is owned and plan is paid`() = runTest {
-        val share = TestShare.Vault.create(id = SHARE_ID.id)
+        val share = ShareTestFactory.Vault.create(id = SHARE_ID.id)
         observeShare.emitValue(share)
 
         val res = instance.invoke(shareId = SHARE_ID, itemId = ItemId(""))
@@ -109,15 +109,15 @@ internal class GetItemActionsImplTest {
 
     @Test
     fun `can edit if downgraded but vault owned and enough permissions`() = runTest {
-        val vaultShare = TestShare.Vault.create(
+        val vaultShare = ShareTestFactory.Vault.create(
             id = SHARE_ID.id,
             isOwner = true,
             shareRole = ShareRole.Admin
         )
         val vaultShares = listOf(
             vaultShare,
-            TestShare.Vault.create(isOwner = false, shareRole = ShareRole.Read),
-            TestShare.Vault.create(isOwner = false, shareRole = ShareRole.Read)
+            ShareTestFactory.Vault.create(isOwner = false, shareRole = ShareRole.Read),
+            ShareTestFactory.Vault.create(isOwner = false, shareRole = ShareRole.Read)
         )
         observeShare.emitValue(vaultShare)
         observeAllShares.sendResult(Result.success(vaultShares))
@@ -129,14 +129,14 @@ internal class GetItemActionsImplTest {
 
     @Test
     fun `cannot edit if not enough permissions`() = runTest {
-        val vaultShare = TestShare.Vault.create(
+        val vaultShare = ShareTestFactory.Vault.create(
             id = SHARE_ID.id,
             isOwner = false,
             shareRole = ShareRole.Read
         )
         val vaultShares = listOf(
             vaultShare,
-            TestShare.Vault.create(isOwner = true, shareRole = ShareRole.Admin)
+            ShareTestFactory.Vault.create(isOwner = true, shareRole = ShareRole.Admin)
         )
         val expected = ItemActions.CanEditActionState.Disabled(
             ItemActions.CanEditActionState.CanEditDisabledReason.NotEnoughPermission
@@ -151,14 +151,14 @@ internal class GetItemActionsImplTest {
 
     @Test
     fun `cannot edit if downgraded`() = runTest {
-        val vaultShare = TestShare.Vault.create(
+        val vaultShare = ShareTestFactory.Vault.create(
             id = SHARE_ID.id,
             isOwner = true,
             shareRole = ShareRole.Read
         )
         val vaultShares = listOf(
             vaultShare,
-            TestShare.Vault.create(isOwner = true, shareRole = ShareRole.Admin)
+            ShareTestFactory.Vault.create(isOwner = true, shareRole = ShareRole.Admin)
         )
         val expected = ItemActions.CanEditActionState.Disabled(
             ItemActions.CanEditActionState.CanEditDisabledReason.Downgraded
@@ -184,7 +184,7 @@ internal class GetItemActionsImplTest {
 
     @Test
     fun `cannot move to another vault if there is only 1 vault`() = runTest {
-        val vaultShare = TestShare.Vault.create(
+        val vaultShare = ShareTestFactory.Vault.create(
             id = SHARE_ID.id,
             isOwner = true,
             shareRole = ShareRole.Admin
@@ -203,14 +203,14 @@ internal class GetItemActionsImplTest {
 
     @Test
     fun `cannot move to another vault if there is only 1 vault where can create`() = runTest {
-        val vaultShare = TestShare.Vault.create(
+        val vaultShare = ShareTestFactory.Vault.create(
             id = SHARE_ID.id,
             isOwner = true,
             shareRole = ShareRole.Admin
         )
         val vaultShares = listOf(
             vaultShare,
-            TestShare.Vault.create(isOwner = true, shareRole = ShareRole.Read)
+            ShareTestFactory.Vault.create(isOwner = true, shareRole = ShareRole.Read)
         )
         val expected = ItemActions.CanMoveToOtherVaultState.Disabled(
             ItemActions.CanMoveToOtherVaultState.CanMoveToOtherVaultDisabledReason.NoVaultToMoveToAvailable
@@ -235,14 +235,14 @@ internal class GetItemActionsImplTest {
 
     @Test
     fun `can move to another vault if vault is read only but owned (downgraded)`() = runTest {
-        val vaultShare = TestShare.Vault.create(
+        val vaultShare = ShareTestFactory.Vault.create(
             id = SHARE_ID.id,
             isOwner = true,
             shareRole = ShareRole.Read
         )
         val vaultShares = listOf(
             vaultShare,
-            TestShare.Vault.create(isOwner = true, shareRole = ShareRole.Admin)
+            ShareTestFactory.Vault.create(isOwner = true, shareRole = ShareRole.Admin)
         )
         observeShare.emitValue(vaultShare)
         observeAllShares.sendResult(Result.success(vaultShares))
@@ -261,14 +261,14 @@ internal class GetItemActionsImplTest {
 
     @Test
     fun `cannot move to trash if is read only`() = runTest {
-        val vaultShare = TestShare.Vault.create(
+        val vaultShare = ShareTestFactory.Vault.create(
             id = SHARE_ID.id,
             isOwner = true,
             shareRole = ShareRole.Read
         )
         val vaultShares = listOf(
             vaultShare,
-            TestShare.Vault.create(isOwner = true, shareRole = ShareRole.Admin)
+            ShareTestFactory.Vault.create(isOwner = true, shareRole = ShareRole.Admin)
         )
         observeShare.emitValue(vaultShare)
         observeAllShares.sendResult(Result.success(vaultShares))
@@ -280,14 +280,14 @@ internal class GetItemActionsImplTest {
 
     @Test
     fun `cannot restore from trash if is read only`() = runTest {
-        val vaultShare = TestShare.Vault.create(
+        val vaultShare = ShareTestFactory.Vault.create(
             id = SHARE_ID.id,
             isOwner = true,
             shareRole = ShareRole.Read
         )
         val vaultShares = listOf(
             vaultShare,
-            TestShare.Vault.create(isOwner = true, shareRole = ShareRole.Admin)
+            ShareTestFactory.Vault.create(isOwner = true, shareRole = ShareRole.Admin)
         )
         observeShare.emitValue(vaultShare)
         observeAllShares.sendResult(Result.success(vaultShares))
@@ -306,14 +306,14 @@ internal class GetItemActionsImplTest {
 
     @Test
     fun `cannot delete if item is trashed but is read only`() = runTest {
-        val vaultShare = TestShare.Vault.create(
+        val vaultShare = ShareTestFactory.Vault.create(
             id = SHARE_ID.id,
             isOwner = true,
             shareRole = ShareRole.Read
         )
         val vaultShares = listOf(
             vaultShare,
-            TestShare.Vault.create(isOwner = true, shareRole = ShareRole.Admin)
+            ShareTestFactory.Vault.create(isOwner = true, shareRole = ShareRole.Admin)
         )
         observeShare.emitValue(vaultShare)
         observeAllShares.sendResult(Result.success(vaultShares))
@@ -329,14 +329,14 @@ internal class GetItemActionsImplTest {
         setPlan(planType = PlanType.Paid.Plus("", ""))
         canShareVault.setResult(CanShareShareStatus.CanShare(1))
 
-        val vaultShare = TestShare.Vault.create(
+        val vaultShare = ShareTestFactory.Vault.create(
             id = SHARE_ID.id,
             isOwner = true,
             shareRole = ShareRole.Admin
         )
         val vaultShares = listOf(
             vaultShare,
-            TestShare.Vault.create(isOwner = true, shareRole = ShareRole.Admin)
+            ShareTestFactory.Vault.create(isOwner = true, shareRole = ShareRole.Admin)
         )
         observeShare.emitValue(vaultShare)
         observeAllShares.sendResult(Result.success(vaultShares))
@@ -349,7 +349,7 @@ internal class GetItemActionsImplTest {
     }
 
     private fun setItem(state: ItemState = ItemState.Active) {
-        getItemById.emit(Result.success(TestItem.create().copy(state = state.value)))
+        getItemById.emit(Result.success(ItemTestFactory.create().copy(state = state.value)))
     }
 
     private fun setPlan(planType: PlanType) {

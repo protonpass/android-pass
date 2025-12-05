@@ -30,7 +30,7 @@ import proton.android.pass.domain.ItemFlag
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ItemState
 import proton.android.pass.domain.ShareSelection
-import proton.android.pass.test.domain.TestItem
+import proton.android.pass.test.domain.ItemTestFactory
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -83,9 +83,9 @@ class FakeObserveItems @Inject constructor() : ObserveItems {
     companion object {
 
         val defaultValues = DefaultValues(
-            TestItem.createLogin(itemId = ItemId("login")),
-            TestItem.createAlias(itemId = ItemId("alias")),
-            TestItem.createNote(itemId = ItemId("note"))
+            ItemTestFactory.createLogin(itemId = ItemId("login")),
+            ItemTestFactory.createAlias(itemId = ItemId("alias")),
+            ItemTestFactory.createNote(itemId = ItemId("note"))
         )
     }
 

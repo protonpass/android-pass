@@ -58,8 +58,8 @@ import proton.android.pass.preferences.FakePreferenceRepository
 import proton.android.pass.preferences.LastItemAutofillPreference
 import proton.android.pass.preferences.UserPreferencesRepository
 import proton.android.pass.test.MainDispatcherRule
-import proton.android.pass.test.domain.TestItem
-import proton.android.pass.test.domain.TestShare
+import proton.android.pass.test.domain.ItemTestFactory
+import proton.android.pass.test.domain.ShareTestFactory
 
 private typealias Filter = (Item) -> Boolean
 
@@ -127,9 +127,9 @@ class GetSuggestedAutofillItemsImplTest {
         val fixedTitle = "item1"
         val shareId = ShareId("test-share-id")
         val userId = UserId("test-user-id")
-        val item1 = TestItem.create(shareId = shareId, title = fixedTitle)
-        val item2 = TestItem.create()
-        val vaultShare = TestShare.Vault.create(userId = userId.id, id = shareId.id)
+        val item1 = ItemTestFactory.create(shareId = shareId, title = fixedTitle)
+        val item2 = ItemTestFactory.create()
+        val vaultShare = ShareTestFactory.Vault.create(userId = userId.id, id = shareId.id)
         accountManager.setAccounts(listOf(FakeAccountManager.DEFAULT_ACCOUNT.copy(userId = userId)))
         observeAutofillShares.setValue(listOf(vaultShare), userId = userId)
         observeItems.emitValue(listOf(item1, item2))
@@ -173,12 +173,12 @@ class GetSuggestedAutofillItemsImplTest {
         // GIVEN
         val firstShareId = ShareId("123")
         val vaultShares = listOf(
-            TestShare.Vault.create(
+            ShareTestFactory.Vault.create(
                 id = firstShareId.id,
                 shareRole = ShareRole.Admin,
                 name = "default"
             ),
-            TestShare.Vault.create(
+            ShareTestFactory.Vault.create(
                 id = ShareId("789").id,
                 shareRole = ShareRole.Read,
                 name = "another"
@@ -190,7 +190,7 @@ class GetSuggestedAutofillItemsImplTest {
 
         filter.setFilter { true }
 
-        val items = listOf(TestItem.create(shareId = firstShareId))
+        val items = listOf(ItemTestFactory.create(shareId = firstShareId))
         observeItems.emitValue(items)
         val expected: List<ItemData.SuggestedItem> =
             items.map { ItemData.SuggestedItem(it, DEFAULT_SUGGESTION) }
@@ -207,10 +207,10 @@ class GetSuggestedAutofillItemsImplTest {
     fun `when plan is free and credit cards, then show upgrade`() = runTest {
         val shareId = ShareId("test-share-id")
         val userId = UserId("test-user-id")
-        val vaultShare = TestShare.Vault.create(userId = userId.id, id = shareId.id)
+        val vaultShare = ShareTestFactory.Vault.create(userId = userId.id, id = shareId.id)
         accountManager.setAccounts(listOf(FakeAccountManager.DEFAULT_ACCOUNT.copy(userId = userId)))
         getUserPlan.setResult(Result.success(buildPlan(PlanType.Free("", ""))), userId)
-        observeItems.emitValue(listOf(TestItem.createCreditCard(shareId = shareId)))
+        observeItems.emitValue(listOf(ItemTestFactory.createCreditCard(shareId = shareId)))
         observeAutofillShares.setValue(listOf(vaultShare), userId)
 
         filter.setFilter { true }
@@ -263,8 +263,8 @@ class GetSuggestedAutofillItemsImplTest {
         )
         val freeShareId = ShareId("free-share-id")
         val paidShareId = ShareId("paid-share-id")
-        val freeCCItem = TestItem.createCreditCard(shareId = freeShareId)
-        val paidCCItem = TestItem.createCreditCard(shareId = paidShareId)
+        val freeCCItem = ItemTestFactory.createCreditCard(shareId = freeShareId)
+        val paidCCItem = ItemTestFactory.createCreditCard(shareId = paidShareId)
         observeItems.emit(
             FakeObserveItems.Params(
                 userId = freeUserId,
@@ -285,14 +285,14 @@ class GetSuggestedAutofillItemsImplTest {
         observeAutofillShares.setValues(
             values = mapOf(
                 freeUserId to listOf(
-                    TestShare.Vault.create(
+                    ShareTestFactory.Vault.create(
                         userId = freeUserId.id,
                         id = freeShareId.id,
                         vaultId = VaultId("free-vault-id").id
                     )
                 ),
                 paidUserId to listOf(
-                    TestShare.Vault.create(
+                    ShareTestFactory.Vault.create(
                         userId = paidUserId.id,
                         id = paidShareId.id,
                         vaultId = VaultId("paid-vault-id").id

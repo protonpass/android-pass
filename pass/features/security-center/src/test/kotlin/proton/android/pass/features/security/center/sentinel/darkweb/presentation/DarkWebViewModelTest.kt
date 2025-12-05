@@ -29,7 +29,7 @@ import org.junit.Rule
 import org.junit.Test
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.data.api.usecases.breach.CustomEmailSuggestion
-import proton.android.pass.data.fakes.usecases.breach.BreachCustomEmailMother
+import proton.android.pass.data.fakes.usecases.breach.BreachCustomEmailTestFactory
 import proton.android.pass.data.fakes.usecases.breach.FakeAddBreachCustomEmail
 import proton.android.pass.data.fakes.usecases.breach.FakeObserveBreachAliasEmails
 import proton.android.pass.data.fakes.usecases.breach.FakeObserveBreachCustomEmails
@@ -224,8 +224,8 @@ class DarkWebViewModelTest {
             )
         }
 
-        val addedVerified = BreachCustomEmailMother.random().copy(verified = true)
-        val addedNotVerified = BreachCustomEmailMother.random().copy(verified = false)
+        val addedVerified = BreachCustomEmailTestFactory.random().copy(verified = true)
+        val addedNotVerified = BreachCustomEmailTestFactory.random().copy(verified = false)
         val alreadyAdded = listOf(addedVerified, addedNotVerified)
 
         val expectedAlreadyAdded = listOf(
@@ -394,7 +394,7 @@ class DarkWebViewModelTest {
 
         // Setup added custom emails
         val customEmailBreaches = customEmailsData.map {
-            BreachCustomEmailMother.random().copy(email = it, verified = true)
+            BreachCustomEmailTestFactory.random().copy(email = it, verified = true)
         }
         observeBreachCustomEmails.emit(customEmailBreaches)
 

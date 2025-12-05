@@ -52,8 +52,8 @@ import proton.android.pass.preferences.FakeFeatureFlagsPreferenceRepository
 import proton.android.pass.preferences.FakePreferenceRepository
 import proton.android.pass.preferences.UseFaviconsPreference
 import proton.android.pass.test.MainDispatcherRule
-import proton.android.pass.test.domain.TestItem
-import proton.android.pass.test.domain.TestVault
+import proton.android.pass.test.domain.ItemTestFactory
+import proton.android.pass.test.domain.VaultTestFactory
 
 internal class SharingSummaryViewModelTest {
 
@@ -175,7 +175,7 @@ internal class SharingSummaryViewModelTest {
     @Test
     fun `GIVEN item is sharing WHEN there are no addresses to share with THEN navigate home`() = runTest {
         val viewModel = createViewModel(isItemSharing = true)
-        val item = TestItem.create(
+        val item = ItemTestFactory.create(
             itemContents = ItemContents.Note(
                 title = "item",
                 note = "note",
@@ -213,7 +213,7 @@ internal class SharingSummaryViewModelTest {
         savedStateHandleProvider.apply {
             get()[CommonOptionalNavArgId.ItemId.key] = TEST_ITEM_ID
         }
-        val item = TestItem.create(
+        val item = ItemTestFactory.create(
             itemContents = ItemContents.Note(
                 title = "item",
                 note = "note",
@@ -274,7 +274,7 @@ internal class SharingSummaryViewModelTest {
     }
 
     private fun createVaultWithItemCount() = VaultWithItemCount(
-        vault = TestVault.create(
+        vault = VaultTestFactory.create(
             shareId = ShareId(id = TEST_SHARE_ID)
         ),
         activeItemCount = 5521,

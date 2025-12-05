@@ -47,8 +47,8 @@ import proton.android.pass.navigation.api.CommonOptionalNavArgId
 import proton.android.pass.notifications.fakes.FakeSnackbarDispatcher
 import proton.android.pass.test.MainDispatcherRule
 import proton.android.pass.test.TestConstants
-import proton.android.pass.test.domain.TestItem
-import proton.android.pass.test.domain.TestShare
+import proton.android.pass.test.domain.ItemTestFactory
+import proton.android.pass.test.domain.ShareTestFactory
 
 class CreateVaultViewModelTest {
 
@@ -161,7 +161,7 @@ class CreateVaultViewModelTest {
     fun `displays success snackbar on createVault success`() = runTest {
         instance.onNameChange("name")
 
-        createVault.setResult(Result.success(TestShare.Vault.create()))
+        createVault.setResult(Result.success(ShareTestFactory.Vault.create()))
         instance.onCreateClick()
         instance.state.test {
             val item = awaitItem()
@@ -245,8 +245,8 @@ class CreateVaultViewModelTest {
         setNextShareVault()
         createViewModel()
 
-        createVault.setResult(Result.success(TestShare.Vault.create(id = NEW_SHARE_ID)))
-        migrateItem.setResult(Result.success(MigrateItemsResult.AllMigrated(listOf(TestItem.create()))))
+        createVault.setResult(Result.success(ShareTestFactory.Vault.create(id = NEW_SHARE_ID)))
+        migrateItem.setResult(Result.success(MigrateItemsResult.AllMigrated(listOf(ItemTestFactory.create()))))
 
         instance.onNameChange("name")
         instance.onCreateClick()
@@ -303,7 +303,7 @@ class CreateVaultViewModelTest {
         setNextShareVault()
         createViewModel()
 
-        createVault.setResult(Result.success(TestShare.Vault.create(id = NEW_SHARE_ID)))
+        createVault.setResult(Result.success(ShareTestFactory.Vault.create(id = NEW_SHARE_ID)))
         migrateItem.setResult(Result.failure(IllegalStateException("test")))
         deleteVault.setResult(Result.success(Unit))
 
@@ -333,7 +333,7 @@ class CreateVaultViewModelTest {
         setNextShareVault()
         createViewModel()
 
-        createVault.setResult(Result.success(TestShare.Vault.create(id = NEW_SHARE_ID)))
+        createVault.setResult(Result.success(ShareTestFactory.Vault.create(id = NEW_SHARE_ID)))
         migrateItem.setResult(Result.failure(IllegalStateException("test")))
         deleteVault.setResult(Result.failure(IllegalStateException("test")))
 

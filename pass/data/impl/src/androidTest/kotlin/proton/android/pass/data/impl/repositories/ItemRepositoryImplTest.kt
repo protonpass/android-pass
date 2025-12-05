@@ -60,9 +60,9 @@ import proton.android.pass.data.impl.repositories.fakes.FakeRemoteItemDataSource
 import proton.android.pass.data.impl.repositories.fakes.FakeShareKeyRepository
 import proton.android.pass.data.impl.repositories.fakes.FakeShareRepository
 import proton.android.pass.domain.ShareId
-import proton.android.pass.test.domain.TestItem
-import proton.android.pass.test.domain.TestShare
-import proton.android.pass.test.domain.TestShareKey
+import proton.android.pass.test.domain.ItemTestFactory
+import proton.android.pass.test.domain.ShareTestFactory
+import proton.android.pass.test.domain.ShareTestFactoryKey
 import kotlin.test.assertEquals
 
 @RunWith(AndroidJUnit4::class)
@@ -115,12 +115,12 @@ class ItemRepositoryImplTest {
             localItemDataSource = LocalItemDataSourceImpl(database, localShareDataSource),
             remoteItemDataSource = FakeRemoteItemDataSource(),
             shareKeyRepository = TestShareKeyRepository().apply {
-                emitGetShareKeys(listOf(TestShareKey.createPrivate()))
+                emitGetShareKeys(listOf(ShareKeyTestFactory.createPrivate()))
             },
             openItem = FakeOpenItem().apply {
                 setOutput(
                     value = OpenItemOutput(
-                        item = TestItem.create(),
+                        item = ItemTestFactory.create(),
                         itemKey = FakeEncryptionContextProvider().withEncryptionContext {
                             encrypt(byteArrayOf(1, 3, 4))
                         }
@@ -284,7 +284,7 @@ class ItemRepositoryImplTest {
             )
         )
         val id = ShareId(shareId)
-        shareRepository.setGetByIdResult(id, Result.success(TestShare.Vault.create(id = shareId)))
+        shareRepository.setGetByIdResult(id, Result.success(ShareTestFactory.Vault.create(id = shareId)))
 
         val items = mutableListOf<ItemRevision>()
         for (i in 0 until itemCount) {

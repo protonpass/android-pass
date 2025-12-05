@@ -79,10 +79,10 @@ import proton.android.pass.preferences.FakePreferenceRepository
 import proton.android.pass.telemetry.api.EventItemType
 import proton.android.pass.telemetry.fakes.FakeTelemetryManager
 import proton.android.pass.test.MainDispatcherRule
-import proton.android.pass.test.TestUtils
-import proton.android.pass.test.domain.TestItem
-import proton.android.pass.test.domain.TestUser
-import proton.android.pass.test.domain.TestVault
+import proton.android.pass.test.StringTestFactory
+import proton.android.pass.test.domain.ItemTestFactory
+import proton.android.pass.test.domain.UserTestFactory
+import proton.android.pass.test.domain.VaultTestFactory
 import proton.android.pass.totp.fakes.FakeTotpManager
 
 internal class CreateLoginNavItemViewModelTest {
@@ -131,7 +131,7 @@ internal class CreateLoginNavItemViewModelTest {
             passwordStrengthCalculator = FakePasswordStrengthCalculator(),
             createLoginAndAlias = createItemAndAlias,
             observeVaults = observeVaults,
-            observeCurrentUser = FakeObserveCurrentUser().apply { sendUser(TestUser.create()) },
+            observeCurrentUser = FakeObserveCurrentUser().apply { sendUser(UserTestFactory.create()) },
             telemetryManager = telemetryManager,
             draftRepository = FakeDraftRepository(),
             observeUpgradeInfo = observeUpgradeInfo,
@@ -156,7 +156,7 @@ internal class CreateLoginNavItemViewModelTest {
 
     @Test
     fun `when a create item event without title should return a BlankTitle validation error`() = runTest {
-        val vault = TestVault.create(shareId = ShareId("shareId"), name = "Share")
+        val vault = VaultTestFactory.create(shareId = ShareId("shareId"), name = "Share")
         val vaultWithItemCount = VaultWithItemCount(vault, 1, 0)
         loginItemFormProcessor.setResult(
             FormProcessingResult.Error(setOf(CommonFieldValidationError.BlankTitle))
@@ -184,7 +184,7 @@ internal class CreateLoginNavItemViewModelTest {
 
     @Test
     fun `given valid data when a create item event should return a success event`() = runTest {
-        val item = TestItem.createLogin(primaryTotp = "secret")
+        val item = ItemTestFactory.createLogin(primaryTotp = "secret")
         val vault = sendInitialVault(item.shareId)
         val baseState = CreateLoginUiState.Initial
 
@@ -336,24 +336,24 @@ internal class CreateLoginNavItemViewModelTest {
 
     private fun setTestAlias(): AliasItemFormState {
         val suffix = AliasSuffixUiModel(
-            suffix = TestUtils.randomString(),
-            signedSuffix = TestUtils.randomString(),
+            suffix = StringTestFactory.randomString(),
+            signedSuffix = StringTestFactory.randomString(),
             isCustom = false,
             isPremium = false,
-            domain = TestUtils.randomString()
+            domain = StringTestFactory.randomString()
         )
-        val mailbox = AliasMailboxUiModel(id = 1, email = TestUtils.randomString())
+        val mailbox = AliasMailboxUiModel(id = 1, email = StringTestFactory.randomString())
         val aliasItemFormState = AliasItemFormState(
-            title = TestUtils.randomString(),
-            prefix = TestUtils.randomString(),
-            note = TestUtils.randomString(),
+            title = StringTestFactory.randomString(),
+            prefix = StringTestFactory.randomString(),
+            note = StringTestFactory.randomString(),
             aliasOptions = AliasOptionsUiModel(
                 suffixes = listOf(suffix),
                 mailboxes = listOf(mailbox)
             ),
             selectedSuffix = suffix,
             selectedMailboxes = setOf(mailbox),
-            aliasToBeCreated = TestUtils.randomString(),
+            aliasToBeCreated = StringTestFactory.randomString(),
             customFields = emptyList()
         )
         instance.onAliasCreated(aliasItemFormState)
@@ -362,10 +362,10 @@ internal class CreateLoginNavItemViewModelTest {
 
     private fun setInitialContents(): InitialCreateLoginUiState {
         val initialContents = InitialCreateLoginUiState(
-            title = TestUtils.randomString(),
-            username = TestUtils.randomString(),
-            password = TestUtils.randomString(),
-            url = TestUtils.randomString()
+            title = StringTestFactory.randomString(),
+            username = StringTestFactory.randomString(),
+            password = StringTestFactory.randomString(),
+            url = StringTestFactory.randomString()
         )
         instance.setInitialContents(initialContents)
         accountManager.sendPrimaryUserId(UserId("UserId"))
@@ -373,7 +373,7 @@ internal class CreateLoginNavItemViewModelTest {
     }
 
     private fun sendInitialVault(shareId: ShareId): VaultWithItemCount {
-        val vault = TestVault.create(shareId = shareId, name = "Share")
+        val vault = VaultTestFactory.create(shareId = shareId, name = "Share")
         val vaultWithItemCount = VaultWithItemCount(vault, 1, 0)
         observeVaults.sendResult(Result.success(listOf(vaultWithItemCount)))
         return vaultWithItemCount

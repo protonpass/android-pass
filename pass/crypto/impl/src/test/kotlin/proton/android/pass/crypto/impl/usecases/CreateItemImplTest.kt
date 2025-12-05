@@ -24,7 +24,8 @@ import proton.android.pass.crypto.api.Base64
 import proton.android.pass.crypto.fakes.context.FakeEncryptionContextProvider
 import proton.android.pass.crypto.impl.Constants
 import proton.android.pass.domain.ItemContents
-import proton.android.pass.test.TestUtils
+import proton.android.pass.test.StringTestFactory
+import proton.android.pass.test.domain.ShareKeyTestFactory
 import proton_pass_item_v1.ItemV1
 import kotlin.test.assertEquals
 
@@ -35,11 +36,11 @@ class CreateItemImplTest {
     @Test
     fun testCanCreateItem() {
         val contents = ItemContents.Note(
-            title = TestUtils.randomString(),
-            note = TestUtils.randomString(),
+            title = StringTestFactory.randomString(),
+            note = StringTestFactory.randomString(),
             customFields = emptyList()
         )
-        val (shareKey, decryptedShareKey) = TestUtils.createShareKey()
+        val (shareKey, decryptedShareKey) = ShareKeyTestFactory.create()
 
         val instance = CreateItemImpl(encryptionContextProvider)
         val output = instance.create(shareKey, contents)

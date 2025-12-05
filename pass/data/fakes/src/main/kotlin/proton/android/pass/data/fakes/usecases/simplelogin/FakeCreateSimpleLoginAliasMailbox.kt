@@ -25,6 +25,6 @@ import javax.inject.Singleton
 @Singleton
 class FakeCreateSimpleLoginAliasMailbox @Inject constructor() : CreateSimpleLoginAliasMailbox {
 
-    override suspend fun invoke(mailboxEmail: String) = SimpleLoginAliasMailboxMother.create()
+    override suspend fun invoke(mailboxEmail: String) = SimpleLoginAliasMailboxTestFactory.create()
 
 }

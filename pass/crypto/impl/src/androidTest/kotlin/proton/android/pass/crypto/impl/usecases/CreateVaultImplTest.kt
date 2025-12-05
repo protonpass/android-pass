@@ -32,7 +32,8 @@ import proton.android.pass.crypto.api.EncryptionKey
 import proton.android.pass.crypto.api.context.EncryptionTag
 import proton.android.pass.crypto.api.usecases.EncryptedCreateVault
 import proton.android.pass.crypto.fakes.context.FakeEncryptionContextProvider
-import proton.android.pass.test.TestUtils
+import proton.android.pass.test.UserAddressTestFactory
+import proton.android.pass.test.domain.UserTestFactory
 import proton_pass_vault_v1.VaultV1
 import kotlin.test.assertContentEquals
 import kotlin.test.assertEquals
@@ -47,10 +48,10 @@ class CreateVaultImplTest {
 
     @Test
     fun canCreateVault() {
-        val userAddress = TestUtils.createUserAddress(cryptoContext)
+        val userAddress = UserAddressTestFactory.createUserAddress(cryptoContext)
         val vaultName = Utils.generatePassphrase()
         val vaultDescription = Utils.generatePassphrase()
-        val user = TestUtils.createUser()
+        val user = UserTestFactory.createWithKeys()
         val vaultMetadata = VaultV1.Vault.newBuilder()
             .setName(vaultName)
             .setDescription(vaultDescription)

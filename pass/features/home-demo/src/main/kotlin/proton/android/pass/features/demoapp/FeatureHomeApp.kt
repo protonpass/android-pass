@@ -8,13 +8,13 @@ import dagger.hilt.android.HiltAndroidApp
 import dagger.hilt.components.SingletonComponent
 import kotlinx.datetime.Clock
 import me.proton.core.domain.entity.UserId
-import proton.android.pass.account.fakes.TestAccountManager
+import proton.android.pass.account.fakes.FakeAccountManager
 import proton.android.pass.autofill.api.AutofillStatus
 import proton.android.pass.autofill.api.AutofillSupportedStatus
-import proton.android.pass.autofill.fakes.TestAutofillManager
-import proton.android.pass.data.fakes.usecases.TestObserveItems
-import proton.android.pass.data.fakes.usecases.TestObserveVaults
-import proton.android.pass.data.fakes.usecases.TestObserveVaultsWithItemCount
+import proton.android.pass.autofill.fakes.FakeAutofillManager
+import proton.android.pass.data.fakes.usecases.FakeObserveItems
+import proton.android.pass.data.fakes.usecases.FakeObserveVaults
+import proton.android.pass.data.fakes.usecases.FakeObserveVaultsWithItemCount
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareFlags
@@ -32,19 +32,19 @@ import javax.inject.Singleton
 class FeatureHomeApp : Application() {
 
     @Inject
-    lateinit var accountManager: TestAccountManager
+    lateinit var accountManager: FakeAccountManager
 
     @Inject
-    lateinit var observeItems: TestObserveItems
+    lateinit var observeItems: FakeObserveItems
 
     @Inject
-    lateinit var observeVaults: TestObserveVaults
+    lateinit var observeVaults: FakeObserveVaults
 
     @Inject
-    lateinit var observeVaultsWithItemCount: TestObserveVaultsWithItemCount
+    lateinit var observeVaultsWithItemCount: FakeObserveVaultsWithItemCount
 
     @Inject
-    lateinit var autofillManager: TestAutofillManager
+    lateinit var autofillManager: FakeAutofillManager
 
     override fun onCreate() {
         super.onCreate()

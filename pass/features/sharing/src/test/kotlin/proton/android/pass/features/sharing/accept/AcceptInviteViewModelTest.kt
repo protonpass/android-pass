@@ -26,12 +26,12 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import proton.android.pass.common.api.toOption
-import proton.android.pass.commonui.fakes.TestSavedStateHandleProvider
+import proton.android.pass.commonui.fakes.FakeSavedStateHandleProvider
 import proton.android.pass.data.api.errors.CannotCreateMoreVaultsError
 import proton.android.pass.data.api.usecases.AcceptInviteStatus
 import proton.android.pass.data.fakes.usecases.FakeGetItemById
-import proton.android.pass.data.fakes.usecases.TestAcceptInvite
-import proton.android.pass.data.fakes.usecases.TestRejectInvite
+import proton.android.pass.data.fakes.usecases.FakeAcceptInvite
+import proton.android.pass.data.fakes.usecases.FakeRejectInvite
 import proton.android.pass.data.fakes.usecases.invites.FakeObserveInvite
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ItemType
@@ -40,7 +40,7 @@ import proton.android.pass.domain.ShareType
 import proton.android.pass.domain.items.ItemCategory
 import proton.android.pass.features.sharing.SharingSnackbarMessage
 import proton.android.pass.navigation.api.CommonNavArgId
-import proton.android.pass.notifications.fakes.TestSnackbarDispatcher
+import proton.android.pass.notifications.fakes.FakeSnackbarDispatcher
 import proton.android.pass.test.MainDispatcherRule
 import proton.android.pass.test.domain.TestItem
 import proton.android.pass.test.domain.TestPendingInvite
@@ -50,25 +50,25 @@ internal class AcceptInviteViewModelTest {
     @get:Rule
     val dispatcherRule = MainDispatcherRule()
 
-    private lateinit var savedStateHandleProvider: TestSavedStateHandleProvider
+    private lateinit var savedStateHandleProvider: FakeSavedStateHandleProvider
     private lateinit var observeInvite: FakeObserveInvite
-    private lateinit var acceptInvite: TestAcceptInvite
-    private lateinit var rejectInvite: TestRejectInvite
+    private lateinit var acceptInvite: FakeAcceptInvite
+    private lateinit var rejectInvite: FakeRejectInvite
     private lateinit var getItemById: FakeGetItemById
-    private lateinit var snackbarDispatcher: TestSnackbarDispatcher
+    private lateinit var snackbarDispatcher: FakeSnackbarDispatcher
 
     private lateinit var viewModel: AcceptInviteViewModel
 
     @Before
     fun setup() {
-        savedStateHandleProvider = TestSavedStateHandleProvider().apply {
+        savedStateHandleProvider = FakeSavedStateHandleProvider().apply {
             get()[CommonNavArgId.InviteToken.key] = INVITE_TOKEN
         }
         observeInvite = FakeObserveInvite()
-        acceptInvite = TestAcceptInvite()
-        rejectInvite = TestRejectInvite()
+        acceptInvite = FakeAcceptInvite()
+        rejectInvite = FakeRejectInvite()
         getItemById = FakeGetItemById()
-        snackbarDispatcher = TestSnackbarDispatcher()
+        snackbarDispatcher = FakeSnackbarDispatcher()
 
         viewModel = AcceptInviteViewModel(
             savedStateHandleProvider = savedStateHandleProvider,

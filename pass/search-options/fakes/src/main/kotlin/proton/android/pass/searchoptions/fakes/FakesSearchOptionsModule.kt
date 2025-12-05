@@ -30,11 +30,11 @@ import proton.android.pass.searchoptions.api.HomeSearchOptionsRepository
 abstract class FakesSearchOptionsModule {
 
     @Binds
-    abstract fun bindSearchOptionsRepository(impl: TestHomeSearchOptionsRepository): HomeSearchOptionsRepository
+    abstract fun bindSearchOptionsRepository(impl: FakeHomeSearchOptionsRepository): HomeSearchOptionsRepository
 
     @Binds
     abstract fun bindAutofillSearchOptionsRepository(
-        impl: TestAutofillSearchOptionsRepository
+        impl: FakeAutofillSearchOptionsRepository
     ): AutofillSearchOptionsRepository
 }
 

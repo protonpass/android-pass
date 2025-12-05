@@ -36,18 +36,18 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import proton.android.pass.account.fakes.FakeUserManager
-import proton.android.pass.account.fakes.TestAccountManager
+import proton.android.pass.account.fakes.FakeAccountManager
 import proton.android.pass.commonui.api.PassTheme
-import proton.android.pass.crypto.fakes.context.TestEncryptionContext
+import proton.android.pass.crypto.fakes.context.FakeEncryptionContext
 import proton.android.pass.data.api.usecases.ItemData
 import proton.android.pass.data.api.usecases.ItemTypeFilter
 import proton.android.pass.data.api.usecases.SuggestedAutofillItemsResult
 import proton.android.pass.data.api.usecases.Suggestion
 import proton.android.pass.data.api.usecases.UpgradeInfo
-import proton.android.pass.data.fakes.usecases.TestGetSuggestedAutofillItems
-import proton.android.pass.data.fakes.usecases.TestGetUserPlan
-import proton.android.pass.data.fakes.usecases.TestObserveItems
-import proton.android.pass.data.fakes.usecases.TestObserveUpgradeInfo
+import proton.android.pass.data.fakes.usecases.FakeGetSuggestedAutofillItems
+import proton.android.pass.data.fakes.usecases.FakeGetUserPlan
+import proton.android.pass.data.fakes.usecases.FakeObserveItems
+import proton.android.pass.data.fakes.usecases.FakeObserveUpgradeInfo
 import proton.android.pass.data.fakes.usecases.shares.FakeObserveAutofillShares
 import proton.android.pass.domain.HiddenState
 import proton.android.pass.domain.Item
@@ -83,22 +83,22 @@ class SelectItemScreenTest {
     val composeTestRule = createAndroidComposeRule<HiltComponentActivity>()
 
     @Inject
-    lateinit var getSuggestedLoginItems: TestGetSuggestedAutofillItems
+    lateinit var getSuggestedLoginItems: FakeGetSuggestedAutofillItems
 
     @Inject
     lateinit var observeAutofillShares: FakeObserveAutofillShares
 
     @Inject
-    lateinit var getUserPlan: TestGetUserPlan
+    lateinit var getUserPlan: FakeGetUserPlan
 
     @Inject
-    lateinit var observeUpgradeInfo: TestObserveUpgradeInfo
+    lateinit var observeUpgradeInfo: FakeObserveUpgradeInfo
 
     @Inject
-    lateinit var observeItems: TestObserveItems
+    lateinit var observeItems: FakeObserveItems
 
     @Inject
-    lateinit var accountManager: TestAccountManager
+    lateinit var accountManager: FakeAccountManager
 
     @Inject
     lateinit var userManager: FakeUserManager
@@ -341,7 +341,7 @@ class SelectItemScreenTest {
         planType: PlanType
     ): SetupData {
         val userId = UserId("test-user-id")
-        accountManager.setAccounts(listOf(TestAccountManager.DEFAULT_ACCOUNT.copy(userId = userId)))
+        accountManager.setAccounts(listOf(FakeAccountManager.DEFAULT_ACCOUNT.copy(userId = userId)))
         userManager.setUser(FakeUserManager.DEFAULT_USER.copy(userId = userId))
         val vaultShares = (0 until sharesCount).map {
             TestShare.Vault.create(
@@ -364,12 +364,12 @@ class SelectItemScreenTest {
                     note = "",
                     itemEmail = "$SUGGESTION_EMAIL_PREFIX$it",
                     itemUsername = "",
-                    password = HiddenState.Concealed(TestEncryptionContext.encrypt("")),
+                    password = HiddenState.Concealed(FakeEncryptionContext.encrypt("")),
                     urls = emptyList(),
                     packageInfoSet = setOf(
                         PackageInfo(PackageName(PACKAGE_NAME), AppName(""))
                     ),
-                    primaryTotp = HiddenState.Revealed(TestEncryptionContext.encrypt(""), ""),
+                    primaryTotp = HiddenState.Revealed(FakeEncryptionContext.encrypt(""), ""),
                     customFields = emptyList(),
                     passkeys = emptyList()
                 )
@@ -390,12 +390,12 @@ class SelectItemScreenTest {
                     note = "",
                     itemEmail = "$SUGGESTION_EMAIL_PREFIX$it",
                     itemUsername = "",
-                    password = HiddenState.Concealed(TestEncryptionContext.encrypt("")),
+                    password = HiddenState.Concealed(FakeEncryptionContext.encrypt("")),
                     urls = emptyList(),
                     packageInfoSet = setOf(
                         PackageInfo(PackageName(PACKAGE_NAME), AppName(""))
                     ),
-                    primaryTotp = HiddenState.Revealed(TestEncryptionContext.encrypt(""), ""),
+                    primaryTotp = HiddenState.Revealed(FakeEncryptionContext.encrypt(""), ""),
                     customFields = emptyList(),
                     passkeys = emptyList()
                 )

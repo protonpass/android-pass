@@ -34,7 +34,7 @@ import org.junit.Rule
 import org.junit.Test
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.SavedStateHandleProvider
-import proton.android.pass.crypto.fakes.context.TestEncryptionContext
+import proton.android.pass.crypto.fakes.context.FakeEncryptionContext
 import proton.android.pass.domain.CustomFieldContent
 import proton.android.pass.domain.CustomFieldType
 import proton.android.pass.domain.HiddenState
@@ -82,7 +82,7 @@ class CustomExtraFieldNameDialogTest {
             CustomFieldType.Totp,
             CustomFieldContent.Totp(
                 label = LABEL,
-                value = HiddenState.Empty(TestEncryptionContext.encrypt(""))
+                value = HiddenState.Empty(FakeEncryptionContext.encrypt(""))
             )
         )
     }
@@ -93,7 +93,7 @@ class CustomExtraFieldNameDialogTest {
             CustomFieldType.Hidden,
             CustomFieldContent.Hidden(
                 label = LABEL,
-                value = HiddenState.Empty(TestEncryptionContext.encrypt(""))
+                value = HiddenState.Empty(FakeEncryptionContext.encrypt(""))
             )
         )
     }

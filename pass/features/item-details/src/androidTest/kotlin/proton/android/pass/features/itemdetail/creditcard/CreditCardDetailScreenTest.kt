@@ -39,14 +39,14 @@ import kotlinx.datetime.Clock
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import proton.android.pass.clipboard.fakes.TestClipboardManager
+import proton.android.pass.clipboard.fakes.FakeClipboardManager
 import proton.android.pass.commonui.api.PassTheme
-import proton.android.pass.commonui.fakes.TestSavedStateHandleProvider
+import proton.android.pass.commonui.fakes.FakeSavedStateHandleProvider
 import proton.android.pass.composecomponents.impl.R
 import proton.android.pass.data.fakes.usecases.FakeGetItemById
-import proton.android.pass.data.fakes.usecases.TestCanPerformPaidAction
-import proton.android.pass.data.fakes.usecases.TestObserveItemById
-import proton.android.pass.data.fakes.usecases.TestObserveUserAccessData
+import proton.android.pass.data.fakes.usecases.FakeCanPerformPaidAction
+import proton.android.pass.data.fakes.usecases.FakeObserveItemById
+import proton.android.pass.data.fakes.usecases.FakeObserveUserAccessData
 import proton.android.pass.data.fakes.usecases.shares.FakeObserveShare
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
@@ -73,25 +73,25 @@ class CreditCardDetailScreenTest {
     val composeTestRule = createAndroidComposeRule<HiltComponentActivity>()
 
     @Inject
-    lateinit var savedStateHandle: TestSavedStateHandleProvider
+    lateinit var savedStateHandle: FakeSavedStateHandleProvider
 
     @Inject
-    lateinit var observeItemById: TestObserveItemById
+    lateinit var observeItemById: FakeObserveItemById
 
     @Inject
     lateinit var getItemById: FakeGetItemById
 
     @Inject
-    lateinit var clipboardManager: TestClipboardManager
+    lateinit var clipboardManager: FakeClipboardManager
 
     @Inject
-    lateinit var canPerformPaidAction: TestCanPerformPaidAction
+    lateinit var canPerformPaidAction: FakeCanPerformPaidAction
 
     @Inject
     lateinit var observeShare: FakeObserveShare
 
     @Inject
-    lateinit var observeUserAccessData: TestObserveUserAccessData
+    lateinit var observeUserAccessData: FakeObserveUserAccessData
 
     @Before
     fun setup() {

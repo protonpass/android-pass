@@ -24,45 +24,45 @@ import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import proton.android.pass.clipboard.fakes.TestClipboardManager
+import proton.android.pass.clipboard.fakes.FakeClipboardManager
 import proton.android.pass.commonpresentation.fakes.attachments.FakeAttachmentHandler
-import proton.android.pass.commonui.fakes.TestSavedStateHandleProvider
-import proton.android.pass.crypto.fakes.context.TestEncryptionContextProvider
-import proton.android.pass.data.fakes.usecases.TestCanPerformPaidAction
+import proton.android.pass.commonui.fakes.FakeSavedStateHandleProvider
+import proton.android.pass.crypto.fakes.context.FakeEncryptionContextProvider
+import proton.android.pass.data.fakes.usecases.FakeCanPerformPaidAction
 import proton.android.pass.features.itemcreate.common.CustomFieldDraftRepositoryImpl
 import proton.android.pass.features.itemcreate.common.customfields.CustomFieldHandlerImpl
 import proton.android.pass.features.itemcreate.common.formprocessor.FakeNoteItemFormProcessor
 import proton.android.pass.features.itemcreate.note.BaseNoteUiState.Companion.Initial
-import proton.android.pass.notifications.fakes.TestSnackbarDispatcher
-import proton.android.pass.preferences.TestPreferenceRepository
+import proton.android.pass.notifications.fakes.FakeSnackbarDispatcher
+import proton.android.pass.preferences.FakePreferenceRepository
 import proton.android.pass.test.MainDispatcherRule
-import proton.android.pass.totp.fakes.TestTotpManager
+import proton.android.pass.totp.fakes.FakeTotpManager
 
 internal class BaseNoteViewModelTest {
 
     @get:Rule
     val dispatcherRule = MainDispatcherRule()
 
-    private lateinit var canPerformPaidAction: TestCanPerformPaidAction
-    private lateinit var snackbarDispatcher: TestSnackbarDispatcher
-    private lateinit var savedStateHandleProvider: TestSavedStateHandleProvider
+    private lateinit var canPerformPaidAction: FakeCanPerformPaidAction
+    private lateinit var snackbarDispatcher: FakeSnackbarDispatcher
+    private lateinit var savedStateHandleProvider: FakeSavedStateHandleProvider
     private lateinit var baseNoteViewModel: BaseNoteViewModel
 
     @Before
     fun setUp() {
-        snackbarDispatcher = TestSnackbarDispatcher()
-        savedStateHandleProvider = TestSavedStateHandleProvider()
-        canPerformPaidAction = TestCanPerformPaidAction()
+        snackbarDispatcher = FakeSnackbarDispatcher()
+        savedStateHandleProvider = FakeSavedStateHandleProvider()
+        canPerformPaidAction = FakeCanPerformPaidAction()
         baseNoteViewModel = object : BaseNoteViewModel(
             snackbarDispatcher = snackbarDispatcher,
             attachmentsHandler = FakeAttachmentHandler(),
-            userPreferencesRepository = TestPreferenceRepository(),
+            userPreferencesRepository = FakePreferenceRepository(),
             savedStateHandleProvider = savedStateHandleProvider,
             customFieldDraftRepository = CustomFieldDraftRepositoryImpl(),
-            customFieldHandler = CustomFieldHandlerImpl(TestTotpManager(), TestEncryptionContextProvider()),
+            customFieldHandler = CustomFieldHandlerImpl(FakeTotpManager(), FakeEncryptionContextProvider()),
             canPerformPaidAction = canPerformPaidAction,
-            clipboardManager = TestClipboardManager(),
-            encryptionContextProvider = TestEncryptionContextProvider(),
+            clipboardManager = FakeClipboardManager(),
+            encryptionContextProvider = FakeEncryptionContextProvider(),
             noteItemFormProcessor = FakeNoteItemFormProcessor()
         ) {}
     }

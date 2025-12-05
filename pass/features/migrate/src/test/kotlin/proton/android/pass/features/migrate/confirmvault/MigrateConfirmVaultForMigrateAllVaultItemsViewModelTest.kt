@@ -28,10 +28,10 @@ import org.junit.Test
 import proton.android.pass.common.api.Some
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.data.api.repositories.BulkMoveToVaultEvent
-import proton.android.pass.data.fakes.repositories.TestBulkMoveToVaultRepository
-import proton.android.pass.data.fakes.usecases.TestGetVaultWithItemCountById
-import proton.android.pass.data.fakes.usecases.TestMigrateItems
-import proton.android.pass.data.fakes.usecases.TestMigrateVault
+import proton.android.pass.data.fakes.repositories.FakeBulkMoveToVaultRepository
+import proton.android.pass.data.fakes.usecases.FakeGetVaultWithItemCountById
+import proton.android.pass.data.fakes.usecases.FakeMigrateItems
+import proton.android.pass.data.fakes.usecases.FakeMigrateVault
 import proton.android.pass.data.fakes.usecases.securelink.FakeObserveHasAssociatedSecureLinks
 import proton.android.pass.data.fakes.usecases.shares.FakeObserveShare
 import proton.android.pass.domain.ShareId
@@ -41,8 +41,8 @@ import proton.android.pass.features.migrate.MigrateModeValue
 import proton.android.pass.features.migrate.MigrateSnackbarMessage
 import proton.android.pass.navigation.api.CommonOptionalNavArgId
 import proton.android.pass.navigation.api.DestinationShareNavArgId
-import proton.android.pass.notifications.fakes.TestSnackbarDispatcher
-import proton.android.pass.preferences.TestInternalSettingsRepository
+import proton.android.pass.notifications.fakes.FakeSnackbarDispatcher
+import proton.android.pass.preferences.FakeInternalSettingsRepository
 import proton.android.pass.test.MainDispatcherRule
 import proton.android.pass.test.TestSavedStateHandle
 import proton.android.pass.test.domain.TestVault
@@ -53,25 +53,25 @@ internal class MigrateConfirmVaultForMigrateAllVaultItemsViewModelTest {
     val dispatcher = MainDispatcherRule()
 
     private lateinit var instance: MigrateConfirmVaultViewModel
-    private lateinit var migrateItem: TestMigrateItems
-    private lateinit var migrateVault: TestMigrateVault
-    private lateinit var getVaultById: TestGetVaultWithItemCountById
-    private lateinit var snackbarDispatcher: TestSnackbarDispatcher
-    private lateinit var bulkMoveToVaultRepository: TestBulkMoveToVaultRepository
+    private lateinit var migrateItem: FakeMigrateItems
+    private lateinit var migrateVault: FakeMigrateVault
+    private lateinit var getVaultById: FakeGetVaultWithItemCountById
+    private lateinit var snackbarDispatcher: FakeSnackbarDispatcher
+    private lateinit var bulkMoveToVaultRepository: FakeBulkMoveToVaultRepository
     private lateinit var observeHasAssociatedSecureLinks: FakeObserveHasAssociatedSecureLinks
     private lateinit var observeShare: FakeObserveShare
-    private lateinit var settingsRepository: TestInternalSettingsRepository
+    private lateinit var settingsRepository: FakeInternalSettingsRepository
 
     @Before
     fun setup() {
-        migrateItem = TestMigrateItems()
-        migrateVault = TestMigrateVault()
-        snackbarDispatcher = TestSnackbarDispatcher()
-        getVaultById = TestGetVaultWithItemCountById()
-        bulkMoveToVaultRepository = TestBulkMoveToVaultRepository()
+        migrateItem = FakeMigrateItems()
+        migrateVault = FakeMigrateVault()
+        snackbarDispatcher = FakeSnackbarDispatcher()
+        getVaultById = FakeGetVaultWithItemCountById()
+        bulkMoveToVaultRepository = FakeBulkMoveToVaultRepository()
         observeHasAssociatedSecureLinks = FakeObserveHasAssociatedSecureLinks()
         observeShare = FakeObserveShare()
-        settingsRepository = TestInternalSettingsRepository()
+        settingsRepository = FakeInternalSettingsRepository()
 
         instance = MigrateConfirmVaultViewModel(
             migrateItems = migrateItem,
@@ -117,7 +117,7 @@ internal class MigrateConfirmVaultForMigrateAllVaultItemsViewModelTest {
         val message = snackbarMessage.value()!!
         assertThat(message).isInstanceOf(MigrateSnackbarMessage.VaultItemsMigrated::class.java)
 
-        val expected = TestMigrateVault.Memory(SHARE_ID, DESTINATION_SHARE_ID)
+        val expected = FakeMigrateVault.Memory(SHARE_ID, DESTINATION_SHARE_ID)
         assertThat(migrateVault.memory()).isEqualTo(listOf(expected))
     }
 
@@ -138,7 +138,7 @@ internal class MigrateConfirmVaultForMigrateAllVaultItemsViewModelTest {
         val message = snackbarMessage.value()!!
         assertThat(message).isInstanceOf(MigrateSnackbarMessage.VaultItemsNotMigrated::class.java)
 
-        val expected = TestMigrateVault.Memory(SHARE_ID, DESTINATION_SHARE_ID)
+        val expected = FakeMigrateVault.Memory(SHARE_ID, DESTINATION_SHARE_ID)
         assertThat(migrateVault.memory()).isEqualTo(listOf(expected))
 
         // No event should have been emitted

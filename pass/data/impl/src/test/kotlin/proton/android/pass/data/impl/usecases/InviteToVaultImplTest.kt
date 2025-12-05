@@ -28,12 +28,12 @@ import me.proton.core.user.domain.entity.UserAddress
 import me.proton.core.user.domain.entity.UserAddressKey
 import org.junit.Before
 import org.junit.Test
-import proton.android.pass.account.fakes.TestAccountManager
+import proton.android.pass.account.fakes.FakeAccountManager
 import proton.android.pass.data.api.repositories.UserTarget
 import proton.android.pass.data.api.usecases.InviteUserMode
-import proton.android.pass.data.fakes.repositories.TestUserInviteRepository
-import proton.android.pass.data.fakes.usecases.TestGetInviteUserMode
-import proton.android.pass.data.impl.fakes.TestShareRepository
+import proton.android.pass.data.fakes.repositories.FakeUserInviteRepository
+import proton.android.pass.data.fakes.usecases.FakeGetInviteUserMode
+import proton.android.pass.data.impl.fakes.FakeShareRepository
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.ShareRole
 import proton.android.pass.test.domain.TestShare
@@ -42,16 +42,16 @@ class InviteToVaultImplTest {
 
     private lateinit var instance: InviteToVaultImpl
 
-    private lateinit var accountManager: TestAccountManager
-    private lateinit var shareRepository: TestShareRepository
-    private lateinit var userInviteRepository: TestUserInviteRepository
-    private lateinit var getInviteUserMode: TestGetInviteUserMode
+    private lateinit var accountManager: FakeAccountManager
+    private lateinit var shareRepository: FakeShareRepository
+    private lateinit var userInviteRepository: FakeUserInviteRepository
+    private lateinit var getInviteUserMode: FakeGetInviteUserMode
 
     @Before
     fun setup() {
-        accountManager = TestAccountManager()
-        getInviteUserMode = TestGetInviteUserMode()
-        shareRepository = TestShareRepository().apply {
+        accountManager = FakeAccountManager()
+        getInviteUserMode = FakeGetInviteUserMode()
+        shareRepository = FakeShareRepository().apply {
             val share = TestShare.Vault.create(
                 id = SHARE_ID,
                 shareRole = ShareRole.Admin
@@ -59,7 +59,7 @@ class InviteToVaultImplTest {
             setGetByIdResult(Result.success(share))
         }
 
-        userInviteRepository = TestUserInviteRepository()
+        userInviteRepository = FakeUserInviteRepository()
 
         instance = InviteToVaultImpl(
             accountManager = accountManager,
@@ -96,7 +96,7 @@ class InviteToVaultImplTest {
         assertThat(newUsersCalls).isEmpty()
 
         val refreshShareMemory = shareRepository.refreshShareMemory()
-        val expectedRefreshSharePayload = TestShareRepository.RefreshSharePayload(
+        val expectedRefreshSharePayload = FakeShareRepository.RefreshSharePayload(
             userId = UserId(USER_ID),
             shareId = ShareId(SHARE_ID)
         )
@@ -171,7 +171,7 @@ class InviteToVaultImplTest {
         assertThat(res.isSuccess).isTrue()
 
         val refreshShareMemory = shareRepository.refreshShareMemory()
-        val expectedRefreshSharePayload = TestShareRepository.RefreshSharePayload(
+        val expectedRefreshSharePayload = FakeShareRepository.RefreshSharePayload(
             userId = UserId(USER_ID),
             shareId = ShareId(SHARE_ID)
         )

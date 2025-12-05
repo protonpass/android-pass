@@ -22,41 +22,41 @@ import com.google.common.truth.Truth.assertThat
 import kotlinx.collections.immutable.persistentListOf
 import org.junit.Before
 import org.junit.Test
-import proton.android.pass.commonui.fakes.TestSavedStateHandleProvider
+import proton.android.pass.commonui.fakes.FakeSavedStateHandleProvider
 import proton.android.pass.data.api.usecases.VaultMember
-import proton.android.pass.data.fakes.usecases.TestCanShareShare
-import proton.android.pass.data.fakes.usecases.TestConfirmNewUserInvite
-import proton.android.pass.data.fakes.usecases.TestGetUserPlan
-import proton.android.pass.data.fakes.usecases.TestGetVaultMembers
-import proton.android.pass.data.fakes.usecases.TestObserveVaultWithItemCountById
+import proton.android.pass.data.fakes.usecases.FakeCanShareShare
+import proton.android.pass.data.fakes.usecases.FakeConfirmNewUserInvite
+import proton.android.pass.data.fakes.usecases.FakeGetUserPlan
+import proton.android.pass.data.fakes.usecases.FakeGetVaultMembers
+import proton.android.pass.data.fakes.usecases.FakeObserveVaultWithItemCountById
 import proton.android.pass.domain.InviteId
 import proton.android.pass.domain.NewUserInviteId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.ShareRole
 import proton.android.pass.navigation.api.CommonNavArgId
-import proton.android.pass.notifications.fakes.TestSnackbarDispatcher
-import proton.android.pass.preferences.TestFeatureFlagsPreferenceRepository
+import proton.android.pass.notifications.fakes.FakeSnackbarDispatcher
+import proton.android.pass.preferences.FakeFeatureFlagsPreferenceRepository
 
 internal class ManageVaultViewModelTest {
 
     private lateinit var instance: ManageVaultViewModel
 
-    private lateinit var confirmNewUserInvite: TestConfirmNewUserInvite
+    private lateinit var confirmNewUserInvite: FakeConfirmNewUserInvite
 
     @Before
     fun setup() {
-        confirmNewUserInvite = TestConfirmNewUserInvite()
+        confirmNewUserInvite = FakeConfirmNewUserInvite()
         instance = ManageVaultViewModel(
-            observeVaultById = TestObserveVaultWithItemCountById(),
-            getVaultMembers = TestGetVaultMembers(),
-            canShareShare = TestCanShareShare(),
-            savedStateHandleProvider = TestSavedStateHandleProvider().apply {
+            observeVaultById = FakeObserveVaultWithItemCountById(),
+            getVaultMembers = FakeGetVaultMembers(),
+            canShareShare = FakeCanShareShare(),
+            savedStateHandleProvider = FakeSavedStateHandleProvider().apply {
                 get()[CommonNavArgId.ShareId.key] = SHARE_ID
             },
-            snackbarDispatcher = TestSnackbarDispatcher(),
+            snackbarDispatcher = FakeSnackbarDispatcher(),
             confirmNewUserInvite = confirmNewUserInvite,
-            getUserPlan = TestGetUserPlan(),
-            featureFlagsPreferencesRepository = TestFeatureFlagsPreferenceRepository()
+            getUserPlan = FakeGetUserPlan(),
+            featureFlagsPreferencesRepository = FakeFeatureFlagsPreferenceRepository()
         )
     }
 

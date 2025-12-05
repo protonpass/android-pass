@@ -25,10 +25,10 @@ import kotlinx.datetime.Clock
 import me.proton.core.domain.entity.UserId
 import org.junit.Before
 import proton.android.pass.data.fakes.repositories.FakeInAppMessagesRepository
-import proton.android.pass.data.fakes.usecases.TestObserveCurrentUser
+import proton.android.pass.data.fakes.usecases.FakeObserveCurrentUser
 import proton.android.pass.domain.inappmessages.InAppMessageStatus
 import proton.android.pass.preferences.LastTimeUserHasSeenIAMPreference
-import proton.android.pass.preferences.TestInternalSettingsRepository
+import proton.android.pass.preferences.FakeInternalSettingsRepository
 import proton.android.pass.test.domain.TestInAppMessage
 import proton.android.pass.test.domain.TestUser
 import kotlin.test.Test
@@ -38,20 +38,20 @@ import kotlin.time.Duration.Companion.minutes
 internal class ObserveDeliverableBannerInAppMessagesImplTest {
 
     private lateinit var instance: ObserveDeliverableBannerInAppMessagesImpl
-    private lateinit var observeCurrentUser: TestObserveCurrentUser
+    private lateinit var observeCurrentUser: FakeObserveCurrentUser
     private lateinit var inAppMessagesRepository: FakeInAppMessagesRepository
-    private lateinit var internalSettingsRepository: TestInternalSettingsRepository
+    private lateinit var internalSettingsRepository: FakeInternalSettingsRepository
     private lateinit var clock: Clock
     private lateinit var userId: UserId
 
     @Before
     fun setup() {
         userId = UserId("test-user")
-        observeCurrentUser = TestObserveCurrentUser().apply {
+        observeCurrentUser = FakeObserveCurrentUser().apply {
             sendUser(TestUser.create())
         }
         inAppMessagesRepository = FakeInAppMessagesRepository()
-        internalSettingsRepository = TestInternalSettingsRepository()
+        internalSettingsRepository = FakeInternalSettingsRepository()
         clock = Clock.System
         instance = ObserveDeliverableBannerInAppMessagesImpl(
             observeCurrentUser = observeCurrentUser,

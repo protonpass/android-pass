@@ -25,15 +25,15 @@ import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import proton.android.pass.commonui.fakes.TestSavedStateHandleProvider
-import proton.android.pass.data.fakes.usecases.TestTransferVaultOwnership
+import proton.android.pass.commonui.fakes.FakeSavedStateHandleProvider
+import proton.android.pass.data.fakes.usecases.FakeTransferVaultOwnership
 import proton.android.pass.domain.ShareId
 import proton.android.pass.features.sharing.SharingSnackbarMessage
 import proton.android.pass.features.sharing.manage.bottomsheet.MemberEmailArg
 import proton.android.pass.features.sharing.manage.bottomsheet.MemberShareIdArg
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.navigation.api.NavParamEncoder
-import proton.android.pass.notifications.fakes.TestSnackbarDispatcher
+import proton.android.pass.notifications.fakes.FakeSnackbarDispatcher
 import proton.android.pass.test.MainDispatcherRule
 
 class TransferOwnershipViewModelTest {
@@ -43,17 +43,17 @@ class TransferOwnershipViewModelTest {
 
     private lateinit var instance: TransferOwnershipViewModel
 
-    private lateinit var snackbarDispatcher: TestSnackbarDispatcher
-    private lateinit var transferVaultOwnership: TestTransferVaultOwnership
+    private lateinit var snackbarDispatcher: FakeSnackbarDispatcher
+    private lateinit var transferVaultOwnership: FakeTransferVaultOwnership
 
     @Before
     fun setup() {
-        snackbarDispatcher = TestSnackbarDispatcher()
-        transferVaultOwnership = TestTransferVaultOwnership()
+        snackbarDispatcher = FakeSnackbarDispatcher()
+        transferVaultOwnership = FakeTransferVaultOwnership()
         instance = TransferOwnershipViewModel(
             snackbarDispatcher = snackbarDispatcher,
             transferVaultOwnership = transferVaultOwnership,
-            savedState = TestSavedStateHandleProvider().apply {
+            savedState = FakeSavedStateHandleProvider().apply {
                 get()[CommonNavArgId.ShareId.key] = SHARE_ID
                 get()[MemberShareIdArg.key] = MEMBER_SHARE_ID
                 get()[MemberEmailArg.key] = MEMBER_EMAIL
@@ -79,7 +79,7 @@ class TransferOwnershipViewModelTest {
         }
 
         val memory = transferVaultOwnership.getMemory()
-        val expected = TestTransferVaultOwnership.Payload(
+        val expected = FakeTransferVaultOwnership.Payload(
             shareId = ShareId(SHARE_ID),
             memberShareId = ShareId(MEMBER_SHARE_ID)
         )

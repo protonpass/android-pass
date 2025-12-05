@@ -30,8 +30,8 @@ import proton.android.pass.inappreview.api.InAppReviewTriggerMetrics
 abstract class FakesInAppReviewModule {
 
     @Binds
-    abstract fun bindInAppReviewTriggerMetrics(impl: TestInAppReviewTriggerMetrics): InAppReviewTriggerMetrics
+    abstract fun bindInAppReviewTriggerMetrics(impl: FakeInAppReviewTriggerMetrics): InAppReviewTriggerMetrics
 
     @Binds
-    abstract fun bindInAppReviewManager(impl: TestInAppReviewManager): InAppReviewManager
+    abstract fun bindInAppReviewManager(impl: FakeInAppReviewManager): InAppReviewManager
 }

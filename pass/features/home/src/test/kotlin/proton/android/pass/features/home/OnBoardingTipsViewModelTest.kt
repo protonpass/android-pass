@@ -25,12 +25,12 @@ import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import proton.android.pass.appconfig.fakes.TestAppConfig
+import proton.android.pass.appconfig.fakes.FakeAppConfig
 import proton.android.pass.autofill.api.AutofillStatus
 import proton.android.pass.autofill.api.AutofillSupportedStatus
-import proton.android.pass.autofill.fakes.TestAutofillManager
+import proton.android.pass.autofill.fakes.FakeAutofillManager
 import proton.android.pass.common.api.some
-import proton.android.pass.data.fakes.usecases.TestObserveInvites
+import proton.android.pass.data.fakes.usecases.FakeObserveInvites
 import proton.android.pass.data.fakes.usecases.simplelogin.FakeObserveSimpleLoginSyncStatus
 import proton.android.pass.domain.simplelogin.SimpleLoginSyncStatus
 import proton.android.pass.features.home.onboardingtips.OnBoardingTipPage.Autofill
@@ -38,11 +38,11 @@ import proton.android.pass.features.home.onboardingtips.OnBoardingTipPage.Invite
 import proton.android.pass.features.home.onboardingtips.OnBoardingTipPage.NotificationPermission
 import proton.android.pass.features.home.onboardingtips.OnBoardingTipsUiState
 import proton.android.pass.features.home.onboardingtips.OnBoardingTipsViewModel
-import proton.android.pass.notifications.fakes.TestNotificationManager
+import proton.android.pass.notifications.fakes.FakeNotificationManager
 import proton.android.pass.preferences.HasDismissedAutofillBanner
 import proton.android.pass.preferences.HasDismissedNotificationBanner
 import proton.android.pass.preferences.HasDismissedSLSyncBanner
-import proton.android.pass.preferences.TestPreferenceRepository
+import proton.android.pass.preferences.FakePreferenceRepository
 import proton.android.pass.test.MainDispatcherRule
 import proton.android.pass.test.domain.TestPendingInvite
 import proton.android.pass.test.domain.TestVault
@@ -53,20 +53,20 @@ class OnBoardingTipsViewModelTest {
     val dispatcherRule = MainDispatcherRule()
 
     private lateinit var viewModel: OnBoardingTipsViewModel
-    private lateinit var preferenceRepository: TestPreferenceRepository
-    private lateinit var autofillManager: TestAutofillManager
-    private lateinit var observeInvites: TestObserveInvites
-    private lateinit var notificationManager: TestNotificationManager
-    private lateinit var appConfig: TestAppConfig
+    private lateinit var preferenceRepository: FakePreferenceRepository
+    private lateinit var autofillManager: FakeAutofillManager
+    private lateinit var observeInvites: FakeObserveInvites
+    private lateinit var notificationManager: FakeNotificationManager
+    private lateinit var appConfig: FakeAppConfig
     private lateinit var observeSimpleLoginSyncStatus: FakeObserveSimpleLoginSyncStatus
 
     @Before
     fun setUp() {
-        preferenceRepository = TestPreferenceRepository()
-        autofillManager = TestAutofillManager()
-        observeInvites = TestObserveInvites()
-        notificationManager = TestNotificationManager()
-        appConfig = TestAppConfig()
+        preferenceRepository = FakePreferenceRepository()
+        autofillManager = FakeAutofillManager()
+        observeInvites = FakeObserveInvites()
+        notificationManager = FakeNotificationManager()
+        appConfig = FakeAppConfig()
         observeSimpleLoginSyncStatus = FakeObserveSimpleLoginSyncStatus()
         viewModel = OnBoardingTipsViewModel(
             autofillManager = autofillManager,

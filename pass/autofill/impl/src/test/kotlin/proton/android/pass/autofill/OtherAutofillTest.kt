@@ -20,7 +20,7 @@ package proton.android.pass.autofill
 
 import org.junit.Test
 import proton.android.pass.autofill.entities.AutofillItem
-import proton.android.pass.crypto.fakes.context.TestEncryptionContext
+import proton.android.pass.crypto.fakes.context.FakeEncryptionContext
 
 class OtherAutofillTest : BaseAutofillTest() {
 
@@ -65,7 +65,7 @@ class OtherAutofillTest : BaseAutofillTest() {
         shareId = "123",
         username = ExpectedAutofill.USERNAME.value,
         email = ExpectedAutofill.EMAIL.value,
-        password = TestEncryptionContext.encrypt(ExpectedAutofill.PASSWORD.value),
+        password = FakeEncryptionContext.encrypt(ExpectedAutofill.PASSWORD.value),
         totp = null,
         shouldLinkPackageName = false
     )

@@ -26,8 +26,8 @@ import me.proton.core.user.domain.entity.AddressId
 import org.junit.Before
 import org.junit.Test
 import proton.android.pass.data.api.usecases.breach.CustomEmailSuggestion
-import proton.android.pass.data.fakes.usecases.TestObserveCurrentUser
-import proton.android.pass.data.fakes.usecases.TestObserveItems
+import proton.android.pass.data.fakes.usecases.FakeObserveCurrentUser
+import proton.android.pass.data.fakes.usecases.FakeObserveItems
 import proton.android.pass.data.fakes.usecases.breach.FakeObserveBreachProtonEmails
 import proton.android.pass.data.impl.usecases.breach.ObserveCustomEmailSuggestionsImpl
 import proton.android.pass.domain.breach.BreachProtonEmail
@@ -38,14 +38,14 @@ internal class ObserveCustomEmailSuggestionsImplTest {
 
     private lateinit var instance: ObserveCustomEmailSuggestionsImpl
 
-    private lateinit var observeCurrentUser: TestObserveCurrentUser
-    private lateinit var observeItems: TestObserveItems
+    private lateinit var observeCurrentUser: FakeObserveCurrentUser
+    private lateinit var observeItems: FakeObserveItems
     private lateinit var observeBreachProtonEmails: FakeObserveBreachProtonEmails
 
     @Before
     fun setup() {
-        observeItems = TestObserveItems()
-        observeCurrentUser = TestObserveCurrentUser()
+        observeItems = FakeObserveItems()
+        observeCurrentUser = FakeObserveCurrentUser()
         observeBreachProtonEmails = FakeObserveBreachProtonEmails()
         instance = ObserveCustomEmailSuggestionsImpl(
             observeCurrentUser = observeCurrentUser,

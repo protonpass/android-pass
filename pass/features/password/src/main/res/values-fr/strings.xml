@@ -34,7 +34,7 @@
   <string name="password_history_description">Les mots de passe générés seront conservés pendant une période de 2 semaines.</string>
   <string name="password_history_today">Aujourd\'hui, %s</string>
   <string name="password_history_yesterday">Hier, %s</string>
-  <string name="password_history_before_yesterday">There are %d days, %s</string>
+  <string name="password_history_before_yesterday">Il y a %d jours, %s</string>
   <string name="password_history_clear_history">Effacer l\'historique</string>
   <string name="password_history_remove_from_history">Retirer de l’historique</string>
 </resources>

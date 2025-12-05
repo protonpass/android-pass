@@ -2,6 +2,8 @@
 <resources>
   <string name="on_boarding_autofill_content">Proton Pass があなたの代わりにログイン情報を入力します。入力やコピー＆ペーストは必要ありません。</string>
   <string name="on_boarding_autofill_title">アプリに即座にログイン</string>
+  <string name="on_boarding_autofill_content_v2">Proton Pass がお客様の代わりにログイン情報を入力します。コピー＆ペーストや入力は必要ありません。</string>
+  <string name="on_boarding_autofill_title_v2">自動入力をお楽しみください</string>
   <string name="on_boarding_autofill_button">Proton Passによる自動入力</string>
   <string name="on_boarding_fingerprint_content">Proton Passを指紋でロック解除するように設定すると、あなただけがアクセスできるようになります。</string>
   <string name="on_boarding_fingerprint_title">最も機密性の高いデータを保護</string>
@@ -11,6 +13,7 @@
   <string name="on_boarding_last_page_button">Proton Pass を使用開始</string>
   <string name="on_boarding_skip">今はしない</string>
   <string name="on_boarding_tutorial">短い動画で Proton Pass の使い方を確認</string>
+  <string name="on_boarding_tutorial_v2">Proton Pass の利用方法</string>
   <string name="on_boarding_pending_invite_content">セキュリティ上の理由から、アクセスを確認する必要があります。</string>
   <string name="on_boarding_pending_invite_title">共有データへのアクセス待ち</string>
   <string name="on_boarding_pending_invite_button">Proton Pass の詳細</string>

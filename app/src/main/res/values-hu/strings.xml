@@ -10,6 +10,6 @@
   <string name="no_session_found">Nem található munkamenet</string>
   <string name="auth_with_extra_password_failed">A hitelesítés extra jelszóval nem sikerült</string>
   <string name="auth_only_1_proton_account_failed">Csak 1 ingyenes Proton-fiók engedélyezett.</string>
-  <string name="warning_dialog_reload_app_after_purchase_description">You are about to be redirected to our website. If you purchase a plan, please restart the app.</string>
-  <string name="warning_dialog_reload_app_after_purchase_reminder">Don\'t remind me again</string>
+  <string name="warning_dialog_reload_app_after_purchase_description">Hamarosan átirányítjuk a weboldalunkra. Ha előfizetést vásárol, indítsa újra az alkalmazást.</string>
+  <string name="warning_dialog_reload_app_after_purchase_reminder">Ne emlékeztessen újra</string>
 </resources>

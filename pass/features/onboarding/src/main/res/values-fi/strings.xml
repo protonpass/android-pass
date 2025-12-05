@@ -2,6 +2,8 @@
 <resources>
   <string name="on_boarding_autofill_content">Anna Proton Passin täyttää kirjautumistiedot puolestasi. Ei tunnusten naputtelua, tai kopiointia ja liittämistä.</string>
   <string name="on_boarding_autofill_title">Kirjaudu sovelluksiin välittömästi</string>
+  <string name="on_boarding_autofill_content_v2">Proton Pass täyttää kirjautumistiedot puolestasi. Naputtelua tai kopiointia ja liittämistä ei tarvita.</string>
+  <string name="on_boarding_autofill_title_v2">Nauti automaattitäytön taiasta</string>
   <string name="on_boarding_autofill_button">Automaattitäytä Proton Passilla</string>
   <string name="on_boarding_fingerprint_content">Aseta Proton Passin lukitus avautumaan sormenjäljelläsi, jotta vain sinä voit käyttää sitä.</string>
   <string name="on_boarding_fingerprint_title">Suojaa arkaluonteisimmat tietosi</string>
@@ -11,6 +13,7 @@
   <string name="on_boarding_last_page_button">Aloita Proton Passin käyttö</string>
   <string name="on_boarding_skip">Ei nyt</string>
   <string name="on_boarding_tutorial">Katso lyhyt video Proton Passin käytöstä</string>
+  <string name="on_boarding_tutorial_v2">Opi käyttämään Proton Passia</string>
   <string name="on_boarding_pending_invite_content">Turvallisuussyistä pääsysi on vahvistettava.</string>
   <string name="on_boarding_pending_invite_title">Odotetaan jaettujen tietojen käyttöoikeutta</string>
   <string name="on_boarding_pending_invite_button">Lue lisää Proton Passista</string>

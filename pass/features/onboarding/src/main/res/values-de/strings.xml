@@ -2,6 +2,8 @@
 <resources>
   <string name="on_boarding_autofill_content">Lass Proton Pass die Anmeldedaten für dich ausfüllen. Kein Tippen oder Einfügen erforderlich.</string>
   <string name="on_boarding_autofill_title">Melde dich sofort bei Apps an</string>
+  <string name="on_boarding_autofill_content_v2">Lass Proton Pass deine Anmeldedaten für dich ausfüllen. Kein Tippen oder Kopieren und Einfügen erforderlich.</string>
+  <string name="on_boarding_autofill_title_v2">Genieße die Magie von AutoFill</string>
   <string name="on_boarding_autofill_button">Mit Proton Pass automatisch ausfüllen</string>
   <string name="on_boarding_fingerprint_content">Stelle Proton Pass so ein, dass es mit deinem Fingerabdruck entsperrt wird, damit nur du Zugang hast.</string>
   <string name="on_boarding_fingerprint_title">Schütze deine sensibelsten Daten</string>
@@ -11,6 +13,7 @@
   <string name="on_boarding_last_page_button">Beginne Proton Pass zu nutzen</string>
   <string name="on_boarding_skip">Nicht jetzt</string>
   <string name="on_boarding_tutorial">Sieh dir ein kurzes Video zur Verwendung von Proton Pass an</string>
+  <string name="on_boarding_tutorial_v2">Erfahre, wie du Proton Pass nutzen kannst</string>
   <string name="on_boarding_pending_invite_content">Aus Sicherheitsgründen muss dein Zugriff bestätigt werden.</string>
   <string name="on_boarding_pending_invite_title">Ausstehender Zugriff auf die geteilten Daten</string>
   <string name="on_boarding_pending_invite_button">Erfahre mehr über Proton Pass</string>

@@ -29,12 +29,12 @@
   <string name="password_mode_random">Véletlenszerű jelszó</string>
   <string name="password_mode_icon">Jelszó mód ikon</string>
   <string name="password_words_separator_icon">Jelszó szóelválasztó</string>
-  <string name="password_history_title">Generated passwords</string>
-  <string name="password_history_empty">No history</string>
-  <string name="password_history_description">Generated passwords will be stored for a period of 2 weeks.</string>
-  <string name="password_history_today">Today, %s</string>
-  <string name="password_history_yesterday">Yesterday, %s</string>
-  <string name="password_history_before_yesterday">There are %d days, %s</string>
-  <string name="password_history_clear_history">Clear history</string>
-  <string name="password_history_remove_from_history">Remove from history</string>
+  <string name="password_history_title">Létrehozott jelszavak</string>
+  <string name="password_history_empty">Nincsenek előzmények</string>
+  <string name="password_history_description">A létrehozott jelszavakat 2 hétig tároljuk.</string>
+  <string name="password_history_today">Ma, %s</string>
+  <string name="password_history_yesterday">Tegnap, %s</string>
+  <string name="password_history_before_yesterday">%d napja, %s</string>
+  <string name="password_history_clear_history">Előzmények törlése</string>
+  <string name="password_history_remove_from_history">Eltávolítás az előzményekből</string>
 </resources>

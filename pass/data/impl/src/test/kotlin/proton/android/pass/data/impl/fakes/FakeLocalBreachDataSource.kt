@@ -26,14 +26,15 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onStart
 import me.proton.core.domain.entity.UserId
 import me.proton.core.user.domain.entity.AddressId
-import proton.android.pass.data.impl.local.LocalBreachesDataSource
+import proton.android.pass.data.impl.local.LocalBreachDataSource
 import proton.android.pass.domain.breach.AliasEmailId
 import proton.android.pass.domain.breach.BreachCustomEmail
+import proton.android.pass.domain.breach.BreachDomainPeek
 import proton.android.pass.domain.breach.BreachEmail
 import proton.android.pass.domain.breach.BreachProtonEmail
 import proton.android.pass.domain.breach.CustomEmailId
 
-class FakeLocalBreachesDataSource : LocalBreachesDataSource {
+class FakeLocalBreachDataSource : LocalBreachDataSource {
 
     private val customEmailsCache = mutableMapOf<Pair<UserId, CustomEmailId>, BreachCustomEmail>()
     private val customEmailsFlow = MutableSharedFlow<Map<Pair<UserId, CustomEmailId>, BreachCustomEmail>>(
@@ -65,6 +66,12 @@ class FakeLocalBreachesDataSource : LocalBreachesDataSource {
         onBufferOverflow = BufferOverflow.DROP_OLDEST
     )
 
+    private val breachDomainPeeksCache = mutableMapOf<UserId, List<BreachDomainPeek>>()
+    private val breachDomainPeeksFlow = MutableSharedFlow<Map<UserId, List<BreachDomainPeek>>>(
+        replay = 1,
+        onBufferOverflow = BufferOverflow.DROP_OLDEST
+    )
+
     override suspend fun getCustomEmail(userId: UserId, customEmailId: CustomEmailId): BreachCustomEmail =
         customEmailsCache[Pair(userId, customEmailId)]
             ?: throw IllegalArgumentException("There's no custom email with id: ${customEmailId.id}")
@@ -81,6 +88,16 @@ class FakeLocalBreachesDataSource : LocalBreachesDataSource {
 
     override fun observeCustomEmails(): Flow<List<BreachCustomEmail>> = customEmailsFlow
         .map { customEmailsMap -> customEmailsMap.values.toList() }
+
+    override fun observeCustomEmails(userId: UserId): Flow<List<BreachCustomEmail>> {
+        return customEmailsFlow
+            .onStart { emitCustomEmailsChanges() }
+            .map { customEmailsMap ->
+                customEmailsMap.filter { (key, _) ->
+                    key.first == userId
+                }.values.toList()
+            }
+    }
 
     override suspend fun upsertCustomEmails(userId: UserId, customEmails: List<BreachCustomEmail>) {
         customEmails.forEach { customEmail ->
@@ -122,6 +139,7 @@ class FakeLocalBreachesDataSource : LocalBreachesDataSource {
     }
 
     override fun observeProtonEmails(userId: UserId): Flow<List<BreachProtonEmail>> = protonEmailsFlow
+        .onStart { emitProtonEmailsChanges() }
         .map { protonEmailsMap ->
             protonEmailsMap.filter { (key, _) ->
                 key.first == userId
@@ -165,17 +183,28 @@ class FakeLocalBreachesDataSource : LocalBreachesDataSource {
         emitAliasEmailBreachesChanges()
     }
 
-    override fun getAliasEmailBreaches(userId: UserId, aliasEmailId: AliasEmailId): List<BreachEmail> =
+    override suspend fun getAliasEmailBreaches(userId: UserId, aliasEmailId: AliasEmailId): List<BreachEmail> =
         aliasEmailBreachesCache[Pair(userId, aliasEmailId)]
             ?: throw IllegalArgumentException("There's no alias email with id: ${aliasEmailId.itemId}")
 
-    override fun getCustomEmailBreaches(userId: UserId, customEmailId: CustomEmailId): List<BreachEmail> =
+    override suspend fun getCustomEmailBreaches(userId: UserId, customEmailId: CustomEmailId): List<BreachEmail> =
         customEmailBreachesCache[Pair(userId, customEmailId)]
             ?: throw IllegalArgumentException("There's no custom email with id: ${customEmailId.id}")
 
-    override fun getProtonEmailBreaches(userId: UserId, id: AddressId): List<BreachEmail> =
+    override suspend fun getProtonEmailBreaches(userId: UserId, id: AddressId): List<BreachEmail> =
         protonEmailBreachesCache[Pair(userId, id)]
             ?: throw IllegalArgumentException("There's no proton email with id: ${id.id}")
+
+    override fun observeBreachDomainPeeks(userId: UserId): Flow<List<BreachDomainPeek>> {
+        return breachDomainPeeksFlow
+            .onStart { emitBreachDomainPeeksChanges() }
+            .map { domainPeeksMap -> domainPeeksMap[userId].orEmpty() }
+    }
+
+    override suspend fun upsertBreachDomainPeeks(userId: UserId, domainPeeks: List<BreachDomainPeek>) {
+        breachDomainPeeksCache[userId] = domainPeeks
+        emitBreachDomainPeeksChanges()
+    }
 
     private fun emitCustomEmailsChanges() {
         customEmailsFlow.tryEmit(customEmailsCache)
@@ -197,12 +226,16 @@ class FakeLocalBreachesDataSource : LocalBreachesDataSource {
         aliasEmailBreachesFlow.tryEmit(aliasEmailBreachesCache)
     }
 
+    private fun emitBreachDomainPeeksChanges() {
+        breachDomainPeeksFlow.tryEmit(breachDomainPeeksCache)
+    }
+
     fun clear() {
         customEmailsCache.clear()
         customEmailBreachesCache.clear()
         protonEmailsCache.clear()
         protonEmailBreachesCache.clear()
         aliasEmailBreachesCache.clear()
+        breachDomainPeeksCache.clear()
     }
 }
-

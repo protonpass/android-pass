@@ -76,6 +76,7 @@ internal class BreachRepositoryImplTest {
         observeItemById = FakeObserveItemById()
         observeItems = FakeObserveItems()
         internalSettings = FakeInternalSettingsRepository()
+        observeItems.emitValue(emptyList())
 
         instance = BreachRepositoryImpl(
             localUserAccessDataDataSource = localUserAccessDataDataSource,

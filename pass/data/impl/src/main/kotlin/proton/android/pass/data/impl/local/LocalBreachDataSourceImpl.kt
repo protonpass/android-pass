@@ -19,6 +19,7 @@
 package proton.android.pass.data.impl.local
 
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import me.proton.core.domain.entity.UserId
@@ -53,7 +54,6 @@ class LocalBreachDataSourceImpl @Inject constructor(
             .map { it ?: throw IllegalArgumentException("There's no custom email with id: ${customEmailId.id}") }
 
     override suspend fun upsertCustomEmail(userId: UserId, customEmail: BreachCustomEmail) {
-        // Check if there's an existing entry with the same email address
         val existingEmails = database.breachCustomEmailDao()
             .observeByUserId(userId.id)
             .first()
@@ -63,7 +63,6 @@ class LocalBreachDataSourceImpl @Inject constructor(
                 database.breachCustomEmailDao().delete(userId.id, existing.customEmailId)
             }
 
-        // Upsert the custom email
         database.breachCustomEmailDao().upsert(customEmail.toEntity(userId.id))
     }
 
@@ -88,9 +87,9 @@ class LocalBreachDataSourceImpl @Inject constructor(
     override fun observeCustomEmailBreaches(userId: UserId, customEmailId: CustomEmailId): Flow<List<BreachEmail>> =
         database.breachEmailDao()
             .observeByOwner(
-                userId.id,
-                BreachEmailEntity.Companion.EMAIL_TYPE_CUSTOM,
-                customEmailId.id
+                userId = userId.id,
+                emailType = BreachEmailEntity.EMAIL_TYPE_CUSTOM,
+                emailOwnerId = customEmailId.id
             )
             .map { entities -> entities.map { it.toDomain() } }
 
@@ -99,13 +98,11 @@ class LocalBreachDataSourceImpl @Inject constructor(
         customEmailId: CustomEmailId,
         customEmailBreaches: List<BreachEmail>
     ) {
-        // Delete existing breaches for this custom email
         database.breachEmailDao().deleteByOwner(
-            userId.id,
-            BreachEmailEntity.Companion.EMAIL_TYPE_CUSTOM,
-            customEmailId.id
+            userId = userId.id,
+            emailType = BreachEmailEntity.EMAIL_TYPE_CUSTOM,
+            emailOwnerId = customEmailId.id
         )
-        // Insert new breaches
         if (customEmailBreaches.isNotEmpty()) {
             database.breachEmailDao().upsertAll(
                 customEmailBreaches.map { it.toEntity(userId.id) }
@@ -143,9 +140,9 @@ class LocalBreachDataSourceImpl @Inject constructor(
     override fun observeProtonEmailBreaches(userId: UserId, addressId: AddressId): Flow<List<BreachEmail>> =
         database.breachEmailDao()
             .observeByOwner(
-                userId.id,
-                BreachEmailEntity.Companion.EMAIL_TYPE_PROTON,
-                addressId.id
+                userId = userId.id,
+                emailType = BreachEmailEntity.EMAIL_TYPE_PROTON,
+                emailOwnerId = addressId.id
             )
             .map { entities -> entities.map { it.toDomain() } }
 
@@ -154,13 +151,11 @@ class LocalBreachDataSourceImpl @Inject constructor(
         addressId: AddressId,
         protonEmailBreaches: List<BreachEmail>
     ) {
-        // Delete existing breaches for this proton email
         database.breachEmailDao().deleteByOwner(
-            userId.id,
-            BreachEmailEntity.Companion.EMAIL_TYPE_PROTON,
-            addressId.id
+            userId = userId.id,
+            emailType = BreachEmailEntity.EMAIL_TYPE_PROTON,
+            emailOwnerId = addressId.id
         )
-        // Insert new breaches
         if (protonEmailBreaches.isNotEmpty()) {
             database.breachEmailDao().upsertAll(
                 protonEmailBreaches.map { it.toEntity(userId.id) }
@@ -173,18 +168,20 @@ class LocalBreachDataSourceImpl @Inject constructor(
             .observeByAlias(userId.id, aliasEmailId.shareId.id, aliasEmailId.itemId.id)
             .map { entities -> entities.map { it.toDomain() } }
 
+    override fun observeAllAliasEmailBreaches(userId: UserId): Flow<List<BreachEmail>> = database.breachEmailDao()
+        .observeAllAliasEmailBreaches(userId.id)
+        .map { entities -> entities.map { it.toDomain() } }
+
     override suspend fun upsertAliasEmailBreaches(
         userId: UserId,
         aliasEmailId: AliasEmailId,
         aliasEmailBreaches: List<BreachEmail>
     ) {
-        // Delete existing breaches for this alias email
         database.breachEmailDao().deleteByAlias(
-            userId.id,
-            aliasEmailId.shareId.id,
-            aliasEmailId.itemId.id
+            userId = userId.id,
+            shareId = aliasEmailId.shareId.id,
+            itemId = aliasEmailId.itemId.id
         )
-        // Insert new breaches
         if (aliasEmailBreaches.isNotEmpty()) {
             database.breachEmailDao().upsertAll(
                 aliasEmailBreaches.map { it.toEntity(userId.id) }
@@ -201,9 +198,9 @@ class LocalBreachDataSourceImpl @Inject constructor(
     override suspend fun getCustomEmailBreaches(userId: UserId, customEmailId: CustomEmailId): List<BreachEmail> =
         database.breachEmailDao()
             .observeByOwner(
-                userId.id,
-                BreachEmailEntity.Companion.EMAIL_TYPE_CUSTOM,
-                customEmailId.id
+                userId = userId.id,
+                emailType = BreachEmailEntity.EMAIL_TYPE_CUSTOM,
+                emailOwnerId = customEmailId.id
             )
             .first()
             .map { it.toDomain() }
@@ -211,9 +208,9 @@ class LocalBreachDataSourceImpl @Inject constructor(
     override suspend fun getProtonEmailBreaches(userId: UserId, id: AddressId): List<BreachEmail> =
         database.breachEmailDao()
             .observeByOwner(
-                userId.id,
-                BreachEmailEntity.Companion.EMAIL_TYPE_PROTON,
-                id.id
+                userId = userId.id,
+                emailType = BreachEmailEntity.EMAIL_TYPE_PROTON,
+                emailOwnerId = id.id
             )
             .first()
             .map { it.toDomain() }
@@ -224,14 +221,19 @@ class LocalBreachDataSourceImpl @Inject constructor(
 
     override suspend fun upsertBreachDomainPeeks(userId: UserId, domainPeeks: List<BreachDomainPeek>) {
         database.inTransaction(name = "upsertBreachDomainPeeks") {
-            // Delete existing domain peeks for this user
             database.breachDomainPeekDao().deleteAllForUser(userId.id)
-            // Insert new domain peeks
             if (domainPeeks.isNotEmpty()) {
                 database.breachDomainPeekDao().upsertAll(
                     domainPeeks.map { it.toEntity(userId.id) }
                 )
             }
         }
+    }
+
+    override fun observeTotalBreachCount(userId: UserId): Flow<Int> = combine(
+        database.breachCustomEmailDao().observeTotalBreachCount(userId.id),
+        database.breachProtonEmailDao().observeTotalBreachCount(userId.id)
+    ) { customCount, protonCount ->
+        (customCount ?: 0) + (protonCount ?: 0)
     }
 }

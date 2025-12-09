@@ -68,5 +68,13 @@ abstract class BreachProtonEmailDao : BaseDao<BreachProtonEmailEntity>() {
         """
     )
     abstract suspend fun deleteAllForUser(userId: String)
+
+    @Query(
+        """
+        SELECT SUM(${BreachProtonEmailEntity.Columns.BREACH_COUNTER}) FROM ${BreachProtonEmailEntity.TABLE}
+        WHERE ${BreachProtonEmailEntity.Columns.USER_ID} = :userId
+        """
+    )
+    abstract fun observeTotalBreachCount(userId: String): Flow<Int?>
 }
 

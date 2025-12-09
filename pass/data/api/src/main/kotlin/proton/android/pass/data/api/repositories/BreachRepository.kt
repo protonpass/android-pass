@@ -29,6 +29,7 @@ import proton.android.pass.domain.breach.BreachEmailReport
 import proton.android.pass.domain.breach.BreachProtonEmail
 import proton.android.pass.domain.breach.CustomEmailId
 
+@Suppress("ComplexInterface", "TooManyFunctions")
 interface BreachRepository {
 
     fun observeAllBreaches(userId: UserId): Flow<Breach>
@@ -78,4 +79,6 @@ interface BreachRepository {
     )
 
     suspend fun refreshBreaches(userId: UserId)
+
+    fun observeHasBreaches(userId: UserId): Flow<Boolean>
 }

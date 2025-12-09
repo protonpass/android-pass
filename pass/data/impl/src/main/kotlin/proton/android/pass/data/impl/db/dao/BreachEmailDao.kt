@@ -59,6 +59,16 @@ abstract class BreachEmailDao : BaseDao<BreachEmailEntity>() {
         itemId: String
     ): Flow<List<BreachEmailEntity>>
 
+    @Query(
+        """
+        SELECT * FROM ${BreachEmailEntity.TABLE}
+        WHERE ${BreachEmailEntity.Columns.USER_ID} = :userId
+        AND ${BreachEmailEntity.Columns.EMAIL_TYPE} = ${BreachEmailEntity.EMAIL_TYPE_ALIAS}
+        ORDER BY ${BreachEmailEntity.Columns.PUBLISHED_AT} DESC
+        """
+    )
+    abstract fun observeAllAliasEmailBreaches(userId: String): Flow<List<BreachEmailEntity>>
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     abstract suspend fun upsertAll(entities: List<BreachEmailEntity>)
 

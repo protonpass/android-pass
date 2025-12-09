@@ -75,5 +75,13 @@ abstract class BreachCustomEmailDao : BaseDao<BreachCustomEmailEntity>() {
         """
     )
     abstract fun observeAll(): Flow<List<BreachCustomEmailEntity>>
+
+    @Query(
+        """
+        SELECT SUM(${BreachCustomEmailEntity.Columns.BREACH_COUNT}) FROM ${BreachCustomEmailEntity.TABLE}
+        WHERE ${BreachCustomEmailEntity.Columns.USER_ID} = :userId
+        """
+    )
+    abstract fun observeTotalBreachCount(userId: String): Flow<Int?>
 }
 

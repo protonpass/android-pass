@@ -21,9 +21,8 @@ package proton.android.pass.data.impl.repositories
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.flatMapLatest
-import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import kotlinx.datetime.Instant
 import me.proton.core.domain.entity.UserId
@@ -42,6 +41,7 @@ import proton.android.pass.data.impl.responses.BreachCustomEmailApiModel
 import proton.android.pass.data.impl.responses.BreachDomainPeekApiModel
 import proton.android.pass.data.impl.responses.BreachProtonEmailApiModel
 import proton.android.pass.data.impl.responses.BreachesResponse
+import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemFlag
 import proton.android.pass.domain.ItemState
 import proton.android.pass.domain.ItemType
@@ -52,6 +52,7 @@ import proton.android.pass.domain.breach.BreachAlias
 import proton.android.pass.domain.breach.BreachCustomEmail
 import proton.android.pass.domain.breach.BreachDomainPeek
 import proton.android.pass.domain.breach.BreachEmail
+import proton.android.pass.domain.breach.BreachEmailId
 import proton.android.pass.domain.breach.BreachEmailReport
 import proton.android.pass.domain.breach.BreachProtonEmail
 import proton.android.pass.domain.breach.CustomEmailId
@@ -94,55 +95,32 @@ class BreachRepositoryImpl @Inject constructor(
     }
         .distinctUntilChanged()
 
-    private fun observeBreachedAliases(userId: UserId): Flow<List<BreachAlias>> = observeItems(
-        selection = ShareSelection.AllShares,
-        itemState = ItemState.Active,
-        filter = ItemTypeFilter.Aliases,
-        userId = userId,
-        itemFlags = mapOf(ItemFlag.EmailBreached to true, ItemFlag.SkipHealthCheck to false),
-        includeHidden = false
-    )
-        .flatMapLatest { aliases ->
-            if (aliases.isEmpty()) {
-                return@flatMapLatest flowOf(emptyList())
-            }
+    private fun observeBreachedAliases(userId: UserId): Flow<List<BreachAlias>> =
+        observeBreachedAliasItems(userId) { alias, breachEmails ->
+            if (breachEmails.isEmpty()) {
+                null
+            } else {
+                val aliasItem = alias.itemType as? ItemType.Alias
+                    ?: return@observeBreachedAliasItems null
 
-            val aliasFlows = aliases.map { alias ->
-                val aliasEmailId = AliasEmailId(
+                val lastBreachTime = breachEmails.firstOrNull()?.let { breachEmail ->
+                    runCatching {
+                        Instant.parse(breachEmail.publishedAt)
+                    }.getOrElse { Instant.DISTANT_PAST }
+                        .epochSeconds
+                } ?: 0L
+
+                BreachAlias(
                     shareId = alias.shareId,
-                    itemId = alias.id
+                    itemId = alias.id,
+                    email = aliasItem.aliasEmail,
+                    breachCounter = breachEmails.filter { !it.isResolved }.size,
+                    flags = alias.itemFlags.value,
+                    lastBreachTime = lastBreachTime
                 )
-                localBreachDataSource.observeAliasEmailBreaches(userId, aliasEmailId)
-                    .map { breachEmails ->
-                        if (breachEmails.isEmpty()) {
-                            null
-                        } else {
-                            val aliasItem = alias.itemType as? ItemType.Alias
-                                ?: return@map null
-
-                            val lastBreachTime = breachEmails.firstOrNull()?.let { breachEmail ->
-                                runCatching {
-                                    Instant.parse(breachEmail.publishedAt)
-                                }.getOrElse { Instant.DISTANT_PAST }
-                                    .epochSeconds
-                            } ?: 0L
-
-                            BreachAlias(
-                                shareId = alias.shareId,
-                                itemId = alias.id,
-                                email = aliasItem.aliasEmail,
-                                breachCounter = breachEmails.filter { !it.isResolved }.size,
-                                flags = alias.itemFlags.value,
-                                lastBreachTime = lastBreachTime
-                            )
-                        }
-                    }
-            }
-
-            combine(*aliasFlows.toTypedArray()) { results ->
-                results.filterNotNull()
             }
         }
+            .map { results -> results.filterNotNull() }
 
     override suspend fun refreshBreaches(userId: UserId) {
         PassLogger.i(TAG, "Refreshing breaches for $userId")
@@ -395,6 +373,47 @@ class BreachRepositoryImpl @Inject constructor(
         flags = this.flags,
         lastBreachTime = this.lastBreachTime
     )
+
+    override fun observeHasBreaches(userId: UserId): Flow<Boolean> = combine(
+        localBreachDataSource.observeTotalBreachCount(userId),
+        observeBreachedAliasesCount(userId)
+    ) { customAndProtonCount, aliasCount ->
+        customAndProtonCount + aliasCount > 0
+    }
+
+    private fun observeBreachedAliasesCount(userId: UserId): Flow<Int> =
+        observeBreachedAliasItems(userId) { _, breachEmails ->
+            breachEmails.filter { !it.isResolved }.size
+        }
+            .map { results -> results.sum() }
+
+    private inline fun <T> observeBreachedAliasItems(
+        userId: UserId,
+        crossinline transform: (Item, List<BreachEmail>) -> T
+    ): Flow<List<T>> = combine(
+        observeItems(
+            selection = ShareSelection.AllShares,
+            itemState = ItemState.Active,
+            filter = ItemTypeFilter.Aliases,
+            userId = userId,
+            itemFlags = mapOf(ItemFlag.EmailBreached to true, ItemFlag.SkipHealthCheck to false),
+            includeHidden = false
+        ),
+        localBreachDataSource.observeAllAliasEmailBreaches(userId)
+    ) { aliases, allBreaches ->
+        if (aliases.isEmpty()) return@combine emptyList()
+
+        val breachesByAlias = allBreaches.groupBy { breach ->
+            val emailId = breach.emailId as BreachEmailId.Alias
+            emailId.shareId to emailId.itemId
+        }
+
+        aliases.map { alias ->
+            val aliasKey = alias.shareId to alias.id
+            val breachEmails = breachesByAlias[aliasKey] ?: emptyList()
+            transform(alias, breachEmails)
+        }
+    }
 
     private companion object {
         private const val TAG = "BreachRepositoryImpl"

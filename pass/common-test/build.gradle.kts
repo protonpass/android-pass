@@ -50,6 +50,8 @@ dependencies {
     implementation(libs.dagger.hilt.android)
     kapt(libs.dagger.hilt.android.compiler)
     kapt(libs.androidx.hilt.compiler)
+
+    implementation(platform(libs.androidx.compose.bom))
     api(libs.bundles.test.android) {
         exclude(module = "protobuf-lite")
     }

@@ -28,6 +28,7 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.take
 import me.proton.core.user.domain.entity.AddressId
 import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.asLoadingResult
@@ -112,7 +113,7 @@ class SecurityCenterBreachDetailViewModel @Inject constructor(
             id = type.customEmailId
         )
         is BreachEmailId.Proton -> observeBreachesForProtonEmail(addressId = type.addressId)
-    }.map {
+    }.take(1).map {
         it.firstOrNull { breach -> breach.emailId.id == selectedBreachId }
     }.asLoadingResult().distinctUntilChanged()
 

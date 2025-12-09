@@ -27,6 +27,7 @@ import org.junit.Before
 import org.junit.Test
 import proton.android.pass.data.api.errors.CustomEmailDoesNotExistException
 import proton.android.pass.data.api.errors.ItemNotFoundError
+import proton.android.pass.data.api.usecases.ItemTypeFilter
 import proton.android.pass.data.fakes.usecases.FakeObserveItemById
 import proton.android.pass.data.fakes.usecases.FakeObserveItems
 import proton.android.pass.data.impl.fakes.FakeLocalBreachDataSource
@@ -44,9 +45,14 @@ import proton.android.pass.data.impl.responses.Breaches
 import proton.android.pass.data.impl.responses.BreachesDetailsApiModel
 import proton.android.pass.data.impl.responses.BreachesResponse
 import proton.android.pass.data.impl.responses.MonitorStateResponse
+import proton.android.pass.data.impl.responses.Source
 import proton.android.pass.data.impl.responses.UpdateGlobalMonitorStateResponse
+import proton.android.pass.domain.ItemFlag
 import proton.android.pass.domain.ItemId
+import proton.android.pass.domain.ItemState
+import proton.android.pass.domain.ItemType
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.ShareSelection
 import proton.android.pass.domain.breach.AliasEmailId
 import proton.android.pass.domain.breach.BreachEmail
 import proton.android.pass.domain.breach.BreachEmailId
@@ -144,6 +150,108 @@ internal class BreachRepositoryImplTest {
 
         val visibility = internalSettings.getDarkWebAliasMessageVisibility().first()
         assertThat(visibility).isEqualTo(IsDarkWebAliasMessageDismissedPreference.Show)
+    }
+
+    @Test
+    fun `refreshBreaches stores breach details for all breached emails`() = runTest {
+        val customEmailId = CustomEmailId("custom-id")
+        val addressId = AddressId("address-id")
+        val shareId = ShareId("share-id")
+        val itemId = ItemId("item-id")
+        val aliasItem = ItemTestFactory.createAlias(
+            shareId = shareId,
+            itemId = itemId,
+            alias = "alias@example.com",
+            flags = ItemFlag.EmailBreached.value
+        )
+
+        observeItems.emit(
+            FakeObserveItems.Params(
+                selection = ShareSelection.AllShares,
+                itemState = ItemState.Active,
+                filter = ItemTypeFilter.Aliases,
+                userId = TEST_USER_ID,
+                itemFlags = mapOf(ItemFlag.EmailBreached to true, ItemFlag.SkipHealthCheck to false)
+            ),
+            listOf(aliasItem)
+        )
+
+        remoteBreachDataSource.setGetAllBreachesResult(
+            Result.success(
+                createBreachesResponse(
+                    emailsCount = 3,
+                    customEmails = listOf(
+                        createBreachCustomEmailResponse(
+                            email = "custom@example.com",
+                            id = customEmailId.id,
+                            breachCounter = 1
+                        )
+                    ),
+                    protonEmails = listOf(
+                        createBreachProtonEmailResponse(
+                            email = "proton@proton.me",
+                            addressId = addressId.id,
+                            breachCounter = 1
+                        )
+                    )
+                )
+            )
+        )
+        remoteBreachDataSource.setGetBreachesForCustomEmailResult(
+            Result.success(
+                createBreachEmailsResponse(
+                    breaches = listOf(
+                        createBreachEntry(
+                            id = "custom-breach",
+                            email = "custom@example.com"
+                        )
+                    )
+                )
+            )
+        )
+        remoteBreachDataSource.setGetBreachesForProtonEmailResult(
+            Result.success(
+                createBreachEmailsResponse(
+                    breaches = listOf(
+                        createBreachEntry(
+                            id = "proton-breach",
+                            email = "proton@proton.me"
+                        )
+                    )
+                )
+            )
+        )
+        remoteBreachDataSource.setGetBreachesForAliasEmailResult(
+            Result.success(
+                createBreachEmailsResponse(
+                    breaches = listOf(
+                        createBreachEntry(
+                            id = "alias-breach",
+                            email = (aliasItem.itemType as ItemType.Alias).aliasEmail
+                        )
+                    )
+                )
+            )
+        )
+
+        instance.refreshBreaches(TEST_USER_ID)
+
+        val storedCustomBreaches = localBreachesDataSource.observeCustomEmailBreaches(
+            TEST_USER_ID,
+            customEmailId
+        ).first()
+        val storedProtonBreaches = localBreachesDataSource.observeProtonEmailBreaches(
+            TEST_USER_ID,
+            addressId
+        ).first()
+        val storedAliasBreaches = localBreachesDataSource.observeAliasEmailBreaches(
+            TEST_USER_ID,
+            AliasEmailId(shareId, itemId)
+        ).first()
+
+        assertThat(storedCustomBreaches).hasSize(1)
+        assertThat(storedProtonBreaches).hasSize(1)
+        assertThat(storedAliasBreaches).hasSize(1)
     }
 
     // ========== observeCustomEmail Tests ==========
@@ -751,6 +859,31 @@ internal class BreachRepositoryImplTest {
             count = breaches.size,
             breaches = breaches
         )
+    )
+
+    private fun createBreachEntry(
+        id: String,
+        email: String,
+        resolvedState: Int = 0,
+        severity: Double = 1.0
+    ): Breaches = Breaches(
+        id = id,
+        email = email,
+        resolvedState = resolvedState,
+        severity = severity,
+        name = "Breach $id",
+        createdAt = "2024-01-01T00:00:00Z",
+        publishedAt = "2024-01-02T00:00:00Z",
+        source = Source(
+            isAggregated = false,
+            domain = "example.com",
+            category = null,
+            country = null
+        ),
+        size = null,
+        exposedData = emptyList(),
+        passwordLastChars = null,
+        actions = emptyList()
     )
 
     private fun createBreachEmail(

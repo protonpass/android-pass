@@ -63,6 +63,10 @@ android {
 }
 
 dependencies {
+    implementation(platform(libs.androidx.compose.bom))
+    implementation(libs.bundles.core.compose)
+    debugImplementation(libs.bundles.core.compose.debug)
+
     implementation(projects.pass.commonPresentation.api)
     implementation(projects.pass.common.api)
     implementation(projects.pass.commonUi.api)
@@ -71,9 +75,6 @@ dependencies {
     implementation(projects.pass.data.api)
     implementation(projects.pass.navigation.api)
 
-    implementation(libs.androidx.compose.material)
-    implementation(libs.androidx.compose.runtime)
-    implementation(libs.androidx.compose.ui)
     implementation(libs.androidx.lifecycle.runtime.compose)
     implementation(libs.androidx.hilt.navigation.compose)
     implementation(libs.core.accountManager.domain)
@@ -87,11 +88,6 @@ dependencies {
 
     debugImplementation(libs.showkase)
     kspDebug(libs.showkaseProcessor)
-
-    implementation(libs.androidx.compose.uiToolingPreview)
-
-    debugImplementation(libs.androidx.compose.uiTooling)
-    debugImplementation(libs.androidx.compose.uiTestManifest)
 
     kaptAndroidTest(libs.dagger.hilt.android.compiler)
     androidTestImplementation(libs.kotlinTest)

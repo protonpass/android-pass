@@ -47,10 +47,10 @@ androidComponents.beforeVariants { variant ->
 }
 
 dependencies {
+    implementation(platform(libs.androidx.compose.bom))
+    implementation(libs.bundles.core.compose)
+    debugImplementation(libs.bundles.core.compose.debug)
 
-    implementation(libs.androidx.compose.material)
-    implementation(libs.androidx.compose.runtime)
-    implementation(libs.androidx.compose.ui)
     implementation(libs.androidx.lifecycle.runtime.compose)
     implementation(libs.androidx.hilt.navigation.compose)
     implementation(libs.core.presentation)
@@ -68,10 +68,6 @@ dependencies {
     implementation(projects.pass.log.api)
     implementation(projects.pass.notifications.api)
     implementation(projects.pass.preferences.api)
-
-    debugImplementation(libs.androidx.compose.uiTooling)
-    implementation(libs.androidx.compose.uiToolingPreview)
-    debugImplementation(libs.androidx.compose.uiTestManifest)
 
     implementation(libs.dagger.hilt.android)
     kapt(libs.dagger.hilt.android.compiler)

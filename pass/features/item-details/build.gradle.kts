@@ -80,11 +80,12 @@ dependencies {
     implementation(projects.pass.securityCenter.api)
     implementation(projects.pass.totp.api)
     implementation(projects.pass.telemetry.api)
-
     implementation(libs.androidsvg)
-    implementation(libs.androidx.compose.material)
-    implementation(libs.androidx.compose.runtime)
-    implementation(libs.androidx.compose.ui)
+
+    implementation(platform(libs.androidx.compose.bom))
+    implementation(libs.bundles.core.compose)
+    debugImplementation(libs.bundles.core.compose.debug)
+
     implementation(libs.androidx.lifecycle.runtime.compose)
     implementation(libs.androidx.hilt.navigation.compose)
     implementation(libs.core.presentation)
@@ -97,9 +98,6 @@ dependencies {
     kapt(libs.androidx.hilt.compiler)
     debugImplementation(libs.showkase)
     kspDebug(libs.showkaseProcessor)
-    implementation(libs.androidx.compose.uiToolingPreview)
-    debugImplementation(libs.androidx.compose.uiTooling)
-    debugImplementation(libs.androidx.compose.uiTestManifest)
 
     testImplementation(libs.turbine)
     testImplementation(libs.truth)

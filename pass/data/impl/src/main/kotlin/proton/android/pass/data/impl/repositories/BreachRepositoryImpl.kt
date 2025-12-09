@@ -39,7 +39,9 @@ import proton.android.pass.data.impl.local.LocalUserAccessDataDataSource
 import proton.android.pass.data.impl.remote.RemoteBreachDataSource
 import proton.android.pass.data.impl.responses.BreachCustomEmailApiModel
 import proton.android.pass.data.impl.responses.BreachDomainPeekApiModel
+import proton.android.pass.data.impl.responses.BreachEmailsResponse
 import proton.android.pass.data.impl.responses.BreachProtonEmailApiModel
+import proton.android.pass.data.impl.responses.Breaches
 import proton.android.pass.data.impl.responses.BreachesResponse
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemFlag
@@ -49,11 +51,14 @@ import proton.android.pass.domain.ShareSelection
 import proton.android.pass.domain.breach.AliasEmailId
 import proton.android.pass.domain.breach.Breach
 import proton.android.pass.domain.breach.BreachAlias
+import proton.android.pass.domain.breach.BreachAction
+import proton.android.pass.domain.breach.BreachActionCode
 import proton.android.pass.domain.breach.BreachCustomEmail
 import proton.android.pass.domain.breach.BreachDomainPeek
 import proton.android.pass.domain.breach.BreachEmail
 import proton.android.pass.domain.breach.BreachEmailId
 import proton.android.pass.domain.breach.BreachEmailReport
+import proton.android.pass.domain.breach.BreachId
 import proton.android.pass.domain.breach.BreachProtonEmail
 import proton.android.pass.domain.breach.CustomEmailId
 import proton.android.pass.domain.breach.EmailFlag
@@ -133,20 +138,18 @@ class BreachRepositoryImpl @Inject constructor(
         val breach = breachesResponse.toDomain()
         PassLogger.d(TAG, "Mapped domain peeks count: ${breach.breachedDomainPeeks.size}")
 
-        // Store domain peeks from API response
         localBreachDataSource.upsertBreachDomainPeeks(userId, breach.breachedDomainPeeks)
         PassLogger.d(
             TAG,
             "Stored ${breach.breachedDomainPeeks.size} domain peeks from API for $userId"
         )
 
-        // Store custom emails
         localBreachDataSource.upsertCustomEmails(userId, breach.breachedCustomEmails)
 
-        // Store proton emails
         localBreachDataSource.upsertProtonEmails(userId, breach.breachedProtonEmails)
 
-        // Handle dark web alias message visibility
+        refreshBreachEmails(userId, breach)
+
         safeRunCatching {
             val showMessage = internalSettings.getDarkWebAliasMessageVisibility().first()
             if (showMessage == Show && !breachesResponse.breaches.hasCustomDomains) {
@@ -387,6 +390,86 @@ class BreachRepositoryImpl @Inject constructor(
         }
             .map { results -> results.sum() }
 
+    private suspend fun refreshBreachEmails(userId: UserId, breach: Breach) {
+        refreshCustomEmailBreaches(userId, breach.breachedCustomEmails)
+        refreshProtonEmailBreaches(userId, breach.breachedProtonEmails)
+        refreshAliasEmailBreaches(userId)
+    }
+
+    private suspend fun refreshCustomEmailBreaches(
+        userId: UserId,
+        breachedCustomEmails: List<BreachCustomEmail>
+    ) {
+        breachedCustomEmails.forEach { customEmail ->
+            remoteBreachDataSource.getBreachesForCustomEmail(userId, customEmail.id)
+                .toDomain { breachDto ->
+                    BreachEmailId.Custom(
+                        id = BreachId(breachDto.id),
+                        customEmailId = customEmail.id
+                    )
+                }
+                .also { customEmailBreaches ->
+                    localBreachDataSource.upsertCustomEmailBreaches(
+                        userId = userId,
+                        customEmailId = customEmail.id,
+                        customEmailBreaches = customEmailBreaches
+                    )
+                }
+        }
+    }
+
+    private suspend fun refreshProtonEmailBreaches(
+        userId: UserId,
+        breachedProtonEmails: List<BreachProtonEmail>
+    ) {
+        breachedProtonEmails.forEach { protonEmail ->
+            remoteBreachDataSource.getBreachesForProtonEmail(userId, protonEmail.addressId)
+                .toDomain { breachDto ->
+                    BreachEmailId.Proton(
+                        id = BreachId(breachDto.id),
+                        addressId = protonEmail.addressId
+                    )
+                }
+                .also { protonEmailBreaches ->
+                    localBreachDataSource.upsertProtonEmailBreaches(
+                        userId = userId,
+                        addressId = protonEmail.addressId,
+                        protonEmailBreaches = protonEmailBreaches
+                    )
+                }
+        }
+    }
+
+    private suspend fun refreshAliasEmailBreaches(userId: UserId) {
+        val breachedAliases = observeItems(
+            selection = ShareSelection.AllShares,
+            itemState = ItemState.Active,
+            filter = ItemTypeFilter.Aliases,
+            userId = userId,
+            itemFlags = mapOf(ItemFlag.EmailBreached to true, ItemFlag.SkipHealthCheck to false),
+            includeHidden = false
+        ).first()
+
+        breachedAliases.forEach { alias ->
+            val aliasEmailId = AliasEmailId(alias.shareId, alias.id)
+            remoteBreachDataSource.getBreachesForAliasEmail(userId, alias.shareId, alias.id)
+                .toDomain { breachDto ->
+                    BreachEmailId.Alias(
+                        id = BreachId(breachDto.id),
+                        shareId = alias.shareId,
+                        itemId = alias.id
+                    )
+                }
+                .also { aliasEmailBreaches ->
+                    localBreachDataSource.upsertAliasEmailBreaches(
+                        userId = userId,
+                        aliasEmailId = aliasEmailId,
+                        aliasEmailBreaches = aliasEmailBreaches
+                    )
+                }
+        }
+    }
+
     private inline fun <T> observeBreachedAliasItems(
         userId: UserId,
         crossinline transform: (Item, List<BreachEmail>) -> T
@@ -412,6 +495,30 @@ class BreachRepositoryImpl @Inject constructor(
             val aliasKey = alias.shareId to alias.id
             val breachEmails = breachesByAlias[aliasKey] ?: emptyList()
             transform(alias, breachEmails)
+        }
+    }
+
+    private fun BreachEmailsResponse.toDomain(createId: (Breaches) -> BreachEmailId) = with(this.breachEmails) {
+        breaches.map { breach ->
+            BreachEmail(
+                emailId = createId(breach),
+                email = breach.email,
+                severity = breach.severity,
+                name = breach.name,
+                createdAt = breach.createdAt,
+                publishedAt = breach.publishedAt,
+                size = breach.size,
+                passwordLastChars = breach.passwordLastChars,
+                exposedData = breach.exposedData.map { it.name },
+                isResolved = breach.resolvedState == BREACH_EMAIL_RESOLVED_STATE_VALUE,
+                actions = breach.actions.map {
+                    BreachAction(
+                        name = it.name,
+                        code = BreachActionCode.from(it.code),
+                        url = it.urls?.firstOrNull()
+                    )
+                }
+            )
         }
     }
 

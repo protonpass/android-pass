@@ -87,12 +87,11 @@ dependencies {
     implementation(libs.androidx.activity)
     implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.annotation)
-    implementation(libs.androidx.compose.foundation)
-    implementation(libs.androidx.compose.foundationLayout)
-    implementation(libs.androidx.compose.foundationLayout)
-    implementation(libs.androidx.compose.material)
-    implementation(libs.androidx.compose.runtime)
+    implementation(libs.material)
+
+    implementation(platform(libs.androidx.compose.bom))
+    implementation(libs.bundles.core.compose)
+
     implementation(libs.androidx.credentials)
     implementation(libs.core.presentation.compose)
-    implementation(libs.material)
 }

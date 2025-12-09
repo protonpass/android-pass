@@ -23,23 +23,29 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import me.proton.core.domain.entity.UserId
+import proton.android.pass.appconfig.api.AppConfig
+import proton.android.pass.appconfig.api.BuildFlavor.Companion.supportPayment
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
+import proton.android.pass.common.api.asLoadingResult
 import proton.android.pass.common.api.combineN
+import proton.android.pass.common.api.getOrNull
+import proton.android.pass.common.api.map
 import proton.android.pass.data.api.repositories.ItemSyncStatusRepository
 import proton.android.pass.data.api.repositories.SyncMode
+import proton.android.pass.data.api.usecases.GetUserPlan
 import proton.android.pass.data.api.usecases.ObserveConfirmedInviteToken
 import proton.android.pass.data.api.usecases.inappmessages.ObserveDeliverableModalInAppMessages
 import proton.android.pass.data.api.usecases.inappmessages.ObserveDeliverablePromoInAppMessages
 import proton.android.pass.domain.InviteToken
 import proton.android.pass.domain.inappmessages.InAppMessage
 import proton.android.pass.domain.inappmessages.InAppMessageId
-import proton.android.pass.preferences.FeatureFlag
-import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import proton.android.pass.preferences.HasCompletedOnBoarding
 import proton.android.pass.preferences.UserPreferencesRepository
 import javax.inject.Inject
@@ -51,7 +57,8 @@ class RouterViewModel @Inject constructor(
     itemSyncStatusRepository: ItemSyncStatusRepository,
     observeDeliverableModalInAppMessages: ObserveDeliverableModalInAppMessages,
     observeDeliverablePromoInAppMessages: ObserveDeliverablePromoInAppMessages,
-    featureFlagsPreferencesRepository: FeatureFlagsPreferencesRepository
+    appConfig: AppConfig,
+    getUserPlan: GetUserPlan
 ) : ViewModel() {
 
 
@@ -70,8 +77,12 @@ class RouterViewModel @Inject constructor(
             itemSyncStatusRepository.observeMode().distinctUntilChanged(),
             observeDeliverableModalInAppMessages(),
             observeDeliverablePromoInAppMessages(),
-            featureFlagsPreferencesRepository
-                .get<Boolean>(FeatureFlag.PASS_MOBILE_ON_BOARDING_V2),
+            flowOf(appConfig.flavor.supportPayment()),
+            getUserPlan()
+                .asLoadingResult()
+                .flatMapLatest {
+                    flowOf(it.map { plan -> plan.isFreePlan }.getOrNull() != false)
+                },
             ::routerEvent
         )
             .distinctUntilChanged()
@@ -92,24 +103,32 @@ class RouterViewModel @Inject constructor(
         syncMode: SyncMode,
         modalOption: InAppMessage.Modal?,
         promoOption: InAppMessage.Promo?,
-        isOnBoardingV2Enabled: Boolean
+        supportPayment: Boolean,
+        isFreePlan: Boolean
     ): RouterEvent = when {
         inviteTokenOption is Some -> RouterEvent.ConfirmedInvite(inviteTokenOption.value)
         hasCompletedOnBoarding == HasCompletedOnBoarding.NotCompleted -> {
-            RouterEvent.OnBoarding(isOnBoardingV2Enabled)
+            RouterEvent.OnBoarding(
+                supportPayment = supportPayment,
+                isFreePlan = isFreePlan
+            )
         }
+
         syncMode == SyncMode.ShownToUser -> RouterEvent.SyncDialog
         promoOption != null ->
             RouterEvent.InAppPromo(promoOption.userId, promoOption.id)
+
         modalOption != null ->
             RouterEvent.InAppModal(modalOption.userId, modalOption.id)
+
         else -> RouterEvent.None
     }
 }
 
 sealed interface RouterEvent {
 
-    data class OnBoarding(val isOnBoardingV2Enabled: Boolean = false) : RouterEvent
+    data class OnBoarding(val supportPayment: Boolean = false, val isFreePlan: Boolean = false) :
+        RouterEvent
 
     data object SyncDialog : RouterEvent
 

@@ -21,6 +21,7 @@ package proton.android.pass.data.impl.fakes
 import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onStart
@@ -174,6 +175,17 @@ class FakeLocalBreachDataSource : LocalBreachDataSource {
                 aliasEmailBreachesMap.getOrElse(Pair(userId, aliasEmailId)) { emptyList() }
             }
 
+    override fun observeAllAliasEmailBreaches(userId: UserId): Flow<List<BreachEmail>> {
+        return aliasEmailBreachesFlow
+            .onStart { emitAliasEmailBreachesChanges() }
+            .map { aliasEmailBreachesMap ->
+                aliasEmailBreachesMap
+                    .filter { (key, _) -> key.first == userId }
+                    .values
+                    .flatten()
+            }
+    }
+
     override suspend fun upsertAliasEmailBreaches(
         userId: UserId,
         aliasEmailId: AliasEmailId,
@@ -204,6 +216,23 @@ class FakeLocalBreachDataSource : LocalBreachDataSource {
     override suspend fun upsertBreachDomainPeeks(userId: UserId, domainPeeks: List<BreachDomainPeek>) {
         breachDomainPeeksCache[userId] = domainPeeks
         emitBreachDomainPeeksChanges()
+    }
+
+    override fun observeTotalBreachCount(userId: UserId): Flow<Int> {
+        return combine(
+            customEmailsFlow.onStart { emitCustomEmailsChanges() },
+            protonEmailsFlow.onStart { emitProtonEmailsChanges() }
+        ) { customEmailsMap, protonEmailsMap ->
+            val customCount = customEmailsMap
+                .filter { (key, _) -> key.first == userId }
+                .values
+                .sumOf { it.breachCount }
+            val protonCount = protonEmailsMap
+                .filter { (key, _) -> key.first == userId }
+                .values
+                .sumOf { it.breachCounter }
+            customCount + protonCount
+        }
     }
 
     private fun emitCustomEmailsChanges() {

@@ -34,7 +34,7 @@ import proton.android.pass.common.api.asLoadingResult
 import proton.android.pass.commonpresentation.api.bars.bottom.home.presentation.HomeBottomBarState
 import proton.android.pass.commonpresentation.api.bars.bottom.home.presentation.HomeBottomBarViewModel
 import proton.android.pass.data.api.usecases.GetUserPlan
-import proton.android.pass.data.api.usecases.breach.ObserveAllBreachByUserId
+import proton.android.pass.data.api.usecases.breach.ObserveHasBreaches
 import proton.android.pass.preferences.UserPreferencesRepository
 import proton.android.pass.preferences.monitor.MonitorStatusPreference
 import proton.android.pass.securitycenter.api.ObserveSecurityAnalysis
@@ -43,21 +43,21 @@ import javax.inject.Inject
 @HiltViewModel
 class HomeBottomBarViewModelImpl @Inject constructor(
     getUserPlan: GetUserPlan,
-    observeAllBreachByUserId: ObserveAllBreachByUserId,
+    observeHasBreaches: ObserveHasBreaches,
     observeSecurityAnalysis: ObserveSecurityAnalysis,
     userPreferencesRepository: UserPreferencesRepository
 ) : ViewModel(), HomeBottomBarViewModel {
 
     private val monitorStatusFlow: Flow<MonitorStatusPreference> = combine(
-        observeAllBreachByUserId().asLoadingResult(),
+        observeHasBreaches().asLoadingResult(),
         observeSecurityAnalysis()
-    ) { breachLoadingResult, securityAnalysis ->
+    ) { hasBreachesResult, securityAnalysis ->
         when {
-            breachLoadingResult is LoadingResult.Success &&
-                breachLoadingResult.data.hasBreaches -> MonitorStatusPreference.BreachIssues
+            hasBreachesResult is LoadingResult.Success &&
+                hasBreachesResult.data -> MonitorStatusPreference.BreachIssues
 
             securityAnalysis.hasSecurityIssues -> MonitorStatusPreference.VulnerabilityIssues
-            breachLoadingResult is LoadingResult.Success -> MonitorStatusPreference.NoIssues
+            hasBreachesResult is LoadingResult.Success -> MonitorStatusPreference.NoIssues
             else -> userPreferencesRepository.observeMonitorStatusPreference().first()
         }.also(userPreferencesRepository::setMonitorStatusPreference)
     }.onStart {

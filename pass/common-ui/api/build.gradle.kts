@@ -31,14 +31,13 @@ androidComponents.beforeVariants { variant ->
 }
 
 dependencies {
-    implementation(libs.androidx.compose.runtime)
-    implementation(libs.androidx.compose.ui)
+    implementation(platform(libs.androidx.compose.bom))
+    implementation(libs.bundles.core.compose)
+    debugImplementation(libs.bundles.core.compose.debug)
+
     implementation(libs.core.presentation.compose)
     implementation(libs.core.utilKotlin)
     implementation(libs.kotlinx.datetime)
-
-    debugImplementation(libs.androidx.compose.uiTooling)
-    implementation(libs.androidx.compose.uiToolingPreview)
 
     implementation(projects.pass.common.api)
     implementation(projects.pass.commonRust.api)

@@ -34,9 +34,10 @@ androidComponents.beforeVariants { variant ->
 }
 
 dependencies {
-    implementation(libs.androidx.compose.material)
-    implementation(libs.androidx.compose.runtime)
-    implementation(libs.androidx.compose.ui)
+    implementation(platform(libs.androidx.compose.bom))
+    implementation(libs.bundles.core.compose)
+    debugImplementation(libs.bundles.core.compose.debug)
+
     implementation(libs.androidx.hilt.navigation.compose)
     implementation(libs.androidx.lifecycle.runtime.compose)
     implementation(libs.core.utilKotlin)
@@ -44,10 +45,6 @@ dependencies {
     implementation(libs.dagger.hilt.android)
     kapt(libs.dagger.hilt.android.compiler)
     kapt(libs.androidx.hilt.compiler)
-
-    debugImplementation(libs.androidx.compose.uiTooling)
-    implementation(libs.androidx.compose.uiToolingPreview)
-    debugImplementation(libs.androidx.compose.uiTestManifest)
 
     implementation(projects.pass.common.api)
     implementation(projects.pass.log.api)

@@ -62,9 +62,9 @@ android {
 }
 
 dependencies {
-    implementation(libs.androidx.compose.material)
-    implementation(libs.androidx.compose.runtime)
-    implementation(libs.androidx.compose.ui)
+    implementation(platform(libs.androidx.compose.bom))
+    implementation(libs.bundles.core.compose)
+
     implementation(libs.androidx.lifecycle.runtime.compose)
     implementation(libs.androidx.hilt.navigation.compose)
     implementation(libs.core.presentation)

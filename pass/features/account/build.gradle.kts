@@ -44,21 +44,18 @@ android {
 
 dependencies {
     implementation(libs.androidx.lifecycle.runtime.compose)
+
+    implementation(platform(libs.androidx.compose.bom))
+    implementation(libs.bundles.core.compose)
+    debugImplementation(libs.bundles.core.compose.debug)
     implementation(libs.androidx.navigation.compose)
-    implementation(libs.androidx.compose.material)
-    implementation(libs.androidx.compose.foundation)
-    implementation(libs.androidx.compose.ui)
-    implementation(libs.androidx.compose.runtime)
+
     implementation(libs.core.presentation)
     implementation(libs.core.presentation.compose)
     implementation(libs.core.user.domain)
     implementation(libs.core.userSettings.domain)
     implementation(libs.core.payment.domain)
     implementation(libs.kotlinx.collections)
-
-    debugImplementation(libs.androidx.compose.uiTooling)
-    implementation(libs.androidx.compose.uiToolingPreview)
-    debugImplementation(libs.androidx.compose.uiTestManifest)
 
     implementation(libs.androidx.hilt.navigation.compose)
     implementation(libs.dagger.hilt.android)

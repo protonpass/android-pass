@@ -27,7 +27,9 @@ androidComponents.beforeVariants { variant ->
 }
 
 dependencies {
-    implementation(libs.androidx.compose.runtime)
+    implementation(platform(libs.androidx.compose.bom))
+    implementation(libs.bundles.core.compose)
+
     implementation(libs.core.account.domain)
     implementation(libs.core.domain)
     implementation(libs.core.user.domain)

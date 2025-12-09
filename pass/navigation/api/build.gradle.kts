@@ -35,8 +35,10 @@ dependencies {
     implementation(libs.kotlin.reflect)
     implementation(libs.kotlinx.coroutines.core)
     implementation(libs.accompanist.navigation.material)
-    implementation(libs.androidx.compose.material)
-    implementation(libs.androidx.compose.ui)
+
+    implementation(platform(libs.androidx.compose.bom))
+    implementation(libs.bundles.core.compose)
+
     implementation(libs.core.cryptoAndroid)
     implementation(libs.core.cryptoCommon)
     implementation(libs.core.utilKotlin)

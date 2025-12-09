@@ -73,6 +73,8 @@ interface LocalBreachDataSource {
 
     fun observeAliasEmailBreaches(userId: UserId, aliasEmailId: AliasEmailId): Flow<List<BreachEmail>>
 
+    fun observeAllAliasEmailBreaches(userId: UserId): Flow<List<BreachEmail>>
+
     suspend fun upsertAliasEmailBreaches(
         userId: UserId,
         aliasEmailId: AliasEmailId,
@@ -88,6 +90,8 @@ interface LocalBreachDataSource {
     fun observeBreachDomainPeeks(userId: UserId): Flow<List<BreachDomainPeek>>
 
     suspend fun upsertBreachDomainPeeks(userId: UserId, domainPeeks: List<BreachDomainPeek>)
+
+    fun observeTotalBreachCount(userId: UserId): Flow<Int>
 
 }
 

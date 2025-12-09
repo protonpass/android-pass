@@ -25,8 +25,6 @@ data class Breach(
     val breachedProtonEmails: List<BreachProtonEmail>,
     val breachedAliases: List<BreachAlias>
 ) {
-    val hasBreaches: Boolean = breachesCount > 0
-
     val domainPeeks = breachedDomainPeeks + breachedAliases.map {
         BreachDomainPeek(
             breachDomain = it.email,

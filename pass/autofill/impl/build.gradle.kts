@@ -67,11 +67,10 @@ dependencies {
     implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.annotation)
     implementation(libs.androidx.autofill)
-    implementation(libs.androidx.compose.foundation)
-    implementation(libs.androidx.compose.foundationLayout)
-    implementation(libs.androidx.compose.material)
-    implementation(libs.androidx.compose.runtime)
-    implementation(libs.androidx.compose.ui)
+
+    implementation(platform(libs.androidx.compose.bom))
+    implementation(libs.bundles.core.compose)
+
     implementation(libs.androidx.hilt.compiler)
     implementation(libs.androidx.hilt.navigation.compose)
     implementation(libs.androidx.hilt.work)

@@ -62,11 +62,10 @@ dependencies {
     implementation(libs.androidx.activity)
     implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.annotation)
-    implementation(libs.androidx.compose.foundation)
-    implementation(libs.androidx.compose.foundationLayout)
-    implementation(libs.androidx.compose.material)
-    implementation(libs.androidx.compose.material.icons.core)
-    implementation(libs.androidx.compose.runtime)
+
+    implementation(platform(libs.androidx.compose.bom))
+    implementation(libs.bundles.core.compose)
+
     implementation(libs.androidx.hilt.navigation.compose)
     implementation(libs.androidx.lifecycle.runtime.compose)
     implementation(libs.androidx.startup.runtime)
@@ -74,7 +73,6 @@ dependencies {
     implementation(libs.kotlinx.collections)
     implementation(libs.kotlinx.datetime)
     implementation(libs.kotlinx.serialization.json)
-    implementation(libs.material)
     implementation(libs.timber)
 
     implementation(libs.core.presentation)

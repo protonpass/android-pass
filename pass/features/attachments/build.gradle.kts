@@ -47,11 +47,11 @@ androidComponents.beforeVariants { variant ->
 }
 
 dependencies {
+    implementation(platform(libs.androidx.compose.bom))
+    implementation(libs.bundles.core.compose)
+    debugImplementation(libs.bundles.core.compose.debug)
 
     implementation(libs.accompanist.permissions)
-    implementation(libs.androidx.compose.material)
-    implementation(libs.androidx.compose.runtime)
-    implementation(libs.androidx.compose.ui)
     implementation(libs.androidx.hilt.navigation.compose)
     implementation(libs.androidx.lifecycle.runtime.compose)
     implementation(libs.core.presentation)
@@ -61,9 +61,6 @@ dependencies {
     implementation(libs.kotlinx.collections)
     implementation(libs.kotlinx.datetime)
     implementation(projects.pass.appConfig.api)
-
-    debugImplementation(libs.androidx.compose.uiTooling)
-    implementation(libs.androidx.compose.uiToolingPreview)
 
     debugImplementation(libs.showkase)
     kspDebug(libs.showkaseProcessor)

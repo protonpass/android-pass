@@ -33,25 +33,21 @@ androidComponents.beforeVariants { variant ->
 }
 
 dependencies {
+    implementation(platform(libs.androidx.compose.bom))
+    implementation(libs.bundles.core.compose)
+    debugImplementation(libs.bundles.core.compose.debug)
+
     implementation(libs.accompanist.placeholder)
     implementation(libs.accompanist.navigation.material)
     implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.annotation)
-    implementation(libs.androidx.compose.foundation)
-    implementation(libs.androidx.compose.foundationLayout)
-    implementation(libs.androidx.compose.material)
-    implementation(libs.androidx.compose.material.icons.core)
-    implementation(libs.androidx.compose.runtime)
-    implementation(libs.androidx.compose.ui)
+
     implementation(libs.androidx.lifecycle.runtime.compose)
     implementation(libs.coil.compose)
     implementation(libs.core.presentation)
     implementation(libs.core.presentation.compose)
     implementation(libs.kotlinx.collections)
     implementation(libs.kotlinx.datetime)
-
-    debugImplementation(libs.androidx.compose.uiTooling)
-    implementation(libs.androidx.compose.uiToolingPreview)
 
     implementation(projects.pass.common.api)
     implementation(projects.pass.commonPresentation.impl)

@@ -80,8 +80,8 @@ enum class SharingSnackbarMessage(
         id = R.string.sharing_snackbar_invite_free_user_error,
         type = SnackbarType.ERROR
     ),
-    UserAlreadyInviteError(
-        id = R.string.sharing_snackbar_invite_user_already_invited_error,
+    CannotCreateInviteError(
+        id = R.string.sharing_snackbar_cannot_create_invite_error,
         type = SnackbarType.ERROR
     )
 }

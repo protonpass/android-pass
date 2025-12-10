@@ -46,7 +46,7 @@ import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.errors.FreeUserInviteError
 import proton.android.pass.data.api.errors.NewUsersInviteError
-import proton.android.pass.data.api.errors.UserAlreadyInviteError
+import proton.android.pass.data.api.errors.CannotCreateInviteError
 import proton.android.pass.data.api.repositories.BulkInviteRepository
 import proton.android.pass.data.api.repositories.InviteTarget
 import proton.android.pass.data.api.usecases.GetUserPlan
@@ -210,8 +210,8 @@ class SharingSummaryViewModel @Inject constructor(
                     return@onFailure
                 }
 
-                if (error is UserAlreadyInviteError) {
-                    SharingSnackbarMessage.UserAlreadyInviteError
+                if (error is CannotCreateInviteError) {
+                    SharingSnackbarMessage.CannotCreateInviteError
                 } else {
                     SharingSnackbarMessage.InviteSentError
                 }.also { snackbarErrorMessage ->

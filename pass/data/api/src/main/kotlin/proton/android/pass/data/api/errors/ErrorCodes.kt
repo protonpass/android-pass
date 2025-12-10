@@ -28,7 +28,7 @@ object ErrorCodes {
 
     const val RESEND_SHARE_INVITE_LIMIT = 2001
 
-    const val USER_ALREADY_INVITED = 2001
+    const val CANNOT_CREATE_INVITE = 2001
 
     const val EMAIL_ALREADY_IN_USE = 2001
 

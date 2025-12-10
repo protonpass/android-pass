@@ -6,6 +6,12 @@
 
 ### Other
 
+## 1.36.3 (2025-12-10)
+
+### Fixes :bug:
+
+- Autofill with multiaccount
+
 ## 1.36.2 (2025-12-04)
 
 ### Other

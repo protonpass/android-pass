@@ -18,4 +18,4 @@
 
 package proton.android.pass.data.api.errors
 
-class UserAlreadyInviteError(message: String?) : Throwable(message)
+class CannotCreateInviteError(message: String?) : Throwable(message)

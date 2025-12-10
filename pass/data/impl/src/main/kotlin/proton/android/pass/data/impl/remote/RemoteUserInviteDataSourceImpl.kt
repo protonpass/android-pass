@@ -27,7 +27,7 @@ import me.proton.core.network.domain.ApiResult
 import proton.android.pass.data.api.errors.CannotCreateMoreVaultsError
 import proton.android.pass.data.api.errors.ErrorCodes
 import proton.android.pass.data.api.errors.FreeUserInviteError
-import proton.android.pass.data.api.errors.UserAlreadyInviteError
+import proton.android.pass.data.api.errors.CannotCreateInviteError
 import proton.android.pass.data.api.errors.getProtonErrorCode
 import proton.android.pass.data.impl.api.PasswordManagerApi
 import proton.android.pass.data.impl.requests.CreateInvitesRequest
@@ -88,7 +88,7 @@ class RemoteUserInviteDataSourceImpl @Inject constructor(
             }.onFailure { error ->
                 val reason = when (error.getProtonErrorCode()) {
                     ErrorCodes.FREE_USER_INVITED -> FreeUserInviteError(error.message)
-                    ErrorCodes.USER_ALREADY_INVITED -> UserAlreadyInviteError(error.message)
+                    ErrorCodes.CANNOT_CREATE_INVITE -> CannotCreateInviteError(error.message)
                     else -> error
                 }
                 throw reason

@@ -209,10 +209,17 @@ class SyncUserEventsImpl @Inject constructor(
             result
         }
 
+        val refreshBreachesDeferred = async {
+            val result = refreshBreaches(userId)
+            PassLogger.i(TAG, "finished refreshBreaches")
+            result
+        }
+
         awaitAll(
             userInvitesDeferred,
             groupInvitesDeferred,
-            syncPendingAliasesDeferred
+            syncPendingAliasesDeferred,
+            refreshBreachesDeferred
         )
 
         PassLogger.i(TAG, "end full refresh")

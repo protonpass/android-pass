@@ -49,7 +49,7 @@ class GetItemOptionsImpl @Inject constructor(
         itemId: ItemId,
         userId: UserId
     ): Option<List<ItemOption>> = combine(
-        oneShot { getItemById(shareId, itemId) },
+        oneShot { getItemById(shareId = shareId, itemId = itemId) },
         oneShot { getVaultByShareId(userId, shareId).first() }
     ) { item, vault ->
         when (val itemType = item.itemType) {

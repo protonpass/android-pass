@@ -231,7 +231,7 @@ class UpdateCustomItemViewModel @Inject constructor(
     private fun onLoadInitialData() {
         viewModelScope.launch {
             updateLoadingState(IsLoadingState.Loading)
-            runCatching { getItemById(navShareId, navItemId) }
+            runCatching { getItemById(shareId = navShareId, itemId = navItemId) }
                 .onSuccess { onItemReceived(it) }
                 .onFailure {
                     PassLogger.i(TAG, it, "Get by id error")

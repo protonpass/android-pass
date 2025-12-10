@@ -18,10 +18,15 @@
 
 package proton.android.pass.data.api.usecases
 
+import me.proton.core.domain.entity.UserId
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 
 interface GetItemById {
-    suspend operator fun invoke(shareId: ShareId, itemId: ItemId): Item
+    suspend operator fun invoke(
+        userId: UserId? = null,
+        shareId: ShareId,
+        itemId: ItemId
+    ): Item
 }

@@ -77,7 +77,7 @@ class ShareFromItemViewModel @Inject constructor(
     internal val stateFlow: StateFlow<ShareFromItemUiState> = combine(
         navEventState,
         canUsePaidFeaturesFlow,
-        oneShot { getItemById(shareId, itemId) },
+        oneShot { getItemById(shareId = shareId, itemId = itemId) },
         observeShare(shareId),
         observeOrganizationSharingPolicy()
     ) { event,

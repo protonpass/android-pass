@@ -67,7 +67,8 @@ class OtherAutofillTest : BaseAutofillTest() {
         email = ExpectedAutofill.EMAIL.value,
         password = FakeEncryptionContext.encrypt(ExpectedAutofill.PASSWORD.value),
         totp = null,
-        shouldLinkPackageName = false
+        shouldLinkPackageName = false,
+        userId = "userID"
     )
 
     private fun runOtherAutofillTest(

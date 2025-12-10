@@ -138,7 +138,7 @@ class UpdateIdentityViewModel @Inject constructor(
 
     private suspend fun getItem() {
         identityActionsProvider.updateLoadingState(IsLoadingState.Loading)
-        runCatching { getItemById(navShareId, navItemId) }
+        runCatching { getItemById(shareId = navShareId, itemId = navItemId) }
             .onSuccess { item: Item ->
                 identityActionsProvider.onItemReceivedState(item)
                 getFormState().let {

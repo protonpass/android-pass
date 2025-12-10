@@ -158,6 +158,7 @@ fun CreateAliasScreen(
                             viewModel.createAlias(event.shareId)
                         }
                     }
+
                     is AliasContentUiEvent.OnNoteChange -> viewModel.onNoteChange(event.note)
                     is AliasContentUiEvent.OnTitleChange -> viewModel.onTitleChange(event.title)
                     is AliasContentUiEvent.OnVaultSelect ->
@@ -167,6 +168,7 @@ fun CreateAliasScreen(
                     is AliasContentUiEvent.OnPrefixChange -> viewModel.onPrefixChange(event.prefix)
                     is AliasContentUiEvent.OnUpgrade ->
                         actionAfterKeyboardHide = { onNavigate(Upgrade) }
+
                     is AliasContentUiEvent.OnSLNoteChange -> viewModel.onSLNoteChange(event.newSLNote)
                     is AliasContentUiEvent.OnSenderNameChange -> viewModel.onSenderNameChange(event.value)
                     AliasContentUiEvent.OnSlNoteInfoClick -> Unit
@@ -174,20 +176,24 @@ fun CreateAliasScreen(
                         when (event.event) {
                             AttachmentContentEvent.OnAddAttachment ->
                                 onNavigate(BaseAliasNavigation.AddAttachment)
+
                             AttachmentContentEvent.OnDeleteAllAttachments -> onNavigate(
                                 DeleteAllAttachments(
                                     uiState.baseAliasUiState.attachmentsState.allToUnlink
                                 )
                             )
+
                             is AttachmentContentEvent.OnDraftAttachmentOpen ->
                                 viewModel.openDraftAttachment(
                                     contextHolder = context.toClassHolder(),
                                     uri = event.event.uri,
                                     mimetype = event.event.mimetype
                                 )
+
                             is AttachmentContentEvent.OnDraftAttachmentOptions -> onNavigate(
                                 OpenDraftAttachmentOptions(event.event.uri)
                             )
+
                             is AttachmentContentEvent.OnAttachmentOpen,
                             is AttachmentContentEvent.OnAttachmentOptions ->
                                 throw IllegalStateException("Action not allowed: $event")
@@ -208,6 +214,7 @@ fun CreateAliasScreen(
 
                     AliasContentUiEvent.OnMailboxSelect ->
                         onNavigate(BaseAliasNavigation.SelectMailbox)
+
                     AliasContentUiEvent.OnSuffixSelect ->
                         onNavigate(BaseAliasNavigation.SelectSuffix)
 
@@ -246,6 +253,7 @@ fun CreateAliasScreen(
                                 CustomFieldType.Date -> {
                                     showDatePickerForField = Some(event.field)
                                 }
+
                                 else -> throw IllegalStateException("Unhandled action")
                             }
                         }
@@ -253,6 +261,7 @@ fun CreateAliasScreen(
                     is AliasContentUiEvent.OnScanTotp ->
                         actionAfterKeyboardHide =
                             { onNavigate(BaseAliasNavigation.ScanTotp(event.index)) }
+
                     AliasContentUiEvent.PasteTotp -> viewModel.onPasteTotp()
                 }
             }
@@ -288,7 +297,14 @@ fun CreateAliasScreen(
         onSuccess = { shareId, itemId, model ->
             viewModel.clearDraftData()
             val aliasEmail = (model.contents as ItemContents.Alias).aliasEmail
-            val event = BaseAliasNavigation.OnCreateAliasEvent(Created(shareId, itemId, aliasEmail))
+            val event = BaseAliasNavigation.OnCreateAliasEvent(
+                Created(
+                    model.userId,
+                    shareId,
+                    itemId,
+                    aliasEmail
+                )
+            )
             actionAfterKeyboardHide = { onNavigate(event) }
         }
     )

@@ -389,7 +389,7 @@ internal fun NavGraphBuilder.autofillActivityGraph(
             when (it) {
                 is BaseAliasNavigation.OnCreateAliasEvent -> when (val event = it.event) {
                     is CreateAliasNavigation.Created -> {
-                        val created = CreatedAlias(event.shareId, event.itemId, event.alias)
+                        val created = CreatedAlias(event.userId, event.shareId, event.itemId, event.alias)
                         onEvent(AutofillItemSelected(created.toAutofillItem()))
                     }
                     is CreateAliasNavigation.CreatedFromBottomsheet -> dismissBottomSheet {}

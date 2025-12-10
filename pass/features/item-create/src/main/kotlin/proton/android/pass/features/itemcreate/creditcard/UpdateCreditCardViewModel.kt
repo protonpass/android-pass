@@ -121,7 +121,7 @@ class UpdateCreditCardViewModel @Inject constructor(
     init {
         viewModelScope.launch {
             isLoadingState.update { IsLoadingState.Loading }
-            runCatching { getItemById(navShareId, navItemId) }
+            runCatching { getItemById(shareId = navShareId, itemId = navItemId) }
                 .onSuccess { item ->
                     runCatching {
                         if (item.hasAttachments) {

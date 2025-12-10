@@ -81,7 +81,7 @@ class ItemTrashDeleteViewModel @Inject constructor(
         viewModelScope.launch {
             isLoadingStateFlow.update { IsLoadingState.Loading }
             val itemType = runCatching {
-                getItemById(shareId, itemId).itemType
+                getItemById(shareId = shareId, itemId = itemId).itemType
             }.onFailure {
                 PassLogger.w(TAG, "Failed to load item before delete for telemetry")
             }.getOrNull()

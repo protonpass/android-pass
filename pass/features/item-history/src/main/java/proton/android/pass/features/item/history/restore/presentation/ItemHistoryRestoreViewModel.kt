@@ -109,7 +109,7 @@ class ItemHistoryRestoreViewModel @Inject constructor(
     }
 
     private val currentItemFlow = oneShot {
-        getItemById(shareId, itemId)
+        getItemById(shareId = shareId, itemId = itemId)
     }
 
     private val currentItemContentsFlow = currentItemFlow.map { currentItem ->

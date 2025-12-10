@@ -108,7 +108,8 @@ class IdentityAutofillTest : BaseAutofillTest() {
                 phoneNumber = ExpectedAutofill.IDENTITY_PHONE.value,
                 postalCode = ExpectedAutofill.IDENTITY_POSTAL_CODE.value,
                 organization = ExpectedAutofill.IDENTITY_ORGANIZATION.value,
-                country = ExpectedAutofill.IDENTITY_COUNTRY.value
+                country = ExpectedAutofill.IDENTITY_COUNTRY.value,
+                userId = "userID"
             )
         )
     }

@@ -24,12 +24,14 @@ import android.text.InputType
 import androidx.appcompat.app.AppCompatActivity
 import proton.android.pass.autofill.sample.LoginResultActivity
 import proton.android.pass.autofill.sample.databinding.ActivitySimpleLoginBinding
+import proton.android.pass.autofill.sample.utils.enableEdgeToEdgeProtonPassCompat
 
 class SimpleLoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         val binding = ActivitySimpleLoginBinding.inflate(layoutInflater)
+        enableEdgeToEdgeProtonPassCompat(view = binding.root)
 
         binding.loginButton.setOnClickListener {
             startActivity(Intent(this, LoginResultActivity::class.java))

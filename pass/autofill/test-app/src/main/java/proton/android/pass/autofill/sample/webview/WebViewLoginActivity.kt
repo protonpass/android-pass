@@ -23,6 +23,7 @@ import android.os.Bundle
 import android.webkit.WebViewClient
 import androidx.appcompat.app.AppCompatActivity
 import proton.android.pass.autofill.sample.databinding.ActivityWebviewLoginBinding
+import proton.android.pass.autofill.sample.utils.enableEdgeToEdgeProtonPassCompat
 
 class WebViewLoginActivity : AppCompatActivity() {
 
@@ -31,6 +32,7 @@ class WebViewLoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         val binding = ActivityWebviewLoginBinding.inflate(layoutInflater)
+        enableEdgeToEdgeProtonPassCompat(view = binding.root)
 
         binding.webView.apply {
             settings.apply {

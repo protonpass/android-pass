@@ -51,11 +51,12 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import me.proton.core.compose.theme.ProtonTheme
 import proton.android.pass.autofill.sample.LoginResultActivity
+import proton.android.pass.commonui.api.enableEdgeToEdgeProtonPass
 
 class SimpleComposeLoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        enableEdgeToEdgeProtonPass()
         setContent {
             ExplicitAutofillTypesDemo(onLoginClicked = {
                 val intent = Intent(this, LoginResultActivity::class.java)

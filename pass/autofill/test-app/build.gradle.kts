@@ -88,6 +88,7 @@ dependencies {
     implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.annotation)
     implementation(libs.material)
+    implementation(projects.pass.commonUi.api)
 
     implementation(platform(libs.androidx.compose.bom))
     implementation(libs.bundles.core.compose)

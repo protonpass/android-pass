@@ -194,7 +194,7 @@ class ShareRepositoryImpl @Inject constructor(
         }
         val hadLocalSharesOnStart = localShares.isNotEmpty()
 
-        val remoteShares = remoteShareDataSource.retrieveShares(userId, eventToken)
+        val remoteShares = remoteShareDataSource.retrieveShares(userId)
         val remoteSharesMap = remoteShares.associateBy { remoteShareResponse ->
             ShareId(remoteShareResponse.shareId)
         }
@@ -285,7 +285,7 @@ class ShareRepositoryImpl @Inject constructor(
         shareId: ShareId,
         eventToken: EventToken?
     ) {
-        val shareResponse = remoteShareDataSource.retrieveShareById(userId, shareId, eventToken)
+        val shareResponse = remoteShareDataSource.retrieveShareById(userId, shareId)
             ?: run {
                 PassLogger.w(TAG, "Error fetching share from remote [shareId=${shareId.id}]")
                 throw ShareNotAvailableError()
@@ -374,7 +374,7 @@ class ShareRepositoryImpl @Inject constructor(
         shareId: ShareId,
         eventToken: EventToken?
     ) {
-        val shareResponse = remoteShareDataSource.retrieveShareById(userId, shareId, eventToken)
+        val shareResponse = remoteShareDataSource.retrieveShareById(userId, shareId)
             ?: run {
                 PassLogger.w(TAG, "Error fetching share from remote [shareId=${shareId.id}]")
                 throw ShareNotAvailableError()

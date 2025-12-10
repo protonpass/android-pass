@@ -162,7 +162,7 @@ class GroupInviteRepositoryImpl @Inject constructor(
 
         do {
             val response =
-                remoteGroupInviteDataSource.retrievePendingGroupInvites(userId, lastToken, eventToken)
+                remoteGroupInviteDataSource.retrievePendingGroupInvites(userId, lastToken)
             allInvites.addAll(response.invites)
             lastToken = response.lastId
         } while (lastToken != null)

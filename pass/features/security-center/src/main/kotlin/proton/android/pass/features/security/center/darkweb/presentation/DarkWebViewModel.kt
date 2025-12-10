@@ -91,14 +91,13 @@ internal class DarkWebViewModel @Inject constructor(
     init {
         telemetryManager.sendEvent(PassMonitorDisplayDarkWebMonitoring)
         viewModelScope.launch {
-            val areUserEventsEnabled = featureFlagsPreferencesRepository.get<Boolean>(
-                FeatureFlag.PASS_USER_EVENTS_V1
-            ).firstOrNull()
-            areUserEventsEnabled ?: return@launch
-            if (!areUserEventsEnabled) {
-                safeRunCatching {
-                    refreshBreaches()
-                }
+            val userEventsEnabled = featureFlagsPreferencesRepository
+                .get<Boolean>(FeatureFlag.PASS_USER_EVENTS_V1)
+                .firstOrNull()
+                ?: return@launch
+
+            if (!userEventsEnabled) {
+                safeRunCatching { refreshBreaches() }
             }
         }
     }

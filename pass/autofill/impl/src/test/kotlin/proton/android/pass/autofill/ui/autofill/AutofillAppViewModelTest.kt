@@ -102,7 +102,8 @@ class AutofillAppViewModelTest {
         username = "username",
         password = null,
         totp = null,
-        shouldLinkPackageName = false
+        shouldLinkPackageName = false,
+        userId = "userID"
     ) to AutofillAppState(
         autofillData = AutofillData(
             assistInfo = AssistInfo(cluster = NodeCluster.Empty, url = None),

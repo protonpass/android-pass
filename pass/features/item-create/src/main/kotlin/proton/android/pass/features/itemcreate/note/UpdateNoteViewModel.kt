@@ -164,7 +164,7 @@ class UpdateNoteViewModel @Inject constructor(
     private suspend fun setupInitialState() {
         if (itemOption != None) return
         isLoadingState.update { IsLoadingState.Loading }
-        runCatching { getItemById(navShareId, navItemId) }
+        runCatching { getItemById(shareId = navShareId, itemId = navItemId) }
             .onFailure {
                 PassLogger.w(TAG, it)
                 PassLogger.w(TAG, "Get item error")

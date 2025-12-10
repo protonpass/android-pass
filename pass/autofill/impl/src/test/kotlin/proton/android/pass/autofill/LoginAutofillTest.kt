@@ -184,7 +184,8 @@ class LoginAutofillTest : BaseAutofillTest() {
                 email = ExpectedAutofill.EMAIL.value,
                 password = TestEncryptionContext.encrypt(ExpectedAutofill.PASSWORD.value),
                 totp = null,
-                shouldLinkPackageName = false
+                shouldLinkPackageName = false,
+                userId = "userID"
             ),
             requestFlags = flags,
             allowEmptyFields = allowEmptyFields

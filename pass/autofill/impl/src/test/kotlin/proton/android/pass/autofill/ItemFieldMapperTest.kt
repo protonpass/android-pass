@@ -154,6 +154,7 @@ class ItemFieldMapperTest {
         password = password,
         totp = "",
         shouldLinkPackageName = false,
-        email = email
+        email = email,
+        userId = "userID"
     )
 }

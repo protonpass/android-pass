@@ -18,6 +18,7 @@
 
 package proton.android.pass.features.itemcreate.alias
 
+import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.Option
 import proton.android.pass.domain.CustomFieldType
 import proton.android.pass.domain.ItemId
@@ -28,6 +29,7 @@ import java.net.URI
 sealed interface CreateAliasNavigation {
     data class CreatedFromBottomsheet(val alias: String) : CreateAliasNavigation
     data class Created(
+        val userId: UserId,
         val shareId: ShareId,
         val itemId: ItemId,
         val alias: String

@@ -95,4 +95,6 @@ dependencies {
     implementation(libs.androidx.credentials)
     implementation(libs.core.presentation.compose)
     implementation(libs.material)
+
+    implementation(projects.pass.commonUi.api)
 }

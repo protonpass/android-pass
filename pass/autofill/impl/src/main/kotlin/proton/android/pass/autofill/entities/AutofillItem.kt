@@ -21,12 +21,14 @@ package proton.android.pass.autofill.entities
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 import me.proton.core.crypto.common.keystore.EncryptedString
+import me.proton.core.domain.entity.UserId
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 
 @Parcelize
 sealed interface AutofillItem : Parcelable {
 
+    fun userId(): UserId
     fun shareId(): ShareId
     fun itemId(): ItemId
     fun type(): String
@@ -34,6 +36,7 @@ sealed interface AutofillItem : Parcelable {
 
     @Parcelize
     data class Login(
+        val userId: String,
         val itemId: String,
         val shareId: String,
         val username: String,
@@ -42,6 +45,7 @@ sealed interface AutofillItem : Parcelable {
         val shouldLinkPackageName: Boolean,
         val email: String = username
     ) : AutofillItem {
+        override fun userId(): UserId = UserId(userId)
         override fun shareId() = ShareId(shareId)
         override fun itemId() = ItemId(itemId)
         override fun type() = "AutofillItem.Login"
@@ -50,6 +54,7 @@ sealed interface AutofillItem : Parcelable {
 
     @Parcelize
     data class CreditCard(
+        val userId: String,
         val itemId: String,
         val shareId: String,
         val number: String,
@@ -57,6 +62,7 @@ sealed interface AutofillItem : Parcelable {
         val expiration: String,
         val cvv: EncryptedString?
     ) : AutofillItem {
+        override fun userId(): UserId = UserId(userId)
         override fun shareId() = ShareId(shareId)
         override fun itemId() = ItemId(itemId)
         override fun type() = "AutofillItem.CreditCard"
@@ -65,6 +71,7 @@ sealed interface AutofillItem : Parcelable {
 
     @Parcelize
     data class Identity(
+        val userId: String,
         val itemId: String,
         val shareId: String,
         val fullName: String?,
@@ -78,6 +85,7 @@ sealed interface AutofillItem : Parcelable {
         val organization: String?,
         val country: String?
     ) : AutofillItem {
+        override fun userId(): UserId = UserId(userId)
         override fun shareId() = ShareId(shareId)
         override fun itemId() = ItemId(itemId)
         override fun type() = "AutofillItem.Identity"

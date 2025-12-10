@@ -83,7 +83,7 @@ class ItemDetailsViewModel @Inject constructor(
     init {
         viewModelScope.launch {
             runCatching {
-                val itemType = getItemById(shareId, itemId).itemType
+                val itemType = getItemById(shareId = shareId, itemId = itemId).itemType
                 val eventItemType: EventItemType = EventItemType.from(itemType)
                 telemetryManager.sendEvent(ItemRead(eventItemType))
                 telemetryManager.sendEvent(ItemViewed(shareId, itemId))

@@ -24,7 +24,6 @@ import proton.android.pass.data.impl.requests.CreateVaultRequest
 import proton.android.pass.data.impl.requests.UpdateVaultRequest
 import proton.android.pass.data.impl.responses.ShareResponse
 import proton.android.pass.domain.ShareId
-import proton.android.pass.domain.events.EventToken
 
 class FakeRemoteShareDataSource : RemoteShareDataSource {
 
@@ -83,14 +82,10 @@ class FakeRemoteShareDataSource : RemoteShareDataSource {
 
     override suspend fun deleteVault(userId: UserId, shareId: ShareId) = deleteVaultResponse.getOrThrow()
 
-    override suspend fun retrieveShares(userId: UserId, eventToken: EventToken?): List<ShareResponse> =
-        getSharesResponse.getOrThrow()
+    override suspend fun retrieveShares(userId: UserId): List<ShareResponse> = getSharesResponse.getOrThrow()
 
-    override suspend fun retrieveShareById(
-        userId: UserId,
-        shareId: ShareId,
-        eventToken: EventToken?
-    ): ShareResponse = getShareByIdResponse.getOrThrow()
+    override suspend fun retrieveShareById(userId: UserId, shareId: ShareId): ShareResponse =
+        getShareByIdResponse.getOrThrow()
 
     override suspend fun markAsPrimary(userId: UserId, shareId: ShareId) {
         markAsPrimaryResponse.getOrThrow()

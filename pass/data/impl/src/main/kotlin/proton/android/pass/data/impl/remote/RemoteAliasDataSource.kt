@@ -28,7 +28,6 @@ import proton.android.pass.data.impl.responses.AliasOptionsResponse
 import proton.android.pass.data.impl.responses.AliasResponse
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
-import proton.android.pass.domain.events.EventToken
 
 interface RemoteAliasDataSource {
 
@@ -37,8 +36,7 @@ interface RemoteAliasDataSource {
     suspend fun fetchAliasDetails(
         userId: UserId,
         shareId: ShareId,
-        itemId: ItemId,
-        eventToken: EventToken?
+        itemId: ItemId
     ): AliasResponse
 
     fun updateAliasMailboxes(

@@ -28,7 +28,6 @@ import proton.android.pass.data.impl.requests.CreateVaultRequest
 import proton.android.pass.data.impl.requests.UpdateVaultRequest
 import proton.android.pass.data.impl.responses.ShareResponse
 import proton.android.pass.domain.ShareId
-import proton.android.pass.domain.events.EventToken
 import javax.inject.Inject
 
 class RemoteShareDataSourceImpl @Inject constructor(
@@ -65,25 +64,21 @@ class RemoteShareDataSourceImpl @Inject constructor(
             .valueOrThrow
     }
 
-    override suspend fun retrieveShares(userId: UserId, eventToken: EventToken?): List<ShareResponse> =
-        api.get<PasswordManagerApi>(userId)
-            .invoke { getShares(eventToken?.token).shares }
-            .valueOrThrow
-
-    override suspend fun retrieveShareById(
-        userId: UserId,
-        shareId: ShareId,
-        eventToken: EventToken?
-    ): ShareResponse? = api.get<PasswordManagerApi>(userId)
-        .invoke {
-            val res = getShare(shareId.id, eventToken?.token)
-            if (res.code == PROTON_RESPONSE_OK) {
-                res.share
-            } else {
-                null
-            }
-        }
+    override suspend fun retrieveShares(userId: UserId): List<ShareResponse> = api.get<PasswordManagerApi>(userId)
+        .invoke { getShares().shares }
         .valueOrThrow
+
+    override suspend fun retrieveShareById(userId: UserId, shareId: ShareId): ShareResponse? =
+        api.get<PasswordManagerApi>(userId)
+            .invoke {
+                val res = getShare(shareId.id)
+                if (res.code == PROTON_RESPONSE_OK) {
+                    res.share
+                } else {
+                    null
+                }
+            }
+            .valueOrThrow
 
     override suspend fun markAsPrimary(userId: UserId, shareId: ShareId) = api.get<PasswordManagerApi>(userId)
         .invoke { markAsPrimary(shareId.id) }

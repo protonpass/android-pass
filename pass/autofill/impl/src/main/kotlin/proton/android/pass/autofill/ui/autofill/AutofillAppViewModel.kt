@@ -130,8 +130,13 @@ class AutofillAppViewModel @Inject constructor(
         isSuggestion: Boolean
     ) {
         viewModelScope.launch {
-            val item = runCatching { getItemById(autofillItem.shareId(), autofillItem.itemId()) }
-                .getOrNull()
+            val item = runCatching {
+                getItemById(
+                    shareId = autofillItem.shareId(),
+                    itemId = autofillItem.itemId(),
+                    userId = autofillItem.userId()
+                )
+            }.getOrNull()
                 ?: run {
                     PassLogger.d(TAG, "Could not get item isSuggestion = $isSuggestion")
                     return@launch

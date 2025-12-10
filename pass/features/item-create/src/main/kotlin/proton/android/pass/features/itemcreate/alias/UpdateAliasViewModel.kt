@@ -181,7 +181,7 @@ class UpdateAliasViewModel @Inject constructor(
 
             runCatching {
                 combine(
-                    oneShot { getItemById(shareId, itemId) },
+                    oneShot { getItemById(shareId = shareId, itemId = itemId) },
                     observeAliasDetails(shareId, itemId),
                     ::Pair
                 ).first()

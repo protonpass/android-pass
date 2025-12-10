@@ -105,6 +105,12 @@ internal class BreachRepositoryImplTest {
         )
 
         remoteBreachDataSource.setGetAllBreachesResult(Result.success(breachesResponse))
+        remoteBreachDataSource.setGetBreachesForCustomEmailResult(
+            Result.success(createBreachEmailsResponse(emptyList()))
+        )
+        remoteBreachDataSource.setGetBreachesForProtonEmailResult(
+            Result.success(createBreachEmailsResponse(emptyList()))
+        )
 
         instance.refreshBreaches(TEST_USER_ID)
         val result = instance.observeAllBreaches(TEST_USER_ID).first()
@@ -292,6 +298,9 @@ internal class BreachRepositoryImplTest {
                     customEmails = listOf(customEmailResponse)
                 )
             )
+        )
+        remoteBreachDataSource.setGetBreachesForCustomEmailResult(
+            Result.success(createBreachEmailsResponse(emptyList()))
         )
 
         instance.refreshBreaches(TEST_USER_ID)

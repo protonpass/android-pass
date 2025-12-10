@@ -87,6 +87,10 @@ import me.proton.core.usersettings.data.entity.OrganizationEntity
 import me.proton.core.usersettings.data.entity.OrganizationKeysEntity
 import me.proton.core.usersettings.data.entity.UserSettingsEntity
 import proton.android.pass.data.impl.db.entities.AssetLinkEntity
+import proton.android.pass.data.impl.db.entities.BreachCustomEmailEntity
+import proton.android.pass.data.impl.db.entities.BreachDomainPeekEntity
+import proton.android.pass.data.impl.db.entities.BreachEmailEntity
+import proton.android.pass.data.impl.db.entities.BreachProtonEmailEntity
 import proton.android.pass.data.impl.db.entities.GroupInviteEntity
 import proton.android.pass.data.impl.db.entities.GroupInviteKeyEntity
 import proton.android.pass.data.impl.db.entities.IgnoredAssetLinkEntity
@@ -169,7 +173,11 @@ import proton.android.pass.data.impl.db.entities.securelinks.SecureLinkEntity
         InAppMessageEntity::class,
         AttachmentEntity::class,
         ChunkEntity::class,
-        PasswordHistoryEntity::class
+        PasswordHistoryEntity::class,
+        BreachCustomEmailEntity::class,
+        BreachProtonEmailEntity::class,
+        BreachEmailEntity::class,
+        BreachDomainPeekEntity::class
     ],
     autoMigrations = [
         AutoMigration(from = 2, to = 3, spec = AppDatabaseMigrations.MIGRATION_2_3::class),
@@ -225,7 +233,8 @@ import proton.android.pass.data.impl.db.entities.securelinks.SecureLinkEntity
         AutoMigration(from = 78, to = 79),
         AutoMigration(from = 79, to = 80),
         AutoMigration(from = 80, to = 81),
-        AutoMigration(from = 81, to = 82)
+        AutoMigration(from = 81, to = 82),
+        AutoMigration(from = 82, to = 83)
     ],
     version = AppDatabase.VERSION,
     exportSchema = true
@@ -243,7 +252,8 @@ import proton.android.pass.data.impl.db.entities.securelinks.SecureLinkEntity
     NotificationConverters::class,
     PushConverters::class,
     AuthConverters::class,
-    InstantConverter::class
+    InstantConverter::class,
+    BreachTypeConverters::class
 )
 abstract class AppDatabase :
     BaseDatabase(),
@@ -269,7 +279,7 @@ abstract class AppDatabase :
     AuthDatabase {
 
     companion object {
-        const val VERSION = 82
+        const val VERSION = 83
 
         const val DB_NAME = "db-passkey"
 

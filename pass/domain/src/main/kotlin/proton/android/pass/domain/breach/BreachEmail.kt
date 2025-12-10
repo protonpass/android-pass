@@ -19,6 +19,7 @@
 package proton.android.pass.domain.breach
 
 import androidx.compose.runtime.Stable
+import kotlinx.serialization.Serializable
 import me.proton.core.user.domain.entity.AddressId
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
@@ -70,13 +71,14 @@ data class BreachEmail(
     val actions: List<BreachAction>
 )
 
+@Serializable
 data class BreachAction(
     val name: String,
     val code: BreachActionCode,
     val url: String?
 )
 
-enum class BreachActionCode(private val code: String) {
+enum class BreachActionCode(val code: String) {
     StayAlert("stay_alert"),
     PasswordSource("password_source"),
     PasswordExposed("password_exposed"),

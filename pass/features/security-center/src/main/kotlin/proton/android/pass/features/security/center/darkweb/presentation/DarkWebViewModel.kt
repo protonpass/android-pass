@@ -44,6 +44,7 @@ import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.asLoadingResult
 import proton.android.pass.common.api.combineN
 import proton.android.pass.common.api.map
+import proton.android.pass.common.api.safeRunCatching
 import proton.android.pass.common.api.some
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.data.api.usecases.ObserveGlobalMonitorState
@@ -95,7 +96,9 @@ internal class DarkWebViewModel @Inject constructor(
             ).firstOrNull()
             areUserEventsEnabled ?: return@launch
             if (!areUserEventsEnabled) {
-                refreshBreaches()
+                safeRunCatching {
+                    refreshBreaches()
+                }
             }
         }
     }

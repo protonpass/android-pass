@@ -83,7 +83,8 @@ class CreditCardAutofillTest : BaseAutofillTest() {
                 expiration = CC_EXPIRATION,
                 cvv = FakeEncryptionContext.encrypt(ExpectedAutofill.CC_CVV.value),
                 itemId = "itemID",
-                shareId = "shareID"
+                shareId = "shareID",
+                userId = "userID"
             )
         )
     }

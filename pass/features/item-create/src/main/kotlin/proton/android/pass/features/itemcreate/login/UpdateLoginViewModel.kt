@@ -194,7 +194,7 @@ class UpdateLoginViewModel @Inject constructor(
             if (itemOption != None) return@launch
 
             isLoadingState.update { IsLoadingState.Loading }
-            runCatching { getItemById(navShareId, navItemId) }
+            runCatching { getItemById(shareId = navShareId, itemId = navItemId) }
                 .onFailure {
                     PassLogger.i(TAG, it, "Get by id error")
                     snackbarDispatcher(InitError)

@@ -82,7 +82,7 @@ class ItemDetailsMenuViewModel @Inject constructor(
 
     private val eventFlow = MutableStateFlow<ItemDetailsMenuEvent>(ItemDetailsMenuEvent.Idle)
 
-    private val itemFlow = oneShot { getItemById(shareId, itemId) }
+    private val itemFlow = oneShot { getItemById(shareId = shareId, itemId = itemId) }
 
     private val shareFlow = oneShot { observeShare(shareId).first() }
 

@@ -23,7 +23,6 @@ import proton.android.pass.data.impl.requests.CreateVaultRequest
 import proton.android.pass.data.impl.requests.UpdateVaultRequest
 import proton.android.pass.data.impl.responses.ShareResponse
 import proton.android.pass.domain.ShareId
-import proton.android.pass.domain.events.EventToken
 
 interface RemoteShareDataSource {
 
@@ -37,13 +36,9 @@ interface RemoteShareDataSource {
 
     suspend fun deleteVault(userId: UserId, shareId: ShareId)
 
-    suspend fun retrieveShares(userId: UserId, eventToken: EventToken?): List<ShareResponse>
+    suspend fun retrieveShares(userId: UserId): List<ShareResponse>
 
-    suspend fun retrieveShareById(
-        userId: UserId,
-        shareId: ShareId,
-        eventToken: EventToken?
-    ): ShareResponse?
+    suspend fun retrieveShareById(userId: UserId, shareId: ShareId): ShareResponse?
 
     suspend fun markAsPrimary(userId: UserId, shareId: ShareId)
 

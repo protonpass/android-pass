@@ -62,7 +62,7 @@ class AliasRepositoryImpl @Inject constructor(
         itemId: ItemId,
         eventToken: EventToken?
     ): Flow<AliasDetails> = oneShot {
-        val response = remoteDataSource.fetchAliasDetails(userId, shareId, itemId, eventToken)
+        val response = remoteDataSource.fetchAliasDetails(userId, shareId, itemId)
         AliasDetails(
             email = response.email,
             canModify = response.modify,

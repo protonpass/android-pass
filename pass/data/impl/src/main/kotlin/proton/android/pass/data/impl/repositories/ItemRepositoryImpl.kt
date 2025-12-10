@@ -370,8 +370,7 @@ class ItemRepositoryImpl @Inject constructor(
         val itemRevision = remoteItemDataSource.getItem(
             userId = userId,
             shareId = shareId,
-            itemId = itemId,
-            eventToken = eventToken
+            itemId = itemId
         )
         val share = shareRepository.getById(userId, shareId)
         val userAddress = shareRepository.getAddressForShareId(userId, shareId)
@@ -817,8 +816,7 @@ class ItemRepositoryImpl @Inject constructor(
                 val page = remoteItemDataSource.getItemsPage(
                     userId = userId,
                     shareId = shareId,
-                    sinceToken = sinceToken,
-                    eventToken = eventToken
+                    sinceToken = sinceToken
                 )
 
                 items.addAll(page.items)

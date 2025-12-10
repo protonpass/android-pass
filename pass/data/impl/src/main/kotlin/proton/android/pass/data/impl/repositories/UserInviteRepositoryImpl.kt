@@ -119,7 +119,7 @@ class UserInviteRepositoryImpl @Inject constructor(
     override suspend fun refreshInvites(userId: UserId, eventToken: EventToken?): Boolean = coroutineScope {
         PassLogger.i(TAG, "Refresh invites started")
         val deferredRemoteInvites: Deferred<List<PendingUserInviteResponse>> =
-            async { remoteDataSource.fetchInvites(userId, eventToken) }
+            async { remoteDataSource.fetchInvites(userId) }
         deferredRemoteInvites.invokeOnCompletion {
             if (it != null) {
                 PassLogger.w(TAG, it)

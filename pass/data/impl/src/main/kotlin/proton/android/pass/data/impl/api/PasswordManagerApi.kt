@@ -153,10 +153,10 @@ interface PasswordManagerApi : BaseRetrofitApi {
     suspend fun deleteVault(@Path("shareId") shareId: String): DeleteVaultResponse
 
     @GET("$PREFIX/share")
-    suspend fun getShares(@Query("EventToken") eventToken: String?): GetSharesResponse
+    suspend fun getShares(): GetSharesResponse
 
     @GET("$PREFIX/share/{shareId}")
-    suspend fun getShare(@Path("shareId") shareId: String, @Query("EventToken") eventToken: String?): GetShareResponse
+    suspend fun getShare(@Path("shareId") shareId: String): GetShareResponse
 
     @DELETE("$PREFIX/share/{shareId}")
     suspend fun leaveShare(@Path("shareId") shareId: String): CodeOnlyResponse
@@ -177,16 +177,11 @@ interface PasswordManagerApi : BaseRetrofitApi {
     suspend fun getItems(
         @Path("shareId") shareId: String,
         @Query("Since") sinceToken: String?,
-        @Query("PageSize") pageSize: Int,
-        @Query("EventToken") eventToken: String?
+        @Query("PageSize") pageSize: Int
     ): GetItemsResponse
 
     @GET("$PREFIX/share/{shareId}/item/{itemId}")
-    suspend fun getItem(
-        @Path("shareId") shareId: String,
-        @Path("itemId") itemId: String,
-        @Query("EventToken") eventToken: String?
-    ): GetItemResponse
+    suspend fun getItem(@Path("shareId") shareId: String, @Path("itemId") itemId: String): GetItemResponse
 
     @POST("$PREFIX/share/{shareId}/item")
     suspend fun createItem(@Path("shareId") shareId: String, @Body request: CreateItemRequest): ItemRevisionResponse
@@ -263,11 +258,7 @@ interface PasswordManagerApi : BaseRetrofitApi {
     suspend fun getAliasOptions(@Path("shareId") shareId: String): GetAliasOptionsResponse
 
     @GET("$PREFIX/share/{shareId}/alias/{itemId}")
-    suspend fun getAliasDetails(
-        @Path("shareId") shareId: String,
-        @Path("itemId") itemId: String,
-        @Query("EventToken") eventToken: String?
-    ): AliasDetailsResponse
+    suspend fun getAliasDetails(@Path("shareId") shareId: String, @Path("itemId") itemId: String): AliasDetailsResponse
 
     @POST("$PREFIX/share/{shareId}/alias/{itemId}/mailbox")
     suspend fun updateAliasMailboxes(
@@ -377,7 +368,7 @@ interface PasswordManagerApi : BaseRetrofitApi {
     ): CodeOnlyResponse
 
     @GET("$PREFIX/invite")
-    suspend fun fetchUserInvites(@Query("EventToken") eventToken: String?): PendingUserInvitesResponse
+    suspend fun fetchUserInvites(): PendingUserInvitesResponse
 
     @POST("$PREFIX/invite/{inviteId}")
     suspend fun acceptInvite(@Path("inviteId") inviteId: String, @Body request: AcceptInviteRequest): GetShareResponse
@@ -693,10 +684,7 @@ interface PasswordManagerApi : BaseRetrofitApi {
 
     // Group invites
     @GET("$PREFIX/invite/group")
-    suspend fun retrievePendingGroupInvites(
-        @Query("Since") lastToken: String?,
-        @Query("EventToken") eventToken: String?
-    ): RetrieveGroupInvitesResponse
+    suspend fun retrievePendingGroupInvites(@Query("Since") lastToken: String?): RetrieveGroupInvitesResponse
 
     @POST("$PREFIX/invite/group/{inviteToken}")
     suspend fun acceptGroupInvite(

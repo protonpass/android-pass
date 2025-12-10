@@ -18,6 +18,7 @@
 
 package proton.android.pass.data.fakes.usecases
 
+import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.api.usecases.GetItemById
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemId
@@ -28,7 +29,8 @@ import javax.inject.Singleton
 @Singleton
 class FakeGetItemById @Inject constructor() : GetItemById {
 
-    private var fallbackResult: Result<Item> = Result.failure(IllegalStateException("Result not set"))
+    private var fallbackResult: Result<Item> =
+        Result.failure(IllegalStateException("Result not set"))
     private var storedResults: MutableMap<Pair<ShareId, ItemId>, Result<Item>> = mutableMapOf()
 
     fun emit(result: Result<Item>) {
@@ -43,6 +45,10 @@ class FakeGetItemById @Inject constructor() : GetItemById {
         storedResults[shareId to itemId] = value
     }
 
-    override suspend fun invoke(shareId: ShareId, itemId: ItemId): Item =
-        storedResults[shareId to itemId]?.getOrThrow() ?: fallbackResult.getOrThrow()
+    override suspend fun invoke(
+        userId: UserId?,
+        shareId: ShareId,
+        itemId: ItemId
+    ): Item = storedResults[shareId to itemId]?.getOrThrow() ?: fallbackResult.getOrThrow()
+
 }

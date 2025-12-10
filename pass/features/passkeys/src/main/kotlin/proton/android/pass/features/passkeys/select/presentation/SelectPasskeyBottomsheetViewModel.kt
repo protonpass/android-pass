@@ -127,7 +127,7 @@ class SelectPasskeyBottomsheetViewModel @Inject constructor(
     }
 
     private suspend fun getPasskeys(): Result<ImmutableList<Passkey>> = safeRunCatching {
-        getItemById(shareId, itemId)
+        getItemById(shareId = shareId, itemId = itemId)
     }.fold(
         onSuccess = { item ->
             val itemContents: ItemContents.Login = encryptionContextProvider.withEncryptionContext {

@@ -82,7 +82,7 @@ class ItemTrashMenuViewModel @Inject constructor(
     private val shareOptionFlow = oneShot { observeShare(shareId).first() }
         .mapLatest(::Some)
 
-    private val itemUiModelOptionFlow = oneShot { getItemById(shareId, itemId) }
+    private val itemUiModelOptionFlow = oneShot { getItemById(shareId = shareId, itemId = itemId) }
         .map { item ->
             encryptionContextProvider.withEncryptionContext {
                 item.toUiModel(this@withEncryptionContext).toOption()

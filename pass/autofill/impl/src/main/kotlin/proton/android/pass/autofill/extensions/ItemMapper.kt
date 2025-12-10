@@ -18,6 +18,7 @@
 
 package proton.android.pass.autofill.extensions
 
+import me.proton.core.domain.entity.UserId
 import proton.android.pass.autofill.entities.AutofillItem
 import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.domain.ItemContents
@@ -26,6 +27,7 @@ import proton.android.pass.domain.ShareId
 
 fun ItemUiModel.toAutoFillItem(shouldLinkPackageName: Boolean = false): AutofillItem = when (val content = contents) {
     is ItemContents.Login -> AutofillItem.Login(
+        userId = userId.id,
         shareId = shareId.id,
         itemId = id.id,
         username = content.displayValue,
@@ -36,6 +38,7 @@ fun ItemUiModel.toAutoFillItem(shouldLinkPackageName: Boolean = false): Autofill
     )
 
     is ItemContents.CreditCard -> AutofillItem.CreditCard(
+        userId = userId.id,
         itemId = id.id,
         shareId = shareId.id,
         number = content.number,
@@ -45,6 +48,7 @@ fun ItemUiModel.toAutoFillItem(shouldLinkPackageName: Boolean = false): Autofill
     )
 
     is ItemContents.Identity -> AutofillItem.Identity(
+        userId = userId.id,
         shareId = shareId.id,
         itemId = id.id,
         fullName = content.personalDetailsContent.fullName,
@@ -60,6 +64,7 @@ fun ItemUiModel.toAutoFillItem(shouldLinkPackageName: Boolean = false): Autofill
     )
 
     is ItemContents.Alias -> AutofillItem.Login(
+        userId = userId.id,
         shareId = shareId.id,
         itemId = id.id,
         username = content.aliasEmail,
@@ -67,6 +72,7 @@ fun ItemUiModel.toAutoFillItem(shouldLinkPackageName: Boolean = false): Autofill
         totp = null,
         shouldLinkPackageName = false
     )
+
     is ItemContents.Note,
     is ItemContents.WifiNetwork,
     is ItemContents.SSHKey,
@@ -75,12 +81,14 @@ fun ItemUiModel.toAutoFillItem(shouldLinkPackageName: Boolean = false): Autofill
 }
 
 data class CreatedAlias(
+    val userId: UserId,
     val shareId: ShareId,
     val itemId: ItemId,
     val alias: String
 )
 
 fun CreatedAlias.toAutofillItem(): AutofillItem.Login = AutofillItem.Login(
+    userId = userId.id,
     shareId = shareId.id,
     itemId = itemId.id,
     username = alias,

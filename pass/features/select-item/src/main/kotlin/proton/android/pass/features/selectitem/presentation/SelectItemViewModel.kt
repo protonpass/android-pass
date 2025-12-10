@@ -539,8 +539,6 @@ class SelectItemViewModel @Inject constructor(
         pinningUiState,
         planRes,
         shares ->
-
-        println("toto caca $planRes")
         val searchIn = planRes.getOrNull()?.run {
             when (planType) {
                 is PlanType.Free -> {

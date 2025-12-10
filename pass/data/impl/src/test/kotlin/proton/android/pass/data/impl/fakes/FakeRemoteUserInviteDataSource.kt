@@ -31,7 +31,6 @@ import proton.android.pass.data.impl.responses.ShareResponse
 import proton.android.pass.domain.InviteToken
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.ShareRole
-import proton.android.pass.domain.events.EventToken
 import javax.inject.Inject
 
 class FakeRemoteUserInviteDataSource @Inject constructor() : RemoteUserInviteDataSource {
@@ -117,8 +116,7 @@ class FakeRemoteUserInviteDataSource @Inject constructor() : RemoteUserInviteDat
         sendInviteResult.getOrThrow()
     }
 
-    override suspend fun fetchInvites(userId: UserId, eventToken: EventToken?): List<PendingUserInviteResponse> =
-        fetchInvitesResult.getOrThrow()
+    override suspend fun fetchInvites(userId: UserId): List<PendingUserInviteResponse> = fetchInvitesResult.getOrThrow()
 
     override suspend fun acceptInvite(
         userId: UserId,

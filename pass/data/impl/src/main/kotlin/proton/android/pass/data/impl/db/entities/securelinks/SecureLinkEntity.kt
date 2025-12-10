@@ -21,6 +21,7 @@ package proton.android.pass.data.impl.db.entities.securelinks
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.ForeignKey
+import androidx.room.Index
 import me.proton.core.user.data.entity.UserEntity
 import proton.android.pass.data.impl.db.entities.ExternalColumns
 import proton.android.pass.data.impl.db.entities.ItemEntity
@@ -29,6 +30,10 @@ import proton.android.pass.data.impl.db.entities.ShareEntity
 @Entity(
     tableName = SecureLinkEntity.TABLE_NAME,
     primaryKeys = [SecureLinkEntity.Columns.LINK_ID],
+    indices = [
+        Index(value = [SecureLinkEntity.Columns.SHARE_ID]),
+        Index(value = [SecureLinkEntity.Columns.SHARE_ID, SecureLinkEntity.Columns.ITEM_ID])
+    ],
     foreignKeys = [
         ForeignKey(
             entity = UserEntity::class,

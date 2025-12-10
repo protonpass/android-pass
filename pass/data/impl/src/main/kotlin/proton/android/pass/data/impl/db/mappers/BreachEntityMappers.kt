@@ -37,8 +37,8 @@ import proton.android.pass.domain.breach.BreachId
 import proton.android.pass.domain.breach.BreachProtonEmail
 import proton.android.pass.domain.breach.CustomEmailId
 
-private val breachTypeConverters = BreachTypeConverters()
 private val commonConverters = CommonConverters()
+private val breachTypeConverters = BreachTypeConverters()
 
 fun BreachCustomEmailEntity.toDomain(): BreachCustomEmail = BreachCustomEmail(
     id = CustomEmailId(customEmailId),

@@ -40,7 +40,7 @@ data class PasswordHistoryEntity(
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = Columns.ID)
     val id: Long,
-    @ColumnInfo(name = Columns.USER_ID)
+    @ColumnInfo(name = Columns.USER_ID, index = true)
     val userId: String,
     @ColumnInfo(name = Columns.PASSWORD)
     val password: EncryptedString,

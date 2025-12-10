@@ -19,58 +19,16 @@
 package proton.android.pass.data.impl.db
 
 import androidx.room.TypeConverter
-import kotlinx.serialization.Serializable
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
-import kotlinx.serialization.decodeFromString
 import proton.android.pass.domain.breach.BreachAction
-import proton.android.pass.domain.breach.BreachActionCode
-
-@Serializable
-private data class BreachActionSerializable(
-    val name: String,
-    val code: String,
-    val url: String?
-)
 
 class BreachTypeConverters {
-    // Note: List<String> converters are provided by CommonConverters, so we don't duplicate them here
 
     @TypeConverter
-    fun fromBreachActionList(value: String?): List<BreachAction>? {
-        return value?.let { json ->
-            val serializableList: List<BreachActionSerializable> = Json.decodeFromString(json)
-            serializableList.map { serializable ->
-                BreachAction(
-                    name = serializable.name,
-                    code = BreachActionCode.from(serializable.code),
-                    url = serializable.url
-                )
-            }
-        }
-    }
+    fun fromBreachActionList(value: String?): List<BreachAction>? = value?.let { json -> Json.decodeFromString(json) }
 
     @TypeConverter
-    fun toBreachActionList(list: List<BreachAction>?): String? {
-        return list?.let { actions ->
-            val serializableList = actions.map { action ->
-                // Map enum to code string manually since code property is private
-                val codeString = when (action.code) {
-                    BreachActionCode.StayAlert -> "stay_alert"
-                    BreachActionCode.PasswordSource -> "password_source"
-                    BreachActionCode.PasswordExposed -> "password_exposed"
-                    BreachActionCode.PasswordsAll -> "passwords_all"
-                    BreachActionCode.Twofa -> "2fa"
-                    BreachActionCode.Aliases -> "aliases"
-                }
-                BreachActionSerializable(
-                    name = action.name,
-                    code = codeString,
-                    url = action.url
-                )
-            }
-            Json.encodeToString(serializableList)
-        }
-    }
+    fun toBreachActionList(list: List<BreachAction>?): String? = list?.let { actions -> Json.encodeToString(actions) }
 }
 

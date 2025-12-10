@@ -396,10 +396,7 @@ class BreachRepositoryImpl @Inject constructor(
         refreshAliasEmailBreaches(userId)
     }
 
-    private suspend fun refreshCustomEmailBreaches(
-        userId: UserId,
-        breachedCustomEmails: List<BreachCustomEmail>
-    ) {
+    private suspend fun refreshCustomEmailBreaches(userId: UserId, breachedCustomEmails: List<BreachCustomEmail>) {
         breachedCustomEmails.forEach { customEmail ->
             remoteBreachDataSource.getBreachesForCustomEmail(userId, customEmail.id)
                 .toDomain { breachDto ->
@@ -418,10 +415,7 @@ class BreachRepositoryImpl @Inject constructor(
         }
     }
 
-    private suspend fun refreshProtonEmailBreaches(
-        userId: UserId,
-        breachedProtonEmails: List<BreachProtonEmail>
-    ) {
+    private suspend fun refreshProtonEmailBreaches(userId: UserId, breachedProtonEmails: List<BreachProtonEmail>) {
         breachedProtonEmails.forEach { protonEmail ->
             remoteBreachDataSource.getBreachesForProtonEmail(userId, protonEmail.addressId)
                 .toDomain { breachDto ->

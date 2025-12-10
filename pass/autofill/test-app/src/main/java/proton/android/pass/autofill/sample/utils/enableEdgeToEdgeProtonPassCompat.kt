@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 Proton AG
+ * Copyright (c) 2025 Proton AG
  * This file is part of Proton AG and Proton Pass.
  *
  * Proton Pass is free software: you can redistribute it and/or modify
@@ -16,24 +16,26 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.autofill.sample
+package proton.android.pass.autofill.sample.utils
 
-import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import proton.android.pass.autofill.sample.databinding.ActivityLoginResultBinding
-import proton.android.pass.autofill.sample.utils.enableEdgeToEdgeProtonPassCompat
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
+import proton.android.pass.commonui.api.enableEdgeToEdgeProtonPass
 
-class LoginResultActivity : AppCompatActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+internal fun AppCompatActivity.enableEdgeToEdgeProtonPassCompat(view: View) {
+    this.enableEdgeToEdgeProtonPass()
 
-        val binding = ActivityLoginResultBinding.inflate(layoutInflater)
-        enableEdgeToEdgeProtonPassCompat(view = binding.root)
+    ViewCompat.setOnApplyWindowInsetsListener(view) { view, insets ->
+        val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+        view.setPadding(
+            view.paddingLeft,
+            systemBars.top,
+            view.paddingRight,
+            systemBars.bottom
+        )
 
-        binding.goBackButton.setOnClickListener {
-            finish()
-        }
-
-        setContentView(binding.root)
+        insets
     }
 }

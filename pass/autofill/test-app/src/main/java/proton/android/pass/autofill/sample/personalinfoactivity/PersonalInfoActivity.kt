@@ -24,12 +24,14 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import proton.android.pass.autofill.sample.LoginResultActivity
 import proton.android.pass.autofill.sample.databinding.ActivityPersonalInfoBinding
+import proton.android.pass.autofill.sample.utils.enableEdgeToEdgeProtonPassCompat
 
 class PersonalInfoActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         val binding = ActivityPersonalInfoBinding.inflate(layoutInflater)
+        enableEdgeToEdgeProtonPassCompat(view = binding.root)
 
         binding.nameEditText.setAutofillHints(View.AUTOFILL_HINT_NAME)
         binding.addressEditText.setAutofillHints(View.AUTOFILL_HINT_POSTAL_ADDRESS)

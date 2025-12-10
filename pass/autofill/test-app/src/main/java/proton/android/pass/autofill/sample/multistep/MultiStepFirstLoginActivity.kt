@@ -24,12 +24,14 @@ import android.view.View
 import android.view.autofill.AutofillManager
 import androidx.appcompat.app.AppCompatActivity
 import proton.android.pass.autofill.sample.databinding.ActivityMultistepLoginFirstBinding
+import proton.android.pass.autofill.sample.utils.enableEdgeToEdgeProtonPassCompat
 
 class MultiStepFirstLoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         val binding = ActivityMultistepLoginFirstBinding.inflate(layoutInflater)
+        enableEdgeToEdgeProtonPassCompat(view = binding.root)
 
         binding.loginButton.setOnClickListener {
             startActivity(Intent(this, MultiStepSecondLoginActivity::class.java))

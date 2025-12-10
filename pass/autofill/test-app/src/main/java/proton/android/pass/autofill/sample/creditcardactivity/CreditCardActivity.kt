@@ -24,6 +24,7 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import proton.android.pass.autofill.sample.LoginResultActivity
 import proton.android.pass.autofill.sample.databinding.ActivityCreditcardBinding
+import proton.android.pass.autofill.sample.utils.enableEdgeToEdgeProtonPassCompat
 
 @Suppress("MagicNumber")
 class CreditCardActivity : AppCompatActivity() {
@@ -31,6 +32,7 @@ class CreditCardActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         val binding = ActivityCreditcardBinding.inflate(layoutInflater)
+        enableEdgeToEdgeProtonPassCompat(view = binding.root)
 
         binding.nameEditText.setAutofillHints(View.AUTOFILL_HINT_NAME)
         binding.numberEditText.setAutofillHints(View.AUTOFILL_HINT_CREDIT_CARD_NUMBER)

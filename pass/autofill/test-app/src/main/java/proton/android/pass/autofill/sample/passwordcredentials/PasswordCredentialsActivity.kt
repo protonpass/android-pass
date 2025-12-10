@@ -30,6 +30,7 @@ import androidx.credentials.PasswordCredential
 import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.launch
 import proton.android.pass.autofill.sample.databinding.ActivityPasswordCredentialsBinding
+import proton.android.pass.autofill.sample.utils.enableEdgeToEdgeProtonPassCompat
 
 internal class PasswordCredentialsActivity : AppCompatActivity() {
 
@@ -41,6 +42,7 @@ internal class PasswordCredentialsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         val binding = ActivityPasswordCredentialsBinding.inflate(layoutInflater)
+        enableEdgeToEdgeProtonPassCompat(view = binding.root)
 
         binding.registerButton.setOnClickListener {
             updateStatusMessage(binding, "")

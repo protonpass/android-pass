@@ -22,6 +22,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import proton.android.pass.autofill.sample.R
 import proton.android.pass.autofill.sample.databinding.ActivitySimpleFragmentLoginBinding
+import proton.android.pass.autofill.sample.utils.enableEdgeToEdgeProtonPassCompat
 
 class SimpleFragmentLoginActivity : AppCompatActivity() {
 
@@ -31,6 +32,7 @@ class SimpleFragmentLoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         binding = ActivitySimpleFragmentLoginBinding.inflate(layoutInflater)
+        enableEdgeToEdgeProtonPassCompat(view = binding.root)
 
         if (supportFragmentManager.fragments.isEmpty()) {
             supportFragmentManager.beginTransaction()

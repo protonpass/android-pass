@@ -32,6 +32,7 @@ import proton.android.pass.autofill.sample.personalinfoactivity.PersonalInfoActi
 import proton.android.pass.autofill.sample.simpleactivity.SimpleLoginActivity
 import proton.android.pass.autofill.sample.simplecompose.SimpleComposeLoginActivity
 import proton.android.pass.autofill.sample.simplefragment.SimpleFragmentLoginActivity
+import proton.android.pass.autofill.sample.utils.enableEdgeToEdgeProtonPassCompat
 import proton.android.pass.autofill.sample.webview.WebViewLoginActivity
 
 class SampleSelectionActivity : AppCompatActivity() {
@@ -40,6 +41,7 @@ class SampleSelectionActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         val binding = ActivitySampleSelectionBinding.inflate(layoutInflater)
+        enableEdgeToEdgeProtonPassCompat(view = binding.root)
 
         binding.simpleActivityLoginButton.setOnClickListener {
             openActivity(SimpleLoginActivity::class.java)

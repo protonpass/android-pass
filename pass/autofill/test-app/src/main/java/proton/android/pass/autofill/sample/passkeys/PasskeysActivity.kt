@@ -29,6 +29,7 @@ import androidx.credentials.PublicKeyCredential
 import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.launch
 import proton.android.pass.autofill.sample.databinding.ActivityPasskeysBinding
+import proton.android.pass.autofill.sample.utils.enableEdgeToEdgeProtonPassCompat
 
 class PasskeysActivity : AppCompatActivity() {
 
@@ -36,6 +37,7 @@ class PasskeysActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         val binding = ActivityPasskeysBinding.inflate(layoutInflater)
+        enableEdgeToEdgeProtonPassCompat(view = binding.root)
 
         binding.registerButton.setOnClickListener {
             createPasskey(binding.usernameEditText.text.toString()) { res ->

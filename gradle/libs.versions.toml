@@ -343,7 +343,6 @@ fusion = { module = "me.proton.test:fusion", version.ref = "fusion" }
 zxing-core = { module = "com.google.zxing:core", version.ref = "zxing" }
 
 [bundles]
-core-compose = ["androidx-compose-foundation", "androidx-compose-foundationLayout", "androidx-compose-material", "androidx-compose-material3", "androidx-compose-material-icons-core", "androidx-compose-runtime", "androidx-compose-ui"]
-core-compose-debug = ["androidx-compose-uiTooling", "androidx-compose-uiToolingPreview", "androidx-compose-uiTestManifest"]
+core-compose = ["androidx-compose-foundation", "androidx-compose-foundationLayout", "androidx-compose-material", "androidx-compose-material3", "androidx-compose-material-icons-core", "androidx-compose-runtime", "androidx-compose-ui", "androidx-compose-uiToolingPreview"]
 core-test = ["core-test-android-instrumented", "core-accountManager-test", "core-accountRecovery-test", "core-auth-test", "core-humanVerification-test", "core-plan-test", "core-userRecovery-test", "core-userSettings-test"]
 test-android = ["fusion", "junit", "coroutines-test", "androidx-test-core-ktx", "androidx-test-runner", "androidx-test-rules", "androidx-compose-ui-test", "androidx-compose-ui-test-junit", "androidx-test-uiautomator", "dagger-hilt-android-testing"]

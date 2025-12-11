@@ -21,6 +21,8 @@ package proton.android.pass.data.impl.repositories
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import me.proton.core.domain.entity.UserId
+import me.proton.core.user.domain.UserManager
+import me.proton.core.user.domain.extension.isNotOrganizationUser
 import proton.android.pass.data.api.repositories.OrganizationSettingsRepository
 import proton.android.pass.data.impl.db.entities.PassOrganizationSettingsEntity
 import proton.android.pass.data.impl.local.LocalOrganizationSettingsDataSource
@@ -39,22 +41,24 @@ import javax.inject.Inject
 
 class OrganizationSettingsRepositoryImpl @Inject constructor(
     private val local: LocalOrganizationSettingsDataSource,
-    private val remote: RemoteOrganizationSettingsDataSource
+    private val remote: RemoteOrganizationSettingsDataSource,
+    private val userManager: UserManager
 ) : OrganizationSettingsRepository {
 
     override fun observe(userId: UserId): Flow<OrganizationSettings?> = local.observe(userId).map { it?.toDomain() }
 
     override suspend fun refresh(userId: UserId) {
+        val hasOrganization = !userManager.getUser(userId)
+            .isNotOrganizationUser()
         val response = remote.request(userId)
-        val entity = response.toEntity(userId)
+        val entity = response.toEntity(userId, hasOrganization)
         local.upsert(entity)
     }
 
-    private fun OrganizationGetOrganization?.toEntity(userId: UserId) = when (this) {
-        null -> PassOrganizationSettingsEntity.empty(userId.id)
-        else -> PassOrganizationSettingsEntity(
+    private fun OrganizationGetOrganization.toEntity(userId: UserId, hasOrganization: Boolean) =
+        PassOrganizationSettingsEntity(
             userId = userId.id,
-            hasOrganization = true,
+            hasOrganization = hasOrganization,
             canUpdate = canUpdate,
             shareMode = settings?.shareMode ?: OrganizationShareMode.Unrestricted.value,
             forceLockSeconds = settings?.forceLockSeconds ?: 0,
@@ -73,7 +77,6 @@ class OrganizationSettingsRepositoryImpl @Inject constructor(
             itemShareMode = settings?.itemShareMode,
             secureLinksMode = settings?.publicLinkMode
         )
-    }
 
     private fun PassOrganizationSettingsEntity.toDomain() = if (hasOrganization) {
         OrganizationSettings.Organization(

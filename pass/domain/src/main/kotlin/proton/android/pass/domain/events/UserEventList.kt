@@ -58,6 +58,7 @@ data class UserEventList(
     val groupInvitesChanged: SyncEventInvitesChanged?,
     val pendingAliasToCreateChanged: SyncEventInvitesChanged?,
     val breachUpdate: SyncEventInvitesChanged?,
+    val organizationInfoChanged: SyncEventInvitesChanged?,
     val sharesWithInvitesToCreate: List<SyncEventShare>,
     val refreshUser: Boolean,
     val eventsPending: Boolean,

@@ -47,7 +47,7 @@ dependencies {
 
     implementation(platform(libs.androidx.compose.bom))
     implementation(libs.bundles.core.compose)
-    debugImplementation(libs.bundles.core.compose.debug)
+    debugImplementation(libs.androidx.compose.uiTooling)
     implementation(libs.androidx.navigation.compose)
 
     implementation(libs.core.presentation)

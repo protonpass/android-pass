@@ -51,7 +51,7 @@ import proton.android.pass.features.home.R
 @Composable
 internal fun EmptyNoVaults(
     modifier: Modifier = Modifier,
-    canCreateVaults: Boolean,
+    canCreateVault: Boolean,
     onCreateVaultsClick: () -> Unit
 ) {
     Box(
@@ -74,7 +74,7 @@ internal fun EmptyNoVaults(
                 textAlign = TextAlign.Center
             )
 
-            if (canCreateVaults) {
+            if (canCreateVault) {
                 PassCircleButton(
                     modifier = Modifier,
                     text = stringResource(R.string.vault_drawer_create_vault),
@@ -119,7 +119,7 @@ fun EmptyNoVaultsPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: 
     PassTheme(isDark = isDark) {
         Surface {
             EmptyNoVaults(
-                canCreateVaults = false,
+                canCreateVault = false,
                 onCreateVaultsClick = {}
             )
         }
@@ -132,7 +132,7 @@ fun EmptyNoVaultsCanCreatePreview(@PreviewParameter(ThemePreviewProvider::class)
     PassTheme(isDark = isDark) {
         Surface {
             EmptyNoVaults(
-                canCreateVaults = true,
+                canCreateVault = true,
                 onCreateVaultsClick = {}
             )
         }

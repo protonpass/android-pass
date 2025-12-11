@@ -33,6 +33,7 @@ import proton.android.pass.data.api.usecases.RefreshSharesAndEnqueueSync
 import proton.android.pass.data.api.usecases.RefreshSharesResult
 import proton.android.pass.data.api.usecases.RefreshUserInvites
 import proton.android.pass.data.api.usecases.SyncUserEvents
+import proton.android.pass.data.api.usecases.organization.RefreshOrganizationSettings
 import proton.android.pass.data.api.usecases.simplelogin.SyncSimpleLoginPendingAliases
 import proton.android.pass.data.api.work.WorkManagerFacade
 import proton.android.pass.data.impl.repositories.UserEventRepository
@@ -56,7 +57,8 @@ class SyncUserEventsImpl @Inject constructor(
     private val refreshGroupInvites: RefreshGroupInvites,
     private val syncPendingAliases: SyncSimpleLoginPendingAliases,
     private val promoteNewInviteToInvite: PromoteNewInviteToInvite,
-    private val refreshBreaches: RefreshBreaches
+    private val refreshBreaches: RefreshBreaches,
+    private val refreshOrganizationSettings: RefreshOrganizationSettings
 ) : SyncUserEvents {
 
     override suspend fun invoke(userId: UserId) {
@@ -114,6 +116,7 @@ class SyncUserEventsImpl @Inject constructor(
         processGroupInvitesChanged(userId, eventList.groupInvitesChanged)
         processPendingAliasToCreateChanged(userId, eventList.pendingAliasToCreateChanged)
         processBreachUpdateChanged(userId, eventList.breachUpdate)
+        processOrganizationUpdateChanged(userId, eventList.organizationInfoChanged)
         processNewUserInvitesChanged(userId, eventList.sharesWithInvitesToCreate)
     }
 
@@ -159,12 +162,16 @@ class SyncUserEventsImpl @Inject constructor(
         invitesChanged?.let { refreshGroupInvites(userId, it.eventToken) }
     }
 
-    private suspend fun processPendingAliasToCreateChanged(userId: UserId, invitesChanged: SyncEventInvitesChanged?) {
-        invitesChanged?.let { syncPendingAliases(userId, false) }
+    private suspend fun processPendingAliasToCreateChanged(userId: UserId, changed: SyncEventInvitesChanged?) {
+        changed?.let { syncPendingAliases(userId, false) }
     }
 
-    private suspend fun processBreachUpdateChanged(userId: UserId, invitesChanged: SyncEventInvitesChanged?) {
-        invitesChanged?.let { refreshBreaches(userId) }
+    private suspend fun processBreachUpdateChanged(userId: UserId, changed: SyncEventInvitesChanged?) {
+        changed?.let { refreshBreaches(userId) }
+    }
+
+    private suspend fun processOrganizationUpdateChanged(userId: UserId, changed: SyncEventInvitesChanged?) {
+        changed?.let { refreshOrganizationSettings(userId) }
     }
 
     private suspend fun processNewUserInvitesChanged(userId: UserId, sharesWithInvitesToCreate: List<SyncEventShare>) {
@@ -215,11 +222,18 @@ class SyncUserEventsImpl @Inject constructor(
             result
         }
 
+        val refreshOrganizationSettingsDeferred = async {
+            val result = refreshOrganizationSettings(userId)
+            PassLogger.i(TAG, "finished refreshOrganizationSettings")
+            result
+        }
+
         awaitAll(
             userInvitesDeferred,
             groupInvitesDeferred,
             syncPendingAliasesDeferred,
-            refreshBreachesDeferred
+            refreshBreachesDeferred,
+            refreshOrganizationSettingsDeferred
         )
 
         PassLogger.i(TAG, "end full refresh")

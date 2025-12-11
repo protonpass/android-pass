@@ -28,6 +28,7 @@ import proton.android.pass.data.fakes.repositories.FakeItemRepository
 import proton.android.pass.data.fakes.usecases.FakePromoteNewInviteToInvite
 import proton.android.pass.data.fakes.usecases.FakeRefreshBreaches
 import proton.android.pass.data.fakes.usecases.FakeRefreshGroupInvites
+import proton.android.pass.data.fakes.usecases.FakeRefreshOrganizationSettings
 import proton.android.pass.data.fakes.usecases.FakeRefreshSharesAndEnqueueSync
 import proton.android.pass.data.fakes.usecases.FakeRefreshUserInvites
 import proton.android.pass.data.fakes.usecases.FakeRefreshUserAccess
@@ -59,6 +60,7 @@ internal class SyncUserEventsImplTest {
     private lateinit var refreshBreaches: FakeRefreshBreaches
     private lateinit var syncPendingAliases: FakeSyncSimpleLoginPendingAliases
     private lateinit var promoteNewInviteToInvite: FakePromoteNewInviteToInvite
+    private lateinit var refreshOrganizationSettings: FakeRefreshOrganizationSettings
 
     @Before
     fun setup() {
@@ -73,6 +75,7 @@ internal class SyncUserEventsImplTest {
         refreshBreaches = FakeRefreshBreaches()
         syncPendingAliases = FakeSyncSimpleLoginPendingAliases()
         promoteNewInviteToInvite = FakePromoteNewInviteToInvite()
+        refreshOrganizationSettings = FakeRefreshOrganizationSettings()
 
         instance = SyncUserEventsImpl(
             userEventRepository = userEventRepository,
@@ -85,7 +88,8 @@ internal class SyncUserEventsImplTest {
             refreshGroupInvites = refreshGroupInvites,
             syncPendingAliases = syncPendingAliases,
             promoteNewInviteToInvite = promoteNewInviteToInvite,
-            refreshBreaches = refreshBreaches
+            refreshBreaches = refreshBreaches,
+            refreshOrganizationSettings = refreshOrganizationSettings
         )
     }
 
@@ -512,6 +516,7 @@ internal class SyncUserEventsImplTest {
         groupInvitesChanged: SyncEventInvitesChanged? = null,
         pendingAliasToCreateChanged: SyncEventInvitesChanged? = null,
         breachUpdate: SyncEventInvitesChanged? = null,
+        organizationInfoChanged: SyncEventInvitesChanged? = null,
         sharesWithInvitesToCreate: List<SyncEventShare> = emptyList(),
         planChanged: Boolean = false,
         eventsPending: Boolean = false,
@@ -531,6 +536,7 @@ internal class SyncUserEventsImplTest {
         pendingAliasToCreateChanged = pendingAliasToCreateChanged,
         sharesWithInvitesToCreate = sharesWithInvitesToCreate,
         breachUpdate = breachUpdate,
+        organizationInfoChanged = organizationInfoChanged,
         refreshUser = planChanged,
         eventsPending = eventsPending,
         fullRefresh = fullRefresh

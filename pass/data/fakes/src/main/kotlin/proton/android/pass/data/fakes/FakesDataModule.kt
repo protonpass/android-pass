@@ -187,6 +187,7 @@ import proton.android.pass.data.api.usecases.items.UpdateItemFlag
 import proton.android.pass.data.api.usecases.organization.ObserveAnyAccountHasEnforcedLock
 import proton.android.pass.data.api.usecases.organization.ObserveOrganizationSettings
 import proton.android.pass.data.api.usecases.organization.ObserveOrganizationSharingPolicy
+import proton.android.pass.data.api.usecases.organization.RefreshOrganizationSettings
 import proton.android.pass.data.api.usecases.passkeys.GetPasskeyById
 import proton.android.pass.data.api.usecases.passkeys.ObserveItemsWithPasskeys
 import proton.android.pass.data.api.usecases.passwordHistoryEntry.AddOnePasswordHistoryEntryToUser
@@ -343,6 +344,7 @@ import proton.android.pass.data.fakes.usecases.FakePerformSync
 import proton.android.pass.data.fakes.usecases.FakePinItems
 import proton.android.pass.data.fakes.usecases.FakeRefreshBreaches
 import proton.android.pass.data.fakes.usecases.FakeRefreshContent
+import proton.android.pass.data.fakes.usecases.FakeRefreshOrganizationSettings
 import proton.android.pass.data.fakes.usecases.FakeRefreshUserAccess
 import proton.android.pass.data.fakes.usecases.FakeRejectInvite
 import proton.android.pass.data.fakes.usecases.FakeRemoveShareMember
@@ -654,6 +656,9 @@ abstract class FakesDataModule {
 
     @Binds
     abstract fun bindRefreshBreaches(impl: FakeRefreshBreaches): RefreshBreaches
+
+    @Binds
+    abstract fun bindRefreshOrganizationSettings(impl: FakeRefreshOrganizationSettings): RefreshOrganizationSettings
 
     @Binds
     abstract fun bindRefreshSharesAndEnqueueSync(impl: FakeRefreshSharesAndEnqueueSync): RefreshSharesAndEnqueueSync

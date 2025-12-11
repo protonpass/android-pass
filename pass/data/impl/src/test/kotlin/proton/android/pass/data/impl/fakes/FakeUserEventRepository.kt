@@ -75,6 +75,7 @@ class FakeUserEventRepository : UserEventRepository {
             groupInvitesChanged = null,
             pendingAliasToCreateChanged = null,
             breachUpdate = null,
+            organizationInfoChanged = null,
             sharesWithInvitesToCreate = emptyList(),
             refreshUser = false,
             eventsPending = false,

@@ -139,15 +139,15 @@ class AccountListenerInitializer : Initializer<Unit> {
             .first()
         PassLogger.i(TAG, "Account ready : ${account.userId}")
 
-        safeRunCatching {
-            refreshOrganizationSettings(account.userId)
-        }.onSuccess {
-            PassLogger.i(TAG, "Organization settings refreshed for ${account.userId}")
-        }.onFailure {
-            PassLogger.w(TAG, "Could not refresh organization settings for ${account.userId}")
-            PassLogger.w(TAG, it)
-        }
         if (!isUserEventsEnabled) {
+            safeRunCatching {
+                refreshOrganizationSettings(account.userId)
+            }.onSuccess {
+                PassLogger.i(TAG, "Organization settings refreshed for ${account.userId}")
+            }.onFailure {
+                PassLogger.w(TAG, "Could not refresh organization settings for ${account.userId}")
+                PassLogger.w(TAG, it)
+            }
             safeRunCatching {
                 refreshBreaches(account.userId)
             }.onSuccess {

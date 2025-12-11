@@ -20,16 +20,15 @@ package proton.android.pass.domain.organizations
 
 enum class OrganizationVaultCreateMode(internal val value: Int) {
     AllUsers(value = 0),
-    OnlyOrganizationAdmin(value = 1);
+    OnlyOrganizationAdmin(value = 1),
+    OnlyOrgAdminsAndPersonalVault(value = 2);
 
     companion object {
-
         fun fromValue(value: Int?): OrganizationVaultCreateMode = when (value) {
             AllUsers.value -> AllUsers
             OnlyOrganizationAdmin.value -> OnlyOrganizationAdmin
+            OnlyOrgAdminsAndPersonalVault.value -> OnlyOrgAdminsAndPersonalVault
             else -> AllUsers
         }
-
     }
-
 }

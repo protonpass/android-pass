@@ -20,48 +20,57 @@ package proton.android.pass.data.impl.usecases.capabilities
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.flatMapLatest
-import kotlinx.coroutines.flow.flowOf
-import kotlinx.coroutines.flow.mapLatest
 import proton.android.pass.common.api.None
+import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
 import proton.android.pass.data.api.usecases.GetUserPlan
 import proton.android.pass.data.api.usecases.ObserveVaults
 import proton.android.pass.data.api.usecases.capabilities.CanCreateVault
 import proton.android.pass.data.api.usecases.organization.ObserveOrganizationVaultsPolicy
+import proton.android.pass.domain.Plan
 import proton.android.pass.domain.PlanLimit
+import proton.android.pass.domain.Vault
+import proton.android.pass.domain.organizations.OrganizationVaultCreateMode
+import proton.android.pass.domain.organizations.OrganizationVaultsPolicy
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
 class CanCreateVaultImpl @Inject constructor(
-    observeOrganizationVaultsPolicy: ObserveOrganizationVaultsPolicy,
-    observeVaults: ObserveVaults,
-    currentUserPlan: GetUserPlan
+    private val observeOrganizationVaultsPolicy: ObserveOrganizationVaultsPolicy,
+    private val observeVaults: ObserveVaults,
+    private val currentUserPlan: GetUserPlan
 ) : CanCreateVault {
 
-    private val canCreateVaultsByPolicy: Flow<Boolean> = observeOrganizationVaultsPolicy()
-        .mapLatest { organizationVaultsPolicyOption ->
-            when (organizationVaultsPolicyOption) {
-                None -> false
-                is Some -> organizationVaultsPolicyOption.value.canCreateVaults
+    override fun invoke(): Flow<Boolean> = combine(
+        observeOrganizationVaultsPolicy(),
+        observeVaults(includeHidden = true),
+        currentUserPlan(),
+        ::transformVaultCheck
+    )
+
+    private fun transformVaultCheck(
+        organizationVaultsPolicyOption: Option<OrganizationVaultsPolicy>,
+        vaults: List<Vault>,
+        plan: Plan
+    ): Boolean {
+        return when (organizationVaultsPolicyOption) {
+            None -> false
+            is Some -> {
+                when (organizationVaultsPolicyOption.value.vaultCreateMode) {
+                    OrganizationVaultCreateMode.AllUsers -> {
+                        when (val limit = plan.vaultLimit) {
+                            PlanLimit.Unlimited -> true
+                            is PlanLimit.Limited -> vaults.size < limit.limit
+                        }
+                    }
+
+                    OrganizationVaultCreateMode.OnlyOrganizationAdmin -> false
+                    OrganizationVaultCreateMode.OnlyOrgAdminsAndPersonalVault -> {
+                        vaults.none { it.isOwned }
+                    }
+                }
             }
         }
-
-    private val canCreateVaultsByPlanFlow: Flow<Boolean> = combine(
-        observeVaults(includeHidden = true),
-        currentUserPlan()
-    ) { vaults, plan ->
-        when (val vaultLimit = plan.vaultLimit) {
-            PlanLimit.Unlimited -> true
-            is PlanLimit.Limited -> vaults.size < vaultLimit.limit
-        }
     }
-
-    override fun invoke(): Flow<Boolean> = canCreateVaultsByPolicy
-        .flatMapLatest { canCreateVaultsByPolicy ->
-            if (canCreateVaultsByPolicy) canCreateVaultsByPlanFlow
-            else flowOf(false)
-        }
-
 }

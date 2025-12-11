@@ -27,6 +27,7 @@ import proton.android.pass.common.api.some
 import proton.android.pass.data.api.usecases.organization.ObserveOrganizationSettings
 import proton.android.pass.data.api.usecases.organization.ObserveOrganizationVaultsPolicy
 import proton.android.pass.domain.OrganizationSettings
+import proton.android.pass.domain.organizations.OrganizationVaultCreateMode
 import proton.android.pass.domain.organizations.OrganizationVaultsPolicy
 import javax.inject.Inject
 
@@ -40,7 +41,12 @@ class ObserveOrganizationVaultsPolicyImpl @Inject constructor(
                 is None -> None
                 is Some -> {
                     when (val organizationSettings = organizationSettingsOption.value) {
-                        OrganizationSettings.NotAnOrganization -> None
+                        OrganizationSettings.NotAnOrganization -> Some(
+                            OrganizationVaultsPolicy(
+                                vaultCreateMode = OrganizationVaultCreateMode.AllUsers
+                            )
+                        )
+
                         is OrganizationSettings.Organization -> organizationSettings.vaultsPolicy.some()
                     }
                 }

@@ -86,7 +86,7 @@ internal fun HomeDrawerContent(
         )
 
         HomeDrawerFooter(
-            canCreateVaults = canCreateVaults,
+            canCreateVault = canCreateVault,
             canOrganiseVaults = canOrganiseVaults,
             onUiEvent = onUiEvent
         )
@@ -95,7 +95,7 @@ internal fun HomeDrawerContent(
 
 @Composable
 internal fun HomeDrawerFooter(
-    canCreateVaults: Boolean,
+    canCreateVault: Boolean,
     canOrganiseVaults: Boolean,
     onUiEvent: (HomeDrawerUiEvent) -> Unit
 ) {
@@ -106,7 +106,7 @@ internal fun HomeDrawerFooter(
         verticalArrangement = Arrangement.spacedBy(Spacing.extraSmall),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        if (canCreateVaults) {
+        if (canCreateVault) {
             Button.Circular(
                 modifier = Modifier.fillMaxWidth(),
                 color = PassTheme.colors.interactionNormMinor1,
@@ -165,7 +165,7 @@ fun FooterPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean
     PassTheme(isDark = isDark) {
         Surface {
             HomeDrawerFooter(
-                canCreateVaults = true,
+                canCreateVault = true,
                 canOrganiseVaults = true
             ) {}
         }

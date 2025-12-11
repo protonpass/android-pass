@@ -73,14 +73,14 @@ class HomeDrawerViewModel @Inject constructor(
         itemCountSummaryOptionFlow,
         observeUpgradeInfo().asLoadingResult()
     ) { vaultSharesItemsCount,
-        canCreateVaults,
+        canCreateVault,
         canOrganiseVaults,
         vaultSelectionOption,
         itemCountSummaryOption,
         upgradeInfo ->
         HomeDrawerState(
             vaultShares = vaultSharesItemsCount,
-            canCreateVaults = canCreateVaults,
+            canCreateVault = canCreateVault,
             canOrganiseVaults = canOrganiseVaults,
             vaultSelectionOption = vaultSelectionOption,
             itemCountSummaryOption = itemCountSummaryOption,

@@ -26,7 +26,7 @@ data class OrganizationGetResponse(
     @SerialName("Code")
     val code: Int,
     @SerialName("Organization")
-    val organization: OrganizationGetOrganization?
+    val organization: OrganizationGetOrganization
 )
 
 @Serializable

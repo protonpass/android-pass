@@ -19,20 +19,15 @@
 package proton.android.pass.data.impl.usecases.organization
 
 import me.proton.core.domain.entity.UserId
-import me.proton.core.user.domain.UserManager
-import me.proton.core.user.domain.extension.isOrganizationUser
 import proton.android.pass.data.api.repositories.OrganizationSettingsRepository
 import proton.android.pass.data.api.usecases.organization.RefreshOrganizationSettings
 import javax.inject.Inject
 
 class RefreshOrganizationSettingsImpl @Inject constructor(
-    private val organizationSettingsRepository: OrganizationSettingsRepository,
-    private val userManager: UserManager
+    private val organizationSettingsRepository: OrganizationSettingsRepository
 ) : RefreshOrganizationSettings {
 
     override suspend fun invoke(userId: UserId) {
-        val user = userManager.getUser(userId)
-        if (!user.isOrganizationUser()) return
         organizationSettingsRepository.refresh(userId)
     }
 }

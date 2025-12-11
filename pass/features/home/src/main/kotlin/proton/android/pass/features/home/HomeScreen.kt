@@ -1059,7 +1059,7 @@ fun HomeScreen(
                         }
                     }
                 },
-                canCreateVaults = homeDrawerState.canCreateVaults
+                canCreateVault = homeDrawerState.canCreateVault
             )
 
             ConfirmRestoreAllDialog(

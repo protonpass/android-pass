@@ -29,7 +29,7 @@ import proton.android.pass.searchoptions.api.VaultSelectionOption
 @Stable
 internal data class HomeDrawerState(
     internal val vaultShares: List<VaultWithItemCount>,
-    internal val canCreateVaults: Boolean,
+    internal val canCreateVault: Boolean,
     internal val canOrganiseVaults: Boolean,
     internal val vaultSelectionOption: VaultSelectionOption,
     private val itemCountSummaryOption: Option<ItemCountSummary>,
@@ -80,7 +80,7 @@ internal data class HomeDrawerState(
 
         internal val Initial: HomeDrawerState = HomeDrawerState(
             vaultShares = emptyList(),
-            canCreateVaults = false,
+            canCreateVault = false,
             canOrganiseVaults = false,
             vaultSelectionOption = VaultSelectionOption.AllVaults,
             itemCountSummaryOption = None,

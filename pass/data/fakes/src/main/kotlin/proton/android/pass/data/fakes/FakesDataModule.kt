@@ -139,7 +139,6 @@ import proton.android.pass.data.api.usecases.breach.AddBreachCustomEmail
 import proton.android.pass.data.api.usecases.breach.MarkEmailBreachAsResolved
 import proton.android.pass.data.api.usecases.breach.ObserveAllBreachByUserId
 import proton.android.pass.data.api.usecases.breach.ObserveBreachAliasEmails
-import proton.android.pass.data.api.usecases.breach.ObserveHasBreaches
 import proton.android.pass.data.api.usecases.breach.ObserveBreachCustomEmails
 import proton.android.pass.data.api.usecases.breach.ObserveBreachEmailReport
 import proton.android.pass.data.api.usecases.breach.ObserveBreachProtonEmails
@@ -148,6 +147,7 @@ import proton.android.pass.data.api.usecases.breach.ObserveBreachesForCustomEmai
 import proton.android.pass.data.api.usecases.breach.ObserveBreachesForEmail
 import proton.android.pass.data.api.usecases.breach.ObserveBreachesForProtonEmail
 import proton.android.pass.data.api.usecases.breach.ObserveCustomEmailSuggestions
+import proton.android.pass.data.api.usecases.breach.ObserveHasBreaches
 import proton.android.pass.data.api.usecases.breach.RemoveCustomEmail
 import proton.android.pass.data.api.usecases.breach.ResendVerificationCode
 import proton.android.pass.data.api.usecases.breach.UpdateGlobalAliasAddressesMonitorState
@@ -187,6 +187,7 @@ import proton.android.pass.data.api.usecases.items.UpdateItemFlag
 import proton.android.pass.data.api.usecases.organization.ObserveAnyAccountHasEnforcedLock
 import proton.android.pass.data.api.usecases.organization.ObserveOrganizationSettings
 import proton.android.pass.data.api.usecases.organization.ObserveOrganizationSharingPolicy
+import proton.android.pass.data.api.usecases.organization.ObserveOrganizationVaultsPolicy
 import proton.android.pass.data.api.usecases.organization.RefreshOrganizationSettings
 import proton.android.pass.data.api.usecases.passkeys.GetPasskeyById
 import proton.android.pass.data.api.usecases.passkeys.ObserveItemsWithPasskeys
@@ -244,34 +245,19 @@ import proton.android.pass.data.api.work.WorkerLauncher
 import proton.android.pass.data.fakes.crypto.FakeGetShareAndItemKey
 import proton.android.pass.data.fakes.repositories.FakeAliasRepository
 import proton.android.pass.data.fakes.repositories.FakeAssetLinkRepository
+import proton.android.pass.data.fakes.repositories.FakeBulkInviteRepository
+import proton.android.pass.data.fakes.repositories.FakeBulkMoveToVaultRepository
 import proton.android.pass.data.fakes.repositories.FakeDraftAttachmentRepository
+import proton.android.pass.data.fakes.repositories.FakeDraftRepository
 import proton.android.pass.data.fakes.repositories.FakeInAppMessagesRepository
+import proton.android.pass.data.fakes.repositories.FakeItemRepository
 import proton.android.pass.data.fakes.repositories.FakeMetadataResolver
 import proton.android.pass.data.fakes.repositories.FakePasswordHistoryEntryRepository
 import proton.android.pass.data.fakes.repositories.FakePendingAttachmentLinkRepository
 import proton.android.pass.data.fakes.repositories.FakePendingAttachmentUpdaterRepository
 import proton.android.pass.data.fakes.repositories.FakeSentinelRepository
-import proton.android.pass.data.fakes.repositories.FakeBulkInviteRepository
-import proton.android.pass.data.fakes.repositories.FakeBulkMoveToVaultRepository
-import proton.android.pass.data.fakes.repositories.FakeDraftRepository
-import proton.android.pass.data.fakes.repositories.FakeItemRepository
 import proton.android.pass.data.fakes.repositories.FakeUserAccessDataRepository
 import proton.android.pass.data.fakes.repositories.FakeUserInviteRepository
-import proton.android.pass.data.fakes.usecases.FakeCanOrganiseVaults
-import proton.android.pass.data.fakes.usecases.FakeChangeAliasStatus
-import proton.android.pass.data.fakes.usecases.FakeGetItemById
-import proton.android.pass.data.fakes.usecases.FakeInitialWorkerLauncher
-import proton.android.pass.data.fakes.usecases.FakeObserveAddressesByUserId
-import proton.android.pass.data.fakes.usecases.FakeObserveEncryptedItems
-import proton.android.pass.data.fakes.usecases.FakeObserveGroupMembersByGroup
-import proton.android.pass.data.fakes.usecases.FakeObserveInviteRecommendations
-import proton.android.pass.data.fakes.usecases.FakePinItem
-import proton.android.pass.data.fakes.usecases.FakePromoteNewInviteToInvite
-import proton.android.pass.data.fakes.usecases.FakeRefreshGroupInvites
-import proton.android.pass.data.fakes.usecases.FakeRefreshSharesAndEnqueueSync
-import proton.android.pass.data.fakes.usecases.FakeRefreshUserInvites
-import proton.android.pass.data.fakes.usecases.FakeUnpinItem
-import proton.android.pass.data.fakes.usecases.FakeUpdateAliasName
 import proton.android.pass.data.fakes.usecases.FakeAcceptInvite
 import proton.android.pass.data.fakes.usecases.FakeAddSearchEntry
 import proton.android.pass.data.fakes.usecases.FakeApplyPendingEvents
@@ -280,9 +266,11 @@ import proton.android.pass.data.fakes.usecases.FakeCanCreateVault
 import proton.android.pass.data.fakes.usecases.FakeCanDisplayTotp
 import proton.android.pass.data.fakes.usecases.FakeCanManageVaultAccess
 import proton.android.pass.data.fakes.usecases.FakeCanMigrateVault
+import proton.android.pass.data.fakes.usecases.FakeCanOrganiseVaults
 import proton.android.pass.data.fakes.usecases.FakeCanPerformPaidAction
 import proton.android.pass.data.fakes.usecases.FakeCanShareShare
 import proton.android.pass.data.fakes.usecases.FakeCancelShareInvite
+import proton.android.pass.data.fakes.usecases.FakeChangeAliasStatus
 import proton.android.pass.data.fakes.usecases.FakeCheckAddressesCanBeInvited
 import proton.android.pass.data.fakes.usecases.FakeCheckMasterPassword
 import proton.android.pass.data.fakes.usecases.FakeCheckPin
@@ -304,6 +292,7 @@ import proton.android.pass.data.fakes.usecases.FakeGetDefaultBrowser
 import proton.android.pass.data.fakes.usecases.FakeGetInviteUserMode
 import proton.android.pass.data.fakes.usecases.FakeGetItemActions
 import proton.android.pass.data.fakes.usecases.FakeGetItemByAliasEmail
+import proton.android.pass.data.fakes.usecases.FakeGetItemById
 import proton.android.pass.data.fakes.usecases.FakeGetPasskeyById
 import proton.android.pass.data.fakes.usecases.FakeGetShareById
 import proton.android.pass.data.fakes.usecases.FakeGetSuggestedAutofillItems
@@ -311,11 +300,13 @@ import proton.android.pass.data.fakes.usecases.FakeGetUserPlan
 import proton.android.pass.data.fakes.usecases.FakeGetVaultByShareId
 import proton.android.pass.data.fakes.usecases.FakeGetVaultMembers
 import proton.android.pass.data.fakes.usecases.FakeGetVaultWithItemCountById
+import proton.android.pass.data.fakes.usecases.FakeInitialWorkerLauncher
 import proton.android.pass.data.fakes.usecases.FakeInviteToVault
 import proton.android.pass.data.fakes.usecases.FakeItemSyncStatusRepository
 import proton.android.pass.data.fakes.usecases.FakeLeaveShare
 import proton.android.pass.data.fakes.usecases.FakeMigrateItems
 import proton.android.pass.data.fakes.usecases.FakeMigrateVault
+import proton.android.pass.data.fakes.usecases.FakeObserveAddressesByUserId
 import proton.android.pass.data.fakes.usecases.FakeObserveAliasDetails
 import proton.android.pass.data.fakes.usecases.FakeObserveAliasOptions
 import proton.android.pass.data.fakes.usecases.FakeObserveAllShares
@@ -325,6 +316,9 @@ import proton.android.pass.data.fakes.usecases.FakeObserveConfirmedInviteToken
 import proton.android.pass.data.fakes.usecases.FakeObserveCurrentUser
 import proton.android.pass.data.fakes.usecases.FakeObserveCurrentUserSettings
 import proton.android.pass.data.fakes.usecases.FakeObserveDefaultVault
+import proton.android.pass.data.fakes.usecases.FakeObserveEncryptedItems
+import proton.android.pass.data.fakes.usecases.FakeObserveGroupMembersByGroup
+import proton.android.pass.data.fakes.usecases.FakeObserveInviteRecommendations
 import proton.android.pass.data.fakes.usecases.FakeObserveInvites
 import proton.android.pass.data.fakes.usecases.FakeObserveItemById
 import proton.android.pass.data.fakes.usecases.FakeObserveItemCount
@@ -341,11 +335,16 @@ import proton.android.pass.data.fakes.usecases.FakeObserveVaultWithItemCountById
 import proton.android.pass.data.fakes.usecases.FakeObserveVaults
 import proton.android.pass.data.fakes.usecases.FakeObserveVaultsWithItemCount
 import proton.android.pass.data.fakes.usecases.FakePerformSync
+import proton.android.pass.data.fakes.usecases.FakePinItem
 import proton.android.pass.data.fakes.usecases.FakePinItems
+import proton.android.pass.data.fakes.usecases.FakePromoteNewInviteToInvite
 import proton.android.pass.data.fakes.usecases.FakeRefreshBreaches
 import proton.android.pass.data.fakes.usecases.FakeRefreshContent
+import proton.android.pass.data.fakes.usecases.FakeRefreshGroupInvites
 import proton.android.pass.data.fakes.usecases.FakeRefreshOrganizationSettings
+import proton.android.pass.data.fakes.usecases.FakeRefreshSharesAndEnqueueSync
 import proton.android.pass.data.fakes.usecases.FakeRefreshUserAccess
+import proton.android.pass.data.fakes.usecases.FakeRefreshUserInvites
 import proton.android.pass.data.fakes.usecases.FakeRejectInvite
 import proton.android.pass.data.fakes.usecases.FakeRemoveShareMember
 import proton.android.pass.data.fakes.usecases.FakeResendShareInvite
@@ -355,8 +354,10 @@ import proton.android.pass.data.fakes.usecases.FakeRestoreItems
 import proton.android.pass.data.fakes.usecases.FakeSetDefaultVault
 import proton.android.pass.data.fakes.usecases.FakeTransferVaultOwnership
 import proton.android.pass.data.fakes.usecases.FakeTrashItems
+import proton.android.pass.data.fakes.usecases.FakeUnpinItem
 import proton.android.pass.data.fakes.usecases.FakeUnpinItems
 import proton.android.pass.data.fakes.usecases.FakeUpdateAlias
+import proton.android.pass.data.fakes.usecases.FakeUpdateAliasName
 import proton.android.pass.data.fakes.usecases.FakeUpdateAutofillItem
 import proton.android.pass.data.fakes.usecases.FakeUpdateItem
 import proton.android.pass.data.fakes.usecases.FakeUpdateShareMemberRole
@@ -379,7 +380,6 @@ import proton.android.pass.data.fakes.usecases.breach.FakeAddBreachCustomEmail
 import proton.android.pass.data.fakes.usecases.breach.FakeMarkEmailBreachAsResolved
 import proton.android.pass.data.fakes.usecases.breach.FakeObserveAllBreachByUserId
 import proton.android.pass.data.fakes.usecases.breach.FakeObserveBreachAliasEmails
-import proton.android.pass.data.fakes.usecases.breach.FakeObserveHasBreaches
 import proton.android.pass.data.fakes.usecases.breach.FakeObserveBreachCustomEmails
 import proton.android.pass.data.fakes.usecases.breach.FakeObserveBreachEmailReport
 import proton.android.pass.data.fakes.usecases.breach.FakeObserveBreachProtonEmails
@@ -389,6 +389,7 @@ import proton.android.pass.data.fakes.usecases.breach.FakeObserveBreachesForEmai
 import proton.android.pass.data.fakes.usecases.breach.FakeObserveBreachesForProtonEmail
 import proton.android.pass.data.fakes.usecases.breach.FakeObserveCustomEmailSuggestions
 import proton.android.pass.data.fakes.usecases.breach.FakeObserveGlobalMonitorState
+import proton.android.pass.data.fakes.usecases.breach.FakeObserveHasBreaches
 import proton.android.pass.data.fakes.usecases.breach.FakeRemoveCustomEmail
 import proton.android.pass.data.fakes.usecases.breach.FakeResendVerificationCode
 import proton.android.pass.data.fakes.usecases.breach.FakeUpdateGlobalAliasAddressesMonitorState
@@ -412,6 +413,7 @@ import proton.android.pass.data.fakes.usecases.items.FakeObserveSharedItemCountS
 import proton.android.pass.data.fakes.usecases.items.FakeOpenItemRevision
 import proton.android.pass.data.fakes.usecases.items.FakeUpdateItemFlag
 import proton.android.pass.data.fakes.usecases.organizations.FakeObserveOrganizationSharingPolicy
+import proton.android.pass.data.fakes.usecases.organizations.FakeObserveOrganizationVaultsPolicy
 import proton.android.pass.data.fakes.usecases.passwordHistoryEntry.FakeAddOnePasswordHistoryEntryToUser
 import proton.android.pass.data.fakes.usecases.passwordHistoryEntry.FakeDeleteOldPasswordHistoryEntry
 import proton.android.pass.data.fakes.usecases.passwordHistoryEntry.FakeDeleteOnePasswordHistoryEntryForUser
@@ -1133,6 +1135,11 @@ abstract class FakesDataModule {
     abstract fun bindObserveOrganizationSharingPolicy(
         impl: FakeObserveOrganizationSharingPolicy
     ): ObserveOrganizationSharingPolicy
+
+    @Binds
+    abstract fun bindObserveOrganizationVaultsPolicy(
+        impl: FakeObserveOrganizationVaultsPolicy
+    ): ObserveOrganizationVaultsPolicy
 
     @Binds
     abstract fun bindGetPasswordCredentialItems(impl: FakeGetPasswordCredentialItems): GetPasswordCredentialItems

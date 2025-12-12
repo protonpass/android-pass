@@ -2,8 +2,8 @@
 <resources>
   <string name="on_boarding_autofill_content">Nechajte Proton Pass vypĺňať prihlasovacie údaje za vás. Nevyžaduje sa písanie ani kopírovanie a vkladanie.</string>
   <string name="on_boarding_autofill_title">Okamžité prihlásenie do aplikácií</string>
-  <string name="on_boarding_autofill_content_v2">Proton pass fill in login details for you. No typing or copy paste required.</string>
-  <string name="on_boarding_autofill_title_v2">Enjoy the magic of AutoFill</string>
+  <string name="on_boarding_autofill_content_v2">Proton Pass vypĺňa prihlasovacie údaje za vás. Nevyžaduje sa písanie ani kopírovanie a vkladanie.</string>
+  <string name="on_boarding_autofill_title_v2">Vychutnajte si čaro automatického vypĺňania</string>
   <string name="on_boarding_autofill_button">Automatické vypĺňanie s Proton Pass</string>
   <string name="on_boarding_fingerprint_content">Nastavte Proton Pass na odomknutie odtlačkom prsta, aby ste len vy mali k nemu prístup.</string>
   <string name="on_boarding_fingerprint_title">Chráňte svoje najcitlivejšie údaje</string>
@@ -13,7 +13,7 @@
   <string name="on_boarding_last_page_button">Začať používať Proton Pass</string>
   <string name="on_boarding_skip">Teraz nie</string>
   <string name="on_boarding_tutorial">Pozrite si krátke video o tom, ako používať Proton Pass</string>
-  <string name="on_boarding_tutorial_v2">Learn how to use Proton Pass</string>
+  <string name="on_boarding_tutorial_v2">Naučte sa, ako používať Proton Pass</string>
   <string name="on_boarding_pending_invite_content">Z bezpečnostných dôvodov musí byť váš prístup potvrdený.</string>
   <string name="on_boarding_pending_invite_title">Čaká sa na prístup k zdieľaným údajom</string>
   <string name="on_boarding_pending_invite_button">Ďalšie informácie o službe Proton Pass</string>

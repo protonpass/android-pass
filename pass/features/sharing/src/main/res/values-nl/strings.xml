@@ -59,7 +59,7 @@
   <string name="sharing_snackbar_invite_sent_error">Kan de uitnodiging niet verzenden</string>
   <string name="sharing_snackbar_invite_new_users_error">Kan geen uitnodigingen versturen naar nieuwe gebruikers</string>
   <string name="sharing_snackbar_invite_free_user_error">Item uitnodigingen mogen alleen verzonden worden naar betaalde gebruikers</string>
-  <string name="sharing_snackbar_invite_user_already_invited_error">Adres is al uitgenodigd</string>
+  <string name="sharing_snackbar_cannot_create_invite_error">Address cannot be invited</string>
   <string name="sharing_snackbar_get_vault_members_error">Kon geen kluisleden krijgen</string>
   <string name="sharing_snackbar_change_permission_success">Machtigingen gewijzigd</string>
   <string name="sharing_snackbar_change_permission_error">Kon machtigingen niet wijzigen</string>

@@ -350,5 +350,6 @@
   <string name="warning_dialog_item_shared_vault_updating">Du redigerer et element i et delt hvelv, og medlemmene vil umiddelbart få tilgang til dette elementet.</string>
   <string name="warning_dialog_item_shared_updating">Du redigerer et delt element. Endringene vil umiddelbart være synlige for alle det deles med.</string>
   <string name="warning_dialog_item_shared_vault_reminder">Ikke minn meg på det igjen</string>
-  <string name="upgrade_to_pass_plus">Upgrade to Pass Plus</string>
+  <string name="upgrade_to_pass_plus">Oppgrader til Pass Plus</string>
+  <string name="warning_dialog_reload_app_after_purchase_description">Du blir snart omdirigert til nettstedet vårt. Hvis du kjøper et abonnement, må du starte appen på nytt.</string>
 </resources>

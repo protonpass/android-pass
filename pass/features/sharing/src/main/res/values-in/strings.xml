@@ -57,7 +57,7 @@
   <string name="sharing_snackbar_invite_sent_error">Tidak dapat mengirim undangan</string>
   <string name="sharing_snackbar_invite_new_users_error">Undangan tidak dapat dikirim ke pengguna baru</string>
   <string name="sharing_snackbar_invite_free_user_error">Undangan item hanya dapat dikirim kepada pengguna berbayar</string>
-  <string name="sharing_snackbar_invite_user_already_invited_error">Alamat telah diundang</string>
+  <string name="sharing_snackbar_cannot_create_invite_error">Address cannot be invited</string>
   <string name="sharing_snackbar_get_vault_members_error">Tidak dapat mendapatkan anggota brankas</string>
   <string name="sharing_snackbar_change_permission_success">Izin diubah</string>
   <string name="sharing_snackbar_change_permission_error">Tidak dapat mengubah izin</string>

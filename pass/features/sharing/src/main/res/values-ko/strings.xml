@@ -57,7 +57,7 @@
   <string name="sharing_snackbar_invite_sent_error">초대를 전송할 수 없습니다</string>
   <string name="sharing_snackbar_invite_new_users_error">새 사용자로 초대 전송할 수 없음</string>
   <string name="sharing_snackbar_invite_free_user_error">항목 초대는 유료 회원에게만 보낼 수 있습니다</string>
-  <string name="sharing_snackbar_invite_user_already_invited_error">주소가 이미 초대되었습니다</string>
+  <string name="sharing_snackbar_cannot_create_invite_error">Address cannot be invited</string>
   <string name="sharing_snackbar_get_vault_members_error">금고 사용자를 불러올 수 없습니다</string>
   <string name="sharing_snackbar_change_permission_success">권한 변경됨</string>
   <string name="sharing_snackbar_change_permission_error">권한을 변경할 수 없습니다.</string>

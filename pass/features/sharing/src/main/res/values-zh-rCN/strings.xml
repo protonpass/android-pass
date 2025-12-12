@@ -57,7 +57,7 @@
   <string name="sharing_snackbar_invite_sent_error">无法发送邀请</string>
   <string name="sharing_snackbar_invite_new_users_error">无法向新用户发送邀请</string>
   <string name="sharing_snackbar_invite_free_user_error">只允许向付费用户发送项目邀请</string>
-  <string name="sharing_snackbar_invite_user_already_invited_error">地址已被邀请</string>
+  <string name="sharing_snackbar_cannot_create_invite_error">Address cannot be invited</string>
   <string name="sharing_snackbar_get_vault_members_error">无法获得保险库成员</string>
   <string name="sharing_snackbar_change_permission_success">权限已更改</string>
   <string name="sharing_snackbar_change_permission_error">无法更改权限</string>

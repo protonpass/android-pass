@@ -63,7 +63,7 @@
   <string name="sharing_snackbar_invite_sent_error">Nepodařilo se odeslat pozvánku</string>
   <string name="sharing_snackbar_invite_new_users_error">Nelze odesílat pozvánky novým uživatelům</string>
   <string name="sharing_snackbar_invite_free_user_error">Pozvánky k položkám lze posílat pouze platícím uživatelům</string>
-  <string name="sharing_snackbar_invite_user_already_invited_error">Adresa již byla pozvána</string>
+  <string name="sharing_snackbar_cannot_create_invite_error">Adresa nemůže být pozvána</string>
   <string name="sharing_snackbar_get_vault_members_error">Nelze získat členy trezoru</string>
   <string name="sharing_snackbar_change_permission_success">Oprávnění byla změněna</string>
   <string name="sharing_snackbar_change_permission_error">Nepodařilo se změnit oprávnění</string>

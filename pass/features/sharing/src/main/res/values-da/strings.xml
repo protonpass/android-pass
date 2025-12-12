@@ -59,7 +59,7 @@
   <string name="sharing_snackbar_invite_sent_error">Kunne ikke sende invitation</string>
   <string name="sharing_snackbar_invite_new_users_error">Kan ikke sende invitationer til nye brugere</string>
   <string name="sharing_snackbar_invite_free_user_error">Element-invitationer kan kun sendes til betalende brugere</string>
-  <string name="sharing_snackbar_invite_user_already_invited_error">Adresse er allerede blevet inviteret</string>
+  <string name="sharing_snackbar_cannot_create_invite_error">Adresse kan ikke inviteres</string>
   <string name="sharing_snackbar_get_vault_members_error">Kunne ikke hente boksmedlemmer</string>
   <string name="sharing_snackbar_change_permission_success">Tilladelser ændret</string>
   <string name="sharing_snackbar_change_permission_error">Kunne ikke ændre tilladelserne</string>

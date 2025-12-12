@@ -59,7 +59,7 @@
   <string name="sharing_snackbar_invite_sent_error">მოსაწვევის გაგზავნის შეცდომა</string>
   <string name="sharing_snackbar_invite_new_users_error">ახალ ი მომხმარებლებისთვის მოსაწვევების გაგზავნა შეუძლებელია</string>
   <string name="sharing_snackbar_invite_free_user_error">ელემენტზე მოსაწვევები, მხოლოდ, ფასიან მომხმარებლებს შეგიძლიათ, გაუგზავნოთ</string>
-  <string name="sharing_snackbar_invite_user_already_invited_error">მისამართი უკვე მოწვეულია</string>
+  <string name="sharing_snackbar_cannot_create_invite_error">Address cannot be invited</string>
   <string name="sharing_snackbar_get_vault_members_error">საცავის წევრების მიღება შეუძლებელია</string>
   <string name="sharing_snackbar_change_permission_success">წვდომები შეიცვალა</string>
   <string name="sharing_snackbar_change_permission_error">წვდომების შეცვლა შეუძლებელია</string>

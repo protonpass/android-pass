@@ -63,7 +63,7 @@
   <string name="sharing_snackbar_invite_sent_error">Nie można wysłać zaproszenia</string>
   <string name="sharing_snackbar_invite_new_users_error">Nie można wysyłać zaproszeń do nowych użytkowników</string>
   <string name="sharing_snackbar_invite_free_user_error">Zaproszenia do elementów mogą być wysyłane tylko do płatnych użytkowników</string>
-  <string name="sharing_snackbar_invite_user_already_invited_error">Adres został już zaproszony</string>
+  <string name="sharing_snackbar_cannot_create_invite_error">Address cannot be invited</string>
   <string name="sharing_snackbar_get_vault_members_error">Nie można pobrać użytkowników sejfu</string>
   <string name="sharing_snackbar_change_permission_success">Uprawnienia zostały zmienione</string>
   <string name="sharing_snackbar_change_permission_error">Nie można zmienić uprawnień</string>

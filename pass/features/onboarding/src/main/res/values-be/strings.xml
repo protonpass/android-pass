@@ -2,8 +2,8 @@
 <resources>
   <string name="on_boarding_autofill_content">Дазвольце Proton Pass запаўняць запісы ўваходу за вас. Няма неабходнасці нічога ўводзіць або выконваць аперацыі капіявання і ўстаўкі.</string>
   <string name="on_boarding_autofill_title">Імгненна ўваходзьце ў праграмы</string>
-  <string name="on_boarding_autofill_content_v2">Proton pass fill in login details for you. No typing or copy paste required.</string>
-  <string name="on_boarding_autofill_title_v2">Enjoy the magic of AutoFill</string>
+  <string name="on_boarding_autofill_content_v2">Дазвольце Proton Pass запаўняць запісы ўваходу за вас. Няма неабходнасці нічога ўводзіць або выконваць аперацыі капіявання і ўстаўкі.</string>
+  <string name="on_boarding_autofill_title_v2">Атрымлівайце асалоду ад магіі аўтазапаўнення</string>
   <string name="on_boarding_autofill_button">Аўтазапаўняць з Proton Pass</string>
   <string name="on_boarding_fingerprint_content">Наладзьце разблакіроўку Proton Pass з дапамогай адбітка, каб толькі ў вас быў доступ да яго.</string>
   <string name="on_boarding_fingerprint_title">Абараняйце свае найбольш канфідэнцыяльныя даныя</string>
@@ -13,7 +13,7 @@
   <string name="on_boarding_last_page_button">Пачаць выкарыстоўваць Proton Pass</string>
   <string name="on_boarding_skip">Не зараз</string>
   <string name="on_boarding_tutorial">Паглядзець кароткае відэа пра тое, як карыстацца Proton Pass</string>
-  <string name="on_boarding_tutorial_v2">Learn how to use Proton Pass</string>
+  <string name="on_boarding_tutorial_v2">Даведайцеся, як выкарыстоўваць Proton Pass</string>
   <string name="on_boarding_pending_invite_content">У мэтах бяспекі вам неабходна пацвердзіць свой доступ.</string>
   <string name="on_boarding_pending_invite_title">Чаканне доступу да абагуленых даных</string>
   <string name="on_boarding_pending_invite_button">Даведацца больш аб Proton Pass</string>

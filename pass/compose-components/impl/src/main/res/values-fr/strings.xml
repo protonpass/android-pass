@@ -351,4 +351,5 @@
   <string name="warning_dialog_item_shared_updating">Vous êtes en train de modifier un élément partagé. Les modifications seront visibles immédiatement par toutes les personnes avec lesquelles il est partagé.</string>
   <string name="warning_dialog_item_shared_vault_reminder">Ne plus me le rappeler</string>
   <string name="upgrade_to_pass_plus">Je passe à Pass Plus</string>
+  <string name="warning_dialog_reload_app_after_purchase_description">Vous allez être redirigé vers notre site internet. Si vous achetez un abonnement, veuillez redémarrer l\'application.</string>
 </resources>

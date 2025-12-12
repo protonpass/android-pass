@@ -57,7 +57,7 @@
   <string name="sharing_snackbar_invite_sent_error">無法發送邀請</string>
   <string name="sharing_snackbar_invite_new_users_error">無法傳送邀請函給新使用者</string>
   <string name="sharing_snackbar_invite_free_user_error">項目邀請函僅允許傳送給付費使用者</string>
-  <string name="sharing_snackbar_invite_user_already_invited_error">此位址已受邀</string>
+  <string name="sharing_snackbar_cannot_create_invite_error">Address cannot be invited</string>
   <string name="sharing_snackbar_get_vault_members_error">無法取得保管庫成員</string>
   <string name="sharing_snackbar_change_permission_success">權限變更</string>
   <string name="sharing_snackbar_change_permission_error">無法更新存取權限設定</string>

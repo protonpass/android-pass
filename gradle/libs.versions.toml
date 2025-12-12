@@ -74,7 +74,7 @@ coroutines = "1.8.0"
 datetime = "0.4.0"
 serializationJson = "1.6.3"
 # Pass
-passCommon = "0.28.2"
+passCommon = "0.28.3"
 # Showkase
 showkase = "1.0.2"
 # Squareup

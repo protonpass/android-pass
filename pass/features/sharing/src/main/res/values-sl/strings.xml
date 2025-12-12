@@ -63,7 +63,7 @@
   <string name="sharing_snackbar_invite_sent_error">Povabila ni bilo mogoče poslati</string>
   <string name="sharing_snackbar_invite_new_users_error">Cannot send invites to new users</string>
   <string name="sharing_snackbar_invite_free_user_error">Item invites are only allowed to be sent to paid users</string>
-  <string name="sharing_snackbar_invite_user_already_invited_error">Naslov je že bil povabljen</string>
+  <string name="sharing_snackbar_cannot_create_invite_error">Address cannot be invited</string>
   <string name="sharing_snackbar_get_vault_members_error">Ni bilo mogoče pridobiti članov trezorja</string>
   <string name="sharing_snackbar_change_permission_success">Spremenjena dovoljenja</string>
   <string name="sharing_snackbar_change_permission_error">Dovoljenj ni bilo mogoče spremeniti</string>

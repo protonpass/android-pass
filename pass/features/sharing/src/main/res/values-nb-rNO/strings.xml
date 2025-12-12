@@ -59,7 +59,7 @@
   <string name="sharing_snackbar_invite_sent_error">Kunne ikke sende invitasjon</string>
   <string name="sharing_snackbar_invite_new_users_error">Kan ikke sende invitasjoner til nye brukere</string>
   <string name="sharing_snackbar_invite_free_user_error">Elementinvitasjoner kan kun sendes til betalende brukere</string>
-  <string name="sharing_snackbar_invite_user_already_invited_error">Adressen er allerede invitert</string>
+  <string name="sharing_snackbar_cannot_create_invite_error">Address cannot be invited</string>
   <string name="sharing_snackbar_get_vault_members_error">Fikk ikke tak i hvelvmedlemmer</string>
   <string name="sharing_snackbar_change_permission_success">Rettigheter endret</string>
   <string name="sharing_snackbar_change_permission_error">Kunne ikke endre rettighetene</string>

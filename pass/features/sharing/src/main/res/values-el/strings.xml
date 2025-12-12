@@ -59,7 +59,7 @@
   <string name="sharing_snackbar_invite_sent_error">Δεν ήταν δυνατή η αποστολή πρόσκλησης</string>
   <string name="sharing_snackbar_invite_new_users_error">Δεν είναι δυνατή η αποστολή προσκλήσεων σε νέους χρήστες</string>
   <string name="sharing_snackbar_invite_free_user_error">Οι προσκλήσεις στοιχείων επιτρέπεται να αποστέλλονται μόνο σε χρήστες επί πληρωμή</string>
-  <string name="sharing_snackbar_invite_user_already_invited_error">Η διεύθυνση έχει ήδη προσκληθεί</string>
+  <string name="sharing_snackbar_cannot_create_invite_error">Η διεύθυνση δεν μπορεί να προσκληθεί</string>
   <string name="sharing_snackbar_get_vault_members_error">Δεν ήταν δυνατή η λήψη μελών της κρύπτης</string>
   <string name="sharing_snackbar_change_permission_success">Τα δικαιώματα άλλαξαν</string>
   <string name="sharing_snackbar_change_permission_error">Δεν ήταν δυνατή η αλλαγή των δικαιωμάτων</string>

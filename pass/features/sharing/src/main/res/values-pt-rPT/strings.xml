@@ -59,7 +59,7 @@
   <string name="sharing_snackbar_invite_sent_error">Não foi possível enviar o convite.</string>
   <string name="sharing_snackbar_invite_new_users_error">Não é possível enviar convites para novos utilizadores.</string>
   <string name="sharing_snackbar_invite_free_user_error">Os convites para itens só podem ser enviados a utilizadores pagos.</string>
-  <string name="sharing_snackbar_invite_user_already_invited_error">O endereço já foi convidado.</string>
+  <string name="sharing_snackbar_cannot_create_invite_error">Address cannot be invited</string>
   <string name="sharing_snackbar_get_vault_members_error">Não foi possível obter os membros do cofre.</string>
   <string name="sharing_snackbar_change_permission_success">As permissões foram alteradas.</string>
   <string name="sharing_snackbar_change_permission_error">Não foi possível mudar as permissões.</string>

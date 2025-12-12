@@ -59,7 +59,7 @@
   <string name="sharing_snackbar_invite_sent_error">No s’ha pogut enviar la invitació.</string>
   <string name="sharing_snackbar_invite_new_users_error">No es poden enviar invitacions a nous usuaris.</string>
   <string name="sharing_snackbar_invite_free_user_error">Les invitacions d\'elements només es poden enviar a usuaris de pagament.</string>
-  <string name="sharing_snackbar_invite_user_already_invited_error">L\'adreça ja ha estat convidada.</string>
+  <string name="sharing_snackbar_cannot_create_invite_error">No es pot convidar l\'adreça</string>
   <string name="sharing_snackbar_get_vault_members_error">No s\'han pogut obtenir els membres de la caixa forta</string>
   <string name="sharing_snackbar_change_permission_success">S\'han canviat els permisos.</string>
   <string name="sharing_snackbar_change_permission_error">No s\'han pogut canviar els permisos.</string>

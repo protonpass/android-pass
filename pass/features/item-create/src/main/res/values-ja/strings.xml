@@ -335,5 +335,5 @@
   <string name="cannot_create_items_dialog_title">アイテムを作成できません</string>
   <string name="cannot_create_items_dialog_message">編集者または管理者権限を持つ保管庫がありません。メインアプリで作成するか、組織の管理者にサポートを依頼してください。</string>
   <string name="wifi_security_type_field_label">セキュリティの種類</string>
-  <string name="functionality_not_available">This functionality is not available for your device.</string>
+  <string name="functionality_not_available">この機能は、お客様のデバイスではご利用いただけません。</string>
 </resources>

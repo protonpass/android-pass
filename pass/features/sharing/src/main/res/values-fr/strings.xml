@@ -59,7 +59,7 @@
   <string name="sharing_snackbar_invite_sent_error">L’invitation n’a pas pu être envoyée.</string>
   <string name="sharing_snackbar_invite_new_users_error">Les invitations aux nouveaux utilisateurs n\'ont pas pu être envoyées.</string>
   <string name="sharing_snackbar_invite_free_user_error">Les invitations pour les éléments ne peuvent être envoyées qu\'aux utilisateurs payants.</string>
-  <string name="sharing_snackbar_invite_user_already_invited_error">L\'adresse a déjà été invitée.</string>
+  <string name="sharing_snackbar_cannot_create_invite_error">L\'adresse ne peut pas être invitée.</string>
   <string name="sharing_snackbar_get_vault_members_error">Impossible d\'obtenir les membres du coffre-fort.</string>
   <string name="sharing_snackbar_change_permission_success">Les autorisations ont été modifiées.</string>
   <string name="sharing_snackbar_change_permission_error">Impossible de modifier les autorisations</string>

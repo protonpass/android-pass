@@ -57,7 +57,7 @@
   <string name="sharing_snackbar_invite_sent_error">招待を送信できませんでした</string>
   <string name="sharing_snackbar_invite_new_users_error">新しいユーザーに招待を送信することはできません</string>
   <string name="sharing_snackbar_invite_free_user_error">アイテムの招待は有料ユーザーにのみ送信することができます</string>
-  <string name="sharing_snackbar_invite_user_already_invited_error">アドレスは既に招待されています</string>
+  <string name="sharing_snackbar_cannot_create_invite_error">アドレスを招待できません</string>
   <string name="sharing_snackbar_get_vault_members_error">保管庫メンバーを取得できませんでした</string>
   <string name="sharing_snackbar_change_permission_success">権限の変更</string>
   <string name="sharing_snackbar_change_permission_error">権限を変更できませんでした</string>

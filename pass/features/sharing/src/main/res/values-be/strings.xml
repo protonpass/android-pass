@@ -63,7 +63,7 @@
   <string name="sharing_snackbar_invite_sent_error">Немагчыма адправіць запрашэнне</string>
   <string name="sharing_snackbar_invite_new_users_error">Немагчыма адправіць запрашэнні новым карыстальнікам</string>
   <string name="sharing_snackbar_invite_free_user_error">Запрашэнні на элементы дазволена адпраўляць толькі платным карыстальнікам</string>
-  <string name="sharing_snackbar_invite_user_already_invited_error">Адрас ужо быў запрошаны</string>
+  <string name="sharing_snackbar_cannot_create_invite_error">Адрас не можа быць запрошаны</string>
   <string name="sharing_snackbar_get_vault_members_error">Немагчыма атрымаць удзельнікаў сховішча</string>
   <string name="sharing_snackbar_change_permission_success">Дазволы зменены</string>
   <string name="sharing_snackbar_change_permission_error">Немагчыма змяніць дазволы</string>

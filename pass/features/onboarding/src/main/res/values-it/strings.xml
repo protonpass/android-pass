@@ -2,8 +2,8 @@
 <resources>
   <string name="on_boarding_autofill_content">Consenti a Proton Pass di inserire le credenziali al posto tuo. Scriverle o copiarle e incollarle manualmente non sarà più necessario.</string>
   <string name="on_boarding_autofill_title">Accedi facilmente alle app</string>
-  <string name="on_boarding_autofill_content_v2">Proton pass fill in login details for you. No typing or copy paste required.</string>
-  <string name="on_boarding_autofill_title_v2">Enjoy the magic of AutoFill</string>
+  <string name="on_boarding_autofill_content_v2">Consenti a Proton Pass di inserire le credenziali al posto tuo. Scriverle o copiarle e incollarle manualmente non sarà più necessario.</string>
+  <string name="on_boarding_autofill_title_v2">Approfitta della magia della compilazione automatica</string>
   <string name="on_boarding_autofill_button">Compilazione automatica con Proton Pass</string>
   <string name="on_boarding_fingerprint_content">Imposta lo sblocco con l\'impronta, così solamente tu potrai accedere a Proton Pass.</string>
   <string name="on_boarding_fingerprint_title">Proteggi i dati più sensibili</string>
@@ -13,7 +13,7 @@
   <string name="on_boarding_last_page_button">Inizia a usare Proton Pass</string>
   <string name="on_boarding_skip">Non adesso</string>
   <string name="on_boarding_tutorial">Guarda un breve video su come utilizzare Proton Pass</string>
-  <string name="on_boarding_tutorial_v2">Learn how to use Proton Pass</string>
+  <string name="on_boarding_tutorial_v2">Scopri come usare Proton Pass</string>
   <string name="on_boarding_pending_invite_content">Per motivi di sicurezza, il tuo accesso deve essere confermato.</string>
   <string name="on_boarding_pending_invite_title">In attesa dell\'accesso ai dati condivisi</string>
   <string name="on_boarding_pending_invite_button">Scopri di più su Proton Pass</string>

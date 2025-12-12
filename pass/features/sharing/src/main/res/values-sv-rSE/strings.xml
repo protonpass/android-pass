@@ -59,7 +59,7 @@
   <string name="sharing_snackbar_invite_sent_error">Kunde inte skicka inbjudan</string>
   <string name="sharing_snackbar_invite_new_users_error">Kan inte skicka inbjudningar till nya användare</string>
   <string name="sharing_snackbar_invite_free_user_error">Objektinbjudningar är endast tillåtna att skickas till betalande användare</string>
-  <string name="sharing_snackbar_invite_user_already_invited_error">Adress har redan blivit inbjuden</string>
+  <string name="sharing_snackbar_cannot_create_invite_error">Adress kan inte bjudas in</string>
   <string name="sharing_snackbar_get_vault_members_error">Kunde inte hämta valvmedlemmar</string>
   <string name="sharing_snackbar_change_permission_success">Behörigheter ändrade</string>
   <string name="sharing_snackbar_change_permission_error">Kunde inte ändra behörigheterna</string>

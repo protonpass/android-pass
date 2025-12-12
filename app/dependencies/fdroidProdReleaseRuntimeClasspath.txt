@@ -376,7 +376,7 @@ me.proton.core:util-android-shared-preferences:36.1.0
 me.proton.core:util-android-work-manager:36.1.0
 me.proton.core:util-kotlin:36.1.0
 me.proton.crypto:android-golib:2.9.0-2
-me.proton.pass.common:lib:0.28.2
+me.proton.pass.common:lib:0.28.3
 net.java.dev.jna:jna:5.17.0
 org.checkerframework:checker-qual:3.42.0
 org.jetbrains.kotlin:kotlin-android-extensions-runtime:2.1.0

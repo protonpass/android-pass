@@ -249,6 +249,70 @@ internal class ItemUiFilterTest {
 
     }
 
+    @Test
+    fun `filterByQuery should match alias custom text fields`() {
+        val items = listOf(
+            TestItemUiModel.create(
+                itemContents = ItemContents.Alias(
+                    title = "Title",
+                    note = "Note",
+                    aliasEmail = "alias@example.com",
+                    customFields = listOf(CustomFieldContent.Text(label = "nick", value = "coolalias"))
+                )
+            )
+        )
+
+        val byValue = items.filterByQuery("coolalias")
+        assertThat(byValue).hasSize(1)
+
+        val byLabel = items.filterByQuery("nick")
+        assertThat(byLabel).hasSize(1)
+    }
+
+    @Test
+    fun `filterByQuery should match credit card custom text fields`() {
+        val items = listOf(
+            TestItemUiModel.create(
+                itemContents = ItemContents.CreditCard(
+                    title = "CC Item",
+                    note = "Note",
+                    cardHolder = "holder",
+                    type = CreditCardType.MasterCard,
+                    number = "1234",
+                    cvv = HiddenState.Empty(""),
+                    pin = HiddenState.Empty(""),
+                    expirationDate = "12/25",
+                    customFields = listOf(CustomFieldContent.Text(label = "nickname", value = "travel"))
+                )
+            )
+        )
+
+        val byValue = items.filterByQuery("travel")
+        assertThat(byValue).hasSize(1)
+
+        val byLabel = items.filterByQuery("nickname")
+        assertThat(byLabel).hasSize(1)
+    }
+
+    @Test
+    fun `filterByQuery should match note custom text fields`() {
+        val items = listOf(
+            TestItemUiModel.create(
+                itemContents = ItemContents.Note(
+                    title = "Note title",
+                    note = "body",
+                    customFields = listOf(CustomFieldContent.Text(label = "tag", value = "important"))
+                )
+            )
+        )
+
+        val byValue = items.filterByQuery("important")
+        assertThat(byValue).hasSize(1)
+
+        val byLabel = items.filterByQuery("tag")
+        assertThat(byLabel).hasSize(1)
+    }
+
     private fun createAliasList() = listOf(
         TestItemUiModel.create(
             itemContents = ItemContents.Alias(

@@ -59,7 +59,7 @@
   <string name="sharing_snackbar_invite_sent_error">Davet gönderilemedi</string>
   <string name="sharing_snackbar_invite_new_users_error">Yeni kullanıcılara davet gönderilemedi</string>
   <string name="sharing_snackbar_invite_free_user_error">Öge davetleri yalnızca ücretli tarife üyelerine gönderilebilir</string>
-  <string name="sharing_snackbar_invite_user_already_invited_error">Adres zaten davet edilmiş</string>
+  <string name="sharing_snackbar_cannot_create_invite_error">Adres davet edilemez</string>
   <string name="sharing_snackbar_get_vault_members_error">Kasa üyeleri alınamadı</string>
   <string name="sharing_snackbar_change_permission_success">İzinler değiştirildi</string>
   <string name="sharing_snackbar_change_permission_error">İzinler değiştirilemedi</string>

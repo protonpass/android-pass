@@ -59,7 +59,7 @@
   <string name="sharing_snackbar_invite_sent_error">Fehler beim Senden der Einladung.</string>
   <string name="sharing_snackbar_invite_new_users_error">Kann keine neuen Benutzer einladen</string>
   <string name="sharing_snackbar_invite_free_user_error">Einladungen zu Einträgen dürfen nur an zahlende Benutzer gesendet werden.</string>
-  <string name="sharing_snackbar_invite_user_already_invited_error">Diese Adresse wurde bereits eingeladen.</string>
+  <string name="sharing_snackbar_cannot_create_invite_error">Adresse kann nicht eingeladen werden</string>
   <string name="sharing_snackbar_get_vault_members_error">Fehler beim Abrufen der Tresormitglieder.</string>
   <string name="sharing_snackbar_change_permission_success">Berechtigungen geändert.</string>
   <string name="sharing_snackbar_change_permission_error">Fehler beim Ändern der Berechtigungen.</string>

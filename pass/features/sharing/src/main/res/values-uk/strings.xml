@@ -63,7 +63,7 @@
   <string name="sharing_snackbar_invite_sent_error">Не вдалося надіслати запрошення</string>
   <string name="sharing_snackbar_invite_new_users_error">Не вдається надіслати запрошення новим користувачам</string>
   <string name="sharing_snackbar_invite_free_user_error">Запрошення до елемента дозволено надсилати лише платним користувачам</string>
-  <string name="sharing_snackbar_invite_user_already_invited_error">Адреса вже запрошена</string>
+  <string name="sharing_snackbar_cannot_create_invite_error">Address cannot be invited</string>
   <string name="sharing_snackbar_get_vault_members_error">Не вдалося отримати інформацію про учасників сховища</string>
   <string name="sharing_snackbar_change_permission_success">Дозволи змінено</string>
   <string name="sharing_snackbar_change_permission_error">Не вдалося змінити дозволи</string>

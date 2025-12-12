@@ -59,7 +59,7 @@
   <string name="sharing_snackbar_invite_sent_error">A meghívó elküldése nem sikerült</string>
   <string name="sharing_snackbar_invite_new_users_error">Nem tud meghívókat küldeni új felhasználóknak</string>
   <string name="sharing_snackbar_invite_free_user_error">Csak fizető felhasználóknak küldhet meghívókat az elemekre.</string>
-  <string name="sharing_snackbar_invite_user_already_invited_error">A cím már meghívást kapott</string>
+  <string name="sharing_snackbar_cannot_create_invite_error">Address cannot be invited</string>
   <string name="sharing_snackbar_get_vault_members_error">A tároló tagjainak betöltése nem sikerült</string>
   <string name="sharing_snackbar_change_permission_success">Az engedélyek megváltoztak</string>
   <string name="sharing_snackbar_change_permission_error">Nem lehet megváltoztatni az engedélyeket</string>

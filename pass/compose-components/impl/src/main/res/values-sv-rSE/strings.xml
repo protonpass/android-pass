@@ -345,10 +345,11 @@
   <string name="action_conceal">Dölj</string>
   <string name="warning_dialog_item_shared_vault_title">Objekt i ett delat valv</string>
   <string name="warning_dialog_item_shared_title">Delat objekt</string>
-  <string name="warning_dialog_item_shared_vault_creating">You are creating an item in a shared vault and members will immediately gain access to this item.</string>
-  <string name="warning_dialog_item_shared_vault_moving">You are moving an item to a shared vault and members will immediately gain access to this item.</string>
-  <string name="warning_dialog_item_shared_vault_updating">You are editing an item in a shared vault and members will immediately gain access to this item.</string>
-  <string name="warning_dialog_item_shared_updating">You are editing a shared item. Changes will be visible to everyone it\'s shared with immediately.</string>
+  <string name="warning_dialog_item_shared_vault_creating">Du skapar ett objekt i ett delat valv och medlemmar kommer omedelbart beviljas åtkomst till detta objekt.</string>
+  <string name="warning_dialog_item_shared_vault_moving">Du flyttar ett objekt till ett delat valv och medlemmar kommer omedelbart att beviljas åtkomst till detta objekt.</string>
+  <string name="warning_dialog_item_shared_vault_updating">Du redigerar ett objekt i ett delat valv och medlemmar kommer omedelbart att beviljas åtkomst till detta objekt.</string>
+  <string name="warning_dialog_item_shared_updating">Du redigerar ett delat objekt. Ändringar kommer vara synliga för alla som det delas med omedelbart.</string>
   <string name="warning_dialog_item_shared_vault_reminder">Påminn mig inte igen</string>
   <string name="upgrade_to_pass_plus">Uppgradera till Pass Plus</string>
+  <string name="warning_dialog_reload_app_after_purchase_description">Du kommer att omdirigeras till vår webbplats. Om du köper ett paket, starta om appen.</string>
 </resources>

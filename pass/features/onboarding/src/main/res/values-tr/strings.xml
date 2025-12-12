@@ -2,8 +2,8 @@
 <resources>
   <string name="on_boarding_autofill_content">Proton Pass oturum açma bilgilerinizi sizin için doldurabilir. Yazmanız veya kopyalayıp yapıştırmanız gerekmez.</string>
   <string name="on_boarding_autofill_title">Uygulamalarda anında oturum açın</string>
-  <string name="on_boarding_autofill_content_v2">Proton Pass sizin için oturum açma bilgilerinizi doldurur. Yazmanız veya kopyalayıp yapıştırmanız gerekmez.</string>
-  <string name="on_boarding_autofill_title_v2">Otomatik doldurmanın sihrini yaşayın</string>
+  <string name="on_boarding_autofill_content_v2">Proton Pass oturum açma bilgilerinizi sizin için doldurabilir. Yazmanız veya kopyalayıp yapıştırmanız gerekmez.</string>
+  <string name="on_boarding_autofill_title_v2">Otomatik doldurmanın tadını çıkarın</string>
   <string name="on_boarding_autofill_button">Proton ile otomatik doldur</string>
   <string name="on_boarding_fingerprint_content">Yalnızca sizin erişebilmeniz için Proton Pass kilidini parmak izinizle açılacak şekilde ayarlayın.</string>
   <string name="on_boarding_fingerprint_title">En önemli verilerinizi koruyun</string>
@@ -13,7 +13,7 @@
   <string name="on_boarding_last_page_button">Proton Pass ile başla</string>
   <string name="on_boarding_skip">Şimdi değil</string>
   <string name="on_boarding_tutorial">Proton Pass kullanımı ile ilgili kısa bir videoyu izleyin</string>
-  <string name="on_boarding_tutorial_v2">Proton Pass\'ı kullanmayı öğrenin</string>
+  <string name="on_boarding_tutorial_v2">Proton Pass nasıl kullanılır öğrenin</string>
   <string name="on_boarding_pending_invite_content">Güvenlik nedeniyle erişiminizin onaylanması gerekiyor.</string>
   <string name="on_boarding_pending_invite_title">Paylaşılmış verilere erişilmesi bekleniyor</string>
   <string name="on_boarding_pending_invite_button">Proton Pass ile ilgili ayrıntılı bilgi alın</string>

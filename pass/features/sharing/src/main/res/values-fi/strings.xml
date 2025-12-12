@@ -59,7 +59,7 @@
   <string name="sharing_snackbar_invite_sent_error">Kutsua ei voitu lähettää</string>
   <string name="sharing_snackbar_invite_new_users_error">Kutsuja ei voi lähettää uusille käyttäjille</string>
   <string name="sharing_snackbar_invite_free_user_error">Kohdekutsuja voidaan lähettää vain maksullisille käyttäjille</string>
-  <string name="sharing_snackbar_invite_user_already_invited_error">Osoite on jo kutsuttu</string>
+  <string name="sharing_snackbar_cannot_create_invite_error">Osoitetta ei voida kutsua</string>
   <string name="sharing_snackbar_get_vault_members_error">Holvin jäsentietojen nouto ei onnistunut</string>
   <string name="sharing_snackbar_change_permission_success">Käyttöoikeudet muutettu</string>
   <string name="sharing_snackbar_change_permission_error">Käyttöoikeuksia ei voitu muuttaa</string>

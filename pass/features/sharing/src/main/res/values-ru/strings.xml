@@ -63,7 +63,7 @@
   <string name="sharing_snackbar_invite_sent_error">Не могу отправить приглашение</string>
   <string name="sharing_snackbar_invite_new_users_error">Не удается отправить приглашения новым пользователям</string>
   <string name="sharing_snackbar_invite_free_user_error">Приглашения к элементам разрешено отправлять только платящим пользователям</string>
-  <string name="sharing_snackbar_invite_user_already_invited_error">Адрес уже был приглашен</string>
+  <string name="sharing_snackbar_cannot_create_invite_error">Address cannot be invited</string>
   <string name="sharing_snackbar_get_vault_members_error">Не могу получить участников хранилища</string>
   <string name="sharing_snackbar_change_permission_success">Разрешения изменены</string>
   <string name="sharing_snackbar_change_permission_error">Не могу изменить разрешения</string>

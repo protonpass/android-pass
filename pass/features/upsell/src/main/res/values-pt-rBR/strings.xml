@@ -39,7 +39,7 @@
   <string name="upsell_button_upgrade">Obter Pass Plus</string>
   <string name="upsell_button_upgrade_essentials">Obtenha o Pass Business</string>
   <string name="price_per_month_type1">%s/mês</string>
-  <string name="price_per_month_type2">%s / month</string>
+  <string name="price_per_month_type2">%s / mês</string>
   <string name="upsell_skip">Agora não</string>
   <string name="upsell_no_plan">Sem plano disponível</string>
   <string name="upsell_plan_title">Desbloqueie recursos premium.</string>
@@ -47,7 +47,7 @@
   <string name="upsell_plan_what_included">O que está incluído</string>
   <string name="upsell_plan_plus_1">Aliases do hide-my-email</string>
   <string name="upsell_plan_plus_2">A2F integrada</string>
-  <string name="upsell_plan_plus_3">Vault, item &amp; link sharing</string>
+  <string name="upsell_plan_plus_3">Cofre e compartilhamento de link e itens</string>
   <string name="upsell_plan_plus_4">Cartões de créditos</string>
   <string name="upsell_plan_plus_5">Monitoramento da Dark Web</string>
   <string name="upsell_plan_plus_6">Anexos de arquivo</string>
@@ -55,8 +55,8 @@
   <string name="upsell_plan_unlimited_2">Endereços de e-mail adicionais</string>
   <string name="upsell_plan_unlimited_3">Dispositivos VPN</string>
   <string name="upsell_plan_unlimited_4">Velocidade da VPN</string>
-  <string name="upsell_plan_unlimited_4_col1">Medium</string>
-  <string name="upsell_plan_unlimited_4_col2">Highest</string>
+  <string name="upsell_plan_unlimited_4_col1">Média</string>
+  <string name="upsell_plan_unlimited_4_col2">Máxima</string>
   <string name="upsell_plan_plus_welcome_1">Aliases do Hide-my-email ilimitados</string>
   <string name="upsell_plan_plus_welcome_2">Autenticador A2F integrado</string>
   <string name="upsell_plan_plus_welcome_3">Compartilhamento seguro de item, cofre e link</string>

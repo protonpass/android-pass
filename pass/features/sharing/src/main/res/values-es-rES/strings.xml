@@ -59,7 +59,7 @@
   <string name="sharing_snackbar_invite_sent_error">No se ha podido enviar la invitación.</string>
   <string name="sharing_snackbar_invite_new_users_error">No se pueden enviar invitaciones a nuevos usuarios.</string>
   <string name="sharing_snackbar_invite_free_user_error">Las invitaciones a elementos solo se pueden enviar a usuarios de pago.</string>
-  <string name="sharing_snackbar_invite_user_already_invited_error">Ya se ha invitado la dirección.</string>
+  <string name="sharing_snackbar_cannot_create_invite_error">No se puede invitar esta dirección.</string>
   <string name="sharing_snackbar_get_vault_members_error">No se han podido obtener los miembros de la caja fuerte.</string>
   <string name="sharing_snackbar_change_permission_success">Los permisos han cambiado.</string>
   <string name="sharing_snackbar_change_permission_error">Error al modificar los permisos</string>

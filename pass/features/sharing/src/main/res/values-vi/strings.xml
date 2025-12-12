@@ -57,7 +57,7 @@
   <string name="sharing_snackbar_invite_sent_error">Không thể gửi lời mời</string>
   <string name="sharing_snackbar_invite_new_users_error">Cannot send invites to new users</string>
   <string name="sharing_snackbar_invite_free_user_error">Item invites are only allowed to be sent to paid users</string>
-  <string name="sharing_snackbar_invite_user_already_invited_error">Address has already been invited</string>
+  <string name="sharing_snackbar_cannot_create_invite_error">Address cannot be invited</string>
   <string name="sharing_snackbar_get_vault_members_error">Không thể lấy thành viên két sắt</string>
   <string name="sharing_snackbar_change_permission_success">Đã thay đổi quyền</string>
   <string name="sharing_snackbar_change_permission_error">Không thể thay đổi quyền</string>

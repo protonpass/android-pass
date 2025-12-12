@@ -50,7 +50,7 @@
   <string name="upsell_plan_plus_3">Valv, objekt och länkdelning</string>
   <string name="upsell_plan_plus_4">Kreditkort</string>
   <string name="upsell_plan_plus_5">Övervakning av mörka webben</string>
-  <string name="upsell_plan_plus_6">File attachments</string>
+  <string name="upsell_plan_plus_6">Filbilagor</string>
   <string name="upsell_plan_unlimited_1">Lagringsutrymme</string>
   <string name="upsell_plan_unlimited_2">Extra e-postadresser</string>
   <string name="upsell_plan_unlimited_3">VPN-enheter</string>
@@ -62,12 +62,12 @@
   <string name="upsell_plan_plus_welcome_3">Säker delning av valv, objekt och länk</string>
   <string name="upsell_plan_plus_welcome_4">Kreditkort</string>
   <string name="upsell_plan_plus_welcome_5">Övervakning av mörka webben</string>
-  <string name="upsell_plan_plus_welcome_6">File attachments</string>
+  <string name="upsell_plan_plus_welcome_6">Filbilagor</string>
   <string name="upsell_limited_time_offer">Tidsbegränsat erbjudande</string>
   <string name="upsell_try_pass_plus">Prova Pass Plus för endast</string>
   <string name="upsell_pass_plus_welcome_offer">Pass Plus välkomsterbjudande</string>
   <string name="upsell_pass_plus_first_year">Första året</string>
-  <string name="upsell_get_the_best_of_pass">Get the best of Pass with this limited time offer.</string>
+  <string name="upsell_get_the_best_of_pass">Få det bästa av Pass med detta tidsbegränsade erbjudande.</string>
   <string name="upsell_get_one_month">Få 1 månad för %s</string>
   <string name="upsell_get_the_deal">Ta del av erbjudandet</string>
   <string name="upsell_whats_included">Vad som är inkluderat</string>

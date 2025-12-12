@@ -40,6 +40,7 @@ object ItemUiFilter {
     private fun isItemMatch(item: ItemUiModel, query: String): Boolean {
         if (item.contents.title.preprocess().contains(query)) return true
         if (item.contents.note.preprocess().contains(query)) return true
+        if (hasMatchingCustomField(item.contents.customFields, query)) return true
 
         return when (val contents = item.contents) {
             is ItemContents.Alias -> isAliasMatch(contents, query)
@@ -116,37 +117,26 @@ object ItemUiFilter {
         }
     }
 
-    private fun isCustomMatch(content: ItemContents.Custom, query: String): Boolean = when {
-        hasMatchingCustomField(content.customFields, query) -> true
-        else -> {
-            content.sectionContentList.forEach {
-                if (hasMatchingCustomField(it.customFieldList, query)) return true
-            }
-
-            false
+    private fun isCustomMatch(content: ItemContents.Custom, query: String): Boolean {
+        content.sectionContentList.forEach {
+            if (hasMatchingCustomField(it.customFieldList, query)) return true
         }
+        return false
     }
 
-    private fun isWifiNetworkMatch(content: ItemContents.WifiNetwork, query: String): Boolean = when {
-        content.ssid.preprocess().contains(query) -> true
-        hasMatchingCustomField(content.customFields, query) -> true
-        else -> {
-            content.sectionContentList.forEach {
-                if (hasMatchingCustomField(it.customFieldList, query)) return true
-            }
-
-            false
+    private fun isWifiNetworkMatch(content: ItemContents.WifiNetwork, query: String): Boolean {
+        if (content.ssid.preprocess().contains(query)) return true
+        content.sectionContentList.forEach {
+            if (hasMatchingCustomField(it.customFieldList, query)) return true
         }
+        return false
     }
-    private fun isSSHKeyMatch(content: ItemContents.SSHKey, query: String): Boolean = when {
-        hasMatchingCustomField(content.customFields, query) -> true
-        else -> {
-            content.sectionContentList.forEach {
-                if (hasMatchingCustomField(it.customFieldList, query)) return true
-            }
 
-            false
+    private fun isSSHKeyMatch(content: ItemContents.SSHKey, query: String): Boolean {
+        content.sectionContentList.forEach {
+            if (hasMatchingCustomField(it.customFieldList, query)) return true
         }
+        return false
     }
 
     private fun hasMatchingCustomField(customFields: List<CustomFieldContent>, query: String): Boolean {
@@ -162,10 +152,7 @@ object ItemUiFilter {
         if (content.itemUsername.preprocess().contains(query)) return true
 
         val anyWebsiteMatches = content.urls.any { it.preprocess().contains(query) }
-        if (anyWebsiteMatches) return true
-
-        val textCustomFields: List<CustomFieldContent.Text> = content.customFields.filterByType()
-        return hasMatchingCustomField(textCustomFields, query)
+        return anyWebsiteMatches
     }
 
     private fun isNoteMatch(content: ItemContents.Note, query: String): Boolean =

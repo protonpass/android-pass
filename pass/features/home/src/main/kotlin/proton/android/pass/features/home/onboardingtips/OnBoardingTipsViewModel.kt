@@ -29,11 +29,13 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import proton.android.pass.appconfig.api.AppConfig
+import proton.android.pass.appconfig.api.BuildFlavor.Companion.isQuest
 import proton.android.pass.autofill.api.AutofillManager
 import proton.android.pass.autofill.api.AutofillStatus
 import proton.android.pass.autofill.api.AutofillSupportedStatus
@@ -83,9 +85,11 @@ class OnBoardingTipsViewModel @Inject constructor(
 
     private val shouldShowNotificationPermissionFlow: Flow<Boolean> = combine(
         notificationPermissionFlow,
-        preferencesRepository.getHasDismissedNotificationBanner()
-    ) { notificationPermissionEnabled, hasDismissedNotificationBanner ->
+        preferencesRepository.getHasDismissedNotificationBanner(),
+        flowOf(appConfig.flavor.isQuest())
+    ) { notificationPermissionEnabled, hasDismissedNotificationBanner, isQuest ->
         when {
+            isQuest -> false
             notificationPermissionEnabled -> false
             hasDismissedNotificationBanner is HasDismissedNotificationBanner.Dismissed -> false
             else -> needsNotificationPermissions()
@@ -154,11 +158,13 @@ class OnBoardingTipsViewModel @Inject constructor(
                     is PendingInvite.GroupItem,
                     is PendingInvite.GroupVault ->
                         OnBoardingTipsEvent.OpenGroupInviteScreen(onBoardingTipPage.pendingInvite.inviteId)
+
                     is PendingInvite.UserItem,
                     is PendingInvite.UserVault ->
                         OnBoardingTipsEvent.OpenUserInviteScreen(onBoardingTipPage.pendingInvite.inviteToken)
                 }
             }
+
             NotificationPermission -> eventFlow.update { OnBoardingTipsEvent.RequestNotificationPermission }
             is SLSync -> eventFlow.update {
                 OnBoardingTipsEvent.OpenSLSyncSettingsScreen(

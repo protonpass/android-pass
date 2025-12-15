@@ -42,6 +42,7 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
@@ -53,6 +54,8 @@ import kotlinx.coroutines.launch
 import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
 import me.proton.core.domain.entity.UserId
+import proton.android.pass.appconfig.api.AppConfig
+import proton.android.pass.appconfig.api.BuildFlavor.Companion.isQuest
 import proton.android.pass.clipboard.api.ClipboardManager
 import proton.android.pass.common.api.AppDispatchers
 import proton.android.pass.common.api.LoadingResult
@@ -206,7 +209,8 @@ class HomeViewModel @Inject constructor(
     observeCanCreateItems: ObserveCanCreateItems,
     observeHasShares: ObserveHasShares,
     observeDeliverableMinimizedPromoInAppMessages: ObserveDeliverableMinimizedPromoInAppMessages,
-    observeUpgradeInfo: ObserveUpgradeInfo
+    observeUpgradeInfo: ObserveUpgradeInfo,
+    appConfig: AppConfig
 ) : ViewModel() {
 
     private val coroutineExceptionHandler = CoroutineExceptionHandler { _, throwable ->
@@ -574,7 +578,8 @@ class HomeViewModel @Inject constructor(
         preferencesRepository.observeAliasTrashDialogStatusPreference(),
         observeCanCreateItems(),
         observeHasShares(includeHidden = true),
-        observeUpgradeInfo().asLoadingResult()
+        observeUpgradeInfo().asLoadingResult(),
+        flowOf(appConfig.flavor.isQuest())
     ) { homeListUiState,
         searchUiState,
         userPlan,
@@ -584,7 +589,8 @@ class HomeViewModel @Inject constructor(
         aliasTrashDialogStatusPreference,
         canCreateItems,
         hasShares,
-        upgradeInfo ->
+        upgradeInfo,
+        isQuest ->
         HomeUiState(
             homeListUiState = homeListUiState,
             searchUiState = searchUiState,
@@ -596,7 +602,8 @@ class HomeViewModel @Inject constructor(
             aliasTrashDialogStatusPreference = aliasTrashDialogStatusPreference,
             canCreateItems = canCreateItems,
             hasShares = hasShares,
-            isUpgradeAvailable = upgradeInfo.getOrNull()?.isUpgradeAvailable ?: false
+            isUpgradeAvailable = upgradeInfo.getOrNull()?.isUpgradeAvailable ?: false,
+            isQuest = isQuest
         )
     }.stateIn(
         scope = viewModelScope,

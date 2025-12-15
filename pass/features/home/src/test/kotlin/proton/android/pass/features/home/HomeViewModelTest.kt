@@ -28,6 +28,7 @@ import me.proton.core.domain.entity.UserId
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
+import proton.android.pass.appconfig.fakes.FakeAppConfig
 import proton.android.pass.clipboard.fakes.FakeClipboardManager
 import proton.android.pass.common.fakes.FakeAppDispatchers
 import proton.android.pass.commonui.api.DateFormatUtils
@@ -112,6 +113,7 @@ internal class HomeViewModelTest {
     private lateinit var observeCanCreateItems: FakeObserveCanCreateItems
     private lateinit var observeHasShares: FakeObserveHasShares
     private lateinit var observeUpgradeInfo: FakeObserveUpgradeInfo
+    private lateinit var appConfig: FakeAppConfig
 
     @Before
     internal fun setup() {
@@ -142,6 +144,7 @@ internal class HomeViewModelTest {
         observeCanCreateItems = FakeObserveCanCreateItems()
         observeHasShares = FakeObserveHasShares()
         observeUpgradeInfo = FakeObserveUpgradeInfo()
+        appConfig = FakeAppConfig()
         createViewModel()
     }
 
@@ -280,7 +283,8 @@ internal class HomeViewModelTest {
             observeHasShares = observeHasShares,
             observeDeliverableMinimizedPromoInAppMessages = FakeObserveDeliverableMinimizedPromoInAppMessage()
                 .apply { emitPromoMessage(null) },
-            observeUpgradeInfo = observeUpgradeInfo
+            observeUpgradeInfo = observeUpgradeInfo,
+            appConfig = appConfig
         )
     }
 }

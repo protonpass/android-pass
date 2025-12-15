@@ -30,9 +30,7 @@ import me.proton.core.accountmanager.domain.getPrimaryAccount
 import me.proton.core.domain.entity.UserId
 import me.proton.core.plan.domain.entity.DynamicPlan
 import me.proton.core.plan.domain.entity.DynamicPlans
-import me.proton.core.plan.domain.entity.filterBy
 import me.proton.core.plan.domain.usecase.GetDynamicPlansAdjustedPrices
-import me.proton.core.plan.domain.usecase.ObserveUserCurrency
 import me.proton.core.plan.presentation.usecase.ComposeAutoRenewText
 import me.proton.core.presentation.utils.formatCentsPriceDefaultLocale
 import proton.android.pass.common.api.AppDispatchers
@@ -47,6 +45,7 @@ import proton.android.pass.data.api.usecases.plan.PASS_UNLIMITED_NAME
 import proton.android.pass.domain.plan.OnePlanWithPrice
 import proton.android.pass.domain.plan.PaymentButton
 import proton.android.pass.domain.plan.PlanWithPriceState
+import proton.android.pass.log.api.PassLogger
 import javax.inject.Inject
 
 class ObservePlansWithPriceImpl @Inject constructor(
@@ -54,33 +53,27 @@ class ObservePlansWithPriceImpl @Inject constructor(
     private val observeUpgradeInfo: ObserveUpgradeInfo,
     private val getDynamicPlans: GetDynamicPlansAdjustedPrices,
     private val autoRenewText: ComposeAutoRenewText,
-    private val observeUserCurrency: ObserveUserCurrency,
     private val appDispatchers: AppDispatchers
 ) : ObservePlansWithPrice {
 
-
+    @SuppressWarnings("LongMethod")
     override fun invoke(): Flow<PlanWithPriceState> = flow {
         accountManager
             .getPrimaryAccount()
             .filterNotNull()
             .flatMapLatest { account ->
-                observeUserCurrency(account.userId).map {
+                observeUpgradeInfo(account.userId).asLoadingResult().map {
                     Pair(account, it)
                 }
             }
-            .flatMapLatest { (account, currency) ->
-                observeUpgradeInfo(account.userId).asLoadingResult().map {
-                    Triple(account, currency, it)
-                }
-            }
-            .collect { (account, userCurrency, upgradeInfo) ->
-
+            .collect { (account, upgradeInfo) ->
                 when (upgradeInfo) {
                     LoadingResult.Loading -> {
                         emit(PlanWithPriceState.Loading)
                     }
 
                     is LoadingResult.Error -> {
+                        PassLogger.w(TAG, "upgradeInfo error : ${upgradeInfo.exception}")
                         emit(PlanWithPriceState.Error)
                     }
 
@@ -92,25 +85,31 @@ class ObservePlansWithPriceImpl @Inject constructor(
                                 getDynamicPlans(userId = account.userId)
                             }.onSuccess { prices ->
                                 if (prices.plans.isEmpty()) {
+                                    PassLogger.w(TAG, "getDynamicPlans plans empty")
                                     emit(PlanWithPriceState.NoPlan)
                                 } else {
                                     emit(
                                         managePlans(
                                             prices = prices,
-                                            userCurrency = userCurrency,
                                             userId = account.userId
                                         )
                                     )
                                 }
                             }.onFailure {
+                                PassLogger.w(TAG, "getDynamicPlans error : $it")
                                 emit(PlanWithPriceState.Error)
                             }
 
                         } else {
+                            PassLogger.w(
+                                TAG,
+                                "getDynamicPlans no plan available, " +
+                                    "isFreePlan: ${upgradeInfo.data.plan.isFreePlan} " +
+                                    "isUpgradeAvailable : ${upgradeInfo.data.isUpgradeAvailable}"
+                            )
                             emit(PlanWithPriceState.NoPlan)
                         }
                     }
-
                 }
             }
     }
@@ -118,16 +117,11 @@ class ObservePlansWithPriceImpl @Inject constructor(
         .flowOn(appDispatchers.io)
 
 
-    private fun managePlans(
-        prices: DynamicPlans,
-        userCurrency: String,
-        userId: UserId
-    ): PlanWithPriceState {
+    private fun managePlans(prices: DynamicPlans, userId: UserId): PlanWithPriceState {
 
         val monthlyPlans =
             getPlanByCycle(
                 prices = prices,
-                userCurrency = userCurrency,
                 cycle = MONTHLY_PLAN_CYCLE,
                 userId = userId
             )
@@ -135,12 +129,12 @@ class ObservePlansWithPriceImpl @Inject constructor(
         val annualPlans =
             getPlanByCycle(
                 prices = prices,
-                userCurrency = userCurrency,
                 cycle = ANNUAL_PLAN_CYCLE,
                 userId = userId
             )
 
         if (annualPlans.isEmpty() && monthlyPlans.isEmpty()) {
+            PassLogger.i(TAG, "managePlans no plan available")
             return PlanWithPriceState.NoPlan
         }
 
@@ -150,71 +144,65 @@ class ObservePlansWithPriceImpl @Inject constructor(
         )
     }
 
+    @SuppressWarnings("LongMethod")
     private fun getPlanByCycle(
         prices: DynamicPlans,
         userId: UserId,
-        userCurrency: String,
         cycle: Int
     ): List<OnePlanWithPrice> {
         val plans = mutableListOf<OnePlanWithPrice>()
 
-        var currencyDisplayed = userCurrency
-
-        val filtered = prices.plans
-            .filterBy(cycle = cycle, currency = currencyDisplayed)
-
-        val effectiveList = filtered.ifEmpty {
-            currencyDisplayed = DEFAULT_CURRENCY
-            prices.plans.filterBy(cycle = cycle, currency = currencyDisplayed)
-        }
-
-        val orderedPlans =
-            effectiveList
-                .sortedBy {
-                    when (it.name) {
-                        PASS_PLUS_NAME -> 0
-                        PASS_UNLIMITED_NAME -> 1
-                        else -> 2
-                    }
+        prices.plans
+            // order : Pass Plus then Pass Unlimited
+            .sortedBy {
+                when (it.name) {
+                    PASS_PLUS_NAME -> 0
+                    PASS_UNLIMITED_NAME -> 1
+                    else -> 2
                 }
-                .take(n = 2)
+            }
+            .take(n = 2)
+            .forEach {
+                // GetDynamicPlansAdjustedPrices contains exactly one currency per plan:
+                // the currency configured in Google Play
+                val currency =
+                    it.instances[cycle]?.price?.values?.firstOrNull()?.currency ?: return@forEach
 
-        orderedPlans.forEach {
-            plans.add(
-                OnePlanWithPrice(
-                    internalName = it.name.orEmpty(),
-                    title = when (it.name) {
-                        PASS_PLUS_NAME -> "Plus"
-                        PASS_UNLIMITED_NAME -> "Unlimited"
-                        else -> ""
-                    },
-                    pricePerMonth = it.getMonthlyPrice(
-                        currency = currencyDisplayed,
+                plans.add(
+                    OnePlanWithPrice(
+                        internalName = it.name.orEmpty(),
+                        title = when (it.name) {
+                            PASS_PLUS_NAME -> "Plus"
+                            PASS_UNLIMITED_NAME -> "Unlimited"
+                            else -> ""
+                        },
+                        pricePerMonth = it.getMonthlyPrice(
+                            currency = currency,
+                            cycle = cycle
+                        ).orEmpty(),
+                        defaultPricePerMonth = it.getDefaultMonthlyPrice(
+                            currency = currency,
+                            cycle = cycle
+                        ),
+                        pricePerYear = it.getYearlyPrice(
+                            currency = currency,
+                            cycle = cycle
+                        ).orEmpty(),
+                        annualPrice = autoRenewText(
+                            price = it.instances[cycle]?.price?.values
+                                ?.firstOrNull { it.currency == currency },
+                            cycle = cycle
+                        ).orEmpty(),
+                        paymentInfo = PaymentButton(
+                            currency = currency,
+                            cycle = cycle,
+                            plan = it,
+                            userId = userId
+                        ),
                         cycle = cycle
-                    ).orEmpty(),
-                    defaultPricePerMonth = it.getDefaultMonthlyPrice(
-                        currency = currencyDisplayed,
-                        cycle = cycle
-                    ),
-                    pricePerYear = it.getYearlyPrice(
-                        currency = currencyDisplayed,
-                        cycle = cycle
-                    ).orEmpty(),
-                    annualPrice = autoRenewText(
-                        price = it.instances[cycle]?.price?.values
-                            ?.firstOrNull { it.currency == currencyDisplayed },
-                        cycle = cycle
-                    ).orEmpty(),
-                    paymentInfo = PaymentButton(
-                        currency = currencyDisplayed,
-                        cycle = cycle,
-                        plan = it,
-                        userId = userId
-                    ),
-                    cycle = cycle
+                    )
                 )
-            )
-        }
+            }
 
         return plans
     }
@@ -246,4 +234,4 @@ class ObservePlansWithPriceImpl @Inject constructor(
         ?.formatCentsPriceDefaultLocale(currency)
 }
 
-private const val DEFAULT_CURRENCY = "USD"
+private const val TAG = "ObservePlansWithPrice"

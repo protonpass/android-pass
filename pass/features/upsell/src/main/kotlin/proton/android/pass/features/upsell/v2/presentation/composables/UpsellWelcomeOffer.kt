@@ -114,7 +114,7 @@ fun UpsellWelcomeOffer(
                 )
 
                 Image.Default(
-                    id = R.drawable.upsell_plus,
+                    id = if (LocalDark.current) R.drawable.upsell_plus else R.drawable.uspell_plus_light,
                     modifier = Modifier
                         .size(size = 50.dp)
                         .align(Alignment.BottomEnd)
@@ -180,18 +180,12 @@ fun UpsellWelcomeOffer(
                 )
             }
 
-            Spacer(modifier = Modifier.height(Spacing.medium))
-
-            Text.Body2Regular(
-                text = if (stepToDisplay == StepToDisplay.WelcomeOfferMonthly) {
-                    stringResource(R.string.upsell_get_the_best_of_pass)
-                } else {
-                    stringResource(
-                        R.string.price_per_month_type2,
-                        plan.selector.pricePerMonth
-                    )
-                }
-            )
+            if (stepToDisplay == StepToDisplay.WelcomeOfferMonthly) {
+                Spacer(modifier = Modifier.height(Spacing.medium))
+                Text.Body2Regular(
+                    text = stringResource(R.string.upsell_get_the_best_of_pass)
+                )
+            }
 
             Divider(
                 modifier = Modifier
@@ -221,7 +215,7 @@ fun UpsellWelcomeOffer(
             backgroundColor = if (LocalDark.current) {
                 Color(color = 0xFF472A6A)
             } else {
-                PassTheme.colors.backgroundStrong
+                Color(color = 0xFFF4F0FE)
             }
         )
     }

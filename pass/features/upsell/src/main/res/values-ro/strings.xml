@@ -39,7 +39,6 @@
   <string name="upsell_button_upgrade">Luați Pass Plus</string>
   <string name="upsell_button_upgrade_essentials">Luați Pass Business</string>
   <string name="price_per_month_type1">%s/lună</string>
-  <string name="price_per_month_type2">%s/lună</string>
   <string name="upsell_skip">Nu acum</string>
   <string name="upsell_no_plan">Nu există planuri disponibile</string>
   <string name="upsell_plan_title">Deblocați funcțiile premium.</string>

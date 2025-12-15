@@ -93,11 +93,11 @@ class OnBoardingViewModel @Inject constructor(
                 )
             }
 
-            initOnBoarding()
+            initOnBoarding(isOnBoardingV2Enable)
         }
     }
 
-    private fun initOnBoarding() {
+    private fun initOnBoarding(isOnBoardingV2Enable: Boolean) {
         viewModelScope.launch {
             val showInvitePendingAcceptance = async { shouldShowInvitePendingAcceptance() }
             val autofillStatus = async { autofillManager.getAutofillStatus().firstOrNull() }
@@ -106,11 +106,20 @@ class OnBoardingViewModel @Inject constructor(
             if (showInvitePendingAcceptance.await()) {
                 supportedPages.add(InvitePending)
             }
-            if (shouldShowAutofill(autofillStatus.await())) {
-                supportedPages.add(Autofill)
-            }
-            if (shouldShowFingerprint(biometryStatus.await())) {
-                supportedPages.add(Fingerprint)
+            if (isOnBoardingV2Enable) {
+                if (shouldShowFingerprint(biometryStatus.await())) {
+                    supportedPages.add(Fingerprint)
+                }
+                if (shouldShowAutofill(autofillStatus.await())) {
+                    supportedPages.add(Autofill)
+                }
+            } else {
+                if (shouldShowAutofill(autofillStatus.await())) {
+                    supportedPages.add(Autofill)
+                }
+                if (shouldShowFingerprint(biometryStatus.await())) {
+                    supportedPages.add(Fingerprint)
+                }
             }
             supportedPages.add(Last)
             _onBoardingUiState.update { it.copy(enabledPages = supportedPages.toPersistentList()) }
@@ -176,9 +185,7 @@ class OnBoardingViewModel @Inject constructor(
         viewModelScope.launch {
             autofillManager.openAutofillSelector()
             delay(DELAY_AFTER_AUTOFILL_CLICK)
-            if (_onBoardingUiState.value.enabledPages.count() > 1) {
-                _onBoardingUiState.update { it.copy(selectedPage = 1) }
-            }
+            goToNextPage()
         }
     }
 
@@ -218,12 +225,12 @@ class OnBoardingViewModel @Inject constructor(
             userPreferencesRepository.setAppLockTypePreference(AppLockTypePreference.Biometrics)
             userPreferencesRepository.setAppLockState(AppLockState.Enabled)
             snackbarDispatcher(FingerprintLockEnabled)
-            _onBoardingUiState.update { it.copy(selectedPage = it.selectedPage + 1) }
+            goToNextPage()
         }
     }
 
     private fun goToNextPage() {
-        viewModelScope.launch {
+        if (_onBoardingUiState.value.selectedPage < _onBoardingUiState.value.enabledPages.size - 1) {
             _onBoardingUiState.update { it.copy(selectedPage = it.selectedPage + 1) }
         }
     }

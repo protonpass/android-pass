@@ -189,6 +189,7 @@ enum class StepToDisplay {
 @Stable
 data class UpsellV2UiState(
     val displayOnBoarding: Boolean = false,
+    val displayLoaderDuringPurchase: Boolean = false,
     val stepToDisplay: StepToDisplay = StepToDisplay.Idle,
     val plans: ImmutableList<UpsellPlanUiModel> = persistentListOf()
 )

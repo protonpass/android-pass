@@ -25,12 +25,20 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toPersistentList
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import me.proton.core.accountmanager.domain.AccountManager
+import me.proton.core.payment.presentation.viewmodel.ProtonPaymentEvent
+import proton.android.pass.common.api.safeRunCatching
 import proton.android.pass.commonui.api.SavedStateHandleProvider
+import proton.android.pass.data.api.usecases.GetUserPlan
+import proton.android.pass.data.api.usecases.RefreshUserAccess
 import proton.android.pass.data.api.usecases.plan.ObservePlansWithPrice
+import proton.android.pass.domain.Plan
 import proton.android.pass.domain.plan.PlanWithPriceState
 import proton.android.pass.features.upsell.v2.models.StepToDisplay
 import proton.android.pass.features.upsell.v2.models.UpsellV2UiState
@@ -40,13 +48,21 @@ import proton.android.pass.features.upsell.v2.models.toWelcomeOfferMonthlyUpsell
 import proton.android.pass.features.upsell.v2.models.toWelcomeOfferYearlyUpsellUiModel
 import proton.android.pass.features.upsell.v2.models.toYearlyUpsellUiModel
 import proton.android.pass.features.upsell.v2.navigation.UpsellV2DisplayOnBoardingArg
+import proton.android.pass.log.api.PassLogger
+import proton.android.pass.notifications.api.ToastManager
 import javax.inject.Inject
+import kotlin.time.Duration.Companion.seconds
+import me.proton.core.plan.presentation.R as PaymentR
 
 @HiltViewModel
 class UpsellV2ViewModel @Inject constructor(
     @param:ApplicationContext private val context: Context,
     savedStateHandleProvider: SavedStateHandleProvider,
-    private val observePlansWithPrice: ObservePlansWithPrice
+    private val observePlansWithPrice: ObservePlansWithPrice,
+    private val accountManager: AccountManager,
+    private val getUserPlan: GetUserPlan,
+    private val refreshUserAccess: RefreshUserAccess,
+    private val toastManager: ToastManager
 ) : ViewModel() {
 
     private val displayOnBoarding: Boolean = savedStateHandleProvider.get()
@@ -64,6 +80,77 @@ class UpsellV2ViewModel @Inject constructor(
     init {
         viewModelScope.launch {
             updatePlans()
+        }
+    }
+
+    private suspend fun getPrimaryUserIdOrNull() = accountManager.getPrimaryUserId().firstOrNull()
+
+    internal fun manageError(error: ProtonPaymentEvent.Error) {
+        PassLogger.w(TAG, "Error during payment : $error")
+
+        when (error) {
+            ProtonPaymentEvent.Error.GoogleProductDetailsNotFound -> {
+                toastManager.showToast(PaymentR.string.payments_error_google_prices)
+            }
+            ProtonPaymentEvent.Error.UserCancelled -> {
+                // do nothing
+            }
+
+            else -> {
+                toastManager.showToast(PaymentR.string.payments_general_error)
+            }
+        }
+
+        if (error !is ProtonPaymentEvent.Error.UserCancelled) {
+            _upsellV2UiState.update {
+                it.copy(
+                    stepToDisplay = StepToDisplay.Next
+                )
+            }
+        }
+    }
+
+    internal fun upgrade() = viewModelScope.launch {
+        getPrimaryUserIdOrNull()?.let { userId ->
+            _upsellV2UiState.update {
+                it.copy(
+                    displayLoaderDuringPurchase = true
+                )
+            }
+
+            viewModelScope.launch {
+                safeRunCatching {
+                    val maxAttempts = 3
+                    val baseDelay = 2.seconds
+                    val previousPlan: Plan? = getUserPlan(userId).firstOrNull()
+
+                    repeat(maxAttempts) { attempt ->
+                        delay(baseDelay * (attempt + 1))
+                        runCatching { refreshUserAccess(userId) }
+                            .onSuccess { PassLogger.i(TAG, "Plan refreshed") }
+                            .onFailure {
+                                PassLogger.w(TAG, "Error refreshing plan")
+                                PassLogger.w(TAG, it)
+                            }
+                        val currentPlan: Plan? = getUserPlan(userId).firstOrNull()
+                        if (previousPlan?.internalName != currentPlan?.internalName) {
+                            _upsellV2UiState.update {
+                                it.copy(
+                                    stepToDisplay = StepToDisplay.Next
+                                )
+                            }
+                            return@launch
+                        }
+                    }
+
+                    // if it's too long, go to next screen.
+                    _upsellV2UiState.update {
+                        it.copy(
+                            stepToDisplay = StepToDisplay.Next
+                        )
+                    }
+                }
+            }
         }
     }
 
@@ -177,3 +264,5 @@ class UpsellV2ViewModel @Inject constructor(
         }
     }
 }
+
+private const val TAG = "UpsellV2ViewModel"

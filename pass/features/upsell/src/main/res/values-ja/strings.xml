@@ -39,7 +39,6 @@
   <string name="upsell_button_upgrade">Pass Plusを入手</string>
   <string name="upsell_button_upgrade_essentials">BusinessPassを入手する</string>
   <string name="price_per_month_type1">%s/月</string>
-  <string name="price_per_month_type2">%s月</string>
   <string name="upsell_skip">多分後で</string>
   <string name="upsell_no_plan">プランを利用できません</string>
   <string name="upsell_plan_title">プレミアム機能をアンロック</string>

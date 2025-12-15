@@ -83,6 +83,8 @@ dependencies {
     implementation(libs.kotlinx.datetime)
     implementation(libs.kotlinx.serialization.json)
     implementation(projects.pass.appConfig.api)
+    implementation(libs.core.accountManager)
+    implementation(projects.pass.log.api)
     kapt(libs.dagger.hilt.android.compiler)
     kapt(libs.androidx.hilt.compiler)
     debugImplementation(libs.showkase)
@@ -90,6 +92,7 @@ dependencies {
     implementation(libs.androidx.compose.uiToolingPreview)
     debugImplementation(libs.androidx.compose.uiTooling)
     debugImplementation(libs.androidx.compose.uiTestManifest)
+    implementation(projects.pass.notifications.api)
 
     implementation(projects.pass.data.api)
     implementation(libs.androidx.compose.material.icons.core)

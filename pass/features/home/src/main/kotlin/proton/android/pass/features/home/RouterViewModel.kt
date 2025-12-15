@@ -46,6 +46,8 @@ import proton.android.pass.data.api.usecases.inappmessages.ObserveDeliverablePro
 import proton.android.pass.domain.InviteToken
 import proton.android.pass.domain.inappmessages.InAppMessage
 import proton.android.pass.domain.inappmessages.InAppMessageId
+import proton.android.pass.preferences.FeatureFlag
+import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import proton.android.pass.preferences.HasCompletedOnBoarding
 import proton.android.pass.preferences.UserPreferencesRepository
 import javax.inject.Inject
@@ -58,7 +60,8 @@ class RouterViewModel @Inject constructor(
     observeDeliverableModalInAppMessages: ObserveDeliverableModalInAppMessages,
     observeDeliverablePromoInAppMessages: ObserveDeliverablePromoInAppMessages,
     appConfig: AppConfig,
-    getUserPlan: GetUserPlan
+    getUserPlan: GetUserPlan,
+    featureFlagsPreferencesRepository: FeatureFlagsPreferencesRepository
 ) : ViewModel() {
 
 
@@ -83,6 +86,7 @@ class RouterViewModel @Inject constructor(
                 .flatMapLatest {
                     flowOf(it.map { plan -> plan.isFreePlan }.getOrNull() != false)
                 },
+            featureFlagsPreferencesRepository.get<Boolean>(FeatureFlag.PASS_MOBILE_ON_BOARDING_V2),
             ::routerEvent
         )
             .distinctUntilChanged()
@@ -104,13 +108,15 @@ class RouterViewModel @Inject constructor(
         modalOption: InAppMessage.Modal?,
         promoOption: InAppMessage.Promo?,
         supportPayment: Boolean,
-        isFreePlan: Boolean
+        isFreePlan: Boolean,
+        isOnboardingV2Enable: Boolean
     ): RouterEvent = when {
         inviteTokenOption is Some -> RouterEvent.ConfirmedInvite(inviteTokenOption.value)
         hasCompletedOnBoarding == HasCompletedOnBoarding.NotCompleted -> {
             RouterEvent.OnBoarding(
                 supportPayment = supportPayment,
-                isFreePlan = isFreePlan
+                isFreePlan = isFreePlan,
+                isOnboardingV2Enable = isOnboardingV2Enable
             )
         }
 
@@ -127,7 +133,11 @@ class RouterViewModel @Inject constructor(
 
 sealed interface RouterEvent {
 
-    data class OnBoarding(val supportPayment: Boolean = false, val isFreePlan: Boolean = false) :
+    data class OnBoarding(
+        val supportPayment: Boolean,
+        val isFreePlan: Boolean,
+        val isOnboardingV2Enable: Boolean
+    ) :
         RouterEvent
 
     data object SyncDialog : RouterEvent

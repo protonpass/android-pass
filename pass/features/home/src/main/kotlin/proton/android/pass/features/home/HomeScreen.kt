@@ -188,7 +188,7 @@ fun HomeScreen(
     DisposableEffect(routerEvent) {
         when (val event = routerEvent) {
             is RouterEvent.OnBoarding -> {
-                if (event.supportPayment && event.isFreePlan) {
+                if (event.supportPayment && event.isFreePlan && event.isOnboardingV2Enable) {
                     onNavigateEvent(HomeNavigation.UpsellV2AndOnboarding)
                 } else {
                     onNavigateEvent(HomeNavigation.OnBoarding)

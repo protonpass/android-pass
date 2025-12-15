@@ -83,7 +83,9 @@ internal data class HomeUiState(
     val isFreePlan: Boolean,
     val canCreateItems: Boolean,
     val hasShares: Boolean,
-    private val aliasTrashDialogStatusPreference: AliasTrashDialogStatusPreference
+    private val aliasTrashDialogStatusPreference: AliasTrashDialogStatusPreference,
+    val isUpgradeAvailable: Boolean,
+    val isQuest: Boolean
 ) {
 
     internal val sharedTrashedItemsCount: Int = homeListUiState.items
@@ -137,7 +139,9 @@ internal data class HomeUiState(
             isFreePlan = true,
             canCreateItems = false,
             aliasTrashDialogStatusPreference = AliasTrashDialogStatusPreference.Disabled,
-            hasShares = false
+            hasShares = false,
+            isUpgradeAvailable = false,
+            isQuest = false
         )
 
     }

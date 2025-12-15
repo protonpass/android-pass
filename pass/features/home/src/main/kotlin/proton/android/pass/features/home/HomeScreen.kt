@@ -230,7 +230,8 @@ fun HomeScreen(
     }
 
     NotificationPermissionLaunchedEffect(
-        shouldRequestPermissions = onBoardingTipsUiState.event == OnBoardingTipsEvent.RequestNotificationPermission,
+        shouldRequestPermissions = !homeUiState.isQuest &&
+            onBoardingTipsUiState.event == OnBoardingTipsEvent.RequestNotificationPermission,
         onPermissionRequested = onBoardingTipsViewModel::clearEvent,
         onPermissionChanged = onBoardingTipsViewModel::onNotificationPermissionChanged
     )

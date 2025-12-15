@@ -26,6 +26,8 @@ import proton.android.pass.data.api.crypto.GetItemKey
 import proton.android.pass.data.api.crypto.GetShareAndItemKey
 import proton.android.pass.data.impl.crypto.EncryptGroupInviteKeys
 import proton.android.pass.data.impl.crypto.EncryptGroupInviteKeysImpl
+import proton.android.pass.data.impl.crypto.ResolveGroupInviteCryptoContext
+import proton.android.pass.data.impl.crypto.ResolveGroupInviteCryptoContextImpl
 import proton.android.pass.data.impl.crypto.EncryptItemsKeysForUser
 import proton.android.pass.data.impl.crypto.EncryptItemsKeysForUserImpl
 import proton.android.pass.data.impl.crypto.EncryptShareKeysForUser
@@ -75,6 +77,11 @@ abstract class DataCryptoModule {
 
     @Binds
     abstract fun bindEncryptGroupInviteKeys(impl: EncryptGroupInviteKeysImpl): EncryptGroupInviteKeys
+
+    @Binds
+    abstract fun bindResolveGroupInviteCryptoContext(
+        impl: ResolveGroupInviteCryptoContextImpl
+    ): ResolveGroupInviteCryptoContext
 
     @Binds
     abstract fun bindCreateNewUserInviteSignature(

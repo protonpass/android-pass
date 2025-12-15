@@ -42,13 +42,13 @@ class AcceptGroupInviteImpl @Inject constructor(
 
     override fun invoke(
         groupPrivateKeys: List<PrivateAddressKey>,
-        organizationPrivateKey: PrivateKey,
+        openerKeys: List<PrivateKey>,
         inviterAddressKeys: List<PublicKey>,
         keys: List<EncryptedInviteKey>
     ): List<EncryptedGroupInviteAcceptKey> {
         val unlockedGroupKeys = unlockGroupKeys(
             groupPrivateKeys = groupPrivateKeys,
-            organizationPrivateKey = organizationPrivateKey
+            openerPrivateKeys = openerKeys
         )
         return keys.map { inviteKey ->
             val decoded = Base64.decodeBase64(inviteKey.key)
@@ -93,13 +93,17 @@ class AcceptGroupInviteImpl @Inject constructor(
 
     private fun unlockGroupKeys(
         groupPrivateKeys: List<PrivateAddressKey>,
-        organizationPrivateKey: PrivateKey
+        openerPrivateKeys: List<PrivateKey>
     ): List<UnlockedGroupKey> = groupPrivateKeys.map { privateAddressKey ->
         val token = privateAddressKey.token ?: error("Missing group address key token")
-        val decryptedToken = cryptoContext.pgpCrypto.decryptData(
-            message = token,
-            unlockedKey = cryptoContext.pgpCrypto.getUnarmored(organizationPrivateKey.key)
-        )
+        val decryptedToken = openerPrivateKeys.firstNotNullOfOrNull { orgKey ->
+            runCatching {
+                cryptoContext.pgpCrypto.decryptData(
+                    message = token,
+                    unlockedKey = cryptoContext.pgpCrypto.getUnarmored(orgKey.key)
+                )
+            }.getOrNull()
+        } ?: error("Cannot decrypt group key token with provided opener keys")
         val unlocked = cryptoContext.pgpCrypto.unlock(
             privateKey = privateAddressKey.privateKey.key,
             passphrase = decryptedToken

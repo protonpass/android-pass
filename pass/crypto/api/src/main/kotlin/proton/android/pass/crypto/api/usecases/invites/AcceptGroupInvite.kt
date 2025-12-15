@@ -32,7 +32,7 @@ data class EncryptedGroupInviteAcceptKey(
 interface AcceptGroupInvite {
     operator fun invoke(
         groupPrivateKeys: List<PrivateAddressKey>,
-        organizationPrivateKey: PrivateKey,
+        openerKeys: List<PrivateKey>,
         inviterAddressKeys: List<PublicKey>,
         keys: List<EncryptedInviteKey>
     ): List<EncryptedGroupInviteAcceptKey>

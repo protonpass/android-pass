@@ -49,7 +49,7 @@ val sentryDSN: String? = privateProperties.getProperty("SENTRY_DSN")
 val accountSentryDSN: String? = System.getenv("ACCOUNT_SENTRY_DSN")
 val atlasProxyToken: String? = privateProperties.getProperty("PROXY_TOKEN")
 val customEnvUrl: String? = System.getenv("PROD_ENV_URL")
-val isCustomBuild: Boolean = !System.getenv("PROD_ENV_URL").isNullOrBlank()
+val isCustomBuild: Boolean = !customEnvUrl.isNullOrBlank()
 val isApkBuild: Boolean = project.findProperty("apkBuild") == "true"
 
 println(

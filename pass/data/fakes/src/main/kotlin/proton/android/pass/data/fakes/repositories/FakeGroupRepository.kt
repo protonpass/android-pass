@@ -26,17 +26,19 @@ import proton.android.pass.domain.GroupMember
 import javax.inject.Inject
 
 class FakeGroupRepository @Inject constructor() : GroupRepository {
-    override suspend fun retrieveGroups(userId: UserId, forceRefresh: Boolean): List<Group> = emptyList()
+    var groups: List<Group> = emptyList()
+    var members: List<GroupMember> = emptyList()
+    override suspend fun retrieveGroups(userId: UserId, forceRefresh: Boolean): List<Group> = groups
 
     override suspend fun retrieveGroup(
         userId: UserId,
         groupId: GroupId,
         forceRefresh: Boolean
-    ): Group? = null
+    ): Group? = groups.firstOrNull { it.id == groupId }
 
     override suspend fun retrieveGroupMembers(
         userId: UserId,
         groupId: GroupId,
         forceRefresh: Boolean
-    ): List<GroupMember> = emptyList()
+    ): List<GroupMember> = members.filter { it.groupId == groupId.id }
 }

@@ -69,6 +69,8 @@ data class GroupInviteEntity(
     val shareContentKeyRotation: Long,
     @ColumnInfo(name = Columns.SHARE_CONTENT_FORMAT_VERSION)
     val shareContentFormatVersion: Int,
+    @ColumnInfo(name = Columns.IS_GROUP_OWNER, defaultValue = "0")
+    val isGroupOwner: Boolean,
     @ColumnInfo(name = Columns.CREATE_TIME)
     val createTime: Long,
 
@@ -93,8 +95,8 @@ data class GroupInviteEntity(
         const val SHARE_CONTENT = "share_content"
         const val SHARE_CONTENT_KEY_ROTATION = "share_content_key_rotation"
         const val SHARE_CONTENT_FORMAT_VERSION = "share_content_format_version"
-        const val DATA = "data"
         const val CREATE_TIME = "create_time"
+        const val IS_GROUP_OWNER = "is_group_owner"
         const val ENCRYPTED_CONTENT = "encrypted_content"
     }
 

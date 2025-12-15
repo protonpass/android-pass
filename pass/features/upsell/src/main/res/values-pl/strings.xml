@@ -39,7 +39,6 @@
   <string name="upsell_button_upgrade">Wybierz plan Pass Plus</string>
   <string name="upsell_button_upgrade_essentials">Wybierz plan Pass Business</string>
   <string name="price_per_month_type1">%s/month</string>
-  <string name="price_per_month_type2">%s / month</string>
   <string name="upsell_skip">Not now</string>
   <string name="upsell_no_plan">No plan available</string>
   <string name="upsell_plan_title">Unlock premium features.</string>

@@ -39,7 +39,6 @@
   <string name="upsell_button_upgrade">Je choisis Pass Plus</string>
   <string name="upsell_button_upgrade_essentials">Je choisis Pass Business</string>
   <string name="price_per_month_type1">%s/mois</string>
-  <string name="price_per_month_type2">%s/mois</string>
   <string name="upsell_skip">Pas maintenant</string>
   <string name="upsell_no_plan">Aucun abonnement n\'est disponible.</string>
   <string name="upsell_plan_title">Débloquez les fonctionnalités premium.</string>

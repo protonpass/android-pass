@@ -214,6 +214,8 @@ object PassPalette {
             0.5671f to Color(color = 0xFFFBF9FE)
         )
     )
+
+    val upsellLightBackgroundColor = Color(color = 0xFFF4F0FE)
 }
 
 private const val GRADIENT_STEP_1 = 0.2595f

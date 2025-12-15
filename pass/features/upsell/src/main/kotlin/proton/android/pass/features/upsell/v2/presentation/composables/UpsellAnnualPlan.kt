@@ -54,6 +54,8 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.payment.presentation.viewmodel.ProtonPaymentEvent
+import proton.android.pass.commonui.api.LocalDark
+import proton.android.pass.commonui.api.PassPalette
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.ThemePreviewProvider
@@ -68,9 +70,9 @@ internal const val WEIGHT_PASS_COL1 = 0.50f
 internal const val WEIGHT_PASS_COL2 = 0.25f
 internal const val WEIGHT_PASS_COL3 = 0.25f
 
-internal const val WEIGHT_UNLIMITED_COL1 = 0.52f
-internal const val WEIGHT_UNLIMITED_COL2 = 0.27f
-internal const val WEIGHT_UNLIMITED_COL3 = 0.40f
+internal const val WEIGHT_UNLIMITED_COL1 = 0.42f
+internal const val WEIGHT_UNLIMITED_COL2 = 0.25f
+internal const val WEIGHT_UNLIMITED_COL3 = 0.38f
 
 @Composable
 fun UpsellAnnualPlan(
@@ -141,7 +143,12 @@ fun UpsellAnnualPlan(
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .heightIn(max = 48.dp),
-                            painter = painterResource(id = R.drawable.upsell_plan_everything),
+                            painter = painterResource(
+                                id = if (LocalDark.current)
+                                    R.drawable.upsell_plan_everything
+                                else
+                                    R.drawable.upsell_plan_everything_light
+                            ),
                             contentDescription = ""
                         )
 
@@ -170,7 +177,10 @@ fun UpsellAnnualPlan(
                             UpsellV2Section(
                                 modifier = Modifier.fillMaxWidth(),
                                 leftColumnText = "Plus",
-                                leftColumnBackTextColor = PassTheme.colors.backgroundStrongest,
+                                leftColumnBackTextColor = if (LocalDark.current)
+                                    PassTheme.colors.backgroundMedium
+                                else
+                                    PassPalette.upsellLightBackgroundColor,
                                 rightColumnText = "Unlimited",
                                 rightColumnTextColor = PassTheme.colors.textInvert,
                                 rightColumnBackTextColor = Color.White,

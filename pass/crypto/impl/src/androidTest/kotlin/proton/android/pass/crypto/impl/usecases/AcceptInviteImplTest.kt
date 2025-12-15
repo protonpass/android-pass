@@ -34,6 +34,7 @@ import proton.android.pass.account.fakes.FakeKeyStoreCrypto
 import proton.android.pass.crypto.api.Base64
 import proton.android.pass.crypto.api.usecases.invites.EncryptedInviteAcceptKey
 import proton.android.pass.crypto.api.usecases.invites.EncryptedInviteKey
+import proton.android.pass.crypto.api.error.InvalidSignature
 import proton.android.pass.crypto.fakes.context.FakeEncryptionContext
 import proton.android.pass.crypto.fakes.context.FakeEncryptionContextProvider
 import proton.android.pass.domain.key.ShareKey
@@ -42,6 +43,7 @@ import proton.android.pass.test.domain.ShareKeyTestFactory
 import proton.android.pass.test.domain.UserTestFactory
 import kotlin.test.assertContentEquals
 import kotlin.test.assertEquals
+import kotlin.test.assertFailsWith
 
 class AcceptInviteImplTest {
     private val cryptoContext: CryptoContext = AndroidCryptoContext(
@@ -82,6 +84,32 @@ class AcceptInviteImplTest {
         }
     }
 
+    @Test
+    fun invalidSignatureThrows() {
+        val instance = AcceptUserInviteImpl(cryptoContext, FakeEncryptionContextProvider())
+        val inviterAddressKey = UserAddressKeyTestFactory.createUserAddressKey(cryptoContext, AddressId("Inviter"))
+        val wrongInviterKey = UserAddressKeyTestFactory.createUserAddressKey(cryptoContext, AddressId("WrongInviter"))
+        val invited = UserTestFactory.createWithKeys()
+        val invitedUserAddressKey = UserAddressKeyTestFactory.createUserAddressKey(cryptoContext, AddressId("Invited"))
+        val (shareKey, _) = ShareKeyTestFactory.create()
+        val shareKeys = listOf(shareKey)
+
+        val input = generateInput(
+            inviterAddressKey = inviterAddressKey,
+            invitedUserAddressKey = invitedUserAddressKey,
+            shareKeys = shareKeys
+        )
+
+        assertFailsWith<InvalidSignature> {
+            instance.invoke(
+                invitedUser = invited,
+                invitedUserAddressKeys = listOf(invitedUserAddressKey.privateKey),
+                inviterAddressKeys = listOf(wrongInviterKey.privateKey.publicKey(cryptoContext)),
+                keys = input
+            )
+        }
+    }
+
     private fun validateKey(
         original: ShareKey,
         reencrypted: EncryptedInviteAcceptKey,
@@ -94,6 +122,8 @@ class AcceptInviteImplTest {
             assertEquals(VerificationStatus.Success, res.status)
             assertContentEquals(decryptedOriginal, res.data)
         }
+        val localKey = FakeEncryptionContext.decrypt(reencrypted.localEncryptedKey)
+        assertContentEquals(decryptedOriginal, localKey)
     }
 
     private fun generateInput(

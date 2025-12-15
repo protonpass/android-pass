@@ -237,6 +237,7 @@ class GroupInviteRepositoryImpl @Inject constructor(
         shareContent = vaultData?.content.orEmpty(),
         shareContentKeyRotation = vaultData?.contentKeyRotation ?: -1L,
         shareContentFormatVersion = vaultData?.contentFormatVersion ?: -1,
+        isGroupOwner = isGroupOwner,
         createTime = createTime,
         encryptedContent = reencryptedInviteContent
     )

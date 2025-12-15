@@ -39,7 +39,6 @@
   <string name="upsell_button_upgrade">Získajte Pass Plus</string>
   <string name="upsell_button_upgrade_essentials">Získajte Pass Business</string>
   <string name="price_per_month_type1">%s/mesiac</string>
-  <string name="price_per_month_type2">%s / mesiac</string>
   <string name="upsell_skip">Teraz nie</string>
   <string name="upsell_no_plan">Nie je k dispozícii žiadny plán</string>
   <string name="upsell_plan_title">Odomknite prémiové funkcie.</string>

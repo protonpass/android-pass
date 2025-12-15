@@ -39,7 +39,6 @@
   <string name="upsell_button_upgrade">Få Pass Plus</string>
   <string name="upsell_button_upgrade_essentials">Få Pass Business</string>
   <string name="price_per_month_type1">%s/måned</string>
-  <string name="price_per_month_type2">%s / måned</string>
   <string name="upsell_skip">Ikke nu</string>
   <string name="upsell_no_plan">Intet tilgængeligt abonnement</string>
   <string name="upsell_plan_title">Lås op for premium-funktioner.</string>

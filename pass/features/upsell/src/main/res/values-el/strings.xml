@@ -39,7 +39,6 @@
   <string name="upsell_button_upgrade">Αποκτήστε το Pass Plus</string>
   <string name="upsell_button_upgrade_essentials">Αποκτήστε το Pass Business</string>
   <string name="price_per_month_type1">%s/μήνα</string>
-  <string name="price_per_month_type2">%s / μήνα</string>
   <string name="upsell_skip">Όχι τώρα</string>
   <string name="upsell_no_plan">Δεν υπάρχει διαθέσιμο πλάνο</string>
   <string name="upsell_plan_title">Ξεκλειδώστε τις premium δυνατότητες.</string>

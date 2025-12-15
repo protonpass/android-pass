@@ -18,14 +18,20 @@
 
 package proton.android.pass.features.upsell.v2.presentation
 
+import android.app.Activity
+import android.content.Intent
 import androidx.activity.compose.BackHandler
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import me.proton.core.payment.presentation.viewmodel.ProtonPaymentEvent
+import me.proton.core.plan.presentation.ui.StartUnredeemedPurchase
 import proton.android.pass.features.upsell.v2.models.StepToDisplay
 
 @Composable
@@ -49,17 +55,38 @@ fun UpsellV2Screen(
         }
     }
 
+    val context = LocalContext.current
+    val launcher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.StartActivityForResult()
+    ) {
+        if (it.resultCode == Activity.RESULT_OK) {
+            viewModel.upgrade()
+        }
+    }
+
     UpsellV2Content(
         modifier = modifier,
         uiState = state,
         onPaymentCallback = {
             when (it) {
                 is ProtonPaymentEvent.GiapSuccess -> {
-                    onPlanFinished(state.displayOnBoarding)
+                    viewModel.upgrade()
                 }
 
                 is ProtonPaymentEvent.Error -> {
-                    onPlanFinished(state.displayOnBoarding)
+                    when (it) {
+                        is ProtonPaymentEvent.Error.GiapUnredeemed -> {
+                            launcher.launch(
+                                input = StartUnredeemedPurchase.createIntent(context, Unit).apply {
+                                    addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                                }
+                            )
+                        }
+
+                        else -> {
+                            viewModel.manageError(it)
+                        }
+                    }
                 }
 
                 else -> {
@@ -72,3 +99,5 @@ fun UpsellV2Screen(
         }
     )
 }
+
+private const val TAG = "UpsellV2Screen"

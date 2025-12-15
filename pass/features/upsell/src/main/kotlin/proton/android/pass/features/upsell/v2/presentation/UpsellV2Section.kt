@@ -21,7 +21,6 @@ package proton.android.pass.features.upsell.v2.presentation
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -50,7 +49,9 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import me.proton.core.compose.theme.ProtonTheme
 import proton.android.pass.commonui.api.LocalDark
+import proton.android.pass.commonui.api.PassPalette
 import proton.android.pass.commonui.api.PassTheme
+import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.features.upsell.v1.R
 import proton.android.pass.features.upsell.v2.models.PlanTypeUiState
@@ -75,9 +76,8 @@ internal fun UpsellV2Section(
     rightColumnBackTextColor: Color = PassTheme.colors.backgroundStrongest,
     rightColumnBackgroundColor: Color = if (LocalDark.current)
         PassTheme.colors.backgroundMedium
-    else Color(
-        color = 0xFFF4F0FE
-    ),
+    else
+        PassPalette.upsellLightBackgroundColor,
     items: List<UpsellItemsUiState>,
     weightCol1: Float = 2f,
     weightCol2: Float = 1f,
@@ -192,8 +192,7 @@ internal fun UpsellV2Section(
         items.forEachIndexed { index, it ->
             Row(
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .height(IntrinsicSize.Min),
+                    .fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
@@ -215,12 +214,12 @@ internal fun UpsellV2Section(
 
                 OnePlan(
                     modifier = Modifier
-                        .fillMaxHeight()
                         .weight(weightCol3)
                         .background(
                             color = rightColumnBackgroundColor,
                             shape = RectangleShape
                         )
+                        .padding(vertical = Spacing.extraSmall)
                         .then(
                             other = if (index == items.lastIndex) {
                                 Modifier.padding(vertical = 8.dp)
@@ -355,7 +354,10 @@ fun UpsellV2Section2Preview(@PreviewParameter(ThemePreviewProvider::class) isDar
             UpsellV2Section(
                 modifier = Modifier.fillMaxWidth(),
                 leftColumnText = "Plus",
-                leftColumnBackTextColor = PassTheme.colors.backgroundStrongest,
+                leftColumnBackTextColor = if (LocalDark.current)
+                    PassTheme.colors.backgroundMedium
+                else
+                    PassPalette.upsellLightBackgroundColor,
                 rightColumnText = "Unlimited",
                 rightColumnTextColor = PassTheme.colors.textInvert,
                 rightColumnBackTextColor = Color.White,

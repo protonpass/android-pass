@@ -39,7 +39,6 @@
   <string name="upsell_button_upgrade">Pass Plus edinin</string>
   <string name="upsell_button_upgrade_essentials">Pass Business edinin</string>
   <string name="price_per_month_type1">%s/ay</string>
-  <string name="price_per_month_type2">%s / ay</string>
   <string name="upsell_skip">Şimdi değil</string>
   <string name="upsell_no_plan">Kullanılabilecek bir tarife bulunamadı</string>
   <string name="upsell_plan_title">Ücretli özelliklere erişin.</string>

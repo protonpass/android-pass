@@ -29,6 +29,7 @@ import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -83,7 +84,7 @@ fun ProtonSelector(
     Box(
         modifier = modifier
             .fillMaxWidth()
-            .height(68.dp)
+            .height(intrinsicSize = IntrinsicSize.Min)
             .onGloballyPositioned {
                 toggleWidth = with(density) { it.size.width.div(items.size).toDp() }
             }
@@ -143,7 +144,6 @@ private fun OneSelector(
     modifier: Modifier = Modifier,
     onClick: () -> Unit
 ) {
-    // Title
     val animatedTitleTextColor by animateColorAsState(
         targetValue = if (isSelected) titleTextColorSelected else titleTextColorUnSelected,
         animationSpec = spring(dampingRatio = Spring.DampingRatioNoBouncy),
@@ -157,7 +157,7 @@ private fun OneSelector(
     )
 
     Column(
-        modifier
+        modifier = modifier
             .clip(RoundedCornerShape(20.dp))
             .clickable(
                 interactionSource = remember { MutableInteractionSource() },

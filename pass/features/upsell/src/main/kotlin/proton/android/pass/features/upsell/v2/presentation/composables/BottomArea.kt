@@ -61,6 +61,7 @@ import me.proton.core.presentation.R
 import proton.android.pass.commonpresentation.api.plan.PaymentButtonUiState
 import proton.android.pass.commonui.api.LocalDark
 import proton.android.pass.commonui.api.LocalIsScreenshotTest
+import proton.android.pass.commonui.api.PassPalette
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.ThemePreviewProvider
@@ -74,9 +75,9 @@ internal fun BottomArea(
     paymentButtonUiState: PaymentButtonUiState,
     bottomText: String,
     backgroundColor: Color = if (LocalDark.current) {
-        PassTheme.colors.backgroundWeak
+        PassTheme.colors.inputBackgroundStrong
     } else {
-        PassTheme.colors.backgroundStrong
+        PassPalette.upsellLightBackgroundColor
     },
     onPaymentCallback: (ProtonPaymentEvent) -> Unit
 ) {

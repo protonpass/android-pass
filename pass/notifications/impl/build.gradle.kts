@@ -11,7 +11,6 @@ android {
 
     defaultConfig {
         minSdk = libs.versions.minSdk.get().toInt()
-        
     }
 
     compileOptions {
@@ -21,6 +20,15 @@ android {
 
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_17.toString()
+    }
+
+    flavorDimensions += "version"
+    productFlavors {
+        maybeCreate("dev")
+        maybeCreate("alpha")
+        maybeCreate("play")
+        maybeCreate("fdroid")
+        maybeCreate("quest")
     }
 }
 

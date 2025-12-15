@@ -28,6 +28,7 @@ import me.proton.core.domain.entity.UserId
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
+import proton.android.pass.appconfig.fakes.TestAppConfig
 import proton.android.pass.clipboard.fakes.TestClipboardManager
 import proton.android.pass.common.fakes.TestAppDispatchers
 import proton.android.pass.commonui.api.DateFormatUtils
@@ -53,6 +54,7 @@ import proton.android.pass.data.fakes.usecases.TestObserveAppNeedsUpdate
 import proton.android.pass.data.fakes.usecases.TestObserveCurrentUser
 import proton.android.pass.data.fakes.usecases.TestObservePinnedItems
 import proton.android.pass.data.fakes.usecases.TestObserveSearchEntry
+import proton.android.pass.data.fakes.usecases.TestObserveUpgradeInfo
 import proton.android.pass.data.fakes.usecases.TestPerformSync
 import proton.android.pass.data.fakes.usecases.TestPinItems
 import proton.android.pass.data.fakes.usecases.TestRestoreAllItems
@@ -110,6 +112,8 @@ internal class HomeViewModelTest {
     private lateinit var observeCurrentUser: TestObserveCurrentUser
     private lateinit var observeCanCreateItems: FakeObserveCanCreateItems
     private lateinit var observeHasShares: FakeObserveHasShares
+    private lateinit var observeUpgradeInfo: TestObserveUpgradeInfo
+    private lateinit var appConfig: TestAppConfig
 
     @Before
     internal fun setup() {
@@ -139,6 +143,8 @@ internal class HomeViewModelTest {
         observeCurrentUser = TestObserveCurrentUser().apply { sendUser(TestUser.create()) }
         observeCanCreateItems = FakeObserveCanCreateItems()
         observeHasShares = FakeObserveHasShares()
+        observeUpgradeInfo = TestObserveUpgradeInfo()
+        appConfig = TestAppConfig()
         createViewModel()
     }
 
@@ -276,7 +282,9 @@ internal class HomeViewModelTest {
             observeCanCreateItems = observeCanCreateItems,
             observeHasShares = observeHasShares,
             observeDeliverableMinimizedPromoInAppMessages = FakeObserveDeliverableMinimizedPromoInAppMessage()
-                .apply { emitPromoMessage(null) }
+                .apply { emitPromoMessage(null) },
+            observeUpgradeInfo = observeUpgradeInfo,
+            appConfig = appConfig
         )
     }
 

@@ -42,6 +42,7 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
@@ -53,6 +54,8 @@ import kotlinx.coroutines.launch
 import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
 import me.proton.core.domain.entity.UserId
+import proton.android.pass.appconfig.api.AppConfig
+import proton.android.pass.appconfig.api.BuildFlavor.Companion.isQuest
 import proton.android.pass.clipboard.api.ClipboardManager
 import proton.android.pass.common.api.AppDispatchers
 import proton.android.pass.common.api.LoadingResult
@@ -99,6 +102,7 @@ import proton.android.pass.data.api.usecases.ObserveAppNeedsUpdate
 import proton.android.pass.data.api.usecases.ObserveCurrentUser
 import proton.android.pass.data.api.usecases.ObserveEncryptedItems
 import proton.android.pass.data.api.usecases.ObservePinnedItems
+import proton.android.pass.data.api.usecases.ObserveUpgradeInfo
 import proton.android.pass.data.api.usecases.PerformSync
 import proton.android.pass.data.api.usecases.PinItem
 import proton.android.pass.data.api.usecases.PinItems
@@ -204,7 +208,9 @@ class HomeViewModel @Inject constructor(
     getUserPlan: GetUserPlan,
     observeCanCreateItems: ObserveCanCreateItems,
     observeHasShares: ObserveHasShares,
-    observeDeliverableMinimizedPromoInAppMessages: ObserveDeliverableMinimizedPromoInAppMessages
+    observeDeliverableMinimizedPromoInAppMessages: ObserveDeliverableMinimizedPromoInAppMessages,
+    observeUpgradeInfo: ObserveUpgradeInfo,
+    appConfig: AppConfig
 ) : ViewModel() {
 
     private val coroutineExceptionHandler = CoroutineExceptionHandler { _, throwable ->
@@ -571,7 +577,9 @@ class HomeViewModel @Inject constructor(
         bottomSheetItemActionFlow,
         preferencesRepository.observeAliasTrashDialogStatusPreference(),
         observeCanCreateItems(),
-        observeHasShares(includeHidden = false)
+        observeHasShares(includeHidden = false),
+        observeUpgradeInfo().asLoadingResult(),
+        flowOf(appConfig.flavor.isQuest())
     ) { homeListUiState,
         searchUiState,
         userPlan,
@@ -580,7 +588,9 @@ class HomeViewModel @Inject constructor(
         bottomSheetItemAction,
         aliasTrashDialogStatusPreference,
         canCreateItems,
-        hasShares ->
+        hasShares,
+        upgradeInfo,
+        isQuest ->
         HomeUiState(
             homeListUiState = homeListUiState,
             searchUiState = searchUiState,
@@ -591,7 +601,9 @@ class HomeViewModel @Inject constructor(
             isFreePlan = userPlan.map { plan -> plan.isFreePlan }.getOrNull() != false,
             aliasTrashDialogStatusPreference = aliasTrashDialogStatusPreference,
             canCreateItems = canCreateItems,
-            hasShares = hasShares
+            hasShares = hasShares,
+            isUpgradeAvailable = upgradeInfo.getOrNull()?.isUpgradeAvailable ?: false,
+            isQuest = isQuest
         )
     }
         .stateIn(

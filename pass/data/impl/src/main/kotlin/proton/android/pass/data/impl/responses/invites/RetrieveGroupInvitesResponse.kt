@@ -65,6 +65,8 @@ data class GroupInviteApiModel(
     val keys: List<KeyApiModel>,
     @SerialName("VaultData")
     val vaultData: VaultDataApiModel?,
+    @SerialName("IsGroupOwner")
+    val isGroupOwner: Boolean,
     @SerialName("CreateTime")
     val createTime: Long
 )

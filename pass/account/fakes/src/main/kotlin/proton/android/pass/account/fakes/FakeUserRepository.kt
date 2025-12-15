@@ -19,6 +19,7 @@
 package proton.android.pass.account.fakes
 
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flowOf
 import me.proton.core.auth.fido.domain.entity.SecondFactorProof
 import me.proton.core.challenge.domain.entity.ChallengeFrameDetails
 import me.proton.core.crypto.common.keystore.EncryptedByteArray
@@ -36,12 +37,15 @@ import javax.inject.Inject
 
 @Suppress("TooManyFunctions")
 class FakeUserRepository @Inject constructor() : UserRepository {
+    private var user: User? = null
+    private var usersById: Map<UserId, User> = emptyMap()
     override fun addOnPassphraseChangedListener(listener: PassphraseRepository.OnPassphraseChangedListener) {
         throw IllegalStateException("Not implemented")
     }
 
     override suspend fun addUser(user: User) {
-        throw IllegalStateException("Not implemented")
+        this.user = user
+        usersById = usersById + (user.userId to user)
     }
 
     override suspend fun checkUsernameAvailable(sessionUserId: UserId?, username: String) {
@@ -84,11 +88,20 @@ class FakeUserRepository @Inject constructor() : UserRepository {
     }
 
     override suspend fun getUser(sessionUserId: SessionUserId, refresh: Boolean): User {
-        throw IllegalStateException("Not implemented")
+        return usersById[sessionUserId] ?: user
+            ?: throw IllegalStateException("User not set in FakeUserRepository")
     }
 
-    override fun observeUser(sessionUserId: SessionUserId, refresh: Boolean): Flow<User?> {
-        throw IllegalStateException("Not implemented")
+    override fun observeUser(sessionUserId: SessionUserId, refresh: Boolean): Flow<User?> =
+        flowOf(usersById[sessionUserId] ?: user)
+
+    fun setUser(user: User) {
+        this.user = user
+        usersById = usersById + (user.userId to user)
+    }
+
+    fun setUsersById(map: Map<UserId, User>) {
+        usersById = map
     }
 
     override suspend fun removeLockedAndPasswordScopes(sessionUserId: SessionUserId): Boolean {

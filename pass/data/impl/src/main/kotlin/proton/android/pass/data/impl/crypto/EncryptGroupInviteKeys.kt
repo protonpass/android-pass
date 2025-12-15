@@ -19,16 +19,10 @@
 package proton.android.pass.data.impl.crypto
 
 import me.proton.core.domain.entity.UserId
-import me.proton.core.user.domain.repository.UserRepository
 import proton.android.pass.crypto.api.usecases.invites.AcceptGroupInvite
-import proton.android.pass.crypto.api.usecases.invites.OpenOrganizationKey
-import proton.android.pass.data.api.repositories.GroupRepository
-import proton.android.pass.data.api.usecases.GetAllKeysByAddress
 import proton.android.pass.data.impl.local.GroupInviteAndKeysEntity
 import proton.android.pass.data.impl.requests.invites.InviteKeyRotation
 import proton.android.pass.domain.GroupId
-import proton.android.pass.domain.repositories.OrganizationKeyRepository
-import proton.android.pass.log.api.PassLogger
 import javax.inject.Inject
 
 interface EncryptGroupInviteKeys {
@@ -37,60 +31,26 @@ interface EncryptGroupInviteKeys {
 
 class EncryptGroupInviteKeysImpl @Inject constructor(
     private val acceptGroupInvite: AcceptGroupInvite,
-    private val groupRepository: GroupRepository,
-    private val organizationKeyRepository: OrganizationKeyRepository,
-    private val openOrganizationKey: OpenOrganizationKey,
-    private val getAllKeysByAddress: GetAllKeysByAddress,
-    private val userRepository: UserRepository
+    private val resolveGroupInviteCryptoContext: ResolveGroupInviteCryptoContext
 ) : EncryptGroupInviteKeys {
 
     override suspend fun invoke(userId: UserId, invite: GroupInviteAndKeysEntity): List<InviteKeyRotation> {
         val (groupInvite, groupKeys) = invite
 
-        val user = userRepository.getUser(userId)
-
-        val group = fetchWithForceRefresh(
-            tag = TAG,
-            initial = { groupRepository.retrieveGroup(userId, GroupId(groupInvite.invitedGroupId)) },
-            refresh = {
-                groupRepository.retrieveGroup(userId, GroupId(groupInvite.invitedGroupId), true)
-            }
-        ) ?: error("Group not found")
-
-        val groupPrivateKeys = group.address?.keys ?: error("Group doesn't have private keys")
-
-        val organizationKey = fetchWithForceRefresh(
-            tag = TAG,
-            initial = { organizationKeyRepository.getOrganizationKey(userId) },
-            refresh = { organizationKeyRepository.getOrganizationKey(userId, true) }
-        ) ?: error("Organization key not found")
-
-        val (organizationPrivateKey, _) = openOrganizationKey(user, organizationKey)
-            .getOrElse {
-                PassLogger.w(TAG, "Failed to open organization key")
-                PassLogger.w(TAG, it)
-                throw it
-            }
-
-        val inviterAddressKeys = getAllKeysByAddress(groupInvite.inviterEmail)
-            .getOrElse {
-                PassLogger.w(TAG, "Could not get inviter address keys")
-                PassLogger.w(TAG, it)
-                throw it
-            }
-            .map { it.publicKey }
+        val cryptoContext = resolveGroupInviteCryptoContext(
+            userId = userId,
+            groupId = GroupId(groupInvite.invitedGroupId),
+            inviterEmail = groupInvite.inviterEmail,
+            isGroupAdmin = groupInvite.isGroupOwner
+        )
 
         val encryptedKeys = acceptGroupInvite(
-            groupPrivateKeys = groupPrivateKeys,
-            organizationPrivateKey = organizationPrivateKey,
-            inviterAddressKeys = inviterAddressKeys,
+            groupPrivateKeys = cryptoContext.groupPrivateKeys,
+            openerKeys = cryptoContext.openerKeys,
+            inviterAddressKeys = cryptoContext.inviterPublicKeys,
             keys = groupKeys.map { it.toEncryptedInviteKey() }
         )
 
         return encryptedKeys.map { it.toInviteKeyRotation() }
-    }
-
-    companion object {
-        private const val TAG = "EncryptGroupInviteKeys"
     }
 }

@@ -66,7 +66,7 @@ import proton.android.pass.data.api.usecases.ObserveItemCount
 import proton.android.pass.data.api.usecases.ObserveMFACount
 import proton.android.pass.data.api.usecases.ObserveUpgradeInfo
 import proton.android.pass.data.api.usecases.ObserveUserAccessData
-import proton.android.pass.data.api.usecases.RefreshContent
+import proton.android.pass.data.api.usecases.PerformSync
 import proton.android.pass.data.api.usecases.UpgradeInfo
 import proton.android.pass.data.api.usecases.organization.ObserveAnyAccountHasEnforcedLock
 import proton.android.pass.data.api.usecases.securelink.ObserveSecureLinksCount
@@ -105,7 +105,7 @@ class ProfileViewModel @Inject constructor(
     private val appConfig: AppConfig,
     private val checkPasskeySupport: CheckPasskeySupport,
     private val userManager: UserManager,
-    private val refreshContent: RefreshContent,
+    private val performSync: PerformSync,
     private val searchOptionsRepository: HomeSearchOptionsRepository,
     accountManager: AccountManager,
     observeItemCount: ObserveItemCount,
@@ -369,7 +369,7 @@ class ProfileViewModel @Inject constructor(
     }
 
     private suspend fun ProfileViewModel.refreshAccount(userId: UserId) {
-        safeRunCatching { refreshContent(userId) }
+        safeRunCatching { performSync(userId, forceSync = true) }
             .onSuccess {
                 PassLogger.i(TAG, "Sync completed")
             }

@@ -21,5 +21,5 @@ package proton.android.pass.data.api.usecases
 import me.proton.core.domain.entity.UserId
 
 interface PerformSync {
-    suspend operator fun invoke(userId: UserId)
+    suspend operator fun invoke(userId: UserId, forceSync: Boolean = false)
 }

@@ -30,7 +30,6 @@ import proton.android.pass.common.api.safeRunCatching
 import proton.android.pass.data.api.ItemPendingEvent
 import proton.android.pass.data.api.PendingEventList
 import proton.android.pass.data.api.errors.ShareNotAvailableError
-import proton.android.pass.data.api.repositories.GroupRepository
 import proton.android.pass.data.api.repositories.ItemRepository
 import proton.android.pass.data.api.repositories.ItemSyncStatusRepository
 import proton.android.pass.data.api.repositories.ShareRepository
@@ -55,20 +54,24 @@ class ApplyPendingEventsImpl @Inject constructor(
     private val addressRepository: UserAddressRepository,
     private val itemRepository: ItemRepository,
     private val shareRepository: ShareRepository,
-    private val groupRepository: GroupRepository,
     private val itemSyncStatusRepository: ItemSyncStatusRepository,
     private val refreshSharesAndEnqueueSync: RefreshSharesAndEnqueueSync
 ) : ApplyPendingEvents {
 
-    override suspend fun invoke(userId: UserId) {
-        PassLogger.i(TAG, "Applying pending events started")
-        if (itemSyncStatusRepository.observeSyncState().first().isSyncing) {
+    override suspend fun invoke(userId: UserId, forceSync: Boolean) {
+        PassLogger.i(TAG, "Applying pending events started (forceSync=$forceSync)")
+        if (!forceSync && itemSyncStatusRepository.observeSyncState().first().isSyncing) {
             PassLogger.i(TAG, "Sync in progress, skipping")
             return
         }
+        val syncType = if (forceSync) {
+            RefreshSharesAndEnqueueSync.SyncType.FULL
+        } else {
+            RefreshSharesAndEnqueueSync.SyncType.INCREMENTAL
+        }
         val result = refreshSharesAndEnqueueSync(
             userId = userId,
-            syncType = RefreshSharesAndEnqueueSync.SyncType.INCREMENTAL
+            syncType = syncType
         )
         when (result) {
             RefreshSharesResult.NoSharesVaultCreated,

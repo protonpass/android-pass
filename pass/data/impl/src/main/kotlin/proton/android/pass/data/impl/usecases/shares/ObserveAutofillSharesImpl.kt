@@ -24,6 +24,7 @@ import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.api.usecases.ObserveAllShares
 import proton.android.pass.data.api.usecases.shares.ObserveAutofillShares
 import proton.android.pass.domain.Share
+import proton.android.pass.log.api.PassLogger
 import javax.inject.Inject
 
 class ObserveAutofillSharesImpl @Inject constructor(
@@ -32,7 +33,20 @@ class ObserveAutofillSharesImpl @Inject constructor(
 
     override fun invoke(userId: UserId?): Flow<List<Share>> = observeAllShares(userId, includeHidden = false)
         .mapLatest { shares ->
-            shares.filter { share -> share.canAutofill }
+            val (kept, dropped) = shares.partition(Share::canAutofill)
+
+            if (dropped.isNotEmpty()) {
+                val droppedIds = dropped.joinToString { it.id.id }
+                PassLogger.i(
+                    TAG,
+                    "Autofill dropped ${dropped.size}/${shares.size} ids=[$droppedIds]"
+                )
+            }
+
+            kept
         }
 
+    companion object {
+        private const val TAG = "ObserveAutofillSharesImpl"
+    }
 }

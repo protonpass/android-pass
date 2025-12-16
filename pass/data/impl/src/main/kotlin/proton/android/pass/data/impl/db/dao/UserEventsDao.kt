@@ -36,4 +36,12 @@ abstract class UserEventsDao : BaseDao<UserEventEntity>() {
     )
     abstract fun getLatestEventId(userId: String): Flow<UserEventEntity?>
 
+    @Query(
+        """
+        DELETE FROM ${UserEventEntity.TABLE}
+        WHERE ${UserEventEntity.Columns.USER_ID} = :userId
+        """
+    )
+    abstract suspend fun deleteLatestEventId(userId: String)
+
 }

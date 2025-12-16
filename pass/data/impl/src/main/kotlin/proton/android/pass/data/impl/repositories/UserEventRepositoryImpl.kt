@@ -48,4 +48,8 @@ class UserEventRepositoryImpl @Inject constructor(
         localUserEventDataSource.storeLatestEventId(userId, eventId)
     }
 
+    override suspend fun deleteLatestEventId(userId: UserId) {
+        localUserEventDataSource.deleteLatestEventId(userId)
+    }
+
 }

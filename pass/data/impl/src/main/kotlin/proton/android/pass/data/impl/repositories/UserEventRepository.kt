@@ -33,4 +33,6 @@ interface UserEventRepository {
 
     suspend fun storeLatestEventId(userId: UserId, eventId: UserEventId)
 
+    suspend fun deleteLatestEventId(userId: UserId)
+
 }

@@ -46,31 +46,31 @@ class PerformSyncImpl @Inject constructor(
     private val featureFlagsPreferencesRepository: FeatureFlagsPreferencesRepository
 ) : PerformSync {
 
-    override suspend fun invoke(userId: UserId) {
-        PassLogger.i(TAG, "Performing sync for $userId started")
+    override suspend fun invoke(userId: UserId, forceSync: Boolean) {
+        PassLogger.i(TAG, "Performing sync for $userId started (forceSync=$forceSync)")
 
-        performSyncWithPendingEvents(userId)
+        performSyncWithPendingEvents(userId, forceSync)
 
         PassLogger.i(TAG, "Performing sync for $userId finished")
     }
 
-    private suspend fun performSyncWithPendingEvents(userId: UserId) = coroutineScope {
+    private suspend fun performSyncWithPendingEvents(userId: UserId, forceSync: Boolean) = coroutineScope {
         val isUserEventsEnabled: Boolean =
             featureFlagsPreferencesRepository.get<Boolean>(FeatureFlag.PASS_USER_EVENTS_V1).first()
         val isGroupSharingEnabled =
             featureFlagsPreferencesRepository.get<Boolean>(FeatureFlag.PASS_GROUP_SHARE).first()
         val tasks = if (isUserEventsEnabled) {
             listOf(
-                async { performSyncUserEvents(userId) }
+                async { performSyncUserEvents(userId, forceSync) }
             )
         } else {
             buildList {
-                add(async { performPendingEvents(userId) })
+                add(async { performPendingEvents(userId, forceSync) })
                 add(async { performUserRefreshInvites(userId) })
                 if (isGroupSharingEnabled) {
                     add(async { performGroupRefreshInvites(userId) })
                 }
-                add(async { syncPendingSlAliases(userId) })
+                add(async { syncPendingSlAliases(userId, forceSync) })
             }
         }
 
@@ -83,9 +83,9 @@ class PerformSyncImpl @Inject constructor(
         }
     }
 
-    private suspend fun performPendingEvents(userId: UserId): Result<Unit> = safeRunCatching {
+    private suspend fun performPendingEvents(userId: UserId, forceSync: Boolean): Result<Unit> = safeRunCatching {
         withTimeout(2.minutes) {
-            applyPendingEvents(userId)
+            applyPendingEvents(userId, forceSync)
             PassLogger.i(TAG, "Pending events for $userId finished")
         }
     }.onFailure { error ->
@@ -110,18 +110,18 @@ class PerformSyncImpl @Inject constructor(
         PassLogger.w(TAG, "Refresh group invites for $userId error: ${error.message}")
     }
 
-    private suspend fun syncPendingSlAliases(userId: UserId): Result<Unit> = safeRunCatching {
+    private suspend fun syncPendingSlAliases(userId: UserId, forceSync: Boolean): Result<Unit> = safeRunCatching {
         withTimeout(2.minutes) {
-            syncPendingAliases(userId, true)
+            syncPendingAliases(userId, forceSync)
             PassLogger.i(TAG, "Pending SL aliases sync for $userId finished")
         }
     }.onFailure { error ->
         PassLogger.w(TAG, "Pending SL aliases sync for $userId error: ${error.message}")
     }
 
-    private suspend fun performSyncUserEvents(userId: UserId): Result<Unit> = runCatching {
+    private suspend fun performSyncUserEvents(userId: UserId, forceSync: Boolean): Result<Unit> = runCatching {
         withTimeout(2.minutes) {
-            syncUserEvents(userId)
+            syncUserEvents(userId, forceSync)
             PassLogger.i(TAG, "User events sync for $userId finished")
         }
     }.onFailure { error ->

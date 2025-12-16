@@ -61,13 +61,18 @@ class SyncUserEventsImpl @Inject constructor(
     private val refreshOrganizationSettings: RefreshOrganizationSettings
 ) : SyncUserEvents {
 
-    override suspend fun invoke(userId: UserId) {
-        PassLogger.d(TAG, "Syncing user events for $userId started")
+    override suspend fun invoke(userId: UserId, forceSync: Boolean) {
+        PassLogger.d(TAG, "Syncing user events for $userId started (forceSync=$forceSync)")
+
+        if (forceSync) {
+            PassLogger.d(TAG, "Force sync requested, clearing local event ID")
+            userEventRepository.deleteLatestEventId(userId)
+        }
 
         val localEventId = getLocalEventId(userId)
         val remoteLatestEventId = userEventRepository.fetchLatestEventId(userId)
 
-        if (localEventId == remoteLatestEventId) {
+        if (localEventId == remoteLatestEventId && !forceSync) {
             PassLogger.d(TAG, "Local user events already up to date for $userId")
             return
         }

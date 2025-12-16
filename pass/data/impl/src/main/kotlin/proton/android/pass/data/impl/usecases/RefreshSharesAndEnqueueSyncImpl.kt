@@ -25,6 +25,7 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.firstOrNull
 import me.proton.core.domain.entity.UserId
+import proton.android.pass.common.api.safeRunCatching
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.repositories.ItemSyncStatus
 import proton.android.pass.data.api.repositories.ItemSyncStatusRepository
@@ -65,14 +66,29 @@ class RefreshSharesAndEnqueueSyncImpl @Inject constructor(
             "RefreshSharesAndEnqueueSync started for user: $userId with syncType: $syncType"
         )
 
-        val repositoryResult = shareRepository.refreshShares(userId)
-        PassLogger.i(TAG, "Shares for user: $userId refreshed")
-
-        return if (repositoryResult.allShareIds.isEmpty()) {
-            handleEmptyShares(userId)
-        } else {
-            handleNonEmptyShares(userId, repositoryResult, syncType)
+        if (syncType == RefreshSharesAndEnqueueSync.SyncType.FULL) {
+            PassLogger.i(TAG, "FULL sync requested, setting up sync status")
+            itemSyncStatusRepository.clear()
+            itemSyncStatusRepository.setMode(SyncMode.ShownToUser)
+            itemSyncStatusRepository.emit(ItemSyncStatus.SyncStarted)
         }
+
+        return safeRunCatching {
+            val repositoryResult = shareRepository.refreshShares(userId)
+            PassLogger.i(TAG, "Shares for user: $userId refreshed")
+
+            if (repositoryResult.allShareIds.isEmpty()) {
+                handleEmptyShares(userId)
+            } else {
+                handleNonEmptyShares(userId, repositoryResult, syncType)
+            }
+        }.onFailure {
+            if (syncType == RefreshSharesAndEnqueueSync.SyncType.FULL) {
+                PassLogger.w(TAG, "Error during FULL sync")
+                PassLogger.w(TAG, it)
+                itemSyncStatusRepository.emit(ItemSyncStatus.SyncError)
+            }
+        }.getOrThrow()
     }
 
     private fun handleNonEmptyShares(

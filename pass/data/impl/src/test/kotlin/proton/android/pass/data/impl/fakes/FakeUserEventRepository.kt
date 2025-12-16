@@ -60,6 +60,10 @@ class FakeUserEventRepository : UserEventRepository {
         storeLatestEventIdMemory.add(Pair(userId, eventId))
     }
 
+    override suspend fun deleteLatestEventId(userId: UserId) {
+        storeLatestEventIdMemory.removeIf { it.first == userId }
+    }
+
     private fun createEmptyUserEventList(): UserEventList {
         return UserEventList(
             lastEventId = UserEventId("event-1"),

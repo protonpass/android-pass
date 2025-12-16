@@ -27,16 +27,19 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.usersettings.domain.repository.DeviceSettingsRepository
 import proton.android.pass.common.api.asLoadingResult
 import proton.android.pass.common.api.combineN
+import proton.android.pass.common.api.safeRunCatching
 import proton.android.pass.data.api.repositories.AssetLinkRepository
 import proton.android.pass.data.api.repositories.ItemSyncStatusRepository
 import proton.android.pass.data.api.usecases.InitialWorkerLauncher
-import proton.android.pass.data.api.usecases.RefreshContent
+import proton.android.pass.data.api.usecases.PerformSync
 import proton.android.pass.data.api.usecases.WorkerFeature
 import proton.android.pass.image.api.ClearIconCache
 import proton.android.pass.log.api.PassLogger
@@ -56,7 +59,8 @@ import javax.inject.Inject
 class SettingsViewModel @Inject constructor(
     private val preferencesRepository: UserPreferencesRepository,
     private val snackbarDispatcher: SnackbarDispatcher,
-    private val refreshContent: RefreshContent,
+    private val performSync: PerformSync,
+    private val accountManager: AccountManager,
     private val clearIconCache: ClearIconCache,
     private val deviceSettingsRepository: DeviceSettingsRepository,
     private val canConfigureTelemetry: CanConfigureTelemetry,
@@ -201,11 +205,16 @@ class SettingsViewModel @Inject constructor(
     }
 
     internal fun onForceSync() = viewModelScope.launch {
-        runCatching { refreshContent() }
-            .onFailure { error ->
-                PassLogger.w(TAG, "Error performing sync")
-                PassLogger.w(TAG, error)
-            }
+        val userId = accountManager.getPrimaryUserId().firstOrNull()
+        if (userId != null) {
+            safeRunCatching { performSync(userId, forceSync = true) }
+                .onFailure { error ->
+                    PassLogger.w(TAG, "Error performing sync")
+                    PassLogger.w(TAG, error)
+                }
+        } else {
+            PassLogger.w(TAG, "Cannot perform sync: userId not available")
+        }
     }
 
     internal fun onToggleDisplayUsernameField(isEnabled: Boolean) {

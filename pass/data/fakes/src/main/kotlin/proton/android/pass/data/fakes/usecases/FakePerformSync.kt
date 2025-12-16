@@ -32,5 +32,5 @@ class FakePerformSync @Inject constructor() : PerformSync {
         result = value
     }
 
-    override suspend fun invoke(userId: UserId) = result.getOrThrow()
+    override suspend fun invoke(userId: UserId, forceSync: Boolean) = result.getOrThrow()
 }

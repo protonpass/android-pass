@@ -32,7 +32,7 @@ class FakeApplyPendingEvents @Inject constructor() : ApplyPendingEvents {
         result = value
     }
 
-    override suspend fun invoke(userId: UserId) {
+    override suspend fun invoke(userId: UserId, forceSync: Boolean) {
         result.getOrThrow()
     }
 }

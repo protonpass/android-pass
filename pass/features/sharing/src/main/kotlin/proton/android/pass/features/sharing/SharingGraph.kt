@@ -282,8 +282,7 @@ sealed interface SharingNavigation {
 
     data class SharedItemDetails(
         val shareId: ShareId,
-        val itemId: ItemId,
-        val itemCategory: ItemCategory
+        val itemId: ItemId
     ) : SharingNavigation
 
     @JvmInline

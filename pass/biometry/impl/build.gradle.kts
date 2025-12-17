@@ -46,6 +46,7 @@ dependencies {
     implementation(projects.pass.domain)
     implementation(projects.pass.log.api)
     implementation(projects.pass.preferences.api)
+    implementation(projects.pass.appConfig.api)
 
     testImplementation(libs.turbine)
     testImplementation(libs.truth)

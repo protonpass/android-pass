@@ -101,9 +101,7 @@ class OnBoardingViewModel @Inject constructor(
         viewModelScope.launch {
             val showInvitePendingAcceptance = async { shouldShowInvitePendingAcceptance() }
             val autofillStatus = async { autofillManager.getAutofillStatus().firstOrNull() }
-            val biometryStatus = async {
-                if (isQuest) BiometryStatus.NotAvailable else biometryManager.getBiometryStatus()
-            }
+            val biometryStatus = async { biometryManager.getBiometryStatus() }
             val supportedPages = mutableListOf<OnBoardingPageName>()
             if (showInvitePendingAcceptance.await()) {
                 supportedPages.add(InvitePending)

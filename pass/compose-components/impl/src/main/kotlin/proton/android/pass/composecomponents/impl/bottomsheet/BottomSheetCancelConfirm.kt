@@ -78,6 +78,7 @@ fun BottomSheetCancelConfirm(
                     .weight(1f)
                     .height(45.dp),
                 backgroundColor = PassTheme.colors.loginInteractionNormMajor1,
+                contentColor = PassTheme.colors.textInvert,
                 onUpgradeClick = onUpgradeClick
             )
         } else {

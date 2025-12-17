@@ -30,6 +30,8 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.channelFlow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
+import proton.android.pass.appconfig.api.AppConfig
+import proton.android.pass.appconfig.api.BuildFlavor.Companion.isQuest
 import proton.android.pass.biometry.extensions.from
 import proton.android.pass.biometry.implementation.R
 import proton.android.pass.common.api.None
@@ -46,21 +48,26 @@ import javax.inject.Singleton
 class BiometryManagerImpl @Inject constructor(
     private val biometricManager: BiometricManager,
     private val userPreferencesRepository: UserPreferencesRepository,
-    private val storeAuthSuccessful: StoreAuthSuccessful
+    private val storeAuthSuccessful: StoreAuthSuccessful,
+    private val appConfig: AppConfig
 ) : BiometryManager {
 
-    override fun getBiometryStatus(): BiometryStatus = when (val res = canAuthenticate()) {
-        BiometryResult.Success -> {
-            PassLogger.i(TAG, "Biometry")
-            BiometryStatus.CanAuthenticate
-        }
+    override fun getBiometryStatus(): BiometryStatus = if (appConfig.flavor.isQuest()) {
+        BiometryStatus.NotAvailable
+    } else {
+        when (val res = canAuthenticate()) {
+            BiometryResult.Success -> {
+                PassLogger.i(TAG, "Biometry")
+                BiometryStatus.CanAuthenticate
+            }
 
-        is BiometryResult.FailedToStart -> when (res.cause) {
-            BiometryStartupError.NoneEnrolled -> BiometryStatus.NotEnrolled
+            is BiometryResult.FailedToStart -> when (res.cause) {
+                BiometryStartupError.NoneEnrolled -> BiometryStatus.NotEnrolled
+                else -> BiometryStatus.NotAvailable
+            }
+
             else -> BiometryStatus.NotAvailable
         }
-
-        else -> BiometryStatus.NotAvailable
     }
 
     override fun launch(contextHolder: ClassHolder<Context>, biometryType: BiometryType): Flow<BiometryResult> =

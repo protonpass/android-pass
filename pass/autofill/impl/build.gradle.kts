@@ -117,6 +117,7 @@ dependencies {
     implementation(projects.pass.notifications.api)
     implementation(projects.pass.preferences.api)
     implementation(projects.pass.telemetry.api)
+    implementation(projects.pass.appConfig.api)
     implementation(projects.pass.totp.api)
 
     debugImplementation(libs.showkase)

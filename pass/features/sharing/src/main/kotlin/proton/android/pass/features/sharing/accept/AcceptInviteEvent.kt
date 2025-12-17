@@ -20,7 +20,6 @@ package proton.android.pass.features.sharing.accept
 
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
-import proton.android.pass.domain.items.ItemCategory
 
 internal sealed interface AcceptInviteEvent {
 
@@ -30,8 +29,7 @@ internal sealed interface AcceptInviteEvent {
 
     data class OnItemInviteAcceptSuccess(
         internal val shareId: ShareId,
-        internal val itemId: ItemId,
-        internal val itemCategory: ItemCategory
+        internal val itemId: ItemId
     ) : AcceptInviteEvent
 
     @JvmInline

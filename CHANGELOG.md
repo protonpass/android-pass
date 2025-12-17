@@ -1,8 +1,9 @@
-## To be released
-
-### Features :tada:
+## 1.36.4 (2025-12-17)
 
 ### Fixes :bug:
+
+- Disable autofill in Meta Horizon
+- Disable biometric in Meta Horizon
 
 ### Other
 

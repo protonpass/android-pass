@@ -206,8 +206,7 @@ class AcceptBottomSheetTest {
             val acceptButtonText = activity.getString(R.string.sharing_item_invitation_accept)
             val expectedNavigation = SharingNavigation.SharedItemDetails(
                 shareId = ShareId(TestAcceptInvite.DEFAULT_SHARE_ID),
-                itemId = ItemId(TestAcceptInvite.DEFAULT_ITEM_ID),
-                itemCategory = ItemCategory.Note
+                itemId = ItemId(TestAcceptInvite.DEFAULT_ITEM_ID)
             )
 
             setContent {

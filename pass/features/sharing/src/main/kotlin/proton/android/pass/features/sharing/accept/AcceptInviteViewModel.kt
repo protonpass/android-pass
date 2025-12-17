@@ -41,7 +41,6 @@ import proton.android.pass.commonui.api.require
 import proton.android.pass.data.api.errors.CannotCreateMoreVaultsError
 import proton.android.pass.data.api.usecases.AcceptInvite
 import proton.android.pass.data.api.usecases.AcceptInviteStatus
-import proton.android.pass.data.api.usecases.GetItemById
 import proton.android.pass.data.api.usecases.RejectInvite
 import proton.android.pass.data.api.usecases.invites.ObserveInvite
 import proton.android.pass.domain.InviteToken
@@ -59,7 +58,6 @@ class AcceptInviteViewModel @Inject constructor(
     observeInvite: ObserveInvite,
     private val acceptInvite: AcceptInvite,
     private val rejectInvite: RejectInvite,
-    private val getItemById: GetItemById,
     private val snackbarDispatcher: SnackbarDispatcher
 ) : ViewModel() {
 
@@ -145,18 +143,10 @@ class AcceptInviteViewModel @Inject constructor(
                         is AcceptInviteStatus.Done -> {
                             PassLogger.i(TAG, "Invite successfully accepted")
                             when (shareType) {
-                                ShareType.Item -> {
-                                    getItemById(
-                                        shareId = acceptInviteStatus.shareId,
-                                        itemId = acceptInviteStatus.itemId
-                                    ).let { item ->
-                                        AcceptInviteEvent.OnItemInviteAcceptSuccess(
-                                            shareId = item.shareId,
-                                            itemId = item.id,
-                                            itemCategory = item.itemType.category
-                                        )
-                                    }
-                                }
+                                ShareType.Item -> AcceptInviteEvent.OnItemInviteAcceptSuccess(
+                                    shareId = acceptInviteStatus.shareId,
+                                    itemId = acceptInviteStatus.itemId
+                                )
 
                                 ShareType.Vault -> AcceptInviteEvent.OnVaultInviteAcceptSuccess(
                                     shareId = acceptInviteStatus.shareId

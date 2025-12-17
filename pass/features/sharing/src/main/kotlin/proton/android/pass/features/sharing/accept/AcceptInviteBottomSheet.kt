@@ -47,8 +47,7 @@ fun AcceptInviteBottomSheet(
             is AcceptInviteEvent.OnItemInviteAcceptSuccess -> {
                 SharingNavigation.SharedItemDetails(
                     shareId = event.shareId,
-                    itemId = event.itemId,
-                    itemCategory = event.itemCategory
+                    itemId = event.itemId
                 ).also(onNavigateEvent)
             }
 

@@ -20,10 +20,9 @@ package proton.android.pass.data.impl.usecases.plan
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.filterNotNull
-import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onStart
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.accountmanager.domain.getPrimaryAccount
@@ -34,9 +33,6 @@ import me.proton.core.plan.domain.usecase.GetDynamicPlansAdjustedPrices
 import me.proton.core.plan.presentation.usecase.ComposeAutoRenewText
 import me.proton.core.presentation.utils.formatCentsPriceDefaultLocale
 import proton.android.pass.common.api.AppDispatchers
-import proton.android.pass.common.api.LoadingResult
-import proton.android.pass.common.api.asLoadingResult
-import proton.android.pass.data.api.usecases.ObserveUpgradeInfo
 import proton.android.pass.data.api.usecases.plan.ANNUAL_PLAN_CYCLE
 import proton.android.pass.data.api.usecases.plan.MONTHLY_PLAN_CYCLE
 import proton.android.pass.data.api.usecases.plan.ObservePlansWithPrice
@@ -50,70 +46,37 @@ import javax.inject.Inject
 
 class ObservePlansWithPriceImpl @Inject constructor(
     private val accountManager: AccountManager,
-    private val observeUpgradeInfo: ObserveUpgradeInfo,
-    private val getDynamicPlans: GetDynamicPlansAdjustedPrices,
+    private val getDynamicPlansAdjustedPrices: GetDynamicPlansAdjustedPrices,
     private val autoRenewText: ComposeAutoRenewText,
     private val appDispatchers: AppDispatchers
 ) : ObservePlansWithPrice {
 
-    @SuppressWarnings("LongMethod")
     override fun invoke(): Flow<PlanWithPriceState> = flow {
         accountManager
             .getPrimaryAccount()
             .filterNotNull()
-            .flatMapLatest { account ->
-                observeUpgradeInfo(account.userId).asLoadingResult().map {
-                    Pair(account, it)
-                }
-            }
-            .collect { (account, upgradeInfo) ->
-                when (upgradeInfo) {
-                    LoadingResult.Loading -> {
-                        emit(PlanWithPriceState.Loading)
-                    }
-
-                    is LoadingResult.Error -> {
-                        PassLogger.w(TAG, "upgradeInfo error : ${upgradeInfo.exception}")
-                        emit(PlanWithPriceState.Error)
-                    }
-
-                    is LoadingResult.Success -> {
-                        val canShow =
-                            upgradeInfo.data.plan.isFreePlan && upgradeInfo.data.isUpgradeAvailable
-                        if (canShow) {
-                            runCatching {
-                                getDynamicPlans(userId = account.userId)
-                            }.onSuccess { prices ->
-                                if (prices.plans.isEmpty()) {
-                                    PassLogger.w(TAG, "getDynamicPlans plans empty")
-                                    emit(PlanWithPriceState.NoPlan)
-                                } else {
-                                    emit(
-                                        managePlans(
-                                            prices = prices,
-                                            userId = account.userId
-                                        )
-                                    )
-                                }
-                            }.onFailure {
-                                PassLogger.w(TAG, "getDynamicPlans error : $it")
-                                emit(PlanWithPriceState.Error)
-                            }
-
-                        } else {
-                            PassLogger.w(
-                                TAG,
-                                "getDynamicPlans no plan available, " +
-                                    "isFreePlan: ${upgradeInfo.data.plan.isFreePlan} " +
-                                    "isUpgradeAvailable : ${upgradeInfo.data.isUpgradeAvailable}"
+            .first()
+            .let { account ->
+                runCatching {
+                    getDynamicPlansAdjustedPrices(userId = account.userId)
+                }.onSuccess { prices ->
+                    if (prices.plans.isEmpty()) {
+                        PassLogger.w(TAG, "getDynamicPlans plans empty")
+                        emit(PlanWithPriceState.NoPlan)
+                    } else {
+                        emit(
+                            managePlans(
+                                prices = prices,
+                                userId = account.userId
                             )
-                            emit(PlanWithPriceState.NoPlan)
-                        }
+                        )
                     }
+                }.onFailure {
+                    PassLogger.w(TAG, "getDynamicPlans error : $it")
+                    emit(PlanWithPriceState.Error)
                 }
             }
-    }
-        .onStart { emit(PlanWithPriceState.Loading) }
+    }.onStart { emit(PlanWithPriceState.Loading) }
         .flowOn(appDispatchers.io)
 
 

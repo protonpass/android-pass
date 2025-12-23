@@ -19,6 +19,7 @@
 package proton.android.pass.features.home
 
 import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import proton.android.pass.common.api.Option
@@ -66,6 +67,8 @@ internal fun HomeEmptyContent(
             modifier = modifier,
             itemSharedType = ItemSharedType.SharedWithMe
         )
+
+        vaultSelectionOption is VaultSelectionOption.Folder -> Text("folder is empty")
 
         readOnly -> EmptyReadOnly(modifier)
         else -> HomeEmptyList(

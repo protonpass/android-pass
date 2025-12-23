@@ -20,6 +20,7 @@ package proton.android.pass.data.api.usecases.searchentry
 
 import kotlinx.coroutines.flow.Flow
 import proton.android.pass.data.api.SearchEntry
+import proton.android.pass.domain.FolderId
 import proton.android.pass.domain.ShareId
 
 interface ObserveSearchEntry {
@@ -28,6 +29,7 @@ interface ObserveSearchEntry {
     sealed class SearchEntrySelection {
         data object AllVaults : SearchEntrySelection()
         data class Vault(val shareId: ShareId) : SearchEntrySelection()
+        data class Folder(val shareId: ShareId, val folderId: FolderId) : SearchEntrySelection()
     }
 }
 

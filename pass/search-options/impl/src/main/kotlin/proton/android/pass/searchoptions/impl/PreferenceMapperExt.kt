@@ -18,6 +18,7 @@
 
 package proton.android.pass.searchoptions.impl
 
+import proton.android.pass.domain.FolderId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.preferences.FilterOptionPreference
 import proton.android.pass.preferences.SelectedVaultPreference
@@ -55,6 +56,10 @@ internal fun SelectedVaultPreference.toSelectionOption(): VaultSelectionOption =
     SelectedVaultPreference.Trash -> VaultSelectionOption.Trash
     SelectedVaultPreference.SharedByMe -> VaultSelectionOption.SharedByMe
     SelectedVaultPreference.SharedWithMe -> VaultSelectionOption.SharedWithMe
+    is SelectedVaultPreference.Folder -> VaultSelectionOption.Folder(
+        ShareId(this.shareId),
+        FolderId(this.folderId)
+    )
 }
 
 internal fun SortingOption.toPreference(): SortingOptionPreference = when (this.searchSortingType) {
@@ -84,4 +89,5 @@ internal fun VaultSelectionOption.toPreference(): SelectedVaultPreference = when
     VaultSelectionOption.Trash -> SelectedVaultPreference.Trash
     VaultSelectionOption.SharedByMe -> SelectedVaultPreference.SharedByMe
     VaultSelectionOption.SharedWithMe -> SelectedVaultPreference.SharedWithMe
+    is VaultSelectionOption.Folder -> SelectedVaultPreference.Folder(this.shareId.id, this.folderId.id)
 }

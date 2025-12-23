@@ -19,6 +19,7 @@
 package proton.android.pass.data.impl.usecases.passkeys
 
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOf
@@ -67,6 +68,8 @@ class ObserveItemsWithPasskeysImpl @Inject constructor(
                         .flatMapLatest { list ->
                             localItemDataSource.observeItemsWithPasskeys(resolvedUserId, list)
                         }
+
+                is ShareSelection.Folder -> emptyFlow() // observeItemsWithPasskeys for folders
             }
         }
         .mapLatest { items ->

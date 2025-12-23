@@ -29,6 +29,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.Dp
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.applyIf
@@ -40,6 +41,7 @@ fun BottomSheetItemRow(
     subtitle: @Composable (() -> Unit)? = null,
     leftIcon: @Composable (() -> Unit)? = null,
     endIcon: @Composable (() -> Unit)? = null,
+    horizontalPadding: Dp = PassTheme.dimens.bottomsheetHorizontalPadding,
     onClick: (() -> Unit)? = null
 ) {
     Row(
@@ -50,7 +52,7 @@ fun BottomSheetItemRow(
                 ifTrue = { clickable { onClick?.invoke() } }
             )
             .padding(
-                horizontal = PassTheme.dimens.bottomsheetHorizontalPadding,
+                horizontal = horizontalPadding,
                 vertical = Spacing.medium
             ),
         horizontalArrangement = Arrangement.Start,

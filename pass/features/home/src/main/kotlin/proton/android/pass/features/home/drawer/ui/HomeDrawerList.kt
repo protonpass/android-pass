@@ -99,6 +99,20 @@ internal fun HomeDrawerList(
                     HomeDrawerUiEvent.OnVaultOptionsClick(
                         shareId = vaultShare.vault.shareId
                     ).also(onUiEvent)
+                },
+                foldersEnabled = true,
+                folders = vaultShare.folders,
+                onMenuOptionsClickFromFolder = {
+                    HomeDrawerUiEvent.OnFolderOptionsClick(
+                        shareId = vaultShare.vault.shareId,
+                        folderId = it
+                    ).also(onUiEvent)
+                },
+                onFolderClick = {
+                    HomeDrawerUiEvent.OnFolderClick(
+                        shareId = vaultShare.vault.shareId,
+                        folderId = it
+                    ).also(onUiEvent)
                 }
             )
 

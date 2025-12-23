@@ -40,6 +40,9 @@ import proton.android.pass.data.api.usecases.capabilities.CanCreateVault
 import proton.android.pass.data.api.usecases.capabilities.CanOrganiseVaults
 import proton.android.pass.domain.ShareSelection
 import proton.android.pass.domain.VaultWithItemCount
+import proton.android.pass.composecomponents.impl.folders.mock.mockFolders
+import proton.android.pass.preferences.FeatureFlag
+import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import proton.android.pass.searchoptions.api.HomeSearchOptionsRepository
 import proton.android.pass.searchoptions.api.VaultSelectionOption
 import javax.inject.Inject
@@ -51,8 +54,12 @@ class HomeDrawerViewModel @Inject constructor(
     observeVaultsWithItemCount: ObserveVaultsWithItemCount,
     observeItemCount: ObserveItemCount,
     private val homeSearchOptionsRepository: HomeSearchOptionsRepository,
-    observeUpgradeInfo: ObserveUpgradeInfo
+    observeUpgradeInfo: ObserveUpgradeInfo,
+    featureFlagsPreferencesRepository: FeatureFlagsPreferencesRepository
 ) : ViewModel() {
+
+    private val foldersEnabled =
+        featureFlagsPreferencesRepository.get<Boolean>(FeatureFlag.PASS_FOLDERS)
 
     private val vaultSharesItemsCountFlow: Flow<List<VaultWithItemCount>> =
         observeVaultsWithItemCount(includeHidden = false)
@@ -71,20 +78,28 @@ class HomeDrawerViewModel @Inject constructor(
         canOrganiseVaults(),
         homeSearchOptionsRepository.observeVaultSelectionOption(),
         itemCountSummaryOptionFlow,
-        observeUpgradeInfo().asLoadingResult()
+        observeUpgradeInfo().asLoadingResult(),
+        foldersEnabled
     ) { vaultSharesItemsCount,
         canCreateVault,
         canOrganiseVaults,
         vaultSelectionOption,
         itemCountSummaryOption,
-        upgradeInfo ->
+        upgradeInfo,
+        foldersEnabled ->
         HomeDrawerState(
-            vaultShares = vaultSharesItemsCount,
+            vaultShares = vaultSharesItemsCount.apply {
+                if (foldersEnabled && vaultSharesItemsCount.isNotEmpty()) {
+                    // to remove
+                    this[0].folders = mockFolders
+                }
+            },
             canCreateVault = canCreateVault,
             canOrganiseVaults = canOrganiseVaults,
             vaultSelectionOption = vaultSelectionOption,
             itemCountSummaryOption = itemCountSummaryOption,
-            isUpgradeAvailable = upgradeInfo.getOrNull()?.isUpgradeAvailable ?: false
+            isUpgradeAvailable = upgradeInfo.getOrNull()?.isUpgradeAvailable ?: false,
+            foldersEnabled = foldersEnabled
         )
     }.stateIn(
         scope = viewModelScope,
@@ -97,5 +112,4 @@ class HomeDrawerViewModel @Inject constructor(
             homeSearchOptionsRepository.setVaultSelectionOption(vaultSelectionOption)
         }
     }
-
 }

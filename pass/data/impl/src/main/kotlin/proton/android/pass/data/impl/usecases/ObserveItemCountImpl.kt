@@ -74,6 +74,16 @@ class ObserveItemCountImpl @Inject constructor(
                     applyItemStateToSharedItems = applyItemStateToSharedItems,
                     includeHiddenVault = includeHiddenVault
                 )
+
+                // observeItemCountSummary for folders
+                is ShareSelection.Folder -> itemRepository.observeItemCountSummary(
+                    userId = user.userId,
+                    shareIds = listOf(shareSelection.shareId),
+                    itemState = itemState,
+                    onlyShared = false,
+                    applyItemStateToSharedItems = applyItemStateToSharedItems,
+                    includeHiddenVault = includeHiddenVault
+                )
             }
 
         }

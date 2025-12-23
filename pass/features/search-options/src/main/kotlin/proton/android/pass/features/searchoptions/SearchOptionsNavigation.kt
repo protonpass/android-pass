@@ -18,10 +18,14 @@
 
 package proton.android.pass.features.searchoptions
 
+import proton.android.pass.domain.FolderId
+import proton.android.pass.domain.ShareId
+
 sealed interface SearchOptionsNavigation {
     data object Sorting : SearchOptionsNavigation
     data object Filter : SearchOptionsNavigation
     data object ResetFilters : SearchOptionsNavigation
     data object SelectSorting : SearchOptionsNavigation
     data object BulkActions : SearchOptionsNavigation
+    data class ManageFolder(val shareId: ShareId, val folderId: FolderId) : SearchOptionsNavigation
 }

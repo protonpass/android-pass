@@ -25,4 +25,5 @@ sealed interface VaultOptionsUserEvent {
     data object OnShare : VaultOptionsUserEvent
     data object OnLeave : VaultOptionsUserEvent
     data object OnVaultAccess : VaultOptionsUserEvent
+    data object OnCreateFolder : VaultOptionsUserEvent
 }

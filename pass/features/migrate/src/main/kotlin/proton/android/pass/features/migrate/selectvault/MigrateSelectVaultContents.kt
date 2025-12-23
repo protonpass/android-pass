@@ -18,14 +18,30 @@
 
 package proton.android.pass.features.migrate.selectvault
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.mutableStateMapOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.mapSaver
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toImmutableList
+import proton.android.pass.commonui.api.PassTheme
+import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItem
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemList
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetVaultRow
 import proton.android.pass.composecomponents.impl.bottomsheet.withDividers
+import proton.android.pass.composecomponents.impl.folders.ExpandCollapseIcon
+import proton.android.pass.composecomponents.impl.folders.FolderTree
 import proton.android.pass.domain.ShareId
 import proton.android.pass.features.migrate.R
 
@@ -35,29 +51,122 @@ fun MigrateSelectVaultContents(
     vaults: ImmutableList<VaultEnabledPair>,
     onVaultSelected: (ShareId) -> Unit
 ) {
-    BottomSheetItemList(
-        modifier = modifier,
-        items = vaults.map { vault ->
-            BottomSheetVaultRow(
-                vault = vault.vault,
-                isSelected = false,
-                customSubtitle = when (vault.status) {
-                    is VaultStatus.Enabled -> null
-                    is VaultStatus.Disabled -> when (vault.status.reason) {
-                        VaultStatus.DisabledReason.NoPermission -> stringResource(
-                            R.string.migrate_disabled_vault_reason_no_permission
-                        )
+    if (vaults.any { it.vault.folders.isNotEmpty() }) {
+        LazyColumn(
+            modifier = modifier
+        ) {
+            items(items = vaults, key = { it.vault.vault.shareId.id }) { vault ->
 
-                        VaultStatus.DisabledReason.SameVault -> stringResource(
-                            R.string.migrate_disabled_vault_reason_same_vault
+                val (showFolders, onShowFolders) = rememberSaveable { mutableStateOf(false) }
+
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    AnimatedVisibility(
+                        visible = vault.vault.folders.isNotEmpty()
+                    ) {
+                        ExpandCollapseIcon(
+                            expanded = showFolders,
+                            onClick = {
+                                onShowFolders(!showFolders)
+                            }
                         )
                     }
-                },
-                enabled = vault.status is VaultStatus.Enabled,
-                onVaultClick = { onVaultSelected(vault.vault.vault.shareId) }
-            )
+
+                    BottomSheetVaultRow(
+                        vault = vault.vault,
+                        isSelected = false,
+                        customSubtitle = when (vault.status) {
+                            is VaultStatus.Enabled -> null
+                            is VaultStatus.Disabled -> when (vault.status.reason) {
+                                VaultStatus.DisabledReason.NoPermission -> stringResource(
+                                    R.string.migrate_disabled_vault_reason_no_permission
+                                )
+
+                                VaultStatus.DisabledReason.SameVault -> stringResource(
+                                    R.string.migrate_disabled_vault_reason_same_vault
+                                )
+                            }
+                        },
+                        enabled = vault.status is VaultStatus.Enabled,
+                        onVaultClick = { onVaultSelected(vault.vault.vault.shareId) }
+                    ).let { item ->
+                        BottomSheetItem(
+                            item = item,
+                            horizontalPadding = if (vault.vault.folders.isNotEmpty()) {
+                                0.dp
+                            } else {
+                                PassTheme.dimens.bottomsheetHorizontalPadding
+                            }
+                        )
+                    }
+                }
+
+                val expandedState = rememberSaveable(
+                    saver = mapSaver(
+                        save = { it },
+                        restore = { map ->
+                            val restored = mutableStateMapOf<String, Boolean>()
+                            map.forEach { (key, value) ->
+                                if (value is Boolean) {
+                                    restored[key] = value
+                                }
+                            }
+                            restored
+                        }
+                    )
+                ) {
+                    mutableStateMapOf()
+                }
+
+                LaunchedEffect(vault.vault.folders) {
+                    vault.vault.folders.forEach { folder ->
+                        if (!expandedState.contains(folder.id.id)) {
+                            expandedState[folder.id.id] = false
+                        }
+                    }
+                }
+
+                AnimatedVisibility(
+                    visible = vault.vault.folders.isNotEmpty() &&
+                        showFolders
+                ) {
+                    FolderTree(
+                        modifier = Modifier.padding(start = 32.dp),
+                        folders = vault.vault.folders,
+                        expandedState = expandedState,
+                        depth = 0,
+                        onFolderClick = {
+                            // add onFolderClick
+                        }
+                    )
+                }
+            }
         }
-            .withDividers()
-            .toImmutableList()
-    )
+
+    } else {
+        BottomSheetItemList(
+            modifier = modifier,
+            items = vaults.map { vault ->
+                BottomSheetVaultRow(
+                    vault = vault.vault,
+                    isSelected = false,
+                    customSubtitle = when (vault.status) {
+                        is VaultStatus.Enabled -> null
+                        is VaultStatus.Disabled -> when (vault.status.reason) {
+                            VaultStatus.DisabledReason.NoPermission -> stringResource(
+                                R.string.migrate_disabled_vault_reason_no_permission
+                            )
+
+                            VaultStatus.DisabledReason.SameVault -> stringResource(
+                                R.string.migrate_disabled_vault_reason_same_vault
+                            )
+                        }
+                    },
+                    enabled = vault.status is VaultStatus.Enabled,
+                    onVaultClick = { onVaultSelected(vault.vault.vault.shareId) }
+                )
+            }
+                .withDividers()
+                .toImmutableList()
+        )
+    }
 }

@@ -21,6 +21,7 @@ package proton.android.pass.searchoptions.api
 import androidx.compose.runtime.Stable
 import kotlinx.coroutines.flow.Flow
 import me.proton.core.domain.entity.UserId
+import proton.android.pass.domain.FolderId
 import proton.android.pass.domain.ShareId
 
 interface HomeSearchOptionsRepository {
@@ -66,4 +67,5 @@ sealed interface VaultSelectionOption {
 
     data object SharedByMe : VaultSelectionOption
 
+    data class Folder(val shareId: ShareId, val folderId: FolderId) : VaultSelectionOption
 }

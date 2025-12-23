@@ -71,5 +71,11 @@ enum class FeatureFlag(
         description = "Enable new OnBoarding",
         key = "PassMobileOnboardingV2",
         isEnabledDefault = false
+    ),
+    PASS_FOLDERS(
+        title = "folders",
+        description = "allow user to create folders",
+        key = "PassFolder",
+        isEnabledDefault = false
     )
 }

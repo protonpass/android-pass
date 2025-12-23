@@ -111,28 +111,34 @@ internal fun NavGraphBuilder.passkeyCredentialCreationNavGraph(
                 is BaseAliasNavigation.OnCreateAliasEvent -> when (val event = destination.event) {
                     is CreateAliasNavigation.Created ->
                         throw IllegalStateException("Cannot create alias from PasskeyCredentialCreation")
+
                     is CreateAliasNavigation.CreatedFromBottomsheet -> dismissBottomSheet {}
                     is CreateAliasNavigation.SelectVault -> appNavigator.navigate(
                         destination = SelectVaultBottomsheet,
                         route = SelectVaultBottomsheet.createNavRoute(event.shareId)
                     )
                 }
+
                 is BaseAliasNavigation.OnUpdateAliasEvent ->
                     throw IllegalStateException("Cannot update alias from PasskeyCredentialCreation")
+
                 BaseAliasNavigation.CloseScreen -> appNavigator.navigateBack()
                 BaseAliasNavigation.CloseBottomsheet -> dismissBottomSheet {}
                 BaseAliasNavigation.Upgrade -> onNavigate(PasskeyCredentialCreationNavEvent.Upgrade)
                 BaseAliasNavigation.SelectMailbox -> appNavigator.navigate(
                     destination = AliasSelectMailboxBottomSheetNavItem
                 )
+
                 BaseAliasNavigation.SelectSuffix -> appNavigator.navigate(
                     destination = AliasSelectSuffixBottomSheetNavItem
                 )
+
                 BaseAliasNavigation.AddAttachment,
                 BaseAliasNavigation.UpsellAttachments,
                 is BaseAliasNavigation.OpenDraftAttachmentOptions,
                 is BaseAliasNavigation.DeleteAllAttachments ->
                     throw IllegalStateException("Cannot use attachments from PasskeyCredentialCreation")
+
                 BaseAliasNavigation.AddMailbox ->
                     throw IllegalStateException("Cannot add mailbox from PasskeyCredentialCreation")
 
@@ -393,6 +399,10 @@ internal fun NavGraphBuilder.passkeyCredentialCreationNavGraph(
                 SearchOptionsNavigation.BulkActions -> {
                     throw IllegalStateException("Cannot perform bulk actions on PasskeyCredentialCreation")
                 }
+
+                is SearchOptionsNavigation.ManageFolder -> {
+                    throw IllegalStateException("Cannot perform manage folder on PasskeyCredentialSelection")
+                }
             }
         }
     )
@@ -468,7 +478,10 @@ internal fun NavGraphBuilder.passkeyCredentialCreationNavGraph(
                 is VaultNavigation.VaultRemove,
                 is VaultNavigation.VaultShare,
                 is VaultNavigation.VaultLeave,
-                is VaultNavigation.VaultAccess -> Unit
+                is VaultNavigation.VaultAccess,
+                is VaultNavigation.AddFolder,
+                is VaultNavigation.RenameFolder,
+                is VaultNavigation.RemoveFolder -> Unit
             }
         }
     )

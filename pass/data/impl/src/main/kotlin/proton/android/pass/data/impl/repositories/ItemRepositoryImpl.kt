@@ -24,6 +24,7 @@ import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.currentCoroutineContext
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.flatMapLatest
@@ -504,6 +505,8 @@ class ItemRepositoryImpl @Inject constructor(
                     itemFlags = itemFlags
                 )
             }
+
+        is ShareSelection.Folder -> emptyFlow() // observeItems in folders
     }
 
     override fun observePinnedItems(
@@ -532,6 +535,8 @@ class ItemRepositoryImpl @Inject constructor(
                     filter = itemTypeFilter
                 )
             }
+
+        is ShareSelection.Folder -> emptyFlow() // observePinnedItems for folders
     }.map { items ->
         encryptionContextProvider.withEncryptionContextSuspendable {
             items.map { item -> item.toDomain(this) }

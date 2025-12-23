@@ -13,10 +13,15 @@
     <string name="snackbar_find_vault_error">Cannot find selected vault</string>
     <string name="snackbar_get_vault_list_error">Vault list could not be loaded</string>
     <string name="vault_delete_dialog_title">Delete vault</string>
+    <string name="vault_add_folder_dialog_title">Enter a folder title</string>
+    <string name="vault_add_foldersame_folder_exist">A folder with the same name already exists</string>
     <string name="vault_delete_dialog_body">This will permanently delete the vault __VAULT_NAME__ and all its contents. Enter the vault name to confirm deletion.</string>
     <string name="vault_delete_dialog_placeholder">Vault name</string>
+    <string name="vault_add_folder_dialog_placeholder">Folder name</string>
+
     <string name="vault_delete_dialog_cancel_action">Cancel</string>
     <string name="vault_delete_dialog_delete_action">Delete</string>
+    <string name="vault_add_folder_dialog_create_action">Create</string>
     <string name="vault_delete_dialog_shared_items_warning" comment ="The placeholder will be replaced by the number of shared items, e.g 2 shared items">This vault holds %1$s. Deleting it will remove access for all other users.</string>
     <string name="vault_leave_dialog_title">Leave vault</string>
     <string name="vault_leave_dialog_body">This will remove your access from the vault __VAULT_NAME__ and all its contents. Are you sure you want to leave?</string>

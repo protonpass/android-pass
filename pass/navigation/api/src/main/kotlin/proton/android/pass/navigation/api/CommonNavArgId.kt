@@ -34,6 +34,7 @@ interface NavArgId {
 
 private const val SHARE_ID_KEY = "ShareID"
 private const val ITEM_ID_KEY = "ItemID"
+private const val FOLDER_ID = "FolderID"
 private const val ADDRESS_ID_KEY = "AddressID"
 private const val USER_ID_KEY = "UserID"
 private const val EMAIL_KEY = "Email"
@@ -120,6 +121,10 @@ enum class CommonOptionalNavArgId : OptionalNavArgId {
     },
     InviteId {
         override val key: String = INVITE_ID_KEY
+        override val navType: NavType<*> = NavType.StringType
+    },
+    FolderId {
+        override val key: String = FOLDER_ID
         override val navType: NavType<*> = NavType.StringType
     }
 }

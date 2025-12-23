@@ -34,7 +34,8 @@ import proton.android.pass.composecomponents.impl.R as CompR
 
 @Stable
 enum class BottomSheetItemAction {
-    None, Pin, Unpin, History, Migrate, MonitorExclude, MonitorInclude, Remove, Restore, Trash, ResetHistory, Duplicate
+    None, Pin, Unpin, History, Migrate, MonitorExclude, MonitorInclude,
+    Remove, Restore, Trash, ResetHistory, Duplicate, AddFolder
 }
 
 fun copyNote(onClick: () -> Unit): BottomSheetItem = object : BottomSheetItem {
@@ -80,6 +81,64 @@ fun migrate(action: BottomSheetItemAction, onClick: () -> Unit): BottomSheetItem
 
     override val isDivider = false
 
+}
+
+fun createFolder(onClick: () -> Unit): BottomSheetItem = object : BottomSheetItem {
+
+    override val title: @Composable () -> Unit = {
+        BottomSheetItemTitle(text = stringResource(R.string.bottomsheet_create_folder))
+    }
+
+    override val subtitle: @Composable (() -> Unit)? = null
+
+    override val leftIcon: @Composable (() -> Unit) = {
+        BottomSheetItemIcon(iconId = CoreR.drawable.ic_proton_folder_plus)
+    }
+
+    override val endIcon: (@Composable () -> Unit)? = null
+
+    override val onClick: () -> Unit = onClick
+
+    override val isDivider = false
+
+}
+
+fun createSubFolder(onClick: () -> Unit): BottomSheetItem = object : BottomSheetItem {
+
+    override val title: @Composable () -> Unit = {
+        BottomSheetItemTitle(text = stringResource(R.string.bottomsheet_create_sub_folder))
+    }
+
+    override val subtitle: @Composable (() -> Unit)? = null
+
+    override val leftIcon: @Composable (() -> Unit) = {
+        BottomSheetItemIcon(iconId = CoreR.drawable.ic_proton_folder_plus)
+    }
+
+    override val endIcon: (@Composable () -> Unit)? = null
+
+    override val onClick: () -> Unit = onClick
+
+    override val isDivider = false
+
+}
+
+fun renameFolder(onClick: () -> Unit): BottomSheetItem = object : BottomSheetItem {
+    override val title: @Composable () -> Unit = {
+        BottomSheetItemTitle(text = stringResource(R.string.bottomsheet_rename_folder))
+    }
+
+    override val subtitle: @Composable (() -> Unit)? = null
+
+    override val leftIcon: @Composable (() -> Unit) = {
+        BottomSheetItemIcon(iconId = CoreR.drawable.ic_proton_pen)
+    }
+
+    override val endIcon: (@Composable () -> Unit)? = null
+
+    override val onClick: () -> Unit = onClick
+
+    override val isDivider = false
 }
 
 fun monitorExclude(action: BottomSheetItemAction, onClick: () -> Unit): BottomSheetItem = object : BottomSheetItem {

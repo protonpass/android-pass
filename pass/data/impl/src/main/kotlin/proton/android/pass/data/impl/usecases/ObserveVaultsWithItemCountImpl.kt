@@ -54,7 +54,8 @@ class ObserveVaultsWithItemCountImpl @Inject constructor(
             VaultWithItemCount(
                 vault = vault,
                 activeItemCount = itemsForShare.activeItems,
-                trashedItemCount = itemsForShare.trashedItems
+                trashedItemCount = itemsForShare.trashedItems,
+                folders = emptyList() // add folders
             )
         }.sorted()
         return res

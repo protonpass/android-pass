@@ -23,6 +23,13 @@ import me.proton.core.domain.entity.UserId
 import java.util.Date
 
 @Stable
+data class Folder(
+    val id: FolderId,
+    val name: String,
+    val folders: List<Folder>
+)
+
+@Stable
 data class Vault(
     val userId: UserId,
     val shareId: ShareId,
@@ -37,7 +44,8 @@ data class Vault(
     val maxMembers: Int = 10,
     val canAutofill: Boolean = true,
     val createTime: Date,
-    val shareFlags: ShareFlags
+    val shareFlags: ShareFlags,
+    val folders: List<Folder> = emptyList() //
 ) {
 
     val canBeUpdated: Boolean = role.toPermissions().canUpdate()

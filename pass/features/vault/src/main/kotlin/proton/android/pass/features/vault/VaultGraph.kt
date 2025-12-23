@@ -19,9 +19,12 @@
 package proton.android.pass.features.vault
 
 import androidx.navigation.NavGraphBuilder
+import proton.android.pass.domain.FolderId
 import proton.android.pass.domain.ShareId
+import proton.android.pass.features.vault.folders.addFolderVaultDialogGraph
 import proton.android.pass.features.vault.bottomsheet.createVaultGraph
 import proton.android.pass.features.vault.bottomsheet.editVaultGraph
+import proton.android.pass.features.vault.bottomsheet.folders.bottomSheetFolderOptionsGraph
 import proton.android.pass.features.vault.bottomsheet.options.bottomSheetVaultOptionsGraph
 import proton.android.pass.features.vault.bottomsheet.select.selectVaultBottomsheetGraph
 import proton.android.pass.features.vault.delete.deleteVaultDialogGraph
@@ -46,7 +49,6 @@ sealed interface VaultNavigation {
     value class VaultEdit(val shareId: ShareId) : VaultNavigation
 
     data class VaultRemove(val shareId: ShareId, val isLastVault: Boolean) : VaultNavigation
-
     data class VaultShare(
         val shareId: ShareId,
         val showEditVault: Boolean
@@ -57,6 +59,11 @@ sealed interface VaultNavigation {
 
     @JvmInline
     value class VaultAccess(val shareId: ShareId) : VaultNavigation
+
+    data class AddFolder(val shareId: ShareId, val folderId: FolderId? = null) : VaultNavigation
+
+    data class RemoveFolder(val shareId: ShareId, val folderId: FolderId) : VaultNavigation
+    data class RenameFolder(val shareId: ShareId, val folderId: FolderId) : VaultNavigation
 }
 
 fun NavGraphBuilder.vaultGraph(onNavigate: (VaultNavigation) -> Unit) {
@@ -67,4 +74,6 @@ fun NavGraphBuilder.vaultGraph(onNavigate: (VaultNavigation) -> Unit) {
     selectVaultBottomsheetGraph(onNavigate)
     bottomSheetVaultOptionsGraph(onNavigate)
     organiseVaultsGraph(onNavigate)
+    addFolderVaultDialogGraph(onNavigate)
+    bottomSheetFolderOptionsGraph(onNavigate)
 }

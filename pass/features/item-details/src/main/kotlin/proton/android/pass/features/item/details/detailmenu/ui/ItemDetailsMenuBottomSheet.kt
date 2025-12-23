@@ -101,6 +101,7 @@ fun ItemDetailsMenuBottomSheet(
                 ItemDetailsMenuUiEvent.OnCloneItemClicked -> onCloneItem()
                 ItemDetailsMenuUiEvent.OnTrashItemClicked -> onTrashItem()
                 ItemDetailsMenuUiEvent.OnLeaveItemClicked -> onLeaveItem()
+                ItemDetailsMenuUiEvent.OnAddFolderClicked -> onAddFolder()
             }
         }
     )

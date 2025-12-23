@@ -215,7 +215,8 @@ internal fun NavGraphBuilder.autofillActivityGraph(
                 SearchOptionsNavigation.ResetFilters,
                 SearchOptionsNavigation.Filter,
                 SearchOptionsNavigation.Sorting,
-                SearchOptionsNavigation.BulkActions -> throw IllegalStateException("Action not supported")
+                SearchOptionsNavigation.BulkActions,
+                is SearchOptionsNavigation.ManageFolder -> throw IllegalStateException("Action not supported")
             }
         }
     )
@@ -389,24 +390,30 @@ internal fun NavGraphBuilder.autofillActivityGraph(
             when (it) {
                 is BaseAliasNavigation.OnCreateAliasEvent -> when (val event = it.event) {
                     is CreateAliasNavigation.Created -> {
-                        val created = CreatedAlias(event.userId, event.shareId, event.itemId, event.alias)
+                        val created =
+                            CreatedAlias(event.userId, event.shareId, event.itemId, event.alias)
                         onEvent(AutofillItemSelected(created.toAutofillItem()))
                     }
+
                     is CreateAliasNavigation.CreatedFromBottomsheet -> dismissBottomSheet {}
                     is CreateAliasNavigation.SelectVault -> appNavigator.navigate(
                         destination = SelectVaultBottomsheet,
                         route = SelectVaultBottomsheet.createNavRoute(event.shareId)
                     )
                 }
+
                 is BaseAliasNavigation.OnUpdateAliasEvent ->
                     throw IllegalStateException("Cannot update alias from autofill")
+
                 BaseAliasNavigation.CloseScreen -> appNavigator.navigateBack()
                 BaseAliasNavigation.CloseBottomsheet -> dismissBottomSheet {}
                 BaseAliasNavigation.Upgrade -> onNavigate(AutofillNavigation.Upgrade)
                 BaseAliasNavigation.SelectMailbox ->
                     appNavigator.navigate(AliasSelectMailboxBottomSheetNavItem)
+
                 BaseAliasNavigation.SelectSuffix ->
                     appNavigator.navigate(AliasSelectSuffixBottomSheetNavItem)
+
                 BaseAliasNavigation.AddAttachment,
                 BaseAliasNavigation.UpsellAttachments,
                 is BaseAliasNavigation.DeleteAllAttachments,
@@ -420,6 +427,7 @@ internal fun NavGraphBuilder.autofillActivityGraph(
                     destination = AddCustomFieldBottomSheetNavItem.CreateAlias,
                     route = AddCustomFieldBottomSheetNavItem.CreateAlias.buildRoute(None)
                 )
+
                 is BaseAliasNavigation.CustomFieldOptions -> appNavigator.navigate(
                     destination = CustomFieldOptionsBottomSheetNavItem.CreateAlias,
                     route = CustomFieldOptionsBottomSheetNavItem.CreateAlias.buildRoute(
@@ -428,6 +436,7 @@ internal fun NavGraphBuilder.autofillActivityGraph(
                         currentTitle = it.currentValue
                     )
                 )
+
                 is BaseAliasNavigation.CustomFieldTypeSelected -> dismissBottomSheet {
                     appNavigator.navigate(
                         destination = CustomFieldNameDialogNavItem.CreateAlias,
@@ -435,6 +444,7 @@ internal fun NavGraphBuilder.autofillActivityGraph(
                         backDestination = CreateAliasNavItem
                     )
                 }
+
                 is BaseAliasNavigation.EditCustomField -> dismissBottomSheet {
                     appNavigator.navigate(
                         destination = EditCustomFieldNameDialogNavItem.CreateAlias,
@@ -446,12 +456,14 @@ internal fun NavGraphBuilder.autofillActivityGraph(
                         backDestination = CreateAliasNavItem
                     )
                 }
+
                 is BaseAliasNavigation.OpenImagePicker -> appNavigator.navigate(
                     destination = PhotoPickerTotpNavItem(CustomFieldPrefix.CreateAlias),
                     route = PhotoPickerTotpNavItem(CustomFieldPrefix.CreateAlias)
                         .createNavRoute(index = it.index),
                     backDestination = CreateAliasNavItem
                 )
+
                 BaseAliasNavigation.RemovedCustomField -> dismissBottomSheet {}
                 BaseAliasNavigation.TotpCancel -> appNavigator.navigateBack()
                 is BaseAliasNavigation.TotpSuccess ->
@@ -494,6 +506,7 @@ internal fun NavGraphBuilder.autofillActivityGraph(
                     destination = AddCustomFieldBottomSheetNavItem.CreateCreditCard,
                     route = AddCustomFieldBottomSheetNavItem.CreateCreditCard.buildRoute(None)
                 )
+
                 is BaseCreditCardNavigation.CustomFieldOptions -> appNavigator.navigate(
                     destination = CustomFieldOptionsBottomSheetNavItem.CreateCreditCard,
                     route = CustomFieldOptionsBottomSheetNavItem.CreateCreditCard.buildRoute(
@@ -502,6 +515,7 @@ internal fun NavGraphBuilder.autofillActivityGraph(
                         currentTitle = it.currentValue
                     )
                 )
+
                 is BaseCreditCardNavigation.CustomFieldTypeSelected -> dismissBottomSheet {
                     appNavigator.navigate(
                         destination = CustomFieldNameDialogNavItem.CreateCreditCard,
@@ -509,6 +523,7 @@ internal fun NavGraphBuilder.autofillActivityGraph(
                         backDestination = CreateCreditCardNavItem
                     )
                 }
+
                 is BaseCreditCardNavigation.EditCustomField -> dismissBottomSheet {
                     appNavigator.navigate(
                         destination = EditCustomFieldNameDialogNavItem.CreateCreditCard,
@@ -520,12 +535,14 @@ internal fun NavGraphBuilder.autofillActivityGraph(
                         backDestination = CreateCreditCardNavItem
                     )
                 }
+
                 is BaseCreditCardNavigation.OpenImagePicker -> appNavigator.navigate(
                     destination = PhotoPickerTotpNavItem(CustomFieldPrefix.CreateCreditCard),
                     route = PhotoPickerTotpNavItem(CustomFieldPrefix.CreateCreditCard)
                         .createNavRoute(index = it.index),
                     backDestination = CreateCreditCardNavItem
                 )
+
                 BaseCreditCardNavigation.RemovedCustomField -> dismissBottomSheet {}
                 BaseCreditCardNavigation.TotpCancel -> appNavigator.navigateBack()
                 is BaseCreditCardNavigation.TotpSuccess ->
@@ -718,7 +735,10 @@ internal fun NavGraphBuilder.autofillActivityGraph(
                 is VaultNavigation.VaultRemove,
                 is VaultNavigation.VaultShare,
                 is VaultNavigation.VaultLeave,
-                is VaultNavigation.VaultAccess -> Unit
+                is VaultNavigation.VaultAccess,
+                is VaultNavigation.AddFolder,
+                is VaultNavigation.RemoveFolder,
+                is VaultNavigation.RenameFolder -> Unit
             }
         }
     )

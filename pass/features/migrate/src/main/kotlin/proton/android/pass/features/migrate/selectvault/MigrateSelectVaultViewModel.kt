@@ -38,6 +38,7 @@ import proton.android.pass.common.api.asLoadingResult
 import proton.android.pass.common.api.toOption
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
+import proton.android.pass.composecomponents.impl.folders.mock.mockFolders
 import proton.android.pass.data.api.repositories.BulkMoveToVaultRepository
 import proton.android.pass.data.api.usecases.ObserveVaultsWithItemCount
 import proton.android.pass.domain.ItemId
@@ -53,6 +54,8 @@ import proton.android.pass.features.migrate.MigrateVaultFilterArg
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.notifications.api.SnackbarDispatcher
+import proton.android.pass.preferences.FeatureFlag
+import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import javax.inject.Inject
 
 @HiltViewModel
@@ -60,8 +63,12 @@ class MigrateSelectVaultViewModel @Inject constructor(
     private val savedStateHandle: SavedStateHandleProvider,
     bulkMoveToVaultRepository: BulkMoveToVaultRepository,
     observeVaults: ObserveVaultsWithItemCount,
-    snackbarDispatcher: SnackbarDispatcher
+    snackbarDispatcher: SnackbarDispatcher,
+    featureFlagsPreferencesRepository: FeatureFlagsPreferencesRepository
 ) : ViewModel() {
+
+    private val foldersEnabled =
+        featureFlagsPreferencesRepository.get<Boolean>(FeatureFlag.PASS_FOLDERS)
 
     private val mode: Mode = getMode()
 
@@ -73,8 +80,9 @@ class MigrateSelectVaultViewModel @Inject constructor(
     internal val state: StateFlow<MigrateSelectVaultUiState> = combine(
         observeVaults(includeHidden = true).asLoadingResult(),
         eventFlow,
-        selectedItemsFlow
-    ) { vaultResult, event, selectedItems ->
+        selectedItemsFlow,
+        foldersEnabled
+    ) { vaultResult, event, selectedItems, foldersEnabled ->
         when (vaultResult) {
             LoadingResult.Loading -> MigrateSelectVaultUiState.Loading
             is LoadingResult.Error -> {
@@ -85,7 +93,7 @@ class MigrateSelectVaultViewModel @Inject constructor(
             }
 
             is LoadingResult.Success -> MigrateSelectVaultUiState.Success(
-                vaultList = prepareVaults(vaultResult.data, selectedItems),
+                vaultList = prepareVaults(vaultResult.data, selectedItems, foldersEnabled),
                 event = event,
                 mode = mode.migrateMode()
             )
@@ -117,14 +125,26 @@ class MigrateSelectVaultViewModel @Inject constructor(
 
     private fun prepareVaults(
         vaults: List<VaultWithItemCount>,
-        selectedItems: Option<Map<ShareId, List<ItemId>>>
-    ): ImmutableList<VaultEnabledPair> = vaults.filter {
-        if (mode is Mode.MigrateSelectedItems && mode.filter == MigrateVaultFilter.Shared) {
-            it.vault.shared
-        } else {
-            true
+        selectedItems: Option<Map<ShareId, List<ItemId>>>,
+        foldersEnabled: Boolean
+    ): ImmutableList<VaultEnabledPair> = vaults
+        .let {
+            if (foldersEnabled && it.isNotEmpty()) {
+                // to be remove !
+                vaults.toMutableList().apply {
+                    this[0].folders = mockFolders
+                }
+            } else vaults
         }
-    }.map { prepareVault(it, selectedItems) }.toImmutableList()
+        .filter {
+            if (mode is Mode.MigrateSelectedItems && mode.filter == MigrateVaultFilter.Shared) {
+                it.vault.shared
+            } else {
+                true
+            }
+        }
+        .map { prepareVault(it, selectedItems) }
+        .toImmutableList()
 
     private fun prepareVault(
         vault: VaultWithItemCount,

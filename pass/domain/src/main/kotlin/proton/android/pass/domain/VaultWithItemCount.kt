@@ -18,10 +18,20 @@
 
 package proton.android.pass.domain
 
+@SuppressWarnings("DataClassShouldBeImmutable")
 data class VaultWithItemCount(
     val vault: Vault,
     val activeItemCount: Long,
-    val trashedItemCount: Long
+    val trashedItemCount: Long,
+    // change var to val, here it is for test, and remove warning above
+    var folders: List<FolderWithItemCount> = emptyList()
+)
+
+data class FolderWithItemCount(
+    val id: FolderId = FolderId(""),
+    val activeItemCount: Long = 0,
+    val name: String = "",
+    val folders: List<FolderWithItemCount> = emptyList()
 )
 
 fun List<VaultWithItemCount>.sorted(): List<VaultWithItemCount> = sortedBy {

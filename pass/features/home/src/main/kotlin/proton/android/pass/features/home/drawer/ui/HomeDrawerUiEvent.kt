@@ -18,6 +18,7 @@
 
 package proton.android.pass.features.home.drawer.ui
 
+import proton.android.pass.domain.FolderId
 import proton.android.pass.domain.ShareId
 
 sealed interface HomeDrawerUiEvent {
@@ -47,4 +48,14 @@ sealed interface HomeDrawerUiEvent {
     data object OnOrganiseVaultsClick : HomeDrawerUiEvent
 
     data object OnUpgradeClick : HomeDrawerUiEvent
+
+    data class OnFolderClick(
+        internal val shareId: ShareId,
+        internal val folderId: FolderId
+    ) : HomeDrawerUiEvent
+
+    data class OnFolderOptionsClick(
+        internal val shareId: ShareId,
+        internal val folderId: FolderId
+    ) : HomeDrawerUiEvent
 }

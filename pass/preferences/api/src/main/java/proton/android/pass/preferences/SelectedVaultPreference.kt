@@ -22,6 +22,8 @@ private const val ALL_VAULTS_VALUE = "AllVaults"
 private const val SHARED_BY_ME_VALUE = "SharedByMe"
 private const val SHARED_WITH_ME_VALUE = "SharedWithMe"
 private const val TRASH_VALUE = "Trash"
+private const val FOLDER = "Folder"
+private const val FOLDER_PARTS = 3
 
 sealed interface SelectedVaultPreference {
 
@@ -58,6 +60,10 @@ sealed interface SelectedVaultPreference {
 
     }
 
+    class Folder(val shareId: String, val folderId: String) : SelectedVaultPreference {
+        override fun value(): String = "$FOLDER:$shareId:$folderId" // simplify ?
+    }
+
     companion object {
 
         fun fromValue(value: String?): SelectedVaultPreference = when {
@@ -65,6 +71,17 @@ sealed interface SelectedVaultPreference {
             value == SHARED_BY_ME_VALUE -> SharedByMe
             value == SHARED_WITH_ME_VALUE -> SharedWithMe
             value == TRASH_VALUE -> Trash
+            !value.isNullOrBlank() && value.startsWith(FOLDER) -> {
+                val parts = value.split(":")
+                if (parts.size == FOLDER_PARTS) { // better management ?
+                    Folder(
+                        shareId = parts[1],
+                        folderId = parts[2]
+                    )
+                } else {
+                    AllVaults // avoid crash
+                }
+            }
             !value.isNullOrBlank() -> Vault(value)
             else -> AllVaults
         }

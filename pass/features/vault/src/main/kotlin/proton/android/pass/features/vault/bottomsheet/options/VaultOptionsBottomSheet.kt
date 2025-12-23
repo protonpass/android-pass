@@ -89,6 +89,10 @@ fun VaultOptionsBottomSheet(
                     VaultOptionsUserEvent.OnVaultAccess -> {
                         onNavigate(VaultNavigation.VaultAccess(state.shareId))
                     }
+
+                    VaultOptionsUserEvent.OnCreateFolder -> {
+                        onNavigate(VaultNavigation.AddFolder(state.shareId))
+                    }
                 }
             }
         )

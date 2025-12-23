@@ -134,6 +134,7 @@ class UpsellV2ViewModel @Inject constructor(
                             }
                         val currentPlan: Plan? = getUserPlan(userId).firstOrNull()
                         if (previousPlan?.internalName != currentPlan?.internalName) {
+                            PassLogger.i(TAG, "Plan refreshed done, go to next screen")
                             _upsellV2UiState.update {
                                 it.copy(
                                     stepToDisplay = StepToDisplay.Next
@@ -142,6 +143,8 @@ class UpsellV2ViewModel @Inject constructor(
                             return@launch
                         }
                     }
+
+                    PassLogger.w(TAG, "Plan refreshed too long, go to next screen")
 
                     // if it's too long, go to next screen.
                     _upsellV2UiState.update {

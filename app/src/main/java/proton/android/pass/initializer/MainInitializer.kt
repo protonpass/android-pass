@@ -43,7 +43,6 @@ import me.proton.core.auth.presentation.MissingScopeInitializer
 import me.proton.core.crypto.validator.presentation.init.CryptoValidatorInitializer
 import me.proton.core.humanverification.presentation.HumanVerificationInitializer
 import me.proton.core.network.presentation.init.UnAuthSessionFetcherInitializer
-import me.proton.core.plan.presentation.UnredeemedPurchaseInitializer
 import me.proton.core.userrecovery.presentation.compose.DeviceRecoveryInitializer
 import proton.android.pass.data.impl.migration.DataMigrationInitializer
 import proton.android.pass.data.impl.sync.SyncInitializer
@@ -73,7 +72,6 @@ class MainInitializer : Initializer<Unit> {
         TelemetryInitializer::class.java,
         DataMigrationInitializer::class.java,
         UnAuthSessionFetcherInitializer::class.java,
-        UnredeemedPurchaseInitializer::class.java,
         AccountListenerInitializer::class.java,
         AppLockListenerInitializer::class.java,
         DeviceRecoveryInitializer::class.java,

@@ -37,6 +37,7 @@ import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemTit
 import proton.android.pass.composecomponents.impl.bottomsheet.withDividers
 import proton.android.pass.searchoptions.api.SearchFilterType
 import proton.android.pass.searchoptions.api.SearchSortingType
+import proton.android.pass.searchoptions.api.VaultSelectionOption
 import me.proton.core.presentation.R as CoreR
 import proton.android.pass.composecomponents.impl.R as ComponentsR
 
@@ -57,6 +58,11 @@ fun SearchOptionsBottomSheetContents(
     if (state.showResetAction) {
         items.add(resetSearchOptions(onResetSearchOptions))
     }
+
+    if (state.vaultSelectionOption is VaultSelectionOption.Folder) {
+        items.add(manageFolderOptions(state.vaultSelectionOption, onNavigateEvent))
+    }
+
     BottomSheetItemList(
         modifier = modifier.bottomSheet(shouldApplyNavPadding = false),
         items = items.withDividers().toPersistentList()
@@ -153,6 +159,29 @@ private fun resetSearchOptions(onResetSearchOptions: () -> Unit): BottomSheetIte
     override val isDivider = false
 }
 
+private fun manageFolderOptions(
+    vaultSelectionOption: VaultSelectionOption.Folder,
+    onNavigateEvent: (SearchOptionsNavigation) -> Unit
+): BottomSheetItem = object : BottomSheetItem {
+    override val title: @Composable () -> Unit
+        get() = { BottomSheetItemTitle(text = stringResource(R.string.manage_folder)) }
+    override val subtitle: (@Composable () -> Unit)? = null
+    override val leftIcon: (@Composable () -> Unit)
+        get() = { BottomSheetItemIcon(iconId = CoreR.drawable.ic_proton_folder) }
+    override val endIcon: (@Composable () -> Unit)?
+        get() = null
+    override val onClick: () -> Unit
+        get() = {
+            onNavigateEvent(
+                SearchOptionsNavigation.ManageFolder(
+                    vaultSelectionOption.shareId,
+                    vaultSelectionOption.folderId
+                )
+            )
+        }
+    override val isDivider = false
+}
+
 @OptIn(ExperimentalMaterialApi::class)
 @Preview
 @Composable
@@ -164,7 +193,8 @@ fun SearchOptionsBottomSheetContentsPreview(@PreviewParameter(ThemePreviewProvid
                     filterType = SearchFilterType.All,
                     sortingType = SearchSortingType.TitleAsc,
                     count = 2,
-                    showBulkActionsOption = true
+                    showBulkActionsOption = true,
+                    vaultSelectionOption = VaultSelectionOption.AllVaults
                 ),
                 onNavigateEvent = {},
                 onResetSearchOptions = {}

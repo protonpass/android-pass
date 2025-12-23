@@ -22,4 +22,5 @@ sealed class ShareSelection {
     data object AllShares : ShareSelection()
     data class Share(val shareId: ShareId) : ShareSelection()
     data class Shares(val shareIds: List<ShareId>) : ShareSelection()
+    data class Folder(val shareId: ShareId, val folderId: FolderId) : ShareSelection()
 }

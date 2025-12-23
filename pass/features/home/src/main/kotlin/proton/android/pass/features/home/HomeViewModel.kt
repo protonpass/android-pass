@@ -289,6 +289,10 @@ class HomeViewModel @Inject constructor(
                     is VaultSelectionOption.Vault ->
                         observeSearchEntry(SearchEntrySelection.Vault(vaultSelection.shareId))
 
+                    is VaultSelectionOption.Folder -> {
+                        observeSearchEntry(SearchEntrySelection.Folder(vaultSelection.shareId, vaultSelection.folderId))
+                    }
+
                     VaultSelectionOption.SharedByMe,
                     VaultSelectionOption.SharedWithMe,
                     VaultSelectionOption.Trash -> emptyFlow()
@@ -338,6 +342,14 @@ class HomeViewModel @Inject constructor(
                         itemState = ItemState.Active,
                         filter = ItemTypeFilter.All,
                         includeHidden = false
+                    )
+                }
+
+                is VaultSelectionOption.Folder -> {
+                    // itemUiModelFlow for folder
+                    observeEncryptedSharedItems(
+                        itemSharedType = ItemSharedType.SharedByMe,
+                        includeHiddenVault = false
                     )
                 }
 

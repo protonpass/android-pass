@@ -35,6 +35,7 @@ import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItem
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemIcon
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemList
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemTitle
+import proton.android.pass.composecomponents.impl.bottomsheet.createFolder
 import proton.android.pass.composecomponents.impl.bottomsheet.withDividers
 import proton.android.pass.features.vault.R
 import me.proton.core.presentation.R as CoreR
@@ -46,9 +47,16 @@ internal fun VaultOptionsBottomSheetContents(
     onEvent: (VaultOptionsUserEvent) -> Unit
 ) {
     buildList {
+
         if (state.showEdit) {
             editVault {
                 onEvent(VaultOptionsUserEvent.OnEdit)
+            }.also(::add)
+        }
+
+        if (state.canAddFolder) {
+            createFolder {
+                onEvent(VaultOptionsUserEvent.OnCreateFolder)
             }.also(::add)
         }
 
@@ -87,6 +95,7 @@ internal fun VaultOptionsBottomSheetContents(
                 onEvent(VaultOptionsUserEvent.OnLeave)
             }.also(::add)
         }
+
     }.let { items ->
         Column(modifier.bottomSheet()) {
             BottomSheetItemList(

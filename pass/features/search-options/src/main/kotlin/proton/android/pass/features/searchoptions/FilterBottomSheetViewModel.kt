@@ -76,6 +76,11 @@ class FilterBottomSheetViewModel @Inject constructor(
                     shareSelection = ShareSelection.Share(vault.shareId),
                     includeHiddenVault = false
                 )
+
+                is VaultSelectionOption.Folder -> observeItemCount(
+                    shareSelection = ShareSelection.Folder(vault.shareId, vault.folderId),
+                    includeHiddenVault = false
+                )
             }.zip(flowOf(it)) { itemCount, searchOptions ->
                 itemCount to searchOptions
             }

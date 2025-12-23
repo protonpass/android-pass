@@ -267,7 +267,8 @@ fun HomeScreen(
             BottomSheetItemAction.Restore,
             BottomSheetItemAction.ResetHistory,
             BottomSheetItemAction.Duplicate,
-            BottomSheetItemAction.Trash -> return@LaunchedEffect
+            BottomSheetItemAction.Trash,
+            BottomSheetItemAction.AddFolder -> return@LaunchedEffect
         }
     }
 
@@ -835,6 +836,21 @@ fun HomeScreen(
 
                             HomeDrawerUiEvent.OnUpgradeClick -> {
                                 onNavigateEvent(HomeNavigation.Upgrade)
+                            }
+
+                            is HomeDrawerUiEvent.OnFolderOptionsClick -> {
+                                HomeNavigation.FolderOptions(
+                                    shareId = uiEvent.shareId,
+                                    folderId = uiEvent.folderId
+                                ).also(onNavigateEvent)
+                            }
+
+                            is HomeDrawerUiEvent.OnFolderClick -> {
+                                scope.launch { drawerState.close() }
+
+                                VaultSelectionOption.Folder(shareId = uiEvent.shareId, folderId = uiEvent.folderId)
+                                    .also(homeDrawerViewModel::setVaultSelection)
+                                    .also(homeViewModel::setVaultSelection)
                             }
                         }
                     }

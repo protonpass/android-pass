@@ -28,6 +28,7 @@ import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.Option
 import proton.android.pass.commonuimodels.api.ItemTypeUiState
 import proton.android.pass.composecomponents.impl.dialogs.PassUpgradePlanDialog
+import proton.android.pass.domain.FolderId
 import proton.android.pass.domain.InviteId
 import proton.android.pass.domain.InviteToken
 import proton.android.pass.domain.ItemId
@@ -181,4 +182,7 @@ sealed interface HomeNavigation {
     data class OpenPromoInAppMessage(val userId: UserId, val inAppMessageId: InAppMessageId) :
         HomeNavigation
 
+    data class AddFolder(val shareId: ShareId, val folderId: FolderId? = null) : HomeNavigation
+
+    data class FolderOptions(val shareId: ShareId, val folderId: FolderId? = null) : HomeNavigation
 }

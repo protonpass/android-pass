@@ -19,6 +19,7 @@
 package proton.android.pass.features.home.drawer.ui
 
 import androidx.annotation.DrawableRes
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -27,12 +28,18 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.mutableStateMapOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.mapSaver
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
+import androidx.compose.ui.unit.dp
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.ThemedBooleanPreviewProvider
@@ -42,8 +49,13 @@ import proton.android.pass.composecomponents.impl.buttons.PassSharingShareIcon
 import proton.android.pass.composecomponents.impl.icon.VaultIcon
 import proton.android.pass.composecomponents.impl.item.icon.ThreeDotsMenuButton
 import proton.android.pass.composecomponents.impl.text.Text
+import proton.android.pass.domain.FolderId
+import proton.android.pass.domain.FolderWithItemCount
 import proton.android.pass.domain.items.ItemCategory
 import proton.android.pass.features.home.R
+import proton.android.pass.composecomponents.impl.folders.ExpandCollapseIcon
+import proton.android.pass.composecomponents.impl.folders.FolderTree
+import proton.android.pass.composecomponents.impl.folders.mock.mockFolders
 import me.proton.core.presentation.R as CoreR
 import proton.android.pass.composecomponents.impl.R as CompR
 
@@ -58,73 +70,141 @@ internal fun HomeDrawerRow(
     isSelected: Boolean,
     onClick: () -> Unit,
     membersCount: Int = 0,
+    foldersEnabled: Boolean = false,
+    folders: List<FolderWithItemCount> = emptyList(),
+    onFolderClick: ((FolderId) -> Unit)? = null,
+    onMenuOptionsClickFromFolder: ((FolderId) -> Unit)? = null,
     onShareClick: (() -> Unit)? = null,
     onMenuOptionsClick: (() -> Unit)? = null
 ) {
-    Row(
-        modifier = modifier
-            .fillMaxWidth()
-            .clickable { onClick() }
-            .padding(
-                start = Spacing.medium,
-                top = Spacing.mediumSmall,
-                bottom = Spacing.mediumSmall
-            ),
-        verticalAlignment = Alignment.CenterVertically
+    val (showFolders, onShowFolders) = rememberSaveable { mutableStateOf(false) }
+
+    Column(
+        modifier = modifier.fillMaxWidth()
     ) {
-        OverlayBadge(
-            isShown = isSelected,
-            content = {
-                VaultIcon(
-                    icon = shareIconRes,
-                    iconColor = iconColor,
-                    backgroundColor = iconBackgroundColor
-                )
-            },
-            badge = {
-                CircledBadge(
-                    ratio = 0.75F,
-                    icon = CoreR.drawable.ic_proton_checkmark,
-                    iconColor = PassTheme.colors.interactionNormMinor1,
-                    backgroundColor = PassTheme.colors.interactionNormMajor2
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .clickable { onClick() }
+                .padding(
+                    start = Spacing.medium,
+                    top = Spacing.mediumSmall,
+                    bottom = Spacing.mediumSmall
+                ),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            AnimatedVisibility(
+                visible = foldersEnabled
+            ) {
+                ExpandCollapseIcon(
+                    expanded = showFolders,
+                    onClick = {
+                        onShowFolders(!showFolders)
+                    }
                 )
             }
-        )
 
-        Column(
-            modifier = Modifier
-                .weight(weight = 1f)
-                .padding(start = Spacing.mediumSmall),
-            verticalArrangement = Arrangement.spacedBy(space = Spacing.extraSmall)
+            OverlayBadge(
+                isShown = isSelected,
+                content = {
+                    VaultIcon(
+                        icon = shareIconRes,
+                        iconColor = iconColor,
+                        backgroundColor = iconBackgroundColor
+                    )
+                },
+                badge = {
+                    CircledBadge(
+                        ratio = 0.75F,
+                        icon = CoreR.drawable.ic_proton_checkmark,
+                        iconColor = PassTheme.colors.interactionNormMinor1,
+                        backgroundColor = PassTheme.colors.interactionNormMajor2
+                    )
+                }
+            )
+
+            Column(
+                modifier = Modifier
+                    .weight(weight = 1f)
+                    .padding(start = Spacing.mediumSmall),
+                verticalArrangement = Arrangement.spacedBy(space = Spacing.extraSmall)
+            ) {
+                Text.Body1Regular(
+                    text = name
+                )
+
+                Text.Body2Regular(
+                    text = pluralStringResource(
+                        R.plurals.vault_drawer_vaults_item_count,
+                        itemsCount,
+                        itemsCount
+                    ),
+                    color = PassTheme.colors.textWeak
+                )
+            }
+
+            onShareClick?.let { onClick ->
+                PassSharingShareIcon(
+                    itemCategory = ItemCategory.Unknown,
+                    shareSharedCount = membersCount,
+                    onClick = onClick
+                )
+            }
+
+            onMenuOptionsClick?.let { onClick ->
+                ThreeDotsMenuButton(
+                    onClick = onClick
+                )
+            }
+        }
+
+        // clean folder ui here with real data
+        val expandedState = rememberSaveable(
+            saver = mapSaver(
+                save = { it },
+                restore = { map ->
+                    val restored = mutableStateMapOf<String, Boolean>()
+                    map.forEach { (key, value) ->
+                        if (value is Boolean) {
+                            restored[key] = value
+                        }
+                    }
+                    restored
+                }
+            )
         ) {
-            Text.Body1Regular(
-                text = name
-            )
-
-            Text.Body2Regular(
-                text = pluralStringResource(
-                    R.plurals.vault_drawer_vaults_item_count,
-                    itemsCount,
-                    itemsCount
-                ),
-                color = PassTheme.colors.textWeak
-            )
+            mutableStateMapOf()
         }
 
-        onShareClick?.let { onClick ->
-            PassSharingShareIcon(
-                itemCategory = ItemCategory.Unknown,
-                shareSharedCount = membersCount,
-                onClick = onClick
-            )
+        LaunchedEffect(folders) {
+            folders.forEach { folder ->
+                if (!expandedState.contains(folder.id.id)) {
+                    expandedState[folder.id.id] = false
+                }
+                // when adding / delete folders, let the current value
+            }
         }
 
-        onMenuOptionsClick?.let { onClick ->
-            ThreeDotsMenuButton(
-                onClick = onClick
+        AnimatedVisibility(
+            visible = foldersEnabled &&
+                folders.isNotEmpty() &&
+                showFolders
+        ) {
+            FolderTree(
+                modifier = Modifier.padding(start = 32.dp),
+                folders = folders,
+                expandedState = expandedState,
+                onThreeDotsClick = {
+                    onMenuOptionsClickFromFolder?.invoke(it)
+                },
+                depth = 0,
+                onFolderClick = {
+                    onFolderClick?.invoke(it)
+                }
             )
         }
     }
+
 }
 
 @[Preview Composable]
@@ -145,7 +225,9 @@ internal fun HomeDrawerRowPreview(
                 isSelected = isSelected,
                 onClick = {},
                 onShareClick = {},
-                onMenuOptionsClick = {}
+                onMenuOptionsClick = {},
+                foldersEnabled = true,
+                folders = mockFolders
             )
         }
     }

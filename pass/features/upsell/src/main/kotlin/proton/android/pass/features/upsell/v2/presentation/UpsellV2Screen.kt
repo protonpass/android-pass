@@ -19,7 +19,6 @@
 package proton.android.pass.features.upsell.v2.presentation
 
 import android.app.Activity
-import android.content.Intent
 import androidx.activity.compose.BackHandler
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -77,9 +76,7 @@ fun UpsellV2Screen(
                     when (it) {
                         is ProtonPaymentEvent.Error.GiapUnredeemed -> {
                             launcher.launch(
-                                input = StartUnredeemedPurchase.createIntent(context, Unit).apply {
-                                    addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                                }
+                                input = StartUnredeemedPurchase.createIntent(context, Unit)
                             )
                         }
 

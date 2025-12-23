@@ -21,6 +21,7 @@ package proton.android.pass.ui
 import android.content.ComponentName
 import android.content.Intent
 import android.os.Bundle
+import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.compose.setContent
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.ActivityResultLauncher
@@ -50,6 +51,7 @@ import me.proton.core.accountmanager.presentation.compose.SignOutDialogActivity
 import me.proton.core.compose.component.ProtonCenteredProgress
 import me.proton.core.notification.presentation.deeplink.DeeplinkManager
 import me.proton.core.notification.presentation.deeplink.onActivityCreate
+import me.proton.core.plan.presentation.ui.StartUnredeemedPurchase
 import me.proton.core.telemetry.domain.TelemetryManager
 import me.proton.core.telemetry.presentation.ProductMetricsDelegate
 import me.proton.core.telemetry.presentation.ProductMetricsDelegateOwner
@@ -151,6 +153,24 @@ class MainActivity : FragmentActivity(), ProductMetricsDelegateOwner {
                 }
             }
 
+
+            val launcher = rememberLauncherForActivityResult(
+                contract = ActivityResultContracts.StartActivityForResult()
+            ) {
+                if (it.resultCode == RESULT_OK) {
+                    launcherViewModel.tryUpgrade()
+                }
+                launcherViewModel.onRedeemedEnd()
+            }
+
+            LaunchedEffect(state.canDisplayUnredeemedPopup) {
+                if (state.canDisplayUnredeemedPopup) {
+                    launcher.launch(
+                        StartUnredeemedPurchase.createIntent(context, Unit)
+                    )
+                }
+            }
+
             val isDark = isDark(state.themePreference)
             LaunchedEffect(isDark) {
                 WindowCompat.getInsetsController(window, window.decorView).apply {
@@ -193,7 +213,7 @@ class MainActivity : FragmentActivity(), ProductMetricsDelegateOwner {
                                     is AppNavigation.Upgrade -> {
                                         when {
                                             state.supportPayment -> {
-                                                launcherViewModel.upgrade()
+                                                launcherViewModel.upgradeWithClassicWorkflow()
                                             }
 
                                             !state.supportPayment &&

@@ -46,13 +46,16 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
@@ -75,6 +78,7 @@ import me.proton.core.auth.presentation.onAddAccountResult
 import me.proton.core.domain.entity.UserId
 import me.proton.core.plan.presentation.PlansOrchestrator
 import me.proton.core.plan.presentation.onUpgradeResult
+import me.proton.core.plan.presentation.usecase.CheckUnredeemedGooglePurchase
 import me.proton.core.usersettings.presentation.UserSettingsOrchestrator
 import proton.android.pass.appconfig.api.AppConfig
 import proton.android.pass.appconfig.api.BuildFlavor.Companion.supportPayment
@@ -96,7 +100,7 @@ import javax.inject.Inject
 import kotlin.time.Duration.Companion.seconds
 
 @HiltViewModel
-@Suppress("LongParameterList")
+@SuppressWarnings("LongParameterList", "TooManyFunctions")
 class LauncherViewModel @Inject constructor(
     private val accountManager: AccountManager,
     private val authOrchestrator: AuthOrchestrator,
@@ -112,8 +116,11 @@ class LauncherViewModel @Inject constructor(
     private val settingsRepository: InternalSettingsRepository,
     userPreferencesRepository: UserPreferencesRepository,
     commonLibraryVersionChecker: CommonLibraryVersionChecker,
-    appConfig: AppConfig
+    private val appConfig: AppConfig,
+    private val checkUnredeemedGooglePurchase: CheckUnredeemedGooglePurchase
 ) : ViewModel() {
+
+    private val canDisplayUnredeemedPopup = MutableStateFlow(false)
 
     init {
         viewModelScope.launch {
@@ -123,20 +130,24 @@ class LauncherViewModel @Inject constructor(
                 PassLogger.i(TAG, "Common library version: $version")
             }
         }
+
+        checkUnredeemed()
     }
 
     internal val state: StateFlow<LauncherState> = combine(
         accountManager.getAccounts().map { accounts -> getState(accounts) },
         userPreferencesRepository.getThemePreference(),
         flowOf(appConfig.flavor.supportPayment()),
-        settingsRepository.hasShownReloadAppWarning()
-    ) { accountState, themePreference, supportPayment, hasShownReloadAppWarning ->
+        settingsRepository.hasShownReloadAppWarning(),
+        canDisplayUnredeemedPopup
+    ) { accountState, themePreference, supportPayment, hasShownReloadAppWarning, canDisplayUnredeemedPopup ->
         LauncherState(
             accountState = accountState,
             themePreference = themePreference,
             isNewLoginFlowEnabled = false,
             supportPayment = supportPayment,
-            canShowWarningReloadApp = !hasShownReloadAppWarning
+            canShowWarningReloadApp = !hasShownReloadAppWarning,
+            canDisplayUnredeemedPopup = canDisplayUnredeemedPopup
         )
     }.stateIn(
         scope = viewModelScope,
@@ -149,10 +160,27 @@ class LauncherViewModel @Inject constructor(
                 themePreference = themePreference,
                 isNewLoginFlowEnabled = false,
                 supportPayment = false,
-                canShowWarningReloadApp = false
+                canShowWarningReloadApp = false,
+                canDisplayUnredeemedPopup = false
             )
         }
     )
+
+    private fun checkUnredeemed() {
+        viewModelScope.launch {
+            if (appConfig.flavor.supportPayment()) {
+                val userId = accountManager.getPrimaryUserId().first() ?: return@launch
+                val unredeemed = checkUnredeemedGooglePurchase.invoke(userId)
+                canDisplayUnredeemedPopup.update { unredeemed != null }
+            } else {
+                canDisplayUnredeemedPopup.update { false }
+            }
+        }
+    }
+
+    fun onRedeemedEnd() {
+        canDisplayUnredeemedPopup.update { false }
+    }
 
     internal fun register(context: ComponentActivity) {
         authOrchestrator.register(context as ActivityResultCaller)
@@ -249,38 +277,45 @@ class LauncherViewModel @Inject constructor(
         }
     }
 
-    internal fun upgrade() = viewModelScope.launch {
+    fun tryUpgrade(id: UserId? = null) {
+        viewModelScope.launch {
+            val internalUserId = id ?: getPrimaryUserIdOrNull()
+            if (internalUserId != null) {
+                safeRunCatching {
+                    /*
+             We need to add a delay to refresh the plan since the BE
+             doesn't have the updated plan yet.
+                     */
+                    val maxAttempts = 3
+                    val baseDelay = 2.seconds
+                    val previousPlan: Plan? = getUserPlan(internalUserId).firstOrNull()
+                    repeat(maxAttempts) { attempt ->
+                        delay(baseDelay * (attempt + 1))
+                        runCatching { refreshUserAccess(internalUserId) }
+                            .onSuccess { PassLogger.i(TAG, "Plan refreshed") }
+                            .onFailure {
+                                PassLogger.w(TAG, "Error refreshing plan")
+                                PassLogger.w(TAG, it)
+                            }
+                        val currentPlan: Plan? = getUserPlan(internalUserId).firstOrNull()
+                        if (previousPlan?.internalName != currentPlan?.internalName) {
+                            return@launch
+                        }
+                    }
+                }.onFailure { e ->
+                    PassLogger.w(TAG, "Failed refreshing plan for $internalUserId")
+                    PassLogger.w(TAG, e)
+                }
+            }
+        }
+    }
+
+    internal fun upgradeWithClassicWorkflow() = viewModelScope.launch {
         getPrimaryUserIdOrNull()?.let { userId ->
             plansOrchestrator
                 .onUpgradeResult { result ->
                     if (result != null) {
-                        viewModelScope.launch {
-                            safeRunCatching {
-                                /*
-                             We need to add a delay to refresh the plan since the BE
-                             doesn't have the updated plan yet.
-                                 */
-                                val maxAttempts = 3
-                                val baseDelay = 2.seconds
-                                val previousPlan: Plan? = getUserPlan(userId).firstOrNull()
-                                repeat(maxAttempts) { attempt ->
-                                    delay(baseDelay * (attempt + 1))
-                                    runCatching { refreshUserAccess(userId) }
-                                        .onSuccess { PassLogger.i(TAG, "Plan refreshed") }
-                                        .onFailure {
-                                            PassLogger.w(TAG, "Error refreshing plan")
-                                            PassLogger.w(TAG, it)
-                                        }
-                                    val currentPlan: Plan? = getUserPlan(userId).firstOrNull()
-                                    if (previousPlan?.internalName != currentPlan?.internalName) {
-                                        return@launch
-                                    }
-                                }
-                            }.onFailure { e ->
-                                PassLogger.w(TAG, "Failed refreshing plan for $userId")
-                                PassLogger.w(TAG, e)
-                            }
-                        }
+                        tryUpgrade(userId)
                     }
                 }
                 .startUpgradeWorkflow(userId)
@@ -368,5 +403,6 @@ internal data class LauncherState(
     val themePreference: ThemePreference,
     val isNewLoginFlowEnabled: Boolean,
     val supportPayment: Boolean,
-    val canShowWarningReloadApp: Boolean
+    val canShowWarningReloadApp: Boolean,
+    val canDisplayUnredeemedPopup: Boolean
 )

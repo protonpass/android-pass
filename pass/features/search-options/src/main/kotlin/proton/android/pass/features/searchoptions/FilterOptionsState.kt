@@ -42,7 +42,8 @@ internal sealed interface FilterOptionsState {
             when (searchOptions.vaultSelectionOption) {
                 VaultSelectionOption.AllVaults,
                 VaultSelectionOption.Trash,
-                is VaultSelectionOption.Vault -> true
+                is VaultSelectionOption.Vault,
+                is VaultSelectionOption.Folder -> true
 
                 VaultSelectionOption.SharedByMe,
                 VaultSelectionOption.SharedWithMe -> false

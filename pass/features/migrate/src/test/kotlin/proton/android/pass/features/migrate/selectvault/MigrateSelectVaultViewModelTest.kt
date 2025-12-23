@@ -37,6 +37,7 @@ import proton.android.pass.features.migrate.MigrateVaultFilter
 import proton.android.pass.features.migrate.MigrateVaultFilterArg
 import proton.android.pass.navigation.api.CommonOptionalNavArgId
 import proton.android.pass.notifications.fakes.FakeSnackbarDispatcher
+import proton.android.pass.preferences.FakeFeatureFlagsPreferenceRepository
 import proton.android.pass.test.MainDispatcherRule
 import proton.android.pass.test.domain.VaultTestFactory
 
@@ -49,6 +50,8 @@ class MigrateSelectVaultViewModelTest {
     private lateinit var observeVaults: FakeObserveVaultsWithItemCount
     private lateinit var snackbarDispatcher: FakeSnackbarDispatcher
     private lateinit var bulkMoveToVaultRepository: FakeBulkMoveToVaultRepository
+    private lateinit var featureFlagsPreferencesRepository: FakeFeatureFlagsPreferenceRepository
+
 
     @Before
     fun setup() {
@@ -58,6 +61,7 @@ class MigrateSelectVaultViewModelTest {
             runBlocking { save(mapOf(SHARE_ID to listOf(ITEM_ID))) }
 
         }
+        featureFlagsPreferencesRepository = FakeFeatureFlagsPreferenceRepository()
         instance = MigrateSelectVaultViewModel(
             observeVaults = observeVaults,
             snackbarDispatcher = snackbarDispatcher,
@@ -66,7 +70,8 @@ class MigrateSelectVaultViewModelTest {
                 get()[MigrateVaultFilterArg.key] = MigrateVaultFilter.All.name
                 get()[MigrateModeArg.key] = MigrateModeValue.SelectedItems.name
                 get()[CommonOptionalNavArgId.ItemId.key] = ITEM_ID.id
-            }
+            },
+            featureFlagsPreferencesRepository = featureFlagsPreferencesRepository
         )
     }
 

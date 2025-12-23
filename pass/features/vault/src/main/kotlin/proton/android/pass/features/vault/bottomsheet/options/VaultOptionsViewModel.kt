@@ -84,8 +84,9 @@ class VaultOptionsViewModel @Inject constructor(
         observeVaults(includeHidden = true).asLoadingResult(),
         canShare,
         eventFlow,
-        preferencesRepository.get<Boolean>(FeatureFlag.PASS_ALLOW_NO_VAULT)
-    ) { vaultResult, canShare, event, allowNoVault ->
+        preferencesRepository.get<Boolean>(FeatureFlag.PASS_ALLOW_NO_VAULT),
+        preferencesRepository.get<Boolean>(FeatureFlag.PASS_FOLDERS)
+    ) { vaultResult, canShare, event, allowNoVault, canAddFolder ->
         val (allVaults, selectedVault) = when (vaultResult) {
             is LoadingResult.Error -> {
                 snackbarDispatcher(CannotGetVaultListError)
@@ -130,7 +131,8 @@ class VaultOptionsViewModel @Inject constructor(
             showManageAccess = showManageAccess,
             showViewMembers = showViewMembers,
             event = event,
-            isLastVault = vaultResult.data.size == 1
+            isLastVault = vaultResult.data.size == 1,
+            canAddFolder = canAddFolder
         )
     }.stateIn(
         scope = viewModelScope,

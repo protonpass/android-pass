@@ -119,7 +119,8 @@ internal data class HomeUiState(
         VaultSelectionOption.AllVaults,
         VaultSelectionOption.SharedByMe,
         VaultSelectionOption.SharedWithMe,
-        is VaultSelectionOption.Trash -> false
+        is VaultSelectionOption.Trash,
+        is VaultSelectionOption.Folder -> false
     }
 
     internal fun shouldDisplayTrashAliasDialog(itemUiModel: ItemUiModel): Boolean = when {

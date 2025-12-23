@@ -214,7 +214,10 @@ fun NavGraphBuilder.autosaveActivityGraph(
                 is VaultNavigation.VaultRemove,
                 is VaultNavigation.VaultShare,
                 is VaultNavigation.VaultLeave,
-                is VaultNavigation.VaultAccess -> Unit
+                is VaultNavigation.VaultAccess,
+                is VaultNavigation.AddFolder,
+                is VaultNavigation.RemoveFolder,
+                is VaultNavigation.RenameFolder -> Unit
             }
         }
     )

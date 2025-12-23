@@ -24,6 +24,7 @@ import androidx.compose.material.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import proton.android.pass.commonui.api.defaultTint
@@ -38,6 +39,21 @@ object Icon {
     ) {
         Icon(
             painter = painterResource(id = id),
+            contentDescription = contentDescription?.let { stringResource(id = it) },
+            modifier = modifier,
+            tint = tint
+        )
+    }
+
+    @Composable
+    fun Default(
+        imageVector: ImageVector,
+        modifier: Modifier = Modifier,
+        @StringRes contentDescription: Int? = null,
+        tint: Color = defaultTint()
+    ) {
+        Icon(
+            imageVector = imageVector,
             contentDescription = contentDescription?.let { stringResource(id = it) },
             modifier = modifier,
             tint = tint

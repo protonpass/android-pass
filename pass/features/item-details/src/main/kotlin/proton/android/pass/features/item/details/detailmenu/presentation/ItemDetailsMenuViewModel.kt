@@ -52,6 +52,7 @@ import proton.android.pass.domain.ShareId
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.notifications.api.SnackbarDispatcher
+import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import javax.inject.Inject
 
 @HiltViewModel
@@ -67,7 +68,8 @@ class ItemDetailsMenuViewModel @Inject constructor(
     private val unpinItem: UnpinItem,
     private val updateItemFlag: UpdateItemFlag,
     private val trashItem: TrashItems,
-    private val snackbarDispatcher: SnackbarDispatcher
+    private val snackbarDispatcher: SnackbarDispatcher,
+    featureFlagsPreferencesRepository: FeatureFlagsPreferencesRepository
 ) : ViewModel() {
 
     private val shareId: ShareId = savedStateHandleProvider.get()
@@ -278,6 +280,10 @@ class ItemDetailsMenuViewModel @Inject constructor(
 
     internal fun onLeaveItem() {
         eventFlow.update { ItemDetailsMenuEvent.OnItemLeaved(shareId) }
+    }
+
+    internal fun onAddFolder() {
+        // eventFlow.update { ItemDetailsMenuEvent.OnItemLeaved(shareId) }
     }
 
     private companion object {

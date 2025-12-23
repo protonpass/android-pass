@@ -31,6 +31,7 @@ import proton.android.pass.preferences.FeatureFlag.PASS_HIDE_SHOW_VAULT
 import proton.android.pass.preferences.FeatureFlag.PASS_MOBILE_ON_BOARDING_V2
 import proton.android.pass.preferences.FeatureFlag.PASS_USER_EVENTS_V1
 import proton.android.pass.preferences.FeatureFlag.RENAME_ADMIN_TO_MANAGER
+import proton.android.pass.preferences.FeatureFlag.PASS_FOLDERS
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -52,6 +53,7 @@ class FakeFeatureFlagsPreferenceRepository @Inject constructor() :
             PASS_USER_EVENTS_V1 -> it.getOrDefault(PASS_USER_EVENTS_V1, false) as T
             PASS_GROUP_SHARE -> it.getOrDefault(PASS_GROUP_SHARE, false) as T
             PASS_MOBILE_ON_BOARDING_V2 -> it.getOrDefault(PASS_MOBILE_ON_BOARDING_V2, false) as T
+            PASS_FOLDERS -> it.getOrDefault(FeatureFlag.PASS_FOLDERS, false) as T
         }
     }
 

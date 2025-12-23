@@ -275,9 +275,11 @@ import proton.android.pass.features.upsell.v1.navigation.UpsellNavDestination
 import proton.android.pass.features.upsell.v1.navigation.UpsellNavItem
 import proton.android.pass.features.upsell.v1.navigation.upsellNavGraph
 import proton.android.pass.features.vault.VaultNavigation
+import proton.android.pass.features.vault.folders.AddFolderToVaultDialog
 import proton.android.pass.features.vault.bottomsheet.CreateVaultNextAction
 import proton.android.pass.features.vault.bottomsheet.CreateVaultScreen
 import proton.android.pass.features.vault.bottomsheet.EditVaultScreen
+import proton.android.pass.features.vault.bottomsheet.folders.FolderOptionsBottomSheet
 import proton.android.pass.features.vault.bottomsheet.options.VaultOptionsBottomSheet
 import proton.android.pass.features.vault.bottomsheet.select.SelectVaultBottomsheet
 import proton.android.pass.features.vault.delete.DeleteVaultDialog
@@ -433,7 +435,6 @@ fun NavGraphBuilder.appGraph(
                     VaultOptionsBottomSheet,
                     VaultOptionsBottomSheet.createNavRoute(it.shareId)
                 )
-
                 is HomeNavigation.OpenUserInvite -> appNavigator.navigate(
                     destination = AcceptInviteNavItem,
                     route = AcceptInviteNavItem.createRoute(it.inviteToken),
@@ -563,6 +564,20 @@ fun NavGraphBuilder.appGraph(
 
                 HomeNavigation.OrganiseVaults ->
                     appNavigator.navigate(OrganiseVaultsNavItem)
+
+                is HomeNavigation.AddFolder -> {
+                    appNavigator.navigate(
+                        AddFolderToVaultDialog,
+                        AddFolderToVaultDialog.createNavRoute(it.shareId, it.folderId)
+                    )
+                }
+
+                is HomeNavigation.FolderOptions -> {
+                    appNavigator.navigate(
+                        FolderOptionsBottomSheet,
+                        FolderOptionsBottomSheet.createNavRoute(it.shareId, it.folderId)
+                    )
+                }
             }
         }
     )
@@ -592,6 +607,13 @@ fun NavGraphBuilder.appGraph(
                 SearchOptionsNavigation.BulkActions -> dismissBottomSheet {
                     appNavigator.setResult(
                         mapOf(HOME_ENABLE_BULK_ACTIONS_KEY to true)
+                    )
+                }
+
+                is SearchOptionsNavigation.ManageFolder -> dismissBottomSheet {
+                    appNavigator.navigate(
+                        FolderOptionsBottomSheet,
+                        FolderOptionsBottomSheet.createNavRoute(it.shareId, it.folderId)
                     )
                 }
             }
@@ -723,6 +745,22 @@ fun NavGraphBuilder.appGraph(
                         route = ManageVault.createRoute(it.shareId),
                         backDestination = HomeNavItem
                     )
+                }
+
+                is VaultNavigation.AddFolder -> dismissBottomSheet {
+                    appNavigator.navigate(
+                        destination = AddFolderToVaultDialog,
+                        route = AddFolderToVaultDialog.createNavRoute(it.shareId, it.folderId),
+                        backDestination = HomeNavItem
+                    )
+                }
+
+                is VaultNavigation.RenameFolder -> dismissBottomSheet {
+                    // rename folder
+                }
+
+                is VaultNavigation.RemoveFolder -> dismissBottomSheet {
+                    // remove folder
                 }
             }
         }

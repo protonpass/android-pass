@@ -58,6 +58,7 @@ import proton.android.pass.composecomponents.impl.buttons.UpgradeIcon
 import proton.android.pass.composecomponents.impl.extension.toColor
 import proton.android.pass.composecomponents.impl.extension.toResource
 import proton.android.pass.composecomponents.impl.icon.AllVaultsIcon
+import proton.android.pass.composecomponents.impl.icon.FolderIcon
 import proton.android.pass.composecomponents.impl.icon.PromoIcon
 import proton.android.pass.composecomponents.impl.icon.TrashVaultIcon
 import proton.android.pass.composecomponents.impl.icon.VaultIcon
@@ -140,6 +141,10 @@ internal fun HomeContent(
 
                                 VaultSelectionOption.SharedWithMe -> {
                                     stringResource(id = R.string.search_topbar_placeholder_shared_with_me)
+                                }
+
+                                is VaultSelectionOption.Folder -> {
+                                    stringResource(id = R.string.search_topbar_placeholder_folder)
                                 }
                             }
                         },
@@ -401,6 +406,13 @@ private fun HomeDrawerIcon(
                             modifier = modifier,
                             size = 48,
                             iconSize = 20,
+                            onClick = { onEvent(HomeUiEvent.DrawerIconClick) }
+                        )
+                    }
+
+                    is VaultSelectionOption.Folder -> {
+                        FolderIcon(
+                            modifier = modifier.size(48.dp),
                             onClick = { onEvent(HomeUiEvent.DrawerIconClick) }
                         )
                     }

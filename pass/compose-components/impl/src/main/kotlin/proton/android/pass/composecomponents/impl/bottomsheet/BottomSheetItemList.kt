@@ -25,29 +25,43 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Divider
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.Dp
 import kotlinx.collections.immutable.ImmutableList
 import proton.android.pass.commonui.api.PassTheme
 
 @Composable
-fun BottomSheetItemList(modifier: Modifier = Modifier, items: ImmutableList<BottomSheetItem>) {
+fun BottomSheetItemList(
+    modifier: Modifier = Modifier,
+    items: ImmutableList<BottomSheetItem>,
+    horizontalPadding: Dp = PassTheme.dimens.bottomsheetHorizontalPadding
+) {
     Column(
         modifier = modifier.verticalScroll(rememberScrollState())
     ) {
         items.forEach { item ->
-            if (item.isDivider) {
-                Divider(
-                    modifier = Modifier.padding(horizontal = PassTheme.dimens.bottomsheetHorizontalPadding),
-                    color = PassTheme.colors.inputBackgroundStrong
-                )
-            } else {
-                BottomSheetItemRow(
-                    title = item.title,
-                    subtitle = item.subtitle,
-                    leftIcon = item.leftIcon,
-                    endIcon = item.endIcon,
-                    onClick = item.onClick?.let { { it.invoke() } }
-                )
-            }
+            BottomSheetItem(
+                item = item,
+                horizontalPadding = horizontalPadding
+            )
         }
+    }
+}
+
+@Composable
+fun BottomSheetItem(item: BottomSheetItem, horizontalPadding: Dp = PassTheme.dimens.bottomsheetHorizontalPadding) {
+    if (item.isDivider) {
+        Divider(
+            modifier = Modifier.padding(horizontal = PassTheme.dimens.bottomsheetHorizontalPadding),
+            color = PassTheme.colors.inputBackgroundStrong
+        )
+    } else {
+        BottomSheetItemRow(
+            title = item.title,
+            subtitle = item.subtitle,
+            leftIcon = item.leftIcon,
+            endIcon = item.endIcon,
+            onClick = item.onClick?.let { { it.invoke() } },
+            horizontalPadding = horizontalPadding
+        )
     }
 }

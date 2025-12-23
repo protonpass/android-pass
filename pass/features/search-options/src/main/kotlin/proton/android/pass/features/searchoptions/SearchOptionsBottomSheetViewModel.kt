@@ -89,6 +89,10 @@ class SearchOptionsBottomSheetViewModel @Inject constructor(
                     shareSelection = ShareSelection.Share(vault.shareId),
                     includeHiddenVault = false
                 )
+                is VaultSelectionOption.Folder -> observeItemCount(
+                    shareSelection = ShareSelection.Folder(vault.shareId, vault.folderId),
+                    includeHiddenVault = false
+                )
             }.zip(flowOf(it)) { itemCount, searchOptions ->
                 itemCount to searchOptions
             }
@@ -114,7 +118,8 @@ class SearchOptionsBottomSheetViewModel @Inject constructor(
                 SearchFilterType.SharedByMe -> summary.sharedByMe
             }.toInt(),
             showBulkActionsOption = bulkActionsEnabled,
-            event = event
+            event = event,
+            vaultSelectionOption = options.vaultSelectionOption
         )
     }
         .stateIn(
@@ -144,7 +149,8 @@ data class SearchOptionsUIState(
     val sortingType: SearchSortingType,
     val count: Int,
     val showBulkActionsOption: Boolean,
-    val event: SearchOptionsEvent = SearchOptionsEvent.Idle
+    val event: SearchOptionsEvent = SearchOptionsEvent.Idle,
+    val vaultSelectionOption: VaultSelectionOption
 ) {
     val showResetAction =
         filterType != SearchFilterType.All || sortingType != SearchSortingType.MostRecent
@@ -154,7 +160,8 @@ data class SearchOptionsUIState(
             filterType = SearchFilterType.All,
             sortingType = SearchSortingType.MostRecent,
             count = 0,
-            showBulkActionsOption = false
+            showBulkActionsOption = false,
+            vaultSelectionOption = VaultSelectionOption.AllVaults
         )
     }
 }

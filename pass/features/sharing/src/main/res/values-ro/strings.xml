@@ -61,7 +61,7 @@
   <string name="sharing_snackbar_invite_sent_error">Nu s-a putut trimite invitația.</string>
   <string name="sharing_snackbar_invite_new_users_error">Nu se pot trimite invitații la utilizatorii noi</string>
   <string name="sharing_snackbar_invite_free_user_error">Se pot trimite invitații pentru articole doar utilizatorilor cu plată.</string>
-  <string name="sharing_snackbar_cannot_create_invite_error">Address cannot be invited</string>
+  <string name="sharing_snackbar_cannot_create_invite_error">Adresa nu poate fi invitată</string>
   <string name="sharing_snackbar_get_vault_members_error">Nu s-au putut prelua membrii seifului.</string>
   <string name="sharing_snackbar_change_permission_success">Permisiunile au fost modificate.</string>
   <string name="sharing_snackbar_change_permission_error">Nu s-au putut modifica permisiunile.</string>

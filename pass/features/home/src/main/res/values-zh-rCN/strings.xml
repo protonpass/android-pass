@@ -20,8 +20,8 @@
   <string name="home_empty_shared_items_title">未找到共享项目</string>
   <string name="home_empty_shared_items_with_me_subtitle">没有项目被分享给您。</string>
   <string name="home_empty_shared_items_by_me_subtitle">您没有共享任何项目。</string>
-  <string name="home_empty_no_vaults_title">You don\'t have any vaults</string>
-  <string name="home_empty_no_vaults_subtitle">Please contact your administrator.</string>
+  <string name="home_empty_no_vaults_title">您还没有任何保险库</string>
+  <string name="home_empty_no_vaults_subtitle">请联系您的管理员</string>
   <string name="home_empty_read_only_vault_title">这个保险库是空的</string>
   <string name="home_empty_read_only_vault_subtitle">你不能向只读保险库添加项目。</string>
   <string name="home_empty_vault_create_login">创建登录</string>
@@ -170,5 +170,5 @@
   <string name="bulk_action_pin">固定</string>
   <string name="bulk_action_enable_alias">启用别名</string>
   <string name="bulk_action_disable_alias">禁用别名</string>
-  <string name="vault_drawer_organise_vaults">Organize vaults</string>
+  <string name="vault_drawer_organise_vaults">整理保险库</string>
 </resources>

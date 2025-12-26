@@ -97,7 +97,7 @@
   <string name="search_topbar_icon_content_description">Søgeikon</string>
   <!-- Select Vault BottomSheet -->
   <plurals name="bottomsheet_select_vault_item_count">
-    <item quantity="one">1 element</item>
+    <item quantity="one">%d element</item>
     <item quantity="other">%d elementer</item>
   </plurals>
   <!-- Confirm close dialog -->

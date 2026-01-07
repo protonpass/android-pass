@@ -35,6 +35,7 @@ import proton.android.pass.data.impl.requests.attachments.UpdatePendingFileReque
 import proton.android.pass.data.impl.responses.attachments.FileApiModel
 import proton.android.pass.data.impl.responses.attachments.FileResult
 import proton.android.pass.data.impl.responses.attachments.FilesApiModel
+import proton.android.pass.data.impl.responses.attachments.PendingFileResponse
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.attachments.AttachmentId
@@ -51,7 +52,7 @@ class RemoteAttachmentsDataSourceImpl @Inject constructor(
         metadata: EncryptedString,
         chunkCount: Int,
         encryptionVersion: Int
-    ): String = api.get<PasswordManagerApi>(userId)
+    ): PendingFileResponse = api.get<PasswordManagerApi>(userId)
         .invoke {
             createPendingFile(
                 CreatePendingFileRequest(
@@ -62,8 +63,6 @@ class RemoteAttachmentsDataSourceImpl @Inject constructor(
             )
         }
         .valueOrThrow
-        .file
-        .fileID
 
     override suspend fun updatePendingFile(
         userId: UserId,

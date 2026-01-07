@@ -24,6 +24,7 @@ import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.impl.responses.attachments.FileApiModel
 import proton.android.pass.data.impl.responses.attachments.FileResult
 import proton.android.pass.data.impl.responses.attachments.FilesApiModel
+import proton.android.pass.data.impl.responses.attachments.PendingFileResponse
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.attachments.AttachmentId
@@ -37,7 +38,7 @@ interface RemoteAttachmentsDataSource {
         metadata: EncryptedString,
         chunkCount: Int,
         encryptionVersion: Int
-    ): String
+    ): PendingFileResponse
 
     suspend fun updatePendingFile(
         userId: UserId,

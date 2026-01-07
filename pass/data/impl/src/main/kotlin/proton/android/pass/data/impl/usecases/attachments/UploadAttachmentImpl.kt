@@ -22,6 +22,7 @@ import kotlinx.coroutines.flow.firstOrNull
 import me.proton.core.accountmanager.domain.AccountManager
 import proton.android.pass.common.api.safeRunCatching
 import proton.android.pass.data.api.errors.FileSizeExceededError
+import proton.android.pass.data.api.errors.TooManyFilesCreatedRecentlyError
 import proton.android.pass.data.api.errors.UserIdNotAvailableError
 import proton.android.pass.data.api.repositories.AttachmentRepository
 import proton.android.pass.data.api.repositories.DraftAttachmentRepository
@@ -67,7 +68,9 @@ class UploadAttachmentImpl @Inject constructor(
             }.onFailure { throw it }
         }.onFailure {
             when (it) {
+                is TooManyFilesCreatedRecentlyError,
                 is FileSizeExceededError -> draftAttachmentRepository.remove(metadata.uri)
+
                 else -> draftAttachmentRepository.update(
                     DraftAttachment.Error(
                         metadata = metadata,

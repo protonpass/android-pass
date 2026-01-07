@@ -32,5 +32,6 @@ enum class AttachmentSnackbarMessages(
     DownloadAttachmentsError(R.string.download_attachments_error, SnackbarType.ERROR),
     ShareAttachmentsError(R.string.share_attachments_error, SnackbarType.ERROR),
     AttachmentSizeExceededError(R.string.attachment_size_exceeded_error, SnackbarType.ERROR),
+    AttachmentTooManyFilesError(R.string.attachment_too_many_files_error, SnackbarType.ERROR),
     UploadAttachmentsError(R.string.upload_attachments_error, SnackbarType.ERROR)
 }

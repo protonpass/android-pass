@@ -25,6 +25,8 @@ import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
+import androidx.compose.runtime.LaunchedEffect
+import androidx.core.view.WindowCompat
 import androidx.credentials.GetCredentialResponse
 import androidx.credentials.GetPublicKeyCredentialOption
 import androidx.credentials.PublicKeyCredential
@@ -86,11 +88,18 @@ internal class PasskeyCredentialSelectionActivity : FragmentActivity() {
         super.onStop()
     }
 
+    @SuppressWarnings("LongMethod")
     private fun setContent(state: PasskeyCredentialSelectionState.Ready) {
         enableEdgeToEdgeProtonPass()
 
         setContent {
             val isDark = isDark(state.themePreference)
+            LaunchedEffect(isDark) {
+                WindowCompat.getInsetsController(window, window.decorView).apply {
+                    isAppearanceLightNavigationBars = !isDark
+                    isAppearanceLightStatusBars = !isDark
+                }
+            }
             PassTheme(isDark = isDark) {
                 PasskeyCredentialSelectionScreen(
                     state = state,

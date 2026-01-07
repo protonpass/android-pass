@@ -47,6 +47,7 @@ import proton.android.pass.commonui.api.ClassHolder
 import proton.android.pass.commonui.api.FileHandler
 import proton.android.pass.commonuimodels.api.attachments.AttachmentsState
 import proton.android.pass.data.api.errors.FileSizeExceededError
+import proton.android.pass.data.api.errors.TooManyFilesCreatedRecentlyError
 import proton.android.pass.data.api.repositories.DraftAttachmentRepository
 import proton.android.pass.data.api.repositories.PendingAttachmentLinkRepository
 import proton.android.pass.data.api.repositories.PendingAttachmentUpdaterRepository
@@ -198,6 +199,9 @@ class AttachmentsHandlerImpl @Inject constructor(
             .onFailure {
                 when (it) {
                     is FileSizeExceededError -> snackbarDispatcher(AttachmentSizeExceededError)
+                    is TooManyFilesCreatedRecentlyError -> snackbarDispatcher(
+                        AttachmentSnackbarMessages.AttachmentTooManyFilesError
+                    )
                     else -> snackbarDispatcher(UploadAttachmentsError)
                 }
                 PassLogger.w(TAG, "Could not upload attachment: $uri")

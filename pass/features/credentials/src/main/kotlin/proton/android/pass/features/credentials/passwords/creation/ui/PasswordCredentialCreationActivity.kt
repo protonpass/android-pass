@@ -24,6 +24,8 @@ import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
+import androidx.compose.runtime.LaunchedEffect
+import androidx.core.view.WindowCompat
 import androidx.credentials.CreatePasswordRequest
 import androidx.credentials.CreatePasswordResponse
 import androidx.credentials.provider.PendingIntentHandler
@@ -83,6 +85,12 @@ internal class PasswordCredentialCreationActivity : FragmentActivity() {
         enableEdgeToEdgeProtonPass()
         setContent {
             val isDark = isDark(state.themePreference)
+            LaunchedEffect(isDark) {
+                WindowCompat.getInsetsController(window, window.decorView).apply {
+                    isAppearanceLightNavigationBars = !isDark
+                    isAppearanceLightStatusBars = !isDark
+                }
+            }
             PassTheme(isDark = isDark) {
                 PasswordCredentialCreationScreen(
                     state = state,

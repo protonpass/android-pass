@@ -30,6 +30,7 @@ import androidx.activity.viewModels
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -39,6 +40,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.core.content.IntentSanitizer
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import androidx.core.view.WindowCompat
 import androidx.fragment.app.FragmentActivity
 import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.EntryPointAccessors
@@ -150,6 +152,12 @@ class MainActivity : FragmentActivity(), ProductMetricsDelegateOwner {
             }
 
             val isDark = isDark(state.themePreference)
+            LaunchedEffect(isDark) {
+                WindowCompat.getInsetsController(window, window.decorView).apply {
+                    isAppearanceLightNavigationBars = !isDark
+                    isAppearanceLightStatusBars = !isDark
+                }
+            }
             PassTheme(isDark = isDark) {
                 var showWarningReloadAppDialog by rememberSaveable { mutableStateOf(false) }
 

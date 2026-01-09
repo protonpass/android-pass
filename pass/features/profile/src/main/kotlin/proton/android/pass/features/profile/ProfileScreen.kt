@@ -118,10 +118,20 @@ fun ProfileScreen(
 
 
                 AccountSwitchEvent.OnAddAccount -> onNavigateEvent(ProfileNavigation.OnAddAccount)
-                is AccountSwitchEvent.OnRemoveAccount -> onNavigateEvent(ProfileNavigation.OnRemoveAccount(it.userId))
+                is AccountSwitchEvent.OnRemoveAccount -> onNavigateEvent(
+                    ProfileNavigation.OnRemoveAccount(
+                        it.userId
+                    )
+                )
+
                 is AccountSwitchEvent.OnSignIn -> onNavigateEvent(ProfileNavigation.OnSignIn(it.userId))
                 is AccountSwitchEvent.OnSignOut -> onNavigateEvent(ProfileNavigation.OnSignOut(it.userId))
-                is AccountSwitchEvent.OnAccountSelected -> onNavigateEvent(ProfileNavigation.OnSwitchAccount(it.userId))
+                is AccountSwitchEvent.OnAccountSelected -> onNavigateEvent(
+                    ProfileNavigation.OnSwitchAccount(
+                        it.userId
+                    )
+                )
+
                 is AccountSwitchEvent.OnManageAccount -> {
                     if (it.isPrimary) {
                         onNavigateEvent(ProfileNavigation.Account)
@@ -131,6 +141,7 @@ fun ProfileScreen(
                         )
                     }
                 }
+
                 ProfileUiEvent.OnAliasCountClick -> viewModel.onAliasCountClick()
                 ProfileUiEvent.OnCreditCardCountClick -> viewModel.onCreditCardCountClick()
                 ProfileUiEvent.OnIdentityCountClick -> viewModel.onIdentityCountClick()
@@ -138,11 +149,7 @@ fun ProfileScreen(
                 ProfileUiEvent.OnMFACountClick -> viewModel.onMFACountClick()
                 ProfileUiEvent.OnNoteCountClick -> viewModel.onNoteCountClick()
                 ProfileUiEvent.OnCustomItemCountClick -> viewModel.onCustomItemCountClick()
-                is ProfileUiEvent.OnStorageFullClick -> if (it.canUpgrade) {
-                    onNavigateEvent(ProfileNavigation.StorageFull)
-                } else {
-                    openWebsite(context, UPGRADE_OVER_QUOTA)
-                }
+                is ProfileUiEvent.OnStorageFullClick -> onNavigateEvent(ProfileNavigation.StorageFull)
             }
         }
     )
@@ -157,6 +164,3 @@ const val PASS_IMPORT = "https://proton.me/support/pass-import"
 
 @VisibleForTesting
 const val PASS_TUTORIAL = "https://www.youtube.com/watch?v=Nm4DCAjePOM"
-
-@VisibleForTesting
-const val UPGRADE_OVER_QUOTA = "https://account.proton.me/pass/dashboard"

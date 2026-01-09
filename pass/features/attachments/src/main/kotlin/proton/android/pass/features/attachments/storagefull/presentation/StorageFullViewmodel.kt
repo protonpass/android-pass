@@ -22,29 +22,38 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.filterNotNull
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
+import proton.android.pass.common.api.asLoadingResult
+import proton.android.pass.common.api.getOrNull
+import proton.android.pass.data.api.usecases.ObserveUpgradeInfo
 import proton.android.pass.data.api.usecases.ObserveUserAccessData
 import javax.inject.Inject
 
 @HiltViewModel
 class StorageFullViewmodel @Inject constructor(
-    observeUserAccessData: ObserveUserAccessData
+    observeUserAccessData: ObserveUserAccessData,
+    observeUpgradeInfo: ObserveUpgradeInfo
 ) : ViewModel() {
 
-    val state = observeUserAccessData()
-        .filterNotNull()
-        .map {
-            StorageFullState.Success(
-                used = it.storageUsed,
-                quota = it.storageQuota
-            )
-        }
-        .stateIn(
-            scope = viewModelScope,
-            started = SharingStarted.WhileSubscribed(),
-            initialValue = StorageFullState.Loading
-        )
+    private val upgradeInfoFlow = observeUpgradeInfo().asLoadingResult()
 
+    val state = combine(
+        observeUserAccessData().filterNotNull(),
+        upgradeInfoFlow
+    ) { userData, upgradeInfoResult ->
+        val upgradeInfo = upgradeInfoResult.getOrNull()
+        val isUpgradeAvailable = upgradeInfo?.isUpgradeAvailable ?: false
+
+        StorageFullState.Success(
+            used = userData.storageUsed,
+            quota = userData.storageQuota,
+            canUpgrade = isUpgradeAvailable
+        )
+    }.stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.WhileSubscribed(),
+        initialValue = StorageFullState.Loading
+    )
 }

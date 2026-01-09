@@ -21,10 +21,14 @@ package proton.android.pass.features.attachments.storagefull.ui
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import org.jetbrains.annotations.VisibleForTesting
+import proton.android.pass.commonui.api.BrowserUtils.openWebsite
 import proton.android.pass.commonui.api.bottomSheet
 import proton.android.pass.features.attachments.storagefull.navigation.StorageFullNavigation
+import proton.android.pass.features.attachments.storagefull.presentation.StorageFullState
 import proton.android.pass.features.attachments.storagefull.presentation.StorageFullViewmodel
 
 @Composable
@@ -34,11 +38,29 @@ fun StorageFullBottomsheet(
     onNavigate: (StorageFullNavigation) -> Unit
 ) {
     val state by viewmodel.state.collectAsStateWithLifecycle()
+    val context = LocalContext.current
 
     StorageFullContent(
         modifier = modifier.bottomSheet(),
         state = state,
-        onClick = { onNavigate(StorageFullNavigation.Upgrade) }
+        onClick = {
+            when (state) {
+                StorageFullState.Loading -> {
+                    // can not exist
+                    openWebsite(context, UPGRADE_OVER_QUOTA)
+                }
+                is StorageFullState.Success -> {
+                    if ((state as StorageFullState.Success).canUpgrade) {
+                        onNavigate(StorageFullNavigation.Upgrade)
+                    } else {
+                        openWebsite(context, UPGRADE_OVER_QUOTA)
+                    }
+                }
+            }
+        }
     )
 }
+
+@VisibleForTesting
+const val UPGRADE_OVER_QUOTA = "https://account.proton.me/pass/dashboard"
 

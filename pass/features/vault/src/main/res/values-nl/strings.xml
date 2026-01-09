@@ -45,6 +45,6 @@
   <string name="organise_vaults_snackbar_error">Kluizen konden niet worden georganiseerd</string>
   <plurals name="organise_vaults_item_count">
     <item quantity="one">%d item</item>
-    <item quantity="other">%d item</item>
+    <item quantity="other">%d items</item>
   </plurals>
 </resources>

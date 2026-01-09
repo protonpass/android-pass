@@ -335,5 +335,5 @@
   <string name="cannot_create_items_dialog_title">Kan geen items maken</string>
   <string name="cannot_create_items_dialog_message">U heeft geen kluizen met editor of admin toegang. Probeer er één aan te maken in de hoofdapplicatie, of vraag de beheerder van uw organisatie om ondersteuning.</string>
   <string name="wifi_security_type_field_label">Beveiligingstype</string>
-  <string name="functionality_not_available">This functionality is not available for your device.</string>
+  <string name="functionality_not_available">Deze functionaliteit is niet beschikbaar voor uw apparaat.</string>
 </resources>

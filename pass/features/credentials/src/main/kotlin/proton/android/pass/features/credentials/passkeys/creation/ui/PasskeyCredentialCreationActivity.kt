@@ -39,6 +39,7 @@ import kotlinx.coroutines.launch
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.enableEdgeToEdgeProtonPass
 import proton.android.pass.composecomponents.impl.theme.isDark
+import proton.android.pass.crypto.api.Base64
 import proton.android.pass.features.credentials.passkeys.creation.navigation.PasskeyCredentialCreationNavEvent
 import proton.android.pass.features.credentials.passkeys.creation.presentation.PasskeyCredentialCreationEvent
 import proton.android.pass.features.credentials.passkeys.creation.presentation.PasskeyCredentialCreationRequest
@@ -158,6 +159,7 @@ internal class PasskeyCredentialCreationActivity : FragmentActivity() {
                         },
                         onFailure = { error ->
                             PassLogger.w(TAG, "Error parsing Passkey credential creation request")
+                            PassLogger.w(TAG, Base64.encodeBase64String(requestJson.toByteArray()))
                             PassLogger.w(TAG, error)
 
                             null

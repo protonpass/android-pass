@@ -22,7 +22,8 @@ sealed interface StorageFullState {
     data object Loading : StorageFullState
     data class Success(
         val used: Long,
-        val quota: Long
+        val quota: Long,
+        val canUpgrade: Boolean = false
     ) : StorageFullState
 }
 

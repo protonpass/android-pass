@@ -26,6 +26,7 @@ import proton.android.pass.passkeys.api.AuthenticateWithPasskey
 import proton.android.pass.passkeys.api.PasskeyAuthenticationResponse
 import javax.inject.Inject
 import javax.inject.Singleton
+import proton.android.pass.crypto.api.Base64
 
 @Singleton
 class AuthenticateWithPasskeyImpl @Inject constructor(
@@ -41,14 +42,23 @@ class AuthenticateWithPasskeyImpl @Inject constructor(
         val sanitized = PasskeyJsonSanitizer.sanitize(requestJson)
         PassLogger.d(TAG, "Resolving challenge for origin=$origin")
 
-        val request = AuthenticateWithPasskeyAndroidRequest(
-            origin = origin,
-            request = sanitized,
-            passkey = passkey.contents.data,
-            clientDataHash = clientDataHash
+        runCatching {
+            val request = AuthenticateWithPasskeyAndroidRequest(
+                origin = origin,
+                request = sanitized,
+                passkey = passkey.contents.data,
+                clientDataHash = clientDataHash
+            )
+            passkeyManager.resolveChallengeForAndroid(request)
+        }.fold(
+            onSuccess = {
+                return PasskeyAuthenticationResponse(it)
+            },
+            onFailure = {
+                PassLogger.w(TAG, Base64.encodeBase64String(requestJson.toByteArray()))
+                throw it
+            }
         )
-        val res = passkeyManager.resolveChallengeForAndroid(request)
-        return PasskeyAuthenticationResponse(res)
     }
 
     companion object {

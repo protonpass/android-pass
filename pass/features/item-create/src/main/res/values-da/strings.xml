@@ -206,7 +206,7 @@
   <string name="banner_body_attachments">Du kan vedhæfte filer til elementer for at få en bedre organisering</string>
   <string name="open_with">Åbn med:</string>
   <string name="banner_advanced_options_title">Vidste du?</string>
-  <string name="banner_advanced_options_subtitle">Tryk på tandhjulsikonet for at tilpasse aliaset, som du vil have det.</string>
+  <string name="banner_advanced_options_subtitle">Tryk på tandhjulsikonet for at tilpasse aliasset, som du vil have det.</string>
   <string name="banner_custom_domain_title">Vidste du?</string>
   <string name="banner_custom_domain_subtitle">Ved at tilføje dit domæne kan du oprette aliasser som hi@my-domain.com.</string>
   <string name="banner_custom_domain_button">Tilføj domæne</string>

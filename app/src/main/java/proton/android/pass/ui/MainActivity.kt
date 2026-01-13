@@ -259,7 +259,11 @@ class MainActivity : FragmentActivity(), ProductMetricsDelegateOwner {
                             }
                             BrowserUtils.openWebsite(
                                 context = context,
-                                website = PROTON_DEFAULT_UPGRADE_URL
+                                website = when {
+                                    appConfig.flavor.isQuest() -> PROTON_HORIZON_UPGRADE_URL
+
+                                    else -> PROTON_DEFAULT_UPGRADE_URL
+                                }
                             )
                         },
                         onCancelClick = {

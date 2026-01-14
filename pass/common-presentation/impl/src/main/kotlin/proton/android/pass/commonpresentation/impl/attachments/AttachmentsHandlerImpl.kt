@@ -30,6 +30,8 @@ import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.update
+import me.proton.core.network.domain.ApiException
+import me.proton.core.network.domain.ApiResult
 import proton.android.pass.biometry.AuthOverrideState
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
@@ -47,7 +49,6 @@ import proton.android.pass.commonui.api.ClassHolder
 import proton.android.pass.commonui.api.FileHandler
 import proton.android.pass.commonuimodels.api.attachments.AttachmentsState
 import proton.android.pass.data.api.errors.FileSizeExceededError
-import proton.android.pass.data.api.errors.TooManyFilesCreatedRecentlyError
 import proton.android.pass.data.api.repositories.DraftAttachmentRepository
 import proton.android.pass.data.api.repositories.PendingAttachmentLinkRepository
 import proton.android.pass.data.api.repositories.PendingAttachmentUpdaterRepository
@@ -199,9 +200,16 @@ class AttachmentsHandlerImpl @Inject constructor(
             .onFailure {
                 when (it) {
                     is FileSizeExceededError -> snackbarDispatcher(AttachmentSizeExceededError)
-                    is TooManyFilesCreatedRecentlyError -> snackbarDispatcher(
-                        AttachmentSnackbarMessages.AttachmentTooManyFilesError
-                    )
+                    is ApiException -> {
+                        val httpError = it.error as? ApiResult.Error.Http
+                        val message = if (httpError?.proton?.code == PROTON_TOO_MANY_FILES_CREATED_CODE) {
+                            AttachmentSnackbarMessages.AttachmentTooManyFilesError
+                        } else {
+                            UploadAttachmentsError
+                        }
+                        snackbarDispatcher(message)
+                    }
+
                     else -> snackbarDispatcher(UploadAttachmentsError)
                 }
                 PassLogger.w(TAG, "Could not upload attachment: $uri")
@@ -236,6 +244,7 @@ class AttachmentsHandlerImpl @Inject constructor(
     }
 
     companion object {
+        private const val PROTON_TOO_MANY_FILES_CREATED_CODE = 2028
         private const val TAG = "DefaultAttachmentsHandler"
     }
 }

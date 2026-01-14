@@ -47,7 +47,6 @@ import proton.android.pass.crypto.api.context.EncryptionTag
 import proton.android.pass.crypto.api.toEncryptedByteArray
 import proton.android.pass.data.api.crypto.GetItemKey
 import proton.android.pass.data.api.errors.FileSizeExceededError
-import proton.android.pass.data.api.errors.TooManyFilesCreatedRecentlyError
 import proton.android.pass.data.api.repositories.AttachmentRepository
 import proton.android.pass.data.api.repositories.PendingAttachmentLinkData
 import proton.android.pass.data.api.repositories.PendingAttachmentLinkRepository
@@ -87,8 +86,6 @@ import javax.inject.Inject
 import kotlin.math.ceil
 import kotlin.math.max
 
-private const val PROTON_TOO_MANY_FILES_CREATED_CODE = 2028
-
 class AttachmentRepositoryImpl @Inject constructor(
     @param:ApplicationContext private val context: Context,
     private val appDispatchers: AppDispatchers,
@@ -124,9 +121,6 @@ class AttachmentRepositoryImpl @Inject constructor(
             chunkCount = chunks,
             encryptionVersion = encryptedMetadata.encryptionVersion
         )
-        if (pendingFileResponse.code == PROTON_TOO_MANY_FILES_CREATED_CODE) {
-            throw TooManyFilesCreatedRecentlyError()
-        }
         val id = pendingFileResponse.file.fileID.let(::PendingAttachmentId)
 
         pendingAttachmentLinkRepository.addToLink(

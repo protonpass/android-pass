@@ -7,7 +7,7 @@ plugins {
     alias(libs.plugins.gradlePlugin.compose.compiler)
 }
 
-val appVersionName: String = "1.36.4"
+val appVersionName: String = "1.36.5"
 val appVersionCode: Int = versionCode(appVersionName)
 val archivesBaseName = "FeatureHomeApp-$appVersionName"
 

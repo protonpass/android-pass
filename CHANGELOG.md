@@ -1,3 +1,9 @@
+## 1.36.5 (2026-01-14)
+
+### Fixes :bug:
+
+- Fix redirection url in Meta Horizon
+
 ## 1.36.4 (2025-12-17)
 
 ### Fixes :bug:

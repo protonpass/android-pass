@@ -130,17 +130,22 @@ fun UpsellWelcomeOffer(
 
             Spacer(modifier = Modifier.height(20.dp))
 
-            Text.Headline(
-                text = stringResource(
-                    when (stepToDisplay) {
-                        StepToDisplay.WelcomeOfferMonthly -> R.string.upsell_try_pass_plus
-                        StepToDisplay.WelcomeOfferYearly -> R.string.upsell_pass_plus_welcome_offer
-                        else -> {
-                            throw IllegalArgumentException("Unknown step : $stepToDisplay")
+            if (stepToDisplay == StepToDisplay.WelcomeOfferMonthly ||
+                stepToDisplay == StepToDisplay.WelcomeOfferYearly
+            ) {
+                Text.Headline(
+                    text = stringResource(
+                        when (stepToDisplay) {
+                            StepToDisplay.WelcomeOfferMonthly -> R.string.upsell_try_pass_plus
+                            StepToDisplay.WelcomeOfferYearly -> R.string.upsell_pass_plus_welcome_offer
+                            else -> {
+                                // impossible
+                                R.string.upsell_try_pass_plus
+                            }
                         }
-                    }
+                    )
                 )
-            )
+            }
 
             Spacer(modifier = Modifier.height(Spacing.medium))
 

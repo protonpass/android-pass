@@ -27,6 +27,7 @@ interface ObserveItemsWithPasskeys {
     operator fun invoke(
         userId: UserId? = null,
         shareSelection: ShareSelection,
-        includeHiddenVault: Boolean
+        includeHiddenVault: Boolean,
+        onlyActiveItems: Boolean = true
     ): Flow<List<Item>>
 }

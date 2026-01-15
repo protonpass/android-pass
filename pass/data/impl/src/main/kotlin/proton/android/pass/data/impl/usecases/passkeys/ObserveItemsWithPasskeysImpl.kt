@@ -31,6 +31,7 @@ import proton.android.pass.data.api.usecases.passkeys.ObserveItemsWithPasskeys
 import proton.android.pass.data.impl.extensions.toDomain
 import proton.android.pass.data.impl.local.LocalItemDataSource
 import proton.android.pass.domain.Item
+import proton.android.pass.domain.ItemState
 import proton.android.pass.domain.ShareSelection
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -45,7 +46,8 @@ class ObserveItemsWithPasskeysImpl @Inject constructor(
     override fun invoke(
         userId: UserId?,
         shareSelection: ShareSelection,
-        includeHiddenVault: Boolean
+        includeHiddenVault: Boolean,
+        onlyActiveItems: Boolean
     ): Flow<List<Item>> = (userId?.let(::flowOf) ?: accountManager.getPrimaryUserId())
         .filterNotNull()
         .flatMapLatest { resolvedUserId ->
@@ -69,7 +71,15 @@ class ObserveItemsWithPasskeysImpl @Inject constructor(
         }
         .mapLatest { items ->
             encryptionContextProvider.withEncryptionContext {
-                items.map { it.toDomain(this@withEncryptionContext) }
+                items
+                    .filter {
+                        if (onlyActiveItems) {
+                            it.state == ItemState.Active.value
+                        } else {
+                            true
+                        }
+                    }
+                    .map { it.toDomain(this@withEncryptionContext) }
             }
         }
 }

@@ -39,6 +39,7 @@ class FakeObserveItemsWithPasskeys @Inject constructor() : ObserveItemsWithPassk
     override fun invoke(
         userId: UserId?,
         shareSelection: ShareSelection,
-        includeHiddenVault: Boolean
+        includeHiddenVault: Boolean,
+        onlyActiveItems: Boolean
     ): Flow<List<Item>> = flow
 }

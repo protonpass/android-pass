@@ -171,7 +171,7 @@ val elementsUnlimitedPlan = persistentListOf(
     UpsellItemsUiState(
         R.string.upsell_plan_unlimited_3,
         PlanTypeUiState.Text(text = "1"),
-        PlanTypeUiState.Text(text = "15")
+        PlanTypeUiState.Text(text = "10")
     ),
     UpsellItemsUiState(
         R.string.upsell_plan_unlimited_4,

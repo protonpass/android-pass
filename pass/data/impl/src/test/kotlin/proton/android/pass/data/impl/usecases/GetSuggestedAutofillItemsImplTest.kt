@@ -263,8 +263,8 @@ class GetSuggestedAutofillItemsImplTest {
         )
         val freeShareId = ShareId("free-share-id")
         val paidShareId = ShareId("paid-share-id")
-        val freeCCItem = ItemTestFactory.createCreditCard(shareId = freeShareId)
-        val paidCCItem = ItemTestFactory.createCreditCard(shareId = paidShareId)
+        val freeCCItem = ItemTestFactory.createCreditCard(shareId = freeShareId).copy(itemUuid = "free-item-uuid")
+        val paidCCItem = ItemTestFactory.createCreditCard(shareId = paidShareId).copy(itemUuid = "paid-item-uuid")
         observeItems.emit(
             FakeObserveItems.Params(
                 userId = freeUserId,

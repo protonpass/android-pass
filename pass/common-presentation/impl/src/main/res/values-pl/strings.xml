@@ -22,6 +22,7 @@
   <string name="share_attachments_error">Nie można udostępnić załącznika</string>
   <string name="upload_attachments_error">Nie można przesłać załącznika</string>
   <string name="attachment_size_exceeded_error">Przekroczono maksymalny rozmiar pliku. Wybierz plik mniejszy niż 100 MB.</string>
+  <string name="attachment_too_many_files_error">Ostatnio utworzono zbyt wiele plików</string>
   <string name="open_with">Otwórz w:</string>
   <string name="share_with">Udostępnij użytkownikowi:</string>
 </resources>

@@ -22,6 +22,7 @@
   <string name="share_attachments_error">添付ファイルを共有できませんでした</string>
   <string name="upload_attachments_error">添付ファイルのアップロードに失敗しました</string>
   <string name="attachment_size_exceeded_error">選択したファイルはサイズ制限を超えています。 100 MB未満のファイルを選択してください。</string>
+  <string name="attachment_too_many_files_error">Too many files created recently</string>
   <string name="open_with">開く：</string>
   <string name="share_with">共有する:</string>
 </resources>

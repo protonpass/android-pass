@@ -22,6 +22,7 @@
   <string name="share_attachments_error">Nem sikerült megosztani a mellékletet</string>
   <string name="upload_attachments_error">Nem sikerült feltölteni a mellékletet</string>
   <string name="attachment_size_exceeded_error">A kiválasztott fájl átlépi a méret keretet. Kérem, válasszon egy 100MB-nál kisebb fájlt.</string>
+  <string name="attachment_too_many_files_error">Too many files created recently</string>
   <string name="open_with">Megnyitás a következővel:</string>
   <string name="share_with">Magosztás:</string>
 </resources>

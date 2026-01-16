@@ -41,7 +41,7 @@ data class AutofillDisplayed(
         if (app.isBrowser()) {
             map["mobileBrowser"] = app.value
         }
-        map["itemType"] = eventItemType.itemTypeName
+        map["type"] = eventItemType.itemTypeName
         return map
     }
 }
@@ -55,7 +55,7 @@ data class AutofillDone(
         if (app.isBrowser()) {
             map["mobileBrowser"] = app.value
         }
-        map["itemType"] = eventItemType.itemTypeName
+        map["type"] = eventItemType.itemTypeName
         return map
     }
 }

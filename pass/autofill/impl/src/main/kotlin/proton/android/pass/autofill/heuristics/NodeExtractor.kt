@@ -42,9 +42,19 @@ import proton.android.pass.common.api.some
 import proton.android.pass.common.api.toOption
 import proton.android.pass.log.api.PassLogger
 import kotlin.math.absoluteValue
+import kotlin.text.contains
 
 typealias Level = Int
 typealias Proximity = Int
+
+
+private val forbiddenAppsDictionary = mapOf(
+    "com.azure.authenticator" to ForbiddenAppCriteria(
+        targetHints = listOf("accountListFragment"),
+        targetInputTypes = listOf(524_417)
+    )
+    // add others here
+)
 
 @Suppress("LargeClass")
 class NodeExtractor(private val requestFlags: List<RequestFlags> = emptyList()) {
@@ -81,9 +91,21 @@ class NodeExtractor(private val requestFlags: List<RequestFlags> = emptyList()) 
     var visitedNodes = 0
         private set
 
-    fun extract(node: AssistStructure.ViewNode): ExtractionResult = extract(node.toAutofillNode())
+    fun extract(node: AssistStructure.ViewNode, packageName: String? = null): ExtractionResult =
+        extract(node.toAutofillNode(), packageName)
 
-    fun extract(node: AutofillNode): ExtractionResult {
+    fun extract(node: AutofillNode, packageName: String? = null): ExtractionResult {
+
+        // check for forbidden apps
+        packageName?.let {
+            forbiddenAppsDictionary[packageName]?.let { criteria ->
+                if (matchAllFieldsInHierarchy(node, criteria.targetHints, criteria.targetInputTypes)) {
+                    PassLogger.i(TAG, "Forbidden screen matched for $packageName, skipping extraction")
+                    return ExtractionResult(fields = emptyList())
+                }
+            }
+        }
+
         visitedNodes = 0
         autoFillNodes = mutableListOf()
         traverseInternal(
@@ -160,7 +182,6 @@ class NodeExtractor(private val requestFlags: List<RequestFlags> = emptyList()) 
     } else {
         false
     }
-
 
 
     private fun addNode(assistField: AssistField) {
@@ -637,7 +658,8 @@ class NodeExtractor(private val requestFlags: List<RequestFlags> = emptyList()) 
 
         val sanitizedHint = sanitizeHint(hint)
 
-        val userNameSanitised = sanitizedHint.takeIf { !DENIED_USERNAME_KEYWORDS.contains(sanitizedHint) }.orEmpty()
+        val userNameSanitised =
+            sanitizedHint.takeIf { !DENIED_USERNAME_KEYWORDS.contains(sanitizedHint) }.orEmpty()
         if (USERNAME_REGEX.containsMatchIn(userNameSanitised)) return FieldType.Username
         if (EMAIL_REGEX.containsMatchIn(sanitizedHint)) return FieldType.Email
         val (fieldTypeKw, match) = fieldKeywordsList.match(sanitizedHint)
@@ -898,3 +920,50 @@ fun AssistStructure.ViewNode.findChildById(id: AutofillId): AssistStructure.View
     }
     return null
 }
+
+private data class ForbiddenAppCriteria(
+    val targetHints: List<String> = emptyList(),
+    val targetInputTypes: List<Int> = emptyList()
+)
+
+private fun matchAllFieldsInHierarchy(
+    rootNode: AutofillNode,
+    targetHints: List<String>,
+    targetInputTypes: List<Int>
+): Boolean {
+    val targetHintsSet = targetHints.toSet()
+    val targetInputTypesSet = targetInputTypes.toSet()
+
+    val foundHints = mutableSetOf<String>()
+    val foundInputTypes = mutableSetOf<Int>()
+
+    val stack = ArrayDeque<AutofillNode>()
+    stack.add(rootNode)
+
+    while (stack.isNotEmpty()) {
+        val currentNode = stack.removeFirst()
+
+        // check hints
+        targetHints.forEach { hint ->
+            if (currentNode.hintKeywordList.any { it.contains(hint, ignoreCase = true) }
+            ) {
+                foundHints.add(hint)
+            }
+        }
+
+        // check InputTypes
+        val currentInputType = currentNode.inputType
+        if (targetInputTypes.contains(currentInputType.value)) {
+            foundInputTypes.add(currentInputType.value)
+        }
+
+        if (foundHints.size == targetHintsSet.size && foundInputTypes.size == targetInputTypesSet.size) {
+            return true
+        }
+
+        currentNode.children.forEach { stack.add(it) }
+    }
+
+    return foundHints == targetHintsSet && foundInputTypes == targetInputTypesSet
+}
+

@@ -22,6 +22,7 @@
   <string name="share_attachments_error">Lampiran tidak dapat dibagikan</string>
   <string name="upload_attachments_error">Gagal mengunggah lampiran</string>
   <string name="attachment_size_exceeded_error">Berkas yang dipilih melebihi batas ukuran berkas. Silakan pilih berkas yang lebih kecil dari 100 MB.</string>
+  <string name="attachment_too_many_files_error">Too many files created recently</string>
   <string name="open_with">Buka dengan:</string>
   <string name="share_with">Bagikan dengan:</string>
 </resources>

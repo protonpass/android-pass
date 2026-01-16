@@ -22,6 +22,7 @@
   <string name="share_attachments_error">Не удалось поделиться вложением</string>
   <string name="upload_attachments_error">Не удалось загрузить вложение</string>
   <string name="attachment_size_exceeded_error">Выбранный файл превышает ограничение по размеру. Выберите файл размером менее 100 МБ.</string>
+  <string name="attachment_too_many_files_error">Too many files created recently</string>
   <string name="open_with">Открыть с помощью:</string>
   <string name="share_with">Поделиться с:</string>
 </resources>

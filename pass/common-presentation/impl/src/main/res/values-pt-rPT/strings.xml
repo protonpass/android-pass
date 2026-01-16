@@ -22,6 +22,7 @@
   <string name="share_attachments_error">Não foi possível partilhar o anexo.</string>
   <string name="upload_attachments_error">Erro ao enviar o anexo</string>
   <string name="attachment_size_exceeded_error">O ficheiro selecionado excede o limite de tamanho. Escolha um ficheiro inferior a 100 MB.</string>
+  <string name="attachment_too_many_files_error">Too many files created recently</string>
   <string name="open_with">Abrir com:</string>
   <string name="share_with">Partilhar com:</string>
 </resources>

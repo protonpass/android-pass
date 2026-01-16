@@ -22,6 +22,7 @@
   <string name="share_attachments_error">Kunde inte dela bilaga</string>
   <string name="upload_attachments_error">Kunde inte ladda upp bilaga</string>
   <string name="attachment_size_exceeded_error">Den valda filen överskrider storleksgränsen. Välj en fil som är mindre än 100 Mb.</string>
+  <string name="attachment_too_many_files_error">För många filer skapade nyligen</string>
   <string name="open_with">Öppna med:</string>
   <string name="share_with">Dela med:</string>
 </resources>

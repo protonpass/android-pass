@@ -22,6 +22,7 @@
   <string name="share_attachments_error">Liitettä ei voitu jakaa</string>
   <string name="upload_attachments_error">Liitettä ei voitu tallentaa</string>
   <string name="attachment_size_exceeded_error">Valittu tiedosto ylittää kokorajoituksen. Valitse tiedosto, joka on pienempi kuin 100 Mt.</string>
+  <string name="attachment_too_many_files_error">Lyhyen ajan sisällä on luotu liian monta tiedostoa</string>
   <string name="open_with">Avaa käyttäen:</string>
   <string name="share_with">Jaa henkilöille:</string>
 </resources>

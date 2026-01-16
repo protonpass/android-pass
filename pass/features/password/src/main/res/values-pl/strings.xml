@@ -33,12 +33,12 @@
   <string name="password_mode_random">Hasło losowe</string>
   <string name="password_mode_icon">Ikona trybu hasła</string>
   <string name="password_words_separator_icon">Separator słów</string>
-  <string name="password_history_title">Generated passwords</string>
-  <string name="password_history_empty">No history</string>
-  <string name="password_history_description">Generated passwords will be stored for a period of 2 weeks.</string>
-  <string name="password_history_today">Today, %s</string>
-  <string name="password_history_yesterday">Yesterday, %s</string>
+  <string name="password_history_title">Wygenerowane hasła</string>
+  <string name="password_history_empty">Brak historii</string>
+  <string name="password_history_description">Wygenerowane hasła będą przechowywane przez 2 tygodnie.</string>
+  <string name="password_history_today">Dzisiaj, %s</string>
+  <string name="password_history_yesterday">Wczoraj, %s</string>
   <string name="password_history_before_yesterday">There are %d days, %s</string>
-  <string name="password_history_clear_history">Clear history</string>
-  <string name="password_history_remove_from_history">Remove from history</string>
+  <string name="password_history_clear_history">Wyczyść historię</string>
+  <string name="password_history_remove_from_history">Usuń z historii</string>
 </resources>

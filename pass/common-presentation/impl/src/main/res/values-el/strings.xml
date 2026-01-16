@@ -22,6 +22,7 @@
   <string name="share_attachments_error">Δεν ήταν δυνατή η κοινοποίηση συνημμένου</string>
   <string name="upload_attachments_error">Αποτυχία ανεβάσματος συνημμένου για το μήνυμα</string>
   <string name="attachment_size_exceeded_error">Το επιλεγμένο αρχείο υπερβαίνει το όριο μεγέθους. Παρακαλούμε επιλέξτε ένα αρχείο μικρότερο από 100MB.</string>
+  <string name="attachment_too_many_files_error">Υπερβολικός αριθμός δημιουργίας αρχείων πρόσφατα</string>
   <string name="open_with">Άνοιγμα με:</string>
   <string name="share_with">Κοινοποίηση με:</string>
 </resources>

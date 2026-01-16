@@ -41,7 +41,7 @@
   <string name="secure_links_overview_button_view_all_links">Afficher tous vos liens sécurisés</string>
   <!--List screen-->
   <string name="secure_links_list_title">Liens sécurisés</string>
-  <string name="secure_links_list_empty_title">Aucun lien séurisé</string>
+  <string name="secure_links_list_empty_title">Aucun lien sécurisé</string>
   <string name="secure_links_list_empty_subtitle">Vous pouvez commencer à créer des liens sécurisés depuis les options de partage des informations d\'un élément.</string>
   <string name="secure_links_list_expiration_description">Expire dans %s</string>
   <string name="secure_links_list_expired_description">Expiré</string>

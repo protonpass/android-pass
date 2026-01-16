@@ -22,6 +22,7 @@
   <string name="share_attachments_error">Le partage de la pièce jointe n\'a pas abouti.</string>
   <string name="upload_attachments_error">La pièce jointe n\'a pas pu être importée dans le message.</string>
   <string name="attachment_size_exceeded_error">Le fichier sélectionné dépasse la taille limite. Veuillez choisir un fichier inférieur à 100 Mo.</string>
+  <string name="attachment_too_many_files_error">Trop de fichiers ont été créés récemment.</string>
   <string name="open_with">Ouvrir avec :</string>
   <string name="share_with">Partager avec :</string>
 </resources>

@@ -24,30 +24,45 @@ import proton.android.pass.domain.Share
 data object ItemFilterProcessor {
 
     fun <T : ItemData> removeDuplicates(array: Array<Pair<List<Share>, List<T>>>): List<T> {
-        val shares = array.map { (share, _) -> share }.flatten()
-        val items = array.map { (_, item) -> item }.flatten()
+        val shares = array.flatMap { it.first }
+        val items = array.flatMap { it.second }
 
-        return filterItemsByShares(
-            items = items,
-            shares = getDistinctShares(shares)
-        )
+        val distinctShares = getDistinctShares(shares)
+        val filteredItems = filterItemsByShares(items, distinctShares)
+
+        return deduplicateItemsByUuid(filteredItems, distinctShares)
     }
 
-    private fun getDistinctShares(sharesList: List<Share>): List<Share> = sharesList
-        .groupBy { share -> share.vaultId }
-        .mapValues { (_, shares) ->
-            compareBy({ share -> !share.isOwner }, Share::shareRole)
-                .let(shares::sortedWith)
-                .first()
-        }
-        .values
-        .toList()
+    private fun getDistinctShares(sharesList: List<Share>): List<Share> {
+        val (vaultShares, itemShares) = sharesList.partition { it is Share.Vault }
 
-    private fun <T : ItemData> filterItemsByShares(shares: List<Share>, items: List<T>): List<T> = shares
-        .map { share -> share.id }
-        .toSet()
-        .let { shareIds ->
-            items.filter { item -> item.item.shareId in shareIds }
-        }
+        val distinctVaultShares = vaultShares
+            .groupBy { it.vaultId }
+            .mapNotNull { (_, shares) ->
+                shares.minWithOrNull(compareBy({ !it.isOwner }, { it.shareRole }))
+            }
+
+        return distinctVaultShares + itemShares
+    }
+
+    private fun <T : ItemData> filterItemsByShares(items: List<T>, shares: List<Share>): List<T> {
+        val shareIds = shares.mapTo(HashSet()) { it.id }
+        return items.filter { it.item.shareId in shareIds }
+    }
+
+    private fun <T : ItemData> deduplicateItemsByUuid(items: List<T>, shares: List<Share>): List<T> {
+        val shareMap = shares.associateBy { it.id }
+
+        return items
+            .groupBy { it.item.itemUuid }
+            .mapNotNull { (_, itemsWithSameUuid) ->
+                itemsWithSameUuid.minWithOrNull(
+                    compareBy(
+                        { !(shareMap[it.item.shareId]?.isOwner ?: false) },
+                        { shareMap[it.item.shareId]?.shareRole }
+                    )
+                )
+            }
+    }
 
 }

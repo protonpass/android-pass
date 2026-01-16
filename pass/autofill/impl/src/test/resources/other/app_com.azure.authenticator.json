@@ -1,0 +1,313 @@
+{
+  "rootContent": {
+    "id": 1544976309,
+    "className": "android.widget.FrameLayout",
+    "isImportantForAutofill": true,
+    "children": [
+      {
+        "id": 471264276,
+        "className": "android.widget.LinearLayout",
+        "isImportantForAutofill": true,
+        "children": [
+          {
+            "id": 471294067,
+            "className": "android.view.View",
+            "isImportantForAutofill": true,
+            "hintKeywordList": [
+              "action_mode_bar_stub"
+            ]
+          },
+          {
+            "id": 471323858,
+            "className": "android.view.ViewGroup",
+            "isImportantForAutofill": true,
+            "children": [
+              {
+                "id": 471353649,
+                "className": "android.view.ViewGroup",
+                "isImportantForAutofill": true,
+                "children": [
+                  {
+                    "id": 471383440,
+                    "className": "android.widget.FrameLayout",
+                    "isImportantForAutofill": true,
+                    "children": [
+                      {
+                        "id": 471413231,
+                        "className": "android.widget.TextView",
+                        "isImportantForAutofill": true,
+                        "text": "",
+                        "hintKeywordList": [
+                          ""
+                        ]
+                      },
+                      {
+                        "id": 471204694,
+                        "className": "android.widget.EditText",
+                        "text": "",
+                        "isFocused": true,
+                        "inputType": 524289,
+                        "hintKeywordList": [
+                          "",
+                          "account_name",
+                          "Account name"
+                        ]
+                      },
+                      {
+                        "id": 471443022,
+                        "className": "android.widget.TextView",
+                        "isImportantForAutofill": true,
+                        "text": "",
+                        "hintKeywordList": [
+                          ""
+                        ]
+                      },
+                      {
+                        "id": 471234485,
+                        "className": "android.widget.EditText",
+                        "text": "",
+                        "inputType": 524417,
+                        "autofillHints": [
+                          "passwordAuto"
+                        ],
+                        "hintKeywordList": [
+                          "",
+                          "secret_key",
+                          "Secret key"
+                        ]
+                      },
+                      {
+                        "id": 471472813,
+                        "className": "android.widget.Button",
+                        "isImportantForAutofill": true,
+                        "text": "",
+                        "hintKeywordList": [
+                          "",
+                          "finish_button"
+                        ]
+                      }
+                    ],
+                    "hintKeywordList": [
+                      "content_frame"
+                    ]
+                  }
+                ],
+                "hintKeywordList": [
+                  "fragment_content_frame"
+                ]
+              },
+              {
+                "id": 471502604,
+                "className": "android.view.ViewGroup",
+                "isImportantForAutofill": true,
+                "children": [
+                  {
+                    "id": 471532395,
+                    "className": "android.view.View",
+                    "isImportantForAutofill": true,
+                    "hintKeywordList": [
+                      "bottom_navigation_divider"
+                    ]
+                  },
+                  {
+                    "id": 471562186,
+                    "className": "android.widget.FrameLayout",
+                    "isImportantForAutofill": true,
+                    "children": [
+                      {
+                        "id": 471591977,
+                        "className": "android.widget.FrameLayout",
+                        "isImportantForAutofill": true,
+                        "children": [
+                          {
+                            "id": 471621768,
+                            "className": "android.widget.FrameLayout",
+                            "isImportantForAutofill": true,
+                            "children": [
+                              {
+                                "id": 471651559,
+                                "className": "android.view.View",
+                                "isImportantForAutofill": true,
+                                "hintKeywordList": [
+                                  "navigation_bar_item_active_indicator_view"
+                                ]
+                              }
+                            ],
+                            "hintKeywordList": [
+                              "navigation_bar_item_icon_container"
+                            ]
+                          },
+                          {
+                            "id": 471681350,
+                            "className": "android.view.ViewGroup",
+                            "isImportantForAutofill": true,
+                            "children": [
+                              {
+                                "id": 471711141,
+                                "className": "android.widget.TextView",
+                                "isImportantForAutofill": true,
+                                "text": "",
+                                "hintKeywordList": [
+                                  "",
+                                  "navigation_bar_item_small_label_view"
+                                ]
+                              },
+                              {
+                                "id": 471740932,
+                                "className": "android.widget.TextView",
+                                "isImportantForAutofill": true,
+                                "text": "",
+                                "hintKeywordList": [
+                                  "",
+                                  "navigation_bar_item_large_label_view"
+                                ]
+                              }
+                            ],
+                            "hintKeywordList": [
+                              "navigation_bar_item_labels_group"
+                            ]
+                          }
+                        ],
+                        "hintKeywordList": [
+                          "accountListFragment"
+                        ]
+                      },
+                      {
+                        "id": 471770723,
+                        "className": "android.widget.FrameLayout",
+                        "isImportantForAutofill": true,
+                        "children": [
+                          {
+                            "id": 471800514,
+                            "className": "android.widget.FrameLayout",
+                            "isImportantForAutofill": true,
+                            "children": [
+                              {
+                                "id": 471830305,
+                                "className": "android.view.View",
+                                "isImportantForAutofill": true,
+                                "hintKeywordList": [
+                                  "navigation_bar_item_active_indicator_view"
+                                ]
+                              }
+                            ],
+                            "hintKeywordList": [
+                              "navigation_bar_item_icon_container"
+                            ]
+                          },
+                          {
+                            "id": 471860096,
+                            "className": "android.view.ViewGroup",
+                            "isImportantForAutofill": true,
+                            "children": [
+                              {
+                                "id": 471889887,
+                                "className": "android.widget.TextView",
+                                "isImportantForAutofill": true,
+                                "text": "",
+                                "hintKeywordList": [
+                                  "",
+                                  "navigation_bar_item_small_label_view"
+                                ]
+                              },
+                              {
+                                "id": 471919678,
+                                "className": "android.widget.TextView",
+                                "isImportantForAutofill": true,
+                                "text": "",
+                                "hintKeywordList": [
+                                  "",
+                                  "navigation_bar_item_large_label_view"
+                                ]
+                              }
+                            ],
+                            "hintKeywordList": [
+                              "navigation_bar_item_labels_group"
+                            ]
+                          }
+                        ],
+                        "hintKeywordList": [
+                          "card_list_graph"
+                        ]
+                      }
+                    ],
+                    "hintKeywordList": [
+                      "bottom_navigation"
+                    ]
+                  }
+                ],
+                "hintKeywordList": [
+                  "bottom_nav_layout"
+                ]
+              },
+              {
+                "id": 471949469,
+                "className": "android.view.ViewGroup",
+                "isImportantForAutofill": true,
+                "hintKeywordList": [
+                  "bottom_sheet_coordinator_layout"
+                ]
+              },
+              {
+                "id": 471979260,
+                "className": "android.widget.LinearLayout",
+                "isImportantForAutofill": true,
+                "children": [
+                  {
+                    "id": 472009051,
+                    "className": "android.view.ViewGroup",
+                    "isImportantForAutofill": true,
+                    "children": [
+                      {
+                        "id": 472038842,
+                        "className": "android.view.ViewGroup",
+                        "isImportantForAutofill": true,
+                        "children": [
+                          {
+                            "id": 472068633,
+                            "className": "android.widget.TextView",
+                            "isImportantForAutofill": true,
+                            "text": "Add account",
+                            "hintKeywordList": [
+                              "Add account",
+                              "toolbar_title"
+                            ]
+                          },
+                          {
+                            "id": 472098424,
+                            "className": "android.widget.TextView",
+                            "isImportantForAutofill": true,
+                            "text": "",
+                            "hintKeywordList": [
+                              ""
+                            ]
+                          }
+                        ],
+                        "hintKeywordList": [
+                          "toolbar"
+                        ]
+                      }
+                    ],
+                    "hintKeywordList": [
+                      "app_toolbar_layout"
+                    ]
+                  }
+                ],
+                "hintKeywordList": [
+                  "app_toolbar"
+                ]
+              }
+            ],
+            "hintKeywordList": [
+              "main_content_view"
+            ]
+          }
+        ],
+        "hintKeywordList": [
+          "action_bar_root"
+        ]
+      }
+    ]
+  },
+  "packageName": "com.azure.authenticator"
+}

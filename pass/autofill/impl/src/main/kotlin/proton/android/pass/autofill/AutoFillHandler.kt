@@ -111,11 +111,13 @@ object AutoFillHandler {
         accountManager: AccountManager,
         thirdPartyModeProvider: ThirdPartyModeProvider
     ): Option<FillResponse> {
+        val applicationPackageName = PackageName(Utils.getApplicationPackageName(windowNode))
         val shouldAutofill = shouldAutofill(
             context = context,
             accountManager = accountManager,
             request = request,
-            windowNode = windowNode
+            windowNode = windowNode,
+            packageName = applicationPackageName.value
         )
         val assistInfo = when (shouldAutofill) {
             is ShouldAutofillResult.No -> {
@@ -128,8 +130,6 @@ object AutoFillHandler {
                 shouldAutofill.assistInfo
             }
         }
-
-        val applicationPackageName = PackageName(Utils.getApplicationPackageName(windowNode))
 
         val packageInfo = PackageInfo(
             packageName = applicationPackageName,
@@ -207,9 +207,10 @@ object AutoFillHandler {
         context: Context,
         accountManager: AccountManager,
         request: FillRequest,
-        windowNode: WindowNode
+        windowNode: WindowNode,
+        packageName: String
     ): ShouldAutofillResult {
-        if (isSelfAutofill(context, windowNode)) {
+        if (isSelfAutofill(context, packageName)) {
             return ShouldAutofillResult.No("Do not self autofill")
         }
 
@@ -218,7 +219,10 @@ object AutoFillHandler {
             return ShouldAutofillResult.No("No user found")
         }
         val requestFlags: List<RequestFlags> = RequestFlags.fromValue(request.flags)
-        val extractionResult = NodeExtractor(requestFlags).extract(windowNode.rootViewNode)
+        val extractionResult = NodeExtractor(requestFlags).extract(
+            windowNode.rootViewNode,
+            packageName
+        )
         if (extractionResult.fields.isEmpty()) {
             return ShouldAutofillResult.No("No fields found")
         }
@@ -258,10 +262,9 @@ object AutoFillHandler {
             false
         }
 
-    private fun isSelfAutofill(context: Context, windowNode: WindowNode): Boolean {
+    private fun isSelfAutofill(context: Context, packageName: String): Boolean {
         val autofillService = context.packageName
-        val clientPackageName = Utils.getApplicationPackageName(windowNode)
-        return autofillService == clientPackageName
+        return autofillService == packageName
     }
 
     sealed interface ShouldAutofillResult {

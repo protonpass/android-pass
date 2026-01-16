@@ -22,6 +22,7 @@
   <string name="share_attachments_error">無法共享附件</string>
   <string name="upload_attachments_error">無法上傳附件</string>
   <string name="attachment_size_exceeded_error">選取的檔案超出大小限制。請選取小於 100MB 的檔案。</string>
+  <string name="attachment_too_many_files_error">近期創建太多檔案</string>
   <string name="open_with">開啟方式：</string>
   <string name="share_with">請共享:</string>
 </resources>

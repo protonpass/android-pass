@@ -22,6 +22,7 @@
   <string name="share_attachments_error">Ni bilo mogoče deliti priponke</string>
   <string name="upload_attachments_error">Ni bilo mogoče naložiti priponke</string>
   <string name="attachment_size_exceeded_error">Izbrana datoteka presega omejitev velikosti. Prosimo, izberite datoteko, manjšo od 100 MB.</string>
+  <string name="attachment_too_many_files_error">Too many files created recently</string>
   <string name="open_with">Odpri z:</string>
   <string name="share_with">Deli z:</string>
 </resources>

@@ -22,6 +22,7 @@
   <string name="share_attachments_error">Atașamentul nu a putut fi partajat.</string>
   <string name="upload_attachments_error">Atașamentul nu a putut fi încărcat.</string>
   <string name="attachment_size_exceeded_error">Fișierul selectat depășește limita de dimensiune. Alegeți un fișier mai mic de 100 MiB.</string>
+  <string name="attachment_too_many_files_error">Recent s-au creat prea multe fișiere.</string>
   <string name="open_with">Deschideți cu:</string>
   <string name="share_with">Partajare cu:</string>
 </resources>

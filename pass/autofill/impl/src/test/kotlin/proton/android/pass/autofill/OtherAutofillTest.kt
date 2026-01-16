@@ -60,6 +60,16 @@ class OtherAutofillTest : BaseAutofillTest() {
         )
     }
 
+    @Test
+    fun `do not autofill microsoft authenticator on create 2FA screen`() {
+        runOtherAutofillTest(
+            file = "other/app_com.azure.authenticator.json",
+            item = loginItem(),
+            allowEmptyFields = true,
+            packageName = "com.azure.authenticator"
+        )
+    }
+
     private fun loginItem(): AutofillItem = AutofillItem.Login(
         itemId = "123",
         shareId = "123",
@@ -75,13 +85,15 @@ class OtherAutofillTest : BaseAutofillTest() {
         file: String,
         item: AutofillItem,
         allowEmptyFields: Boolean,
-        flags: List<RequestFlags> = emptyList()
+        flags: List<RequestFlags> = emptyList(),
+        packageName: String? = null
     ) {
         runAutofillTest(
             file = file,
             item = item,
             requestFlags = flags,
-            allowEmptyFields = allowEmptyFields
+            allowEmptyFields = allowEmptyFields,
+            packageName = packageName
         )
     }
 }

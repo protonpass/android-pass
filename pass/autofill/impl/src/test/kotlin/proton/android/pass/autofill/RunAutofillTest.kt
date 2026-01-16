@@ -74,12 +74,13 @@ fun runAutofillTest(
     file: String,
     item: AutofillItem,
     requestFlags: List<RequestFlags> = emptyList(),
-    allowEmptyFields: Boolean = false
+    allowEmptyFields: Boolean = false,
+    packageName: String? = null
 ) {
     val parsed = TestUtils.parseResourceFile(file)
     val nodesWithExpectedContents = TestUtils.getExpectedContents(parsed, allowEmptyFields)
     val asAutofillNodes = parsed.rootContent.toAutofillNode()
-    val detectedNodes = NodeExtractor(requestFlags).extract(asAutofillNodes)
+    val detectedNodes = NodeExtractor(requestFlags).extract(asAutofillNodes, packageName)
     val clusters = NodeClusterer.cluster(detectedNodes.fields)
     val focusedCluster = clusters.focused()
 

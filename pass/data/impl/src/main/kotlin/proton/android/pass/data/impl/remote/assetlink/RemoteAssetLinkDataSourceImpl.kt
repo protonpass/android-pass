@@ -27,15 +27,17 @@ import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.Response
 import okio.IOException
+import proton.android.pass.data.api.errors.ResponseSizeExceededError
 import proton.android.pass.data.impl.remote.PublicOkhttpClient
 import proton.android.pass.data.impl.responses.AssetLinkResponse
 import proton.android.pass.data.impl.responses.IgnoredAssetLinkResponse
+import proton.android.pass.log.api.PassLogger
 import javax.inject.Inject
 import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
 
 class RemoteAssetLinkDataSourceImpl @Inject constructor(
-    @PublicOkhttpClient private val okHttpClient: OkHttpClient
+    @param:PublicOkhttpClient private val okHttpClient: OkHttpClient
 ) : RemoteAssetLinkDataSource {
 
     override suspend fun fetch(website: String): List<AssetLinkResponse> {
@@ -64,8 +66,11 @@ class RemoteAssetLinkDataSourceImpl @Inject constructor(
                 }
 
                 override fun onResponse(call: Call, response: Response) {
-                    if (!continuation.isActive) return
-                    handleResponse(response, continuation, parse)
+                    if (!continuation.isActive) {
+                        response.close()
+                        return
+                    }
+                    response.use { handleResponse(it, continuation, parse) }
                 }
             })
         }
@@ -80,16 +85,64 @@ class RemoteAssetLinkDataSourceImpl @Inject constructor(
             return
         }
 
-        val json = response.body?.string().orEmpty()
-        if (json.isEmpty()) {
-            continuation.resumeWithException(IllegalStateException("Empty response"))
-            return
+        readAndValidateBody(response).fold(
+            onSuccess = { json ->
+                runCatching {
+                    parse(json)
+                }.onSuccess(continuation::resume)
+                    .onFailure { e ->
+                        PassLogger.w(TAG, "Failed to parse response")
+                        PassLogger.w(TAG, e)
+                        continuation.resumeWithException(e)
+                    }
+            },
+            onFailure = { e ->
+                continuation.resumeWithException(e)
+            }
+        )
+    }
+
+    private fun readAndValidateBody(response: Response): Result<String> {
+        // Check Content-Length header BEFORE reading body
+        val contentLength = response.body?.contentLength() ?: -1
+        if (contentLength > MAX_RESPONSE_SIZE_BYTES) {
+            return createSizeExceededError(response.request.url.toString(), contentLength)
         }
 
-        runCatching {
-            parse(json)
-        }.onSuccess(continuation::resume)
-            .onFailure(continuation::resumeWithException)
+        // Read and validate response body
+        return try {
+            val bodyString = response.body?.string().orEmpty()
+
+            when {
+                bodyString.isEmpty() -> {
+                    Result.failure(IllegalStateException("Empty response"))
+                }
+                bodyString.length > MAX_RESPONSE_SIZE_BYTES -> {
+                    createSizeExceededError(response.request.url.toString(), bodyString.length.toLong())
+                }
+                else -> Result.success(bodyString)
+            }
+        } catch (e: IOException) {
+            PassLogger.w(TAG, "Failed to read response body")
+            PassLogger.w(TAG, e)
+            Result.failure(e)
+        }
+    }
+
+    private fun createSizeExceededError(url: String, contentLength: Long): Result<String> {
+        PassLogger.w(TAG, "Response size exceeds maximum allowed")
+        return Result.failure(
+            ResponseSizeExceededError(
+                url = url,
+                contentLength = contentLength,
+                maxSize = MAX_RESPONSE_SIZE_BYTES
+            )
+        )
+    }
+
+    companion object {
+        private const val TAG = "RemoteAssetLinkDataSource"
+        private const val MAX_RESPONSE_SIZE_BYTES = 2 * 1024 * 1024L
     }
 }
 

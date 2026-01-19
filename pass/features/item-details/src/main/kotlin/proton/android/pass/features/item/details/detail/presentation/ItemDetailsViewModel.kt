@@ -95,7 +95,7 @@ class ItemDetailsViewModel @Inject constructor(
         it.keys().associateWith { key -> it.get<Any?>(key) }
     }
 
-    private val itemFlow = observeItemById(shareId, itemId)
+    private val itemFlow = observeItemById(shareId = shareId, itemId = itemId)
         .map { item -> item ?: throw ItemNotFoundError(itemId, shareId) }
         .catch { error ->
             if (error is ItemNotFoundError) {
@@ -139,7 +139,7 @@ class ItemDetailsViewModel @Inject constructor(
         oneShot { getItemActions(shareId, itemId) },
         itemFeaturesFlow,
         eventFlow,
-        oneShot { observeShare(shareId).first() }
+        oneShot { observeShare(shareId = shareId).first() }
     ) { itemDetailsState, itemActions, itemFeatures, event, share ->
         ItemDetailsState.Success(
             shareId = shareId,
@@ -189,14 +189,18 @@ class ItemDetailsViewModel @Inject constructor(
                 if (isVisible) {
                     revealedHiddenFieldsFlow.update {
                         it.toMutableMap().apply {
-                            this[hiddenFieldSection] = (this[hiddenFieldSection] ?: emptySet()) + hiddenFieldType
+                            this[hiddenFieldSection] =
+                                (this[hiddenFieldSection] ?: emptySet()) + hiddenFieldType
                         }
                     }
                 } else {
                     revealedHiddenFieldsFlow.update {
                         it.toMutableMap().apply {
-                            this[hiddenFieldSection] = (this[hiddenFieldSection] ?: emptySet()) - hiddenFieldType
-                            if (this[hiddenFieldSection]?.isEmpty() == true) remove(hiddenFieldSection)
+                            this[hiddenFieldSection] =
+                                (this[hiddenFieldSection] ?: emptySet()) - hiddenFieldType
+                            if (this[hiddenFieldSection]?.isEmpty() == true) remove(
+                                hiddenFieldSection
+                            )
                         }
                     }
                 }

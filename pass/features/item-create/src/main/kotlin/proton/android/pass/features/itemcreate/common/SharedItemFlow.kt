@@ -25,6 +25,7 @@ import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onStart
+import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
 import proton.android.pass.data.api.usecases.ObserveItemById
@@ -70,10 +71,11 @@ fun canDisplayWarningMessageForCreationFlow(
 fun canDisplayVaultSharedWarningDialogFlow(
     settingsRepository: InternalSettingsRepository,
     shareId: ShareId,
-    observeShare: ObserveShare
+    observeShare: ObserveShare,
+    userId: UserId? = null
 ) = combine(
     settingsRepository.hasShownItemInSharedVaultWarning(),
-    observeShare(shareId)
+    observeShare(shareId = shareId, userId = userId)
 ) { hasShownItemInSharedVaultWarning, share ->
     !hasShownItemInSharedVaultWarning && share.shared
 }.onStart { emit(false) }
@@ -83,10 +85,11 @@ fun canDisplaySharedItemWarningDialogFlow(
     settingsRepository: InternalSettingsRepository,
     shareId: ShareId,
     itemId: ItemId,
-    observeItemById: ObserveItemById
+    observeItemById: ObserveItemById,
+    userId: UserId? = null
 ) = combine(
     settingsRepository.hasShownItemInSharedVaultWarning(),
-    observeItemById(shareId, itemId = itemId)
+    observeItemById(shareId = shareId, itemId = itemId, userId = userId)
 ) { hasShownItemInSharedVaultWarning, item ->
     !hasShownItemInSharedVaultWarning && (item?.shareCount ?: 0) > 0
 }.onStart { emit(false) }

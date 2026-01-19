@@ -78,7 +78,7 @@ class ShareFromItemViewModel @Inject constructor(
         navEventState,
         canUsePaidFeaturesFlow,
         oneShot { getItemById(shareId = shareId, itemId = itemId) },
-        observeShare(shareId),
+        observeShare(shareId = shareId),
         observeOrganizationSharingPolicy()
     ) { event,
         canUsePaidFeatures,

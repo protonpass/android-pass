@@ -121,10 +121,10 @@ class AutoSaveActivity : FragmentActivity() {
     }
 
     companion object {
-        private const val ARG_SAVE_INFORMATION = "arg_save_information"
-        private const val ARG_LINKED_APP = "arg_linked_app"
-        private const val ARG_TITLE = "arg_title"
-        private const val ARG_WEBSITE = "arg_website"
+        const val ARG_SAVE_INFORMATION = "arg_save_information"
+        const val ARG_LINKED_APP = "arg_linked_app"
+        const val ARG_TITLE = "arg_title"
+        const val ARG_WEBSITE = "arg_website"
 
         fun newIntent(
             context: Context,

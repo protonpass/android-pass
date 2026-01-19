@@ -19,10 +19,15 @@
 package proton.android.pass.data.api.usecases
 
 import kotlinx.coroutines.flow.Flow
+import me.proton.core.domain.entity.UserId
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 
 interface ObserveItemById {
-    operator fun invoke(shareId: ShareId, itemId: ItemId): Flow<Item?>
+    operator fun invoke(
+        userId: UserId? = null,
+        shareId: ShareId,
+        itemId: ItemId
+    ): Flow<Item?>
 }

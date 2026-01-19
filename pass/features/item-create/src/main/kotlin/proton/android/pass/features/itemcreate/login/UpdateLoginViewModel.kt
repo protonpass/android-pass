@@ -19,6 +19,9 @@
 package proton.android.pass.features.itemcreate.login
 
 import androidx.lifecycle.viewModelScope
+import dagger.assisted.Assisted
+import dagger.assisted.AssistedFactory
+import dagger.assisted.AssistedInject
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -103,10 +106,10 @@ import proton.android.pass.preferences.UserPreferencesRepository
 import proton.android.pass.telemetry.api.EventItemType
 import proton.android.pass.telemetry.api.TelemetryManager
 import proton.android.pass.totp.api.TotpManager
-import javax.inject.Inject
 
-@[HiltViewModel Suppress("LongParameterList")]
-class UpdateLoginViewModel @Inject constructor(
+@Suppress("LongParameterList")
+@[HiltViewModel(assistedFactory = UpdateLoginViewModel.AddInitialUpdateLoginUiState::class)]
+class UpdateLoginViewModel @AssistedInject constructor(
     private val getItemById: GetItemById,
     private val updateItem: UpdateItem,
     private val snackbarDispatcher: SnackbarDispatcher,
@@ -135,7 +138,8 @@ class UpdateLoginViewModel @Inject constructor(
     savedStateHandleProvider: SavedStateHandleProvider,
     observeShare: ObserveShare,
     observeItemById: ObserveItemById,
-    private val settingsRepository: InternalSettingsRepository
+    private val settingsRepository: InternalSettingsRepository,
+    @Assisted private val initialUpdateLoginUiState: InitialUpdateLoginUiState?
 ) : BaseLoginViewModel(
     accountManager = accountManager,
     snackbarDispatcher = snackbarDispatcher,
@@ -156,13 +160,24 @@ class UpdateLoginViewModel @Inject constructor(
     loginItemFormProcessor = loginItemFormProcessor,
     savedStateHandleProvider = savedStateHandleProvider
 ) {
-    private val navShareId: ShareId = savedStateHandleProvider.get()
-        .require<String>(CommonNavArgId.ShareId.key)
-        .let(::ShareId)
+    @AssistedFactory
+    interface AddInitialUpdateLoginUiState {
+        fun create(initialUpdateLoginUiState: InitialUpdateLoginUiState?): UpdateLoginViewModel
+    }
 
-    private val navItemId: ItemId = savedStateHandleProvider.get()
-        .require<String>(CommonNavArgId.ItemId.key)
-        .let(::ItemId)
+    private val navShareId: ShareId = initialUpdateLoginUiState?.sharedId
+        ?: savedStateHandleProvider.get()
+            .require<String>(CommonNavArgId.ShareId.key)
+            .let(::ShareId)
+
+    private val navItemId: ItemId = initialUpdateLoginUiState?.itemId
+        ?: savedStateHandleProvider.get()
+            .require<String>(CommonNavArgId.ItemId.key)
+            .let(::ItemId)
+
+    private val initialUserId: UserId? = initialUpdateLoginUiState?.userId
+
+    private val initialPasswordEncrypted = initialUpdateLoginUiState?.newPassword
 
     private val updateEventFlow: MutableStateFlow<UpdateUiEvent> =
         MutableStateFlow(UpdateUiEvent.Idle)
@@ -178,7 +193,8 @@ class UpdateLoginViewModel @Inject constructor(
         canDisplayVaultSharedWarningDialogFlow(
             settingsRepository = settingsRepository,
             observeShare = observeShare,
-            shareId = navShareId
+            shareId = navShareId,
+            userId = initialUserId
         )
 
     private val canDisplaySharedItemWarningDialogFlow =
@@ -186,7 +202,8 @@ class UpdateLoginViewModel @Inject constructor(
             settingsRepository = settingsRepository,
             observeItemById = observeItemById,
             shareId = navShareId,
-            itemId = navItemId
+            itemId = navItemId,
+            userId = initialUserId
         )
 
     init {
@@ -194,7 +211,7 @@ class UpdateLoginViewModel @Inject constructor(
             if (itemOption != None) return@launch
 
             isLoadingState.update { IsLoadingState.Loading }
-            runCatching { getItemById(shareId = navShareId, itemId = navItemId) }
+            runCatching { getItemById(shareId = navShareId, itemId = navItemId, userId = initialUserId) }
                 .onFailure {
                     PassLogger.i(TAG, it, "Get by id error")
                     snackbarDispatcher(InitError)
@@ -253,7 +270,7 @@ class UpdateLoginViewModel @Inject constructor(
         if (!isFormStateValid(originalPrimaryTotp, originalTotpCustomFields)) return@launch
         isLoadingState.update { IsLoadingState.Loading }
         val loginItem = loginItemFormState.toItemContents(emailValidator = emailValidator)
-        val userId = accountManager.getPrimaryUserId()
+        val userId = initialUserId ?: accountManager.getPrimaryUserId()
             .first { userId -> userId != null }
         if (userId != null) {
             val aliasItemOption = aliasLocalItemState.value
@@ -300,10 +317,26 @@ class UpdateLoginViewModel @Inject constructor(
                     primaryTotp = itemContents.primaryTotp.encrypted
                 )
 
-                val passwordHiddenState = when (val hiddenState = itemContents.password) {
-                    is HiddenState.Empty -> UIHiddenState.Empty(hiddenState.encrypted)
-                    is HiddenState.Concealed,
-                    is HiddenState.Revealed -> UIHiddenState.Concealed(hiddenState.encrypted)
+                val passwordHiddenState = when (initialPasswordEncrypted) {
+                    null -> when (val hiddenState = itemContents.password) {
+                        is HiddenState.Empty -> UIHiddenState.Empty(
+                            hiddenState.encrypted
+                        )
+
+                        is HiddenState.Concealed,
+                        is HiddenState.Revealed -> UIHiddenState.Concealed(
+                            hiddenState.encrypted
+                        )
+                    }
+
+                    else -> {
+                        // if came from AutosaveActivity with new password
+                        // impossible to have empty password here, Android will not display
+                        // the "update" bottomSheet if it is the case
+                        UIHiddenState.Concealed(
+                            initialPasswordEncrypted
+                        )
+                    }
                 }
 
                 val customFields =
@@ -317,7 +350,7 @@ class UpdateLoginViewModel @Inject constructor(
                     username = itemContents.itemUsername,
                     password = passwordHiddenState,
                     passwordStrength = passwordStrengthCalculator.calculateStrength(
-                        password = decrypt(itemContents.password.encrypted)
+                        password = decrypt(initialPasswordEncrypted ?: itemContents.password.encrypted)
                     ),
                     urls = itemContents.urls.ifEmpty { listOf("") },
                     note = itemContents.note,

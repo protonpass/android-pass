@@ -62,7 +62,7 @@ class LoginItemDetailReusedPassViewModel @Inject constructor(
         .require<String>(CommonNavArgId.ItemId.key)
         .let(::ItemId)
 
-    private val loginItemPasswordFlow = observeItemById(shareId, itemId)
+    private val loginItemPasswordFlow = observeItemById(shareId = shareId, itemId = itemId)
         .filterNotNull()
         .map { loginItem ->
             encryptionContextProvider.withEncryptionContext {
@@ -70,7 +70,7 @@ class LoginItemDetailReusedPassViewModel @Inject constructor(
             }
         }
 
-    private val duplicatedLoginItemsFlow = observeItemById(shareId, itemId)
+    private val duplicatedLoginItemsFlow = observeItemById(shareId = shareId, itemId = itemId)
         .filterNotNull()
         .map { loginItem ->
             duplicatedPasswordChecker(loginItem).let { duplicatedPasswordReport ->

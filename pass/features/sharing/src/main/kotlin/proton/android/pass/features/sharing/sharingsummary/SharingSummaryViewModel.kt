@@ -121,7 +121,7 @@ class SharingSummaryViewModel @Inject constructor(
         }
 
         is Some -> {
-            observeItemById(shareId, itemIdOption.value)
+            observeItemById(shareId = shareId, itemId = itemIdOption.value)
                 .filterNotNull()
                 .mapLatest { item ->
                     encryptionContextProvider.withEncryptionContextSuspendable {

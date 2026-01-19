@@ -23,6 +23,7 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.map
 import kotlinx.datetime.Instant
 import me.proton.core.domain.entity.UserId
@@ -442,7 +443,7 @@ class BreachRepositoryImpl @Inject constructor(
             userId = userId,
             itemFlags = mapOf(ItemFlag.EmailBreached to true, ItemFlag.SkipHealthCheck to false),
             includeHidden = false
-        ).first()
+        ).firstOrNull() ?: emptyList()
 
         breachedAliases.forEach { alias ->
             val aliasEmailId = AliasEmailId(alias.shareId, alias.id)

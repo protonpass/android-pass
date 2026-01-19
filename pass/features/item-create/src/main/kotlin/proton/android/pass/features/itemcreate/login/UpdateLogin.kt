@@ -72,7 +72,12 @@ internal fun UpdateLogin(
     navTotpIndex: Int? = null,
     canUseAttachments: Boolean,
     onNavigate: (BaseLoginNavigation) -> Unit,
-    viewModel: UpdateLoginViewModel = hiltViewModel()
+    initialUpdateLoginUiState: InitialUpdateLoginUiState? = null,
+    viewModel: UpdateLoginViewModel = hiltViewModel(
+        creationCallback = { factory: UpdateLoginViewModel.AddInitialUpdateLoginUiState ->
+            factory.create(initialUpdateLoginUiState)
+        }
+    )
 ) {
     val context = LocalContext.current
     var showDatePickerForField: Option<CustomFieldIdentifier> by remember { mutableStateOf(None) }

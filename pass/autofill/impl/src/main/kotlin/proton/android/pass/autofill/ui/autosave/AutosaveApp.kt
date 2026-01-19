@@ -18,13 +18,21 @@
 
 package proton.android.pass.autofill.ui.autosave
 
+import androidx.compose.animation.AnimatedContent
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Scaffold
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -61,16 +69,39 @@ fun AutoSaveApp(
             .imePadding(),
         snackbarHost = { PassSnackbarHost(snackbarHostState = passSnackbarHostState) }
     ) { padding ->
-        AutosaveAppContent(
-            modifier = Modifier.padding(padding),
-            arguments = arguments,
-            needsAuth = state.needsAuth,
-            onNavigate = {
-                if (it == AutosaveNavigation.Success) {
-                    viewModel.onItemAutoSaved()
-                }
-                onNavigate(it)
+        AnimatedContent(
+            targetState = state,
+            transitionSpec = {
+                fadeIn().togetherWith(fadeOut())
             }
-        )
+        ) { state ->
+
+            when (state) {
+                is AutoSaveAppViewState.Ready -> {
+                    AutosaveAppContent(
+                        modifier = Modifier.padding(padding),
+                        arguments = arguments,
+                        state = state,
+                        onNavigate = {
+                            if (it == AutosaveNavigation.Success) {
+                                viewModel.onItemAutoSaved()
+                            }
+                            onNavigate(it)
+                        }
+                    )
+                }
+
+                is AutoSaveAppViewState.Loading -> {
+                    Box(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(padding),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        CircularProgressIndicator()
+                    }
+                }
+            }
+        }
     }
 }

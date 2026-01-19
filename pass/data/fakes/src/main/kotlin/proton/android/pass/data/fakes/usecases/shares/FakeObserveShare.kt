@@ -20,6 +20,7 @@ package proton.android.pass.data.fakes.usecases.shares
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
+import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.FlowUtils.testFlow
 import proton.android.pass.data.api.usecases.shares.ObserveShare
 import proton.android.pass.domain.Share
@@ -36,6 +37,6 @@ class FakeObserveShare @Inject constructor() : ObserveShare {
         shareFlow.tryEmit(value)
     }
 
-    override fun invoke(shareId: ShareId): Flow<Share> = shareFlow
+    override fun invoke(userId: UserId?, shareId: ShareId): Flow<Share> = shareFlow
 
 }

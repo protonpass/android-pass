@@ -131,7 +131,8 @@ class UpdateLoginViewModelTest {
         loginItemFormProcessor = FakeLoginItemFormProcessor(),
         observeShare = observeShare,
         settingsRepository = settingsRepository,
-        observeItemById = observeItemById
+        observeItemById = observeItemById,
+        initialUpdateLoginUiState = null
     )
 
     @Test

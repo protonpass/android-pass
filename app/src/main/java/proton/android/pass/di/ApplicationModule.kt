@@ -34,6 +34,7 @@ import me.proton.core.domain.entity.AppStore
 import me.proton.core.domain.entity.Product
 import okhttp3.OkHttpClient
 import proton.android.pass.PassAppConfig
+import java.util.concurrent.TimeUnit
 import proton.android.pass.R
 import proton.android.pass.appconfig.api.AppConfig
 import proton.android.pass.appconfig.api.BuildFlavor
@@ -47,6 +48,10 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object ApplicationModule {
+
+    private const val CONNECT_TIMEOUT = 15L
+    private const val READ_WRITE_TIMEOUT = 30L
+    private const val CALL_TIMEOUT = 60L
 
     @Provides
     @Singleton
@@ -96,10 +101,13 @@ object ApplicationModule {
     @Singleton
     fun provideOkHttpClient(): OkHttpClient = OkHttpClient.Builder()
         .retryOnConnectionFailure(false)
+        .connectTimeout(CONNECT_TIMEOUT, TimeUnit.SECONDS)
+        .readTimeout(READ_WRITE_TIMEOUT, TimeUnit.SECONDS)
+        .writeTimeout(READ_WRITE_TIMEOUT, TimeUnit.SECONDS)
+        .callTimeout(CALL_TIMEOUT, TimeUnit.SECONDS)
         .build()
 
     @[Provides Singleton]
     fun provideNotificationManagerCompat(@ApplicationContext context: Context): NotificationManagerCompat =
         NotificationManagerCompat.from(context)
-
 }

@@ -27,6 +27,9 @@ import dagger.hilt.EntryPoint
 import dagger.hilt.InstallIn
 import dagger.hilt.android.EntryPointAccessors
 import dagger.hilt.components.SingletonComponent
+import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.launchIn
@@ -140,29 +143,39 @@ class AccountListenerInitializer : Initializer<Unit> {
         PassLogger.i(TAG, "Account ready : ${account.userId}")
 
         if (!isUserEventsEnabled) {
-            safeRunCatching {
-                refreshOrganizationSettings(account.userId)
-            }.onSuccess {
-                PassLogger.i(TAG, "Organization settings refreshed for ${account.userId}")
-            }.onFailure {
-                PassLogger.w(TAG, "Could not refresh organization settings for ${account.userId}")
-                PassLogger.w(TAG, it)
-            }
-            safeRunCatching {
-                refreshBreaches(account.userId)
-            }.onSuccess {
-                PassLogger.i(TAG, "Breaches refreshed for ${account.userId}")
-            }.onFailure {
-                PassLogger.w(TAG, "Could not refresh breaches for ${account.userId}")
-                PassLogger.w(TAG, it)
-            }
-            safeRunCatching {
-                refreshUserAccess(account.userId)
-            }.onSuccess {
-                PassLogger.i(TAG, "Plan refreshed for ${account.userId}")
-            }.onFailure {
-                PassLogger.w(TAG, "Refresh plan errored for ${account.userId}")
-                PassLogger.w(TAG, it)
+            coroutineScope {
+                listOf(
+                    async {
+                        safeRunCatching {
+                            refreshOrganizationSettings(account.userId)
+                        }.onSuccess {
+                            PassLogger.i(TAG, "Organization settings refreshed for ${account.userId}")
+                        }.onFailure {
+                            PassLogger.w(TAG, "Could not refresh organization settings for ${account.userId}")
+                            PassLogger.w(TAG, it)
+                        }
+                    },
+                    async {
+                        safeRunCatching {
+                            refreshBreaches(account.userId)
+                        }.onSuccess {
+                            PassLogger.i(TAG, "Breaches refreshed for ${account.userId}")
+                        }.onFailure {
+                            PassLogger.w(TAG, "Could not refresh breaches for ${account.userId}")
+                            PassLogger.w(TAG, it)
+                        }
+                    },
+                    async {
+                        safeRunCatching {
+                            refreshUserAccess(account.userId)
+                        }.onSuccess {
+                            PassLogger.i(TAG, "Plan refreshed for ${account.userId}")
+                        }.onFailure {
+                            PassLogger.w(TAG, "Refresh plan errored for ${account.userId}")
+                            PassLogger.w(TAG, it)
+                        }
+                    }
+                ).awaitAll()
             }
         }
     }

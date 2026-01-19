@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2024 Proton AG
+ * Copyright (c) 2023 Proton AG
  * This file is part of Proton AG and Proton Pass.
  *
  * Proton Pass is free software: you can redistribute it and/or modify
@@ -16,15 +16,16 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.data.api.usecases.shares
+package proton.android.pass.features.itemcreate.login
 
-import kotlinx.coroutines.flow.Flow
+import me.proton.core.crypto.common.keystore.EncryptedString
 import me.proton.core.domain.entity.UserId
-import proton.android.pass.domain.Share
+import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 
-interface ObserveShare {
-
-    operator fun invoke(userId: UserId? = null, shareId: ShareId): Flow<Share>
-
-}
+data class InitialUpdateLoginUiState(
+    val sharedId: ShareId,
+    val itemId: ItemId,
+    val userId: UserId,
+    val newPassword: EncryptedString
+)

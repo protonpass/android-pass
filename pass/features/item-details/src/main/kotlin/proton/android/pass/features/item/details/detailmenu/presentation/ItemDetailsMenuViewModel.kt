@@ -84,7 +84,7 @@ class ItemDetailsMenuViewModel @Inject constructor(
 
     private val itemFlow = oneShot { getItemById(shareId = shareId, itemId = itemId) }
 
-    private val shareFlow = oneShot { observeShare(shareId).first() }
+    private val shareFlow = oneShot { observeShare(shareId = shareId).first() }
 
     internal val state: StateFlow<ItemDetailsMenuState> = combine(
         actionFlow,

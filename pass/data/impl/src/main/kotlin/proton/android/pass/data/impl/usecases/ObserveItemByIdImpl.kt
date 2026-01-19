@@ -19,8 +19,11 @@
 package proton.android.pass.data.impl.usecases
 
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
+import me.proton.core.domain.entity.UserId
+import me.proton.core.user.domain.usecase.ObserveUser
 import proton.android.pass.data.api.errors.ItemNotFoundError
 import proton.android.pass.data.api.repositories.ItemRepository
 import proton.android.pass.data.api.usecases.ObserveCurrentUser
@@ -32,13 +35,20 @@ import javax.inject.Inject
 
 class ObserveItemByIdImpl @Inject constructor(
     private val observeCurrentUser: ObserveCurrentUser,
+    private val observeUser: ObserveUser,
     private val itemRepository: ItemRepository
 ) : ObserveItemById {
 
-    override fun invoke(shareId: ShareId, itemId: ItemId): Flow<Item> = observeCurrentUser()
-        .flatMapLatest {
-            itemRepository.observeById(it.userId, shareId, itemId)
-                .map { item -> item ?: throw ItemNotFoundError(itemId, shareId) }
-        }
-
+    override fun invoke(
+        userId: UserId?,
+        shareId: ShareId,
+        itemId: ItemId
+    ): Flow<Item> {
+        val f = userId?.let { observeUser(userId = userId).filterNotNull() } ?: observeCurrentUser()
+        return f
+            .flatMapLatest {
+                itemRepository.observeById(it.userId, shareId, itemId)
+                    .map { item -> item ?: throw ItemNotFoundError(itemId, shareId) }
+            }
+    }
 }

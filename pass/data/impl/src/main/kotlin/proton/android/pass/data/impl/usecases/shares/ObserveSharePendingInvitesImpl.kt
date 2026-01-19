@@ -38,7 +38,7 @@ class ObserveSharePendingInvitesImpl @Inject constructor(
 ) : ObserveSharePendingInvites {
 
     override fun invoke(shareId: ShareId, itemId: ItemId?): Flow<List<SharePendingInvite>> =
-        observeShare(shareId).flatMapLatest { share ->
+        observeShare(shareId = shareId).flatMapLatest { share ->
             if (share.isAdmin) {
                 observeCurrentUser().flatMapLatest { user ->
                     shareInvitesRepository.observeSharePendingInvites(user.userId, shareId)

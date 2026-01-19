@@ -38,6 +38,7 @@ import proton.android.pass.features.auth.AuthNavigation
 import proton.android.pass.features.auth.EnterPin
 import proton.android.pass.features.auth.authGraph
 import proton.android.pass.features.itemcreate.login.CREATE_LOGIN_GRAPH
+import proton.android.pass.features.itemcreate.login.EDIT_LOGIN_GRAPH
 import proton.android.pass.navigation.api.rememberAppNavigator
 import proton.android.pass.navigation.api.rememberBottomSheetNavigator
 
@@ -46,14 +47,14 @@ import proton.android.pass.navigation.api.rememberBottomSheetNavigator
 fun AutosaveAppContent(
     modifier: Modifier = Modifier,
     arguments: AutoSaveArguments,
-    needsAuth: Boolean,
+    state: AutoSaveAppViewState.Ready,
     onNavigate: (AutosaveNavigation) -> Unit
 ) {
     val coroutineScope = rememberCoroutineScope()
 
     val bottomSheetJob: MutableState<Job?> = remember { mutableStateOf(null) }
 
-    if (needsAuth) {
+    if (state.needsAuth) {
         val bottomSheetState = rememberModalBottomSheetState(
             initialValue = ModalBottomSheetValue.Hidden,
             skipHalfExpanded = true
@@ -78,6 +79,7 @@ fun AutosaveAppContent(
                                 dismissJob = bottomSheetJob,
                                 block = {}
                             )
+
                             AuthNavigation.Dismissed -> onNavigate(AutosaveNavigation.Cancel)
                             AuthNavigation.Failed -> onNavigate(AutosaveNavigation.Cancel)
                             is AuthNavigation.ForceSignOut ->
@@ -110,26 +112,56 @@ fun AutosaveAppContent(
         val appNavigator = rememberAppNavigator(
             bottomSheetNavigator = rememberBottomSheetNavigator(bottomSheetState)
         )
+
         PassModalBottomSheetLayout(bottomSheetNavigator = appNavigator.passBottomSheetNavigator) {
-            NavHost(
-                modifier = modifier.defaultMinSize(minHeight = 200.dp),
-                navController = appNavigator.navController,
-                startDestination = CREATE_LOGIN_GRAPH
-            ) {
-                autosaveActivityGraph(
-                    appNavigator = appNavigator,
-                    arguments = arguments,
-                    onNavigate = onNavigate,
-                    dismissBottomSheet = { block ->
-                        onBottomSheetDismissed(
-                            coroutineScope = coroutineScope,
-                            modalBottomSheetState = bottomSheetState,
-                            dismissJob = bottomSheetJob,
-                            block = block
+
+            when (state.initialUpdateLoginUiState) {
+                null -> {
+                    NavHost(
+                        modifier = modifier.defaultMinSize(minHeight = 200.dp),
+                        navController = appNavigator.navController,
+                        startDestination = CREATE_LOGIN_GRAPH
+                    ) {
+                        autosaveActivityGraph(
+                            appNavigator = appNavigator,
+                            arguments = arguments,
+                            onNavigate = onNavigate,
+                            dismissBottomSheet = { block ->
+                                onBottomSheetDismissed(
+                                    coroutineScope = coroutineScope,
+                                    modalBottomSheetState = bottomSheetState,
+                                    dismissJob = bottomSheetJob,
+                                    block = block
+                                )
+                            }
                         )
                     }
-                )
+                }
+
+                else -> {
+                    NavHost(
+                        modifier = modifier.defaultMinSize(minHeight = 200.dp),
+                        navController = appNavigator.navController,
+                        startDestination = EDIT_LOGIN_GRAPH
+                    ) {
+                        autosaveActivityGraph(
+                            appNavigator = appNavigator,
+                            arguments = arguments,
+                            onNavigate = onNavigate,
+                            initialUpdateLoginUiState = state.initialUpdateLoginUiState,
+                            dismissBottomSheet = { block ->
+                                onBottomSheetDismissed(
+                                    coroutineScope = coroutineScope,
+                                    modalBottomSheetState = bottomSheetState,
+                                    dismissJob = bottomSheetJob,
+                                    block = block
+                                )
+                            }
+                        )
+                    }
+                }
             }
+
         }
     }
 }

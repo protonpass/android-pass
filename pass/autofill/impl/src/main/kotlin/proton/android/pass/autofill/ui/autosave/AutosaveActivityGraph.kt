@@ -34,6 +34,7 @@ import proton.android.pass.features.itemcreate.login.CreateLoginNavItem
 import proton.android.pass.features.itemcreate.login.CreateLoginNavigation
 import proton.android.pass.features.itemcreate.login.EditLoginNavItem
 import proton.android.pass.features.itemcreate.login.InitialCreateLoginUiState
+import proton.android.pass.features.itemcreate.login.InitialUpdateLoginUiState
 import proton.android.pass.features.itemcreate.login.createUpdateLoginGraph
 import proton.android.pass.features.itemcreate.totp.CameraTotpNavItem
 import proton.android.pass.features.itemcreate.totp.PhotoPickerTotpNavItem
@@ -52,11 +53,13 @@ import proton.android.pass.navigation.api.AppNavigator
 fun NavGraphBuilder.autosaveActivityGraph(
     appNavigator: AppNavigator,
     arguments: AutoSaveArguments,
+    initialUpdateLoginUiState: InitialUpdateLoginUiState? = null,
     onNavigate: (AutosaveNavigation) -> Unit,
     dismissBottomSheet: (() -> Unit) -> Unit
 ) {
     createUpdateLoginGraph(
         initialCreateLoginUiState = getInitialState(arguments),
+        initialUpdateLoginUiState = initialUpdateLoginUiState,
         showCreateAliasButton = false,
         canUseAttachments = false,
         onNavigate = {
@@ -148,8 +151,9 @@ fun NavGraphBuilder.autosaveActivityGraph(
 
                 BaseLoginNavigation.RemovedCustomField -> dismissBottomSheet {}
 
-                // Updates cannot happen
-                is BaseLoginNavigation.OnUpdateLoginEvent -> {}
+                is BaseLoginNavigation.OnUpdateLoginEvent -> {
+                    onNavigate(AutosaveNavigation.Success)
+                }
                 // Aliases not allowed
                 is BaseLoginNavigation.AliasOptions -> {}
                 BaseLoginNavigation.DeleteAlias -> {}

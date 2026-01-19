@@ -75,7 +75,7 @@ class ItemDetailsHandlerImpl @Inject constructor(
         source: ItemDetailsSource,
         savedStateEntries: Map<String, Any?>
     ): Flow<ItemDetailState> = combine(
-        oneShot { observeShare(item.shareId).first() },
+        oneShot { observeShare(shareId = item.shareId).first() },
         attachmentsFlow(item, source),
         detailEventFlow,
         ::Triple

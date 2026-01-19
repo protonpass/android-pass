@@ -41,7 +41,7 @@ import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.navigation.api.NavItem
 import proton.android.pass.navigation.api.composable
 
-private const val EDIT_LOGIN_GRAPH = "edit_login_graph"
+const val EDIT_LOGIN_GRAPH = "edit_login_graph"
 
 object EditLoginNavItem : NavItem(
     baseRoute = "login/edit",
@@ -51,12 +51,17 @@ object EditLoginNavItem : NavItem(
 }
 
 @Suppress("LongParameterList", "LongMethod")
-fun NavGraphBuilder.updateLoginGraph(canUseAttachments: Boolean, onNavigate: (BaseLoginNavigation) -> Unit) {
+fun NavGraphBuilder.updateLoginGraph(
+    canUseAttachments: Boolean,
+    initialUpdateLoginUiState: InitialUpdateLoginUiState? = null,
+    onNavigate: (BaseLoginNavigation) -> Unit
+) {
     navigation(
         route = EDIT_LOGIN_GRAPH,
         startDestination = EditLoginNavItem.route
     ) {
         composable(EditLoginNavItem) { navBackStack ->
+
             val navTotpUri by navBackStack.savedStateHandle
                 .getStateFlow<String?>(TOTP_NAV_PARAMETER_KEY, null)
                 .collectAsStateWithLifecycle()
@@ -86,7 +91,8 @@ fun NavGraphBuilder.updateLoginGraph(canUseAttachments: Boolean, onNavigate: (Ba
                 navTotpUri = navTotpUri,
                 navTotpIndex = navTotpIndex,
                 canUseAttachments = canUseAttachments,
-                onNavigate = onNavigate
+                onNavigate = onNavigate,
+                initialUpdateLoginUiState = initialUpdateLoginUiState
             )
         }
 

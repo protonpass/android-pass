@@ -22,6 +22,7 @@ import androidx.navigation.NavGraphBuilder
 
 fun NavGraphBuilder.createUpdateLoginGraph(
     initialCreateLoginUiState: InitialCreateLoginUiState = InitialCreateLoginUiState(),
+    initialUpdateLoginUiState: InitialUpdateLoginUiState? = null,
     showCreateAliasButton: Boolean,
     canUseAttachments: Boolean,
     onNavigate: (BaseLoginNavigation) -> Unit
@@ -34,6 +35,7 @@ fun NavGraphBuilder.createUpdateLoginGraph(
     )
     updateLoginGraph(
         canUseAttachments = canUseAttachments,
+        initialUpdateLoginUiState = initialUpdateLoginUiState,
         onNavigate = onNavigate
     )
 }

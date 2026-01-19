@@ -69,7 +69,7 @@ class ManageItemViewModel @Inject constructor(
 
     private val eventFlow = MutableStateFlow<ManageItemEvent>(ManageItemEvent.Idle)
 
-    private val shareFlow = oneShot { observeShare(shareId).first() }
+    private val shareFlow = oneShot { observeShare(shareId = shareId).first() }
 
     private val refreshShareItemMembersFlow = MutableStateFlow(value = false)
 

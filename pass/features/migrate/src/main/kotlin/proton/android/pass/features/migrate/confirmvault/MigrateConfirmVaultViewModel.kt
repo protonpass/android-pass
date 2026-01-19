@@ -111,7 +111,7 @@ class MigrateConfirmVaultViewModel @Inject constructor(
     private val shareId = ShareId(savedStateHandle.require(DestinationShareNavArgId.key))
     private val canDisplayWarningVaultSharedDialogFlow = combine(
         settingsRepository.hasShownItemInSharedVaultWarning(),
-        observeShare(shareId)
+        observeShare(shareId = shareId)
     ) { hasShownItemInSharedVaultWarning, share ->
         !hasShownItemInSharedVaultWarning && share.shared
     }.onStart { emit(false) }

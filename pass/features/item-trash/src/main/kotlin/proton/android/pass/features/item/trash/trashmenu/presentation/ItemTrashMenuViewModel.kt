@@ -79,7 +79,7 @@ class ItemTrashMenuViewModel @Inject constructor(
             favIconsPreference.value()
         }
 
-    private val shareOptionFlow = oneShot { observeShare(shareId).first() }
+    private val shareOptionFlow = oneShot { observeShare(shareId = shareId).first() }
         .mapLatest(::Some)
 
     private val itemUiModelOptionFlow = oneShot { getItemById(shareId = shareId, itemId = itemId) }

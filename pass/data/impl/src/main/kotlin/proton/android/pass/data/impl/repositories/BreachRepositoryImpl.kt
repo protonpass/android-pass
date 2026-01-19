@@ -222,7 +222,7 @@ class BreachRepositoryImpl @Inject constructor(
     }
 
     override fun observeAliasEmail(userId: UserId, aliasEmailId: AliasEmailId): Flow<BreachEmailReport.Alias> = combine(
-        observeItemById(aliasEmailId.shareId, aliasEmailId.itemId)
+        observeItemById(shareId = aliasEmailId.shareId, itemId = aliasEmailId.itemId)
             .map { item ->
                 item ?: throw ItemNotFoundError(aliasEmailId.itemId, aliasEmailId.shareId)
             },

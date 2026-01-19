@@ -19,6 +19,7 @@
 package proton.android.pass.data.impl.usecases.assetlink
 
 import proton.android.pass.commonrust.api.DomainManager
+import proton.android.pass.data.api.errors.ResponseSizeExceededError
 import proton.android.pass.data.api.repositories.AssetLinkRepository
 import proton.android.pass.data.impl.util.runConcurrently
 import proton.android.pass.domain.assetlink.AssetLink
@@ -40,6 +41,13 @@ class UpdateAssetLinkImpl @Inject constructor(
         )
         val (successes, failures) = results.partition { it.isSuccess }
         if (failures.isNotEmpty()) {
+            // Count and log size-specific errors
+            val sizeErrors = failures.count {
+                it.exceptionOrNull() is ResponseSizeExceededError
+            }
+            if (sizeErrors > 0) {
+                PassLogger.w(TAG, "$sizeErrors websites returned oversized responses")
+            }
             PassLogger.w(
                 TAG,
                 "${failures.size} from ${results.size} websites failed to get asset links"

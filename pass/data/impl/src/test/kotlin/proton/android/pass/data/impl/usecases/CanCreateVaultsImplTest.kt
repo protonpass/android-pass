@@ -26,6 +26,7 @@ import org.junit.Before
 import org.junit.Test
 import proton.android.pass.common.api.Some
 import proton.android.pass.data.fakes.usecases.FakeGetUserPlan
+import proton.android.pass.data.fakes.usecases.FakeObserveCurrentUser
 import proton.android.pass.data.fakes.usecases.FakeObserveVaults
 import proton.android.pass.data.fakes.usecases.organizations.FakeObserveOrganizationVaultsPolicy
 import proton.android.pass.data.impl.usecases.capabilities.CanCreateVaultImpl
@@ -39,6 +40,7 @@ import proton.android.pass.domain.VaultId
 import proton.android.pass.domain.organizations.OrganizationVaultCreateMode
 import proton.android.pass.domain.organizations.OrganizationVaultsPolicy
 import proton.android.pass.test.FixedClock
+import proton.android.pass.test.domain.UserTestFactory
 import java.util.Date
 
 internal class CanCreateVaultsImplTest {
@@ -48,6 +50,7 @@ internal class CanCreateVaultsImplTest {
     private lateinit var observeOrganizationVaultsPolicy: FakeObserveOrganizationVaultsPolicy
     private lateinit var observeVaults: FakeObserveVaults
     private lateinit var currentUserPlan: FakeGetUserPlan
+    private lateinit var observeCurrentUser: FakeObserveCurrentUser
     private lateinit var clock: FixedClock
 
     @Before
@@ -55,12 +58,16 @@ internal class CanCreateVaultsImplTest {
         observeOrganizationVaultsPolicy = FakeObserveOrganizationVaultsPolicy()
         observeVaults = FakeObserveVaults()
         currentUserPlan = FakeGetUserPlan()
+        observeCurrentUser = FakeObserveCurrentUser()
         clock = FixedClock()
+
+        observeCurrentUser.sendUser(UserTestFactory.create(email = "test@test.test", name = "test user"))
 
         instance = CanCreateVaultImpl(
             observeOrganizationVaultsPolicy = observeOrganizationVaultsPolicy,
             observeVaults = observeVaults,
-            currentUserPlan = currentUserPlan
+            currentUserPlan = currentUserPlan,
+            observeCurrentUser = observeCurrentUser
         )
     }
 

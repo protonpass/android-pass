@@ -20,10 +20,4 @@ package proton.android.pass.domain.organizations
 
 data class OrganizationVaultsPolicy(
     val vaultCreateMode: OrganizationVaultCreateMode
-) {
-    val canCreateVault: Boolean = when (vaultCreateMode) {
-        OrganizationVaultCreateMode.AllUsers -> true
-        OrganizationVaultCreateMode.OnlyOrganizationAdmin -> false
-        OrganizationVaultCreateMode.OnlyOrgAdminsAndPersonalVault -> true // only the personal one
-    }
-}
+)

@@ -93,7 +93,7 @@ class InAppReviewManagerImpl @Inject constructor(
         const val TIMES_USED = 3
 
         @VisibleForTesting
-        const val FREE_USER_ITEM_CREATED_TRIGGER = 10
+        const val FREE_USER_ITEM_CREATED_TRIGGER = 5
 
         @VisibleForTesting
         const val PAID_USER_ITEM_CREATED_TRIGGER = 5

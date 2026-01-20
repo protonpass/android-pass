@@ -186,7 +186,8 @@ abstract class BaseCustomItemViewModel(
     private val isItemSavedState = MutableStateFlow<ItemSavedState>(ItemSavedState.Unknown)
     private val focusedFieldState = MutableStateFlow<Option<CustomFieldIdentifier>>(None)
     private val isSshKeyGeneratingState = MutableStateFlow(false)
-    private val isSshKeyFieldFocusedState = MutableStateFlow(false)
+    private val isPublicKeyFocusedState = MutableStateFlow(false)
+    private val isPrivateKeyFocusedState = MutableStateFlow(false)
 
     protected fun processCommonIntent(intent: BaseCustomItemCommonIntent) {
         when (intent) {
@@ -658,7 +659,15 @@ abstract class BaseCustomItemViewModel(
                 onUserEditedContent()
                 onPublicKeyChange(components.publicKey)
                 val privateKey = encryptionContextProvider.withEncryptionContext {
-                    UIHiddenState.Concealed(encrypt(components.privateKey))
+                    val encrypted = encrypt(components.privateKey)
+                    if (isPrivateKeyFocusedState.value) {
+                        UIHiddenState.Revealed(
+                            encrypted = encrypted,
+                            clearText = components.privateKey
+                        )
+                    } else {
+                        UIHiddenState.Concealed(encrypted)
+                    }
                 }
                 val updatedStaticFields = (itemFormState.itemStaticFields as ItemStaticFields.SSHKey)
                     .copy(privateKey = privateKey)
@@ -696,11 +705,11 @@ abstract class BaseCustomItemViewModel(
     }
 
     private fun onPublicKeyFocusedChange(isFocused: Boolean) {
-        isSshKeyFieldFocusedState.update { isFocused }
+        isPublicKeyFocusedState.update { isFocused }
     }
 
     private fun onPrivateKeyFocusedChange(isFocused: Boolean) {
-        isSshKeyFieldFocusedState.update { isFocused }
+        isPrivateKeyFocusedState.update { isFocused }
         val sshKeyFields = itemFormState.itemStaticFields as ItemStaticFields.SSHKey
         itemFormState = itemFormState.copy(
             itemStaticFields = sshKeyFields.copy(
@@ -728,9 +737,11 @@ abstract class BaseCustomItemViewModel(
         userPreferencesRepository.observeDisplayFileAttachmentsOnboarding(),
         attachmentsHandler.attachmentState,
         isSshKeyGeneratingState,
-        isSshKeyFieldFocusedState
+        isPublicKeyFocusedState,
+        isPrivateKeyFocusedState
     ) { isLoading, hasEdited, errors, savedState, lastAddedField, canPerformPaidAction,
-        displayFileAttachmentsOnboarding, attachmentsState, isSshKeyGenerating, isSshKeyFieldFocused ->
+        displayFileAttachmentsOnboarding, attachmentsState, isSshKeyGenerating,
+        isPublicKeyFocused, isPrivateKeyFocused ->
         ItemSharedUiState(
             isLoadingState = isLoading,
             hasUserEditedContent = hasEdited,
@@ -741,7 +752,8 @@ abstract class BaseCustomItemViewModel(
             displayFileAttachmentsOnboarding = displayFileAttachmentsOnboarding.value(),
             attachmentsState = attachmentsState,
             isSshKeyGenerating = isSshKeyGenerating,
-            isSshKeyFieldFocused = isSshKeyFieldFocused
+            isPublicKeyFocused = isPublicKeyFocused,
+            isPrivateKeyFocused = isPrivateKeyFocused
         )
     }
 

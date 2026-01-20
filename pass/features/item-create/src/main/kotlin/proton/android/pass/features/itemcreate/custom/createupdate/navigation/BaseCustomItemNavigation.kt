@@ -96,8 +96,7 @@ sealed interface BaseCustomItemNavigation {
     @JvmInline
     value class WifiSecurityTypeSelected(val wifiSecurityType: WifiSecurityType) : BaseCustomItemNavigation
 
-    @JvmInline
-    value class OpenSshKeyTypeSelector(val sshKeyType: SshKeyType) : BaseCustomItemNavigation
+    data object OpenSshKeyTypeSelector : BaseCustomItemNavigation
 
     @JvmInline
     value class SshKeyTypeSelected(val sshKeyType: SshKeyType) : BaseCustomItemNavigation

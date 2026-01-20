@@ -18,23 +18,12 @@
 
 package proton.android.pass.features.itemcreate.custom.selectsshkeytype.navigation
 
-import androidx.navigation.NavType
-import proton.android.pass.domain.SshKeyType
-import proton.android.pass.navigation.api.NavArgId
 import proton.android.pass.navigation.api.NavItem
 import proton.android.pass.navigation.api.NavItemType
 
 const val SSH_KEY_TYPE_PARAMETER_KEY = "sshKeyType"
 
-internal object SelectedSshKeyTypeNavArgId : NavArgId {
-    override val key = "selectedSshKeyType"
-    override val navType = NavType.IntType
-}
-
 object SelectSshKeyTypeNavItem : NavItem(
     baseRoute = "customitem/selectsshkeytype/bottomsheet",
-    navArgIds = listOf(SelectedSshKeyTypeNavArgId),
     navItemType = NavItemType.Bottomsheet
-) {
-    fun createNavRoute(sshKeyType: SshKeyType) = "$baseRoute/${sshKeyType.id}"
-}
+)

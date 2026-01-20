@@ -123,6 +123,8 @@ import proton.android.pass.features.itemcreate.custom.createupdate.navigation.Cr
 import proton.android.pass.features.itemcreate.custom.createupdate.navigation.UpdateCustomItemNavItem
 import proton.android.pass.features.itemcreate.custom.createupdate.navigation.UpdateCustomItemNavigation
 import proton.android.pass.features.itemcreate.custom.createupdate.navigation.createUpdateCustomItemGraph
+import proton.android.pass.features.itemcreate.custom.selectsshkeytype.navigation.SSH_KEY_TYPE_PARAMETER_KEY
+import proton.android.pass.features.itemcreate.custom.selectsshkeytype.navigation.SelectSshKeyTypeNavItem
 import proton.android.pass.features.itemcreate.custom.selecttemplate.navigation.SelectTemplateNavItem
 import proton.android.pass.features.itemcreate.custom.selecttemplate.navigation.SelectTemplateNavigation
 import proton.android.pass.features.itemcreate.custom.selecttemplate.navigation.selectTemplateGraph
@@ -1790,6 +1792,18 @@ fun NavGraphBuilder.appGraph(
                                 to it.wifiSecurityType.id
                         )
                     )
+                }
+            }
+
+            is BaseCustomItemNavigation.OpenSshKeyTypeSelector ->
+                appNavigator.navigate(
+                    destination = SelectSshKeyTypeNavItem,
+                    route = SelectSshKeyTypeNavItem.createNavRoute(it.sshKeyType)
+                )
+
+            is BaseCustomItemNavigation.SshKeyTypeSelected -> {
+                dismissBottomSheet {
+                    appNavigator.setResult(mapOf(SSH_KEY_TYPE_PARAMETER_KEY to it.sshKeyType.id))
                 }
             }
         }

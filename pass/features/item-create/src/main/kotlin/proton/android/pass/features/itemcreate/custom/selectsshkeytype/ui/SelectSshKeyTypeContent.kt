@@ -22,52 +22,35 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import kotlinx.collections.immutable.toPersistentList
-import me.proton.core.compose.theme.ProtonTheme
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItem
-import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemIcon
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemList
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemTitle
 import proton.android.pass.composecomponents.impl.bottomsheet.withDividers
 import proton.android.pass.domain.SshKeyType
 import proton.android.pass.features.itemcreate.R
-import me.proton.core.presentation.R as CoreR
 
 @Composable
-fun SelectSshKeyTypeContent(
-    modifier: Modifier = Modifier,
-    selectedSshKeyType: SshKeyType,
-    onSelect: (SshKeyType) -> Unit
-) {
+fun SelectSshKeyTypeContent(modifier: Modifier = Modifier, onSelect: (SshKeyType) -> Unit) {
     BottomSheetItemList(
         modifier = modifier,
         items = SshKeyType.entries.map {
-            sshKeyTypeRow(it, it == selectedSshKeyType, onSelect)
+            sshKeyTypeRow(it, onSelect)
         }.withDividers().toPersistentList()
     )
 }
 
-private fun sshKeyTypeRow(
-    sshKeyType: SshKeyType,
-    isSelected: Boolean,
-    onClick: (SshKeyType) -> Unit
-): BottomSheetItem = object : BottomSheetItem {
-    override val title: @Composable () -> Unit
-        get() = {
-            BottomSheetItemTitle(text = getSshKeyTypeText(sshKeyType))
-        }
-    override val subtitle: (@Composable () -> Unit)? = null
-    override val leftIcon: (@Composable () -> Unit)? = null
-    override val endIcon: @Composable (() -> Unit)? = if (isSelected) {
-        {
-            BottomSheetItemIcon(
-                iconId = CoreR.drawable.ic_proton_checkmark,
-                tint = ProtonTheme.colors.textNorm
-            )
-        }
-    } else null
-    override val onClick: () -> Unit = { onClick(sshKeyType) }
-    override val isDivider = false
-}
+private fun sshKeyTypeRow(sshKeyType: SshKeyType, onClick: (SshKeyType) -> Unit): BottomSheetItem =
+    object : BottomSheetItem {
+        override val title: @Composable () -> Unit
+            get() = {
+                BottomSheetItemTitle(text = getSshKeyTypeText(sshKeyType))
+            }
+        override val subtitle: (@Composable () -> Unit)? = null
+        override val leftIcon: (@Composable () -> Unit)? = null
+        override val endIcon: @Composable (() -> Unit)? = null
+        override val onClick: () -> Unit = { onClick(sshKeyType) }
+        override val isDivider = false
+    }
 
 @Composable
 private fun getSshKeyTypeText(type: SshKeyType): String = when (type) {

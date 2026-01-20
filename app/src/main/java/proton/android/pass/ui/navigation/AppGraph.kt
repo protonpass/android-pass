@@ -1795,11 +1795,8 @@ fun NavGraphBuilder.appGraph(
                 }
             }
 
-            is BaseCustomItemNavigation.OpenSshKeyTypeSelector ->
-                appNavigator.navigate(
-                    destination = SelectSshKeyTypeNavItem,
-                    route = SelectSshKeyTypeNavItem.createNavRoute(it.sshKeyType)
-                )
+            BaseCustomItemNavigation.OpenSshKeyTypeSelector ->
+                appNavigator.navigate(SelectSshKeyTypeNavItem)
 
             is BaseCustomItemNavigation.SshKeyTypeSelected -> {
                 dismissBottomSheet {

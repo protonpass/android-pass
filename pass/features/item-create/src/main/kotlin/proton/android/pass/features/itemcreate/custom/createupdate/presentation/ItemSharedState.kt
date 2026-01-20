@@ -38,7 +38,8 @@ data class ItemSharedUiState(
     val displayFileAttachmentsOnboarding: Boolean,
     val attachmentsState: AttachmentsState,
     val isSshKeyGenerating: Boolean = false,
-    val isSshKeyFieldFocused: Boolean = false
+    val isPublicKeyFocused: Boolean = false,
+    val isPrivateKeyFocused: Boolean = false
 ) {
 
     val showFileAttachmentsBanner = displayFileAttachmentsOnboarding
@@ -54,7 +55,8 @@ data class ItemSharedUiState(
             displayFileAttachmentsOnboarding = false,
             attachmentsState = AttachmentsState.Initial,
             isSshKeyGenerating = false,
-            isSshKeyFieldFocused = false
+            isPublicKeyFocused = false,
+            isPrivateKeyFocused = false
         )
     }
 }

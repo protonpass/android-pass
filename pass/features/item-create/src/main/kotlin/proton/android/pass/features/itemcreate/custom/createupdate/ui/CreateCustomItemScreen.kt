@@ -316,8 +316,8 @@ fun CreateCustomItemScreen(
                     is ItemContentEvent.OnOpenWifiSecurityType ->
                         onNavigate(OpenWifiSecurityTypeSelector(it.wifiSecurityType))
 
-                    is ItemContentEvent.OnOpenSshKeyType ->
-                        onNavigate(BaseCustomItemNavigation.OpenSshKeyTypeSelector(it.sshKeyType))
+                    ItemContentEvent.OnOpenSshKeyType ->
+                        onNavigate(BaseCustomItemNavigation.OpenSshKeyTypeSelector)
 
                 }
             }

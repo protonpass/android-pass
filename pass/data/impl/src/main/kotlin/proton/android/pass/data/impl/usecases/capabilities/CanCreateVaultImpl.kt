@@ -20,10 +20,13 @@ package proton.android.pass.data.impl.usecases.capabilities
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
+import me.proton.core.user.domain.entity.User
+import me.proton.core.user.domain.extension.isOrganizationAdmin
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
 import proton.android.pass.data.api.usecases.GetUserPlan
+import proton.android.pass.data.api.usecases.ObserveCurrentUser
 import proton.android.pass.data.api.usecases.ObserveVaults
 import proton.android.pass.data.api.usecases.capabilities.CanCreateVault
 import proton.android.pass.data.api.usecases.organization.ObserveOrganizationVaultsPolicy
@@ -39,20 +42,23 @@ import javax.inject.Singleton
 class CanCreateVaultImpl @Inject constructor(
     private val observeOrganizationVaultsPolicy: ObserveOrganizationVaultsPolicy,
     private val observeVaults: ObserveVaults,
-    private val currentUserPlan: GetUserPlan
+    private val currentUserPlan: GetUserPlan,
+    private val observeCurrentUser: ObserveCurrentUser
 ) : CanCreateVault {
 
     override fun invoke(): Flow<Boolean> = combine(
         observeOrganizationVaultsPolicy(),
         observeVaults(includeHidden = true),
         currentUserPlan(),
+        observeCurrentUser(),
         ::transformVaultCheck
     )
 
     private fun transformVaultCheck(
         organizationVaultsPolicyOption: Option<OrganizationVaultsPolicy>,
         vaults: List<Vault>,
-        plan: Plan
+        plan: Plan,
+        currentUser: User
     ): Boolean {
         return when (organizationVaultsPolicyOption) {
             None -> false
@@ -65,7 +71,9 @@ class CanCreateVaultImpl @Inject constructor(
                         }
                     }
 
-                    OrganizationVaultCreateMode.OnlyOrganizationAdmin -> false
+                    OrganizationVaultCreateMode.OnlyOrganizationAdmin -> {
+                        currentUser.isOrganizationAdmin()
+                    }
                     OrganizationVaultCreateMode.OnlyOrgAdminsAndPersonalVault -> {
                         vaults.none { it.isOwned }
                     }

@@ -35,5 +35,6 @@ internal enum class CustomItemSnackbarMessage(
     ItemUpdated(R.string.update_custom_item_item_creation_success, SnackbarType.SUCCESS),
     AttachmentsInitError(R.string.update_custom_item_attachments_init_error, SnackbarType.ERROR),
     ItemLinkAttachmentsError(R.string.custom_item_link_attachments_error, SnackbarType.ERROR),
-    ItemRenameAttachmentsError(R.string.custom_item_rename_attachments_error, SnackbarType.ERROR)
+    ItemRenameAttachmentsError(R.string.custom_item_rename_attachments_error, SnackbarType.ERROR),
+    SshKeyGenerationError(R.string.ssh_key_generation_error, SnackbarType.ERROR)
 }

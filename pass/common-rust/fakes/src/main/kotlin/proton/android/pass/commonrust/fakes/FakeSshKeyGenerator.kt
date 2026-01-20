@@ -29,6 +29,8 @@ class FakeSshKeyGenerator @Inject constructor() : SshKeyGenerator {
 
     override suspend fun generateSshKey(type: SshKeyType): SshKeyComponents = SshKeyComponents(
         publicKey = "ssh-${type.name.lowercase()} fake-public-key user@host",
-        privateKey = "-----BEGIN OPENSSH PRIVATE KEY-----\nfake-private-key-${type.name.lowercase()}\n-----END OPENSSH PRIVATE KEY-----"
+        privateKey = "-----BEGIN OPENSSH PRIVATE KEY-----\n" +
+            "fake-private-key-${type.name.lowercase()}\n" +
+            "-----END OPENSSH PRIVATE KEY-----"
     )
 }

@@ -109,6 +109,9 @@ sealed interface BaseCustomItemCommonIntent : BaseItemFormIntent {
     value class OnPasswordFocusedChanged(val isFocused: Boolean) : BaseCustomItemCommonIntent
 
     @JvmInline
+    value class OnPublicKeyFocusedChanged(val isFocused: Boolean) : BaseCustomItemCommonIntent
+
+    @JvmInline
     value class OnPrivateKeyFocusedChanged(val isFocused: Boolean) : BaseCustomItemCommonIntent
 
     data class OnCustomFieldChanged(
@@ -183,6 +186,7 @@ abstract class BaseCustomItemViewModel(
     private val isItemSavedState = MutableStateFlow<ItemSavedState>(ItemSavedState.Unknown)
     private val focusedFieldState = MutableStateFlow<Option<CustomFieldIdentifier>>(None)
     private val isSshKeyGeneratingState = MutableStateFlow(false)
+    private val isSshKeyFieldFocusedState = MutableStateFlow(false)
 
     protected fun processCommonIntent(intent: BaseCustomItemCommonIntent) {
         when (intent) {
@@ -211,6 +215,9 @@ abstract class BaseCustomItemViewModel(
                 onWifiSecurityTypeChange(intent.value)
             is BaseCustomItemCommonIntent.OnPasswordFocusedChanged ->
                 onPasswordFocusedChange(intent.isFocused)
+
+            is BaseCustomItemCommonIntent.OnPublicKeyFocusedChanged ->
+                onPublicKeyFocusedChange(intent.isFocused)
 
             is BaseCustomItemCommonIntent.OnPrivateKeyFocusedChanged ->
                 onPrivateKeyFocusedChange(intent.isFocused)
@@ -688,7 +695,12 @@ abstract class BaseCustomItemViewModel(
         itemFormState = itemFormState.copy(itemStaticFields = updatedStaticFields)
     }
 
+    private fun onPublicKeyFocusedChange(isFocused: Boolean) {
+        isSshKeyFieldFocusedState.update { isFocused }
+    }
+
     private fun onPrivateKeyFocusedChange(isFocused: Boolean) {
+        isSshKeyFieldFocusedState.update { isFocused }
         val sshKeyFields = itemFormState.itemStaticFields as ItemStaticFields.SSHKey
         itemFormState = itemFormState.copy(
             itemStaticFields = sshKeyFields.copy(
@@ -715,9 +727,10 @@ abstract class BaseCustomItemViewModel(
         canPerformPaidAction(),
         userPreferencesRepository.observeDisplayFileAttachmentsOnboarding(),
         attachmentsHandler.attachmentState,
-        isSshKeyGeneratingState
+        isSshKeyGeneratingState,
+        isSshKeyFieldFocusedState
     ) { isLoading, hasEdited, errors, savedState, lastAddedField, canPerformPaidAction,
-        displayFileAttachmentsOnboarding, attachmentsState, isSshKeyGenerating ->
+        displayFileAttachmentsOnboarding, attachmentsState, isSshKeyGenerating, isSshKeyFieldFocused ->
         ItemSharedUiState(
             isLoadingState = isLoading,
             hasUserEditedContent = hasEdited,
@@ -727,7 +740,8 @@ abstract class BaseCustomItemViewModel(
             canCreateItem = canPerformPaidAction,
             displayFileAttachmentsOnboarding = displayFileAttachmentsOnboarding.value(),
             attachmentsState = attachmentsState,
-            isSshKeyGenerating = isSshKeyGenerating
+            isSshKeyGenerating = isSshKeyGenerating,
+            isSshKeyFieldFocused = isSshKeyFieldFocused
         )
     }
 

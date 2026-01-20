@@ -18,30 +18,12 @@
 
 package proton.android.pass.features.itemcreate.custom.createupdate.ui
 
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
-import androidx.compose.material.CircularProgressIndicator
-import androidx.compose.material.Icon
-import androidx.compose.material.Text
-import androidx.compose.material.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.unit.dp
-import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.composecomponents.impl.container.roundedContainerNorm
 import proton.android.pass.composecomponents.impl.form.PassDivider
-import proton.android.pass.domain.SshKeyType
-import proton.android.pass.features.itemcreate.R
 import proton.android.pass.features.itemcreate.custom.createupdate.presentation.ItemStaticFields
-import me.proton.core.presentation.R as CoreR
 
 @Composable
 internal fun SSHKeyContent(
@@ -52,40 +34,14 @@ internal fun SSHKeyContent(
     onEvent: (ItemContentEvent) -> Unit
 ) {
     Column(modifier = modifier.roundedContainerNorm()) {
-        if (isEditAllowed) {
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(Spacing.medium),
-                horizontalArrangement = Arrangement.End
-            ) {
-                if (isGenerating) {
-                    CircularProgressIndicator(
-                        modifier = Modifier.size(24.dp)
-                    )
-                } else {
-                    TextButton(
-                        onClick = {
-                            onEvent(ItemContentEvent.OnOpenSshKeyType(SshKeyType.ED25519))
-                        }
-                    ) {
-                        Icon(
-                            painter = painterResource(CoreR.drawable.ic_proton_key),
-                            contentDescription = null
-                        )
-                        Spacer(Modifier.width(Spacing.small))
-                        Text(stringResource(R.string.ssh_key_generate_button))
-                    }
-                }
-            }
-            PassDivider()
-        }
-
         PublicKeyInput(
             text = itemStaticFields.publicKey,
             isEditAllowed = isEditAllowed,
             onChange = {
                 onEvent(ItemContentEvent.OnFieldValueChange(FieldChange.PublicKey, it))
+            },
+            onFocusChange = {
+                onEvent(ItemContentEvent.OnFieldFocusChange(FieldChange.PublicKey, it))
             }
         )
 

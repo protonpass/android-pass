@@ -26,6 +26,7 @@ import proton.android.pass.commonrust.api.AliasPrefixValidator
 import proton.android.pass.commonrust.api.EmailValidator
 import proton.android.pass.commonrust.api.NewUserInviteSignatureBodyCreator
 import proton.android.pass.commonrust.api.PasswordScorer
+import proton.android.pass.commonrust.api.SshKeyGenerator
 import proton.android.pass.commonrust.api.WifiNetworkQRGenerator
 import proton.android.pass.commonrust.api.passwords.PasswordGenerator
 import proton.android.pass.commonrust.api.passwords.strengths.PasswordStrengthCalculator
@@ -58,5 +59,8 @@ abstract class FakesCommonRustModule {
 
     @[Binds Singleton]
     abstract fun bindWifiNetworkQRGenerator(calculator: FakeWifiNetworkQRGenerator): WifiNetworkQRGenerator
+
+    @[Binds Singleton]
+    abstract fun bindSshKeyGenerator(impl: FakeSshKeyGenerator): SshKeyGenerator
 
 }

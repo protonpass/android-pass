@@ -126,6 +126,9 @@ interface ItemSharedProperties {
 
     val isSshKeyGenerating: Boolean
         get() = sharedState.isSshKeyGenerating
+
+    val isSshKeyFieldFocused: Boolean
+        get() = sharedState.isSshKeyFieldFocused
 }
 
 val EMPTY_SHARED_STATE = ItemSharedUiState(
@@ -136,5 +139,7 @@ val EMPTY_SHARED_STATE = ItemSharedUiState(
     canCreateItem = false,
     displayFileAttachmentsOnboarding = false,
     focusedField = None,
-    attachmentsState = AttachmentsState.Initial
+    attachmentsState = AttachmentsState.Initial,
+    isSshKeyGenerating = false,
+    isSshKeyFieldFocused = false
 )

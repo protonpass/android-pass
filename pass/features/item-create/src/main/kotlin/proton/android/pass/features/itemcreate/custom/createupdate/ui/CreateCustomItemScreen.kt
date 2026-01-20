@@ -62,6 +62,7 @@ import proton.android.pass.features.itemcreate.custom.createupdate.presentation.
 import proton.android.pass.features.itemcreate.custom.createupdate.presentation.BaseCustomItemCommonIntent.OnPrivateKeyChanged
 import proton.android.pass.features.itemcreate.custom.createupdate.presentation.BaseCustomItemCommonIntent.OnPrivateKeyFocusedChanged
 import proton.android.pass.features.itemcreate.custom.createupdate.presentation.BaseCustomItemCommonIntent.OnPublicKeyChanged
+import proton.android.pass.features.itemcreate.custom.createupdate.presentation.BaseCustomItemCommonIntent.OnPublicKeyFocusedChanged
 import proton.android.pass.features.itemcreate.custom.createupdate.presentation.BaseCustomItemCommonIntent.OnReceiveTotp
 import proton.android.pass.features.itemcreate.custom.createupdate.presentation.BaseCustomItemCommonIntent.OnReceiveWifiSecurityType
 import proton.android.pass.features.itemcreate.custom.createupdate.presentation.BaseCustomItemCommonIntent.OnSSIDChanged
@@ -171,6 +172,9 @@ fun CreateCustomItemScreen(
                     is ItemContentEvent.OnFieldFocusChange -> when (it.field) {
                         FieldChange.Password ->
                             viewModel.processIntent(OnPasswordFocusedChanged(it.isFocused))
+
+                        FieldChange.PublicKey ->
+                            viewModel.processIntent(OnPublicKeyFocusedChanged(it.isFocused))
 
                         FieldChange.PrivateKey ->
                             viewModel.processIntent(OnPrivateKeyFocusedChanged(it.isFocused))

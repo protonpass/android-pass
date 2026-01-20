@@ -36,7 +36,8 @@ internal fun PublicKeyInput(
     modifier: Modifier = Modifier,
     text: String,
     isEditAllowed: Boolean,
-    onChange: (String) -> Unit
+    onChange: (String) -> Unit,
+    onFocusChange: (Boolean) -> Unit
 ) {
     ProtonTextField(
         modifier = modifier.padding(
@@ -49,7 +50,7 @@ internal fun PublicKeyInput(
         editable = isEditAllowed,
         singleLine = false,
         onChange = onChange,
-        onFocusChange = {},
+        onFocusChange = onFocusChange,
         textStyle = ProtonTheme.typography.defaultNorm(isEditAllowed),
         trailingIcon = {
             if (text.isNotEmpty()) {

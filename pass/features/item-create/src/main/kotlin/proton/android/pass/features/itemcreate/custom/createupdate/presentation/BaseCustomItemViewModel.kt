@@ -54,6 +54,7 @@ import proton.android.pass.domain.CustomFieldType
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.SshKeyType
 import proton.android.pass.domain.WifiSecurityType
 import proton.android.pass.domain.attachments.FileMetadata
 import proton.android.pass.features.itemcreate.ItemSavedState
@@ -144,6 +145,9 @@ sealed interface BaseCustomItemCommonIntent : BaseItemFormIntent {
     ) : BaseCustomItemCommonIntent
 
     data class OnReceiveWifiSecurityType(val type: WifiSecurityType) : BaseCustomItemCommonIntent
+
+    @JvmInline
+    value class OnGenerateSshKey(val type: SshKeyType) : BaseCustomItemCommonIntent
 }
 
 @Suppress("TooManyFunctions", "LargeClass")
@@ -160,6 +164,7 @@ abstract class BaseCustomItemViewModel(
     private val appDispatchers: AppDispatchers,
     private val canPerformPaidAction: CanPerformPaidAction,
     private val customItemFormProcessor: CustomItemFormProcessor,
+    private val sshKeyGenerator: proton.android.pass.commonrust.api.SshKeyGenerator,
     savedStateHandleProvider: SavedStateHandleProvider
 ) : ViewModel() {
 
@@ -177,6 +182,7 @@ abstract class BaseCustomItemViewModel(
     private val validationErrorsState = MutableStateFlow(emptySet<ValidationError>())
     private val isItemSavedState = MutableStateFlow<ItemSavedState>(ItemSavedState.Unknown)
     private val focusedFieldState = MutableStateFlow<Option<CustomFieldIdentifier>>(None)
+    private val isSshKeyGeneratingState = MutableStateFlow(false)
 
     protected fun processCommonIntent(intent: BaseCustomItemCommonIntent) {
         when (intent) {
@@ -214,6 +220,7 @@ abstract class BaseCustomItemViewModel(
                 onReceiveTotp(intent.uri, intent.sectionIndex, intent.index)
             is BaseCustomItemCommonIntent.OnReceiveWifiSecurityType ->
                 onReceiveWifiSecurityType(intent.type)
+            is BaseCustomItemCommonIntent.OnGenerateSshKey -> onGenerateSshKey(intent.type)
         }
     }
 
@@ -636,6 +643,27 @@ abstract class BaseCustomItemViewModel(
         itemFormState = itemFormState.copy(itemStaticFields = updatedStaticFields)
     }
 
+    private fun onGenerateSshKey(type: SshKeyType) {
+        viewModelScope.launch {
+            isSshKeyGeneratingState.update { true }
+            safeRunCatching {
+                val components = sshKeyGenerator.generateSshKey(type)
+                onPublicKeyChange(components.publicKey)
+                onPrivateKeyChange(components.privateKey)
+            }.fold(
+                onSuccess = {
+                    isSshKeyGeneratingState.update { false }
+                },
+                onFailure = { e ->
+                    PassLogger.w(TAG, "SSH key generation failed")
+                    PassLogger.w(TAG, e)
+                    snackbarDispatcher(CustomItemSnackbarMessage.SshKeyGenerationError)
+                    isSshKeyGeneratingState.update { false }
+                }
+            )
+        }
+    }
+
     private fun onPasswordChange(value: String) {
         onUserEditedContent()
 
@@ -680,9 +708,10 @@ abstract class BaseCustomItemViewModel(
         focusedFieldState,
         canPerformPaidAction(),
         userPreferencesRepository.observeDisplayFileAttachmentsOnboarding(),
-        attachmentsHandler.attachmentState
+        attachmentsHandler.attachmentState,
+        isSshKeyGeneratingState
     ) { isLoading, hasEdited, errors, savedState, lastAddedField, canPerformPaidAction,
-        displayFileAttachmentsOnboarding, attachmentsState ->
+        displayFileAttachmentsOnboarding, attachmentsState, isSshKeyGenerating ->
         ItemSharedUiState(
             isLoadingState = isLoading,
             hasUserEditedContent = hasEdited,
@@ -691,7 +720,8 @@ abstract class BaseCustomItemViewModel(
             focusedField = lastAddedField,
             canCreateItem = canPerformPaidAction,
             displayFileAttachmentsOnboarding = displayFileAttachmentsOnboarding.value(),
-            attachmentsState = attachmentsState
+            attachmentsState = attachmentsState,
+            isSshKeyGenerating = isSshKeyGenerating
         )
     }
 

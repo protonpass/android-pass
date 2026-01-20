@@ -123,6 +123,9 @@ interface ItemSharedProperties {
 
     val attachmentsState: AttachmentsState
         get() = sharedState.attachmentsState
+
+    val isSshKeyGenerating: Boolean
+        get() = sharedState.isSshKeyGenerating
 }
 
 val EMPTY_SHARED_STATE = ItemSharedUiState(

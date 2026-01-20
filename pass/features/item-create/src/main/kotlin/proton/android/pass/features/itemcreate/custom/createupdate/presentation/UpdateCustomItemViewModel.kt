@@ -97,6 +97,7 @@ class UpdateCustomItemViewModel @Inject constructor(
     savedStateHandleProvider: SavedStateHandleProvider,
     observeShare: ObserveShare,
     observeItemById: ObserveItemById,
+    sshKeyGenerator: proton.android.pass.commonrust.api.SshKeyGenerator,
     private val settingsRepository: InternalSettingsRepository
 ) : BaseCustomItemViewModel(
     canPerformPaidAction = canPerformPaidAction,
@@ -111,7 +112,8 @@ class UpdateCustomItemViewModel @Inject constructor(
     clipboardManager = clipboardManager,
     customItemFormProcessor = customItemFormProcessor,
     appDispatchers = appDispatchers,
-    savedStateHandleProvider = savedStateHandleProvider
+    savedStateHandleProvider = savedStateHandleProvider,
+    sshKeyGenerator = sshKeyGenerator
 ) {
 
     private val navShareId: ShareId =

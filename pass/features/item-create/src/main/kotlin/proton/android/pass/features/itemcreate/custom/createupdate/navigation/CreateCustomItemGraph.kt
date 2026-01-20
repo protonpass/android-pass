@@ -32,6 +32,7 @@ import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.domain.CustomFieldType
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.SshKeyType
 import proton.android.pass.domain.WifiSecurityType
 import proton.android.pass.features.itemcreate.bottomsheets.customfield.customFieldBottomSheetGraph
 import proton.android.pass.features.itemcreate.common.CustomFieldPrefix
@@ -39,6 +40,9 @@ import proton.android.pass.features.itemcreate.common.KEY_VAULT_SELECTED
 import proton.android.pass.features.itemcreate.common.customsection.ExtraSectionNavigation
 import proton.android.pass.features.itemcreate.common.customsection.extraSectionGraph
 import proton.android.pass.features.itemcreate.custom.createupdate.ui.CreateCustomItemScreen
+import proton.android.pass.features.itemcreate.custom.selectsshkeytype.navigation.SSH_KEY_TYPE_PARAMETER_KEY
+import proton.android.pass.features.itemcreate.custom.selectsshkeytype.navigation.SelectSshKeyTypeNavItem
+import proton.android.pass.features.itemcreate.custom.selectsshkeytype.ui.SelectSshKeyTypeBottomsheet
 import proton.android.pass.features.itemcreate.custom.selectwifisecuritytype.navigation.SelectWifiSecurityTypeNavItem
 import proton.android.pass.features.itemcreate.custom.selectwifisecuritytype.navigation.WIFI_SECURITY_TYPE_PARAMETER_KEY
 import proton.android.pass.features.itemcreate.custom.selectwifisecuritytype.ui.SelectWifiSecurityTypeBottomsheet
@@ -133,6 +137,10 @@ fun NavGraphBuilder.createCustomItemGraph(onNavigate: (BaseCustomItemNavigation)
                 .getStateFlow<Int?>(WIFI_SECURITY_TYPE_PARAMETER_KEY, null)
                 .collectAsStateWithLifecycle()
 
+            val sshKeyType by navBackStack.savedStateHandle
+                .getStateFlow<Int?>(SSH_KEY_TYPE_PARAMETER_KEY, null)
+                .collectAsStateWithLifecycle()
+
             CreateCustomItemScreen(
                 selectVault = selectVault.toOption().map(::ShareId),
                 selectTotp = Triple(
@@ -141,6 +149,7 @@ fun NavGraphBuilder.createCustomItemGraph(onNavigate: (BaseCustomItemNavigation)
                     third = navTotpIndex.takeIf { value: Int? -> value != null && value >= 0 }.toOption()
                 ),
                 selectWifiSecurityType = wifiSecurityType.toOption().map { WifiSecurityType.fromId(it) },
+                selectSshKeyType = sshKeyType.toOption().map { SshKeyType.fromId(it) },
                 onNavigate = onNavigate
             )
         }
@@ -196,6 +205,13 @@ fun NavGraphBuilder.createCustomItemGraph(onNavigate: (BaseCustomItemNavigation)
             SelectWifiSecurityTypeBottomsheet(
                 onSelect = {
                     onNavigate(BaseCustomItemNavigation.WifiSecurityTypeSelected(it))
+                }
+            )
+        }
+        bottomSheet(SelectSshKeyTypeNavItem) {
+            SelectSshKeyTypeBottomsheet(
+                onSelect = {
+                    onNavigate(BaseCustomItemNavigation.SshKeyTypeSelected(it))
                 }
             )
         }

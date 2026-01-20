@@ -479,16 +479,13 @@ class ShareRepositoryImpl @Inject constructor(
         userId: UserId,
         groupEmail: String?
     ): Pair<ShareEntity, List<ShareKeyEntity>> {
-        val userAddress = userAddressRepository.getAddresses(userId).primary()
-            ?: throw IllegalStateException("Could not find PrimaryAddress")
-        PassLogger.i(TAG, "Found primary user address")
         val shareId = ShareId(shareResponse.shareId)
 
         // First we fetch the shareKeys and not save them, in case the share has not been
         // inserted yet, as it would cause a FK mismatch in the database
         val shareKeys = shareKeyRepository.getShareKeys(
-            userId = userAddress.userId,
-            addressId = userAddress.addressId,
+            userId = userId,
+            addressId = AddressId(shareResponse.addressId),
             shareId = shareId,
             groupEmail = groupEmail,
             forceRefresh = false,
@@ -506,16 +503,16 @@ class ShareRepositoryImpl @Inject constructor(
             EncryptionKeyStatus.Inactive -> null to false
         }
         return shareResponse.toEntity(
-            userId = userAddress.userId.id,
-            addressId = userAddress.addressId.id,
+            userId = userId.id,
+            addressId = shareResponse.addressId,
             encryptedContent = encryptedContent,
             isActive = isActive,
             groupEmail = groupEmail
         ) to shareKeys.map { shareKey ->
             ShareKeyEntity(
                 rotation = shareKey.rotation,
-                userId = userAddress.userId.id,
-                addressId = userAddress.addressId.id,
+                userId = userId.id,
+                addressId = shareResponse.addressId,
                 shareId = shareResponse.shareId,
                 key = shareKey.responseKey,
                 createTime = shareKey.createTime,
@@ -653,6 +650,7 @@ class ShareRepositoryImpl @Inject constructor(
         localShare.targetId != remoteShare.targetId -> true
         localShare.owner != remoteShare.owner -> true
         localShare.groupId != remoteShare.groupId -> true
+        localShare.addressId != remoteShare.addressId -> true
         localShare.shareRoleId != remoteShare.shareRoleId -> true
         localShare.permission != remoteShare.permission -> true
         localShare.targetMembers != remoteShare.targetMembers -> true

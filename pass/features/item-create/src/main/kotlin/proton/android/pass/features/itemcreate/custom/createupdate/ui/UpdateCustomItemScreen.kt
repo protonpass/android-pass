@@ -41,6 +41,7 @@ import proton.android.pass.composecomponents.impl.attachments.AttachmentContentE
 import proton.android.pass.composecomponents.impl.dialogs.ConfirmCloseDialog
 import proton.android.pass.composecomponents.impl.dialogs.WarningSharedItemDialog
 import proton.android.pass.domain.CustomFieldType
+import proton.android.pass.domain.SshKeyType
 import proton.android.pass.domain.WifiSecurityType
 import proton.android.pass.features.itemcreate.R
 import proton.android.pass.features.itemcreate.common.DialogWarningType
@@ -76,6 +77,7 @@ fun UpdateCustomItemScreen(
     modifier: Modifier = Modifier,
     selectTotp: Triple<Option<String>, Option<Int>, Option<Int>>,
     selectWifiSecurityType: Option<WifiSecurityType>,
+    selectSshKeyType: Option<SshKeyType>,
     viewModel: UpdateCustomItemViewModel = hiltViewModel(),
     onNavigate: (BaseCustomItemNavigation) -> Unit
 ) {
@@ -108,6 +110,12 @@ fun UpdateCustomItemScreen(
     LaunchedEffect(selectWifiSecurityType) {
         if (selectWifiSecurityType is Some) {
             viewModel.processIntent(OnReceiveWifiSecurityType(selectWifiSecurityType.value))
+        }
+    }
+
+    LaunchedEffect(selectSshKeyType) {
+        if (selectSshKeyType is Some) {
+            viewModel.processIntent(BaseCustomItemCommonIntent.OnGenerateSshKey(selectSshKeyType.value))
         }
     }
 
@@ -288,6 +296,9 @@ fun UpdateCustomItemScreen(
 
                     is ItemContentEvent.OnOpenWifiSecurityType ->
                         onNavigate(OpenWifiSecurityTypeSelector(it.wifiSecurityType))
+
+                    is ItemContentEvent.OnOpenSshKeyType ->
+                        onNavigate(BaseCustomItemNavigation.OpenSshKeyTypeSelector(it.sshKeyType))
                 }
             }
         )

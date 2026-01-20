@@ -143,6 +143,7 @@ internal fun CustomItemForm(
                         modifier = Modifier.padding(horizontal = Spacing.medium).padding(vertical = Spacing.extraSmall),
                         itemStaticFields = itemFormState.itemStaticFields,
                         isEditAllowed = itemSharedProperties.isFormEnabled,
+                        isGenerating = itemSharedProperties.isSshKeyGenerating,
                         onEvent = onEvent
                     )
                 }

@@ -21,7 +21,6 @@ package proton.android.pass.data.impl.repositories
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
-import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.map
@@ -87,12 +86,9 @@ class BreachRepositoryImpl @Inject constructor(
         localBreachDataSource.observeProtonEmails(userId),
         observeBreachedAliases(userId)
     ) { domainPeeks, customEmails, protonEmails, breachedAliases ->
-        val computedCount = customEmails.sumOf { it.breachCount } +
-            protonEmails.sumOf { it.breachCounter } +
-            breachedAliases.sumOf { it.breachCounter }
-
+        val computedCount = customEmails.size + protonEmails.size + breachedAliases.size
         Breach(
-            breachesCount = computedCount,
+            emailCount = computedCount,
             breachedDomainPeeks = domainPeeks,
             breachedCustomEmails = customEmails,
             breachedProtonEmails = protonEmails,
@@ -173,7 +169,28 @@ class BreachRepositoryImpl @Inject constructor(
         remoteBreachDataSource.addCustomEmail(userId, email)
             .email
             .toDomain()
-            .also { customEmail -> localBreachDataSource.upsertCustomEmail(userId, customEmail) }
+            .also { customEmail ->
+                localBreachDataSource.upsertCustomEmail(userId, customEmail)
+                safeRunCatching {
+                    remoteBreachDataSource.getBreachesForCustomEmail(userId, customEmail.id)
+                        .toDomain { breachDto ->
+                            BreachEmailId.Custom(
+                                id = BreachId(breachDto.id),
+                                customEmailId = customEmail.id
+                            )
+                        }
+                        .also { customEmailBreaches ->
+                            localBreachDataSource.upsertCustomEmailBreaches(
+                                userId = userId,
+                                customEmailId = customEmail.id,
+                                customEmailBreaches = customEmailBreaches
+                            )
+                        }
+                }.onFailure { error ->
+                    PassLogger.w(TAG, "Failed to fetch breaches for new email ${customEmail.id}")
+                    PassLogger.w(TAG, error)
+                }
+            }
 
     override suspend fun verifyCustomEmail(
         userId: UserId,
@@ -348,7 +365,7 @@ class BreachRepositoryImpl @Inject constructor(
 
     private fun BreachesResponse.toDomain() = with(this.breaches) {
         Breach(
-            breachesCount = emailsCount,
+            emailCount = emailsCount,
             breachedDomainPeeks = domainPeeks.map { domainPeek -> domainPeek.toDomain() },
             breachedCustomEmails = customEmails.map { customEmail -> customEmail.toDomain() },
             breachedProtonEmails = protonEmails.map { protonEmail -> protonEmail.toDomain() },

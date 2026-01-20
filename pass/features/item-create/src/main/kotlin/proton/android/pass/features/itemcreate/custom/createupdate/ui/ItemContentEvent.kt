@@ -21,7 +21,6 @@ package proton.android.pass.features.itemcreate.custom.createupdate.ui
 import proton.android.pass.common.api.Option
 import proton.android.pass.composecomponents.impl.attachments.AttachmentContentEvent
 import proton.android.pass.domain.ShareId
-import proton.android.pass.domain.SshKeyType
 import proton.android.pass.domain.WifiSecurityType
 import proton.android.pass.features.itemcreate.common.customfields.CustomFieldEvent
 
@@ -65,8 +64,7 @@ internal sealed interface ItemContentEvent {
     @JvmInline
     value class OnOpenWifiSecurityType(val wifiSecurityType: WifiSecurityType) : ItemContentEvent
 
-    @JvmInline
-    value class OnOpenSshKeyType(val sshKeyType: SshKeyType) : ItemContentEvent
+    data object OnOpenSshKeyType : ItemContentEvent
 
     data object OnUpgrade : ItemContentEvent
 

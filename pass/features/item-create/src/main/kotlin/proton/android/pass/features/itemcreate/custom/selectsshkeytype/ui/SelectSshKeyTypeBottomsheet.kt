@@ -20,20 +20,13 @@ package proton.android.pass.features.itemcreate.custom.selectsshkeytype.ui
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.hilt.navigation.compose.hiltViewModel
 import proton.android.pass.commonui.api.bottomSheet
 import proton.android.pass.domain.SshKeyType
-import proton.android.pass.features.itemcreate.custom.selectsshkeytype.presentation.SelectSshKeyTypeViewModel
 
 @Composable
-fun SelectSshKeyTypeBottomsheet(
-    modifier: Modifier = Modifier,
-    viewModel: SelectSshKeyTypeViewModel = hiltViewModel(),
-    onSelect: (SshKeyType) -> Unit
-) {
+fun SelectSshKeyTypeBottomsheet(modifier: Modifier = Modifier, onSelect: (SshKeyType) -> Unit) {
     SelectSshKeyTypeContent(
         modifier = modifier.bottomSheet(),
-        selectedSshKeyType = viewModel.sshKeyType,
         onSelect = onSelect
     )
 }

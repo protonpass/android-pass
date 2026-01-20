@@ -66,7 +66,6 @@ class InviteToItemImpl @Inject constructor(
         val existingUserInvitesAddresses = getUserInviteAddresses(userId, inviteTargets)
 
         val inviterUserAddress = shareRepository.getAddressForShareId(userId, shareId)
-
         remoteUserInviteDataSource.sendInvites(
             userId = userId,
             shareId = shareId,

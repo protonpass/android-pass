@@ -99,7 +99,7 @@ internal class BreachRepositoryImplTest {
     @Test
     fun `observeAllBreaches returns breaches from remote`() = runTest {
         val breachesResponse = createBreachesResponse(
-            emailsCount = 5,
+            emailsCount = 2,
             customEmails = listOf(createBreachCustomEmailResponse("email1@test.com", "id1", breachCounter = 2)),
             protonEmails = listOf(createBreachProtonEmailResponse("email2@proton.me", "addr1", breachCounter = 3))
         )
@@ -115,7 +115,7 @@ internal class BreachRepositoryImplTest {
         instance.refreshBreaches(TEST_USER_ID)
         val result = instance.observeAllBreaches(TEST_USER_ID).first()
 
-        assertThat(result.emailCount).isEqualTo(5)
+        assertThat(result.emailCount).isEqualTo(2)
         assertThat(result.breachedCustomEmails).hasSize(1)
         assertThat(result.breachedProtonEmails).hasSize(1)
     }

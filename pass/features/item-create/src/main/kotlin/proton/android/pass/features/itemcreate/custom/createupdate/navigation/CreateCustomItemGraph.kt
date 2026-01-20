@@ -141,6 +141,10 @@ fun NavGraphBuilder.createCustomItemGraph(onNavigate: (BaseCustomItemNavigation)
                 .getStateFlow<Int?>(SSH_KEY_TYPE_PARAMETER_KEY, null)
                 .collectAsStateWithLifecycle()
 
+            LaunchedEffect(sshKeyType) {
+                navBackStack.savedStateHandle.remove<Int?>(SSH_KEY_TYPE_PARAMETER_KEY)
+            }
+
             CreateCustomItemScreen(
                 selectVault = selectVault.toOption().map(::ShareId),
                 selectTotp = Triple(

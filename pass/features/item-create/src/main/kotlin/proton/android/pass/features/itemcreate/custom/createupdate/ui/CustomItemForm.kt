@@ -84,11 +84,12 @@ internal fun CustomItemForm(
     }
 
     val isSshKeyStickyVisible = remember(
-        itemSharedProperties.isSshKeyFieldFocused,
+        itemSharedProperties.isPublicKeyFocused,
+        itemSharedProperties.isPrivateKeyFocused,
         itemSharedProperties.isFormEnabled,
         itemFormState.itemStaticFields
     ) {
-        itemSharedProperties.isSshKeyFieldFocused &&
+        (itemSharedProperties.isPublicKeyFocused || itemSharedProperties.isPrivateKeyFocused) &&
             itemSharedProperties.isFormEnabled &&
             itemFormState.itemStaticFields is ItemStaticFields.SSHKey
     }
@@ -291,7 +292,7 @@ internal fun CustomItemForm(
             StickySshKeyOptions(
                 isGenerating = itemSharedProperties.isSshKeyGenerating,
                 onClick = {
-                    onEvent(ItemContentEvent.OnOpenSshKeyType(proton.android.pass.domain.SshKeyType.ED25519))
+                    onEvent(ItemContentEvent.OnOpenSshKeyType)
                 }
             )
         }

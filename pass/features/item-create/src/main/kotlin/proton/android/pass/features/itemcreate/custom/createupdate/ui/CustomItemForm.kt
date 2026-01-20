@@ -79,9 +79,21 @@ internal fun CustomItemForm(
         mutableStateListOf()
     }
 
-    val isCurrentStickyVisible = remember(itemSharedProperties.focusedField) {
+    val isTotpStickyVisible = remember(itemSharedProperties.focusedField) {
         itemSharedProperties.focusedField.value()?.type == CustomFieldType.Totp
     }
+
+    val isSshKeyStickyVisible = remember(
+        itemSharedProperties.isSshKeyFieldFocused,
+        itemSharedProperties.isFormEnabled,
+        itemFormState.itemStaticFields
+    ) {
+        itemSharedProperties.isSshKeyFieldFocused &&
+            itemSharedProperties.isFormEnabled &&
+            itemFormState.itemStaticFields is ItemStaticFields.SSHKey
+    }
+
+    val isCurrentStickyVisible = isTotpStickyVisible || isSshKeyStickyVisible
 
     val shouldShowAttachmentBanner = remember(itemSharedProperties.showFileAttachmentsBanner) {
         itemSharedProperties.showFileAttachmentsBanner
@@ -249,7 +261,7 @@ internal fun CustomItemForm(
                 .fillMaxWidth()
                 .align(Alignment.BottomCenter)
                 .imePadding(),
-            visible = isCurrentStickyVisible
+            visible = isTotpStickyVisible
         ) {
 
             val context = LocalContext.current
@@ -265,6 +277,21 @@ internal fun CustomItemForm(
                     itemSharedProperties.focusedField.value()?.let {
                         onEvent(OnOpenTOTPScanner(it.sectionIndex, it.index))
                     }
+                }
+            )
+        }
+
+        AnimatedVisibility(
+            modifier = Modifier
+                .fillMaxWidth()
+                .align(Alignment.BottomCenter)
+                .imePadding(),
+            visible = isSshKeyStickyVisible
+        ) {
+            StickySshKeyOptions(
+                isGenerating = itemSharedProperties.isSshKeyGenerating,
+                onClick = {
+                    onEvent(ItemContentEvent.OnOpenSshKeyType(proton.android.pass.domain.SshKeyType.ED25519))
                 }
             )
         }

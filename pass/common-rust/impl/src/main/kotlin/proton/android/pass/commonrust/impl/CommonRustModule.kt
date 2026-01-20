@@ -26,6 +26,7 @@ import dagger.hilt.components.SingletonComponent
 import proton.android.pass.commonrust.PassphraseGenerator
 import proton.android.pass.commonrust.RandomPasswordGenerator
 import proton.android.pass.commonrust.ShareOverrideCalculator
+import proton.android.pass.commonrust.SshKeyManager
 import proton.android.pass.commonrust.api.AliasPrefixValidator
 import proton.android.pass.commonrust.api.CommonLibraryVersionChecker
 import proton.android.pass.commonrust.api.DomainManager
@@ -33,6 +34,7 @@ import proton.android.pass.commonrust.api.EmailValidator
 import proton.android.pass.commonrust.api.FileTypeDetector
 import proton.android.pass.commonrust.api.NewUserInviteSignatureBodyCreator
 import proton.android.pass.commonrust.api.PasswordScorer
+import proton.android.pass.commonrust.api.SshKeyGenerator
 import proton.android.pass.commonrust.api.UsableShareFilter
 import proton.android.pass.commonrust.api.WifiNetworkQRGenerator
 import proton.android.pass.commonrust.api.passwords.PasswordGenerator
@@ -80,6 +82,9 @@ abstract class CommonRustModule {
     @[Binds Singleton]
     abstract fun bindUsableShareFilter(impl: UsableShareFilterImpl): UsableShareFilter
 
+    @[Binds Singleton]
+    abstract fun bindSshKeyGenerator(impl: SshKeyGeneratorImpl): SshKeyGenerator
+
     companion object {
 
         @[Provides Singleton]
@@ -90,6 +95,9 @@ abstract class CommonRustModule {
 
         @[Provides Singleton]
         fun provideShareOverrideCalculator() = ShareOverrideCalculator()
+
+        @[Provides Singleton]
+        fun provideSshKeyManager() = SshKeyManager()
 
     }
 

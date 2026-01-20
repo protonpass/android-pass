@@ -52,6 +52,4 @@ class ObserveOrganizationVaultsPolicyImpl @Inject constructor(
                 }
             }
         }
-
-
 }

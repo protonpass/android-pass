@@ -648,8 +648,14 @@ abstract class BaseCustomItemViewModel(
             isSshKeyGeneratingState.update { true }
             safeRunCatching {
                 val components = sshKeyGenerator.generateSshKey(type)
+                onUserEditedContent()
                 onPublicKeyChange(components.publicKey)
-                onPrivateKeyChange(components.privateKey)
+                val privateKey = encryptionContextProvider.withEncryptionContext {
+                    UIHiddenState.Concealed(encrypt(components.privateKey))
+                }
+                val updatedStaticFields = (itemFormState.itemStaticFields as ItemStaticFields.SSHKey)
+                    .copy(privateKey = privateKey)
+                itemFormState = itemFormState.copy(itemStaticFields = updatedStaticFields)
             }.fold(
                 onSuccess = {
                     isSshKeyGeneratingState.update { false }

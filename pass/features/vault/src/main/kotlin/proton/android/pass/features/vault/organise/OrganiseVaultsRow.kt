@@ -20,6 +20,7 @@ package proton.android.pass.features.vault.organise
 
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -48,7 +49,7 @@ import proton.android.pass.features.vault.R
 
 @Composable
 internal fun OrganiseVaultsRow(
-    modifier: Modifier = Modifier.Companion,
+    modifier: Modifier = Modifier,
     shareId: ShareId,
     @DrawableRes shareIconRes: Int,
     iconColor: Color,
@@ -62,8 +63,9 @@ internal fun OrganiseVaultsRow(
         modifier = modifier
             .fillMaxWidth()
             .background(PassTheme.colors.backgroundStrong)
+            .clickable { onClick(shareId, !isSelected) }
             .padding(vertical = Spacing.mediumSmall),
-        verticalAlignment = Alignment.Companion.CenterVertically
+        verticalAlignment = Alignment.CenterVertically
     ) {
 
         Checkbox(
@@ -78,7 +80,7 @@ internal fun OrganiseVaultsRow(
         )
 
         Column(
-            modifier = Modifier.Companion
+            modifier = Modifier
                 .weight(weight = 1f)
                 .padding(start = Spacing.mediumSmall),
             verticalArrangement = Arrangement.spacedBy(space = Spacing.extraSmall)

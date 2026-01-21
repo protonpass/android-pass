@@ -18,14 +18,20 @@
 
 package proton.android.pass.features.itemcreate.custom.createupdate.ui
 
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Icon
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -54,22 +60,39 @@ internal fun StickySshKeyOptions(
             modifier
         }
     ) {
-        if (isGenerating) {
-            CircularProgressIndicator()
-        } else {
-            Icon(
-                painter = painterResource(CoreR.drawable.ic_proton_key),
-                contentDescription = null,
-                tint = PassTheme.colors.loginInteractionNormMajor2
-            )
-            Spacer(modifier = Modifier.width(8.dp))
-            Text(
-                text = stringResource(id = R.string.ssh_key_generate_button),
-                color = PassTheme.colors.loginInteractionNormMajor2,
-                style = ProtonTheme.typography.defaultNorm,
-                overflow = TextOverflow.Ellipsis,
-                maxLines = 1
-            )
+        Box(
+            modifier = Modifier.fillMaxWidth(),
+            contentAlignment = Alignment.Center
+        ) {
+            androidx.compose.animation.AnimatedVisibility(
+                visible = isGenerating,
+                enter = fadeIn(),
+                exit = fadeOut()
+            ) {
+                CircularProgressIndicator()
+            }
+
+            androidx.compose.animation.AnimatedVisibility(
+                visible = !isGenerating,
+                enter = fadeIn(),
+                exit = fadeOut()
+            ) {
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Icon(
+                        painter = painterResource(CoreR.drawable.ic_proton_key),
+                        contentDescription = null,
+                        tint = PassTheme.colors.loginInteractionNormMajor2
+                    )
+                    Spacer(modifier = Modifier.width(8.dp))
+                    Text(
+                        text = stringResource(id = R.string.ssh_key_generate_button),
+                        color = PassTheme.colors.loginInteractionNormMajor2,
+                        style = ProtonTheme.typography.defaultNorm,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis
+                    )
+                }
+            }
         }
     }
 }

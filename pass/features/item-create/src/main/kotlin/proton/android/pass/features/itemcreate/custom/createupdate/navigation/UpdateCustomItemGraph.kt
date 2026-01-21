@@ -99,7 +99,7 @@ fun NavGraphBuilder.updateCustomItemGraph(onNavigate: (BaseCustomItemNavigation)
                 .collectAsStateWithLifecycle()
 
             LaunchedEffect(sshKeyType) {
-                navBackStack.savedStateHandle.remove<Int?>(SSH_KEY_TYPE_PARAMETER_KEY)
+                navBackStack.savedStateHandle.set<Int?>(SSH_KEY_TYPE_PARAMETER_KEY, null)
             }
 
             UpdateCustomItemScreen(

@@ -52,12 +52,13 @@ class ResolveGroupInviteCryptoContextTest {
             userId = USER_ID,
             groupId = GROUP_ID,
             inviterEmail = INVITER_EMAIL,
-            isGroupAdmin = false
+            isGroupOwner = false
         )
 
         assertEquals(group.address?.keys, ctx.groupPrivateKeys)
         assertEquals(inviterKeys.map { it.publicKey }, ctx.inviterPublicKeys)
-        assertEquals("org-priv", ctx.openerKey.key)
+        assertEquals("org-priv", ctx.openerKeys.first().key)
+        assertEquals(1, ctx.openerKeys.size)
         assertEquals(user, ctx.user)
     }
 
@@ -130,7 +131,56 @@ class ResolveGroupInviteCryptoContextTest {
         )
 
         val ctx = resolver(USER_ID, GROUP_ID, INVITER_EMAIL, true)
-        assertEquals(listOf(userKey), ctx.openerKeys)
+        assertEquals(listOf("user-priv"), ctx.openerKeys.map { it.key })
+    }
+
+    @Test
+    fun throwsWhenGroupAdminHasNoActiveKeys() = runTest {
+        val inactiveKey = PrivateKey(
+            key = "user-priv-inactive",
+            isPrimary = true,
+            isActive = false,
+            canEncrypt = true,
+            canVerify = true,
+            passphrase = null
+        )
+        val userWithInactiveKeys = user.copy(
+            keys = listOf(
+                UserKey(
+                    userId = USER_ID,
+                    version = 1,
+                    activation = null,
+                    active = false,
+                    keyId = KeyId("kid-inactive"),
+                    privateKey = inactiveKey
+                )
+            )
+        )
+
+        val resolver = resolver(
+            userRepo = FakeUserRepository().apply { setUser(userWithInactiveKeys) }
+        )
+
+        val error = assertFailsWith<IllegalStateException> {
+            resolver(USER_ID, GROUP_ID, INVITER_EMAIL, isGroupOwner = true)
+        }
+        assert(error.message!!.contains("Group admin cannot access invite"))
+        assert(error.message!!.contains("none are active"))
+    }
+
+    @Test
+    fun throwsWhenGroupAdminHasNoKeys() = runTest {
+        val userWithNoKeys = user.copy(keys = emptyList())
+
+        val resolver = resolver(
+            userRepo = FakeUserRepository().apply { setUser(userWithNoKeys) }
+        )
+
+        val error = assertFailsWith<IllegalStateException> {
+            resolver(USER_ID, GROUP_ID, INVITER_EMAIL, isGroupOwner = true)
+        }
+        assert(error.message!!.contains("Group admin cannot access invite"))
+        assert(error.message!!.contains("no private keys"))
     }
 
     private fun resolver(

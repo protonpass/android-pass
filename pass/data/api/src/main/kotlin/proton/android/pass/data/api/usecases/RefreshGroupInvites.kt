@@ -22,5 +22,5 @@ import me.proton.core.domain.entity.UserId
 import proton.android.pass.domain.events.EventToken
 
 interface RefreshGroupInvites {
-    suspend operator fun invoke(userId: UserId? = null, eventToken: EventToken? = null)
+    suspend operator fun invoke(userId: UserId, eventToken: EventToken? = null)
 }

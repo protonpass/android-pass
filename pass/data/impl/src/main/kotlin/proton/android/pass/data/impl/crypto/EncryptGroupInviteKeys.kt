@@ -41,7 +41,7 @@ class EncryptGroupInviteKeysImpl @Inject constructor(
             userId = userId,
             groupId = GroupId(groupInvite.invitedGroupId),
             inviterEmail = groupInvite.inviterEmail,
-            isGroupAdmin = groupInvite.isGroupOwner
+            isGroupOwner = groupInvite.isGroupOwner
         )
 
         val encryptedKeys = acceptGroupInvite(

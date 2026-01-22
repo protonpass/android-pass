@@ -39,7 +39,7 @@ class ReencryptGroupInviteContentsImpl @Inject constructor(
             userId = userId,
             groupId = GroupId(invite.invitedGroupId),
             inviterEmail = invite.inviterEmail,
-            isGroupAdmin = invite.isGroupOwner
+            isGroupOwner = invite.isGroupOwner
         )
         val inviteKeys = invite.keys.map { it.toEncryptedInviteKey() }
         val openKeys = acceptGroupInvite(

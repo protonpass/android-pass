@@ -10,7 +10,6 @@ import proton.android.pass.crypto.api.usecases.invites.OpenOrganizationKey
 import proton.android.pass.data.api.repositories.GroupRepository
 import proton.android.pass.data.api.usecases.GetAllKeysByAddress
 import proton.android.pass.domain.GroupId
-import proton.android.pass.domain.OrganizationKey
 import proton.android.pass.domain.repositories.OrganizationKeyRepository
 import proton.android.pass.log.api.PassLogger
 import javax.inject.Inject
@@ -27,7 +26,7 @@ interface ResolveGroupInviteCryptoContext {
         userId: UserId,
         groupId: GroupId,
         inviterEmail: String,
-        isGroupAdmin: Boolean
+        isGroupOwner: Boolean
     ): GroupInviteCryptoContext
 }
 
@@ -43,26 +42,38 @@ class ResolveGroupInviteCryptoContextImpl @Inject constructor(
         userId: UserId,
         groupId: GroupId,
         inviterEmail: String,
-        isGroupAdmin: Boolean
+        isGroupOwner: Boolean
     ): GroupInviteCryptoContext {
+        PassLogger.d(TAG, "Resolving group invite crypto context:")
+        PassLogger.d(TAG, "  userId=$userId, groupId=$groupId, isGroupOwner=$isGroupOwner")
+        PassLogger.d(TAG, "  inviterEmail=$inviterEmail")
+
         val user = userRepository.getUser(userId)
 
-        val openerKeys: List<PrivateKey> = if (isGroupAdmin) {
-            user.keys.map { it.privateKey }.ifEmpty { error("User does not have a private key") }
-        } else {
-            val organizationKey: OrganizationKey = fetchWithForceRefresh(
-                tag = TAG,
-                initial = { organizationKeyRepository.getOrganizationKey(userId) },
-                refresh = { organizationKeyRepository.getOrganizationKey(userId, true) }
-            ) ?: error("Organization key not found")
+        val openerKeys: List<PrivateKey> = buildList {
+            if (isGroupOwner) {
+                PassLogger.d(TAG, "Using group owner path - will use user keys")
+                val allUserKeys = user.keys.map { it.privateKey }
+                val activeUserKeys = allUserKeys.filter { it.isActive }
+                PassLogger.d(TAG, "Total user keys: ${allUserKeys.size}, Active: ${activeUserKeys.size}")
 
-            val (organizationPrivateKey, _) = openOrganizationKey(user, organizationKey)
-                .getOrElse {
-                    PassLogger.w(TAG, "Failed to open organization key")
-                    PassLogger.w(TAG, it)
-                    throw it
+                if (activeUserKeys.isEmpty()) {
+                    val message = if (allUserKeys.isNotEmpty()) {
+                        "User has ${allUserKeys.size} key(s) but none are active"
+                    } else {
+                        "User has no private keys"
+                    }
+                    PassLogger.w(TAG, message)
+                    error("Group admin cannot access invite: $message. Please activate your keys and try again.")
                 }
-            listOf(organizationPrivateKey)
+                addAll(activeUserKeys)
+            } else {
+                PassLogger.i(TAG, "Using admin path - will use organization key")
+                val orgKey = fetchOrganizationPrivateKey(userId, user)
+                val keyPreview = orgKey.key.take(50).replace("\n", "")
+                PassLogger.d(TAG, "  Org key: $keyPreview... (primary=${orgKey.isPrimary}, active=${orgKey.isActive})")
+                add(orgKey)
+            }
         }
 
         val group = fetchWithForceRefresh(
@@ -87,6 +98,30 @@ class ResolveGroupInviteCryptoContextImpl @Inject constructor(
             openerKeys = openerKeys,
             inviterPublicKeys = inviterPublicKeys
         )
+    }
+
+    private suspend fun fetchOrganizationPrivateKey(userId: UserId, user: User): PrivateKey {
+        val organizationKey = fetchWithForceRefresh(
+            tag = TAG,
+            initial = { organizationKeyRepository.getOrganizationKey(userId) },
+            refresh = { organizationKeyRepository.getOrganizationKey(userId, true) }
+        )
+
+        if (organizationKey == null) {
+            PassLogger.w(TAG, "Organization key not found for user ${userId.id}")
+            error("Organization key not found. This user may not have organization access. Please sync and try again.")
+        }
+
+        return openOrganizationKey(user, organizationKey)
+            .onFailure { error ->
+                PassLogger.e(TAG, error, "Failed to unlock organization key for user ${userId.id}")
+                throw IllegalStateException(
+                    "Cannot unlock organization key. Please verify your master password and try again.",
+                    error
+                )
+            }
+            .getOrThrow()
+            .first
     }
 
     companion object {

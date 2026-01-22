@@ -160,7 +160,7 @@ class ReencryptGroupInviteContentsTest {
             userId: UserId,
             groupId: GroupId,
             inviterEmail: String,
-            isGroupAdmin: Boolean
+            isGroupOwner: Boolean
         ): GroupInviteCryptoContext = ctx
     }
 

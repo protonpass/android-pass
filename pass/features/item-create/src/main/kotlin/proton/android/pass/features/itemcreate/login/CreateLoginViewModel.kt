@@ -513,11 +513,12 @@ class CreateLoginViewModel @Inject constructor(
         shareId: ShareId,
         passkeyResponse: Option<String>
     ) {
+        val contents = loginItemFormState.toItemContents(emailValidator = emailValidator)
         safeRunCatching {
             createItem(
                 userId = userId,
                 shareId = shareId,
-                itemContents = loginItemFormState.toItemContents(emailValidator = emailValidator)
+                itemContents = contents
             )
         }
             .onFailure {
@@ -535,6 +536,7 @@ class CreateLoginViewModel @Inject constructor(
                     snackbarDispatcher(ItemLinkAttachmentsError)
                 }
 
+                launchUpdateAssetLinksWorker(contents.urls.toSet())
                 inAppReviewTriggerMetrics.incrementItemCreatedCount()
 
                 when (passkeyResponse) {

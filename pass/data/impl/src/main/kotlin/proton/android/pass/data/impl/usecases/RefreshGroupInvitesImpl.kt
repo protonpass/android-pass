@@ -18,12 +18,8 @@
 
 package proton.android.pass.data.impl.usecases
 
-import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.first
-import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.domain.entity.UserId
-import me.proton.core.user.domain.extension.isOrganizationAdmin
-import me.proton.core.user.domain.repository.UserRepository
 import proton.android.pass.common.api.safeRunCatching
 import proton.android.pass.data.api.repositories.GroupInviteRepository
 import proton.android.pass.data.api.usecases.RefreshGroupInvites
@@ -33,29 +29,19 @@ import proton.android.pass.notifications.api.NotificationManager
 import javax.inject.Inject
 
 class RefreshGroupInvitesImpl @Inject constructor(
-    private val accountManager: AccountManager,
     private val groupInviteRepository: GroupInviteRepository,
-    private val userRepository: UserRepository,
     private val notificationManager: NotificationManager
 ) : RefreshGroupInvites {
 
-    override suspend fun invoke(userId: UserId?, eventToken: EventToken?) {
+    override suspend fun invoke(userId: UserId, eventToken: EventToken?) {
         PassLogger.i(TAG, "Refreshing group invites started")
 
         safeRunCatching {
-            val currentUserId = userId ?: accountManager.getPrimaryUserId()
-                .filterNotNull()
-                .first()
-            val currentUser = userRepository.getUser(currentUserId)
-            if (currentUser.isOrganizationAdmin()) {
-                groupInviteRepository.observePendingGroupInvites(
-                    userId = currentUserId,
-                    forceRefresh = true,
-                    eventToken = eventToken
-                ).first().lastOrNull()
-            } else {
-                null
-            }
+            groupInviteRepository.observePendingGroupInvites(
+                userId = userId,
+                forceRefresh = true,
+                eventToken = eventToken
+            ).first().lastOrNull()
         }.onSuccess { invite ->
             if (invite != null) {
                 PassLogger.i(TAG, "Group invites refreshed successfully")

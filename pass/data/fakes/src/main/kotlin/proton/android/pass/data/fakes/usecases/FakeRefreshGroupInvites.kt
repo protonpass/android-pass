@@ -33,7 +33,7 @@ class FakeRefreshGroupInvites @Inject constructor() : RefreshGroupInvites {
         refreshResult = value
     }
 
-    override suspend fun invoke(userId: UserId?, eventToken: EventToken?) {
+    override suspend fun invoke(userId: UserId, eventToken: EventToken?) {
         refreshResult.getOrThrow()
     }
 }

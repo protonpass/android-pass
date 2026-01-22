@@ -74,8 +74,13 @@ class CanCreateVaultImpl @Inject constructor(
                     OrganizationVaultCreateMode.OnlyOrganizationAdmin -> {
                         currentUser.isOrganizationAdmin()
                     }
+
                     OrganizationVaultCreateMode.OnlyOrgAdminsAndPersonalVault -> {
-                        vaults.none { it.isOwned }
+                        if (currentUser.isOrganizationAdmin()) {
+                            true
+                        } else {
+                            vaults.none { it.isOwned }
+                        }
                     }
                 }
             }

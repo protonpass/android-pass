@@ -40,16 +40,16 @@
   <string name="security_center_home_section_password_health">Salut de les contrasenyes</string>
   <!-- Sentinel bottom sheet -->
   <string name="security_center_sentinel_title">Proton Sentinel</string>
-  <string name="security_center_sentinel_subtitle">Proton Sentinel és un programa avançat de protecció de comptes impulsat per sistemes d\'IA sofisticats i especialistes que treballen les 24 hores del dia per protegir-vos dels mals actors i les amenaces de seguretat.</string>
+  <string name="security_center_sentinel_subtitle">Proton Sentinel és un programa avançat de protecció de comptes basat en sistemes d\'IA sofisticats i especialistes que treballen les vint-i-quatre hores del dia per a protegir-vos d\'agents malintencionats i amenaces de seguretat.</string>
   <string name="security_center_sentinel_button_enable">Activa el Proton Sentinel</string>
   <string name="security_center_sentinel_button_disable">Desactiva el Proton Sentinel</string>
-  <string name="security_center_sentinel_snackbar_message_enable_canceled">S\'ha cancel·lat l\'activació de la protecció Proton Sentinel</string>
-  <string name="security_center_sentinel_snackbar_message_enable_error">S\'ha produït un error en activar la protecció Proton Sentinel. Si us plau, torni-ho a intentar.</string>
-  <string name="security_center_sentinel_snackbar_message_disable_canceled">La desactivació de la protecció de Proton Sentinel s\'ha cancel·lat</string>
-  <string name="security_center_sentinel_snackbar_message_disable_error">S\'ha produït un error en desactivar la protecció Proton Sentinel. Si us plau, torni-ho a provar.</string>
+  <string name="security_center_sentinel_snackbar_message_enable_canceled">S\'ha cancel·lat l\'activació de la protecció de Proton Sentinel</string>
+  <string name="security_center_sentinel_snackbar_message_enable_error">S\'ha produït un error en activar la protecció de Proton Sentinel. Torneu-ho a intentar.</string>
+  <string name="security_center_sentinel_snackbar_message_disable_canceled">S\'ha cancel·lat la desactivació de la protecció de Proton Sentinel</string>
+  <string name="security_center_sentinel_snackbar_message_disable_error">S\'ha produït un error en desactivar la protecció de Proton Sentinel. Torneu-ho a provar.</string>
   <!-- Weak passwords screen -->
   <string name="security_center_weak_pass_top_bar_title">Contrasenyes febles</string>
-  <string name="security_center_weak_pass_top_bar_subtitle">Les contrasenyes febles són més fàcils d\'endevinar. Genereu contrasenyes robustes per mantenir el compte segur.</string>
+  <string name="security_center_weak_pass_top_bar_subtitle">Les contrasenyes febles són més fàcils d\'endevinar. Genereu contrasenyes robustes per mantenir segurs els vostres comptes.</string>
   <!-- Reused passwords screen -->
   <string name="security_center_reused_pass_top_bar_title">Contrasenyes reutilitzades</string>
   <string name="security_center_reused_pass_top_bar_subtitle">Genereu contrasenyes úniques per a cada compte per a augmentar la seguretat.</string>
@@ -105,7 +105,7 @@
   <string name="security_center_verify_email_subtitle">Hem enviat un codi de verificació a %s. Introduïu-lo a continuació:</string>
   <string name="security_center_verify_email_snackbar_message_resend_code_success">S\'ha enviat una nova verificació. Comproveu la vostra safata d\'entrada.</string>
   <string name="security_center_verify_email_snackbar_message_resend_code_error">S\'ha produït un error en enviar el codi de verificació. Torneu-ho a intentar més tard.</string>
-  <string name="security_center_verify_email_snackbar_message_too_many_verifications_error">Massa verificacions no vàlides. Eliminació del correu electrònic personalitzat.</string>
+  <string name="security_center_verify_email_snackbar_message_too_many_verifications_error">Hi ha hagut massa verificacions no vàlides. S\'està suprimint el correu electrònic personalitzat.</string>
   <string name="security_center_verify_email_snackbar_message_invalid_verification_error">El codi de verificació no és vàlid.</string>
   <string name="security_center_verify_email_snackbar_message_verification_error">S\'ha produït un error en verificar el correu electrònic. Torneu-ho a intentar més tard.</string>
   <!-- Verify email monitoring -->
@@ -122,22 +122,22 @@
   <string name="security_center_email_report_options_menu">Menú d\'opcions de l\'informe d\'infracció</string>
   <!-- Breach report detail-->
   <string name="security_center_report_detail_your_exposed_information">La vostra informació exposada</string>
-  <string name="security_center_report_detail_subtitle">La vostra informació es trobava en una violació de dades i es va trobar el __DATE__</string>
+  <string name="security_center_report_detail_subtitle">La vostra informació es trobava en una filtració de dades i es va trobar el __DATE__</string>
   <string name="security_center_report_detail_details">Detalls</string>
   <string name="security_center_report_detail_password">Contrasenya</string>
   <string name="security_center_report_detail_recommended_actions">Accions recomanades</string>
   <string name="security_center_report_detail_note" comment="The placeholder argument contains the name of the service where the breach occurred.">La informació exposada es va filtrar de %s. La informació del vostre compte de Proton roman segura i xifrada.</string>
   <string name="security_center_report_detail_learn_more">Saber-ne més</string>
-  <string name="security_center_report_detail_snackbar_error">No s\'han pogut carregar els detalls de la infracció</string>
+  <string name="security_center_report_detail_snackbar_error">No s\'han pogut carregar els detalls de la filtració.</string>
   <string name="security_center_report_detail_excluded_from_monitoring">Exclòs del monitoratge</string>
   <string name="security_center_report_resolve_confirmation_dialog_title">Resoldre totes les infraccions?</string>
-  <string name="security_center_report_resolve_confirmation_dialog_message">Totes les infraccions actuals es marcaran com a resoltes. En cas de futures infraccions de dades, rebreu una notificació.</string>
+  <string name="security_center_report_resolve_confirmation_dialog_message">Totes les filtracions actuals es marcaran com a resoltes. En cas de futures filtracions de dades, rebreu una notificació.</string>
   <!-- Proton list -->
   <string name="security_center_proton_list_top_bar_title">Adreces de Proton</string>
   <string name="security_center_proton_list_no_breaches_detected">No s\'han detectat infraccions</string>
   <string name="security_center_proton_list_excluded_from_monitoring">Exclòs del monitoratge</string>
   <string name="security_center_proton_list_error">No s\'han pogut carregar les adreces</string>
-  <string name="security_center_proton_list_included_in_monitoring">Activeu el monitoratge per rebre notificacions si es filtren les seves adreces de Proton.</string>
+  <string name="security_center_proton_list_included_in_monitoring">Activeu el monitoratge per a rebre notificacions si es filtren les vostres adreces de Proton.</string>
   <string name="security_center_proton_list_options_menu">Menú d\'opcions de la pantalla de Proton</string>
   <string name="security_center_proton_list_not_monitored">No supervisat</string>
   <!-- Address Bottomsheet options -->
@@ -147,17 +147,17 @@
   <string name="security_center_address_bottomsheet_snackbar_message_enable_error">S\'ha produït un error en posar en pausa el monitoratge</string>
   <string name="security_center_address_bottomsheet_snackbar_message_disable_error">S\'ha produït un error en reprendre el monitoratge</string>
   <string name="security_center_address_bottomsheet_snackbar_message_remove_custom_email_error">No s\'ha pogut esborrar el correu electrònic personalitzat</string>
-  <string name="security_center_address_bottomsheet_snackbar_message_enable_success">El seguiment s\'ha reprès amb èxit</string>
+  <string name="security_center_address_bottomsheet_snackbar_message_enable_success">S\'ha reprès el monitoratge</string>
   <string name="security_center_address_bottomsheet_snackbar_message_disable_success">S\'ha pausat el monitoratge.</string>
   <string name="security_center_address_bottomsheet_snackbar_message_remove_custom_email_success">S\'ha esborrat el correu electrònic personalitzat</string>
   <!-- Alias list -->
   <string name="security_center_alias_list_top_bar_title">Àlies de hide-my-email</string>
   <string name="security_center_alias_list_excluded_from_monitoring">Exclòs del monitoratge</string>
   <string name="security_center_alias_list_error">No s\'han pogut carregar les adreces</string>
-  <string name="security_center_alias_list_included_in_monitoring">Activeu el monitoratge per rebre notificacions si els vostres àlies de hide-my-email es van filtrar.</string>
+  <string name="security_center_alias_list_included_in_monitoring">Activeu el monitoratge per rebre notificacions si els vostres àlies de hide-my-email s\'han filtrat.</string>
   <string name="security_center_alias_list_monitored">Supervisat</string>
-  <string name="security_center_alias_list_custom_email_message">Els àlies amb dominis personalitzats no se supervisen; afegiu-los com a correu electrònic personalitzat per al seguiment.</string>
-  <string name="security_center_alias_list_options_menu">Menú d\'opcions de pantalla d\'àlies</string>
+  <string name="security_center_alias_list_custom_email_message">Els àlies amb dominis personalitzats no se supervisen; afegiu-los com a correu electrònic personalitzat per al monitoratge.</string>
+  <string name="security_center_alias_list_options_menu">Menú d\'opcions de la pantalla d\'àlies</string>
   <!-- Dark web help dialogs -->
   <string name="dark_web_help_dialog_title">Seguretat de les dades</string>
   <string name="dark_web_help_dialog_subtitle">Proton no comparteix mai la vostra informació amb tercers. Totes les dades provenen de cerques de l\'aparició de dominis de Proton al web fosc.</string>

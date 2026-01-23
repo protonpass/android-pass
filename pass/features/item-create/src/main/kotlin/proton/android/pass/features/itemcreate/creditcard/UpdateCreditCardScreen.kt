@@ -139,9 +139,6 @@ fun UpdateCreditCardScreen(
                             }
 
                             CreditCardContentEvent.Up -> onExit()
-                            CreditCardContentEvent.Upgrade ->
-                                actionAfterKeyboardHide = { onNavigate(Upgrade) }
-
                             is CreditCardContentEvent.OnCVVFocusChange ->
                                 viewModel.onCVVFocusChanged(it.isFocused)
 

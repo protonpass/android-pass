@@ -3,7 +3,6 @@
   <string name="autofill_authenticate_prompt">Получить из Proton Pass</string>
   <string name="error_loading_items">Не могу загрузить элементы</string>
   <string name="inline_suggestions_open_app">Открыть Proton Pass</string>
-  <string name="suggestions_cc_autofill_paid_plans_title" comment="This string is shown in the autofill suggestions when the user is not on a paid plan but has credit cards that can be autofilled">Улучшите тариф для активации автозаполнения</string>
   <string name="autofill_associate_web_app_name_dialog_title">Использовать информацию для входа из \"%s\" в этом приложении или на сайте.</string>
   <string name="autofill_dialog_associate_and_autofill">Использовать всегда</string>
   <string name="autofill_dialog_just_autofill">Использовать один раз</string>
@@ -11,8 +10,6 @@
   <string name="autofill_notification_copy_to_clipboard">TOTP скопирован в буфер обмена</string>
   <string name="autofill_dialog_associate_title">Использовать имя пользователя?</string>
   <string name="autofill_user_logged_out">Был произведён выход из учётной записи. Пожалуйста, войдите снова, открыв приложение.</string>
-  <string name="autofill_cc_upgrade_dialog_title" comment="Title of the dialog that will appear when the user clicks on Autofill credit card but is on Free plan">Автозаполнение данных карты</string>
-  <string name="autofill_cc_upgrade_dialog_message" comment="Message of the dialog that will appear when the user clicks on Autofill credit card but is on Free plan">Автозаполнение данных карты является платной функцией. Если вы хотите, чтобы Proton Pass автоматически вводил данные вашей карты в приложениях и на веб-сайтах, улучшите тариф.</string>
   <string name="autofill_confirm_dangerous_title" comment="Title for the dialog that will appear when the user clicks on Autofill but we think it may be a dangerous action">Подтвердите действие</string>
   <string name="autofill_confirm_dangerous_body" comment="Body for the dialog that will appear when the user clicks on Autofill but we think it may be a dangerous action">Вы собираетесь автоматически заполнить свои учетные данные на сайте, который открывается вашим текущим приложением. Приложение может получить доступ к учетным данным после автозаполнения. Делайте это, только если вы доверяете приложению.</string>
   <string name="autofill_confirm_button" comment="Confirmation button for actually performing the autofill action">Автозаполнение</string>

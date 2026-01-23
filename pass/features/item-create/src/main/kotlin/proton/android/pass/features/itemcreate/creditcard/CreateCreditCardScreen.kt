@@ -158,7 +158,6 @@ fun CreateCreditCardScreen(
                             }
 
                             CreditCardContentEvent.Up -> onExit()
-                            CreditCardContentEvent.Upgrade -> onNavigate(Upgrade)
                             is CreditCardContentEvent.OnCVVFocusChange ->
                                 viewModel.onCVVFocusChanged(it.isFocused)
 

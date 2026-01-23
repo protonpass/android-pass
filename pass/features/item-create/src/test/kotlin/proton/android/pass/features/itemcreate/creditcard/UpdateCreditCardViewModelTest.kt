@@ -53,7 +53,6 @@ import proton.android.pass.features.itemcreate.common.formprocessor.FormProcessi
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.navigation.api.CommonOptionalNavArgId
 import proton.android.pass.notifications.fakes.FakeSnackbarDispatcher
-import proton.android.pass.preferences.FakeFeatureFlagsPreferenceRepository
 import proton.android.pass.preferences.FakeInternalSettingsRepository
 import proton.android.pass.preferences.FakePreferenceRepository
 import proton.android.pass.telemetry.api.EventItemType
@@ -121,8 +120,7 @@ class UpdateCreditCardViewModelTest {
         clipboardManager = FakeClipboardManager(),
         observeShare = observeShare,
         observeItemById = observeItemById,
-        settingsRepository = settingsRepository,
-        featureFlagsPreferencesRepository = FakeFeatureFlagsPreferenceRepository()
+        settingsRepository = settingsRepository
     )
 
     @Test

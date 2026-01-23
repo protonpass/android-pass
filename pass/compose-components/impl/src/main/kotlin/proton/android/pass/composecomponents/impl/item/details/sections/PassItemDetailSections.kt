@@ -81,7 +81,6 @@ internal fun PassItemDetailSections(
             vaultId = itemShare.vaultId,
             contents = itemContents,
             customFieldTotps = customFieldTotps.toImmutableMap(),
-            isDowngraded = isDowngraded,
             itemColors = itemColors,
             itemDiffs = itemDiffs,
             onEvent = onEvent,

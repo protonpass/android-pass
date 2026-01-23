@@ -60,7 +60,6 @@ import proton.android.pass.inappreview.api.InAppReviewTriggerMetrics
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonOptionalNavArgId
 import proton.android.pass.notifications.api.SnackbarDispatcher
-import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import proton.android.pass.preferences.InternalSettingsRepository
 import proton.android.pass.preferences.UserPreferencesRepository
 import proton.android.pass.telemetry.api.EventItemType
@@ -89,8 +88,7 @@ class CreateCreditCardViewModel @Inject constructor(
     clipboardManager: ClipboardManager,
     savedStateHandleProvider: SavedStateHandleProvider,
     observeShare: ObserveShare,
-    private val settingsRepository: InternalSettingsRepository,
-    featureFlagsPreferencesRepository: FeatureFlagsPreferencesRepository
+    private val settingsRepository: InternalSettingsRepository
 ) : BaseCreditCardViewModel(
     userPreferencesRepository = userPreferencesRepository,
     attachmentsHandler = attachmentsHandler,
@@ -100,8 +98,7 @@ class CreateCreditCardViewModel @Inject constructor(
     customFieldDraftRepository = customFieldDraftRepository,
     creditCardItemFormProcessor = creditCardItemFormProcessor,
     clipboardManager = clipboardManager,
-    savedStateHandleProvider = savedStateHandleProvider,
-    featureFlagsPreferencesRepository = featureFlagsPreferencesRepository
+    savedStateHandleProvider = savedStateHandleProvider
 ) {
     private val navShareId: Option<ShareId> =
         savedStateHandleProvider.get().get<String>(CommonOptionalNavArgId.ShareId.key)

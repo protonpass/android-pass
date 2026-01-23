@@ -28,6 +28,7 @@ import proton.android.pass.data.api.repositories.ItemSyncStatusRepository
 import proton.android.pass.data.api.repositories.SyncMode
 import proton.android.pass.data.api.usecases.RefreshContent
 import proton.android.pass.data.api.usecases.RefreshSharesAndEnqueueSync
+import proton.android.pass.data.api.usecases.RefreshSharesResult
 import proton.android.pass.log.api.PassLogger
 import javax.inject.Inject
 
@@ -37,7 +38,7 @@ class RefreshContentImpl @Inject constructor(
     private val refreshSharesAndEnqueueSync: RefreshSharesAndEnqueueSync
 ) : RefreshContent {
 
-    override suspend fun invoke(userId: UserId?) {
+    override suspend fun invoke(userId: UserId?): RefreshSharesResult {
         PassLogger.i(TAG, "Refreshing shares")
         syncStatusRepository.clear()
         syncStatusRepository.setMode(SyncMode.ShownToUser)
@@ -46,7 +47,7 @@ class RefreshContentImpl @Inject constructor(
         val actualUserId = userId ?: accountManager.getPrimaryUserId().firstOrNull()
             ?: throw UserIdNotAvailableError()
 
-        safeRunCatching {
+        return safeRunCatching {
             refreshSharesAndEnqueueSync(
                 userId = actualUserId,
                 syncType = RefreshSharesAndEnqueueSync.SyncType.FULL
@@ -56,7 +57,7 @@ class RefreshContentImpl @Inject constructor(
             PassLogger.w(TAG, error)
             syncStatusRepository.emit(ItemSyncStatus.SyncError)
             throw error
-        }
+        }.getOrThrow()
     }
 
     private companion object {

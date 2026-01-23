@@ -18,6 +18,8 @@
 
 package proton.android.pass.composecomponents.impl.snackbar
 
+import androidx.compose.material.SnackbarDuration
+import androidx.compose.material.SnackbarResult
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.res.stringResource
@@ -28,7 +30,7 @@ import proton.android.pass.notifications.api.SnackbarMessage
 fun SnackBarLaunchedEffect(
     snackBarMessage: SnackbarMessage?,
     passSnackBarHostState: PassSnackbarHostState,
-    onSnackBarMessageDelivered: () -> Unit
+    onSnackBarMessageDelivered: ((SnackbarResult)?) -> Unit
 ) {
     snackBarMessage ?: return
     when (snackBarMessage) {
@@ -38,7 +40,7 @@ fun SnackBarLaunchedEffect(
                     snackBarMessage.type,
                     snackBarMessage.message
                 )
-                onSnackBarMessageDelivered()
+                onSnackBarMessageDelivered(null)
             }
         }
         is SnackbarMessage.StructuredMessage -> {
@@ -48,7 +50,21 @@ fun SnackBarLaunchedEffect(
                     snackBarMessage.type,
                     snackBarMessageLocale
                 )
-                onSnackBarMessageDelivered()
+                onSnackBarMessageDelivered(null)
+            }
+        }
+
+        is SnackbarMessage.StructuredMessageWithAction -> {
+            val snackBarMessageLocale = stringResource(id = snackBarMessage.id)
+            val snackBarActionLocale = stringResource(id = snackBarMessage.action)
+            LaunchedEffect(snackBarMessage) {
+                val res = passSnackBarHostState.showSnackbar(
+                    snackBarMessage.type,
+                    snackBarMessageLocale,
+                    snackBarActionLocale,
+                    SnackbarDuration.Indefinite
+                )
+                onSnackBarMessageDelivered(res)
             }
         }
     }

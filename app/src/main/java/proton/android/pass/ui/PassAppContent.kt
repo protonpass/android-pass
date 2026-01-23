@@ -78,6 +78,7 @@ import proton.android.pass.domain.inappmessages.InAppMessageKey
 import proton.android.pass.features.auth.AuthOrigin
 import proton.android.pass.features.featureflags.FeatureFlagRoute
 import proton.android.pass.features.home.HomeNavItem
+import proton.android.pass.features.home.HomeSnackbarMessageWithAction
 import proton.android.pass.features.inappmessages.banner.ui.InAppMessageBanner
 import proton.android.pass.features.itemcreate.bottomsheets.createitem.CreateItemBottomSheetMode
 import proton.android.pass.features.itemcreate.bottomsheets.createitem.CreateItemBottomsheetNavItem
@@ -101,6 +102,9 @@ import proton.android.pass.ui.internal.rememberInternalDrawerState
 import proton.android.pass.ui.navigation.UN_AUTH_GRAPH
 import proton.android.pass.ui.navigation.appGraph
 import proton.android.pass.ui.navigation.unAuthGraph
+
+private const val PROTON_RECOVER_URL = "https://proton.me/support/recover-encrypted-messages-files"
+
 
 @OptIn(ExperimentalMaterialNavigationApi::class)
 @Composable
@@ -146,9 +150,24 @@ fun PassAppContent(
     )
 
     SnackBarLaunchedEffect(
-        appUiState.snackbarMessage.value(),
-        passSnackbarHostState,
-        onSnackbarMessageDelivered
+        snackBarMessage = appUiState.snackbarMessage.value(),
+        passSnackBarHostState = passSnackbarHostState,
+        onSnackBarMessageDelivered = {
+            if (it == SnackbarResult.ActionPerformed) {
+                when (appUiState.snackbarMessage.value()) {
+                    HomeSnackbarMessageWithAction.InactiveVault -> {
+                        BrowserUtils.openWebsite(
+                            context = context,
+                            website = PROTON_RECOVER_URL
+                        )
+                    }
+
+                    else -> {}
+                }
+            }
+
+            onSnackbarMessageDelivered()
+        }
     )
 
     if (appUiState.inAppUpdateState is InAppUpdateState.Downloaded) {

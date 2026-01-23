@@ -278,7 +278,7 @@ class HomeScreenTest {
             )
         }
 
-        itemSyncStatusRepository.tryEmit(ItemSyncStatus.SyncSuccess)
+        itemSyncStatusRepository.tryEmit(ItemSyncStatus.SyncSuccess(false))
         observeAllShares.sendResult(Result.success(vaultShares))
         observeEncryptedItems.emitValue(items)
         observeSearchEntry.emit(searchEntries)

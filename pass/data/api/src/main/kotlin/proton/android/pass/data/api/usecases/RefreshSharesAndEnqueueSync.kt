@@ -33,7 +33,8 @@ interface RefreshSharesAndEnqueueSync {
 sealed interface RefreshSharesResult {
     data class SharesFound(
         val shareIds: Set<ShareId>,
-        val isWorkerEnqueued: Boolean
+        val isWorkerEnqueued: Boolean,
+        val hasUndecryptableShares: Boolean = false
     ) : RefreshSharesResult
     data object NoSharesVaultCreated : RefreshSharesResult
     data object NoSharesSkipped : RefreshSharesResult

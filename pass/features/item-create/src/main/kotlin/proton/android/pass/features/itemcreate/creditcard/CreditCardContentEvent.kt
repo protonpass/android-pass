@@ -25,7 +25,6 @@ import proton.android.pass.features.itemcreate.common.customfields.CustomFieldEv
 
 internal sealed interface CreditCardContentEvent {
     data object Up : CreditCardContentEvent
-    data object Upgrade : CreditCardContentEvent
 
     @JvmInline
     value class Submit(val shareId: ShareId) : CreditCardContentEvent

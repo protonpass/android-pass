@@ -112,8 +112,6 @@ import proton.android.pass.features.selectitem.ui.SelectItemSnackbarMessage
 import proton.android.pass.features.selectitem.ui.SelectItemUiState
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.SnackbarDispatcher
-import proton.android.pass.preferences.FeatureFlag
-import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import proton.android.pass.preferences.UserPreferencesRepository
 import proton.android.pass.preferences.value
 import proton.android.pass.searchoptions.api.AutofillSearchOptionsRepository
@@ -137,8 +135,7 @@ class SelectItemViewModel @Inject constructor(
     observeAutofillShares: ObserveAutofillShares,
     observeUpgradeInfo: ObserveUpgradeInfo,
     getUserPlan: GetUserPlan,
-    clock: Clock,
-    private val featureFlagsPreferencesRepository: FeatureFlagsPreferencesRepository
+    clock: Clock
 ) : ViewModel() {
 
     private val selectItemStateFlow: MutableStateFlow<Option<SelectItemState>> =
@@ -210,26 +207,13 @@ class SelectItemViewModel @Inject constructor(
     private val itemUiModelFlow: Flow<LoadingResult<List<ItemUiModel>>> = combine(
         selectItemStateFlow,
         usersAutofillSharesMapFlow,
-        selectedAccountFlow,
-        usersAndPlansFlow,
-        featureFlagsPreferencesRepository.get<Boolean>(FeatureFlag.PASS_ALLOW_CREDIT_CARD_FREE_USERS)
-    ) { selectItemState, usersAutofillShares, selectedAccount, usersAndPlans, allowCreditCreditFreeUsers ->
+        selectedAccountFlow
+    ) { selectItemState, usersAutofillShares, selectedAccount ->
         when (val state = selectItemState.value()) {
             is SelectItemState.Autofill,
             is SelectItemState.Passkey.Register -> {
                 val flows = usersAutofillShares
                     .filter { it.matchesSelectedAccount(selectedAccount) }
-                    .filter { (userId, _) ->
-                        if (state.itemTypeFilter == ItemTypeFilter.CreditCards) {
-                            usersAndPlans.keys.find { it.userId == userId }?.let { user ->
-                                usersAndPlans[user]?.let {
-                                    allowCreditCreditFreeUsers || it.hasPlanWithAccess
-                                } == true
-                            } == true
-                        } else {
-                            true
-                        }
-                    }
                     .map { (userId, autofillShares) ->
                         observeItems(
                             userId = userId,

@@ -20,15 +20,16 @@ package proton.android.pass.data.fakes.usecases
 
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.api.usecases.RefreshContent
+import proton.android.pass.data.api.usecases.RefreshSharesResult
 import javax.inject.Inject
 
 class FakeRefreshContent @Inject constructor() : RefreshContent {
 
-    private var result: Result<Unit> = Result.success(Unit)
+    private var result: Result<RefreshSharesResult> = Result.success(RefreshSharesResult.NoSharesSkipped)
 
-    fun setResult(value: Result<Unit>) {
+    fun setResult(value: Result<RefreshSharesResult>) {
         result = value
     }
 
-    override suspend fun invoke(userId: UserId?) = result.getOrThrow()
+    override suspend fun invoke(userId: UserId?): RefreshSharesResult = result.getOrThrow()
 }

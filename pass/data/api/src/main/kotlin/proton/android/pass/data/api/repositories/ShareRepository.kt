@@ -117,5 +117,6 @@ data class UpdateShareEvent(
 data class RefreshSharesResult(
     val allShareIds: Set<ShareId>,
     val newShareIds: Set<ShareId>,
-    val wasFirstSync: Boolean
+    val wasFirstSync: Boolean,
+    val hasUndecryptableShares: Boolean
 )

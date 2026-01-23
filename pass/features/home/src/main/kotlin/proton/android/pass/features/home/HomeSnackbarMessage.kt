@@ -89,3 +89,17 @@ enum class HomeSnackbarMessage(
     AliasItemsEnabledError(R.string.home_snackbar_items_alias_enabled_error, SnackbarType.ERROR)
 }
 
+enum class HomeSnackbarMessageWithAction(
+    @StringRes override val id: Int,
+    override val type: SnackbarType,
+    override val isClipboard: Boolean = false,
+    override val action: Int
+) : SnackbarMessage.StructuredMessageWithAction {
+    InactiveVault(
+        id = R.string.sync_inactive_vault_warning,
+        isClipboard = false,
+        type = SnackbarType.ERROR,
+        action = R.string.sync_inactive_vault_warning_action
+    )
+}
+

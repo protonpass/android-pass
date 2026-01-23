@@ -56,6 +56,8 @@ open class FetchItemsWorker @AssistedInject constructor(
         val userId = inputData.getString(ARG_USER_ID)?.let(::UserId) ?: return Result.failure()
         val shareIds = inputData.getStringArray(ARG_SHARE_IDS)?.map(::ShareId) ?: emptyList()
         val fetchSource = inputData.getString(ARG_FETCH_SOURCE)?.let(FetchSource::valueOf)
+        val hasUndecryptableShares = inputData.getBoolean(ARG_UNDECRYPTABLE, false)
+
         if (fetchSource == null) {
             PassLogger.w(TAG, "Invalid fetch source")
             return Result.failure()
@@ -63,7 +65,12 @@ open class FetchItemsWorker @AssistedInject constructor(
 
         PassLogger.i(TAG, "Fetching items for ${shareIds.size} shares in ${fetchSource.name}")
 
-        val res = forceSyncItems(userId, shareIds, isBackground = !fetchSource.showDialog)
+        val res = forceSyncItems(
+            userId,
+            shareIds,
+            isBackground = !fetchSource.showDialog,
+            hasUndecryptableShares = hasUndecryptableShares
+        )
         return when (res) {
             ForceSyncResult.Error -> {
                 PassLogger.i(TAG, "$TAG finished with errors")
@@ -109,6 +116,7 @@ open class FetchItemsWorker @AssistedInject constructor(
         private const val ARG_USER_ID = "user_id"
         private const val ARG_SHARE_IDS = "share_ids"
         private const val ARG_FETCH_SOURCE = "fetch_source"
+        private const val ARG_UNDECRYPTABLE = "hasUndecryptableShares"
 
         private const val SYNC_NOTIFICATION_ID = 0
         private const val SYNC_NOTIFICATION_CHANNEL_ID = "SyncNotificationChannel"
@@ -116,13 +124,15 @@ open class FetchItemsWorker @AssistedInject constructor(
         fun getRequestFor(
             source: FetchSource,
             userId: UserId,
-            shareIds: List<ShareId>
+            shareIds: List<ShareId>,
+            hasUndecryptableShares: Boolean
         ): OneTimeWorkRequest {
             val shareIdsAsString = shareIds.map { it.id }.toTypedArray()
             val extras = mutableMapOf(
                 ARG_SHARE_IDS to shareIdsAsString,
                 ARG_FETCH_SOURCE to source.name,
-                ARG_USER_ID to userId.id
+                ARG_USER_ID to userId.id,
+                ARG_UNDECRYPTABLE to hasUndecryptableShares
             )
 
             val data = Data.Builder()

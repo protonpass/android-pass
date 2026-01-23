@@ -22,6 +22,6 @@ import me.proton.core.domain.entity.UserId
 
 interface RefreshContent {
 
-    suspend operator fun invoke(userId: UserId? = null)
+    suspend operator fun invoke(userId: UserId? = null): RefreshSharesResult
 
 }

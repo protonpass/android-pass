@@ -30,6 +30,7 @@ interface ForceSyncItems {
     suspend operator fun invoke(
         userId: UserId,
         shareIds: List<ShareId>,
-        isBackground: Boolean
+        isBackground: Boolean,
+        hasUndecryptableShares: Boolean
     ): ForceSyncResult
 }

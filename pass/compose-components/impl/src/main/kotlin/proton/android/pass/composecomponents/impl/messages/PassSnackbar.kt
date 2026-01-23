@@ -22,6 +22,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Snackbar
 import androidx.compose.material.SnackbarData
 import androidx.compose.material.SnackbarDuration
@@ -33,6 +34,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
@@ -52,17 +54,26 @@ fun PassSnackbar(
     type: ProtonSnackbarType,
     message: String,
     actionLabel: String? = null,
+    actionColor: Color = MaterialTheme.colors.surface,
     performAction: () -> Unit = {},
     dismiss: () -> Unit = {}
 ) {
     Snackbar(
         modifier = modifier.padding(Spacing.mediumSmall),
-        content = { Text(message) },
+        content = {
+            Text(
+                modifier = Modifier.padding(vertical = Spacing.small),
+                text = message
+            )
+        },
         action = {
             Row {
                 if (!actionLabel.isNullOrBlank()) {
                     TextButton(onClick = { performAction() }) {
-                        Text(text = actionLabel)
+                        Text(
+                            text = actionLabel,
+                            color = actionColor
+                        )
                     }
                 }
                 IconButton(

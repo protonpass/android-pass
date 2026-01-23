@@ -59,7 +59,7 @@
   <string name="secure_links_shared_action_delete_links_inactive">Esborra tots els enllaços inactius</string>
   <string name="secure_links_shared_snackbar_message_link_copied">S\'ha copiat l\'enllaç segur.</string>
   <string name="secure_links_shared_snackbar_message_link_deletion_canceled">S\'ha cancel·lat l\'eliminació de l\'enllaç segur</string>
-  <string name="secure_links_shared_snackbar_message_link_deletion_error">S\'ha produït un error en suprimir l\'enllaç segur</string>
-  <string name="secure_links_shared_snackbar_message_inactive_links_deletion_canceled">S\'ha cancel·lat la supressió d\'enllaços segurs inactius</string>
+  <string name="secure_links_shared_snackbar_message_link_deletion_error">S\'ha produït un error en eliminar l\'enllaç segur</string>
+  <string name="secure_links_shared_snackbar_message_inactive_links_deletion_canceled">S\'ha cancel·lat l\'eliminació d\'enllaços segurs inactius</string>
   <string name="secure_links_shared_snackbar_message_inactive_links_deletion_error">S\'ha produït un error en eliminar els enllaços segurs inactius.</string>
 </resources>

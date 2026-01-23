@@ -22,7 +22,7 @@
   <string name="sharing_can_manage">Administrador</string>
   <string name="sharing_can_manage_v2">Gestor</string>
   <string name="sharing_can_view_description">Permet veure els elements d\'aquesta caixa forte.</string>
-  <string name="sharing_can_edit_description">Permet crear, editar, suprimir i exportar elements en aquesta caixa forta.</string>
+  <string name="sharing_can_edit_description">Permet crear, editar, eliminar i exportar elements en aquesta caixa forta.</string>
   <string name="sharing_can_manage_description">Permet concedir i revocar accés a aquesta caixa forta.</string>
   <plurals name="sharing_item_count">
     <item quantity="one">%d element</item>
@@ -39,7 +39,7 @@
   <string name="share_with_title">Comparteix amb</string>
   <string name="share_with_email_hint">Adreça de correu electrònic</string>
   <string name="share_with_email_error">L\'adreça de correu electrònic no és vàlida.</string>
-  <string name="share_with_email_cannot_invite_outside_org">No podeu convidar persones fora de la vostra organització, contacteu amb l\'administrador per obtenir més informació</string>
+  <string name="share_with_email_cannot_invite_outside_org">No podeu convidar persones de fora de la vostra organització. Contacteu amb l\'administrador per a obtenir més informació</string>
   <string name="share_with_email_email_already_added">Ja heu afegit aquesta adreça de correu electrònic</string>
   <string name="share_permissions_title">Estableix el nivell d`accés</string>
   <string name="sharing_reject_invitation">Rebutja la invitació</string>

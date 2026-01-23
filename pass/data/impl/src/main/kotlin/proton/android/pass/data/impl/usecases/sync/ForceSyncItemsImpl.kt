@@ -37,10 +37,12 @@ class ForceSyncItemsImpl @Inject constructor(
     private val itemSyncStatusRepository: ItemSyncStatusRepository
 ) : ForceSyncItems {
 
+    @SuppressWarnings("LongMethod")
     override suspend fun invoke(
         userId: UserId,
         shareIds: List<ShareId>,
-        isBackground: Boolean
+        isBackground: Boolean,
+        hasUndecryptableShares: Boolean
     ): ForceSyncResult {
         if (shareIds.isEmpty()) return ForceSyncResult.Success
 
@@ -96,7 +98,11 @@ class ForceSyncItemsImpl @Inject constructor(
         )
 
         val result = if (errors.isEmpty()) {
-            itemSyncStatusRepository.emit(ItemSyncStatus.SyncSuccess)
+            itemSyncStatusRepository.emit(
+                status = ItemSyncStatus.SyncSuccess(
+                    hasUndecryptableShares = hasUndecryptableShares
+                )
+            )
             ForceSyncResult.Success
         } else {
             itemSyncStatusRepository.emit(ItemSyncStatus.SyncError)

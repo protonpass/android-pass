@@ -38,7 +38,7 @@ class FakeShareRepository : ShareRepository {
     private var createVaultResult: Result<Share> =
         Result.failure(IllegalStateException("CreateVaultResult not set"))
     private var refreshSharesResult: RefreshSharesResult =
-        RefreshSharesResult(emptySet(), emptySet(), wasFirstSync = false)
+        RefreshSharesResult(emptySet(), emptySet(), wasFirstSync = false, hasUndecryptableShares = false)
     private var refreshShareResult: Result<Unit> = Result.success(Unit)
     private val observeSharesFlow = testFlow<Result<List<Share>>>()
     private val observeUsableShareIdsFlow = testFlow<Result<List<ShareId>>>()

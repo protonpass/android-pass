@@ -3,7 +3,6 @@
   <string name="autofill_authenticate_prompt">Nouda Proton Passista</string>
   <string name="error_loading_items">Kohteita ei voitu ladata</string>
   <string name="inline_suggestions_open_app">Avaa Proton Pass</string>
-  <string name="suggestions_cc_autofill_paid_plans_title" comment="This string is shown in the autofill suggestions when the user is not on a paid plan but has credit cards that can be autofilled">Päivitä tilauksesi käyttääksesi automaattiäyttöä</string>
   <string name="autofill_associate_web_app_name_dialog_title">Käytä kohteen \"%s\" kirjautumistietoja tässä sovelluksessa tai tällä verkkosivustolla.</string>
   <string name="autofill_dialog_associate_and_autofill">Käytä aina</string>
   <string name="autofill_dialog_just_autofill">Käytä kerran</string>
@@ -11,8 +10,6 @@
   <string name="autofill_notification_copy_to_clipboard">TOTP-koodi kopioitiin leikepöydälle</string>
   <string name="autofill_dialog_associate_title">Käytetäänkö kirjautumistietoa?</string>
   <string name="autofill_user_logged_out">Sinut on kirjattu ulos. Kirjaudu uudelleen avaamalla sovellus.</string>
-  <string name="autofill_cc_upgrade_dialog_title" comment="Title of the dialog that will appear when the user clicks on Autofill credit card but is on Free plan">Automaattitäytä kortin tiedot</string>
-  <string name="autofill_cc_upgrade_dialog_message" comment="Message of the dialog that will appear when the user clicks on Autofill credit card but is on Free plan">Maksukorttitietojen automaattitäyttö on maksullinen ominaisuus. Jos haluat Proton Passin täyttävän korttitietosi automaattisesti puolestasi sovelluksissa ja verkkosivustoilla, päivitä maksulliseen tilaukseen.</string>
   <string name="autofill_confirm_dangerous_title" comment="Title for the dialog that will appear when the user clicks on Autofill but we think it may be a dangerous action">Vahvista toimintosi</string>
   <string name="autofill_confirm_dangerous_body" comment="Body for the dialog that will appear when the user clicks on Autofill but we think it may be a dangerous action">Olet automaattitäyttämässä tunnistetietojasi verkkosivustolle, jonka parhaillaan käyttämäsi sovellus on avannut. Tämä sovellus saattaa nähdä täytetyt tiedot, eli täytä ne vain, jos luotat siihen.</string>
   <string name="autofill_confirm_button" comment="Confirmation button for actually performing the autofill action">Automaattitäytä</string>

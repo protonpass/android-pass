@@ -3,7 +3,6 @@
   <string name="autofill_authenticate_prompt">Lấy từ Proton Pass</string>
   <string name="error_loading_items">Không thể tải các mục</string>
   <string name="inline_suggestions_open_app">Mở Proton Pass</string>
-  <string name="suggestions_cc_autofill_paid_plans_title" comment="This string is shown in the autofill suggestions when the user is not on a paid plan but has credit cards that can be autofilled">Nâng cấp để tự động điền</string>
   <string name="autofill_associate_web_app_name_dialog_title">Sử dụng thông tin đăng nhập từ \"%s\" cho ứng dụng hoặc trang web.</string>
   <string name="autofill_dialog_associate_and_autofill">Luôn dùng</string>
   <string name="autofill_dialog_just_autofill">Dùng một lần</string>
@@ -11,8 +10,6 @@
   <string name="autofill_notification_copy_to_clipboard">Đã sao chép mã TOTP vào bộ nhớ tạm</string>
   <string name="autofill_dialog_associate_title">Sử dụng đăng nhập này?</string>
   <string name="autofill_user_logged_out">Bạn đã đăng xuất. Hãy đăng nhập lại bằng cách mở lại ứng dụng.</string>
-  <string name="autofill_cc_upgrade_dialog_title" comment="Title of the dialog that will appear when the user clicks on Autofill credit card but is on Free plan">Thông tin tự động điền thẻ</string>
-  <string name="autofill_cc_upgrade_dialog_message" comment="Message of the dialog that will appear when the user clicks on Autofill credit card but is on Free plan">Tự đồng điền thông tin thẻ là một tính năng trả phí. Nếu bạn muốn Proton Pass tự động điền thông tin thẻ của mình trong ứng dụng và trang web, vui lòng nâng cấp lên một gói trả phí.</string>
   <string name="autofill_confirm_dangerous_title" comment="Title for the dialog that will appear when the user clicks on Autofill but we think it may be a dangerous action">Xác nhận hành động của bạn</string>
   <string name="autofill_confirm_dangerous_body" comment="Body for the dialog that will appear when the user clicks on Autofill but we think it may be a dangerous action">Bạn đang chuẩn bị tự động thông tin đăng nhập của mình vào một trang web được mở bởi ứng dụng hiện tại của bạn. Ứng dụng này có thể truy cập thông tin đăng nhập của bạn sau khi tự động điền - chỉ thực hiện nếu như bạn tin tưởng ứng dụng này.</string>
   <string name="autofill_confirm_button" comment="Confirmation button for actually performing the autofill action">Tự động điền</string>

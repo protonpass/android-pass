@@ -3,7 +3,6 @@
   <string name="autofill_authenticate_prompt">Hämta från Proton Pass</string>
   <string name="error_loading_items">Kunde inte ladda objekten</string>
   <string name="inline_suggestions_open_app">Öppna Proton Pass</string>
-  <string name="suggestions_cc_autofill_paid_plans_title" comment="This string is shown in the autofill suggestions when the user is not on a paid plan but has credit cards that can be autofilled">Uppgradera till autofyll</string>
   <string name="autofill_associate_web_app_name_dialog_title">Använd inloggningsuppgifter från “%s“ på denna app eller webbplats.</string>
   <string name="autofill_dialog_associate_and_autofill">Använd alltid</string>
   <string name="autofill_dialog_just_autofill">Använd en gång</string>
@@ -11,8 +10,6 @@
   <string name="autofill_notification_copy_to_clipboard">TOTP har kopierats till urklipp</string>
   <string name="autofill_dialog_associate_title">Använd inloggning?</string>
   <string name="autofill_user_logged_out">Du har loggats ut. Logga in igen genom att öppna appen.</string>
-  <string name="autofill_cc_upgrade_dialog_title" comment="Title of the dialog that will appear when the user clicks on Autofill credit card but is on Free plan">Autofyll kortuppgifter</string>
-  <string name="autofill_cc_upgrade_dialog_message" comment="Message of the dialog that will appear when the user clicks on Autofill credit card but is on Free plan">Autofyllning av kreditkortsuppgifter är en betald funktion. Om du vill att Proton Pass automatiskt ska ange dina kortuppgifter åt dig i appar och webbplatser, uppgradera till ett betalt paket.</string>
   <string name="autofill_confirm_dangerous_title" comment="Title for the dialog that will appear when the user clicks on Autofill but we think it may be a dangerous action">Bekräfta din åtgärd</string>
   <string name="autofill_confirm_dangerous_body" comment="Body for the dialog that will appear when the user clicks on Autofill but we think it may be a dangerous action">Du är på väg att fylla i dina autentiseringsuppgifter automatiskt till en webbplats som öppnas av din nuvarande app. Appen kan få åtkomst till autentiseringsuppgifterna efter automatisk ifyllnad – gör det bara om du litar på appen.</string>
   <string name="autofill_confirm_button" comment="Confirmation button for actually performing the autofill action">Autofyll</string>

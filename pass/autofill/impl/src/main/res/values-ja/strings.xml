@@ -3,7 +3,6 @@
   <string name="autofill_authenticate_prompt">Proton Pass から取得</string>
   <string name="error_loading_items">アイテムを読み込むことができませんでした</string>
   <string name="inline_suggestions_open_app">Proton Pass を開く</string>
-  <string name="suggestions_cc_autofill_paid_plans_title" comment="This string is shown in the autofill suggestions when the user is not on a paid plan but has credit cards that can be autofilled">自動入力を更新</string>
   <string name="autofill_associate_web_app_name_dialog_title">このアプリやウェブサイトでの “%s” によるログイン詳細を使用</string>
   <string name="autofill_dialog_associate_and_autofill">常に使用</string>
   <string name="autofill_dialog_just_autofill">1 度のみ使用</string>
@@ -11,8 +10,6 @@
   <string name="autofill_notification_copy_to_clipboard">TOTP がクリップボードにコピーされました</string>
   <string name="autofill_dialog_associate_title">ログインを使用しますか？</string>
   <string name="autofill_user_logged_out">ログアウト状態です。アプリを開いて再びログインしてください。</string>
-  <string name="autofill_cc_upgrade_dialog_title" comment="Title of the dialog that will appear when the user clicks on Autofill credit card but is on Free plan">カードの詳細を自動入力</string>
-  <string name="autofill_cc_upgrade_dialog_message" comment="Message of the dialog that will appear when the user clicks on Autofill credit card but is on Free plan">カード情報の詳細の自動入力は有料版の機能です。Proton Pass でアプリや Web サイトにカード情報を自動で入力したい場合は、有料プランにアップグレードしてください。</string>
   <string name="autofill_confirm_dangerous_title" comment="Title for the dialog that will appear when the user clicks on Autofill but we think it may be a dangerous action">アクションを確認する</string>
   <string name="autofill_confirm_dangerous_body" comment="Body for the dialog that will appear when the user clicks on Autofill but we think it may be a dangerous action">現在のアプリによって開かれた Web サイトに認証情報を自動入力しようとしています。このアプリは自動入力後に認証情報にアクセスできます。つまり、アプリを信頼する場合にのみ実行してください。</string>
   <string name="autofill_confirm_button" comment="Confirmation button for actually performing the autofill action">自動入力</string>

@@ -51,8 +51,6 @@ import proton.android.pass.features.itemcreate.common.formprocessor.CreditCardIt
 import proton.android.pass.features.itemcreate.common.formprocessor.FormProcessingResult
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.preferences.DisplayFileAttachmentsBanner.NotDisplay
-import proton.android.pass.preferences.FeatureFlag
-import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import proton.android.pass.preferences.UserPreferencesRepository
 import proton.android.pass.preferences.value
 import java.net.URI
@@ -66,8 +64,7 @@ abstract class BaseCreditCardViewModel(
     private val clipboardManager: ClipboardManager,
     customFieldDraftRepository: CustomFieldDraftRepository,
     canPerformPaidAction: CanPerformPaidAction,
-    savedStateHandleProvider: SavedStateHandleProvider,
-    featureFlagsPreferencesRepository: FeatureFlagsPreferencesRepository
+    savedStateHandleProvider: SavedStateHandleProvider
 ) : ViewModel() {
 
     private val hasUserEditedContentState: MutableStateFlow<Boolean> = MutableStateFlow(false)
@@ -127,10 +124,9 @@ abstract class BaseCreditCardViewModel(
         canPerformPaidAction(),
         userPreferencesRepository.observeDisplayFileAttachmentsOnboarding(),
         attachmentsHandler.attachmentState,
-        focusedFieldState,
-        featureFlagsPreferencesRepository.get<Boolean>(FeatureFlag.PASS_ALLOW_CREDIT_CARD_FREE_USERS)
+        focusedFieldState
     ) { isLoading, hasUserEditedContent, validationErrors, isItemSaved, canPerformPaidAction,
-        displayFileAttachmentsOnboarding, attachmentsState, focusedField, allowCreditCreditFreeUsers ->
+        displayFileAttachmentsOnboarding, attachmentsState, focusedField ->
         BaseCreditCardUiState(
             isLoading = isLoading.value(),
             hasUserEditedContent = hasUserEditedContent,
@@ -139,8 +135,7 @@ abstract class BaseCreditCardViewModel(
             canPerformPaidAction = canPerformPaidAction,
             displayFileAttachmentsOnboarding = displayFileAttachmentsOnboarding.value(),
             attachmentsState = attachmentsState,
-            focusedField = focusedField,
-            allowCreditCreditFreeUsers = allowCreditCreditFreeUsers
+            focusedField = focusedField
         )
     }
         .stateIn(

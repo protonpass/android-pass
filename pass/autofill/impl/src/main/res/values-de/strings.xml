@@ -3,7 +3,6 @@
   <string name="autofill_authenticate_prompt">Von Proton Pass holen</string>
   <string name="error_loading_items">Einträge konnten nicht geladen werden. </string>
   <string name="inline_suggestions_open_app">Proton Pass öffnen</string>
-  <string name="suggestions_cc_autofill_paid_plans_title" comment="This string is shown in the autofill suggestions when the user is not on a paid plan but has credit cards that can be autofilled">Upgrade für die automatische Ausfüllung</string>
   <string name="autofill_associate_web_app_name_dialog_title">Die Zugangsdaten von \"%s\" auf dieser App oder Website verwenden.</string>
   <string name="autofill_dialog_associate_and_autofill">Immer verwenden</string>
   <string name="autofill_dialog_just_autofill">Einmal verwenden</string>
@@ -11,8 +10,6 @@
   <string name="autofill_notification_copy_to_clipboard">TOTP wurde in die Zwischenablage kopiert.</string>
   <string name="autofill_dialog_associate_title">Anmeldedaten verwenden?</string>
   <string name="autofill_user_logged_out">Du wurdest abgemeldet. Bitte melde dich erneut an, um fortzufahren.</string>
-  <string name="autofill_cc_upgrade_dialog_title" comment="Title of the dialog that will appear when the user clicks on Autofill credit card but is on Free plan">Kartendaten automatisch ausfüllen</string>
-  <string name="autofill_cc_upgrade_dialog_message" comment="Message of the dialog that will appear when the user clicks on Autofill credit card but is on Free plan">Das automatische Ausfüllen von Kreditkartendaten ist eine kostenpflichtige Funktion. Wenn du möchtest, dass Proton Pass automatisch deine Kartendaten für dich in Apps und auf Websites eingibt, erwirb bitte ein Upgrade auf einen kostenpflichtiges Abonnement.</string>
   <string name="autofill_confirm_dangerous_title" comment="Title for the dialog that will appear when the user clicks on Autofill but we think it may be a dangerous action">Aktion bestätigen</string>
   <string name="autofill_confirm_dangerous_body" comment="Body for the dialog that will appear when the user clicks on Autofill but we think it may be a dangerous action">Du bist dabei, deine Zugangsdaten auf einer Website automatisch auszufüllen, die von deiner aktuellen Anwendung geöffnet wird. Die App kann nach dem automatischen Ausfüllen Zugriff auf die Anmeldeinformationen haben - tue dies nur, wenn du der App vertraust.</string>
   <string name="autofill_confirm_button" comment="Confirmation button for actually performing the autofill action">AutoFill</string>

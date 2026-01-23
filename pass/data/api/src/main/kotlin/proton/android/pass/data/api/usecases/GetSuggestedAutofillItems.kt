@@ -36,7 +36,6 @@ sealed interface SuggestedAutofillItemsResult {
     @JvmInline
     value class Items(val suggestedItems: List<ItemData.SuggestedItem>) :
         SuggestedAutofillItemsResult
-    data object ShowUpgrade : SuggestedAutofillItemsResult
 }
 
 sealed interface ItemData {

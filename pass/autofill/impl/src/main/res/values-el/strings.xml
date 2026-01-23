@@ -3,7 +3,6 @@
   <string name="autofill_authenticate_prompt">Λήψη από το Proton Pass</string>
   <string name="error_loading_items">Αδυναμία φόρτωσης των στοιχείων</string>
   <string name="inline_suggestions_open_app">Άνοιγμα Proton Pass</string>
-  <string name="suggestions_cc_autofill_paid_plans_title" comment="This string is shown in the autofill suggestions when the user is not on a paid plan but has credit cards that can be autofilled">Αναβάθμιση για αυτόματη συμπλήρωση</string>
   <string name="autofill_associate_web_app_name_dialog_title">Χρησιμοποιήστε τα στοιχεία σύνδεσης από το \"%s\" σε αυτήν την εφαρμογή ή ιστότοπο.</string>
   <string name="autofill_dialog_associate_and_autofill">Χρήση πάντα</string>
   <string name="autofill_dialog_just_autofill">Χρήση μία φορά</string>
@@ -11,8 +10,6 @@
   <string name="autofill_notification_copy_to_clipboard">Ο TOTP έχει αντιγραφεί στο πρόχειρο</string>
   <string name="autofill_dialog_associate_title">Χρησιμοποίηση διαπιστευτηρίων;</string>
   <string name="autofill_user_logged_out">Έχετε αποσυνδεθεί. Παρακαλούμε συνδεθείτε ξανά ανοίγοντας την εφαρμογή.</string>
-  <string name="autofill_cc_upgrade_dialog_title" comment="Title of the dialog that will appear when the user clicks on Autofill credit card but is on Free plan">Αυτόματη συμπλήρωση στοιχείων κάρτας</string>
-  <string name="autofill_cc_upgrade_dialog_message" comment="Message of the dialog that will appear when the user clicks on Autofill credit card but is on Free plan">Η αυτόματη συμπλήρωση στοιχείων πιστωτικής κάρτας είναι μια δυνατότητα επί πληρωμή. Εάν θέλετε το Proton Pass να εισάγει αυτόματα τα στοιχεία της κάρτας σας για εσάς σε εφαρμογές και ιστότοπους, αναβαθμίστε σε πλάνο επί πληρωμή.</string>
   <string name="autofill_confirm_dangerous_title" comment="Title for the dialog that will appear when the user clicks on Autofill but we think it may be a dangerous action">Επιβεβαίωση ενέργειας</string>
   <string name="autofill_confirm_dangerous_body" comment="Body for the dialog that will appear when the user clicks on Autofill but we think it may be a dangerous action">Πρόκειται να συμπληρώσετε αυτόματα τα διαπιστευτήριά σας σε έναν ιστότοπο που ανοίγει από την τρέχουσα εφαρμογή σας. Η εφαρμογή μπορεί να έχει πρόσβαση στα διαπιστευτήρια μετά την αυτόματη συμπλήρωση - κάντε το μόνο εάν εμπιστεύεστε την εφαρμογή.</string>
   <string name="autofill_confirm_button" comment="Confirmation button for actually performing the autofill action">Αυτόματη συμπλήρωση</string>

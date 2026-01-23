@@ -38,8 +38,7 @@ internal data class BaseCreditCardUiState(
     val canPerformPaidAction: Boolean,
     val displayFileAttachmentsOnboarding: Boolean,
     val attachmentsState: AttachmentsState,
-    val focusedField: Option<CreditCardField>,
-    val allowCreditCreditFreeUsers: Boolean
+    val focusedField: Option<CreditCardField>
 ) {
     companion object {
         val Initial = BaseCreditCardUiState(
@@ -50,8 +49,7 @@ internal data class BaseCreditCardUiState(
             canPerformPaidAction = false,
             displayFileAttachmentsOnboarding = false,
             attachmentsState = AttachmentsState.Initial,
-            focusedField = None,
-            allowCreditCreditFreeUsers = false
+            focusedField = None
         )
     }
 }

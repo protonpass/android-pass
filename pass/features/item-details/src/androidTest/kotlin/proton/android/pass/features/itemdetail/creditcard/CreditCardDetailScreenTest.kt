@@ -19,7 +19,6 @@
 package proton.android.pass.features.itemdetail.creditcard
 
 import androidx.annotation.DrawableRes
-import androidx.compose.ui.test.assertCountEquals
 import androidx.compose.ui.test.filterToOne
 import androidx.compose.ui.test.hasAnySibling
 import androidx.compose.ui.test.hasContentDescription
@@ -43,7 +42,6 @@ import proton.android.pass.clipboard.fakes.FakeClipboardManager
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.fakes.FakeSavedStateHandleProvider
 import proton.android.pass.composecomponents.impl.R
-import proton.android.pass.data.fakes.usecases.FakeCanPerformPaidAction
 import proton.android.pass.data.fakes.usecases.FakeGetItemById
 import proton.android.pass.data.fakes.usecases.FakeObserveItemById
 import proton.android.pass.data.fakes.usecases.FakeObserveUserAccessData
@@ -51,9 +49,7 @@ import proton.android.pass.data.fakes.usecases.shares.FakeObserveShare
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.features.item.details.detail.ui.ItemDetailsScreen
-import proton.android.pass.features.item.details.shared.navigation.ItemDetailsNavDestination
 import proton.android.pass.navigation.api.CommonNavArgId
-import proton.android.pass.test.CallChecker
 import proton.android.pass.test.HiltComponentActivity
 import proton.android.pass.test.domain.ItemTestFactory
 import proton.android.pass.test.domain.ShareTestFactory
@@ -61,7 +57,6 @@ import proton.android.pass.test.domain.UserAccessDataTestFactory
 import proton.android.pass.test.waitUntilExists
 import javax.inject.Inject
 import kotlin.test.assertEquals
-import proton.android.pass.composecomponents.impl.R as CompR
 
 @HiltAndroidTest
 class CreditCardDetailScreenTest {
@@ -85,9 +80,6 @@ class CreditCardDetailScreenTest {
     lateinit var clipboardManager: FakeClipboardManager
 
     @Inject
-    lateinit var canPerformPaidAction: FakeCanPerformPaidAction
-
-    @Inject
     lateinit var observeShare: FakeObserveShare
 
     @Inject
@@ -100,7 +92,6 @@ class CreditCardDetailScreenTest {
             set(CommonNavArgId.ShareId.key, SHARE_ID)
             set(CommonNavArgId.ItemId.key, ITEM_ID)
         }
-        canPerformPaidAction.setResult(true)
     }
 
     @Test
@@ -274,67 +265,6 @@ class CreditCardDetailScreenTest {
         }
 
         assertEquals(verificationNumber, clipboardManager.getContents())
-    }
-
-    @Test
-    fun canHandleDowngradedMode() {
-        canPerformPaidAction.setResult(false)
-
-        val cardHolder = "Card cardholder"
-        val cvv = "333"
-        val pin = "6543"
-        val expirationDate = "2010-02"
-        val formattedExpirationDate = "02 / 10"
-        val title = performSetup(
-            cardHolder = cardHolder,
-            expirationDate = expirationDate,
-            pin = pin,
-            verificationNumber = cvv
-        )
-        val checker = CallChecker<Unit>()
-        composeTestRule.apply {
-            setContent {
-                PassTheme(isDark = true) {
-                    ItemDetailsScreen(
-                        onNavigated = {
-                            if (it is ItemDetailsNavDestination.Upgrade) {
-                                checker.call(Unit)
-                            }
-                        }
-                    )
-                }
-            }
-            waitUntilExists(hasText(title))
-
-            // Cardholder is there
-            onNodeWithText(cardHolder).assertExists()
-
-            // Expiration date is there
-            onNodeWithText(formattedExpirationDate).assertExists()
-
-            // CVV can be revealed
-            val revealContentDescription = activity.getString(R.string.action_reveal)
-            onAllNodes(hasText("••••")).assertCountEquals(2) // CVV and PIN
-
-            // CVV
-            onNode(hasText(cvv)).assertDoesNotExist()
-            onAllNodes(hasText("••••"))[0]
-                .onChildren()
-                .filterToOne(hasContentDescription(revealContentDescription))
-                .performClick()
-            onNode(hasText(cvv)).assertExists()
-
-            // PIN
-            onNode(hasText(pin)).assertDoesNotExist()
-            onAllNodesWithContentDescription(revealContentDescription)[0].performClick()
-            onNode(hasText(pin)).assertExists()
-
-            // Can go to upgrade
-            val upgrade = activity.getString(CompR.string.upgrade)
-            onAllNodes(hasText(upgrade)).assertCountEquals(1) // CC number
-            onNodeWithText(upgrade).performClick()
-            waitUntil { checker.isCalled }
-        }
     }
 
     private fun testSectionDoesNotExist(title: String, @DrawableRes fieldName: Int) {

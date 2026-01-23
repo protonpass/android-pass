@@ -3,7 +3,6 @@
   <string name="autofill_authenticate_prompt">Uzyskaj z Proton Pass</string>
   <string name="error_loading_items">Nie można załadować elementów</string>
   <string name="inline_suggestions_open_app">Otwórz Proton Pass</string>
-  <string name="suggestions_cc_autofill_paid_plans_title" comment="This string is shown in the autofill suggestions when the user is not on a paid plan but has credit cards that can be autofilled">Ulepsz konto, aby włączyć autouzupełnianie</string>
   <string name="autofill_associate_web_app_name_dialog_title">Użyj danych logowania z \"%s\" w tej aplikacji lub na stronie internetowej.</string>
   <string name="autofill_dialog_associate_and_autofill">Używaj zawsze</string>
   <string name="autofill_dialog_just_autofill">Użyj raz</string>
@@ -11,8 +10,6 @@
   <string name="autofill_notification_copy_to_clipboard">Kod TOTP został skopiowany do schowka</string>
   <string name="autofill_dialog_associate_title">Użyć danych logowania?</string>
   <string name="autofill_user_logged_out">Zostałeś wylogowany. Zaloguj się ponownie, aby otworzyć aplikację.</string>
-  <string name="autofill_cc_upgrade_dialog_title" comment="Title of the dialog that will appear when the user clicks on Autofill credit card but is on Free plan">Autouzupełnianie szczegółów karty płatniczej</string>
-  <string name="autofill_cc_upgrade_dialog_message" comment="Message of the dialog that will appear when the user clicks on Autofill credit card but is on Free plan">Autouzupełnianie szczegółów karty płatniczej jest płatną funkcją. Ulepsz do płatnego planu, aby Proton Pass automatycznie uzupełniał dane karty w aplikacjach i stronach internetowych.</string>
   <string name="autofill_confirm_dangerous_title" comment="Title for the dialog that will appear when the user clicks on Autofill but we think it may be a dangerous action">Potwierdź akcję</string>
   <string name="autofill_confirm_dangerous_body" comment="Body for the dialog that will appear when the user clicks on Autofill but we think it may be a dangerous action">Uzupełnisz dane logowania na stronie internetowej otwartej przez aplikację. Aplikacja uzyska dostęp do danych autouzupełniania. Sprawdź, czy ufasz aplikacji.</string>
   <string name="autofill_confirm_button" comment="Confirmation button for actually performing the autofill action">Uzupełnij</string>

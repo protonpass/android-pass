@@ -3,7 +3,6 @@
   <string name="autofill_authenticate_prompt">Aconseguiu el Proton Pass</string>
   <string name="error_loading_items">No s\'han pogut carregar els elements.</string>
   <string name="inline_suggestions_open_app">Obriu Proton Pass</string>
-  <string name="suggestions_cc_autofill_paid_plans_title" comment="This string is shown in the autofill suggestions when the user is not on a paid plan but has credit cards that can be autofilled">Milloreu per emplenar automàticament</string>
   <string name="autofill_associate_web_app_name_dialog_title">Utilitzeu les dades d\'inici de sessió de \"%s\" en aquesta aplicació o lloc web.</string>
   <string name="autofill_dialog_associate_and_autofill">Utilitza sempre</string>
   <string name="autofill_dialog_just_autofill">Utilitza una vegada</string>
@@ -11,8 +10,6 @@
   <string name="autofill_notification_copy_to_clipboard">S\'ha copiat el codi TOTP al porta-retalls.</string>
   <string name="autofill_dialog_associate_title">Voleu utilitzar les dades d\'inici de sessió?</string>
   <string name="autofill_user_logged_out">Se us ha tancat la sessió. Torneu a iniciar-la obrint l\'aplicació.</string>
-  <string name="autofill_cc_upgrade_dialog_title" comment="Title of the dialog that will appear when the user clicks on Autofill credit card but is on Free plan">Emplena les dades de la targeta</string>
-  <string name="autofill_cc_upgrade_dialog_message" comment="Message of the dialog that will appear when the user clicks on Autofill credit card but is on Free plan">L\'emplenament automàtic de les dades de la targeta de crèdit és una funció de pagament. Si voleu que Proton Pass introdueixi automàticament els detalls de la vostra targeta en aplicacions i llocs web, milloreu el pla a un de pagament.</string>
   <string name="autofill_confirm_dangerous_title" comment="Title for the dialog that will appear when the user clicks on Autofill but we think it may be a dangerous action">Confirmeu l\'acció</string>
   <string name="autofill_confirm_dangerous_body" comment="Body for the dialog that will appear when the user clicks on Autofill but we think it may be a dangerous action">Esteu a punt d\'emplenar automàticament les vostres credencials en un lloc web que ha obert l\'aplicació actual. L\'aplicació pot tenir accés a les credencials després de l\'emplenament automàtic. Feu-ho només si hi confieu.</string>
   <string name="autofill_confirm_button" comment="Confirmation button for actually performing the autofill action">Emplenament automàtic</string>

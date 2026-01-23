@@ -52,7 +52,6 @@ import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.ShareRole
 import proton.android.pass.domain.ShareSelection
 import proton.android.pass.domain.VaultId
-import proton.android.pass.preferences.FakeFeatureFlagsPreferenceRepository
 import proton.android.pass.preferences.FakeInternalSettingsRepository
 import proton.android.pass.preferences.FakePreferenceRepository
 import proton.android.pass.preferences.LastItemAutofillPreference
@@ -117,8 +116,7 @@ class GetSuggestedAutofillItemsImplTest {
             internalSettingsRepository = internalSettingsRepository,
             getUserPlan = getUserPlan,
             assetLinkRepository = assetLinkRepository,
-            userPreferencesRepository = userPreferencesRepository,
-            featureFlagsPreferencesRepository = FakeFeatureFlagsPreferenceRepository()
+            userPreferencesRepository = userPreferencesRepository
         )
     }
 
@@ -204,13 +202,14 @@ class GetSuggestedAutofillItemsImplTest {
     }
 
     @Test
-    fun `when plan is free and credit cards, then show upgrade`() = runTest {
+    fun `when plan is free and credit cards, then return items`() = runTest {
         val shareId = ShareId("test-share-id")
         val userId = UserId("test-user-id")
+        val creditCard = ItemTestFactory.createCreditCard(shareId = shareId)
         val vaultShare = ShareTestFactory.Vault.create(userId = userId.id, id = shareId.id)
         accountManager.setAccounts(listOf(FakeAccountManager.DEFAULT_ACCOUNT.copy(userId = userId)))
         getUserPlan.setResult(Result.success(buildPlan(PlanType.Free("", ""))), userId)
-        observeItems.emitValue(listOf(ItemTestFactory.createCreditCard(shareId = shareId)))
+        observeItems.emitValue(listOf(creditCard))
         observeAutofillShares.setValue(listOf(vaultShare), userId)
 
         filter.setFilter { true }
@@ -219,7 +218,10 @@ class GetSuggestedAutofillItemsImplTest {
             itemTypeFilter = ItemTypeFilter.CreditCards,
             DEFAULT_SUGGESTION
         ).test {
-            assertThat(awaitItem()).isInstanceOf(SuggestedAutofillItemsResult.ShowUpgrade::class.java)
+            val result = awaitItem()
+            assertThat(result).isInstanceOf(SuggestedAutofillItemsResult.Items::class.java)
+            val items = (result as SuggestedAutofillItemsResult.Items).suggestedItems
+            assertThat(items).hasSize(1)
         }
     }
 
@@ -240,7 +242,7 @@ class GetSuggestedAutofillItemsImplTest {
     }
 
     @Test
-    fun `should filter CC from free plan`() = runTest {
+    fun `should return CC from both free and paid plans`() = runTest {
         val freeUserId = UserId("free-user-id")
         val paidUserId = UserId("paid-user-id")
         accountManager.setAccounts(
@@ -311,8 +313,7 @@ class GetSuggestedAutofillItemsImplTest {
             assertThat(result).isInstanceOf(SuggestedAutofillItemsResult.Items::class.java)
 
             val items = (result as SuggestedAutofillItemsResult.Items).suggestedItems
-            assertThat(items).hasSize(1)
-            assertThat(items.first().item.shareId).isEqualTo(paidShareId)
+            assertThat(items).hasSize(2)
         }
     }
 

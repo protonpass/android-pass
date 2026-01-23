@@ -27,7 +27,6 @@ import proton.android.pass.commonuimodels.api.items.DetailEvent
 import proton.android.pass.commonuimodels.api.items.ItemDetailState
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.usecases.CanDisplayTotp
-import proton.android.pass.data.api.usecases.CanPerformPaidAction
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.ItemDiffs
@@ -41,8 +40,7 @@ import javax.inject.Inject
 class CreditCardItemDetailsHandlerObserverImpl @Inject constructor(
     override val encryptionContextProvider: EncryptionContextProvider,
     override val observeTotpFromUri: ObserveTotpFromUri,
-    override val canDisplayTotp: CanDisplayTotp,
-    private val canPerformPaidAction: CanPerformPaidAction
+    override val canDisplayTotp: CanDisplayTotp
 ) : ItemDetailsHandlerObserver<ItemContents.CreditCard, ItemDetailsFieldType.CreditCardItemAction>(
     encryptionContextProvider = encryptionContextProvider,
     observeTotpFromUri = observeTotpFromUri,
@@ -57,9 +55,8 @@ class CreditCardItemDetailsHandlerObserverImpl @Inject constructor(
         detailEvent: DetailEvent
     ): Flow<ItemDetailState> = combine(
         observeItemContents(item),
-        observeCustomFieldTotps(item),
-        canPerformPaidAction()
-    ) { creditCardItemContents, customFieldTotps, canPerformPaidAction ->
+        observeCustomFieldTotps(item)
+    ) { creditCardItemContents, customFieldTotps ->
         ItemDetailState.CreditCard(
             itemContents = creditCardItemContents,
             itemId = item.id,
@@ -75,8 +72,7 @@ class CreditCardItemDetailsHandlerObserverImpl @Inject constructor(
             itemShareCount = item.shareCount,
             attachmentsState = attachmentsState,
             customFieldTotps = customFieldTotps,
-            detailEvent = detailEvent,
-            isDowngraded = !canPerformPaidAction
+            detailEvent = detailEvent
         )
     }
 

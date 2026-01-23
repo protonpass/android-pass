@@ -2,7 +2,7 @@
 <resources>
   <string name="on_boarding_autofill_content">Laissez Proton Pass compléter vos informations de connexion. Vous n\'avez pas besoin de les saisir ou de les copier-coller.</string>
   <string name="on_boarding_autofill_title">Connectez-vous instantanément aux applications.</string>
-  <string name="on_boarding_autofill_content_v2">Laissez Proton Pass compléter vos informations de connexion. Vous n\'avez pas besoin de les saisir ou de les copier-coller.</string>
+  <string name="on_boarding_autofill_content_v2">Proton Pass remplit les informations de connexion à votre place. Aucune saisie ni copier-coller n\'est nécessaire.</string>
   <string name="on_boarding_autofill_title_v2">Profitez du confort du remplissage automatique</string>
   <string name="on_boarding_autofill_button">Profitez du remplissage automatique avec Proton Pass.</string>
   <string name="on_boarding_fingerprint_content">Paramétrez Proton Pass pour qu\'il se déverrouille avec votre empreinte digitale. Personne d\'autre que vous ne peut y accéder.</string>

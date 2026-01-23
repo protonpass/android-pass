@@ -39,7 +39,7 @@
   <string name="vault_title">Valv</string>
   <string name="organise_vaults_visible_title">Synliga valv</string>
   <string name="organise_vaults_hidden_title">Dolda valv</string>
-  <string name="organise_vaults_hidden_description">These vaults will not be accessible and their content won’t be available to Search or Autofill.</string>
+  <string name="organise_vaults_hidden_description">Dessa valv kommer inte vara åtkomliga och deras innehåll kommer inte vara tillgängligt för sök eller automatisk ifyllning.</string>
   <string name="organise_vaults_title">Organisera valv</string>
   <string name="organise_vaults_snackbar_success">Valv organiserade</string>
   <string name="organise_vaults_snackbar_error">Valv kunde inte organiseras</string>

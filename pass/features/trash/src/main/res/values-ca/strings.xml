@@ -12,8 +12,8 @@
   <string name="delete_alias_enabled_subtitle">"Tingueu en compte que, un cop suprimit, l'àlies no es pot restaurar. Potser voleu desactivar l'àlies? "</string>
   <string name="delete_alias_disabled_subtitle">Un cop suprimit, l\'àlies no es pot restaurar. L\'àlies ja està desactivat i no reenviarà correus electrònics a la vostra bústia de correu.</string>
   <plurals name="bulk_delete_alias_title">
-    <item quantity="one">Esteu a punt de suprimir permanentment %d àlies.</item>
-    <item quantity="other">Esteu a punt de suprimir permanentment %d àlies.</item>
+    <item quantity="one">Esteu a punt d\'eliminar permanentment %d àlies.</item>
+    <item quantity="other">Esteu a punt d\'eliminar permanentment %d àlies.</item>
   </plurals>
   <string name="bulk_delete_alias_subtitle">Recordeu que un cop eliminats, els àlies no es poden recuperar.</string>
   <string name="bulk_delete_alias_confirm">Ho entenc i mai els necessitaré.</string>

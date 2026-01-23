@@ -34,8 +34,8 @@
   <string name="simple_login_sync_management_dialog_title_mailboxes">Bústia de correu per defecte per als àlies</string>
   <!-- Settings screen -->
   <string name="simple_login_sync_settings_title">Sincronitza els àlies</string>
-  <string name="simple_login_sync_enable_snackbar_error">S\'ha produït un error en activar la sincronització d\'àlies SimpleLogin.</string>
-  <string name="simple_login_sync_enable_snackbar_success">Els àlies de SimpleLogin estan sincronitzats.</string>
+  <string name="simple_login_sync_enable_snackbar_error">S\'ha produït un error en activar la sincronització d\'àlies de SimpleLogin.</string>
+  <string name="simple_login_sync_enable_snackbar_success">S\'ha habilitat la sincronització dels àlies de SimpleLogin.</string>
   <!-- Mailbox create screen -->
   <string name="simple_login_sync_mailbox_create_title">Afegeix una bústia de correu</string>
   <string name="simple_login_sync_mailbox_create_message_error">S\'ha produït un error en afegir la bústia de correu.</string>
@@ -48,19 +48,19 @@
   <string name="simple_login_sync_mailbox_verify_subtitle" comment="the placeholder will be replaced by an email address">Hem enviat un codi de verificació a %s. Introduïu-lo a continuació:</string>
   <string name="simple_login_sync_mailbox_verify_email_fallback" comment="this text will replace the placeholder in the subtitle above in case the email address is not available">la vostra adreça de correu electrònic</string>
   <string name="simple_login_sync_mailbox_verify_message_verification_code_error">El codi de verificació de la bústia de correu no és vàlid.</string>
-  <string name="simple_login_sync_mailbox_verify_message_verification_code_limit_error">S\'ha assolit el límit de codis de verificació no vàlids per al correu. La bústia de correu s\'ha suprimit.</string>
+  <string name="simple_login_sync_mailbox_verify_message_verification_code_limit_error">S\'ha assolit el límit de codis de verificació no vàlids. S\'ha eliminat la bústia de correu.</string>
   <string name="simple_login_sync_mailbox_verify_message_verification_error">S\'ha produït un error en verificar la bústia de correu.</string>
   <string name="simple_login_sync_mailbox_verify_message_verification_success">S\'ha verificat la bústia de correu.</string>
   <string name="simple_login_sync_mailbox_verify_message_resend_code_error">S\'ha produït un error en enviar el codi de verificació.</string>
   <string name="simple_login_sync_mailbox_verify_message_resend_code_success">S\'ha enviat el codi de verificació.</string>
   <!-- Mailbox delete screen -->
   <string name="simple_login_sync_mailbox_delete_title">Elimina la bústia de correu</string>
-  <string name="simple_login_sync_mailbox_delete_subtitle">També se suprimiran tots els àlies que utilitzen la bústia de correu %s. Per continuar rebent correus electrònics, transferiu aquests àlies a una bústia de correu diferent:</string>
+  <string name="simple_login_sync_mailbox_delete_subtitle">També s\'eliminaran tots els àlies que utilitzen la bústia de correu %s. Per a continuar rebent correus electrònics, transferiu aquests àlies a una bústia de correu diferent:</string>
   <string name="simple_login_sync_mailbox_delete_tranfer_option_toggle">Transfereix els àlies</string>
   <string name="simple_login_sync_mailbox_delete_tranfer_option_mailbox">A la bústia de correu</string>
   <string name="simple_login_sync_mailbox_delete_action_delete">Elimina la bústia de correu</string>
-  <string name="simple_login_sync_mailbox_delete_action_delete_and_transfer">Transferirà i elimina la bústia de correu</string>
-  <string name="simple_login_sync_mailbox_delete_message_delete_error">S\'ha produït un error en eliminar a la paperera aquesta bústia de correu.</string>
+  <string name="simple_login_sync_mailbox_delete_action_delete_and_transfer">Transfereix i elimina la bústia de correu</string>
+  <string name="simple_login_sync_mailbox_delete_message_delete_error">S\'ha produït un error en eliminar la bústia de correu.</string>
   <string name="simple_login_sync_mailbox_delete_message_delete_success">S\'ha eliminat la bústia de correu.</string>
   <string name="simple_login_sync_mailbox_delete_transfer_dialog_title">Transfereix els àlies a</string>
   <string name="simple_login_sync_mailbox_delete_warning">Recordeu que un cop eliminats, els àlies no es poden recuperar.</string>

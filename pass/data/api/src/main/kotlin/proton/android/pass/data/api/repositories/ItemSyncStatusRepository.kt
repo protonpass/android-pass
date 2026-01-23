@@ -27,20 +27,22 @@ sealed interface ItemSyncStatus {
     data object SyncNotStarted : ItemSyncStatus
 
     data object SyncStarted : ItemSyncStatus
-
     data class SyncDownloading(val shareId: ShareId, val current: Int, val total: Int) :
         ItemSyncStatus
 
     data class SyncInserting(val current: Int, val total: Int) : ItemSyncStatus
 
-    data object SyncSuccess : ItemSyncStatus
+    @JvmInline
+    value class SyncSuccess(
+        val hasUndecryptableShares: Boolean = false
+    ) : ItemSyncStatus
 
     data object SyncError : ItemSyncStatus
 
     fun isSyncing(): Boolean = when (this) {
         SyncError,
         SyncNotStarted,
-        SyncSuccess -> false
+        is SyncSuccess -> false
 
         SyncStarted,
         is SyncInserting,
@@ -65,7 +67,7 @@ fun ItemSyncStatus.toSyncMode(): SyncMode = when (this) {
     is ItemSyncStatus.SyncInserting,
     is ItemSyncStatus.SyncDownloading -> SyncMode.ShownToUser
 
-    ItemSyncStatus.SyncSuccess -> SyncMode.Background
+    is ItemSyncStatus.SyncSuccess -> SyncMode.Background
 }
 
 data class SyncState(

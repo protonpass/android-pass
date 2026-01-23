@@ -276,7 +276,8 @@ class ShareRepositoryImpl @Inject constructor(
         RefreshSharesResult(
             allShareIds = allShareIds,
             newShareIds = newShares.map { ShareId(it.id) }.toSet(),
-            wasFirstSync = wasFirstSync
+            wasFirstSync = wasFirstSync,
+            hasUndecryptableShares = inactiveNotInLocalShares.isNotEmpty()
         )
     }
 

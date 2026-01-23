@@ -49,6 +49,7 @@ import proton.android.pass.data.fakes.usecases.FakeDeleteAllSearchEntry
 import proton.android.pass.data.fakes.usecases.FakeDeleteItems
 import proton.android.pass.data.fakes.usecases.FakeDeleteSearchEntry
 import proton.android.pass.data.fakes.usecases.FakeGetUserPlan
+import proton.android.pass.data.fakes.usecases.FakeItemSyncStatusRepository
 import proton.android.pass.data.fakes.usecases.FakeObserveAllShares
 import proton.android.pass.data.fakes.usecases.FakeObserveAppNeedsUpdate
 import proton.android.pass.data.fakes.usecases.FakeObserveCurrentUser
@@ -284,7 +285,8 @@ internal class HomeViewModelTest {
             observeDeliverableMinimizedPromoInAppMessages = FakeObserveDeliverableMinimizedPromoInAppMessage()
                 .apply { emitPromoMessage(null) },
             observeUpgradeInfo = observeUpgradeInfo,
-            appConfig = appConfig
+            appConfig = appConfig,
+            syncStatusRepository = FakeItemSyncStatusRepository()
         )
     }
 }

@@ -31,6 +31,13 @@ sealed interface SnackbarMessage {
     }
 
     @Stable
+    interface StructuredMessageWithAction : SnackbarMessage {
+        val id: Int
+        val isClipboard: Boolean
+        val action: Int
+    }
+
+    @Stable
     data class SimpleMessage(
         val message: String,
         override val type: SnackbarType

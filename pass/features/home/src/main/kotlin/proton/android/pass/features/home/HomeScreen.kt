@@ -98,6 +98,9 @@ import proton.android.pass.features.trash.ConfirmDeleteItemDialog
 import proton.android.pass.features.trash.TrashItemBottomSheetContents
 import proton.android.pass.searchoptions.api.VaultSelectionOption
 
+private const val PROTON_RECOVER_URL = "https://proton.me/support/recover-encrypted-messages-files"
+
+
 @OptIn(ExperimentalMaterialApi::class)
 @Suppress("ComplexMethod")
 @Composable

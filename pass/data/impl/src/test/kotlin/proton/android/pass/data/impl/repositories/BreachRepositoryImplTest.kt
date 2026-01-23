@@ -115,7 +115,7 @@ internal class BreachRepositoryImplTest {
         instance.refreshBreaches(TEST_USER_ID)
         val result = instance.observeAllBreaches(TEST_USER_ID).first()
 
-        assertThat(result.emailCount).isEqualTo(2)
+        assertThat(result.breachedEmailCount).isEqualTo(2)
         assertThat(result.breachedCustomEmails).hasSize(1)
         assertThat(result.breachedProtonEmails).hasSize(1)
     }

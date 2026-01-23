@@ -43,7 +43,7 @@ internal data class SecurityCenterHomeState(
         is LoadingResult.Error,
         LoadingResult.Loading -> 0
 
-        is LoadingResult.Success -> breachLoadingResult.data.emailCount
+        is LoadingResult.Success -> breachLoadingResult.data.breachedEmailCount
     }
 
     private val hasDataBreaches: Boolean = dataBreachesCount > 0

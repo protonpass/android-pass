@@ -86,9 +86,12 @@ class BreachRepositoryImpl @Inject constructor(
         localBreachDataSource.observeProtonEmails(userId),
         observeBreachedAliases(userId)
     ) { domainPeeks, customEmails, protonEmails, breachedAliases ->
-        val computedCount = customEmails.size + protonEmails.size + breachedAliases.size
+        val breachedCustomEmails = customEmails.filter { !it.isMonitoringDisabled && it.breachCount > 0 }
+        val breachedProtonEmails = protonEmails.filter { !it.isMonitoringDisabled && it.breachCounter > 0 }
+        val breachedAliasEmails = breachedAliases.filter { !it.isMonitoringDisabled && it.breachCounter > 0 }
+        val breachedEmailCount = breachedCustomEmails.size + breachedProtonEmails.size + breachedAliasEmails.size
         Breach(
-            emailCount = computedCount,
+            breachedEmailCount = breachedEmailCount,
             breachedDomainPeeks = domainPeeks,
             breachedCustomEmails = customEmails,
             breachedProtonEmails = protonEmails,
@@ -365,7 +368,7 @@ class BreachRepositoryImpl @Inject constructor(
 
     private fun BreachesResponse.toDomain() = with(this.breaches) {
         Breach(
-            emailCount = emailsCount,
+            breachedEmailCount = emailsCount,
             breachedDomainPeeks = domainPeeks.map { domainPeek -> domainPeek.toDomain() },
             breachedCustomEmails = customEmails.map { customEmail -> customEmail.toDomain() },
             breachedProtonEmails = protonEmails.map { protonEmail -> protonEmail.toDomain() },

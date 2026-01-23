@@ -19,7 +19,7 @@
 package proton.android.pass.domain.breach
 
 data class Breach(
-    val emailCount: Int,
+    val breachedEmailCount: Int,
     val breachedDomainPeeks: List<BreachDomainPeek>,
     val breachedCustomEmails: List<BreachCustomEmail>,
     val breachedProtonEmails: List<BreachProtonEmail>,

@@ -65,6 +65,7 @@ class ItemSyncStatusRepositoryImpl @Inject constructor(
                 is ItemSyncStatus.SyncInserting -> {
                     insertedItemsState.emit(ItemSyncStatusPayload(status.current, status.total).some())
                 }
+
                 is ItemSyncStatus.SyncDownloading -> {
                     downloadedItemsMutableMap[status.shareId] =
                         ItemSyncStatusPayload(status.current, status.total)
@@ -79,7 +80,7 @@ class ItemSyncStatusRepositoryImpl @Inject constructor(
 
                 ItemSyncStatus.SyncError,
                 ItemSyncStatus.SyncStarted,
-                ItemSyncStatus.SyncSuccess -> {
+                is ItemSyncStatus.SyncSuccess -> {
                 }
             }
         }

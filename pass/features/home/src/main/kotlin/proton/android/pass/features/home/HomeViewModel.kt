@@ -36,6 +36,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.distinctUntilChanged
@@ -91,6 +92,9 @@ import proton.android.pass.data.api.SearchEntry
 import proton.android.pass.data.api.repositories.AliasItemsChangeStatusResult
 import proton.android.pass.data.api.repositories.BulkMoveToVaultEvent
 import proton.android.pass.data.api.repositories.BulkMoveToVaultRepository
+import proton.android.pass.data.api.repositories.ItemSyncStatus
+import proton.android.pass.data.api.repositories.ItemSyncStatusRepository
+import proton.android.pass.data.api.repositories.SyncMode
 import proton.android.pass.data.api.repositories.PinItemsResult
 import proton.android.pass.data.api.usecases.ChangeAliasStatus
 import proton.android.pass.data.api.usecases.ClearTrash
@@ -210,7 +214,8 @@ class HomeViewModel @Inject constructor(
     observeHasShares: ObserveHasShares,
     observeDeliverableMinimizedPromoInAppMessages: ObserveDeliverableMinimizedPromoInAppMessages,
     observeUpgradeInfo: ObserveUpgradeInfo,
-    appConfig: AppConfig
+    appConfig: AppConfig,
+    private val syncStatusRepository: ItemSyncStatusRepository
 ) : ViewModel() {
 
     private val coroutineExceptionHandler = CoroutineExceptionHandler { _, throwable ->
@@ -220,6 +225,7 @@ class HomeViewModel @Inject constructor(
     // Variable to keep track of whether the user has entered the search in this session, so we
     // don't send an EnterSearch event every time they click on the search bar
     private var hasEnteredSearch = false
+
 
     private val shouldScrollToTopFlow: MutableStateFlow<Boolean> = MutableStateFlow(false)
     private val searchQueryState: MutableStateFlow<String> = MutableStateFlow("")
@@ -621,6 +627,23 @@ class HomeViewModel @Inject constructor(
                     bulkMoveToVaultRepository.emitEvent(BulkMoveToVaultEvent.Idle)
                 }
             }
+        }
+
+        viewModelScope.launch {
+            syncStatusRepository
+                .observeSyncState()
+                .distinctUntilChanged()
+                .collectLatest { syncState ->
+                    val syncStatus = syncState.syncStatus
+                    if (syncStatus is ItemSyncStatus.SyncSuccess &&
+                        syncStatus.hasUndecryptableShares &&
+                        syncState.syncMode == SyncMode.ShownToUser
+                    ) {
+                        snackbarDispatcher(
+                            snackbarMessage = HomeSnackbarMessageWithAction.InactiveVault
+                        )
+                    }
+                }
         }
     }
 

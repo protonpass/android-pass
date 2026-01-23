@@ -1,4 +1,5 @@
 <resources>
+    <string name="autofill_service_name" translatable="false">Proton Pass</string>
     <string translatable="false" name="error_cant_find_matching_fields">No matching displayed fields found</string>
     <string translatable="false" name="error_credentials_not_saved">Could not save the credentials</string>
     <string name="autofill_authenticate_prompt">Get from Proton Pass</string>

@@ -18,6 +18,7 @@
 
 package proton.android.pass.domain.breach
 
+import me.proton.core.util.kotlin.hasFlag
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 
@@ -28,4 +29,6 @@ data class BreachAlias(
     val breachCounter: Int,
     val flags: Int,
     val lastBreachTime: Long
-)
+) {
+    val isMonitoringDisabled: Boolean = flags.hasFlag(EmailFlag.MonitoringDisabled.value)
+}

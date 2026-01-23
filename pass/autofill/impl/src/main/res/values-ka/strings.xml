@@ -3,7 +3,6 @@
   <string name="autofill_authenticate_prompt">მიიღეთ Proton Pass-დან</string>
   <string name="error_loading_items">ელემენტების ჩატვირთვა შეუძლებელია</string>
   <string name="inline_suggestions_open_app">Proton Pass-ის გახსნა</string>
-  <string name="suggestions_cc_autofill_paid_plans_title" comment="This string is shown in the autofill suggestions when the user is not on a paid plan but has credit cards that can be autofilled">ასწიეთ ტარიფი ავტოშევსებისთვის</string>
   <string name="autofill_associate_web_app_name_dialog_title">ამ აპზე ან ვებგვერდზე \"%s\"-ის შესვლის დეტალების გამოყენება.</string>
   <string name="autofill_dialog_associate_and_autofill">ყოველთვის გამოყენება</string>
   <string name="autofill_dialog_just_autofill">ერთხელ გამოყენება</string>
@@ -11,8 +10,6 @@
   <string name="autofill_notification_copy_to_clipboard">TOTP-ი დაკოპირდა გაცვლის ბუფერში</string>
   <string name="autofill_dialog_associate_title">გამოვიყენო შესვლის დეტალები?</string>
   <string name="autofill_user_logged_out">თქვენ გახვედით. თავიდან შესასვლელად გახსენით აპი.</string>
-  <string name="autofill_cc_upgrade_dialog_title" comment="Title of the dialog that will appear when the user clicks on Autofill credit card but is on Free plan">ბარათის დეტალების ავტოშევსება</string>
-  <string name="autofill_cc_upgrade_dialog_message" comment="Message of the dialog that will appear when the user clicks on Autofill credit card but is on Free plan">საკრედიტო ბარათის ავტოშევსება ფასიანი ფუნქციაა. თუ გნებავთ, Proton Pass-მა თქვენი საკრედიტო ბარათის დეტალები თქვენს აპებში და ვებგვერდებში ავტომატურად შეავსოს, ასწიეთ ტარიფი ფასიან ვერსიამდე.</string>
   <string name="autofill_confirm_dangerous_title" comment="Title for the dialog that will appear when the user clicks on Autofill but we think it may be a dangerous action">მოქმედების დადასტურება</string>
   <string name="autofill_confirm_dangerous_body" comment="Body for the dialog that will appear when the user clicks on Autofill but we think it may be a dangerous action">აპირებთ ავტომატურად შეავსოთ შესვლის დეტალები ვებგვერდზე, რომელიც თქვენს აპშია გახსნილი. აპს შეუძლია, შეყვანილ ავტორიზაციის დეტალებთან წვდომა ჰქონდეთ შევსების შემდეგაც - ქენით ეს, მხოლოდ, მაშინ, თუ აპს ენდობით.</string>
   <string name="autofill_confirm_button" comment="Confirmation button for actually performing the autofill action">ავტოშევსება</string>

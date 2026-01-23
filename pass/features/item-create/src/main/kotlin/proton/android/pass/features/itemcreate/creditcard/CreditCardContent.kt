@@ -14,7 +14,6 @@ import proton.android.pass.features.itemcreate.common.CreateUpdateTopBar
 import proton.android.pass.features.itemcreate.common.CustomFieldValidationError
 import proton.android.pass.features.itemcreate.creditcard.CreditCardContentEvent.Submit
 import proton.android.pass.features.itemcreate.creditcard.CreditCardContentEvent.Up
-import proton.android.pass.features.itemcreate.creditcard.CreditCardContentEvent.Upgrade
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
@@ -37,7 +36,6 @@ internal fun CreditCardContent(
                 isLoading = state.isLoading || state.attachmentsState.loadingDraftAttachments.isNotEmpty(),
                 actionColor = PassTheme.colors.cardInteractionNormMajor1,
                 iconColor = PassTheme.colors.cardInteractionNormMajor2,
-                showUpgrade = !state.allowCreditCreditFreeUsers && !state.canPerformPaidAction,
                 iconBackgroundColor = PassTheme.colors.cardInteractionNormMinor1,
                 selectedVault = selectedVault,
                 showVaultSelector = showVaultSelector,
@@ -46,7 +44,7 @@ internal fun CreditCardContent(
                     selectedShareId ?: return@CreateUpdateTopBar
                     onEvent(Submit(selectedShareId))
                 },
-                onUpgrade = { onEvent(Upgrade) },
+                onUpgrade = {},
                 onVaultSelectorClick = {
                     selectedShareId ?: return@CreateUpdateTopBar
                     onEvent(CreditCardContentEvent.OnVaultSelect(selectedShareId))

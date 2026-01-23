@@ -40,7 +40,6 @@ import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.fakes.FakeSavedStateHandleProvider
 import proton.android.pass.crypto.fakes.context.FakeEncryptionContext
 import proton.android.pass.data.fakes.usecases.FakeGetItemById
-import proton.android.pass.data.fakes.usecases.FakeCanPerformPaidAction
 import proton.android.pass.data.fakes.usecases.FakeObserveUserAccessData
 import proton.android.pass.data.fakes.usecases.FakeUpdateItem
 import proton.android.pass.domain.CreditCardType
@@ -82,9 +81,6 @@ class UpdateCreditCardScreenTest {
     lateinit var getItemById: FakeGetItemById
 
     @Inject
-    lateinit var canPerformPaidAction: FakeCanPerformPaidAction
-
-    @Inject
     lateinit var observeUserAccessData: FakeObserveUserAccessData
 
     private lateinit var initialItem: Item
@@ -110,7 +106,6 @@ class UpdateCreditCardScreenTest {
         )
         getItemById.emit(Result.success(initialItem))
         updateItem.setResult(Result.success(initialItem))
-        canPerformPaidAction.setResult(true)
         observeUserAccessData.sendValue(null)
     }
 
@@ -291,31 +286,6 @@ class UpdateCreditCardScreenTest {
             val closeContentDescription =
                 activity.getString(R.string.close_scree_icon_content_description)
             onNode(hasContentDescription(closeContentDescription)).performClick()
-
-            waitUntil { checker.isCalled }
-        }
-    }
-
-    @Test
-    fun canHandleDowngradedMode() {
-        canPerformPaidAction.setResult(false)
-        val checker = CallChecker<Unit>()
-        composeTestRule.apply {
-            setContent {
-                PassTheme(isDark = true) {
-                    UpdateCreditCardScreen(
-                        onNavigate = {
-                            if (it == BaseCreditCardNavigation.Upgrade) {
-                                checker.call()
-                            }
-                        }
-                    )
-                }
-            }
-
-            val buttonText = activity.getString(R.string.upgrade)
-            waitUntilExists(hasText(buttonText))
-            onNodeWithText(buttonText).performClick()
 
             waitUntil { checker.isCalled }
         }

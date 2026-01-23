@@ -3,7 +3,6 @@
   <string name="autofill_authenticate_prompt">Obtenir depuis Proton Pass</string>
   <string name="error_loading_items">Impossible de charger les éléments</string>
   <string name="inline_suggestions_open_app">Ouvrir Proton Pass</string>
-  <string name="suggestions_cc_autofill_paid_plans_title" comment="This string is shown in the autofill suggestions when the user is not on a paid plan but has credit cards that can be autofilled">Changez d\'abonnement pour utiliser la fonctionnalité de remplissage automatique.</string>
   <string name="autofill_associate_web_app_name_dialog_title">Utiliser les informations de connexion de « %s » pour cette application ou ce site internet.</string>
   <string name="autofill_dialog_associate_and_autofill">Toujours utiliser</string>
   <string name="autofill_dialog_just_autofill">Utiliser une fois</string>
@@ -11,8 +10,6 @@
   <string name="autofill_notification_copy_to_clipboard">Le mot de passe à usage unique basé sur le temps (TOTP) a été copié dans le presse-papiers.</string>
   <string name="autofill_dialog_associate_title">Utiliser l\'identifiant ?</string>
   <string name="autofill_user_logged_out">Vous avez été déconnecté. Veuillez vous reconnecter en ouvrant l\'application.</string>
-  <string name="autofill_cc_upgrade_dialog_title" comment="Title of the dialog that will appear when the user clicks on Autofill credit card but is on Free plan">Remplissage automatique des informations de cartes de paiement</string>
-  <string name="autofill_cc_upgrade_dialog_message" comment="Message of the dialog that will appear when the user clicks on Autofill credit card but is on Free plan">Le remplissage automatique des informations de cartes de paiement est une fonctionnalité payante. Si vous voulez que Proton Pass remplisse automatiquement les informations de votre carte dans les applications et sur les sites internet, choisissez un abonnement payant.</string>
   <string name="autofill_confirm_dangerous_title" comment="Title for the dialog that will appear when the user clicks on Autofill but we think it may be a dangerous action">Confirmez votre action</string>
   <string name="autofill_confirm_dangerous_body" comment="Body for the dialog that will appear when the user clicks on Autofill but we think it may be a dangerous action">Vous êtes sur le point de renseigner automatiquement vos informations d\'identification sur un site internet ouvert par votre application actuelle. L\'application peut avoir accès aux informations d\'identification après le remplissage automatique : faites-le uniquement si vous faites confiance à cette application.</string>
   <string name="autofill_confirm_button" comment="Confirmation button for actually performing the autofill action">Remplissage automatique</string>

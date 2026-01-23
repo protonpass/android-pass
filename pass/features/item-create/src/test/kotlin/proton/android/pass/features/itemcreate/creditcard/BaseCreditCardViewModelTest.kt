@@ -34,7 +34,6 @@ import proton.android.pass.features.itemcreate.common.CustomFieldDraftRepository
 import proton.android.pass.features.itemcreate.common.UIHiddenState
 import proton.android.pass.features.itemcreate.common.customfields.CustomFieldHandlerImpl
 import proton.android.pass.features.itemcreate.common.formprocessor.FakeCreditCardItemFormProcessor
-import proton.android.pass.preferences.FakeFeatureFlagsPreferenceRepository
 import proton.android.pass.preferences.FakePreferenceRepository
 import proton.android.pass.test.MainDispatcherRule
 import proton.android.pass.totp.fakes.FakeTotpManager
@@ -61,8 +60,7 @@ class BaseCreditCardViewModelTest {
             customFieldHandler = CustomFieldHandlerImpl(FakeTotpManager(), FakeEncryptionContextProvider()),
             customFieldDraftRepository = CustomFieldDraftRepositoryImpl(),
             creditCardItemFormProcessor = FakeCreditCardItemFormProcessor(),
-            clipboardManager = FakeClipboardManager(),
-            featureFlagsPreferencesRepository = FakeFeatureFlagsPreferenceRepository()
+            clipboardManager = FakeClipboardManager()
         ) {}
     }
 

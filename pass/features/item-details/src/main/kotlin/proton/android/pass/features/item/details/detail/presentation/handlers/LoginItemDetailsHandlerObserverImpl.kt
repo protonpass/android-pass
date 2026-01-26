@@ -25,6 +25,10 @@ import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
+import proton.android.pass.common.api.None
+import proton.android.pass.common.api.Option
+import proton.android.pass.common.api.Some
+import proton.android.pass.common.api.combineN
 import proton.android.pass.commonpresentation.api.items.details.domain.ItemDetailsFieldType
 import proton.android.pass.commonpresentation.api.items.details.handlers.ItemDetailsHandlerObserver
 import proton.android.pass.commonrust.api.passwords.strengths.PasswordStrengthCalculator
@@ -34,10 +38,12 @@ import proton.android.pass.commonuimodels.api.attachments.AttachmentsState
 import proton.android.pass.commonuimodels.api.items.DetailEvent
 import proton.android.pass.commonuimodels.api.items.ItemDetailNavScope
 import proton.android.pass.commonuimodels.api.items.ItemDetailState
+import proton.android.pass.commonuimodels.api.items.LinkedAliasItem
 import proton.android.pass.commonuimodels.api.items.LoginMonitorState
 import proton.android.pass.commonuimodels.api.items.LoginMonitorState.ReusedPasswordDisplayMode
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.usecases.CanDisplayTotp
+import proton.android.pass.data.api.usecases.GetItemByAliasEmail
 import proton.android.pass.domain.HiddenState
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemContents
@@ -74,7 +80,8 @@ class LoginItemDetailsHandlerObserverImpl @Inject constructor(
     private val insecurePasswordChecker: InsecurePasswordChecker,
     private val duplicatedPasswordChecker: DuplicatedPasswordChecker,
     private val missingTfaChecker: MissingTfaChecker,
-    private val telemetryManager: TelemetryManager
+    private val telemetryManager: TelemetryManager,
+    private val getItemByAliasEmail: GetItemByAliasEmail
 ) : ItemDetailsHandlerObserver<ItemContents.Login, ItemDetailsFieldType.LoginItemAction>(
     encryptionContextProvider,
     observeTotpFromUri,
@@ -87,7 +94,7 @@ class LoginItemDetailsHandlerObserverImpl @Inject constructor(
         attachmentsState: AttachmentsState,
         savedStateEntries: Map<String, Any?>,
         detailEvent: DetailEvent
-    ): Flow<ItemDetailState> = combine(
+    ): Flow<ItemDetailState> = combineN(
         observeItemContents(item),
         observePrimaryTotp(item),
         observeCustomFieldTotps(item),
@@ -97,9 +104,10 @@ class LoginItemDetailsHandlerObserverImpl @Inject constructor(
                 ?.let { it as? ItemDetailNavScope }
                 ?: ItemDetailNavScope.Default
         ),
+        observeLinkedAlias(item),
         userPreferencesRepository.getUseFaviconsPreference()
     ) { loginItemContents, primaryTotp, customFieldTotps, loginMonitorState,
-        useFaviconsPreference ->
+        linkedAlias, useFaviconsPreference ->
         ItemDetailState.Login(
             itemContents = loginItemContents,
             itemId = item.id,
@@ -123,7 +131,8 @@ class LoginItemDetailsHandlerObserverImpl @Inject constructor(
             passkeys = loginItemContents.passkeys.map { passkey -> UIPasskeyContent.from(passkey) },
             attachmentsState = attachmentsState,
             loginMonitorState = loginMonitorState,
-            detailEvent = detailEvent
+            detailEvent = detailEvent,
+            linkedAlias = linkedAlias
         )
     }
 
@@ -197,6 +206,32 @@ class LoginItemDetailsHandlerObserverImpl @Inject constructor(
                     )
                 }
                 else -> flowOf(TotpState.Limited)
+            }
+        }
+
+    private fun observeLinkedAlias(item: Item): Flow<Option<LinkedAliasItem>> =
+        observeItemContents(item).flatMapLatest { loginContents ->
+            val email = loginContents.itemEmail
+
+            if (email.isBlank()) {
+                flowOf(None)
+            } else {
+                flow<Option<LinkedAliasItem>> {
+                    val aliasItem = runCatching {
+                        getItemByAliasEmail(aliasEmail = email)
+                    }.fold(
+                        onSuccess = { it },
+                        onFailure = { null }
+                    )
+
+                    val linkedAlias: Option<LinkedAliasItem> = if (aliasItem == null) {
+                        None
+                    } else {
+                        Some(LinkedAliasItem(shareId = aliasItem.shareId, itemId = aliasItem.id))
+                    }
+
+                    emit(linkedAlias)
+                }
             }
         }
 

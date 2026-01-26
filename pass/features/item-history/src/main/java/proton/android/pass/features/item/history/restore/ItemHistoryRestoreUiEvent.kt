@@ -22,7 +22,9 @@ import proton.android.pass.commonpresentation.api.items.details.domain.ItemDetai
 import proton.android.pass.commonuimodels.api.UIPasskeyContent
 import proton.android.pass.domain.HiddenState
 import proton.android.pass.domain.ItemContents
+import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ItemSection
+import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.attachments.AttachmentId
 import proton.android.pass.features.item.history.restore.presentation.ItemHistoryRestoreEvent
 import proton.android.pass.features.item.history.restore.presentation.ItemHistoryRestoreSelection
@@ -63,6 +65,8 @@ internal sealed interface ItemHistoryRestoreUiEvent {
 
     @JvmInline
     value class OnWifiNetworkQRClick(val rawSvg: String) : ItemHistoryRestoreUiEvent
+
+    data class OnViewItem(val shareId: ShareId, val itemId: ItemId) : ItemHistoryRestoreUiEvent
 
     data object OnUpgrade : ItemHistoryRestoreUiEvent
 }

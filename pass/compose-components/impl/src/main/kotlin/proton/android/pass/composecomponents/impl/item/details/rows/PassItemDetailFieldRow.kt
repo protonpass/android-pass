@@ -57,6 +57,7 @@ internal fun PassItemDetailFieldRow(
     itemDiffType: ItemDiffType = ItemDiffType.None,
     isSelectable: Boolean = false,
     onClick: (() -> Unit)? = null,
+    contentBelowSubtitle: (@Composable () -> Unit)? = null,
     contentInBetween: (@Composable () -> Unit)? = null
 ) {
     Row(
@@ -104,6 +105,8 @@ internal fun PassItemDetailFieldRow(
                     itemDiffType = itemDiffType
                 )
             }
+
+            contentBelowSubtitle?.invoke()
         }
 
         contentInBetween?.invoke()

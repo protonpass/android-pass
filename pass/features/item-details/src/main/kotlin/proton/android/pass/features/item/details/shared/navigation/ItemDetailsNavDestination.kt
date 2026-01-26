@@ -104,4 +104,6 @@ sealed interface ItemDetailsNavDestination {
         val alias: String,
         val shareId: ShareId
     ) : ItemDetailsNavDestination
+
+    data class ViewItem(val shareId: ShareId, val itemId: ItemId) : ItemDetailsNavDestination
 }

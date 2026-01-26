@@ -135,7 +135,8 @@ internal fun PassItemDetailSections(
             modifiedAt = itemModifiedAt,
             attachmentsState = attachmentsState,
             shouldDisplayItemHistorySection = shouldDisplayItemHistorySection,
-            shouldDisplayItemHistoryButton = shouldDisplayItemHistoryButton
+            shouldDisplayItemHistoryButton = shouldDisplayItemHistoryButton,
+            linkedAlias = linkedAlias
         )
 
         is ItemDetailState.SSHKey -> PassSSHKeyItemDetailSections(

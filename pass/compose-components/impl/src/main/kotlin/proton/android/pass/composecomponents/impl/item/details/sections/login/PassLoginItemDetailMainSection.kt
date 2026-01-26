@@ -18,20 +18,34 @@
 
 package proton.android.pass.composecomponents.impl.item.details.sections.login
 
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Surface
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import kotlinx.collections.immutable.toPersistentList
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.defaultNorm
+import proton.android.pass.common.api.None
+import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.PasswordStrength
+import proton.android.pass.common.api.Some
 import proton.android.pass.commonpresentation.api.items.details.domain.ItemDetailsFieldType
 import proton.android.pass.commonui.api.PassTheme
+import proton.android.pass.commonui.api.Radius
+import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.ThemePreviewProvider
+import proton.android.pass.commonuimodels.api.items.LinkedAliasItem
 import proton.android.pass.composecomponents.impl.R
 import proton.android.pass.composecomponents.impl.item.PassPasswordStrengthItem
 import proton.android.pass.composecomponents.impl.item.details.PassItemDetailsUiEvent
@@ -62,6 +76,7 @@ internal fun PassLoginItemDetailMainSection(
     primaryTotp: TotpState?,
     itemColors: PassItemColors,
     itemDiffs: ItemDiffs.Login,
+    linkedAlias: Option<LinkedAliasItem>,
     onEvent: (PassItemDetailsUiEvent) -> Unit
 ) {
     val sections = mutableListOf<@Composable () -> Unit>()
@@ -80,6 +95,28 @@ internal fun PassLoginItemDetailMainSection(
                             field = ItemDetailsFieldType.PlainCopyable.Email(email)
                         )
                     )
+                },
+                contentBelowSubtitle = {
+                    if (linkedAlias is Some) {
+                        Spacer(modifier = Modifier.height(Spacing.small))
+                        Text(
+                            modifier = Modifier
+                                .padding(start = Spacing.small)
+                                .clip(RoundedCornerShape(size = Radius.small))
+                                .clickable {
+                                    onEvent(
+                                        PassItemDetailsUiEvent.OnViewAliasClick(
+                                            linkedAlias.value.shareId,
+                                            linkedAlias.value.itemId
+                                        )
+                                    )
+                                }
+                                .padding(Spacing.small),
+                            text = stringResource(R.string.login_item_view_alias_button),
+                            color = PassTheme.colors.loginInteractionNorm,
+                            textDecoration = TextDecoration.Underline
+                        )
+                    }
                 }
             )
         }
@@ -178,6 +215,7 @@ internal fun PassLoginItemDetailMainDiffPreview(@PreviewParameter(ThemePreviewPr
                     password = ItemDiffType.Content,
                     totp = ItemDiffType.Field
                 ),
+                linkedAlias = None,
                 onEvent = {}
             )
         }

@@ -95,6 +95,9 @@ fun ItemHistoryRestoreScreen(
                 }
                 is ItemHistoryRestoreUiEvent.OnWifiNetworkQRClick ->
                     onNavigated(ItemHistoryNavDestination.WifiNetworkQR(uiEvent.rawSvg))
+
+                is ItemHistoryRestoreUiEvent.OnViewItem ->
+                    onNavigated(ItemHistoryNavDestination.ViewItem(uiEvent.shareId, uiEvent.itemId))
             }
         }
     )

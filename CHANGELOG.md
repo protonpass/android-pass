@@ -1,3 +1,27 @@
+## To be released
+
+### Features :tada:
+
+### Fixes :bug:
+
+### Other
+
+## 1.37.0 (2026-01-26)
+
+### Features :tada:
+
+- Update upgrade screen design.
+
+### Fixes :bug:
+
+- Fix upgrade in credit card detail.
+- Autofill and Passkeys improvements.
+- Other bug fixes and improvements.
+
+### Other
+
+- Updated translations.
+
 ## 1.36.5 (2026-01-14)
 
 ### Fixes :bug:

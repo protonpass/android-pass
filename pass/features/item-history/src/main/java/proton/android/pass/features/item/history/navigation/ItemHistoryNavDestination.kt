@@ -58,5 +58,7 @@ sealed interface ItemHistoryNavDestination {
     @JvmInline
     value class WifiNetworkQR(val rawSVG: String) : ItemHistoryNavDestination
 
+    data class ViewItem(val shareId: ShareId, val itemId: ItemId) : ItemHistoryNavDestination
+
     data object Upgrade : ItemHistoryNavDestination
 }

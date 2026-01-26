@@ -30,6 +30,7 @@ import kotlinx.collections.immutable.toPersistentSet
 import kotlinx.datetime.Instant
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.PasswordStrength
+import proton.android.pass.commonuimodels.api.items.LinkedAliasItem
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonuimodels.api.PackageInfoUi
 import proton.android.pass.commonuimodels.api.UIPasskeyContent
@@ -69,6 +70,7 @@ internal fun PassLoginItemDetailSections(
     shouldDisplayItemHistorySection: Boolean,
     shouldDisplayItemHistoryButton: Boolean,
     attachmentsState: AttachmentsState,
+    linkedAlias: Option<LinkedAliasItem>,
     onEvent: (PassItemDetailsUiEvent) -> Unit
 ) = with(contents) {
     Column(
@@ -94,6 +96,7 @@ internal fun PassLoginItemDetailSections(
             primaryTotp = primaryTotp,
             itemColors = itemColors,
             itemDiffs = itemDiffs,
+            linkedAlias = linkedAlias,
             onEvent = onEvent
         )
 

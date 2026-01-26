@@ -22,6 +22,7 @@ import proton.android.pass.commonpresentation.api.items.details.domain.ItemDetai
 import proton.android.pass.commonuimodels.api.UIPasskeyContent
 import proton.android.pass.composecomponents.impl.attachments.AttachmentContentEvent
 import proton.android.pass.domain.HiddenState
+import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ItemSection
 import proton.android.pass.domain.ShareId
 
@@ -55,6 +56,8 @@ sealed interface PassItemDetailsUiEvent {
     value class OnWifiNetworkQRClick(val rawSvg: String) : PassItemDetailsUiEvent
 
     data object OnShowReusedPasswords : PassItemDetailsUiEvent
+
+    data class OnViewAliasClick(val shareId: ShareId, val itemId: ItemId) : PassItemDetailsUiEvent
 
     data object OnUpgrade : PassItemDetailsUiEvent
 }

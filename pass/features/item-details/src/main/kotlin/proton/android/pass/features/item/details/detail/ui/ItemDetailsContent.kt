@@ -20,6 +20,7 @@ package proton.android.pass.features.item.details.detail.ui
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import proton.android.pass.commonuimodels.api.items.ItemDetailState
 import proton.android.pass.composecomponents.impl.item.details.PassItemDetailsContent
 import proton.android.pass.composecomponents.impl.item.details.PassItemDetailsUiEvent
 import proton.android.pass.composecomponents.impl.loading.PassFullScreenLoading
@@ -32,6 +33,7 @@ import proton.android.pass.features.item.details.detail.ui.ItemDetailsUiEvent.On
 import proton.android.pass.features.item.details.detail.ui.ItemDetailsUiEvent.OnPasskeyClicked
 import proton.android.pass.features.item.details.detail.ui.ItemDetailsUiEvent.OnSharedVaultClicked
 import proton.android.pass.features.item.details.detail.ui.ItemDetailsUiEvent.OnUpgrade
+import proton.android.pass.features.item.details.detail.ui.ItemDetailsUiEvent.OnViewAliasItem
 import proton.android.pass.features.item.details.detail.ui.ItemDetailsUiEvent.OnViewItemHistoryClicked
 import proton.android.pass.features.item.details.detail.ui.ItemDetailsUiEvent.OnViewReusedPasswords
 import proton.android.pass.features.item.details.detail.ui.ItemDetailsUiEvent.OnWifiNetworkQRClick
@@ -102,49 +104,76 @@ internal fun ItemDetailsContent(
                 },
                 onEvent = { uiEvent ->
                     when (uiEvent) {
-                        is PassItemDetailsUiEvent.OnUpgrade -> OnUpgrade
-                        is PassItemDetailsUiEvent.OnHiddenFieldToggle -> OnHiddenFieldToggled(
-                            isVisible = uiEvent.isVisible,
-                            state = uiEvent.hiddenState,
-                            fieldType = uiEvent.fieldType,
-                            fieldSection = uiEvent.fieldSection
+                        is PassItemDetailsUiEvent.OnUpgrade -> onEvent(OnUpgrade)
+                        is PassItemDetailsUiEvent.OnHiddenFieldToggle -> onEvent(
+                            OnHiddenFieldToggled(
+                                isVisible = uiEvent.isVisible,
+                                state = uiEvent.hiddenState,
+                                fieldType = uiEvent.fieldType,
+                                fieldSection = uiEvent.fieldSection
+                            )
                         )
 
-                        is PassItemDetailsUiEvent.OnLinkClick -> OnLinkClicked(
-                            link = uiEvent.link
+                        is PassItemDetailsUiEvent.OnLinkClick -> onEvent(
+                            OnLinkClicked(link = uiEvent.link)
                         )
 
-                        is PassItemDetailsUiEvent.OnPasskeyClick -> OnPasskeyClicked(
-                            passkeyContent = uiEvent.passkey
+                        is PassItemDetailsUiEvent.OnPasskeyClick -> onEvent(
+                            OnPasskeyClicked(passkeyContent = uiEvent.passkey)
                         )
 
-                        is PassItemDetailsUiEvent.OnFieldClick -> OnFieldClicked(
-                            field = uiEvent.field
+                        is PassItemDetailsUiEvent.OnFieldClick -> onEvent(
+                            OnFieldClicked(field = uiEvent.field)
                         )
 
-                        PassItemDetailsUiEvent.OnViewItemHistoryClick -> OnViewItemHistoryClicked(
-                            shareId = shareId,
-                            itemId = itemId
-                        )
-
-                        is PassItemDetailsUiEvent.OnSharedVaultClick -> OnSharedVaultClicked(
-                            sharedVaultId = uiEvent.sharedVaultId,
-                            itemCategory = itemDetailState.itemCategory
-                        )
-
-                        is PassItemDetailsUiEvent.OnAttachmentEvent -> OnAttachmentEvent(
-                            attachmentContentEvent = uiEvent.attachmentContentEvent
-                        )
-
-                        is PassItemDetailsUiEvent.OnWifiNetworkQRClick ->
-                            OnWifiNetworkQRClick(uiEvent.rawSvg)
-
-                        PassItemDetailsUiEvent.OnShowReusedPasswords ->
-                            OnViewReusedPasswords(
+                        PassItemDetailsUiEvent.OnViewItemHistoryClick -> onEvent(
+                            OnViewItemHistoryClicked(
                                 shareId = shareId,
                                 itemId = itemId
                             )
-                    }.also(onEvent)
+                        )
+
+                        is PassItemDetailsUiEvent.OnSharedVaultClick -> onEvent(
+                            OnSharedVaultClicked(
+                                sharedVaultId = uiEvent.sharedVaultId,
+                                itemCategory = itemDetailState.itemCategory
+                            )
+                        )
+
+                        is PassItemDetailsUiEvent.OnAttachmentEvent -> onEvent(
+                            OnAttachmentEvent(
+                                attachmentContentEvent = uiEvent.attachmentContentEvent
+                            )
+                        )
+
+                        is PassItemDetailsUiEvent.OnWifiNetworkQRClick ->
+                            onEvent(OnWifiNetworkQRClick(uiEvent.rawSvg))
+
+                        PassItemDetailsUiEvent.OnShowReusedPasswords ->
+                            onEvent(
+                                OnViewReusedPasswords(
+                                    shareId = shareId,
+                                    itemId = itemId
+                                )
+                            )
+
+                        is PassItemDetailsUiEvent.OnViewAliasClick -> {
+                            when (val loginState = itemDetailState) {
+                                is ItemDetailState.Login -> {
+                                    if (loginState.linkedAlias.isNotEmpty()) {
+                                        val aliasItem = loginState.linkedAlias.value()!!
+                                        onEvent(
+                                            OnViewAliasItem(
+                                                shareId = aliasItem.shareId,
+                                                itemId = aliasItem.itemId
+                                            )
+                                        )
+                                    }
+                                }
+                                else -> Unit
+                            }
+                        }
+                    }
                 }
             )
         }

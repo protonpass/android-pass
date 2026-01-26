@@ -61,16 +61,21 @@ internal fun PassItemDetailMaskedFieldRow(
         itemColors = itemColors,
         itemDiffType = itemDiffType,
         isSelectable = isSelectable,
-        onClick = onClick
-    ) {
-        contentInBetween?.invoke()
+        onClick = onClick,
+        contentInBetween = if (contentInBetween != null || isToggleable) {
+            {
+                contentInBetween?.invoke()
 
-        if (isToggleable) {
-            PassVisibilityToggle(
-                isVisible = !isMasked,
-                onToggle = { isVisible -> isMasked = !isVisible },
-                itemColors = itemColors
-            )
+                if (isToggleable) {
+                    PassVisibilityToggle(
+                        isVisible = !isMasked,
+                        onToggle = { isVisible -> isMasked = !isVisible },
+                        itemColors = itemColors
+                    )
+                }
+            }
+        } else {
+            null
         }
-    }
+    )
 }

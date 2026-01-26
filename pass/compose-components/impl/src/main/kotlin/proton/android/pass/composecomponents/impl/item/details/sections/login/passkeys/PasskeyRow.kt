@@ -62,14 +62,15 @@ internal fun PasskeyRow(
             subtitle = username,
             itemColors = itemColors,
             itemDiffType = itemDiffType,
-            onClick = onClick
-        ) {
-            Icon(
-                painter = painterResource(R.drawable.ic_chevron_tiny_right),
-                contentDescription = null,
-                tint = ProtonTheme.colors.iconWeak
-            )
-        }
+            onClick = onClick,
+            contentInBetween = {
+                Icon(
+                    painter = painterResource(R.drawable.ic_chevron_tiny_right),
+                    contentDescription = null,
+                    tint = ProtonTheme.colors.iconWeak
+                )
+            }
+        )
     }
 }
 

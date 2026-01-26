@@ -191,6 +191,10 @@ fun ItemDetailsScreen(
                 is ItemDetailsUiEvent.OnViewReusedPasswords ->
                     ViewReusedPasswords(uiEvent.shareId, uiEvent.itemId)
                         .also(onNavigated)
+
+                is ItemDetailsUiEvent.OnViewAliasItem ->
+                    ItemDetailsNavDestination.ViewItem(uiEvent.shareId, uiEvent.itemId)
+                        .also(onNavigated)
             }
         }
     )

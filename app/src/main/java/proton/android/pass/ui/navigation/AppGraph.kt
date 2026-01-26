@@ -2022,6 +2022,14 @@ fun NavGraphBuilder.appGraph(
                     ),
                     backDestination = HomeNavItem
                 )
+
+                is ItemDetailsNavDestination.ViewItem -> appNavigator.navigate(
+                    destination = ItemDetailsNavItem,
+                    route = ItemDetailsNavItem.createNavRoute(
+                        shareId = itemDetailsNavDestination.shareId,
+                        itemId = itemDetailsNavDestination.itemId
+                    )
+                )
             }
         }
     )
@@ -2080,6 +2088,14 @@ fun NavGraphBuilder.appGraph(
                 is ItemHistoryNavDestination.WifiNetworkQR -> appNavigator.navigate(
                     destination = QRViewerNavItem,
                     route = QRViewerNavItem.createNavRoute(itemHistoryNavDestination.rawSVG)
+                )
+
+                is ItemHistoryNavDestination.ViewItem -> appNavigator.navigate(
+                    destination = ItemDetailsNavItem,
+                    route = ItemDetailsNavItem.createNavRoute(
+                        shareId = itemHistoryNavDestination.shareId,
+                        itemId = itemHistoryNavDestination.itemId
+                    )
                 )
             }
         }

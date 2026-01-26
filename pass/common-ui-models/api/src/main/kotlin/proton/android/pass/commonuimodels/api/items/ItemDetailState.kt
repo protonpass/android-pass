@@ -220,7 +220,8 @@ sealed interface ItemDetailState {
         val passwordStrength: PasswordStrength,
         val primaryTotp: TotpState?,
         val passkeys: List<UIPasskeyContent>,
-        val loginMonitorState: LoginMonitorState
+        val loginMonitorState: LoginMonitorState,
+        val linkedAlias: Option<LinkedAliasItem>
     ) : ItemDetailState {
 
         override val itemCategory: ItemCategory = ItemCategory.Login
@@ -431,6 +432,12 @@ sealed interface ItemDetailState {
     }
 
 }
+
+@Stable
+data class LinkedAliasItem(
+    val shareId: ShareId,
+    val itemId: ItemId
+)
 
 sealed interface DetailEvent {
     data object Idle : AliasDetailEvent

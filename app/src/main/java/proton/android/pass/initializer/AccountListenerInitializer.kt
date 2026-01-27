@@ -30,6 +30,7 @@ import dagger.hilt.components.SingletonComponent
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.launchIn
@@ -56,6 +57,7 @@ import proton.android.pass.data.api.usecases.ResetAppToDefaults
 import proton.android.pass.data.api.usecases.organization.RefreshOrganizationSettings
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.preferences.FeatureFlag
+import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 
 class AccountListenerInitializer : Initializer<Unit> {
@@ -75,6 +77,7 @@ class AccountListenerInitializer : Initializer<Unit> {
         val refreshUserAccess = entryPoint.refreshUserAccess()
         val refreshBreaches = entryPoint.refreshBreaches()
         val featureFlagsPreferencesRepository = entryPoint.featureFlagsPreferencesRepository()
+        val snackbarDispatcher = entryPoint.snackbarDispatcher()
 
         accountManager.observe(
             lifecycle = lifecycleProvider.lifecycle,
@@ -121,6 +124,12 @@ class AccountListenerInitializer : Initializer<Unit> {
                     }
                 }
             }
+            .flowWithLifecycle(lifecycleProvider.lifecycle)
+            .launchIn(lifecycleProvider.lifecycle.coroutineScope)
+
+        accountManager.getPrimaryUserId()
+            .distinctUntilChanged()
+            .onEach { snackbarDispatcher.reset() }
             .flowWithLifecycle(lifecycleProvider.lifecycle)
             .launchIn(lifecycleProvider.lifecycle.coroutineScope)
     }
@@ -212,6 +221,7 @@ class AccountListenerInitializer : Initializer<Unit> {
         fun resetAppToDefaults(): ResetAppToDefaults
         fun clearUserData(): ClearUserData
         fun featureFlagsPreferencesRepository(): FeatureFlagsPreferencesRepository
+        fun snackbarDispatcher(): SnackbarDispatcher
     }
 
     companion object {

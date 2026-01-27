@@ -18,6 +18,7 @@
 
 package proton.android.pass.composecomponents.impl.messages
 
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Icon
@@ -61,13 +62,13 @@ fun PassSnackbar(
     Snackbar(
         modifier = modifier.padding(Spacing.mediumSmall),
         content = {
-            Text(
-                modifier = Modifier.padding(vertical = Spacing.small),
-                text = message
-            )
-        },
-        action = {
-            Row {
+            Column(
+                modifier = Modifier.padding(vertical = Spacing.small)
+            ) {
+                Text(
+                    modifier = Modifier,
+                    text = message
+                )
                 if (!actionLabel.isNullOrBlank()) {
                     TextButton(onClick = { performAction() }) {
                         Text(
@@ -76,6 +77,10 @@ fun PassSnackbar(
                         )
                     }
                 }
+            }
+        },
+        action = {
+            Row {
                 IconButton(
                     onClick = { dismiss() },
                     content = {

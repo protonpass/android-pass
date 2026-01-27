@@ -35,8 +35,8 @@ internal suspend fun <T> fetchWithForceRefresh(
     safeRunCatching { refresh() }
         .onFailure { t ->
             PassLogger.w(tag, "Force-refresh fetch also failed.")
-            PassLogger.w(tag, it)
+            PassLogger.w(tag, t)
         }
-        .getOrElse { t -> null }
-}.getOrElse { t -> null }
+        .getOrElse { _ -> null }
+}.getOrElse { _ -> null }
 

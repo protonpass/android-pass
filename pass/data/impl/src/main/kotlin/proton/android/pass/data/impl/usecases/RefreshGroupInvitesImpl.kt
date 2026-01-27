@@ -20,6 +20,10 @@ package proton.android.pass.data.impl.usecases
 
 import kotlinx.coroutines.flow.first
 import me.proton.core.domain.entity.UserId
+import me.proton.core.user.domain.extension.isOrganizationAdmin
+import me.proton.core.user.domain.extension.isOrganizationMember
+import me.proton.core.user.domain.extension.isOrganizationUser
+import me.proton.core.user.domain.repository.UserRepository
 import proton.android.pass.common.api.safeRunCatching
 import proton.android.pass.data.api.repositories.GroupInviteRepository
 import proton.android.pass.data.api.usecases.RefreshGroupInvites
@@ -30,6 +34,7 @@ import javax.inject.Inject
 
 class RefreshGroupInvitesImpl @Inject constructor(
     private val groupInviteRepository: GroupInviteRepository,
+    private val userRepository: UserRepository,
     private val notificationManager: NotificationManager
 ) : RefreshGroupInvites {
 
@@ -37,11 +42,16 @@ class RefreshGroupInvitesImpl @Inject constructor(
         PassLogger.i(TAG, "Refreshing group invites started")
 
         safeRunCatching {
-            groupInviteRepository.observePendingGroupInvites(
-                userId = userId,
-                forceRefresh = true,
-                eventToken = eventToken
-            ).first().lastOrNull()
+            val currentUser = userRepository.getUser(userId)
+            if (currentUser.isOrganizationUser()) {
+                groupInviteRepository.observePendingGroupInvites(
+                    userId = userId,
+                    forceRefresh = true,
+                    eventToken = eventToken
+                ).first().lastOrNull()
+            } else {
+                null
+            }
         }.onSuccess { invite ->
             if (invite != null) {
                 PassLogger.i(TAG, "Group invites refreshed successfully")

@@ -1,6 +1,26 @@
+/*
+ * Copyright (c) 2025 Proton AG
+ * This file is part of Proton AG and Proton Pass.
+ *
+ * Proton Pass is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * Proton Pass is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package proton.android.pass.data.impl.crypto
 
 import kotlinx.coroutines.test.runTest
+import me.proton.core.crypto.android.context.AndroidCryptoContext
+import me.proton.core.crypto.android.pgp.GOpenPGPCrypto
 import me.proton.core.domain.entity.UserId
 import me.proton.core.key.domain.entity.key.KeyFlags
 import me.proton.core.key.domain.entity.key.KeyId
@@ -8,6 +28,7 @@ import me.proton.core.key.domain.entity.key.PrivateKey
 import me.proton.core.key.domain.entity.key.PublicAddressKey
 import me.proton.core.key.domain.entity.key.PublicKey
 import me.proton.core.user.domain.entity.UserKey
+import proton.android.pass.account.fakes.FakeKeyStoreCrypto
 import proton.android.pass.account.fakes.FakeUserRepository
 import proton.android.pass.data.fakes.repositories.FakeGroupRepository
 import proton.android.pass.data.fakes.usecases.FakeGetAllKeysByAddress
@@ -100,7 +121,7 @@ class ResolveGroupInviteCryptoContextTest {
     }
 
     @Test
-    fun groupAdminUsesUserKey() = runTest {
+    fun groupOwnerUsesUserKey() = runTest {
         val userKey = PrivateKey(
             key = "user-priv",
             isPrimary = true,
@@ -123,6 +144,10 @@ class ResolveGroupInviteCryptoContextTest {
         )
 
         val resolver = ResolveGroupInviteCryptoContextImpl(
+            cryptoContext = AndroidCryptoContext(
+                keyStoreCrypto = FakeKeyStoreCrypto,
+                pgpCrypto = GOpenPGPCrypto()
+            ),
             userRepository = FakeUserRepository().apply { setUser(userWithKey) },
             groupRepository = FakeGroupRepository().apply { groups = listOf(group) },
             organizationKeyRepository = FakeOrganizationKeyRepository(),
@@ -135,7 +160,7 @@ class ResolveGroupInviteCryptoContextTest {
     }
 
     @Test
-    fun throwsWhenGroupAdminHasNoActiveKeys() = runTest {
+    fun throwsWhenGroupOwnerHasNoActiveKeys() = runTest {
         val inactiveKey = PrivateKey(
             key = "user-priv-inactive",
             isPrimary = true,
@@ -164,12 +189,12 @@ class ResolveGroupInviteCryptoContextTest {
         val error = assertFailsWith<IllegalStateException> {
             resolver(USER_ID, GROUP_ID, INVITER_EMAIL, isGroupOwner = true)
         }
-        assert(error.message!!.contains("Group admin cannot access invite"))
+        assert(error.message!!.contains("Group owner cannot access invite"))
         assert(error.message!!.contains("none are active"))
     }
 
     @Test
-    fun throwsWhenGroupAdminHasNoKeys() = runTest {
+    fun throwsWhenGroupOwnerHasNoKeys() = runTest {
         val userWithNoKeys = user.copy(keys = emptyList())
 
         val resolver = resolver(
@@ -179,7 +204,7 @@ class ResolveGroupInviteCryptoContextTest {
         val error = assertFailsWith<IllegalStateException> {
             resolver(USER_ID, GROUP_ID, INVITER_EMAIL, isGroupOwner = true)
         }
-        assert(error.message!!.contains("Group admin cannot access invite"))
+        assert(error.message!!.contains("Group owner cannot access invite"))
         assert(error.message!!.contains("no private keys"))
     }
 
@@ -192,6 +217,10 @@ class ResolveGroupInviteCryptoContextTest {
         },
         userRepo: FakeUserRepository = FakeUserRepository().apply { setUser(user) }
     ) = ResolveGroupInviteCryptoContextImpl(
+        cryptoContext = AndroidCryptoContext(
+            keyStoreCrypto = FakeKeyStoreCrypto,
+            pgpCrypto = GOpenPGPCrypto()
+        ),
         userRepository = userRepo,
         groupRepository = groupRepo,
         organizationKeyRepository = orgRepo,

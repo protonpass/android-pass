@@ -116,8 +116,7 @@ class AcceptGroupInviteImplTest {
             keys = encryptedInviteKeys
         )
         }
-        assert(error.message!!.contains("Invite key (rotation"))
-        assert(error.message!!.contains("cannot be decrypted"))
+        assert(error.message!!.contains("Message cannot be decrypted"))
     }
 
     @Test
@@ -181,18 +180,18 @@ class AcceptGroupInviteImplTest {
             keys = encryptedInviteKeys
         )
         }
-        assert(error.message!!.contains("Missing group address key token for address"))
+        assert(error.message!!.contains("Missing group address key token"))
     }
 
     @Test
-    fun groupAdminCanAcceptInviteWithUserKeys() {
+    fun groupOwnerCanAcceptInviteWithUserKeys() {
         val inviterAddressKey = UserAddressKeyTestFactory.createUserAddressKey(
             cryptoContext,
             AddressId("Inviter")
         )
-        // Create an unlocked admin user key (similar to org key pattern)
-        val adminUserKey = createUnlockedUserKey()
-        val (groupAddressKey, groupPassphrase) = createGroupAddressKeyWithUserKey(adminUserKey)
+        // Create an unlocked owner user key (similar to org key pattern)
+        val ownerUserKey = createUnlockedUserKey()
+        val (groupAddressKey, groupPassphrase) = createGroupAddressKeyWithUserKey(ownerUserKey)
         val (shareKey, _) = ShareKeyTestFactory.create()
 
         val encryptedInviteKeys = generateInput(
@@ -205,7 +204,7 @@ class AcceptGroupInviteImplTest {
 
         val res = instance.invoke(
             groupPrivateKeys = listOf(groupAddressKey),
-            openerKeys = listOf(adminUserKey),
+            openerKeys = listOf(ownerUserKey),
             inviterAddressKeys = listOf(inviterAddressKey.privateKey.publicKey(cryptoContext)),
             keys = encryptedInviteKeys
         )
@@ -246,7 +245,7 @@ class AcceptGroupInviteImplTest {
             keys = encryptedInviteKeys
         )
         }
-        assert(error.message!!.contains("Could not decrypt token with any key for address"))
+        assert(error.message!!.contains("Could not decrypt token with any opener key"))
     }
 
     private fun validateKey(
@@ -309,9 +308,9 @@ class AcceptGroupInviteImplTest {
     }
 
     private fun createUnlockedUserKey(): PrivateKey {
-        val passphrase = "admin-user-passphrase".encodeToByteArray()
+        val passphrase = "owner-user-passphrase".encodeToByteArray()
         val lockedKey = cryptoContext.pgpCrypto.generateNewPrivateKey(
-            username = "adminuser",
+            username = "owneruser",
             domain = "user.test",
             passphrase = passphrase
         )
@@ -396,7 +395,7 @@ class AcceptGroupInviteImplTest {
         )
 
         return PrivateAddressKey(
-            addressId = "group-admin-address-id",
+            addressId = "group-owner-address-id",
             privateKey = privateKey,
             token = token,
             signature = null

@@ -645,6 +645,7 @@ class HomeViewModel @Inject constructor(
                     }
                 }
         }
+
     }
 
     fun onSearchQueryChange(query: String) {

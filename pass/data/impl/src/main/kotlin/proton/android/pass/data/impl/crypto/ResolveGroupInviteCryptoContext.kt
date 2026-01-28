@@ -19,11 +19,11 @@
 package proton.android.pass.data.impl.crypto
 
 import me.proton.core.crypto.common.context.CryptoContext
+import me.proton.core.crypto.common.pgp.UnlockedKey
 import me.proton.core.domain.entity.UserId
 import me.proton.core.key.domain.entity.key.PrivateAddressKey
 import me.proton.core.key.domain.entity.key.PrivateKey
 import me.proton.core.key.domain.entity.key.PublicKey
-import me.proton.core.key.domain.toPrivateKey
 import me.proton.core.user.domain.entity.User
 import me.proton.core.user.domain.repository.UserRepository
 import proton.android.pass.crypto.api.usecases.invites.OpenOrganizationKey
@@ -37,8 +37,9 @@ import javax.inject.Inject
 data class GroupInviteCryptoContext(
     val user: User,
     val groupPrivateKeys: List<PrivateAddressKey>,
-    val openerKeys: List<PrivateKey>,
-    val inviterPublicKeys: List<PublicKey>
+    val unlockedOrganizationKey: UnlockedKey?,
+    val inviterPublicKeys: List<PublicKey>,
+    val isGroupOwner: Boolean
 )
 
 interface ResolveGroupInviteCryptoContext {
@@ -66,17 +67,13 @@ class ResolveGroupInviteCryptoContextImpl @Inject constructor(
         isGroupOwner: Boolean
     ): GroupInviteCryptoContext {
         val user = userRepository.getUser(userId)
-        val openerKeys: List<PrivateKey> = buildList {
-            if (isGroupOwner) {
-                // Group owners: unlock their user keys and return as unlocked PrivateKeys
-                val unlockedUserKeys = unlockUserKeys(user, userId, groupId)
-                addAll(unlockedUserKeys)
-            } else {
-                // Non-owners: use organization key (already unlocked)
-                val orgKey = fetchOrganizationPrivateKey(userId, user)
-                add(orgKey)
-            }
-        }
+        val unlockedOrganizationKey: UnlockedKey? = if (!isGroupOwner) {
+            val orgPrivateKey = fetchOrganizationPrivateKey(userId, user)
+            cryptoContext.pgpCrypto.unlock(
+                privateKey = orgPrivateKey.key,
+                passphrase = ByteArray(0)
+            )
+        } else null
 
         val group = fetchWithForceRefresh(
             tag = TAG,
@@ -97,45 +94,10 @@ class ResolveGroupInviteCryptoContextImpl @Inject constructor(
         return GroupInviteCryptoContext(
             user = user,
             groupPrivateKeys = groupPrivateKeys,
-            openerKeys = openerKeys,
-            inviterPublicKeys = inviterPublicKeys
+            unlockedOrganizationKey = unlockedOrganizationKey,
+            inviterPublicKeys = inviterPublicKeys,
+            isGroupOwner = isGroupOwner
         )
-    }
-
-    private fun unlockUserKeys(user: User, userId: UserId, groupId: GroupId): List<PrivateKey> {
-        val allUserKeys = user.keys.map { it.privateKey }
-        val activeUserKeys = allUserKeys.filter { it.isActive }
-
-        if (activeUserKeys.isEmpty()) {
-            val message = if (allUserKeys.isNotEmpty()) {
-                "User has ${allUserKeys.size} key(s) but none are active"
-            } else {
-                "User has no private keys"
-            }
-            PassLogger.w(TAG, "$message for userId=${userId.id}, groupId=${groupId.id}")
-            error(
-                "Group owner cannot access invite: $message. " +
-                    "Please activate your keys and try again. (userId=${userId.id}, groupId=${groupId.id})"
-            )
-        }
-
-        // Unlock each active user key and return as PrivateKeys with no passphrase
-        return activeUserKeys.map { privateKey ->
-            val encryptedPassphrase = privateKey.passphrase
-            if (encryptedPassphrase != null) {
-                // Key is locked, decrypt passphrase and unlock it
-                val decryptedPassphrase = cryptoContext.keyStoreCrypto.decrypt(encryptedPassphrase)
-                val unlockedKey = cryptoContext.pgpCrypto.unlock(
-                    privateKey = privateKey.key,
-                    passphrase = decryptedPassphrase.array
-                )
-                // Return as unlocked PrivateKey (passphrase = null)
-                cryptoContext.pgpCrypto.getArmored(unlockedKey.value).toPrivateKey()
-            } else {
-                // Key is already unlocked
-                privateKey
-            }
-        }
     }
 
     private suspend fun fetchOrganizationPrivateKey(userId: UserId, user: User): PrivateKey {

@@ -22,8 +22,11 @@ import me.proton.core.crypto.android.context.AndroidCryptoContext
 import me.proton.core.crypto.android.pgp.GOpenPGPCrypto
 import me.proton.core.crypto.common.context.CryptoContext
 import me.proton.core.crypto.common.keystore.PlainByteArray
+import me.proton.core.crypto.common.keystore.decrypt
 import me.proton.core.crypto.common.keystore.encrypt
 import me.proton.core.crypto.common.pgp.PGPHeader
+import me.proton.core.domain.entity.UserId
+import me.proton.core.key.domain.entity.key.KeyId
 import me.proton.core.key.domain.entity.key.PrivateAddressKey
 import me.proton.core.key.domain.entity.key.PrivateKey
 import me.proton.core.key.domain.publicKey
@@ -39,9 +42,11 @@ import proton.android.pass.crypto.fakes.context.FakeEncryptionContextProvider
 import proton.android.pass.domain.key.ShareKey
 import proton.android.pass.test.UserAddressKeyTestFactory
 import proton.android.pass.test.domain.ShareKeyTestFactory
+import proton.android.pass.test.domain.UserTestFactory
 import kotlin.test.assertContentEquals
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
+import kotlin.test.assertFails
 
 class AcceptGroupInviteImplTest {
     private val cryptoContext: CryptoContext = AndroidCryptoContext(
@@ -68,11 +73,18 @@ class AcceptGroupInviteImplTest {
 
         val instance = AcceptGroupInviteImpl(cryptoContext, FakeEncryptionContextProvider())
 
+        val unlockedOrgKey = cryptoContext.pgpCrypto.unlock(
+            privateKey = groupOpenerKey.key,
+            passphrase = ByteArray(0)
+        )
+
         val res = instance.invoke(
+            user = UserTestFactory.create(),
             groupPrivateKeys = listOf(groupAddressKey),
-            openerKeys = listOf(groupOpenerKey),
+            unlockedOrganizationKey = unlockedOrgKey,
             inviterAddressKeys = listOf(inviterAddressKey.privateKey.publicKey(cryptoContext)),
-            keys = encryptedInviteKeys
+            keys = encryptedInviteKeys,
+            isGroupOwner = false
         )
 
         assertEquals(shareKeys.size, res.size)
@@ -108,13 +120,20 @@ class AcceptGroupInviteImplTest {
 
         val instance = AcceptGroupInviteImpl(cryptoContext, FakeEncryptionContextProvider())
 
+        val unlockedOrgKey = cryptoContext.pgpCrypto.unlock(
+            privateKey = groupOpenerKey.key,
+            passphrase = ByteArray(0)
+        )
+
         val error = assertFailsWith<IllegalStateException> {
             instance.invoke(
+                user = UserTestFactory.create(),
                 groupPrivateKeys = listOf(groupAddressKey),
-            openerKeys = listOf(groupOpenerKey),
-            inviterAddressKeys = listOf(wrongInviterKey.privateKey.publicKey(cryptoContext)),
-            keys = encryptedInviteKeys
-        )
+                unlockedOrganizationKey = unlockedOrgKey,
+                inviterAddressKeys = listOf(wrongInviterKey.privateKey.publicKey(cryptoContext)),
+                keys = encryptedInviteKeys,
+                isGroupOwner = false
+            )
         }
         assert(error.message!!.contains("Message cannot be decrypted"))
     }
@@ -138,11 +157,18 @@ class AcceptGroupInviteImplTest {
 
         val instance = AcceptGroupInviteImpl(cryptoContext, FakeEncryptionContextProvider())
 
+        val unlockedOrgKey = cryptoContext.pgpCrypto.unlock(
+            privateKey = groupOpenerKey.key,
+            passphrase = ByteArray(0)
+        )
+
         val res = instance.invoke(
+            user = UserTestFactory.create(),
             groupPrivateKeys = listOf(firstGroupKey, targetGroupKey),
-            openerKeys = listOf(groupOpenerKey),
+            unlockedOrganizationKey = unlockedOrgKey,
             inviterAddressKeys = listOf(inviterAddressKey.privateKey.publicKey(cryptoContext)),
-            keys = encryptedInviteKeys
+            keys = encryptedInviteKeys,
+            isGroupOwner = false
         )
 
         assertEquals(1, res.size)
@@ -172,13 +198,20 @@ class AcceptGroupInviteImplTest {
 
         val instance = AcceptGroupInviteImpl(cryptoContext, FakeEncryptionContextProvider())
 
+        val unlockedOrgKey = cryptoContext.pgpCrypto.unlock(
+            privateKey = groupOpenerKey.key,
+            passphrase = ByteArray(0)
+        )
+
         val error = assertFailsWith<IllegalStateException> {
             instance.invoke(
+                user = UserTestFactory.create(),
                 groupPrivateKeys = listOf(groupKeyWithNoToken),
-            openerKeys = listOf(groupOpenerKey),
-            inviterAddressKeys = listOf(inviterAddressKey.privateKey.publicKey(cryptoContext)),
-            keys = encryptedInviteKeys
-        )
+                unlockedOrganizationKey = unlockedOrgKey,
+                inviterAddressKeys = listOf(inviterAddressKey.privateKey.publicKey(cryptoContext)),
+                keys = encryptedInviteKeys,
+                isGroupOwner = false
+            )
         }
         assert(error.message!!.contains("Missing group address key token"))
     }
@@ -202,11 +235,27 @@ class AcceptGroupInviteImplTest {
 
         val instance = AcceptGroupInviteImpl(cryptoContext, FakeEncryptionContextProvider())
 
+        // Group owner test: pass null for unlockedOrganizationKey, user keys will be used via KeyHolderContext
+        val ownerUser = UserTestFactory.create().copy(
+            keys = listOf(
+                me.proton.core.user.domain.entity.UserKey(
+                    userId = UserId("OwnerUser"),
+                    version = 1,
+                    activation = null,
+                    active = true,
+                    keyId = KeyId("owner-key-id"),
+                    privateKey = ownerUserKey
+                )
+            )
+        )
+
         val res = instance.invoke(
+            user = ownerUser,
             groupPrivateKeys = listOf(groupAddressKey),
-            openerKeys = listOf(ownerUserKey),
+            unlockedOrganizationKey = null,
             inviterAddressKeys = listOf(inviterAddressKey.privateKey.publicKey(cryptoContext)),
-            keys = encryptedInviteKeys
+            keys = encryptedInviteKeys,
+            isGroupOwner = true
         )
 
         assertEquals(1, res.size)
@@ -237,15 +286,24 @@ class AcceptGroupInviteImplTest {
 
         val instance = AcceptGroupInviteImpl(cryptoContext, FakeEncryptionContextProvider())
 
-        val error = assertFailsWith<IllegalStateException> {
-            instance.invoke(
-                groupPrivateKeys = listOf(groupAddressKey),
-            openerKeys = listOf(wrongOpener),
-            inviterAddressKeys = listOf(inviterAddressKey.privateKey.publicKey(cryptoContext)),
-            keys = encryptedInviteKeys
+        val unlockedWrongOpener = cryptoContext.pgpCrypto.unlock(
+            privateKey = wrongOpener.key,
+            passphrase = ByteArray(0)
         )
+
+        // With wrong opener key, decryption should fail with CryptoException
+        val error = assertFails {
+            instance.invoke(
+                user = UserTestFactory.create(),
+                groupPrivateKeys = listOf(groupAddressKey),
+                unlockedOrganizationKey = unlockedWrongOpener,
+                inviterAddressKeys = listOf(inviterAddressKey.privateKey.publicKey(cryptoContext)),
+                keys = encryptedInviteKeys,
+                isGroupOwner = false
+            )
         }
-        assert(error.message!!.contains("Could not decrypt token with any opener key"))
+        // The error message should indicate decryption failure
+        assert(error.message!!.contains("decrypt", ignoreCase = true) || error.message!!.contains("Message"))
     }
 
     private fun validateKey(
@@ -314,18 +372,15 @@ class AcceptGroupInviteImplTest {
             domain = "user.test",
             passphrase = passphrase
         )
-        val unlocked = cryptoContext.pgpCrypto.unlock(lockedKey, passphrase)
-        val unencryptedArmored = cryptoContext.pgpCrypto.getArmored(
-            unlocked.value,
-            PGPHeader.PrivateKey
-        )
+        // Store the key in locked form with encrypted passphrase so tryUseKeys() can unlock it
+        val encryptedPassphrase = PlainByteArray(passphrase).encrypt(cryptoContext.keyStoreCrypto)
         return PrivateKey(
-            key = unencryptedArmored,
+            key = lockedKey,
             isPrimary = true,
             isActive = true,
             canEncrypt = true,
             canVerify = true,
-            passphrase = null
+            passphrase = encryptedPassphrase
         )
     }
 
@@ -373,14 +428,17 @@ class AcceptGroupInviteImplTest {
             passphrase = groupPassphrase
         )
 
-        // User key is already unlocked (passphrase = null), just get the raw bytes
-        val unlockedUserKey = cryptoContext.pgpCrypto.getUnarmored(userKey.key)
+        // Unlock the user key using its passphrase
+        val userPassphrase = userKey.passphrase?.decrypt(cryptoContext.keyStoreCrypto)?.array ?: ByteArray(0)
+        val unlockedUserKey = cryptoContext.pgpCrypto.unlock(
+            privateKey = userKey.key,
+            passphrase = userPassphrase
+        )
 
         val token = cryptoContext.pgpCrypto.encryptAndSignData(
             data = groupPassphrase,
             publicKey = userKey.publicKey(cryptoContext).key,
-            unlockedKey = unlockedUserKey,
-            signatureContext = null
+            unlockedKey = unlockedUserKey.value
         )
 
         val encryptedGroupPassphrase = PlainByteArray(groupPassphrase).encrypt(cryptoContext.keyStoreCrypto)

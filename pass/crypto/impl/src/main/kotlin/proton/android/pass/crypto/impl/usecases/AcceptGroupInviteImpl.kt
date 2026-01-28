@@ -23,9 +23,10 @@ import me.proton.core.crypto.common.pgp.UnlockedKey
 import me.proton.core.crypto.common.pgp.VerificationContext
 import me.proton.core.crypto.common.pgp.VerificationStatus
 import me.proton.core.key.domain.entity.key.PrivateAddressKey
-import me.proton.core.key.domain.entity.key.PrivateKey
 import me.proton.core.key.domain.entity.key.PublicKey
+import me.proton.core.key.domain.decryptData
 import me.proton.core.key.domain.publicKey
+import me.proton.core.user.domain.entity.User
 import proton.android.pass.crypto.api.Base64
 import proton.android.pass.crypto.api.Constants
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
@@ -33,7 +34,7 @@ import proton.android.pass.crypto.api.error.InvalidSignature
 import proton.android.pass.crypto.api.usecases.invites.AcceptGroupInvite
 import proton.android.pass.crypto.api.usecases.invites.EncryptedGroupInviteAcceptKey
 import proton.android.pass.crypto.api.usecases.invites.EncryptedInviteKey
-import proton.android.pass.log.api.PassLogger
+import proton.android.pass.crypto.impl.extensions.tryUseKeys
 import javax.inject.Inject
 
 class AcceptGroupInviteImpl @Inject constructor(
@@ -42,14 +43,18 @@ class AcceptGroupInviteImpl @Inject constructor(
 ) : AcceptGroupInvite {
 
     override fun invoke(
+        user: User,
         groupPrivateKeys: List<PrivateAddressKey>,
-        openerKeys: List<PrivateKey>,
+        unlockedOrganizationKey: UnlockedKey?,
         inviterAddressKeys: List<PublicKey>,
-        keys: List<EncryptedInviteKey>
+        keys: List<EncryptedInviteKey>,
+        isGroupOwner: Boolean
     ): List<EncryptedGroupInviteAcceptKey> {
         val unlockedGroupKeys = unlockGroupKeys(
+            user = user,
             groupPrivateKeys = groupPrivateKeys,
-            openerKeys = openerKeys
+            unlockedOrganizationKey = unlockedOrganizationKey,
+            isGroupOwner = isGroupOwner
         )
         return keys.map { inviteKey ->
             val decoded = Base64.decodeBase64(inviteKey.key)
@@ -93,24 +98,27 @@ class AcceptGroupInviteImpl @Inject constructor(
     }
 
     private fun unlockGroupKeys(
+        user: User,
         groupPrivateKeys: List<PrivateAddressKey>,
-        openerKeys: List<PrivateKey>
+        unlockedOrganizationKey: UnlockedKey?,
+        isGroupOwner: Boolean
     ): List<UnlockedGroupKey> = groupPrivateKeys.map { privateAddressKey ->
         val token = privateAddressKey.token ?: error("Missing group address key token")
 
-        // Try each opener key until one successfully decrypts the token
-        val decryptedToken = openerKeys.firstNotNullOfOrNull { openerKey ->
-            runCatching {
-                cryptoContext.pgpCrypto.decryptData(
-                    message = token,
-                    unlockedKey = cryptoContext.pgpCrypto.getUnarmored(openerKey.key)
-                )
-            }.onFailure { error ->
-                PassLogger.d(TAG, "Failed to decrypt token with opener key: ${error.message}")
-            }.getOrNull()
-        } ?: run {
-            PassLogger.w(TAG, "Could not decrypt token with any of ${openerKeys.size} opener key(s)")
-            error("Could not decrypt token with any opener key")
+        val decryptedToken = if (isGroupOwner) {
+            user.tryUseKeys(
+                message = "AcceptGroupInviteImpl: Decrypt group address key token",
+                cryptoContext = cryptoContext
+            ) {
+                decryptData(token)
+            }
+        } else {
+            val orgKey = unlockedOrganizationKey
+                ?: error("Admin requires organization key")
+            cryptoContext.pgpCrypto.decryptData(
+                message = token,
+                unlockedKey = orgKey.value
+            )
         }
 
         val unlocked = cryptoContext.pgpCrypto.unlock(
@@ -127,8 +135,4 @@ class AcceptGroupInviteImpl @Inject constructor(
         val publicKey: PublicKey,
         val unlocked: UnlockedKey
     )
-
-    companion object {
-        private const val TAG = "AcceptGroupInviteImpl"
-    }
 }

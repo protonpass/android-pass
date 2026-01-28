@@ -34,6 +34,8 @@ import proton.android.pass.data.impl.remote.RemoteEventDataSource
 import proton.android.pass.data.impl.remote.RemoteEventDataSourceImpl
 import proton.android.pass.data.impl.remote.RemoteExtraPasswordDataSource
 import proton.android.pass.data.impl.remote.RemoteExtraPasswordDataSourceImpl
+import proton.android.pass.data.impl.remote.RemoteFolderDataSource
+import proton.android.pass.data.impl.remote.RemoteFolderDataSourceImpl
 import proton.android.pass.data.impl.remote.RemoteImageFetcher
 import proton.android.pass.data.impl.remote.RemoteImageFetcherImpl
 import proton.android.pass.data.impl.remote.RemoteItemDataSource
@@ -182,6 +184,9 @@ abstract class DataRemoteDataSourceModule {
 
     @[Binds Singleton]
     abstract fun bindRemoteUserEventDataSource(impl: RemoteUserEventDataSourceImpl): RemoteUserEventDataSource
+
+    @[Binds Singleton]
+    abstract fun bindRemoteFolderDataSource(impl: RemoteFolderDataSourceImpl): RemoteFolderDataSource
 
 }
 

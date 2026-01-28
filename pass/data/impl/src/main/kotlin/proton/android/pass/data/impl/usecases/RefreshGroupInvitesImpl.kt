@@ -20,8 +20,6 @@ package proton.android.pass.data.impl.usecases
 
 import kotlinx.coroutines.flow.first
 import me.proton.core.domain.entity.UserId
-import me.proton.core.user.domain.extension.isOrganizationAdmin
-import me.proton.core.user.domain.extension.isOrganizationMember
 import me.proton.core.user.domain.extension.isOrganizationUser
 import me.proton.core.user.domain.repository.UserRepository
 import proton.android.pass.common.api.safeRunCatching

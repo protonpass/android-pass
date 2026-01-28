@@ -19,7 +19,7 @@ data class ProtosConfig(
     val branchTag: BranchOrTag
 )
 
-val PROTOBUF_TAG = "1.5.2"
+val PROTOBUF_TAG = "1.6.0"
 
 val isCI = System.getenv("GITLAB_CI").toBoolean()
 

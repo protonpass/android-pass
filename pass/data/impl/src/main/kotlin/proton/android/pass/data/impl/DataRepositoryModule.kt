@@ -32,6 +32,7 @@ import proton.android.pass.data.api.repositories.BulkInviteRepository
 import proton.android.pass.data.api.repositories.BulkMoveToVaultRepository
 import proton.android.pass.data.api.repositories.DraftAttachmentRepository
 import proton.android.pass.data.api.repositories.DraftRepository
+import proton.android.pass.data.api.repositories.FolderRepository
 import proton.android.pass.data.api.repositories.GroupInviteRepository
 import proton.android.pass.data.api.repositories.GroupRepository
 import proton.android.pass.data.api.repositories.InAppMessagesRepository
@@ -67,6 +68,7 @@ import proton.android.pass.data.impl.repositories.ExtraPasswordRepository
 import proton.android.pass.data.impl.repositories.ExtraPasswordRepositoryImpl
 import proton.android.pass.data.impl.repositories.FetchShareItemsStatusRepository
 import proton.android.pass.data.impl.repositories.FetchShareItemsStatusRepositoryImpl
+import proton.android.pass.data.impl.repositories.FolderRepositoryImpl
 import proton.android.pass.data.impl.repositories.GroupInviteRepositoryImpl
 import proton.android.pass.data.impl.repositories.GroupRepositoryImpl
 import proton.android.pass.data.impl.repositories.InAppMessagesRepositoryImpl
@@ -231,5 +233,8 @@ abstract class DataRepositoryModule {
 
     @[Binds Singleton]
     abstract fun bindGroupInviteRepository(impl: GroupInviteRepositoryImpl): GroupInviteRepository
+
+    @[Binds Singleton]
+    abstract fun bindFolderRepository(impl: FolderRepositoryImpl): FolderRepository
 
 }

@@ -29,15 +29,18 @@ import proton.android.pass.data.impl.requests.ChangeAliasStatusRequest
 import proton.android.pass.data.impl.requests.ChangeNotificationStatusRequest
 import proton.android.pass.data.impl.requests.CheckAddressesCanBeInvitedRequest
 import proton.android.pass.data.impl.requests.CreateAliasRequest
+import proton.android.pass.data.impl.requests.CreateFolderRequest
 import proton.android.pass.data.impl.requests.CreateInvitesRequest
 import proton.android.pass.data.impl.requests.CreateItemAliasRequest
 import proton.android.pass.data.impl.requests.CreateItemRequest
 import proton.android.pass.data.impl.requests.CreateNewUserInvitesRequest
 import proton.android.pass.data.impl.requests.CreateSecureLinkRequest
 import proton.android.pass.data.impl.requests.CreateVaultRequest
+import proton.android.pass.data.impl.requests.DeleteFoldersRequest
 import proton.android.pass.data.impl.requests.ExtraPasswordSendSrpDataRequest
 import proton.android.pass.data.impl.requests.ItemReadRequest
 import proton.android.pass.data.impl.requests.MigrateItemsRequest
+import proton.android.pass.data.impl.requests.MoveFolderRequest
 import proton.android.pass.data.impl.requests.SendUserMonitorCredentialsRequest
 import proton.android.pass.data.impl.requests.SetupExtraPasswordRequest
 import proton.android.pass.data.impl.requests.SimpleLoginChangeMailboxRequest
@@ -52,6 +55,7 @@ import proton.android.pass.data.impl.requests.TelemetryRequest
 import proton.android.pass.data.impl.requests.TransferVaultOwnershipRequest
 import proton.android.pass.data.impl.requests.TrashItemsRequest
 import proton.android.pass.data.impl.requests.UpdateAliasMailboxesRequest
+import proton.android.pass.data.impl.requests.UpdateFolderRequest
 import proton.android.pass.data.impl.requests.UpdateItemFlagsRequest
 import proton.android.pass.data.impl.requests.UpdateItemRequest
 import proton.android.pass.data.impl.requests.UpdateLastUsedTimeRequest
@@ -87,6 +91,8 @@ import proton.android.pass.data.impl.responses.GetAllKeysByAddressResponse
 import proton.android.pass.data.impl.responses.GetAllSecureLinksResponse
 import proton.android.pass.data.impl.responses.GetEventsResponse
 import proton.android.pass.data.impl.responses.GetItemLatestKeyResponse
+import proton.android.pass.data.impl.responses.FolderGetResponse
+import proton.android.pass.data.impl.responses.GetFoldersResponse
 import proton.android.pass.data.impl.responses.GetItemResponse
 import proton.android.pass.data.impl.responses.GetItemRevisionsResponse
 import proton.android.pass.data.impl.responses.GetItemsResponse
@@ -715,6 +721,37 @@ interface PasswordManagerApi : BaseRetrofitApi {
 
     @PUT("$PREFIX/share/hide")
     suspend fun changeShareVisibility(@Body request: BatchHideUnhideShareRequest): BatchHideUnhideSharesResponse
+
+    // Folders
+    @GET("$PREFIX/share/{shareId}/folder")
+    suspend fun getFolders(
+        @Path("shareId") shareId: String,
+        @Query("Since") sinceToken: String?,
+        @Query("PageSize") pageSize: Int? = null
+    ): GetFoldersResponse
+
+    @POST("$PREFIX/share/{shareId}/folder")
+    suspend fun createFolder(@Path("shareId") shareId: String, @Body request: CreateFolderRequest): FolderGetResponse
+
+    @DELETE("$PREFIX/share/{shareId}/folder")
+    suspend fun deleteFolders(@Path("shareId") shareId: String, @Body request: DeleteFoldersRequest): CodeOnlyResponse
+
+    @GET("$PREFIX/share/{shareId}/folder/{folderId}")
+    suspend fun getFolder(@Path("shareId") shareId: String, @Path("folderId") folderId: String): FolderGetResponse
+
+    @PUT("$PREFIX/share/{shareId}/folder/{folderId}")
+    suspend fun updateFolder(
+        @Path("shareId") shareId: String,
+        @Path("folderId") folderId: String,
+        @Body request: UpdateFolderRequest
+    ): FolderGetResponse
+
+    @PUT("$PREFIX/share/{shareId}/folder/{folderId}/move")
+    suspend fun moveFolder(
+        @Path("shareId") shareId: String,
+        @Path("folderId") folderId: String,
+        @Body request: MoveFolderRequest
+    ): FolderGetResponse
 
     // Organization Keys
     @GET("core/v4/organizations/keys")

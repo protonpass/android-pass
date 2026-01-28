@@ -1,9 +1,9 @@
 package proton.android.pass.data.impl.crypto
 
 import kotlinx.coroutines.test.runTest
+import me.proton.core.crypto.common.pgp.UnlockedKey
 import me.proton.core.domain.entity.UserId
 import me.proton.core.key.domain.entity.key.KeyFlags
-import me.proton.core.key.domain.entity.key.PrivateKey
 import me.proton.core.key.domain.entity.key.PublicAddressKey
 import me.proton.core.key.domain.entity.key.PublicKey
 import proton.android.pass.crypto.api.usecases.invites.EncryptedGroupInviteAcceptKey
@@ -128,30 +128,21 @@ class ReencryptGroupInviteContentsTest {
         )
     )
 
-    private fun orgKeyPair(): Pair<PrivateKey, PublicKey> = Pair(
-        PrivateKey(
-            key = "org-priv",
-            isPrimary = true,
-            isActive = true,
-            canEncrypt = true,
-            canVerify = true,
-            passphrase = null
-        ),
-        PublicKey(
-            key = "org-pub",
-            isPrimary = true,
-            isActive = true,
-            canEncrypt = true,
-            canVerify = true
-        )
-    )
+    private fun defaultCryptoContext(): GroupInviteCryptoContext {
+        // Create a fake UnlockedKey for testing (unit tests don't need real crypto)
+        val fakeUnlockedKey = object : UnlockedKey {
+            override val value: ByteArray = "fake-unlocked-key".encodeToByteArray()
+            override fun close() {}
+        }
 
-    private fun defaultCryptoContext() = GroupInviteCryptoContext(
-        user = user,
-        groupPrivateKeys = group.address!!.keys!!,
-        openerKeys = listOf(orgKeyPair().first),
-        inviterPublicKeys = inviterKeys().map { it.publicKey }
-    )
+        return GroupInviteCryptoContext(
+            user = user,
+            groupPrivateKeys = group.address!!.keys!!,
+            unlockedOrganizationKey = fakeUnlockedKey,
+            inviterPublicKeys = inviterKeys().map { it.publicKey },
+            isGroupOwner = false
+        )
+    }
 
     private class FakeResolveGroupInviteCryptoContext(
         private val ctx: GroupInviteCryptoContext

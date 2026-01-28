@@ -30,6 +30,8 @@ import proton.android.pass.data.impl.local.LocalDataMigrationDataSource
 import proton.android.pass.data.impl.local.LocalDataMigrationDataSourceImpl
 import proton.android.pass.data.impl.local.LocalEventDataSource
 import proton.android.pass.data.impl.local.LocalEventDataSourceImpl
+import proton.android.pass.data.impl.local.LocalFolderDataSource
+import proton.android.pass.data.impl.local.LocalFolderDataSourceImpl
 import proton.android.pass.data.impl.local.LocalGroupInviteDataSource
 import proton.android.pass.data.impl.local.LocalGroupInviteDataSourceImpl
 import proton.android.pass.data.impl.local.LocalItemDataSource
@@ -81,6 +83,9 @@ abstract class DataLocalDataSourceModule {
 
     @[Binds Singleton]
     abstract fun bindLocalShareDataSource(impl: LocalShareDataSourceImpl): LocalShareDataSource
+
+    @[Binds Singleton]
+    abstract fun bindLocalFolderDataSource(impl: LocalFolderDataSourceImpl): LocalFolderDataSource
 
     @Binds
     abstract fun bindLocalShareKeyDataSource(impl: LocalShareKeyDataSourceImpl): LocalShareKeyDataSource

@@ -45,10 +45,12 @@ class EncryptGroupInviteKeysImpl @Inject constructor(
         )
 
         val encryptedKeys = acceptGroupInvite(
+            user = cryptoContext.user,
             groupPrivateKeys = cryptoContext.groupPrivateKeys,
-            openerKeys = cryptoContext.openerKeys,
+            unlockedOrganizationKey = cryptoContext.unlockedOrganizationKey,
             inviterAddressKeys = cryptoContext.inviterPublicKeys,
-            keys = groupKeys.map { it.toEncryptedInviteKey() }
+            keys = groupKeys.map { it.toEncryptedInviteKey() },
+            isGroupOwner = cryptoContext.isGroupOwner
         )
 
         return encryptedKeys.map { it.toInviteKeyRotation() }

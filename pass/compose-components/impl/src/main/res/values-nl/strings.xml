@@ -154,6 +154,7 @@
   <string name="item_details_login_section_password_title">Wachtwoord</string>
   <string name="item_details_login_section_primary_totp_title">2FA-token (TOTP)</string>
   <string name="item_details_login_section_websites_title">Websites</string>
+  <string name="login_item_view_alias_button">Alias bekijken</string>
   <string name="item_details_identity_section_personal_title">Persoonlijke gegevens</string>
   <string name="item_details_identity_section_personal_first_name_title">Voornaam</string>
   <string name="item_details_identity_section_personal_middle_name_title">Tussenvoegsel</string>

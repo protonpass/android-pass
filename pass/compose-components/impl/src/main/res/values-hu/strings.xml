@@ -154,6 +154,7 @@
   <string name="item_details_login_section_password_title">Jelszó</string>
   <string name="item_details_login_section_primary_totp_title">Kétlépcsős token (TOTP)</string>
   <string name="item_details_login_section_websites_title">Weboldalak</string>
+  <string name="login_item_view_alias_button">Álnév megjelenítése</string>
   <string name="item_details_identity_section_personal_title">Személyes adatok</string>
   <string name="item_details_identity_section_personal_first_name_title">Keresztnév</string>
   <string name="item_details_identity_section_personal_middle_name_title">Középső név</string>

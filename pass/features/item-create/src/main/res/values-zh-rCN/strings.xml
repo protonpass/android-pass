@@ -259,6 +259,12 @@
   <string name="template_ssh_key_field_public_key">公钥</string>
   <string name="template_ssh_key_field_username">用户名</string>
   <string name="template_ssh_key_field_host">主机</string>
+  <!-- SSH Key Generation -->
+  <string name="ssh_key_generate_button">Generate</string>
+  <string name="ssh_key_type_ed25519">Ed25519</string>
+  <string name="ssh_key_type_rsa_2048">RSA-2048</string>
+  <string name="ssh_key_type_rsa_4096">RSA-4096</string>
+  <string name="ssh_key_generation_error">Failed to generate SSH key</string>
   <!-- WiFi Network Fields -->
   <string name="template_wifi_network_field_name">名称 (SSID)</string>
   <!-- Bank Account Fields -->

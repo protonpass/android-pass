@@ -152,6 +152,7 @@
   <string name="item_details_login_section_password_title">密碼</string>
   <string name="item_details_login_section_primary_totp_title">雙重驗證憑證(TOTP) </string>
   <string name="item_details_login_section_websites_title">網站</string>
+  <string name="login_item_view_alias_button">檢視別名</string>
   <string name="item_details_identity_section_personal_title">個人資訊</string>
   <string name="item_details_identity_section_personal_first_name_title">名</string>
   <string name="item_details_identity_section_personal_middle_name_title">中間名</string>

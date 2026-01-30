@@ -41,21 +41,26 @@ class ReencryptGroupInviteContentsImpl @Inject constructor(
             inviterEmail = invite.inviterEmail,
             isGroupOwner = invite.isGroupOwner
         )
-        val inviteKeys = invite.keys.map { it.toEncryptedInviteKey() }
-        val openKeys = acceptGroupInvite(
-            user = cryptoContext.user,
-            groupPrivateKeys = cryptoContext.groupPrivateKeys,
-            unlockedOrganizationKey = cryptoContext.unlockedOrganizationKey,
-            inviterAddressKeys = cryptoContext.inviterPublicKeys,
-            keys = inviteKeys,
-            isGroupOwner = cryptoContext.isGroupOwner
-        )
-        val reencryptedKey = openKeys.firstOrNull() ?: error("No open key found")
 
-        return inviteContentReencrypter.reencrypt(
-            localEncryptedKey = reencryptedKey.localEncryptedKey,
-            encodedContent = invite.vaultData?.content
-        )
+        return try {
+            val inviteKeys = invite.keys.map { it.toEncryptedInviteKey() }
+            val openKeys = acceptGroupInvite(
+                user = cryptoContext.user,
+                groupPrivateKeys = cryptoContext.groupPrivateKeys,
+                unlockedOrganizationKey = cryptoContext.unlockedOrganizationKey,
+                inviterAddressKeys = cryptoContext.inviterPublicKeys,
+                keys = inviteKeys,
+                isGroupOwner = cryptoContext.isGroupOwner
+            )
+            val reencryptedKey = openKeys.firstOrNull() ?: error("No open key found")
+
+            inviteContentReencrypter.reencrypt(
+                localEncryptedKey = reencryptedKey.localEncryptedKey,
+                encodedContent = invite.vaultData?.content
+            )
+        } finally {
+            cryptoContext.unlockedOrganizationKey?.close()
+        }
     }
 
 }

@@ -74,7 +74,6 @@ class ResolveGroupInviteCryptoContextImpl @Inject constructor(
                 passphrase = ByteArray(0)
             )
         } else null
-
         val group = fetchWithForceRefresh(
             tag = TAG,
             initial = { groupRepository.retrieveGroup(userId, groupId) },

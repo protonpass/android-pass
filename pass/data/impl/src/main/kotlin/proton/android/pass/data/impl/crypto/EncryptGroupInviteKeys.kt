@@ -44,15 +44,19 @@ class EncryptGroupInviteKeysImpl @Inject constructor(
             isGroupOwner = groupInvite.isGroupOwner
         )
 
-        val encryptedKeys = acceptGroupInvite(
-            user = cryptoContext.user,
-            groupPrivateKeys = cryptoContext.groupPrivateKeys,
-            unlockedOrganizationKey = cryptoContext.unlockedOrganizationKey,
-            inviterAddressKeys = cryptoContext.inviterPublicKeys,
-            keys = groupKeys.map { it.toEncryptedInviteKey() },
-            isGroupOwner = cryptoContext.isGroupOwner
-        )
+        return try {
+            val encryptedKeys = acceptGroupInvite(
+                user = cryptoContext.user,
+                groupPrivateKeys = cryptoContext.groupPrivateKeys,
+                unlockedOrganizationKey = cryptoContext.unlockedOrganizationKey,
+                inviterAddressKeys = cryptoContext.inviterPublicKeys,
+                keys = groupKeys.map { it.toEncryptedInviteKey() },
+                isGroupOwner = cryptoContext.isGroupOwner
+            )
 
-        return encryptedKeys.map { it.toInviteKeyRotation() }
+            encryptedKeys.map { it.toInviteKeyRotation() }
+        } finally {
+            cryptoContext.unlockedOrganizationKey?.close()
+        }
     }
 }

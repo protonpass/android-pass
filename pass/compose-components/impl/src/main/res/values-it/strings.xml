@@ -154,6 +154,7 @@
   <string name="item_details_login_section_password_title">Password</string>
   <string name="item_details_login_section_primary_totp_title">Token 2FA (TOTP)</string>
   <string name="item_details_login_section_websites_title">Sito web</string>
+  <string name="login_item_view_alias_button">Visualizza l\'alias</string>
   <string name="item_details_identity_section_personal_title">Informazioni personali</string>
   <string name="item_details_identity_section_personal_first_name_title">Nome</string>
   <string name="item_details_identity_section_personal_middle_name_title">Secondo nome</string>

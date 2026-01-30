@@ -152,6 +152,7 @@
   <string name="item_details_login_section_password_title">密码</string>
   <string name="item_details_login_section_primary_totp_title">2FA 令牌 (TOTP)</string>
   <string name="item_details_login_section_websites_title">网站</string>
+  <string name="login_item_view_alias_button">查看别名</string>
   <string name="item_details_identity_section_personal_title">个人资料</string>
   <string name="item_details_identity_section_personal_first_name_title">名</string>
   <string name="item_details_identity_section_personal_middle_name_title">中间名</string>

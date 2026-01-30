@@ -259,6 +259,12 @@
   <string name="template_ssh_key_field_public_key">Открытый ключ</string>
   <string name="template_ssh_key_field_username">Имя пользователя</string>
   <string name="template_ssh_key_field_host">Хост</string>
+  <!-- SSH Key Generation -->
+  <string name="ssh_key_generate_button">Generate</string>
+  <string name="ssh_key_type_ed25519">Ed25519</string>
+  <string name="ssh_key_type_rsa_2048">RSA-2048</string>
+  <string name="ssh_key_type_rsa_4096">RSA-4096</string>
+  <string name="ssh_key_generation_error">Failed to generate SSH key</string>
   <!-- WiFi Network Fields -->
   <string name="template_wifi_network_field_name">Имя (SSID)</string>
   <!-- Bank Account Fields -->

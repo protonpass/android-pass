@@ -152,6 +152,7 @@
   <string name="item_details_login_section_password_title">Kata sandi</string>
   <string name="item_details_login_section_primary_totp_title">Token 2FA (TOTP)</string>
   <string name="item_details_login_section_websites_title">Situs web</string>
+  <string name="login_item_view_alias_button">Tampilkan alias</string>
   <string name="item_details_identity_section_personal_title">Rincian pribadi</string>
   <string name="item_details_identity_section_personal_first_name_title">Nama depan</string>
   <string name="item_details_identity_section_personal_middle_name_title">Nama tengah</string>

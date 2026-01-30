@@ -259,6 +259,12 @@
   <string name="template_ssh_key_field_public_key">Chiave Pubblica</string>
   <string name="template_ssh_key_field_username">Nome utente</string>
   <string name="template_ssh_key_field_host">Host</string>
+  <!-- SSH Key Generation -->
+  <string name="ssh_key_generate_button">Genera</string>
+  <string name="ssh_key_type_ed25519">Ed25519</string>
+  <string name="ssh_key_type_rsa_2048">RSA-2048</string>
+  <string name="ssh_key_type_rsa_4096">RSA-4096</string>
+  <string name="ssh_key_generation_error">Impossibile generare la chiave SSH</string>
   <!-- WiFi Network Fields -->
   <string name="template_wifi_network_field_name">Nome (SSID)</string>
   <!-- Bank Account Fields -->

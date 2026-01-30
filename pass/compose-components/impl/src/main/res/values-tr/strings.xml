@@ -154,6 +154,7 @@
   <string name="item_details_login_section_password_title">Parola</string>
   <string name="item_details_login_section_primary_totp_title">İki adımlı doğrulama kodu (tek kullanımlık)</string>
   <string name="item_details_login_section_websites_title">Siteler</string>
+  <string name="login_item_view_alias_button">Takma adları görüntüle</string>
   <string name="item_details_identity_section_personal_title">Kişisel bilgiler</string>
   <string name="item_details_identity_section_personal_first_name_title">Ad</string>
   <string name="item_details_identity_section_personal_middle_name_title">İkinci ad</string>

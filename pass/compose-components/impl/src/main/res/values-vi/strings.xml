@@ -152,6 +152,7 @@
   <string name="item_details_login_section_password_title">Mật khẩu</string>
   <string name="item_details_login_section_primary_totp_title">Mã bảo mật 2FA (TOTP)</string>
   <string name="item_details_login_section_websites_title">Các trang web</string>
+  <string name="login_item_view_alias_button">Xem bí danh</string>
   <string name="item_details_identity_section_personal_title">Thông tin cá nhân</string>
   <string name="item_details_identity_section_personal_first_name_title">Họ</string>
   <string name="item_details_identity_section_personal_middle_name_title">Tên đệm</string>

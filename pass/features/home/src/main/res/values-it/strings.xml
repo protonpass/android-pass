@@ -180,4 +180,6 @@
   <string name="bulk_action_enable_alias">Abilita l\'alias</string>
   <string name="bulk_action_disable_alias">Disabilita l\'alias</string>
   <string name="vault_drawer_organise_vaults">Gestisci le casseforti</string>
+  <string name="sync_inactive_vault_warning">Alcune casseforti non sono più accessibili a causa di un reimpostazione della password. Riattiva le chiavi del tuo account per recuperare l\'accesso.</string>
+  <string name="sync_inactive_vault_warning_action">Scopri di più</string>
 </resources>

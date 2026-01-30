@@ -158,6 +158,7 @@
   <string name="item_details_login_section_password_title">Heslo</string>
   <string name="item_details_login_section_primary_totp_title">2FA token (TOTP)</string>
   <string name="item_details_login_section_websites_title">Webové stránky</string>
+  <string name="login_item_view_alias_button">Zobraziť alias</string>
   <string name="item_details_identity_section_personal_title">Osobné údaje</string>
   <string name="item_details_identity_section_personal_first_name_title">Krstné meno</string>
   <string name="item_details_identity_section_personal_middle_name_title">Stredné meno</string>

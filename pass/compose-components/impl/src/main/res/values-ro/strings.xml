@@ -156,6 +156,7 @@
   <string name="item_details_login_section_password_title">Parola</string>
   <string name="item_details_login_section_primary_totp_title">Cod A2F (TOTP)</string>
   <string name="item_details_login_section_websites_title">Pagini web</string>
+  <string name="login_item_view_alias_button">Afișare alias</string>
   <string name="item_details_identity_section_personal_title">Detalii personale</string>
   <string name="item_details_identity_section_personal_first_name_title">Prenume</string>
   <string name="item_details_identity_section_personal_middle_name_title">Nume mijlociu</string>

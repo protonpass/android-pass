@@ -154,6 +154,7 @@
   <string name="item_details_login_section_password_title">Contrasenya</string>
   <string name="item_details_login_section_primary_totp_title">Testimoni 2FA (TOTP)</string>
   <string name="item_details_login_section_websites_title">Llocs web</string>
+  <string name="login_item_view_alias_button">Mostra l\'àlies</string>
   <string name="item_details_identity_section_personal_title">Detalls personals</string>
   <string name="item_details_identity_section_personal_first_name_title">Nom</string>
   <string name="item_details_identity_section_personal_middle_name_title">Segon nom</string>

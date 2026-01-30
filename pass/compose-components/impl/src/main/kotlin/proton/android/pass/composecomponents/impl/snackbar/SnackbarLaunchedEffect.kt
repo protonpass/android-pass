@@ -62,7 +62,7 @@ fun SnackBarLaunchedEffect(
                     snackBarMessage.type,
                     snackBarMessageLocale,
                     snackBarActionLocale,
-                    SnackbarDuration.Indefinite
+                    SnackbarDuration.Long
                 )
                 onSnackBarMessageDelivered(res)
             }

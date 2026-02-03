@@ -82,7 +82,7 @@ object MostRecentKeyComparator : Comparator<GroupingKeys.MostRecentKey> {
 }
 
 object ItemSorter {
-    private val monthlyFormatter = DateTimeFormatter.ofPattern("LLLL yyyy")
+    private val monthlyFormatter = DateTimeFormatter.ofPattern("LLLL yyyy", java.util.Locale.ENGLISH)
 
     private fun List<ItemUiModel>.groupByFirstChar(): Map<GroupingKeys.AlphabeticalKey, List<ItemUiModel>> = groupBy {
         it.contents.title.firstOrNull()?.takeIf { char -> char.isLetter() }?.uppercaseChar()

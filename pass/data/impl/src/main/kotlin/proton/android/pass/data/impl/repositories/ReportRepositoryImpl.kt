@@ -18,11 +18,11 @@
 
 package proton.android.pass.data.impl.repositories
 
-import android.net.Uri
 import android.webkit.MimeTypeMap
-import androidx.core.net.toFile
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.withContext
+import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.network.data.ApiProvider
 import me.proton.core.report.domain.entity.BugReportMeta
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
@@ -31,7 +31,7 @@ import okhttp3.RequestBody.Companion.asRequestBody
 import proton.android.pass.data.api.repositories.ReportRepository
 import proton.android.pass.data.api.usecases.report.Report
 import proton.android.pass.data.impl.core.api.CoreApi
-import proton.android.pass.log.api.LogFileUri
+import proton.android.pass.log.api.LogFileManager
 import proton.android.pass.log.api.PassLogger
 import java.io.File
 import java.nio.file.Files
@@ -42,7 +42,8 @@ import javax.inject.Provider
 class ReportRepositoryImpl @Inject constructor(
     private val apiProvider: ApiProvider,
     private val bugReportMetaProvider: Provider<BugReportMeta>,
-    @LogFileUri private val logFileUri: Uri?
+    private val logFileManager: LogFileManager,
+    private val accountManager: AccountManager
 ) : ReportRepository {
 
     private val File.mimeType: String?
@@ -55,8 +56,12 @@ class ReportRepositoryImpl @Inject constructor(
     override suspend fun sendReport(report: Report) {
         apiProvider.get<CoreApi>()
             .invoke {
-                val logFileUriTemp = logFileUri.takeIf { report.shouldAttachLog }
-                val logFile = logFileUriTemp?.toFile()
+                val logFile = if (report.shouldAttachLog) {
+                    val userId = accountManager.getPrimaryUserId().firstOrNull()
+                    logFileManager.getLogFile(userId)
+                } else {
+                    null
+                }
                 val logFileSize = logFile?.length() ?: 0
                 val extraFilesSize = report.extraFiles.sumOf { it.length() }
                 PassLogger.i(TAG, "Log file size: $logFileSize bytes")

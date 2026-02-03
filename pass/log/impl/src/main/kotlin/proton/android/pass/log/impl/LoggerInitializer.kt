@@ -36,27 +36,22 @@
 
 package proton.android.pass.log.impl
 
-import android.app.ActivityManager
 import android.content.Context
-import android.net.Uri
-import android.os.Build
-import android.os.Environment
-import android.os.LocaleList
-import android.os.StatFs
 import androidx.startup.Initializer
 import dagger.hilt.EntryPoint
 import dagger.hilt.InstallIn
 import dagger.hilt.android.EntryPointAccessors
 import dagger.hilt.components.SingletonComponent
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.launch
 import me.proton.core.util.kotlin.CoreLogger
 import proton.android.pass.appconfig.api.AppConfig
-import proton.android.pass.common.api.FileSizeUtil.toHumanReadableSize
-import proton.android.pass.log.api.LogFileUri
-import proton.android.pass.log.api.PassLogger
+import proton.android.pass.common.api.AppDispatchers
+import proton.android.pass.log.api.LogFileManager
 import proton.android.pass.tracing.impl.SentryInitializer
 import proton.android.pass.tracing.impl.initSentryLogger
 import timber.log.Timber
-import java.text.DecimalFormat
 
 class LoggerInitializer : Initializer<Unit> {
 
@@ -66,15 +61,18 @@ class LoggerInitializer : Initializer<Unit> {
             LoggerInitializerEntryPoint::class.java
         )
 
+        // Initialize log directory and clean up orphaned temp files
+        CoroutineScope(SupervisorJob() + entryPoint.appDispatchers().io).launch {
+            entryPoint.logFileManager().initializeLogDirectory()
+        }
+
         if (entryPoint.appConfig().isDebug) {
             Timber.plant(Timber.DebugTree())
         }
-        Timber.plant(FileLoggingTree(entryPoint.logFileUri()))
+        Timber.plant(entryPoint.fileLoggingTree())
 
         // Forward Core Logs to Timber, using TimberLogger.
         initSentryLogger(CoreLogger)
-
-        deviceInfo(context, entryPoint.appConfig())
     }
 
     override fun dependencies(): List<Class<out Initializer<*>>> = listOf(
@@ -85,60 +83,8 @@ class LoggerInitializer : Initializer<Unit> {
     @InstallIn(SingletonComponent::class)
     interface LoggerInitializerEntryPoint {
         fun appConfig(): AppConfig
-
-        @LogFileUri
-        fun logFileUri(): Uri
+        fun fileLoggingTree(): FileLoggingTree
+        fun logFileManager(): LogFileManager
+        fun appDispatchers(): AppDispatchers
     }
 }
-
-private fun deviceInfo(context: Context, appConfig: AppConfig) {
-    val memory = getMemory(context)
-    val storage = getStorage()
-    PassLogger.i(TAG, "-----------------------------------------")
-    PassLogger.i(TAG, "PACKAGE:     ${context.packageName}")
-    PassLogger.i(
-        TAG,
-        "OS:          Android ${Build.VERSION.RELEASE} (API ${Build.VERSION.SDK_INT})"
-    )
-    PassLogger.i(TAG, "VERSION:     ${appConfig.versionName}")
-    PassLogger.i(TAG, "DEVICE:      ${Build.MANUFACTURER} ${Build.MODEL}")
-    PassLogger.i(TAG, "FINGERPRINT: ${Build.FINGERPRINT}")
-    PassLogger.i(TAG, "ABI:         ${Build.SUPPORTED_ABIS.joinToString(",")}")
-    PassLogger.i(TAG, "LOCALE:      ${LocaleList.getDefault().toLanguageTags()}")
-    PassLogger.i(TAG, "MEMORY:      $memory")
-    PassLogger.i(TAG, "STORAGE:     $storage")
-    PassLogger.i(TAG, "-----------------------------------------")
-}
-
-private fun getStorage(): String {
-    val free = freeStorage()
-    val total = totalStorage()
-    return "Free: ${toHumanReadableSize(free)} | Total: ${toHumanReadableSize(total)}"
-}
-
-private fun getMemory(context: Context): String {
-    val mi = ActivityManager.MemoryInfo()
-    val activityManager = context.getSystemService(ActivityManager::class.java)
-        ?: return "UNAVAILABLE"
-    activityManager.getMemoryInfo(mi)
-
-    val fractionAvail: Double = mi.availMem.toDouble() / mi.totalMem.toDouble()
-    val percentAvail: Double = fractionAvail * 100
-
-    return "Available: ${toHumanReadableSize(mi.availMem)} / ${toHumanReadableSize(mi.totalMem)}" +
-        " (${floatForm(percentAvail)}% used)"
-}
-
-private fun totalStorage(): Long {
-    val statFs = StatFs(Environment.getDataDirectory().absolutePath)
-    return statFs.blockCountLong * statFs.blockSizeLong
-}
-
-private fun freeStorage(): Long {
-    val statFs = StatFs(Environment.getDataDirectory().absolutePath)
-    return statFs.freeBlocksLong * statFs.blockSizeLong
-}
-
-private fun floatForm(d: Double) = DecimalFormat("#.##").format(d)
-
-private const val TAG = "DEVICE_INFO"

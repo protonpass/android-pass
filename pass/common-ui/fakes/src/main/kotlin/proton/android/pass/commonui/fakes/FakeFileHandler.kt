@@ -39,7 +39,7 @@ class FakeFileHandler @Inject constructor() : FileHandler {
         // no-op
     }
 
-    override fun shareFileWithEmail(
+    override suspend fun shareFileWithEmail(
         contextHolder: ClassHolder<Context>,
         uri: URI,
         mimeType: String,

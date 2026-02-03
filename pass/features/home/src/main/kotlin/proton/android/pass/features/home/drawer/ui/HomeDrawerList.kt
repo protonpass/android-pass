@@ -113,6 +113,11 @@ internal fun HomeDrawerList(
                         shareId = vaultShare.vault.shareId,
                         folderId = it
                     ).also(onUiEvent)
+                },
+                onCreateFolderClick = {
+                    HomeDrawerUiEvent.OnCreateFolderClick(
+                        shareId = vaultShare.vault.shareId
+                    ).also(onUiEvent)
                 }
             )
 

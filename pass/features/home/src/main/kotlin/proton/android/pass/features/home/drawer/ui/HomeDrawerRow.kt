@@ -71,13 +71,15 @@ internal fun HomeDrawerRow(
     onClick: () -> Unit,
     membersCount: Int = 0,
     foldersEnabled: Boolean = false,
+    forceShowFolder: Boolean = false,
     folders: List<FolderWithItemCount> = emptyList(),
     onFolderClick: ((FolderId) -> Unit)? = null,
     onMenuOptionsClickFromFolder: ((FolderId) -> Unit)? = null,
+    onCreateFolderClick: (() -> Unit)? = null,
     onShareClick: (() -> Unit)? = null,
     onMenuOptionsClick: (() -> Unit)? = null
 ) {
-    val (showFolders, onShowFolders) = rememberSaveable { mutableStateOf(false) }
+    val (showFolders, onShowFolders) = rememberSaveable { mutableStateOf(forceShowFolder) }
 
     Column(
         modifier = modifier.fillMaxWidth()
@@ -186,9 +188,7 @@ internal fun HomeDrawerRow(
         }
 
         AnimatedVisibility(
-            visible = foldersEnabled &&
-                folders.isNotEmpty() &&
-                showFolders
+            visible = foldersEnabled && showFolders
         ) {
             FolderTree(
                 modifier = Modifier.padding(start = 32.dp),
@@ -197,14 +197,19 @@ internal fun HomeDrawerRow(
                 onThreeDotsClick = {
                     onMenuOptionsClickFromFolder?.invoke(it)
                 },
+                onCreateFolderClick = {
+                    onCreateFolderClick?.invoke()
+                },
                 depth = 0,
+                modifierCreateButton = Modifier
+                    .padding(start = 20.dp)
+                    .padding(bottom = Spacing.medium),
                 onFolderClick = {
                     onFolderClick?.invoke(it)
                 }
             )
         }
     }
-
 }
 
 @[Preview Composable]
@@ -226,7 +231,61 @@ internal fun HomeDrawerRowPreview(
                 onClick = {},
                 onShareClick = {},
                 onMenuOptionsClick = {},
+                foldersEnabled = false,
+                folders = emptyList()
+            )
+        }
+    }
+}
+
+@[Preview Composable]
+internal fun HomeDrawerRowEmptyFoldersPreview(
+    @PreviewParameter(ThemedBooleanPreviewProvider::class) input: Pair<Boolean, Boolean>
+) {
+    val (isDark, isSelected) = input
+
+    PassTheme(isDark = isDark) {
+        Surface {
+            HomeDrawerRow(
+                shareIconRes = CompR.drawable.ic_brand_pass,
+                iconColor = PassTheme.colors.interactionNormMajor2,
+                iconBackgroundColor = PassTheme.colors.interactionNormMinor1,
+                name = "Share name",
+                itemsCount = 16,
+                membersCount = 5,
+                isSelected = isSelected,
+                onClick = {},
+                onShareClick = {},
+                onMenuOptionsClick = {},
                 foldersEnabled = true,
+                forceShowFolder = true,
+                folders = emptyList()
+            )
+        }
+    }
+}
+
+@[Preview Composable]
+internal fun HomeDrawerRowWithFoldersPreview(
+    @PreviewParameter(ThemedBooleanPreviewProvider::class) input: Pair<Boolean, Boolean>
+) {
+    val (isDark, isSelected) = input
+
+    PassTheme(isDark = isDark) {
+        Surface {
+            HomeDrawerRow(
+                shareIconRes = CompR.drawable.ic_brand_pass,
+                iconColor = PassTheme.colors.interactionNormMajor2,
+                iconBackgroundColor = PassTheme.colors.interactionNormMinor1,
+                name = "Share name",
+                itemsCount = 16,
+                membersCount = 5,
+                isSelected = isSelected,
+                onClick = {},
+                onShareClick = {},
+                onMenuOptionsClick = {},
+                foldersEnabled = true,
+                forceShowFolder = true,
                 folders = mockFolders
             )
         }

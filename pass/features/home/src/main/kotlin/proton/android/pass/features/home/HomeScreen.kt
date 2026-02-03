@@ -848,9 +848,17 @@ fun HomeScreen(
                             is HomeDrawerUiEvent.OnFolderClick -> {
                                 scope.launch { drawerState.close() }
 
-                                VaultSelectionOption.Folder(shareId = uiEvent.shareId, folderId = uiEvent.folderId)
-                                    .also(homeDrawerViewModel::setVaultSelection)
+                                VaultSelectionOption.Folder(
+                                    shareId = uiEvent.shareId,
+                                    folderId = uiEvent.folderId
+                                ).also(homeDrawerViewModel::setVaultSelection)
                                     .also(homeViewModel::setVaultSelection)
+                            }
+
+                            is HomeDrawerUiEvent.OnCreateFolderClick -> {
+                                HomeNavigation.AddFolder(
+                                    shareId = uiEvent.shareId
+                                ).also(onNavigateEvent)
                             }
                         }
                     }

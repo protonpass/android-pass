@@ -23,13 +23,6 @@ import me.proton.core.domain.entity.UserId
 import java.util.Date
 
 @Stable
-data class Folder(
-    val id: FolderId,
-    val name: String,
-    val folders: List<Folder>
-)
-
-@Stable
 data class Vault(
     val userId: UserId,
     val shareId: ShareId,

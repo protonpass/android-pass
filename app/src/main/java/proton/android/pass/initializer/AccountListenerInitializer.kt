@@ -55,6 +55,7 @@ import proton.android.pass.data.api.usecases.RefreshBreaches
 import proton.android.pass.data.api.usecases.RefreshUserAccess
 import proton.android.pass.data.api.usecases.ResetAppToDefaults
 import proton.android.pass.data.api.usecases.organization.RefreshOrganizationSettings
+import proton.android.pass.data.impl.db.DatabaseCleanupHelper
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.preferences.FeatureFlag
 import proton.android.pass.notifications.api.SnackbarDispatcher
@@ -82,15 +83,15 @@ class AccountListenerInitializer : Initializer<Unit> {
         accountManager.observe(
             lifecycle = lifecycleProvider.lifecycle,
             minActiveState = Lifecycle.State.CREATED
-        ).onAccountDisabled {
-            PassLogger.i(TAG, "Account disabled : ${it.userId}")
+        ).onAccountDisabled { account ->
+            PassLogger.i(TAG, "Account disabled : ${account.userId}")
             launchInAppLifecycleScope(lifecycleProvider) {
-                performCleanup(it, entryPoint)
+                performCleanup(account, entryPoint)
             }
-        }.onAccountRemoved {
-            PassLogger.i(TAG, "Account removed : ${it.userId}")
+        }.onAccountRemoved { account ->
+            PassLogger.i(TAG, "Account removed : ${account.userId}")
             launchInAppLifecycleScope(lifecycleProvider) {
-                performCleanup(it, entryPoint)
+                performCleanup(account, entryPoint)
             }
         }.onAccountReady { account ->
             launchInAppLifecycleScope(lifecycleProvider) {
@@ -195,16 +196,27 @@ class AccountListenerInitializer : Initializer<Unit> {
         val clearUserData = entryPoint.clearUserData()
         val resetApp = entryPoint.resetAppToDefaults()
         val accountManager = entryPoint.accountManager()
+        val databaseCleanupHelper = entryPoint.databaseCleanupHelper()
 
         entryPoint.itemSyncStatusRepository().clear()
+
         safeRunCatching { clearUserData(account.userId) }
             .onSuccess { PassLogger.i(TAG, "Cleared user data") }
             .onFailure { PassLogger.i(TAG, it, "Error clearing user data") }
 
         val activeAccounts = accountManager.getAccounts(AccountState.Ready).firstOrNull().orEmpty()
-        PassLogger.i(TAG, "Active accounts : ${activeAccounts.size}")
-        // If there are no more active accounts, reset the app to defaults
+        PassLogger.i(TAG, "Active accounts remaining: ${activeAccounts.size}")
+
         if (activeAccounts.isEmpty()) {
+            PassLogger.i(TAG, "No more active accounts - performing final cleanup")
+
+            safeRunCatching { databaseCleanupHelper.cleanupLastUser() }
+                .onSuccess { PassLogger.i(TAG, "Database cleanup completed") }
+                .onFailure {
+                    PassLogger.w(TAG, "Error during database cleanup")
+                    PassLogger.w(TAG, it)
+                }
+
             resetApp()
         }
     }
@@ -222,6 +234,7 @@ class AccountListenerInitializer : Initializer<Unit> {
         fun clearUserData(): ClearUserData
         fun featureFlagsPreferencesRepository(): FeatureFlagsPreferencesRepository
         fun snackbarDispatcher(): SnackbarDispatcher
+        fun databaseCleanupHelper(): DatabaseCleanupHelper
     }
 
     companion object {

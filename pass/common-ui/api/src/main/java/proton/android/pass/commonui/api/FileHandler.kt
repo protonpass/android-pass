@@ -34,7 +34,7 @@ interface FileHandler {
     )
 
     @Suppress("LongParameterList")
-    fun shareFileWithEmail(
+    suspend fun shareFileWithEmail(
         contextHolder: ClassHolder<Context>,
         uri: URI,
         mimeType: String,

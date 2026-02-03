@@ -23,17 +23,22 @@ import kotlinx.coroutines.withContext
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.api.repositories.ShareRepository
 import proton.android.pass.data.api.usecases.ClearUserData
+import proton.android.pass.data.impl.db.DatabaseCleanupHelper
 import proton.android.pass.data.impl.repositories.ExtraPasswordRepository
 import javax.inject.Inject
 
 class ClearUserDataImpl @Inject constructor(
     private val shareRepository: ShareRepository,
-    private val extraPasswordRepository: ExtraPasswordRepository
+    private val extraPasswordRepository: ExtraPasswordRepository,
+    private val databaseCleanupHelper: DatabaseCleanupHelper
 ) : ClearUserData {
 
-    override suspend fun invoke(userId: UserId) = withContext(Dispatchers.IO) {
-        shareRepository.deleteLocalSharesForUser(userId)
-        extraPasswordRepository.removeLocalExtraPasswordForUser(userId)
+    override suspend fun invoke(userId: UserId) {
+        withContext(Dispatchers.IO) {
+            shareRepository.deleteLocalSharesForUser(userId)
+            extraPasswordRepository.removeLocalExtraPasswordForUser(userId)
+            databaseCleanupHelper.cleanupUserData()
+        }
     }
 
 }

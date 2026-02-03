@@ -39,7 +39,9 @@ import proton.android.pass.commonuimodels.api.items.ItemDetailState
 import proton.android.pass.composecomponents.impl.item.details.rows.PassItemDetailBannerRow
 import proton.android.pass.composecomponents.impl.item.details.rows.PassItemDetailTitleRow
 import proton.android.pass.composecomponents.impl.item.details.sections.PassItemDetailSections
+import proton.android.pass.composecomponents.impl.item.details.titles.FolderPathComposable
 import proton.android.pass.composecomponents.impl.utils.PassItemColors
+import proton.android.pass.domain.Share
 
 @Composable
 fun PassItemDetailsContent(
@@ -50,6 +52,7 @@ fun PassItemDetailsContent(
     onEvent: (PassItemDetailsUiEvent) -> Unit,
     shouldDisplayItemHistorySection: Boolean,
     shouldDisplayItemHistoryButton: Boolean,
+    folderPath: List<String> = emptyList(),
     extraBottomSpacing: Dp = Spacing.none
 ) {
     Scaffold(
@@ -64,6 +67,14 @@ fun PassItemDetailsContent(
                 .verticalScroll(state = rememberScrollState()),
             verticalArrangement = Arrangement.spacedBy(Spacing.mediumSmall)
         ) {
+            // if FoldeFeatureFlag == false folderPath must be empty
+            if (folderPath.isNotEmpty()) {
+                FolderPathComposable(
+                    vaultName = (itemDetailState.itemShare as? Share.Vault)?.name.orEmpty(),
+                    folderPath = folderPath
+                )
+            }
+
             PassItemDetailBannerRow(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -80,6 +91,7 @@ fun PassItemDetailsContent(
                     ),
                 itemDetailState = itemDetailState,
                 itemColors = itemColors,
+                folderPath = folderPath,
                 onEvent = onEvent
             )
 

@@ -16,16 +16,7 @@ android {
         minSdk = libs.versions.minSdk.get().toInt()
         testInstrumentationRunner = "proton.android.pass.test.HiltRunner"
     }
-    
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_17
-        targetCompatibility = JavaVersion.VERSION_17
-    }
-
-    kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_17.toString()
-    }
-    buildFeatures {
+        buildFeatures {
         compose = true
     }
 

@@ -19,26 +19,20 @@
 package proton.android.pass.ui.shortcuts
 
 import android.content.Context
-import android.net.Uri
 import android.os.Bundle
 import androidx.fragment.app.FragmentActivity
+import androidx.lifecycle.lifecycleScope
 import dagger.hilt.android.AndroidEntryPoint
-import proton.android.pass.commonui.api.FileHandler
-import proton.android.pass.commonui.api.toClassHolder
-import proton.android.pass.log.api.LogFileUri
+import kotlinx.coroutines.launch
 import proton.android.pass.log.api.PassLogger
-import proton.android.pass.log.api.ShareLogsConstants
-import java.net.URI
+import proton.android.pass.log.api.ShareLogsUseCase
 import javax.inject.Inject
 
 @AndroidEntryPoint
 class ShortcutActivity : FragmentActivity() {
 
-    @Inject @LogFileUri
-    lateinit var logFileUri: Uri
-
     @Inject
-    lateinit var fileHandler: FileHandler
+    lateinit var shareLogsUseCase: ShareLogsUseCase
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,14 +49,9 @@ class ShortcutActivity : FragmentActivity() {
     }
 
     private fun onShareLogs() {
-        fileHandler.shareFileWithEmail(
-            contextHolder = (this as Context).toClassHolder(),
-            uri = URI(logFileUri.toString()),
-            mimeType = "text/plain",
-            chooserTitle = ShareLogsConstants.CHOOSER_TITLE,
-            email = ShareLogsConstants.EMAIL,
-            subject = ShareLogsConstants.SUBJECT
-        )
+        lifecycleScope.launch {
+            shareLogsUseCase(this@ShortcutActivity as Context)
+        }
         finish()
     }
 

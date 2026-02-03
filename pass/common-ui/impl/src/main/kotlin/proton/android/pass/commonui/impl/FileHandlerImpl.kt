@@ -47,19 +47,27 @@ class FileHandlerImpl @Inject constructor(
     private fun createContentUri(contextHolder: ClassHolder<Context>, file: File): Uri {
         val context = contextHolder.get().value()
             ?: throw IllegalStateException("Could not get context")
-        return FileProvider.getUriForFile(
+        PassLogger.i(TAG, "Creating content URI for file: ${file.absolutePath}, name: ${file.name}")
+        val contentUri = FileProvider.getUriForFile(
             context,
             "${appConfig.applicationId}.fileprovider",
             file
         )
+        PassLogger.i(TAG, "Created content URI: $contentUri")
+        return contentUri
     }
 
     private fun isContentUri(uri: URI?): Boolean = uri?.scheme == "content"
 
-    private fun URI.toContentUri(contextHolder: ClassHolder<Context>): Uri = if (isContentUri(this)) {
-        this.toString().toUri()
-    } else {
-        createContentUri(contextHolder, File(this))
+    private fun URI.toContentUri(contextHolder: ClassHolder<Context>): Uri {
+        PassLogger.i(TAG, "Converting URI to content URI: $this")
+        return if (isContentUri(this)) {
+            this.toString().toUri()
+        } else {
+            val file = File(this)
+            PassLogger.i(TAG, "Creating File from URI - path: ${file.absolutePath}, name: ${file.name}")
+            createContentUri(contextHolder, file)
+        }
     }
 
     private fun Uri.hasExtension(): Boolean = lastPathSegment?.contains(".") == true
@@ -139,7 +147,7 @@ class FileHandlerImpl @Inject constructor(
         )
     }
 
-    override fun shareFileWithEmail(
+    override suspend fun shareFileWithEmail(
         contextHolder: ClassHolder<Context>,
         uri: URI,
         mimeType: String,
@@ -147,20 +155,24 @@ class FileHandlerImpl @Inject constructor(
         email: String,
         subject: String
     ) {
-        val contentUri = uri.toContentUri(contextHolder)
-        val intent = Intent(Intent.ACTION_SEND)
-            .setType(mimeType)
-        val bundle = Bundle().apply {
-            putStringArray(Intent.EXTRA_EMAIL, arrayOf(email))
-            putString(Intent.EXTRA_SUBJECT, subject)
-            putParcelable(Intent.EXTRA_STREAM, contentUri)
+        val contentUri = withContext(appDispatchers.io) {
+            uri.toContentUri(contextHolder)
         }
-        performFileAction(
-            contextHolder = contextHolder,
-            intent = intent,
-            chooserTitle = chooserTitle,
-            extras = bundle
-        )
+        withContext(appDispatchers.main) {
+            val intent = Intent(Intent.ACTION_SEND)
+                .setType(mimeType)
+            val bundle = Bundle().apply {
+                putStringArray(Intent.EXTRA_EMAIL, arrayOf(email))
+                putString(Intent.EXTRA_SUBJECT, subject)
+                putParcelable(Intent.EXTRA_STREAM, contentUri)
+            }
+            performFileAction(
+                contextHolder = contextHolder,
+                intent = intent,
+                chooserTitle = chooserTitle,
+                extras = bundle
+            )
+        }
     }
 
     override fun performFileAction(

@@ -21,15 +21,6 @@ android {
         getByName("androidTest").assets.srcDir("$projectDir/schemas")
     }
 
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_17
-        targetCompatibility = JavaVersion.VERSION_17
-    }
-
-    kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_17.toString()
-    }
-
     testOptions {
         managedDevices {
             allDevices {

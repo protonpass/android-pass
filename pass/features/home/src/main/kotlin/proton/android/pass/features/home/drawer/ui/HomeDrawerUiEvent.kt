@@ -58,4 +58,7 @@ sealed interface HomeDrawerUiEvent {
         internal val shareId: ShareId,
         internal val folderId: FolderId
     ) : HomeDrawerUiEvent
+
+    @JvmInline
+    value class OnCreateFolderClick(internal val shareId: ShareId) : HomeDrawerUiEvent
 }

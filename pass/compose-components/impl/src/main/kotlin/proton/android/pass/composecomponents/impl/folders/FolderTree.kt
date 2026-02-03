@@ -19,24 +19,36 @@
 package proton.android.pass.composecomponents.impl.folders
 
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.Surface
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material3.Icon
+import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateMapOf
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.ThemedBooleanPreviewProvider
+import proton.android.pass.composecomponents.impl.R
+import proton.android.pass.composecomponents.impl.folders.mock.mockFolders
+import proton.android.pass.composecomponents.impl.text.Text
 import proton.android.pass.domain.FolderId
 import proton.android.pass.domain.FolderWithItemCount
-import proton.android.pass.composecomponents.impl.folders.mock.mockFolders
-import kotlin.collections.forEach
+import me.proton.core.presentation.R as CoreR
 
 private fun MutableMap<String, Boolean>.isExpanded(id: String) = this[id] ?: false
 
@@ -47,9 +59,11 @@ private fun MutableMap<String, Boolean>.toggle(id: String) {
 @Composable
 fun FolderTree(
     modifier: Modifier = Modifier,
+    modifierCreateButton: Modifier = Modifier,
     folders: List<FolderWithItemCount>,
     onFolderClick: (FolderId) -> Unit,
     onThreeDotsClick: ((FolderId) -> Unit)? = null,
+    onCreateFolderClick: (() -> Unit)? = null,
     expandedState: MutableMap<String, Boolean>,
     depth: Int = 0 // no padding when depth == 0
 ) {
@@ -57,6 +71,17 @@ fun FolderTree(
         modifier = modifier,
         verticalArrangement = Arrangement.spacedBy(Spacing.small)
     ) {
+        onCreateFolderClick?.let {
+            if (folders.isEmpty() && depth == 0) {
+                CreateFolderButton(
+                    modifier = modifierCreateButton,
+                    onClick = {
+                        onCreateFolderClick.invoke()
+                    }
+                )
+            }
+        }
+
         folders.forEach { folder ->
 
             val isExpanded = expandedState.isExpanded(folder.id.id)
@@ -82,6 +107,7 @@ fun FolderTree(
                     folders = folder.folders,
                     expandedState = expandedState,
                     onThreeDotsClick = onThreeDotsClick,
+                    onCreateFolderClick = onCreateFolderClick,
                     depth = depth + 1,
                     onFolderClick = onFolderClick
                 )
@@ -90,11 +116,33 @@ fun FolderTree(
     }
 }
 
+@Composable
+private fun CreateFolderButton(modifier: Modifier = Modifier, onClick: () -> Unit) {
+    Row(
+        modifier = modifier
+            .clip(shape = CircleShape)
+            .background(color = PassTheme.colors.interactionNormMinor1)
+            .clickable { onClick() }
+            .padding(vertical = 10.dp, horizontal = Spacing.medium),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(Spacing.small)
+    ) {
+        Icon(
+            modifier = Modifier.size(20.dp),
+            painter = painterResource(CoreR.drawable.ic_proton_folder_plus),
+            contentDescription = null,
+            tint = PassTheme.colors.interactionNormMajor2
+        )
+        Text.Body2Regular(
+            text = stringResource(R.string.folder_tree_create_folder),
+            color = PassTheme.colors.interactionNormMajor2
+        )
+    }
+}
+
 @[Preview Composable]
-internal fun HomeDrawerRowPreview(
-    @PreviewParameter(ThemedBooleanPreviewProvider::class) input: Pair<Boolean, Boolean>
-) {
-    val (isDark, isSelected) = input
+internal fun FolderTreePreview(@PreviewParameter(ThemedBooleanPreviewProvider::class) input: Pair<Boolean, Boolean>) {
+    val (isDark, _) = input
 
     PassTheme(isDark = isDark) {
         Surface {
@@ -102,6 +150,26 @@ internal fun HomeDrawerRowPreview(
                 folders = mockFolders,
                 expandedState = remember { mutableStateMapOf() },
                 onThreeDotsClick = {},
+                onCreateFolderClick = {},
+                onFolderClick = {}
+            )
+        }
+    }
+}
+
+@[Preview Composable]
+internal fun FolderTreeEmptyPreview(
+    @PreviewParameter(ThemedBooleanPreviewProvider::class) input: Pair<Boolean, Boolean>
+) {
+    val (isDark, _) = input
+
+    PassTheme(isDark = isDark) {
+        Surface {
+            FolderTree(
+                folders = emptyList(),
+                expandedState = remember { mutableStateMapOf() },
+                onThreeDotsClick = {},
+                onCreateFolderClick = {},
                 onFolderClick = {}
             )
         }

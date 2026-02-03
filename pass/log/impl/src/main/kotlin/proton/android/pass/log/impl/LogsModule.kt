@@ -18,32 +18,41 @@
 
 package proton.android.pass.log.impl
 
-import android.content.Context
-import android.net.Uri
-import androidx.core.net.toUri
+import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
-import proton.android.pass.log.api.LogFileUri
-import java.io.File
+import proton.android.pass.log.api.LogFileManager
+import proton.android.pass.log.api.PrivacySanitizer
+import proton.android.pass.log.api.ShareLogsUseCase
+import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-object LogsModuleProvides {
+abstract class LogsModule {
 
-    @LogFileUri
-    @Provides
-    fun provideLogFile(@ApplicationContext context: Context): Uri {
-        val cacheDir = File(context.cacheDir, "logs")
-        if (!cacheDir.exists()) {
-            cacheDir.mkdirs()
-        }
-        val file = File(cacheDir, "pass.log")
-        if (!file.exists()) {
-            file.createNewFile()
-        }
-        return file.toUri()
+    @Binds
+    @Singleton
+    abstract fun bindLogFileManager(impl: LogFileManagerImpl): LogFileManager
+
+    @Binds
+    @Singleton
+    abstract fun bindPrivacySanitizer(impl: PrivacySanitizerImpl): PrivacySanitizer
+
+    @Binds
+    @Singleton
+    abstract fun bindShareLogsUseCase(impl: ShareLogsUseCaseImpl): ShareLogsUseCase
+
+    companion object {
+        @Provides
+        @Singleton
+        @LogFileMaxSize
+        fun provideLogFileMaxSize(): Long = FileLoggingTree.DEFAULT_MAX_FILE_SIZE
+
+        @Provides
+        @Singleton
+        @LogRotationLines
+        fun provideLogRotationLines(): Int = FileLoggingTree.DEFAULT_ROTATION_LINES
     }
 }

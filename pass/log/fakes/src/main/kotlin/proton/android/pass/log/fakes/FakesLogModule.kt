@@ -18,18 +18,46 @@
 
 package proton.android.pass.log.fakes
 
-import android.net.Uri
+import dagger.Binds
 import dagger.Module
 import dagger.Provides
-import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import proton.android.pass.log.api.LogFileUri
+import dagger.hilt.testing.TestInstallIn
+import proton.android.pass.log.api.LogFileManager
+import proton.android.pass.log.api.PrivacySanitizer
+import proton.android.pass.log.impl.LogFileMaxSize
+import proton.android.pass.log.impl.LogRotationLines
+import proton.android.pass.log.impl.LogsModule
+import javax.inject.Singleton
 
 @Module
-@InstallIn(SingletonComponent::class)
-object FakesLogModule {
+@TestInstallIn(
+    components = [SingletonComponent::class],
+    replaces = [LogsModule::class]
+)
+abstract class FakesLogModule {
 
-    @LogFileUri
-    @Provides
-    fun provideLogFile(): Uri = Uri.EMPTY
+    @Binds
+    @Singleton
+    abstract fun bindLogFileManager(impl: FakeLogFileManager): LogFileManager
+
+    @Binds
+    @Singleton
+    abstract fun bindPrivacySanitizer(impl: FakePrivacySanitizer): PrivacySanitizer
+
+    companion object {
+
+        private const val LOG_FILE_MAX_SIZE: Long = 4 * 1024 * 1024
+        private const val LOG_ROTATION_LINES: Int = 500
+
+        @Provides
+        @Singleton
+        @LogFileMaxSize
+        fun provideLogFileMaxSize(): Long = LOG_FILE_MAX_SIZE
+
+        @Provides
+        @Singleton
+        @LogRotationLines
+        fun provideLogRotationLines(): Int = LOG_ROTATION_LINES
+    }
 }

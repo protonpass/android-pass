@@ -46,8 +46,10 @@ fun DependencyHandlerScope.addSpecialLib(
 
 dependencies {
     api(projects.pass.log.api)
-    
+
     implementation(projects.pass.common.api)
+    implementation(projects.pass.commonUi.api)
+    implementation(libs.core.accountManager.domain)
 
     addSpecialLib(
         default = projects.pass.tracing.impl,
@@ -66,4 +68,11 @@ dependencies {
     implementation(libs.dagger.hilt.android)
     kapt(libs.dagger.hilt.android.compiler)
     kapt(libs.androidx.hilt.compiler)
+
+    testImplementation(libs.junit)
+    testImplementation(libs.truth)
+    testImplementation(libs.coroutines.test)
+    testImplementation(libs.turbine)
+    testImplementation(projects.pass.common.fakes)
+    testImplementation(projects.pass.account.fakes)
 }

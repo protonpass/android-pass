@@ -86,6 +86,8 @@ import me.proton.core.usersettings.data.db.UserSettingsDatabase
 import me.proton.core.usersettings.data.entity.OrganizationEntity
 import me.proton.core.usersettings.data.entity.OrganizationKeysEntity
 import me.proton.core.usersettings.data.entity.UserSettingsEntity
+import proton.android.pass.common.api.onError
+import proton.android.pass.common.api.runCatching
 import proton.android.pass.data.impl.db.entities.AssetLinkEntity
 import proton.android.pass.data.impl.db.entities.BreachCustomEmailEntity
 import proton.android.pass.data.impl.db.entities.BreachDomainPeekEntity
@@ -115,6 +117,7 @@ import proton.android.pass.data.impl.db.entities.UserInviteKeyEntity
 import proton.android.pass.data.impl.db.entities.attachments.AttachmentEntity
 import proton.android.pass.data.impl.db.entities.attachments.ChunkEntity
 import proton.android.pass.data.impl.db.entities.securelinks.SecureLinkEntity
+import proton.android.pass.log.api.PassLogger
 
 @Database(
     entities = [
@@ -282,6 +285,7 @@ abstract class AppDatabase :
     AuthDatabase {
 
     companion object {
+        private const val TAG = "AppDatabase"
         const val VERSION = 84
 
         const val DB_NAME = "db-passkey"
@@ -319,6 +323,17 @@ abstract class AppDatabase :
         fun buildDatabase(context: Context): AppDatabase = databaseBuilder<AppDatabase>(context, DB_NAME)
             .apply { migrations.forEach { addMigrations(it) } }
             .fallbackToDestructiveMigration()
+            .addCallback(object : Callback() {
+                override fun onOpen(db: androidx.sqlite.db.SupportSQLiteDatabase) {
+                    super.onOpen(db)
+                    runCatching {
+                        db.query("PRAGMA secure_delete = ON").close()
+                    }.onError { e ->
+                        PassLogger.w(TAG, "Failed to enable secure_delete")
+                        PassLogger.w(TAG, e)
+                    }
+                }
+            })
             .build()
     }
 }

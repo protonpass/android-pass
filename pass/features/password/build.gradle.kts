@@ -17,11 +17,6 @@ android {
         testInstrumentationRunner = "proton.android.pass.test.HiltRunner"
     }
     
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_17
-        targetCompatibility = JavaVersion.VERSION_17
-    }
-
     buildFeatures {
         compose = true
     }

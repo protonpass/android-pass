@@ -33,6 +33,7 @@
     <string name="bottomsheet_monitor_include">Include in monitoring</string>
     <string name="bottomsheet_migrate_item">Move to another vault</string>
     <string name="bottomsheet_create_folder">Create folder</string>
+    <string name="folder_tree_create_folder">Create folder</string>
     <string name="bottomsheet_rename_folder">Rename</string>
     <string name="bottomsheet_create_sub_folder">Create sub-folder</string>
     <string name="bottomsheet_copy_item_note">Copy note</string>

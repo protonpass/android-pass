@@ -41,6 +41,7 @@ internal fun HomeDrawerList(
     vaultShares: List<VaultWithItemCount>,
     vaultSelectionOption: VaultSelectionOption,
     allItemsCount: Int,
+    foldersEnabled: Boolean,
     hasSharedWithMeItems: Boolean,
     sharedWithMeItemsCount: Int,
     hasSharedByMeItems: Boolean,
@@ -100,7 +101,7 @@ internal fun HomeDrawerList(
                         shareId = vaultShare.vault.shareId
                     ).also(onUiEvent)
                 },
-                foldersEnabled = true,
+                foldersEnabled = foldersEnabled,
                 folders = vaultShare.folders,
                 onMenuOptionsClickFromFolder = {
                     HomeDrawerUiEvent.OnFolderOptionsClick(

@@ -25,12 +25,14 @@ import proton.android.pass.data.api.repositories.ShareRepository
 import proton.android.pass.data.api.usecases.ClearUserData
 import proton.android.pass.data.impl.db.DatabaseCleanupHelper
 import proton.android.pass.data.impl.repositories.ExtraPasswordRepository
+import proton.android.pass.log.api.LogFileManager
 import javax.inject.Inject
 
 class ClearUserDataImpl @Inject constructor(
     private val shareRepository: ShareRepository,
     private val extraPasswordRepository: ExtraPasswordRepository,
-    private val databaseCleanupHelper: DatabaseCleanupHelper
+    private val databaseCleanupHelper: DatabaseCleanupHelper,
+    private val logFileManager: LogFileManager
 ) : ClearUserData {
 
     override suspend fun invoke(userId: UserId) {
@@ -38,6 +40,8 @@ class ClearUserDataImpl @Inject constructor(
             shareRepository.deleteLocalSharesForUser(userId)
             extraPasswordRepository.removeLocalExtraPasswordForUser(userId)
             databaseCleanupHelper.cleanupUserData()
+            val logFile = logFileManager.getLogFile(userId)
+            logFileManager.deleteLogFile(logFile)
         }
     }
 

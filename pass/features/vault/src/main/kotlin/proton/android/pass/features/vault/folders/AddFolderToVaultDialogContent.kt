@@ -18,10 +18,15 @@
 
 package proton.android.pass.features.vault.folders
 
-import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.AnimatedContent
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
@@ -30,6 +35,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
+import androidx.compose.ui.unit.dp
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.defaultNorm
 import proton.android.pass.commonui.api.PassTheme
@@ -60,16 +66,26 @@ internal fun AddFolderToVaultDialogContent(
         title = stringResource(R.string.vault_add_folder_dialog_title),
         content = {
             Column(
-                modifier = Modifier.fillMaxWidth(),
                 verticalArrangement = Arrangement.spacedBy(Spacing.medium)
             ) {
-                AnimatedVisibility(visible = state.showSameFolderExist) {
-                    Text(text = stringResource(R.string.vault_add_foldersame_folder_exist))
+                AnimatedContent(
+                    targetState = state.showSameFolderExist,
+                    transitionSpec = {
+                        fadeIn().togetherWith(fadeOut())
+                    }
+                ) { visible ->
+                    if (visible) {
+                        Text(text = stringResource(R.string.vault_add_foldersame_folder_exist))
+                    } else {
+                        Text(
+                            text = "",
+                            modifier = Modifier.height(0.dp)
+                        )
+                    }
                 }
 
-                Column(
+                Box(
                     modifier = Modifier
-                        .fillMaxWidth()
                         .roundedContainerNorm()
                         .padding(Spacing.medium)
                 ) {

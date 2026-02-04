@@ -82,7 +82,8 @@ internal fun HomeDrawerContent(
             hasSharedByMeItems = hasSharedByMeItems,
             sharedByMeItemsCount = sharedByMeItemsCount,
             trashedItemsCount = trashedItemsCount,
-            onUiEvent = onUiEvent
+            onUiEvent = onUiEvent,
+            foldersEnabled = foldersEnabled
         )
 
         HomeDrawerFooter(

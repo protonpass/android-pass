@@ -261,9 +261,9 @@ android {
 
     applicationVariants.all {
         val variant = this
-        val buildTypeName = variant.buildType.name
         val flavorName = variant.flavorName
-        if (buildTypeName == "debug") {
+        val originalNameFlavors = listOf("playProd", "questProd", "fdroidProd")
+        if (flavorName !in originalNameFlavors) {
             val appName = "($flavorName) Proton Pass"
             variant.resValue("string", "app_name", appName)
             variant.resValue("string", "autofill_service_name", appName)

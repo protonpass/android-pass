@@ -124,5 +124,4 @@ libs/*.aar
 pass/**/*.aar
 
 .kotlin/
-
-.claude/
+.claude/settings.local.json

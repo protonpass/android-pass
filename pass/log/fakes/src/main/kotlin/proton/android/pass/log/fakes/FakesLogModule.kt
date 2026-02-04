@@ -25,6 +25,7 @@ import dagger.hilt.components.SingletonComponent
 import dagger.hilt.testing.TestInstallIn
 import proton.android.pass.log.api.LogFileManager
 import proton.android.pass.log.api.PrivacySanitizer
+import proton.android.pass.log.api.ShareLogsUseCase
 import proton.android.pass.log.impl.LogFileMaxSize
 import proton.android.pass.log.impl.LogRotationLines
 import proton.android.pass.log.impl.LogsModule
@@ -44,6 +45,10 @@ abstract class FakesLogModule {
     @Binds
     @Singleton
     abstract fun bindPrivacySanitizer(impl: FakePrivacySanitizer): PrivacySanitizer
+
+    @Binds
+    @Singleton
+    abstract fun bindShareLogsUseCase(impl: FakeShareLogsUseCase): ShareLogsUseCase
 
     companion object {
 

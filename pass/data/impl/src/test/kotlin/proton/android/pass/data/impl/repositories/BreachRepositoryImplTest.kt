@@ -27,7 +27,6 @@ import org.junit.Before
 import org.junit.Test
 import proton.android.pass.data.api.errors.CustomEmailDoesNotExistException
 import proton.android.pass.data.api.errors.ItemNotFoundError
-import proton.android.pass.data.api.usecases.ItemTypeFilter
 import proton.android.pass.data.fakes.usecases.FakeObserveItemById
 import proton.android.pass.data.fakes.usecases.FakeObserveItems
 import proton.android.pass.data.impl.fakes.FakeLocalBreachDataSource
@@ -47,12 +46,8 @@ import proton.android.pass.data.impl.responses.BreachesResponse
 import proton.android.pass.data.impl.responses.MonitorStateResponse
 import proton.android.pass.data.impl.responses.Source
 import proton.android.pass.data.impl.responses.UpdateGlobalMonitorStateResponse
-import proton.android.pass.domain.ItemFlag
 import proton.android.pass.domain.ItemId
-import proton.android.pass.domain.ItemState
-import proton.android.pass.domain.ItemType
 import proton.android.pass.domain.ShareId
-import proton.android.pass.domain.ShareSelection
 import proton.android.pass.domain.breach.AliasEmailId
 import proton.android.pass.domain.breach.BreachEmail
 import proton.android.pass.domain.breach.BreachEmailId
@@ -156,108 +151,6 @@ internal class BreachRepositoryImplTest {
 
         val visibility = internalSettings.getDarkWebAliasMessageVisibility().first()
         assertThat(visibility).isEqualTo(IsDarkWebAliasMessageDismissedPreference.Show)
-    }
-
-    @Test
-    fun `refreshBreaches stores breach details for all breached emails`() = runTest {
-        val customEmailId = CustomEmailId("custom-id")
-        val addressId = AddressId("address-id")
-        val shareId = ShareId("share-id")
-        val itemId = ItemId("item-id")
-        val aliasItem = ItemTestFactory.createAlias(
-            shareId = shareId,
-            itemId = itemId,
-            alias = "alias@example.com",
-            flags = ItemFlag.EmailBreached.value
-        )
-
-        observeItems.emit(
-            FakeObserveItems.Params(
-                selection = ShareSelection.AllShares,
-                itemState = ItemState.Active,
-                filter = ItemTypeFilter.Aliases,
-                userId = TEST_USER_ID,
-                itemFlags = mapOf(ItemFlag.EmailBreached to true, ItemFlag.SkipHealthCheck to false)
-            ),
-            listOf(aliasItem)
-        )
-
-        remoteBreachDataSource.setGetAllBreachesResult(
-            Result.success(
-                createBreachesResponse(
-                    emailsCount = 3,
-                    customEmails = listOf(
-                        createBreachCustomEmailResponse(
-                            email = "custom@example.com",
-                            id = customEmailId.id,
-                            breachCounter = 1
-                        )
-                    ),
-                    protonEmails = listOf(
-                        createBreachProtonEmailResponse(
-                            email = "proton@proton.me",
-                            addressId = addressId.id,
-                            breachCounter = 1
-                        )
-                    )
-                )
-            )
-        )
-        remoteBreachDataSource.setGetBreachesForCustomEmailResult(
-            Result.success(
-                createBreachEmailsResponse(
-                    breaches = listOf(
-                        createBreachEntry(
-                            id = "custom-breach",
-                            email = "custom@example.com"
-                        )
-                    )
-                )
-            )
-        )
-        remoteBreachDataSource.setGetBreachesForProtonEmailResult(
-            Result.success(
-                createBreachEmailsResponse(
-                    breaches = listOf(
-                        createBreachEntry(
-                            id = "proton-breach",
-                            email = "proton@proton.me"
-                        )
-                    )
-                )
-            )
-        )
-        remoteBreachDataSource.setGetBreachesForAliasEmailResult(
-            Result.success(
-                createBreachEmailsResponse(
-                    breaches = listOf(
-                        createBreachEntry(
-                            id = "alias-breach",
-                            email = (aliasItem.itemType as ItemType.Alias).aliasEmail
-                        )
-                    )
-                )
-            )
-        )
-
-        instance.refreshBreaches(TEST_USER_ID)
-
-        val storedCustomBreaches = localBreachesDataSource.observeCustomEmailBreaches(
-            TEST_USER_ID,
-            customEmailId
-        ).first()
-        val storedProtonBreaches = localBreachesDataSource.observeProtonEmailBreaches(
-            TEST_USER_ID,
-            addressId
-        ).first()
-        val storedAliasBreaches = localBreachesDataSource.observeAliasEmailBreaches(
-            TEST_USER_ID,
-            AliasEmailId(shareId, itemId)
-        ).first()
-
-        assertThat(storedCustomBreaches).hasSize(1)
-        assertThat(storedProtonBreaches).hasSize(1)
-        assertThat(storedAliasBreaches).hasSize(1)
     }
 
     // ========== observeCustomEmail Tests ==========
@@ -484,69 +377,87 @@ internal class BreachRepositoryImplTest {
     // ========== observeBreachesForCustomEmail Tests ==========
 
     @Test
-    fun `observeBreachesForCustomEmail returns breaches from local data source`() = runTest {
+    fun `observeBreachesForCustomEmail fetches and returns breaches`() = runTest {
         val customEmailId = CustomEmailId("id1")
-        val breachEmail = createBreachEmail(
-            id = BreachEmailId.Custom(BreachId("breach1"), customEmailId),
-            email = "test@example.com",
-            isResolved = false
-        )
 
-        localBreachesDataSource.upsertCustomEmailBreaches(TEST_USER_ID, customEmailId, listOf(breachEmail))
         remoteBreachDataSource.setGetBreachesForCustomEmailResult(
-            Result.success(createBreachEmailsResponse(emptyList()))
+            Result.success(
+                createBreachEmailsResponse(
+                    breaches = listOf(
+                        createBreachEntry(
+                            id = "breach1",
+                            email = "test@example.com"
+                        )
+                    )
+                )
+            )
         )
 
         val result = instance.observeBreachesForCustomEmail(TEST_USER_ID, customEmailId).first()
 
         assertThat(result).hasSize(1)
         assertThat(result[0].email).isEqualTo("test@example.com")
+
+        val cached = localBreachesDataSource.observeCustomEmailBreaches(TEST_USER_ID, customEmailId).first()
+        assertThat(cached).hasSize(1)
     }
 
     // ========== observeBreachesForProtonEmail Tests ==========
 
     @Test
-    fun `observeBreachesForProtonEmail returns breaches from local data source`() = runTest {
+    fun `observeBreachesForProtonEmail fetches and returns breaches`() = runTest {
         val addressId = AddressId("addr1")
-        val breachEmail = createBreachEmail(
-            id = BreachEmailId.Proton(BreachId("breach1"), addressId),
-            email = "test@proton.me",
-            isResolved = false
-        )
 
-        localBreachesDataSource.upsertProtonEmailBreaches(TEST_USER_ID, addressId, listOf(breachEmail))
         remoteBreachDataSource.setGetBreachesForProtonEmailResult(
-            Result.success(createBreachEmailsResponse(emptyList()))
+            Result.success(
+                createBreachEmailsResponse(
+                    breaches = listOf(
+                        createBreachEntry(
+                            id = "breach1",
+                            email = "test@proton.me"
+                        )
+                    )
+                )
+            )
         )
 
         val result = instance.observeBreachesForProtonEmail(TEST_USER_ID, addressId).first()
 
         assertThat(result).hasSize(1)
         assertThat(result[0].email).isEqualTo("test@proton.me")
+
+        val cached = localBreachesDataSource.observeProtonEmailBreaches(TEST_USER_ID, addressId).first()
+        assertThat(cached).hasSize(1)
     }
 
     // ========== observeBreachesForAliasEmail Tests ==========
 
     @Test
-    fun `observeBreachesForAliasEmail returns breaches from local data source`() = runTest {
+    fun `observeBreachesForAliasEmail fetches and returns breaches`() = runTest {
         val shareId = ShareId("share1")
         val itemId = ItemId("item1")
         val aliasEmailId = AliasEmailId(shareId, itemId)
-        val breachEmail = createBreachEmail(
-            id = BreachEmailId.Alias(BreachId("breach1"), shareId, itemId),
-            email = "alias@example.com",
-            isResolved = false
-        )
 
-        localBreachesDataSource.upsertAliasEmailBreaches(TEST_USER_ID, aliasEmailId, listOf(breachEmail))
         remoteBreachDataSource.setGetBreachesForAliasEmailResult(
-            Result.success(createBreachEmailsResponse(emptyList()))
+            Result.success(
+                createBreachEmailsResponse(
+                    breaches = listOf(
+                        createBreachEntry(
+                            id = "breach1",
+                            email = "alias@example.com"
+                        )
+                    )
+                )
+            )
         )
 
         val result = instance.observeBreachesForAliasEmail(TEST_USER_ID, aliasEmailId).first()
 
         assertThat(result).hasSize(1)
         assertThat(result[0].email).isEqualTo("alias@example.com")
+
+        val cached = localBreachesDataSource.observeAliasEmailBreaches(TEST_USER_ID, aliasEmailId).first()
+        assertThat(cached).hasSize(1)
     }
 
     // ========== addCustomEmail Tests ==========

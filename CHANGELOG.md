@@ -6,6 +6,12 @@
 
 ### Other
 
+## 1.37.1 (2026-02-05)
+
+### Fixes :bug:
+
+- Bug fixes and improvements.
+
 ## 1.37.0 (2026-01-26)
 
 ### Features :tada:

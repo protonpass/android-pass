@@ -31,6 +31,7 @@ dependencies {
     implementation(projects.pass.crypto.api)
 
     implementation(libs.dagger.hilt.android)
+    implementation(libs.androidx.credentials)
     kapt(libs.dagger.hilt.android.compiler)
     kapt(libs.androidx.hilt.compiler)
 

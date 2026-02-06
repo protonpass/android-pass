@@ -54,7 +54,6 @@ import proton.android.pass.features.report.R
 import proton.android.pass.features.report.navigation.ReportNavContentEvent
 import proton.android.pass.passkeys.api.PasskeySupport
 import proton.android.pass.passkeys.api.PasskeySupport.NotSupportedReason.AndroidVersion
-import proton.android.pass.passkeys.api.PasskeySupport.NotSupportedReason.CredentialManagerUnsupported
 
 @Composable
 @Suppress("CyclomaticComplexMethod")
@@ -126,7 +125,7 @@ internal fun ReportTipsPage(
                     None -> {}
                     is Some -> {
                         val passKeyLabelText =
-                            if (passkeySupportOption.value is PasskeySupport.Supported) {
+                            if (passkeySupportOption.value is PasskeySupport.CanSupport) {
                                 stringResource(R.string.tips_passkey_supported)
                             } else {
                                 stringResource(R.string.tips_passkey_not_supported)
@@ -147,19 +146,12 @@ internal fun ReportTipsPage(
                                     AndroidVersion ->
                                         TipRow(text = stringResource(R.string.tips_passkey_android_not_supported))
 
-                                    CredentialManagerUnsupported ->
-                                        TipRow(
-                                            text = stringResource(
-                                                R.string.tips_passkeys_credential_manager_not_supported
-                                            )
-                                        )
-
                                     PasskeySupport.NotSupportedReason.Quest -> {}
                                     PasskeySupport.NotSupportedReason.Unknown -> {}
                                 }
                             }
 
-                            PasskeySupport.Supported -> {
+                            PasskeySupport.CanSupport -> {
                                 TipRow(
                                     text = stringResource(R.string.tips_passkey_check_guide),
                                     onClick = { openWebsite(context, PASS_PASSKEYS) }

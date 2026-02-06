@@ -13,10 +13,14 @@
   <string name="snackbar_find_vault_error">Не могу найти созданное хранилище</string>
   <string name="snackbar_get_vault_list_error">Список хранилищ не может быть загружен</string>
   <string name="vault_delete_dialog_title">Удалить хранилище</string>
+  <string name="vault_add_folder_dialog_title">Enter a folder title</string>
+  <string name="vault_add_foldersame_folder_exist">A folder with the same name already exists</string>
   <string name="vault_delete_dialog_body">Это приведет к окончательному удалению хранилища __VAULT_NAME__ и всего его содержимого. Введите имя хранилища, чтобы подтвердить удаление.</string>
   <string name="vault_delete_dialog_placeholder">Название хранилища</string>
+  <string name="vault_add_folder_dialog_placeholder">Folder name</string>
   <string name="vault_delete_dialog_cancel_action">Отменить</string>
   <string name="vault_delete_dialog_delete_action">Удалить</string>
+  <string name="vault_add_folder_dialog_create_action">Create</string>
   <string name="vault_delete_dialog_shared_items_warning" comment="The placeholder will be replaced by the number of shared items, e.g 2 shared items">В этом хранилище находится %1$s. При его удалении доступ к нему будет закрыт для всех остальных пользователей.</string>
   <string name="vault_leave_dialog_title">Покинуть хранилище</string>
   <string name="vault_leave_dialog_body">Это приведет к закрытию доступа к хранилищу __VAULT_NAME__ и всему его содержимому. Вы уверены, что хотите уйти?</string>

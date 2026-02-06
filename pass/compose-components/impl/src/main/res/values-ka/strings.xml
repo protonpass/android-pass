@@ -32,6 +32,10 @@
   <string name="bottomsheet_monitor_exclude">მონიტორინგიდან ამოღება</string>
   <string name="bottomsheet_monitor_include">მონიტორინგში ჩასმა</string>
   <string name="bottomsheet_migrate_item">სხვა საცავში გადატანა</string>
+  <string name="bottomsheet_create_folder">Create folder</string>
+  <string name="folder_tree_create_folder">Create folder</string>
+  <string name="bottomsheet_rename_folder">Rename</string>
+  <string name="bottomsheet_create_sub_folder">Create sub-folder</string>
   <string name="bottomsheet_copy_item_note">შენიშვნის კოპირება</string>
   <string name="bottomsheet_delete_permanently">სამუდამოდ წაშლა</string>
   <string name="bottomsheet_restore">აღდგენა</string>

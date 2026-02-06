@@ -13,10 +13,14 @@
   <string name="snackbar_find_vault_error">Kan geselecteerde kluis niet vinden</string>
   <string name="snackbar_get_vault_list_error">Kluislijst kan niet worden geladen</string>
   <string name="vault_delete_dialog_title">Kluis verwijderen</string>
+  <string name="vault_add_folder_dialog_title">Voer een maptitel in</string>
+  <string name="vault_add_foldersame_folder_exist">Een map met dezelfde naam bestaat al</string>
   <string name="vault_delete_dialog_body">Hiermee wordt de kluis __VAULT_NAME__ en de volledige inhoud permanent verwijderd. Voer de kluisnaam in om de verwijdering te bevestigen.</string>
   <string name="vault_delete_dialog_placeholder">Kluisnaam</string>
+  <string name="vault_add_folder_dialog_placeholder">Mapnaam</string>
   <string name="vault_delete_dialog_cancel_action">Annuleren</string>
   <string name="vault_delete_dialog_delete_action">Verwijderen</string>
+  <string name="vault_add_folder_dialog_create_action">Aanmaken</string>
   <string name="vault_delete_dialog_shared_items_warning" comment="The placeholder will be replaced by the number of shared items, e.g 2 shared items">Deze kluis bevat %1$s. Als u het verwijdert, wordt de toegang voor alle andere gebruikers verwijderd.</string>
   <string name="vault_leave_dialog_title">Verlaat kluis</string>
   <string name="vault_leave_dialog_body">Dit verwijdert uw toegang tot de kluis __VAULT_NAME__ en al zijn inhoud. Weet u zeker dat u de kluis wil verlaten?</string>

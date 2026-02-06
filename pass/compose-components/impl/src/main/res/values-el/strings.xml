@@ -32,6 +32,10 @@
   <string name="bottomsheet_monitor_exclude">Εξαίρεση από την παρακολούθηση</string>
   <string name="bottomsheet_monitor_include">Συμπερίληψη στην παρακολούθηση</string>
   <string name="bottomsheet_migrate_item">Μετακίνηση σε άλλη κρύπτη</string>
+  <string name="bottomsheet_create_folder">Δημιουργία φακέλου</string>
+  <string name="folder_tree_create_folder">Δημιουργία φακέλου</string>
+  <string name="bottomsheet_rename_folder">Μετονομασία</string>
+  <string name="bottomsheet_create_sub_folder">Δημιουργία υποφακέλου</string>
   <string name="bottomsheet_copy_item_note">Αντιγραφή σημείωσης</string>
   <string name="bottomsheet_delete_permanently">Οριστική διαγραφή</string>
   <string name="bottomsheet_restore">Επαναφορά</string>

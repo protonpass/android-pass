@@ -32,6 +32,10 @@
   <string name="bottomsheet_monitor_exclude">Ekskluder fra overvåking</string>
   <string name="bottomsheet_monitor_include">Inkluder i overvåking</string>
   <string name="bottomsheet_migrate_item">Flytt til annet hvelv</string>
+  <string name="bottomsheet_create_folder">Create folder</string>
+  <string name="folder_tree_create_folder">Create folder</string>
+  <string name="bottomsheet_rename_folder">Rename</string>
+  <string name="bottomsheet_create_sub_folder">Create sub-folder</string>
   <string name="bottomsheet_copy_item_note">Kopier notat</string>
   <string name="bottomsheet_delete_permanently">Slett permanent</string>
   <string name="bottomsheet_restore">Gjenopprett</string>

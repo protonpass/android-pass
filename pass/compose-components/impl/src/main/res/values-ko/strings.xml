@@ -31,6 +31,10 @@
   <string name="bottomsheet_monitor_exclude">감시에서 제외하기</string>
   <string name="bottomsheet_monitor_include">모니터링에 포함</string>
   <string name="bottomsheet_migrate_item">다른 금고로 이동</string>
+  <string name="bottomsheet_create_folder">Create folder</string>
+  <string name="folder_tree_create_folder">Create folder</string>
+  <string name="bottomsheet_rename_folder">Rename</string>
+  <string name="bottomsheet_create_sub_folder">Create sub-folder</string>
   <string name="bottomsheet_copy_item_note">메모 복사</string>
   <string name="bottomsheet_delete_permanently">영구적으로 삭제</string>
   <string name="bottomsheet_restore">복원</string>

@@ -13,10 +13,14 @@
   <string name="snackbar_find_vault_error">Nu se poate găsi seiful selectat.</string>
   <string name="snackbar_get_vault_list_error">Nu s-a putut încărca lista cu seifuri.</string>
   <string name="vault_delete_dialog_title">Ștergere seif</string>
+  <string name="vault_add_folder_dialog_title">Introduceți titlul folderului</string>
+  <string name="vault_add_foldersame_folder_exist">Deja există un folder cu același nume.</string>
   <string name="vault_delete_dialog_body">Aceasta va șterge permanent seiful __VAULT_NAME__ și a conținutului său. Introduceți numele seifului pentru a confirma ștergerea.</string>
   <string name="vault_delete_dialog_placeholder">Nume seif</string>
+  <string name="vault_add_folder_dialog_placeholder">Nume folder</string>
   <string name="vault_delete_dialog_cancel_action">Anulare</string>
   <string name="vault_delete_dialog_delete_action">Ștergere</string>
+  <string name="vault_add_folder_dialog_create_action">Creare</string>
   <string name="vault_delete_dialog_shared_items_warning" comment="The placeholder will be replaced by the number of shared items, e.g 2 shared items">Acest seif deține %1$s. Ștergându-l, se va elimina accesul pentru toți ceilalți utilizatori.</string>
   <string name="vault_leave_dialog_title">Părăsire seif</string>
   <string name="vault_leave_dialog_body">Aceasta vă va elimina accesul la seiful __VAULT_NAME__ și conținutul acestuia. Îl părăsiți?</string>

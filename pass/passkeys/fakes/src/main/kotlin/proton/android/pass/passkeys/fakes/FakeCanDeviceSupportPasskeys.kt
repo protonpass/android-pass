@@ -18,15 +18,15 @@
 
 package proton.android.pass.passkeys.fakes
 
-import proton.android.pass.passkeys.api.CheckPasskeySupport
+import proton.android.pass.passkeys.api.CanDeviceSupportPasskeys
 import proton.android.pass.passkeys.api.PasskeySupport
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class FakeCheckPasskeySupport @Inject constructor() : CheckPasskeySupport {
+class FakeCanDeviceSupportPasskeys @Inject constructor() : CanDeviceSupportPasskeys {
 
-    private var result: PasskeySupport = PasskeySupport.Supported
+    private var result: PasskeySupport = PasskeySupport.CanSupport
 
     fun setResult(value: PasskeySupport) {
         result = value

@@ -58,7 +58,7 @@ import proton.android.pass.features.report.presentation.ReportFormData.Companion
 import proton.android.pass.features.report.ui.ReportReason
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.SnackbarDispatcher
-import proton.android.pass.passkeys.api.CheckPasskeySupport
+import proton.android.pass.passkeys.api.CanDeviceSupportPasskeys
 import java.io.File
 import java.io.FileOutputStream
 import javax.inject.Inject
@@ -72,7 +72,7 @@ class ReportViewModel @Inject constructor(
     private val autofillManager: AutofillManager,
     private val sendReport: SendReport,
     private val snackbarDispatcher: SnackbarDispatcher,
-    private val checkPasskeySupport: CheckPasskeySupport,
+    private val canDeviceSupportPasskeys: CanDeviceSupportPasskeys,
     private val emailValidator: EmailValidator
 ) : ViewModel() {
 
@@ -97,7 +97,7 @@ class ReportViewModel @Inject constructor(
         MutableStateFlow(persistentListOf<ReportValidationError>())
 
     internal val state = combine(
-        oneShot { checkPasskeySupport().some() },
+        oneShot { canDeviceSupportPasskeys().some() },
         reportEventFlow,
         reportReasonFlow,
         isLoadingStateFlow,

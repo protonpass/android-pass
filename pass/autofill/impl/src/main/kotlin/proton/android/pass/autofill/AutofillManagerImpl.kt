@@ -35,8 +35,6 @@ import kotlinx.coroutines.isActive
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.runInterruptible
 import kotlinx.coroutines.withTimeout
-import proton.android.pass.appconfig.api.AppConfig
-import proton.android.pass.appconfig.api.BuildFlavor.Companion.isQuest
 import proton.android.pass.autofill.api.AutofillManager
 import proton.android.pass.autofill.api.AutofillStatus
 import proton.android.pass.autofill.api.AutofillSupportedStatus
@@ -50,8 +48,7 @@ import android.view.autofill.AutofillManager as AndroidAutofillManager
 
 @Singleton
 class AutofillManagerImpl @Inject constructor(
-    @param:ApplicationContext private val context: Context,
-    private val appConfig: AppConfig
+    @param:ApplicationContext private val context: Context
 ) : AutofillManager {
 
     private val autofillManager: AndroidAutofillManager? =
@@ -59,7 +56,6 @@ class AutofillManagerImpl @Inject constructor(
 
     override fun getAutofillStatus(): Flow<AutofillSupportedStatus> = flow {
         when {
-            appConfig.flavor.isQuest() -> emit(Unsupported)
             autofillManager == null -> {
                 PassLogger.d(TAG, "AutofillManager is null")
                 emit(Unsupported)

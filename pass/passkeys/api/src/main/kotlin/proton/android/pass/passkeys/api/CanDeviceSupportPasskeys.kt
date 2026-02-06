@@ -19,7 +19,7 @@
 package proton.android.pass.passkeys.api
 
 sealed interface PasskeySupport {
-    data object Supported : PasskeySupport
+    data object CanSupport : PasskeySupport
 
     @JvmInline
     value class NotSupported(val reason: NotSupportedReason) : PasskeySupport
@@ -27,11 +27,10 @@ sealed interface PasskeySupport {
     enum class NotSupportedReason {
         AndroidVersion,
         Quest,
-        CredentialManagerUnsupported,
         Unknown
     }
 }
 
-interface CheckPasskeySupport {
+interface CanDeviceSupportPasskeys {
     operator fun invoke(): PasskeySupport
 }

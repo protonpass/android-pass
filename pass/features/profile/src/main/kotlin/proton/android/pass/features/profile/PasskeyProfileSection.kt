@@ -86,21 +86,14 @@ private fun ProfilePasskeySupportSection.Show.toStatus(): PasskeyStatus = when (
         color = PassTheme.colors.signalDanger,
         subtitle = when (support.reason) {
             PasskeySupport.NotSupportedReason.Quest,
-            PasskeySupport.NotSupportedReason.AndroidVersion -> {
+            PasskeySupport.NotSupportedReason.AndroidVersion ->
                 stringResource(R.string.profile_passkey_support_subtitle_not_supported_android_version)
-            }
-
-            PasskeySupport.NotSupportedReason.CredentialManagerUnsupported -> {
-                stringResource(R.string.profile_passkey_support_subtitle_not_supported_credential_manager)
-            }
-
-            PasskeySupport.NotSupportedReason.Unknown -> {
+            PasskeySupport.NotSupportedReason.Unknown ->
                 stringResource(R.string.profile_passkey_support_subtitle_not_supported_unknown)
-            }
         }
     )
 
-    PasskeySupport.Supported -> PasskeyStatus(
+    PasskeySupport.CanSupport -> PasskeyStatus(
         icon = CompR.drawable.ic_shield_success,
         color = PassTheme.colors.signalSuccess,
         subtitle = stringResource(R.string.profile_passkey_support_subtitle_supported)
@@ -119,7 +112,7 @@ internal fun PasskeyProfileSectionPreview(
     @PreviewParameter(ThemedBooleanPreviewProvider::class) input: Pair<Boolean, Boolean>
 ) {
     val support = if (input.second) {
-        ProfilePasskeySupportSection.Show(PasskeySupport.Supported)
+        ProfilePasskeySupportSection.Show(PasskeySupport.CanSupport)
     } else {
         ProfilePasskeySupportSection.Show(
             support = PasskeySupport.NotSupported(

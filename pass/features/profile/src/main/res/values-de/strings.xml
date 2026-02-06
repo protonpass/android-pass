@@ -72,8 +72,8 @@
   <string name="account_switcher_switch_to">Wechseln zu</string>
   <string name="account_switcher_add_account">Konto hinzufügen</string>
   <string name="account_switcher_remove">Entfernen</string>
-  <string name="filtered_by_logins">Nach Logins gefiltert. Einträge im Papierkorb werden nicht angezeigt.</string>
-  <string name="filtered_by_logins_with_mfa">Nach Logins mit Einmalpasswort gefiltert. Einträge im Papierkorb werden nicht angezeigt.</string>
+  <string name="filtered_by_logins">Nach Zugangsdaten gefiltert. Einträge im Papierkorb werden nicht angezeigt.</string>
+  <string name="filtered_by_logins_with_mfa">Nach Zugangsdaten mit Einmalpasswort gefiltert. Einträge im Papierkorb werden nicht angezeigt.</string>
   <string name="filtered_by_aliases">Nach Aliassen gefiltert. Einträge im Papierkorb werden nicht angezeigt.</string>
   <string name="filtered_by_notes">Nach Notizen gefiltert. Einträge im Papierkorb werden nicht angezeigt.</string>
   <string name="filtered_by_credit_cards">Nach Kreditkarten gefiltert. Einträge im Papierkorb werden nicht angezeigt.</string>

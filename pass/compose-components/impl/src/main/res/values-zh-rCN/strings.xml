@@ -31,6 +31,10 @@
   <string name="bottomsheet_monitor_exclude">移除监控</string>
   <string name="bottomsheet_monitor_include">纳入监控</string>
   <string name="bottomsheet_migrate_item">移至另一个保险库</string>
+  <string name="bottomsheet_create_folder">Create folder</string>
+  <string name="folder_tree_create_folder">Create folder</string>
+  <string name="bottomsheet_rename_folder">Rename</string>
+  <string name="bottomsheet_create_sub_folder">Create sub-folder</string>
   <string name="bottomsheet_copy_item_note">复制笔记</string>
   <string name="bottomsheet_delete_permanently">永久删除</string>
   <string name="bottomsheet_restore">恢复</string>

@@ -31,6 +31,10 @@
   <string name="bottomsheet_monitor_exclude">Bỏ qua theo dõi</string>
   <string name="bottomsheet_monitor_include">Thêm vào theo dõi</string>
   <string name="bottomsheet_migrate_item">Chuyển đến một két sắt khác</string>
+  <string name="bottomsheet_create_folder">Create folder</string>
+  <string name="folder_tree_create_folder">Create folder</string>
+  <string name="bottomsheet_rename_folder">Rename</string>
+  <string name="bottomsheet_create_sub_folder">Create sub-folder</string>
   <string name="bottomsheet_copy_item_note">Sao chép ghi chú</string>
   <string name="bottomsheet_delete_permanently">Xóa vĩnh viễn</string>
   <string name="bottomsheet_restore">Khôi phục</string>

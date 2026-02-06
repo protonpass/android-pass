@@ -13,10 +13,14 @@
   <string name="snackbar_find_vault_error">Izbranega trezorja ni mogoče najti</string>
   <string name="snackbar_get_vault_list_error">Seznam trezorja ni bilo mogoče naložiti</string>
   <string name="vault_delete_dialog_title">Izbriši trezor</string>
+  <string name="vault_add_folder_dialog_title">Enter a folder title</string>
+  <string name="vault_add_foldersame_folder_exist">A folder with the same name already exists</string>
   <string name="vault_delete_dialog_body">S tem boste trajno izbrisali trezor __VAULT_NAME__ in vso njegovo vsebino. Vnesite ime trezorja, da potrdite izbris.</string>
   <string name="vault_delete_dialog_placeholder">Ime trezorja</string>
+  <string name="vault_add_folder_dialog_placeholder">Folder name</string>
   <string name="vault_delete_dialog_cancel_action">Prekliči</string>
   <string name="vault_delete_dialog_delete_action">Izbriši</string>
+  <string name="vault_add_folder_dialog_create_action">Create</string>
   <string name="vault_delete_dialog_shared_items_warning" comment="The placeholder will be replaced by the number of shared items, e.g 2 shared items">This vault holds %1$s. Deleting it will remove access for all other users.</string>
   <string name="vault_leave_dialog_title">Zapusti trezor</string>
   <string name="vault_leave_dialog_body">S tem boste odstranili vaš dostop do trezorja __VAULT_NAME__ in vse njegove vsebine. Ste prepričani, da želite oditi?</string>

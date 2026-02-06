@@ -13,10 +13,14 @@
   <string name="snackbar_find_vault_error">No se encuentra la caja fuerte seleccionada.</string>
   <string name="snackbar_get_vault_list_error">No se ha podido cargar la lista de cajas fuertes.</string>
   <string name="vault_delete_dialog_title">Eliminar caja fuerte</string>
+  <string name="vault_add_folder_dialog_title">Ingresa un título de carpeta</string>
+  <string name="vault_add_foldersame_folder_exist">Ya existe una carpeta con el mismo nombre</string>
   <string name="vault_delete_dialog_body">Esto eliminará permanentemente la caja fuerte __VAULT_NAME__ y todo su contenido. Escribe el nombre de la caja fuerte para confirmar la eliminación.</string>
   <string name="vault_delete_dialog_placeholder">Nombre de la caja fuerte</string>
+  <string name="vault_add_folder_dialog_placeholder">Nombre de la carpeta</string>
   <string name="vault_delete_dialog_cancel_action">Cancelar</string>
   <string name="vault_delete_dialog_delete_action">Eliminar</string>
+  <string name="vault_add_folder_dialog_create_action">Crear</string>
   <string name="vault_delete_dialog_shared_items_warning" comment="The placeholder will be replaced by the number of shared items, e.g 2 shared items">Esta caja fuerte contiene %1$s. Si la eliminas, se eliminará el acceso a todos los demás usuarios.</string>
   <string name="vault_leave_dialog_title">Abandonar la caja fuerte</string>
   <string name="vault_leave_dialog_body">Esto eliminará el acceso a la caja fuerte __VAULT_NAME__ y todo su contenido. ¿Estás seguro de que quieres abandonarla?</string>

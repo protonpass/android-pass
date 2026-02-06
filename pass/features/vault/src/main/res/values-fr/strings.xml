@@ -13,10 +13,14 @@
   <string name="snackbar_find_vault_error">Le coffre-fort sélectionné est introuvable.</string>
   <string name="snackbar_get_vault_list_error">Impossible de charger la liste des coffres-forts</string>
   <string name="vault_delete_dialog_title">Supprimer le coffre-fort</string>
+  <string name="vault_add_folder_dialog_title">Saisir un titre de dossier</string>
+  <string name="vault_add_foldersame_folder_exist">Un dossier portant le même nom existe déjà.</string>
   <string name="vault_delete_dialog_body">Ceci supprimera définitivement le coffre-fort « __VAULT_NAME__ » et tout son contenu. Saisissez le nom du coffre-fort pour confirmer la suppression.</string>
   <string name="vault_delete_dialog_placeholder">Nom du coffre-fort</string>
+  <string name="vault_add_folder_dialog_placeholder">Nom du dossier</string>
   <string name="vault_delete_dialog_cancel_action">Annuler</string>
   <string name="vault_delete_dialog_delete_action">Supprimer</string>
+  <string name="vault_add_folder_dialog_create_action">Créer</string>
   <string name="vault_delete_dialog_shared_items_warning" comment="The placeholder will be replaced by the number of shared items, e.g 2 shared items">Ce coffre-fort contient %1$s. Sa suppression en retirera l\'accès à tous les autres utilisateurs.</string>
   <string name="vault_leave_dialog_title">Quitter le coffre-fort</string>
   <string name="vault_leave_dialog_body">Cela retirera votre accès au coffre-fort __VAULT_NAME__ et à son contenu. Voulez-vous vraiment le quitter ?</string>

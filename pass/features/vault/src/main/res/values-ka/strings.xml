@@ -13,10 +13,14 @@
   <string name="snackbar_find_vault_error">არჩეული საცავის მოძებნა შეუძლებელია</string>
   <string name="snackbar_get_vault_list_error">საცავების სიის ჩატვირთვა შეუძლებელია</string>
   <string name="vault_delete_dialog_title">საცავის წაშლა</string>
+  <string name="vault_add_folder_dialog_title">Enter a folder title</string>
+  <string name="vault_add_foldersame_folder_exist">A folder with the same name already exists</string>
   <string name="vault_delete_dialog_body">ეს სამუდამოდ წაშლის საცავს __VAULT_NAME__ და მის შემცველობას. წაშლის დასადასტურებლად შეიყვანეთ საცავის სახელი.</string>
   <string name="vault_delete_dialog_placeholder">საცავის სახელი</string>
+  <string name="vault_add_folder_dialog_placeholder">Folder name</string>
   <string name="vault_delete_dialog_cancel_action">გაუქმება</string>
   <string name="vault_delete_dialog_delete_action">წაშლა</string>
+  <string name="vault_add_folder_dialog_create_action">Create</string>
   <string name="vault_delete_dialog_shared_items_warning" comment="The placeholder will be replaced by the number of shared items, e.g 2 shared items">ეს საცავი შეიცავს %1$s-ს. მიწი წაშლა ყველა სხვა მომხმარებლის წვდომასაც წაშლის.</string>
   <string name="vault_leave_dialog_title">საცავის დატოვება</string>
   <string name="vault_leave_dialog_body">ეს საცავიდან __VAULT_NAME__ და მისი შემცველობისგან თქვენს წვდომებს წაშლის. მართლა გნებავთ, გახვიდეთ?</string>

@@ -8,7 +8,7 @@
   <string name="autofill_dialog_just_autofill">Bir kez kullan</string>
   <string name="autofill_dialog_cancel">İptal</string>
   <string name="autofill_notification_copy_to_clipboard">Tek kullanımlık parola panoya kopyalandı</string>
-  <string name="autofill_dialog_associate_title">Oturum açma kullanılsın mı?</string>
+  <string name="autofill_dialog_associate_title">Oturum açma kaydı kullanılsın mı?</string>
   <string name="autofill_user_logged_out">Oturumunuz kapatıldı. Lütfen uygulamayı yeniden açarak oturum açın.</string>
   <string name="autofill_confirm_dangerous_title" comment="Title for the dialog that will appear when the user clicks on Autofill but we think it may be a dangerous action">İşleminizi onaylayın</string>
   <string name="autofill_confirm_dangerous_body" comment="Body for the dialog that will appear when the user clicks on Autofill but we think it may be a dangerous action">Geçerli uygulamanız tarafından açılan bir sitede kimlik bilgilerinizi otomatik olarak doldurmak üzeresiniz. Uygulama, otomatik doldurmanın ardından kimlik bilgilerine erişebilir. Bu işlemi yalnızca uygulamaya güveniyorsanız yapın.</string>

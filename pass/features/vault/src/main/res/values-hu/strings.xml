@@ -13,10 +13,14 @@
   <string name="snackbar_find_vault_error">Nem található a kiválasztott tároló</string>
   <string name="snackbar_get_vault_list_error">A tárolók listájának betöltése nem sikerült</string>
   <string name="vault_delete_dialog_title">Tároló törlése</string>
+  <string name="vault_add_folder_dialog_title">Enter a folder title</string>
+  <string name="vault_add_foldersame_folder_exist">A folder with the same name already exists</string>
   <string name="vault_delete_dialog_body">Ez véglegesen törli a __VAULT_NAME__ tárolót és annak minden tartalmát. A törlés megerősítéséhez írja be a tároló nevét.</string>
   <string name="vault_delete_dialog_placeholder">Tároló neve</string>
+  <string name="vault_add_folder_dialog_placeholder">Folder name</string>
   <string name="vault_delete_dialog_cancel_action">Mégsem</string>
   <string name="vault_delete_dialog_delete_action">Törlés</string>
+  <string name="vault_add_folder_dialog_create_action">Create</string>
   <string name="vault_delete_dialog_shared_items_warning" comment="The placeholder will be replaced by the number of shared items, e.g 2 shared items">Ez a tároló %1$s-t tartalmaz. Törlésével minden más felhasználó számára megszűnik a hozzáférés.</string>
   <string name="vault_leave_dialog_title">Tároló elhagyása</string>
   <string name="vault_leave_dialog_body">Ez eltávolítja a hozzáférést a(z) __VAULT_NAME__ tárolóhoz és annak teljes tartalmához. Biztos, hogy ki akarsz lépni?</string>

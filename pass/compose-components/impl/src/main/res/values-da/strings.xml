@@ -32,6 +32,10 @@
   <string name="bottomsheet_monitor_exclude">Undtag fra monitorering</string>
   <string name="bottomsheet_monitor_include">Inkluder i monitorering</string>
   <string name="bottomsheet_migrate_item">Flyt til en anden boks</string>
+  <string name="bottomsheet_create_folder">Opret mappe</string>
+  <string name="folder_tree_create_folder">Opret mappe</string>
+  <string name="bottomsheet_rename_folder">Omdøb</string>
+  <string name="bottomsheet_create_sub_folder">Opret undermappe</string>
   <string name="bottomsheet_copy_item_note">Kopiér note</string>
   <string name="bottomsheet_delete_permanently">Slet permanent</string>
   <string name="bottomsheet_restore">Gendan</string>

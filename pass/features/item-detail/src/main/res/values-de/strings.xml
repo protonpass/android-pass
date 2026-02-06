@@ -38,8 +38,8 @@
   <string name="login_item_monitor_widget_weak_pass_title">Schwaches Kennwort</string>
   <string name="login_item_monitor_widget_weak_pass_subtitle">Dieses Konto ist angreifbar, besuche den Dienst und ändere dein Passwort.</string>
   <plurals name="login_item_monitor_widget_reused_pass_title">
-    <item quantity="one">%d andere Anmeldung verwendet das gleiche Passwort.</item>
-    <item quantity="other">%d andere Anmeldungen verwenden das gleiche Passwort.</item>
+    <item quantity="one">%d weitere Anmeldeinformation verwendet das selbe Passwort.</item>
+    <item quantity="other">%d andere Zugangsdaten verwenden das selbe Passwort.</item>
   </plurals>
   <string name="login_item_monitor_widget_missing_two_fa_title">Richte 2FA für mehr Sicherheit ein</string>
   <string name="login_item_monitor_widget_missing_two_fa_subtitle">Dieser Dienst unterstützt 2FA. Aktiviere sie für zusätzliche Kontosicherheit.</string>

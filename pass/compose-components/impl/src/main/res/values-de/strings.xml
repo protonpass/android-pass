@@ -10,7 +10,7 @@
   <string name="item_list_header_all_search_results">Alle</string>
   <string name="item_list_header_pinned_search_results">Angeheftet</string>
   <string name="item_list_header_logins_type">Zugangsdaten</string>
-  <string name="item_list_header_logins_totp_type">Logins mit Einmalpasswort</string>
+  <string name="item_list_header_logins_totp_type">Zugangsdaten mit Einmalpasswort</string>
   <string name="item_list_header_aliases_type">Aliasse</string>
   <string name="item_list_header_notes_type">Notizen</string>
   <string name="item_list_header_credit_cards_type">Kreditkarten</string>
@@ -32,6 +32,10 @@
   <string name="bottomsheet_monitor_exclude">Von der Überwachung ausschließen</string>
   <string name="bottomsheet_monitor_include">In die Überwachung einbeziehen</string>
   <string name="bottomsheet_migrate_item">In einen anderen Tresor verschieben</string>
+  <string name="bottomsheet_create_folder">Ordner erstellen</string>
+  <string name="folder_tree_create_folder">Ordner erstellen</string>
+  <string name="bottomsheet_rename_folder">Umbenennen</string>
+  <string name="bottomsheet_create_sub_folder">Unterordner erstellen</string>
   <string name="bottomsheet_copy_item_note">Notiz kopieren</string>
   <string name="bottomsheet_delete_permanently">Dauerhaft löschen</string>
   <string name="bottomsheet_restore">Wiederherstellen</string>
@@ -315,8 +319,8 @@
   <string name="login_item_monitor_widget_weak_pass_title">Schwaches Kennwort</string>
   <string name="login_item_monitor_widget_weak_pass_subtitle">Dieses Konto ist angreifbar, besuche den Dienst und ändere dein Passwort.</string>
   <plurals name="login_item_monitor_widget_reused_pass_title">
-    <item quantity="one">%d andere Anmeldung verwendet das gleiche Passwort.</item>
-    <item quantity="other">%d andere Anmeldungen verwenden das gleiche Passwort.</item>
+    <item quantity="one">%d weitere Anmeldeinformation verwendet das selbe Passwort.</item>
+    <item quantity="other">%d andere Zugangsdaten verwenden das selbe Passwort.</item>
   </plurals>
   <string name="login_item_monitor_widget_missing_two_fa_title">Richte 2FA für mehr Sicherheit ein</string>
   <string name="login_item_monitor_widget_missing_two_fa_subtitle">Dieser Dienst unterstützt 2FA. Aktiviere sie für zusätzliche Kontosicherheit.</string>

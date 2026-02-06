@@ -214,7 +214,7 @@
   <string name="banner_mailbox_subtitle">Share aliases with others by adding their inbox as an additional mailbox.</string>
   <string name="banner_mailbox_button">Dodaj poštni predal</string>
   <!-- Suffix -->
-  <string name="suffix_subtitle_premium_domain">Premium domena</string>
+  <string name="suffix_subtitle_premium_domain">Premijska domena</string>
   <string name="suffix_subtitle_public_domain">Public domain</string>
   <string name="suffix_subtitle_private_domain">Vaša domena</string>
   <!-- Templates -->

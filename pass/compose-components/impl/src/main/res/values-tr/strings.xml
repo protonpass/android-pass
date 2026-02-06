@@ -32,6 +32,10 @@
   <string name="bottomsheet_monitor_exclude">İzlemeye katma</string>
   <string name="bottomsheet_monitor_include">İzlemeye kat</string>
   <string name="bottomsheet_migrate_item">Başka bir kasaya taşı</string>
+  <string name="bottomsheet_create_folder">Klasör oluştur</string>
+  <string name="folder_tree_create_folder">Klasör oluştur</string>
+  <string name="bottomsheet_rename_folder">Yeniden adlandır</string>
+  <string name="bottomsheet_create_sub_folder">Alt klasör oluştur</string>
   <string name="bottomsheet_copy_item_note">Notu kopyala</string>
   <string name="bottomsheet_delete_permanently">Kalıcı olarak sil</string>
   <string name="bottomsheet_restore">Geri yükle</string>
@@ -312,14 +316,14 @@
   <string name="show_network_qr_code">Ağ kare kodunu görüntüle</string>
   <string name="expand_collpased_text">daha fazla</string>
   <string name="collapse_expanded_text">daha az</string>
-  <string name="login_item_monitor_widget_weak_pass_title">Zayıf Parola</string>
+  <string name="login_item_monitor_widget_weak_pass_title">Parola zayıf</string>
   <string name="login_item_monitor_widget_weak_pass_subtitle">Bu hesap ele geçirilebilir. Hizmeti ziyaret edin ve parolanızı değiştirin.</string>
   <plurals name="login_item_monitor_widget_reused_pass_title">
     <item quantity="one">%d oturum açma kaydı aynı parolayı kullanıyor</item>
     <item quantity="other">%d oturum açma kaydı aynı parolayı kullanıyor</item>
   </plurals>
   <string name="login_item_monitor_widget_missing_two_fa_title">Güvenliği artırmak için iki adımlı doğrulamayı açın</string>
-  <string name="login_item_monitor_widget_missing_two_fa_subtitle">Bu hizmet iki adımlı doğrulama sağlıyor. Hesap güvenliğini artırmak için bunu kullanın.</string>
+  <string name="login_item_monitor_widget_missing_two_fa_subtitle">Bu hizmette iki adımlı doğrulama özelliği var. Hesap güvenliğini artırmak için bunu kullanın.</string>
   <string name="login_item_reused_passwords_subtitle">Kasalarınızda bu parolayı kullanan ögeler.</string>
   <string name="mfa_limit_reached">İki adımlı doğrulama sınırına ulaşıldı</string>
   <string name="activity_in_last_two_weeks">Son 14 gündeki etkinlikler</string>

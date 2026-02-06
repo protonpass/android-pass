@@ -32,6 +32,10 @@
   <string name="bottomsheet_monitor_exclude">Excluir da monitorização</string>
   <string name="bottomsheet_monitor_include">Incluir na monitorização</string>
   <string name="bottomsheet_migrate_item">Mover para outro cofre</string>
+  <string name="bottomsheet_create_folder">Create folder</string>
+  <string name="folder_tree_create_folder">Create folder</string>
+  <string name="bottomsheet_rename_folder">Rename</string>
+  <string name="bottomsheet_create_sub_folder">Create sub-folder</string>
   <string name="bottomsheet_copy_item_note">Copiar nota</string>
   <string name="bottomsheet_delete_permanently">Eliminar permanentemente</string>
   <string name="bottomsheet_restore">Restaurar</string>

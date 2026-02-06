@@ -26,9 +26,9 @@
                 android:name="proton.android.pass.telemetry.impl.startup.TelemetryInitializer"
                 android:value="androidx.startup"
                 tools:node="remove" />
-                
+
             <meta-data
-                android:name="proton.android.pass.initializer.LoggerInitializer"
+                android:name="proton.android.pass.log.impl.LoggerInitializer"
                 android:value="androidx.startup"
                 tools:node="remove" />
                 

@@ -31,6 +31,10 @@
   <string name="bottomsheet_monitor_exclude">Kecualikan dari pemantauan</string>
   <string name="bottomsheet_monitor_include">Sertakan dalam pemantauan</string>
   <string name="bottomsheet_migrate_item">Pindahkan ke brankas lainnya</string>
+  <string name="bottomsheet_create_folder">Create folder</string>
+  <string name="folder_tree_create_folder">Create folder</string>
+  <string name="bottomsheet_rename_folder">Rename</string>
+  <string name="bottomsheet_create_sub_folder">Create sub-folder</string>
   <string name="bottomsheet_copy_item_note">Salin catatan</string>
   <string name="bottomsheet_delete_permanently">Hapus secara permanen</string>
   <string name="bottomsheet_restore">Pulihkan</string>

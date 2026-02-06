@@ -264,7 +264,7 @@
   <string name="ssh_key_type_ed25519">Ed25519</string>
   <string name="ssh_key_type_rsa_2048">RSA-2048</string>
   <string name="ssh_key_type_rsa_4096">RSA-4096</string>
-  <string name="ssh_key_generation_error">Nepodařilo se vygenerovat SSH klíč</string>
+  <string name="ssh_key_generation_error">Generování SSH klíče selhalo</string>
   <!-- WiFi Network Fields -->
   <string name="template_wifi_network_field_name">Název (SSID)</string>
   <!-- Bank Account Fields -->

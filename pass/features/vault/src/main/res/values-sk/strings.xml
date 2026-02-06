@@ -13,10 +13,14 @@
   <string name="snackbar_find_vault_error">Nemožno nájsť vybraný trezor</string>
   <string name="snackbar_get_vault_list_error">Zoznam trezorov sa nepodarilo načítať</string>
   <string name="vault_delete_dialog_title">Odstrániť trezor</string>
+  <string name="vault_add_folder_dialog_title">Zadajte názov priečinka</string>
+  <string name="vault_add_foldersame_folder_exist">Priečinok s rovnakým názvom už existuje</string>
   <string name="vault_delete_dialog_body">Týmto sa natrvalo odstráni trezor __VAULT_NAME__ a celý jeho obsah. Zadaním názvu trezoru potvrdíte vymazanie.</string>
   <string name="vault_delete_dialog_placeholder">Názov trezoru</string>
+  <string name="vault_add_folder_dialog_placeholder">Názov priečinka</string>
   <string name="vault_delete_dialog_cancel_action">Zrušiť</string>
   <string name="vault_delete_dialog_delete_action">Vymazať</string>
+  <string name="vault_add_folder_dialog_create_action">Vytvoriť</string>
   <string name="vault_delete_dialog_shared_items_warning" comment="The placeholder will be replaced by the number of shared items, e.g 2 shared items">Tento trezor obsahuje %1$s. Jeho odstránením sa zruší prístup pre všetkých ostatných používateľov.</string>
   <string name="vault_leave_dialog_title">Opustiť trezor</string>
   <string name="vault_leave_dialog_body">Týmto sa odstráni váš prístup k trezoru __VAULT_NAME__ a k celému jeho obsahu. Naozaj chcete odísť?</string>

@@ -13,10 +13,14 @@
   <string name="snackbar_find_vault_error">找不到选定的保险库</string>
   <string name="snackbar_get_vault_list_error">无法加载保险库列表</string>
   <string name="vault_delete_dialog_title">删除保管库</string>
+  <string name="vault_add_folder_dialog_title">Enter a folder title</string>
+  <string name="vault_add_foldersame_folder_exist">A folder with the same name already exists</string>
   <string name="vault_delete_dialog_body">这将永久删除保险库 __VAULT_NAME__ 及其所有内容。输入保险库名称以确认删除。</string>
   <string name="vault_delete_dialog_placeholder">保险库名称</string>
+  <string name="vault_add_folder_dialog_placeholder">Folder name</string>
   <string name="vault_delete_dialog_cancel_action">取消</string>
   <string name="vault_delete_dialog_delete_action">刪除</string>
+  <string name="vault_add_folder_dialog_create_action">Create</string>
   <string name="vault_delete_dialog_shared_items_warning" comment="The placeholder will be replaced by the number of shared items, e.g 2 shared items">此保险库包含 %1$s。删除它将删除所有其他用户的访问权限。</string>
   <string name="vault_leave_dialog_title">离开保险库</string>
   <string name="vault_leave_dialog_body">这将删除您对保险库 __VAULT_NAME__ 及其所有内容的访问权限。您确定要离开吗？</string>

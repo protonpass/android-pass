@@ -13,10 +13,14 @@
   <string name="snackbar_find_vault_error">Nie można znaleźć sejfu</string>
   <string name="snackbar_get_vault_list_error">Lista sejfów nie mogła zostać załadowana</string>
   <string name="vault_delete_dialog_title">Usuń sejf</string>
+  <string name="vault_add_folder_dialog_title">Enter a folder title</string>
+  <string name="vault_add_foldersame_folder_exist">A folder with the same name already exists</string>
   <string name="vault_delete_dialog_body">Spowoduje to trwałe usunięcie sejfu __VAULT_NAME__ i jego zawartości. Wpisz nazwę sejfu, aby potwierdzić usunięcie.</string>
   <string name="vault_delete_dialog_placeholder">Nazwa sejfu</string>
+  <string name="vault_add_folder_dialog_placeholder">Folder name</string>
   <string name="vault_delete_dialog_cancel_action">Anuluj</string>
   <string name="vault_delete_dialog_delete_action">Usuń</string>
+  <string name="vault_add_folder_dialog_create_action">Create</string>
   <string name="vault_delete_dialog_shared_items_warning" comment="The placeholder will be replaced by the number of shared items, e.g 2 shared items">Sejf zawiera %1$s. Usunięcie go spowoduje zatrzymanie udostępniania.</string>
   <string name="vault_leave_dialog_title">Opuść sejf</string>
   <string name="vault_leave_dialog_body">Spowoduje to utratę dostępu do sejfu __VAULT_NAME__. Czy chcesz opuścić sejf?</string>

@@ -13,10 +13,14 @@
   <string name="snackbar_find_vault_error">無法找到選取的保管庫</string>
   <string name="snackbar_get_vault_list_error">無法載入保管清單單</string>
   <string name="vault_delete_dialog_title">刪除保管庫</string>
+  <string name="vault_add_folder_dialog_title">Enter a folder title</string>
+  <string name="vault_add_foldersame_folder_exist">A folder with the same name already exists</string>
   <string name="vault_delete_dialog_body">此將永久刪除__VAULT_NAME__保管庫及其內容。輸入保管庫名稱已繼續。</string>
   <string name="vault_delete_dialog_placeholder">保管庫名稱</string>
+  <string name="vault_add_folder_dialog_placeholder">Folder name</string>
   <string name="vault_delete_dialog_cancel_action">取消</string>
   <string name="vault_delete_dialog_delete_action">刪除</string>
+  <string name="vault_add_folder_dialog_create_action">Create</string>
   <string name="vault_delete_dialog_shared_items_warning" comment="The placeholder will be replaced by the number of shared items, e.g 2 shared items">此保管庫包含 %1$s。刪除此保管庫將會移除所有其他使用者的存取權限。</string>
   <string name="vault_leave_dialog_title">離開保管庫</string>
   <string name="vault_leave_dialog_body">此將移除您存取__VAULT_NAME__保管庫的權限及全部內容。確定要離開?</string>

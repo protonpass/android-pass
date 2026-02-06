@@ -13,10 +13,14 @@
   <string name="snackbar_find_vault_error">Ausgewählter Tresor konnte nicht gefunden werden</string>
   <string name="snackbar_get_vault_list_error">Tresorliste konnte nicht geladen werden.</string>
   <string name="vault_delete_dialog_title">Tresor löschen</string>
+  <string name="vault_add_folder_dialog_title">Namen des Ordners eingeben</string>
+  <string name="vault_add_foldersame_folder_exist">Ein Ordner mit diesem Namen existiert bereits</string>
   <string name="vault_delete_dialog_body">Dadurch wird der Tresor __VAULT_NAME__ und alle seine Inhalte dauerhaft gelöscht. Bitte gib den Tresornamen ein, um die Löschung zu bestätigen.</string>
   <string name="vault_delete_dialog_placeholder">Tresorname</string>
+  <string name="vault_add_folder_dialog_placeholder">Ordnername</string>
   <string name="vault_delete_dialog_cancel_action">Abbrechen</string>
   <string name="vault_delete_dialog_delete_action">Löschen</string>
+  <string name="vault_add_folder_dialog_create_action">Erstellen</string>
   <string name="vault_delete_dialog_shared_items_warning" comment="The placeholder will be replaced by the number of shared items, e.g 2 shared items">Dieser Tresor enthält %1$s. Das Löschen wird den Zugriff für alle anderen Nutzer entfernen.</string>
   <string name="vault_leave_dialog_title">Tresor verlassen</string>
   <string name="vault_leave_dialog_body">Dadurch wird dein Zugriff auf den Tresor __VAULT_NAME__ und alle seine Inhalte entfernt. Bist du sicher, dass du ihn verlassen willst?</string>

@@ -32,6 +32,10 @@
   <string name="bottomsheet_monitor_exclude">Exkludera från övervakning</string>
   <string name="bottomsheet_monitor_include">Inkludera i övervakning</string>
   <string name="bottomsheet_migrate_item">Flytta till annat valv</string>
+  <string name="bottomsheet_create_folder">Skapa mapp</string>
+  <string name="folder_tree_create_folder">Skapa mapp</string>
+  <string name="bottomsheet_rename_folder">Byt namn</string>
+  <string name="bottomsheet_create_sub_folder">Skapa undermapp</string>
   <string name="bottomsheet_copy_item_note">Kopiera anteckning</string>
   <string name="bottomsheet_delete_permanently">Ta bort permanent</string>
   <string name="bottomsheet_restore">Återställ</string>

@@ -13,10 +13,14 @@
   <string name="snackbar_find_vault_error">Kan ikke finde valgte boks</string>
   <string name="snackbar_get_vault_list_error">Listen over bokse kunne ikke indlæses</string>
   <string name="vault_delete_dialog_title">Slet boks</string>
+  <string name="vault_add_folder_dialog_title">Indtast en mappetitel</string>
+  <string name="vault_add_foldersame_folder_exist">En mappe med det samme navn findes allerede</string>
   <string name="vault_delete_dialog_body">Dette vil permanent slette boksen __VAULT_NAME__ og alt dens indhold. Indtast boksens navn for at bekræfte sletningen.</string>
   <string name="vault_delete_dialog_placeholder">Boksnavn</string>
+  <string name="vault_add_folder_dialog_placeholder">Mappenavn</string>
   <string name="vault_delete_dialog_cancel_action">Annuller</string>
   <string name="vault_delete_dialog_delete_action">Slet</string>
+  <string name="vault_add_folder_dialog_create_action">Opret</string>
   <string name="vault_delete_dialog_shared_items_warning" comment="The placeholder will be replaced by the number of shared items, e.g 2 shared items">Denne boks indeholder %1$s. Hvis du sletter den, fjernes adgangen for alle andre brugere.</string>
   <string name="vault_leave_dialog_title">Forlad boks</string>
   <string name="vault_leave_dialog_body">Dette vil fjerne din adgang fra boksen __VAULT_NAME__ og al dens indhold. Er du sikker på, at du vil forlade den?</string>

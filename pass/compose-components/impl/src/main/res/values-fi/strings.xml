@@ -32,6 +32,10 @@
   <string name="bottomsheet_monitor_exclude">Poissulje valvonnasta</string>
   <string name="bottomsheet_monitor_include">Sisällytä valvontaan</string>
   <string name="bottomsheet_migrate_item">Siirrä toiseen holviin</string>
+  <string name="bottomsheet_create_folder">Create folder</string>
+  <string name="folder_tree_create_folder">Create folder</string>
+  <string name="bottomsheet_rename_folder">Rename</string>
+  <string name="bottomsheet_create_sub_folder">Create sub-folder</string>
   <string name="bottomsheet_copy_item_note">Kopioi muistiinpano</string>
   <string name="bottomsheet_delete_permanently">Poista pysyvästi</string>
   <string name="bottomsheet_restore">Palauta</string>

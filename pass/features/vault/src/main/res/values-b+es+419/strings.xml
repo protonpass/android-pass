@@ -13,10 +13,14 @@
   <string name="snackbar_find_vault_error">No se encuentra la bóveda seleccionada</string>
   <string name="snackbar_get_vault_list_error">No se pudo cargar la lista de bóveda</string>
   <string name="vault_delete_dialog_title">Eliminar bóveda</string>
+  <string name="vault_add_folder_dialog_title">Ingrese un título de carpeta</string>
+  <string name="vault_add_foldersame_folder_exist">Ya existe una carpeta con el mismo nombre</string>
   <string name="vault_delete_dialog_body">Esto eliminará permanentemente la bóveda __VAULT_NAME__ y todo su contenido. Escriba el nombre de la bóveda para confirmar la eliminación.</string>
   <string name="vault_delete_dialog_placeholder">Nombre de la bóveda</string>
+  <string name="vault_add_folder_dialog_placeholder">Nombre de la carpeta</string>
   <string name="vault_delete_dialog_cancel_action">Cancelar</string>
   <string name="vault_delete_dialog_delete_action">Eliminar</string>
+  <string name="vault_add_folder_dialog_create_action">Crear</string>
   <string name="vault_delete_dialog_shared_items_warning" comment="The placeholder will be replaced by the number of shared items, e.g 2 shared items">Esta bóveda contiene %1$s. Si la elimina, se eliminará el acceso a todos los demás usuarios.</string>
   <string name="vault_leave_dialog_title">Dejar la bóveda</string>
   <string name="vault_leave_dialog_body">Esto eliminará su acceso de la bóveda __VAULT_NAME__ y todo su contenido. ¿En verdad desea abandonarla?</string>

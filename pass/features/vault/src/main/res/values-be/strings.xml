@@ -13,10 +13,14 @@
   <string name="snackbar_find_vault_error">Немагчыма знайсці выбранае сховішча</string>
   <string name="snackbar_get_vault_list_error">Не атрымалася загрузіць спіс сховішчаў</string>
   <string name="vault_delete_dialog_title">Выдаліць сховішча</string>
+  <string name="vault_add_folder_dialog_title">Enter a folder title</string>
+  <string name="vault_add_foldersame_folder_exist">A folder with the same name already exists</string>
   <string name="vault_delete_dialog_body">Дзеянне прывядзе да выдалення сховішча з назвай __VAULT_NAME__ і ўсяго яго змесціва. Увядзіце назву сховішча, каб пацвердзіць выдаленне.</string>
   <string name="vault_delete_dialog_placeholder">Назва сховішча</string>
+  <string name="vault_add_folder_dialog_placeholder">Folder name</string>
   <string name="vault_delete_dialog_cancel_action">Скасаваць</string>
   <string name="vault_delete_dialog_delete_action">Выдаліць</string>
+  <string name="vault_add_folder_dialog_create_action">Create</string>
   <string name="vault_delete_dialog_shared_items_warning" comment="The placeholder will be replaced by the number of shared items, e.g 2 shared items">Гэта сховішча ўтрымлівае %1$s. Яго выдаленне пазбавіць доступу ўсіх іншых карыстальнікаў.</string>
   <string name="vault_leave_dialog_title">Выйсці са сховішча</string>
   <string name="vault_leave_dialog_body">Гэта прывядзе да выдалення доступу вашага сховішча з назвай __VAULT_NAME__ і ўсяго яго змесціва. Вы ўпэўнены, што хочаце выйсці?</string>

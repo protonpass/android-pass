@@ -13,10 +13,14 @@
   <string name="snackbar_find_vault_error">Valittua holvia ei löytynyt</string>
   <string name="snackbar_get_vault_list_error">Holvilistaa ei voitu ladata</string>
   <string name="vault_delete_dialog_title">Poista holvi</string>
+  <string name="vault_add_folder_dialog_title">Enter a folder title</string>
+  <string name="vault_add_foldersame_folder_exist">A folder with the same name already exists</string>
   <string name="vault_delete_dialog_body">Tämä poistaa holvin __VAULT_NAME__ ja kaiken sen sisällön pysyvästi. Vahvista poisto syöttämällä holvin nimi.</string>
   <string name="vault_delete_dialog_placeholder">Holvin nimi</string>
+  <string name="vault_add_folder_dialog_placeholder">Folder name</string>
   <string name="vault_delete_dialog_cancel_action">Peruuta</string>
   <string name="vault_delete_dialog_delete_action">Poista</string>
+  <string name="vault_add_folder_dialog_create_action">Create</string>
   <string name="vault_delete_dialog_shared_items_warning" comment="The placeholder will be replaced by the number of shared items, e.g 2 shared items">Tämä holvi sisältää %1$s. Sen poistaminen estää pääsyn myös muilta käyttäjiltä.</string>
   <string name="vault_leave_dialog_title">Poistu holvista</string>
   <string name="vault_leave_dialog_body">Tämä mitätöi käyttöoikeutesi holviin __VAULT_NAME__ ja sen sisältöön. Haluatko varmasti poistua?</string>

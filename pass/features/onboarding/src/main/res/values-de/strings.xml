@@ -2,7 +2,7 @@
 <resources>
   <string name="on_boarding_autofill_content">Lass Proton Pass die Anmeldedaten für dich ausfüllen. Kein Tippen oder Einfügen erforderlich.</string>
   <string name="on_boarding_autofill_title">Melde dich sofort bei Apps an</string>
-  <string name="on_boarding_autofill_content_v2">Lass Proton Pass deine Anmeldedaten für dich ausfüllen. Kein Tippen oder Kopieren und Einfügen erforderlich.</string>
+  <string name="on_boarding_autofill_content_v2">Lass Proton Pass deine Zugangsdaten für dich ausfüllen. Kein Tippen oder Kopieren und Einfügen erforderlich.</string>
   <string name="on_boarding_autofill_title_v2">Genieße die Magie von AutoFill</string>
   <string name="on_boarding_autofill_button">Mit Proton Pass automatisch ausfüllen</string>
   <string name="on_boarding_fingerprint_content">Stelle Proton Pass so ein, dass es mit deinem Fingerabdruck entsperrt wird, damit nur du Zugang hast.</string>

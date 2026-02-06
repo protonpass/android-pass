@@ -13,10 +13,14 @@
   <string name="snackbar_find_vault_error">Không thể tìm thấy két sắt đã chọn</string>
   <string name="snackbar_get_vault_list_error">Không thể tải danh sách két sắt</string>
   <string name="vault_delete_dialog_title">Xóa két sắt</string>
+  <string name="vault_add_folder_dialog_title">Enter a folder title</string>
+  <string name="vault_add_foldersame_folder_exist">A folder with the same name already exists</string>
   <string name="vault_delete_dialog_body">Điều này sẽ xóa vĩnh viễn két sắt __VAULT_NAME__ và tất cả mục chứa bên trong. Nhập tên của két sắt để xác nhận việc xóa.</string>
   <string name="vault_delete_dialog_placeholder">Tên két sắt</string>
+  <string name="vault_add_folder_dialog_placeholder">Folder name</string>
   <string name="vault_delete_dialog_cancel_action">Hủy</string>
   <string name="vault_delete_dialog_delete_action">Xóa</string>
+  <string name="vault_add_folder_dialog_create_action">Create</string>
   <string name="vault_delete_dialog_shared_items_warning" comment="The placeholder will be replaced by the number of shared items, e.g 2 shared items">This vault holds %1$s. Deleting it will remove access for all other users.</string>
   <string name="vault_leave_dialog_title">Rời khởi két sắt</string>
   <string name="vault_leave_dialog_body">Điều này sẽ gỡ truy cập của bạn đến két sắt __VAULT_NAME__ và tất cả mục chứa bên trong đó. Bạn có thực sự muốn rời khỏi không?</string>

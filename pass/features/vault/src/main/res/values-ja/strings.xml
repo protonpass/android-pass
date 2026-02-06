@@ -13,10 +13,14 @@
   <string name="snackbar_find_vault_error">選択された保管庫が見つかりません</string>
   <string name="snackbar_get_vault_list_error">保管庫のリストを読み込めません</string>
   <string name="vault_delete_dialog_title">保管庫の削除</string>
+  <string name="vault_add_folder_dialog_title">Enter a folder title</string>
+  <string name="vault_add_foldersame_folder_exist">A folder with the same name already exists</string>
   <string name="vault_delete_dialog_body">これにより、保管庫__VAULT_NAME__とそのすべての内容が完全に削除されます。 削除を確認するために保管庫名を入力してください。</string>
   <string name="vault_delete_dialog_placeholder">保管庫名</string>
+  <string name="vault_add_folder_dialog_placeholder">Folder name</string>
   <string name="vault_delete_dialog_cancel_action">キャンセル</string>
   <string name="vault_delete_dialog_delete_action">削除</string>
+  <string name="vault_add_folder_dialog_create_action">Create</string>
   <string name="vault_delete_dialog_shared_items_warning" comment="The placeholder will be replaced by the number of shared items, e.g 2 shared items">この保管庫は %1$sを保持しています。削除すると他のすべてのユーザーのアクセス権が削除されます。</string>
   <string name="vault_leave_dialog_title">保管庫を退出</string>
   <string name="vault_leave_dialog_body">この操作により、保管庫 __VAULT_NAME__ とすべてのコンテンツへのアクセスを失います。退出してよろしいですか？</string>

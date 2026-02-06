@@ -84,7 +84,7 @@ import proton.android.pass.features.profile.accountswitcher.AccountItem
 import proton.android.pass.features.profile.accountswitcher.AccountListItem
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.SnackbarDispatcher
-import proton.android.pass.passkeys.api.CheckPasskeySupport
+import proton.android.pass.passkeys.api.CanDeviceSupportPasskeys
 import proton.android.pass.passkeys.api.PasskeySupport
 import proton.android.pass.preferences.AppLockTypePreference
 import proton.android.pass.preferences.BiometricSystemLockPreference
@@ -103,7 +103,7 @@ class ProfileViewModel @Inject constructor(
     private val clipboardManager: ClipboardManager,
     private val snackbarDispatcher: SnackbarDispatcher,
     private val appConfig: AppConfig,
-    private val checkPasskeySupport: CheckPasskeySupport,
+    private val canDeviceSupportPasskeys: CanDeviceSupportPasskeys,
     private val userManager: UserManager,
     private val performSync: PerformSync,
     private val searchOptionsRepository: HomeSearchOptionsRepository,
@@ -200,7 +200,7 @@ class ProfileViewModel @Inject constructor(
 
     private val passkeySupportFlow: Flow<ProfilePasskeySupportSection> =
         oneShot<ProfilePasskeySupportSection> {
-            val support = checkPasskeySupport()
+            val support = canDeviceSupportPasskeys()
             if (support is PasskeySupport.NotSupported &&
                 support.reason == PasskeySupport.NotSupportedReason.Quest
             ) {

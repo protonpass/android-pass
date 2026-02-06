@@ -5,7 +5,7 @@ import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import proton.android.pass.passkeys.api.AuthenticateWithPasskey
-import proton.android.pass.passkeys.api.CheckPasskeySupport
+import proton.android.pass.passkeys.api.CanDeviceSupportPasskeys
 import proton.android.pass.passkeys.api.GeneratePasskey
 import proton.android.pass.passkeys.api.ParseCreatePasskeyRequest
 
@@ -23,6 +23,6 @@ abstract class FakesPasskeysModule {
     abstract fun bindParseCreatePasskeyRequest(impl: FakeParseCreatePasskeyRequest): ParseCreatePasskeyRequest
 
     @Binds
-    abstract fun bindCheckPasskeySupport(impl: FakeCheckPasskeySupport): CheckPasskeySupport
+    abstract fun bindCheckPasskeySupport(impl: FakeCanDeviceSupportPasskeys): CanDeviceSupportPasskeys
 }
 

@@ -45,6 +45,7 @@ sealed class BuildFlavor(val env: BuildEnv) {
     class Play(env: BuildEnv) : BuildFlavor(env)
     class Fdroid(env: BuildEnv) : BuildFlavor(env)
     class Quest(env: BuildEnv) : BuildFlavor(env)
+    class Nogms(env: BuildEnv) : BuildFlavor(env)
 
     companion object {
         fun from(string: String): BuildFlavor = when (string) {
@@ -58,6 +59,8 @@ sealed class BuildFlavor(val env: BuildEnv) {
             "fdroidProd" -> Fdroid(BuildEnv.PROD)
             "questBlack" -> Quest(BuildEnv.BLACK)
             "questProd" -> Quest(BuildEnv.PROD)
+            "nogmsBlack" -> Nogms(BuildEnv.BLACK)
+            "nogmsProd" -> Nogms(BuildEnv.PROD)
             else -> throw UnsupportedOperationException("Unsupported flavour")
         }
 
@@ -86,9 +89,14 @@ sealed class BuildFlavor(val env: BuildEnv) {
                 BuildEnv.BLACK -> "questBlack"
                 BuildEnv.PROD -> "questProd"
             }
+
+            is Nogms -> when (this.env) {
+                BuildEnv.BLACK -> "nogmsBlack"
+                BuildEnv.PROD -> "nogmsProd"
+            }
         }
 
-        fun BuildFlavor.supportPayment() = this !is Fdroid && this !is Quest
+        fun BuildFlavor.supportPayment() = this !is Fdroid && this !is Quest && this !is Nogms
 
         fun BuildFlavor.isQuest() = this is Quest
     }

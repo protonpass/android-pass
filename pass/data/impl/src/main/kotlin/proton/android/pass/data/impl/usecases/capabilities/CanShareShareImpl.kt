@@ -19,11 +19,15 @@
 package proton.android.pass.data.impl.usecases.capabilities
 
 import kotlinx.coroutines.flow.first
+import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.safeRunCatching
 import proton.android.pass.data.api.usecases.GetShareById
 import proton.android.pass.data.api.usecases.GetUserPlan
 import proton.android.pass.data.api.usecases.capabilities.CanShareShare
 import proton.android.pass.data.api.usecases.capabilities.CanShareShareStatus
+import proton.android.pass.data.api.usecases.organization.ObserveOrganizationSettings
+import proton.android.pass.domain.OrganizationSettings
+import proton.android.pass.domain.Plan
 import proton.android.pass.domain.Share
 import proton.android.pass.domain.ShareId
 import proton.android.pass.log.api.PassLogger
@@ -31,9 +35,11 @@ import javax.inject.Inject
 
 class CanShareShareImpl @Inject constructor(
     private val getShareById: GetShareById,
-    private val getUserPlan: GetUserPlan
+    private val getUserPlan: GetUserPlan,
+    private val observeOrganizationSettings: ObserveOrganizationSettings
 ) : CanShareShare {
 
+    @Suppress("ReturnCount")
     override suspend fun invoke(shareId: ShareId): CanShareShareStatus {
         val share = safeRunCatching { getShareById(shareId = shareId) }.getOrElse { error ->
             PassLogger.w(TAG, "There was an error getting the share")
@@ -41,23 +47,47 @@ class CanShareShareImpl @Inject constructor(
 
             return CanShareShareStatus.CannotShare(CanShareShareStatus.CannotShareReason.Unknown)
         }
+        val orgSettings = safeRunCatching { observeOrganizationSettings().first() }
+            .getOrElse { error ->
+                PassLogger.w(TAG, "There was an error getting the org settings")
+                PassLogger.w(TAG, error)
+
+                return CanShareShareStatus.CannotShare(CanShareShareStatus.CannotShareReason.Unknown)
+            }
+        val userPlan = safeRunCatching { getUserPlan().first() }
+            .getOrElse { error ->
+                PassLogger.w(TAG, "There was an error getting the plan")
+                PassLogger.w(TAG, error)
+
+                return CanShareShareStatus.CannotShare(CanShareShareStatus.CannotShareReason.Unknown)
+            }
+
+        if (orgSettings is Some && orgSettings.value is OrganizationSettings.Organization) {
+            val isAllowed = (orgSettings.value as OrganizationSettings.Organization)
+                .sharingPolicy
+                .hasAnySharingOptionAllowed
+            if (!isAllowed) return CanShareShareStatus.CannotShare(
+                reason = CanShareShareStatus.CannotShareReason.NotEnoughPermissions
+            )
+        }
 
         return when (share) {
             is Share.Item -> getItemCanShareStatus(share)
-            is Share.Vault -> getVaultCanShareStatus(share)
+            is Share.Vault -> getVaultCanShareStatus(share, userPlan)
         }
     }
 
     private fun getItemCanShareStatus(itemShare: Share.Item) = when {
         itemShare.isSharingAvailable ->
             CanShareShareStatus.CanShare(invitesRemaining = itemShare.remainingInvites)
+
         else -> CanShareShareStatus.CannotShare(
             reason = CanShareShareStatus.CannotShareReason.NotEnoughPermissions
         )
     }
 
-    private suspend fun getVaultCanShareStatus(vaultShare: Share.Vault) = when {
-        getUserPlan().first().isBusinessPlan -> {
+    private fun getVaultCanShareStatus(vaultShare: Share.Vault, userPlan: Plan) = when {
+        userPlan.isBusinessPlan -> {
             CanShareShareStatus.CanShare(invitesRemaining = vaultShare.remainingInvites)
         }
 

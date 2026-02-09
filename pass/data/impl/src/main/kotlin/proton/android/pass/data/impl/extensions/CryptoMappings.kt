@@ -68,7 +68,8 @@ fun ItemRevision.toCrypto(): EncryptedItemRevision = EncryptedItemRevision(
     isPinned = isPinned,
     pinTime = pinTime,
     flags = flags,
-    shareCount = shareCount
+    shareCount = shareCount,
+    folderId = folderId
 )
 
 fun ItemLatestKeyResponse.toCrypto(): EncryptedItemKey = EncryptedItemKey(

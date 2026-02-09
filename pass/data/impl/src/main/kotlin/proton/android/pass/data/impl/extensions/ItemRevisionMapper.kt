@@ -38,7 +38,8 @@ fun ItemRevisionImpl.toDomain(): ItemRevisionApi = ItemRevisionApi(
     isPinned = isPinned,
     pinTime = pinTime,
     flags = flags,
-    shareCount = shareCount
+    shareCount = shareCount,
+    folderId = folderId
 )
 
 fun List<ItemRevisionImpl>.toDomain(): List<ItemRevisionApi> = map { itemRevision ->
@@ -61,7 +62,8 @@ fun ItemRevisionImpl.toPendingEvent(): PendingEventItemRevision = PendingEventIt
     isPinned = isPinned,
     pinTime = pinTime,
     flags = flags,
-    shareCount = shareCount
+    shareCount = shareCount,
+    folderId = folderId
 )
 
 fun PendingEventItemRevision.toItemRevision(): ItemRevisionImpl = ItemRevisionImpl(
@@ -80,5 +82,6 @@ fun PendingEventItemRevision.toItemRevision(): ItemRevisionImpl = ItemRevisionIm
     isPinned = isPinned,
     pinTime = pinTime,
     flags = flags,
-    shareCount = shareCount
+    shareCount = shareCount,
+    folderId = folderId
 )

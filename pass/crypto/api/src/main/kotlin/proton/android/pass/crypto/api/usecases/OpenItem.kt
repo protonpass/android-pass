@@ -22,6 +22,7 @@ import me.proton.core.crypto.common.keystore.EncryptedByteArray
 import proton.android.pass.crypto.api.context.EncryptionContext
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.Share
+import proton.android.pass.domain.key.FolderKey
 import proton.android.pass.domain.key.ShareKey
 
 data class EncryptedItemRevision(
@@ -40,7 +41,8 @@ data class EncryptedItemRevision(
     val isPinned: Boolean,
     val pinTime: Long?,
     val flags: Int,
-    val shareCount: Int
+    val shareCount: Int,
+    val folderId: String? = null
 )
 
 data class OpenItemOutput(
@@ -59,6 +61,14 @@ interface OpenItem {
         response: EncryptedItemRevision,
         share: Share,
         shareKeys: List<ShareKey>,
+        encryptionContext: EncryptionContext
+    ): OpenItemOutput
+
+    fun open(
+        response: EncryptedItemRevision,
+        share: Share,
+        shareKeys: List<ShareKey>,
+        folderKey: FolderKey?,
         encryptionContext: EncryptionContext
     ): OpenItemOutput
 }

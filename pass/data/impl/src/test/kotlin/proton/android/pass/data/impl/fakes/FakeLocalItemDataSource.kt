@@ -31,6 +31,7 @@ import proton.android.pass.data.api.usecases.ItemTypeFilter
 import proton.android.pass.data.impl.db.entities.ItemEntity
 import proton.android.pass.data.impl.local.ItemWithTotp
 import proton.android.pass.data.impl.local.LocalItemDataSource
+import proton.android.pass.domain.FolderId
 import proton.android.pass.domain.ItemFlag
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ItemState
@@ -187,6 +188,10 @@ class FakeLocalItemDataSource : LocalItemDataSource {
     }
 
     override fun findUserId(shareId: ShareId, itemId: ItemId): Option<UserId> {
+        throw IllegalStateException("Not yet implemented")
+    }
+
+    override fun observeFolderItemCounts(userId: UserId, shareId: ShareId): Flow<Map<FolderId, Long>> {
         throw IllegalStateException("Not yet implemented")
     }
 

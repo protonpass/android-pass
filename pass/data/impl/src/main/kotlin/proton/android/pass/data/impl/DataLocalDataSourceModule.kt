@@ -32,6 +32,8 @@ import proton.android.pass.data.impl.local.LocalEventDataSource
 import proton.android.pass.data.impl.local.LocalEventDataSourceImpl
 import proton.android.pass.data.impl.local.LocalFolderDataSource
 import proton.android.pass.data.impl.local.LocalFolderDataSourceImpl
+import proton.android.pass.data.impl.local.LocalFolderKeyDataSource
+import proton.android.pass.data.impl.local.LocalFolderKeyDataSourceImpl
 import proton.android.pass.data.impl.local.LocalGroupInviteDataSource
 import proton.android.pass.data.impl.local.LocalGroupInviteDataSourceImpl
 import proton.android.pass.data.impl.local.LocalItemDataSource
@@ -74,6 +76,7 @@ import proton.android.pass.data.impl.local.simplelogin.LocalSimpleLoginDataSourc
 import proton.android.pass.data.impl.local.simplelogin.LocalSimpleLoginDataSourceImpl
 import javax.inject.Singleton
 
+@Suppress("TooManyFunctions")
 @Module
 @InstallIn(SingletonComponent::class)
 abstract class DataLocalDataSourceModule {
@@ -86,6 +89,9 @@ abstract class DataLocalDataSourceModule {
 
     @[Binds Singleton]
     abstract fun bindLocalFolderDataSource(impl: LocalFolderDataSourceImpl): LocalFolderDataSource
+
+    @[Binds Singleton]
+    abstract fun bindLocalFolderKeyDataSource(impl: LocalFolderKeyDataSourceImpl): LocalFolderKeyDataSource
 
     @Binds
     abstract fun bindLocalShareKeyDataSource(impl: LocalShareKeyDataSourceImpl): LocalShareKeyDataSource

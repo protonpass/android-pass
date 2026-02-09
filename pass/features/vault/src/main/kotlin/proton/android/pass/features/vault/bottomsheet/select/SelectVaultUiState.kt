@@ -39,7 +39,7 @@ sealed interface VaultStatus {
 
 @Stable
 data class VaultWithStatus(
-    val vault: VaultWithItemCount,
+    val vaultWithItemCount: VaultWithItemCount,
     val status: VaultStatus
 )
 

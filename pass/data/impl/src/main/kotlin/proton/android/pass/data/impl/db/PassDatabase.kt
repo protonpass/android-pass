@@ -23,6 +23,7 @@ import proton.android.pass.data.impl.db.dao.BreachCustomEmailDao
 import proton.android.pass.data.impl.db.dao.BreachDomainPeekDao
 import proton.android.pass.data.impl.db.dao.BreachEmailDao
 import proton.android.pass.data.impl.db.dao.BreachProtonEmailDao
+import proton.android.pass.data.impl.db.dao.FolderKeysDao
 import proton.android.pass.data.impl.db.dao.FoldersDao
 import proton.android.pass.data.impl.db.dao.GroupInviteDao
 import proton.android.pass.data.impl.db.dao.GroupInviteKeyDao
@@ -57,6 +58,8 @@ interface PassDatabase : Database {
     fun itemsDao(): ItemsDao
 
     fun foldersDao(): FoldersDao
+
+    fun folderKeysDao(): FolderKeysDao
 
     fun shareKeysDao(): ShareKeysDao
 

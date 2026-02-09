@@ -26,9 +26,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
+import proton.android.pass.commonuimodels.api.FolderUiModel
 import proton.android.pass.composecomponents.impl.extension.toColor
 import proton.android.pass.composecomponents.impl.extension.toResource
 import proton.android.pass.composecomponents.impl.form.PassDivider
+import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.VaultWithItemCount
 import proton.android.pass.features.home.R
 import proton.android.pass.searchoptions.api.VaultSelectionOption
@@ -39,6 +41,7 @@ import proton.android.pass.composecomponents.impl.R as CompR
 internal fun HomeDrawerList(
     modifier: Modifier = Modifier,
     vaultShares: List<VaultWithItemCount>,
+    vaultFolders: Map<ShareId, List<FolderUiModel>>,
     vaultSelectionOption: VaultSelectionOption,
     allItemsCount: Int,
     foldersEnabled: Boolean,
@@ -102,7 +105,6 @@ internal fun HomeDrawerList(
                     ).also(onUiEvent)
                 },
                 foldersEnabled = foldersEnabled,
-                folders = vaultShare.folders,
                 onMenuOptionsClickFromFolder = {
                     HomeDrawerUiEvent.OnFolderOptionsClick(
                         shareId = vaultShare.vault.shareId,
@@ -119,7 +121,8 @@ internal fun HomeDrawerList(
                     HomeDrawerUiEvent.OnCreateFolderClick(
                         shareId = vaultShare.vault.shareId
                     ).also(onUiEvent)
-                }
+                },
+                folders = vaultFolders[vaultShare.vault.shareId] ?: emptyList()
             )
 
             PassDivider(

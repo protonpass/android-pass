@@ -39,6 +39,7 @@ import proton.android.pass.data.impl.crypto.ReencryptShareKey
 import proton.android.pass.data.impl.crypto.ReencryptShareKeyInput
 import proton.android.pass.data.impl.db.entities.ShareKeyEntity
 import proton.android.pass.data.impl.exception.UserKeyNotActive
+import proton.android.pass.data.impl.extensions.toDomain
 import proton.android.pass.data.impl.local.LocalShareKeyDataSource
 import proton.android.pass.data.impl.remote.RemoteShareKeyDataSource
 import proton.android.pass.domain.ShareId
@@ -69,7 +70,7 @@ class ShareKeyRepositoryImpl @Inject constructor(
             val readyKeys = tryToReencryptLocalKeys(userId, localKeys, groupEmail)
 
             if (readyKeys.isNotEmpty()) {
-                emit(readyKeys.map(::entityToDomain))
+                emit(readyKeys.map(ShareKeyEntity::toDomain))
                 return@flow
             }
         }
@@ -79,7 +80,7 @@ class ShareKeyRepositoryImpl @Inject constructor(
             localDataSource.storeShareKeys(keys)
         }
 
-        emit(keys.map(::entityToDomain))
+        emit(keys.map(ShareKeyEntity::toDomain))
     }
 
     override suspend fun saveShareKeys(shareKeyEntities: List<ShareKeyEntity>) {
@@ -87,7 +88,7 @@ class ShareKeyRepositoryImpl @Inject constructor(
     }
 
     override fun getLatestKeyForShare(shareId: ShareId): Flow<ShareKey> =
-        localDataSource.getLatestKeyForShare(shareId).map(::entityToDomain)
+        localDataSource.getLatestKeyForShare(shareId).map(ShareKeyEntity::toDomain)
 
     override fun getShareKeyForRotation(
         userId: UserId,
@@ -99,7 +100,7 @@ class ShareKeyRepositoryImpl @Inject constructor(
         val localKeys = localDataSource.getAllShareKeysForShare(userId, shareId).first()
         val key = localKeys.firstOrNull { it.rotation == keyRotation }
         if (key != null) {
-            val mapped = entityToDomain(key)
+            val mapped = key.toDomain()
             emit(mapped)
             return@flow
         }
@@ -110,7 +111,7 @@ class ShareKeyRepositoryImpl @Inject constructor(
 
         val retrievedKey = retrievedKeys.firstOrNull { it.rotation == keyRotation }
         if (retrievedKey != null) {
-            val mapped = entityToDomain(retrievedKey)
+            val mapped = retrievedKey.toDomain()
             emit(mapped)
         } else {
             emit(null)
@@ -264,15 +265,6 @@ class ShareKeyRepositoryImpl @Inject constructor(
                 throw it
             }
         }
-    )
-
-    private fun entityToDomain(entity: ShareKeyEntity): ShareKey = ShareKey(
-        rotation = entity.rotation,
-        key = entity.symmetricallyEncryptedKey,
-        responseKey = entity.key,
-        createTime = entity.createTime,
-        isActive = entity.isActive,
-        userKeyId = entity.userKeyId
     )
 
     private data class ReencryptedKeyData(

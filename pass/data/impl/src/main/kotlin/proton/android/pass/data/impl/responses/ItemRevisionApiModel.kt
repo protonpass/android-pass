@@ -86,5 +86,7 @@ data class ItemRevisionApiModel(
     @SerialName("Flags")
     val flags: Int,
     @SerialName("ShareCount")
-    val shareCount: Int
+    val shareCount: Int,
+    @SerialName("FolderID")
+    val folderId: String? = null
 )

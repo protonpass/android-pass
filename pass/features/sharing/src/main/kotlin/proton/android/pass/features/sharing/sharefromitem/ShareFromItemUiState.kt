@@ -27,7 +27,6 @@ import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ItemType
 import proton.android.pass.domain.Share
 import proton.android.pass.domain.ShareId
-import proton.android.pass.domain.organizations.OrganizationSharingPolicy
 
 @Stable
 internal sealed interface ShareFromItemNavEvent {
@@ -48,7 +47,7 @@ internal data class ShareFromItemUiState(
     val canUsePaidFeatures: Boolean,
     private val itemOption: Option<Item>,
     private val shareOption: Option<Share>,
-    private val organizationSharingPolicy: OrganizationSharingPolicy
+    private val canShare: Boolean
 ) {
 
     private val isSharedItem: Boolean = when (itemOption) {
@@ -60,10 +59,6 @@ internal data class ShareFromItemUiState(
         None -> false
         is Some -> shareOption.value.shared
     }
-
-    private val isItemSharingAllowedByOrganization = organizationSharingPolicy.canShareItems
-
-    private val isSecureLinkSharingAllowedByOrganization = organizationSharingPolicy.canShareSecureLinks
 
     internal val isSingleSharingAvailable: Boolean = when (itemOption) {
         None -> false
@@ -84,7 +79,7 @@ internal data class ShareFromItemUiState(
 
     internal val canShareViaItemSharing: Boolean
         get() {
-            if (!isItemSharingAllowedByOrganization) return false
+            if (!canShare) return false
 
             return when (shareOption) {
                 None -> false
@@ -97,7 +92,7 @@ internal data class ShareFromItemUiState(
 
     internal val canShareViaSecureLink: Boolean
         get() {
-            if (!isSecureLinkSharingAllowedByOrganization) return false
+            if (!canShare) return false
 
             return when (shareOption) {
                 None -> false
@@ -116,7 +111,7 @@ internal data class ShareFromItemUiState(
             canUsePaidFeatures = false,
             itemOption = None,
             shareOption = None,
-            organizationSharingPolicy = OrganizationSharingPolicy.Default
+            canShare = false
         )
 
     }

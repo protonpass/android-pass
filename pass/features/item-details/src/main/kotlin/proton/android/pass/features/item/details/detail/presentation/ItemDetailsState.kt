@@ -87,6 +87,9 @@ internal sealed interface ItemDetailsState {
             when (val canShare = itemActions.canShare) {
                 is CanShareShareStatus.CanShare -> null
                 is CanShareShareStatus.CannotShare -> when (canShare.reason) {
+                    CanShareShareStatus.CannotShareReason.ItemIsShared -> {
+                        ItemDetailsActionForbiddenReason.ShareItemPermissionRequired
+                    }
                     CanShareShareStatus.CannotShareReason.ItemInTrash -> {
                         ItemDetailsActionForbiddenReason.ShareItemTrashed
                     }

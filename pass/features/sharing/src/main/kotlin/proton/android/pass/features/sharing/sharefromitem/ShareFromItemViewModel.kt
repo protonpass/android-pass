@@ -36,7 +36,7 @@ import proton.android.pass.commonui.api.require
 import proton.android.pass.data.api.repositories.BulkMoveToVaultRepository
 import proton.android.pass.data.api.usecases.GetItemById
 import proton.android.pass.data.api.usecases.GetUserPlan
-import proton.android.pass.data.api.usecases.organization.ObserveOrganizationSharingPolicy
+import proton.android.pass.data.api.usecases.capabilities.CanShareShare
 import proton.android.pass.data.api.usecases.shares.ObserveShare
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.PlanType
@@ -51,7 +51,7 @@ class ShareFromItemViewModel @Inject constructor(
     getUserPlan: GetUserPlan,
     getItemById: GetItemById,
     observeShare: ObserveShare,
-    observeOrganizationSharingPolicy: ObserveOrganizationSharingPolicy
+    canShareShare: CanShareShare
 ) : ViewModel() {
 
     private val shareId: ShareId = savedStateHandleProvider.get()
@@ -79,12 +79,12 @@ class ShareFromItemViewModel @Inject constructor(
         canUsePaidFeaturesFlow,
         oneShot { getItemById(shareId = shareId, itemId = itemId) },
         observeShare(shareId),
-        observeOrganizationSharingPolicy()
+        oneShot { canShareShare(shareId = shareId) }
     ) { event,
         canUsePaidFeatures,
         item,
         share,
-        organizationSharingPolicy ->
+        canShare ->
         ShareFromItemUiState(
             shareId = shareId,
             itemId = itemId,
@@ -92,7 +92,7 @@ class ShareFromItemViewModel @Inject constructor(
             canUsePaidFeatures = canUsePaidFeatures,
             itemOption = item.some(),
             shareOption = share.some(),
-            organizationSharingPolicy = organizationSharingPolicy
+            canShare = canShare.value
         )
     }.stateIn(
         scope = viewModelScope,

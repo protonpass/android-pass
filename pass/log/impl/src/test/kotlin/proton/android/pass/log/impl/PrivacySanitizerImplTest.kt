@@ -195,6 +195,46 @@ class PrivacySanitizerImplTest {
     }
 
     @Test
+    fun `sanitize should redact Domain query parameter in image logo URL`() {
+        val input = "https://pass-api.proton.me/core/v4/images/logo?Domain=my.domain.test&Size=64"
+        val expected = "https://pass-api.proton.me/core/v4/images/logo?Domain=[DOMAIN_REDACTED]&Size=64"
+
+        val result = sanitizer.sanitize(input)
+
+        assertThat(result).isEqualTo(expected)
+    }
+
+    @Test
+    fun `sanitize should redact Domain query parameter when not first param`() {
+        val input = "https://example.com/api?Size=64&Domain=sensitive.domain.com&Mode=light"
+        val expected = "https://example.com/api?Size=64&Domain=[DOMAIN_REDACTED]&Mode=light"
+
+        val result = sanitizer.sanitize(input)
+
+        assertThat(result).isEqualTo(expected)
+    }
+
+    @Test
+    fun `sanitize should redact Domain query parameter case insensitively`() {
+        val input = "https://example.com/api?domain=secret.site.org"
+        val expected = "https://example.com/api?domain=[DOMAIN_REDACTED]"
+
+        val result = sanitizer.sanitize(input)
+
+        assertThat(result).isEqualTo(expected)
+    }
+
+    @Test
+    fun `sanitize should redact multiple Domain query parameters in same message`() {
+        val input = "Fetching ?Domain=first.com and ?Domain=second.com"
+        val expected = "Fetching ?Domain=[DOMAIN_REDACTED] and ?Domain=[DOMAIN_REDACTED]"
+
+        val result = sanitizer.sanitize(input)
+
+        assertThat(result).isEqualTo(expected)
+    }
+
+    @Test
     fun `sanitize should mask share IDs with 4 chars on each side`() {
         val shareId = "a".repeat(84) + "VA=="
         val input = "Share ID: $shareId found"

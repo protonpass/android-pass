@@ -21,6 +21,7 @@ android {
         maybeCreate("play")
         maybeCreate("fdroid")
         maybeCreate("quest")
+        maybeCreate("nogms")
     }
 
     compileOptions {
@@ -41,7 +42,7 @@ fun DependencyHandlerScope.addSpecialLib(
     default: Any,
     overrides: Map<String, Any?> = emptyMap()
 ) {
-    val variants = listOf("dev", "alpha", "play", "quest", "fdroid")
+    val variants = listOf("dev", "alpha", "play", "quest", "fdroid", "nogms")
     variants.forEach { variant ->
         val dep = overrides[variant].let { override ->
             if (override != null || variant in overrides) override else default

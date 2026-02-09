@@ -35,6 +35,12 @@ class PrivacySanitizerImpl @Inject constructor() : PrivacySanitizer {
         option = RegexOption.IGNORE_CASE
     )
 
+    // Match domain values in URL query parameters (e.g., ?Domain=example.com)
+    private val domainQueryParamRegex = Regex(
+        pattern = "([?&]Domain)=[^&\\s]+",
+        option = RegexOption.IGNORE_CASE
+    )
+
     // Match share IDs (88 characters)
     private val shareIdRegex = Regex("[a-zA-Z0-9_=-]{88}")
 
@@ -48,6 +54,9 @@ class PrivacySanitizerImpl @Inject constructor() : PrivacySanitizer {
         sanitized = sanitized.replace(bearerTokenRegex, "Bearer [REDACTED]")
         sanitized = sanitized.replace(encodedEmailRegex, EMAIL_REDACTED)
         sanitized = sanitized.replace(plainEmailRegex, EMAIL_REDACTED)
+        sanitized = sanitized.replace(domainQueryParamRegex) { matchResult ->
+            "${matchResult.groupValues[1]}=$DOMAIN_REDACTED"
+        }
         sanitized = sanitizeIds(sanitized)
         return sanitized
     }
@@ -65,6 +74,7 @@ class PrivacySanitizerImpl @Inject constructor() : PrivacySanitizer {
     companion object {
         private const val TAG = "PrivacySanitizerImpl"
         private const val EMAIL_REDACTED = "[EMAIL_REDACTED]"
+        private const val DOMAIN_REDACTED = "[DOMAIN_REDACTED]"
         private const val ID_OFFSET = 4
     }
 }

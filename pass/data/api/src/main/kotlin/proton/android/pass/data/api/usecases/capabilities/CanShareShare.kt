@@ -37,6 +37,7 @@ sealed interface CanShareShareStatus {
     }
 
     enum class CannotShareReason {
+        ItemIsShared,
         ItemInTrash,
         NotEnoughInvites,
         NotEnoughPermissions,

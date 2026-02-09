@@ -94,6 +94,7 @@ import proton.android.pass.data.impl.db.entities.BreachDomainPeekEntity
 import proton.android.pass.data.impl.db.entities.BreachEmailEntity
 import proton.android.pass.data.impl.db.entities.BreachProtonEmailEntity
 import proton.android.pass.data.impl.db.entities.FolderEntity
+import proton.android.pass.data.impl.db.entities.FolderKeyEntity
 import proton.android.pass.data.impl.db.entities.GroupInviteEntity
 import proton.android.pass.data.impl.db.entities.GroupInviteKeyEntity
 import proton.android.pass.data.impl.db.entities.IgnoredAssetLinkEntity
@@ -158,6 +159,7 @@ import proton.android.pass.log.api.PassLogger
         ItemEntity::class,
         ShareEntity::class,
         FolderEntity::class,
+        FolderKeyEntity::class,
         ShareKeyEntity::class,
         PassEventEntity::class,
         UserEventEntity::class,
@@ -240,7 +242,8 @@ import proton.android.pass.log.api.PassLogger
         AutoMigration(from = 80, to = 81),
         AutoMigration(from = 81, to = 82),
         AutoMigration(from = 82, to = 83),
-        AutoMigration(from = 83, to = 84)
+        AutoMigration(from = 83, to = 84),
+        AutoMigration(from = 84, to = 85)
     ],
     version = AppDatabase.VERSION,
     exportSchema = true
@@ -286,7 +289,7 @@ abstract class AppDatabase :
 
     companion object {
         private const val TAG = "AppDatabase"
-        const val VERSION = 84
+        const val VERSION = 85
 
         const val DB_NAME = "db-passkey"
 

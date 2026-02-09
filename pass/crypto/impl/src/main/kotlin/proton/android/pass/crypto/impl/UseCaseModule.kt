@@ -25,6 +25,7 @@ import dagger.hilt.components.SingletonComponent
 import proton.android.pass.crypto.api.usecases.CreateItem
 import proton.android.pass.crypto.api.usecases.CreateVault
 import proton.android.pass.crypto.api.usecases.MigrateItem
+import proton.android.pass.crypto.api.usecases.OpenFolder
 import proton.android.pass.crypto.api.usecases.OpenItem
 import proton.android.pass.crypto.api.usecases.OpenItemKey
 import proton.android.pass.crypto.api.usecases.UpdateItem
@@ -39,6 +40,7 @@ import proton.android.pass.crypto.impl.usecases.CreateItemImpl
 import proton.android.pass.crypto.impl.usecases.CreateVaultImpl
 import proton.android.pass.crypto.impl.usecases.EncryptInviteKeysImpl
 import proton.android.pass.crypto.impl.usecases.MigrateItemImpl
+import proton.android.pass.crypto.impl.usecases.OpenFolderImpl
 import proton.android.pass.crypto.impl.usecases.OpenItemImpl
 import proton.android.pass.crypto.impl.usecases.OpenItemKeyImpl
 import proton.android.pass.crypto.impl.usecases.OpenOrganizationKeyImpl
@@ -81,5 +83,8 @@ abstract class UseCaseModule {
 
     @Binds
     abstract fun bindAcceptGroupInvite(impl: AcceptGroupInviteImpl): AcceptGroupInvite
+
+    @Binds
+    abstract fun bindOpenFolder(impl: OpenFolderImpl): OpenFolder
 
 }

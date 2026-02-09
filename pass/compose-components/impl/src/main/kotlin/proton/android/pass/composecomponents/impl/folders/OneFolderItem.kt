@@ -37,12 +37,12 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import me.proton.core.compose.theme.ProtonTheme
 import proton.android.pass.commonui.api.PassTheme
-import proton.android.pass.commonui.api.ThemedBooleanPreviewProvider
+import proton.android.pass.commonuimodels.api.FolderUiModel
+import proton.android.pass.composecomponents.impl.folders.mock.FoldersParameter
+import proton.android.pass.composecomponents.impl.folders.mock.ThemedFoldersPreviewProvider
 import proton.android.pass.composecomponents.impl.icon.Icon
 import proton.android.pass.composecomponents.impl.item.icon.ThreeDotsMenuButton
 import proton.android.pass.composecomponents.impl.text.Text
-import proton.android.pass.domain.FolderWithItemCount
-import proton.android.pass.composecomponents.impl.folders.mock.mockFolders
 import me.proton.core.presentation.R as CoreR
 
 
@@ -50,7 +50,7 @@ import me.proton.core.presentation.R as CoreR
 fun OneFolderItem(
     modifier: Modifier = Modifier,
     folderName: String,
-    folders: List<FolderWithItemCount> = emptyList(),
+    folders: List<FolderUiModel> = emptyList(),
     isExpanded: Boolean,
     onFolderClick: () -> Unit,
     onExpandToggle: () -> Unit,
@@ -86,9 +86,9 @@ fun OneFolderItem(
                 modifier = Modifier.size(20.dp),
                 tint = Color(color = 0xFFE9A944),
                 id = if (folders.isNotEmpty())
-                    CoreR.drawable.ic_proton_folders
+                    CoreR.drawable.ic_proton_folders_filled
                 else
-                    CoreR.drawable.ic_proton_folder
+                    CoreR.drawable.ic_proton_folder_filled
             )
 
             Text.Body1Regular(
@@ -110,13 +110,13 @@ fun OneFolderItem(
 
 @[Preview Composable]
 internal fun HomeDrawerFolderRowPreview(
-    @PreviewParameter(ThemedBooleanPreviewProvider::class) input: Pair<Boolean, Boolean>
+    @PreviewParameter(ThemedFoldersPreviewProvider::class) input: Pair<Boolean, FoldersParameter>
 ) {
     val (isExpanded, onExpandToggle) = remember { mutableStateOf(false) }
     PassTheme(isDark = input.first) {
         Surface {
             OneFolderItem(
-                folders = mockFolders,
+                folders = input.second.folders,
                 folderName = "a folder",
                 isExpanded = isExpanded,
                 onExpandToggle = {

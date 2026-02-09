@@ -34,7 +34,8 @@ data class PendingEventItemRevision(
     val isPinned: Boolean,
     val pinTime: Long?,
     val flags: Int,
-    val shareCount: Int
+    val shareCount: Int,
+    val folderId: String? = null
 )
 
 data class PendingEventList(

@@ -30,6 +30,8 @@ private const val LINK_KEY_TAG = "linkkey"
 private const val FILE_KEY_TAG = "filekey"
 private const val FILE_CONTENTS_TAG = "filedata"
 private const val FILE_METADATA_TAG = "v2;filemetadata.item.pass.proton"
+private const val FOLDER_KEY_TAG = "key.folder.pass.proton"
+private const val FOLDER_CONTENT_TAG = "content.folder.pass.proton"
 
 private fun fileDataV2Tag(chunkIndex: Int, numChunks: Int) =
     "v2;$chunkIndex;$numChunks;filedata.item.pass.proton".encodeToByteArray()
@@ -67,6 +69,14 @@ sealed class EncryptionTag(val value: ByteArray, val name: String) {
     class FileDataV2(chunkIndex: Int, numChunks: Int) : EncryptionTag(
         value = fileDataV2Tag(chunkIndex = chunkIndex, numChunks = numChunks),
         name = "FileDataV2"
+    )
+    data object FolderKey : EncryptionTag(
+        value = FOLDER_KEY_TAG.encodeToByteArray(),
+        name = "FolderKey"
+    )
+    data object FolderContent : EncryptionTag(
+        value = FOLDER_CONTENT_TAG.encodeToByteArray(),
+        name = "FolderContent"
     )
 }
 

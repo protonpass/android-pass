@@ -43,6 +43,11 @@ data class ShareIdCountRow(
     val shareId: String
 )
 
+data class FolderItemCountRow(
+    val folderId: String,
+    val itemCount: Long
+)
+
 @Dao
 @Suppress("TooManyFunctions")
 abstract class ItemsDao : BaseDao<ItemEntity>() {
@@ -165,6 +170,21 @@ abstract class ItemsDao : BaseDao<ItemEntity>() {
         """
     )
     abstract fun countItemsForShares(shareIds: List<String>): Flow<List<ShareItemCountRow>>
+
+    @Query(
+        """
+        SELECT
+            ${ItemEntity.Columns.FOLDER_ID} as folderId,
+            COUNT(*) as itemCount
+        FROM ${ItemEntity.TABLE}
+        WHERE ${ItemEntity.Columns.USER_ID} = :userId
+          AND ${ItemEntity.Columns.SHARE_ID} = :shareId
+          AND ${ItemEntity.Columns.FOLDER_ID} IS NOT NULL
+          AND ${ItemEntity.Columns.STATE} = ${ItemStateValues.ACTIVE}
+        GROUP BY ${ItemEntity.Columns.FOLDER_ID}
+        """
+    )
+    abstract fun observeFolderItemCounts(userId: String, shareId: String): Flow<List<FolderItemCountRow>>
 
     @Query(
         """

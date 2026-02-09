@@ -180,7 +180,9 @@ class ManageVaultViewModel @Inject constructor(
 
                     CanShareShareStatus.CannotShareReason.ItemInTrash,
                     CanShareShareStatus.CannotShareReason.NotEnoughPermissions,
+                    CanShareShareStatus.CannotShareReason.ItemIsShared,
                     CanShareShareStatus.CannotShareReason.Unknown -> ShareOptions.Hide
+
                 }
             }
         }

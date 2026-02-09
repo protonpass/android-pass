@@ -28,9 +28,7 @@ import proton.android.pass.data.api.usecases.ItemActions
 import proton.android.pass.data.api.usecases.ObserveAllShares
 import proton.android.pass.data.api.usecases.capabilities.CanShareShare
 import proton.android.pass.data.api.usecases.capabilities.CanShareShareStatus
-import proton.android.pass.data.api.usecases.organization.ObserveOrganizationSharingPolicy
 import proton.android.pass.data.api.usecases.shares.ObserveShare
-import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ItemState
 import proton.android.pass.domain.Plan
@@ -47,8 +45,7 @@ class GetItemActionsImpl @Inject constructor(
     private val observeShare: ObserveShare,
     private val observeUserPlan: GetUserPlan,
     private val observeAllShares: ObserveAllShares,
-    private val canShareShare: CanShareShare,
-    private val observeOrganizationSharingPolicy: ObserveOrganizationSharingPolicy
+    private val canShareShare: CanShareShare
 ) : GetItemActions {
 
     override suspend fun invoke(shareId: ShareId, itemId: ItemId): ItemActions = combine(
@@ -60,7 +57,7 @@ class GetItemActionsImpl @Inject constructor(
         val isItemTrashed = item.state == ItemState.Trashed.value
 
         ItemActions(
-            canShare = canShare(isItemTrashed, item, share),
+            canShare = canShare(userPlan.isFreePlan, item.isShared, isItemTrashed, share),
             canEdit = canEdit(isItemTrashed, share, userPlan),
             canMoveToOtherVault = canMigrate(isItemTrashed, share, shares),
             canMoveToTrash = !isItemTrashed && share.canBeTrashed,
@@ -71,25 +68,21 @@ class GetItemActionsImpl @Inject constructor(
     }.first()
 
     private suspend fun canShare(
+        isFreePlan: Boolean,
+        isItemShared: Boolean,
         isItemTrashed: Boolean,
-        item: Item,
         share: Share
     ) = when {
-        isItemTrashed -> {
-            CanShareShareStatus.CannotShare(
-                reason = CanShareShareStatus.CannotShareReason.ItemInTrash
-            )
-        }
-
-        !observeOrganizationSharingPolicy().first().hasAnySharingOptionAllowed && !item.isShared -> {
-            CanShareShareStatus.CannotShare(
-                reason = CanShareShareStatus.CannotShareReason.NotEnoughPermissions
-            )
-        }
-
-        else -> {
-            canShareShare(share.id)
-        }
+        isFreePlan -> CanShareShareStatus.CannotShare(
+            reason = CanShareShareStatus.CannotShareReason.NotEnoughPermissions
+        )
+        isItemShared -> CanShareShareStatus.CannotShare(
+            reason = CanShareShareStatus.CannotShareReason.ItemIsShared
+        )
+        isItemTrashed -> CanShareShareStatus.CannotShare(
+            reason = CanShareShareStatus.CannotShareReason.ItemInTrash
+        )
+        else -> canShareShare(share.id)
     }
 
     private fun canEdit(

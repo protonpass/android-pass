@@ -101,7 +101,7 @@ class SelectVaultViewModel @Inject constructor(
                 }
 
                 VaultWithStatus(
-                    vault = vault,
+                    vaultWithItemCount = vault,
                     status = status
                 )
             }

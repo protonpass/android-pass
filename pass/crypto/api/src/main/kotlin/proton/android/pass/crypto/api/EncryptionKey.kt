@@ -22,9 +22,7 @@ import java.security.SecureRandom
 
 data class EncryptionKey(private val key: ByteArray) {
     fun clear() {
-        key.indices.map { idx ->
-            key[idx] = 0x00.toByte()
-        }
+        key.fill(0)
     }
 
     fun clone(): EncryptionKey = EncryptionKey(key.clone())

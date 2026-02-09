@@ -44,6 +44,7 @@ data class Item(
     val itemUuid: String,
     val revision: Long,
     val shareId: ShareId,
+    val folderId: FolderId? = null,
     val itemType: ItemType,
     val title: EncryptedString,
     val note: EncryptedString,

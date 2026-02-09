@@ -43,19 +43,20 @@ import androidx.compose.ui.unit.dp
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.ThemedBooleanPreviewProvider
+import proton.android.pass.commonuimodels.api.FolderUiModel
 import proton.android.pass.composecomponents.impl.badge.CircledBadge
 import proton.android.pass.composecomponents.impl.badge.OverlayBadge
 import proton.android.pass.composecomponents.impl.buttons.PassSharingShareIcon
+import proton.android.pass.composecomponents.impl.folders.ExpandCollapseIcon
+import proton.android.pass.composecomponents.impl.folders.FolderTree
+import proton.android.pass.composecomponents.impl.folders.mock.FoldersParameter
+import proton.android.pass.composecomponents.impl.folders.mock.ThemedFoldersPreviewProvider
 import proton.android.pass.composecomponents.impl.icon.VaultIcon
 import proton.android.pass.composecomponents.impl.item.icon.ThreeDotsMenuButton
 import proton.android.pass.composecomponents.impl.text.Text
 import proton.android.pass.domain.FolderId
-import proton.android.pass.domain.FolderWithItemCount
 import proton.android.pass.domain.items.ItemCategory
 import proton.android.pass.features.home.R
-import proton.android.pass.composecomponents.impl.folders.ExpandCollapseIcon
-import proton.android.pass.composecomponents.impl.folders.FolderTree
-import proton.android.pass.composecomponents.impl.folders.mock.mockFolders
 import me.proton.core.presentation.R as CoreR
 import proton.android.pass.composecomponents.impl.R as CompR
 
@@ -72,7 +73,7 @@ internal fun HomeDrawerRow(
     membersCount: Int = 0,
     foldersEnabled: Boolean = false,
     forceShowFolder: Boolean = false,
-    folders: List<FolderWithItemCount> = emptyList(),
+    folders: List<FolderUiModel> = emptyList(),
     onFolderClick: ((FolderId) -> Unit)? = null,
     onMenuOptionsClickFromFolder: ((FolderId) -> Unit)? = null,
     onCreateFolderClick: (() -> Unit)? = null,
@@ -267,11 +268,9 @@ internal fun HomeDrawerRowEmptyFoldersPreview(
 
 @[Preview Composable]
 internal fun HomeDrawerRowWithFoldersPreview(
-    @PreviewParameter(ThemedBooleanPreviewProvider::class) input: Pair<Boolean, Boolean>
+    @PreviewParameter(ThemedFoldersPreviewProvider::class) input: Pair<Boolean, FoldersParameter>
 ) {
-    val (isDark, isSelected) = input
-
-    PassTheme(isDark = isDark) {
+    PassTheme(isDark = input.first) {
         Surface {
             HomeDrawerRow(
                 shareIconRes = CompR.drawable.ic_brand_pass,
@@ -280,13 +279,13 @@ internal fun HomeDrawerRowWithFoldersPreview(
                 name = "Share name",
                 itemsCount = 16,
                 membersCount = 5,
-                isSelected = isSelected,
+                isSelected = false,
                 onClick = {},
                 onShareClick = {},
                 onMenuOptionsClick = {},
                 foldersEnabled = true,
                 forceShowFolder = true,
-                folders = mockFolders
+                folders = input.second.folders
             )
         }
     }

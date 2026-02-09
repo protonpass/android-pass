@@ -33,6 +33,7 @@ import proton.android.pass.crypto.api.usecases.OpenItem
 import proton.android.pass.crypto.api.usecases.OpenItemOutput
 import proton.android.pass.crypto.impl.Constants.ITEM_CONTENT_FORMAT_VERSION
 import proton.android.pass.datamodels.api.fromParsed
+import proton.android.pass.domain.FolderId
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemFlags
 import proton.android.pass.domain.ItemId
@@ -43,6 +44,7 @@ import proton.android.pass.domain.ShareType
 import proton.android.pass.domain.entity.AppName
 import proton.android.pass.domain.entity.PackageInfo
 import proton.android.pass.domain.entity.PackageName
+import proton.android.pass.domain.key.FolderKey
 import proton.android.pass.domain.key.ShareKey
 import proton.android.pass.log.api.PassLogger
 import proton_pass_item_v1.ItemV1
@@ -65,50 +67,81 @@ class OpenItemImpl @Inject constructor(
         share: Share,
         shareKeys: List<ShareKey>,
         encryptionContext: EncryptionContext
-    ): OpenItemOutput {
-        return when (share.shareType) {
-            ShareType.Vault -> openItemWithVaultShare(
-                response = response,
-                shareId = share.id,
-                userId = share.userId,
-                shareKeys = shareKeys,
-                encryptionContext = encryptionContext
-            )
+    ): OpenItemOutput = when (share.shareType) {
+        ShareType.Vault -> openItemWithVaultShare(
+            share = share,
+            response = response,
+            shareKeys = shareKeys,
+            folderKey = null,
+            encryptionContext = encryptionContext
+        )
 
-            ShareType.Item -> openItemWithItemShare(
-                response = response,
-                shareId = share.id,
-                userId = share.userId,
-                shareKeys = shareKeys,
-                encryptionContext = encryptionContext
-            )
-        }
+        ShareType.Item -> openItemWithItemShare(
+            userId = share.userId,
+            response = response,
+            shareId = share.id,
+            shareKeys = shareKeys,
+            encryptionContext = encryptionContext
+        )
+    }
+
+    override fun open(
+        response: EncryptedItemRevision,
+        share: Share,
+        shareKeys: List<ShareKey>,
+        folderKey: FolderKey?,
+        encryptionContext: EncryptionContext
+    ): OpenItemOutput = when (share.shareType) {
+        ShareType.Vault -> openItemWithVaultShare(
+            share = share,
+            response = response,
+            shareKeys = shareKeys,
+            folderKey = folderKey,
+            encryptionContext = encryptionContext
+        )
+
+        ShareType.Item -> openItemWithItemShare(
+            response = response,
+            shareId = share.id,
+            userId = share.userId,
+            shareKeys = shareKeys,
+            encryptionContext = encryptionContext
+        )
     }
 
     private fun openItemWithVaultShare(
-        response: EncryptedItemRevision,
-        shareId: ShareId,
+        share: Share,
         shareKeys: List<ShareKey>,
-        encryptionContext: EncryptionContext,
-        userId: UserId
+        folderKey: FolderKey?,
+        response: EncryptedItemRevision,
+        encryptionContext: EncryptionContext
     ): OpenItemOutput {
-        val shareKey = shareKeys.firstOrNull { it.rotation == response.keyRotation }
-            ?: throw KeyNotFound(
-                "Could not find ShareKey " +
-                    "[share=${shareId.id}] [keyRotation=${response.keyRotation}]"
-            )
-
-        val itemKey = response.key
-            ?: throw IllegalStateException(
-                "ItemRevision should contain a key for Vault share " +
-                    "[share=${shareId.id}] [itemId=${response.itemId}]"
-            )
+        val shareId = share.id
+        val itemKey = response.key ?: throw IllegalStateException(
+            "ItemRevision should contain a key for Vault share " +
+                "[share=${shareId.id}] [itemId=${response.itemId}]"
+        )
         val decodedItemKey = Base64.decodeBase64(itemKey)
 
-        val decryptedShareKey = EncryptionKey(encryptionContext.decrypt(shareKey.key))
-
-        val decryptedItemKey = encryptionContextProvider.withEncryptionContext(decryptedShareKey) {
-            EncryptionKey(decrypt(EncryptedByteArray(decodedItemKey), EncryptionTag.ItemKey))
+        val decryptedItemKey = if (response.folderId != null && folderKey != null) {
+            PassLogger.i(
+                TAG,
+                "Decrypting item ${response.itemId} with FolderKey (folderId=${response.folderId})"
+            )
+            val decryptedFolderKey = EncryptionKey(encryptionContext.decrypt(folderKey.key))
+            encryptionContextProvider.withEncryptionContext(decryptedFolderKey) {
+                EncryptionKey(decrypt(EncryptedByteArray(decodedItemKey), EncryptionTag.ItemKey))
+            }
+        } else {
+            val shareKey = shareKeys.firstOrNull { it.rotation == response.keyRotation }
+                ?: throw KeyNotFound(
+                    "Could not find ShareKey " +
+                        "[share=${shareId.id}] [keyRotation=${response.keyRotation}]"
+                )
+            val decryptedShareKey = EncryptionKey(encryptionContext.decrypt(shareKey.key))
+            encryptionContextProvider.withEncryptionContext(decryptedShareKey) {
+                EncryptionKey(decrypt(EncryptedByteArray(decodedItemKey), EncryptionTag.ItemKey))
+            }
         }
 
         val encryptedItemKey = encryptionContext.encrypt(decryptedItemKey.value())
@@ -130,7 +163,7 @@ class OpenItemImpl @Inject constructor(
                 decoded = decoded,
                 decryptedContents = decryptedContents,
                 encryptionContext = encryptionContext,
-                userId = userId
+                userId = share.userId
             ),
             itemKey = encryptedItemKey
         )
@@ -157,12 +190,11 @@ class OpenItemImpl @Inject constructor(
             decrypt(EncryptedByteArray(decodedItemContents), EncryptionTag.ItemContent)
         }
 
-        val decoded = ItemV1.Item.parseFrom(decryptedContents)
         return OpenItemOutput(
             item = createDomainObject(
                 response = response,
                 shareId = shareId,
-                decoded = decoded,
+                decoded = ItemV1.Item.parseFrom(decryptedContents),
                 decryptedContents = decryptedContents,
                 encryptionContext = encryptionContext,
                 userId = userId
@@ -186,6 +218,7 @@ class OpenItemImpl @Inject constructor(
             itemUuid = decoded.metadata.itemUuid,
             revision = response.revision,
             shareId = shareId,
+            folderId = response.folderId?.let(::FolderId),
             title = encrypt(decoded.metadata.name),
             note = encrypt(decoded.metadata.note),
             content = encrypt(decryptedContents),

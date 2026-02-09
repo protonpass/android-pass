@@ -90,7 +90,7 @@ fun SelectVaultBottomsheetContent(
         BottomSheetItemList(
             items = state.vaults
                 .map {
-                    val isSelected = it.vault.vault.shareId == state.selected.vault.shareId
+                    val isSelected = it.vaultWithItemCount.vault.shareId == state.selected.vault.shareId
                     val (subtitle, enabled) = when (it.status) {
                         is VaultStatus.Disabled -> when (it.status.reason) {
                             VaultStatus.Reason.ReadOnly ->
@@ -104,7 +104,7 @@ fun SelectVaultBottomsheetContent(
                         VaultStatus.Selectable -> null to true
                     }
                     BottomSheetVaultRow(
-                        vault = it.vault,
+                        vault = it.vaultWithItemCount,
                         isSelected = isSelected,
                         enabled = enabled,
                         customSubtitle = subtitle,
@@ -140,11 +140,11 @@ fun SelectVaultBottomsheetContentPreview(
                 state = SelectVaultUiState.Success(
                     vaults = persistentListOf(
                         VaultWithStatus(
-                            vault = selectedVault,
+                            vaultWithItemCount = selectedVault,
                             status = VaultStatus.Selectable
                         ),
                         VaultWithStatus(
-                            vault = VaultWithItemCount(
+                            vaultWithItemCount = VaultWithItemCount(
                                 vault = Vault(
                                     userId = UserId(id = ""),
                                     shareId = ShareId("other"),
@@ -161,7 +161,7 @@ fun SelectVaultBottomsheetContentPreview(
                             status = VaultStatus.Disabled(VaultStatus.Reason.ReadOnly)
                         ),
                         VaultWithStatus(
-                            vault = VaultWithItemCount(
+                            vaultWithItemCount = VaultWithItemCount(
                                 vault = Vault(
                                     userId = UserId(id = ""),
                                     shareId = ShareId("another"),

@@ -26,6 +26,7 @@ import proton.android.pass.data.api.ItemCountSummary
 import proton.android.pass.data.api.repositories.ShareItemCount
 import proton.android.pass.data.api.usecases.ItemTypeFilter
 import proton.android.pass.data.impl.db.entities.ItemEntity
+import proton.android.pass.domain.FolderId
 import proton.android.pass.domain.ItemFlag
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ItemState
@@ -135,5 +136,7 @@ interface LocalItemDataSource {
     ): List<ItemEntity>
 
     fun findUserId(shareId: ShareId, itemId: ItemId): Option<UserId>
+
+    fun observeFolderItemCounts(userId: UserId, shareId: ShareId): Flow<Map<FolderId, Long>>
 
 }

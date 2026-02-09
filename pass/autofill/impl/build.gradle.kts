@@ -25,6 +25,7 @@ android {
         maybeCreate("play")
         maybeCreate("fdroid")
         maybeCreate("quest")
+        maybeCreate("nogms")
     }
 
     buildFeatures {

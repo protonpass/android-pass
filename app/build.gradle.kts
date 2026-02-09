@@ -188,6 +188,10 @@ android {
             applicationIdSuffix = ".quest"
             buildConfigField("Boolean", "ALLOW_SCREENSHOTS_DEFAULT_VALUE", "false")
         }
+        create("nogms") {
+            dimension = "version"
+            buildConfigField("Boolean", "ALLOW_SCREENSHOTS_DEFAULT_VALUE", "false")
+        }
     }
     flavorDimensions += "env"
     productFlavors {
@@ -262,7 +266,7 @@ android {
     applicationVariants.all {
         val variant = this
         val flavorName = variant.flavorName
-        val originalNameFlavors = listOf("playProd", "questProd", "fdroidProd")
+        val originalNameFlavors = listOf("playProd", "questProd", "fdroidProd", "nogmsProd")
         if (flavorName !in originalNameFlavors) {
             val appName = "($flavorName) Proton Pass"
             variant.resValue("string", "app_name", appName)
@@ -281,7 +285,7 @@ fun DependencyHandlerScope.addSpecialLib(
     default: Any,
     overrides: Map<String, Any?> = emptyMap()
 ) {
-    val variants = listOf("dev", "alpha", "play", "quest", "fdroid")
+    val variants = listOf("dev", "alpha", "play", "quest", "fdroid", "nogms")
 
     variants.forEach { variant ->
         val dep = overrides[variant].let { override ->
@@ -304,6 +308,7 @@ fun DependencyHandlerScope.addDevBlackImplementation(
     val playImplementation = configurations.getByName("playImplementation")
     val fdroidImplementation = configurations.getByName("fdroidImplementation")
     val questImplementation = configurations.getByName("questImplementation")
+    val nogmsImplementation = configurations.getByName("nogmsImplementation")
 
     devBlackImplementation(devBlack)
     devProdImplementation(default)
@@ -311,6 +316,7 @@ fun DependencyHandlerScope.addDevBlackImplementation(
     playImplementation(default)
     fdroidImplementation(default)
     questImplementation(default)
+    nogmsImplementation(default)
 }
 
 dependencies {
@@ -358,16 +364,16 @@ dependencies {
 
     addSpecialLib(
         default = libs.core.payment,
-        overrides = mapOf("fdroid" to null, "quest" to null)
+        overrides = mapOf("fdroid" to null, "quest" to null, "nogms" to null)
     )
 
     addSpecialLib(
         default = libs.core.paymentIap,
-        overrides = mapOf("fdroid" to null, "quest" to null)
+        overrides = mapOf("fdroid" to null, "quest" to null, "nogms" to null)
     )
     addSpecialLib(
         default = libs.core.authFidoPlay,
-        overrides = mapOf("fdroid" to null, "quest" to null)
+        overrides = mapOf("fdroid" to null, "quest" to null, "nogms" to null)
     )
 
     implementation(libs.core.plan)
@@ -427,7 +433,8 @@ dependencies {
         default = projects.pass.inAppUpdates.impl,
         overrides = mapOf(
             "fdroid" to projects.pass.inAppUpdates.noOp,
-            "quest" to projects.pass.inAppUpdates.noOp
+            "quest" to projects.pass.inAppUpdates.noOp,
+            "nogms" to projects.pass.inAppUpdates.noOp
         )
     )
 
@@ -436,7 +443,8 @@ dependencies {
         default = projects.pass.inAppReview.impl,
         overrides = mapOf(
             "fdroid" to projects.pass.inAppReview.noOp,
-            "quest" to projects.pass.inAppReview.noOp
+            "quest" to projects.pass.inAppReview.noOp,
+            "nogms" to projects.pass.inAppReview.noOp
         )
     )
 
@@ -570,6 +578,17 @@ dependencyGuard {
         }
     }
     configuration("questProdReleaseRuntimeClasspath") {
+        artifacts = true
+        modules = false
+
+        allowedFilter = {
+            !it.contains("junit")
+            !it.contains("com.android.billingclient")
+            !it.contains("com.google.android.gms")
+            !it.contains("com.google.android.play")
+        }
+    }
+    configuration("nogmsProdReleaseRuntimeClasspath") {
         artifacts = true
         modules = false
 

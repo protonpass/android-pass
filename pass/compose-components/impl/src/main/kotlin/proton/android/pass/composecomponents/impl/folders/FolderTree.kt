@@ -27,8 +27,8 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material3.Icon
 import androidx.compose.material.Surface
+import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateMapOf
 import androidx.compose.runtime.remember
@@ -43,11 +43,12 @@ import androidx.compose.ui.unit.dp
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.ThemedBooleanPreviewProvider
+import proton.android.pass.commonuimodels.api.FolderUiModel
 import proton.android.pass.composecomponents.impl.R
-import proton.android.pass.composecomponents.impl.folders.mock.mockFolders
+import proton.android.pass.composecomponents.impl.folders.mock.FoldersParameter
+import proton.android.pass.composecomponents.impl.folders.mock.ThemedFoldersPreviewProvider
 import proton.android.pass.composecomponents.impl.text.Text
 import proton.android.pass.domain.FolderId
-import proton.android.pass.domain.FolderWithItemCount
 import me.proton.core.presentation.R as CoreR
 
 private fun MutableMap<String, Boolean>.isExpanded(id: String) = this[id] ?: false
@@ -60,7 +61,7 @@ private fun MutableMap<String, Boolean>.toggle(id: String) {
 fun FolderTree(
     modifier: Modifier = Modifier,
     modifierCreateButton: Modifier = Modifier,
-    folders: List<FolderWithItemCount>,
+    folders: List<FolderUiModel>,
     onFolderClick: (FolderId) -> Unit,
     onThreeDotsClick: ((FolderId) -> Unit)? = null,
     onCreateFolderClick: (() -> Unit)? = null,
@@ -141,11 +142,13 @@ private fun CreateFolderButton(modifier: Modifier = Modifier, onClick: () -> Uni
 }
 
 @[Preview Composable]
-internal fun FolderTreePreview(@PreviewParameter(ThemedBooleanPreviewProvider::class) input: Pair<Boolean, Boolean>) {
+internal fun FolderTreePreview(
+    @PreviewParameter(ThemedFoldersPreviewProvider::class) input: Pair<Boolean, FoldersParameter>
+) {
     PassTheme(isDark = input.first) {
         Surface {
             FolderTree(
-                folders = mockFolders,
+                folders = input.second.folders,
                 expandedState = remember { mutableStateMapOf() },
                 onThreeDotsClick = {},
                 onCreateFolderClick = {},

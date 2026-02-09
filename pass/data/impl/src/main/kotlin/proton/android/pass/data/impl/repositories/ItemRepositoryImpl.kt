@@ -88,6 +88,7 @@ import proton.android.pass.data.impl.requests.UpdateItemFlagsRequest
 import proton.android.pass.data.impl.responses.TrashItemsResponse
 import proton.android.pass.data.impl.util.TimeUtil
 import proton.android.pass.datamodels.api.serializeToProto
+import proton.android.pass.domain.FolderId
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.ItemEncrypted
@@ -103,6 +104,7 @@ import proton.android.pass.domain.VaultId
 import proton.android.pass.domain.entity.NewAlias
 import proton.android.pass.domain.entity.PackageInfo
 import proton.android.pass.domain.events.EventToken
+import proton.android.pass.domain.key.FolderKey
 import proton.android.pass.domain.key.ShareKey
 import proton.android.pass.log.api.PassLogger
 import proton_pass_item_v1.ItemV1
@@ -122,7 +124,8 @@ class ItemRepositoryImpl @Inject constructor(
     private val openItem: OpenItem,
     private val migrateItem: MigrateItem,
     private val encryptionContextProvider: EncryptionContextProvider,
-    private val getShareAndItemKey: GetShareAndItemKey
+    private val getShareAndItemKey: GetShareAndItemKey,
+    private val folderKeyRepository: FolderKeyRepository
 ) : BaseRepository(userAddressRepository), ItemRepository {
 
     @Suppress("TooGenericExceptionCaught")
@@ -382,12 +385,21 @@ class ItemRepositoryImpl @Inject constructor(
             groupEmail = share.groupEmail
         ).firstOrNull() ?: throw IllegalStateException("No ShareKey found for item")
 
+        val folderKey = itemRevision.folderId?.let { folderId ->
+            folderKeyRepository.getFolderKey(
+                userId = userId,
+                shareId = shareId,
+                folderId = FolderId(folderId)
+            )
+        }
+
         val itemEntity = encryptionContextProvider.withEncryptionContextSuspendable {
             itemResponseToEntity(
                 userAddress = userAddress,
                 itemRevision = itemRevision,
                 share = share,
                 shareKeys = shareKeys,
+                folderKey = folderKey,
                 encryptionContext = this
             )
         }
@@ -916,13 +928,26 @@ class ItemRepositoryImpl @Inject constructor(
             groupEmail = share.groupEmail
         ).first()
 
+        val pendingRevisions = pendingItemRevisions.map { it.toItemRevision().toDomain() }
+        val folderIds = pendingRevisions.mapNotNull { it.folderId?.let(::FolderId) }.distinct()
+
+        val folderKeysMap: Map<FolderId, FolderKey> = folderKeyRepository.getFolderKeys(
+            userId = userId,
+            shareId = shareId,
+            folderIds = folderIds
+        )
+
         val items = encryptionContextProvider.withEncryptionContextSuspendable {
-            pendingItemRevisions.map { pendingItemRevision ->
+            pendingRevisions.map { revision ->
+                val folderKey: FolderKey? = revision.folderId?.let { folderId ->
+                    folderKeysMap[FolderId(folderId)]
+                }
                 itemResponseToEntity(
                     userAddress = userAddress,
-                    itemRevision = pendingItemRevision.toItemRevision().toDomain(),
+                    itemRevision = revision,
                     share = share,
                     shareKeys = shareKeys,
+                    folderKey = folderKey,
                     encryptionContext = this
                 )
             }
@@ -1143,13 +1168,25 @@ class ItemRepositoryImpl @Inject constructor(
             groupEmail = share.groupEmail
         ).first()
 
+        val folderIds = revisions.mapNotNull { it.folderId?.let(::FolderId) }.distinct()
+
+        val folderKeysMap: Map<FolderId, FolderKey> = folderKeyRepository.getFolderKeys(
+            userId = userId,
+            shareId = shareId,
+            folderIds = folderIds
+        )
+
         val itemsToUpsert = encryptionContextProvider.withEncryptionContextSuspendable {
-            revisions.map {
+            revisions.map { revision ->
+                val folderKey: FolderKey? = revision.folderId?.let { folderId ->
+                    folderKeysMap[FolderId(folderId)]
+                }
                 itemResponseToEntity(
                     userAddress = address,
-                    itemRevision = it,
+                    itemRevision = revision,
                     share = share,
                     shareKeys = shareKeys,
+                    folderKey = folderKey,
                     encryptionContext = this
                 )
             }
@@ -1329,13 +1366,25 @@ class ItemRepositoryImpl @Inject constructor(
 
         val res = remoteItemDataSource.migrateItems(userId, source, body)
 
+        val folderIds = res.mapNotNull { it.folderId?.let(::FolderId) }.distinct()
+
+        val folderKeysMap: Map<FolderId, FolderKey> = folderKeyRepository.getFolderKeys(
+            userId = userId,
+            shareId = destination,
+            folderIds = folderIds
+        )
+
         val resAsEntities = encryptionContextProvider.withEncryptionContextSuspendable {
-            res.map {
+            res.map { revision ->
+                val folderKey: FolderKey? = revision.folderId?.let { folderId ->
+                    folderKeysMap[FolderId(folderId)]
+                }
                 itemResponseToEntity(
                     userAddress = userAddress,
-                    itemRevision = it,
+                    itemRevision = revision,
                     share = destinationShare,
                     shareKeys = listOf(destinationKey),
+                    folderKey = folderKey,
                     encryptionContext = this
                 )
             }
@@ -1498,11 +1547,20 @@ class ItemRepositoryImpl @Inject constructor(
         share: Share,
         shareKeys: List<ShareKey>
     ): ItemEntity = encryptionContextProvider.withEncryptionContextSuspendable {
+        val folderKey: FolderKey? = itemRevision.folderId?.let {
+            folderKeyRepository.getFolderKey(
+                userId = userAddress.userId,
+                shareId = share.id,
+                folderId = FolderId(it)
+            )
+        }
+
         itemResponseToEntity(
             userAddress = userAddress,
             itemRevision = itemRevision,
             share = share,
             shareKeys = shareKeys,
+            folderKey = folderKey,
             encryptionContext = this
         )
     }
@@ -1512,12 +1570,14 @@ class ItemRepositoryImpl @Inject constructor(
         itemRevision: ItemRevision,
         share: Share,
         shareKeys: List<ShareKey>,
+        folderKey: FolderKey?,
         encryptionContext: EncryptionContext
     ): ItemEntity {
         val output = openItem.open(
             response = itemRevision.toCrypto(),
             share = share,
             shareKeys = shareKeys,
+            folderKey = folderKey,
             encryptionContext = encryptionContext
         )
         val hasTotp = output.item.hasTotp(encryptionContext)
@@ -1528,25 +1588,26 @@ class ItemRepositoryImpl @Inject constructor(
             shareId = share.id.id,
             revision = itemRevision.revision,
             contentFormatVersion = itemRevision.contentFormatVersion,
+            keyRotation = itemRevision.keyRotation,
             content = itemRevision.content,
+            key = itemRevision.itemKey,
             state = itemRevision.state,
             itemType = output.item.itemType.category.value,
+            aliasEmail = itemRevision.aliasEmail,
             createTime = itemRevision.createTime,
             modifyTime = itemRevision.modifyTime,
             lastUsedTime = itemRevision.lastUseTime,
-            encryptedContent = output.item.content,
-            encryptedTitle = output.item.title,
-            encryptedNote = output.item.note,
-            aliasEmail = itemRevision.aliasEmail,
-            keyRotation = itemRevision.keyRotation,
-            key = itemRevision.itemKey,
-            encryptedKey = output.itemKey,
             hasTotp = hasTotp,
             isPinned = itemRevision.isPinned,
             pinTime = itemRevision.pinTime,
             hasPasskeys = output.item.hasPasskeys,
             flags = itemRevision.flags,
-            shareCount = itemRevision.shareCount
+            shareCount = itemRevision.shareCount,
+            folderId = itemRevision.folderId,
+            encryptedTitle = output.item.title,
+            encryptedNote = output.item.note,
+            encryptedContent = output.item.content,
+            encryptedKey = output.itemKey
         )
     }
 

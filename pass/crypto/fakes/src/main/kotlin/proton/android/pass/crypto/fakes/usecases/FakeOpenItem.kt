@@ -24,6 +24,7 @@ import proton.android.pass.crypto.api.usecases.OpenItem
 import proton.android.pass.crypto.api.usecases.OpenItemOutput
 import proton.android.pass.crypto.fakes.context.FakeEncryptionContext
 import proton.android.pass.domain.Share
+import proton.android.pass.domain.key.FolderKey
 import proton.android.pass.domain.key.ShareKey
 
 class FakeOpenItem : OpenItem {
@@ -44,6 +45,14 @@ class FakeOpenItem : OpenItem {
         response: EncryptedItemRevision,
         share: Share,
         shareKeys: List<ShareKey>,
+        encryptionContext: EncryptionContext
+    ): OpenItemOutput = output ?: throw IllegalStateException("output not set")
+
+    override fun open(
+        response: EncryptedItemRevision,
+        share: Share,
+        shareKeys: List<ShareKey>,
+        folderKey: FolderKey?,
         encryptionContext: EncryptionContext
     ): OpenItemOutput = output ?: throw IllegalStateException("output not set")
 }

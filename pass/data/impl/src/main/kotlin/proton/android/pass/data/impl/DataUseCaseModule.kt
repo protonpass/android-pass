@@ -78,6 +78,8 @@ import proton.android.pass.data.api.usecases.ObserveConfirmedInviteToken
 import proton.android.pass.data.api.usecases.ObserveCurrentUser
 import proton.android.pass.data.api.usecases.ObserveCurrentUserSettings
 import proton.android.pass.data.api.usecases.ObserveEncryptedItems
+import proton.android.pass.data.api.usecases.folders.ObserveFolderItemCounts
+import proton.android.pass.data.api.usecases.folders.ObserveFolders
 import proton.android.pass.data.api.usecases.ObserveGlobalMonitorState
 import proton.android.pass.data.api.usecases.ObserveGroupMembersByGroup
 import proton.android.pass.data.api.usecases.ObserveInviteRecommendations
@@ -321,6 +323,8 @@ import proton.android.pass.data.impl.usecases.ObserveCurrentUserImpl
 import proton.android.pass.data.impl.usecases.ObserveCurrentUserSettingsImpl
 import proton.android.pass.data.impl.usecases.ObserveDefaultVaultImpl
 import proton.android.pass.data.impl.usecases.ObserveEncryptedItemsImpl
+import proton.android.pass.data.impl.usecases.folders.ObserveFolderItemCountsImpl
+import proton.android.pass.data.impl.usecases.folders.ObserveFoldersImpl
 import proton.android.pass.data.impl.usecases.ObserveGlobalMonitorStateImpl
 import proton.android.pass.data.impl.usecases.ObserveGroupMembersByGroupImpl
 import proton.android.pass.data.impl.usecases.ObserveInviteRecommendationsImpl
@@ -573,6 +577,9 @@ abstract class DataUseCaseModule {
 
     @Binds
     abstract fun bindObserveVaults(impl: ObserveVaultsImpl): ObserveVaults
+
+    @Binds
+    abstract fun bindObserveFolders(impl: ObserveFoldersImpl): ObserveFolders
 
     @Binds
     abstract fun bindRefreshContent(impl: RefreshContentImpl): RefreshContent
@@ -1318,5 +1325,8 @@ abstract class DataUseCaseModule {
 
     @[Binds Singleton]
     abstract fun bindGetPlanWithPrices(impl: ObservePlansWithPriceImpl): ObservePlansWithPrice
+
+    @[Binds Singleton]
+    abstract fun bindObserveFolderItemCounts(impl: ObserveFolderItemCountsImpl): ObserveFolderItemCounts
 
 }

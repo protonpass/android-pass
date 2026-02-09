@@ -36,14 +36,33 @@ import androidx.compose.ui.unit.dp
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toImmutableList
 import proton.android.pass.commonui.api.PassTheme
+import proton.android.pass.commonuimodels.api.FolderUiModel
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItem
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemList
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetVaultRow
 import proton.android.pass.composecomponents.impl.bottomsheet.withDividers
 import proton.android.pass.composecomponents.impl.folders.ExpandCollapseIcon
 import proton.android.pass.composecomponents.impl.folders.FolderTree
+import proton.android.pass.domain.Folder
 import proton.android.pass.domain.ShareId
 import proton.android.pass.features.migrate.R
+
+private fun List<Folder>.toFolderUiModelTree(): List<FolderUiModel> {
+    val childrenMap = groupBy { it.parentFolderId?.id }
+
+    fun buildSubtree(parentId: String?): List<FolderUiModel> {
+        val children = childrenMap[parentId] ?: return emptyList()
+        return children.map { folder ->
+            FolderUiModel(
+                id = folder.folderId,
+                name = folder.name,
+                folders = buildSubtree(folder.folderId.id)
+            )
+        }
+    }
+
+    return buildSubtree(parentId = null)
+}
 
 @Composable
 fun MigrateSelectVaultContents(
@@ -51,17 +70,19 @@ fun MigrateSelectVaultContents(
     vaults: ImmutableList<VaultEnabledPair>,
     onVaultSelected: (ShareId) -> Unit
 ) {
-    if (vaults.any { it.vault.folders.isNotEmpty() }) {
+    if (vaults.any { it.vault.vault.folders.isNotEmpty() }) {
         LazyColumn(
             modifier = modifier
         ) {
-            items(items = vaults, key = { it.vault.vault.shareId.id }) { vault ->
+            items(items = vaults, key = { it.vault.vault.shareId.id }) { vaultPair ->
+                val vaultWithCount = vaultPair.vault
+                val vaultModel = vaultWithCount.vault
 
                 val (showFolders, onShowFolders) = rememberSaveable { mutableStateOf(false) }
 
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     AnimatedVisibility(
-                        visible = vault.vault.folders.isNotEmpty()
+                        visible = vaultModel.folders.isNotEmpty()
                     ) {
                         ExpandCollapseIcon(
                             expanded = showFolders,
@@ -72,11 +93,11 @@ fun MigrateSelectVaultContents(
                     }
 
                     BottomSheetVaultRow(
-                        vault = vault.vault,
+                        vault = vaultWithCount,
                         isSelected = false,
-                        customSubtitle = when (vault.status) {
+                        customSubtitle = when (vaultPair.status) {
                             is VaultStatus.Enabled -> null
-                            is VaultStatus.Disabled -> when (vault.status.reason) {
+                            is VaultStatus.Disabled -> when (vaultPair.status.reason) {
                                 VaultStatus.DisabledReason.NoPermission -> stringResource(
                                     R.string.migrate_disabled_vault_reason_no_permission
                                 )
@@ -86,12 +107,12 @@ fun MigrateSelectVaultContents(
                                 )
                             }
                         },
-                        enabled = vault.status is VaultStatus.Enabled,
-                        onVaultClick = { onVaultSelected(vault.vault.vault.shareId) }
+                        enabled = vaultPair.status is VaultStatus.Enabled,
+                        onVaultClick = { onVaultSelected(vaultModel.shareId) }
                     ).let { item ->
                         BottomSheetItem(
                             item = item,
-                            horizontalPadding = if (vault.vault.folders.isNotEmpty()) {
+                            horizontalPadding = if (vaultModel.folders.isNotEmpty()) {
                                 0.dp
                             } else {
                                 PassTheme.dimens.bottomsheetHorizontalPadding
@@ -116,9 +137,10 @@ fun MigrateSelectVaultContents(
                 ) {
                     mutableStateMapOf()
                 }
+                val folderTree = vaultModel.folders.toFolderUiModelTree()
 
-                LaunchedEffect(vault.vault.folders) {
-                    vault.vault.folders.forEach { folder ->
+                LaunchedEffect(folderTree) {
+                    folderTree.forEach { folder ->
                         if (!expandedState.contains(folder.id.id)) {
                             expandedState[folder.id.id] = false
                         }
@@ -126,12 +148,12 @@ fun MigrateSelectVaultContents(
                 }
 
                 AnimatedVisibility(
-                    visible = vault.vault.folders.isNotEmpty() &&
+                    visible = vaultModel.folders.isNotEmpty() &&
                         showFolders
                 ) {
                     FolderTree(
                         modifier = Modifier.padding(start = 32.dp),
-                        folders = vault.vault.folders,
+                        folders = folderTree,
                         expandedState = expandedState,
                         depth = 0,
                         onFolderClick = {
@@ -146,8 +168,10 @@ fun MigrateSelectVaultContents(
         BottomSheetItemList(
             modifier = modifier,
             items = vaults.map { vault ->
+                val vaultWithCount = vault.vault
+                val vaultModel = vaultWithCount.vault
                 BottomSheetVaultRow(
-                    vault = vault.vault,
+                    vault = vaultWithCount,
                     isSelected = false,
                     customSubtitle = when (vault.status) {
                         is VaultStatus.Enabled -> null
@@ -162,7 +186,7 @@ fun MigrateSelectVaultContents(
                         }
                     },
                     enabled = vault.status is VaultStatus.Enabled,
-                    onVaultClick = { onVaultSelected(vault.vault.vault.shareId) }
+                    onVaultClick = { onVaultSelected(vaultModel.shareId) }
                 )
             }
                 .withDividers()

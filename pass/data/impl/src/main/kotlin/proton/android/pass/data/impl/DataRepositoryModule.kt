@@ -68,6 +68,8 @@ import proton.android.pass.data.impl.repositories.ExtraPasswordRepository
 import proton.android.pass.data.impl.repositories.ExtraPasswordRepositoryImpl
 import proton.android.pass.data.impl.repositories.FetchShareItemsStatusRepository
 import proton.android.pass.data.impl.repositories.FetchShareItemsStatusRepositoryImpl
+import proton.android.pass.data.impl.repositories.FolderKeyRepository
+import proton.android.pass.data.impl.repositories.FolderKeyRepositoryImpl
 import proton.android.pass.data.impl.repositories.FolderRepositoryImpl
 import proton.android.pass.data.impl.repositories.GroupInviteRepositoryImpl
 import proton.android.pass.data.impl.repositories.GroupRepositoryImpl
@@ -236,5 +238,8 @@ abstract class DataRepositoryModule {
 
     @[Binds Singleton]
     abstract fun bindFolderRepository(impl: FolderRepositoryImpl): FolderRepository
+
+    @[Binds Singleton]
+    abstract fun bindFolderKeyRepository(impl: FolderKeyRepositoryImpl): FolderKeyRepository
 
 }

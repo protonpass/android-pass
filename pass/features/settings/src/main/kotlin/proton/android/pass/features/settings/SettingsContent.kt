@@ -18,6 +18,7 @@
 
 package proton.android.pass.features.settings
 
+import android.os.Build
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -63,6 +64,13 @@ internal fun SettingsContent(
                 theme = state.themePreference,
                 onEvent = onEvent
             )
+
+            if (state.isAutofillEnabled && Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                AutofillDisplaySection(
+                    autofillDisplayPreference = state.autofillDisplayPreference,
+                    onEvent = onEvent
+                )
+            }
 
             PrivacySection(
                 useFavicons = state.useFavicons.value(),

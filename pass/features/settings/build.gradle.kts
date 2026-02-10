@@ -69,6 +69,7 @@ dependencies {
     kspDebug(libs.showkaseProcessor)
 
     implementation(projects.pass.appConfig.api)
+    implementation(projects.pass.autofill.api)
     implementation(projects.pass.common.api)
     implementation(projects.pass.commonUi.api)
     implementation(projects.pass.composeComponents.impl)
@@ -97,6 +98,7 @@ dependencies {
     kaptAndroidTest(libs.dagger.hilt.android.compiler)
     androidTestImplementation(libs.kotlinTest)
     androidTestImplementation(libs.truth)
+    androidTestImplementation(projects.pass.autofill.fakes)
     androidTestImplementation(projects.pass.appConfig.fakes)
     androidTestImplementation(projects.pass.common.fakes)
     androidTestImplementation(projects.pass.commonTest)

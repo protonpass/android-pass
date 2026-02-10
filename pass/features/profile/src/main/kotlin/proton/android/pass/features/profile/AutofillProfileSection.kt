@@ -45,12 +45,15 @@ fun AutofillProfileSection(
         modifier = modifier,
         verticalArrangement = Arrangement.spacedBy(10.dp)
     ) {
-        SettingToggle(
-            modifier = Modifier.roundedContainerNorm(),
-            text = stringResource(R.string.profile_option_autofill),
-            isChecked = isChecked,
-            onClick = { onClick(isChecked) }
-        )
+        Column(
+            modifier = Modifier.roundedContainerNorm()
+        ) {
+            SettingToggle(
+                text = stringResource(R.string.profile_option_autofill),
+                isChecked = isChecked,
+                onClick = { onClick(isChecked) }
+            )
+        }
         Text(
             text = stringResource(R.string.profile_option_autofill_subtitle),
             style = ProtonTheme.typography.captionWeak.copy(PassTheme.colors.textWeak)
@@ -70,3 +73,4 @@ fun AutofillProfileSectionPreview(@PreviewParameter(ThemePreviewProvider::class)
         }
     }
 }
+

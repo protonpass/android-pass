@@ -121,4 +121,7 @@ interface UserPreferencesRepository {
         feature: FeatureDiscoveryFeature,
         preference: FeatureDiscoveryBannerPreference
     ): Result<Unit>
+
+    fun setAutofillDisplayPreference(preference: AutofillDisplayPreference): Result<Unit>
+    fun getAutofillDisplayPreference(): Flow<AutofillDisplayPreference>
 }

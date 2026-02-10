@@ -21,18 +21,21 @@ package proton.android.pass.features.settings
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import android.os.Build
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.firstOrNull
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.usersettings.domain.repository.DeviceSettingsRepository
+import proton.android.pass.autofill.api.AutofillManager
+import proton.android.pass.autofill.api.AutofillSupportedStatus
 import proton.android.pass.common.api.asLoadingResult
 import proton.android.pass.common.api.combineN
 import proton.android.pass.common.api.safeRunCatching
@@ -45,6 +48,7 @@ import proton.android.pass.image.api.ClearIconCache
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.android.pass.preferences.AllowScreenshotsPreference
+import proton.android.pass.preferences.AutofillDisplayPreference
 import proton.android.pass.preferences.CopyTotpToClipboard
 import proton.android.pass.preferences.ThemePreference
 import proton.android.pass.preferences.UseDigitalAssetLinksPreference
@@ -66,6 +70,7 @@ class SettingsViewModel @Inject constructor(
     private val canConfigureTelemetry: CanConfigureTelemetry,
     private val initialWorkerLauncher: InitialWorkerLauncher,
     private val assetLinkRepository: AssetLinkRepository,
+    autofillManager: AutofillManager,
     syncStatusRepository: ItemSyncStatusRepository
 ) : ViewModel() {
 
@@ -98,6 +103,15 @@ class SettingsViewModel @Inject constructor(
             .observeDisplayUsernameFieldPreference()
             .distinctUntilChanged()
 
+    private val autofillStatusFlow: Flow<AutofillSupportedStatus> = autofillManager
+        .getAutofillStatus()
+        .distinctUntilChanged()
+
+    private val autofillDisplayPreferenceFlow: Flow<AutofillDisplayPreference> =
+        preferencesRepository.getAutofillDisplayPreference()
+            .map { if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) it else AutofillDisplayPreference.Popup }
+            .distinctUntilChanged()
+
     private val eventState: MutableStateFlow<SettingsEvent> =
         MutableStateFlow(SettingsEvent.Unknown)
 
@@ -107,7 +121,8 @@ class SettingsViewModel @Inject constructor(
         val useFavicons: UseFaviconsPreference,
         val useDigitalAssetLinks: UseDigitalAssetLinksPreference,
         val displayUsernameFieldPreference: SettingsDisplayUsernameFieldPreference,
-        val displayAutofillPinningPreference: SettingsDisplayAutofillPinningPreference
+        val displayAutofillPinningPreference: SettingsDisplayAutofillPinningPreference,
+        val autofillDisplayPreference: AutofillDisplayPreference
     )
 
     private val preferencesState: Flow<PreferencesState> = combineN(
@@ -117,16 +132,18 @@ class SettingsViewModel @Inject constructor(
         useDigitalAssetLinksState,
         displayUsernameFieldPreferenceFlow,
         preferencesRepository.observeDisplayAutofillPinningPreference(),
+        autofillDisplayPreferenceFlow,
         ::PreferencesState
     )
 
-    internal val state: StateFlow<SettingsUiState> = combine(
+    internal val state: StateFlow<SettingsUiState> = combineN(
         preferencesState,
         deviceSettingsRepository.observeDeviceSettings(),
         allowScreenshotsState,
         syncStatusRepository.observeSyncState().asLoadingResult(),
-        eventState
-    ) { preferences, deviceSettings, allowScreenshots, syncStateLoadingResult, event ->
+        eventState,
+        autofillStatusFlow
+    ) { preferences, deviceSettings, allowScreenshots, syncStateLoadingResult, event, autofillStatus ->
         val telemetryStatus = if (canConfigureTelemetry()) {
             TelemetryStatus.Show(
                 shareTelemetry = deviceSettings.isTelemetryEnabled,
@@ -146,7 +163,9 @@ class SettingsViewModel @Inject constructor(
             telemetryStatus = telemetryStatus,
             event = event,
             displayUsernameFieldPreference = preferences.displayUsernameFieldPreference,
-            displayAutofillPinningPreference = preferences.displayAutofillPinningPreference
+            displayAutofillPinningPreference = preferences.displayAutofillPinningPreference,
+            autofillDisplayPreference = preferences.autofillDisplayPreference,
+            autofillStatus = autofillStatus
         )
     }.stateIn(
         scope = viewModelScope,

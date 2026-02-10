@@ -71,4 +71,5 @@ sealed interface ProfileUiEvent {
     @JvmInline
     value class OnStorageFullClick(val canUpgrade: Boolean) : ProfileUiEvent
 
+
 }

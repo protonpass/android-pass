@@ -235,6 +235,7 @@ import proton.android.pass.features.security.center.weakpass.navigation.Security
 import proton.android.pass.features.settings.ClearClipboardOptions
 import proton.android.pass.features.settings.ClipboardSettings
 import proton.android.pass.features.settings.LogView
+import proton.android.pass.features.settings.AutofillDisplaySelector
 import proton.android.pass.features.settings.Settings
 import proton.android.pass.features.settings.SettingsNavigation
 import proton.android.pass.features.settings.ThemeSelector
@@ -973,6 +974,8 @@ fun NavGraphBuilder.appGraph(
 
                 SettingsNavigation.Restart -> onNavigate(AppNavigation.Restart)
                 SettingsNavigation.SyncDialog -> appNavigator.navigate(SyncNavItem)
+                SettingsNavigation.SelectAutofillDisplay ->
+                    appNavigator.navigate(AutofillDisplaySelector)
             }
         }
     )

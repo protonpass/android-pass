@@ -50,4 +50,6 @@ internal sealed interface SettingsContentEvent {
     @JvmInline
     value class OnDisplayAutofillPinningToggled(val isEnabled: Boolean) : SettingsContentEvent
 
+    data object SelectAutofillDisplay : SettingsContentEvent
+
 }

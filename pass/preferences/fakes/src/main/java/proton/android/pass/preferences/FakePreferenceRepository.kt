@@ -107,6 +107,9 @@ class FakePreferenceRepository @Inject constructor() : UserPreferencesRepository
     private val featureDiscoveryBannerPreferenceMap =
         MutableStateFlow<Map<FeatureDiscoveryFeature, FeatureDiscoveryBannerPreference>>(emptyMap())
 
+    private val autofillDisplayPreference =
+        MutableStateFlow(AutofillDisplayPreference.Inline)
+
     override fun setAppLockState(state: AppLockState): Result<Unit> {
         appLockState.tryEmit(state)
         return Result.success(Unit)
@@ -309,5 +312,12 @@ class FakePreferenceRepository @Inject constructor() : UserPreferencesRepository
         }
         return Result.success(Unit)
     }
+
+    override fun setAutofillDisplayPreference(preference: AutofillDisplayPreference): Result<Unit> {
+        autofillDisplayPreference.tryEmit(preference)
+        return Result.success(Unit)
+    }
+
+    override fun getAutofillDisplayPreference(): Flow<AutofillDisplayPreference> = autofillDisplayPreference
 
 }

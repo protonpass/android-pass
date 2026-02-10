@@ -354,6 +354,12 @@ class UserPreferencesRepositoryImpl @Inject constructor(
         }
     }
 
+    override fun setAutofillDisplayPreference(preference: AutofillDisplayPreference): Result<Unit> =
+        setPreference { it.setAutofillDisplay(preference.value()) }
+
+    override fun getAutofillDisplayPreference(): Flow<AutofillDisplayPreference> =
+        getPreference { AutofillDisplayPreference.from(it.autofillDisplay) }
+
     private fun setPreference(mapper: suspend (UserPreferences.Builder) -> UserPreferences.Builder): Result<Unit> =
         runBlocking {
             setPreferenceSuspend(mapper)

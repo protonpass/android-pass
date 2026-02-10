@@ -47,6 +47,11 @@ object ClearClipboardOptions : NavItem(
     navItemType = NavItemType.Bottomsheet
 )
 
+object AutofillDisplaySelector : NavItem(
+    baseRoute = "autofill/display/bottomsheet",
+    navItemType = NavItemType.Bottomsheet
+)
+
 sealed interface SettingsNavigation {
     data object SelectTheme : SettingsNavigation
     data object ClipboardSettings : SettingsNavigation
@@ -56,6 +61,7 @@ sealed interface SettingsNavigation {
     data object ViewLogs : SettingsNavigation
     data object Restart : SettingsNavigation
     data object SyncDialog : SettingsNavigation
+    data object SelectAutofillDisplay : SettingsNavigation
 }
 
 fun NavGraphBuilder.settingsGraph(onNavigate: (SettingsNavigation) -> Unit) {
@@ -81,6 +87,9 @@ fun NavGraphBuilder.settingsGraph(onNavigate: (SettingsNavigation) -> Unit) {
         }
         bottomSheet(ClearClipboardOptions) {
             ClearClipboardOptionsBottomSheet(onNavigate = onNavigate)
+        }
+        bottomSheet(AutofillDisplaySelector) {
+            AutofillDisplaySelectionBottomSheet(onNavigate = onNavigate)
         }
     }
 }

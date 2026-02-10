@@ -21,11 +21,13 @@ package proton.android.pass.features.settings
 import androidx.compose.runtime.Stable
 import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.data.api.repositories.SyncState
+import proton.android.pass.autofill.api.AutofillSupportedStatus
 import proton.android.pass.preferences.AllowScreenshotsPreference
 import proton.android.pass.preferences.CopyTotpToClipboard
 import proton.android.pass.preferences.ThemePreference
 import proton.android.pass.preferences.UseDigitalAssetLinksPreference
 import proton.android.pass.preferences.UseFaviconsPreference
+import proton.android.pass.preferences.AutofillDisplayPreference
 import proton.android.pass.preferences.settings.SettingsDisplayAutofillPinningPreference
 import proton.android.pass.preferences.settings.SettingsDisplayUsernameFieldPreference
 
@@ -59,8 +61,14 @@ internal data class SettingsUiState(
     val event: SettingsEvent,
     val displayUsernameFieldPreference: SettingsDisplayUsernameFieldPreference,
     val displayAutofillPinningPreference: SettingsDisplayAutofillPinningPreference,
+    val autofillDisplayPreference: AutofillDisplayPreference,
+    val autofillStatus: AutofillSupportedStatus,
     private val syncStateLoadingResult: LoadingResult<SyncState>
 ) {
+
+    internal val isAutofillEnabled: Boolean
+        get() = autofillStatus is AutofillSupportedStatus.Supported &&
+            autofillStatus.status.value()
 
     internal val isForceRefreshing: Boolean = when (syncStateLoadingResult) {
         is LoadingResult.Error,
@@ -83,7 +91,11 @@ internal data class SettingsUiState(
             telemetryStatus = TelemetryStatus.Hide,
             event = SettingsEvent.Unknown,
             displayUsernameFieldPreference = SettingsDisplayUsernameFieldPreference.Disabled,
-            displayAutofillPinningPreference = SettingsDisplayAutofillPinningPreference.Disabled
+            displayAutofillPinningPreference = SettingsDisplayAutofillPinningPreference.Disabled,
+            autofillDisplayPreference = AutofillDisplayPreference.Popup,
+            autofillStatus = AutofillSupportedStatus.Supported(
+                proton.android.pass.autofill.api.AutofillStatus.Disabled
+            )
         )
 
     }

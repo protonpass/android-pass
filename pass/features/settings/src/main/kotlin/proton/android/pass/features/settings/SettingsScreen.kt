@@ -75,6 +75,9 @@ fun SettingsScreen(
                 is SettingsContentEvent.OnDisplayAutofillPinningToggled -> {
                     viewModel.onToggleDisplayAutofillPinning(isEnabled = it.isEnabled)
                 }
+
+                SettingsContentEvent.SelectAutofillDisplay ->
+                    onNavigate(SettingsNavigation.SelectAutofillDisplay)
             }
         }
     )

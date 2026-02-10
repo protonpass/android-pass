@@ -55,6 +55,7 @@ import proton.android.pass.domain.entity.AppName
 import proton.android.pass.domain.entity.PackageInfo
 import proton.android.pass.domain.entity.PackageName
 import proton.android.pass.log.api.PassLogger
+import proton.android.pass.preferences.AutofillDisplayPreference
 import proton.android.pass.telemetry.api.TelemetryManager
 
 object AutoFillHandler {
@@ -71,6 +72,7 @@ object AutoFillHandler {
         telemetryManager: TelemetryManager,
         accountManager: AccountManager,
         thirdPartyModeProvider: ThirdPartyModeProvider,
+        autofillDisplayPreference: AutofillDisplayPreference,
         healthMonitor: AutofillHealthMonitor? = null
     ) {
         val windowNode = getWindowNodes(request.fillContexts).lastOrNull()
@@ -98,7 +100,8 @@ object AutoFillHandler {
                 telemetryManager = telemetryManager,
                 accountManager = accountManager,
                 thirdPartyModeProvider = thirdPartyModeProvider,
-                healthMonitor = healthMonitor
+                healthMonitor = healthMonitor,
+                autofillDisplayPreference = autofillDisplayPreference
             )
 
             callback.onSuccess(response.value())
@@ -118,6 +121,7 @@ object AutoFillHandler {
         telemetryManager: TelemetryManager,
         accountManager: AccountManager,
         thirdPartyModeProvider: ThirdPartyModeProvider,
+        autofillDisplayPreference: AutofillDisplayPreference,
         healthMonitor: AutofillHealthMonitor? = null
     ): Option<FillResponse> {
         val applicationPackageName = PackageName(Utils.getApplicationPackageName(windowNode))
@@ -157,7 +161,8 @@ object AutoFillHandler {
         val isDangerousAutofill = !applicationPackageName.isBrowser() && hasUrl
 
         val autofillData = AutofillData(assistInfo, packageInfo, isDangerousAutofill)
-        val usedInlinePath = hasSupportForInlineSuggestions(request)
+        val usedInlinePath = autofillDisplayPreference == AutofillDisplayPreference.Inline &&
+            hasSupportForInlineSuggestions(request)
         val datasetList = if (usedInlinePath) {
             request.inlineSuggestionsRequest?.let {
                 autofillServiceManager.createSuggestedItemsDatasetList(

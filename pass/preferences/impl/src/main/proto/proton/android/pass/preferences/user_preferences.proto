@@ -39,4 +39,5 @@ message UserPreferences {
   BooleanPrefProto display_file_attachments_onboarding = 25;
   BooleanPrefProto use_digital_asset_links = 26;
   map<string, BooleanPrefProto> feature_discovery_banners = 27;
+  int32 autofill_display = 28;
 }

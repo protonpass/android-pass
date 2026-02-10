@@ -37,6 +37,7 @@ import proton.android.pass.autofill.autofillhealth.service.AutofillHealthMonitor
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.preferences.FeatureFlag
 import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
+import proton.android.pass.preferences.UserPreferencesRepository
 import proton.android.pass.telemetry.api.TelemetryManager
 import javax.inject.Inject
 
@@ -57,6 +58,9 @@ class ProtonPassAutofillService : AutofillService() {
 
     @Inject
     lateinit var ffRepo: FeatureFlagsPreferencesRepository
+
+    @Inject
+    lateinit var userPreferencesRepository: UserPreferencesRepository
 
     @Inject
     lateinit var healthMonitor: AutofillHealthMonitor
@@ -116,6 +120,10 @@ class ProtonPassAutofillService : AutofillService() {
             }
         }
 
+        val autofillDisplayPreference = runBlocking {
+            userPreferencesRepository.getAutofillDisplayPreference().first()
+        }
+
         AutoFillHandler.handleAutofill(
             context = this@ProtonPassAutofillService,
             request = request,
@@ -125,7 +133,8 @@ class ProtonPassAutofillService : AutofillService() {
             telemetryManager = telemetryManager,
             accountManager = accountManager,
             thirdPartyModeProvider = thirdPartyModeProvider,
-            healthMonitor = if (isDebugMode) healthMonitor else null
+            healthMonitor = if (isDebugMode) healthMonitor else null,
+            autofillDisplayPreference = autofillDisplayPreference
         )
     }
 

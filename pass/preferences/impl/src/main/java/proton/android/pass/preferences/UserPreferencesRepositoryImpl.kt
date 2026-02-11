@@ -39,6 +39,7 @@ import proton.android.pass.preferences.featurediscovery.FeatureDiscoveryBannerPr
 import proton.android.pass.preferences.featurediscovery.FeatureDiscoveryFeature
 import proton.android.pass.preferences.monitor.MonitorStatusPreference
 import proton.android.pass.preferences.sentinel.SentinelStatusPreference
+import proton.android.pass.preferences.settings.AutosavePreference
 import proton.android.pass.preferences.settings.SettingsDisplayAutofillPinningPreference
 import proton.android.pass.preferences.settings.SettingsDisplayUsernameFieldPreference
 import proton.android.pass.preferences.simplelogin.SimpleLoginSyncStatusPreference
@@ -339,6 +340,20 @@ class UserPreferencesRepositoryImpl @Inject constructor(
         preference: FeatureDiscoveryBannerPreference
     ): Result<Unit> = setPreference {
         it.putFeatureDiscoveryBanners(feature.id, preference.value.toBooleanPrefProto())
+    }
+
+    override fun setAutosavePreference(preference: AutosavePreference): Result<Unit> =
+        setPreference { userPreferencesBuilder ->
+            preference.value
+                .toBooleanPrefProto()
+                .let(userPreferencesBuilder::setAutosaveEnabled)
+        }
+
+    override fun observeAutosavePreference(): Flow<AutosavePreference> = getPreference { userPreferences ->
+        fromBooleanPrefProto(
+            pref = userPreferences.autosaveEnabled,
+            default = true
+        ).let(AutosavePreference::from)
     }
 
     override fun observeDisplayFeatureDiscoverBanner(

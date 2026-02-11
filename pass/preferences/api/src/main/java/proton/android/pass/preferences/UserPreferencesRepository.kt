@@ -26,6 +26,7 @@ import proton.android.pass.preferences.featurediscovery.FeatureDiscoveryBannerPr
 import proton.android.pass.preferences.featurediscovery.FeatureDiscoveryFeature
 import proton.android.pass.preferences.monitor.MonitorStatusPreference
 import proton.android.pass.preferences.sentinel.SentinelStatusPreference
+import proton.android.pass.preferences.settings.AutosavePreference
 import proton.android.pass.preferences.settings.SettingsDisplayAutofillPinningPreference
 import proton.android.pass.preferences.settings.SettingsDisplayUsernameFieldPreference
 import proton.android.pass.preferences.simplelogin.SimpleLoginSyncStatusPreference
@@ -124,4 +125,7 @@ interface UserPreferencesRepository {
 
     fun setAutofillDisplayPreference(preference: AutofillDisplayPreference): Result<Unit>
     fun getAutofillDisplayPreference(): Flow<AutofillDisplayPreference>
+
+    fun setAutosavePreference(preference: AutosavePreference): Result<Unit>
+    fun observeAutosavePreference(): Flow<AutosavePreference>
 }

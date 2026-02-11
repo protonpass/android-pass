@@ -28,6 +28,7 @@ import proton.android.pass.preferences.ThemePreference
 import proton.android.pass.preferences.UseDigitalAssetLinksPreference
 import proton.android.pass.preferences.UseFaviconsPreference
 import proton.android.pass.preferences.AutofillDisplayPreference
+import proton.android.pass.preferences.settings.AutosavePreference
 import proton.android.pass.preferences.settings.SettingsDisplayAutofillPinningPreference
 import proton.android.pass.preferences.settings.SettingsDisplayUsernameFieldPreference
 
@@ -63,6 +64,7 @@ internal data class SettingsUiState(
     val displayAutofillPinningPreference: SettingsDisplayAutofillPinningPreference,
     val autofillDisplayPreference: AutofillDisplayPreference,
     val autofillStatus: AutofillSupportedStatus,
+    val autosavePreference: AutosavePreference,
     private val syncStateLoadingResult: LoadingResult<SyncState>
 ) {
 
@@ -95,7 +97,8 @@ internal data class SettingsUiState(
             autofillDisplayPreference = AutofillDisplayPreference.Popup,
             autofillStatus = AutofillSupportedStatus.Supported(
                 proton.android.pass.autofill.api.AutofillStatus.Disabled
-            )
+            ),
+            autosavePreference = AutosavePreference.Enabled
         )
 
     }

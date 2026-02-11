@@ -18,7 +18,6 @@
 
 package proton.android.pass.features.settings
 
-import android.os.Build
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -65,9 +64,10 @@ internal fun SettingsContent(
                 onEvent = onEvent
             )
 
-            if (state.isAutofillEnabled && Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            if (state.isAutofillEnabled) {
                 AutofillDisplaySection(
                     autofillDisplayPreference = state.autofillDisplayPreference,
+                    isAutosaveEnabled = state.autosavePreference.value,
                     onEvent = onEvent
                 )
             }

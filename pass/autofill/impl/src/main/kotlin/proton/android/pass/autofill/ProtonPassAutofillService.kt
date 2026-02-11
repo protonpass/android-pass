@@ -38,6 +38,7 @@ import proton.android.pass.log.api.PassLogger
 import proton.android.pass.preferences.FeatureFlag
 import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import proton.android.pass.preferences.UserPreferencesRepository
+import proton.android.pass.preferences.settings.AutosavePreference
 import proton.android.pass.telemetry.api.TelemetryManager
 import javax.inject.Inject
 
@@ -124,6 +125,10 @@ class ProtonPassAutofillService : AutofillService() {
             userPreferencesRepository.getAutofillDisplayPreference().first()
         }
 
+        val isAutosaveEnabled = runBlocking {
+            userPreferencesRepository.observeAutosavePreference().first()
+        } == AutosavePreference.Enabled
+
         AutoFillHandler.handleAutofill(
             context = this@ProtonPassAutofillService,
             request = request,
@@ -134,7 +139,8 @@ class ProtonPassAutofillService : AutofillService() {
             accountManager = accountManager,
             thirdPartyModeProvider = thirdPartyModeProvider,
             healthMonitor = if (isDebugMode) healthMonitor else null,
-            autofillDisplayPreference = autofillDisplayPreference
+            autofillDisplayPreference = autofillDisplayPreference,
+            isAutosaveEnabled = isAutosaveEnabled
         )
     }
 

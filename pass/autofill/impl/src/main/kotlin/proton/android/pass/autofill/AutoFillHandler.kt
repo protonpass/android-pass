@@ -73,6 +73,7 @@ object AutoFillHandler {
         accountManager: AccountManager,
         thirdPartyModeProvider: ThirdPartyModeProvider,
         autofillDisplayPreference: AutofillDisplayPreference,
+        isAutosaveEnabled: Boolean,
         healthMonitor: AutofillHealthMonitor? = null
     ) {
         val windowNode = getWindowNodes(request.fillContexts).lastOrNull()
@@ -101,7 +102,8 @@ object AutoFillHandler {
                 accountManager = accountManager,
                 thirdPartyModeProvider = thirdPartyModeProvider,
                 healthMonitor = healthMonitor,
-                autofillDisplayPreference = autofillDisplayPreference
+                autofillDisplayPreference = autofillDisplayPreference,
+                isAutosaveEnabled = isAutosaveEnabled
             )
 
             callback.onSuccess(response.value())
@@ -122,6 +124,7 @@ object AutoFillHandler {
         accountManager: AccountManager,
         thirdPartyModeProvider: ThirdPartyModeProvider,
         autofillDisplayPreference: AutofillDisplayPreference,
+        isAutosaveEnabled: Boolean,
         healthMonitor: AutofillHealthMonitor? = null
     ): Option<FillResponse> {
         val applicationPackageName = PackageName(Utils.getApplicationPackageName(windowNode))
@@ -196,7 +199,8 @@ object AutoFillHandler {
             assistInfo = assistInfo,
             request = request,
             telemetryManager = telemetryManager,
-            thirdPartyModeProvider = thirdPartyModeProvider
+            thirdPartyModeProvider = thirdPartyModeProvider,
+            isAutosaveEnabled = isAutosaveEnabled
         )
     }
 
@@ -207,7 +211,8 @@ object AutoFillHandler {
         assistInfo: AssistInfo,
         request: FillRequest,
         telemetryManager: TelemetryManager,
-        thirdPartyModeProvider: ThirdPartyModeProvider
+        thirdPartyModeProvider: ThirdPartyModeProvider,
+        isAutosaveEnabled: Boolean
     ): Option<FillResponse> {
         if (datasetList.isEmpty()) {
             PassLogger.i(TAG, "No dataset found")
@@ -217,12 +222,14 @@ object AutoFillHandler {
         val responseBuilder = FillResponse.Builder()
         datasetList.forEach { responseBuilder.addDataset(it) }
 
-        responseBuilder.addSaveInfo(
-            request = request,
-            cluster = assistInfo.cluster,
-            packageName = packageName,
-            thirdPartyModeProvider = thirdPartyModeProvider
-        )
+        if (isAutosaveEnabled) {
+            responseBuilder.addSaveInfo(
+                request = request,
+                cluster = assistInfo.cluster,
+                packageName = packageName,
+                thirdPartyModeProvider = thirdPartyModeProvider
+            )
+        }
 
         return if (!currentCoroutineContext().isActive) {
             PassLogger.i(TAG, "Job was cancelled")

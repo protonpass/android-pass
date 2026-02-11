@@ -31,6 +31,7 @@ import proton.android.pass.preferences.featurediscovery.FeatureDiscoveryBannerPr
 import proton.android.pass.preferences.featurediscovery.FeatureDiscoveryFeature
 import proton.android.pass.preferences.monitor.MonitorStatusPreference
 import proton.android.pass.preferences.sentinel.SentinelStatusPreference
+import proton.android.pass.preferences.settings.AutosavePreference
 import proton.android.pass.preferences.settings.SettingsDisplayAutofillPinningPreference
 import proton.android.pass.preferences.settings.SettingsDisplayUsernameFieldPreference
 import proton.android.pass.preferences.simplelogin.SimpleLoginSyncStatusPreference
@@ -103,6 +104,9 @@ class FakePreferenceRepository @Inject constructor() : UserPreferencesRepository
 
     private val displayFileAttachmentsBanner: MutableStateFlow<DisplayFileAttachmentsBanner> =
         MutableStateFlow(DisplayFileAttachmentsBanner.Unknown)
+
+    private val autosavePreference =
+        MutableStateFlow(AutosavePreference.Enabled)
 
     private val featureDiscoveryBannerPreferenceMap =
         MutableStateFlow<Map<FeatureDiscoveryFeature, FeatureDiscoveryBannerPreference>>(emptyMap())
@@ -296,6 +300,13 @@ class FakePreferenceRepository @Inject constructor() : UserPreferencesRepository
 
     override fun observeUseDigitalAssetLinksPreference(): Flow<UseDigitalAssetLinksPreference> =
         useUseDigitalAssetLinksPreference
+
+    override fun setAutosavePreference(preference: AutosavePreference): Result<Unit> {
+        autosavePreference.tryEmit(preference)
+        return Result.success(Unit)
+    }
+
+    override fun observeAutosavePreference(): Flow<AutosavePreference> = autosavePreference
 
     override fun observeDisplayFeatureDiscoverBanner(
         feature: FeatureDiscoveryFeature

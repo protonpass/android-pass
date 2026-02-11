@@ -18,32 +18,23 @@
 
 package proton.android.pass.features.settings
 
-import android.os.Build
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.tooling.preview.PreviewParameter
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.captionWeak
 import me.proton.core.compose.theme.defaultSmallWeak
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
-import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.composecomponents.impl.container.roundedContainerNorm
-import proton.android.pass.composecomponents.impl.setting.SettingOption
 import proton.android.pass.composecomponents.impl.setting.SettingToggle
-import proton.android.pass.preferences.AutofillDisplayPreference
 
 @Composable
-internal fun AutofillDisplaySection(
+internal fun AutosaveSection(
     modifier: Modifier = Modifier,
-    autofillDisplayPreference: AutofillDisplayPreference,
     isAutosaveEnabled: Boolean,
     onEvent: (SettingsContentEvent) -> Unit
 ) {
@@ -57,21 +48,6 @@ internal fun AutofillDisplaySection(
         )
 
         Column(modifier = Modifier.roundedContainerNorm()) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-                val autofillDisplaySubtitleId = remember(autofillDisplayPreference) {
-                    when (autofillDisplayPreference) {
-                        AutofillDisplayPreference.Inline -> R.string.settings_autofill_display_inline
-                        AutofillDisplayPreference.Popup -> R.string.settings_autofill_display_popup
-                    }
-                }
-
-                SettingOption(
-                    text = stringResource(autofillDisplaySubtitleId),
-                    label = stringResource(R.string.settings_autofill_display_title),
-                    onClick = { onEvent(SettingsContentEvent.SelectAutofillDisplay) }
-                )
-            }
-
             SettingToggle(
                 text = stringResource(R.string.settings_autosave_prompt_title),
                 isChecked = isAutosaveEnabled,
@@ -83,19 +59,5 @@ internal fun AutofillDisplaySection(
             text = stringResource(R.string.settings_autosave_prompt_subtitle),
             style = ProtonTheme.typography.captionWeak.copy(PassTheme.colors.textWeak)
         )
-    }
-}
-
-@Preview
-@Composable
-internal fun AutofillDisplaySectionPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
-    PassTheme(isDark = isDark) {
-        Surface {
-            AutofillDisplaySection(
-                autofillDisplayPreference = AutofillDisplayPreference.Inline,
-                isAutosaveEnabled = true,
-                onEvent = {}
-            )
-        }
     }
 }

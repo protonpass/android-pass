@@ -54,6 +54,7 @@ import proton.android.pass.preferences.ThemePreference
 import proton.android.pass.preferences.UseDigitalAssetLinksPreference
 import proton.android.pass.preferences.UseFaviconsPreference
 import proton.android.pass.preferences.UserPreferencesRepository
+import proton.android.pass.preferences.settings.AutosavePreference
 import proton.android.pass.preferences.settings.SettingsDisplayAutofillPinningPreference
 import proton.android.pass.preferences.settings.SettingsDisplayUsernameFieldPreference
 import proton.android.pass.telemetry.api.CanConfigureTelemetry
@@ -112,6 +113,11 @@ class SettingsViewModel @Inject constructor(
             .map { if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) it else AutofillDisplayPreference.Popup }
             .distinctUntilChanged()
 
+    private val autosavePreferenceFlow: Flow<AutosavePreference> =
+        preferencesRepository
+            .observeAutosavePreference()
+            .distinctUntilChanged()
+
     private val eventState: MutableStateFlow<SettingsEvent> =
         MutableStateFlow(SettingsEvent.Unknown)
 
@@ -122,7 +128,8 @@ class SettingsViewModel @Inject constructor(
         val useDigitalAssetLinks: UseDigitalAssetLinksPreference,
         val displayUsernameFieldPreference: SettingsDisplayUsernameFieldPreference,
         val displayAutofillPinningPreference: SettingsDisplayAutofillPinningPreference,
-        val autofillDisplayPreference: AutofillDisplayPreference
+        val autofillDisplayPreference: AutofillDisplayPreference,
+        val autosavePreference: AutosavePreference
     )
 
     private val preferencesState: Flow<PreferencesState> = combineN(
@@ -133,6 +140,7 @@ class SettingsViewModel @Inject constructor(
         displayUsernameFieldPreferenceFlow,
         preferencesRepository.observeDisplayAutofillPinningPreference(),
         autofillDisplayPreferenceFlow,
+        autosavePreferenceFlow,
         ::PreferencesState
     )
 
@@ -165,7 +173,8 @@ class SettingsViewModel @Inject constructor(
             displayUsernameFieldPreference = preferences.displayUsernameFieldPreference,
             displayAutofillPinningPreference = preferences.displayAutofillPinningPreference,
             autofillDisplayPreference = preferences.autofillDisplayPreference,
-            autofillStatus = autofillStatus
+            autofillStatus = autofillStatus,
+            autosavePreference = preferences.autosavePreference
         )
     }.stateIn(
         scope = viewModelScope,
@@ -244,6 +253,11 @@ class SettingsViewModel @Inject constructor(
     fun onToggleDisplayAutofillPinning(isEnabled: Boolean) {
         SettingsDisplayAutofillPinningPreference.from(isEnabled)
             .also(preferencesRepository::setDisplayAutofillPinningPreference)
+    }
+
+    internal fun onAutosaveChange(isEnabled: Boolean) {
+        AutosavePreference.from(isEnabled)
+            .also(preferencesRepository::setAutosavePreference)
     }
 
     private companion object {

@@ -78,6 +78,10 @@ fun SettingsScreen(
 
                 SettingsContentEvent.SelectAutofillDisplay ->
                     onNavigate(SettingsNavigation.SelectAutofillDisplay)
+
+                is SettingsContentEvent.OnAutosaveChange -> {
+                    viewModel.onAutosaveChange(isEnabled = it.isEnabled)
+                }
             }
         }
     )

@@ -52,4 +52,7 @@ internal sealed interface SettingsContentEvent {
 
     data object SelectAutofillDisplay : SettingsContentEvent
 
+    @JvmInline
+    value class OnAutosaveChange(val isEnabled: Boolean) : SettingsContentEvent
+
 }

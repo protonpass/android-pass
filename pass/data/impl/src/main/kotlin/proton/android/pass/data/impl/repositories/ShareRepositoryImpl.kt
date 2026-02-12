@@ -256,7 +256,7 @@ class ShareRepositoryImpl @Inject constructor(
                 inactiveLocalShares.contains(ShareId(it.shareId))
         }
 
-        val storedShares = storeShares(userId, remoteSharesToSave)
+        val (storedShares, skippedDueToGroupCount) = storeShares(userId, remoteSharesToSave)
         val inactiveNotInLocalShares = storedShares
             .filter { !it.isActive }
             .map { ShareId(it.id) }
@@ -277,7 +277,8 @@ class ShareRepositoryImpl @Inject constructor(
             allShareIds = allShareIds,
             newShareIds = newShares.map { ShareId(it.id) }.toSet(),
             wasFirstSync = wasFirstSync,
-            hasUndecryptableShares = inactiveNotInLocalShares.isNotEmpty()
+            hasInactiveShares = inactiveNotInLocalShares.isNotEmpty(),
+            hasInvalidGroupShares = skippedDueToGroupCount > 0
         )
     }
 
@@ -381,7 +382,10 @@ class ShareRepositoryImpl @Inject constructor(
                 throw ShareNotAvailableError()
             }
         localShareDataSource.deleteShares(userId, setOf(shareId))
-        storeShares(userId, listOf(shareResponse))
+        val (_, skippedCount) = storeShares(userId, listOf(shareResponse))
+        if (skippedCount > 0) {
+            PassLogger.w(TAG, "Skipped $skippedCount shares due to missing group information")
+        }
     }
 
     override suspend fun deleteLocalSharesForUser(userId: UserId) = withContext(Dispatchers.IO) {
@@ -427,7 +431,10 @@ class ShareRepositoryImpl @Inject constructor(
 
     override suspend fun batchChangeShareVisibility(userId: UserId, shareVisibilityChanges: Map<ShareId, Boolean>) {
         val response = remoteShareDataSource.batchChangeShareVisibility(userId, shareVisibilityChanges)
-        storeShares(userId, response)
+        val (_, skippedCount) = storeShares(userId, response)
+        if (skippedCount > 0) {
+            PassLogger.w(TAG, "Skipped $skippedCount shares due to missing group information")
+        }
     }
 
     private suspend fun onShareResponseEntity(
@@ -438,23 +445,39 @@ class ShareRepositoryImpl @Inject constructor(
         block(createShareResponseEntity(event.toResponse(), userId, event.groupEmail))
     }
 
-    private suspend fun storeShares(userId: UserId, shares: List<ShareResponse>): List<ShareEntity> = coroutineScope {
-        if (shares.isEmpty()) return@coroutineScope emptyList()
+    private suspend fun storeShares(userId: UserId, shares: List<ShareResponse>): StoreSharesResult = coroutineScope {
+        if (shares.isEmpty()) return@coroutineScope StoreSharesResult(emptyList(), 0)
         PassLogger.i(TAG, "Fetching ShareKeys for ${shares.size} shares")
         val groups = if (shares.any { it.groupId != null }) {
             groupRepository.retrieveGroups(userId, forceRefresh = true)
         } else null
-        val entities: List<Pair<ShareEntity, List<ShareKeyEntity>>> = shares.map { response ->
-            val groupEmail = if (response.groupId != null) {
-                groups?.find { it.id.id == response.groupId }
-                    ?.groupEmail
-                    ?: throw IllegalStateException("Group not found on storing shares")
-            } else null
-            async { createShareResponseEntity(response, userId, groupEmail) }
-        }.awaitAll()
+
+        var invalidGroupSharesCount = 0
+        val entities: List<Pair<ShareEntity, List<ShareKeyEntity>>> = shares
+            .mapNotNull { response ->
+                val groupEmail = if (response.groupId != null) {
+                    groups?.find { it.id.id == response.groupId }?.groupEmail
+                        ?: run {
+                            PassLogger.w(
+                                TAG,
+                                "Skipping share ${response.shareId} - " +
+                                    "group ${response.groupId} not found"
+                            )
+                            invalidGroupSharesCount++
+                            return@mapNotNull null
+                        }
+                } else {
+                    null
+                }
+                response to groupEmail
+            }
+            .map { (response, groupEmail) ->
+                async { createShareResponseEntity(response, userId, groupEmail) }
+            }
+            .awaitAll()
 
         val shareEntities = entities.map { (entity, _) -> entity }
-        val shareKeyEntities = entities.map { (_, keys) -> keys }.flatten()
+        val shareKeyEntities = entities.flatMap { (_, keys) -> keys }
 
         if (shareEntities.isNotEmpty() || shareKeyEntities.isNotEmpty()) {
             database.inTransaction("storeShares") {
@@ -472,7 +495,7 @@ class ShareRepositoryImpl @Inject constructor(
             }
         }
 
-        shareEntities
+        StoreSharesResult(shareEntities, invalidGroupSharesCount)
     }
 
     private suspend fun createShareResponseEntity(
@@ -694,6 +717,11 @@ class ShareRepositoryImpl @Inject constructor(
         data class Found(val encryptionKey: EncryptionKey) : EncryptionKeyStatus
         data object Inactive : EncryptionKeyStatus
     }
+
+    private data class StoreSharesResult(
+        val shareEntities: List<ShareEntity>,
+        val invalidGroupSharesCount: Int
+    )
 
     private companion object {
 

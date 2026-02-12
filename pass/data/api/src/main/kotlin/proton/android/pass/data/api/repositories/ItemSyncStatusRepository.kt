@@ -32,9 +32,9 @@ sealed interface ItemSyncStatus {
 
     data class SyncInserting(val current: Int, val total: Int) : ItemSyncStatus
 
-    @JvmInline
-    value class SyncSuccess(
-        val hasUndecryptableShares: Boolean = false
+    data class SyncSuccess(
+        val hasInactiveShares: Boolean,
+        val hasInvalidGroupShares: Boolean
     ) : ItemSyncStatus
 
     data object SyncError : ItemSyncStatus

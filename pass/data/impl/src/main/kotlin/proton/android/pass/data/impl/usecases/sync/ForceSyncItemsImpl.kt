@@ -42,7 +42,8 @@ class ForceSyncItemsImpl @Inject constructor(
         userId: UserId,
         shareIds: List<ShareId>,
         isBackground: Boolean,
-        hasUndecryptableShares: Boolean
+        hasInactiveShares: Boolean,
+        hasInvalidGroupShares: Boolean
     ): ForceSyncResult {
         if (shareIds.isEmpty()) return ForceSyncResult.Success
 
@@ -100,7 +101,8 @@ class ForceSyncItemsImpl @Inject constructor(
         val result = if (errors.isEmpty()) {
             itemSyncStatusRepository.emit(
                 status = ItemSyncStatus.SyncSuccess(
-                    hasUndecryptableShares = hasUndecryptableShares
+                    hasInactiveShares = hasInactiveShares,
+                    hasInvalidGroupShares = hasInvalidGroupShares
                 )
             )
             ForceSyncResult.Success

@@ -31,6 +31,7 @@ interface ForceSyncItems {
         userId: UserId,
         shareIds: List<ShareId>,
         isBackground: Boolean,
-        hasUndecryptableShares: Boolean
+        hasInactiveShares: Boolean,
+        hasInvalidGroupShares: Boolean
     ): ForceSyncResult
 }

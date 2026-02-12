@@ -86,7 +86,9 @@ enum class HomeSnackbarMessage(
 
     AliasItemsEnabledSuccess(R.string.home_snackbar_items_alias_enabled_success, SnackbarType.SUCCESS),
     AliasItemsEnabledPartialSuccess(R.string.home_snackbar_items_alias_enabled_partial_success, SnackbarType.ERROR),
-    AliasItemsEnabledError(R.string.home_snackbar_items_alias_enabled_error, SnackbarType.ERROR)
+    AliasItemsEnabledError(R.string.home_snackbar_items_alias_enabled_error, SnackbarType.ERROR),
+
+    GroupVaultError(R.string.sync_group_vault_warning, SnackbarType.ERROR)
 }
 
 enum class HomeSnackbarMessageWithAction(
@@ -95,7 +97,7 @@ enum class HomeSnackbarMessageWithAction(
     override val isClipboard: Boolean = false,
     override val action: Int
 ) : SnackbarMessage.StructuredMessageWithAction {
-    InactiveVault(
+    InactiveVaultError(
         id = R.string.sync_inactive_vault_warning,
         isClipboard = false,
         type = SnackbarType.ERROR,

@@ -118,5 +118,6 @@ data class RefreshSharesResult(
     val allShareIds: Set<ShareId>,
     val newShareIds: Set<ShareId>,
     val wasFirstSync: Boolean,
-    val hasUndecryptableShares: Boolean
+    val hasInactiveShares: Boolean,
+    val hasInvalidGroupShares: Boolean
 )

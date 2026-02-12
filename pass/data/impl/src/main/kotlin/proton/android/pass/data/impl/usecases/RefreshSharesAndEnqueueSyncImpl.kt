@@ -77,7 +77,11 @@ class RefreshSharesAndEnqueueSyncImpl @Inject constructor(
             val repositoryResult = shareRepository.refreshShares(userId)
             PassLogger.i(TAG, "Shares for user: $userId refreshed")
             if (repositoryResult.allShareIds.isEmpty()) {
-                handleEmptyShares(userId, repositoryResult.hasUndecryptableShares)
+                handleEmptyShares(
+                    userId,
+                    repositoryResult.hasInactiveShares,
+                    repositoryResult.hasInvalidGroupShares
+                )
             } else {
                 handleNonEmptyShares(userId, repositoryResult, syncType)
             }
@@ -101,17 +105,19 @@ class RefreshSharesAndEnqueueSyncImpl @Inject constructor(
         val shouldEnqueueWorker = sharesToFetch.isNotEmpty()
         if (shouldEnqueueWorker) {
             enqueueWorker(
-                userId,
-                sharesToFetch,
-                fetchSource,
-                repositoryResult.hasUndecryptableShares
+                userId = userId,
+                shareIds = sharesToFetch,
+                fetchSource = fetchSource,
+                hasInactiveShares = repositoryResult.hasInactiveShares,
+                hasInvalidGroupShares = repositoryResult.hasInvalidGroupShares
             )
         }
 
         return RefreshSharesResult.SharesFound(
             shareIds = existingShareIds,
             isWorkerEnqueued = shouldEnqueueWorker,
-            hasUndecryptableShares = repositoryResult.hasUndecryptableShares
+            hasInactiveShares = repositoryResult.hasInactiveShares,
+            hasInvalidGroupShares = repositoryResult.hasInvalidGroupShares
         )
     }
 
@@ -134,13 +140,15 @@ class RefreshSharesAndEnqueueSyncImpl @Inject constructor(
         userId: UserId,
         shareIds: Set<ShareId>,
         fetchSource: FetchItemsWorker.FetchSource,
-        hasUndecryptableShares: Boolean
+        hasInactiveShares: Boolean,
+        hasInvalidGroupShares: Boolean
     ) {
         val request = FetchItemsWorker.getRequestFor(
             source = fetchSource,
             userId = userId,
             shareIds = shareIds.toList(),
-            hasUndecryptableShares = hasUndecryptableShares
+            hasInactiveShares = hasInactiveShares,
+            hasInvalidGroupShares = hasInvalidGroupShares
         )
         PassLogger.i(TAG, "Enqueuing FetchItemsWorker with source: $fetchSource")
         workManager.enqueueUniqueWork(
@@ -150,10 +158,14 @@ class RefreshSharesAndEnqueueSyncImpl @Inject constructor(
         )
     }
 
-    private suspend fun handleEmptyShares(userId: UserId, hasUndecryptableShares: Boolean): RefreshSharesResult {
+    private suspend fun handleEmptyShares(
+        userId: UserId,
+        hasUndecryptableShares: Boolean,
+        hasUndecryptableSharesDueToGroup: Boolean
+    ): RefreshSharesResult {
         if (!canCreateVault().first()) {
             PassLogger.i(TAG, "Skipping default vault creation")
-            setSyncSuccess(hasUndecryptableShares)
+            setSyncSuccess(hasUndecryptableShares, hasUndecryptableSharesDueToGroup)
             return RefreshSharesResult.NoSharesSkipped
         }
 
@@ -170,11 +182,11 @@ class RefreshSharesAndEnqueueSyncImpl @Inject constructor(
             PassLogger.i(TAG, "Creating default vault")
             createDefaultVault(userId)
             internalSettingsRepository.setDefaultVaultHasBeenCreated(userId)
-            setSyncSuccess(hasUndecryptableShares)
+            setSyncSuccess(hasUndecryptableShares, hasUndecryptableSharesDueToGroup)
             RefreshSharesResult.NoSharesVaultCreated
         } else {
             PassLogger.i(TAG, "Default vault already created")
-            setSyncSuccess(hasUndecryptableShares)
+            setSyncSuccess(hasUndecryptableShares, hasUndecryptableSharesDueToGroup)
             RefreshSharesResult.NoSharesSkipped
         }
     }
@@ -194,11 +206,15 @@ class RefreshSharesAndEnqueueSyncImpl @Inject constructor(
         createVault(userId, vault)
     }
 
-    private suspend fun setSyncSuccess(hasUndecryptableShares: Boolean) {
+    private suspend fun setSyncSuccess(
+        hasUndecryptableShares: Boolean,
+        hasUndecryptableSharesDueToGroup: Boolean = false
+    ) {
         itemSyncStatusRepository.setMode(SyncMode.Background)
         itemSyncStatusRepository.emit(
             ItemSyncStatus.SyncSuccess(
-                hasUndecryptableShares = hasUndecryptableShares
+                hasInactiveShares = hasUndecryptableShares,
+                hasInvalidGroupShares = hasUndecryptableSharesDueToGroup
             )
         )
     }

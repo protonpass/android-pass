@@ -47,7 +47,8 @@ internal data class ShareFromItemUiState(
     val canUsePaidFeatures: Boolean,
     private val itemOption: Option<Item>,
     private val shareOption: Option<Share>,
-    private val canShare: Boolean
+    private val isItemSharingAllowed: Boolean,
+    private val isSecureLinkSharing: Boolean
 ) {
 
     private val isSharedItem: Boolean = when (itemOption) {
@@ -79,7 +80,7 @@ internal data class ShareFromItemUiState(
 
     internal val canShareViaItemSharing: Boolean
         get() {
-            if (!canShare) return false
+            if (!isItemSharingAllowed) return false
 
             return when (shareOption) {
                 None -> false
@@ -92,7 +93,7 @@ internal data class ShareFromItemUiState(
 
     internal val canShareViaSecureLink: Boolean
         get() {
-            if (!canShare) return false
+            if (!isSecureLinkSharing) return false
 
             return when (shareOption) {
                 None -> false
@@ -111,7 +112,8 @@ internal data class ShareFromItemUiState(
             canUsePaidFeatures = false,
             itemOption = None,
             shareOption = None,
-            canShare = false
+            isItemSharingAllowed = false,
+            isSecureLinkSharing = false
         )
 
     }

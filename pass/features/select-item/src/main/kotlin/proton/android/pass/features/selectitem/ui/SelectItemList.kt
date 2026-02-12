@@ -72,6 +72,9 @@ internal fun SelectItemList(
     val accounts = remember(uiState.listUiState.accountSwitchState.accountList) {
         uiState.listUiState.accountSwitchState.accountList.associate { it.userId to it.email }.toPersistentMap()
     }
+    val showAutosaveBanner = listUiState.showAutosaveBanner &&
+        listUiState.autosaveUpdateFound &&
+        (!searchUiState.inSearchMode || items.isNotEmpty())
 
     ItemsList(
         modifier = modifier,
@@ -84,7 +87,7 @@ internal fun SelectItemList(
         isLoading = listUiState.isLoading,
         isProcessingSearch = searchUiState.isProcessingSearch,
         isRefreshing = listUiState.isRefreshing,
-        showMenuIcon = true,
+        showMenuIcon = !showAutosaveBanner,
         enableSwipeRefresh = false,
         canLoadExternalImages = listUiState.canLoadExternalImages,
         onRefresh = {},
@@ -98,8 +101,14 @@ internal fun SelectItemList(
                 EmptySearchResults()
             } else {
                 EmptyList(
-                    emptyListMessage = stringResource(id = R.string.error_credentials_not_found),
-                    canCreate = listUiState.displayCreateButton,
+                    emptyListMessage = stringResource(
+                        id = if (listUiState.showAutosaveBanner && !listUiState.autosaveUpdateFound) {
+                            R.string.select_item_autosave_no_match
+                        } else {
+                            R.string.error_credentials_not_found
+                        }
+                    ),
+                    canCreate = !listUiState.showAutosaveBanner,
                     onCreateItemClick = {
                         if (listUiState.accountSwitchState.hasMultipleAccounts) {
                             onNavigate(SelectItemNavigation.SelectAccount)
@@ -110,7 +119,9 @@ internal fun SelectItemList(
                 )
             }
         },
-        forceContent = listUiState.items.suggestions.isNotEmpty() || listUiState.displayOnlyPrimaryVaultMessage,
+        forceContent = listUiState.items.suggestions.isNotEmpty() ||
+            listUiState.displayOnlyPrimaryVaultMessage ||
+            showAutosaveBanner,
         header = {
             if (!pinningUiState.inPinningMode) {
                 SelectItemListHeader(
@@ -118,6 +129,7 @@ internal fun SelectItemList(
                     suggestions = listUiState.items.suggestions,
                     canLoadExternalImages = listUiState.canLoadExternalImages,
                     showUpgradeMessage = listUiState.displayOnlyPrimaryVaultMessage,
+                    showAutosaveBanner = showAutosaveBanner,
                     canUpgrade = listUiState.canUpgrade,
                     accounts = accounts,
                     onItemOptionsClicked = onItemOptionsClicked,

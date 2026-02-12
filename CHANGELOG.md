@@ -6,6 +6,13 @@
 
 ### Other
 
+## 1.37.2 (2026-02-12)
+
+### Fixes :bug:
+
+- Pass lifetime sharing.
+- Enable Meta Quest autofill.
+
 ## 1.37.1 (2026-02-05)
 
 ### Fixes :bug:

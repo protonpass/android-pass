@@ -43,7 +43,6 @@ import proton.android.pass.composecomponents.impl.dialogs.ConfirmCloseDialog
 import proton.android.pass.composecomponents.impl.dialogs.WarningSharedItemDialog
 import proton.android.pass.domain.CustomFieldType
 import proton.android.pass.features.itemcreate.ItemSavedState
-import proton.android.pass.features.itemcreate.R
 import proton.android.pass.features.itemcreate.alias.AliasItemFormState
 import proton.android.pass.features.itemcreate.common.DialogWarningType
 import proton.android.pass.features.itemcreate.common.ItemSavedLaunchedEffect
@@ -138,7 +137,7 @@ internal fun UpdateLogin(
             selectedVault = null,
             showVaultSelector = false,
             selectedShareId = uiState.selectedShareId,
-            topBarActionName = stringResource(id = R.string.action_save),
+            topBarActionName = stringResource(id = CompR.string.action_update),
             showCreateAliasButton = true,
             canUseAttachments = canUseAttachments,
             isUpdate = true,

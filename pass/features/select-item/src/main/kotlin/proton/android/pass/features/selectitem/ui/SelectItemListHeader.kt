@@ -55,18 +55,29 @@ import proton.android.pass.features.selectitem.previewproviders.SuggestionsInput
 import proton.android.pass.features.selectitem.previewproviders.SuggestionsPreviewProvider
 import proton.android.pass.composecomponents.impl.R as CompR
 
-@Suppress("LongParameterList")
+@Suppress("LongParameterList", "LongMethod")
 fun LazyListScope.SelectItemListHeader(
     suggestionsForTitle: String,
     suggestions: List<ItemUiModel>,
     canLoadExternalImages: Boolean,
     showUpgradeMessage: Boolean,
+    showAutosaveBanner: Boolean,
     canUpgrade: Boolean,
     accounts: ImmutableMap<UserId, String>,
     onItemOptionsClicked: (ItemUiModel) -> Unit,
     onItemClicked: (ItemUiModel) -> Unit,
     onUpgradeClick: () -> Unit
 ) {
+    if (showAutosaveBanner) {
+        item {
+            InfoBanner(
+                modifier = Modifier.padding(horizontal = Spacing.medium),
+                backgroundColor = PassTheme.colors.interactionNormMinor1,
+                text = stringResource(R.string.select_item_autosave_banner)
+            )
+        }
+        item { Spacer(modifier = Modifier.height(Spacing.small)) }
+    }
 
     if (showUpgradeMessage) {
         item {
@@ -126,7 +137,7 @@ fun LazyListScope.SelectItemListHeader(
         }
         ActionableItemRow(
             item = item,
-            showMenuIcon = true,
+            showMenuIcon = !showAutosaveBanner,
             canLoadExternalImages = canLoadExternalImages,
             onItemClick = onItemClicked,
             onItemMenuClick = onItemOptionsClicked,
@@ -151,6 +162,7 @@ internal fun SelectItemListHeaderPreview(
                     suggestions = input.second.items,
                     canLoadExternalImages = false,
                     showUpgradeMessage = input.second.showUpgradeMessage,
+                    showAutosaveBanner = input.second.showAutosaveBanner,
                     canUpgrade = input.second.canUpgrade,
                     accounts = persistentMapOf(),
                     onItemClicked = {},

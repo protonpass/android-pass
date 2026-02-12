@@ -39,7 +39,8 @@ internal class SuggestionsPreviewProvider : PreviewParameterProvider<Suggestions
                         item("item 2", "other username")
                     ),
                     showUpgradeMessage = showUpgrade,
-                    canUpgrade = false
+                    canUpgrade = false,
+                    showAutosaveBanner = false
                 )
             )
         }
@@ -50,7 +51,19 @@ internal class SuggestionsPreviewProvider : PreviewParameterProvider<Suggestions
                     item("item 2", "other username")
                 ),
                 showUpgradeMessage = true,
-                canUpgrade = true
+                canUpgrade = true,
+                showAutosaveBanner = false
+            )
+        )
+        yield(
+            SuggestionsInput(
+                items = listOf(
+                    item("item 1", "some username"),
+                    item("item 2", "other username")
+                ),
+                showUpgradeMessage = false,
+                canUpgrade = false,
+                showAutosaveBanner = true
             )
         )
     }
@@ -86,5 +99,6 @@ internal class SuggestionsPreviewProvider : PreviewParameterProvider<Suggestions
 internal data class SuggestionsInput(
     val items: List<ItemUiModel>,
     val showUpgradeMessage: Boolean,
-    val canUpgrade: Boolean
+    val canUpgrade: Boolean,
+    val showAutosaveBanner: Boolean
 )

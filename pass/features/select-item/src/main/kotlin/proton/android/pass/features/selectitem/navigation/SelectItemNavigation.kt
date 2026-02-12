@@ -78,6 +78,19 @@ sealed class SelectItemState(
         ) : Passkey(title, showPinnedItems = false, showCreateButton = false)
     }
 
+    sealed class Autosave(
+        filter: ItemTypeFilter,
+        title: String
+    ) : SelectItemState(filter, title, showPinnedItems = false, showCreateButton = true) {
+        data class Login(
+            val title: String,
+            val usernameFilter: String,
+            val websiteFilter: String? = null,
+            val packageNameFilter: String? = null,
+            val updateFound: Boolean = false
+        ) : Autosave(ItemTypeFilter.Logins, title)
+    }
+
     sealed class Password(title: String, isPasswordCredentialCreation: Boolean) : SelectItemState(
         suggestionsTitle = title,
         isPasswordCredentialCreation = isPasswordCredentialCreation,

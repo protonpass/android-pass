@@ -143,6 +143,7 @@ import proton.android.pass.features.home.HomeSnackbarMessage.DeleteItemError
 import proton.android.pass.features.home.HomeSnackbarMessage.DeleteItemSuccess
 import proton.android.pass.features.home.HomeSnackbarMessage.DeleteItemsError
 import proton.android.pass.features.home.HomeSnackbarMessage.DeleteItemsSuccess
+import proton.android.pass.features.home.HomeSnackbarMessage.GroupVaultError
 import proton.android.pass.features.home.HomeSnackbarMessage.IdentityMovedToTrash
 import proton.android.pass.features.home.HomeSnackbarMessage.ItemsMovedToTrashError
 import proton.android.pass.features.home.HomeSnackbarMessage.ItemsMovedToTrashSuccess
@@ -159,6 +160,7 @@ import proton.android.pass.features.home.HomeSnackbarMessage.ObserveItemsError
 import proton.android.pass.features.home.HomeSnackbarMessage.RefreshError
 import proton.android.pass.features.home.HomeSnackbarMessage.RestoreItemsError
 import proton.android.pass.features.home.HomeSnackbarMessage.RestoreItemsSuccess
+import proton.android.pass.features.home.HomeSnackbarMessageWithAction.InactiveVaultError
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.android.pass.notifications.api.ToastManager
@@ -648,12 +650,14 @@ class HomeViewModel @Inject constructor(
                 .collectLatest { syncState ->
                     val syncStatus = syncState.syncStatus
                     if (syncStatus is ItemSyncStatus.SyncSuccess &&
-                        syncStatus.hasUndecryptableShares &&
                         syncState.syncMode == SyncMode.ShownToUser
                     ) {
-                        snackbarDispatcher(
-                            snackbarMessage = HomeSnackbarMessageWithAction.InactiveVault
-                        )
+                        when {
+                            syncStatus.hasInactiveShares ->
+                                snackbarDispatcher(InactiveVaultError)
+                            syncStatus.hasInvalidGroupShares ->
+                                snackbarDispatcher(GroupVaultError)
+                        }
                     }
                 }
         }

@@ -356,7 +356,9 @@ internal class SyncUserEventsImplTest {
         refreshSharesAndEnqueueSync.setResult(
             RefreshSharesResult.SharesFound(
                 shareIds = setOf(ShareId(SHARE_ID_1)),
-                isWorkerEnqueued = true
+                isWorkerEnqueued = true,
+                hasInactiveShares = false,
+                hasInvalidGroupShares = false
             )
         )
 
@@ -489,7 +491,9 @@ internal class SyncUserEventsImplTest {
         refreshSharesAndEnqueueSync.setResult(
             RefreshSharesResult.SharesFound(
                 shareIds = setOf(ShareId(SHARE_ID_1)),
-                isWorkerEnqueued = true
+                isWorkerEnqueued = true,
+                hasInactiveShares = false,
+                hasInvalidGroupShares = false
             )
         )
 

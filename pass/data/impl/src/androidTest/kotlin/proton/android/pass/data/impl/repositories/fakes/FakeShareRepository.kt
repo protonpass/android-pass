@@ -43,7 +43,8 @@ class FakeShareRepository : ShareRepository {
             emptySet(),
             emptySet(),
             wasFirstSync = false,
-            hasUndecryptableShares = false
+            hasInactiveShares = false,
+            hasInvalidGroupShares = false
         )
     private var refreshShareResult: Result<Unit> = Result.success(Unit)
     private val observeSharesFlow = testFlow<Result<List<Share>>>()

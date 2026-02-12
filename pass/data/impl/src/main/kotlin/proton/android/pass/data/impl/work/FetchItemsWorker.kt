@@ -56,7 +56,8 @@ open class FetchItemsWorker @AssistedInject constructor(
         val userId = inputData.getString(ARG_USER_ID)?.let(::UserId) ?: return Result.failure()
         val shareIds = inputData.getStringArray(ARG_SHARE_IDS)?.map(::ShareId) ?: emptyList()
         val fetchSource = inputData.getString(ARG_FETCH_SOURCE)?.let(FetchSource::valueOf)
-        val hasUndecryptableShares = inputData.getBoolean(ARG_UNDECRYPTABLE, false)
+        val hasInactiveShares = inputData.getBoolean(ARG_INACTIVE_SHARES, false)
+        val hasInvalidGroupShares = inputData.getBoolean(ARG_INVALID_GROUP_SHARES, false)
 
         if (fetchSource == null) {
             PassLogger.w(TAG, "Invalid fetch source")
@@ -66,10 +67,11 @@ open class FetchItemsWorker @AssistedInject constructor(
         PassLogger.i(TAG, "Fetching items for ${shareIds.size} shares in ${fetchSource.name}")
 
         val res = forceSyncItems(
-            userId,
-            shareIds,
+            userId = userId,
+            shareIds = shareIds,
             isBackground = !fetchSource.showDialog,
-            hasUndecryptableShares = hasUndecryptableShares
+            hasInactiveShares = hasInactiveShares,
+            hasInvalidGroupShares = hasInvalidGroupShares
         )
         return when (res) {
             ForceSyncResult.Error -> {
@@ -116,7 +118,8 @@ open class FetchItemsWorker @AssistedInject constructor(
         private const val ARG_USER_ID = "user_id"
         private const val ARG_SHARE_IDS = "share_ids"
         private const val ARG_FETCH_SOURCE = "fetch_source"
-        private const val ARG_UNDECRYPTABLE = "hasUndecryptableShares"
+        private const val ARG_INACTIVE_SHARES = "hasUndecryptableShares"
+        private const val ARG_INVALID_GROUP_SHARES = "invalid_group_shares"
 
         private const val SYNC_NOTIFICATION_ID = 0
         private const val SYNC_NOTIFICATION_CHANNEL_ID = "SyncNotificationChannel"
@@ -125,14 +128,16 @@ open class FetchItemsWorker @AssistedInject constructor(
             source: FetchSource,
             userId: UserId,
             shareIds: List<ShareId>,
-            hasUndecryptableShares: Boolean
+            hasInactiveShares: Boolean,
+            hasInvalidGroupShares: Boolean
         ): OneTimeWorkRequest {
             val shareIdsAsString = shareIds.map { it.id }.toTypedArray()
             val extras = mutableMapOf(
                 ARG_SHARE_IDS to shareIdsAsString,
                 ARG_FETCH_SOURCE to source.name,
                 ARG_USER_ID to userId.id,
-                ARG_UNDECRYPTABLE to hasUndecryptableShares
+                ARG_INACTIVE_SHARES to hasInactiveShares,
+                ARG_INVALID_GROUP_SHARES to hasInvalidGroupShares
             )
 
             val data = Data.Builder()

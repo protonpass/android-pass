@@ -155,7 +155,7 @@ fun PassAppContent(
         onSnackBarMessageDelivered = {
             if (it == SnackbarResult.ActionPerformed) {
                 when (appUiState.snackbarMessage.value()) {
-                    HomeSnackbarMessageWithAction.InactiveVault -> {
+                    HomeSnackbarMessageWithAction.InactiveVaultError -> {
                         BrowserUtils.openWebsite(
                             context = context,
                             website = PROTON_RECOVER_URL

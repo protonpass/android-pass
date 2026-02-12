@@ -57,7 +57,7 @@ class GetItemActionsImpl @Inject constructor(
         val isItemTrashed = item.state == ItemState.Trashed.value
 
         ItemActions(
-            canShare = canShare(userPlan.isFreePlan, item.isShared, isItemTrashed, share),
+            canShare = canShare(userPlan.isFreePlan, isItemTrashed, share),
             canEdit = canEdit(isItemTrashed, share, userPlan),
             canMoveToOtherVault = canMigrate(isItemTrashed, share, shares),
             canMoveToTrash = !isItemTrashed && share.canBeTrashed,
@@ -69,15 +69,11 @@ class GetItemActionsImpl @Inject constructor(
 
     private suspend fun canShare(
         isFreePlan: Boolean,
-        isItemShared: Boolean,
         isItemTrashed: Boolean,
         share: Share
     ) = when {
         isFreePlan -> CanShareShareStatus.CannotShare(
             reason = CanShareShareStatus.CannotShareReason.NotEnoughPermissions
-        )
-        isItemShared -> CanShareShareStatus.CannotShare(
-            reason = CanShareShareStatus.CannotShareReason.ItemIsShared
         )
         isItemTrashed -> CanShareShareStatus.CannotShare(
             reason = CanShareShareStatus.CannotShareReason.ItemInTrash

@@ -82,6 +82,8 @@ fun AutoSaveApp(
                         modifier = Modifier.padding(padding),
                         arguments = arguments,
                         state = state,
+                        onItemSelectedForUpdate = viewModel::onItemSelectedForUpdate,
+                        onClearSelectedItemForUpdate = viewModel::onClearSelectedItemForUpdate,
                         onNavigate = {
                             if (it == AutosaveNavigation.Success) {
                                 viewModel.onItemAutoSaved()

@@ -80,6 +80,7 @@ import proton.android.pass.composecomponents.impl.uievents.IsProcessingSearchSta
 import proton.android.pass.composecomponents.impl.uievents.IsRefreshingState
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.ItemFilterProcessor
+import proton.android.pass.data.api.autosave.AutosaveLoginMatcher
 import proton.android.pass.data.api.usecases.GetSuggestedAutofillItems
 import proton.android.pass.data.api.usecases.GetUserPlan
 import proton.android.pass.data.api.usecases.ItemData
@@ -222,6 +223,38 @@ class SelectItemViewModel @Inject constructor(
                             itemState = ItemState.Active,
                             includeHidden = false
                         ).map { autofillShares to it.map(ItemData::DefaultItem) }
+                    }
+                combine(flows, ItemFilterProcessor::removeDuplicates)
+            }
+
+            is SelectItemState.Autosave -> {
+                val autosaveLogin = state as SelectItemState.Autosave.Login
+                val flows = usersAutofillShares
+                    .filter { it.matchesSelectedAccount(selectedAccount) }
+                    .map { (userId, autofillShares) ->
+                        observeItems(
+                            userId = userId,
+                            filter = state.itemTypeFilter,
+                            selection = ShareSelection.Shares(autofillShares.map(Share::id)),
+                            itemState = ItemState.Active,
+                            includeHidden = false
+                        ).map { items ->
+                            val matcher = AutosaveLoginMatcher(
+                                autosaveLogin.usernameFilter,
+                                autosaveLogin.websiteFilter,
+                                autosaveLogin.packageNameFilter
+                            )
+                            val filtered = items.filter { item ->
+                                val login = item.itemType as? ItemType.Login
+                                    ?: return@filter false
+
+                                if (!matcher.matchesUsername(login))
+                                    return@filter false
+
+                                matcher.matchesSource(login) ?: true
+                            }
+                            autofillShares to filtered.map(ItemData::DefaultItem)
+                        }
                     }
                 combine(flows, ItemFilterProcessor::removeDuplicates)
             }
@@ -494,6 +527,8 @@ class SelectItemViewModel @Inject constructor(
         val showCreateButton = selectItemState.map { it.showCreateButton }.value() == true
         val isPasswordCredential =
             selectItemState.map { it.isPasswordCredentialCreation }.value() == true
+        val autosaveState = selectItemState.value() as? SelectItemState.Autosave
+        val autosaveLogin = autosaveState as? SelectItemState.Autosave.Login
 
         SelectItemListUiState(
             isLoading = isLoading,
@@ -508,7 +543,9 @@ class SelectItemViewModel @Inject constructor(
             canUpgrade = canUpgrade,
             displayCreateButton = showCreateButton,
             accountSwitchState = accountData.toAccountSwitchUIState(),
-            isPasswordCredentialCreation = isPasswordCredential
+            isPasswordCredentialCreation = isPasswordCredential,
+            showAutosaveBanner = autosaveState != null,
+            autosaveUpdateFound = autosaveLogin?.updateFound ?: false
         )
     }
 
@@ -613,6 +650,7 @@ class SelectItemViewModel @Inject constructor(
 
     private fun getSuggestionsForState(state: SelectItemState) = when (state) {
         is SelectItemState.Autofill -> getSuggestionsForAutofill(state)
+        is SelectItemState.Autosave -> flowOf(LoadingResult.Success(emptyList()))
         is SelectItemState.Passkey -> getSuggestionsForPasskey(state)
         is SelectItemState.Password -> getSuggestionsForPassword(state)
     }

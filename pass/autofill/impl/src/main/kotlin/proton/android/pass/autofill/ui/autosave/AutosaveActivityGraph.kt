@@ -55,7 +55,8 @@ fun NavGraphBuilder.autosaveActivityGraph(
     arguments: AutoSaveArguments,
     initialUpdateLoginUiState: InitialUpdateLoginUiState? = null,
     onNavigate: (AutosaveNavigation) -> Unit,
-    dismissBottomSheet: (() -> Unit) -> Unit
+    dismissBottomSheet: (() -> Unit) -> Unit,
+    onCloseEditScreen: (() -> Unit)? = null
 ) {
     createUpdateLoginGraph(
         initialCreateLoginUiState = getInitialState(arguments),
@@ -69,7 +70,13 @@ fun NavGraphBuilder.autosaveActivityGraph(
                 else -> null
             }
             when (it) {
-                BaseLoginNavigation.CloseScreen -> appNavigator.navigateBack()
+                BaseLoginNavigation.CloseScreen -> {
+                    if (onCloseEditScreen != null) {
+                        onCloseEditScreen()
+                    } else {
+                        appNavigator.navigateBack()
+                    }
+                }
                 BaseLoginNavigation.DismissBottomsheet -> dismissBottomSheet {}
                 is BaseLoginNavigation.CreateAlias -> appNavigator.navigate(
                     destination = CreateAliasBottomSheet,

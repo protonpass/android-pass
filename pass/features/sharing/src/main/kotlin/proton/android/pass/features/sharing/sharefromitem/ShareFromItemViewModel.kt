@@ -36,10 +36,10 @@ import proton.android.pass.commonui.api.require
 import proton.android.pass.data.api.repositories.BulkMoveToVaultRepository
 import proton.android.pass.data.api.usecases.GetItemById
 import proton.android.pass.data.api.usecases.GetUserPlan
-import proton.android.pass.data.api.usecases.capabilities.CanShareShare
+import proton.android.pass.data.api.usecases.organization.ObserveOrganizationSettings
 import proton.android.pass.data.api.usecases.shares.ObserveShare
 import proton.android.pass.domain.ItemId
-import proton.android.pass.domain.PlanType
+import proton.android.pass.domain.OrganizationSettings
 import proton.android.pass.domain.ShareId
 import proton.android.pass.navigation.api.CommonNavArgId
 import javax.inject.Inject
@@ -51,7 +51,7 @@ class ShareFromItemViewModel @Inject constructor(
     getUserPlan: GetUserPlan,
     getItemById: GetItemById,
     observeShare: ObserveShare,
-    canShareShare: CanShareShare
+    observeOrganizationSettings: ObserveOrganizationSettings
 ) : ViewModel() {
 
     private val shareId: ShareId = savedStateHandleProvider.get()
@@ -65,26 +65,27 @@ class ShareFromItemViewModel @Inject constructor(
     private val navEventState: MutableStateFlow<ShareFromItemNavEvent> =
         MutableStateFlow(ShareFromItemNavEvent.Unknown)
 
-    private val canUsePaidFeaturesFlow = getUserPlan()
-        .map { userPlan ->
-            when (userPlan.planType) {
-                is PlanType.Paid -> true
-                is PlanType.Free,
-                is PlanType.Unknown -> false
-            }
-        }
-
     internal val stateFlow: StateFlow<ShareFromItemUiState> = combine(
         navEventState,
-        canUsePaidFeaturesFlow,
+        getUserPlan().map { it.isPaidPlan },
         oneShot { getItemById(shareId = shareId, itemId = itemId) },
         observeShare(shareId = shareId),
-        oneShot { canShareShare(shareId = shareId) }
+        observeOrganizationSettings()
     ) { event,
         canUsePaidFeatures,
         item,
         share,
-        canShare ->
+        organizationSettings ->
+        val (isItemSharingAllowed, isSecureLinkSharing) =
+            when (val settings = organizationSettings.value()) {
+                OrganizationSettings.NotAnOrganization ->
+                    canUsePaidFeatures to canUsePaidFeatures
+
+                is OrganizationSettings.Organization ->
+                    settings.sharingPolicy.canShareItems to settings.sharingPolicy.canShareSecureLinks
+
+                null -> false to false
+            }
         ShareFromItemUiState(
             shareId = shareId,
             itemId = itemId,
@@ -92,7 +93,8 @@ class ShareFromItemViewModel @Inject constructor(
             canUsePaidFeatures = canUsePaidFeatures,
             itemOption = item.some(),
             shareOption = share.some(),
-            canShare = canShare.value
+            isItemSharingAllowed = isItemSharingAllowed,
+            isSecureLinkSharing = isSecureLinkSharing
         )
     }.stateIn(
         scope = viewModelScope,

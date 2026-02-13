@@ -31,10 +31,10 @@
   <string name="bottomsheet_monitor_exclude">移除监控</string>
   <string name="bottomsheet_monitor_include">纳入监控</string>
   <string name="bottomsheet_migrate_item">移至另一个保险库</string>
-  <string name="bottomsheet_create_folder">Create folder</string>
-  <string name="folder_tree_create_folder">Create folder</string>
-  <string name="bottomsheet_rename_folder">Rename</string>
-  <string name="bottomsheet_create_sub_folder">Create sub-folder</string>
+  <string name="bottomsheet_create_folder">创建文件夹</string>
+  <string name="folder_tree_create_folder">创建文件夹</string>
+  <string name="bottomsheet_rename_folder">重命名</string>
+  <string name="bottomsheet_create_sub_folder">创建子文件夹</string>
   <string name="bottomsheet_copy_item_note">复制笔记</string>
   <string name="bottomsheet_delete_permanently">永久删除</string>
   <string name="bottomsheet_restore">恢复</string>
@@ -302,7 +302,7 @@
   <string name="expand_collpased_text">更多</string>
   <string name="collapse_expanded_text">收起</string>
   <string name="login_item_monitor_widget_weak_pass_title">弱密码</string>
-  <string name="login_item_monitor_widget_weak_pass_subtitle">此帐户易受攻击，请访问服务并更改您的密码。</string>
+  <string name="login_item_monitor_widget_weak_pass_subtitle">此账户存在安全风险，请访问该服务并更改密码。</string>
   <plurals name="login_item_monitor_widget_reused_pass_title">
     <item quantity="other">%d 其他登录使用相同密码</item>
   </plurals>
@@ -312,7 +312,7 @@
   <string name="mfa_limit_reached">已达 2FA 数量上限</string>
   <string name="activity_in_last_two_weeks">最近 14 天的活动</string>
   <string name="contacts">联系人</string>
-  <string name="contacts_section_description">要隐藏您的个人电子邮件地址，您可以创建一个别名联系人来掩盖您的地址。</string>
+  <string name="contacts_section_description">要隐藏您的个人邮箱地址，您可以创建一个别名联系人来掩盖您的地址。</string>
   <string name="field_detail_display_name_title">显示名称</string>
   <string name="display_name_section_description">使用此别名发送电子邮件时的显示名称。</string>
   <plurals name="alias_forwards_count">

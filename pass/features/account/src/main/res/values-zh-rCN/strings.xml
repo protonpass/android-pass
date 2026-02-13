@@ -10,7 +10,7 @@
   <string name="account_sign_out">退出账户</string>
   <string name="account_sign_out_icon_content_description">退出账户按钮</string>
   <string name="account_manage_account">管理账户</string>
-  <string name="account_manage_account_icon_content_description">管理帐户按钮</string>
+  <string name="account_manage_account_icon_content_description">管理账户按钮</string>
   <string name="account_manage_subscription">管理订阅</string>
   <string name="account_get_user_info_error">无法获取用户信息</string>
   <string name="manage_subscription_icon_content_description">管理订阅按钮</string>

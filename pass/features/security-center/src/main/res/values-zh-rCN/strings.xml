@@ -21,7 +21,7 @@
   <string name="security_center_home_top_bar_title">Pass Monitor</string>
   <string name="security_center_home_dark_web_monitoring_title">Dark Web Monitoring</string>
   <string name="security_center_home_widget_breaches_title">检测到信息泄露</string>
-  <string name="security_center_home_widget_breaches_subtitle">您的电子邮件地址在至少1次数据泄露事件中被泄露。</string>
+  <string name="security_center_home_widget_breaches_subtitle">您的邮箱地址在至少 1 次数据泄露事件中被泄露。</string>
   <string name="security_center_home_widget_no_breaches_subtitle">如果您的电子邮件、密码或其他个人数据被泄露，您会收到通知。</string>
   <string name="security_center_home_row_no_data_breaches_subtitle">未检测到数据泄露</string>
   <string name="security_center_home_row_data_breaches_title">暗网警报</string>
@@ -64,7 +64,7 @@
   <string name="security_center_dark_web_monitor_top_bar_subtitle" comment="Placeholder will contain a formatted string for the date of the last check, such as Feb 14 2024, 09:41">上次检查： %s</string>
   <string name="security_center_dark_web_monitor_custom_emails_title">自定义邮箱地址</string>
   <string name="security_center_dark_web_monitor_custom_emails_not_verified_subtitle">未验证</string>
-  <string name="security_center_dark_web_monitor_custom_emails_add_content_description">添加新的自定义电子邮件地址</string>
+  <string name="security_center_dark_web_monitor_custom_emails_add_content_description">添加新的自定义邮箱地址</string>
   <string name="security_center_dark_web_monitor_custom_emails_add_button">添加</string>
   <plurals name="security_center_dark_web_monitor_custom_emails_used_count">
     <item quantity="other">用于 %d 登录</item>
@@ -72,8 +72,8 @@
   <plurals name="security_center_dark_web_monitor_custom_emails_breaches_found">
     <item quantity="other">检测到 %d 泄露</item>
   </plurals>
-  <string name="security_center_dark_web_monitor_custom_emails_loading_error">加载自定义电子邮件地址时出错</string>
-  <string name="security_center_dark_web_monitor_custom_emails_unknown_error">无法获取电子邮件地址</string>
+  <string name="security_center_dark_web_monitor_custom_emails_loading_error">加载自定义邮箱地址时出错</string>
+  <string name="security_center_dark_web_monitor_custom_emails_unknown_error">无法获取邮箱地址</string>
   <string name="security_center_dark_web_monitor_custom_email_option_remove">移除</string>
   <string name="security_center_dark_web_monitor_latest_breach_on">最近一次泄露的时间 %s</string>
   <plurals name="security_center_dark_web_monitor_found_in_breaches">
@@ -96,7 +96,7 @@
   <string name="security_center_custom_email_invalid_address">无效邮箱地址</string>
   <string name="security_center_custom_email_continue">继续</string>
   <string name="security_center_custom_email_already_verified">邮箱已验证</string>
-  <string name="security_center_custom_email_error_adding">添加电子邮件地址时出错</string>
+  <string name="security_center_custom_email_error_adding">添加邮箱地址时出错</string>
   <!-- Verify email monitoring -->
   <string name="security_center_verify_email_title">确认您的邮箱</string>
   <string name="security_center_verify_email_subtitle">我们已向 %s 发送了验证码。请在下面输入：</string>

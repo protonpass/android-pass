@@ -65,6 +65,16 @@ class LocalFolderDataSourceImpl @Inject constructor(
         folderId = folderId.id
     )
 
+    override suspend fun getByIds(
+        userId: UserId,
+        shareId: ShareId,
+        folderIds: List<FolderId>
+    ): List<FolderEntity> = database.foldersDao().getByIds(
+        userId = userId.id,
+        shareId = shareId.id,
+        folderIds = folderIds.map { it.id }
+    )
+
     override suspend fun deleteFolders(
         userId: UserId,
         shareId: ShareId,

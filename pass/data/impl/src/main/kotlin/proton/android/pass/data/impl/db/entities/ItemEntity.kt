@@ -59,6 +59,8 @@ data class ItemEntity(
     val addressId: String,
     @ColumnInfo(name = Columns.SHARE_ID, index = true)
     val shareId: String,
+    @ColumnInfo(name = Columns.FOLDER_ID, index = true)
+    val folderId: String? = null,
     @ColumnInfo(name = Columns.REVISION)
     val revision: Long,
     @ColumnInfo(name = Columns.CONTENT_FORMAT_VERSION)
@@ -93,8 +95,6 @@ data class ItemEntity(
     val flags: Int,
     @ColumnInfo(name = Columns.SHARE_COUNT, defaultValue = "0")
     val shareCount: Int,
-    @ColumnInfo(name = Columns.FOLDER_ID)
-    val folderId: String? = null,
 
     // Keystore Encrypted contents
     @ColumnInfo(name = Columns.ENCRYPTED_TITLE)

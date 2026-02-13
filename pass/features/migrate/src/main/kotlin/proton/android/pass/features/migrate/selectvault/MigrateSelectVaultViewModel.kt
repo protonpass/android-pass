@@ -37,6 +37,7 @@ import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.asLoadingResult
 import proton.android.pass.common.api.toOption
 import proton.android.pass.commonui.api.SavedStateHandleProvider
+import proton.android.pass.commonuimodels.api.FolderTreeBuilder
 import proton.android.pass.commonui.api.require
 import proton.android.pass.data.api.repositories.BulkMoveToVaultRepository
 import proton.android.pass.data.api.usecases.ObserveVaultsWithItemCount
@@ -134,14 +135,16 @@ class MigrateSelectVaultViewModel @Inject constructor(
         selectedItems: Option<Map<ShareId, List<ItemId>>>
     ): VaultEnabledPair {
         val canCreate = vault.vault.role.toPermissions().canCreate()
+        val folderTree = FolderTreeBuilder.build(vault.vault.folders)
         return when (mode) {
             is Mode.MigrateSelectedItems -> {
                 when (selectedItems) {
                     None -> VaultEnabledPair(
-                        vault = vault,
+                        vaultWithItemCount = vault,
                         status = VaultStatus.Disabled(
                             reason = VaultStatus.DisabledReason.NoPermission
-                        )
+                        ),
+                        folderTree = folderTree
                     )
 
                     is Some -> {
@@ -170,8 +173,9 @@ class MigrateSelectVaultViewModel @Inject constructor(
                         }
 
                         VaultEnabledPair(
-                            vault = vault,
-                            status = state
+                            vaultWithItemCount = vault,
+                            status = state,
+                            folderTree = folderTree
                         )
                     }
                 }
@@ -180,10 +184,11 @@ class MigrateSelectVaultViewModel @Inject constructor(
             is Mode.MigrateAllItems -> {
                 val isNotCurrentOne = vault.vault.shareId != mode.shareId
                 VaultEnabledPair(
-                    vault = vault,
+                    vaultWithItemCount = vault,
                     status = if (isNotCurrentOne) VaultStatus.Enabled else VaultStatus.Disabled(
                         reason = VaultStatus.DisabledReason.SameVault
-                    )
+                    ),
+                    folderTree = folderTree
                 )
             }
         }

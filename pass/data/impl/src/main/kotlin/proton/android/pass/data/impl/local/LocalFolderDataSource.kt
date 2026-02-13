@@ -47,6 +47,12 @@ interface LocalFolderDataSource {
         folderId: FolderId
     ): FolderEntity?
 
+    suspend fun getByIds(
+        userId: UserId,
+        shareId: ShareId,
+        folderIds: List<FolderId>
+    ): List<FolderEntity>
+
     suspend fun deleteFolders(
         userId: UserId,
         shareId: ShareId,

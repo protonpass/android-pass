@@ -46,7 +46,6 @@
   <string name="report_sending_error">Bildiriminiz gönderilemedi.</string>
   <string name="tips_passkey_check_guide">Herhangi bir sorun yaşarsanız rehberimize bakın.</string>
   <string name="tips_passkey_android_not_supported">Android sürümünüz çok eski. Aygıtınızı yükseltmeyi deneyin.</string>
-  <string name="tips_passkeys_credential_manager_not_supported">Aygıtın üreticisi bir kimlik doğrulama yönetimi sunmuyor.</string>
   <string name="tips_passkey_supported">Geçiş anahtarları destekleniyor</string>
   <string name="tips_passkey_not_supported">Geçiş anahtarları desteklenmiyor</string>
   <string name="report_steps" comment="Indicator showing report progress">%1$d / %2$d. adım</string>

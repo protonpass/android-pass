@@ -46,7 +46,6 @@
   <string name="report_sending_error">无法发送反馈。</string>
   <string name="tips_passkey_check_guide">如果您有任何问题，请查看我们的指南。</string>
   <string name="tips_passkey_android_not_supported">您的 Android 版本太低。请尝试升级您的设备。</string>
-  <string name="tips_passkeys_credential_manager_not_supported">设备制造商不提供凭证管理器。</string>
   <string name="tips_passkey_supported">通行密钥已支持</string>
   <string name="tips_passkey_not_supported">通行密钥不受支持</string>
   <string name="report_steps" comment="Indicator showing report progress">第 %1$d 步，共 %2$d 步</string>

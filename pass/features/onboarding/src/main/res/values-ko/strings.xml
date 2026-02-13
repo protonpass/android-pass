@@ -2,7 +2,7 @@
 <resources>
   <string name="on_boarding_autofill_content">Proton Pass가 로그인 상세 정보를 채울 수 있도록 해주세요. 타이핑하거나 복사해서 붙여넣을 필요가 없습니다.</string>
   <string name="on_boarding_autofill_title">앱에 즉시 로그인</string>
-  <string name="on_boarding_autofill_content_v2">Proton pass fill in login details for you. No typing or copy paste required.</string>
+  <string name="on_boarding_autofill_content_v2">Proton 패스가 로그인 세부사항을 대신 작성합니다. 직접 입력하거나 복사 붙여넣기 할 필요 없습니다.</string>
   <string name="on_boarding_autofill_title_v2">Enjoy the magic of AutoFill</string>
   <string name="on_boarding_autofill_button">Proton Pass로 자동 완성</string>
   <string name="on_boarding_fingerprint_content">오직 당신만 접근할 수 있도록 Proton Pass에 지문 인식 잠금 해제를 설정하세요.</string>

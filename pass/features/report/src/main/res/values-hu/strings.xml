@@ -46,7 +46,6 @@
   <string name="report_sending_error">A jelentést nem lehetettet elküldeni.</string>
   <string name="tips_passkey_check_guide">Ha bármilyen problémája van, nézze meg az útmutatónkat.</string>
   <string name="tips_passkey_android_not_supported">Az Android verziója túl régi. Próbálja meg frissíteni a készülék rendszerét.</string>
-  <string name="tips_passkeys_credential_manager_not_supported">Az eszköz gyártója nem biztosít hitelesítő adatokat kezelő eszközt.</string>
   <string name="tips_passkey_supported">A hozzáférési kulcsok támogatva vannak</string>
   <string name="tips_passkey_not_supported">A hozzáférési kulcsok nincsenek támogatva</string>
   <string name="report_steps" comment="Indicator showing report progress">%1$d / %2$d lépés</string>

@@ -38,7 +38,7 @@
   <string name="share_with_email_hint">邮箱地址</string>
   <string name="share_with_email_error">邮箱地址无效</string>
   <string name="share_with_email_cannot_invite_outside_org">您不能邀请组织外的人员，请联系管理员获取更多信息</string>
-  <string name="share_with_email_email_already_added">您已经添加了此电子邮件地址</string>
+  <string name="share_with_email_email_already_added">您已经添加了此邮箱地址</string>
   <string name="share_permissions_title">设置访问级别</string>
   <string name="sharing_reject_invitation">拒绝邀请</string>
   <string name="sharing_vault_invitation_title">共享保险库邀请</string>
@@ -121,7 +121,7 @@
   <string name="sharing_from_item_vault_limit_reached">您已达到保险库上限</string>
   <string name="share_with_suggestions_title">建议</string>
   <string name="share_with_recents_title">最近使用</string>
-  <string name="share_with_remove_email_content_description">移除电子邮件地址</string>
+  <string name="share_with_remove_email_content_description">移除邮箱地址</string>
   <string name="share_with_user_shared_title">与其他 Proton Pass 用户联系</string>
   <string name="share_with_user_shared_description">有利于永久共享。</string>
   <string name="share_with_manage_shared_item_title">管理访问权限</string>

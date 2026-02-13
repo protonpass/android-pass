@@ -46,7 +46,6 @@
   <string name="report_sending_error">Impossibile inviare la segnalazione.</string>
   <string name="tips_passkey_check_guide">In caso di problemi consulta la nostra guida.</string>
   <string name="tips_passkey_android_not_supported">La tua versione di Android è troppo vecchia. Prova ad aggiornare il tuo dispositivo.</string>
-  <string name="tips_passkeys_credential_manager_not_supported">Il produttore del dispositivo non fornisce un gestore di credenziali.</string>
   <string name="tips_passkey_supported">La passkey sono supportate</string>
   <string name="tips_passkey_not_supported">Le passkey non sono supportate</string>
   <string name="report_steps" comment="Indicator showing report progress">Passaggio %1$d di %2$d</string>

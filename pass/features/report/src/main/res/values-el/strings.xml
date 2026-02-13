@@ -46,7 +46,6 @@
   <string name="report_sending_error">Δεν ήταν δυνατή η αποστολή της αναφοράς.</string>
   <string name="tips_passkey_check_guide">Εάν αντιμετωπίζετε προβλήματα, ελέγξτε τον οδηγό μας.</string>
   <string name="tips_passkey_android_not_supported">Η έκδοση Android σας είναι πολύ χαμηλή. Δοκιμάστε να αναβαθμίσετε τη συσκευή σας.</string>
-  <string name="tips_passkeys_credential_manager_not_supported">Ο κατασκευαστής της συσκευής δεν παρέχει διαχείριση διαπιστευτηρίων.</string>
   <string name="tips_passkey_supported">Υποστηρίζονται κλειδιά πρόσβασης</string>
   <string name="tips_passkey_not_supported">Δεν υποστηρίζονται κλειδιά πρόσβασης</string>
   <string name="report_steps" comment="Indicator showing report progress">Βήμα %1$d από %2$d</string>

@@ -9,7 +9,7 @@
   <string name="autofill_dialog_cancel">取消</string>
   <string name="autofill_notification_copy_to_clipboard">TOTP 验证码已复制到剪贴板</string>
   <string name="autofill_dialog_associate_title">使用已保存账号？</string>
-  <string name="autofill_user_logged_out">您的登录状态已失效。请打开应用重新登录。</string>
+  <string name="autofill_user_logged_out">您已退出登录，请打开应用重新登录。</string>
   <string name="autofill_confirm_dangerous_title" comment="Title for the dialog that will appear when the user clicks on Autofill but we think it may be a dangerous action">确认您的操作</string>
   <string name="autofill_confirm_dangerous_body" comment="Body for the dialog that will appear when the user clicks on Autofill but we think it may be a dangerous action">您即将在当前应用打开的网站中自动填充登录凭据。自动填充后，该应用将可能获取您的凭据——请仅在完全信任该应用的情况下执行此操作。</string>
   <string name="autofill_confirm_button" comment="Confirmation button for actually performing the autofill action">自动填充</string>

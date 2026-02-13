@@ -46,7 +46,6 @@
   <string name="report_sending_error">ანგარიშის გაგზავნა შეუძლებელია.</string>
   <string name="tips_passkey_check_guide">თუ გაქვთ ნებისმიერი პრობლემა, შეამოწმეთ ჩვენი სახელმძღვანელო.</string>
   <string name="tips_passkey_android_not_supported">თქვენი Android-ის ვერსია ძალიან ძველია. სხცადეთ, განაახლოთ თქვენი მოწყობილობა.</string>
-  <string name="tips_passkeys_credential_manager_not_supported">მოწყობილობის მწარემოებელს შესვლის დეტალების მმართველი არ მოუწოდებია.</string>
   <string name="tips_passkey_supported">საკვანძო გასაღებები მხარდაჭერილია</string>
   <string name="tips_passkey_not_supported">საკვანძო გასაღებები მხარდაჭერილი არაა</string>
   <string name="report_steps" comment="Indicator showing report progress">ნაბიჯი %1$d %2$d-დან</string>

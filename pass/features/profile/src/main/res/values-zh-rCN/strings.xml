@@ -49,9 +49,8 @@
   <string name="profile_option_unlock_with">解锁方式</string>
   <string name="profile_option_change_pin_code">更改 PIN 码</string>
   <string name="profile_passkey_support_section_title">通行密钥</string>
-  <string name="profile_passkey_support_subtitle_supported">通行密钥已支持</string>
+  <string name="profile_passkey_support_subtitle_supported">此设备支持通行密钥</string>
   <string name="profile_passkey_support_subtitle_not_supported_android_version">您的 Android 版本不支持密码。</string>
-  <string name="profile_passkey_support_subtitle_not_supported_credential_manager">您的设备不支持密钥</string>
   <string name="profile_passkey_support_subtitle_not_supported_unknown">无法检查密钥是否支持</string>
   <plurals name="profile_after_days">
     <item quantity="other">%d 天后</item>
@@ -67,7 +66,7 @@
   <string name="account_switcher_sign_in">登录</string>
   <string name="account_switcher_sign_out">登出</string>
   <string name="account_switcher_switch_to">切换为</string>
-  <string name="account_switcher_add_account">添加帐户</string>
+  <string name="account_switcher_add_account">添加账户</string>
   <string name="account_switcher_remove">注销</string>
   <string name="filtered_by_logins">通过登录过滤。不显示回收站中的项目</string>
   <string name="filtered_by_logins_with_mfa">通过使用 TOTP 登录进行过滤。不显示回收站中的项目</string>

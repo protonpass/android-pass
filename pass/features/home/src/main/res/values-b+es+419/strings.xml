@@ -181,6 +181,7 @@
   <string name="bulk_action_enable_alias">Activar el alias</string>
   <string name="bulk_action_disable_alias">Desactivar el alias</string>
   <string name="vault_drawer_organise_vaults">Organizar bóvedas</string>
+  <string name="sync_group_vault_warning">Algunas bóvedas no están disponibles actualmente debido a un problema con su grupo.</string>
   <string name="sync_inactive_vault_warning">Algunas bóvedas ya no son accesibles debido a un restablecimiento de contraseña. Reactive sus claves de cuenta para recuperar el acceso.</string>
   <string name="sync_inactive_vault_warning_action">Más información</string>
 </resources>

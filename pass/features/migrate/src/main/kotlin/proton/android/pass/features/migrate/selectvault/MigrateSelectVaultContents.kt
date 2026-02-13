@@ -36,33 +36,14 @@ import androidx.compose.ui.unit.dp
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toImmutableList
 import proton.android.pass.commonui.api.PassTheme
-import proton.android.pass.commonuimodels.api.FolderUiModel
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItem
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemList
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetVaultRow
 import proton.android.pass.composecomponents.impl.bottomsheet.withDividers
 import proton.android.pass.composecomponents.impl.folders.ExpandCollapseIcon
 import proton.android.pass.composecomponents.impl.folders.FolderTree
-import proton.android.pass.domain.Folder
 import proton.android.pass.domain.ShareId
 import proton.android.pass.features.migrate.R
-
-private fun List<Folder>.toFolderUiModelTree(): List<FolderUiModel> {
-    val childrenMap = groupBy { it.parentFolderId?.id }
-
-    fun buildSubtree(parentId: String?): List<FolderUiModel> {
-        val children = childrenMap[parentId] ?: return emptyList()
-        return children.map { folder ->
-            FolderUiModel(
-                id = folder.folderId,
-                name = folder.name,
-                folders = buildSubtree(folder.folderId.id)
-            )
-        }
-    }
-
-    return buildSubtree(parentId = null)
-}
 
 @Composable
 fun MigrateSelectVaultContents(
@@ -70,19 +51,19 @@ fun MigrateSelectVaultContents(
     vaults: ImmutableList<VaultEnabledPair>,
     onVaultSelected: (ShareId) -> Unit
 ) {
-    if (vaults.any { it.vault.vault.folders.isNotEmpty() }) {
+    if (vaults.any { it.folderTree.isNotEmpty() }) {
         LazyColumn(
             modifier = modifier
         ) {
-            items(items = vaults, key = { it.vault.vault.shareId.id }) { vaultPair ->
-                val vaultWithCount = vaultPair.vault
+            items(items = vaults, key = { it.vaultWithItemCount.vault.shareId.id }) { vaultPair ->
+                val vaultWithCount = vaultPair.vaultWithItemCount
                 val vaultModel = vaultWithCount.vault
 
                 val (showFolders, onShowFolders) = rememberSaveable { mutableStateOf(false) }
 
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     AnimatedVisibility(
-                        visible = vaultModel.folders.isNotEmpty()
+                        visible = vaultPair.folderTree.isNotEmpty()
                     ) {
                         ExpandCollapseIcon(
                             expanded = showFolders,
@@ -112,7 +93,7 @@ fun MigrateSelectVaultContents(
                     ).let { item ->
                         BottomSheetItem(
                             item = item,
-                            horizontalPadding = if (vaultModel.folders.isNotEmpty()) {
+                            horizontalPadding = if (vaultPair.folderTree.isNotEmpty()) {
                                 0.dp
                             } else {
                                 PassTheme.dimens.bottomsheetHorizontalPadding
@@ -137,10 +118,8 @@ fun MigrateSelectVaultContents(
                 ) {
                     mutableStateMapOf()
                 }
-                val folderTree = vaultModel.folders.toFolderUiModelTree()
-
-                LaunchedEffect(folderTree) {
-                    folderTree.forEach { folder ->
+                LaunchedEffect(vaultPair.folderTree) {
+                    vaultPair.folderTree.forEach { folder ->
                         if (!expandedState.contains(folder.id.id)) {
                             expandedState[folder.id.id] = false
                         }
@@ -148,12 +127,12 @@ fun MigrateSelectVaultContents(
                 }
 
                 AnimatedVisibility(
-                    visible = vaultModel.folders.isNotEmpty() &&
+                    visible = vaultPair.folderTree.isNotEmpty() &&
                         showFolders
                 ) {
                     FolderTree(
                         modifier = Modifier.padding(start = 32.dp),
-                        folders = folderTree,
+                        folders = vaultPair.folderTree,
                         expandedState = expandedState,
                         depth = 0,
                         onFolderClick = {
@@ -168,7 +147,7 @@ fun MigrateSelectVaultContents(
         BottomSheetItemList(
             modifier = modifier,
             items = vaults.map { vault ->
-                val vaultWithCount = vault.vault
+                val vaultWithCount = vault.vaultWithItemCount
                 val vaultModel = vaultWithCount.vault
                 BottomSheetVaultRow(
                     vault = vaultWithCount,

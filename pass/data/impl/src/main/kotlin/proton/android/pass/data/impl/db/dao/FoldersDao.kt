@@ -80,6 +80,20 @@ abstract class FoldersDao : BaseDao<FolderEntity>() {
 
     @Query(
         """
+        SELECT * FROM ${FolderEntity.TABLE}
+        WHERE ${FolderEntity.Columns.USER_ID} = :userId
+          AND ${FolderEntity.Columns.SHARE_ID} = :shareId
+          AND ${FolderEntity.Columns.ID} IN (:folderIds)
+        """
+    )
+    abstract suspend fun getByIds(
+        userId: String,
+        shareId: String,
+        folderIds: List<String>
+    ): List<FolderEntity>
+
+    @Query(
+        """
         DELETE FROM ${FolderEntity.TABLE}
         WHERE ${FolderEntity.Columns.USER_ID} = :userId
           AND ${FolderEntity.Columns.SHARE_ID} = :shareId

@@ -32,8 +32,14 @@ class LocalFolderKeyDataSourceImpl @Inject constructor(
 
     override suspend fun upsertKey(entity: FolderKeyEntity) = database.folderKeysDao().insertOrUpdate(entity)
 
+    override suspend fun upsertKeys(entities: List<FolderKeyEntity>) =
+        database.folderKeysDao().insertOrUpdate(*entities.toTypedArray())
+
     override suspend fun getByFolderId(shareId: ShareId, folderId: FolderId): FolderKeyEntity? =
         database.folderKeysDao().getByFolderId(folderId.id, shareId.id)
+
+    override suspend fun getByFolderIds(shareId: ShareId, folderIds: List<FolderId>): List<FolderKeyEntity> =
+        database.folderKeysDao().getByFolderIds(folderIds.map { it.id }, shareId.id)
 
     override suspend fun getAllByShareId(userId: UserId, shareId: ShareId): List<FolderKeyEntity> =
         database.folderKeysDao().getAllByShareId(shareId.id, userId.id)

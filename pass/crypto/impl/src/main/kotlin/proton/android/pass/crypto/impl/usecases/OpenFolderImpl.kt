@@ -48,6 +48,7 @@ class OpenFolderImpl @Inject constructor(
                 decrypt(EncryptedByteArray(decodedContent), EncryptionTag.FolderContent)
             }
             val encryptedFolderKeyForStorage = encrypt(folderKeyBytes)
+            decryptedFolderKey.clear()
             if (encryptedFolder.contentFormatVersion > FOLDER_CONTENT_FORMAT_VERSION) {
                 PassLogger.w(
                     TAG,

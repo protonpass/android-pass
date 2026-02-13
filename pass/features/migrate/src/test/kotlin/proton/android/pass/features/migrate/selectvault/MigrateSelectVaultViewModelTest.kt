@@ -77,7 +77,7 @@ class MigrateSelectVaultViewModelTest {
 
         val expected = listOf(
             VaultEnabledPair(
-                vault = currentVault,
+                vaultWithItemCount = currentVault,
                 status = VaultStatus.Disabled(VaultStatus.DisabledReason.SameVault)
             ),
             VaultEnabledPair(otherVault, VaultStatus.Enabled)

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2024 Proton AG
+ * Copyright (c) 2023 Proton AG
  * This file is part of Proton AG and Proton Pass.
  *
  * Proton Pass is free software: you can redistribute it and/or modify
@@ -16,7 +16,7 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.data.impl.repositories.fakes
+package proton.android.pass.data.impl.fakes
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
@@ -32,7 +32,6 @@ import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.ShareType
 import proton.android.pass.domain.entity.NewVault
 import proton.android.pass.domain.events.EventToken
-import proton.android.pass.domain.shares.SharePendingInvite
 
 class FakeShareRepository : ShareRepository {
 
@@ -50,6 +49,7 @@ class FakeShareRepository : ShareRepository {
     private val observeSharesFlow = testFlow<Result<List<Share>>>()
     private val observeUsableShareIdsFlow = testFlow<Result<List<ShareId>>>()
     private val observeVaultCountFlow = testFlow<Result<Int>>()
+    private val recreateShareMemory: MutableList<RecreateSharePayload> = mutableListOf()
 
     private var deleteVault: Result<Unit> =
         Result.failure(IllegalStateException("DeleteVaultResult not set"))
@@ -76,8 +76,6 @@ class FakeShareRepository : ShareRepository {
     private val observeSharedWithMeIds = testFlow<Result<List<ShareId>>>()
 
     private val observeSharedByMeIds = testFlow<Result<List<ShareId>>>()
-
-    private val sharePendingInvitesFlow = testFlow<List<SharePendingInvite>>()
 
     fun deleteVaultMemory(): List<ShareId> = deleteVaultMemory
     fun refreshShareMemory(): List<RefreshSharePayload> = refreshShareMemory
@@ -122,12 +120,12 @@ class FakeShareRepository : ShareRepository {
         deleteSharesResult = value
     }
 
-    fun setGetAddressForShareIdResult(value: Result<UserAddress>) {
-        getAddressForShareIdResult = value
-    }
-
     fun setUsableShareIdsResult(value: Result<List<ShareId>>) {
         observeUsableShareIdsFlow.tryEmit(value)
+    }
+
+    fun setGetAddressForShareIdResult(value: Result<UserAddress>) {
+        getAddressForShareIdResult = value
     }
 
     override suspend fun createVault(userId: SessionUserId, vault: NewVault): Share =
@@ -143,7 +141,11 @@ class FakeShareRepository : ShareRepository {
         eventToken: EventToken?
     ): RefreshSharesResult = refreshSharesResult
 
-    override suspend fun refreshShare(userId: UserId, shareId: ShareId, eventToken: EventToken?) {
+    override suspend fun refreshShare(
+        userId: UserId,
+        shareId: ShareId,
+        eventToken: EventToken?
+    ) {
         refreshShareMemory.add(RefreshSharePayload(userId, shareId))
         refreshShareResult.getOrThrow()
     }
@@ -154,8 +156,7 @@ class FakeShareRepository : ShareRepository {
     override fun observeAllUsableShareIds(
         userId: UserId,
         includeHidden: Boolean
-    ): Flow<List<ShareId>> =
-        observeUsableShareIdsFlow.map { it.getOrThrow() }
+    ): Flow<List<ShareId>> = observeUsableShareIdsFlow.map { it.getOrThrow() }
 
     override fun observeVaultCount(userId: UserId, includeHidden: Boolean): Flow<Int> =
         observeVaultCountFlow.map { it.getOrThrow() }
@@ -169,9 +170,25 @@ class FakeShareRepository : ShareRepository {
         vault: NewVault
     ): Share = updateVaultResult.getOrThrow()
 
-    override suspend fun recreateShare(userId: UserId, shareId: ShareId, eventToken: EventToken?) {
+    fun getRecreateShareMemory(): List<RecreateSharePayload> = recreateShareMemory.toList()
 
+    fun clearRecreateShareMemory() {
+        recreateShareMemory.clear()
     }
+
+    override suspend fun recreateShare(
+        userId: UserId,
+        shareId: ShareId,
+        eventToken: EventToken?
+    ) {
+        recreateShareMemory.add(RecreateSharePayload(userId, shareId, eventToken))
+    }
+
+    data class RecreateSharePayload(
+        val userId: UserId,
+        val shareId: ShareId,
+        val eventToken: EventToken?
+    )
 
     override suspend fun deleteLocalSharesForUser(userId: UserId): Boolean =
         deleteSharesResult.getOrThrow()
@@ -215,7 +232,6 @@ class FakeShareRepository : ShareRepository {
         userId: UserId,
         shareVisibilityChanges: Map<ShareId, Boolean>
     ) {
-
     }
 
     data class RefreshSharePayload(

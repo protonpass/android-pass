@@ -18,8 +18,10 @@
 
 package proton.android.pass.commonuimodels.api
 
+import androidx.compose.runtime.Stable
 import proton.android.pass.domain.FolderId
 
+@Stable
 data class FolderUiModel(
     val id: FolderId,
     val name: String,

@@ -118,7 +118,7 @@ class MigrateSelectVaultForMigrateItemsViewModelTest {
             val item = awaitItem()
             require(item is MigrateSelectVaultUiState.Success)
 
-            val expected = VaultEnabledPair(vault = sharedVault, status = VaultStatus.Enabled)
+            val expected = VaultEnabledPair(vaultWithItemCount = sharedVault, status = VaultStatus.Enabled)
             assertThat(item.vaultList).isEqualTo(listOf(expected))
 
         }

@@ -57,6 +57,15 @@ abstract class FolderKeysDao : BaseDao<FolderKeyEntity>() {
 
     @Query(
         """
+        SELECT * FROM ${FolderKeyEntity.TABLE}
+        WHERE ${FolderKeyEntity.Columns.FOLDER_ID} IN (:folderIds)
+          AND ${FolderKeyEntity.Columns.SHARE_ID} = :shareId
+        """
+    )
+    abstract suspend fun getByFolderIds(folderIds: List<String>, shareId: String): List<FolderKeyEntity>
+
+    @Query(
+        """
         DELETE FROM ${FolderKeyEntity.TABLE}
         WHERE ${FolderKeyEntity.Columns.FOLDER_ID} = :folderId
           AND ${FolderKeyEntity.Columns.SHARE_ID} = :shareId

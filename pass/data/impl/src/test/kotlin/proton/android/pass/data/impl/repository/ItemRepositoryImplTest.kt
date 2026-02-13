@@ -32,6 +32,7 @@ import proton.android.pass.crypto.fakes.usecases.FakeMigrateItem
 import proton.android.pass.crypto.fakes.usecases.FakeOpenItem
 import proton.android.pass.crypto.fakes.usecases.FakeUpdateItem
 import proton.android.pass.data.fakes.crypto.FakeGetShareAndItemKey
+import proton.android.pass.data.impl.fakes.FakeFolderKeyRepository
 import proton.android.pass.data.impl.fakes.FakeItemKeyRepository
 import proton.android.pass.data.impl.fakes.FakeLocalItemDataSource
 import proton.android.pass.data.impl.fakes.FakePassDatabase
@@ -90,7 +91,8 @@ class ItemRepositoryImplTest {
             encryptionContextProvider = FakeEncryptionContextProvider(),
             shareKeyRepository = shareKeyRepository,
             migrateItem = FakeMigrateItem(),
-            getShareAndItemKey = FakeGetShareAndItemKey()
+            getShareAndItemKey = FakeGetShareAndItemKey(),
+            folderKeyRepository = FakeFolderKeyRepository()
         )
     }
 

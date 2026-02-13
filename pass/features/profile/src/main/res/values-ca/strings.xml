@@ -49,9 +49,8 @@
   <string name="profile_option_unlock_with">Desbloqueja amb</string>
   <string name="profile_option_change_pin_code">Canvia el codi PIN</string>
   <string name="profile_passkey_support_section_title">Claus d\'accés</string>
-  <string name="profile_passkey_support_subtitle_supported">Les claus d\'accés són compatibles</string>
+  <string name="profile_passkey_support_subtitle_supported">Les claus d\'accés es poden admetre en aquest dispositiu</string>
   <string name="profile_passkey_support_subtitle_not_supported_android_version">La vostra versió d\'Android no admet claus de pas.</string>
-  <string name="profile_passkey_support_subtitle_not_supported_credential_manager">El vostre dispositiu no admet claus d\'accés.</string>
   <string name="profile_passkey_support_subtitle_not_supported_unknown">No s\'ha pogut comprovar la compatibilitat per a les claus d\'accés</string>
   <plurals name="profile_after_days">
     <item quantity="one">Després d\'%d dia</item>

@@ -46,7 +46,6 @@
   <string name="report_sending_error">無法傳送報告。</string>
   <string name="tips_passkey_check_guide">如果您遇到任何問題，請查看我們的指南。</string>
   <string name="tips_passkey_android_not_supported">您的 Android 版本過低。請嘗試升級您的裝置。</string>
-  <string name="tips_passkeys_credential_manager_not_supported">該裝置的製造商未提供認證管理員。</string>
   <string name="tips_passkey_supported">密碼金鑰是支援服務</string>
   <string name="tips_passkey_not_supported">通行密鑰不受支援</string>
   <string name="report_steps" comment="Indicator showing report progress">第 %1$d 步，共 %2$d 步</string>

@@ -34,10 +34,10 @@
   <string name="bottomsheet_monitor_exclude">Выключыць з назірання</string>
   <string name="bottomsheet_monitor_include">Уключыць у назіранне</string>
   <string name="bottomsheet_migrate_item">Перамясціць у іншае сховішча</string>
-  <string name="bottomsheet_create_folder">Create folder</string>
-  <string name="folder_tree_create_folder">Create folder</string>
-  <string name="bottomsheet_rename_folder">Rename</string>
-  <string name="bottomsheet_create_sub_folder">Create sub-folder</string>
+  <string name="bottomsheet_create_folder">Стварыць папку</string>
+  <string name="folder_tree_create_folder">Стварыць папку</string>
+  <string name="bottomsheet_rename_folder">Перайменаваць</string>
+  <string name="bottomsheet_create_sub_folder">Стварыць падпапку</string>
   <string name="bottomsheet_copy_item_note">Скапіяваць нататку</string>
   <string name="bottomsheet_delete_permanently">Выдаліць незваротна</string>
   <string name="bottomsheet_restore">Аднавіць</string>

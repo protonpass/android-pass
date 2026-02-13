@@ -46,7 +46,6 @@
   <string name="report_sending_error">Không thể gửi báo cáo.</string>
   <string name="tips_passkey_check_guide">Nếu bạn gặp bất kỳ vấn đề nào, hãy xem qua bài hướng dẫn của chúng tôi.</string>
   <string name="tips_passkey_android_not_supported">Your Android version is too low. Try upgrading your device.</string>
-  <string name="tips_passkeys_credential_manager_not_supported">Nhà sản xuất thiết bị không cung cấp trình quản lý thông tin xác thực.</string>
   <string name="tips_passkey_supported">Chìa khóa truy cập được hỗ trợ</string>
   <string name="tips_passkey_not_supported">Chìa khóa truy cập không có hỗ trợ</string>
   <string name="report_steps" comment="Indicator showing report progress">Bước %1$d của %2$d</string>

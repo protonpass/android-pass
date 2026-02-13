@@ -46,7 +46,6 @@
   <string name="report_sending_error">No s\'ha pogut enviar l\'informe.</string>
   <string name="tips_passkey_check_guide">Si teniu problemes, consulteu la nostra guia.</string>
   <string name="tips_passkey_android_not_supported">La vostra versió d\'Android és massa baixa. Proveu d\'actualitzar el vostre dispositiu.</string>
-  <string name="tips_passkeys_credential_manager_not_supported">El fabricant del dispositiu no proporciona un gestor de credencials.</string>
   <string name="tips_passkey_supported">S\'admeten claus d\'accés.</string>
   <string name="tips_passkey_not_supported">Les claus d\'accés no són compatibles.</string>
   <string name="report_steps" comment="Indicator showing report progress">Pas %1$d de %2$d</string>

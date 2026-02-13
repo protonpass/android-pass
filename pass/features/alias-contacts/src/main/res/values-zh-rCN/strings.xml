@@ -24,7 +24,7 @@
   <string name="create_contact_title">创建联系人</string>
   <string name="detail_contact_title">联系人</string>
   <string name="email_input_error">无效邮件地址</string>
-  <string name="detail_contact_display_name" comment="sender email address">每当有电子邮件地址向%1$s发送或接收邮件时，系统都会自动为其创建联系人。</string>
+  <string name="detail_contact_display_name" comment="sender email address">每当有邮箱地址向 %1$s 发送或接收邮件时，系统都会自动为其创建联系人。</string>
   <string name="empty_alias_contacts_title">别名联系人</string>
   <string name="empty_alias_contacts_body">为了保护您的个人邮箱地址不被泄露，您可以创建一个别名联系人，用于隐藏您的真实邮箱地址。</string>
   <string name="empty_alias_contacts_learn_more">了解详情</string>
@@ -50,7 +50,7 @@
   <string name="snackbar_contact_unblock_error">无法取消屏蔽联系人</string>
   <string name="snackbar_delete_contact_success">联系人已删除</string>
   <string name="snackbar_delete_contact_error">无法删除联系人</string>
-  <string name="snackbar_email_copied_success">电子邮件地址已复制到剪贴板</string>
+  <string name="snackbar_email_copied_success">邮箱地址已复制到剪贴板</string>
   <string name="contact_option_send_email">发送邮件</string>
   <string name="contact_option_copy_address">复制转发地址</string>
   <string name="contact_option_block_contact">屏蔽联系人</string>

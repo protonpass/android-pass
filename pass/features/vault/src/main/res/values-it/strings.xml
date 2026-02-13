@@ -13,14 +13,14 @@
   <string name="snackbar_find_vault_error">Impossibile trovare la cassaforte selezionata</string>
   <string name="snackbar_get_vault_list_error">Impossibile caricare la lista delle casseforti</string>
   <string name="vault_delete_dialog_title">Elimina la cassaforte</string>
-  <string name="vault_add_folder_dialog_title">Enter a folder title</string>
-  <string name="vault_add_foldersame_folder_exist">A folder with the same name already exists</string>
+  <string name="vault_add_folder_dialog_title">Inserisci un titolo per la cartella</string>
+  <string name="vault_add_foldersame_folder_exist">Esiste già una cartella con lo stesso nome</string>
   <string name="vault_delete_dialog_body">Questo eliminerà definitivamente la cassaforte __VAULT_NAME__ e tutti i suoi contenuti. Inserisci il nome della cassaforte per confermare l\'eliminazione.</string>
   <string name="vault_delete_dialog_placeholder">Nome cassaforte</string>
-  <string name="vault_add_folder_dialog_placeholder">Folder name</string>
+  <string name="vault_add_folder_dialog_placeholder">Nome cartella</string>
   <string name="vault_delete_dialog_cancel_action">Annulla</string>
   <string name="vault_delete_dialog_delete_action">Elimina</string>
-  <string name="vault_add_folder_dialog_create_action">Create</string>
+  <string name="vault_add_folder_dialog_create_action">Crea</string>
   <string name="vault_delete_dialog_shared_items_warning" comment="The placeholder will be replaced by the number of shared items, e.g 2 shared items">Questa cassaforte contiene %1$s. Eliminarla rimuoverà l\'accesso per tutti gli altri utenti.</string>
   <string name="vault_leave_dialog_title">Abbandona la cassaforte</string>
   <string name="vault_leave_dialog_body">Questo rimuoverà il tuo accesso alla cassaforte __VAULT_NAME__ e a tutti i suoi contenuti. Sei sicuro di volerla abbandonare?</string>

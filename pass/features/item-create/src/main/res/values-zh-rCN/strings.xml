@@ -121,7 +121,7 @@
   <string name="credit_card_item_update_error">无法更新信用卡</string>
   <!-- Create Identity -->
   <string name="identity_field_full_name_title">全名</string>
-  <string name="identity_field_email_title">电子邮件地址</string>
+  <string name="identity_field_email_title">邮箱地址</string>
   <string name="identity_field_phone_number_title">电话号码</string>
   <string name="identity_field_organization_title">机构</string>
   <string name="identity_field_street_address_title">街道地址，邮政编号</string>
@@ -260,18 +260,18 @@
   <string name="template_ssh_key_field_username">用户名</string>
   <string name="template_ssh_key_field_host">主机</string>
   <!-- SSH Key Generation -->
-  <string name="ssh_key_generate_button">Generate</string>
+  <string name="ssh_key_generate_button">生成</string>
   <string name="ssh_key_type_ed25519">Ed25519</string>
   <string name="ssh_key_type_rsa_2048">RSA-2048</string>
   <string name="ssh_key_type_rsa_4096">RSA-4096</string>
-  <string name="ssh_key_generation_error">Failed to generate SSH key</string>
+  <string name="ssh_key_generation_error">SSH 密钥生成失败</string>
   <!-- WiFi Network Fields -->
   <string name="template_wifi_network_field_name">名称 (SSID)</string>
   <!-- Bank Account Fields -->
   <string name="template_bank_account_field_bank_name">银行名称</string>
   <string name="template_bank_account_field_account_number">账户号码</string>
   <string name="template_bank_account_field_routing_number">路由号码</string>
-  <string name="template_bank_account_field_account_type">帐户类型</string>
+  <string name="template_bank_account_field_account_type">账户类型</string>
   <string name="template_bank_account_field_iban">IBAN</string>
   <string name="template_bank_account_field_swift_bic">SWIFT/BIC</string>
   <string name="template_bank_account_field_holder_name">持有人姓名</string>

@@ -181,6 +181,7 @@
   <string name="bulk_action_enable_alias">Ενεργοποίηση ψευδωνύμου</string>
   <string name="bulk_action_disable_alias">Απενεργοποίηση ψευδωνύμου</string>
   <string name="vault_drawer_organise_vaults">Οργάνωση κρυπτών</string>
+  <string name="sync_group_vault_warning">Ορισμένες κρύπτες δεν είναι διαθέσιμες προς το παρόν λόγω προβλήματος με την ομάδα τους.</string>
   <string name="sync_inactive_vault_warning">Κάποιες κρύπτες δεν είναι πλέον προσβάσιμες λόγω επαναφοράς κωδικού. Ενεργοποιήστε ξανά τα κλειδιά του λογαριασμού σας για να αποκτήσετε ξανά πρόσβαση.</string>
   <string name="sync_inactive_vault_warning_action">Μάθετε περισσότερα</string>
 </resources>

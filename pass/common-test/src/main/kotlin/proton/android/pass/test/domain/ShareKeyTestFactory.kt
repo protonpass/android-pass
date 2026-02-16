@@ -35,6 +35,15 @@ object ShareKeyTestFactory {
         userKeyId = "userKeyId"
     )
 
+    fun create(rotation: Long, keyBytes: ByteArray): ShareKey = ShareKey(
+        rotation = rotation,
+        key = FakeEncryptionContext.encrypt(keyBytes),
+        responseKey = Base64.encodeBase64String(keyBytes),
+        createTime = 123_456_789,
+        isActive = true,
+        userKeyId = "userKeyId"
+    )
+
     fun create(): Pair<ShareKey, EncryptionKey> {
         val key = EncryptionKey.generate()
         return ShareKey(

@@ -16,8 +16,9 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.commonuimodels.api
+package proton.android.pass.commonpresentation.api.folders
 
+import proton.android.pass.commonuimodels.api.FolderUiModel
 import proton.android.pass.domain.Folder
 
 object FolderTreeBuilder {

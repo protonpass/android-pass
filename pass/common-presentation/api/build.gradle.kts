@@ -38,4 +38,10 @@ dependencies {
 
     implementation(libs.kotlinx.collections)
     implementation(libs.core.plan.domain)
+
+    testImplementation(libs.core.test.kotlin)
+    testImplementation(libs.junit)
+    testImplementation(libs.kotlinTest)
+    testImplementation(libs.truth)
+    testImplementation(projects.pass.commonTest)
 }

@@ -25,16 +25,12 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.withTimeout
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.safeRunCatching
-import proton.android.pass.data.api.repositories.ShareRepository
 import proton.android.pass.data.api.usecases.ApplyPendingEvents
 import proton.android.pass.data.api.usecases.PerformSync
 import proton.android.pass.data.api.usecases.RefreshGroupInvites
 import proton.android.pass.data.api.usecases.RefreshUserInvites
 import proton.android.pass.data.api.usecases.SyncUserEvents
-import proton.android.pass.data.api.usecases.folders.RefreshFolders
 import proton.android.pass.data.api.usecases.simplelogin.SyncSimpleLoginPendingAliases
-import proton.android.pass.domain.ShareId
-import proton.android.pass.domain.ShareType
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.preferences.FeatureFlag
 import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
@@ -47,8 +43,6 @@ class PerformSyncImpl @Inject constructor(
     private val refreshGroupInvites: RefreshGroupInvites,
     private val syncPendingAliases: SyncSimpleLoginPendingAliases,
     private val syncUserEvents: SyncUserEvents,
-    private val shareRepository: ShareRepository,
-    private val refreshFolders: RefreshFolders,
     private val featureFlagsPreferencesRepository: FeatureFlagsPreferencesRepository
 ) : PerformSync {
 
@@ -63,8 +57,6 @@ class PerformSyncImpl @Inject constructor(
     private suspend fun performSyncWithPendingEvents(userId: UserId, forceSync: Boolean) = coroutineScope {
         val isUserEventsEnabled: Boolean =
             featureFlagsPreferencesRepository.get<Boolean>(FeatureFlag.PASS_USER_EVENTS_V1).first()
-        val isFoldersEnabled: Boolean =
-            featureFlagsPreferencesRepository.get<Boolean>(FeatureFlag.PASS_FOLDERS).first()
         val isGroupSharingEnabled =
             featureFlagsPreferencesRepository.get<Boolean>(FeatureFlag.PASS_GROUP_SHARE).first()
 
@@ -78,9 +70,6 @@ class PerformSyncImpl @Inject constructor(
                     add(async { performGroupRefreshInvites(userId) })
                 }
                 add(async { syncPendingSlAliases(userId, forceSync) })
-                if (isFoldersEnabled) {
-                    add(async { refreshAllVaultFolders(userId) })
-                }
             }
             tasks.awaitAll()
         }
@@ -136,27 +125,6 @@ class PerformSyncImpl @Inject constructor(
     }.onFailure { error ->
         PassLogger.w(TAG, "User events sync for $userId error: ${error.message}")
     }
-
-    private suspend fun refreshAllVaultFolders(userId: UserId): Result<Unit> = safeRunCatching {
-        val vaultShareIds = shareRepository.observeSharesByType(
-            userId = userId,
-            shareType = ShareType.Vault,
-            includeHidden = true
-        ).first().map { it.id }.toSet()
-        refreshFoldersForShares(userId, vaultShareIds).getOrThrow()
-    }.onFailure { error ->
-        PassLogger.w(TAG, "Refresh all folders for $userId error: ${error.message}")
-    }
-
-    private suspend fun refreshFoldersForShares(userId: UserId, shareIds: Set<ShareId>): Result<Unit> =
-        safeRunCatching {
-            shareIds.forEach { shareId ->
-                refreshFolders(userId, shareId)
-            }
-            PassLogger.i(TAG, "Folders refreshed for ${shareIds.size} shares")
-        }.onFailure { error ->
-            PassLogger.w(TAG, "Refresh folders for selected shares for $userId error: ${error.message}")
-        }
 
     private companion object {
 

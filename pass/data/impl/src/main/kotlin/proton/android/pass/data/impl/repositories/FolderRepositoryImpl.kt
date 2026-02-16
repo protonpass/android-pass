@@ -23,18 +23,15 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.isActive
-import me.proton.core.crypto.common.keystore.EncryptedByteArray
 import me.proton.core.domain.entity.UserId
+import proton.android.pass.common.api.AppDispatchers
 import proton.android.pass.common.api.safeRunCatching
-import proton.android.pass.crypto.api.Base64
 import proton.android.pass.crypto.api.EncryptionKey
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
-import proton.android.pass.crypto.api.context.EncryptionTag
 import proton.android.pass.crypto.api.usecases.EncryptedFolderData
 import proton.android.pass.crypto.api.usecases.OpenFolder
 import proton.android.pass.data.api.repositories.FolderRepository
 import proton.android.pass.data.impl.db.PassDatabase
-import proton.android.pass.data.impl.db.entities.FolderEntity
 import proton.android.pass.data.impl.db.entities.FolderKeyEntity
 import proton.android.pass.data.impl.extensions.toDomain
 import proton.android.pass.data.impl.extensions.toEntity
@@ -58,6 +55,7 @@ import proton_pass_folder_v1.FolderV1
 import javax.inject.Inject
 
 class FolderRepositoryImpl @Inject constructor(
+    private val appDispatchers: AppDispatchers,
     private val localFolderDataSource: LocalFolderDataSource,
     private val localFolderKeyDataSource: LocalFolderKeyDataSource,
     private val localShareKeyDataSource: LocalShareKeyDataSource,
@@ -68,199 +66,32 @@ class FolderRepositoryImpl @Inject constructor(
     private val database: PassDatabase
 ) : FolderRepository {
 
+    private val folderSyncDecryptor = FolderSyncDecryptor(
+        appDispatchers = appDispatchers,
+        localFolderDataSource = localFolderDataSource,
+        localFolderKeyDataSource = localFolderKeyDataSource,
+        encryptionContextProvider = encryptionContextProvider,
+        openFolder = openFolder,
+        database = database
+    )
+
     private suspend fun decryptAndStoreFolders(
         userId: UserId,
         shareId: ShareId,
         folderApiModels: List<FolderApiModel>
     ) = safeRunCatching {
-        if (folderApiModels.isEmpty()) return@safeRunCatching
-        val childrenMap = folderApiModels.groupBy { it.parentFolderId }
-        val rootShareKeyByRotation = resolveRootShareKeyByRotation(userId, shareId, folderApiModels)
-        val orphanParentKeyByFolderId = resolveOrphanParentKeyByFolderId(shareId, folderApiModels)
-
-        if (rootShareKeyByRotation.isEmpty() && orphanParentKeyByFolderId.isEmpty()) {
-            PassLogger.w(TAG, "No decryption keys resolved for shareId=${shareId.id}, skipping folder sync")
-            return@safeRunCatching
-        }
-
-        val context = FolderDecryptionContext(
-            childrenMap = childrenMap,
+        folderSyncDecryptor.decryptAndStoreFolders(
             userId = userId,
             shareId = shareId,
-            rootShareKeyByRotation = rootShareKeyByRotation
-        )
-
-        val decryptedFolders = mutableListOf<Pair<FolderEntity, FolderKeyEntity>>()
-
-        decryptedFolders.addAll(decryptFolderTree(null, null, context))
-
-        for ((parentId, parentKeyBytes) in orphanParentKeyByFolderId) {
-            decryptedFolders.addAll(decryptFolderTree(parentId, parentKeyBytes, context))
-        }
-
-        if (decryptedFolders.isNotEmpty()) {
-            database.inTransaction("upsertFoldersAndKeys") {
-                localFolderDataSource.upsertFolders(decryptedFolders.map { it.first })
-                localFolderKeyDataSource.upsertKeys(decryptedFolders.map { it.second })
+            folderApiModels = folderApiModels,
+            getShareKeyForRotation = { keyRotation ->
+                getShareKeyForRotation(userId, shareId, keyRotation)
             }
-            PassLogger.d(
-                TAG,
-                "Decrypted and stored ${decryptedFolders.size} folders for shareId=${shareId.id}"
-            )
-        }
+        )
     }.onFailure { e ->
         PassLogger.w(TAG, "Failed to decrypt and store folders for shareId=${shareId.id}")
         PassLogger.w(TAG, e)
     }.getOrThrow()
-
-    private suspend fun resolveRootShareKeyByRotation(
-        userId: UserId,
-        shareId: ShareId,
-        folderApiModels: List<FolderApiModel>
-    ): Map<Long, ByteArray> {
-        val rootRotations = folderApiModels
-            .asSequence()
-            .filter { it.parentFolderId == null }
-            .map { it.keyRotation }
-            .distinct()
-            .toList()
-
-        return encryptionContextProvider.withEncryptionContextSuspendable {
-            rootRotations.mapNotNull { keyRotation ->
-                safeRunCatching {
-                    val shareKey = getShareKeyForRotation(userId, shareId, keyRotation)
-                    keyRotation to decrypt(shareKey.key).copyOf()
-                }.onFailure { e ->
-                    PassLogger.w(TAG, "Cannot resolve share key for rotation=$keyRotation, shareId=${shareId.id}")
-                    PassLogger.w(TAG, e)
-                }.getOrNull()
-            }.toMap()
-        }
-    }
-
-    private suspend fun resolveOrphanParentKeyByFolderId(
-        shareId: ShareId,
-        folderApiModels: List<FolderApiModel>
-    ): Map<String, ByteArray> {
-        val batchFolderIds = folderApiModels.mapTo(mutableSetOf()) { it.folderId }
-        val orphanParentIds = folderApiModels
-            .asSequence()
-            .mapNotNull { it.parentFolderId }
-            .filter { it !in batchFolderIds }
-            .distinct()
-            .toList()
-
-        return encryptionContextProvider.withEncryptionContextSuspendable {
-            orphanParentIds.mapNotNull { parentFolderId ->
-                safeRunCatching {
-                    val parentFolderKey = localFolderKeyDataSource.getByFolderId(shareId, FolderId(parentFolderId))
-                        ?: throw IllegalStateException("Parent folder key not found for parentId=$parentFolderId")
-                    parentFolderId to decrypt(parentFolderKey.encryptedKey).copyOf()
-                }.onFailure { e ->
-                    PassLogger.w(
-                        TAG,
-                        "Cannot resolve local parent key for " +
-                            "parentId=$parentFolderId, shareId=${shareId.id}"
-                    )
-                    PassLogger.w(TAG, e)
-                }.getOrNull()
-            }.toMap()
-        }
-    }
-
-    private data class FolderDecryptionContext(
-        val childrenMap: Map<String?, List<FolderApiModel>>,
-        val userId: UserId,
-        val shareId: ShareId,
-        val rootShareKeyByRotation: Map<Long, ByteArray>
-    )
-
-    private suspend fun decryptFolderTree(
-        parentFolderId: String?,
-        parentKeyBytes: ByteArray?,
-        context: FolderDecryptionContext
-    ): List<Pair<FolderEntity, FolderKeyEntity>> {
-        val children = context.childrenMap[parentFolderId] ?: return emptyList()
-        val results = mutableListOf<Pair<FolderEntity, FolderKeyEntity>>()
-
-        for (apiModel in children) {
-            safeRunCatching {
-                val decryptionKeyBytes = resolveDecryptionKey(
-                    parentFolderId = parentFolderId,
-                    parentKeyBytes = parentKeyBytes,
-                    apiModel = apiModel,
-                    context = context
-                )
-                val (folderEntity, folderKeyEntity) = decryptFolderApiModel(apiModel, decryptionKeyBytes, context)
-                results.add(folderEntity to folderKeyEntity)
-
-                val childKeyBytes = decryptChildFolderKey(apiModel, decryptionKeyBytes)
-                results.addAll(decryptFolderTree(apiModel.folderId, childKeyBytes, context))
-            }.onFailure { e ->
-                PassLogger.w(TAG, "Failed to decrypt folder ${apiModel.folderId}")
-                PassLogger.w(TAG, e)
-            }
-        }
-
-        return results
-    }
-
-    private fun resolveDecryptionKey(
-        parentFolderId: String?,
-        parentKeyBytes: ByteArray?,
-        apiModel: FolderApiModel,
-        context: FolderDecryptionContext
-    ): ByteArray = if (parentFolderId == null) {
-        context.rootShareKeyByRotation[apiModel.keyRotation]
-            ?: throw IllegalStateException(
-                "No ShareKey found for shareId=${context.shareId.id}, keyRotation=${apiModel.keyRotation}"
-            )
-    } else {
-        parentKeyBytes
-            ?: throw IllegalStateException("Missing parent key for folder ${apiModel.folderId}")
-    }
-
-    private suspend fun decryptFolderApiModel(
-        apiModel: FolderApiModel,
-        decryptionKeyBytes: ByteArray,
-        context: FolderDecryptionContext
-    ): Pair<FolderEntity, FolderKeyEntity> {
-        val parentKey = EncryptionKey(decryptionKeyBytes.copyOf())
-        val encryptedData = EncryptedFolderData(
-            folderId = FolderId(apiModel.folderId),
-            parentFolderId = apiModel.parentFolderId?.let(::FolderId),
-            keyRotation = apiModel.keyRotation,
-            contentFormatVersion = apiModel.contentFormatVersion,
-            content = apiModel.content,
-            folderKey = apiModel.folderKey
-        )
-        val openedFolder = openFolder.open(encryptedData, parentKey)
-
-        val folderProto = FolderV1.Folder.newBuilder()
-            .setName(openedFolder.folderName)
-            .build()
-        val folderContentProto = encryptionContextProvider.withEncryptionContextSuspendable {
-            encrypt(folderProto.toByteArray())
-        }
-        val folderEntity = apiModel.toEntity(context.userId, context.shareId.id, folderContentProto)
-        val folderKeyEntity = FolderKeyEntity(
-            folderId = apiModel.folderId,
-            userId = context.userId.id,
-            shareId = context.shareId.id,
-            keyRotation = apiModel.keyRotation,
-            encryptedKey = openedFolder.reencryptedFolderKey
-        )
-        return folderEntity to folderKeyEntity
-    }
-
-    private suspend fun decryptChildFolderKey(apiModel: FolderApiModel, parentKeyBytes: ByteArray): ByteArray {
-        val decodedFolderKey = Base64.decodeBase64(apiModel.folderKey)
-        return encryptionContextProvider.withEncryptionContextSuspendable(
-            EncryptionKey(parentKeyBytes.copyOf())
-        ) {
-            decrypt(EncryptedByteArray(decodedFolderKey), EncryptionTag.FolderKey).copyOf()
-        }
-    }
 
     private suspend fun decryptAndSaveFolder(
         apiModel: FolderApiModel,
@@ -291,7 +122,12 @@ class FolderRepositoryImpl @Inject constructor(
             content = apiModel.content,
             folderKey = apiModel.folderKey
         )
-        val openedFolder = openFolder.open(encryptedData, parentKey)
+        val openFolderKey = parentKey.clone()
+        val openedFolder = try {
+            openFolder.open(encryptedData, openFolderKey)
+        } finally {
+            openFolderKey.clear()
+        }
 
         val folderProto = FolderV1.Folder.newBuilder()
             .setName(openedFolder.folderName)
@@ -311,8 +147,12 @@ class FolderRepositoryImpl @Inject constructor(
         )
         localFolderKeyDataSource.upsertKey(folderKeyEntity)
 
-        encryptionContextProvider.withEncryptionContextSuspendable {
-            folderEntity.toDomain(this)
+        try {
+            encryptionContextProvider.withEncryptionContextSuspendable {
+                folderEntity.toDomain(this)
+            }
+        } finally {
+            parentKey.clear()
         }
     }.onFailure { e ->
         PassLogger.w(TAG, "Failed to decrypt and save folder ${apiModel.folderId}")

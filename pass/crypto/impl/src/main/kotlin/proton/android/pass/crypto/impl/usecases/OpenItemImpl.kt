@@ -59,29 +59,11 @@ class OpenItemImpl @Inject constructor(
         share: Share,
         shareKeys: List<ShareKey>
     ): OpenItemOutput = encryptionContextProvider.withEncryptionContext {
-        open(response, share, shareKeys, this@withEncryptionContext)
-    }
-
-    override fun open(
-        response: EncryptedItemRevision,
-        share: Share,
-        shareKeys: List<ShareKey>,
-        encryptionContext: EncryptionContext
-    ): OpenItemOutput = when (share.shareType) {
-        ShareType.Vault -> openItemWithVaultShare(
+        open(
+            response = response,
             share = share,
-            response = response,
             shareKeys = shareKeys,
-            folderKey = null,
-            encryptionContext = encryptionContext
-        )
-
-        ShareType.Item -> openItemWithItemShare(
-            userId = share.userId,
-            response = response,
-            shareId = share.id,
-            shareKeys = shareKeys,
-            encryptionContext = encryptionContext
+            encryptionContext = this@withEncryptionContext
         )
     }
 
@@ -124,10 +106,6 @@ class OpenItemImpl @Inject constructor(
         val decodedItemKey = Base64.decodeBase64(itemKey)
 
         val decryptedItemKey = if (response.folderId != null && folderKey != null) {
-            PassLogger.i(
-                TAG,
-                "Decrypting item ${response.itemId} with FolderKey (folderId=${response.folderId})"
-            )
             val decryptedFolderKey = EncryptionKey(encryptionContext.decrypt(folderKey.key))
             encryptionContextProvider.withEncryptionContext(decryptedFolderKey) {
                 EncryptionKey(decrypt(EncryptedByteArray(decodedItemKey), EncryptionTag.ItemKey))

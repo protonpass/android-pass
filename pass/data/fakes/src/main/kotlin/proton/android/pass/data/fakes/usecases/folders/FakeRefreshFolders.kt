@@ -26,15 +26,15 @@ import javax.inject.Singleton
 
 @Singleton
 class FakeRefreshFolders @Inject constructor() : RefreshFolders {
-    data class Invocation(val userId: UserId, val shareId: ShareId)
+    data class Invocation(val userId: UserId, val shareIds: Set<ShareId>)
 
     private val _invocations = mutableListOf<Invocation>()
     val invocations: List<Invocation> get() = _invocations
 
     var result: Result<Unit> = Result.success(Unit)
 
-    override suspend fun invoke(userId: UserId, shareId: ShareId) {
-        _invocations += Invocation(userId, shareId)
+    override suspend fun invoke(userId: UserId, shareIds: Set<ShareId>) {
+        _invocations += Invocation(userId, shareIds)
         result.getOrThrow()
     }
 }

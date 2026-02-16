@@ -171,13 +171,11 @@ class SyncUserEventsImpl @Inject constructor(
     private suspend fun processFoldersUpdated(userId: UserId, foldersUpdated: List<SyncEventShareFolder>) {
         if (foldersUpdated.isNotEmpty()) {
             val sharesToRefresh = foldersUpdated.map(SyncEventShareFolder::shareId).toSet()
-            sharesToRefresh.forEach { shareId ->
-                safeRunCatching {
-                    refreshFolders(userId, shareId)
-                }.onFailure { error ->
-                    PassLogger.w(TAG, "Failed to refresh folders from user events for shareId=${shareId.id}")
-                    PassLogger.w(TAG, error)
-                }
+            safeRunCatching {
+                refreshFolders(userId, sharesToRefresh)
+            }.onFailure { error ->
+                PassLogger.w(TAG, "Failed to refresh folders from user events")
+                PassLogger.w(TAG, error)
             }
         }
     }

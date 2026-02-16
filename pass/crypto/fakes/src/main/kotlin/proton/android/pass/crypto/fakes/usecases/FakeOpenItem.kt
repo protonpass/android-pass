@@ -39,14 +39,12 @@ class FakeOpenItem : OpenItem {
         response: EncryptedItemRevision,
         share: Share,
         shareKeys: List<ShareKey>
-    ): OpenItemOutput = open(response, share, shareKeys, FakeEncryptionContext)
-
-    override fun open(
-        response: EncryptedItemRevision,
-        share: Share,
-        shareKeys: List<ShareKey>,
-        encryptionContext: EncryptionContext
-    ): OpenItemOutput = output ?: throw IllegalStateException("output not set")
+    ): OpenItemOutput = open(
+        response = response,
+        share = share,
+        shareKeys = shareKeys,
+        encryptionContext = FakeEncryptionContext
+    )
 
     override fun open(
         response: EncryptedItemRevision,

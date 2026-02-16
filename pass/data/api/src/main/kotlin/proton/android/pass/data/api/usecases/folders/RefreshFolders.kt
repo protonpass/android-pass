@@ -22,5 +22,5 @@ import me.proton.core.domain.entity.UserId
 import proton.android.pass.domain.ShareId
 
 interface RefreshFolders {
-    suspend operator fun invoke(userId: UserId, shareId: ShareId)
+    suspend operator fun invoke(userId: UserId, shareIds: Set<ShareId>)
 }

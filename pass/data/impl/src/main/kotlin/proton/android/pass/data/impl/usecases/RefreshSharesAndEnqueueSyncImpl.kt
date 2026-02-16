@@ -35,6 +35,7 @@ import proton.android.pass.data.api.usecases.CreateVault
 import proton.android.pass.data.api.usecases.RefreshSharesAndEnqueueSync
 import proton.android.pass.data.api.usecases.RefreshSharesResult
 import proton.android.pass.data.api.usecases.capabilities.CanCreateVault
+import proton.android.pass.data.api.usecases.folders.RefreshFolders
 import proton.android.pass.data.impl.R
 import proton.android.pass.data.impl.work.FetchItemsWorker
 import proton.android.pass.domain.ShareColor
@@ -55,6 +56,7 @@ class RefreshSharesAndEnqueueSyncImpl @Inject constructor(
     private val encryptionContextProvider: EncryptionContextProvider,
     private val createVault: CreateVault,
     private val canCreateVault: CanCreateVault,
+    private val refreshFolders: RefreshFolders,
     private val internalSettingsRepository: InternalSettingsRepository,
     private val preferencesRepository: FeatureFlagsPreferencesRepository,
     private val workManager: WorkManager
@@ -94,7 +96,7 @@ class RefreshSharesAndEnqueueSyncImpl @Inject constructor(
         }.getOrThrow()
     }
 
-    private fun handleNonEmptyShares(
+    private suspend fun handleNonEmptyShares(
         userId: UserId,
         repositoryResult: RepositoryRefreshSharesResult,
         syncType: RefreshSharesAndEnqueueSync.SyncType
@@ -102,8 +104,12 @@ class RefreshSharesAndEnqueueSyncImpl @Inject constructor(
         val existingShareIds = repositoryResult.allShareIds - repositoryResult.newShareIds
         val (sharesToFetch, fetchSource) = getSharesAndSource(repositoryResult, syncType)
 
-        val shouldEnqueueWorker = sharesToFetch.isNotEmpty()
-        if (shouldEnqueueWorker) {
+        val shouldFetchFoldersAndItems = sharesToFetch.isNotEmpty()
+        if (shouldFetchFoldersAndItems) {
+            val isFoldersEnabled: Boolean = preferencesRepository.get<Boolean>(FeatureFlag.PASS_FOLDERS).first()
+            if (isFoldersEnabled) {
+                refreshFolders(userId, sharesToFetch)
+            }
             enqueueWorker(
                 userId = userId,
                 shareIds = sharesToFetch,
@@ -115,7 +121,7 @@ class RefreshSharesAndEnqueueSyncImpl @Inject constructor(
 
         return RefreshSharesResult.SharesFound(
             shareIds = existingShareIds,
-            isWorkerEnqueued = shouldEnqueueWorker,
+            isWorkerEnqueued = shouldFetchFoldersAndItems,
             hasInactiveShares = repositoryResult.hasInactiveShares,
             hasInvalidGroupShares = repositoryResult.hasInvalidGroupShares
         )

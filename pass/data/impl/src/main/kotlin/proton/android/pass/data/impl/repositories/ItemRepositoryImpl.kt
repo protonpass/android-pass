@@ -1180,6 +1180,7 @@ class ItemRepositoryImpl @Inject constructor(
             revisions.map { revision ->
                 val folderKey: FolderKey? = revision.folderId?.let { folderId ->
                     folderKeysMap[FolderId(folderId)]
+                        ?: throw IllegalStateException("FolderKey not found in the database")
                 }
                 itemResponseToEntity(
                     userAddress = address,

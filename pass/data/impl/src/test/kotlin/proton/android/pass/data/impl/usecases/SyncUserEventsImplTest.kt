@@ -32,6 +32,8 @@ import proton.android.pass.data.fakes.usecases.FakeRefreshOrganizationSettings
 import proton.android.pass.data.fakes.usecases.FakeRefreshSharesAndEnqueueSync
 import proton.android.pass.data.fakes.usecases.FakeRefreshUserInvites
 import proton.android.pass.data.fakes.usecases.FakeRefreshUserAccess
+import proton.android.pass.data.fakes.usecases.folders.FakeDeleteFoldersLocally
+import proton.android.pass.data.fakes.usecases.folders.FakeRefreshFolders
 import proton.android.pass.data.fakes.usecases.simplelogin.FakeSyncSimpleLoginPendingAliases
 import proton.android.pass.data.fakes.work.FakeWorkManagerFacade
 import proton.android.pass.data.impl.fakes.FakeUserEventRepository
@@ -58,6 +60,8 @@ internal class SyncUserEventsImplTest {
     private lateinit var refreshUserInvites: FakeRefreshUserInvites
     private lateinit var refreshGroupInvites: FakeRefreshGroupInvites
     private lateinit var refreshBreaches: FakeRefreshBreaches
+    private lateinit var deleteFoldersLocally: FakeDeleteFoldersLocally
+    private lateinit var refreshFolders: FakeRefreshFolders
     private lateinit var syncPendingAliases: FakeSyncSimpleLoginPendingAliases
     private lateinit var promoteNewInviteToInvite: FakePromoteNewInviteToInvite
     private lateinit var refreshOrganizationSettings: FakeRefreshOrganizationSettings
@@ -73,6 +77,8 @@ internal class SyncUserEventsImplTest {
         refreshUserInvites = FakeRefreshUserInvites()
         refreshGroupInvites = FakeRefreshGroupInvites()
         refreshBreaches = FakeRefreshBreaches()
+        deleteFoldersLocally = FakeDeleteFoldersLocally()
+        refreshFolders = FakeRefreshFolders()
         syncPendingAliases = FakeSyncSimpleLoginPendingAliases()
         promoteNewInviteToInvite = FakePromoteNewInviteToInvite()
         refreshOrganizationSettings = FakeRefreshOrganizationSettings()
@@ -81,6 +87,8 @@ internal class SyncUserEventsImplTest {
             userEventRepository = userEventRepository,
             shareRepository = shareRepository,
             itemRepository = itemRepository,
+            deleteFoldersLocally = deleteFoldersLocally,
+            refreshFolders = refreshFolders,
             refreshSharesAndEnqueueSync = refreshSharesAndEnqueueSync,
             workManagerFacade = workManagerFacade,
             refreshUserAccess = refreshPlan,
@@ -571,4 +579,3 @@ internal class SyncUserEventsImplTest {
     }
 
 }
-

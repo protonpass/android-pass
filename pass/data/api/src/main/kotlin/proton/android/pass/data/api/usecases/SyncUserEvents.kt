@@ -23,4 +23,3 @@ import me.proton.core.domain.entity.UserId
 interface SyncUserEvents {
     suspend operator fun invoke(userId: UserId, forceSync: Boolean = false)
 }
-

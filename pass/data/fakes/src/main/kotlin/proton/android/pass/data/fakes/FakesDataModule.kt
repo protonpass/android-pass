@@ -171,6 +171,8 @@ import proton.android.pass.data.api.usecases.extrapassword.RemoveExtraPassword
 import proton.android.pass.data.api.usecases.extrapassword.SetupExtraPassword
 import proton.android.pass.data.api.usecases.folders.ObserveFolderItemCounts
 import proton.android.pass.data.api.usecases.folders.ObserveFolders
+import proton.android.pass.data.api.usecases.folders.DeleteFoldersLocally
+import proton.android.pass.data.api.usecases.folders.RefreshFolders
 import proton.android.pass.data.api.usecases.inappmessages.ObserveDeliverableMinimizedPromoInAppMessages
 import proton.android.pass.data.api.usecases.inappmessages.ObserveDeliverableModalInAppMessages
 import proton.android.pass.data.api.usecases.inappmessages.ObserveDeliverablePromoInAppMessages
@@ -459,6 +461,8 @@ import proton.android.pass.data.fakes.usecases.simplelogin.FakeUpdateSimpleLogin
 import proton.android.pass.data.fakes.usecases.simplelogin.FakeVerifySimpleLoginAliasMailbox
 import proton.android.pass.data.fakes.usecases.folders.FakeObserveFolderItemCounts
 import proton.android.pass.data.fakes.usecases.folders.FakeObserveFolders
+import proton.android.pass.data.fakes.usecases.folders.FakeDeleteFoldersLocally
+import proton.android.pass.data.fakes.usecases.folders.FakeRefreshFolders
 import proton.android.pass.data.fakes.usecases.tooltips.FakeDisableTooltip
 import proton.android.pass.data.fakes.usecases.tooltips.FakeObserveTooltipEnabled
 import proton.android.pass.data.fakes.usecases.vaults.FakeBatchChangeShareVisibility
@@ -532,6 +536,12 @@ abstract class FakesDataModule {
 
     @Binds
     abstract fun bindObserveFolders(impl: FakeObserveFolders): ObserveFolders
+
+    @Binds
+    abstract fun bindDeleteFoldersLocally(impl: FakeDeleteFoldersLocally): DeleteFoldersLocally
+
+    @Binds
+    abstract fun bindRefreshFolders(impl: FakeRefreshFolders): RefreshFolders
 
     @Binds
     abstract fun bindObserveFolderItemCounts(impl: FakeObserveFolderItemCounts): ObserveFolderItemCounts

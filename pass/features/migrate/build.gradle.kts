@@ -41,6 +41,7 @@ dependencies {
     kspDebug(libs.showkaseProcessor)
 
     implementation(projects.pass.common.api)
+    implementation(projects.pass.commonPresentation.api)
     implementation(projects.pass.commonUi.api)
     implementation(projects.pass.commonUiModels.api)
     implementation(projects.pass.composeComponents.impl)

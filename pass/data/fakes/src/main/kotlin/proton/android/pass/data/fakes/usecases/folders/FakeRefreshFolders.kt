@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 Proton AG
+ * Copyright (c) 2026 Proton AG
  * This file is part of Proton AG and Proton Pass.
  *
  * Proton Pass is free software: you can redistribute it and/or modify
@@ -16,10 +16,25 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.data.api.usecases
+package proton.android.pass.data.fakes.usecases.folders
 
 import me.proton.core.domain.entity.UserId
+import proton.android.pass.data.api.usecases.folders.RefreshFolders
+import proton.android.pass.domain.ShareId
+import javax.inject.Inject
+import javax.inject.Singleton
 
-interface SyncUserEvents {
-    suspend operator fun invoke(userId: UserId, forceSync: Boolean = false)
+@Singleton
+class FakeRefreshFolders @Inject constructor() : RefreshFolders {
+    data class Invocation(val userId: UserId, val shareId: ShareId)
+
+    private val _invocations = mutableListOf<Invocation>()
+    val invocations: List<Invocation> get() = _invocations
+
+    var result: Result<Unit> = Result.success(Unit)
+
+    override suspend fun invoke(userId: UserId, shareId: ShareId) {
+        _invocations += Invocation(userId, shareId)
+        result.getOrThrow()
+    }
 }

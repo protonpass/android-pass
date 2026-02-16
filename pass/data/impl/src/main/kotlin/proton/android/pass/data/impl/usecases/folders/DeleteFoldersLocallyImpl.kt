@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 Proton AG
+ * Copyright (c) 2026 Proton AG
  * This file is part of Proton AG and Proton Pass.
  *
  * Proton Pass is free software: you can redistribute it and/or modify
@@ -16,10 +16,23 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.data.api.usecases
+package proton.android.pass.data.impl.usecases.folders
 
 import me.proton.core.domain.entity.UserId
+import proton.android.pass.data.api.repositories.FolderRepository
+import proton.android.pass.data.api.usecases.folders.DeleteFoldersLocally
+import proton.android.pass.domain.FolderId
+import proton.android.pass.domain.ShareId
+import javax.inject.Inject
 
-interface SyncUserEvents {
-    suspend operator fun invoke(userId: UserId, forceSync: Boolean = false)
+class DeleteFoldersLocallyImpl @Inject constructor(
+    private val folderRepository: FolderRepository
+) : DeleteFoldersLocally {
+    override suspend fun invoke(
+        userId: UserId,
+        shareId: ShareId,
+        folderIds: List<FolderId>
+    ) {
+        folderRepository.deleteFoldersLocally(userId, shareId, folderIds)
+    }
 }

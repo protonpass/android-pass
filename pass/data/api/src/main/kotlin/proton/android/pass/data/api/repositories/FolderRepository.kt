@@ -25,12 +25,9 @@ import proton.android.pass.domain.FolderId
 import proton.android.pass.domain.ShareId
 
 interface FolderRepository {
-    fun observeFolders(
-        userId: UserId,
-        shareId: ShareId,
-        sinceToken: String? = null,
-        pageSize: Int? = null
-    ): Flow<List<Folder>>
+    fun observeFolders(userId: UserId, shareId: ShareId): Flow<List<Folder>>
+
+    suspend fun refreshFolders(userId: UserId, shareId: ShareId)
 
     fun observeFolder(
         userId: UserId,
@@ -68,6 +65,12 @@ interface FolderRepository {
     ): Folder
 
     suspend fun deleteFolders(
+        userId: UserId,
+        shareId: ShareId,
+        folderIds: List<FolderId>
+    )
+
+    suspend fun deleteFoldersLocally(
         userId: UserId,
         shareId: ShareId,
         folderIds: List<FolderId>

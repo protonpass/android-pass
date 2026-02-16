@@ -80,6 +80,8 @@ import proton.android.pass.data.api.usecases.ObserveCurrentUserSettings
 import proton.android.pass.data.api.usecases.ObserveEncryptedItems
 import proton.android.pass.data.api.usecases.folders.ObserveFolderItemCounts
 import proton.android.pass.data.api.usecases.folders.ObserveFolders
+import proton.android.pass.data.api.usecases.folders.DeleteFoldersLocally
+import proton.android.pass.data.api.usecases.folders.RefreshFolders
 import proton.android.pass.data.api.usecases.ObserveGlobalMonitorState
 import proton.android.pass.data.api.usecases.ObserveGroupMembersByGroup
 import proton.android.pass.data.api.usecases.ObserveInviteRecommendations
@@ -325,6 +327,8 @@ import proton.android.pass.data.impl.usecases.ObserveDefaultVaultImpl
 import proton.android.pass.data.impl.usecases.ObserveEncryptedItemsImpl
 import proton.android.pass.data.impl.usecases.folders.ObserveFolderItemCountsImpl
 import proton.android.pass.data.impl.usecases.folders.ObserveFoldersImpl
+import proton.android.pass.data.impl.usecases.folders.DeleteFoldersLocallyImpl
+import proton.android.pass.data.impl.usecases.folders.RefreshFoldersImpl
 import proton.android.pass.data.impl.usecases.ObserveGlobalMonitorStateImpl
 import proton.android.pass.data.impl.usecases.ObserveGroupMembersByGroupImpl
 import proton.android.pass.data.impl.usecases.ObserveInviteRecommendationsImpl
@@ -580,6 +584,12 @@ abstract class DataUseCaseModule {
 
     @Binds
     abstract fun bindObserveFolders(impl: ObserveFoldersImpl): ObserveFolders
+
+    @Binds
+    abstract fun bindDeleteFoldersLocally(impl: DeleteFoldersLocallyImpl): DeleteFoldersLocally
+
+    @Binds
+    abstract fun bindRefreshFolders(impl: RefreshFoldersImpl): RefreshFolders
 
     @Binds
     abstract fun bindRefreshContent(impl: RefreshContentImpl): RefreshContent

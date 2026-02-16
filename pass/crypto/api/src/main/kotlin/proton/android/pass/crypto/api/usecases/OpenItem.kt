@@ -61,14 +61,7 @@ interface OpenItem {
         response: EncryptedItemRevision,
         share: Share,
         shareKeys: List<ShareKey>,
-        encryptionContext: EncryptionContext
-    ): OpenItemOutput
-
-    fun open(
-        response: EncryptedItemRevision,
-        share: Share,
-        shareKeys: List<ShareKey>,
-        folderKey: FolderKey?,
+        folderKey: FolderKey? = null,
         encryptionContext: EncryptionContext
     ): OpenItemOutput
 }

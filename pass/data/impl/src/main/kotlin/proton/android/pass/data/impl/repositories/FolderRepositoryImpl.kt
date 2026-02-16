@@ -18,14 +18,11 @@
 
 package proton.android.pass.data.impl.repositories
 
-import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.currentCoroutineContext
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.isActive
-import kotlinx.coroutines.launch
 import me.proton.core.crypto.common.keystore.EncryptedByteArray
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.safeRunCatching
@@ -339,61 +336,52 @@ class FolderRepositoryImpl @Inject constructor(
         throw IllegalStateException("No ShareKey found for shareId=${shareId.id}, keyRotation=$keyRotation")
     }
 
-    override fun observeFolders(
-        userId: UserId,
-        shareId: ShareId,
-        sinceToken: String?,
-        pageSize: Int?
-    ): Flow<List<Folder>> = localFolderDataSource.observeFolders(
-        userId = userId,
-        shareId = shareId,
-        parentFolderId = null
-    ).map { folderEntities ->
-        encryptionContextProvider.withEncryptionContextSuspendable {
-            folderEntities.map { it.toDomain(this) }
-        }
-    }.onStart {
-        coroutineScope {
-            launch {
-                safeRunCatching {
-                    var currentSinceToken: String? = sinceToken
-                    val allFolders = mutableListOf<FolderApiModel>()
-                    val effectivePageSize = pageSize ?: PAGE_SIZE
-
-                    while (currentCoroutineContext().isActive) {
-                        val foldersPage = remoteFolderDataSource.retrieveFolders(
-                            userId = userId,
-                            shareId = shareId,
-                            sinceToken = currentSinceToken,
-                            pageSize = effectivePageSize
-                        )
-
-                        if (foldersPage.folders.isEmpty()) {
-                            break
-                        }
-
-                        allFolders.addAll(foldersPage.folders)
-                        if (foldersPage.lastToken == null || foldersPage.folders.size < effectivePageSize) {
-                            break
-                        }
-
-                        currentSinceToken = foldersPage.lastToken
-                    }
-
-                    PassLogger.i(
-                        TAG,
-                        "Total folders fetched: ${allFolders.size} for shareId=${shareId.id}"
-                    )
-                    if (allFolders.isNotEmpty()) {
-                        decryptAndStoreFolders(userId, shareId, allFolders)
-                    }
-                }.onFailure { error ->
-                    PassLogger.w(TAG, "Background folder sync failed for shareId=${shareId.id}")
-                    PassLogger.w(TAG, error)
-                }
+    override fun observeFolders(userId: UserId, shareId: ShareId): Flow<List<Folder>> =
+        localFolderDataSource.observeFolders(
+            userId = userId,
+            shareId = shareId,
+            parentFolderId = null
+        ).map { folderEntities ->
+            encryptionContextProvider.withEncryptionContextSuspendable {
+                folderEntities.map { it.toDomain(this) }
             }
         }
-    }
+
+    override suspend fun refreshFolders(userId: UserId, shareId: ShareId) = safeRunCatching {
+        var currentSinceToken: String? = null
+        val allFolders = mutableListOf<FolderApiModel>()
+
+        while (currentCoroutineContext().isActive) {
+            val foldersPage = remoteFolderDataSource.retrieveFolders(
+                userId = userId,
+                shareId = shareId,
+                sinceToken = currentSinceToken,
+                pageSize = PAGE_SIZE
+            )
+
+            if (foldersPage.folders.isEmpty()) {
+                break
+            }
+
+            allFolders.addAll(foldersPage.folders)
+            if (foldersPage.lastToken == null || foldersPage.folders.size < PAGE_SIZE) {
+                break
+            }
+
+            currentSinceToken = foldersPage.lastToken
+        }
+
+        PassLogger.i(
+            TAG,
+            "Total folders fetched: ${allFolders.size} for shareId=${shareId.id}"
+        )
+        if (allFolders.isNotEmpty()) {
+            decryptAndStoreFolders(userId, shareId, allFolders)
+        }
+    }.onFailure { error ->
+        PassLogger.w(TAG, "Folder sync failed for shareId=${shareId.id}")
+        PassLogger.w(TAG, error)
+    }.getOrThrow()
 
     override fun observeFolder(
         userId: UserId,
@@ -516,6 +504,23 @@ class FolderRepositoryImpl @Inject constructor(
         }
     }.onFailure { e ->
         PassLogger.w(TAG, "Failed to delete folders from shareId=${shareId.id}")
+        PassLogger.w(TAG, e)
+    }.getOrThrow()
+
+    override suspend fun deleteFoldersLocally(
+        userId: UserId,
+        shareId: ShareId,
+        folderIds: List<FolderId>
+    ) = safeRunCatching {
+        if (folderIds.isEmpty()) return@safeRunCatching
+        val deleted = localFolderDataSource.deleteFolders(userId, shareId, folderIds)
+        if (!deleted) {
+            PassLogger.w(TAG, "Failed to delete folders locally: ${folderIds.map { it.id }}")
+        } else {
+            PassLogger.i(TAG, "Successfully deleted ${folderIds.size} folders locally")
+        }
+    }.onFailure { e ->
+        PassLogger.w(TAG, "Failed to delete folders locally from shareId=${shareId.id}")
         PassLogger.w(TAG, e)
     }.getOrThrow()
 

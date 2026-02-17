@@ -54,7 +54,9 @@ open class FetchItemsWorker @AssistedInject constructor(
         PassLogger.i(TAG, "Starting $TAG attempt $runAttemptCount")
 
         val userId = inputData.getString(ARG_USER_ID)?.let(::UserId) ?: return Result.failure()
-        val shareIds = inputData.getStringArray(ARG_SHARE_IDS)?.map(::ShareId) ?: emptyList()
+        val shareIds = inputData.getStringArray(ARG_SHARE_IDS)?.map(::ShareId)
+            ?.toSet()
+            ?: emptySet()
         val fetchSource = inputData.getString(ARG_FETCH_SOURCE)?.let(FetchSource::valueOf)
         val hasInactiveShares = inputData.getBoolean(ARG_INACTIVE_SHARES, false)
         val hasInvalidGroupShares = inputData.getBoolean(ARG_INVALID_GROUP_SHARES, false)
@@ -127,7 +129,7 @@ open class FetchItemsWorker @AssistedInject constructor(
         fun getRequestFor(
             source: FetchSource,
             userId: UserId,
-            shareIds: List<ShareId>,
+            shareIds: Set<ShareId>,
             hasInactiveShares: Boolean,
             hasInvalidGroupShares: Boolean
         ): OneTimeWorkRequest {

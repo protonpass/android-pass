@@ -41,6 +41,16 @@ plugins {
 
 val isCI = System.getenv().containsKey("CI")
 
+// Pass Common AAR replacement setup
+val passCommonAarPath = project.findProperty("passCommonAarPath")?.toString()
+    ?: System.getenv("PASS_COMMON_AAR_PATH")
+    ?: "libs/lib-release.aar"
+val passCommonAar = File(rootProject.projectDir, passCommonAarPath)
+
+val versionCatalog = extensions.findByType<VersionCatalogsExtension>()?.named("libs")
+val passCommon = versionCatalog?.findLibrary("pass-common")?.get()?.get()
+val jna = versionCatalog?.findLibrary("jna")?.get()?.get()
+
 subprojects {
     apply {
         plugin("com.adarshr.test-logger")
@@ -52,6 +62,32 @@ subprojects {
 
     configure<com.adarshr.gradle.testlogger.TestLoggerExtension> {
         theme = com.adarshr.gradle.testlogger.theme.ThemeType.MOCHA_PARALLEL
+    }
+
+    // Pass Common AAR replacement
+    afterEvaluate {
+        configurations.configureEach {
+            withDependencies {
+                if (passCommon == null || jna == null) return@withDependencies
+
+                val wasPassCommonRemoved = removeIf { dependency ->
+                    dependency.group == passCommon.module.group &&
+                    dependency.name == passCommon.module.name
+                }
+
+                if (!wasPassCommonRemoved) return@withDependencies
+
+                if (passCommonAar.exists()) {
+                    // Use local AAR with JNA dependency
+                    add(project.dependencies.create(files(passCommonAar)))
+                    add(project.dependencies.create("$jna@aar"))
+                    logger.quiet("✅  Using local AAR: ${passCommonAar.name} (${passCommon.module})")
+                } else {
+                    // Fallback to remote dependency (default behavior, silent)
+                    add(passCommon)
+                }
+            }
+        }
     }
 
     // Paparazzi workaround

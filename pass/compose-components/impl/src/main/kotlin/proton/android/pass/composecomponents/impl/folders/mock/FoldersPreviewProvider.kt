@@ -32,7 +32,8 @@ class FoldersPreviewProvider : PreviewParameterProvider<FoldersParameter> {
         get() = sequenceOf(
             withEmptyFolders(),
             withSingleFolder(),
-            withNestedFolders()
+            withNestedFolders(),
+            withNestedFoldersExpanded()
         )
 
     companion object {
@@ -72,6 +73,36 @@ class FoldersPreviewProvider : PreviewParameterProvider<FoldersParameter> {
             return FoldersParameter(folders = level0Folders)
         }
 
+        private fun withNestedFoldersExpanded(): FoldersParameter {
+            val level3Folders = listOf(
+                createFolder("level3-0", "level3-0 supppperrrrr looooonnnnnng"),
+                createFolder("level3-1", "level3-1 supppperrrrr looooonnnnnng")
+            )
+            val level2Folders = listOf(
+                createFolder("level2-0", "level2-0", level3Folders),
+                createFolder("level2-1", "level2-1")
+            )
+            val level1Folders = listOf(
+                createFolder("level1-0", "My sub folder 1"),
+                createFolder("level1-1", "My sub folder 2", level2Folders),
+                createFolder("level1-2", "My sub folder 3")
+            )
+            val level0Folders = listOf(
+                createFolder("level0-0", "My main 1", level1Folders),
+                createFolder("level0-1", "My main 2"),
+                createFolder("level0-2", "My main 3")
+            )
+            val expandedState = mapOf(
+                "level0-0" to true,
+                "level1-1" to true,
+                "level2-0" to true
+            )
+            return FoldersParameter(
+                folders = level0Folders,
+                expandedState = expandedState
+            )
+        }
+
         private fun createFolder(
             id: String,
             name: String,
@@ -85,5 +116,6 @@ class FoldersPreviewProvider : PreviewParameterProvider<FoldersParameter> {
 }
 
 data class FoldersParameter(
-    val folders: List<FolderUiModel>
+    val folders: List<FolderUiModel>,
+    val expandedState: Map<String, Boolean> = emptyMap()
 )

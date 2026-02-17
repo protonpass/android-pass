@@ -20,6 +20,8 @@ package proton.android.pass.features.migrate.selectvault
 
 import androidx.compose.runtime.Stable
 import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.PersistentList
+import kotlinx.collections.immutable.persistentListOf
 import proton.android.pass.common.api.Option
 import proton.android.pass.commonuimodels.api.FolderUiModel
 import proton.android.pass.domain.ShareId
@@ -65,7 +67,7 @@ sealed interface VaultStatus {
 data class VaultEnabledPair(
     val vaultWithItemCount: VaultWithItemCount,
     val status: VaultStatus,
-    val folderTree: List<FolderUiModel> = emptyList()
+    val folderTree: PersistentList<FolderUiModel> = persistentListOf()
 )
 
 sealed class MigrateSelectVaultUiState {

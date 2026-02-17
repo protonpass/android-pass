@@ -18,12 +18,15 @@
 
 package proton.android.pass.commonpresentation.api.folders
 
+import kotlinx.collections.immutable.PersistentList
+import kotlinx.collections.immutable.persistentListOf
+import kotlinx.collections.immutable.toPersistentList
 import proton.android.pass.commonuimodels.api.FolderUiModel
 import proton.android.pass.domain.Folder
 
 object FolderTreeBuilder {
-    fun build(folders: List<Folder>): List<FolderUiModel> {
-        if (folders.isEmpty()) return emptyList()
+    fun build(folders: List<Folder>): PersistentList<FolderUiModel> {
+        if (folders.isEmpty()) return persistentListOf()
 
         val folderIds = folders.mapTo(mutableSetOf()) { it.folderId.id }
         val childrenMap = folders.groupBy { it.parentFolderId?.id }
@@ -43,7 +46,7 @@ object FolderTreeBuilder {
                 globallyVisited = globallyVisited,
                 lineage = lineage
             )
-        }
+        }.toPersistentList()
     }
 
     private fun buildSubtree(
@@ -68,6 +71,7 @@ object FolderTreeBuilder {
                     lineage = lineage
                 )
             }
+            .toPersistentList()
         lineage.remove(folderId)
 
         return FolderUiModel(

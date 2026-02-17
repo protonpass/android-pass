@@ -21,6 +21,7 @@ package proton.android.pass.features.home.drawer.presentation
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.collections.immutable.PersistentList
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -78,7 +79,7 @@ class HomeDrawerViewModel @Inject constructor(
 
     private data class VaultsWithFolders(
         val vaultShares: List<VaultWithItemCount>,
-        val vaultFolders: Map<ShareId, List<FolderUiModel>>
+        val vaultFolders: Map<ShareId, PersistentList<FolderUiModel>>
     )
 
     private val foldersEnabledFlow: Flow<Boolean> = featureFlagsPreferencesRepository[FeatureFlag.PASS_FOLDERS]
@@ -104,7 +105,7 @@ class HomeDrawerViewModel @Inject constructor(
         ::FolderFlowInput
     )
 
-    private val vaultFoldersFlow: Flow<Map<ShareId, List<FolderUiModel>>> =
+    private val vaultFoldersFlow: Flow<Map<ShareId, PersistentList<FolderUiModel>>> =
         folderFlowInput.flatMapLatest(::observeVaultFolders)
 
     private val vaultsWithFoldersFlow: Flow<VaultsWithFolders> = combine(
@@ -176,7 +177,7 @@ class HomeDrawerViewModel @Inject constructor(
         foldersEnabled = isFoldersEnabled
     )
 
-    private fun observeVaultFolders(input: FolderFlowInput): Flow<Map<ShareId, List<FolderUiModel>>> {
+    private fun observeVaultFolders(input: FolderFlowInput): Flow<Map<ShareId, PersistentList<FolderUiModel>>> {
         if (!input.isFoldersEnabled || input.shareKeys.isEmpty()) {
             return flowOf(emptyMap())
         }
@@ -185,7 +186,7 @@ class HomeDrawerViewModel @Inject constructor(
         return combine(folderFlows) { shareFolderPairs -> shareFolderPairs.toMap() }
     }
 
-    private fun observeFolderTreeForShare(shareKey: VaultShareKey): Flow<Pair<ShareId, List<FolderUiModel>>> =
+    private fun observeFolderTreeForShare(shareKey: VaultShareKey): Flow<Pair<ShareId, PersistentList<FolderUiModel>>> =
         observeFolders(shareKey.userId, shareKey.shareId).map { folderList ->
             shareKey.shareId to FolderTreeBuilder.build(folderList)
         }

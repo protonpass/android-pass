@@ -36,7 +36,7 @@ class FolderKeyRepositoryImpl @Inject constructor(
         shareId: ShareId,
         folderId: FolderId
     ): FolderKey? {
-        val entity = localFolderKeyDataSource.getByFolderId(shareId, folderId) ?: return null
+        val entity = localFolderKeyDataSource.getByFolderId(userId, shareId, folderId) ?: return null
         val responseKey = localFolderDataSource.getById(userId, shareId, folderId)
             ?.folderKey
             ?: return null
@@ -54,7 +54,7 @@ class FolderKeyRepositoryImpl @Inject constructor(
     ): Map<FolderId, FolderKey> {
         if (folderIds.isEmpty()) return emptyMap()
 
-        val keyEntities = localFolderKeyDataSource.getByFolderIds(shareId, folderIds)
+        val keyEntities = localFolderKeyDataSource.getByFolderIds(userId, shareId, folderIds)
             .associateBy { it.folderId }
         val folderEntities = localFolderDataSource.getByIds(userId, shareId, folderIds)
             .associateBy { it.id }

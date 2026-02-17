@@ -65,6 +65,8 @@ gradlePlugin-sentry = "4.14.1"
 gradlePlugin-test-logger = "3.2.0"
 # Jacoco
 jacoco = "0.8.8"
+# JNA
+jna = "5.17.0"
 # JakeWharton
 timber = "5.0.1"
 # Kotlin
@@ -285,6 +287,9 @@ google-inAppUpdate = { module = "com.google.android.play:app-update-ktx", versio
 
 # JakeWharton
 timber = { module = "com.jakewharton.timber:timber", version.ref = "timber" }
+
+# JNA
+jna = { module = "net.java.dev.jna:jna", version.ref = "jna" }
 
 # Kotlin
 kotlin-reflect = { module = "org.jetbrains.kotlin:kotlin-reflect", version.ref = "kotlin" }

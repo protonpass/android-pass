@@ -36,7 +36,11 @@ abstract class FolderKeysDao : BaseDao<FolderKeyEntity>() {
         LIMIT 1
         """
     )
-    abstract suspend fun getByFolderId(userId: String, shareId: String, folderId: String): FolderKeyEntity?
+    abstract suspend fun getByFolderId(
+        userId: String,
+        shareId: String,
+        folderId: String
+    ): FolderKeyEntity?
 
     @Query(
         """
@@ -64,7 +68,11 @@ abstract class FolderKeysDao : BaseDao<FolderKeyEntity>() {
           AND ${FolderKeyEntity.Columns.FOLDER_ID} IN (:folderIds)
         """
     )
-    abstract suspend fun getByFolderIds(userId: String, shareId: String, folderIds: List<String>): List<FolderKeyEntity>
+    abstract suspend fun getByFolderIds(
+        userId: String,
+        shareId: String,
+        folderIds: List<String>
+    ): List<FolderKeyEntity>
 
     @Query(
         """
@@ -74,7 +82,11 @@ abstract class FolderKeysDao : BaseDao<FolderKeyEntity>() {
           AND ${FolderKeyEntity.Columns.FOLDER_ID} = :folderId
         """
     )
-    abstract suspend fun deleteByFolderId(userId: String, shareId: String, folderId: String): Int
+    abstract suspend fun deleteByFolderId(
+        userId: String,
+        shareId: String,
+        folderId: String
+    ): Int
 
     @Query(
         """
@@ -84,7 +96,11 @@ abstract class FolderKeysDao : BaseDao<FolderKeyEntity>() {
           AND ${FolderKeyEntity.Columns.FOLDER_ID} IN (:folderIds)
         """
     )
-    abstract suspend fun deleteByFolderIds(userId: String, shareId: String, folderIds: List<String>): Int
+    abstract suspend fun deleteByFolderIds(
+        userId: String,
+        shareId: String,
+        folderIds: List<String>
+    ): Int
 
     @Query("DELETE FROM ${FolderKeyEntity.TABLE}")
     abstract suspend fun deleteAll(): Int

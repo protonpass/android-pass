@@ -31,6 +31,7 @@ import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.mapLatest
+import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import me.proton.core.domain.entity.UserId
@@ -187,7 +188,11 @@ class HomeDrawerViewModel @Inject constructor(
     }
 
     private fun observeFolderTreeForShare(shareKey: VaultShareKey): Flow<Pair<ShareId, PersistentList<FolderUiModel>>> =
-        observeFolders(shareKey.userId, shareKey.shareId).map { folderList ->
-            shareKey.shareId to FolderTreeBuilder.build(folderList)
-        }
+        observeFolders(shareKey.userId, shareKey.shareId)
+            .map { folderList ->
+                shareKey.shareId to FolderTreeBuilder.build(folderList)
+            }
+            .onStart {
+                emit(shareKey.shareId to FolderTreeBuilder.build(emptyList()))
+            }
 }

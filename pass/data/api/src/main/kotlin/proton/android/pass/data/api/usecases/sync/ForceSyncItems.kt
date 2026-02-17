@@ -29,7 +29,7 @@ enum class ForceSyncResult {
 interface ForceSyncItems {
     suspend operator fun invoke(
         userId: UserId,
-        shareIds: List<ShareId>,
+        shareIds: Set<ShareId>,
         isBackground: Boolean,
         hasInactiveShares: Boolean,
         hasInvalidGroupShares: Boolean

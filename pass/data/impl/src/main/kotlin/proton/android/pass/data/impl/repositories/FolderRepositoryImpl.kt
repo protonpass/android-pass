@@ -105,7 +105,7 @@ class FolderRepositoryImpl @Inject constructor(
             }
         } else {
             val parentFolderKey =
-                localFolderKeyDataSource.getByFolderId(shareId, FolderId(apiModel.parentFolderId))
+                localFolderKeyDataSource.getByFolderId(userId, shareId, FolderId(apiModel.parentFolderId))
                     ?: throw IllegalStateException(
                         "Parent folder key not found for parentId=${apiModel.parentFolderId}"
                     )

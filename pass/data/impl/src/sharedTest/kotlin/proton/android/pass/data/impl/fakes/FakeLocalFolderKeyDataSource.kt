@@ -40,11 +40,11 @@ class FakeLocalFolderKeyDataSource : LocalFolderKeyDataSource {
         entities.forEach { upsertKey(it) }
     }
 
-    override suspend fun getByFolderId(shareId: ShareId, folderId: FolderId): FolderKeyEntity? =
-        keyByShareAndFolderId[shareId.id to folderId.id]
+    override suspend fun getByFolderId(userId: UserId, shareId: ShareId, folderId: FolderId): FolderKeyEntity? =
+        keyByShareAndFolderId[shareId.id to folderId.id]?.takeIf { it.userId == userId.id }
 
-    override suspend fun getByFolderIds(shareId: ShareId, folderIds: List<FolderId>): List<FolderKeyEntity> =
-        folderIds.mapNotNull { keyByShareAndFolderId[shareId.id to it.id] }
+    override suspend fun getByFolderIds(userId: UserId, shareId: ShareId, folderIds: List<FolderId>): List<FolderKeyEntity> =
+        folderIds.mapNotNull { keyByShareAndFolderId[shareId.id to it.id]?.takeIf { entity -> entity.userId == userId.id } }
 
     override suspend fun getAllByShareId(userId: UserId, shareId: ShareId): List<FolderKeyEntity> =
         keyByShareAndFolderId.values.filter { it.userId == userId.id && it.shareId == shareId.id }
@@ -55,11 +55,13 @@ class FakeLocalFolderKeyDataSource : LocalFolderKeyDataSource {
                 .filter { it.userId == userId.id && it.shareId == shareId.id }
         )
 
-    override suspend fun deleteByFolderId(shareId: ShareId, folderId: FolderId) {
-        keyByShareAndFolderId.remove(shareId.id to folderId.id)
+    override suspend fun deleteByFolderId(userId: UserId, shareId: ShareId, folderId: FolderId) {
+        keyByShareAndFolderId[shareId.id to folderId.id]?.takeIf { it.userId == userId.id }?.let {
+            keyByShareAndFolderId.remove(shareId.id to folderId.id)
+        }
     }
 
-    override suspend fun deleteByFolderIds(shareId: ShareId, folderIds: List<FolderId>) {
-        folderIds.forEach { deleteByFolderId(shareId, it) }
+    override suspend fun deleteByFolderIds(userId: UserId, shareId: ShareId, folderIds: List<FolderId>) {
+        folderIds.forEach { deleteByFolderId(userId, shareId, it) }
     }
 }

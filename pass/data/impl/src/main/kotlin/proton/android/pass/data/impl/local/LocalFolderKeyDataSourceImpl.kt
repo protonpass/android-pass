@@ -35,23 +35,23 @@ class LocalFolderKeyDataSourceImpl @Inject constructor(
     override suspend fun upsertKeys(entities: List<FolderKeyEntity>) =
         database.folderKeysDao().insertOrUpdate(*entities.toTypedArray())
 
-    override suspend fun getByFolderId(shareId: ShareId, folderId: FolderId): FolderKeyEntity? =
-        database.folderKeysDao().getByFolderId(folderId.id, shareId.id)
+    override suspend fun getByFolderId(userId: UserId, shareId: ShareId, folderId: FolderId): FolderKeyEntity? =
+        database.folderKeysDao().getByFolderId(userId.id, shareId.id, folderId.id)
 
-    override suspend fun getByFolderIds(shareId: ShareId, folderIds: List<FolderId>): List<FolderKeyEntity> =
-        database.folderKeysDao().getByFolderIds(folderIds.map { it.id }, shareId.id)
+    override suspend fun getByFolderIds(userId: UserId, shareId: ShareId, folderIds: List<FolderId>): List<FolderKeyEntity> =
+        database.folderKeysDao().getByFolderIds(userId.id, shareId.id, folderIds.map { it.id })
 
     override suspend fun getAllByShareId(userId: UserId, shareId: ShareId): List<FolderKeyEntity> =
-        database.folderKeysDao().getAllByShareId(shareId.id, userId.id)
+        database.folderKeysDao().getAllByShareId(userId.id, shareId.id)
 
     override fun observeByShareId(userId: UserId, shareId: ShareId): Flow<List<FolderKeyEntity>> =
-        database.folderKeysDao().observeByShareId(shareId.id, userId.id)
+        database.folderKeysDao().observeByShareId(userId.id, shareId.id)
 
-    override suspend fun deleteByFolderId(shareId: ShareId, folderId: FolderId) {
-        database.folderKeysDao().deleteByFolderId(folderId.id, shareId.id)
+    override suspend fun deleteByFolderId(userId: UserId, shareId: ShareId, folderId: FolderId) {
+        database.folderKeysDao().deleteByFolderId(userId.id, shareId.id, folderId.id)
     }
 
-    override suspend fun deleteByFolderIds(shareId: ShareId, folderIds: List<FolderId>) {
-        database.folderKeysDao().deleteByFolderIds(folderIds.map { it.id }, shareId.id)
+    override suspend fun deleteByFolderIds(userId: UserId, shareId: ShareId, folderIds: List<FolderId>) {
+        database.folderKeysDao().deleteByFolderIds(userId.id, shareId.id, folderIds.map { it.id })
     }
 }

@@ -30,57 +30,61 @@ abstract class FolderKeysDao : BaseDao<FolderKeyEntity>() {
     @Query(
         """
         SELECT * FROM ${FolderKeyEntity.TABLE}
-        WHERE ${FolderKeyEntity.Columns.FOLDER_ID} = :folderId
+        WHERE ${FolderKeyEntity.Columns.USER_ID} = :userId
           AND ${FolderKeyEntity.Columns.SHARE_ID} = :shareId
+          AND ${FolderKeyEntity.Columns.FOLDER_ID} = :folderId
         LIMIT 1
         """
     )
-    abstract suspend fun getByFolderId(folderId: String, shareId: String): FolderKeyEntity?
+    abstract suspend fun getByFolderId(userId: String, shareId: String, folderId: String): FolderKeyEntity?
 
     @Query(
         """
         SELECT * FROM ${FolderKeyEntity.TABLE}
-        WHERE ${FolderKeyEntity.Columns.SHARE_ID} = :shareId
-          AND ${FolderKeyEntity.Columns.USER_ID} = :userId
-        """
-    )
-    abstract fun observeByShareId(shareId: String, userId: String): Flow<List<FolderKeyEntity>>
-
-    @Query(
-        """
-        SELECT * FROM ${FolderKeyEntity.TABLE}
-        WHERE ${FolderKeyEntity.Columns.SHARE_ID} = :shareId
-          AND ${FolderKeyEntity.Columns.USER_ID} = :userId
-        """
-    )
-    abstract suspend fun getAllByShareId(shareId: String, userId: String): List<FolderKeyEntity>
-
-    @Query(
-        """
-        SELECT * FROM ${FolderKeyEntity.TABLE}
-        WHERE ${FolderKeyEntity.Columns.FOLDER_ID} IN (:folderIds)
+        WHERE ${FolderKeyEntity.Columns.USER_ID} = :userId
           AND ${FolderKeyEntity.Columns.SHARE_ID} = :shareId
         """
     )
-    abstract suspend fun getByFolderIds(folderIds: List<String>, shareId: String): List<FolderKeyEntity>
+    abstract fun observeByShareId(userId: String, shareId: String): Flow<List<FolderKeyEntity>>
+
+    @Query(
+        """
+        SELECT * FROM ${FolderKeyEntity.TABLE}
+        WHERE ${FolderKeyEntity.Columns.USER_ID} = :userId
+          AND ${FolderKeyEntity.Columns.SHARE_ID} = :shareId
+        """
+    )
+    abstract suspend fun getAllByShareId(userId: String, shareId: String): List<FolderKeyEntity>
+
+    @Query(
+        """
+        SELECT * FROM ${FolderKeyEntity.TABLE}
+        WHERE ${FolderKeyEntity.Columns.USER_ID} = :userId
+          AND ${FolderKeyEntity.Columns.SHARE_ID} = :shareId
+          AND ${FolderKeyEntity.Columns.FOLDER_ID} IN (:folderIds)
+        """
+    )
+    abstract suspend fun getByFolderIds(userId: String, shareId: String, folderIds: List<String>): List<FolderKeyEntity>
 
     @Query(
         """
         DELETE FROM ${FolderKeyEntity.TABLE}
-        WHERE ${FolderKeyEntity.Columns.FOLDER_ID} = :folderId
+        WHERE ${FolderKeyEntity.Columns.USER_ID} = :userId
           AND ${FolderKeyEntity.Columns.SHARE_ID} = :shareId
+          AND ${FolderKeyEntity.Columns.FOLDER_ID} = :folderId
         """
     )
-    abstract suspend fun deleteByFolderId(folderId: String, shareId: String): Int
+    abstract suspend fun deleteByFolderId(userId: String, shareId: String, folderId: String): Int
 
     @Query(
         """
         DELETE FROM ${FolderKeyEntity.TABLE}
-        WHERE ${FolderKeyEntity.Columns.FOLDER_ID} IN (:folderIds)
+        WHERE ${FolderKeyEntity.Columns.USER_ID} = :userId
           AND ${FolderKeyEntity.Columns.SHARE_ID} = :shareId
+          AND ${FolderKeyEntity.Columns.FOLDER_ID} IN (:folderIds)
         """
     )
-    abstract suspend fun deleteByFolderIds(folderIds: List<String>, shareId: String): Int
+    abstract suspend fun deleteByFolderIds(userId: String, shareId: String, folderIds: List<String>): Int
 
     @Query("DELETE FROM ${FolderKeyEntity.TABLE}")
     abstract suspend fun deleteAll(): Int

@@ -62,7 +62,7 @@ internal class FolderSyncDecryptor(
         logDuplicateFolderIds(shareId, deduplicated.duplicateFolderIds)
 
         val childrenMap = deduplicated.uniqueFolders.groupBy { it.parentFolderId }
-        val resolvedKeys = resolveAllDecryptionKeys(shareId, deduplicated.uniqueFolders, getShareKeyForRotation)
+        val resolvedKeys = resolveAllDecryptionKeys(userId, shareId, deduplicated.uniqueFolders, getShareKeyForRotation)
         try {
             if (resolvedKeys.isEmpty()) {
                 PassLogger.w(TAG, "No decryption keys resolved for shareId=${shareId.id}, skipping folder sync")
@@ -84,12 +84,13 @@ internal class FolderSyncDecryptor(
     }
 
     private suspend fun resolveAllDecryptionKeys(
+        userId: UserId,
         shareId: ShareId,
         folders: List<FolderApiModel>,
         getShareKeyForRotation: suspend (Long) -> ShareKey
     ): FolderResolvedKeys {
         val rootKeys = resolveRootShareKeyByRotation(shareId, folders, getShareKeyForRotation)
-        val orphanKeys = resolveOrphanParentKeyByFolderId(shareId, folders)
+        val orphanKeys = resolveOrphanParentKeyByFolderId(userId, shareId, folders)
         return FolderResolvedKeys(rootShareKeyByRotation = rootKeys, orphanParentKeyByFolderId = orphanKeys)
     }
 
@@ -117,6 +118,7 @@ internal class FolderSyncDecryptor(
     }
 
     private suspend fun resolveOrphanParentKeyByFolderId(
+        userId: UserId,
         shareId: ShareId,
         folders: List<FolderApiModel>
     ): Map<String, EncryptionKey> {
@@ -129,7 +131,7 @@ internal class FolderSyncDecryptor(
         return encryptionContextProvider.withEncryptionContextSuspendable {
             orphanParentIds.mapNotNull { parentFolderId ->
                 safeRunCatching {
-                    val parentFolderKey = localFolderKeyDataSource.getByFolderId(shareId, FolderId(parentFolderId))
+                    val parentFolderKey = localFolderKeyDataSource.getByFolderId(userId, shareId, FolderId(parentFolderId))
                         ?: throw IllegalStateException("Parent folder key not found for parentId=$parentFolderId")
                     parentFolderId to EncryptionKey(decrypt(parentFolderKey.encryptedKey))
                 }.onFailure { error ->

@@ -136,10 +136,13 @@ class FolderTreeBuilderTest {
         val result = FolderTreeBuilder.build(listOf(root, orphanedChild))
 
         // Both should be roots since the child's parent doesn't exist
+        // Results are sorted alphabetically: "Orphaned Child" before "Root"
         assertThat(result).hasSize(2)
-        assertThat(result[0].id).isEqualTo(FolderId("root"))
+        assertThat(result[0].id).isEqualTo(FolderId("child"))
+        assertThat(result[0].name).isEqualTo("Orphaned Child")
         assertThat(result[0].folders).isEmpty()
-        assertThat(result[1].id).isEqualTo(FolderId("child"))
+        assertThat(result[1].id).isEqualTo(FolderId("root"))
+        assertThat(result[1].name).isEqualTo("Root")
         assertThat(result[1].folders).isEmpty()
     }
 
@@ -350,6 +353,188 @@ class FolderTreeBuilderTest {
 
         val orphanTree = result.first { it.id.id == "orphan" }
         assertThat(orphanTree.folders).isEmpty()
+    }
+
+    @Test
+    fun `build sorts root folders alphabetically by name`() {
+        val folderZ = FolderTestFactory.create(
+            folderId = FolderId("z"),
+            parentFolderId = null,
+            name = "Zebra"
+        )
+        val folderA = FolderTestFactory.create(
+            folderId = FolderId("a"),
+            parentFolderId = null,
+            name = "Apple"
+        )
+        val folderM = FolderTestFactory.create(
+            folderId = FolderId("m"),
+            parentFolderId = null,
+            name = "Mango"
+        )
+
+        val result = FolderTreeBuilder.build(listOf(folderZ, folderA, folderM))
+
+        assertThat(result).hasSize(3)
+        assertThat(result[0].name).isEqualTo("Apple")
+        assertThat(result[1].name).isEqualTo("Mango")
+        assertThat(result[2].name).isEqualTo("Zebra")
+    }
+
+    @Test
+    fun `build sorts child folders alphabetically by name`() {
+        val root = FolderTestFactory.create(
+            folderId = FolderId("root"),
+            parentFolderId = null,
+            name = "Root"
+        )
+        val childZ = FolderTestFactory.create(
+            folderId = FolderId("z"),
+            parentFolderId = FolderId("root"),
+            name = "Zebra"
+        )
+        val childA = FolderTestFactory.create(
+            folderId = FolderId("a"),
+            parentFolderId = FolderId("root"),
+            name = "Apple"
+        )
+        val childM = FolderTestFactory.create(
+            folderId = FolderId("m"),
+            parentFolderId = FolderId("root"),
+            name = "Mango"
+        )
+
+        val result = FolderTreeBuilder.build(listOf(root, childZ, childA, childM))
+
+        assertThat(result).hasSize(1)
+        assertThat(result[0].folders).hasSize(3)
+        assertThat(result[0].folders[0].name).isEqualTo("Apple")
+        assertThat(result[0].folders[1].name).isEqualTo("Mango")
+        assertThat(result[0].folders[2].name).isEqualTo("Zebra")
+    }
+
+    @Test
+    fun `build sorts folders case-insensitively`() {
+        val root = FolderTestFactory.create(
+            folderId = FolderId("root"),
+            parentFolderId = null,
+            name = "Root"
+        )
+        val childLower = FolderTestFactory.create(
+            folderId = FolderId("lower"),
+            parentFolderId = FolderId("root"),
+            name = "zebra"
+        )
+        val childUpper = FolderTestFactory.create(
+            folderId = FolderId("upper"),
+            parentFolderId = FolderId("root"),
+            name = "Apple"
+        )
+        val childMixed = FolderTestFactory.create(
+            folderId = FolderId("mixed"),
+            parentFolderId = FolderId("root"),
+            name = "Mango"
+        )
+
+        val result = FolderTreeBuilder.build(listOf(root, childLower, childUpper, childMixed))
+
+        assertThat(result).hasSize(1)
+        assertThat(result[0].folders).hasSize(3)
+        assertThat(result[0].folders[0].name).isEqualTo("Apple")
+        assertThat(result[0].folders[1].name).isEqualTo("Mango")
+        assertThat(result[0].folders[2].name).isEqualTo("zebra")
+    }
+
+    @Test
+    fun `build sorts folders at multiple levels`() {
+        val root = FolderTestFactory.create(
+            folderId = FolderId("root"),
+            parentFolderId = null,
+            name = "Root"
+        )
+        val childB = FolderTestFactory.create(
+            folderId = FolderId("b"),
+            parentFolderId = FolderId("root"),
+            name = "Bravo"
+        )
+        val childA = FolderTestFactory.create(
+            folderId = FolderId("a"),
+            parentFolderId = FolderId("root"),
+            name = "Alpha"
+        )
+        // Grandchildren under childB
+        val grandchildB2 = FolderTestFactory.create(
+            folderId = FolderId("b2"),
+            parentFolderId = FolderId("b"),
+            name = "Beta"
+        )
+        val grandchildB1 = FolderTestFactory.create(
+            folderId = FolderId("b1"),
+            parentFolderId = FolderId("b"),
+            name = "Alpha"
+        )
+        // Grandchildren under childA
+        val grandchildA2 = FolderTestFactory.create(
+            folderId = FolderId("a2"),
+            parentFolderId = FolderId("a"),
+            name = "Zulu"
+        )
+        val grandchildA1 = FolderTestFactory.create(
+            folderId = FolderId("a1"),
+            parentFolderId = FolderId("a"),
+            name = "Delta"
+        )
+
+        val result = FolderTreeBuilder.build(
+            listOf(root, childB, childA, grandchildB2, grandchildB1, grandchildA2, grandchildA1)
+        )
+
+        // Root level
+        assertThat(result).hasSize(1)
+        assertThat(result[0].name).isEqualTo("Root")
+
+        // First level children should be sorted: Alpha, Bravo
+        assertThat(result[0].folders).hasSize(2)
+        assertThat(result[0].folders[0].name).isEqualTo("Alpha")
+        assertThat(result[0].folders[1].name).isEqualTo("Bravo")
+
+        // Alpha's children should be sorted: Delta, Zulu
+        val alphaFolder = result[0].folders[0]
+        assertThat(alphaFolder.folders).hasSize(2)
+        assertThat(alphaFolder.folders[0].name).isEqualTo("Delta")
+        assertThat(alphaFolder.folders[1].name).isEqualTo("Zulu")
+
+        // Bravo's children should be sorted: Alpha, Beta
+        val bravoFolder = result[0].folders[1]
+        assertThat(bravoFolder.folders).hasSize(2)
+        assertThat(bravoFolder.folders[0].name).isEqualTo("Alpha")
+        assertThat(bravoFolder.folders[1].name).isEqualTo("Beta")
+    }
+
+    @Test
+    fun `build sorts orphaned folders alphabetically`() {
+        val orphanZ = FolderTestFactory.create(
+            folderId = FolderId("orphan-z"),
+            parentFolderId = FolderId("missing-1"),
+            name = "Zebra Orphan"
+        )
+        val orphanA = FolderTestFactory.create(
+            folderId = FolderId("orphan-a"),
+            parentFolderId = FolderId("missing-2"),
+            name = "Apple Orphan"
+        )
+        val normalRoot = FolderTestFactory.create(
+            folderId = FolderId("root"),
+            parentFolderId = null,
+            name = "Mango Root"
+        )
+
+        val result = FolderTreeBuilder.build(listOf(orphanZ, orphanA, normalRoot))
+
+        assertThat(result).hasSize(3)
+        assertThat(result[0].name).isEqualTo("Apple Orphan")
+        assertThat(result[1].name).isEqualTo("Mango Root")
+        assertThat(result[2].name).isEqualTo("Zebra Orphan")
     }
 
     // Helper functions

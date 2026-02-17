@@ -32,7 +32,7 @@ object FolderTreeBuilder {
         val roots = folders.filter { folder ->
             val parentId = folder.parentFolderId?.id
             parentId == null || parentId !in folderIds
-        }
+        }.sortedBy { it.name.lowercase() }
 
         val lineage = mutableSetOf<String>()
 
@@ -59,6 +59,7 @@ object FolderTreeBuilder {
         lineage.add(folderId)
         val children = childrenMap[folderId]
             .orEmpty()
+            .sortedBy { it.name.lowercase() }
             .mapNotNull { child ->
                 buildSubtree(
                     folder = child,

@@ -18,6 +18,7 @@
 
 package proton.android.pass.data.impl.usecases.sync
 
+import kotlinx.coroutines.flow.first
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.api.repositories.ItemRepository
 import proton.android.pass.data.api.repositories.ItemRevision
@@ -25,14 +26,19 @@ import proton.android.pass.data.api.repositories.ItemSyncStatus
 import proton.android.pass.data.api.repositories.ItemSyncStatusRepository
 import proton.android.pass.data.api.repositories.SyncMode
 import proton.android.pass.data.api.repositories.VaultProgress
+import proton.android.pass.data.api.usecases.folders.RefreshFolders
 import proton.android.pass.data.api.usecases.sync.ForceSyncItems
 import proton.android.pass.data.api.usecases.sync.ForceSyncResult
 import proton.android.pass.data.impl.util.runConcurrently
 import proton.android.pass.domain.ShareId
 import proton.android.pass.log.api.PassLogger
+import proton.android.pass.preferences.FeatureFlag
+import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import javax.inject.Inject
 
 class ForceSyncItemsImpl @Inject constructor(
+    private val featureFlagsPreferencesRepository: FeatureFlagsPreferencesRepository,
+    private val refreshFolders: RefreshFolders,
     private val itemRepository: ItemRepository,
     private val itemSyncStatusRepository: ItemSyncStatusRepository
 ) : ForceSyncItems {
@@ -40,13 +46,18 @@ class ForceSyncItemsImpl @Inject constructor(
     @SuppressWarnings("LongMethod")
     override suspend fun invoke(
         userId: UserId,
-        shareIds: List<ShareId>,
+        shareIds: Set<ShareId>,
         isBackground: Boolean,
         hasInactiveShares: Boolean,
         hasInvalidGroupShares: Boolean
     ): ForceSyncResult {
         if (shareIds.isEmpty()) return ForceSyncResult.Success
 
+        val isFoldersEnabled: Boolean =
+            featureFlagsPreferencesRepository.get<Boolean>(FeatureFlag.PASS_FOLDERS).first()
+        if (isFoldersEnabled) {
+            refreshFolders(userId, shareIds)
+        }
         val results: List<Result<Pair<ShareId, List<ItemRevision>>>> = runConcurrently(
             items = shareIds,
             block = { shareId ->

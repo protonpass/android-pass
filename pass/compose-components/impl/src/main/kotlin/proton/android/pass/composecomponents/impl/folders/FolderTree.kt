@@ -42,7 +42,6 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
-import proton.android.pass.commonui.api.ThemedBooleanPreviewProvider
 import proton.android.pass.commonuimodels.api.FolderUiModel
 import proton.android.pass.composecomponents.impl.R
 import proton.android.pass.composecomponents.impl.folders.mock.FoldersParameter
@@ -149,24 +148,10 @@ internal fun FolderTreePreview(
         Surface {
             FolderTree(
                 folders = input.second.folders,
-                expandedState = remember { mutableStateMapOf() },
-                onThreeDotsClick = {},
-                onCreateFolderClick = {},
-                onFolderClick = {}
-            )
-        }
-    }
-}
-
-@[Preview Composable]
-internal fun FolderTreeEmptyPreview(
-    @PreviewParameter(ThemedBooleanPreviewProvider::class) input: Pair<Boolean, Boolean>
-) {
-    PassTheme(isDark = input.first) {
-        Surface {
-            FolderTree(
-                folders = emptyList(),
-                expandedState = remember { mutableStateMapOf() },
+                expandedState = remember {
+                    mutableStateMapOf<String, Boolean>()
+                        .apply { putAll(input.second.expandedState) }
+                },
                 onThreeDotsClick = {},
                 onCreateFolderClick = {},
                 onFolderClick = {}

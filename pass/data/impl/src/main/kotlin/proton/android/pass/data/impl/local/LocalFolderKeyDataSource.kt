@@ -27,10 +27,10 @@ import proton.android.pass.domain.ShareId
 interface LocalFolderKeyDataSource {
     suspend fun upsertKey(entity: FolderKeyEntity)
     suspend fun upsertKeys(entities: List<FolderKeyEntity>)
-    suspend fun getByFolderId(shareId: ShareId, folderId: FolderId): FolderKeyEntity?
-    suspend fun getByFolderIds(shareId: ShareId, folderIds: List<FolderId>): List<FolderKeyEntity>
+    suspend fun getByFolderId(userId: UserId, shareId: ShareId, folderId: FolderId): FolderKeyEntity?
+    suspend fun getByFolderIds(userId: UserId, shareId: ShareId, folderIds: List<FolderId>): List<FolderKeyEntity>
     suspend fun getAllByShareId(userId: UserId, shareId: ShareId): List<FolderKeyEntity>
     fun observeByShareId(userId: UserId, shareId: ShareId): Flow<List<FolderKeyEntity>>
-    suspend fun deleteByFolderId(shareId: ShareId, folderId: FolderId)
-    suspend fun deleteByFolderIds(shareId: ShareId, folderIds: List<FolderId>)
+    suspend fun deleteByFolderId(userId: UserId, shareId: ShareId, folderId: FolderId)
+    suspend fun deleteByFolderIds(userId: UserId, shareId: ShareId, folderIds: List<FolderId>)
 }

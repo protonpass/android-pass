@@ -19,6 +19,9 @@
 package proton.android.pass.composecomponents.impl.folders.mock
 
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
+import kotlinx.collections.immutable.PersistentList
+import kotlinx.collections.immutable.persistentListOf
+import kotlinx.collections.immutable.toPersistentList
 import proton.android.pass.commonui.api.ThemePairPreviewProvider
 import proton.android.pass.commonuimodels.api.FolderUiModel
 import proton.android.pass.domain.FolderId
@@ -38,7 +41,7 @@ class FoldersPreviewProvider : PreviewParameterProvider<FoldersParameter> {
 
     companion object {
         private fun withEmptyFolders() = FoldersParameter(
-            folders = emptyList()
+            folders = persistentListOf()
         )
 
         private fun withSingleFolder() = FoldersParameter(
@@ -46,9 +49,9 @@ class FoldersPreviewProvider : PreviewParameterProvider<FoldersParameter> {
                 FolderUiModel(
                     id = FolderId("level0-0"),
                     name = "My main folder",
-                    folders = emptyList()
+                    folders = persistentListOf()
                 )
-            )
+            ).toPersistentList()
         )
 
         private fun withNestedFolders(): FoldersParameter {
@@ -70,7 +73,7 @@ class FoldersPreviewProvider : PreviewParameterProvider<FoldersParameter> {
                 createFolder("level0-1", "My main 2"),
                 createFolder("level0-2", "My main 3")
             )
-            return FoldersParameter(folders = level0Folders)
+            return FoldersParameter(folders = level0Folders.toPersistentList())
         }
 
         private fun withNestedFoldersExpanded(): FoldersParameter {
@@ -98,7 +101,7 @@ class FoldersPreviewProvider : PreviewParameterProvider<FoldersParameter> {
                 "level2-0" to true
             )
             return FoldersParameter(
-                folders = level0Folders,
+                folders = level0Folders.toPersistentList(),
                 expandedState = expandedState
             )
         }
@@ -110,12 +113,12 @@ class FoldersPreviewProvider : PreviewParameterProvider<FoldersParameter> {
         ) = FolderUiModel(
             id = FolderId(id),
             name = name,
-            folders = folders
+            folders = folders.toPersistentList()
         )
     }
 }
 
 data class FoldersParameter(
-    val folders: List<FolderUiModel>,
+    val folders: PersistentList<FolderUiModel>,
     val expandedState: Map<String, Boolean> = emptyMap()
 )

@@ -131,8 +131,11 @@ internal class FolderSyncDecryptor(
         return encryptionContextProvider.withEncryptionContextSuspendable {
             orphanParentIds.mapNotNull { parentFolderId ->
                 safeRunCatching {
-                    val parentFolderKey = localFolderKeyDataSource.getByFolderId(userId, shareId, FolderId(parentFolderId))
-                        ?: throw IllegalStateException("Parent folder key not found for parentId=$parentFolderId")
+                    val parentFolderKey = localFolderKeyDataSource.getByFolderId(
+                        userId = userId,
+                        shareId = shareId,
+                        folderId = FolderId(parentFolderId)
+                    ) ?: throw IllegalStateException("Parent folder key not found for parentId=$parentFolderId")
                     parentFolderId to EncryptionKey(decrypt(parentFolderKey.encryptedKey))
                 }.onFailure { error ->
                     PassLogger.w(

@@ -117,7 +117,8 @@ object AutoFillHandler {
             accountManager = accountManager,
             request = request,
             windowNode = windowNode,
-            packageName = applicationPackageName.value
+            packageName = applicationPackageName.value,
+            thirdPartyModeProvider = thirdPartyModeProvider
         )
         val assistInfo = when (shouldAutofill) {
             is ShouldAutofillResult.No -> {
@@ -202,28 +203,34 @@ object AutoFillHandler {
         }
     }
 
-    @Suppress("ReturnCount")
+    @Suppress("ReturnCount", "LongParameterList")
     private suspend fun shouldAutofill(
         context: Context,
         accountManager: AccountManager,
         request: FillRequest,
         windowNode: WindowNode,
-        packageName: String
+        packageName: String,
+        thirdPartyModeProvider: ThirdPartyModeProvider
     ): ShouldAutofillResult {
         if (isSelfAutofill(context, packageName)) {
             return ShouldAutofillResult.No("Do not self autofill")
         }
 
-        val currentUser = accountManager.getPrimaryUserId().first()
-        if (currentUser == null) {
+        if (accountManager.getPrimaryUserId().first() == null) {
             return ShouldAutofillResult.No("No user found")
         }
+
         val requestFlags: List<RequestFlags> = RequestFlags.fromValue(request.flags)
         val extractionResult = NodeExtractor(requestFlags).extract(
             windowNode.rootViewNode,
             packageName
         )
         if (extractionResult.fields.isEmpty()) {
+            if (PackageName(value = packageName).isBrowser() &&
+                !thirdPartyModeProvider.isThirdPartyModeEnabled(browserPackage = packageName)
+            ) {
+                PassLogger.i(TAG, "isThirdPartyModeEnabled is not activated for : $packageName")
+            }
             return ShouldAutofillResult.No("No fields found")
         }
         PassLogger.d(TAG, "Fields found: ${extractionResult.fields.map { it.type }.joinToString()}")

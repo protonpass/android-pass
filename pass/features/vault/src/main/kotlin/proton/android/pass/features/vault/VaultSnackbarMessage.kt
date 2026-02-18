@@ -39,6 +39,12 @@ enum class VaultSnackbarMessage(
         SnackbarType.ERROR
     ),
     CreateVaultError(R.string.snackbar_create_vault_error, SnackbarType.ERROR),
+    CreateFolderSuccess(R.string.snackbar_create_folder_success, SnackbarType.SUCCESS),
+    CreateFolderError(R.string.snackbar_create_folder_error, SnackbarType.ERROR),
+    UpdateFolderSuccess(R.string.snackbar_update_folder_success, SnackbarType.SUCCESS),
+    UpdateFolderError(R.string.snackbar_update_folder_error, SnackbarType.ERROR),
+    DeleteFolderSuccess(R.string.snackbar_delete_folder_success, SnackbarType.SUCCESS),
+    DeleteFolderError(R.string.snackbar_delete_folder_error, SnackbarType.ERROR),
     CannotRetrieveVaultError(R.string.snackbar_retrieve_vault_error, SnackbarType.ERROR),
     CannotFindVaultError(R.string.snackbar_find_vault_error, SnackbarType.ERROR),
     CannotGetVaultListError(R.string.snackbar_get_vault_list_error, SnackbarType.ERROR)

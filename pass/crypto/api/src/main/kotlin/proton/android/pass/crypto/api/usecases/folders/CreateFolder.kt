@@ -19,7 +19,6 @@
 package proton.android.pass.crypto.api.usecases.folders
 
 import proton.android.pass.crypto.api.EncryptionKey
-import proton.android.pass.domain.key.ShareKey
 
 data class EncryptedCreateFolder(
     val keyRotation: Long,
@@ -34,5 +33,9 @@ data class CreateFolderPayload(
 )
 
 interface CreateFolder {
-    fun create(shareKey: ShareKey, folderName: String): CreateFolderPayload
+    fun create(
+        parentKey: EncryptionKey,
+        keyRotation: Long,
+        folderName: String
+    ): CreateFolderPayload
 }

@@ -276,9 +276,11 @@ import proton.android.pass.features.upsell.v1.navigation.UpsellNavItem
 import proton.android.pass.features.upsell.v1.navigation.upsellNavGraph
 import proton.android.pass.features.vault.VaultNavigation
 import proton.android.pass.features.vault.folders.AddFolderToVaultDialog
+import proton.android.pass.features.vault.folders.RenameFolderDialog
 import proton.android.pass.features.vault.bottomsheet.CreateVaultNextAction
 import proton.android.pass.features.vault.bottomsheet.CreateVaultScreen
 import proton.android.pass.features.vault.bottomsheet.EditVaultScreen
+import proton.android.pass.features.vault.bottomsheet.folders.DeleteFolderDialog
 import proton.android.pass.features.vault.bottomsheet.folders.FolderOptionsBottomSheet
 import proton.android.pass.features.vault.bottomsheet.options.VaultOptionsBottomSheet
 import proton.android.pass.features.vault.bottomsheet.select.SelectVaultBottomsheet
@@ -756,11 +758,19 @@ fun NavGraphBuilder.appGraph(
                 }
 
                 is VaultNavigation.RenameFolder -> dismissBottomSheet {
-                    // rename folder
+                    appNavigator.navigate(
+                        destination = RenameFolderDialog,
+                        route = RenameFolderDialog.createNavRoute(it.shareId, it.folderId),
+                        backDestination = HomeNavItem
+                    )
                 }
 
                 is VaultNavigation.RemoveFolder -> dismissBottomSheet {
-                    // remove folder
+                    appNavigator.navigate(
+                        destination = DeleteFolderDialog,
+                        route = DeleteFolderDialog.createNavRoute(it.shareId, it.folderId),
+                        backDestination = HomeNavItem
+                    )
                 }
             }
         }

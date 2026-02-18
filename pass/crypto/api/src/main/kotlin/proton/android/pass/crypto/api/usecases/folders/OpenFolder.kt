@@ -16,7 +16,7 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.crypto.api.usecases
+package proton.android.pass.crypto.api.usecases.folders
 
 import me.proton.core.crypto.common.keystore.EncryptedByteArray
 import proton.android.pass.crypto.api.EncryptionKey

@@ -16,13 +16,13 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.crypto.fakes.usecases
+package proton.android.pass.crypto.fakes.usecases.folders
 
 import me.proton.core.crypto.common.keystore.EncryptedByteArray
 import proton.android.pass.crypto.api.EncryptionKey
-import proton.android.pass.crypto.api.usecases.EncryptedFolderData
-import proton.android.pass.crypto.api.usecases.OpenFolder
-import proton.android.pass.crypto.api.usecases.OpenFolderOutput
+import proton.android.pass.crypto.api.usecases.folders.EncryptedFolderData
+import proton.android.pass.crypto.api.usecases.folders.OpenFolder
+import proton.android.pass.crypto.api.usecases.folders.OpenFolderOutput
 
 class FakeOpenFolder : OpenFolder {
     data class OpenCall(

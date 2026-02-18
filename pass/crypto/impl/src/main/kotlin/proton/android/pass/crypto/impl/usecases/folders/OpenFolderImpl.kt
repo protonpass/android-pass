@@ -16,16 +16,17 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.crypto.impl.usecases
+package proton.android.pass.crypto.impl.usecases.folders
 
 import me.proton.core.crypto.common.keystore.EncryptedByteArray
 import proton.android.pass.crypto.api.Base64
 import proton.android.pass.crypto.api.EncryptionKey
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.crypto.api.context.EncryptionTag
-import proton.android.pass.crypto.api.usecases.EncryptedFolderData
-import proton.android.pass.crypto.api.usecases.OpenFolder
-import proton.android.pass.crypto.api.usecases.OpenFolderOutput
+import proton.android.pass.crypto.api.usecases.folders.EncryptedFolderData
+import proton.android.pass.crypto.api.usecases.folders.OpenFolder
+import proton.android.pass.crypto.api.usecases.folders.OpenFolderOutput
+import proton.android.pass.crypto.impl.Constants.FOLDER_CONTENT_FORMAT_VERSION
 import proton.android.pass.log.api.PassLogger
 import proton_pass_folder_v1.FolderV1
 import javax.inject.Inject
@@ -65,6 +66,5 @@ class OpenFolderImpl @Inject constructor(
 
     private companion object {
         private const val TAG = "OpenFolderImpl"
-        private const val FOLDER_CONTENT_FORMAT_VERSION = 1
     }
 }

@@ -81,9 +81,11 @@ import proton.android.pass.data.api.usecases.ObserveEncryptedItems
 import proton.android.pass.data.api.usecases.folders.CreateFolder
 import proton.android.pass.data.api.usecases.folders.DeleteFolders
 import proton.android.pass.data.api.usecases.folders.DeleteFoldersLocally
+import proton.android.pass.data.api.usecases.folders.GetFolder
 import proton.android.pass.data.api.usecases.folders.MoveFolder
 import proton.android.pass.data.api.usecases.folders.ObserveFolderItemCounts
 import proton.android.pass.data.api.usecases.folders.ObserveFolders
+import proton.android.pass.data.api.usecases.folders.ObserveFoldersByParentId
 import proton.android.pass.data.api.usecases.folders.RefreshFolders
 import proton.android.pass.data.api.usecases.folders.UpdateFolder
 import proton.android.pass.data.api.usecases.ObserveGlobalMonitorState
@@ -332,9 +334,11 @@ import proton.android.pass.data.impl.usecases.ObserveEncryptedItemsImpl
 import proton.android.pass.data.impl.usecases.folders.CreateFolderImpl
 import proton.android.pass.data.impl.usecases.folders.DeleteFoldersImpl
 import proton.android.pass.data.impl.usecases.folders.DeleteFoldersLocallyImpl
+import proton.android.pass.data.impl.usecases.folders.GetFolderImpl
 import proton.android.pass.data.impl.usecases.folders.MoveFolderImpl
 import proton.android.pass.data.impl.usecases.folders.ObserveFolderItemCountsImpl
 import proton.android.pass.data.impl.usecases.folders.ObserveFoldersImpl
+import proton.android.pass.data.impl.usecases.folders.ObserveFoldersByParentIdImpl
 import proton.android.pass.data.impl.usecases.folders.RefreshFoldersImpl
 import proton.android.pass.data.impl.usecases.folders.UpdateFolderImpl
 import proton.android.pass.data.impl.usecases.ObserveGlobalMonitorStateImpl
@@ -594,6 +598,9 @@ abstract class DataUseCaseModule {
     abstract fun bindObserveFolders(impl: ObserveFoldersImpl): ObserveFolders
 
     @Binds
+    abstract fun bindGetFolder(impl: GetFolderImpl): GetFolder
+
+    @Binds
     abstract fun bindCreateFolder(impl: CreateFolderImpl): CreateFolder
 
     @Binds
@@ -610,6 +617,9 @@ abstract class DataUseCaseModule {
 
     @Binds
     abstract fun bindRefreshFolders(impl: RefreshFoldersImpl): RefreshFolders
+
+    @Binds
+    abstract fun bindObserveFoldersByParentId(impl: ObserveFoldersByParentIdImpl): ObserveFoldersByParentId
 
     @Binds
     abstract fun bindRefreshContent(impl: RefreshContentImpl): RefreshContent

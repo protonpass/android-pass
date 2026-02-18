@@ -22,9 +22,11 @@ import androidx.navigation.NavGraphBuilder
 import proton.android.pass.domain.FolderId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.features.vault.folders.addFolderVaultDialogGraph
+import proton.android.pass.features.vault.folders.renameFolderVaultDialogGraph
 import proton.android.pass.features.vault.bottomsheet.createVaultGraph
 import proton.android.pass.features.vault.bottomsheet.editVaultGraph
 import proton.android.pass.features.vault.bottomsheet.folders.bottomSheetFolderOptionsGraph
+import proton.android.pass.features.vault.bottomsheet.folders.deleteFolderDialogGraph
 import proton.android.pass.features.vault.bottomsheet.options.bottomSheetVaultOptionsGraph
 import proton.android.pass.features.vault.bottomsheet.select.selectVaultBottomsheetGraph
 import proton.android.pass.features.vault.delete.deleteVaultDialogGraph
@@ -75,5 +77,7 @@ fun NavGraphBuilder.vaultGraph(onNavigate: (VaultNavigation) -> Unit) {
     bottomSheetVaultOptionsGraph(onNavigate)
     organiseVaultsGraph(onNavigate)
     addFolderVaultDialogGraph(onNavigate)
+    renameFolderVaultDialogGraph(onNavigate)
+    deleteFolderDialogGraph(onNavigate)
     bottomSheetFolderOptionsGraph(onNavigate)
 }

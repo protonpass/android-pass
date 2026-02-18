@@ -37,13 +37,11 @@ class UpdateFolderImpl @Inject constructor(
         keyRotation: Long,
         folderName: String
     ): EncryptedUpdateFolder {
-        // Build the FolderV1 protobuf with updated name
         val folder = FolderV1.Folder.newBuilder()
             .setName(folderName)
             .build()
         val serializedFolder = folder.toByteArray()
 
-        // Encrypt the folder content with the existing folder key
         val encryptedContents = encryptionContextProvider.withEncryptionContext(folderKey.clone()) {
             encrypt(serializedFolder, EncryptionTag.FolderContent)
         }

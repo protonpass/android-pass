@@ -28,7 +28,6 @@ import proton.android.pass.common.api.AppDispatchers
 import proton.android.pass.common.api.safeRunCatching
 import proton.android.pass.crypto.api.EncryptionKey
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
-import proton.android.pass.crypto.api.context.EncryptionTag
 import proton.android.pass.crypto.api.usecases.folders.CreateFolder
 import proton.android.pass.crypto.api.usecases.folders.EncryptedFolderData
 import proton.android.pass.crypto.api.usecases.folders.MoveFolder
@@ -48,6 +47,7 @@ import proton.android.pass.data.impl.requests.CreateFolderRequest
 import proton.android.pass.data.impl.requests.DeleteFoldersRequest
 import proton.android.pass.data.impl.requests.FolderKeyRequest
 import proton.android.pass.data.impl.requests.MoveFolderRequest
+import proton.android.pass.data.impl.requests.UpdateFolderContent
 import proton.android.pass.data.impl.requests.UpdateFolderRequest
 import proton.android.pass.data.impl.responses.FolderApiModel
 import proton.android.pass.domain.Folder
@@ -206,7 +206,7 @@ class FolderRepositoryImpl @Inject constructor(
         newParentKey: EncryptionKey
     ): String {
         val decryptedFolderKey = encryptionContextProvider.withEncryptionContextSuspendable {
-            decrypt(folderKeyEntity.encryptedKey, EncryptionTag.FolderKey)
+            decrypt(folderKeyEntity.encryptedKey)
         }
 
         return moveFolder.reencryptFolderKey(
@@ -225,6 +225,20 @@ class FolderRepositoryImpl @Inject constructor(
                 folderEntities.map { it.toDomain(this) }
             }
         }
+
+    override fun observeFoldersByParentId(
+        userId: UserId,
+        shareId: ShareId,
+        parentFolderId: FolderId?
+    ): Flow<List<Folder>> = localFolderDataSource.observeFolders(
+        userId = userId,
+        shareId = shareId,
+        parentFolderId = parentFolderId
+    ).map { folderEntities ->
+        encryptionContextProvider.withEncryptionContextSuspendable {
+            folderEntities.map { it.toDomain(this) }
+        }
+    }
 
     override suspend fun refreshFolders(userId: UserId, shareId: ShareId) = safeRunCatching {
         var currentSinceToken: String? = null
@@ -286,15 +300,31 @@ class FolderRepositoryImpl @Inject constructor(
     ): Folder = safeRunCatching {
         PassLogger.d(
             TAG,
-            "Creating folder '$folderName' for shareId=${shareId.id}, parentFolderId=${parentFolderId?.id}"
+            "Creating folder for shareId=${shareId.id}, parentFolderId=${parentFolderId?.id}"
         )
 
-        // Get the latest share key for encryption
         val shareKey = shareKeyRepository.getLatestKeyForShare(shareId).firstOrNull()
             ?: throw IllegalStateException("No share key found for shareId=${shareId.id}")
 
-        // Use the crypto use case to encrypt the folder
-        val payload = createFolder.create(shareKey, folderName)
+        val (parentKey, keyRotation) = if (parentFolderId != null) {
+            val parentFolderKey = localFolderKeyDataSource.getByFolderId(
+                userId = userId,
+                shareId = shareId,
+                folderId = parentFolderId
+            ) ?: throw IllegalStateException("No folder key found for parentFolderId=${parentFolderId.id}")
+
+            val decryptedParentKey = encryptionContextProvider.withEncryptionContext {
+                EncryptionKey(decrypt(parentFolderKey.encryptedKey))
+            }
+            Pair(decryptedParentKey, shareKey.rotation)
+        } else {
+            val decryptedShareKey = encryptionContextProvider.withEncryptionContext {
+                EncryptionKey(decrypt(shareKey.key))
+            }
+            Pair(decryptedShareKey, shareKey.rotation)
+        }
+
+        val payload = createFolder.create(parentKey, keyRotation, folderName)
 
         val request = CreateFolderRequest(
             parentFolderId = parentFolderId?.id,
@@ -311,7 +341,7 @@ class FolderRepositoryImpl @Inject constructor(
     }.onFailure { e ->
         PassLogger.w(
             TAG,
-            "Failed to create folder '$folderName' for shareId=${shareId.id}, parentFolderId=${parentFolderId?.id}"
+            "Failed to create folder for shareId=${shareId.id}, parentFolderId=${parentFolderId?.id}"
         )
         PassLogger.w(TAG, e)
     }.getOrThrow()
@@ -322,18 +352,13 @@ class FolderRepositoryImpl @Inject constructor(
         folderId: FolderId,
         folderName: String
     ): Folder = safeRunCatching {
-        PassLogger.d(TAG, "Updating folder ${folderId.id} to '$folderName' in shareId=${shareId.id}")
-
-        // Get the existing folder key entity
+        PassLogger.d(TAG, "Updating folder ${folderId.id} in shareId=${shareId.id}")
         val folderKeyEntity = localFolderKeyDataSource.getByFolderId(userId, shareId, folderId)
             ?: throw IllegalStateException("No folder key found for folderId=${folderId.id}")
 
-        // Decrypt the folder key
         val decryptedFolderKey = encryptionContextProvider.withEncryptionContextSuspendable {
-            EncryptionKey(decrypt(folderKeyEntity.encryptedKey, EncryptionTag.FolderKey))
+            EncryptionKey(decrypt(folderKeyEntity.encryptedKey))
         }
-
-        // Use the crypto use case to encrypt the updated folder
         val payload = updateFolder.update(
             folderKey = decryptedFolderKey,
             keyRotation = folderKeyEntity.keyRotation,
@@ -341,9 +366,11 @@ class FolderRepositoryImpl @Inject constructor(
         )
 
         val request = UpdateFolderRequest(
-            keyRotation = payload.keyRotation,
-            contentFormatVersion = payload.contentFormatVersion,
-            content = payload.content
+            content = UpdateFolderContent(
+                keyRotation = payload.keyRotation,
+                contentFormatVersion = payload.contentFormatVersion,
+                content = payload.content
+            )
         )
         val apiModel = remoteFolderDataSource.updateFolder(userId, shareId, folderId, request)
 

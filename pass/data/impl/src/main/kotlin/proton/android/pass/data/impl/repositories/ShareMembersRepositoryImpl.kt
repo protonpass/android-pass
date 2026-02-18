@@ -123,5 +123,6 @@ private fun ShareMemberResponse.toDomain(currentUserEmail: String?): ShareMember
     role = shareRoleId
         ?.let(ShareRole::fromValue)
         ?: ShareRole.fromValue(ShareRole.SHARE_ROLE_READ),
-    shareType = ShareType.from(targetType)
+    shareType = ShareType.from(targetType),
+    isGroup = isGroupShare
 )

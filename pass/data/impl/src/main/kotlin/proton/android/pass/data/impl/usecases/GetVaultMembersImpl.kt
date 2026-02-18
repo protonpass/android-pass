@@ -65,7 +65,8 @@ private fun ShareMember.toVaultMember(): VaultMember = VaultMember.Member(
     username = username,
     role = role,
     isCurrentUser = isCurrentUser,
-    isOwner = isOwner
+    isOwner = isOwner,
+    isGroup = isGroup
 )
 
 private fun SharePendingInvite.toVaultMember(): VaultMember = when (this) {

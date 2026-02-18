@@ -47,6 +47,7 @@ import proton.android.pass.domain.Vault
 import proton.android.pass.domain.hasFlag
 import proton.android.pass.domain.toPermissions
 import proton.android.pass.features.sharing.SharingSnackbarMessage
+import proton.android.pass.features.sharing.manage.bottomsheet.IsGroupArg
 import proton.android.pass.features.sharing.manage.bottomsheet.MemberEmailArg
 import proton.android.pass.features.sharing.manage.bottomsheet.MemberShareIdArg
 import proton.android.pass.features.sharing.manage.bottomsheet.ShareRoleArg
@@ -71,6 +72,7 @@ class MemberOptionsViewModel @Inject constructor(
     private val vaultShareId = ShareId(savedState.get().require(CommonNavArgId.ShareId.key))
     private val memberShareId = ShareId(savedState.get().require(MemberShareIdArg.key))
     private val shareRole = ShareRole.fromValue(savedState.get().require(ShareRoleArg.key))
+    private val isGroup = savedState.get().require<Boolean>(IsGroupArg.key)
     private val memberEmail = NavParamEncoder.decode(savedState.get().require(MemberEmailArg.key))
 
     private val eventFlow: MutableStateFlow<MemberOptionsEvent> =
@@ -80,19 +82,20 @@ class MemberOptionsViewModel @Inject constructor(
     private val loadingOptionFlow: MutableStateFlow<LoadingOption?> =
         MutableStateFlow(null)
 
-    private val getVaultFlow: Flow<LoadingResult<VaultsInfo>> = observeVaults(includeHidden = true).map { vaults ->
-        val selectedVault = vaults.firstOrNull { it.shareId == vaultShareId }
-        if (selectedVault == null) {
-            eventFlow.update { MemberOptionsEvent.Close(refresh = false) }
-            throw IllegalArgumentException("Cannot find vault with shareId $vaultShareId")
+    private val getVaultFlow: Flow<LoadingResult<VaultsInfo>> =
+        observeVaults(includeHidden = true).map { vaults ->
+            val selectedVault = vaults.firstOrNull { it.shareId == vaultShareId }
+            if (selectedVault == null) {
+                eventFlow.update { MemberOptionsEvent.Close(refresh = false) }
+                throw IllegalArgumentException("Cannot find vault with shareId $vaultShareId")
+            }
+            VaultsInfo(
+                vaults = vaults,
+                selectedVault = selectedVault
+            )
         }
-        VaultsInfo(
-            vaults = vaults,
-            selectedVault = selectedVault
-        )
-    }
-        .asLoadingResult()
-        .distinctUntilChanged()
+            .asLoadingResult()
+            .distinctUntilChanged()
 
     val state: StateFlow<MemberOptionsUiState> = combine(
         getVaultFlow,
@@ -118,7 +121,8 @@ class MemberOptionsViewModel @Inject constructor(
                 val showTransferOwnership = canShowTransferOwnership(
                     memberPermissions = memberPermissions,
                     vaults = vaultInfo.data.vaults,
-                    selectedVault = vaultInfo.data.selectedVault
+                    selectedVault = vaultInfo.data.selectedVault,
+                    isGroup = isGroup
                 )
                 MemberOptionsUiState(
                     memberRole = shareRole,
@@ -198,10 +202,12 @@ class MemberOptionsViewModel @Inject constructor(
     private fun canShowTransferOwnership(
         vaults: List<Vault>,
         selectedVault: Vault,
-        memberPermissions: SharePermission
+        memberPermissions: SharePermission,
+        isGroup: Boolean
     ): TransferOwnershipState {
         // Mandatory: for transfering ownership, user must be owner and the target must be admin
-        val minimumRequirementsMatch = selectedVault.isOwned && memberPermissions.hasFlag(SharePermissionFlag.Admin)
+        val minimumRequirementsMatch =
+            selectedVault.isOwned && memberPermissions.hasFlag(SharePermissionFlag.Admin) && !isGroup
         if (!minimumRequirementsMatch) {
             return TransferOwnershipState.Hide
         }

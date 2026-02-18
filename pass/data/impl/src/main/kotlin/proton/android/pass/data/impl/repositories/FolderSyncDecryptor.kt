@@ -27,8 +27,8 @@ import proton.android.pass.crypto.api.Base64
 import proton.android.pass.crypto.api.EncryptionKey
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.crypto.api.context.EncryptionTag
-import proton.android.pass.crypto.api.usecases.EncryptedFolderData
-import proton.android.pass.crypto.api.usecases.OpenFolder
+import proton.android.pass.crypto.api.usecases.folders.EncryptedFolderData
+import proton.android.pass.crypto.api.usecases.folders.OpenFolder
 import proton.android.pass.data.impl.db.PassDatabase
 import proton.android.pass.data.impl.db.entities.FolderEntity
 import proton.android.pass.data.impl.db.entities.FolderKeyEntity

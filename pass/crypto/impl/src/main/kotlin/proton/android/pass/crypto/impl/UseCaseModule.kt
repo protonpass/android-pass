@@ -22,10 +22,13 @@ import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import proton.android.pass.crypto.api.usecases.folders.CreateFolder
 import proton.android.pass.crypto.api.usecases.CreateItem
 import proton.android.pass.crypto.api.usecases.CreateVault
 import proton.android.pass.crypto.api.usecases.MigrateItem
-import proton.android.pass.crypto.api.usecases.OpenFolder
+import proton.android.pass.crypto.api.usecases.folders.MoveFolder
+import proton.android.pass.crypto.api.usecases.folders.OpenFolder
+import proton.android.pass.crypto.api.usecases.folders.UpdateFolder
 import proton.android.pass.crypto.api.usecases.OpenItem
 import proton.android.pass.crypto.api.usecases.OpenItemKey
 import proton.android.pass.crypto.api.usecases.UpdateItem
@@ -36,14 +39,17 @@ import proton.android.pass.crypto.api.usecases.invites.EncryptInviteKeys
 import proton.android.pass.crypto.api.usecases.invites.OpenOrganizationKey
 import proton.android.pass.crypto.impl.usecases.AcceptGroupInviteImpl
 import proton.android.pass.crypto.impl.usecases.AcceptUserInviteImpl
+import proton.android.pass.crypto.impl.usecases.folders.CreateFolderImpl
 import proton.android.pass.crypto.impl.usecases.CreateItemImpl
 import proton.android.pass.crypto.impl.usecases.CreateVaultImpl
 import proton.android.pass.crypto.impl.usecases.EncryptInviteKeysImpl
 import proton.android.pass.crypto.impl.usecases.MigrateItemImpl
-import proton.android.pass.crypto.impl.usecases.OpenFolderImpl
+import proton.android.pass.crypto.impl.usecases.folders.MoveFolderImpl
+import proton.android.pass.crypto.impl.usecases.folders.OpenFolderImpl
 import proton.android.pass.crypto.impl.usecases.OpenItemImpl
 import proton.android.pass.crypto.impl.usecases.OpenItemKeyImpl
 import proton.android.pass.crypto.impl.usecases.OpenOrganizationKeyImpl
+import proton.android.pass.crypto.impl.usecases.folders.UpdateFolderImpl
 import proton.android.pass.crypto.impl.usecases.UpdateItemImpl
 import proton.android.pass.crypto.impl.usecases.UpdateVaultImpl
 
@@ -86,5 +92,14 @@ abstract class UseCaseModule {
 
     @Binds
     abstract fun bindOpenFolder(impl: OpenFolderImpl): OpenFolder
+
+    @Binds
+    abstract fun bindCreateFolder(impl: CreateFolderImpl): CreateFolder
+
+    @Binds
+    abstract fun bindUpdateFolder(impl: UpdateFolderImpl): UpdateFolder
+
+    @Binds
+    abstract fun bindMoveFolder(impl: MoveFolderImpl): MoveFolder
 
 }

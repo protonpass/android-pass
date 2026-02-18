@@ -20,4 +20,5 @@ package proton.android.pass.crypto.impl
 
 object Constants {
     const val ITEM_CONTENT_FORMAT_VERSION = 7
+    const val FOLDER_CONTENT_FORMAT_VERSION = 1
 }

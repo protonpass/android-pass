@@ -23,6 +23,12 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class UpdateFolderRequest(
+    @SerialName("Content")
+    val content: UpdateFolderContent
+)
+
+@Serializable
+data class UpdateFolderContent(
     @SerialName("KeyRotation")
     val keyRotation: Long,
     @SerialName("ContentFormatVersion")

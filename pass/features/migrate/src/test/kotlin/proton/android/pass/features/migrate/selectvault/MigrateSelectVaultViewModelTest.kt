@@ -28,6 +28,7 @@ import org.junit.Test
 import proton.android.pass.commonui.fakes.FakeSavedStateHandleProvider
 import proton.android.pass.data.fakes.repositories.FakeBulkMoveToVaultRepository
 import proton.android.pass.data.fakes.usecases.FakeObserveVaultsWithItemCount
+import proton.android.pass.data.fakes.usecases.folders.FakeObserveFolders
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.VaultWithItemCount
@@ -47,12 +48,14 @@ class MigrateSelectVaultViewModelTest {
 
     private lateinit var instance: MigrateSelectVaultViewModel
     private lateinit var observeVaults: FakeObserveVaultsWithItemCount
+    private lateinit var observeFolders: FakeObserveFolders
     private lateinit var snackbarDispatcher: FakeSnackbarDispatcher
     private lateinit var bulkMoveToVaultRepository: FakeBulkMoveToVaultRepository
 
     @Before
     fun setup() {
         observeVaults = FakeObserveVaultsWithItemCount()
+        observeFolders = FakeObserveFolders()
         snackbarDispatcher = FakeSnackbarDispatcher()
         bulkMoveToVaultRepository = FakeBulkMoveToVaultRepository().apply {
             runBlocking { save(mapOf(SHARE_ID to listOf(ITEM_ID))) }
@@ -60,6 +63,7 @@ class MigrateSelectVaultViewModelTest {
         }
         instance = MigrateSelectVaultViewModel(
             observeVaults = observeVaults,
+            observeFolders = observeFolders,
             snackbarDispatcher = snackbarDispatcher,
             bulkMoveToVaultRepository = bulkMoveToVaultRepository,
             savedStateHandle = FakeSavedStateHandleProvider().apply {

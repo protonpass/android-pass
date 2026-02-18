@@ -22,14 +22,22 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.PersistentList
+import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
+import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
@@ -39,8 +47,10 @@ import proton.android.pass.common.api.toOption
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonpresentation.api.folders.FolderTreeBuilder
 import proton.android.pass.commonui.api.require
+import proton.android.pass.commonuimodels.api.FolderUiModel
 import proton.android.pass.data.api.repositories.BulkMoveToVaultRepository
 import proton.android.pass.data.api.usecases.ObserveVaultsWithItemCount
+import proton.android.pass.data.api.usecases.folders.ObserveFolders
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.VaultWithItemCount
@@ -61,8 +71,19 @@ class MigrateSelectVaultViewModel @Inject constructor(
     private val savedStateHandle: SavedStateHandleProvider,
     bulkMoveToVaultRepository: BulkMoveToVaultRepository,
     observeVaults: ObserveVaultsWithItemCount,
+    private val observeFolders: ObserveFolders,
     snackbarDispatcher: SnackbarDispatcher
 ) : ViewModel() {
+
+    private data class VaultShareKey(
+        val userId: UserId,
+        val shareId: ShareId
+    )
+
+    private data class VaultsWithFolders(
+        val vaultShares: List<VaultWithItemCount>,
+        val vaultFolders: Map<ShareId, PersistentList<FolderUiModel>>
+    )
 
     private val mode: Mode = getMode()
 
@@ -71,22 +92,42 @@ class MigrateSelectVaultViewModel @Inject constructor(
     private val selectedItemsFlow = bulkMoveToVaultRepository.observe()
         .distinctUntilChanged()
 
+    private val vaultSharesFlow: Flow<List<VaultWithItemCount>> =
+        observeVaults(includeHidden = true)
+
+    private val vaultShareKeysFlow: Flow<List<VaultShareKey>> = vaultSharesFlow
+        .map(::toVaultShareKeys)
+        .distinctUntilChanged()
+
+    private val vaultFoldersFlow: Flow<Map<ShareId, PersistentList<FolderUiModel>>> =
+        vaultShareKeysFlow.flatMapLatest(::observeVaultFolders)
+
+    private val vaultsWithFoldersFlow: Flow<VaultsWithFolders> = combine(
+        vaultSharesFlow,
+        vaultFoldersFlow,
+        ::VaultsWithFolders
+    )
+
     internal val state: StateFlow<MigrateSelectVaultUiState> = combine(
-        observeVaults(includeHidden = true).asLoadingResult(),
+        vaultsWithFoldersFlow.asLoadingResult(),
         eventFlow,
         selectedItemsFlow
-    ) { vaultResult, event, selectedItems ->
-        when (vaultResult) {
+    ) { vaultsWithFoldersResult, event, selectedItems ->
+        when (vaultsWithFoldersResult) {
             LoadingResult.Loading -> MigrateSelectVaultUiState.Loading
             is LoadingResult.Error -> {
                 snackbarDispatcher(CouldNotInit)
                 PassLogger.w(TAG, "Error observing active vaults")
-                PassLogger.w(TAG, vaultResult.exception)
+                PassLogger.w(TAG, vaultsWithFoldersResult.exception)
                 MigrateSelectVaultUiState.Error
             }
 
             is LoadingResult.Success -> MigrateSelectVaultUiState.Success(
-                vaultList = prepareVaults(vaultResult.data, selectedItems),
+                vaultList = prepareVaults(
+                    vaultsWithFoldersResult.data.vaultShares,
+                    vaultsWithFoldersResult.data.vaultFolders,
+                    selectedItems
+                ),
                 event = event,
                 mode = mode.migrateMode()
             )
@@ -118,6 +159,7 @@ class MigrateSelectVaultViewModel @Inject constructor(
 
     private fun prepareVaults(
         vaults: List<VaultWithItemCount>,
+        vaultFolders: Map<ShareId, PersistentList<FolderUiModel>>,
         selectedItems: Option<Map<ShareId, List<ItemId>>>
     ): ImmutableList<VaultEnabledPair> = vaults
         .filter {
@@ -127,15 +169,16 @@ class MigrateSelectVaultViewModel @Inject constructor(
                 true
             }
         }
-        .map { prepareVault(it, selectedItems) }
+        .map { prepareVault(it, vaultFolders, selectedItems) }
         .toImmutableList()
 
     private fun prepareVault(
         vault: VaultWithItemCount,
+        vaultFolders: Map<ShareId, PersistentList<FolderUiModel>>,
         selectedItems: Option<Map<ShareId, List<ItemId>>>
     ): VaultEnabledPair {
         val canCreate = vault.vault.role.toPermissions().canCreate()
-        val folderTree = FolderTreeBuilder.build(vault.vault.folders)
+        val folderTree = vaultFolders[vault.vault.shareId] ?: persistentListOf()
         return when (mode) {
             is Mode.MigrateSelectedItems -> {
                 when (selectedItems) {
@@ -193,6 +236,31 @@ class MigrateSelectVaultViewModel @Inject constructor(
             }
         }
     }
+
+    private fun toVaultShareKeys(vaults: List<VaultWithItemCount>): List<VaultShareKey> = vaults.map { vault ->
+        VaultShareKey(
+            userId = vault.vault.userId,
+            shareId = vault.vault.shareId
+        )
+    }
+
+    private fun observeVaultFolders(shareKeys: List<VaultShareKey>): Flow<Map<ShareId, PersistentList<FolderUiModel>>> {
+        if (shareKeys.isEmpty()) {
+            return flowOf(emptyMap())
+        }
+
+        val folderFlows = shareKeys.map(::observeFolderTreeForShare)
+        return combine(folderFlows) { shareFolderPairs -> shareFolderPairs.toMap() }
+    }
+
+    private fun observeFolderTreeForShare(shareKey: VaultShareKey): Flow<Pair<ShareId, PersistentList<FolderUiModel>>> =
+        observeFolders(shareKey.userId, shareKey.shareId)
+            .map { folderList ->
+                shareKey.shareId to FolderTreeBuilder.build(folderList)
+            }
+            .onStart {
+                emit(shareKey.shareId to FolderTreeBuilder.build(emptyList()))
+            }
 
     private fun getMode(): Mode {
         val savedState = savedStateHandle.get()

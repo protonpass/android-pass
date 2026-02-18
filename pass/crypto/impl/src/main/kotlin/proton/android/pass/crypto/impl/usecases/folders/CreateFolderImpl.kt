@@ -26,7 +26,6 @@ import proton.android.pass.crypto.api.usecases.folders.CreateFolder
 import proton.android.pass.crypto.api.usecases.folders.CreateFolderPayload
 import proton.android.pass.crypto.api.usecases.folders.EncryptedCreateFolder
 import proton.android.pass.crypto.impl.Constants.FOLDER_CONTENT_FORMAT_VERSION
-import proton.android.pass.domain.key.ShareKey
 import proton_pass_folder_v1.FolderV1
 import javax.inject.Inject
 
@@ -34,33 +33,28 @@ class CreateFolderImpl @Inject constructor(
     private val encryptionContextProvider: EncryptionContextProvider
 ) : CreateFolder {
 
-    override fun create(shareKey: ShareKey, folderName: String): CreateFolderPayload {
-        // Build the FolderV1 protobuf
+    override fun create(
+        parentKey: EncryptionKey,
+        keyRotation: Long,
+        folderName: String
+    ): CreateFolderPayload {
         val folder = FolderV1.Folder.newBuilder()
             .setName(folderName)
             .build()
         val serializedFolder = folder.toByteArray()
 
-        // Generate a new folder key
         val folderKey = EncryptionKey.generate()
 
-        // Encrypt the folder content with the folder key
         val encryptedContents = encryptionContextProvider.withEncryptionContext(folderKey.clone()) {
             encrypt(serializedFolder, EncryptionTag.FolderContent)
         }
 
-        // Decrypt the share key
-        val decryptedShareKey = encryptionContextProvider.withEncryptionContext {
-            EncryptionKey(decrypt(shareKey.key))
-        }
-
-        // Encrypt the folder key with the share key
-        val encryptedFolderKey = encryptionContextProvider.withEncryptionContext(decryptedShareKey) {
+        val encryptedFolderKey = encryptionContextProvider.withEncryptionContext(parentKey.clone()) {
             encrypt(folderKey.value(), EncryptionTag.FolderKey)
         }
 
         val request = EncryptedCreateFolder(
-            keyRotation = shareKey.rotation,
+            keyRotation = keyRotation,
             contentFormatVersion = FOLDER_CONTENT_FORMAT_VERSION,
             content = Base64.encodeBase64String(encryptedContents.array),
             folderKey = Base64.encodeBase64String(encryptedFolderKey.array)

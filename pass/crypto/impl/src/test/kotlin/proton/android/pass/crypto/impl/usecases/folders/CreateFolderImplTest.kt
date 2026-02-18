@@ -44,13 +44,19 @@ class CreateFolderImplTest {
         val (shareKey, _) = ShareKeyTestFactory.create()
         val folderName = "My Folder"
 
-        val result = createFolder.create(shareKey, folderName)
+        val parentKey = encryptionContextProvider.withEncryptionContext {
+            EncryptionKey(decrypt(shareKey.key))
+        }
+
+        val result = createFolder.create(parentKey, shareKey.rotation, folderName)
 
         assertThat(result.request.keyRotation).isEqualTo(shareKey.rotation)
         assertThat(result.request.contentFormatVersion).isEqualTo(1)
         assertThat(result.request.content).isNotEmpty()
         assertThat(result.request.folderKey).isNotEmpty()
         assertThat(result.folderKey).isNotNull()
+
+        parentKey.clear()
     }
 
     @Test
@@ -58,7 +64,11 @@ class CreateFolderImplTest {
         val (shareKey, _) = ShareKeyTestFactory.create()
         val folderName = "Test Folder"
 
-        val result = createFolder.create(shareKey, folderName)
+        val parentKey = encryptionContextProvider.withEncryptionContext {
+            EncryptionKey(decrypt(shareKey.key))
+        }
+
+        val result = createFolder.create(parentKey, shareKey.rotation, folderName)
 
         // Decrypt the content to verify it contains the folder name
         val decryptedContent = encryptionContextProvider.withEncryptionContext(result.folderKey.clone()) {
@@ -68,6 +78,8 @@ class CreateFolderImplTest {
 
         val folder = FolderV1.Folder.parseFrom(decryptedContent)
         assertThat(folder.name).isEqualTo(folderName)
+
+        parentKey.clear()
     }
 
     @Test
@@ -75,32 +87,39 @@ class CreateFolderImplTest {
         val (shareKey, _) = ShareKeyTestFactory.create()
         val folderName = "Folder"
 
-        val result1 = createFolder.create(shareKey, folderName)
-        val result2 = createFolder.create(shareKey, folderName)
-
-        // Each call should generate a different folder key
-        assertThat(result1.request.folderKey).isNotEqualTo(result2.request.folderKey)
-    }
-
-    @Test
-    fun `create folder encrypts folder key with share key`() {
-        val (shareKey, _) = ShareKeyTestFactory.create()
-        val folderName = "Encrypted Folder"
-
-        val result = createFolder.create(shareKey, folderName)
-
-        // Verify that the folder key can be decrypted with the share key
-        val decryptedShareKey = encryptionContextProvider.withEncryptionContext {
+        val parentKey = encryptionContextProvider.withEncryptionContext {
             EncryptionKey(decrypt(shareKey.key))
         }
 
-        val decryptedFolderKey = encryptionContextProvider.withEncryptionContext(decryptedShareKey) {
+        val result1 = createFolder.create(parentKey.clone(), shareKey.rotation, folderName)
+        val result2 = createFolder.create(parentKey.clone(), shareKey.rotation, folderName)
+
+        // Each call should generate a different folder key
+        assertThat(result1.request.folderKey).isNotEqualTo(result2.request.folderKey)
+
+        parentKey.clear()
+    }
+
+    @Test
+    fun `create folder encrypts folder key with parent key`() {
+        val (shareKey, _) = ShareKeyTestFactory.create()
+        val folderName = "Encrypted Folder"
+
+        val parentKey = encryptionContextProvider.withEncryptionContext {
+            EncryptionKey(decrypt(shareKey.key))
+        }
+
+        val result = createFolder.create(parentKey.clone(), shareKey.rotation, folderName)
+
+        // Verify that the folder key can be decrypted with the parent key
+        val decryptedFolderKey = encryptionContextProvider.withEncryptionContext(parentKey.clone()) {
             val encryptedFolderKeyBytes = EncryptedByteArray(Base64.decodeBase64(result.request.folderKey))
             decrypt(encryptedFolderKeyBytes)
         }
 
         assertThat(decryptedFolderKey).isNotEmpty()
-        decryptedShareKey.clear()
+
+        parentKey.clear()
     }
 
     @Test
@@ -108,7 +127,11 @@ class CreateFolderImplTest {
         val (shareKey, _) = ShareKeyTestFactory.create()
         val folderName = "Folder with émojis 🎉 and spëcial characters"
 
-        val result = createFolder.create(shareKey, folderName)
+        val parentKey = encryptionContextProvider.withEncryptionContext {
+            EncryptionKey(decrypt(shareKey.key))
+        }
+
+        val result = createFolder.create(parentKey, shareKey.rotation, folderName)
 
         // Decrypt and verify the name is preserved
         val decryptedContent = encryptionContextProvider.withEncryptionContext(result.folderKey.clone()) {
@@ -118,5 +141,7 @@ class CreateFolderImplTest {
 
         val folder = FolderV1.Folder.parseFrom(decryptedContent)
         assertThat(folder.name).isEqualTo(folderName)
+
+        parentKey.clear()
     }
 }

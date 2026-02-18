@@ -57,13 +57,25 @@ internal fun AddFolderToVaultDialogContent(
     onCancel: () -> Unit,
     onDismiss: () -> Unit
 ) {
+    val title = if (state.isEditMode) {
+        stringResource(R.string.vault_edit_folder_dialog_title)
+    } else {
+        stringResource(R.string.vault_add_folder_dialog_title)
+    }
+
+    val confirmText = if (state.isEditMode) {
+        stringResource(R.string.vault_edit_folder_dialog_save_action)
+    } else {
+        stringResource(R.string.vault_add_folder_dialog_create_action)
+    }
+
     ConfirmWithLoadingDialog(
         modifier = modifier,
         show = true,
         isLoading = state.isLoading,
         isConfirmActionDestructive = true,
         isConfirmEnabled = state.isButtonEnabled.value(),
-        title = stringResource(R.string.vault_add_folder_dialog_title),
+        title = title,
         content = {
             Column(
                 verticalArrangement = Arrangement.spacedBy(Spacing.medium)
@@ -104,7 +116,7 @@ internal fun AddFolderToVaultDialogContent(
                 }
             }
         },
-        confirmText = stringResource(R.string.vault_add_folder_dialog_create_action),
+        confirmText = confirmText,
         cancelText = stringResource(R.string.vault_delete_dialog_cancel_action),
         onDismiss = onDismiss,
         onConfirm = onCreate,

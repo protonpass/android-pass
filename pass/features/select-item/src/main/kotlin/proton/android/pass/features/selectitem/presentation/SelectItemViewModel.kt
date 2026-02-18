@@ -527,7 +527,8 @@ class SelectItemViewModel @Inject constructor(
         }
 
         val canUpgrade = upgradeInfo.getOrNull()?.isUpgradeAvailable == true
-        val showCreateButton = selectItemState.map { it.showCreateButton }.value() == true
+        val hasVaults = shares.values.any { it.isNotEmpty() }
+        val showCreateButton = selectItemState.map { it.showCreateButton }.value() == true && hasVaults
         val isPasswordCredential =
             selectItemState.map { it.isPasswordCredentialCreation }.value() == true
         val autosaveState = selectItemState.value() as? SelectItemState.Autosave

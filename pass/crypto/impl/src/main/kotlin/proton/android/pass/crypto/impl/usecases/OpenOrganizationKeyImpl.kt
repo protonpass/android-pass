@@ -19,6 +19,7 @@
 package proton.android.pass.crypto.impl.usecases
 
 import me.proton.core.crypto.common.context.CryptoContext
+import me.proton.core.crypto.common.pgp.PGPHeader
 import me.proton.core.crypto.common.pgp.VerificationContext
 import me.proton.core.key.domain.decryptData
 import me.proton.core.key.domain.entity.key.PrivateKey
@@ -72,7 +73,10 @@ class OpenOrganizationKeyImpl @Inject constructor(
                     decryptedToken
                 }
             )
-            val privateKeyResult = cryptoContext.pgpCrypto.getArmored(unlockedKey.value)
+            val privateKeyResult = cryptoContext.pgpCrypto.getArmored(
+                unlockedKey.value,
+                PGPHeader.PrivateKey
+            )
                 .toPrivateKey()
             val publicKeyResult = cryptoContext.pgpCrypto.getPublicKey(privateKey)
                 .toPublicKey()

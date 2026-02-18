@@ -45,7 +45,8 @@ class ManageVaultMemberRowPreviewProvider : PreviewParameterProvider<VaultMember
                         username = "someuser",
                         role = ShareRole.Admin,
                         isCurrentUser = true,
-                        isOwner = isOwner
+                        isOwner = isOwner,
+                        isGroup = false
                     )
                 )
                 yield(VaultMemberRowInput(member))
@@ -60,7 +61,8 @@ class ManageVaultMemberRowPreviewProvider : PreviewParameterProvider<VaultMember
                         username = "someuser",
                         role = role,
                         isCurrentUser = false,
-                        isOwner = false
+                        isOwner = false,
+                        isGroup = false
                     )
                 )
                 yield(VaultMemberRowInput(member))

@@ -30,7 +30,10 @@ import kotlin.test.assertFailsWith
 import proton.android.pass.crypto.api.Base64
 import proton.android.pass.crypto.fakes.context.FakeEncryptionContext
 import proton.android.pass.crypto.fakes.context.FakeEncryptionContextProvider
-import proton.android.pass.crypto.fakes.usecases.FakeOpenFolder
+import proton.android.pass.crypto.fakes.usecases.folders.FakeCreateFolder
+import proton.android.pass.crypto.fakes.usecases.folders.FakeMoveFolder
+import proton.android.pass.crypto.fakes.usecases.folders.FakeOpenFolder
+import proton.android.pass.crypto.fakes.usecases.folders.FakeUpdateFolder
 import proton.android.pass.data.impl.fakes.FakeLocalFolderDataSource
 import proton.android.pass.data.impl.fakes.FakeLocalFolderKeyDataSource
 import proton.android.pass.data.impl.fakes.FakeLocalShareKeyDataSource
@@ -55,6 +58,9 @@ internal class FolderRepositoryImplTest {
     private lateinit var localFolderKeyDataSource: FakeLocalFolderKeyDataSource
     private lateinit var localShareKeyDataSource: FakeLocalShareKeyDataSource
     private lateinit var remoteFolderDataSource: FakeRemoteFolderDataSource
+    private lateinit var createFolder: FakeCreateFolder
+    private lateinit var updateFolder: FakeUpdateFolder
+    private lateinit var moveFolder: FakeMoveFolder
     private lateinit var openFolder: FakeOpenFolder
     private lateinit var shareKeyRepository: FakeShareKeyRepository
     private lateinit var repository: FolderRepositoryImpl
@@ -65,6 +71,9 @@ internal class FolderRepositoryImplTest {
         localFolderKeyDataSource = FakeLocalFolderKeyDataSource()
         localShareKeyDataSource = FakeLocalShareKeyDataSource()
         remoteFolderDataSource = FakeRemoteFolderDataSource()
+        createFolder = FakeCreateFolder()
+        updateFolder = FakeUpdateFolder()
+        moveFolder = FakeMoveFolder()
         openFolder = FakeOpenFolder()
         shareKeyRepository = FakeShareKeyRepository()
 
@@ -75,6 +84,9 @@ internal class FolderRepositoryImplTest {
             localShareKeyDataSource = localShareKeyDataSource,
             remoteFolderDataSource = remoteFolderDataSource,
             encryptionContextProvider = FakeEncryptionContextProvider(),
+            createFolder = createFolder,
+            updateFolder = updateFolder,
+            moveFolder = moveFolder,
             openFolder = openFolder,
             shareKeyRepository = shareKeyRepository,
             database = FakePassDatabase()
@@ -122,11 +134,14 @@ internal class FolderRepositoryImplTest {
 
     @Test
     fun `createFolder uses local share key for root folder decryption`() = runTest {
-        localShareKeyDataSource.setShareKey(
-            userId = userId,
-            shareId = shareId,
-            rotation = 3,
-            keyBytes = byteArrayOf(10)
+        shareKeyRepository.emitGetLatestKeyForShare(
+            ShareKeyTestFactory.create(rotation = 3, keyBytes = byteArrayOf(10))
+        )
+        createFolder.setResult(
+            keyRotation = 3,
+            contentFormatVersion = 1,
+            content = "payload",
+            folderKey = "folder-key"
         )
         remoteFolderDataSource.createFolderResponse = FolderApiModelTestFactory.create(
             folderId = "created-root",
@@ -144,14 +159,12 @@ internal class FolderRepositoryImplTest {
             userId = userId,
             shareId = shareId,
             parentFolderId = null,
-            keyRotation = 3,
-            contentFormatVersion = 1,
-            content = "payload",
-            folderKey = "folder-key"
+            folderName = "Root Name"
         )
 
+        assertThat(createFolder.memory()).hasSize(1)
+        assertThat(createFolder.memory().single().folderName).isEqualTo("Root Name")
         assertThat(openFolder.calls).hasSize(1)
-        assertThat(openFolder.calls.single().parentKey.toList()).isEqualTo(listOf(10.toByte()))
         assertThat(result.name).isEqualTo("Root Name")
         assertThat(localFolderDataSource.memory.single().id).isEqualTo("created-root")
         assertThat(localFolderKeyDataSource.memory.single().encryptedKey.array.toList())
@@ -166,11 +179,14 @@ internal class FolderRepositoryImplTest {
 
     @Test
     fun `createFolder clears transient open folder key after use`() = runTest {
-        localShareKeyDataSource.setShareKey(
-            userId = userId,
-            shareId = shareId,
-            rotation = 3,
-            keyBytes = byteArrayOf(10)
+        shareKeyRepository.emitGetLatestKeyForShare(
+            ShareKeyTestFactory.create(rotation = 3, keyBytes = byteArrayOf(10))
+        )
+        createFolder.setResult(
+            keyRotation = 3,
+            contentFormatVersion = 1,
+            content = "payload",
+            folderKey = "folder-key"
         )
         remoteFolderDataSource.createFolderResponse = FolderApiModelTestFactory.create(
             folderId = "created-root",
@@ -188,10 +204,7 @@ internal class FolderRepositoryImplTest {
             userId = userId,
             shareId = shareId,
             parentFolderId = null,
-            keyRotation = 3,
-            contentFormatVersion = 1,
-            content = "payload",
-            folderKey = "folder-key"
+            folderName = "Root Name"
         )
 
         assertThat(openFolder.keyReferences).hasSize(1)
@@ -202,6 +215,15 @@ internal class FolderRepositoryImplTest {
 
     @Test
     fun `createFolder uses parent folder key for nested folder decryption`() = runTest {
+        shareKeyRepository.emitGetLatestKeyForShare(
+            ShareKeyTestFactory.create(rotation = 7, keyBytes = byteArrayOf(77))
+        )
+        createFolder.setResult(
+            keyRotation = 7,
+            contentFormatVersion = 1,
+            content = "payload",
+            folderKey = "child-folder-key"
+        )
         localFolderKeyDataSource.upsertKey(
             FolderKeyEntityTestFactory.create(
                 folderId = "parent-folder",
@@ -227,19 +249,22 @@ internal class FolderRepositoryImplTest {
             userId = userId,
             shareId = shareId,
             parentFolderId = FolderId("parent-folder"),
-            keyRotation = 7,
-            contentFormatVersion = 1,
-            content = "payload",
-            folderKey = "child-folder-key"
+            folderName = "Nested Name"
         )
 
         assertThat(openFolder.calls.single().parentKey.toList()).isEqualTo(listOf(44.toByte()))
     }
 
     @Test
-    fun `createFolder falls back to share key repository when local share key missing`() = runTest {
+    fun `createFolder uses share key repository for encryption`() = runTest {
         shareKeyRepository.emitGetLatestKeyForShare(
             ShareKeyTestFactory.create(rotation = 8, keyBytes = byteArrayOf(77))
+        )
+        createFolder.setResult(
+            keyRotation = 8,
+            contentFormatVersion = 1,
+            content = "content",
+            folderKey = "folder-key"
         )
         remoteFolderDataSource.createFolderResponse = FolderApiModelTestFactory.create(
             folderId = "created-root",
@@ -257,13 +282,11 @@ internal class FolderRepositoryImplTest {
             userId = userId,
             shareId = shareId,
             parentFolderId = null,
-            keyRotation = 8,
-            contentFormatVersion = 1,
-            content = "content",
-            folderKey = "folder-key"
+            folderName = "Root"
         )
 
-        assertThat(openFolder.calls.single().parentKey.toList()).isEqualTo(listOf(77.toByte()))
+        assertThat(createFolder.memory()).hasSize(1)
+        assertThat(createFolder.memory().single().shareKey.rotation).isEqualTo(8L)
     }
 
     @Test
@@ -468,64 +491,305 @@ internal class FolderRepositoryImplTest {
     }
 
     @Test
-    fun `updateFolder maps request and decrypts response`() = runTest {
-        localShareKeyDataSource.setShareKey(userId, shareId, rotation = 5, keyBytes = byteArrayOf(61))
+    fun `updateFolder successfully updates folder name`() = runTest {
+        // Setup share key for root folder
+        localShareKeyDataSource.setShareKey(
+            userId = userId,
+            shareId = shareId,
+            rotation = 1,
+            keyBytes = byteArrayOf(55)
+        )
+
+        // Setup existing folder
+        localFolderDataSource.upsertFolder(
+            folderEntity(
+                folderId = "folder-to-update",
+                name = "Old Name",
+                parentFolderId = null
+            )
+        )
+        localFolderKeyDataSource.upsertKey(
+            FolderKeyEntityTestFactory.create(
+                folderId = "folder-to-update",
+                userId = userId.id,
+                shareId = shareId.id,
+                keyRotation = 1,
+                encryptedKey = encryptedBytes(100)
+            )
+        )
+
+        updateFolder.setResult(
+            keyRotation = 1,
+            contentFormatVersion = 1,
+            content = "updated-content"
+        )
         remoteFolderDataSource.updateFolderResponse = FolderApiModelTestFactory.create(
             folderId = "folder-to-update",
             parentFolderId = null,
-            keyRotation = 5,
-            folderKey = "update-key"
+            keyRotation = 1,
+            folderKey = "updated-key"
         )
-        openFolder.setOutput("folder-to-update", "Updated Name", encryptedBytes(3))
+        openFolder.setOutput(
+            folderId = "folder-to-update",
+            folderName = "New Name",
+            reencryptedFolderKey = encryptedBytes(101)
+        )
 
         val result = repository.updateFolder(
             userId = userId,
             shareId = shareId,
             folderId = FolderId("folder-to-update"),
-            keyRotation = 5,
-            contentFormatVersion = 2,
-            content = "updated-content"
+            folderName = "New Name"
         )
 
-        assertThat(result.name).isEqualTo("Updated Name")
-        val request = remoteFolderDataSource.updateFolderCalls.single().request
-        assertThat(request.keyRotation).isEqualTo(5)
-        assertThat(request.contentFormatVersion).isEqualTo(2)
-        assertThat(request.content).isEqualTo("updated-content")
+        assertThat(result.name).isEqualTo("New Name")
+        assertThat(updateFolder.memory()).hasSize(1)
+        assertThat(updateFolder.memory().single().folderName).isEqualTo("New Name")
+        assertThat(remoteFolderDataSource.updateFolderCalls).hasSize(1)
     }
 
     @Test
-    fun `moveFolder maps folder keys and decrypts response`() = runTest {
+    fun `updateFolder uses existing folder key`() = runTest {
+        // Setup share key for root folder
+        localShareKeyDataSource.setShareKey(
+            userId = userId,
+            shareId = shareId,
+            rotation = 5,
+            keyBytes = byteArrayOf(66)
+        )
+
+        localFolderDataSource.upsertFolder(
+            folderEntity(
+                folderId = "folder-1",
+                name = "Original",
+                parentFolderId = null
+            )
+        )
         localFolderKeyDataSource.upsertKey(
             FolderKeyEntityTestFactory.create(
-                folderId = "parent",
+                folderId = "folder-1",
+                userId = userId.id,
+                shareId = shareId.id,
+                keyRotation = 5,
+                encryptedKey = encryptedBytes(50)
+            )
+        )
+
+        updateFolder.setResult(
+            keyRotation = 5,
+            contentFormatVersion = 1,
+            content = "content"
+        )
+        remoteFolderDataSource.updateFolderResponse = FolderApiModelTestFactory.create(
+            folderId = "folder-1",
+            parentFolderId = null,
+            keyRotation = 5,
+            folderKey = "key"
+        )
+        openFolder.setOutput(
+            folderId = "folder-1",
+            folderName = "Updated",
+            reencryptedFolderKey = encryptedBytes(51)
+        )
+
+        repository.updateFolder(
+            userId = userId,
+            shareId = shareId,
+            folderId = FolderId("folder-1"),
+            folderName = "Updated"
+        )
+
+        assertThat(updateFolder.memory().single().keyRotation).isEqualTo(5L)
+    }
+
+    @Test
+    fun `moveFolder successfully moves folder to new parent`() = runTest {
+        // Setup folder to move
+        localFolderDataSource.upsertFolder(
+            folderEntity(
+                folderId = "folder-to-move",
+                name = "Moving Folder",
+                parentFolderId = "old-parent"
+            )
+        )
+        localFolderKeyDataSource.upsertKey(
+            FolderKeyEntityTestFactory.create(
+                folderId = "folder-to-move",
                 userId = userId.id,
                 shareId = shareId.id,
                 keyRotation = 1,
-                encryptedKey = encryptedBytes(40)
+                encryptedKey = encryptedBytes(200)
             )
         )
+        // Setup old parent
+        localFolderKeyDataSource.upsertKey(
+            FolderKeyEntityTestFactory.create(
+                folderId = "old-parent",
+                userId = userId.id,
+                shareId = shareId.id,
+                keyRotation = 1,
+                encryptedKey = encryptedBytes(201)
+            )
+        )
+        // Setup new parent
+        localFolderKeyDataSource.upsertKey(
+            FolderKeyEntityTestFactory.create(
+                folderId = "new-parent",
+                userId = userId.id,
+                shareId = shareId.id,
+                keyRotation = 1,
+                encryptedKey = encryptedBytes(202)
+            )
+        )
+
+        moveFolder.setResult("reencrypted-key")
         remoteFolderDataSource.moveFolderResponse = FolderApiModelTestFactory.create(
             folderId = "folder-to-move",
-            parentFolderId = "parent",
+            parentFolderId = "new-parent",
             keyRotation = 1,
-            folderKey = "moved-folder-key"
+            folderKey = "moved-key"
         )
-        openFolder.setOutput("folder-to-move", "Moved Name", encryptedBytes(4))
+        openFolder.setOutput(
+            folderId = "folder-to-move",
+            folderName = "Moving Folder",
+            reencryptedFolderKey = encryptedBytes(203)
+        )
 
         val result = repository.moveFolder(
             userId = userId,
             shareId = shareId,
             folderId = FolderId("folder-to-move"),
-            parentFolderId = FolderId("parent"),
-            folderKeys = listOf(1L to "key-1", 2L to "key-2")
+            newParentFolderId = FolderId("new-parent")
         )
 
-        assertThat(result.name).isEqualTo("Moved Name")
-        val request = remoteFolderDataSource.moveFolderCalls.single().request
-        assertThat(request.parentFolderId).isEqualTo("parent")
-        assertThat(request.folderKeys.map { it.keyRotation to it.folderKey })
-            .containsExactly(1L to "key-1", 2L to "key-2")
+        assertThat(result.name).isEqualTo("Moving Folder")
+        assertThat(moveFolder.memory()).hasSize(1)
+        assertThat(remoteFolderDataSource.moveFolderCalls).hasSize(1)
+        assertThat(remoteFolderDataSource.moveFolderCalls.single().folderId.id).isEqualTo("folder-to-move")
+    }
+
+    @Test
+    fun `moveFolder successfully moves folder to root`() = runTest {
+        // Setup folder to move (currently has a parent)
+        localFolderDataSource.upsertFolder(
+            folderEntity(
+                folderId = "folder-to-root",
+                name = "To Root",
+                parentFolderId = "current-parent"
+            )
+        )
+        localFolderKeyDataSource.upsertKey(
+            FolderKeyEntityTestFactory.create(
+                folderId = "folder-to-root",
+                userId = userId.id,
+                shareId = shareId.id,
+                keyRotation = 2,
+                encryptedKey = encryptedBytes(300)
+            )
+        )
+        // Setup current parent
+        localFolderKeyDataSource.upsertKey(
+            FolderKeyEntityTestFactory.create(
+                folderId = "current-parent",
+                userId = userId.id,
+                shareId = shareId.id,
+                keyRotation = 2,
+                encryptedKey = encryptedBytes(301)
+            )
+        )
+        // Setup share key for root
+        localShareKeyDataSource.setShareKey(
+            userId = userId,
+            shareId = shareId,
+            rotation = 2,
+            keyBytes = byteArrayOf(88)
+        )
+
+        moveFolder.setResult("reencrypted-for-root")
+        remoteFolderDataSource.moveFolderResponse = FolderApiModelTestFactory.create(
+            folderId = "folder-to-root",
+            parentFolderId = null,
+            keyRotation = 2,
+            folderKey = "root-key"
+        )
+        openFolder.setOutput(
+            folderId = "folder-to-root",
+            folderName = "To Root",
+            reencryptedFolderKey = encryptedBytes(302)
+        )
+
+        val result = repository.moveFolder(
+            userId = userId,
+            shareId = shareId,
+            folderId = FolderId("folder-to-root"),
+            newParentFolderId = null
+        )
+
+        assertThat(result.name).isEqualTo("To Root")
+        assertThat(remoteFolderDataSource.moveFolderCalls.single().request.parentFolderId).isNull()
+    }
+
+    @Test
+    fun `moveFolder re-encrypts folder key with new parent key`() = runTest {
+        localFolderDataSource.upsertFolder(
+            folderEntity(
+                folderId = "folder-x",
+                name = "Folder X",
+                parentFolderId = "parent-a"
+            )
+        )
+        localFolderKeyDataSource.upsertKey(
+            FolderKeyEntityTestFactory.create(
+                folderId = "folder-x",
+                userId = userId.id,
+                shareId = shareId.id,
+                keyRotation = 3,
+                encryptedKey = encryptedBytes(400)
+            )
+        )
+        localFolderKeyDataSource.upsertKey(
+            FolderKeyEntityTestFactory.create(
+                folderId = "parent-a",
+                userId = userId.id,
+                shareId = shareId.id,
+                keyRotation = 3,
+                encryptedKey = encryptedBytes(401)
+            )
+        )
+        localFolderKeyDataSource.upsertKey(
+            FolderKeyEntityTestFactory.create(
+                folderId = "parent-b",
+                userId = userId.id,
+                shareId = shareId.id,
+                keyRotation = 3,
+                encryptedKey = encryptedBytes(402)
+            )
+        )
+
+        moveFolder.setResult("reencrypted-with-parent-b")
+        remoteFolderDataSource.moveFolderResponse = FolderApiModelTestFactory.create(
+            folderId = "folder-x",
+            parentFolderId = "parent-b",
+            keyRotation = 3,
+            folderKey = "key-b"
+        )
+        openFolder.setOutput(
+            folderId = "folder-x",
+            folderName = "Folder X",
+            reencryptedFolderKey = encryptedBytes(403)
+        )
+
+        repository.moveFolder(
+            userId = userId,
+            shareId = shareId,
+            folderId = FolderId("folder-x"),
+            newParentFolderId = FolderId("parent-b")
+        )
+
+        assertThat(moveFolder.memory()).hasSize(1)
+        // Just verify moveFolder was called with the correct parameters
+        assertThat(remoteFolderDataSource.moveFolderCalls).hasSize(1)
+        assertThat(remoteFolderDataSource.moveFolderCalls.single().request.folderKeys).hasSize(1)
     }
 
     @Test

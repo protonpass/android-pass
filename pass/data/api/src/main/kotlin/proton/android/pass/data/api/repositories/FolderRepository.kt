@@ -35,33 +35,25 @@ interface FolderRepository {
         folderId: FolderId
     ): Flow<Folder?>
 
-    @Suppress("LongParameterList")
     suspend fun createFolder(
         userId: UserId,
         shareId: ShareId,
         parentFolderId: FolderId?,
-        keyRotation: Long,
-        contentFormatVersion: Int,
-        content: String,
-        folderKey: String
+        folderName: String
     ): Folder
 
-    @Suppress("LongParameterList")
     suspend fun updateFolder(
         userId: UserId,
         shareId: ShareId,
         folderId: FolderId,
-        keyRotation: Long,
-        contentFormatVersion: Int,
-        content: String
+        folderName: String
     ): Folder
 
     suspend fun moveFolder(
         userId: UserId,
         shareId: ShareId,
         folderId: FolderId,
-        parentFolderId: FolderId?,
-        folderKeys: List<Pair<Long, String>>
+        newParentFolderId: FolderId?
     ): Folder
 
     suspend fun deleteFolders(

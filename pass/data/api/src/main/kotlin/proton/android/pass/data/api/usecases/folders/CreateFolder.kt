@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2024 Proton AG
+ * Copyright (c) 2025 Proton AG
  * This file is part of Proton AG and Proton Pass.
  *
  * Proton Pass is free software: you can redistribute it and/or modify
@@ -16,9 +16,16 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.crypto.impl
+package proton.android.pass.data.api.usecases.folders
 
-object Constants {
-    const val ITEM_CONTENT_FORMAT_VERSION = 7
-    const val FOLDER_CONTENT_FORMAT_VERSION = 1
+import proton.android.pass.domain.Folder
+import proton.android.pass.domain.FolderId
+import proton.android.pass.domain.ShareId
+
+interface CreateFolder {
+    suspend operator fun invoke(
+        shareId: ShareId,
+        parentFolderId: FolderId?,
+        title: String
+    ): Folder
 }

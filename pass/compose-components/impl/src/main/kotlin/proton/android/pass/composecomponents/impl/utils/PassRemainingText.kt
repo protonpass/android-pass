@@ -42,10 +42,11 @@ fun passRemainingTimeText(remainingTime: RemainingTime): String? = when {
     }
 
     remainingTime.weeks > 0 -> {
+        val displayWeeks = (remainingTime.days + 1) / 7
         pluralStringResource(
             id = R.plurals.time_unit_weeks,
-            count = remainingTime.weeks,
-            remainingTime.weeks
+            count = displayWeeks,
+            displayWeeks
         )
     }
 

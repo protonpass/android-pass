@@ -75,7 +75,8 @@ fun ManageVaultContent(
                                         shareId = shareId,
                                         destShareId = member.shareId,
                                         memberRole = role,
-                                        destEmail = member.email
+                                        destEmail = member.email,
+                                        isGroup = member.isGroup
                                     )
                                     onNavigateEvent(event)
                                 }

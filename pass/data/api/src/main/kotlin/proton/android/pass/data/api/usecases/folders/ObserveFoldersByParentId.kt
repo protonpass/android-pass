@@ -16,23 +16,13 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.data.impl.requests
+package proton.android.pass.data.api.usecases.folders
 
-import kotlinx.serialization.SerialName
-import kotlinx.serialization.Serializable
+import kotlinx.coroutines.flow.Flow
+import proton.android.pass.domain.Folder
+import proton.android.pass.domain.FolderId
+import proton.android.pass.domain.ShareId
 
-@Serializable
-data class UpdateFolderRequest(
-    @SerialName("Content")
-    val content: UpdateFolderContent
-)
-
-@Serializable
-data class UpdateFolderContent(
-    @SerialName("KeyRotation")
-    val keyRotation: Long,
-    @SerialName("ContentFormatVersion")
-    val contentFormatVersion: Int,
-    @SerialName("Content")
-    val content: String
-)
+interface ObserveFoldersByParentId {
+    operator fun invoke(shareId: ShareId, parentFolderId: FolderId?): Flow<List<Folder>>
+}

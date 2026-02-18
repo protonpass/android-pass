@@ -30,6 +30,7 @@ import proton.android.pass.commonui.fakes.FakeSavedStateHandleProvider
 import proton.android.pass.data.fakes.repositories.FakeBulkMoveToVaultRepository
 import proton.android.pass.data.fakes.usecases.FakeCanPerformPaidAction
 import proton.android.pass.data.fakes.usecases.FakeObserveVaultsWithItemCount
+import proton.android.pass.data.fakes.usecases.folders.FakeObserveFolders
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.VaultWithItemCount
@@ -50,6 +51,7 @@ class MigrateSelectVaultForMigrateItemsViewModelTest {
 
     private lateinit var instance: MigrateSelectVaultViewModel
     private lateinit var observeVaults: FakeObserveVaultsWithItemCount
+    private lateinit var observeFolders: FakeObserveFolders
     private lateinit var canPerformPaidAction: FakeCanPerformPaidAction
     private lateinit var snackbarDispatcher: FakeSnackbarDispatcher
     private lateinit var savedState: FakeSavedStateHandleProvider
@@ -58,6 +60,7 @@ class MigrateSelectVaultForMigrateItemsViewModelTest {
     @Before
     fun setup() {
         observeVaults = FakeObserveVaultsWithItemCount()
+        observeFolders = FakeObserveFolders()
         canPerformPaidAction = FakeCanPerformPaidAction()
         snackbarDispatcher = FakeSnackbarDispatcher()
         bulkMoveToVaultRepository = FakeBulkMoveToVaultRepository().apply {
@@ -127,6 +130,7 @@ class MigrateSelectVaultForMigrateItemsViewModelTest {
     private fun createViewModel() {
         instance = MigrateSelectVaultViewModel(
             observeVaults = observeVaults,
+            observeFolders = observeFolders,
             snackbarDispatcher = snackbarDispatcher,
             savedStateHandle = savedState,
             bulkMoveToVaultRepository = bulkMoveToVaultRepository

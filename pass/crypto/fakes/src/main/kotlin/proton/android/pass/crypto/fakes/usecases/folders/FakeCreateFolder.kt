@@ -23,7 +23,6 @@ import proton.android.pass.crypto.api.EncryptionKey
 import proton.android.pass.crypto.api.usecases.folders.CreateFolder
 import proton.android.pass.crypto.api.usecases.folders.CreateFolderPayload
 import proton.android.pass.crypto.api.usecases.folders.EncryptedCreateFolder
-import proton.android.pass.domain.key.ShareKey
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -49,14 +48,18 @@ class FakeCreateFolder @Inject constructor() : CreateFolder {
         )
     }
 
-    override fun create(shareKey: ShareKey, folderName: String): CreateFolderPayload {
-        memory.add(Payload(shareKey, folderName))
+    override fun create(
+        parentKey: EncryptionKey,
+        keyRotation: Long,
+        folderName: String
+    ): CreateFolderPayload {
+        memory.add(Payload(parentKey.value().copyOf(), keyRotation, folderName))
 
         val result = mockResult ?: run {
             // Default implementation if no mock result set
             val folderKey = EncryptionKey.generate()
             EncryptedCreateFolder(
-                keyRotation = shareKey.rotation,
+                keyRotation = keyRotation,
                 contentFormatVersion = 1,
                 content = Base64.encodeBase64String(folderName.toByteArray()),
                 folderKey = Base64.encodeBase64String(folderKey.value())
@@ -70,7 +73,29 @@ class FakeCreateFolder @Inject constructor() : CreateFolder {
     }
 
     data class Payload(
-        val shareKey: ShareKey,
+        val parentKeyValue: ByteArray,
+        val keyRotation: Long,
         val folderName: String
-    )
+    ) {
+        @Suppress("ReturnCount")
+        override fun equals(other: Any?): Boolean {
+            if (this === other) return true
+            if (javaClass != other?.javaClass) return false
+
+            other as Payload
+
+            if (!parentKeyValue.contentEquals(other.parentKeyValue)) return false
+            if (keyRotation != other.keyRotation) return false
+            if (folderName != other.folderName) return false
+
+            return true
+        }
+
+        override fun hashCode(): Int {
+            var result = parentKeyValue.contentHashCode()
+            result = 31 * result + keyRotation.hashCode()
+            result = 31 * result + folderName.hashCode()
+            return result
+        }
+    }
 }

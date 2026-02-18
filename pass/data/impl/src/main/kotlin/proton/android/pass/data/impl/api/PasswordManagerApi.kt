@@ -733,7 +733,7 @@ interface PasswordManagerApi : BaseRetrofitApi {
     @POST("$PREFIX/share/{shareId}/folder")
     suspend fun createFolder(@Path("shareId") shareId: String, @Body request: CreateFolderRequest): FolderGetResponse
 
-    @DELETE("$PREFIX/share/{shareId}/folder")
+    @HTTP(method = "DELETE", path = "$PREFIX/share/{shareId}/folder", hasBody = true)
     suspend fun deleteFolders(@Path("shareId") shareId: String, @Body request: DeleteFoldersRequest): CodeOnlyResponse
 
     @GET("$PREFIX/share/{shareId}/folder/{folderId}")

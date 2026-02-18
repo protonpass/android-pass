@@ -286,7 +286,7 @@ internal class FolderRepositoryImplTest {
         )
 
         assertThat(createFolder.memory()).hasSize(1)
-        assertThat(createFolder.memory().single().shareKey.rotation).isEqualTo(8L)
+        assertThat(createFolder.memory().single().keyRotation).isEqualTo(8L)
     }
 
     @Test

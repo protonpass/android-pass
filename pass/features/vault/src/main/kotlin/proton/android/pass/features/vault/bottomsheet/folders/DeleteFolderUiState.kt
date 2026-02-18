@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 Proton AG
+ * Copyright (c) 2025 Proton AG
  * This file is part of Proton AG and Proton Pass.
  *
  * Proton Pass is free software: you can redistribute it and/or modify
@@ -16,37 +16,41 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.vault.folders
+package proton.android.pass.features.vault.bottomsheet.folders
 
 import androidx.compose.runtime.Stable
 import proton.android.pass.composecomponents.impl.uievents.IsButtonEnabled
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 
-internal sealed interface AddFolderToVaultEvent {
-    data object Unknown : AddFolderToVaultEvent
-    data object FolderAdded : AddFolderToVaultEvent
+sealed interface DeleteFolderEvent {
+
+    data object Unknown : DeleteFolderEvent
+
+    data object Deleted : DeleteFolderEvent
+
 }
 
 @Stable
-internal data class AddFolderToVaultUiState(
+data class DeleteFolderUiState(
     internal val folderName: String,
-    internal val event: AddFolderToVaultEvent,
+    internal val folderText: String,
+    internal val event: DeleteFolderEvent,
     internal val isButtonEnabled: IsButtonEnabled,
-    private val isLoadingState: IsLoadingState,
-    val showSameFolderExist: Boolean,
-    val isEditMode: Boolean
+    private val isLoadingState: IsLoadingState
 ) {
+
     internal val isLoading: Boolean = isLoadingState.value()
 
     internal companion object {
 
-        internal val Initial = AddFolderToVaultUiState(
+        internal val Initial = DeleteFolderUiState(
             folderName = "",
-            event = AddFolderToVaultEvent.Unknown,
+            folderText = "",
+            event = DeleteFolderEvent.Unknown,
             isButtonEnabled = IsButtonEnabled.Disabled,
-            isLoadingState = IsLoadingState.NotLoading,
-            showSameFolderExist = false,
-            isEditMode = false
+            isLoadingState = IsLoadingState.NotLoading
         )
+
     }
+
 }

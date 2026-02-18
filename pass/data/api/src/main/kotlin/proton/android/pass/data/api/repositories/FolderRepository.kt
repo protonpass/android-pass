@@ -27,6 +27,12 @@ import proton.android.pass.domain.ShareId
 interface FolderRepository {
     fun observeFolders(userId: UserId, shareId: ShareId): Flow<List<Folder>>
 
+    fun observeFoldersByParentId(
+        userId: UserId,
+        shareId: ShareId,
+        parentFolderId: FolderId?
+    ): Flow<List<Folder>>
+
     suspend fun refreshFolders(userId: UserId, shareId: ShareId)
 
     fun observeFolder(

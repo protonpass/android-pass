@@ -169,10 +169,16 @@ import proton.android.pass.data.api.usecases.extrapassword.CheckLocalExtraPasswo
 import proton.android.pass.data.api.usecases.extrapassword.HasExtraPassword
 import proton.android.pass.data.api.usecases.extrapassword.RemoveExtraPassword
 import proton.android.pass.data.api.usecases.extrapassword.SetupExtraPassword
+import proton.android.pass.data.api.usecases.folders.CreateFolder
+import proton.android.pass.data.api.usecases.folders.DeleteFolders
+import proton.android.pass.data.api.usecases.folders.DeleteFoldersLocally
+import proton.android.pass.data.api.usecases.folders.GetFolder
+import proton.android.pass.data.api.usecases.folders.MoveFolder
 import proton.android.pass.data.api.usecases.folders.ObserveFolderItemCounts
 import proton.android.pass.data.api.usecases.folders.ObserveFolders
-import proton.android.pass.data.api.usecases.folders.DeleteFoldersLocally
+import proton.android.pass.data.api.usecases.folders.ObserveFoldersByParentId
 import proton.android.pass.data.api.usecases.folders.RefreshFolders
+import proton.android.pass.data.api.usecases.folders.UpdateFolder
 import proton.android.pass.data.api.usecases.inappmessages.ObserveDeliverableMinimizedPromoInAppMessages
 import proton.android.pass.data.api.usecases.inappmessages.ObserveDeliverableModalInAppMessages
 import proton.android.pass.data.api.usecases.inappmessages.ObserveDeliverablePromoInAppMessages
@@ -459,10 +465,16 @@ import proton.android.pass.data.fakes.usecases.simplelogin.FakeSyncSimpleLoginPe
 import proton.android.pass.data.fakes.usecases.simplelogin.FakeUpdateSimpleLoginAliasDomain
 import proton.android.pass.data.fakes.usecases.simplelogin.FakeUpdateSimpleLoginAliasMailbox
 import proton.android.pass.data.fakes.usecases.simplelogin.FakeVerifySimpleLoginAliasMailbox
+import proton.android.pass.data.fakes.usecases.folders.FakeCreateFolder
+import proton.android.pass.data.fakes.usecases.folders.FakeDeleteFolders
+import proton.android.pass.data.fakes.usecases.folders.FakeDeleteFoldersLocally
+import proton.android.pass.data.fakes.usecases.folders.FakeGetFolder
+import proton.android.pass.data.fakes.usecases.folders.FakeMoveFolder
 import proton.android.pass.data.fakes.usecases.folders.FakeObserveFolderItemCounts
 import proton.android.pass.data.fakes.usecases.folders.FakeObserveFolders
-import proton.android.pass.data.fakes.usecases.folders.FakeDeleteFoldersLocally
+import proton.android.pass.data.fakes.usecases.folders.FakeObserveFoldersByParentId
 import proton.android.pass.data.fakes.usecases.folders.FakeRefreshFolders
+import proton.android.pass.data.fakes.usecases.folders.FakeUpdateFolder
 import proton.android.pass.data.fakes.usecases.tooltips.FakeDisableTooltip
 import proton.android.pass.data.fakes.usecases.tooltips.FakeObserveTooltipEnabled
 import proton.android.pass.data.fakes.usecases.vaults.FakeBatchChangeShareVisibility
@@ -535,16 +547,34 @@ abstract class FakesDataModule {
     abstract fun bindObserveItemCount(impl: FakeObserveItemCount): ObserveItemCount
 
     @Binds
-    abstract fun bindObserveFolders(impl: FakeObserveFolders): ObserveFolders
+    abstract fun bindCreateFolder(impl: FakeCreateFolder): CreateFolder
+
+    @Binds
+    abstract fun bindDeleteFolders(impl: FakeDeleteFolders): DeleteFolders
 
     @Binds
     abstract fun bindDeleteFoldersLocally(impl: FakeDeleteFoldersLocally): DeleteFoldersLocally
 
     @Binds
-    abstract fun bindRefreshFolders(impl: FakeRefreshFolders): RefreshFolders
+    abstract fun bindGetFolder(impl: FakeGetFolder): GetFolder
+
+    @Binds
+    abstract fun bindMoveFolder(impl: FakeMoveFolder): MoveFolder
 
     @Binds
     abstract fun bindObserveFolderItemCounts(impl: FakeObserveFolderItemCounts): ObserveFolderItemCounts
+
+    @Binds
+    abstract fun bindObserveFolders(impl: FakeObserveFolders): ObserveFolders
+
+    @Binds
+    abstract fun bindObserveFoldersByParentId(impl: FakeObserveFoldersByParentId): ObserveFoldersByParentId
+
+    @Binds
+    abstract fun bindRefreshFolders(impl: FakeRefreshFolders): RefreshFolders
+
+    @Binds
+    abstract fun bindUpdateFolder(impl: FakeUpdateFolder): UpdateFolder
 
     @Binds
     abstract fun bindMigrateItem(impl: FakeMigrateItems): MigrateItems

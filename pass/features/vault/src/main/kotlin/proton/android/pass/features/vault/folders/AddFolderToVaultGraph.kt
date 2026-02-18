@@ -19,6 +19,7 @@
 package proton.android.pass.features.vault.folders
 
 import androidx.navigation.NavGraphBuilder
+import androidx.navigation.NavType
 import proton.android.pass.domain.FolderId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.features.vault.VaultNavigation
@@ -26,29 +27,56 @@ import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.navigation.api.CommonOptionalNavArgId
 import proton.android.pass.navigation.api.NavItem
 import proton.android.pass.navigation.api.NavItemType
+import proton.android.pass.navigation.api.OptionalNavArgId
 import proton.android.pass.navigation.api.dialog
 import proton.android.pass.navigation.api.toPath
+
+object ParentFolderIdNavArgId : OptionalNavArgId {
+    override val key: String = "parentFolderId"
+    override val navType: NavType<*> = NavType.StringType
+}
 
 object AddFolderToVaultDialog : NavItem(
     baseRoute = "vault/addFolder/dialog",
     navArgIds = listOf(CommonNavArgId.ShareId),
-    optionalArgIds = listOf(CommonOptionalNavArgId.FolderId),
+    optionalArgIds = listOf(ParentFolderIdNavArgId),
     navItemType = NavItemType.Dialog
 ) {
-    // if folderId == null, it means it is the root folder (directly into the Vault)
-    fun createNavRoute(shareId: ShareId, folderId: FolderId? = null): String = buildString {
+    fun createNavRoute(shareId: ShareId, parentFolderId: FolderId? = null): String = buildString {
         append("$baseRoute/${shareId.id}")
 
-        folderId?.let { folderId ->
-            mapOf(CommonOptionalNavArgId.FolderId.key to folderId.id)
+        parentFolderId?.let { parentFolderId ->
+            mapOf(ParentFolderIdNavArgId.key to parentFolderId.id)
                 .toPath()
                 .also(::append)
         }
     }
 }
 
+object RenameFolderDialog : NavItem(
+    baseRoute = "vault/renameFolder/dialog",
+    navArgIds = listOf(CommonNavArgId.ShareId),
+    optionalArgIds = listOf(CommonOptionalNavArgId.FolderId),
+    navItemType = NavItemType.Dialog
+) {
+    fun createNavRoute(shareId: ShareId, folderId: FolderId): String = buildString {
+        append("$baseRoute/${shareId.id}")
+        mapOf(CommonOptionalNavArgId.FolderId.key to folderId.id)
+            .toPath()
+            .also(::append)
+    }
+}
+
 fun NavGraphBuilder.addFolderVaultDialogGraph(onNavigate: (VaultNavigation) -> Unit) {
     dialog(AddFolderToVaultDialog) {
+        AddFolderToVaultDialog(
+            onNavigate = onNavigate
+        )
+    }
+}
+
+fun NavGraphBuilder.renameFolderVaultDialogGraph(onNavigate: (VaultNavigation) -> Unit) {
+    dialog(RenameFolderDialog) {
         AddFolderToVaultDialog(
             onNavigate = onNavigate
         )

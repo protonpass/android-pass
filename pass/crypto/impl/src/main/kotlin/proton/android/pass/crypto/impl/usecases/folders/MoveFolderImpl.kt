@@ -30,7 +30,6 @@ class MoveFolderImpl @Inject constructor(
 ) : MoveFolder {
 
     override fun reencryptFolderKey(folderKey: EncryptionKey, newParentKey: EncryptionKey): String {
-        // Re-encrypt the folder key with the new parent key
         val encryptedFolderKey = encryptionContextProvider.withEncryptionContext(newParentKey) {
             encrypt(folderKey.value(), EncryptionTag.FolderKey)
         }

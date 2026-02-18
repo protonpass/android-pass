@@ -37,8 +37,7 @@ data class Vault(
     val maxMembers: Int = 10,
     val canAutofill: Boolean = true,
     val createTime: Date,
-    val shareFlags: ShareFlags,
-    val folders: List<Folder> = emptyList() //
+    val shareFlags: ShareFlags
 ) {
 
     val canBeUpdated: Boolean = role.toPermissions().canUpdate()

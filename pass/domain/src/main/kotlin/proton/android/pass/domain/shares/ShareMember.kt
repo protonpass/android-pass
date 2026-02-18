@@ -29,6 +29,7 @@ data class ShareMember(
     val role: ShareRole,
     val isCurrentUser: Boolean,
     val isOwner: Boolean,
+    val isGroup: Boolean,
     private val shareType: ShareType
 ) {
 

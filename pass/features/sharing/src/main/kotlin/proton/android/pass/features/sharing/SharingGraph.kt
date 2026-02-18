@@ -230,7 +230,8 @@ sealed interface SharingNavigation {
         val shareId: ShareId,
         val memberRole: ShareRole,
         val destShareId: ShareId,
-        val destEmail: String
+        val destEmail: String,
+        val isGroup: Boolean
     ) : SharingNavigation
 
     data class ExistingUserInviteOptions(

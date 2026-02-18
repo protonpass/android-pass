@@ -95,7 +95,8 @@ internal fun ManageItemScreen(
                         shareId = uiEvent.shareId,
                         destShareId = uiEvent.member.shareId,
                         memberRole = uiEvent.member.role,
-                        destEmail = uiEvent.member.email
+                        destEmail = uiEvent.member.email,
+                        isGroup = uiEvent.member.isGroup
                     ).also(onNavigateEvent)
                 }
             }

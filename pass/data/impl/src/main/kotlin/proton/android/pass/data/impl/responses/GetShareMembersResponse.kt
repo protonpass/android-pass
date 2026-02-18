@@ -49,6 +49,8 @@ data class ShareMemberResponse(
     val permission: Int,
     @SerialName("ShareRoleID")
     val shareRoleId: String?,
+    @SerialName("IsGroupShare")
+    val isGroupShare: Boolean,
     @SerialName("ExpireTime")
     val expireTime: Long?,
     @SerialName("CreateTime")

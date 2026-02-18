@@ -32,6 +32,7 @@ import proton.android.pass.data.fakes.usecases.FakeUpdateShareMemberRole
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.ShareRole
 import proton.android.pass.features.sharing.SharingSnackbarMessage
+import proton.android.pass.features.sharing.manage.bottomsheet.IsGroupArg
 import proton.android.pass.features.sharing.manage.bottomsheet.MemberEmailArg
 import proton.android.pass.features.sharing.manage.bottomsheet.MemberShareIdArg
 import proton.android.pass.features.sharing.manage.bottomsheet.ShareRoleArg
@@ -251,6 +252,7 @@ class MemberOptionsViewModelTest {
             set(MemberShareIdArg.key, MEMBER_SHARE_ID)
             set(ShareRoleArg.key, memberRole.value)
             set(MemberEmailArg.key, MEMBER_EMAIL)
+            set(IsGroupArg.key, false)
         }
 
         instance = MemberOptionsViewModel(

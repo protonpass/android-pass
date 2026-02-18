@@ -29,6 +29,7 @@ sealed class VaultMember(open val email: String) {
         override val email: String,
         val shareId: ShareId,
         val username: String,
+        val isGroup: Boolean,
         val role: ShareRole?,
         val isCurrentUser: Boolean,
         val isOwner: Boolean

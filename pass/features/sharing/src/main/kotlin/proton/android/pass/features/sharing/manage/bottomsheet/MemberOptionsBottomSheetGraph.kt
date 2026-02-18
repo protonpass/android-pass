@@ -98,6 +98,11 @@ object ShareRoleArg : NavArgId {
     override val navType = NavType.StringType
 }
 
+object IsGroupArg : NavArgId {
+    override val key = "isGroup"
+    override val navType = NavType.BoolType
+}
+
 object MemberEmailArg : NavArgId {
     override val key = "memberEmail"
     override val navType = NavType.StringType
@@ -105,15 +110,17 @@ object MemberEmailArg : NavArgId {
 
 object MemberOptionsBottomSheet : NavItem(
     baseRoute = "sharing/manage/member/bottomsheet",
-    navArgIds = listOf(CommonNavArgId.ShareId, MemberShareIdArg, ShareRoleArg, MemberEmailArg),
+    navArgIds = listOf(CommonNavArgId.ShareId, MemberShareIdArg, ShareRoleArg, MemberEmailArg, IsGroupArg),
     navItemType = NavItemType.Bottomsheet
 ) {
     fun buildRoute(
         shareId: ShareId,
         memberShareId: ShareId,
         shareRole: ShareRole,
-        memberEmail: String
-    ) = "$baseRoute/${shareId.id}/${memberShareId.id}/${shareRole.value}/${NavParamEncoder.encode(memberEmail)}"
+        memberEmail: String,
+        isGroup: Boolean
+    ) = "$baseRoute/${shareId.id}/${memberShareId.id}/${shareRole.value}/" +
+        "${NavParamEncoder.encode(memberEmail)}/$isGroup"
 }
 
 

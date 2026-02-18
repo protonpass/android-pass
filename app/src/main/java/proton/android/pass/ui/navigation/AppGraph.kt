@@ -2643,7 +2643,8 @@ fun NavGraphBuilder.appGraph(
                     shareId = it.shareId,
                     memberShareId = it.destShareId,
                     shareRole = it.memberRole,
-                    memberEmail = it.destEmail
+                    memberEmail = it.destEmail,
+                    isGroup = it.isGroup
                 )
             )
 

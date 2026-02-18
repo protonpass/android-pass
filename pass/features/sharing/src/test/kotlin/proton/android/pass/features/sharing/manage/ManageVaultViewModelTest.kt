@@ -78,7 +78,8 @@ internal class ManageVaultViewModelTest {
             username = "username1",
             role = ShareRole.Admin,
             isCurrentUser = true,
-            isOwner = true
+            isOwner = true,
+            isGroup = false
         )
         val member2 = VaultMember.Member(
             email = "email2",
@@ -86,7 +87,8 @@ internal class ManageVaultViewModelTest {
             username = "username2",
             role = ShareRole.Admin,
             isCurrentUser = false,
-            isOwner = false
+            isOwner = false,
+            isGroup = false
         )
         val invite1 = VaultMember.InvitePending(
             email = "invited1",

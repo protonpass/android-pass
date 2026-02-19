@@ -34,41 +34,73 @@ internal fun AcceptInviteContent(
         AcceptInviteState.Initial -> Unit
 
         is AcceptInviteState.ItemInvite -> {
+            val subtitle = when (val itemInvite = invite) {
+                is AcceptInviteUiModel.Item.User -> stringResource(
+                    R.string.sharing_item_invitation_subtitle,
+                    itemInvite.inviterEmail
+                )
+
+                is AcceptInviteUiModel.Item.Group -> stringResource(
+                    R.string.sharing_group_item_invitation_subtitle,
+                    itemInvite.inviterEmail,
+                    itemInvite.groupName
+                )
+            }
+            val acceptTextRes = if (invite is AcceptInviteUiModel.Item.Group) {
+                R.string.sharing_group_invitation_accept
+            } else {
+                R.string.sharing_item_invitation_accept
+            }
             AcceptInviteContentBody(
                 modifier = modifier,
-                title = stringResource(id = R.string.sharing_item_invitation_title),
-                subtitle = stringResource(
-                    id = R.string.sharing_item_invitation_subtitle,
-                    inviterEmail
+                title = stringResource(
+                    id = R.string.sharing_item_invitation_title
                 ),
-                inviterEmail = inviterEmail,
+                subtitle = subtitle,
+                inviterEmail = invite.inviterEmail,
                 shareType = ShareType.Item,
-                acceptInviteText = stringResource(id = R.string.sharing_item_invitation_accept),
+                acceptInviteText = stringResource(id = acceptTextRes),
                 progress = progress,
                 onUiEvent = onUiEvent
             )
         }
 
         is AcceptInviteState.VaultInvite -> {
+            val subtitle = when (val vaultInvite = invite) {
+                is AcceptInviteUiModel.Vault.User -> stringResource(
+                    R.string.sharing_vault_invitation_subtitle,
+                    vaultInvite.inviterEmail
+                )
+
+                is AcceptInviteUiModel.Vault.Group -> stringResource(
+                    R.string.sharing_group_vault_invitation_subtitle,
+                    vaultInvite.inviterEmail,
+                    vaultInvite.groupName
+                )
+            }
+            val acceptTextRes = if (invite is AcceptInviteUiModel.Vault.Group) {
+                R.string.sharing_group_invitation_accept
+            } else {
+                R.string.sharing_vault_invitation_accept
+            }
             AcceptInviteContentBody(
                 modifier = modifier,
-                title = stringResource(id = R.string.sharing_vault_invitation_title),
-                subtitle = stringResource(
-                    id = R.string.sharing_vault_invitation_subtitle,
-                    inviterEmail
+                title = stringResource(
+                    id = R.string.sharing_vault_invitation_title
                 ),
-                inviterEmail = inviterEmail,
+                subtitle = subtitle,
+                inviterEmail = invite.inviterEmail,
                 shareType = ShareType.Vault,
-                acceptInviteText = stringResource(id = R.string.sharing_vault_invitation_accept),
+                acceptInviteText = stringResource(id = acceptTextRes),
                 onUiEvent = onUiEvent,
                 progress = progress,
                 infoContent = {
                     AcceptInviteVaultInfo(
-                        vaultName = name,
-                        vaultItemCount = itemCount,
-                        vaultMemberCount = memberCount,
-                        vaultIcon = icon,
-                        vaultColor = color
+                        vaultName = invite.name,
+                        vaultItemCount = invite.itemCount,
+                        vaultMemberCount = invite.memberCount,
+                        vaultIcon = invite.icon,
+                        vaultColor = invite.color
                     )
                 }
             )

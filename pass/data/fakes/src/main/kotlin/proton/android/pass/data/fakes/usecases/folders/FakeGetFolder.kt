@@ -24,6 +24,7 @@ import proton.android.pass.domain.Folder
 import proton.android.pass.domain.FolderId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.VaultId
+import proton.android.pass.test.domain.FolderTestFactory
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -31,12 +32,11 @@ import javax.inject.Singleton
 class FakeGetFolder @Inject constructor() : GetFolder {
 
     private var result: Result<Folder> = Result.success(
-        Folder(
+        FolderTestFactory.create(
             userId = UserId("fake-user-id"),
             shareId = ShareId("fake-share-id"),
             vaultId = VaultId("fake-vault-id"),
             folderId = FolderId("fake-folder-id"),
-            parentFolderId = null,
             folderKey = "fake-folder-key",
             name = "Fake Folder"
         )

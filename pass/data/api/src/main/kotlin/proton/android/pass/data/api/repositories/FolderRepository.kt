@@ -41,6 +41,12 @@ interface FolderRepository {
         folderId: FolderId
     ): Flow<Folder?>
 
+    suspend fun getFolderHierarchy(
+        userId: UserId,
+        shareId: ShareId,
+        folderId: FolderId
+    ): List<Folder>
+
     suspend fun createFolder(
         userId: UserId,
         shareId: ShareId,

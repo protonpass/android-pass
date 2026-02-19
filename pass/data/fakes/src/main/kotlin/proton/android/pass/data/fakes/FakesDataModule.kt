@@ -173,6 +173,7 @@ import proton.android.pass.data.api.usecases.folders.CreateFolder
 import proton.android.pass.data.api.usecases.folders.DeleteFolders
 import proton.android.pass.data.api.usecases.folders.DeleteFoldersLocally
 import proton.android.pass.data.api.usecases.folders.GetFolder
+import proton.android.pass.data.api.usecases.folders.GetFolderHierarchy
 import proton.android.pass.data.api.usecases.folders.MoveFolder
 import proton.android.pass.data.api.usecases.folders.ObserveFolderItemCounts
 import proton.android.pass.data.api.usecases.folders.ObserveFolders
@@ -469,6 +470,7 @@ import proton.android.pass.data.fakes.usecases.folders.FakeCreateFolder
 import proton.android.pass.data.fakes.usecases.folders.FakeDeleteFolders
 import proton.android.pass.data.fakes.usecases.folders.FakeDeleteFoldersLocally
 import proton.android.pass.data.fakes.usecases.folders.FakeGetFolder
+import proton.android.pass.data.fakes.usecases.folders.FakeGetFolderHierarchy
 import proton.android.pass.data.fakes.usecases.folders.FakeMoveFolder
 import proton.android.pass.data.fakes.usecases.folders.FakeObserveFolderItemCounts
 import proton.android.pass.data.fakes.usecases.folders.FakeObserveFolders
@@ -557,6 +559,9 @@ abstract class FakesDataModule {
 
     @Binds
     abstract fun bindGetFolder(impl: FakeGetFolder): GetFolder
+
+    @Binds
+    abstract fun bindGetFolderHierarchy(impl: FakeGetFolderHierarchy): GetFolderHierarchy
 
     @Binds
     abstract fun bindMoveFolder(impl: FakeMoveFolder): MoveFolder

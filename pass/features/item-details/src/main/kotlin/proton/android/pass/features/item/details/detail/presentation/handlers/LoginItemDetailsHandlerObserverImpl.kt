@@ -44,6 +44,7 @@ import proton.android.pass.commonuimodels.api.items.LoginMonitorState.ReusedPass
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.usecases.CanDisplayTotp
 import proton.android.pass.data.api.usecases.GetItemByAliasEmail
+import proton.android.pass.data.api.usecases.folders.GetFolderHierarchy
 import proton.android.pass.domain.HiddenState
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemContents
@@ -74,6 +75,7 @@ private const val REUSED_PASSWORD_DISPLAY_MODE_THRESHOLD = 5
 class LoginItemDetailsHandlerObserverImpl @Inject constructor(
     override val encryptionContextProvider: EncryptionContextProvider,
     override val observeTotpFromUri: ObserveTotpFromUri,
+    override val getFolderHierarchy: GetFolderHierarchy,
     override val canDisplayTotp: CanDisplayTotp,
     private val userPreferencesRepository: UserPreferencesRepository,
     private val passwordStrengthCalculator: PasswordStrengthCalculator,
@@ -85,6 +87,7 @@ class LoginItemDetailsHandlerObserverImpl @Inject constructor(
 ) : ItemDetailsHandlerObserver<ItemContents.Login, ItemDetailsFieldType.LoginItemAction>(
     encryptionContextProvider,
     observeTotpFromUri,
+    getFolderHierarchy,
     canDisplayTotp
 ) {
 
@@ -105,9 +108,10 @@ class LoginItemDetailsHandlerObserverImpl @Inject constructor(
                 ?: ItemDetailNavScope.Default
         ),
         observeLinkedAlias(item),
-        userPreferencesRepository.getUseFaviconsPreference()
+        userPreferencesRepository.getUseFaviconsPreference(),
+        observeBreadcrumbs(item)
     ) { loginItemContents, primaryTotp, customFieldTotps, loginMonitorState,
-        linkedAlias, useFaviconsPreference ->
+        linkedAlias, useFaviconsPreference, breadcrumb ->
         ItemDetailState.Login(
             itemContents = loginItemContents,
             itemId = item.id,
@@ -132,7 +136,8 @@ class LoginItemDetailsHandlerObserverImpl @Inject constructor(
             attachmentsState = attachmentsState,
             loginMonitorState = loginMonitorState,
             detailEvent = detailEvent,
-            linkedAlias = linkedAlias
+            linkedAlias = linkedAlias,
+            breadcrumb = breadcrumb
         )
     }
 

@@ -72,6 +72,23 @@ class DeleteFolderViewModel @Inject constructor(
     private val isLoadingState: MutableStateFlow<IsLoadingState> =
         MutableStateFlow(IsLoadingState.NotLoading)
 
+    init {
+        viewModelScope.launch(coroutineExceptionHandler) {
+            isLoadingState.update { IsLoadingState.Loading }
+            safeRunCatching {
+                getFolder(shareId = shareId, folderId = folderId)
+            }.onSuccess { folder ->
+                folderNameFlow.update { folder.name }
+                isLoadingState.update { IsLoadingState.NotLoading }
+            }.onFailure { error ->
+                PassLogger.w(TAG, "Error getting folder by id")
+                PassLogger.w(TAG, error)
+                snackbarDispatcher(VaultSnackbarMessage.CannotRetrieveVaultError)
+                isLoadingState.update { IsLoadingState.NotLoading }
+            }
+        }
+    }
+
     internal val state: StateFlow<DeleteFolderUiState> = combine(
         folderNameFlow,
         eventFlow,
@@ -91,23 +108,6 @@ class DeleteFolderViewModel @Inject constructor(
         started = SharingStarted.WhileSubscribed(5_000L),
         initialValue = DeleteFolderUiState.Initial
     )
-
-    internal fun onStart() {
-        viewModelScope.launch(coroutineExceptionHandler) {
-            isLoadingState.update { IsLoadingState.Loading }
-            safeRunCatching {
-                getFolder(shareId = shareId, folderId = folderId)
-            }.onSuccess { folder ->
-                folderNameFlow.update { folder.name }
-                isLoadingState.update { IsLoadingState.NotLoading }
-            }.onFailure { error ->
-                PassLogger.w(TAG, "Error getting folder by id")
-                PassLogger.w(TAG, error)
-                snackbarDispatcher(VaultSnackbarMessage.CannotRetrieveVaultError)
-                isLoadingState.update { IsLoadingState.NotLoading }
-            }
-        }
-    }
 
     internal fun onTextChange(text: String) {
         formFlow.update {

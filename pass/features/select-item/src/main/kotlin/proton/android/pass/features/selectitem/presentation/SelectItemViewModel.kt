@@ -261,13 +261,15 @@ class SelectItemViewModel @Inject constructor(
             }
 
             is SelectItemState.Passkey.Select -> {
-                val flows = usersAutofillShares.map { (userId, usableVaults) ->
-                    observeItemsWithPasskeys(
-                        userId = userId,
-                        shareSelection = ShareSelection.Shares(usableVaults.map(Share::id)),
-                        includeHiddenVault = false
-                    )
-                }
+                val flows = usersAutofillShares
+                    .filter { it.matchesSelectedAccount(selectedAccount) }
+                    .map { (userId, usableVaults) ->
+                        observeItemsWithPasskeys(
+                            userId = userId,
+                            shareSelection = ShareSelection.Shares(usableVaults.map(Share::id)),
+                            includeHiddenVault = false
+                        )
+                    }
                 combine(flows) { it.toList().flatten().map(ItemData::DefaultItem) }
             }
 

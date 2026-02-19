@@ -30,6 +30,7 @@ import proton.android.pass.common.api.some
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.fakes.FakeSavedStateHandleProvider
 import proton.android.pass.data.fakes.usecases.FakeGetItemById
+import proton.android.pass.data.fakes.usecases.FakeObserveCurrentUser
 import proton.android.pass.data.fakes.usecases.FakeAcceptInvite
 import proton.android.pass.data.fakes.usecases.FakeRejectInvite
 import proton.android.pass.data.fakes.usecases.invites.FakeObserveInvite
@@ -44,6 +45,7 @@ import proton.android.pass.test.CallChecker
 import proton.android.pass.test.HiltComponentActivity
 import proton.android.pass.test.domain.ItemTestFactory
 import proton.android.pass.test.domain.PendingInviteTestFactory
+import proton.android.pass.test.domain.UserTestFactory
 import javax.inject.Inject
 
 @HiltAndroidTest
@@ -68,6 +70,9 @@ class AcceptBottomSheetTest {
     lateinit var getItemById: FakeGetItemById
 
     @Inject
+    lateinit var observeCurrentUser: FakeObserveCurrentUser
+
+    @Inject
     lateinit var savedStateHandle: FakeSavedStateHandleProvider
 
     @Before
@@ -77,6 +82,7 @@ class AcceptBottomSheetTest {
         savedStateHandle.get().apply {
             set(CommonNavArgId.InviteToken.key, INVITE_TOKEN)
         }
+        observeCurrentUser.sendUser(UserTestFactory.create())
     }
 
     @Test

@@ -151,12 +151,20 @@ class HomeDrawerViewModel @Inject constructor(
         }
     }
 
-    private fun toVaultShareKeys(vaults: List<VaultWithItemCount>): List<VaultShareKey> = vaults.map { vault ->
-        VaultShareKey(
-            userId = vault.vault.userId,
-            shareId = vault.vault.shareId
+    private fun toVaultShareKeys(vaults: List<VaultWithItemCount>): List<VaultShareKey> = vaults
+        .asSequence()
+        .map { vault ->
+            VaultShareKey(
+                userId = vault.vault.userId,
+                shareId = vault.vault.shareId
+            )
+        }
+        .distinct()
+        .sortedWith(
+            compareBy<VaultShareKey> { it.userId.id }
+                .thenBy { it.shareId.id }
         )
-    }
+        .toList()
 
     @Suppress("LongParameterList")
     private fun buildHomeDrawerState(
@@ -185,10 +193,12 @@ class HomeDrawerViewModel @Inject constructor(
 
         val folderFlows = input.shareKeys.map(::observeFolderTreeForShare)
         return combine(folderFlows) { shareFolderPairs -> shareFolderPairs.toMap() }
+            .distinctUntilChanged()
     }
 
     private fun observeFolderTreeForShare(shareKey: VaultShareKey): Flow<Pair<ShareId, PersistentList<FolderUiModel>>> =
         observeFolders(shareKey.userId, shareKey.shareId)
+            .distinctUntilChanged()
             .map { folderList ->
                 shareKey.shareId to FolderTreeBuilder.build(folderList)
             }

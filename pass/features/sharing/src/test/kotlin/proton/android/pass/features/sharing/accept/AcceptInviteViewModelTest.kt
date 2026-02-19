@@ -22,6 +22,7 @@ import app.cash.turbine.test
 import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
+import me.proton.core.domain.entity.UserId
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -30,8 +31,11 @@ import proton.android.pass.commonui.fakes.FakeSavedStateHandleProvider
 import proton.android.pass.data.api.errors.CannotCreateMoreVaultsError
 import proton.android.pass.data.api.usecases.AcceptInviteStatus
 import proton.android.pass.data.fakes.usecases.FakeAcceptInvite
+import proton.android.pass.data.fakes.usecases.FakeObserveCurrentUser
 import proton.android.pass.data.fakes.usecases.FakeRejectInvite
 import proton.android.pass.data.fakes.usecases.invites.FakeObserveInvite
+import proton.android.pass.data.fakes.repositories.FakeGroupRepository
+import proton.android.pass.domain.GroupId
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ItemType
 import proton.android.pass.domain.ShareId
@@ -40,8 +44,10 @@ import proton.android.pass.features.sharing.SharingSnackbarMessage
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.notifications.fakes.FakeSnackbarDispatcher
 import proton.android.pass.test.MainDispatcherRule
+import proton.android.pass.test.domain.GroupTestFactory
 import proton.android.pass.test.domain.ItemTestFactory
 import proton.android.pass.test.domain.PendingInviteTestFactory
+import proton.android.pass.test.domain.UserTestFactory
 
 internal class AcceptInviteViewModelTest {
 
@@ -50,6 +56,8 @@ internal class AcceptInviteViewModelTest {
 
     private lateinit var savedStateHandleProvider: FakeSavedStateHandleProvider
     private lateinit var observeInvite: FakeObserveInvite
+    private lateinit var observeCurrentUser: FakeObserveCurrentUser
+    private lateinit var groupRepository: FakeGroupRepository
     private lateinit var acceptInvite: FakeAcceptInvite
     private lateinit var rejectInvite: FakeRejectInvite
     private lateinit var snackbarDispatcher: FakeSnackbarDispatcher
@@ -62,6 +70,8 @@ internal class AcceptInviteViewModelTest {
             get()[CommonNavArgId.InviteToken.key] = INVITE_TOKEN
         }
         observeInvite = FakeObserveInvite()
+        observeCurrentUser = FakeObserveCurrentUser()
+        groupRepository = FakeGroupRepository()
         acceptInvite = FakeAcceptInvite()
         rejectInvite = FakeRejectInvite()
         snackbarDispatcher = FakeSnackbarDispatcher()
@@ -69,10 +79,14 @@ internal class AcceptInviteViewModelTest {
         viewModel = AcceptInviteViewModel(
             savedStateHandleProvider = savedStateHandleProvider,
             observeInvite = observeInvite,
+            observeCurrentUser = observeCurrentUser,
+            groupRepository = groupRepository,
             acceptInvite = acceptInvite,
             rejectInvite = rejectInvite,
             snackbarDispatcher = snackbarDispatcher
         )
+
+        observeCurrentUser.sendUser(UserTestFactory.create(userId = USER_ID))
     }
 
     @Test
@@ -89,7 +103,9 @@ internal class AcceptInviteViewModelTest {
     @Test
     fun `GIVEN item pending invite WHEN invite is shown THEN emits item invite state`() = runTest {
         val pendingItemInvite = PendingInviteTestFactory.Item.create()
-        val expectedState = AcceptInviteStateTestFactory.Item.create(pendingItemInvite = pendingItemInvite)
+        val expectedState = AcceptInviteStateTestFactory.Item.create(
+            invite = AcceptInviteUiModel.Item.User(inviterEmail = pendingItemInvite.inviterEmail)
+        )
         observeInvite.emit(pendingItemInvite.toOption())
 
         viewModel.stateFlow.test {
@@ -118,7 +134,7 @@ internal class AcceptInviteViewModelTest {
         val pendingItemInvite = PendingInviteTestFactory.Item.create()
         val rejectionResult: Result<Unit> = Result.failure(IllegalStateException("test"))
         val expectedState = AcceptInviteStateTestFactory.Item.create(
-            pendingItemInvite = pendingItemInvite,
+            invite = AcceptInviteUiModel.Item.User(inviterEmail = pendingItemInvite.inviterEmail),
             progress = AcceptInviteProgress.Rejecting,
             event = AcceptInviteEvent.Close
         )
@@ -156,7 +172,16 @@ internal class AcceptInviteViewModelTest {
     @Test
     fun `GIVEN vault pending invite WHEN invite is shown THEN emits vault invite state`() = runTest {
         val vaultInvite = PendingInviteTestFactory.Vault.create()
-        val expectedState = AcceptInviteStateTestFactory.Vault.create(pendingVaultInvite = vaultInvite)
+        val expectedState = AcceptInviteStateTestFactory.Vault.create(
+            invite = AcceptInviteUiModel.Vault.User(
+                inviterEmail = vaultInvite.inviterEmail,
+                name = vaultInvite.name,
+                itemCount = vaultInvite.itemCount,
+                memberCount = vaultInvite.memberCount,
+                icon = vaultInvite.icon,
+                color = vaultInvite.color
+            )
+        )
 
         observeInvite.emit(vaultInvite.toOption())
 
@@ -186,7 +211,14 @@ internal class AcceptInviteViewModelTest {
         val pendingVaultInvite = PendingInviteTestFactory.Vault.create()
         val rejectionResult: Result<Unit> = Result.failure(IllegalStateException("test"))
         val expectedState = AcceptInviteStateTestFactory.Vault.create(
-            pendingVaultInvite = pendingVaultInvite,
+            invite = AcceptInviteUiModel.Vault.User(
+                inviterEmail = pendingVaultInvite.inviterEmail,
+                name = pendingVaultInvite.name,
+                itemCount = pendingVaultInvite.itemCount,
+                memberCount = pendingVaultInvite.memberCount,
+                icon = pendingVaultInvite.icon,
+                color = pendingVaultInvite.color
+            ),
             progress = AcceptInviteProgress.Rejecting,
             event = AcceptInviteEvent.Close
         )
@@ -217,7 +249,7 @@ internal class AcceptInviteViewModelTest {
         )
         val acceptationResult: Result<AcceptInviteStatus> = Result.success(acceptInviteStatus)
         val expectedState = AcceptInviteStateTestFactory.Item.create(
-            pendingItemInvite = pendingItemInvite,
+            invite = AcceptInviteUiModel.Item.User(inviterEmail = pendingItemInvite.inviterEmail),
             event = AcceptInviteEvent.OnItemInviteAcceptSuccess(
                 shareId = acceptInviteStatus.shareId,
                 itemId = acceptInviteStatus.itemId
@@ -292,7 +324,14 @@ internal class AcceptInviteViewModelTest {
         )
         val acceptationResult: Result<AcceptInviteStatus> = Result.success(acceptInviteStatus)
         val expectedState = AcceptInviteStateTestFactory.Vault.create(
-            pendingVaultInvite = pendingVaultInvite,
+            invite = AcceptInviteUiModel.Vault.User(
+                inviterEmail = pendingVaultInvite.inviterEmail,
+                name = pendingVaultInvite.name,
+                itemCount = pendingVaultInvite.itemCount,
+                memberCount = pendingVaultInvite.memberCount,
+                icon = pendingVaultInvite.icon,
+                color = pendingVaultInvite.color
+            ),
             event = AcceptInviteEvent.OnVaultInviteAcceptSuccess(
                 shareId = acceptInviteStatus.shareId
             )
@@ -309,9 +348,61 @@ internal class AcceptInviteViewModelTest {
         }
     }
 
+    @Test
+    fun `GIVEN group item pending invite WHEN invite is shown THEN emits group ui model with required group name`() =
+        runTest {
+            val pendingGroupInvite = PendingInviteTestFactory.GroupItem.create()
+            groupRepository.groups = listOf(
+                GroupTestFactory.create(
+                    id = GroupId(pendingGroupInvite.invitedGroupId),
+                    email = pendingGroupInvite.invitedEmail
+                )
+            )
+            val expectedState = AcceptInviteStateTestFactory.Item.create(
+                invite = AcceptInviteUiModel.Item.Group(
+                    inviterEmail = pendingGroupInvite.inviterEmail,
+                    groupName = groupRepository.groups.first().name
+                )
+            )
+            observeInvite.emit(pendingGroupInvite.toOption())
+
+            viewModel.stateFlow.test {
+                val state = awaitItem()
+
+                assertThat(state).isEqualTo(expectedState)
+            }
+        }
+
+    @Test
+    fun `GIVEN group vault pending invite WHEN group cannot be resolved THEN uses invited email`() = runTest {
+        val pendingGroupInvite = PendingInviteTestFactory.GroupVault.create(
+            invitedGroupId = "missing-group-id",
+            invitedEmail = "group-fallback@email"
+        )
+        val expectedState = AcceptInviteStateTestFactory.Vault.create(
+            invite = AcceptInviteUiModel.Vault.Group(
+                inviterEmail = pendingGroupInvite.inviterEmail,
+                groupName = pendingGroupInvite.invitedEmail,
+                name = pendingGroupInvite.name,
+                itemCount = pendingGroupInvite.itemCount,
+                memberCount = pendingGroupInvite.memberCount,
+                icon = pendingGroupInvite.icon,
+                color = pendingGroupInvite.color
+            )
+        )
+        observeInvite.emit(pendingGroupInvite.toOption())
+
+        viewModel.stateFlow.test {
+            val state = awaitItem()
+
+            assertThat(state).isEqualTo(expectedState)
+        }
+    }
+
     private companion object {
 
         private const val INVITE_TOKEN = "AcceptInviteViewModelTest.INVITE_TOKEN"
+        private val USER_ID = UserId("user-id")
 
     }
 

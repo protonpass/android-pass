@@ -18,6 +18,7 @@
 
 package proton.android.pass.test.domain
 
+import proton.android.pass.domain.InviteId
 import proton.android.pass.domain.InviteToken
 import proton.android.pass.domain.PendingInvite
 import proton.android.pass.domain.ShareColor
@@ -55,6 +56,68 @@ object PendingInviteTestFactory {
             icon = ShareIcon.Icon1,
             color = ShareColor.Color1,
             isFromNewUser = false
+        )
+
+    }
+
+    object GroupItem {
+
+        fun create(
+            inviteToken: String = "token",
+            inviterEmail: String = "owner@email",
+            invitedAddressId: String = "address-id",
+            inviteId: String = "invite-id",
+            inviterUserId: String = "inviter-user-id",
+            invitedGroupId: String = "group-id",
+            invitedEmail: String = "group@email",
+            targetId: String = "target-id",
+            remindersSent: Int = 0
+        ) = PendingInvite.GroupItem(
+            inviteToken = InviteToken(inviteToken),
+            inviterEmail = inviterEmail,
+            invitedAddressId = invitedAddressId,
+            inviteId = InviteId(inviteId),
+            inviterUserId = inviterUserId,
+            invitedGroupId = invitedGroupId,
+            invitedEmail = invitedEmail,
+            targetId = targetId,
+            remindersSent = remindersSent
+        )
+
+    }
+
+    object GroupVault {
+
+        fun create(
+            inviteToken: String = "token",
+            inviterEmail: String = "owner@email",
+            invitedAddressId: String = "address-id",
+            inviteId: String = "invite-id",
+            inviterUserId: String = "inviter-user-id",
+            invitedGroupId: String = "group-id",
+            invitedEmail: String = "group@email",
+            targetId: String = "target-id",
+            remindersSent: Int = 0,
+            memberCount: Int = 7,
+            itemCount: Int = 13,
+            name: String = "shared-vault",
+            icon: ShareIcon = ShareIcon.Icon1,
+            color: ShareColor = ShareColor.Color1
+        ) = PendingInvite.GroupVault(
+            inviteToken = InviteToken(inviteToken),
+            inviterEmail = inviterEmail,
+            invitedAddressId = invitedAddressId,
+            inviteId = InviteId(inviteId),
+            inviterUserId = inviterUserId,
+            invitedGroupId = invitedGroupId,
+            invitedEmail = invitedEmail,
+            targetId = targetId,
+            remindersSent = remindersSent,
+            memberCount = memberCount,
+            itemCount = itemCount,
+            name = name,
+            icon = icon,
+            color = color
         )
 
     }

@@ -29,21 +29,27 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.FlowUtils.oneShot
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.data.api.errors.CannotCreateMoreVaultsError
+import proton.android.pass.data.api.repositories.GroupRepository
 import proton.android.pass.data.api.usecases.AcceptInvite
 import proton.android.pass.data.api.usecases.AcceptInviteStatus
+import proton.android.pass.data.api.usecases.ObserveCurrentUser
 import proton.android.pass.data.api.usecases.RejectInvite
 import proton.android.pass.data.api.usecases.invites.ObserveInvite
+import proton.android.pass.domain.GroupId
 import proton.android.pass.domain.InviteId
 import proton.android.pass.domain.InviteToken
+import proton.android.pass.domain.PendingGroupInvite
 import proton.android.pass.domain.PendingInvite
 import proton.android.pass.domain.ShareType
 import proton.android.pass.features.sharing.SharingSnackbarMessage
@@ -56,6 +62,8 @@ import javax.inject.Inject
 class AcceptInviteViewModel @Inject constructor(
     savedStateHandleProvider: SavedStateHandleProvider,
     observeInvite: ObserveInvite,
+    observeCurrentUser: ObserveCurrentUser,
+    groupRepository: GroupRepository,
     private val acceptInvite: AcceptInvite,
     private val rejectInvite: RejectInvite,
     private val snackbarDispatcher: SnackbarDispatcher
@@ -76,7 +84,7 @@ class AcceptInviteViewModel @Inject constructor(
         value = AcceptInviteEvent.Idle
     )
 
-    private val pendingUserInviteOptionFlow: Flow<Option<PendingInvite>> = oneShot {
+    private val pendingInviteOptionFlow: Flow<Option<PendingInvite>> = oneShot {
         when {
             inviteToken != null -> observeInvite(inviteToken).first()
             inviteId != null -> observeInvite(inviteId).first()
@@ -84,24 +92,40 @@ class AcceptInviteViewModel @Inject constructor(
         }
     }
 
+    private val pendingInviteUiModelOptionFlow: Flow<Option<AcceptInviteUiModel>> = combine(
+        observeCurrentUser().map { it.userId },
+        pendingInviteOptionFlow
+    ) { userId, pendingInviteOption ->
+        when (pendingInviteOption) {
+            None -> None
+            is Some ->
+                pendingInviteOption.value
+                    .toAcceptInviteUiModel(
+                        userId = userId,
+                        groupRepository = groupRepository
+                    )
+                    .let(::Some)
+        }
+    }.distinctUntilChanged()
+
     internal val stateFlow: StateFlow<AcceptInviteState> = combine(
-        pendingUserInviteOptionFlow,
+        pendingInviteUiModelOptionFlow,
         progressFlow,
         eventFlow
     ) { pendingInviteOption, progress, event ->
         when (pendingInviteOption) {
             None -> AcceptInviteState.Initial
             is Some -> when (val pendingInvite = pendingInviteOption.value) {
-                is PendingInvite.UserItem, is PendingInvite.GroupItem -> AcceptInviteState.ItemInvite(
+                is AcceptInviteUiModel.Item -> AcceptInviteState.ItemInvite(
                     progress = progress,
                     event = event,
-                    pendingItemInvite = pendingInvite
+                    invite = pendingInvite
                 )
 
-                is PendingInvite.UserVault, is PendingInvite.GroupVault -> AcceptInviteState.VaultInvite(
+                is AcceptInviteUiModel.Vault -> AcceptInviteState.VaultInvite(
                     progress = progress,
                     event = event,
-                    pendingVaultInvite = pendingInvite
+                    invite = pendingInvite
                 )
             }
         }
@@ -157,6 +181,7 @@ class AcceptInviteViewModel @Inject constructor(
                             snackbarDispatcher(SharingSnackbarMessage.InviteAccepted)
                             eventFlow.update { AcceptInviteEvent.Close }
                         }
+
                         is AcceptInviteStatus.UserInviteDone -> {
                             PassLogger.i(TAG, "Invite successfully accepted")
                             when (shareType) {
@@ -215,3 +240,48 @@ class AcceptInviteViewModel @Inject constructor(
     }
 
 }
+
+private suspend fun PendingInvite.toAcceptInviteUiModel(
+    userId: UserId,
+    groupRepository: GroupRepository
+): AcceptInviteUiModel = when (this) {
+    is PendingInvite.UserItem -> AcceptInviteUiModel.Item.User(
+        inviterEmail = inviterEmail
+    )
+
+    is PendingInvite.GroupItem -> AcceptInviteUiModel.Item.Group(
+        inviterEmail = inviterEmail,
+        groupName = resolveGroupName(
+            userId = userId,
+            groupRepository = groupRepository
+        )
+    )
+
+    is PendingInvite.UserVault -> AcceptInviteUiModel.Vault.User(
+        inviterEmail = inviterEmail,
+        name = name,
+        itemCount = itemCount,
+        memberCount = memberCount,
+        icon = icon,
+        color = color
+    )
+
+    is PendingInvite.GroupVault -> AcceptInviteUiModel.Vault.Group(
+        inviterEmail = inviterEmail,
+        groupName = resolveGroupName(
+            userId = userId,
+            groupRepository = groupRepository
+        ),
+        name = name,
+        itemCount = itemCount,
+        memberCount = memberCount,
+        icon = icon,
+        color = color
+    )
+}
+
+private suspend fun PendingGroupInvite.resolveGroupName(userId: UserId, groupRepository: GroupRepository): String =
+    groupRepository.retrieveGroup(
+        userId = userId,
+        groupId = GroupId(invitedGroupId)
+    )?.name ?: invitedEmail

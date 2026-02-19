@@ -30,6 +30,7 @@ dependencies {
     implementation(libs.androidx.compose.runtime)
     implementation(libs.core.key.domain)
     implementation(libs.core.accountManager.domain)
+    implementation(libs.core.user.domain)
     implementation(libs.core.presentation)
     implementation(libs.core.presentation.compose)
     implementation(libs.core.utilKotlin)

@@ -85,7 +85,7 @@ class CustomItemDetailsHandlerObserverImpl @Inject constructor(
             itemShareCount = item.shareCount,
             attachmentsState = attachmentsState,
             customFieldTotps = totps,
-            breadcrumb = breadcrumb,
+            breadcrumbs = breadcrumb,
             detailEvent = detailEvent
         )
     }

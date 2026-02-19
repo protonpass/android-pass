@@ -95,7 +95,7 @@ class WifiNetworkDetailsHandlerObserverImpl @Inject constructor(
                 },
                 wifiSecurity = itemContents.wifiSecurityType
             ).getOrNull().toOption(),
-            breadcrumb = breadcrumb,
+            breadcrumbs = breadcrumb,
             detailEvent = detailEvent
         )
     }

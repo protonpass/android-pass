@@ -70,7 +70,7 @@ sealed interface ItemDetailState {
 
     val detailEvent: DetailEvent
 
-    val breadcrumb: List<String>
+    val breadcrumbs: List<String>
 
     fun update(itemContents: ItemContents, itemDiffs: ItemDiffs = ItemDiffs.None): ItemDetailState
 
@@ -91,7 +91,7 @@ sealed interface ItemDetailState {
         override val attachmentsState: AttachmentsState,
         override val customFieldTotps: Map<Pair<Option<Int>, Int>, TotpState>,
         override val detailEvent: DetailEvent,
-        override val breadcrumb: List<String>,
+        override val breadcrumbs: List<String>,
         val aliasDetails: AliasDetails,
         val aliasContacts: AliasContacts,
         val displayContactsBanner: Boolean,
@@ -135,7 +135,7 @@ sealed interface ItemDetailState {
         override val attachmentsState: AttachmentsState,
         override val customFieldTotps: Map<Pair<Option<Int>, Int>, TotpState>,
         override val detailEvent: DetailEvent,
-        override val breadcrumb: List<String>
+        override val breadcrumbs: List<String>
     ) : ItemDetailState {
 
         override val itemCategory: ItemCategory = ItemCategory.CreditCard
@@ -176,7 +176,7 @@ sealed interface ItemDetailState {
         override val attachmentsState: AttachmentsState,
         override val customFieldTotps: Map<Pair<Option<Int>, Int>, TotpState>,
         override val detailEvent: DetailEvent,
-        override val breadcrumb: List<String>,
+        override val breadcrumbs: List<String>,
         val personalDetailsTotps: Map<Pair<Option<Int>, Int>, TotpState>,
         val addressDetailsTotps: Map<Pair<Option<Int>, Int>, TotpState>,
         val contactDetailsTotps: Map<Pair<Option<Int>, Int>, TotpState>,
@@ -221,7 +221,7 @@ sealed interface ItemDetailState {
         override val customFieldTotps: Map<Pair<Option<Int>, Int>, TotpState>,
         override val attachmentsState: AttachmentsState,
         override val detailEvent: DetailEvent,
-        override val breadcrumb: List<String>,
+        override val breadcrumbs: List<String>,
         val canLoadExternalImages: Boolean,
         val passwordStrength: PasswordStrength,
         val primaryTotp: TotpState?,
@@ -268,7 +268,7 @@ sealed interface ItemDetailState {
         override val attachmentsState: AttachmentsState,
         override val customFieldTotps: Map<Pair<Option<Int>, Int>, TotpState>,
         override val detailEvent: DetailEvent,
-        override val breadcrumb: List<String>
+        override val breadcrumbs: List<String>
     ) : ItemDetailState {
 
         override val itemCategory: ItemCategory = ItemCategory.Custom
@@ -309,7 +309,7 @@ sealed interface ItemDetailState {
         override val attachmentsState: AttachmentsState,
         override val customFieldTotps: Map<Pair<Option<Int>, Int>, TotpState>,
         override val detailEvent: DetailEvent,
-        override val breadcrumb: List<String>,
+        override val breadcrumbs: List<String>,
         val svgQR: Option<String>
     ) : ItemDetailState {
 
@@ -351,7 +351,7 @@ sealed interface ItemDetailState {
         override val attachmentsState: AttachmentsState,
         override val customFieldTotps: Map<Pair<Option<Int>, Int>, TotpState>,
         override val detailEvent: DetailEvent,
-        override val breadcrumb: List<String>
+        override val breadcrumbs: List<String>
     ) : ItemDetailState {
 
         override val itemCategory: ItemCategory = ItemCategory.SSHKey
@@ -392,7 +392,7 @@ sealed interface ItemDetailState {
         override val attachmentsState: AttachmentsState,
         override val customFieldTotps: Map<Pair<Option<Int>, Int>, TotpState>,
         override val detailEvent: DetailEvent,
-        override val breadcrumb: List<String>
+        override val breadcrumbs: List<String>
     ) : ItemDetailState {
 
         override val itemCategory: ItemCategory = ItemCategory.Note
@@ -433,7 +433,7 @@ sealed interface ItemDetailState {
         override val attachmentsState: AttachmentsState,
         override val customFieldTotps: Map<Pair<Option<Int>, Int>, TotpState>,
         override val detailEvent: DetailEvent,
-        override val breadcrumb: List<String>
+        override val breadcrumbs: List<String>
     ) : ItemDetailState {
 
         override val itemCategory: ItemCategory = ItemCategory.Unknown

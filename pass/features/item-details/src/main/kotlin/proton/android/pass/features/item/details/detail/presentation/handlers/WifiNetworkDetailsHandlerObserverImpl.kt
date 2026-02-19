@@ -37,6 +37,7 @@ import proton.android.pass.commonuimodels.api.items.DetailEvent
 import proton.android.pass.commonuimodels.api.items.ItemDetailState
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.usecases.CanDisplayTotp
+import proton.android.pass.data.api.usecases.folders.GetFolderHierarchy
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.ItemDiffs
@@ -51,11 +52,13 @@ import javax.inject.Inject
 class WifiNetworkDetailsHandlerObserverImpl @Inject constructor(
     override val encryptionContextProvider: EncryptionContextProvider,
     override val observeTotpFromUri: ObserveTotpFromUri,
+    override val getFolderHierarchy: GetFolderHierarchy,
     override val canDisplayTotp: CanDisplayTotp,
     private val wifiNetworkQRGenerator: WifiNetworkQRGenerator
 ) : ItemDetailsHandlerObserver<ItemContents.WifiNetwork, ItemDetailsFieldType.WifiNetworkItemAction>(
     encryptionContextProvider = encryptionContextProvider,
     observeTotpFromUri = observeTotpFromUri,
+    getFolderHierarchy = getFolderHierarchy,
     canDisplayTotp = canDisplayTotp
 ) {
 
@@ -67,8 +70,9 @@ class WifiNetworkDetailsHandlerObserverImpl @Inject constructor(
         detailEvent: DetailEvent
     ): Flow<ItemDetailState> = combine(
         observeItemContents(item),
-        observeTotps(item)
-    ) { itemContents, customFieldsTotps ->
+        observeTotps(item),
+        observeBreadcrumbs(item)
+    ) { itemContents, customFieldsTotps, breadcrumb ->
         ItemDetailState.WifiNetwork(
             itemContents = itemContents,
             itemId = item.id,
@@ -91,6 +95,7 @@ class WifiNetworkDetailsHandlerObserverImpl @Inject constructor(
                 },
                 wifiSecurity = itemContents.wifiSecurityType
             ).getOrNull().toOption(),
+            breadcrumb = breadcrumb,
             detailEvent = detailEvent
         )
     }

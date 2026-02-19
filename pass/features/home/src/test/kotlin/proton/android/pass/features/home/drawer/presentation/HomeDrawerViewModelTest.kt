@@ -36,7 +36,6 @@ import proton.android.pass.data.api.usecases.UpgradeInfo
 import proton.android.pass.data.api.usecases.capabilities.CanCreateVault
 import proton.android.pass.data.api.usecases.capabilities.CanOrganiseVaults
 import proton.android.pass.data.fakes.usecases.folders.FakeObserveFolders
-import proton.android.pass.domain.Folder
 import proton.android.pass.domain.FolderId
 import proton.android.pass.domain.PlanType
 import proton.android.pass.domain.ShareId
@@ -46,6 +45,7 @@ import proton.android.pass.preferences.FakeFeatureFlagsPreferenceRepository
 import proton.android.pass.preferences.FeatureFlag
 import proton.android.pass.searchoptions.fakes.FakeHomeSearchOptionsRepository
 import proton.android.pass.test.MainDispatcherRule
+import proton.android.pass.test.domain.FolderTestFactory
 import proton.android.pass.test.domain.VaultTestFactory
 
 internal class HomeDrawerViewModelTest {
@@ -97,12 +97,11 @@ internal class HomeDrawerViewModelTest {
         val userId = UserId("user-1")
         val shareId = ShareId("share-1")
         val vault = VaultTestFactory.create(userId = userId, shareId = shareId, name = "Main Vault")
-        val folder = Folder(
+        val folder = FolderTestFactory.create(
             userId = userId,
             shareId = shareId,
             vaultId = vault.vaultId,
             folderId = FolderId("folder-1"),
-            parentFolderId = null,
             folderKey = "key",
             name = "Root"
         )
@@ -134,12 +133,11 @@ internal class HomeDrawerViewModelTest {
         val userId = UserId("user-1")
         val shareId = ShareId("share-1")
         val vault = VaultTestFactory.create(userId = userId, shareId = shareId, name = "Main Vault")
-        val folder = Folder(
+        val folder = FolderTestFactory.create(
             userId = userId,
             shareId = shareId,
             vaultId = vault.vaultId,
             folderId = FolderId("folder-1"),
-            parentFolderId = null,
             folderKey = "key",
             name = "Root"
         )

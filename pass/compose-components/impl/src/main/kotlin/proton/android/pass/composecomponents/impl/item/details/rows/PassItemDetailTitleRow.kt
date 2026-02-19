@@ -51,7 +51,6 @@ internal fun PassItemDetailTitleRow(
     modifier: Modifier = Modifier,
     itemDetailState: ItemDetailState,
     itemColors: PassItemColors,
-    folderPath: List<String> = emptyList(),
     onEvent: (PassItemDetailsUiEvent) -> Unit
 ) = with(itemDetailState) {
     when (this) {
@@ -63,7 +62,6 @@ internal fun PassItemDetailTitleRow(
                 itemColors = itemColors,
                 share = itemShare,
                 itemDiffType = itemDetailState.itemDiffs.title,
-                folderPath = folderPath,
                 onSharedVaultClick = { sharedVaultId ->
                     PassItemDetailsUiEvent.OnSharedVaultClick(
                         sharedVaultId = sharedVaultId
@@ -86,7 +84,6 @@ internal fun PassItemDetailTitleRow(
                 itemColors = itemColors,
                 share = itemShare,
                 itemDiffType = itemDetailState.itemDiffs.title,
-                folderPath = folderPath,
                 onSharedVaultClick = { sharedVaultId ->
                     PassItemDetailsUiEvent.OnSharedVaultClick(
                         sharedVaultId = sharedVaultId
@@ -108,7 +105,6 @@ internal fun PassItemDetailTitleRow(
                 itemColors = itemColors,
                 share = itemShare,
                 itemDiffType = itemDetailState.itemDiffs.title,
-                folderPath = folderPath,
                 onSharedVaultClick = { sharedVaultId ->
                     PassItemDetailsUiEvent.OnSharedVaultClick(
                         sharedVaultId = sharedVaultId
@@ -130,7 +126,6 @@ internal fun PassItemDetailTitleRow(
                 itemColors = itemColors,
                 share = itemShare,
                 itemDiffType = itemDetailState.itemDiffs.title,
-                folderPath = folderPath,
                 onSharedVaultClick = { sharedVaultId ->
                     PassItemDetailsUiEvent.OnSharedVaultClick(
                         sharedVaultId = sharedVaultId
@@ -197,7 +192,6 @@ internal fun PassItemDetailTitleRow(
                 itemColors = itemColors,
                 share = itemShare,
                 itemDiffType = itemDetailState.itemDiffs.title,
-                folderPath = folderPath,
                 onSharedVaultClick = { sharedVaultId ->
                     PassItemDetailsUiEvent.OnSharedVaultClick(
                         sharedVaultId = sharedVaultId
@@ -219,7 +213,6 @@ internal fun PassItemDetailTitleRow(
                 itemColors = itemColors,
                 share = itemShare,
                 itemDiffType = itemDetailState.itemDiffs.title,
-                folderPath = folderPath,
                 onSharedVaultClick = {},
                 iconContent = {}
             )
@@ -235,7 +228,6 @@ private fun ItemDetailTitleRow(
     itemColors: PassItemColors,
     share: Share,
     itemDiffType: ItemDiffType,
-    folderPath: List<String> = emptyList(),
     onSharedVaultClick: (ShareId) -> Unit,
     iconContent: @Composable RowScope.() -> Unit
 ) {

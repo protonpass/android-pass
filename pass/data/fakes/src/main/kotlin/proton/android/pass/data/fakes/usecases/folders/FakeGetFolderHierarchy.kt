@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2025 Proton AG
+ * Copyright (c) 2026 Proton AG
  * This file is part of Proton AG and Proton Pass.
  *
  * Proton Pass is free software: you can redistribute it and/or modify
@@ -19,9 +19,10 @@
 package proton.android.pass.data.fakes.usecases.folders
 
 import me.proton.core.domain.entity.UserId
-import proton.android.pass.data.api.usecases.folders.GetFolder
+import proton.android.pass.data.api.usecases.folders.GetFolderHierarchy
 import proton.android.pass.domain.Folder
 import proton.android.pass.domain.FolderId
+import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.VaultId
 import proton.android.pass.test.domain.FolderTestFactory
@@ -29,22 +30,24 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class FakeGetFolder @Inject constructor() : GetFolder {
+class FakeGetFolderHierarchy @Inject constructor() : GetFolderHierarchy {
 
-    private var result: Result<Folder> = Result.success(
-        FolderTestFactory.create(
-            userId = UserId("fake-user-id"),
-            shareId = ShareId("fake-share-id"),
-            vaultId = VaultId("fake-vault-id"),
-            folderId = FolderId("fake-folder-id"),
-            folderKey = "fake-folder-key",
-            name = "Fake Folder"
+    private var result: Result<List<Folder>> = Result.success(
+        listOf(
+            FolderTestFactory.create(
+                userId = UserId("fake-user-id"),
+                shareId = ShareId("fake-share-id"),
+                vaultId = VaultId("fake-vault-id"),
+                folderId = FolderId("fake-folder-id"),
+                folderKey = "fake-folder-key",
+                name = "Fake Folder"
+            )
         )
     )
 
-    fun setResult(result: Result<Folder>) {
+    fun setResult(result: Result<List<Folder>>) {
         this.result = result
     }
 
-    override suspend fun invoke(shareId: ShareId, folderId: FolderId): Folder = result.getOrThrow()
+    override suspend fun invoke(shareId: ShareId, itemId: ItemId): List<Folder> = result.getOrThrow()
 }

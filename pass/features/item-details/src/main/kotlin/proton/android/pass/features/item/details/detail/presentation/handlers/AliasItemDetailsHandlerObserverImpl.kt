@@ -105,7 +105,7 @@ class AliasItemDetailsHandlerObserverImpl @Inject constructor(
             aliasContacts = aliasContacts,
             attachmentsState = attachmentsState,
             customFieldTotps = customFieldTotps,
-            breadcrumb = breadcrumb,
+            breadcrumbs = breadcrumb,
             displayContactsBanner = displayContactsBanner.value,
             detailEvent = detailEvent
         )

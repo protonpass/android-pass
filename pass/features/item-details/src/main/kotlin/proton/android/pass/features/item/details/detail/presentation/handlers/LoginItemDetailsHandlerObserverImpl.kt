@@ -137,7 +137,7 @@ class LoginItemDetailsHandlerObserverImpl @Inject constructor(
             loginMonitorState = loginMonitorState,
             detailEvent = detailEvent,
             linkedAlias = linkedAlias,
-            breadcrumb = breadcrumb
+            breadcrumbs = breadcrumb
         )
     }
 

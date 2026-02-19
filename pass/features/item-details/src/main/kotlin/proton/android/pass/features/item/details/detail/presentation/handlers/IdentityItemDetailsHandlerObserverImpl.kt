@@ -96,7 +96,7 @@ class IdentityItemDetailsHandlerObserverImpl @Inject constructor(
             addressDetailsTotps = addressDetailTotps,
             contactDetailsTotps = contactDetailTotps,
             workDetailsTotps = workDetailTotps,
-            breadcrumb = breadcrumb
+            breadcrumbs = breadcrumb
         )
     }
 

@@ -66,7 +66,7 @@ fun PassItemDetailsContent(
                 .verticalScroll(state = rememberScrollState()),
             verticalArrangement = Arrangement.spacedBy(Spacing.mediumSmall)
         ) {
-            if (itemDetailState.breadcrumb.isNotEmpty()) {
+            if (itemDetailState.breadcrumbs.isNotEmpty()) {
                 val vaultShare = itemDetailState.itemShare as? Share.Vault
                 if (vaultShare != null) {
                     FolderPathComposable(
@@ -76,7 +76,7 @@ fun PassItemDetailsContent(
                         vaultName = vaultShare.name,
                         vaultIcon = vaultShare.icon,
                         vaultColor = vaultShare.color,
-                        folderPath = itemDetailState.breadcrumb
+                        folderPath = itemDetailState.breadcrumbs
                     )
                 }
             }

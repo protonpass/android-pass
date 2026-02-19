@@ -179,6 +179,65 @@ internal class HomeDrawerViewModelTest {
         }
     }
 
+    @Test
+    internal fun `does not re-subscribe folder flows when vault order changes for same keys`() = runTest {
+        val userId = UserId("user-1")
+        val firstShareId = ShareId("share-1")
+        val secondShareId = ShareId("share-2")
+        val firstVault = VaultTestFactory.create(userId = userId, shareId = firstShareId, name = "same-name")
+        val secondVault = VaultTestFactory.create(userId = userId, shareId = secondShareId, name = "same-name")
+
+        featureFlags.set(FeatureFlag.PASS_FOLDERS, true)
+
+        observeVaultsWithItemCount.send(
+            listOf(
+                VaultWithItemCount(vault = firstVault, activeItemCount = 1, trashedItemCount = 0),
+                VaultWithItemCount(vault = secondVault, activeItemCount = 2, trashedItemCount = 0)
+            )
+        )
+
+        viewModel.stateFlow.test {
+            awaitNextMatching { it.vaultShares.size == 2 }
+            assertThat(observeFolders.invocationCount(userId, firstShareId)).isEqualTo(1)
+            assertThat(observeFolders.invocationCount(userId, secondShareId)).isEqualTo(1)
+
+            observeVaultsWithItemCount.send(
+                listOf(
+                    VaultWithItemCount(vault = secondVault, activeItemCount = 3, trashedItemCount = 0),
+                    VaultWithItemCount(vault = firstVault, activeItemCount = 4, trashedItemCount = 0)
+                )
+            )
+            awaitNextMatching {
+                it.vaultShares.firstOrNull()?.activeItemCount == 3L ||
+                    it.vaultShares.firstOrNull()?.activeItemCount == 4L
+            }
+
+            assertThat(observeFolders.invocationCount(userId, firstShareId)).isEqualTo(1)
+            assertThat(observeFolders.invocationCount(userId, secondShareId)).isEqualTo(1)
+        }
+    }
+
+    @Test
+    internal fun `observes duplicated share key once`() = runTest {
+        val userId = UserId("user-1")
+        val shareId = ShareId("share-1")
+        val vault = VaultTestFactory.create(userId = userId, shareId = shareId, name = "Main Vault")
+
+        featureFlags.set(FeatureFlag.PASS_FOLDERS, true)
+
+        observeVaultsWithItemCount.send(
+            listOf(
+                VaultWithItemCount(vault = vault, activeItemCount = 1, trashedItemCount = 0),
+                VaultWithItemCount(vault = vault, activeItemCount = 2, trashedItemCount = 0)
+            )
+        )
+
+        viewModel.stateFlow.test {
+            awaitNextMatching { it.vaultShares.size == 2 }
+            assertThat(observeFolders.invocationCount(userId, shareId)).isEqualTo(1)
+        }
+    }
+
     private suspend fun ReceiveTurbine<HomeDrawerState>.awaitNextMatching(
         predicate: (HomeDrawerState) -> Boolean
     ): HomeDrawerState {

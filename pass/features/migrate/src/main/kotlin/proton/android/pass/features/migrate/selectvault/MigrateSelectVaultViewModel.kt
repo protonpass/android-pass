@@ -237,12 +237,20 @@ class MigrateSelectVaultViewModel @Inject constructor(
         }
     }
 
-    private fun toVaultShareKeys(vaults: List<VaultWithItemCount>): List<VaultShareKey> = vaults.map { vault ->
-        VaultShareKey(
-            userId = vault.vault.userId,
-            shareId = vault.vault.shareId
+    private fun toVaultShareKeys(vaults: List<VaultWithItemCount>): List<VaultShareKey> = vaults
+        .asSequence()
+        .map { vault ->
+            VaultShareKey(
+                userId = vault.vault.userId,
+                shareId = vault.vault.shareId
+            )
+        }
+        .distinct()
+        .sortedWith(
+            compareBy<VaultShareKey> { it.userId.id }
+                .thenBy { it.shareId.id }
         )
-    }
+        .toList()
 
     private fun observeVaultFolders(shareKeys: List<VaultShareKey>): Flow<Map<ShareId, PersistentList<FolderUiModel>>> {
         if (shareKeys.isEmpty()) {
@@ -251,15 +259,17 @@ class MigrateSelectVaultViewModel @Inject constructor(
 
         val folderFlows = shareKeys.map(::observeFolderTreeForShare)
         return combine(folderFlows) { shareFolderPairs -> shareFolderPairs.toMap() }
+            .distinctUntilChanged()
     }
 
     private fun observeFolderTreeForShare(shareKey: VaultShareKey): Flow<Pair<ShareId, PersistentList<FolderUiModel>>> =
         observeFolders(shareKey.userId, shareKey.shareId)
+            .distinctUntilChanged()
             .map { folderList ->
                 shareKey.shareId to FolderTreeBuilder.build(folderList)
             }
             .onStart {
-                emit(shareKey.shareId to FolderTreeBuilder.build(emptyList()))
+                emit(shareKey.shareId to persistentListOf())
             }
 
     private fun getMode(): Mode {

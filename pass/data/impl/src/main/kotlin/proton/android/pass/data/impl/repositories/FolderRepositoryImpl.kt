@@ -326,6 +326,8 @@ class FolderRepositoryImpl @Inject constructor(
 
         val payload = createFolder.create(parentKey, keyRotation, folderName)
 
+        parentKey.clear()
+
         val request = CreateFolderRequest(
             parentFolderId = parentFolderId?.id,
             contentFormatVersion = payload.request.contentFormatVersion,
@@ -392,19 +394,8 @@ class FolderRepositoryImpl @Inject constructor(
             TAG,
             "Moving folder ${folderId.id} to parent=${newParentFolderId?.id} in shareId=${shareId.id}"
         )
-
-        val folderEntity = localFolderDataSource.getById(userId, shareId, folderId)
-            ?: throw IllegalStateException("Folder ${folderId.id} not found")
-
         val folderKeyEntity = localFolderKeyDataSource.getByFolderId(userId, shareId, folderId)
             ?: throw IllegalStateException("No folder key found for folderId=${folderId.id}")
-
-        val currentParentKey = getParentKeyForFolder(
-            userId = userId,
-            shareId = shareId,
-            parentFolderId = folderEntity.parentFolderId?.let(::FolderId),
-            keyRotation = folderKeyEntity.keyRotation
-        )
 
         val newParentKey = getParentKeyForFolder(
             userId = userId,
@@ -418,7 +409,6 @@ class FolderRepositoryImpl @Inject constructor(
             newParentKey = newParentKey
         )
 
-        currentParentKey.clear()
         newParentKey.clear()
 
         val request = MoveFolderRequest(

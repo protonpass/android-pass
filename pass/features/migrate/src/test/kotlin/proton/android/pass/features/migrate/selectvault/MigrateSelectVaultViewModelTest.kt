@@ -19,6 +19,7 @@
 package proton.android.pass.features.migrate.selectvault
 
 import app.cash.turbine.test
+import app.cash.turbine.ReceiveTurbine
 import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.runTest
@@ -91,6 +92,62 @@ class MigrateSelectVaultViewModelTest {
             require(item is MigrateSelectVaultUiState.Success)
             assertThat(item.vaultList).isEqualTo(expected)
             assertThat(item.event.value()).isNull()
+        }
+    }
+
+    @Test
+    fun `does not restart folder observers when vault order changes`() = runTest {
+        val (currentVault, otherVault) = initialVaults()
+
+        instance.state.test {
+            observeVaults.sendResult(Result.success(listOf(currentVault, otherVault)))
+            awaitSuccess()
+
+            observeVaults.sendResult(Result.success(listOf(otherVault, currentVault)))
+            awaitSuccess()
+
+            assertThat(
+                observeFolders.invocationCount(
+                    userId = currentVault.vault.userId,
+                    shareId = currentVault.vault.shareId
+                )
+            ).isEqualTo(1)
+            assertThat(
+                observeFolders.invocationCount(
+                    userId = otherVault.vault.userId,
+                    shareId = otherVault.vault.shareId
+                )
+            ).isEqualTo(1)
+        }
+    }
+
+    @Test
+    fun `observes duplicated share key once`() = runTest {
+        val (currentVault, otherVault) = initialVaults()
+
+        instance.state.test {
+            observeVaults.sendResult(Result.success(listOf(currentVault, currentVault, otherVault)))
+            awaitSuccess()
+
+            assertThat(
+                observeFolders.invocationCount(
+                    userId = currentVault.vault.userId,
+                    shareId = currentVault.vault.shareId
+                )
+            ).isEqualTo(1)
+            assertThat(
+                observeFolders.invocationCount(
+                    userId = otherVault.vault.userId,
+                    shareId = otherVault.vault.shareId
+                )
+            ).isEqualTo(1)
+        }
+    }
+
+    private suspend fun ReceiveTurbine<MigrateSelectVaultUiState>.awaitSuccess(): MigrateSelectVaultUiState.Success {
+        while (true) {
+            val state = awaitItem()
+            if (state is MigrateSelectVaultUiState.Success) return state
         }
     }
 

@@ -35,6 +35,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -44,7 +45,12 @@ import proton.android.pass.commonui.api.LocalDark
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.ThemedBooleanPreviewProvider
+import proton.android.pass.commonui.api.applyIf
 import proton.android.pass.commonui.api.body3Norm
+import proton.android.pass.composecomponents.impl.extension.toColor
+import proton.android.pass.composecomponents.impl.extension.toSmallResource
+import proton.android.pass.domain.ShareColor
+import proton.android.pass.domain.ShareIcon
 import me.proton.core.presentation.R as CoreR
 
 private const val ELLIPSIS = "..."
@@ -56,9 +62,10 @@ private val BorderLightColor = Color(color = 0xFFE3DFFA)
 fun FolderPathComposable(
     modifier: Modifier = Modifier,
     vaultName: String,
+    vaultIcon: ShareIcon,
+    vaultColor: ShareColor,
     forceExpand: Boolean = false,
-    folderPath: List<String>,
-    onClick: (() -> Unit)? = null
+    folderPath: List<String>
 ) {
     if (folderPath.isEmpty()) return
 
@@ -74,13 +81,14 @@ fun FolderPathComposable(
                 },
                 shape = RoundedCornerShape(size = 12.dp)
             )
-            .padding(horizontal = Spacing.medium, vertical = Spacing.mediumSmall)
-            .clickable {
-                if (folderPath.size > 1) {
-                    onExpand(!isExpanded)
+            .clip(RoundedCornerShape(size = 12.dp))
+            .applyIf(
+                condition = folderPath.size > 1,
+                ifTrue = {
+                    clickable { onExpand(!isExpanded) }
                 }
-                onClick?.invoke()
-            }
+            )
+            .padding(horizontal = Spacing.medium, vertical = Spacing.mediumSmall)
             .padding(vertical = Spacing.extraSmall),
         verticalAlignment = Alignment.CenterVertically
     ) {
@@ -88,9 +96,9 @@ fun FolderPathComposable(
             modifier = Modifier
                 .size(16.dp)
                 .padding(end = Spacing.extraSmall),
-            painter = painterResource(CoreR.drawable.ic_proton_briefcase),
+            painter = painterResource(vaultIcon.toSmallResource()),
             contentDescription = null,
-            tint = PassTheme.colors.vaultColor5
+            tint = vaultColor.toColor()
         )
 
         Text(
@@ -192,6 +200,8 @@ internal fun FolderPathComposableSinglePreview(
         Surface {
             FolderPathComposable(
                 vaultName = "Work",
+                vaultIcon = ShareIcon.Icon2,
+                vaultColor = ShareColor.Color2,
                 folderPath = listOf("Folder1")
             )
         }
@@ -206,6 +216,8 @@ internal fun FolderPathComposableCollapsedPreview(
         Surface {
             FolderPathComposable(
                 vaultName = "Work",
+                vaultIcon = ShareIcon.Icon2,
+                vaultColor = ShareColor.Color2,
                 folderPath = listOf("Folder1", "Folder2", "Folder3")
             )
         }
@@ -220,6 +232,8 @@ internal fun FolderPathComposableExpandedPreview(
         Surface {
             FolderPathComposable(
                 vaultName = "Work",
+                vaultIcon = ShareIcon.Icon2,
+                vaultColor = ShareColor.Color2,
                 forceExpand = true,
                 folderPath = listOf("Folder1", "Folder2", "Folder3")
             )

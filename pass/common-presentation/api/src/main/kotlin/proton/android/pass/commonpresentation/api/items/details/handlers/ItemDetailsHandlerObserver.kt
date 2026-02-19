@@ -25,7 +25,9 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onStart
+import proton.android.pass.common.api.FlowUtils.oneShot
 import proton.android.pass.common.api.Option
+import proton.android.pass.common.api.safeRunCatching
 import proton.android.pass.commonpresentation.api.items.details.domain.ItemDetailsFieldType
 import proton.android.pass.commonuimodels.api.attachments.AttachmentsState
 import proton.android.pass.commonuimodels.api.items.DetailEvent
@@ -33,6 +35,7 @@ import proton.android.pass.commonuimodels.api.items.ItemDetailState
 import proton.android.pass.crypto.api.context.EncryptionContext
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.usecases.CanDisplayTotp
+import proton.android.pass.data.api.usecases.folders.GetFolderHierarchy
 import proton.android.pass.domain.CustomFieldContent
 import proton.android.pass.domain.HiddenState
 import proton.android.pass.domain.Item
@@ -45,11 +48,13 @@ import proton.android.pass.domain.TotpState
 import proton.android.pass.domain.attachments.Attachment
 import proton.android.pass.domain.attachments.AttachmentId
 import proton.android.pass.domain.toItemContents
+import proton.android.pass.log.api.PassLogger
 import proton.android.pass.totp.api.ObserveTotpFromUri
 
 abstract class ItemDetailsHandlerObserver<ITEM_CONTENTS : ItemContents, FIELD_TYPE : ItemDetailsFieldType>(
     open val encryptionContextProvider: EncryptionContextProvider,
     open val observeTotpFromUri: ObserveTotpFromUri,
+    open val getFolderHierarchy: GetFolderHierarchy,
     open val canDisplayTotp: CanDisplayTotp
 ) {
 
@@ -81,6 +86,26 @@ abstract class ItemDetailsHandlerObserver<ITEM_CONTENTS : ItemContents, FIELD_TY
         }.let { loginItemContents ->
             emit(loginItemContents)
         }
+    }
+
+    protected fun observeBreadcrumbs(item: Item): Flow<List<String>> = oneShot {
+        safeRunCatching {
+            getFolderHierarchy(
+                shareId = item.shareId,
+                itemId = item.id
+            ).map { it.name }
+        }.fold(
+            onSuccess = { it },
+            onFailure = {
+                PassLogger.w(
+                    TAG,
+                    "Could not get folders for item with " +
+                        "share id:${item.shareId} and item id: ${item.id}"
+                )
+                PassLogger.w(TAG, it)
+                emptyList()
+            }
+        )
     }
 
     protected fun calculateItemDiffTypes(
@@ -251,7 +276,7 @@ abstract class ItemDetailsHandlerObserver<ITEM_CONTENTS : ItemContents, FIELD_TY
         val mutableCustomFields = customFields.toMutableList()
         customFields.forEachIndexed { index, field ->
             val shouldBeRevealed = revealedHiddenFields
-                .any { it is ItemDetailsFieldType.HiddenCopyable.CustomField && it.index == index } == true
+                .any { it is ItemDetailsFieldType.HiddenCopyable.CustomField && it.index == index }
             mutableCustomFields[index] =
                 updateHiddenState(field, shouldBeRevealed, encryptionContextProvider)
         }
@@ -291,4 +316,8 @@ abstract class ItemDetailsHandlerObserver<ITEM_CONTENTS : ItemContents, FIELD_TY
             }
         }
         .onStart { emit(emptyMap()) }
+
+    companion object {
+        private const val TAG = "ItemDetailsHandlerObserver"
+    }
 }

@@ -35,6 +35,7 @@ import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.usecases.CanDisplayTotp
 import proton.android.pass.data.api.usecases.ChangeAliasStatus
 import proton.android.pass.data.api.usecases.ObserveAliasDetails
+import proton.android.pass.data.api.usecases.folders.GetFolderHierarchy
 import proton.android.pass.data.api.usecases.aliascontact.ObserveAliasContacts
 import proton.android.pass.domain.AliasDetails
 import proton.android.pass.domain.Item
@@ -54,6 +55,7 @@ import javax.inject.Inject
 class AliasItemDetailsHandlerObserverImpl @Inject constructor(
     override val encryptionContextProvider: EncryptionContextProvider,
     override val observeTotpFromUri: ObserveTotpFromUri,
+    override val getFolderHierarchy: GetFolderHierarchy,
     override val canDisplayTotp: CanDisplayTotp,
     private val observeAliasDetails: ObserveAliasDetails,
     private val observeAliasContacts: ObserveAliasContacts,
@@ -62,6 +64,7 @@ class AliasItemDetailsHandlerObserverImpl @Inject constructor(
 ) : ItemDetailsHandlerObserver<ItemContents.Alias, ItemDetailsFieldType.AliasItemAction>(
     encryptionContextProvider = encryptionContextProvider,
     observeTotpFromUri = observeTotpFromUri,
+    getFolderHierarchy = getFolderHierarchy,
     canDisplayTotp = canDisplayTotp
 ) {
 
@@ -79,9 +82,10 @@ class AliasItemDetailsHandlerObserverImpl @Inject constructor(
         observeAliasDetails(item.shareId, item.id).onStart { emit(AliasDetails.EMPTY) },
         observeAliasContacts(item.shareId, item.id),
         observeCustomFieldTotps(item),
+        observeBreadcrumbs(item),
         userPreferencesRepository.observeDisplayFeatureDiscoverBanner(AliasManagementContacts),
         isAliasStateTogglingState
-    ) { aliasItemContents, aliasDetails, aliasContacts, customFieldTotps, displayContactsBanner,
+    ) { aliasItemContents, aliasDetails, aliasContacts, customFieldTotps, breadcrumb, displayContactsBanner,
         isAliasStateToggling ->
         ItemDetailState.Alias(
             itemContents = aliasItemContents,
@@ -101,6 +105,7 @@ class AliasItemDetailsHandlerObserverImpl @Inject constructor(
             aliasContacts = aliasContacts,
             attachmentsState = attachmentsState,
             customFieldTotps = customFieldTotps,
+            breadcrumb = breadcrumb,
             displayContactsBanner = displayContactsBanner.value,
             detailEvent = detailEvent
         )

@@ -35,6 +35,7 @@ import proton.android.pass.commonuimodels.api.items.DetailEvent
 import proton.android.pass.commonuimodels.api.items.ItemDetailState
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.usecases.CanDisplayTotp
+import proton.android.pass.data.api.usecases.folders.GetFolderHierarchy
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.ItemDiffs
@@ -49,10 +50,12 @@ import javax.inject.Inject
 class SSHKeyDetailsHandlerObserverImpl @Inject constructor(
     override val encryptionContextProvider: EncryptionContextProvider,
     override val observeTotpFromUri: ObserveTotpFromUri,
+    override val getFolderHierarchy: GetFolderHierarchy,
     override val canDisplayTotp: CanDisplayTotp
 ) : ItemDetailsHandlerObserver<ItemContents.SSHKey, ItemDetailsFieldType.SSHKeyItemAction>(
     encryptionContextProvider = encryptionContextProvider,
     observeTotpFromUri = observeTotpFromUri,
+    getFolderHierarchy = getFolderHierarchy,
     canDisplayTotp = canDisplayTotp
 ) {
 
@@ -64,8 +67,9 @@ class SSHKeyDetailsHandlerObserverImpl @Inject constructor(
         detailEvent: DetailEvent
     ): Flow<ItemDetailState> = combine(
         observeItemContents(item),
-        observeTotps(item)
-    ) { itemContents, customFieldsTotps ->
+        observeTotps(item),
+        observeBreadcrumbs(item)
+    ) { itemContents, customFieldsTotps, breadcrumb ->
         ItemDetailState.SSHKey(
             itemContents = itemContents,
             itemId = item.id,
@@ -81,6 +85,7 @@ class SSHKeyDetailsHandlerObserverImpl @Inject constructor(
             itemShareCount = item.shareCount,
             attachmentsState = attachmentsState,
             customFieldTotps = customFieldsTotps,
+            breadcrumb = breadcrumb,
             detailEvent = detailEvent
         )
     }

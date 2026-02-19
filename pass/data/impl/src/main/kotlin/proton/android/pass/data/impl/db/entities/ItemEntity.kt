@@ -47,6 +47,12 @@ import me.proton.core.user.data.entity.UserEntity
             parentColumns = [ShareEntity.Columns.ID],
             childColumns = [ItemEntity.Columns.SHARE_ID],
             onDelete = ForeignKey.CASCADE
+        ),
+        ForeignKey(
+            entity = FolderEntity::class,
+            parentColumns = [FolderEntity.Columns.ID, FolderEntity.Columns.SHARE_ID],
+            childColumns = [ItemEntity.Columns.FOLDER_ID, ItemEntity.Columns.SHARE_ID],
+            onDelete = ForeignKey.CASCADE
         )
     ]
 )

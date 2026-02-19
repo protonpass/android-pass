@@ -33,10 +33,6 @@ internal fun DeleteFolderDialog(
     viewModel: DeleteFolderViewModel = hiltViewModel()
 ) {
 
-    LaunchedEffect(Unit) {
-        viewModel.onStart()
-    }
-
     val state by viewModel.state.collectAsStateWithLifecycle()
     LaunchedEffect(state.event) {
         if (state.event == DeleteFolderEvent.Deleted) {

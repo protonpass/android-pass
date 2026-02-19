@@ -18,8 +18,8 @@
 
 package proton.android.pass.features.sharing.accept
 
-import proton.android.pass.domain.PendingInvite
-import proton.android.pass.test.domain.PendingInviteTestFactory
+import proton.android.pass.domain.ShareColor
+import proton.android.pass.domain.ShareIcon
 
 internal object AcceptInviteStateTestFactory {
 
@@ -28,11 +28,13 @@ internal object AcceptInviteStateTestFactory {
         internal fun create(
             progress: AcceptInviteProgress = AcceptInviteProgress.Pending,
             event: AcceptInviteEvent = AcceptInviteEvent.Idle,
-            pendingItemInvite: PendingInvite.UserItem = PendingInviteTestFactory.Item.create()
+            invite: AcceptInviteUiModel.Item = AcceptInviteUiModel.Item.User(
+                inviterEmail = "inviter@email"
+            )
         ) = AcceptInviteState.ItemInvite(
             progress = progress,
             event = event,
-            pendingItemInvite = pendingItemInvite
+            invite = invite
         )
 
     }
@@ -42,11 +44,18 @@ internal object AcceptInviteStateTestFactory {
         internal fun create(
             progress: AcceptInviteProgress = AcceptInviteProgress.Pending,
             event: AcceptInviteEvent = AcceptInviteEvent.Idle,
-            pendingVaultInvite: PendingInvite.UserVault = PendingInviteTestFactory.Vault.create()
+            invite: AcceptInviteUiModel.Vault = AcceptInviteUiModel.Vault.User(
+                inviterEmail = "inviter@email",
+                name = "invite-name",
+                itemCount = 1,
+                memberCount = 1,
+                icon = ShareIcon.Icon1,
+                color = ShareColor.Color1
+            )
         ) = AcceptInviteState.VaultInvite(
             progress = progress,
             event = event,
-            pendingVaultInvite = pendingVaultInvite
+            invite = invite
         )
 
     }

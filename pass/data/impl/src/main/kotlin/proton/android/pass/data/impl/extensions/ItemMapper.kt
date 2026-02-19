@@ -31,6 +31,7 @@ import proton.android.pass.domain.ItemEncrypted
 import proton.android.pass.domain.ItemFlags
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ItemType
+import proton.android.pass.domain.FolderId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.ShareType
 import proton.android.pass.domain.entity.AppName
@@ -62,6 +63,7 @@ fun ItemEntity.toDomain(context: EncryptionContext): Item {
         itemUuid = parsed.metadata.itemUuid,
         revision = revision,
         shareId = ShareId(shareId),
+        folderId = folderId?.let(::FolderId),
         itemType = ItemType.fromParsed(context, parsed, aliasEmail),
         title = encryptedTitle,
         note = encryptedNote,

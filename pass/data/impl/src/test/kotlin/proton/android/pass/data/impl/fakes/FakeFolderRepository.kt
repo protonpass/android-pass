@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2025 Proton AG
+ * Copyright (c) 2026 Proton AG
  * This file is part of Proton AG and Proton Pass.
  *
  * Proton Pass is free software: you can redistribute it and/or modify
@@ -16,67 +16,81 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.data.api.repositories
+package proton.android.pass.data.impl.fakes
 
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.emptyFlow
 import me.proton.core.domain.entity.UserId
+import proton.android.pass.data.api.repositories.FolderRepository
 import proton.android.pass.domain.Folder
 import proton.android.pass.domain.FolderId
 import proton.android.pass.domain.ShareId
 
-interface FolderRepository {
-    fun observeFolders(userId: UserId, shareId: ShareId): Flow<List<Folder>>
+class FakeFolderRepository : FolderRepository {
+    data class GetFolderHierarchyCall(
+        val userId: UserId,
+        val shareId: ShareId,
+        val folderId: FolderId
+    )
 
-    fun observeFoldersByParentId(
+    var getFolderHierarchyResult: List<Folder> = emptyList()
+    var lastGetFolderHierarchyCall: GetFolderHierarchyCall? = null
+
+    override fun observeFolders(userId: UserId, shareId: ShareId): Flow<List<Folder>> = emptyFlow()
+
+    override fun observeFoldersByParentId(
         userId: UserId,
         shareId: ShareId,
         parentFolderId: FolderId?
-    ): Flow<List<Folder>>
+    ): Flow<List<Folder>> = emptyFlow()
 
-    suspend fun refreshFolders(userId: UserId, shareId: ShareId)
+    override suspend fun refreshFolders(userId: UserId, shareId: ShareId) = Unit
 
-    fun observeFolder(
+    override fun observeFolder(
         userId: UserId,
         shareId: ShareId,
         folderId: FolderId
-    ): Flow<Folder?>
+    ): Flow<Folder?> = emptyFlow()
 
-    suspend fun getFolderHierarchy(
+    override suspend fun getFolderHierarchy(
         userId: UserId,
         shareId: ShareId,
         folderId: FolderId
-    ): List<Folder>
+    ): List<Folder> {
+        lastGetFolderHierarchyCall = GetFolderHierarchyCall(userId, shareId, folderId)
+        return getFolderHierarchyResult
+    }
 
-    suspend fun createFolder(
+    override suspend fun createFolder(
         userId: UserId,
         shareId: ShareId,
         parentFolderId: FolderId?,
         folderName: String
-    ): Folder
+    ): Folder = error("Not implemented")
 
-    suspend fun updateFolder(
+    override suspend fun updateFolder(
         userId: UserId,
         shareId: ShareId,
         folderId: FolderId,
         folderName: String
-    ): Folder
+    ): Folder = error("Not implemented")
 
-    suspend fun moveFolder(
+    override suspend fun moveFolder(
         userId: UserId,
         shareId: ShareId,
         folderId: FolderId,
         newParentFolderId: FolderId?
-    ): Folder
+    ): Folder = error("Not implemented")
 
-    suspend fun deleteFolders(
+    override suspend fun deleteFolders(
         userId: UserId,
         shareId: ShareId,
         folderIds: List<FolderId>
-    )
+    ) = Unit
 
-    suspend fun deleteFoldersLocally(
+    override suspend fun deleteFoldersLocally(
         userId: UserId,
         shareId: ShareId,
         folderIds: List<FolderId>
-    )
+    ) = Unit
 }

@@ -52,7 +52,6 @@ fun PassItemDetailsContent(
     onEvent: (PassItemDetailsUiEvent) -> Unit,
     shouldDisplayItemHistorySection: Boolean,
     shouldDisplayItemHistoryButton: Boolean,
-    folderPath: List<String> = emptyList(),
     extraBottomSpacing: Dp = Spacing.none
 ) {
     Scaffold(
@@ -67,12 +66,19 @@ fun PassItemDetailsContent(
                 .verticalScroll(state = rememberScrollState()),
             verticalArrangement = Arrangement.spacedBy(Spacing.mediumSmall)
         ) {
-            // if FoldeFeatureFlag == false folderPath must be empty
-            if (folderPath.isNotEmpty()) {
-                FolderPathComposable(
-                    vaultName = (itemDetailState.itemShare as? Share.Vault)?.name.orEmpty(),
-                    folderPath = folderPath
-                )
+            if (itemDetailState.breadcrumb.isNotEmpty()) {
+                val vaultShare = itemDetailState.itemShare as? Share.Vault
+                if (vaultShare != null) {
+                    FolderPathComposable(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = Spacing.medium),
+                        vaultName = vaultShare.name,
+                        vaultIcon = vaultShare.icon,
+                        vaultColor = vaultShare.color,
+                        folderPath = itemDetailState.breadcrumb
+                    )
+                }
             }
 
             PassItemDetailBannerRow(
@@ -91,7 +97,6 @@ fun PassItemDetailsContent(
                     ),
                 itemDetailState = itemDetailState,
                 itemColors = itemColors,
-                folderPath = folderPath,
                 onEvent = onEvent
             )
 

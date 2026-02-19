@@ -30,6 +30,7 @@ import proton.android.pass.data.api.repositories.BulkInviteRepository
 import proton.android.pass.data.api.repositories.BulkMoveToVaultRepository
 import proton.android.pass.data.api.repositories.DraftAttachmentRepository
 import proton.android.pass.data.api.repositories.DraftRepository
+import proton.android.pass.data.api.repositories.GroupRepository
 import proton.android.pass.data.api.repositories.InAppMessagesRepository
 import proton.android.pass.data.api.repositories.ItemRepository
 import proton.android.pass.data.api.repositories.ItemSyncStatusRepository
@@ -260,6 +261,7 @@ import proton.android.pass.data.fakes.repositories.FakeBulkInviteRepository
 import proton.android.pass.data.fakes.repositories.FakeBulkMoveToVaultRepository
 import proton.android.pass.data.fakes.repositories.FakeDraftAttachmentRepository
 import proton.android.pass.data.fakes.repositories.FakeDraftRepository
+import proton.android.pass.data.fakes.repositories.FakeGroupRepository
 import proton.android.pass.data.fakes.repositories.FakeInAppMessagesRepository
 import proton.android.pass.data.fakes.repositories.FakeItemRepository
 import proton.android.pass.data.fakes.repositories.FakeMetadataResolver
@@ -1259,4 +1261,7 @@ abstract class FakesDataModule {
 
     @Binds
     abstract fun bindGetPlanWithPrices(impl: FakeObservePlanWithPrices): ObservePlansWithPrice
+
+    @Binds
+    abstract fun bindGroupRepository(impl: FakeGroupRepository): GroupRepository
 }

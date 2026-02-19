@@ -85,7 +85,7 @@ class SSHKeyDetailsHandlerObserverImpl @Inject constructor(
             itemShareCount = item.shareCount,
             attachmentsState = attachmentsState,
             customFieldTotps = customFieldsTotps,
-            breadcrumb = breadcrumb,
+            breadcrumbs = breadcrumb,
             detailEvent = detailEvent
         )
     }

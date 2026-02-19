@@ -76,7 +76,7 @@ class CreditCardItemDetailsHandlerObserverImpl @Inject constructor(
             itemShareCount = item.shareCount,
             attachmentsState = attachmentsState,
             customFieldTotps = customFieldTotps,
-            breadcrumb = breadcrumb,
+            breadcrumbs = breadcrumb,
             detailEvent = detailEvent
         )
     }

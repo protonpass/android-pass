@@ -133,6 +133,40 @@ internal class FolderRepositoryImplTest {
     }
 
     @Test
+    fun `getFolderHierarchy returns folders ordered from root to leaf`() = runTest {
+        localFolderDataSource.upsertFolder(
+            folderEntity(
+                folderId = "root",
+                name = "Root",
+                parentFolderId = null
+            )
+        )
+        localFolderDataSource.upsertFolder(
+            folderEntity(
+                folderId = "child",
+                name = "Child",
+                parentFolderId = "root"
+            )
+        )
+        localFolderDataSource.upsertFolder(
+            folderEntity(
+                folderId = "leaf",
+                name = "Leaf",
+                parentFolderId = "child"
+            )
+        )
+
+        val result = repository.getFolderHierarchy(
+            userId = userId,
+            shareId = shareId,
+            folderId = FolderId("leaf")
+        )
+
+        assertThat(result.map { it.folderId.id }).containsExactly("root", "child", "leaf").inOrder()
+        assertThat(result.map { it.name }).containsExactly("Root", "Child", "Leaf").inOrder()
+    }
+
+    @Test
     fun `createFolder uses local share key for root folder decryption`() = runTest {
         shareKeyRepository.emitGetLatestKeyForShare(
             ShareKeyTestFactory.create(rotation = 3, keyBytes = byteArrayOf(10))

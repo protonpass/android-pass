@@ -35,6 +35,7 @@ import proton.android.pass.crypto.api.usecases.folders.OpenFolder
 import proton.android.pass.crypto.api.usecases.folders.UpdateFolder
 import proton.android.pass.data.api.repositories.FolderRepository
 import proton.android.pass.data.impl.db.PassDatabase
+import proton.android.pass.data.impl.db.entities.FolderEntity
 import proton.android.pass.data.impl.db.entities.FolderKeyEntity
 import proton.android.pass.data.impl.extensions.toDomain
 import proton.android.pass.data.impl.extensions.toEntity
@@ -237,6 +238,28 @@ class FolderRepositoryImpl @Inject constructor(
     ).map { folderEntities ->
         encryptionContextProvider.withEncryptionContextSuspendable {
             folderEntities.map { it.toDomain(this) }
+        }
+    }
+
+    override suspend fun getFolderHierarchy(
+        userId: UserId,
+        shareId: ShareId,
+        folderId: FolderId
+    ): List<Folder> {
+        val visitedFolderIds = mutableSetOf<String>()
+        val folderEntities = mutableListOf<FolderEntity>()
+        var currentFolderId: FolderId? = folderId
+
+        while (currentFolderId != null && visitedFolderIds.add(currentFolderId.id)) {
+            val folderEntity = localFolderDataSource.getById(userId, shareId, currentFolderId) ?: break
+            folderEntities += folderEntity
+            currentFolderId = folderEntity.parentFolderId?.let(::FolderId)
+        }
+
+        return encryptionContextProvider.withEncryptionContextSuspendable {
+            folderEntities
+                .asReversed()
+                .map { it.toDomain(this) }
         }
     }
 

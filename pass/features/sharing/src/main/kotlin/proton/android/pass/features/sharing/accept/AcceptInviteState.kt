@@ -19,10 +19,8 @@
 package proton.android.pass.features.sharing.accept
 
 import androidx.compose.runtime.Stable
-import proton.android.pass.domain.PendingInvite
 import proton.android.pass.domain.ShareColor
 import proton.android.pass.domain.ShareIcon
-import proton.android.pass.domain.VaultInfo
 
 @Stable
 internal sealed interface AcceptInviteState {
@@ -44,32 +42,66 @@ internal sealed interface AcceptInviteState {
     data class ItemInvite(
         override val progress: AcceptInviteProgress,
         override val event: AcceptInviteEvent,
-        private val pendingItemInvite: PendingInvite
-    ) : AcceptInviteState {
-
-        internal val inviterEmail: String = pendingItemInvite.inviterEmail
-
-    }
+        internal val invite: AcceptInviteUiModel.Item
+    ) : AcceptInviteState
 
     @Stable
     data class VaultInvite(
         override val progress: AcceptInviteProgress,
         override val event: AcceptInviteEvent,
-        private val pendingVaultInvite: PendingInvite
-    ) : AcceptInviteState {
+        internal val invite: AcceptInviteUiModel.Vault
+    ) : AcceptInviteState
 
-        internal val inviterEmail: String = pendingVaultInvite.inviterEmail
+}
 
-        internal val name: String = (pendingVaultInvite as VaultInfo).name
+@Stable
+internal sealed interface AcceptInviteUiModel {
 
-        internal val itemCount: Int = (pendingVaultInvite as VaultInfo).itemCount
+    val inviterEmail: String
 
-        internal val memberCount: Int = (pendingVaultInvite as VaultInfo).memberCount
+    @Stable
+    sealed interface Item : AcceptInviteUiModel {
 
-        internal val icon: ShareIcon = (pendingVaultInvite as VaultInfo).icon
+        @Stable
+        data class User(
+            override val inviterEmail: String
+        ) : Item
 
-        internal val color: ShareColor = (pendingVaultInvite as VaultInfo).color
-
+        @Stable
+        data class Group(
+            override val inviterEmail: String,
+            val groupName: String
+        ) : Item
     }
 
+    @Stable
+    sealed interface Vault : AcceptInviteUiModel {
+
+        val name: String
+        val itemCount: Int
+        val memberCount: Int
+        val icon: ShareIcon
+        val color: ShareColor
+
+        @Stable
+        data class User(
+            override val inviterEmail: String,
+            override val name: String,
+            override val itemCount: Int,
+            override val memberCount: Int,
+            override val icon: ShareIcon,
+            override val color: ShareColor
+        ) : Vault
+
+        @Stable
+        data class Group(
+            override val inviterEmail: String,
+            val groupName: String,
+            override val name: String,
+            override val itemCount: Int,
+            override val memberCount: Int,
+            override val icon: ShareIcon,
+            override val color: ShareColor
+        ) : Vault
+    }
 }

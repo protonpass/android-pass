@@ -73,7 +73,7 @@ internal fun SelectItemList(
         uiState.listUiState.accountSwitchState.accountList.associate { it.userId to it.email }.toPersistentMap()
     }
     val showAutosaveBanner = listUiState.showAutosaveBanner &&
-        listUiState.autosaveUpdateFound &&
+        listUiState.autosaveMatchCount > 0 &&
         (!searchUiState.inSearchMode || items.isNotEmpty())
 
     ItemsList(
@@ -102,7 +102,7 @@ internal fun SelectItemList(
             } else {
                 EmptyList(
                     emptyListMessage = stringResource(
-                        id = if (listUiState.showAutosaveBanner && !listUiState.autosaveUpdateFound) {
+                        id = if (listUiState.showAutosaveBanner && listUiState.autosaveMatchCount == 0) {
                             R.string.select_item_autosave_no_match
                         } else {
                             R.string.error_credentials_not_found
@@ -130,6 +130,7 @@ internal fun SelectItemList(
                     canLoadExternalImages = listUiState.canLoadExternalImages,
                     showUpgradeMessage = listUiState.displayOnlyPrimaryVaultMessage,
                     showAutosaveBanner = showAutosaveBanner,
+                    autosaveMatchCount = listUiState.autosaveMatchCount,
                     canUpgrade = listUiState.canUpgrade,
                     accounts = accounts,
                     onItemOptionsClicked = onItemOptionsClicked,

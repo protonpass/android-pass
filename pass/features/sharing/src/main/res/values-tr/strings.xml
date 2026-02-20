@@ -49,6 +49,9 @@
   <string name="sharing_item_invitation_title">Öge paylaşma daveti</string>
   <string name="sharing_item_invitation_subtitle" comment="placeholder is replaced by an email address">%s sizinle bir öge paylaşmak istiyor.</string>
   <string name="sharing_item_invitation_accept">Kabul et ve ögeyi görüntüle</string>
+  <string name="sharing_group_vault_invitation_subtitle" comment="first placeholder is replaced by an email address, second by a group name">%1$s, %2$s grubunuzla bir kasa paylaşmak istiyor.</string>
+  <string name="sharing_group_item_invitation_subtitle" comment="first placeholder is replaced by an email address, second by a group name">%1$s, %2$s grubunuzla bir öge paylaşmak istiyor.</string>
+  <string name="sharing_group_invitation_accept">Daveti kabul et</string>
   <string name="sharing_invite_more">Başkalarını davet et…</string>
   <string name="sharing_snackbar_invite_accepted">Davet kabul edildi</string>
   <string name="sharing_snackbar_invite_accept_error">Davet kabul edilirken sorun çıktı</string>

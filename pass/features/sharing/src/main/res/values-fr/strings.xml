@@ -49,6 +49,9 @@
   <string name="sharing_item_invitation_title">Invitation à un élément partagé</string>
   <string name="sharing_item_invitation_subtitle" comment="placeholder is replaced by an email address">%s souhaite partager un élément avec vous.</string>
   <string name="sharing_item_invitation_accept">Accepter et afficher l\'élément</string>
+  <string name="sharing_group_vault_invitation_subtitle" comment="first placeholder is replaced by an email address, second by a group name">%1$s souhaite partager un coffre-fort avec votre groupe %2$s.</string>
+  <string name="sharing_group_item_invitation_subtitle" comment="first placeholder is replaced by an email address, second by a group name">%1$s souhaite partager un élément avec votre groupe %2$s.</string>
+  <string name="sharing_group_invitation_accept">Accepter l\'invitation</string>
   <string name="sharing_invite_more">Invitez plus de personnes…</string>
   <string name="sharing_snackbar_invite_accepted">Invitation acceptée</string>
   <string name="sharing_snackbar_invite_accept_error">Une erreur s\'est produite lors de l\'acceptation de l\'invitation.</string>

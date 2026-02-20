@@ -49,6 +49,9 @@
   <string name="sharing_item_invitation_title">Delad valvinbjudan</string>
   <string name="sharing_item_invitation_subtitle" comment="placeholder is replaced by an email address">%s vill dela ett objekt med dig.</string>
   <string name="sharing_item_invitation_accept">Acceptera och visa objektet</string>
+  <string name="sharing_group_vault_invitation_subtitle" comment="first placeholder is replaced by an email address, second by a group name">%1$s vill dela ett valv med din grupp %2$s.</string>
+  <string name="sharing_group_item_invitation_subtitle" comment="first placeholder is replaced by an email address, second by a group name">%1$s vill dela ett objekt med din grupp %2$s.</string>
+  <string name="sharing_group_invitation_accept">Acceptera inbjudan</string>
   <string name="sharing_invite_more">Bjud in fler…</string>
   <string name="sharing_snackbar_invite_accepted">Inbjudan accepterad</string>
   <string name="sharing_snackbar_invite_accept_error">Det gick inte acceptera inbjudan</string>

@@ -3,6 +3,12 @@
   <string name="snackbar_create_vault_success">Holvi luotiin</string>
   <string name="snackbar_create_vault_error">Holvia ei luotu</string>
   <string name="snackbar_cannot_create_more_vaults_error">Holveja ei voida luoda enempää</string>
+  <string name="snackbar_create_folder_success">Folder created</string>
+  <string name="snackbar_create_folder_error">Folder not created</string>
+  <string name="snackbar_update_folder_success">Folder renamed</string>
+  <string name="snackbar_update_folder_error">Folder not renamed</string>
+  <string name="snackbar_delete_folder_success">Folder deleted</string>
+  <string name="snackbar_delete_folder_error">Folder not deleted</string>
   <string name="snackbar_edit_vault_success">Holvia muokattiin</string>
   <string name="snackbar_edit_vault_error">Holvia ei muokattu</string>
   <string name="snackbar_delete_vault_success">Holvi poistettiin</string>
@@ -13,14 +19,20 @@
   <string name="snackbar_find_vault_error">Valittua holvia ei löytynyt</string>
   <string name="snackbar_get_vault_list_error">Holvilistaa ei voitu ladata</string>
   <string name="vault_delete_dialog_title">Poista holvi</string>
-  <string name="vault_add_folder_dialog_title">Enter a folder title</string>
-  <string name="vault_add_foldersame_folder_exist">A folder with the same name already exists</string>
+  <string name="vault_add_folder_dialog_title">Syötä kansion nimi</string>
+  <string name="vault_edit_folder_dialog_title">Rename folder</string>
+  <string name="vault_add_foldersame_folder_exist">Samanniminen kansio on jo olemassa</string>
+  <string name="folder_delete_dialog_title">Delete folder</string>
+  <string name="folder_delete_dialog_body">This will permanently delete the folder __FOLDER_NAME__ and all its contents. Enter the folder name to confirm deletion.</string>
+  <string name="folder_delete_dialog_placeholder">Folder name</string>
+  <string name="folder_delete_dialog_delete_action">Delete</string>
   <string name="vault_delete_dialog_body">Tämä poistaa holvin __VAULT_NAME__ ja kaiken sen sisällön pysyvästi. Vahvista poisto syöttämällä holvin nimi.</string>
   <string name="vault_delete_dialog_placeholder">Holvin nimi</string>
-  <string name="vault_add_folder_dialog_placeholder">Folder name</string>
+  <string name="vault_add_folder_dialog_placeholder">Kansion nimi</string>
   <string name="vault_delete_dialog_cancel_action">Peruuta</string>
   <string name="vault_delete_dialog_delete_action">Poista</string>
-  <string name="vault_add_folder_dialog_create_action">Create</string>
+  <string name="vault_add_folder_dialog_create_action">Luo</string>
+  <string name="vault_edit_folder_dialog_save_action">Save</string>
   <string name="vault_delete_dialog_shared_items_warning" comment="The placeholder will be replaced by the number of shared items, e.g 2 shared items">Tämä holvi sisältää %1$s. Sen poistaminen estää pääsyn myös muilta käyttäjiltä.</string>
   <string name="vault_leave_dialog_title">Poistu holvista</string>
   <string name="vault_leave_dialog_body">Tämä mitätöi käyttöoikeutesi holviin __VAULT_NAME__ ja sen sisältöön. Haluatko varmasti poistua?</string>

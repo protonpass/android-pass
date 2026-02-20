@@ -51,6 +51,9 @@
   <string name="sharing_item_invitation_title">Invitație articol partajat</string>
   <string name="sharing_item_invitation_subtitle" comment="placeholder is replaced by an email address">%s doreşte să vă partajeze un articol.</string>
   <string name="sharing_item_invitation_accept">Acceptare și vizualizare articol</string>
+  <string name="sharing_group_vault_invitation_subtitle" comment="first placeholder is replaced by an email address, second by a group name">%1$s wants to share a vault with your group %2$s.</string>
+  <string name="sharing_group_item_invitation_subtitle" comment="first placeholder is replaced by an email address, second by a group name">%1$s wants to share an item with your group %2$s.</string>
+  <string name="sharing_group_invitation_accept">Accept invitation</string>
   <string name="sharing_invite_more">Invitare mai mulți...</string>
   <string name="sharing_snackbar_invite_accepted">Invitație acceptată</string>
   <string name="sharing_snackbar_invite_accept_error">Eroare la acceptarea invitației.</string>

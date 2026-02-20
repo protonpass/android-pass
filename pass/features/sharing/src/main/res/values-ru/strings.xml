@@ -53,6 +53,9 @@
   <string name="sharing_item_invitation_title">Приглашение для общего предмета</string>
   <string name="sharing_item_invitation_subtitle" comment="placeholder is replaced by an email address">%s хочет поделиться с вами элементом.</string>
   <string name="sharing_item_invitation_accept">Принять и просмотреть элемент</string>
+  <string name="sharing_group_vault_invitation_subtitle" comment="first placeholder is replaced by an email address, second by a group name">%1$s wants to share a vault with your group %2$s.</string>
+  <string name="sharing_group_item_invitation_subtitle" comment="first placeholder is replaced by an email address, second by a group name">%1$s wants to share an item with your group %2$s.</string>
+  <string name="sharing_group_invitation_accept">Accept invitation</string>
   <string name="sharing_invite_more">Пригласить ещё…</string>
   <string name="sharing_snackbar_invite_accepted">Приглашение принято</string>
   <string name="sharing_snackbar_invite_accept_error">Ошибка при принятии приглашения</string>

@@ -3,6 +3,12 @@
   <string name="snackbar_create_vault_success">Cofre criado</string>
   <string name="snackbar_create_vault_error">Cofre não criado</string>
   <string name="snackbar_cannot_create_more_vaults_error">Não é possível criar mais cofres</string>
+  <string name="snackbar_create_folder_success">Pasta criada</string>
+  <string name="snackbar_create_folder_error">Pasta não criada</string>
+  <string name="snackbar_update_folder_success">Pasta renomada</string>
+  <string name="snackbar_update_folder_error">Pasta não renomada</string>
+  <string name="snackbar_delete_folder_success">Pasta excluída</string>
+  <string name="snackbar_delete_folder_error">Pasta não excluída</string>
   <string name="snackbar_edit_vault_success">Cofre editado</string>
   <string name="snackbar_edit_vault_error">Cofre não editado</string>
   <string name="snackbar_delete_vault_success">Cofre excluído</string>
@@ -14,13 +20,19 @@
   <string name="snackbar_get_vault_list_error">Não foi possível carregar a lista de cofres.</string>
   <string name="vault_delete_dialog_title">Excluir cofre</string>
   <string name="vault_add_folder_dialog_title">Enter a folder title</string>
-  <string name="vault_add_foldersame_folder_exist">A folder with the same name already exists</string>
+  <string name="vault_edit_folder_dialog_title">Renomear pasta</string>
+  <string name="vault_add_foldersame_folder_exist">Uma pasta com o mesmo nome já existe.</string>
+  <string name="folder_delete_dialog_title">Excluir pasta</string>
+  <string name="folder_delete_dialog_body">Isso irá excluir permanentemente a pasta __FOLDER_NAME__ e todo o seu conteúdo. Insira o nome da pasta para confirmar a exclusão.</string>
+  <string name="folder_delete_dialog_placeholder">Nome da pasta</string>
+  <string name="folder_delete_dialog_delete_action">Excluir</string>
   <string name="vault_delete_dialog_body">Isso irá excluir permanentemente o cofre __VAULT_NAME__ e todo o seu conteúdo. Insira o nome do cofre para confirmar a exclusão.</string>
   <string name="vault_delete_dialog_placeholder">Nome do cofre</string>
   <string name="vault_add_folder_dialog_placeholder">Nome da pasta</string>
   <string name="vault_delete_dialog_cancel_action">Cancelar</string>
   <string name="vault_delete_dialog_delete_action">Excluir</string>
   <string name="vault_add_folder_dialog_create_action">Criar</string>
+  <string name="vault_edit_folder_dialog_save_action">Salvar</string>
   <string name="vault_delete_dialog_shared_items_warning" comment="The placeholder will be replaced by the number of shared items, e.g 2 shared items">Este cofre contém %1$s. Eliminá-la irá remover o acesso para todos os outros usuários.</string>
   <string name="vault_leave_dialog_title">Deixar cofre</string>
   <string name="vault_leave_dialog_body">Isso removerá seu acesso do cofre __VAULT_NAME__ e todo o seu conteúdo. Você tem certeza que deseja deixá-lo?</string>

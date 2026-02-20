@@ -3,6 +3,12 @@
   <string name="snackbar_create_vault_success">Хранилище создано</string>
   <string name="snackbar_create_vault_error">Хранилище не создано</string>
   <string name="snackbar_cannot_create_more_vaults_error">Не могу создать больше хранилищ</string>
+  <string name="snackbar_create_folder_success">Folder created</string>
+  <string name="snackbar_create_folder_error">Folder not created</string>
+  <string name="snackbar_update_folder_success">Folder renamed</string>
+  <string name="snackbar_update_folder_error">Folder not renamed</string>
+  <string name="snackbar_delete_folder_success">Folder deleted</string>
+  <string name="snackbar_delete_folder_error">Folder not deleted</string>
   <string name="snackbar_edit_vault_success">Хранилище отредактировано</string>
   <string name="snackbar_edit_vault_error">Хранилище не отредактировано</string>
   <string name="snackbar_delete_vault_success">Хранилище удалено</string>
@@ -14,13 +20,19 @@
   <string name="snackbar_get_vault_list_error">Список хранилищ не может быть загружен</string>
   <string name="vault_delete_dialog_title">Удалить хранилище</string>
   <string name="vault_add_folder_dialog_title">Enter a folder title</string>
+  <string name="vault_edit_folder_dialog_title">Rename folder</string>
   <string name="vault_add_foldersame_folder_exist">A folder with the same name already exists</string>
+  <string name="folder_delete_dialog_title">Delete folder</string>
+  <string name="folder_delete_dialog_body">This will permanently delete the folder __FOLDER_NAME__ and all its contents. Enter the folder name to confirm deletion.</string>
+  <string name="folder_delete_dialog_placeholder">Folder name</string>
+  <string name="folder_delete_dialog_delete_action">Delete</string>
   <string name="vault_delete_dialog_body">Это приведет к окончательному удалению хранилища __VAULT_NAME__ и всего его содержимого. Введите имя хранилища, чтобы подтвердить удаление.</string>
   <string name="vault_delete_dialog_placeholder">Название хранилища</string>
   <string name="vault_add_folder_dialog_placeholder">Folder name</string>
   <string name="vault_delete_dialog_cancel_action">Отменить</string>
   <string name="vault_delete_dialog_delete_action">Удалить</string>
   <string name="vault_add_folder_dialog_create_action">Create</string>
+  <string name="vault_edit_folder_dialog_save_action">Save</string>
   <string name="vault_delete_dialog_shared_items_warning" comment="The placeholder will be replaced by the number of shared items, e.g 2 shared items">В этом хранилище находится %1$s. При его удалении доступ к нему будет закрыт для всех остальных пользователей.</string>
   <string name="vault_leave_dialog_title">Покинуть хранилище</string>
   <string name="vault_leave_dialog_body">Это приведет к закрытию доступа к хранилищу __VAULT_NAME__ и всему его содержимому. Вы уверены, что хотите уйти?</string>

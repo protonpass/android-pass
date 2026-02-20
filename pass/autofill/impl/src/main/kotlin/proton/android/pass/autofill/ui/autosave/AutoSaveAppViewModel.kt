@@ -204,30 +204,13 @@ class AutoSaveAppViewModel @Inject constructor(
             // --> go to create screen directly
             exactMatches.isEmpty() && !hasPartialMatch -> AutosaveMode.Create
 
-            // if there is only ONE linked item found to update :
-            // --> go to update screen directly
-            exactMatches.size == 1 -> {
-                val match = exactMatches.first()
-                val encryptedNewPassword = encryptionContextProvider.withEncryptionContext {
-                    encrypt(usernamePasswordArgs.password.orEmpty())
-                }
-                AutosaveMode.Update(
-                    InitialUpdateLoginUiState(
-                        sharedId = match.shareId,
-                        itemId = match.id,
-                        userId = match.userId,
-                        newPassword = encryptedNewPassword
-                    )
-                )
-            }
-
             // otherwise we display the list of linked items which match
             // OR a empty list if nothing is found with a message "you can only create a item"
             else -> AutosaveMode.CreateOrUpdate(
                 username = username,
                 website = websiteArgs,
                 packageName = linkedAppInfoArgs?.packageName,
-                updateFound = exactMatches.size > 1
+                matchCount = exactMatches.size
             )
         }
     }
@@ -244,7 +227,7 @@ sealed class AutosaveMode {
         val website: String? = null,
         val packageName: String? = null,
         val selectedUpdateState: InitialUpdateLoginUiState? = null,
-        val updateFound: Boolean = false
+        val matchCount: Int = 0
     ) : AutosaveMode()
 
     data class Update(val initialUpdateLoginUiState: InitialUpdateLoginUiState) : AutosaveMode()

@@ -38,6 +38,12 @@ import androidx.room.Index
         Index(
             value = [SearchEntryEntity.Columns.ITEM_ID, SearchEntryEntity.Columns.SHARE_ID],
             unique = true
+        ),
+        Index(
+            value = [SearchEntryEntity.Columns.USER_ID, SearchEntryEntity.Columns.CREATE_TIME]
+        ),
+        Index(
+            value = [SearchEntryEntity.Columns.SHARE_ID, SearchEntryEntity.Columns.CREATE_TIME]
         )
     ]
 )

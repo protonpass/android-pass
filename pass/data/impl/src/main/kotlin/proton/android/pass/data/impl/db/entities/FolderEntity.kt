@@ -21,12 +21,22 @@ package proton.android.pass.data.impl.db.entities
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.ForeignKey
+import androidx.room.Index
 import me.proton.core.crypto.common.keystore.EncryptedByteArray
 import me.proton.core.user.data.entity.UserEntity
 
 @Entity(
     tableName = FolderEntity.TABLE,
     primaryKeys = [FolderEntity.Columns.ID, FolderEntity.Columns.SHARE_ID],
+    indices = [
+        Index(
+            value = [
+                FolderEntity.Columns.USER_ID,
+                FolderEntity.Columns.SHARE_ID,
+                FolderEntity.Columns.PARENT_FOLDER_ID
+            ]
+        )
+    ],
     foreignKeys = [
         ForeignKey(
             entity = UserEntity::class,

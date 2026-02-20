@@ -53,6 +53,9 @@
   <string name="sharing_item_invitation_title">Pozvánka ku zdieľanej položke</string>
   <string name="sharing_item_invitation_subtitle" comment="placeholder is replaced by an email address">%s chce s vami zdieľať položku.</string>
   <string name="sharing_item_invitation_accept">Prijať a zobraziť novú položku</string>
+  <string name="sharing_group_vault_invitation_subtitle" comment="first placeholder is replaced by an email address, second by a group name">%1$s wants to share a vault with your group %2$s.</string>
+  <string name="sharing_group_item_invitation_subtitle" comment="first placeholder is replaced by an email address, second by a group name">%1$s wants to share an item with your group %2$s.</string>
+  <string name="sharing_group_invitation_accept">Accept invitation</string>
   <string name="sharing_invite_more">Pozvať ďalších…</string>
   <string name="sharing_snackbar_invite_accepted">Pozvánka prijatá</string>
   <string name="sharing_snackbar_invite_accept_error">Chyba pri prijatí pozvánky</string>

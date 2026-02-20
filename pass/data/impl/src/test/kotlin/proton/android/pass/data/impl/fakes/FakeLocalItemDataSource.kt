@@ -195,6 +195,17 @@ class FakeLocalItemDataSource : LocalItemDataSource {
         throw IllegalStateException("Not yet implemented")
     }
 
+    override fun observeItemsByFolder(
+        userId: UserId,
+        shareId: ShareId,
+        folderId: FolderId,
+        itemState: ItemState?,
+        filter: ItemTypeFilter,
+        itemFlags: Map<ItemFlag, Boolean>
+    ): Flow<List<ItemEntity>> = flowOf(
+        memory.filter { it.shareId == shareId.id && it.folderId == folderId.id }
+    )
+
     override suspend fun getItemsPendingForPasskeyMigration(): List<ItemEntity> {
         throw IllegalStateException("Not yet implemented")
     }

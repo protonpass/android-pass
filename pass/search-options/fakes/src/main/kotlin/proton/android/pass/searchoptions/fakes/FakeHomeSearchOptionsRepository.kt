@@ -57,6 +57,7 @@ class FakeHomeSearchOptionsRepository @Inject constructor() : HomeSearchOptionsR
 
     override suspend fun setVaultSelectionOption(vaultSelectionOption: VaultSelectionOption) {
         vaultSelectionOptionFlow.update { vaultSelectionOption }
+        searchOptionsFlow.update { it.copy(vaultSelectionOption = vaultSelectionOption) }
     }
 
 }

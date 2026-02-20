@@ -31,6 +31,8 @@ import proton.android.pass.data.impl.db.entities.ShareEntity
     tableName = SecureLinkEntity.TABLE_NAME,
     primaryKeys = [SecureLinkEntity.Columns.LINK_ID],
     indices = [
+        Index(value = [SecureLinkEntity.Columns.ITEM_ID, SecureLinkEntity.Columns.SHARE_ID]),
+        Index(value = [SecureLinkEntity.Columns.USER_ID, SecureLinkEntity.Columns.EXPIRATION]),
         Index(value = [SecureLinkEntity.Columns.SHARE_ID]),
         Index(value = [SecureLinkEntity.Columns.SHARE_ID, SecureLinkEntity.Columns.ITEM_ID])
     ],

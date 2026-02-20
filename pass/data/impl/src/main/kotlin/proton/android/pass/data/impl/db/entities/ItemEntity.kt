@@ -21,6 +21,7 @@ package proton.android.pass.data.impl.db.entities
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.ForeignKey
+import androidx.room.Index
 import me.proton.core.crypto.common.keystore.EncryptedByteArray
 import me.proton.core.crypto.common.keystore.EncryptedString
 import me.proton.core.user.data.entity.AddressEntity
@@ -29,6 +30,22 @@ import me.proton.core.user.data.entity.UserEntity
 @Entity(
     tableName = ItemEntity.TABLE,
     primaryKeys = [ItemEntity.Columns.ID, ItemEntity.Columns.SHARE_ID],
+    indices = [
+        Index(
+            value = [
+                ItemEntity.Columns.FOLDER_ID,
+                ItemEntity.Columns.SHARE_ID
+            ]
+        ),
+        Index(
+            value = [
+                ItemEntity.Columns.USER_ID,
+                ItemEntity.Columns.SHARE_ID,
+                ItemEntity.Columns.FOLDER_ID,
+                ItemEntity.Columns.CREATE_TIME
+            ]
+        )
+    ],
     foreignKeys = [
         ForeignKey(
             entity = AddressEntity::class,

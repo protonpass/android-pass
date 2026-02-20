@@ -21,12 +21,16 @@ package proton.android.pass.data.impl.db.entities
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.ForeignKey
+import androidx.room.Index
 import androidx.room.PrimaryKey
 import me.proton.core.crypto.common.keystore.EncryptedString
 import me.proton.core.user.data.entity.UserEntity
 
 @Entity(
     tableName = PasswordHistoryEntity.TABLE,
+    indices = [
+        Index(value = [PasswordHistoryEntity.Columns.USER_ID, PasswordHistoryEntity.Columns.CREATE_TIME])
+    ],
     foreignKeys = [
         ForeignKey(
             entity = UserEntity::class,

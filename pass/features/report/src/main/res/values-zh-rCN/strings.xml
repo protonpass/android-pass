@@ -19,8 +19,8 @@
 <resources>
   <string name="description_field_label">您遇到的问题是?</string>
   <string name="description_field_hint">描述问题，越详细越好。如果有错误消息，请告诉我们它的内容。</string>
-  <string name="email_field_label">电子邮箱</string>
-  <string name="email_field_hint">电子邮箱</string>
+  <string name="email_field_label">邮箱</string>
+  <string name="email_field_hint">邮箱</string>
   <string name="attach_image_button">附上图像</string>
   <string name="categories_title">您遇到的问题是?</string>
   <string name="report_toolbar_title">报告问题</string>

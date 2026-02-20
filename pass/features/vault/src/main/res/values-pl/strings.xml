@@ -3,6 +3,12 @@
   <string name="snackbar_create_vault_success">Sejf został utworzony</string>
   <string name="snackbar_create_vault_error">Sejf nie został utworzony</string>
   <string name="snackbar_cannot_create_more_vaults_error">Nie można utworzyć więcej sejfów</string>
+  <string name="snackbar_create_folder_success">Folder created</string>
+  <string name="snackbar_create_folder_error">Folder not created</string>
+  <string name="snackbar_update_folder_success">Folder renamed</string>
+  <string name="snackbar_update_folder_error">Folder not renamed</string>
+  <string name="snackbar_delete_folder_success">Folder deleted</string>
+  <string name="snackbar_delete_folder_error">Folder not deleted</string>
   <string name="snackbar_edit_vault_success">Sejf został zaktualizowany</string>
   <string name="snackbar_edit_vault_error">Sejf nie został zaktualizowany</string>
   <string name="snackbar_delete_vault_success">Sejf został usunięty</string>
@@ -14,13 +20,19 @@
   <string name="snackbar_get_vault_list_error">Lista sejfów nie mogła zostać załadowana</string>
   <string name="vault_delete_dialog_title">Usuń sejf</string>
   <string name="vault_add_folder_dialog_title">Enter a folder title</string>
+  <string name="vault_edit_folder_dialog_title">Rename folder</string>
   <string name="vault_add_foldersame_folder_exist">A folder with the same name already exists</string>
+  <string name="folder_delete_dialog_title">Delete folder</string>
+  <string name="folder_delete_dialog_body">This will permanently delete the folder __FOLDER_NAME__ and all its contents. Enter the folder name to confirm deletion.</string>
+  <string name="folder_delete_dialog_placeholder">Folder name</string>
+  <string name="folder_delete_dialog_delete_action">Delete</string>
   <string name="vault_delete_dialog_body">Spowoduje to trwałe usunięcie sejfu __VAULT_NAME__ i jego zawartości. Wpisz nazwę sejfu, aby potwierdzić usunięcie.</string>
   <string name="vault_delete_dialog_placeholder">Nazwa sejfu</string>
   <string name="vault_add_folder_dialog_placeholder">Folder name</string>
   <string name="vault_delete_dialog_cancel_action">Anuluj</string>
   <string name="vault_delete_dialog_delete_action">Usuń</string>
   <string name="vault_add_folder_dialog_create_action">Create</string>
+  <string name="vault_edit_folder_dialog_save_action">Save</string>
   <string name="vault_delete_dialog_shared_items_warning" comment="The placeholder will be replaced by the number of shared items, e.g 2 shared items">Sejf zawiera %1$s. Usunięcie go spowoduje zatrzymanie udostępniania.</string>
   <string name="vault_leave_dialog_title">Opuść sejf</string>
   <string name="vault_leave_dialog_body">Spowoduje to utratę dostępu do sejfu __VAULT_NAME__. Czy chcesz opuścić sejf?</string>

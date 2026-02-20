@@ -47,6 +47,9 @@
   <string name="sharing_item_invitation_title">공유된 금고 초대</string>
   <string name="sharing_item_invitation_subtitle" comment="placeholder is replaced by an email address">%s님이 나와 항목을 공유하고자 합니다.</string>
   <string name="sharing_item_invitation_accept">항목 공유 수락 및 확인</string>
+  <string name="sharing_group_vault_invitation_subtitle" comment="first placeholder is replaced by an email address, second by a group name">%1$s wants to share a vault with your group %2$s.</string>
+  <string name="sharing_group_item_invitation_subtitle" comment="first placeholder is replaced by an email address, second by a group name">%1$s wants to share an item with your group %2$s.</string>
+  <string name="sharing_group_invitation_accept">Accept invitation</string>
   <string name="sharing_invite_more">더 초대하기…</string>
   <string name="sharing_snackbar_invite_accepted">초대가 수락됨</string>
   <string name="sharing_snackbar_invite_accept_error">초대 수락 중 오류</string>

@@ -3,6 +3,12 @@
   <string name="snackbar_create_vault_success">Сховище створено</string>
   <string name="snackbar_create_vault_error">Сховище не створено</string>
   <string name="snackbar_cannot_create_more_vaults_error">Не вдалося створити більше сховищ</string>
+  <string name="snackbar_create_folder_success">Folder created</string>
+  <string name="snackbar_create_folder_error">Folder not created</string>
+  <string name="snackbar_update_folder_success">Folder renamed</string>
+  <string name="snackbar_update_folder_error">Folder not renamed</string>
+  <string name="snackbar_delete_folder_success">Folder deleted</string>
+  <string name="snackbar_delete_folder_error">Folder not deleted</string>
   <string name="snackbar_edit_vault_success">Сховище відредаговано</string>
   <string name="snackbar_edit_vault_error">Сховище не відредаговано</string>
   <string name="snackbar_delete_vault_success">Сховище видалено</string>
@@ -14,13 +20,19 @@
   <string name="snackbar_get_vault_list_error">Не вдалося завантажити список сховищ</string>
   <string name="vault_delete_dialog_title">Видалити сховище</string>
   <string name="vault_add_folder_dialog_title">Enter a folder title</string>
+  <string name="vault_edit_folder_dialog_title">Rename folder</string>
   <string name="vault_add_foldersame_folder_exist">A folder with the same name already exists</string>
+  <string name="folder_delete_dialog_title">Delete folder</string>
+  <string name="folder_delete_dialog_body">This will permanently delete the folder __FOLDER_NAME__ and all its contents. Enter the folder name to confirm deletion.</string>
+  <string name="folder_delete_dialog_placeholder">Folder name</string>
+  <string name="folder_delete_dialog_delete_action">Delete</string>
   <string name="vault_delete_dialog_body">Ця дія остаточно видалить сховище __VAULT_NAME__ і весь його вміст. Введіть назву сховища для підтвердження видалення.</string>
   <string name="vault_delete_dialog_placeholder">Назва сховища</string>
   <string name="vault_add_folder_dialog_placeholder">Folder name</string>
   <string name="vault_delete_dialog_cancel_action">Скасувати</string>
   <string name="vault_delete_dialog_delete_action">Видалити</string>
   <string name="vault_add_folder_dialog_create_action">Create</string>
+  <string name="vault_edit_folder_dialog_save_action">Save</string>
   <string name="vault_delete_dialog_shared_items_warning" comment="The placeholder will be replaced by the number of shared items, e.g 2 shared items">Це сховище містить %1$s. Видалення призведе до вилучення доступу для всіх інших користувачів.</string>
   <string name="vault_leave_dialog_title">Покинути сховище</string>
   <string name="vault_leave_dialog_body">Це призведе до вилучення вашого доступу до сховища __VAULT_NAME__ та його вмісту. Ви впевнені, що хочете покинути сховище?</string>

@@ -17,7 +17,7 @@
   ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="select_passkey_action_title" comment="Title of the action to select a passkey. Will appear in the system passkey selector">Selecione outra chave de acesso</string>
+  <string name="select_passkey_action_title" comment="Title of the action to select a passkey. Will appear in the system passkey selector">Selecionar outra chave de acesso</string>
   <string name="select_passkey_action_subtitle" comment="Subtitle of the action to select a passkey. Will appear in the system passkey selector">Selecione chave de acesso do Proton Pass</string>
   <string name="passkeys_user_logged_out">Você foi desconectado. Inicie sessão novamente abrindo o aplicativo.</string>
   <string name="passkey_confirm_item_title" comment="Title of the dialog for confirming the generation of a passkey for an item">Gerar chave de acesso</string>

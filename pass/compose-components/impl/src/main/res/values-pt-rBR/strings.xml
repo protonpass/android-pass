@@ -35,7 +35,7 @@
   <string name="bottomsheet_create_folder">Criar pasta</string>
   <string name="folder_tree_create_folder">Criar pasta</string>
   <string name="bottomsheet_rename_folder">Renomear</string>
-  <string name="bottomsheet_create_sub_folder">Create sub-folder</string>
+  <string name="bottomsheet_create_sub_folder">Criar subpasta</string>
   <string name="bottomsheet_copy_item_note">Copiar nota</string>
   <string name="bottomsheet_delete_permanently">Excluir permanentemente</string>
   <string name="bottomsheet_restore">Restaurar</string>
@@ -284,9 +284,9 @@
   <!-- Verification codes -->
   <string name="verification_code_not_received">Não recebeu o código?</string>
   <string name="verification_code_suggestion_spam" comment="placeholder will be replaced by an email subject">Verifique na sua pasta de Spam um e-mail chamado “%s“</string>
-  <string name="verification_code_suggestion_subject_new_email_address">Confirme seu endereço de email para o Proton Pass</string>
+  <string name="verification_code_suggestion_subject_new_email_address">Confirme seu endereço de e-mail para o Proton Pass</string>
   <string name="verification_code_suggestion_subject_new_mailbox">Confirme sua caixa de correio</string>
-  <string name="verification_code_suggestion_resend" comment="The text that follows is: -request a new code.-">Se você não encontrar o email, você pode %s</string>
+  <string name="verification_code_suggestion_resend" comment="The text that follows is: -request a new code.-">Se você não encontrar o e-mail, você pode %s</string>
   <string name="verification_code_suggestion_resend_link" comment="The text that precedes is: -If you can’t find such email, you can -">solicitar um novo código</string>
   <string name="field_display_name_title">Nome de exibição</string>
   <!-- Attachments -->
@@ -313,7 +313,7 @@
     <item quantity="one">%d membro</item>
     <item quantity="other">%d membros</item>
   </plurals>
-  <string name="show_network_qr_code">Exibir o código QR da rede</string>
+  <string name="show_network_qr_code">Mostrar código QR da rede</string>
   <string name="expand_collpased_text">mais</string>
   <string name="collapse_expanded_text">menos</string>
   <string name="login_item_monitor_widget_weak_pass_title">Senha fraca</string>
@@ -356,5 +356,5 @@
   <string name="warning_dialog_item_shared_updating">Você está editando um item compartilhado. As alterações ficarão visíveis imediatamente para todas as pessoas com acesso a ele.</string>
   <string name="warning_dialog_item_shared_vault_reminder">Não lembrar novamente</string>
   <string name="upgrade_to_pass_plus">Faça upgrade para o Pass Plus</string>
-  <string name="warning_dialog_reload_app_after_purchase_description">Você será redirecionado para nosso site. Se você adquirir um plano, por favor, reinicie o aplicativo.</string>
+  <string name="warning_dialog_reload_app_after_purchase_description">Você será redirecionado para nosso site. Se você adquirir um plano, reinicie o aplicativo.</string>
 </resources>

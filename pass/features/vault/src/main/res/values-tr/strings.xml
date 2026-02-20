@@ -3,6 +3,12 @@
   <string name="snackbar_create_vault_success">Kasa oluşturuldu</string>
   <string name="snackbar_create_vault_error">Kasa oluşturulmadı</string>
   <string name="snackbar_cannot_create_more_vaults_error">Daha fazla kasa oluşturulamaz</string>
+  <string name="snackbar_create_folder_success">Klasör oluşturuldu</string>
+  <string name="snackbar_create_folder_error">Klasör oluşturulmadı</string>
+  <string name="snackbar_update_folder_success">Klasör yeniden adlandırıldı</string>
+  <string name="snackbar_update_folder_error">Klasör yeniden adlandırılamadı</string>
+  <string name="snackbar_delete_folder_success">Klasör silindi</string>
+  <string name="snackbar_delete_folder_error">Klasör silinemedi</string>
   <string name="snackbar_edit_vault_success">Kasa düzenlendi</string>
   <string name="snackbar_edit_vault_error">Kasa düzenlenmedi</string>
   <string name="snackbar_delete_vault_success">Kasa silindi</string>
@@ -13,14 +19,20 @@
   <string name="snackbar_find_vault_error">Seçilmiş kasa bulunamadı</string>
   <string name="snackbar_get_vault_list_error">Kasa listesi yüklenemedi</string>
   <string name="vault_delete_dialog_title">Kasayı sil</string>
-  <string name="vault_add_folder_dialog_title">Klasör başlığı girin</string>
-  <string name="vault_add_foldersame_folder_exist">Aynı isimde bir klasör zaten var</string>
+  <string name="vault_add_folder_dialog_title">Bir klasör başlığı yazın</string>
+  <string name="vault_edit_folder_dialog_title">Klasörü yeniden adlandır</string>
+  <string name="vault_add_foldersame_folder_exist">Aynı adlı bir klasör zaten var</string>
+  <string name="folder_delete_dialog_title">Klasörü sil</string>
+  <string name="folder_delete_dialog_body">Bu işlem __FOLDER_NAME__ klasörünü ve içindeki tüm içeriği kalıcı olarak siler. Silme işlemini onaylamak için klasör adını yazın.</string>
+  <string name="folder_delete_dialog_placeholder">Klasör adı</string>
+  <string name="folder_delete_dialog_delete_action">Sil</string>
   <string name="vault_delete_dialog_body">Bu işlem __VAULT_NAME__ kasasını ve içindekileri kalıcı olarak silecek. Silme işlemini onaylamak için kasa adını yazın.</string>
   <string name="vault_delete_dialog_placeholder">Kasa adı</string>
   <string name="vault_add_folder_dialog_placeholder">Klasör adı</string>
   <string name="vault_delete_dialog_cancel_action">İptal</string>
   <string name="vault_delete_dialog_delete_action">Sil</string>
   <string name="vault_add_folder_dialog_create_action">Oluştur</string>
+  <string name="vault_edit_folder_dialog_save_action">Kaydet</string>
   <string name="vault_delete_dialog_shared_items_warning" comment="The placeholder will be replaced by the number of shared items, e.g 2 shared items">Bu kasada %1$s bulunuyor. Kasayı silerseniz diğer kullanıcıların erişimi kaldırılacak.</string>
   <string name="vault_leave_dialog_title">Kasayı bırak</string>
   <string name="vault_leave_dialog_body">Bu işlem __VAULT_NAME__ kasasını ve tüm içeriklerini bırakmanızı sağlar. Kasayı bırakmak istediğinize emin misiniz?</string>

@@ -22,6 +22,7 @@ import androidx.room.Dao
 import androidx.room.Query
 import kotlinx.coroutines.flow.Flow
 import me.proton.core.data.room.db.BaseDao
+import proton.android.pass.data.impl.db.entities.FolderEntity
 import proton.android.pass.data.impl.db.entities.ItemEntity
 import proton.android.pass.data.impl.db.entities.ShareEntity
 import proton.android.pass.domain.ItemStateValues
@@ -285,6 +286,46 @@ abstract class ItemsDao : BaseDao<ItemEntity>() {
         """
     )
     abstract fun findUserId(shareId: String, itemId: String): String?
+
+    @Suppress("LongParameterList")
+    @Query(
+        """
+        WITH RECURSIVE folder_tree(id) AS (
+            SELECT ${FolderEntity.Columns.ID}
+            FROM ${FolderEntity.TABLE}
+            WHERE ${FolderEntity.Columns.USER_ID} = :userId
+              AND ${FolderEntity.Columns.SHARE_ID} = :shareId
+              AND ${FolderEntity.Columns.ID} = :rootFolderId
+            UNION
+            SELECT child.${FolderEntity.Columns.ID}
+            FROM ${FolderEntity.TABLE} child
+            JOIN folder_tree parent
+              ON child.${FolderEntity.Columns.PARENT_FOLDER_ID} = parent.id
+            WHERE child.${FolderEntity.Columns.USER_ID} = :userId
+              AND child.${FolderEntity.Columns.SHARE_ID} = :shareId
+        )
+        SELECT item.*
+        FROM ${ItemEntity.TABLE} item
+        JOIN folder_tree ON item.${ItemEntity.Columns.FOLDER_ID} = folder_tree.id
+        WHERE item.${ItemEntity.Columns.USER_ID} = :userId
+          AND item.${ItemEntity.Columns.SHARE_ID} = :shareId
+          AND (:itemState IS NULL OR item.${ItemEntity.Columns.STATE} = :itemState)
+          AND (NOT :applyItemTypes OR item.${ItemEntity.Columns.ITEM_TYPE} IN (:itemTypes))
+          AND (:setFlags IS NULL OR (item.${ItemEntity.Columns.FLAGS} & :setFlags) = :setFlags)
+          AND (:clearFlags IS NULL OR (item.${ItemEntity.Columns.FLAGS} & :clearFlags) = 0)
+        ORDER BY item.${ItemEntity.Columns.CREATE_TIME} DESC
+        """
+    )
+    abstract fun observeItemsByFolder(
+        userId: String,
+        shareId: String,
+        rootFolderId: String,
+        itemState: Int?,
+        itemTypes: List<Int>?,
+        applyItemTypes: Boolean,
+        setFlags: Int?,
+        clearFlags: Int?
+    ): Flow<List<ItemEntity>>
 
     @Query(
         """

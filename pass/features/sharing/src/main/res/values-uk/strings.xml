@@ -53,6 +53,9 @@
   <string name="sharing_item_invitation_title">Запрошення на спільний елемент</string>
   <string name="sharing_item_invitation_subtitle" comment="placeholder is replaced by an email address">%s хоче поділитися з вами елементом.</string>
   <string name="sharing_item_invitation_accept">Прийняти та переглянути елемент</string>
+  <string name="sharing_group_vault_invitation_subtitle" comment="first placeholder is replaced by an email address, second by a group name">%1$s wants to share a vault with your group %2$s.</string>
+  <string name="sharing_group_item_invitation_subtitle" comment="first placeholder is replaced by an email address, second by a group name">%1$s wants to share an item with your group %2$s.</string>
+  <string name="sharing_group_invitation_accept">Accept invitation</string>
   <string name="sharing_invite_more">Запросити більше…</string>
   <string name="sharing_snackbar_invite_accepted">Запрошення прийнято</string>
   <string name="sharing_snackbar_invite_accept_error">Помилка приймання запрошення</string>

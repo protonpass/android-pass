@@ -232,10 +232,11 @@ class SelectItemViewModel @Inject constructor(
                 val flows = usersAutofillShares
                     .filter { it.matchesSelectedAccount(selectedAccount) }
                     .map { (userId, autofillShares) ->
+                        val updatableShares = autofillShares.filter { it.canBeUpdated }
                         observeItems(
                             userId = userId,
                             filter = state.itemTypeFilter,
-                            selection = ShareSelection.Shares(autofillShares.map(Share::id)),
+                            selection = ShareSelection.Shares(updatableShares.map(Share::id)),
                             itemState = ItemState.Active,
                             includeHidden = false
                         ).map { items ->
@@ -545,7 +546,7 @@ class SelectItemViewModel @Inject constructor(
             accountSwitchState = accountData.toAccountSwitchUIState(),
             isPasswordCredentialCreation = isPasswordCredential,
             showAutosaveBanner = autosaveState != null,
-            autosaveUpdateFound = autosaveLogin?.updateFound ?: false
+            autosaveMatchCount = autosaveLogin?.matchCount ?: 0
         )
     }
 

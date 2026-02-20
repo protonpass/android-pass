@@ -87,7 +87,7 @@ sealed class SelectItemState(
             val usernameFilter: String,
             val websiteFilter: String? = null,
             val packageNameFilter: String? = null,
-            val updateFound: Boolean = false
+            val matchCount: Int = 0
         ) : Autosave(ItemTypeFilter.Logins, title)
     }
 

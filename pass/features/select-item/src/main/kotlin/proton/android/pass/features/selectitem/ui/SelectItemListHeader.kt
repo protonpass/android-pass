@@ -29,6 +29,7 @@ import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
@@ -62,6 +63,7 @@ fun LazyListScope.SelectItemListHeader(
     canLoadExternalImages: Boolean,
     showUpgradeMessage: Boolean,
     showAutosaveBanner: Boolean,
+    autosaveMatchCount: Int = 0,
     canUpgrade: Boolean,
     accounts: ImmutableMap<UserId, String>,
     onItemOptionsClicked: (ItemUiModel) -> Unit,
@@ -73,7 +75,10 @@ fun LazyListScope.SelectItemListHeader(
             InfoBanner(
                 modifier = Modifier.padding(horizontal = Spacing.medium),
                 backgroundColor = PassTheme.colors.interactionNormMinor1,
-                text = stringResource(R.string.select_item_autosave_banner)
+                text = pluralStringResource(
+                    R.plurals.select_item_autosave_banner,
+                    autosaveMatchCount
+                )
             )
         }
         item { Spacer(modifier = Modifier.height(Spacing.small)) }

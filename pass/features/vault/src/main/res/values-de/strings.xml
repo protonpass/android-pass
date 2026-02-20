@@ -3,6 +3,12 @@
   <string name="snackbar_create_vault_success">Tresor erstellt</string>
   <string name="snackbar_create_vault_error">Tresor nicht erstellt</string>
   <string name="snackbar_cannot_create_more_vaults_error">Es können keine weiteren Tresore erstellt werden</string>
+  <string name="snackbar_create_folder_success">Ordner erstellt</string>
+  <string name="snackbar_create_folder_error">Ordner nicht erstellt</string>
+  <string name="snackbar_update_folder_success">Ordner umbenannt</string>
+  <string name="snackbar_update_folder_error">Ordner nicht umbenannt</string>
+  <string name="snackbar_delete_folder_success">Ordner gelöscht</string>
+  <string name="snackbar_delete_folder_error">Ordner nicht gelöscht</string>
   <string name="snackbar_edit_vault_success">Tresor bearbeitet</string>
   <string name="snackbar_edit_vault_error">Tresor nicht bearbeitet</string>
   <string name="snackbar_delete_vault_success">Tresor gelöscht</string>
@@ -14,13 +20,19 @@
   <string name="snackbar_get_vault_list_error">Tresorliste konnte nicht geladen werden.</string>
   <string name="vault_delete_dialog_title">Tresor löschen</string>
   <string name="vault_add_folder_dialog_title">Namen des Ordners eingeben</string>
+  <string name="vault_edit_folder_dialog_title">Ordner umbenennen</string>
   <string name="vault_add_foldersame_folder_exist">Ein Ordner mit diesem Namen existiert bereits</string>
+  <string name="folder_delete_dialog_title">Ordner löschen</string>
+  <string name="folder_delete_dialog_body">Dadurch werden der Ordner __FOLDER_NAME__ und sein gesamter Inhalt dauerhaft gelöscht. Geben Sie den Namen des Ordners ein, um den Löschvorgang zu bestätigen.</string>
+  <string name="folder_delete_dialog_placeholder">Namen des Ordners</string>
+  <string name="folder_delete_dialog_delete_action">Löschen</string>
   <string name="vault_delete_dialog_body">Dadurch wird der Tresor __VAULT_NAME__ und alle seine Inhalte dauerhaft gelöscht. Bitte gib den Tresornamen ein, um die Löschung zu bestätigen.</string>
   <string name="vault_delete_dialog_placeholder">Tresorname</string>
   <string name="vault_add_folder_dialog_placeholder">Ordnername</string>
   <string name="vault_delete_dialog_cancel_action">Abbrechen</string>
   <string name="vault_delete_dialog_delete_action">Löschen</string>
   <string name="vault_add_folder_dialog_create_action">Erstellen</string>
+  <string name="vault_edit_folder_dialog_save_action">Speichern</string>
   <string name="vault_delete_dialog_shared_items_warning" comment="The placeholder will be replaced by the number of shared items, e.g 2 shared items">Dieser Tresor enthält %1$s. Das Löschen wird den Zugriff für alle anderen Nutzer entfernen.</string>
   <string name="vault_leave_dialog_title">Tresor verlassen</string>
   <string name="vault_leave_dialog_body">Dadurch wird dein Zugriff auf den Tresor __VAULT_NAME__ und alle seine Inhalte entfernt. Bist du sicher, dass du ihn verlassen willst?</string>

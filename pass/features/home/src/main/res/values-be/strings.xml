@@ -199,7 +199,7 @@
   <string name="bulk_action_enable_alias">Уключыць псеўданім</string>
   <string name="bulk_action_disable_alias">Адключыць псеўданім</string>
   <string name="vault_drawer_organise_vaults">Упарадкаваць сховішчы</string>
-  <string name="sync_group_vault_warning">Some vaults are currently unavailable due to an issue with their group.</string>
+  <string name="sync_group_vault_warning">Некаторыя сховішчы пакуль недаступны з-за праблемы з іх групай.</string>
   <string name="sync_inactive_vault_warning">З прычыны скінутага пароля некаторыя сховішчы больш недаступны. Паўторна актывуйце ключы свайго ўліковага запісу, каб аднавіць доступ.</string>
   <string name="sync_inactive_vault_warning_action">Даведацца больш</string>
 </resources>

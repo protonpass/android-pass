@@ -49,6 +49,9 @@
   <string name="sharing_item_invitation_title">Gedeelde item uitnodiging</string>
   <string name="sharing_item_invitation_subtitle" comment="placeholder is replaced by an email address">%s wil een item delen met u.</string>
   <string name="sharing_item_invitation_accept">Accepteer en bekijk het item</string>
+  <string name="sharing_group_vault_invitation_subtitle" comment="first placeholder is replaced by an email address, second by a group name">%1$s wil een kluis delen met uw groep %2$s.</string>
+  <string name="sharing_group_item_invitation_subtitle" comment="first placeholder is replaced by an email address, second by a group name">%1$s wil een item delen met uw groep %2$s.</string>
+  <string name="sharing_group_invitation_accept">Accepteer uitnodiging</string>
   <string name="sharing_invite_more">Meer uitnodigen…</string>
   <string name="sharing_snackbar_invite_accepted">Uitnodiging geaccepteerd</string>
   <string name="sharing_snackbar_invite_accept_error">Fout bij het accepteren van de uitnodiging</string>

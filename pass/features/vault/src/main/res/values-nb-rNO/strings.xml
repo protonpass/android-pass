@@ -3,6 +3,12 @@
   <string name="snackbar_create_vault_success">Hvelv opprettet</string>
   <string name="snackbar_create_vault_error">Hvelv ikke opprettet</string>
   <string name="snackbar_cannot_create_more_vaults_error">Kan ikke opprette flere hvelv</string>
+  <string name="snackbar_create_folder_success">Mappe opprettet</string>
+  <string name="snackbar_create_folder_error">Mappe ble ikke opprettet</string>
+  <string name="snackbar_update_folder_success">Mappe gitt nytt navn</string>
+  <string name="snackbar_update_folder_error">Mappe ble ikke gitt nytt navn</string>
+  <string name="snackbar_delete_folder_success">Mappe slettet</string>
+  <string name="snackbar_delete_folder_error">Mappe ble ikke slettet</string>
   <string name="snackbar_edit_vault_success">Hvelv redigert</string>
   <string name="snackbar_edit_vault_error">Hvelv ikke redigert</string>
   <string name="snackbar_delete_vault_success">Hvelv slettet</string>
@@ -14,13 +20,19 @@
   <string name="snackbar_get_vault_list_error">Hvelvlisten kunne ikke lastes inn</string>
   <string name="vault_delete_dialog_title">Slett hvelv</string>
   <string name="vault_add_folder_dialog_title">Skriv inn en mappetittel</string>
+  <string name="vault_edit_folder_dialog_title">Gi nytt navn til mappe</string>
   <string name="vault_add_foldersame_folder_exist">En mappe med samme navn finnes allerede</string>
+  <string name="folder_delete_dialog_title">Slett mappe</string>
+  <string name="folder_delete_dialog_body">Dette vil slette mappen __FOLDER_NAME__ og alt innholdet permanent. Skriv inn mappenavnet for å bekrefte slettingen.</string>
+  <string name="folder_delete_dialog_placeholder">Mappenavn</string>
+  <string name="folder_delete_dialog_delete_action">Slett</string>
   <string name="vault_delete_dialog_body">Dette vil slette hvelvet __VAULT_NAME__ og alt innholdet permanent. Skriv inn hvelvnavnet for å bekrefte slettingen.</string>
   <string name="vault_delete_dialog_placeholder">Hvelvnavn</string>
   <string name="vault_add_folder_dialog_placeholder">Mappenavn</string>
   <string name="vault_delete_dialog_cancel_action">Avbryt</string>
   <string name="vault_delete_dialog_delete_action">Slett</string>
   <string name="vault_add_folder_dialog_create_action">Opprett</string>
+  <string name="vault_edit_folder_dialog_save_action">Lagre</string>
   <string name="vault_delete_dialog_shared_items_warning" comment="The placeholder will be replaced by the number of shared items, e.g 2 shared items">Dette hvelvet inneholder %1$s. Hvis du sletter det, fjernes tilgangen for alle andre brukere.</string>
   <string name="vault_leave_dialog_title">Forlat hvelv</string>
   <string name="vault_leave_dialog_body">Dette vil fjerne tilgangen din fra hvelvet __VAULT_NAME__ og alt innholdet. Er du sikker på at du vil forlate det?</string>

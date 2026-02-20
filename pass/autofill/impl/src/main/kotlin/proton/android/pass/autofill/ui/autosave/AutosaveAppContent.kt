@@ -172,7 +172,7 @@ fun AutosaveAppContent(
                                     usernameFilter = state.autosaveMode.username,
                                     websiteFilter = state.autosaveMode.website,
                                     packageNameFilter = state.autosaveMode.packageName,
-                                    updateFound = state.autosaveMode.updateFound
+                                    matchCount = state.autosaveMode.matchCount
                                 ),
                                 onScreenShown = {},
                                 onNavigate = {

@@ -66,8 +66,11 @@ import proton.android.pass.data.fakes.usecases.inappmessages.FakeObserveDelivera
 import proton.android.pass.data.fakes.usecases.items.FakeObserveCanCreateItems
 import proton.android.pass.data.fakes.usecases.shares.FakeObserveEncryptedSharedItems
 import proton.android.pass.data.fakes.usecases.shares.FakeObserveHasShares
+import proton.android.pass.domain.FolderId
 import proton.android.pass.domain.ItemEncrypted
+import proton.android.pass.domain.ItemState
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.ShareSelection
 import proton.android.pass.notifications.fakes.FakeSnackbarDispatcher
 import proton.android.pass.notifications.fakes.FakeToastManager
 import proton.android.pass.preferences.FakePreferenceRepository
@@ -230,6 +233,41 @@ internal class HomeViewModelTest {
         observeHasShares.emit(hasShares = true)
 
         return items
+    }
+
+    @Test
+    fun `folder selection shows items from that folder via encrypted items path`() = runTest {
+        val shareId = ShareId("share-folder-test")
+        val folderId = FolderId("folder-123")
+        val folderItem = FakeObserveEncryptedItems.createLogin(
+            shareId = shareId,
+            itemId = proton.android.pass.domain.ItemId("item-in-folder"),
+            title = "Folder Item"
+        ).copy(
+            createTime = clock.now(),
+            modificationTime = clock.now()
+        )
+
+        val folderParams = FakeObserveEncryptedItems.Params(
+            selection = ShareSelection.Folder(shareId, folderId),
+            itemState = ItemState.Active
+        )
+        observeEncryptedItems.emit(folderParams, listOf(folderItem))
+
+        preferencesRepository.setUseFaviconsPreference(UseFaviconsPreference.Disabled)
+        observeAllShares.sendResult(Result.success(emptyList()))
+        observeCanCreateItems.emit(canCreateItems = true)
+        observeHasShares.emit(hasShares = true)
+
+        instance.setVaultSelection(VaultSelectionOption.Folder(shareId, folderId))
+
+        instance.homeUiState.test {
+            val state = awaitItem()
+            assertThat(state.homeListUiState.isLoading).isInstanceOf(IsLoadingState.NotLoading::class.java)
+            val allItems = state.homeListUiState.items.flatMap { it.items }
+            assertThat(allItems).hasSize(1)
+            assertThat(allItems.first().id).isEqualTo(folderItem.id)
+        }
     }
 
     @Test

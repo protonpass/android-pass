@@ -436,6 +436,28 @@ class LocalItemDataSourceImpl @Inject constructor(
                 rows.associate { row -> FolderId(row.folderId) to row.itemCount }
             }
 
+    override fun observeItemsByFolder(
+        userId: UserId,
+        shareId: ShareId,
+        folderId: FolderId,
+        itemState: ItemState?,
+        filter: ItemTypeFilter,
+        itemFlags: Map<ItemFlag, Boolean>
+    ): Flow<List<ItemEntity>> {
+        val (setFlags, clearFlags) = foldFlags(itemFlags)
+        val itemTypes = filter.value()
+        return database.itemsDao().observeItemsByFolder(
+            userId = userId.id,
+            shareId = shareId.id,
+            rootFolderId = folderId.id,
+            itemState = itemState?.value,
+            itemTypes = itemTypes,
+            applyItemTypes = itemTypes != null,
+            setFlags = setFlags,
+            clearFlags = clearFlags
+        )
+    }
+
     private fun ItemEntity.toItemWithTotp(): ItemWithTotp = ItemWithTotp(
         shareId = ShareId(shareId),
         itemId = ItemId(id),

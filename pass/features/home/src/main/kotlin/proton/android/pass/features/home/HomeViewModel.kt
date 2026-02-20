@@ -348,10 +348,14 @@ class HomeViewModel @Inject constructor(
                 }
 
                 is VaultSelectionOption.Folder -> {
-                    // itemUiModelFlow for folder
-                    observeEncryptedSharedItems(
-                        itemSharedType = ItemSharedType.SharedByMe,
-                        includeHiddenVault = false
+                    observeEncryptedItems(
+                        selection = ShareSelection.Folder(
+                            shareId = vaultSelectionOption.shareId,
+                            folderId = vaultSelectionOption.folderId
+                        ),
+                        itemState = ItemState.Active,
+                        filter = ItemTypeFilter.All,
+                        includeHidden = false
                     )
                 }
 

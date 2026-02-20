@@ -28,6 +28,7 @@ import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import proton.android.pass.data.impl.db.AppDatabase
+import proton.android.pass.data.impl.db.entities.ShareEntity
 import proton.android.pass.data.impl.fakes.mother.FolderEntityTestFactory
 import proton.android.pass.data.impl.fakes.mother.ItemEntityTestFactory
 import proton.android.pass.domain.ItemStateValues
@@ -41,6 +42,7 @@ class ItemsDaoTest {
     private lateinit var db: AppDatabase
     private lateinit var itemsDao: ItemsDao
     private lateinit var foldersDao: FoldersDao
+    private lateinit var sharesDao: SharesDao
 
     @Before
     fun setup() {
@@ -51,6 +53,7 @@ class ItemsDaoTest {
         db.query("PRAGMA foreign_keys=OFF;", null)
         itemsDao = db.itemsDao()
         foldersDao = db.foldersDao()
+        sharesDao = db.sharesDao()
     }
 
     @After
@@ -245,6 +248,42 @@ class ItemsDaoTest {
         assertEquals("flagged-item", result.first().id)
     }
 
+    @Test
+    fun getByVaultIdAndItemId_filtersByShareUserId() = runTest {
+        val vaultId = "vault-1"
+        val itemId = "same-item-id"
+        val allowedUser = "allowed-user"
+        val blockedUser = "blocked-user"
+        val allowedShare = "share-allowed"
+        val blockedShare = "share-blocked"
+
+        insertShare(userId = allowedUser, shareId = allowedShare, vaultId = vaultId)
+        insertShare(userId = blockedUser, shareId = blockedShare, vaultId = vaultId)
+
+        insertItem(
+            userId = allowedUser,
+            shareId = allowedShare,
+            itemId = itemId,
+            folderId = null
+        )
+        insertItem(
+            userId = blockedUser,
+            shareId = blockedShare,
+            itemId = itemId,
+            folderId = null
+        )
+
+        val result = itemsDao.getByVaultIdAndItemId(
+            userIds = listOf(allowedUser),
+            vaultId = vaultId,
+            itemId = itemId
+        )
+
+        assertEquals(1, result.size)
+        assertEquals(allowedShare, result.first().shareId)
+        assertEquals(allowedUser, result.first().userId)
+    }
+
     private suspend fun insertFolder(
         userId: String,
         shareId: String,
@@ -300,6 +339,42 @@ class ItemsDaoTest {
                 shareCount = 0,
                 hasTotp = false,
                 hasPasskeys = false
+            )
+        )
+    }
+
+    private suspend fun insertShare(
+        userId: String,
+        shareId: String,
+        vaultId: String
+    ) {
+        sharesDao.insertOrUpdate(
+            ShareEntity(
+                id = shareId,
+                userId = userId,
+                addressId = "address-1",
+                vaultId = vaultId,
+                groupId = null,
+                targetType = 1,
+                targetId = "target-id",
+                permission = 1,
+                content = null,
+                contentKeyRotation = null,
+                contentFormatVersion = null,
+                expirationTime = null,
+                createTime = 1L,
+                encryptedContent = null,
+                isActive = true,
+                shareRoleId = "1",
+                owner = true,
+                targetMembers = 1,
+                shared = false,
+                targetMaxMembers = 10,
+                pendingInvites = 0,
+                newUserInvitesReady = 0,
+                canAutofill = true,
+                flags = 0,
+                groupEmail = null
             )
         )
     }

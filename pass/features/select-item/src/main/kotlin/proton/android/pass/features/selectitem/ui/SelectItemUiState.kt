@@ -97,7 +97,7 @@ internal data class SelectItemListUiState(
     val accountSwitchState: AccountSwitchUIState,
     val isPasswordCredentialCreation: Boolean,
     val showAutosaveBanner: Boolean = false,
-    val autosaveUpdateFound: Boolean = false
+    val autosaveMatchCount: Int = 0
 ) {
 
     val itemCount: Int = items.items.map { it.items }.flatten().count() + items.suggestions.count()

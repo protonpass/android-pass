@@ -518,7 +518,14 @@ class ItemRepositoryImpl @Inject constructor(
                 )
             }
 
-        is ShareSelection.Folder -> emptyFlow() // observeItems in folders
+        is ShareSelection.Folder -> localItemDataSource.observeItemsByFolder(
+            userId = userId,
+            shareId = shareSelection.shareId,
+            folderId = shareSelection.folderId,
+            itemState = itemState,
+            filter = itemTypeFilter,
+            itemFlags = itemFlags
+        )
     }
 
     override fun observePinnedItems(

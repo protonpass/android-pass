@@ -139,4 +139,14 @@ interface LocalItemDataSource {
 
     fun observeFolderItemCounts(userId: UserId, shareId: ShareId): Flow<Map<FolderId, Long>>
 
+    @Suppress("LongParameterList")
+    fun observeItemsByFolder(
+        userId: UserId,
+        shareId: ShareId,
+        folderId: FolderId,
+        itemState: ItemState?,
+        filter: ItemTypeFilter,
+        itemFlags: Map<ItemFlag, Boolean>
+    ): Flow<List<ItemEntity>>
+
 }

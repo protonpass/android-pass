@@ -63,8 +63,8 @@ class PerformSyncImpl @Inject constructor(
         val results = if (isUserEventsEnabled) {
             listOf(performSyncUserEvents(userId, forceSync))
         } else {
+            performPendingEvents(userId, forceSync)
             val tasks = buildList {
-                add(async { performPendingEvents(userId, forceSync) })
                 add(async { performUserRefreshInvites(userId) })
                 if (isGroupSharingEnabled) {
                     add(async { performGroupRefreshInvites(userId) })

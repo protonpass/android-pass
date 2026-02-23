@@ -42,6 +42,7 @@ import proton.android.pass.composecomponents.impl.attachments.AttachmentContentE
 import proton.android.pass.composecomponents.impl.dialogs.ConfirmCloseDialog
 import proton.android.pass.composecomponents.impl.dialogs.WarningSharedItemDialog
 import proton.android.pass.domain.CustomFieldType
+import proton.android.pass.domain.FolderId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.features.itemcreate.ItemSavedState
 import proton.android.pass.features.itemcreate.R
@@ -71,6 +72,7 @@ import proton.android.pass.composecomponents.impl.R as CompR
 fun CreateIdentityScreen(
     modifier: Modifier = Modifier,
     selectVault: ShareId?,
+    selectFolder: FolderId? = null,
     totpNavParams: TotpNavParams?,
     canUseAttachments: Boolean,
     viewModel: CreateIdentityViewModel = hiltViewModel(),
@@ -80,6 +82,11 @@ fun CreateIdentityScreen(
     LaunchedEffect(selectVault) {
         if (selectVault != null) {
             viewModel.onVaultSelect(selectVault)
+        }
+    }
+    LaunchedEffect(selectFolder) {
+        if (selectFolder != null) {
+            viewModel.onFolderSelect(selectFolder)
         }
     }
     TotpSetLaunchEffect(totpNavParams) { field, uri ->
@@ -125,7 +132,7 @@ fun CreateIdentityScreen(
             onEvent = {
                 when (it) {
                     is IdentityContentEvent.OnVaultSelect ->
-                        actionAfterKeyboardHide = { onNavigate(SelectVault(it.shareId)) }
+                        actionAfterKeyboardHide = { onNavigate(SelectVault(it.shareId, it.folderId)) }
 
                     is IdentityContentEvent.Submit -> {
                         if (state.canDisplayWarningVaultSharedDialogLocal) {

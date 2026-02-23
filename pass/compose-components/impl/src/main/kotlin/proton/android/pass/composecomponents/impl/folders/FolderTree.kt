@@ -62,12 +62,13 @@ fun FolderTree(
     modifier: Modifier = Modifier,
     modifierCreateButton: Modifier = Modifier,
     folders: List<FolderUiModel>,
+    expandedState: MutableMap<String, Boolean>,
+    selectedFolderId: FolderId? = null,
+    depth: Int = 0, // no padding when depth == 0
+    needsToUpgrade: Boolean = false,
     onFolderClick: (FolderId) -> Unit,
     onThreeDotsClick: ((FolderId) -> Unit)? = null,
-    onCreateFolderClick: (() -> Unit)? = null,
-    expandedState: MutableMap<String, Boolean>,
-    depth: Int = 0, // no padding when depth == 0
-    needsToUpgrade: Boolean = false
+    onCreateFolderClick: (() -> Unit)? = null
 ) {
     Column(
         modifier = modifier,
@@ -78,9 +79,7 @@ fun FolderTree(
                 CreateFolderButton(
                     modifier = modifierCreateButton,
                     needsToUpgrade = needsToUpgrade,
-                    onClick = {
-                        onCreateFolderClick.invoke()
-                    }
+                    onClick = { onCreateFolderClick.invoke() }
                 )
             }
         }
@@ -93,15 +92,10 @@ fun FolderTree(
                 folderName = folder.name,
                 folders = folder.folders,
                 isExpanded = isExpanded,
-                onExpandToggle = {
-                    expandedState.toggle(folder.id.id)
-                },
-                onThreeDotsClick = onThreeDotsClick?.let {
-                    { it(folder.id) }
-                },
-                onFolderClick = {
-                    onFolderClick(folder.id)
-                }
+                isSelected = selectedFolderId != null && folder.id == selectedFolderId,
+                onExpandToggle = { expandedState.toggle(folder.id.id) },
+                onThreeDotsClick = onThreeDotsClick?.let { { it(folder.id) } },
+                onFolderClick = { onFolderClick(folder.id) }
             )
 
             AnimatedVisibility(visible = folder.folders.isNotEmpty() && isExpanded) {
@@ -111,6 +105,7 @@ fun FolderTree(
                     expandedState = expandedState,
                     onThreeDotsClick = onThreeDotsClick,
                     onCreateFolderClick = onCreateFolderClick,
+                    selectedFolderId = selectedFolderId,
                     depth = depth + 1,
                     onFolderClick = onFolderClick
                 )
@@ -162,10 +157,11 @@ internal fun FolderTreePreview(
                     mutableStateMapOf<String, Boolean>()
                         .apply { putAll(input.second.expandedState) }
                 },
+                selectedFolderId = null,
+                needsToUpgrade = input.second.needsToUpgrade,
                 onThreeDotsClick = {},
                 onCreateFolderClick = {},
-                onFolderClick = {},
-                needsToUpgrade = input.second.needsToUpgrade
+                onFolderClick = {}
             )
         }
     }

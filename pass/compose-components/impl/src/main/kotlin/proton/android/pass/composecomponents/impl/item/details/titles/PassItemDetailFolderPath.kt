@@ -42,6 +42,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import proton.android.pass.commonui.api.LocalDark
+import proton.android.pass.commonui.api.PassPalette
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.ThemedBooleanPreviewProvider
@@ -180,7 +181,7 @@ private fun FolderItem(
             else CoreR.drawable.ic_proton_folders_filled
         ),
         contentDescription = null,
-        tint = Color(color = 0xFFE9A944)
+        tint = PassPalette.FolderYellow
     )
     Spacer(modifier = Modifier.width(6.dp))
     Text(

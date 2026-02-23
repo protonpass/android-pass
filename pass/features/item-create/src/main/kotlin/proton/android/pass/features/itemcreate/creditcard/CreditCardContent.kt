@@ -8,6 +8,7 @@ import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import kotlinx.collections.immutable.toPersistentList
 import proton.android.pass.commonui.api.PassTheme
+import proton.android.pass.domain.FolderId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.Vault
 import proton.android.pass.features.itemcreate.common.CreateUpdateTopBar
@@ -23,7 +24,9 @@ internal fun CreditCardContent(
     creditCardItemFormState: CreditCardItemFormState,
     topBarActionName: String,
     selectedShareId: ShareId?,
+    selectedFolderId: FolderId? = null,
     selectedVault: Vault?,
+    selectedFolderName: String? = null,
     showVaultSelector: Boolean,
     canUseAttachments: Boolean,
     onEvent: (CreditCardContentEvent) -> Unit
@@ -38,6 +41,7 @@ internal fun CreditCardContent(
                 iconColor = PassTheme.colors.cardInteractionNormMajor2,
                 iconBackgroundColor = PassTheme.colors.cardInteractionNormMinor1,
                 selectedVault = selectedVault,
+                selectedFolderName = selectedFolderName,
                 showVaultSelector = showVaultSelector,
                 onCloseClick = { onEvent(Up) },
                 onActionClick = {
@@ -47,7 +51,7 @@ internal fun CreditCardContent(
                 onUpgrade = {},
                 onVaultSelectorClick = {
                     selectedShareId ?: return@CreateUpdateTopBar
-                    onEvent(CreditCardContentEvent.OnVaultSelect(selectedShareId))
+                    onEvent(CreditCardContentEvent.OnVaultSelect(selectedShareId, selectedFolderId))
                 }
             )
         }

@@ -61,6 +61,7 @@ internal fun CreateUpdateTopBar(
     showUpgrade: Boolean = false,
     iconBackgroundColor: Color,
     selectedVault: Vault?,
+    selectedFolderName: String? = null,
     showVaultSelector: Boolean,
     onCloseClick: () -> Unit,
     onActionClick: () -> Unit,
@@ -113,6 +114,7 @@ internal fun CreateUpdateTopBar(
                         if (selectedVault != null) {
                             VaultSwitcher(
                                 selectedVault = selectedVault,
+                                selectedFolderName = selectedFolderName,
                                 onClick = onVaultSelectorClick
                             )
                         }

@@ -27,6 +27,7 @@ import androidx.lifecycle.viewmodel.compose.saveable
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
@@ -57,7 +58,9 @@ import proton.android.pass.data.api.usecases.GetShareById
 import proton.android.pass.data.api.usecases.ObserveVaultsWithItemCount
 import proton.android.pass.data.api.usecases.attachments.LinkAttachmentsToItem
 import proton.android.pass.data.api.usecases.defaultvault.ObserveDefaultVault
+import proton.android.pass.data.api.usecases.folders.ObserveFolders
 import proton.android.pass.data.api.usecases.shares.ObserveShare
+import proton.android.pass.domain.FolderId
 import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
@@ -73,6 +76,7 @@ import proton.android.pass.features.itemcreate.common.UICustomFieldContent
 import proton.android.pass.features.itemcreate.common.canDisplayWarningMessageForCreationFlow
 import proton.android.pass.features.itemcreate.common.customfields.CustomFieldHandler
 import proton.android.pass.features.itemcreate.common.formprocessor.NoteItemFormProcessor
+import proton.android.pass.features.itemcreate.common.getFolderNameFlow
 import proton.android.pass.features.itemcreate.common.getShareUiStateFlow
 import proton.android.pass.features.itemcreate.note.NoteSnackbarMessage.ItemCreationError
 import proton.android.pass.features.itemcreate.note.NoteSnackbarMessage.ItemLinkAttachmentsError
@@ -91,6 +95,7 @@ import javax.inject.Inject
 @HiltViewModel
 class CreateNoteViewModel @Inject constructor(
     private val accountManager: AccountManager,
+    private val observeFolders: ObserveFolders,
     private val getShare: GetShareById,
     private val itemRepository: ItemRepository,
     private val snackbarDispatcher: SnackbarDispatcher,
@@ -138,6 +143,10 @@ class CreateNoteViewModel @Inject constructor(
             .toOption()
             .map(::ItemId)
 
+    private val navFolderId: FolderId? =
+        savedStateHandleProvider.get().get<String>(CommonOptionalNavArgId.FolderId.key)
+            ?.let(::FolderId)
+
     @OptIn(SavedStateHandleSaveableApi::class)
     private var selectedShareIdMutableState: Option<ShareId> by savedStateHandleProvider.get()
         .saveable(stateSaver = OptionShareIdSaver) { mutableStateOf(None) }
@@ -149,6 +158,16 @@ class CreateNoteViewModel @Inject constructor(
                 started = SharingStarted.WhileSubscribed(5_000),
                 initialValue = None
             )
+
+    private val selectedFolderIdMutableState: MutableStateFlow<FolderId?> = MutableStateFlow(navFolderId)
+
+    private val selectedFolderNameFlow = getFolderNameFlow(
+        accountManager = accountManager,
+        observeFolders = observeFolders,
+        selectedShareIdState = selectedShareIdState,
+        selectedFolderIdFlow = selectedFolderIdMutableState,
+        navShareIdState = flowOf(navShareId)
+    )
 
     private val observeAllVaultsFlow: Flow<List<VaultWithItemCount>> =
         observeVaults(includeHidden = true).distinctUntilChanged()
@@ -167,7 +186,9 @@ class CreateNoteViewModel @Inject constructor(
         observeAllVaultsFlow = observeAllVaultsFlow.asLoadingResult(),
         observeDefaultVaultFlow = observeDefaultVault().asLoadingResult(),
         viewModelScope = viewModelScope,
-        tag = TAG
+        tag = TAG,
+        selectedFolderNameFlow = selectedFolderNameFlow,
+        selectedFolderIdFlow = selectedFolderIdMutableState
     )
 
     internal val createNoteUiState: StateFlow<CreateNoteUiState> = combine(
@@ -249,6 +270,12 @@ class CreateNoteViewModel @Inject constructor(
     fun changeVault(shareId: ShareId) = viewModelScope.launch {
         onUserEditedContent()
         selectedShareIdMutableState = Some(shareId)
+        selectedFolderIdMutableState.value = null
+    }
+
+    fun changeFolder(folderId: FolderId) {
+        onUserEditedContent()
+        selectedFolderIdMutableState.value = folderId
     }
 
     companion object {

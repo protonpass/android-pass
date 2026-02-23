@@ -49,6 +49,7 @@ internal fun CustomContent(
                 iconColor = PassTheme.colors.interactionNormMajor2,
                 iconBackgroundColor = PassTheme.colors.interactionNormMinor1,
                 selectedVault = itemSharedProperties.selectedVault.value(),
+                selectedFolderName = itemSharedProperties.selectedFolderName,
                 showVaultSelector = itemSharedProperties.shouldShowVaultSelector,
                 showUpgrade = !itemSharedProperties.canCreateItem,
                 onCloseClick = { onEvent(ItemContentEvent.Up) },
@@ -60,7 +61,7 @@ internal fun CustomContent(
                 onUpgrade = { onEvent(ItemContentEvent.OnUpgrade) },
                 onVaultSelectorClick = {
                     itemSharedProperties.selectedShareId.value()?.let {
-                        onEvent(ItemContentEvent.OnVaultSelect(it))
+                        onEvent(ItemContentEvent.OnVaultSelect(it, itemSharedProperties.selectedFolderId))
                     }
                 }
             )

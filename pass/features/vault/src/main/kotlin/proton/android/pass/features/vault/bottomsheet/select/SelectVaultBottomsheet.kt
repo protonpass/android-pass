@@ -42,6 +42,10 @@ fun SelectVaultBottomsheet(
                 viewModel.setLastUsedVault(it)
                 onNavigate(VaultNavigation.VaultSelected(it))
             },
+            onFolderClick = { shareId, folderId ->
+                viewModel.setLastUsedVault(shareId)
+                onNavigate(VaultNavigation.VaultAndFolderSelected(shareId, folderId))
+            },
             onUpgrade = { onNavigate(VaultNavigation.Upgrade) }
         )
 

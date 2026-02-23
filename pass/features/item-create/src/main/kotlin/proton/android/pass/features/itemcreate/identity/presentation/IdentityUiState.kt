@@ -24,23 +24,79 @@ import kotlinx.collections.immutable.persistentSetOf
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.some
+import proton.android.pass.common.api.toOption
 import proton.android.pass.commonuimodels.api.attachments.AttachmentsState
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
+import proton.android.pass.domain.FolderId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.Vault
 import proton.android.pass.features.itemcreate.ItemSavedState
 import proton.android.pass.features.itemcreate.common.ShareUiState
 import proton.android.pass.features.itemcreate.common.ValidationError
 
-sealed interface IdentityUiState {
+interface IdentitySharedStateAccessor {
+    fun getItemSavedState(): ItemSavedState
+    fun getSubmitLoadingState(): IsLoadingState
+    fun getValidationErrors(): PersistentSet<ValidationError>
+    fun getExtraFields(): PersistentSet<IdentityField>
+    fun getFocusedField(): Option<IdentityField>
+    fun getCanUseCustomFields(): Boolean
+    fun showAddPersonalDetailsButton(): Boolean
+    fun showAddAddressDetailsButton(): Boolean
+    fun showAddContactDetailsButton(): Boolean
+    fun showAddWorkDetailsButton(): Boolean
+    fun showFileAttachmentsBanner(): Boolean
+    fun getAttachmentsState(): AttachmentsState
+}
+
+sealed interface IdentityUiState : IdentitySharedStateAccessor {
     @Immutable
-    data object NotInitialised : IdentityUiState
+    data object NotInitialised : IdentityUiState {
+        override fun getItemSavedState() = ItemSavedState.Unknown
+        override fun getSubmitLoadingState() = IsLoadingState.NotLoading
+        override fun getValidationErrors(): PersistentSet<ValidationError> = persistentSetOf()
+        override fun getExtraFields(): PersistentSet<IdentityField> = persistentSetOf()
+        override fun getFocusedField(): Option<IdentityField> = None
+        override fun getCanUseCustomFields() = false
+        override fun showAddPersonalDetailsButton() = false
+        override fun showAddAddressDetailsButton() = false
+        override fun showAddContactDetailsButton() = false
+        override fun showAddWorkDetailsButton() = false
+        override fun showFileAttachmentsBanner() = false
+        override fun getAttachmentsState() = AttachmentsState.Initial
+    }
 
     @Immutable
-    data object Loading : IdentityUiState
+    data object Loading : IdentityUiState {
+        override fun getItemSavedState() = ItemSavedState.Unknown
+        override fun getSubmitLoadingState() = IsLoadingState.Loading
+        override fun getValidationErrors(): PersistentSet<ValidationError> = persistentSetOf()
+        override fun getExtraFields(): PersistentSet<IdentityField> = persistentSetOf()
+        override fun getFocusedField(): Option<IdentityField> = None
+        override fun getCanUseCustomFields() = false
+        override fun showAddPersonalDetailsButton() = false
+        override fun showAddAddressDetailsButton() = false
+        override fun showAddContactDetailsButton() = false
+        override fun showAddWorkDetailsButton() = false
+        override fun showFileAttachmentsBanner() = false
+        override fun getAttachmentsState() = AttachmentsState.Initial
+    }
 
     @Immutable
-    data object Error : IdentityUiState
+    data object Error : IdentityUiState {
+        override fun getItemSavedState() = ItemSavedState.Unknown
+        override fun getSubmitLoadingState() = IsLoadingState.NotLoading
+        override fun getValidationErrors(): PersistentSet<ValidationError> = persistentSetOf()
+        override fun getExtraFields(): PersistentSet<IdentityField> = persistentSetOf()
+        override fun getFocusedField(): Option<IdentityField> = None
+        override fun getCanUseCustomFields() = false
+        override fun showAddPersonalDetailsButton() = false
+        override fun showAddAddressDetailsButton() = false
+        override fun showAddContactDetailsButton() = false
+        override fun showAddWorkDetailsButton() = false
+        override fun showFileAttachmentsBanner() = false
+        override fun getAttachmentsState() = AttachmentsState.Initial
+    }
 
     @Immutable
     data class CreateIdentity(
@@ -48,7 +104,20 @@ sealed interface IdentityUiState {
         val sharedState: IdentitySharedUiState,
         val isCloned: Boolean,
         val canDisplayVaultSharedWarningDialog: Boolean
-    ) : IdentityUiState
+    ) : IdentityUiState {
+        override fun getItemSavedState() = sharedState.isItemSaved
+        override fun getSubmitLoadingState() = sharedState.isLoadingState
+        override fun getValidationErrors() = sharedState.validationErrors
+        override fun getExtraFields() = sharedState.extraFields
+        override fun getFocusedField() = sharedState.focusedField
+        override fun getCanUseCustomFields() = sharedState.canUseCustomFields
+        override fun showAddPersonalDetailsButton() = sharedState.showAddPersonalDetailsButton
+        override fun showAddAddressDetailsButton() = sharedState.showAddAddressDetailsButton
+        override fun showAddContactDetailsButton() = sharedState.showAddContactDetailsButton
+        override fun showAddWorkDetailsButton() = sharedState.showAddWorkDetailsButton
+        override fun showFileAttachmentsBanner() = sharedState.showFileAttachmentsBanner
+        override fun getAttachmentsState() = sharedState.attachmentsState
+    }
 
     @Immutable
     data class UpdateIdentity(
@@ -57,7 +126,20 @@ sealed interface IdentityUiState {
         val hasReceivedItem: Boolean,
         val canDisplayWarningVaultSharedDialog: Boolean,
         val canDisplaySharedItemWarningDialog: Boolean
-    ) : IdentityUiState
+    ) : IdentityUiState {
+        override fun getItemSavedState() = sharedState.isItemSaved
+        override fun getSubmitLoadingState() = sharedState.isLoadingState
+        override fun getValidationErrors() = sharedState.validationErrors
+        override fun getExtraFields() = sharedState.extraFields
+        override fun getFocusedField() = sharedState.focusedField
+        override fun getCanUseCustomFields() = sharedState.canUseCustomFields
+        override fun showAddPersonalDetailsButton() = sharedState.showAddPersonalDetailsButton
+        override fun showAddAddressDetailsButton() = sharedState.showAddAddressDetailsButton
+        override fun showAddContactDetailsButton() = sharedState.showAddContactDetailsButton
+        override fun showAddWorkDetailsButton() = sharedState.showAddWorkDetailsButton
+        override fun showFileAttachmentsBanner() = sharedState.showFileAttachmentsBanner
+        override fun getAttachmentsState() = sharedState.attachmentsState
+    }
 
     val canDisplayWarningVaultSharedDialogLocal: Boolean
         get() = when (this) {
@@ -100,82 +182,21 @@ sealed interface IdentityUiState {
         else -> None
     }
 
-    fun getItemSavedState(): ItemSavedState = when (this) {
-        is CreateIdentity -> sharedState.isItemSaved
-        is UpdateIdentity -> sharedState.isItemSaved
-        else -> ItemSavedState.Unknown
-    }
-
-    fun getSubmitLoadingState(): IsLoadingState = when (this) {
-        is Loading -> IsLoadingState.Loading
-        is CreateIdentity -> sharedState.isLoadingState
-        is UpdateIdentity -> sharedState.isLoadingState
-        else -> IsLoadingState.NotLoading
-    }
-
-    fun getValidationErrors(): PersistentSet<ValidationError> = when (this) {
-        is CreateIdentity -> sharedState.validationErrors
-        is UpdateIdentity -> sharedState.validationErrors
-        else -> persistentSetOf()
-    }
-
-    fun getExtraFields(): PersistentSet<IdentityField> = when (this) {
-        is CreateIdentity -> sharedState.extraFields
-        is UpdateIdentity -> sharedState.extraFields
-        else -> persistentSetOf()
-    }
-
-    fun getFocusedField(): Option<IdentityField> = when (this) {
-        is CreateIdentity -> sharedState.focusedField
-        is UpdateIdentity -> sharedState.focusedField
+    fun getSelectedFolderName(): Option<String> = when {
+        this is CreateIdentity && shareUiState is ShareUiState.Success ->
+            shareUiState.selectedFolderName.toOption()
         else -> None
     }
 
-    fun getCanUseCustomFields(): Boolean = when (this) {
-        is CreateIdentity -> sharedState.canUseCustomFields
-        is UpdateIdentity -> sharedState.canUseCustomFields
-        else -> false
+    fun getSelectedFolderId(): Option<FolderId> = when {
+        this is CreateIdentity && shareUiState is ShareUiState.Success ->
+            shareUiState.selectedFolderId.toOption()
+        else -> None
     }
 
     fun performActionOnContentReceived(): Boolean = when (this) {
         is CreateIdentity -> isCloned
         is UpdateIdentity -> hasReceivedItem
         else -> false
-    }
-
-    fun showAddPersonalDetailsButton(): Boolean = when (this) {
-        is CreateIdentity -> sharedState.showAddPersonalDetailsButton
-        is UpdateIdentity -> sharedState.showAddPersonalDetailsButton
-        else -> false
-    }
-
-    fun showAddAddressDetailsButton(): Boolean = when (this) {
-        is CreateIdentity -> sharedState.showAddAddressDetailsButton
-        is UpdateIdentity -> sharedState.showAddAddressDetailsButton
-        else -> false
-    }
-
-    fun showAddContactDetailsButton(): Boolean = when (this) {
-        is CreateIdentity -> sharedState.showAddContactDetailsButton
-        is UpdateIdentity -> sharedState.showAddContactDetailsButton
-        else -> false
-    }
-
-    fun showAddWorkDetailsButton(): Boolean = when (this) {
-        is CreateIdentity -> sharedState.showAddWorkDetailsButton
-        is UpdateIdentity -> sharedState.showAddWorkDetailsButton
-        else -> false
-    }
-
-    fun showFileAttachmentsBanner(): Boolean = when (this) {
-        is CreateIdentity -> sharedState.showFileAttachmentsBanner
-        is UpdateIdentity -> sharedState.showFileAttachmentsBanner
-        else -> false
-    }
-
-    fun getAttachmentsState(): AttachmentsState = when (this) {
-        is CreateIdentity -> sharedState.attachmentsState
-        is UpdateIdentity -> sharedState.attachmentsState
-        else -> AttachmentsState.Initial
     }
 }

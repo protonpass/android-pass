@@ -182,6 +182,7 @@ object PassPalette {
     val MistGray = Color(0x4DB8B6C4)
 
     val PromoYellow = Color(0xFFDBFF00)
+    val FolderYellow = Color(0xFFE9A944)
 
     val gradientBrushDark = Brush.linearGradient(
         colorStops = arrayOf(

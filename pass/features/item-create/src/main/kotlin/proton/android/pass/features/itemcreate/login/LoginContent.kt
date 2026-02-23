@@ -29,6 +29,7 @@ import kotlinx.collections.immutable.toPersistentList
 import proton.android.pass.common.api.Option
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
+import proton.android.pass.domain.FolderId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.Vault
 import proton.android.pass.features.itemcreate.common.CommonFieldValidationError
@@ -44,6 +45,8 @@ internal fun LoginContent(
     passkeyState: Option<CreatePasskeyState>,
     loginItemFormState: LoginItemFormState,
     selectedVault: Vault?,
+    selectedFolderName: String? = null,
+    selectedFolderId: FolderId? = null,
     showVaultSelector: Boolean,
     selectedShareId: ShareId?,
     topBarActionName: String,
@@ -64,6 +67,7 @@ internal fun LoginContent(
                 iconColor = PassTheme.colors.loginInteractionNormMajor2,
                 iconBackgroundColor = PassTheme.colors.loginInteractionNormMinor1,
                 selectedVault = selectedVault,
+                selectedFolderName = selectedFolderName,
                 showVaultSelector = showVaultSelector,
                 onCloseClick = { onEvent(LoginContentEvent.Up) },
                 onActionClick = {
@@ -73,7 +77,7 @@ internal fun LoginContent(
                 onUpgrade = { onEvent(LoginContentEvent.OnUpgrade) },
                 onVaultSelectorClick = {
                     selectedShareId ?: return@CreateUpdateTopBar
-                    onEvent(LoginContentEvent.OnVaultSelect(selectedShareId))
+                    onEvent(LoginContentEvent.OnVaultSelect(selectedShareId, selectedFolderId))
                 }
             )
         }

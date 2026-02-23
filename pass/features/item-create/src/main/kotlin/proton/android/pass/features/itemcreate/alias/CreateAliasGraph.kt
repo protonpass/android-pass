@@ -27,12 +27,14 @@ import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.toOption
+import proton.android.pass.domain.FolderId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.features.itemcreate.alias.bottomsheet.CreateAliasBottomSheet
 import proton.android.pass.features.itemcreate.alias.mailboxes.ui.SelectMailboxesBottomsheet
 import proton.android.pass.features.itemcreate.alias.suffixes.ui.SelectSuffixBottomsheet
 import proton.android.pass.features.itemcreate.bottomsheets.customfield.customFieldBottomSheetGraph
 import proton.android.pass.features.itemcreate.common.CustomFieldPrefix
+import proton.android.pass.features.itemcreate.common.KEY_FOLDER_SELECTED
 import proton.android.pass.features.itemcreate.common.KEY_VAULT_SELECTED
 import proton.android.pass.features.itemcreate.dialogs.customfield.CustomFieldNameNavigation
 import proton.android.pass.features.itemcreate.dialogs.customfield.customFieldNameDialogGraph
@@ -56,13 +58,24 @@ object IsEditAliasNavArg : OptionalNavArgId {
 
 object CreateAliasNavItem : NavItem(
     baseRoute = "alias/create/screen",
-    optionalArgIds = listOf(CommonOptionalNavArgId.ShareId, AliasOptionalNavArgId.Title)
+    optionalArgIds = listOf(
+        CommonOptionalNavArgId.ShareId,
+        CommonOptionalNavArgId.FolderId,
+        AliasOptionalNavArgId.Title
+    )
 ) {
-    fun createNavRoute(shareId: Option<ShareId> = None, title: Option<String> = None) = buildString {
+    fun createNavRoute(
+        shareId: Option<ShareId> = None,
+        folderId: Option<FolderId> = None,
+        title: Option<String> = None
+    ) = buildString {
         append(baseRoute)
         val map = mutableMapOf<String, Any>()
         if (shareId is Some) {
             map[CommonOptionalNavArgId.ShareId.key] = shareId.value.id
+        }
+        if (folderId is Some) {
+            map[CommonOptionalNavArgId.FolderId.key] = folderId.value.id
         }
         if (title is Some) {
             map[AliasOptionalNavArgId.Title.key] = title.value
@@ -118,6 +131,11 @@ fun NavGraphBuilder.createAliasGraph(
         val selectVault by navBackStack.savedStateHandle
             .getStateFlow<String?>(KEY_VAULT_SELECTED, null)
             .collectAsStateWithLifecycle()
+
+        val selectFolder by navBackStack.savedStateHandle
+            .getStateFlow<String?>(KEY_FOLDER_SELECTED, null)
+            .collectAsStateWithLifecycle()
+
         val navTotpUri by navBackStack.savedStateHandle
             .getStateFlow<String?>(TOTP_NAV_PARAMETER_KEY, null)
             .collectAsStateWithLifecycle()
@@ -135,6 +153,7 @@ fun NavGraphBuilder.createAliasGraph(
         }
         CreateAliasScreen(
             selectVault = selectVault.toOption().map { ShareId(it) }.value(),
+            selectFolder = selectFolder.toOption().map { FolderId(it) }.value(),
             navTotpUri = navTotpUri,
             navTotpIndex = navTotpIndex,
             canUseAttachments = canUseAttachments,

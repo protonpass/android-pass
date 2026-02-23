@@ -75,7 +75,6 @@ import proton.android.pass.features.itemcreate.custom.createupdate.presentation.
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.android.pass.preferences.DisplayFileAttachmentsBanner.NotDisplay
-import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import proton.android.pass.preferences.UserPreferencesRepository
 import proton.android.pass.preferences.value
 import java.net.URI
@@ -161,7 +160,6 @@ abstract class BaseCustomItemViewModel(
     private val attachmentsHandler: AttachmentsHandler,
     protected val customFieldHandler: CustomFieldHandler,
     private val userPreferencesRepository: UserPreferencesRepository,
-    private val featureFlagsRepository: FeatureFlagsPreferencesRepository,
     private val encryptionContextProvider: EncryptionContextProvider,
     private val clipboardManager: ClipboardManager,
     private val appDispatchers: AppDispatchers,
@@ -178,7 +176,6 @@ abstract class BaseCustomItemViewModel(
     @OptIn(SavedStateHandleSaveableApi::class)
     internal var itemFormState: ItemFormState by savedStateHandleProvider.get()
         .saveable { mutableStateOf(ItemFormState.EMPTY) }
-        protected set
 
     private val isLoadingState = MutableStateFlow<IsLoadingState>(IsLoadingState.NotLoading)
     private val hasUserEditedContentState = MutableStateFlow(false)

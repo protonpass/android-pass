@@ -38,7 +38,8 @@ fun TemplateScreen(
                     onNavigate(
                         SelectTemplateNavigation.NavigateToCreate(
                             shareId = viewmodel.optionalShareId,
-                            templateType = it.templateType
+                            templateType = it.templateType,
+                            folderId = viewmodel.optionalFolderId
                         )
                     )
 

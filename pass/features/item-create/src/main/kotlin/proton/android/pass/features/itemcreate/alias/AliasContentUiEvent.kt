@@ -20,6 +20,7 @@ package proton.android.pass.features.itemcreate.alias
 
 import proton.android.pass.common.api.Option
 import proton.android.pass.composecomponents.impl.attachments.AttachmentContentEvent
+import proton.android.pass.domain.FolderId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.features.itemcreate.common.customfields.CustomFieldEvent
 
@@ -36,8 +37,7 @@ internal sealed interface AliasContentUiEvent {
     @JvmInline
     value class OnTitleChange(val title: String) : AliasContentUiEvent
 
-    @JvmInline
-    value class OnVaultSelect(val shareId: ShareId) : AliasContentUiEvent
+    data class OnVaultSelect(val shareId: ShareId, val folderId: FolderId? = null) : AliasContentUiEvent
 
     @JvmInline
     value class OnPrefixChange(val prefix: String) : AliasContentUiEvent

@@ -34,6 +34,7 @@ import proton.android.pass.common.api.toOption
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.data.api.usecases.ObserveUpgradeInfo
 import proton.android.pass.data.api.usecases.items.ObserveCanCreateItems
+import proton.android.pass.domain.FolderId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.navigation.api.CommonOptionalNavArgId
 import proton.android.pass.searchoptions.api.HomeSearchOptionsRepository
@@ -52,31 +53,48 @@ class CreateItemBottomSheetViewModel @Inject constructor(
         savedStateHandleProvider.get()
             .getStateFlow<String?>(CommonOptionalNavArgId.ShareId.key, null)
             .map { value -> value.toOption().map(::ShareId) }
+
+    private val navFolderIdFlow: Flow<Option<FolderId>> =
+        savedStateHandleProvider.get()
+            .getStateFlow<String?>(CommonOptionalNavArgId.FolderId.key, null)
+            .map { value -> value.toOption().map(::FolderId) }
+
     private val createItemModeFlow: Flow<CreateItemBottomSheetMode?> =
         savedStateHandleProvider.get().getStateFlow(CreateItemBottomSheetModeNavArgId.key, null)
 
-    private val selectedShareIdFlow = combine(
+    private val selectedShareAndFolderFlow = combine(
         navShareIdFlow,
+        navFolderIdFlow,
         homeSearchOptionsRepository.observeVaultSelectionOption().take(1),
         createItemModeFlow
-    ) { navShareId: Option<ShareId>, vaultSelectionOption: VaultSelectionOption, mode: CreateItemBottomSheetMode? ->
-        when {
+    ) { navShareId: Option<ShareId>, navFolderId: Option<FolderId>,
+        vaultSelectionOption: VaultSelectionOption, mode: CreateItemBottomSheetMode? ->
+        val shareId: ShareId? = when {
             navShareId is Some -> navShareId.value
             mode == CreateItemBottomSheetMode.HomeFull &&
                 vaultSelectionOption is VaultSelectionOption.Vault -> vaultSelectionOption.shareId
-
+            mode == CreateItemBottomSheetMode.HomeFull &&
+                vaultSelectionOption is VaultSelectionOption.Folder -> vaultSelectionOption.shareId
             else -> null
         }
+        val folderId: FolderId? = when {
+            navFolderId is Some -> navFolderId.value
+            mode == CreateItemBottomSheetMode.HomeFull &&
+                vaultSelectionOption is VaultSelectionOption.Folder -> vaultSelectionOption.folderId
+            else -> null
+        }
+        shareId to folderId
     }
 
     internal val stateFlow: StateFlow<CreateItemBottomSheetUIState> = combine(
         observeUpgradeInfo(),
-        selectedShareIdFlow,
+        selectedShareAndFolderFlow,
         createItemModeFlow,
         observeCanCreateItems()
-    ) { upgradeInfo, selectedShare, mode, canCreateItems ->
+    ) { upgradeInfo, (selectedShare, folderId), mode, canCreateItems ->
         CreateItemBottomSheetUIState(
             shareId = selectedShare,
+            folderId = folderId,
             mode = mode,
             createItemAliasUIState = CreateItemAliasUIState(
                 canUpgrade = upgradeInfo.isUpgradeAvailable,
@@ -96,6 +114,7 @@ class CreateItemBottomSheetViewModel @Inject constructor(
 
 internal data class CreateItemBottomSheetUIState(
     val shareId: ShareId?,
+    val folderId: FolderId? = null,
     val mode: CreateItemBottomSheetMode?,
     val createItemAliasUIState: CreateItemAliasUIState,
     val canCreateItems: Boolean
@@ -105,6 +124,7 @@ internal data class CreateItemBottomSheetUIState(
 
         val Initial = CreateItemBottomSheetUIState(
             shareId = null,
+            folderId = null,
             mode = null,
             createItemAliasUIState = CreateItemAliasUIState.Initial,
             canCreateItems = false

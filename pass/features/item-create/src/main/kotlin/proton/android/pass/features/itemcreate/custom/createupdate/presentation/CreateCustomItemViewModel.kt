@@ -27,6 +27,7 @@ import androidx.lifecycle.viewmodel.compose.saveable
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
@@ -34,6 +35,7 @@ import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
+import me.proton.core.accountmanager.domain.AccountManager
 import proton.android.pass.clipboard.api.ClipboardManager
 import proton.android.pass.common.api.AppDispatchers
 import proton.android.pass.common.api.None
@@ -43,6 +45,7 @@ import proton.android.pass.common.api.asLoadingResult
 import proton.android.pass.common.api.some
 import proton.android.pass.common.api.toOption
 import proton.android.pass.commonpresentation.api.attachments.AttachmentsHandler
+import proton.android.pass.commonrust.api.SshKeyGenerator
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
@@ -53,7 +56,9 @@ import proton.android.pass.data.api.usecases.GetItemById
 import proton.android.pass.data.api.usecases.ObserveVaultsWithItemCount
 import proton.android.pass.data.api.usecases.attachments.LinkAttachmentsToItem
 import proton.android.pass.data.api.usecases.defaultvault.ObserveDefaultVault
+import proton.android.pass.data.api.usecases.folders.ObserveFolders
 import proton.android.pass.data.api.usecases.shares.ObserveShare
+import proton.android.pass.domain.FolderId
 import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ItemType
@@ -71,6 +76,7 @@ import proton.android.pass.features.itemcreate.common.UIHiddenState
 import proton.android.pass.features.itemcreate.common.canDisplayWarningMessageForCreationFlow
 import proton.android.pass.features.itemcreate.common.customfields.CustomFieldHandler
 import proton.android.pass.features.itemcreate.common.formprocessor.CustomItemFormProcessor
+import proton.android.pass.features.itemcreate.common.getFolderNameFlow
 import proton.android.pass.features.itemcreate.common.getShareUiStateFlow
 import proton.android.pass.features.itemcreate.custom.createupdate.navigation.TemplateTypeNavArgId
 import proton.android.pass.features.itemcreate.custom.createupdate.presentation.CreateSpecificIntent.OnVaultSelected
@@ -81,7 +87,6 @@ import proton.android.pass.inappreview.api.InAppReviewTriggerMetrics
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonOptionalNavArgId
 import proton.android.pass.notifications.api.SnackbarDispatcher
-import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import proton.android.pass.preferences.InternalSettingsRepository
 import proton.android.pass.preferences.UserPreferencesRepository
 import proton.android.pass.telemetry.api.EventItemType
@@ -92,6 +97,7 @@ import javax.inject.Inject
 @HiltViewModel
 class CreateCustomItemViewModel @Inject constructor(
     @param:ApplicationContext private val context: Context,
+    private val accountManager: AccountManager,
     private val createItem: CreateItem,
     private val telemetryManager: TelemetryManager,
     private val inAppReviewTriggerMetrics: InAppReviewTriggerMetrics,
@@ -103,16 +109,16 @@ class CreateCustomItemViewModel @Inject constructor(
     attachmentsHandler: AttachmentsHandler,
     customFieldHandler: CustomFieldHandler,
     userPreferencesRepository: UserPreferencesRepository,
-    featureFlagsRepository: FeatureFlagsPreferencesRepository,
     observeVaults: ObserveVaultsWithItemCount,
     observeDefaultVault: ObserveDefaultVault,
+    observeFolders: ObserveFolders,
     customFieldDraftRepository: CustomFieldDraftRepository,
     clipboardManager: ClipboardManager,
     customItemFormProcessor: CustomItemFormProcessor,
     appDispatchers: AppDispatchers,
     savedStateHandleProvider: SavedStateHandleProvider,
     observeShare: ObserveShare,
-    sshKeyGenerator: proton.android.pass.commonrust.api.SshKeyGenerator,
+    sshKeyGenerator: SshKeyGenerator,
     private val settingsRepository: InternalSettingsRepository
 ) : BaseCustomItemViewModel(
     canPerformPaidAction = canPerformPaidAction,
@@ -121,7 +127,6 @@ class CreateCustomItemViewModel @Inject constructor(
     attachmentsHandler = attachmentsHandler,
     customFieldHandler = customFieldHandler,
     userPreferencesRepository = userPreferencesRepository,
-    featureFlagsRepository = featureFlagsRepository,
     encryptionContextProvider = encryptionContextProvider,
     customFieldDraftRepository = customFieldDraftRepository,
     clipboardManager = clipboardManager,
@@ -140,6 +145,10 @@ class CreateCustomItemViewModel @Inject constructor(
         savedStateHandleProvider.get().get<String>(CommonOptionalNavArgId.ItemId.key)
             .toOption()
             .map(::ItemId)
+
+    private val navFolderId: FolderId? =
+        savedStateHandleProvider.get().get<String>(CommonOptionalNavArgId.FolderId.key)
+            ?.let(::FolderId)
 
     private val navTemplateType: Option<TemplateType> =
         savedStateHandleProvider.get().require<Int>(TemplateTypeNavArgId.key)
@@ -161,13 +170,25 @@ class CreateCustomItemViewModel @Inject constructor(
                 initialValue = None
             )
 
+    private val selectedFolderIdMutableState: MutableStateFlow<FolderId?> = MutableStateFlow(navFolderId)
+
+    private val selectedFolderNameFlow = getFolderNameFlow(
+        accountManager = accountManager,
+        observeFolders = observeFolders,
+        selectedShareIdState = selectedShareIdState,
+        selectedFolderIdFlow = selectedFolderIdMutableState,
+        navShareIdState = flowOf(navShareId)
+    )
+
     private val shareUiState: StateFlow<ShareUiState> = getShareUiStateFlow(
         navShareIdState = flowOf(navShareId),
         selectedShareIdState = selectedShareIdState,
         observeAllVaultsFlow = observeVaults(includeHidden = true).asLoadingResult(),
         observeDefaultVaultFlow = observeDefaultVault().asLoadingResult(),
         viewModelScope = viewModelScope,
-        tag = TAG
+        tag = TAG,
+        selectedFolderNameFlow = selectedFolderNameFlow,
+        selectedFolderIdFlow = selectedFolderIdMutableState
     )
 
     private val canDisplayWarningVaultSharedDialogFlow =
@@ -280,6 +301,11 @@ class CreateCustomItemViewModel @Inject constructor(
 
     private fun onVaultSelected(shareId: ShareId) {
         selectedShareIdMutableState = Some(shareId)
+        selectedFolderIdMutableState.value = null
+    }
+
+    fun onFolderSelected(folderId: FolderId) {
+        selectedFolderIdMutableState.value = folderId
     }
 
 

@@ -28,10 +28,12 @@ import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.toOption
 import proton.android.pass.commonuimodels.api.ItemUiModel
+import proton.android.pass.domain.FolderId
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.features.itemcreate.bottomsheets.customfield.customFieldBottomSheetGraph
 import proton.android.pass.features.itemcreate.common.CustomFieldPrefix
+import proton.android.pass.features.itemcreate.common.KEY_FOLDER_SELECTED
 import proton.android.pass.features.itemcreate.common.KEY_VAULT_SELECTED
 import proton.android.pass.features.itemcreate.common.customsection.ExtraSectionNavigation
 import proton.android.pass.features.itemcreate.common.customsection.extraSectionGraph
@@ -55,9 +57,17 @@ const val CREATE_IDENTITY_GRAPH = "create_identity_graph"
 
 object CreateIdentityNavItem : NavItem(
     baseRoute = "identity/create/screen",
-    optionalArgIds = listOf(CommonOptionalNavArgId.ShareId, CommonOptionalNavArgId.ItemId)
+    optionalArgIds = listOf(
+        CommonOptionalNavArgId.ShareId,
+        CommonOptionalNavArgId.ItemId,
+        CommonOptionalNavArgId.FolderId
+    )
 ) {
-    fun createNavRoute(shareId: Option<ShareId> = None, itemId: Option<ItemId> = None) = buildString {
+    fun createNavRoute(
+        shareId: Option<ShareId> = None,
+        itemId: Option<ItemId> = None,
+        folderId: Option<FolderId> = None
+    ) = buildString {
         append(baseRoute)
         val map = mutableMapOf<String, Any>()
         if (shareId is Some) {
@@ -65,6 +75,9 @@ object CreateIdentityNavItem : NavItem(
         }
         if (itemId is Some) {
             map[CommonOptionalNavArgId.ItemId.key] = itemId.value.id
+        }
+        if (folderId is Some) {
+            map[CommonOptionalNavArgId.FolderId.key] = folderId.value.id
         }
         val path = map.toPath()
         append(path)
@@ -75,8 +88,7 @@ sealed interface CreateIdentityNavigation : BaseIdentityNavigation {
     @JvmInline
     value class ItemCreated(val itemUiModel: ItemUiModel) : CreateIdentityNavigation
 
-    @JvmInline
-    value class SelectVault(val shareId: ShareId) : CreateIdentityNavigation
+    data class SelectVault(val shareId: ShareId, val folderId: FolderId? = null) : CreateIdentityNavigation
 }
 
 @Suppress("LongMethod")
@@ -88,6 +100,10 @@ fun NavGraphBuilder.createIdentityGraph(canUseAttachments: Boolean, onNavigate: 
         composable(CreateIdentityNavItem) { navBackStack ->
             val selectVault by navBackStack.savedStateHandle
                 .getStateFlow<String?>(KEY_VAULT_SELECTED, null)
+                .collectAsStateWithLifecycle()
+
+            val selectFolder by navBackStack.savedStateHandle
+                .getStateFlow<String?>(KEY_FOLDER_SELECTED, null)
                 .collectAsStateWithLifecycle()
 
             val navTotpUri by navBackStack.savedStateHandle
@@ -124,6 +140,7 @@ fun NavGraphBuilder.createIdentityGraph(canUseAttachments: Boolean, onNavigate: 
             }
             CreateIdentityScreen(
                 selectVault = selectVault.toOption().map { ShareId(it) }.value(),
+                selectFolder = selectFolder.toOption().map { FolderId(it) }.value(),
                 canUseAttachments = canUseAttachments,
                 totpNavParams = totpNavParams,
                 onNavigate = onNavigate

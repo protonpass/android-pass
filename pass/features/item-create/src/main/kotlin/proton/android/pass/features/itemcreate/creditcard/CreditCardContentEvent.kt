@@ -20,6 +20,7 @@ package proton.android.pass.features.itemcreate.creditcard
 
 import proton.android.pass.common.api.Option
 import proton.android.pass.composecomponents.impl.attachments.AttachmentContentEvent
+import proton.android.pass.domain.FolderId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.features.itemcreate.common.customfields.CustomFieldEvent
 
@@ -56,8 +57,7 @@ internal sealed interface CreditCardContentEvent {
     @JvmInline
     value class OnTitleChange(val value: String) : CreditCardContentEvent
 
-    @JvmInline
-    value class OnVaultSelect(val shareId: ShareId) : CreditCardContentEvent
+    data class OnVaultSelect(val shareId: ShareId, val folderId: FolderId? = null) : CreditCardContentEvent
 
     @JvmInline
     value class OnAttachmentEvent(val event: AttachmentContentEvent) : CreditCardContentEvent

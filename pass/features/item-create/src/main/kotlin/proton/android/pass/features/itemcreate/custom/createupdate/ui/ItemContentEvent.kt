@@ -20,6 +20,7 @@ package proton.android.pass.features.itemcreate.custom.createupdate.ui
 
 import proton.android.pass.common.api.Option
 import proton.android.pass.composecomponents.impl.attachments.AttachmentContentEvent
+import proton.android.pass.domain.FolderId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.WifiSecurityType
 import proton.android.pass.features.itemcreate.common.customfields.CustomFieldEvent
@@ -45,8 +46,7 @@ internal sealed interface ItemContentEvent {
 
     data class OnFieldFocusChange(val field: FieldChange, val isFocused: Boolean) : ItemContentEvent
 
-    @JvmInline
-    value class OnVaultSelect(val shareId: ShareId) : ItemContentEvent
+    data class OnVaultSelect(val shareId: ShareId, val folderId: FolderId? = null) : ItemContentEvent
 
     data object OnAddSection : ItemContentEvent
 

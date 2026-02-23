@@ -42,6 +42,7 @@ import proton.android.pass.composecomponents.impl.attachments.AttachmentContentE
 import proton.android.pass.composecomponents.impl.dialogs.ConfirmCloseDialog
 import proton.android.pass.composecomponents.impl.dialogs.WarningSharedItemDialog
 import proton.android.pass.domain.CustomFieldType
+import proton.android.pass.domain.FolderId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.features.itemcreate.ItemSavedState
 import proton.android.pass.features.itemcreate.R
@@ -71,6 +72,7 @@ fun CreateLoginScreen(
     showCreateAliasButton: Boolean = true,
     clearAlias: Boolean,
     selectVault: ShareId?,
+    selectFolder: FolderId? = null,
     canUseAttachments: Boolean,
     onNavigate: (BaseLoginNavigation) -> Unit,
     viewModel: CreateLoginViewModel = hiltViewModel()
@@ -104,6 +106,11 @@ fun CreateLoginScreen(
             viewModel.changeVault(selectVault)
         }
     }
+    LaunchedEffect(selectFolder) {
+        if (selectFolder != null) {
+            viewModel.changeFolder(selectFolder)
+        }
+    }
 
     var showConfirmDialog by rememberSaveable { mutableStateOf(false) }
     val onExit = {
@@ -118,9 +125,9 @@ fun CreateLoginScreen(
         onExit()
     }
 
-    val (showVaultSelector, selectedVault) = when (val shares = uiState.shareUiState) {
+    val (showVaultSelector, selectedVault, selectedFolderName) = when (val shares = uiState.shareUiState) {
         ShareUiState.Loading,
-        ShareUiState.NotInitialised -> false to null
+        ShareUiState.NotInitialised -> Triple(false, null, null)
 
         is ShareUiState.Error -> {
             if (shares.shareError == EmptyShareList || shares.shareError == SharesNotAvailable) {
@@ -129,11 +136,12 @@ fun CreateLoginScreen(
                     actionAfterKeyboardHide = { onNavigate(BaseLoginNavigation.CloseScreen) }
                 }
             }
-            false to null
+            Triple(false, null, null)
         }
 
-        is ShareUiState.Success -> (shares.vaultList.size > 1) to shares.currentVault
+        is ShareUiState.Success -> Triple(shares.vaultList.size > 1, shares.currentVault, shares.selectedFolderName)
     }
+    val selectedFolderId = (uiState.shareUiState as? ShareUiState.Success)?.selectedFolderId
 
 
     var showWarningVaultSharedDialog by rememberSaveable { mutableStateOf(false) }
@@ -144,6 +152,8 @@ fun CreateLoginScreen(
             passkeyState = uiState.passkeyState,
             loginItemFormState = viewModel.loginItemFormState,
             selectedVault = selectedVault?.vault,
+            selectedFolderName = selectedFolderName,
+            selectedFolderId = selectedFolderId,
             showVaultSelector = showVaultSelector,
             selectedShareId = selectedVault?.vault?.shareId,
             topBarActionName = stringResource(id = R.string.title_create),
@@ -229,7 +239,7 @@ fun CreateLoginScreen(
                     is LoginContentEvent.OnVaultSelect ->
                         actionAfterKeyboardHide = {
                             onNavigate(
-                                OnCreateLoginEvent(CreateLoginNavigation.SelectVault(it.shareId))
+                                OnCreateLoginEvent(CreateLoginNavigation.SelectVault(it.shareId, it.folderId))
                             )
                         }
 

@@ -26,6 +26,7 @@ import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
+import proton.android.pass.domain.FolderId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.Vault
 import proton.android.pass.features.itemcreate.common.CommonFieldValidationError
@@ -40,6 +41,8 @@ internal fun NoteContent(
     uiState: BaseNoteUiState,
     noteItemFormState: NoteItemFormState,
     selectedVault: Vault?,
+    selectedFolderName: String? = null,
+    selectedFolderId: FolderId? = null,
     showVaultSelector: Boolean,
     selectedShareId: ShareId?,
     onEvent: (NoteContentUiEvent) -> Unit
@@ -55,6 +58,7 @@ internal fun NoteContent(
                 iconColor = PassTheme.colors.noteInteractionNormMajor2,
                 iconBackgroundColor = PassTheme.colors.noteInteractionNormMinor1,
                 selectedVault = selectedVault,
+                selectedFolderName = selectedFolderName,
                 showVaultSelector = showVaultSelector,
                 onCloseClick = { onEvent(NoteContentUiEvent.Back) },
                 onActionClick = {
@@ -64,7 +68,7 @@ internal fun NoteContent(
                 onUpgrade = {},
                 onVaultSelectorClick = {
                     selectedShareId ?: return@CreateUpdateTopBar
-                    onEvent(NoteContentUiEvent.OnVaultSelect(selectedShareId))
+                    onEvent(NoteContentUiEvent.OnVaultSelect(selectedShareId, selectedFolderId))
                 }
             )
         }

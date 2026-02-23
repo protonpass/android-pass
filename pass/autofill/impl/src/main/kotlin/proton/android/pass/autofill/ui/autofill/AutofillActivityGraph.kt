@@ -56,6 +56,7 @@ import proton.android.pass.features.itemcreate.bottomsheets.createitem.bottomshe
 import proton.android.pass.features.itemcreate.bottomsheets.customfield.AddCustomFieldBottomSheetNavItem
 import proton.android.pass.features.itemcreate.bottomsheets.customfield.CustomFieldOptionsBottomSheetNavItem
 import proton.android.pass.features.itemcreate.common.CustomFieldPrefix
+import proton.android.pass.features.itemcreate.common.KEY_FOLDER_SELECTED
 import proton.android.pass.features.itemcreate.common.KEY_VAULT_SELECTED
 import proton.android.pass.features.itemcreate.common.customsection.CustomSectionNameDialogNavItem
 import proton.android.pass.features.itemcreate.common.customsection.CustomSectionOptionsBottomSheetNavItem
@@ -724,8 +725,15 @@ internal fun NavGraphBuilder.autofillActivityGraph(
                 VaultNavigation.DismissBottomsheet -> dismissBottomSheet {}
                 VaultNavigation.Upgrade -> onNavigate(AutofillNavigation.Upgrade)
                 is VaultNavigation.VaultSelected -> dismissBottomSheet {
+                    appNavigator.setResult(mapOf(KEY_VAULT_SELECTED to it.shareId.id))
+                }
+
+                is VaultNavigation.VaultAndFolderSelected -> dismissBottomSheet {
                     appNavigator.setResult(
-                        mapOf(KEY_VAULT_SELECTED to it.shareId.id)
+                        mapOf(
+                            KEY_VAULT_SELECTED to it.shareId.id,
+                            KEY_FOLDER_SELECTED to it.folderId.id
+                        )
                     )
                 }
 

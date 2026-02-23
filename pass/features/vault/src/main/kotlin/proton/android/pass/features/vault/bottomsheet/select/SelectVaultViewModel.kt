@@ -21,27 +21,43 @@ package proton.android.pass.features.vault.bottomsheet.select
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.collections.immutable.PersistentList
 import kotlinx.collections.immutable.toImmutableList
+import kotlinx.collections.immutable.toImmutableMap
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
+import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.asLoadingResult
 import proton.android.pass.common.api.getOrNull
+import proton.android.pass.commonpresentation.api.folders.FolderTreeBuilder
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
+import proton.android.pass.commonuimodels.api.FolderUiModel
 import proton.android.pass.data.api.usecases.ObserveUpgradeInfo
 import proton.android.pass.data.api.usecases.ObserveVaultsWithItemCount
 import proton.android.pass.data.api.usecases.UpgradeInfo
 import proton.android.pass.data.api.usecases.capabilities.CanCreateItemInVault
 import proton.android.pass.data.api.usecases.defaultvault.SetDefaultVault
+import proton.android.pass.data.api.usecases.folders.ObserveFolders
+import proton.android.pass.domain.FolderId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.VaultWithItemCount
 import proton.android.pass.features.vault.VaultSnackbarMessage
 import proton.android.pass.log.api.PassLogger
+import proton.android.pass.navigation.api.CommonOptionalNavArgId
 import proton.android.pass.notifications.api.SnackbarDispatcher
+import proton.android.pass.preferences.FeatureFlag
+import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import javax.inject.Inject
 
 @HiltViewModel
@@ -51,20 +67,72 @@ class SelectVaultViewModel @Inject constructor(
     private val setDefaultVault: SetDefaultVault,
     observeVaultsWithItemCount: ObserveVaultsWithItemCount,
     observeUpgradeInfo: ObserveUpgradeInfo,
+    featureFlagsPreferencesRepository: FeatureFlagsPreferencesRepository,
+    private val observeFolders: ObserveFolders,
     savedStateHandle: SavedStateHandleProvider
 ) : ViewModel() {
 
+    private data class VaultShareKey(
+        val userId: UserId,
+        val shareId: ShareId
+    )
+
     private val selected: ShareId = ShareId(savedStateHandle.get().require(SelectedVaultArg.key))
 
+    private val selectedFolderId: FolderId? =
+        savedStateHandle.get().get<String?>(CommonOptionalNavArgId.FolderId.key)
+            ?.let { FolderId(it) }
+
+    private val foldersEnabledFlow: Flow<Boolean> =
+        featureFlagsPreferencesRepository[FeatureFlag.PASS_FOLDERS]
+
+    private val vaultsFlow = observeVaultsWithItemCount(includeHidden = true)
+
+    private val vaultShareKeysFlow: Flow<List<VaultShareKey>> = vaultsFlow
+        .map { vaults ->
+            vaults.asSequence()
+                .map { VaultShareKey(userId = it.vault.userId, shareId = it.vault.shareId) }
+                .distinct()
+                .sortedWith(
+                    compareBy<VaultShareKey> { it.userId.id }.thenBy { it.shareId.id }
+                )
+                .toList()
+        }
+        .distinctUntilChanged()
+
+    private val vaultFoldersFlow: Flow<Map<ShareId, PersistentList<FolderUiModel>>> =
+        combine(foldersEnabledFlow, vaultShareKeysFlow) { enabled: Boolean, keys: List<VaultShareKey> ->
+            enabled to keys
+        }.flatMapLatest { (enabled, keys) ->
+            if (!enabled || keys.isEmpty()) {
+                return@flatMapLatest flowOf<Map<ShareId, PersistentList<FolderUiModel>>>(emptyMap())
+            }
+            val flows: List<Flow<Pair<ShareId, PersistentList<FolderUiModel>>>> = keys.map { key ->
+                observeFolders(key.userId, key.shareId)
+                    .distinctUntilChanged()
+                    .map<_, Pair<ShareId, PersistentList<FolderUiModel>>> { folderList ->
+                        key.shareId to FolderTreeBuilder.build(folderList)
+                    }
+                    .onStart { emit(key.shareId to FolderTreeBuilder.build(emptyList())) }
+            }
+            combine(flows) { pairs ->
+                pairs.toMap()
+            }.distinctUntilChanged()
+        }
+
     val state: StateFlow<SelectVaultUiState> = combine(
-        observeVaultsWithItemCount(includeHidden = true).asLoadingResult(),
-        observeUpgradeInfo().asLoadingResult()
-    ) { vaultsResult, upgradeResult ->
+        vaultsFlow.asLoadingResult(),
+        observeUpgradeInfo().asLoadingResult(),
+        foldersEnabledFlow,
+        vaultFoldersFlow
+    ) { vaultsResult, upgradeResult, foldersEnabled, vaultFolders ->
         when (vaultsResult) {
             LoadingResult.Loading -> SelectVaultUiState.Loading
             is LoadingResult.Success -> successState(
                 vaults = vaultsResult.data,
-                upgradeResult = upgradeResult
+                upgradeResult = upgradeResult,
+                foldersEnabled = foldersEnabled,
+                vaultFolders = vaultFolders
             )
 
             is LoadingResult.Error -> {
@@ -82,7 +150,9 @@ class SelectVaultViewModel @Inject constructor(
 
     private suspend fun successState(
         vaults: List<VaultWithItemCount>,
-        upgradeResult: LoadingResult<UpgradeInfo>
+        upgradeResult: LoadingResult<UpgradeInfo>,
+        foldersEnabled: Boolean,
+        vaultFolders: Map<ShareId, PersistentList<FolderUiModel>>
     ): SelectVaultUiState {
         val showUpgradeMessage = upgradeResult.getOrNull()?.isUpgradeAvailable ?: false
 
@@ -109,7 +179,10 @@ class SelectVaultViewModel @Inject constructor(
             SelectVaultUiState.Success(
                 vaults = vaultsList.toImmutableList(),
                 selected = selectedVault,
-                showUpgradeMessage = showUpgradeMessage
+                showUpgradeMessage = showUpgradeMessage,
+                foldersEnabled = foldersEnabled,
+                vaultFolders = vaultFolders.toImmutableMap(),
+                selectedFolderId = selectedFolderId
             )
         } else {
             PassLogger.w(TAG, "Error finding current vault")

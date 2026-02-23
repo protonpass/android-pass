@@ -26,6 +26,7 @@ import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.some
 import proton.android.pass.commonuimodels.api.attachments.AttachmentsState
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
+import proton.android.pass.domain.FolderId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.Vault
 import proton.android.pass.features.itemcreate.ItemSavedState
@@ -68,6 +69,12 @@ sealed interface CustomItemState : ItemSharedProperties {
 
         override val selectedShareId: Option<ShareId>
             get() = selectedVault.map { it.shareId }
+
+        override val selectedFolderName: String?
+            get() = if (shareUiState is ShareUiState.Success) shareUiState.selectedFolderName else null
+
+        override val selectedFolderId: FolderId?
+            get() = if (shareUiState is ShareUiState.Success) shareUiState.selectedFolderId else null
     }
 
     @Immutable
@@ -93,6 +100,12 @@ interface ItemSharedProperties {
 
     val selectedShareId: Option<ShareId>
         get() = None
+
+    val selectedFolderName: String?
+        get() = null
+
+    val selectedFolderId: FolderId?
+        get() = null
 
     val canDisplayVaultSharedWarningDialog: Boolean
         get() = false

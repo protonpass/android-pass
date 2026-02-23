@@ -23,6 +23,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.toOption
 import proton.android.pass.commonui.api.SavedStateHandleProvider
+import proton.android.pass.domain.FolderId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.navigation.api.CommonOptionalNavArgId
 import javax.inject.Inject
@@ -37,5 +38,11 @@ class TemplateViewmodel @Inject constructor(
         .get<String?>(CommonOptionalNavArgId.ShareId.key)
         .toOption()
         .map(::ShareId)
+
+    val optionalFolderId: Option<FolderId> = savedStateHandleProvider
+        .get()
+        .get<String?>(CommonOptionalNavArgId.FolderId.key)
+        .toOption()
+        .map(::FolderId)
 
 }

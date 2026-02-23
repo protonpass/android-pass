@@ -106,6 +106,7 @@ import proton.android.pass.features.itemcreate.bottomsheets.createitem.bottomshe
 import proton.android.pass.features.itemcreate.bottomsheets.customfield.AddCustomFieldBottomSheetNavItem
 import proton.android.pass.features.itemcreate.bottomsheets.customfield.CustomFieldOptionsBottomSheetNavItem
 import proton.android.pass.features.itemcreate.common.CustomFieldPrefix
+import proton.android.pass.features.itemcreate.common.KEY_FOLDER_SELECTED
 import proton.android.pass.features.itemcreate.common.KEY_VAULT_SELECTED
 import proton.android.pass.features.itemcreate.common.customfields.CustomFieldNavigation
 import proton.android.pass.features.itemcreate.common.customsection.CustomSectionNameDialogNavItem
@@ -308,19 +309,23 @@ fun NavGraphBuilder.appGraph(
                         ItemTypeUiState.Unknown ->
                             CreateItemBottomsheetNavItem to CreateItemBottomsheetNavItem.createNavRoute(
                                 mode = CreateItemBottomSheetMode.HomeFull,
-                                shareId = it.shareId
+                                shareId = it.shareId,
+                                folderId = it.folderId
                             )
 
                         ItemTypeUiState.Login -> CreateLoginNavItem to CreateLoginNavItem.createNavRoute(
-                            it.shareId
+                            shareId = it.shareId,
+                            folderId = it.folderId
                         )
 
                         ItemTypeUiState.Note -> CreateNoteNavItem to CreateNoteNavItem.createNavRoute(
-                            it.shareId
+                            shareId = it.shareId,
+                            folderId = it.folderId
                         )
 
                         ItemTypeUiState.Alias -> CreateAliasNavItem to CreateAliasNavItem.createNavRoute(
-                            it.shareId
+                            shareId = it.shareId,
+                            folderId = it.folderId
                         )
 
                         ItemTypeUiState.Password ->
@@ -329,13 +334,22 @@ fun NavGraphBuilder.appGraph(
                             )
 
                         ItemTypeUiState.CreditCard ->
-                            CreateCreditCardNavItem to CreateCreditCardNavItem.createNavRoute(it.shareId)
+                            CreateCreditCardNavItem to CreateCreditCardNavItem.createNavRoute(
+                                shareId = it.shareId,
+                                folderId = it.folderId
+                            )
 
                         ItemTypeUiState.Identity ->
-                            CreateIdentityNavItem to CreateIdentityNavItem.createNavRoute(it.shareId)
+                            CreateIdentityNavItem to CreateIdentityNavItem.createNavRoute(
+                                shareId = it.shareId,
+                                folderId = it.folderId
+                            )
 
                         ItemTypeUiState.Custom ->
-                            SelectTemplateNavItem to SelectTemplateNavItem.createNavRoute(it.shareId)
+                            SelectTemplateNavItem to SelectTemplateNavItem.createNavRoute(
+                                shareId = it.shareId,
+                                folderId = it.folderId
+                            )
                     }
 
                     appNavigator.navigate(destination, route)
@@ -628,19 +642,19 @@ fun NavGraphBuilder.appGraph(
                     is CreateItemBottomsheetNavigation.CreateAlias ->
                         appNavigator.navigate(
                             CreateAliasNavItem,
-                            CreateAliasNavItem.createNavRoute(it.shareId)
+                            CreateAliasNavItem.createNavRoute(shareId = it.shareId, folderId = it.folderId)
                         )
 
                     is CreateItemBottomsheetNavigation.CreateLogin ->
                         appNavigator.navigate(
                             CreateLoginNavItem,
-                            CreateLoginNavItem.createNavRoute(it.shareId)
+                            CreateLoginNavItem.createNavRoute(shareId = it.shareId, folderId = it.folderId)
                         )
 
                     is CreateItemBottomsheetNavigation.CreateNote ->
                         appNavigator.navigate(
                             CreateNoteNavItem,
-                            CreateNoteNavItem.createNavRoute(it.shareId)
+                            CreateNoteNavItem.createNavRoute(shareId = it.shareId, folderId = it.folderId)
                         )
 
                     CreateItemBottomsheetNavigation.CreatePassword -> {
@@ -661,19 +675,19 @@ fun NavGraphBuilder.appGraph(
                     is CreateItemBottomsheetNavigation.CreateCreditCard ->
                         appNavigator.navigate(
                             CreateCreditCardNavItem,
-                            CreateCreditCardNavItem.createNavRoute(it.shareId)
+                            CreateCreditCardNavItem.createNavRoute(shareId = it.shareId, folderId = it.folderId)
                         )
 
                     is CreateItemBottomsheetNavigation.CreateIdentity ->
                         appNavigator.navigate(
                             CreateIdentityNavItem,
-                            CreateIdentityNavItem.createNavRoute(it.shareId)
+                            CreateIdentityNavItem.createNavRoute(shareId = it.shareId, folderId = it.folderId)
                         )
 
                     is CreateItemBottomsheetNavigation.CreateCustom ->
                         appNavigator.navigate(
                             SelectTemplateNavItem,
-                            SelectTemplateNavItem.createNavRoute(it.shareId)
+                            SelectTemplateNavItem.createNavRoute(shareId = it.shareId, folderId = it.folderId)
                         )
                 }
             }
@@ -687,8 +701,15 @@ fun NavGraphBuilder.appGraph(
 
                 VaultNavigation.Upgrade -> onNavigate(AppNavigation.Upgrade)
                 is VaultNavigation.VaultSelected -> dismissBottomSheet {
+                    appNavigator.setResult(mapOf(KEY_VAULT_SELECTED to it.shareId.id))
+                }
+
+                is VaultNavigation.VaultAndFolderSelected -> dismissBottomSheet {
                     appNavigator.setResult(
-                        mapOf(KEY_VAULT_SELECTED to it.shareId.id)
+                        mapOf(
+                            KEY_VAULT_SELECTED to it.shareId.id,
+                            KEY_FOLDER_SELECTED to it.folderId.id
+                        )
                     )
                 }
 
@@ -844,6 +865,7 @@ fun NavGraphBuilder.appGraph(
                 destination = CreateCustomItemNavItem,
                 route = CreateCustomItemNavItem.createNavRoute(
                     shareId = it.shareId,
+                    folderId = it.folderId,
                     templateType = it.templateType
                 ),
                 backDestination = SelectTemplateNavItem
@@ -982,7 +1004,7 @@ fun NavGraphBuilder.appGraph(
                     is CreateLoginNavigation.SelectVault -> {
                         appNavigator.navigate(
                             destination = SelectVaultBottomsheet,
-                            route = SelectVaultBottomsheet.createNavRoute(event.shareId)
+                            route = SelectVaultBottomsheet.createNavRoute(event.shareId, event.folderId)
                         )
                     }
                 }
@@ -1234,7 +1256,7 @@ fun NavGraphBuilder.appGraph(
                     CreateNoteNavigation.NoteCreated -> appNavigator.navigateBack()
                     is CreateNoteNavigation.SelectVault -> appNavigator.navigate(
                         destination = SelectVaultBottomsheet,
-                        route = SelectVaultBottomsheet.createNavRoute(cevent.shareId)
+                        route = SelectVaultBottomsheet.createNavRoute(cevent.shareId, cevent.folderId)
                     )
                 }
 
@@ -1272,7 +1294,7 @@ fun NavGraphBuilder.appGraph(
                     is CreateCreditCardNavigation.ItemCreated -> appNavigator.navigateBack()
                     is CreateCreditCardNavigation.SelectVault -> appNavigator.navigate(
                         destination = SelectVaultBottomsheet,
-                        route = SelectVaultBottomsheet.createNavRoute(it.shareId)
+                        route = SelectVaultBottomsheet.createNavRoute(it.shareId, it.folderId)
                     )
                 }
 
@@ -1394,7 +1416,7 @@ fun NavGraphBuilder.appGraph(
                     is CreateAliasNavigation.CreatedFromBottomsheet -> dismissBottomSheet {}
                     is CreateAliasNavigation.SelectVault -> appNavigator.navigate(
                         destination = SelectVaultBottomsheet,
-                        route = SelectVaultBottomsheet.createNavRoute(event.shareId)
+                        route = SelectVaultBottomsheet.createNavRoute(event.shareId, event.folderId)
                     )
                 }
 
@@ -1537,7 +1559,7 @@ fun NavGraphBuilder.appGraph(
                 is CreateIdentityNavigation.ItemCreated -> appNavigator.navigateBack()
                 is CreateIdentityNavigation.SelectVault -> appNavigator.navigate(
                     destination = SelectVaultBottomsheet,
-                    route = SelectVaultBottomsheet.createNavRoute(it.shareId)
+                    route = SelectVaultBottomsheet.createNavRoute(it.shareId, it.folderId)
                 )
 
                 BaseIdentityNavigation.OpenCustomFieldBottomSheet -> dismissBottomSheet {
@@ -1690,7 +1712,7 @@ fun NavGraphBuilder.appGraph(
             is CreateCustomItemNavigation.ItemCreated -> appNavigator.navigateBack()
             is CreateCustomItemNavigation.SelectVault -> appNavigator.navigate(
                 destination = SelectVaultBottomsheet,
-                route = SelectVaultBottomsheet.createNavRoute(it.shareId)
+                route = SelectVaultBottomsheet.createNavRoute(it.shareId, it.folderId)
             )
 
             is BaseCustomItemNavigation.AddCustomField -> dismissBottomSheet {

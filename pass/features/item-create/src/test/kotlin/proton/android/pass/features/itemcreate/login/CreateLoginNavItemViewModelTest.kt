@@ -48,11 +48,13 @@ import proton.android.pass.data.fakes.usecases.FakeObserveDefaultVault
 import proton.android.pass.data.fakes.usecases.FakeObserveUpgradeInfo
 import proton.android.pass.data.fakes.usecases.FakeObserveVaultsWithItemCount
 import proton.android.pass.data.fakes.usecases.attachments.FakeLinkAttachmentsToItem
+import proton.android.pass.data.fakes.usecases.folders.FakeObserveFolders
 import proton.android.pass.data.fakes.usecases.shares.FakeObserveShare
 import proton.android.pass.data.fakes.usecases.tooltips.FakeDisableTooltip
 import proton.android.pass.data.fakes.usecases.tooltips.FakeObserveTooltipEnabled
 import proton.android.pass.data.fakes.work.FakeWorkerLauncher
 import proton.android.pass.domain.ItemState
+import proton.android.pass.domain.FolderId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.VaultWithItemCount
 import proton.android.pass.domain.items.ItemCategory
@@ -150,7 +152,8 @@ internal class CreateLoginNavItemViewModelTest {
             loginItemFormProcessor = loginItemFormProcessor,
             getItemById = FakeGetItemById(),
             observeShare = observeShare,
-            settingsRepository = settingsRepository
+            settingsRepository = settingsRepository,
+            observeFolders = FakeObserveFolders()
         )
     }
 
@@ -370,6 +373,35 @@ internal class CreateLoginNavItemViewModelTest {
         instance.setInitialContents(initialContents)
         accountManager.sendPrimaryUserId(UserId("UserId"))
         return initialContents
+    }
+
+    @Test
+    fun `changeFolder sets selectedFolderId in shareUiState`() = runTest {
+        val shareId = ShareId("shareId")
+        val folderId = FolderId("folderId")
+        sendInitialVault(shareId)
+
+        instance.changeFolder(folderId)
+
+        instance.createLoginUiState.test {
+            val state = awaitItem().shareUiState as? ShareUiState.Success
+            assertThat(state?.selectedFolderId).isEqualTo(folderId)
+        }
+    }
+
+    @Test
+    fun `changeVault clears selectedFolderId`() = runTest {
+        val shareId = ShareId("shareId")
+        val folderId = FolderId("folderId")
+        sendInitialVault(shareId)
+
+        instance.changeFolder(folderId)
+        instance.changeVault(shareId)
+
+        instance.createLoginUiState.test {
+            val state = awaitItem().shareUiState as? ShareUiState.Success
+            assertThat(state?.selectedFolderId).isNull()
+        }
     }
 
     private fun sendInitialVault(shareId: ShareId): VaultWithItemCount {

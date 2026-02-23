@@ -36,6 +36,7 @@ import androidx.compose.ui.unit.dp
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toImmutableList
 import proton.android.pass.commonui.api.PassTheme
+import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItem
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemList
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetVaultRow
@@ -127,17 +128,18 @@ fun MigrateSelectVaultContents(
                 }
 
                 AnimatedVisibility(
-                    visible = vaultPair.folderTree.isNotEmpty() &&
-                        showFolders
+                    visible = vaultPair.folderTree.isNotEmpty() && showFolders
                 ) {
                     FolderTree(
-                        modifier = Modifier.padding(start = 32.dp),
+                        modifier = Modifier.padding(start = Spacing.large),
                         folders = vaultPair.folderTree,
                         expandedState = expandedState,
-                        depth = 0,
                         onFolderClick = {
                             // add onFolderClick
-                        }
+                        },
+                        onThreeDotsClick = null,
+                        onCreateFolderClick = null,
+                        selectedFolderId = null
                     )
                 }
             }

@@ -30,12 +30,12 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import me.proton.core.compose.theme.ProtonTheme
+import proton.android.pass.commonui.api.PassPalette
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonuimodels.api.FolderUiModel
 import proton.android.pass.composecomponents.impl.folders.mock.FoldersParameter
@@ -52,6 +52,7 @@ fun OneFolderItem(
     folderName: String,
     folders: List<FolderUiModel> = emptyList(),
     isExpanded: Boolean,
+    isSelected: Boolean = false,
     onFolderClick: () -> Unit,
     onExpandToggle: () -> Unit,
     onThreeDotsClick: (() -> Unit)? = null
@@ -84,7 +85,7 @@ fun OneFolderItem(
         ) {
             Icon.Default(
                 modifier = Modifier.size(20.dp),
-                tint = Color(color = 0xFFE9A944),
+                tint = PassPalette.FolderYellow,
                 id = if (folders.isNotEmpty())
                     CoreR.drawable.ic_proton_folders_filled
                 else
@@ -98,6 +99,14 @@ fun OneFolderItem(
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis
             )
+
+            if (isSelected) {
+                Icon.Default(
+                    modifier = Modifier.size(20.dp),
+                    id = CoreR.drawable.ic_proton_checkmark,
+                    tint = PassTheme.colors.loginInteractionNormMajor1
+                )
+            }
 
             onThreeDotsClick?.let {
                 ThreeDotsMenuButton(

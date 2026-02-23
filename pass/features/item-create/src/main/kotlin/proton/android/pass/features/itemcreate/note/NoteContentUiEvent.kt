@@ -20,6 +20,7 @@ package proton.android.pass.features.itemcreate.note
 
 import proton.android.pass.common.api.Option
 import proton.android.pass.composecomponents.impl.attachments.AttachmentContentEvent
+import proton.android.pass.domain.FolderId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.features.itemcreate.common.customfields.CustomFieldEvent
 
@@ -37,8 +38,7 @@ internal sealed interface NoteContentUiEvent {
     @JvmInline
     value class OnTitleChange(val title: String) : NoteContentUiEvent
 
-    @JvmInline
-    value class OnVaultSelect(val shareId: ShareId) : NoteContentUiEvent
+    data class OnVaultSelect(val shareId: ShareId, val folderId: FolderId? = null) : NoteContentUiEvent
 
     @JvmInline
     value class OnAttachmentEvent(val event: AttachmentContentEvent) : NoteContentUiEvent

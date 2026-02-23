@@ -21,6 +21,11 @@ package proton.android.pass.features.vault.bottomsheet.select
 import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.Stable
 import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.ImmutableMap
+import kotlinx.collections.immutable.PersistentList
+import proton.android.pass.commonuimodels.api.FolderUiModel
+import proton.android.pass.domain.FolderId
+import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.VaultWithItemCount
 
 @Stable
@@ -52,6 +57,9 @@ sealed interface SelectVaultUiState {
     data class Success(
         val vaults: ImmutableList<VaultWithStatus>,
         val selected: VaultWithItemCount,
-        val showUpgradeMessage: Boolean
+        val showUpgradeMessage: Boolean,
+        val foldersEnabled: Boolean,
+        val vaultFolders: ImmutableMap<ShareId, PersistentList<FolderUiModel>>,
+        val selectedFolderId: FolderId?
     ) : SelectVaultUiState
 }

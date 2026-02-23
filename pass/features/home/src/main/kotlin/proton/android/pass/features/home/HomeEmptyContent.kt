@@ -19,12 +19,12 @@
 package proton.android.pass.features.home
 
 import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import proton.android.pass.common.api.Option
 import proton.android.pass.commonuimodels.api.ItemTypeUiState
 import proton.android.pass.composecomponents.impl.item.EmptySearchResults
+import proton.android.pass.domain.FolderId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.items.ItemSharedType
 import proton.android.pass.features.home.empty.EmptyNoVaults
@@ -46,6 +46,7 @@ internal fun HomeEmptyContent(
     vaultSelectionOption: VaultSelectionOption,
     filterType: SearchFilterType,
     shareId: Option<ShareId>,
+    folderId: Option<FolderId>,
     onEvent: (HomeUiEvent) -> Unit
 ) {
     when {
@@ -67,39 +68,28 @@ internal fun HomeEmptyContent(
             modifier = modifier,
             itemSharedType = ItemSharedType.SharedWithMe
         )
-
-        vaultSelectionOption is VaultSelectionOption.Folder -> Text("folder is empty")
-
         readOnly -> EmptyReadOnly(modifier)
         else -> HomeEmptyList(
             modifier = modifier.fillMaxHeight(),
             canCreateItems = canCreateItems,
             filterType = filterType,
             onCreateLoginClick = {
-                onEvent(
-                    HomeUiEvent.AddItemClick(
-                        shareId,
-                        ItemTypeUiState.Login
-                    )
-                )
+                onEvent(HomeUiEvent.AddItemClick(shareId, ItemTypeUiState.Login, folderId))
             },
             onCreateAliasClick = {
-                onEvent(
-                    HomeUiEvent.AddItemClick(
-                        shareId,
-                        ItemTypeUiState.Alias
-                    )
-                )
+                onEvent(HomeUiEvent.AddItemClick(shareId, ItemTypeUiState.Alias, folderId))
             },
-            onCreateNoteClick = { onEvent(HomeUiEvent.AddItemClick(shareId, ItemTypeUiState.Note)) },
+            onCreateNoteClick = {
+                onEvent(HomeUiEvent.AddItemClick(shareId, ItemTypeUiState.Note, folderId))
+            },
             onCreateCreditCardClick = {
-                onEvent(HomeUiEvent.AddItemClick(shareId, ItemTypeUiState.CreditCard))
+                onEvent(HomeUiEvent.AddItemClick(shareId, ItemTypeUiState.CreditCard, folderId))
             },
             onCreateIdentityClick = {
-                onEvent(HomeUiEvent.AddItemClick(shareId, ItemTypeUiState.Identity))
+                onEvent(HomeUiEvent.AddItemClick(shareId, ItemTypeUiState.Identity, folderId))
             },
             onCreateCustomItemClick = {
-                onEvent(HomeUiEvent.AddItemClick(shareId, ItemTypeUiState.Custom))
+                onEvent(HomeUiEvent.AddItemClick(shareId, ItemTypeUiState.Custom, folderId))
             }
         )
     }

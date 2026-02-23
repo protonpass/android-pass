@@ -22,6 +22,7 @@ import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.Option
 import proton.android.pass.domain.CustomFieldType
 import proton.android.pass.domain.ItemId
+import proton.android.pass.domain.FolderId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.attachments.AttachmentId
 import java.net.URI
@@ -35,7 +36,7 @@ sealed interface CreateAliasNavigation {
         val alias: String
     ) : CreateAliasNavigation
 
-    data class SelectVault(val shareId: ShareId) : CreateAliasNavigation
+    data class SelectVault(val shareId: ShareId, val folderId: FolderId? = null) : CreateAliasNavigation
 }
 
 sealed interface UpdateAliasNavigation {

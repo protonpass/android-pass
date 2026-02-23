@@ -41,8 +41,10 @@ import proton.android.pass.data.fakes.usecases.FakeGetItemById
 import proton.android.pass.data.fakes.usecases.FakeObserveDefaultVault
 import proton.android.pass.data.fakes.usecases.FakeObserveVaultsWithItemCount
 import proton.android.pass.data.fakes.usecases.attachments.FakeLinkAttachmentsToItem
+import proton.android.pass.data.fakes.usecases.folders.FakeObserveFolders
 import proton.android.pass.data.fakes.usecases.shares.FakeObserveShare
 import proton.android.pass.domain.ItemState
+import proton.android.pass.domain.FolderId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.VaultWithItemCount
 import proton.android.pass.domain.items.ItemCategory
@@ -115,7 +117,8 @@ class CreateCreditCardViewModelTest {
             clipboardManager = FakeClipboardManager(),
             getItemById = FakeGetItemById(),
             observeShare = observeShare,
-            settingsRepository = settingsRepository
+            settingsRepository = settingsRepository,
+            observeFolders = FakeObserveFolders()
         )
     }
 
@@ -243,6 +246,39 @@ class CreateCreditCardViewModelTest {
 
             val message = snackbarDispatcher.snackbarMessage.first().value()!!
             assertThat(message).isInstanceOf(CreditCardSnackbarMessage.ItemCreationError::class.java)
+        }
+    }
+
+    @Test
+    fun `changeFolder sets selectedFolderId in shareUiState`() = runTest {
+        val shareId = ShareId("shareId")
+        val folderId = FolderId("folderId")
+        sendInitialVault(shareId)
+
+        instance.changeFolder(folderId)
+
+        instance.state.test {
+            val state = awaitItem()
+            assertThat(state).isInstanceOf(CreateCreditCardUiState.Success::class.java)
+            val shareState = (state as CreateCreditCardUiState.Success).shareUiState as? ShareUiState.Success
+            assertThat(shareState?.selectedFolderId).isEqualTo(folderId)
+        }
+    }
+
+    @Test
+    fun `changeVault clears selectedFolderId`() = runTest {
+        val shareId = ShareId("shareId")
+        val folderId = FolderId("folderId")
+        sendInitialVault(shareId)
+
+        instance.changeFolder(folderId)
+        instance.changeVault(shareId)
+
+        instance.state.test {
+            val state = awaitItem()
+            assertThat(state).isInstanceOf(CreateCreditCardUiState.Success::class.java)
+            val shareState = (state as CreateCreditCardUiState.Success).shareUiState as? ShareUiState.Success
+            assertThat(shareState?.selectedFolderId).isNull()
         }
     }
 

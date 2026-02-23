@@ -23,6 +23,7 @@ import proton.android.pass.composecomponents.impl.attachments.AttachmentContentE
 import proton.android.pass.composecomponents.impl.dialogs.ConfirmCloseDialog
 import proton.android.pass.composecomponents.impl.dialogs.WarningSharedItemDialog
 import proton.android.pass.domain.CustomFieldType
+import proton.android.pass.domain.FolderId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.features.itemcreate.ItemSavedState
 import proton.android.pass.features.itemcreate.R
@@ -52,6 +53,7 @@ import proton.android.pass.composecomponents.impl.R as CompR
 fun CreateCreditCardScreen(
     modifier: Modifier = Modifier,
     selectVault: ShareId?,
+    selectFolder: FolderId? = null,
     navTotpUri: String? = null,
     navTotpIndex: Int? = null,
     canUseAttachments: Boolean,
@@ -62,6 +64,11 @@ fun CreateCreditCardScreen(
     LaunchedEffect(selectVault) {
         if (selectVault != null) {
             viewModel.changeVault(selectVault)
+        }
+    }
+    LaunchedEffect(selectFolder) {
+        if (selectFolder != null) {
+            viewModel.changeFolder(selectFolder)
         }
     }
     LaunchedEffect(navTotpUri) {
@@ -105,9 +112,9 @@ fun CreateCreditCardScreen(
                 }
             }
             BackHandler(onBack = onExit)
-            val (showVaultSelector, selectedVault) = when (val shares = uiState.shareUiState) {
+            val (showVaultSelector, selectedVault, selectedFolderName) = when (val shares = uiState.shareUiState) {
                 ShareUiState.Loading,
-                ShareUiState.NotInitialised -> false to null
+                ShareUiState.NotInitialised -> Triple(false, null, null)
 
                 is ShareUiState.Error -> {
                     if (shares.shareError == EmptyShareList || shares.shareError == SharesNotAvailable) {
@@ -115,16 +122,23 @@ fun CreateCreditCardScreen(
                             actionAfterKeyboardHide = { onNavigate(CloseScreen) }
                         }
                     }
-                    false to null
+                    Triple(false, null, null)
                 }
 
-                is ShareUiState.Success -> (shares.vaultList.size > 1) to shares.currentVault
+                is ShareUiState.Success -> Triple(
+                    first = shares.vaultList.size > 1,
+                    second = shares.currentVault,
+                    third = shares.selectedFolderName
+                )
             }
+            val selectedFolderId = (uiState.shareUiState as? ShareUiState.Success)?.selectedFolderId
             Box(modifier = modifier.fillMaxSize()) {
                 CreditCardContent(
                     state = uiState.baseState,
                     creditCardItemFormState = viewModel.creditCardItemFormState,
                     selectedVault = selectedVault?.vault,
+                    selectedFolderName = selectedFolderName,
+                    selectedFolderId = selectedFolderId,
                     showVaultSelector = showVaultSelector,
                     selectedShareId = selectedVault?.vault?.shareId,
                     canUseAttachments = canUseAttachments,
@@ -169,7 +183,7 @@ fun CreateCreditCardScreen(
 
                             is CreditCardContentEvent.OnVaultSelect ->
                                 actionAfterKeyboardHide =
-                                    { onNavigate(SelectVault(it.shareId)) }
+                                    { onNavigate(SelectVault(it.shareId, it.folderId)) }
 
                             is CreditCardContentEvent.OnAttachmentEvent ->
                                 when (val event = it.event) {

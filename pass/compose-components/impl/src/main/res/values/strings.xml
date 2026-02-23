@@ -80,8 +80,6 @@
     <string name="missing_app_icon_content_description">Missing app icon</string>
     <string name="add_item_icon_content_description">Add item icon</string>
     <string name="navigate_back_icon_content_description">Navigate back icon</string>
-    <!-- Vault selector -->
-    <string name="vault_selector_title">Vault</string>
     <!-- Bottom bar -->
     <string name="bottom_bar_list_items_icon_content_description">List items</string>
     <string name="bottom_bar_add_item_icon_content_description">Add item</string>

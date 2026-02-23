@@ -50,6 +50,7 @@ import kotlinx.collections.immutable.toPersistentSet
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
+import proton.android.pass.common.api.toOption
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.TestTags.HOME_EMPTY_TAG
@@ -341,6 +342,11 @@ internal fun HomeContent(
                 isInSelectionMode = uiState.homeListUiState.selectionState.isInSelectMode,
                 selectedItemIds = selectedItemIds,
                 emptyContent = {
+                    val (shareId, folderId) = if (uiState.homeListUiState.selectedFolder is Some) {
+                        uiState.homeListUiState.selectedFolder.value
+                    } else {
+                        uiState.homeListUiState.selectedShare.map { it.id }.value() to null
+                    }
                     HomeEmptyContent(
                         modifier = Modifier.testTag(HOME_EMPTY_TAG),
                         hasShares = uiState.hasShares,
@@ -350,7 +356,8 @@ internal fun HomeContent(
                         inSearchMode = isPinningOrSearch,
                         filterType = uiState.homeListUiState.searchFilterType,
                         readOnly = uiState.isSelectedVaultReadOnly(),
-                        shareId = uiState.homeListUiState.selectedShare.map { it.id },
+                        shareId = shareId.toOption(),
+                        folderId = folderId.toOption(),
                         onEvent = onEvent
                     )
                 },

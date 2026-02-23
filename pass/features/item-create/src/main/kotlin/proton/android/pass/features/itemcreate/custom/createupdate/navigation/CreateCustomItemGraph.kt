@@ -30,12 +30,14 @@ import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.toOption
 import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.domain.CustomFieldType
+import proton.android.pass.domain.FolderId
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.SshKeyType
 import proton.android.pass.domain.WifiSecurityType
 import proton.android.pass.features.itemcreate.bottomsheets.customfield.customFieldBottomSheetGraph
 import proton.android.pass.features.itemcreate.common.CustomFieldPrefix
+import proton.android.pass.features.itemcreate.common.KEY_FOLDER_SELECTED
 import proton.android.pass.features.itemcreate.common.KEY_VAULT_SELECTED
 import proton.android.pass.features.itemcreate.common.customsection.ExtraSectionNavigation
 import proton.android.pass.features.itemcreate.common.customsection.extraSectionGraph
@@ -72,12 +74,14 @@ object CreateCustomItemNavItem : NavItem(
     optionalArgIds = listOf(
         CommonOptionalNavArgId.ShareId,
         CommonOptionalNavArgId.ItemId,
+        CommonOptionalNavArgId.FolderId,
         TemplateTypeNavArgId
     )
 ) {
     fun createNavRoute(
         shareId: Option<ShareId> = None,
         itemId: Option<ItemId> = None,
+        folderId: Option<FolderId> = None,
         templateType: Option<TemplateType> = None
     ) = buildString {
         append(baseRoute)
@@ -87,6 +91,9 @@ object CreateCustomItemNavItem : NavItem(
         }
         if (itemId is Some) {
             map[CommonOptionalNavArgId.ItemId.key] = itemId.value.id
+        }
+        if (folderId is Some) {
+            map[CommonOptionalNavArgId.FolderId.key] = folderId.value.id
         }
         map[TemplateTypeNavArgId.key] = templateType.value()?.id ?: -1
         val path = map.toPath()
@@ -98,8 +105,7 @@ sealed interface CreateCustomItemNavigation : BaseCustomItemNavigation {
     @JvmInline
     value class ItemCreated(val itemUiModel: ItemUiModel) : CreateCustomItemNavigation
 
-    @JvmInline
-    value class SelectVault(val shareId: ShareId) : CreateCustomItemNavigation
+    data class SelectVault(val shareId: ShareId, val folderId: FolderId? = null) : CreateCustomItemNavigation
 }
 
 @Suppress("LongMethod")
@@ -111,6 +117,10 @@ fun NavGraphBuilder.createCustomItemGraph(onNavigate: (BaseCustomItemNavigation)
         composable(CreateCustomItemNavItem) { navBackStack ->
             val selectVault by navBackStack.savedStateHandle
                 .getStateFlow<String?>(KEY_VAULT_SELECTED, null)
+                .collectAsStateWithLifecycle()
+
+            val selectFolder by navBackStack.savedStateHandle
+                .getStateFlow<String?>(KEY_FOLDER_SELECTED, null)
                 .collectAsStateWithLifecycle()
 
             val navTotpUri by navBackStack.savedStateHandle
@@ -147,6 +157,7 @@ fun NavGraphBuilder.createCustomItemGraph(onNavigate: (BaseCustomItemNavigation)
 
             CreateCustomItemScreen(
                 selectVault = selectVault.toOption().map(::ShareId),
+                selectFolder = selectFolder.toOption().map(::FolderId),
                 selectTotp = Triple(
                     first = navTotpUri.toOption(),
                     second = navTotpSectionIndex.takeIf { value: Int? -> value != null && value >= 0 }.toOption(),

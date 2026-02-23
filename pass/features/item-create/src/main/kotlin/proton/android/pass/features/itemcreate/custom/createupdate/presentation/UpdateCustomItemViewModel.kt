@@ -34,6 +34,7 @@ import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.safeRunCatching
 import proton.android.pass.common.api.some
 import proton.android.pass.commonpresentation.api.attachments.AttachmentsHandler
+import proton.android.pass.commonrust.api.SshKeyGenerator
 import proton.android.pass.commonui.api.ClassHolder
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
@@ -66,7 +67,6 @@ import proton.android.pass.features.itemcreate.common.formprocessor.CustomItemFo
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.notifications.api.SnackbarDispatcher
-import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import proton.android.pass.preferences.InternalSettingsRepository
 import proton.android.pass.preferences.UserPreferencesRepository
 import proton.android.pass.telemetry.api.EventItemType
@@ -90,14 +90,13 @@ class UpdateCustomItemViewModel @Inject constructor(
     canPerformPaidAction: CanPerformPaidAction,
     linkAttachmentsToItem: LinkAttachmentsToItem,
     userPreferencesRepository: UserPreferencesRepository,
-    featureFlagsRepository: FeatureFlagsPreferencesRepository,
     customFieldDraftRepository: CustomFieldDraftRepository,
     clipboardManager: ClipboardManager,
     appDispatchers: AppDispatchers,
     savedStateHandleProvider: SavedStateHandleProvider,
     observeShare: ObserveShare,
     observeItemById: ObserveItemById,
-    sshKeyGenerator: proton.android.pass.commonrust.api.SshKeyGenerator,
+    sshKeyGenerator: SshKeyGenerator,
     private val settingsRepository: InternalSettingsRepository
 ) : BaseCustomItemViewModel(
     canPerformPaidAction = canPerformPaidAction,
@@ -106,7 +105,6 @@ class UpdateCustomItemViewModel @Inject constructor(
     customFieldHandler = customFieldHandler,
     snackbarDispatcher = snackbarDispatcher,
     userPreferencesRepository = userPreferencesRepository,
-    featureFlagsRepository = featureFlagsRepository,
     encryptionContextProvider = encryptionContextProvider,
     customFieldDraftRepository = customFieldDraftRepository,
     clipboardManager = clipboardManager,

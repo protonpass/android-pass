@@ -30,6 +30,7 @@ import proton.android.pass.commonuimodels.api.FolderUiModel
 import proton.android.pass.composecomponents.impl.extension.toColor
 import proton.android.pass.composecomponents.impl.extension.toResource
 import proton.android.pass.composecomponents.impl.form.PassDivider
+import proton.android.pass.domain.FolderId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.VaultWithItemCount
 import proton.android.pass.features.home.R
@@ -80,6 +81,11 @@ internal fun HomeDrawerList(
             items = vaultShares,
             key = { vaultShare -> vaultShare.vault.shareId.id }
         ) { vaultShare ->
+            val shareId = vaultShare.vault.shareId
+            val selectedFolderIdForVault: FolderId? =
+                (vaultSelectionOption as? VaultSelectionOption.Folder)
+                    ?.takeIf { it.shareId == shareId }
+                    ?.folderId
             HomeDrawerRow(
                 shareIconRes = vaultShare.vault.icon.toResource(),
                 iconColor = vaultShare.vault.color.toColor(),
@@ -87,7 +93,10 @@ internal fun HomeDrawerList(
                 name = vaultShare.vault.name,
                 itemsCount = vaultShare.activeItemCount.toInt(),
                 membersCount = vaultShare.vault.members,
-                isSelected = vaultSelectionOption == VaultSelectionOption.Vault(vaultShare.vault.shareId),
+                isSelected = vaultSelectionOption == VaultSelectionOption.Vault(shareId) ||
+                    vaultSelectionOption is VaultSelectionOption.Folder &&
+                    vaultSelectionOption.shareId == shareId,
+                selectedFolderId = selectedFolderIdForVault,
                 onClick = {
                     HomeDrawerUiEvent.OnVaultClick(
                         shareId = vaultShare.vault.shareId

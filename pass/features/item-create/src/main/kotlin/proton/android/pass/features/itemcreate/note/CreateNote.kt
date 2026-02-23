@@ -42,6 +42,7 @@ import proton.android.pass.composecomponents.impl.attachments.AttachmentContentE
 import proton.android.pass.composecomponents.impl.dialogs.ConfirmCloseDialog
 import proton.android.pass.composecomponents.impl.dialogs.WarningSharedItemDialog
 import proton.android.pass.domain.CustomFieldType
+import proton.android.pass.domain.FolderId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.features.itemcreate.ItemSavedState
 import proton.android.pass.features.itemcreate.R
@@ -70,6 +71,7 @@ import proton.android.pass.composecomponents.impl.R as CompR
 fun CreateNoteScreen(
     modifier: Modifier = Modifier,
     selectVault: ShareId?,
+    selectFolder: FolderId? = null,
     navTotpUri: String? = null,
     navTotpIndex: Int? = null,
     onNavigate: (BaseNoteNavigation) -> Unit,
@@ -79,6 +81,11 @@ fun CreateNoteScreen(
     LaunchedEffect(selectVault) {
         if (selectVault != null) {
             viewModel.changeVault(selectVault)
+        }
+    }
+    LaunchedEffect(selectFolder) {
+        if (selectFolder != null) {
+            viewModel.changeFolder(selectFolder)
         }
     }
     LaunchedEffect(navTotpUri) {
@@ -112,9 +119,9 @@ fun CreateNoteScreen(
         onExit()
     }
 
-    val (showVaultSelector, selectedVault) = when (val shares = uiState.shareUiState) {
+    val (showVaultSelector, selectedVault, selectedFolderName) = when (val shares = uiState.shareUiState) {
         ShareUiState.Loading,
-        ShareUiState.NotInitialised -> false to null
+        ShareUiState.NotInitialised -> Triple(false, null, null)
 
         is ShareUiState.Error -> {
             if (shares.shareError == EmptyShareList || shares.shareError == SharesNotAvailable) {
@@ -123,11 +130,12 @@ fun CreateNoteScreen(
                     onNavigate(BaseNoteNavigation.CloseScreen)
                 }
             }
-            false to null
+            Triple(false, null, null)
         }
 
-        is ShareUiState.Success -> (shares.vaultList.size > 1) to shares.currentVault
+        is ShareUiState.Success -> Triple(shares.vaultList.size > 1, shares.currentVault, shares.selectedFolderName)
     }
+    val selectedFolderId = (uiState.shareUiState as? ShareUiState.Success)?.selectedFolderId
 
     var showWarningVaultSharedDialog by rememberSaveable { mutableStateOf(false) }
 
@@ -138,6 +146,8 @@ fun CreateNoteScreen(
             uiState = uiState.baseNoteUiState,
             noteItemFormState = viewModel.noteItemFormState,
             selectedVault = selectedVault?.vault,
+            selectedFolderName = selectedFolderName,
+            selectedFolderId = selectedFolderId,
             showVaultSelector = showVaultSelector,
             selectedShareId = selectedVault?.vault?.shareId,
             topBarActionName = stringResource(R.string.title_create),
@@ -158,7 +168,7 @@ fun CreateNoteScreen(
                     is NoteContentUiEvent.OnVaultSelect ->
                         actionAfterKeyboardHide = {
                             onNavigate(
-                                BaseNoteNavigation.OnCreateNoteEvent(SelectVault(event.shareId))
+                                BaseNoteNavigation.OnCreateNoteEvent(SelectVault(event.shareId, event.folderId))
                             )
                         }
 

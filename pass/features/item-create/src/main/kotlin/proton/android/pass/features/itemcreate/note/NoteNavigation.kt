@@ -20,6 +20,7 @@ package proton.android.pass.features.itemcreate.note
 
 import proton.android.pass.common.api.Option
 import proton.android.pass.domain.ItemId
+import proton.android.pass.domain.FolderId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.attachments.AttachmentId
 import proton.android.pass.features.itemcreate.common.customfields.CustomFieldNavigation
@@ -27,7 +28,7 @@ import java.net.URI
 
 sealed interface CreateNoteNavigation {
     data object NoteCreated : CreateNoteNavigation
-    data class SelectVault(val shareId: ShareId) : CreateNoteNavigation
+    data class SelectVault(val shareId: ShareId, val folderId: FolderId? = null) : CreateNoteNavigation
 }
 
 sealed interface UpdateNoteNavigation {

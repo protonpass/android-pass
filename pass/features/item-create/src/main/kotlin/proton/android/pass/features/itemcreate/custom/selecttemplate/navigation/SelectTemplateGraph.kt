@@ -19,7 +19,9 @@
 package proton.android.pass.features.itemcreate.custom.selecttemplate.navigation
 
 import androidx.navigation.NavGraphBuilder
+import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
+import proton.android.pass.domain.FolderId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.features.itemcreate.custom.selecttemplate.ui.TemplateScreen
 import proton.android.pass.features.itemcreate.custom.shared.TemplateType
@@ -28,7 +30,8 @@ import proton.android.pass.navigation.api.composable
 sealed interface SelectTemplateNavigation {
     data class NavigateToCreate(
         val shareId: Option<ShareId>,
-        val templateType: Option<TemplateType>
+        val templateType: Option<TemplateType>,
+        val folderId: Option<FolderId> = None
     ) : SelectTemplateNavigation
     data object NavigateBack : SelectTemplateNavigation
 }

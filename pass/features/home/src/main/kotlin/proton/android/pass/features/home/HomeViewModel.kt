@@ -60,6 +60,7 @@ import proton.android.pass.appconfig.api.BuildFlavor.Companion.isQuest
 import proton.android.pass.clipboard.api.ClipboardManager
 import proton.android.pass.common.api.AppDispatchers
 import proton.android.pass.common.api.LoadingResult
+import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.asLoadingResult
@@ -124,6 +125,7 @@ import proton.android.pass.data.api.usecases.searchentry.DeleteSearchEntry
 import proton.android.pass.data.api.usecases.searchentry.ObserveSearchEntry
 import proton.android.pass.data.api.usecases.searchentry.ObserveSearchEntry.SearchEntrySelection
 import proton.android.pass.data.api.usecases.shares.ObserveHasShares
+import proton.android.pass.domain.FolderId
 import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ItemState
@@ -258,41 +260,47 @@ class HomeViewModel @Inject constructor(
         observeAllShares(includeHidden = false).asLoadingResult()
     ) { searchOptions, sharesResult ->
         val shares: List<Share> = sharesResult.getOrNull().orEmpty()
-        val selectedShare: Option<Share> = searchOptions.vaultSelectionOption
-            .let { it as? VaultSelectionOption.Vault }
-            ?.let { vaultSelectionOption -> shares.firstOrNull { it.id == vaultSelectionOption.shareId } }
-            .toOption()
+        val shareMap = shares.associateBy { it.id }.toPersistentMap()
 
-        val isVaultSelected = searchOptions.vaultSelectionOption is VaultSelectionOption.Vault
-        if (isVaultSelected) {
-            autoSelectAllVaultsIfCannotFindVault(selectedShare, shares, searchOptions.userId)
+        val (selectedShare, selectedFolder) = when (val selection = searchOptions.vaultSelectionOption) {
+            is VaultSelectionOption.Vault -> {
+                val share = shareMap[selection.shareId].toOption()
+                autoSelectAllVaultsIfCannotFindVault(share, shares, searchOptions.userId)
+                share to None
+            }
+            is VaultSelectionOption.Folder -> {
+                val share = shareMap[selection.shareId].toOption()
+                autoSelectAllVaultsIfCannotFindVault(share, shares, searchOptions.userId)
+                None to Some(selection.shareId to selection.folderId)
+            }
+            else -> None to None
         }
 
         ShareListWrapper(
-            shares = shares
-                .associateBy { share -> share.id }
-                .toPersistentMap(),
-            selectedShare = selectedShare
+            shares = shareMap,
+            selectedShare = selectedShare,
+            selectedFolder = selectedFolder
         )
     }.distinctUntilChanged()
 
     private data class ShareListWrapper(
         val shares: ImmutableMap<ShareId, Share>,
-        val selectedShare: Option<Share>
+        val selectedShare: Option<Share>,
+        val selectedFolder: Option<Pair<ShareId, FolderId>> = None
     )
 
     private val searchEntryState: StateFlow<List<SearchEntry>> =
         searchOptionsFlow.map { it.vaultSelectionOption }
             .flatMapLatest {
-                when (val vaultSelection = it) {
+                when (it) {
                     VaultSelectionOption.AllVaults ->
                         observeSearchEntry(SearchEntrySelection.AllVaults)
 
                     is VaultSelectionOption.Vault ->
-                        observeSearchEntry(SearchEntrySelection.Vault(vaultSelection.shareId))
+                        observeSearchEntry(SearchEntrySelection.Vault(it.shareId))
 
                     is VaultSelectionOption.Folder -> {
-                        observeSearchEntry(SearchEntrySelection.Folder(vaultSelection.shareId, vaultSelection.folderId))
+                        observeSearchEntry(SearchEntrySelection.Folder(it.shareId, it.folderId))
                     }
 
                     VaultSelectionOption.SharedByMe,
@@ -576,6 +584,7 @@ class HomeViewModel @Inject constructor(
             actionState = refreshingLoading.actionState,
             items = items,
             selectedShare = shareListWrapper.selectedShare,
+            selectedFolder = shareListWrapper.selectedFolder,
             shares = shareListWrapper.shares,
             homeVaultSelection = searchOptions.vaultSelectionOption,
             searchFilterType = searchOptions.filterOption.searchFilterType,

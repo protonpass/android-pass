@@ -20,8 +20,10 @@ package proton.android.pass.features.vault.bottomsheet.select
 
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavType
+import proton.android.pass.domain.FolderId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.features.vault.VaultNavigation
+import proton.android.pass.navigation.api.CommonOptionalNavArgId
 import proton.android.pass.navigation.api.NavArgId
 import proton.android.pass.navigation.api.NavItem
 import proton.android.pass.navigation.api.NavItemType
@@ -35,9 +37,17 @@ object SelectedVaultArg : NavArgId {
 object SelectVaultBottomsheet : NavItem(
     baseRoute = "vault/select/bottomsheet",
     navArgIds = listOf(SelectedVaultArg),
+    optionalArgIds = listOf(CommonOptionalNavArgId.FolderId),
     navItemType = NavItemType.Bottomsheet
 ) {
-    fun createNavRoute(selectedVault: ShareId) = "$baseRoute/${selectedVault.id}"
+    fun createNavRoute(selectedVault: ShareId, selectedFolder: FolderId? = null): String {
+        val base = "$baseRoute/${selectedVault.id}"
+        return if (selectedFolder != null) {
+            "$base?${CommonOptionalNavArgId.FolderId.key}=${selectedFolder.id}"
+        } else {
+            base
+        }
+    }
 }
 
 fun NavGraphBuilder.selectVaultBottomsheetGraph(onNavigate: (VaultNavigation) -> Unit) {

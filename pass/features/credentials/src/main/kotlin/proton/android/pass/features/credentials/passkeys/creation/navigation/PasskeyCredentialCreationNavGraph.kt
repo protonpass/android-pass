@@ -34,6 +34,7 @@ import proton.android.pass.features.itemcreate.alias.createAliasGraph
 import proton.android.pass.features.itemcreate.bottomsheets.customfield.AddCustomFieldBottomSheetNavItem
 import proton.android.pass.features.itemcreate.bottomsheets.customfield.CustomFieldOptionsBottomSheetNavItem
 import proton.android.pass.features.itemcreate.common.CustomFieldPrefix
+import proton.android.pass.features.itemcreate.common.KEY_FOLDER_SELECTED
 import proton.android.pass.features.itemcreate.common.KEY_VAULT_SELECTED
 import proton.android.pass.features.itemcreate.dialogs.cannotcreateitems.navigation.CannotCreateItemsNavDestination
 import proton.android.pass.features.itemcreate.dialogs.cannotcreateitems.navigation.CannotCreateItemsNavItem
@@ -467,8 +468,15 @@ internal fun NavGraphBuilder.passkeyCredentialCreationNavGraph(
                 VaultNavigation.DismissBottomsheet -> dismissBottomSheet {}
                 VaultNavigation.Upgrade -> onNavigate(PasskeyCredentialCreationNavEvent.Upgrade)
                 is VaultNavigation.VaultSelected -> dismissBottomSheet {
+                    appNavigator.setResult(values = mapOf(KEY_VAULT_SELECTED to destination.shareId.id))
+                }
+
+                is VaultNavigation.VaultAndFolderSelected -> dismissBottomSheet {
                     appNavigator.setResult(
-                        values = mapOf(KEY_VAULT_SELECTED to destination.shareId.id)
+                        values = mapOf(
+                            KEY_VAULT_SELECTED to destination.shareId.id,
+                            KEY_FOLDER_SELECTED to destination.folderId.id
+                        )
                     )
                 }
 

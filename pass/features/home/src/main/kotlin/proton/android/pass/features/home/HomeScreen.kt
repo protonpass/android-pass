@@ -931,8 +931,9 @@ fun HomeScreen(
                         is HomeUiEvent.AddItemClick -> {
                             onNavigateEvent(
                                 HomeNavigation.AddItem(
-                                    homeUiEvent.shareId,
-                                    homeUiEvent.state
+                                    shareId = homeUiEvent.shareId,
+                                    itemTypeUiState = homeUiEvent.state,
+                                    folderId = homeUiEvent.folderId
                                 )
                             )
                         }

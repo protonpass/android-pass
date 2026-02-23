@@ -49,6 +49,8 @@ import proton.android.pass.composecomponents.impl.badge.OverlayBadge
 import proton.android.pass.composecomponents.impl.buttons.PassSharingShareIcon
 import proton.android.pass.composecomponents.impl.folders.ExpandCollapseIcon
 import proton.android.pass.composecomponents.impl.folders.FolderTree
+import proton.android.pass.composecomponents.impl.folders.containsFolderId
+import proton.android.pass.composecomponents.impl.folders.expandAncestors
 import proton.android.pass.composecomponents.impl.folders.mock.FoldersParameter
 import proton.android.pass.composecomponents.impl.folders.mock.ThemedFoldersPreviewProvider
 import proton.android.pass.composecomponents.impl.icon.VaultIcon
@@ -72,8 +74,9 @@ internal fun HomeDrawerRow(
     onClick: () -> Unit,
     membersCount: Int = 0,
     foldersEnabled: Boolean = false,
-    forceShowFolder: Boolean = false,
+    selectedFolderId: FolderId? = null,
     folders: List<FolderUiModel> = emptyList(),
+    showFoldersInitially: Boolean = false,
     onFolderClick: ((FolderId) -> Unit)? = null,
     onMenuOptionsClickFromFolder: ((FolderId) -> Unit)? = null,
     onCreateFolderClick: (() -> Unit)? = null,
@@ -81,7 +84,7 @@ internal fun HomeDrawerRow(
     onMenuOptionsClick: (() -> Unit)? = null,
     needsToUpgrade: Boolean = false
 ) {
-    val (showFolders, onShowFolders) = rememberSaveable { mutableStateOf(forceShowFolder) }
+    val (showFolders, onShowFolders) = rememberSaveable { mutableStateOf(showFoldersInitially) }
 
     Column(
         modifier = modifier.fillMaxWidth()
@@ -162,7 +165,6 @@ internal fun HomeDrawerRow(
             }
         }
 
-        // clean folder ui here with real data
         val expandedState = rememberSaveable(
             saver = mapSaver(
                 save = { it },
@@ -180,12 +182,19 @@ internal fun HomeDrawerRow(
             mutableStateMapOf()
         }
 
-        LaunchedEffect(folders) {
+        LaunchedEffect(folders, selectedFolderId) {
             folders.forEach { folder ->
                 if (!expandedState.contains(folder.id.id)) {
-                    expandedState[folder.id.id] = false
+                    expandedState[folder.id.id] = showFoldersInitially
                 }
-                // when adding / delete folders, let the current value
+            }
+            val shouldExpand = foldersEnabled &&
+                selectedFolderId != null &&
+                folders.isNotEmpty() &&
+                containsFolderId(folders, selectedFolderId)
+            if (shouldExpand) {
+                onShowFolders(true)
+                expandAncestors(folders, selectedFolderId, expandedState)
             }
         }
 
@@ -193,16 +202,16 @@ internal fun HomeDrawerRow(
             visible = foldersEnabled && showFolders
         ) {
             FolderTree(
-                modifier = Modifier.padding(start = 32.dp),
+                modifier = Modifier.padding(start = Spacing.large),
                 folders = folders,
                 expandedState = expandedState,
+                selectedFolderId = selectedFolderId,
                 onThreeDotsClick = {
                     onMenuOptionsClickFromFolder?.invoke(it)
                 },
                 onCreateFolderClick = {
                     onCreateFolderClick?.invoke()
                 },
-                depth = 0,
                 modifierCreateButton = Modifier
                     .padding(start = 20.dp)
                     .padding(bottom = Spacing.medium),
@@ -257,11 +266,11 @@ internal fun HomeDrawerRowEmptyFoldersPreview(
                 itemsCount = 16,
                 membersCount = 5,
                 isSelected = isSelected,
+                showFoldersInitially = true,
                 onClick = {},
                 onShareClick = {},
                 onMenuOptionsClick = {},
                 foldersEnabled = true,
-                forceShowFolder = true,
                 folders = emptyList()
             )
         }
@@ -282,11 +291,11 @@ internal fun HomeDrawerRowWithFoldersPreview(
                 itemsCount = 16,
                 membersCount = 5,
                 isSelected = false,
+                showFoldersInitially = true,
                 onClick = {},
                 onShareClick = {},
                 onMenuOptionsClick = {},
                 foldersEnabled = true,
-                forceShowFolder = true,
                 folders = input.second.folders
             )
         }

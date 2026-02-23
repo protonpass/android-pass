@@ -67,18 +67,19 @@ internal fun CreateItemBottomSheetContents(
 ) = with(state) {
     when (mode) {
         CreateItemBottomSheetMode.HomeFull -> buildList {
+            val folderIdOption = folderId.toOption()
             if (canCreateItems) {
                 createLogin(
-                    onClick = { onNavigate(CreateLogin(shareId.toOption())) }
+                    onClick = { onNavigate(CreateLogin(shareId.toOption(), folderIdOption)) }
                 ).also(::add)
 
                 createAlias(
                     createItemAliasUIState = createItemAliasUIState,
-                    onClick = { onNavigate(CreateAlias(shareId.toOption())) }
+                    onClick = { onNavigate(CreateAlias(shareId.toOption(), folderIdOption)) }
                 ).also(::add)
 
                 createNote(
-                    onClick = { onNavigate(CreateNote(shareId.toOption())) }
+                    onClick = { onNavigate(CreateNote(shareId.toOption(), folderIdOption)) }
                 ).also(::add)
             }
 
@@ -88,15 +89,15 @@ internal fun CreateItemBottomSheetContents(
 
             if (canCreateItems) {
                 createCreditCard(
-                    onClick = { onNavigate(CreateCreditCard(shareId.toOption())) }
+                    onClick = { onNavigate(CreateCreditCard(shareId.toOption(), folderIdOption)) }
                 ).also(::add)
 
                 createIdentity(
-                    onClick = { onNavigate(CreateIdentity(shareId.toOption())) }
+                    onClick = { onNavigate(CreateIdentity(shareId.toOption(), folderIdOption)) }
                 ).also(::add)
 
                 createCustom(
-                    onClick = { onNavigate(CreateCustom(shareId.toOption())) }
+                    onClick = { onNavigate(CreateCustom(shareId.toOption(), folderIdOption)) }
                 ).also(::add)
             }
         }

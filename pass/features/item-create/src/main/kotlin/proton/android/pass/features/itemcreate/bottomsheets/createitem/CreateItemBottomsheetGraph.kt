@@ -23,6 +23,7 @@ import androidx.navigation.NavType
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
+import proton.android.pass.domain.FolderId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.navigation.api.CommonOptionalNavArgId
 import proton.android.pass.navigation.api.NavArgId
@@ -39,14 +40,21 @@ object CreateItemBottomSheetModeNavArgId : NavArgId {
 object CreateItemBottomsheetNavItem : NavItem(
     baseRoute = "item/create/bottomsheet",
     navArgIds = listOf(CreateItemBottomSheetModeNavArgId),
-    optionalArgIds = listOf(CommonOptionalNavArgId.ShareId),
+    optionalArgIds = listOf(CommonOptionalNavArgId.ShareId, CommonOptionalNavArgId.FolderId),
     navItemType = NavItemType.Bottomsheet
 ) {
-    fun createNavRoute(mode: CreateItemBottomSheetMode, shareId: Option<ShareId> = None) = buildString {
+    fun createNavRoute(
+        mode: CreateItemBottomSheetMode,
+        shareId: Option<ShareId> = None,
+        folderId: Option<FolderId> = None
+    ) = buildString {
         append("$baseRoute/$mode")
         val map = mutableMapOf<String, Any>()
         if (shareId is Some) {
             map[CommonOptionalNavArgId.ShareId.key] = shareId.value.id
+        }
+        if (folderId is Some) {
+            map[CommonOptionalNavArgId.FolderId.key] = folderId.value.id
         }
         val path = map.toPath()
         append(path)
@@ -54,12 +62,36 @@ object CreateItemBottomsheetNavItem : NavItem(
 }
 
 sealed interface CreateItemBottomsheetNavigation {
-    data class CreateLogin(val shareId: Option<ShareId>) : CreateItemBottomsheetNavigation
-    data class CreateAlias(val shareId: Option<ShareId>) : CreateItemBottomsheetNavigation
-    data class CreateNote(val shareId: Option<ShareId>) : CreateItemBottomsheetNavigation
-    data class CreateCreditCard(val shareId: Option<ShareId>) : CreateItemBottomsheetNavigation
-    data class CreateIdentity(val shareId: Option<ShareId>) : CreateItemBottomsheetNavigation
-    data class CreateCustom(val shareId: Option<ShareId>) : CreateItemBottomsheetNavigation
+
+    data class CreateLogin(
+        val shareId: Option<ShareId>,
+        val folderId: Option<FolderId> = None
+    ) : CreateItemBottomsheetNavigation
+
+    data class CreateAlias(
+        val shareId: Option<ShareId>,
+        val folderId: Option<FolderId> = None
+    ) : CreateItemBottomsheetNavigation
+
+    data class CreateNote(
+        val shareId: Option<ShareId>,
+        val folderId: Option<FolderId> = None
+    ) : CreateItemBottomsheetNavigation
+
+    data class CreateCreditCard(
+        val shareId: Option<ShareId>,
+        val folderId: Option<FolderId> = None
+    ) : CreateItemBottomsheetNavigation
+
+    data class CreateIdentity(
+        val shareId: Option<ShareId>,
+        val folderId: Option<FolderId> = None
+    ) : CreateItemBottomsheetNavigation
+
+    data class CreateCustom(
+        val shareId: Option<ShareId>,
+        val folderId: Option<FolderId> = None
+    ) : CreateItemBottomsheetNavigation
     data object CreatePassword : CreateItemBottomsheetNavigation
 }
 

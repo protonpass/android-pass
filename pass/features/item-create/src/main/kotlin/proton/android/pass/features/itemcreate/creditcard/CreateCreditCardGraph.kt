@@ -9,10 +9,12 @@ import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.toOption
 import proton.android.pass.commonuimodels.api.ItemUiModel
+import proton.android.pass.domain.FolderId
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.features.itemcreate.bottomsheets.customfield.customFieldBottomSheetGraph
 import proton.android.pass.features.itemcreate.common.CustomFieldPrefix
+import proton.android.pass.features.itemcreate.common.KEY_FOLDER_SELECTED
 import proton.android.pass.features.itemcreate.common.KEY_VAULT_SELECTED
 import proton.android.pass.features.itemcreate.dialogs.customfield.CustomFieldNameNavigation
 import proton.android.pass.features.itemcreate.dialogs.customfield.customFieldNameDialogGraph
@@ -26,9 +28,17 @@ import proton.android.pass.navigation.api.toPath
 
 object CreateCreditCardNavItem : NavItem(
     baseRoute = "creditcard/create/screen",
-    optionalArgIds = listOf(CommonOptionalNavArgId.ShareId, CommonOptionalNavArgId.ItemId)
+    optionalArgIds = listOf(
+        CommonOptionalNavArgId.ShareId,
+        CommonOptionalNavArgId.ItemId,
+        CommonOptionalNavArgId.FolderId
+    )
 ) {
-    fun createNavRoute(shareId: Option<ShareId> = None, itemId: Option<ItemId> = None) = buildString {
+    fun createNavRoute(
+        shareId: Option<ShareId> = None,
+        itemId: Option<ItemId> = None,
+        folderId: Option<FolderId> = None
+    ) = buildString {
         append(baseRoute)
         val map = mutableMapOf<String, Any>()
         if (shareId is Some) {
@@ -36,6 +46,9 @@ object CreateCreditCardNavItem : NavItem(
         }
         if (itemId is Some) {
             map[CommonOptionalNavArgId.ItemId.key] = itemId.value.id
+        }
+        if (folderId is Some) {
+            map[CommonOptionalNavArgId.FolderId.key] = folderId.value.id
         }
         val path = map.toPath()
         append(path)
@@ -46,14 +59,18 @@ sealed interface CreateCreditCardNavigation : BaseCreditCardNavigation {
     @JvmInline
     value class ItemCreated(val itemUiModel: ItemUiModel) : CreateCreditCardNavigation
 
-    @JvmInline
-    value class SelectVault(val shareId: ShareId) : CreateCreditCardNavigation
+    data class SelectVault(val shareId: ShareId, val folderId: FolderId? = null) : CreateCreditCardNavigation
 }
 
+@Suppress("LongMethod")
 fun NavGraphBuilder.createCreditCardGraph(canUseAttachments: Boolean, onNavigate: (BaseCreditCardNavigation) -> Unit) {
     composable(CreateCreditCardNavItem) { navBackStack ->
         val selectVault by navBackStack.savedStateHandle
             .getStateFlow<String?>(KEY_VAULT_SELECTED, null)
+            .collectAsStateWithLifecycle()
+
+        val selectFolder by navBackStack.savedStateHandle
+            .getStateFlow<String?>(KEY_FOLDER_SELECTED, null)
             .collectAsStateWithLifecycle()
 
         val navTotpUri by navBackStack.savedStateHandle
@@ -74,6 +91,7 @@ fun NavGraphBuilder.createCreditCardGraph(canUseAttachments: Boolean, onNavigate
 
         CreateCreditCardScreen(
             selectVault = selectVault.toOption().map { ShareId(it) }.value(),
+            selectFolder = selectFolder.toOption().map { FolderId(it) }.value(),
             navTotpUri = navTotpUri,
             navTotpIndex = navTotpIndex,
             canUseAttachments = canUseAttachments,

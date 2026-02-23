@@ -19,3 +19,4 @@
 package proton.android.pass.features.itemcreate.common
 
 const val KEY_VAULT_SELECTED = "vaultSelected"
+const val KEY_FOLDER_SELECTED = "folderSelected"

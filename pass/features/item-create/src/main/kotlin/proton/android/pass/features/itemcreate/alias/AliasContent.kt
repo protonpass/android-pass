@@ -27,6 +27,7 @@ import androidx.compose.ui.Modifier
 import kotlinx.collections.immutable.toPersistentList
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.FolderId
 import proton.android.pass.domain.Vault
 import proton.android.pass.features.itemcreate.common.AliasItemValidationError
 import proton.android.pass.features.itemcreate.common.CommonFieldValidationError
@@ -40,6 +41,8 @@ internal fun AliasContent(
     uiState: BaseAliasUiState,
     aliasItemFormState: AliasItemFormState,
     selectedVault: Vault?,
+    selectedFolderName: String? = null,
+    selectedFolderId: FolderId? = null,
     selectedShareId: ShareId?,
     showVaultSelector: Boolean,
     topBarActionName: String,
@@ -62,6 +65,7 @@ internal fun AliasContent(
                 showUpgrade = uiState.hasReachedAliasLimit,
                 iconBackgroundColor = PassTheme.colors.aliasInteractionNormMinor1,
                 selectedVault = selectedVault,
+                selectedFolderName = selectedFolderName,
                 onCloseClick = { onEvent(AliasContentUiEvent.Back) },
                 onActionClick = {
                     selectedShareId ?: return@CreateUpdateTopBar
@@ -70,7 +74,7 @@ internal fun AliasContent(
                 onUpgrade = { onEvent(AliasContentUiEvent.OnUpgrade) },
                 onVaultSelectorClick = {
                     selectedShareId ?: return@CreateUpdateTopBar
-                    onEvent(AliasContentUiEvent.OnVaultSelect(selectedShareId))
+                    onEvent(AliasContentUiEvent.OnVaultSelect(selectedShareId, selectedFolderId))
                 }
             )
         }

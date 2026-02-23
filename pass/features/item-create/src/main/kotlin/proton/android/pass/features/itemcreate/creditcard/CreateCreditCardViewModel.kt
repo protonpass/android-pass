@@ -8,6 +8,7 @@ import androidx.lifecycle.viewmodel.compose.SavedStateHandleSaveableApi
 import androidx.lifecycle.viewmodel.compose.saveable
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
@@ -38,7 +39,9 @@ import proton.android.pass.data.api.usecases.GetItemById
 import proton.android.pass.data.api.usecases.ObserveVaultsWithItemCount
 import proton.android.pass.data.api.usecases.attachments.LinkAttachmentsToItem
 import proton.android.pass.data.api.usecases.defaultvault.ObserveDefaultVault
+import proton.android.pass.data.api.usecases.folders.ObserveFolders
 import proton.android.pass.data.api.usecases.shares.ObserveShare
+import proton.android.pass.domain.FolderId
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.VaultWithItemCount
@@ -52,6 +55,7 @@ import proton.android.pass.features.itemcreate.common.ShareUiState
 import proton.android.pass.features.itemcreate.common.canDisplayWarningMessageForCreationFlow
 import proton.android.pass.features.itemcreate.common.customfields.CustomFieldHandler
 import proton.android.pass.features.itemcreate.common.formprocessor.CreditCardFormProcessorType
+import proton.android.pass.features.itemcreate.common.getFolderNameFlow
 import proton.android.pass.features.itemcreate.common.getShareUiStateFlow
 import proton.android.pass.features.itemcreate.creditcard.CreditCardSnackbarMessage.ItemCreated
 import proton.android.pass.features.itemcreate.creditcard.CreditCardSnackbarMessage.ItemCreationError
@@ -73,6 +77,7 @@ class CreateCreditCardViewModel @Inject constructor(
     private val snackbarDispatcher: SnackbarDispatcher,
     private val createItem: CreateItem,
     private val accountManager: AccountManager,
+    private val observeFolders: ObserveFolders,
     private val telemetryManager: TelemetryManager,
     private val inAppReviewTriggerMetrics: InAppReviewTriggerMetrics,
     private val linkAttachmentsToItem: LinkAttachmentsToItem,
@@ -110,6 +115,10 @@ class CreateCreditCardViewModel @Inject constructor(
             .toOption()
             .map(::ItemId)
 
+    private val navFolderId: FolderId? =
+        savedStateHandleProvider.get().get<String>(CommonOptionalNavArgId.FolderId.key)
+            ?.let(::FolderId)
+
     @OptIn(SavedStateHandleSaveableApi::class)
     private var selectedShareIdMutableState: Option<ShareId> by savedStateHandleProvider.get()
         .saveable(stateSaver = OptionShareIdSaver) { mutableStateOf(None) }
@@ -121,6 +130,16 @@ class CreateCreditCardViewModel @Inject constructor(
                 started = SharingStarted.WhileSubscribed(5_000),
                 initialValue = None
             )
+
+    private val selectedFolderIdMutableState: MutableStateFlow<FolderId?> = MutableStateFlow(navFolderId)
+
+    private val selectedFolderNameFlow = getFolderNameFlow(
+        accountManager = accountManager,
+        observeFolders = observeFolders,
+        selectedShareIdState = selectedShareIdState,
+        selectedFolderIdFlow = selectedFolderIdMutableState,
+        navShareIdState = flowOf(navShareId)
+    )
 
     private val observeAllVaultsFlow: Flow<List<VaultWithItemCount>> =
         observeVaults(includeHidden = true).distinctUntilChanged()
@@ -139,7 +158,9 @@ class CreateCreditCardViewModel @Inject constructor(
         observeAllVaultsFlow = observeAllVaultsFlow.asLoadingResult(),
         observeDefaultVaultFlow = observeDefaultVault().asLoadingResult(),
         viewModelScope = viewModelScope,
-        tag = TAG
+        tag = TAG,
+        selectedFolderNameFlow = selectedFolderNameFlow,
+        selectedFolderIdFlow = selectedFolderIdMutableState
     )
 
 
@@ -162,6 +183,12 @@ class CreateCreditCardViewModel @Inject constructor(
     fun changeVault(shareId: ShareId) {
         onUserEditedContent()
         selectedShareIdMutableState = Some(shareId)
+        selectedFolderIdMutableState.value = null
+    }
+
+    fun changeFolder(folderId: FolderId) {
+        onUserEditedContent()
+        selectedFolderIdMutableState.value = folderId
     }
 
     suspend fun duplicateContents(context: Context) {

@@ -21,10 +21,10 @@ package proton.android.pass.composecomponents.impl.icon
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import me.proton.core.presentation.R
+import proton.android.pass.commonui.api.PassPalette
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemePreviewProvider
 
@@ -38,7 +38,7 @@ fun FolderIcon(
     VaultIcon(
         modifier = modifier,
         backgroundColor = PassTheme.colors.interactionNormMinor1,
-        iconColor = Color(color = 0xFFE9A944),
+        iconColor = PassPalette.FolderYellow,
         iconSize = iconSize,
         size = size,
         icon = R.drawable.ic_proton_folder_filled,

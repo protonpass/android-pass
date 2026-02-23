@@ -22,6 +22,7 @@ import proton.android.pass.common.api.Option
 import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.domain.CustomFieldType
 import proton.android.pass.domain.ItemId
+import proton.android.pass.domain.FolderId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.attachments.AttachmentId
 import java.net.URI
@@ -30,8 +31,7 @@ sealed interface CreateLoginNavigation {
     @JvmInline
     value class LoginCreated(val itemUiModel: ItemUiModel) : CreateLoginNavigation
 
-    @JvmInline
-    value class SelectVault(val shareId: ShareId) : CreateLoginNavigation
+    data class SelectVault(val shareId: ShareId, val folderId: FolderId? = null) : CreateLoginNavigation
 
     @JvmInline
     value class LoginCreatedWithPasskey(val createPasskeyResponse: String) : CreateLoginNavigation

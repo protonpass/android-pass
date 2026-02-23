@@ -28,10 +28,12 @@ import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.toOption
+import proton.android.pass.domain.FolderId
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.features.itemcreate.bottomsheets.customfield.customFieldBottomSheetGraph
 import proton.android.pass.features.itemcreate.common.CustomFieldPrefix
+import proton.android.pass.features.itemcreate.common.KEY_FOLDER_SELECTED
 import proton.android.pass.features.itemcreate.common.KEY_VAULT_SELECTED
 import proton.android.pass.features.itemcreate.dialogs.customfield.CustomFieldNameNavigation
 import proton.android.pass.features.itemcreate.dialogs.customfield.customFieldNameDialogGraph
@@ -61,6 +63,7 @@ object CreateLoginNavItem : NavItem(
     optionalArgIds = listOf(
         CommonOptionalNavArgId.ShareId,
         CommonOptionalNavArgId.ItemId,
+        CommonOptionalNavArgId.FolderId,
         CreateLoginDefaultEmailArg
     )
 ) {
@@ -68,6 +71,7 @@ object CreateLoginNavItem : NavItem(
         shareId: Option<ShareId> = None,
         // ItemID of the item to be cloned
         itemId: Option<ItemId> = None,
+        folderId: Option<FolderId> = None,
         emailOption: Option<String> = None
     ) = buildString {
         append(baseRoute)
@@ -78,6 +82,9 @@ object CreateLoginNavItem : NavItem(
             }
             if (itemId is Some) {
                 set(CommonOptionalNavArgId.ItemId.key, itemId.value.id)
+            }
+            if (folderId is Some) {
+                set(CommonOptionalNavArgId.FolderId.key, folderId.value.id)
             }
             if (emailOption is Some) {
                 set(CreateLoginDefaultEmailArg.key, emailOption.value)
@@ -126,6 +133,10 @@ fun NavGraphBuilder.createLoginGraph(
                 .getStateFlow<String?>(KEY_VAULT_SELECTED, null)
                 .collectAsStateWithLifecycle()
 
+            val selectFolder by navBackStack.savedStateHandle
+                .getStateFlow<String?>(KEY_FOLDER_SELECTED, null)
+                .collectAsStateWithLifecycle()
+
             val initialContents = initialCreateLoginUiState.copy(
                 navTotpUri = navTotpUri,
                 navTotpIndex = navTotpIndex ?: -1
@@ -135,6 +146,7 @@ fun NavGraphBuilder.createLoginGraph(
                 initialContents = initialContents,
                 clearAlias = clearAlias,
                 selectVault = selectVault.toOption().map { ShareId(it) }.value(),
+                selectFolder = selectFolder.toOption().map { FolderId(it) }.value(),
                 showCreateAliasButton = showCreateAliasButton,
                 canUseAttachments = canUseAttachments,
                 onNavigate = onNavigate

@@ -21,6 +21,7 @@ package proton.android.pass.features.itemcreate.custom.selecttemplate.navigation
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
+import proton.android.pass.domain.FolderId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.navigation.api.CommonOptionalNavArgId
 import proton.android.pass.navigation.api.NavItem
@@ -28,14 +29,17 @@ import proton.android.pass.navigation.api.toPath
 
 object SelectTemplateNavItem : NavItem(
     baseRoute = "select/template/screen",
-    optionalArgIds = listOf(CommonOptionalNavArgId.ShareId),
+    optionalArgIds = listOf(CommonOptionalNavArgId.ShareId, CommonOptionalNavArgId.FolderId),
     noHistory = true
 ) {
-    fun createNavRoute(shareId: Option<ShareId> = None) = buildString {
+    fun createNavRoute(shareId: Option<ShareId> = None, folderId: Option<FolderId> = None) = buildString {
         append(baseRoute)
         val map = mutableMapOf<String, Any>()
         if (shareId is Some) {
             map[CommonOptionalNavArgId.ShareId.key] = shareId.value.id
+        }
+        if (folderId is Some) {
+            map[CommonOptionalNavArgId.FolderId.key] = folderId.value.id
         }
         val path = map.toPath()
         append(path)

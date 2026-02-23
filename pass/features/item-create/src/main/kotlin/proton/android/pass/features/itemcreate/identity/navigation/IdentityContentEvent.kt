@@ -19,6 +19,7 @@
 package proton.android.pass.features.itemcreate.identity.navigation
 
 import proton.android.pass.composecomponents.impl.attachments.AttachmentContentEvent
+import proton.android.pass.domain.FolderId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.features.itemcreate.identity.presentation.IdentityField
 import proton.android.pass.features.itemcreate.identity.ui.IdentitySectionType
@@ -40,8 +41,7 @@ sealed interface IdentityContentEvent {
         val isFocused: Boolean
     ) : IdentityContentEvent
 
-    @JvmInline
-    value class OnVaultSelect(val shareId: ShareId) : IdentityContentEvent
+    data class OnVaultSelect(val shareId: ShareId, val folderId: FolderId? = null) : IdentityContentEvent
 
     data class OnCustomFieldClick(
         val index: Int,

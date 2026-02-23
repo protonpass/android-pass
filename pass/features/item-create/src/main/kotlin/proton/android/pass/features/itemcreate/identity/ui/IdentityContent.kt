@@ -53,6 +53,7 @@ fun IdentityContent(
                 iconColor = PassTheme.colors.interactionNormMajor2,
                 iconBackgroundColor = PassTheme.colors.interactionNormMinor1,
                 selectedVault = identityUiState.getSelectedVault().value(),
+                selectedFolderName = identityUiState.getSelectedFolderName().value(),
                 showVaultSelector = identityUiState.shouldShowVaultSelector(),
                 onCloseClick = { onEvent(IdentityContentEvent.Up) },
                 onActionClick = {
@@ -65,7 +66,12 @@ fun IdentityContent(
                 onVaultSelectorClick = {
                     when (val selectedShareId = identityUiState.getSelectedShareId()) {
                         None -> return@CreateUpdateTopBar
-                        is Some -> onEvent(IdentityContentEvent.OnVaultSelect(selectedShareId.value))
+                        is Some -> onEvent(
+                            IdentityContentEvent.OnVaultSelect(
+                                shareId = selectedShareId.value,
+                                folderId = identityUiState.getSelectedFolderId().value()
+                            )
+                        )
                     }
                 }
             )

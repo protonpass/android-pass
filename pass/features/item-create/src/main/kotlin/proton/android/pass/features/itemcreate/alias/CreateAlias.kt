@@ -42,6 +42,7 @@ import proton.android.pass.composecomponents.impl.dialogs.ConfirmCloseDialog
 import proton.android.pass.composecomponents.impl.dialogs.WarningSharedItemDialog
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.domain.CustomFieldType
+import proton.android.pass.domain.FolderId
 import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.ShareId
 import proton.android.pass.features.itemcreate.ItemSavedState
@@ -71,6 +72,7 @@ import proton.android.pass.composecomponents.impl.R as CompR
 fun CreateAliasScreen(
     modifier: Modifier = Modifier,
     selectVault: ShareId?,
+    selectFolder: FolderId? = null,
     navTotpUri: String? = null,
     navTotpIndex: Int? = null,
     canUseAttachments: Boolean,
@@ -81,6 +83,11 @@ fun CreateAliasScreen(
     LaunchedEffect(selectVault) {
         if (selectVault != null) {
             viewModel.changeVault(selectVault)
+        }
+    }
+    LaunchedEffect(selectFolder) {
+        if (selectFolder != null) {
+            viewModel.changeFolder(selectFolder)
         }
     }
     LaunchedEffect(navTotpUri) {
@@ -115,9 +122,9 @@ fun CreateAliasScreen(
             actionAfterKeyboardHide = { onNavigate(BaseAliasNavigation.CloseScreen) }
         }
     }
-    val (showVaultSelector, selectedVault) = when (val shares = uiState.shareUiState) {
+    val (showVaultSelector, selectedVault, selectedFolderName) = when (val shares = uiState.shareUiState) {
         ShareUiState.Loading,
-        ShareUiState.NotInitialised -> false to null
+        ShareUiState.NotInitialised -> Triple(false, null, null)
 
         is ShareUiState.Error -> {
             if (shares.shareError == EmptyShareList || shares.shareError == SharesNotAvailable) {
@@ -126,11 +133,12 @@ fun CreateAliasScreen(
                     actionAfterKeyboardHide = { onNavigate(BaseAliasNavigation.CloseScreen) }
                 }
             }
-            false to null
+            Triple(false, null, null)
         }
 
-        is ShareUiState.Success -> (shares.vaultList.size > 1) to shares.currentVault
+        is ShareUiState.Success -> Triple(shares.vaultList.size > 1, shares.currentVault, shares.selectedFolderName)
     }
+    val selectedFolderId = (uiState.shareUiState as? ShareUiState.Success)?.selectedFolderId
 
     var showWarningVaultSharedDialog by rememberSaveable { mutableStateOf(false) }
 
@@ -141,6 +149,8 @@ fun CreateAliasScreen(
             uiState = uiState.baseAliasUiState,
             aliasItemFormState = viewModel.aliasItemFormState,
             selectedVault = selectedVault?.vault,
+            selectedFolderName = selectedFolderName,
+            selectedFolderId = selectedFolderId,
             selectedShareId = selectedVault?.vault?.shareId,
             showVaultSelector = showVaultSelector,
             topBarActionName = stringResource(id = R.string.title_create),
@@ -163,7 +173,7 @@ fun CreateAliasScreen(
                     is AliasContentUiEvent.OnTitleChange -> viewModel.onTitleChange(event.title)
                     is AliasContentUiEvent.OnVaultSelect ->
                         actionAfterKeyboardHide =
-                            { onNavigate(OnCreateAliasEvent(SelectVault(event.shareId))) }
+                            { onNavigate(OnCreateAliasEvent(SelectVault(event.shareId, event.folderId))) }
 
                     is AliasContentUiEvent.OnPrefixChange -> viewModel.onPrefixChange(event.prefix)
                     is AliasContentUiEvent.OnUpgrade ->

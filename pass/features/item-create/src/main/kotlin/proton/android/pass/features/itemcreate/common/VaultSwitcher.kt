@@ -21,61 +21,81 @@ package proton.android.pass.features.itemcreate.common
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.defaultSmallInverted
+import proton.android.pass.commonui.api.PassPalette
+import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
-import proton.android.pass.composecomponents.impl.R
+import proton.android.pass.commonui.api.applyIf
 import proton.android.pass.composecomponents.impl.extension.toColor
 import proton.android.pass.composecomponents.impl.extension.toResource
+import proton.android.pass.composecomponents.impl.icon.Icon
 import proton.android.pass.domain.Vault
+import me.proton.core.presentation.R as CoreR
+import proton.android.pass.composecomponents.impl.R as CompR
 
 @Composable
 fun RowScope.VaultSwitcher(
     modifier: Modifier = Modifier,
     selectedVault: Vault,
+    selectedFolderName: String? = null,
     onClick: () -> Unit
 ) {
+    val isFolder = selectedFolderName != null
+    val text = if (isFolder) selectedFolderName!! else selectedVault.name
+    val textColor = if (isFolder) PassTheme.colors.textNorm else selectedVault.color.toColor()
     Row(
         modifier = modifier
             .weight(weight = 1f, fill = false)
             .clip(CircleShape)
-            .background(selectedVault.color.toColor(isBackground = true))
+            .applyIf(
+                condition = !isFolder,
+                ifTrue = { background(selectedVault.color.toColor(isBackground = true)) },
+                ifFalse = { background(PassTheme.colors.interactionNormMinor1) }
+            )
             .clickable { onClick() }
             .padding(horizontal = Spacing.medium, vertical = 10.dp),
         horizontalArrangement = Arrangement.spacedBy(5.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        Icon(
-            modifier = Modifier.size(20.dp),
-            painter = painterResource(id = selectedVault.icon.toResource()),
-            contentDescription = null,
-            tint = selectedVault.color.toColor()
-        )
-        Text(
-            modifier = Modifier.weight(weight = 1f, fill = false),
-            text = selectedVault.name,
-            style = ProtonTheme.typography.defaultSmallInverted,
-            color = selectedVault.color.toColor(),
-            overflow = TextOverflow.Ellipsis
-        )
-        Icon(
-            painter = painterResource(R.drawable.ic_chevron_tiny_down),
-            contentDescription = null,
-            tint = selectedVault.color.toColor()
+        if (isFolder) {
+            Icon.Default(
+                modifier = Modifier.size(20.dp),
+                id = CoreR.drawable.ic_proton_folder_filled,
+                tint = PassPalette.FolderYellow
+            )
+        } else {
+            Icon.Default(
+                modifier = Modifier.size(20.dp),
+                id = selectedVault.icon.toResource(),
+                tint = selectedVault.color.toColor()
+            )
+        }
+        Column(modifier = Modifier.weight(weight = 1f, fill = false)) {
+            Text(
+                text = text,
+                style = ProtonTheme.typography.defaultSmallInverted,
+                color = textColor,
+                overflow = TextOverflow.Ellipsis,
+                maxLines = 1
+            )
+        }
+        Icon.Default(
+            id = CompR.drawable.ic_chevron_tiny_down,
+            tint = textColor
         )
     }
 }

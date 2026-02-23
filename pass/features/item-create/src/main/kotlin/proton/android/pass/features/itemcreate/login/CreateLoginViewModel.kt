@@ -70,12 +70,14 @@ import proton.android.pass.data.api.usecases.ObserveUpgradeInfo
 import proton.android.pass.data.api.usecases.ObserveVaultsWithItemCount
 import proton.android.pass.data.api.usecases.attachments.LinkAttachmentsToItem
 import proton.android.pass.data.api.usecases.defaultvault.ObserveDefaultVault
+import proton.android.pass.data.api.usecases.folders.ObserveFolders
 import proton.android.pass.data.api.usecases.shares.ObserveShare
 import proton.android.pass.data.api.usecases.tooltips.DisableTooltip
 import proton.android.pass.data.api.usecases.tooltips.ObserveTooltipEnabled
 import proton.android.pass.data.api.work.WorkerItem
 import proton.android.pass.data.api.work.WorkerLauncher
 import proton.android.pass.domain.CustomField
+import proton.android.pass.domain.FolderId
 import proton.android.pass.domain.HiddenState
 import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.ItemId
@@ -99,6 +101,7 @@ import proton.android.pass.features.itemcreate.common.UIHiddenState
 import proton.android.pass.features.itemcreate.common.canDisplayWarningMessageForCreationFlow
 import proton.android.pass.features.itemcreate.common.customfields.CustomFieldHandler
 import proton.android.pass.features.itemcreate.common.formprocessor.LoginItemFormProcessorType
+import proton.android.pass.features.itemcreate.common.getFolderNameFlow
 import proton.android.pass.features.itemcreate.common.getShareUiStateFlow
 import proton.android.pass.features.itemcreate.login.LoginSnackbarMessages.AliasRateLimited
 import proton.android.pass.features.itemcreate.login.LoginSnackbarMessages.CannotCreateMoreAliases
@@ -123,6 +126,7 @@ import javax.inject.Inject
 class CreateLoginViewModel @Inject constructor(
     private val createItem: CreateItem,
     private val createLoginAndAlias: CreateLoginAndAlias,
+    private val observeFolders: ObserveFolders,
     private val snackbarDispatcher: SnackbarDispatcher,
     private val encryptionContextProvider: EncryptionContextProvider,
     private val telemetryManager: TelemetryManager,
@@ -181,6 +185,10 @@ class CreateLoginViewModel @Inject constructor(
         .toOption()
         .map(::ItemId)
 
+    private val navFolderId: FolderId? =
+        savedStateHandleProvider.get().get<String>(CommonOptionalNavArgId.FolderId.key)
+            ?.let(::FolderId)
+
     private val initialEmail: Option<String> = savedStateHandleProvider.get()
         .get<String>(CreateLoginDefaultEmailArg.key)
         .toOption()
@@ -210,6 +218,16 @@ class CreateLoginViewModel @Inject constructor(
                 initialValue = None
             )
 
+    private val selectedFolderIdMutableState: MutableStateFlow<FolderId?> = MutableStateFlow(navFolderId)
+
+    private val selectedFolderNameFlow = getFolderNameFlow(
+        accountManager = accountManager,
+        observeFolders = observeFolders,
+        selectedShareIdState = selectedShareIdState,
+        selectedFolderIdFlow = selectedFolderIdMutableState,
+        navShareIdState = flowOf(navShareId)
+    )
+
     private val canDisplayWarningVaultSharedDialogFlow =
         canDisplayWarningMessageForCreationFlow(
             selectedShareIdMutableState = selectedShareIdMutableState,
@@ -227,7 +245,9 @@ class CreateLoginViewModel @Inject constructor(
         observeAllVaultsFlow = observeAllVaultsFlow.asLoadingResult(),
         observeDefaultVaultFlow = observeDefaultVault().asLoadingResult(),
         viewModelScope = viewModelScope,
-        tag = TAG
+        tag = TAG,
+        selectedFolderNameFlow = selectedFolderNameFlow,
+        selectedFolderIdFlow = selectedFolderIdMutableState
     )
 
     internal val createLoginUiState: StateFlow<CreateLoginUiState> = combine(
@@ -244,6 +264,12 @@ class CreateLoginViewModel @Inject constructor(
 
     internal fun changeVault(shareId: ShareId) {
         selectedShareIdMutableState = Some(shareId)
+        selectedFolderIdMutableState.value = null
+    }
+
+    internal fun changeFolder(folderId: FolderId) {
+        onUserEditedContent()
+        selectedFolderIdMutableState.value = folderId
     }
 
     internal suspend fun duplicateContents(context: Context) {

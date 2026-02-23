@@ -37,6 +37,7 @@ import proton.android.pass.data.api.usecases.ObserveUpgradeInfo
 import proton.android.pass.data.api.usecases.ObserveVaultsWithItemCount
 import proton.android.pass.data.api.usecases.attachments.LinkAttachmentsToItem
 import proton.android.pass.data.api.usecases.defaultvault.ObserveDefaultVault
+import proton.android.pass.data.api.usecases.folders.ObserveFolders
 import proton.android.pass.data.api.usecases.shares.ObserveShare
 import proton.android.pass.features.itemcreate.alias.AliasDraftSavedState
 import proton.android.pass.features.itemcreate.alias.AliasItemFormState
@@ -58,6 +59,7 @@ import javax.inject.Inject
 @HiltViewModel
 class CreateAliasBottomSheetViewModel @Inject constructor(
     accountManager: AccountManager,
+    observeFolders: ObserveFolders,
     createAlias: CreateAlias,
     snackbarDispatcher: SnackbarDispatcher,
     observeAliasOptions: ObserveAliasOptions,
@@ -83,6 +85,7 @@ class CreateAliasBottomSheetViewModel @Inject constructor(
     private val settingsRepository: InternalSettingsRepository
 ) : CreateAliasViewModel(
     accountManager = accountManager,
+    observeFolders = observeFolders,
     createAlias = createAlias,
     snackbarDispatcher = snackbarDispatcher,
     telemetryManager = telemetryManager,

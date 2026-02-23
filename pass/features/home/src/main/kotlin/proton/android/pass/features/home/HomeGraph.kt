@@ -25,6 +25,7 @@ import androidx.compose.ui.platform.testTag
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavGraphBuilder
 import me.proton.core.domain.entity.UserId
+import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.commonuimodels.api.ItemTypeUiState
 import proton.android.pass.composecomponents.impl.dialogs.PassUpgradePlanDialog
@@ -84,7 +85,8 @@ sealed interface HomeNavigation {
 
     data class AddItem(
         val shareId: Option<ShareId>,
-        val itemTypeUiState: ItemTypeUiState
+        val itemTypeUiState: ItemTypeUiState,
+        val folderId: Option<FolderId> = None
     ) : HomeNavigation
 
     data object CloseScreen : HomeNavigation

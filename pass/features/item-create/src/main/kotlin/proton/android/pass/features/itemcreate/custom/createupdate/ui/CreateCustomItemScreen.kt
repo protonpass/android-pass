@@ -41,6 +41,7 @@ import proton.android.pass.composecomponents.impl.attachments.AttachmentContentE
 import proton.android.pass.composecomponents.impl.dialogs.ConfirmCloseDialog
 import proton.android.pass.composecomponents.impl.dialogs.WarningSharedItemDialog
 import proton.android.pass.domain.CustomFieldType
+import proton.android.pass.domain.FolderId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.SshKeyType
 import proton.android.pass.domain.WifiSecurityType
@@ -79,6 +80,7 @@ import proton.android.pass.composecomponents.impl.R as CompR
 fun CreateCustomItemScreen(
     modifier: Modifier = Modifier,
     selectVault: Option<ShareId>,
+    selectFolder: Option<FolderId> = None,
     selectWifiSecurityType: Option<WifiSecurityType>,
     selectSshKeyType: Option<SshKeyType>,
     selectTotp: Triple<Option<String>, Option<Int>, Option<Int>>,
@@ -89,6 +91,11 @@ fun CreateCustomItemScreen(
     LaunchedEffect(selectVault) {
         if (selectVault is Some) {
             viewModel.processIntent(OnVaultSelected(selectVault.value))
+        }
+    }
+    LaunchedEffect(selectFolder) {
+        if (selectFolder is Some) {
+            viewModel.onFolderSelected(selectFolder.value)
         }
     }
     LaunchedEffect(selectTotp) {
@@ -288,7 +295,7 @@ fun CreateCustomItemScreen(
 
                     is ItemContentEvent.OnVaultSelect ->
                         actionAfterKeyboardHide = {
-                            onNavigate(CreateCustomItemNavigation.SelectVault(it.shareId))
+                            onNavigate(CreateCustomItemNavigation.SelectVault(it.shareId, it.folderId))
                         }
 
                     is ItemContentEvent.Submit -> {

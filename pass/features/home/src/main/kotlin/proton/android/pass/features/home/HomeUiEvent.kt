@@ -19,9 +19,11 @@
 package proton.android.pass.features.home
 
 import me.proton.core.domain.entity.UserId
+import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.commonuimodels.api.ItemTypeUiState
 import proton.android.pass.commonuimodels.api.ItemUiModel
+import proton.android.pass.domain.FolderId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.inappmessages.InAppMessageId
 import proton.android.pass.searchoptions.api.SearchFilterType
@@ -30,7 +32,11 @@ sealed interface HomeUiEvent {
 
     data object ActionsClick : HomeUiEvent
 
-    data class AddItemClick(val shareId: Option<ShareId>, val state: ItemTypeUiState) : HomeUiEvent
+    data class AddItemClick(
+        val shareId: Option<ShareId>,
+        val state: ItemTypeUiState,
+        val folderId: Option<FolderId> = None
+    ) : HomeUiEvent
 
     data object ClearRecentSearchClick : HomeUiEvent
 

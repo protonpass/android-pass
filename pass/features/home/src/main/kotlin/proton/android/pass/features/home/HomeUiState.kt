@@ -36,6 +36,7 @@ import proton.android.pass.composecomponents.impl.uievents.IsRefreshingState
 import proton.android.pass.crypto.api.extensions.toVault
 import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.ItemId
+import proton.android.pass.domain.FolderId
 import proton.android.pass.domain.Share
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.Vault
@@ -230,6 +231,7 @@ internal data class HomeListUiState(
     val actionState: ActionState = ActionState.Unknown,
     val items: ImmutableList<GroupedItemList>,
     val selectedShare: Option<Share> = None,
+    val selectedFolder: Option<Pair<ShareId, FolderId>> = None,
     val shares: ImmutableMap<ShareId, Share>,
     val homeVaultSelection: VaultSelectionOption = VaultSelectionOption.AllVaults,
     val searchFilterType: SearchFilterType = SearchFilterType.All,
@@ -239,9 +241,7 @@ internal data class HomeListUiState(
     val promoInAppMessage: InAppMessage?
 ) {
 
-    internal val selectedVaultOption: Option<Vault> = selectedShare.flatMap { share ->
-        share.toVault()
-    }
+    internal val selectedVaultOption: Option<Vault> = selectedShare.flatMap(Share::toVault)
 
     internal val selectedVaultName: String = selectedVaultOption.value()
         ?.name

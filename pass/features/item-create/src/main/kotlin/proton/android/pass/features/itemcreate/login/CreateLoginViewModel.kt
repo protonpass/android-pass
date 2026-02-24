@@ -70,7 +70,7 @@ import proton.android.pass.data.api.usecases.ObserveUpgradeInfo
 import proton.android.pass.data.api.usecases.ObserveVaultsWithItemCount
 import proton.android.pass.data.api.usecases.attachments.LinkAttachmentsToItem
 import proton.android.pass.data.api.usecases.defaultvault.ObserveDefaultVault
-import proton.android.pass.data.api.usecases.folders.ObserveFolders
+import proton.android.pass.data.api.usecases.folders.ObserveFolder
 import proton.android.pass.data.api.usecases.shares.ObserveShare
 import proton.android.pass.data.api.usecases.tooltips.DisableTooltip
 import proton.android.pass.data.api.usecases.tooltips.ObserveTooltipEnabled
@@ -126,7 +126,7 @@ import javax.inject.Inject
 class CreateLoginViewModel @Inject constructor(
     private val createItem: CreateItem,
     private val createLoginAndAlias: CreateLoginAndAlias,
-    private val observeFolders: ObserveFolders,
+    private val observeFolder: ObserveFolder,
     private val snackbarDispatcher: SnackbarDispatcher,
     private val encryptionContextProvider: EncryptionContextProvider,
     private val telemetryManager: TelemetryManager,
@@ -222,7 +222,7 @@ class CreateLoginViewModel @Inject constructor(
 
     private val selectedFolderNameFlow = getFolderNameFlow(
         accountManager = accountManager,
-        observeFolders = observeFolders,
+        observeFolder = observeFolder,
         selectedShareIdState = selectedShareIdState,
         selectedFolderIdFlow = selectedFolderIdMutableState,
         navShareIdState = flowOf(navShareId)

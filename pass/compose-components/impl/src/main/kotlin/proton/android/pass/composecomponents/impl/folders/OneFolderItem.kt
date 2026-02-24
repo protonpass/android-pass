@@ -53,7 +53,7 @@ fun OneFolderItem(
     folders: List<FolderUiModel> = emptyList(),
     isExpanded: Boolean,
     isSelected: Boolean = false,
-    onFolderClick: () -> Unit,
+    onFolderClick: (() -> Unit)?,
     onExpandToggle: () -> Unit,
     onThreeDotsClick: (() -> Unit)? = null
 ) {
@@ -77,8 +77,10 @@ fun OneFolderItem(
         }
 
         Row(
-            modifier = Modifier.clickable {
-                onFolderClick()
+            modifier = if (onFolderClick != null) {
+                Modifier.clickable { onFolderClick() }
+            } else {
+                Modifier
             },
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(16.dp)
@@ -137,4 +139,3 @@ internal fun HomeDrawerFolderRowPreview(
         }
     }
 }
-

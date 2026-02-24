@@ -87,6 +87,12 @@ interface ShareRepository {
     fun observeSharedByMeIds(userId: UserId, includeHiddenVault: Boolean): Flow<List<ShareId>>
 
     suspend fun batchChangeShareVisibility(userId: UserId, shareVisibilityChanges: Map<ShareId, Boolean>)
+
+    suspend fun filterShareIdsByType(
+        userId: UserId,
+        shareIds: Set<ShareId>,
+        shareType: ShareType
+    ): Set<ShareId>
 }
 
 data class UpdateShareEvent(

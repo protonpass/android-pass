@@ -77,6 +77,8 @@ class FakeShareRepository : ShareRepository {
 
     private val observeSharedByMeIds = testFlow<Result<List<ShareId>>>()
 
+    private val shareTypes: MutableMap<ShareId, ShareType> = mutableMapOf()
+
     fun deleteVaultMemory(): List<ShareId> = deleteVaultMemory
     fun refreshShareMemory(): List<RefreshSharePayload> = refreshShareMemory
 
@@ -126,6 +128,10 @@ class FakeShareRepository : ShareRepository {
 
     fun setGetAddressForShareIdResult(value: Result<UserAddress>) {
         getAddressForShareIdResult = value
+    }
+
+    fun setShareType(shareId: ShareId, shareType: ShareType) {
+        shareTypes[shareId] = shareType
     }
 
     override suspend fun createVault(userId: SessionUserId, vault: NewVault): Share =
@@ -232,6 +238,16 @@ class FakeShareRepository : ShareRepository {
         userId: UserId,
         shareVisibilityChanges: Map<ShareId, Boolean>
     ) {
+    }
+
+    override suspend fun filterShareIdsByType(
+        userId: UserId,
+        shareIds: Set<ShareId>,
+        shareType: ShareType
+    ): Set<ShareId> = if (shareTypes.isEmpty()) {
+        shareIds
+    } else {
+        shareIds.filter { shareTypes[it] == shareType }.toSet()
     }
 
     data class RefreshSharePayload(

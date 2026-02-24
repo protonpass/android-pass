@@ -150,4 +150,19 @@ abstract class SharesDao : BaseDao<ShareEntity>() {
         """
     )
     abstract suspend fun checkIfShareExists(userId: String, shareId: String): Boolean
+
+    @Query(
+        """
+        SELECT ${ShareEntity.Columns.ID} FROM ${ShareEntity.TABLE}
+        WHERE ${ShareEntity.Columns.USER_ID} = :userId
+          AND ${ShareEntity.Columns.ID} IN (:shareIds)
+          AND ${ShareEntity.Columns.SHARE_TYPE} = :shareType
+          AND ${ShareEntity.Columns.IS_ACTIVE} = 1
+        """
+    )
+    abstract suspend fun getIdsByType(
+        userId: String,
+        shareIds: List<String>,
+        shareType: Int
+    ): List<String>
 }

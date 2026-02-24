@@ -128,4 +128,10 @@ class FakeLocalShareDataSource : LocalShareDataSource {
     override fun observeSharedByMeIds(userId: UserId, includeHidden: Boolean): Flow<List<ShareId>> =
         observeSharedByMeIds.map { it.getOrThrow() }
 
+    override suspend fun getShareIdsByType(
+        userId: UserId,
+        shareIds: Set<ShareId>,
+        shareType: ShareType
+    ): Set<ShareId> = shareIds
+
 }

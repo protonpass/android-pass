@@ -143,6 +143,19 @@ class LocalShareDataSourceImpl @Inject constructor(
                 .map { list -> list.map(::ShareId) }
         }
 
+    override suspend fun getShareIdsByType(
+        userId: UserId,
+        shareIds: Set<ShareId>,
+        shareType: ShareType
+    ): Set<ShareId> = database.sharesDao()
+        .getIdsByType(
+            userId = userId.id,
+            shareIds = shareIds.map { it.id },
+            shareType = shareType.value
+        )
+        .map(::ShareId)
+        .toSet()
+
     private fun mapToUsableShareKeys(entities: List<ShareKeyView>): List<UsableShareKey> = entities.map {
         UsableShareKey(
             shareId = it.shareId,

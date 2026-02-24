@@ -183,7 +183,11 @@ fun SelectVaultBottomsheetContent(
                     onToggleFolders = { showFoldersState.value = !showFoldersState.value },
                     expandedState = expandedState,
                     selectedFolderId = state.selectedFolderId,
-                    onVaultClick = { if (enabled) onVaultClick(shareId) },
+                    onVaultClick = if (enabled) {
+                        { onVaultClick(shareId) }
+                    } else {
+                        null
+                    },
                     onFolderClick = { folderId -> onFolderClick(shareId, folderId) }
                 )
 
@@ -211,7 +215,7 @@ private fun VaultRowWithFolders(
     onToggleFolders: () -> Unit,
     expandedState: MutableMap<String, Boolean>,
     selectedFolderId: FolderId?,
-    onVaultClick: () -> Unit,
+    onVaultClick: (() -> Unit)?,
     onFolderClick: (FolderId) -> Unit
 ) {
     Column(modifier = modifier.fillMaxWidth()) {

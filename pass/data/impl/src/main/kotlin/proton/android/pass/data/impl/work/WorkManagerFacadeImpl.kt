@@ -19,9 +19,11 @@
 package proton.android.pass.data.impl.work
 
 import androidx.lifecycle.asFlow
+import androidx.work.WorkInfo
 import androidx.work.WorkManager
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.mapNotNull
+import proton.android.pass.data.api.work.FetchItemsState
 import proton.android.pass.data.api.work.WorkManagerFacade
 import javax.inject.Inject
 
@@ -29,13 +31,23 @@ class WorkManagerFacadeImpl @Inject constructor(
     private val workManager: WorkManager
 ) : WorkManagerFacade {
 
-    override suspend fun awaitUniqueWorkFinished(name: String) {
-        workManager.getWorkInfosForUniqueWorkLiveData(name)
+    override suspend fun awaitUniqueWorkFinished(name: String): FetchItemsState {
+        val terminalState = workManager
+            .getWorkInfosForUniqueWorkLiveData(name)
             .asFlow()
-            .mapNotNull { infos ->
-                if (infos.isEmpty()) null
-                else infos.first().state
-            }
+            .mapNotNull { infos -> infos.firstOrNull()?.state }
             .first { it.isFinished }
+
+        return terminalState.toFetchItemsState()
     }
+}
+
+fun WorkInfo.State.toFetchItemsState(): FetchItemsState = when (this) {
+    WorkInfo.State.ENQUEUED,
+    WorkInfo.State.RUNNING,
+    WorkInfo.State.BLOCKED -> error("Unreachable: filtered by isFinished")
+
+    WorkInfo.State.SUCCEEDED -> FetchItemsState.Success
+    WorkInfo.State.FAILED -> FetchItemsState.Failure
+    WorkInfo.State.CANCELLED -> FetchItemsState.Cancelled
 }

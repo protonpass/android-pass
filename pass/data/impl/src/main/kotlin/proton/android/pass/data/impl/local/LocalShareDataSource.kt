@@ -60,4 +60,10 @@ interface LocalShareDataSource {
 
     fun observeSharedByMeIds(userId: UserId, includeHidden: Boolean): Flow<List<ShareId>>
 
+    suspend fun getShareIdsByType(
+        userId: UserId,
+        shareIds: Set<ShareId>,
+        shareType: ShareType
+    ): Set<ShareId>
+
 }

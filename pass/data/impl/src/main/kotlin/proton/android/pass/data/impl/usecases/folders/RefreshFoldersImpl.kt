@@ -20,22 +20,33 @@ package proton.android.pass.data.impl.usecases.folders
 
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.api.repositories.FolderRepository
+import proton.android.pass.data.api.repositories.ShareRepository
 import proton.android.pass.data.api.usecases.folders.RefreshFolders
 import proton.android.pass.data.impl.util.runConcurrently
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.ShareType
 import proton.android.pass.log.api.PassLogger
 import javax.inject.Inject
 
 class RefreshFoldersImpl @Inject constructor(
-    private val folderRepository: FolderRepository
+    private val folderRepository: FolderRepository,
+    private val shareRepository: ShareRepository
 ) : RefreshFolders {
 
     override suspend fun invoke(userId: UserId, shareIds: Set<ShareId>) {
         if (shareIds.isEmpty()) return
 
+        val vaultShareIds = shareRepository.filterShareIdsByType(
+            userId = userId,
+            shareIds = shareIds,
+            shareType = ShareType.Vault
+        )
+
+        if (vaultShareIds.isEmpty()) return
+
         val results = runConcurrently(
             maxParallelCalls = MAX_PARALLEL_REFRESHES,
-            items = shareIds,
+            items = vaultShareIds,
             block = { shareId -> folderRepository.refreshFolders(userId, shareId) },
             onFailure = { shareId, error ->
                 PassLogger.w(TAG, "Failed to refresh folders for shareId=${shareId.id}")

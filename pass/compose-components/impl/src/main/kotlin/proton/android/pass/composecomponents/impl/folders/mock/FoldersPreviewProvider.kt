@@ -34,6 +34,7 @@ class FoldersPreviewProvider : PreviewParameterProvider<FoldersParameter> {
     override val values: Sequence<FoldersParameter>
         get() = sequenceOf(
             withEmptyFolders(),
+            withEmptyFoldersNeedsUpgrade(),
             withSingleFolder(),
             withNestedFolders(),
             withNestedFoldersExpanded()
@@ -42,6 +43,11 @@ class FoldersPreviewProvider : PreviewParameterProvider<FoldersParameter> {
     companion object {
         private fun withEmptyFolders() = FoldersParameter(
             folders = persistentListOf()
+        )
+
+        private fun withEmptyFoldersNeedsUpgrade() = FoldersParameter(
+            folders = persistentListOf(),
+            needsToUpgrade = true
         )
 
         private fun withSingleFolder() = FoldersParameter(
@@ -120,5 +126,6 @@ class FoldersPreviewProvider : PreviewParameterProvider<FoldersParameter> {
 
 data class FoldersParameter(
     val folders: PersistentList<FolderUiModel>,
-    val expandedState: Map<String, Boolean> = emptyMap()
+    val expandedState: Map<String, Boolean> = emptyMap(),
+    val needsToUpgrade: Boolean = false
 )

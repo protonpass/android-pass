@@ -18,7 +18,7 @@
 
 package proton.android.pass.features.itemcreate.common
 
-import proton.android.pass.domain.FolderId
+import proton.android.pass.commonuimodels.api.FolderUiModel
 import proton.android.pass.domain.VaultWithItemCount
 
 sealed class ShareUiState {
@@ -28,8 +28,7 @@ sealed class ShareUiState {
     data class Success(
         val vaultList: List<VaultWithItemCount>,
         val currentVault: VaultWithItemCount,
-        val selectedFolderName: String? = null,
-        val selectedFolderId: FolderId? = null
+        val selectedFolder: FolderUiModel? = null
     ) : ShareUiState()
 }
 

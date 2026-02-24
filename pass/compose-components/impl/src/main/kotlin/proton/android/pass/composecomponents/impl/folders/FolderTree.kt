@@ -66,7 +66,7 @@ fun FolderTree(
     selectedFolderId: FolderId? = null,
     depth: Int = 0, // no padding when depth == 0
     needsToUpgrade: Boolean = false,
-    onFolderClick: (FolderId) -> Unit,
+    onFolderClick: ((FolderId) -> Unit)?,
     onThreeDotsClick: ((FolderId) -> Unit)? = null,
     onCreateFolderClick: (() -> Unit)? = null
 ) {
@@ -95,7 +95,7 @@ fun FolderTree(
                 isSelected = selectedFolderId != null && folder.id == selectedFolderId,
                 onExpandToggle = { expandedState.toggle(folder.id.id) },
                 onThreeDotsClick = onThreeDotsClick?.let { { it(folder.id) } },
-                onFolderClick = { onFolderClick(folder.id) }
+                onFolderClick = onFolderClick?.let { { it(folder.id) } }
             )
 
             AnimatedVisibility(visible = folder.folders.isNotEmpty() && isExpanded) {

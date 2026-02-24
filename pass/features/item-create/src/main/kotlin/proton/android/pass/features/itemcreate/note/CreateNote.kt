@@ -133,9 +133,13 @@ fun CreateNoteScreen(
             Triple(false, null, null)
         }
 
-        is ShareUiState.Success -> Triple(shares.vaultList.size > 1, shares.currentVault, shares.selectedFolderName)
+        is ShareUiState.Success -> Triple(
+            shares.vaultList.size > 1,
+            shares.currentVault,
+            shares.selectedFolder?.name?.takeIf { it.isNotBlank() }
+        )
     }
-    val selectedFolderId = (uiState.shareUiState as? ShareUiState.Success)?.selectedFolderId
+    val selectedFolderId = (uiState.shareUiState as? ShareUiState.Success)?.selectedFolder?.id
 
     var showWarningVaultSharedDialog by rememberSaveable { mutableStateOf(false) }
 

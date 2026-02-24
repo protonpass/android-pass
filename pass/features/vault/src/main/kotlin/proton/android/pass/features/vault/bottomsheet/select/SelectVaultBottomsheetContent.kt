@@ -188,7 +188,11 @@ fun SelectVaultBottomsheetContent(
                     } else {
                         null
                     },
-                    onFolderClick = { folderId -> onFolderClick(shareId, folderId) }
+                    onFolderClick = if (enabled) {
+                        { folderId -> onFolderClick(shareId, folderId) }
+                    } else {
+                        null
+                    }
                 )
 
                 if (index < state.vaults.lastIndex) {
@@ -216,7 +220,7 @@ private fun VaultRowWithFolders(
     expandedState: MutableMap<String, Boolean>,
     selectedFolderId: FolderId?,
     onVaultClick: (() -> Unit)?,
-    onFolderClick: (FolderId) -> Unit
+    onFolderClick: ((FolderId) -> Unit)?
 ) {
     Column(modifier = modifier.fillMaxWidth()) {
         BottomSheetItemRow(

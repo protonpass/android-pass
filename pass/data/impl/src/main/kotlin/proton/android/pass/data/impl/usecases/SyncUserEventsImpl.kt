@@ -38,6 +38,7 @@ import proton.android.pass.data.api.usecases.folders.DeleteFoldersLocally
 import proton.android.pass.data.api.usecases.folders.RefreshFolders
 import proton.android.pass.data.api.usecases.organization.RefreshOrganizationSettings
 import proton.android.pass.data.api.usecases.simplelogin.SyncSimpleLoginPendingAliases
+import proton.android.pass.data.api.work.FetchItemsState
 import proton.android.pass.data.api.work.WorkManagerFacade
 import proton.android.pass.data.impl.repositories.UserEventRepository
 import proton.android.pass.data.impl.work.FetchItemsWorker
@@ -282,7 +283,11 @@ class SyncUserEventsImpl @Inject constructor(
 
     private suspend fun waitForFetchItemsWorker(userId: UserId) {
         val uniqueName = FetchItemsWorker.getOneTimeUniqueWorkName(userId)
-        workManagerFacade.awaitUniqueWorkFinished(uniqueName)
+        when (workManagerFacade.awaitUniqueWorkFinished(uniqueName)) {
+            FetchItemsState.Success -> Unit
+            FetchItemsState.Failure,
+            FetchItemsState.Cancelled -> error("$uniqueName did not succeed")
+        }
     }
 
     private companion object {

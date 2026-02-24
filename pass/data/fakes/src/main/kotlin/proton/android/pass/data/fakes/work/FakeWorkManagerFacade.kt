@@ -18,6 +18,7 @@
 
 package proton.android.pass.data.fakes.work
 
+import proton.android.pass.data.api.work.FetchItemsState
 import proton.android.pass.data.api.work.WorkManagerFacade
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -33,8 +34,8 @@ class FakeWorkManagerFacade @Inject constructor() : WorkManagerFacade {
         awaitedWorkNames.clear()
     }
 
-    override suspend fun awaitUniqueWorkFinished(name: String) {
+    override suspend fun awaitUniqueWorkFinished(name: String): FetchItemsState {
         awaitedWorkNames.add(name)
-        // In tests, we can simulate immediate completion or configure behavior
+        return FetchItemsState.Success
     }
 }

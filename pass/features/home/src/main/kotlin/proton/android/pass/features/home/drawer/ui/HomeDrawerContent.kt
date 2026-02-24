@@ -84,7 +84,8 @@ internal fun HomeDrawerContent(
             sharedByMeItemsCount = sharedByMeItemsCount,
             trashedItemsCount = trashedItemsCount,
             onUiEvent = onUiEvent,
-            foldersEnabled = foldersEnabled
+            foldersEnabled = foldersEnabled,
+            needsToUpgrade = needsToUpgrade
         )
 
         HomeDrawerFooter(

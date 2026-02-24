@@ -46,6 +46,7 @@ import proton.android.pass.commonuimodels.api.FolderUiModel
 import proton.android.pass.composecomponents.impl.R
 import proton.android.pass.composecomponents.impl.folders.mock.FoldersParameter
 import proton.android.pass.composecomponents.impl.folders.mock.ThemedFoldersPreviewProvider
+import proton.android.pass.composecomponents.impl.icon.PassPlusIcon
 import proton.android.pass.composecomponents.impl.text.Text
 import proton.android.pass.domain.FolderId
 import me.proton.core.presentation.R as CoreR
@@ -65,7 +66,8 @@ fun FolderTree(
     onThreeDotsClick: ((FolderId) -> Unit)? = null,
     onCreateFolderClick: (() -> Unit)? = null,
     expandedState: MutableMap<String, Boolean>,
-    depth: Int = 0 // no padding when depth == 0
+    depth: Int = 0, // no padding when depth == 0
+    needsToUpgrade: Boolean = false
 ) {
     Column(
         modifier = modifier,
@@ -75,6 +77,7 @@ fun FolderTree(
             if (folders.isEmpty() && depth == 0) {
                 CreateFolderButton(
                     modifier = modifierCreateButton,
+                    needsToUpgrade = needsToUpgrade,
                     onClick = {
                         onCreateFolderClick.invoke()
                     }
@@ -117,7 +120,11 @@ fun FolderTree(
 }
 
 @Composable
-private fun CreateFolderButton(modifier: Modifier = Modifier, onClick: () -> Unit) {
+private fun CreateFolderButton(
+    modifier: Modifier = Modifier,
+    needsToUpgrade: Boolean = false,
+    onClick: () -> Unit
+) {
     Row(
         modifier = modifier
             .clip(shape = CircleShape)
@@ -137,6 +144,9 @@ private fun CreateFolderButton(modifier: Modifier = Modifier, onClick: () -> Uni
             text = stringResource(R.string.folder_tree_create_folder),
             color = PassTheme.colors.interactionNormMajor2
         )
+        if (needsToUpgrade) {
+            PassPlusIcon()
+        }
     }
 }
 
@@ -154,7 +164,8 @@ internal fun FolderTreePreview(
                 },
                 onThreeDotsClick = {},
                 onCreateFolderClick = {},
-                onFolderClick = {}
+                onFolderClick = {},
+                needsToUpgrade = input.second.needsToUpgrade
             )
         }
     }

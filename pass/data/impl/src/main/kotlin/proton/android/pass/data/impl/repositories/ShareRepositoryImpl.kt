@@ -437,6 +437,12 @@ class ShareRepositoryImpl @Inject constructor(
         }
     }
 
+    override suspend fun filterShareIdsByType(
+        userId: UserId,
+        shareIds: Set<ShareId>,
+        shareType: ShareType
+    ): Set<ShareId> = localShareDataSource.getShareIdsByType(userId, shareIds, shareType)
+
     private suspend fun onShareResponseEntity(
         userId: UserId,
         event: UpdateShareEvent,

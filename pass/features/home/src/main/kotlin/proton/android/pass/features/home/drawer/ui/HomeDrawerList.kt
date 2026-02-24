@@ -45,6 +45,7 @@ internal fun HomeDrawerList(
     vaultSelectionOption: VaultSelectionOption,
     allItemsCount: Int,
     foldersEnabled: Boolean,
+    needsToUpgrade: Boolean,
     hasSharedWithMeItems: Boolean,
     sharedWithMeItemsCount: Int,
     hasSharedByMeItems: Boolean,
@@ -118,11 +119,16 @@ internal fun HomeDrawerList(
                     ).also(onUiEvent)
                 },
                 onCreateFolderClick = {
-                    HomeDrawerUiEvent.OnCreateFolderClick(
-                        shareId = vaultShare.vault.shareId
-                    ).also(onUiEvent)
+                    if (needsToUpgrade) {
+                        onUiEvent(HomeDrawerUiEvent.OnUpgradeClick)
+                    } else {
+                        HomeDrawerUiEvent.OnCreateFolderClick(
+                            shareId = vaultShare.vault.shareId
+                        ).also(onUiEvent)
+                    }
                 },
-                folders = vaultFolders[vaultShare.vault.shareId] ?: emptyList()
+                folders = vaultFolders[vaultShare.vault.shareId] ?: emptyList(),
+                needsToUpgrade = needsToUpgrade
             )
 
             PassDivider(

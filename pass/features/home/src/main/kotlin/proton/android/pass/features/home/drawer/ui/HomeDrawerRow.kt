@@ -78,7 +78,8 @@ internal fun HomeDrawerRow(
     onMenuOptionsClickFromFolder: ((FolderId) -> Unit)? = null,
     onCreateFolderClick: (() -> Unit)? = null,
     onShareClick: (() -> Unit)? = null,
-    onMenuOptionsClick: (() -> Unit)? = null
+    onMenuOptionsClick: (() -> Unit)? = null,
+    needsToUpgrade: Boolean = false
 ) {
     val (showFolders, onShowFolders) = rememberSaveable { mutableStateOf(forceShowFolder) }
 
@@ -207,7 +208,8 @@ internal fun HomeDrawerRow(
                     .padding(bottom = Spacing.medium),
                 onFolderClick = {
                     onFolderClick?.invoke(it)
-                }
+                },
+                needsToUpgrade = needsToUpgrade
             )
         }
     }

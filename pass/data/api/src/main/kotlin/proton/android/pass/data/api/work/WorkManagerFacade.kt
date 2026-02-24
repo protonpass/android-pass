@@ -19,5 +19,12 @@
 package proton.android.pass.data.api.work
 
 interface WorkManagerFacade {
-    suspend fun awaitUniqueWorkFinished(name: String)
+    suspend fun awaitUniqueWorkFinished(name: String): FetchItemsState
+}
+
+
+sealed interface FetchItemsState {
+    data object Success : FetchItemsState
+    data object Failure : FetchItemsState
+    data object Cancelled : FetchItemsState
 }

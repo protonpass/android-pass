@@ -30,12 +30,19 @@ data class AutosaveLoginMatcher(
     fun matchesUsername(login: ItemType.Login): Boolean = login.itemUsername == username || login.itemEmail == username
 
     fun matchesSource(login: ItemType.Login): Boolean? = when {
-        website != null -> login.websites.any { url ->
-            UrlSanitizer.sanitize(url).getOrNull() == website
-        }
-
         packageName != null -> login.packageInfoSet.any {
             it.packageName.value == packageName
+        }
+
+        website != null -> {
+            val websiteSanitize = UrlSanitizer
+                .sanitize(website)
+                .getOrNull()
+                ?.trimEnd('/')
+                ?: return false
+            login.websites.any { url ->
+                UrlSanitizer.sanitize(url).getOrNull()?.trimEnd('/') == websiteSanitize
+            }
         }
 
         else -> null

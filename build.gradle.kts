@@ -186,3 +186,16 @@ fladle {
     useOrchestrator.set(true)
     flakyTestAttempts.set(1)
 }
+
+// Selective test run: when the selective.test.apks Gradle property is provided, replace
+// Fulladle's auto-discovered module list with only the APKs we actually built.
+// This runs in afterEvaluate so it executes after Fulladle has registered its entries.
+afterEvaluate {
+    providers.gradleProperty("selective.test.apks").orNull?.let { apkPaths ->
+        fladle {
+            additionalTestApks.set(
+                apkPaths.split(",").filter { it.isNotBlank() }.map { "test:${it.trim()}" }
+            )
+        }
+    }
+}

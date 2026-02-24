@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 Proton AG
+ * Copyright (c) 2026 Proton AG
  * This file is part of Proton AG and Proton Pass.
  *
  * Proton Pass is free software: you can redistribute it and/or modify
@@ -16,25 +16,18 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.itemcreate.common
+package proton.android.pass.data.api.usecases.folders
 
-import proton.android.pass.commonuimodels.api.FolderUiModel
-import proton.android.pass.domain.VaultWithItemCount
+import kotlinx.coroutines.flow.Flow
+import me.proton.core.domain.entity.UserId
+import proton.android.pass.domain.Folder
+import proton.android.pass.domain.FolderId
+import proton.android.pass.domain.ShareId
 
-sealed class ShareUiState {
-    data object NotInitialised : ShareUiState()
-    data object Loading : ShareUiState()
-    data class Error(val shareError: ShareError) : ShareUiState()
-    data class Success(
-        val vaultList: List<VaultWithItemCount>,
-        val currentVault: VaultWithItemCount,
-        val selectedFolder: FolderUiModel? = null
-    ) : ShareUiState()
-}
-
-enum class ShareError {
-    EmptyShareList,
-    UpgradeInfoNotAvailable,
-    SharesNotAvailable,
-    NoPrimaryVault
+interface ObserveFolder {
+    operator fun invoke(
+        userId: UserId,
+        shareId: ShareId,
+        folderId: FolderId
+    ): Flow<Folder?>
 }

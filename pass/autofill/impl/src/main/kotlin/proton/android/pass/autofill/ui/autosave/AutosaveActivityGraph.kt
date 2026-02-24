@@ -211,6 +211,7 @@ fun NavGraphBuilder.autosaveActivityGraph(
                 VaultNavigation.DismissBottomsheet -> dismissBottomSheet {}
                 VaultNavigation.Upgrade -> onNavigate(AutosaveNavigation.Upgrade)
                 is VaultNavigation.VaultSelected -> dismissBottomSheet {
+                    appNavigator.clearResult(KEY_FOLDER_SELECTED)
                     appNavigator.setResult(mapOf(KEY_VAULT_SELECTED to it.shareId.id))
                 }
 

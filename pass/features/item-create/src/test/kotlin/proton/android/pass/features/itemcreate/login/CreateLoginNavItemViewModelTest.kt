@@ -48,7 +48,7 @@ import proton.android.pass.data.fakes.usecases.FakeObserveDefaultVault
 import proton.android.pass.data.fakes.usecases.FakeObserveUpgradeInfo
 import proton.android.pass.data.fakes.usecases.FakeObserveVaultsWithItemCount
 import proton.android.pass.data.fakes.usecases.attachments.FakeLinkAttachmentsToItem
-import proton.android.pass.data.fakes.usecases.folders.FakeObserveFolders
+import proton.android.pass.data.fakes.usecases.folders.FakeObserveFolder
 import proton.android.pass.data.fakes.usecases.shares.FakeObserveShare
 import proton.android.pass.data.fakes.usecases.tooltips.FakeDisableTooltip
 import proton.android.pass.data.fakes.usecases.tooltips.FakeObserveTooltipEnabled
@@ -153,7 +153,7 @@ internal class CreateLoginNavItemViewModelTest {
             getItemById = FakeGetItemById(),
             observeShare = observeShare,
             settingsRepository = settingsRepository,
-            observeFolders = FakeObserveFolders()
+            observeFolder = FakeObserveFolder()
         )
     }
 
@@ -385,7 +385,7 @@ internal class CreateLoginNavItemViewModelTest {
 
         instance.createLoginUiState.test {
             val state = awaitItem().shareUiState as? ShareUiState.Success
-            assertThat(state?.selectedFolderId).isEqualTo(folderId)
+            assertThat(state?.selectedFolder?.id).isEqualTo(folderId)
         }
     }
 
@@ -400,7 +400,7 @@ internal class CreateLoginNavItemViewModelTest {
 
         instance.createLoginUiState.test {
             val state = awaitItem().shareUiState as? ShareUiState.Success
-            assertThat(state?.selectedFolderId).isNull()
+            assertThat(state?.selectedFolder?.id).isNull()
         }
     }
 

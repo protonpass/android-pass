@@ -117,11 +117,15 @@ internal data class HomeUiState(
                 .shares[selection.shareId]
                 ?.isViewer == true
 
+        is VaultSelectionOption.Folder ->
+            homeListUiState
+                .shares[selection.shareId]
+                ?.isViewer == true
+
         VaultSelectionOption.AllVaults,
         VaultSelectionOption.SharedByMe,
         VaultSelectionOption.SharedWithMe,
-        is VaultSelectionOption.Trash,
-        is VaultSelectionOption.Folder -> false
+        is VaultSelectionOption.Trash -> false
     }
 
     internal fun shouldDisplayTrashAliasDialog(itemUiModel: ItemUiModel): Boolean = when {

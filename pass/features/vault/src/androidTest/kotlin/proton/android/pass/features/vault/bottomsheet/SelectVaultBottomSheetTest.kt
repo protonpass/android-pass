@@ -25,11 +25,14 @@ import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.performClick
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
+import kotlinx.collections.immutable.persistentListOf
+import kotlinx.collections.immutable.persistentMapOf
 import me.proton.core.domain.entity.UserId
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import proton.android.pass.commonui.api.PassTheme
+import proton.android.pass.commonuimodels.api.FolderUiModel
 import proton.android.pass.commonui.fakes.FakeSavedStateHandleProvider
 import proton.android.pass.data.api.usecases.UpgradeInfo
 import proton.android.pass.data.fakes.usecases.FakeCanCreateItemInVault
@@ -39,6 +42,7 @@ import proton.android.pass.data.fakes.usecases.FakeObserveVaultsWithItemCount
 import proton.android.pass.domain.Plan
 import proton.android.pass.domain.PlanLimit
 import proton.android.pass.domain.PlanType
+import proton.android.pass.domain.FolderId
 import proton.android.pass.domain.ShareFlags
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.ShareRole
@@ -48,7 +52,11 @@ import proton.android.pass.domain.VaultWithItemCount
 import proton.android.pass.features.vault.R
 import proton.android.pass.features.vault.VaultNavigation
 import proton.android.pass.features.vault.bottomsheet.select.SelectVaultBottomsheet
+import proton.android.pass.features.vault.bottomsheet.select.SelectVaultBottomsheetContent
+import proton.android.pass.features.vault.bottomsheet.select.SelectVaultUiState
 import proton.android.pass.features.vault.bottomsheet.select.SelectedVaultArg
+import proton.android.pass.features.vault.bottomsheet.select.VaultStatus
+import proton.android.pass.features.vault.bottomsheet.select.VaultWithStatus
 import proton.android.pass.test.CallChecker
 import proton.android.pass.test.HiltComponentActivity
 import proton.android.pass.test.TestConstants
@@ -281,6 +289,63 @@ class SelectVaultBottomSheetTest {
             val otherVaultRow = hasText(vaultNameForIndex(1))
             waitUntilExists(otherVaultRow)
             onNode(otherVaultRow).assertHasNoClickAction()
+        }
+    }
+
+    @Test
+    fun foldersInDisabledVaultHaveNoClickAction() {
+        val shareId = shareIdForIndex(0)
+        val folderId = FolderId("folder-0")
+        val folderName = "Folder0"
+        val vault = VaultWithItemCount(
+            vault = Vault(
+                userId = UserId(""),
+                shareId = shareId,
+                vaultId = VaultId("vault-id"),
+                name = vaultNameForIndex(0),
+                role = ShareRole.Read,
+                createTime = Date(),
+                shareFlags = ShareFlags(0)
+            ),
+            activeItemCount = 1,
+            trashedItemCount = 1
+        )
+
+        composeTestRule.apply {
+            setContent {
+                PassTheme {
+                    SelectVaultBottomsheetContent(
+                        state = SelectVaultUiState.Success(
+                            vaults = persistentListOf(
+                                VaultWithStatus(
+                                    vaultWithItemCount = vault,
+                                    status = VaultStatus.Disabled(VaultStatus.Reason.ReadOnly)
+                                )
+                            ),
+                            selected = vault,
+                            showUpgradeMessage = false,
+                            foldersEnabled = true,
+                            vaultFolders = persistentMapOf(
+                                shareId to persistentListOf(
+                                    FolderUiModel(
+                                        id = folderId,
+                                        name = folderName,
+                                        folders = persistentListOf()
+                                    )
+                                )
+                            ),
+                            selectedFolderId = folderId
+                        ),
+                        onVaultClick = {},
+                        onFolderClick = { _, _ -> },
+                        onUpgrade = {}
+                    )
+                }
+            }
+
+            val folderRow = hasText(folderName)
+            waitUntilExists(folderRow)
+            onNode(folderRow).assertHasNoClickAction()
         }
     }
 

@@ -18,6 +18,7 @@
 
 package proton.android.pass.features.itemcreate.common
 
+import kotlinx.collections.immutable.persistentListOf
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharingStarted
@@ -30,10 +31,10 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import me.proton.core.accountmanager.domain.AccountManager
 import proton.android.pass.common.api.LoadingResult
-import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
-import proton.android.pass.data.api.usecases.folders.ObserveFolders
+import proton.android.pass.commonuimodels.api.FolderUiModel
+import proton.android.pass.data.api.usecases.folders.ObserveFolder
 import proton.android.pass.domain.FolderId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.VaultWithItemCount
@@ -43,10 +44,10 @@ import proton.android.pass.log.api.PassLogger
 
 fun getFolderNameFlow(
     accountManager: AccountManager,
-    observeFolders: ObserveFolders,
+    observeFolder: ObserveFolder,
     selectedShareIdState: Flow<Option<ShareId>>,
     selectedFolderIdFlow: Flow<FolderId?>,
-    navShareIdState: Flow<Option<ShareId>> = flowOf(None)
+    navShareIdState: Flow<Option<ShareId>>
 ): Flow<String?> = combine(
     accountManager.getPrimaryUserId().distinctUntilChanged(),
     selectedShareIdState,
@@ -57,8 +58,8 @@ fun getFolderNameFlow(
     Triple(userId, shareId, folderId)
 }.flatMapLatest { (userId, shareId, folderId) ->
     if (userId == null || shareId == null || folderId == null) return@flatMapLatest flowOf(null)
-    observeFolders(userId, shareId)
-        .map { folders -> folders.firstOrNull { it.folderId == folderId }?.name }
+    observeFolder(userId, shareId, folderId)
+        .map { folder -> folder?.name }
         .distinctUntilChanged()
 }
 
@@ -73,12 +74,12 @@ private data class VaultArgs(
 fun getShareUiStateFlow(
     navShareIdState: Flow<Option<ShareId>>,
     selectedShareIdState: Flow<Option<ShareId>>,
+    selectedFolderNameFlow: Flow<String?>,
+    selectedFolderIdFlow: Flow<FolderId?>,
     observeAllVaultsFlow: Flow<LoadingResult<List<VaultWithItemCount>>>,
     observeDefaultVaultFlow: Flow<LoadingResult<Option<VaultWithItemCount>>>,
     viewModelScope: CoroutineScope,
-    tag: String,
-    selectedFolderNameFlow: Flow<String?> = flowOf(null),
-    selectedFolderIdFlow: Flow<FolderId?> = flowOf(null)
+    tag: String
 ): StateFlow<ShareUiState> = combine(
     combine(
         navShareIdState,
@@ -90,15 +91,15 @@ fun getShareUiStateFlow(
     selectedFolderNameFlow,
     selectedFolderIdFlow
 ) { vaultArgs, selectedFolderName, selectedFolderId ->
-    val allShares = when (val r = vaultArgs.allSharesResult) {
+    val allShares = when (val result = vaultArgs.allSharesResult) {
         is LoadingResult.Error -> return@combine ShareUiState.Error(ShareError.SharesNotAvailable)
         LoadingResult.Loading -> return@combine ShareUiState.Loading
-        is LoadingResult.Success -> r.data
+        is LoadingResult.Success -> result.data
     }
-    val defaultVault = when (val r = vaultArgs.defaultVaultResult) {
+    val defaultVault = when (val result = vaultArgs.defaultVaultResult) {
         is LoadingResult.Error -> return@combine ShareUiState.Error(ShareError.SharesNotAvailable)
         LoadingResult.Loading -> return@combine ShareUiState.Loading
-        is LoadingResult.Success -> r.data
+        is LoadingResult.Success -> result.data
     }
     shareUiState(
         tag = tag,
@@ -115,14 +116,15 @@ fun getShareUiStateFlow(
     initialValue = ShareUiState.NotInitialised
 )
 
+@Suppress("LongParameterList")
 private fun shareUiState(
     tag: String,
     allShares: List<VaultWithItemCount>,
     selectedShareId: Option<ShareId>,
     navShareId: Option<ShareId>,
     defaultVault: Option<VaultWithItemCount>,
-    selectedFolderName: String? = null,
-    selectedFolderId: FolderId? = null
+    selectedFolderName: String?,
+    selectedFolderId: FolderId?
 ): ShareUiState {
     val writeableVaults = allShares.filter { it.vault.role.toPermissions().canCreate() }
     if (writeableVaults.isEmpty()) {
@@ -151,8 +153,12 @@ private fun shareUiState(
     return ShareUiState.Success(
         vaultList = allShares,
         currentVault = selectedVault,
-        selectedFolderName = selectedFolderName,
-        selectedFolderId = selectedFolderId
+        selectedFolder = selectedFolderId?.let {
+            FolderUiModel(
+                id = it,
+                name = selectedFolderName.orEmpty(),
+                folders = persistentListOf()
+            )
+        }
     )
 }
-

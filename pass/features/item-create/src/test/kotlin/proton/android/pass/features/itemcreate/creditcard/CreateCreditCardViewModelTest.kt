@@ -41,7 +41,7 @@ import proton.android.pass.data.fakes.usecases.FakeGetItemById
 import proton.android.pass.data.fakes.usecases.FakeObserveDefaultVault
 import proton.android.pass.data.fakes.usecases.FakeObserveVaultsWithItemCount
 import proton.android.pass.data.fakes.usecases.attachments.FakeLinkAttachmentsToItem
-import proton.android.pass.data.fakes.usecases.folders.FakeObserveFolders
+import proton.android.pass.data.fakes.usecases.folders.FakeObserveFolder
 import proton.android.pass.data.fakes.usecases.shares.FakeObserveShare
 import proton.android.pass.domain.ItemState
 import proton.android.pass.domain.FolderId
@@ -118,7 +118,7 @@ class CreateCreditCardViewModelTest {
             getItemById = FakeGetItemById(),
             observeShare = observeShare,
             settingsRepository = settingsRepository,
-            observeFolders = FakeObserveFolders()
+            observeFolder = FakeObserveFolder()
         )
     }
 
@@ -261,7 +261,7 @@ class CreateCreditCardViewModelTest {
             val state = awaitItem()
             assertThat(state).isInstanceOf(CreateCreditCardUiState.Success::class.java)
             val shareState = (state as CreateCreditCardUiState.Success).shareUiState as? ShareUiState.Success
-            assertThat(shareState?.selectedFolderId).isEqualTo(folderId)
+            assertThat(shareState?.selectedFolder?.id).isEqualTo(folderId)
         }
     }
 
@@ -278,7 +278,7 @@ class CreateCreditCardViewModelTest {
             val state = awaitItem()
             assertThat(state).isInstanceOf(CreateCreditCardUiState.Success::class.java)
             val shareState = (state as CreateCreditCardUiState.Success).shareUiState as? ShareUiState.Success
-            assertThat(shareState?.selectedFolderId).isNull()
+            assertThat(shareState?.selectedFolder?.id).isNull()
         }
     }
 

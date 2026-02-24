@@ -71,10 +71,14 @@ sealed interface CustomItemState : ItemSharedProperties {
             get() = selectedVault.map { it.shareId }
 
         override val selectedFolderName: String?
-            get() = if (shareUiState is ShareUiState.Success) shareUiState.selectedFolderName else null
+            get() = if (shareUiState is ShareUiState.Success) {
+                shareUiState.selectedFolder?.name?.takeIf { it.isNotBlank() }
+            } else {
+                null
+            }
 
         override val selectedFolderId: FolderId?
-            get() = if (shareUiState is ShareUiState.Success) shareUiState.selectedFolderId else null
+            get() = if (shareUiState is ShareUiState.Success) shareUiState.selectedFolder?.id else null
     }
 
     @Immutable

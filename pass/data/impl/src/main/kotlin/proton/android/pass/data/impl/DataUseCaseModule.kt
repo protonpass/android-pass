@@ -84,6 +84,7 @@ import proton.android.pass.data.api.usecases.folders.DeleteFoldersLocally
 import proton.android.pass.data.api.usecases.folders.GetFolder
 import proton.android.pass.data.api.usecases.folders.GetFolderHierarchy
 import proton.android.pass.data.api.usecases.folders.MoveFolder
+import proton.android.pass.data.api.usecases.folders.ObserveFolder
 import proton.android.pass.data.api.usecases.folders.ObserveFolderItemCounts
 import proton.android.pass.data.api.usecases.folders.ObserveFolders
 import proton.android.pass.data.api.usecases.folders.ObserveFoldersByParentId
@@ -338,6 +339,7 @@ import proton.android.pass.data.impl.usecases.folders.DeleteFoldersLocallyImpl
 import proton.android.pass.data.impl.usecases.folders.GetFolderImpl
 import proton.android.pass.data.impl.usecases.folders.GetFolderHierarchyImpl
 import proton.android.pass.data.impl.usecases.folders.MoveFolderImpl
+import proton.android.pass.data.impl.usecases.folders.ObserveFolderImpl
 import proton.android.pass.data.impl.usecases.folders.ObserveFolderItemCountsImpl
 import proton.android.pass.data.impl.usecases.folders.ObserveFoldersImpl
 import proton.android.pass.data.impl.usecases.folders.ObserveFoldersByParentIdImpl
@@ -598,6 +600,9 @@ abstract class DataUseCaseModule {
 
     @Binds
     abstract fun bindObserveFolders(impl: ObserveFoldersImpl): ObserveFolders
+
+    @Binds
+    abstract fun bindObserveFolder(impl: ObserveFolderImpl): ObserveFolder
 
     @Binds
     abstract fun bindGetFolder(impl: GetFolderImpl): GetFolder

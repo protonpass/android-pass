@@ -66,7 +66,7 @@ import proton.android.pass.data.api.usecases.CreateAlias
 import proton.android.pass.data.api.usecases.ObserveAliasOptions
 import proton.android.pass.data.api.usecases.ObserveUpgradeInfo
 import proton.android.pass.data.api.usecases.ObserveVaultsWithItemCount
-import proton.android.pass.data.api.usecases.folders.ObserveFolders
+import proton.android.pass.data.api.usecases.folders.ObserveFolder
 import proton.android.pass.data.api.usecases.attachments.LinkAttachmentsToItem
 import proton.android.pass.data.api.usecases.defaultvault.ObserveDefaultVault
 import proton.android.pass.data.api.usecases.shares.ObserveShare
@@ -106,7 +106,7 @@ import javax.inject.Inject
 @HiltViewModel
 open class CreateAliasViewModel @Inject constructor(
     private val accountManager: AccountManager,
-    private val observeFolders: ObserveFolders,
+    private val observeFolder: ObserveFolder,
     private val createAlias: CreateAlias,
     private val snackbarDispatcher: SnackbarDispatcher,
     private val telemetryManager: TelemetryManager,
@@ -174,7 +174,7 @@ open class CreateAliasViewModel @Inject constructor(
 
     private val selectedFolderNameFlow = getFolderNameFlow(
         accountManager = accountManager,
-        observeFolders = observeFolders,
+        observeFolder = observeFolder,
         selectedShareIdState = selectedShareIdState,
         selectedFolderIdFlow = selectedFolderIdMutableState,
         navShareIdState = flowOf(navShareId)

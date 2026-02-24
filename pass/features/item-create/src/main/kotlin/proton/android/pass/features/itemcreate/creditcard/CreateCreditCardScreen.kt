@@ -128,10 +128,10 @@ fun CreateCreditCardScreen(
                 is ShareUiState.Success -> Triple(
                     first = shares.vaultList.size > 1,
                     second = shares.currentVault,
-                    third = shares.selectedFolderName
+                    third = shares.selectedFolder?.name?.takeIf { it.isNotBlank() }
                 )
             }
-            val selectedFolderId = (uiState.shareUiState as? ShareUiState.Success)?.selectedFolderId
+            val selectedFolderId = (uiState.shareUiState as? ShareUiState.Success)?.selectedFolder?.id
             Box(modifier = modifier.fillMaxSize()) {
                 CreditCardContent(
                     state = uiState.baseState,

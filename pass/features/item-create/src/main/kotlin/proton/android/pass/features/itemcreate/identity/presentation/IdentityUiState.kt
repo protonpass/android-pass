@@ -184,13 +184,13 @@ sealed interface IdentityUiState : IdentitySharedStateAccessor {
 
     fun getSelectedFolderName(): Option<String> = when {
         this is CreateIdentity && shareUiState is ShareUiState.Success ->
-            shareUiState.selectedFolderName.toOption()
+            shareUiState.selectedFolder?.name?.takeIf { it.isNotBlank() }.toOption()
         else -> None
     }
 
     fun getSelectedFolderId(): Option<FolderId> = when {
         this is CreateIdentity && shareUiState is ShareUiState.Success ->
-            shareUiState.selectedFolderId.toOption()
+            shareUiState.selectedFolder?.id.toOption()
         else -> None
     }
 

@@ -188,6 +188,16 @@ class AppNavigator(
             }
     }
 
+    fun clearResult(vararg keys: String) {
+        navController.currentBackStackEntry
+            ?.savedStateHandle
+            ?.let { savedStateHandle ->
+                keys.forEach { key ->
+                    savedStateHandle.remove<Any?>(key)
+                }
+            }
+    }
+
     fun navigateBackWithResult(values: Map<String, Any>) {
         if (isInProgress()) return
         PassLogger.i(TAG, "Navigating back with results to $previousRoute")

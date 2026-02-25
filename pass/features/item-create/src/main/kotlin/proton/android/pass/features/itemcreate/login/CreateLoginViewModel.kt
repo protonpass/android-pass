@@ -94,6 +94,7 @@ import proton.android.pass.features.itemcreate.alias.AliasItemFormState
 import proton.android.pass.features.itemcreate.alias.AliasMailboxUiModel
 import proton.android.pass.features.itemcreate.alias.CreateAliasViewModel
 import proton.android.pass.features.itemcreate.common.CustomFieldDraftRepository
+import proton.android.pass.features.itemcreate.common.OptionFolderIdSaver
 import proton.android.pass.features.itemcreate.common.OptionShareIdSaver
 import proton.android.pass.features.itemcreate.common.ShareUiState
 import proton.android.pass.features.itemcreate.common.UICustomFieldContent
@@ -218,13 +219,24 @@ class CreateLoginViewModel @Inject constructor(
                 initialValue = None
             )
 
-    private val selectedFolderIdMutableState: MutableStateFlow<FolderId?> = MutableStateFlow(navFolderId)
+    @OptIn(SavedStateHandleSaveableApi::class)
+    private var selectedFolderIdMutableState: Option<FolderId> by savedStateHandleProvider.get()
+        .saveable(stateSaver = OptionFolderIdSaver) { mutableStateOf(navFolderId.toOption()) }
+
+    private val selectedFolderIdState: Flow<Option<FolderId>> =
+        snapshotFlow { selectedFolderIdMutableState }
+            .filterNotNull()
+            .stateIn(
+                scope = viewModelScope,
+                started = SharingStarted.WhileSubscribed(5_000),
+                initialValue = navFolderId.toOption()
+            )
 
     private val selectedFolderNameFlow = getFolderNameFlow(
         accountManager = accountManager,
         observeFolder = observeFolder,
         selectedShareIdState = selectedShareIdState,
-        selectedFolderIdFlow = selectedFolderIdMutableState,
+        selectedFolderIdFlow = selectedFolderIdState,
         navShareIdState = flowOf(navShareId)
     )
 
@@ -247,7 +259,7 @@ class CreateLoginViewModel @Inject constructor(
         viewModelScope = viewModelScope,
         tag = TAG,
         selectedFolderNameFlow = selectedFolderNameFlow,
-        selectedFolderIdFlow = selectedFolderIdMutableState
+        selectedFolderIdFlow = selectedFolderIdState
     )
 
     internal val createLoginUiState: StateFlow<CreateLoginUiState> = combine(
@@ -264,12 +276,12 @@ class CreateLoginViewModel @Inject constructor(
 
     internal fun changeVault(shareId: ShareId) {
         selectedShareIdMutableState = Some(shareId)
-        selectedFolderIdMutableState.value = null
+        selectedFolderIdMutableState = None
     }
 
     internal fun changeFolder(folderId: FolderId) {
         onUserEditedContent()
-        selectedFolderIdMutableState.value = folderId
+        selectedFolderIdMutableState = Some(folderId)
     }
 
     internal suspend fun duplicateContents(context: Context) {

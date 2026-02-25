@@ -1,3 +1,9 @@
+import com.adarshr.gradle.testlogger.TestLoggerExtension
+import com.adarshr.gradle.testlogger.theme.ThemeType
+import org.jetbrains.kotlin.gradle.dsl.KotlinTopLevelExtension
+import org.jetbrains.kotlin.gradle.plugin.KotlinBasePlugin
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+
 /*
  * Copyright (c) 2022 Proton Technologies AG
  * This file is part of Proton Technologies AG and Proton Mail.
@@ -60,8 +66,8 @@ subprojects {
         maxParallelForks = (Runtime.getRuntime().availableProcessors() / 2).takeIf { it > 0 } ?: 1
     }
 
-    configure<com.adarshr.gradle.testlogger.TestLoggerExtension> {
-        theme = com.adarshr.gradle.testlogger.theme.ThemeType.MOCHA_PARALLEL
+    configure<TestLoggerExtension> {
+        theme = ThemeType.MOCHA_PARALLEL
     }
 
     // Pass Common AAR replacement
@@ -72,7 +78,7 @@ subprojects {
 
                 val wasPassCommonRemoved = removeIf { dependency ->
                     dependency.group == passCommon.module.group &&
-                    dependency.name == passCommon.module.name
+                            dependency.name == passCommon.module.name
                 }
 
                 if (!wasPassCommonRemoved) return@withDependencies
@@ -99,11 +105,16 @@ subprojects {
                     attributes {
                         attribute(
                             TargetJvmEnvironment.TARGET_JVM_ENVIRONMENT_ATTRIBUTE,
-                            objects.named(TargetJvmEnvironment::class.java, TargetJvmEnvironment.STANDARD_JVM)
+                            objects.named(
+                                TargetJvmEnvironment::class.java,
+                                TargetJvmEnvironment.STANDARD_JVM
+                            )
                         )
                     }
-                    because("LayoutLib and sdk-common depend on Guava's -jre published variant." +
-                            "See https://github.com/cashapp/paparazzi/issues/906.")
+                    because(
+                        "LayoutLib and sdk-common depend on Guava's -jre published variant." +
+                                "See https://github.com/cashapp/paparazzi/issues/906."
+                    )
                 }
             }
         }
@@ -123,7 +134,7 @@ tasks.register("clean", Delete::class) {
 }
 
 for (project in subprojects) {
-    project.tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
+    project.tasks.withType<KotlinCompile> {
         kotlinOptions {
             freeCompilerArgs = freeCompilerArgs + listOf(
                 "-opt-in=kotlin.RequiresOptIn",
@@ -150,8 +161,8 @@ protonDetekt {
 
 allprojects {
     // Force JVM toolchain to 17 for all subprojects
-    plugins.withType<org.jetbrains.kotlin.gradle.plugin.KotlinBasePlugin> {
-        extensions.configure<org.jetbrains.kotlin.gradle.dsl.KotlinTopLevelExtension> {
+    plugins.withType<KotlinBasePlugin> {
+        extensions.configure<KotlinTopLevelExtension> {
             jvmToolchain(17)
         }
     }
@@ -187,20 +198,25 @@ fladle {
     flakyTestAttempts.set(1)
 }
 
-// Selective test run: when the selective.test.apks Gradle property is provided, replace
-// Fulladle's auto-discovered module list with only the APKs we actually built.
-// This runs in afterEvaluate so it executes after Fulladle has registered its entries.
-afterEvaluate {
-    providers.gradleProperty("selective.test.apks").orNull?.let { apkPaths ->
-        fladle {
-            // Each entry must pair the main app APK with a test APK, matching the format
-            // Fulladle generates ("app:X test:Y"). A test-only entry ("test:X") is not
-            // supported by Flank v23 and causes a YAML parse error.
-            additionalTestApks.set(
-                apkPaths.split(",").filter { it.isNotBlank() }.map {
-                    "app:${debugApk.get()} test:${it.trim()}"
-                }
-            )
-        }
+val filterFlankConfig = tasks.register("filterFlankConfigForSelectiveTests") {
+    val apksProp = providers.gradleProperty("selective.test.apks")
+    onlyIf { apksProp.isPresent }
+    dependsOn("writeConfigProps")
+    doLast {
+        val builtApks = apksProp.get().split(",").map { it.trim() }.toSet()
+        val flankYml = layout.buildDirectory.file("fladle/flank.yml").get().asFile
+        if (!flankYml.exists()) return@doLast
+        val filtered = flankYml.readLines()
+            .filter { line ->
+                val t = line.trim()
+                !t.startsWith("- test: /") || t.removePrefix("- test: ") in builtApks
+            }
+            .joinToString("\n")
+        flankYml.writeText("$filtered\n")
+        logger.lifecycle("Selective filter: kept ${builtApks.size} APKs in Flank config.")
     }
+}
+
+tasks.matching { it.name == "execFlank" }.configureEach {
+    dependsOn(filterFlankConfig)
 }

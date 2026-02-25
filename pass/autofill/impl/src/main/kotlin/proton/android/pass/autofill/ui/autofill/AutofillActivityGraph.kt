@@ -725,8 +725,7 @@ internal fun NavGraphBuilder.autofillActivityGraph(
                 VaultNavigation.DismissBottomsheet -> dismissBottomSheet {}
                 VaultNavigation.Upgrade -> onNavigate(AutofillNavigation.Upgrade)
                 is VaultNavigation.VaultSelected -> dismissBottomSheet {
-                    appNavigator.clearResult(KEY_FOLDER_SELECTED)
-                    appNavigator.setResult(mapOf(KEY_VAULT_SELECTED to it.shareId.id))
+                    appNavigator.setResult(mapOf(KEY_VAULT_SELECTED to it.shareId.id, KEY_FOLDER_SELECTED to null))
                 }
 
                 is VaultNavigation.VaultAndFolderSelected -> dismissBottomSheet {

@@ -28,10 +28,16 @@ class FakePaymentManager @Inject constructor() : PaymentManager {
     var paymentProviders: Set<PaymentProvider> = emptySet()
     var isUpgradeAvailable: Boolean = true
     var isSubscriptionAvailable: Boolean = true
+    var subscriptionAvailableThrowable: Throwable? = null
+    var subscriptionAvailabilityCalls: Int = 0
 
     override suspend fun getPaymentProviders(userId: UserId?, refresh: Boolean): Set<PaymentProvider> = paymentProviders
 
     override suspend fun isUpgradeAvailable(userId: UserId?, refresh: Boolean): Boolean = isUpgradeAvailable
 
-    override suspend fun isSubscriptionAvailable(userId: UserId, refresh: Boolean): Boolean = isSubscriptionAvailable
+    override suspend fun isSubscriptionAvailable(userId: UserId, refresh: Boolean): Boolean {
+        subscriptionAvailabilityCalls++
+        subscriptionAvailableThrowable?.let { throw it }
+        return isSubscriptionAvailable
+    }
 }

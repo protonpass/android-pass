@@ -122,7 +122,7 @@ fun FolderTree(
 @Composable
 private fun CreateFolderButton(
     modifier: Modifier = Modifier,
-    needsToUpgrade: Boolean = false,
+    needsToUpgrade: Boolean,
     onClick: () -> Unit
 ) {
     Row(

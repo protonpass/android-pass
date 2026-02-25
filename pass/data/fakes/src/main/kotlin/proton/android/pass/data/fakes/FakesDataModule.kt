@@ -99,6 +99,7 @@ import proton.android.pass.data.api.usecases.ObservePinnedItems
 import proton.android.pass.data.api.usecases.ObserveUpgradeInfo
 import proton.android.pass.data.api.usecases.ObserveUserAccessData
 import proton.android.pass.data.api.usecases.ObserveUserEmail
+import proton.android.pass.data.api.usecases.ObserveVaultCount
 import proton.android.pass.data.api.usecases.ObserveVaultWithItemCountById
 import proton.android.pass.data.api.usecases.ObserveVaults
 import proton.android.pass.data.api.usecases.ObserveVaultsWithItemCount
@@ -344,6 +345,7 @@ import proton.android.pass.data.fakes.usecases.FakeObserveSearchEntry
 import proton.android.pass.data.fakes.usecases.FakeObserveUpgradeInfo
 import proton.android.pass.data.fakes.usecases.FakeObserveUserAccessData
 import proton.android.pass.data.fakes.usecases.FakeObserveUserEmail
+import proton.android.pass.data.fakes.usecases.FakeObserveVaultCount
 import proton.android.pass.data.fakes.usecases.FakeObserveVaultWithItemCountById
 import proton.android.pass.data.fakes.usecases.FakeObserveVaults
 import proton.android.pass.data.fakes.usecases.FakeObserveVaultsWithItemCount
@@ -658,6 +660,9 @@ abstract class FakesDataModule {
 
     @Binds
     abstract fun bindObserveMFACount(impl: FakeObserveMFACount): ObserveMFACount
+
+    @Binds
+    abstract fun bindObserveVaultCount(impl: FakeObserveVaultCount): ObserveVaultCount
 
     @Binds
     abstract fun bindCreateVault(impl: FakeCreateVault): CreateVault

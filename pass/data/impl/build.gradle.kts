@@ -107,6 +107,7 @@ dependencies {
     testImplementation(libs.turbine)
 
     testImplementation(projects.pass.account.fakes)
+    testImplementation(projects.pass.appConfig.fakes)
     testImplementation(projects.pass.common.fakes)
     testImplementation(projects.pass.commonTest)
     testImplementation(projects.pass.crypto.fakes)

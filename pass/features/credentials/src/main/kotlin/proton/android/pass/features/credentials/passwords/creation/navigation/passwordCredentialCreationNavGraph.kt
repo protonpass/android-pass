@@ -301,8 +301,12 @@ internal fun NavGraphBuilder.passwordCredentialCreationNavGraph(
                 VaultNavigation.DismissBottomsheet -> dismissBottomSheet {}
                 VaultNavigation.Upgrade -> onNavigate(PasswordCredentialCreationNavEvent.Upgrade)
                 is VaultNavigation.VaultSelected -> dismissBottomSheet {
-                    appNavigator.clearResult(KEY_FOLDER_SELECTED)
-                    appNavigator.setResult(values = mapOf(KEY_VAULT_SELECTED to destination.shareId.id))
+                    appNavigator.setResult(
+                        values = mapOf(
+                            KEY_VAULT_SELECTED to destination.shareId.id,
+                            KEY_FOLDER_SELECTED to null
+                        )
+                    )
                 }
 
                 is VaultNavigation.VaultAndFolderSelected -> dismissBottomSheet {

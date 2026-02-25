@@ -193,8 +193,13 @@ fladle {
 afterEvaluate {
     providers.gradleProperty("selective.test.apks").orNull?.let { apkPaths ->
         fladle {
+            // Each entry must pair the main app APK with a test APK, matching the format
+            // Fulladle generates ("app:X test:Y"). A test-only entry ("test:X") is not
+            // supported by Flank v23 and causes a YAML parse error.
             additionalTestApks.set(
-                apkPaths.split(",").filter { it.isNotBlank() }.map { "test:${it.trim()}" }
+                apkPaths.split(",").filter { it.isNotBlank() }.map {
+                    "app:${debugApk.get()} test:${it.trim()}"
+                }
             )
         }
     }

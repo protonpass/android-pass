@@ -8,7 +8,6 @@ import androidx.lifecycle.viewmodel.compose.SavedStateHandleSaveableApi
 import androidx.lifecycle.viewmodel.compose.saveable
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
@@ -50,6 +49,7 @@ import proton.android.pass.features.itemcreate.ItemCreate
 import proton.android.pass.features.itemcreate.ItemSavedState
 import proton.android.pass.features.itemcreate.R
 import proton.android.pass.features.itemcreate.common.CustomFieldDraftRepository
+import proton.android.pass.features.itemcreate.common.OptionFolderIdSaver
 import proton.android.pass.features.itemcreate.common.OptionShareIdSaver
 import proton.android.pass.features.itemcreate.common.ShareUiState
 import proton.android.pass.features.itemcreate.common.canDisplayWarningMessageForCreationFlow
@@ -131,13 +131,24 @@ class CreateCreditCardViewModel @Inject constructor(
                 initialValue = None
             )
 
-    private val selectedFolderIdMutableState: MutableStateFlow<FolderId?> = MutableStateFlow(navFolderId)
+    @OptIn(SavedStateHandleSaveableApi::class)
+    private var selectedFolderIdMutableState: Option<FolderId> by savedStateHandleProvider.get()
+        .saveable(stateSaver = OptionFolderIdSaver) { mutableStateOf(navFolderId.toOption()) }
+
+    private val selectedFolderIdState: Flow<Option<FolderId>> =
+        snapshotFlow { selectedFolderIdMutableState }
+            .filterNotNull()
+            .stateIn(
+                scope = viewModelScope,
+                started = SharingStarted.WhileSubscribed(5_000),
+                initialValue = navFolderId.toOption()
+            )
 
     private val selectedFolderNameFlow = getFolderNameFlow(
         accountManager = accountManager,
         observeFolder = observeFolder,
         selectedShareIdState = selectedShareIdState,
-        selectedFolderIdFlow = selectedFolderIdMutableState,
+        selectedFolderIdFlow = selectedFolderIdState,
         navShareIdState = flowOf(navShareId)
     )
 
@@ -160,7 +171,7 @@ class CreateCreditCardViewModel @Inject constructor(
         viewModelScope = viewModelScope,
         tag = TAG,
         selectedFolderNameFlow = selectedFolderNameFlow,
-        selectedFolderIdFlow = selectedFolderIdMutableState
+        selectedFolderIdFlow = selectedFolderIdState
     )
 
 
@@ -183,12 +194,12 @@ class CreateCreditCardViewModel @Inject constructor(
     fun changeVault(shareId: ShareId) {
         onUserEditedContent()
         selectedShareIdMutableState = Some(shareId)
-        selectedFolderIdMutableState.value = null
+        selectedFolderIdMutableState = None
     }
 
     fun changeFolder(folderId: FolderId) {
         onUserEditedContent()
-        selectedFolderIdMutableState.value = folderId
+        selectedFolderIdMutableState = Some(folderId)
     }
 
     suspend fun duplicateContents(context: Context) {

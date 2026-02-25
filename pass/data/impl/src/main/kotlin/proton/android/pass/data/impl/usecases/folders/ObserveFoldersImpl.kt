@@ -19,17 +19,29 @@
 package proton.android.pass.data.impl.usecases.folders
 
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.flowOf
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.api.repositories.FolderRepository
 import proton.android.pass.data.api.usecases.folders.ObserveFolders
 import proton.android.pass.domain.Folder
 import proton.android.pass.domain.ShareId
+import proton.android.pass.preferences.FeatureFlag
+import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import javax.inject.Inject
 
 class ObserveFoldersImpl @Inject constructor(
+    private val featureFlagsPreferencesRepository: FeatureFlagsPreferencesRepository,
     private val folderRepository: FolderRepository
 ) : ObserveFolders {
 
     override fun invoke(userId: UserId, shareId: ShareId): Flow<List<Folder>> =
-        folderRepository.observeFolders(userId, shareId)
+        featureFlagsPreferencesRepository.get<Boolean>(FeatureFlag.PASS_FOLDERS)
+            .flatMapLatest { isEnabled ->
+                if (isEnabled) {
+                    folderRepository.observeFolders(userId, shareId)
+                } else {
+                    flowOf(emptyList())
+                }
+            }
 }

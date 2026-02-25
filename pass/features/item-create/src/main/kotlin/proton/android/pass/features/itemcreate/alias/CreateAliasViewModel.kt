@@ -26,7 +26,6 @@ import androidx.lifecycle.viewmodel.compose.saveable
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.distinctUntilChanged
@@ -66,9 +65,9 @@ import proton.android.pass.data.api.usecases.CreateAlias
 import proton.android.pass.data.api.usecases.ObserveAliasOptions
 import proton.android.pass.data.api.usecases.ObserveUpgradeInfo
 import proton.android.pass.data.api.usecases.ObserveVaultsWithItemCount
-import proton.android.pass.data.api.usecases.folders.ObserveFolder
 import proton.android.pass.data.api.usecases.attachments.LinkAttachmentsToItem
 import proton.android.pass.data.api.usecases.defaultvault.ObserveDefaultVault
+import proton.android.pass.data.api.usecases.folders.ObserveFolder
 import proton.android.pass.data.api.usecases.shares.ObserveShare
 import proton.android.pass.domain.AliasOptions
 import proton.android.pass.domain.FolderId
@@ -85,6 +84,7 @@ import proton.android.pass.features.itemcreate.alias.draftrepositories.SuffixDra
 import proton.android.pass.features.itemcreate.common.AliasItemValidationError
 import proton.android.pass.features.itemcreate.common.CommonFieldValidationError
 import proton.android.pass.features.itemcreate.common.CustomFieldDraftRepository
+import proton.android.pass.features.itemcreate.common.OptionFolderIdSaver
 import proton.android.pass.features.itemcreate.common.OptionShareIdSaver
 import proton.android.pass.features.itemcreate.common.ShareUiState
 import proton.android.pass.features.itemcreate.common.canDisplayWarningMessageForCreationFlow
@@ -170,13 +170,24 @@ open class CreateAliasViewModel @Inject constructor(
                 initialValue = None
             )
 
-    private val selectedFolderIdMutableState: MutableStateFlow<FolderId?> = MutableStateFlow(navFolderId)
+    @OptIn(SavedStateHandleSaveableApi::class)
+    private var selectedFolderIdMutableState: Option<FolderId> by savedStateHandleProvider.get()
+        .saveable(stateSaver = OptionFolderIdSaver) { mutableStateOf(navFolderId.toOption()) }
+
+    private val selectedFolderIdState: Flow<Option<FolderId>> =
+        snapshotFlow { selectedFolderIdMutableState }
+            .filterNotNull()
+            .stateIn(
+                scope = viewModelScope,
+                started = SharingStarted.WhileSubscribed(5_000),
+                initialValue = navFolderId.toOption()
+            )
 
     private val selectedFolderNameFlow = getFolderNameFlow(
         accountManager = accountManager,
         observeFolder = observeFolder,
         selectedShareIdState = selectedShareIdState,
-        selectedFolderIdFlow = selectedFolderIdMutableState,
+        selectedFolderIdFlow = selectedFolderIdState,
         navShareIdState = flowOf(navShareId)
     )
 
@@ -191,7 +202,7 @@ open class CreateAliasViewModel @Inject constructor(
         observeDefaultVaultFlow = observeDefaultVault().asLoadingResult(),
         tag = TAG,
         selectedFolderNameFlow = selectedFolderNameFlow,
-        selectedFolderIdFlow = selectedFolderIdMutableState
+        selectedFolderIdFlow = selectedFolderIdState
     )
 
     private val aliasOptionsState: Flow<LoadingResult<AliasOptionsUiModel>> = shareUiState
@@ -445,12 +456,12 @@ open class CreateAliasViewModel @Inject constructor(
         onUserEditedContent()
         isLoadingState.update { IsLoadingState.Loading }
         selectedShareIdMutableState = Some(shareId)
-        selectedFolderIdMutableState.value = null
+        selectedFolderIdMutableState = None
     }
 
     fun changeFolder(folderId: FolderId) {
         onUserEditedContent()
-        selectedFolderIdMutableState.value = folderId
+        selectedFolderIdMutableState = Some(folderId)
     }
 
     private fun setupMailboxesAndSuffixes(aliasOptions: AliasOptions) {

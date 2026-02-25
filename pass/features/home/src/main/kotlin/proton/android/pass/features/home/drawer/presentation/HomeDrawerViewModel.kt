@@ -137,8 +137,7 @@ class HomeDrawerViewModel @Inject constructor(
             canOrganiseVaults = canOrganiseVaults,
             vaultSelectionOption = vaultSelectionOption,
             itemCountSummaryOption = itemCountSummaryOption,
-            isUpgradeAvailable = upgradeInfo.getOrNull()?.isUpgradeAvailable ?: false,
-            needsToUpgrade = upgradeInfo.getOrNull()?.plan?.isFreePlan ?: false
+            isUpgradeAvailable = upgradeInfo.getOrNull()?.isUpgradeAvailable ?: false
         )
     }.stateIn(
         scope = viewModelScope,
@@ -175,8 +174,7 @@ class HomeDrawerViewModel @Inject constructor(
         canOrganiseVaults: Boolean,
         vaultSelectionOption: VaultSelectionOption,
         itemCountSummaryOption: Some<ItemCountSummary>,
-        isUpgradeAvailable: Boolean,
-        needsToUpgrade: Boolean
+        isUpgradeAvailable: Boolean
     ): HomeDrawerState = HomeDrawerState(
         vaultShares = vaultsWithFolders.vaultShares,
         vaultFolders = vaultsWithFolders.vaultFolders,
@@ -185,8 +183,7 @@ class HomeDrawerViewModel @Inject constructor(
         vaultSelectionOption = vaultSelectionOption,
         itemCountSummaryOption = itemCountSummaryOption,
         isUpgradeAvailable = isUpgradeAvailable,
-        foldersEnabled = isFoldersEnabled,
-        needsToUpgrade = needsToUpgrade
+        foldersEnabled = isFoldersEnabled
     )
 
     private fun observeVaultFolders(input: FolderFlowInput): Flow<Map<ShareId, PersistentList<FolderUiModel>>> {

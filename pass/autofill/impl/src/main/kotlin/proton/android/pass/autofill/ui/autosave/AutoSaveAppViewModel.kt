@@ -195,7 +195,7 @@ class AutoSaveAppViewModel @Inject constructor(
 
                 hasPartialMatch = true
 
-                matcher.matchesSource(login) ?: false
+                matcher.matchesSource(login)
             }
 
 

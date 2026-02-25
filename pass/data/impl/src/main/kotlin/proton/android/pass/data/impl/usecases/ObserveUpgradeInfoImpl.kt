@@ -36,6 +36,7 @@ import proton.android.pass.data.api.usecases.ObserveUpgradeInfo
 import proton.android.pass.data.api.usecases.ObserveVaultCount
 import proton.android.pass.data.api.usecases.UpgradeInfo
 import proton.android.pass.data.impl.repositories.PlanRepository
+import proton.android.pass.domain.Plan
 import proton.android.pass.domain.ShareSelection
 import javax.inject.Inject
 
@@ -48,39 +49,57 @@ class ObserveUpgradeInfoImpl @Inject constructor(
     private val planRepository: PlanRepository,
     private val observeVaultCount: ObserveVaultCount
 ) : ObserveUpgradeInfo {
-    override fun invoke(userId: UserId?): Flow<UpgradeInfo> =
-        (userId?.let(::flowOf) ?: observeCurrentUser().map { it.userId })
-            .flatMapLatest { id ->
-                val supportsPayments = appConfig.flavor.supportPayment()
-                val (isSubscriptionAvailable, isUpgradeAvailable) = if (supportsPayments) {
-                    paymentManager.isSubscriptionAvailable(id) to paymentManager.isUpgradeAvailable()
-                } else {
-                    true to true
-                }
+    private val supportsPayments: Boolean = appConfig.flavor.supportPayment()
 
-                combine(
-                    planRepository.observePlan(userId = id).filterNotNull(),
-                    observeMFACount(includeHiddenVault = true),
-                    observeItemCount(
-                        itemState = null,
-                        shareSelection = ShareSelection.AllShares,
-                        includeHiddenVault = true
-                    ),
-                    observeVaultCount(id, includeHidden = true)
-                ) { plan, mfaCount, itemCount, vaultCount ->
-                    val displayUpgrade = when {
-                        plan.hideUpgrade -> false
-                        else -> isUpgradeAvailable && !plan.isPaidPlan
-                    }
-                    UpgradeInfo(
-                        isUpgradeAvailable = displayUpgrade,
-                        isSubscriptionAvailable = isSubscriptionAvailable,
-                        plan = plan,
-                        totalVaults = vaultCount,
-                        totalAlias = itemCount.alias.toInt(),
-                        totalTotp = mfaCount
-                    )
-                }
+    override fun invoke(userId: UserId?): Flow<UpgradeInfo> = getUserIdFlow(userId)
+        .flatMapLatest { id ->
+            val isSubscriptionAvailable = resolveSubscriptionAvailability(id)
+
+            combine(
+                observePlan(id),
+                observeTotpCount(),
+                observeAliasCount(),
+                observeVaultTotal(id)
+            ) { plan, totalTotp, totalAlias, totalVaults ->
+                UpgradeInfo(
+                    isUpgradeAvailable = shouldDisplayUpgrade(plan),
+                    isSubscriptionAvailable = isSubscriptionAvailable,
+                    plan = plan,
+                    totalVaults = totalVaults,
+                    totalAlias = totalAlias,
+                    totalTotp = totalTotp
+                )
             }
+        }
+
+    private fun getUserIdFlow(userId: UserId?): Flow<UserId> = userId?.let(::flowOf)
+        ?: observeCurrentUser()
+            .map { it.userId }
             .distinctUntilChanged()
+
+    private suspend fun resolveSubscriptionAvailability(userId: UserId): Boolean {
+        if (!supportsPayments) return true
+        return runCatching { paymentManager.isSubscriptionAvailable(userId) }.getOrDefault(false)
+    }
+
+    private fun observePlan(userId: UserId): Flow<Plan> = planRepository.observePlan(userId = userId)
+        .filterNotNull()
+        .distinctUntilChanged()
+
+    private fun observeTotpCount(): Flow<Int> = observeMFACount(includeHiddenVault = true).distinctUntilChanged()
+
+    private fun observeAliasCount(): Flow<Int> = observeItemCount(
+        itemState = null,
+        shareSelection = ShareSelection.AllShares,
+        includeHiddenVault = true
+    )
+        .map { it.alias.toBoundedInt() }
+        .distinctUntilChanged()
+
+    private fun observeVaultTotal(userId: UserId): Flow<Int> =
+        observeVaultCount(userId, includeHidden = true).distinctUntilChanged()
+
+    private fun shouldDisplayUpgrade(plan: Plan): Boolean = !plan.hideUpgrade && !plan.isPaidPlan
+
+    private fun Long.toBoundedInt(): Int = coerceAtMost(Int.MAX_VALUE.toLong()).toInt()
 }

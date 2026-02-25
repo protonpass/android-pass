@@ -90,13 +90,24 @@ log "Testable (${#TESTABLE_MODULES[@]}): ${TESTABLE_MODULES[*]}"
 log "=== Step 5: Build test APKs ==="
 FLAVOR_CAP=$(capitalize "$FLAVOUR")
 
+# Returns true if a module's build.gradle.kts defines the given product flavor.
+# Modules with flavors need assemble<Flavor>DebugAndroidTest; otherwise the task is ambiguous.
+module_has_flavor() {
+  local module_dir="$1" flavor="$2"
+  grep -q "\"${flavor}\"" "$module_dir/build.gradle.kts" 2>/dev/null
+}
+
 # Always build the main debug APK (Fladle requires it as debugApk)
 declare -a GRADLE_TASKS=( ":app:assemble${FLAVOR_CAP}BlackDebug" )
 
 for module in "${TESTABLE_MODULES[@]}"; do
-  # assembleDebugAndroidTest exists on every Android module and builds all its flavor variants
-  # (e.g. settings produces settings-dev-debug-androidTest.apk automatically)
-  GRADLE_TASKS+=( "${module}:assembleDebugAndroidTest" )
+  module_dir="$REPO_ROOT/$(echo "$module" | sed 's/^://' | tr ':' '/')"
+  if module_has_flavor "$module_dir" "$FLAVOUR"; then
+    # Module has multiple product flavors — qualify to avoid "ambiguous task" error
+    GRADLE_TASKS+=( "${module}:assemble${FLAVOR_CAP}DebugAndroidTest" )
+  else
+    GRADLE_TASKS+=( "${module}:assembleDebugAndroidTest" )
+  fi
 done
 log "Tasks: ${GRADLE_TASKS[*]}"
 run_gradle "${GRADLE_TASKS[@]}"

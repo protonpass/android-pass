@@ -178,22 +178,12 @@ class AppNavigator(
         navController.navigateUp()
     }
 
-    fun setResult(values: Map<String, Any>) {
+    fun setResult(values: Map<String, Any?>) {
         navController.currentBackStackEntry
             ?.savedStateHandle
             ?.let {
                 values.forEach { (key, value) ->
                     it[key] = value
-                }
-            }
-    }
-
-    fun clearResult(vararg keys: String) {
-        navController.currentBackStackEntry
-            ?.savedStateHandle
-            ?.let { savedStateHandle ->
-                keys.forEach { key ->
-                    savedStateHandle.remove<Any?>(key)
                 }
             }
     }

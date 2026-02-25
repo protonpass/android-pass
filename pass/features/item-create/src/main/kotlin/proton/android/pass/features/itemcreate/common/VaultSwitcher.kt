@@ -55,7 +55,7 @@ fun RowScope.VaultSwitcher(
     onClick: () -> Unit
 ) {
     val isFolder = selectedFolderName != null
-    val text = if (isFolder) selectedFolderName!! else selectedVault.name
+    val text = if (isFolder) selectedFolderName else selectedVault.name
     val textColor = if (isFolder) PassTheme.colors.textNorm else selectedVault.color.toColor()
     Row(
         modifier = modifier

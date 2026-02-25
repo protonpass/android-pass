@@ -29,24 +29,25 @@ data class AutosaveLoginMatcher(
 
     fun matchesUsername(login: ItemType.Login): Boolean = login.itemUsername == username || login.itemEmail == username
 
-    fun matchesSource(login: ItemType.Login): Boolean? = when {
-
-        packageName != null -> login.packageInfoSet.any {
+    fun matchesSource(login: ItemType.Login): Boolean {
+        val matchesByPackage = packageName != null && login.packageInfoSet.any {
             it.packageName.value == packageName
         }
 
-        website != null -> {
-            val websiteSanitize = UrlSanitizer
-                .sanitize(website)
-                .getOrNull()
-                ?.trimEnd('/')
-                ?: return false
-            login.websites.any { url ->
-                UrlSanitizer.sanitize(url).getOrNull()?.trimEnd('/') == websiteSanitize
-            }
-        }
+        if (matchesByPackage) return true
 
-        else -> null
+        return website?.let { w ->
+            login.websites.isNotEmpty() && run {
+                val websiteSanitize = UrlSanitizer
+                    .sanitize(w)
+                    .getOrNull()
+                    ?.trimEnd('/')
+                    ?: return@run false
+                login.websites.any { url ->
+                    UrlSanitizer.sanitize(url).getOrNull()?.trimEnd('/') == websiteSanitize
+                }
+            }
+        } ?: false
     }
 
 }

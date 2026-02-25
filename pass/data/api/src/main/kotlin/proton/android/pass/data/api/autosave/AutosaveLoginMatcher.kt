@@ -30,6 +30,7 @@ data class AutosaveLoginMatcher(
     fun matchesUsername(login: ItemType.Login): Boolean = login.itemUsername == username || login.itemEmail == username
 
     fun matchesSource(login: ItemType.Login): Boolean? = when {
+
         packageName != null -> login.packageInfoSet.any {
             it.packageName.value == packageName
         }

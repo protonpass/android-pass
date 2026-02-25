@@ -182,7 +182,7 @@ class HomeDrawerViewModel @Inject constructor(
         canOrganiseVaults = canOrganiseVaults,
         vaultSelectionOption = vaultSelectionOption,
         itemCountSummaryOption = itemCountSummaryOption,
-        isUpgradeAvailable = isUpgradeAvailable,
+        needsToUpgrade = isUpgradeAvailable,
         foldersEnabled = isFoldersEnabled
     )
 

@@ -36,7 +36,7 @@ internal data class HomeDrawerState(
     internal val canOrganiseVaults: Boolean,
     internal val vaultSelectionOption: VaultSelectionOption,
     private val itemCountSummaryOption: Option<ItemCountSummary>,
-    internal val isUpgradeAvailable: Boolean,
+    internal val needsToUpgrade: Boolean,
     internal val foldersEnabled: Boolean
 ) {
 
@@ -89,7 +89,7 @@ internal data class HomeDrawerState(
             canOrganiseVaults = false,
             vaultSelectionOption = VaultSelectionOption.AllVaults,
             itemCountSummaryOption = None,
-            isUpgradeAvailable = false,
+            needsToUpgrade = false,
             foldersEnabled = false
         )
 

@@ -61,7 +61,7 @@ internal fun HomeDrawerContent(
             .statusBarsPadding()
             .padding(top = Spacing.small)
     ) {
-        if (isUpgradeAvailable) {
+        if (needsToUpgrade) {
             LongUpgradeButton(
                 modifier = Modifier.padding(horizontal = Spacing.medium),
                 onUpgradeClick = {
@@ -85,7 +85,7 @@ internal fun HomeDrawerContent(
             trashedItemsCount = trashedItemsCount,
             onUiEvent = onUiEvent,
             foldersEnabled = foldersEnabled,
-            needsToUpgrade = isUpgradeAvailable
+            needsToUpgrade = needsToUpgrade
         )
 
         HomeDrawerFooter(

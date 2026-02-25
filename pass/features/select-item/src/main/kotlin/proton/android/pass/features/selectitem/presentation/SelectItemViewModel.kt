@@ -252,7 +252,7 @@ class SelectItemViewModel @Inject constructor(
                                 if (!matcher.matchesUsername(login))
                                     return@filter false
 
-                                matcher.matchesSource(login) ?: true
+                                matcher.matchesSource(login)
                             }
                             autofillShares to filtered.map(ItemData::DefaultItem)
                         }

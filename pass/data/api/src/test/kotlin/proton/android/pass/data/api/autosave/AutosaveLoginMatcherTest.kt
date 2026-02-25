@@ -24,7 +24,6 @@ import proton.android.pass.domain.entity.AppName
 import proton.android.pass.domain.entity.PackageInfo
 import proton.android.pass.domain.entity.PackageName
 import kotlin.test.assertEquals
-import kotlin.test.assertNull
 
 class AutosaveLoginMatcherTest {
 
@@ -182,6 +181,13 @@ class AutosaveLoginMatcherTest {
         assertEquals(true, matcher.matchesSource(login))
     }
 
+    @Test
+    fun `blank website in item is ignored`() {
+        val matcher = AutosaveLoginMatcher("user", "https://example.com", null)
+        val login = loginWith(websites = listOf("", "   "))
+        assertEquals(false, matcher.matchesSource(login))
+    }
+
     // --- Package name matching ---
 
     @Test
@@ -202,30 +208,44 @@ class AutosaveLoginMatcherTest {
         assertEquals(false, matcher.matchesSource(login))
     }
 
-    // --- Null cases ---
+    // --- No website No packageName matching ---
 
     @Test
     fun `no website and no package name returns null`() {
         val matcher = AutosaveLoginMatcher("user", null, null)
         val login = loginWith(websites = listOf("https://example.com"))
-        assertNull(matcher.matchesSource(login))
+        assertEquals(false, matcher.matchesSource(login))
     }
 
+    // --- website and packageName matching ---
+
     @Test
-    fun `package name takes priority over website`() {
+    fun `package name takes priority over website and packageName match`() {
         val matcher = AutosaveLoginMatcher("user", "https://example.com", "com.example.app")
         val login = loginWith(
             websites = listOf("https://other.com"),
             packageInfoSet = setOf(PackageInfo(PackageName("com.example.app"), AppName("Example")))
         )
-        // packageName is non-null so it's used first, and it matches
         assertEquals(true, matcher.matchesSource(login))
     }
 
     @Test
-    fun `blank website in item is ignored`() {
-        val matcher = AutosaveLoginMatcher("user", "https://example.com", null)
-        val login = loginWith(websites = listOf("", "   "))
+    fun `package name takes priority over website but login packageName not found and website match`() {
+        val matcher = AutosaveLoginMatcher("user", "https://example.com", "com.example.app")
+        val login = loginWith(
+            websites = listOf("https://example.com"),
+            packageInfoSet = setOf(PackageInfo(PackageName("com.another.app"), AppName("another")))
+        )
+        assertEquals(true, matcher.matchesSource(login))
+    }
+
+    @Test
+    fun `package name takes priority over website but login packageName and website do not match`() {
+        val matcher = AutosaveLoginMatcher("user", "https://example.com", "com.example.app")
+        val login = loginWith(
+            websites = listOf("https://another.com"),
+            packageInfoSet = setOf(PackageInfo(PackageName("com.another.app"), AppName("another")))
+        )
         assertEquals(false, matcher.matchesSource(login))
     }
 }

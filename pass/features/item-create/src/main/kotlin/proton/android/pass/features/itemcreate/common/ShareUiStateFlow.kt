@@ -46,16 +46,16 @@ fun getFolderNameFlow(
     accountManager: AccountManager,
     observeFolder: ObserveFolder,
     selectedShareIdState: Flow<Option<ShareId>>,
-    selectedFolderIdFlow: Flow<FolderId?>,
+    selectedFolderIdFlow: Flow<Option<FolderId>>,
     navShareIdState: Flow<Option<ShareId>>
 ): Flow<String?> = combine(
     accountManager.getPrimaryUserId().distinctUntilChanged(),
     selectedShareIdState,
     navShareIdState,
     selectedFolderIdFlow
-) { userId, shareIdOption, navShareIdOption, folderId ->
+) { userId, shareIdOption, navShareIdOption, folderIdOption ->
     val shareId = shareIdOption.value() ?: navShareIdOption.value()
-    Triple(userId, shareId, folderId)
+    Triple(userId, shareId, folderIdOption.value())
 }.flatMapLatest { (userId, shareId, folderId) ->
     if (userId == null || shareId == null || folderId == null) return@flatMapLatest flowOf(null)
     observeFolder(userId, shareId, folderId)
@@ -75,7 +75,7 @@ fun getShareUiStateFlow(
     navShareIdState: Flow<Option<ShareId>>,
     selectedShareIdState: Flow<Option<ShareId>>,
     selectedFolderNameFlow: Flow<String?>,
-    selectedFolderIdFlow: Flow<FolderId?>,
+    selectedFolderIdFlow: Flow<Option<FolderId>>,
     observeAllVaultsFlow: Flow<LoadingResult<List<VaultWithItemCount>>>,
     observeDefaultVaultFlow: Flow<LoadingResult<Option<VaultWithItemCount>>>,
     viewModelScope: CoroutineScope,
@@ -90,7 +90,7 @@ fun getShareUiStateFlow(
     ),
     selectedFolderNameFlow,
     selectedFolderIdFlow
-) { vaultArgs, selectedFolderName, selectedFolderId ->
+) { vaultArgs, selectedFolderName, selectedFolderIdOption ->
     val allShares = when (val result = vaultArgs.allSharesResult) {
         is LoadingResult.Error -> return@combine ShareUiState.Error(ShareError.SharesNotAvailable)
         LoadingResult.Loading -> return@combine ShareUiState.Loading
@@ -108,7 +108,7 @@ fun getShareUiStateFlow(
         selectedShareId = vaultArgs.selectedShareId,
         defaultVault = defaultVault,
         selectedFolderName = selectedFolderName,
-        selectedFolderId = selectedFolderId
+        selectedFolderId = selectedFolderIdOption.value()
     )
 }.stateIn(
     scope = viewModelScope,

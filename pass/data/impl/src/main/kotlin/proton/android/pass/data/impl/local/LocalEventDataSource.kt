@@ -34,4 +34,6 @@ interface LocalEventDataSource {
         eventId: String
     )
 
+    suspend fun deleteAllLatestEventIds(userId: UserId)
+
 }

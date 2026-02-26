@@ -136,7 +136,12 @@ class FakeLocalItemDataSource : LocalItemDataSource {
         shareId: ShareId,
         itemIds: List<ItemId>
     ): Boolean {
-        throw IllegalStateException("Not yet implemented")
+        if (itemIds.isEmpty()) return true
+        val ids = itemIds.map { it.id }.toSet()
+        val removed = memory.removeAll { entity ->
+            entity.userId == userId.id && entity.shareId == shareId.id && entity.id in ids
+        }
+        return removed
     }
 
     override suspend fun hasItemsForShare(userId: UserId, shareId: ShareId): Boolean {

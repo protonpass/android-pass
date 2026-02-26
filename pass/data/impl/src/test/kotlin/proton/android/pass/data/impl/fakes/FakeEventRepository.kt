@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023-2026 Proton AG
+ * Copyright (c) 2026 Proton AG
  * This file is part of Proton AG and Proton Pass.
  *
  * Proton Pass is free software: you can redistribute it and/or modify
@@ -16,30 +16,43 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.data.impl.repositories
+package proton.android.pass.data.impl.fakes
 
 import me.proton.core.domain.entity.UserId
 import me.proton.core.user.domain.entity.AddressId
+import proton.android.pass.data.impl.repositories.EventRepository
 import proton.android.pass.data.impl.responses.EventList
 import proton.android.pass.domain.ShareId
 
-interface EventRepository {
+class FakeEventRepository : EventRepository {
 
-    suspend fun getLatestEventId(userId: UserId, shareId: ShareId): String
+    private val deletedUserIds = mutableListOf<UserId>()
 
-    suspend fun getEvents(
+    fun getDeletedAllLatestEventIdsMemory(): List<UserId> = deletedUserIds.toList()
+
+    override suspend fun getLatestEventId(userId: UserId, shareId: ShareId): String = ""
+
+    override suspend fun getEvents(
         lastEventId: String,
         userId: UserId,
         shareId: ShareId
-    ): EventList
+    ): EventList = EventList(
+        shareResponse = null,
+        updatedItems = emptyList(),
+        deletedItemIds = emptyList(),
+        newRotationId = null,
+        latestEventId = lastEventId,
+        eventsPending = false
+    )
 
-    suspend fun storeLatestEventId(
+    override suspend fun storeLatestEventId(
         userId: UserId,
         addressId: AddressId,
         shareId: ShareId,
         eventId: String
-    )
+    ) = Unit
 
-    suspend fun deleteAllLatestEventIds(userId: UserId)
-
+    override suspend fun deleteAllLatestEventIds(userId: UserId) {
+        deletedUserIds += userId
+    }
 }

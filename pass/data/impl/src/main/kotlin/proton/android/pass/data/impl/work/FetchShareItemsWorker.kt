@@ -71,7 +71,7 @@ open class FetchShareItemsWorker @AssistedInject constructor(
                 shareId = shareId,
                 onProgress = {}
             ).let { itemRevisions ->
-                itemRepository.setShareItems(
+                val failedShareIds = itemRepository.setShareItems(
                     userId = userId,
                     items = mapOf(shareId to itemRevisions),
                     onProgress = { progress ->
@@ -96,13 +96,18 @@ open class FetchShareItemsWorker @AssistedInject constructor(
                         }
                     }
                 )
-                itemRevisions.size
+                itemRevisions.size to failedShareIds.contains(shareId)
             }
         }.fold(
-            onSuccess = {
-                fetchShareItemsStatusRepository.emit(shareId, FetchShareItemsStatus.Done(it))
-                PassLogger.i(TAG, "$TAG finished successfully")
-                Result.success()
+            onSuccess = { (itemCount, hasCryptoFailure) ->
+                if (hasCryptoFailure) {
+                    PassLogger.w(TAG, "$TAG finished with permanent decrypt failures for shareId=${shareId.id}")
+                    Result.failure()
+                } else {
+                    fetchShareItemsStatusRepository.emit(shareId, FetchShareItemsStatus.Done(itemCount))
+                    PassLogger.i(TAG, "$TAG finished successfully")
+                    Result.success()
+                }
             },
             onFailure = {
                 PassLogger.w(TAG, "$TAG failed")

@@ -23,6 +23,7 @@ import proton.android.pass.domain.ShareId
 
 enum class ForceSyncResult {
     Success,
+    PartialSuccess,
     Error
 }
 
@@ -30,7 +31,6 @@ interface ForceSyncItems {
     suspend operator fun invoke(
         userId: UserId,
         shareIds: Set<ShareId>,
-        isBackground: Boolean,
         hasInactiveShares: Boolean,
         hasInvalidGroupShares: Boolean
     ): ForceSyncResult

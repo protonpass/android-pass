@@ -285,9 +285,7 @@ class FakeItemRepository @Inject constructor() : ItemRepository {
         userId: UserId,
         items: Map<ShareId, List<ItemRevision>>,
         onProgress: suspend (VaultProgress) -> Unit
-    ) {
-        TODO("Not yet implemented")
-    }
+    ): Set<ShareId> = emptySet()
 
     override suspend fun applyPendingEvent(event: ItemPendingEvent) {}
 

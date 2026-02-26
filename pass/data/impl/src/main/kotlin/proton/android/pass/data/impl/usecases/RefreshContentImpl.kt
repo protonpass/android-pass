@@ -23,9 +23,6 @@ import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.safeRunCatching
 import proton.android.pass.data.api.errors.UserIdNotAvailableError
-import proton.android.pass.data.api.repositories.ItemSyncStatus
-import proton.android.pass.data.api.repositories.ItemSyncStatusRepository
-import proton.android.pass.data.api.repositories.SyncMode
 import proton.android.pass.data.api.usecases.RefreshContent
 import proton.android.pass.data.api.usecases.RefreshSharesAndEnqueueSync
 import proton.android.pass.data.api.usecases.RefreshSharesResult
@@ -34,15 +31,11 @@ import javax.inject.Inject
 
 class RefreshContentImpl @Inject constructor(
     private val accountManager: AccountManager,
-    private val syncStatusRepository: ItemSyncStatusRepository,
     private val refreshSharesAndEnqueueSync: RefreshSharesAndEnqueueSync
 ) : RefreshContent {
 
     override suspend fun invoke(userId: UserId?): RefreshSharesResult {
         PassLogger.i(TAG, "Refreshing shares")
-        syncStatusRepository.clear()
-        syncStatusRepository.setMode(SyncMode.ShownToUser)
-        syncStatusRepository.emit(ItemSyncStatus.SyncStarted)
 
         val actualUserId = userId ?: accountManager.getPrimaryUserId().firstOrNull()
             ?: throw UserIdNotAvailableError()
@@ -55,7 +48,6 @@ class RefreshContentImpl @Inject constructor(
         }.onFailure { error ->
             PassLogger.w(TAG, "Error in RefreshSharesAndEnqueueSync")
             PassLogger.w(TAG, error)
-            syncStatusRepository.emit(ItemSyncStatus.SyncError)
             throw error
         }.getOrThrow()
     }

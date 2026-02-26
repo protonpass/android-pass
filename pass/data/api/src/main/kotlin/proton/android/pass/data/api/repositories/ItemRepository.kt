@@ -180,7 +180,7 @@ interface ItemRepository {
         userId: UserId,
         items: Map<ShareId, List<ItemRevision>>,
         onProgress: suspend (VaultProgress) -> Unit
-    )
+    ): Set<ShareId>
 
     suspend fun applyPendingEvent(event: ItemPendingEvent)
 

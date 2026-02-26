@@ -37,10 +37,16 @@ sealed interface ItemSyncStatus {
         val hasInvalidGroupShares: Boolean
     ) : ItemSyncStatus
 
-    data object SyncError : ItemSyncStatus
+    sealed interface SyncError : ItemSyncStatus {
+        val failedShareIds: Set<ShareId>
+
+        data class DownloadError(override val failedShareIds: Set<ShareId> = emptySet()) : SyncError
+
+        data class CryptoError(override val failedShareIds: Set<ShareId> = emptySet()) : SyncError
+    }
 
     fun isSyncing(): Boolean = when (this) {
-        SyncError,
+        is SyncError,
         SyncNotStarted,
         is SyncSuccess -> false
 
@@ -61,7 +67,7 @@ enum class SyncMode {
 }
 
 fun ItemSyncStatus.toSyncMode(): SyncMode = when (this) {
-    ItemSyncStatus.SyncError,
+    is ItemSyncStatus.SyncError,
     ItemSyncStatus.SyncStarted,
     ItemSyncStatus.SyncNotStarted,
     is ItemSyncStatus.SyncInserting,

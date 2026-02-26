@@ -48,7 +48,6 @@ class ForceSyncItemsImpl @Inject constructor(
     override suspend fun invoke(
         userId: UserId,
         shareIds: Set<ShareId>,
-        isBackground: Boolean,
         hasInactiveShares: Boolean,
         hasInvalidGroupShares: Boolean
     ): ForceSyncResult {
@@ -94,13 +93,12 @@ class ForceSyncItemsImpl @Inject constructor(
             }
         )
 
-        val (successes, errors) = results.partition { it.isSuccess }
+        val successes = results.mapNotNull { it.getOrNull() }
+        val downloadFailedShareIds = shareIds - successes.map { it.first }.toSet()
 
-        val itemsToInsert: Map<ShareId, List<ItemRevision>> = successes
-            .mapNotNull { it.getOrNull() }
-            .toMap()
+        val itemsToInsert: Map<ShareId, List<ItemRevision>> = successes.toMap()
 
-        itemRepository.setShareItems(
+        val setShareItemsFailedShareIds = itemRepository.setShareItems(
             userId = userId,
             items = itemsToInsert,
             onProgress = { progress: VaultProgress ->
@@ -114,18 +112,29 @@ class ForceSyncItemsImpl @Inject constructor(
                 PassLogger.d(TAG, "Inserting ${progress.current} of: ${progress.total}")
             }
         )
+        val failedShareIds: Set<ShareId> = downloadFailedShareIds + setShareItemsFailedShareIds
 
-        val result = if (errors.isEmpty()) {
-            itemSyncStatusRepository.emit(
-                status = ItemSyncStatus.SyncSuccess(
-                    hasInactiveShares = hasInactiveShares,
-                    hasInvalidGroupShares = hasInvalidGroupShares
+        val result = when {
+            failedShareIds.isEmpty() -> {
+                itemSyncStatusRepository.emit(
+                    status = ItemSyncStatus.SyncSuccess(
+                        hasInactiveShares = hasInactiveShares,
+                        hasInvalidGroupShares = hasInvalidGroupShares
+                    )
                 )
-            )
-            ForceSyncResult.Success
-        } else {
-            itemSyncStatusRepository.emit(ItemSyncStatus.SyncError)
-            ForceSyncResult.Error
+                ForceSyncResult.Success
+            }
+
+            downloadFailedShareIds.isEmpty() -> {
+                // All downloads succeeded; failures are crypto-only (permanent, non-retriable)
+                itemSyncStatusRepository.emit(ItemSyncStatus.SyncError.CryptoError(failedShareIds = failedShareIds))
+                ForceSyncResult.PartialSuccess
+            }
+
+            else -> {
+                itemSyncStatusRepository.emit(ItemSyncStatus.SyncError.DownloadError(failedShareIds = failedShareIds))
+                ForceSyncResult.Error
+            }
         }
 
         itemSyncStatusRepository.setMode(SyncMode.Background)

@@ -18,13 +18,15 @@
 
 package proton.android.pass.features.vault.bottomsheet.folders
 
-import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import proton.android.pass.features.vault.VaultNavigation
+import proton.android.pass.features.vault.VaultNavigation.AddFolder
+import proton.android.pass.features.vault.VaultNavigation.MoveFolder
+import proton.android.pass.features.vault.VaultNavigation.RemoveFolder
+import proton.android.pass.features.vault.VaultNavigation.RenameFolder
 
-@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun FolderOptionsBottomSheet(
     modifier: Modifier = Modifier,
@@ -35,32 +37,17 @@ fun FolderOptionsBottomSheet(
         modifier = modifier,
         onEvent = {
             when (it) {
-                FolderOptionsUserEvent.OnCreateSubFolder -> {
-                    onNavigate(
-                        VaultNavigation.AddFolder(
-                            viewModel.navShareId,
-                            viewModel.navFolderId
-                        )
-                    )
-                }
+                FolderOptionsUserEvent.OnCreateSubFolder ->
+                    onNavigate(AddFolder(viewModel.navShareId, viewModel.navFolderId))
 
-                FolderOptionsUserEvent.OnRenameFolder -> {
-                    onNavigate(
-                        VaultNavigation.RenameFolder(
-                            viewModel.navShareId,
-                            viewModel.navFolderId
-                        )
-                    )
-                }
+                FolderOptionsUserEvent.OnRenameFolder ->
+                    onNavigate(RenameFolder(viewModel.navShareId, viewModel.navFolderId))
 
-                FolderOptionsUserEvent.OnDeleteFolder -> {
-                    onNavigate(
-                        VaultNavigation.RemoveFolder(
-                            viewModel.navShareId,
-                            viewModel.navFolderId
-                        )
-                    )
-                }
+                FolderOptionsUserEvent.OnDeleteFolder ->
+                    onNavigate(RemoveFolder(viewModel.navShareId, viewModel.navFolderId))
+
+                FolderOptionsUserEvent.OnMoveFolder ->
+                    onNavigate(MoveFolder(viewModel.navShareId, viewModel.navFolderId))
             }
         }
     )

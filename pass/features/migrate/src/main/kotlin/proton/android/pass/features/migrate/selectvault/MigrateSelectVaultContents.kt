@@ -53,9 +53,7 @@ fun MigrateSelectVaultContents(
     onVaultSelected: (ShareId) -> Unit
 ) {
     if (vaults.any { it.folderTree.isNotEmpty() }) {
-        LazyColumn(
-            modifier = modifier
-        ) {
+        LazyColumn(modifier = modifier) {
             items(items = vaults, key = { it.vaultWithItemCount.vault.shareId.id }) { vaultPair ->
                 val vaultWithCount = vaultPair.vaultWithItemCount
                 val vaultModel = vaultWithCount.vault

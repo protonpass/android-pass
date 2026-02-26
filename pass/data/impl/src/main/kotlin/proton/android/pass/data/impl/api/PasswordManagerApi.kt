@@ -40,6 +40,7 @@ import proton.android.pass.data.impl.requests.DeleteFoldersRequest
 import proton.android.pass.data.impl.requests.ExtraPasswordSendSrpDataRequest
 import proton.android.pass.data.impl.requests.ItemReadRequest
 import proton.android.pass.data.impl.requests.MigrateItemsRequest
+import proton.android.pass.data.impl.requests.MoveItemsToFolderRequest
 import proton.android.pass.data.impl.requests.MoveFolderRequest
 import proton.android.pass.data.impl.requests.SendUserMonitorCredentialsRequest
 import proton.android.pass.data.impl.requests.SetupExtraPasswordRequest
@@ -107,6 +108,7 @@ import proton.android.pass.data.impl.responses.InviteRecommendationsSuggestedRes
 import proton.android.pass.data.impl.responses.ItemRevisionResponse
 import proton.android.pass.data.impl.responses.LastEventIdResponse
 import proton.android.pass.data.impl.responses.MigrateItemsResponse
+import proton.android.pass.data.impl.responses.MoveItemsToFolderResponse
 import proton.android.pass.data.impl.responses.OrganizationGetResponse
 import proton.android.pass.data.impl.responses.OrganizationKeyApiModel
 import proton.android.pass.data.impl.responses.PendingUserInvitesResponse
@@ -245,6 +247,12 @@ interface PasswordManagerApi : BaseRetrofitApi {
 
     @PUT("$PREFIX/share/{shareId}/item/share")
     suspend fun migrateItems(@Path("shareId") shareId: String, @Body request: MigrateItemsRequest): MigrateItemsResponse
+
+    @PUT("$PREFIX/share/{shareId}/item/folder")
+    suspend fun moveItemsToFolder(
+        @Path("shareId") shareId: String,
+        @Body request: MoveItemsToFolderRequest
+    ): MoveItemsToFolderResponse
 
     // ItemKey
     @GET("$PREFIX/share/{shareId}/item/{itemId}/key/latest")

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023-2026 Proton AG
+ * Copyright (c) 2026 Proton AG
  * This file is part of Proton AG and Proton Pass.
  *
  * Proton Pass is free software: you can redistribute it and/or modify
@@ -16,33 +16,34 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.data.impl.requests
+package proton.android.pass.data.impl.responses
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class MigrateItemsRequest(
-    @SerialName("ShareID")
-    val shareId: String,
+data class MoveItemsToFolderResponse(
+    @SerialName("Code")
+    val code: Int,
     @SerialName("Items")
-    val items: List<MigrateItemsBody>
+    val items: List<MoveItemRevisionApiModel>
 )
 
 @Serializable
-data class MigrateItemsBody(
+data class MoveItemRevisionApiModel(
     @SerialName("ItemID")
     val itemId: String,
-    @SerialName("DestinationFolderID")
-    val destinationFolderId: String? = null,
-    @SerialName("ItemKeys")
-    val itemKeys: List<ItemKeyBody>
+    @SerialName("Revision")
+    val revision: Long,
+    @SerialName("State")
+    val state: Int,
+    @SerialName("Flags")
+    val flags: Int,
+    @SerialName("FolderID")
+    val folderId: String?,
+    @SerialName("ModifyTime")
+    val modifyTime: Long,
+    @SerialName("RevisionTime")
+    val revisionTime: Long
 )
 
-@Serializable
-data class ItemKeyBody(
-    @SerialName("Key")
-    val key: String,
-    @SerialName("KeyRotation")
-    val keyRotation: Long
-)

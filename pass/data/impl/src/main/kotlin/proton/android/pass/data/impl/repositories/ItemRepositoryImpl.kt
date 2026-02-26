@@ -82,6 +82,7 @@ import proton.android.pass.data.impl.requests.CreateItemAliasRequest
 import proton.android.pass.data.impl.requests.ItemKeyBody
 import proton.android.pass.data.impl.requests.MigrateItemsBody
 import proton.android.pass.data.impl.requests.MigrateItemsRequest
+import proton.android.pass.data.impl.requests.MoveItemsToFolderRequest
 import proton.android.pass.data.impl.requests.TrashItemRevision
 import proton.android.pass.data.impl.requests.TrashItemsRequest
 import proton.android.pass.data.impl.requests.UpdateItemFlagsRequest
@@ -1108,6 +1109,70 @@ class ItemRepositoryImpl @Inject constructor(
             destinationKey = destinationKey,
             items = items
         )
+    }
+
+    override suspend fun moveItemsToFolder(
+        userId: UserId,
+        shareId: ShareId,
+        folderId: FolderId,
+        itemIds: List<ItemId>
+    ) {
+        val userAddress = shareRepository.getAddressForShareId(userId, shareId)
+        val folderKey = folderKeyRepository.getFolderKey(userId, shareId, folderId)
+            ?: throw IllegalStateException("FolderKey not found for folderId=${folderId.id}")
+
+        val items = localItemDataSource.getByIdList(userId, shareId, itemIds)
+
+        val moveItems = items.map { item ->
+            val (_, itemKey) = getShareAndItemKey(
+                userAddress = userAddress,
+                shareId = shareId,
+                itemId = ItemId(item.id)
+            )
+            val reencryptedKeys = migrateItem.migrate(
+                destinationKey = folderKey,
+                itemKeys = listOf(ItemKeyWithRotation(itemKey.key, itemKey.rotation))
+            )
+            MigrateItemsBody(
+                itemId = item.id,
+                itemKeys = reencryptedKeys.map { k ->
+                    ItemKeyBody(
+                        key = Base64.encodeBase64String(k.itemKey.array),
+                        keyRotation = folderKey.rotation
+                    )
+                }
+            )
+        }
+
+        val request = MoveItemsToFolderRequest(
+            folderId = folderId.id,
+            items = moveItems
+        )
+
+        val response = remoteItemDataSource.moveItemsToFolder(userId, shareId, request)
+
+        val reencryptedKeyByItemId = moveItems.associateBy { it.itemId }
+        val entityByItemId = items.associateBy { it.id }
+
+        val updatedEntities = response.map { moveRevision ->
+            val entity = entityByItemId[moveRevision.itemId]
+                ?: throw IllegalStateException("ItemEntity not found for itemId=${moveRevision.itemId}")
+            val transportKey = reencryptedKeyByItemId[moveRevision.itemId]
+                ?.itemKeys
+                ?.firstOrNull()
+                ?.key
+            entity.copy(
+                folderId = moveRevision.folderId,
+                revision = moveRevision.revision,
+                state = moveRevision.state,
+                flags = moveRevision.flags,
+                modifyTime = moveRevision.modifyTime,
+                key = transportKey ?: entity.key,
+                keyRotation = folderKey.rotation
+            )
+        }
+
+        localItemDataSource.upsertItems(updatedEntities)
     }
 
     override suspend fun getItemByAliasEmail(userId: UserId, aliasEmail: String): Item? {

@@ -793,6 +793,15 @@ fun NavGraphBuilder.appGraph(
                         backDestination = HomeNavItem
                     )
                 }
+
+                is VaultNavigation.MoveFolder -> dismissBottomSheet {
+                    appNavigator.navigate(
+                        destination = MigrateSelectVault,
+                        route = MigrateSelectVault.createNavRouteForMigrateAll(
+                            shareId = it.shareId
+                        )
+                    )
+                }
             }
         }
     )

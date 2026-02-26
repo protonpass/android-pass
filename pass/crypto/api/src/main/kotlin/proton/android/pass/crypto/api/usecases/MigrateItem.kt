@@ -19,11 +19,11 @@
 package proton.android.pass.crypto.api.usecases
 
 import me.proton.core.crypto.common.keystore.EncryptedByteArray
-import proton.android.pass.domain.key.ShareKey
+import proton.android.pass.domain.key.InviteKey
 
 interface MigrateItem {
 
-    fun migrate(destinationKey: ShareKey, itemKeys: List<ItemKeyWithRotation>): List<ItemKeyWithRotation>
+    fun migrate(destinationKey: InviteKey, itemKeys: List<ItemKeyWithRotation>): List<ItemKeyWithRotation>
 
 }
 

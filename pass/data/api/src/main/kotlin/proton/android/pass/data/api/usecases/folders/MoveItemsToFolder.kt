@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023-2026 Proton AG
+ * Copyright (c) 2026 Proton AG
  * This file is part of Proton AG and Proton Pass.
  *
  * Proton Pass is free software: you can redistribute it and/or modify
@@ -16,21 +16,16 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.crypto.fakes.usecases
+package proton.android.pass.data.api.usecases.folders
 
-import proton.android.pass.crypto.api.usecases.ItemKeyWithRotation
-import proton.android.pass.crypto.api.usecases.MigrateItem
-import proton.android.pass.domain.key.InviteKey
+import proton.android.pass.domain.FolderId
+import proton.android.pass.domain.ItemId
+import proton.android.pass.domain.ShareId
 
-class FakeMigrateItem : MigrateItem {
-
-    private var output: List<ItemKeyWithRotation>? = null
-
-    fun setOutput(value: List<ItemKeyWithRotation>) {
-        output = value
-    }
-
-    override fun migrate(destinationKey: InviteKey, itemKeys: List<ItemKeyWithRotation>): List<ItemKeyWithRotation> =
-        output ?: throw IllegalStateException("output not set")
-
+interface MoveItemsToFolder {
+    suspend operator fun invoke(
+        shareId: ShareId,
+        folderId: FolderId,
+        itemIds: List<ItemId>
+    )
 }

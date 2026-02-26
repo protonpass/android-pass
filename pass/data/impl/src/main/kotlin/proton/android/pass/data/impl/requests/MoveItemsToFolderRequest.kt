@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023-2026 Proton AG
+ * Copyright (c) 2026 Proton AG
  * This file is part of Proton AG and Proton Pass.
  *
  * Proton Pass is free software: you can redistribute it and/or modify
@@ -22,27 +22,9 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class MigrateItemsRequest(
-    @SerialName("ShareID")
-    val shareId: String,
+data class MoveItemsToFolderRequest(
+    @SerialName("FolderID")
+    val folderId: String,
     @SerialName("Items")
     val items: List<MigrateItemsBody>
-)
-
-@Serializable
-data class MigrateItemsBody(
-    @SerialName("ItemID")
-    val itemId: String,
-    @SerialName("DestinationFolderID")
-    val destinationFolderId: String? = null,
-    @SerialName("ItemKeys")
-    val itemKeys: List<ItemKeyBody>
-)
-
-@Serializable
-data class ItemKeyBody(
-    @SerialName("Key")
-    val key: String,
-    @SerialName("KeyRotation")
-    val keyRotation: Long
 )

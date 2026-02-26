@@ -291,6 +291,7 @@ class CreateCustomItemViewModel @Inject constructor(
             runCatching {
                 createItem(
                     shareId = shareId,
+                    folderId = selectedFolderIdMutableState.value(),
                     itemContents = itemFormState.toItemContents()
                 )
             }
@@ -391,4 +392,3 @@ sealed interface CreateSpecificIntent : BaseItemFormIntent {
     @JvmInline
     value class OnVaultSelected(val shareId: ShareId) : CreateSpecificIntent
 }
-

@@ -255,6 +255,7 @@ class CreateLoginScreenTest {
         val expected = FakeCreateItem.Payload(
             userId = USER_ID,
             shareId = ShareId(SHARE_ID),
+            folderId = null,
             itemContents = ItemContents.Login(
                 title = title,
                 itemEmail = email,

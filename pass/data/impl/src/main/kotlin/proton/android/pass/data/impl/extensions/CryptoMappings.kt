@@ -30,6 +30,7 @@ import proton.android.pass.data.impl.requests.CreateVaultRequest
 import proton.android.pass.data.impl.requests.UpdateItemRequest
 import proton.android.pass.data.impl.requests.UpdateVaultRequest
 import proton.android.pass.data.impl.responses.ItemLatestKeyResponse
+import proton.android.pass.domain.FolderId
 
 fun EncryptedCreateVault.toRequest(): CreateVaultRequest = CreateVaultRequest(
     addressId = addressId,
@@ -38,11 +39,12 @@ fun EncryptedCreateVault.toRequest(): CreateVaultRequest = CreateVaultRequest(
     encryptedVaultKey = encryptedVaultKey
 )
 
-fun EncryptedCreateItem.toRequest(): CreateItemRequest = CreateItemRequest(
+fun EncryptedCreateItem.toRequest(folderId: FolderId? = null): CreateItemRequest = CreateItemRequest(
     keyRotation = keyRotation,
     contentFormatVersion = contentFormatVersion,
     content = content,
-    itemKey = itemKey
+    itemKey = itemKey,
+    folderId = folderId?.id
 )
 
 fun EncryptedUpdateItemRequest.toRequest(): UpdateItemRequest = UpdateItemRequest(

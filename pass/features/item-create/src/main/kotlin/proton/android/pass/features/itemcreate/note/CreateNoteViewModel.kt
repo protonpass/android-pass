@@ -244,7 +244,12 @@ class CreateNoteViewModel @Inject constructor(
                 .onFailure { PassLogger.e(TAG, it, "Error getting share") }
                 .mapCatching { share ->
                     val itemContents = noteItemFormState.toItemContents()
-                    itemRepository.createItem(userId, share, itemContents)
+                    itemRepository.createItem(
+                        userId = userId,
+                        share = share,
+                        folderId = selectedFolderIdMutableState.value(),
+                        contents = itemContents
+                    )
                 }
                 .onFailure {
                     PassLogger.w(TAG, "Create item error")

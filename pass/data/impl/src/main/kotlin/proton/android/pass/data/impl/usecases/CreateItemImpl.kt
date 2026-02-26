@@ -24,6 +24,7 @@ import proton.android.pass.data.api.repositories.ItemRepository
 import proton.android.pass.data.api.repositories.ShareRepository
 import proton.android.pass.data.api.usecases.CreateItem
 import proton.android.pass.data.api.usecases.ObserveCurrentUser
+import proton.android.pass.domain.FolderId
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.ShareId
@@ -38,11 +39,11 @@ class CreateItemImpl @Inject constructor(
     override suspend operator fun invoke(
         userId: UserId?,
         shareId: ShareId,
+        folderId: FolderId?,
         itemContents: ItemContents
     ): Item {
         val actualUserId = userId ?: observeCurrentUser().first().userId
         val share = shareRepository.getById(actualUserId, shareId)
-        return itemRepository.createItem(actualUserId, share, itemContents)
+        return itemRepository.createItem(actualUserId, share, folderId, itemContents)
     }
 }
-

@@ -257,6 +257,7 @@ class CreateCreditCardViewModel @Inject constructor(
                 createItem(
                     userId = userId,
                     shareId = vault.vault.shareId,
+                    folderId = selectedFolderIdMutableState.value(),
                     itemContents = sanitisedItemFormState.toItemContents()
                 )
             }

@@ -1,6 +1,13 @@
 repos:
   - repo: local
     hooks:
+      - id: copyright-fix
+        name: copyright headers fix
+        description: Adds missing copyright headers on modified source files.
+        language: script
+        entry: ./tools/private/addCopyrightToFiles.sh fix
+        files: \.(kt|kts|java)$
+        exclude: (buildSrc/.*)
       - id: detekt
         name: detekt check
         description: Runs `detekt` on modified .kt files.
@@ -8,3 +15,9 @@ repos:
         entry: ./scripts/detekt.sh
         files: \.kt$
         exclude: (buildSrc/.*)
+      - id: conventional-commit
+        name: conventional commit message
+        description: Validates commit message follows Conventional Commits.
+        language: script
+        entry: ./scripts/checkConventionalCommit.sh
+        stages: [commit-msg]

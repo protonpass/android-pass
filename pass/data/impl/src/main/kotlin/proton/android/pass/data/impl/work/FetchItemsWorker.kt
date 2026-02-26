@@ -71,7 +71,6 @@ open class FetchItemsWorker @AssistedInject constructor(
         val res = forceSyncItems(
             userId = userId,
             shareIds = shareIds,
-            isBackground = !fetchSource.showDialog,
             hasInactiveShares = hasInactiveShares,
             hasInvalidGroupShares = hasInvalidGroupShares
         )
@@ -79,6 +78,11 @@ open class FetchItemsWorker @AssistedInject constructor(
             ForceSyncResult.Error -> {
                 PassLogger.i(TAG, "$TAG finished with errors")
                 Result.retry()
+            }
+
+            ForceSyncResult.PartialSuccess -> {
+                PassLogger.w(TAG, "$TAG finished with partial success")
+                Result.success()
             }
 
             ForceSyncResult.Success -> {
@@ -109,10 +113,10 @@ open class FetchItemsWorker @AssistedInject constructor(
             .build()
     }
 
-    enum class FetchSource(val showDialog: Boolean) {
-        ForceSync(true),
-        NewShare(false),
-        FirstSync(true)
+    enum class FetchSource {
+        ForceSync,
+        NewShare,
+        FirstSync
     }
 
     companion object {

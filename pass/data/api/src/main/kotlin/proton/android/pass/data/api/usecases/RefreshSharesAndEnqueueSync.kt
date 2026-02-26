@@ -26,7 +26,8 @@ interface RefreshSharesAndEnqueueSync {
 
     enum class SyncType {
         INCREMENTAL,
-        FULL
+        FULL,
+        FULL_BACKGROUND
     }
 }
 

@@ -41,12 +41,19 @@ internal data class SyncDialogState(
 
     internal val hasSyncFailed: Boolean = itemSyncStatus is ItemSyncStatus.SyncError
 
+    internal val canRetry: Boolean = itemSyncStatus is ItemSyncStatus.SyncError.DownloadError
+
     internal val hasSyncSucceeded: Boolean = itemSyncStatus is ItemSyncStatus.SyncSuccess
 
     internal val hasSyncFinished: Boolean = hasSyncFailed || hasSyncSucceeded
 
     internal val isInserting: Boolean =
         insertedItems.map { it.current > 0 && it.current != it.total }.value() ?: false
+
+    private val failedShareIds: Set<ShareId> = when (val status = itemSyncStatus) {
+        is ItemSyncStatus.SyncError -> status.failedShareIds
+        else -> emptySet()
+    }
 
     internal val syncItemsMap: ImmutableMap<ShareId, SyncDialogItem> = when (vaultsLoadingResult) {
         is LoadingResult.Error,
@@ -56,10 +63,18 @@ internal data class SyncDialogState(
             vaultsLoadingResult.data
                 .associateBy { vault -> vault.shareId }
                 .mapValues { (shareId, vault) ->
+                    val isFailedVault = when {
+                        !hasSyncFailed -> false
+                        // Empty failedShareIds with a SyncError means a global failure
+                        // (e.g. network error before any share was fetched) — mark all vaults as failed.
+                        failedShareIds.isEmpty() -> true
+                        else -> shareId in failedShareIds
+                    }
                     SyncDialogItem(
                         vault = vault,
                         downloadedItemsCountOption = downloadedItemsMap[shareId]?.current.toOption(),
-                        totalDownloadedItemsCountOption = downloadedItemsMap[shareId]?.total.toOption()
+                        totalDownloadedItemsCountOption = downloadedItemsMap[shareId]?.total.toOption(),
+                        hasSyncFailed = isFailedVault
                     )
                 }
                 .toPersistentMap()

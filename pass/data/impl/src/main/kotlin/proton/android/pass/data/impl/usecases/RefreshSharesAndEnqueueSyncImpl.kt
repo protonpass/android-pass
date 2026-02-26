@@ -89,10 +89,11 @@ class RefreshSharesAndEnqueueSyncImpl @Inject constructor(
             if (syncType == RefreshSharesAndEnqueueSync.SyncType.FULL) {
                 PassLogger.w(TAG, "Error during FULL sync")
                 PassLogger.w(TAG, it)
-                itemSyncStatusRepository.emit(ItemSyncStatus.SyncError)
+                itemSyncStatusRepository.emit(ItemSyncStatus.SyncError.DownloadError())
             }
         }.getOrThrow()
     }
+
 
     private fun handleNonEmptyShares(
         userId: UserId,
@@ -132,7 +133,8 @@ class RefreshSharesAndEnqueueSyncImpl @Inject constructor(
                 FetchItemsWorker.FetchSource.NewShare
             }
 
-        RefreshSharesAndEnqueueSync.SyncType.FULL ->
+        RefreshSharesAndEnqueueSync.SyncType.FULL,
+        RefreshSharesAndEnqueueSync.SyncType.FULL_BACKGROUND ->
             result.allShareIds to FetchItemsWorker.FetchSource.ForceSync
     }
 
@@ -150,10 +152,15 @@ class RefreshSharesAndEnqueueSyncImpl @Inject constructor(
             hasInactiveShares = hasInactiveShares,
             hasInvalidGroupShares = hasInvalidGroupShares
         )
-        PassLogger.i(TAG, "Enqueuing FetchItemsWorker with source: $fetchSource")
+        val policy = if (fetchSource == FetchItemsWorker.FetchSource.ForceSync) {
+            ExistingWorkPolicy.REPLACE
+        } else {
+            ExistingWorkPolicy.KEEP
+        }
+        PassLogger.i(TAG, "Enqueuing FetchItemsWorker with source: $fetchSource, policy: $policy")
         workManager.enqueueUniqueWork(
             FetchItemsWorker.getOneTimeUniqueWorkName(userId),
-            ExistingWorkPolicy.REPLACE,
+            policy,
             request
         )
     }

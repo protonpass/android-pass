@@ -59,7 +59,8 @@ internal fun SyncDialogContent(
         onDismissRequest = {},
         title = {
             val titlesResId = when {
-                hasSyncFailed -> R.string.sync_dialog_title_error
+                canRetry -> R.string.sync_dialog_title_error
+                hasSyncFailed -> R.string.sync_dialog_title_partial_error
                 hasSyncSucceeded -> R.string.sync_dialog_title_success
                 isInserting -> R.string.sync_dialog_title_inserting
                 else -> R.string.sync_dialog_title
@@ -77,7 +78,8 @@ internal fun SyncDialogContent(
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 val subtitleResId = when {
-                    hasSyncFailed -> R.string.sync_dialog_subtitle_error
+                    canRetry -> R.string.sync_dialog_subtitle_error
+                    hasSyncFailed -> R.string.sync_dialog_subtitle_partial_error
                     hasSyncSucceeded -> R.string.sync_dialog_subtitle_success
                     isInserting -> R.string.sync_dialog_subtitle_inserting
                     else -> R.string.sync_dialog_subtitle
@@ -108,7 +110,7 @@ internal fun SyncDialogContent(
                                     itemTotal = totalDownloadedItemsCount,
                                     color = vaultColor,
                                     icon = vaultIcon,
-                                    hasSyncFailed = hasSyncFailed,
+                                    hasVaultSyncFailed = hasSyncFailed,
                                     hasSyncFinished = hasSyncFinished
                                 )
                             }
@@ -118,10 +120,17 @@ internal fun SyncDialogContent(
             }
         },
         confirmButton = {
-            AnimatedVisibility(visible = hasSyncFailed) {
+            AnimatedVisibility(visible = canRetry) {
                 SyncDialogButton(
                     textResId = CompR.string.action_retry,
                     onClick = { onUiEvent(SyncDialogUiEvent.OnRetrySync) }
+                )
+            }
+
+            AnimatedVisibility(visible = hasSyncFailed && !canRetry) {
+                SyncDialogButton(
+                    textResId = CompR.string.action_continue,
+                    onClick = { onUiEvent(SyncDialogUiEvent.OnCompleteSync) }
                 )
             }
 
@@ -133,7 +142,7 @@ internal fun SyncDialogContent(
             }
         },
         dismissButton = {
-            AnimatedVisibility(visible = hasSyncFailed) {
+            AnimatedVisibility(visible = canRetry) {
                 SyncDialogButton(
                     textResId = CompR.string.action_not_now,
                     onClick = { onUiEvent(SyncDialogUiEvent.OnCloseSync) }

@@ -30,9 +30,16 @@ import proton.android.pass.domain.key.ShareKey
 class FakeOpenItem : OpenItem {
 
     private var output: OpenItemOutput? = null
+    private var openBlock: ((EncryptedItemRevision) -> OpenItemOutput)? = null
 
     fun setOutput(value: OpenItemOutput) {
         output = value
+        openBlock = null
+    }
+
+    fun setOpenBlock(block: (EncryptedItemRevision) -> OpenItemOutput) {
+        openBlock = block
+        output = null
     }
 
     override fun open(
@@ -52,5 +59,6 @@ class FakeOpenItem : OpenItem {
         shareKeys: List<ShareKey>,
         folderKey: FolderKey?,
         encryptionContext: EncryptionContext
-    ): OpenItemOutput = output ?: throw IllegalStateException("output not set")
+    ): OpenItemOutput = openBlock?.invoke(response) ?: output
+        ?: throw IllegalStateException("output not set")
 }

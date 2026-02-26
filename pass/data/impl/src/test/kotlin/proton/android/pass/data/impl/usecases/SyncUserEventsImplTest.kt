@@ -28,6 +28,7 @@ import proton.android.pass.data.fakes.repositories.FakeItemRepository
 import proton.android.pass.data.fakes.usecases.FakePromoteNewInviteToInvite
 import proton.android.pass.data.fakes.usecases.FakeRefreshBreaches
 import proton.android.pass.data.fakes.usecases.FakeRefreshGroupInvites
+import proton.android.pass.data.fakes.usecases.FakeItemSyncStatusRepository
 import proton.android.pass.data.fakes.usecases.FakeRefreshOrganizationSettings
 import proton.android.pass.data.fakes.usecases.FakeRefreshSharesAndEnqueueSync
 import proton.android.pass.data.fakes.usecases.FakeRefreshUserInvites
@@ -36,6 +37,7 @@ import proton.android.pass.data.fakes.usecases.folders.FakeDeleteFoldersLocally
 import proton.android.pass.data.fakes.usecases.folders.FakeRefreshFolders
 import proton.android.pass.data.fakes.usecases.simplelogin.FakeSyncSimpleLoginPendingAliases
 import proton.android.pass.data.fakes.work.FakeWorkManagerFacade
+import proton.android.pass.data.impl.fakes.FakeEventRepository
 import proton.android.pass.data.impl.fakes.FakeUserEventRepository
 import proton.android.pass.data.impl.fakes.FakeShareRepository
 import proton.android.pass.data.impl.work.FetchItemsWorker
@@ -65,6 +67,8 @@ internal class SyncUserEventsImplTest {
     private lateinit var syncPendingAliases: FakeSyncSimpleLoginPendingAliases
     private lateinit var promoteNewInviteToInvite: FakePromoteNewInviteToInvite
     private lateinit var refreshOrganizationSettings: FakeRefreshOrganizationSettings
+    private lateinit var itemSyncStatusRepository: FakeItemSyncStatusRepository
+    private lateinit var eventRepository: FakeEventRepository
 
     @Before
     fun setup() {
@@ -82,6 +86,8 @@ internal class SyncUserEventsImplTest {
         syncPendingAliases = FakeSyncSimpleLoginPendingAliases()
         promoteNewInviteToInvite = FakePromoteNewInviteToInvite()
         refreshOrganizationSettings = FakeRefreshOrganizationSettings()
+        itemSyncStatusRepository = FakeItemSyncStatusRepository()
+        eventRepository = FakeEventRepository()
 
         instance = SyncUserEventsImpl(
             userEventRepository = userEventRepository,
@@ -97,7 +103,9 @@ internal class SyncUserEventsImplTest {
             syncPendingAliases = syncPendingAliases,
             promoteNewInviteToInvite = promoteNewInviteToInvite,
             refreshBreaches = refreshBreaches,
-            refreshOrganizationSettings = refreshOrganizationSettings
+            refreshOrganizationSettings = refreshOrganizationSettings,
+            itemSyncStatusRepository = itemSyncStatusRepository,
+            eventRepository = eventRepository
         )
     }
 

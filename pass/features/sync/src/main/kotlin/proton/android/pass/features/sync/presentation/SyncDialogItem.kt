@@ -26,7 +26,8 @@ import proton.android.pass.domain.Vault
 internal data class SyncDialogItem(
     private val downloadedItemsCountOption: Option<Int>,
     private val totalDownloadedItemsCountOption: Option<Int>,
-    private val vault: Vault
+    private val vault: Vault,
+    internal val hasSyncFailed: Boolean
 ) {
 
     internal val currentDownloadedItemsCount: Int? = downloadedItemsCountOption.value()

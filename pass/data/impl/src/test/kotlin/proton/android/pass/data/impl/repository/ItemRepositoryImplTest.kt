@@ -41,7 +41,9 @@ import proton.android.pass.data.impl.fakes.FakeShareKeyRepository
 import proton.android.pass.data.impl.fakes.FakeShareRepository
 import proton.android.pass.data.impl.generator.TestProtoItemGenerator
 import proton.android.pass.data.impl.repositories.ItemRepositoryImpl
+import proton.android.pass.data.api.repositories.VaultProgress
 import proton.android.pass.domain.ItemContents
+import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.Share
 import proton.android.pass.test.MainDispatcherRule
 import proton.android.pass.test.domain.ItemTestFactory
@@ -61,6 +63,8 @@ class ItemRepositoryImplTest {
     private lateinit var remoteItemDataSource: FakeRemoteItemDataSource
     private lateinit var shareKeyRepository: FakeShareKeyRepository
     private lateinit var itemKeyRepository: FakeItemKeyRepository
+    private lateinit var shareRepository: FakeShareRepository
+    private lateinit var userAddressRepository: FakeUserAddressRepository
 
     private val userId = UserId("test-123")
     private lateinit var share: Share
@@ -73,16 +77,22 @@ class ItemRepositoryImplTest {
         remoteItemDataSource = FakeRemoteItemDataSource()
         shareKeyRepository = FakeShareKeyRepository()
         itemKeyRepository = FakeItemKeyRepository()
+        shareRepository = FakeShareRepository()
+        userAddressRepository = FakeUserAddressRepository()
 
         share = ShareTestFactory.random()
+        val userAddress = userAddressRepository.generateAddress("test1", userId)
+        shareRepository.setGetByIdResult(Result.success(share))
+        shareRepository.setGetAddressForShareIdResult(Result.success(userAddress))
+        shareKeyRepository.emitGetShareKeys(listOf(ShareKeyTestFactory.createPrivate()))
 
         repository = ItemRepositoryImpl(
             database = FakePassDatabase(),
             accountManager = FakeAccountManager(),
-            userAddressRepository = FakeUserAddressRepository().apply {
-                setAddresses(listOf(generateAddress("test1", userId)))
+            userAddressRepository = userAddressRepository.apply {
+                setAddresses(listOf(userAddress))
             },
-            shareRepository = FakeShareRepository(),
+            shareRepository = shareRepository,
             createItem = createItem,
             updateItem = FakeUpdateItem(),
             localItemDataSource = localItemDataSource,
@@ -129,6 +139,39 @@ class ItemRepositoryImplTest {
         val localItem = localMemory.first()
         assertEquals(localItem.userId, userId.id)
         assertEquals(localItem.aliasEmail, null)
+    }
+
+    @Test
+    fun `setShareItems skips failing revision and upserts remaining items`() = runTest {
+        val goodItemId = ItemId("good-item-id")
+        val badItemId = ItemId("bad-item-id")
+
+        val protoItem = TestProtoItemGenerator.generate(name = "title", note = "note")
+        val openOutputItem = ItemTestFactory.random(content = protoItem.toByteArray())
+        openItem.setOpenBlock { encryptedRevision ->
+            if (encryptedRevision.itemId == badItemId.id) {
+                throw IllegalStateException("Bad decrypt")
+            }
+            OpenItemOutput(item = openOutputItem, itemKey = null)
+        }
+
+        val goodRevision = FakeRemoteItemDataSource.createItemRevision(
+            ItemTestFactory.create(itemId = goodItemId, shareId = share.id)
+        )
+        val badRevision = FakeRemoteItemDataSource.createItemRevision(
+            ItemTestFactory.create(itemId = badItemId, shareId = share.id)
+        )
+
+        val failedShareIds = repository.setShareItems(
+            userId = userId,
+            items = mapOf(share.id to listOf(goodRevision, badRevision)),
+            onProgress = { _: VaultProgress -> }
+        )
+
+        val upserted = localItemDataSource.getMemory()
+        assertEquals(1, upserted.size)
+        assertEquals(goodItemId.id, upserted.first().id)
+        assertEquals(setOf(share.id), failedShareIds)
     }
 
 }

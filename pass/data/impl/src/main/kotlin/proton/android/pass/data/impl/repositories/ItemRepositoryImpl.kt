@@ -888,55 +888,52 @@ class ItemRepositoryImpl @Inject constructor(
         userId: UserId,
         items: Map<ShareId, List<ItemRevision>>,
         onProgress: suspend (VaultProgress) -> Unit
-    ) {
-        if (items.isEmpty()) return
+    ): Set<ShareId> {
+        if (items.isEmpty()) return emptySet()
 
-        val plans: List<Result<SetShareItemsPlan>> = coroutineScope {
+        val plans: List<Pair<ShareId, Result<SetShareItemsPlan>>> = coroutineScope {
             items.map { (shareId, revisions) ->
                 async {
-                    calculatePlanForSetShareItems(userId, shareId, revisions)
+                    shareId to calculatePlanForSetShareItems(userId, shareId, revisions)
                 }
             }.awaitAll()
         }
 
-        val (successes, failures) = plans.partition { it.isSuccess }
+        val (successes, failures) = plans.partition { (_, result) -> result.isSuccess }
+        val failedShareIds: MutableSet<ShareId> = failures
+            .map { (shareId, _) -> shareId }
+            .toMutableSet()
 
         if (failures.isNotEmpty()) {
-            failures.first().exceptionOrNull()?.let {
-                PassLogger.w(TAG, "Error calculating plan for setShareItems")
-                PassLogger.w(TAG, it)
+            failures.forEach { (shareId, result) ->
+                result.exceptionOrNull()?.let {
+                    PassLogger.w(TAG, "Error calculating plan for setShareItems (shareId: ${shareId.id})")
+                    PassLogger.w(TAG, it)
+                }
             }
         }
 
-        val successPlans = successes.mapNotNull { it.getOrNull() }
-        val itemsToUpsert = successPlans.flatMap { it.itemsToUpsert }
-        val itemsToDelete = successPlans.map { it.itemsToDelete }
+        val successPlans: List<Pair<ShareId, SetShareItemsPlan>> = successes.mapNotNull { (shareId, result) ->
+            result.getOrNull()?.let { shareId to it }
+        }
+        failedShareIds += successPlans
+            .filter { (_, plan) -> plan.hasFailedItems }
+            .map { (shareId, _) -> shareId }
 
-        val insertItemCount = itemsToUpsert.size
-        val deleteItemCount = itemsToDelete.flatMap { it.second }.size
-        PassLogger.i(
-            TAG,
-            "Going to insert $insertItemCount items and delete $deleteItemCount items"
-        )
+        val itemsToUpsert = successPlans.flatMap { (_, plan) -> plan.itemsToUpsert }
+        val itemsToDelete = successPlans.map { (_, plan) -> plan.itemsToDelete }
 
-        val upsertChunks: List<List<ItemEntity>> = itemsToUpsert.chunked(MAX_ITEMS_PER_TRANSACTION)
-        upsertChunks.forEachIndexed { idx, chunk ->
-            PassLogger.i(TAG, "setShareItems insert(${idx + 1}/${upsertChunks.size})")
-            localItemDataSource.upsertItems(chunk)
-            val progress = idx * MAX_ITEMS_PER_TRANSACTION + chunk.size
-            onProgress(
-                VaultProgress(
-                    total = insertItemCount,
-                    current = progress.coerceAtMost(insertItemCount)
-                )
+        persistShareItemsData(userId, itemsToUpsert, itemsToDelete, onProgress)
+
+        if (failedShareIds.isNotEmpty()) {
+            PassLogger.w(
+                TAG,
+                "setShareItems finished with failed shares: " +
+                    failedShareIds.joinToString(separator = ",") { it.id }
             )
         }
 
-        database.inTransaction("setShareItems delete") {
-            itemsToDelete.forEach { (shareId, toDelete) ->
-                localItemDataSource.delete(userId, shareId, toDelete)
-            }
-        }
+        return failedShareIds
     }
 
     override suspend fun applyPendingEvent(event: ItemPendingEvent) = with(event) {
@@ -960,23 +957,14 @@ class ItemRepositoryImpl @Inject constructor(
             folderIds = folderIds
         )
 
-        val items = encryptionContextProvider.withEncryptionContextSuspendable {
-            pendingRevisions.map { revision ->
-                val folderKey: FolderKey? = revision.folderId?.let { folderId ->
-                    folderKeysMap[FolderId(folderId)]
-                        ?: throw IllegalStateException("FolderKey not found in the database")
-                }
-                itemResponseToEntity(
-                    userAddress = userAddress,
-                    itemRevision = revision,
-                    share = share,
-                    shareKeys = shareKeys,
-                    folderKey = folderKey,
-                    encryptionContext = this
-                )
-            }
-        }
-
+        val items = decryptPendingItemRevisions(
+            shareId = shareId,
+            pendingRevisions = pendingRevisions,
+            userAddress = userAddress,
+            share = share,
+            shareKeys = shareKeys,
+            folderKeysMap = folderKeysMap
+        )
         localItemDataSource.upsertItems(items)
     }
 
@@ -1263,26 +1251,18 @@ class ItemRepositoryImpl @Inject constructor(
             folderIds = folderIds
         )
 
-        val itemsToUpsert = encryptionContextProvider.withEncryptionContextSuspendable {
-            revisions.map { revision ->
-                val folderKey: FolderKey? = revision.folderId?.let { folderId ->
-                    folderKeysMap[FolderId(folderId)]
-                        ?: throw IllegalStateException("FolderKey not found in the database")
-                }
-                itemResponseToEntity(
-                    userAddress = address,
-                    itemRevision = revision,
-                    share = share,
-                    shareKeys = shareKeys,
-                    folderKey = folderKey,
-                    encryptionContext = this
-                )
-            }
-        }
-
+        val (itemsToUpsert, hasFailedItems) = decryptItemRevisions(
+            shareId = shareId,
+            revisions = revisions,
+            address = address,
+            share = share,
+            shareKeys = shareKeys,
+            folderKeysMap = folderKeysMap
+        )
         SetShareItemsPlan(
             itemsToDelete = shareId to itemsNotPresentInRemote,
-            itemsToUpsert = itemsToUpsert
+            itemsToUpsert = itemsToUpsert,
+            hasFailedItems = hasFailedItems
         )
     }.onFailure {
         PassLogger.w(TAG, "Error calculating plan for setShareItems (shareId: ${shareId.id})")
@@ -1700,9 +1680,129 @@ class ItemRepositoryImpl @Inject constructor(
         )
     }
 
+    private suspend fun persistShareItemsData(
+        userId: UserId,
+        itemsToUpsert: List<ItemEntity>,
+        itemsToDelete: List<Pair<ShareId, List<ItemId>>>,
+        onProgress: suspend (VaultProgress) -> Unit
+    ) {
+        val insertItemCount = itemsToUpsert.size
+        val deleteItemCount = itemsToDelete.flatMap { it.second }.size
+        PassLogger.i(TAG, "Going to insert $insertItemCount items and delete $deleteItemCount items")
+        val upsertChunks = itemsToUpsert.chunked(MAX_ITEMS_PER_TRANSACTION)
+        upsertChunks.forEachIndexed { idx, chunk ->
+            PassLogger.i(TAG, "setShareItems insert(${idx + 1}/${upsertChunks.size})")
+            localItemDataSource.upsertItems(chunk)
+            val progress = idx * MAX_ITEMS_PER_TRANSACTION + chunk.size
+            onProgress(VaultProgress(total = insertItemCount, current = progress.coerceAtMost(insertItemCount)))
+        }
+        database.inTransaction("setShareItems delete") {
+            itemsToDelete.forEach { (shareId, toDelete) ->
+                localItemDataSource.delete(userId, shareId, toDelete)
+            }
+        }
+    }
+
+    private suspend fun decryptPendingItemRevisions(
+        shareId: ShareId,
+        pendingRevisions: List<ItemRevision>,
+        userAddress: UserAddress,
+        share: Share,
+        shareKeys: List<ShareKey>,
+        folderKeysMap: Map<FolderId, FolderKey>
+    ): List<ItemEntity> {
+        val failedItemIds = mutableListOf<String>()
+        val items = encryptionContextProvider.withEncryptionContextSuspendable {
+            pendingRevisions.mapNotNull { revision ->
+                safeRunCatching {
+                    val folderKey: FolderKey? = revision.folderId?.let { folderId ->
+                        folderKeysMap[FolderId(folderId)]
+                            ?: throw IllegalStateException("FolderKey not found in the database")
+                    }
+                    itemResponseToEntity(
+                        userAddress = userAddress,
+                        itemRevision = revision,
+                        share = share,
+                        shareKeys = shareKeys,
+                        folderKey = folderKey,
+                        encryptionContext = this
+                    )
+                }.onFailure { error ->
+                    failedItemIds += revision.itemId
+                    PassLogger.w(
+                        TAG,
+                        "applyPendingEvent failed for item " +
+                            "(shareId: ${shareId.id}, itemId: ${revision.itemId}, " +
+                            "revision: ${revision.revision}, state: ${revision.state}, " +
+                            "folderId: ${revision.folderId})"
+                    )
+                    PassLogger.w(TAG, error)
+                }.getOrNull()
+            }
+        }
+        if (failedItemIds.isNotEmpty()) {
+            val failedPreview = failedItemIds.joinToString(separator = ",", limit = 5, truncated = "...")
+            PassLogger.w(
+                TAG,
+                "applyPendingEvent skipped ${failedItemIds.size}/${pendingRevisions.size} items " +
+                    "for shareId=${shareId.id} (itemIds=$failedPreview)"
+            )
+        }
+        return items
+    }
+
+    private suspend fun decryptItemRevisions(
+        shareId: ShareId,
+        revisions: List<ItemRevision>,
+        address: UserAddress,
+        share: Share,
+        shareKeys: List<ShareKey>,
+        folderKeysMap: Map<FolderId, FolderKey>
+    ): Pair<List<ItemEntity>, Boolean> {
+        val failedItemIds = mutableListOf<ItemId>()
+        val itemsToUpsert = encryptionContextProvider.withEncryptionContextSuspendable {
+            revisions.mapNotNull { revision ->
+                safeRunCatching {
+                    val folderKey: FolderKey? = revision.folderId?.let { folderId ->
+                        folderKeysMap[FolderId(folderId)]
+                            ?: throw IllegalStateException("FolderKey not found in the database")
+                    }
+                    itemResponseToEntity(
+                        userAddress = address,
+                        itemRevision = revision,
+                        share = share,
+                        shareKeys = shareKeys,
+                        folderKey = folderKey,
+                        encryptionContext = this
+                    )
+                }.onFailure { error ->
+                    failedItemIds += ItemId(revision.itemId)
+                    PassLogger.w(
+                        TAG,
+                        "setShareItems decrypt failed " +
+                            "(shareId: ${shareId.id}, itemId: ${revision.itemId}, " +
+                            "revision: ${revision.revision}, state: ${revision.state}, " +
+                            "folderId: ${revision.folderId})"
+                    )
+                    PassLogger.w(TAG, error)
+                }.getOrNull()
+            }
+        }
+        if (failedItemIds.isNotEmpty()) {
+            val failedPreview = failedItemIds.joinToString(separator = ",", limit = 5, truncated = "...")
+            PassLogger.w(
+                TAG,
+                "setShareItems skipped ${failedItemIds.size}/${revisions.size} items " +
+                    "for shareId=${shareId.id} (itemIds=$failedPreview)"
+            )
+        }
+        return itemsToUpsert to failedItemIds.isNotEmpty()
+    }
+
     private data class SetShareItemsPlan(
         val itemsToUpsert: List<ItemEntity>,
-        val itemsToDelete: Pair<ShareId, List<ItemId>>
+        val itemsToDelete: Pair<ShareId, List<ItemId>>,
+        val hasFailedItems: Boolean
     )
 
     companion object {

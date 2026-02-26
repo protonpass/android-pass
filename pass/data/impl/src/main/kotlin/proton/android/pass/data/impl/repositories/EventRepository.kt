@@ -40,4 +40,6 @@ interface EventRepository {
         eventId: String
     )
 
+    suspend fun deleteAllLatestEventIds(userId: UserId)
+
 }

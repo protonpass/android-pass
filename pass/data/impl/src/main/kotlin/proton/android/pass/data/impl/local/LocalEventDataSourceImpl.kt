@@ -52,4 +52,8 @@ class LocalEventDataSourceImpl @Inject constructor(
         ).let { passEventEntity -> database.passEventsDao().insertOrUpdate(passEventEntity) }
     }
 
+    override suspend fun deleteAllLatestEventIds(userId: UserId) {
+        database.passEventsDao().deleteAllEventIds(userId.id)
+    }
+
 }

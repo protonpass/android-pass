@@ -61,7 +61,7 @@ internal fun SyncDialogVaultRow(
     itemTotal: Int?,
     color: ShareColor,
     icon: ShareIcon,
-    hasSyncFailed: Boolean
+    hasVaultSyncFailed: Boolean
 ) {
     Row(
         modifier = modifier.fillMaxWidth(),
@@ -91,7 +91,7 @@ internal fun SyncDialogVaultRow(
                 hasSyncFinished && itemTotal != null && itemCurrent == itemTotal ->
                     pluralStringResource(R.plurals.sync_finished_item_count, itemTotal, itemTotal)
 
-                hasSyncFailed -> stringResource(id = R.string.sync_item_failed)
+                hasVaultSyncFailed -> stringResource(id = R.string.sync_item_failed)
 
                 itemCurrent != null && itemTotal != null ->
                     stringResource(R.string.sync_progress_item_count, itemCurrent, itemTotal)
@@ -111,7 +111,7 @@ internal fun SyncDialogVaultRow(
         ) {
             when {
 
-                hasSyncFailed -> {
+                hasVaultSyncFailed -> {
                     Icon(
                         painter = painterResource(id = CoreR.drawable.ic_proton_cross_big),
                         tint = PassTheme.colors.signalDanger,
@@ -153,7 +153,7 @@ internal fun SyncVaultLoadingRowPreview(@PreviewParameter(ThemePreviewProvider::
                     itemTotal = 4,
                     color = ShareColor.Color1,
                     icon = ShareIcon.Icon1,
-                    hasSyncFailed = false,
+                    hasVaultSyncFailed = false,
                     hasSyncFinished = false
                 )
             }
@@ -173,7 +173,7 @@ internal fun SyncVaultNotLoadingRowPreview(@PreviewParameter(ThemePreviewProvide
                     itemTotal = 4,
                     color = ShareColor.Color1,
                     icon = ShareIcon.Icon1,
-                    hasSyncFailed = false,
+                    hasVaultSyncFailed = false,
                     hasSyncFinished = false
                 )
             }

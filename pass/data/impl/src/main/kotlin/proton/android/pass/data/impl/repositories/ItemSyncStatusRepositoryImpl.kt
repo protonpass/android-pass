@@ -78,7 +78,7 @@ class ItemSyncStatusRepositoryImpl @Inject constructor(
                     insertedItemsState.emit(None)
                 }
 
-                ItemSyncStatus.SyncError,
+                is ItemSyncStatus.SyncError,
                 ItemSyncStatus.SyncStarted,
                 is ItemSyncStatus.SyncSuccess -> {
                 }

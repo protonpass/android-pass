@@ -20,6 +20,7 @@ package proton.android.pass.features.vault.bottomsheet.folders
 
 sealed interface FolderOptionsUserEvent {
     data object OnCreateSubFolder : FolderOptionsUserEvent
+    data object OnMoveFolder : FolderOptionsUserEvent
     data object OnRenameFolder : FolderOptionsUserEvent
     data object OnDeleteFolder : FolderOptionsUserEvent
 }

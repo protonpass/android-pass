@@ -327,6 +327,7 @@ internal fun NavGraphBuilder.passwordCredentialCreationNavGraph(
                 is VaultNavigation.VaultAccess,
                 is VaultNavigation.AddFolder,
                 is VaultNavigation.RenameFolder,
+                is VaultNavigation.MoveFolder,
                 is VaultNavigation.RemoveFolder -> Unit
             }
         }

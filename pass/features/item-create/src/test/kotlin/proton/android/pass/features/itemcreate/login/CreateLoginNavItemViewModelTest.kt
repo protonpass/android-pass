@@ -22,6 +22,7 @@ import app.cash.turbine.test
 import com.google.common.truth.Truth.assertThat
 import kotlinx.collections.immutable.persistentSetOf
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.runTest
 import me.proton.core.domain.entity.UserId
 import org.junit.Before
@@ -402,6 +403,27 @@ internal class CreateLoginNavItemViewModelTest {
             val state = awaitItem().shareUiState as? ShareUiState.Success
             assertThat(state?.selectedFolder?.id).isNull()
         }
+    }
+
+    @Test
+    fun `createItem passes selectedFolderId when present`() = runTest {
+        val shareId = ShareId("shareId")
+        val folderId = FolderId("folderId")
+        val item = ItemTestFactory.createLogin(primaryTotp = "secret")
+        sendInitialVault(shareId)
+        setInitialContents()
+        instance.changeFolder(folderId)
+        createItem.sendItem(Result.success(item))
+
+        instance.createLoginUiState.test {
+            awaitItem()
+            instance.createItem()
+            advanceUntilIdle()
+            cancelAndIgnoreRemainingEvents()
+        }
+
+        val payload = createItem.memory().single()
+        assertThat(payload.folderId).isEqualTo(folderId)
     }
 
     private fun sendInitialVault(shareId: ShareId): VaultWithItemCount {

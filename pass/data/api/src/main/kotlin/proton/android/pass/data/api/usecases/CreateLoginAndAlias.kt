@@ -21,6 +21,7 @@ package proton.android.pass.data.api.usecases
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemContents
+import proton.android.pass.domain.FolderId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.entity.NewAlias
 
@@ -28,6 +29,7 @@ interface CreateLoginAndAlias {
     suspend operator fun invoke(
         userId: UserId? = null,
         shareId: ShareId,
+        folderId: FolderId? = null,
         itemContents: ItemContents.Login,
         newAlias: NewAlias
     ): Item

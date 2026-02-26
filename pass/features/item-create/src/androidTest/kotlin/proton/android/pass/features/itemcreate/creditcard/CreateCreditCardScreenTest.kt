@@ -22,7 +22,6 @@ import androidx.compose.ui.test.hasContentDescription
 import androidx.compose.ui.test.hasText
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.onNodeWithTag
-import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performScrollTo
 import androidx.compose.ui.test.performScrollToIndex
@@ -205,6 +204,7 @@ class CreateCreditCardScreenTest {
         val expected = FakeCreateItem.Payload(
             userId = USER_ID,
             shareId = ShareId(SHARE_ID),
+            folderId = null,
             itemContents = ItemContents.CreditCard(
                 title = title,
                 cardHolder = cardHolder,

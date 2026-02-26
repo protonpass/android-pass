@@ -43,8 +43,7 @@ class CreateItemImplTest {
         val (shareKey, decryptedShareKey) = ShareKeyTestFactory.create()
 
         val instance = CreateItemImpl(encryptionContextProvider)
-        val output = instance.create(shareKey, contents)
-        val request = output.request
+        val request = instance.create(shareKey, contents)
 
         assertEquals(request.contentFormatVersion, Constants.ITEM_CONTENT_FORMAT_VERSION)
         assertEquals(request.keyRotation, shareKey.rotation)

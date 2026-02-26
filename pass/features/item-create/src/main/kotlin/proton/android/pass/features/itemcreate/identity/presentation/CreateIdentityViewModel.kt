@@ -216,6 +216,7 @@ class CreateIdentityViewModel @Inject constructor(
         safeRunCatching {
             createItem(
                 shareId = shareId,
+                folderId = selectedFolderIdMutableState.value(),
                 itemContents = identityActionsProvider.getFormState().toItemContents()
             )
         }
@@ -249,4 +250,3 @@ class CreateIdentityViewModel @Inject constructor(
         private const val TAG = "CreateIdentityViewModel"
     }
 }
-

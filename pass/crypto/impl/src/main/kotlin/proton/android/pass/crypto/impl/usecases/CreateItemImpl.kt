@@ -23,19 +23,18 @@ import proton.android.pass.crypto.api.EncryptionKey
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.crypto.api.context.EncryptionTag
 import proton.android.pass.crypto.api.usecases.CreateItem
-import proton.android.pass.crypto.api.usecases.CreateItemPayload
 import proton.android.pass.crypto.api.usecases.EncryptedCreateItem
 import proton.android.pass.crypto.impl.Constants.ITEM_CONTENT_FORMAT_VERSION
 import proton.android.pass.datamodels.api.serializeToProto
 import proton.android.pass.domain.ItemContents
-import proton.android.pass.domain.key.ShareKey
+import proton.android.pass.domain.key.InviteKey
 import javax.inject.Inject
 
 class CreateItemImpl @Inject constructor(
     private val encryptionContextProvider: EncryptionContextProvider
 ) : CreateItem {
 
-    override fun create(shareKey: ShareKey, itemContents: ItemContents): CreateItemPayload {
+    override fun create(parentKey: InviteKey, itemContents: ItemContents): EncryptedCreateItem {
         val serializedItem = encryptionContextProvider.withEncryptionContext {
             itemContents.serializeToProto(encryptionContext = this).toByteArray()
         }
@@ -45,24 +44,19 @@ class CreateItemImpl @Inject constructor(
             encrypt(serializedItem, EncryptionTag.ItemContent)
         }
 
-        val decryptedShareKey = encryptionContextProvider.withEncryptionContext {
-            EncryptionKey(decrypt(shareKey.key))
+        val decryptedParentKey = encryptionContextProvider.withEncryptionContext {
+            EncryptionKey(decrypt(parentKey.key))
         }
 
-        val encryptedItemKey = encryptionContextProvider.withEncryptionContext(decryptedShareKey) {
+        val encryptedItemKey = encryptionContextProvider.withEncryptionContext(decryptedParentKey) {
             encrypt(itemKey.value(), EncryptionTag.ItemKey)
         }
 
-        val request = EncryptedCreateItem(
-            keyRotation = shareKey.rotation,
+        return EncryptedCreateItem(
+            keyRotation = parentKey.rotation,
             contentFormatVersion = ITEM_CONTENT_FORMAT_VERSION,
             content = Base64.encodeBase64String(encryptedContents.array),
             itemKey = Base64.encodeBase64String(encryptedItemKey.array)
         )
-        return CreateItemPayload(
-            request = request,
-            itemKey = itemKey
-        )
     }
 }
-

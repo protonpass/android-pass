@@ -24,6 +24,8 @@ import proton.android.pass.data.impl.requests.CreateAliasRequest
 import proton.android.pass.data.impl.requests.CreateItemAliasRequest
 import proton.android.pass.data.impl.requests.CreateItemRequest
 import proton.android.pass.data.impl.requests.MigrateItemsRequest
+import proton.android.pass.data.impl.requests.MoveItemsToFolderRequest
+import proton.android.pass.data.impl.responses.MoveItemRevisionApiModel
 import proton.android.pass.data.impl.requests.TrashItemsRequest
 import proton.android.pass.data.impl.requests.UpdateItemFlagsRequest
 import proton.android.pass.data.impl.requests.UpdateItemRequest
@@ -110,6 +112,12 @@ interface RemoteItemDataSource {
         shareId: ShareId,
         body: MigrateItemsRequest
     ): List<ItemRevision>
+
+    suspend fun moveItemsToFolder(
+        userId: UserId,
+        shareId: ShareId,
+        body: MoveItemsToFolderRequest
+    ): List<MoveItemRevisionApiModel>
 
     suspend fun pinItem(
         userId: UserId,

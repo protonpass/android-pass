@@ -20,7 +20,7 @@ package proton.android.pass.crypto.fakes.usecases
 
 import proton.android.pass.crypto.api.usecases.ItemKeyWithRotation
 import proton.android.pass.crypto.api.usecases.MigrateItem
-import proton.android.pass.domain.key.ShareKey
+import proton.android.pass.domain.key.InviteKey
 
 class FakeMigrateItem : MigrateItem {
 
@@ -30,7 +30,7 @@ class FakeMigrateItem : MigrateItem {
         output = value
     }
 
-    override fun migrate(destinationKey: ShareKey, itemKeys: List<ItemKeyWithRotation>): List<ItemKeyWithRotation> =
+    override fun migrate(destinationKey: InviteKey, itemKeys: List<ItemKeyWithRotation>): List<ItemKeyWithRotation> =
         output ?: throw IllegalStateException("output not set")
 
 }

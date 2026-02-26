@@ -206,7 +206,31 @@ val filterFlankConfig = tasks.register("filterFlankConfigForSelectiveTests") {
         val builtApks = apksProp.get().split(",").map { it.trim() }.toSet()
         val flankYml = layout.buildDirectory.file("fladle/flank.yml").get().asFile
         if (!flankYml.exists()) return@doLast
-        val filtered = flankYml.readLines()
+        val lines = flankYml.readLines().toMutableList()
+        val mainTestIdx = lines.indexOfFirst { line ->
+            val t = line.trim()
+            t.startsWith("test: /") // not prefixed with '- ', so this is the gcloud test field
+        }
+        if (mainTestIdx != -1) {
+            val mainApk = lines[mainTestIdx].trim().removePrefix("test: ")
+            if (mainApk !in builtApks) {
+                val replacement = lines
+                    .mapNotNull { line ->
+                        val t = line.trim()
+                        if (t.startsWith("- test: /")) t.removePrefix("- test: ") else null
+                    }
+                    .firstOrNull { it in builtApks }
+                if (replacement != null) {
+                    lines[mainTestIdx] = lines[mainTestIdx].replace(mainApk, replacement)
+                    lines.removeAll { it.trim() == "- test: $replacement" }
+                    logger.lifecycle("Selective filter: swapped main test APK → $replacement")
+                } else {
+                    logger.warn("Selective filter: main test APK not built and no replacement available")
+                }
+            }
+        }
+
+        val filtered = lines
             .filter { line ->
                 val t = line.trim()
                 !t.startsWith("- test: /") || t.removePrefix("- test: ") in builtApks

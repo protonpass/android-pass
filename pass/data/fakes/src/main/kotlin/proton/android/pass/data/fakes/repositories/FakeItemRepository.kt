@@ -33,6 +33,7 @@ import proton.android.pass.data.api.repositories.PinItemsResult
 import proton.android.pass.data.api.repositories.ShareItemCount
 import proton.android.pass.data.api.repositories.VaultProgress
 import proton.android.pass.data.api.usecases.ItemTypeFilter
+import proton.android.pass.domain.FolderId
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.ItemEncrypted
@@ -328,6 +329,15 @@ class FakeItemRepository @Inject constructor() : ItemRepository {
         userId: UserId,
         source: ShareId,
         destination: ShareId
+    ) {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun moveItemsToFolder(
+        userId: UserId,
+        shareId: ShareId,
+        folderId: FolderId,
+        itemIds: List<ItemId>
     ) {
         TODO("Not yet implemented")
     }

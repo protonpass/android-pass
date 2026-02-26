@@ -33,6 +33,8 @@ data class MigrateItemsRequest(
 data class MigrateItemsBody(
     @SerialName("ItemID")
     val itemId: String,
+    @SerialName("DestinationFolderID")
+    val destinationFolderId: String? = null,
     @SerialName("ItemKeys")
     val itemKeys: List<ItemKeyBody>
 )

@@ -25,6 +25,7 @@ import proton.android.pass.common.api.Option
 import proton.android.pass.data.api.ItemCountSummary
 import proton.android.pass.data.api.ItemPendingEvent
 import proton.android.pass.data.api.usecases.ItemTypeFilter
+import proton.android.pass.domain.FolderId
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.ItemEncrypted
@@ -210,6 +211,13 @@ interface ItemRepository {
         userId: UserId,
         source: ShareId,
         destination: ShareId
+    )
+
+    suspend fun moveItemsToFolder(
+        userId: UserId,
+        shareId: ShareId,
+        folderId: FolderId,
+        itemIds: List<ItemId>
     )
 
     suspend fun getItemByAliasEmail(userId: UserId, aliasEmail: String): Item?

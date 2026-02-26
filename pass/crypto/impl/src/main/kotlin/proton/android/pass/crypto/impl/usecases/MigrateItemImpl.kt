@@ -23,14 +23,14 @@ import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.crypto.api.context.EncryptionTag
 import proton.android.pass.crypto.api.usecases.ItemKeyWithRotation
 import proton.android.pass.crypto.api.usecases.MigrateItem
-import proton.android.pass.domain.key.ShareKey
+import proton.android.pass.domain.key.InviteKey
 import javax.inject.Inject
 
 class MigrateItemImpl @Inject constructor(
     private val encryptionContextProvider: EncryptionContextProvider
 ) : MigrateItem {
 
-    override fun migrate(destinationKey: ShareKey, itemKeys: List<ItemKeyWithRotation>): List<ItemKeyWithRotation> {
+    override fun migrate(destinationKey: InviteKey, itemKeys: List<ItemKeyWithRotation>): List<ItemKeyWithRotation> {
         val decryptedDestinationKey = encryptionContextProvider.withEncryptionContext {
             EncryptionKey(decrypt(destinationKey.key))
         }

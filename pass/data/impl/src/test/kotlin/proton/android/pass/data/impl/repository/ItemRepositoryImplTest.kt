@@ -110,7 +110,11 @@ class ItemRepositoryImplTest {
         }
         openItem.setOutput(OpenItemOutput(item = item, itemKey = null))
 
-        repository.createItem(userId, share, ItemContents.Note(name, note, emptyList()))
+        repository.createItem(
+            userId = userId,
+            share = share,
+            contents = ItemContents.Note(name, note, emptyList())
+        )
 
         val remoteMemory = remoteItemDataSource.getCreateItemMemory()
         assertEquals(1, remoteMemory.size)

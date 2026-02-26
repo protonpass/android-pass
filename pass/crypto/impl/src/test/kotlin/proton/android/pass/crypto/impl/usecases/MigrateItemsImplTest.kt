@@ -25,7 +25,6 @@ import org.junit.Test
 import proton.android.pass.crypto.api.Base64
 import proton.android.pass.crypto.api.EncryptionKey
 import proton.android.pass.crypto.api.context.EncryptionTag
-import proton.android.pass.crypto.api.usecases.CreateItemPayload
 import proton.android.pass.crypto.api.usecases.ItemKeyWithRotation
 import proton.android.pass.crypto.api.usecases.MigrateItem
 import proton.android.pass.crypto.fakes.context.FakeEncryptionContextProvider
@@ -53,15 +52,15 @@ internal class MigrateItemsImplTest {
             note = StringTestFactory.randomString(),
             customFields = emptyList()
         )
-        val item: CreateItemPayload = createItem.create(sourceShareKey, itemContents)
+        val item = createItem.create(sourceShareKey, itemContents)
         val (destinationShareKey, decryptedDestinationShareKey) = ShareKeyTestFactory.create()
         val encryptedItemKey = encryptionContextProvider.withEncryptionContext {
-            encrypt(item.request.itemKey.toByteArray())
+            encrypt(item.itemKey.toByteArray())
         }
         val itemKeys = listOf(
             ItemKeyWithRotation(
                 itemKey = encryptedItemKey,
-                keyRotation = item.request.keyRotation
+                keyRotation = item.keyRotation
             )
         )
 
@@ -69,14 +68,14 @@ internal class MigrateItemsImplTest {
 
         assertThat(encryptedItemKeys).hasSize(1)
         val migratedItemKey = encryptedItemKeys.first()
-        assertThat(migratedItemKey.keyRotation).isEqualTo(item.request.keyRotation)
+        assertThat(migratedItemKey.keyRotation).isEqualTo(item.keyRotation)
 
         val decryptedKey = decryptItemKey(
             encryptionKey = decryptedDestinationShareKey,
             encryptedItemKey = migratedItemKey.itemKey
         )
 
-        val expectedKey = Base64.encodeBase64String(item.request.itemKey.toByteArray())
+        val expectedKey = Base64.encodeBase64String(item.itemKey.toByteArray())
         val actualKey = Base64.encodeBase64String(decryptedKey)
         assertThat(actualKey).isEqualTo(expectedKey)
     }

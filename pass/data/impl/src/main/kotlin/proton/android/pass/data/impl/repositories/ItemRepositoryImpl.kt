@@ -132,12 +132,17 @@ class ItemRepositoryImpl @Inject constructor(
     override suspend fun createItem(
         userId: UserId,
         share: Share,
+        folderId: FolderId?,
         contents: ItemContents
     ): Item = withUserAddress(userId) { userAddress ->
         val shareKey = shareKeyRepository.getLatestKeyForShare(share.id).first()
+        val parentKey = folderId?.let {
+            folderKeyRepository.getFolderKey(userId, share.id, it)
+                ?: throw IllegalStateException("No folder key found for folderId=${it.id}")
+        } ?: shareKey
 
         val body = try {
-            createItem.create(shareKey, contents)
+            createItem.create(parentKey, contents)
         } catch (e: Exception) {
             PassLogger.w(TAG, "Error creating item")
             PassLogger.w(TAG, e)
@@ -145,7 +150,7 @@ class ItemRepositoryImpl @Inject constructor(
         }
 
         val itemResponse =
-            remoteItemDataSource.createItem(userId, share.id, body.request.toRequest())
+            remoteItemDataSource.createItem(userId, share.id, body.toRequest(folderId))
         val entity = itemResponseToEntity(
             userAddress,
             itemResponse,
@@ -162,6 +167,7 @@ class ItemRepositoryImpl @Inject constructor(
     override suspend fun createAlias(
         userId: UserId,
         share: Share,
+        folderId: FolderId?,
         newAlias: NewAlias
     ): Item = withUserAddress(userId) { userAddress ->
         val shareKey = shareKeyRepository.getLatestKeyForShare(share.id).first()
@@ -171,7 +177,11 @@ class ItemRepositoryImpl @Inject constructor(
             customFields = newAlias.contents.customFields,
             aliasEmail = "" // Not used when creating the payload,
         )
-        val body = createItem.create(shareKey, itemContents)
+        val parentKey = folderId?.let {
+            folderKeyRepository.getFolderKey(userId, share.id, it)
+                ?: throw IllegalStateException("No folder key found for folderId=${it.id}")
+        } ?: shareKey
+        val body = createItem.create(parentKey, itemContents)
 
         val mailboxIds = newAlias.mailboxes.map { it.id }
         val requestBody = CreateAliasRequest(
@@ -179,7 +189,7 @@ class ItemRepositoryImpl @Inject constructor(
             signedSuffix = newAlias.suffix.signedSuffix,
             mailboxes = mailboxIds,
             aliasName = newAlias.aliasName,
-            item = body.request.toRequest()
+            item = body.toRequest(folderId)
         )
 
         val itemResponse = remoteItemDataSource.createAlias(userId, share.id, requestBody)
@@ -198,13 +208,18 @@ class ItemRepositoryImpl @Inject constructor(
     override suspend fun createLoginAndAlias(
         userId: UserId,
         shareId: ShareId,
+        folderId: FolderId?,
         contents: ItemContents.Login,
         newAlias: NewAlias
     ): Item = withUserAddress(userId) { userAddress ->
         val share = shareRepository.getById(userId, shareId)
         val shareKey = shareKeyRepository.getLatestKeyForShare(shareId).first()
+        val parentKey = folderId?.let {
+            folderKeyRepository.getFolderKey(userId, shareId, it)
+                ?: throw IllegalStateException("No folder key found for folderId=${it.id}")
+        } ?: shareKey
         val request = safeRunCatching {
-            val itemBody = createItem.create(shareKey, contents)
+            val itemBody = createItem.create(parentKey, contents)
             val aliasContents = ItemContents.Alias(
                 title = contents.title,
                 note = newAlias.contents.note,
@@ -219,9 +234,9 @@ class ItemRepositoryImpl @Inject constructor(
                     signedSuffix = newAlias.suffix.signedSuffix,
                     aliasName = newAlias.aliasName,
                     mailboxes = newAlias.mailboxes.map { it.id },
-                    item = aliasBody.request.toRequest()
+                    item = aliasBody.toRequest()
                 ),
-                item = itemBody.request.toRequest()
+                item = itemBody.toRequest(folderId)
             )
         }.fold(
             onSuccess = { it },

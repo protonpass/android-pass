@@ -452,6 +452,7 @@ class CreateLoginViewModel @Inject constructor(
                 performCreateItemAndAlias(
                     userId = userId,
                     shareId = vault.vault.shareId,
+                    folderId = selectedFolderIdMutableState.value(),
                     aliasItemFormState = aliasItemOption.value,
                     passkeyResponse = generatedPasskey.map { it.response }
                 )
@@ -459,6 +460,7 @@ class CreateLoginViewModel @Inject constructor(
                 performCreateItem(
                     userId = userId,
                     shareId = vault.vault.shareId,
+                    folderId = selectedFolderIdMutableState.value(),
                     passkeyResponse = generatedPasskey.map { it.response }
                 )
             }
@@ -472,6 +474,7 @@ class CreateLoginViewModel @Inject constructor(
     private suspend fun performCreateItemAndAlias(
         userId: UserId,
         shareId: ShareId,
+        folderId: FolderId?,
         aliasItemFormState: AliasItemFormState,
         passkeyResponse: Option<String>
     ) {
@@ -488,6 +491,7 @@ class CreateLoginViewModel @Inject constructor(
             createLoginAndAlias(
                 userId = userId,
                 shareId = shareId,
+                folderId = folderId,
                 itemContents = contents,
                 newAlias = NewAlias(
                     contents = aliasItemFormState.toItemContents(),
@@ -549,6 +553,7 @@ class CreateLoginViewModel @Inject constructor(
     private suspend fun performCreateItem(
         userId: UserId,
         shareId: ShareId,
+        folderId: FolderId?,
         passkeyResponse: Option<String>
     ) {
         val contents = loginItemFormState.toItemContents(emailValidator = emailValidator)
@@ -556,6 +561,7 @@ class CreateLoginViewModel @Inject constructor(
             createItem(
                 userId = userId,
                 shareId = shareId,
+                folderId = folderId,
                 itemContents = contents
             )
         }

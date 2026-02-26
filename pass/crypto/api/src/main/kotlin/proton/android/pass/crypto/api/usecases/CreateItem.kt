@@ -18,9 +18,8 @@
 
 package proton.android.pass.crypto.api.usecases
 
-import proton.android.pass.crypto.api.EncryptionKey
 import proton.android.pass.domain.ItemContents
-import proton.android.pass.domain.key.ShareKey
+import proton.android.pass.domain.key.InviteKey
 
 data class EncryptedCreateItem(
     val keyRotation: Long,
@@ -29,11 +28,6 @@ data class EncryptedCreateItem(
     val itemKey: String
 )
 
-data class CreateItemPayload(
-    val request: EncryptedCreateItem,
-    val itemKey: EncryptionKey
-)
-
 interface CreateItem {
-    fun create(shareKey: ShareKey, itemContents: ItemContents): CreateItemPayload
+    fun create(parentKey: InviteKey, itemContents: ItemContents): EncryptedCreateItem
 }

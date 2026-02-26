@@ -23,6 +23,7 @@ import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.api.repositories.ItemRepository
 import proton.android.pass.data.api.usecases.CreateLoginAndAlias
+import proton.android.pass.domain.FolderId
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.ShareId
@@ -37,18 +38,20 @@ class CreateLoginAndAliasImpl @Inject constructor(
     override suspend fun invoke(
         userId: UserId?,
         shareId: ShareId,
+        folderId: FolderId?,
         itemContents: ItemContents.Login,
         newAlias: NewAlias
     ): Item {
         val id = userId ?: requireNotNull(accountManager.getPrimaryUserId().first())
-        return createItemAndAlias(id, shareId, itemContents, newAlias)
+        return createItemAndAlias(id, shareId, folderId, itemContents, newAlias)
     }
 
     private suspend fun createItemAndAlias(
         userId: UserId,
         shareId: ShareId,
+        folderId: FolderId?,
         itemContents: ItemContents.Login,
         newAlias: NewAlias
-    ): Item = itemRepository.createLoginAndAlias(userId, shareId, itemContents, newAlias)
+    ): Item = itemRepository.createLoginAndAlias(userId, shareId, folderId, itemContents, newAlias)
 
 }

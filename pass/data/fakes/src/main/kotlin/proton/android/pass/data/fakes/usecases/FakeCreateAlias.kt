@@ -20,6 +20,7 @@ package proton.android.pass.data.fakes.usecases
 
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.api.usecases.CreateAlias
+import proton.android.pass.domain.FolderId
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.entity.NewAlias
@@ -43,15 +44,17 @@ class FakeCreateAlias @Inject constructor() : CreateAlias {
     override suspend fun invoke(
         userId: UserId,
         shareId: ShareId,
+        folderId: FolderId?,
         newAlias: NewAlias
     ): Item {
-        memory.add(Payload(userId, shareId, newAlias))
+        memory.add(Payload(userId, shareId, folderId, newAlias))
         return result.getOrThrow()
     }
 
     data class Payload(
         val userId: UserId,
         val shareId: ShareId,
+        val folderId: FolderId?,
         val newAlias: NewAlias
     )
 }

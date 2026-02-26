@@ -20,6 +20,7 @@ package proton.android.pass.data.fakes.usecases
 
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.api.usecases.CreateItem
+import proton.android.pass.domain.FolderId
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.ShareId
@@ -39,9 +40,10 @@ class FakeCreateItem @Inject constructor() : CreateItem {
     override suspend fun invoke(
         userId: UserId?,
         shareId: ShareId,
+        folderId: FolderId?,
         itemContents: ItemContents
     ): Item {
-        memory.add(Payload(userId ?: UserId(USER_ID), shareId, itemContents))
+        memory.add(Payload(userId ?: UserId(USER_ID), shareId, folderId, itemContents))
         return item.getOrThrow()
     }
 
@@ -52,6 +54,7 @@ class FakeCreateItem @Inject constructor() : CreateItem {
     data class Payload(
         val userId: UserId,
         val shareId: ShareId,
+        val folderId: FolderId?,
         val itemContents: ItemContents
     )
 

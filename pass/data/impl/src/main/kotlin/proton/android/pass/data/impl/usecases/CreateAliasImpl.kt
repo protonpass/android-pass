@@ -22,6 +22,7 @@ import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.api.repositories.ItemRepository
 import proton.android.pass.data.api.repositories.ShareRepository
 import proton.android.pass.data.api.usecases.CreateAlias
+import proton.android.pass.domain.FolderId
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.entity.NewAlias
@@ -34,9 +35,10 @@ class CreateAliasImpl @Inject constructor(
     override suspend fun invoke(
         userId: UserId,
         shareId: ShareId,
+        folderId: FolderId?,
         newAlias: NewAlias
     ): Item {
         val share = shareRepository.getById(userId, shareId)
-        return itemRepository.createAlias(userId, share, newAlias)
+        return itemRepository.createAlias(userId, share, folderId, newAlias)
     }
 }

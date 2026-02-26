@@ -30,5 +30,7 @@ data class CreateItemRequest(
     @SerialName("Content")
     val content: String,
     @SerialName("ItemKey")
-    val itemKey: String
+    val itemKey: String,
+    @SerialName("FolderID")
+    val folderId: String? = null
 )

@@ -62,12 +62,12 @@ class SyncSimpleLoginPendingAliasesImpl @Inject constructor(
     }
 
     private fun requestForItem(shareKey: ShareKey, email: String): EncryptedCreateItem = createItem.create(
-        shareKey = shareKey,
+        parentKey = shareKey,
         itemContents = ItemContents.Alias(
             title = email,
             aliasEmail = email,
             note = "",
             customFields = emptyList()
         )
-    ).request
+    )
 }

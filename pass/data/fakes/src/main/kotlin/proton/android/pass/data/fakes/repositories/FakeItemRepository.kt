@@ -39,6 +39,7 @@ import proton.android.pass.domain.ItemEncrypted
 import proton.android.pass.domain.ItemFlag
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ItemState
+import proton.android.pass.domain.FolderId
 import proton.android.pass.domain.Passkey
 import proton.android.pass.domain.Share
 import proton.android.pass.domain.ShareId
@@ -85,6 +86,7 @@ class FakeItemRepository @Inject constructor() : ItemRepository {
     override suspend fun createItem(
         userId: UserId,
         share: Share,
+        folderId: FolderId?,
         contents: ItemContents
     ): Item {
         TODO("Not yet implemented")
@@ -93,6 +95,7 @@ class FakeItemRepository @Inject constructor() : ItemRepository {
     override suspend fun createAlias(
         userId: UserId,
         share: Share,
+        folderId: FolderId?,
         newAlias: NewAlias
     ): Item {
         TODO("Not yet implemented")
@@ -101,6 +104,7 @@ class FakeItemRepository @Inject constructor() : ItemRepository {
     override suspend fun createLoginAndAlias(
         userId: UserId,
         shareId: ShareId,
+        folderId: FolderId?,
         contents: ItemContents.Login,
         newAlias: NewAlias
     ): Item {

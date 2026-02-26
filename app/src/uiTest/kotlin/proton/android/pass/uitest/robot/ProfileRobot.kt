@@ -19,8 +19,8 @@
 package proton.android.pass.uitest.robot
 
 import me.proton.test.fusion.Fusion.node
-import proton.android.pass.featureprofile.impl.AccountProfileSectionTestTag
-import proton.android.pass.featureprofile.impl.ProfileScreenTestTag
+import proton.android.pass.features.profile.AccountProfileSectionTestTag
+import proton.android.pass.features.profile.ProfileScreenTestTag
 
 object ProfileRobot : Robot {
 

@@ -21,34 +21,30 @@ package proton.android.pass.crypto.fakes.usecases
 import proton.android.pass.crypto.api.Base64
 import proton.android.pass.crypto.api.EncryptionKey
 import proton.android.pass.crypto.api.usecases.CreateItem
-import proton.android.pass.crypto.api.usecases.CreateItemPayload
 import proton.android.pass.crypto.api.usecases.EncryptedCreateItem
 import proton.android.pass.crypto.fakes.context.FakeEncryptionContext
 import proton.android.pass.domain.ItemContents
-import proton.android.pass.domain.key.ShareKey
+import proton.android.pass.domain.key.InviteKey
 
 class FakeCreateItem : CreateItem {
 
-    private var payload: CreateItemPayload? = null
+    private var payload: EncryptedCreateItem? = null
 
-    fun setPayload(value: CreateItemPayload) {
+    fun setPayload(value: EncryptedCreateItem) {
         payload = value
     }
 
-    override fun create(shareKey: ShareKey, itemContents: ItemContents): CreateItemPayload =
+    override fun create(parentKey: InviteKey, itemContents: ItemContents): EncryptedCreateItem =
         payload ?: throw IllegalStateException("payload is not set")
 
     companion object {
-        fun createPayload(): CreateItemPayload {
+        fun createPayload(): EncryptedCreateItem {
             val key = EncryptionKey.generate()
-            return CreateItemPayload(
-                request = EncryptedCreateItem(
-                    contentFormatVersion = 1,
-                    content = FakeEncryptionContext.encrypt("content"),
-                    keyRotation = 1,
-                    itemKey = Base64.encodeBase64String(FakeEncryptionContext.encrypt(key.value()).array)
-                ),
-                itemKey = key
+            return EncryptedCreateItem(
+                contentFormatVersion = 1,
+                content = FakeEncryptionContext.encrypt("content"),
+                keyRotation = 1,
+                itemKey = Base64.encodeBase64String(FakeEncryptionContext.encrypt(key.value()).array)
             )
         }
     }

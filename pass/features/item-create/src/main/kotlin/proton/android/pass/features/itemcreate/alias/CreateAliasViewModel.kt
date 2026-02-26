@@ -401,6 +401,7 @@ open class CreateAliasViewModel @Inject constructor(
                 createAlias(
                     userId = userId,
                     shareId = shareId,
+                    folderId = selectedFolderIdMutableState.value(),
                     newAlias = NewAlias(
                         contents = aliasItemFormState.toItemContents(),
                         prefix = aliasItemFormState.prefix,

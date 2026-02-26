@@ -5,7 +5,7 @@ import org.jetbrains.kotlin.gradle.plugin.KotlinBasePlugin
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 /*
- * Copyright (c) 2022 Proton Technologies AG
+ * Copyright (c) 2022-2026 Proton Technologies AG
  * This file is part of Proton Technologies AG and Proton Mail.
  *
  * Proton Mail is free software: you can redistribute it and/or modify

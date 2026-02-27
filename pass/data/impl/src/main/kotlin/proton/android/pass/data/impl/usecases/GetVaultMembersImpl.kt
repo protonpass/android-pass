@@ -20,9 +20,13 @@ package proton.android.pass.data.impl.usecases
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
+import proton.android.pass.common.api.asLoadingResult
+import proton.android.pass.common.api.getOrNull
 import proton.android.pass.data.api.repositories.ShareMembersRepository
 import proton.android.pass.data.api.usecases.GetVaultMembers
+import proton.android.pass.data.api.usecases.GroupMembers
 import proton.android.pass.data.api.usecases.ObserveCurrentUser
+import proton.android.pass.data.api.usecases.ObserveGroupMembersByGroup
 import proton.android.pass.data.api.usecases.VaultMember
 import proton.android.pass.data.api.usecases.shares.ObserveSharePendingInvites
 import proton.android.pass.domain.NewUserInviteId
@@ -34,39 +38,52 @@ import javax.inject.Inject
 class GetVaultMembersImpl @Inject constructor(
     private val observeCurrentUser: ObserveCurrentUser,
     private val observeSharePendingInvites: ObserveSharePendingInvites,
+    private val observeGroupMembersByGroup: ObserveGroupMembersByGroup,
     private val shareMembersRepository: ShareMembersRepository
 ) : GetVaultMembers {
 
     override fun invoke(shareId: ShareId): Flow<List<VaultMember>> = combine(
         observeCurrentUser(),
-        observeSharePendingInvites(shareId)
-    ) { user, pendingInvites ->
-        shareMembersRepository.getShareMembers(
+        observeSharePendingInvites(shareId),
+        observeGroupMembersByGroup().asLoadingResult()
+    ) { user, pendingInvites, groupMembersResult ->
+        val groupByEmail = groupMembersResult.getOrNull().orEmpty().toGroupByEmail()
+        val shareMembers = shareMembersRepository.getShareMembers(
             userId = user.userId,
             shareId = shareId,
             userEmail = user.email
-        ).let { shareMembers ->
-            buildList {
-                pendingInvites
-                    .map(SharePendingInvite::toVaultMember)
-                    .also(::addAll)
-
-                shareMembers
-                    .map(ShareMember::toVaultMember)
-                    .also(::addAll)
-            }
-        }
+        )
+        buildVaultMembers(pendingInvites, shareMembers, groupByEmail)
     }
 }
 
-private fun ShareMember.toVaultMember(): VaultMember = VaultMember.Member(
+private fun List<GroupMembers>.toGroupByEmail(): Map<String, GroupMembers> = mapNotNull { groupMembers ->
+    groupMembers.group.groupEmail?.let { email -> email to groupMembers }
+}.toMap()
+
+private fun buildVaultMembers(
+    pendingInvites: List<SharePendingInvite>,
+    shareMembers: List<ShareMember>,
+    groupByEmail: Map<String, GroupMembers>
+): List<VaultMember> = buildList {
+    pendingInvites
+        .map(SharePendingInvite::toVaultMember)
+        .also(::addAll)
+
+    shareMembers
+        .map { it.toVaultMember(groupByEmail) }
+        .also(::addAll)
+}
+
+private fun ShareMember.toVaultMember(groupByEmail: Map<String, GroupMembers>): VaultMember = VaultMember.Member(
     shareId = shareId,
     email = email,
-    username = username,
+    username = if (isGroup) groupByEmail[email]?.group?.name ?: username else username,
     role = role,
     isCurrentUser = isCurrentUser,
     isOwner = isOwner,
-    isGroup = isGroup
+    isGroup = isGroup,
+    memberCount = if (isGroup) groupByEmail[email]?.members?.size ?: 0 else 0
 )
 
 private fun SharePendingInvite.toVaultMember(): VaultMember = when (this) {

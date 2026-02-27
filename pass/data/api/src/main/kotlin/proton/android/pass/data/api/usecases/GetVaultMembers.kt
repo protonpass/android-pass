@@ -30,6 +30,7 @@ sealed class VaultMember(open val email: String) {
         val shareId: ShareId,
         val username: String,
         val isGroup: Boolean,
+        val memberCount: Int,
         val role: ShareRole?,
         val isCurrentUser: Boolean,
         val isOwner: Boolean

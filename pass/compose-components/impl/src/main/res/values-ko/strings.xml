@@ -79,8 +79,6 @@
   <string name="missing_app_icon_content_description">앱 아이콘 없음</string>
   <string name="add_item_icon_content_description">항목 아이콘 추가</string>
   <string name="navigate_back_icon_content_description">뒤로 가기 아이콘 </string>
-  <!-- Vault selector -->
-  <string name="vault_selector_title">금고</string>
   <!-- Bottom bar -->
   <string name="bottom_bar_list_items_icon_content_description">항목 목록</string>
   <string name="bottom_bar_add_item_icon_content_description">항목 추가</string>

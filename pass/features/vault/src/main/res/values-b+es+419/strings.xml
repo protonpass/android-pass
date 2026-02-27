@@ -23,7 +23,7 @@
   <string name="vault_edit_folder_dialog_title">Renombrar carpeta</string>
   <string name="vault_add_foldersame_folder_exist">Ya existe una carpeta con el mismo nombre</string>
   <string name="folder_delete_dialog_title">Eliminar carpeta</string>
-  <string name="folder_delete_dialog_body">Esto eliminará de forma permanente la carpeta __FOLDER_NAME__ y todo su contenido. Introduzca el nombre de la carpeta para confirmar la eliminación.</string>
+  <string name="folder_delete_dialog_body">Esto eliminará de forma permanente la carpeta __FOLDER_NAME__ y todo su contenido. Ingrese el nombre de la carpeta para confirmar la eliminación.</string>
   <string name="folder_delete_dialog_placeholder">Nombre de carpeta</string>
   <string name="folder_delete_dialog_delete_action">Eliminar</string>
   <string name="vault_delete_dialog_body">Esto eliminará permanentemente la bóveda __VAULT_NAME__ y todo su contenido. Escriba el nombre de la bóveda para confirmar la eliminación.</string>

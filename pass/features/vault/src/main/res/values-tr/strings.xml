@@ -23,7 +23,7 @@
   <string name="vault_edit_folder_dialog_title">Klasörü yeniden adlandır</string>
   <string name="vault_add_foldersame_folder_exist">Aynı adlı bir klasör zaten var</string>
   <string name="folder_delete_dialog_title">Klasörü sil</string>
-  <string name="folder_delete_dialog_body">Bu işlem __FOLDER_NAME__ klasörünü ve içindeki tüm içeriği kalıcı olarak siler. Silme işlemini onaylamak için klasör adını yazın.</string>
+  <string name="folder_delete_dialog_body">Bu işlem __FOLDER_NAME__ klasörünü ve içindeki tüm içeriği kalıcı olarak silecek. Silme işlemini onaylamak için klasör adını yazın.</string>
   <string name="folder_delete_dialog_placeholder">Klasör adı</string>
   <string name="folder_delete_dialog_delete_action">Sil</string>
   <string name="vault_delete_dialog_body">Bu işlem __VAULT_NAME__ kasasını ve içindekileri kalıcı olarak silecek. Silme işlemini onaylamak için kasa adını yazın.</string>

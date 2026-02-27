@@ -80,8 +80,6 @@
   <string name="missing_app_icon_content_description">Uygulama simgesi eksik</string>
   <string name="add_item_icon_content_description">Öge simgesi ekle</string>
   <string name="navigate_back_icon_content_description">Geri dön simgesi</string>
-  <!-- Vault selector -->
-  <string name="vault_selector_title">Kasa</string>
   <!-- Bottom bar -->
   <string name="bottom_bar_list_items_icon_content_description">Ögeleri listele</string>
   <string name="bottom_bar_add_item_icon_content_description">Öge ekle</string>

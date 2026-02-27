@@ -79,8 +79,6 @@
   <string name="missing_app_icon_content_description">Thiếu biểu tượng ứng dụng</string>
   <string name="add_item_icon_content_description">Thêm biểu tượng nội dung</string>
   <string name="navigate_back_icon_content_description">Biểu tượng quay lại</string>
-  <!-- Vault selector -->
-  <string name="vault_selector_title">Két sắt</string>
   <!-- Bottom bar -->
   <string name="bottom_bar_list_items_icon_content_description">Liệt kê nội dung</string>
   <string name="bottom_bar_add_item_icon_content_description">Thêm nội dung</string>

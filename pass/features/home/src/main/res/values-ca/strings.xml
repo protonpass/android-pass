@@ -183,5 +183,5 @@
   <string name="vault_drawer_organise_vaults">Organitza les caixes fortes</string>
   <string name="sync_group_vault_warning">Algunes caixes fortes no estan disponibles actualment a causa d\'un problema amb el seu grup.</string>
   <string name="sync_inactive_vault_warning">Unes quantes caixes fortes ja no són accessibles a causa d\'un restabliment de contrasenya. Torneu a activar les claus del vostre compte per a recuperar l\'accés.</string>
-  <string name="sync_inactive_vault_warning_action">Per saber-ne més</string>
+  <string name="sync_inactive_vault_warning_action">Més informació</string>
 </resources>

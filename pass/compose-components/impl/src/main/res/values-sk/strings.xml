@@ -82,8 +82,6 @@
   <string name="missing_app_icon_content_description">Chýbajúca ikona aplikácie</string>
   <string name="add_item_icon_content_description">Ikona pridania položky</string>
   <string name="navigate_back_icon_content_description">Ikona návratu späť</string>
-  <!-- Vault selector -->
-  <string name="vault_selector_title">Trezor</string>
   <!-- Bottom bar -->
   <string name="bottom_bar_list_items_icon_content_description">Zoznam položiek</string>
   <string name="bottom_bar_add_item_icon_content_description">Pridať položku</string>

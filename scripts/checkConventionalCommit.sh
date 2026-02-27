@@ -2,7 +2,7 @@
 
 set -euo pipefail
 
-CONVENTIONAL_REGEX='^(feat|fix|docs|style|refactor|perf|test|build|ci|chore|revert)(\([a-z0-9._/-]+\))?(!)?: .+'
+CONVENTIONAL_REGEX='^(feat|fix|docs|style|refactor|perf|test|build|ci|chore|revert|i18n)(\([a-z0-9._/-]+\))?(!)?: .+'
 
 is_valid_subject() {
   local subject="$1"

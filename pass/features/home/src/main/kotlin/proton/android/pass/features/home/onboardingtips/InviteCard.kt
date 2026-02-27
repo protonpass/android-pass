@@ -22,7 +22,6 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -31,39 +30,48 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import proton.android.pass.commonui.api.PassTheme
-import proton.android.pass.commonui.api.ThemePreviewProvider
-import proton.android.pass.domain.InviteToken
-import proton.android.pass.domain.ItemInfo
 import proton.android.pass.domain.PendingInvite
-import proton.android.pass.domain.ShareColor
-import proton.android.pass.domain.ShareIcon
-import proton.android.pass.domain.VaultInfo
 import proton.android.pass.features.home.R
 
 @Composable
 internal fun InviteCard(
     modifier: Modifier = Modifier,
     pendingInvite: PendingInvite,
+    groupName: String?,
     onClick: () -> Unit
 ) {
-    val (titleResId, bodyResId) = remember(pendingInvite) {
-        when (pendingInvite) {
-            is ItemInfo -> {
-                R.string.home_item_invite_banner_title to R.string.home_item_invite_banner_subtitle
-            }
-
-            is VaultInfo -> {
-                R.string.home_invite_banner_title to R.string.home_invite_banner_subtitle
-            }
-            else -> throw IllegalStateException("Type not supported")
-        }
+    val title = when (pendingInvite) {
+        is PendingInvite.GroupItem,
+        is PendingInvite.UserItem -> stringResource(R.string.home_item_invite_card_title)
+        is PendingInvite.GroupVault,
+        is PendingInvite.UserVault -> stringResource(R.string.home_vault_invite_card_title)
+    }
+    val body = when (pendingInvite) {
+        is PendingInvite.GroupItem -> stringResource(
+            R.string.home_group_item_invite_banner_title,
+            pendingInvite.inviterEmail,
+            groupName ?: pendingInvite.invitedEmail
+        )
+        is PendingInvite.GroupVault -> stringResource(
+            R.string.home_group_invite_banner_title,
+            pendingInvite.inviterEmail,
+            groupName ?: pendingInvite.invitedEmail
+        )
+        is PendingInvite.UserItem -> stringResource(
+            R.string.home_item_invite_banner_title,
+            pendingInvite.inviterEmail
+        )
+        is PendingInvite.UserVault -> stringResource(
+            R.string.home_vault_invite_banner_body,
+            pendingInvite.inviterEmail
+        )
     }
 
     SpotlightCard(
         modifier = modifier,
         backgroundColor = PassTheme.colors.backgroundMedium,
-        title = stringResource(id = titleResId, pendingInvite.inviterEmail),
-        body = stringResource(id = bodyResId),
+        title = title,
+        body = body,
         titleColor = PassTheme.colors.textNorm,
         image = {
             Image(
@@ -80,21 +88,14 @@ internal fun InviteCard(
 }
 
 @[Preview Composable]
-internal fun InviteCardPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
-    PassTheme(isDark = isDark) {
+internal fun InviteCardPreview(
+    @PreviewParameter(ThemedInviteCardPreviewProvider::class) input: Pair<Boolean, InviteCardPreviewInput>
+) {
+    PassTheme(isDark = input.first) {
         Surface {
             InviteCard(
-                pendingInvite = PendingInvite.UserVault(
-                    inviteToken = InviteToken(""),
-                    inviterEmail = "inviter@email.com",
-                    invitedAddressId = "invitedAddressId",
-                    isFromNewUser = false,
-                    memberCount = 0,
-                    itemCount = 0,
-                    name = "Vault name",
-                    icon = ShareIcon.Icon1,
-                    color = ShareColor.Color1
-                ),
+                pendingInvite = input.second.pendingInvite,
+                groupName = input.second.groupName,
                 onClick = {}
             )
         }

@@ -114,6 +114,7 @@ fun OnBoardingTipContent(
                 Box(modifier = Modifier.padding(all = Spacing.medium)) {
                     InviteCard(
                         pendingInvite = invite.pendingInvite,
+                        groupName = invite.groupName,
                         onClick = { onClick(tipPage) }
                     )
                 }

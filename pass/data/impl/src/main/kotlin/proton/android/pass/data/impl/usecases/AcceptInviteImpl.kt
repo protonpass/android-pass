@@ -38,7 +38,9 @@ import proton.android.pass.data.impl.work.FetchShareItemsWorker
 import proton.android.pass.domain.InviteId
 import proton.android.pass.domain.InviteToken
 import proton.android.pass.domain.ItemId
+import proton.android.pass.domain.PendingInvite
 import proton.android.pass.domain.ShareId
+import proton.android.pass.notifications.api.InviteNotificationModel
 import proton.android.pass.notifications.api.NotificationManager
 import javax.inject.Inject
 
@@ -57,7 +59,7 @@ class AcceptInviteImpl @Inject constructor(
             userInviteRepository.getInvite(user.userId, inviteToken).value()
                 ?.let { pendingInvite ->
                     val (shareId, itemId) = userInviteRepository.acceptInvite(user.userId, inviteToken)
-                    notificationManager.removeReceivedInviteNotification(pendingInvite)
+                    notificationManager.removeReceivedInviteNotification(pendingInvite.toRemoveModel())
                     shareRepository.recreateShare(user.userId, shareId)
                     downloadItems(user.userId, shareId, itemId)
                 }
@@ -75,7 +77,7 @@ class AcceptInviteImpl @Inject constructor(
                     inviteId = inviteId,
                     inviteToken = pendingInvite.inviteToken
                 )
-                notificationManager.removeReceivedInviteNotification(pendingInvite)
+                notificationManager.removeReceivedInviteNotification(pendingInvite.toRemoveModel())
                 flowOf(AcceptInviteStatus.GroupInviteDone)
             } else {
                 flowOf(AcceptInviteStatus.Error)
@@ -110,4 +112,11 @@ class AcceptInviteImpl @Inject constructor(
                 }
             }
     }
+}
+
+private fun PendingInvite.toRemoveModel(): InviteNotificationModel = when (this) {
+    is PendingInvite.UserItem -> InviteNotificationModel.UserItem(inviterEmail)
+    is PendingInvite.UserVault -> InviteNotificationModel.UserVault(inviterEmail)
+    is PendingInvite.GroupItem -> InviteNotificationModel.GroupItem(inviterEmail, invitedEmail)
+    is PendingInvite.GroupVault -> InviteNotificationModel.GroupVault(inviterEmail, invitedEmail)
 }

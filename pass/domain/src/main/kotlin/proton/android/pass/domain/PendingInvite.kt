@@ -37,11 +37,11 @@ interface VaultInfo {
     val color: ShareColor
 }
 
-interface PendingUserInvite {
+sealed interface PendingUserInvite {
     val isFromNewUser: Boolean
 }
 
-interface PendingGroupInvite {
+sealed interface PendingGroupInvite {
     val inviteId: InviteId
     val inviterUserId: String
     val invitedGroupId: String

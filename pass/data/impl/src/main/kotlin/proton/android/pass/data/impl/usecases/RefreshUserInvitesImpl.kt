@@ -25,8 +25,11 @@ import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.safeRunCatching
 import proton.android.pass.data.api.repositories.UserInviteRepository
 import proton.android.pass.data.api.usecases.RefreshUserInvites
+import proton.android.pass.domain.PendingGroupInvite
+import proton.android.pass.domain.PendingInvite
 import proton.android.pass.domain.events.EventToken
 import proton.android.pass.log.api.PassLogger
+import proton.android.pass.notifications.api.InviteNotificationModel
 import proton.android.pass.notifications.api.NotificationManager
 import javax.inject.Inject
 
@@ -51,7 +54,14 @@ class RefreshUserInvitesImpl @Inject constructor(
             } else null
         }.onSuccess { pendingInvite ->
             PassLogger.i(TAG, "User invites refreshed successfully")
-            pendingInvite?.let(notificationManager::sendReceivedInviteNotification)
+            pendingInvite?.let { invite ->
+                val model = when (invite) {
+                    is PendingInvite.UserItem -> InviteNotificationModel.UserItem(invite.inviterEmail)
+                    is PendingInvite.UserVault -> InviteNotificationModel.UserVault(invite.inviterEmail)
+                    is PendingGroupInvite -> return@onSuccess
+                }
+                notificationManager.sendReceivedInviteNotification(model)
+            }
         }.onFailure { error ->
             PassLogger.i(TAG, "Error refreshing user invites")
             PassLogger.w(TAG, error)

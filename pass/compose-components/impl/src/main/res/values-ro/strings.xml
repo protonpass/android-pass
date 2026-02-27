@@ -81,8 +81,6 @@
   <string name="missing_app_icon_content_description">Pictogramă aplicație lipsă</string>
   <string name="add_item_icon_content_description">Pictogramă adăugare articol</string>
   <string name="navigate_back_icon_content_description">Pictogramă navigare înapoi</string>
-  <!-- Vault selector -->
-  <string name="vault_selector_title">Seif</string>
   <!-- Bottom bar -->
   <string name="bottom_bar_list_items_icon_content_description">Articole listă</string>
   <string name="bottom_bar_add_item_icon_content_description">Adăugare articol</string>

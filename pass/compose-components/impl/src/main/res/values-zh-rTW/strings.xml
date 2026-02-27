@@ -79,8 +79,6 @@
   <string name="missing_app_icon_content_description">缺少應用程式圖示</string>
   <string name="add_item_icon_content_description">新增項目圖示</string>
   <string name="navigate_back_icon_content_description">返回按鈕</string>
-  <!-- Vault selector -->
-  <string name="vault_selector_title">保管庫</string>
   <!-- Bottom bar -->
   <string name="bottom_bar_list_items_icon_content_description">列出項目</string>
   <string name="bottom_bar_add_item_icon_content_description">新增項目</string>

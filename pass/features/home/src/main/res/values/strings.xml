@@ -57,10 +57,7 @@
     <string name="home_notification_permission_banner_title">Get important updates</string>
     <string name="home_notification_permission_banner_text">Enable push notifications to be informed when others share a vault with you.</string>
     <string name="home_notification_permission_banner_settings">Enable permission ›</string>
-    <string name="home_invite_banner_title">Vault shared with you</string>
-    <string name="home_invite_banner_subtitle">You\'re invited to a shared vault. Tap for details.</string>
     <string name="home_item_invite_banner_title" comment="placeholder is replaced by an email address">%s wants to share an item with you.</string>
-    <string name="home_item_invite_banner_subtitle">Tap for details.</string>
     <string name="home_group_item_invite_banner_title" comment="%1$s = inviter email, %2$s = group name">%1$s wants to share an item with your group %2$s.</string>
     <string name="home_group_invite_banner_title" comment="%1$s = inviter email, %2$s = group name">%1$s wants to share a vault with your group %2$s.</string>
     <string name="home_item_invite_card_title">Shared item invitation</string>

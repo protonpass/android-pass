@@ -30,6 +30,8 @@ import proton.android.pass.autofill.api.AutofillStatus
 import proton.android.pass.autofill.api.AutofillSupportedStatus
 import proton.android.pass.autofill.fakes.FakeAutofillManager
 import proton.android.pass.common.api.some
+import proton.android.pass.data.fakes.repositories.FakeGroupRepository
+import proton.android.pass.data.fakes.usecases.FakeObserveCurrentUser
 import proton.android.pass.data.fakes.usecases.FakeObserveInvites
 import proton.android.pass.data.fakes.usecases.simplelogin.FakeObserveSimpleLoginSyncStatus
 import proton.android.pass.domain.simplelogin.SimpleLoginSyncStatus
@@ -72,6 +74,8 @@ class OnBoardingTipsViewModelTest {
             autofillManager = autofillManager,
             preferencesRepository = preferenceRepository,
             observeInvites = observeInvites,
+            observeCurrentUser = FakeObserveCurrentUser(),
+            groupRepository = FakeGroupRepository(),
             notificationManager = notificationManager,
             appConfig = appConfig,
             observeSimpleLoginSyncStatus = observeSimpleLoginSyncStatus

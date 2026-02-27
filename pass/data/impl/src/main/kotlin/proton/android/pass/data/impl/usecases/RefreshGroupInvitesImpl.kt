@@ -24,14 +24,21 @@ import me.proton.core.user.domain.extension.isOrganizationUser
 import me.proton.core.user.domain.repository.UserRepository
 import proton.android.pass.common.api.safeRunCatching
 import proton.android.pass.data.api.repositories.GroupInviteRepository
+import proton.android.pass.data.api.repositories.GroupRepository
 import proton.android.pass.data.api.usecases.RefreshGroupInvites
+import proton.android.pass.domain.GroupId
+import proton.android.pass.domain.PendingGroupInvite
+import proton.android.pass.domain.PendingInvite
+import proton.android.pass.domain.PendingUserInvite
 import proton.android.pass.domain.events.EventToken
 import proton.android.pass.log.api.PassLogger
+import proton.android.pass.notifications.api.InviteNotificationModel
 import proton.android.pass.notifications.api.NotificationManager
 import javax.inject.Inject
 
 class RefreshGroupInvitesImpl @Inject constructor(
     private val groupInviteRepository: GroupInviteRepository,
+    private val groupRepository: GroupRepository,
     private val userRepository: UserRepository,
     private val notificationManager: NotificationManager
 ) : RefreshGroupInvites {
@@ -41,19 +48,36 @@ class RefreshGroupInvitesImpl @Inject constructor(
 
         safeRunCatching {
             val currentUser = userRepository.getUser(userId)
-            if (currentUser.isOrganizationUser()) {
-                groupInviteRepository.observePendingGroupInvites(
-                    userId = userId,
-                    forceRefresh = true,
-                    eventToken = eventToken
-                ).first().lastOrNull()
-            } else {
-                null
+            if (!currentUser.isOrganizationUser()) return@safeRunCatching null
+
+            val invite = groupInviteRepository.observePendingGroupInvites(
+                userId = userId,
+                forceRefresh = true,
+                eventToken = eventToken
+            ).first().lastOrNull() ?: return@safeRunCatching null
+
+            when (invite) {
+                is PendingGroupInvite -> {
+                    val groupName = safeRunCatching {
+                        groupRepository.retrieveGroup(
+                            userId = userId,
+                            groupId = GroupId(invite.invitedGroupId)
+                        )?.name
+                    }.getOrNull() ?: invite.invitedEmail
+
+                    when (invite) {
+                        is PendingInvite.GroupItem ->
+                            InviteNotificationModel.GroupItem(invite.inviterEmail, groupName)
+                        is PendingInvite.GroupVault ->
+                            InviteNotificationModel.GroupVault(invite.inviterEmail, groupName)
+                    }
+                }
+                is PendingUserInvite -> null
             }
-        }.onSuccess { invite ->
-            if (invite != null) {
+        }.onSuccess { model ->
+            if (model != null) {
                 PassLogger.i(TAG, "Group invites refreshed successfully")
-                notificationManager.sendReceivedInviteNotification(invite)
+                notificationManager.sendReceivedInviteNotification(model)
             } else {
                 PassLogger.i(TAG, "No pending group invites")
             }

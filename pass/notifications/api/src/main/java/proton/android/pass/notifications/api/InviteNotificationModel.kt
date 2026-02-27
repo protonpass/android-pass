@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023-2026 Proton AG
+ * Copyright (c) 2026 Proton AG
  * This file is part of Proton AG and Proton Pass.
  *
  * Proton Pass is free software: you can redistribute it and/or modify
@@ -18,14 +18,14 @@
 
 package proton.android.pass.notifications.api
 
-interface NotificationManager {
+sealed interface InviteNotificationModel {
+    val inviterEmail: String
 
-    fun sendNotification()
+    sealed interface Item : InviteNotificationModel
+    sealed interface Vault : InviteNotificationModel
 
-    fun sendReceivedInviteNotification(model: InviteNotificationModel)
-
-    fun removeReceivedInviteNotification(model: InviteNotificationModel)
-
-    fun hasNotificationPermission(): Boolean
-
+    data class UserItem(override val inviterEmail: String) : Item
+    data class UserVault(override val inviterEmail: String) : Vault
+    data class GroupItem(override val inviterEmail: String, val groupName: String) : Item
+    data class GroupVault(override val inviterEmail: String, val groupName: String) : Vault
 }

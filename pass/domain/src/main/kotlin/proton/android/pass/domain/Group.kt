@@ -46,7 +46,7 @@ data class GroupMember(
     val state: Int,
     val createTime: Long,
     val groupId: String,
-    val addressId: String,
-    val email: String
+    val addressId: String?,
+    val email: String?
 )
 

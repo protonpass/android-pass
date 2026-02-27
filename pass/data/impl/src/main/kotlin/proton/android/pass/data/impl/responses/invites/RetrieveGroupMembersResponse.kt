@@ -44,8 +44,8 @@ data class GroupMemberApiModel(
     @SerialName("GroupID")
     val groupId: String,
     @SerialName("AddressID")
-    val addressId: String,
+    val addressId: String?,
     @SerialName("Email")
-    val email: String
+    val email: String?
 )
 

@@ -28,7 +28,7 @@ import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
 import dagger.hilt.android.qualifiers.ApplicationContext
-import proton.android.pass.domain.PendingInvite
+import proton.android.pass.notifications.api.InviteNotificationModel
 import proton.android.pass.notifications.api.MainActivityAnnotation
 import proton.android.pass.notifications.api.NotificationManager
 import javax.inject.Inject
@@ -37,7 +37,7 @@ import me.proton.core.presentation.R as CoreR
 
 class NotificationManagerImpl @Inject constructor(
     @param:ApplicationContext private val context: Context,
-    @MainActivityAnnotation private val mainActivityClass: Class<*>,
+    @param:MainActivityAnnotation private val mainActivityClass: Class<*>,
     private val notificationManagerCompat: NotificationManagerCompat
 ) : NotificationManager {
 
@@ -66,24 +66,35 @@ class NotificationManagerImpl @Inject constructor(
             }
     }
 
-    override fun sendReceivedInviteNotification(pendingInvite: PendingInvite) {
-        val (contentTitle, contentText, notificationId) = when (pendingInvite) {
-            is PendingInvite.GroupItem, is PendingInvite.UserItem -> Triple(
+    override fun sendReceivedInviteNotification(model: InviteNotificationModel) {
+        val (contentTitle, contentText, notificationId) = when (model) {
+            is InviteNotificationModel.UserItem -> Triple(
                 context.getString(R.string.new_item_invite_notification_title),
-                context.getString(
-                    R.string.new_item_invite_notification_message,
-                    pendingInvite.inviterEmail
-                ),
-                ITEM_INVITE_RECEIVED_UNIQUE_ID
+                context.getString(R.string.new_item_invite_notification_message, model.inviterEmail),
+                USER_ITEM_INVITE_RECEIVED_UNIQUE_ID
             )
-
-            is PendingInvite.GroupVault, is PendingInvite.UserVault -> Triple(
-                context.getString(R.string.new_vault_invite_notification_title),
+            is InviteNotificationModel.GroupItem -> Triple(
+                context.getString(R.string.new_group_item_invite_notification_title),
                 context.getString(
-                    R.string.new_vault_invite_notification_message,
-                    pendingInvite.inviterEmail
+                    R.string.new_group_item_invite_notification_message,
+                    model.inviterEmail,
+                    model.groupName
                 ),
-                VAULT_INVITE_RECEIVED_UNIQUE_ID
+                GROUP_ITEM_INVITE_RECEIVED_UNIQUE_ID
+            )
+            is InviteNotificationModel.UserVault -> Triple(
+                context.getString(R.string.new_vault_invite_notification_title),
+                context.getString(R.string.new_vault_invite_notification_message, model.inviterEmail),
+                USER_VAULT_INVITE_RECEIVED_UNIQUE_ID
+            )
+            is InviteNotificationModel.GroupVault -> Triple(
+                context.getString(R.string.new_group_vault_invite_notification_title),
+                context.getString(
+                    R.string.new_group_vault_invite_notification_message,
+                    model.inviterEmail,
+                    model.groupName
+                ),
+                GROUP_VAULT_INVITE_RECEIVED_UNIQUE_ID
             )
         }
 
@@ -94,12 +105,12 @@ class NotificationManagerImpl @Inject constructor(
         )
     }
 
-    override fun removeReceivedInviteNotification(pendingInvite: PendingInvite) {
-        val id = when (pendingInvite) {
-            is PendingInvite.GroupItem,
-            is PendingInvite.UserItem -> ITEM_INVITE_RECEIVED_UNIQUE_ID
-            is PendingInvite.GroupVault,
-            is PendingInvite.UserVault -> VAULT_INVITE_RECEIVED_UNIQUE_ID
+    override fun removeReceivedInviteNotification(model: InviteNotificationModel) {
+        val id = when (model) {
+            is InviteNotificationModel.UserItem -> USER_ITEM_INVITE_RECEIVED_UNIQUE_ID
+            is InviteNotificationModel.GroupItem -> GROUP_ITEM_INVITE_RECEIVED_UNIQUE_ID
+            is InviteNotificationModel.UserVault -> USER_VAULT_INVITE_RECEIVED_UNIQUE_ID
+            is InviteNotificationModel.GroupVault -> GROUP_VAULT_INVITE_RECEIVED_UNIQUE_ID
         }
         removeNotification(id)
     }
@@ -187,8 +198,10 @@ class NotificationManagerImpl @Inject constructor(
     private companion object {
         private const val NOTIFICATION_TIMEOUT = 2000L
         private const val COPY_TO_CLIPBOARD_UNIQUE_ID = 1
-        private const val ITEM_INVITE_RECEIVED_UNIQUE_ID = 3
-        private const val VAULT_INVITE_RECEIVED_UNIQUE_ID = 4
+        private const val USER_ITEM_INVITE_RECEIVED_UNIQUE_ID = 3
+        private const val USER_VAULT_INVITE_RECEIVED_UNIQUE_ID = 4
+        private const val GROUP_ITEM_INVITE_RECEIVED_UNIQUE_ID = 5
+        private const val GROUP_VAULT_INVITE_RECEIVED_UNIQUE_ID = 6
         private const val AUTOFILL_CHANNEL_ID = "AUTOFILL"
         private const val UPDATES_CHANNEL_ID = "UPDATES"
     }

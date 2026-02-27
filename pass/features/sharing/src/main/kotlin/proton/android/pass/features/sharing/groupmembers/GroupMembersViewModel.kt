@@ -54,8 +54,8 @@ internal class GroupMembersViewModel @Inject constructor(
                     val groupMembers = result.data.find { it.group.id == groupId }
                     GroupMembersUiState.Loading.copy(
                         groupName = groupMembers?.group?.name ?: "",
-                        members = groupMembers?.members?.map { member ->
-                            GroupMemberUiModel(email = member.email)
+                        members = groupMembers?.members?.mapNotNull { member ->
+                            member.email?.let { GroupMemberUiModel(email = it) }
                         }
                             ?.toImmutableList()
                             ?: persistentListOf(),

@@ -62,7 +62,7 @@ sealed interface VaultMemberContent {
     data object Loading : VaultMemberContent
 
     data class Member(
-        val member: VaultMember,
+        val vaultMember: VaultMember,
         val isLoading: Boolean = false
     ) : VaultMemberContent
 }
@@ -70,21 +70,24 @@ sealed interface VaultMemberContent {
 @Composable
 fun ManageVaultMemberRow(
     modifier: Modifier = Modifier,
-    member: VaultMemberContent,
+    memberContent: VaultMemberContent,
     canShowActions: Boolean,
     isRenameAdminToManagerEnabled: Boolean,
     onOptionsClick: (() -> Unit)? = null,
     onConfirmInviteClick: ((VaultMember.NewUserInvitePending) -> Unit)? = null
 ) {
-    val (circleTextModifier, circleText) = when (member) {
+    val (circleTextModifier, circleText) = when (memberContent) {
         VaultMemberContent.Loading -> Modifier.placeholder() to ""
-        is VaultMemberContent.Member -> Modifier to member.member.email
+        is VaultMemberContent.Member -> Modifier to when (val member = memberContent.vaultMember) {
+            is VaultMember.Member -> if (member.isGroup) member.username else member.email
+            else -> memberContent.vaultMember.email
+        }
     }
 
-    val showActions = when (member) {
-        is VaultMemberContent.Member -> when (member.member) {
+    val showActions = when (memberContent) {
+        is VaultMemberContent.Member -> when (memberContent.vaultMember) {
             is VaultMember.Member -> {
-                canShowActions && !member.member.isCurrentUser && !member.member.isOwner
+                canShowActions && !memberContent.vaultMember.isCurrentUser && !memberContent.vaultMember.isOwner
             }
 
             is VaultMember.InvitePending -> canShowActions
@@ -114,7 +117,7 @@ fun ManageVaultMemberRow(
 
             UserInfo(
                 modifier = Modifier.weight(1f),
-                member = member,
+                memberContent = memberContent,
                 isRenameAdminToManagerEnabled = isRenameAdminToManagerEnabled
             )
 
@@ -133,7 +136,7 @@ fun ManageVaultMemberRow(
         }
 
         ConfirmAccessButton(
-            member = member,
+            member = memberContent,
             onClick = { onConfirmInviteClick?.invoke(it) }
         )
     }
@@ -142,16 +145,27 @@ fun ManageVaultMemberRow(
 @Composable
 private fun UserInfo(
     modifier: Modifier = Modifier,
-    member: VaultMemberContent,
+    memberContent: VaultMemberContent,
     isRenameAdminToManagerEnabled: Boolean
 ) {
-    val (titleTextModifier, titleText) = when (member) {
+    val (titleTextModifier, titleText) = when (memberContent) {
         VaultMemberContent.Loading ->
             Modifier
                 .fillMaxWidth()
                 .placeholder() to ""
 
-        is VaultMemberContent.Member -> Modifier to member.member.email
+        is VaultMemberContent.Member -> Modifier to when (val member = memberContent.vaultMember) {
+            is VaultMember.Member -> when {
+                member.isGroup && member.memberCount > 0 -> stringResource(
+                    R.string.share_with_group_entry,
+                    member.username,
+                    member.memberCount
+                )
+                member.isGroup -> member.username
+                else -> member.email
+            }
+            else -> memberContent.vaultMember.email
+        }
     }
 
     Column(
@@ -164,7 +178,7 @@ private fun UserInfo(
             style = PassTheme.typography.body3Norm()
         )
 
-        UserInfoSubtitle(member = member, isRenameAdminToManagerEnabled = isRenameAdminToManagerEnabled)
+        UserInfoSubtitle(member = memberContent, isRenameAdminToManagerEnabled = isRenameAdminToManagerEnabled)
     }
 }
 
@@ -184,7 +198,7 @@ private fun UserInfoSubtitle(
             )
         }
 
-        is VaultMemberContent.Member -> when (val memberContent = member.member) {
+        is VaultMemberContent.Member -> when (val memberContent = member.vaultMember) {
             is VaultMember.Member -> {
                 memberContent.role?.let { role ->
                     Row(
@@ -255,14 +269,14 @@ private fun ConfirmAccessButton(
     onClick: (VaultMember.NewUserInvitePending) -> Unit
 ) {
     if (member is VaultMemberContent.Member &&
-        member.member is VaultMember.NewUserInvitePending &&
-        member.member.inviteState == VaultMember.NewUserInvitePending.InviteState.PendingAcceptance
+        member.vaultMember is VaultMember.NewUserInvitePending &&
+        member.vaultMember.inviteState == VaultMember.NewUserInvitePending.InviteState.PendingAcceptance
     ) {
         CircleButton(
             modifier = modifier.fillMaxWidth(),
             color = PassTheme.colors.interactionNormMinor1,
             elevation = ButtonDefaults.elevation(0.dp),
-            onClick = { onClick(member.member) }
+            onClick = { onClick(member.vaultMember) }
         ) {
             if (member.isLoading) {
                 CircularProgressIndicator(modifier = Modifier.size(24.dp))
@@ -285,7 +299,7 @@ fun ManageVaultMemberRowPreview(
     PassTheme(isDark = input.first) {
         Surface {
             ManageVaultMemberRow(
-                member = input.second.member,
+                memberContent = input.second.member,
                 canShowActions = true,
                 isRenameAdminToManagerEnabled = true,
                 onOptionsClick = {}

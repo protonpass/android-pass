@@ -80,8 +80,6 @@
   <string name="missing_app_icon_content_description">Hiányzó alkalmazás ikon</string>
   <string name="add_item_icon_content_description">Elem hozzáadása ikon</string>
   <string name="navigate_back_icon_content_description">Vissza navigálás ikon</string>
-  <!-- Vault selector -->
-  <string name="vault_selector_title">Tároló</string>
   <!-- Bottom bar -->
   <string name="bottom_bar_list_items_icon_content_description">Elemek listázása</string>
   <string name="bottom_bar_add_item_icon_content_description">Új elem</string>

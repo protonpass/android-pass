@@ -82,8 +82,6 @@
   <string name="missing_app_icon_content_description">Значок прапушчанай праграмы</string>
   <string name="add_item_icon_content_description">Дадаць значок элемента</string>
   <string name="navigate_back_icon_content_description">Значок пераходу назад</string>
-  <!-- Vault selector -->
-  <string name="vault_selector_title">Сховішча</string>
   <!-- Bottom bar -->
   <string name="bottom_bar_list_items_icon_content_description">Элементы спіса</string>
   <string name="bottom_bar_add_item_icon_content_description">Дадаць элемент</string>

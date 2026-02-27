@@ -80,8 +80,6 @@
   <string name="missing_app_icon_content_description">Mangler appikon</string>
   <string name="add_item_icon_content_description">Legg til elementsikon</string>
   <string name="navigate_back_icon_content_description">Naviger tilbake ikon</string>
-  <!-- Vault selector -->
-  <string name="vault_selector_title">Hvelv</string>
   <!-- Bottom bar -->
   <string name="bottom_bar_list_items_icon_content_description">List elementer</string>
   <string name="bottom_bar_add_item_icon_content_description">Legg til element</string>

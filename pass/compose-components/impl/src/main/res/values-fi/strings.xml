@@ -80,8 +80,6 @@
   <string name="missing_app_icon_content_description">Sovellus puuttuu -kuvake</string>
   <string name="add_item_icon_content_description">Lisää kohde -kuvake</string>
   <string name="navigate_back_icon_content_description">Palaa takaisin -kuvake</string>
-  <!-- Vault selector -->
-  <string name="vault_selector_title">Holvi</string>
   <!-- Bottom bar -->
   <string name="bottom_bar_list_items_icon_content_description">Listaa kohteet</string>
   <string name="bottom_bar_add_item_icon_content_description">Lisää kohde</string>

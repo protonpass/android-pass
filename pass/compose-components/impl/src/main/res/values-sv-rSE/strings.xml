@@ -80,8 +80,6 @@
   <string name="missing_app_icon_content_description">Saknar appikon</string>
   <string name="add_item_icon_content_description">Ikon för “Lägg till objekt“</string>
   <string name="navigate_back_icon_content_description">Ikon för “Gå tillbaka“</string>
-  <!-- Vault selector -->
-  <string name="vault_selector_title">Valv</string>
   <!-- Bottom bar -->
   <string name="bottom_bar_list_items_icon_content_description">Objekt i listan</string>
   <string name="bottom_bar_add_item_icon_content_description">Lägg till objekt</string>

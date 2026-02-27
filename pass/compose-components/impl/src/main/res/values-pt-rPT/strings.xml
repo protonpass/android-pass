@@ -80,8 +80,6 @@
   <string name="missing_app_icon_content_description">Ícone da aplicação ausente</string>
   <string name="add_item_icon_content_description">Ícone de adição de item</string>
   <string name="navigate_back_icon_content_description">Ícone Voltar</string>
-  <!-- Vault selector -->
-  <string name="vault_selector_title">Cofre</string>
   <!-- Bottom bar -->
   <string name="bottom_bar_list_items_icon_content_description">Itens da lista</string>
   <string name="bottom_bar_add_item_icon_content_description">Adicionar um item</string>

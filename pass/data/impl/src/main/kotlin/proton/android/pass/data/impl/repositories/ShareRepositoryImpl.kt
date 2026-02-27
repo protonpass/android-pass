@@ -457,10 +457,20 @@ class ShareRepositoryImpl @Inject constructor(
         val groups = if (shares.any { it.groupId != null }) {
             groupRepository.retrieveGroups(userId, forceRefresh = true)
         } else null
+        val requiredAddressIds = shares.map { AddressId(it.addressId) }.toSet()
+        val availableAddressIds = getAvailableAddressIds(userId, requiredAddressIds)
 
         var invalidGroupSharesCount = 0
         val entities: List<Pair<ShareEntity, List<ShareKeyEntity>>> = shares
             .mapNotNull { response ->
+                val shareAddressId = AddressId(response.addressId)
+                if (shareAddressId !in availableAddressIds) {
+                    PassLogger.w(
+                        TAG,
+                        "Skipping share ${response.shareId} - address ${response.addressId} not found after refresh"
+                    )
+                    return@mapNotNull null
+                }
                 val groupEmail = if (response.groupId != null) {
                     groups?.find { it.id.id == response.groupId }?.groupEmail
                         ?: run {
@@ -502,6 +512,22 @@ class ShareRepositoryImpl @Inject constructor(
         }
 
         StoreSharesResult(shareEntities, invalidGroupSharesCount)
+    }
+
+    private suspend fun getAvailableAddressIds(userId: UserId, requiredAddressIds: Set<AddressId>): Set<AddressId> {
+        val localAddressIds = userAddressRepository.getAddresses(userId)
+            .map { it.addressId }
+            .toSet()
+        val missingAddressIds = requiredAddressIds - localAddressIds
+        if (missingAddressIds.isEmpty()) return localAddressIds
+
+        PassLogger.w(
+            TAG,
+            "Missing ${missingAddressIds.size} addresses referenced by shares, refreshing addresses"
+        )
+        return userAddressRepository.getAddresses(userId, refresh = true)
+            .map { it.addressId }
+            .toSet()
     }
 
     private suspend fun createShareResponseEntity(

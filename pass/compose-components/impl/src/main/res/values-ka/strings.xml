@@ -80,8 +80,6 @@
   <string name="missing_app_icon_content_description">აპის ხატულა ვერ ვიპოვე</string>
   <string name="add_item_icon_content_description">ელემენტის დამატების ხატულა</string>
   <string name="navigate_back_icon_content_description">უკან დაბრუნების ხატულა</string>
-  <!-- Vault selector -->
-  <string name="vault_selector_title">საცავი</string>
   <!-- Bottom bar -->
   <string name="bottom_bar_list_items_icon_content_description">ელემენტების სია</string>
   <string name="bottom_bar_add_item_icon_content_description">ელემენტის დამატება</string>

@@ -79,8 +79,6 @@
   <string name="missing_app_icon_content_description">Ikon aplikasi tidak ada</string>
   <string name="add_item_icon_content_description">Tambah ikon item</string>
   <string name="navigate_back_icon_content_description">Ikon navigasi kembali</string>
-  <!-- Vault selector -->
-  <string name="vault_selector_title">Brankas</string>
   <!-- Bottom bar -->
   <string name="bottom_bar_list_items_icon_content_description">Daftar item</string>
   <string name="bottom_bar_add_item_icon_content_description">Tambahkan item</string>

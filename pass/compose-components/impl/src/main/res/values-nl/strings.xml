@@ -80,8 +80,6 @@
   <string name="missing_app_icon_content_description">Ontbrekend app-pictogram</string>
   <string name="add_item_icon_content_description">Itempictogram toevoegen</string>
   <string name="navigate_back_icon_content_description">Navigeer terug pictogram</string>
-  <!-- Vault selector -->
-  <string name="vault_selector_title">Kluis</string>
   <!-- Bottom bar -->
   <string name="bottom_bar_list_items_icon_content_description">Lijst items</string>
   <string name="bottom_bar_add_item_icon_content_description">Item toevoegen</string>

@@ -80,8 +80,6 @@
   <string name="missing_app_icon_content_description">Fehlendes App-Symbol</string>
   <string name="add_item_icon_content_description">Eintrag hinzufügen-Symbol</string>
   <string name="navigate_back_icon_content_description">Zurück-Symbol</string>
-  <!-- Vault selector -->
-  <string name="vault_selector_title">Tresor</string>
   <!-- Bottom bar -->
   <string name="bottom_bar_list_items_icon_content_description">Listeneinträge</string>
   <string name="bottom_bar_add_item_icon_content_description">Eintrag hinzufügen</string>

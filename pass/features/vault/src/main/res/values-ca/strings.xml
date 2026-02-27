@@ -22,7 +22,7 @@
   <string name="vault_add_folder_dialog_title">Introduïu un títol per la carpeta</string>
   <string name="vault_edit_folder_dialog_title">Canvia el nom de la carpeta</string>
   <string name="vault_add_foldersame_folder_exist">Ja hi ha una carpeta amb el mateix nom</string>
-  <string name="folder_delete_dialog_title">Elimina la carpeta</string>
+  <string name="folder_delete_dialog_title">Elimineu la carpeta</string>
   <string name="folder_delete_dialog_body">Això eliminarà permanentment la carpeta __FOLDER_NAME__ i tot el seu contingut. Introduïu el nom de la carpeta per confirmar-ne l\'eliminació.</string>
   <string name="folder_delete_dialog_placeholder">Nom de la carpeta</string>
   <string name="folder_delete_dialog_delete_action">Elimineu-la</string>

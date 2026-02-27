@@ -18,7 +18,7 @@
 
 package proton.android.pass.notifications.fakes
 
-import proton.android.pass.domain.PendingInvite
+import proton.android.pass.notifications.api.InviteNotificationModel
 import proton.android.pass.notifications.api.NotificationManager
 import javax.inject.Inject
 
@@ -34,9 +34,9 @@ class FakeNotificationManager @Inject constructor() : NotificationManager {
         // no op
     }
 
-    override fun sendReceivedInviteNotification(pendingInvite: PendingInvite) = Unit
+    override fun sendReceivedInviteNotification(model: InviteNotificationModel) = Unit
 
-    override fun removeReceivedInviteNotification(pendingInvite: PendingInvite) = Unit
+    override fun removeReceivedInviteNotification(model: InviteNotificationModel) = Unit
 
     override fun hasNotificationPermission(): Boolean = hasNotificationPermission
 

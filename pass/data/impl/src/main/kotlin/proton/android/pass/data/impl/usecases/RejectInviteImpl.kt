@@ -27,6 +27,8 @@ import proton.android.pass.data.api.usecases.ObserveCurrentUser
 import proton.android.pass.data.api.usecases.RejectInvite
 import proton.android.pass.domain.InviteId
 import proton.android.pass.domain.InviteToken
+import proton.android.pass.domain.PendingInvite
+import proton.android.pass.notifications.api.InviteNotificationModel
 import proton.android.pass.notifications.api.NotificationManager
 import javax.inject.Inject
 
@@ -43,7 +45,7 @@ class RejectInviteImpl @Inject constructor(
         userInviteRepository.getInvite(user.userId, inviteToken).value()
             ?.let { pendingInvite ->
                 userInviteRepository.rejectInvite(user.userId, inviteToken)
-                notificationManager.removeReceivedInviteNotification(pendingInvite)
+                notificationManager.removeReceivedInviteNotification(pendingInvite.toRemoveModel())
             }
     }
 
@@ -60,4 +62,11 @@ class RejectInviteImpl @Inject constructor(
             error("No pending invite found")
         }
     }
+}
+
+private fun PendingInvite.toRemoveModel(): InviteNotificationModel = when (this) {
+    is PendingInvite.UserItem -> InviteNotificationModel.UserItem(inviterEmail)
+    is PendingInvite.UserVault -> InviteNotificationModel.UserVault(inviterEmail)
+    is PendingInvite.GroupItem -> InviteNotificationModel.GroupItem(inviterEmail, invitedEmail)
+    is PendingInvite.GroupVault -> InviteNotificationModel.GroupVault(inviterEmail, invitedEmail)
 }

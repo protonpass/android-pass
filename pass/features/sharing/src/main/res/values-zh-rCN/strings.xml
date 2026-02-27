@@ -47,9 +47,9 @@
   <string name="sharing_item_invitation_title">共享项目邀请</string>
   <string name="sharing_item_invitation_subtitle" comment="placeholder is replaced by an email address">%s 希望与您分享一个项目。</string>
   <string name="sharing_item_invitation_accept">接受并查看项目</string>
-  <string name="sharing_group_vault_invitation_subtitle" comment="first placeholder is replaced by an email address, second by a group name">%1$s wants to share a vault with your group %2$s.</string>
-  <string name="sharing_group_item_invitation_subtitle" comment="first placeholder is replaced by an email address, second by a group name">%1$s wants to share an item with your group %2$s.</string>
-  <string name="sharing_group_invitation_accept">Accept invitation</string>
+  <string name="sharing_group_vault_invitation_subtitle" comment="first placeholder is replaced by an email address, second by a group name">%1$s 希望与您的群组 %2$s 共享一个保险库。</string>
+  <string name="sharing_group_item_invitation_subtitle" comment="first placeholder is replaced by an email address, second by a group name">%1$s 希望与您的群组 %2$s 共享一个项目。</string>
+  <string name="sharing_group_invitation_accept">接受邀请</string>
   <string name="sharing_invite_more">邀请更多…</string>
   <string name="sharing_snackbar_invite_accepted">邀请已接受</string>
   <string name="sharing_snackbar_invite_accept_error">接受邀请时出错</string>

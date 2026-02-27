@@ -80,8 +80,6 @@
   <string name="missing_app_icon_content_description">Icona de Falta una aplicació</string>
   <string name="add_item_icon_content_description">Icona d\'afegeix un element</string>
   <string name="navigate_back_icon_content_description">Icona de tornar enrere</string>
-  <!-- Vault selector -->
-  <string name="vault_selector_title">Caixa forta</string>
   <!-- Bottom bar -->
   <string name="bottom_bar_list_items_icon_content_description">Llista d\'elements</string>
   <string name="bottom_bar_add_item_icon_content_description">Afegeix un element</string>

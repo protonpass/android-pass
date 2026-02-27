@@ -39,14 +39,15 @@ class ManageVaultMemberRowPreviewProvider : PreviewParameterProvider<VaultMember
             // Current user
             for (isOwner in listOf(true, false)) {
                 val member = VaultMemberContent.Member(
-                    member = VaultMember.Member(
+                    vaultMember = VaultMember.Member(
                         email = "someuser@test.local",
                         shareId = ShareId("someShareId"),
                         username = "someuser",
                         role = ShareRole.Admin,
                         isCurrentUser = true,
                         isOwner = isOwner,
-                        isGroup = false
+                        isGroup = false,
+                        memberCount = 0
                     )
                 )
                 yield(VaultMemberRowInput(member))
@@ -55,14 +56,15 @@ class ManageVaultMemberRowPreviewProvider : PreviewParameterProvider<VaultMember
             // Member Roles
             for (role in listOf(ShareRole.Admin, ShareRole.Write, ShareRole.Read)) {
                 val member = VaultMemberContent.Member(
-                    member = VaultMember.Member(
+                    vaultMember = VaultMember.Member(
                         email = "someuser@test.local",
                         shareId = ShareId("someShareId"),
                         username = "someuser",
                         role = role,
                         isCurrentUser = false,
                         isOwner = false,
-                        isGroup = false
+                        isGroup = false,
+                        memberCount = 0
                     )
                 )
                 yield(VaultMemberRowInput(member))
@@ -72,7 +74,7 @@ class ManageVaultMemberRowPreviewProvider : PreviewParameterProvider<VaultMember
             yield(
                 VaultMemberRowInput(
                     VaultMemberContent.Member(
-                        member = VaultMember.InvitePending(
+                        vaultMember = VaultMember.InvitePending(
                             email = "invited@user.test",
                             inviteId = InviteId("someInviteId")
                         )
@@ -85,7 +87,7 @@ class ManageVaultMemberRowPreviewProvider : PreviewParameterProvider<VaultMember
                 yield(
                     VaultMemberRowInput(
                         VaultMemberContent.Member(
-                            member = VaultMember.NewUserInvitePending(
+                            vaultMember = VaultMember.NewUserInvitePending(
                                 email = "invited@user.test",
                                 signature = "",
                                 newUserInviteId = NewUserInviteId("someInviteId"),

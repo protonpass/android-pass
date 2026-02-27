@@ -56,7 +56,7 @@ fun ManageVaultMembersList(
                 Column(modifier = Modifier.roundedContainerNorm()) {
                     repeat(2) {
                         ManageVaultMemberRow(
-                            member = VaultMemberContent.Loading,
+                            memberContent = VaultMemberContent.Loading,
                             isRenameAdminToManagerEnabled = false,
                             canShowActions = false
                         )
@@ -103,8 +103,8 @@ private fun ManageVaultMembersList(
                     }
 
                     ManageVaultMemberRow(
-                        member = VaultMemberContent.Member(
-                            member = invite,
+                        memberContent = VaultMemberContent.Member(
+                            vaultMember = invite,
                             isLoading = isLoading
                         ),
                         canShowActions = content.canEdit,
@@ -126,8 +126,8 @@ private fun ManageVaultMembersList(
         Column(modifier = Modifier.roundedContainerNorm()) {
             content.vaultMembers.forEach { member ->
                 ManageVaultMemberRow(
-                    member = VaultMemberContent.Member(
-                        member = member
+                    memberContent = VaultMemberContent.Member(
+                        vaultMember = member
                     ),
                     canShowActions = content.canEdit,
                     isRenameAdminToManagerEnabled = content.isRenameAdminToManagerEnabled,

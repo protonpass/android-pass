@@ -54,6 +54,8 @@ fun MigrateConfirmVaultBottomSheet(
                 }
 
                 ConfirmMigrateEvent.Close -> navigation(MigrateNavigation.DismissBottomsheet)
+
+                ConfirmMigrateEvent.FolderMoved -> navigation(MigrateNavigation.FolderMoved)
             }
         }
     }

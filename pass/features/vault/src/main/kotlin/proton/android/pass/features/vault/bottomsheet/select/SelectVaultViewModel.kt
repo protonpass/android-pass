@@ -39,6 +39,7 @@ import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.asLoadingResult
 import proton.android.pass.common.api.getOrNull
+import proton.android.pass.common.api.toOption
 import proton.android.pass.commonpresentation.api.folders.FolderTreeBuilder
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
@@ -182,7 +183,7 @@ class SelectVaultViewModel @Inject constructor(
                 showUpgradeMessage = showUpgradeMessage,
                 foldersEnabled = foldersEnabled,
                 vaultFolders = vaultFolders.toImmutableMap(),
-                selectedFolderId = selectedFolderId
+                selectedFolderId = selectedFolderId.toOption()
             )
         } else {
             PassLogger.w(TAG, "Error finding current vault")

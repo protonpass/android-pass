@@ -184,24 +184,6 @@ class FolderRepositoryImpl @Inject constructor(
         throw IllegalStateException("No ShareKey found for shareId=${shareId.id}, keyRotation=$keyRotation")
     }
 
-    private suspend fun getParentKeyForFolder(
-        userId: UserId,
-        shareId: ShareId,
-        parentFolderId: FolderId?,
-        keyRotation: Long
-    ): EncryptionKey = if (parentFolderId == null) {
-        val shareKey = getShareKeyForRotation(userId, shareId, keyRotation)
-        encryptionContextProvider.withEncryptionContextSuspendable {
-            EncryptionKey(decrypt(shareKey.key))
-        }
-    } else {
-        val parentFolderKey = localFolderKeyDataSource.getByFolderId(userId, shareId, parentFolderId)
-            ?: throw IllegalStateException("Parent folder key not found for folderId=${parentFolderId.id}")
-        encryptionContextProvider.withEncryptionContextSuspendable {
-            EncryptionKey(decrypt(parentFolderKey.encryptedKey))
-        }
-    }
-
     private suspend fun reencryptFolderKeyForMove(
         folderKeyEntity: FolderKeyEntity,
         newParentKey: EncryptionKey
@@ -415,17 +397,27 @@ class FolderRepositoryImpl @Inject constructor(
     ): Folder = safeRunCatching {
         PassLogger.d(
             TAG,
-            "Moving folder ${folderId.id} to parent=${newParentFolderId?.id} in shareId=${shareId.id}"
+            "Moving folder ${folderId.id} in shareId=${shareId.id}, newParent=${newParentFolderId?.id}"
         )
+
         val folderKeyEntity = localFolderKeyDataSource.getByFolderId(userId, shareId, folderId)
             ?: throw IllegalStateException("No folder key found for folderId=${folderId.id}")
 
-        val newParentKey = getParentKeyForFolder(
-            userId = userId,
-            shareId = shareId,
-            parentFolderId = newParentFolderId,
-            keyRotation = folderKeyEntity.keyRotation
-        )
+        val (newParentKey, keyRotation) = if (newParentFolderId == null) {
+            val shareKey = shareKeyRepository.getLatestKeyForShare(shareId).firstOrNull()
+                ?: throw IllegalStateException("No share key found for shareId=${shareId.id}")
+            val key = encryptionContextProvider.withEncryptionContextSuspendable {
+                EncryptionKey(decrypt(shareKey.key))
+            }
+            Pair(key, shareKey.rotation)
+        } else {
+            val parentFolderKey = localFolderKeyDataSource.getByFolderId(userId, shareId, newParentFolderId)
+                ?: throw IllegalStateException("Parent folder key not found for folderId=${newParentFolderId.id}")
+            val key = encryptionContextProvider.withEncryptionContextSuspendable {
+                EncryptionKey(decrypt(parentFolderKey.encryptedKey))
+            }
+            Pair(key, parentFolderKey.keyRotation)
+        }
 
         val reencryptedFolderKey = reencryptFolderKeyForMove(
             folderKeyEntity = folderKeyEntity,
@@ -438,7 +430,7 @@ class FolderRepositoryImpl @Inject constructor(
             parentFolderId = newParentFolderId?.id,
             folderKeys = listOf(
                 FolderKeyRequest(
-                    keyRotation = folderKeyEntity.keyRotation,
+                    keyRotation = keyRotation,
                     folderKey = reencryptedFolderKey
                 )
             )

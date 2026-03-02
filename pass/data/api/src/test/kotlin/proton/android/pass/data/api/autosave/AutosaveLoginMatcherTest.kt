@@ -188,6 +188,22 @@ class AutosaveLoginMatcherTest {
         assertEquals(false, matcher.matchesSource(login))
     }
 
+    // --- www subdomain matching ---
+
+    @Test
+    fun `website with www matches item without www`() {
+        val matcher = AutosaveLoginMatcher("user", "https://www.example.com", null)
+        val login = loginWith(websites = listOf("https://example.com"))
+        assertEquals(true, matcher.matchesSource(login))
+    }
+
+    @Test
+    fun `website without www matches item with www`() {
+        val matcher = AutosaveLoginMatcher("user", "https://example.com", null)
+        val login = loginWith(websites = listOf("https://www.example.com"))
+        assertEquals(true, matcher.matchesSource(login))
+    }
+
     // --- Package name matching ---
 
     @Test

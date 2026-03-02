@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2024 Proton AG
+ * Copyright (c) 2026 Proton AG
  * This file is part of Proton AG and Proton Pass.
  *
  * Proton Pass is free software: you can redistribute it and/or modify
@@ -71,18 +71,20 @@ internal fun AutofillDisplaySection(
                     onClick = { onEvent(SettingsContentEvent.SelectAutofillDisplay) }
                 )
             }
-
-            SettingToggle(
-                text = stringResource(R.string.settings_autosave_prompt_title),
-                isChecked = isAutosaveEnabled,
-                onClick = { onEvent(SettingsContentEvent.OnAutosaveChange(it)) }
-            )
         }
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
             Text(
                 text = stringResource(R.string.settings_autofill_display_subtitle),
                 style = ProtonTheme.typography.captionWeak.copy(PassTheme.colors.textWeak)
+            )
+        }
+
+        Column(modifier = Modifier.roundedContainerNorm()) {
+            SettingToggle(
+                text = stringResource(R.string.settings_autosave_prompt_title),
+                isChecked = isAutosaveEnabled,
+                onClick = { onEvent(SettingsContentEvent.OnAutosaveChange(it)) }
             )
         }
 

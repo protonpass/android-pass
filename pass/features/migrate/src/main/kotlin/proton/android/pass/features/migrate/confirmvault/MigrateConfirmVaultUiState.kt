@@ -19,9 +19,13 @@
 package proton.android.pass.features.migrate.confirmvault
 
 import androidx.compose.runtime.Stable
+import kotlinx.collections.immutable.PersistentList
+import kotlinx.collections.immutable.persistentListOf
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
+import proton.android.pass.commonuimodels.api.FolderUiModel
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
+import proton.android.pass.domain.FolderId
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.VaultWithItemCount
@@ -33,6 +37,8 @@ internal sealed interface ConfirmMigrateEvent {
     data class ItemMigrated(val shareId: ShareId, val itemId: ItemId) : ConfirmMigrateEvent
 
     data object AllItemsMigrated : ConfirmMigrateEvent
+
+    data object FolderMoved : ConfirmMigrateEvent
 
 }
 
@@ -46,6 +52,9 @@ internal sealed interface MigrateMode {
     @Stable
     data object MigrateAll : MigrateMode
 
+    @Stable
+    data object MoveFolder : MigrateMode
+
 }
 
 @Stable
@@ -55,7 +64,9 @@ internal data class MigrateConfirmVaultUiState(
     val vault: Option<VaultWithItemCount>,
     val mode: MigrateMode,
     val hasAssociatedSecureLinks: Boolean,
-    val canDisplayWarningVaultSharedDialog: Boolean
+    val canDisplayWarningVaultSharedDialog: Boolean,
+    val folderTree: PersistentList<FolderUiModel> = persistentListOf(),
+    val newParentFolderId: FolderId? = null
 ) {
 
     internal companion object {

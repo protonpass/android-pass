@@ -20,6 +20,10 @@ package proton.android.pass.features.migrate
 
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavType
+import proton.android.pass.common.api.None
+import proton.android.pass.common.api.Option
+import proton.android.pass.common.api.Some
+import proton.android.pass.domain.FolderId
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.features.migrate.confirmvault.MigrateConfirmVaultBottomSheet
@@ -41,7 +45,8 @@ sealed interface MigrateNavigation {
     data object Close : MigrateNavigation
 
     data class VaultSelectedForMigrateItem(
-        val destShareId: ShareId
+        val destShareId: ShareId,
+        val folderId: Option<FolderId> = None
     ) : MigrateNavigation
 
     data class VaultSelectedForMigrateAll(
@@ -58,6 +63,14 @@ sealed interface MigrateNavigation {
 
     data object DismissBottomsheet : MigrateNavigation
 
+    data object FolderMoved : MigrateNavigation
+
+    data class VaultSelectedForMoveFolder(
+        val shareId: ShareId,
+        val folderId: FolderId,
+        val newParentFolderId: FolderId? = null
+    ) : MigrateNavigation
+
     @JvmInline
     value class VaultSelectionForVaultMigration(val shareId: ShareId) : MigrateNavigation
 
@@ -73,7 +86,8 @@ object MigrateModeArg : NavArgId {
 
 enum class MigrateModeValue {
     SelectedItems,
-    AllVaultItems
+    AllVaultItems,
+    MoveFolder
 }
 
 enum class MigrateVaultFilter {
@@ -86,28 +100,43 @@ object MigrateVaultFilterArg : OptionalNavArgId {
     override val navType = NavType.StringType
 }
 
+object MigrateNewParentFolderNavArgId : OptionalNavArgId {
+    override val key = "newParentFolderId"
+    override val navType = NavType.StringType
+}
+
 object MigrateSelectVault : NavItem(
     baseRoute = "migrate/select",
     navArgIds = listOf(MigrateModeArg),
-    optionalArgIds = listOf(CommonOptionalNavArgId.ShareId, MigrateVaultFilterArg),
+    optionalArgIds = listOf(CommonOptionalNavArgId.ShareId, MigrateVaultFilterArg, CommonOptionalNavArgId.FolderId),
     navItemType = NavItemType.Bottomsheet,
     noHistory = true
 ) {
 
     fun createNavRouteForMigrateAll(shareId: ShareId) = buildString {
         append("$baseRoute/${MigrateModeValue.AllVaultItems.name}")
-
-        val map = mapOf(
-            CommonOptionalNavArgId.ShareId.key to shareId.id
-        )
+        val map = mapOf(CommonOptionalNavArgId.ShareId.key to shareId.id)
         append(map.toPath())
     }
 
-    fun createNavRouteForMigrateSelectedItems(filter: MigrateVaultFilter): String = buildString {
-        append("$baseRoute/${MigrateModeValue.SelectedItems.name}")
+    fun createNavRouteForMigrateSelectedItems(filter: MigrateVaultFilter, folderId: Option<FolderId> = None): String =
+        buildString {
+            append("$baseRoute/${MigrateModeValue.SelectedItems.name}")
 
-        val map = mapOf(
-            MigrateVaultFilterArg.key to filter.name
+            val map = mutableMapOf<String, Any>(
+                MigrateVaultFilterArg.key to filter.name
+            )
+            if (folderId is Some) {
+                map[CommonOptionalNavArgId.FolderId.key] = folderId.value.id
+            }
+            append(map.toPath())
+        }
+
+    fun createNavRouteForMoveFolder(shareId: ShareId, folderId: FolderId) = buildString {
+        append("$baseRoute/${MigrateModeValue.MoveFolder.name}")
+        val map = mutableMapOf<String, Any>(
+            CommonOptionalNavArgId.ShareId.key to shareId.id,
+            CommonOptionalNavArgId.FolderId.key to folderId.id
         )
         append(map.toPath())
     }
@@ -116,7 +145,11 @@ object MigrateSelectVault : NavItem(
 object MigrateConfirmVault : NavItem(
     baseRoute = "migrate/confirm",
     navArgIds = listOf(MigrateModeArg, DestinationShareNavArgId),
-    optionalArgIds = listOf(CommonOptionalNavArgId.ShareId),
+    optionalArgIds = listOf(
+        CommonOptionalNavArgId.ShareId,
+        CommonOptionalNavArgId.FolderId,
+        MigrateNewParentFolderNavArgId
+    ),
     navItemType = NavItemType.Bottomsheet
 ) {
     fun createNavRouteForMigrateAll(sourceShareId: ShareId, destShareId: ShareId) = buildString {
@@ -129,6 +162,21 @@ object MigrateConfirmVault : NavItem(
 
     fun createNavRouteForMigrateSelectedItems(destShareId: ShareId): String =
         "$baseRoute/${MigrateModeValue.SelectedItems.name}/${destShareId.id}"
+
+    fun createNavRouteForMoveFolder(
+        shareId: ShareId,
+        folderId: FolderId,
+        newParentFolderId: FolderId? = null
+    ) = buildString {
+        append("$baseRoute/${MigrateModeValue.MoveFolder.name}/${shareId.id}")
+        val map = mutableMapOf(
+            CommonOptionalNavArgId.FolderId.key to folderId.id
+        )
+        if (newParentFolderId != null) {
+            map[MigrateNewParentFolderNavArgId.key] = newParentFolderId.id
+        }
+        append(map.toPath())
+    }
 }
 
 fun NavGraphBuilder.migrateGraph(navigation: (MigrateNavigation) -> Unit) {

@@ -40,6 +40,9 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
+import proton.android.pass.common.api.None
+import proton.android.pass.common.api.Option
+import proton.android.pass.common.api.Some
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonuimodels.api.FolderUiModel
@@ -63,7 +66,7 @@ fun FolderTree(
     modifierCreateButton: Modifier = Modifier,
     folders: List<FolderUiModel>,
     expandedState: MutableMap<String, Boolean>,
-    selectedFolderId: FolderId? = null,
+    selectedFolderId: Option<FolderId>,
     depth: Int = 0, // no padding when depth == 0
     needsToUpgrade: Boolean = false,
     onFolderClick: ((FolderId) -> Unit)?,
@@ -92,7 +95,7 @@ fun FolderTree(
                 folderName = folder.name,
                 folders = folder.folders,
                 isExpanded = isExpanded,
-                isSelected = selectedFolderId != null && folder.id == selectedFolderId,
+                isSelected = selectedFolderId is Some && folder.id == selectedFolderId.value,
                 onExpandToggle = { expandedState.toggle(folder.id.id) },
                 onThreeDotsClick = onThreeDotsClick?.let { { it(folder.id) } },
                 onFolderClick = onFolderClick?.let { { it(folder.id) } }
@@ -157,7 +160,7 @@ internal fun FolderTreePreview(
                     mutableStateMapOf<String, Boolean>()
                         .apply { putAll(input.second.expandedState) }
                 },
-                selectedFolderId = null,
+                selectedFolderId = None,
                 needsToUpgrade = input.second.needsToUpgrade,
                 onThreeDotsClick = {},
                 onCreateFolderClick = {},

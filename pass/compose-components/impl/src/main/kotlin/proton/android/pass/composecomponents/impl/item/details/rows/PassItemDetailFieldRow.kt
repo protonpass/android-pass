@@ -30,21 +30,31 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.material.Icon
+import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewParameter
 import proton.android.pass.commonpresentation.api.items.details.domain.ItemDetailsFieldType
+import proton.android.pass.commonui.api.BrowserUtils
+import proton.android.pass.commonui.api.PassTheme
+import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.applyIf
 import proton.android.pass.commonui.api.asAnnotatedString
+import proton.android.pass.commonui.api.toUrlAnnotatedString
 import proton.android.pass.composecomponents.impl.item.SectionSubtitle
 import proton.android.pass.composecomponents.impl.item.SectionTitle
 import proton.android.pass.composecomponents.impl.item.details.PassItemDetailsUiEvent
 import proton.android.pass.composecomponents.impl.item.details.modifiers.contentDiff
 import proton.android.pass.composecomponents.impl.utils.PassItemColors
+import proton.android.pass.composecomponents.impl.utils.passItemColors
 import proton.android.pass.domain.ItemDiffType
+import proton.android.pass.domain.items.ItemCategory
 
 @Composable
 internal fun PassItemDetailFieldRow(
@@ -83,6 +93,8 @@ internal fun PassItemDetailFieldRow(
         Column(
             modifier = Modifier.weight(weight = 1f)
         ) {
+            val context = LocalContext.current
+
             SectionTitle(
                 modifier = Modifier.padding(start = Spacing.small),
                 text = title
@@ -94,7 +106,12 @@ internal fun PassItemDetailFieldRow(
                 SelectionContainer {
                     SectionSubtitle(
                         modifier = Modifier.padding(start = Spacing.small),
-                        text = subtitle.asAnnotatedString(),
+                        text = subtitle.toUrlAnnotatedString(
+                            linkColor = itemColors.majorSecondary,
+                            onUrlClick = { url ->
+                                BrowserUtils.openWebsite(context = context, website = url)
+                            }
+                        ),
                         itemDiffType = itemDiffType
                     )
                 }
@@ -136,5 +153,24 @@ internal fun MutableList<@Composable () -> Unit>.addItemDetailsFieldRow(
                 ).also(onEvent)
             }
         )
+    }
+}
+
+@[Preview Composable]
+internal fun PassItemDetailFieldRowHyperlinkPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
+    PassTheme(isDark = isDark) {
+        Surface {
+            Column {
+                ItemCategory.entries.forEach { category ->
+                    PassItemDetailFieldRow(
+                        icon = null,
+                        title = category.name,
+                        subtitle = "Visit https://proton.me or http://example.com",
+                        itemColors = passItemColors(itemCategory = category),
+                        isSelectable = true
+                    )
+                }
+            }
+        }
     }
 }

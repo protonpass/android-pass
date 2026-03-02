@@ -23,6 +23,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.selection.SelectionContainer
+import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -32,14 +33,19 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.TextLayoutResult
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewParameter
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.defaultNorm
+import proton.android.pass.commonui.api.BrowserUtils
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
+import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.commonui.api.applyIf
+import proton.android.pass.commonui.api.toUrlAnnotatedString
 import proton.android.pass.composecomponents.impl.R
 import proton.android.pass.composecomponents.impl.buttons.TransparentTextButton
 import proton.android.pass.composecomponents.impl.container.roundedContainer
@@ -50,12 +56,18 @@ fun ExpandableText(
     text: String,
     textModifier: Modifier = Modifier,
     textColor: Color = Color.Unspecified,
+    linkColor: Color = Color.Unspecified,
     minimizedMaxLines: Int = 10
 ) {
     if (text.isBlank()) return
     var isExpanded by remember { mutableStateOf(false) }
     var isTextOverflowing by remember { mutableStateOf(false) }
-    var textLayoutResult by remember { mutableStateOf<TextLayoutResult?>(null) }
+    val context = LocalContext.current
+    val annotatedText = remember(text, linkColor) {
+        text.toUrlAnnotatedString(linkColor) { url ->
+            BrowserUtils.openWebsite(context = context, website = url)
+        }
+    }
 
     Column(
         modifier = modifier
@@ -75,11 +87,10 @@ fun ExpandableText(
         ) {
             Text(
                 modifier = textModifier,
-                text = text,
+                text = annotatedText,
                 maxLines = if (isExpanded) Int.MAX_VALUE else minimizedMaxLines,
                 overflow = TextOverflow.Ellipsis,
                 onTextLayout = { layoutResult ->
-                    textLayoutResult = layoutResult
                     isTextOverflowing = layoutResult.hasVisualOverflow
                 },
                 style = ProtonTheme.typography.defaultNorm,
@@ -96,6 +107,19 @@ fun ExpandableText(
                 },
                 color = PassTheme.colors.noteInteractionNormMajor2,
                 onClick = { isExpanded = !isExpanded }
+            )
+        }
+    }
+}
+
+@[Preview Composable]
+internal fun ExpandableTextPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
+    PassTheme(isDark = isDark) {
+        Surface {
+            ExpandableText(
+                text = "Check out https://proton.me or https://www.proton.me for more info.\n\n" +
+                    "This is a note with URLs like http://example.com/path?q=1",
+                linkColor = PassTheme.colors.noteInteractionNormMajor2
             )
         }
     }

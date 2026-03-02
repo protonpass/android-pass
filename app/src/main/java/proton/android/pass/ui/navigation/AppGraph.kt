@@ -797,8 +797,9 @@ fun NavGraphBuilder.appGraph(
                 is VaultNavigation.MoveFolder -> dismissBottomSheet {
                     appNavigator.navigate(
                         destination = MigrateSelectVault,
-                        route = MigrateSelectVault.createNavRouteForMigrateAll(
-                            shareId = it.shareId
+                        route = MigrateSelectVault.createNavRouteForMoveFolder(
+                            shareId = it.shareId,
+                            folderId = it.folderId
                         )
                     )
                 }
@@ -2252,6 +2253,20 @@ fun NavGraphBuilder.appGraph(
                         backDestination = HomeNavItem
                     )
                 }
+
+                is MigrateNavigation.VaultSelectedForMoveFolder -> dismissBottomSheet {
+                    appNavigator.navigate(
+                        destination = MigrateConfirmVault,
+                        route = MigrateConfirmVault.createNavRouteForMoveFolder(
+                            shareId = it.shareId,
+                            folderId = it.folderId,
+                            newParentFolderId = it.newParentFolderId
+                        ),
+                        backDestination = HomeNavItem
+                    )
+                }
+
+                MigrateNavigation.FolderMoved -> dismissBottomSheet {}
 
                 MigrateNavigation.DismissBottomsheet -> dismissBottomSheet {}
 

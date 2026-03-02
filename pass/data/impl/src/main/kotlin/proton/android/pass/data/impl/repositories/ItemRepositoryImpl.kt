@@ -1138,7 +1138,7 @@ class ItemRepositoryImpl @Inject constructor(
                 itemKeys = reencryptedKeys.map { k ->
                     ItemKeyBody(
                         key = Base64.encodeBase64String(k.itemKey.array),
-                        keyRotation = folderKey.rotation
+                        keyRotation = k.keyRotation
                     )
                 }
             )
@@ -1157,18 +1157,17 @@ class ItemRepositoryImpl @Inject constructor(
         val updatedEntities = response.map { moveRevision ->
             val entity = entityByItemId[moveRevision.itemId]
                 ?: throw IllegalStateException("ItemEntity not found for itemId=${moveRevision.itemId}")
-            val transportKey = reencryptedKeyByItemId[moveRevision.itemId]
+            val reencryptedItemKey = reencryptedKeyByItemId[moveRevision.itemId]
                 ?.itemKeys
                 ?.firstOrNull()
-                ?.key
             entity.copy(
                 folderId = moveRevision.folderId,
                 revision = moveRevision.revision,
                 state = moveRevision.state,
                 flags = moveRevision.flags,
                 modifyTime = moveRevision.modifyTime,
-                key = transportKey ?: entity.key,
-                keyRotation = folderKey.rotation
+                key = reencryptedItemKey?.key ?: entity.key,
+                keyRotation = reencryptedItemKey?.keyRotation ?: entity.keyRotation
             )
         }
 

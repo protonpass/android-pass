@@ -22,14 +22,17 @@ import androidx.compose.runtime.Stable
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.PersistentList
 import kotlinx.collections.immutable.persistentListOf
+import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.commonuimodels.api.FolderUiModel
+import proton.android.pass.domain.FolderId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.VaultWithItemCount
 
 sealed interface SelectVaultEvent {
     data class VaultSelectedForMigrateItem(
-        val destinationShareId: ShareId
+        val destinationShareId: ShareId,
+        val folderId: Option<FolderId> = None
     ) : SelectVaultEvent
 
     data class VaultSelectedForMigrateAll(
@@ -37,12 +40,19 @@ sealed interface SelectVaultEvent {
         val destinationShareId: ShareId
     ) : SelectVaultEvent
 
+    data class VaultSelectedForMoveFolder(
+        val shareId: ShareId,
+        val folderId: FolderId,
+        val newParentFolderId: FolderId? = null
+    ) : SelectVaultEvent
+
     data object Close : SelectVaultEvent
 }
 
 enum class MigrateMode {
     MigrateItem,
-    MigrateAll
+    MigrateAll,
+    MoveFolder
 }
 
 @Stable
@@ -64,7 +74,7 @@ sealed interface VaultStatus {
     }
 }
 
-data class VaultEnabledPair(
+data class MigrateVaultState(
     val vaultWithItemCount: VaultWithItemCount,
     val status: VaultStatus,
     val folderTree: PersistentList<FolderUiModel> = persistentListOf()
@@ -82,8 +92,9 @@ sealed class MigrateSelectVaultUiState {
 
     @Stable
     data class Success(
-        val vaultList: ImmutableList<VaultEnabledPair>,
+        val vaultList: ImmutableList<MigrateVaultState>,
         val event: Option<SelectVaultEvent>,
-        val mode: MigrateMode
+        val mode: MigrateMode,
+        val folderIdToExpand: Option<FolderId>
     ) : MigrateSelectVaultUiState()
 }

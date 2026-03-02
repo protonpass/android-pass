@@ -23,6 +23,7 @@ import androidx.compose.runtime.Stable
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.ImmutableMap
 import kotlinx.collections.immutable.PersistentList
+import proton.android.pass.common.api.Option
 import proton.android.pass.commonuimodels.api.FolderUiModel
 import proton.android.pass.domain.FolderId
 import proton.android.pass.domain.ShareId
@@ -60,6 +61,6 @@ sealed interface SelectVaultUiState {
         val showUpgradeMessage: Boolean,
         val foldersEnabled: Boolean,
         val vaultFolders: ImmutableMap<ShareId, PersistentList<FolderUiModel>>,
-        val selectedFolderId: FolderId?
+        val selectedFolderId: Option<FolderId>
     ) : SelectVaultUiState
 }

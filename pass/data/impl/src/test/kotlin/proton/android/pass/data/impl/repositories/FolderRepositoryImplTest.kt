@@ -732,11 +732,8 @@ internal class FolderRepositoryImplTest {
             )
         )
         // Setup share key for root
-        localShareKeyDataSource.setShareKey(
-            userId = userId,
-            shareId = shareId,
-            rotation = 2,
-            keyBytes = byteArrayOf(88)
+        shareKeyRepository.emitGetLatestKeyForShare(
+            ShareKeyTestFactory.create(rotation = 2, keyBytes = byteArrayOf(88))
         )
 
         moveFolder.setResult("reencrypted-for-root")

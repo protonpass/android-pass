@@ -31,6 +31,7 @@ import me.proton.core.domain.entity.UserId
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
+import proton.android.pass.common.api.some
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonuimodels.api.FolderUiModel
 import proton.android.pass.commonui.fakes.FakeSavedStateHandleProvider
@@ -334,7 +335,7 @@ class SelectVaultBottomSheetTest {
                                     )
                                 )
                             ),
-                            selectedFolderId = folderId
+                            selectedFolderId = folderId.some()
                         ),
                         onVaultClick = {},
                         onFolderClick = { _, _ -> },

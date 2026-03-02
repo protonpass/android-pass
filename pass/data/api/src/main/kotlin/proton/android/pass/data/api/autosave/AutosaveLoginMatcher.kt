@@ -41,10 +41,15 @@ data class AutosaveLoginMatcher(
                 val websiteSanitize = UrlSanitizer
                     .sanitize(w)
                     .getOrNull()
+                    ?.replace("https://www.", "https://")
                     ?.trimEnd('/')
                     ?: return@run false
                 login.websites.any { url ->
-                    UrlSanitizer.sanitize(url).getOrNull()?.trimEnd('/') == websiteSanitize
+                    UrlSanitizer
+                        .sanitize(url)
+                        .getOrNull()
+                        ?.replace("https://www.", "https://")
+                        ?.trimEnd('/') == websiteSanitize
                 }
             }
         } ?: false

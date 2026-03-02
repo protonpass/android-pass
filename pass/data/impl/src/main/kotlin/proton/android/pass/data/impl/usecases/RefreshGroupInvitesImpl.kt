@@ -29,7 +29,6 @@ import proton.android.pass.data.api.usecases.RefreshGroupInvites
 import proton.android.pass.domain.GroupId
 import proton.android.pass.domain.PendingGroupInvite
 import proton.android.pass.domain.PendingInvite
-import proton.android.pass.domain.PendingUserInvite
 import proton.android.pass.domain.events.EventToken
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.InviteNotificationModel
@@ -57,22 +56,15 @@ class RefreshGroupInvitesImpl @Inject constructor(
             ).first().lastOrNull() ?: return@safeRunCatching null
 
             when (invite) {
-                is PendingGroupInvite -> {
-                    val groupName = safeRunCatching {
-                        groupRepository.retrieveGroup(
-                            userId = userId,
-                            groupId = GroupId(invite.invitedGroupId)
-                        )?.name
-                    }.getOrNull() ?: invite.invitedEmail
-
-                    when (invite) {
-                        is PendingInvite.GroupItem ->
-                            InviteNotificationModel.GroupItem(invite.inviterEmail, groupName)
-                        is PendingInvite.GroupVault ->
-                            InviteNotificationModel.GroupVault(invite.inviterEmail, groupName)
-                    }
+                is PendingInvite.GroupItem -> {
+                    val groupName = resolveGroupName(userId, invite)
+                    InviteNotificationModel.GroupItem(invite.inviterEmail, groupName)
                 }
-                is PendingUserInvite -> null
+                is PendingInvite.GroupVault -> {
+                    val groupName = resolveGroupName(userId, invite)
+                    InviteNotificationModel.GroupVault(invite.inviterEmail, groupName)
+                }
+                is PendingInvite.UserItem, is PendingInvite.UserVault -> null
             }
         }.onSuccess { model ->
             if (model != null) {
@@ -86,6 +78,13 @@ class RefreshGroupInvitesImpl @Inject constructor(
             PassLogger.w(TAG, error)
         }
     }
+
+    private suspend fun resolveGroupName(userId: UserId, invite: PendingGroupInvite): String = safeRunCatching {
+        groupRepository.retrieveGroup(
+            userId = userId,
+            groupId = GroupId(invite.invitedGroupId)
+        )?.name
+    }.getOrNull() ?: invite.invitedEmail
 
     private companion object {
 

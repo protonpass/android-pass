@@ -114,7 +114,7 @@ class AcceptInviteImpl @Inject constructor(
     }
 }
 
-private fun PendingInvite.toRemoveModel(): InviteNotificationModel = when (this) {
+fun PendingInvite.toRemoveModel(): InviteNotificationModel = when (this) {
     is PendingInvite.UserItem -> InviteNotificationModel.UserItem(inviterEmail)
     is PendingInvite.UserVault -> InviteNotificationModel.UserVault(inviterEmail)
     is PendingInvite.GroupItem -> InviteNotificationModel.GroupItem(inviterEmail, invitedEmail)

@@ -19,11 +19,15 @@
 package proton.android.pass.composecomponents.impl.item.details.sections.notes
 
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewParameter
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
+import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.commonui.api.applyIf
 import proton.android.pass.composecomponents.impl.item.details.modifiers.contentDiff
 import proton.android.pass.domain.ItemDiffType
@@ -47,7 +51,21 @@ internal fun PassNoteItemDetailMainSection(
                 PassTheme.colors.signalWarning
             } else {
                 Color.Unspecified
-            }
+            },
+            linkColor = PassTheme.colors.noteInteractionNormMajor2
         )
     }
 }
+
+@[Preview Composable]
+internal fun PassNoteItemDetailMainSectionPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
+    PassTheme(isDark = isDark) {
+        Surface {
+            PassNoteItemDetailMainSection(
+                note = "Check out https://proton.me and http://example.com for more info.",
+                itemDiffs = ItemDiffs.Note()
+            )
+        }
+    }
+}
+

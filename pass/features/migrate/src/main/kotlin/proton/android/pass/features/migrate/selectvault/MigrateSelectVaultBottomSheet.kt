@@ -50,7 +50,8 @@ fun MigrateSelectVaultBottomSheet(
                         is SelectVaultEvent.VaultSelectedForMigrateItem -> {
                             onNavigate(
                                 MigrateNavigation.VaultSelectedForMigrateItem(
-                                    destShareId = value.destinationShareId
+                                    destShareId = value.destinationShareId,
+                                    folderId = value.folderId
                                 )
                             )
                         }
@@ -63,6 +64,16 @@ fun MigrateSelectVaultBottomSheet(
                                 )
                             )
                         }
+
+                        is SelectVaultEvent.VaultSelectedForMoveFolder -> {
+                            onNavigate(
+                                MigrateNavigation.VaultSelectedForMoveFolder(
+                                    shareId = value.shareId,
+                                    folderId = value.folderId,
+                                    newParentFolderId = value.newParentFolderId
+                                )
+                            )
+                        }
                     }
                     viewModel.clearEvent()
                 }
@@ -71,7 +82,9 @@ fun MigrateSelectVaultBottomSheet(
             MigrateSelectVaultContents(
                 modifier = modifier.bottomSheet(),
                 vaults = state.vaultList,
-                onVaultSelected = { viewModel.onVaultSelected(it) }
+                onVaultSelected = { viewModel.onVaultSelected(it) },
+                onFolderSelected = { viewModel.onFolderSelected(it) },
+                folderIdToExpand = state.folderIdToExpand
             )
         }
     }

@@ -24,6 +24,9 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.mutableStateMapOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.pluralStringResource
@@ -31,6 +34,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import kotlinx.collections.immutable.persistentListOf
 import proton.android.pass.common.api.Some
+import proton.android.pass.common.api.toOption
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetCancelConfirm
@@ -38,6 +42,8 @@ import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemLis
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetVaultRow
 import proton.android.pass.composecomponents.impl.bottomsheet.bottomSheetDivider
 import proton.android.pass.composecomponents.impl.container.PassInfoWarningBanner
+import proton.android.pass.composecomponents.impl.folders.FolderTree
+import proton.android.pass.composecomponents.impl.folders.expandAncestors
 import proton.android.pass.features.migrate.R
 
 @Composable
@@ -55,6 +61,12 @@ internal fun MigrateConfirmVaultContents(
         )
 
         MigrateMode.MigrateAll -> stringResource(R.string.migrate_all_items_confirm_title_bottom_sheet)
+
+        MigrateMode.MoveFolder -> if (state.newParentFolderId != null) {
+            stringResource(R.string.migrate_folder_to_folder_confirm_title_bottom_sheet)
+        } else {
+            stringResource(R.string.migrate_folder_confirm_title_bottom_sheet)
+        }
     }
 
     Column(
@@ -87,17 +99,55 @@ internal fun MigrateConfirmVaultContents(
         )
 
         if (state.vault is Some) {
+            val newParentFolderId = state.newParentFolderId
+            val showFolderTree = state.mode is MigrateMode.MoveFolder &&
+                newParentFolderId != null &&
+                state.folderTree.isNotEmpty()
+
             BottomSheetItemList(
-                items = persistentListOf(
-                    bottomSheetDivider(),
-                    BottomSheetVaultRow(
-                        vault = state.vault.value,
-                        isSelected = false,
-                        onVaultClick = null
-                    ),
-                    bottomSheetDivider()
-                )
+                items = if (showFolderTree) {
+                    persistentListOf(
+                        bottomSheetDivider(),
+                        BottomSheetVaultRow(
+                            vault = state.vault.value,
+                            isSelected = false,
+                            onVaultClick = null
+                        )
+                    )
+                } else {
+                    persistentListOf(
+                        bottomSheetDivider(),
+                        BottomSheetVaultRow(
+                            vault = state.vault.value,
+                            isSelected = false,
+                            onVaultClick = null
+                        ),
+                        bottomSheetDivider()
+                    )
+                }
             )
+
+            if (newParentFolderId != null && showFolderTree) {
+                val expandedState = remember { mutableStateMapOf<String, Boolean>() }
+                LaunchedEffect(state.folderTree, newParentFolderId) {
+                    state.folderTree.forEach { folder ->
+                        if (!expandedState.contains(folder.id.id)) {
+                            expandedState[folder.id.id] = false
+                        }
+                    }
+                    expandAncestors(state.folderTree, newParentFolderId, expandedState)
+                }
+                FolderTree(
+                    modifier = Modifier.padding(start = Spacing.large),
+                    folders = state.folderTree,
+                    expandedState = expandedState,
+                    onFolderClick = null,
+                    onThreeDotsClick = null,
+                    onCreateFolderClick = null,
+                    selectedFolderId = newParentFolderId.toOption()
+                )
+                BottomSheetItemList(items = persistentListOf(bottomSheetDivider()))
+            }
         }
 
         BottomSheetCancelConfirm(

@@ -32,6 +32,9 @@ enum class MigrateSnackbarMessage(
     SomeItemsNotMigrated(R.string.migrate_item_some_not_migrated_error_snackbar, SnackbarType.ERROR),
     VaultItemsMigrated(R.string.migrate_all_items_success_snackbar, SnackbarType.SUCCESS),
     VaultItemsNotMigrated(R.string.migrate_all_items_error_snackbar, SnackbarType.ERROR),
-    CouldNotInit(R.string.migrate_init_error_snackbar, SnackbarType.ERROR)
+    CouldNotInit(R.string.migrate_init_error_snackbar, SnackbarType.ERROR),
+    FolderMoved(R.string.migrate_folder_success_snackbar, SnackbarType.SUCCESS),
+    FolderNotMoved(R.string.migrate_folder_error_snackbar, SnackbarType.ERROR),
+    FolderAlreadySameParent(R.string.migrate_folder_already_same_parent_snackbar, SnackbarType.NORM)
 }
 

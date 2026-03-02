@@ -35,6 +35,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toImmutableList
+import proton.android.pass.common.api.Option
+import proton.android.pass.common.api.Some
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItem
@@ -43,14 +45,18 @@ import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetVaultRo
 import proton.android.pass.composecomponents.impl.bottomsheet.withDividers
 import proton.android.pass.composecomponents.impl.folders.ExpandCollapseIcon
 import proton.android.pass.composecomponents.impl.folders.FolderTree
+import proton.android.pass.composecomponents.impl.folders.expandAncestors
+import proton.android.pass.domain.FolderId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.features.migrate.R
 
 @Composable
 fun MigrateSelectVaultContents(
     modifier: Modifier = Modifier,
-    vaults: ImmutableList<VaultEnabledPair>,
-    onVaultSelected: (ShareId) -> Unit
+    vaults: ImmutableList<MigrateVaultState>,
+    folderIdToExpand: Option<FolderId>,
+    onVaultSelected: (ShareId) -> Unit,
+    onFolderSelected: ((FolderId) -> Unit)? = null
 ) {
     if (vaults.any { it.folderTree.isNotEmpty() }) {
         LazyColumn(modifier = modifier) {
@@ -58,9 +64,21 @@ fun MigrateSelectVaultContents(
                 val vaultWithCount = vaultPair.vaultWithItemCount
                 val vaultModel = vaultWithCount.vault
 
-                val (showFolders, onShowFolders) = rememberSaveable { mutableStateOf(false) }
+                val (showFolders, onShowFolders) = rememberSaveable {
+                    mutableStateOf(folderIdToExpand is Some && vaultPair.folderTree.isNotEmpty())
+                }
 
-                Row(verticalAlignment = Alignment.CenterVertically) {
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    modifier = Modifier.padding(
+                        start = if (vaultPair.folderTree.isEmpty()) {
+                            PassTheme.dimens.bottomsheetHorizontalPadding
+                        } else {
+                            0.dp
+                        },
+                        end = PassTheme.dimens.bottomsheetHorizontalPadding
+                    )
+                ) {
                     AnimatedVisibility(
                         visible = vaultPair.folderTree.isNotEmpty()
                     ) {
@@ -92,11 +110,7 @@ fun MigrateSelectVaultContents(
                     ).let { item ->
                         BottomSheetItem(
                             item = item,
-                            horizontalPadding = if (vaultPair.folderTree.isNotEmpty()) {
-                                0.dp
-                            } else {
-                                PassTheme.dimens.bottomsheetHorizontalPadding
-                            }
+                            horizontalPadding = 0.dp
                         )
                     }
                 }
@@ -117,11 +131,14 @@ fun MigrateSelectVaultContents(
                 ) {
                     mutableStateMapOf()
                 }
-                LaunchedEffect(vaultPair.folderTree) {
+                LaunchedEffect(vaultPair.folderTree, folderIdToExpand) {
                     vaultPair.folderTree.forEach { folder ->
                         if (!expandedState.contains(folder.id.id)) {
                             expandedState[folder.id.id] = false
                         }
+                    }
+                    if (folderIdToExpand is Some) {
+                        expandAncestors(vaultPair.folderTree, folderIdToExpand.value, expandedState)
                     }
                 }
 
@@ -132,12 +149,12 @@ fun MigrateSelectVaultContents(
                         modifier = Modifier.padding(start = Spacing.large),
                         folders = vaultPair.folderTree,
                         expandedState = expandedState,
-                        onFolderClick = {
-                            // add onFolderClick
+                        onFolderClick = { folderId ->
+                            onFolderSelected?.invoke(folderId)
                         },
                         onThreeDotsClick = null,
                         onCreateFolderClick = null,
-                        selectedFolderId = null
+                        selectedFolderId = folderIdToExpand
                     )
                 }
             }

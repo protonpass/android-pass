@@ -23,7 +23,9 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.size
+import androidx.compose.material3.minimumInteractiveComponentSize
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
@@ -77,11 +79,12 @@ fun OneFolderItem(
         }
 
         Row(
-            modifier = if (onFolderClick != null) {
-                Modifier.clickable { onFolderClick() }
-            } else {
-                Modifier
-            },
+            modifier = Modifier
+                .fillMaxWidth()
+                .then(
+                    if (onFolderClick != null) Modifier.clickable { onFolderClick() } else Modifier
+                )
+                .minimumInteractiveComponentSize(),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(16.dp)
         ) {

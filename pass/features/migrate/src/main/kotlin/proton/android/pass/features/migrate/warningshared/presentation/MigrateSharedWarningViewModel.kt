@@ -25,6 +25,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
@@ -70,6 +71,8 @@ class MigrateSharedWarningViewModel @Inject constructor(
                 .require<String>(CommonNavArgId.ShareId.key)
                 .let(::ShareId)
         )
+
+        MigrateModeValue.MoveFolder -> error("MoveFolder mode is not supported in shared warning")
     }
 
     private val eventFlow = MutableStateFlow<MigrateSharedWarningEvent>(
@@ -94,6 +97,8 @@ class MigrateSharedWarningViewModel @Inject constructor(
             .mapLatest { selectedItemsOption ->
                 selectedItemsOption.value().orEmpty()
             }
+
+        is Mode.MoveFolder -> flowOf(emptyMap())
     }.mapLatest(getMigrationItemsSelection::invoke)
 
     internal val stateFlow: StateFlow<MigrateSharedWarningState> = combine(
@@ -120,6 +125,8 @@ class MigrateSharedWarningViewModel @Inject constructor(
             is Mode.MigrateSelectedItems -> MigrateSharedWarningEvent.OnMigrateItems(
                 filter = mode.filter
             )
+
+            is Mode.MoveFolder -> MigrateSharedWarningEvent.Idle
         }.also { event ->
             eventFlow.update { event }
         }

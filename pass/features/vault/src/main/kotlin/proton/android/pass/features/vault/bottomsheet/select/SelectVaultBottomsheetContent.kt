@@ -47,6 +47,9 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.persistentMapOf
 import me.proton.core.domain.entity.UserId
+import proton.android.pass.common.api.None
+import proton.android.pass.common.api.Option
+import proton.android.pass.common.api.Some
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.ThemedBooleanPreviewProvider
@@ -118,7 +121,7 @@ fun SelectVaultBottomsheetContent(
             state.vaults.forEachIndexed { index, vaultWithStatus ->
                 val shareId = vaultWithStatus.vaultWithItemCount.vault.shareId
                 val isVaultSelected = shareId == state.selected.vault.shareId &&
-                    state.selectedFolderId == null
+                    state.selectedFolderId is None
                 val (subtitle, enabled) = when (vaultWithStatus.status) {
                     is VaultStatus.Disabled -> when (vaultWithStatus.status.reason) {
                         VaultStatus.Reason.ReadOnly ->
@@ -138,9 +141,9 @@ fun SelectVaultBottomsheetContent(
                 }
 
                 val hasSelectedFolder = state.foldersEnabled &&
-                    state.selectedFolderId != null &&
+                    state.selectedFolderId is Some &&
                     folders.isNotEmpty() &&
-                    containsFolderId(folders, state.selectedFolderId)
+                    containsFolderId(folders, state.selectedFolderId.value)
 
                 val showFoldersState = rememberSaveable(shareId.id) {
                     mutableStateOf(false)
@@ -168,7 +171,7 @@ fun SelectVaultBottomsheetContent(
                     }
                     if (hasSelectedFolder) {
                         showFoldersState.value = true
-                        expandAncestors(folders, state.selectedFolderId, expandedState)
+                        expandAncestors(folders, (state.selectedFolderId as Some).value, expandedState)
                     }
                 }
 
@@ -218,7 +221,7 @@ private fun VaultRowWithFolders(
     showFolders: Boolean,
     onToggleFolders: () -> Unit,
     expandedState: MutableMap<String, Boolean>,
-    selectedFolderId: FolderId?,
+    selectedFolderId: Option<FolderId>,
     onVaultClick: (() -> Unit)?,
     onFolderClick: ((FolderId) -> Unit)?
 ) {
@@ -362,7 +365,7 @@ fun SelectVaultBottomsheetContentPreview(
                     showUpgradeMessage = input.second,
                     foldersEnabled = false,
                     vaultFolders = persistentMapOf(),
-                    selectedFolderId = null
+                    selectedFolderId = None
                 ),
                 onVaultClick = {},
                 onFolderClick = { _, _ -> },

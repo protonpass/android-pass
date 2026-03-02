@@ -56,6 +56,7 @@ import proton.android.pass.composecomponents.impl.folders.mock.ThemedFoldersPrev
 import proton.android.pass.composecomponents.impl.icon.VaultIcon
 import proton.android.pass.composecomponents.impl.item.icon.ThreeDotsMenuButton
 import proton.android.pass.composecomponents.impl.text.Text
+import proton.android.pass.common.api.toOption
 import proton.android.pass.domain.FolderId
 import proton.android.pass.domain.items.ItemCategory
 import proton.android.pass.features.home.R
@@ -205,7 +206,7 @@ internal fun HomeDrawerRow(
                 modifier = Modifier.padding(start = Spacing.large),
                 folders = folders,
                 expandedState = expandedState,
-                selectedFolderId = selectedFolderId,
+                selectedFolderId = selectedFolderId.toOption(),
                 onThreeDotsClick = {
                     onMenuOptionsClickFromFolder?.invoke(it)
                 },

@@ -81,11 +81,11 @@ class MigrateSelectVaultViewModelTest {
         observeVaults.sendResult(Result.success(listOf(currentVault, otherVault)))
 
         val expected = listOf(
-            VaultEnabledPair(
+            MigrateVaultState(
                 vaultWithItemCount = currentVault,
                 status = VaultStatus.Disabled(VaultStatus.DisabledReason.SameVault)
             ),
-            VaultEnabledPair(otherVault, VaultStatus.Enabled)
+            MigrateVaultState(otherVault, VaultStatus.Enabled)
         )
         instance.state.test {
             val item = awaitItem()

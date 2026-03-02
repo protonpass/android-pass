@@ -79,6 +79,13 @@ internal fun AutofillDisplaySection(
             )
         }
 
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            Text(
+                text = stringResource(R.string.settings_autofill_display_subtitle),
+                style = ProtonTheme.typography.captionWeak.copy(PassTheme.colors.textWeak)
+            )
+        }
+
         Text(
             text = stringResource(R.string.settings_autosave_prompt_subtitle),
             style = ProtonTheme.typography.captionWeak.copy(PassTheme.colors.textWeak)

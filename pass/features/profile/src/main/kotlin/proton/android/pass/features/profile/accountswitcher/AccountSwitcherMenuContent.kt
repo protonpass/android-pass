@@ -29,7 +29,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
-import androidx.compose.ui.unit.dp
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import me.proton.core.account.domain.entity.AccountState
@@ -60,9 +59,9 @@ fun AccountSwitcherMenuContent(
                 onEvent = onEvent
             )
             PassDivider(modifier = Modifier.padding(horizontal = Spacing.medium))
-            Spacer(modifier = Modifier.height(30.dp))
         }
         if (other.isNotEmpty()) {
+            Spacer(modifier = Modifier.height(Spacing.small))
             Text.Body1Regular(
                 modifier = Modifier.padding(horizontal = Spacing.medium),
                 text = stringResource(R.string.account_switcher_switch_to)

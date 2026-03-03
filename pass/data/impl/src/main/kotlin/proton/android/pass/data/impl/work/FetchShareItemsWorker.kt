@@ -38,6 +38,7 @@ import dagger.assisted.AssistedInject
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.safeRunCatching
 import proton.android.pass.data.api.repositories.ItemRepository
+import proton.android.pass.data.api.usecases.folders.RefreshFolders
 import proton.android.pass.data.impl.R
 import proton.android.pass.data.impl.repositories.FetchShareItemsStatus
 import proton.android.pass.data.impl.repositories.FetchShareItemsStatusRepository
@@ -49,7 +50,8 @@ open class FetchShareItemsWorker @AssistedInject constructor(
     @Assisted private val context: Context,
     @Assisted workerParameters: WorkerParameters,
     private val fetchShareItemsStatusRepository: FetchShareItemsStatusRepository,
-    private val itemRepository: ItemRepository
+    private val itemRepository: ItemRepository,
+    private val refreshFolders: RefreshFolders
 ) : CoroutineWorker(context, workerParameters) {
 
     override suspend fun doWork(): Result {
@@ -66,6 +68,12 @@ open class FetchShareItemsWorker @AssistedInject constructor(
         fetchShareItemsStatusRepository.emit(shareId, FetchShareItemsStatus.NotStarted)
 
         return safeRunCatching {
+            safeRunCatching {
+                refreshFolders(userId, setOf(shareId))
+            }.onFailure {
+                PassLogger.w(TAG, "Failed refreshing folders for shareId=$shareId")
+                PassLogger.w(TAG, it)
+            }
             itemRepository.downloadItemsAndObserveProgress(
                 userId = userId,
                 shareId = shareId,

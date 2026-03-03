@@ -18,7 +18,6 @@
 
 package proton.android.pass.data.impl.usecases.sync
 
-import kotlinx.coroutines.flow.first
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.safeRunCatching
 import proton.android.pass.data.api.repositories.ItemRepository
@@ -35,12 +34,9 @@ import proton.android.pass.data.api.usecases.sync.ForceSyncResult
 import proton.android.pass.data.impl.util.runConcurrently
 import proton.android.pass.domain.ShareId
 import proton.android.pass.log.api.PassLogger
-import proton.android.pass.preferences.FeatureFlag
-import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import javax.inject.Inject
 
 class ForceSyncItemsImpl @Inject constructor(
-    private val featureFlagsPreferencesRepository: FeatureFlagsPreferencesRepository,
     private val refreshFolders: RefreshFolders,
     private val itemRepository: ItemRepository,
     private val itemSyncStatusRepository: ItemSyncStatusRepository
@@ -56,15 +52,11 @@ class ForceSyncItemsImpl @Inject constructor(
     ): ForceSyncResult {
         if (shareIds.isEmpty()) return ForceSyncResult.Success
 
-        val isFoldersEnabled: Boolean =
-            featureFlagsPreferencesRepository.get<Boolean>(FeatureFlag.PASS_FOLDERS).first()
-        if (isFoldersEnabled) {
-            safeRunCatching {
-                refreshFolders(userId, shareIds)
-            }.onFailure {
-                PassLogger.w(TAG, "Failed to refresh folders for ids $shareIds")
-                PassLogger.w(TAG, it)
-            }
+        safeRunCatching {
+            refreshFolders(userId, shareIds)
+        }.onFailure {
+            PassLogger.w(TAG, "Failed to refresh folders for ids $shareIds")
+            PassLogger.w(TAG, it)
         }
         val results: List<Result<Pair<ShareId, List<ItemRevision>>>> = runConcurrently(
             items = shareIds,

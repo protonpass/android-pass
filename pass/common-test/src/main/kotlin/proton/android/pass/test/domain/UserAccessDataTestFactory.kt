@@ -24,6 +24,41 @@ import kotlin.random.Random
 
 object UserAccessDataTestFactory {
 
+    @Suppress("LongParameterList")
+    fun create(
+        pendingInvites: Int = 0,
+        waitingNewUserInvites: Int = 0,
+        needsUpdate: Boolean = false,
+        protonMonitorEnabled: Boolean = false,
+        aliasMonitorEnabled: Boolean = false,
+        isSimpleLoginSyncEnabled: Boolean = false,
+        minVersionUpgrade: String? = null,
+        simpleLoginSyncDefaultShareId: String = "",
+        simpleLoginSyncPendingAliasCount: Int = 0,
+        canManageSimpleLoginAliases: Boolean = false,
+        storageAllowed: Boolean = false,
+        storageUsed: Long = 1,
+        storageQuota: Long = 100,
+        storageMaxFileSize: Long = 1_048_576,
+        folderAllowed: Boolean = false
+    ): UserAccessData = UserAccessData(
+        pendingInvites = pendingInvites,
+        waitingNewUserInvites = waitingNewUserInvites,
+        needsUpdate = needsUpdate,
+        protonMonitorEnabled = protonMonitorEnabled,
+        aliasMonitorEnabled = aliasMonitorEnabled,
+        isSimpleLoginSyncEnabled = isSimpleLoginSyncEnabled,
+        minVersionUpgrade = minVersionUpgrade,
+        simpleLoginSyncDefaultShareId = simpleLoginSyncDefaultShareId,
+        simpleLoginSyncPendingAliasCount = simpleLoginSyncPendingAliasCount,
+        canManageSimpleLoginAliases = canManageSimpleLoginAliases,
+        storageAllowed = storageAllowed,
+        storageUsed = storageUsed,
+        storageQuota = storageQuota,
+        storageMaxFileSize = storageMaxFileSize,
+        folderAllowed = folderAllowed
+    )
+
     fun random(): UserAccessData = UserAccessData(
         pendingInvites = Random.nextInt(0, 10),
         waitingNewUserInvites = Random.nextInt(0, 10),
@@ -38,6 +73,7 @@ object UserAccessDataTestFactory {
         storageAllowed = Random.nextBoolean(),
         storageUsed = Random.nextLong(0, 1_000_000),
         storageQuota = Random.nextLong(1_000_000, 10_000_000),
-        storageMaxFileSize = Random.nextLong(100_000, 1_000_000)
+        storageMaxFileSize = Random.nextLong(100_000, 1_000_000),
+        folderAllowed = Random.nextBoolean()
     )
 }

@@ -36,8 +36,8 @@ import proton.android.pass.data.impl.responses.PlanResponse
 import proton.android.pass.data.impl.responses.UserAccessResponse
 import proton.android.pass.data.impl.responses.UserDataResponse
 import proton.android.pass.domain.PlanType
-import proton.android.pass.domain.UserAccessData
 import proton.android.pass.test.FixedClock
+import proton.android.pass.test.domain.UserAccessDataTestFactory
 
 internal class PlanRepositoryImplTest {
 
@@ -80,7 +80,8 @@ internal class PlanRepositoryImplTest {
                     storageAllowed = false,
                     storageQuota = 100,
                     storageUsed = 1,
-                    storageMaxFileSize = 1_048_576
+                    storageMaxFileSize = 1_048_576,
+                    folderAllowed = false
                 ),
                 pendingInvites = pendingInvites,
                 waitingNewUserInvites = waitingNewUserInvites,
@@ -96,22 +97,27 @@ internal class PlanRepositoryImplTest {
             )
         )
 
+        val access = userAccessResponse.accessResponse
+        val planResponse = access.planResponse
+        val monitor = access.monitorResponse
+        val userData = access.userData
         userAccessDataRepository.sendValue(
-            value = UserAccessData(
-                pendingInvites = userAccessResponse.accessResponse.pendingInvites,
-                waitingNewUserInvites = userAccessResponse.accessResponse.waitingNewUserInvites,
-                needsUpdate = userAccessResponse.accessResponse.planResponse.hideUpgrade,
-                protonMonitorEnabled = userAccessResponse.accessResponse.monitorResponse.protonMonitorEnabled,
-                aliasMonitorEnabled = userAccessResponse.accessResponse.monitorResponse.aliasMonitorEnabled,
-                minVersionUpgrade = userAccessResponse.accessResponse.minVersionUpgrade,
-                isSimpleLoginSyncEnabled = userAccessResponse.accessResponse.userData.isAliasSyncEnabled,
-                simpleLoginSyncDefaultShareId = userAccessResponse.accessResponse.userData.defaultShareID.orEmpty(),
-                simpleLoginSyncPendingAliasCount = userAccessResponse.accessResponse.userData.pendingAliasToSync,
-                canManageSimpleLoginAliases = userAccessResponse.accessResponse.planResponse.manageAlias,
-                storageAllowed = userAccessResponse.accessResponse.planResponse.storageAllowed,
-                storageQuota = userAccessResponse.accessResponse.planResponse.storageQuota,
-                storageUsed = userAccessResponse.accessResponse.planResponse.storageUsed,
-                storageMaxFileSize = userAccessResponse.accessResponse.planResponse.storageMaxFileSize
+            value = UserAccessDataTestFactory.create(
+                pendingInvites = access.pendingInvites,
+                waitingNewUserInvites = access.waitingNewUserInvites,
+                needsUpdate = planResponse.hideUpgrade,
+                protonMonitorEnabled = monitor.protonMonitorEnabled,
+                aliasMonitorEnabled = monitor.aliasMonitorEnabled,
+                minVersionUpgrade = access.minVersionUpgrade,
+                isSimpleLoginSyncEnabled = userData.isAliasSyncEnabled,
+                simpleLoginSyncDefaultShareId = userData.defaultShareID.orEmpty(),
+                simpleLoginSyncPendingAliasCount = userData.pendingAliasToSync,
+                canManageSimpleLoginAliases = planResponse.manageAlias,
+                storageAllowed = planResponse.storageAllowed,
+                storageQuota = planResponse.storageQuota,
+                storageUsed = planResponse.storageUsed,
+                storageMaxFileSize = planResponse.storageMaxFileSize,
+                folderAllowed = planResponse.folderAllowed
             )
         )
 

@@ -80,7 +80,9 @@ data class PlanResponse(
     @SerialName("StorageQuota")
     val storageQuota: Long,
     @SerialName("StorageMaxFileSize")
-    val storageMaxFileSize: Long
+    val storageMaxFileSize: Long,
+    @SerialName("FolderAllowed")
+    val folderAllowed: Boolean
 )
 
 @Serializable

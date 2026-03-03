@@ -26,7 +26,7 @@ import org.junit.Before
 import org.junit.Test
 import proton.android.pass.account.fakes.FakeAccountManager
 import proton.android.pass.data.fakes.repositories.FakeUserAccessDataRepository
-import proton.android.pass.domain.UserAccessData
+import proton.android.pass.test.domain.UserAccessDataTestFactory
 
 class ObserveAppNeedsUpdateImplTest {
 
@@ -86,24 +86,7 @@ class ObserveAppNeedsUpdateImplTest {
     }
 
     private fun sendUserAccessData(needsUpdate: Boolean?) {
-        val value = needsUpdate?.let {
-            UserAccessData(
-                pendingInvites = 0,
-                waitingNewUserInvites = 0,
-                needsUpdate = it,
-                protonMonitorEnabled = false,
-                aliasMonitorEnabled = false,
-                minVersionUpgrade = null,
-                isSimpleLoginSyncEnabled = false,
-                simpleLoginSyncPendingAliasCount = 0,
-                simpleLoginSyncDefaultShareId = "",
-                canManageSimpleLoginAliases = false,
-                storageAllowed = false,
-                storageQuota = 100,
-                storageUsed = 1,
-                storageMaxFileSize = 1_048_576
-            )
-        }
+        val value = needsUpdate?.let { UserAccessDataTestFactory.create(needsUpdate = it) }
         userAccessDataRepository.sendValue(value)
     }
 

@@ -69,6 +69,7 @@ fun FolderTree(
     selectedFolderId: Option<FolderId>,
     depth: Int = 0, // no padding when depth == 0
     needsToUpgrade: Boolean = false,
+    canCreateFolder: Boolean = false,
     onFolderClick: ((FolderId) -> Unit)?,
     onThreeDotsClick: ((FolderId) -> Unit)? = null,
     onCreateFolderClick: (() -> Unit)? = null
@@ -78,7 +79,7 @@ fun FolderTree(
         verticalArrangement = Arrangement.spacedBy(Spacing.small)
     ) {
         onCreateFolderClick?.let {
-            if (folders.isEmpty() && depth == 0) {
+            if (folders.isEmpty() && depth == 0 && canCreateFolder) {
                 CreateFolderButton(
                     modifier = modifierCreateButton,
                     needsToUpgrade = needsToUpgrade,
@@ -161,6 +162,7 @@ internal fun FolderTreePreview(
                         .apply { putAll(input.second.expandedState) }
                 },
                 selectedFolderId = None,
+                canCreateFolder = true,
                 needsToUpgrade = input.second.needsToUpgrade,
                 onThreeDotsClick = {},
                 onCreateFolderClick = {},

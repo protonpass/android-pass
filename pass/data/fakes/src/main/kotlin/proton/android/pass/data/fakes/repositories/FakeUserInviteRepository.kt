@@ -21,6 +21,7 @@ package proton.android.pass.data.fakes.repositories
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.flowOf
+import proton.android.pass.common.api.Some
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
@@ -55,6 +56,7 @@ class FakeUserInviteRepository @Inject constructor() : UserInviteRepository {
             organizationItems = emptyList()
         )
     )
+    private var inviteOption: Option<PendingInvite> = None
 
     private val existingUsersInviteCalls: MutableList<ExistingUsersInviteCall> = mutableListOf()
     private val newUsersInviteCalls: MutableList<NewUsersInviteCall> = mutableListOf()
@@ -104,7 +106,11 @@ class FakeUserInviteRepository @Inject constructor() : UserInviteRepository {
         rejectResult = value
     }
 
-    override suspend fun getInvite(userId: UserId, inviteToken: InviteToken): Option<PendingInvite> = None
+    fun setInvite(value: PendingInvite?) {
+        inviteOption = if (value == null) None else Some(value)
+    }
+
+    override suspend fun getInvite(userId: UserId, inviteToken: InviteToken): Option<PendingInvite> = inviteOption
 
     override fun observeInvites(userId: UserId): Flow<List<PendingInvite>> = invitesFlow
 

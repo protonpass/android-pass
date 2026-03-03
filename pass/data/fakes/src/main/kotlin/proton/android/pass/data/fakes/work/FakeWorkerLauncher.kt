@@ -25,5 +25,15 @@ import javax.inject.Singleton
 
 @Singleton
 class FakeWorkerLauncher @Inject constructor() : WorkerLauncher {
-    override fun launch(workerItem: WorkerItem) = Unit
+    private val launchedItems = mutableListOf<WorkerItem>()
+
+    fun getLaunchedItems(): List<WorkerItem> = launchedItems.toList()
+
+    fun clear() {
+        launchedItems.clear()
+    }
+
+    override fun launch(workerItem: WorkerItem) {
+        launchedItems.add(workerItem)
+    }
 }

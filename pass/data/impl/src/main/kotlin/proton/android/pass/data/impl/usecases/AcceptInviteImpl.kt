@@ -18,8 +18,8 @@
 
 package proton.android.pass.data.impl.usecases
 
-import androidx.work.WorkManager
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOf
@@ -27,19 +27,23 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onStart
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.api.repositories.GroupInviteRepository
+import proton.android.pass.data.api.repositories.ItemRepository
 import proton.android.pass.data.api.repositories.ShareRepository
 import proton.android.pass.data.api.repositories.UserInviteRepository
 import proton.android.pass.data.api.usecases.AcceptInvite
 import proton.android.pass.data.api.usecases.AcceptInviteStatus
 import proton.android.pass.data.api.usecases.ObserveCurrentUser
+import proton.android.pass.data.api.usecases.folders.RefreshFolders
+import proton.android.pass.data.api.work.WorkerItem
+import proton.android.pass.data.api.work.WorkerLauncher
 import proton.android.pass.data.impl.repositories.FetchShareItemsStatus
 import proton.android.pass.data.impl.repositories.FetchShareItemsStatusRepository
-import proton.android.pass.data.impl.work.FetchShareItemsWorker
 import proton.android.pass.domain.InviteId
 import proton.android.pass.domain.InviteToken
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.PendingInvite
 import proton.android.pass.domain.ShareId
+import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.InviteNotificationModel
 import proton.android.pass.notifications.api.NotificationManager
 import javax.inject.Inject
@@ -49,19 +53,24 @@ class AcceptInviteImpl @Inject constructor(
     private val shareRepository: ShareRepository,
     private val userInviteRepository: UserInviteRepository,
     private val groupInviteRepository: GroupInviteRepository,
-    private val workManager: WorkManager,
+    private val workerLauncher: WorkerLauncher,
     private val fetchShareItemsStatusRepository: FetchShareItemsStatusRepository,
-    private val notificationManager: NotificationManager
+    private val notificationManager: NotificationManager,
+    private val itemRepository: ItemRepository,
+    private val refreshFolders: RefreshFolders
 ) : AcceptInvite {
 
     override fun invoke(inviteToken: InviteToken): Flow<AcceptInviteStatus> = observeCurrentUser()
         .flatMapLatest { user ->
             userInviteRepository.getInvite(user.userId, inviteToken).value()
                 ?.let { pendingInvite ->
-                    val (shareId, itemId) = userInviteRepository.acceptInvite(user.userId, inviteToken)
+                    val (shareId, itemId) = userInviteRepository.acceptInvite(
+                        user.userId,
+                        inviteToken
+                    )
                     notificationManager.removeReceivedInviteNotification(pendingInvite.toRemoveModel())
                     shareRepository.recreateShare(user.userId, shareId)
-                    downloadItems(user.userId, shareId, itemId)
+                    downloadItems(user.userId, pendingInvite, shareId, itemId)
                 }
                 ?: flowOf(AcceptInviteStatus.Error)
         }
@@ -69,8 +78,9 @@ class AcceptInviteImpl @Inject constructor(
 
     override fun invoke(inviteId: InviteId): Flow<AcceptInviteStatus> = observeCurrentUser()
         .flatMapLatest { user ->
-            val pendingInvite = groupInviteRepository.observePendingGroupInvite(user.userId, inviteId)
-                .first()
+            val pendingInvite =
+                groupInviteRepository.observePendingGroupInvite(user.userId, inviteId)
+                    .first()
             if (pendingInvite != null) {
                 groupInviteRepository.acceptGroupInvite(
                     userId = user.userId,
@@ -87,11 +97,23 @@ class AcceptInviteImpl @Inject constructor(
 
     private fun downloadItems(
         userId: UserId,
+        pendingInvite: PendingInvite,
+        shareId: ShareId,
+        itemId: ItemId
+    ): Flow<AcceptInviteStatus> = when (pendingInvite) {
+        is PendingInvite.UserItem,
+        is PendingInvite.GroupItem -> downloadItemsSynchronously(userId, shareId, itemId)
+
+        is PendingInvite.UserVault,
+        is PendingInvite.GroupVault -> downloadItemsUsingWorker(userId, shareId, itemId)
+    }
+
+    private fun downloadItemsUsingWorker(
+        userId: UserId,
         shareId: ShareId,
         itemId: ItemId
     ): Flow<AcceptInviteStatus> {
-        val request = FetchShareItemsWorker.getRequestFor(userId, shareId)
-        workManager.enqueue(request)
+        workerLauncher.launch(WorkerItem.FetchShareItems(userId, shareId))
         return fetchShareItemsStatusRepository.observe(shareId)
             .map { fetchShareItemsStatus ->
                 when (fetchShareItemsStatus) {
@@ -111,6 +133,52 @@ class AcceptInviteImpl @Inject constructor(
                     }
                 }
             }
+    }
+
+    private fun downloadItemsSynchronously(
+        userId: UserId,
+        shareId: ShareId,
+        itemId: ItemId
+    ): Flow<AcceptInviteStatus> = flow {
+        runCatching {
+            refreshFolders(userId, setOf(shareId))
+            val itemRevisions = itemRepository.downloadItemsAndObserveProgress(
+                userId = userId,
+                shareId = shareId
+            ) { progress ->
+                emit(
+                    AcceptInviteStatus.DownloadingItems(
+                        downloaded = progress.current,
+                        total = progress.total
+                    )
+                )
+            }
+            itemRepository.setShareItems(
+                userId = userId,
+                items = mapOf(shareId to itemRevisions),
+                onProgress = {}
+            )
+            itemRepository.getById(
+                userId = userId,
+                shareId = shareId,
+                itemId = itemId
+            )
+            emit(
+                AcceptInviteStatus.UserInviteDone(
+                    items = itemRevisions.size,
+                    shareId = shareId,
+                    itemId = itemId
+                )
+            )
+        }.getOrElse {
+            PassLogger.w(TAG, "Could not accept item invite")
+            PassLogger.w(TAG, it)
+            emit(AcceptInviteStatus.Error)
+        }
+    }
+
+    companion object {
+        private const val TAG = "AcceptInviteImpl"
     }
 }
 

@@ -41,6 +41,14 @@ class WorkerLauncherImpl @Inject constructor(
                 )
                 workManager.enqueue(request)
             }
+
+            is WorkerItem.FetchShareItems -> {
+                val request = FetchShareItemsWorker.getRequestFor(
+                    userId = workerItem.userId,
+                    shareId = workerItem.shareId
+                )
+                workManager.enqueue(request)
+            }
         }
     }
 }

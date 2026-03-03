@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023-2026 Proton AG
+ * Copyright (c) 2026 Proton AG
  * This file is part of Proton AG and Proton Pass.
  *
  * Proton Pass is free software: you can redistribute it and/or modify
@@ -16,22 +16,20 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.domain
+package proton.android.pass.data.impl.usecases.capabilities
 
-data class UserAccessData(
-    val pendingInvites: Int,
-    val waitingNewUserInvites: Int,
-    val needsUpdate: Boolean,
-    val protonMonitorEnabled: Boolean,
-    val aliasMonitorEnabled: Boolean,
-    val isSimpleLoginSyncEnabled: Boolean,
-    val minVersionUpgrade: String?,
-    val simpleLoginSyncDefaultShareId: String,
-    val simpleLoginSyncPendingAliasCount: Int,
-    val canManageSimpleLoginAliases: Boolean,
-    val storageAllowed: Boolean,
-    val storageUsed: Long,
-    val storageQuota: Long,
-    val storageMaxFileSize: Long,
-    val folderAllowed: Boolean
-)
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
+import proton.android.pass.data.api.usecases.ObserveUserAccessData
+import proton.android.pass.data.api.usecases.capabilities.CanCreateFolder
+import javax.inject.Inject
+import javax.inject.Singleton
+
+@Singleton
+class CanCreateFolderImpl @Inject constructor(
+    private val observeUserAccessData: ObserveUserAccessData
+) : CanCreateFolder {
+
+    override fun invoke(): Flow<Boolean> = observeUserAccessData()
+        .map { it?.folderAllowed ?: false }
+}

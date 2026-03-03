@@ -45,6 +45,7 @@ import proton.android.pass.data.api.ItemCountSummary
 import proton.android.pass.data.api.usecases.ObserveItemCount
 import proton.android.pass.data.api.usecases.ObserveUpgradeInfo
 import proton.android.pass.data.api.usecases.ObserveVaultsWithItemCount
+import proton.android.pass.data.api.usecases.capabilities.CanCreateFolder
 import proton.android.pass.data.api.usecases.capabilities.CanCreateVault
 import proton.android.pass.data.api.usecases.capabilities.CanOrganiseVaults
 import proton.android.pass.data.api.usecases.folders.ObserveFolders
@@ -59,6 +60,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeDrawerViewModel @Inject constructor(
+    canCreateFolder: CanCreateFolder,
     canCreateVault: CanCreateVault,
     canOrganiseVaults: CanOrganiseVaults,
     observeVaultsWithItemCount: ObserveVaultsWithItemCount,
@@ -118,6 +120,7 @@ class HomeDrawerViewModel @Inject constructor(
     internal val stateFlow: StateFlow<HomeDrawerState> = combineN(
         foldersEnabledFlow,
         vaultsWithFoldersFlow,
+        canCreateFolder(),
         canCreateVault(),
         canOrganiseVaults(),
         homeSearchOptionsRepository.observeVaultSelectionOption(),
@@ -125,6 +128,7 @@ class HomeDrawerViewModel @Inject constructor(
         observeUpgradeInfo().asLoadingResult()
     ) { isFoldersEnabled,
         vaultsWithFolders,
+        canCreateFolder,
         canCreateVault,
         canOrganiseVaults,
         vaultSelectionOption,
@@ -133,6 +137,7 @@ class HomeDrawerViewModel @Inject constructor(
         buildHomeDrawerState(
             isFoldersEnabled = isFoldersEnabled,
             vaultsWithFolders = vaultsWithFolders,
+            canCreateFolder = canCreateFolder,
             canCreateVault = canCreateVault,
             canOrganiseVaults = canOrganiseVaults,
             vaultSelectionOption = vaultSelectionOption,
@@ -170,6 +175,7 @@ class HomeDrawerViewModel @Inject constructor(
     private fun buildHomeDrawerState(
         isFoldersEnabled: Boolean,
         vaultsWithFolders: VaultsWithFolders,
+        canCreateFolder: Boolean,
         canCreateVault: Boolean,
         canOrganiseVaults: Boolean,
         vaultSelectionOption: VaultSelectionOption,
@@ -178,6 +184,7 @@ class HomeDrawerViewModel @Inject constructor(
     ): HomeDrawerState = HomeDrawerState(
         vaultShares = vaultsWithFolders.vaultShares,
         vaultFolders = vaultsWithFolders.vaultFolders,
+        canCreateFolder = canCreateFolder,
         canCreateVault = canCreateVault,
         canOrganiseVaults = canOrganiseVaults,
         vaultSelectionOption = vaultSelectionOption,

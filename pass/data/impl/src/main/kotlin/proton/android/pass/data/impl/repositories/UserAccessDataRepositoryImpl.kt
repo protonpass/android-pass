@@ -102,7 +102,8 @@ class UserAccessDataRepositoryImpl @Inject constructor(
         storageAllowed = accessResponse.planResponse.storageAllowed,
         storageUsed = accessResponse.planResponse.storageUsed,
         storageQuota = accessResponse.planResponse.storageQuota,
-        storageMaxFileSize = accessResponse.planResponse.storageMaxFileSize
+        storageMaxFileSize = accessResponse.planResponse.storageMaxFileSize,
+        folderAllowed = accessResponse.planResponse.folderAllowed
     )
 
     private fun UserAccessDataEntity.toDomain() = UserAccessData(
@@ -119,7 +120,8 @@ class UserAccessDataRepositoryImpl @Inject constructor(
         storageAllowed = storageAllowed,
         storageUsed = storageUsed,
         storageQuota = storageQuota,
-        storageMaxFileSize = storageMaxFileSize
+        storageMaxFileSize = storageMaxFileSize,
+        folderAllowed = folderAllowed
     )
 
     private fun UserAccessData.toEntity(userId: UserId) = UserAccessDataEntity(
@@ -136,6 +138,7 @@ class UserAccessDataRepositoryImpl @Inject constructor(
         storageAllowed = storageAllowed,
         storageUsed = storageUsed,
         storageQuota = storageQuota,
-        storageMaxFileSize = storageMaxFileSize
+        storageMaxFileSize = storageMaxFileSize,
+        folderAllowed = folderAllowed
     )
 }

@@ -55,6 +55,10 @@ class FakeItemRepository @Inject constructor() : ItemRepository {
 
     private var item: Item? = null
     private var itemRevisions: List<ItemRevision>? = null
+    private var setShareItemsResult: Result<Unit> = Result.success(Unit)
+    private val downloadItemsByShareId: MutableMap<ShareId, List<ItemRevision>> = mutableMapOf()
+    private val downloadItemsMemory: MutableList<DownloadItemsPayload> = mutableListOf()
+    private val setShareItemsMemory: MutableList<SetShareItemsPayload> = mutableListOf()
 
     private var migrateItemResult: Result<MigrateItemsResult> =
         Result.failure(IllegalStateException("TestItemRepository.migrateItemResult not initialized"))
@@ -78,6 +82,26 @@ class FakeItemRepository @Inject constructor() : ItemRepository {
 
     fun setItemRevisions(newItemRevisions: List<ItemRevision>) {
         itemRevisions = newItemRevisions
+    }
+
+    fun setDownloadItemsResult(shareId: ShareId, revisions: List<ItemRevision>) {
+        downloadItemsByShareId[shareId] = revisions
+    }
+
+    fun getDownloadItemsMemory(): List<DownloadItemsPayload> = downloadItemsMemory.toList()
+
+    fun clearDownloadItemsMemory() {
+        downloadItemsMemory.clear()
+    }
+
+    fun setSetShareItemsResult(value: Result<Unit>) {
+        setShareItemsResult = value
+    }
+
+    fun getSetShareItemsMemory(): List<SetShareItemsPayload> = setShareItemsMemory.toList()
+
+    fun clearSetShareItemsMemory() {
+        setShareItemsMemory.clear()
     }
 
     fun emitValue(value: List<ItemEncrypted>) {
@@ -190,6 +214,17 @@ class FakeItemRepository @Inject constructor() : ItemRepository {
         val eventToken: EventToken
     )
 
+    data class DownloadItemsPayload(
+        val userId: UserId,
+        val shareId: ShareId,
+        val eventToken: EventToken?
+    )
+
+    data class SetShareItemsPayload(
+        val userId: UserId,
+        val items: Map<ShareId, List<ItemRevision>>
+    )
+
     override fun observeItems(
         userId: UserId,
         shareSelection: ShareSelection,
@@ -281,14 +316,29 @@ class FakeItemRepository @Inject constructor() : ItemRepository {
         eventToken: EventToken?,
         onProgress: suspend (VaultProgress) -> Unit
     ): List<ItemRevision> {
-        TODO("Not yet implemented")
+        val revisions = downloadItemsByShareId[shareId] ?: itemRevisions ?: emptyList()
+        downloadItemsMemory.add(
+            DownloadItemsPayload(
+                userId = userId,
+                shareId = shareId,
+                eventToken = eventToken
+            )
+        )
+        onProgress(VaultProgress(total = revisions.size, current = revisions.size))
+        return revisions
     }
 
     override suspend fun setShareItems(
         userId: UserId,
         items: Map<ShareId, List<ItemRevision>>,
         onProgress: suspend (VaultProgress) -> Unit
-    ): Set<ShareId> = emptySet()
+    ) : Set<ShareId>{
+        setShareItemsMemory.add(SetShareItemsPayload(userId = userId, items = items))
+        val total = items.values.sumOf { it.size }
+        onProgress(VaultProgress(total = total, current = total))
+        setShareItemsResult.getOrThrow()
+        return emptySet()
+    }
 
     override suspend fun applyPendingEvent(event: ItemPendingEvent) {}
 

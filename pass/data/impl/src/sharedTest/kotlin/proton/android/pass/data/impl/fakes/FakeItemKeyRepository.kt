@@ -25,6 +25,7 @@ import proton.android.pass.common.api.FlowUtils.testFlow
 import proton.android.pass.data.impl.repositories.ItemKeyRepository
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.key.FolderKey
 import proton.android.pass.domain.key.ItemKey
 import proton.android.pass.domain.key.ShareKey
 
@@ -41,6 +42,7 @@ class FakeItemKeyRepository : ItemKeyRepository {
         addressId: AddressId,
         shareId: ShareId,
         groupEmail: String?,
-        itemId: ItemId
+        itemId: ItemId,
+        currentFolderKey: FolderKey?
     ): Flow<Pair<ShareKey, ItemKey>> = getLatestItemKeyFlow
 }

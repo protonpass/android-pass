@@ -56,7 +56,7 @@ fun MigrateSelectVaultContents(
     vaults: ImmutableList<MigrateVaultState>,
     folderIdToExpand: Option<FolderId>,
     onVaultSelected: (ShareId) -> Unit,
-    onFolderSelected: ((FolderId) -> Unit)? = null
+    onFolderSelected: ((ShareId, FolderId) -> Unit)? = null
 ) {
     if (vaults.any { it.folderTree.isNotEmpty() }) {
         LazyColumn(modifier = modifier) {
@@ -150,7 +150,7 @@ fun MigrateSelectVaultContents(
                         folders = vaultPair.folderTree,
                         expandedState = expandedState,
                         onFolderClick = { folderId ->
-                            onFolderSelected?.invoke(folderId)
+                            onFolderSelected?.invoke(vaultModel.shareId, folderId)
                         },
                         onThreeDotsClick = null,
                         onCreateFolderClick = null,

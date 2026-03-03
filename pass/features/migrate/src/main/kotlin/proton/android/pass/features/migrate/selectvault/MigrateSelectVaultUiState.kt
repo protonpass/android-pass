@@ -32,7 +32,7 @@ import proton.android.pass.domain.VaultWithItemCount
 sealed interface SelectVaultEvent {
     data class VaultSelectedForMigrateItem(
         val destinationShareId: ShareId,
-        val folderId: Option<FolderId> = None
+        val destFolderId: Option<FolderId> = None
     ) : SelectVaultEvent
 
     data class VaultSelectedForMigrateAll(

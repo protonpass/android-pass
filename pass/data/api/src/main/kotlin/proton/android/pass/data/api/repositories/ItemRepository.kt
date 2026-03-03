@@ -203,7 +203,8 @@ interface ItemRepository {
     suspend fun migrateItems(
         userId: UserId,
         items: Map<ShareId, List<ItemId>>,
-        destination: Share
+        destination: Share,
+        destinationFolderId: FolderId? = null
     ): MigrateItemsResult
 
     suspend fun migrateAllVaultItems(

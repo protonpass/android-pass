@@ -184,8 +184,7 @@ class MigrateSelectVaultViewModel @Inject constructor(
         when (val currentMode = mode) {
             is Mode.MigrateSelectedItems -> eventFlow.update {
                 SelectVaultEvent.VaultSelectedForMigrateItem(
-                    destinationShareId = shareId,
-                    folderId = currentMode.folderId
+                    destinationShareId = shareId
                 ).toOption()
             }
 
@@ -211,20 +210,31 @@ class MigrateSelectVaultViewModel @Inject constructor(
         }
     }
 
-    internal fun onFolderSelected(newParentFolderId: FolderId) {
-        val currentMode = mode
-        if (currentMode !is Mode.MoveFolder) return
-        val currentParent = currentParentFolderIdFlow.value
-        if (currentParent is Some && currentParent.value == newParentFolderId) {
-            viewModelScope.launch { snackbarDispatcher(FolderAlreadySameParent) }
-            return
-        }
-        eventFlow.update {
-            SelectVaultEvent.VaultSelectedForMoveFolder(
-                shareId = currentMode.sourceShareId,
-                folderId = currentMode.folderId,
-                newParentFolderId = newParentFolderId
-            ).toOption()
+    internal fun onFolderSelected(shareId: ShareId, newParentFolderId: FolderId) {
+        when (val currentMode = mode) {
+            is Mode.MigrateSelectedItems -> eventFlow.update {
+                SelectVaultEvent.VaultSelectedForMigrateItem(
+                    destinationShareId = shareId,
+                    destFolderId = newParentFolderId.toOption()
+                ).toOption()
+            }
+
+            is Mode.MoveFolder -> {
+                val currentParent = currentParentFolderIdFlow.value
+                if (currentParent is Some && currentParent.value == newParentFolderId) {
+                    viewModelScope.launch { snackbarDispatcher(FolderAlreadySameParent) }
+                    return
+                }
+                eventFlow.update {
+                    SelectVaultEvent.VaultSelectedForMoveFolder(
+                        shareId = currentMode.sourceShareId,
+                        folderId = currentMode.folderId,
+                        newParentFolderId = newParentFolderId
+                    ).toOption()
+                }
+            }
+
+            else -> Unit
         }
     }
 
@@ -398,8 +408,7 @@ class MigrateSelectVaultViewModel @Inject constructor(
     internal sealed interface Mode {
 
         data class MigrateSelectedItems(
-            val filter: MigrateVaultFilter,
-            val folderId: Option<FolderId> = None
+            val filter: MigrateVaultFilter
         ) : Mode
 
         data class MigrateAllItems(val shareId: ShareId) : Mode

@@ -51,7 +51,7 @@ fun MigrateSelectVaultBottomSheet(
                             onNavigate(
                                 MigrateNavigation.VaultSelectedForMigrateItem(
                                     destShareId = value.destinationShareId,
-                                    folderId = value.folderId
+                                    destFolderId = value.destFolderId
                                 )
                             )
                         }
@@ -83,7 +83,7 @@ fun MigrateSelectVaultBottomSheet(
                 modifier = modifier.bottomSheet(),
                 vaults = state.vaultList,
                 onVaultSelected = { viewModel.onVaultSelected(it) },
-                onFolderSelected = { viewModel.onFolderSelected(it) },
+                onFolderSelected = { shareId, folderId -> viewModel.onFolderSelected(shareId, folderId) },
                 folderIdToExpand = state.folderIdToExpand
             )
         }

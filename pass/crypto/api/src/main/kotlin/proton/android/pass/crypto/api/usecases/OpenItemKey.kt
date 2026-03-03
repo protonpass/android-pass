@@ -18,8 +18,8 @@
 
 package proton.android.pass.crypto.api.usecases
 
+import proton.android.pass.domain.key.InviteKey
 import proton.android.pass.domain.key.ItemKey
-import proton.android.pass.domain.key.ShareKey
 
 data class EncryptedItemKey(
     val key: String,
@@ -27,5 +27,5 @@ data class EncryptedItemKey(
 )
 
 interface OpenItemKey {
-    operator fun invoke(shareKey: ShareKey, key: EncryptedItemKey): ItemKey
+    operator fun invoke(inviteKey: InviteKey, key: EncryptedItemKey): ItemKey
 }

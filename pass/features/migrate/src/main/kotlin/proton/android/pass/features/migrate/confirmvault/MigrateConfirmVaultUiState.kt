@@ -66,7 +66,9 @@ internal data class MigrateConfirmVaultUiState(
     val hasAssociatedSecureLinks: Boolean,
     val canDisplayWarningVaultSharedDialog: Boolean,
     val folderTree: PersistentList<FolderUiModel> = persistentListOf(),
-    val newParentFolderId: FolderId? = null
+    val newParentFolderId: FolderId? = null,
+    val destFolderId: Option<FolderId> = None,
+    val isSameVaultMove: Boolean = false
 ) {
 
     internal companion object {

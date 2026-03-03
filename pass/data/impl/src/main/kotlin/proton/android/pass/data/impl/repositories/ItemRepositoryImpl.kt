@@ -106,6 +106,7 @@ import proton.android.pass.domain.entity.NewAlias
 import proton.android.pass.domain.entity.PackageInfo
 import proton.android.pass.domain.events.EventToken
 import proton.android.pass.domain.key.FolderKey
+import proton.android.pass.domain.key.InviteKey
 import proton.android.pass.domain.key.ShareKey
 import proton.android.pass.log.api.PassLogger
 import proton_pass_item_v1.ItemV1
@@ -523,7 +524,10 @@ class ItemRepositoryImpl @Inject constructor(
             itemFlags = itemFlags
         )
 
-        is ShareSelection.AllShares -> shareRepository.observeAllUsableShareIds(userId, includeHidden)
+        is ShareSelection.AllShares -> shareRepository.observeAllUsableShareIds(
+            userId,
+            includeHidden
+        )
             .flatMapLatest {
                 localItemDataSource.observeItems(
                     userId = userId,
@@ -562,7 +566,10 @@ class ItemRepositoryImpl @Inject constructor(
             filter = itemTypeFilter
         )
 
-        is ShareSelection.AllShares -> shareRepository.observeAllUsableShareIds(userId, includeHidden)
+        is ShareSelection.AllShares -> shareRepository.observeAllUsableShareIds(
+            userId,
+            includeHidden
+        )
             .flatMapLatest {
                 localItemDataSource.observePinnedItems(
                     userId = userId,
@@ -712,8 +719,9 @@ class ItemRepositoryImpl @Inject constructor(
 
     override suspend fun clearTrash(userId: UserId, includeHidden: Boolean) {
         coroutineScope {
-            val shareIds = shareRepository.observeAllUsableShareIds(userId, includeHidden).firstOrNull()
-                ?: emptyList()
+            val shareIds =
+                shareRepository.observeAllUsableShareIds(userId, includeHidden).firstOrNull()
+                    ?: emptyList()
             val trashedItems = localItemDataSource.getTrashedItems(userId, shareIds)
             val trashedPerShare = trashedItems.groupBy { it.shareId }
             val results = trashedPerShare
@@ -737,8 +745,9 @@ class ItemRepositoryImpl @Inject constructor(
 
     override suspend fun restoreItems(userId: UserId, includeHidden: Boolean) {
         coroutineScope {
-            val shareIds = shareRepository.observeAllUsableShareIds(userId, includeHidden).firstOrNull()
-                ?: emptyList()
+            val shareIds =
+                shareRepository.observeAllUsableShareIds(userId, includeHidden).firstOrNull()
+                    ?: emptyList()
             val trashedItems = localItemDataSource.getTrashedItems(userId, shareIds)
             val trashedPerShare = trashedItems.groupBy { it.shareId }
             val results = trashedPerShare
@@ -1015,7 +1024,8 @@ class ItemRepositoryImpl @Inject constructor(
     override suspend fun migrateItems(
         userId: UserId,
         items: Map<ShareId, List<ItemId>>,
-        destination: Share
+        destination: Share,
+        destinationFolderId: FolderId?
     ): MigrateItemsResult = coroutineScope {
         val destinationKey = shareKeyRepository.getLatestKeyForShare(destination.id).first()
         val migratedRevisions: List<Result<List<ItemEntity>>> = items.map { (shareId, items) ->
@@ -1027,7 +1037,8 @@ class ItemRepositoryImpl @Inject constructor(
                         source = shareId,
                         destination = destination.id,
                         destinationKey = destinationKey,
-                        items = shareItems
+                        items = shareItems,
+                        destinationFolderId = destinationFolderId
                     )
                 }
             }
@@ -1111,11 +1122,22 @@ class ItemRepositoryImpl @Inject constructor(
 
         val items = localItemDataSource.getByIdList(userId, shareId, itemIds)
 
+        // Pre-fetch folder keys for items that are currently in a folder so that we can
+        // correctly decrypt their item keys (which are folder-key-encrypted, not share-key-encrypted).
+        val uniqueSourceFolderIds = items.mapNotNull { it.folderId?.let(::FolderId) }.distinct()
+        val sourceFolderKeys: Map<FolderId, FolderKey> = folderKeyRepository.getFolderKeys(
+            userId = userId,
+            shareId = shareId,
+            folderIds = uniqueSourceFolderIds
+        )
+
         val moveItems = items.map { item ->
+            val currentFolderKey: FolderKey? = item.folderId?.let { sourceFolderKeys[FolderId(it)] }
             val (_, itemKey) = getShareAndItemKey(
                 userAddress = userAddress,
                 shareId = shareId,
-                itemId = ItemId(item.id)
+                itemId = ItemId(item.id),
+                currentFolderKey = currentFolderKey
             )
             val reencryptedKeys = migrateItem.migrate(
                 destinationKey = folderKey,
@@ -1386,36 +1408,63 @@ class ItemRepositoryImpl @Inject constructor(
         source: ShareId,
         destination: ShareId,
         destinationKey: ShareKey,
-        items: List<ItemEntity>
+        items: List<ItemEntity>,
+        destinationFolderId: FolderId? = null
     ): List<ItemEntity> = withContext(Dispatchers.Default) {
         val userAddress = shareRepository.getAddressForShareId(userId, source)
         items.chunked(MAX_BATCH_ITEMS_PER_REQUEST).map { chunk ->
             async {
-                migrateChunk(userAddress, source, destination, destinationKey, chunk)
+                migrateChunk(
+                    userAddress,
+                    source,
+                    destination,
+                    destinationKey,
+                    chunk,
+                    destinationFolderId
+                )
             }
         }.awaitAll().flatten()
     }
 
+
+    @Suppress("LongMethod")
     private suspend fun migrateChunk(
         userAddress: UserAddress,
         source: ShareId,
         destination: ShareId,
         destinationKey: ShareKey,
-        chunk: List<ItemEntity>
+        chunk: List<ItemEntity>,
+        destinationFolderId: FolderId? = null
     ): List<ItemEntity> {
-        val userId = userAddress.userId
+        val destFolderKey: FolderKey? = destinationFolderId?.let {
+            folderKeyRepository.getFolderKey(userAddress.userId, destination, it)
+                ?: throw IllegalStateException("FolderKey not found for destination folderId=${it.id}")
+        }
+        val encryptionKey: InviteKey = destFolderKey ?: destinationKey
+
+        // Pre-fetch folder keys for source items that are currently in a folder.
+        val uniqueSourceFolderIds = chunk.mapNotNull { it.folderId?.let(::FolderId) }.distinct()
+        val sourceFolderKeys: Map<FolderId, FolderKey> = folderKeyRepository.getFolderKeys(
+            userId = userAddress.userId,
+            shareId = source,
+            folderIds = uniqueSourceFolderIds
+        )
+
         val migrations = chunk.map { item ->
+            val currentFolderKey: FolderKey? = item.folderId?.let { sourceFolderKeys[FolderId(it)] }
             val (_, itemKey) = getShareAndItemKey(
                 userAddress = userAddress,
                 shareId = source,
-                itemId = ItemId(item.id)
+                itemId = ItemId(item.id),
+                currentFolderKey = currentFolderKey
             )
             val encryptedMigrateItemBody = migrateItem.migrate(
-                destinationKey,
+                encryptionKey,
                 listOf(ItemKeyWithRotation(itemKey.key, itemKey.rotation))
             )
             MigrateItemsBody(
                 itemId = item.id,
+                destinationFolderId = destinationFolderId?.id,
                 itemKeys = encryptedMigrateItemBody.map {
                     ItemKeyBody(
                         key = Base64.encodeBase64String(it.itemKey.array),
@@ -1430,14 +1479,14 @@ class ItemRepositoryImpl @Inject constructor(
             items = migrations
         )
 
-        val destinationShare = shareRepository.getById(userId, destination)
+        val destinationShare = shareRepository.getById(userAddress.userId, destination)
 
-        val res = remoteItemDataSource.migrateItems(userId, source, body)
+        val res = remoteItemDataSource.migrateItems(userAddress.userId, source, body)
 
         val folderIds = res.mapNotNull { it.folderId?.let(::FolderId) }.distinct()
 
         val folderKeysMap: Map<FolderId, FolderKey> = folderKeyRepository.getFolderKeys(
-            userId = userId,
+            userId = userAddress.userId,
             shareId = destination,
             folderIds = folderIds
         )
@@ -1462,7 +1511,7 @@ class ItemRepositoryImpl @Inject constructor(
         val itemIdsToDelete = chunk.map { ItemId(it.id) }
         database.inTransaction("migrateChunk") {
             localItemDataSource.upsertItems(resAsEntities)
-            localItemDataSource.delete(userId, source, itemIdsToDelete)
+            localItemDataSource.delete(userAddress.userId, source, itemIdsToDelete)
         }
 
         return resAsEntities

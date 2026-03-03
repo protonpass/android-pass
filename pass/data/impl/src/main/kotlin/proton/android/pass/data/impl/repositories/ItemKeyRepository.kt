@@ -23,6 +23,7 @@ import me.proton.core.domain.entity.UserId
 import me.proton.core.user.domain.entity.AddressId
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.key.FolderKey
 import proton.android.pass.domain.key.ItemKey
 import proton.android.pass.domain.key.ShareKey
 
@@ -32,6 +33,7 @@ interface ItemKeyRepository {
         addressId: AddressId,
         shareId: ShareId,
         groupEmail: String?,
-        itemId: ItemId
+        itemId: ItemId,
+        currentFolderKey: FolderKey? = null
     ): Flow<Pair<ShareKey, ItemKey>>
 }

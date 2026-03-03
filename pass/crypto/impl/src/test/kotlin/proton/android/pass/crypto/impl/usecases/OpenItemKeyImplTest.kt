@@ -44,7 +44,7 @@ class OpenItemKeyImplTest {
     @Test
     fun canOpenItemKey() {
         val res = instance.invoke(
-            shareKey = getShareKey(),
+            inviteKey = getShareKey(),
             key = EncryptedItemKey(key = encryptedItemKey, keyRotation = KEY_ROTATION)
         )
 

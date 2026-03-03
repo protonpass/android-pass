@@ -315,9 +315,10 @@ class FakeItemRepository @Inject constructor() : ItemRepository {
     override suspend fun migrateItems(
         userId: UserId,
         items: Map<ShareId, List<ItemId>>,
-        destination: Share
+        destination: Share,
+        destinationFolderId: FolderId?
     ): MigrateItemsResult {
-        migrateItemMemory.add(MigrateItemPayload(userId, items, destination))
+        migrateItemMemory.add(MigrateItemPayload(userId, items, destination, destinationFolderId))
         return migrateItemResult.getOrThrow()
     }
 
@@ -383,7 +384,8 @@ class FakeItemRepository @Inject constructor() : ItemRepository {
     data class MigrateItemPayload(
         val userId: UserId,
         val items: Map<ShareId, List<ItemId>>,
-        val destination: Share
+        val destination: Share,
+        val destinationFolderId: FolderId? = null
     )
 
 }

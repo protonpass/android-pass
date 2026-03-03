@@ -19,6 +19,7 @@
 package proton.android.pass.data.api.work
 
 import me.proton.core.domain.entity.UserId
+import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.inappmessages.InAppMessageId
 import proton.android.pass.domain.inappmessages.InAppMessageStatus
 
@@ -35,5 +36,10 @@ sealed interface WorkerItem {
         val userId: UserId,
         val inAppMessageId: InAppMessageId,
         val inAppMessageStatus: InAppMessageStatus
+    ) : WorkerItem
+
+    data class FetchShareItems(
+        val userId: UserId,
+        val shareId: ShareId
     ) : WorkerItem
 }

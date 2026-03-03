@@ -68,12 +68,9 @@ open class FetchShareItemsWorker @AssistedInject constructor(
         fetchShareItemsStatusRepository.emit(shareId, FetchShareItemsStatus.NotStarted)
 
         return safeRunCatching {
-            safeRunCatching {
-                refreshFolders(userId, setOf(shareId))
-            }.onFailure {
-                PassLogger.w(TAG, "Failed refreshing folders for shareId=$shareId")
-                PassLogger.w(TAG, it)
-            }
+
+            refreshFolders(userId, setOf(shareId))
+
             itemRepository.downloadItemsAndObserveProgress(
                 userId = userId,
                 shareId = shareId,

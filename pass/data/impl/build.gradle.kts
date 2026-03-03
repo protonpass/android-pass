@@ -131,6 +131,7 @@ dependencies {
     testImplementation(projects.pass.crypto.fakes)
     testImplementation(projects.pass.data.fakes)
     testImplementation(projects.pass.network.fakes)
+    testImplementation(projects.pass.notifications.fakes)
     testImplementation(projects.pass.preferences.fakes)
 
     androidTestImplementation(projects.pass.account.fakes)

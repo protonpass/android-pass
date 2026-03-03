@@ -19,7 +19,6 @@
 package proton.android.pass.data.impl.usecases.sync
 
 import me.proton.core.domain.entity.UserId
-import proton.android.pass.common.api.safeRunCatching
 import proton.android.pass.data.api.repositories.ItemRepository
 import proton.android.pass.data.api.repositories.ItemRevision
 import proton.android.pass.data.api.repositories.ItemSyncStatus
@@ -52,12 +51,8 @@ class ForceSyncItemsImpl @Inject constructor(
     ): ForceSyncResult {
         if (shareIds.isEmpty()) return ForceSyncResult.Success
 
-        safeRunCatching {
-            refreshFolders(userId, shareIds)
-        }.onFailure {
-            PassLogger.w(TAG, "Failed to refresh folders for ids $shareIds")
-            PassLogger.w(TAG, it)
-        }
+        refreshFolders(userId, shareIds)
+
         val results: List<Result<Pair<ShareId, List<ItemRevision>>>> = runConcurrently(
             items = shareIds,
             block = { shareId ->

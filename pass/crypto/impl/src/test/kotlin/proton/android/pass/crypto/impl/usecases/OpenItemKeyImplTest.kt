@@ -25,9 +25,11 @@ import proton.android.pass.crypto.api.EncryptionKey
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.crypto.api.usecases.EncryptedItemKey
 import proton.android.pass.crypto.impl.context.FakeEncryptionContextProvider
+import proton.android.pass.domain.key.FolderKey
 import proton.android.pass.domain.key.ShareKey
 import kotlin.test.assertContentEquals
 import kotlin.test.assertEquals
+import kotlin.test.assertFailsWith
 
 @Suppress("UnderscoresInNumericLiterals")
 class OpenItemKeyImplTest {
@@ -59,16 +61,51 @@ class OpenItemKeyImplTest {
         }
     }
 
+    @Test
+    fun shareKeyRotationMismatchThrows() {
+        val exception = assertFailsWith<IllegalStateException> {
+            instance.invoke(
+                inviteKey = getShareKey(rotation = KEY_ROTATION + 1),
+                key = EncryptedItemKey(key = encryptedItemKey, keyRotation = KEY_ROTATION)
+            )
+        }
 
-    private fun getShareKey(): ShareKey {
+        assertEquals(
+            "Received ShareKey with rotation not matching ItemKey rotation " +
+                "[shareKey=${KEY_ROTATION + 1}] [itemKey=$KEY_ROTATION]",
+            exception.message
+        )
+    }
+
+    @Test
+    fun folderKeyRotationMismatchStillDecryptsItemKey() {
+        val res = instance.invoke(
+            inviteKey = getFolderKey(rotation = KEY_ROTATION + 1),
+            key = EncryptedItemKey(key = encryptedItemKey, keyRotation = KEY_ROTATION)
+        )
+
+        assertEquals(KEY_ROTATION, res.rotation)
+        assertEquals(encryptedItemKey, res.responseKey)
+    }
+
+    private fun getShareKey(rotation: Long = KEY_ROTATION): ShareKey {
         val decodedShareKey = Base64.decodeBase64(shareKeyBase64)
         return ShareKey(
-            rotation = KEY_ROTATION,
+            rotation = rotation,
             key = encryptionContextProvider.withEncryptionContext { encrypt(decodedShareKey) },
             responseKey = OpenItemImplTest.shareKeyBase64,
             createTime = 1664195804,
             isActive = true,
             userKeyId = "userKeyId"
+        )
+    }
+
+    private fun getFolderKey(rotation: Long = KEY_ROTATION): FolderKey {
+        val decodedShareKey = Base64.decodeBase64(shareKeyBase64)
+        return FolderKey(
+            rotation = rotation,
+            key = encryptionContextProvider.withEncryptionContext { encrypt(decodedShareKey) },
+            responseKey = OpenItemImplTest.shareKeyBase64
         )
     }
 

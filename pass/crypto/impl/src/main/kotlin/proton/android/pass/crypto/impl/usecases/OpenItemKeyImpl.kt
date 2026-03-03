@@ -25,6 +25,7 @@ import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.crypto.api.context.EncryptionTag
 import proton.android.pass.crypto.api.usecases.EncryptedItemKey
 import proton.android.pass.crypto.api.usecases.OpenItemKey
+import proton.android.pass.domain.key.FolderKey
 import proton.android.pass.domain.key.InviteKey
 import proton.android.pass.domain.key.ItemKey
 import proton.android.pass.domain.key.ShareKey
@@ -34,13 +35,9 @@ class OpenItemKeyImpl @Inject constructor(
     private val encryptionContextProvider: EncryptionContextProvider
 ) : OpenItemKey {
     override fun invoke(inviteKey: InviteKey, key: EncryptedItemKey): ItemKey {
-        // For ShareKey, validate that the rotation matches to catch usage mistakes.
-        // FolderKey uses a different rotation scheme, so the check is skipped.
-        if (inviteKey is ShareKey && inviteKey.rotation != key.keyRotation) {
-            throw IllegalStateException(
-                "Received ShareKey with rotation not matching ItemKey " +
-                    "rotation [shareKey=${inviteKey.rotation}] [itemKey=${key.keyRotation}]"
-            )
+        when (inviteKey) {
+            is ShareKey -> validateShareKeyRotation(inviteKey, key)
+            is FolderKey -> Unit
         }
 
         val decryptedInviteKey = encryptionContextProvider.withEncryptionContext {
@@ -61,5 +58,14 @@ class OpenItemKeyImpl @Inject constructor(
             key = reencryptedItemKey,
             responseKey = key.key
         )
+    }
+
+    private fun validateShareKeyRotation(shareKey: ShareKey, encryptedItemKey: EncryptedItemKey) {
+        if (shareKey.rotation != encryptedItemKey.keyRotation) {
+            throw IllegalStateException(
+                "Received ShareKey with rotation not matching ItemKey rotation " +
+                    "[shareKey=${shareKey.rotation}] [itemKey=${encryptedItemKey.keyRotation}]"
+            )
+        }
     }
 }

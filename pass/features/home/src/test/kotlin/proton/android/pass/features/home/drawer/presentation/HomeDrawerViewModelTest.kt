@@ -21,25 +21,21 @@ package proton.android.pass.features.home.drawer.presentation
 import app.cash.turbine.ReceiveTurbine
 import app.cash.turbine.test
 import com.google.common.truth.Truth.assertThat
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.test.runTest
 import me.proton.core.domain.entity.UserId
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import proton.android.pass.data.api.ItemCountSummary
-import proton.android.pass.data.api.usecases.ObserveItemCount
-import proton.android.pass.data.api.usecases.ObserveUpgradeInfo
-import proton.android.pass.data.api.usecases.ObserveVaultsWithItemCount
-import proton.android.pass.data.api.usecases.UpgradeInfo
-import proton.android.pass.data.api.usecases.capabilities.CanCreateVault
-import proton.android.pass.data.api.usecases.capabilities.CanOrganiseVaults
+import proton.android.pass.data.fakes.usecases.FakeCanCreateFolder
+import proton.android.pass.data.fakes.usecases.FakeCanCreateVault
+import proton.android.pass.data.fakes.usecases.FakeCanOrganiseVaults
+import proton.android.pass.data.fakes.usecases.FakeObserveItemCount
+import proton.android.pass.data.fakes.usecases.FakeObserveUpgradeInfo
+import proton.android.pass.data.fakes.usecases.FakeObserveVaultsWithItemCount
 import proton.android.pass.data.fakes.usecases.folders.FakeObserveFolders
 import proton.android.pass.domain.FolderId
-import proton.android.pass.domain.PlanType
 import proton.android.pass.domain.ShareId
-import proton.android.pass.domain.ShareSelection
 import proton.android.pass.domain.VaultWithItemCount
 import proton.android.pass.preferences.FakeFeatureFlagsPreferenceRepository
 import proton.android.pass.preferences.FeatureFlag
@@ -55,6 +51,7 @@ internal class HomeDrawerViewModelTest {
 
     private lateinit var observeVaultsWithItemCount: FakeObserveVaultsWithItemCount
     private lateinit var observeItemCount: FakeObserveItemCount
+    private lateinit var canCreateFolder: FakeCanCreateFolder
     private lateinit var canCreateVault: FakeCanCreateVault
     private lateinit var canOrganiseVaults: FakeCanOrganiseVaults
     private lateinit var observeUpgradeInfo: FakeObserveUpgradeInfo
@@ -68,6 +65,7 @@ internal class HomeDrawerViewModelTest {
     internal fun setup() {
         observeVaultsWithItemCount = FakeObserveVaultsWithItemCount()
         observeItemCount = FakeObserveItemCount()
+        canCreateFolder = FakeCanCreateFolder()
         canCreateVault = FakeCanCreateVault()
         canOrganiseVaults = FakeCanOrganiseVaults()
         observeUpgradeInfo = FakeObserveUpgradeInfo()
@@ -75,12 +73,14 @@ internal class HomeDrawerViewModelTest {
         homeSearchOptionsRepository = FakeHomeSearchOptionsRepository()
         observeFolders = FakeObserveFolders()
 
+        canCreateFolder.sendValue(true)
         canCreateVault.sendValue(true)
         canOrganiseVaults.sendValue(true)
-        observeUpgradeInfo.sendResult(FakeObserveUpgradeInfo.Default)
-        observeItemCount.sendResult(ItemCountSummary.Initial)
+        observeUpgradeInfo.setResult(FakeObserveUpgradeInfo.DEFAULT)
+        observeItemCount.sendResult(Result.success(ItemCountSummary.Initial))
 
         viewModel = HomeDrawerViewModel(
+            canCreateFolder = canCreateFolder,
             canCreateVault = canCreateVault,
             canOrganiseVaults = canOrganiseVaults,
             observeVaultsWithItemCount = observeVaultsWithItemCount,
@@ -108,12 +108,14 @@ internal class HomeDrawerViewModelTest {
 
         featureFlags.set(FeatureFlag.PASS_FOLDERS, true)
         observeFolders.sendResult(userId, shareId, Result.success(listOf(folder)))
-        observeVaultsWithItemCount.send(
-            listOf(
-                VaultWithItemCount(
-                    vault = vault,
-                    activeItemCount = 2,
-                    trashedItemCount = 0
+        observeVaultsWithItemCount.sendResult(
+            Result.success(
+                listOf(
+                    VaultWithItemCount(
+                        vault = vault,
+                        activeItemCount = 2,
+                        trashedItemCount = 0
+                    )
                 )
             )
         )
@@ -145,12 +147,14 @@ internal class HomeDrawerViewModelTest {
         featureFlags.set(FeatureFlag.PASS_FOLDERS, true)
         observeFolders.sendResult(userId, shareId, Result.success(listOf(folder)))
 
-        observeVaultsWithItemCount.send(
-            listOf(
-                VaultWithItemCount(
-                    vault = vault,
-                    activeItemCount = 1,
-                    trashedItemCount = 0
+        observeVaultsWithItemCount.sendResult(
+            Result.success(
+                listOf(
+                    VaultWithItemCount(
+                        vault = vault,
+                        activeItemCount = 1,
+                        trashedItemCount = 0
+                    )
                 )
             )
         )
@@ -160,12 +164,14 @@ internal class HomeDrawerViewModelTest {
 
             assertThat(observeFolders.invocationCount(userId, shareId)).isEqualTo(1)
 
-            observeVaultsWithItemCount.send(
-                listOf(
-                    VaultWithItemCount(
-                        vault = vault,
-                        activeItemCount = 9,
-                        trashedItemCount = 0
+            observeVaultsWithItemCount.sendResult(
+                Result.success(
+                    listOf(
+                        VaultWithItemCount(
+                            vault = vault,
+                            activeItemCount = 9,
+                            trashedItemCount = 0
+                        )
                     )
                 )
             )
@@ -187,10 +193,12 @@ internal class HomeDrawerViewModelTest {
 
         featureFlags.set(FeatureFlag.PASS_FOLDERS, true)
 
-        observeVaultsWithItemCount.send(
-            listOf(
-                VaultWithItemCount(vault = firstVault, activeItemCount = 1, trashedItemCount = 0),
-                VaultWithItemCount(vault = secondVault, activeItemCount = 2, trashedItemCount = 0)
+        observeVaultsWithItemCount.sendResult(
+            Result.success(
+                listOf(
+                    VaultWithItemCount(vault = firstVault, activeItemCount = 1, trashedItemCount = 0),
+                    VaultWithItemCount(vault = secondVault, activeItemCount = 2, trashedItemCount = 0)
+                )
             )
         )
 
@@ -199,10 +207,12 @@ internal class HomeDrawerViewModelTest {
             assertThat(observeFolders.invocationCount(userId, firstShareId)).isEqualTo(1)
             assertThat(observeFolders.invocationCount(userId, secondShareId)).isEqualTo(1)
 
-            observeVaultsWithItemCount.send(
-                listOf(
-                    VaultWithItemCount(vault = secondVault, activeItemCount = 3, trashedItemCount = 0),
-                    VaultWithItemCount(vault = firstVault, activeItemCount = 4, trashedItemCount = 0)
+            observeVaultsWithItemCount.sendResult(
+                Result.success(
+                    listOf(
+                        VaultWithItemCount(vault = secondVault, activeItemCount = 3, trashedItemCount = 0),
+                        VaultWithItemCount(vault = firstVault, activeItemCount = 4, trashedItemCount = 0)
+                    )
                 )
             )
             awaitNextMatching {
@@ -223,10 +233,12 @@ internal class HomeDrawerViewModelTest {
 
         featureFlags.set(FeatureFlag.PASS_FOLDERS, true)
 
-        observeVaultsWithItemCount.send(
-            listOf(
-                VaultWithItemCount(vault = vault, activeItemCount = 1, trashedItemCount = 0),
-                VaultWithItemCount(vault = vault, activeItemCount = 2, trashedItemCount = 0)
+        observeVaultsWithItemCount.sendResult(
+            Result.success(
+                listOf(
+                    VaultWithItemCount(vault = vault, activeItemCount = 1, trashedItemCount = 0),
+                    VaultWithItemCount(vault = vault, activeItemCount = 2, trashedItemCount = 0)
+                )
             )
         )
 
@@ -242,79 +254,6 @@ internal class HomeDrawerViewModelTest {
         while (true) {
             val state = awaitItem()
             if (predicate(state)) return state
-        }
-    }
-
-    private class FakeObserveVaultsWithItemCount : ObserveVaultsWithItemCount {
-        private val flow = MutableStateFlow<List<VaultWithItemCount>>(emptyList())
-
-        fun send(value: List<VaultWithItemCount>) {
-            flow.value = value
-        }
-
-        override fun invoke(includeHidden: Boolean): Flow<List<VaultWithItemCount>> = flow
-    }
-
-    private class FakeObserveItemCount : ObserveItemCount {
-        private val flow = MutableStateFlow(ItemCountSummary.Initial)
-
-        fun sendResult(value: ItemCountSummary) {
-            flow.value = value
-        }
-
-        override fun invoke(
-            itemState: proton.android.pass.domain.ItemState?,
-            shareSelection: ShareSelection,
-            applyItemStateToSharedItems: Boolean,
-            includeHiddenVault: Boolean
-        ): Flow<ItemCountSummary> = flow
-    }
-
-    private class FakeCanCreateVault : CanCreateVault {
-        private val flow = MutableStateFlow(true)
-
-        fun sendValue(value: Boolean) {
-            flow.value = value
-        }
-
-        override fun invoke(): Flow<Boolean> = flow
-    }
-
-    private class FakeCanOrganiseVaults : CanOrganiseVaults {
-        private val flow = MutableStateFlow(true)
-
-        fun sendValue(value: Boolean) {
-            flow.value = value
-        }
-
-        override fun invoke(): Flow<Boolean> = flow
-    }
-
-    private class FakeObserveUpgradeInfo : ObserveUpgradeInfo {
-        private val flow = MutableStateFlow(Default)
-
-        fun sendResult(value: UpgradeInfo) {
-            flow.value = value
-        }
-
-        override fun invoke(userId: UserId?): Flow<UpgradeInfo> = flow
-
-        companion object {
-            val Default = UpgradeInfo(
-                isUpgradeAvailable = false,
-                isSubscriptionAvailable = false,
-                plan = proton.android.pass.domain.Plan(
-                    planType = PlanType.Free(name = "free", displayName = "Free"),
-                    vaultLimit = proton.android.pass.domain.PlanLimit.Limited(0),
-                    aliasLimit = proton.android.pass.domain.PlanLimit.Limited(0),
-                    totpLimit = proton.android.pass.domain.PlanLimit.Limited(0),
-                    updatedAt = 0,
-                    hideUpgrade = false
-                ),
-                totalVaults = 0,
-                totalAlias = 0,
-                totalTotp = 0
-            )
         }
     }
 

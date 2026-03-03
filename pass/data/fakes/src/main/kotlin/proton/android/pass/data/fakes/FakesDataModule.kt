@@ -157,6 +157,7 @@ import proton.android.pass.data.api.usecases.breach.UpdateGlobalProtonAddressesM
 import proton.android.pass.data.api.usecases.breach.UpdateProtonAddressMonitorState
 import proton.android.pass.data.api.usecases.breach.VerifyBreachCustomEmail
 import proton.android.pass.data.api.usecases.capabilities.CanCreateItemInVault
+import proton.android.pass.data.api.usecases.capabilities.CanCreateFolder
 import proton.android.pass.data.api.usecases.capabilities.CanCreateVault
 import proton.android.pass.data.api.usecases.capabilities.CanManageVaultAccess
 import proton.android.pass.data.api.usecases.capabilities.CanMigrateVault
@@ -277,6 +278,7 @@ import proton.android.pass.data.fakes.usecases.FakeAcceptInvite
 import proton.android.pass.data.fakes.usecases.FakeAddSearchEntry
 import proton.android.pass.data.fakes.usecases.FakeApplyPendingEvents
 import proton.android.pass.data.fakes.usecases.FakeCanCreateItemInVault
+import proton.android.pass.data.fakes.usecases.FakeCanCreateFolder
 import proton.android.pass.data.fakes.usecases.FakeCanCreateVault
 import proton.android.pass.data.fakes.usecases.FakeCanDisplayTotp
 import proton.android.pass.data.fakes.usecases.FakeCanManageVaultAccess
@@ -773,6 +775,9 @@ abstract class FakesDataModule {
 
     @Binds
     abstract fun bindTransferOwnership(impl: FakeTransferVaultOwnership): TransferVaultOwnership
+
+    @Binds
+    abstract fun bindCanCreateFolder(impl: FakeCanCreateFolder): CanCreateFolder
 
     @Binds
     abstract fun bindCanCreateVault(impl: FakeCanCreateVault): CanCreateVault

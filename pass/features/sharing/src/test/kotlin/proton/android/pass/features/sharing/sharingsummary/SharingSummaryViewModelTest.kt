@@ -201,7 +201,7 @@ internal class SharingSummaryViewModelTest {
         val expectedMessage = InviteSentError
         inviteToItem.setResult(shouldFail = true)
 
-        viewModel.onShareItem(ItemId("testId"), ItemCategory.Note)
+        viewModel.onShareItem(ItemId("testId"), null, ItemCategory.Note)
 
         val message = snackbarDispatcher.snackbarMessage.first().value()
         assertThat(message).isEqualTo(expectedMessage)
@@ -247,7 +247,7 @@ internal class SharingSummaryViewModelTest {
         val viewModel = createViewModel(isItemSharing = false)
         val expectedMessage = InviteSentSuccess
 
-        viewModel.onShareItem(ItemId("testId"), ItemCategory.Note)
+        viewModel.onShareItem(ItemId("testId"), null, ItemCategory.Note)
 
         val message = snackbarDispatcher.snackbarMessage.first().value()
         assertThat(message).isEqualTo(expectedMessage)

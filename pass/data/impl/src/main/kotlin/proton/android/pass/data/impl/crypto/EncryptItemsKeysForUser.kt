@@ -25,8 +25,11 @@ import proton.android.pass.crypto.api.usecases.invites.EncryptInviteKeys
 import proton.android.pass.crypto.api.usecases.invites.EncryptedInviteShareKeyList
 import proton.android.pass.data.api.crypto.GetShareAndItemKey
 import proton.android.pass.data.api.usecases.GetAllKeysByAddress
+import proton.android.pass.data.impl.repositories.FolderKeyRepository
+import proton.android.pass.domain.FolderId
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.key.FolderKey
 import proton.android.pass.log.api.PassLogger
 import javax.inject.Inject
 
@@ -35,6 +38,7 @@ interface EncryptItemsKeysForUser {
     suspend operator fun invoke(
         shareId: ShareId,
         itemId: ItemId,
+        folderId: FolderId?,
         userAddress: UserAddress,
         targetEmail: String
     ): Result<EncryptedInviteShareKeyList>
@@ -44,17 +48,29 @@ interface EncryptItemsKeysForUser {
 class EncryptItemsKeysForUserImpl @Inject constructor(
     private val getAllKeysByAddress: GetAllKeysByAddress,
     private val encryptInviteKeys: EncryptInviteKeys,
-    private val getShareAndItemKey: GetShareAndItemKey
+    private val getShareAndItemKey: GetShareAndItemKey,
+    private val folderKeyRepository: FolderKeyRepository
 ) : EncryptItemsKeysForUser {
 
     @Suppress("ReturnCount")
     override suspend fun invoke(
         shareId: ShareId,
         itemId: ItemId,
+        folderId: FolderId?,
         userAddress: UserAddress,
         targetEmail: String
     ): Result<EncryptedInviteShareKeyList> {
-        val (_, itemKey) = getShareAndItemKey(userAddress, shareId, itemId)
+        val folderKey = resolveFolderKeyOverride(
+            userAddress = userAddress,
+            shareId = shareId,
+            folderId = folderId
+        ).getOrElse { return Result.failure(it) }
+        val (_, itemKey) = getShareAndItemKey(
+            userAddress = userAddress,
+            shareId = shareId,
+            itemId = itemId,
+            decryptionKeyOverride = folderKey
+        )
 
         val inviterAddressKey = userAddress.keys.primary()?.privateKey
             ?: return Result.failure(IllegalStateException("No primary address key for inviter user"))
@@ -81,6 +97,19 @@ class EncryptItemsKeysForUserImpl @Inject constructor(
             }
         )
 
+    }
+
+    private suspend fun resolveFolderKeyOverride(
+        userAddress: UserAddress,
+        shareId: ShareId,
+        folderId: FolderId?
+    ): Result<FolderKey?> = safeRunCatching {
+        folderId ?: return@safeRunCatching null
+        folderKeyRepository.getFolderKey(
+            userId = userAddress.userId,
+            shareId = shareId,
+            folderId = folderId
+        ) ?: throw IllegalStateException("Folder key not found for folderId=${folderId.id}")
     }
 
     private companion object {

@@ -25,24 +25,51 @@ import proton.android.pass.common.api.FlowUtils.testFlow
 import proton.android.pass.data.impl.repositories.ItemKeyRepository
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
-import proton.android.pass.domain.key.FolderKey
 import proton.android.pass.domain.key.ItemKey
 import proton.android.pass.domain.key.ShareKey
 
 class FakeItemKeyRepository : ItemKeyRepository {
 
-    private var getLatestItemKeyFlow = testFlow<Pair<ShareKey, ItemKey>>()
+    private var getLatestItemKeyFlow = testFlow<ItemKey>()
+    private var getLatestShareAndItemKeyFlow = testFlow<Pair<ShareKey, ItemKey>>()
+    var getLatestItemKeyCallCount: Int = 0
+        private set
+    var getLatestShareAndItemKeyCallCount: Int = 0
+        private set
+    var lastGetLatestItemKeyScope: ItemKeyRepository.Scope.SharedVault? = null
+        private set
+    var lastGetLatestShareAndItemKeyScope: ItemKeyRepository.Scope? = null
+        private set
 
-    fun emitGetLatestItemKey(value: Pair<ShareKey, ItemKey>) {
+    fun emitGetLatestItemKey(value: ItemKey) {
         getLatestItemKeyFlow.tryEmit(value)
+    }
+
+    fun emitGetLatestShareAndItemKey(value: Pair<ShareKey, ItemKey>) {
+        getLatestShareAndItemKeyFlow.tryEmit(value)
     }
 
     override fun getLatestItemKey(
         userId: UserId,
         addressId: AddressId,
         shareId: ShareId,
-        groupEmail: String?,
         itemId: ItemId,
-        currentFolderKey: FolderKey?
-    ): Flow<Pair<ShareKey, ItemKey>> = getLatestItemKeyFlow
+        scope: ItemKeyRepository.Scope.SharedVault
+    ): Flow<ItemKey> {
+        getLatestItemKeyCallCount++
+        lastGetLatestItemKeyScope = scope
+        return getLatestItemKeyFlow
+    }
+
+    override fun getLatestShareAndItemKey(
+        userId: UserId,
+        addressId: AddressId,
+        shareId: ShareId,
+        itemId: ItemId,
+        scope: ItemKeyRepository.Scope
+    ): Flow<Pair<ShareKey, ItemKey>> {
+        getLatestShareAndItemKeyCallCount++
+        lastGetLatestShareAndItemKeyScope = scope
+        return getLatestShareAndItemKeyFlow
+    }
 }

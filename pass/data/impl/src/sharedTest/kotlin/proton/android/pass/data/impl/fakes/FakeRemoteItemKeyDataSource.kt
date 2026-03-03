@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2024-2026 Proton AG
+ * Copyright (c) 2026 Proton AG
  * This file is part of Proton AG and Proton Pass.
  *
  * Proton Pass is free software: you can redistribute it and/or modify
@@ -16,34 +16,31 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.data.fakes.usecases.invites
+package proton.android.pass.data.impl.fakes
 
-import proton.android.pass.data.api.repositories.InviteTarget
-import proton.android.pass.data.api.usecases.invites.InviteToItem
-import proton.android.pass.domain.FolderId
+import me.proton.core.domain.entity.UserId
+import proton.android.pass.data.impl.remote.RemoteItemKeyDataSource
+import proton.android.pass.data.impl.responses.ItemLatestKeyResponse
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
-import javax.inject.Inject
-import javax.inject.Singleton
 
-@Singleton
-class FakeInviteToItem @Inject constructor() : InviteToItem {
+class FakeRemoteItemKeyDataSource : RemoteItemKeyDataSource {
 
-    private var shouldFail = false
+    var fetchLatestItemKeyCallCount: Int = 0
+        private set
 
-    fun setResult(shouldFail: Boolean) {
-        this.shouldFail = shouldFail
+    private var response: ItemLatestKeyResponse? = null
+
+    fun setFetchLatestItemKeyResponse(value: ItemLatestKeyResponse) {
+        response = value
     }
 
-    override suspend fun invoke(
+    override suspend fun fetchLatestItemKey(
+        userId: UserId,
         shareId: ShareId,
-        itemId: ItemId,
-        folderId: FolderId?,
-        inviteTargets: List<InviteTarget>
-    ) {
-        if (shouldFail) {
-            throw IllegalStateException("test exception")
-        }
+        itemId: ItemId
+    ): ItemLatestKeyResponse {
+        fetchLatestItemKeyCallCount++
+        return response ?: throw IllegalStateException("fetchLatestItemKey response not set")
     }
-
 }

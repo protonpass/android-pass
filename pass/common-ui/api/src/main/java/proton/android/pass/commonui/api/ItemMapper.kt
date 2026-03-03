@@ -38,6 +38,7 @@ fun Item.toUiModel(context: EncryptionContext): ItemUiModel = ItemUiModel(
     lastAutofillTime = lastAutofillTime.value(),
     isPinned = isPinned,
     pinTime = pinTime.value(),
+    folderId = folderId,
     category = itemType.category,
     revision = revision,
     shareCount = shareCount,

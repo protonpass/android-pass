@@ -23,18 +23,17 @@ import me.proton.core.user.domain.entity.UserAddress
 import proton.android.pass.data.api.crypto.GetShareAndItemKey
 import proton.android.pass.data.api.repositories.ShareRepository
 import proton.android.pass.data.impl.repositories.ItemKeyRepository
-import proton.android.pass.data.impl.repositories.ShareKeyRepository
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.Share
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.key.FolderKey
+import proton.android.pass.domain.key.InviteKey
 import proton.android.pass.domain.key.ItemKey
 import proton.android.pass.domain.key.ShareKey
 import javax.inject.Inject
 
 class GetShareAndItemKeyImpl @Inject constructor(
     private val shareRepository: ShareRepository,
-    private val shareKeyRepository: ShareKeyRepository,
     private val itemKeyRepository: ItemKeyRepository
 ) : GetShareAndItemKey {
 
@@ -42,28 +41,30 @@ class GetShareAndItemKeyImpl @Inject constructor(
         userAddress: UserAddress,
         shareId: ShareId,
         itemId: ItemId,
-        currentFolderKey: FolderKey?
+        decryptionKeyOverride: InviteKey?
     ): Pair<ShareKey, ItemKey> = shareRepository.getById(userAddress.userId, shareId).let { share ->
-        when (share) {
-            is Share.Item -> shareKeyRepository.getLatestKeyForShare(shareId)
-                .first()
-                .let { shareKey ->
-                    shareKey to ItemKey(
-                        rotation = shareKey.rotation,
-                        key = shareKey.key,
-                        responseKey = shareKey.responseKey
-                    )
-                }
-
-            is Share.Vault -> itemKeyRepository.getLatestItemKey(
-                userId = userAddress.userId,
-                addressId = userAddress.addressId,
-                shareId = shareId,
-                itemId = itemId,
+        val scope = when (share) {
+            is Share.Item -> ItemKeyRepository.Scope.SharedItem
+            is Share.Vault -> ItemKeyRepository.Scope.SharedVault(
                 groupEmail = share.groupEmail,
-                currentFolderKey = currentFolderKey
-            ).first()
+                decryptionSource = decryptionSourceForVault(decryptionKeyOverride)
+            )
         }
+        itemKeyRepository.getLatestShareAndItemKey(
+            userId = userAddress.userId,
+            addressId = userAddress.addressId,
+            shareId = shareId,
+            itemId = itemId,
+            scope = scope
+        ).first()
     }
 
+    private fun decryptionSourceForVault(decryptionKeyOverride: InviteKey?): ItemKeyRepository.VaultDecryptionSource =
+        when (decryptionKeyOverride) {
+            null -> ItemKeyRepository.VaultDecryptionSource.Share
+            is FolderKey -> ItemKeyRepository.VaultDecryptionSource.Folder(decryptionKeyOverride)
+            else -> throw IllegalArgumentException(
+                "Vault key override must be FolderKey when provided [type=${decryptionKeyOverride::class.simpleName}]"
+            )
+        }
 }

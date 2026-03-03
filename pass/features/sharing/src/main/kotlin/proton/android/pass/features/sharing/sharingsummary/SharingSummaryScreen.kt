@@ -70,6 +70,7 @@ fun SharingSummaryScreen(
                 is SharingSummaryUiEvent.OnShareItemClick -> {
                     onShareItem(
                         itemId = uiEvent.itemId,
+                        folderId = uiEvent.folderId,
                         itemCategory = uiEvent.itemCategory
                     )
                 }

@@ -54,6 +54,7 @@ import proton.android.pass.data.api.usecases.GetVaultWithItemCountById
 import proton.android.pass.data.api.usecases.InviteToVault
 import proton.android.pass.data.api.usecases.ObserveItemById
 import proton.android.pass.data.api.usecases.invites.InviteToItem
+import proton.android.pass.domain.FolderId
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.items.ItemCategory
@@ -150,7 +151,11 @@ class SharingSummaryViewModel @Inject constructor(
         eventFlow.compareAndSet(event, SharingSummaryEvent.Idle)
     }
 
-    internal fun onShareItem(itemId: ItemId, itemCategory: ItemCategory) {
+    internal fun onShareItem(
+        itemId: ItemId,
+        folderId: FolderId?,
+        itemCategory: ItemCategory
+    ) {
         viewModelScope.launch {
             isLoadingStateFlow.update { IsLoadingState.Loading }
 
@@ -158,6 +163,7 @@ class SharingSummaryViewModel @Inject constructor(
                 inviteToItem(
                     shareId = shareId,
                     itemId = itemId,
+                    folderId = folderId,
                     inviteTargets = stateFlow.value.inviteTargets
                 )
             }.onFailure { error ->

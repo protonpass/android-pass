@@ -19,6 +19,7 @@
 package proton.android.pass.data.api.usecases.invites
 
 import proton.android.pass.data.api.repositories.InviteTarget
+import proton.android.pass.domain.FolderId
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 
@@ -27,6 +28,7 @@ interface InviteToItem {
     suspend operator fun invoke(
         shareId: ShareId,
         itemId: ItemId,
+        folderId: FolderId? = null,
         inviteTargets: List<InviteTarget>
     )
 

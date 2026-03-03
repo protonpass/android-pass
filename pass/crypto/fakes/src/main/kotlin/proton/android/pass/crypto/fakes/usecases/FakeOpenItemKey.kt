@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2024-2026 Proton AG
+ * Copyright (c) 2026 Proton AG
  * This file is part of Proton AG and Proton Pass.
  *
  * Proton Pass is free software: you can redistribute it and/or modify
@@ -16,22 +16,29 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.data.api.crypto
+package proton.android.pass.crypto.fakes.usecases
 
-import me.proton.core.user.domain.entity.UserAddress
-import proton.android.pass.domain.ItemId
-import proton.android.pass.domain.ShareId
+import proton.android.pass.crypto.api.usecases.EncryptedItemKey
+import proton.android.pass.crypto.api.usecases.OpenItemKey
 import proton.android.pass.domain.key.InviteKey
 import proton.android.pass.domain.key.ItemKey
-import proton.android.pass.domain.key.ShareKey
 
-interface GetShareAndItemKey {
+class FakeOpenItemKey : OpenItemKey {
 
-    suspend operator fun invoke(
-        userAddress: UserAddress,
-        shareId: ShareId,
-        itemId: ItemId,
-        decryptionKeyOverride: InviteKey? = null
-    ): Pair<ShareKey, ItemKey>
+    var lastInviteKey: InviteKey? = null
+        private set
+    var lastEncryptedItemKey: EncryptedItemKey? = null
+        private set
 
+    private var result: ItemKey? = null
+
+    fun setResult(value: ItemKey) {
+        result = value
+    }
+
+    override fun invoke(inviteKey: InviteKey, key: EncryptedItemKey): ItemKey {
+        lastInviteKey = inviteKey
+        lastEncryptedItemKey = key
+        return result ?: throw IllegalStateException("result not set")
+    }
 }

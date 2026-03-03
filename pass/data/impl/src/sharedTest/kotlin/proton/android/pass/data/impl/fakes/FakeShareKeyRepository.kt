@@ -32,6 +32,10 @@ class FakeShareKeyRepository : ShareKeyRepository {
     private var getShareKeysFlow = testFlow<List<ShareKey>>()
     private var getLatestKeyForShareFlow = testFlow<ShareKey>()
     private var getShareKeyForRotationFlow = testFlow<ShareKey?>()
+    var getLatestKeyForShareCallCount: Int = 0
+        private set
+    var getShareKeyForRotationCallCount: Int = 0
+        private set
 
     fun emitGetShareKeys(value: List<ShareKey>) {
         getShareKeysFlow.tryEmit(value)
@@ -54,7 +58,10 @@ class FakeShareKeyRepository : ShareKeyRepository {
         shouldStoreLocally: Boolean
     ): Flow<List<ShareKey>> = getShareKeysFlow
 
-    override fun getLatestKeyForShare(shareId: ShareId): Flow<ShareKey> = getLatestKeyForShareFlow
+    override fun getLatestKeyForShare(shareId: ShareId): Flow<ShareKey> {
+        getLatestKeyForShareCallCount++
+        return getLatestKeyForShareFlow
+    }
 
     override fun getShareKeyForRotation(
         userId: UserId,
@@ -62,7 +69,10 @@ class FakeShareKeyRepository : ShareKeyRepository {
         shareId: ShareId,
         groupEmail: String?,
         keyRotation: Long
-    ): Flow<ShareKey?> = getShareKeyForRotationFlow
+    ): Flow<ShareKey?> {
+        getShareKeyForRotationCallCount++
+        return getShareKeyForRotationFlow
+    }
 
     override suspend fun saveShareKeys(shareKeyEntities: List<ShareKeyEntity>) {
 

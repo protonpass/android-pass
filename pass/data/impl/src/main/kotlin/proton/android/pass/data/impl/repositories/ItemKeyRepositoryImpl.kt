@@ -29,7 +29,6 @@ import proton.android.pass.data.impl.extensions.toCrypto
 import proton.android.pass.data.impl.remote.RemoteItemKeyDataSource
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
-import proton.android.pass.domain.key.FolderKey
 import proton.android.pass.domain.key.ItemKey
 import proton.android.pass.domain.key.ShareKey
 import javax.inject.Inject
@@ -44,28 +43,80 @@ class ItemKeyRepositoryImpl @Inject constructor(
         userId: UserId,
         addressId: AddressId,
         shareId: ShareId,
-        groupEmail: String?,
         itemId: ItemId,
-        currentFolderKey: FolderKey?
-    ): Flow<Pair<ShareKey, ItemKey>> = flow {
+        scope: ItemKeyRepository.Scope.SharedVault
+    ): Flow<ItemKey> = flow {
         val response = remoteItemKeyRepository.fetchLatestItemKey(userId, shareId, itemId)
-        val shareKey = shareKeyRepository
-            .getShareKeyForRotation(
+        val inviteKey = when (val source = scope.decryptionSource) {
+            ItemKeyRepository.VaultDecryptionSource.Share -> resolveShareKey(
                 userId = userId,
                 addressId = addressId,
                 shareId = shareId,
-                groupEmail = groupEmail,
+                groupEmail = scope.groupEmail,
                 keyRotation = response.keyRotation
             )
-            .first()
 
-        if (shareKey == null) {
-            throw KeyNotFound("Could not find ShareKey [shareId=${shareId.id}] [keyRotation=${response.keyRotation}]")
+            is ItemKeyRepository.VaultDecryptionSource.Folder -> source.folderKey
         }
-
-        // When the item is currently in a folder, its key is encrypted with the folder key.
-        // Use the folder key for decryption in that case; otherwise fall back to the share key.
-        val itemKey = openItemKey(currentFolderKey ?: shareKey, response.toCrypto())
-        emit(shareKey to itemKey)
+        emit(openItemKey(inviteKey, response.toCrypto()))
     }
+
+    override fun getLatestShareAndItemKey(
+        userId: UserId,
+        addressId: AddressId,
+        shareId: ShareId,
+        itemId: ItemId,
+        scope: ItemKeyRepository.Scope
+    ): Flow<Pair<ShareKey, ItemKey>> = flow {
+        when (scope) {
+            ItemKeyRepository.Scope.SharedItem -> {
+                val shareKey = shareKeyRepository.getLatestKeyForShare(shareId).first()
+                emit(
+                    shareKey to ItemKey(
+                        rotation = shareKey.rotation,
+                        key = shareKey.key,
+                        responseKey = shareKey.responseKey
+                    )
+                )
+            }
+
+            is ItemKeyRepository.Scope.SharedVault -> {
+                val response = remoteItemKeyRepository.fetchLatestItemKey(userId, shareId, itemId)
+                val shareKey = resolveShareKey(
+                    userId = userId,
+                    addressId = addressId,
+                    shareId = shareId,
+                    groupEmail = scope.groupEmail,
+                    keyRotation = response.keyRotation
+                )
+                val itemKey = openItemKey(
+                    when (val source = scope.decryptionSource) {
+                        ItemKeyRepository.VaultDecryptionSource.Share -> shareKey
+                        is ItemKeyRepository.VaultDecryptionSource.Folder -> source.folderKey
+                    },
+                    response.toCrypto()
+                )
+                emit(shareKey to itemKey)
+            }
+        }
+    }
+
+    private suspend fun resolveShareKey(
+        userId: UserId,
+        addressId: AddressId,
+        shareId: ShareId,
+        groupEmail: String?,
+        keyRotation: Long
+    ): ShareKey = shareKeyRepository
+        .getShareKeyForRotation(
+            userId = userId,
+            addressId = addressId,
+            shareId = shareId,
+            groupEmail = groupEmail,
+            keyRotation = keyRotation
+        )
+        .first()
+        ?: throw KeyNotFound(
+            "Could not find ShareKey [shareId=${shareId.id}] [keyRotation=$keyRotation]"
+        )
 }

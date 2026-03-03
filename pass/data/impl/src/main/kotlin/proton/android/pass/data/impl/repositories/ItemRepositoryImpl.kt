@@ -1137,7 +1137,7 @@ class ItemRepositoryImpl @Inject constructor(
                 userAddress = userAddress,
                 shareId = shareId,
                 itemId = ItemId(item.id),
-                currentFolderKey = currentFolderKey
+                decryptionKeyOverride = currentFolderKey
             )
             val reencryptedKeys = migrateItem.migrate(
                 destinationKey = folderKey,
@@ -1456,7 +1456,7 @@ class ItemRepositoryImpl @Inject constructor(
                 userAddress = userAddress,
                 shareId = source,
                 itemId = ItemId(item.id),
-                currentFolderKey = currentFolderKey
+                decryptionKeyOverride = currentFolderKey
             )
             val encryptedMigrateItemBody = migrateItem.migrate(
                 encryptionKey,

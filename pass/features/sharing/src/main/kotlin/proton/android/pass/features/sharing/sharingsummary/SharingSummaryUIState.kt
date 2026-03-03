@@ -100,6 +100,7 @@ internal sealed class SharingSummaryState {
     ) : SharingSummaryState() {
 
         override val shareType: ShareType = ShareType.Item
+        internal val folderId = itemUiModel.folderId
 
         internal val itemId: ItemId = itemUiModel.id
 

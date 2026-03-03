@@ -32,5 +32,6 @@ data class UserAccessData(
     val storageAllowed: Boolean,
     val storageUsed: Long,
     val storageQuota: Long,
-    val storageMaxFileSize: Long
+    val storageMaxFileSize: Long,
+    val folderAllowed: Boolean
 )

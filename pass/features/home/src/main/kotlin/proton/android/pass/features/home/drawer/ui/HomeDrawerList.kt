@@ -22,13 +22,22 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.mutableStateMapOf
+import androidx.compose.runtime.saveable.mapSaver
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
+import proton.android.pass.common.api.toOption
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonuimodels.api.FolderUiModel
 import proton.android.pass.composecomponents.impl.extension.toColor
 import proton.android.pass.composecomponents.impl.extension.toResource
+import proton.android.pass.composecomponents.impl.folders.FolderTree
+import proton.android.pass.composecomponents.impl.folders.containsFolderId
+import proton.android.pass.composecomponents.impl.folders.expandAncestors
 import proton.android.pass.composecomponents.impl.form.PassDivider
 import proton.android.pass.domain.FolderId
 import proton.android.pass.domain.ShareId
@@ -46,6 +55,7 @@ internal fun HomeDrawerList(
     vaultSelectionOption: VaultSelectionOption,
     allItemsCount: Int,
     foldersEnabled: Boolean,
+    canCreateFolder: Boolean,
     needsToUpgrade: Boolean,
     hasSharedWithMeItems: Boolean,
     sharedWithMeItemsCount: Int,
@@ -86,6 +96,12 @@ internal fun HomeDrawerList(
                 (vaultSelectionOption as? VaultSelectionOption.Folder)
                     ?.takeIf { it.shareId == shareId }
                     ?.folderId
+            val folders = vaultFolders[shareId] ?: emptyList()
+            val shouldExpandVault = foldersEnabled &&
+                selectedFolderIdForVault != null &&
+                folders.isNotEmpty() &&
+                containsFolderId(folders, selectedFolderIdForVault)
+
             HomeDrawerRow(
                 shareIconRes = vaultShare.vault.icon.toResource(),
                 iconColor = vaultShare.vault.color.toColor(),
@@ -96,7 +112,6 @@ internal fun HomeDrawerList(
                 isSelected = vaultSelectionOption == VaultSelectionOption.Vault(shareId) ||
                     vaultSelectionOption is VaultSelectionOption.Folder &&
                     vaultSelectionOption.shareId == shareId,
-                selectedFolderId = selectedFolderIdForVault,
                 onClick = {
                     HomeDrawerUiEvent.OnVaultClick(
                         shareId = vaultShare.vault.shareId
@@ -114,30 +129,64 @@ internal fun HomeDrawerList(
                         shareId = vaultShare.vault.shareId
                     ).also(onUiEvent)
                 },
-                foldersEnabled = foldersEnabled,
-                onMenuOptionsClickFromFolder = {
-                    HomeDrawerUiEvent.OnFolderOptionsClick(
-                        shareId = vaultShare.vault.shareId,
-                        folderId = it
-                    ).also(onUiEvent)
-                },
-                onFolderClick = {
-                    HomeDrawerUiEvent.OnFolderClick(
-                        shareId = vaultShare.vault.shareId,
-                        folderId = it
-                    ).also(onUiEvent)
-                },
-                onCreateFolderClick = {
-                    if (needsToUpgrade) {
-                        onUiEvent(HomeDrawerUiEvent.OnUpgradeClick)
-                    } else {
-                        HomeDrawerUiEvent.OnCreateFolderClick(
-                            shareId = vaultShare.vault.shareId
-                        ).also(onUiEvent)
+                expandVault = shouldExpandVault,
+                folderContent = if (foldersEnabled && (folders.isNotEmpty() || canCreateFolder)) {
+                    {
+                        val expandedState = rememberSaveable(
+                            saver = mapSaver(
+                                save = { it },
+                                restore = { map ->
+                                    val restored = mutableStateMapOf<String, Boolean>()
+                                    map.forEach { (key, value) ->
+                                        if (value is Boolean) {
+                                            restored[key] = value
+                                        }
+                                    }
+                                    restored
+                                }
+                            )
+                        ) {
+                            mutableStateMapOf()
+                        }
+
+                        LaunchedEffect(folders, selectedFolderIdForVault) {
+                            folders.forEach { folder ->
+                                if (!expandedState.contains(folder.id.id)) {
+                                    expandedState[folder.id.id] = false
+                                }
+                            }
+                            if (selectedFolderIdForVault != null &&
+                                containsFolderId(folders, selectedFolderIdForVault)
+                            ) {
+                                expandAncestors(folders, selectedFolderIdForVault, expandedState)
+                            }
+                        }
+
+                        FolderTree(
+                            modifier = Modifier.padding(start = Spacing.large),
+                            modifierCreateButton = Modifier
+                                .padding(start = 20.dp)
+                                .padding(bottom = Spacing.medium),
+                            folders = folders,
+                            expandedState = expandedState,
+                            selectedFolderId = selectedFolderIdForVault.toOption(),
+                            onThreeDotsClick = if (canCreateFolder) {
+                                { HomeDrawerUiEvent.OnFolderOptionsClick(shareId, it).also(onUiEvent) }
+                            } else null,
+                            onFolderClick = {
+                                HomeDrawerUiEvent.OnFolderClick(shareId, it).also(onUiEvent)
+                            },
+                            onCreateFolderClick = if (canCreateFolder) {
+                                {
+                                    if (needsToUpgrade) onUiEvent(HomeDrawerUiEvent.OnUpgradeClick)
+                                    else HomeDrawerUiEvent.OnCreateFolderClick(shareId).also(onUiEvent)
+                                }
+                            } else null,
+                            canCreateFolder = canCreateFolder,
+                            needsToUpgrade = needsToUpgrade
+                        )
                     }
-                },
-                folders = vaultFolders[vaultShare.vault.shareId] ?: emptyList(),
-                needsToUpgrade = needsToUpgrade
+                } else null
             )
 
             PassDivider(

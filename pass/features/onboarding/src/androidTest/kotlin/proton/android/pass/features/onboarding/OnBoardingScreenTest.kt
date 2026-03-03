@@ -34,7 +34,7 @@ import proton.android.pass.autofill.fakes.FakeAutofillManager
 import proton.android.pass.biometry.BiometryStatus
 import proton.android.pass.biometry.FakeBiometryManager
 import proton.android.pass.data.fakes.usecases.FakeObserveUserAccessData
-import proton.android.pass.domain.UserAccessData
+import proton.android.pass.test.domain.UserAccessDataTestFactory
 import proton.android.pass.test.CallChecker
 import proton.android.pass.test.HiltComponentActivity
 import javax.inject.Inject
@@ -73,22 +73,7 @@ class OnBoardingScreenTest {
     fun setup() {
         hiltRule.inject()
 
-        UserAccessData(
-            pendingInvites = 0,
-            waitingNewUserInvites = 0,
-            needsUpdate = false,
-            protonMonitorEnabled = false,
-            aliasMonitorEnabled = false,
-            minVersionUpgrade = null,
-            isSimpleLoginSyncEnabled = false,
-            simpleLoginSyncPendingAliasCount = 0,
-            simpleLoginSyncDefaultShareId = "",
-            canManageSimpleLoginAliases = false,
-            storageQuota = 100,
-            storageUsed = 1,
-            storageAllowed = false,
-            storageMaxFileSize = 1_048_576
-        ).also(observeUserAccessData::sendValue)
+        UserAccessDataTestFactory.create().also(observeUserAccessData::sendValue)
     }
 
     @Test

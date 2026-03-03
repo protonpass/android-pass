@@ -175,6 +175,7 @@ import proton.android.pass.data.api.usecases.breach.UpdateGlobalProtonAddressesM
 import proton.android.pass.data.api.usecases.breach.UpdateProtonAddressMonitorState
 import proton.android.pass.data.api.usecases.breach.VerifyBreachCustomEmail
 import proton.android.pass.data.api.usecases.capabilities.CanCreateItemInVault
+import proton.android.pass.data.api.usecases.capabilities.CanCreateFolder
 import proton.android.pass.data.api.usecases.capabilities.CanCreateVault
 import proton.android.pass.data.api.usecases.capabilities.CanManageVaultAccess
 import proton.android.pass.data.api.usecases.capabilities.CanMigrateVault
@@ -433,6 +434,7 @@ import proton.android.pass.data.impl.usecases.breach.UpdateGlobalProtonAddresses
 import proton.android.pass.data.impl.usecases.breach.UpdateProtonAddressMonitorStateImpl
 import proton.android.pass.data.impl.usecases.breach.VerifyBreachCustomEmailImpl
 import proton.android.pass.data.impl.usecases.capabilities.CanCreateItemInVaultImpl
+import proton.android.pass.data.impl.usecases.capabilities.CanCreateFolderImpl
 import proton.android.pass.data.impl.usecases.capabilities.CanCreateVaultImpl
 import proton.android.pass.data.impl.usecases.capabilities.CanManageVaultAccessImpl
 import proton.android.pass.data.impl.usecases.capabilities.CanMigrateVaultImpl
@@ -827,6 +829,9 @@ abstract class DataUseCaseModule {
 
     @Binds
     abstract fun bindTransferOwnership(impl: TransferVaultOwnershipImpl): TransferVaultOwnership
+
+    @Binds
+    abstract fun bindCanCreateFolder(impl: CanCreateFolderImpl): CanCreateFolder
 
     @Binds
     abstract fun bindCanCreateVault(impl: CanCreateVaultImpl): CanCreateVault

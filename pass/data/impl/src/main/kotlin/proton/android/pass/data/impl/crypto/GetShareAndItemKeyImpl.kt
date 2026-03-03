@@ -27,6 +27,7 @@ import proton.android.pass.data.impl.repositories.ShareKeyRepository
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.Share
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.key.FolderKey
 import proton.android.pass.domain.key.ItemKey
 import proton.android.pass.domain.key.ShareKey
 import javax.inject.Inject
@@ -40,7 +41,8 @@ class GetShareAndItemKeyImpl @Inject constructor(
     override suspend fun invoke(
         userAddress: UserAddress,
         shareId: ShareId,
-        itemId: ItemId
+        itemId: ItemId,
+        currentFolderKey: FolderKey?
     ): Pair<ShareKey, ItemKey> = shareRepository.getById(userAddress.userId, shareId).let { share ->
         when (share) {
             is Share.Item -> shareKeyRepository.getLatestKeyForShare(shareId)
@@ -58,7 +60,8 @@ class GetShareAndItemKeyImpl @Inject constructor(
                 addressId = userAddress.addressId,
                 shareId = shareId,
                 itemId = itemId,
-                groupEmail = share.groupEmail
+                groupEmail = share.groupEmail,
+                currentFolderKey = currentFolderKey
             ).first()
         }
     }

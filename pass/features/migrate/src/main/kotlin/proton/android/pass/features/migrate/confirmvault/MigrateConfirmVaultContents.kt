@@ -54,11 +54,19 @@ internal fun MigrateConfirmVaultContents(
     onConfirm: () -> Unit
 ) {
     val title = when (state.mode) {
-        is MigrateMode.MigrateSelectedItems -> pluralStringResource(
-            R.plurals.migrate_item_confirm_title_bottom_sheet,
-            state.mode.number,
-            state.mode.number
-        )
+        is MigrateMode.MigrateSelectedItems -> if (state.destFolderId is Some) {
+            pluralStringResource(
+                R.plurals.migrate_item_to_folder_confirm_title_bottom_sheet,
+                state.mode.number,
+                state.mode.number
+            )
+        } else {
+            pluralStringResource(
+                R.plurals.migrate_item_confirm_title_bottom_sheet,
+                state.mode.number,
+                state.mode.number
+            )
+        }
 
         MigrateMode.MigrateAll -> stringResource(R.string.migrate_all_items_confirm_title_bottom_sheet)
 
@@ -69,6 +77,9 @@ internal fun MigrateConfirmVaultContents(
         }
     }
 
+    val targetFolderId = state.newParentFolderId ?: state.destFolderId.value()
+    val showFolderTree = targetFolderId != null && state.folderTree.isNotEmpty()
+
     Column(
         modifier = modifier,
         verticalArrangement = Arrangement.spacedBy(space = Spacing.medium)
@@ -76,10 +87,12 @@ internal fun MigrateConfirmVaultContents(
         Column(
             verticalArrangement = Arrangement.spacedBy(space = Spacing.small)
         ) {
-            PassInfoWarningBanner(
-                modifier = Modifier.align(Alignment.CenterHorizontally),
-                text = stringResource(id = R.string.migrate_item_warning_history)
-            )
+            if (!state.isSameVaultMove) {
+                PassInfoWarningBanner(
+                    modifier = Modifier.align(Alignment.CenterHorizontally),
+                    text = stringResource(id = R.string.migrate_item_warning_history)
+                )
+            }
 
             if (state.hasAssociatedSecureLinks) {
                 PassInfoWarningBanner(
@@ -99,11 +112,6 @@ internal fun MigrateConfirmVaultContents(
         )
 
         if (state.vault is Some) {
-            val newParentFolderId = state.newParentFolderId
-            val showFolderTree = state.mode is MigrateMode.MoveFolder &&
-                newParentFolderId != null &&
-                state.folderTree.isNotEmpty()
-
             BottomSheetItemList(
                 items = if (showFolderTree) {
                     persistentListOf(
@@ -127,15 +135,15 @@ internal fun MigrateConfirmVaultContents(
                 }
             )
 
-            if (newParentFolderId != null && showFolderTree) {
+            if (targetFolderId != null && showFolderTree) {
                 val expandedState = remember { mutableStateMapOf<String, Boolean>() }
-                LaunchedEffect(state.folderTree, newParentFolderId) {
+                LaunchedEffect(state.folderTree, targetFolderId) {
                     state.folderTree.forEach { folder ->
                         if (!expandedState.contains(folder.id.id)) {
                             expandedState[folder.id.id] = false
                         }
                     }
-                    expandAncestors(state.folderTree, newParentFolderId, expandedState)
+                    expandAncestors(state.folderTree, targetFolderId, expandedState)
                 }
                 FolderTree(
                     modifier = Modifier.padding(start = Spacing.large),
@@ -144,7 +152,7 @@ internal fun MigrateConfirmVaultContents(
                     onFolderClick = null,
                     onThreeDotsClick = null,
                     onCreateFolderClick = null,
-                    selectedFolderId = newParentFolderId.toOption()
+                    selectedFolderId = targetFolderId.toOption()
                 )
                 BottomSheetItemList(items = persistentListOf(bottomSheetDivider()))
             }

@@ -22,6 +22,7 @@ import me.proton.core.user.domain.entity.UserAddress
 import proton.android.pass.data.api.crypto.GetShareAndItemKey
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.key.FolderKey
 import proton.android.pass.domain.key.ItemKey
 import proton.android.pass.domain.key.ShareKey
 import javax.inject.Inject
@@ -39,7 +40,8 @@ class FakeGetShareAndItemKey @Inject constructor() : GetShareAndItemKey {
     override suspend fun invoke(
         userAddress: UserAddress,
         shareId: ShareId,
-        itemId: ItemId
+        itemId: ItemId,
+        currentFolderKey: FolderKey?
     ): Pair<ShareKey, ItemKey> = itemKeys ?: throw IllegalStateException("Item keys not set")
 
 }

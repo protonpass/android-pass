@@ -29,6 +29,7 @@ import proton.android.pass.data.impl.extensions.toCrypto
 import proton.android.pass.data.impl.remote.RemoteItemKeyDataSource
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.key.FolderKey
 import proton.android.pass.domain.key.ItemKey
 import proton.android.pass.domain.key.ShareKey
 import javax.inject.Inject
@@ -44,7 +45,8 @@ class ItemKeyRepositoryImpl @Inject constructor(
         addressId: AddressId,
         shareId: ShareId,
         groupEmail: String?,
-        itemId: ItemId
+        itemId: ItemId,
+        currentFolderKey: FolderKey?
     ): Flow<Pair<ShareKey, ItemKey>> = flow {
         val response = remoteItemKeyRepository.fetchLatestItemKey(userId, shareId, itemId)
         val shareKey = shareKeyRepository
@@ -61,7 +63,9 @@ class ItemKeyRepositoryImpl @Inject constructor(
             throw KeyNotFound("Could not find ShareKey [shareId=${shareId.id}] [keyRotation=${response.keyRotation}]")
         }
 
-        val itemKey = openItemKey(shareKey, response.toCrypto())
+        // When the item is currently in a folder, its key is encrypted with the folder key.
+        // Use the folder key for decryption in that case; otherwise fall back to the share key.
+        val itemKey = openItemKey(currentFolderKey ?: shareKey, response.toCrypto())
         emit(shareKey to itemKey)
     }
 }

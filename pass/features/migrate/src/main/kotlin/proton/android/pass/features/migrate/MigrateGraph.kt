@@ -46,7 +46,7 @@ sealed interface MigrateNavigation {
 
     data class VaultSelectedForMigrateItem(
         val destShareId: ShareId,
-        val folderId: Option<FolderId> = None
+        val destFolderId: Option<FolderId> = None
     ) : MigrateNavigation
 
     data class VaultSelectedForMigrateAll(
@@ -105,6 +105,11 @@ object MigrateNewParentFolderNavArgId : OptionalNavArgId {
     override val navType = NavType.StringType
 }
 
+object MigrateDestinationFolderNavArgId : OptionalNavArgId {
+    override val key = "destinationFolderId"
+    override val navType = NavType.StringType
+}
+
 object MigrateSelectVault : NavItem(
     baseRoute = "migrate/select",
     navArgIds = listOf(MigrateModeArg),
@@ -148,7 +153,8 @@ object MigrateConfirmVault : NavItem(
     optionalArgIds = listOf(
         CommonOptionalNavArgId.ShareId,
         CommonOptionalNavArgId.FolderId,
-        MigrateNewParentFolderNavArgId
+        MigrateNewParentFolderNavArgId,
+        MigrateDestinationFolderNavArgId
     ),
     navItemType = NavItemType.Bottomsheet
 ) {
@@ -160,8 +166,13 @@ object MigrateConfirmVault : NavItem(
         append(map.toPath())
     }
 
-    fun createNavRouteForMigrateSelectedItems(destShareId: ShareId): String =
-        "$baseRoute/${MigrateModeValue.SelectedItems.name}/${destShareId.id}"
+    fun createNavRouteForMigrateSelectedItems(destShareId: ShareId, destFolderId: Option<FolderId> = None): String =
+        buildString {
+            append("$baseRoute/${MigrateModeValue.SelectedItems.name}/${destShareId.id}")
+            destFolderId.value()?.let { folderId ->
+                append(mapOf(MigrateDestinationFolderNavArgId.key to folderId.id).toPath())
+            }
+        }
 
     fun createNavRouteForMoveFolder(
         shareId: ShareId,

@@ -18,10 +18,17 @@
 
 package proton.android.pass.data.api.usecases
 
+import proton.android.pass.common.api.None
+import proton.android.pass.common.api.Option
 import proton.android.pass.data.api.repositories.MigrateItemsResult
+import proton.android.pass.domain.FolderId
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 
 interface MigrateItems {
-    suspend operator fun invoke(items: Map<ShareId, List<ItemId>>, destinationShare: ShareId): MigrateItemsResult
+    suspend operator fun invoke(
+        items: Map<ShareId, List<ItemId>>,
+        destinationShare: ShareId,
+        destinationFolderId: Option<FolderId> = None
+    ): MigrateItemsResult
 }

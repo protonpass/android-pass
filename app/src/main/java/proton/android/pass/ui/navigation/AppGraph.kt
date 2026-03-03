@@ -2223,7 +2223,8 @@ fun NavGraphBuilder.appGraph(
                     appNavigator.navigate(
                         destination = MigrateConfirmVault,
                         route = MigrateConfirmVault.createNavRouteForMigrateSelectedItems(
-                            destShareId = it.destShareId
+                            destShareId = it.destShareId,
+                            destFolderId = it.destFolderId
                         ),
                         backDestination = ItemDetailsNavItem
                     )

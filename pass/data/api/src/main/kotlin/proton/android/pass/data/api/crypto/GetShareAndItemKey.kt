@@ -21,6 +21,7 @@ package proton.android.pass.data.api.crypto
 import me.proton.core.user.domain.entity.UserAddress
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.key.FolderKey
 import proton.android.pass.domain.key.ItemKey
 import proton.android.pass.domain.key.ShareKey
 
@@ -29,7 +30,8 @@ interface GetShareAndItemKey {
     suspend operator fun invoke(
         userAddress: UserAddress,
         shareId: ShareId,
-        itemId: ItemId
+        itemId: ItemId,
+        currentFolderKey: FolderKey? = null
     ): Pair<ShareKey, ItemKey>
 
 }

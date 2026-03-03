@@ -18,8 +18,11 @@
 
 package proton.android.pass.data.fakes.usecases
 
+import proton.android.pass.common.api.None
+import proton.android.pass.common.api.Option
 import proton.android.pass.data.api.repositories.MigrateItemsResult
 import proton.android.pass.data.api.usecases.MigrateItems
+import proton.android.pass.domain.FolderId
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import javax.inject.Inject
@@ -38,13 +41,18 @@ class FakeMigrateItems @Inject constructor() : MigrateItems {
         result = value
     }
 
-    override suspend fun invoke(items: Map<ShareId, List<ItemId>>, destinationShare: ShareId): MigrateItemsResult {
-        memory.add(Payload(items, destinationShare))
+    override suspend fun invoke(
+        items: Map<ShareId, List<ItemId>>,
+        destinationShare: ShareId,
+        destinationFolderId: Option<FolderId>
+    ): MigrateItemsResult {
+        memory.add(Payload(items, destinationShare, destinationFolderId))
         return result.getOrThrow()
     }
 
     data class Payload(
         val items: Map<ShareId, List<ItemId>>,
-        val destinationShare: ShareId
+        val destinationShare: ShareId,
+        val destinationFolderId: Option<FolderId> = None
     )
 }

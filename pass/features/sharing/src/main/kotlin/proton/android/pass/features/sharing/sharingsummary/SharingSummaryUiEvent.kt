@@ -19,6 +19,7 @@
 package proton.android.pass.features.sharing.sharingsummary
 
 import proton.android.pass.domain.ItemId
+import proton.android.pass.domain.FolderId
 import proton.android.pass.domain.items.ItemCategory
 
 internal sealed interface SharingSummaryUiEvent {
@@ -27,6 +28,7 @@ internal sealed interface SharingSummaryUiEvent {
 
     data class OnShareItemClick(
         internal val itemId: ItemId,
+        internal val folderId: FolderId?,
         internal val itemCategory: ItemCategory
     ) : SharingSummaryUiEvent
 

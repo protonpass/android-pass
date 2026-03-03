@@ -22,6 +22,7 @@ import androidx.compose.runtime.Stable
 import kotlinx.datetime.Instant
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.domain.ItemContents
+import proton.android.pass.domain.FolderId
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ItemState
 import proton.android.pass.domain.ShareId
@@ -40,6 +41,7 @@ data class ItemUiModel(
     val lastAutofillTime: Instant?,
     val isPinned: Boolean,
     val pinTime: Instant?,
+    val folderId: FolderId? = null,
     val category: ItemCategory = ItemCategory.Unknown,
     val revision: Long,
     val shareCount: Int,

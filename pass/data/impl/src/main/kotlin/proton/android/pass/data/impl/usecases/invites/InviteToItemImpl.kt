@@ -40,6 +40,7 @@ import proton.android.pass.data.impl.requests.CreateInviteKey
 import proton.android.pass.data.impl.requests.CreateInviteRequest
 import proton.android.pass.data.impl.requests.CreateInvitesRequest
 import proton.android.pass.data.impl.requests.CreateNewUserInvitesRequest
+import proton.android.pass.domain.FolderId
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.ShareRole
@@ -57,6 +58,7 @@ class InviteToItemImpl @Inject constructor(
     override suspend fun invoke(
         shareId: ShareId,
         itemId: ItemId,
+        folderId: FolderId?,
         inviteTargets: List<InviteTarget>
     ) {
         val userId = accountManager.getPrimaryUserId()
@@ -73,6 +75,7 @@ class InviteToItemImpl @Inject constructor(
                 invites = createExistingUserInvites(
                     shareId = shareId,
                     itemId = itemId,
+                    folderId = folderId,
                     existingUserInvitesAddresses = existingUserInvitesAddresses,
                     inviterUserAddress = inviterUserAddress
                 ).awaitAll()
@@ -112,6 +115,7 @@ class InviteToItemImpl @Inject constructor(
     private suspend fun createExistingUserInvites(
         shareId: ShareId,
         itemId: ItemId,
+        folderId: FolderId?,
         existingUserInvitesAddresses: List<Pair<String, ShareRole>>,
         inviterUserAddress: UserAddress
     ): List<Deferred<CreateInviteRequest>> = coroutineScope {
@@ -120,6 +124,7 @@ class InviteToItemImpl @Inject constructor(
                 val encryptedShareKeys = encryptItemsKeysForUser(
                     shareId = shareId,
                     itemId = itemId,
+                    folderId = folderId,
                     userAddress = inviterUserAddress,
                     targetEmail = email
                 ).getOrThrow()

@@ -28,12 +28,34 @@ import proton.android.pass.domain.key.ItemKey
 import proton.android.pass.domain.key.ShareKey
 
 interface ItemKeyRepository {
+
+    sealed interface Scope {
+        data object SharedItem : Scope
+
+        data class SharedVault(
+            val groupEmail: String?,
+            val decryptionSource: VaultDecryptionSource = VaultDecryptionSource.Share
+        ) : Scope
+    }
+
+    sealed interface VaultDecryptionSource {
+        data object Share : VaultDecryptionSource
+        data class Folder(val folderKey: FolderKey) : VaultDecryptionSource
+    }
+
     fun getLatestItemKey(
         userId: UserId,
         addressId: AddressId,
         shareId: ShareId,
-        groupEmail: String?,
         itemId: ItemId,
-        currentFolderKey: FolderKey? = null
+        scope: Scope.SharedVault
+    ): Flow<ItemKey>
+
+    fun getLatestShareAndItemKey(
+        userId: UserId,
+        addressId: AddressId,
+        shareId: ShareId,
+        itemId: ItemId,
+        scope: Scope
     ): Flow<Pair<ShareKey, ItemKey>>
 }

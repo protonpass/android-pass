@@ -20,6 +20,7 @@ package proton.android.pass.data.fakes.usecases.invites
 
 import proton.android.pass.data.api.repositories.InviteTarget
 import proton.android.pass.data.api.usecases.invites.InviteToItem
+import proton.android.pass.domain.FolderId
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import javax.inject.Inject
@@ -37,6 +38,7 @@ class FakeInviteToItem @Inject constructor() : InviteToItem {
     override suspend fun invoke(
         shareId: ShareId,
         itemId: ItemId,
+        folderId: FolderId?,
         inviteTargets: List<InviteTarget>
     ) {
         if (shouldFail) {

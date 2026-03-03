@@ -85,6 +85,7 @@ internal fun SharingSummaryContent(
 
                                 is SharingSummaryState.ShareItem -> SharingSummaryUiEvent.OnShareItemClick(
                                     itemId = state.itemId,
+                                    folderId = state.folderId,
                                     itemCategory = state.itemCategory
                                 )
 

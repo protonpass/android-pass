@@ -24,12 +24,11 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.minimumInteractiveComponentSize
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextOverflow
@@ -39,10 +38,12 @@ import androidx.compose.ui.unit.dp
 import me.proton.core.compose.theme.ProtonTheme
 import proton.android.pass.commonui.api.PassPalette
 import proton.android.pass.commonui.api.PassTheme
+import proton.android.pass.commonui.api.Spacing
+import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.commonuimodels.api.FolderUiModel
-import proton.android.pass.composecomponents.impl.folders.mock.FoldersParameter
-import proton.android.pass.composecomponents.impl.folders.mock.ThemedFoldersPreviewProvider
 import proton.android.pass.composecomponents.impl.icon.Icon
+import proton.android.pass.domain.FolderId
+import kotlinx.collections.immutable.persistentListOf
 import proton.android.pass.composecomponents.impl.item.icon.ThreeDotsMenuButton
 import proton.android.pass.composecomponents.impl.text.Text
 import me.proton.core.presentation.R as CoreR
@@ -84,7 +85,10 @@ fun OneFolderItem(
                 .then(
                     if (onFolderClick != null) Modifier.clickable { onFolderClick() } else Modifier
                 )
-                .minimumInteractiveComponentSize(),
+                .minimumInteractiveComponentSize()
+                .then(
+                    if (onThreeDotsClick == null) Modifier.padding(end = Spacing.medium) else Modifier
+                ),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(16.dp)
         ) {
@@ -122,20 +126,53 @@ fun OneFolderItem(
     }
 }
 
+private val previewChildFolder = FolderUiModel(
+    id = FolderId("child"),
+    name = "Child folder",
+    folders = persistentListOf()
+)
+
 @[Preview Composable]
-internal fun HomeDrawerFolderRowPreview(
-    @PreviewParameter(ThemedFoldersPreviewProvider::class) input: Pair<Boolean, FoldersParameter>
-) {
-    val (isExpanded, onExpandToggle) = remember { mutableStateOf(false) }
-    PassTheme(isDark = input.first) {
+internal fun OneFolderItemLeafPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
+    PassTheme(isDark = isDark) {
         Surface {
             OneFolderItem(
-                folders = input.second.folders,
-                folderName = "a folder",
-                isExpanded = isExpanded,
-                onExpandToggle = {
-                    onExpandToggle(!isExpanded)
-                },
+                folders = emptyList(),
+                folderName = "Leaf folder",
+                isExpanded = false,
+                onExpandToggle = {},
+                onThreeDotsClick = {},
+                onFolderClick = {}
+            )
+        }
+    }
+}
+
+@[Preview Composable]
+internal fun OneFolderItemCollapsedPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
+    PassTheme(isDark = isDark) {
+        Surface {
+            OneFolderItem(
+                folders = listOf(previewChildFolder),
+                folderName = "Parent folder",
+                isExpanded = false,
+                onExpandToggle = {},
+                onThreeDotsClick = {},
+                onFolderClick = {}
+            )
+        }
+    }
+}
+
+@[Preview Composable]
+internal fun OneFolderItemExpandedPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
+    PassTheme(isDark = isDark) {
+        Surface {
+            OneFolderItem(
+                folders = listOf(previewChildFolder),
+                folderName = "Parent folder",
+                isExpanded = true,
+                onExpandToggle = {},
                 onThreeDotsClick = {},
                 onFolderClick = {}
             )

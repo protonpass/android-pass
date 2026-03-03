@@ -30,11 +30,14 @@ class FakeRefreshFolders @Inject constructor() : RefreshFolders {
 
     private val _invocations = mutableListOf<Invocation>()
     val invocations: List<Invocation> get() = _invocations
+    var onInvoke: ((Invocation) -> Unit)? = null
 
     var result: Result<Unit> = Result.success(Unit)
 
     override suspend fun invoke(userId: UserId, shareIds: Set<ShareId>) {
-        _invocations += Invocation(userId, shareIds)
+        val invocation = Invocation(userId, shareIds)
+        _invocations += invocation
+        onInvoke?.invoke(invocation)
         result.getOrThrow()
     }
 }

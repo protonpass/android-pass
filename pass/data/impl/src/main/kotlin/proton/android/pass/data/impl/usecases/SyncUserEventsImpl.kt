@@ -136,6 +136,8 @@ class SyncUserEventsImpl @Inject constructor(
         processSharesCreated(userId, eventList.sharesCreated)
         processSharesUpdated(userId, eventList.sharesUpdated)
         processSharesDeleted(userId, eventList.sharesDeleted)
+        processFoldersUpdated(userId, eventList.foldersUpdated)
+        processFoldersDeleted(userId, eventList.foldersDeleted)
         processItemsUpdated(userId, eventList.itemsUpdated)
         processItemsDeleted(userId, eventList.itemsDeleted)
         processInvitesChanged(userId, eventList.invitesChanged)
@@ -144,8 +146,6 @@ class SyncUserEventsImpl @Inject constructor(
         processBreachUpdateChanged(userId, eventList.breachUpdate)
         processOrganizationUpdateChanged(userId, eventList.organizationInfoChanged)
         processNewUserInvitesChanged(userId, eventList.sharesWithInvitesToCreate)
-        processFoldersUpdated(userId, eventList.foldersUpdated)
-        processFoldersDeleted(userId, eventList.foldersDeleted)
     }
 
     private suspend fun processSharesCreated(userId: UserId, sharesCreated: List<SyncEventShare>) {

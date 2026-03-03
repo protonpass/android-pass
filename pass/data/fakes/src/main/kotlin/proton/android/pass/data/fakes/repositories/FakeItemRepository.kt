@@ -64,6 +64,7 @@ class FakeItemRepository @Inject constructor() : ItemRepository {
         MutableSharedFlow(replay = 1, onBufferOverflow = BufferOverflow.DROP_OLDEST)
     private val deleteLocalItemsMemory: MutableList<DeleteLocalItemsPayload> = mutableListOf()
     private val refreshItemMemory: MutableList<RefreshItemPayload> = mutableListOf()
+    var onRefreshItem: ((RefreshItemPayload) -> Unit)? = null
 
     private val encryptedSharedItemsFlow = testFlow<List<ItemEncrypted>>()
 
@@ -177,7 +178,9 @@ class FakeItemRepository @Inject constructor() : ItemRepository {
         itemId: ItemId,
         eventToken: EventToken
     ) {
-        refreshItemMemory.add(RefreshItemPayload(userId, shareId, itemId, eventToken))
+        val payload = RefreshItemPayload(userId, shareId, itemId, eventToken)
+        refreshItemMemory.add(payload)
+        onRefreshItem?.invoke(payload)
     }
 
     data class RefreshItemPayload(

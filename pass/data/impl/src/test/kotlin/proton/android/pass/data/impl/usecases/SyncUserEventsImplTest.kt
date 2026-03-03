@@ -40,6 +40,7 @@ import proton.android.pass.data.fakes.work.FakeWorkManagerFacade
 import proton.android.pass.data.impl.fakes.FakeEventRepository
 import proton.android.pass.data.impl.fakes.FakeUserEventRepository
 import proton.android.pass.data.impl.fakes.FakeShareRepository
+import proton.android.pass.domain.FolderId
 import proton.android.pass.data.impl.work.FetchItemsWorker
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
@@ -47,6 +48,7 @@ import proton.android.pass.domain.UserEventId
 import proton.android.pass.domain.events.EventToken
 import proton.android.pass.domain.events.SyncEventInvitesChanged
 import proton.android.pass.domain.events.SyncEventShare
+import proton.android.pass.domain.events.SyncEventShareFolder
 import proton.android.pass.domain.events.SyncEventShareItem
 import proton.android.pass.domain.events.UserEventList
 
@@ -237,6 +239,39 @@ internal class SyncUserEventsImplTest {
         instance.invoke(USER_ID)
 
         assertThat(userEventRepository.getStoreLatestEventIdMemory()).isNotEmpty()
+    }
+
+    @Test
+    fun `processes folders updated before items updated`() = runTest {
+        val eventId = UserEventId(EVENT_ID_1)
+        setupBasicSync(eventId)
+        val callOrder = mutableListOf<String>()
+        refreshFolders.onInvoke = { callOrder += "folders" }
+        itemRepository.onRefreshItem = { callOrder += "items" }
+
+        userEventRepository.setGetUserEventsResult(
+            createUserEventList(
+                lastEventId = eventId,
+                foldersUpdated = listOf(
+                    SyncEventShareFolder(
+                        shareId = ShareId(SHARE_ID_1),
+                        folderId = FolderId(FOLDER_ID_1),
+                        eventToken = EventToken(TOKEN_1)
+                    )
+                ),
+                itemsUpdated = listOf(
+                    SyncEventShareItem(
+                        shareId = ShareId(SHARE_ID_1),
+                        itemId = ItemId(ITEM_ID_1),
+                        eventToken = EventToken(TOKEN_2)
+                    )
+                )
+            )
+        )
+
+        instance.invoke(USER_ID)
+
+        assertThat(callOrder).containsExactly("folders", "items").inOrder()
     }
 
     @Test
@@ -534,6 +569,8 @@ internal class SyncUserEventsImplTest {
         sharesCreated: List<SyncEventShare> = emptyList(),
         sharesUpdated: List<SyncEventShare> = emptyList(),
         sharesDeleted: List<SyncEventShare> = emptyList(),
+        foldersUpdated: List<SyncEventShareFolder> = emptyList(),
+        foldersDeleted: List<SyncEventShareFolder> = emptyList(),
         invitesChanged: SyncEventInvitesChanged? = null,
         groupInvitesChanged: SyncEventInvitesChanged? = null,
         pendingAliasToCreateChanged: SyncEventInvitesChanged? = null,
@@ -551,8 +588,8 @@ internal class SyncUserEventsImplTest {
         sharesCreated = sharesCreated,
         sharesUpdated = sharesUpdated,
         sharesDeleted = sharesDeleted,
-        foldersUpdated = emptyList(),
-        foldersDeleted = emptyList(),
+        foldersUpdated = foldersUpdated,
+        foldersDeleted = foldersDeleted,
         invitesChanged = invitesChanged,
         groupInvitesChanged = groupInvitesChanged,
         pendingAliasToCreateChanged = pendingAliasToCreateChanged,
@@ -576,6 +613,7 @@ internal class SyncUserEventsImplTest {
         // Share IDs
         private const val SHARE_ID_1 = "share-1"
         private const val SHARE_ID_2 = "share-2"
+        private const val FOLDER_ID_1 = "folder-1"
 
         // Item IDs
         private const val ITEM_ID_1 = "item-1"

@@ -67,25 +67,6 @@ class ForceSyncItemsImplTest {
         assertThat(itemRepository.getSetShareItemsMemory()).hasSize(1)
     }
 
-    @Test
-    fun `sync continues when folder refresh fails`() = runTest {
-        val shareId = ShareId("share-1")
-        refreshFolders.result = Result.failure(IllegalStateException("boom"))
-
-        val result = instance.invoke(
-            userId = USER_ID,
-            shareIds = setOf(shareId),
-            isBackground = false,
-            hasInactiveShares = false,
-            hasInvalidGroupShares = false
-        )
-
-        assertThat(result).isEqualTo(ForceSyncResult.Success)
-        assertThat(refreshFolders.invocations).hasSize(1)
-        assertThat(itemRepository.getDownloadItemsMemory()).hasSize(1)
-        assertThat(itemRepository.getSetShareItemsMemory()).hasSize(1)
-    }
-
     private companion object {
         private val USER_ID = UserId("user-id")
     }

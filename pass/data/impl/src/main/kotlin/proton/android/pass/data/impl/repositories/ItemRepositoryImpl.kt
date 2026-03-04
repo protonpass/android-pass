@@ -1122,8 +1122,6 @@ class ItemRepositoryImpl @Inject constructor(
 
         val items = localItemDataSource.getByIdList(userId, shareId, itemIds)
 
-        // Pre-fetch folder keys for items that are currently in a folder so that we can
-        // correctly decrypt their item keys (which are folder-key-encrypted, not share-key-encrypted).
         val uniqueSourceFolderIds = items.mapNotNull { it.folderId?.let(::FolderId) }.distinct()
         val sourceFolderKeys: Map<FolderId, FolderKey> = folderKeyRepository.getFolderKeys(
             userId = userId,

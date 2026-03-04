@@ -26,12 +26,13 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -45,8 +46,8 @@ import proton.android.pass.commonui.api.require
 import proton.android.pass.commonuimodels.api.items.DetailEvent
 import proton.android.pass.commonuimodels.api.items.ItemDetailState
 import proton.android.pass.data.api.usecases.GetItemActions
+import proton.android.pass.data.api.usecases.GetItemById
 import proton.android.pass.data.api.usecases.GetUserPlan
-import proton.android.pass.data.api.usecases.ObserveItemById
 import proton.android.pass.data.api.usecases.shares.ObserveShare
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ItemSection
@@ -63,8 +64,8 @@ import javax.inject.Inject
 class ItemDetailsViewModel @Inject constructor(
     savedStateHandleProvider: SavedStateHandleProvider,
     getItemActions: GetItemActions,
+    getItemById: GetItemById,
     getUserPlan: GetUserPlan,
-    observeItemById: ObserveItemById,
     observeShare: ObserveShare,
     telemetryManager: TelemetryManager,
     private val itemDetailsHandler: ItemDetailsHandler
@@ -78,27 +79,22 @@ class ItemDetailsViewModel @Inject constructor(
         .require<String>(CommonNavArgId.ItemId.key)
         .let(::ItemId)
 
-    init {
-        viewModelScope.launch {
-            runCatching {
-                val itemType = itemFlow.first().itemType
-                val eventItemType: EventItemType = EventItemType.from(itemType)
-                telemetryManager.sendEvent(ItemRead(eventItemType))
-                telemetryManager.sendEvent(ItemViewed(shareId, itemId))
-            }
-        }
-    }
+    private val eventFlow = MutableStateFlow<ItemDetailsEvent>(ItemDetailsEvent.Idle)
 
     private val savedStateEntries: Map<String, Any?> = savedStateHandleProvider.get().let {
-        it.keys().associateWith { key -> it.get<Any?>(key) }
+        it.keys().associateWith { key -> it[key] }
     }
 
-    private val itemFlow = observeItemById(shareId = shareId, itemId = itemId)
-        .filterNotNull()
+    private val itemFlow = flow { emit(getItemById(shareId = shareId, itemId = itemId)) }
+        .onEach { item ->
+            val eventItemType: EventItemType = EventItemType.from(item.itemType)
+            telemetryManager.sendEvent(ItemRead(eventItemType))
+            telemetryManager.sendEvent(ItemViewed(shareId, itemId))
+        }
         .catch { error ->
-            PassLogger.w(TAG, "There was an error observing item")
+            PassLogger.w(TAG, "There was an error getting item")
             PassLogger.w(TAG, error)
-            throw error
+            eventFlow.update { ItemDetailsEvent.OnItemNotFound }
         }
 
     private val revealedHiddenFieldsFlow = MutableStateFlow(
@@ -119,8 +115,6 @@ class ItemDetailsViewModel @Inject constructor(
             )
         }
     }
-
-    private val eventFlow = MutableStateFlow<ItemDetailsEvent>(ItemDetailsEvent.Idle)
 
     private val itemFeaturesFlow: Flow<IdentityItemFeatures> = getUserPlan().map { userPlan ->
         IdentityItemFeatures(

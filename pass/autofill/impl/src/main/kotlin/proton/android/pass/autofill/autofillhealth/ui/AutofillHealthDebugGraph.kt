@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023-2026 Proton AG
+ * Copyright (c) 2026 Proton AG
  * This file is part of Proton AG and Proton Pass.
  *
  * Proton Pass is free software: you can redistribute it and/or modify
@@ -16,16 +16,19 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.featureflags
+package proton.android.pass.autofill.autofillhealth.ui
 
 import androidx.navigation.NavGraphBuilder
 import proton.android.pass.navigation.api.NavItem
 import proton.android.pass.navigation.api.composable
 
-object FeatureFlagRoute : NavItem(baseRoute = "feature-flags")
+object AutofillHealthDebugRoute : NavItem(
+    baseRoute = "autofill-health-debug",
+    baseDeepLinkRoute = listOf("autofill-health-debug")
+)
 
-fun NavGraphBuilder.featureFlagsGraph(onNavigateToAutofillDebug: () -> Unit = {}) {
-    composable(FeatureFlagRoute) {
-        FeatureFlagsScreen(onNavigateToAutofillDebug = onNavigateToAutofillDebug)
+fun NavGraphBuilder.autofillHealthDebugGraph() {
+    composable(AutofillHealthDebugRoute) {
+        AutofillHealthDebugScreen()
     }
 }

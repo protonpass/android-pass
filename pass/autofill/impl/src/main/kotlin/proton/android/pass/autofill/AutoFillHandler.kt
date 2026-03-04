@@ -44,6 +44,8 @@ import proton.android.pass.autofill.heuristics.NodeCluster
 import proton.android.pass.autofill.heuristics.NodeClusterer
 import proton.android.pass.autofill.heuristics.NodeExtractor
 import proton.android.pass.autofill.heuristics.focused
+import proton.android.pass.autofill.autofillhealth.model.AutofillHealthEventType
+import proton.android.pass.autofill.autofillhealth.service.AutofillHealthMonitor
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.some
@@ -68,7 +70,8 @@ object AutoFillHandler {
         autofillServiceManager: AutofillServiceManager,
         telemetryManager: TelemetryManager,
         accountManager: AccountManager,
-        thirdPartyModeProvider: ThirdPartyModeProvider
+        thirdPartyModeProvider: ThirdPartyModeProvider,
+        healthMonitor: AutofillHealthMonitor? = null
     ) {
         val windowNode = getWindowNodes(request.fillContexts).lastOrNull()
         if (windowNode?.rootViewNode == null) {
@@ -80,6 +83,10 @@ object AutoFillHandler {
         val handler = CoroutineExceptionHandler { _, exception ->
             PassLogger.w(TAG, "Error handling autofill")
             PassLogger.w(TAG, exception)
+            healthMonitor?.recordFillRequest(
+                packageName = Utils.getApplicationPackageName(windowNode),
+                type = AutofillHealthEventType.FILL_REQUEST_ERROR
+            )
             callback.onSuccess(null)
         }
         val job = CoroutineScope(Dispatchers.IO).launch(handler) {
@@ -90,7 +97,8 @@ object AutoFillHandler {
                 autofillServiceManager = autofillServiceManager,
                 telemetryManager = telemetryManager,
                 accountManager = accountManager,
-                thirdPartyModeProvider = thirdPartyModeProvider
+                thirdPartyModeProvider = thirdPartyModeProvider,
+                healthMonitor = healthMonitor
             )
 
             callback.onSuccess(response.value())
@@ -101,7 +109,7 @@ object AutoFillHandler {
         }
     }
 
-    @Suppress("LongParameterList")
+    @Suppress("LongParameterList", "LongMethod")
     private suspend fun searchAndFill(
         context: Context,
         windowNode: WindowNode,
@@ -109,7 +117,8 @@ object AutoFillHandler {
         autofillServiceManager: AutofillServiceManager,
         telemetryManager: TelemetryManager,
         accountManager: AccountManager,
-        thirdPartyModeProvider: ThirdPartyModeProvider
+        thirdPartyModeProvider: ThirdPartyModeProvider,
+        healthMonitor: AutofillHealthMonitor? = null
     ): Option<FillResponse> {
         val applicationPackageName = PackageName(Utils.getApplicationPackageName(windowNode))
         val shouldAutofill = shouldAutofill(
@@ -123,6 +132,10 @@ object AutoFillHandler {
         val assistInfo = when (shouldAutofill) {
             is ShouldAutofillResult.No -> {
                 PassLogger.i(TAG, "Should not autofill, reason: ${shouldAutofill.reason}")
+                healthMonitor?.recordFillRequest(
+                    packageName = applicationPackageName.value,
+                    type = AutofillHealthEventType.FILL_REQUEST_NONE
+                )
                 return None
             }
 
@@ -144,7 +157,8 @@ object AutoFillHandler {
         val isDangerousAutofill = !applicationPackageName.isBrowser() && hasUrl
 
         val autofillData = AutofillData(assistInfo, packageInfo, isDangerousAutofill)
-        val datasetList = if (hasSupportForInlineSuggestions(request)) {
+        val usedInlinePath = hasSupportForInlineSuggestions(request)
+        val datasetList = if (usedInlinePath) {
             request.inlineSuggestionsRequest?.let {
                 autofillServiceManager.createSuggestedItemsDatasetList(
                     autofillData = autofillData,
@@ -153,6 +167,22 @@ object AutoFillHandler {
             } ?: emptyList()
         } else {
             autofillServiceManager.createMenuPresentationDataset(autofillData)
+        }
+
+        if (datasetList.isEmpty()) {
+            healthMonitor?.recordFillRequest(
+                packageName = applicationPackageName.value,
+                type = AutofillHealthEventType.FILL_REQUEST_NONE
+            )
+        } else {
+            healthMonitor?.recordFillRequest(
+                packageName = applicationPackageName.value,
+                type = if (usedInlinePath) {
+                    AutofillHealthEventType.FILL_REQUEST_INLINE
+                } else {
+                    AutofillHealthEventType.FILL_REQUEST_MENU
+                }
+            )
         }
 
         return generateResponse(

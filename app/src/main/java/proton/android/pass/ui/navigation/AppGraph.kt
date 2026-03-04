@@ -57,6 +57,8 @@ import proton.android.pass.features.extrapassword.confirm.navigation.ConfirmExtr
 import proton.android.pass.features.extrapassword.extraPasswordGraph
 import proton.android.pass.features.extrapassword.infosheet.navigation.ExtraPasswordInfoNavItem
 import proton.android.pass.features.extrapassword.options.navigation.ExtraPasswordOptionsNavItem
+import proton.android.pass.autofill.autofillhealth.ui.AutofillHealthDebugRoute
+import proton.android.pass.autofill.autofillhealth.ui.autofillHealthDebugGraph
 import proton.android.pass.features.featureflags.FeatureFlagRoute
 import proton.android.pass.features.featureflags.featureFlagsGraph
 import proton.android.pass.features.home.HOME_ENABLE_BULK_ACTIONS_KEY
@@ -2381,7 +2383,10 @@ fun NavGraphBuilder.appGraph(
             }
         }
     )
-    featureFlagsGraph()
+    featureFlagsGraph(
+        onNavigateToAutofillDebug = { appNavigator.navigate(AutofillHealthDebugRoute) }
+    )
+    autofillHealthDebugGraph()
     securityCenterNavGraph(
         onNavigated = { destination ->
             when (destination) {

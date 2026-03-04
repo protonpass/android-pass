@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023-2026 Proton AG
+ * Copyright (c) 2026 Proton AG
  * This file is part of Proton AG and Proton Pass.
  *
  * Proton Pass is free software: you can redistribute it and/or modify
@@ -16,16 +16,30 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.featureflags
+package proton.android.pass.autofill.autofillhealth.model
 
-import androidx.navigation.NavGraphBuilder
-import proton.android.pass.navigation.api.NavItem
-import proton.android.pass.navigation.api.composable
+data class AutofillHealthEvent(
+    val timestamp: Long,
+    val type: AutofillHealthEventType,
+    val packageName: String? = null,
+    val details: String? = null
+)
 
-object FeatureFlagRoute : NavItem(baseRoute = "feature-flags")
-
-fun NavGraphBuilder.featureFlagsGraph(onNavigateToAutofillDebug: () -> Unit = {}) {
-    composable(FeatureFlagRoute) {
-        FeatureFlagsScreen(onNavigateToAutofillDebug = onNavigateToAutofillDebug)
-    }
+enum class AutofillHealthEventType {
+    CREATED,
+    CONNECTED,
+    DISCONNECTED,
+    FILL_REQUEST_INLINE,
+    FILL_REQUEST_MENU,
+    FILL_REQUEST_NONE,
+    FILL_REQUEST_ERROR
 }
+
+data class LogcatEntry(
+    val timestamp: String,
+    val level: Char,
+    val tag: String,
+    val message: String,
+    val isOwnProcess: Boolean = false,
+    val processName: String = ""
+)

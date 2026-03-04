@@ -23,7 +23,6 @@ import android.service.autofill.FillRequest
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import kotlinx.serialization.Serializable
-import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import proton.android.pass.autofill.Utils
 import proton.android.pass.autofill.debug.DebugUtils.autofillDumpDir

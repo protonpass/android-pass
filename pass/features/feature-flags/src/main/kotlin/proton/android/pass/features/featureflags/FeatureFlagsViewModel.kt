@@ -26,30 +26,44 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
+import proton.android.pass.appconfig.api.AppConfig
+import proton.android.pass.appconfig.api.BuildFlavor
 import proton.android.pass.preferences.FeatureFlag
 import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import javax.inject.Inject
 
 @HiltViewModel
 class FeatureFlagsViewModel @Inject constructor(
-    private val ffRepository: FeatureFlagsPreferencesRepository
+    private val ffRepository: FeatureFlagsPreferencesRepository,
+    appConfig: AppConfig
 ) : ViewModel() {
 
-    internal val state: StateFlow<Map<FeatureFlag, Boolean>> =
+    private val showAutofillDebug = appConfig.flavor is BuildFlavor.Dev ||
+        appConfig.flavor is BuildFlavor.Alpha
+
+    internal val state: StateFlow<FeatureFlagsUiState> =
         combine(
             FeatureFlag.entries.map { featureFlag ->
                 ffRepository.get<Boolean>(featureFlag)
                     .map { isEnabled -> featureFlag to isEnabled }
             }
         ) { featureFlagStates ->
-            featureFlagStates.toMap()
+            FeatureFlagsUiState(
+                flags = featureFlagStates.toMap(),
+                showAutofillDebug = showAutofillDebug
+            )
         }.stateIn(
             scope = viewModelScope,
             started = SharingStarted.Eagerly,
-            initialValue = emptyMap()
+            initialValue = FeatureFlagsUiState()
         )
 
     internal fun <T> override(featureFlag: FeatureFlag, value: T) {
         ffRepository.set(featureFlag = featureFlag, value = value)
     }
 }
+
+internal data class FeatureFlagsUiState(
+    val flags: Map<FeatureFlag, Boolean> = emptyMap(),
+    val showAutofillDebug: Boolean = false
+)

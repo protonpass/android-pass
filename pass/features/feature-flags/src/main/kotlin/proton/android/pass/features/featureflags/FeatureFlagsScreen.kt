@@ -25,7 +25,17 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 
 @Composable
-fun FeatureFlagsScreen(modifier: Modifier = Modifier, viewModel: FeatureFlagsViewModel = hiltViewModel()) {
+fun FeatureFlagsScreen(
+    modifier: Modifier = Modifier,
+    onNavigateToAutofillDebug: () -> Unit = {},
+    viewModel: FeatureFlagsViewModel = hiltViewModel()
+) {
     val state by viewModel.state.collectAsStateWithLifecycle()
-    FeatureFlagsContent(modifier, state, viewModel::override)
+    FeatureFlagsContent(
+        modifier = modifier,
+        state = state.flags,
+        showAutofillDebug = state.showAutofillDebug,
+        onToggle = viewModel::override,
+        onNavigateToAutofillDebug = onNavigateToAutofillDebug
+    )
 }

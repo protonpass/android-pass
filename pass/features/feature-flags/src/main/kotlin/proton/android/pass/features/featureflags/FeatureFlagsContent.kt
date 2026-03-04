@@ -19,22 +19,30 @@
 package proton.android.pass.features.featureflags
 
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material.Button
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import proton.android.pass.preferences.FeatureFlag
 
 @Composable
 fun FeatureFlagsContent(
     modifier: Modifier = Modifier,
     state: Map<FeatureFlag, Any>,
-    onToggle: (FeatureFlag, Boolean) -> Unit
+    showAutofillDebug: Boolean = false,
+    onToggle: (FeatureFlag, Boolean) -> Unit,
+    onNavigateToAutofillDebug: () -> Unit = {}
 ) {
+    val isAutofillDebugEnabled = showAutofillDebug &&
+        state[FeatureFlag.AUTOFILL_DEBUG_MODE] == true
+
     Scaffold(
         modifier = modifier
             .fillMaxSize()
@@ -50,6 +58,18 @@ fun FeatureFlagsContent(
                             value = value,
                             onToggle = onToggle
                         )
+                    }
+                }
+            }
+            if (isAutofillDebugEnabled) {
+                item {
+                    Button(
+                        onClick = onNavigateToAutofillDebug,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = 16.dp, vertical = 8.dp)
+                    ) {
+                        Text("Autofill Health Monitor")
                     }
                 }
             }

@@ -24,8 +24,8 @@ import proton.android.pass.navigation.api.composable
 
 object FeatureFlagRoute : NavItem(baseRoute = "feature-flags")
 
-fun NavGraphBuilder.featureFlagsGraph() {
+fun NavGraphBuilder.featureFlagsGraph(onNavigateToAutofillDebug: () -> Unit = {}) {
     composable(FeatureFlagRoute) {
-        FeatureFlagsScreen()
+        FeatureFlagsScreen(onNavigateToAutofillDebug = onNavigateToAutofillDebug)
     }
 }

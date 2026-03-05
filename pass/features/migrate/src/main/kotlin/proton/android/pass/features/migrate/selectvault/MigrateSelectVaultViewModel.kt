@@ -50,7 +50,10 @@ import proton.android.pass.commonpresentation.api.folders.FolderTreeBuilder
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
 import proton.android.pass.commonuimodels.api.FolderUiModel
+import proton.android.pass.data.api.repositories.BulkMoveToVaultSelection
 import proton.android.pass.data.api.repositories.BulkMoveToVaultRepository
+import proton.android.pass.data.api.repositories.ParentContainer
+import proton.android.pass.data.api.repositories.flattenByShare
 import proton.android.pass.data.api.usecases.ObserveVaultsWithItemCount
 import proton.android.pass.data.api.usecases.folders.ObserveFolders
 import proton.android.pass.domain.Folder
@@ -95,8 +98,32 @@ class MigrateSelectVaultViewModel @Inject constructor(
 
     private val eventFlow: MutableStateFlow<Option<SelectVaultEvent>> = MutableStateFlow(None)
 
-    private val selectedItemsFlow = bulkMoveToVaultRepository.observe()
-        .distinctUntilChanged()
+    private val selectedItemsSelectionFlow: StateFlow<Option<BulkMoveToVaultSelection>> =
+        bulkMoveToVaultRepository.observe()
+            .distinctUntilChanged()
+            .stateIn(
+                scope = viewModelScope,
+                started = SharingStarted.WhileSubscribed(5_000L),
+                initialValue = None
+            )
+
+    private val selectedItemsFlow: StateFlow<Option<Map<ShareId, List<ItemId>>>> =
+        selectedItemsSelectionFlow
+            .map { it.map { selection -> selection.flattenByShare() } }
+            .stateIn(
+                scope = viewModelScope,
+                started = SharingStarted.WhileSubscribed(5_000L),
+                initialValue = None
+            )
+
+    private val selectedItemsAnalysisFlow: StateFlow<SelectedItemsAnalysis> =
+        selectedItemsSelectionFlow
+            .map { it.value()?.let(::analyzeSelectedItems) ?: SelectedItemsAnalysis.Empty }
+            .stateIn(
+                scope = viewModelScope,
+                started = SharingStarted.WhileSubscribed(5_000L),
+                initialValue = SelectedItemsAnalysis.Empty
+            )
 
     private val vaultSharesFlow: Flow<List<VaultWithItemCount>> =
         observeVaults(includeHidden = true).map { vaults ->
@@ -152,8 +179,9 @@ class MigrateSelectVaultViewModel @Inject constructor(
     internal val state: StateFlow<MigrateSelectVaultUiState> = combine(
         vaultsWithFoldersFlow.asLoadingResult(),
         eventFlow,
-        selectedItemsFlow
-    ) { vaultsWithFoldersResult, event, selectedItems ->
+        selectedItemsFlow,
+        selectedItemsAnalysisFlow
+    ) { vaultsWithFoldersResult, event, selectedItems, selectedItemsAnalysis ->
         when (vaultsWithFoldersResult) {
             LoadingResult.Loading -> MigrateSelectVaultUiState.Loading
             is LoadingResult.Error -> {
@@ -167,11 +195,14 @@ class MigrateSelectVaultViewModel @Inject constructor(
                 vaultList = prepareVaults(
                     vaultsWithFoldersResult.data.vaultShares,
                     vaultsWithFoldersResult.data.vaultFolders,
-                    selectedItems
+                    selectedItems,
+                    selectedItemsAnalysis
                 ),
                 event = event,
                 mode = mode.migrateMode(),
-                folderIdToExpand = (mode as? Mode.MoveFolder)?.folderId.toOption()
+                folderIdToExpand = (mode as? Mode.MoveFolder)?.folderId.toOption(),
+                disabledFolderId = selectedItemsAnalysis.disabledFolderId,
+                disabledFolderItemCount = selectedItemsAnalysis.disabledFolderItemCount
             )
         }
     }.stateIn(
@@ -212,11 +243,13 @@ class MigrateSelectVaultViewModel @Inject constructor(
 
     internal fun onFolderSelected(shareId: ShareId, newParentFolderId: FolderId) {
         when (val currentMode = mode) {
-            is Mode.MigrateSelectedItems -> eventFlow.update {
-                SelectVaultEvent.VaultSelectedForMigrateItem(
-                    destinationShareId = shareId,
-                    destFolderId = newParentFolderId.toOption()
-                ).toOption()
+            is Mode.MigrateSelectedItems -> {
+                eventFlow.update {
+                    SelectVaultEvent.VaultSelectedForMigrateItem(
+                        destinationShareId = shareId,
+                        destFolderId = newParentFolderId.toOption()
+                    ).toOption()
+                }
             }
 
             is Mode.MoveFolder -> {
@@ -245,7 +278,8 @@ class MigrateSelectVaultViewModel @Inject constructor(
     private fun prepareVaults(
         vaults: List<VaultWithItemCount>,
         vaultFolders: Map<ShareId, PersistentList<FolderUiModel>>,
-        selectedItems: Option<Map<ShareId, List<ItemId>>>
+        selectedItems: Option<Map<ShareId, List<ItemId>>>,
+        selectedItemsAnalysis: SelectedItemsAnalysis
     ): ImmutableList<MigrateVaultState> = vaults
         .filter {
             when (mode) {
@@ -255,13 +289,15 @@ class MigrateSelectVaultViewModel @Inject constructor(
                 is Mode.MigrateAllItems -> true
             }
         }
-        .map { prepareVault(it, vaultFolders, selectedItems) }
+        .map { prepareVault(it, vaultFolders, selectedItems, selectedItemsAnalysis) }
         .toImmutableList()
 
+    @Suppress("LongMethod")
     private fun prepareVault(
         vault: VaultWithItemCount,
         vaultFolders: Map<ShareId, PersistentList<FolderUiModel>>,
-        selectedItems: Option<Map<ShareId, List<ItemId>>>
+        selectedItems: Option<Map<ShareId, List<ItemId>>>,
+        selectedItemsAnalysis: SelectedItemsAnalysis
     ): MigrateVaultState {
         val canCreate = vault.vault.role.toPermissions().canCreate()
         val folderTree = vaultFolders[vault.vault.shareId] ?: persistentListOf()
@@ -279,17 +315,20 @@ class MigrateSelectVaultViewModel @Inject constructor(
                     is Some -> {
                         val selectedItemsMap = selectedItems.value
                         val state = if (selectedItemsMap.size == 1) {
-                            // We only have 1 vault. Disable that one
                             val shareToBeMoved = selectedItemsMap.entries.first()
-                            val isNotCurrentOne = vault.vault.shareId != shareToBeMoved.key
+                            val isSameVault = vault.vault.shareId == shareToBeMoved.key
                             when {
-                                isNotCurrentOne && canCreate -> VaultStatus.Enabled
-                                isNotCurrentOne && !canCreate -> VaultStatus.Disabled(
+                                !isSameVault && canCreate -> VaultStatus.Enabled
+                                !isSameVault && !canCreate -> VaultStatus.Disabled(
                                     reason = VaultStatus.DisabledReason.NoPermission
                                 )
-
+                                selectedItemsAnalysis.disableSourceVault && canCreate ->
+                                    VaultStatus.Disabled(
+                                        reason = VaultStatus.DisabledReason.SameVault
+                                    )
+                                isSameVault && canCreate -> VaultStatus.Enabled
                                 else -> VaultStatus.Disabled(
-                                    reason = VaultStatus.DisabledReason.SameVault
+                                    reason = VaultStatus.DisabledReason.NoPermission
                                 )
                             }
                         } else {
@@ -385,7 +424,11 @@ class MigrateSelectVaultViewModel @Inject constructor(
             MigrateModeValue.SelectedItems -> Mode.MigrateSelectedItems(
                 filter = savedStateHandle.get()
                     .require<String>(MigrateVaultFilterArg.key)
-                    .let(MigrateVaultFilter::valueOf)
+                    .let(MigrateVaultFilter::valueOf),
+                sourceFolderId = savedStateHandle.get()
+                    .get<String>(CommonOptionalNavArgId.FolderId.key)
+                    ?.let(::FolderId)
+                    .toOption()
             )
 
             MigrateModeValue.AllVaultItems -> Mode.MigrateAllItems(
@@ -408,7 +451,8 @@ class MigrateSelectVaultViewModel @Inject constructor(
     internal sealed interface Mode {
 
         data class MigrateSelectedItems(
-            val filter: MigrateVaultFilter
+            val filter: MigrateVaultFilter,
+            val sourceFolderId: Option<FolderId> = None
         ) : Mode
 
         data class MigrateAllItems(val shareId: ShareId) : Mode
@@ -431,4 +475,56 @@ class MigrateSelectVaultViewModel @Inject constructor(
 
     }
 
+}
+
+internal data class SelectedItemsAnalysis(
+    val sourceShareId: ShareId?,
+    val disableSourceVault: Boolean,
+    val disabledFolderId: Option<FolderId>,
+    val disabledFolderItemCount: Int
+) {
+    companion object {
+        val Empty = SelectedItemsAnalysis(
+            sourceShareId = null,
+            disableSourceVault = false,
+            disabledFolderId = None,
+            disabledFolderItemCount = 0
+        )
+    }
+}
+
+internal fun analyzeSelectedItems(selection: BulkMoveToVaultSelection): SelectedItemsAnalysis {
+    if (selection.size != 1) return SelectedItemsAnalysis.Empty
+
+    val sourceShareId = selection.keys.firstOrNull() ?: return SelectedItemsAnalysis.Empty
+    val containers = selection[sourceShareId].orEmpty().filterValues { it.isNotEmpty() }
+
+    val hasRootItems = containers.keys.any { it is ParentContainer.Share }
+    val folderContainers = containers.keys
+        .mapNotNull { it as? ParentContainer.Folder }
+    val folderIds = folderContainers.map { it.folderId }.toSet()
+
+    val disableSourceVault = hasRootItems && folderIds.isEmpty()
+    val disabledFolderId = when {
+        !hasRootItems && folderIds.size == 1 -> folderIds.first().toOption()
+        else -> None
+    }
+    val disabledFolderItemCount = if (disabledFolderId is Some) {
+        containers.entries
+            .firstOrNull { (container, _) ->
+                container is ParentContainer.Folder && container.folderId == disabledFolderId.value
+            }
+            ?.value
+            ?.size
+            ?: 0
+    } else {
+        0
+    }
+
+    return SelectedItemsAnalysis(
+        sourceShareId = sourceShareId,
+        disableSourceVault = disableSourceVault,
+        disabledFolderId = disabledFolderId,
+        disabledFolderItemCount = disabledFolderItemCount
+    )
 }

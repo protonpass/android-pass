@@ -125,9 +125,7 @@ fun HomeScreen(
                     .also(onNavigateEvent)
             }
 
-            HomeNavEvent.ShowBulkMoveToVault -> {
-                onNavigateEvent(HomeNavigation.MoveToVault)
-            }
+            HomeNavEvent.ShowBulkMoveToVault -> onNavigateEvent(HomeNavigation.MoveToVault)
 
             HomeNavEvent.UpgradeDialog -> {
                 onNavigateEvent(HomeNavigation.UpgradeDialog)
@@ -135,9 +133,8 @@ fun HomeScreen(
 
             HomeNavEvent.Unknown -> Unit
 
-            HomeNavEvent.OnBulkMigrationSharedWarning -> {
+            HomeNavEvent.OnBulkMigrationSharedWarning ->
                 onNavigateEvent(HomeNavigation.ItemsMigrationSharedWarning)
-            }
         }
 
         homeViewModel.onNavEventConsumed(homeUiState.navEvent)

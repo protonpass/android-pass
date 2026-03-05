@@ -86,6 +86,7 @@ fun ItemEntity.toEncryptedDomain(): ItemEncrypted = ItemEncrypted(
     userId = UserId(userId),
     revision = revision,
     shareId = ShareId(shareId),
+    folderId = folderId?.let(::FolderId),
     title = encryptedTitle,
     note = encryptedNote,
     content = encryptedContent,

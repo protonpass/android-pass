@@ -18,6 +18,7 @@
 
 package proton.android.pass.features.item.details.detailmenu.presentation
 
+import proton.android.pass.domain.FolderId
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 
@@ -29,7 +30,7 @@ internal sealed interface ItemDetailsMenuEvent {
 
     data object OnItemNoteCopied : ItemDetailsMenuEvent
 
-    data object OnItemMigrated : ItemDetailsMenuEvent
+    data class OnItemMigrated(val folderId: FolderId?) : ItemDetailsMenuEvent
 
     data object OnItemMigrationError : ItemDetailsMenuEvent
 
@@ -58,6 +59,6 @@ internal sealed interface ItemDetailsMenuEvent {
     @JvmInline
     value class OnItemLeaved(val shareId: ShareId) : ItemDetailsMenuEvent
 
-    data object OnItemSharedMigrated : ItemDetailsMenuEvent
+    data class OnItemSharedMigrated(val folderId: FolderId?) : ItemDetailsMenuEvent
 
 }

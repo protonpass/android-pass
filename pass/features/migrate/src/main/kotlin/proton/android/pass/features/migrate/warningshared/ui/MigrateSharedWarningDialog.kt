@@ -42,7 +42,8 @@ fun MigrateSharedWarningDialog(
 
             is MigrateSharedWarningEvent.OnMigrateItems -> {
                 MigrateNavigation.VaultSelectionForItemsMigration(
-                    filter = event.filter
+                    filter = event.filter,
+                    folderId = event.folderId
                 ).also(onNavigate)
             }
 

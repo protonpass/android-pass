@@ -213,10 +213,10 @@ interface ItemRepository {
         destination: ShareId
     )
 
-    suspend fun moveItemsToFolder(
+    suspend fun moveItemsInsideShare(
         userId: UserId,
         shareId: ShareId,
-        folderId: FolderId,
+        folderId: FolderId?,
         itemIds: List<ItemId>
     )
 

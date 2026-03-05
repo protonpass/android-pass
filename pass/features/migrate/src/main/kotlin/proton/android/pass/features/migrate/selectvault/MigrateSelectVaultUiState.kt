@@ -95,6 +95,8 @@ sealed class MigrateSelectVaultUiState {
         val vaultList: ImmutableList<MigrateVaultState>,
         val event: Option<SelectVaultEvent>,
         val mode: MigrateMode,
-        val folderIdToExpand: Option<FolderId>
+        val folderIdToExpand: Option<FolderId>,
+        val disabledFolderId: Option<FolderId> = None,
+        val disabledFolderItemCount: Int = 0
     ) : MigrateSelectVaultUiState()
 }

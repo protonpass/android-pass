@@ -74,8 +74,10 @@ sealed interface MigrateNavigation {
     @JvmInline
     value class VaultSelectionForVaultMigration(val shareId: ShareId) : MigrateNavigation
 
-    @JvmInline
-    value class VaultSelectionForItemsMigration(val filter: MigrateVaultFilter) : MigrateNavigation
+    data class VaultSelectionForItemsMigration(
+        val filter: MigrateVaultFilter,
+        val folderId: Option<FolderId> = None
+    ) : MigrateNavigation
 
 }
 
@@ -113,7 +115,11 @@ object MigrateDestinationFolderNavArgId : OptionalNavArgId {
 object MigrateSelectVault : NavItem(
     baseRoute = "migrate/select",
     navArgIds = listOf(MigrateModeArg),
-    optionalArgIds = listOf(CommonOptionalNavArgId.ShareId, MigrateVaultFilterArg, CommonOptionalNavArgId.FolderId),
+    optionalArgIds = listOf(
+        CommonOptionalNavArgId.ShareId,
+        MigrateVaultFilterArg,
+        CommonOptionalNavArgId.FolderId
+    ),
     navItemType = NavItemType.Bottomsheet,
     noHistory = true
 ) {

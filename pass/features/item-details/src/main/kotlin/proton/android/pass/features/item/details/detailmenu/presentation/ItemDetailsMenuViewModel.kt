@@ -34,6 +34,7 @@ import proton.android.pass.common.api.FlowUtils.oneShot
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.some
+import proton.android.pass.data.api.repositories.ParentContainer
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemAction
@@ -131,7 +132,12 @@ class ItemDetailsMenuViewModel @Inject constructor(
         viewModelScope.launch {
             actionFlow.update { BottomSheetItemAction.Migrate }
 
-            runCatching { bulkMoveToVaultRepository.save(mapOf(shareId to listOf(itemId))) }
+            val itemFolderId = (state.value.itemOption as? Some)?.value?.folderId
+            val parentContainer = itemFolderId?.let(ParentContainer::Folder) ?: ParentContainer.Share
+            val selection = mapOf(
+                shareId to mapOf(parentContainer to setOf(itemId))
+            )
+            runCatching { bulkMoveToVaultRepository.save(selection) }
                 .onFailure { error ->
                     PassLogger.w(TAG, "There was an error migrating item")
                     PassLogger.w(TAG, error)
@@ -139,10 +145,11 @@ class ItemDetailsMenuViewModel @Inject constructor(
                     snackbarDispatcher(ItemDetailMenuSnackBarMessage.ItemMigrationError)
                 }
                 .onSuccess {
+                    val folderId = state.value.itemOption.value()?.folderId
                     if (state.value.isItemShared) {
-                        ItemDetailsMenuEvent.OnItemSharedMigrated
+                        ItemDetailsMenuEvent.OnItemSharedMigrated(folderId)
                     } else {
-                        ItemDetailsMenuEvent.OnItemMigrated
+                        ItemDetailsMenuEvent.OnItemMigrated(folderId)
                     }.also { event ->
                         eventFlow.update { event }
                     }

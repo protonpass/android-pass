@@ -40,6 +40,7 @@ import proton.android.pass.domain.ItemFlag
 import proton.android.pass.domain.ItemFlags
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ItemState
+import proton.android.pass.domain.FolderId
 import proton.android.pass.domain.PersonalDetailsContent
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.ShareSelection
@@ -105,6 +106,7 @@ class FakeObserveEncryptedItems @Inject constructor() : ObserveEncryptedItems {
         fun createItem(
             shareId: ShareId = ShareId("share-123"),
             itemId: ItemId = ItemId("item-123"),
+            folderId: FolderId? = null,
             aliasEmail: String? = null,
             flags: Int = 0,
             itemContents: ItemContents
@@ -120,6 +122,7 @@ class FakeObserveEncryptedItems @Inject constructor() : ObserveEncryptedItems {
                     userId = UserId("user-id"),
                     revision = 1,
                     shareId = shareId,
+                    folderId = folderId,
                     title = encrypt(itemContents.title),
                     note = encrypt(itemContents.note),
                     content = encrypt(asProto.toByteArray()),

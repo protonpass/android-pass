@@ -31,6 +31,7 @@ import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.foundation.layout.Column
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
@@ -56,6 +57,7 @@ fun OneFolderItem(
     folders: List<FolderUiModel> = emptyList(),
     isExpanded: Boolean,
     isSelected: Boolean = false,
+    disabledReason: String? = null,
     onFolderClick: (() -> Unit)?,
     onExpandToggle: () -> Unit,
     onThreeDotsClick: (() -> Unit)? = null
@@ -101,13 +103,21 @@ fun OneFolderItem(
                     CoreR.drawable.ic_proton_folder_filled
             )
 
-            Text.Body1Regular(
-                modifier = Modifier.weight(1f),
-                text = folderName,
-                color = ProtonTheme.colors.textNorm,
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis
-            )
+            Column(modifier = Modifier.weight(1f)) {
+                Text.Body1Regular(
+                    text = folderName,
+                    color = if (disabledReason != null) ProtonTheme.colors.textHint
+                    else ProtonTheme.colors.textNorm,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis
+                )
+                if (disabledReason != null) {
+                    Text.CaptionRegular(
+                        text = disabledReason,
+                        color = ProtonTheme.colors.textHint
+                    )
+                }
+            }
 
             if (isSelected) {
                 Icon.Default(

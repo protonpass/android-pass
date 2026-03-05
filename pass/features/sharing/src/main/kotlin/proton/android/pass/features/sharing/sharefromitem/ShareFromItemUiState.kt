@@ -50,7 +50,6 @@ internal data class ShareFromItemUiState(
     private val isItemSharingAllowed: Boolean,
     private val isSecureLinkSharing: Boolean
 ) {
-
     private val isSharedItem: Boolean = when (itemOption) {
         None -> false
         is Some -> itemOption.value.shareCount > 0

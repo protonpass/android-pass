@@ -67,6 +67,8 @@ fun FolderTree(
     folders: List<FolderUiModel>,
     expandedState: MutableMap<String, Boolean>,
     selectedFolderId: Option<FolderId>,
+    disabledFolderId: Option<FolderId> = None,
+    disabledFolderReason: String? = null,
     depth: Int = 0, // no padding when depth == 0
     needsToUpgrade: Boolean = false,
     canCreateFolder: Boolean = false,
@@ -91,15 +93,17 @@ fun FolderTree(
         folders.forEach { folder ->
 
             val isExpanded = expandedState.isExpanded(folder.id.id)
+            val isFolderDisabled = disabledFolderId is Some && folder.id == disabledFolderId.value
 
             OneFolderItem(
                 folderName = folder.name,
                 folders = folder.folders,
                 isExpanded = isExpanded,
                 isSelected = selectedFolderId is Some && folder.id == selectedFolderId.value,
+                disabledReason = if (isFolderDisabled) disabledFolderReason else null,
                 onExpandToggle = { expandedState.toggle(folder.id.id) },
                 onThreeDotsClick = onThreeDotsClick?.let { { it(folder.id) } },
-                onFolderClick = onFolderClick?.let { { it(folder.id) } }
+                onFolderClick = if (isFolderDisabled) null else onFolderClick?.let { { it(folder.id) } }
             )
 
             AnimatedVisibility(visible = folder.folders.isNotEmpty() && isExpanded) {
@@ -110,6 +114,8 @@ fun FolderTree(
                     onThreeDotsClick = onThreeDotsClick,
                     onCreateFolderClick = onCreateFolderClick,
                     selectedFolderId = selectedFolderId,
+                    disabledFolderId = disabledFolderId,
+                    disabledFolderReason = disabledFolderReason,
                     depth = depth + 1,
                     onFolderClick = onFolderClick
                 )

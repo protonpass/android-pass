@@ -18,6 +18,9 @@
 
 package proton.android.pass.features.migrate.warningshared.presentation
 
+import proton.android.pass.common.api.None
+import proton.android.pass.common.api.Option
+import proton.android.pass.domain.FolderId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.features.migrate.MigrateVaultFilter
 
@@ -25,8 +28,10 @@ internal sealed interface MigrateSharedWarningEvent {
 
     data object Idle : MigrateSharedWarningEvent
 
-    @JvmInline
-    value class OnMigrateItems(internal val filter: MigrateVaultFilter) : MigrateSharedWarningEvent
+    data class OnMigrateItems(
+        internal val filter: MigrateVaultFilter,
+        internal val folderId: Option<FolderId> = None
+    ) : MigrateSharedWarningEvent
 
     @JvmInline
     value class OnMigrateVault(internal val shareId: ShareId) : MigrateSharedWarningEvent

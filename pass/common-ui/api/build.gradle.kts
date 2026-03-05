@@ -63,5 +63,6 @@ dependencies {
     testImplementation(libs.kotlinTest)
     testImplementation(libs.junit)
 
+    testImplementation(projects.pass.crypto.fakes)
     testImplementation(projects.pass.commonUiModels.fakes)
 }

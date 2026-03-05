@@ -29,10 +29,13 @@ import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
+import proton.android.pass.common.api.toOption
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
+import proton.android.pass.domain.FolderId
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.data.api.repositories.BulkMoveToVaultRepository
+import proton.android.pass.data.api.repositories.flattenByShare
 import proton.android.pass.data.api.usecases.ItemTypeFilter
 import proton.android.pass.data.api.usecases.ObserveEncryptedItems
 import proton.android.pass.data.api.usecases.items.GetMigrationItemsSelection
@@ -45,6 +48,7 @@ import proton.android.pass.features.migrate.MigrateVaultFilter
 import proton.android.pass.features.migrate.MigrateVaultFilterArg
 import proton.android.pass.features.migrate.selectvault.MigrateSelectVaultViewModel.Mode
 import proton.android.pass.navigation.api.CommonNavArgId
+import proton.android.pass.navigation.api.CommonOptionalNavArgId
 import javax.inject.Inject
 
 @HiltViewModel
@@ -63,7 +67,11 @@ class MigrateSharedWarningViewModel @Inject constructor(
         MigrateModeValue.SelectedItems -> Mode.MigrateSelectedItems(
             filter = savedStateHandleProvider.get()
                 .require<String>(MigrateVaultFilterArg.key)
-                .let(MigrateVaultFilter::valueOf)
+                .let(MigrateVaultFilter::valueOf),
+            sourceFolderId = savedStateHandleProvider.get()
+                .get<String>(CommonOptionalNavArgId.FolderId.key)
+                ?.let(::FolderId)
+                .toOption()
         )
 
         MigrateModeValue.AllVaultItems -> Mode.MigrateAllItems(
@@ -95,7 +103,7 @@ class MigrateSharedWarningViewModel @Inject constructor(
 
         is Mode.MigrateSelectedItems -> bulkMoveToVaultRepository.observe()
             .mapLatest { selectedItemsOption ->
-                selectedItemsOption.value().orEmpty()
+                selectedItemsOption.value()?.flattenByShare().orEmpty()
             }
 
         is Mode.MoveFolder -> flowOf(emptyMap())
@@ -123,7 +131,8 @@ class MigrateSharedWarningViewModel @Inject constructor(
             )
 
             is Mode.MigrateSelectedItems -> MigrateSharedWarningEvent.OnMigrateItems(
-                filter = mode.filter
+                filter = mode.filter,
+                folderId = mode.sourceFolderId
             )
 
             is Mode.MoveFolder -> MigrateSharedWarningEvent.Idle

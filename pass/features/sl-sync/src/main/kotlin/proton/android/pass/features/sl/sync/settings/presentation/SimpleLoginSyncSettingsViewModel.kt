@@ -67,11 +67,7 @@ class SimpleLoginSyncSettingsViewModel @Inject constructor(
         selectedShareIdOptionFlow,
         defaultShareIdOptionFlow
     ) { selectedShareIdOption, defaultShareIdOption ->
-        if (selectedShareIdOption is Some) {
-            selectedShareIdOption
-        } else {
-            defaultShareIdOption
-        }.let { shareIdOption ->
+        (selectedShareIdOption as? Some ?: defaultShareIdOption).let { shareIdOption ->
             when (shareIdOption) {
                 None -> None
                 is Some -> getVaultByShareId(shareId = shareIdOption.value)

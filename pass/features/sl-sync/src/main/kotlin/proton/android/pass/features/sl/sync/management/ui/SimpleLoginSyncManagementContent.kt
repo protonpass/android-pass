@@ -68,6 +68,7 @@ internal fun SimpleLoginSyncDetailsContent(
                 defaultDomain = defaultDomain,
                 aliasMailboxes = aliasMailboxes,
                 defaultVault = defaultVault,
+                isNoVaults = isNoVaults,
                 isSyncEnabled = isSyncEnabled,
                 hasPendingAliases = hasPendingAliases,
                 pendingAliasesCount = pendingAliasesCount,

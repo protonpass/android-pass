@@ -41,6 +41,7 @@ import proton.android.pass.composecomponents.impl.badge.CircledBadge
 import proton.android.pass.composecomponents.impl.badge.OverlayBadge
 import proton.android.pass.composecomponents.impl.item.icon.CreditCardIcon
 import proton.android.pass.domain.ItemContents
+import proton.android.pass.domain.highlightableBodyFields
 
 private const val MAX_PREVIEW_LENGTH = 128
 
@@ -64,11 +65,12 @@ fun CreditCardRow(
 
     val highlightColor = PassTheme.colors.interactionNorm
     val fields =
-        remember(content.title, content.note, content.cardHolder, highlight, maskedNumber) {
+        remember(content.title, content.note, content.cardHolder, content.customFields, highlight, maskedNumber) {
             getHighlightedFields(
                 title = content.title,
                 note = content.note,
                 cardHolder = content.cardHolder,
+                bodyFields = content.highlightableBodyFields(),
                 highlight = highlight,
                 highlightColor = highlightColor,
                 maskedNumber = maskedNumber
@@ -124,6 +126,7 @@ private fun getHighlightedFields(
     title: String,
     note: String,
     cardHolder: String,
+    bodyFields: List<String>,
     highlight: String,
     highlightColor: Color,
     maskedNumber: AnnotatedString?
@@ -131,15 +134,13 @@ private fun getHighlightedFields(
     var annotatedTitle = AnnotatedString(title.take(MAX_PREVIEW_LENGTH))
     var annotatedNote: AnnotatedString? = null
     var annotatedCardHolder: AnnotatedString? = null
+    val annotatedBodyFields: MutableList<AnnotatedString> = mutableListOf()
     if (highlight.isNotBlank()) {
-        title.highlight(highlight, highlightColor)?.let {
-            annotatedTitle = it
-        }
-        note.replace("\n", " ").highlight(highlight, highlightColor)?.let {
-            annotatedNote = it
-        }
-        cardHolder.highlight(highlight, highlightColor)?.let {
-            annotatedCardHolder = it
+        title.highlight(highlight, highlightColor)?.let { annotatedTitle = it }
+        note.replace("\n", " ").highlight(highlight, highlightColor)?.let { annotatedNote = it }
+        cardHolder.highlight(highlight, highlightColor)?.let { annotatedCardHolder = it }
+        bodyFields.forEach { field ->
+            field.highlight(highlight, highlightColor)?.let { annotatedBodyFields.add(it) }
         }
     }
 
@@ -147,11 +148,8 @@ private fun getHighlightedFields(
         title = annotatedTitle,
         note = annotatedNote,
         cardHolder = annotatedCardHolder,
-        subtitles = listOfNotNull(
-            maskedNumber,
-            annotatedNote,
-            annotatedCardHolder
-        ).toPersistentList()
+        subtitles = (listOfNotNull(maskedNumber, annotatedNote, annotatedCardHolder) + annotatedBodyFields)
+            .toPersistentList()
     )
 }
 

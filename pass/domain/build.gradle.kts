@@ -33,4 +33,7 @@ dependencies {
 
     implementation(libs.core.accountManager.domain)
     implementation(libs.core.plan.domain)
+
+    testImplementation(libs.junit)
+    testImplementation(libs.truth)
 }

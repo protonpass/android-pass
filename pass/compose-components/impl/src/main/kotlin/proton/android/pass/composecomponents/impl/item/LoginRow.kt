@@ -39,8 +39,8 @@ import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.composecomponents.impl.badge.CircledBadge
 import proton.android.pass.composecomponents.impl.badge.OverlayBadge
 import proton.android.pass.composecomponents.impl.item.icon.LoginIcon
-import proton.android.pass.domain.CustomFieldContent
 import proton.android.pass.domain.ItemContents
+import proton.android.pass.domain.highlightableBodyFields
 
 private const val MAX_PREVIEW_LENGTH = 128
 
@@ -57,16 +57,13 @@ fun LoginRow(
     val content = remember(item.contents) { item.contents as ItemContents.Login }
 
     val highlightColor = PassTheme.colors.interactionNorm
-    val textCustomFields = remember(content.customFields) {
-        content.customFields.filterIsInstance<CustomFieldContent.Text>()
-    }
     val fields = remember(
         content.title,
         content.itemEmail,
         content.itemUsername,
         content.note,
         content.urls,
-        textCustomFields,
+        content.customFields,
         highlight
     ) {
         getHighlightedFields(
@@ -76,7 +73,7 @@ fun LoginRow(
             displayUsername = content.displayValue,
             note = content.note,
             urls = content.urls,
-            customFields = textCustomFields,
+            bodyFields = content.highlightableBodyFields(),
             highlight = highlight,
             highlightColor = highlightColor
         )
@@ -130,7 +127,7 @@ fun LoginRow(
     )
 }
 
-@Suppress("ComplexMethod", "CyclomaticComplexMethod", "LongParameterList")
+@Suppress("LongParameterList")
 private fun getHighlightedFields(
     title: String,
     email: String,
@@ -138,7 +135,7 @@ private fun getHighlightedFields(
     displayUsername: String,
     note: String,
     urls: List<String>,
-    customFields: List<CustomFieldContent.Text>,
+    bodyFields: List<String>,
     highlight: String,
     highlightColor: Color
 ): LoginHighlightFields {
@@ -149,7 +146,7 @@ private fun getHighlightedFields(
 
     var annotatedNote: AnnotatedString? = null
     val annotatedWebsites: MutableList<AnnotatedString> = mutableListOf()
-    val annotatedCustomFields: MutableList<AnnotatedString> = mutableListOf()
+    val annotatedBodyFields: MutableList<AnnotatedString> = mutableListOf()
     if (highlight.isNotBlank()) {
         title.highlight(highlight, highlightColor)?.let {
             annotatedTitle = it
@@ -169,14 +166,10 @@ private fun getHighlightedFields(
             }
             if (annotatedWebsites.size >= 2) return@forEach
         }
-
-        customFields.forEach { customField ->
-            val customFieldText = "${customField.label}: ${customField.value}"
-            customFieldText.highlight(highlight, highlightColor)?.let {
-                annotatedCustomFields.add(it)
+        bodyFields.forEach { field ->
+            field.highlight(highlight, highlightColor)?.let {
+                annotatedBodyFields.add(it)
             }
-
-            if (annotatedCustomFields.size >= 2) return@forEach
         }
     }
 
@@ -199,7 +192,7 @@ private fun getHighlightedFields(
             listOfNotNull(
                 rowUsername,
                 annotatedNote
-            ) + annotatedWebsites + annotatedCustomFields
+            ) + annotatedWebsites + annotatedBodyFields
             ).toPersistentList()
     )
 }

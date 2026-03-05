@@ -40,14 +40,12 @@ import proton.android.pass.composecomponents.impl.badge.OverlayBadge
 import proton.android.pass.composecomponents.impl.item.icon.IdentityIcon
 import proton.android.pass.domain.AddressDetailsContent
 import proton.android.pass.domain.ContactDetailsContent
-import proton.android.pass.domain.CustomFieldContent
-import proton.android.pass.domain.ExtraSectionContent
 import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.PersonalDetailsContent
 import proton.android.pass.domain.WorkDetailsContent
+import proton.android.pass.domain.highlightableBodyFields
 
 private const val MAX_PREVIEW_LENGTH = 128
-private const val MAX_CUSTOM_FIELDS = 2
 
 @Composable
 fun IdentityRow(
@@ -60,22 +58,14 @@ fun IdentityRow(
 ) {
     val content = remember(item.contents) { item.contents as ItemContents.Identity }
     val highlightColor = PassTheme.colors.interactionNorm
-    val fields = remember(
-        content.title,
-        content.personalDetailsContent,
-        content.addressDetailsContent,
-        content.contactDetailsContent,
-        content.workDetailsContent,
-        content.extraSectionContentList,
-        highlight
-    ) {
+    val fields = remember(content, highlight) {
         getHighlightedFields(
             title = content.title,
             personalDetailsContent = content.personalDetailsContent,
             addressDetailsContent = content.addressDetailsContent,
             contactDetailsContent = content.contactDetailsContent,
             workDetailsContent = content.workDetailsContent,
-            extraSectionContentList = content.extraSectionContentList,
+            bodyFields = content.highlightableBodyFields(),
             highlight = highlight,
             highlightColor = highlightColor
         )
@@ -125,14 +115,14 @@ fun IdentityRow(
     )
 }
 
-@Suppress("LongMethod", "LongParameterList")
+@Suppress("LongParameterList")
 private fun getHighlightedFields(
     title: String,
     personalDetailsContent: PersonalDetailsContent,
     addressDetailsContent: AddressDetailsContent,
     contactDetailsContent: ContactDetailsContent,
     workDetailsContent: WorkDetailsContent,
-    extraSectionContentList: List<ExtraSectionContent>,
+    bodyFields: List<String>,
     highlight: String,
     highlightColor: Color
 ): IdentityHighlightFields {
@@ -141,145 +131,48 @@ private fun getHighlightedFields(
         .filter { it.isNotBlank() }
         .joinToString(" / ")
     var annotatedFullNameEmail = AnnotatedString(nameAndEmail.take(MAX_PREVIEW_LENGTH))
-
     val annotatedFields: MutableList<AnnotatedString> = mutableListOf()
 
     if (highlight.isNotBlank()) {
-        title.highlight(highlight, highlightColor)?.let {
-            annotatedTitle = it
+        title.highlight(highlight, highlightColor)?.let { annotatedTitle = it }
+        nameAndEmail.highlight(highlight, highlightColor)?.let { annotatedFullNameEmail = it }
+
+        sequenceOf(
+            personalDetailsContent.firstName,
+            personalDetailsContent.middleName,
+            personalDetailsContent.lastName,
+            personalDetailsContent.birthdate,
+            personalDetailsContent.gender,
+            personalDetailsContent.phoneNumber,
+            addressDetailsContent.organization,
+            addressDetailsContent.streetAddress,
+            addressDetailsContent.zipOrPostalCode,
+            addressDetailsContent.city,
+            addressDetailsContent.stateOrProvince,
+            addressDetailsContent.countryOrRegion,
+            addressDetailsContent.floor,
+            addressDetailsContent.county,
+            contactDetailsContent.passportNumber,
+            contactDetailsContent.licenseNumber,
+            contactDetailsContent.website,
+            contactDetailsContent.xHandle,
+            contactDetailsContent.secondPhoneNumber,
+            contactDetailsContent.linkedin,
+            contactDetailsContent.reddit,
+            contactDetailsContent.facebook,
+            contactDetailsContent.yahoo,
+            contactDetailsContent.instagram,
+            workDetailsContent.company,
+            workDetailsContent.jobTitle,
+            workDetailsContent.personalWebsite,
+            workDetailsContent.workPhoneNumber,
+            workDetailsContent.workEmail
+        ).forEach { field ->
+            field.highlight(highlight, highlightColor)?.let { annotatedFields.add(it) }
         }
-        nameAndEmail.highlight(highlight, highlightColor)?.let {
-            annotatedFullNameEmail = it
-        }
 
-        // Highlight fields for PersonalDetails
-        annotatedFields.addAll(
-            highlightFields(
-                listOf(
-                    personalDetailsContent.firstName,
-                    personalDetailsContent.middleName,
-                    personalDetailsContent.lastName,
-                    personalDetailsContent.birthdate,
-                    personalDetailsContent.gender,
-                    personalDetailsContent.phoneNumber
-                ),
-                highlight,
-                highlightColor
-            )
-        )
-        val personalCustomField =
-            personalDetailsContent.customFields.filterIsInstance<CustomFieldContent.Text>()
-                .mapNotNull { customField ->
-                    customFieldToAnnotatedString(
-                        customField,
-                        highlight,
-                        highlightColor
-                    )
-                }
-                .take(MAX_CUSTOM_FIELDS)
-        annotatedFields.addAll(personalCustomField)
-
-        // Highlight fields for AddressDetails
-        annotatedFields.addAll(
-            highlightFields(
-                listOf(
-                    addressDetailsContent.organization,
-                    addressDetailsContent.streetAddress,
-                    addressDetailsContent.zipOrPostalCode,
-                    addressDetailsContent.city,
-                    addressDetailsContent.stateOrProvince,
-                    addressDetailsContent.countryOrRegion,
-                    addressDetailsContent.floor,
-                    addressDetailsContent.county
-                ),
-                highlight,
-                highlightColor
-            )
-        )
-
-        val addressCustomField =
-            addressDetailsContent.customFields.filterIsInstance<CustomFieldContent.Text>()
-                .mapNotNull { customField ->
-                    customFieldToAnnotatedString(
-                        customField,
-                        highlight,
-                        highlightColor
-                    )
-                }
-                .take(MAX_CUSTOM_FIELDS)
-        annotatedFields.addAll(addressCustomField)
-
-        // Highlight fields for ContactDetails
-        annotatedFields.addAll(
-            highlightFields(
-                listOf(
-                    contactDetailsContent.passportNumber,
-                    contactDetailsContent.licenseNumber,
-                    contactDetailsContent.website,
-                    contactDetailsContent.xHandle,
-                    contactDetailsContent.secondPhoneNumber,
-                    contactDetailsContent.linkedin,
-                    contactDetailsContent.reddit,
-                    contactDetailsContent.facebook,
-                    contactDetailsContent.yahoo,
-                    contactDetailsContent.instagram
-                ),
-                highlight,
-                highlightColor
-            )
-        )
-
-        val contactCustomField =
-            contactDetailsContent.customFields.filterIsInstance<CustomFieldContent.Text>()
-                .mapNotNull { customField ->
-                    customFieldToAnnotatedString(
-                        customField,
-                        highlight,
-                        highlightColor
-                    )
-                }
-                .take(MAX_CUSTOM_FIELDS)
-        annotatedFields.addAll(contactCustomField)
-
-        // Highlight fields for WorkDetails
-        annotatedFields.addAll(
-            highlightFields(
-                listOf(
-                    workDetailsContent.company,
-                    workDetailsContent.jobTitle,
-                    workDetailsContent.personalWebsite,
-                    workDetailsContent.workPhoneNumber,
-                    workDetailsContent.workEmail
-                ),
-                highlight,
-                highlightColor
-            )
-        )
-
-        val workCustomField =
-            workDetailsContent.customFields.filterIsInstance<CustomFieldContent.Text>()
-                .mapNotNull { customField ->
-                    customFieldToAnnotatedString(
-                        customField,
-                        highlight,
-                        highlightColor
-                    )
-                }
-                .take(MAX_CUSTOM_FIELDS)
-        annotatedFields.addAll(workCustomField)
-
-        extraSectionContentList.forEach { extraSectionContent ->
-            val extraSectionCustomField =
-                extraSectionContent.customFieldList.filterIsInstance<CustomFieldContent.Text>()
-                    .mapNotNull { customField ->
-                        customFieldToAnnotatedString(
-                            customField,
-                            highlight,
-                            highlightColor
-                        )
-                    }
-                    .take(MAX_CUSTOM_FIELDS)
-            annotatedFields.addAll(extraSectionCustomField)
+        bodyFields.forEach { field ->
+            field.highlight(highlight, highlightColor)?.let { annotatedFields.add(it) }
         }
     }
 
@@ -287,30 +180,6 @@ private fun getHighlightedFields(
         title = annotatedTitle,
         subtitles = listOf(annotatedFullNameEmail) + annotatedFields
     )
-}
-
-private fun customFieldToAnnotatedString(
-    customField: CustomFieldContent.Text,
-    highlight: String,
-    highlightColor: Color
-): AnnotatedString? {
-    val customFieldText = "${customField.label}: ${customField.value}"
-    return customFieldText.highlight(highlight, highlightColor)
-}
-
-private fun highlightFields(
-    fields: List<String>,
-    highlight: String,
-    highlightColor: Color
-): List<AnnotatedString> {
-    val annotatedFields: MutableList<AnnotatedString> = mutableListOf()
-    fields.forEach { fieldValue ->
-        fieldValue.highlight(highlight, highlightColor)?.let {
-            annotatedFields.add(it)
-        }
-    }
-
-    return annotatedFields
 }
 
 @Stable

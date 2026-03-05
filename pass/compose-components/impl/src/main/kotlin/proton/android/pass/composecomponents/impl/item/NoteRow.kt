@@ -30,7 +30,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import kotlinx.collections.immutable.ImmutableList
-import kotlinx.collections.immutable.persistentListOf
+import kotlinx.collections.immutable.toPersistentList
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.commonui.api.PassTheme
@@ -40,6 +40,7 @@ import proton.android.pass.composecomponents.impl.badge.CircledBadge
 import proton.android.pass.composecomponents.impl.badge.OverlayBadge
 import proton.android.pass.composecomponents.impl.item.icon.NoteIcon
 import proton.android.pass.domain.ItemContents
+import proton.android.pass.domain.highlightableBodyFields
 
 private const val MAX_LINES_NOTE_DETAIL = 1
 private const val MAX_NOTE_CHARS_PREVIEW = 128
@@ -56,8 +57,8 @@ fun NoteRow(
     val content = item.contents as ItemContents.Note
 
     val highlightColor = PassTheme.colors.interactionNorm
-    val (title, subtitles) = remember(content.title, content.note, highlight) {
-        getHighlightedFields(content.title, content.note, highlight, highlightColor)
+    val (title, subtitles) = remember(content.title, content.note, content.customFields, highlight) {
+        getHighlightedFields(content.title, content.note, content.highlightableBodyFields(), highlight, highlightColor)
     }
 
     ItemRow(
@@ -107,23 +108,29 @@ fun NoteRow(
 private fun getHighlightedFields(
     title: String,
     note: String,
+    bodyFields: List<String>,
     highlight: String,
     highlightColor: Color
 ): NoteHighlightFields {
     var annotatedTitle = AnnotatedString(title.take(MAX_NOTE_CHARS_PREVIEW))
-    val annotatedNote = if (highlight.isNotBlank()) {
-        title.highlight(highlight, highlightColor)?.let {
-            annotatedTitle = it
-        }
+    val subtitles: MutableList<AnnotatedString> = mutableListOf()
+
+    if (highlight.isNotBlank()) {
+        title.highlight(highlight, highlightColor)?.let { annotatedTitle = it }
         val noteWithoutNewLines = note.replace("\n", " ")
-        noteWithoutNewLines.highlight(highlight, highlightColor)
-            ?: AnnotatedString(noteWithoutNewLines.take(MAX_NOTE_CHARS_PREVIEW))
+        subtitles.add(
+            noteWithoutNewLines.highlight(highlight, highlightColor)
+                ?: AnnotatedString(noteWithoutNewLines.take(MAX_NOTE_CHARS_PREVIEW))
+        )
+        bodyFields.forEach { field ->
+            field.highlight(highlight, highlightColor)?.let { subtitles.add(it) }
+        }
     } else {
         val firstLines = note.lines().take(MAX_LINES_NOTE_DETAIL).joinToString(" ")
-        AnnotatedString(firstLines.take(MAX_NOTE_CHARS_PREVIEW))
+        subtitles.add(AnnotatedString(firstLines.take(MAX_NOTE_CHARS_PREVIEW)))
     }
 
-    return NoteHighlightFields(annotatedTitle, persistentListOf(annotatedNote))
+    return NoteHighlightFields(annotatedTitle, subtitles.toPersistentList())
 }
 
 @Stable

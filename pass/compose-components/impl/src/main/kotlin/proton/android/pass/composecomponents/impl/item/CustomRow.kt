@@ -38,12 +38,9 @@ import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.composecomponents.impl.badge.CircledBadge
 import proton.android.pass.composecomponents.impl.badge.OverlayBadge
 import proton.android.pass.composecomponents.impl.item.icon.CustomItemIcon
-import proton.android.pass.domain.CustomFieldContent
-import proton.android.pass.domain.ExtraSectionContent
-import proton.android.pass.domain.ItemContents
+import proton.android.pass.domain.highlightableBodyFields
 
 private const val MAX_PREVIEW_LENGTH = 128
-private const val MAX_CUSTOM_FIELDS = 2
 
 @Composable
 fun CustomRow(
@@ -54,35 +51,13 @@ fun CustomRow(
     selection: ItemSelectionModeState = ItemSelectionModeState.NotInSelectionMode,
     titleSuffix: Option<String> = None
 ) {
-    val (title, customFields, sections) = remember(item.contents) {
-        when (val contents = item.contents) {
-            is ItemContents.Custom -> Triple(
-                contents.title,
-                contents.customFields,
-                contents.sectionContentList
-            )
-
-            is ItemContents.SSHKey -> Triple(
-                contents.title,
-                contents.customFields,
-                contents.sectionContentList
-            )
-
-            is ItemContents.WifiNetwork -> Triple(
-                contents.title,
-                contents.customFields,
-                contents.sectionContentList
-            )
-
-            else -> throw IllegalStateException("Unsupported item type")
-        }
-    }
+    val content = item.contents
     val highlightColor = PassTheme.colors.interactionNorm
-    val fields = remember(title, customFields, sections, highlight) {
+    val fields = remember(content, highlight) {
+        val title = content.title
         getHighlightedFields(
             title = title,
-            customFields = customFields,
-            extraSectionContentList = sections,
+            bodyFields = content.highlightableBodyFields(),
             highlight = highlight,
             highlightColor = highlightColor
         )
@@ -134,8 +109,7 @@ fun CustomRow(
 
 private fun getHighlightedFields(
     title: String,
-    customFields: List<CustomFieldContent>,
-    extraSectionContentList: List<ExtraSectionContent>,
+    bodyFields: List<String>,
     highlight: String,
     highlightColor: Color
 ): CustomHighlightFields {
@@ -143,33 +117,9 @@ private fun getHighlightedFields(
     val annotatedFields: MutableList<AnnotatedString> = mutableListOf()
 
     if (highlight.isNotBlank()) {
-        title.highlight(highlight, highlightColor)?.let {
-            annotatedTitle = it
-        }
-
-        val filteredCustomFields = customFields.filterIsInstance<CustomFieldContent.Text>()
-            .mapNotNull { customField ->
-                customFieldToAnnotatedString(
-                    customField,
-                    highlight,
-                    highlightColor
-                )
-            }
-            .take(MAX_CUSTOM_FIELDS)
-        annotatedFields.addAll(filteredCustomFields)
-
-        extraSectionContentList.forEach { extraSectionContent ->
-            val extraSectionCustomField =
-                extraSectionContent.customFieldList.filterIsInstance<CustomFieldContent.Text>()
-                    .mapNotNull { customField ->
-                        customFieldToAnnotatedString(
-                            customField,
-                            highlight,
-                            highlightColor
-                        )
-                    }
-                    .take(MAX_CUSTOM_FIELDS)
-            annotatedFields.addAll(extraSectionCustomField)
+        title.highlight(highlight, highlightColor)?.let { annotatedTitle = it }
+        bodyFields.forEach { field ->
+            field.highlight(highlight, highlightColor)?.let { annotatedFields.add(it) }
         }
     }
 
@@ -177,15 +127,6 @@ private fun getHighlightedFields(
         title = annotatedTitle,
         subtitles = annotatedFields
     )
-}
-
-private fun customFieldToAnnotatedString(
-    customField: CustomFieldContent.Text,
-    highlight: String,
-    highlightColor: Color
-): AnnotatedString? {
-    val customFieldText = "${customField.label}: ${customField.value}"
-    return customFieldText.highlight(highlight, highlightColor)
 }
 
 

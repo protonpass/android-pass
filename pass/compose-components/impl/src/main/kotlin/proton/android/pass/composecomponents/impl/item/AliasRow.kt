@@ -40,6 +40,7 @@ import proton.android.pass.composecomponents.impl.badge.CircledBadge
 import proton.android.pass.composecomponents.impl.badge.OverlayBadge
 import proton.android.pass.composecomponents.impl.item.icon.AliasIcon
 import proton.android.pass.domain.ItemContents
+import proton.android.pass.domain.highlightableBodyFields
 
 private const val MAX_PREVIEW_LENGTH = 128
 
@@ -55,12 +56,20 @@ internal fun AliasRow(
     val content = item.contents as ItemContents.Alias
 
     val highlightColor = PassTheme.colors.interactionNorm
-    val fields = remember(content.title, content.aliasEmail, content.note, content.slNote, highlight) {
+    val fields = remember(
+        content.title,
+        content.aliasEmail,
+        content.note,
+        content.slNote,
+        content.customFields,
+        highlight
+    ) {
         getHighlightedFields(
             title = content.title,
             aliasEmail = content.aliasEmail,
             note = content.note,
             slNote = content.slNote,
+            bodyFields = content.highlightableBodyFields(),
             highlight = highlight,
             highlightColor = highlightColor
         )
@@ -121,6 +130,7 @@ private fun getHighlightedFields(
     aliasEmail: String,
     note: String,
     slNote: String?,
+    bodyFields: List<String>,
     highlight: String,
     highlightColor: Color
 ): AliasHighlightFields {
@@ -128,15 +138,13 @@ private fun getHighlightedFields(
     var annotatedAliasEmail = AnnotatedString(aliasEmail)
     var annotatedNote: AnnotatedString? = null
     var annotatedSlNote: AnnotatedString? = null
+    val annotatedBodyFields: MutableList<AnnotatedString> = mutableListOf()
     if (highlight.isNotBlank()) {
-        title.highlight(highlight, highlightColor)?.let {
-            annotatedTitle = it
-        }
-        aliasEmail.highlight(highlight, highlightColor)?.let {
-            annotatedAliasEmail = it
-        }
-        note.replace("\n", " ").highlight(highlight, highlightColor)?.let {
-            annotatedNote = it
+        title.highlight(highlight, highlightColor)?.let { annotatedTitle = it }
+        aliasEmail.highlight(highlight, highlightColor)?.let { annotatedAliasEmail = it }
+        note.replace("\n", " ").highlight(highlight, highlightColor)?.let { annotatedNote = it }
+        bodyFields.forEach { field ->
+            field.highlight(highlight, highlightColor)?.let { annotatedBodyFields.add(it) }
         }
         slNote?.replace("\n", " ")?.highlight(highlight, highlightColor)?.let {
             annotatedSlNote = it
@@ -147,7 +155,13 @@ private fun getHighlightedFields(
         title = annotatedTitle,
         aliasEmail = annotatedAliasEmail,
         note = annotatedNote,
-        subtitles = listOfNotNull(annotatedAliasEmail, annotatedNote, annotatedSlNote).toImmutableList()
+        subtitles = (
+            listOfNotNull(
+                annotatedAliasEmail,
+                annotatedNote,
+                annotatedSlNote
+            ) + annotatedBodyFields
+            ).toImmutableList()
     )
 }
 

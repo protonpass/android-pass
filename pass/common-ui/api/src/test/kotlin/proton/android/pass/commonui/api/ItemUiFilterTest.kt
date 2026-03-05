@@ -27,6 +27,7 @@ import proton.android.pass.domain.CreditCardType
 import proton.android.pass.domain.CustomFieldContent
 import proton.android.pass.domain.HiddenState
 import proton.android.pass.domain.ItemContents
+import proton.android.pass.domain.ExtraSectionContent
 import proton.android.pass.domain.ItemId
 
 internal class ItemUiFilterTest {
@@ -239,13 +240,13 @@ internal class ItemUiFilterTest {
         val filteredLabelList = items.filterByQuery("label")
         assertThat(filteredLabelList.size).isEqualTo(1)
 
-        // Cannot find Hidden text fields
+        // Can find by Hidden field label
         val filteredHiddenList = items.filterByQuery("hidden")
-        assertThat(filteredHiddenList.size).isEqualTo(0)
+        assertThat(filteredHiddenList.size).isEqualTo(1)
 
-        // Cannot find Totp text fields
+        // Can find by Totp field label
         val filteredTotpList = items.filterByQuery("totp")
-        assertThat(filteredTotpList.size).isEqualTo(0)
+        assertThat(filteredTotpList.size).isEqualTo(1)
 
     }
 
@@ -340,6 +341,139 @@ internal class ItemUiFilterTest {
         assertThat(byValue).hasSize(1)
 
         val byLabel = items.filterByQuery("tag")
+        assertThat(byLabel).hasSize(1)
+    }
+
+    @Test
+    fun `filterByQuery should match hidden custom field label`() {
+        val items = listOf(
+            TestItemUiModel.create(
+                itemContents = ItemContents.Login(
+                    title = "Login",
+                    note = "",
+                    itemEmail = "",
+                    itemUsername = "",
+                    password = HiddenState.Empty(""),
+                    urls = emptyList(),
+                    packageInfoSet = setOf(),
+                    primaryTotp = HiddenState.Empty(""),
+                    customFields = listOf(
+                        CustomFieldContent.Hidden(label = "mysecretlabel", value = HiddenState.Concealed("secretvalue"))
+                    ),
+                    passkeys = emptyList()
+                )
+            )
+        )
+
+        val byLabel = items.filterByQuery("mysecretlabel")
+        assertThat(byLabel).hasSize(1)
+
+        val byValue = items.filterByQuery("secretvalue")
+        assertThat(byValue).hasSize(0)
+    }
+
+    @Test
+    fun `filterByQuery should match totp custom field label`() {
+        val items = listOf(
+            TestItemUiModel.create(
+                itemContents = ItemContents.Login(
+                    title = "Login",
+                    note = "",
+                    itemEmail = "",
+                    itemUsername = "",
+                    password = HiddenState.Empty(""),
+                    urls = emptyList(),
+                    packageInfoSet = setOf(),
+                    primaryTotp = HiddenState.Empty(""),
+                    customFields = listOf(
+                        CustomFieldContent.Totp(label = "mytotplabel", value = HiddenState.Concealed("totpseed"))
+                    ),
+                    passkeys = emptyList()
+                )
+            )
+        )
+
+        val byLabel = items.filterByQuery("mytotplabel")
+        assertThat(byLabel).hasSize(1)
+
+        val byValue = items.filterByQuery("totpseed")
+        assertThat(byValue).hasSize(0)
+    }
+
+    @Test
+    fun `filterByQuery should match section title`() {
+        val items = listOf(
+            TestItemUiModel.create(
+                itemContents = ItemContents.Custom(
+                    title = "Custom Item",
+                    note = "",
+                    customFields = emptyList(),
+                    sectionContentList = listOf(
+                        ExtraSectionContent(title = "sectiontitle", customFieldList = emptyList())
+                    )
+                )
+            )
+        )
+
+        val matched = items.filterByQuery("sectiontitle")
+        assertThat(matched).hasSize(1)
+
+        val noMatch = items.filterByQuery("other")
+        assertThat(noMatch).hasSize(0)
+    }
+
+    @Test
+    fun `filterByQuery should match section custom fields`() {
+        val items = listOf(
+            TestItemUiModel.create(
+                itemContents = ItemContents.Custom(
+                    title = "Custom Item",
+                    note = "",
+                    customFields = emptyList(),
+                    sectionContentList = listOf(
+                        ExtraSectionContent(
+                            title = "section",
+                            customFieldList = listOf(
+                                CustomFieldContent.Text(label = "sectionlabel", value = "sectionvalue")
+                            )
+                        )
+                    )
+                )
+            )
+        )
+
+        val byLabel = items.filterByQuery("sectionlabel")
+        assertThat(byLabel).hasSize(1)
+
+        val byValue = items.filterByQuery("sectionvalue")
+        assertThat(byValue).hasSize(1)
+
+        val noMatch = items.filterByQuery("other")
+        assertThat(noMatch).hasSize(0)
+    }
+
+    @Test
+    fun `filterByQuery should match date custom field label`() {
+        val items = listOf(
+            TestItemUiModel.create(
+                itemContents = ItemContents.Login(
+                    title = "Login",
+                    note = "",
+                    itemEmail = "",
+                    itemUsername = "",
+                    password = HiddenState.Empty(""),
+                    urls = emptyList(),
+                    packageInfoSet = setOf(),
+                    primaryTotp = HiddenState.Empty(""),
+                    customFields = listOf(
+                        CustomFieldContent.Date(label = "mydatelabel", value = 1_700_000_000L)
+                    ),
+                    passkeys = emptyList()
+                )
+            )
+        )
+
+        val byLabel = items.filterByQuery("mydatelabel")
         assertThat(byLabel).hasSize(1)
     }
 

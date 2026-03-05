@@ -18,11 +18,10 @@
 
 package proton.android.pass.commonui.api
 
-import proton.android.pass.common.api.filterByType
 import proton.android.pass.common.api.removeAccents
 import proton.android.pass.commonuimodels.api.ItemUiModel
-import proton.android.pass.domain.CustomFieldContent
 import proton.android.pass.domain.ItemContents
+import proton.android.pass.domain.highlightableBodyFields
 
 object ItemUiFilter {
 
@@ -40,18 +39,18 @@ object ItemUiFilter {
     private fun isItemMatch(item: ItemUiModel, query: String): Boolean {
         if (item.contents.title.preprocess().contains(query)) return true
         if (item.contents.note.preprocess().contains(query)) return true
-        if (hasMatchingCustomField(item.contents.customFields, query)) return true
+        if (item.contents.highlightableBodyFields().any { it.preprocess().contains(query) }) return true
 
         return when (val contents = item.contents) {
-            is ItemContents.Alias -> isAliasMatch(contents, query)
             is ItemContents.Login -> isLoginMatch(contents, query)
-            is ItemContents.Note -> isNoteMatch(contents, query)
+            is ItemContents.Alias -> isAliasMatch(contents, query)
             is ItemContents.CreditCard -> isCreditCardMatch(contents, query)
             is ItemContents.Identity -> isIdentityMatch(contents, query)
-            is ItemContents.Custom -> isCustomMatch(contents, query)
-            is ItemContents.WifiNetwork -> isWifiNetworkMatch(contents, query)
-            is ItemContents.SSHKey -> isSSHKeyMatch(contents, query)
-            is ItemContents.Unknown -> return false
+            is ItemContents.Note,
+            is ItemContents.Custom,
+            is ItemContents.WifiNetwork,
+            is ItemContents.SSHKey,
+            is ItemContents.Unknown -> false
         }
     }
 
@@ -65,7 +64,7 @@ object ItemUiFilter {
         val contactDetails = content.contactDetailsContent
         val workDetails = content.workDetailsContent
 
-        val identityProperties = listOf(
+        return sequenceOf(
             personalDetails.fullName,
             personalDetails.firstName,
             personalDetails.middleName,
@@ -97,80 +96,20 @@ object ItemUiFilter {
             workDetails.personalWebsite,
             workDetails.workPhoneNumber,
             workDetails.workEmail
-        )
-        identityProperties.forEach { fieldValue ->
-            if (fieldValue.preprocess().contains(query)) {
-                return true
-            }
-        }
-        return when {
-            hasMatchingCustomField(personalDetails.customFields, query) -> true
-            hasMatchingCustomField(addressDetails.customFields, query) -> true
-            hasMatchingCustomField(contactDetails.customFields, query) -> true
-            hasMatchingCustomField(workDetails.customFields, query) -> true
-            else -> {
-                content.extraSectionContentList.forEach {
-                    if (hasMatchingCustomField(it.customFieldList, query)) return true
-                }
-
-                false
-            }
-        }
-    }
-
-    private fun isCustomMatch(content: ItemContents.Custom, query: String): Boolean {
-        content.sectionContentList.forEach {
-            if (hasMatchingCustomField(it.customFieldList, query)) return true
-        }
-        return false
-    }
-
-    private fun isWifiNetworkMatch(content: ItemContents.WifiNetwork, query: String): Boolean {
-        if (content.ssid.preprocess().contains(query)) return true
-        content.sectionContentList.forEach {
-            if (hasMatchingCustomField(it.customFieldList, query)) return true
-        }
-        return false
-    }
-
-    private fun isSSHKeyMatch(content: ItemContents.SSHKey, query: String): Boolean {
-        content.sectionContentList.forEach {
-            if (hasMatchingCustomField(it.customFieldList, query)) return true
-        }
-        return false
-    }
-
-    private fun hasMatchingCustomField(customFields: List<CustomFieldContent>, query: String): Boolean {
-        val customFieldsText: List<CustomFieldContent.Text> = customFields.filterByType()
-        return customFieldsText.any {
-            it.label.preprocess().contains(query) || it.value.preprocess().contains(query)
-        }
+        ).any { it.preprocess().contains(query) }
     }
 
     private fun isLoginMatch(content: ItemContents.Login, query: String): Boolean {
         if (content.itemEmail.preprocess().contains(query)) return true
-
         if (content.itemUsername.preprocess().contains(query)) return true
-
-        val anyWebsiteMatches = content.urls.any { it.preprocess().contains(query) }
-        return anyWebsiteMatches
+        return content.urls.any { it.preprocess().contains(query) }
     }
 
-    private fun isNoteMatch(content: ItemContents.Note, query: String): Boolean =
-        content.note.preprocess().contains(query)
+    private fun isCreditCardMatch(content: ItemContents.CreditCard, query: String): Boolean =
+        content.cardHolder.preprocess().contains(query)
 
-    private fun isCreditCardMatch(content: ItemContents.CreditCard, query: String): Boolean {
-        if (content.title.preprocess().contains(query)) return true
-        if (content.cardHolder.preprocess().contains(query)) return true
-        if (content.note.preprocess().contains(query)) return true
-
-        return false
-    }
-
-    private fun ItemUiModel.matchesQuery(query: String): Boolean {
-        val queryParts = query.split(" ").filter { it.isNotBlank() }
-        return queryParts.all { isItemMatch(this, it) }
-    }
+    private fun ItemUiModel.matchesQuery(query: String): Boolean =
+        query.splitToSequence(" ").filter { it.isNotBlank() }.all { isItemMatch(this, it) }
 
     private fun String.preprocess(): String = this.lowercase().removeAccents()
 

@@ -22,21 +22,46 @@ import kotlinx.coroutines.flow.first
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.crypto.api.usecases.CreateItem
 import proton.android.pass.crypto.api.usecases.EncryptedCreateItem
+import proton.android.pass.data.api.errors.ShareContentNotAvailableError
+import proton.android.pass.data.api.errors.ShareNotAvailableError
 import proton.android.pass.data.api.repositories.SimpleLoginRepository
+import proton.android.pass.data.api.repositories.UserAccessDataRepository
+import proton.android.pass.data.api.usecases.ObserveVaults
 import proton.android.pass.data.api.usecases.simplelogin.SyncSimpleLoginPendingAliases
 import proton.android.pass.data.impl.repositories.ShareKeyRepository
 import proton.android.pass.domain.ItemContents
+import proton.android.pass.domain.Vault
 import proton.android.pass.domain.key.ShareKey
+import proton.android.pass.domain.simplelogin.SimpleLoginSyncStatus
+import proton.android.pass.log.api.PassLogger
 import javax.inject.Inject
 
 class SyncSimpleLoginPendingAliasesImpl @Inject constructor(
     private val repository: SimpleLoginRepository,
     private val createItem: CreateItem,
-    private val shareKeyRepository: ShareKeyRepository
+    private val shareKeyRepository: ShareKeyRepository,
+    private val userAccessDataRepository: UserAccessDataRepository,
+    private val observeVaults: ObserveVaults
 ) : SyncSimpleLoginPendingAliases {
 
+    @Suppress("ReturnCount")
     override suspend fun invoke(userId: UserId, forceRefresh: Boolean) {
-        val syncStatus = repository.observeSyncStatus(userId, forceRefresh).first()
+        val userAccessData = userAccessDataRepository.observe(userId).first()
+        if (userAccessData?.isSimpleLoginSyncEnabled != true) {
+            return
+        }
+
+        val syncStatus = try {
+            repository.observeSyncStatus(userId, forceRefresh).first()
+        } catch (e: ShareNotAvailableError) {
+            PassLogger.w(TAG, "SL default share not available during sync")
+            PassLogger.w(TAG, e)
+            recoverAndGetSyncStatus(userId) ?: return
+        } catch (e: ShareContentNotAvailableError) {
+            PassLogger.w(TAG, "SL default share content unavailable during sync")
+            PassLogger.w(TAG, e)
+            recoverAndGetSyncStatus(userId) ?: return
+        }
 
         if (!syncStatus.isSyncEnabled) {
             return
@@ -70,4 +95,40 @@ class SyncSimpleLoginPendingAliasesImpl @Inject constructor(
             customFields = emptyList()
         )
     )
+
+    private suspend fun getOwnedFallbackVault(userId: UserId): Vault? = observeVaults(
+        userId = userId,
+        includeHidden = true
+    ).first().let { vaults ->
+        vaults.firstOrNull { vault -> vault.isOwned && !vault.shareFlags.isHidden() }
+            ?: vaults.firstOrNull { vault -> vault.isOwned }
+    }
+
+    private suspend fun recoverAndGetSyncStatus(userId: UserId): SimpleLoginSyncStatus? {
+        val fallbackVault = getOwnedFallbackVault(userId) ?: run {
+            PassLogger.w(TAG, "Missing SL default share and no owned fallback vault found")
+            return null
+        }
+
+        PassLogger.w(TAG, "Missing SL default share. Recovering with owned vault [${fallbackVault.shareId.id}]")
+        runCatching {
+            repository.enableSync(fallbackVault.shareId)
+        }.getOrElse { e ->
+            PassLogger.w(TAG, "SL sync enable failed during recovery attempt")
+            PassLogger.w(TAG, e)
+            return null
+        }
+
+        return runCatching {
+            repository.observeSyncStatus(userId, forceRefresh = true).first()
+        }.getOrElse { e ->
+            PassLogger.w(TAG, "SL sync status fetch failed after recovery attempt")
+            PassLogger.w(TAG, e)
+            null
+        }
+    }
+
+    private companion object {
+        private const val TAG = "SyncSimpleLoginPendingAliasesImpl"
+    }
 }

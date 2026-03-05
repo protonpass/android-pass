@@ -33,7 +33,8 @@ import proton.android.pass.domain.simplelogin.SimpleLoginAliasMailbox
 internal data class SimpleLoginSyncManagementState(
     internal val isUpdating: Boolean,
     internal val event: SimpleLoginSyncManagementEvent,
-    private val modelOption: Option<SimpleLoginSyncManagementModel>
+    private val modelOption: Option<SimpleLoginSyncManagementModel>,
+    private val hasVaults: Boolean
 ) {
 
     internal val defaultDomain: String? = when (modelOption) {
@@ -70,9 +71,12 @@ internal data class SimpleLoginSyncManagementState(
 
     internal val hasPendingAliases: Boolean = pendingAliasesCount > 0
 
-    internal val isLoading: Boolean = when (modelOption) {
-        None -> true
-        is Some -> false
+    internal val isNoVaults: Boolean = !hasVaults
+
+    internal val isLoading: Boolean = when {
+        isNoVaults -> false
+        modelOption is None -> true
+        else -> false
     }
 
     internal val canManageAliases: Boolean = when (modelOption) {
@@ -85,7 +89,8 @@ internal data class SimpleLoginSyncManagementState(
         internal val Initial: SimpleLoginSyncManagementState = SimpleLoginSyncManagementState(
             isUpdating = false,
             event = SimpleLoginSyncManagementEvent.Idle,
-            modelOption = None
+            modelOption = None,
+            hasVaults = true
         )
 
     }

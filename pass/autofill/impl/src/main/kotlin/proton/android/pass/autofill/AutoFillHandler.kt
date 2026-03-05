@@ -26,6 +26,7 @@ import android.service.autofill.Dataset
 import android.service.autofill.FillCallback
 import android.service.autofill.FillRequest
 import android.service.autofill.FillResponse
+import android.view.Display
 import androidx.annotation.ChecksSdkIntAtLeast
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.CoroutineScope
@@ -164,8 +165,10 @@ object AutoFillHandler {
         val isDangerousAutofill = !applicationPackageName.isBrowser() && hasUrl
 
         val autofillData = AutofillData(assistInfo, packageInfo, isDangerousAutofill)
+        val windowDisplayId = getWindowDisplayId(windowNode)
+        PassLogger.i(TAG, "Window displayId: $windowDisplayId")
         val usedInlinePath = autofillDisplayPreference == AutofillDisplayPreference.Inline &&
-            hasSupportForInlineSuggestions(request)
+            hasSupportForInlineSuggestions(request, windowDisplayId)
         val datasetList = if (usedInlinePath) {
             request.inlineSuggestionsRequest?.let {
                 autofillServiceManager.createSuggestedItemsDatasetList(
@@ -300,8 +303,15 @@ object AutoFillHandler {
     }
 
     @ChecksSdkIntAtLeast(api = Build.VERSION_CODES.R)
-    private fun hasSupportForInlineSuggestions(request: FillRequest): Boolean =
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+    private fun hasSupportForInlineSuggestions(request: FillRequest, windowDisplayId: Int): Boolean {
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            if (windowDisplayId != Display.DEFAULT_DISPLAY) {
+                PassLogger.i(
+                    TAG,
+                    "Inline suggestions disabled on non-default display ($windowDisplayId)"
+                )
+                return false
+            }
             request.inlineSuggestionsRequest?.let {
                 val maxSuggestion = it.maxSuggestionCount
                 val specCount = it.inlinePresentationSpecs.count()
@@ -310,6 +320,13 @@ object AutoFillHandler {
         } else {
             false
         }
+    }
+
+    private fun getWindowDisplayId(windowNode: WindowNode): Int = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+        windowNode.displayId
+    } else {
+        Display.DEFAULT_DISPLAY
+    }
 
     private fun isSelfAutofill(context: Context, packageName: String): Boolean {
         val autofillService = context.packageName

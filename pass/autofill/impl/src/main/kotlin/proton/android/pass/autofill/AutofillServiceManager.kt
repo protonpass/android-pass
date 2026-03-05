@@ -290,6 +290,8 @@ class AutofillServiceManager @Inject constructor(
         index: Int,
         shouldAuthenticate: Boolean
     ): Dataset {
+        val title = ItemDisplayBuilder.createTitle(suggestedItem.item, this)
+        val subtitle = ItemDisplayBuilder.createSubtitle(suggestedItem.item, this)
         val autofillItem = suggestedItem.item.toUiModel(this)
             .toAutoFillItem(suggestedItem.isDALSuggestion)
         val pendingIntent = PendingIntentUtils.getSuggestionPendingIntent(
@@ -299,15 +301,20 @@ class AutofillServiceManager @Inject constructor(
             shouldAuthenticate = shouldAuthenticate
         )
         val inlinePresentation = InlinePresentationUtils.create(
-            title = ItemDisplayBuilder.createTitle(suggestedItem.item, this),
-            subtitle = ItemDisplayBuilder.createSubtitle(suggestedItem.item, this).some(),
+            title = title,
+            subtitle = subtitle.some(),
             inlinePresentationSpec = spec,
             pendingIntent = PendingIntentUtils
                 .getLongPressInlinePendingIntent(context)
         )
+        val remoteViewPresentation = createRemoteViewPresentation(
+            title = title,
+            subtitle = subtitle
+        )
 
         val datasetBuilderOptions = DatasetBuilderOptions(
             id = "InlineSuggestion-$index".some(),
+            remoteViewPresentation = remoteViewPresentation.some(),
             inlinePresentation = inlinePresentation.toOption(),
             pendingIntent = pendingIntent.toOption()
         )
@@ -322,8 +329,9 @@ class AutofillServiceManager @Inject constructor(
         autofillData: AutofillData,
         inlinePresentationSpec: InlinePresentationSpec
     ): Dataset {
+        val title = context.getString(R.string.inline_suggestions_open_app)
         val inlinePresentation = InlinePresentationUtils.create(
-            title = context.getString(R.string.inline_suggestions_open_app),
+            title = title,
             subtitle = None,
             inlinePresentationSpec = inlinePresentationSpec,
             pendingIntent = PendingIntentUtils.getLongPressInlinePendingIntent(context),
@@ -335,6 +343,10 @@ class AutofillServiceManager @Inject constructor(
         )
         val builderOptions = DatasetBuilderOptions(
             id = "InlineSuggestion-OpenApp".some(),
+            remoteViewPresentation = createRemoteViewPresentation(
+                title = title,
+                subtitle = null
+            ).some(),
             inlinePresentation = inlinePresentation.toOption(),
             pendingIntent = pendingIntent.toOption()
         )
@@ -346,8 +358,9 @@ class AutofillServiceManager @Inject constructor(
 
     @RequiresApi(Build.VERSION_CODES.R)
     private fun createPinnedIcon(autofillData: AutofillData, inlinePresentationSpec: InlinePresentationSpec): Dataset {
+        val title = context.getString(R.string.inline_suggestions_open_app)
         val inlinePresentation = InlinePresentationUtils.createPinned(
-            contentDescription = context.getString(R.string.inline_suggestions_open_app),
+            contentDescription = title,
             icon = getIcon(),
             inlinePresentationSpec = inlinePresentationSpec,
             pendingIntent = PendingIntentUtils.getLongPressInlinePendingIntent(context)
@@ -358,6 +371,10 @@ class AutofillServiceManager @Inject constructor(
         )
         val builderOptions = DatasetBuilderOptions(
             id = "InlineSuggestion-PinnedIcon".some(),
+            remoteViewPresentation = createRemoteViewPresentation(
+                title = title,
+                subtitle = null
+            ).some(),
             inlinePresentation = inlinePresentation.toOption(),
             pendingIntent = pendingIntent.toOption()
         )
@@ -366,6 +383,17 @@ class AutofillServiceManager @Inject constructor(
             cluster = autofillData.assistInfo.cluster
         )
     }
+
+    private fun createRemoteViewPresentation(title: String, subtitle: String?): RemoteViews =
+        RemoteViews(context.packageName, R.layout.autofill_item).apply {
+            setTextViewText(R.id.title, title)
+            if (subtitle == null) {
+                setViewVisibility(R.id.subtitle, View.GONE)
+            } else {
+                setViewVisibility(R.id.subtitle, View.VISIBLE)
+                setTextViewText(R.id.subtitle, subtitle)
+            }
+        }
 
     private fun getAvailableSuggestionSpots(maxSuggestion: Int, itemsSize: Int): Int {
         val min = min(maxSuggestion, itemsSize)
@@ -393,4 +421,3 @@ sealed interface SuggestionType {
     data object CreditCard : SuggestionType
     data object Identity : SuggestionType
 }
-

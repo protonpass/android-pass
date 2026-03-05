@@ -25,19 +25,24 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.filterNotNull
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import proton.android.pass.common.api.FlowUtils.oneShot
+import proton.android.pass.common.api.None
 import proton.android.pass.common.api.some
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
 import proton.android.pass.data.api.repositories.BulkMoveToVaultRepository
+import proton.android.pass.data.api.repositories.ParentContainer
 import proton.android.pass.data.api.usecases.GetItemById
 import proton.android.pass.data.api.usecases.GetUserPlan
 import proton.android.pass.data.api.usecases.organization.ObserveOrganizationSettings
 import proton.android.pass.data.api.usecases.shares.ObserveShare
+import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.OrganizationSettings
 import proton.android.pass.domain.ShareId
@@ -49,7 +54,7 @@ class ShareFromItemViewModel @Inject constructor(
     private val bulkMoveToVaultRepository: BulkMoveToVaultRepository,
     savedStateHandleProvider: SavedStateHandleProvider,
     getUserPlan: GetUserPlan,
-    getItemById: GetItemById,
+    private val getItemById: GetItemById,
     observeShare: ObserveShare,
     observeOrganizationSettings: ObserveOrganizationSettings
 ) : ViewModel() {
@@ -65,10 +70,17 @@ class ShareFromItemViewModel @Inject constructor(
     private val navEventState: MutableStateFlow<ShareFromItemNavEvent> =
         MutableStateFlow(ShareFromItemNavEvent.Unknown)
 
+    private val itemFlow: StateFlow<Item?> = oneShot { getItemById(shareId = shareId, itemId = itemId) }
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.Eagerly,
+            initialValue = null
+        )
+
     internal val stateFlow: StateFlow<ShareFromItemUiState> = combine(
         navEventState,
         getUserPlan().map { it.isPaidPlan },
-        oneShot { getItemById(shareId = shareId, itemId = itemId) },
+        itemFlow,
         observeShare(shareId = shareId),
         observeOrganizationSettings()
     ) { event,
@@ -91,7 +103,7 @@ class ShareFromItemViewModel @Inject constructor(
             itemId = itemId,
             event = event,
             canUsePaidFeatures = canUsePaidFeatures,
-            itemOption = item.some(),
+            itemOption = item?.some() ?: None,
             shareOption = share.some(),
             isItemSharingAllowed = isItemSharingAllowed,
             isSecureLinkSharing = isSecureLinkSharing
@@ -104,7 +116,16 @@ class ShareFromItemViewModel @Inject constructor(
 
     internal fun moveItemToSharedVault() {
         viewModelScope.launch {
-            bulkMoveToVaultRepository.save(mapOf(shareId to listOf(itemId)))
+            val parentContainer = itemFlow
+                .filterNotNull()
+                .first()
+                .folderId
+                ?.let(ParentContainer::Folder)
+                ?: ParentContainer.Share
+            val selection = mapOf(
+                shareId to mapOf(parentContainer to setOf(itemId))
+            )
+            bulkMoveToVaultRepository.save(selection)
             navEventState.update { ShareFromItemNavEvent.MoveToSharedVault }
         }
     }

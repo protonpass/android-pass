@@ -20,8 +20,24 @@ package proton.android.pass.data.api.repositories
 
 import kotlinx.coroutines.flow.Flow
 import proton.android.pass.common.api.Option
+import proton.android.pass.domain.FolderId
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
+
+sealed interface ParentContainer {
+    data object Share : ParentContainer
+    data class Folder(val folderId: FolderId) : ParentContainer
+}
+
+typealias BulkMoveToVaultSelection = Map<ShareId, Map<ParentContainer, Set<ItemId>>>
+
+fun Map<ShareId, List<ItemId>>.toBulkMoveToVaultSelection(): BulkMoveToVaultSelection = mapValues { (_, itemIds) ->
+    mapOf(ParentContainer.Share to itemIds.toSet())
+}
+
+fun BulkMoveToVaultSelection.flattenByShare(): Map<ShareId, List<ItemId>> = mapValues { (_, containers) ->
+    containers.values.flatten().distinct()
+}
 
 sealed interface BulkMoveToVaultEvent {
     data object Idle : BulkMoveToVaultEvent
@@ -29,8 +45,8 @@ sealed interface BulkMoveToVaultEvent {
 }
 
 interface BulkMoveToVaultRepository {
-    suspend fun save(value: Map<ShareId, List<ItemId>>)
-    fun observe(): Flow<Option<Map<ShareId, List<ItemId>>>>
+    suspend fun save(value: BulkMoveToVaultSelection)
+    fun observe(): Flow<Option<BulkMoveToVaultSelection>>
     suspend fun delete()
 
     suspend fun emitEvent(event: BulkMoveToVaultEvent)

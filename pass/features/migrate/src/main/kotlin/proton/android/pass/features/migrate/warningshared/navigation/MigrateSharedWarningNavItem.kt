@@ -18,6 +18,10 @@
 
 package proton.android.pass.features.migrate.warningshared.navigation
 
+import proton.android.pass.common.api.None
+import proton.android.pass.common.api.Option
+import proton.android.pass.common.api.Some
+import proton.android.pass.domain.FolderId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.features.migrate.MigrateModeArg
 import proton.android.pass.features.migrate.MigrateModeValue
@@ -34,7 +38,8 @@ object MigrateSharedWarningNavItem : NavItem(
     navArgIds = listOf(MigrateModeArg),
     optionalArgIds = listOf(
         CommonOptionalNavArgId.ShareId,
-        MigrateVaultFilterArg
+        MigrateVaultFilterArg,
+        CommonOptionalNavArgId.FolderId
     ),
     noHistory = true,
     navItemType = NavItemType.Dialog
@@ -43,7 +48,8 @@ object MigrateSharedWarningNavItem : NavItem(
     fun createNavRoute(
         migrateMode: MigrateModeValue,
         shareId: ShareId? = null,
-        filter: MigrateVaultFilter? = null
+        filter: MigrateVaultFilter? = null,
+        folderId: Option<FolderId> = None
     ): String = buildString {
         append("$baseRoute/$migrateMode")
 
@@ -54,6 +60,10 @@ object MigrateSharedWarningNavItem : NavItem(
 
             if (filter != null) {
                 put(MigrateVaultFilterArg.key, filter)
+            }
+
+            if (folderId is Some) {
+                put(CommonOptionalNavArgId.FolderId.key, folderId.value.id)
             }
         }
             .toPath()

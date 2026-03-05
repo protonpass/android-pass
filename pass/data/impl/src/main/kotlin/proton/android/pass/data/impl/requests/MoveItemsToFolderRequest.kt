@@ -24,7 +24,7 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class MoveItemsToFolderRequest(
     @SerialName("FolderID")
-    val folderId: String,
+    val folderId: String?,
     @SerialName("Items")
     val items: List<MigrateItemsBody>
 )

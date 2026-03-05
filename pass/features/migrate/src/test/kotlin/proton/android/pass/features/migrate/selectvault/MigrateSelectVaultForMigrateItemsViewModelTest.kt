@@ -28,6 +28,8 @@ import org.junit.Rule
 import org.junit.Test
 import proton.android.pass.commonui.fakes.FakeSavedStateHandleProvider
 import proton.android.pass.data.fakes.repositories.FakeBulkMoveToVaultRepository
+import proton.android.pass.data.api.repositories.flattenByShare
+import proton.android.pass.data.api.repositories.toBulkMoveToVaultSelection
 import proton.android.pass.data.fakes.usecases.FakeCanPerformPaidAction
 import proton.android.pass.data.fakes.usecases.FakeObserveVaultsWithItemCount
 import proton.android.pass.data.fakes.usecases.folders.FakeObserveFolders
@@ -64,7 +66,7 @@ class MigrateSelectVaultForMigrateItemsViewModelTest {
         canPerformPaidAction = FakeCanPerformPaidAction()
         snackbarDispatcher = FakeSnackbarDispatcher()
         bulkMoveToVaultRepository = FakeBulkMoveToVaultRepository().apply {
-            runBlocking { save(mapOf(SHARE_ID to listOf(ITEM_ID))) }
+            runBlocking { save(mapOf(SHARE_ID to listOf(ITEM_ID)).toBulkMoveToVaultSelection()) }
         }
         savedState = FakeSavedStateHandleProvider().apply {
             get()[CommonNavArgId.ShareId.key] = SHARE_ID.id
@@ -93,7 +95,7 @@ class MigrateSelectVaultForMigrateItemsViewModelTest {
             assertThat(castedEvent.destinationShareId).isEqualTo(otherVault.vault.shareId)
 
             val bulkMemory = bulkMoveToVaultRepository.observe().first()
-            assertThat(bulkMemory.value()).isEqualTo(mapOf(SHARE_ID to listOf(ITEM_ID)))
+            assertThat(bulkMemory.value()?.flattenByShare()).isEqualTo(mapOf(SHARE_ID to listOf(ITEM_ID)))
         }
     }
 

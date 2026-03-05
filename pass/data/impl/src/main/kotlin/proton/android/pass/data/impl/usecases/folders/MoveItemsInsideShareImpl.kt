@@ -16,34 +16,28 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.data.fakes.usecases.folders
+package proton.android.pass.data.impl.usecases.folders
 
-import proton.android.pass.data.api.usecases.folders.MoveItemsToFolder
+import kotlinx.coroutines.flow.first
+import me.proton.core.accountmanager.domain.AccountManager
+import proton.android.pass.data.api.repositories.ItemRepository
+import proton.android.pass.data.api.usecases.folders.MoveItemsInsideShare
 import proton.android.pass.domain.FolderId
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import javax.inject.Inject
-import javax.inject.Singleton
 
-@Singleton
-class FakeMoveItemsToFolder @Inject constructor() : MoveItemsToFolder {
-    data class Invocation(
-        val shareId: ShareId,
-        val folderId: FolderId,
-        val itemIds: List<ItemId>
-    )
-
-    private val _invocations = mutableListOf<Invocation>()
-    val invocations: List<Invocation> get() = _invocations
-
-    var result: Result<Unit> = Result.success(Unit)
+class MoveItemsInsideShareImpl @Inject constructor(
+    private val accountManager: AccountManager,
+    private val itemRepository: ItemRepository
+) : MoveItemsInsideShare {
 
     override suspend fun invoke(
         shareId: ShareId,
-        folderId: FolderId,
+        folderId: FolderId?,
         itemIds: List<ItemId>
     ) {
-        _invocations += Invocation(shareId, folderId, itemIds)
-        result.getOrThrow()
+        val userId = requireNotNull(accountManager.getPrimaryUserId().first())
+        itemRepository.moveItemsInsideShare(userId, shareId, folderId, itemIds)
     }
 }

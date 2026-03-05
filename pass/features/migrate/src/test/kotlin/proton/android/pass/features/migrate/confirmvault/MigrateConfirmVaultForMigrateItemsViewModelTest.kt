@@ -30,11 +30,12 @@ import proton.android.pass.common.api.Some
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.data.api.repositories.MigrateItemsResult
 import proton.android.pass.data.fakes.repositories.FakeBulkMoveToVaultRepository
+import proton.android.pass.data.api.repositories.toBulkMoveToVaultSelection
 import proton.android.pass.data.fakes.usecases.FakeGetVaultWithItemCountById
 import proton.android.pass.data.fakes.usecases.FakeMigrateItems
 import proton.android.pass.data.fakes.usecases.FakeMigrateVault
 import proton.android.pass.data.fakes.usecases.folders.FakeMoveFolder
-import proton.android.pass.data.fakes.usecases.folders.FakeMoveItemsToFolder
+import proton.android.pass.data.fakes.usecases.folders.FakeMoveItemsInsideShare
 import proton.android.pass.data.fakes.usecases.folders.FakeObserveFolders
 import proton.android.pass.data.fakes.usecases.securelink.FakeObserveHasAssociatedSecureLinks
 import proton.android.pass.data.fakes.usecases.shares.FakeObserveShare
@@ -74,7 +75,7 @@ class MigrateConfirmVaultForMigrateItemsViewModelTest {
         snackbarDispatcher = FakeSnackbarDispatcher()
         getVaultById = FakeGetVaultWithItemCountById()
         bulkMoveToVaultRepository = FakeBulkMoveToVaultRepository().apply {
-            runBlocking { save(mapOf(SHARE_ID to listOf(ITEM_ID))) }
+            runBlocking { save(mapOf(SHARE_ID to listOf(ITEM_ID)).toBulkMoveToVaultSelection()) }
         }
         observeHasAssociatedSecureLinks = FakeObserveHasAssociatedSecureLinks()
         observeShare = FakeObserveShare()
@@ -95,7 +96,7 @@ class MigrateConfirmVaultForMigrateItemsViewModelTest {
             settingsRepository = settingsRepository,
             moveFolder = FakeMoveFolder(),
             observeFolders = FakeObserveFolders(),
-            moveItemsToFolder = FakeMoveItemsToFolder()
+            moveItemsInsideShare = FakeMoveItemsInsideShare()
         )
     }
 

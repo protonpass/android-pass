@@ -16,16 +16,34 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.data.api.usecases.folders
+package proton.android.pass.data.fakes.usecases.folders
 
+import proton.android.pass.data.api.usecases.folders.MoveItemsInsideShare
 import proton.android.pass.domain.FolderId
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
+import javax.inject.Inject
+import javax.inject.Singleton
 
-interface MoveItemsToFolder {
-    suspend operator fun invoke(
-        shareId: ShareId,
-        folderId: FolderId,
-        itemIds: List<ItemId>
+@Singleton
+class FakeMoveItemsInsideShare @Inject constructor() : MoveItemsInsideShare {
+    data class Invocation(
+        val shareId: ShareId,
+        val folderId: FolderId?,
+        val itemIds: List<ItemId>
     )
+
+    private val _invocations = mutableListOf<Invocation>()
+    val invocations: List<Invocation> get() = _invocations
+
+    var result: Result<Unit> = Result.success(Unit)
+
+    override suspend fun invoke(
+        shareId: ShareId,
+        folderId: FolderId?,
+        itemIds: List<ItemId>
+    ) {
+        _invocations += Invocation(shareId, folderId, itemIds)
+        result.getOrThrow()
+    }
 }

@@ -384,10 +384,10 @@ class FakeItemRepository @Inject constructor() : ItemRepository {
         TODO("Not yet implemented")
     }
 
-    override suspend fun moveItemsToFolder(
+    override suspend fun moveItemsInsideShare(
         userId: UserId,
         shareId: ShareId,
-        folderId: FolderId,
+        folderId: FolderId?,
         itemIds: List<ItemId>
     ) {
         TODO("Not yet implemented")

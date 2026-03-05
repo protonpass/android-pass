@@ -34,6 +34,7 @@ import proton.android.pass.datamodels.api.serializeToProto
 import proton.android.pass.domain.AddressDetailsContent
 import proton.android.pass.domain.ContactDetailsContent
 import proton.android.pass.domain.CreditCardType
+import proton.android.pass.domain.FolderId
 import proton.android.pass.domain.HiddenState
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemContents
@@ -56,6 +57,7 @@ object ItemTestFactory {
         itemType: ItemType = ItemType.Password,
         itemId: ItemId = ItemId(id = "item-id"),
         shareId: ShareId = ShareId(id = "share-id"),
+        folderId: FolderId? = null,
         packageInfoSet: Set<PackageInfo> = emptySet(),
         keyStoreCrypto: KeyStoreCrypto = FakeKeyStoreCrypto,
         title: String = "item-title"
@@ -68,6 +70,7 @@ object ItemTestFactory {
             itemUuid = "uuid",
             revision = 0,
             shareId = shareId,
+            folderId = folderId,
             itemType = itemType,
             title = title.encrypt(keyStoreCrypto),
             note = note.encrypt(keyStoreCrypto),

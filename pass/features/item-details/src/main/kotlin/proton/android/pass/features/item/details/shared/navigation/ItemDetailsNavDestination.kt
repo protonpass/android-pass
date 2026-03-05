@@ -20,6 +20,7 @@ package proton.android.pass.features.item.details.shared.navigation
 
 import proton.android.pass.commonpresentation.api.items.details.domain.ItemDetailsActionForbiddenReason
 import proton.android.pass.commonuimodels.api.UIPasskeyContent
+import proton.android.pass.domain.FolderId
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.attachments.AttachmentId
@@ -71,9 +72,9 @@ sealed interface ItemDetailsNavDestination {
         val itemId: ItemId
     ) : ItemDetailsNavDestination
 
-    data object ItemMigration : ItemDetailsNavDestination
+    data class ItemMigration(val folderId: FolderId?) : ItemDetailsNavDestination
 
-    data object ItemSharedMigration : ItemDetailsNavDestination
+    data class ItemSharedMigration(val folderId: FolderId?) : ItemDetailsNavDestination
 
     data object DismissBottomSheet : ItemDetailsNavDestination
 

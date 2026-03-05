@@ -93,6 +93,7 @@ import proton.android.pass.data.api.SearchEntry
 import proton.android.pass.data.api.repositories.AliasItemsChangeStatusResult
 import proton.android.pass.data.api.repositories.BulkMoveToVaultEvent
 import proton.android.pass.data.api.repositories.BulkMoveToVaultRepository
+import proton.android.pass.data.api.repositories.ParentContainer
 import proton.android.pass.data.api.repositories.ItemSyncStatus
 import proton.android.pass.data.api.repositories.ItemSyncStatusRepository
 import proton.android.pass.data.api.repositories.PinItemsResult
@@ -1076,8 +1077,10 @@ class HomeViewModel @Inject constructor(
 
     internal fun moveItemsToVault(items: List<ItemUiModel>) {
         viewModelScope.launch {
-            val selectedItemsAsPairs = items.map { it.shareId to it.id }.toPersistentSet()
-            val groupedItems = groupItems(selectedItemsAsPairs)
+            val selectedItems = items
+                .map { Triple(it.shareId, it.folderId, it.id) }
+                .toPersistentSet()
+            val groupedItems = groupItemsByParentContainer(selectedItems)
             bulkMoveToVaultRepository.save(groupedItems)
 
             if (items.any { it.isShared }) {
@@ -1219,6 +1222,19 @@ class HomeViewModel @Inject constructor(
 
     private fun groupItems(items: ImmutableSet<Pair<ShareId, ItemId>>): Map<ShareId, List<ItemId>> =
         items.groupBy({ it.first }, { it.second })
+
+    private fun groupItemsByParentContainer(
+        items: ImmutableSet<Triple<ShareId, FolderId?, ItemId>>
+    ): Map<ShareId, Map<ParentContainer, Set<ItemId>>> = items
+        .groupBy(keySelector = { it.first }, valueTransform = { (_, folderId, itemId) ->
+            (folderId?.let(ParentContainer::Folder) ?: ParentContainer.Share) to itemId
+        })
+        .mapValues { (_, values) ->
+            values.groupBy(
+                keySelector = { it.first },
+                valueTransform = { it.second }
+            ).mapValues { (_, itemIds) -> itemIds.toSet() }
+        }
 
     private fun List<ItemUiModel>.toShareIdItemId(): List<Pair<ShareId, ItemId>> = map { it.shareId to it.id }
 

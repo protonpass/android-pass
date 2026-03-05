@@ -37,4 +37,3 @@ enum class MigrateSnackbarMessage(
     FolderNotMoved(R.string.migrate_folder_error_snackbar, SnackbarType.ERROR),
     FolderAlreadySameParent(R.string.migrate_folder_already_same_parent_snackbar, SnackbarType.NORM)
 }
-

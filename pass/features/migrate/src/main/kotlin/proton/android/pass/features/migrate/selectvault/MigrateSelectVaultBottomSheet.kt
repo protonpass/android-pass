@@ -84,7 +84,9 @@ fun MigrateSelectVaultBottomSheet(
                 vaults = state.vaultList,
                 onVaultSelected = { viewModel.onVaultSelected(it) },
                 onFolderSelected = { shareId, folderId -> viewModel.onFolderSelected(shareId, folderId) },
-                folderIdToExpand = state.folderIdToExpand
+                folderIdToExpand = state.folderIdToExpand,
+                disabledFolderId = state.disabledFolderId,
+                disabledFolderItemCount = state.disabledFolderItemCount
             )
         }
     }

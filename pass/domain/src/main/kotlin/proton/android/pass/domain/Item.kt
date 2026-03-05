@@ -78,6 +78,7 @@ data class ItemEncrypted(
     val userId: UserId,
     val revision: Long,
     val shareId: ShareId,
+    val folderId: FolderId? = null,
     val title: EncryptedString,
     val note: EncryptedString,
     val content: EncryptedByteArray,

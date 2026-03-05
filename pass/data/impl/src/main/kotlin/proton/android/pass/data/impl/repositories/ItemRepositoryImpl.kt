@@ -1110,15 +1110,20 @@ class ItemRepositoryImpl @Inject constructor(
         )
     }
 
-    override suspend fun moveItemsToFolder(
+    @Suppress("LongMethod")
+    override suspend fun moveItemsInsideShare(
         userId: UserId,
         shareId: ShareId,
-        folderId: FolderId,
+        folderId: FolderId?,
         itemIds: List<ItemId>
     ) {
         val userAddress = shareRepository.getAddressForShareId(userId, shareId)
-        val folderKey = folderKeyRepository.getFolderKey(userId, shareId, folderId)
-            ?: throw IllegalStateException("FolderKey not found for folderId=${folderId.id}")
+        val destinationKey = if (folderId != null) {
+            folderKeyRepository.getFolderKey(userId, shareId, folderId)
+                ?: throw IllegalStateException("FolderKey not found for folderId=${folderId.id}")
+        } else {
+            shareKeyRepository.getLatestKeyForShare(shareId).first()
+        }
 
         val items = localItemDataSource.getByIdList(userId, shareId, itemIds)
 
@@ -1138,7 +1143,7 @@ class ItemRepositoryImpl @Inject constructor(
                 decryptionKeyOverride = currentFolderKey
             )
             val reencryptedKeys = migrateItem.migrate(
-                destinationKey = folderKey,
+                destinationKey = destinationKey,
                 itemKeys = listOf(ItemKeyWithRotation(itemKey.key, itemKey.rotation))
             )
             MigrateItemsBody(
@@ -1153,7 +1158,7 @@ class ItemRepositoryImpl @Inject constructor(
         }
 
         val request = MoveItemsToFolderRequest(
-            folderId = folderId.id,
+            folderId = folderId?.id,
             items = moveItems
         )
 

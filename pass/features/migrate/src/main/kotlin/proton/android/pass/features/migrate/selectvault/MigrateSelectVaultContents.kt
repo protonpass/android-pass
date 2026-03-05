@@ -31,10 +31,12 @@ import androidx.compose.runtime.saveable.mapSaver
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toImmutableList
+import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
 import proton.android.pass.commonui.api.PassTheme
@@ -55,9 +57,21 @@ fun MigrateSelectVaultContents(
     modifier: Modifier = Modifier,
     vaults: ImmutableList<MigrateVaultState>,
     folderIdToExpand: Option<FolderId>,
+    disabledFolderId: Option<FolderId> = None,
+    disabledFolderItemCount: Int = 0,
     onVaultSelected: (ShareId) -> Unit,
     onFolderSelected: ((ShareId, FolderId) -> Unit)? = null
 ) {
+    val disabledCount = disabledFolderItemCount.coerceAtLeast(1)
+    val disabledFolderReason = if (disabledFolderId is Some) {
+        pluralStringResource(
+            id = R.plurals.migrate_disabled_folder_reason_same_folder,
+            count = disabledCount,
+            disabledCount
+        )
+    } else {
+        null
+    }
     if (vaults.any { it.folderTree.isNotEmpty() }) {
         LazyColumn(modifier = modifier) {
             items(items = vaults, key = { it.vaultWithItemCount.vault.shareId.id }) { vaultPair ->
@@ -154,7 +168,9 @@ fun MigrateSelectVaultContents(
                         },
                         onThreeDotsClick = null,
                         onCreateFolderClick = null,
-                        selectedFolderId = folderIdToExpand
+                        selectedFolderId = folderIdToExpand,
+                        disabledFolderId = disabledFolderId,
+                        disabledFolderReason = disabledFolderReason
                     )
                 }
             }

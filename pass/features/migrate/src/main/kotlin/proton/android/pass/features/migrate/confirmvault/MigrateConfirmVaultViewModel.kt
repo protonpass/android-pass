@@ -55,11 +55,12 @@ import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.data.api.repositories.BulkMoveToVaultEvent
 import proton.android.pass.data.api.repositories.BulkMoveToVaultRepository
 import proton.android.pass.data.api.repositories.MigrateItemsResult
+import proton.android.pass.data.api.repositories.flattenByShare
 import proton.android.pass.data.api.usecases.GetVaultWithItemCountById
 import proton.android.pass.data.api.usecases.MigrateItems
 import proton.android.pass.data.api.usecases.MigrateVault
 import proton.android.pass.data.api.usecases.folders.MoveFolder
-import proton.android.pass.data.api.usecases.folders.MoveItemsToFolder
+import proton.android.pass.data.api.usecases.folders.MoveItemsInsideShare
 import proton.android.pass.data.api.usecases.folders.ObserveFolders
 import proton.android.pass.data.api.usecases.securelink.ObserveHasAssociatedSecureLinks
 import proton.android.pass.data.api.usecases.shares.ObserveShare
@@ -84,7 +85,7 @@ class MigrateConfirmVaultViewModel @Inject constructor(
     private val migrateItems: MigrateItems,
     private val migrateVault: MigrateVault,
     private val moveFolder: MoveFolder,
-    private val moveItemsToFolder: MoveItemsToFolder,
+    private val moveItemsInsideShare: MoveItemsInsideShare,
     private val snackbarDispatcher: SnackbarDispatcher,
     private val bulkMoveToVaultRepository: BulkMoveToVaultRepository,
     private val observeHasAssociatedSecureLinks: ObserveHasAssociatedSecureLinks,
@@ -102,6 +103,7 @@ class MigrateConfirmVaultViewModel @Inject constructor(
         MutableStateFlow(None)
 
     private val selectedItemsFlow = bulkMoveToVaultRepository.observe()
+        .map { it.map { selection -> selection.flattenByShare() } }
         .distinctUntilChanged()
         .stateIn(
             scope = viewModelScope,
@@ -168,7 +170,6 @@ class MigrateConfirmVaultViewModel @Inject constructor(
         val vault = vaultRes.getOrNull().toOption()
         val itemCount = selectedItems.map { entries -> entries.values.sumOf { it.size } }
         val isSameVaultMove = mode is Mode.MigrateSelectedItems &&
-            mode.destFolderId is Some &&
             selectedItems.value()?.keys?.singleOrNull() == mode.destShareId
         MigrateConfirmVaultUiState(
             isLoading = IsLoadingState.from(loading),
@@ -265,16 +266,15 @@ class MigrateConfirmVaultViewModel @Inject constructor(
             return
         }
 
-        val isSameVaultFolderMove = destFolderId is Some &&
-            itemsToMigrate.keys.singleOrNull() == destShareId
+        val isSameVaultFolderMove = itemsToMigrate.keys.singleOrNull() == destShareId
 
         isLoadingFlow.update { IsLoadingState.Loading }
 
         if (isSameVaultFolderMove) {
             safeRunCatching {
-                moveItemsToFolder(
+                moveItemsInsideShare(
                     shareId = destShareId,
-                    folderId = destFolderId.value,
+                    folderId = destFolderId.value(),
                     itemIds = itemsToMigrate.values.flatten()
                 )
             }.onSuccess {

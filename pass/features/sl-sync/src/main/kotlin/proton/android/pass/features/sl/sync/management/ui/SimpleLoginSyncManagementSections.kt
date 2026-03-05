@@ -36,6 +36,7 @@ import proton.android.pass.composecomponents.impl.widgets.PassSingleActionWidget
 import proton.android.pass.domain.Vault
 import proton.android.pass.domain.simplelogin.SimpleLoginAliasMailbox
 import proton.android.pass.features.sl.sync.R
+import proton.android.pass.features.sl.sync.shared.ui.SimpleLoginSyncDescriptionText
 import proton.android.pass.features.sl.sync.shared.ui.SimpleLoginSyncLabelText
 import proton.android.pass.features.sl.sync.shared.ui.SimpleLoginSyncSectionRow
 import proton.android.pass.composecomponents.impl.R as CompR
@@ -46,6 +47,7 @@ internal fun SimpleLoginSyncManagementSections(
     defaultDomain: String?,
     aliasMailboxes: ImmutableList<SimpleLoginAliasMailbox>,
     defaultVault: Vault?,
+    isNoVaults: Boolean,
     isSyncEnabled: Boolean,
     hasPendingAliases: Boolean,
     pendingAliasesCount: Int,
@@ -86,7 +88,19 @@ internal fun SimpleLoginSyncManagementSections(
             }
         )
 
-        if (isSyncEnabled && defaultVault != null) {
+        if (isNoVaults) {
+            Column(
+                verticalArrangement = Arrangement.spacedBy(space = Spacing.small)
+            ) {
+                SimpleLoginSyncLabelText(
+                    text = stringResource(id = R.string.simple_login_sync_management_vault_title)
+                )
+
+                SimpleLoginSyncDescriptionText(
+                    text = stringResource(id = R.string.simple_login_sync_management_no_vault_description)
+                )
+            }
+        } else if (isSyncEnabled && defaultVault != null) {
             with(defaultVault) {
                 SimpleLoginSyncSectionRow(
                     leadingIcon = {

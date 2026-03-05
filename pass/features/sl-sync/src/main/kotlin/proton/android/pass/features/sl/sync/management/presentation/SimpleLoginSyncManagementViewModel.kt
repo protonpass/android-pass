@@ -26,10 +26,13 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.some
+import proton.android.pass.data.api.usecases.ObserveVaults
 import proton.android.pass.data.api.usecases.simplelogin.ObserveSimpleLoginAliasDomains
 import proton.android.pass.data.api.usecases.simplelogin.ObserveSimpleLoginAliasMailboxes
 import proton.android.pass.data.api.usecases.simplelogin.ObserveSimpleLoginAliasSettings
@@ -40,6 +43,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SimpleLoginSyncManagementViewModel @Inject constructor(
+    observeVaults: ObserveVaults,
     observeSimpleLoginAliasDomains: ObserveSimpleLoginAliasDomains,
     observeSimpleLoginAliasMailboxes: ObserveSimpleLoginAliasMailboxes,
     observeSimpleLoginAliasSettings: ObserveSimpleLoginAliasSettings,
@@ -59,6 +63,8 @@ class SimpleLoginSyncManagementViewModel @Inject constructor(
             aliasSettings = aliasSettings,
             syncStatus = syncStatus
         ).some()
+    }.onStart {
+        emit(None)
     }.catch { error ->
         PassLogger.w(TAG, "There was an error while observing SL alias details")
         PassLogger.w(TAG, error)
@@ -66,6 +72,9 @@ class SimpleLoginSyncManagementViewModel @Inject constructor(
         eventFlow.update { SimpleLoginSyncManagementEvent.OnFetchAliasManagementError }
         emit(None)
     }
+
+    private val hasVaultsFlow = observeVaults(includeHidden = true)
+        .map { vaults -> vaults.isNotEmpty() }
 
     private val eventFlow = MutableStateFlow<SimpleLoginSyncManagementEvent>(
         value = SimpleLoginSyncManagementEvent.Idle
@@ -77,6 +86,7 @@ class SimpleLoginSyncManagementViewModel @Inject constructor(
         isUpdatingFlow,
         eventFlow,
         modelOptionFlow,
+        hasVaultsFlow,
         ::SimpleLoginSyncManagementState
     ).stateIn(
         scope = viewModelScope,

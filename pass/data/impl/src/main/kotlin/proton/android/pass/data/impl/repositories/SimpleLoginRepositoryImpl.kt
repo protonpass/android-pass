@@ -41,11 +41,14 @@ import proton.android.pass.data.api.errors.EmailAlreadyInUseError
 import proton.android.pass.data.api.errors.ErrorCodes
 import proton.android.pass.data.api.errors.InvalidVerificationCodeError
 import proton.android.pass.data.api.errors.InvalidVerificationCodeLimitError
+import proton.android.pass.data.api.errors.ShareContentNotAvailableError
+import proton.android.pass.data.api.errors.ShareNotAvailableError
 import proton.android.pass.data.api.errors.UserIdNotAvailableError
 import proton.android.pass.data.api.errors.getProtonErrorCode
 import proton.android.pass.data.api.repositories.SimpleLoginRepository
 import proton.android.pass.data.api.repositories.UserAccessDataRepository
 import proton.android.pass.data.api.usecases.GetVaultByShareId
+import proton.android.pass.data.api.usecases.ObserveVaults
 import proton.android.pass.data.impl.extensions.toRequest
 import proton.android.pass.data.impl.local.simplelogin.LocalSimpleLoginDataSource
 import proton.android.pass.data.impl.remote.simplelogin.RemoteSimpleLoginDataSource
@@ -79,6 +82,7 @@ class SimpleLoginRepositoryImpl @Inject constructor(
     private val accountManager: AccountManager,
     private val userAccessDataRepository: UserAccessDataRepository,
     private val observeVaultById: GetVaultByShareId,
+    private val observeVaults: ObserveVaults,
     private val localSimpleLoginDataSource: LocalSimpleLoginDataSource,
     private val remoteSimpleLoginDataSource: RemoteSimpleLoginDataSource
 ) : SimpleLoginRepository {
@@ -379,19 +383,54 @@ class SimpleLoginRepositoryImpl @Inject constructor(
         userAccessDataRepository.observe(userId)
             .mapLatest { userAccessData: UserAccessData? ->
                 if (userAccessData == null) return@mapLatest None
+                if (userAccessData.simpleLoginSyncDefaultShareId.isBlank()) return@mapLatest None
                 val shareId = ShareId(userAccessData.simpleLoginSyncDefaultShareId)
-                val defaultVault = observeVaultById(
-                    userId = userId,
-                    shareId = shareId
-                ).firstOrNull()
+                val defaultVault = try {
+                    observeVaultById(
+                        userId = userId,
+                        shareId = shareId
+                    ).firstOrNull()
+                } catch (e: ShareNotAvailableError) {
+                    PassLogger.w(TAG, "SL default share not available [${shareId.id}]")
+                    PassLogger.w(TAG, e)
+                    handleMissingDefaultShare(userId)
+                    return@mapLatest None
+                } catch (e: ShareContentNotAvailableError) {
+                    PassLogger.w(TAG, "SL default share content unavailable [${shareId.id}]")
+                    PassLogger.w(TAG, e)
+                    handleMissingDefaultShare(userId)
+                    return@mapLatest None
+                }
 
                 if (defaultVault == null) {
-                    userAccessDataRepository.refresh(userId)
+                    PassLogger.w(TAG, "SL default vault resolved to null for share [${shareId.id}], starting recovery")
+                    handleMissingDefaultShare(userId)
                     None
                 } else {
                     (userAccessData to defaultVault).some()
                 }
             }
+
+    private suspend fun handleMissingDefaultShare(userId: UserId) {
+        val vaults = observeVaults(
+            userId = userId,
+            includeHidden = true
+        ).first()
+        val fallbackVault = vaults.firstOrNull { vault ->
+            vault.isOwned && !vault.shareFlags.isHidden()
+        } ?: vaults.firstOrNull { vault ->
+            vault.isOwned
+        }
+
+        if (fallbackVault == null) return
+
+        PassLogger.w(TAG, "Missing SL default share. Recovering with owned vault [${fallbackVault.shareId.id}]")
+        runCatching { enableSync(fallbackVault.shareId) }
+            .onFailure { e ->
+                PassLogger.w(TAG, "Failed to enable SL sync with fallback vault [${fallbackVault.shareId.id}]")
+                PassLogger.w(TAG, e)
+            }
+    }
 
     private fun syncStatusForUser(userId: UserId): Flow<SimpleLoginSyncStatus?> = combine(
         userAccessDataWithVaultFlow(userId),
@@ -452,4 +491,3 @@ class SimpleLoginRepositoryImpl @Inject constructor(
     }
 
 }
-

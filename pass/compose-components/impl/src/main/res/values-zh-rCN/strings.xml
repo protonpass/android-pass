@@ -35,6 +35,7 @@
   <string name="folder_tree_create_folder">创建文件夹</string>
   <string name="bottomsheet_rename_folder">重命名</string>
   <string name="bottomsheet_create_sub_folder">创建子文件夹</string>
+  <string name="bottomsheet_move_folder">移动</string>
   <string name="bottomsheet_copy_item_note">复制笔记</string>
   <string name="bottomsheet_delete_permanently">永久删除</string>
   <string name="bottomsheet_restore">恢复</string>

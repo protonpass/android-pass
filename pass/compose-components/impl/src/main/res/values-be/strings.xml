@@ -38,6 +38,7 @@
   <string name="folder_tree_create_folder">Стварыць папку</string>
   <string name="bottomsheet_rename_folder">Перайменаваць</string>
   <string name="bottomsheet_create_sub_folder">Стварыць падпапку</string>
+  <string name="bottomsheet_move_folder">Перамясціць</string>
   <string name="bottomsheet_copy_item_note">Скапіяваць нататку</string>
   <string name="bottomsheet_delete_permanently">Выдаліць незваротна</string>
   <string name="bottomsheet_restore">Аднавіць</string>

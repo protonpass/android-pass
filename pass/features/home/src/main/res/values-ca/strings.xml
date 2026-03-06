@@ -57,10 +57,12 @@
   <string name="home_notification_permission_banner_title">Obteniu actualitzacions importants</string>
   <string name="home_notification_permission_banner_text">Habiliteu les notificacions automàtiques per a rebre una notificació quan altres persones comparteixin una caixa forta.</string>
   <string name="home_notification_permission_banner_settings">Activar permisos ›</string>
-  <string name="home_invite_banner_title">Caixa forta compartida amb vós</string>
-  <string name="home_invite_banner_subtitle">Us han convidat a una caixa forta compartida. Toqueu per obtenir més informació.</string>
   <string name="home_item_invite_banner_title" comment="placeholder is replaced by an email address">%s vol posar a la vostra disposició un element compartit.</string>
-  <string name="home_item_invite_banner_subtitle">Toqueu per obtenir més informació.</string>
+  <string name="home_group_item_invite_banner_title" comment="%1$s = inviter email, %2$s = group name">%1$s vol compartir un element amb el vostre grup %2$s.</string>
+  <string name="home_group_invite_banner_title" comment="%1$s = inviter email, %2$s = group name">%1$s vol compartir una caixa forta amb el vostre grup %2$s.</string>
+  <string name="home_item_invite_card_title">Invitació a un element compartit</string>
+  <string name="home_vault_invite_card_title">Invitació a una caixa forta compartida</string>
+  <string name="home_vault_invite_banner_body" comment="placeholder is replaced by an email address">%s vol compartir una caixa forta amb vosaltres.</string>
   <!-- Common bottomsheet -->
   <string name="bottomsheet_copy_password">Copia la contrasenya</string>
   <string name="bottomsheet_copy_username">Copia el nom d\'usuari</string>

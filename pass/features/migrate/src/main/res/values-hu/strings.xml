@@ -14,6 +14,11 @@
   <string name="migrate_all_items_success_snackbar">Minden elem áthelyezve</string>
   <string name="migrate_all_items_error_snackbar">Hiba az összes elem áthelyezésekor</string>
   <string name="migrate_init_error_snackbar">Nem sikerült a költöztetési képernyő előkészítése</string>
+  <string name="migrate_folder_confirm_title_bottom_sheet">Move folder to the following vault?</string>
+  <string name="migrate_folder_to_folder_confirm_title_bottom_sheet">Move folder to the following folder?</string>
+  <string name="migrate_folder_success_snackbar">Folder moved</string>
+  <string name="migrate_folder_error_snackbar">Error moving the folder</string>
+  <string name="migrate_folder_already_same_parent_snackbar">Folder is already in this location</string>
   <string name="migrate_disabled_vault_reason_no_permission">Nem hozhat létre elemeket ebben a tárolóban</string>
   <string name="migrate_disabled_vault_reason_same_vault">Nem helyezhet át elemet ugyanabba a tárolóba</string>
   <plurals name="migrate_items_shared_warning_title">

@@ -8,4 +8,8 @@
   <string name="new_item_invite_notification_message" comment="the placeholder will be replaced by an email address">%s ønsker å dele et element med deg.</string>
   <string name="new_vault_invite_notification_title">Invitasjon til nytt hvelv mottatt</string>
   <string name="new_vault_invite_notification_message" comment="the placeholder will be replaced by an email address">%s ønsker å dele et hvelv med deg.</string>
+  <string name="new_group_item_invite_notification_title">Invitasjon til ny gruppeelement mottatt</string>
+  <string name="new_group_item_invite_notification_message" comment="%1$s = inviter email, %2$s = group name">%1$s ønsker å dele et element med gruppen din %2$s.</string>
+  <string name="new_group_vault_invite_notification_title">Invitasjon til nytt gruppehvelv mottatt</string>
+  <string name="new_group_vault_invite_notification_message" comment="%1$s = inviter email, %2$s = group name">%1$s ønsker å dele et hvelv med gruppen din %2$s.</string>
 </resources>

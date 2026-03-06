@@ -36,6 +36,7 @@
   <string name="folder_tree_create_folder">Ordner erstellen</string>
   <string name="bottomsheet_rename_folder">Umbenennen</string>
   <string name="bottomsheet_create_sub_folder">Unterordner erstellen</string>
+  <string name="bottomsheet_move_folder">Verschieben</string>
   <string name="bottomsheet_copy_item_note">Notiz kopieren</string>
   <string name="bottomsheet_delete_permanently">Dauerhaft löschen</string>
   <string name="bottomsheet_restore">Wiederherstellen</string>

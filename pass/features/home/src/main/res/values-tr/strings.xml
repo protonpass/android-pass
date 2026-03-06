@@ -57,10 +57,12 @@
   <string name="home_notification_permission_banner_title">Önemli güncellemeleri edinin</string>
   <string name="home_notification_permission_banner_text">Başkaları sizinle bir kasayı paylaştığında öğrenmek için anında bildirimleri açın</string>
   <string name="home_notification_permission_banner_settings">İzin ver ›</string>
-  <string name="home_invite_banner_title">Sizinle bir kasa paylaşıldı</string>
-  <string name="home_invite_banner_subtitle">Paylaşılmış bir kasaya davet edildiniz. Ayrıntılı bilgi almak için dokunun.</string>
   <string name="home_item_invite_banner_title" comment="placeholder is replaced by an email address">%s sizinle bir öge paylaşmak istiyor.</string>
-  <string name="home_item_invite_banner_subtitle">Ayrıntılar için dokunun.</string>
+  <string name="home_group_item_invite_banner_title" comment="%1$s = inviter email, %2$s = group name">%1$s, %2$s grubunuzla bir öge paylaşmak istiyor.</string>
+  <string name="home_group_invite_banner_title" comment="%1$s = inviter email, %2$s = group name">%1$s, %2$s grubunuzla bir kasa paylaşmak istiyor.</string>
+  <string name="home_item_invite_card_title">Öge paylaşma daveti</string>
+  <string name="home_vault_invite_card_title">Kasa paylaşma daveti</string>
+  <string name="home_vault_invite_banner_body" comment="placeholder is replaced by an email address">%s sizinle bir kasa paylaşmak istiyor.</string>
   <!-- Common bottomsheet -->
   <string name="bottomsheet_copy_password">Parolayı kopyala</string>
   <string name="bottomsheet_copy_username">Kullanıcı adını kopyala</string>

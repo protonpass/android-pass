@@ -80,7 +80,8 @@ class RefreshSharesAndEnqueueSyncImpl @Inject constructor(
                 handleEmptyShares(
                     userId,
                     repositoryResult.hasInactiveShares,
-                    repositoryResult.hasInvalidGroupShares
+                    repositoryResult.hasInvalidGroupShares,
+                    repositoryResult.hasInvalidAddressShares
                 )
             } else {
                 handleNonEmptyShares(userId, repositoryResult, syncType)
@@ -109,8 +110,11 @@ class RefreshSharesAndEnqueueSyncImpl @Inject constructor(
                 userId = userId,
                 shareIds = sharesToFetch,
                 fetchSource = fetchSource,
-                hasInactiveShares = repositoryResult.hasInactiveShares,
-                hasInvalidGroupShares = repositoryResult.hasInvalidGroupShares
+                warnings = FetchItemsWorker.SyncWarnings(
+                    hasInactiveShares = repositoryResult.hasInactiveShares,
+                    hasInvalidGroupShares = repositoryResult.hasInvalidGroupShares,
+                    hasInvalidAddressShares = repositoryResult.hasInvalidAddressShares
+                )
             )
         }
 
@@ -118,7 +122,8 @@ class RefreshSharesAndEnqueueSyncImpl @Inject constructor(
             shareIds = existingShareIds,
             isWorkerEnqueued = shouldFetchFoldersAndItems,
             hasInactiveShares = repositoryResult.hasInactiveShares,
-            hasInvalidGroupShares = repositoryResult.hasInvalidGroupShares
+            hasInvalidGroupShares = repositoryResult.hasInvalidGroupShares,
+            hasInvalidAddressShares = repositoryResult.hasInvalidAddressShares
         )
     }
 
@@ -142,15 +147,13 @@ class RefreshSharesAndEnqueueSyncImpl @Inject constructor(
         userId: UserId,
         shareIds: Set<ShareId>,
         fetchSource: FetchItemsWorker.FetchSource,
-        hasInactiveShares: Boolean,
-        hasInvalidGroupShares: Boolean
+        warnings: FetchItemsWorker.SyncWarnings
     ) {
         val request = FetchItemsWorker.getRequestFor(
             source = fetchSource,
             userId = userId,
             shareIds = shareIds,
-            hasInactiveShares = hasInactiveShares,
-            hasInvalidGroupShares = hasInvalidGroupShares
+            warnings = warnings
         )
         val policy = if (fetchSource == FetchItemsWorker.FetchSource.ForceSync) {
             ExistingWorkPolicy.REPLACE
@@ -168,11 +171,12 @@ class RefreshSharesAndEnqueueSyncImpl @Inject constructor(
     private suspend fun handleEmptyShares(
         userId: UserId,
         hasUndecryptableShares: Boolean,
-        hasUndecryptableSharesDueToGroup: Boolean
+        hasUndecryptableSharesDueToGroup: Boolean,
+        hasInvalidAddressShares: Boolean
     ): RefreshSharesResult {
         if (!canCreateVault().first()) {
             PassLogger.i(TAG, "Skipping default vault creation")
-            setSyncSuccess(hasUndecryptableShares, hasUndecryptableSharesDueToGroup)
+            setSyncSuccess(hasUndecryptableShares, hasUndecryptableSharesDueToGroup, hasInvalidAddressShares)
             return RefreshSharesResult.NoSharesSkipped
         }
 
@@ -189,11 +193,11 @@ class RefreshSharesAndEnqueueSyncImpl @Inject constructor(
             PassLogger.i(TAG, "Creating default vault")
             createDefaultVault(userId)
             internalSettingsRepository.setDefaultVaultHasBeenCreated(userId)
-            setSyncSuccess(hasUndecryptableShares, hasUndecryptableSharesDueToGroup)
+            setSyncSuccess(hasUndecryptableShares, hasUndecryptableSharesDueToGroup, hasInvalidAddressShares)
             RefreshSharesResult.NoSharesVaultCreated
         } else {
             PassLogger.i(TAG, "Default vault already created")
-            setSyncSuccess(hasUndecryptableShares, hasUndecryptableSharesDueToGroup)
+            setSyncSuccess(hasUndecryptableShares, hasUndecryptableSharesDueToGroup, hasInvalidAddressShares)
             RefreshSharesResult.NoSharesSkipped
         }
     }
@@ -215,13 +219,15 @@ class RefreshSharesAndEnqueueSyncImpl @Inject constructor(
 
     private suspend fun setSyncSuccess(
         hasUndecryptableShares: Boolean,
-        hasUndecryptableSharesDueToGroup: Boolean = false
+        hasUndecryptableSharesDueToGroup: Boolean = false,
+        hasInvalidAddressShares: Boolean = false
     ) {
         itemSyncStatusRepository.setMode(SyncMode.Background)
         itemSyncStatusRepository.emit(
             ItemSyncStatus.SyncSuccess(
                 hasInactiveShares = hasUndecryptableShares,
-                hasInvalidGroupShares = hasUndecryptableSharesDueToGroup
+                hasInvalidGroupShares = hasUndecryptableSharesDueToGroup,
+                hasInvalidAddressShares = hasInvalidAddressShares
             )
         )
     }

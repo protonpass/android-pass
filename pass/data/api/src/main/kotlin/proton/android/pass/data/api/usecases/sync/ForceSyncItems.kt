@@ -32,6 +32,7 @@ interface ForceSyncItems {
         userId: UserId,
         shareIds: Set<ShareId>,
         hasInactiveShares: Boolean,
-        hasInvalidGroupShares: Boolean
+        hasInvalidGroupShares: Boolean,
+        hasInvalidAddressShares: Boolean
     ): ForceSyncResult
 }

@@ -374,7 +374,8 @@ internal class SyncUserEventsImplTest {
                 shareIds = setOf(ShareId(SHARE_ID_1)),
                 isWorkerEnqueued = true,
                 hasInactiveShares = false,
-                hasInvalidGroupShares = false
+                hasInvalidGroupShares = false,
+                hasInvalidAddressShares = false
             )
         )
 
@@ -509,7 +510,8 @@ internal class SyncUserEventsImplTest {
                 shareIds = setOf(ShareId(SHARE_ID_1)),
                 isWorkerEnqueued = true,
                 hasInactiveShares = false,
-                hasInvalidGroupShares = false
+                hasInvalidGroupShares = false,
+                hasInvalidAddressShares = false
             )
         )
 

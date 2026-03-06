@@ -97,23 +97,39 @@ internal fun SyncDialogContent(
                         CircularProgressIndicator()
                     }
 
-                    else -> LazyColumn {
-                        items(
-                            items = syncItemsMap.entries.toList(),
-                            key = { dialogSyncItemMap -> dialogSyncItemMap.key.id }
-                        ) { dialogSyncItemMap ->
-                            with(dialogSyncItemMap.value) {
-                                SyncDialogVaultRow(
-                                    modifier = Modifier.padding(vertical = Spacing.small),
-                                    name = vaultName,
-                                    itemCurrent = currentDownloadedItemsCount,
-                                    itemTotal = totalDownloadedItemsCount,
-                                    color = vaultColor,
-                                    icon = vaultIcon,
-                                    hasVaultSyncFailed = hasSyncFailed,
-                                    hasSyncFinished = hasSyncFinished
-                                )
+                    else -> {
+                        LazyColumn {
+                            items(
+                                items = syncItemsMap.entries.toList(),
+                                key = { dialogSyncItemMap -> dialogSyncItemMap.key.id }
+                            ) { dialogSyncItemMap ->
+                                with(dialogSyncItemMap.value) {
+                                    SyncDialogVaultRow(
+                                        modifier = Modifier.padding(vertical = Spacing.small),
+                                        name = vaultName,
+                                        itemCurrent = currentDownloadedItemsCount,
+                                        itemTotal = totalDownloadedItemsCount,
+                                        color = vaultColor,
+                                        icon = vaultIcon,
+                                        hasVaultSyncFailed = hasSyncFailed,
+                                        hasSyncFinished = hasSyncFinished
+                                    )
+                                }
                             }
+                        }
+                        AnimatedVisibility(visible = hasSyncSucceeded && hasInvalidAddressShares) {
+                            Text(
+                                text = stringResource(R.string.sync_dialog_invalid_address_shares_warning),
+                                style = ProtonTheme.typography.defaultNorm,
+                                color = ProtonTheme.colors.notificationWarning
+                            )
+                        }
+                        AnimatedVisibility(visible = hasSyncSucceeded && hasInvalidGroupShares) {
+                            Text(
+                                text = stringResource(R.string.sync_dialog_invalid_group_shares_warning),
+                                style = ProtonTheme.typography.defaultNorm,
+                                color = ProtonTheme.colors.notificationWarning
+                            )
                         }
                     }
                 }

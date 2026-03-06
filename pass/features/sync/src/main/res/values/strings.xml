@@ -39,4 +39,6 @@
     <string name="sync_item_failed">Sync failed</string>
     <string name="sync_dialog_title_inserting">Inserting items…</string>
     <string name="sync_dialog_subtitle_inserting">Completing last step, almost there.</string>
+    <string name="sync_dialog_invalid_address_shares_warning">Some vaults could not be synced because the associated address was not found on this account.</string>
+    <string name="sync_dialog_invalid_group_shares_warning">Some vaults could not be synced because the associated group was not found on this account.</string>
 </resources>

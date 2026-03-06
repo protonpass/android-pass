@@ -8,4 +8,8 @@
   <string name="new_item_invite_notification_message" comment="the placeholder will be replaced by an email address">%s 希望与您分享一个项目。</string>
   <string name="new_vault_invite_notification_title">收到新保险库邀请</string>
   <string name="new_vault_invite_notification_message" comment="the placeholder will be replaced by an email address">%s 想和您分享一个保险库。</string>
+  <string name="new_group_item_invite_notification_title">收到新群组项目邀请</string>
+  <string name="new_group_item_invite_notification_message" comment="%1$s = inviter email, %2$s = group name">%1$s 希望与您的群组 %2$s 共享一个项目。</string>
+  <string name="new_group_vault_invite_notification_title">收到新群组保险库邀请</string>
+  <string name="new_group_vault_invite_notification_message" comment="%1$s = inviter email, %2$s = group name">%1$s 希望与您的群组 %2$s 共享一个保险库。</string>
 </resources>

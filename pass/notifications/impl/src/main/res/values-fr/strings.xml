@@ -8,4 +8,8 @@
   <string name="new_item_invite_notification_message" comment="the placeholder will be replaced by an email address">%s souhaite partager un élément avec vous.</string>
   <string name="new_vault_invite_notification_title">Nouvelle invitation à un coffre-fort</string>
   <string name="new_vault_invite_notification_message" comment="the placeholder will be replaced by an email address">%s souhaite partager un coffre-fort avec vous.</string>
+  <string name="new_group_item_invite_notification_title">Invitation à un nouvel élément de groupe reçue</string>
+  <string name="new_group_item_invite_notification_message" comment="%1$s = inviter email, %2$s = group name">%1$s souhaite partager un élément avec votre groupe %2$s.</string>
+  <string name="new_group_vault_invite_notification_title">Invitation à un nouveau coffre-fort de groupe reçu</string>
+  <string name="new_group_vault_invite_notification_message" comment="%1$s = inviter email, %2$s = group name">%1$s souhaite partager un coffre-fort avec votre groupe %2$s.</string>
 </resources>

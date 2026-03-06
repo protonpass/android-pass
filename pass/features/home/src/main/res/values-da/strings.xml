@@ -57,10 +57,12 @@
   <string name="home_notification_permission_banner_title">Få vigtige opdateringer</string>
   <string name="home_notification_permission_banner_text">Aktivér push-notifikationer for at blive informeret, når andre deler en boks med dig.</string>
   <string name="home_notification_permission_banner_settings">Aktivér tilladelse ›</string>
-  <string name="home_invite_banner_title">Boks delt med dig</string>
-  <string name="home_invite_banner_subtitle">Du er inviteret til en delt boks. Tryk for detaljer.</string>
   <string name="home_item_invite_banner_title" comment="placeholder is replaced by an email address">%s ønsker at dele et element med dig.</string>
-  <string name="home_item_invite_banner_subtitle">Tryk for detaljer.</string>
+  <string name="home_group_item_invite_banner_title" comment="%1$s = inviter email, %2$s = group name">%1$s ønsker at dele et element med din gruppe %2$s.</string>
+  <string name="home_group_invite_banner_title" comment="%1$s = inviter email, %2$s = group name">%1$s ønsker at dele en boks med din gruppe %2$s.</string>
+  <string name="home_item_invite_card_title">Invitation til delt element</string>
+  <string name="home_vault_invite_card_title">Invitation til delt boks</string>
+  <string name="home_vault_invite_banner_body" comment="placeholder is replaced by an email address">%s ønsker at dele en boks med dig.</string>
   <!-- Common bottomsheet -->
   <string name="bottomsheet_copy_password">Kopiér adgangskode</string>
   <string name="bottomsheet_copy_username">Kopiér brugernavn</string>

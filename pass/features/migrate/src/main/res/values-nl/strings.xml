@@ -14,6 +14,11 @@
   <string name="migrate_all_items_success_snackbar">Alle items zijn verplaatst</string>
   <string name="migrate_all_items_error_snackbar">Fout bij het verplaatsen van alle kluisitems</string>
   <string name="migrate_init_error_snackbar">Kan migratiescherm niet voorbereiden</string>
+  <string name="migrate_folder_confirm_title_bottom_sheet">Map verplaatsen naar de volgende kluis?</string>
+  <string name="migrate_folder_to_folder_confirm_title_bottom_sheet">Map verplaatsen naar de volgende map?</string>
+  <string name="migrate_folder_success_snackbar">Map verplaatst</string>
+  <string name="migrate_folder_error_snackbar">Fout bij het verplaatsen van de map</string>
+  <string name="migrate_folder_already_same_parent_snackbar">Map bevindt zich al op deze locatie</string>
   <string name="migrate_disabled_vault_reason_no_permission">U kunt geen items aanmaken in deze kluis</string>
   <string name="migrate_disabled_vault_reason_same_vault">U kunt een item niet naar dezelfde kluis verplaatsen</string>
   <plurals name="migrate_items_shared_warning_title">

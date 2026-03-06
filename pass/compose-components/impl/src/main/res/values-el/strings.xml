@@ -36,6 +36,7 @@
   <string name="folder_tree_create_folder">Δημιουργία φακέλου</string>
   <string name="bottomsheet_rename_folder">Μετονομασία</string>
   <string name="bottomsheet_create_sub_folder">Δημιουργία υποφακέλου</string>
+  <string name="bottomsheet_move_folder">Μετακίνηση</string>
   <string name="bottomsheet_copy_item_note">Αντιγραφή σημείωσης</string>
   <string name="bottomsheet_delete_permanently">Οριστική διαγραφή</string>
   <string name="bottomsheet_restore">Επαναφορά</string>

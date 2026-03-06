@@ -14,6 +14,11 @@
   <string name="migrate_all_items_success_snackbar">Alle Einträge verschoben.</string>
   <string name="migrate_all_items_error_snackbar">Fehler beim Verschieben aller Tresoreinträge.</string>
   <string name="migrate_init_error_snackbar">Migrationsseite konnte nicht geladen werden.</string>
+  <string name="migrate_folder_confirm_title_bottom_sheet">Ordner in den folgenden Tresor verschieben?</string>
+  <string name="migrate_folder_to_folder_confirm_title_bottom_sheet">Ordner in den folgenden Ordner verschieben?</string>
+  <string name="migrate_folder_success_snackbar">Ordner verschoben</string>
+  <string name="migrate_folder_error_snackbar">Fehler beim Verschieben des Ordners</string>
+  <string name="migrate_folder_already_same_parent_snackbar">Der Ordner befindet sich bereits in diesem Speicherort</string>
   <string name="migrate_disabled_vault_reason_no_permission">Du kannst in diesem Tresor keine Einträge erstellen.</string>
   <string name="migrate_disabled_vault_reason_same_vault">Du kannst einen Eintrag nicht in denselben Tresor verschieben.</string>
   <plurals name="migrate_items_shared_warning_title">

@@ -59,10 +59,12 @@
   <string name="home_notification_permission_banner_title">Získajte dôležité aktualizácie</string>
   <string name="home_notification_permission_banner_text">Povoľte push oznámenia, aby ste dostali informáciu, keď s vami ostatní budú zdieľať trezor.</string>
   <string name="home_notification_permission_banner_settings">Povoľte oprávnenie ›</string>
-  <string name="home_invite_banner_title">Trezor zdieľaný s vami</string>
-  <string name="home_invite_banner_subtitle">Ste pozvaní do zdieľaného trezoru. Kliknite pre podrobnosti.</string>
   <string name="home_item_invite_banner_title" comment="placeholder is replaced by an email address">%s chce s vami zdieľať položku.</string>
-  <string name="home_item_invite_banner_subtitle">Kliknite pre viac informácií.</string>
+  <string name="home_group_item_invite_banner_title" comment="%1$s = inviter email, %2$s = group name">%1$s chce zdieľať položku s vašou skupinou %2$s.</string>
+  <string name="home_group_invite_banner_title" comment="%1$s = inviter email, %2$s = group name">%1$s chce zdieľať trezor s vašou skupinou %2$s.</string>
+  <string name="home_item_invite_card_title">Pozvánka ku zdieľanej položke</string>
+  <string name="home_vault_invite_card_title">Pozvánka do zdieľaného trezora</string>
+  <string name="home_vault_invite_banner_body" comment="placeholder is replaced by an email address">%s s vami chce zdieľať trezor.</string>
   <!-- Common bottomsheet -->
   <string name="bottomsheet_copy_password">Kopírovať heslo</string>
   <string name="bottomsheet_copy_username">Kopírovať meno používateľa</string>

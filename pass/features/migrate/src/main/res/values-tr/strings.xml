@@ -14,6 +14,11 @@
   <string name="migrate_all_items_success_snackbar">Tüm ögeler taşındı</string>
   <string name="migrate_all_items_error_snackbar">Tüm kasa ögeleri taşınırken sorun çıktı</string>
   <string name="migrate_init_error_snackbar">Aktarım arayüzü hazırlanamadı</string>
+  <string name="migrate_folder_confirm_title_bottom_sheet">Klasör şu kasaya taşınsın mı?</string>
+  <string name="migrate_folder_to_folder_confirm_title_bottom_sheet">Klasör aşağıdaki şu klasöre taşınsın mı?</string>
+  <string name="migrate_folder_success_snackbar">Klasör taşındı</string>
+  <string name="migrate_folder_error_snackbar">Klasör taşınırken sorun çıktı</string>
+  <string name="migrate_folder_already_same_parent_snackbar">Klasör zaten bu konumda</string>
   <string name="migrate_disabled_vault_reason_no_permission">Bu kasaya ögeler ekleyemezsiniz</string>
   <string name="migrate_disabled_vault_reason_same_vault">Bir ögeyi aynı kasaya taşıyamazsınız</string>
   <plurals name="migrate_items_shared_warning_title">

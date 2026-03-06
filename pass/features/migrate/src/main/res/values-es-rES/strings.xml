@@ -14,6 +14,11 @@
   <string name="migrate_all_items_success_snackbar">Todos los elementos movidos</string>
   <string name="migrate_all_items_error_snackbar">Error al mover todos los elementos de la caja fuerte</string>
   <string name="migrate_init_error_snackbar">No se ha podido preparar la pantalla de migración.</string>
+  <string name="migrate_folder_confirm_title_bottom_sheet">¿Mover carpeta a la siguiente caja fuerte?</string>
+  <string name="migrate_folder_to_folder_confirm_title_bottom_sheet">¿Mover carpeta a la siguiente ubicación?</string>
+  <string name="migrate_folder_success_snackbar">Carpeta movida</string>
+  <string name="migrate_folder_error_snackbar">Error al mover la carpeta</string>
+  <string name="migrate_folder_already_same_parent_snackbar">La carpeta ya está en esta ubicación</string>
   <string name="migrate_disabled_vault_reason_no_permission">No puedes crear elementos en esta caja fuerte.</string>
   <string name="migrate_disabled_vault_reason_same_vault">No puedes mover un elemento a la misma caja fuerte.</string>
   <plurals name="migrate_items_shared_warning_title">

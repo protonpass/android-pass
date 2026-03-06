@@ -28,10 +28,10 @@
   <string name="topbar_search_query_uninitialized" comment="Placeholder string before we know where we're searching (all vaults, oldest vaults, etc.)">Hledat...</string>
   <string name="all_accounts_item" comment="The placeholder argument will have the count of how many accounts the user has added">Všechny účty (%1$s)</string>
   <plurals name="select_item_autosave_banner">
-    <item quantity="one">An item with the same name already exists.\nSelect it to update or create a new item.</item>
-    <item quantity="few">Items with the same name already exist.\nSelect one to update or create a new item.</item>
-    <item quantity="many">Items with the same name already exist.\nSelect one to update or create a new item.</item>
-    <item quantity="other">Items with the same name already exist.\nSelect one to update or create a new item.</item>
+    <item quantity="one">Položka se stejným názvem již existuje.\nVyberte ji k aktualizaci nebo vytvořte novou položku.</item>
+    <item quantity="few">Položky se stejným názvem již existují.\nVyberte jednu pro aktualizaci nebo vytvořte novou položku.</item>
+    <item quantity="many">Položky se stejným názvem již existují.\nVyberte jednu pro aktualizaci nebo vytvořte novou položku.</item>
+    <item quantity="other">Položky se stejným názvem již existují.\nVyberte jednu pro aktualizaci nebo vytvořte novou položku.</item>
   </plurals>
   <string name="select_item_autosave_no_match">Nebyly nalezeny žádné odpovídající položky.\nVytvořte novou pro uložení těchto přihlašovacích údajů.</string>
   <string name="select_item_save_credential_title">Uložit přihlašovací údaje</string>

@@ -15,6 +15,11 @@
   <string name="migrate_all_items_success_snackbar">S-au mutat toate articolele.</string>
   <string name="migrate_all_items_error_snackbar">Eroare la mutarea tuturor articolelor din seif.</string>
   <string name="migrate_init_error_snackbar">Nu s-a putut pregăti ecranul de migrare.</string>
+  <string name="migrate_folder_confirm_title_bottom_sheet">Mutați folderul în următorul seif?</string>
+  <string name="migrate_folder_to_folder_confirm_title_bottom_sheet">Mutați folderul în următorul folder?</string>
+  <string name="migrate_folder_success_snackbar">Folderul s-a mutat.</string>
+  <string name="migrate_folder_error_snackbar">Eroare la mutarea folderului.</string>
+  <string name="migrate_folder_already_same_parent_snackbar">Folderul există deja în acest loc.</string>
   <string name="migrate_disabled_vault_reason_no_permission">Nu puteți crea articole în acest seif.</string>
   <string name="migrate_disabled_vault_reason_same_vault">Nu puteți muta un articol în același seif.</string>
   <plurals name="migrate_items_shared_warning_title">

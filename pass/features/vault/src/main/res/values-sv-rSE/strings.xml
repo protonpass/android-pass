@@ -20,10 +20,10 @@
   <string name="snackbar_get_vault_list_error">Valvlistan kunde inte laddas</string>
   <string name="vault_delete_dialog_title">Ta bort valv</string>
   <string name="vault_add_folder_dialog_title">Ange en mapprubrik</string>
-  <string name="vault_edit_folder_dialog_title">Rename folder</string>
+  <string name="vault_edit_folder_dialog_title">Byt namn på mapp</string>
   <string name="vault_add_foldersame_folder_exist">En mapp med samma namn finns redan</string>
   <string name="folder_delete_dialog_title">Ta bort mapp</string>
-  <string name="folder_delete_dialog_body">This will permanently delete the folder __FOLDER_NAME__ and all its contents. Enter the folder name to confirm deletion.</string>
+  <string name="folder_delete_dialog_body">Detta kommer ta bort mappen __FOLDER_NAME__ och allt dess innehåll permanent. Ange mappens namn för att bekräfta borttagning.</string>
   <string name="folder_delete_dialog_placeholder">Mappnamn</string>
   <string name="folder_delete_dialog_delete_action">Ta bort</string>
   <string name="vault_delete_dialog_body">Detta kommer ta bort valvet __VAULT_NAME__ och allt dess innehåll permanent. Ange valvets namn för att bekräfta borttagning.</string>

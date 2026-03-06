@@ -13,6 +13,11 @@
   <string name="migrate_all_items_success_snackbar">已移動所有項目</string>
   <string name="migrate_all_items_error_snackbar">移動所有保險庫項目時發生錯誤</string>
   <string name="migrate_init_error_snackbar">無法準備遷移畫面</string>
+  <string name="migrate_folder_confirm_title_bottom_sheet">Move folder to the following vault?</string>
+  <string name="migrate_folder_to_folder_confirm_title_bottom_sheet">Move folder to the following folder?</string>
+  <string name="migrate_folder_success_snackbar">Folder moved</string>
+  <string name="migrate_folder_error_snackbar">Error moving the folder</string>
+  <string name="migrate_folder_already_same_parent_snackbar">Folder is already in this location</string>
   <string name="migrate_disabled_vault_reason_no_permission">您無法於保管庫創建項目</string>
   <string name="migrate_disabled_vault_reason_same_vault">您無法將項目移動到同一個保管庫。</string>
   <plurals name="migrate_items_shared_warning_title">

@@ -56,10 +56,12 @@
   <string name="home_notification_permission_banner_title">Nhận thông báo quan trọng</string>
   <string name="home_notification_permission_banner_text">Bật thông báo đẩy để biết được khi nào người khác chia sẻ két sắt với bạn.</string>
   <string name="home_notification_permission_banner_settings">Mở màn hình cấp quyền ›</string>
-  <string name="home_invite_banner_title">Két sắt được chia sẻ với bạn</string>
-  <string name="home_invite_banner_subtitle">Bạn được mời vào một kho lưu trữ. Chạm vào để biết thêm thông tin.</string>
   <string name="home_item_invite_banner_title" comment="placeholder is replaced by an email address">%s muốn chia sẻ một mục với bạn.</string>
-  <string name="home_item_invite_banner_subtitle">Chạm để xem chi tiết.</string>
+  <string name="home_group_item_invite_banner_title" comment="%1$s = inviter email, %2$s = group name">%1$s wants to share an item with your group %2$s.</string>
+  <string name="home_group_invite_banner_title" comment="%1$s = inviter email, %2$s = group name">%1$s wants to share a vault with your group %2$s.</string>
+  <string name="home_item_invite_card_title">Shared item invitation</string>
+  <string name="home_vault_invite_card_title">Shared vault invitation</string>
+  <string name="home_vault_invite_banner_body" comment="placeholder is replaced by an email address">%s wants to share a vault with you.</string>
   <!-- Common bottomsheet -->
   <string name="bottomsheet_copy_password">Sao chép mật khẩu</string>
   <string name="bottomsheet_copy_username">Sao chép tên đăng nhập</string>

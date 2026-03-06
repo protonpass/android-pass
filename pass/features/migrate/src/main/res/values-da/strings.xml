@@ -14,6 +14,11 @@
   <string name="migrate_all_items_success_snackbar">Alle elementer flyttet</string>
   <string name="migrate_all_items_error_snackbar">Fejl ved flytning af alle boks-elementer</string>
   <string name="migrate_init_error_snackbar">Kunne ikke forberede migreringsskærm</string>
+  <string name="migrate_folder_confirm_title_bottom_sheet">Flyt mappe til følgende boks?</string>
+  <string name="migrate_folder_to_folder_confirm_title_bottom_sheet">Flyt mappe til følgende mappe?</string>
+  <string name="migrate_folder_success_snackbar">Mappe flyttet</string>
+  <string name="migrate_folder_error_snackbar">Fejl ved flytning af mappen</string>
+  <string name="migrate_folder_already_same_parent_snackbar">Mappen er allerede på denne placering</string>
   <string name="migrate_disabled_vault_reason_no_permission">Du kan ikke oprette elementer i denne boks</string>
   <string name="migrate_disabled_vault_reason_same_vault">Du kan ikke flytte et element til den samme boks</string>
   <plurals name="migrate_items_shared_warning_title">

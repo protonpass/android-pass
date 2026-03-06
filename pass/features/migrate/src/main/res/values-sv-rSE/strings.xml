@@ -14,6 +14,11 @@
   <string name="migrate_all_items_success_snackbar">Alla objekt flyttade</string>
   <string name="migrate_all_items_error_snackbar">Gick inte flytta alla valvobjekt</string>
   <string name="migrate_init_error_snackbar">Kunde inte förbereda migreringsskärmen</string>
+  <string name="migrate_folder_confirm_title_bottom_sheet">Flytta mapp till följande valv?</string>
+  <string name="migrate_folder_to_folder_confirm_title_bottom_sheet">Flytta mapp till följande mapp?</string>
+  <string name="migrate_folder_success_snackbar">Mapp flyttad</string>
+  <string name="migrate_folder_error_snackbar">Fel vid flytt av mappen</string>
+  <string name="migrate_folder_already_same_parent_snackbar">Mapp finns redan på denna plats</string>
   <string name="migrate_disabled_vault_reason_no_permission">Du kan inte skapa objekt i detta valv</string>
   <string name="migrate_disabled_vault_reason_same_vault">Du kan inte flytta ett objekt till samma valv</string>
   <plurals name="migrate_items_shared_warning_title">

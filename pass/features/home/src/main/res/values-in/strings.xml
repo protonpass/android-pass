@@ -56,10 +56,12 @@
   <string name="home_notification_permission_banner_title">Dapatkan berbagai pembaruan penting</string>
   <string name="home_notification_permission_banner_text">Aktifkan notifikasi push untuk menerima pemberitahuan ketika orang lain berbagi brankas dengan Anda.</string>
   <string name="home_notification_permission_banner_settings">Aktifkan izin ›</string>
-  <string name="home_invite_banner_title">Brankas yang dibagikan dengan Anda</string>
-  <string name="home_invite_banner_subtitle">Anda telah diundang ke brankas yang dibagikan. Klik di sini untuk rincian lebih lanjut.</string>
   <string name="home_item_invite_banner_title" comment="placeholder is replaced by an email address">%s ingin membagikan item dengan Anda.</string>
-  <string name="home_item_invite_banner_subtitle">Ketuk untuk perincian.</string>
+  <string name="home_group_item_invite_banner_title" comment="%1$s = inviter email, %2$s = group name">%1$s wants to share an item with your group %2$s.</string>
+  <string name="home_group_invite_banner_title" comment="%1$s = inviter email, %2$s = group name">%1$s wants to share a vault with your group %2$s.</string>
+  <string name="home_item_invite_card_title">Shared item invitation</string>
+  <string name="home_vault_invite_card_title">Shared vault invitation</string>
+  <string name="home_vault_invite_banner_body" comment="placeholder is replaced by an email address">%s wants to share a vault with you.</string>
   <!-- Common bottomsheet -->
   <string name="bottomsheet_copy_password">Salin kata sandi</string>
   <string name="bottomsheet_copy_username">Salin nama pengguna</string>

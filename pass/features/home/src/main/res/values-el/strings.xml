@@ -57,10 +57,12 @@
   <string name="home_notification_permission_banner_title">Λάβετε σημαντικές ενημερώσεις</string>
   <string name="home_notification_permission_banner_text">Ενεργοποιήστε τις ειδοποιήσεις push για να ενημερώνεστε όταν άλλα άτομα μοιράζονται μαζί σας μια κρύπτη.</string>
   <string name="home_notification_permission_banner_settings">Ενεργοποίηση δικαιώματος ›</string>
-  <string name="home_invite_banner_title">Η κρύπτη που έχει κοινοποιηθεί σε εσάς</string>
-  <string name="home_invite_banner_subtitle">Έχετε προσκληθεί σε κοινόχρηστη κρύπτη. Πατήστε για λεπτομέρειες.</string>
   <string name="home_item_invite_banner_title" comment="placeholder is replaced by an email address">Ο %s θέλει να μοιραστεί μαζί σας ένα αντικείμενο.</string>
-  <string name="home_item_invite_banner_subtitle">Πατήστε για λεπτομέρειες.</string>
+  <string name="home_group_item_invite_banner_title" comment="%1$s = inviter email, %2$s = group name">Ο %1$s θέλει να μοιραστεί ένα στοιχείο με την ομάδα σας %2$s.</string>
+  <string name="home_group_invite_banner_title" comment="%1$s = inviter email, %2$s = group name">Ο %1$s θέλει να μοιραστεί μία κρύπτη με την ομάδα σας %2$s.</string>
+  <string name="home_item_invite_card_title">Πρόσκληση για κοινόχρηστο στοιχείο</string>
+  <string name="home_vault_invite_card_title">Πρόσκληση για κοινόχρηστη κρύπτη</string>
+  <string name="home_vault_invite_banner_body" comment="placeholder is replaced by an email address">Ο %s θέλει να μοιραστεί μαζί σας μια κοινόχρηστη κρύπτη.</string>
   <!-- Common bottomsheet -->
   <string name="bottomsheet_copy_password">Αντιγραφή συνθηματικού</string>
   <string name="bottomsheet_copy_username">Αντιγραφή ονόματος χρήστη</string>

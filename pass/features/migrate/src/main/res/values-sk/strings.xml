@@ -16,6 +16,11 @@
   <string name="migrate_all_items_success_snackbar">Všetky položky presunuté</string>
   <string name="migrate_all_items_error_snackbar">Chyba pri presúvaní všetkých položiek</string>
   <string name="migrate_init_error_snackbar">Nepodarilo sa pripraviť obrazovku migrácie</string>
+  <string name="migrate_folder_confirm_title_bottom_sheet">Presunúť priečinok do nasledovného trezora?</string>
+  <string name="migrate_folder_to_folder_confirm_title_bottom_sheet">Presunúť priečinok do nasledovného priečinka?</string>
+  <string name="migrate_folder_success_snackbar">Priečinok presunutý</string>
+  <string name="migrate_folder_error_snackbar">Chyba pri presúvaní priečinka</string>
+  <string name="migrate_folder_already_same_parent_snackbar">Priečinok sa už na tejto lokalite nachádza</string>
   <string name="migrate_disabled_vault_reason_no_permission">V tomto trezore nemôžete vytvárať položky</string>
   <string name="migrate_disabled_vault_reason_same_vault">Nemôžete presunúť položku do rovnakého trezora</string>
   <plurals name="migrate_items_shared_warning_title">

@@ -56,10 +56,12 @@
   <string name="home_notification_permission_banner_title">중요한 소식 얻기</string>
   <string name="home_notification_permission_banner_text">다른 사람과 금고를 공유할 때 정보를 받을 수 있도록 푸시 알림을 허용하세요.</string>
   <string name="home_notification_permission_banner_settings">권한 허용 ›</string>
-  <string name="home_invite_banner_title">나와 공유된 금고</string>
-  <string name="home_invite_banner_subtitle">공유 금고에 초대되었습니다. 상세 정보를 확인하려면 탭하세요.</string>
   <string name="home_item_invite_banner_title" comment="placeholder is replaced by an email address">%s님이 나와 항목을 공유하고자 합니다.</string>
-  <string name="home_item_invite_banner_subtitle">세부정보를 보려면 탭하세요.</string>
+  <string name="home_group_item_invite_banner_title" comment="%1$s = inviter email, %2$s = group name">%1$s wants to share an item with your group %2$s.</string>
+  <string name="home_group_invite_banner_title" comment="%1$s = inviter email, %2$s = group name">%1$s wants to share a vault with your group %2$s.</string>
+  <string name="home_item_invite_card_title">Shared item invitation</string>
+  <string name="home_vault_invite_card_title">Shared vault invitation</string>
+  <string name="home_vault_invite_banner_body" comment="placeholder is replaced by an email address">%s wants to share a vault with you.</string>
   <!-- Common bottomsheet -->
   <string name="bottomsheet_copy_password">암호 복사</string>
   <string name="bottomsheet_copy_username">사용자 이름 복사</string>

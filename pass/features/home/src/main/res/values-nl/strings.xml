@@ -57,10 +57,12 @@
   <string name="home_notification_permission_banner_title">Krijg belangrijke updates</string>
   <string name="home_notification_permission_banner_text">Schakel push notificaties in om geïnformeerd te worden wanneer iemand een kluis met u deelt.</string>
   <string name="home_notification_permission_banner_settings">Toestemming geven ›</string>
-  <string name="home_invite_banner_title">Kluis gedeeld met u</string>
-  <string name="home_invite_banner_subtitle">U wordt uitgenodigd tot een gedeelte kluis. Klik voor meer details.</string>
   <string name="home_item_invite_banner_title" comment="placeholder is replaced by an email address">%s wil een item delen met u.</string>
-  <string name="home_item_invite_banner_subtitle">Tik voor details.</string>
+  <string name="home_group_item_invite_banner_title" comment="%1$s = inviter email, %2$s = group name">%1$s wil een item delen met uw groep %2$s.</string>
+  <string name="home_group_invite_banner_title" comment="%1$s = inviter email, %2$s = group name">%1$s wil een kluis delen met uw groep %2$s.</string>
+  <string name="home_item_invite_card_title">Uitnodiging voor gedeeld item</string>
+  <string name="home_vault_invite_card_title">Uitnodiging voor gedeelde kluis</string>
+  <string name="home_vault_invite_banner_body" comment="placeholder is replaced by an email address">%s wil een kluis met u delen.</string>
   <!-- Common bottomsheet -->
   <string name="bottomsheet_copy_password">Wachtwoord kopiëren</string>
   <string name="bottomsheet_copy_username">Gebruikersnaam kopiëren</string>

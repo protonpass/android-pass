@@ -36,6 +36,7 @@
   <string name="folder_tree_create_folder">Criar pasta</string>
   <string name="bottomsheet_rename_folder">Renomear</string>
   <string name="bottomsheet_create_sub_folder">Criar subpasta</string>
+  <string name="bottomsheet_move_folder">Mover</string>
   <string name="bottomsheet_copy_item_note">Copiar nota</string>
   <string name="bottomsheet_delete_permanently">Excluir permanentemente</string>
   <string name="bottomsheet_restore">Restaurar</string>

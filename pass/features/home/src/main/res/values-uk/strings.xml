@@ -59,10 +59,12 @@
   <string name="home_notification_permission_banner_title">Отримувати важливі оновлення</string>
   <string name="home_notification_permission_banner_text">Увімкніть push-сповіщення, щоб знати коли інші надають вам спільний доступ до сховища.</string>
   <string name="home_notification_permission_banner_settings">Надати дозвіл ›</string>
-  <string name="home_invite_banner_title">Вам надано спільний доступ до сховища</string>
-  <string name="home_invite_banner_subtitle">Вас запрошено до спільного сховища. Торкніться для перегляду подробиць.</string>
   <string name="home_item_invite_banner_title" comment="placeholder is replaced by an email address">%s хоче поділитися з вами елементом.</string>
-  <string name="home_item_invite_banner_subtitle">Торкніться для отримання деталей.</string>
+  <string name="home_group_item_invite_banner_title" comment="%1$s = inviter email, %2$s = group name">%1$s wants to share an item with your group %2$s.</string>
+  <string name="home_group_invite_banner_title" comment="%1$s = inviter email, %2$s = group name">%1$s wants to share a vault with your group %2$s.</string>
+  <string name="home_item_invite_card_title">Shared item invitation</string>
+  <string name="home_vault_invite_card_title">Shared vault invitation</string>
+  <string name="home_vault_invite_banner_body" comment="placeholder is replaced by an email address">%s wants to share a vault with you.</string>
   <!-- Common bottomsheet -->
   <string name="bottomsheet_copy_password">Копіювати пароль</string>
   <string name="bottomsheet_copy_username">Копіювати ім\'я користувача</string>

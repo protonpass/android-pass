@@ -132,7 +132,7 @@ open class FetchItemsWorker @AssistedInject constructor(
         private const val ARG_USER_ID = "user_id"
         private const val ARG_SHARE_IDS = "share_ids"
         private const val ARG_FETCH_SOURCE = "fetch_source"
-        private const val ARG_INACTIVE_SHARES = "hasUndecryptableShares"
+        private const val ARG_INACTIVE_SHARES = "inactive_shares"
         private const val ARG_INVALID_GROUP_SHARES = "invalid_group_shares"
         private const val ARG_INVALID_ADDRESS_SHARES = "invalid_address_shares"
 

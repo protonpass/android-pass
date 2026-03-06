@@ -95,7 +95,6 @@ class RefreshSharesAndEnqueueSyncImpl @Inject constructor(
         }.getOrThrow()
     }
 
-
     private fun handleNonEmptyShares(
         userId: UserId,
         repositoryResult: RepositoryRefreshSharesResult,

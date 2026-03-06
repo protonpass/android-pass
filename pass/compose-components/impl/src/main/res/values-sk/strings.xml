@@ -38,6 +38,7 @@
   <string name="folder_tree_create_folder">Vytvoriť priečinok</string>
   <string name="bottomsheet_rename_folder">Premenovať</string>
   <string name="bottomsheet_create_sub_folder">Vytvoriť podpriečinok</string>
+  <string name="bottomsheet_move_folder">Presunúť</string>
   <string name="bottomsheet_copy_item_note">Kopírovať poznámku</string>
   <string name="bottomsheet_delete_permanently">Odstrániť natrvalo</string>
   <string name="bottomsheet_restore">Obnoviť</string>

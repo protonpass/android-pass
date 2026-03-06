@@ -74,7 +74,7 @@
   </plurals>
   <plurals name="security_center_dark_web_monitor_custom_emails_breaches_found">
     <item quantity="one">Выяўлена %d парушэнне</item>
-    <item quantity="few">Выяўлены %d парушэнні</item>
+    <item quantity="few">Выяўлена %d парушэнні</item>
     <item quantity="many">Выяўлена %d парушэнняў</item>
     <item quantity="other">Выяўлена %d парушэнняў</item>
   </plurals>

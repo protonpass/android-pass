@@ -56,10 +56,12 @@
   <string name="home_notification_permission_banner_title">取得重要更新</string>
   <string name="home_notification_permission_banner_text">啟用推送通知，以便在其他人與您分享保管庫時收到通知。</string>
   <string name="home_notification_permission_banner_settings">啟用權限 ›</string>
-  <string name="home_invite_banner_title">與您分享的保管庫</string>
-  <string name="home_invite_banner_subtitle">您被邀請加入共享的保管庫。點擊以取得詳細資料。</string>
   <string name="home_item_invite_banner_title" comment="placeholder is replaced by an email address">%s 想與你分享項目</string>
-  <string name="home_item_invite_banner_subtitle">輕點以查看詳細資料。</string>
+  <string name="home_group_item_invite_banner_title" comment="%1$s = inviter email, %2$s = group name">%1$s wants to share an item with your group %2$s.</string>
+  <string name="home_group_invite_banner_title" comment="%1$s = inviter email, %2$s = group name">%1$s wants to share a vault with your group %2$s.</string>
+  <string name="home_item_invite_card_title">Shared item invitation</string>
+  <string name="home_vault_invite_card_title">Shared vault invitation</string>
+  <string name="home_vault_invite_banner_body" comment="placeholder is replaced by an email address">%s wants to share a vault with you.</string>
   <!-- Common bottomsheet -->
   <string name="bottomsheet_copy_password">複製密碼</string>
   <string name="bottomsheet_copy_username">複製使用者名稱</string>

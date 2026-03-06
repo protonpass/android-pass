@@ -14,6 +14,11 @@
   <string name="migrate_all_items_success_snackbar">Tous les éléments ont été déplacés.</string>
   <string name="migrate_all_items_error_snackbar">Une erreur s\'est produite pendant le déplacement des éléments du coffre-fort.</string>
   <string name="migrate_init_error_snackbar">Impossible de préparer l\'écran de transfert</string>
+  <string name="migrate_folder_confirm_title_bottom_sheet">Déplacer le dossier vers le coffre-fort suivant ?</string>
+  <string name="migrate_folder_to_folder_confirm_title_bottom_sheet">Déplacer le dossier vers le dossier suivant ?</string>
+  <string name="migrate_folder_success_snackbar">Le dossier a été déplacé</string>
+  <string name="migrate_folder_error_snackbar">Une erreur s\'est produite lors du déplacement du dossier</string>
+  <string name="migrate_folder_already_same_parent_snackbar">Le dossier est déjà à cet emplacement</string>
   <string name="migrate_disabled_vault_reason_no_permission">Vous ne pouvez pas créer d\'éléments dans ce coffre-fort.</string>
   <string name="migrate_disabled_vault_reason_same_vault">Vous ne pouvez pas déplacer un élément vers le même coffre-fort.</string>
   <plurals name="migrate_items_shared_warning_title">

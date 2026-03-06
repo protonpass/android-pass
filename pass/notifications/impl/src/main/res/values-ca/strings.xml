@@ -8,4 +8,8 @@
   <string name="new_item_invite_notification_message" comment="the placeholder will be replaced by an email address">%s vol posar a la vostra disposició un element compartit.</string>
   <string name="new_vault_invite_notification_title">S\'ha rebut una nova invitació a una caixa forta</string>
   <string name="new_vault_invite_notification_message" comment="the placeholder will be replaced by an email address">%s vol posar a la vostra disposició una caixa forta compartida.</string>
+  <string name="new_group_item_invite_notification_title">S\'ha rebut una invitació a un nou grup</string>
+  <string name="new_group_item_invite_notification_message" comment="%1$s = inviter email, %2$s = group name">%1$s vol compartir un element amb el vostre grup %2$s.</string>
+  <string name="new_group_vault_invite_notification_title">S\'ha rebut una invitació a una caixa forta de grup</string>
+  <string name="new_group_vault_invite_notification_message" comment="%1$s = inviter email, %2$s = group name">%1$s vol compartir una caixa forta amb el vostre grup %2$s.</string>
 </resources>

@@ -16,6 +16,11 @@
   <string name="migrate_all_items_success_snackbar">Усе элементы перамешчаны</string>
   <string name="migrate_all_items_error_snackbar">Памылка падчас перамяшчэння ўсіх элементаў сховішча</string>
   <string name="migrate_init_error_snackbar">Немагчыма падрыхтаваць экран пераносу</string>
+  <string name="migrate_folder_confirm_title_bottom_sheet">Перамясціць папку ў наступнае сховішча?</string>
+  <string name="migrate_folder_to_folder_confirm_title_bottom_sheet">Перамясціць папку ў наступнае папку?</string>
+  <string name="migrate_folder_success_snackbar">Папка перамешчана</string>
+  <string name="migrate_folder_error_snackbar">Памылка пры перамяшчэнні папкі</string>
+  <string name="migrate_folder_already_same_parent_snackbar">Папка ўжо знаходзіцца ў гэтым размяшчэнні</string>
   <string name="migrate_disabled_vault_reason_no_permission">Вы не можаце ствараць элементы ў гэтым сховішчы</string>
   <string name="migrate_disabled_vault_reason_same_vault">Вы не можаце перамясціць элемент у тое ж самае сховішча</string>
   <plurals name="migrate_items_shared_warning_title">

@@ -36,6 +36,7 @@
   <string name="folder_tree_create_folder">Create folder</string>
   <string name="bottomsheet_rename_folder">Rename</string>
   <string name="bottomsheet_create_sub_folder">Create sub-folder</string>
+  <string name="bottomsheet_move_folder">Move</string>
   <string name="bottomsheet_copy_item_note">Jegyzet másolása</string>
   <string name="bottomsheet_delete_permanently">Végleges törlés</string>
   <string name="bottomsheet_restore">Visszaállítás</string>

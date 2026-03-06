@@ -36,6 +36,7 @@
   <string name="folder_tree_create_folder">Luo kansio</string>
   <string name="bottomsheet_rename_folder">Nimeä uudelleen</string>
   <string name="bottomsheet_create_sub_folder">Luo alikansio</string>
+  <string name="bottomsheet_move_folder">Siirrä</string>
   <string name="bottomsheet_copy_item_note">Kopioi muistiinpano</string>
   <string name="bottomsheet_delete_permanently">Poista pysyvästi</string>
   <string name="bottomsheet_restore">Palauta</string>

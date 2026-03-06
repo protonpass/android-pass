@@ -57,10 +57,12 @@
   <string name="home_notification_permission_banner_title">Obtenga actualizaciones importantes</string>
   <string name="home_notification_permission_banner_text">Active las notificaciones push para informarse cuando otros compartan una bóveda con usted.</string>
   <string name="home_notification_permission_banner_settings">Activar permiso ›</string>
-  <string name="home_invite_banner_title">Bóveda compartida con usted</string>
-  <string name="home_invite_banner_subtitle">Se le invitó a una bóveda compartida. Pulse para ver los datos.</string>
   <string name="home_item_invite_banner_title" comment="placeholder is replaced by an email address">%s desea compartir un elemento con usted.</string>
-  <string name="home_item_invite_banner_subtitle">Pulse para ver los detalles.</string>
+  <string name="home_group_item_invite_banner_title" comment="%1$s = inviter email, %2$s = group name">%1$s desea compartir un elemento con su grupo %2$s.</string>
+  <string name="home_group_invite_banner_title" comment="%1$s = inviter email, %2$s = group name">%1$s desea compartir una bóveda con su grupo %2$s.</string>
+  <string name="home_item_invite_card_title">Invitación a un elemento compartido</string>
+  <string name="home_vault_invite_card_title">Invitación a una bóveda compartida</string>
+  <string name="home_vault_invite_banner_body" comment="placeholder is replaced by an email address">%s desea compartir una bóveda con usted.</string>
   <!-- Common bottomsheet -->
   <string name="bottomsheet_copy_password">Copiar contraseña</string>
   <string name="bottomsheet_copy_username">Copiar nombre de usuario</string>

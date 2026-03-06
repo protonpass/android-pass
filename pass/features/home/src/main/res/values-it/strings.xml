@@ -57,10 +57,12 @@
   <string name="home_notification_permission_banner_title">Ricevi gli aggiornamenti importanti</string>
   <string name="home_notification_permission_banner_text">Abilita le notifiche push per sapere quando qualcuno condivide una cassaforte con te.</string>
   <string name="home_notification_permission_banner_settings">Abilita l\'autorizzazione ›</string>
-  <string name="home_invite_banner_title">Cassaforte condivisa con te</string>
-  <string name="home_invite_banner_subtitle">Sei stato invitato in una cassaforte condivisa. Tocca per i dettagli.</string>
   <string name="home_item_invite_banner_title" comment="placeholder is replaced by an email address">%s vuole condividere un elemento con te.</string>
-  <string name="home_item_invite_banner_subtitle">Tocca per informazioni.</string>
+  <string name="home_group_item_invite_banner_title" comment="%1$s = inviter email, %2$s = group name">%1$s wants to share an item with your group %2$s.</string>
+  <string name="home_group_invite_banner_title" comment="%1$s = inviter email, %2$s = group name">%1$s wants to share a vault with your group %2$s.</string>
+  <string name="home_item_invite_card_title">Shared item invitation</string>
+  <string name="home_vault_invite_card_title">Shared vault invitation</string>
+  <string name="home_vault_invite_banner_body" comment="placeholder is replaced by an email address">%s wants to share a vault with you.</string>
   <!-- Common bottomsheet -->
   <string name="bottomsheet_copy_password">Copia la password</string>
   <string name="bottomsheet_copy_username">Copia il nome utente</string>

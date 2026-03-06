@@ -37,6 +37,7 @@
   <string name="folder_tree_create_folder">Creare folder</string>
   <string name="bottomsheet_rename_folder">Redenumire</string>
   <string name="bottomsheet_create_sub_folder">Creare subfolder</string>
+  <string name="bottomsheet_move_folder">Mutare</string>
   <string name="bottomsheet_copy_item_note">Copiere notiță</string>
   <string name="bottomsheet_delete_permanently">Ștergere permanentă</string>
   <string name="bottomsheet_restore">Restaurare</string>

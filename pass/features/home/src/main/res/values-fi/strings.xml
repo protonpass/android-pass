@@ -57,10 +57,12 @@
   <string name="home_notification_permission_banner_title">Vastaanota tärkeitä ilmoituksia</string>
   <string name="home_notification_permission_banner_text">Ota push-ilmoitukset käyttöön saadaksesi tiedon kun muut jakavat holvejaan sinulle.</string>
   <string name="home_notification_permission_banner_settings">Myönnä käyttöoikeus ›</string>
-  <string name="home_invite_banner_title">Sinulle on jaettu holvi</string>
-  <string name="home_invite_banner_subtitle">Sinut on kutsuttu jaettuun holviin. Näytä tiedot napauttamalla.</string>
   <string name="home_item_invite_banner_title" comment="placeholder is replaced by an email address">%s haluaa jakaa sinulle kohteen.</string>
-  <string name="home_item_invite_banner_subtitle">Lisätietoja napauttamalla.</string>
+  <string name="home_group_item_invite_banner_title" comment="%1$s = inviter email, %2$s = group name">%1$s wants to share an item with your group %2$s.</string>
+  <string name="home_group_invite_banner_title" comment="%1$s = inviter email, %2$s = group name">%1$s wants to share a vault with your group %2$s.</string>
+  <string name="home_item_invite_card_title">Shared item invitation</string>
+  <string name="home_vault_invite_card_title">Shared vault invitation</string>
+  <string name="home_vault_invite_banner_body" comment="placeholder is replaced by an email address">%s wants to share a vault with you.</string>
   <!-- Common bottomsheet -->
   <string name="bottomsheet_copy_password">Kopioi salasana</string>
   <string name="bottomsheet_copy_username">Kopioi käyttäjätunnus</string>

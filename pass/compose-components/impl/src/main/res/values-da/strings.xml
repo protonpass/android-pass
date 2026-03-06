@@ -36,6 +36,7 @@
   <string name="folder_tree_create_folder">Opret mappe</string>
   <string name="bottomsheet_rename_folder">Omdøb</string>
   <string name="bottomsheet_create_sub_folder">Opret undermappe</string>
+  <string name="bottomsheet_move_folder">Flyt</string>
   <string name="bottomsheet_copy_item_note">Kopiér note</string>
   <string name="bottomsheet_delete_permanently">Slet permanent</string>
   <string name="bottomsheet_restore">Gendan</string>

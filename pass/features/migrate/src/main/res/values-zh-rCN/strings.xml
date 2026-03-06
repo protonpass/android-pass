@@ -13,6 +13,11 @@
   <string name="migrate_all_items_success_snackbar">所有项目已移动</string>
   <string name="migrate_all_items_error_snackbar">移动所有保险库项目时出错</string>
   <string name="migrate_init_error_snackbar">无法准备迁移画面</string>
+  <string name="migrate_folder_confirm_title_bottom_sheet">是否将文件夹移动到以下保险库？</string>
+  <string name="migrate_folder_to_folder_confirm_title_bottom_sheet">是否将文件夹移动到以下文件夹？</string>
+  <string name="migrate_folder_success_snackbar">文件夹已移动</string>
+  <string name="migrate_folder_error_snackbar">移动文件夹时出错</string>
+  <string name="migrate_folder_already_same_parent_snackbar">文件夹已在此位置</string>
   <string name="migrate_disabled_vault_reason_no_permission">您不能在此保险库中创建项目</string>
   <string name="migrate_disabled_vault_reason_same_vault">不能将项目移动到同一保险库</string>
   <plurals name="migrate_items_shared_warning_title">

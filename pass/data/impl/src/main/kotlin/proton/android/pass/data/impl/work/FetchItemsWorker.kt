@@ -60,6 +60,7 @@ open class FetchItemsWorker @AssistedInject constructor(
         val fetchSource = inputData.getString(ARG_FETCH_SOURCE)?.let(FetchSource::valueOf)
         val hasInactiveShares = inputData.getBoolean(ARG_INACTIVE_SHARES, false)
         val hasInvalidGroupShares = inputData.getBoolean(ARG_INVALID_GROUP_SHARES, false)
+        val hasInvalidAddressShares = inputData.getBoolean(ARG_INVALID_ADDRESS_SHARES, false)
 
         if (fetchSource == null) {
             PassLogger.w(TAG, "Invalid fetch source")
@@ -72,7 +73,8 @@ open class FetchItemsWorker @AssistedInject constructor(
             userId = userId,
             shareIds = shareIds,
             hasInactiveShares = hasInactiveShares,
-            hasInvalidGroupShares = hasInvalidGroupShares
+            hasInvalidGroupShares = hasInvalidGroupShares,
+            hasInvalidAddressShares = hasInvalidAddressShares
         )
         return when (res) {
             ForceSyncResult.Error -> {
@@ -119,6 +121,12 @@ open class FetchItemsWorker @AssistedInject constructor(
         FirstSync
     }
 
+    data class SyncWarnings(
+        val hasInactiveShares: Boolean,
+        val hasInvalidGroupShares: Boolean,
+        val hasInvalidAddressShares: Boolean
+    )
+
     companion object {
         private const val TAG = "FetchItemsWorker"
         private const val ARG_USER_ID = "user_id"
@@ -126,6 +134,7 @@ open class FetchItemsWorker @AssistedInject constructor(
         private const val ARG_FETCH_SOURCE = "fetch_source"
         private const val ARG_INACTIVE_SHARES = "hasUndecryptableShares"
         private const val ARG_INVALID_GROUP_SHARES = "invalid_group_shares"
+        private const val ARG_INVALID_ADDRESS_SHARES = "invalid_address_shares"
 
         private const val SYNC_NOTIFICATION_ID = 0
         private const val SYNC_NOTIFICATION_CHANNEL_ID = "SyncNotificationChannel"
@@ -134,16 +143,16 @@ open class FetchItemsWorker @AssistedInject constructor(
             source: FetchSource,
             userId: UserId,
             shareIds: Set<ShareId>,
-            hasInactiveShares: Boolean,
-            hasInvalidGroupShares: Boolean
+            warnings: SyncWarnings
         ): OneTimeWorkRequest {
             val shareIdsAsString = shareIds.map { it.id }.toTypedArray()
             val extras = mutableMapOf(
                 ARG_SHARE_IDS to shareIdsAsString,
                 ARG_FETCH_SOURCE to source.name,
                 ARG_USER_ID to userId.id,
-                ARG_INACTIVE_SHARES to hasInactiveShares,
-                ARG_INVALID_GROUP_SHARES to hasInvalidGroupShares
+                ARG_INACTIVE_SHARES to warnings.hasInactiveShares,
+                ARG_INVALID_GROUP_SHARES to warnings.hasInvalidGroupShares,
+                ARG_INVALID_ADDRESS_SHARES to warnings.hasInvalidAddressShares
             )
 
             val data = Data.Builder()

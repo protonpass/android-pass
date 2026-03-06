@@ -3056,8 +3056,8 @@ fun NavGraphBuilder.appGraph(
     accountRedirectsGraph {
         when (it) {
             AccountRedirectsDestination.Upgrade -> {
-                onNavigate(AppNavigation.Upgrade)
                 appNavigator.navigateBackToStartDestination(force = true)
+                onNavigate(AppNavigation.Upgrade)
             }
         }
     }

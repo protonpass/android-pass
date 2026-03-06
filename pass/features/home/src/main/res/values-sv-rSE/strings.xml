@@ -57,10 +57,12 @@
   <string name="home_notification_permission_banner_title">Få viktiga uppdateringar</string>
   <string name="home_notification_permission_banner_text">Aktivera pushaviseringar för att informeras när andra delar ett valv med dig.</string>
   <string name="home_notification_permission_banner_settings">Aktivera behörighet ›</string>
-  <string name="home_invite_banner_title">Valv delade med dig</string>
-  <string name="home_invite_banner_subtitle">Du är inbjuden till ett delat valv. Tryck för detaljer.</string>
   <string name="home_item_invite_banner_title" comment="placeholder is replaced by an email address">%s vill dela ett objekt med dig.</string>
-  <string name="home_item_invite_banner_subtitle">Tryck för detaljer.</string>
+  <string name="home_group_item_invite_banner_title" comment="%1$s = inviter email, %2$s = group name">%1$s vill dela ett objekt med din grupp %2$s.</string>
+  <string name="home_group_invite_banner_title" comment="%1$s = inviter email, %2$s = group name">%1$s vill dela ett valv med din grupp %2$s.</string>
+  <string name="home_item_invite_card_title">Inbjudan till delat objekt</string>
+  <string name="home_vault_invite_card_title">Inbjudan till delat valv</string>
+  <string name="home_vault_invite_banner_body" comment="placeholder is replaced by an email address">%s vill dela ett valv med dig.</string>
   <!-- Common bottomsheet -->
   <string name="bottomsheet_copy_password">Kopiera lösenord</string>
   <string name="bottomsheet_copy_username">Kopiera användarnamn</string>

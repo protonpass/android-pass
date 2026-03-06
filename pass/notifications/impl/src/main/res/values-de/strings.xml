@@ -8,4 +8,8 @@
   <string name="new_item_invite_notification_message" comment="the placeholder will be replaced by an email address">%s möchte etwas mit dir teilen.</string>
   <string name="new_vault_invite_notification_title">Einladung zu einem neuen Tresor erhalten</string>
   <string name="new_vault_invite_notification_message" comment="the placeholder will be replaced by an email address">%s möchte einen Tresor mit dir teilen.</string>
+  <string name="new_group_item_invite_notification_title">Neue Gruppeneinladung für einen Eintrag erhalten</string>
+  <string name="new_group_item_invite_notification_message" comment="%1$s = inviter email, %2$s = group name">%1$s möchte einen Eintrag mit deiner Gruppe %2$s teilen.</string>
+  <string name="new_group_vault_invite_notification_title">Neue Gruppeneinladung für einen Tresor erhalten</string>
+  <string name="new_group_vault_invite_notification_message" comment="%1$s = inviter email, %2$s = group name">%1$s möchte einen Tresor mit deiner Gruppe %2$s teilen.</string>
 </resources>

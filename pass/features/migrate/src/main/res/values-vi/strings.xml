@@ -13,6 +13,11 @@
   <string name="migrate_all_items_success_snackbar">Đã chuyển tất cả nội dung</string>
   <string name="migrate_all_items_error_snackbar">Lỗi khi di chuyển tất cả các mục của két sắt</string>
   <string name="migrate_init_error_snackbar">Không thể chuẩn bị màn hình chuyển</string>
+  <string name="migrate_folder_confirm_title_bottom_sheet">Move folder to the following vault?</string>
+  <string name="migrate_folder_to_folder_confirm_title_bottom_sheet">Move folder to the following folder?</string>
+  <string name="migrate_folder_success_snackbar">Folder moved</string>
+  <string name="migrate_folder_error_snackbar">Error moving the folder</string>
+  <string name="migrate_folder_already_same_parent_snackbar">Folder is already in this location</string>
   <string name="migrate_disabled_vault_reason_no_permission">Bạn không thể tạo nội dung trong két sắt này</string>
   <string name="migrate_disabled_vault_reason_same_vault">Bạn không thể di chuyển mục vào cùng két sắt</string>
   <plurals name="migrate_items_shared_warning_title">

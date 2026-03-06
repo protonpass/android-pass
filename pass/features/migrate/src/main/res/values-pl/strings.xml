@@ -16,6 +16,11 @@
   <string name="migrate_all_items_success_snackbar">Wszystkie elementy zostały przeniesione</string>
   <string name="migrate_all_items_error_snackbar">Wystąpił błąd podczas przenoszenia wszystkich elementów w sejfie</string>
   <string name="migrate_init_error_snackbar">Nie można przygotować ekranu migracji</string>
+  <string name="migrate_folder_confirm_title_bottom_sheet">Move folder to the following vault?</string>
+  <string name="migrate_folder_to_folder_confirm_title_bottom_sheet">Move folder to the following folder?</string>
+  <string name="migrate_folder_success_snackbar">Folder moved</string>
+  <string name="migrate_folder_error_snackbar">Error moving the folder</string>
+  <string name="migrate_folder_already_same_parent_snackbar">Folder is already in this location</string>
   <string name="migrate_disabled_vault_reason_no_permission">Nie możesz utworzyć elementów w tym sejfie</string>
   <string name="migrate_disabled_vault_reason_same_vault">Nie możesz przenieść elementu do tego samego sejfu</string>
   <plurals name="migrate_items_shared_warning_title">

@@ -36,6 +36,7 @@
   <string name="folder_tree_create_folder">Créer un dossier</string>
   <string name="bottomsheet_rename_folder">Modifier le nom</string>
   <string name="bottomsheet_create_sub_folder">Créer un sous-dossier</string>
+  <string name="bottomsheet_move_folder">Déplacer</string>
   <string name="bottomsheet_copy_item_note">Copier la note</string>
   <string name="bottomsheet_delete_permanently">Supprimer définitivement</string>
   <string name="bottomsheet_restore">Restaurer</string>

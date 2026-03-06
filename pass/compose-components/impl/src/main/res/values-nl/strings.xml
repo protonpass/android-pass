@@ -36,6 +36,7 @@
   <string name="folder_tree_create_folder">Map aanmaken</string>
   <string name="bottomsheet_rename_folder">Hernoemen</string>
   <string name="bottomsheet_create_sub_folder">Maak submap</string>
+  <string name="bottomsheet_move_folder">Verplaatsen</string>
   <string name="bottomsheet_copy_item_note">Notitie kopiëren</string>
   <string name="bottomsheet_delete_permanently">Permanent verwijderen</string>
   <string name="bottomsheet_restore">Herstel</string>

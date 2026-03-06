@@ -57,10 +57,12 @@
   <string name="home_notification_permission_banner_title">Erhalte wichtige Updates</string>
   <string name="home_notification_permission_banner_text">Aktiviere Push-Benachrichtigungen, um informiert zu werden, wenn andere einen Tresor mit dir teilen.</string>
   <string name="home_notification_permission_banner_settings">Berechtigung erteilen ›</string>
-  <string name="home_invite_banner_title">Mit dir geteilter Tresor</string>
-  <string name="home_invite_banner_subtitle">Du wurdest zu einem geteilten Tresor eingeladen. Tippe für Details.</string>
   <string name="home_item_invite_banner_title" comment="placeholder is replaced by an email address">%s möchte etwas mit dir teilen.</string>
-  <string name="home_item_invite_banner_subtitle">Für Details tippen.</string>
+  <string name="home_group_item_invite_banner_title" comment="%1$s = inviter email, %2$s = group name">%1$s möchte einen Eintrag mit deiner Gruppe %2$s teilen.</string>
+  <string name="home_group_invite_banner_title" comment="%1$s = inviter email, %2$s = group name">%1$s möchte einen Tresor mit deiner Gruppe %2$s teilen.</string>
+  <string name="home_item_invite_card_title">Einladung zu einem freigegebenen Eintrag</string>
+  <string name="home_vault_invite_card_title">Einladung zu einem freigegebenen Tresor</string>
+  <string name="home_vault_invite_banner_body" comment="placeholder is replaced by an email address">%s möchte einen Tresor mit dir teilen.</string>
   <!-- Common bottomsheet -->
   <string name="bottomsheet_copy_password">Passwort kopieren</string>
   <string name="bottomsheet_copy_username">Benutzername kopieren</string>

@@ -57,10 +57,12 @@
   <string name="home_notification_permission_banner_title">Få viktige oppdateringer</string>
   <string name="home_notification_permission_banner_text">Aktiver push-varsler for å bli informert når andre deler et hvelv med deg.</string>
   <string name="home_notification_permission_banner_settings">Aktiver tillatelse ›</string>
-  <string name="home_invite_banner_title">Hvelv delt med deg</string>
-  <string name="home_invite_banner_subtitle">Du er invitert til et delt hvelv. Trykk for detaljer.</string>
   <string name="home_item_invite_banner_title" comment="placeholder is replaced by an email address">%s ønsker å dele et element med deg.</string>
-  <string name="home_item_invite_banner_subtitle">Trykk for detaljer.</string>
+  <string name="home_group_item_invite_banner_title" comment="%1$s = inviter email, %2$s = group name">%1$s ønsker å dele et element med gruppen din %2$s.</string>
+  <string name="home_group_invite_banner_title" comment="%1$s = inviter email, %2$s = group name">%1$s ønsker å dele et hvelv med gruppen din %2$s.</string>
+  <string name="home_item_invite_card_title">Delt elementinvitasjon</string>
+  <string name="home_vault_invite_card_title">Delt hvelvinvitasjon</string>
+  <string name="home_vault_invite_banner_body" comment="placeholder is replaced by an email address">%s ønsker å dele et hvelv med deg.</string>
   <!-- Common bottomsheet -->
   <string name="bottomsheet_copy_password">Kopier passord</string>
   <string name="bottomsheet_copy_username">Kopier brukernavn</string>

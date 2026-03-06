@@ -36,6 +36,7 @@
   <string name="folder_tree_create_folder">Crear carpeta</string>
   <string name="bottomsheet_rename_folder">Renombrar</string>
   <string name="bottomsheet_create_sub_folder">Crear subcarpeta</string>
+  <string name="bottomsheet_move_folder">Mover</string>
   <string name="bottomsheet_copy_item_note">Copiar la nota</string>
   <string name="bottomsheet_delete_permanently">Eliminar permanentemente</string>
   <string name="bottomsheet_restore">Restaurar</string>

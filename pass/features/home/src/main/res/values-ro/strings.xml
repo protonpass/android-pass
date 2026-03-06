@@ -58,10 +58,12 @@
   <string name="home_notification_permission_banner_title">Obțineți actualizări importante</string>
   <string name="home_notification_permission_banner_text">Activați notificările instante pentru a vă informa când alții vă partajează un seif.</string>
   <string name="home_notification_permission_banner_settings">Activare permisiune</string>
-  <string name="home_invite_banner_title">Seif partajat cu dvs.</string>
-  <string name="home_invite_banner_subtitle">Ați primit o invitație la un seif partajat. Atingeți pentru detalii.</string>
   <string name="home_item_invite_banner_title" comment="placeholder is replaced by an email address">%s doreşte să vă partajeze un articol.</string>
-  <string name="home_item_invite_banner_subtitle">Apăsați pentru detalii.</string>
+  <string name="home_group_item_invite_banner_title" comment="%1$s = inviter email, %2$s = group name">%1$s dorește să partajeze un articol cu grupul %2$s de care aparțineți.</string>
+  <string name="home_group_invite_banner_title" comment="%1$s = inviter email, %2$s = group name">%1$s dorește să partajeze un seif cu grupul %2$s de care aparțineți.</string>
+  <string name="home_item_invite_card_title">Invitație articol partajat</string>
+  <string name="home_vault_invite_card_title">Invitație seif partajat</string>
+  <string name="home_vault_invite_banner_body" comment="placeholder is replaced by an email address">%s dorește să vă partajeze un seif.</string>
   <!-- Common bottomsheet -->
   <string name="bottomsheet_copy_password">Copiere parolă</string>
   <string name="bottomsheet_copy_username">Copiere nume utilizator</string>

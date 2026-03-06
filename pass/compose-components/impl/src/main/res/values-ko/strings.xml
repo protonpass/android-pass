@@ -35,6 +35,7 @@
   <string name="folder_tree_create_folder">폴더 만들기</string>
   <string name="bottomsheet_rename_folder">이름 바꾸기</string>
   <string name="bottomsheet_create_sub_folder">하위 폴더 만들기</string>
+  <string name="bottomsheet_move_folder">Move</string>
   <string name="bottomsheet_copy_item_note">메모 복사</string>
   <string name="bottomsheet_delete_permanently">영구적으로 삭제</string>
   <string name="bottomsheet_restore">복원</string>

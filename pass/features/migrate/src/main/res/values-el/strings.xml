@@ -14,6 +14,11 @@
   <string name="migrate_all_items_success_snackbar">Όλα τα στοιχεία που μετακινήθηκαν</string>
   <string name="migrate_all_items_error_snackbar">Σφάλμα κατά τη μετακίνηση όλων των στοιχείων κρύπτης</string>
   <string name="migrate_init_error_snackbar">Δεν ήταν δυνατή η προετοιμασία της οθόνης μετεγκατάστασης</string>
+  <string name="migrate_folder_confirm_title_bottom_sheet">Μετακίνηση φακέλου στην ακόλουθη κρύπτη;</string>
+  <string name="migrate_folder_to_folder_confirm_title_bottom_sheet">Μετακίνηση φακέλου στο ακόλουθο φάκελο;</string>
+  <string name="migrate_folder_success_snackbar">Ο φάκελος μετακινήθηκε</string>
+  <string name="migrate_folder_error_snackbar">Σφάλμα κατά τη μετακίνηση του φακέλου</string>
+  <string name="migrate_folder_already_same_parent_snackbar">Ο φάκελος βρίσκεται ήδη σε αυτήν την τοποθεσία</string>
   <string name="migrate_disabled_vault_reason_no_permission">Δεν μπορείτε να δημιουργήσετε στοιχεία σε αυτήν την κρύπτη</string>
   <string name="migrate_disabled_vault_reason_same_vault">Δεν μπορείτε να μετακινήσετε ένα στοιχείο στην ίδια κρύπτη</string>
   <plurals name="migrate_items_shared_warning_title">

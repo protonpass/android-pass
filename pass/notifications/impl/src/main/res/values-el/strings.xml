@@ -8,4 +8,8 @@
   <string name="new_item_invite_notification_message" comment="the placeholder will be replaced by an email address">Ο %s θέλει να μοιραστεί μαζί σας ένα αντικείμενο.</string>
   <string name="new_vault_invite_notification_title">Ελήφθη πρόσκληση νέας κρύπτης</string>
   <string name="new_vault_invite_notification_message" comment="the placeholder will be replaced by an email address">Ο %s θέλει να μοιραστεί μαζί σας μια κοινόχρηστη κρύπτη.</string>
+  <string name="new_group_item_invite_notification_title">Ελήφθη πρόσκληση νέου στοιχείου ομάδας</string>
+  <string name="new_group_item_invite_notification_message" comment="%1$s = inviter email, %2$s = group name">Ο %1$s θέλει να μοιραστεί ένα στοιχείο με την ομάδα σας %2$s.</string>
+  <string name="new_group_vault_invite_notification_title">Ελήφθη πρόσκληση νέας κοινόχρηστης ομάδας κρυπτών</string>
+  <string name="new_group_vault_invite_notification_message" comment="%1$s = inviter email, %2$s = group name">Ο %1$s θέλει να μοιραστεί μία κρύπτη με την ομάδα σας %2$s.</string>
 </resources>

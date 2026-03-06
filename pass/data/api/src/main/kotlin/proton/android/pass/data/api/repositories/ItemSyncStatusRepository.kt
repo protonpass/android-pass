@@ -35,7 +35,7 @@ sealed interface ItemSyncStatus {
     data class SyncSuccess(
         val hasInactiveShares: Boolean,
         val hasInvalidGroupShares: Boolean,
-        val hasInvalidAddressShares: Boolean = false
+        val hasInvalidAddressShares: Boolean
     ) : ItemSyncStatus
 
     sealed interface SyncError : ItemSyncStatus {

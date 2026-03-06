@@ -30,17 +30,21 @@ import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.CircularProgressIndicator
+import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import me.proton.core.compose.component.ProtonAlertDialog
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.defaultNorm
 import me.proton.core.compose.theme.headlineNorm
+import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.features.sync.R
 import proton.android.pass.features.sync.presentation.SyncDialogState
@@ -119,6 +123,7 @@ internal fun SyncDialogContent(
                         }
                         AnimatedVisibility(visible = hasSyncSucceeded && hasInvalidAddressShares) {
                             Text(
+                                modifier = Modifier.fillMaxWidth(),
                                 text = stringResource(R.string.sync_dialog_invalid_address_shares_warning),
                                 style = ProtonTheme.typography.defaultNorm,
                                 color = ProtonTheme.colors.notificationWarning
@@ -126,6 +131,7 @@ internal fun SyncDialogContent(
                         }
                         AnimatedVisibility(visible = hasSyncSucceeded && hasInvalidGroupShares) {
                             Text(
+                                modifier = Modifier.fillMaxWidth(),
                                 text = stringResource(R.string.sync_dialog_invalid_group_shares_warning),
                                 style = ProtonTheme.typography.defaultNorm,
                                 color = ProtonTheme.colors.notificationWarning
@@ -169,3 +175,18 @@ internal fun SyncDialogContent(
 }
 
 private const val ALERT_DIALOG_HEIGHT_FRACTION = 0.9f
+
+@Preview
+@Composable
+internal fun SyncDialogContentPreview(
+    @PreviewParameter(SyncDialogContentPreviewProvider::class) state: SyncDialogState
+) {
+    PassTheme {
+        Surface {
+            SyncDialogContent(
+                state = state,
+                onUiEvent = {}
+            )
+        }
+    }
+}

@@ -123,7 +123,7 @@ class HomeScreenTest {
     lateinit var observeItemCount: FakeObserveItemCount
 
     @Inject
-    lateinit var observeDeliverableMinimizedPromoInAppMessage: FakeObserveDeliverableMinimizedPromoInAppMessage
+    lateinit var observeDeliverableMinimizedPromoMessage: FakeObserveDeliverableMinimizedPromoInAppMessage
 
     @Before
     fun setup() {
@@ -280,7 +280,8 @@ class HomeScreenTest {
 
         itemSyncStatusRepository.tryEmit(ItemSyncStatus.SyncSuccess(
             hasInactiveShares = false,
-            hasInvalidGroupShares = false
+            hasInvalidGroupShares = false,
+            hasInvalidAddressShares = false
         ))
         observeAllShares.sendResult(Result.success(vaultShares))
         observeEncryptedItems.emitValue(items)
@@ -289,7 +290,7 @@ class HomeScreenTest {
         observeHasShares.emit(hasShares = true)
         observeSharesItemsCount.emitValue(emptyMap())
         observeItemCount.sendResult(Result.success(ItemCountSummary.Initial))
-        observeDeliverableMinimizedPromoInAppMessage.emitPromoMessage(null)
+        observeDeliverableMinimizedPromoMessage.emitPromoMessage(null)
     }
 
     @Module

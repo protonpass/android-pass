@@ -1710,46 +1710,15 @@ class ItemRepositoryImpl @Inject constructor(
         share: Share,
         shareKeys: List<ShareKey>,
         folderKeysMap: Map<FolderId, FolderKey>
-    ): List<ItemEntity> {
-        val failedItemIds = mutableListOf<String>()
-        val items = encryptionContextProvider.withEncryptionContextSuspendable {
-            pendingRevisions.mapNotNull { revision ->
-                safeRunCatching {
-                    val folderKey: FolderKey? = revision.folderId?.let { folderId ->
-                        folderKeysMap[FolderId(folderId)]
-                            ?: throw IllegalStateException("FolderKey not found in the database")
-                    }
-                    itemResponseToEntity(
-                        userAddress = userAddress,
-                        itemRevision = revision,
-                        share = share,
-                        shareKeys = shareKeys,
-                        folderKey = folderKey,
-                        encryptionContext = this
-                    )
-                }.onFailure { error ->
-                    failedItemIds += revision.itemId
-                    PassLogger.w(
-                        TAG,
-                        "applyPendingEvent failed for item " +
-                            "(shareId: ${shareId.id}, itemId: ${revision.itemId}, " +
-                            "revision: ${revision.revision}, state: ${revision.state}, " +
-                            "folderId: ${revision.folderId})"
-                    )
-                    PassLogger.w(TAG, error)
-                }.getOrNull()
-            }
-        }
-        if (failedItemIds.isNotEmpty()) {
-            val failedPreview = failedItemIds.joinToString(separator = ",", limit = 5, truncated = "...")
-            PassLogger.w(
-                TAG,
-                "applyPendingEvent skipped ${failedItemIds.size}/${pendingRevisions.size} items " +
-                    "for shareId=${shareId.id} (itemIds=$failedPreview)"
-            )
-        }
-        return items
-    }
+    ): List<ItemEntity> = decryptRevisions(
+        shareId = shareId,
+        revisions = pendingRevisions,
+        address = userAddress,
+        share = share,
+        shareKeys = shareKeys,
+        folderKeysMap = folderKeysMap,
+        callerTag = "applyPendingEvent"
+    ).first
 
     private suspend fun decryptItemRevisions(
         shareId: ShareId,
@@ -1759,8 +1728,29 @@ class ItemRepositoryImpl @Inject constructor(
         shareKeys: List<ShareKey>,
         folderKeysMap: Map<FolderId, FolderKey>
     ): Pair<List<ItemEntity>, Boolean> {
+        val (items, failedItemIds) = decryptRevisions(
+            shareId = shareId,
+            revisions = revisions,
+            address = address,
+            share = share,
+            shareKeys = shareKeys,
+            folderKeysMap = folderKeysMap,
+            callerTag = "setShareItems"
+        )
+        return items to failedItemIds.isNotEmpty()
+    }
+
+    private suspend fun decryptRevisions(
+        shareId: ShareId,
+        revisions: List<ItemRevision>,
+        address: UserAddress,
+        share: Share,
+        shareKeys: List<ShareKey>,
+        folderKeysMap: Map<FolderId, FolderKey>,
+        callerTag: String
+    ): Pair<List<ItemEntity>, List<ItemId>> {
         val failedItemIds = mutableListOf<ItemId>()
-        val itemsToUpsert = encryptionContextProvider.withEncryptionContextSuspendable {
+        val items = encryptionContextProvider.withEncryptionContextSuspendable {
             revisions.mapNotNull { revision ->
                 safeRunCatching {
                     val folderKey: FolderKey? = revision.folderId?.let { folderId ->
@@ -1779,7 +1769,7 @@ class ItemRepositoryImpl @Inject constructor(
                     failedItemIds += ItemId(revision.itemId)
                     PassLogger.w(
                         TAG,
-                        "setShareItems decrypt failed " +
+                        "$callerTag decrypt failed " +
                             "(shareId: ${shareId.id}, itemId: ${revision.itemId}, " +
                             "revision: ${revision.revision}, state: ${revision.state}, " +
                             "folderId: ${revision.folderId})"
@@ -1792,11 +1782,11 @@ class ItemRepositoryImpl @Inject constructor(
             val failedPreview = failedItemIds.joinToString(separator = ",", limit = 5, truncated = "...")
             PassLogger.w(
                 TAG,
-                "setShareItems skipped ${failedItemIds.size}/${revisions.size} items " +
+                "$callerTag skipped ${failedItemIds.size}/${revisions.size} items " +
                     "for shareId=${shareId.id} (itemIds=$failedPreview)"
             )
         }
-        return itemsToUpsert to failedItemIds.isNotEmpty()
+        return items to failedItemIds
     }
 
     private data class SetShareItemsPlan(

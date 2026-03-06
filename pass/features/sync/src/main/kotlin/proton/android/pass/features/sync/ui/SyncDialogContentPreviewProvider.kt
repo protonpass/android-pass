@@ -46,17 +46,48 @@ internal class SyncDialogContentPreviewProvider : PreviewParameterProvider<SyncD
                         ),
                         downloadedItemsMap = emptyMap(),
                         insertedItems = None,
-                        vaultsLoadingResult = LoadingResult.Success(
-                            listOf(
-                                previewVault("share-1", "Personal"),
-                                previewVault("share-2", "Work")
-                            )
-                        )
+                        vaultsLoadingResult = LoadingResult.Success(vaults)
                     )
                 )
             }
         }
+
+        yield(
+            SyncDialogState(
+                itemSyncStatus = ItemSyncStatus.SyncError.DownloadError(),
+                downloadedItemsMap = emptyMap(),
+                insertedItems = None,
+                vaultsLoadingResult = LoadingResult.Success(vaults)
+            )
+        )
+
+        yield(
+            SyncDialogState(
+                itemSyncStatus = ItemSyncStatus.SyncError.DownloadError(
+                    failedShareIds = setOf(ShareId("share-2"))
+                ),
+                downloadedItemsMap = emptyMap(),
+                insertedItems = None,
+                vaultsLoadingResult = LoadingResult.Success(vaults)
+            )
+        )
+
+        yield(
+            SyncDialogState(
+                itemSyncStatus = ItemSyncStatus.SyncError.CryptoError(
+                    failedShareIds = setOf(ShareId("share-2"))
+                ),
+                downloadedItemsMap = emptyMap(),
+                insertedItems = None,
+                vaultsLoadingResult = LoadingResult.Success(vaults)
+            )
+        )
     }
+
+    private val vaults = listOf(
+        previewVault("share-1", "Personal"),
+        previewVault("share-2", "Work")
+    )
 
     private fun previewVault(id: String, name: String) = Vault(
         userId = UserId("user-id"),

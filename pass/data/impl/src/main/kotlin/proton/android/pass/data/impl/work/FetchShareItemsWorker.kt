@@ -100,11 +100,11 @@ open class FetchShareItemsWorker @AssistedInject constructor(
             }
         }.fold(
             onSuccess = { (itemCount, hasCryptoFailure) ->
+                fetchShareItemsStatusRepository.emit(shareId, FetchShareItemsStatus.Done(itemCount))
                 if (hasCryptoFailure) {
                     PassLogger.w(TAG, "$TAG finished with permanent decrypt failures for shareId=${shareId.id}")
                     Result.failure()
                 } else {
-                    fetchShareItemsStatusRepository.emit(shareId, FetchShareItemsStatus.Done(itemCount))
                     PassLogger.i(TAG, "$TAG finished successfully")
                     Result.success()
                 }

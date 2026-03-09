@@ -1,0 +1,5 @@
+## 1.37.3 (2026-03-09)
+
+### Fixes :bug:
+
+- Bug fixes and improvements.

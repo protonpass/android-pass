@@ -24,6 +24,8 @@ import proton.android.pass.common.api.safeRunCatching
 import proton.android.pass.data.api.repositories.ItemRepository
 import proton.android.pass.data.api.repositories.ItemRevision
 import proton.android.pass.data.api.repositories.ItemSyncStatus
+import proton.android.pass.data.api.repositories.ItemSyncStatus.SyncError.CryptoError
+import proton.android.pass.data.api.repositories.ItemSyncStatus.SyncError.DownloadError
 import proton.android.pass.data.api.repositories.ItemSyncStatusRepository
 import proton.android.pass.data.api.repositories.SyncMode
 import proton.android.pass.data.api.repositories.VaultProgress
@@ -129,12 +131,12 @@ class ForceSyncItemsImpl @Inject constructor(
 
             downloadFailedShareIds.isEmpty() -> {
                 // All downloads succeeded; failures are crypto-only (permanent, non-retriable)
-                itemSyncStatusRepository.emit(ItemSyncStatus.SyncError.CryptoError(failedShareIds = failedShareIds))
+                itemSyncStatusRepository.emit(CryptoError(failedShareIds = failedShareIds))
                 ForceSyncResult.PartialSuccess
             }
 
             else -> {
-                itemSyncStatusRepository.emit(ItemSyncStatus.SyncError.DownloadError(failedShareIds = failedShareIds))
+                itemSyncStatusRepository.emit(DownloadError(failedShareIds = downloadFailedShareIds))
                 ForceSyncResult.Error
             }
         }

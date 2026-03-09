@@ -40,10 +40,10 @@ class BiometricEnrollmentGuard @Inject constructor() {
     @Suppress("TooGenericExceptionCaught")
     fun hasEnrollmentChanged(): Boolean = try {
         runOrRetryOnce {
-            val key = getOrCreateKey()
             val cipher = Cipher.getInstance(CIPHER_TRANSFORMATION)
             // Keystore is known to be sensitive to parallel operations.
             synchronized(lock) {
+                val key = getOrCreateKey()
                 cipher.init(Cipher.ENCRYPT_MODE, key)
             }
         }

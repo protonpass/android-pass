@@ -39,7 +39,7 @@ class BiometricEnrollmentGuard @Inject constructor() {
 
     @Suppress("TooGenericExceptionCaught")
     fun hasEnrollmentChanged(): Boolean = try {
-        runOrRetryOnce(LogTag.ENROLLMENT_CHECK_RETRY) {
+        runOrRetryOnce {
             val key = getOrCreateKey()
             val cipher = Cipher.getInstance(CIPHER_TRANSFORMATION)
             // Keystore is known to be sensitive to parallel operations.
@@ -116,7 +116,7 @@ class BiometricEnrollmentGuard @Inject constructor() {
         }
     }
 
-    private fun <T> runOrRetryOnce(logTag: String, block: () -> T): T = try {
+    private fun <T> runOrRetryOnce(block: () -> T): T = try {
         block()
     } catch (error: KeyPermanentlyInvalidatedException) {
         throw error
@@ -125,17 +125,13 @@ class BiometricEnrollmentGuard @Inject constructor() {
     } catch (error: UserNotAuthenticatedException) {
         throw error
     } catch (error: ProviderException) {
-        logAndRetry(logTag, error, block)
+        logAndRetry(error, block)
     } catch (error: GeneralSecurityException) {
-        logAndRetry(logTag, error, block)
+        logAndRetry(error, block)
     }
 
-    private fun <T> logAndRetry(
-        logTag: String,
-        error: Throwable,
-        block: () -> T
-    ): T {
-        PassLogger.w(TAG, "$logTag: retrying after transient keystore failure")
+    private fun <T> logAndRetry(error: Throwable, block: () -> T): T {
+        PassLogger.w(TAG, "${LogTag.ENROLLMENT_CHECK_RETRY}: retrying after transient keystore failure")
         PassLogger.w(TAG, error)
         return block()
     }
@@ -145,7 +141,7 @@ class BiometricEnrollmentGuard @Inject constructor() {
         private const val KEY_ALIAS = "proton_pass_biometric_enrollment_guard"
         private const val ANDROID_KEYSTORE = "AndroidKeyStore"
         private const val CIPHER_TRANSFORMATION = "AES/GCM/NoPadding"
-        private val lock = Object()
+        private val lock = Any()
     }
 
     private object LogTag {

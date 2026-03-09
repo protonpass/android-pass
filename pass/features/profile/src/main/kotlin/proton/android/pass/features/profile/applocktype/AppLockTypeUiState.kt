@@ -30,6 +30,7 @@ sealed interface AppLockTypeEvent {
 data class AppLockTypeUiState(
     val items: List<AppLockTypePreference>,
     val selected: AppLockTypePreference,
+    val isPasswordOption: Boolean,
     val isForceLockMandatory: Boolean,
     val event: AppLockTypeEvent
 ) {
@@ -37,6 +38,7 @@ data class AppLockTypeUiState(
         fun default(preferences: List<AppLockTypePreference>) = AppLockTypeUiState(
             items = preferences,
             selected = AppLockTypePreference.None,
+            isPasswordOption = false,
             isForceLockMandatory = false,
             event = AppLockTypeEvent.Unknown
         )

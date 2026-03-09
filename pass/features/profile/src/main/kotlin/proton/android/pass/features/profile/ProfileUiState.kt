@@ -126,6 +126,8 @@ internal sealed interface BiometricSection : AppLockSectionState {
 
 internal sealed interface PinSection : AppLockSectionState
 
+internal sealed interface PasswordSection : AppLockSectionState
+
 internal sealed interface UserAppLockSectionState {
 
     @Stable
@@ -139,6 +141,12 @@ internal sealed interface UserAppLockSectionState {
     value class Pin(
         val appLockTimePreference: AppLockTimePreference
     ) : UserAppLockSectionState, PinSection
+
+    @JvmInline
+    @Stable
+    value class Password(
+        val appLockTimePreference: AppLockTimePreference
+    ) : UserAppLockSectionState, PasswordSection
 
     data object None : UserAppLockSectionState, AppLockSectionState
 
@@ -158,7 +166,7 @@ internal sealed interface EnforcedAppLockSectionState {
 
     @JvmInline
     @Stable
-    value class Password(val seconds: Int) : EnforcedAppLockSectionState, AppLockSectionState
+    value class Password(val seconds: Int) : EnforcedAppLockSectionState, PasswordSection
 
 }
 

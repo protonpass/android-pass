@@ -87,6 +87,7 @@ import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.android.pass.preferences.AppLockState
 import proton.android.pass.preferences.AppLockTypePreference
+import proton.android.pass.preferences.HasAuthenticated
 import proton.android.pass.preferences.InternalSettingsRepository
 import proton.android.pass.preferences.UserPreferencesRepository
 import javax.inject.Inject
@@ -122,16 +123,23 @@ class AuthViewModel @Inject constructor(
 
     private val eventFlow: MutableStateFlow<Option<AuthEvent>> = MutableStateFlow(None)
     private val formContentFlow: MutableStateFlow<FormContents> = MutableStateFlow(FormContents())
+    private val canUseBiometricAuthMethodFlow: MutableStateFlow<Boolean> = MutableStateFlow(false)
 
-    private val authMethodFlow: Flow<Option<AuthMethod>> = preferenceRepository
-        .getAppLockTypePreference()
-        .map {
-            when (it) {
-                AppLockTypePreference.None -> None
-                AppLockTypePreference.Biometrics -> AuthMethod.Fingerprint.some()
-                AppLockTypePreference.Pin -> AuthMethod.Pin.some()
+    private val authMethodFlow: Flow<Option<AuthMethod>> = combine(
+        preferenceRepository.getAppLockTypePreference(),
+        canUseBiometricAuthMethodFlow
+    ) { lockType, canUseBiometricAuthMethod ->
+        when (lockType) {
+            AppLockTypePreference.None -> None
+            AppLockTypePreference.Biometrics -> if (canUseBiometricAuthMethod) {
+                AuthMethod.Fingerprint.some()
+            } else {
+                None
             }
+
+            AppLockTypePreference.Pin -> AuthMethod.Pin.some()
         }
+    }
         .distinctUntilChanged()
 
     private val accountSwitcherFlow: Flow<AccountSwitcherState> =
@@ -493,7 +501,11 @@ class AuthViewModel @Inject constructor(
         if (canUseAlternative) {
             val newAuthEvent = when (preferenceRepository.getAppLockTypePreference().first()) {
                 AppLockTypePreference.None -> AuthEvent.Unknown
-                AppLockTypePreference.Biometrics -> AuthEvent.EnterBiometrics
+                AppLockTypePreference.Biometrics -> {
+                    val canAuthenticate = biometryManager.getBiometryStatus() == BiometryStatus.CanAuthenticate
+                    if (canAuthenticate) AuthEvent.EnterBiometrics else AuthEvent.Unknown
+                }
+
                 AppLockTypePreference.Pin -> AuthEvent.EnterPin(origin)
             }
             updateAuthEventFlow(newAuthEvent)
@@ -506,8 +518,15 @@ class AuthViewModel @Inject constructor(
 
     internal fun onBiometricsRequired(contextHolder: ClassHolder<Context>) = viewModelScope.launch {
         when (biometryManager.getBiometryStatus()) {
-            BiometryStatus.NotAvailable,
-            BiometryStatus.NotEnrolled -> {}
+            BiometryStatus.NotAvailable -> {
+                PassLogger.w(TAG, "Biometry not available, disabling biometric auth method")
+                canUseBiometricAuthMethodFlow.update { false }
+            }
+
+            BiometryStatus.NotEnrolled -> {
+                PassLogger.w(TAG, "Biometry not enrolled, disabling biometric auth method")
+                canUseBiometricAuthMethodFlow.update { false }
+            }
 
             BiometryStatus.CanAuthenticate -> {
                 val biometricLockState = preferenceRepository.getAppLockState().first()
@@ -526,6 +545,7 @@ class AuthViewModel @Inject constructor(
                 PassLogger.i(TAG, "Biometry result: $result")
                 when (result) {
                     BiometryResult.Success -> {
+                        canUseBiometricAuthMethodFlow.update { true }
                         storeAuthSuccessful(UnlockMethod.PinOrBiometrics)
                         formContentFlow.update { it.copy(password = "", isPasswordVisible = false) }
                         updateAuthEventFlow(AuthEvent.Success(origin))
@@ -537,8 +557,10 @@ class AuthViewModel @Inject constructor(
                             BiometryAuthError.Canceled,
                             BiometryAuthError.UserCanceled,
                             BiometryAuthError.NegativeButton -> {
+                                canUseBiometricAuthMethodFlow.update { true }
                             }
 
+                            BiometryAuthError.EnrollmentChanged -> onBiometricEnrollmentChanged()
                             else -> updateAuthEventFlow(AuthEvent.Failed)
                         }
                     }
@@ -551,6 +573,26 @@ class AuthViewModel @Inject constructor(
                     }
                 }
             }
+    }
+
+    private suspend fun onBiometricEnrollmentChanged() {
+        preferenceRepository.setAppLockState(AppLockState.Enabled)
+            .onFailure {
+                PassLogger.w(TAG, "Failed to set AppLockState after enrollment change")
+                PassLogger.w(TAG, it)
+            }
+        preferenceRepository.setAppLockTypePreference(AppLockTypePreference.None)
+            .onFailure {
+                PassLogger.w(TAG, "Failed to set AppLockTypePreference after enrollment change")
+                PassLogger.w(TAG, it)
+            }
+        preferenceRepository.setHasAuthenticated(HasAuthenticated.NotAuthenticated)
+            .onFailure {
+                PassLogger.w(TAG, "Failed to set HasAuthenticated after enrollment change")
+                PassLogger.w(TAG, it)
+            }
+        canUseBiometricAuthMethodFlow.update { false }
+        snackbarDispatcher(AuthSnackbarMessage.BiometricEnrollmentChanged)
     }
 
     private fun updateAuthEventFlow(newAuthEvent: AuthEvent) {

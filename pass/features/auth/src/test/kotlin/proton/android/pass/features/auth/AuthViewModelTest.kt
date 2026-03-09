@@ -21,6 +21,7 @@ package proton.android.pass.features.auth
 import app.cash.turbine.test
 import com.google.common.truth.Truth.assertThat
 import kotlinx.collections.immutable.persistentMapOf
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
 import me.proton.core.domain.entity.UserId
 import org.junit.Before
@@ -55,6 +56,7 @@ import proton.android.pass.preferences.AppLockState
 import proton.android.pass.preferences.AppLockTypePreference
 import proton.android.pass.preferences.FakeInternalSettingsRepository
 import proton.android.pass.preferences.FakePreferenceRepository
+import proton.android.pass.preferences.HasAuthenticated
 import proton.android.pass.test.MainDispatcherRule
 
 internal class AuthViewModelTest {
@@ -106,7 +108,7 @@ internal class AuthViewModelTest {
             event = None,
             content = AuthStateContent.default(USER_EMAIL.some()).copy(
                 userId = UserId(FakeAccountManager.USER_ID).some(),
-                authMethod = Some(AuthMethod.Fingerprint),
+                authMethod = None,
                 showExtraPassword = LoadingResult.Success(false),
                 showPinOrBiometry = true,
                 accountSwitcherState = AccountSwitcherState(
@@ -163,27 +165,34 @@ internal class AuthViewModelTest {
         }
 
     @Test
-    internal fun `GIVEN biometrics are not available WHEN requesting biometrics THEN emits no event`() = runTest {
-        biometryManager.setBiometryStatus(BiometryStatus.NotAvailable)
+    internal fun `GIVEN biometrics NotAvailable WHEN requesting biometrics THEN no event and authMethod is None`() =
+        runTest {
+            preferenceRepository.setAppLockTypePreference(AppLockTypePreference.Biometrics)
+            biometryManager.setBiometryStatus(BiometryStatus.NotAvailable)
 
-        viewModel.onBiometricsRequired(ClassHolder(None))
+            viewModel.onBiometricsRequired(ClassHolder(None))
 
-        viewModel.state.test {
-            assertThat(awaitItem().event).isEqualTo(None)
+            viewModel.state.test {
+                val state = awaitItem()
+                assertThat(state.event).isEqualTo(None)
+                assertThat(state.content.authMethod).isEqualTo(None)
+            }
         }
-    }
 
     @Test
-    internal fun `GIVEN biometrics are not enrolled WHEN requesting biometrics THEN emits no event`() = runTest {
-        biometryManager.setBiometryStatus(BiometryStatus.CanAuthenticate)
-        biometryManager.setBiometryStatus(BiometryStatus.NotEnrolled)
+    internal fun `GIVEN biometrics NotEnrolled WHEN requesting biometrics THEN no event and authMethod is None`() =
+        runTest {
+            preferenceRepository.setAppLockTypePreference(AppLockTypePreference.Biometrics)
+            biometryManager.setBiometryStatus(BiometryStatus.NotEnrolled)
 
-        viewModel.onBiometricsRequired(ClassHolder(None))
+            viewModel.onBiometricsRequired(ClassHolder(None))
 
-        viewModel.state.test {
-            assertThat(awaitItem().event).isEqualTo(None)
+            viewModel.state.test {
+                val state = awaitItem()
+                assertThat(state.event).isEqualTo(None)
+                assertThat(state.content.authMethod).isEqualTo(None)
+            }
         }
-    }
 
     @Test
     internal fun `GIVEN biometrics canceled error WHEN requesting biometrics THEN emits initial state`() = runTest {
@@ -243,6 +252,26 @@ internal class AuthViewModelTest {
             assertThat(awaitItem().event).isEqualTo(AuthEvent.Failed.some())
         }
     }
+
+    @Test
+    internal fun `GIVEN enrollment changed error WHEN requesting biometrics THEN fall back to password auth`() =
+        runTest {
+            preferenceRepository.setAppLockState(AppLockState.Enabled)
+            preferenceRepository.setAppLockTypePreference(AppLockTypePreference.Biometrics)
+            biometryManager.setBiometryStatus(BiometryStatus.CanAuthenticate)
+            biometryManager.emitResult(BiometryResult.Error(BiometryAuthError.EnrollmentChanged))
+
+            viewModel.onBiometricsRequired(ClassHolder(None))
+
+            viewModel.state.test {
+                val state = awaitItem()
+                assertThat(state.event).isEqualTo(None)
+                assertThat(state.content.authMethod).isEqualTo(None)
+            }
+            assertThat(preferenceRepository.getAppLockState().first()).isEqualTo(AppLockState.Enabled)
+            assertThat(preferenceRepository.getAppLockTypePreference().first()).isEqualTo(AppLockTypePreference.None)
+            assertThat(preferenceRepository.getHasAuthenticated().first()).isEqualTo(HasAuthenticated.NotAuthenticated)
+        }
 
     @Test
     internal fun `WHEN sign out is clicked THEN emits SignOut event`() = runTest {
@@ -366,6 +395,32 @@ internal class AuthViewModelTest {
 
             viewModel.state.test {
                 assertThat(awaitItem().event).isEqualTo(expectedAuthEvent)
+            }
+        }
+
+    @Test
+    internal fun `GIVEN Biometrics lock type and biometry NotAvailable WHEN auth method THEN emit Unknown event`() =
+        runTest {
+            preferenceRepository.setAppLockTypePreference(AppLockTypePreference.Biometrics)
+            biometryManager.setBiometryStatus(BiometryStatus.NotAvailable)
+
+            viewModel.onAuthMethodRequested()
+
+            viewModel.state.test {
+                assertThat(awaitItem().event).isEqualTo(AuthEvent.Unknown.some())
+            }
+        }
+
+    @Test
+    internal fun `GIVEN Biometrics lock type and biometry NotEnrolled WHEN auth method THEN emit Unknown event`() =
+        runTest {
+            preferenceRepository.setAppLockTypePreference(AppLockTypePreference.Biometrics)
+            biometryManager.setBiometryStatus(BiometryStatus.NotEnrolled)
+
+            viewModel.onAuthMethodRequested()
+
+            viewModel.state.test {
+                assertThat(awaitItem().event).isEqualTo(AuthEvent.Unknown.some())
             }
         }
 

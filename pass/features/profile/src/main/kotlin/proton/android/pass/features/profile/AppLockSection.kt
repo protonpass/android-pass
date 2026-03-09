@@ -41,7 +41,6 @@ import proton.android.pass.composecomponents.impl.form.PassDivider
 import proton.android.pass.composecomponents.impl.setting.ColorSettingOption
 import proton.android.pass.composecomponents.impl.setting.SettingOption
 import proton.android.pass.composecomponents.impl.setting.SettingToggle
-import proton.android.pass.features.profile.EnforcedAppLockSectionState.Password
 import proton.android.pass.preferences.AppLockTimePreference
 import proton.android.pass.preferences.value
 import me.proton.core.presentation.compose.R as CoreR
@@ -76,7 +75,7 @@ internal fun AppLockSection(
                 is UserAppLockSectionState.Pin, is EnforcedAppLockSectionState.Pin ->
                     stringResource(id = R.string.app_lock_config_pin_code)
 
-                is Password ->
+                is PasswordSection ->
                     stringResource(id = R.string.app_lock_config_password)
 
                 else -> ""
@@ -88,13 +87,30 @@ internal fun AppLockSection(
                 onClick = { onEvent(ProfileUiEvent.OnAppLockTypeClick) }
             )
 
-            AnimatedVisibility(visible = appLockSectionState is Password) {
-                if (appLockSectionState is Password) {
-                    PassDivider()
-                    SettingOption(
-                        label = stringResource(R.string.app_lock_config_app_lock_time),
-                        text = secondsToText(seconds = appLockSectionState.seconds)
-                    )
+            AnimatedVisibility(
+                visible = appLockSectionState is PasswordSection
+            ) {
+                Column {
+                    when (appLockSectionState) {
+                        is UserAppLockSectionState.Password -> {
+                            PassDivider()
+                            SettingOption(
+                                label = stringResource(R.string.app_lock_config_app_lock_time),
+                                text = getAppLockTimePreferenceText(appLockSectionState.appLockTimePreference),
+                                onClick = { onEvent(ProfileUiEvent.OnAppLockTimeClick) }
+                            )
+                        }
+
+                        is EnforcedAppLockSectionState.Password -> {
+                            PassDivider()
+                            SettingOption(
+                                label = stringResource(R.string.app_lock_config_app_lock_time),
+                                text = secondsToText(seconds = appLockSectionState.seconds)
+                            )
+                        }
+
+                        else -> Unit
+                    }
                 }
             }
 

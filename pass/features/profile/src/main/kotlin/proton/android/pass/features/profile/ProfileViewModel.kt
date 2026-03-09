@@ -88,6 +88,7 @@ import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.android.pass.passkeys.api.CanDeviceSupportPasskeys
 import proton.android.pass.passkeys.api.PasskeySupport
 import proton.android.pass.preferences.AppLockTypePreference
+import proton.android.pass.preferences.AppLockState
 import proton.android.pass.preferences.BiometricSystemLockPreference
 import proton.android.pass.preferences.UserPreferencesRepository
 import proton.android.pass.searchoptions.api.FilterOption
@@ -119,16 +120,21 @@ class ProfileViewModel @Inject constructor(
 ) : ViewModel() {
 
     private val userAppLockSectionStateFlow: Flow<AppLockSectionState> = combine(
+        userPreferencesRepository.getAppLockState(),
         userPreferencesRepository.getAppLockTimePreference(),
         userPreferencesRepository.getAppLockTypePreference(),
         userPreferencesRepository.getBiometricSystemLockPreference()
-    ) { time, type, biometricSystemLock ->
+    ) { appLockState, time, type, biometricSystemLock ->
         when (type) {
             AppLockTypePreference.Biometrics ->
                 UserAppLockSectionState.Biometric(time, biometricSystemLock)
 
             AppLockTypePreference.Pin -> UserAppLockSectionState.Pin(time)
-            AppLockTypePreference.None -> UserAppLockSectionState.None
+            AppLockTypePreference.None -> if (appLockState == AppLockState.Enabled) {
+                UserAppLockSectionState.Password(time)
+            } else {
+                UserAppLockSectionState.None
+            }
         }
 
     }

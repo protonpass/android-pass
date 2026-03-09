@@ -26,10 +26,12 @@ import androidx.biometric.BiometricPrompt.PromptInfo
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentActivity
 import kotlinx.coroutines.channels.awaitClose
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.channelFlow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.withContext
 import proton.android.pass.appconfig.api.AppConfig
 import proton.android.pass.appconfig.api.BuildFlavor.Companion.isQuest
 import proton.android.pass.biometry.extensions.from
@@ -49,6 +51,7 @@ class BiometryManagerImpl @Inject constructor(
     private val biometricManager: BiometricManager,
     private val userPreferencesRepository: UserPreferencesRepository,
     private val storeAuthSuccessful: StoreAuthSuccessful,
+    private val biometricEnrollmentGuard: BiometricEnrollmentGuard,
     private val appConfig: AppConfig
 ) : BiometryManager {
 
@@ -75,6 +78,16 @@ class BiometryManagerImpl @Inject constructor(
             val canAuthenticate = canAuthenticate()
             if (canAuthenticate is BiometryResult.FailedToStart) {
                 trySend(canAuthenticate)
+                close()
+                return@channelFlow
+            }
+            val enrollmentChanged = if (biometryType == BiometryType.AUTHENTICATE) {
+                withContext(Dispatchers.IO) { biometricEnrollmentGuard.hasEnrollmentChanged() }
+            } else {
+                false
+            }
+            if (enrollmentChanged) {
+                trySend(BiometryResult.Error(BiometryAuthError.EnrollmentChanged))
                 close()
                 return@channelFlow
             }

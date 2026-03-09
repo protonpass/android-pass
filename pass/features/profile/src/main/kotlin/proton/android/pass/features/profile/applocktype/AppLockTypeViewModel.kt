@@ -74,12 +74,14 @@ class AppLockTypeViewModel @Inject constructor(
     val state: StateFlow<AppLockTypeUiState> = combine(
         flow { emit(biometryManager.getBiometryStatus()) },
         userPreferencesRepository.getAppLockTypePreference(),
+        userPreferencesRepository.getAppLockState(),
         observeAnyAccountHasEnforcedLock().map { if (it is Some) it.value.isEnforced() else false },
         eventState
-    ) { biometryStatus, appLockTypePreference, isForceLockMandatory, event ->
+    ) { biometryStatus, appLockTypePreference, appLockState, isForceLockMandatory, event ->
         AppLockTypeUiState(
             items = appLockTypePreferences(biometryStatus),
             selected = appLockTypePreference,
+            isPasswordOption = appLockState == AppLockState.Enabled || isForceLockMandatory,
             isForceLockMandatory = isForceLockMandatory,
             event = event
         )
@@ -110,7 +112,13 @@ class AppLockTypeViewModel @Inject constructor(
                 Biometrics -> when (newPreference) {
                     None -> openBiometrics(
                         contextHolder = contextHolder,
-                        onSuccess = ::onBiometryAuthUnSet,
+                        onSuccess = {
+                            if (state.value.isPasswordOption) {
+                                onBiometryAuthToPassword()
+                            } else {
+                                onBiometryAuthUnSet()
+                            }
+                        },
                         onError = ::onBiometryError
                     )
 
@@ -146,7 +154,11 @@ class AppLockTypeViewModel @Inject constructor(
     fun onPinSuccessfullyEntered(contextHolder: ClassHolder<Context>) {
         val newPreference = newPreferenceState.value ?: return
         when (newPreference) {
-            None -> onPinAuthUnSet()
+            None -> if (state.value.isPasswordOption) {
+                onPinAuthToPassword()
+            } else {
+                onPinAuthUnSet()
+            }
             Biometrics -> openBiometrics(
                 contextHolder = contextHolder,
                 onSuccess = ::onBiometryAuthSet,
@@ -214,9 +226,30 @@ class AppLockTypeViewModel @Inject constructor(
         }
     }
 
+    private fun onBiometryAuthToPassword() {
+        viewModelScope.launch {
+            userPreferencesRepository.setAppLockState(AppLockState.Enabled)
+            userPreferencesRepository.setHasAuthenticated(HasAuthenticated.Authenticated)
+            userPreferencesRepository.setAppLockTypePreference(None)
+            snackbarDispatcher(ProfileSnackbarMessage.FingerprintLockDisabled)
+            eventState.update { AppLockTypeEvent.Dismiss }
+        }
+    }
+
     private fun onPinAuthUnSet() {
         viewModelScope.launch {
             userPreferencesRepository.setAppLockState(AppLockState.Disabled)
+            userPreferencesRepository.setAppLockTypePreference(None)
+            snackbarDispatcher(ProfileSnackbarMessage.PinLockDisabled)
+            clearPin()
+            eventState.update { AppLockTypeEvent.Dismiss }
+        }
+    }
+
+    private fun onPinAuthToPassword() {
+        viewModelScope.launch {
+            userPreferencesRepository.setAppLockState(AppLockState.Enabled)
+            userPreferencesRepository.setHasAuthenticated(HasAuthenticated.Authenticated)
             userPreferencesRepository.setAppLockTypePreference(None)
             snackbarDispatcher(ProfileSnackbarMessage.PinLockDisabled)
             clearPin()

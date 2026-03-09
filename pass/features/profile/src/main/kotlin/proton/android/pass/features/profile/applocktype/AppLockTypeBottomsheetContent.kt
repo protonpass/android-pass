@@ -43,7 +43,7 @@ fun AppLockTypeBottomsheetContent(
             appLockTypeBottomSheetItem(
                 preference = preference,
                 isSelected = preference == state.selected,
-                isForceLockMandatory = state.isForceLockMandatory,
+                isPasswordOption = state.isPasswordOption,
                 onClick = { onSelected(preference) }
             )
         }.withDividers().toPersistentList()
@@ -53,7 +53,7 @@ fun AppLockTypeBottomsheetContent(
 private fun appLockTypeBottomSheetItem(
     preference: AppLockTypePreference,
     isSelected: Boolean,
-    isForceLockMandatory: Boolean,
+    isPasswordOption: Boolean,
     onClick: () -> Unit
 ): BottomSheetItem = object : BottomSheetItem {
     override val title: @Composable () -> Unit
@@ -61,7 +61,7 @@ private fun appLockTypeBottomSheetItem(
             val title = when (preference) {
                 AppLockTypePreference.Biometrics -> R.string.app_lock_config_biometric
                 AppLockTypePreference.Pin -> R.string.app_lock_config_pin_code
-                AppLockTypePreference.None -> if (isForceLockMandatory) {
+                AppLockTypePreference.None -> if (isPasswordOption) {
                     R.string.app_lock_config_password
                 } else {
                     R.string.app_lock_config_none

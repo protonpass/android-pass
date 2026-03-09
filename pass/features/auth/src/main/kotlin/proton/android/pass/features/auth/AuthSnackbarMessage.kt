@@ -28,5 +28,6 @@ enum class AuthSnackbarMessage(
     override val isClipboard: Boolean = false
 ) : SnackbarMessage.StructuredMessage {
     AuthExtraPasswordError(R.string.auth_extra_password_error, SnackbarType.ERROR),
-    AuthTooManyAttemptsError(R.string.auth_extra_password_too_many_attempts, SnackbarType.ERROR)
+    AuthTooManyAttemptsError(R.string.auth_extra_password_too_many_attempts, SnackbarType.ERROR),
+    BiometricEnrollmentChanged(R.string.auth_biometric_enrollment_changed, SnackbarType.WARNING)
 }

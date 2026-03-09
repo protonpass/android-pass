@@ -31,6 +31,9 @@ internal class AppLockSectionStatePreviewProvider : PreviewParameterProvider<App
         UserAppLockSectionState.Pin(
             appLockTimePreference = AppLockTimePreference.InOneMinute
         ),
+        UserAppLockSectionState.Password(
+            appLockTimePreference = AppLockTimePreference.InFiveMinutes
+        ),
         UserAppLockSectionState.Biometric(
             appLockTimePreference = AppLockTimePreference.InOneMinute,
             biometricSystemLockPreference = BiometricSystemLockPreference.Enabled

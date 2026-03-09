@@ -32,6 +32,7 @@ sealed interface BiometryAuthError {
     data object HardwareNotPresent : BiometryAuthError
     data object NegativeButton : BiometryAuthError
     data object NoDeviceCredential : BiometryAuthError
+    data object EnrollmentChanged : BiometryAuthError
     data object Unknown : BiometryAuthError
 
     companion object

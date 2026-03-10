@@ -86,7 +86,8 @@ internal data class HomeUiState(
     val hasShares: Boolean,
     private val aliasTrashDialogStatusPreference: AliasTrashDialogStatusPreference,
     val isUpgradeAvailable: Boolean,
-    val isQuest: Boolean
+    val isQuest: Boolean,
+    val foldersEnabled: Boolean = false
 ) {
 
     internal val sharedTrashedItemsCount: Int = homeListUiState.items
@@ -235,7 +236,7 @@ internal data class HomeListUiState(
     val actionState: ActionState = ActionState.Unknown,
     val items: ImmutableList<GroupedItemList>,
     val selectedShare: Option<Share> = None,
-    val selectedFolder: Option<Pair<ShareId, FolderId>> = None,
+    val selectedFolder: Option<SelectedFolder> = None,
     val shares: ImmutableMap<ShareId, Share>,
     val homeVaultSelection: VaultSelectionOption = VaultSelectionOption.AllVaults,
     val searchFilterType: SearchFilterType = SearchFilterType.All,
@@ -248,6 +249,10 @@ internal data class HomeListUiState(
     internal val selectedVaultOption: Option<Vault> = selectedShare.flatMap(Share::toVault)
 
     internal val selectedVaultName: String = selectedVaultOption.value()
+        ?.name
+        .orEmpty()
+
+    internal val selectedFolderName: String = selectedFolder.value()
         ?.name
         .orEmpty()
 
@@ -279,6 +284,13 @@ internal data class HomeListUiState(
     }
 
 }
+
+@Immutable
+internal data class SelectedFolder(
+    val shareId: ShareId,
+    val folderId: FolderId,
+    val name: String
+)
 
 @Immutable
 internal data class SearchUiState(

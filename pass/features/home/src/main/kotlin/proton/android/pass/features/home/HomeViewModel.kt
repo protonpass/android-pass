@@ -95,8 +95,8 @@ import proton.android.pass.data.api.repositories.BulkMoveToVaultEvent
 import proton.android.pass.data.api.repositories.BulkMoveToVaultRepository
 import proton.android.pass.data.api.repositories.ItemSyncStatus
 import proton.android.pass.data.api.repositories.ItemSyncStatusRepository
-import proton.android.pass.data.api.repositories.SyncMode
 import proton.android.pass.data.api.repositories.PinItemsResult
+import proton.android.pass.data.api.repositories.SyncMode
 import proton.android.pass.data.api.usecases.ChangeAliasStatus
 import proton.android.pass.data.api.usecases.ClearTrash
 import proton.android.pass.data.api.usecases.DeleteItems
@@ -116,6 +116,7 @@ import proton.android.pass.data.api.usecases.RestoreItems
 import proton.android.pass.data.api.usecases.TrashItems
 import proton.android.pass.data.api.usecases.UnpinItem
 import proton.android.pass.data.api.usecases.UnpinItems
+import proton.android.pass.data.api.usecases.folders.ObserveFolder
 import proton.android.pass.data.api.usecases.inappmessages.ObserveDeliverableMinimizedPromoInAppMessages
 import proton.android.pass.data.api.usecases.items.ObserveCanCreateItems
 import proton.android.pass.data.api.usecases.items.ObserveEncryptedSharedItems
@@ -125,7 +126,6 @@ import proton.android.pass.data.api.usecases.searchentry.DeleteSearchEntry
 import proton.android.pass.data.api.usecases.searchentry.ObserveSearchEntry
 import proton.android.pass.data.api.usecases.searchentry.ObserveSearchEntry.SearchEntrySelection
 import proton.android.pass.data.api.usecases.shares.ObserveHasShares
-import proton.android.pass.domain.FolderId
 import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ItemState
@@ -166,6 +166,8 @@ import proton.android.pass.features.home.HomeSnackbarMessageWithAction.InactiveV
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.android.pass.notifications.api.ToastManager
+import proton.android.pass.preferences.FeatureFlag
+import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import proton.android.pass.preferences.UserPreferencesRepository
 import proton.android.pass.preferences.value
 import proton.android.pass.searchoptions.api.FilterOption
@@ -219,6 +221,8 @@ class HomeViewModel @Inject constructor(
     observeDeliverableMinimizedPromoInAppMessages: ObserveDeliverableMinimizedPromoInAppMessages,
     observeUpgradeInfo: ObserveUpgradeInfo,
     appConfig: AppConfig,
+    featureFlagsPreferencesRepository: FeatureFlagsPreferencesRepository,
+    observeFolder: ObserveFolder,
     private val syncStatusRepository: ItemSyncStatusRepository
 ) : ViewModel() {
 
@@ -255,6 +259,31 @@ class HomeViewModel @Inject constructor(
         .distinctUntilChanged()
         .onEach { shouldScrollToTopFlow.update { true } }
 
+    private val foldersEnabledFlow: Flow<Boolean> =
+        featureFlagsPreferencesRepository[FeatureFlag.PASS_FOLDERS]
+
+    private val selectedFolderFlow: Flow<Option<SelectedFolder>> = searchOptionsFlow
+        .flatMapLatest { searchOptions ->
+            val userId = searchOptions.userId ?: return@flatMapLatest flowOf(None)
+            when (val selection = searchOptions.vaultSelectionOption) {
+                is VaultSelectionOption.Folder -> observeFolder(
+                    userId = userId,
+                    shareId = selection.shareId,
+                    folderId = selection.folderId
+                ).map { folder ->
+                    Some(
+                        SelectedFolder(
+                            shareId = selection.shareId,
+                            folderId = selection.folderId,
+                            name = folder?.name.orEmpty()
+                        )
+                    )
+                }
+                else -> flowOf(None)
+            }
+        }
+        .distinctUntilChanged()
+
     private val shareListWrapperFlow: Flow<ShareListWrapper> = combine(
         searchOptionsFlow,
         observeAllShares(includeHidden = false).asLoadingResult()
@@ -262,31 +291,29 @@ class HomeViewModel @Inject constructor(
         val shares: List<Share> = sharesResult.getOrNull().orEmpty()
         val shareMap = shares.associateBy { it.id }.toPersistentMap()
 
-        val (selectedShare, selectedFolder) = when (val selection = searchOptions.vaultSelectionOption) {
+        val selectedShare = when (val selection = searchOptions.vaultSelectionOption) {
             is VaultSelectionOption.Vault -> {
                 val share = shareMap[selection.shareId].toOption()
                 autoSelectAllVaultsIfCannotFindVault(share, shares, searchOptions.userId)
-                share to None
+                share
             }
             is VaultSelectionOption.Folder -> {
                 val share = shareMap[selection.shareId].toOption()
                 autoSelectAllVaultsIfCannotFindVault(share, shares, searchOptions.userId)
-                None to Some(selection.shareId to selection.folderId)
+                None
             }
-            else -> None to None
+            else -> None
         }
 
         ShareListWrapper(
             shares = shareMap,
-            selectedShare = selectedShare,
-            selectedFolder = selectedFolder
+            selectedShare = selectedShare
         )
     }.distinctUntilChanged()
 
     private data class ShareListWrapper(
         val shares: ImmutableMap<ShareId, Share>,
-        val selectedShare: Option<Share>,
-        val selectedFolder: Option<Pair<ShareId, FolderId>> = None
+        val selectedShare: Option<Share>
     )
 
     private val searchEntryState: StateFlow<List<SearchEntry>> =
@@ -553,7 +580,8 @@ class HomeViewModel @Inject constructor(
         preferencesRepository.getUseFaviconsPreference(),
         selectionState,
         appNeedsUpdateFlow,
-        observeDeliverableMinimizedPromoInAppMessages()
+        observeDeliverableMinimizedPromoInAppMessages(),
+        selectedFolderFlow
     ) { itemsResult,
         refreshingLoading,
         shouldScrollToTop,
@@ -562,7 +590,8 @@ class HomeViewModel @Inject constructor(
         useFavicons,
         selection,
         appNeedsUpdate,
-        promoInAppMessages ->
+        promoInAppMessages,
+        selectedFolder ->
         val isLoadingState = IsLoadingState.from(itemsResult is LoadingResult.Loading)
 
         val (items, isLoading) = when (itemsResult) {
@@ -584,7 +613,7 @@ class HomeViewModel @Inject constructor(
             actionState = refreshingLoading.actionState,
             items = items,
             selectedShare = shareListWrapper.selectedShare,
-            selectedFolder = shareListWrapper.selectedFolder,
+            selectedFolder = selectedFolder,
             shares = shareListWrapper.shares,
             homeVaultSelection = searchOptions.vaultSelectionOption,
             searchFilterType = searchOptions.filterOption.searchFilterType,
@@ -612,7 +641,7 @@ class HomeViewModel @Inject constructor(
         observeCanCreateItems(),
         observeHasShares(includeHidden = true),
         observeUpgradeInfo().asLoadingResult(),
-        flowOf(appConfig.flavor.isQuest())
+        foldersEnabledFlow
     ) { homeListUiState,
         searchUiState,
         userPlan,
@@ -623,7 +652,7 @@ class HomeViewModel @Inject constructor(
         canCreateItems,
         hasShares,
         upgradeInfo,
-        isQuest ->
+        foldersEnabled ->
         HomeUiState(
             homeListUiState = homeListUiState,
             searchUiState = searchUiState,
@@ -636,7 +665,8 @@ class HomeViewModel @Inject constructor(
             canCreateItems = canCreateItems,
             hasShares = hasShares,
             isUpgradeAvailable = upgradeInfo.getOrNull()?.isUpgradeAvailable ?: false,
-            isQuest = isQuest
+            isQuest = appConfig.flavor.isQuest(),
+            foldersEnabled = foldersEnabled
         )
     }.stateIn(
         scope = viewModelScope,

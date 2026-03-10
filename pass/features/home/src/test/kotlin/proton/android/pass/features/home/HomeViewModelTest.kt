@@ -62,10 +62,12 @@ import proton.android.pass.data.fakes.usecases.FakeRestoreAllItems
 import proton.android.pass.data.fakes.usecases.FakeRestoreItems
 import proton.android.pass.data.fakes.usecases.FakeTrashItems
 import proton.android.pass.data.fakes.usecases.FakeUnpinItems
+import proton.android.pass.data.fakes.usecases.folders.FakeObserveFolder
 import proton.android.pass.data.fakes.usecases.inappmessages.FakeObserveDeliverableMinimizedPromoInAppMessage
 import proton.android.pass.data.fakes.usecases.items.FakeObserveCanCreateItems
 import proton.android.pass.data.fakes.usecases.shares.FakeObserveEncryptedSharedItems
 import proton.android.pass.data.fakes.usecases.shares.FakeObserveHasShares
+import proton.android.pass.preferences.FakeFeatureFlagsPreferenceRepository
 import proton.android.pass.domain.FolderId
 import proton.android.pass.domain.ItemEncrypted
 import proton.android.pass.domain.ItemState
@@ -118,6 +120,8 @@ internal class HomeViewModelTest {
     private lateinit var observeHasShares: FakeObserveHasShares
     private lateinit var observeUpgradeInfo: FakeObserveUpgradeInfo
     private lateinit var appConfig: FakeAppConfig
+    private lateinit var featureFlags: FakeFeatureFlagsPreferenceRepository
+    private lateinit var observeFolder: FakeObserveFolder
 
     @Before
     internal fun setup() {
@@ -149,6 +153,8 @@ internal class HomeViewModelTest {
         observeHasShares = FakeObserveHasShares()
         observeUpgradeInfo = FakeObserveUpgradeInfo()
         appConfig = FakeAppConfig()
+        featureFlags = FakeFeatureFlagsPreferenceRepository()
+        observeFolder = FakeObserveFolder()
         createViewModel()
     }
 
@@ -324,7 +330,9 @@ internal class HomeViewModelTest {
                 .apply { emitPromoMessage(null) },
             observeUpgradeInfo = observeUpgradeInfo,
             appConfig = appConfig,
-            syncStatusRepository = FakeItemSyncStatusRepository()
+            syncStatusRepository = FakeItemSyncStatusRepository(),
+            featureFlagsPreferencesRepository = featureFlags,
+            observeFolder = observeFolder
         )
     }
 }

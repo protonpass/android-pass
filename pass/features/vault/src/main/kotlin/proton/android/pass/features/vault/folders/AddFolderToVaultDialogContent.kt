@@ -32,7 +32,9 @@ import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
@@ -111,6 +113,7 @@ internal fun AddFolderToVaultDialogContent(
                                 text = stringResource(R.string.vault_add_folder_dialog_placeholder)
                             )
                         },
+                        keyboardOptions = KeyboardOptions(capitalization = KeyboardCapitalization.Sentences),
                         textStyle = ProtonTheme.typography.defaultNorm
                     )
                 }

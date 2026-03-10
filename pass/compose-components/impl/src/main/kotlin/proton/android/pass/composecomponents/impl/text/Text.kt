@@ -63,13 +63,17 @@ object Text {
         text: String,
         modifier: Modifier = Modifier,
         color: Color = ProtonTheme.colors.textNorm,
-        textAlign: TextAlign = TextAlign.Start
+        textAlign: TextAlign = TextAlign.Start,
+        maxLines: Int = Int.MAX_VALUE,
+        overflow: TextOverflow = TextOverflow.Clip
     ) {
         Text(
             text = text,
             style = ProtonTheme.typography.headlineNorm.copy(color = color),
             modifier = modifier,
-            textAlign = textAlign
+            textAlign = textAlign,
+            maxLines = maxLines,
+            overflow = overflow
         )
     }
 

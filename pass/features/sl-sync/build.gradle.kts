@@ -85,6 +85,7 @@ dependencies {
     debugImplementation(libs.androidx.compose.uiTooling)
     debugImplementation(libs.androidx.compose.uiTestManifest)
 
+    testImplementation(libs.junit)
     testImplementation(libs.truth)
 
     kaptAndroidTest(libs.dagger.hilt.android.compiler)

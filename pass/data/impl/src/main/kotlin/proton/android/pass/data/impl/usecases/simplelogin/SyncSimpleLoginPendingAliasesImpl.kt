@@ -28,6 +28,7 @@ import proton.android.pass.data.api.repositories.SimpleLoginRepository
 import proton.android.pass.data.api.repositories.UserAccessDataRepository
 import proton.android.pass.data.api.usecases.ObserveVaults
 import proton.android.pass.data.api.usecases.simplelogin.SyncSimpleLoginPendingAliases
+import proton.android.pass.data.impl.extensions.selectFallbackVault
 import proton.android.pass.data.impl.repositories.ShareKeyRepository
 import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.Vault
@@ -96,21 +97,18 @@ class SyncSimpleLoginPendingAliasesImpl @Inject constructor(
         )
     )
 
-    private suspend fun getOwnedFallbackVault(userId: UserId): Vault? = observeVaults(
+    private suspend fun getFallbackVault(userId: UserId): Vault? = observeVaults(
         userId = userId,
         includeHidden = true
-    ).first().let { vaults ->
-        vaults.firstOrNull { vault -> vault.isOwned && !vault.shareFlags.isHidden() }
-            ?: vaults.firstOrNull { vault -> vault.isOwned }
-    }
+    ).first().selectFallbackVault()
 
     private suspend fun recoverAndGetSyncStatus(userId: UserId): SimpleLoginSyncStatus? {
-        val fallbackVault = getOwnedFallbackVault(userId) ?: run {
-            PassLogger.w(TAG, "Missing SL default share and no owned fallback vault found")
+        val fallbackVault = getFallbackVault(userId) ?: run {
+            PassLogger.w(TAG, "Missing SL default share and no fallback vault found")
             return null
         }
 
-        PassLogger.w(TAG, "Missing SL default share. Recovering with owned vault [${fallbackVault.shareId.id}]")
+        PassLogger.w(TAG, "Missing SL default share. Recovering with fallback vault [${fallbackVault.shareId.id}]")
         runCatching {
             repository.enableSync(fallbackVault.shareId)
         }.getOrElse { e ->

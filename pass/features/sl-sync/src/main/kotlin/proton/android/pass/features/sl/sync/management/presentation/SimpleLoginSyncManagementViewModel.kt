@@ -31,12 +31,14 @@ import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import proton.android.pass.common.api.None
+import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.some
 import proton.android.pass.data.api.usecases.ObserveVaults
 import proton.android.pass.data.api.usecases.simplelogin.ObserveSimpleLoginAliasDomains
 import proton.android.pass.data.api.usecases.simplelogin.ObserveSimpleLoginAliasMailboxes
 import proton.android.pass.data.api.usecases.simplelogin.ObserveSimpleLoginAliasSettings
 import proton.android.pass.data.api.usecases.simplelogin.ObserveSimpleLoginSyncStatus
+import proton.android.pass.domain.simplelogin.SimpleLoginSyncStatus
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.SnackbarDispatcher
 import javax.inject.Inject
@@ -51,17 +53,25 @@ class SimpleLoginSyncManagementViewModel @Inject constructor(
     private val snackbarDispatcher: SnackbarDispatcher
 ) : ViewModel() {
 
+    private val syncStatusOptionFlow = observeSimpleLoginSyncStatus()
+        .map { syncStatus: SimpleLoginSyncStatus -> syncStatus.some() as Option<SimpleLoginSyncStatus> }
+        .catch { error ->
+            PassLogger.w(TAG, "There was an error while observing SL sync status")
+            PassLogger.w(TAG, error)
+            emit(None)
+        }
+
     private val modelOptionFlow = combine(
         observeSimpleLoginAliasDomains(),
         observeSimpleLoginAliasMailboxes(),
         observeSimpleLoginAliasSettings(),
-        observeSimpleLoginSyncStatus()
-    ) { aliasDomains, aliasMailboxes, aliasSettings, syncStatus ->
+        syncStatusOptionFlow
+    ) { aliasDomains, aliasMailboxes, aliasSettings, syncStatusOption ->
         SimpleLoginSyncManagementModel(
             aliasDomains = aliasDomains,
             aliasMailboxes = aliasMailboxes,
             aliasSettings = aliasSettings,
-            syncStatus = syncStatus
+            syncStatusOption = syncStatusOption
         ).some()
     }.onStart {
         emit(None)

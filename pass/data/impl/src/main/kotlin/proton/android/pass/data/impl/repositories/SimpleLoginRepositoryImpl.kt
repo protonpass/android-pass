@@ -50,6 +50,7 @@ import proton.android.pass.data.api.repositories.UserAccessDataRepository
 import proton.android.pass.data.api.usecases.GetVaultByShareId
 import proton.android.pass.data.api.usecases.ObserveVaults
 import proton.android.pass.data.impl.extensions.toRequest
+import proton.android.pass.data.impl.extensions.selectFallbackVault
 import proton.android.pass.data.impl.local.simplelogin.LocalSimpleLoginDataSource
 import proton.android.pass.data.impl.remote.simplelogin.RemoteSimpleLoginDataSource
 import proton.android.pass.data.impl.requests.SimpleLoginChangeMailboxRequest
@@ -416,15 +417,11 @@ class SimpleLoginRepositoryImpl @Inject constructor(
             userId = userId,
             includeHidden = true
         ).first()
-        val fallbackVault = vaults.firstOrNull { vault ->
-            vault.isOwned && !vault.shareFlags.isHidden()
-        } ?: vaults.firstOrNull { vault ->
-            vault.isOwned
-        }
+        val fallbackVault = vaults.selectFallbackVault()
 
         if (fallbackVault == null) return
 
-        PassLogger.w(TAG, "Missing SL default share. Recovering with owned vault [${fallbackVault.shareId.id}]")
+        PassLogger.w(TAG, "Missing SL default share. Recovering with fallback vault [${fallbackVault.shareId.id}]")
         runCatching { enableSync(fallbackVault.shareId) }
             .onFailure { e ->
                 PassLogger.w(TAG, "Failed to enable SL sync with fallback vault [${fallbackVault.shareId.id}]")

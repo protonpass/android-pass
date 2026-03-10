@@ -18,6 +18,9 @@
 
 package proton.android.pass.features.sl.sync.management.presentation
 
+import proton.android.pass.common.api.None
+import proton.android.pass.common.api.Option
+import proton.android.pass.common.api.Some
 import proton.android.pass.domain.Vault
 import proton.android.pass.domain.simplelogin.SimpleLoginAliasDomain
 import proton.android.pass.domain.simplelogin.SimpleLoginAliasMailbox
@@ -28,19 +31,31 @@ internal data class SimpleLoginSyncManagementModel(
     internal val aliasDomains: List<SimpleLoginAliasDomain>,
     internal val aliasMailboxes: List<SimpleLoginAliasMailbox>,
     private val aliasSettings: SimpleLoginAliasSettings,
-    private val syncStatus: SimpleLoginSyncStatus
+    private val syncStatusOption: Option<SimpleLoginSyncStatus>
 ) {
 
     internal val defaultDomain: String? = aliasSettings.defaultDomain
 
     internal val defaultMailboxId: Long = aliasSettings.defaultMailboxId
 
-    internal val defaultVault: Vault = syncStatus.defaultVault
+    internal val defaultVault: Vault? = when (syncStatusOption) {
+        None -> null
+        is Some -> syncStatusOption.value.defaultVault
+    }
 
-    internal val pendingAliasesCount: Int = syncStatus.pendingAliasCount
+    internal val pendingAliasesCount: Int = when (syncStatusOption) {
+        None -> 0
+        is Some -> syncStatusOption.value.pendingAliasCount
+    }
 
-    internal val isSyncEnabled: Boolean = syncStatus.isSyncEnabled
+    internal val isSyncEnabled: Boolean = when (syncStatusOption) {
+        None -> false
+        is Some -> syncStatusOption.value.isSyncEnabled
+    }
 
-    internal val canManageAliases: Boolean = syncStatus.canManageAliases
+    internal val canManageAliases: Boolean = when (syncStatusOption) {
+        None -> false
+        is Some -> syncStatusOption.value.canManageAliases
+    }
 
 }

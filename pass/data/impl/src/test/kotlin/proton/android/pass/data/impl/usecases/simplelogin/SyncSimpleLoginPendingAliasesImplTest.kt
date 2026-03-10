@@ -129,23 +129,39 @@ class SyncSimpleLoginPendingAliasesImplTest {
     }
 
     @Test
-    fun `returns without calling enableSync when no owned vault exists`() = runTest {
+    fun `recovers missing default share with readable vault when no owned vault exists`() = runTest {
+        val readableVault = VaultTestFactory.create(
+            shareId = ShareId("readable-vault-share-id"),
+            isOwned = false
+        )
+        val syncStatus = SimpleLoginSyncStatus(
+            isSyncEnabled = true,
+            isPreferenceEnabled = true,
+            pendingAliasCount = 0,
+            defaultVault = readableVault,
+            canManageAliases = true
+        )
+
         userAccessDataRepository.sendValue(
             UserAccessDataTestFactory.create(
                 isSimpleLoginSyncEnabled = true
             )
         )
-        observeVaults.sendResult(Result.success(emptyList()))
+        observeVaults.sendResult(Result.success(listOf(readableVault)))
+        shareKeyRepository.emitGetLatestKeyForShare(ShareKeyTestFactory.createPrivate())
         repository.observeSyncStatusResults.add(Result.failure(ShareNotAvailableError()))
+        repository.observeSyncStatusResults.add(Result.success(syncStatus))
 
         instance(
             userId = USER_ID,
             forceRefresh = false
         )
 
-        assertThat(repository.enableSyncInvocations).isEmpty()
-        assertThat(repository.createPendingAliasesInvocations).isEmpty()
-        assertThat(repository.observeSyncStatusInvocations).isEqualTo(1)
+        assertThat(repository.enableSyncInvocations).containsExactly(readableVault.shareId)
+        assertThat(repository.createPendingAliasesInvocations).hasSize(1)
+        assertThat(repository.createPendingAliasesInvocations.first().defaultShareId).isEqualTo(readableVault.shareId)
+        assertThat(repository.createPendingAliasesInvocations.first().pendingAliasesItems).isEmpty()
+        assertThat(repository.observeSyncStatusInvocations).isEqualTo(2)
     }
 
     @Test

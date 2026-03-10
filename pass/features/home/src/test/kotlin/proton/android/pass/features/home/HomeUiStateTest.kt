@@ -19,8 +19,10 @@
 package proton.android.pass.features.home
 
 import com.google.common.truth.Truth.assertThat
+import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.persistentMapOf
 import org.junit.Test
+import proton.android.pass.common.api.Some
 import proton.android.pass.domain.FolderId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.ShareRole
@@ -28,6 +30,24 @@ import proton.android.pass.searchoptions.api.VaultSelectionOption
 import proton.android.pass.test.domain.ShareTestFactory
 
 internal class HomeUiStateTest {
+
+    @Test
+    fun `selected folder name is derived from selected folder`() {
+        val uiState = HomeUiState.Loading.copy(
+            homeListUiState = HomeListUiState.Loading.copy(
+                selectedFolder = Some(
+                    SelectedFolder(
+                        shareId = ShareId("share-id"),
+                        folderId = FolderId("folder-id"),
+                        name = "Work"
+                    )
+                ),
+                items = persistentListOf()
+            )
+        )
+
+        assertThat(uiState.homeListUiState.selectedFolderName).isEqualTo("Work")
+    }
 
     @Test
     fun `selected folder is read-only when selected share is viewer`() {

@@ -24,6 +24,11 @@ import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.animation.core.spring
+import androidx.compose.animation.rememberSplineBasedDecay
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -53,6 +58,7 @@ import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.toOption
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
+import proton.android.pass.commonui.api.applyIf
 import proton.android.pass.commonui.api.TestTags.HOME_EMPTY_TAG
 import proton.android.pass.commonui.api.TestTags.HOME_ITEM_LIST_TAG
 import proton.android.pass.composecomponents.impl.buttons.UpgradeIcon
@@ -69,6 +75,7 @@ import proton.android.pass.composecomponents.impl.item.header.ItemListHeader
 import proton.android.pass.composecomponents.impl.item.header.SortingButton
 import proton.android.pass.composecomponents.impl.item.icon.ThreeDotsMenuButton
 import proton.android.pass.composecomponents.impl.pinning.PinCarousel
+import proton.android.pass.composecomponents.impl.topbar.CollapsibleSearchTopBar
 import proton.android.pass.composecomponents.impl.topbar.SearchTopBar
 import proton.android.pass.composecomponents.impl.topbar.iconbutton.ArrowBackIconButton
 import proton.android.pass.domain.ItemId
@@ -78,8 +85,10 @@ import proton.android.pass.features.home.HomeContentTestTag.DRAWER_ICON_TEST_TAG
 import proton.android.pass.searchoptions.api.SearchFilterType
 import proton.android.pass.searchoptions.api.VaultSelectionOption
 import me.proton.core.presentation.R as CoreR
+import proton.android.pass.composecomponents.impl.R as ComponentsR
 
 @Suppress("ComplexMethod")
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun HomeContent(
     modifier: Modifier = Modifier,
@@ -97,9 +106,45 @@ internal fun HomeContent(
         remember(uiState.pinningUiState.inPinningMode, uiState.searchUiState.inSearchMode) {
             uiState.pinningUiState.inPinningMode || uiState.searchUiState.inSearchMode
         }
+    val firstItemVisible by remember {
+        derivedStateOf {
+            scrollableState.firstVisibleItemIndex <= 1
+        }
+    }
+    val flingSpec = rememberSplineBasedDecay<Float>()
+    val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior(
+        snapAnimationSpec = spring(),
+        flingAnimationSpec = flingSpec
+    )
+    val barScrollConnection = rememberHomeTopBarScrollConnection(scrollBehavior)
     Scaffold(
-        modifier = modifier.statusBarsPadding(),
+        modifier = modifier
+            .statusBarsPadding()
+            .applyIf(uiState.foldersEnabled, ifTrue = { nestedScroll(barScrollConnection) }),
         topBar = {
+            val placeholderText = if (uiState.pinningUiState.inPinningMode) {
+                stringResource(R.string.search_topbar_placeholder_pinning)
+            } else {
+                when (uiState.homeListUiState.homeVaultSelection) {
+                    VaultSelectionOption.AllVaults ->
+                        stringResource(R.string.search_topbar_placeholder_all_items)
+                    VaultSelectionOption.Trash ->
+                        stringResource(R.string.search_topbar_placeholder_trash)
+                    is VaultSelectionOption.Vault -> stringResource(
+                        R.string.search_topbar_placeholder_vault,
+                        uiState.homeListUiState.selectedVaultName
+                    )
+                    VaultSelectionOption.SharedByMe ->
+                        stringResource(id = R.string.search_topbar_placeholder_shared_by_me)
+                    VaultSelectionOption.SharedWithMe ->
+                        stringResource(id = R.string.search_topbar_placeholder_shared_with_me)
+                    is VaultSelectionOption.Folder ->
+                        uiState.homeListUiState.selectedFolderName
+                            .takeIf { it.isNotBlank() }
+                            ?.let { stringResource(R.string.search_topbar_placeholder_folder, it) }
+                            ?: stringResource(R.string.search_topbar_placeholder_folder_fallback)
+                }
+            }
             if (uiState.isTopBarAvailable) {
                 AnimatedVisibility(
                     visible = uiState.homeListUiState.selectionState.isInSelectMode,
@@ -118,97 +163,78 @@ internal fun HomeContent(
                     exit = fadeOut(),
                     label = "HomeContent-SearchTopBar"
                 ) {
-                    SearchTopBar(
-                        searchQuery = uiState.searchUiState.searchQuery,
-                        inSearchMode = uiState.searchUiState.inSearchMode,
-                        placeholderText = if (uiState.pinningUiState.inPinningMode) {
-                            stringResource(R.string.search_topbar_placeholder_pinning)
+                    if (uiState.foldersEnabled) {
+                        val topBarTitle = if (uiState.pinningUiState.inPinningMode) {
+                            stringResource(ComponentsR.string.item_list_header_pinned_search_results)
                         } else {
                             when (uiState.homeListUiState.homeVaultSelection) {
                                 VaultSelectionOption.AllVaults ->
-                                    stringResource(R.string.search_topbar_placeholder_all_items)
-
+                                    stringResource(R.string.home_drawer_all_items)
                                 VaultSelectionOption.Trash ->
-                                    stringResource(R.string.search_topbar_placeholder_trash)
-
-                                is VaultSelectionOption.Vault -> stringResource(
-                                    R.string.search_topbar_placeholder_vault,
+                                    stringResource(R.string.vault_drawer_item_trash)
+                                is VaultSelectionOption.Vault ->
                                     uiState.homeListUiState.selectedVaultName
-                                )
-
-                                VaultSelectionOption.SharedByMe -> {
-                                    stringResource(id = R.string.search_topbar_placeholder_shared_by_me)
-                                }
-
-                                VaultSelectionOption.SharedWithMe -> {
-                                    stringResource(id = R.string.search_topbar_placeholder_shared_with_me)
-                                }
-
-                                is VaultSelectionOption.Folder -> {
-                                    stringResource(id = R.string.search_topbar_placeholder_folder)
-                                }
+                                VaultSelectionOption.SharedByMe ->
+                                    stringResource(R.string.item_type_filter_items_shared_by_me)
+                                VaultSelectionOption.SharedWithMe ->
+                                    stringResource(R.string.item_type_filter_items_shared_with_me)
+                                is VaultSelectionOption.Folder ->
+                                    uiState.homeListUiState.selectedFolderName
+                                        .takeIf { it.isNotBlank() }
+                                        ?: stringResource(R.string.home_topbar_title_folder_fallback)
                             }
-                        },
-                        onEnterSearch = { onEvent(HomeUiEvent.EnterSearch) },
-                        onStopSearch = { onEvent(HomeUiEvent.StopSearch) },
-                        onSearchQueryChange = { onEvent(HomeUiEvent.SearchQueryChange(it)) },
-                        drawerIcon = {
-                            HomeDrawerIcon(
-                                modifier = Modifier.testTag(DRAWER_ICON_TEST_TAG),
-                                selectedVaultOption = uiState.homeListUiState.selectedVaultOption,
-                                homeVaultSelection = uiState.homeListUiState.homeVaultSelection,
-                                isSeeAllPinsMode = uiState.pinningUiState.inPinningMode,
-                                isSearchMode = uiState.searchUiState.inSearchMode,
-                                onEvent = onEvent
-                            )
-                        },
-                        actions = {
-                            uiState.homeListUiState.promoInAppMessage?.let { promo ->
-                                PromoIcon(
-                                    onClick = {
-                                        onEvent(
-                                            HomeUiEvent.PromoInAppMessageClick(
-                                                userId = promo.userId,
-                                                inAppMessageId = promo.id
-                                            )
-                                        )
-                                    }
-                                )
-                            } ?: run {
-                                if (uiState.isUpgradeAvailable) {
-                                    UpgradeIcon(onUpgradeClick = {
-                                        onEvent(
-                                            HomeUiEvent.OnUpgradeClick
-                                        )
-                                    })
-                                }
-                            }
-
-
-                            val (backgroundColor, iconColor) =
-                                if (uiState.homeListUiState.searchFilterType != SearchFilterType.All) {
-                                    PassTheme.colors.interactionNormMajor2 to PassTheme.colors.textInvert
-                                } else {
-                                    Color.Transparent to PassTheme.colors.textWeak
-                                }
-                            ThreeDotsMenuButton(
-                                modifier = Modifier
-                                    .clip(CircleShape)
-                                    .background(backgroundColor),
-                                dotsColor = iconColor
-                            ) { onEvent(HomeUiEvent.ActionsClick) }
                         }
-                    )
+                        CollapsibleSearchTopBar(
+                            scrollBehavior = scrollBehavior,
+                            title = topBarTitle,
+                            searchQuery = uiState.searchUiState.searchQuery,
+                            inSearchMode = uiState.searchUiState.inSearchMode,
+                            placeholderText = placeholderText,
+                            onEnterSearch = { onEvent(HomeUiEvent.EnterSearch) },
+                            onStopSearch = { onEvent(HomeUiEvent.StopSearch) },
+                            onSearchQueryChange = { onEvent(HomeUiEvent.SearchQueryChange(it)) },
+                            drawerIcon = {
+                                HomeDrawerIcon(
+                                    modifier = Modifier.testTag(DRAWER_ICON_TEST_TAG),
+                                    selectedVaultOption = uiState.homeListUiState.selectedVaultOption,
+                                    homeVaultSelection = uiState.homeListUiState.homeVaultSelection,
+                                    isSeeAllPinsMode = uiState.pinningUiState.inPinningMode,
+                                    isSearchMode = uiState.searchUiState.inSearchMode,
+                                    onEvent = onEvent
+                                )
+                            },
+                            actions = {
+                                HomeTopBarActions(uiState = uiState, onEvent = onEvent)
+                            }
+                        )
+                    } else {
+                        SearchTopBar(
+                            searchQuery = uiState.searchUiState.searchQuery,
+                            inSearchMode = uiState.searchUiState.inSearchMode,
+                            placeholderText = placeholderText,
+                            onEnterSearch = { onEvent(HomeUiEvent.EnterSearch) },
+                            onStopSearch = { onEvent(HomeUiEvent.StopSearch) },
+                            onSearchQueryChange = { onEvent(HomeUiEvent.SearchQueryChange(it)) },
+                            drawerIcon = {
+                                HomeDrawerIcon(
+                                    modifier = Modifier.testTag(DRAWER_ICON_TEST_TAG),
+                                    selectedVaultOption = uiState.homeListUiState.selectedVaultOption,
+                                    homeVaultSelection = uiState.homeListUiState.homeVaultSelection,
+                                    isSeeAllPinsMode = uiState.pinningUiState.inPinningMode,
+                                    isSearchMode = uiState.searchUiState.inSearchMode,
+                                    onEvent = onEvent
+                                )
+                            },
+                            actions = {
+                                HomeTopBarActions(uiState = uiState, onEvent = onEvent)
+                            }
+                        )
+                    }
                 }
             }
         }
     ) { contentPadding ->
         val keyboardController = LocalSoftwareKeyboardController.current
-        val firstItemVisible by remember {
-            derivedStateOf {
-                scrollableState.firstVisibleItemIndex <= 1
-            }
-        }
         val listItemCount = remember(uiState.homeListUiState.items) {
             uiState.homeListUiState.items.map { it.items }.flatten().count()
         }
@@ -342,11 +368,9 @@ internal fun HomeContent(
                 isInSelectionMode = uiState.homeListUiState.selectionState.isInSelectMode,
                 selectedItemIds = selectedItemIds,
                 emptyContent = {
-                    val (shareId, folderId) = if (uiState.homeListUiState.selectedFolder is Some) {
-                        uiState.homeListUiState.selectedFolder.value
-                    } else {
-                        uiState.homeListUiState.selectedShare.map { it.id }.value() to null
-                    }
+                    val selectedFolder = uiState.homeListUiState.selectedFolder.value()
+                    val shareId = selectedFolder?.shareId ?: uiState.homeListUiState.selectedShare.map { it.id }.value()
+                    val folderId = selectedFolder?.folderId
                     HomeEmptyContent(
                         modifier = Modifier.testTag(HOME_EMPTY_TAG),
                         hasShares = uiState.hasShares,
@@ -365,6 +389,39 @@ internal fun HomeContent(
             )
         }
     }
+}
+
+@Composable
+private fun HomeTopBarActions(uiState: HomeUiState, onEvent: (HomeUiEvent) -> Unit) {
+    uiState.homeListUiState.promoInAppMessage?.let { promo ->
+        PromoIcon(
+            onClick = {
+                onEvent(
+                    HomeUiEvent.PromoInAppMessageClick(
+                        userId = promo.userId,
+                        inAppMessageId = promo.id
+                    )
+                )
+            }
+        )
+    } ?: run {
+        if (uiState.isUpgradeAvailable) {
+            UpgradeIcon(onUpgradeClick = { onEvent(HomeUiEvent.OnUpgradeClick) })
+        }
+    }
+
+    val (backgroundColor, iconColor) =
+        if (uiState.homeListUiState.searchFilterType != SearchFilterType.All) {
+            PassTheme.colors.interactionNormMajor2 to PassTheme.colors.textInvert
+        } else {
+            Color.Transparent to PassTheme.colors.textWeak
+        }
+    ThreeDotsMenuButton(
+        modifier = Modifier
+            .clip(CircleShape)
+            .background(backgroundColor),
+        dotsColor = iconColor
+    ) { onEvent(HomeUiEvent.ActionsClick) }
 }
 
 @Composable

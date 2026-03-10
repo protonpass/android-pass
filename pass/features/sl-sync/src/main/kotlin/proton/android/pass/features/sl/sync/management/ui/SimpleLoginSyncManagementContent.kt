@@ -73,7 +73,7 @@ internal fun SimpleLoginSyncDetailsContent(
                 hasPendingAliases = hasPendingAliases,
                 pendingAliasesCount = pendingAliasesCount,
                 canSelectDomain = canSelectDomain,
-                canManageAliases = canManageAliases,
+                canManageAliases = canManageMailboxAliases,
                 onUiEvent = onUiEvent
             )
         }

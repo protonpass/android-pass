@@ -30,6 +30,7 @@ import proton.android.pass.data.fakes.repositories.FakeUserAccessDataRepository
 import proton.android.pass.data.fakes.usecases.FakeObserveVaults
 import proton.android.pass.data.impl.fakes.FakeShareKeyRepository
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.ShareRole
 import proton.android.pass.domain.simplelogin.SimpleLoginAlias
 import proton.android.pass.domain.simplelogin.SimpleLoginPendingAliases
 import proton.android.pass.domain.simplelogin.SimpleLoginSyncStatus
@@ -129,16 +130,43 @@ class SyncSimpleLoginPendingAliasesImplTest {
     }
 
     @Test
-    fun `recovers missing default share with readable vault when no owned vault exists`() = runTest {
-        val readableVault = VaultTestFactory.create(
-            shareId = ShareId("readable-vault-share-id"),
-            isOwned = false
+    fun `returns gracefully when only viewer vault is available`() = runTest {
+        val viewerVault = VaultTestFactory.create(
+            shareId = ShareId("viewer-vault-share-id"),
+            isOwned = false,
+            role = ShareRole.Read
+        )
+
+        userAccessDataRepository.sendValue(
+            UserAccessDataTestFactory.create(
+                isSimpleLoginSyncEnabled = true
+            )
+        )
+        observeVaults.sendResult(Result.success(listOf(viewerVault)))
+        repository.observeSyncStatusResults.add(Result.failure(ShareNotAvailableError()))
+
+        instance(
+            userId = USER_ID,
+            forceRefresh = false
+        )
+
+        assertThat(repository.enableSyncInvocations).isEmpty()
+        assertThat(repository.createPendingAliasesInvocations).isEmpty()
+        assertThat(repository.observeSyncStatusInvocations).isEqualTo(1)
+    }
+
+    @Test
+    fun `recovers missing default share with writable shared vault when no owned vault exists`() = runTest {
+        val writableVault = VaultTestFactory.create(
+            shareId = ShareId("writable-vault-share-id"),
+            isOwned = false,
+            role = ShareRole.Write
         )
         val syncStatus = SimpleLoginSyncStatus(
             isSyncEnabled = true,
             isPreferenceEnabled = true,
             pendingAliasCount = 0,
-            defaultVault = readableVault,
+            defaultVault = writableVault,
             canManageAliases = true
         )
 
@@ -147,7 +175,7 @@ class SyncSimpleLoginPendingAliasesImplTest {
                 isSimpleLoginSyncEnabled = true
             )
         )
-        observeVaults.sendResult(Result.success(listOf(readableVault)))
+        observeVaults.sendResult(Result.success(listOf(writableVault)))
         shareKeyRepository.emitGetLatestKeyForShare(ShareKeyTestFactory.createPrivate())
         repository.observeSyncStatusResults.add(Result.failure(ShareNotAvailableError()))
         repository.observeSyncStatusResults.add(Result.success(syncStatus))
@@ -157,9 +185,9 @@ class SyncSimpleLoginPendingAliasesImplTest {
             forceRefresh = false
         )
 
-        assertThat(repository.enableSyncInvocations).containsExactly(readableVault.shareId)
+        assertThat(repository.enableSyncInvocations).containsExactly(writableVault.shareId)
         assertThat(repository.createPendingAliasesInvocations).hasSize(1)
-        assertThat(repository.createPendingAliasesInvocations.first().defaultShareId).isEqualTo(readableVault.shareId)
+        assertThat(repository.createPendingAliasesInvocations.first().defaultShareId).isEqualTo(writableVault.shareId)
         assertThat(repository.createPendingAliasesInvocations.first().pendingAliasesItems).isEmpty()
         assertThat(repository.observeSyncStatusInvocations).isEqualTo(2)
     }

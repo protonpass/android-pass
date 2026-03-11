@@ -87,6 +87,10 @@ dependencies {
 
     testImplementation(libs.junit)
     testImplementation(libs.truth)
+    testImplementation(libs.coroutines.test)
+    testImplementation(projects.pass.commonTest)
+    testImplementation(projects.pass.data.fakes)
+    testImplementation(projects.pass.notifications.fakes)
 
     kaptAndroidTest(libs.dagger.hilt.android.compiler)
     androidTestImplementation(libs.kotlinTest)

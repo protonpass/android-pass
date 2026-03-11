@@ -22,11 +22,51 @@ import com.google.common.truth.Truth.assertThat
 import org.junit.Test
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.some
+import proton.android.pass.domain.ShareFlags
+import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.ShareRole
+import proton.android.pass.domain.Vault
+import proton.android.pass.domain.VaultId
+import proton.android.pass.domain.hasUsableSimpleLoginVaults
 import proton.android.pass.domain.simplelogin.SimpleLoginAliasDomain
 import proton.android.pass.domain.simplelogin.SimpleLoginAliasMailbox
 import proton.android.pass.domain.simplelogin.SimpleLoginAliasSettings
+import me.proton.core.domain.entity.UserId
+import java.util.Date
 
 class SimpleLoginSyncManagementStateTest {
+
+    @Test
+    fun `treats viewer-only vaults as no usable vaults`() {
+        val viewerVault = Vault(
+            userId = UserId("user-id"),
+            shareId = ShareId("viewer-share-id"),
+            vaultId = VaultId("viewer-vault-id"),
+            name = "Viewer vault",
+            isOwned = false,
+            role = ShareRole.Read,
+            createTime = Date(),
+            shareFlags = ShareFlags(0)
+        )
+
+        assertThat(listOf(viewerVault).hasUsableSimpleLoginVaults()).isFalse()
+    }
+
+    @Test
+    fun `treats writable shared vaults as usable vaults`() {
+        val writableVault = Vault(
+            userId = UserId("user-id"),
+            shareId = ShareId("writable-share-id"),
+            vaultId = VaultId("writable-vault-id"),
+            name = "Writable vault",
+            isOwned = false,
+            role = ShareRole.Write,
+            createTime = Date(),
+            shareFlags = ShareFlags(0)
+        )
+
+        assertThat(listOf(writableVault).hasUsableSimpleLoginVaults()).isTrue()
+    }
 
     @Test
     fun `keeps mailboxes visible and mailbox management enabled when no vaults`() {
@@ -66,6 +106,7 @@ class SimpleLoginSyncManagementStateTest {
         assertThat(state.isLoading).isFalse()
         assertThat(state.aliasMailboxes).containsExactly(mailbox)
         assertThat(state.canManageMailboxAliases).isTrue()
+        assertThat(state.canSelectPremiumDomains).isTrue()
         assertThat(state.canManageAliases).isFalse()
     }
 }

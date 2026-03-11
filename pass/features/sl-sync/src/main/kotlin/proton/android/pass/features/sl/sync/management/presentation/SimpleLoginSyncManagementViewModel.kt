@@ -38,6 +38,7 @@ import proton.android.pass.data.api.usecases.simplelogin.ObserveSimpleLoginAlias
 import proton.android.pass.data.api.usecases.simplelogin.ObserveSimpleLoginAliasMailboxes
 import proton.android.pass.data.api.usecases.simplelogin.ObserveSimpleLoginAliasSettings
 import proton.android.pass.data.api.usecases.simplelogin.ObserveSimpleLoginSyncStatus
+import proton.android.pass.domain.hasUsableSimpleLoginVaults
 import proton.android.pass.domain.simplelogin.SimpleLoginSyncStatus
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.SnackbarDispatcher
@@ -53,8 +54,33 @@ class SimpleLoginSyncManagementViewModel @Inject constructor(
     private val snackbarDispatcher: SnackbarDispatcher
 ) : ViewModel() {
 
+    private val aliasDomainsFlow = observeSimpleLoginAliasDomains()
+        .onStart { emit(emptyList()) }
+        .catch { error ->
+            PassLogger.w(TAG, "There was an error while observing SL alias domains")
+            PassLogger.w(TAG, error)
+            emit(emptyList())
+        }
+
+    private val aliasMailboxesFlow = observeSimpleLoginAliasMailboxes()
+        .onStart { emit(emptyList()) }
+        .catch { error ->
+            PassLogger.w(TAG, "There was an error while observing SL alias mailboxes")
+            PassLogger.w(TAG, error)
+            emit(emptyList())
+        }
+
+    private val aliasSettingsFlow = observeSimpleLoginAliasSettings()
+        .onStart { emit(SimpleLoginSyncManagementModel.DefaultAliasSettings) }
+        .catch { error ->
+            PassLogger.w(TAG, "There was an error while observing SL alias settings")
+            PassLogger.w(TAG, error)
+            emit(SimpleLoginSyncManagementModel.DefaultAliasSettings)
+        }
+
     private val syncStatusOptionFlow = observeSimpleLoginSyncStatus()
         .map { syncStatus: SimpleLoginSyncStatus -> syncStatus.some() as Option<SimpleLoginSyncStatus> }
+        .onStart { emit(None) }
         .catch { error ->
             PassLogger.w(TAG, "There was an error while observing SL sync status")
             PassLogger.w(TAG, error)
@@ -62,9 +88,9 @@ class SimpleLoginSyncManagementViewModel @Inject constructor(
         }
 
     private val modelOptionFlow = combine(
-        observeSimpleLoginAliasDomains(),
-        observeSimpleLoginAliasMailboxes(),
-        observeSimpleLoginAliasSettings(),
+        aliasDomainsFlow,
+        aliasMailboxesFlow,
+        aliasSettingsFlow,
         syncStatusOptionFlow
     ) { aliasDomains, aliasMailboxes, aliasSettings, syncStatusOption ->
         SimpleLoginSyncManagementModel(
@@ -73,10 +99,8 @@ class SimpleLoginSyncManagementViewModel @Inject constructor(
             aliasSettings = aliasSettings,
             syncStatusOption = syncStatusOption
         ).some()
-    }.onStart {
-        emit(None)
     }.catch { error ->
-        PassLogger.w(TAG, "There was an error while observing SL alias details")
+        PassLogger.w(TAG, "There was an unexpected error while observing SL alias details")
         PassLogger.w(TAG, error)
         snackbarDispatcher(SimpleLoginSyncManagementSnackBarMessage.FetchAliasDetailsError)
         eventFlow.update { SimpleLoginSyncManagementEvent.OnFetchAliasManagementError }
@@ -84,7 +108,8 @@ class SimpleLoginSyncManagementViewModel @Inject constructor(
     }
 
     private val hasVaultsFlow = observeVaults(includeHidden = true)
-        .map { vaults -> vaults.isNotEmpty() }
+        .map { vaults -> vaults.hasUsableSimpleLoginVaults() }
+        .onStart { emit(false) }
 
     private val eventFlow = MutableStateFlow<SimpleLoginSyncManagementEvent>(
         value = SimpleLoginSyncManagementEvent.Idle

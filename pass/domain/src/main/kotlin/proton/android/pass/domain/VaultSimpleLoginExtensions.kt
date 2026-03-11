@@ -16,12 +16,12 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.data.impl.extensions
+package proton.android.pass.domain
 
-import proton.android.pass.domain.Vault
+fun Vault.canBeUsedForSimpleLogin(): Boolean = isOwned || role.toPermissions().canCreate()
 
-internal fun List<Vault>.selectFallbackVault(): Vault? =
-    firstOrNull { vault -> vault.isOwned && !vault.shareFlags.isHidden() }
-        ?: firstOrNull { vault -> vault.isOwned }
-        ?: firstOrNull { vault -> !vault.shareFlags.isHidden() }
-        ?: firstOrNull()
+fun List<Vault>.hasUsableSimpleLoginVaults(): Boolean = any(Vault::canBeUsedForSimpleLogin)
+
+fun List<Vault>.selectSimpleLoginFallbackVault(): Vault? =
+    firstOrNull { vault -> vault.canBeUsedForSimpleLogin() && !vault.shareFlags.isHidden() }
+        ?: firstOrNull(Vault::canBeUsedForSimpleLogin)

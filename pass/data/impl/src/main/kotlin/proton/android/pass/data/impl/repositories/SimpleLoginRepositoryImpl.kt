@@ -50,7 +50,6 @@ import proton.android.pass.data.api.repositories.UserAccessDataRepository
 import proton.android.pass.data.api.usecases.GetVaultByShareId
 import proton.android.pass.data.api.usecases.ObserveVaults
 import proton.android.pass.data.impl.extensions.toRequest
-import proton.android.pass.data.impl.extensions.selectFallbackVault
 import proton.android.pass.data.impl.local.simplelogin.LocalSimpleLoginDataSource
 import proton.android.pass.data.impl.remote.simplelogin.RemoteSimpleLoginDataSource
 import proton.android.pass.data.impl.requests.SimpleLoginChangeMailboxRequest
@@ -69,6 +68,7 @@ import proton.android.pass.data.impl.responses.SimpleLoginPendingAliasesData
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.UserAccessData
 import proton.android.pass.domain.Vault
+import proton.android.pass.domain.selectSimpleLoginFallbackVault
 import proton.android.pass.domain.simplelogin.SimpleLoginAlias
 import proton.android.pass.domain.simplelogin.SimpleLoginAliasDomain
 import proton.android.pass.domain.simplelogin.SimpleLoginAliasMailbox
@@ -417,7 +417,7 @@ class SimpleLoginRepositoryImpl @Inject constructor(
             userId = userId,
             includeHidden = true
         ).first()
-        val fallbackVault = vaults.selectFallbackVault()
+        val fallbackVault = vaults.selectSimpleLoginFallbackVault()
 
         if (fallbackVault == null) return
 

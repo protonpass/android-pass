@@ -35,8 +35,13 @@ internal data class SimpleLoginSyncManagementModel(
 ) {
 
     internal val defaultDomain: String? = aliasSettings.defaultDomain
+        ?: aliasDomains.firstOrNull { aliasDomain -> aliasDomain.isDefault }?.domain
+        ?: aliasDomains.firstOrNull()?.domain
 
     internal val defaultMailboxId: Long = aliasSettings.defaultMailboxId
+        .takeIf { defaultMailboxId -> defaultMailboxId != 0L }
+        ?: aliasMailboxes.firstOrNull { aliasMailbox -> aliasMailbox.isDefault }?.id
+        ?: 0L
 
     internal val defaultVault: Vault? = when (syncStatusOption) {
         None -> null
@@ -56,6 +61,13 @@ internal data class SimpleLoginSyncManagementModel(
     internal val canManageAliases: Boolean = when (syncStatusOption) {
         None -> false
         is Some -> syncStatusOption.value.canManageAliases
+    }
+
+    internal companion object {
+        internal val DefaultAliasSettings = SimpleLoginAliasSettings(
+            defaultDomain = null,
+            defaultMailboxId = 0
+        )
     }
 
 }

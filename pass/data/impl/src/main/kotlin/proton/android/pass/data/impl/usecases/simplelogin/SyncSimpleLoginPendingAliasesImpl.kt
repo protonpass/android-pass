@@ -28,11 +28,11 @@ import proton.android.pass.data.api.repositories.SimpleLoginRepository
 import proton.android.pass.data.api.repositories.UserAccessDataRepository
 import proton.android.pass.data.api.usecases.ObserveVaults
 import proton.android.pass.data.api.usecases.simplelogin.SyncSimpleLoginPendingAliases
-import proton.android.pass.data.impl.extensions.selectFallbackVault
 import proton.android.pass.data.impl.repositories.ShareKeyRepository
 import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.Vault
 import proton.android.pass.domain.key.ShareKey
+import proton.android.pass.domain.selectSimpleLoginFallbackVault
 import proton.android.pass.domain.simplelogin.SimpleLoginSyncStatus
 import proton.android.pass.log.api.PassLogger
 import javax.inject.Inject
@@ -100,7 +100,7 @@ class SyncSimpleLoginPendingAliasesImpl @Inject constructor(
     private suspend fun getFallbackVault(userId: UserId): Vault? = observeVaults(
         userId = userId,
         includeHidden = true
-    ).first().selectFallbackVault()
+    ).first().selectSimpleLoginFallbackVault()
 
     private suspend fun recoverAndGetSyncStatus(userId: UserId): SimpleLoginSyncStatus? {
         val fallbackVault = getFallbackVault(userId) ?: run {

@@ -20,6 +20,7 @@ package proton.android.pass.data.fakes.usecases.simplelogin
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.update
 import proton.android.pass.data.api.usecases.simplelogin.ObserveSimpleLoginAliasSettings
 import proton.android.pass.domain.simplelogin.SimpleLoginAliasSettings
 import javax.inject.Inject
@@ -36,5 +37,9 @@ class FakeObserveSimpleLoginAliasSettings @Inject constructor() : ObserveSimpleL
     )
 
     override fun invoke(): Flow<SimpleLoginAliasSettings> = simpleLoginAliasSettingsFlow
+
+    fun sendSettings(settings: SimpleLoginAliasSettings) {
+        simpleLoginAliasSettingsFlow.update { settings }
+    }
 
 }

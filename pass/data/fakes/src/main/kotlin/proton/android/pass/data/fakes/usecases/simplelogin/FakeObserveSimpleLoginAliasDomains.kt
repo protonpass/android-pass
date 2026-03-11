@@ -20,6 +20,7 @@ package proton.android.pass.data.fakes.usecases.simplelogin
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.update
 import proton.android.pass.data.api.usecases.simplelogin.ObserveSimpleLoginAliasDomains
 import proton.android.pass.domain.simplelogin.SimpleLoginAliasDomain
 import javax.inject.Inject
@@ -31,5 +32,9 @@ class FakeObserveSimpleLoginAliasDomains @Inject constructor() : ObserveSimpleLo
     private val simpleLoginAliasDomainsFlow = MutableStateFlow<List<SimpleLoginAliasDomain>>(emptyList())
 
     override operator fun invoke(): Flow<List<SimpleLoginAliasDomain>> = simpleLoginAliasDomainsFlow
+
+    fun sendDomains(domains: List<SimpleLoginAliasDomain>) {
+        simpleLoginAliasDomainsFlow.update { domains }
+    }
 
 }

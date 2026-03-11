@@ -84,6 +84,8 @@ internal data class SimpleLoginSyncManagementState(
         is Some -> modelOption.value.canManageAliases
     }
 
+    internal val canSelectPremiumDomains: Boolean = isNoVaults || canManageAliases
+
     internal val canManageMailboxAliases: Boolean = isNoVaults || canManageAliases
 
     internal companion object {

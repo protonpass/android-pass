@@ -83,6 +83,7 @@ class SimpleLoginSyncManagementStateTest {
             isUpdating = false,
             event = SimpleLoginSyncManagementEvent.Idle,
             modelOption = SimpleLoginSyncManagementModel(
+                vaults = emptyList(),
                 aliasDomains = listOf(
                     SimpleLoginAliasDomain(
                         domain = "example.com",
@@ -99,14 +100,14 @@ class SimpleLoginSyncManagementStateTest {
                 ),
                 syncStatusOption = None
             ).some(),
-            hasVaults = false
+            hasVaults = false,
+            canManageMailboxAliases = true
         )
 
         assertThat(state.isNoVaults).isTrue()
         assertThat(state.isLoading).isFalse()
         assertThat(state.aliasMailboxes).containsExactly(mailbox)
         assertThat(state.canManageMailboxAliases).isTrue()
-        assertThat(state.canSelectPremiumDomains).isTrue()
         assertThat(state.canManageAliases).isFalse()
     }
 }

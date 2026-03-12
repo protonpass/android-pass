@@ -2945,9 +2945,7 @@ fun NavGraphBuilder.appGraph(
 
                 is SimpleLoginSyncNavDestination.SelectDomain -> appNavigator.navigate(
                     destination = SimpleLoginSyncDomainSelectNavItem,
-                    route = SimpleLoginSyncDomainSelectNavItem.buildRoute(
-                        canSelectPremiumDomains = destination.canSelectPremiumDomains
-                    )
+                    route = SimpleLoginSyncDomainSelectNavItem.baseRoute
                 )
 
                 is SimpleLoginSyncNavDestination.MailboxOptions -> appNavigator.navigate(

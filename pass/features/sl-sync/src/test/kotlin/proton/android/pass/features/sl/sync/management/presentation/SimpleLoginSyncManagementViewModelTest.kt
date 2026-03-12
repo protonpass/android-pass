@@ -27,19 +27,22 @@ import kotlinx.coroutines.test.runTest
 import org.junit.Rule
 import org.junit.Test
 import proton.android.pass.data.api.usecases.simplelogin.ObserveSimpleLoginAliasSettings
-import proton.android.pass.data.api.usecases.simplelogin.ObserveSimpleLoginSyncStatus
+import proton.android.pass.data.fakes.usecases.FakeGetUserPlan
 import proton.android.pass.data.fakes.usecases.FakeObserveVaults
 import proton.android.pass.data.fakes.usecases.simplelogin.FakeObserveSimpleLoginAliasDomains
 import proton.android.pass.data.fakes.usecases.simplelogin.FakeObserveSimpleLoginAliasMailboxes
 import proton.android.pass.data.fakes.usecases.simplelogin.FakeObserveSimpleLoginAliasSettings
 import proton.android.pass.data.fakes.usecases.simplelogin.FakeObserveSimpleLoginSyncStatus
+import proton.android.pass.domain.PlanType
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.ShareRole
+import proton.android.pass.domain.simplelogin.SimpleLoginSyncStatus
 import proton.android.pass.domain.simplelogin.SimpleLoginAliasDomain
 import proton.android.pass.domain.simplelogin.SimpleLoginAliasMailbox
 import proton.android.pass.domain.simplelogin.SimpleLoginAliasSettings
 import proton.android.pass.notifications.fakes.FakeSnackbarDispatcher
 import proton.android.pass.test.MainDispatcherRule
+import proton.android.pass.test.domain.plans.PlanTestFactory
 import proton.android.pass.test.domain.VaultTestFactory
 
 class SimpleLoginSyncManagementViewModelTest {
@@ -48,7 +51,7 @@ class SimpleLoginSyncManagementViewModelTest {
     val mainDispatcherRule = MainDispatcherRule()
 
     @Test
-    fun `keeps mailboxes and domains visible when settings and sync status fail with only viewer vaults`() = runTest {
+    fun `keeps mailboxes and domains visible when settings fail with only viewer vaults`() = runTest {
         val mailbox = SimpleLoginAliasMailbox(
             id = 1L,
             email = "alias@example.com",
@@ -98,7 +101,10 @@ class SimpleLoginSyncManagementViewModelTest {
             observeSimpleLoginAliasDomains = observeAliasDomains,
             observeSimpleLoginAliasMailboxes = observeAliasMailboxes,
             observeSimpleLoginAliasSettings = failingAliasSettingsFlow(),
-            observeSimpleLoginSyncStatus = failingSyncStatusFlow(),
+            observeSimpleLoginSyncStatus = FakeObserveSimpleLoginSyncStatus(),
+            getUserPlan = FakeGetUserPlan().apply {
+                setResult(Result.success(PlanTestFactory.create(planType = PAID_PLAN_TYPE)))
+            },
             snackbarDispatcher = FakeSnackbarDispatcher()
         )
         val collectJob = backgroundScope.launch {
@@ -113,6 +119,7 @@ class SimpleLoginSyncManagementViewModelTest {
         assertThat(state.aliasMailboxes).containsExactly(mailbox)
         assertThat(state.canSelectDomain).isTrue()
         assertThat(state.defaultDomain).isEqualTo("example.com")
+        assertThat(state.canManageMailboxAliases).isTrue()
 
         collectJob.cancel()
     }
@@ -145,6 +152,7 @@ class SimpleLoginSyncManagementViewModelTest {
                 )
             },
             observeSimpleLoginSyncStatus = FakeObserveSimpleLoginSyncStatus(),
+            getUserPlan = FakeGetUserPlan(),
             snackbarDispatcher = FakeSnackbarDispatcher()
         )
         val collectJob = backgroundScope.launch {
@@ -158,17 +166,218 @@ class SimpleLoginSyncManagementViewModelTest {
         assertThat(state.isLoading).isFalse()
         assertThat(state.aliasMailboxes).isEmpty()
         assertThat(state.defaultDomain).isNull()
+        assertThat(state.canManageMailboxAliases).isFalse()
+
+        collectJob.cancel()
+    }
+
+    @Test
+    fun `allows mailbox management for paid users with a usable vault`() = runTest {
+        val observeVaults = FakeObserveVaults().apply {
+            sendResult(
+                Result.success(
+                    listOf(
+                        VaultTestFactory.create(
+                            shareId = ShareId("owned-share-id"),
+                            isOwned = true,
+                            role = ShareRole.Admin
+                        )
+                    )
+                )
+            )
+        }
+        val viewModel = SimpleLoginSyncManagementViewModel(
+            observeVaults = observeVaults,
+            observeSimpleLoginAliasDomains = FakeObserveSimpleLoginAliasDomains(),
+            observeSimpleLoginAliasMailboxes = FakeObserveSimpleLoginAliasMailboxes(),
+            observeSimpleLoginAliasSettings = FakeObserveSimpleLoginAliasSettings(),
+            observeSimpleLoginSyncStatus = FakeObserveSimpleLoginSyncStatus(),
+            getUserPlan = FakeGetUserPlan().apply {
+                setResult(Result.success(PlanTestFactory.create(planType = PAID_PLAN_TYPE)))
+            },
+            snackbarDispatcher = FakeSnackbarDispatcher()
+        )
+        val collectJob = backgroundScope.launch {
+            viewModel.state.collect { }
+        }
+
+        advanceUntilIdle()
+
+        val state = viewModel.state.value
+        assertThat(state.isNoVaults).isFalse()
+        assertThat(state.canManageMailboxAliases).isTrue()
+
+        collectJob.cancel()
+    }
+
+    @Test
+    fun `falls back to live vault when sync status default vault was deleted`() = runTest {
+        val staleVault = VaultTestFactory.create(
+            shareId = ShareId("deleted-share-id"),
+            name = "Deleted vault",
+            isOwned = true,
+            role = ShareRole.Admin
+        )
+        val recreatedVault = VaultTestFactory.create(
+            shareId = ShareId("new-share-id"),
+            name = "New vault",
+            isOwned = true,
+            role = ShareRole.Admin
+        )
+        val observeVaults = FakeObserveVaults().apply {
+            sendResult(Result.success(listOf(recreatedVault)))
+        }
+        val observeSyncStatus = FakeObserveSimpleLoginSyncStatus().apply {
+            updateSyncStatus(
+                SimpleLoginSyncStatus(
+                    isSyncEnabled = true,
+                    isPreferenceEnabled = true,
+                    pendingAliasCount = 0,
+                    defaultVault = staleVault,
+                    canManageAliases = true
+                )
+            )
+        }
+        val viewModel = SimpleLoginSyncManagementViewModel(
+            observeVaults = observeVaults,
+            observeSimpleLoginAliasDomains = FakeObserveSimpleLoginAliasDomains(),
+            observeSimpleLoginAliasMailboxes = FakeObserveSimpleLoginAliasMailboxes(),
+            observeSimpleLoginAliasSettings = FakeObserveSimpleLoginAliasSettings(),
+            observeSimpleLoginSyncStatus = observeSyncStatus,
+            getUserPlan = FakeGetUserPlan(),
+            snackbarDispatcher = FakeSnackbarDispatcher()
+        )
+        val collectJob = backgroundScope.launch {
+            viewModel.state.collect { }
+        }
+
+        advanceUntilIdle()
+
+        val state = viewModel.state.value
+        assertThat(state.isNoVaults).isFalse()
+        assertThat(state.defaultVault?.shareId).isEqualTo(recreatedVault.shareId)
+        assertThat(state.defaultVault?.name).isEqualTo("New vault")
+
+        collectJob.cancel()
+    }
+
+    @Test
+    fun `forces sync status refresh when usable vaults are available and when they change`() = runTest {
+        val initialVault = VaultTestFactory.create(
+            shareId = ShareId("old-share-id"),
+            isOwned = true,
+            role = ShareRole.Admin
+        )
+        val recreatedVault = VaultTestFactory.create(
+            shareId = ShareId("new-share-id"),
+            isOwned = true,
+            role = ShareRole.Admin
+        )
+        val observeVaults = FakeObserveVaults().apply {
+            sendResult(Result.success(listOf(initialVault)))
+        }
+        val observeSyncStatus = FakeObserveSimpleLoginSyncStatus().apply {
+            updateSyncStatus(
+                SimpleLoginSyncStatus(
+                    isSyncEnabled = true,
+                    isPreferenceEnabled = true,
+                    pendingAliasCount = 0,
+                    defaultVault = initialVault,
+                    canManageAliases = true
+                )
+            )
+        }
+        val viewModel = SimpleLoginSyncManagementViewModel(
+            observeVaults = observeVaults,
+            observeSimpleLoginAliasDomains = FakeObserveSimpleLoginAliasDomains(),
+            observeSimpleLoginAliasMailboxes = FakeObserveSimpleLoginAliasMailboxes(),
+            observeSimpleLoginAliasSettings = FakeObserveSimpleLoginAliasSettings(),
+            observeSimpleLoginSyncStatus = observeSyncStatus,
+            getUserPlan = FakeGetUserPlan(),
+            snackbarDispatcher = FakeSnackbarDispatcher()
+        )
+        val collectJob = backgroundScope.launch {
+            viewModel.state.collect { }
+        }
+
+        advanceUntilIdle()
+        observeVaults.sendResult(Result.success(listOf(recreatedVault)))
+        advanceUntilIdle()
+
+        assertThat(observeSyncStatus.forceRefreshValues).containsExactly(true, true).inOrder()
+
+        collectJob.cancel()
+    }
+
+    @Test
+    fun `does not show a selected domain when none is selected`() = runTest {
+        val observeAliasDomains = FakeObserveSimpleLoginAliasDomains().apply {
+            sendDomains(
+                listOf(
+                    SimpleLoginAliasDomain(
+                        domain = "example.com",
+                        isDefault = false,
+                        isCustom = false,
+                        isPremium = false,
+                        isVerified = true
+                    ),
+                    SimpleLoginAliasDomain(
+                        domain = "example.net",
+                        isDefault = false,
+                        isCustom = false,
+                        isPremium = true,
+                        isVerified = true
+                    )
+                )
+            )
+        }
+        val viewModel = SimpleLoginSyncManagementViewModel(
+            observeVaults = FakeObserveVaults().apply {
+                sendResult(
+                    Result.success(
+                        listOf(
+                            VaultTestFactory.create(
+                                shareId = ShareId("owned-share-id"),
+                                isOwned = true,
+                                role = ShareRole.Admin
+                            )
+                        )
+                    )
+                )
+            },
+            observeSimpleLoginAliasDomains = observeAliasDomains,
+            observeSimpleLoginAliasMailboxes = FakeObserveSimpleLoginAliasMailboxes(),
+            observeSimpleLoginAliasSettings = FakeObserveSimpleLoginAliasSettings().apply {
+                sendSettings(
+                    SimpleLoginAliasSettings(
+                        defaultDomain = null,
+                        defaultMailboxId = 0
+                    )
+                )
+            },
+            observeSimpleLoginSyncStatus = FakeObserveSimpleLoginSyncStatus(),
+            getUserPlan = FakeGetUserPlan(),
+            snackbarDispatcher = FakeSnackbarDispatcher()
+        )
+        val collectJob = backgroundScope.launch {
+            viewModel.state.collect { }
+        }
+
+        advanceUntilIdle()
+
+        val state = viewModel.state.value
+        assertThat(state.defaultDomain).isNull()
+        assertThat(state.canSelectDomain).isTrue()
 
         collectJob.cancel()
     }
 
     private fun failingAliasSettingsFlow(): ObserveSimpleLoginAliasSettings = object : ObserveSimpleLoginAliasSettings {
-        override fun invoke(): Flow<proton.android.pass.domain.simplelogin.SimpleLoginAliasSettings> =
+        override fun invoke(): Flow<SimpleLoginAliasSettings> =
             flow { throw IllegalStateException("settings unavailable") }
     }
 
-    private fun failingSyncStatusFlow(): ObserveSimpleLoginSyncStatus = object : ObserveSimpleLoginSyncStatus {
-        override fun invoke(): Flow<proton.android.pass.domain.simplelogin.SimpleLoginSyncStatus> =
-            flow { throw IllegalStateException("sync status unavailable") }
+    private companion object {
+        private val PAID_PLAN_TYPE = PlanType.Paid.Plus("plus", "Plus")
     }
 }

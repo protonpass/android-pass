@@ -33,6 +33,7 @@ import proton.android.pass.composecomponents.impl.extension.toColor
 import proton.android.pass.composecomponents.impl.extension.toResource
 import proton.android.pass.composecomponents.impl.icon.VaultIcon
 import proton.android.pass.composecomponents.impl.widgets.PassSingleActionWidget
+import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.Vault
 import proton.android.pass.domain.simplelogin.SimpleLoginAliasMailbox
 import proton.android.pass.features.sl.sync.R
@@ -100,52 +101,84 @@ internal fun SimpleLoginSyncManagementSections(
                     text = stringResource(id = R.string.simple_login_sync_management_no_vault_description)
                 )
             }
-        } else if (isSyncEnabled && defaultVault != null) {
-            with(defaultVault) {
-                SimpleLoginSyncSectionRow(
-                    leadingIcon = {
-                        VaultIcon(
-                            backgroundColor = color.toColor(isBackground = true),
-                            icon = icon.toResource(),
-                            iconColor = color.toColor()
-                        )
-                    },
-                    label = stringResource(id = R.string.simple_login_sync_management_vault_title),
-                    title = stringResource(id = R.string.simple_login_sync_shared_default_vault_title),
-                    subtitle = name,
-                    description = stringResource(
-                        id = R.string.simple_login_sync_shared_default_vault_description
-                    ),
-                    onClick = {
-                        SimpleLoginSyncManagementUiEvent.OnDefaultVaultClicked(
-                            shareId = shareId
-                        ).also(onUiEvent)
-                    }
-                )
+        } else {
+            if (isSyncEnabled) {
+                defaultVault?.let {
+                    DefaultVaultSectionRow(
+                        vault = it,
+                        onUiEvent = onUiEvent
+                    )
+                }
             }
-        } else if (hasPendingAliases) {
-            Column(
-                verticalArrangement = Arrangement.spacedBy(space = Spacing.small)
-            ) {
-                SimpleLoginSyncLabelText(
-                    text = stringResource(id = R.string.simple_login_sync_management_vault_title)
-                )
 
-                PassSingleActionWidget(
-                    title = stringResource(id = CompR.string.simple_login_widget_title),
-                    message = pluralStringResource(
-                        id = CompR.plurals.simple_login_widget_pending_aliases_message,
-                        count = pendingAliasesCount,
-                        pendingAliasesCount
-                    ),
-                    actionText = stringResource(id = CompR.string.simple_login_widget_action),
-                    onActionClick = {
-                        SimpleLoginSyncManagementUiEvent.OnSyncSettingsClicked(
-                            shareId = defaultVault?.shareId
-                        ).also(onUiEvent)
-                    }
+            if (!isSyncEnabled && hasPendingAliases) {
+                PendingAliasesSection(
+                    pendingAliasesCount = pendingAliasesCount,
+                    shareId = defaultVault?.shareId,
+                    onUiEvent = onUiEvent
                 )
             }
         }
+    }
+}
+
+@Composable
+private fun DefaultVaultSectionRow(
+    modifier: Modifier = Modifier,
+    vault: Vault,
+    onUiEvent: (SimpleLoginSyncManagementUiEvent) -> Unit
+) = with(vault) {
+    SimpleLoginSyncSectionRow(
+        modifier = modifier,
+        leadingIcon = {
+            VaultIcon(
+                backgroundColor = color.toColor(isBackground = true),
+                icon = icon.toResource(),
+                iconColor = color.toColor()
+            )
+        },
+        label = stringResource(id = R.string.simple_login_sync_management_vault_title),
+        title = stringResource(id = R.string.simple_login_sync_shared_default_vault_title),
+        subtitle = name,
+        description = stringResource(
+            id = R.string.simple_login_sync_shared_default_vault_description
+        ),
+        onClick = {
+            SimpleLoginSyncManagementUiEvent.OnDefaultVaultClicked(
+                shareId = shareId
+            ).also(onUiEvent)
+        }
+    )
+}
+
+@Composable
+private fun PendingAliasesSection(
+    modifier: Modifier = Modifier,
+    pendingAliasesCount: Int,
+    shareId: ShareId?,
+    onUiEvent: (SimpleLoginSyncManagementUiEvent) -> Unit
+) {
+    Column(
+        modifier = modifier,
+        verticalArrangement = Arrangement.spacedBy(space = Spacing.small)
+    ) {
+        SimpleLoginSyncLabelText(
+            text = stringResource(id = R.string.simple_login_sync_management_vault_title)
+        )
+
+        PassSingleActionWidget(
+            title = stringResource(id = CompR.string.simple_login_widget_title),
+            message = pluralStringResource(
+                id = CompR.plurals.simple_login_widget_pending_aliases_message,
+                count = pendingAliasesCount,
+                pendingAliasesCount
+            ),
+            actionText = stringResource(id = CompR.string.simple_login_widget_action),
+            onActionClick = {
+                SimpleLoginSyncManagementUiEvent.OnSyncSettingsClicked(
+                    shareId = shareId
+                ).also(onUiEvent)
+            }
+        )
     }
 }

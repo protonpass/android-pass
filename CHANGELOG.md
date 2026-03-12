@@ -6,6 +6,22 @@
 
 ### Other
 
+## 1.38.0 (2026-03-12)
+
+### Features :tada:
+
+- Allow generating SSH key pairs within SSH key items.
+- Improved autosave.
+
+### Fixes :bug:
+
+- Bug fixes and improvements.
+
+### Other
+
+- Add view alias from login.
+- Updated translations.
+
 ## 1.37.3 (2026-03-09)
 
 ### Fixes :bug:

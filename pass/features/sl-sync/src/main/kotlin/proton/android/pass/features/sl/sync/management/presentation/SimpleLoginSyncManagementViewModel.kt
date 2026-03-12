@@ -26,6 +26,9 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.stateIn
@@ -33,11 +36,14 @@ import kotlinx.coroutines.flow.update
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.some
+import proton.android.pass.data.api.usecases.GetUserPlan
 import proton.android.pass.data.api.usecases.ObserveVaults
 import proton.android.pass.data.api.usecases.simplelogin.ObserveSimpleLoginAliasDomains
 import proton.android.pass.data.api.usecases.simplelogin.ObserveSimpleLoginAliasMailboxes
 import proton.android.pass.data.api.usecases.simplelogin.ObserveSimpleLoginAliasSettings
 import proton.android.pass.data.api.usecases.simplelogin.ObserveSimpleLoginSyncStatus
+import proton.android.pass.domain.Vault
+import proton.android.pass.domain.canBeUsedForSimpleLogin
 import proton.android.pass.domain.hasUsableSimpleLoginVaults
 import proton.android.pass.domain.simplelogin.SimpleLoginSyncStatus
 import proton.android.pass.log.api.PassLogger
@@ -51,6 +57,7 @@ class SimpleLoginSyncManagementViewModel @Inject constructor(
     observeSimpleLoginAliasMailboxes: ObserveSimpleLoginAliasMailboxes,
     observeSimpleLoginAliasSettings: ObserveSimpleLoginAliasSettings,
     observeSimpleLoginSyncStatus: ObserveSimpleLoginSyncStatus,
+    getUserPlan: GetUserPlan,
     private val snackbarDispatcher: SnackbarDispatcher
 ) : ViewModel() {
 
@@ -78,22 +85,41 @@ class SimpleLoginSyncManagementViewModel @Inject constructor(
             emit(SimpleLoginSyncManagementModel.DefaultAliasSettings)
         }
 
-    private val syncStatusOptionFlow = observeSimpleLoginSyncStatus()
-        .map { syncStatus: SimpleLoginSyncStatus -> syncStatus.some() as Option<SimpleLoginSyncStatus> }
-        .onStart { emit(None) }
-        .catch { error ->
-            PassLogger.w(TAG, "There was an error while observing SL sync status")
-            PassLogger.w(TAG, error)
-            emit(None)
+    private val vaultsFlow = observeVaults(includeHidden = true)
+        .onStart { emit(emptyList()) }
+
+    private val syncStatusOptionFlow = vaultsFlow
+        .map { vaults ->
+            vaults
+                .filter(Vault::canBeUsedForSimpleLogin)
+                .map { vault -> vault.shareId.id }
+                .sorted()
+        }
+        .distinctUntilChanged()
+        .flatMapLatest { usableVaultShareIds ->
+            if (usableVaultShareIds.isEmpty()) {
+                return@flatMapLatest flowOf(None)
+            }
+
+            observeSimpleLoginSyncStatus(forceRefresh = true)
+                .map { syncStatus: SimpleLoginSyncStatus -> syncStatus.some() as Option<SimpleLoginSyncStatus> }
+                .onStart { emit(None) }
+                .catch { error ->
+                    PassLogger.w(TAG, "There was an error while observing SL sync status")
+                    PassLogger.w(TAG, error)
+                    emit(None)
+                }
         }
 
     private val modelOptionFlow = combine(
+        vaultsFlow,
         aliasDomainsFlow,
         aliasMailboxesFlow,
         aliasSettingsFlow,
         syncStatusOptionFlow
-    ) { aliasDomains, aliasMailboxes, aliasSettings, syncStatusOption ->
+    ) { vaults, aliasDomains, aliasMailboxes, aliasSettings, syncStatusOption ->
         SimpleLoginSyncManagementModel(
+            vaults = vaults,
             aliasDomains = aliasDomains,
             aliasMailboxes = aliasMailboxes,
             aliasSettings = aliasSettings,
@@ -107,9 +133,17 @@ class SimpleLoginSyncManagementViewModel @Inject constructor(
         emit(None)
     }
 
-    private val hasVaultsFlow = observeVaults(includeHidden = true)
+    private val hasVaultsFlow = vaultsFlow
         .map { vaults -> vaults.hasUsableSimpleLoginVaults() }
+
+    private val canManageMailboxAliasesFlow = getUserPlan()
+        .map { userPlan -> userPlan.isPaidPlan }
         .onStart { emit(false) }
+        .catch { error ->
+            PassLogger.w(TAG, "There was an error while observing the user plan")
+            PassLogger.w(TAG, error)
+            emit(false)
+        }
 
     private val eventFlow = MutableStateFlow<SimpleLoginSyncManagementEvent>(
         value = SimpleLoginSyncManagementEvent.Idle
@@ -122,6 +156,7 @@ class SimpleLoginSyncManagementViewModel @Inject constructor(
         eventFlow,
         modelOptionFlow,
         hasVaultsFlow,
+        canManageMailboxAliasesFlow,
         ::SimpleLoginSyncManagementState
     ).stateIn(
         scope = viewModelScope,

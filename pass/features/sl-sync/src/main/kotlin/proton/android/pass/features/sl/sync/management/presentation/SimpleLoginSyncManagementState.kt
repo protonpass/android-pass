@@ -34,7 +34,8 @@ internal data class SimpleLoginSyncManagementState(
     internal val isUpdating: Boolean,
     internal val event: SimpleLoginSyncManagementEvent,
     private val modelOption: Option<SimpleLoginSyncManagementModel>,
-    private val hasVaults: Boolean
+    private val hasVaults: Boolean,
+    internal val canManageMailboxAliases: Boolean
 ) {
 
     internal val defaultDomain: String? = when (modelOption) {
@@ -84,17 +85,14 @@ internal data class SimpleLoginSyncManagementState(
         is Some -> modelOption.value.canManageAliases
     }
 
-    internal val canSelectPremiumDomains: Boolean = isNoVaults || canManageAliases
-
-    internal val canManageMailboxAliases: Boolean = isNoVaults || canManageAliases
-
     internal companion object {
 
         internal val Initial: SimpleLoginSyncManagementState = SimpleLoginSyncManagementState(
             isUpdating = false,
             event = SimpleLoginSyncManagementEvent.Idle,
             modelOption = None,
-            hasVaults = true
+            hasVaults = true,
+            canManageMailboxAliases = false
         )
 
     }

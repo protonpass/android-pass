@@ -31,8 +31,12 @@ import javax.inject.Singleton
 class FakeObserveSimpleLoginSyncStatus @Inject constructor() : ObserveSimpleLoginSyncStatus {
 
     private val simpleLoginSyncStatusFlow = MutableStateFlow<SimpleLoginSyncStatus?>(null)
+    val forceRefreshValues = mutableListOf<Boolean>()
 
-    override fun invoke(): Flow<SimpleLoginSyncStatus> = simpleLoginSyncStatusFlow.filterNotNull()
+    override fun invoke(forceRefresh: Boolean): Flow<SimpleLoginSyncStatus> {
+        forceRefreshValues += forceRefresh
+        return simpleLoginSyncStatusFlow.filterNotNull()
+    }
 
     fun updateSyncStatus(newStatus: SimpleLoginSyncStatus) {
         simpleLoginSyncStatusFlow.update { newStatus }

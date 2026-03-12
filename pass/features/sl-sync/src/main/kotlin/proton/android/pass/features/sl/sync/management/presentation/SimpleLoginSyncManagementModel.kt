@@ -22,21 +22,25 @@ import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
 import proton.android.pass.domain.Vault
+import proton.android.pass.domain.canBeUsedForSimpleLogin
+import proton.android.pass.domain.selectSimpleLoginFallbackVault
 import proton.android.pass.domain.simplelogin.SimpleLoginAliasDomain
 import proton.android.pass.domain.simplelogin.SimpleLoginAliasMailbox
 import proton.android.pass.domain.simplelogin.SimpleLoginAliasSettings
 import proton.android.pass.domain.simplelogin.SimpleLoginSyncStatus
 
 internal data class SimpleLoginSyncManagementModel(
+    private val vaults: List<Vault>,
     internal val aliasDomains: List<SimpleLoginAliasDomain>,
     internal val aliasMailboxes: List<SimpleLoginAliasMailbox>,
     private val aliasSettings: SimpleLoginAliasSettings,
     private val syncStatusOption: Option<SimpleLoginSyncStatus>
 ) {
 
+    private val usableVaults: List<Vault> = vaults.filter(Vault::canBeUsedForSimpleLogin)
+
     internal val defaultDomain: String? = aliasSettings.defaultDomain
         ?: aliasDomains.firstOrNull { aliasDomain -> aliasDomain.isDefault }?.domain
-        ?: aliasDomains.firstOrNull()?.domain
 
     internal val defaultMailboxId: Long = aliasSettings.defaultMailboxId
         .takeIf { defaultMailboxId -> defaultMailboxId != 0L }
@@ -44,8 +48,10 @@ internal data class SimpleLoginSyncManagementModel(
         ?: 0L
 
     internal val defaultVault: Vault? = when (syncStatusOption) {
-        None -> null
-        is Some -> syncStatusOption.value.defaultVault
+        None -> usableVaults.selectSimpleLoginFallbackVault()
+        is Some -> usableVaults.firstOrNull { vault ->
+            vault.shareId == syncStatusOption.value.defaultVault.shareId
+        } ?: usableVaults.selectSimpleLoginFallbackVault()
     }
 
     internal val pendingAliasesCount: Int = when (syncStatusOption) {

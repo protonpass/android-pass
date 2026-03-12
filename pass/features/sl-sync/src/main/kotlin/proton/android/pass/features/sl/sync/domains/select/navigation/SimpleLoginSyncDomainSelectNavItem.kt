@@ -23,10 +23,5 @@ import proton.android.pass.navigation.api.NavItemType
 
 object SimpleLoginSyncDomainSelectNavItem : NavItem(
     baseRoute = "sl/sync/domains/select",
-    navItemType = NavItemType.Bottomsheet,
-    navArgIds = listOf(SimpleLoginSyncDomainSelectPremiumNavId)
-) {
-
-    fun buildRoute(canSelectPremiumDomains: Boolean) = "$baseRoute/$canSelectPremiumDomains"
-
-}
+    navItemType = NavItemType.Bottomsheet
+)

@@ -23,6 +23,6 @@ import proton.android.pass.domain.simplelogin.SimpleLoginSyncStatus
 
 interface ObserveSimpleLoginSyncStatus {
 
-    operator fun invoke(): Flow<SimpleLoginSyncStatus>
+    operator fun invoke(forceRefresh: Boolean = false): Flow<SimpleLoginSyncStatus>
 
 }

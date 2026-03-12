@@ -32,9 +32,9 @@ class ObserveSimpleLoginSyncStatusImpl @Inject constructor(
     private val accountManager: AccountManager
 ) : ObserveSimpleLoginSyncStatus {
 
-    override fun invoke(): Flow<SimpleLoginSyncStatus> = accountManager.getPrimaryUserId()
+    override fun invoke(forceRefresh: Boolean): Flow<SimpleLoginSyncStatus> = accountManager.getPrimaryUserId()
         .filterNotNull()
         .flatMapLatest { userId ->
-            repository.observeSyncStatus(userId, false)
+            repository.observeSyncStatus(userId, forceRefresh)
         }
 }

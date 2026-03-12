@@ -43,8 +43,7 @@ sealed interface SimpleLoginSyncNavDestination {
     @JvmInline
     value class ChangeMailboxEmail(val mailboxId: Long) : SimpleLoginSyncNavDestination
 
-    @JvmInline
-    value class SelectDomain(val canSelectPremiumDomains: Boolean) : SimpleLoginSyncNavDestination
+    data object SelectDomain : SimpleLoginSyncNavDestination
 
     @JvmInline
     value class MailboxOptions(val mailboxId: Long) : SimpleLoginSyncNavDestination

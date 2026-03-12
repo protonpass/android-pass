@@ -26,6 +26,8 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -35,25 +37,29 @@ import proton.android.pass.common.api.onError
 import proton.android.pass.common.api.onSuccess
 import proton.android.pass.common.api.runCatching
 import proton.android.pass.common.api.some
-import proton.android.pass.commonui.api.SavedStateHandleProvider
-import proton.android.pass.commonui.api.require
+import proton.android.pass.data.api.usecases.GetUserPlan
 import proton.android.pass.data.api.usecases.simplelogin.ObserveSimpleLoginAliasDomains
 import proton.android.pass.data.api.usecases.simplelogin.UpdateSimpleLoginAliasDomain
-import proton.android.pass.features.sl.sync.domains.select.navigation.SimpleLoginSyncDomainSelectPremiumNavId
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.SnackbarDispatcher
 import javax.inject.Inject
 
 @HiltViewModel
 class SimpleLoginSyncDomainSelectViewModel @Inject constructor(
-    savedStateHandleProvider: SavedStateHandleProvider,
     observeSimpleLoginAliasDomains: ObserveSimpleLoginAliasDomains,
+    getUserPlan: GetUserPlan,
     private val updateSimpleLoginAliasDomain: UpdateSimpleLoginAliasDomain,
     private val snackbarDispatcher: SnackbarDispatcher
 ) : ViewModel() {
 
-    private val canSelectPremiumDomains = savedStateHandleProvider.get()
-        .require<Boolean>(SimpleLoginSyncDomainSelectPremiumNavId.key)
+    private val canSelectPremiumDomainsFlow = getUserPlan()
+        .map { userPlan -> userPlan.isPaidPlan }
+        .onStart { emit(false) }
+        .catch { error ->
+            PassLogger.w(TAG, "There was an error while observing the user plan")
+            PassLogger.w(TAG, error)
+            emit(false)
+        }
 
     private val eventFlow = MutableStateFlow<SimpleLoginSyncDomainSelectEvent>(
         value = SimpleLoginSyncDomainSelectEvent.Idle
@@ -71,10 +77,11 @@ class SimpleLoginSyncDomainSelectViewModel @Inject constructor(
         }
 
     internal val stateFlow: StateFlow<SimpleLoginSyncDomainSelectState> = combine(
+        canSelectPremiumDomainsFlow,
         aliasDomainsFlow,
         eventFlow,
         updatingAliasDomainOptionFlow
-    ) { aliasDomains, event, updatingAliasDomainOption ->
+    ) { canSelectPremiumDomains, aliasDomains, event, updatingAliasDomainOption ->
         SimpleLoginSyncDomainSelectState(
             canSelectPremiumDomains = canSelectPremiumDomains,
             simpleLoginAliasDomains = aliasDomains,

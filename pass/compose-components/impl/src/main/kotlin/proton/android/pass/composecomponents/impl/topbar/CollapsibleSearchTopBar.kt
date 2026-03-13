@@ -150,7 +150,7 @@ fun CollapsibleSearchTopBar(
         )
 
         val expandedSearchWidth = constraints.maxWidth - startPx - startPx
-        val collapsedSearchWidth = titleAvailableWidth
+        val collapsedSearchWidth = (titleAvailableWidth - spacingPx).coerceAtLeast(0)
         val searchWidth = lerp(
             start = expandedSearchWidth.toFloat(),
             stop = collapsedSearchWidth.toFloat(),

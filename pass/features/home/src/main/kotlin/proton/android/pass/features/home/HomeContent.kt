@@ -24,6 +24,8 @@ import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.ui.Alignment
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.ui.input.nestedscroll.nestedScroll
@@ -39,6 +41,7 @@ import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
@@ -116,7 +119,10 @@ internal fun HomeContent(
         snapAnimationSpec = spring(),
         flingAnimationSpec = flingSpec
     )
-    val barScrollConnection = rememberHomeTopBarScrollConnection(scrollBehavior)
+    val barScrollConnection = rememberHomeTopBarScrollConnection(scrollBehavior, scrollableState)
+    LaunchedEffect(uiState.homeListUiState.homeVaultSelection) {
+        scrollBehavior.state.heightOffset = 0f
+    }
     Scaffold(
         modifier = modifier
             .statusBarsPadding()
@@ -393,35 +399,37 @@ internal fun HomeContent(
 
 @Composable
 private fun HomeTopBarActions(uiState: HomeUiState, onEvent: (HomeUiEvent) -> Unit) {
-    uiState.homeListUiState.promoInAppMessage?.let { promo ->
-        PromoIcon(
-            onClick = {
-                onEvent(
-                    HomeUiEvent.PromoInAppMessageClick(
-                        userId = promo.userId,
-                        inAppMessageId = promo.id
+    Row(verticalAlignment = Alignment.CenterVertically) {
+        uiState.homeListUiState.promoInAppMessage?.let { promo ->
+            PromoIcon(
+                onClick = {
+                    onEvent(
+                        HomeUiEvent.PromoInAppMessageClick(
+                            userId = promo.userId,
+                            inAppMessageId = promo.id
+                        )
                     )
-                )
+                }
+            )
+        } ?: run {
+            if (uiState.isUpgradeAvailable) {
+                UpgradeIcon(onUpgradeClick = { onEvent(HomeUiEvent.OnUpgradeClick) })
             }
-        )
-    } ?: run {
-        if (uiState.isUpgradeAvailable) {
-            UpgradeIcon(onUpgradeClick = { onEvent(HomeUiEvent.OnUpgradeClick) })
         }
-    }
 
-    val (backgroundColor, iconColor) =
-        if (uiState.homeListUiState.searchFilterType != SearchFilterType.All) {
-            PassTheme.colors.interactionNormMajor2 to PassTheme.colors.textInvert
-        } else {
-            Color.Transparent to PassTheme.colors.textWeak
-        }
-    ThreeDotsMenuButton(
-        modifier = Modifier
-            .clip(CircleShape)
-            .background(backgroundColor),
-        dotsColor = iconColor
-    ) { onEvent(HomeUiEvent.ActionsClick) }
+        val (backgroundColor, iconColor) =
+            if (uiState.homeListUiState.searchFilterType != SearchFilterType.All) {
+                PassTheme.colors.interactionNormMajor2 to PassTheme.colors.textInvert
+            } else {
+                Color.Transparent to PassTheme.colors.textWeak
+            }
+        ThreeDotsMenuButton(
+            modifier = Modifier
+                .clip(CircleShape)
+                .background(backgroundColor),
+            dotsColor = iconColor
+        ) { onEvent(HomeUiEvent.ActionsClick) }
+    }
 }
 
 @Composable

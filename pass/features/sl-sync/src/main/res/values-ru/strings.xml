@@ -28,6 +28,7 @@
   <string name="simple_login_sync_management_mailbox_unverified">Неподтвержденный почтовый ящик</string>
   <string name="simple_login_sync_management_mailbox_unverified_change">Непроверенное изменение почтового ящика</string>
   <string name="simple_login_sync_management_vault_title">Синхронизация SimpleLogin</string>
+  <string name="simple_login_sync_management_no_vault_description">You need at least one vault to manage SimpleLogin sync settings.</string>
   <string name="simple_login_sync_management_snackbar_alias_details_fetch_error">Произошла ошибка при загрузке информации о псевдониме SL</string>
   <string name="simple_login_sync_management_mailboxes_title">Почтовый ящик по умолчанию для псевдонимов</string>
   <string name="simple_login_sync_management_dialog_title_domains">Домен по умолчанию для псевдонимов</string>

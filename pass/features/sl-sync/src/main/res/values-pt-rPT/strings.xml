@@ -28,6 +28,7 @@
   <string name="simple_login_sync_management_mailbox_unverified">A caixa de correio não é verificada.</string>
   <string name="simple_login_sync_management_mailbox_unverified_change">A alteração da caixa de correio não foi verificada.</string>
   <string name="simple_login_sync_management_vault_title">Sincronização com SimpleLogin</string>
+  <string name="simple_login_sync_management_no_vault_description">You need at least one vault to manage SimpleLogin sync settings.</string>
   <string name="simple_login_sync_management_snackbar_alias_details_fetch_error">Ocorreu um erro ao recuperar os detalhes do alias SL.</string>
   <string name="simple_login_sync_management_mailboxes_title">Caixa de correio predefinida para os aliases</string>
   <string name="simple_login_sync_management_dialog_title_domains">Domínio predefinido para os aliases</string>

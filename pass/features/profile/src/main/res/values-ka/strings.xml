@@ -13,7 +13,7 @@
   <string name="profile_option_autofill_subtitle">მომხმარებლის სახელებისა და პაროლების ავტომატური შევსება.</string>
   <string name="profile_option_secure_links">დაცული ბმულები</string>
   <string name="profile_option_alias_management">ფსევდონიმების მართვა</string>
-  <string name="profile_option_generated_passwords">Generated passwords</string>
+  <string name="profile_option_generated_passwords">გენერირებული პაროლები</string>
   <string name="profile_error_biometry_failed_to_start">ბიომეტრიული ავთენტიკაციის გაშვება შეუძლებელია</string>
   <string name="profile_error_biometry_failed_to_authenticate">ავთენტიკაციის შეცდომა</string>
   <string name="profile_fingerprint_lock_enabled">ანაბეჭდით დაბლოკვა ჩართულია</string>
@@ -49,7 +49,7 @@
   <string name="profile_option_unlock_with">განბლოკვის მექანიზმი</string>
   <string name="profile_option_change_pin_code">PIN-კოდის შეცვლა</string>
   <string name="profile_passkey_support_section_title">წვდომის გასაღებები</string>
-  <string name="profile_passkey_support_subtitle_supported">Passkeys can be supported on this device</string>
+  <string name="profile_passkey_support_subtitle_supported">წვდომის გასაღებები მხარდაჭერილია ამ მოწყობილობაზე</string>
   <string name="profile_passkey_support_subtitle_not_supported_android_version">თქვენს Android-ის ვერსიას შესვლის გასაღებების მხარდაჭერა არ გააჩნია.</string>
   <string name="profile_passkey_support_subtitle_not_supported_unknown">შესვლის გასაღებების მხარდაჭერის შემოწმება შეუძლებელია</string>
   <plurals name="profile_after_days">

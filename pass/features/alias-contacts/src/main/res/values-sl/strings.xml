@@ -19,56 +19,56 @@
 <resources>
   <string name="create_contact_button">Ustvari stik</string>
   <string name="save_contact_alias">Shrani</string>
-  <string name="snackbar_contact_create_success">Contact created successfully</string>
-  <string name="snackbar_contact_create_error">Failed to create contact</string>
+  <string name="snackbar_contact_create_success">Stik je bil uspešno ustvarjen</string>
+  <string name="snackbar_contact_create_error">Ni uspelo ustvariti stika</string>
   <string name="create_contact_title">Ustvari stik</string>
   <string name="detail_contact_title">Stiki</string>
   <string name="email_input_error">Neveljaven e-poštni naslov</string>
-  <string name="detail_contact_display_name" comment="sender email address">A contact is created for every email address that sends emails to or receives emails from %1$s</string>
+  <string name="detail_contact_display_name" comment="sender email address">Za vsak e-poštni naslov, s katerega se pošiljajo ali prejemajo e-poštna sporočila s %1$s, je ustvarjen stik</string>
   <string name="empty_alias_contacts_title">Stiki z vzdevkom</string>
   <string name="empty_alias_contacts_body">Če želite skriti svoj osebni e-poštni naslov, lahko ustvarite kontakt z vzdevkom, ki prikrije vaš naslov.</string>
   <string name="empty_alias_contacts_learn_more">Izvedi več</string>
-  <string name="unblock_button">Unblock contact</string>
+  <string name="unblock_button">Odblokiraj stik</string>
   <string name="block_button">Blokiraj stik</string>
   <string name="contact_created_date" comment="date of creation">Ustvarjeno pred %1$s</string>
-  <string name="no_activity_contact">No activity in the last 14 days.</string>
-  <string name="activity_summary" comment="%1$d forwarded, %2$d sent, %3$d blocked will prepend this">in the last 14 days.</string>
+  <string name="no_activity_contact">V zadnjih 14 dneh ni bilo nobene dejavnosti.</string>
+  <string name="activity_summary" comment="%1$d forwarded, %2$d sent, %3$d blocked will prepend this">v zadnjih 14 dneh.</string>
   <plurals name="forwarded_count" comment="full sentence is %1$d forwarded, %2$d sent, %3$d blocked in the last 14 days.">
-    <item quantity="one">%1$d forwarded</item>
-    <item quantity="two">%1$d forwarded</item>
-    <item quantity="few">%1$d forwarded</item>
-    <item quantity="other">%1$d forwarded</item>
+    <item quantity="one">%1$d posredovano</item>
+    <item quantity="two">%1$d posredovana</item>
+    <item quantity="few">%1$d posredovani</item>
+    <item quantity="other">%1$d posredovani</item>
   </plurals>
   <plurals name="sent_count" comment="full sentence is %1$d forwarded, %2$d sent, %3$d blocked in the last 14 days.">
-    <item quantity="one">%1$d sent</item>
-    <item quantity="two">%1$d sent</item>
-    <item quantity="few">%1$d sent</item>
-    <item quantity="other">%1$d sent</item>
+    <item quantity="one">%1$d poslan</item>
+    <item quantity="two">%1$d poslana</item>
+    <item quantity="few">%1$d poslani</item>
+    <item quantity="other">%1$d poslani</item>
   </plurals>
   <plurals name="blocked_count" comment="full sentence is %1$d forwarded, %2$d sent, %3$d blocked in the last 14 days.">
-    <item quantity="one">%1$d blocked</item>
-    <item quantity="two">%1$d blocked</item>
-    <item quantity="few">%1$d blocked</item>
-    <item quantity="other">%1$d blocked</item>
+    <item quantity="one">%1$d blokiran</item>
+    <item quantity="two">%1$d blokirana</item>
+    <item quantity="few">%1$d blokirani</item>
+    <item quantity="other">%1$d blokirani</item>
   </plurals>
-  <string name="blocked_addresses_subtitle">Blocked addresses</string>
-  <string name="forwarding_addresses_subtitle">Forwarding addresses</string>
+  <string name="blocked_addresses_subtitle">Blokirani naslovi</string>
+  <string name="forwarding_addresses_subtitle">Naslovi za posredovanje</string>
   <string name="snackbar_contact_block_success">Stik blokiran</string>
   <string name="snackbar_contact_block_error">Ni bilo mogoče blokirati stika</string>
-  <string name="snackbar_contact_unblock_success">Contact unblocked</string>
+  <string name="snackbar_contact_unblock_success">Stik odblokiran</string>
   <string name="snackbar_contact_unblock_error">Ni bilo mogoče odblokirati stika</string>
   <string name="snackbar_delete_contact_success">Stik izbrisan</string>
   <string name="snackbar_delete_contact_error">Ni bilo mogoče izbrisati stika</string>
   <string name="snackbar_email_copied_success">E-poštni naslov kopiran v odložišče</string>
   <string name="contact_option_send_email">Pošlji sporočilo</string>
-  <string name="contact_option_copy_address">Copy forwarding address</string>
+  <string name="contact_option_copy_address">Kopiraj posredniški naslov</string>
   <string name="contact_option_block_contact">Blokiraj stik</string>
-  <string name="contact_option_unblock_contact">Unblock contact</string>
+  <string name="contact_option_unblock_contact">Odblokiraj stik</string>
   <string name="contact_option_delete">Izbriši</string>
-  <string name="alias_contacts_bottomsheet_title">Alias Contacts</string>
+  <string name="alias_contacts_bottomsheet_title">Stiki z vzdevkom</string>
   <string name="alias_contacts_bottomsheet_subtitle">Če želite skriti svoj osebni e-poštni naslov, lahko ustvarite kontakt z vzdevkom, ki prikrije vaš naslov.</string>
-  <string name="alias_contacts_explanation">Here’s how it works:</string>
-  <string name="alias_contacts_bottomsheet_section_1">Enter the address you want to email.</string>
-  <string name="alias_contacts_bottomsheet_section_2">Proton Pass will generate a forwarding address (also referred to as reverse alias).</string>
-  <string name="alias_contacts_bottomsheet_section_3" comment="an email will follow this sentence">Email this address and it will appear to be sent from</string>
+  <string name="alias_contacts_explanation">Tako deluje:</string>
+  <string name="alias_contacts_bottomsheet_section_1">Vnesite naslov, na katerega želite poslati e-pošto.</string>
+  <string name="alias_contacts_bottomsheet_section_2">Proton Pass bo ustvaril posredni naslov (imenovan tudi povratni vzdevek).</string>
+  <string name="alias_contacts_bottomsheet_section_3" comment="an email will follow this sentence">Email na ta naslov bo videti, kot da je poslan iz</string>
 </resources>

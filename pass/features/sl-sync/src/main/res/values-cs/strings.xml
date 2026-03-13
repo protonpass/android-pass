@@ -28,6 +28,7 @@
   <string name="simple_login_sync_management_mailbox_unverified">Neověřená e-mailová schránka</string>
   <string name="simple_login_sync_management_mailbox_unverified_change">Neověřená změna e-mailové schránky</string>
   <string name="simple_login_sync_management_vault_title">Synchronizace SimpleLogin</string>
+  <string name="simple_login_sync_management_no_vault_description">K správě nastavení synchronizace SimpleLogin potřebujete alespoň jeden trezor.</string>
   <string name="simple_login_sync_management_snackbar_alias_details_fetch_error">Došlo k chybě při získávání detailů SL aliasu</string>
   <string name="simple_login_sync_management_mailboxes_title">Výchozí e-mailová schránka pro aliasy</string>
   <string name="simple_login_sync_management_dialog_title_domains">Výchozí doména pro aliasy</string>

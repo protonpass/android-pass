@@ -14,11 +14,11 @@
   <string name="migrate_all_items_success_snackbar">Elementi spostati</string>
   <string name="migrate_all_items_error_snackbar">Spostamento degli elementi non riuscito</string>
   <string name="migrate_init_error_snackbar">Caricamento della schermata di spostamento non riuscito</string>
-  <string name="migrate_folder_confirm_title_bottom_sheet">Move folder to the following vault?</string>
-  <string name="migrate_folder_to_folder_confirm_title_bottom_sheet">Move folder to the following folder?</string>
-  <string name="migrate_folder_success_snackbar">Folder moved</string>
-  <string name="migrate_folder_error_snackbar">Error moving the folder</string>
-  <string name="migrate_folder_already_same_parent_snackbar">Folder is already in this location</string>
+  <string name="migrate_folder_confirm_title_bottom_sheet">Spostare la cartella nella seguente cassaforte?</string>
+  <string name="migrate_folder_to_folder_confirm_title_bottom_sheet">Spostare la cartella nella seguente cartella?</string>
+  <string name="migrate_folder_success_snackbar">Cartella spostata</string>
+  <string name="migrate_folder_error_snackbar">Errore durante lo spostamento della cartella</string>
+  <string name="migrate_folder_already_same_parent_snackbar">La cartella è già in questa posizione</string>
   <string name="migrate_disabled_vault_reason_no_permission">Non puoi creare elementi in questa cassaforte</string>
   <string name="migrate_disabled_vault_reason_same_vault">Cassaforte attuale</string>
   <plurals name="migrate_items_shared_warning_title">

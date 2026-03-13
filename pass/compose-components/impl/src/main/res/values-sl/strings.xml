@@ -10,7 +10,7 @@
   <string name="item_list_header_all_search_results">Vse</string>
   <string name="item_list_header_pinned_search_results">Pripeto</string>
   <string name="item_list_header_logins_type">Prijave</string>
-  <string name="item_list_header_logins_totp_type">Logins with TOTP</string>
+  <string name="item_list_header_logins_totp_type">Prijava s TOTP</string>
   <string name="item_list_header_aliases_type">Vzdevki</string>
   <string name="item_list_header_notes_type">Opombe</string>
   <string name="item_list_header_credit_cards_type">Plačilne kartice</string>
@@ -21,7 +21,7 @@
     <item quantity="other">rezultatov</item>
   </plurals>
   <string name="item_list_header_identities_type">Identitete</string>
-  <string name="item_list_header_custom_type">Custom items</string>
+  <string name="item_list_header_custom_type">Predmeti po meri</string>
   <string name="item_list_header_shared_with_me">Deljeno z mano</string>
   <string name="item_list_header_shared_by_me">Kaj delim z drugimi</string>
   <!-- Bottomsheets -->
@@ -34,16 +34,16 @@
   <string name="bottomsheet_monitor_exclude">Izključi iz spremljanja</string>
   <string name="bottomsheet_monitor_include">Vključi v spremljanje</string>
   <string name="bottomsheet_migrate_item">Premakni v drug trezor</string>
-  <string name="bottomsheet_create_folder">Create folder</string>
-  <string name="folder_tree_create_folder">Create folder</string>
-  <string name="bottomsheet_rename_folder">Rename</string>
-  <string name="bottomsheet_create_sub_folder">Create sub-folder</string>
-  <string name="bottomsheet_move_folder">Move</string>
+  <string name="bottomsheet_create_folder">Ustvari mapo</string>
+  <string name="folder_tree_create_folder">Ustvari mapo</string>
+  <string name="bottomsheet_rename_folder">Preimenuj</string>
+  <string name="bottomsheet_create_sub_folder">Ustvari podmapo</string>
+  <string name="bottomsheet_move_folder">Premakni</string>
   <string name="bottomsheet_copy_item_note">Kopiraj opombo</string>
   <string name="bottomsheet_delete_permanently">Trajno izbriši</string>
   <string name="bottomsheet_restore">Obnovi</string>
   <string name="bottomsheet_leave">Zapusti</string>
-  <string name="bottomsheet_duplicate">Duplicate</string>
+  <string name="bottomsheet_duplicate">Podvoji</string>
   <string name="bottomsheet_no_actions">Na voljo ni nobenih dejanj</string>
   <!-- Actions -->
   <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">Odpri meni z dejanji predmeta</string>
@@ -149,7 +149,7 @@
   <string name="date_full_date_format_with_year_compact_month" comment="Do not add any extra text when translating as always should have to keep the same length. Please, just reorder the parts according to country locale">dd LLL yyyy HH:mm</string>
   <!-- Items -->
   <string name="item_details_alias_section_alias_title">Naslov vzdevka</string>
-  <string name="item_details_alias_section_alias_disabled_title">Alias address (disabled)</string>
+  <string name="item_details_alias_section_alias_disabled_title">Vzdevek naslova (onemogočeno)</string>
   <string name="item_details_alias_section_mailboxes_title">Posredovanje na</string>
   <string name="item_details_credit_card_section_cardholder_title">Ime na kartici</string>
   <string name="item_details_credit_card_section_card_number_title">Številka kartice</string>
@@ -206,8 +206,8 @@
   <string name="item_details_shared_section_more_info_header_title">Več informacij</string>
   <string name="item_details_shared_section_more_info_header_icon_content_description">Ikona za informacije o predmetu</string>
   <string name="item_details_shared_section_more_info_item_id">ID predmeta</string>
-  <string name="item_details_shared_section_more_info_vault_id">Vault ID</string>
-  <string name="item_details_shared_section_more_info_share_id">Share ID</string>
+  <string name="item_details_shared_section_more_info_vault_id">ID trezorja</string>
+  <string name="item_details_shared_section_more_info_share_id">Deli ID</string>
   <string name="item_details_wifi_network_label_ssid_name">Ime (SSID)</string>
   <string name="item_details_wifi_network_label_password">Geslo</string>
   <string name="item_details_wifi_network_label_security">Varnost</string>
@@ -296,18 +296,18 @@
   <!-- Simple Login -->
   <string name="simple_login_widget_title">Omogočanje sinhronizacije SimpleLogin</string>
   <plurals name="simple_login_widget_pending_aliases_message">
-    <item quantity="one">We detected that you have %d alias that is present in SimpleLogin but missing in Proton Pass. Would you like to import it?</item>
-    <item quantity="two">We detected that you have %d aliases that are present in SimpleLogin but missing in Proton Pass. Would you like to import them?</item>
-    <item quantity="few">We detected that you have %d aliases that are present in SimpleLogin but missing in Proton Pass. Would you like to import them?</item>
-    <item quantity="other">We detected that you have %d aliases that are present in SimpleLogin but missing in Proton Pass. Would you like to import them?</item>
+    <item quantity="one">Zaznali smo, da imate %d vzdevek, ki je prisoten v SimpleLogin, vendar manjka v Proton Pass. Ali ga želite uvoziti?</item>
+    <item quantity="two">Zaznali smo, da imate %d vzdevka, ki sta v SimpleLogin, vendar ju ni v Proton Pass. Ju želite uvoziti?</item>
+    <item quantity="few">Zaznali smo, da imate %d vzdevke, ki so prisotni v SimpleLogin, a jih v programu Proton Pass ni. Jih želite uvoziti?</item>
+    <item quantity="other">Zaznali smo, da imate v SimpleLogin %d vzdevkov, ki manjkajo v programu Proton Pass. Jih želite uvoziti?</item>
   </plurals>
   <string name="simple_login_widget_action">Sinhroniziranje vzdevkov</string>
   <!-- Verification codes -->
   <string name="verification_code_not_received">Niste prejeli kode?</string>
-  <string name="verification_code_suggestion_spam" comment="placeholder will be replaced by an email subject">Please check in your Spam for an email called “%s“</string>
-  <string name="verification_code_suggestion_subject_new_email_address">Please confirm your email address for Proton Pass</string>
-  <string name="verification_code_suggestion_subject_new_mailbox">Please confirm your mailbox</string>
-  <string name="verification_code_suggestion_resend" comment="The text that follows is: -request a new code.-">If you can\'t find such email, you can %s.</string>
+  <string name="verification_code_suggestion_spam" comment="placeholder will be replaced by an email subject">Preverite v mapi Neželena pošta za e-poštno sporočilo z naslovom »%s«</string>
+  <string name="verification_code_suggestion_subject_new_email_address">Prosimo potrdite svoj e-poštni naslov za Proton Pass</string>
+  <string name="verification_code_suggestion_subject_new_mailbox">Prosim potrdite svoj poštni predal</string>
+  <string name="verification_code_suggestion_resend" comment="The text that follows is: -request a new code.-">Če takšnega e-poštnega sporočila ne najdete, ga lahko %s</string>
   <string name="verification_code_suggestion_resend_link" comment="The text that precedes is: -If you can’t find such email, you can -">zahtevajte novo kodo</string>
   <string name="field_display_name_title">Prikazno ime</string>
   <!-- Attachments -->
@@ -318,17 +318,17 @@
     <item quantity="other">%1$s datoteke</item>
   </plurals>
   <string name="attachment_title">Priponke</string>
-  <string name="attachment_no_files">Upload files from your device</string>
+  <string name="attachment_no_files">Naloži datoteke iz vaše naprave</string>
   <string name="attachment_add_file">Pripni datoteko</string>
   <string name="attachment_row_upload_failed">Nalaganje ni bilo uspešno</string>
   <string name="attachment_row_retry">Poskusi znova</string>
-  <string name="options_menu_content_description">Options menu</string>
+  <string name="options_menu_content_description">Meni z nastavitvami</string>
   <!-- Items -->
   <plurals name="shared_items_count">
-    <item quantity="one">%d shared item</item>
-    <item quantity="two">%d shared items</item>
-    <item quantity="few">%d shared items</item>
-    <item quantity="other">%d shared items</item>
+    <item quantity="one">%d deljeni predmet</item>
+    <item quantity="two">%d deljena predmeta</item>
+    <item quantity="few">%d deljeni predmeti</item>
+    <item quantity="other">%d deljeni predmeti</item>
   </plurals>
   <plurals name="users_count">
     <item quantity="one">%d uporabnik</item>
@@ -382,16 +382,16 @@
   </plurals>
   <string name="alias_create_login_from_alias">Ustvarite prijavo</string>
   <string name="banner_contacts_title">Ali ste vedeli?</string>
-  <string name="banner_contacts_subtitle">Every time your alias receives an email from someone, a new contact is automatically created.</string>
+  <string name="banner_contacts_subtitle">Vsakič, ko vaš vzdevek prejme e-pošto od nekoga, se samodejno ustvari nov stik.</string>
   <string name="action_reveal">Pokaži</string>
   <string name="action_conceal">Skrij</string>
-  <string name="warning_dialog_item_shared_vault_title">Item in a shared vault</string>
-  <string name="warning_dialog_item_shared_title">Shared item</string>
-  <string name="warning_dialog_item_shared_vault_creating">You are creating an item in a shared vault and members will immediately gain access to this item.</string>
-  <string name="warning_dialog_item_shared_vault_moving">You are moving an item to a shared vault and members will immediately gain access to this item.</string>
-  <string name="warning_dialog_item_shared_vault_updating">You are editing an item in a shared vault and members will immediately gain access to this item.</string>
-  <string name="warning_dialog_item_shared_updating">You are editing a shared item. Changes will be visible to everyone it\'s shared with immediately.</string>
-  <string name="warning_dialog_item_shared_vault_reminder">Don\'t remind me again</string>
-  <string name="upgrade_to_pass_plus">Upgrade to Pass Plus</string>
-  <string name="warning_dialog_reload_app_after_purchase_description">You are about to be redirected to our website. If you purchase a plan, please restart the app.</string>
+  <string name="warning_dialog_item_shared_vault_title">Predmet v skupnem trezorju</string>
+  <string name="warning_dialog_item_shared_title">Predmet v skupni rabi</string>
+  <string name="warning_dialog_item_shared_vault_creating">Ustvarjate predmet v skupnem trezorju in člani bodo takoj dobili dostop do tega elementa.</string>
+  <string name="warning_dialog_item_shared_vault_moving">Predmet premikate v skupni trezor in člani bodo takoj dobili dostop do njega.</string>
+  <string name="warning_dialog_item_shared_vault_updating">Urejate predmet v skupnem trezorju in člani bodo takoj dobili dostop do tega predmeta.</string>
+  <string name="warning_dialog_item_shared_updating">Urejate deljeni predmet. Spremembe bodo takoj vidne vsem, s katerimi je deljen.</string>
+  <string name="warning_dialog_item_shared_vault_reminder">Ne opominjaj me več</string>
+  <string name="upgrade_to_pass_plus">Nadgradi na Pass Plus</string>
+  <string name="warning_dialog_reload_app_after_purchase_description">Pravkar boste preusmerjeni na naše spletno mesto. Če kupite paket, ponovno zaženite aplikacijo.</string>
 </resources>

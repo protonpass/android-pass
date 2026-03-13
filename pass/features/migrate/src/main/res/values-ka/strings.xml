@@ -14,11 +14,11 @@
   <string name="migrate_all_items_success_snackbar">ყველა ელემენტი გადატანილია</string>
   <string name="migrate_all_items_error_snackbar">ყველა საცავის ელემენტის გადატანის შეცდომა</string>
   <string name="migrate_init_error_snackbar">მიგრაციის ეკრანის მომზადება შეუძლებელია</string>
-  <string name="migrate_folder_confirm_title_bottom_sheet">Move folder to the following vault?</string>
-  <string name="migrate_folder_to_folder_confirm_title_bottom_sheet">Move folder to the following folder?</string>
-  <string name="migrate_folder_success_snackbar">Folder moved</string>
-  <string name="migrate_folder_error_snackbar">Error moving the folder</string>
-  <string name="migrate_folder_already_same_parent_snackbar">Folder is already in this location</string>
+  <string name="migrate_folder_confirm_title_bottom_sheet">გადავიტანო საქაღალდე შემდეგ საცავში?</string>
+  <string name="migrate_folder_to_folder_confirm_title_bottom_sheet">გადავიტანო საქაღალდე შემდეგ საქაღალდეში?</string>
+  <string name="migrate_folder_success_snackbar">საქაღალდე გადატანილია</string>
+  <string name="migrate_folder_error_snackbar">საქაღალდის გადატანის შეცდომა</string>
+  <string name="migrate_folder_already_same_parent_snackbar">საქაღალდე უკვე ამ ადგილასაა</string>
   <string name="migrate_disabled_vault_reason_no_permission">ამ საცავში ელემენტების შექმნა არ შეგიძლიათ</string>
   <string name="migrate_disabled_vault_reason_same_vault">ელემენტს იგივე საცავში ვერ გადაიტანთ</string>
   <plurals name="migrate_items_shared_warning_title">

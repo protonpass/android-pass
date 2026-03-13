@@ -28,10 +28,10 @@
   <string name="topbar_search_query_uninitialized" comment="Placeholder string before we know where we're searching (all vaults, oldest vaults, etc.)">Cerca…</string>
   <string name="all_accounts_item" comment="The placeholder argument will have the count of how many accounts the user has added">Tutti gli account (%1$s)</string>
   <plurals name="select_item_autosave_banner">
-    <item quantity="one">An item with the same name already exists.\nSelect it to update or create a new item.</item>
-    <item quantity="other">Items with the same name already exist.\nSelect one to update or create a new item.</item>
+    <item quantity="one">Esiste già un elemento con lo stesso nome.\nSelezionalo per aggiornare o crearne uno nuovo.</item>
+    <item quantity="other">Esistono già elementi con lo stesso nome.\nSelezionane uno per aggiornare o crearne uno nuovo.</item>
   </plurals>
-  <string name="select_item_autosave_no_match">No matching items found.\nCreate a new one to save these credentials.</string>
+  <string name="select_item_autosave_no_match">Nessun elemento corrispondente trovato.\nCreane uno nuovo per salvare queste credenziali.</string>
   <string name="select_item_save_credential_title">Salva le credenziali</string>
   <string name="select_item_save_credential_subtitle">Seleziona un account in cui salvare le credenziali.</string>
   <string name="select_item_save_credential_button">Seleziona</string>

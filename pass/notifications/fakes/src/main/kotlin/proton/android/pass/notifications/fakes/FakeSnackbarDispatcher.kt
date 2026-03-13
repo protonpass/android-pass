@@ -37,7 +37,11 @@ class FakeSnackbarDispatcher @Inject constructor() : SnackbarDispatcher {
 
     override val snackbarMessage: Flow<Option<SnackbarMessage>> = snackbarState
 
+    var invocationCount = 0
+        private set
+
     override suspend fun invoke(snackbarMessage: SnackbarMessage) {
+        invocationCount++
         snackbarState.tryEmit(snackbarMessage.some())
     }
 

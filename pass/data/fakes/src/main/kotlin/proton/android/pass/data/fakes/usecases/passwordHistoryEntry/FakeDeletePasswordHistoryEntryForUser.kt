@@ -26,6 +26,11 @@ import javax.inject.Singleton
 @Singleton
 class FakeDeletePasswordHistoryEntryForUser @Inject constructor() :
     DeletePasswordHistoryEntryForUser {
+
+    var invocationCount = 0
+        private set
+
     override suspend fun invoke(userId: UserId?) {
+        invocationCount++
     }
 }

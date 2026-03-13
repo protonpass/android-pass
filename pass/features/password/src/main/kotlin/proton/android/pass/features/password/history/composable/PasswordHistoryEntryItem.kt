@@ -33,12 +33,10 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.IconButton
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import proton.android.pass.commonui.api.PassTheme
@@ -49,6 +47,8 @@ import proton.android.pass.composecomponents.impl.icon.Icon
 import proton.android.pass.composecomponents.impl.text.Text
 import proton.android.pass.domain.PasswordHistoryEntryId
 import proton.android.pass.features.itemcreate.common.UIHiddenState
+import proton.android.pass.features.password.R
+import proton.android.pass.features.password.history.model.PasswordDateLabel
 import proton.android.pass.features.password.history.model.PasswordHistoryItemUiState
 import me.proton.core.presentation.R as PresentationR
 
@@ -62,18 +62,12 @@ fun PasswordHistoryItem(
     onThreeDotsClick: () -> Unit,
     onChangeVisibility: (Boolean) -> Unit
 ) {
-    val isPasswordVisible by remember(item.value) {
-        mutableStateOf(item.value is UIHiddenState.Revealed)
-    }
+    val isPasswordVisible = item.value is UIHiddenState.Revealed
 
-    val password by remember(item.value) {
-        mutableStateOf(
-            when (item.value) {
-                is UIHiddenState.Concealed -> "•".repeat(PASSWORD_CONCEALED_LENGTH)
-                is UIHiddenState.Revealed -> item.value.clearText
-                is UIHiddenState.Empty -> ""
-            }
-        )
+    val password = when (item.value) {
+        is UIHiddenState.Concealed -> "•".repeat(PASSWORD_CONCEALED_LENGTH)
+        is UIHiddenState.Revealed -> item.value.clearText
+        is UIHiddenState.Empty -> ""
     }
 
     Row(
@@ -107,7 +101,14 @@ fun PasswordHistoryItem(
             Spacer(modifier = Modifier.height(height = Spacing.small))
 
             Text.Body1Regular(
-                text = item.date,
+                text = when (val label = item.dateLabel) {
+                    is PasswordDateLabel.Today ->
+                        stringResource(R.string.password_history_today, label.time)
+                    is PasswordDateLabel.Yesterday ->
+                        stringResource(R.string.password_history_yesterday, label.time)
+                    is PasswordDateLabel.DaysAgo ->
+                        stringResource(R.string.password_history_before_yesterday, label.days, label.time)
+                },
                 color = PassTheme.colors.textWeak
             )
         }
@@ -152,7 +153,7 @@ internal fun PasswordHistoryItemShowPreview(@PreviewParameter(ThemePreviewProvid
                         encrypted = "toto",
                         clearText = "long long long long long long long long password"
                     ),
-                    date = "01/01/2002",
+                    dateLabel = PasswordDateLabel.Today("12:00"),
                     passwordHistoryEntryId = PasswordHistoryEntryId(0)
                 ),
                 onThreeDotsClick = {},
@@ -174,7 +175,7 @@ internal fun PasswordHistoryItemHidePreview(@PreviewParameter(ThemePreviewProvid
                     value = UIHiddenState.Concealed(
                         encrypted = "toto"
                     ),
-                    date = "01/01/2003",
+                    dateLabel = PasswordDateLabel.DaysAgo(days = 3, time = "09:30"),
                     passwordHistoryEntryId = PasswordHistoryEntryId(0)
                 ),
                 onThreeDotsClick = {},

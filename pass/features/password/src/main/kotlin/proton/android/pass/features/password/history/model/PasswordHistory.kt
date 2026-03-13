@@ -18,7 +18,6 @@
 
 package proton.android.pass.features.password.history.model
 
-import android.content.Context
 import androidx.compose.runtime.Stable
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
@@ -30,62 +29,53 @@ import kotlinx.datetime.toLocalDateTime
 import proton.android.pass.domain.PasswordHistoryEntry
 import proton.android.pass.domain.PasswordHistoryEntryId
 import proton.android.pass.features.itemcreate.common.UIHiddenState
-import proton.android.pass.features.password.R
+
+sealed interface PasswordDateLabel {
+    val time: String
+
+    data class Today(override val time: String) : PasswordDateLabel
+    data class Yesterday(override val time: String) : PasswordDateLabel
+    data class DaysAgo(val days: Int, override val time: String) : PasswordDateLabel
+}
 
 @Stable
 data class PasswordHistoryItemUiState(
     val passwordHistoryEntryId: PasswordHistoryEntryId,
     val value: UIHiddenState,
-    val date: String
+    val dateLabel: PasswordDateLabel
 )
 
 @Stable
 data class PasswordHistoryUiState(
     val isLoading: Boolean = false,
     val items: ImmutableList<PasswordHistoryItemUiState> = persistentListOf()
-)
-
+) {
+    val isOptionsMenuVisible: Boolean = items.isNotEmpty()
+}
 
 internal fun PasswordHistoryEntry.toUiModel(
-    context: Context,
     clock: Clock,
     defaultUIHiddenState: UIHiddenState
 ): PasswordHistoryItemUiState {
-
     val now = clock.now()
-    val currentDateTime = now.toLocalDateTime(TimeZone.currentSystemDefault())
-    val createdDateTime =
-        Instant.fromEpochSeconds(createdTime).toLocalDateTime(TimeZone.currentSystemDefault())
-
-    val currentDate = currentDateTime.date
+    val currentDate = now.toLocalDateTime(TimeZone.currentSystemDefault()).date
+    val createdDateTime = Instant.fromEpochSeconds(createdTime)
+        .toLocalDateTime(TimeZone.currentSystemDefault())
     val createdDate = createdDateTime.date
 
+    val timePart = "%02d:%02d".format(createdDateTime.time.hour, createdDateTime.time.minute)
     val diffDays = currentDate.daysUntil(createdDate)
-    val timePart = createdDateTime.time.let {
-        "%02d:%02d".format(it.hour, it.minute)
-    }
 
-    val dateText = when {
-        diffDays == 0 -> context.getString(
-            R.string.password_history_today, timePart
-        )
-
-        diffDays == -1 -> context.getString(
-            R.string.password_history_yesterday, timePart
-        )
-
-        diffDays < -1 -> context.getString(
-            R.string.password_history_before_yesterday,
-            -diffDays,
-            timePart
-        )
-
+    val dateLabel = when {
+        diffDays == 0 -> PasswordDateLabel.Today(timePart)
+        diffDays == -1 -> PasswordDateLabel.Yesterday(timePart)
+        diffDays < -1 -> PasswordDateLabel.DaysAgo(-diffDays, timePart)
         else -> throw IllegalStateException("date in the future createdDate $createdDate")
     }
 
     return PasswordHistoryItemUiState(
         value = defaultUIHiddenState,
-        date = dateText,
+        dateLabel = dateLabel,
         passwordHistoryEntryId = passwordHistoryEntryId
     )
 }

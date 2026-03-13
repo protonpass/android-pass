@@ -18,6 +18,7 @@
 
 package proton.android.pass.features.home
 
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
@@ -34,42 +35,57 @@ internal data class TopBarExpansionResult(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-internal fun rememberHomeTopBarScrollConnection(scrollBehavior: TopAppBarScrollBehavior): NestedScrollConnection =
-    remember(scrollBehavior) {
-        object : NestedScrollConnection {
-            override fun onPreScroll(available: Offset, source: NestedScrollSource): Offset {
-                return when {
-                    available.y < 0f -> scrollBehavior.nestedScrollConnection.onPreScroll(available, source)
-                    available.y > 0f && scrollBehavior.state.collapsedFraction > 0f -> {
-                        val expansion = consumeTopBarExpansion(
-                            availableY = available.y,
-                            currentHeightOffset = scrollBehavior.state.heightOffset,
-                            heightOffsetLimit = scrollBehavior.state.heightOffsetLimit
-                        )
-                        scrollBehavior.state.heightOffset = expansion.newHeightOffset
-                        if (expansion.consumedY > 0f) {
-                            Offset(x = 0f, y = expansion.consumedY)
-                        } else {
-                            Offset.Zero
-                        }
+internal fun rememberHomeTopBarScrollConnection(
+    scrollBehavior: TopAppBarScrollBehavior,
+    listState: LazyListState
+): NestedScrollConnection = remember(scrollBehavior, listState) {
+    object : NestedScrollConnection {
+        private val canHandleScrollEvent
+            get() = scrollBehavior.state.collapsedFraction > 0f ||
+                listState.canScrollForward ||
+                listState.canScrollBackward
+
+        override fun onPreScroll(available: Offset, source: NestedScrollSource): Offset {
+            return when {
+                available.y < 0f && canHandleScrollEvent ->
+                    scrollBehavior.nestedScrollConnection.onPreScroll(available, source)
+                available.y > 0f && scrollBehavior.state.collapsedFraction > 0f -> {
+                    val expansion = consumeTopBarExpansion(
+                        availableY = available.y,
+                        currentHeightOffset = scrollBehavior.state.heightOffset,
+                        heightOffsetLimit = scrollBehavior.state.heightOffsetLimit
+                    )
+                    scrollBehavior.state.heightOffset = expansion.newHeightOffset
+                    if (expansion.consumedY > 0f) {
+                        Offset(x = 0f, y = expansion.consumedY)
+                    } else {
+                        Offset.Zero
                     }
-                    else -> Offset.Zero
                 }
+                else -> Offset.Zero
             }
-
-            override fun onPostScroll(
-                consumed: Offset,
-                available: Offset,
-                source: NestedScrollSource
-            ): Offset = Offset.Zero
-
-            override suspend fun onPreFling(available: Velocity): Velocity =
-                scrollBehavior.nestedScrollConnection.onPreFling(available)
-
-            override suspend fun onPostFling(consumed: Velocity, available: Velocity): Velocity =
-                scrollBehavior.nestedScrollConnection.onPostFling(consumed, available)
         }
+
+        override fun onPostScroll(
+            consumed: Offset,
+            available: Offset,
+            source: NestedScrollSource
+        ): Offset = Offset.Zero
+
+        override suspend fun onPreFling(available: Velocity): Velocity = if (canHandleScrollEvent) {
+            scrollBehavior.nestedScrollConnection.onPreFling(available)
+        } else {
+            Velocity.Zero
+        }
+
+        override suspend fun onPostFling(consumed: Velocity, available: Velocity): Velocity =
+            if (canHandleScrollEvent) {
+                scrollBehavior.nestedScrollConnection.onPostFling(consumed, available)
+            } else {
+                Velocity.Zero
+            }
     }
+}
 
 internal fun consumeTopBarExpansion(
     availableY: Float,

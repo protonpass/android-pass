@@ -55,6 +55,7 @@ import proton.android.pass.composecomponents.impl.topbar.BackArrowTopAppBar
 import proton.android.pass.domain.PasswordHistoryEntryId
 import proton.android.pass.features.itemcreate.common.UIHiddenState
 import proton.android.pass.features.password.R
+import proton.android.pass.features.password.history.model.PasswordDateLabel
 import proton.android.pass.features.password.history.model.PasswordHistoryItemUiState
 import proton.android.pass.features.password.history.model.PasswordHistoryUiState
 
@@ -79,18 +80,26 @@ internal fun PasswordHistoryEntryContent(
                 arrowColor = PassTheme.colors.passwordInteractionNormMajor2,
                 backgroundArrowColor = PassTheme.colors.passwordInteractionNormMinor1,
                 actions = {
-                    ThreeDotsMenuButton(
-                        modifier = Modifier.size(size = 40.dp),
-                        onClick = onMainThreeDotsMenuButtonClick,
-                        backgroundColor = PassTheme.colors.passwordInteractionNormMinor1,
-                        dotsColor = PassTheme.colors.passwordInteractionNormMajor2
-                    )
+                    AnimatedVisibility(
+                        visible = state.isOptionsMenuVisible,
+                        enter = fadeIn(),
+                        exit = fadeOut()
+                    ) {
+                        ThreeDotsMenuButton(
+                            modifier = Modifier.size(size = 40.dp),
+                            onClick = onMainThreeDotsMenuButtonClick,
+                            backgroundColor = PassTheme.colors.passwordInteractionNormMinor1,
+                            dotsColor = PassTheme.colors.passwordInteractionNormMajor2
+                        )
+                    }
                 }
             )
         }
-    ) {
+    ) { contentPadding ->
         Column(
-            modifier = Modifier.fillMaxSize()
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(contentPadding)
         ) {
             Spacer(modifier = Modifier.height(Spacing.medium))
 
@@ -154,11 +163,8 @@ internal fun PasswordHistoryEntryContent(
                                     .animateItem(),
                                 item = item,
                                 onChangeVisibility = { mustReveal ->
-                                    if (mustReveal) {
-                                        onRevealItem(item.passwordHistoryEntryId)
-                                    } else {
-                                        onHideItem(item.passwordHistoryEntryId)
-                                    }
+                                    if (mustReveal) onRevealItem(item.passwordHistoryEntryId)
+                                    else onHideItem(item.passwordHistoryEntryId)
                                 },
                                 onThreeDotsClick = {
                                     onThreeDotsMenuButtonClick(item.passwordHistoryEntryId)
@@ -213,14 +219,14 @@ internal fun PasswordHistoryEntryScreenPreview(@PreviewParameter(ThemePreviewPro
                             value = UIHiddenState.Concealed(
                                 encrypted = "tttttt"
                             ),
-                            date = "a date"
+                            dateLabel = PasswordDateLabel.Today("12:00")
                         ),
                         PasswordHistoryItemUiState(
                             passwordHistoryEntryId = PasswordHistoryEntryId(1),
                             value = UIHiddenState.Concealed(
                                 encrypted = "tttttt"
                             ),
-                            date = "a date 2"
+                            dateLabel = PasswordDateLabel.Yesterday("09:30")
                         )
                     ),
                     isLoading = false

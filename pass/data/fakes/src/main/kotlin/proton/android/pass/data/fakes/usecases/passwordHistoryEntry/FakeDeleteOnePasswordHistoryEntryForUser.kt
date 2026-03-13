@@ -26,7 +26,10 @@ import javax.inject.Singleton
 @Singleton
 class FakeDeleteOnePasswordHistoryEntryForUser @Inject constructor() :
     DeleteOnePasswordHistoryEntryForUser {
-    override suspend fun invoke(passwordHistoryEntryId: PasswordHistoryEntryId) {
 
+    val deletedIds = mutableListOf<PasswordHistoryEntryId>()
+
+    override suspend fun invoke(passwordHistoryEntryId: PasswordHistoryEntryId) {
+        deletedIds.add(passwordHistoryEntryId)
     }
 }

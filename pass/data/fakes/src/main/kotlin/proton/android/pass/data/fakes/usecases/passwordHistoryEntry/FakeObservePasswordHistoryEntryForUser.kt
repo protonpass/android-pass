@@ -19,7 +19,8 @@
 package proton.android.pass.data.fakes.usecases.passwordHistoryEntry
 
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.emptyFlow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.map
 import proton.android.pass.data.api.usecases.passwordHistoryEntry.ObservePasswordHistoryEntryForUser
 import proton.android.pass.domain.PasswordHistoryEntry
 import javax.inject.Inject
@@ -28,5 +29,19 @@ import javax.inject.Singleton
 @Singleton
 class FakeObservePasswordHistoryEntryForUser @Inject constructor() :
     ObservePasswordHistoryEntryForUser {
-    override suspend fun invoke(): Flow<List<PasswordHistoryEntry>> = emptyFlow()
+
+    private val flow = MutableStateFlow<Result<List<PasswordHistoryEntry>>>(
+        Result.success(emptyList())
+    )
+    var invocationCount = 0
+        private set
+
+    fun sendResult(result: Result<List<PasswordHistoryEntry>>) {
+        flow.value = result
+    }
+
+    override suspend fun invoke(): Flow<List<PasswordHistoryEntry>> {
+        invocationCount++
+        return flow.map { it.getOrThrow() }
+    }
 }

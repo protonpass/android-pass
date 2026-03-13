@@ -18,7 +18,6 @@
 
 package proton.android.pass.features.password.history
 
-import android.app.Application
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -50,7 +49,6 @@ import javax.inject.Inject
 @HiltViewModel
 class PasswordHistoryEntryViewModel @Inject constructor(
     observePasswordHistoryForUser: ObservePasswordHistoryEntryForUser,
-    private val application: Application,
     private val clock: Clock,
     private val encryptionContextProvider: EncryptionContextProvider,
     private val deletePasswordHistoryEntryForUser: DeletePasswordHistoryEntryForUser,
@@ -86,7 +84,6 @@ class PasswordHistoryEntryViewModel @Inject constructor(
                             }
                         onePassword.toUiModel(
                             clock = clock,
-                            context = application.applicationContext,
                             defaultUIHiddenState = if (index >= 0 && index < currentUiPasswords.size) {
                                 currentUiPasswords[index].value
                             } else {

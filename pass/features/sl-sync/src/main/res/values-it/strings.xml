@@ -28,6 +28,7 @@
   <string name="simple_login_sync_management_mailbox_unverified">Casella email non verificata</string>
   <string name="simple_login_sync_management_mailbox_unverified_change">Modifica della casella di posta non verificata</string>
   <string name="simple_login_sync_management_vault_title">Sincronizzazione SimpleLogin</string>
+  <string name="simple_login_sync_management_no_vault_description">Hai bisogno di almeno una cassaforte per gestire le impostazioni di sincronizzazione di SimpleLogin.</string>
   <string name="simple_login_sync_management_snackbar_alias_details_fetch_error">Si è verificato un errore nel recuperare i dati dell\'alias SL</string>
   <string name="simple_login_sync_management_mailboxes_title">Casella email predefinita per gli alias</string>
   <string name="simple_login_sync_management_dialog_title_domains">Dominio predefinito per gli alias</string>

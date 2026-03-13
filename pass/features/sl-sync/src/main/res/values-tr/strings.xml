@@ -28,6 +28,7 @@
   <string name="simple_login_sync_management_mailbox_unverified">E-posta kutusu doğrulanmamış</string>
   <string name="simple_login_sync_management_mailbox_unverified_change">E-posta kutusu değişikliği doğrulanmamış</string>
   <string name="simple_login_sync_management_vault_title">SimpleLogin eşitleme</string>
+  <string name="simple_login_sync_management_no_vault_description">SimpleLogin eşitleme ayarlarını yönetmek için en az bir kasanız olmalı.</string>
   <string name="simple_login_sync_management_snackbar_alias_details_fetch_error">SimpleLogin takma adı bilgileri alınırken sorun çıktı</string>
   <string name="simple_login_sync_management_mailboxes_title">Takma adların varsayılan e-posta kutusu</string>
   <string name="simple_login_sync_management_dialog_title_domains">Takma adların varsayılan etki alanı</string>

@@ -28,6 +28,7 @@
   <string name="simple_login_sync_management_mailbox_unverified">未驗證的電郵信箱</string>
   <string name="simple_login_sync_management_mailbox_unverified_change">未驗證的電郵信箱變更</string>
   <string name="simple_login_sync_management_vault_title">SimpleLogin 同步</string>
+  <string name="simple_login_sync_management_no_vault_description">You need at least one vault to manage SimpleLogin sync settings.</string>
   <string name="simple_login_sync_management_snackbar_alias_details_fetch_error">擷取 SL 別名詳細資料時發生錯誤</string>
   <string name="simple_login_sync_management_mailboxes_title">別名的預設電郵信箱</string>
   <string name="simple_login_sync_management_dialog_title_domains">別名的預設網域</string>

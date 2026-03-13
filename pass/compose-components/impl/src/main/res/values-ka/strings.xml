@@ -32,16 +32,16 @@
   <string name="bottomsheet_monitor_exclude">მონიტორინგიდან ამოღება</string>
   <string name="bottomsheet_monitor_include">მონიტორინგში ჩასმა</string>
   <string name="bottomsheet_migrate_item">სხვა საცავში გადატანა</string>
-  <string name="bottomsheet_create_folder">Create folder</string>
-  <string name="folder_tree_create_folder">Create folder</string>
-  <string name="bottomsheet_rename_folder">Rename</string>
-  <string name="bottomsheet_create_sub_folder">Create sub-folder</string>
-  <string name="bottomsheet_move_folder">Move</string>
+  <string name="bottomsheet_create_folder">საქაღალდის შექმნა</string>
+  <string name="folder_tree_create_folder">საქაღალდის შექმნა</string>
+  <string name="bottomsheet_rename_folder">სახელის გადარქმევა</string>
+  <string name="bottomsheet_create_sub_folder">ქვესაქაღალდის შექმნა</string>
+  <string name="bottomsheet_move_folder">გადატანა</string>
   <string name="bottomsheet_copy_item_note">შენიშვნის კოპირება</string>
   <string name="bottomsheet_delete_permanently">სამუდამოდ წაშლა</string>
   <string name="bottomsheet_restore">აღდგენა</string>
   <string name="bottomsheet_leave">გასვლა</string>
-  <string name="bottomsheet_duplicate">Duplicate</string>
+  <string name="bottomsheet_duplicate">დუბლირება</string>
   <string name="bottomsheet_no_actions">ქმედებები ხელმისაწვდომი არაა</string>
   <!-- Actions -->
   <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">ელემენტის ქმედების მენიუს გახსნა</string>
@@ -202,11 +202,11 @@
   <string name="item_details_shared_section_more_info_header_title">მეტი ინფორმაცია</string>
   <string name="item_details_shared_section_more_info_header_icon_content_description">ელემენტის დამატებითი ინფორმაციის ხატულა</string>
   <string name="item_details_shared_section_more_info_item_id">ელემენტის ID</string>
-  <string name="item_details_shared_section_more_info_vault_id">Vault ID</string>
-  <string name="item_details_shared_section_more_info_share_id">Share ID</string>
-  <string name="item_details_wifi_network_label_ssid_name">Name (SSID)</string>
+  <string name="item_details_shared_section_more_info_vault_id">საცავის ID</string>
+  <string name="item_details_shared_section_more_info_share_id">ID-ის გაზიარება</string>
+  <string name="item_details_wifi_network_label_ssid_name">სახელი (SSID)</string>
   <string name="item_details_wifi_network_label_password">პაროლი</string>
-  <string name="item_details_wifi_network_label_security">Security</string>
+  <string name="item_details_wifi_network_label_security">უსაფრთხოება</string>
   <string name="item_details_ssh_key_label_public_key">საჯარო გასაღები</string>
   <string name="item_details_ssh_key_label_private_key">პირადი გასაღები</string>
   <string name="home_app_needs_update_message" comment="Message displayed when the app needs to be updated">აპის ვერსია მხარდაჭერილი აღარაა. განაახლეთ თქვენი აპი.</string>
@@ -312,9 +312,9 @@
     <item quantity="one">%d წევრი</item>
     <item quantity="other">%d წევრი</item>
   </plurals>
-  <string name="show_network_qr_code">Show Network QR Code</string>
-  <string name="expand_collpased_text">more</string>
-  <string name="collapse_expanded_text">less</string>
+  <string name="show_network_qr_code">ქსელის QR კოდის ჩვენება</string>
+  <string name="expand_collpased_text">მეტი</string>
+  <string name="collapse_expanded_text">ნაკლები</string>
   <string name="login_item_monitor_widget_weak_pass_title">პაროლი სუსტია</string>
   <string name="login_item_monitor_widget_weak_pass_subtitle">ეს ანგარიში მოწყვლადია. მიმართეთ სერვისს და შეცვალეთ თქვენი პაროლი.</string>
   <plurals name="login_item_monitor_widget_reused_pass_title">
@@ -345,15 +345,15 @@
   <string name="alias_create_login_from_alias">შესვლის შექმნა</string>
   <string name="banner_contacts_title">იცოდით?</string>
   <string name="banner_contacts_subtitle">ყოველთვის, როცა თქვენი ფსევდონიმი ელფოსტის მიიღებს, ახალი კონტაქტი ავტომატურად იქნება.</string>
-  <string name="action_reveal">Reveal</string>
-  <string name="action_conceal">Conceal</string>
-  <string name="warning_dialog_item_shared_vault_title">Item in a shared vault</string>
-  <string name="warning_dialog_item_shared_title">Shared item</string>
-  <string name="warning_dialog_item_shared_vault_creating">You are creating an item in a shared vault and members will immediately gain access to this item.</string>
-  <string name="warning_dialog_item_shared_vault_moving">You are moving an item to a shared vault and members will immediately gain access to this item.</string>
-  <string name="warning_dialog_item_shared_vault_updating">You are editing an item in a shared vault and members will immediately gain access to this item.</string>
-  <string name="warning_dialog_item_shared_updating">You are editing a shared item. Changes will be visible to everyone it\'s shared with immediately.</string>
-  <string name="warning_dialog_item_shared_vault_reminder">Don\'t remind me again</string>
-  <string name="upgrade_to_pass_plus">Upgrade to Pass Plus</string>
-  <string name="warning_dialog_reload_app_after_purchase_description">You are about to be redirected to our website. If you purchase a plan, please restart the app.</string>
+  <string name="action_reveal">გამოჩენა</string>
+  <string name="action_conceal">დამალვა</string>
+  <string name="warning_dialog_item_shared_vault_title">ელემენტი გაზიარებულ საცავში</string>
+  <string name="warning_dialog_item_shared_title">გაზიარებული ელემენტი</string>
+  <string name="warning_dialog_item_shared_vault_creating">თქვენ ქმნით ელემენტს გაზიარებულ საცავში. წევრები დაუყოვნებლივ მიიღებენ ამ ელემენტზე წვდომას.</string>
+  <string name="warning_dialog_item_shared_vault_moving">თქვენ გადააქვთ ელემენტი გაზიარებულ საცავში. წევრები დაუყოვნებლივ მიიღებენ წვდომას ამ ელემენტზე.</string>
+  <string name="warning_dialog_item_shared_vault_updating">თქვენ რედაქტირებთ გაზიარებულ საცავში არსებულ ელემენტს. წევრები დაუყოვნებლივ მიიღებენ წვდომას ამ ელემენტზე.</string>
+  <string name="warning_dialog_item_shared_updating">თქვენ რედაქტირებთ გაზიარებულ ელემენტს. ცვლილებები დაუყოვნებლივ იქნება ხილული ყველასთვის, ვისთანაც ის გაზიარებულია.</string>
+  <string name="warning_dialog_item_shared_vault_reminder">აღარ შემახსენო</string>
+  <string name="upgrade_to_pass_plus">განახლება Pass Plus-ზე</string>
+  <string name="warning_dialog_reload_app_after_purchase_description">თქვენ გადამისამართდებით ჩვენს ვებსაიტზე. თუ სატარიფო გეგმას შეიძენთ, გადატვირთეთ აპლიკაცია.</string>
 </resources>

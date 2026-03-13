@@ -28,6 +28,7 @@
   <string name="simple_login_sync_management_mailbox_unverified">Vahvistamaton postilaatikko</string>
   <string name="simple_login_sync_management_mailbox_unverified_change">Vahvistamaton postilaatikon vaihto</string>
   <string name="simple_login_sync_management_vault_title">SimpleLogin-synkronointi</string>
+  <string name="simple_login_sync_management_no_vault_description">Tarvitset vähintään yhden holvin hallitaksesi SimpleLogin-synkronointiasetuksia.</string>
   <string name="simple_login_sync_management_snackbar_alias_details_fetch_error">Virhe noutaessa SL-aliasten tietoja</string>
   <string name="simple_login_sync_management_mailboxes_title">Aliasten oletuspostilaatikko</string>
   <string name="simple_login_sync_management_dialog_title_domains">Aliasten oletusverkkotunnus</string>

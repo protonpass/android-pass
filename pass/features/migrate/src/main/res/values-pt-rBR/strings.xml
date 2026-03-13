@@ -16,7 +16,7 @@
   <string name="migrate_init_error_snackbar">Não foi possível preparar a tela de migração</string>
   <string name="migrate_folder_confirm_title_bottom_sheet">Mover pasta para o seguinte cofre?</string>
   <string name="migrate_folder_to_folder_confirm_title_bottom_sheet">Mover pasta para a seguinte pasta?</string>
-  <string name="migrate_folder_success_snackbar">Folder moved</string>
+  <string name="migrate_folder_success_snackbar">Pasta movida</string>
   <string name="migrate_folder_error_snackbar">Erro ao mover a pasta</string>
   <string name="migrate_folder_already_same_parent_snackbar">Folder is already in this location</string>
   <string name="migrate_disabled_vault_reason_no_permission">Você não pode criar itens neste cofre</string>

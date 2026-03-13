@@ -8,8 +8,8 @@
   <string name="new_item_invite_notification_message" comment="the placeholder will be replaced by an email address">%s vuole condividere un elemento con te.</string>
   <string name="new_vault_invite_notification_title">Ricevuto invito per una nuova cassaforte</string>
   <string name="new_vault_invite_notification_message" comment="the placeholder will be replaced by an email address">%s vuole condividere una cassaforte con te.</string>
-  <string name="new_group_item_invite_notification_title">New group item invite received</string>
-  <string name="new_group_item_invite_notification_message" comment="%1$s = inviter email, %2$s = group name">%1$s wants to share an item with your group %2$s.</string>
-  <string name="new_group_vault_invite_notification_title">New group vault invite received</string>
-  <string name="new_group_vault_invite_notification_message" comment="%1$s = inviter email, %2$s = group name">%1$s wants to share a vault with your group %2$s.</string>
+  <string name="new_group_item_invite_notification_title">Invito ricevuto per un nuovo elemento di gruppo</string>
+  <string name="new_group_item_invite_notification_message" comment="%1$s = inviter email, %2$s = group name">%1$s vuole condividere un elemento con il tuo gruppo %2$s.</string>
+  <string name="new_group_vault_invite_notification_title">Ricevuto invito per una cassaforte di gruppo</string>
+  <string name="new_group_vault_invite_notification_message" comment="%1$s = inviter email, %2$s = group name">%1$s vuole condividere una cassaforte con il tuo gruppo %2$s.</string>
 </resources>

@@ -33,8 +33,8 @@
     <item quantity="few">Items with the same name already exist.\nSelect one to update or create a new item.</item>
     <item quantity="other">Items with the same name already exist.\nSelect one to update or create a new item.</item>
   </plurals>
-  <string name="select_item_autosave_no_match">No matching items found.\nCreate a new one to save these credentials.</string>
-  <string name="select_item_save_credential_title">Save password credential</string>
-  <string name="select_item_save_credential_subtitle">Select an account to save credential in.</string>
-  <string name="select_item_save_credential_button">Select account</string>
+  <string name="select_item_autosave_no_match">Ni najdenih ustreznih elementov. \nUstvarite novega za shranjevanje te poverilnice.</string>
+  <string name="select_item_save_credential_title">Shrani poverilnico za geslo</string>
+  <string name="select_item_save_credential_subtitle">Izberite račun, v katerega želite shraniti poverilnico.</string>
+  <string name="select_item_save_credential_button">Izberi račun</string>
 </resources>

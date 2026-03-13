@@ -20,13 +20,13 @@
   <string name="sharing_can_view">მთვალიერებელი</string>
   <string name="sharing_can_edit">რედაქტორი</string>
   <string name="sharing_can_manage">ადმინისტრატორი</string>
-  <string name="sharing_can_manage_v2">Manager</string>
+  <string name="sharing_can_manage_v2">მმართველი</string>
   <string name="sharing_can_view_description">შეუძლია ამ საცავის ელემენტების დათვალიერება.</string>
   <string name="sharing_can_edit_description">შეუძლია ამ საცავის ელემენტების ჩასწორება, წაშლა და გატანა.</string>
   <string name="sharing_can_manage_description">შეუძლია ამ საცავზე წვდომების მინიჭება და ჩამორთმევა.</string>
   <plurals name="sharing_item_count">
     <item quantity="one">%d ელემენტი</item>
-    <item quantity="other">%d items</item>
+    <item quantity="other">%d ელემენტი</item>
   </plurals>
   <plurals name="sharing_member_count">
     <item quantity="one">%d წევრი</item>
@@ -49,9 +49,9 @@
   <string name="sharing_item_invitation_title">გაზიარებული ელემენტის მოსაწვევი</string>
   <string name="sharing_item_invitation_subtitle" comment="placeholder is replaced by an email address">%s უნდა, ელემენტი გაგიზიაროთ.</string>
   <string name="sharing_item_invitation_accept">მიღება და ელემენტის ნახვა</string>
-  <string name="sharing_group_vault_invitation_subtitle" comment="first placeholder is replaced by an email address, second by a group name">%1$s wants to share a vault with your group %2$s.</string>
-  <string name="sharing_group_item_invitation_subtitle" comment="first placeholder is replaced by an email address, second by a group name">%1$s wants to share an item with your group %2$s.</string>
-  <string name="sharing_group_invitation_accept">Accept invitation</string>
+  <string name="sharing_group_vault_invitation_subtitle" comment="first placeholder is replaced by an email address, second by a group name">%1$s-ს უნდა, რომ გაუზიაროს საცავი თქვენს ჯგუფს %2$s.</string>
+  <string name="sharing_group_item_invitation_subtitle" comment="first placeholder is replaced by an email address, second by a group name">%1$s-ს უნდა, გაუზიაროს ელემენტი თქვენს ჯგუფს %2$s.</string>
+  <string name="sharing_group_invitation_accept">მოსაწვევის მიღება</string>
   <string name="sharing_invite_more">მეტის მოწვევა…</string>
   <string name="sharing_snackbar_invite_accepted">მოწვევა მიღებულია</string>
   <string name="sharing_snackbar_invite_accept_error">მოსაწვევის დათანხმების შეცდომა</string>
@@ -62,7 +62,7 @@
   <string name="sharing_snackbar_invite_sent_error">მოსაწვევის გაგზავნის შეცდომა</string>
   <string name="sharing_snackbar_invite_new_users_error">ახალ ი მომხმარებლებისთვის მოსაწვევების გაგზავნა შეუძლებელია</string>
   <string name="sharing_snackbar_invite_free_user_error">ელემენტზე მოსაწვევები, მხოლოდ, ფასიან მომხმარებლებს შეგიძლიათ, გაუგზავნოთ</string>
-  <string name="sharing_snackbar_cannot_create_invite_error">Address cannot be invited</string>
+  <string name="sharing_snackbar_cannot_create_invite_error">მისამართის მოწვევა შეუძლებელია</string>
   <string name="sharing_snackbar_get_vault_members_error">საცავის წევრების მიღება შეუძლებელია</string>
   <string name="sharing_snackbar_change_permission_success">წვდომები შეიცვალა</string>
   <string name="sharing_snackbar_change_permission_error">წვდომების შეცვლა შეუძლებელია</string>
@@ -83,7 +83,7 @@
   </plurals>
   <plurals name="share_manage_vault_item_count">
     <item quantity="one">%d ელემენტი</item>
-    <item quantity="other">%d items</item>
+    <item quantity="other">%d ელემენტი</item>
   </plurals>
   <string name="share_manage_vault_invite_pending" comment="Text that will be shown in the vault member list, below the user email when the user has been invited but has not accepted the invitation yet">მოსაწვევი გაგზავნილია</string>
   <string name="share_manage_vault_invite_pending_user_creation" comment="Text that will be shown in the vault member list, below the user email when the user has not created the account yet">მიმდინარეობს ანგარიშის შექმნა</string>
@@ -94,7 +94,7 @@
   <string name="share_role_viewer">მთვალიერებელი</string>
   <string name="share_role_editor">რედაქტორი</string>
   <string name="share_role_admin">ადმინისტრატორი</string>
-  <string name="share_role_manager">Manager</string>
+  <string name="share_role_manager">მმართველი</string>
   <string name="share_role_owner">მფლობელი</string>
   <string name="sharing_bottomsheet_transfer_ownership">მფლობელობის გადაცემა</string>
   <string name="sharing_bottomsheet_transfer_ownership_disabled_subtitle" comment="Appears as the subtitle of the sharing_bottomsheet_transfer_ownership when the user cannot transfer the ownership because they only own one vault">თქვენი უკანასკნელი საკუთარი საცავის გადატანა შეუძლებელია.</string>

@@ -28,6 +28,7 @@
   <string name="simple_login_sync_management_mailbox_unverified">Ubekreftet postboks</string>
   <string name="simple_login_sync_management_mailbox_unverified_change">Ubekreftet postboksendring</string>
   <string name="simple_login_sync_management_vault_title">SimpleLogin synkronisering</string>
+  <string name="simple_login_sync_management_no_vault_description">Du trenger minst ett hvelv for å administrere SimpleLogin-synkroniseringsinnstillinger.</string>
   <string name="simple_login_sync_management_snackbar_alias_details_fetch_error">Det oppstod en feil under henting av SL-aliasdetaljer</string>
   <string name="simple_login_sync_management_mailboxes_title">Standard postboks for aliaser</string>
   <string name="simple_login_sync_management_dialog_title_domains">Standard domene for aliaser</string>

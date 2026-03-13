@@ -18,11 +18,11 @@
   -->
 <resources>
   <string name="open_attachments_error">მიმაგრებული ფაილის გახსნა შეუძლებელია</string>
-  <string name="download_attachments_error">Could not download attachment</string>
-  <string name="share_attachments_error">Could not share attachment</string>
+  <string name="download_attachments_error">მიმაგრებული ფაილის გადმოწერა შეუძლებელია</string>
+  <string name="share_attachments_error">მიმაგრებული ფაილის გაზიარება შეუძლებელია</string>
   <string name="upload_attachments_error">მიმაგრებული ფაილის ატვირთვა შეუძლებელია</string>
-  <string name="attachment_size_exceeded_error">The selected file exceeds the size limit. Please choose a file smaller than 100MB.</string>
-  <string name="attachment_too_many_files_error">Too many files created recently</string>
+  <string name="attachment_size_exceeded_error">მონიშნული ფაილი ზომის ზღვარს სცდება. აირჩიეთ ფაილი, რომელიც 100 მბ-ზე პატარაა.</string>
+  <string name="attachment_too_many_files_error">ახლახან, მეტად ბევრი ფაილი შექმენით</string>
   <string name="open_with">გახსნა პროგრამით:</string>
-  <string name="share_with">Share with:</string>
+  <string name="share_with">გაზიარება:</string>
 </resources>

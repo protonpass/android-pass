@@ -28,6 +28,7 @@
   <string name="simple_login_sync_management_mailbox_unverified">認証されていないメールボックス</string>
   <string name="simple_login_sync_management_mailbox_unverified_change">未確認メールボックスの変更</string>
   <string name="simple_login_sync_management_vault_title">SimpleLogin 同期</string>
+  <string name="simple_login_sync_management_no_vault_description">You need at least one vault to manage SimpleLogin sync settings.</string>
   <string name="simple_login_sync_management_snackbar_alias_details_fetch_error">SLエイリアスの詳細を取得中にエラーが発生しました</string>
   <string name="simple_login_sync_management_mailboxes_title">エイリアスのデフォルトメールボックス</string>
   <string name="simple_login_sync_management_dialog_title_domains">エイリアスのデフォルトドメイン</string>

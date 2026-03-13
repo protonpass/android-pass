@@ -28,6 +28,7 @@
   <string name="simple_login_sync_management_mailbox_unverified">Nicht verifiziertes Postfach</string>
   <string name="simple_login_sync_management_mailbox_unverified_change">Ungeprüfte Änderung des Postfachs</string>
   <string name="simple_login_sync_management_vault_title">SimpleLogin-Synchronisierung</string>
+  <string name="simple_login_sync_management_no_vault_description">Es wird mindestens ein Tresor benötigt, um die Synchronisierungseinstellungen von SimpleLogin verwalten zu können.</string>
   <string name="simple_login_sync_management_snackbar_alias_details_fetch_error">Fehler beim Abrufen der SimpleLogin-Aliasdetails.</string>
   <string name="simple_login_sync_management_mailboxes_title">Standardpostfach für Aliasse</string>
   <string name="simple_login_sync_management_dialog_title_domains">Standard-Domain für Aliasse</string>

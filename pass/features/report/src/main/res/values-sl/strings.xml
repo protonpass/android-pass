@@ -18,10 +18,10 @@
   -->
 <resources>
   <string name="description_field_label">Kaj je vaša težava?</string>
-  <string name="description_field_hint">Describe the issue, the more detailed the better. If there\'s an error message, let us know what it says.</string>
+  <string name="description_field_hint">Opišite težavo, bolj podrobno kot je, tem bolje. Če se prikaže sporočilo o napaki, nam sporočite, kaj piše.</string>
   <string name="email_field_label">E-pošta</string>
   <string name="email_field_hint">e-pošta</string>
-  <string name="attach_image_button">Attach image</string>
+  <string name="attach_image_button">Priloži sliko</string>
   <string name="categories_title">Kaj je vaša težava?</string>
   <string name="report_toolbar_title">Prijavi težavo</string>
   <string name="send_report_button">Pošlji poročilo</string>
@@ -33,25 +33,25 @@
   <string name="report_reason_sync">Sinhronizacija</string>
   <string name="report_reason_passkeys">Identifikacijski ključi</string>
   <string name="report_reason_other">Ostalo</string>
-  <string name="tips_title">Quick fixes for %1$s</string>
-  <string name="tips_subtitle">These tips could help you solve your issue faster.</string>
-  <string name="autofill_tip_restart">Try disabling and enabling the autofill service.</string>
-  <string name="autofill_tip_browser">Try another browser.</string>
-  <string name="autofill_tip_another_website">Try it in another website.</string>
-  <string name="sharing_tip_vault_sharing_guide">Having issues with vault sharing? Check our guide.</string>
-  <string name="sharing_tip_secure_links_guide">Having issues with secure links? Check our guide.</string>
-  <string name="sync_tip_force_refresh">Is your screen empty? Try doing a force sync.</string>
+  <string name="tips_title">Hitri popravki za %1$s</string>
+  <string name="tips_subtitle">Ti nasveti vam lahko pomagajo hitreje rešiti vašo težavo.</string>
+  <string name="autofill_tip_restart">Poskusite onemogočiti in omogočiti storitev samodejnega izpolnjevanja.</string>
+  <string name="autofill_tip_browser">Poskusite drug brskalnik.</string>
+  <string name="autofill_tip_another_website">Poskusite na drugem spletnem mestu.</string>
+  <string name="sharing_tip_vault_sharing_guide">Imate težave s skupno rabo trezorja? Preverite naš vodnik.</string>
+  <string name="sharing_tip_secure_links_guide">Imate težave z varnimi povezavami? Preverite naš vodnik.</string>
+  <string name="sync_tip_force_refresh">Je zaslon prazen? Poskusite z izsiljeno sinhronizacijo.</string>
   <string name="send_logs_label">Pošlji dnevnike</string>
-  <string name="report_sending_success">Report sent successfully.</string>
+  <string name="report_sending_success">Poročilo je bilo uspešno poslano.</string>
   <string name="report_sending_error">Ni bilo mogoče poslati poročila.</string>
-  <string name="tips_passkey_check_guide">If you have any issues check our guide.</string>
-  <string name="tips_passkey_android_not_supported">Your Android version is too low. Try upgrading your device.</string>
+  <string name="tips_passkey_check_guide">Če imate kakršne koli težave, si oglejte naš vodnik.</string>
+  <string name="tips_passkey_android_not_supported">Vaša različica sistema Android je preniska. Poskusite nadgraditi svojo napravo.</string>
   <string name="tips_passkey_supported">Podprti identifikacijski ključi</string>
-  <string name="tips_passkey_not_supported">Passkeys not supported</string>
+  <string name="tips_passkey_not_supported">Identifikacijski ključi niso podprti</string>
   <string name="report_steps" comment="Indicator showing report progress">Korak %1$d od %2$d</string>
-  <string name="description_cannot_be_blank">Description cannot be blank</string>
-  <string name="description_is_too_short">Description is too short</string>
-  <string name="description_is_too_long">Description is too long</string>
+  <string name="description_cannot_be_blank">Opis ne sme biti prazen</string>
+  <string name="description_is_too_short">Opis je prekratek</string>
+  <string name="description_is_too_long">Opis je predolg</string>
   <string name="email_cannot_be_blank">E-pošta ne sme biti prazna</string>
   <string name="email_invalid">Neveljaven e-poštni naslov</string>
 </resources>

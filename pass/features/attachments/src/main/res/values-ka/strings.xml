@@ -22,8 +22,8 @@
   <string name="add_attachment_choose_a_file">ფაილის არჩევა</string>
   <string name="attachment_options_rename">გადარქმევა</string>
   <string name="attachment_options_delete">წაშლა</string>
-  <string name="attachment_options_download">Download</string>
-  <string name="attachment_options_share">Share</string>
+  <string name="attachment_options_download">გადმოწერა</string>
+  <string name="attachment_options_share">გაზიარება</string>
   <string name="file_picker_open_error">ვერ გავხსენი ფაილის ამრჩევი</string>
   <string name="media_picker_open_error">ვერ გავხსენი მედიაფაილის ამრჩევი</string>
   <string name="camera_open_error">კამერა ვერ გავხსენი</string>
@@ -37,6 +37,6 @@
   <string name="storage_full_body">ასწიეთ ტარიფი მეტი საცავის მისაღებად.</string>
   <string name="storage_full_upgrade">გაუმჯობესება</string>
   <string name="storage_full_amount" comment="This will show 20MB of 100MB">%1$s %2$s-დან</string>
-  <string name="attachments_saved_to_location_success">Attachment saved to location</string>
-  <string name="attachments_saved_to_location_error">Could not save attachment to location</string>
+  <string name="attachments_saved_to_location_success">მიმაგრებული ფაილი შენახულია მდებარეობაზე</string>
+  <string name="attachments_saved_to_location_error">მიმაგრებული ფაილის მდებარეობაზე შენახვა შეუძლებელია</string>
 </resources>

@@ -28,6 +28,7 @@
   <string name="simple_login_sync_management_mailbox_unverified">No s\'ha verificat la bústia de correu.</string>
   <string name="simple_login_sync_management_mailbox_unverified_change">No s\'ha verificat el canvi de bústia.</string>
   <string name="simple_login_sync_management_vault_title">Sincronització amb SimpleLogin</string>
+  <string name="simple_login_sync_management_no_vault_description">Necessites com a mínim una caixa forta per gestionar les preferències de sincronització de SimpleLogin.</string>
   <string name="simple_login_sync_management_snackbar_alias_details_fetch_error">S\'ha produït un error en obtenir els detalls de l\'àlies SL.</string>
   <string name="simple_login_sync_management_mailboxes_title">Bústia de correu per defecte per als àlies</string>
   <string name="simple_login_sync_management_dialog_title_domains">Domini per defecte per als àlies</string>

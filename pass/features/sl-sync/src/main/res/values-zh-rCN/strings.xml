@@ -28,6 +28,7 @@
   <string name="simple_login_sync_management_mailbox_unverified">未经验证的邮箱</string>
   <string name="simple_login_sync_management_mailbox_unverified_change">未经验证的邮箱变更</string>
   <string name="simple_login_sync_management_vault_title">SimpleLogin 同步</string>
+  <string name="simple_login_sync_management_no_vault_description">您需要至少一个保险库来管理 SimpleLogin 的同步设置。</string>
   <string name="simple_login_sync_management_snackbar_alias_details_fetch_error">获取 SL 别名详细信息时出现错误</string>
   <string name="simple_login_sync_management_mailboxes_title">别名默认邮箱地址</string>
   <string name="simple_login_sync_management_dialog_title_domains">别名的默认域名</string>

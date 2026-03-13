@@ -18,25 +18,25 @@
   -->
 <resources>
   <string name="add_attachment_take_a_photo">Zajemi fotografijo</string>
-  <string name="add_attachment_choose_a_photo_or_video">Choose a photo or video</string>
+  <string name="add_attachment_choose_a_photo_or_video">Izberite fotografijo ali videoposnetek</string>
   <string name="add_attachment_choose_a_file">Izberite datoteko</string>
   <string name="attachment_options_rename">Preimenuj</string>
   <string name="attachment_options_delete">Izbriši</string>
   <string name="attachment_options_download">Naloži</string>
   <string name="attachment_options_share">Deli</string>
-  <string name="file_picker_open_error">Could not open file picker</string>
-  <string name="media_picker_open_error">Could not open media picker</string>
+  <string name="file_picker_open_error">Ni bilo mogoče odpreti izbirnika datotek</string>
+  <string name="media_picker_open_error">Izbirnika medijev ni bilo mogoče odpreti</string>
   <string name="camera_open_error">Ni bilo mogoče odpreti kamere</string>
   <string name="camera_permission_explanation">Za to funkcijo je potrebno dovoljenje za kamero.</string>
   <string name="camera_permission_open_settings">Odpri nastavitve</string>
-  <string name="delete_all_attachments_title">Delete all attachments?</string>
+  <string name="delete_all_attachments_title">Izbriši vse priponke?</string>
   <string name="delete_all_attachments_subtitle">Tega dejanja ni mogoče preklicati</string>
   <string name="delete_all_attachments_confirm">Izbriši vse</string>
   <string name="rename_attachment_dialog_title">Preimenuj datoteko</string>
-  <string name="storage_full_title">Your storage is almost full.</string>
-  <string name="storage_full_body">Upgrade to increase your storage capacity.</string>
+  <string name="storage_full_title">Vaša shramba je skoraj polna.</string>
+  <string name="storage_full_body">Nadgradite, da povečate svojo velikost shrambe.</string>
   <string name="storage_full_upgrade">Nadgradnja</string>
   <string name="storage_full_amount" comment="This will show 20MB of 100MB">%1$s od %2$s</string>
-  <string name="attachments_saved_to_location_success">Attachment saved to location</string>
+  <string name="attachments_saved_to_location_success">Priloga shranjena na lokacijo</string>
   <string name="attachments_saved_to_location_error">Ni bilo mogoče shraniti priponke na lokacijo</string>
 </resources>

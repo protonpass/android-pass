@@ -28,6 +28,7 @@
   <string name="simple_login_sync_management_mailbox_unverified">Ubekræftet postkasse</string>
   <string name="simple_login_sync_management_mailbox_unverified_change">Ubekræftet ændring af postkasse</string>
   <string name="simple_login_sync_management_vault_title">SimpleLogin-synkronisering</string>
+  <string name="simple_login_sync_management_no_vault_description">Du skal bruge mindst én boks for at administrere SimpleLogin synkroniseringsindstillinger.</string>
   <string name="simple_login_sync_management_snackbar_alias_details_fetch_error">Der opstod en fejl ved hentning af SL-alias-oplysninger</string>
   <string name="simple_login_sync_management_mailboxes_title">Standardpostkasse til aliasser</string>
   <string name="simple_login_sync_management_dialog_title_domains">Standarddomæne for aliasser</string>

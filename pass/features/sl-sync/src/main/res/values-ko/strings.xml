@@ -28,6 +28,7 @@
   <string name="simple_login_sync_management_mailbox_unverified">확인되지 않은 메일함</string>
   <string name="simple_login_sync_management_mailbox_unverified_change">확인되지 않은 메일함 변경</string>
   <string name="simple_login_sync_management_vault_title">SimpleLogin 동기화</string>
+  <string name="simple_login_sync_management_no_vault_description">You need at least one vault to manage SimpleLogin sync settings.</string>
   <string name="simple_login_sync_management_snackbar_alias_details_fetch_error">SL 별칭 사항 가져오기 중 오류가 발생했습니다.</string>
   <string name="simple_login_sync_management_mailboxes_title">별칭에 대한 기본 메일함</string>
   <string name="simple_login_sync_management_dialog_title_domains">별칭의 기본 도메인</string>

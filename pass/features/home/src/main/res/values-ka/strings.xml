@@ -20,8 +20,8 @@
   <string name="home_empty_shared_items_title">გაზიარებული ელემენტების გარეშე</string>
   <string name="home_empty_shared_items_with_me_subtitle">თქვენთვის ელემენტები არ გაუზიარებიათ.</string>
   <string name="home_empty_shared_items_by_me_subtitle">თქვენთვის ელემენტები არ გაუზიარებიათ.</string>
-  <string name="home_empty_no_vaults_title">You don\'t have any vaults</string>
-  <string name="home_empty_no_vaults_subtitle">Please contact your administrator.</string>
+  <string name="home_empty_no_vaults_title">საცავები არ გაქვთ</string>
+  <string name="home_empty_no_vaults_subtitle">დაუკავშირდით თქვენს ადმინისტრატორს.</string>
   <string name="home_empty_read_only_vault_title">ეს საცავი ცარიელია</string>
   <string name="home_empty_read_only_vault_subtitle">მხოლოდ-კითხვად საცავში ელემენტებს ვერ ჩაამატებთ.</string>
   <string name="home_empty_vault_create_login">შესვლის ჩანაწერის შექმნა</string>
@@ -58,11 +58,11 @@
   <string name="home_notification_permission_banner_text">ჩართეთ პუშ-გაფრთხილებები, რათა გაიგოთ, როცა სხვები საცავს გაგიზიარებენ.</string>
   <string name="home_notification_permission_banner_settings">წვდომის ჩართვა ›</string>
   <string name="home_item_invite_banner_title" comment="placeholder is replaced by an email address">%s უნდა, ელემენტი გაგიზიაროთ.</string>
-  <string name="home_group_item_invite_banner_title" comment="%1$s = inviter email, %2$s = group name">%1$s wants to share an item with your group %2$s.</string>
-  <string name="home_group_invite_banner_title" comment="%1$s = inviter email, %2$s = group name">%1$s wants to share a vault with your group %2$s.</string>
-  <string name="home_item_invite_card_title">Shared item invitation</string>
-  <string name="home_vault_invite_card_title">Shared vault invitation</string>
-  <string name="home_vault_invite_banner_body" comment="placeholder is replaced by an email address">%s wants to share a vault with you.</string>
+  <string name="home_group_item_invite_banner_title" comment="%1$s = inviter email, %2$s = group name">%1$s-ს უნდა, გაუზიაროს ელემენტი თქვენს ჯგუფს %2$s.</string>
+  <string name="home_group_invite_banner_title" comment="%1$s = inviter email, %2$s = group name">%1$s-ს უნდა, რომ გაუზიაროს საცავი თქვენს ჯგუფს %2$s.</string>
+  <string name="home_item_invite_card_title">გაზიარებული ელემენტის მოსაწვევი</string>
+  <string name="home_vault_invite_card_title">გაზიარებული საცავის მოსაწვევი</string>
+  <string name="home_vault_invite_banner_body" comment="placeholder is replaced by an email address">%s-ის უნდა, საცავი გაგიზიაროთ.</string>
   <!-- Common bottomsheet -->
   <string name="bottomsheet_copy_password">პაროლის კოპირება</string>
   <string name="bottomsheet_copy_username">მომხმარებლის სახელის კოპირება</string>
@@ -85,7 +85,7 @@
   <!-- Vault drawer -->
   <plurals name="vault_drawer_vaults_item_count">
     <item quantity="one">%d ელემენტი</item>
-    <item quantity="other">%d items</item>
+    <item quantity="other">%d ელემენტი</item>
   </plurals>
   <string name="vault_drawer_create_vault">საცავის შექმნა</string>
   <string name="vault_drawer_item_trash">ნაგვის ყუთი</string>
@@ -102,7 +102,9 @@
   <string name="search_topbar_placeholder_pinning">მიმაგრებულებში ძებნა…</string>
   <string name="search_topbar_placeholder_shared_by_me">ძებნა ჩემს გაზიარებულებში…</string>
   <string name="search_topbar_placeholder_shared_with_me">ძებნა ჩემთან გაზიარებულებში…</string>
-  <string name="search_topbar_placeholder_folder">Search in Folder…</string>
+  <string name="search_topbar_placeholder_folder">%s-ში ძებნა…</string>
+  <string name="search_topbar_placeholder_folder_fallback">ძებნა საქაღალდეში…</string>
+  <string name="home_topbar_title_folder_fallback">საქაღალდე</string>
   <string name="item_type_filter_list_icon_content_description">ელემენტის ტიპის ხატულა</string>
   <string name="item_type_filter_all">ყველა</string>
   <string name="item_type_filter_login">შესვლა</string>
@@ -110,7 +112,7 @@
   <string name="item_type_filter_note">შენიშვნა</string>
   <string name="item_type_filter_credit_card">ბარათი</string>
   <string name="item_type_filter_identity">იდენტობა</string>
-  <string name="item_type_filter_custom_item">Custom</string>
+  <string name="item_type_filter_custom_item">მორგებული</string>
   <string name="item_type_filter_login_totp">TOTP-ით შესვლა</string>
   <string name="item_type_filter_items_shared_with_me">ჩემთან გაზიარებული</string>
   <string name="item_type_filter_items_shared_by_me">ჩემი გაზიარებული</string>
@@ -182,8 +184,8 @@
   <string name="bulk_action_pin">მიმაგრება</string>
   <string name="bulk_action_enable_alias">ფსევდონიმის ჩართვა</string>
   <string name="bulk_action_disable_alias">ფსევდონიმის გათიშვა</string>
-  <string name="vault_drawer_organise_vaults">Organize vaults</string>
-  <string name="sync_group_vault_warning">Some vaults are currently unavailable due to an issue with their group.</string>
-  <string name="sync_inactive_vault_warning">Some vaults are no longer accessible due to a password reset. Reactivate your account keys in order to regain access.</string>
-  <string name="sync_inactive_vault_warning_action">Learn more</string>
+  <string name="vault_drawer_organise_vaults">საცავების დალაგება</string>
+  <string name="sync_group_vault_warning">ზოგიერთი საცავი ახლა ხელმისაწვდომი არაა მათ ჯგუფთან არსებული პრობლემების გამო.</string>
+  <string name="sync_inactive_vault_warning">პაროლის ჩამოყრის გამო ზოგიერთი საცავი ხელმისაწვდომი აღარაა. წვდომის დასაბრუნებლად თავიდან გაააქტიურეთ ანგარიშის გასაღებები.</string>
+  <string name="sync_inactive_vault_warning_action">მეტის ნახვა</string>
 </resources>

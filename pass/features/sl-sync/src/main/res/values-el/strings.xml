@@ -28,6 +28,7 @@
   <string name="simple_login_sync_management_mailbox_unverified">Μη επαληθευμένο γραμματοκιβώτιο</string>
   <string name="simple_login_sync_management_mailbox_unverified_change">Μη επιβεβαιωμένη αλλαγή γραμματοκιβωτίου</string>
   <string name="simple_login_sync_management_vault_title">Συγχρονισμός SimpleLogin</string>
+  <string name="simple_login_sync_management_no_vault_description">Χρειάζεστε τουλάχιστον μία κρύπτη για να διαχειρίζεστε τις ρυθμίσεις συγχρονισμού του SimpleLogin.</string>
   <string name="simple_login_sync_management_snackbar_alias_details_fetch_error">Παρουσιάστηκε σφάλμα κατά τη λήψη λεπτομερειών ψευδωνύμου SL</string>
   <string name="simple_login_sync_management_mailboxes_title">Προεπιλεγμένο γραμματοκιβώτιο για ψευδώνυμα</string>
   <string name="simple_login_sync_management_dialog_title_domains">Προεπιλεγμένος τομέας για ψευδώνυμα</string>

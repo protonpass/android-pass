@@ -2,8 +2,8 @@
 <resources>
   <string name="on_boarding_autofill_content">Naj Proton Pass izpolni podatke za prijavo namesto vas. Brez tipkanja ali kopiranja in lepljenja.</string>
   <string name="on_boarding_autofill_title">Takoj se prijavite v aplikacije</string>
-  <string name="on_boarding_autofill_content_v2">Proton pass fill in login details for you. No typing or copy paste required.</string>
-  <string name="on_boarding_autofill_title_v2">Enjoy the magic of AutoFill</string>
+  <string name="on_boarding_autofill_content_v2">Proton Pass za vas samodejno izpolni podatke za prijavo. Ni vam treba ničesar tipkati ali kopirati in lepiti.</string>
+  <string name="on_boarding_autofill_title_v2">Uživajte v čarobnosti samodejnega izpolnjevanja</string>
   <string name="on_boarding_autofill_button">Samodejno izpolnjevanje s Proton Pass</string>
   <string name="on_boarding_fingerprint_content">Nastavite Proton Pass za odklepanje s prstnim odtisom, tako da imate samo vi dostop.</string>
   <string name="on_boarding_fingerprint_title">Zaščitite svoje najbolj občutljive podatke</string>
@@ -13,7 +13,7 @@
   <string name="on_boarding_last_page_button">Začnite uporabljati Proton Pass</string>
   <string name="on_boarding_skip">Ne zdaj</string>
   <string name="on_boarding_tutorial">Oglejte si kratek video o uporabi Proton Pass</string>
-  <string name="on_boarding_tutorial_v2">Learn how to use Proton Pass</string>
+  <string name="on_boarding_tutorial_v2">Naučite se uporabljati Proton Pass</string>
   <string name="on_boarding_pending_invite_content">Iz varnostnih razlogov mora biti vaš dostop potrjen.</string>
   <string name="on_boarding_pending_invite_title">Čakanje na dostop do podatkov v skupni rabi</string>
   <string name="on_boarding_pending_invite_button">Izvedite več o Proton Pass</string>
@@ -22,13 +22,13 @@
   <string name="settings_fingerprint_lock_enabled">Omogočeno odklepanje s prstnim odtisom</string>
   <string name="error_performing_operation">Napaka pri izvajanju operacije</string>
   <string name="onboarding_slide_1_title">Vsa vaša gesla.</string>
-  <string name="onboarding_slide_2_title">Protect your inbox.</string>
+  <string name="onboarding_slide_2_title">Zaščitite svojo prejeto e-pošto</string>
   <string name="onboarding_slide_3_title">Bodite obveščeni.</string>
   <string name="onboarding_slide_4_title">Varna skupna raba.</string>
-  <string name="onboarding_slide_1_subtitle">Securely in one place and protected by the most trusted name in privacy.</string>
-  <string name="onboarding_slide_2_subtitle">Use Hide-My-Email aliases against phishing threats.</string>
+  <string name="onboarding_slide_1_subtitle">Varno na enem mestu in pod zaščito najzanesljivejšega imena na področju zasebnosti.</string>
+  <string name="onboarding_slide_2_subtitle">Uporabite vzdevke Hide-My-Email za zaščito pred lažnim predstavljanjem.</string>
   <string name="onboarding_slide_3_subtitle">Varno in preprosto deli gesla in občutljive informacije.</string>
-  <string name="onboarding_slide_4_subtitle">Get alerts when your email is found on the Dark web.</string>
+  <string name="onboarding_slide_4_subtitle">Prejmite obvestila, ko je vaša e-pošta najdena na temnem spletu.</string>
   <string name="create_an_account_button">Ustvarite račun</string>
   <string name="sign_in_button">Prijava</string>
 </resources>

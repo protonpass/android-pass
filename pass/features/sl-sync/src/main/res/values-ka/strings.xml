@@ -28,6 +28,7 @@
   <string name="simple_login_sync_management_mailbox_unverified">შეუმოწმებელი საფოსტო ყუთი</string>
   <string name="simple_login_sync_management_mailbox_unverified_change">შეუმოწმებელი საფოსტო ყუთის ცვლილება</string>
   <string name="simple_login_sync_management_vault_title">SimpleLogin-ის სინქრონიზაცია</string>
+  <string name="simple_login_sync_management_no_vault_description">SimpleLogin-ის სინქრონიზაციის პარამეტრების მართვისთვის საჭიროა, მინიმუმ, ერთი საცავი.</string>
   <string name="simple_login_sync_management_snackbar_alias_details_fetch_error">შეცდომა SL ფსევდონიმის დეტალების გამოთხოვისას</string>
   <string name="simple_login_sync_management_mailboxes_title">ნაგულისხმევი საფოსტო ყუთი ფსევდონიმებისთვის</string>
   <string name="simple_login_sync_management_dialog_title_domains">ნაგულისხმევი დომენი ფსევდონიმებისთვის</string>

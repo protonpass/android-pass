@@ -20,15 +20,15 @@
   <string name="sharing_can_view">Preglednik</string>
   <string name="sharing_can_edit">Urejevalnik</string>
   <string name="sharing_can_manage">Administrator</string>
-  <string name="sharing_can_manage_v2">Manager</string>
+  <string name="sharing_can_manage_v2">Upravitelj</string>
   <string name="sharing_can_view_description">Lahko si ogleda predmete v tem trezorju.</string>
   <string name="sharing_can_edit_description">Lahko ustvarja, ureja, briše in izvaža predmete v tem trezorju.</string>
   <string name="sharing_can_manage_description">Lahko odobri in prekliče dostop do tega trezorja.</string>
   <plurals name="sharing_item_count">
     <item quantity="one">%d predmet</item>
-    <item quantity="two">%d items</item>
-    <item quantity="few">%d items</item>
-    <item quantity="other">%d items</item>
+    <item quantity="two">%d predmeta</item>
+    <item quantity="few">%d predmetov</item>
+    <item quantity="other">%d predmetov</item>
   </plurals>
   <plurals name="sharing_member_count">
     <item quantity="one">%d član</item>
@@ -38,19 +38,19 @@
   </plurals>
   <string name="sharing_member_count_header">Člani</string>
   <string name="shared_via_title">Deljeno preko</string>
-  <string name="shared_via_item_section_title" comment="The placeholder will be replaced by users count. E.g. 2 users">Item sharing: %s</string>
-  <string name="shared_via_vault_section_title" comment="The placeholder will be replaced by members count. E.g. 2 members">Vault sharing: %s</string>
+  <string name="shared_via_item_section_title" comment="The placeholder will be replaced by users count. E.g. 2 users">Deljenje predmetov: %s</string>
+  <string name="shared_via_vault_section_title" comment="The placeholder will be replaced by members count. E.g. 2 members">Deljenje trezorja: %s</string>
   <string name="share_with_title">Deli z</string>
   <string name="share_with_email_hint">E-poštni naslov</string>
   <string name="share_with_email_error">Neveljaven e-poštni naslov</string>
   <string name="share_with_email_cannot_invite_outside_org">Ne morete povabiti ljudi izven vaše organizacije, za več informacij se obrnite na skrbnika.</string>
-  <string name="share_with_email_email_already_added">You have already added this email address</string>
+  <string name="share_with_email_email_already_added">Ta e-poštni naslov ste že dodali</string>
   <string name="share_permissions_title">Nastavite raven dostopa</string>
   <string name="sharing_reject_invitation">Zavrni povabilo</string>
   <string name="sharing_vault_invitation_title">Vabilo v skupni trezor</string>
-  <string name="sharing_vault_invitation_subtitle" comment="placeholder is replaced by an email address">%s wants to share a vault with you.</string>
+  <string name="sharing_vault_invitation_subtitle" comment="placeholder is replaced by an email address">%s želi deliti trezor s tabo.</string>
   <string name="sharing_vault_invitation_accept">Pridružite se skupnemu trezorju</string>
-  <string name="sharing_item_invitation_title">Shared item invitation</string>
+  <string name="sharing_item_invitation_title">Povabilo k skupnem predmetu</string>
   <string name="sharing_item_invitation_subtitle" comment="placeholder is replaced by an email address">%s wants to share an item with you.</string>
   <string name="sharing_item_invitation_accept">Accept and view the item</string>
   <string name="sharing_group_vault_invitation_subtitle" comment="first placeholder is replaced by an email address, second by a group name">%1$s wants to share a vault with your group %2$s.</string>

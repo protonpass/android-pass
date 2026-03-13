@@ -28,6 +28,7 @@
   <string name="simple_login_sync_management_mailbox_unverified">Niezweryfikowana skrzynka pocztowa</string>
   <string name="simple_login_sync_management_mailbox_unverified_change">Niezweryfikowana zmiana skrzynki pocztowej</string>
   <string name="simple_login_sync_management_vault_title">Synchronizacja SimpleLogin</string>
+  <string name="simple_login_sync_management_no_vault_description">You need at least one vault to manage SimpleLogin sync settings.</string>
   <string name="simple_login_sync_management_snackbar_alias_details_fetch_error">Wystąpił błąd podczas pobierania szczegółów aliasu SimpleLogin</string>
   <string name="simple_login_sync_management_mailboxes_title">Domyślna skrzynka pocztowa dla aliasów</string>
   <string name="simple_login_sync_management_dialog_title_domains">Domyślna domena dla aliasów</string>

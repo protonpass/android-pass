@@ -28,6 +28,7 @@
   <string name="simple_login_sync_management_mailbox_unverified">El buzón no está verificado.</string>
   <string name="simple_login_sync_management_mailbox_unverified_change">No se ha verificado el cambio del buzón.</string>
   <string name="simple_login_sync_management_vault_title">Sincronización con SimpleLogin</string>
+  <string name="simple_login_sync_management_no_vault_description">Necesitas al menos una caja fuerte para administrar los ajustes de sincronización de SimpleLogin.</string>
   <string name="simple_login_sync_management_snackbar_alias_details_fetch_error">Se ha producido un error al recuperar los detalles del alias de SL.</string>
   <string name="simple_login_sync_management_mailboxes_title">Buzón por defecto para los alias</string>
   <string name="simple_login_sync_management_dialog_title_domains">Dominio por defecto para los alias</string>

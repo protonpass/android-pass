@@ -23,18 +23,19 @@
   <string name="simple_login_sync_management_domain_title">Privzeta domena za vzdevke</string>
   <string name="simple_login_sync_management_domain_option_blank">Ni izbrano</string>
   <string name="simple_login_sync_management_mailboxes_label">Poštni predali</string>
-  <string name="simple_login_sync_management_mailboxes_description">Mailbox is where emails sent to an alias are forwarded to. It\'s your usual mailbox, e.g. Gmail, Outlook, Proton Mail, etc.</string>
+  <string name="simple_login_sync_management_mailboxes_description">Poštni predal je, kamor se posreduje e-pošta, poslana na vzdevek. To je vaš običajni poštni predal, npr. Gmail, Outlook, Proton Mail itd.</string>
   <string name="simple_login_sync_management_mailbox_default">Privzeto</string>
-  <string name="simple_login_sync_management_mailbox_unverified">Unverified mailbox</string>
-  <string name="simple_login_sync_management_mailbox_unverified_change">Unverified mailbox change</string>
+  <string name="simple_login_sync_management_mailbox_unverified">Nepreverjen poštni predal</string>
+  <string name="simple_login_sync_management_mailbox_unverified_change">Sprememba nepreverjenega poštnega predala</string>
   <string name="simple_login_sync_management_vault_title">Sinhronizacija SimpleLogin</string>
-  <string name="simple_login_sync_management_snackbar_alias_details_fetch_error">There was an error fetching SL alias details</string>
+  <string name="simple_login_sync_management_no_vault_description">Za upravljanje nastavitev sinhronizacije SimpleLogin potrebujete vsaj en trezor.</string>
+  <string name="simple_login_sync_management_snackbar_alias_details_fetch_error">Pri pridobivanju podrobnosti o vzdevku SimpleLogin je prišlo do napake</string>
   <string name="simple_login_sync_management_mailboxes_title">Privzeti nabiralnik za vzdevke</string>
   <string name="simple_login_sync_management_dialog_title_domains">Privzeta domena za vzdevke</string>
   <string name="simple_login_sync_management_dialog_title_mailboxes">Privzeti nabiralnik za vzdevke</string>
   <!-- Settings screen -->
   <string name="simple_login_sync_settings_title">Sinhroniziranje vzdevkov</string>
-  <string name="simple_login_sync_enable_snackbar_error">There was an error enabling SimpleLogin aliases sync</string>
+  <string name="simple_login_sync_enable_snackbar_error">Pri omogočanju sinhronizacije vzdevkov SimpleLogin je prišlo do napake</string>
   <string name="simple_login_sync_enable_snackbar_success">SimpleLogin aliases sync successfully enabled</string>
   <!-- Mailbox create screen -->
   <string name="simple_login_sync_mailbox_create_title">Dodaj poštni predal</string>

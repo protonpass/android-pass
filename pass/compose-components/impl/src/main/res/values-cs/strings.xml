@@ -38,7 +38,7 @@
   <string name="folder_tree_create_folder">Vytvořit složku</string>
   <string name="bottomsheet_rename_folder">Přejmenovat</string>
   <string name="bottomsheet_create_sub_folder">Vytvořit podsložku</string>
-  <string name="bottomsheet_move_folder">Move</string>
+  <string name="bottomsheet_move_folder">Přesunout</string>
   <string name="bottomsheet_copy_item_note">Kopírovat poznámku</string>
   <string name="bottomsheet_delete_permanently">Trvale smazat</string>
   <string name="bottomsheet_restore">Obnovit</string>

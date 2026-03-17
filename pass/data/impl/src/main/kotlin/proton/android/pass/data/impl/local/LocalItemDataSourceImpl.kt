@@ -24,6 +24,7 @@ import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.mapLatest
 import kotlinx.datetime.Instant
+import me.proton.core.crypto.common.keystore.EncryptedString
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.combineN
@@ -368,6 +369,13 @@ class LocalItemDataSourceImpl @Inject constructor(
 
     override suspend fun getItemsPendingForPasskeyMigration(): List<ItemEntity> =
         database.itemsDao().getItemsPendingForPasskeyMigration()
+
+    override suspend fun updateSlNote(
+        userId: UserId,
+        shareId: ShareId,
+        itemId: ItemId,
+        slNote: EncryptedString?
+    ) = database.itemsDao().updateSlNote(userId.id, shareId.id, itemId.id, slNote)
 
     override fun countAllItemsWithTotp(userId: UserId, shareIds: List<ShareId>): Flow<Int> = observeItemsWithTotpCount(
         userId = userId,

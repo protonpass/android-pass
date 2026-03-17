@@ -18,16 +18,16 @@
 
 package proton.android.pass.domain.items
 
-private const val ITEM_CATEGORY_UNKNOWN = -1
-private const val ITEM_CATEGORY_LOGIN = 0
-private const val ITEM_CATEGORY_ALIAS = 1
-private const val ITEM_CATEGORY_NOTE = 2
-private const val ITEM_CATEGORY_PASSWORD = 3
-private const val ITEM_CATEGORY_CREDIT_CARD = 4
-private const val ITEM_CATEGORY_IDENTITY = 5
-private const val ITEM_CATEGORY_CUSTOM = 6
-private const val ITEM_CATEGORY_WIFI_NETWORK = 7
-private const val ITEM_CATEGORY_SSH_KEY = 8
+const val ITEM_CATEGORY_UNKNOWN = -1
+const val ITEM_CATEGORY_LOGIN = 0
+const val ITEM_CATEGORY_ALIAS = 1
+const val ITEM_CATEGORY_NOTE = 2
+const val ITEM_CATEGORY_PASSWORD = 3
+const val ITEM_CATEGORY_CREDIT_CARD = 4
+const val ITEM_CATEGORY_IDENTITY = 5
+const val ITEM_CATEGORY_CUSTOM = 6
+const val ITEM_CATEGORY_WIFI_NETWORK = 7
+const val ITEM_CATEGORY_SSH_KEY = 8
 
 enum class ItemCategory(val value: Int) {
     Unknown(ITEM_CATEGORY_UNKNOWN),

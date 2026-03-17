@@ -56,7 +56,8 @@ object ItemUiFilter {
     }
 
     private fun isAliasMatch(content: ItemContents.Alias, query: String): Boolean =
-        content.aliasEmail.preprocess().contains(query)
+        content.aliasEmail.preprocess().contains(query) ||
+            content.slNote?.preprocess()?.contains(query) == true
 
     private fun isIdentityMatch(content: ItemContents.Identity, query: String): Boolean {
         val personalDetails = content.personalDetailsContent

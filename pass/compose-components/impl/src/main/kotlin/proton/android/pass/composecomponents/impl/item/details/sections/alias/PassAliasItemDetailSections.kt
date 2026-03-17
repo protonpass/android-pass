@@ -62,7 +62,7 @@ internal fun PassAliasItemDetailSections(
     contents: ItemContents.Alias,
     isAliasCreatedByUser: Boolean,
     isAliasStateToggling: Boolean,
-    slNote: String,
+    slNote: String?,
     displayName: String,
     stats: Option<AliasStats>,
     contactsCount: Int,
@@ -105,7 +105,7 @@ internal fun PassAliasItemDetailSections(
             )
         }
 
-        if (slNote.isNotBlank()) {
+        if (!slNote.isNullOrBlank()) {
             PassSharedItemDetailNoteSection(
                 title = buildString {
                     append(stringResource(id = R.string.item_details_shared_section_note_title))

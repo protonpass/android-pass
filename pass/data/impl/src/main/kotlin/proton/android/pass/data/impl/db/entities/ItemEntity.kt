@@ -118,6 +118,8 @@ data class ItemEntity(
     val flags: Int,
     @ColumnInfo(name = Columns.SHARE_COUNT, defaultValue = "0")
     val shareCount: Int,
+    @ColumnInfo(name = Columns.SL_NOTE)
+    val slNote: EncryptedString? = null,
 
     // Keystore Encrypted contents
     @ColumnInfo(name = Columns.ENCRYPTED_TITLE)
@@ -156,6 +158,7 @@ data class ItemEntity(
         const val FLAGS = "flags"
         const val SHARE_COUNT = "share_count"
         const val FOLDER_ID = "folder_id"
+        const val SL_NOTE = "sl_note"
     }
 
     companion object {

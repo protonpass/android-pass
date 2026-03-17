@@ -25,6 +25,7 @@ import proton.android.pass.common.api.Option
 import proton.android.pass.data.api.ItemCountSummary
 import proton.android.pass.data.api.repositories.ShareItemCount
 import proton.android.pass.data.api.usecases.ItemTypeFilter
+import me.proton.core.crypto.common.keystore.EncryptedString
 import proton.android.pass.data.impl.db.entities.ItemEntity
 import proton.android.pass.domain.FolderId
 import proton.android.pass.domain.ItemFlag
@@ -116,6 +117,13 @@ interface LocalItemDataSource {
     suspend fun getItemsPendingForTotpMigration(): List<ItemEntity>
 
     suspend fun getItemsPendingForPasskeyMigration(): List<ItemEntity>
+
+    suspend fun updateSlNote(
+        userId: UserId,
+        shareId: ShareId,
+        itemId: ItemId,
+        slNote: EncryptedString?
+    )
 
     fun observeItemsWithTotp(userId: UserId, shareIds: List<ShareId>): Flow<List<ItemWithTotp>>
 

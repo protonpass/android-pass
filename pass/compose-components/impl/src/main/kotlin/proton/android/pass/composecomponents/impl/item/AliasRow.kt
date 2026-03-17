@@ -55,11 +55,12 @@ internal fun AliasRow(
     val content = item.contents as ItemContents.Alias
 
     val highlightColor = PassTheme.colors.interactionNorm
-    val fields = remember(content.title, content.aliasEmail, content.note, highlight) {
+    val fields = remember(content.title, content.aliasEmail, content.note, content.slNote, highlight) {
         getHighlightedFields(
             title = content.title,
             aliasEmail = content.aliasEmail,
             note = content.note,
+            slNote = content.slNote,
             highlight = highlight,
             highlightColor = highlightColor
         )
@@ -114,16 +115,19 @@ internal fun AliasRow(
     )
 }
 
+@SuppressWarnings("LongParameterList")
 private fun getHighlightedFields(
     title: String,
     aliasEmail: String,
     note: String,
+    slNote: String?,
     highlight: String,
     highlightColor: Color
 ): AliasHighlightFields {
     var annotatedTitle = AnnotatedString(title.take(MAX_PREVIEW_LENGTH))
     var annotatedAliasEmail = AnnotatedString(aliasEmail)
     var annotatedNote: AnnotatedString? = null
+    var annotatedSlNote: AnnotatedString? = null
     if (highlight.isNotBlank()) {
         title.highlight(highlight, highlightColor)?.let {
             annotatedTitle = it
@@ -134,13 +138,16 @@ private fun getHighlightedFields(
         note.replace("\n", " ").highlight(highlight, highlightColor)?.let {
             annotatedNote = it
         }
+        slNote?.replace("\n", " ")?.highlight(highlight, highlightColor)?.let {
+            annotatedSlNote = it
+        }
     }
 
     return AliasHighlightFields(
         title = annotatedTitle,
         aliasEmail = annotatedAliasEmail,
         note = annotatedNote,
-        subtitles = listOfNotNull(annotatedAliasEmail, annotatedNote).toImmutableList()
+        subtitles = listOfNotNull(annotatedAliasEmail, annotatedNote, annotatedSlNote).toImmutableList()
     )
 }
 

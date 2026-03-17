@@ -77,7 +77,8 @@ fun ItemEntity.toDomain(context: EncryptionContext): Item {
         pinTime = pinTime.toOption().map(Instant::fromEpochSeconds),
         itemFlags = ItemFlags(flags),
         shareCount = shareCount,
-        shareType = if (encryptedKey != null) ShareType.Vault else ShareType.Item
+        shareType = if (encryptedKey != null) ShareType.Vault else ShareType.Item,
+        slNote = slNote
     )
 }
 
@@ -99,5 +100,6 @@ fun ItemEntity.toEncryptedDomain(): ItemEncrypted = ItemEncrypted(
     pinTime = pinTime?.let { Some(Instant.fromEpochSeconds(it)) } ?: None,
     itemFlags = ItemFlags(flags),
     shareCount = shareCount,
-    shareType = if (encryptedKey != null) ShareType.Vault else ShareType.Item
+    shareType = if (encryptedKey != null) ShareType.Vault else ShareType.Item,
+    slNote = slNote
 )

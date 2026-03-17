@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2024-2026 Proton AG
+ * Copyright (c) 2026 Proton AG
  * This file is part of Proton AG and Proton Pass.
  *
  * Proton Pass is free software: you can redistribute it and/or modify
@@ -19,6 +19,7 @@
 package proton.android.pass.data.impl.usecases.sync
 
 import me.proton.core.domain.entity.UserId
+import proton.android.pass.common.api.safeRunCatching
 import proton.android.pass.data.api.repositories.ItemRepository
 import proton.android.pass.data.api.repositories.ItemRevision
 import proton.android.pass.data.api.repositories.ItemSyncStatus
@@ -27,6 +28,7 @@ import proton.android.pass.data.api.repositories.ItemSyncStatus.SyncError.Downlo
 import proton.android.pass.data.api.repositories.ItemSyncStatusRepository
 import proton.android.pass.data.api.repositories.SyncMode
 import proton.android.pass.data.api.repositories.VaultProgress
+import proton.android.pass.data.api.usecases.RefreshAliasSlNotes
 import proton.android.pass.data.api.usecases.folders.RefreshFolders
 import proton.android.pass.data.api.usecases.sync.ForceSyncItems
 import proton.android.pass.data.api.usecases.sync.ForceSyncResult
@@ -38,7 +40,8 @@ import javax.inject.Inject
 class ForceSyncItemsImpl @Inject constructor(
     private val refreshFolders: RefreshFolders,
     private val itemRepository: ItemRepository,
-    private val itemSyncStatusRepository: ItemSyncStatusRepository
+    private val itemSyncStatusRepository: ItemSyncStatusRepository,
+    private val refreshAliasSlNotes: RefreshAliasSlNotes
 ) : ForceSyncItems {
 
     @SuppressWarnings("LongMethod")
@@ -113,6 +116,10 @@ class ForceSyncItemsImpl @Inject constructor(
             )
         }
         val failedShareIds: Set<ShareId> = downloadFailedShareIds + setShareItemsResult.failedShareIds
+
+        safeRunCatching {
+            refreshAliasSlNotes(userId)
+        }
 
         val result = when {
             failedShareIds.isEmpty() -> {

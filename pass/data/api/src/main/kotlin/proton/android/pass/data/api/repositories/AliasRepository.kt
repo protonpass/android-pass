@@ -69,8 +69,16 @@ interface AliasRepository {
         userId: UserId,
         shareId: ShareId,
         itemId: ItemId,
-        note: String
+        slNote: String
     )
+
+    suspend fun refreshAliasSlNote(
+        userId: UserId,
+        shareId: ShareId,
+        itemId: ItemId
+    )
+
+    suspend fun refreshBulkAliasSlNotes(userId: UserId, shareIds: List<ShareId>)
 
 }
 

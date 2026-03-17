@@ -23,6 +23,7 @@ import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.first
 import me.proton.core.domain.entity.UserId
+import proton.android.pass.data.api.repositories.AliasRepository
 import proton.android.pass.data.api.repositories.ItemRepository
 import proton.android.pass.data.api.repositories.ItemSyncStatusRepository
 import proton.android.pass.data.api.repositories.ShareRepository
@@ -34,6 +35,7 @@ import proton.android.pass.data.api.usecases.RefreshSharesAndEnqueueSync
 import proton.android.pass.data.api.usecases.RefreshSharesResult
 import proton.android.pass.data.api.usecases.RefreshUserInvites
 import proton.android.pass.data.api.usecases.SyncUserEvents
+import proton.android.pass.data.api.usecases.RefreshAliasSlNotes
 import proton.android.pass.data.api.usecases.folders.DeleteFoldersLocally
 import proton.android.pass.data.api.usecases.folders.RefreshFolders
 import proton.android.pass.data.api.usecases.organization.RefreshOrganizationSettings
@@ -70,7 +72,9 @@ class SyncUserEventsImpl @Inject constructor(
     private val refreshBreaches: RefreshBreaches,
     private val refreshOrganizationSettings: RefreshOrganizationSettings,
     private val itemSyncStatusRepository: ItemSyncStatusRepository,
-    private val eventRepository: EventRepository
+    private val eventRepository: EventRepository,
+    private val aliasRepository: AliasRepository,
+    private val refreshAliasSlNotes: RefreshAliasSlNotes
 ) : SyncUserEvents {
 
     override suspend fun invoke(userId: UserId, forceSync: Boolean) {
@@ -147,6 +151,7 @@ class SyncUserEventsImpl @Inject constructor(
         processBreachUpdateChanged(userId, eventList.breachUpdate)
         processOrganizationUpdateChanged(userId, eventList.organizationInfoChanged)
         processNewUserInvitesChanged(userId, eventList.sharesWithInvitesToCreate)
+        processAliasNoteChanged(userId, eventList.aliasNoteChanged)
     }
 
     private suspend fun processSharesCreated(userId: UserId, sharesCreated: List<SyncEventShare>) {
@@ -285,15 +290,27 @@ class SyncUserEventsImpl @Inject constructor(
             result
         }
 
+        val refreshAliasSlNotesDeferred = async {
+            refreshAliasSlNotes(userId)
+            PassLogger.i(TAG, "finished refreshAliasSlNotes")
+        }
+
         awaitAll(
             userInvitesDeferred,
             groupInvitesDeferred,
             syncPendingAliasesDeferred,
             refreshBreachesDeferred,
-            refreshOrganizationSettingsDeferred
+            refreshOrganizationSettingsDeferred,
+            refreshAliasSlNotesDeferred
         )
 
         PassLogger.i(TAG, "end full refresh")
+    }
+
+    private suspend fun processAliasNoteChanged(userId: UserId, events: List<SyncEventShareItem>) {
+        events.forEach { (shareId, itemId, _) ->
+            aliasRepository.refreshAliasSlNote(userId, shareId, itemId)
+        }
     }
 
     private suspend fun waitForFetchItemsWorker(userId: UserId) {

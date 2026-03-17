@@ -183,7 +183,8 @@ sealed class ItemContents {
         override val note: String,
         override val customFields: List<CustomFieldContent>,
         val aliasEmail: String,
-        private val isDisabled: Boolean? = null
+        private val isDisabled: Boolean? = null,
+        val slNote: String? = null
     ) : ItemContents() {
 
         override val displayValue: String = aliasEmail

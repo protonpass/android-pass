@@ -24,8 +24,10 @@ import me.proton.core.domain.entity.UserId
 import org.junit.Before
 import org.junit.Test
 import proton.android.pass.data.api.usecases.RefreshSharesResult
+import proton.android.pass.data.fakes.repositories.FakeAliasRepository
 import proton.android.pass.data.fakes.repositories.FakeItemRepository
 import proton.android.pass.data.fakes.usecases.FakePromoteNewInviteToInvite
+import proton.android.pass.data.fakes.usecases.FakeRefreshAliasSlNotes
 import proton.android.pass.data.fakes.usecases.FakeRefreshBreaches
 import proton.android.pass.data.fakes.usecases.FakeRefreshGroupInvites
 import proton.android.pass.data.fakes.usecases.FakeItemSyncStatusRepository
@@ -72,6 +74,8 @@ internal class SyncUserEventsImplTest {
     private lateinit var refreshOrganizationSettings: FakeRefreshOrganizationSettings
     private lateinit var itemSyncStatusRepository: FakeItemSyncStatusRepository
     private lateinit var eventRepository: FakeEventRepository
+    private lateinit var aliasRepository: FakeAliasRepository
+    private lateinit var refreshAliasSlNotes: FakeRefreshAliasSlNotes
 
     @Before
     fun setup() {
@@ -91,6 +95,8 @@ internal class SyncUserEventsImplTest {
         refreshOrganizationSettings = FakeRefreshOrganizationSettings()
         itemSyncStatusRepository = FakeItemSyncStatusRepository()
         eventRepository = FakeEventRepository()
+        aliasRepository = FakeAliasRepository()
+        refreshAliasSlNotes = FakeRefreshAliasSlNotes()
 
         instance = SyncUserEventsImpl(
             userEventRepository = userEventRepository,
@@ -108,7 +114,9 @@ internal class SyncUserEventsImplTest {
             refreshBreaches = refreshBreaches,
             refreshOrganizationSettings = refreshOrganizationSettings,
             itemSyncStatusRepository = itemSyncStatusRepository,
-            eventRepository = eventRepository
+            eventRepository = eventRepository,
+            aliasRepository = aliasRepository,
+            refreshAliasSlNotes = refreshAliasSlNotes
         )
     }
 
@@ -495,6 +503,27 @@ internal class SyncUserEventsImplTest {
     }
 
     @Test
+    fun `processes alias note changed events`() = runTest {
+        val eventId = UserEventId(EVENT_ID_1)
+        setupBasicSync(eventId)
+
+        val alias1 = SyncEventShareItem(ShareId(SHARE_ID_1), ItemId(ITEM_ID_1), EventToken(TOKEN_1))
+        val alias2 = SyncEventShareItem(ShareId(SHARE_ID_2), ItemId(ITEM_ID_2), EventToken(TOKEN_2))
+
+        userEventRepository.setGetUserEventsResult(
+            createUserEventList(
+                lastEventId = eventId,
+                aliasNoteChanged = listOf(alias1, alias2)
+            )
+        )
+
+        instance.invoke(USER_ID)
+
+        assertThat(userEventRepository.getStoreLatestEventIdMemory()).isNotEmpty()
+        assertThat(aliasRepository.getRefreshAliasSlNoteMemory()).hasSize(2)
+    }
+
+    @Test
     fun `handles empty event lists`() = runTest {
         val eventId = UserEventId(EVENT_ID_1)
         setupBasicSync(eventId)
@@ -654,6 +683,7 @@ internal class SyncUserEventsImplTest {
         lastEventId: UserEventId,
         itemsUpdated: List<SyncEventShareItem> = emptyList(),
         itemsDeleted: List<SyncEventShareItem> = emptyList(),
+        aliasNoteChanged: List<SyncEventShareItem> = emptyList(),
         sharesCreated: List<SyncEventShare> = emptyList(),
         sharesUpdated: List<SyncEventShare> = emptyList(),
         sharesDeleted: List<SyncEventShare> = emptyList(),
@@ -672,7 +702,7 @@ internal class SyncUserEventsImplTest {
         lastEventId = lastEventId,
         itemsUpdated = itemsUpdated,
         itemsDeleted = itemsDeleted,
-        aliasNoteChanged = emptyList(),
+        aliasNoteChanged = aliasNoteChanged,
         sharesCreated = sharesCreated,
         sharesUpdated = sharesUpdated,
         sharesDeleted = sharesDeleted,

@@ -23,15 +23,19 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.FlowUtils.oneShot
 import proton.android.pass.common.api.firstError
 import proton.android.pass.common.api.safeRunCatching
+import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.repositories.AliasItemsChangeStatusResult
 import proton.android.pass.data.api.repositories.AliasRepository
+import proton.android.pass.data.api.usecases.ItemTypeFilter
 import proton.android.pass.data.impl.extensions.toDomain
+import proton.android.pass.data.impl.local.LocalItemDataSource
 import proton.android.pass.data.impl.remote.RemoteAliasDataSource
 import proton.android.pass.data.impl.requests.ChangeAliasStatusRequest
 import proton.android.pass.data.impl.requests.UpdateAliasMailboxesRequest
@@ -43,12 +47,15 @@ import proton.android.pass.domain.AliasMailbox
 import proton.android.pass.domain.AliasOptions
 import proton.android.pass.domain.AliasStats
 import proton.android.pass.domain.ItemId
+import proton.android.pass.domain.ItemState
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.events.EventToken
 import javax.inject.Inject
 
 class AliasRepositoryImpl @Inject constructor(
-    private val remoteDataSource: RemoteAliasDataSource
+    private val remoteDataSource: RemoteAliasDataSource,
+    private val localItemDataSource: LocalItemDataSource,
+    private val encryptionContextProvider: EncryptionContextProvider
 ) : AliasRepository {
 
     override fun getAliasOptions(userId: UserId, shareId: ShareId): Flow<AliasOptions> =
@@ -146,16 +153,67 @@ class AliasRepositoryImpl @Inject constructor(
         userId: UserId,
         shareId: ShareId,
         itemId: ItemId,
-        note: String
+        slNote: String
     ) {
         remoteDataSource.updateAliasNote(
             userId = userId,
             shareId = shareId,
             itemId = itemId,
-            request = UpdateAliasNoteRequest(note)
+            request = UpdateAliasNoteRequest(slNote)
         )
+        val encryptedSlNote = encryptionContextProvider.withEncryptionContext {
+            encrypt(slNote)
+        }
+        localItemDataSource.updateSlNote(userId, shareId, itemId, encryptedSlNote)
+    }
+
+    override suspend fun refreshAliasSlNote(
+        userId: UserId,
+        shareId: ShareId,
+        itemId: ItemId
+    ) {
+        val response = remoteDataSource.fetchAliasDetails(userId, shareId, itemId)
+        response.note?.let {
+            val encryptedSlNote = encryptionContextProvider.withEncryptionContext {
+                encrypt(response.note)
+            }
+            localItemDataSource.updateSlNote(userId, shareId, itemId, encryptedSlNote)
+        }
+    }
+
+    override suspend fun refreshBulkAliasSlNotes(userId: UserId, shareIds: List<ShareId>) {
+        val items = localItemDataSource.observeItems(
+            userId = userId,
+            shareIds = shareIds,
+            itemState = ItemState.Active,
+            filter = ItemTypeFilter.Aliases,
+            itemFlags = emptyMap()
+        ).first().filter { it.aliasEmail != null }
+        if (items.isEmpty()) return
+
+        val emailToItemId = items.associate { it.aliasEmail to ItemId(it.id) }
+
+        items.groupBy { ShareId(it.shareId) }.forEach { (shareId, shareItems) ->
+            val itemIds = shareItems.map { ItemId(it.id) }
+            itemIds.chunked(MAX_BULK_SIZE).forEach { chunk ->
+                val responses = remoteDataSource.fetchBulkAliasDetails(userId, shareId, chunk)
+                encryptionContextProvider.withEncryptionContextSuspendable {
+                    responses.forEach { aliasResponse ->
+                        val itemId = emailToItemId[aliasResponse.email] ?: return@forEach
+                        aliasResponse.note?.let {
+                            val encryptedSlNote = encrypt(aliasResponse.note)
+                            localItemDataSource.updateSlNote(userId, shareId, itemId, encryptedSlNote)
+                        }
+                    }
+                }
+            }
+        }
     }
 
     private fun mapMailboxes(input: List<AliasMailboxResponse>): List<AliasMailbox> =
         input.map { AliasMailbox(id = it.id, email = it.email) }
+
+    private companion object {
+        private const val MAX_BULK_SIZE = 100
+    }
 }

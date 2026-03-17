@@ -21,6 +21,7 @@ package proton.android.pass.data.impl.db.dao
 import androidx.room.Dao
 import androidx.room.Query
 import kotlinx.coroutines.flow.Flow
+import me.proton.core.crypto.common.keystore.EncryptedString
 import me.proton.core.data.room.db.BaseDao
 import proton.android.pass.data.impl.db.entities.FolderEntity
 import proton.android.pass.data.impl.db.entities.ItemEntity
@@ -339,6 +340,22 @@ abstract class ItemsDao : BaseDao<ItemEntity>() {
         shareIds: List<String>,
         itemState: Int?
     ): Flow<Int>
+
+    @Query(
+        """
+        UPDATE ${ItemEntity.TABLE}
+        SET ${ItemEntity.Columns.SL_NOTE} = :slNote
+        WHERE ${ItemEntity.Columns.USER_ID} = :userId
+          AND ${ItemEntity.Columns.SHARE_ID} = :shareId
+          AND ${ItemEntity.Columns.ID} = :itemId
+        """
+    )
+    abstract suspend fun updateSlNote(
+        userId: String,
+        shareId: String,
+        itemId: String,
+        slNote: EncryptedString?
+    )
 
     @Query(
         """

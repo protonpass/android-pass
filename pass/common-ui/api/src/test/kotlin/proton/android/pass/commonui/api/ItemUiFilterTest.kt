@@ -250,6 +250,36 @@ internal class ItemUiFilterTest {
     }
 
     @Test
+    fun `filterByQuery should match alias slNote`() {
+        val items = listOf(
+            TestItemUiModel.create(
+                itemContents = ItemContents.Alias(
+                    title = "Title",
+                    note = "Note",
+                    aliasEmail = "alias@example.com",
+                    customFields = emptyList(),
+                    slNote = "my important SimpleLogin note"
+                )
+            ),
+            TestItemUiModel.create(
+                itemContents = ItemContents.Alias(
+                    title = "Other Title",
+                    note = "Other Note",
+                    aliasEmail = "other@example.com",
+                    customFields = emptyList(),
+                    slNote = ""
+                )
+            )
+        )
+
+        val filteredList = items.filterByQuery("SimpleLogin")
+        assertThat(filteredList).hasSize(1)
+
+        val filteredList2 = items.filterByQuery("important")
+        assertThat(filteredList2).hasSize(1)
+    }
+
+    @Test
     fun `filterByQuery should match alias custom text fields`() {
         val items = listOf(
             TestItemUiModel.create(

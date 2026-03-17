@@ -58,7 +58,8 @@ fun ItemEncrypted.toUiModel(context: EncryptionContext): ItemUiModel {
             itemType = itemType,
             title = title,
             note = note,
-            itemFlags = itemFlags
+            itemFlags = itemFlags,
+            slNote = slNote
         ),
         state = state,
         createTime = createTime,

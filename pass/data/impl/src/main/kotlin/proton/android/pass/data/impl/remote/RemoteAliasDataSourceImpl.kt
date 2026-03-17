@@ -25,6 +25,7 @@ import me.proton.core.network.data.ApiProvider
 import proton.android.pass.data.impl.api.PasswordManagerApi
 import proton.android.pass.data.impl.requests.ChangeAliasStatusRequest
 import proton.android.pass.data.impl.requests.UpdateAliasMailboxesRequest
+import proton.android.pass.data.impl.requests.alias.GetBulkAliasRequest
 import proton.android.pass.data.impl.requests.alias.UpdateAliasNameRequest
 import proton.android.pass.data.impl.requests.alias.UpdateAliasNoteRequest
 import proton.android.pass.data.impl.responses.AliasOptionsResponse
@@ -99,5 +100,19 @@ class RemoteAliasDataSourceImpl @Inject constructor(
             .invoke { updateAliasNote(shareId.id, itemId.id, request) }
             .valueOrThrow
     }
+
+    override suspend fun fetchBulkAliasDetails(
+        userId: UserId,
+        shareId: ShareId,
+        itemIds: List<ItemId>
+    ): List<AliasResponse> = api.get<PasswordManagerApi>(userId)
+        .invoke {
+            getBulkAliasDetails(
+                shareId = shareId.id,
+                request = GetBulkAliasRequest(itemIds = itemIds.map { it.id })
+            )
+        }
+        .valueOrThrow
+        .aliases
 
 }

@@ -58,7 +58,8 @@ data class Item(
     val pinTime: Option<Instant>,
     val itemFlags: ItemFlags,
     val shareCount: Int,
-    val shareType: ShareType
+    val shareType: ShareType,
+    val slNote: EncryptedString? = null
 ) {
     val hasPasskeys: Boolean = when (val type = itemType) {
         is ItemType.Login -> type.passkeys.isNotEmpty()
@@ -91,7 +92,8 @@ data class ItemEncrypted(
     val pinTime: Option<Instant>,
     val itemFlags: ItemFlags,
     val shareCount: Int,
-    val shareType: ShareType
+    val shareType: ShareType,
+    val slNote: EncryptedString? = null
 ) {
 
     val isShared: Boolean = shareCount > 0

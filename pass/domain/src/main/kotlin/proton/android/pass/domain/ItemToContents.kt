@@ -18,14 +18,25 @@
 
 package proton.android.pass.domain
 
+import me.proton.core.crypto.common.keystore.EncryptedString
+
 fun toItemContents(
     decrypt: (String) -> String,
     itemType: ItemType,
     title: String,
     note: String,
-    itemFlags: ItemFlags
+    itemFlags: ItemFlags,
+    slNote: EncryptedString? = null
 ): ItemContents = when (itemType) {
-    is ItemType.Alias -> createAlias(decrypt, title, note, itemType, itemFlags.isAliasDisabled())
+    is ItemType.Alias -> createAlias(
+        decrypt,
+        title,
+        note,
+        itemType,
+        itemFlags.isAliasDisabled(),
+        slNote?.let(decrypt)
+    )
+
     is ItemType.Login -> createLogin(decrypt, title, note, itemType)
     is ItemType.Note -> createNote(decrypt, title, note, itemType)
     is ItemType.CreditCard -> createCreditCard(decrypt, title, note, itemType)
@@ -42,7 +53,15 @@ fun toItemContents(
 
 @Suppress("UNCHECKED_CAST")
 fun <T : ItemContents> Item.toItemContents(decrypt: (String) -> String): T = when (val type = this.itemType) {
-    is ItemType.Alias -> createAlias(decrypt, title, note, type, itemFlags.isAliasDisabled())
+    is ItemType.Alias -> createAlias(
+        decrypt,
+        title,
+        note,
+        type,
+        itemFlags.isAliasDisabled(),
+        slNote?.let(decrypt)
+    )
+
     is ItemType.Login -> createLogin(decrypt, title, note, type)
     is ItemType.Note -> createNote(decrypt, title, note, type)
     is ItemType.CreditCard -> createCreditCard(decrypt, title, note, type)
@@ -62,13 +81,15 @@ private fun createAlias(
     title: String,
     note: String,
     type: ItemType.Alias,
-    isAliasDisabled: Boolean
+    isAliasDisabled: Boolean,
+    slNote: String? = null
 ) = ItemContents.Alias(
     title = decrypt(title),
     note = decrypt(note),
     aliasEmail = type.aliasEmail,
     isDisabled = isAliasDisabled,
-    customFields = type.customFields.mapNotNull { it.toContent(decrypt, true) }
+    customFields = type.customFields.mapNotNull { it.toContent(decrypt, true) },
+    slNote = slNote
 )
 
 private fun createLogin(

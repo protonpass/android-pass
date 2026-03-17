@@ -113,6 +113,7 @@ import proton.android.pass.data.api.usecases.PerformSync
 import proton.android.pass.data.api.usecases.PinItem
 import proton.android.pass.data.api.usecases.PinItems
 import proton.android.pass.data.api.usecases.PromoteNewInviteToInvite
+import proton.android.pass.data.api.usecases.RefreshAliasSlNotes
 import proton.android.pass.data.api.usecases.RefreshBreaches
 import proton.android.pass.data.api.usecases.RefreshContent
 import proton.android.pass.data.api.usecases.RefreshGroupInvites
@@ -375,6 +376,7 @@ import proton.android.pass.data.impl.usecases.PerformSyncImpl
 import proton.android.pass.data.impl.usecases.PinItemImpl
 import proton.android.pass.data.impl.usecases.PinItemsImpl
 import proton.android.pass.data.impl.usecases.PromoteNewInviteToInviteImpl
+import proton.android.pass.data.impl.usecases.RefreshAliasSlNotesImpl
 import proton.android.pass.data.impl.usecases.RefreshBreachesImpl
 import proton.android.pass.data.impl.usecases.RefreshContentImpl
 import proton.android.pass.data.impl.usecases.RefreshGroupInvitesImpl
@@ -797,6 +799,9 @@ abstract class DataUseCaseModule {
 
     @Binds
     abstract fun bindRefreshBreaches(impl: RefreshBreachesImpl): RefreshBreaches
+
+    @Binds
+    abstract fun bindRefreshAliasSlNotes(impl: RefreshAliasSlNotesImpl): RefreshAliasSlNotes
 
     @Binds
     abstract fun bindSyncUserEvents(impl: SyncUserEventsImpl): SyncUserEvents

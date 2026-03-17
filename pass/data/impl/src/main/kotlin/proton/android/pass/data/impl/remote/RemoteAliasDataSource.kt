@@ -67,4 +67,10 @@ interface RemoteAliasDataSource {
         request: UpdateAliasNoteRequest
     )
 
+    suspend fun fetchBulkAliasDetails(
+        userId: UserId,
+        shareId: ShareId,
+        itemIds: List<ItemId>
+    ): List<AliasResponse>
+
 }

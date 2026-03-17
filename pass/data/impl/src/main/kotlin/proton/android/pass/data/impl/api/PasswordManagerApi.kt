@@ -62,6 +62,7 @@ import proton.android.pass.data.impl.requests.UpdateItemRequest
 import proton.android.pass.data.impl.requests.UpdateLastUsedTimeRequest
 import proton.android.pass.data.impl.requests.UpdateMemberShareRequest
 import proton.android.pass.data.impl.requests.UpdateVaultRequest
+import proton.android.pass.data.impl.requests.alias.GetBulkAliasRequest
 import proton.android.pass.data.impl.requests.alias.UpdateAliasNameRequest
 import proton.android.pass.data.impl.requests.alias.UpdateAliasNoteRequest
 import proton.android.pass.data.impl.requests.aliascontacts.CreateAliasContactRequest
@@ -88,6 +89,7 @@ import proton.android.pass.data.impl.responses.CreateVaultResponse
 import proton.android.pass.data.impl.responses.DeleteVaultResponse
 import proton.android.pass.data.impl.responses.ExtraPasswordGetSrpDataResponse
 import proton.android.pass.data.impl.responses.GetAliasOptionsResponse
+import proton.android.pass.data.impl.responses.GetBulkAliasResponse
 import proton.android.pass.data.impl.responses.GetAllKeysByAddressResponse
 import proton.android.pass.data.impl.responses.GetAllSecureLinksResponse
 import proton.android.pass.data.impl.responses.GetEventsResponse
@@ -273,6 +275,12 @@ interface PasswordManagerApi : BaseRetrofitApi {
 
     @GET("$PREFIX/share/{shareId}/alias/{itemId}")
     suspend fun getAliasDetails(@Path("shareId") shareId: String, @Path("itemId") itemId: String): AliasDetailsResponse
+
+    @POST("$PREFIX/share/{shareId}/alias/bulk/get")
+    suspend fun getBulkAliasDetails(
+        @Path("shareId") shareId: String,
+        @Body request: GetBulkAliasRequest
+    ): GetBulkAliasResponse
 
     @POST("$PREFIX/share/{shareId}/alias/{itemId}/mailbox")
     suspend fun updateAliasMailboxes(

@@ -22,6 +22,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
+import me.proton.core.crypto.common.keystore.EncryptedString
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.FlowUtils.testFlow
 import proton.android.pass.common.api.Option
@@ -49,6 +50,8 @@ class FakeLocalItemDataSource : LocalItemDataSource {
     private val itemEntityFlow = testFlow<ItemEntity>()
 
     private val sharedItemsFlow = testFlow<List<ItemEntity>>()
+    private val slNoteUpdates = mutableListOf<Triple<ShareId, ItemId, EncryptedString?>>()
+
 
     fun getMemory(): List<ItemEntity> = memory
 
@@ -216,6 +219,15 @@ class FakeLocalItemDataSource : LocalItemDataSource {
 
     override suspend fun getItemsPendingForPasskeyMigration(): List<ItemEntity> {
         throw IllegalStateException("Not yet implemented")
+    }
+
+    override suspend fun updateSlNote(
+        userId: UserId,
+        shareId: ShareId,
+        itemId: ItemId,
+        slNote: EncryptedString?
+    ) {
+        slNoteUpdates.add(Triple(shareId, itemId, slNote))
     }
 
     override fun observeItemCountSummary(

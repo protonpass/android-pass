@@ -54,7 +54,8 @@ object ItemEntityTestFactory {
         flags: Int = 0,
         shareCount: Int = 0,
         hasTotp: Boolean = false,
-        hasPasskeys: Boolean = false
+        hasPasskeys: Boolean = false,
+        slNote: EncryptedString? = null
     ): ItemEntity = ItemEntity(
         id = id,
         userId = userId,
@@ -81,6 +82,7 @@ object ItemEntityTestFactory {
         flags = flags,
         shareCount = shareCount,
         hasTotp = hasTotp,
-        hasPasskeys = hasPasskeys
+        hasPasskeys = hasPasskeys,
+        slNote = slNote
     )
 }

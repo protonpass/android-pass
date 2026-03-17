@@ -107,6 +107,7 @@ import proton.android.pass.data.api.usecases.PerformSync
 import proton.android.pass.data.api.usecases.PinItem
 import proton.android.pass.data.api.usecases.PinItems
 import proton.android.pass.data.api.usecases.PromoteNewInviteToInvite
+import proton.android.pass.data.api.usecases.RefreshAliasSlNotes
 import proton.android.pass.data.api.usecases.RefreshBreaches
 import proton.android.pass.data.api.usecases.RefreshContent
 import proton.android.pass.data.api.usecases.RefreshGroupInvites
@@ -360,6 +361,7 @@ import proton.android.pass.data.fakes.usecases.FakePerformSync
 import proton.android.pass.data.fakes.usecases.FakePinItem
 import proton.android.pass.data.fakes.usecases.FakePinItems
 import proton.android.pass.data.fakes.usecases.FakePromoteNewInviteToInvite
+import proton.android.pass.data.fakes.usecases.FakeRefreshAliasSlNotes
 import proton.android.pass.data.fakes.usecases.FakeRefreshBreaches
 import proton.android.pass.data.fakes.usecases.FakeRefreshContent
 import proton.android.pass.data.fakes.usecases.FakeRefreshGroupInvites
@@ -728,6 +730,9 @@ abstract class FakesDataModule {
 
     @Binds
     abstract fun bindRefreshGroupInvites(impl: FakeRefreshGroupInvites): RefreshGroupInvites
+
+    @Binds
+    abstract fun bindRefreshAliasSlNotes(impl: FakeRefreshAliasSlNotes): RefreshAliasSlNotes
 
     @Binds
     abstract fun bindRefreshBreaches(impl: FakeRefreshBreaches): RefreshBreaches

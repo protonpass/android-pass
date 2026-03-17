@@ -100,7 +100,7 @@ fun EventRowPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boole
         Surface {
             EventRow(
                 event = AutofillHealthEvent(
-                    timestamp = System.currentTimeMillis(),
+                    timestamp = 1_700_000_000_000L,
                     type = AutofillHealthEventType.FILL_REQUEST_INLINE,
                     packageName = "com.example.app"
                 )

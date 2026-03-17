@@ -23,7 +23,6 @@ import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.first
 import me.proton.core.domain.entity.UserId
-import proton.android.pass.common.api.safeRunCatching
 import proton.android.pass.data.api.repositories.ItemRepository
 import proton.android.pass.data.api.repositories.ItemSyncStatusRepository
 import proton.android.pass.data.api.repositories.ShareRepository
@@ -186,12 +185,7 @@ class SyncUserEventsImpl @Inject constructor(
     private suspend fun processFoldersUpdated(userId: UserId, foldersUpdated: List<SyncEventShareFolder>) {
         if (foldersUpdated.isNotEmpty()) {
             val sharesToRefresh = foldersUpdated.map(SyncEventShareFolder::shareId).toSet()
-            safeRunCatching {
-                refreshFolders(userId, sharesToRefresh)
-            }.onFailure { error ->
-                PassLogger.w(TAG, "Failed to refresh folders from user events")
-                PassLogger.w(TAG, error)
-            }
+            refreshFolders(userId, sharesToRefresh)
         }
     }
 
@@ -200,12 +194,7 @@ class SyncUserEventsImpl @Inject constructor(
             val foldersToDeleteByShare = foldersDeleted.groupBy(SyncEventShareFolder::shareId)
                 .mapValues { (_, events) -> events.map(SyncEventShareFolder::folderId).distinct() }
             foldersToDeleteByShare.forEach { (shareId, folderIds) ->
-                safeRunCatching {
-                    deleteFoldersLocally(userId, shareId, folderIds)
-                }.onFailure { error ->
-                    PassLogger.w(TAG, "Failed to delete folders from user events for shareId=${shareId.id}")
-                    PassLogger.w(TAG, error)
-                }
+                deleteFoldersLocally(userId, shareId, folderIds)
             }
         }
     }

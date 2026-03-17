@@ -29,7 +29,6 @@ import proton.android.pass.domain.FolderId
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.key.FolderKey
-import proton.android.pass.domain.key.InviteKey
 import proton.android.pass.domain.key.ItemKey
 import proton.android.pass.domain.key.ShareKey
 import proton.android.pass.test.domain.ShareKeyTestFactory
@@ -121,7 +120,7 @@ class EncryptItemsKeysForUserImplTest {
     private class RecordingGetShareAndItemKey : GetShareAndItemKey {
         var callCount: Int = 0
             private set
-        var lastDecryptionKeyOverride: InviteKey? = null
+        var lastDecryptionKeyOverride: FolderKey? = null
             private set
 
         private val response: Pair<ShareKey, ItemKey> = ShareKeyTestFactory.createPrivate() to ItemKey(
@@ -134,7 +133,7 @@ class EncryptItemsKeysForUserImplTest {
             userAddress: me.proton.core.user.domain.entity.UserAddress,
             shareId: ShareId,
             itemId: ItemId,
-            decryptionKeyOverride: InviteKey?
+            decryptionKeyOverride: FolderKey?
         ): Pair<ShareKey, ItemKey> {
             callCount++
             lastDecryptionKeyOverride = decryptionKeyOverride

@@ -34,7 +34,6 @@ import proton.android.pass.test.domain.ShareKeyTestFactory
 import proton.android.pass.test.domain.ShareTestFactory
 import proton.android.pass.test.domain.UserAddressTestFactory
 import kotlin.test.assertEquals
-import kotlin.test.assertFailsWith
 
 class GetShareAndItemKeyImplTest {
 
@@ -162,35 +161,6 @@ class GetShareAndItemKeyImplTest {
             ),
             itemKeyRepository.lastGetLatestShareAndItemKeyScope
         )
-    }
-
-    @Test
-    fun `invoke throws when vault override is not a folder key`() = runTest {
-        val share = ShareTestFactory.Vault.create(id = shareId.id, userId = userAddress.userId.id)
-        val shareRepository = FakeShareRepository().apply {
-            setGetByIdResult(shareId, Result.success(share))
-        }
-        val itemKeyRepository = FakeItemKeyRepository().apply {
-            emitGetLatestShareAndItemKey(
-                ShareKeyTestFactory.createPrivate() to ItemKey(
-                    rotation = 1L,
-                    key = EncryptedByteArray(byteArrayOf(1)),
-                    responseKey = "unused"
-                )
-            )
-        }
-
-        assertFailsWith<IllegalArgumentException> {
-            GetShareAndItemKeyImpl(
-                shareRepository = shareRepository,
-                itemKeyRepository = itemKeyRepository
-            ).invoke(
-                userAddress = userAddress,
-                shareId = shareId,
-                itemId = itemId,
-                decryptionKeyOverride = ShareKeyTestFactory.createPrivate()
-            )
-        }
     }
 
 }

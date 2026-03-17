@@ -106,16 +106,19 @@ class FakeLocalItemDataSource : LocalItemDataSource {
         userId: UserId,
         shareId: ShareId,
         itemId: ItemId
-    ): ItemEntity {
-        throw IllegalStateException("Not yet implemented")
-    }
+    ): ItemEntity = memory.firstOrNull {
+        it.userId == userId.id && it.shareId == shareId.id && it.id == itemId.id
+    } ?: throw IllegalStateException("Item not found")
 
     override suspend fun getByIdList(
         userId: UserId,
         shareId: ShareId,
         itemIds: List<ItemId>
     ): List<ItemEntity> {
-        throw IllegalStateException("Not yet implemented")
+        val ids = itemIds.map(ItemId::id).toSet()
+        return memory.filter {
+            it.userId == userId.id && it.shareId == shareId.id && it.id in ids
+        }
     }
 
     override suspend fun setItemStates(

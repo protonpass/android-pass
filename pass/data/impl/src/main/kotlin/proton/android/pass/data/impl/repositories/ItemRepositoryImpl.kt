@@ -1135,7 +1135,10 @@ class ItemRepositoryImpl @Inject constructor(
         )
 
         val moveItems = items.map { item ->
-            val currentFolderKey: FolderKey? = item.folderId?.let { sourceFolderKeys[FolderId(it)] }
+            val currentFolderKey = resolveSourceFolderKey(
+                sourceFolderId = item.folderId,
+                sourceFolderKeys = sourceFolderKeys
+            )
             val (_, itemKey) = getShareAndItemKey(
                 userAddress = userAddress,
                 shareId = shareId,
@@ -1454,7 +1457,10 @@ class ItemRepositoryImpl @Inject constructor(
         )
 
         val migrations = chunk.map { item ->
-            val currentFolderKey: FolderKey? = item.folderId?.let { sourceFolderKeys[FolderId(it)] }
+            val currentFolderKey = resolveSourceFolderKey(
+                sourceFolderId = item.folderId,
+                sourceFolderKeys = sourceFolderKeys
+            )
             val (_, itemKey) = getShareAndItemKey(
                 userAddress = userAddress,
                 shareId = source,
@@ -1634,10 +1640,18 @@ class ItemRepositoryImpl @Inject constructor(
         item: Item,
         itemContents: ItemV1.Item
     ): Item = withUserAddress(userId) { userAddress ->
+        val folderKeyOverride = item.folderId?.let { folderId ->
+            folderKeyRepository.getFolderKey(
+                userId = userId,
+                shareId = share.id,
+                folderId = folderId
+            ) ?: throw IllegalStateException("FolderKey not found for folderId=${folderId.id}")
+        }
         val (shareKey, itemKey) = getShareAndItemKey(
             userAddress = userAddress,
             shareId = share.id,
-            itemId = item.id
+            itemId = item.id,
+            decryptionKeyOverride = folderKeyOverride
         )
         val body = updateItem.createRequest(
             itemKey,
@@ -1660,6 +1674,14 @@ class ItemRepositoryImpl @Inject constructor(
         encryptionContextProvider.withEncryptionContextSuspendable {
             entity.toDomain(this)
         }
+    }
+
+    private fun resolveSourceFolderKey(
+        sourceFolderId: String?,
+        sourceFolderKeys: Map<FolderId, FolderKey>
+    ): FolderKey? = sourceFolderId?.let {
+        sourceFolderKeys[FolderId(it)]
+            ?: throw IllegalStateException("FolderKey not found for source folderId=$it")
     }
 
     private suspend fun itemResponseToEntity(

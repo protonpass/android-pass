@@ -37,6 +37,8 @@ class OpenItemKeyImpl @Inject constructor(
     override fun invoke(inviteKey: InviteKey, key: EncryptedItemKey): ItemKey {
         when (inviteKey) {
             is ShareKey -> validateShareKeyRotation(inviteKey, key)
+            // Folder keys are fetched per-folder rather than via share-key rotation history,
+            // so the stored item-key rotation cannot be validated against the folder key here.
             is FolderKey -> Unit
         }
 

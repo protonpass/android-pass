@@ -27,7 +27,6 @@ import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.Share
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.key.FolderKey
-import proton.android.pass.domain.key.InviteKey
 import proton.android.pass.domain.key.ItemKey
 import proton.android.pass.domain.key.ShareKey
 import javax.inject.Inject
@@ -41,7 +40,7 @@ class GetShareAndItemKeyImpl @Inject constructor(
         userAddress: UserAddress,
         shareId: ShareId,
         itemId: ItemId,
-        decryptionKeyOverride: InviteKey?
+        decryptionKeyOverride: FolderKey?
     ): Pair<ShareKey, ItemKey> = shareRepository.getById(userAddress.userId, shareId).let { share ->
         val scope = when (share) {
             is Share.Item -> ItemKeyRepository.Scope.SharedItem
@@ -59,12 +58,9 @@ class GetShareAndItemKeyImpl @Inject constructor(
         ).first()
     }
 
-    private fun decryptionSourceForVault(decryptionKeyOverride: InviteKey?): ItemKeyRepository.VaultDecryptionSource =
+    private fun decryptionSourceForVault(decryptionKeyOverride: FolderKey?): ItemKeyRepository.VaultDecryptionSource =
         when (decryptionKeyOverride) {
             null -> ItemKeyRepository.VaultDecryptionSource.Share
-            is FolderKey -> ItemKeyRepository.VaultDecryptionSource.Folder(decryptionKeyOverride)
-            else -> throw IllegalArgumentException(
-                "Vault key override must be FolderKey when provided [type=${decryptionKeyOverride::class.simpleName}]"
-            )
+            else -> ItemKeyRepository.VaultDecryptionSource.Folder(decryptionKeyOverride)
         }
 }

@@ -23,6 +23,7 @@ import kotlinx.coroutines.test.runTest
 import me.proton.core.domain.entity.UserId
 import org.junit.Before
 import org.junit.Test
+import kotlin.test.assertFailsWith
 import proton.android.pass.data.api.usecases.sync.ForceSyncResult
 import proton.android.pass.data.fakes.repositories.FakeItemRepository
 import proton.android.pass.data.fakes.usecases.FakeItemSyncStatusRepository
@@ -65,6 +66,26 @@ class ForceSyncItemsImplTest {
         assertThat(refreshFolders.invocations.first().shareIds).containsExactly(shareId)
         assertThat(itemRepository.getDownloadItemsMemory()).hasSize(1)
         assertThat(itemRepository.getSetShareItemsMemory()).hasSize(1)
+    }
+
+    @Test
+    fun `refresh folders failure aborts sync`() = runTest {
+        val shareId = ShareId("share-1")
+        refreshFolders.result = Result.failure(IllegalStateException("folder refresh failed"))
+
+        val error = assertFailsWith<IllegalStateException> {
+            instance.invoke(
+                userId = USER_ID,
+                shareIds = setOf(shareId),
+                hasInactiveShares = false,
+                hasInvalidGroupShares = false,
+                hasInvalidAddressShares = false
+            )
+        }
+
+        assertThat(error.message).isEqualTo("folder refresh failed")
+        assertThat(itemRepository.getDownloadItemsMemory()).isEmpty()
+        assertThat(itemRepository.getSetShareItemsMemory()).isEmpty()
     }
 
     private companion object {

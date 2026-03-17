@@ -46,11 +46,20 @@ class FakeRemoteItemDataSource : RemoteItemDataSource {
     private var createItemResponse: () -> ItemRevision =
         { throw IllegalStateException("response not set") }
     private var createItemMemory: MutableList<CreateItemParams> = mutableListOf()
+    private var updateItemResponse: () -> ItemRevision =
+        { throw IllegalStateException("response not set") }
+    private var updateItemMemory: MutableList<UpdateItemParams> = mutableListOf()
 
     fun getCreateItemMemory(): List<CreateItemParams> = createItemMemory
 
     fun setCreateItemResponse(delegate: () -> ItemRevision) {
         createItemResponse = delegate
+    }
+
+    fun getUpdateItemMemory(): List<UpdateItemParams> = updateItemMemory
+
+    fun setUpdateItemResponse(delegate: () -> ItemRevision) {
+        updateItemResponse = delegate
     }
 
     override suspend fun createItem(
@@ -84,7 +93,8 @@ class FakeRemoteItemDataSource : RemoteItemDataSource {
         itemId: ItemId,
         body: UpdateItemRequest
     ): ItemRevision {
-        throw IllegalStateException("Not yet implemented")
+        updateItemMemory.add(UpdateItemParams(userId, shareId, itemId, body))
+        return updateItemResponse()
     }
 
     override suspend fun updateItemFlags(
@@ -210,6 +220,13 @@ class FakeRemoteItemDataSource : RemoteItemDataSource {
         val userId: UserId,
         val shareId: ShareId,
         val body: CreateItemRequest
+    )
+
+    data class UpdateItemParams(
+        val userId: UserId,
+        val shareId: ShareId,
+        val itemId: ItemId,
+        val body: UpdateItemRequest
     )
 
     companion object {

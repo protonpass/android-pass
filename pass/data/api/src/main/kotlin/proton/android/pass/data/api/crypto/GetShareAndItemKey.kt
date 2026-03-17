@@ -21,7 +21,7 @@ package proton.android.pass.data.api.crypto
 import me.proton.core.user.domain.entity.UserAddress
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
-import proton.android.pass.domain.key.InviteKey
+import proton.android.pass.domain.key.FolderKey
 import proton.android.pass.domain.key.ItemKey
 import proton.android.pass.domain.key.ShareKey
 
@@ -31,7 +31,7 @@ interface GetShareAndItemKey {
         userAddress: UserAddress,
         shareId: ShareId,
         itemId: ItemId,
-        decryptionKeyOverride: InviteKey? = null
+        decryptionKeyOverride: FolderKey? = null
     ): Pair<ShareKey, ItemKey>
 
 }

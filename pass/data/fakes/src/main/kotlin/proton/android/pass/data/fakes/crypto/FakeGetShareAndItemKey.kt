@@ -22,7 +22,7 @@ import me.proton.core.user.domain.entity.UserAddress
 import proton.android.pass.data.api.crypto.GetShareAndItemKey
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
-import proton.android.pass.domain.key.InviteKey
+import proton.android.pass.domain.key.FolderKey
 import proton.android.pass.domain.key.ItemKey
 import proton.android.pass.domain.key.ShareKey
 import javax.inject.Inject
@@ -32,6 +32,10 @@ import javax.inject.Singleton
 class FakeGetShareAndItemKey @Inject constructor() : GetShareAndItemKey {
 
     private var itemKeys: Pair<ShareKey, ItemKey>? = null
+    var callCount: Int = 0
+        private set
+    var lastDecryptionKeyOverride: FolderKey? = null
+        private set
 
     fun setItemKeys(itemKeys: Pair<ShareKey, ItemKey>) {
         this.itemKeys = itemKeys
@@ -41,7 +45,11 @@ class FakeGetShareAndItemKey @Inject constructor() : GetShareAndItemKey {
         userAddress: UserAddress,
         shareId: ShareId,
         itemId: ItemId,
-        decryptionKeyOverride: InviteKey?
-    ): Pair<ShareKey, ItemKey> = itemKeys ?: throw IllegalStateException("Item keys not set")
+        decryptionKeyOverride: FolderKey?
+    ): Pair<ShareKey, ItemKey> {
+        callCount++
+        lastDecryptionKeyOverride = decryptionKeyOverride
+        return itemKeys ?: throw IllegalStateException("Item keys not set")
+    }
 
 }

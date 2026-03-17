@@ -55,9 +55,9 @@ class ForceSyncItemsImplTest {
         val result = instance.invoke(
             userId = USER_ID,
             shareIds = setOf(shareId),
-            isBackground = false,
             hasInactiveShares = false,
-            hasInvalidGroupShares = false
+            hasInvalidGroupShares = false,
+            hasInvalidAddressShares = false
         )
 
         assertThat(result).isEqualTo(ForceSyncResult.Success)

@@ -332,7 +332,7 @@ class FakeItemRepository @Inject constructor() : ItemRepository {
         userId: UserId,
         items: Map<ShareId, List<ItemRevision>>,
         onProgress: suspend (VaultProgress) -> Unit
-    ) : Set<ShareId>{
+    ): Set<ShareId> {
         setShareItemsMemory.add(SetShareItemsPayload(userId = userId, items = items))
         val total = items.values.sumOf { it.size }
         onProgress(VaultProgress(total = total, current = total))

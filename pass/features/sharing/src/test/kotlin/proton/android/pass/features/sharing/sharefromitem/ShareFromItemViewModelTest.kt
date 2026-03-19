@@ -29,6 +29,7 @@ import proton.android.pass.commonui.fakes.FakeSavedStateHandleProvider
 import proton.android.pass.data.api.repositories.ParentContainer
 import proton.android.pass.data.fakes.repositories.FakeBulkMoveToVaultRepository
 import proton.android.pass.data.fakes.usecases.FakeGetItemById
+import proton.android.pass.data.fakes.usecases.FakeCanCreateSecureLink
 import proton.android.pass.data.fakes.usecases.FakeGetUserPlan
 import proton.android.pass.data.fakes.usecases.FakeObserveOrganizationSettings
 import proton.android.pass.data.fakes.usecases.shares.FakeObserveShare
@@ -121,7 +122,8 @@ internal class ShareFromItemViewModelTest {
         getUserPlan = FakeGetUserPlan(),
         getItemById = getItemById,
         observeShare = FakeObserveShare(),
-        observeOrganizationSettings = FakeObserveOrganizationSettings()
+        observeOrganizationSettings = FakeObserveOrganizationSettings(),
+        canCreateSecureLink = FakeCanCreateSecureLink()
     )
 
     private companion object {

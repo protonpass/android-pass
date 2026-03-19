@@ -33,6 +33,7 @@ import proton.android.pass.domain.OrganizationSettings
 import proton.android.pass.domain.OrganizationShareMode
 import proton.android.pass.domain.organizations.OrganizationItemShareMode
 import proton.android.pass.domain.organizations.OrganizationPasswordPolicy
+import proton.android.pass.domain.organizations.OrganizationAliasMode
 import proton.android.pass.domain.organizations.OrganizationSecureLinkMode
 import proton.android.pass.domain.organizations.OrganizationSharingPolicy
 import proton.android.pass.domain.organizations.OrganizationVaultCreateMode
@@ -75,7 +76,8 @@ class OrganizationSettingsRepositoryImpl @Inject constructor(
             memorablePasswordIncludeNumbers = settings?.passwordPolicy?.memorablePasswordMustIncludeNumbers,
             vaultCreateMode = settings?.vaultCreateMode,
             itemShareMode = settings?.itemShareMode,
-            secureLinksMode = settings?.publicLinkMode
+            secureLinksMode = settings?.publicLinkMode,
+            aliasCreateMode = settings?.aliasCreateMode
         )
 
     private fun PassOrganizationSettingsEntity.toDomain() = if (hasOrganization) {
@@ -102,7 +104,8 @@ class OrganizationSettingsRepositoryImpl @Inject constructor(
             sharingPolicy = OrganizationSharingPolicy(
                 itemShareMode = OrganizationItemShareMode.fromValue(itemShareMode),
                 secureLinkMode = OrganizationSecureLinkMode.fromValue(secureLinksMode)
-            )
+            ),
+            aliasMode = OrganizationAliasMode.fromValue(aliasCreateMode)
         )
     } else {
         OrganizationSettings.NotAnOrganization

@@ -93,7 +93,10 @@ data class PassOrganizationSettingsEntity(
     val itemShareMode: Int?,
 
     @ColumnInfo(name = Columns.SECURE_LINKS_MODE)
-    val secureLinksMode: Int?
+    val secureLinksMode: Int?,
+
+    @ColumnInfo(name = Columns.ALIAS_CREATE_MODE)
+    val aliasCreateMode: Int?
 ) {
     object Columns {
         const val USER_ID = "user_id"
@@ -115,6 +118,7 @@ data class PassOrganizationSettingsEntity(
         const val VAULT_CREATE_MODE = "vault_create_mode"
         const val ITEM_SHARE_MODE = "item_share_mode"
         const val SECURE_LINKS_MODE = "secure_links_mode"
+        const val ALIAS_CREATE_MODE = "alias_create_mode"
     }
 
     companion object {
@@ -139,7 +143,8 @@ data class PassOrganizationSettingsEntity(
             memorablePasswordIncludeNumbers = null,
             vaultCreateMode = null,
             itemShareMode = null,
-            secureLinksMode = null
+            secureLinksMode = null,
+            aliasCreateMode = null
         )
     }
 }

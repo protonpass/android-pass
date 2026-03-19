@@ -73,10 +73,12 @@ internal fun CreateItemBottomSheetContents(
                     onClick = { onNavigate(CreateLogin(shareId.toOption(), folderIdOption)) }
                 ).also(::add)
 
-                createAlias(
-                    createItemAliasUIState = createItemAliasUIState,
-                    onClick = { onNavigate(CreateAlias(shareId.toOption(), folderIdOption)) }
-                ).also(::add)
+                if (canCreateAlias) {
+                    createAlias(
+                        createItemAliasUIState = createItemAliasUIState,
+                        onClick = { onNavigate(CreateAlias(shareId.toOption(), folderIdOption)) }
+                    ).also(::add)
+                }
 
                 createNote(
                     onClick = { onNavigate(CreateNote(shareId.toOption(), folderIdOption)) }
@@ -108,10 +110,12 @@ internal fun CreateItemBottomSheetContents(
                     onClick = { onNavigate(CreateLogin(shareId.toOption())) }
                 ).also(::add)
 
-                createAlias(
-                    createItemAliasUIState = createItemAliasUIState,
-                    onClick = { onNavigate(CreateAlias(shareId.toOption())) }
-                ).also(::add)
+                if (canCreateAlias) {
+                    createAlias(
+                        createItemAliasUIState = createItemAliasUIState,
+                        onClick = { onNavigate(CreateAlias(shareId.toOption())) }
+                    ).also(::add)
+                }
             }
         }
 

@@ -68,6 +68,7 @@ import proton.android.pass.data.api.usecases.ObserveUpgradeInfo
 import proton.android.pass.data.api.usecases.ObserveUserAccessData
 import proton.android.pass.data.api.usecases.PerformSync
 import proton.android.pass.data.api.usecases.UpgradeInfo
+import proton.android.pass.data.api.usecases.capabilities.CanCreateAlias
 import proton.android.pass.data.api.usecases.organization.ObserveAnyAccountHasEnforcedLock
 import proton.android.pass.data.api.usecases.securelink.ObserveSecureLinksCount
 import proton.android.pass.domain.PlanType
@@ -113,7 +114,8 @@ class ProfileViewModel @Inject constructor(
     observeUpgradeInfo: ObserveUpgradeInfo,
     observeAnyAccountHasEnforcedLock: ObserveAnyAccountHasEnforcedLock,
     observeSecureLinksCount: ObserveSecureLinksCount,
-    observeUserAccessData: ObserveUserAccessData
+    observeUserAccessData: ObserveUserAccessData,
+    canCreateAlias: CanCreateAlias
 ) : ViewModel() {
 
     private val userAppLockSectionStateFlow: Flow<AppLockSectionState> = combine(
@@ -276,9 +278,10 @@ class ProfileViewModel @Inject constructor(
         observeSecureLinksCount(),
         dataStorageStateFlow,
         accountsFlow,
-        flowOf(appConfig.flavor.isQuest())
+        flowOf(appConfig.flavor.isQuest()),
+        canCreateAlias()
     ) { appLockSectionState, autofillStatus, itemSummaryUiState, upgradeInfo, event,
-        passkey, secureLinksCount, dataStorage, accounts, isQuest ->
+        passkey, secureLinksCount, dataStorage, accounts, isQuest, canCreateAliases ->
 
         val (accountType, showUpgradeButton) = processUpgradeInfo(upgradeInfo)
         ProfileUiState(
@@ -291,6 +294,7 @@ class ProfileViewModel @Inject constructor(
             showUpgradeButton = showUpgradeButton,
             passkeySupport = passkey,
             secureLinksCount = secureLinksCount,
+            canCreateAlias = canCreateAliases,
             accounts = accounts,
             dataStorageState = dataStorage,
             canDisplaySignInToAnotherDeviceSection = !isQuest

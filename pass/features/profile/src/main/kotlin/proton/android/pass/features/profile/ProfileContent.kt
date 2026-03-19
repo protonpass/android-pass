@@ -147,9 +147,11 @@ internal fun ProfileContent(
                         )
                     }
 
-                    ProfileAliasesSection(
-                        onclick = { onEvent(ProfileUiEvent.OnAliasesClicked) }
-                    )
+                    if (state.canCreateAlias) {
+                        ProfileAliasesSection(
+                            onclick = { onEvent(ProfileUiEvent.OnAliasesClicked) }
+                        )
+                    }
 
                     PasswordHistorySection(
                         onclick = { onEvent(ProfileUiEvent.OnGeneratedPasswordsClicked) }

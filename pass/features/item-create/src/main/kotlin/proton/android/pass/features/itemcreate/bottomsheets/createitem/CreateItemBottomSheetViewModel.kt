@@ -33,6 +33,7 @@ import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.toOption
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.data.api.usecases.ObserveUpgradeInfo
+import proton.android.pass.data.api.usecases.capabilities.CanCreateAlias
 import proton.android.pass.data.api.usecases.items.ObserveCanCreateItems
 import proton.android.pass.domain.FolderId
 import proton.android.pass.domain.ShareId
@@ -46,7 +47,8 @@ class CreateItemBottomSheetViewModel @Inject constructor(
     homeSearchOptionsRepository: HomeSearchOptionsRepository,
     observeUpgradeInfo: ObserveUpgradeInfo,
     savedStateHandleProvider: SavedStateHandleProvider,
-    observeCanCreateItems: ObserveCanCreateItems
+    observeCanCreateItems: ObserveCanCreateItems,
+    canCreateAlias: CanCreateAlias
 ) : ViewModel() {
 
     private val navShareIdFlow: Flow<Option<ShareId>> =
@@ -90,8 +92,9 @@ class CreateItemBottomSheetViewModel @Inject constructor(
         observeUpgradeInfo(),
         selectedShareAndFolderFlow,
         createItemModeFlow,
-        observeCanCreateItems()
-    ) { upgradeInfo, (selectedShare, folderId), mode, canCreateItems ->
+        observeCanCreateItems(),
+        canCreateAlias()
+    ) { upgradeInfo, (selectedShare, folderId), mode, canCreateItems, canCreateAliases ->
         CreateItemBottomSheetUIState(
             shareId = selectedShare,
             folderId = folderId,
@@ -101,7 +104,8 @@ class CreateItemBottomSheetViewModel @Inject constructor(
                 aliasCount = upgradeInfo.totalAlias,
                 aliasLimit = upgradeInfo.plan.aliasLimit.limitOrNull() ?: 0
             ),
-            canCreateItems = canCreateItems
+            canCreateItems = canCreateItems,
+            canCreateAlias = canCreateAliases
         )
     }
         .stateIn(
@@ -117,17 +121,18 @@ internal data class CreateItemBottomSheetUIState(
     val folderId: FolderId? = null,
     val mode: CreateItemBottomSheetMode?,
     val createItemAliasUIState: CreateItemAliasUIState,
-    val canCreateItems: Boolean
+    val canCreateItems: Boolean,
+    val canCreateAlias: Boolean
 ) {
 
     internal companion object {
-
         val Initial = CreateItemBottomSheetUIState(
             shareId = null,
             folderId = null,
             mode = null,
             createItemAliasUIState = CreateItemAliasUIState.Initial,
-            canCreateItems = false
+            canCreateItems = false,
+            canCreateAlias = true
         )
 
     }

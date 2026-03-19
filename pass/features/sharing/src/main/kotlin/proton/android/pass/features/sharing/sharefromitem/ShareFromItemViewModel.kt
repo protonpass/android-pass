@@ -24,7 +24,6 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
@@ -33,6 +32,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import proton.android.pass.common.api.FlowUtils.oneShot
 import proton.android.pass.common.api.None
+import proton.android.pass.common.api.combineN
 import proton.android.pass.common.api.some
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
@@ -40,6 +40,7 @@ import proton.android.pass.data.api.repositories.BulkMoveToVaultRepository
 import proton.android.pass.data.api.repositories.ParentContainer
 import proton.android.pass.data.api.usecases.GetItemById
 import proton.android.pass.data.api.usecases.GetUserPlan
+import proton.android.pass.data.api.usecases.capabilities.CanCreateSecureLink
 import proton.android.pass.data.api.usecases.organization.ObserveOrganizationSettings
 import proton.android.pass.data.api.usecases.shares.ObserveShare
 import proton.android.pass.domain.Item
@@ -56,7 +57,8 @@ class ShareFromItemViewModel @Inject constructor(
     getUserPlan: GetUserPlan,
     private val getItemById: GetItemById,
     observeShare: ObserveShare,
-    observeOrganizationSettings: ObserveOrganizationSettings
+    observeOrganizationSettings: ObserveOrganizationSettings,
+    canCreateSecureLink: CanCreateSecureLink
 ) : ViewModel() {
 
     private val shareId: ShareId = savedStateHandleProvider.get()
@@ -77,27 +79,21 @@ class ShareFromItemViewModel @Inject constructor(
             initialValue = null
         )
 
-    internal val stateFlow: StateFlow<ShareFromItemUiState> = combine(
+    internal val stateFlow: StateFlow<ShareFromItemUiState> = combineN(
         navEventState,
         getUserPlan().map { it.isPaidPlan },
         itemFlow,
         observeShare(shareId = shareId),
-        observeOrganizationSettings()
-    ) { event,
-        canUsePaidFeatures,
-        item,
-        share,
-        organizationSettings ->
-        val (isItemSharingAllowed, isSecureLinkSharing) =
-            when (val settings = organizationSettings.value()) {
-                OrganizationSettings.NotAnOrganization ->
-                    canUsePaidFeatures to canUsePaidFeatures
+        observeOrganizationSettings(),
+        canCreateSecureLink()
+    ) { event, canUsePaidFeatures, item, share, organizationSettings, canCreateSecureLinks ->
 
-                is OrganizationSettings.Organization ->
-                    settings.sharingPolicy.canShareItems to settings.sharingPolicy.canShareSecureLinks
+        val isItemSharingAllowed = when (val settings = organizationSettings.value()) {
+            OrganizationSettings.NotAnOrganization -> canUsePaidFeatures
+            is OrganizationSettings.Organization -> settings.sharingPolicy.canShareItems
+            null -> false
+        }
 
-                null -> false to false
-            }
         ShareFromItemUiState(
             shareId = shareId,
             itemId = itemId,
@@ -106,7 +102,7 @@ class ShareFromItemViewModel @Inject constructor(
             itemOption = item?.some() ?: None,
             shareOption = share.some(),
             isItemSharingAllowed = isItemSharingAllowed,
-            isSecureLinkSharing = isSecureLinkSharing
+            canCreateSecureLinks = canCreateSecureLinks
         )
     }.stateIn(
         scope = viewModelScope,

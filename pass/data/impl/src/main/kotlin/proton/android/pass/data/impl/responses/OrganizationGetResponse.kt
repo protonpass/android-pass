@@ -50,7 +50,9 @@ data class OrganizationGetOrganizationSettings(
     @SerialName("ItemShareMode")
     val itemShareMode: Int?,
     @SerialName("PublicLinkMode")
-    val publicLinkMode: Int?
+    val publicLinkMode: Int?,
+    @SerialName("AliasCreateMode")
+    val aliasCreateMode: Int?
 )
 
 @Serializable

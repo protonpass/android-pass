@@ -72,6 +72,7 @@ internal data class ProfileUiState(
     val showUpgradeButton: Boolean,
     val passkeySupport: ProfilePasskeySupportSection,
     val secureLinksCount: Int,
+    val canCreateAlias: Boolean,
     val accounts: ImmutableList<AccountListItem>,
     val dataStorageState: DataStorageState,
     val canDisplaySignInToAnotherDeviceSection: Boolean
@@ -89,6 +90,7 @@ internal data class ProfileUiState(
             showUpgradeButton = false,
             passkeySupport = ProfilePasskeySupportSection.Hide,
             secureLinksCount = 0,
+            canCreateAlias = true,
             accounts = persistentListOf(),
             dataStorageState = DataStorageState.Initial,
             canDisplaySignInToAnotherDeviceSection = false

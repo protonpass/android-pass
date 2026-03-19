@@ -18,6 +18,7 @@
 
 package proton.android.pass.domain
 
+import proton.android.pass.domain.organizations.OrganizationAliasMode
 import proton.android.pass.domain.organizations.OrganizationPasswordPolicy
 import proton.android.pass.domain.organizations.OrganizationSharingPolicy
 import proton.android.pass.domain.organizations.OrganizationVaultsPolicy
@@ -52,7 +53,8 @@ sealed interface OrganizationSettings {
         val forceLockSeconds: ForceLockSeconds,
         val passwordPolicy: OrganizationPasswordPolicy,
         val vaultsPolicy: OrganizationVaultsPolicy,
-        val sharingPolicy: OrganizationSharingPolicy
+        val sharingPolicy: OrganizationSharingPolicy,
+        val aliasMode: OrganizationAliasMode
     ) : OrganizationSettings
 
     fun isEnforced(): Boolean = when (this) {

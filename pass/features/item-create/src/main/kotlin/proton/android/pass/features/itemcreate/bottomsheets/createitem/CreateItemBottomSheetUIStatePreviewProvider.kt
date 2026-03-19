@@ -32,7 +32,8 @@ internal class CreateItemBottomSheetUIStatePreviewProvider :
                 aliasCount = 5,
                 aliasLimit = 10
             ),
-            canCreateItems = true
+            canCreateItems = true,
+            canCreateAlias = true
         ),
         CreateItemBottomSheetUIState(
             shareId = null,
@@ -42,7 +43,8 @@ internal class CreateItemBottomSheetUIStatePreviewProvider :
                 aliasCount = 10,
                 aliasLimit = 10
             ),
-            canCreateItems = true
+            canCreateItems = true,
+            canCreateAlias = true
         )
     )
 }

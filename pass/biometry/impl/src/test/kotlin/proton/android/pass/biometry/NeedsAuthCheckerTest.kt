@@ -29,6 +29,7 @@ import proton.android.pass.domain.OrganizationSettings
 import proton.android.pass.domain.OrganizationShareMode
 import proton.android.pass.domain.organizations.OrganizationItemShareMode
 import proton.android.pass.domain.organizations.OrganizationPasswordPolicy
+import proton.android.pass.domain.organizations.OrganizationAliasMode
 import proton.android.pass.domain.organizations.OrganizationSecureLinkMode
 import proton.android.pass.domain.organizations.OrganizationSharingPolicy
 import proton.android.pass.domain.organizations.OrganizationVaultCreateMode
@@ -179,7 +180,8 @@ class NeedsAuthCheckerTest {
             sharingPolicy = OrganizationSharingPolicy(
                 itemShareMode = OrganizationItemShareMode.Enabled,
                 secureLinkMode = OrganizationSecureLinkMode.Enabled
-            )
+            ),
+            aliasMode = OrganizationAliasMode.Enabled
         )
         val now = Clock.System.now()
         val elevenMinutesAgo = now.minus(11.minutes)
@@ -211,7 +213,8 @@ class NeedsAuthCheckerTest {
             sharingPolicy = OrganizationSharingPolicy(
                 itemShareMode = OrganizationItemShareMode.Enabled,
                 secureLinkMode = OrganizationSecureLinkMode.Enabled
-            )
+            ),
+            aliasMode = OrganizationAliasMode.Enabled
         )
 
         val result = NeedsAuthChecker.needsAuth(

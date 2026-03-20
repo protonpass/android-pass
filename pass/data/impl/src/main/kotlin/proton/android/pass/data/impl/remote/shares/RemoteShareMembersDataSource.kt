@@ -48,4 +48,6 @@ interface RemoteShareMembersDataSource {
         memberShareId: ShareId
     ): CodeOnlyResponse
 
+    suspend fun getShareMembersTotal(userId: UserId, shareId: ShareId): Int
+
 }

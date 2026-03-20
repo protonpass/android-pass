@@ -143,6 +143,14 @@ class LocalShareDataSourceImpl @Inject constructor(
                 .map { list -> list.map(::ShareId) }
         }
 
+    override suspend fun updateMembersCount(
+        userId: UserId,
+        shareId: ShareId,
+        count: Int
+    ) {
+        database.sharesDao().updateMembersCount(userId.id, shareId.id, count)
+    }
+
     override suspend fun getShareIdsByType(
         userId: UserId,
         shareIds: Set<ShareId>,

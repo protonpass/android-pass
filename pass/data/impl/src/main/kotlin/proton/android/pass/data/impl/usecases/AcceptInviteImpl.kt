@@ -28,6 +28,7 @@ import kotlinx.coroutines.flow.onStart
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.api.repositories.GroupInviteRepository
 import proton.android.pass.data.api.repositories.ItemRepository
+import proton.android.pass.data.api.repositories.ShareMembersRepository
 import proton.android.pass.data.api.repositories.ShareRepository
 import proton.android.pass.data.api.repositories.UserInviteRepository
 import proton.android.pass.data.api.usecases.AcceptInvite
@@ -51,6 +52,7 @@ import javax.inject.Inject
 class AcceptInviteImpl @Inject constructor(
     private val observeCurrentUser: ObserveCurrentUser,
     private val shareRepository: ShareRepository,
+    private val shareMembersRepository: ShareMembersRepository,
     private val userInviteRepository: UserInviteRepository,
     private val groupInviteRepository: GroupInviteRepository,
     private val workerLauncher: WorkerLauncher,
@@ -70,6 +72,8 @@ class AcceptInviteImpl @Inject constructor(
                     )
                     notificationManager.removeReceivedInviteNotification(pendingInvite.toRemoveModel())
                     shareRepository.recreateShare(user.userId, shareId)
+                    val updatedCount = shareMembersRepository.getShareMembersTotal(user.userId, shareId)
+                    shareRepository.updateMembersCount(user.userId, shareId, updatedCount)
                     downloadItems(user.userId, pendingInvite, shareId, itemId)
                 }
                 ?: flowOf(AcceptInviteStatus.Error)

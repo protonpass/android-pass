@@ -106,6 +106,9 @@ class ShareMembersRepositoryImpl @Inject constructor(
         }
     }
 
+    override suspend fun getShareMembersTotal(userId: UserId, shareId: ShareId): Int =
+        remoteDataSource.getShareMembersTotal(userId, shareId)
+
     private companion object {
 
         private const val TAG = "ShareMembersRepository"

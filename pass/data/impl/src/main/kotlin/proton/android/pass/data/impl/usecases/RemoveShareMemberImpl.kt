@@ -22,20 +22,23 @@ import kotlinx.coroutines.flow.first
 import me.proton.core.accountmanager.domain.AccountManager
 import proton.android.pass.data.api.errors.UserIdNotAvailableError
 import proton.android.pass.data.api.repositories.ShareMembersRepository
+import proton.android.pass.data.api.repositories.ShareRepository
 import proton.android.pass.data.api.usecases.RemoveShareMember
 import proton.android.pass.domain.ShareId
 import javax.inject.Inject
 
 class RemoveShareMemberImpl @Inject constructor(
     private val accountManager: AccountManager,
-    private val shareMemberRepository: ShareMembersRepository
+    private val shareMemberRepository: ShareMembersRepository,
+    private val shareRepository: ShareRepository
 ) : RemoveShareMember {
 
     override suspend fun invoke(shareId: ShareId, memberShareId: ShareId) {
-        accountManager.getPrimaryUserId()
-            .first()
-            ?.also { userId -> shareMemberRepository.deleteShareMember(userId, shareId, memberShareId) }
+        val userId = accountManager.getPrimaryUserId().first()
             ?: throw UserIdNotAvailableError()
+        shareMemberRepository.deleteShareMember(userId, shareId, memberShareId)
+        val updatedCount = shareMemberRepository.getShareMembersTotal(userId, shareId)
+        shareRepository.updateMembersCount(userId, shareId, updatedCount)
     }
 
 }

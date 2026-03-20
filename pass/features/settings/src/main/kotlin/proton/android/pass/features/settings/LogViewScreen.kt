@@ -43,6 +43,11 @@ fun LogViewScreen(
         modifier = modifier,
         content = state,
         onUpClick = onUpClick,
-        onShareLogsClick = { viewModel.startShareIntent(context.toClassHolder()) }
+        onShareLogsClick = { viewModel.startShareIntent(context.toClassHolder()) },
+        onClearLogsClick = viewModel::showClearLogsDialog,
+        onRefreshLogs = viewModel::refreshLogs,
+        onLoadOlderLogsClick = viewModel::loadOlderLogs,
+        onClearLogsDismiss = viewModel::dismissClearLogsDialog,
+        onClearLogsConfirm = { viewModel.clearLogs() }
     )
 }

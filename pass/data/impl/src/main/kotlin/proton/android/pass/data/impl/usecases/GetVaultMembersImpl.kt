@@ -78,6 +78,7 @@ private fun buildVaultMembers(
 private fun ShareMember.toVaultMember(groupByEmail: Map<String, GroupMembers>): VaultMember = VaultMember.Member(
     shareId = shareId,
     email = email,
+    groupId = if (isGroup) groupByEmail[email]?.group?.id else null,
     username = if (isGroup) groupByEmail[email]?.group?.name ?: username else username,
     role = role,
     isCurrentUser = isCurrentUser,

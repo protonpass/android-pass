@@ -19,6 +19,7 @@
 package proton.android.pass.features.sharing.manage
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -38,6 +39,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -53,6 +55,7 @@ import proton.android.pass.composecomponents.impl.buttons.CircleButton
 import proton.android.pass.composecomponents.impl.container.CircleTextIcon
 import proton.android.pass.composecomponents.impl.modifiers.placeholder
 import proton.android.pass.data.api.usecases.VaultMember
+import proton.android.pass.domain.GroupId
 import proton.android.pass.features.sharing.R
 import proton.android.pass.features.sharing.common.toShortSummary
 import proton.android.pass.composecomponents.impl.R as CompR
@@ -74,7 +77,8 @@ fun ManageVaultMemberRow(
     canShowActions: Boolean,
     isRenameAdminToManagerEnabled: Boolean,
     onOptionsClick: (() -> Unit)? = null,
-    onConfirmInviteClick: ((VaultMember.NewUserInvitePending) -> Unit)? = null
+    onConfirmInviteClick: ((VaultMember.NewUserInvitePending) -> Unit)? = null,
+    onViewGroupMembersClick: ((GroupId) -> Unit)? = null
 ) {
     val (circleTextModifier, circleText) = when (memberContent) {
         VaultMemberContent.Loading -> Modifier.placeholder() to ""
@@ -96,7 +100,6 @@ fun ManageVaultMemberRow(
 
         VaultMemberContent.Loading -> false
     }
-
     Column(
         modifier = modifier
             .fillMaxWidth()
@@ -118,7 +121,8 @@ fun ManageVaultMemberRow(
             UserInfo(
                 modifier = Modifier.weight(1f),
                 memberContent = memberContent,
-                isRenameAdminToManagerEnabled = isRenameAdminToManagerEnabled
+                isRenameAdminToManagerEnabled = isRenameAdminToManagerEnabled,
+                onViewGroupMembersClick = onViewGroupMembersClick
             )
 
             if (showActions) {
@@ -146,37 +150,66 @@ fun ManageVaultMemberRow(
 private fun UserInfo(
     modifier: Modifier = Modifier,
     memberContent: VaultMemberContent,
-    isRenameAdminToManagerEnabled: Boolean
+    isRenameAdminToManagerEnabled: Boolean,
+    onViewGroupMembersClick: ((GroupId) -> Unit)?
 ) {
-    val (titleTextModifier, titleText) = when (memberContent) {
-        VaultMemberContent.Loading ->
-            Modifier
-                .fillMaxWidth()
-                .placeholder() to ""
-
-        is VaultMemberContent.Member -> Modifier to when (val member = memberContent.vaultMember) {
-            is VaultMember.Member -> when {
-                member.isGroup && member.memberCount > 0 -> stringResource(
-                    R.string.share_with_group_entry,
-                    member.username,
-                    member.memberCount
-                )
-                member.isGroup -> member.username
-                else -> member.email
-            }
-            else -> memberContent.vaultMember.email
-        }
-    }
-
     Column(
         modifier = modifier,
         verticalArrangement = Arrangement.spacedBy(Spacing.extraSmall)
     ) {
-        Text(
-            modifier = titleTextModifier,
-            text = titleText,
-            style = PassTheme.typography.body3Norm()
-        )
+        when (memberContent) {
+            VaultMemberContent.Loading -> {
+                Text(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .placeholder(),
+                    text = "",
+                    style = PassTheme.typography.body3Norm()
+                )
+            }
+
+            is VaultMemberContent.Member -> when (val member = memberContent.vaultMember) {
+                is VaultMember.Member -> {
+                    val groupId = member.groupId
+                    if (member.isGroup && member.memberCount > 0 && groupId != null) {
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.spacedBy(Spacing.extraSmall)
+                        ) {
+                            Text(
+                                text = member.username,
+                                style = PassTheme.typography.body3Norm()
+                            )
+                            val label = pluralStringResource(
+                                CompR.plurals.members_count,
+                                member.memberCount,
+                                member.memberCount
+                            )
+                            Text(
+                                text = "($label)",
+                                color = PassTheme.colors.interactionNormMajor2,
+                                style = PassTheme.typography.body3Norm(),
+                                modifier = Modifier.clickable {
+                                    onViewGroupMembersClick?.invoke(groupId)
+                                }
+                            )
+                        }
+                    } else {
+                        Text(
+                            text = if (member.isGroup) member.username else member.email,
+                            style = PassTheme.typography.body3Norm()
+                        )
+                    }
+                }
+
+                else -> {
+                    Text(
+                        text = member.email,
+                        style = PassTheme.typography.body3Norm()
+                    )
+                }
+            }
+        }
 
         UserInfoSubtitle(member = memberContent, isRenameAdminToManagerEnabled = isRenameAdminToManagerEnabled)
     }

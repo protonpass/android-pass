@@ -44,4 +44,10 @@
   <string name="clipboard_option_clear_clipboard_after_180_seconds">Čez 3 minut</string>
   <string name="settings_use_digital_asset_link_preference_title">Omogoči povezave do digitalnih sredstev</string>
   <string name="settings_use_digital_asset_link_preference_subtitle">Vzpostavlja preverjanje lastništva spletnega mesta med aplikacijo Android in spletnim mestom.</string>
+  <string name="settings_autofill_display_title">Prikaz samodejnega izpolnjevanja</string>
+  <string name="settings_autofill_display_inline">Med besedilom (nad tipkovnico)</string>
+  <string name="settings_autofill_display_popup">Pojavno okno (nad poljem za vnos)</string>
+  <string name="settings_autofill_display_subtitle">Za vstavljeni način je potrebna združljiva tipkovnica (npr. Gboard). Če ni podprta, se bo samodejno uporabil pojavni način.</string>
+  <string name="settings_autosave_prompt_title">Poziv za samodejno shranjevanje</string>
+  <string name="settings_autosave_prompt_subtitle">Proton Pass vas bo pozval, da shranite ali posodobite prijave</string>
 </resources>

@@ -6,6 +6,12 @@
     <item quantity="few">Ali želite %d predmete premakniti v naslednji trezor?</item>
     <item quantity="other">Ali želite %d predmetov premakniti v naslednji trezor?</item>
   </plurals>
+  <plurals name="migrate_item_to_folder_confirm_title_bottom_sheet">
+    <item quantity="one">Ali želite %d predmet premakniti v naslednjo mapo?</item>
+    <item quantity="two">Ali želite %d predmeta premakniti v naslednjo mapo?</item>
+    <item quantity="few">Ali želite %d predmetov premakniti v naslednjo mapo?</item>
+    <item quantity="other">Ali želite %d predmetov premakniti v naslednjo mapo?</item>
+  </plurals>
   <string name="migrate_all_items_confirm_title_bottom_sheet">Želite premakniti vse predmete v naslednji trezor?</string>
   <string name="migrate_item_confirm_confirm_button">Premakni</string>
   <string name="migrate_item_success_snackbar">Predmeti premaknjeni</string>
@@ -21,6 +27,12 @@
   <string name="migrate_folder_success_snackbar">Mapa je premaknjena</string>
   <string name="migrate_folder_error_snackbar">Napaka pri premikanju mape</string>
   <string name="migrate_folder_already_same_parent_snackbar">Mapa je že na tej lokaciji</string>
+  <plurals name="migrate_disabled_folder_reason_same_folder">
+    <item quantity="one">Predmet je že v tej mapi</item>
+    <item quantity="two">Predmeta %d sta že v tej mapi</item>
+    <item quantity="few">Predmetov %d je že v tej mapi</item>
+    <item quantity="other">Predmetov %d je že v tej mapi</item>
+  </plurals>
   <string name="migrate_disabled_vault_reason_no_permission">V tem trezorju ne morete ustvarjati predmetov</string>
   <string name="migrate_disabled_vault_reason_same_vault">Predmeta ne morete premakniti v isti trezor</string>
   <plurals name="migrate_items_shared_warning_title">

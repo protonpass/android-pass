@@ -4,6 +4,10 @@
     <item quantity="one">%d Eintrag in folgenden Tresor verschieben?</item>
     <item quantity="other">%d Einträge in folgenden Tresor verschieben?</item>
   </plurals>
+  <plurals name="migrate_item_to_folder_confirm_title_bottom_sheet">
+    <item quantity="one">Soll %d Eintrag in den folgenden Ordner verschoben werden?</item>
+    <item quantity="other">Sollen %d Einträge in den folgenden Ordner verschoben werden?</item>
+  </plurals>
   <string name="migrate_all_items_confirm_title_bottom_sheet">Alle Einträge in folgenden Tresor verschieben?</string>
   <string name="migrate_item_confirm_confirm_button">Verschieben</string>
   <string name="migrate_item_success_snackbar">Einträge verschoben</string>
@@ -19,6 +23,10 @@
   <string name="migrate_folder_success_snackbar">Ordner verschoben</string>
   <string name="migrate_folder_error_snackbar">Fehler beim Verschieben des Ordners</string>
   <string name="migrate_folder_already_same_parent_snackbar">Der Ordner befindet sich bereits in diesem Speicherort</string>
+  <plurals name="migrate_disabled_folder_reason_same_folder">
+    <item quantity="one">Eintrag befindet sich bereits in diesem Ordner</item>
+    <item quantity="other">%d Einträge befindet sich bereits in diesem Ordner</item>
+  </plurals>
   <string name="migrate_disabled_vault_reason_no_permission">Du kannst in diesem Tresor keine Einträge erstellen.</string>
   <string name="migrate_disabled_vault_reason_same_vault">Du kannst einen Eintrag nicht in denselben Tresor verschieben.</string>
   <plurals name="migrate_items_shared_warning_title">

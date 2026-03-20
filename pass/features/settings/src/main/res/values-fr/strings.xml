@@ -44,4 +44,10 @@
   <string name="clipboard_option_clear_clipboard_after_180_seconds">Après 3 minutes</string>
   <string name="settings_use_digital_asset_link_preference_title">Activer le Digital Asset Links (DLA)</string>
   <string name="settings_use_digital_asset_link_preference_subtitle">Établit la vérification de la propriété du site web entre une application Android et un site web.</string>
+  <string name="settings_autofill_display_title">Affichage du remplissage automatique</string>
+  <string name="settings_autofill_display_inline">Dans le message (au-dessus du clavier)</string>
+  <string name="settings_autofill_display_popup">Pop-up (au-dessus du champ de saisie)</string>
+  <string name="settings_autofill_display_subtitle">Le mode dans le message nécessite un clavier compatible (par ex. Gboard). S\'il n\'est pas pris en charge, le mode pop-up sera utilisé automatiquement.</string>
+  <string name="settings_autosave_prompt_title">Demander l\'enregistrement automatique</string>
+  <string name="settings_autosave_prompt_subtitle">Proton Pass vous invitera à enregistrer ou à mettre à jour vos identifiants</string>
 </resources>

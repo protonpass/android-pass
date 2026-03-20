@@ -44,4 +44,10 @@
   <string name="clipboard_option_clear_clipboard_after_180_seconds">Después de 3 minutos</string>
   <string name="settings_use_digital_asset_link_preference_title">Activar los enlaces de activos digitales</string>
   <string name="settings_use_digital_asset_link_preference_subtitle">Establece la verificación de propiedad del sitio web entre una aplicación Android y un sitio web.</string>
+  <string name="settings_autofill_display_title">Visualización del completado automático</string>
+  <string name="settings_autofill_display_inline">En línea (sobre el teclado)</string>
+  <string name="settings_autofill_display_popup">Ventana emergente (sobre el campo de entrada)</string>
+  <string name="settings_autofill_display_subtitle">El modo en línea requiere un teclado compatible (p. ej., Gboard). Si no se admite, se usará automáticamente el modo de ventana emergente.</string>
+  <string name="settings_autosave_prompt_title">Avisar para guardar automáticamente</string>
+  <string name="settings_autosave_prompt_subtitle">Proton Pass le preguntará si desea guardar o actualizar el inicio de sesión</string>
 </resources>

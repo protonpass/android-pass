@@ -44,4 +44,10 @@
   <string name="clipboard_option_clear_clipboard_after_180_seconds">Etter 3 minutter</string>
   <string name="settings_use_digital_asset_link_preference_title">Aktiver digitale aktivakoblinger</string>
   <string name="settings_use_digital_asset_link_preference_subtitle">Etablerer bekreftelse av eierskap av nettsted mellom en Android-app og et nettsted.</string>
+  <string name="settings_autofill_display_title">Autofill display</string>
+  <string name="settings_autofill_display_inline">Inline (above keyboard)</string>
+  <string name="settings_autofill_display_popup">Popup (over input field)</string>
+  <string name="settings_autofill_display_subtitle">Inline mode requires a compatible keyboard (e.g. Gboard). If unsupported, popup mode will be used automatically.</string>
+  <string name="settings_autosave_prompt_title">Prompt for auto-save</string>
+  <string name="settings_autosave_prompt_subtitle">Proton Pass will prompt you to save or update logins</string>
 </resources>

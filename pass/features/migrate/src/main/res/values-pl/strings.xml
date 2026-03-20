@@ -6,6 +6,12 @@
     <item quantity="many">Przenieść %d elementów do tego sejfu?</item>
     <item quantity="other">Przenieść %d elementów do tego sejfu?</item>
   </plurals>
+  <plurals name="migrate_item_to_folder_confirm_title_bottom_sheet">
+    <item quantity="one">Move %d item to the following folder?</item>
+    <item quantity="few">Move %d items to the following folder?</item>
+    <item quantity="many">Move %d items to the following folder?</item>
+    <item quantity="other">Move %d items to the following folder?</item>
+  </plurals>
   <string name="migrate_all_items_confirm_title_bottom_sheet">Przenieść wszystkie elementy do następującego sejfu?</string>
   <string name="migrate_item_confirm_confirm_button">Przenieś</string>
   <string name="migrate_item_success_snackbar">Elementy zostały przeniesione</string>
@@ -21,6 +27,12 @@
   <string name="migrate_folder_success_snackbar">Folder moved</string>
   <string name="migrate_folder_error_snackbar">Error moving the folder</string>
   <string name="migrate_folder_already_same_parent_snackbar">Folder is already in this location</string>
+  <plurals name="migrate_disabled_folder_reason_same_folder">
+    <item quantity="one">Item is already in this folder</item>
+    <item quantity="few">%d items are already in this folder</item>
+    <item quantity="many">%d items are already in this folder</item>
+    <item quantity="other">%d items are already in this folder</item>
+  </plurals>
   <string name="migrate_disabled_vault_reason_no_permission">Nie możesz utworzyć elementów w tym sejfie</string>
   <string name="migrate_disabled_vault_reason_same_vault">Nie możesz przenieść elementu do tego samego sejfu</string>
   <plurals name="migrate_items_shared_warning_title">

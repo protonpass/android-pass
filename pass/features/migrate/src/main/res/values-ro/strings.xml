@@ -5,6 +5,11 @@
     <item quantity="few">Mutați %d articole în seiful următor?</item>
     <item quantity="other">Mutați %d de articole în seiful următor?</item>
   </plurals>
+  <plurals name="migrate_item_to_folder_confirm_title_bottom_sheet">
+    <item quantity="one">Mutați %d articol în folderul următor?</item>
+    <item quantity="few">Mutați %d articole în folderul următor?</item>
+    <item quantity="other">Mutați %d de articole în folderul următor?</item>
+  </plurals>
   <string name="migrate_all_items_confirm_title_bottom_sheet">Mutați toate aceste articole în seiful următor?</string>
   <string name="migrate_item_confirm_confirm_button">Mutare</string>
   <string name="migrate_item_success_snackbar">Articole au fost mutate.</string>
@@ -20,6 +25,11 @@
   <string name="migrate_folder_success_snackbar">Folderul s-a mutat.</string>
   <string name="migrate_folder_error_snackbar">Eroare la mutarea folderului.</string>
   <string name="migrate_folder_already_same_parent_snackbar">Folderul există deja în acest loc.</string>
+  <plurals name="migrate_disabled_folder_reason_same_folder">
+    <item quantity="one">Articolul există deja în acest folder.</item>
+    <item quantity="few">În acest folder există deja %d articole.</item>
+    <item quantity="other">În acest folder există deja %d de articole.</item>
+  </plurals>
   <string name="migrate_disabled_vault_reason_no_permission">Nu puteți crea articole în acest seif.</string>
   <string name="migrate_disabled_vault_reason_same_vault">Nu puteți muta un articol în același seif.</string>
   <plurals name="migrate_items_shared_warning_title">

@@ -4,6 +4,10 @@
     <item quantity="one">%d elem áthelyezése a következő tárolóba?</item>
     <item quantity="other">%d elem áthelyezése a következő tárolóba?</item>
   </plurals>
+  <plurals name="migrate_item_to_folder_confirm_title_bottom_sheet">
+    <item quantity="one">Move %d item to the following folder?</item>
+    <item quantity="other">Move %d items to the following folder?</item>
+  </plurals>
   <string name="migrate_all_items_confirm_title_bottom_sheet">Az összes elem áthelyezése a következő tárolóba?</string>
   <string name="migrate_item_confirm_confirm_button">Áthelyezés</string>
   <string name="migrate_item_success_snackbar">Elemek áthelyezve</string>
@@ -19,6 +23,10 @@
   <string name="migrate_folder_success_snackbar">Folder moved</string>
   <string name="migrate_folder_error_snackbar">Error moving the folder</string>
   <string name="migrate_folder_already_same_parent_snackbar">Folder is already in this location</string>
+  <plurals name="migrate_disabled_folder_reason_same_folder">
+    <item quantity="one">Item is already in this folder</item>
+    <item quantity="other">%d items are already in this folder</item>
+  </plurals>
   <string name="migrate_disabled_vault_reason_no_permission">Nem hozhat létre elemeket ebben a tárolóban</string>
   <string name="migrate_disabled_vault_reason_same_vault">Nem helyezhet át elemet ugyanabba a tárolóba</string>
   <plurals name="migrate_items_shared_warning_title">

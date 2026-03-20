@@ -29,12 +29,16 @@
   <string name="sync_progress_item_count">Λήψη %1$d από %2$d στοιχεία</string>
   <string name="sync_dialog_title">Γίνεται συγχρονισμός αντικειμένων…</string>
   <string name="sync_dialog_title_error">Ο συγχρονισμός απέτυχε</string>
+  <string name="sync_dialog_title_partial_error">Ο συγχρονισμός ολοκληρώθηκε μερικώς</string>
   <string name="sync_dialog_title_success">Ο συγχρονισμός ολοκληρώθηκε</string>
   <string name="sync_dialog_subtitle">Κατεβάζουμε και αποκρυπτογραφούμε τα στοιχεία σας. Αυτό μπορεί να διαρκέσει μερικά λεπτά.</string>
   <string name="sync_dialog_subtitle_error">Παρουσιάστηκε σφάλμα κατά τη λήψη και την αποκρυπτογράφηση των στοιχείων σας. Παρακαλούμε προσπαθήστε ξανά.</string>
+  <string name="sync_dialog_subtitle_partial_error">Ορισμένα αντικείμενα δεν μπόρεσαν να αποκρυπτογραφηθούν και παραλείφθηκαν. Τα υπόλοιπα αντικείμενά σας είναι διαθέσιμα.</string>
   <string name="sync_dialog_subtitle_success">Έγινε επιτυχής λήψη και αποκρυπτογράφηση των στοιχείων σας.</string>
   <string name="sync_item_not_started">Δεν ξεκίνησε</string>
   <string name="sync_item_failed">Ο συγχρονισμός απέτυχε</string>
   <string name="sync_dialog_title_inserting">Εισαγωγή στοιχείων...</string>
   <string name="sync_dialog_subtitle_inserting">Ολοκληρώνεται το τελευταίο βήμα, σχεδόν τελειώσαμε.</string>
+  <string name="sync_dialog_invalid_address_shares_warning">Ορισμένες κρύπτες δεν μπόρεσαν να συγχρονιστούν επειδή η συνδεδεμένη διεύθυνση δε βρέθηκε σε αυτόν τον λογαριασμό.</string>
+  <string name="sync_dialog_invalid_group_shares_warning">Ορισμένες κρύπτες δεν μπόρεσαν να συγχρονιστούν επειδή η συνδεδεμένη ομάδα δε βρέθηκε σε αυτόν τον λογαριασμό.</string>
 </resources>

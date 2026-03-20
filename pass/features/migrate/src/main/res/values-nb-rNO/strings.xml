@@ -4,6 +4,10 @@
     <item quantity="one">Flytte %d element til følgende hvelv?</item>
     <item quantity="other">Flytte %d elementer til følgende hvelv?</item>
   </plurals>
+  <plurals name="migrate_item_to_folder_confirm_title_bottom_sheet">
+    <item quantity="one">Move %d item to the following folder?</item>
+    <item quantity="other">Move %d items to the following folder?</item>
+  </plurals>
   <string name="migrate_all_items_confirm_title_bottom_sheet">Flytte alle elementene til følgende hvelv?</string>
   <string name="migrate_item_confirm_confirm_button">Flytt</string>
   <string name="migrate_item_success_snackbar">Elementer flyttet</string>
@@ -19,6 +23,10 @@
   <string name="migrate_folder_success_snackbar">Mappe flyttet</string>
   <string name="migrate_folder_error_snackbar">Feil ved flytting av mappen</string>
   <string name="migrate_folder_already_same_parent_snackbar">Mappen finnes allerede på denne plasseringen</string>
+  <plurals name="migrate_disabled_folder_reason_same_folder">
+    <item quantity="one">Item is already in this folder</item>
+    <item quantity="other">%d items are already in this folder</item>
+  </plurals>
   <string name="migrate_disabled_vault_reason_no_permission">Du kan ikke opprette elementer i dette hvelvet</string>
   <string name="migrate_disabled_vault_reason_same_vault">Du kan ikke flytte et element til det samme hvelvet</string>
   <plurals name="migrate_items_shared_warning_title">

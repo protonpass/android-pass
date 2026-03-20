@@ -4,6 +4,10 @@
     <item quantity="one">Μετακίνηση %d στοιχείου στην ακόλουθη κρύπτη;</item>
     <item quantity="other">Μετακίνηση %d στοιχεία στην ακόλουθη κρύπτη;</item>
   </plurals>
+  <plurals name="migrate_item_to_folder_confirm_title_bottom_sheet">
+    <item quantity="one">Μετακίνηση %d στοιχείου στον ακόλουθο φάκελο;</item>
+    <item quantity="other">Μετακίνηση %d στοιχείων στον ακόλουθο φάκελο;</item>
+  </plurals>
   <string name="migrate_all_items_confirm_title_bottom_sheet">Μετακινήστε όλα τα στοιχεία στην ακόλουθη θυρίδα αποθήκευσης;</string>
   <string name="migrate_item_confirm_confirm_button">Μεταφορά</string>
   <string name="migrate_item_success_snackbar">Τα στοιχεία μετακινήθηκαν</string>
@@ -19,6 +23,10 @@
   <string name="migrate_folder_success_snackbar">Ο φάκελος μετακινήθηκε</string>
   <string name="migrate_folder_error_snackbar">Σφάλμα κατά τη μετακίνηση του φακέλου</string>
   <string name="migrate_folder_already_same_parent_snackbar">Ο φάκελος βρίσκεται ήδη σε αυτήν την τοποθεσία</string>
+  <plurals name="migrate_disabled_folder_reason_same_folder">
+    <item quantity="one">Το στοιχείο υπάρχει ήδη σε αυτόν τον φάκελο</item>
+    <item quantity="other">%d στοιχεία υπάρχουν ήδη σε αυτόν τον φάκελο</item>
+  </plurals>
   <string name="migrate_disabled_vault_reason_no_permission">Δεν μπορείτε να δημιουργήσετε στοιχεία σε αυτήν την κρύπτη</string>
   <string name="migrate_disabled_vault_reason_same_vault">Δεν μπορείτε να μετακινήσετε ένα στοιχείο στην ίδια κρύπτη</string>
   <plurals name="migrate_items_shared_warning_title">

@@ -4,6 +4,10 @@
     <item quantity="one">%d öge şu kasaya taşınsın mı?</item>
     <item quantity="other">%d öge şu kasaya taşınsın mı?</item>
   </plurals>
+  <plurals name="migrate_item_to_folder_confirm_title_bottom_sheet">
+    <item quantity="one">%d öğe şu klasöre taşınsın mı?</item>
+    <item quantity="other">%d öğe şu klasöre taşınsın mı?</item>
+  </plurals>
   <string name="migrate_all_items_confirm_title_bottom_sheet">Tüm ögeler şu kasaya taşınsın mı?</string>
   <string name="migrate_item_confirm_confirm_button">Taşı</string>
   <string name="migrate_item_success_snackbar">Ögeler taşındı</string>
@@ -19,6 +23,10 @@
   <string name="migrate_folder_success_snackbar">Klasör taşındı</string>
   <string name="migrate_folder_error_snackbar">Klasör taşınırken sorun çıktı</string>
   <string name="migrate_folder_already_same_parent_snackbar">Klasör zaten bu konumda</string>
+  <plurals name="migrate_disabled_folder_reason_same_folder">
+    <item quantity="one">Öğe zaten bu klasörde bulunuyor</item>
+    <item quantity="other">%d öğe zaten bu klasörde bulunuyor</item>
+  </plurals>
   <string name="migrate_disabled_vault_reason_no_permission">Bu kasaya ögeler ekleyemezsiniz</string>
   <string name="migrate_disabled_vault_reason_same_vault">Bir ögeyi aynı kasaya taşıyamazsınız</string>
   <plurals name="migrate_items_shared_warning_title">

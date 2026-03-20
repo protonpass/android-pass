@@ -4,6 +4,10 @@
     <item quantity="one">Déplacer %d élément vers ce coffre-fort ?</item>
     <item quantity="other">Déplacer %d éléments vers ce coffre-fort ?</item>
   </plurals>
+  <plurals name="migrate_item_to_folder_confirm_title_bottom_sheet">
+    <item quantity="one">Déplacer %d élément vers le dossier suivant ?</item>
+    <item quantity="other">Déplacer %d éléments vers le dossier suivant ?</item>
+  </plurals>
   <string name="migrate_all_items_confirm_title_bottom_sheet">Déplacer tous les éléments vers ce coffre-fort ?</string>
   <string name="migrate_item_confirm_confirm_button">Déplacer</string>
   <string name="migrate_item_success_snackbar">Les éléments ont été déplacés.</string>
@@ -19,6 +23,10 @@
   <string name="migrate_folder_success_snackbar">Le dossier a été déplacé</string>
   <string name="migrate_folder_error_snackbar">Une erreur s\'est produite lors du déplacement du dossier</string>
   <string name="migrate_folder_already_same_parent_snackbar">Le dossier est déjà à cet emplacement</string>
+  <plurals name="migrate_disabled_folder_reason_same_folder">
+    <item quantity="one">L\'élément est déjà dans ce dossier</item>
+    <item quantity="other">%d éléments sont déjà dans ce dossier</item>
+  </plurals>
   <string name="migrate_disabled_vault_reason_no_permission">Vous ne pouvez pas créer d\'éléments dans ce coffre-fort.</string>
   <string name="migrate_disabled_vault_reason_same_vault">Vous ne pouvez pas déplacer un élément vers le même coffre-fort.</string>
   <plurals name="migrate_items_shared_warning_title">

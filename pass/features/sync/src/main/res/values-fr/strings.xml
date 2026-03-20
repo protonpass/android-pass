@@ -29,12 +29,16 @@
   <string name="sync_progress_item_count">Téléchargement des éléments : %1$d sur %2$d</string>
   <string name="sync_dialog_title">Synchronisation des éléments en cours</string>
   <string name="sync_dialog_title_error">La synchronisation n\'a pas abouti.</string>
+  <string name="sync_dialog_title_partial_error">La synchronisation est partiellement terminée</string>
   <string name="sync_dialog_title_success">La synchronisation est terminée.</string>
   <string name="sync_dialog_subtitle">Nous téléchargeons et déchiffrons vos éléments. Cela peut prendre quelques minutes.</string>
   <string name="sync_dialog_subtitle_error">Une erreur s\'est produite lors du téléchargement et du déchiffrement de vos éléments. Nous vous invitons à réessayer.</string>
+  <string name="sync_dialog_subtitle_partial_error">Certains éléments n’ont pas pu être déchiffrés et ont été ignorés. Le reste de vos éléments est disponible.</string>
   <string name="sync_dialog_subtitle_success">Vos éléments ont été téléchargés et déchiffrés.</string>
   <string name="sync_item_not_started">Non commencée</string>
   <string name="sync_item_failed">La synchronisation n\'a pas abouti.</string>
   <string name="sync_dialog_title_inserting">Insertion des éléments…</string>
   <string name="sync_dialog_subtitle_inserting">La dernière étape est en cours. C\'est bientôt terminé !</string>
+  <string name="sync_dialog_invalid_address_shares_warning">Certains coffres-forts n\'ont pas pu être synchronisés car l\'adresse associée n\'a pas été trouvé dans ce compte.</string>
+  <string name="sync_dialog_invalid_group_shares_warning">Certains coffres-forts n’ont pas pu être synchronisés car le groupe associé n\'a pas été trouvé dans ce compte.</string>
 </resources>

@@ -29,12 +29,16 @@
   <string name="sync_progress_item_count">Henter %1$d af %2$d elementer</string>
   <string name="sync_dialog_title">Synkroniserer elementer...</string>
   <string name="sync_dialog_title_error">Synkronisering fejlede</string>
+  <string name="sync_dialog_title_partial_error">Synkronisering delvist fuldført</string>
   <string name="sync_dialog_title_success">Synkronisering gennemført</string>
   <string name="sync_dialog_subtitle">Vi downloader og dekrypterer dine ting. Dette kan tage et par minutter.</string>
   <string name="sync_dialog_subtitle_error">Der opstod en fejl ved download og dekryptering af dine elementer. Prøv venligst igen.</string>
+  <string name="sync_dialog_subtitle_partial_error">Nogle elementer kunne ikke dekrypteres og blev sprunget over. Resten af dine elementer er tilgængelige.</string>
   <string name="sync_dialog_subtitle_success">Dine elementer blev downloadet og dekrypteret.</string>
   <string name="sync_item_not_started">Ikke startet</string>
   <string name="sync_item_failed">Synkronisering mislykkedes</string>
   <string name="sync_dialog_title_inserting">Indsætter elementer…</string>
   <string name="sync_dialog_subtitle_inserting">Færdiggør sidste trin, er næsten i mål.</string>
+  <string name="sync_dialog_invalid_address_shares_warning">Nogle bokse kunne ikke synkroniseres, fordi den tilknyttede adresse ikke blev fundet på denne konto.</string>
+  <string name="sync_dialog_invalid_group_shares_warning">Nogle bokse kunne ikke synkroniseres, fordi den tilknyttede gruppe ikke blev fundet på denne konto.</string>
 </resources>

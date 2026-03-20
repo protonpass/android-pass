@@ -44,4 +44,10 @@
   <string name="clipboard_option_clear_clipboard_after_180_seconds">Kolmen minuutin kuluttua</string>
   <string name="settings_use_digital_asset_link_preference_title">Ota Digital Asset Links käyttöön</string>
   <string name="settings_use_digital_asset_link_preference_subtitle">Luo verkkosivuston omistajuuden varmennuksen Android-sovelluksen ja verkkosivuston välille.</string>
+  <string name="settings_autofill_display_title">Automaattisen täytön näyttö</string>
+  <string name="settings_autofill_display_inline">Rivissä (näppäimistön yläpuolella)</string>
+  <string name="settings_autofill_display_popup">Popup (syöttökentän yläpuolella)</string>
+  <string name="settings_autofill_display_subtitle">Tekstinsisäinen tila vaatii yhteensopivan näppäimistön (esim. Gboardin). Jos sitä ei tueta, ponnahdusikkunatilaa käytetään automaattisesti.</string>
+  <string name="settings_autosave_prompt_title">Kehote automaattista tallennusta varten</string>
+  <string name="settings_autosave_prompt_subtitle">Proton Pass pyytää sinua tallentamaan tai päivittämään kirjautumistiedot</string>
 </resources>

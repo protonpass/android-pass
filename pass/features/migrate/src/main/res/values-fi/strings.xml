@@ -4,6 +4,10 @@
     <item quantity="one">Siirretäänkö %d kohde seuraavaan holviin?</item>
     <item quantity="other">Siirretäänkö %d kohdetta seuraavaan holviin?</item>
   </plurals>
+  <plurals name="migrate_item_to_folder_confirm_title_bottom_sheet">
+    <item quantity="one">Siirretäänkö %d kohde seuraavaan kansioon?</item>
+    <item quantity="other">Siirretäänkö %d kohdetta seuraavaan kansioon?</item>
+  </plurals>
   <string name="migrate_all_items_confirm_title_bottom_sheet">Siirretäänkö kaikki kohteet seuraavaan holviin?</string>
   <string name="migrate_item_confirm_confirm_button">Siirrä</string>
   <string name="migrate_item_success_snackbar">Kohteet siirrettiin</string>
@@ -19,6 +23,10 @@
   <string name="migrate_folder_success_snackbar">Kansio siirretty</string>
   <string name="migrate_folder_error_snackbar">Virhe siirrettäessä kansiota</string>
   <string name="migrate_folder_already_same_parent_snackbar">Kansio on jo tässä sijainnissa</string>
+  <plurals name="migrate_disabled_folder_reason_same_folder">
+    <item quantity="one">Kohde on jo tässä kansiossa</item>
+    <item quantity="other">%d kohdetta on jo tässä kansiossa</item>
+  </plurals>
   <string name="migrate_disabled_vault_reason_no_permission">Et voi luoda kohteita tähän holviin</string>
   <string name="migrate_disabled_vault_reason_same_vault">Et voi siirtää kohdetta samaan holviin</string>
   <plurals name="migrate_items_shared_warning_title">

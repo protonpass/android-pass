@@ -6,6 +6,12 @@
     <item quantity="many">Přesunout %d položek do následujícího trezoru?</item>
     <item quantity="other">Přesunout %d položek do následujícího trezoru?</item>
   </plurals>
+  <plurals name="migrate_item_to_folder_confirm_title_bottom_sheet">
+    <item quantity="one">Přesunout %d položku do následující složky?</item>
+    <item quantity="few">Přesunout %d položky do následující složky?</item>
+    <item quantity="many">Přesunout %d položek do následující složky?</item>
+    <item quantity="other">Přesunout %d položek do následující složky?</item>
+  </plurals>
   <string name="migrate_all_items_confirm_title_bottom_sheet">Přesunout všechny položky do následujícího trezoru?</string>
   <string name="migrate_item_confirm_confirm_button">Přesunout</string>
   <string name="migrate_item_success_snackbar">Položky přesunuty</string>
@@ -21,6 +27,12 @@
   <string name="migrate_folder_success_snackbar">Složka přesunuta</string>
   <string name="migrate_folder_error_snackbar">Chyba při přesouvání složky</string>
   <string name="migrate_folder_already_same_parent_snackbar">Složka se již nachází v tomto umístění</string>
+  <plurals name="migrate_disabled_folder_reason_same_folder">
+    <item quantity="one">Položka je již v této složce</item>
+    <item quantity="few">%d položky jsou již v této složce</item>
+    <item quantity="many">%d položek je již v této složce</item>
+    <item quantity="other">%d položek je již v této složce</item>
+  </plurals>
   <string name="migrate_disabled_vault_reason_no_permission">V tomto trezoru nelze vytvářet položky</string>
   <string name="migrate_disabled_vault_reason_same_vault">Položku nelze přesunout do stejného trezoru</string>
   <plurals name="migrate_items_shared_warning_title">

@@ -44,4 +44,10 @@
   <string name="clipboard_option_clear_clipboard_after_180_seconds">Després de 3 minuts</string>
   <string name="settings_use_digital_asset_link_preference_title">Activa els enllaços d\'actius digitals</string>
   <string name="settings_use_digital_asset_link_preference_subtitle">S\'estableix la verificació de la propietat del lloc web entre una aplicació Android i un lloc web.</string>
+  <string name="settings_autofill_display_title">Visualització de l\'emplenament automàtic</string>
+  <string name="settings_autofill_display_inline">En línia (sobre el teclat)</string>
+  <string name="settings_autofill_display_popup">Finestra emergent (sobre el camp d\'entrada)</string>
+  <string name="settings_autofill_display_subtitle">El mode en línia requereix un teclat compatible (p. ex., Gboard). Si no s\'admet, s\'utilitzarà automàticament el mode emergent.</string>
+  <string name="settings_autosave_prompt_title">Demana el desament automàtic</string>
+  <string name="settings_autosave_prompt_subtitle">Proton Pass us demanarà que deseu o actualitzeu els inicis de sessió</string>
 </resources>

@@ -29,12 +29,16 @@
   <string name="sync_progress_item_count">Lade %1$d von %2$d Einträgen herunter</string>
   <string name="sync_dialog_title">Einträge werden synchronisiert…</string>
   <string name="sync_dialog_title_error">Synchronisierung fehlgeschlagen</string>
+  <string name="sync_dialog_title_partial_error">Teilweise synchronisiert</string>
   <string name="sync_dialog_title_success">Synchronisierung abgeschlossen</string>
   <string name="sync_dialog_subtitle">Wir laden deine Einträge herunter und entschlüsseln sie. Das kann einige Minuten dauern.</string>
   <string name="sync_dialog_subtitle_error">Fehler beim Herunterladen und Entschlüsseln deiner Einträge. Bitte versuche es erneut.</string>
+  <string name="sync_dialog_subtitle_partial_error">Einige Einträge konnten nicht entschlüsselt werden und wurden übersprungen. Die anderen Einträge sind verfügbar.</string>
   <string name="sync_dialog_subtitle_success">Deine Einträge wurden erfolgreich heruntergeladen und entschlüsselt.</string>
   <string name="sync_item_not_started">Nicht gestartet</string>
   <string name="sync_item_failed">Synchronisierung fehlgeschlagen</string>
   <string name="sync_dialog_title_inserting">Einträge werden eingefügt…</string>
   <string name="sync_dialog_subtitle_inserting">Letzter Schritt wird abgeschlossen, gleich geschafft.</string>
+  <string name="sync_dialog_invalid_address_shares_warning">Einige Tresore konnten nicht synchronisiert werden, da die zugehörige E-Mail-Adresse in diesem Konto nicht gefunden wurde.</string>
+  <string name="sync_dialog_invalid_group_shares_warning">Einige Tresore konnten nicht synchronisiert werden, da die zugehörige Gruppe in diesem Konto nicht gefunden wurde.</string>
 </resources>

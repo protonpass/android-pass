@@ -3,25 +3,25 @@
   <!-- Home -->
   <string name="home_empty_vault_title">Vaš trezor je prazen</string>
   <string name="home_empty_vault_subtitle">Začnite tako, da ustvarite svoj prvi predmet.</string>
-  <string name="home_empty_vault_login_title">No logins found</string>
-  <string name="home_empty_vault_login_subtitle">Get started by creating your first login item.</string>
+  <string name="home_empty_vault_login_title">Ni najdenih prijav</string>
+  <string name="home_empty_vault_login_subtitle">Začnite z ustvarjanjem prvega prijavnega predmeta.</string>
   <string name="home_empty_vault_aliases_title">Ni najdenih vzdevkov</string>
-  <string name="home_empty_vault_aliases_subtitle">Get started by creating your first alias item.</string>
-  <string name="home_empty_vault_notes_title">No notes found</string>
-  <string name="home_empty_vault_notes_subtitle">Get started by creating your first note item.</string>
-  <string name="home_empty_vault_logins_mfa_title">No logins with TOTP found</string>
-  <string name="home_empty_vault_logins_mfa_subtitle">Get started by creating your first login with TOTP.</string>
-  <string name="home_empty_vault_identity_title">No identity found</string>
-  <string name="home_empty_vault_identity_subtitle">Get started by creating your first identity item.</string>
-  <string name="home_empty_vault_custom_item_title">No custom item found</string>
-  <string name="home_empty_vault_custom_item_subtitle">Get started by creating your first custom item.</string>
-  <string name="home_empty_vault_cc_title">No credit card found</string>
-  <string name="home_empty_vault_cc_subtitle">Get started by creating your first credit card item.</string>
+  <string name="home_empty_vault_aliases_subtitle">Začnite tako, da ustvarite svoj prvi vzdevek.</string>
+  <string name="home_empty_vault_notes_title">Ni opomb</string>
+  <string name="home_empty_vault_notes_subtitle">Začnite tako, da ustvarite svojo prvo opombo.</string>
+  <string name="home_empty_vault_logins_mfa_title">Ni najdenih postopkov prijave s TOTP</string>
+  <string name="home_empty_vault_logins_mfa_subtitle">Začnite tako, da ustvarite svojo prvo prijavo s TOTP.</string>
+  <string name="home_empty_vault_identity_title">Ne najdem identitete</string>
+  <string name="home_empty_vault_identity_subtitle">Začnite tako, da ustvarite svoj prvi predmet identitete.</string>
+  <string name="home_empty_vault_custom_item_title">Ni predmeta po meri</string>
+  <string name="home_empty_vault_custom_item_subtitle">Začnite z ustvarjanjem svojega prvega predmeta po meri.</string>
+  <string name="home_empty_vault_cc_title">Kreditne kartice ni bilo mogoče najti</string>
+  <string name="home_empty_vault_cc_subtitle">Začnite z ustvarjanjem svojega prvega predmeta s kreditno kartico.</string>
   <string name="home_empty_shared_items_title">Ni predmetov v skupni rabi</string>
   <string name="home_empty_shared_items_with_me_subtitle">Noben predmet ni bil v skupni rabi z vami.</string>
   <string name="home_empty_shared_items_by_me_subtitle">Nobenega predmeta niste dali v skupno rabo.</string>
-  <string name="home_empty_no_vaults_title">You don\'t have any vaults</string>
-  <string name="home_empty_no_vaults_subtitle">Please contact your administrator.</string>
+  <string name="home_empty_no_vaults_title">Nimate nobenih trezorjev</string>
+  <string name="home_empty_no_vaults_subtitle">Prosimo, obrnite se na skrbnika.</string>
   <string name="home_empty_read_only_vault_title">Ta trezor je prazen</string>
   <string name="home_empty_read_only_vault_subtitle">Predmetov ne morete dodati v trezor, ki je določen samo za branje.</string>
   <string name="home_empty_vault_create_login">Ustvarite prijavo</string>
@@ -37,17 +37,17 @@
   <string name="home_snackbar_note_moved_to_trash">Opomba premaknjena v smetnjak</string>
   <string name="home_snackbar_credit_card_moved_to_trash">Plačilna kartica premaknjena v smetnjak</string>
   <string name="home_snackbar_identity_moved_to_trash">Identiteta je premaknjena v smetnjak</string>
-  <string name="home_snackbar_custom_moved_to_trash">Custom item moved to trash</string>
+  <string name="home_snackbar_custom_moved_to_trash">Predmet po meri premaknjen v smetnjak</string>
   <string name="home_snackbar_move_to_trash_error">Predmeta ni bilo mogoče premakniti v smetnjak</string>
   <string name="home_snackbar_items_move_to_trash_success">Predmeti premaknjeni v smetnjak</string>
   <string name="home_snackbar_items_move_to_trash_error">Predmetov ni bilo mogoče premakniti v smetnjak</string>
   <string name="home_toast_items_selected_read_only">Predmetov samo za branje ni mogoče izbrati</string>
-  <string name="home_toast_items_selected_shared_with_me">Items shared with you cannot be selected</string>
+  <string name="home_toast_items_selected_shared_with_me">Predmetov, ki so v skupni rabi z vami, ni mogoče izbrati.</string>
   <string name="home_autofill_banner_title">Uživajte v čarobnosti samodejnega izpolnjevanja</string>
   <string name="home_autofill_banner_text">Samo en dotik in vaše uporabniško ime in geslo sta v trenutku izpolnjena.</string>
   <string name="home_autofill_banner_settings">Vklopi samodejno izpolnjevanje ›</string>
   <string name="home_drawer_all_items">Vsi predmeti</string>
-  <string name="sl_sync_banner_title">Sync your aliases from SimpleLogin</string>
+  <string name="sl_sync_banner_title">Sinhronizirajte svoje vzdevke iz SimpleLogin</string>
   <plurals name="sl_sync_banner_text">
     <item quantity="one">You have %d alias that is present in SimpleLogin but missing in Proton Pass. Would you like to sync it?</item>
     <item quantity="two">You have %d aliases that are present in SimpleLogin but missing in Proton Pass. Would you like to sync them?</item>
@@ -55,16 +55,16 @@
     <item quantity="other">You have %d aliases that are present in SimpleLogin but missing in Proton Pass. Would you like to sync them?</item>
   </plurals>
   <string name="sl_sync_banner_settings">Sinhroniziranje vzdevkov ›</string>
-  <string name="sl_sync_banner_note">Once synced, deleting aliases in Pass will also delete them in SimpleLogin.</string>
+  <string name="sl_sync_banner_note">Po sinhronizaciji jih boste z brisanjem vzdevkov v Passu izbrisali tudi v SimpleLogin</string>
   <string name="home_notification_permission_banner_title">Pridobite pomembne posodobitve</string>
   <string name="home_notification_permission_banner_text">Omogočite potisna obvestila, da boste obveščeni, ko drugi delijo trezor z vami.</string>
   <string name="home_notification_permission_banner_settings">Omogoči dovoljenje ›</string>
-  <string name="home_item_invite_banner_title" comment="placeholder is replaced by an email address">%s wants to share an item with you.</string>
-  <string name="home_group_item_invite_banner_title" comment="%1$s = inviter email, %2$s = group name">%1$s wants to share an item with your group %2$s.</string>
-  <string name="home_group_invite_banner_title" comment="%1$s = inviter email, %2$s = group name">%1$s wants to share a vault with your group %2$s.</string>
-  <string name="home_item_invite_card_title">Shared item invitation</string>
-  <string name="home_vault_invite_card_title">Shared vault invitation</string>
-  <string name="home_vault_invite_banner_body" comment="placeholder is replaced by an email address">%s wants to share a vault with you.</string>
+  <string name="home_item_invite_banner_title" comment="placeholder is replaced by an email address">%s želi deliti predmet z vami.</string>
+  <string name="home_group_item_invite_banner_title" comment="%1$s = inviter email, %2$s = group name">%1$s želi deliti predmet z vašo skupino %2$s.</string>
+  <string name="home_group_invite_banner_title" comment="%1$s = inviter email, %2$s = group name">%1$s želi deliti trezor z vašo skupino %2$s.</string>
+  <string name="home_item_invite_card_title">Povabilo k skupnem predmetu</string>
+  <string name="home_vault_invite_card_title">Povabilo v skupni trezor</string>
+  <string name="home_vault_invite_banner_body" comment="placeholder is replaced by an email address">%s želi deliti trezor s tabo.</string>
   <!-- Common bottomsheet -->
   <string name="bottomsheet_copy_password">Kopiraj geslo</string>
   <string name="bottomsheet_copy_username">Kopiraj uporabniško ime</string>
@@ -87,9 +87,9 @@
   <!-- Vault drawer -->
   <plurals name="vault_drawer_vaults_item_count">
     <item quantity="one">%d predmet</item>
-    <item quantity="two">%d items</item>
-    <item quantity="few">%d items</item>
-    <item quantity="other">%d items</item>
+    <item quantity="two">%d predmeta</item>
+    <item quantity="few">%d predmeti</item>
+    <item quantity="other">%d predmeti</item>
   </plurals>
   <string name="vault_drawer_create_vault">Ustvari nov trezor</string>
   <string name="vault_drawer_item_trash">Smetnjak</string>

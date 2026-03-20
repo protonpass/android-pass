@@ -4,6 +4,10 @@
     <item quantity="one">¿Mover %d elemento a la caja fuerte siguiente?</item>
     <item quantity="other">¿Mover %d elementos a la caja fuerte siguiente?</item>
   </plurals>
+  <plurals name="migrate_item_to_folder_confirm_title_bottom_sheet">
+    <item quantity="one">¿Mover %d elemento a la siguiente carpeta?</item>
+    <item quantity="other">¿Mover %d elementos a la siguiente carpeta?</item>
+  </plurals>
   <string name="migrate_all_items_confirm_title_bottom_sheet">¿Mover todos los elementos a la siguiente caja fuerte?</string>
   <string name="migrate_item_confirm_confirm_button">Mover</string>
   <string name="migrate_item_success_snackbar">Se han movido los elementos.</string>
@@ -19,6 +23,10 @@
   <string name="migrate_folder_success_snackbar">Carpeta movida</string>
   <string name="migrate_folder_error_snackbar">Error al mover la carpeta</string>
   <string name="migrate_folder_already_same_parent_snackbar">La carpeta ya está en esta ubicación</string>
+  <plurals name="migrate_disabled_folder_reason_same_folder">
+    <item quantity="one">El elemento ya está en esta carpeta</item>
+    <item quantity="other">Ya hay %d elementos en esta carpeta</item>
+  </plurals>
   <string name="migrate_disabled_vault_reason_no_permission">No puedes crear elementos en esta caja fuerte.</string>
   <string name="migrate_disabled_vault_reason_same_vault">No puedes mover un elemento a la misma caja fuerte.</string>
   <plurals name="migrate_items_shared_warning_title">

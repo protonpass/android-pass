@@ -3,6 +3,9 @@
   <plurals name="migrate_item_confirm_title_bottom_sheet">
     <item quantity="other">移動%d項目到以下保險庫？</item>
   </plurals>
+  <plurals name="migrate_item_to_folder_confirm_title_bottom_sheet">
+    <item quantity="other">Move %d items to the following folder?</item>
+  </plurals>
   <string name="migrate_all_items_confirm_title_bottom_sheet">移動所有項目到以下保險庫？</string>
   <string name="migrate_item_confirm_confirm_button">移動</string>
   <string name="migrate_item_success_snackbar">項目已移動</string>
@@ -18,6 +21,9 @@
   <string name="migrate_folder_success_snackbar">Folder moved</string>
   <string name="migrate_folder_error_snackbar">Error moving the folder</string>
   <string name="migrate_folder_already_same_parent_snackbar">Folder is already in this location</string>
+  <plurals name="migrate_disabled_folder_reason_same_folder">
+    <item quantity="other">%d items are already in this folder</item>
+  </plurals>
   <string name="migrate_disabled_vault_reason_no_permission">您無法於保管庫創建項目</string>
   <string name="migrate_disabled_vault_reason_same_vault">您無法將項目移動到同一個保管庫。</string>
   <plurals name="migrate_items_shared_warning_title">

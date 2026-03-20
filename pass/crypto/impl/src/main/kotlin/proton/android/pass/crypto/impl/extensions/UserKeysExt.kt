@@ -33,7 +33,9 @@ fun <T> KeyHolder.tryUseKeys(
 ): T = runCatching {
     useKeys(cryptoContext) { block() }
 }.getOrElse {
-    PassLogger.w(TAG, "Error using user keys for $message")
+    val total = keys.size
+    val active = keys.count { it.privateKey.isActive }
+    PassLogger.w(TAG, "Error using user keys for $message (keys: total=$total, active=$active)")
     PassLogger.e(TAG, it)
     throw it
 }

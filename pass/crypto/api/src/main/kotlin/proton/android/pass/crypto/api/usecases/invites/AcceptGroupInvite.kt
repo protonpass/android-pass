@@ -38,6 +38,7 @@ interface AcceptGroupInvite {
         groupPrivateKeys: List<PrivateAddressKey>,
         unlockedOrganizationKey: UnlockedKey?,
         inviterAddressKeys: List<PublicKey>,
+        groupPublicKeys: List<PublicKey>,
         keys: List<EncryptedInviteKey>,
         isGroupOwner: Boolean
     ): List<EncryptedGroupInviteAcceptKey>

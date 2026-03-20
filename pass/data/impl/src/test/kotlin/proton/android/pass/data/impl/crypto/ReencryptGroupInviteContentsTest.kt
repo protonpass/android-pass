@@ -146,6 +146,16 @@ class ReencryptGroupInviteContentsTest {
         )
     )
 
+    private fun groupPublicKeys(): List<PublicKey> = listOf(
+        PublicKey(
+            key = GROUP_PUBLIC_KEY,
+            isPrimary = true,
+            isActive = true,
+            canEncrypt = true,
+            canVerify = true
+        )
+    )
+
     private fun defaultCryptoContext(): GroupInviteCryptoContext {
         // Create a fake UnlockedKey for testing (unit tests don't need real crypto)
         val fakeUnlockedKey = object : UnlockedKey {
@@ -158,6 +168,7 @@ class ReencryptGroupInviteContentsTest {
             groupPrivateKeys = group.address!!.keys!!,
             unlockedOrganizationKey = fakeUnlockedKey,
             inviterPublicKeys = inviterKeys().map { it.publicKey },
+            groupPublicKeys = groupPublicKeys(),
             isGroupOwner = false
         )
     }
@@ -196,5 +207,6 @@ class ReencryptGroupInviteContentsTest {
         private const val GROUP_EMAIL = "group@test.com"
         private const val INVITER_EMAIL = "inviter@test.com"
         private const val INVITER_PUBLIC_KEY = "inviter-public-key"
+        private const val GROUP_PUBLIC_KEY = "group-public-key"
     }
 }

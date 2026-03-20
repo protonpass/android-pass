@@ -94,7 +94,10 @@ class ReencryptShareKeyImpl @Inject constructor(
         return encryptionContext.encrypt(decrypted.data)
     }
 
-    fun reencryptGroupKey(encryptionContext: EncryptionContext, input: ReencryptGroupKeyInput): EncryptedByteArray {
+    private fun reencryptGroupKey(
+        encryptionContext: EncryptionContext,
+        input: ReencryptGroupKeyInput
+    ): EncryptedByteArray {
         val decryptedShareKey = input.invitedAddress.useKeys(cryptoContext) {
             decryptAndVerifyData(
                 message = getArmored(Base64.decodeBase64(input.key)),

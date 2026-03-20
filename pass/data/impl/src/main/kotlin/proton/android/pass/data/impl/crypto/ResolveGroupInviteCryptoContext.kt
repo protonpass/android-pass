@@ -39,6 +39,7 @@ data class GroupInviteCryptoContext(
     val groupPrivateKeys: List<PrivateAddressKey>,
     val unlockedOrganizationKey: UnlockedKey?,
     val inviterPublicKeys: List<PublicKey>,
+    val groupPublicKeys: List<PublicKey>,
     val isGroupOwner: Boolean
 )
 
@@ -78,13 +79,22 @@ class ResolveGroupInviteCryptoContextImpl @Inject constructor(
             tag = TAG,
             initial = { groupRepository.retrieveGroup(userId, groupId) },
             refresh = { groupRepository.retrieveGroup(userId, groupId, true) }
-        ) ?: error("Group not found (userId=${userId.id}, groupId=${groupId.id})")
+        ) ?: error("Group not found")
 
-        val groupPrivateKeys = group.address?.keys ?: error("Group doesn't have private keys (groupId=${groupId.id})")
+        val groupPrivateKeys = group.address?.keys ?: error("Group doesn't have private keys")
 
         val inviterPublicKeys = getAllKeysByAddress(inviterEmail)
             .getOrElse {
                 PassLogger.w(TAG, "Could not get inviter address keys")
+                PassLogger.w(TAG, it)
+                throw it
+            }
+            .map { it.publicKey }
+
+        val groupEmail = group.address?.email ?: error("Group doesn't have an address")
+        val groupPublicKeys = getAllKeysByAddress(groupEmail)
+            .getOrElse {
+                PassLogger.w(TAG, "Could not get group address keys")
                 PassLogger.w(TAG, it)
                 throw it
             }
@@ -95,6 +105,7 @@ class ResolveGroupInviteCryptoContextImpl @Inject constructor(
             groupPrivateKeys = groupPrivateKeys,
             unlockedOrganizationKey = unlockedOrganizationKey,
             inviterPublicKeys = inviterPublicKeys,
+            groupPublicKeys = groupPublicKeys,
             isGroupOwner = isGroupOwner
         )
     }

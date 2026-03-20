@@ -29,12 +29,16 @@
   <string name="sync_progress_item_count">Baixando %1$d de %2$d itens</string>
   <string name="sync_dialog_title">Sincronizando itens…</string>
   <string name="sync_dialog_title_error">Falha na sincronização</string>
+  <string name="sync_dialog_title_partial_error">Sync partially completed</string>
   <string name="sync_dialog_title_success">Sincronização completa</string>
   <string name="sync_dialog_subtitle">Estamos baixando e descriptografando seus itens. Isso pode demorar alguns minutos.</string>
   <string name="sync_dialog_subtitle_error">Ocorreu um erro ao baixar e descriptografar seus itens. Tente novamente.</string>
+  <string name="sync_dialog_subtitle_partial_error">Some items could not be decrypted and were skipped. The rest of your items are available.</string>
   <string name="sync_dialog_subtitle_success">Seus itens foram baixados e descriptografados.</string>
   <string name="sync_item_not_started">Não iniciado</string>
   <string name="sync_item_failed">Falha na sincronização</string>
   <string name="sync_dialog_title_inserting">Inserindo itens…</string>
   <string name="sync_dialog_subtitle_inserting">Completado a última etapa falta pouco.</string>
+  <string name="sync_dialog_invalid_address_shares_warning">Some vaults could not be synced because the associated address was not found on this account.</string>
+  <string name="sync_dialog_invalid_group_shares_warning">Some vaults could not be synced because the associated group was not found on this account.</string>
 </resources>

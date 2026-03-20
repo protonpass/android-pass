@@ -29,12 +29,16 @@
   <string name="sync_progress_item_count">%1$d van %2$d items aan het downloaden</string>
   <string name="sync_dialog_title">Aan het synchroniseren...</string>
   <string name="sync_dialog_title_error">Synchronisatie mislukt</string>
+  <string name="sync_dialog_title_partial_error">Synchronisatie gedeeltelijk voltooid</string>
   <string name="sync_dialog_title_success">Synchronisatie voltooid</string>
   <string name="sync_dialog_subtitle">We downloaden en decrypten uw items. Dit kan een paar minuten duren.</string>
   <string name="sync_dialog_subtitle_error">Er is een fout opgetreden tijdens het downloaden en ontsleutelen van uw items. Probeer het opnieuw.</string>
+  <string name="sync_dialog_subtitle_partial_error">Sommige items konden niet worden ontsleuteld en werden overgeslagen. De rest van uw items is beschikbaar.</string>
   <string name="sync_dialog_subtitle_success">Uw items zijn succesvol gedownload en ontsleuteld.</string>
   <string name="sync_item_not_started">Niet begonnen</string>
   <string name="sync_item_failed">Synchronisatie mislukt</string>
   <string name="sync_dialog_title_inserting">Items invoeren…</string>
   <string name="sync_dialog_subtitle_inserting">Laatste stap wordt voltooid, bijna klaar.</string>
+  <string name="sync_dialog_invalid_address_shares_warning">Sommige kluizen konden niet worden gesynchroniseerd omdat het gekoppelde adres niet op dit account is gevonden.</string>
+  <string name="sync_dialog_invalid_group_shares_warning">Sommige kluizen konden niet worden gesynchroniseerd omdat de bijbehorende groep niet is gevonden op dit account.</string>
 </resources>

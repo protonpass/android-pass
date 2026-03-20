@@ -3,6 +3,9 @@
   <plurals name="migrate_item_confirm_title_bottom_sheet">
     <item quantity="other">Chuyển %d mục vào két sắt này?</item>
   </plurals>
+  <plurals name="migrate_item_to_folder_confirm_title_bottom_sheet">
+    <item quantity="other">Move %d items to the following folder?</item>
+  </plurals>
   <string name="migrate_all_items_confirm_title_bottom_sheet">Chuyển tất cả mục vào trong két sắt sau đây?</string>
   <string name="migrate_item_confirm_confirm_button">Di chuyển</string>
   <string name="migrate_item_success_snackbar">Đã di chuyển nội dung</string>
@@ -18,6 +21,9 @@
   <string name="migrate_folder_success_snackbar">Folder moved</string>
   <string name="migrate_folder_error_snackbar">Error moving the folder</string>
   <string name="migrate_folder_already_same_parent_snackbar">Folder is already in this location</string>
+  <plurals name="migrate_disabled_folder_reason_same_folder">
+    <item quantity="other">%d items are already in this folder</item>
+  </plurals>
   <string name="migrate_disabled_vault_reason_no_permission">Bạn không thể tạo nội dung trong két sắt này</string>
   <string name="migrate_disabled_vault_reason_same_vault">Bạn không thể di chuyển mục vào cùng két sắt</string>
   <plurals name="migrate_items_shared_warning_title">

@@ -29,12 +29,16 @@
   <string name="sync_progress_item_count">S\'està descarregant %1$d de %2$d elements</string>
   <string name="sync_dialog_title">S\'estan sincronitzant elements…</string>
   <string name="sync_dialog_title_error">Error de sincronització</string>
+  <string name="sync_dialog_title_partial_error">La sincronització s\'ha completat parcialment</string>
   <string name="sync_dialog_title_success">Sincronització completada</string>
   <string name="sync_dialog_subtitle">S\'estan descarregant i desxifrant els elements. Això podria durar uns minuts.</string>
   <string name="sync_dialog_subtitle_error">S\'ha produït un error en descarregar i desxifrar els vostres elements. Torneu-ho a provar.</string>
+  <string name="sync_dialog_subtitle_partial_error">Alguns elements no s\'han pogut desxifrar i s\'han omès. La resta dels vostres elements està disponible.</string>
   <string name="sync_dialog_subtitle_success">S\'han descarregat i desxifrat els elements.</string>
   <string name="sync_item_not_started">No s\'ha iniciat.</string>
   <string name="sync_item_failed">Error de sincronització</string>
   <string name="sync_dialog_title_inserting">S\'estan inserint els elements…</string>
   <string name="sync_dialog_subtitle_inserting">S\'està acabant el darrer pas. Falta poc.</string>
+  <string name="sync_dialog_invalid_address_shares_warning">Alguna caixa forta no s\'ha pogut sincronitzar perquè l\'adreça associada no s\'ha trobat en aquest compte.</string>
+  <string name="sync_dialog_invalid_group_shares_warning">Algunes caixes fortes no s\'han pogut sincronitzar perquè el grup associat no s\'ha trobat en aquest compte.</string>
 </resources>

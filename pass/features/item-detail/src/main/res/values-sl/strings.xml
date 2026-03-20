@@ -7,7 +7,7 @@
   <string name="top_bar_edit_button_text">Uredi</string>
   <!-- Alias details -->
   <string name="field_alias_title">Vzdevek naslova</string>
-  <string name="field_alias_disabled_title">Alias address (disabled)</string>
+  <string name="field_alias_disabled_title">Vzdevek naslova (onemogočeno)</string>
   <string name="alias_copied_to_clipboard">Vzdevek je kopiran</string>
   <string name="alias_detail_field_mailboxes_title">Posredovanje na</string>
   <string name="alias_create_login_from_alias">Ustvarite prijavo</string>
@@ -106,16 +106,16 @@
   <string name="passkey_detail_bottomsheet_domain">Domena</string>
   <string name="passkey_detail_bottomsheet_key">Ključ</string>
   <string name="passkey_detail_bottomsheet_created">Ustvarjeno</string>
-  <string name="activity_in_last_two_weeks">Activity in the last 14 days</string>
+  <string name="activity_in_last_two_weeks">Dejavnost v zadnjih 14 dneh</string>
   <string name="contacts">Stiki</string>
   <string name="contacts_section_description">Če želite skriti svoj osebni e-poštni naslov, lahko ustvarite kontakt z vzdevkom, ki prikrije vaš naslov.</string>
   <string name="field_detail_display_name_title">Prikazno ime</string>
-  <string name="display_name_section_description">The display name when sending an email from this alias.</string>
+  <string name="display_name_section_description">Prikazno ime pri pošiljanju e-pošte s tega vzdevka.</string>
   <plurals name="alias_forwards_count">
     <item quantity="one">%1$s forward</item>
-    <item quantity="two">%1$s forwards</item>
-    <item quantity="few">%1$s forwards</item>
-    <item quantity="other">%1$s forwards</item>
+    <item quantity="two">%1$s posredovani</item>
+    <item quantity="few">%1$s posredovana</item>
+    <item quantity="other">%1$s posredovana</item>
   </plurals>
   <plurals name="alias_replies_count">
     <item quantity="one">%1$s odgovor</item>
@@ -124,10 +124,10 @@
     <item quantity="other">%1$s replies</item>
   </plurals>
   <plurals name="alias_blocks_count">
-    <item quantity="one">%1$s block</item>
-    <item quantity="two">%1$s blocks</item>
-    <item quantity="few">%1$s blocks</item>
-    <item quantity="other">%1$s blocks</item>
+    <item quantity="one">%1$s blokiran</item>
+    <item quantity="two">%1$s blokirana</item>
+    <item quantity="few">%1$s blokirani</item>
+    <item quantity="other">%1$s blokirani</item>
   </plurals>
   <string name="open_with">Odpri z:</string>
   <string name="open_attachments_error">Ni bilo mogoče odpreti priponke</string>

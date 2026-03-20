@@ -44,4 +44,10 @@
   <string name="clipboard_option_clear_clipboard_after_180_seconds">Nach 3 Minuten</string>
   <string name="settings_use_digital_asset_link_preference_title">Digitale Asset-Links aktivieren</string>
   <string name="settings_use_digital_asset_link_preference_subtitle">Ermöglicht die Überprüfung der Website-Eigentümerschaft zwischen einer Android-App und einer Website.</string>
+  <string name="settings_autofill_display_title">Anzeige für automatisches Ausfüllen</string>
+  <string name="settings_autofill_display_inline">Eingebettet (über der Tastatur)</string>
+  <string name="settings_autofill_display_popup">Popup-Fenster (über dem Eingabefeld)</string>
+  <string name="settings_autofill_display_subtitle">Für den Modus „Eingebettet“ ist eine kompatible Tastatur erforderlich (z. B. Gboard). Falls dieser nicht unterstützt wird, wird automatisch der Popup-Modus verwendet.</string>
+  <string name="settings_autosave_prompt_title">Automatischens Speichern anfordern</string>
+  <string name="settings_autosave_prompt_subtitle">Proton Pass wird dich auffordern, deine Anmeldedaten zu speichern oder zu aktualisieren</string>
 </resources>

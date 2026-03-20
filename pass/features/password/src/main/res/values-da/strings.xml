@@ -34,7 +34,7 @@
   <string name="password_history_description">Genererede adgangskoder gemmes i en periode på 2 uger.</string>
   <string name="password_history_today">I dag, %s</string>
   <string name="password_history_yesterday">I går, %s</string>
-  <string name="password_history_before_yesterday">Det er %d dage siden, %s</string>
+  <string name="password_history_before_yesterday">%d dage siden, %s</string>
   <string name="password_history_clear_history">Ryd historik</string>
   <string name="password_history_remove_from_history">Fjern fra historik</string>
 </resources>

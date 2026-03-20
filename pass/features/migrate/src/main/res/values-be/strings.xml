@@ -6,6 +6,12 @@
     <item quantity="many">Перамясціць %d элементаў у наступнае сховішча?</item>
     <item quantity="other">Перамясціць %d элементаў у наступнае сховішча?</item>
   </plurals>
+  <plurals name="migrate_item_to_folder_confirm_title_bottom_sheet">
+    <item quantity="one">Move %d item to the following folder?</item>
+    <item quantity="few">Move %d items to the following folder?</item>
+    <item quantity="many">Move %d items to the following folder?</item>
+    <item quantity="other">Move %d items to the following folder?</item>
+  </plurals>
   <string name="migrate_all_items_confirm_title_bottom_sheet">Перамясціць усе элементы ў наступнае сховішча?</string>
   <string name="migrate_item_confirm_confirm_button">Перамясціць</string>
   <string name="migrate_item_success_snackbar">Элементы перамешчаны</string>
@@ -21,6 +27,12 @@
   <string name="migrate_folder_success_snackbar">Папка перамешчана</string>
   <string name="migrate_folder_error_snackbar">Памылка пры перамяшчэнні папкі</string>
   <string name="migrate_folder_already_same_parent_snackbar">Папка ўжо знаходзіцца ў гэтым размяшчэнні</string>
+  <plurals name="migrate_disabled_folder_reason_same_folder">
+    <item quantity="one">Item is already in this folder</item>
+    <item quantity="few">%d items are already in this folder</item>
+    <item quantity="many">%d items are already in this folder</item>
+    <item quantity="other">%d items are already in this folder</item>
+  </plurals>
   <string name="migrate_disabled_vault_reason_no_permission">Вы не можаце ствараць элементы ў гэтым сховішчы</string>
   <string name="migrate_disabled_vault_reason_same_vault">Вы не можаце перамясціць элемент у тое ж самае сховішча</string>
   <plurals name="migrate_items_shared_warning_title">

@@ -36,7 +36,7 @@
   <string name="password_history_description">Parolele generate vor fi stocate pentru o perioadă de două săptămâni.</string>
   <string name="password_history_today">Astăzi, %s</string>
   <string name="password_history_yesterday">Ieri, %s</string>
-  <string name="password_history_before_yesterday">Există %d zile, %s</string>
+  <string name="password_history_before_yesterday">În urmă cu %d zile, %s</string>
   <string name="password_history_clear_history">Golire istoric</string>
   <string name="password_history_remove_from_history">Eliminare din istoric</string>
 </resources>

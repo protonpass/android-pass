@@ -34,7 +34,7 @@
   <string name="password_history_description">Gegenereerde wachtwoorden worden 2 weken opgeslagen.</string>
   <string name="password_history_today">Vandaag, %s</string>
   <string name="password_history_yesterday">Gisteren, %s</string>
-  <string name="password_history_before_yesterday">Er zijn %d dagen, %s</string>
+  <string name="password_history_before_yesterday">%d dagen geleden, %s</string>
   <string name="password_history_clear_history">Geschiedenis wissen</string>
   <string name="password_history_remove_from_history">Verwijderen uit geschiedenis</string>
 </resources>

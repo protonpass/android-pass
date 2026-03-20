@@ -4,6 +4,10 @@
     <item quantity="one">Voleu moure %d element a la caixa forta següent?</item>
     <item quantity="other">Voleu moure %d elements a la caixa forta següent?</item>
   </plurals>
+  <plurals name="migrate_item_to_folder_confirm_title_bottom_sheet">
+    <item quantity="one">Voleu moure l\'element %d a la carpeta següent?</item>
+    <item quantity="other">Voleu moure els %d elements a la carpeta següent?</item>
+  </plurals>
   <string name="migrate_all_items_confirm_title_bottom_sheet">Voleu moure tots els elements a la caixa forta següent?</string>
   <string name="migrate_item_confirm_confirm_button">Mou</string>
   <string name="migrate_item_success_snackbar">S\'han mogut els elements.</string>
@@ -19,6 +23,10 @@
   <string name="migrate_folder_success_snackbar">S\'ha mogut la carpeta</string>
   <string name="migrate_folder_error_snackbar">S\'ha produït un error en moure la carpeta</string>
   <string name="migrate_folder_already_same_parent_snackbar">La carpeta ja és en aquesta ubicació</string>
+  <plurals name="migrate_disabled_folder_reason_same_folder">
+    <item quantity="one">L\'element ja es troba en aquesta carpeta</item>
+    <item quantity="other">Els %d elements ja es troben en aquesta carpeta</item>
+  </plurals>
   <string name="migrate_disabled_vault_reason_no_permission">No podeu crear elements en aquesta caixa forta</string>
   <string name="migrate_disabled_vault_reason_same_vault">No podeu moure un element a la mateixa caixa forta</string>
   <plurals name="migrate_items_shared_warning_title">

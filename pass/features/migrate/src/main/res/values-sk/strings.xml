@@ -6,6 +6,12 @@
     <item quantity="many">Presunúť %d položiek do nasledovného trezora?</item>
     <item quantity="other">Presunúť %d položiek do nasledovného trezora?</item>
   </plurals>
+  <plurals name="migrate_item_to_folder_confirm_title_bottom_sheet">
+    <item quantity="one">Presunúť %d položku do nasledovného priečinka?</item>
+    <item quantity="few">Presunúť %d položky do nasledovného priečinka?</item>
+    <item quantity="many">Presunúť %d položiek do nasledovného priečinka?</item>
+    <item quantity="other">Presunúť %d položiek do nasledovného priečinka?</item>
+  </plurals>
   <string name="migrate_all_items_confirm_title_bottom_sheet">Presunúť všetky položky do nasledujúceho trezoru?</string>
   <string name="migrate_item_confirm_confirm_button">Presunúť</string>
   <string name="migrate_item_success_snackbar">Položky boli presunuté</string>
@@ -21,6 +27,12 @@
   <string name="migrate_folder_success_snackbar">Priečinok presunutý</string>
   <string name="migrate_folder_error_snackbar">Chyba pri presúvaní priečinka</string>
   <string name="migrate_folder_already_same_parent_snackbar">Priečinok sa už na tejto lokalite nachádza</string>
+  <plurals name="migrate_disabled_folder_reason_same_folder">
+    <item quantity="one">Položka sa už v tomto priečinku nachádza</item>
+    <item quantity="few">%d položky sa už v tomto priečinku nachádzajú</item>
+    <item quantity="many">%d položiek sa už v tomto priečinku nachádza</item>
+    <item quantity="other">%d položiek sa už v tomto priečinku nachádza</item>
+  </plurals>
   <string name="migrate_disabled_vault_reason_no_permission">V tomto trezore nemôžete vytvárať položky</string>
   <string name="migrate_disabled_vault_reason_same_vault">Nemôžete presunúť položku do rovnakého trezora</string>
   <plurals name="migrate_items_shared_warning_title">

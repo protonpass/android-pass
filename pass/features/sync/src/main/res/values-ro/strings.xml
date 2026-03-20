@@ -31,12 +31,16 @@
   <string name="sync_progress_item_count">Se descarcă %1$d din %2$d articole</string>
   <string name="sync_dialog_title">Se sincronizează articolele…</string>
   <string name="sync_dialog_title_error">Sincronizarea nereușită</string>
+  <string name="sync_dialog_title_partial_error">Sincronizare parțial finalizată</string>
   <string name="sync_dialog_title_success">Sincronizare finalizată</string>
   <string name="sync_dialog_subtitle">Se descarcă și se decriptează articolele. Acest lucru poate dura câteva minute.</string>
   <string name="sync_dialog_subtitle_error">A apărut o eroare la descărcarea și decriptarea articolelor. Mai încercați.</string>
+  <string name="sync_dialog_subtitle_partial_error">Unele articole nu au putut fi decriptate și au fost omise. Restul sunt disponibile.</string>
   <string name="sync_dialog_subtitle_success">Articolele au fost descărcate și decriptate cu succes.</string>
   <string name="sync_item_not_started">Neefectuată</string>
   <string name="sync_item_failed">Sincronizarea nereușită</string>
   <string name="sync_dialog_title_inserting">Se inserează articolele…</string>
   <string name="sync_dialog_subtitle_inserting">Se finalizează ultimul pas, e aproape gata.</string>
+  <string name="sync_dialog_invalid_address_shares_warning">Unele seifuri nu au putut fi sincronizate deoarece adresa asociată nu a fost găsită în acest cont.</string>
+  <string name="sync_dialog_invalid_group_shares_warning">Unele seifuri nu au putut fi sincronizate deoarece nu a fost găsit grupul cu care sunt asociate în acest cont.</string>
 </resources>

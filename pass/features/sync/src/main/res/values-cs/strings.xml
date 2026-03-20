@@ -33,12 +33,16 @@
   <string name="sync_progress_item_count">Stahování %1$d z %2$d položek</string>
   <string name="sync_dialog_title">Synchronizace položek…</string>
   <string name="sync_dialog_title_error">Synchronizace selhala</string>
+  <string name="sync_dialog_title_partial_error">Synchronizace částečně dokončena</string>
   <string name="sync_dialog_title_success">Synchronizace dokončena</string>
   <string name="sync_dialog_subtitle">Stahujeme a dešifrujeme vaše položky. Může to trvat několik minut.</string>
   <string name="sync_dialog_subtitle_error">Došlo k chybě při stahování a dešifrování vašich položek. Prosím zkuste to znovu.</string>
+  <string name="sync_dialog_subtitle_partial_error">Některé položky se nepodařilo dešifrovat a byly přeskočeny. Ostatní položky jsou k dispozici.</string>
   <string name="sync_dialog_subtitle_success">Vaše položky byly úspěšně staženy a dešifrovány.</string>
   <string name="sync_item_not_started">Nezahájeno</string>
   <string name="sync_item_failed">Synchronizace selhala</string>
   <string name="sync_dialog_title_inserting">Vkládání položek…</string>
   <string name="sync_dialog_subtitle_inserting">Dokončujeme poslední krok, už je téměř hotovo.</string>
+  <string name="sync_dialog_invalid_address_shares_warning">Některé peněženky nebylo možné synchronizovat, protože příslušná adresa nebyla v tomto účtu nalezena.</string>
+  <string name="sync_dialog_invalid_group_shares_warning">Některé peněženky nebylo možné synchronizovat, protože příslušná skupina nebyla v tomto účtu nalezena.</string>
 </resources>

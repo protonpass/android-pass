@@ -38,7 +38,7 @@
   <string name="password_history_description">Згенерыраваныя паролі будуць захоўвацца на працягу 2 тыдняў.</string>
   <string name="password_history_today">Сёння, %s</string>
   <string name="password_history_yesterday">Учора, %s</string>
-  <string name="password_history_before_yesterday">Ёсць %d дзён, %s</string>
+  <string name="password_history_before_yesterday">%d days ago, %s</string>
   <string name="password_history_clear_history">Ачысціць гісторыю</string>
   <string name="password_history_remove_from_history">Выдаліць з гісторыі</string>
 </resources>

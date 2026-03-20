@@ -44,4 +44,10 @@
   <string name="clipboard_option_clear_clipboard_after_180_seconds">Po 3 minútach</string>
   <string name="settings_use_digital_asset_link_preference_title">Povoliť odkazy na digitálne aktíva</string>
   <string name="settings_use_digital_asset_link_preference_subtitle">Overenie vlastníctva webovej lokality medzi aplikáciou pre Android a webovou lokalitou.</string>
+  <string name="settings_autofill_display_title">Zobrazenie automatického vypĺňania</string>
+  <string name="settings_autofill_display_inline">V texte (nad klávesnicou)</string>
+  <string name="settings_autofill_display_popup">Vyskakovacie okno (nad vstupným poľom)</string>
+  <string name="settings_autofill_display_subtitle">Režim v texte vyžaduje kompatibilnú klávesnicu (napr. Gboard). Ak nie je podporovaný, automaticky sa použije režim vyskakovacieho okna.</string>
+  <string name="settings_autosave_prompt_title">Výzva na automatické ukladanie</string>
+  <string name="settings_autosave_prompt_subtitle">Proton Pass vás požiada o uloženie alebo aktualizáciu prihlásení</string>
 </resources>

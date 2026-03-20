@@ -29,12 +29,16 @@
   <string name="sync_progress_item_count">%1$d / %2$d öge indiriliyor</string>
   <string name="sync_dialog_title">Ögeler eşitleniyor…</string>
   <string name="sync_dialog_title_error">Eşitlenemedi</string>
+  <string name="sync_dialog_title_partial_error">Senkronizasyon kısmen tamamlandı</string>
   <string name="sync_dialog_title_success">Eşitlendi</string>
   <string name="sync_dialog_subtitle">Ögeleriniz indiriliyor ve şifresi çözülüyor. Bu işlem birkaç dakika sürebilir.</string>
   <string name="sync_dialog_subtitle_error">Ögeleriniz indirilip şifresi çözülürken bir sorun çıktı. Lütfen yeniden deneyin.</string>
+  <string name="sync_dialog_subtitle_partial_error">Bazı öğelerin şifresi çözülemediğinden atlandı. Geri kalan öğeleriniz kullanılabilir durumda.</string>
   <string name="sync_dialog_subtitle_success">Ögeleriniz indirildi ve şifreleri çözüldü.</string>
   <string name="sync_item_not_started">Başlatılmadı</string>
   <string name="sync_item_failed">Eşitlenemedi</string>
   <string name="sync_dialog_title_inserting">Ögeler ekleniyor…</string>
   <string name="sync_dialog_subtitle_inserting">Son adım tamamlanıyor. Neredeyse bitti.</string>
+  <string name="sync_dialog_invalid_address_shares_warning">Bazı kasalar ilgili adresin bu hesapta bulunmaması nedeniyle senkronize edilemedi.</string>
+  <string name="sync_dialog_invalid_group_shares_warning">İlgili grup bu hesapta bulunamadığı için bazı kasalar senkronize edilemedi.</string>
 </resources>

@@ -4,6 +4,10 @@
     <item quantity="one">¿Mover %d elemento a la bóveda siguiente?</item>
     <item quantity="other">¿Mover %d elementos a la bóveda siguiente?</item>
   </plurals>
+  <plurals name="migrate_item_to_folder_confirm_title_bottom_sheet">
+    <item quantity="one">¿Mover %d elemento a la carpeta siguiente?</item>
+    <item quantity="other">¿Mover %d elementos a la carpeta siguiente?</item>
+  </plurals>
   <string name="migrate_all_items_confirm_title_bottom_sheet">¿Mover todos los elementos a la bóveda siguiente?</string>
   <string name="migrate_item_confirm_confirm_button">Mover</string>
   <string name="migrate_item_success_snackbar">Elementos movidos</string>
@@ -19,6 +23,10 @@
   <string name="migrate_folder_success_snackbar">Carpeta movida</string>
   <string name="migrate_folder_error_snackbar">Error al mover la carpeta</string>
   <string name="migrate_folder_already_same_parent_snackbar">La carpeta ya está en esta ubicación</string>
+  <plurals name="migrate_disabled_folder_reason_same_folder">
+    <item quantity="one">El elemento ya está en esta carpeta</item>
+    <item quantity="other">%d elementos ya están en esta carpeta</item>
+  </plurals>
   <string name="migrate_disabled_vault_reason_no_permission">No puede crear elementos en esta bóveda</string>
   <string name="migrate_disabled_vault_reason_same_vault">No puede mover un elemento a la misma bóveda</string>
   <plurals name="migrate_items_shared_warning_title">

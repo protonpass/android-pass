@@ -32,7 +32,7 @@
   <string name="password_history_description">生成的密码将保留2周。</string>
   <string name="password_history_today">今天，%s</string>
   <string name="password_history_yesterday">昨天，%s</string>
-  <string name="password_history_before_yesterday">有 %d 天，%s</string>
+  <string name="password_history_before_yesterday">%d 天前，%s</string>
   <string name="password_history_clear_history">清除历史记录</string>
   <string name="password_history_remove_from_history">从历史记录中移除</string>
 </resources>

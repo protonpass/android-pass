@@ -44,4 +44,10 @@
   <string name="clipboard_option_clear_clipboard_after_180_seconds">Μετά από 3 λεπτά</string>
   <string name="settings_use_digital_asset_link_preference_title">Ενεργοποίηση Συνδέσεων Ψηφιακών Στοιχείων</string>
   <string name="settings_use_digital_asset_link_preference_subtitle">Καθιερώνει την επαλήθευση ιδιοκτησίας ιστότοπου μεταξύ μιας εφαρμογής Android και ενός ιστότοπου.</string>
+  <string name="settings_autofill_display_title">Εμφάνιση αυτόματης συμπλήρωσης</string>
+  <string name="settings_autofill_display_inline">Ενσωματωμένο (πάνω από το πληκτρολόγιο)</string>
+  <string name="settings_autofill_display_popup">Αναδυόμενο παράθυρο (πάνω από το πεδίο εισαγωγής)</string>
+  <string name="settings_autofill_display_subtitle">Η λειτουργία εντός γραμμής απαιτεί συμβατό πληκτρολόγιο (π.χ. Gboard). Εάν δεν υποστηρίζεται, η λειτουργία αναδυόμενου παραθύρου θα χρησιμοποιηθεί αυτόματα.</string>
+  <string name="settings_autosave_prompt_title">Ερώτηση για αυτόματη αποθήκευση</string>
+  <string name="settings_autosave_prompt_subtitle">Το Proton Pass θα σας ζητήσει να αποθηκεύσετε ή να ενημερώσετε τα στοιχεία σύνδεσης</string>
 </resources>

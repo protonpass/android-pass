@@ -27,12 +27,16 @@
   <string name="sync_progress_item_count">下载 %2$d 个项目中的 %1$d 个</string>
   <string name="sync_dialog_title">同步项目中…</string>
   <string name="sync_dialog_title_error">同步失败</string>
+  <string name="sync_dialog_title_partial_error">部分同步完成</string>
   <string name="sync_dialog_title_success">同步已完成</string>
   <string name="sync_dialog_subtitle">我们正在下载和解密您的项目。这可能需要几分钟时间。</string>
   <string name="sync_dialog_subtitle_error">下载和解密您的项目时出现错误。请重试。</string>
+  <string name="sync_dialog_subtitle_partial_error">某些项目无法解密，已跳过。其余项目可用。</string>
   <string name="sync_dialog_subtitle_success">您的项目已成功下载并解密。</string>
   <string name="sync_item_not_started">未开始</string>
   <string name="sync_item_failed">同步失败</string>
   <string name="sync_dialog_title_inserting">插入项目…</string>
   <string name="sync_dialog_subtitle_inserting">完成最后一步，就快成功了</string>
+  <string name="sync_dialog_invalid_address_shares_warning">部分保险库无法同步，因为在此账户上未找到关联地址。</string>
+  <string name="sync_dialog_invalid_group_shares_warning">部分保险库无法同步，因为在此账户上未找到关联群组。</string>
 </resources>

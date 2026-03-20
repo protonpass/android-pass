@@ -49,6 +49,7 @@ class ReencryptGroupInviteContentsImpl @Inject constructor(
                 groupPrivateKeys = cryptoContext.groupPrivateKeys,
                 unlockedOrganizationKey = cryptoContext.unlockedOrganizationKey,
                 inviterAddressKeys = cryptoContext.inviterPublicKeys,
+                groupPublicKeys = cryptoContext.groupPublicKeys,
                 keys = inviteKeys,
                 isGroupOwner = cryptoContext.isGroupOwner
             )

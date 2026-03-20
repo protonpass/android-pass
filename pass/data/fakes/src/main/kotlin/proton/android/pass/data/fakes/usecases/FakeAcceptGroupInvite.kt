@@ -34,6 +34,7 @@ class FakeAcceptGroupInvite(
     var lastGroupKeys: List<PrivateAddressKey>? = null
     var lastUnlockedOrganizationKey: UnlockedKey? = null
     var lastInviterKeys: List<PublicKey>? = null
+    var lastGroupPublicKeys: List<PublicKey>? = null
     var lastKeys: List<EncryptedInviteKey>? = null
     var lastIsGroupOwner: Boolean? = null
 
@@ -42,6 +43,7 @@ class FakeAcceptGroupInvite(
         groupPrivateKeys: List<PrivateAddressKey>,
         unlockedOrganizationKey: UnlockedKey?,
         inviterAddressKeys: List<PublicKey>,
+        groupPublicKeys: List<PublicKey>,
         keys: List<EncryptedInviteKey>,
         isGroupOwner: Boolean
     ): List<EncryptedGroupInviteAcceptKey> {
@@ -49,6 +51,7 @@ class FakeAcceptGroupInvite(
         lastGroupKeys = groupPrivateKeys
         lastUnlockedOrganizationKey = unlockedOrganizationKey
         lastInviterKeys = inviterAddressKeys
+        lastGroupPublicKeys = groupPublicKeys
         lastKeys = keys
         lastIsGroupOwner = isGroupOwner
         return result

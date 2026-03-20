@@ -50,6 +50,7 @@ class EncryptGroupInviteKeysImpl @Inject constructor(
                 groupPrivateKeys = cryptoContext.groupPrivateKeys,
                 unlockedOrganizationKey = cryptoContext.unlockedOrganizationKey,
                 inviterAddressKeys = cryptoContext.inviterPublicKeys,
+                groupPublicKeys = cryptoContext.groupPublicKeys,
                 keys = groupKeys.map { it.toEncryptedInviteKey() },
                 isGroupOwner = cryptoContext.isGroupOwner
             )

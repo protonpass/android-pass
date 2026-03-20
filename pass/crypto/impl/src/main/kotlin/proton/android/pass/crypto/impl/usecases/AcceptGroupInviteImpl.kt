@@ -25,7 +25,6 @@ import me.proton.core.crypto.common.pgp.VerificationStatus
 import me.proton.core.key.domain.entity.key.PrivateAddressKey
 import me.proton.core.key.domain.entity.key.PublicKey
 import me.proton.core.key.domain.decryptData
-import me.proton.core.key.domain.publicKey
 import me.proton.core.user.domain.entity.User
 import proton.android.pass.crypto.api.Base64
 import proton.android.pass.crypto.api.Constants
@@ -47,53 +46,60 @@ class AcceptGroupInviteImpl @Inject constructor(
         groupPrivateKeys: List<PrivateAddressKey>,
         unlockedOrganizationKey: UnlockedKey?,
         inviterAddressKeys: List<PublicKey>,
+        groupPublicKeys: List<PublicKey>,
         keys: List<EncryptedInviteKey>,
         isGroupOwner: Boolean
     ): List<EncryptedGroupInviteAcceptKey> {
+        val encryptionTarget = groupPublicKeys.firstOrNull { it.isPrimary }
+            ?: error("No primary key found in group public keys from keys/all")
         val unlockedGroupKeys = unlockGroupKeys(
             user = user,
             groupPrivateKeys = groupPrivateKeys,
             unlockedOrganizationKey = unlockedOrganizationKey,
             isGroupOwner = isGroupOwner
         )
-        return keys.map { inviteKey ->
-            val decoded = Base64.decodeBase64(inviteKey.key)
-            val armored = cryptoContext.pgpCrypto.getArmored(decoded)
+        return try {
+            keys.map { inviteKey ->
+                val decoded = Base64.decodeBase64(inviteKey.key)
+                val armored = cryptoContext.pgpCrypto.getArmored(decoded)
 
-            val (unlockedGroupKey, data) = unlockedGroupKeys.firstNotNullOfOrNull { unlockedGroupKey ->
-                runCatching {
-                    val decryptedKey = cryptoContext.pgpCrypto.decryptAndVerifyData(
-                        message = armored,
-                        publicKeys = inviterAddressKeys.map { it.key },
-                        unlockedKeys = listOf(unlockedGroupKey.unlocked.value),
-                        verificationContext = VerificationContext(
-                            value = Constants.SIGNATURE_CONTEXT_EXISTING_USER,
-                            required = VerificationContext.ContextRequirement.Required.Always
+                val (unlockedGroupKey, data) = unlockedGroupKeys.firstNotNullOfOrNull { unlockedGroupKey ->
+                    runCatching {
+                        val decryptedKey = cryptoContext.pgpCrypto.decryptAndVerifyData(
+                            message = armored,
+                            publicKeys = inviterAddressKeys.map { it.key },
+                            unlockedKeys = listOf(unlockedGroupKey.value),
+                            verificationContext = VerificationContext(
+                                value = Constants.SIGNATURE_CONTEXT_EXISTING_USER,
+                                required = VerificationContext.ContextRequirement.Required.Always
+                            )
                         )
-                    )
-                    if (decryptedKey.status != VerificationStatus.Success) {
-                        throw InvalidSignature("Invite signature did not match")
-                    }
-                    unlockedGroupKey to decryptedKey.data
-                }.getOrNull()
-            } ?: error("Message cannot be decrypted with any group key")
+                        if (decryptedKey.status != VerificationStatus.Success) {
+                            throw InvalidSignature("Invite signature did not match")
+                        }
+                        unlockedGroupKey to decryptedKey.data
+                    }.getOrNull()
+                } ?: error("Message cannot be decrypted with any group key")
 
-            val reencryptedKey = cryptoContext.pgpCrypto.encryptAndSignData(
-                data = data,
-                publicKey = unlockedGroupKey.publicKey.key,
-                unlockedKey = unlockedGroupKey.unlocked.value,
-                signatureContext = null
-            )
-            val unarmored = cryptoContext.pgpCrypto.getUnarmored(reencryptedKey)
-            val localEncryptedKey = encryptionContextProvider.withEncryptionContext {
-                encrypt(data)
+                val reencryptedKey = cryptoContext.pgpCrypto.encryptAndSignData(
+                    data = data,
+                    publicKey = encryptionTarget.key,
+                    unlockedKey = unlockedGroupKey.value,
+                    signatureContext = null
+                )
+                val unarmored = cryptoContext.pgpCrypto.getUnarmored(reencryptedKey)
+                val localEncryptedKey = encryptionContextProvider.withEncryptionContext {
+                    encrypt(data)
+                }
+
+                EncryptedGroupInviteAcceptKey(
+                    keyRotation = inviteKey.keyRotation,
+                    key = Base64.encodeBase64String(unarmored),
+                    localEncryptedKey = localEncryptedKey
+                )
             }
-
-            EncryptedGroupInviteAcceptKey(
-                keyRotation = inviteKey.keyRotation,
-                key = Base64.encodeBase64String(unarmored),
-                localEncryptedKey = localEncryptedKey
-            )
+        } finally {
+            unlockedGroupKeys.forEach { it.close() }
         }
     }
 
@@ -102,37 +108,37 @@ class AcceptGroupInviteImpl @Inject constructor(
         groupPrivateKeys: List<PrivateAddressKey>,
         unlockedOrganizationKey: UnlockedKey?,
         isGroupOwner: Boolean
-    ): List<UnlockedGroupKey> = groupPrivateKeys.map { privateAddressKey ->
-        val token = privateAddressKey.token ?: error("Missing group address key token")
+    ): List<UnlockedKey> {
+        val result = mutableListOf<UnlockedKey>()
+        runCatching {
+            groupPrivateKeys.mapTo(result) { privateAddressKey ->
+                val token = privateAddressKey.token ?: error("Missing group address key token")
 
-        val decryptedToken = if (isGroupOwner) {
-            user.tryUseKeys(
-                message = "AcceptGroupInviteImpl: Decrypt group address key token",
-                cryptoContext = cryptoContext
-            ) {
-                decryptData(token)
+                val decryptedToken = if (isGroupOwner) {
+                    user.tryUseKeys(
+                        message = "AcceptGroupInviteImpl: Decrypt group address key token",
+                        cryptoContext = cryptoContext
+                    ) {
+                        decryptData(token)
+                    }
+                } else {
+                    val orgKey = unlockedOrganizationKey
+                        ?: error("Admin requires organization key")
+                    cryptoContext.pgpCrypto.decryptData(
+                        message = token,
+                        unlockedKey = orgKey.value
+                    )
+                }
+
+                cryptoContext.pgpCrypto.unlock(
+                    privateKey = privateAddressKey.privateKey.key,
+                    passphrase = decryptedToken
+                )
             }
-        } else {
-            val orgKey = unlockedOrganizationKey
-                ?: error("Admin requires organization key")
-            cryptoContext.pgpCrypto.decryptData(
-                message = token,
-                unlockedKey = orgKey.value
-            )
+        }.onFailure { throwable ->
+            result.forEach { runCatching { it.close() } }
+            throw throwable
         }
-
-        val unlocked = cryptoContext.pgpCrypto.unlock(
-            privateKey = privateAddressKey.privateKey.key,
-            passphrase = decryptedToken
-        )
-        UnlockedGroupKey(
-            publicKey = privateAddressKey.privateKey.publicKey(cryptoContext),
-            unlocked = unlocked
-        )
+        return result
     }
-
-    data class UnlockedGroupKey(
-        val publicKey: PublicKey,
-        val unlocked: UnlockedKey
-    )
 }

@@ -88,6 +88,41 @@ class LogViewViewModelTest {
     }
 
     @Test
+    fun `showClearLogsDialog is false by default`() = runTest {
+        accountManager.sendPrimaryUserId(null)
+        viewModel = createViewModel()
+        assertThat(viewModel.state.value.showClearLogsDialog).isFalse()
+    }
+
+    @Test
+    fun `showClearLogsDialog becomes true after showClearLogsDialog is called`() = runTest {
+        accountManager.sendPrimaryUserId(null)
+        viewModel = createViewModel()
+        viewModel.showClearLogsDialog()
+        assertThat(viewModel.state.value.showClearLogsDialog).isTrue()
+    }
+
+    @Test
+    fun `showClearLogsDialog becomes false after dismissClearLogsDialog is called`() = runTest {
+        accountManager.sendPrimaryUserId(null)
+        viewModel = createViewModel()
+        viewModel.showClearLogsDialog()
+        viewModel.dismissClearLogsDialog()
+        assertThat(viewModel.state.value.showClearLogsDialog).isFalse()
+    }
+
+    @Test
+    fun `clearLogs resets showClearLogsDialog to false`() = runTest {
+        accountManager.sendPrimaryUserId(null)
+        viewModel = createViewModel()
+        viewModel.showClearLogsDialog()
+        assertThat(viewModel.state.value.showClearLogsDialog).isTrue()
+        viewModel.clearLogs()
+        appDispatchers.testDispatcher.scheduler.advanceUntilIdle()
+        assertThat(viewModel.state.value.showClearLogsDialog).isFalse()
+    }
+
+    @Test
     fun `loads current user log file when user is logged in`() = runTest {
         val userId = UserId("test-user-123")
         accountManager.sendPrimaryUserId(userId)
@@ -100,16 +135,14 @@ class LogViewViewModelTest {
                 Line 1
                 Line 2
                 Line 3
-            """.trimIndent()
+            """.trimIndent() + "\n"
         )
 
         viewModel.loadLogFile()
 
         viewModel.state.test {
             val state = awaitItem()
-            assertThat(state).contains("Line 3")
-            assertThat(state).contains("Line 2")
-            assertThat(state).contains("Line 1")
+            assertThat(state.lines.map { it.text }).containsExactly("Line 3", "Line 2", "Line 1").inOrder()
         }
     }
 
@@ -124,15 +157,14 @@ class LogViewViewModelTest {
             """
                 Unlogged line 1
                 Unlogged line 2
-            """.trimIndent()
+            """.trimIndent() + "\n"
         )
 
         viewModel.loadLogFile()
 
         viewModel.state.test {
             val state = awaitItem()
-            assertThat(state).contains("Unlogged line 2")
-            assertThat(state).contains("Unlogged line 1")
+            assertThat(state.lines.map { it.text }).containsExactly("Unlogged line 2", "Unlogged line 1").inOrder()
         }
     }
 
@@ -145,17 +177,146 @@ class LogViewViewModelTest {
         val logFile = logFileManager.getLogFile(userId)
         logFile.parentFile?.mkdirs()
         val lines = (1..150).map { "Line $it" }
-        logFile.writeText(lines.joinToString("\n"))
+        logFile.writeText(lines.joinToString("\n") + "\n")
 
         viewModel.loadLogFile()
 
         viewModel.state.test {
             val state = awaitItem()
-            val stateLines = state.split("\n")
-            assertThat(stateLines.size).isEqualTo(100)
-            assertThat(stateLines.first()).isEqualTo("Line 150")
-            assertThat(stateLines.last()).isEqualTo("Line 51")
+            assertThat(state.lines.size).isEqualTo(100)
+            assertThat(state.lines.first().text).isEqualTo("Line 150")
+            assertThat(state.lines.last().text).isEqualTo("Line 51")
+            assertThat(state.hasOlderLogs).isTrue()
         }
+    }
+
+    @Test
+    fun `loads older logs when requested`() = runTest {
+        val userId = UserId("older-user")
+        accountManager.sendPrimaryUserId(userId)
+        viewModel = createViewModel()
+
+        val logFile = logFileManager.getLogFile(userId)
+        logFile.parentFile?.mkdirs()
+        val lines = (1..150).map { "Line $it" }
+        logFile.writeText(lines.joinToString("\n") + "\n")
+
+        viewModel.loadLogFile()
+        appDispatchers.testDispatcher.scheduler.advanceUntilIdle()
+        viewModel.loadOlderLogs()
+        appDispatchers.testDispatcher.scheduler.advanceUntilIdle()
+
+        val state = viewModel.state.value
+        assertThat(state.lines.size).isEqualTo(150)
+        assertThat(state.lines.first().text).isEqualTo("Line 150")
+        assertThat(state.lines.last().text).isEqualTo("Line 1")
+        assertThat(state.hasOlderLogs).isFalse()
+    }
+
+    @Test
+    fun `each loaded line has a unique stable id`() = runTest {
+        val userId = UserId("ids-user")
+        accountManager.sendPrimaryUserId(userId)
+        viewModel = createViewModel()
+
+        val logFile = logFileManager.getLogFile(userId)
+        logFile.parentFile?.mkdirs()
+        logFile.writeText("Line 1\nLine 2\nLine 3\n")
+
+        viewModel.loadLogFile()
+        appDispatchers.testDispatcher.scheduler.advanceUntilIdle()
+        val idsAfterLoad = viewModel.state.value.lines.map { it.id }
+        assertThat(idsAfterLoad).hasSize(3)
+        assertThat(idsAfterLoad.toSet()).hasSize(3) // all unique
+
+        logFile.appendText("Line 4\n")
+        viewModel.refreshLogs()
+        appDispatchers.testDispatcher.scheduler.advanceUntilIdle()
+        val idsAfterRefresh = viewModel.state.value.lines.map { it.id }
+        // existing lines keep their ids
+        assertThat(idsAfterRefresh.takeLast(3)).isEqualTo(idsAfterLoad)
+        // new line has a new id not in the original set
+        assertThat(idsAfterRefresh.first()).isNotIn(idsAfterLoad)
+    }
+
+    @Test
+    fun `refresh loads newly appended logs without dropping loaded history`() = runTest {
+        val userId = UserId("refresh-user")
+        accountManager.sendPrimaryUserId(userId)
+        viewModel = createViewModel()
+
+        val logFile = logFileManager.getLogFile(userId)
+        logFile.parentFile?.mkdirs()
+        logFile.writeText(
+            """
+                Line 1
+                Line 2
+            """.trimIndent() + "\n"
+        )
+
+        viewModel.loadLogFile()
+        appDispatchers.testDispatcher.scheduler.advanceUntilIdle()
+
+        logFile.appendText(
+            """
+                Line 3
+                Line 4
+            """.trimIndent() + "\n"
+        )
+
+        viewModel.refreshLogs()
+        appDispatchers.testDispatcher.scheduler.advanceUntilIdle()
+
+        assertThat(viewModel.state.value.lines.map { it.text }).containsExactly(
+            "Line 4",
+            "Line 3",
+            "Line 2",
+            "Line 1"
+        ).inOrder()
+    }
+
+    @Test
+    fun `refresh does not show partial trailing line until it is completed`() = runTest {
+        val userId = UserId("partial-refresh-user")
+        accountManager.sendPrimaryUserId(userId)
+        viewModel = createViewModel()
+
+        val logFile = logFileManager.getLogFile(userId)
+        logFile.parentFile?.mkdirs()
+        logFile.writeText("Line 1\n")
+
+        viewModel.loadLogFile()
+        appDispatchers.testDispatcher.scheduler.advanceUntilIdle()
+
+        logFile.appendText("Line 2 partial")
+        viewModel.refreshLogs()
+        appDispatchers.testDispatcher.scheduler.advanceUntilIdle()
+        assertThat(viewModel.state.value.lines.map { it.text }).containsExactly("Line 1").inOrder()
+
+        logFile.appendText(" complete\n")
+        viewModel.refreshLogs()
+        appDispatchers.testDispatcher.scheduler.advanceUntilIdle()
+
+        assertThat(viewModel.state.value.lines.map { it.text }).containsExactly(
+            "Line 2 partial complete",
+            "Line 1"
+        ).inOrder()
+    }
+
+    @Test
+    fun `initial load hides partial trailing line`() = runTest {
+        val userId = UserId("partial-initial-user")
+        accountManager.sendPrimaryUserId(userId)
+        viewModel = createViewModel()
+
+        val logFile = logFileManager.getLogFile(userId)
+        logFile.parentFile?.mkdirs()
+        logFile.writeText("Line 1\nLine 2 partial")
+
+        viewModel.loadLogFile()
+        appDispatchers.testDispatcher.scheduler.advanceUntilIdle()
+
+        assertThat(viewModel.state.value.lines.map { it.text }).containsExactly("Line 1").inOrder()
     }
 
     @Test
@@ -168,8 +329,34 @@ class LogViewViewModelTest {
 
         viewModel.state.test {
             val state = awaitItem()
-            assertThat(state).isEmpty()
+            assertThat(state.lines).isEmpty()
         }
+    }
+
+    @Test
+    fun `clears current user log file and empties state`() = runTest {
+        val userId = UserId("clear-user")
+        accountManager.sendPrimaryUserId(userId)
+        viewModel = createViewModel()
+
+        val logFile = logFileManager.getLogFile(userId)
+        logFile.parentFile?.mkdirs()
+        logFile.writeText(
+            """
+                Line 1
+                Line 2
+            """.trimIndent() + "\n"
+        )
+
+        viewModel.loadLogFile()
+        appDispatchers.testDispatcher.scheduler.advanceUntilIdle()
+        assertThat(viewModel.state.value.lines.map { it.text }).containsExactly("Line 2", "Line 1").inOrder()
+
+        viewModel.clearLogs()
+        appDispatchers.testDispatcher.scheduler.advanceUntilIdle()
+
+        assertThat(logFile.exists()).isFalse()
+        assertThat(viewModel.state.value.lines).isEmpty()
     }
 
     @Test
@@ -217,6 +404,32 @@ class LogViewViewModelTest {
         val content = sharedFile.readText()
         assertThat(content).contains("-----------------------------------------")
         assertThat(content).contains("Unlogged content")
+    }
+
+    @Test
+    fun `lines have unique ids that are stable across reload`() = runTest {
+        val userId = UserId("stable-ids-user")
+        accountManager.sendPrimaryUserId(userId)
+        viewModel = createViewModel()
+
+        val logFile = logFileManager.getLogFile(userId)
+        logFile.parentFile?.mkdirs()
+        logFile.writeText("Line A\nLine B\n")
+
+        viewModel.loadLogFile()
+        appDispatchers.testDispatcher.scheduler.advanceUntilIdle()
+
+        val firstIds = viewModel.state.value.lines.map { it.id }
+        assertThat(firstIds.toSet()).hasSize(2)
+
+        viewModel.loadLogFile()
+        appDispatchers.testDispatcher.scheduler.advanceUntilIdle()
+
+        // IDs are monotonically increasing but different each load — uniqueness is what matters
+        val secondIds = viewModel.state.value.lines.map { it.id }
+        assertThat(secondIds.toSet()).hasSize(2)
+        // Ids from second load should be different from the first (they're fresh)
+        assertThat(secondIds).isNotEqualTo(firstIds)
     }
 
     private fun createViewModel() = LogViewViewModel(

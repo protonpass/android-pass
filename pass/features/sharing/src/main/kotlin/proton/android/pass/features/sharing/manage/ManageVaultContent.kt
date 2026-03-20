@@ -35,6 +35,7 @@ import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.composecomponents.impl.container.InfoBanner
 import proton.android.pass.composecomponents.impl.topbar.BackArrowTopAppBar
 import proton.android.pass.data.api.usecases.VaultMember
+import proton.android.pass.domain.GroupId
 import proton.android.pass.features.sharing.R
 import proton.android.pass.features.sharing.SharingNavigation
 
@@ -44,7 +45,8 @@ fun ManageVaultContent(
     state: ManageVaultUiState,
     onNavigateEvent: (SharingNavigation) -> Unit,
     onConfirmInviteClick: (VaultMember.NewUserInvitePending) -> Unit,
-    onPendingInvitesClick: () -> Unit
+    onPendingInvitesClick: () -> Unit,
+    onViewGroupMembersClick: (GroupId) -> Unit
 ) {
     Scaffold(
         modifier = modifier.systemBarsPadding(),
@@ -100,7 +102,8 @@ fun ManageVaultContent(
                         }
                     }
                 },
-                onConfirmInviteClick = onConfirmInviteClick
+                onConfirmInviteClick = onConfirmInviteClick,
+                onViewGroupMembersClick = onViewGroupMembersClick
             )
 
             if (state.shareOptions is ShareOptions.Show) {

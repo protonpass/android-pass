@@ -21,6 +21,7 @@ package proton.android.pass.data.api.usecases
 import kotlinx.coroutines.flow.Flow
 import proton.android.pass.domain.InviteId
 import proton.android.pass.domain.NewUserInviteId
+import proton.android.pass.domain.GroupId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.ShareRole
 
@@ -28,6 +29,7 @@ sealed class VaultMember(open val email: String) {
     data class Member(
         override val email: String,
         val shareId: ShareId,
+        val groupId: GroupId? = null,
         val username: String,
         val isGroup: Boolean,
         val memberCount: Int,

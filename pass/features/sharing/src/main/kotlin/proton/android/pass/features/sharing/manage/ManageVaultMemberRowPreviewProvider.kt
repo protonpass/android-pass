@@ -23,6 +23,7 @@ import proton.android.pass.commonui.api.ThemePairPreviewProvider
 import proton.android.pass.data.api.usecases.VaultMember
 import proton.android.pass.domain.InviteId
 import proton.android.pass.domain.NewUserInviteId
+import proton.android.pass.domain.GroupId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.ShareRole
 
@@ -42,6 +43,7 @@ class ManageVaultMemberRowPreviewProvider : PreviewParameterProvider<VaultMember
                     vaultMember = VaultMember.Member(
                         email = "someuser@test.local",
                         shareId = ShareId("someShareId"),
+                        groupId = null,
                         username = "someuser",
                         role = ShareRole.Admin,
                         isCurrentUser = true,
@@ -59,6 +61,7 @@ class ManageVaultMemberRowPreviewProvider : PreviewParameterProvider<VaultMember
                     vaultMember = VaultMember.Member(
                         email = "someuser@test.local",
                         shareId = ShareId("someShareId"),
+                        groupId = null,
                         username = "someuser",
                         role = role,
                         isCurrentUser = false,
@@ -69,6 +72,24 @@ class ManageVaultMemberRowPreviewProvider : PreviewParameterProvider<VaultMember
                 )
                 yield(VaultMemberRowInput(member))
             }
+
+            yield(
+                VaultMemberRowInput(
+                    VaultMemberContent.Member(
+                        vaultMember = VaultMember.Member(
+                            email = "group@test.local",
+                            shareId = ShareId("groupShareId"),
+                            groupId = GroupId("group-id"),
+                            username = "Security Team",
+                            role = ShareRole.Admin,
+                            isCurrentUser = false,
+                            isOwner = false,
+                            isGroup = true,
+                            memberCount = 6
+                        )
+                    )
+                )
+            )
 
             // Invite
             yield(

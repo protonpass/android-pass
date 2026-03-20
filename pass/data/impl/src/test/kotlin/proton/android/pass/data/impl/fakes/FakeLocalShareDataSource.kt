@@ -134,4 +134,10 @@ class FakeLocalShareDataSource : LocalShareDataSource {
         shareType: ShareType
     ): Set<ShareId> = shareIds
 
+    override suspend fun updateMembersCount(
+        userId: UserId,
+        shareId: ShareId,
+        count: Int
+    ) = Unit
+
 }

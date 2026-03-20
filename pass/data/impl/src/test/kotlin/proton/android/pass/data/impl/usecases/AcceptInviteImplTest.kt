@@ -27,13 +27,14 @@ import org.junit.Test
 import proton.android.pass.data.api.usecases.AcceptInviteStatus
 import proton.android.pass.data.fakes.repositories.FakeGroupInviteRepository
 import proton.android.pass.data.fakes.repositories.FakeItemRepository
+import proton.android.pass.data.fakes.repositories.FakeShareMembersRepository
 import proton.android.pass.data.fakes.repositories.FakeUserInviteRepository
 import proton.android.pass.data.fakes.usecases.FakeObserveCurrentUser
+import proton.android.pass.data.fakes.usecases.folders.FakeRefreshFolders
 import proton.android.pass.data.fakes.work.FakeWorkerLauncher
 import proton.android.pass.data.impl.fakes.FakeShareRepository
 import proton.android.pass.data.impl.repositories.FetchShareItemsStatus
 import proton.android.pass.data.impl.repositories.FetchShareItemsStatusRepositoryImpl
-import proton.android.pass.data.fakes.usecases.folders.FakeRefreshFolders
 import proton.android.pass.domain.InviteToken
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
@@ -54,6 +55,7 @@ class AcceptInviteImplTest {
     private lateinit var notificationManager: FakeNotificationManager
     private lateinit var itemRepository: FakeItemRepository
     private lateinit var refreshFolders: FakeRefreshFolders
+    private lateinit var shareMembersRepository: FakeShareMembersRepository
     private lateinit var instance: AcceptInviteImpl
 
     @Before
@@ -67,10 +69,12 @@ class AcceptInviteImplTest {
         notificationManager = FakeNotificationManager()
         itemRepository = FakeItemRepository()
         refreshFolders = FakeRefreshFolders()
+        shareMembersRepository = FakeShareMembersRepository()
 
         instance = AcceptInviteImpl(
             observeCurrentUser = observeCurrentUser,
             shareRepository = shareRepository,
+            shareMembersRepository = shareMembersRepository,
             userInviteRepository = userInviteRepository,
             groupInviteRepository = groupInviteRepository,
             workerLauncher = workerLauncher,

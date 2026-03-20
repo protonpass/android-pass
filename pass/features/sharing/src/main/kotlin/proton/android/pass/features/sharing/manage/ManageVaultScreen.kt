@@ -64,6 +64,9 @@ fun ManageVaultScreen(
         state = state,
         onNavigateEvent = onNavigateEvent,
         onConfirmInviteClick = viewModel::onConfirmInvite,
-        onPendingInvitesClick = viewModel::onPendingInvitesClick
+        onPendingInvitesClick = viewModel::onPendingInvitesClick,
+        onViewGroupMembersClick = { groupId ->
+            onNavigateEvent(SharingNavigation.GroupMembers(groupId))
+        }
     )
 }

@@ -34,6 +34,7 @@ import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.composecomponents.impl.container.roundedContainerNorm
 import proton.android.pass.composecomponents.impl.form.PassDivider
 import proton.android.pass.data.api.usecases.VaultMember
+import proton.android.pass.domain.GroupId
 import proton.android.pass.domain.VaultWithItemCount
 import proton.android.pass.features.sharing.R
 
@@ -43,7 +44,8 @@ fun ManageVaultMembersList(
     content: ManageVaultUiContent,
     vault: VaultWithItemCount?,
     onMemberOptionsClick: (VaultMember) -> Unit,
-    onConfirmInviteClick: (VaultMember.NewUserInvitePending) -> Unit
+    onConfirmInviteClick: (VaultMember.NewUserInvitePending) -> Unit,
+    onViewGroupMembersClick: (GroupId) -> Unit
 ) {
     Column(
         modifier = modifier.verticalScroll(rememberScrollState()),
@@ -69,7 +71,8 @@ fun ManageVaultMembersList(
                 ManageVaultMembersList(
                     content = content,
                     onMemberOptionsClick = onMemberOptionsClick,
-                    onConfirmInviteClick = onConfirmInviteClick
+                    onConfirmInviteClick = onConfirmInviteClick,
+                    onViewGroupMembersClick = onViewGroupMembersClick
                 )
             }
         }
@@ -81,7 +84,8 @@ private fun ManageVaultMembersList(
     modifier: Modifier = Modifier,
     content: ManageVaultUiContent.Content,
     onMemberOptionsClick: (VaultMember) -> Unit,
-    onConfirmInviteClick: (VaultMember.NewUserInvitePending) -> Unit
+    onConfirmInviteClick: (VaultMember.NewUserInvitePending) -> Unit,
+    onViewGroupMembersClick: (GroupId) -> Unit
 ) {
     Column(
         modifier = modifier.fillMaxWidth(),
@@ -110,7 +114,8 @@ private fun ManageVaultMembersList(
                         canShowActions = content.canEdit,
                         onOptionsClick = { onMemberOptionsClick(invite) },
                         isRenameAdminToManagerEnabled = content.isRenameAdminToManagerEnabled,
-                        onConfirmInviteClick = onConfirmInviteClick
+                        onConfirmInviteClick = onConfirmInviteClick,
+                        onViewGroupMembersClick = onViewGroupMembersClick
                     )
                     PassDivider()
                 }
@@ -131,7 +136,8 @@ private fun ManageVaultMembersList(
                     ),
                     canShowActions = content.canEdit,
                     isRenameAdminToManagerEnabled = content.isRenameAdminToManagerEnabled,
-                    onOptionsClick = { onMemberOptionsClick(member) }
+                    onOptionsClick = { onMemberOptionsClick(member) },
+                    onViewGroupMembersClick = onViewGroupMembersClick
                 )
                 PassDivider()
             }

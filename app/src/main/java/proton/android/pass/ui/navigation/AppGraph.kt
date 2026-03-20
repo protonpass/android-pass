@@ -2776,7 +2776,8 @@ fun NavGraphBuilder.appGraph(
                 route = SharingEditPermissions.buildRouteForEditOne(
                     itemIdOption = it.itemIdOption,
                     email = it.email,
-                    permission = it.permission.toSharingType()
+                    permission = it.permission.toSharingType(),
+                    groupId = it.groupId
                 )
             )
 

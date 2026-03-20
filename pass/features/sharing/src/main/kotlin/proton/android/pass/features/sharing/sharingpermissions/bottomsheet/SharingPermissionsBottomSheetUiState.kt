@@ -43,7 +43,11 @@ internal sealed interface SharingPermissionsEditMode {
     data object All : SharingPermissionsEditMode
 
     @Immutable
-    data class EditOne(val email: String, val sharingType: SharingType) : SharingPermissionsEditMode
+    data class EditOne(
+        val displayName: String,
+        val sharingType: SharingType,
+        val isGroup: Boolean
+    ) : SharingPermissionsEditMode
 
 }
 

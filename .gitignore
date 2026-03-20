@@ -87,3 +87,4 @@ pass/**/*.aar
 .kotlin/
 .claude/settings.local.json
 .claude/agents/
+.worktrees/

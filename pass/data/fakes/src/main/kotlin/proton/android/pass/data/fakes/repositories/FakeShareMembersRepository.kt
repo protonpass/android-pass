@@ -31,10 +31,15 @@ import javax.inject.Inject
 class FakeShareMembersRepository @Inject constructor() : ShareMembersRepository {
 
     private var members: List<ShareMember> = emptyList()
+    private var getMembersTotalError: Throwable? = null
     private val observeShareItemMembersFlow = testFlow<List<ShareMember>>()
 
     fun setMembers(value: List<ShareMember>) {
         members = value
+    }
+
+    fun setGetMembersTotalError(error: Throwable) {
+        getMembersTotalError = error
     }
 
     fun emitShareItemMembers(value: List<ShareMember>) {
@@ -67,5 +72,8 @@ class FakeShareMembersRepository @Inject constructor() : ShareMembersRepository 
         memberShareId: ShareId
     ) = Unit
 
-    override suspend fun getShareMembersTotal(userId: UserId, shareId: ShareId): Int = members.size
+    override suspend fun getShareMembersTotal(userId: UserId, shareId: ShareId): Int {
+        getMembersTotalError?.let { throw it }
+        return members.size
+    }
 }

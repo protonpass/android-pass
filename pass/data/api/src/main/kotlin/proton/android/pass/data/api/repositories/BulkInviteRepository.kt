@@ -25,7 +25,7 @@ interface BulkInviteRepository {
 
     fun storeInvites(inviteTargets: List<InviteTarget>)
 
-    fun setIndividualPermission(email: String, permission: ShareRole)
+    fun setPermission(inviteTarget: InviteTarget, permission: ShareRole)
 
     fun setAllPermissions(permission: ShareRole)
 

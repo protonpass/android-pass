@@ -41,6 +41,7 @@ import kotlinx.coroutines.launch
 import me.proton.core.util.kotlin.takeIfNotBlank
 import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.None
+import proton.android.pass.common.api.safeRunCatching
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.asLoadingResult
 import proton.android.pass.common.api.combineN
@@ -349,12 +350,16 @@ class SharingWithViewModel @Inject constructor(
             val groupEmails = selectedGroups.map { it.email }
 
             // Check to see if all addresses can be invited
-            val canInviteResult = checkCanAddressesBeInvited(
-                shareId = shareId,
-                addresses = (userEmails + groupEmails).distinct()
-            )
-
-            handleCanInviteResult(canInviteResult, userEmails, selectedGroups)
+            safeRunCatching {
+                val canInviteResult = checkCanAddressesBeInvited(
+                    shareId = shareId,
+                    addresses = (userEmails + groupEmails).distinct()
+                )
+                handleCanInviteResult(canInviteResult, userEmails, selectedGroups)
+            }.onFailure {
+                PassLogger.w(TAG, "Failed to check if addresses can be invited")
+                PassLogger.w(TAG, it)
+            }
 
             isLoadingState.update { IsLoadingState.NotLoading }
         }

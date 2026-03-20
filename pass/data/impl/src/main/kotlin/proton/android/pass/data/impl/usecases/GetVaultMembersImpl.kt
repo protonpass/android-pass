@@ -20,8 +20,10 @@ package proton.android.pass.data.impl.usecases
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
+import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.asLoadingResult
 import proton.android.pass.common.api.getOrNull
+import proton.android.pass.log.api.PassLogger
 import proton.android.pass.data.api.repositories.ShareMembersRepository
 import proton.android.pass.data.api.usecases.GetVaultMembers
 import proton.android.pass.data.api.usecases.GroupMembers
@@ -47,6 +49,10 @@ class GetVaultMembersImpl @Inject constructor(
         observeSharePendingInvites(shareId),
         observeGroupMembersByGroup().asLoadingResult()
     ) { user, pendingInvites, groupMembersResult ->
+        if (groupMembersResult is LoadingResult.Error) {
+            PassLogger.w(TAG, "Failed to load group members, group info will be missing from vault member list")
+            PassLogger.w(TAG, groupMembersResult.exception)
+        }
         val groupByEmail = groupMembersResult.getOrNull().orEmpty().toGroupByEmail()
         val shareMembers = shareMembersRepository.getShareMembers(
             userId = user.userId,
@@ -54,6 +60,10 @@ class GetVaultMembersImpl @Inject constructor(
             userEmail = user.email
         )
         buildVaultMembers(pendingInvites, shareMembers, groupByEmail)
+    }
+
+    companion object {
+        private const val TAG = "GetVaultMembersImpl"
     }
 }
 
@@ -75,17 +85,20 @@ private fun buildVaultMembers(
         .also(::addAll)
 }
 
-private fun ShareMember.toVaultMember(groupByEmail: Map<String, GroupMembers>): VaultMember = VaultMember.Member(
-    shareId = shareId,
-    email = email,
-    groupId = if (isGroup) groupByEmail[email]?.group?.id else null,
-    username = if (isGroup) groupByEmail[email]?.group?.name ?: username else username,
-    role = role,
-    isCurrentUser = isCurrentUser,
-    isOwner = isOwner,
-    isGroup = isGroup,
-    memberCount = if (isGroup) groupByEmail[email]?.members?.size ?: 0 else 0
-)
+private fun ShareMember.toVaultMember(groupByEmail: Map<String, GroupMembers>): VaultMember {
+    val groupInfo = if (isGroup) groupByEmail[email] else null
+    return VaultMember.Member(
+        shareId = shareId,
+        email = email,
+        groupId = groupInfo?.group?.id,
+        username = groupInfo?.group?.name ?: username,
+        role = role,
+        isCurrentUser = isCurrentUser,
+        isOwner = isOwner,
+        isGroup = isGroup,
+        memberCount = groupInfo?.members?.size ?: 0
+    )
+}
 
 private fun SharePendingInvite.toVaultMember(): VaultMember = when (this) {
     is SharePendingInvite.ExistingUser -> VaultMember.InvitePending(

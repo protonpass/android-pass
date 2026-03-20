@@ -116,6 +116,10 @@ class AcceptInviteImplTest {
         assertThat(workerLauncher.getLaunchedItems()).isEmpty()
         assertThat(refreshFolders.invocations).hasSize(1)
         assertThat(itemRepository.getSetShareItemsMemory()).hasSize(1)
+
+        val updateMembersCountCalls = shareRepository.getUpdateMembersCountMemory()
+        assertThat(updateMembersCountCalls).hasSize(1)
+        assertThat(updateMembersCountCalls.first().shareId).isEqualTo(shareId)
     }
 
     @Test

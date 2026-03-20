@@ -31,6 +31,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.toOption
+import proton.android.pass.log.api.PassLogger
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
 import proton.android.pass.data.api.repositories.BulkInviteRepository
@@ -95,8 +96,8 @@ class SharingPermissionsBottomSheetViewModel @Inject constructor(
                 }
 
                 is SharingPermissionMode.SetOne -> {
-                    bulkInviteRepository.setIndividualPermission(
-                        email = mode.email,
+                    bulkInviteRepository.setPermission(
+                        inviteTarget = mode.toInviteTarget(),
                         permission = sharingType.toShareRole()
                     )
                 }
@@ -108,16 +109,12 @@ class SharingPermissionsBottomSheetViewModel @Inject constructor(
 
     internal fun onDeleteUser() {
         viewModelScope.launch {
-            when (mode) {
-                is SharingPermissionMode.SetAll -> {
-                    throw IllegalStateException("Cannot delete user in SetAll mode")
-                }
-
-                is SharingPermissionMode.SetOne -> {
-                    bulkInviteRepository.removeInvite(mode.toInviteTarget())
-                }
+            if (mode is SharingPermissionMode.SetAll) {
+                PassLogger.w(TAG, "onDeleteUser called in SetAll mode — this is a programming error")
+                return@launch
             }
 
+            bulkInviteRepository.removeInvite((mode as SharingPermissionMode.SetOne).toInviteTarget())
             eventFlow.update { SharingPermissionsBottomSheetEvent.Close }
         }
     }
@@ -199,4 +196,7 @@ class SharingPermissionsBottomSheetViewModel @Inject constructor(
             }
         }
 
+    companion object {
+        private const val TAG = "SharingPermissionsBottomSheetViewModel"
+    }
 }

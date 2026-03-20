@@ -93,6 +93,12 @@ interface ShareRepository {
         shareIds: Set<ShareId>,
         shareType: ShareType
     ): Set<ShareId>
+
+    suspend fun updateMembersCount(
+        userId: UserId,
+        shareId: ShareId,
+        count: Int
+    )
 }
 
 data class UpdateShareEvent(

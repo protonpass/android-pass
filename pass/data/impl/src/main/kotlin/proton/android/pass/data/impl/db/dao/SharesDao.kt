@@ -165,4 +165,18 @@ abstract class SharesDao : BaseDao<ShareEntity>() {
         shareIds: List<String>,
         shareType: Int
     ): List<String>
+
+    @Query(
+        """
+        UPDATE ${ShareEntity.TABLE}
+        SET ${ShareEntity.Columns.TARGET_MEMBERS} = :count
+        WHERE ${ShareEntity.Columns.USER_ID} = :userId
+          AND ${ShareEntity.Columns.ID} = :shareId
+        """
+    )
+    abstract suspend fun updateMembersCount(
+        userId: String,
+        shareId: String,
+        count: Int
+    )
 }

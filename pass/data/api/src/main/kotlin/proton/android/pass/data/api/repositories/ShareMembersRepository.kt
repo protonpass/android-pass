@@ -53,4 +53,6 @@ interface ShareMembersRepository {
         memberShareId: ShareId
     )
 
+    suspend fun getShareMembersTotal(userId: UserId, shareId: ShareId): Int
+
 }

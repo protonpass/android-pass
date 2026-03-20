@@ -314,6 +314,14 @@ class ShareRepositoryImpl @Inject constructor(
         localShareDataSource.upsertShares(listOf(updated))
     }
 
+    override suspend fun updateMembersCount(
+        userId: UserId,
+        shareId: ShareId,
+        count: Int
+    ) {
+        localShareDataSource.updateMembersCount(userId, shareId, count)
+    }
+
     override suspend fun getById(userId: UserId, shareId: ShareId): Share =
         localShareDataSource.getById(userId, shareId)?.let { entity ->
             encryptionContextProvider.withEncryptionContextSuspendable {

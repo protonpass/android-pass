@@ -251,6 +251,8 @@ class FakeShareRepository : ShareRepository {
         shareIds.filter { shareTypes[it] == shareType }.toSet()
     }
 
+    override suspend fun updateMembersCount(userId: UserId, shareId: ShareId, count: Int) {}
+
     data class RefreshSharePayload(
         val userId: UserId,
         val shareId: ShareId

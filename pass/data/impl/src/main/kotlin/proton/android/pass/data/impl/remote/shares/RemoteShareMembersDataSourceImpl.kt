@@ -78,4 +78,10 @@ class RemoteShareMembersDataSourceImpl @Inject constructor(
         }
         .valueOrThrow
 
+    override suspend fun getShareMembersTotal(userId: UserId, shareId: ShareId): Int =
+        apiProvider.get<PasswordManagerApi>(userId)
+            .invoke { getShareMembers(shareId.id) }
+            .valueOrThrow
+            .total
+
 }

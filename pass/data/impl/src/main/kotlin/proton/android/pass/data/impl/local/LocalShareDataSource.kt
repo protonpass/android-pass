@@ -66,4 +66,10 @@ interface LocalShareDataSource {
         shareType: ShareType
     ): Set<ShareId>
 
+    suspend fun updateMembersCount(
+        userId: UserId,
+        shareId: ShareId,
+        count: Int
+    )
+
 }

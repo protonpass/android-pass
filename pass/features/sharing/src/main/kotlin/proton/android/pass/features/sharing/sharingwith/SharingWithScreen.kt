@@ -56,7 +56,7 @@ fun SharingWithScreen(
                 SharingWithUiEvent.ContinueClick -> onContinueClick()
                 is SharingWithUiEvent.EmailChange -> onEmailChange(uiEvent.content)
                 is SharingWithUiEvent.ChipEmailClick -> onChipEmailClick(uiEvent.index)
-                is SharingWithUiEvent.ChipGroupClick -> onNavigateEvent(SharingNavigation.GroupMembers(uiEvent.groupId))
+                is SharingWithUiEvent.ChipGroupClick -> onChipGroupClick(uiEvent.groupId)
                 is SharingWithUiEvent.GroupSuggestionMembersClick -> onNavigateEvent(
                     SharingNavigation.GroupMembers(uiEvent.groupId)
                 )

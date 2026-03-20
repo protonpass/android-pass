@@ -108,6 +108,7 @@ class SharingWithViewModel @Inject constructor(
         MutableStateFlow(emptyList())
 
     private val focusedEmailIndexFlow: MutableStateFlow<Option<Int>> = MutableStateFlow(None)
+    private val focusedGroupIdFlow: MutableStateFlow<Option<GroupId>> = MutableStateFlow(None)
 
     private val checkedEmailFlow = MutableStateFlow<Set<String>>(emptySet())
     private val checkedGroupIdsFlow = MutableStateFlow<Set<GroupId>>(emptySet())
@@ -155,8 +156,9 @@ class SharingWithViewModel @Inject constructor(
     private val suggestionsUIStateFlow = combine(
         recommendationsFlow,
         checkedEmailFlow,
-        checkedGroupIdsFlow
-    ) { result, checkedEmails, checkedGroupIds ->
+        checkedGroupIdsFlow,
+        focusedGroupIdFlow
+    ) { result, checkedEmails, checkedGroupIds, focusedGroupId ->
         when (result) {
             is LoadingResult.Error -> SuggestionsUIState.Initial
             LoadingResult.Loading -> SuggestionsUIState.Loading
@@ -174,7 +176,8 @@ class SharingWithViewModel @Inject constructor(
                             email = group.email,
                             name = group.name,
                             memberCount = group.memberCount,
-                            isSelected = group.groupId in checkedGroupIds
+                            isSelected = group.groupId in checkedGroupIds,
+                            isFocused = group.groupId == focusedGroupId.value()
                         )
                     }
 
@@ -190,7 +193,8 @@ class SharingWithViewModel @Inject constructor(
                             email = group.email,
                             name = group.name,
                             memberCount = group.memberCount,
-                            isSelected = group.groupId in checkedGroupIds
+                            isSelected = group.groupId in checkedGroupIds,
+                            isFocused = group.groupId == focusedGroupId.value()
                         )
                     }
 
@@ -276,6 +280,7 @@ class SharingWithViewModel @Inject constructor(
         editingEmailStateFlow.update { sanitised }
         errorMessageFlow.update { ErrorMessage.None }
         focusedEmailIndexFlow.update { None }
+        focusedGroupIdFlow.update { None }
     }
 
     internal fun onEmailSubmit() {
@@ -314,6 +319,17 @@ class SharingWithViewModel @Inject constructor(
             focusedEmailIndexFlow.update { None }
         } else {
             focusedEmailIndexFlow.update { index.some() }
+            focusedGroupIdFlow.update { None }
+        }
+    }
+
+    internal fun onChipGroupClick(groupId: GroupId) {
+        if (focusedGroupIdFlow.value.value() == groupId) {
+            checkedGroupIdsFlow.update { current -> current - groupId }
+            focusedGroupIdFlow.update { None }
+        } else {
+            focusedGroupIdFlow.update { groupId.some() }
+            focusedEmailIndexFlow.update { None }
         }
     }
 
@@ -387,7 +403,10 @@ class SharingWithViewModel @Inject constructor(
         }
         if (shouldSelect) {
             scrollToBottomFlow.update { true }
+        } else if (focusedGroupIdFlow.value.value() == groupId) {
+            focusedGroupIdFlow.update { None }
         }
+        focusedEmailIndexFlow.update { None }
     }
 
     internal fun onScrolledToBottom() {
@@ -510,4 +529,3 @@ class SharingWithViewModel @Inject constructor(
     }
 
 }
-

@@ -204,11 +204,7 @@ internal fun SharingWithContent(
                                         text = label,
                                         isError = false,
                                         isSelected = group.isFocused,
-                                        onClick = {
-                                            if (group.memberCount > 0) {
-                                                onEvent(SharingWithUiEvent.ChipGroupClick(group.id))
-                                            }
-                                        }
+                                        onClick = { onEvent(SharingWithUiEvent.ChipGroupClick(group.id)) }
                                     )
                                 }
                         }

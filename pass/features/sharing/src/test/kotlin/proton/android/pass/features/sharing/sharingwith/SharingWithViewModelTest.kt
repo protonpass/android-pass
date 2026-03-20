@@ -36,8 +36,10 @@ import proton.android.pass.data.fakes.usecases.FakeObserveInviteRecommendations
 import proton.android.pass.data.fakes.usecases.FakeCheckAddressesCanBeInvited
 import proton.android.pass.data.fakes.usecases.FakeObserveOrganizationSettings
 import proton.android.pass.data.fakes.usecases.shares.FakeObserveShare
+import proton.android.pass.domain.GroupId
 import proton.android.pass.domain.InviteRecommendations
 import proton.android.pass.domain.RecommendedEmail
+import proton.android.pass.domain.RecommendedGroup
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.ShareRole
 import proton.android.pass.features.sharing.ShowEditVaultArgId
@@ -215,6 +217,74 @@ class SharingWithViewModelTest {
             assertThat(recentEmails.size).isEqualTo(2)
             assertThat(recentEmails[0]).isEqualTo(EmailUiModel(email2, false))
             assertThat(recentEmails[1]).isEqualTo(EmailUiModel(email1, false))
+        }
+    }
+
+    @Test
+    fun `double click on selected group chip should focus it and then remove it`() = runTest {
+        val groupId = GroupId("group-id")
+        val recommendations = InviteRecommendations(
+            recommendedItems = listOf(
+                RecommendedGroup(
+                    groupId = groupId,
+                    email = "group@proton.test",
+                    name = "Team group",
+                    memberCount = 3
+                )
+            ),
+            groupDisplayName = "",
+            organizationItems = emptyList()
+        )
+        observeInviteRecommendations.emitInvites(recommendations)
+
+        viewModel.onGroupToggle(groupId = groupId, isSelected = false)
+
+        viewModel.stateFlow.test {
+            val state = awaitItem()
+            val content = state.suggestionsUIState as SuggestionsUIState.Content
+            assertThat(content.recentSortedItems.filterIsInstance<GroupSuggestionUiModel>()).containsExactly(
+                GroupSuggestionUiModel(
+                    id = groupId,
+                    email = "group@proton.test",
+                    name = "Team group",
+                    memberCount = 3,
+                    isSelected = true
+                )
+            )
+        }
+
+        viewModel.onChipGroupClick(groupId)
+
+        viewModel.stateFlow.test {
+            val state = awaitItem()
+            val content = state.suggestionsUIState as SuggestionsUIState.Content
+            assertThat(content.recentSortedItems.filterIsInstance<GroupSuggestionUiModel>()).containsExactly(
+                GroupSuggestionUiModel(
+                    id = groupId,
+                    email = "group@proton.test",
+                    name = "Team group",
+                    memberCount = 3,
+                    isSelected = true,
+                    isFocused = true
+                )
+            )
+        }
+
+        viewModel.onChipGroupClick(groupId)
+
+        viewModel.stateFlow.test {
+            val state = awaitItem()
+            assertThat(state.selectedGroups).isEmpty()
+
+            val content = state.suggestionsUIState as SuggestionsUIState.Content
+            assertThat(content.recentSortedItems.filterIsInstance<GroupSuggestionUiModel>()).containsExactly(
+                GroupSuggestionUiModel(
+                    id = groupId,
+                    email = "group@proton.test",
+                    name = "Team group",
+                    memberCount = 3
+                )
+            )
         }
     }
 

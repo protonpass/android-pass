@@ -263,7 +263,8 @@ sealed interface SharingNavigation {
     data class InviteToShareEditPermissions(
         val itemIdOption: Option<ItemId>,
         val email: String,
-        val permission: ShareRole
+        val permission: ShareRole,
+        val groupId: GroupId? = null
     ) : SharingNavigation
 
     @JvmInline

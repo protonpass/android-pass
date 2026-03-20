@@ -25,6 +25,7 @@ import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import proton.android.pass.features.sharing.SharingNavigation
+import proton.android.pass.features.sharing.common.GroupTargetUiState
 import proton.android.pass.features.sharing.extensions.toShareRole
 
 @Composable
@@ -63,7 +64,8 @@ fun SharingPermissionsScreen(
                     SharingNavigation.InviteToShareEditPermissions(
                         itemIdOption = state.itemIdOption,
                         email = uiEvent.inviteTarget.email,
-                        permission = uiEvent.inviteTarget.permission.toShareRole()
+                        permission = uiEvent.inviteTarget.permission.toShareRole(),
+                        groupId = (uiEvent.inviteTarget as? GroupTargetUiState)?.groupId
                     ).also(onNavigateEvent)
                 }
 

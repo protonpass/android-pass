@@ -21,6 +21,7 @@ package proton.android.pass.features.sharing.sharingpermissions.bottomsheet
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavType
 import proton.android.pass.common.api.Option
+import proton.android.pass.domain.GroupId
 import proton.android.pass.domain.ItemId
 import proton.android.pass.features.sharing.SharingNavigation
 import proton.android.pass.features.sharing.sharingpermissions.SharingType
@@ -44,12 +45,12 @@ object EditPermissionsModeNavArgId : NavArgId {
 
 object EmailNavArgId : OptionalNavArgId {
     override val key: String = "email"
-    override val navType: NavType<*> = NavType.StringType
+    override val navType = NavType.StringType
 }
 
 object PermissionNavArgId : OptionalNavArgId {
     override val key: String = "permission"
-    override val navType: NavType<*> = NavType.StringType
+    override val navType = NavType.StringType
 }
 
 object SharingEditPermissions : NavItem(
@@ -57,6 +58,7 @@ object SharingEditPermissions : NavItem(
     navArgIds = listOf(EditPermissionsModeNavArgId),
     optionalArgIds = listOf(
         CommonOptionalNavArgId.ItemId,
+        CommonOptionalNavArgId.GroupId,
         EmailNavArgId,
         PermissionNavArgId
     ),
@@ -76,7 +78,8 @@ object SharingEditPermissions : NavItem(
     fun buildRouteForEditOne(
         itemIdOption: Option<ItemId>,
         email: String,
-        permission: SharingType
+        permission: SharingType,
+        groupId: GroupId? = null
     ) = buildString {
         append("$baseRoute/${EditPermissionsMode.SingleUser.name}")
 
@@ -86,6 +89,7 @@ object SharingEditPermissions : NavItem(
             }
             put(EmailNavArgId.key, email)
             put(PermissionNavArgId.key, permission.name)
+            groupId?.let { put(CommonOptionalNavArgId.GroupId.key, it.id) }
         }.also { params ->
             append(params.toPath())
         }

@@ -53,7 +53,7 @@ internal fun SharingPermissionsBottomSheetContent(
 
         is SharingPermissionsEditMode.EditOne -> stringResource(
             R.string.sharing_edit_permissions_set_access_level_single_member,
-            mode.email
+            mode.displayName
         ) to mode.sharingType
     }
 
@@ -80,7 +80,10 @@ internal fun SharingPermissionsBottomSheetContent(
         ).also(::add)
 
         if (state.displayRemove) {
-            removeUserRow(onClick = onDeleteUserClick).also(::add)
+            removeUserRow(
+                isGroup = (mode as? SharingPermissionsEditMode.EditOne)?.isGroup == true,
+                onClick = onDeleteUserClick
+            ).also(::add)
         }
     }.let { items ->
         BottomSheetItemList(
@@ -225,11 +228,17 @@ private fun permissionRow(
     override val isDivider = false
 }
 
-private fun removeUserRow(onClick: () -> Unit): BottomSheetItem = object : BottomSheetItem {
+private fun removeUserRow(isGroup: Boolean, onClick: () -> Unit): BottomSheetItem = object : BottomSheetItem {
 
     override val title: @Composable () -> Unit = {
         BottomSheetItemTitle(
-            text = stringResource(id = R.string.sharing_edit_permissions_remove_user),
+            text = stringResource(
+                id = if (isGroup) {
+                    R.string.sharing_edit_permissions_remove_group
+                } else {
+                    R.string.sharing_edit_permissions_remove_user
+                }
+            ),
             color = PassTheme.colors.signalDanger
         )
     }

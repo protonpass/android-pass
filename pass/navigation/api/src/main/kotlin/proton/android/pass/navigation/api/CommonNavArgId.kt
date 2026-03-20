@@ -38,6 +38,7 @@ private const val FOLDER_ID = "FolderID"
 private const val ADDRESS_ID_KEY = "AddressID"
 private const val USER_ID_KEY = "UserID"
 private const val EMAIL_KEY = "Email"
+private const val GROUP_ID_KEY = "GroupId"
 private const val INVITE_TOKEN_KEY = "InviteToken"
 private const val INVITE_ID_KEY = "InviteId"
 private const val URI_KEY = "Uri"
@@ -125,6 +126,10 @@ enum class CommonOptionalNavArgId : OptionalNavArgId {
     },
     FolderId {
         override val key: String = FOLDER_ID
+        override val navType: NavType<*> = NavType.StringType
+    },
+    GroupId {
+        override val key: String = GROUP_ID_KEY
         override val navType: NavType<*> = NavType.StringType
     }
 }

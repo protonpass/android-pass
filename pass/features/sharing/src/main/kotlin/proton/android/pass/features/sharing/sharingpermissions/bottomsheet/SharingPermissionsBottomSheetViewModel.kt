@@ -21,6 +21,7 @@ package proton.android.pass.features.sharing.sharingpermissions.bottomsheet
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -33,9 +34,11 @@ import proton.android.pass.common.api.toOption
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
 import proton.android.pass.data.api.repositories.BulkInviteRepository
+import proton.android.pass.data.api.repositories.GroupTarget
+import proton.android.pass.data.api.repositories.InviteTarget
 import proton.android.pass.data.api.repositories.UserTarget
+import proton.android.pass.domain.GroupId
 import proton.android.pass.domain.ItemId
-import proton.android.pass.domain.ShareRole
 import proton.android.pass.features.sharing.extensions.toShareRole
 import proton.android.pass.features.sharing.sharingpermissions.SharingType
 import proton.android.pass.navigation.api.CommonOptionalNavArgId
@@ -67,10 +70,10 @@ class SharingPermissionsBottomSheetViewModel @Inject constructor(
     ) { event, invites, isRenameAdminToManagerEnabled ->
         SharingPermissionsBottomSheetUiState(
             event = event,
-            mode = mode.toUi(),
+            mode = mode.toUi(invites),
             displayRemove = when (mode) {
                 is SharingPermissionMode.SetAll -> false
-                is SharingPermissionMode.SetOne -> invites.size > 1
+                is SharingPermissionMode.SetOne -> true
             },
             itemIdOption = itemIdOption,
             isRenameAdminToManagerEnabled = isRenameAdminToManagerEnabled
@@ -79,7 +82,7 @@ class SharingPermissionsBottomSheetViewModel @Inject constructor(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5_000L),
         initialValue = SharingPermissionsBottomSheetUiState.initial(
-            mode = mode.toUi(),
+            mode = mode.toUi(emptyList()),
             itemIdOption = itemIdOption
         )
     )
@@ -111,7 +114,7 @@ class SharingPermissionsBottomSheetViewModel @Inject constructor(
                 }
 
                 is SharingPermissionMode.SetOne -> {
-                    bulkInviteRepository.removeInvite(UserTarget(mode.email, ShareRole.Read))
+                    bulkInviteRepository.removeInvite(mode.toInviteTarget())
                 }
             }
 
@@ -132,10 +135,11 @@ class SharingPermissionsBottomSheetViewModel @Inject constructor(
             EditPermissionsMode.SingleUser -> {
                 val email = savedState.require<String>(EmailNavArgId.key)
                 val permission = savedState.require<String>(PermissionNavArgId.key)
+                val groupId = savedState.get<String>(CommonOptionalNavArgId.GroupId.key)?.let(::GroupId)
                 val permissionAsEnum = SharingType.entries.firstOrNull { it.name == permission }
                 when (permissionAsEnum) {
                     null -> throw IllegalArgumentException("Unknown permission: $permission")
-                    else -> SharingPermissionMode.SetOne(email, permissionAsEnum)
+                    else -> SharingPermissionMode.SetOne(email, permissionAsEnum, groupId)
                 }
             }
 
@@ -143,12 +147,19 @@ class SharingPermissionsBottomSheetViewModel @Inject constructor(
         }
     }
 
-    private fun SharingPermissionMode.toUi() = when (this) {
+    private fun SharingPermissionMode.toUi(invites: List<InviteTarget>) = when (this) {
         SharingPermissionMode.SetAll -> SharingPermissionsEditMode.All
-        is SharingPermissionMode.SetOne -> SharingPermissionsEditMode.EditOne(
-            email = email,
-            sharingType = currentPermission
-        )
+        is SharingPermissionMode.SetOne -> {
+            val inviteTarget = findMatchingTarget(invites)
+            SharingPermissionsEditMode.EditOne(
+                displayName = when (inviteTarget) {
+                    is GroupTarget -> inviteTarget.name
+                    else -> email
+                },
+                sharingType = currentPermission,
+                isGroup = inviteTarget is GroupTarget || groupId != null
+            )
+        }
     }
 
     private sealed interface SharingPermissionMode {
@@ -157,9 +168,35 @@ class SharingPermissionsBottomSheetViewModel @Inject constructor(
 
         data class SetOne(
             val email: String,
-            val currentPermission: SharingType
+            val currentPermission: SharingType,
+            val groupId: GroupId?
         ) : SharingPermissionMode
 
     }
+
+    private suspend fun SharingPermissionMode.SetOne.toInviteTarget(): InviteTarget {
+        val invites = bulkInviteRepository.observeInvites().first()
+        return findMatchingTarget(invites) ?: when (groupId) {
+            null -> UserTarget(email, currentPermission.toShareRole())
+            else -> GroupTarget(
+                groupId = groupId,
+                name = email,
+                memberCount = 0,
+                email = email,
+                shareRole = currentPermission.toShareRole()
+            )
+        }
+    }
+
+    private fun SharingPermissionMode.SetOne.findMatchingTarget(invites: List<InviteTarget>): InviteTarget? =
+        when (groupId) {
+            null -> invites.firstOrNull { invite ->
+                invite is UserTarget && invite.email == email
+            }
+
+            else -> invites.firstOrNull { invite ->
+                invite is GroupTarget && invite.groupId == groupId
+            }
+        }
 
 }

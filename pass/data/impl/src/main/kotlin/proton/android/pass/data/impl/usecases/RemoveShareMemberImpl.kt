@@ -20,11 +20,13 @@ package proton.android.pass.data.impl.usecases
 
 import kotlinx.coroutines.flow.first
 import me.proton.core.accountmanager.domain.AccountManager
+import proton.android.pass.common.api.safeRunCatching
 import proton.android.pass.data.api.errors.UserIdNotAvailableError
 import proton.android.pass.data.api.repositories.ShareMembersRepository
 import proton.android.pass.data.api.repositories.ShareRepository
 import proton.android.pass.data.api.usecases.RemoveShareMember
 import proton.android.pass.domain.ShareId
+import proton.android.pass.log.api.PassLogger
 import javax.inject.Inject
 
 class RemoveShareMemberImpl @Inject constructor(
@@ -37,8 +39,17 @@ class RemoveShareMemberImpl @Inject constructor(
         val userId = accountManager.getPrimaryUserId().first()
             ?: throw UserIdNotAvailableError()
         shareMemberRepository.deleteShareMember(userId, shareId, memberShareId)
-        val updatedCount = shareMemberRepository.getShareMembersTotal(userId, shareId)
-        shareRepository.updateMembersCount(userId, shareId, updatedCount)
+        safeRunCatching {
+            val updatedCount = shareMemberRepository.getShareMembersTotal(userId, shareId)
+            shareRepository.updateMembersCount(userId, shareId, updatedCount)
+        }.onFailure {
+            PassLogger.w(TAG, "Failed to update member count after removing member")
+            PassLogger.w(TAG, it)
+        }
+    }
+
+    companion object {
+        private const val TAG = "RemoveShareMemberImpl"
     }
 
 }

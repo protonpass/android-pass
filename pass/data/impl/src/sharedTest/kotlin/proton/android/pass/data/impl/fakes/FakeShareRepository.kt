@@ -80,6 +80,8 @@ class FakeShareRepository : ShareRepository {
 
     private val shareTypes: MutableMap<ShareId, ShareType> = mutableMapOf()
 
+    private val updateMembersCountMemory: MutableList<UpdateMembersCountPayload> = mutableListOf()
+
     fun deleteVaultMemory(): List<ShareId> = deleteVaultMemory
     fun refreshShareMemory(): List<RefreshSharePayload> = refreshShareMemory
 
@@ -251,7 +253,17 @@ class FakeShareRepository : ShareRepository {
         shareIds.filter { shareTypes[it] == shareType }.toSet()
     }
 
-    override suspend fun updateMembersCount(userId: UserId, shareId: ShareId, count: Int) {}
+    fun getUpdateMembersCountMemory(): List<UpdateMembersCountPayload> = updateMembersCountMemory.toList()
+
+    override suspend fun updateMembersCount(userId: UserId, shareId: ShareId, count: Int) {
+        updateMembersCountMemory.add(UpdateMembersCountPayload(userId, shareId, count))
+    }
+
+    data class UpdateMembersCountPayload(
+        val userId: UserId,
+        val shareId: ShareId,
+        val count: Int
+    )
 
     data class RefreshSharePayload(
         val userId: UserId,

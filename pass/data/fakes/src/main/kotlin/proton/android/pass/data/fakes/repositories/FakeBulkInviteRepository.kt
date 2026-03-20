@@ -41,15 +41,22 @@ class FakeBulkInviteRepository @Inject constructor() : BulkInviteRepository {
         invitesFlow.update { inviteTargets }
     }
 
-    override fun setIndividualPermission(email: String, permission: ShareRole) {
+    override fun setPermission(inviteTarget: InviteTarget, permission: ShareRole) {
         invitesFlow.update { state ->
-            state.map { invite ->
-                if (invite.email == email) {
-                    when (invite) {
-                        is UserTarget -> invite.copy(shareRole = permission)
-                        is GroupTarget -> invite.copy(shareRole = permission)
+            state.map { existingInvite ->
+                val matches = when {
+                    existingInvite is UserTarget && inviteTarget is UserTarget ->
+                        existingInvite.email == inviteTarget.email
+                    existingInvite is GroupTarget && inviteTarget is GroupTarget ->
+                        existingInvite.groupId == inviteTarget.groupId
+                    else -> false
+                }
+                if (matches) {
+                    when (existingInvite) {
+                        is UserTarget -> existingInvite.copy(shareRole = permission)
+                        is GroupTarget -> existingInvite.copy(shareRole = permission)
                     }
-                } else invite
+                } else existingInvite
             }
         }
     }

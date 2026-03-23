@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023-2026 Proton AG
+ * Copyright (c) 2026 Proton AG
  * This file is part of Proton AG and Proton Pass.
  *
  * Proton Pass is free software: you can redistribute it and/or modify
@@ -44,6 +44,7 @@ import proton.android.pass.data.fakes.usecases.FakeObserveEncryptedItems
 import proton.android.pass.data.fakes.usecases.FakePinItem
 import proton.android.pass.data.fakes.usecases.FakeUnpinItem
 import proton.android.pass.data.fakes.usecases.FakeAddSearchEntry
+import proton.android.pass.data.fakes.usecases.FakeCanCreateAlias
 import proton.android.pass.data.fakes.usecases.FakeClearTrash
 import proton.android.pass.data.fakes.usecases.FakeDeleteAllSearchEntry
 import proton.android.pass.data.fakes.usecases.FakeDeleteItems
@@ -70,6 +71,7 @@ import proton.android.pass.data.fakes.usecases.shares.FakeObserveHasShares
 import proton.android.pass.preferences.FakeFeatureFlagsPreferenceRepository
 import proton.android.pass.domain.FolderId
 import proton.android.pass.domain.ItemEncrypted
+import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ItemState
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.ShareSelection
@@ -247,7 +249,7 @@ internal class HomeViewModelTest {
         val folderId = FolderId("folder-123")
         val folderItem = FakeObserveEncryptedItems.createLogin(
             shareId = shareId,
-            itemId = proton.android.pass.domain.ItemId("item-in-folder"),
+            itemId = ItemId("item-in-folder"),
             title = "Folder Item"
         ).copy(
             createTime = clock.now(),
@@ -332,7 +334,8 @@ internal class HomeViewModelTest {
             appConfig = appConfig,
             syncStatusRepository = FakeItemSyncStatusRepository(),
             featureFlagsPreferencesRepository = featureFlags,
-            observeFolder = observeFolder
+            observeFolder = observeFolder,
+            canCreateAlias = FakeCanCreateAlias()
         )
     }
 }

@@ -45,6 +45,7 @@ import me.proton.core.presentation.R as CoreR
 internal fun HomeEmptyList(
     modifier: Modifier = Modifier,
     canCreateItems: Boolean,
+    canCreateAlias: Boolean,
     filterType: SearchFilterType,
     onCreateLoginClick: () -> Unit,
     onCreateAliasClick: () -> Unit,
@@ -68,11 +69,11 @@ internal fun HomeEmptyList(
         Column(
             verticalArrangement = Arrangement.spacedBy(space = Spacing.small)
         ) {
-            val visibleButtons = remember(canCreateItems, filterType) {
+            val visibleButtons = remember(canCreateItems, canCreateAlias, filterType) {
                 if (!canCreateItems) return@remember emptySet()
 
-                when (filterType) {
-                    SearchFilterType.All -> SearchFilterType.entries
+                val buttons = when (filterType) {
+                    SearchFilterType.All -> SearchFilterType.entries.toSet()
                     SearchFilterType.Login, SearchFilterType.LoginMFA -> setOf(
                         SearchFilterType.Login,
                         SearchFilterType.LoginMFA
@@ -85,6 +86,12 @@ internal fun HomeEmptyList(
                     SearchFilterType.Custom -> setOf(SearchFilterType.Custom)
                     SearchFilterType.SharedWithMe,
                     SearchFilterType.SharedByMe -> emptySet()
+                }
+
+                if (!canCreateAlias) {
+                    buttons - SearchFilterType.Alias
+                } else {
+                    buttons
                 }
             }
 
@@ -174,6 +181,7 @@ internal fun HomeEmptyListPreview(
             HomeEmptyList(
                 filterType = input.second,
                 canCreateItems = true,
+                canCreateAlias = true,
                 onCreateLoginClick = {},
                 onCreateAliasClick = {},
                 onCreateNoteClick = {},

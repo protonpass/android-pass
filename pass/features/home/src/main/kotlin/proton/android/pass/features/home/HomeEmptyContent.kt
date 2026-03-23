@@ -40,6 +40,7 @@ internal fun HomeEmptyContent(
     modifier: Modifier = Modifier,
     hasShares: Boolean,
     canCreateItems: Boolean,
+    canCreateAlias: Boolean,
     canCreateVault: Boolean,
     inSearchMode: Boolean,
     readOnly: Boolean,
@@ -72,6 +73,7 @@ internal fun HomeEmptyContent(
         else -> HomeEmptyList(
             modifier = modifier.fillMaxHeight(),
             canCreateItems = canCreateItems,
+            canCreateAlias = canCreateAlias,
             filterType = filterType,
             onCreateLoginClick = {
                 onEvent(HomeUiEvent.AddItemClick(shareId, ItemTypeUiState.Login, folderId))

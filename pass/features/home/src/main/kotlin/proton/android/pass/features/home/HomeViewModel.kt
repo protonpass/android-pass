@@ -119,6 +119,7 @@ import proton.android.pass.data.api.usecases.UnpinItem
 import proton.android.pass.data.api.usecases.UnpinItems
 import proton.android.pass.data.api.usecases.folders.ObserveFolder
 import proton.android.pass.data.api.usecases.inappmessages.ObserveDeliverableMinimizedPromoInAppMessages
+import proton.android.pass.data.api.usecases.capabilities.CanCreateAlias
 import proton.android.pass.data.api.usecases.items.ObserveCanCreateItems
 import proton.android.pass.data.api.usecases.items.ObserveEncryptedSharedItems
 import proton.android.pass.data.api.usecases.searchentry.AddSearchEntry
@@ -219,6 +220,7 @@ class HomeViewModel @Inject constructor(
     appDispatchers: AppDispatchers,
     getUserPlan: GetUserPlan,
     observeCanCreateItems: ObserveCanCreateItems,
+    canCreateAlias: CanCreateAlias,
     observeHasShares: ObserveHasShares,
     observeDeliverableMinimizedPromoInAppMessages: ObserveDeliverableMinimizedPromoInAppMessages,
     observeUpgradeInfo: ObserveUpgradeInfo,
@@ -643,7 +645,8 @@ class HomeViewModel @Inject constructor(
         observeCanCreateItems(),
         observeHasShares(includeHidden = true),
         observeUpgradeInfo().asLoadingResult(),
-        foldersEnabledFlow
+        foldersEnabledFlow,
+        canCreateAlias()
     ) { homeListUiState,
         searchUiState,
         userPlan,
@@ -654,7 +657,8 @@ class HomeViewModel @Inject constructor(
         canCreateItems,
         hasShares,
         upgradeInfo,
-        foldersEnabled ->
+        foldersEnabled,
+        canCreateAlias ->
         HomeUiState(
             homeListUiState = homeListUiState,
             searchUiState = searchUiState,
@@ -665,6 +669,7 @@ class HomeViewModel @Inject constructor(
             isFreePlan = userPlan.map { plan -> plan.isFreePlan }.getOrNull() != false,
             aliasTrashDialogStatusPreference = aliasTrashDialogStatusPreference,
             canCreateItems = canCreateItems,
+            canCreateAlias = canCreateAlias,
             hasShares = hasShares,
             isUpgradeAvailable = upgradeInfo.getOrNull()?.isUpgradeAvailable ?: false,
             isQuest = appConfig.flavor.isQuest(),

@@ -75,6 +75,10 @@ enum class CommonNavArgId : NavArgId {
     InviteId {
         override val key: String = INVITE_ID_KEY
         override val navType: NavType<*> = NavType.StringType
+    },
+    GroupId {
+        override val key: String = GROUP_ID_KEY
+        override val navType: NavType<*> = NavType.StringType
     }
 }
 object DestinationShareNavArgId : NavArgId {

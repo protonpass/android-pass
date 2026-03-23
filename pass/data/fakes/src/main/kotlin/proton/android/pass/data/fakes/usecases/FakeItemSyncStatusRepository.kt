@@ -47,15 +47,19 @@ class FakeItemSyncStatusRepository @Inject constructor() : ItemSyncStatusReposit
     private val syncModeFlow: MutableSharedFlow<SyncMode> = testFlow<SyncMode>()
         .apply { tryEmit(SyncMode.Background) }
 
+    val emittedStatuses: MutableList<ItemSyncStatus> = mutableListOf()
+
     fun emitAccumulated(map: Map<ShareId, ItemSyncStatusPayload>) {
         accumulatedFlow.tryEmit(map)
     }
 
     override suspend fun emit(status: ItemSyncStatus) {
+        emittedStatuses += status
         syncStatusFlow.emit(status)
     }
 
     override fun tryEmit(status: ItemSyncStatus) {
+        emittedStatuses += status
         syncStatusFlow.tryEmit(status)
     }
 

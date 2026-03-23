@@ -141,6 +141,9 @@ dependencies {
     androidTestImplementation(projects.pass.data.fakes)
     androidTestImplementation(projects.pass.network.fakes)
 
+    androidTestImplementation(libs.androidx.work.testing)
+    androidTestImplementation(libs.truth)
+
     androidTestImplementation(libs.androidx.compose.ui.test)
     androidTestImplementation(libs.androidx.compose.ui.test.junit)
     androidTestImplementation(libs.androidx.room.testing)

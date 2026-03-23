@@ -38,6 +38,7 @@ import dagger.assisted.AssistedInject
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.safeRunCatching
 import proton.android.pass.data.api.repositories.ItemRepository
+import proton.android.pass.data.api.repositories.VaultProgress
 import proton.android.pass.data.api.usecases.folders.RefreshFolders
 import proton.android.pass.data.impl.R
 import proton.android.pass.data.impl.repositories.FetchShareItemsStatus
@@ -76,32 +77,12 @@ open class FetchShareItemsWorker @AssistedInject constructor(
                 shareId = shareId,
                 onProgress = {}
             ).let { itemRevisions ->
-                val failedShareIds = itemRepository.setShareItems(
+                val result = itemRepository.setShareItems(
                     userId = userId,
                     items = mapOf(shareId to itemRevisions),
-                    onProgress = { progress ->
-                        when {
-                            progress.total == 0 -> {
-                                FetchShareItemsStatus.Done(0)
-                            }
-
-                            progress.current == progress.total -> {
-                                FetchShareItemsStatus.Done(progress.total)
-                            }
-
-                            else -> {
-                                FetchShareItemsStatus.Syncing(
-                                    current = progress.current,
-                                    total = progress.total
-                                )
-                            }
-                        }.also { fetchShareItemsStatus ->
-                            fetchShareItemsStatusRepository.emit(shareId, fetchShareItemsStatus)
-                            PassLogger.d(TAG, "ShareId $shareId progress: $fetchShareItemsStatus")
-                        }
-                    }
+                    onProgress = { progress -> onInsertProgress(shareId, progress) }
                 )
-                itemRevisions.size to failedShareIds.contains(shareId)
+                (result.insertedCountByShare[shareId] ?: 0) to result.failedShareIds.contains(shareId)
             }
         }.fold(
             onSuccess = { (itemCount, hasCryptoFailure) ->
@@ -119,6 +100,16 @@ open class FetchShareItemsWorker @AssistedInject constructor(
                 Result.retry()
             }
         )
+    }
+
+    private suspend fun onInsertProgress(shareId: ShareId, progress: VaultProgress) {
+        val status = when {
+            progress.total == 0 -> FetchShareItemsStatus.Done(0)
+            progress.current == progress.total -> FetchShareItemsStatus.Done(progress.total)
+            else -> FetchShareItemsStatus.Syncing(current = progress.current, total = progress.total)
+        }
+        fetchShareItemsStatusRepository.emit(shareId, status)
+        PassLogger.d(TAG, "ShareId $shareId progress: $status")
     }
 
     override suspend fun getForegroundInfo(): ForegroundInfo = ForegroundInfo(

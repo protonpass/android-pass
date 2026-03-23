@@ -178,7 +178,7 @@ class ItemRepositoryImplTest {
             ItemTestFactory.create(itemId = badItemId, shareId = share.id)
         )
 
-        val failedShareIds = repository.setShareItems(
+        val result = repository.setShareItems(
             userId = userId,
             items = mapOf(share.id to listOf(goodRevision, badRevision)),
             onProgress = { _: VaultProgress -> }
@@ -187,7 +187,7 @@ class ItemRepositoryImplTest {
         val upserted = localItemDataSource.getMemory()
         assertEquals(1, upserted.size)
         assertEquals(goodItemId.id, upserted.first().id)
-        assertEquals(setOf(share.id), failedShareIds)
+        assertEquals(setOf(share.id), result.failedShareIds)
     }
 
     @Test

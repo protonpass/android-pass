@@ -180,7 +180,7 @@ interface ItemRepository {
         userId: UserId,
         items: Map<ShareId, List<ItemRevision>>,
         onProgress: suspend (VaultProgress) -> Unit
-    ): Set<ShareId>
+    ): SetShareItemsResult
 
     suspend fun applyPendingEvent(event: ItemPendingEvent)
 
@@ -262,6 +262,11 @@ interface ItemRepository {
 data class VaultProgress(
     val total: Int,
     val current: Int
+)
+
+data class SetShareItemsResult(
+    val failedShareIds: Set<ShareId>,
+    val insertedCountByShare: Map<ShareId, Int>
 )
 
 sealed interface MigrateItemsResult {

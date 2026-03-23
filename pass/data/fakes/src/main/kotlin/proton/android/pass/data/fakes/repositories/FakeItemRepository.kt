@@ -31,6 +31,7 @@ import proton.android.pass.data.api.repositories.ItemRevision
 import proton.android.pass.data.api.repositories.MigrateItemsResult
 import proton.android.pass.data.api.repositories.PinItemsResult
 import proton.android.pass.data.api.repositories.ShareItemCount
+import proton.android.pass.data.api.repositories.SetShareItemsResult
 import proton.android.pass.data.api.repositories.VaultProgress
 import proton.android.pass.data.api.usecases.ItemTypeFilter
 import proton.android.pass.domain.FolderId
@@ -55,7 +56,10 @@ class FakeItemRepository @Inject constructor() : ItemRepository {
 
     private var item: Item? = null
     private var itemRevisions: List<ItemRevision>? = null
+    var downloadItemsException: Throwable? = null
     private var setShareItemsResult: Result<Unit> = Result.success(Unit)
+    var setShareItemsInsertedCount: Int? = null
+    var setShareItemsFailedShareIds: Set<ShareId> = emptySet()
     private val downloadItemsByShareId: MutableMap<ShareId, List<ItemRevision>> = mutableMapOf()
     private val downloadItemsMemory: MutableList<DownloadItemsPayload> = mutableListOf()
     private val setShareItemsMemory: MutableList<SetShareItemsPayload> = mutableListOf()
@@ -316,7 +320,6 @@ class FakeItemRepository @Inject constructor() : ItemRepository {
         eventToken: EventToken?,
         onProgress: suspend (VaultProgress) -> Unit
     ): List<ItemRevision> {
-        val revisions = downloadItemsByShareId[shareId] ?: itemRevisions ?: emptyList()
         downloadItemsMemory.add(
             DownloadItemsPayload(
                 userId = userId,
@@ -324,6 +327,8 @@ class FakeItemRepository @Inject constructor() : ItemRepository {
                 eventToken = eventToken
             )
         )
+        downloadItemsException?.let { throw it }
+        val revisions = downloadItemsByShareId[shareId] ?: itemRevisions ?: emptyList()
         onProgress(VaultProgress(total = revisions.size, current = revisions.size))
         return revisions
     }
@@ -332,12 +337,13 @@ class FakeItemRepository @Inject constructor() : ItemRepository {
         userId: UserId,
         items: Map<ShareId, List<ItemRevision>>,
         onProgress: suspend (VaultProgress) -> Unit
-    ): Set<ShareId> {
+    ): SetShareItemsResult {
         setShareItemsMemory.add(SetShareItemsPayload(userId = userId, items = items))
-        val total = items.values.sumOf { it.size }
+        val total = setShareItemsInsertedCount ?: items.values.sumOf { it.size }
         onProgress(VaultProgress(total = total, current = total))
         setShareItemsResult.getOrThrow()
-        return emptySet()
+        val insertedCountByShare = items.keys.associateWith { total / items.size.coerceAtLeast(1) }
+        return SetShareItemsResult(setShareItemsFailedShareIds, insertedCountByShare)
     }
 
     override suspend fun applyPendingEvent(event: ItemPendingEvent) {}

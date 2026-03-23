@@ -88,7 +88,7 @@ class ForceSyncItemsImpl @Inject constructor(
 
         val itemsToInsert: Map<ShareId, List<ItemRevision>> = successes.toMap()
 
-        val setShareItemsFailedShareIds = itemRepository.setShareItems(
+        val setShareItemsResult = itemRepository.setShareItems(
             userId = userId,
             items = itemsToInsert,
             onProgress = { progress: VaultProgress ->
@@ -102,7 +102,17 @@ class ForceSyncItemsImpl @Inject constructor(
                 PassLogger.d(TAG, "Inserting ${progress.current} of: ${progress.total}")
             }
         )
-        val failedShareIds: Set<ShareId> = downloadFailedShareIds + setShareItemsFailedShareIds
+        for (shareId in setShareItemsResult.failedShareIds) {
+            val insertedCount = setShareItemsResult.insertedCountByShare[shareId] ?: 0
+            itemSyncStatusRepository.emit(
+                ItemSyncStatus.SyncDownloading(
+                    shareId = shareId,
+                    current = insertedCount,
+                    total = insertedCount
+                )
+            )
+        }
+        val failedShareIds: Set<ShareId> = downloadFailedShareIds + setShareItemsResult.failedShareIds
 
         val result = when {
             failedShareIds.isEmpty() -> {

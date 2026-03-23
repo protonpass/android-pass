@@ -186,6 +186,7 @@ androidx-room-testing = { module = "androidx.room:room-testing", version.ref = "
 androidx-startup-runtime = { module = "androidx.startup:startup-runtime", version.ref = "androidx-startup" }
 ## Work
 androidx-work-runtime-ktx = { module = "androidx.work:work-runtime-ktx", version.ref = "androidx-work" }
+androidx-work-testing = { module = "androidx.work:work-testing", version.ref = "androidx-work" }
 
 # CashApp
 turbine = { module = "app.cash.turbine:turbine", version.ref = "turbine" }

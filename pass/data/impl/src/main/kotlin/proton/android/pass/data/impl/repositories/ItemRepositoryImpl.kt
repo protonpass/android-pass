@@ -60,6 +60,7 @@ import proton.android.pass.data.api.repositories.MigrateItemsResult
 import proton.android.pass.data.api.repositories.PinItemsResult
 import proton.android.pass.data.api.repositories.ShareItemCount
 import proton.android.pass.data.api.repositories.ShareRepository
+import proton.android.pass.data.api.repositories.SetShareItemsResult
 import proton.android.pass.data.api.repositories.VaultProgress
 import proton.android.pass.data.api.usecases.ItemTypeFilter
 import proton.android.pass.data.impl.db.PassDatabase
@@ -897,8 +898,8 @@ class ItemRepositoryImpl @Inject constructor(
         userId: UserId,
         items: Map<ShareId, List<ItemRevision>>,
         onProgress: suspend (VaultProgress) -> Unit
-    ): Set<ShareId> {
-        if (items.isEmpty()) return emptySet()
+    ): SetShareItemsResult {
+        if (items.isEmpty()) return SetShareItemsResult(emptySet(), emptyMap())
 
         val plans: List<Pair<ShareId, Result<SetShareItemsPlan>>> = coroutineScope {
             items.map { (shareId, revisions) ->
@@ -929,6 +930,8 @@ class ItemRepositoryImpl @Inject constructor(
             .filter { (_, plan) -> plan.hasFailedItems }
             .map { (shareId, _) -> shareId }
 
+        val insertedCountByShare = successPlans.associate { (shareId, plan) -> shareId to plan.itemsToUpsert.size }
+
         val itemsToUpsert = successPlans.flatMap { (_, plan) -> plan.itemsToUpsert }
         val itemsToDelete = successPlans.map { (_, plan) -> plan.itemsToDelete }
 
@@ -942,7 +945,7 @@ class ItemRepositoryImpl @Inject constructor(
             )
         }
 
-        return failedShareIds
+        return SetShareItemsResult(failedShareIds, insertedCountByShare)
     }
 
     override suspend fun applyPendingEvent(event: ItemPendingEvent) = with(event) {

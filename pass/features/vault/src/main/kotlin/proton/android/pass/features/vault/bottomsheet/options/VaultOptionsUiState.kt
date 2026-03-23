@@ -50,6 +50,7 @@ internal sealed interface VaultOptionsUiState {
         val showManageAccess: Boolean,
         val showViewMembers: Boolean,
         val canAddFolder: Boolean,
+        val canAddFolderNeedsUpgrade: Boolean,
         override val event: VaultOptionsEvent
     ) : VaultOptionsUiState
 

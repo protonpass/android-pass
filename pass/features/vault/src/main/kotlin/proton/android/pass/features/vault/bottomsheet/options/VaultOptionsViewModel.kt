@@ -25,7 +25,6 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
@@ -35,11 +34,15 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.asLoadingResult
+import proton.android.pass.common.api.combineN
+import proton.android.pass.common.api.getOrNull
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
 import proton.android.pass.data.api.usecases.ItemTypeFilter
 import proton.android.pass.data.api.usecases.ObserveEncryptedItems
+import proton.android.pass.data.api.usecases.ObserveUpgradeInfo
 import proton.android.pass.data.api.usecases.ObserveVaults
+import proton.android.pass.data.api.usecases.capabilities.CanCreateFolder
 import proton.android.pass.data.api.usecases.capabilities.CanManageVaultAccess
 import proton.android.pass.data.api.usecases.capabilities.CanMigrateVault
 import proton.android.pass.data.api.usecases.capabilities.CanShareShare
@@ -63,6 +66,8 @@ class VaultOptionsViewModel @Inject constructor(
     canShareShare: CanShareShare,
     canMigrateVault: CanMigrateVault,
     canManageVaultAccess: CanManageVaultAccess,
+    canCreateFolder: CanCreateFolder,
+    observeUpgradeInfo: ObserveUpgradeInfo,
     savedStateHandle: SavedStateHandleProvider,
     private val observeEncryptedItems: ObserveEncryptedItems,
     preferencesRepository: FeatureFlagsPreferencesRepository
@@ -80,33 +85,36 @@ class VaultOptionsViewModel @Inject constructor(
         value = VaultOptionsEvent.Idle
     )
 
-    internal val state: StateFlow<VaultOptionsUiState> = combine(
+    internal val state: StateFlow<VaultOptionsUiState> = combineN(
         observeVaults(includeHidden = true).asLoadingResult(),
         canShare,
         eventFlow,
         preferencesRepository.get<Boolean>(FeatureFlag.PASS_ALLOW_NO_VAULT),
-        preferencesRepository.get<Boolean>(FeatureFlag.PASS_FOLDERS)
-    ) { vaultResult, canShare, event, allowNoVault, canAddFolder ->
+        preferencesRepository.get<Boolean>(FeatureFlag.PASS_FOLDERS),
+        canCreateFolder(),
+        observeUpgradeInfo().asLoadingResult()
+    ) { vaultResult, canShare, event, allowNoVault, foldersEnabled, canCreateFolder, upgradeResult ->
         val (allVaults, selectedVault) = when (vaultResult) {
             is LoadingResult.Error -> {
                 snackbarDispatcher(CannotGetVaultListError)
                 PassLogger.w(TAG, "Cannot get vault")
                 PassLogger.w(TAG, vaultResult.exception)
-                return@combine VaultOptionsUiState.Error
+                return@combineN VaultOptionsUiState.Error
             }
 
-            LoadingResult.Loading -> return@combine VaultOptionsUiState.Loading
+            LoadingResult.Loading -> return@combineN VaultOptionsUiState.Loading
             is LoadingResult.Success -> {
                 val selectedVault = vaultResult.data.find { it.shareId == navShareId }
                 if (selectedVault == null) {
                     snackbarDispatcher(CannotFindVaultError)
                     PassLogger.w(TAG, "Cannot find vault with shareId $navShareId")
-                    return@combine VaultOptionsUiState.Error
+                    return@combineN VaultOptionsUiState.Error
                 }
                 vaultResult.data to selectedVault
             }
         }
 
+        val isUpgradeAvailable = upgradeResult.getOrNull()?.isUpgradeAvailable ?: false
         val canDelete = canDeleteVault(allVaults, selectedVault, allowNoVault)
 
         val canEdit = selectedVault.isOwned
@@ -121,6 +129,7 @@ class VaultOptionsViewModel @Inject constructor(
         // Only show manageVault and viewMembers if vault has not already been shared
         val showManageAccess = selectedVault.shared && vaultAccessData.canManageAccess
         val showViewMembers = selectedVault.shared && vaultAccessData.canViewMembers
+
         VaultOptionsUiState.Success(
             shareId = navShareId,
             showEdit = canEdit,
@@ -132,7 +141,8 @@ class VaultOptionsViewModel @Inject constructor(
             showViewMembers = showViewMembers,
             event = event,
             isLastVault = vaultResult.data.size == 1,
-            canAddFolder = canAddFolder
+            canAddFolder = foldersEnabled && (canCreateFolder || isUpgradeAvailable),
+            canAddFolderNeedsUpgrade = foldersEnabled && !canCreateFolder && isUpgradeAvailable
         )
     }.stateIn(
         scope = viewModelScope,

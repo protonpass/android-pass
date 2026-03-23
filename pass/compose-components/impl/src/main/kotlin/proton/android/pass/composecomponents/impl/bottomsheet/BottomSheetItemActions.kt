@@ -29,6 +29,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import me.proton.core.compose.theme.ProtonTheme
 import proton.android.pass.composecomponents.impl.R
+import proton.android.pass.composecomponents.impl.icon.PassPlusIcon
 import me.proton.core.presentation.R as CoreR
 import proton.android.pass.composecomponents.impl.R as CompR
 
@@ -83,7 +84,7 @@ fun migrate(action: BottomSheetItemAction, onClick: () -> Unit): BottomSheetItem
 
 }
 
-fun createFolder(onClick: () -> Unit): BottomSheetItem = object : BottomSheetItem {
+fun createFolder(needsUpgrade: Boolean = false, onClick: () -> Unit): BottomSheetItem = object : BottomSheetItem {
 
     override val title: @Composable () -> Unit = {
         BottomSheetItemTitle(text = stringResource(R.string.bottomsheet_create_folder))
@@ -95,7 +96,11 @@ fun createFolder(onClick: () -> Unit): BottomSheetItem = object : BottomSheetIte
         BottomSheetItemIcon(iconId = CoreR.drawable.ic_proton_folder_plus)
     }
 
-    override val endIcon: (@Composable () -> Unit)? = null
+    override val endIcon: (@Composable () -> Unit)? = if (needsUpgrade) {
+        { PassPlusIcon() }
+    } else {
+        null
+    }
 
     override val onClick: () -> Unit = onClick
 

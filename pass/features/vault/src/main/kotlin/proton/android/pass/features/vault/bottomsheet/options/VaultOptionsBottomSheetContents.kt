@@ -55,8 +55,12 @@ internal fun VaultOptionsBottomSheetContents(
         }
 
         if (state.canAddFolder) {
-            createFolder {
-                onEvent(VaultOptionsUserEvent.OnCreateFolder)
+            createFolder(needsUpgrade = state.canAddFolderNeedsUpgrade) {
+                if (state.canAddFolderNeedsUpgrade) {
+                    onEvent(VaultOptionsUserEvent.OnUpgradeForFolder)
+                } else {
+                    onEvent(VaultOptionsUserEvent.OnCreateFolder)
+                }
             }.also(::add)
         }
 

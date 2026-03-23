@@ -35,6 +35,7 @@ internal class VaultOptionsBottomSheetContentsPreviewProvider :
             showManageAccess = true,
             showViewMembers = true,
             canAddFolder = true,
+            canAddFolderNeedsUpgrade = false,
             event = VaultOptionsEvent.Idle,
             isLastVault = false
         )

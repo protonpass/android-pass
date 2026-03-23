@@ -62,7 +62,6 @@ fun NavGraphBuilder.autosaveActivityGraph(
     createUpdateLoginGraph(
         initialCreateLoginUiState = getInitialState(arguments),
         initialUpdateLoginUiState = initialUpdateLoginUiState,
-        showCreateAliasButton = false,
         canUseAttachments = false,
         onNavigate = {
             val backDestination = when {
@@ -250,6 +249,7 @@ private fun getInitialState(arguments: AutoSaveArguments): InitialCreateLoginUiS
         password = password,
         url = arguments.website,
         title = arguments.title,
-        packageInfoUi = packageInfoUi
+        packageInfoUi = packageInfoUi,
+        canCreateAlias = false
     )
 }

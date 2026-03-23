@@ -35,7 +35,8 @@ data class InitialCreateLoginUiState(
     val navTotpIndex: Int = -1,
     val passkeyDomain: String? = null,
     val passkeyOrigin: String? = null,
-    val passkeyRequest: String? = null
+    val passkeyRequest: String? = null,
+    val canCreateAlias: Boolean = true
 ) {
 
     val passkeyData: PasskeyData? = PasskeyData.buildIfNoneNull(

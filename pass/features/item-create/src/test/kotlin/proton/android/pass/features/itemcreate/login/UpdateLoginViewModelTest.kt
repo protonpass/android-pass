@@ -43,6 +43,7 @@ import proton.android.pass.data.fakes.usecases.FakeCreateAlias
 import proton.android.pass.data.fakes.usecases.FakeObserveCurrentUser
 import proton.android.pass.data.fakes.usecases.FakeObserveItemById
 import proton.android.pass.data.fakes.usecases.FakeObserveUpgradeInfo
+import proton.android.pass.data.fakes.usecases.FakeCanCreateAlias
 import proton.android.pass.data.fakes.usecases.FakeUpdateItem
 import proton.android.pass.data.fakes.usecases.attachments.FakeLinkAttachmentsToItem
 import proton.android.pass.data.fakes.usecases.attachments.FakeRenameAttachments
@@ -132,7 +133,8 @@ class UpdateLoginViewModelTest {
         observeShare = observeShare,
         settingsRepository = settingsRepository,
         observeItemById = observeItemById,
-        initialUpdateLoginUiState = null
+        initialUpdateLoginUiState = null,
+        canCreateAlias = FakeCanCreateAlias()
     )
 
     @Test

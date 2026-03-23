@@ -138,7 +138,6 @@ internal fun UpdateLogin(
             showVaultSelector = false,
             selectedShareId = uiState.selectedShareId,
             topBarActionName = stringResource(id = CompR.string.action_update),
-            showCreateAliasButton = true,
             canUseAttachments = canUseAttachments,
             isUpdate = true,
             onEvent = {

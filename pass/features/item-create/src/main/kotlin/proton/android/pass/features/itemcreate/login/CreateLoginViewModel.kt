@@ -67,6 +67,7 @@ import proton.android.pass.data.api.usecases.CreateLoginAndAlias
 import proton.android.pass.data.api.usecases.GetItemById
 import proton.android.pass.data.api.usecases.ObserveCurrentUser
 import proton.android.pass.data.api.usecases.ObserveUpgradeInfo
+import proton.android.pass.data.api.usecases.capabilities.CanCreateAlias
 import proton.android.pass.data.api.usecases.ObserveVaultsWithItemCount
 import proton.android.pass.data.api.usecases.attachments.LinkAttachmentsToItem
 import proton.android.pass.data.api.usecases.defaultvault.ObserveDefaultVault
@@ -155,6 +156,7 @@ class CreateLoginViewModel @Inject constructor(
     loginItemFormProcessor: LoginItemFormProcessorType,
     savedStateHandleProvider: SavedStateHandleProvider,
     observeShare: ObserveShare,
+    private val canCreateAlias: CanCreateAlias,
     private val settingsRepository: InternalSettingsRepository
 ) : BaseLoginViewModel(
     accountManager = accountManager,
@@ -174,6 +176,7 @@ class CreateLoginViewModel @Inject constructor(
     customFieldHandler = customFieldHandler,
     customFieldDraftRepository = customFieldDraftRepository,
     loginItemFormProcessor = loginItemFormProcessor,
+    canCreateAlias = canCreateAlias,
     savedStateHandleProvider = savedStateHandleProvider
 ) {
     private val navShareId: Option<ShareId> = savedStateHandleProvider.get()
@@ -323,6 +326,7 @@ class CreateLoginViewModel @Inject constructor(
 
     @Suppress("ComplexMethod", "LongMethod")
     internal fun setInitialContents(initialContents: InitialCreateLoginUiState) {
+        canCreateAliasOverride.update { initialContents.canCreateAlias }
         val currentValue = loginItemFormState
         val websites = currentValue.urls.toMutableList()
 

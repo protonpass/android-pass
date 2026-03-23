@@ -69,7 +69,6 @@ import proton.android.pass.composecomponents.impl.R as CompR
 fun CreateLoginScreen(
     modifier: Modifier = Modifier,
     initialContents: InitialCreateLoginUiState? = null,
-    showCreateAliasButton: Boolean = true,
     clearAlias: Boolean,
     selectVault: ShareId?,
     selectFolder: FolderId? = null,
@@ -161,7 +160,6 @@ fun CreateLoginScreen(
             showVaultSelector = showVaultSelector,
             selectedShareId = selectedVault?.vault?.shareId,
             topBarActionName = stringResource(id = R.string.title_create),
-            showCreateAliasButton = showCreateAliasButton,
             canUseAttachments = canUseAttachments,
             isUpdate = false,
             onEvent = {

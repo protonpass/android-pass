@@ -237,7 +237,6 @@ internal fun NavGraphBuilder.autofillActivityGraph(
                 .takeIf { !it.packageName.isBrowser() }
                 ?.let { PackageInfoUi(it) }
         ),
-        showCreateAliasButton = true,
         canUseAttachments = false,
         onNavigate = {
             when (it) {

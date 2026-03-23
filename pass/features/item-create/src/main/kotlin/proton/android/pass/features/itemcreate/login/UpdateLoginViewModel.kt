@@ -61,6 +61,7 @@ import proton.android.pass.data.api.usecases.GetItemById
 import proton.android.pass.data.api.usecases.ObserveCurrentUser
 import proton.android.pass.data.api.usecases.ObserveItemById
 import proton.android.pass.data.api.usecases.ObserveUpgradeInfo
+import proton.android.pass.data.api.usecases.capabilities.CanCreateAlias
 import proton.android.pass.data.api.usecases.UpdateItem
 import proton.android.pass.data.api.usecases.attachments.LinkAttachmentsToItem
 import proton.android.pass.data.api.usecases.attachments.RenameAttachments
@@ -138,6 +139,7 @@ class UpdateLoginViewModel @AssistedInject constructor(
     savedStateHandleProvider: SavedStateHandleProvider,
     observeShare: ObserveShare,
     observeItemById: ObserveItemById,
+    canCreateAlias: CanCreateAlias,
     private val settingsRepository: InternalSettingsRepository,
     @Assisted private val initialUpdateLoginUiState: InitialUpdateLoginUiState?
 ) : BaseLoginViewModel(
@@ -158,6 +160,7 @@ class UpdateLoginViewModel @AssistedInject constructor(
     userPreferencesRepository = userPreferencesRepository,
     customFieldDraftRepository = customFieldDraftRepository,
     loginItemFormProcessor = loginItemFormProcessor,
+    canCreateAlias = canCreateAlias,
     savedStateHandleProvider = savedStateHandleProvider
 ) {
     @AssistedFactory

@@ -46,6 +46,7 @@ import proton.android.pass.data.fakes.usecases.FakeCreateItem
 import proton.android.pass.data.fakes.usecases.FakeCreateLoginAndAlias
 import proton.android.pass.data.fakes.usecases.FakeObserveCurrentUser
 import proton.android.pass.data.fakes.usecases.FakeObserveDefaultVault
+import proton.android.pass.data.fakes.usecases.FakeCanCreateAlias
 import proton.android.pass.data.fakes.usecases.FakeObserveUpgradeInfo
 import proton.android.pass.data.fakes.usecases.FakeObserveVaultsWithItemCount
 import proton.android.pass.data.fakes.usecases.attachments.FakeLinkAttachmentsToItem
@@ -154,7 +155,8 @@ internal class CreateLoginNavItemViewModelTest {
             getItemById = FakeGetItemById(),
             observeShare = observeShare,
             settingsRepository = settingsRepository,
-            observeFolder = FakeObserveFolder()
+            observeFolder = FakeObserveFolder(),
+            canCreateAlias = FakeCanCreateAlias()
         )
     }
 

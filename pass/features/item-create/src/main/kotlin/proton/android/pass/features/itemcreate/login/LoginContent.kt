@@ -50,7 +50,6 @@ internal fun LoginContent(
     showVaultSelector: Boolean,
     selectedShareId: ShareId?,
     topBarActionName: String,
-    showCreateAliasButton: Boolean,
     canUseAttachments: Boolean,
     isUpdate: Boolean,
     onEvent: (LoginContentEvent) -> Unit
@@ -92,7 +91,7 @@ internal fun LoginContent(
                 .filterIsInstance<CustomFieldValidationError>()
                 .toPersistentList(),
             focusedField = uiState.focusedField,
-            showCreateAliasButton = showCreateAliasButton,
+            showCreateAliasButton = uiState.canCreateAlias,
             canUpdateUsername = uiState.canUpdateUsername,
             primaryEmail = uiState.primaryEmail,
             isUpdate = isUpdate,

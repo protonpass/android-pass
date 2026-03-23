@@ -124,7 +124,6 @@ internal fun NavGraphBuilder.passwordCredentialCreationNavGraph(
 
     createUpdateLoginGraph(
         initialCreateLoginUiState = initialCreateLoginUiState,
-        showCreateAliasButton = true,
         canUseAttachments = false,
         onNavigate = { destination ->
             val backDestination = when {

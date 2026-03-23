@@ -381,6 +381,7 @@ internal fun HomeContent(
                         modifier = Modifier.testTag(HOME_EMPTY_TAG),
                         hasShares = uiState.hasShares,
                         canCreateItems = uiState.canCreateItems,
+                        canCreateAlias = uiState.canCreateAlias,
                         canCreateVault = canCreateVault,
                         vaultSelectionOption = uiState.homeListUiState.homeVaultSelection,
                         inSearchMode = isPinningOrSearch,

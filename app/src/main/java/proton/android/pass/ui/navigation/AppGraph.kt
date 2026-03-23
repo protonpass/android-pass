@@ -980,7 +980,6 @@ fun NavGraphBuilder.appGraph(
         }
     )
     createUpdateLoginGraph(
-        showCreateAliasButton = true,
         canUseAttachments = true,
         onNavigate = {
             val backDestination = when {

@@ -67,6 +67,7 @@ import proton.android.pass.data.api.repositories.DraftRepository
 import proton.android.pass.data.api.url.UrlSanitizer
 import proton.android.pass.data.api.usecases.ObserveCurrentUser
 import proton.android.pass.data.api.usecases.ObserveUpgradeInfo
+import proton.android.pass.data.api.usecases.capabilities.CanCreateAlias
 import proton.android.pass.data.api.usecases.UpgradeInfo
 import proton.android.pass.data.api.usecases.tooltips.DisableTooltip
 import proton.android.pass.data.api.usecases.tooltips.ObserveTooltipEnabled
@@ -115,6 +116,7 @@ abstract class BaseLoginViewModel(
     protected val customFieldHandler: CustomFieldHandler,
     private val customFieldDraftRepository: CustomFieldDraftRepository,
     private val loginItemFormProcessor: LoginItemFormProcessorType,
+    canCreateAlias: CanCreateAlias,
     observeCurrentUser: ObserveCurrentUser,
     observeUpgradeInfo: ObserveUpgradeInfo,
     observeTooltipEnabled: ObserveTooltipEnabled,
@@ -138,6 +140,8 @@ abstract class BaseLoginViewModel(
 
     internal val loginItemFormState: LoginItemFormState
         get() = loginItemFormMutableState
+
+    protected val canCreateAliasOverride: MutableStateFlow<Boolean> = MutableStateFlow(true)
 
     protected val aliasLocalItemState: MutableStateFlow<Option<AliasItemFormState>> =
         MutableStateFlow(None)
@@ -244,10 +248,11 @@ abstract class BaseLoginViewModel(
         userInteractionFlow,
         observeTooltipEnabled(Tooltip.UsernameSplit),
         userPreferencesRepository.observeDisplayFileAttachmentsOnboarding(),
-        attachmentsHandler.attachmentState
+        attachmentsHandler.attachmentState,
+        combine(canCreateAlias(), canCreateAliasOverride) { policy, override -> policy && override }
     ) { loginItemValidationErrors, primaryEmail, aliasItemFormState, isLoading, totpUiState,
         upgradeInfoResult, userInteraction, isUsernameSplitTooltipEnabled,
-        displayFileAttachmentsOnboarding, attachmentsState ->
+        displayFileAttachmentsOnboarding, attachmentsState, canCreateAlias ->
         val userPlan = upgradeInfoResult.getOrNull()?.plan
         BaseLoginUiState(
             validationErrors = loginItemValidationErrors.toPersistentSet(),
@@ -265,7 +270,8 @@ abstract class BaseLoginViewModel(
             focusedField = userInteraction.focusedField.value(),
             isUsernameSplitTooltipEnabled = isUsernameSplitTooltipEnabled,
             displayFileAttachmentsOnboarding = displayFileAttachmentsOnboarding.value(),
-            attachmentsState = attachmentsState
+            attachmentsState = attachmentsState,
+            canCreateAlias = canCreateAlias
         )
     }
         .stateIn(

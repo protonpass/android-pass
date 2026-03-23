@@ -36,6 +36,7 @@ import proton.android.pass.crypto.fakes.context.FakeEncryptionContextProvider
 import proton.android.pass.data.api.repositories.DRAFT_PASSWORD_KEY
 import proton.android.pass.data.api.repositories.DraftRepository
 import proton.android.pass.data.fakes.repositories.FakeDraftRepository
+import proton.android.pass.data.fakes.usecases.FakeCanCreateAlias
 import proton.android.pass.data.fakes.usecases.FakeObserveCurrentUser
 import proton.android.pass.data.fakes.usecases.FakeObserveUpgradeInfo
 import proton.android.pass.data.fakes.usecases.tooltips.FakeDisableTooltip
@@ -92,7 +93,8 @@ internal class BaseLoginViewModelTest {
             attachmentsHandler = FakeAttachmentHandler(),
             customFieldDraftRepository = CustomFieldDraftRepositoryImpl(),
             customFieldHandler = CustomFieldHandlerImpl(totpManager, encryptionContextProvider),
-            loginItemFormProcessor = FakeLoginItemFormProcessor()
+            loginItemFormProcessor = FakeLoginItemFormProcessor(),
+            canCreateAlias = FakeCanCreateAlias()
         ) {}
     }
 

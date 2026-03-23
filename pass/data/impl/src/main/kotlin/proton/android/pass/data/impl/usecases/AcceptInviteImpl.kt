@@ -98,6 +98,16 @@ class AcceptInviteImpl @Inject constructor(
                     inviteToken = pendingInvite.inviteToken
                 )
                 notificationManager.removeReceivedInviteNotification(pendingInvite.toRemoveModel())
+                if (pendingInvite is PendingInvite.GroupVault) {
+                    val shareId = ShareId(pendingInvite.targetId)
+                    safeRunCatching {
+                        val updatedCount = shareMembersRepository.getShareMembersTotal(user.userId, shareId)
+                        shareRepository.updateMembersCount(user.userId, shareId, updatedCount)
+                    }.onFailure {
+                        PassLogger.w(TAG, "Failed to update member count after accepting group invite")
+                        PassLogger.w(TAG, it)
+                    }
+                }
                 flowOf(AcceptInviteStatus.GroupInviteDone)
             } else {
                 flowOf(AcceptInviteStatus.Error)

@@ -21,7 +21,6 @@ package proton.android.pass.features.sharing.sharingpermissions.bottomsheet
 import app.cash.turbine.test
 import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Rule
@@ -64,9 +63,7 @@ class SharingPermissionsBottomSheetViewModelTest {
             email = "user@proton.test",
             shareRole = ShareRole.Read
         )
-        runBlocking {
-            bulkInviteRepository.storeInvites(listOf(userTarget, groupTarget))
-        }
+        bulkInviteRepository.storeInvites(listOf(userTarget, groupTarget))
         savedStateHandleProvider.get().apply {
             this[EditPermissionsModeNavArgId.key] = EditPermissionsMode.SingleUser.name
             this[EmailNavArgId.key] = groupTarget.email

@@ -33,7 +33,7 @@ import proton.android.pass.common.api.asLoadingResult
 import proton.android.pass.commonui.api.require
 import proton.android.pass.data.api.usecases.ObserveGroupMembersByGroup
 import proton.android.pass.domain.GroupId
-import proton.android.pass.features.sharing.GroupIdArgId
+import proton.android.pass.navigation.api.CommonNavArgId
 import javax.inject.Inject
 
 @HiltViewModel
@@ -42,7 +42,7 @@ internal class GroupMembersViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
-    val groupId: GroupId = GroupId(savedStateHandle.require(GroupIdArgId.key))
+    val groupId: GroupId = GroupId(savedStateHandle.require(CommonNavArgId.GroupId.key))
 
     val uiState: StateFlow<GroupMembersUiState> = observeGroupMembersByGroup()
         .asLoadingResult()

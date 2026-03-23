@@ -66,11 +66,6 @@ object ShowEditVaultArgId : NavArgId {
     override val navType: NavType<*> = NavType.BoolType
 }
 
-object GroupIdArgId : NavArgId {
-    override val key: String = "GroupId"
-    override val navType: NavType<*> = NavType.StringType
-}
-
 object SharingWith : NavItem(
     baseRoute = "sharing/with/screen",
     navArgIds = listOf(CommonNavArgId.ShareId, ShowEditVaultArgId),
@@ -127,7 +122,7 @@ object AcceptInviteNavItem : NavItem(
 
 object GroupMembersNavItem : NavItem(
     baseRoute = "sharing/group-members",
-    navArgIds = listOf(GroupIdArgId),
+    navArgIds = listOf(CommonNavArgId.GroupId),
     navItemType = NavItemType.Bottomsheet
 ) {
     fun createRoute(groupId: GroupId) = "$baseRoute/${groupId.id}"

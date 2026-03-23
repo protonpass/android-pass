@@ -3,6 +3,7 @@
 set -euo pipefail
 
 CONVENTIONAL_REGEX='^(feat|fix|docs|style|refactor|perf|test|build|ci|chore|revert|i18n)(\([a-z0-9._/-]+\))?(!)?: .+'
+FORBIDDEN_COAUTHOR_REGEX='^[Cc]o-[Aa]uthored-[Bb]y:'
 
 is_valid_subject() {
   local subject="$1"
@@ -23,23 +24,44 @@ validate_subject() {
   fi
 }
 
+validate_no_forbidden_coauthor_content() {
+  local content="$1"
+  if grep -Eq "$FORBIDDEN_COAUTHOR_REGEX" <<< "$content"; then
+    echo "Forbidden co-author trailer found:"
+    grep -En "$FORBIDDEN_COAUTHOR_REGEX" <<< "$content"
+    echo
+    echo "Remove all Co-authored-by trailers before pushing."
+    return 1
+  fi
+}
+
 validate_file() {
   local commit_msg_file="$1"
   local subject
+  local content
   subject=$(head -n 1 "$commit_msg_file")
+  content=$(cat "$commit_msg_file")
   validate_subject "$subject"
+  validate_no_forbidden_coauthor_content "$content"
 }
 
 validate_range() {
   local range="$1"
   local has_failures=0
+  local commit
   local subject
-  while IFS= read -r subject; do
+  while IFS= read -r commit; do
+    [[ -z "$commit" ]] && continue
+    subject=$(git show -s --format=%s "$commit")
     [[ -z "$subject" ]] && continue
     if ! validate_subject "$subject"; then
       has_failures=1
     fi
-  done < <(git log --format=%s "$range")
+    if ! validate_no_forbidden_coauthor_content "$(git show -s --format=%B "$commit")"; then
+      echo "Commit: $commit"
+      has_failures=1
+    fi
+  done < <(git rev-list "$range")
 
   if [[ "$has_failures" -ne 0 ]]; then
     return 1

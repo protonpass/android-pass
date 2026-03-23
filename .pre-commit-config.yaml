@@ -19,5 +19,5 @@ repos:
         name: conventional commit message
         description: Validates commit message follows Conventional Commits.
         language: script
-        entry: ./scripts/checkConventionalCommit.sh
+        entry: ./scripts/checkCommitMessage.sh
         stages: [commit-msg]

@@ -37,8 +37,7 @@ import javax.inject.Singleton
 @Singleton
 class BiometricEnrollmentGuard @Inject constructor() {
 
-    @Suppress("TooGenericExceptionCaught")
-    fun hasEnrollmentChanged(): Boolean = try {
+    fun hasEnrollmentChanged(): Boolean = runCatching {
         runOrRetryOnce {
             val cipher = Cipher.getInstance(CIPHER_TRANSFORMATION)
             // Keystore is known to be sensitive to parallel operations.
@@ -47,29 +46,38 @@ class BiometricEnrollmentGuard @Inject constructor() {
                 cipher.init(Cipher.ENCRYPT_MODE, key)
             }
         }
-        false
-    } catch (e: KeyPermanentlyInvalidatedException) {
-        PassLogger.w(TAG, "Biometric enrollment changed: key permanently invalidated")
-        PassLogger.w(TAG, e)
-        deleteGuardKey()
-        true
-    } catch (e: InvalidKeyException) {
-        // Some OEM variants throw InvalidKeyException (the parent class) instead of the
-        // more specific KeyPermanentlyInvalidatedException. Treat as enrollment changed.
-        PassLogger.w(TAG, "InvalidKeyException during enrollment check, treating as changed")
-        PassLogger.w(TAG, e)
-        deleteGuardKey()
-        true
-    } catch (_: UserNotAuthenticatedException) {
-        // Expected for user-authenticated keys: the key is valid but requires recent auth.
-        PassLogger.d(TAG, "UserNotAuthenticatedException: key is valid, enrollment not changed")
-        false
-    } catch (e: Exception) {
-        // Unknown error: we cannot verify enrollment state. Fail closed to protect the user.
-        PassLogger.w(TAG, "Unknown error verifying biometric enrollment: ${e::class.simpleName}")
-        PassLogger.w(TAG, e)
-        true
-    }
+    }.fold(
+        onSuccess = { false },
+        onFailure = { e ->
+            when (e) {
+                is KeyPermanentlyInvalidatedException -> {
+                    PassLogger.w(TAG, "Biometric enrollment changed: key permanently invalidated")
+                    PassLogger.w(TAG, e)
+                    deleteGuardKey()
+                    true
+                }
+                is InvalidKeyException -> {
+                    // Some OEM variants throw InvalidKeyException (the parent class) instead of the
+                    // more specific KeyPermanentlyInvalidatedException. Treat as enrollment changed.
+                    PassLogger.w(TAG, "InvalidKeyException during enrollment check, treating as changed")
+                    PassLogger.w(TAG, e)
+                    deleteGuardKey()
+                    true
+                }
+                is UserNotAuthenticatedException -> {
+                    // Expected for user-authenticated keys: the key is valid but requires recent auth.
+                    PassLogger.d(TAG, "UserNotAuthenticatedException: key is valid, enrollment not changed")
+                    false
+                }
+                else -> {
+                    // Unknown error: we cannot verify enrollment state. Fail closed to protect the user.
+                    PassLogger.w(TAG, "Unknown error verifying biometric enrollment: ${e::class.simpleName}")
+                    PassLogger.w(TAG, e)
+                    true
+                }
+            }
+        }
+    )
 
     private fun getOrCreateKey(): SecretKey {
         val keyStore = KeyStore.getInstance(ANDROID_KEYSTORE).apply { load(null) }
@@ -116,19 +124,17 @@ class BiometricEnrollmentGuard @Inject constructor() {
         }
     }
 
-    private fun <T> runOrRetryOnce(block: () -> T): T = try {
-        block()
-    } catch (error: KeyPermanentlyInvalidatedException) {
-        throw error
-    } catch (error: InvalidKeyException) {
-        throw error
-    } catch (error: UserNotAuthenticatedException) {
-        throw error
-    } catch (error: ProviderException) {
-        logAndRetry(error, block)
-    } catch (error: GeneralSecurityException) {
-        logAndRetry(error, block)
-    }
+    private fun <T> runOrRetryOnce(block: () -> T): T = runCatching { block() }
+        .getOrElse { error ->
+            when (error) {
+                is KeyPermanentlyInvalidatedException,
+                is InvalidKeyException,
+                is UserNotAuthenticatedException -> throw error
+                is ProviderException -> logAndRetry(error, block)
+                is GeneralSecurityException -> logAndRetry(error, block)
+                else -> throw error
+            }
+        }
 
     private fun <T> logAndRetry(error: Throwable, block: () -> T): T {
         PassLogger.w(TAG, "${LogTag.ENROLLMENT_CHECK_RETRY}: retrying after transient keystore failure")

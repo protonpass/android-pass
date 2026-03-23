@@ -81,12 +81,9 @@ class BiometryManagerImpl @Inject constructor(
                 close()
                 return@channelFlow
             }
-            val enrollmentChanged = if (biometryType == BiometryType.AUTHENTICATE) {
+            if (biometryType == BiometryType.AUTHENTICATE &&
                 withContext(Dispatchers.IO) { biometricEnrollmentGuard.hasEnrollmentChanged() }
-            } else {
-                false
-            }
-            if (enrollmentChanged) {
+            ) {
                 trySend(BiometryResult.Error(BiometryAuthError.EnrollmentChanged))
                 close()
                 return@channelFlow

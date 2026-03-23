@@ -97,6 +97,8 @@ internal fun HomeDrawerList(
                     ?.takeIf { it.shareId == shareId }
                     ?.folderId
             val folders = vaultFolders[shareId] ?: emptyList()
+            val shouldShowFolderContent = foldersEnabled &&
+                (folders.isNotEmpty() || canCreateFolder || needsToUpgrade)
             val shouldExpandVault = foldersEnabled &&
                 selectedFolderIdForVault != null &&
                 folders.isNotEmpty() &&
@@ -130,7 +132,7 @@ internal fun HomeDrawerList(
                     ).also(onUiEvent)
                 },
                 expandVault = shouldExpandVault,
-                folderContent = if (foldersEnabled && (folders.isNotEmpty() || canCreateFolder)) {
+                folderContent = if (shouldShowFolderContent) {
                     {
                         val expandedState = rememberSaveable(
                             saver = mapSaver(
@@ -176,13 +178,13 @@ internal fun HomeDrawerList(
                             onFolderClick = {
                                 HomeDrawerUiEvent.OnFolderClick(shareId, it).also(onUiEvent)
                             },
-                            onCreateFolderClick = if (canCreateFolder) {
+                            onCreateFolderClick = if (canCreateFolder || needsToUpgrade) {
                                 {
                                     if (needsToUpgrade) onUiEvent(HomeDrawerUiEvent.OnUpgradeClick)
                                     else HomeDrawerUiEvent.OnCreateFolderClick(shareId).also(onUiEvent)
                                 }
                             } else null,
-                            canCreateFolder = canCreateFolder,
+                            canCreateFolder = canCreateFolder || needsToUpgrade,
                             needsToUpgrade = needsToUpgrade
                         )
                     }

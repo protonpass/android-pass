@@ -27,6 +27,7 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import proton.android.pass.data.api.ItemCountSummary
+import proton.android.pass.data.api.usecases.UpgradeInfo
 import proton.android.pass.data.fakes.usecases.FakeCanCreateFolder
 import proton.android.pass.data.fakes.usecases.FakeCanCreateVault
 import proton.android.pass.data.fakes.usecases.FakeCanOrganiseVaults
@@ -35,12 +36,15 @@ import proton.android.pass.data.fakes.usecases.FakeObserveUpgradeInfo
 import proton.android.pass.data.fakes.usecases.FakeObserveVaultsWithItemCount
 import proton.android.pass.data.fakes.usecases.folders.FakeObserveFolders
 import proton.android.pass.domain.FolderId
+import proton.android.pass.domain.Plan
+import proton.android.pass.domain.PlanLimit
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.VaultWithItemCount
 import proton.android.pass.preferences.FakeFeatureFlagsPreferenceRepository
 import proton.android.pass.preferences.FeatureFlag
 import proton.android.pass.searchoptions.fakes.FakeHomeSearchOptionsRepository
 import proton.android.pass.test.MainDispatcherRule
+import proton.android.pass.test.TestConstants
 import proton.android.pass.test.domain.FolderTestFactory
 import proton.android.pass.test.domain.VaultTestFactory
 
@@ -247,6 +251,90 @@ internal class HomeDrawerViewModelTest {
             assertThat(observeFolders.invocationCount(userId, shareId)).isEqualTo(1)
         }
     }
+
+    // region folder button visibility
+
+    @Test
+    internal fun `folder button hidden when PASS_FOLDERS flag is disabled`() = runTest {
+        featureFlags.set(FeatureFlag.PASS_FOLDERS, false)
+        canCreateFolder.sendValue(true)
+        emitSingleVault()
+
+        viewModel.stateFlow.test {
+            val state = awaitNextMatching { it.vaultShares.isNotEmpty() }
+            assertThat(state.foldersEnabled).isFalse()
+        }
+    }
+
+    @Test
+    internal fun `folder button shown for paid user when flag is enabled`() = runTest {
+        featureFlags.set(FeatureFlag.PASS_FOLDERS, true)
+        canCreateFolder.sendValue(true)
+        observeUpgradeInfo.setResult(upgradeInfoWithUpgrade(false))
+        emitSingleVault()
+
+        viewModel.stateFlow.test {
+            val state = awaitNextMatching { it.foldersEnabled && it.vaultShares.isNotEmpty() }
+            assertThat(state.canCreateFolder).isTrue()
+            assertThat(state.needsToUpgrade).isFalse()
+        }
+    }
+
+    @Test
+    internal fun `folder upsell button shown for free user when flag is enabled and upgrade available`() = runTest {
+        featureFlags.set(FeatureFlag.PASS_FOLDERS, true)
+        canCreateFolder.sendValue(false)
+        observeUpgradeInfo.setResult(upgradeInfoWithUpgrade(true))
+        emitSingleVault()
+
+        viewModel.stateFlow.test {
+            val state = awaitNextMatching { it.foldersEnabled && it.vaultShares.isNotEmpty() }
+            assertThat(state.canCreateFolder).isFalse()
+            assertThat(state.needsToUpgrade).isTrue()
+        }
+    }
+
+    @Test
+    internal fun `folder button hidden when org restricts creation and no upgrade available`() = runTest {
+        featureFlags.set(FeatureFlag.PASS_FOLDERS, true)
+        canCreateFolder.sendValue(false)
+        observeUpgradeInfo.setResult(upgradeInfoWithUpgrade(false))
+        emitSingleVault()
+
+        viewModel.stateFlow.test {
+            val state = awaitNextMatching { it.vaultShares.isNotEmpty() }
+            assertThat(state.foldersEnabled).isTrue()
+            assertThat(state.canCreateFolder).isFalse()
+            assertThat(state.needsToUpgrade).isFalse()
+        }
+    }
+
+    // endregion
+
+    private fun emitSingleVault(userId: UserId = UserId("user-1"), shareId: ShareId = ShareId("share-1")) {
+        val vault = VaultTestFactory.create(userId = userId, shareId = shareId)
+        observeVaultsWithItemCount.sendResult(
+            Result.success(
+                listOf(VaultWithItemCount(vault = vault, activeItemCount = 0, trashedItemCount = 0))
+            )
+        )
+    }
+
+    private fun upgradeInfoWithUpgrade(isUpgradeAvailable: Boolean): UpgradeInfo = UpgradeInfo(
+        isUpgradeAvailable = isUpgradeAvailable,
+        isSubscriptionAvailable = isUpgradeAvailable,
+        plan = Plan(
+            planType = TestConstants.FreePlanType,
+            vaultLimit = PlanLimit.Limited(1),
+            aliasLimit = PlanLimit.Limited(0),
+            totpLimit = PlanLimit.Limited(0),
+            updatedAt = 0,
+            hideUpgrade = false
+        ),
+        totalVaults = 1,
+        totalAlias = 0,
+        totalTotp = 0
+    )
 
     private suspend fun ReceiveTurbine<HomeDrawerState>.awaitNextMatching(
         predicate: (HomeDrawerState) -> Boolean

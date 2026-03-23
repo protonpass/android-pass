@@ -25,19 +25,26 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import proton.android.pass.commonui.fakes.FakeSavedStateHandleProvider
+import proton.android.pass.data.api.usecases.UpgradeInfo
 import proton.android.pass.data.api.usecases.capabilities.VaultAccessData
-import proton.android.pass.data.fakes.usecases.FakeObserveEncryptedItems
+import proton.android.pass.data.fakes.usecases.FakeCanCreateFolder
 import proton.android.pass.data.fakes.usecases.FakeCanManageVaultAccess
 import proton.android.pass.data.fakes.usecases.FakeCanMigrateVault
 import proton.android.pass.data.fakes.usecases.FakeCanShareShare
+import proton.android.pass.data.fakes.usecases.FakeObserveEncryptedItems
+import proton.android.pass.data.fakes.usecases.FakeObserveUpgradeInfo
 import proton.android.pass.data.fakes.usecases.FakeObserveVaults
+import proton.android.pass.domain.Plan
+import proton.android.pass.domain.PlanLimit
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.Vault
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.notifications.fakes.FakeSnackbarDispatcher
 import proton.android.pass.preferences.FakeFeatureFlagsPreferenceRepository
+import proton.android.pass.preferences.FeatureFlag
 import proton.android.pass.test.MainDispatcherRule
 import proton.android.pass.test.StringTestFactory
+import proton.android.pass.test.TestConstants
 import proton.android.pass.test.domain.VaultTestFactory
 
 class VaultOptionsViewModelTest {
@@ -51,6 +58,8 @@ class VaultOptionsViewModelTest {
     private lateinit var canMigrateVault: FakeCanMigrateVault
     private lateinit var canShareVault: FakeCanShareShare
     private lateinit var canManageVaultAccess: FakeCanManageVaultAccess
+    private lateinit var canCreateFolder: FakeCanCreateFolder
+    private lateinit var observeUpgradeInfo: FakeObserveUpgradeInfo
     private lateinit var observeVaults: FakeObserveVaults
 
     @Before
@@ -59,6 +68,8 @@ class VaultOptionsViewModelTest {
         canShareVault = FakeCanShareShare()
         canMigrateVault = FakeCanMigrateVault()
         canManageVaultAccess = FakeCanManageVaultAccess()
+        canCreateFolder = FakeCanCreateFolder()
+        observeUpgradeInfo = FakeObserveUpgradeInfo()
         observeVaults = FakeObserveVaults()
         setNavShareId(ShareId(SHARE_ID))
     }
@@ -331,7 +342,97 @@ class VaultOptionsViewModelTest {
     private fun vaultWith(owned: Boolean): Vault =
         VaultTestFactory.create(shareId = ShareId("ShareId-${StringTestFactory.randomString()}"), isOwned = owned)
 
-    private fun setNavShareId(shareId: ShareId) {
+    // region canAddFolder / canAddFolderNeedsUpgrade
+
+    @Test
+    fun `canAddFolder is false when PASS_FOLDERS flag is disabled`() = runTest {
+        val featureFlags = FakeFeatureFlagsPreferenceRepository().apply {
+            set(FeatureFlag.PASS_FOLDERS, false)
+        }
+        canCreateFolder.sendValue(true)
+        setNavShareId(ShareId(SHARE_ID), featureFlags)
+        emitDefaultVault()
+
+        instance.state.test {
+            val item = awaitItem() as VaultOptionsUiState.Success
+            assertThat(item.canAddFolder).isFalse()
+            assertThat(item.canAddFolderNeedsUpgrade).isFalse()
+        }
+    }
+
+    @Test
+    fun `canAddFolder is true and no upgrade needed for paid user when flag is enabled`() = runTest {
+        val featureFlags = FakeFeatureFlagsPreferenceRepository().apply {
+            set(FeatureFlag.PASS_FOLDERS, true)
+        }
+        canCreateFolder.sendValue(true)
+        observeUpgradeInfo.setResult(upgradeInfoWithUpgrade(false))
+        setNavShareId(ShareId(SHARE_ID), featureFlags)
+        emitDefaultVault()
+
+        instance.state.test {
+            val item = awaitItem() as VaultOptionsUiState.Success
+            assertThat(item.canAddFolder).isTrue()
+            assertThat(item.canAddFolderNeedsUpgrade).isFalse()
+        }
+    }
+
+    @Test
+    fun `canAddFolder shows upsell for free user when flag is enabled and upgrade available`() = runTest {
+        val featureFlags = FakeFeatureFlagsPreferenceRepository().apply {
+            set(FeatureFlag.PASS_FOLDERS, true)
+        }
+        canCreateFolder.sendValue(false)
+        observeUpgradeInfo.setResult(upgradeInfoWithUpgrade(true))
+        setNavShareId(ShareId(SHARE_ID), featureFlags)
+        emitDefaultVault()
+
+        instance.state.test {
+            val item = awaitItem() as VaultOptionsUiState.Success
+            assertThat(item.canAddFolder).isTrue()
+            assertThat(item.canAddFolderNeedsUpgrade).isTrue()
+        }
+    }
+
+    @Test
+    fun `canAddFolder hidden when org restricts folder creation and no upgrade available`() = runTest {
+        val featureFlags = FakeFeatureFlagsPreferenceRepository().apply {
+            set(FeatureFlag.PASS_FOLDERS, true)
+        }
+        canCreateFolder.sendValue(false)
+        observeUpgradeInfo.setResult(upgradeInfoWithUpgrade(false))
+        setNavShareId(ShareId(SHARE_ID), featureFlags)
+        emitDefaultVault()
+
+        instance.state.test {
+            val item = awaitItem() as VaultOptionsUiState.Success
+            assertThat(item.canAddFolder).isFalse()
+            assertThat(item.canAddFolderNeedsUpgrade).isFalse()
+        }
+    }
+
+    // endregion
+
+    private fun upgradeInfoWithUpgrade(isUpgradeAvailable: Boolean): UpgradeInfo = UpgradeInfo(
+        isUpgradeAvailable = isUpgradeAvailable,
+        isSubscriptionAvailable = isUpgradeAvailable,
+        plan = Plan(
+            planType = TestConstants.FreePlanType,
+            vaultLimit = PlanLimit.Limited(1),
+            aliasLimit = PlanLimit.Limited(0),
+            totpLimit = PlanLimit.Limited(0),
+            updatedAt = 0,
+            hideUpgrade = false
+        ),
+        totalVaults = 1,
+        totalAlias = 0,
+        totalTotp = 0
+    )
+
+    private fun setNavShareId(
+        shareId: ShareId,
+        featureFlags: FakeFeatureFlagsPreferenceRepository = FakeFeatureFlagsPreferenceRepository()
+    ) {
         instance = VaultOptionsViewModel(
             snackbarDispatcher = snackbarDispatcher,
             savedStateHandle = FakeSavedStateHandleProvider().apply {
@@ -341,8 +442,10 @@ class VaultOptionsViewModelTest {
             observeVaults = observeVaults,
             canShareShare = canShareVault,
             canManageVaultAccess = canManageVaultAccess,
+            canCreateFolder = canCreateFolder,
+            observeUpgradeInfo = observeUpgradeInfo,
             observeEncryptedItems = FakeObserveEncryptedItems(),
-            preferencesRepository = FakeFeatureFlagsPreferenceRepository()
+            preferencesRepository = featureFlags
         )
     }
 

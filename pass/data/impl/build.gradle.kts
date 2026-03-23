@@ -140,6 +140,7 @@ dependencies {
     androidTestImplementation(projects.pass.crypto.fakes)
     androidTestImplementation(projects.pass.data.fakes)
     androidTestImplementation(projects.pass.network.fakes)
+    androidTestImplementation(projects.pass.preferences.fakes)
 
     androidTestImplementation(libs.androidx.work.testing)
     androidTestImplementation(libs.truth)

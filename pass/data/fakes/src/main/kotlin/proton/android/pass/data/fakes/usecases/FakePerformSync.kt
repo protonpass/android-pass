@@ -26,11 +26,15 @@ import javax.inject.Singleton
 @Singleton
 class FakePerformSync @Inject constructor() : PerformSync {
 
+    val invokedUserIds = mutableListOf<UserId>()
     private var result: Result<Unit> = Result.success(Unit)
 
     fun setResult(value: Result<Unit>) {
         result = value
     }
 
-    override suspend fun invoke(userId: UserId, forceSync: Boolean) = result.getOrThrow()
+    override suspend fun invoke(userId: UserId, forceSync: Boolean) {
+        invokedUserIds += userId
+        result.getOrThrow()
+    }
 }

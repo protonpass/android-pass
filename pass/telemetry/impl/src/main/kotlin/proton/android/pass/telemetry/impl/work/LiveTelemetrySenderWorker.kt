@@ -73,7 +73,10 @@ open class LiveTelemetrySenderWorker @AssistedInject constructor(
 
         fun getRequestFor(repeatInterval: Duration): PeriodicWorkRequest {
             val backoffDelaySeconds = 30.seconds
-            return PeriodicWorkRequestBuilder<TelemetrySenderWorker>(repeatInterval.inWholeSeconds, TimeUnit.SECONDS)
+            return PeriodicWorkRequestBuilder<LiveTelemetrySenderWorker>(
+                repeatInterval = repeatInterval.inWholeSeconds,
+                repeatIntervalTimeUnit = TimeUnit.SECONDS
+            )
                 .setBackoffCriteria(
                     BackoffPolicy.EXPONENTIAL,
                     backoffDelaySeconds.inWholeSeconds,

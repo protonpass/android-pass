@@ -24,7 +24,17 @@ import javax.inject.Singleton
 
 @Singleton
 class FakeDeleteOldPasswordHistoryEntry @Inject constructor() : DeleteOldPasswordHistoryEntry {
-    override suspend fun invoke() {
 
+    var invocations = 0
+        private set
+    private var exception: Throwable? = null
+
+    fun setException(value: Throwable) {
+        exception = value
+    }
+
+    override suspend fun invoke() {
+        invocations++
+        exception?.let { throw it }
     }
 }

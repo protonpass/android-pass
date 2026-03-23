@@ -2930,7 +2930,8 @@ fun NavGraphBuilder.appGraph(
                 is SimpleLoginSyncNavDestination.SelectVault -> appNavigator.navigate(
                     destination = SelectVaultBottomsheet,
                     route = SelectVaultBottomsheet.createNavRoute(
-                        selectedVault = destination.shareId
+                        selectedVault = destination.shareId,
+                        showFolders = false
                     )
                 )
 

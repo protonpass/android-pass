@@ -84,8 +84,15 @@ class SelectVaultViewModel @Inject constructor(
         savedStateHandle.get().get<String?>(CommonOptionalNavArgId.FolderId.key)
             ?.let { FolderId(it) }
 
+    private val showFolders: Boolean =
+        savedStateHandle.get().get<Boolean>(ShowFoldersArg.key) ?: true
+
     private val foldersEnabledFlow: Flow<Boolean> =
-        featureFlagsPreferencesRepository[FeatureFlag.PASS_FOLDERS]
+        if (showFolders) {
+            featureFlagsPreferencesRepository[FeatureFlag.PASS_FOLDERS]
+        } else {
+            flowOf(false)
+        }
 
     private val vaultsFlow = observeVaultsWithItemCount(includeHidden = true)
 

@@ -27,6 +27,7 @@ import proton.android.pass.navigation.api.CommonOptionalNavArgId
 import proton.android.pass.navigation.api.NavArgId
 import proton.android.pass.navigation.api.NavItem
 import proton.android.pass.navigation.api.NavItemType
+import proton.android.pass.navigation.api.OptionalNavArgId
 import proton.android.pass.navigation.api.bottomSheet
 
 object SelectedVaultArg : NavArgId {
@@ -34,19 +35,29 @@ object SelectedVaultArg : NavArgId {
     override val navType = NavType.StringType
 }
 
+object ShowFoldersArg : OptionalNavArgId {
+    override val key = "showFolders"
+    override val navType = NavType.BoolType
+    override val default: Any = true
+}
+
 object SelectVaultBottomsheet : NavItem(
     baseRoute = "vault/select/bottomsheet",
     navArgIds = listOf(SelectedVaultArg),
-    optionalArgIds = listOf(CommonOptionalNavArgId.FolderId),
+    optionalArgIds = listOf(CommonOptionalNavArgId.FolderId, ShowFoldersArg),
     navItemType = NavItemType.Bottomsheet
 ) {
-    fun createNavRoute(selectedVault: ShareId, selectedFolder: FolderId? = null): String {
+    fun createNavRoute(
+        selectedVault: ShareId,
+        selectedFolder: FolderId? = null,
+        showFolders: Boolean = true
+    ): String {
         val base = "$baseRoute/${selectedVault.id}"
-        return if (selectedFolder != null) {
-            "$base?${CommonOptionalNavArgId.FolderId.key}=${selectedFolder.id}"
-        } else {
-            base
+        val params = buildList {
+            if (selectedFolder != null) add("${CommonOptionalNavArgId.FolderId.key}=${selectedFolder.id}")
+            if (!showFolders) add("${ShowFoldersArg.key}=false")
         }
+        return if (params.isEmpty()) base else "$base?${params.joinToString("&")}"
     }
 }
 

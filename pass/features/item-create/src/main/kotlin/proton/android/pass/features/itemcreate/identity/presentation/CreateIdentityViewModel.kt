@@ -199,6 +199,7 @@ class CreateIdentityViewModel @Inject constructor(
         val shareId = navShareId.value() ?: return
         val itemId = navItemId.value() ?: return
         val item = getItemById(shareId = shareId, itemId = itemId)
+        item.folderId?.let { selectedFolderIdMutableState = Some(it) }
         val encryptedTitle = encryptionContextProvider.withEncryptionContextSuspendable {
             val decryptedTitle = context.getString(R.string.title_duplicate, decrypt(item.title))
             return@withEncryptionContextSuspendable encrypt(decryptedTitle)

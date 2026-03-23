@@ -18,9 +18,12 @@
 
 package proton.android.pass.composecomponents.impl.item.details.titles
 
-import androidx.compose.animation.AnimatedContent
+import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
@@ -38,6 +41,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
@@ -59,6 +63,7 @@ private const val ELLIPSIS = "..."
 private val BorderDarkColor = Color(color = 0xFF38384C)
 private val BorderLightColor = Color(color = 0xFFE3DFFA)
 
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun FolderPathComposable(
     modifier: Modifier = Modifier,
@@ -72,7 +77,7 @@ fun FolderPathComposable(
 
     val (isExpanded, onExpand) = rememberSaveable { mutableStateOf(forceExpand) }
 
-    Row(
+    FlowRow(
         modifier = modifier
             .border(
                 width = 1.dp,
@@ -89,68 +94,70 @@ fun FolderPathComposable(
                     clickable { onExpand(!isExpanded) }
                 }
             )
+            .animateContentSize()
             .padding(horizontal = Spacing.medium, vertical = Spacing.mediumSmall)
             .padding(vertical = Spacing.extraSmall),
-        verticalAlignment = Alignment.CenterVertically
+        verticalArrangement = Arrangement.spacedBy(Spacing.small)
     ) {
-        Icon(
-            modifier = Modifier
-                .size(16.dp)
-                .padding(end = Spacing.extraSmall),
-            painter = painterResource(vaultIcon.toSmallResource()),
-            contentDescription = null,
-            tint = vaultColor.toColor()
-        )
+        // Vault header — always the first item in the flow
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            Icon(
+                modifier = Modifier
+                    .size(16.dp)
+                    .padding(end = Spacing.extraSmall),
+                painter = painterResource(vaultIcon.toSmallResource()),
+                contentDescription = null,
+                tint = vaultColor.toColor()
+            )
+            Text(
+                text = vaultName,
+                style = PassTheme.typography.body3Norm(),
+                color = PassTheme.colors.textWeak,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis
+            )
+        }
 
-        Text(
-            text = vaultName,
-            style = PassTheme.typography.body3Norm(),
-            color = PassTheme.colors.textWeak
-        )
+        when {
+            folderPath.size == 1 -> {
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    ChevronIcon()
+                    FolderItem(
+                        name = folderPath.first(),
+                        isLast = true,
+                        textColor = PassTheme.colors.textNorm
+                    )
+                }
+            }
 
-        Spacer(modifier = Modifier.width(Spacing.extraSmall))
-
-        AnimatedContent(
-            targetState = isExpanded,
-            label = "FolderPathAnimation"
-        ) { expanded ->
-            Row(verticalAlignment = Alignment.CenterVertically) {
-                when {
-                    folderPath.size == 1 -> {
+            isExpanded -> {
+                folderPath.forEachIndexed { index, folderName ->
+                    val isLast = index == folderPath.lastIndex
+                    Row(verticalAlignment = Alignment.CenterVertically) {
                         ChevronIcon()
                         FolderItem(
-                            name = folderPath.first(),
-                            isLast = true,
-                            textColor = PassTheme.colors.textNorm
+                            name = folderName,
+                            isLast = isLast,
+                            textColor = if (isLast) PassTheme.colors.textNorm else PassTheme.colors.textWeak
                         )
                     }
+                }
+            }
 
-                    expanded -> {
-                        folderPath.forEachIndexed { index, folderName ->
-                            val isLast = index == folderPath.lastIndex
-                            ChevronIcon()
-                            FolderItem(
-                                name = folderName,
-                                isLast = isLast,
-                                textColor = if (isLast) PassTheme.colors.textNorm else PassTheme.colors.textWeak
-                            )
-                        }
-                    }
-
-                    else -> {
-                        ChevronIcon()
-                        Text(
-                            text = ELLIPSIS,
-                            style = PassTheme.typography.body3Norm(),
-                            color = PassTheme.colors.textWeak
-                        )
-                        ChevronIcon()
-                        FolderItem(
-                            name = folderPath.last(),
-                            isLast = true,
-                            textColor = PassTheme.colors.textNorm
-                        )
-                    }
+            else -> {
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    ChevronIcon()
+                    Text(
+                        text = ELLIPSIS,
+                        style = PassTheme.typography.body3Norm(),
+                        color = PassTheme.colors.textWeak
+                    )
+                    ChevronIcon()
+                    FolderItem(
+                        name = folderPath.last(),
+                        isLast = true,
+                        textColor = PassTheme.colors.textNorm
+                    )
                 }
             }
         }

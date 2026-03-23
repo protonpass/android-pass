@@ -217,6 +217,7 @@ class CreateNoteViewModel @Inject constructor(
         val shareId = navShareId.value() ?: return
         val itemId = navItemId.value() ?: return
         val item = getItemById(shareId = shareId, itemId = itemId)
+        item.folderId?.let { selectedFolderIdMutableState = Some(it) }
 
         val currentValue = noteItemFormState
         encryptionContextProvider.withEncryptionContextSuspendable {

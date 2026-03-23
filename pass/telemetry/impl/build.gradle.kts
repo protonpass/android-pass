@@ -29,11 +29,8 @@ android {
 
     defaultConfig {
         minSdk = libs.versions.minSdk.get().toInt()
-        
-    }}
-
-androidComponents.beforeVariants { variant ->
-    variant.enableAndroidTest = false
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+    }
 }
 
 dependencies {
@@ -61,4 +58,15 @@ dependencies {
 
     testImplementation(projects.pass.commonTest)
     testImplementation(projects.pass.data.fakes)
+
+    androidTestImplementation(projects.pass.commonTest)
+    androidTestImplementation(projects.pass.data.fakes)
+
+    androidTestImplementation(libs.androidx.work.testing)
+    androidTestImplementation(libs.truth)
+    androidTestImplementation(libs.androidx.test.core)
+    androidTestImplementation(libs.androidx.test.junit)
+    androidTestImplementation(libs.androidx.test.runner)
+    androidTestImplementation(libs.coroutines.test)
+    androidTestImplementation(libs.kotlinTest)
 }

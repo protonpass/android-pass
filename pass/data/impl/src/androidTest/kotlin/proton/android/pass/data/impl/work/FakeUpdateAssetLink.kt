@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023-2026 Proton AG
+ * Copyright (c) 2026 Proton AG
  * This file is part of Proton AG and Proton Pass.
  *
  * Proton Pass is free software: you can redistribute it and/or modify
@@ -16,25 +16,21 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.data.fakes.usecases
+package proton.android.pass.data.impl.work
 
-import me.proton.core.domain.entity.UserId
-import proton.android.pass.data.api.usecases.PerformSync
-import javax.inject.Inject
-import javax.inject.Singleton
+import proton.android.pass.data.impl.usecases.assetlink.UpdateAssetLink
 
-@Singleton
-class FakePerformSync @Inject constructor() : PerformSync {
+class FakeUpdateAssetLink : UpdateAssetLink {
 
-    val invokedUserIds = mutableListOf<UserId>()
+    val invocations = mutableListOf<Set<String>>()
     private var result: Result<Unit> = Result.success(Unit)
 
     fun setResult(value: Result<Unit>) {
         result = value
     }
 
-    override suspend fun invoke(userId: UserId, forceSync: Boolean) {
-        invokedUserIds += userId
+    override suspend fun invoke(websites: Set<String>) {
+        invocations += websites
         result.getOrThrow()
     }
 }

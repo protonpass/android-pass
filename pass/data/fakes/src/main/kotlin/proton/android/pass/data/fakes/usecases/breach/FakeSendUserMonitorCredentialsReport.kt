@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023-2026 Proton AG
+ * Copyright (c) 2026 Proton AG
  * This file is part of Proton AG and Proton Pass.
  *
  * Proton Pass is free software: you can redistribute it and/or modify
@@ -16,25 +16,25 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.data.fakes.usecases
+package proton.android.pass.data.fakes.usecases.breach
 
-import me.proton.core.domain.entity.UserId
-import proton.android.pass.data.api.usecases.PerformSync
+import proton.android.pass.data.api.usecases.breach.SendUserMonitorCredentialsReport
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class FakePerformSync @Inject constructor() : PerformSync {
+class FakeSendUserMonitorCredentialsReport @Inject constructor() : SendUserMonitorCredentialsReport {
 
-    val invokedUserIds = mutableListOf<UserId>()
+    var invocations = 0
+        private set
     private var result: Result<Unit> = Result.success(Unit)
 
     fun setResult(value: Result<Unit>) {
         result = value
     }
 
-    override suspend fun invoke(userId: UserId, forceSync: Boolean) {
-        invokedUserIds += userId
+    override suspend fun invoke() {
+        invocations++
         result.getOrThrow()
     }
 }

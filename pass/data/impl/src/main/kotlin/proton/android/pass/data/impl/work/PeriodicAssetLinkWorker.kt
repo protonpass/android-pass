@@ -66,7 +66,9 @@ class PeriodicAssetLinkWorker @AssistedInject constructor(
         PassLogger.i(TAG, "Starting $TAG attempt $runAttemptCount")
         purgeOldData()
         val websites: Set<String> = getAllWebsites()
-        updateAssetLink(websites)
+        if (websites.isNotEmpty()) {
+            updateAssetLink(websites)
+        }
     }.onSuccess {
         PassLogger.i(TAG, "Finished $TAG")
     }.onFailure {

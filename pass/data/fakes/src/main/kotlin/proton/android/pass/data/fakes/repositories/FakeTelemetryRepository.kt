@@ -26,11 +26,16 @@ class FakeTelemetryRepository @Inject constructor() : TelemetryRepository {
     private val memory: MutableList<Entry> = mutableListOf()
     private var sendInvoked = false
     private var storeResult: Result<Unit> = Result.failure(IllegalStateException("storeResult not set"))
+    private var sendResult: Result<Unit> = Result.success(Unit)
 
     fun getMemory(): List<Entry> = memory
     fun getSendInvoked() = sendInvoked
     fun setStoreResult(value: Result<Unit>) {
         storeResult = value
+    }
+
+    fun setSendResult(value: Result<Unit>) {
+        sendResult = value
     }
 
     override suspend fun storeEntry(event: String, dimensions: Map<String, String>) {
@@ -40,6 +45,7 @@ class FakeTelemetryRepository @Inject constructor() : TelemetryRepository {
 
     override suspend fun sendEvents() {
         sendInvoked = true
+        sendResult.getOrThrow()
     }
 
     data class Entry(val event: String, val dimensions: Map<String, String>)

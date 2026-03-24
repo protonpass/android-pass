@@ -44,18 +44,27 @@ import proton.android.pass.data.api.repositories.GroupRepository
 import proton.android.pass.data.api.usecases.AcceptInvite
 import proton.android.pass.data.api.usecases.AcceptInviteStatus
 import proton.android.pass.data.api.usecases.ObserveCurrentUser
+import proton.android.pass.data.api.usecases.GetItemById
 import proton.android.pass.data.api.usecases.RejectInvite
 import proton.android.pass.data.api.usecases.invites.ObserveInvite
 import proton.android.pass.domain.GroupId
 import proton.android.pass.domain.InviteId
+import proton.android.pass.domain.ItemId
+import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.InviteToken
 import proton.android.pass.domain.PendingGroupInvite
 import proton.android.pass.domain.PendingInvite
 import proton.android.pass.domain.ShareType
+import proton.android.pass.features.sharing.InviteAccept
+import proton.android.pass.features.sharing.InviteReject
 import proton.android.pass.features.sharing.SharingSnackbarMessage
+import proton.android.pass.features.sharing.TARGET_TYPE_ITEM
+import proton.android.pass.features.sharing.TARGET_TYPE_VAULT
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonOptionalNavArgId
 import proton.android.pass.notifications.api.SnackbarDispatcher
+import proton.android.pass.telemetry.api.EventItemType
+import proton.android.pass.telemetry.api.TelemetryManager
 import javax.inject.Inject
 
 @HiltViewModel
@@ -66,7 +75,9 @@ class AcceptInviteViewModel @Inject constructor(
     groupRepository: GroupRepository,
     private val acceptInvite: AcceptInvite,
     private val rejectInvite: RejectInvite,
-    private val snackbarDispatcher: SnackbarDispatcher
+    private val getItemById: GetItemById,
+    private val snackbarDispatcher: SnackbarDispatcher,
+    private val telemetryManager: TelemetryManager
 ) : ViewModel() {
 
     private val inviteToken: InviteToken? = savedStateHandleProvider.get()
@@ -178,12 +189,18 @@ class AcceptInviteViewModel @Inject constructor(
 
                         is AcceptInviteStatus.GroupInviteDone -> {
                             PassLogger.i(TAG, "Invite successfully accepted")
+                            sendAcceptTelemetry(shareType = shareType)
                             snackbarDispatcher(SharingSnackbarMessage.InviteAccepted)
                             eventFlow.update { AcceptInviteEvent.Close }
                         }
 
                         is AcceptInviteStatus.UserInviteDone -> {
                             PassLogger.i(TAG, "Invite successfully accepted")
+                            sendAcceptTelemetry(
+                                shareType = shareType,
+                                shareId = acceptInviteStatus.shareId,
+                                itemId = acceptInviteStatus.itemId
+                            )
                             when (shareType) {
                                 ShareType.Item -> AcceptInviteEvent.OnItemInviteAcceptSuccess(
                                     shareId = acceptInviteStatus.shareId,
@@ -226,11 +243,38 @@ class AcceptInviteViewModel @Inject constructor(
                 }
                 .onSuccess {
                     PassLogger.i(TAG, "Invite successfully rejected")
+                    val rejectEvent = when (stateFlow.value) {
+                        is AcceptInviteState.ItemInvite -> InviteReject(TARGET_TYPE_ITEM)
+                        is AcceptInviteState.VaultInvite -> InviteReject(TARGET_TYPE_VAULT)
+                        else -> InviteReject(TARGET_TYPE_VAULT)
+                    }
+                    telemetryManager.sendEvent(rejectEvent)
                     snackbarDispatcher(SharingSnackbarMessage.InviteRejected)
                 }
 
             eventFlow.update { AcceptInviteEvent.Close }
         }
+    }
+
+    private suspend fun sendAcceptTelemetry(
+        shareType: ShareType,
+        shareId: ShareId? = null,
+        itemId: ItemId? = null
+    ) {
+        val event = when (shareType) {
+            ShareType.Vault -> InviteAccept(TARGET_TYPE_VAULT)
+            ShareType.Item -> {
+                val eventItemType = if (shareId != null && itemId != null) {
+                    runCatching {
+                        getItemById(shareId = shareId, itemId = itemId)
+                    }.getOrNull()?.let { EventItemType.from(it.itemType) }
+                } else {
+                    null
+                }
+                InviteAccept(TARGET_TYPE_ITEM, eventItemType)
+            }
+        }
+        telemetryManager.sendEvent(event)
     }
 
     private companion object {

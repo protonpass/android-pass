@@ -58,12 +58,17 @@ import proton.android.pass.domain.FolderId
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.items.ItemCategory
+import proton.android.pass.features.sharing.InviteCreate
 import proton.android.pass.features.sharing.SharingSnackbarMessage
+import proton.android.pass.features.sharing.TARGET_TYPE_ITEM
+import proton.android.pass.features.sharing.TARGET_TYPE_VAULT
+import proton.android.pass.telemetry.api.EventItemType
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.navigation.api.CommonOptionalNavArgId
 import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.android.pass.preferences.FeatureFlag
+import proton.android.pass.telemetry.api.TelemetryManager
 import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import proton.android.pass.preferences.UserPreferencesRepository
 import javax.inject.Inject
@@ -75,6 +80,7 @@ class SharingSummaryViewModel @Inject constructor(
     private val bulkInviteRepository: BulkInviteRepository,
     private val getUserPlan: GetUserPlan,
     private val inviteToItem: InviteToItem,
+    private val telemetryManager: TelemetryManager,
     getVaultWithItemCountById: GetVaultWithItemCountById,
     savedStateHandleProvider: SavedStateHandleProvider,
     observeItemById: ObserveItemById,
@@ -186,6 +192,7 @@ class SharingSummaryViewModel @Inject constructor(
                 }
             }.onSuccess {
                 bulkInviteRepository.clear()
+                telemetryManager.sendEvent(InviteCreate(TARGET_TYPE_ITEM, EventItemType.from(itemCategory)))
                 snackbarDispatcher(SharingSnackbarMessage.InviteSentSuccess)
                 eventFlow.update { SharingSummaryEvent.OnSharingItemSuccess(itemCategory) }
             }
@@ -204,6 +211,7 @@ class SharingSummaryViewModel @Inject constructor(
             ).onSuccess {
                 bulkInviteRepository.clear()
                 isLoadingStateFlow.update { IsLoadingState.NotLoading }
+                telemetryManager.sendEvent(InviteCreate(TARGET_TYPE_VAULT))
                 snackbarDispatcher(SharingSnackbarMessage.InviteSentSuccess)
                 PassLogger.i(TAG, "Vault invite successfully sent")
                 eventFlow.update { SharingSummaryEvent.OnSharingVaultSuccess(shareId) }

@@ -23,7 +23,13 @@ import proton.android.pass.common.api.None
 import proton.android.pass.features.auth.AuthNavigation
 import proton.android.pass.features.auth.EnterPin
 import proton.android.pass.features.auth.authGraph
+import proton.android.pass.features.itemcreate.alias.AliasSelectMailboxBottomSheetNavItem
+import proton.android.pass.features.itemcreate.alias.AliasSelectSuffixBottomSheetNavItem
+import proton.android.pass.features.itemcreate.alias.BaseAliasNavigation
 import proton.android.pass.features.itemcreate.alias.CreateAliasBottomSheet
+import proton.android.pass.features.itemcreate.alias.CreateAliasNavItem
+import proton.android.pass.features.itemcreate.alias.CreateAliasNavigation
+import proton.android.pass.features.itemcreate.alias.createAliasGraph
 import proton.android.pass.features.itemcreate.bottomsheets.customfield.AddCustomFieldBottomSheetNavItem
 import proton.android.pass.features.itemcreate.bottomsheets.customfield.CustomFieldOptionsBottomSheetNavItem
 import proton.android.pass.features.itemcreate.common.CustomFieldPrefix
@@ -58,7 +64,7 @@ import proton.android.pass.features.vault.bottomsheet.select.SelectVaultBottomsh
 import proton.android.pass.features.vault.vaultGraph
 import proton.android.pass.navigation.api.AppNavigator
 
-@Suppress("LongMethod")
+@Suppress("LongMethod", "ThrowsCount")
 internal fun NavGraphBuilder.passwordCredentialCreationNavGraph(
     appNavigator: AppNavigator,
     initialCreateLoginUiState: InitialCreateLoginUiState,
@@ -329,6 +335,106 @@ internal fun NavGraphBuilder.passwordCredentialCreationNavGraph(
                 is VaultNavigation.RenameFolder,
                 is VaultNavigation.MoveFolder,
                 is VaultNavigation.RemoveFolder -> Unit
+            }
+        }
+    )
+
+    createAliasGraph(
+        canUseAttachments = false,
+        canAddMailbox = false,
+        onNavigate = { destination ->
+            when (destination) {
+                is BaseAliasNavigation.OnCreateAliasEvent -> when (val event = destination.event) {
+                    is CreateAliasNavigation.Created ->
+                        throw IllegalStateException("Cannot create alias from PasswordCredentialCreation")
+
+                    is CreateAliasNavigation.CreatedFromBottomsheet -> dismissBottomSheet {}
+                    is CreateAliasNavigation.SelectVault -> appNavigator.navigate(
+                        destination = SelectVaultBottomsheet,
+                        route = SelectVaultBottomsheet.createNavRoute(event.shareId)
+                    )
+                }
+
+                is BaseAliasNavigation.OnUpdateAliasEvent ->
+                    throw IllegalStateException("Cannot update alias from PasswordCredentialCreation")
+
+                BaseAliasNavigation.CloseScreen -> appNavigator.navigateBack()
+                BaseAliasNavigation.CloseBottomsheet -> dismissBottomSheet {}
+                BaseAliasNavigation.Upgrade -> onNavigate(PasswordCredentialCreationNavEvent.Upgrade)
+                BaseAliasNavigation.SelectMailbox -> appNavigator.navigate(
+                    destination = AliasSelectMailboxBottomSheetNavItem
+                )
+
+                BaseAliasNavigation.SelectSuffix -> appNavigator.navigate(
+                    destination = AliasSelectSuffixBottomSheetNavItem
+                )
+
+                BaseAliasNavigation.AddAttachment,
+                BaseAliasNavigation.UpsellAttachments,
+                is BaseAliasNavigation.OpenDraftAttachmentOptions,
+                is BaseAliasNavigation.DeleteAllAttachments ->
+                    throw IllegalStateException("Cannot use attachments from PasswordCredentialCreation")
+
+                BaseAliasNavigation.AddMailbox ->
+                    throw IllegalStateException("Cannot add mailbox from PasswordCredentialCreation")
+
+                BaseAliasNavigation.AddCustomField -> appNavigator.navigate(
+                    destination = AddCustomFieldBottomSheetNavItem.CreateAlias,
+                    route = AddCustomFieldBottomSheetNavItem.CreateAlias.buildRoute(None)
+                )
+
+                is BaseAliasNavigation.CustomFieldTypeSelected -> dismissBottomSheet {
+                    appNavigator.navigate(
+                        destination = CustomFieldNameDialogNavItem.CreateAlias,
+                        route = CustomFieldNameDialogNavItem.CreateAlias.buildRoute(
+                            type = destination.type,
+                            sectionIndex = None
+                        ),
+                        backDestination = CreateAliasNavItem
+                    )
+                }
+
+                is BaseAliasNavigation.CustomFieldOptions -> appNavigator.navigate(
+                    destination = CustomFieldOptionsBottomSheetNavItem.CreateAlias,
+                    route = CustomFieldOptionsBottomSheetNavItem.CreateAlias.buildRoute(
+                        index = destination.index,
+                        sectionIndex = None,
+                        currentTitle = destination.currentValue
+                    )
+                )
+
+                is BaseAliasNavigation.EditCustomField -> dismissBottomSheet {
+                    appNavigator.navigate(
+                        destination = EditCustomFieldNameDialogNavItem.CreateAlias,
+                        route = EditCustomFieldNameDialogNavItem.CreateAlias.buildRoute(
+                            index = destination.index,
+                            sectionIndex = None,
+                            currentValue = destination.currentValue
+                        ),
+                        backDestination = CreateAliasNavItem
+                    )
+                }
+
+                BaseAliasNavigation.RemovedCustomField -> dismissBottomSheet {}
+
+                BaseAliasNavigation.TotpCancel -> appNavigator.navigateBack()
+                is BaseAliasNavigation.TotpSuccess ->
+                    appNavigator.navigateBackWithResult(destination.results)
+
+                is BaseAliasNavigation.OpenImagePicker -> appNavigator.navigate(
+                    destination = PhotoPickerTotpNavItem.CreateAlias,
+                    route = PhotoPickerTotpNavItem.CreateAlias.createNavRoute(
+                        sectionIndex = None,
+                        index = destination.index
+                    ),
+                    backDestination = CreateAliasNavItem
+                )
+
+                is BaseAliasNavigation.ScanTotp -> appNavigator.navigate(
+                    destination = CameraTotpNavItem(CustomFieldPrefix.CreateAlias),
+                    route = CameraTotpNavItem(CustomFieldPrefix.CreateAlias)
+                        .createNavRoute(index = destination.index)
+                )
             }
         }
     )

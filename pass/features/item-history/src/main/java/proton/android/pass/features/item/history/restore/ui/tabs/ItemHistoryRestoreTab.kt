@@ -107,6 +107,10 @@ internal fun ItemHistoryRestoreTab(
                     // We do nothing since the widget should not show from restore screen
                 }
 
+                is PassItemDetailsUiEvent.OnReusedPasswordItemClick -> {
+                    // We do nothing since the widget should not show from restore screen
+                }
+
                 is PassItemDetailsUiEvent.OnViewAliasClick ->
                     ItemHistoryRestoreUiEvent.OnViewItem(uiEvent.shareId, uiEvent.itemId)
                         .also(onEvent)

@@ -99,7 +99,8 @@ internal fun LoginMonitorReusedPassWidget(
                 LoginMonitorState.ReusedPasswordDisplayMode.Expanded -> {
                     ReusedPasswordCarousel(
                         reusedPasswordItems = reusedPasswordItems,
-                        canLoadExternalImages = canLoadExternalImages
+                        canLoadExternalImages = canLoadExternalImages,
+                        onEvent = onEvent
                     )
                 }
             }
@@ -111,7 +112,8 @@ internal fun LoginMonitorReusedPassWidget(
 private fun ReusedPasswordCarousel(
     modifier: Modifier = Modifier,
     reusedPasswordItems: ImmutableList<ItemUiModel>,
-    canLoadExternalImages: Boolean
+    canLoadExternalImages: Boolean,
+    onEvent: (PassItemDetailsUiEvent) -> Unit
 ) {
     if (reusedPasswordItems.isNotEmpty()) {
         LazyRow(
@@ -125,7 +127,15 @@ private fun ReusedPasswordCarousel(
             ) { reusedPasswordItem ->
                 ReusedPasswordCarouselItem(
                     item = reusedPasswordItem,
-                    canLoadExternalImages = canLoadExternalImages
+                    canLoadExternalImages = canLoadExternalImages,
+                    onClick = {
+                        onEvent(
+                            PassItemDetailsUiEvent.OnReusedPasswordItemClick(
+                                shareId = reusedPasswordItem.shareId,
+                                itemId = reusedPasswordItem.id
+                            )
+                        )
+                    }
                 )
             }
         }
@@ -136,7 +146,8 @@ private fun ReusedPasswordCarousel(
 private fun ReusedPasswordCarouselItem(
     modifier: Modifier = Modifier,
     item: ItemUiModel,
-    canLoadExternalImages: Boolean
+    canLoadExternalImages: Boolean,
+    onClick: () -> Unit
 ) = with(item.contents as ItemContents.Login) {
     Row(
         modifier = modifier
@@ -144,6 +155,7 @@ private fun ReusedPasswordCarouselItem(
                 backgroundColor = PassTheme.colors.noteInteractionNormMinor1,
                 borderColor = PassTheme.colors.noteInteractionNormMinor1
             )
+            .clickable(onClick = onClick)
             .padding(Spacing.small),
         horizontalArrangement = Arrangement.spacedBy(Spacing.small),
         verticalAlignment = Alignment.CenterVertically

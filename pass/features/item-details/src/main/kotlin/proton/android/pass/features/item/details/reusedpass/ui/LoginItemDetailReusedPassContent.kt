@@ -18,6 +18,7 @@
 
 package proton.android.pass.features.item.details.reusedpass.ui
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -90,6 +91,14 @@ internal fun LoginItemDetailReusedPassContent(
                             key = { it.key }
                         ) { itemUiModel ->
                             LoginRow(
+                                modifier = Modifier.clickable {
+                                    onNavigated(
+                                        ItemDetailsNavDestination.ViewItem(
+                                            shareId = itemUiModel.shareId,
+                                            itemId = itemUiModel.id
+                                        )
+                                    )
+                                },
                                 item = itemUiModel,
                                 vaultIcon = getShareIcon(itemUiModel.shareId)?.toSmallResource(),
                                 canLoadExternalImages = canLoadExternalImages,

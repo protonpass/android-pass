@@ -25,11 +25,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import proton.android.pass.commonui.api.EmailUtils.sendEmail
 import proton.android.pass.features.alias.contacts.AliasContactsNavigation
 import proton.android.pass.features.alias.contacts.detail.presentation.DetailAliasContactEvent
 import proton.android.pass.features.alias.contacts.detail.presentation.DetailAliasContactUIEvent
 import proton.android.pass.features.alias.contacts.detail.presentation.DetailAliasContactViewModel
-import proton.android.pass.features.alias.contacts.sendEmailIntent
 
 @Composable
 fun DetailAliasContactScreen(
@@ -73,7 +73,7 @@ fun DetailAliasContactScreen(
                     val itemId = state.itemId.value() ?: return@DetailAliasContactContent
                     onNavigate(AliasContactsNavigation.ContactOptions(shareId, itemId, it.contactId))
                 }
-                is DetailAliasContactUIEvent.SendEmail -> sendEmailIntent(context, it.email)
+                is DetailAliasContactUIEvent.SendEmail -> sendEmail(context, it.email)
                 DetailAliasContactUIEvent.Upgrade -> onNavigate(AliasContactsNavigation.Upgrade)
             }
         }

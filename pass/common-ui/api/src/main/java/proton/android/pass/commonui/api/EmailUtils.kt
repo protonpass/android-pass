@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2024-2026 Proton AG
+ * Copyright (c) 2026 Proton AG
  * This file is part of Proton AG and Proton Pass.
  *
  * Proton Pass is free software: you can redistribute it and/or modify
@@ -16,18 +16,30 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.alias.contacts
+package proton.android.pass.commonui.api
 
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import androidx.core.net.toUri
+import proton.android.pass.log.api.PassLogger
 
-fun sendEmailIntent(context: Context, email: String) {
-    val emailIntent = Intent(Intent.ACTION_SENDTO).apply {
-        data = Uri.parse("mailto:")
-        putExtra(Intent.EXTRA_EMAIL, arrayOf(email))
-    }
-    if (emailIntent.resolveActivity(context.packageManager) != null) {
-        context.startActivity(emailIntent)
+object EmailUtils {
+    private const val TAG = "EmailUtils"
+
+    fun sendEmail(context: Context, email: String) {
+        runCatching {
+            val intent = Intent(Intent.ACTION_SENDTO).apply {
+                data = "mailto:${Uri.encode(email)}".toUri()
+            }
+            if (intent.resolveActivity(context.packageManager) != null) {
+                context.startActivity(intent)
+            } else {
+                PassLogger.w(TAG, "No email application found")
+            }
+        }.onFailure {
+            PassLogger.w(TAG, "Could not launch email intent")
+            PassLogger.w(TAG, it)
+        }
     }
 }

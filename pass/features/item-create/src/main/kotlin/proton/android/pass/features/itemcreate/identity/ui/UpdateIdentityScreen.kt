@@ -256,7 +256,7 @@ fun UpdateIdentityScreen(
                     viewModel.getFormState().uiContactDetails.customFields
 
                 is IdentitySectionType.ExtraSection ->
-                    viewModel.getFormState().uiExtraSections[customField.index].customFields
+                    viewModel.getFormState().uiExtraSections[customField.sectionType.index].customFields
 
                 is IdentitySectionType.PersonalDetails ->
                     viewModel.getFormState().uiPersonalDetails.customFields

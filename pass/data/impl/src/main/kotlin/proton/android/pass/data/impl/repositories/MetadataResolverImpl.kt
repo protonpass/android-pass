@@ -86,7 +86,9 @@ class MetadataResolverImpl @Inject constructor(
     private suspend fun extractMetadataFromCursor(cursor: Cursor, contentUri: Uri): FileMetadata {
         val name = cursor.getString(cursor.getColumnIndexOrThrow(OpenableColumns.DISPLAY_NAME))
         val size = cursor.getLong(cursor.getColumnIndexOrThrow(OpenableColumns.SIZE))
-        val mimeType = detectMimeType(contentUri) ?: throw IllegalStateException("MIME type is null")
+        val mimeType = detectMimeType(contentUri)
+            ?: context.contentResolver.getType(contentUri)
+            ?: "application/octet-stream"
         val fileType = fileTypeDetector.getFileTypeFromMimeType(MimeType(mimeType))
 
         return FileMetadata(
@@ -119,15 +121,10 @@ class MetadataResolverImpl @Inject constructor(
     private suspend fun detectMimeType(contentUri: Uri): String? = withContext(appDispatchers.io) {
         safeRunCatching {
             context.contentResolver.openInputStream(contentUri)?.use { inputStream ->
-                val availableBytes = inputStream.available().coerceAtMost(200)
-                if (availableBytes > 0) {
-                    val buffer = ByteArray(availableBytes)
-                    val bytesRead = inputStream.read(buffer, 0, buffer.size)
-                    if (bytesRead > 0) {
-                        fileTypeDetector.getMimeTypeFromBytes(buffer.copyOf(bytesRead)).value
-                    } else {
-                        null
-                    }
+                val buffer = ByteArray(200)
+                val bytesRead = inputStream.read(buffer, 0, buffer.size)
+                if (bytesRead > 0) {
+                    fileTypeDetector.getMimeTypeFromBytes(buffer.copyOf(bytesRead)).value
                 } else {
                     null
                 }

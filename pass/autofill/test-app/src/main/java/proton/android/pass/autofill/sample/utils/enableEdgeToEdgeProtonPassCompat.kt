@@ -27,13 +27,16 @@ import proton.android.pass.commonui.api.enableEdgeToEdgeProtonPass
 internal fun AppCompatActivity.enableEdgeToEdgeProtonPassCompat(view: View) {
     this.enableEdgeToEdgeProtonPass()
 
+    val initialTopPadding = view.paddingTop
+    val initialBottomPadding = view.paddingBottom
+
     ViewCompat.setOnApplyWindowInsetsListener(view) { view, insets ->
         val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
         view.setPadding(
             view.paddingLeft,
-            systemBars.top,
+            systemBars.top + initialTopPadding,
             view.paddingRight,
-            systemBars.bottom
+            systemBars.bottom + initialBottomPadding
         )
 
         insets

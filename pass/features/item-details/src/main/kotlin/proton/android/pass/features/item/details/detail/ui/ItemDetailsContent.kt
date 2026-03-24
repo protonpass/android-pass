@@ -35,6 +35,7 @@ import proton.android.pass.features.item.details.detail.ui.ItemDetailsUiEvent.On
 import proton.android.pass.features.item.details.detail.ui.ItemDetailsUiEvent.OnUpgrade
 import proton.android.pass.features.item.details.detail.ui.ItemDetailsUiEvent.OnViewAliasItem
 import proton.android.pass.features.item.details.detail.ui.ItemDetailsUiEvent.OnViewItemHistoryClicked
+import proton.android.pass.features.item.details.detail.ui.ItemDetailsUiEvent.OnReusedPasswordItemClicked
 import proton.android.pass.features.item.details.detail.ui.ItemDetailsUiEvent.OnViewReusedPasswords
 import proton.android.pass.features.item.details.detail.ui.ItemDetailsUiEvent.OnWifiNetworkQRClick
 
@@ -154,6 +155,14 @@ internal fun ItemDetailsContent(
                                 OnViewReusedPasswords(
                                     shareId = shareId,
                                     itemId = itemId
+                                )
+                            )
+
+                        is PassItemDetailsUiEvent.OnReusedPasswordItemClick ->
+                            onEvent(
+                                OnReusedPasswordItemClicked(
+                                    shareId = uiEvent.shareId,
+                                    itemId = uiEvent.itemId
                                 )
                             )
 

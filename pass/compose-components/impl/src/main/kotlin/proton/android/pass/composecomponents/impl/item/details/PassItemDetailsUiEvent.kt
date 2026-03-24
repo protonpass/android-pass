@@ -57,6 +57,8 @@ sealed interface PassItemDetailsUiEvent {
 
     data object OnShowReusedPasswords : PassItemDetailsUiEvent
 
+    data class OnReusedPasswordItemClick(val shareId: ShareId, val itemId: ItemId) : PassItemDetailsUiEvent
+
     data class OnViewAliasClick(val shareId: ShareId, val itemId: ItemId) : PassItemDetailsUiEvent
 
     data object OnUpgrade : PassItemDetailsUiEvent

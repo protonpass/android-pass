@@ -33,7 +33,7 @@ import proton.android.pass.features.alias.contacts.options.ui.OptionsAliasBottom
 import proton.android.pass.features.alias.contacts.options.ui.OptionsAliasBottomSheetUiEvent.OnDeleteContactClicked
 import proton.android.pass.features.alias.contacts.options.ui.OptionsAliasBottomSheetUiEvent.OnSendEmailClicked
 import proton.android.pass.features.alias.contacts.options.ui.OptionsAliasBottomSheetUiEvent.OnUnblockContactClicked
-import proton.android.pass.features.alias.contacts.sendEmailIntent
+import proton.android.pass.commonui.api.EmailUtils
 
 @Composable
 fun OptionsAliasContactBottomSheet(
@@ -49,7 +49,7 @@ fun OptionsAliasContactBottomSheet(
             OptionsAliasEvent.Close -> onNavigate(AliasContactsNavigation.CloseBottomSheet)
             OptionsAliasEvent.Idle -> {}
             is OptionsAliasEvent.SendEmail -> {
-                sendEmailIntent(context, event.email)
+                EmailUtils.sendEmail(context, event.email)
                 onNavigate(AliasContactsNavigation.CloseBottomSheet)
             }
         }

@@ -49,6 +49,7 @@ import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.navigation.api.CommonOptionalNavArgId
 import proton.android.pass.notifications.fakes.FakeSnackbarDispatcher
 import proton.android.pass.preferences.FakeFeatureFlagsPreferenceRepository
+import proton.android.pass.telemetry.fakes.FakeTelemetryManager
 import proton.android.pass.preferences.FakePreferenceRepository
 import proton.android.pass.preferences.UseFaviconsPreference
 import proton.android.pass.test.MainDispatcherRule
@@ -267,6 +268,7 @@ internal class SharingSummaryViewModelTest {
             getUserPlan = FakeGetUserPlan(),
             observeItemById = observeItemById,
             inviteToItem = inviteToItem,
+            telemetryManager = FakeTelemetryManager(),
             encryptionContextProvider = encryptionContextProvider,
             userPreferencesRepository = userPreferencesRepository,
             featureFlagsPreferencesRepository = FakeFeatureFlagsPreferenceRepository()

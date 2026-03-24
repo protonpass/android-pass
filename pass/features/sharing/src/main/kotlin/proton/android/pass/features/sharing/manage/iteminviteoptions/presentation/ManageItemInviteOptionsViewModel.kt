@@ -36,12 +36,15 @@ import proton.android.pass.data.api.usecases.CancelShareInvite
 import proton.android.pass.data.api.usecases.ResendShareInvite
 import proton.android.pass.domain.InviteId
 import proton.android.pass.domain.ShareId
+import proton.android.pass.features.sharing.InviteDelete
 import proton.android.pass.features.sharing.SharingSnackbarMessage
+import proton.android.pass.features.sharing.TARGET_TYPE_ITEM
 import proton.android.pass.features.sharing.manage.bottomsheet.InviteIdArg
 import proton.android.pass.features.sharing.manage.bottomsheet.IsNewUserInviteArg
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.notifications.api.SnackbarDispatcher
+import proton.android.pass.telemetry.api.TelemetryManager
 import javax.inject.Inject
 
 @HiltViewModel
@@ -49,7 +52,8 @@ class ManageItemInviteOptionsViewModel @Inject constructor(
     savedStateHandleProvider: SavedStateHandleProvider,
     private val resendShareInvite: ResendShareInvite,
     private val cancelShareInvite: CancelShareInvite,
-    private val snackbarDispatcher: SnackbarDispatcher
+    private val snackbarDispatcher: SnackbarDispatcher,
+    private val telemetryManager: TelemetryManager
 ) : ViewModel() {
 
     private val shareId: ShareId = savedStateHandleProvider.get()
@@ -129,6 +133,7 @@ class ManageItemInviteOptionsViewModel @Inject constructor(
                     snackbarDispatcher(SharingSnackbarMessage.CancelInviteError)
                 }
                 .onSuccess {
+                    telemetryManager.sendEvent(InviteDelete(TARGET_TYPE_ITEM))
                     eventFlow.update { ManageItemInviteOptionsEvent.OnCancelInviteSuccess }
                     snackbarDispatcher(SharingSnackbarMessage.CancelInviteSuccess)
                 }

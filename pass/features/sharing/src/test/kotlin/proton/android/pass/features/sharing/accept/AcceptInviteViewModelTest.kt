@@ -32,6 +32,7 @@ import proton.android.pass.data.api.errors.CannotCreateMoreVaultsError
 import proton.android.pass.data.api.usecases.AcceptInviteStatus
 import proton.android.pass.data.fakes.usecases.FakeAcceptInvite
 import proton.android.pass.data.fakes.usecases.FakeObserveCurrentUser
+import proton.android.pass.data.fakes.usecases.FakeGetItemById
 import proton.android.pass.data.fakes.usecases.FakeRejectInvite
 import proton.android.pass.data.fakes.usecases.invites.FakeObserveInvite
 import proton.android.pass.data.fakes.repositories.FakeGroupRepository
@@ -43,6 +44,7 @@ import proton.android.pass.domain.ShareType
 import proton.android.pass.features.sharing.SharingSnackbarMessage
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.notifications.fakes.FakeSnackbarDispatcher
+import proton.android.pass.telemetry.fakes.FakeTelemetryManager
 import proton.android.pass.test.MainDispatcherRule
 import proton.android.pass.test.domain.GroupTestFactory
 import proton.android.pass.test.domain.ItemTestFactory
@@ -60,7 +62,9 @@ internal class AcceptInviteViewModelTest {
     private lateinit var groupRepository: FakeGroupRepository
     private lateinit var acceptInvite: FakeAcceptInvite
     private lateinit var rejectInvite: FakeRejectInvite
+    private lateinit var getItemById: FakeGetItemById
     private lateinit var snackbarDispatcher: FakeSnackbarDispatcher
+    private lateinit var telemetryManager: FakeTelemetryManager
 
     private lateinit var viewModel: AcceptInviteViewModel
 
@@ -74,7 +78,11 @@ internal class AcceptInviteViewModelTest {
         groupRepository = FakeGroupRepository()
         acceptInvite = FakeAcceptInvite()
         rejectInvite = FakeRejectInvite()
+        getItemById = FakeGetItemById().apply {
+            emit(Result.success(ItemTestFactory.create()))
+        }
         snackbarDispatcher = FakeSnackbarDispatcher()
+        telemetryManager = FakeTelemetryManager()
 
         viewModel = AcceptInviteViewModel(
             savedStateHandleProvider = savedStateHandleProvider,
@@ -83,7 +91,9 @@ internal class AcceptInviteViewModelTest {
             groupRepository = groupRepository,
             acceptInvite = acceptInvite,
             rejectInvite = rejectInvite,
-            snackbarDispatcher = snackbarDispatcher
+            getItemById = getItemById,
+            snackbarDispatcher = snackbarDispatcher,
+            telemetryManager = telemetryManager
         )
 
         observeCurrentUser.sendUser(UserTestFactory.create(userId = USER_ID))

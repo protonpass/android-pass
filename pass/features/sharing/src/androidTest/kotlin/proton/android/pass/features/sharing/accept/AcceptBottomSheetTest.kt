@@ -29,15 +29,14 @@ import org.junit.Test
 import proton.android.pass.common.api.some
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.fakes.FakeSavedStateHandleProvider
-import proton.android.pass.data.fakes.usecases.FakeGetItemById
-import proton.android.pass.data.fakes.usecases.FakeObserveCurrentUser
 import proton.android.pass.data.fakes.usecases.FakeAcceptInvite
+import proton.android.pass.data.fakes.usecases.FakeObserveCurrentUser
+import proton.android.pass.data.fakes.usecases.FakeGetItemById
 import proton.android.pass.data.fakes.usecases.FakeRejectInvite
 import proton.android.pass.data.fakes.usecases.invites.FakeObserveInvite
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ItemType
 import proton.android.pass.domain.ShareId
-import proton.android.pass.domain.items.ItemCategory
 import proton.android.pass.features.sharing.R
 import proton.android.pass.features.sharing.SharingNavigation
 import proton.android.pass.navigation.api.CommonNavArgId

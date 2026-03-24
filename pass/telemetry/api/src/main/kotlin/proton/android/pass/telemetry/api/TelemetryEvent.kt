@@ -20,6 +20,7 @@ package proton.android.pass.telemetry.api
 
 import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.ItemType
+import proton.android.pass.domain.items.ItemCategory
 
 enum class EventItemType(val itemTypeName: String) {
     Login("login"),
@@ -45,6 +46,19 @@ enum class EventItemType(val itemTypeName: String) {
             is ItemType.Custom -> Custom
             is ItemType.SSHKey -> WifiNetwork
             is ItemType.WifiNetwork -> SSHKey
+        }
+
+        fun from(itemCategory: ItemCategory): EventItemType = when (itemCategory) {
+            ItemCategory.Login -> Login
+            ItemCategory.Alias -> Alias
+            ItemCategory.Note -> Note
+            ItemCategory.Password -> Password
+            ItemCategory.CreditCard -> CreditCard
+            ItemCategory.Identity -> Identity
+            ItemCategory.Custom -> Custom
+            ItemCategory.WifiNetwork -> WifiNetwork
+            ItemCategory.SSHKey -> SSHKey
+            ItemCategory.Unknown -> Unknown
         }
 
         fun from(itemContents: ItemContents): EventItemType = when (itemContents) {

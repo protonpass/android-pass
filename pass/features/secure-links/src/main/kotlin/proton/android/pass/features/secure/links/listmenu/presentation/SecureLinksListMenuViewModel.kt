@@ -42,14 +42,19 @@ import proton.android.pass.common.api.some
 import proton.android.pass.common.api.toOption
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemAction
+import proton.android.pass.data.api.usecases.GetItemById
 import proton.android.pass.data.api.usecases.securelink.DeleteInactiveSecureLinks
 import proton.android.pass.data.api.usecases.securelink.DeleteSecureLink
 import proton.android.pass.data.api.usecases.securelink.ObserveSecureLink
 import proton.android.pass.domain.securelinks.SecureLinkId
+import proton.android.pass.features.secure.links.SecureInactiveLinkDelete
+import proton.android.pass.features.secure.links.SecureLinkDelete
 import proton.android.pass.features.secure.links.shared.navigation.SecureLinksLinkIdNavArgId
 import proton.android.pass.features.secure.links.shared.presentation.SecureLinksSharedSnackbarMessage
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.SnackbarDispatcher
+import proton.android.pass.telemetry.api.EventItemType
+import proton.android.pass.telemetry.api.TelemetryManager
 import javax.inject.Inject
 import kotlin.coroutines.cancellation.CancellationException
 
@@ -60,7 +65,9 @@ class SecureLinksListMenuViewModel @Inject constructor(
     private val clipboardManager: ClipboardManager,
     private val snackbarDispatcher: SnackbarDispatcher,
     private val deleteSecureLink: DeleteSecureLink,
-    private val deleteInactiveSecureLinks: DeleteInactiveSecureLinks
+    private val deleteInactiveSecureLinks: DeleteInactiveSecureLinks,
+    private val getItemById: GetItemById,
+    private val telemetryManager: TelemetryManager
 ) : ViewModel() {
 
     private val secureLinkIdOption: Option<SecureLinkId> = savedStateHandleProvider.get()
@@ -68,11 +75,23 @@ class SecureLinksListMenuViewModel @Inject constructor(
         ?.let(::SecureLinkId)
         .toOption()
 
+    private var eventItemType: EventItemType = EventItemType.Unknown
+
     private val secureLinkOptionFlow = when (secureLinkIdOption) {
         None -> flowOf(None)
         is Some -> oneShot {
             observeSecureLink(secureLinkIdOption.value)
                 .first()
+                .also { secureLink ->
+                    runCatching {
+                        getItemById(
+                            shareId = secureLink.shareId,
+                            itemId = secureLink.itemId
+                        )
+                    }.onSuccess { item ->
+                        eventItemType = EventItemType.from(item.itemType)
+                    }
+                }
                 .some()
         }
     }
@@ -131,6 +150,7 @@ class SecureLinksListMenuViewModel @Inject constructor(
                             eventFlow.update { SecureLinksListMenuEvent.OnDeleteLinkError }
                         }
                         .onSuccess {
+                            telemetryManager.sendEvent(SecureLinkDelete(eventItemType))
                             eventFlow.update { SecureLinksListMenuEvent.OnLinkDeleted }
                         }
 
@@ -154,10 +174,11 @@ class SecureLinksListMenuViewModel @Inject constructor(
                         SecureLinksSharedSnackbarMessage.InactiveLinksDeletionError
                     }.also { snackbarMessage -> snackbarDispatcher(snackbarMessage) }
 
-                    eventFlow.update { SecureLinksListMenuEvent.OnInactiveLinksDeleted }
+                    eventFlow.update { SecureLinksListMenuEvent.OnDeleteInactiveLinksError }
                 }
                 .onSuccess {
-                    eventFlow.update { SecureLinksListMenuEvent.OnDeleteInactiveLinksError }
+                    telemetryManager.sendEvent(SecureInactiveLinkDelete)
+                    eventFlow.update { SecureLinksListMenuEvent.OnInactiveLinksDeleted }
                 }
 
             actionFlow.update { BottomSheetItemAction.None }

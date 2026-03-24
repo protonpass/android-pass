@@ -33,21 +33,27 @@ import proton.android.pass.common.api.runCatching
 import proton.android.pass.common.api.toOption
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
+import proton.android.pass.data.api.usecases.GetItemById
 import proton.android.pass.data.api.usecases.securelink.GenerateSecureLink
 import proton.android.pass.data.api.usecases.securelink.SecureLinkOptions
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.securelinks.SecureLinkExpiration
+import proton.android.pass.features.secure.links.SecureLinkCreate
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.notifications.api.SnackbarDispatcher
+import proton.android.pass.telemetry.api.EventItemType
+import proton.android.pass.telemetry.api.TelemetryManager
 import javax.inject.Inject
 
 @HiltViewModel
 class SecureLinksCreateViewModel @Inject constructor(
     savedStateHandleProvider: SavedStateHandleProvider,
     private val generateSecureLink: GenerateSecureLink,
-    private val snackbarDispatcher: SnackbarDispatcher
+    private val getItemById: GetItemById,
+    private val snackbarDispatcher: SnackbarDispatcher,
+    private val telemetryManager: TelemetryManager
 ) : ViewModel() {
 
     private val shareId: ShareId = savedStateHandleProvider.get()
@@ -58,8 +64,20 @@ class SecureLinksCreateViewModel @Inject constructor(
         .require<String>(CommonNavArgId.ItemId.key)
         .let(::ItemId)
 
+    private var eventItemType: EventItemType = EventItemType.Unknown
+
     private var _state = MutableStateFlow(SecureLinksCreateState.Initial)
     internal val state: StateFlow<SecureLinksCreateState> = _state.asStateFlow()
+
+    init {
+        viewModelScope.launch {
+            runCatching {
+                getItemById(shareId = shareId, itemId = itemId)
+            }.onSuccess { item ->
+                eventItemType = EventItemType.from(item.itemType)
+            }
+        }
+    }
 
     internal fun onMaxViewsEnabled() {
         _state.update { currentState ->
@@ -115,6 +133,7 @@ class SecureLinksCreateViewModel @Inject constructor(
                 PassLogger.w(TAG, error)
                 snackbarDispatcher(SecureLinksCreateSnackbarMessage.GenerateSecureLinkError)
             }.onSuccess { secureLinkId ->
+                telemetryManager.sendEvent(SecureLinkCreate(eventItemType))
                 _state.update { currentState ->
                     currentState.copy(
                         event = SecureLinksCreateEvent.OnLinkGenerated(secureLinkId)

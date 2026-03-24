@@ -29,6 +29,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.rememberNavController
 import com.google.accompanist.navigation.material.ExperimentalMaterialNavigationApi
 import kotlinx.coroutines.Job
 import proton.android.pass.commonui.api.onBottomSheetDismissed
@@ -39,7 +40,7 @@ import proton.android.pass.features.credentials.passwords.creation.navigation.pa
 import proton.android.pass.features.credentials.passwords.creation.presentation.PasswordCredentialCreationState
 import proton.android.pass.features.itemcreate.login.CREATE_LOGIN_GRAPH
 import proton.android.pass.features.selectitem.navigation.SelectItem
-import proton.android.pass.navigation.api.rememberAppNavigator
+import proton.android.pass.navigation.api.AppNavigator
 import proton.android.pass.navigation.api.rememberBottomSheetNavigator
 
 @[Composable OptIn(ExperimentalMaterialNavigationApi::class)]
@@ -48,47 +49,76 @@ internal fun PasswordCredentialCreationContent(
     state: PasswordCredentialCreationState.Ready,
     onNavigate: (PasswordCredentialCreationNavEvent) -> Unit
 ) = with(state) {
-    val bottomSheetState = rememberModalBottomSheetState(
-        initialValue = ModalBottomSheetValue.Hidden,
-        skipHalfExpanded = true
-    )
-
-    val appNavigator = rememberAppNavigator(
-        bottomSheetNavigator = rememberBottomSheetNavigator(bottomSheetState)
-    )
-
-    val startDestination = remember(key1 = isBiometricAuthRequired, key2 = hasSingleAccount) {
-        when {
-            isBiometricAuthRequired -> AUTH_GRAPH
-            hasSingleAccount -> CREATE_LOGIN_GRAPH
-            else -> SelectItem.route
-        }
-    }
-
-    val bottomSheetJob: MutableState<Job?> = remember { mutableStateOf(null) }
-
     val coroutineScope = rememberCoroutineScope()
 
-    PassModalBottomSheetLayout(bottomSheetNavigator = appNavigator.passBottomSheetNavigator) {
-        NavHost(
-            modifier = modifier.defaultMinSize(minHeight = 200.dp),
-            navController = appNavigator.navController,
-            startDestination = startDestination
-        ) {
-            passwordCredentialCreationNavGraph(
-                appNavigator = appNavigator,
-                initialCreateLoginUiState = initialCreateLoginUiState,
-                selectItemState = selectItemState,
-                onNavigate = onNavigate,
-                dismissBottomSheet = { block ->
-                    onBottomSheetDismissed(
-                        coroutineScope = coroutineScope,
-                        modalBottomSheetState = bottomSheetState,
-                        dismissJob = bottomSheetJob,
-                        block = block
-                    )
-                }
-            )
+    if (isBiometricAuthRequired) {
+        val bottomSheetJob: MutableState<Job?> = remember { mutableStateOf(null) }
+        val bottomSheetState = rememberModalBottomSheetState(
+            initialValue = ModalBottomSheetValue.Hidden,
+            skipHalfExpanded = true
+        )
+        val bottomSheetNavigator = rememberBottomSheetNavigator(bottomSheetState)
+        val navController = rememberNavController(bottomSheetNavigator)
+        val appNavigator = remember(navController, bottomSheetNavigator) {
+            AppNavigator(navController, bottomSheetNavigator)
+        }
+
+        PassModalBottomSheetLayout(bottomSheetNavigator = appNavigator.passBottomSheetNavigator) {
+            NavHost(
+                modifier = modifier.defaultMinSize(minHeight = 200.dp),
+                navController = appNavigator.navController,
+                startDestination = AUTH_GRAPH
+            ) {
+                passwordCredentialCreationNavGraph(
+                    appNavigator = appNavigator,
+                    initialCreateLoginUiState = initialCreateLoginUiState,
+                    selectItemState = selectItemState,
+                    onNavigate = onNavigate,
+                    dismissBottomSheet = { block ->
+                        onBottomSheetDismissed(
+                            coroutineScope = coroutineScope,
+                            modalBottomSheetState = bottomSheetState,
+                            dismissJob = bottomSheetJob,
+                            block = block
+                        )
+                    }
+                )
+            }
+        }
+    } else {
+        val startDestination = if (hasSingleAccount) CREATE_LOGIN_GRAPH else SelectItem.route
+        val bottomSheetJob: MutableState<Job?> = remember { mutableStateOf(null) }
+        val bottomSheetState = rememberModalBottomSheetState(
+            initialValue = ModalBottomSheetValue.Hidden,
+            skipHalfExpanded = true
+        )
+        val bottomSheetNavigator = rememberBottomSheetNavigator(bottomSheetState)
+        val navController = rememberNavController(bottomSheetNavigator)
+        val appNavigator = remember(navController, bottomSheetNavigator) {
+            AppNavigator(navController, bottomSheetNavigator)
+        }
+
+        PassModalBottomSheetLayout(bottomSheetNavigator = appNavigator.passBottomSheetNavigator) {
+            NavHost(
+                modifier = modifier.defaultMinSize(minHeight = 200.dp),
+                navController = appNavigator.navController,
+                startDestination = startDestination
+            ) {
+                passwordCredentialCreationNavGraph(
+                    appNavigator = appNavigator,
+                    initialCreateLoginUiState = initialCreateLoginUiState,
+                    selectItemState = selectItemState,
+                    onNavigate = onNavigate,
+                    dismissBottomSheet = { block ->
+                        onBottomSheetDismissed(
+                            coroutineScope = coroutineScope,
+                            modalBottomSheetState = bottomSheetState,
+                            dismissJob = bottomSheetJob,
+                            block = block
+                        )
+                    }
+                )
+            }
         }
     }
 }

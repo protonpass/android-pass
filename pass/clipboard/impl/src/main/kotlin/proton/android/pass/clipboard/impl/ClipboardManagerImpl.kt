@@ -59,9 +59,15 @@ class ClipboardManagerImpl @Inject constructor(
         if (isSecure) {
             applySecureFlag(clipData)
         }
-        runBlocking(Dispatchers.IO) {
-            androidClipboard.setPrimaryClip(clipData)
-        }
+        val copied = runCatching {
+            runBlocking(Dispatchers.IO) {
+                androidClipboard.setPrimaryClip(clipData)
+            }
+        }.onFailure {
+            PassLogger.w(TAG, "Could not copy to clipboard")
+            PassLogger.w(TAG, it)
+        }.isSuccess
+        if (!copied) return
         when (runBlocking { clearClipboardPreferenceFlow.first() }) {
             ClearClipboardPreference.Never -> {}
             ClearClipboardPreference.S60 -> scheduler.schedule(1.minutes.inWholeSeconds, text)

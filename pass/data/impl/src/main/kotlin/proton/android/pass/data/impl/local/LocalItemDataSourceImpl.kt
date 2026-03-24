@@ -94,7 +94,7 @@ class LocalItemDataSourceImpl @Inject constructor(
             applyItemIds = false,
             itemTypes = itemTypes,
             applyItemTypes = itemTypes != null,
-            itemState = null,
+            itemState = ItemState.Active.value,
             isPinned = true,
             hasTotp = null,
             hasPasskeys = null,

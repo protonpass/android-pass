@@ -149,7 +149,7 @@ class ShareRepositoryImpl @Inject constructor(
 
         return encryptionContextProvider.withEncryptionContextSuspendable {
             responseAsEntity.toDomain(this@withEncryptionContextSuspendable)
-        }
+        } ?: throw IllegalStateException("Failed to parse created vault share ${responseAsEntity.id}")
     }
 
     override suspend fun deleteVault(userId: UserId, shareId: ShareId) {
@@ -162,7 +162,7 @@ class ShareRepositoryImpl @Inject constructor(
         localShareDataSource.observeAllActiveSharesForUser(userId, includeHidden)
             .map { shares ->
                 encryptionContextProvider.withEncryptionContextSuspendable {
-                    shares.map { share ->
+                    shares.mapNotNull { share ->
                         share.toDomain(this@withEncryptionContextSuspendable)
                     }
                 }
@@ -178,7 +178,7 @@ class ShareRepositoryImpl @Inject constructor(
     ): Flow<List<Share>> = localShareDataSource.observeByType(userId, shareType, includeHidden)
         .map { shares ->
             encryptionContextProvider.withEncryptionContextSuspendable {
-                shares.map { share ->
+                shares.mapNotNull { share ->
                     share.toDomain(this@withEncryptionContextSuspendable)
                 }
             }
@@ -338,7 +338,7 @@ class ShareRepositoryImpl @Inject constructor(
 
                 encryptionContextProvider.withEncryptionContextSuspendable {
                     shareEntity.toDomain(this@withEncryptionContextSuspendable)
-                }
+                } ?: throw ShareNotAvailableError()
             }
 
     override suspend fun updateVault(
@@ -377,7 +377,7 @@ class ShareRepositoryImpl @Inject constructor(
 
         return encryptionContextProvider.withEncryptionContextSuspendable {
             shareEntity.toDomain(this@withEncryptionContextSuspendable)
-        }
+        } ?: throw IllegalStateException("Failed to parse updated vault share ${shareEntity.id}")
     }
 
     override suspend fun recreateShare(
@@ -628,61 +628,66 @@ class ShareRepositoryImpl @Inject constructor(
         return EncryptionKeyStatus.Found(EncryptionKey(decrypted))
     }
 
-    private fun ShareEntity.toDomain(encryptionContext: EncryptionContext): Share = when (ShareType.from(targetType)) {
-        ShareType.Item -> {
-            Share.Item(
-                id = ShareId(id),
-                userId = UserId(userId),
-                targetId = targetId,
-                permission = SharePermission(permission),
-                vaultId = VaultId(vaultId),
-                groupId = groupId?.let(::GroupId),
-                expirationTime = expirationTime?.let { Date(it) },
-                createTime = createTime.toDate(),
-                shareRole = ShareRole.fromValue(shareRoleId),
-                isOwner = owner,
-                memberCount = targetMembers,
-                shared = shared,
-                pendingInvites = pendingInvites,
-                newUserInvitesReady = newUserInvitesReady,
-                maxMembers = targetMaxMembers,
-                canAutofill = canAutofill,
-                shareFlags = ShareFlags(flags),
-                groupEmail = groupEmail
-            )
-        }
+    private fun ShareEntity.toDomain(encryptionContext: EncryptionContext): Share? = when (ShareType.from(targetType)) {
+        ShareType.Item -> toItemShare()
+        ShareType.Vault -> toVaultShare(encryptionContext)
+    }
 
-        ShareType.Vault -> {
-            encryptedContent?.let { vaultEncryptedContent ->
-                encryptionContext.decrypt(vaultEncryptedContent)
-                    .let(VaultV1.Vault::parseFrom)
-                    .let { vault ->
-                        Share.Vault(
-                            id = ShareId(id),
-                            userId = UserId(userId),
-                            targetId = targetId,
-                            permission = SharePermission(permission),
-                            vaultId = VaultId(vaultId),
-                            groupId = groupId?.let(::GroupId),
-                            groupEmail = groupEmail,
-                            expirationTime = expirationTime?.let { Date(it) },
-                            createTime = createTime.toDate(),
-                            shareRole = ShareRole.fromValue(shareRoleId),
-                            isOwner = owner,
-                            memberCount = targetMembers,
-                            shared = shared,
-                            pendingInvites = pendingInvites,
-                            newUserInvitesReady = newUserInvitesReady,
-                            maxMembers = targetMaxMembers,
-                            canAutofill = canAutofill,
-                            name = vault.name,
-                            color = vault.display.color.toDomain(),
-                            icon = vault.display.icon.toDomain(),
-                            shareFlags = ShareFlags(flags)
-                        )
-                    }
-            } ?: throw IllegalStateException("Vault share without encrypted content")
+    private fun ShareEntity.toItemShare(): Share.Item = Share.Item(
+        id = ShareId(id),
+        userId = UserId(userId),
+        targetId = targetId,
+        permission = SharePermission(permission),
+        vaultId = VaultId(vaultId),
+        groupId = groupId?.let(::GroupId),
+        expirationTime = expirationTime?.let { Date(it) },
+        createTime = createTime.toDate(),
+        shareRole = ShareRole.fromValue(shareRoleId),
+        isOwner = owner,
+        memberCount = targetMembers,
+        shared = shared,
+        pendingInvites = pendingInvites,
+        newUserInvitesReady = newUserInvitesReady,
+        maxMembers = targetMaxMembers,
+        canAutofill = canAutofill,
+        shareFlags = ShareFlags(flags),
+        groupEmail = groupEmail
+    )
+
+    private fun ShareEntity.toVaultShare(encryptionContext: EncryptionContext): Share.Vault? {
+        val vaultEncryptedContent = encryptedContent
+            ?: throw IllegalStateException("Vault share without encrypted content")
+        val vault = runCatching {
+            encryptionContext.decrypt(vaultEncryptedContent)
+                .let(VaultV1.Vault::parseFrom)
+        }.getOrElse { e ->
+            PassLogger.w(TAG, "Failed to parse vault proto for share $id, skipping")
+            PassLogger.w(TAG, e)
+            return null
         }
+        return Share.Vault(
+            id = ShareId(id),
+            userId = UserId(userId),
+            targetId = targetId,
+            permission = SharePermission(permission),
+            vaultId = VaultId(vaultId),
+            groupId = groupId?.let(::GroupId),
+            groupEmail = groupEmail,
+            expirationTime = expirationTime?.let { Date(it) },
+            createTime = createTime.toDate(),
+            shareRole = ShareRole.fromValue(shareRoleId),
+            isOwner = owner,
+            memberCount = targetMembers,
+            shared = shared,
+            pendingInvites = pendingInvites,
+            newUserInvitesReady = newUserInvitesReady,
+            maxMembers = targetMaxMembers,
+            canAutofill = canAutofill,
+            name = vault.name,
+            color = vault.display.color.toDomain(),
+            icon = vault.display.icon.toDomain(),
+            shareFlags = ShareFlags(flags)
+        )
     }
 
     private suspend fun createVaultRequest(

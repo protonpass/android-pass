@@ -30,11 +30,12 @@ class QrCodeImageAnalyzer(
 ) : ImageAnalysis.Analyzer {
 
     override fun analyze(image: ImageProxy) {
+        val yPlane = image.planes[0]
         val source = PlanarYUVLuminanceSource(
             /* yuvData = */
-            image.planes[0].buffer.toByteArray(),
+            yPlane.buffer.toByteArray(),
             /* dataWidth = */
-            image.width,
+            yPlane.rowStride,
             /* dataHeight = */
             image.height,
             /* left = */

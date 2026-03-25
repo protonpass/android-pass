@@ -55,7 +55,7 @@ class RejectInviteImpl @Inject constructor(
             }
             .first()
         if (pendingInvite != null) {
-            groupInviteRepository.rejectGroupInvite(userId, pendingInvite.inviteToken)
+            groupInviteRepository.rejectGroupInvite(userId, inviteId, pendingInvite.inviteToken)
         } else {
             error("No pending invite found")
         }

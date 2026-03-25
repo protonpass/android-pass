@@ -100,8 +100,13 @@ class GroupInviteRepositoryImpl @Inject constructor(
         localGroupInviteDataSource.removeInvite(userId, inviteId)
     }
 
-    override suspend fun rejectGroupInvite(userId: UserId, inviteToken: InviteToken) {
+    override suspend fun rejectGroupInvite(
+        userId: UserId,
+        inviteId: InviteId,
+        inviteToken: InviteToken
+    ) {
         remoteGroupInviteDataSource.rejectGroupInvite(userId, inviteToken)
+        localGroupInviteDataSource.removeInvite(userId, inviteId)
     }
 
     private suspend fun refreshInvites(userId: UserId, eventToken: EventToken?): Boolean = coroutineScope {

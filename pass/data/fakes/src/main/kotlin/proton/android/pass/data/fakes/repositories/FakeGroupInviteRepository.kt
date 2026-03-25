@@ -44,6 +44,10 @@ class FakeGroupInviteRepository @Inject constructor() : GroupInviteRepository {
     ) {
     }
 
-    override suspend fun rejectGroupInvite(userId: UserId, inviteToken: InviteToken) {
+    override suspend fun rejectGroupInvite(
+        userId: UserId,
+        inviteId: InviteId,
+        inviteToken: InviteToken
+    ) {
     }
 }

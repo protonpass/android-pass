@@ -55,13 +55,17 @@ class ShareMembersRepositoryImpl @Inject constructor(
         itemId: ItemId,
         userEmail: String?
     ): Flow<List<ShareMember>> = flow {
-        remoteDataSource.getShareItemMembers(userId, shareId, itemId)
-            .map { shareMemberResponse ->
-                shareMemberResponse.toDomain(userEmail)
-            }
-            .also { shareMembers ->
-                localDataSource.upsertShareMembers(userId, shareId, shareMembers)
-            }
+        val itemMembers = remoteDataSource.getShareItemMembers(userId, shareId, itemId)
+            .map { it.toDomain(userEmail) }
+
+        val vaultGroupMembers = remoteDataSource.getShareMembers(userId, shareId)
+            .filter { it.isGroupShare }
+            .map { it.toDomain(userEmail) }
+
+        val itemMemberIds = itemMembers.mapTo(HashSet()) { it.shareId }
+        val mergedMembers = itemMembers + vaultGroupMembers.filter { it.shareId !in itemMemberIds }
+
+        localDataSource.upsertShareMembers(userId, shareId, mergedMembers)
 
         emitAll(localDataSource.observeShareMembers(userId, shareId))
     }

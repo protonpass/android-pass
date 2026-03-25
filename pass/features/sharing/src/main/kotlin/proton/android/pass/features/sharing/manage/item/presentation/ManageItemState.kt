@@ -20,6 +20,8 @@ package proton.android.pass.features.sharing.manage.item.presentation
 
 import androidx.compose.runtime.Stable
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
+import proton.android.pass.data.api.usecases.GroupMembers
+import proton.android.pass.domain.GroupId
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.Share
 import proton.android.pass.domain.organizations.OrganizationSharingPolicy
@@ -48,7 +50,8 @@ internal sealed interface ManageItemState {
         internal val itemsCount: Int,
         private val members: List<ShareMember>,
         private val isLoadingState: IsLoadingState,
-        private val organizationSharingPolicy: OrganizationSharingPolicy
+        private val organizationSharingPolicy: OrganizationSharingPolicy,
+        private val groupMembers: List<GroupMembers>
     ) : ManageItemState {
 
         internal val itemMembers: List<ShareMember> = members.filter { it.isItemMember }
@@ -70,6 +73,14 @@ internal sealed interface ManageItemState {
         internal val canInviteMoreToVault = true
 
         internal val isRenameAdminToManagerEnabled = false
+
+        internal val groupsByEmail: Map<String, GroupMembers> = groupMembers
+            .mapNotNull { gm -> gm.group.groupEmail?.let { email -> email to gm } }
+            .toMap()
+
+        internal fun groupIdFor(member: ShareMember): GroupId? = groupsByEmail[member.email]?.group?.id
+
+        internal fun memberCountFor(member: ShareMember): Int = groupsByEmail[member.email]?.members?.size ?: 0
 
     }
 

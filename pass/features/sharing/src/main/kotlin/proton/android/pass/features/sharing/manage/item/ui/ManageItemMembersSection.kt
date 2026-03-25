@@ -30,6 +30,8 @@ import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.composecomponents.impl.container.roundedContainerNorm
 import proton.android.pass.composecomponents.impl.form.PassDivider
 import proton.android.pass.composecomponents.impl.text.Text
+import proton.android.pass.data.api.usecases.GroupMembers
+import proton.android.pass.domain.GroupId
 import proton.android.pass.domain.Vault
 import proton.android.pass.domain.shares.ShareMember
 import proton.android.pass.domain.shares.SharePendingInvite
@@ -46,8 +48,10 @@ internal fun ManageItemMembersSection(
     pendingInvites: List<SharePendingInvite>,
     members: List<ShareMember>,
     isRenameAdminToManagerEnabled: Boolean,
+    groupsByEmail: Map<String, GroupMembers> = emptyMap(),
     onPendingInviteMenuOptionsClick: (SharePendingInvite) -> Unit,
     onMemberMenuOptionsClick: (ShareMember) -> Unit,
+    onViewGroupMembersClick: (GroupId) -> Unit = {},
     onInviteMoreClick: () -> Unit
 ) {
     Column(
@@ -99,12 +103,17 @@ internal fun ManageItemMembersSection(
             }
 
             members.forEachIndexed { index, member ->
+                val groupInfo = groupsByEmail[member.email]
                 ManageItemMemberRow(
                     member = member,
                     canAdmin = isShareAdmin,
                     hasVaultAccess = vaultOption is Some,
                     isRenameAdminToManagerEnabled = isRenameAdminToManagerEnabled,
-                    onMenuOptionsClick = onMemberMenuOptionsClick
+                    groupId = groupInfo?.group?.id,
+                    groupName = groupInfo?.group?.name,
+                    memberCount = groupInfo?.members?.size ?: 0,
+                    onMenuOptionsClick = onMemberMenuOptionsClick,
+                    onViewGroupMembersClick = onViewGroupMembersClick
                 )
 
                 if (index < members.lastIndex) {

@@ -99,6 +99,10 @@ internal fun ManageItemScreen(
                         isGroup = uiEvent.member.isGroup
                     ).also(onNavigateEvent)
                 }
+
+                is ManageItemUiEvent.OnViewGroupMembersClick -> {
+                    SharingNavigation.GroupMembers(uiEvent.groupId).also(onNavigateEvent)
+                }
             }
         }
     )

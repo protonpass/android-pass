@@ -41,6 +41,10 @@ interface GroupInviteRepository {
         inviteToken: InviteToken
     )
 
-    suspend fun rejectGroupInvite(userId: UserId, inviteToken: InviteToken)
+    suspend fun rejectGroupInvite(
+        userId: UserId,
+        inviteId: InviteId,
+        inviteToken: InviteToken
+    )
 
 }

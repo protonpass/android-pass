@@ -192,6 +192,7 @@ fun CameraPreviewContent(
                 preview.setSurfaceProvider(view.surfaceProvider)
             }
         )
+        CameraPreviewMask(cutoutRect = cutoutRect)
         CameraPreviewTopBar(onOpenImagePicker = onOpenImagePicker, onDismiss = onDismiss)
     }
 }

@@ -85,7 +85,7 @@ class SecurityCenterReusedPassViewModel @Inject constructor(
         encryptionContextProvider.withEncryptionContext {
             map { item ->
                 item.toUiModel(this@withEncryptionContext).copy(isPinned = false)
-            }
+            }.sortedBy { it.contents.title.lowercase() }
         }
     }
 

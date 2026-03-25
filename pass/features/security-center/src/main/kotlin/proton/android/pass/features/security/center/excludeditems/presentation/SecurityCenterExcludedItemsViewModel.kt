@@ -65,7 +65,7 @@ class SecurityCenterExcludedItemsViewModel @Inject constructor(
         encryptionContextProvider.withEncryptionContext {
             excludedLoginItems.map { excludedLoginItem ->
                 excludedLoginItem.toUiModel(this@withEncryptionContext).copy(isPinned = false)
-            }
+            }.sortedBy { it.contents.title.lowercase() }
         }
     }
 

@@ -73,7 +73,7 @@ class SecurityCenterMissingTFAViewModel @Inject constructor(
     private fun List<Item>.toUiModels() = encryptionContextProvider.withEncryptionContext {
         map { item ->
             item.toUiModel(this@withEncryptionContext).copy(isPinned = false)
-        }
+        }.sortedBy { it.contents.title.lowercase() }
     }
 
 }

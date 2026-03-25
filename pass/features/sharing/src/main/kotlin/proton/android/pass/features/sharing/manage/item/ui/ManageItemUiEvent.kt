@@ -18,6 +18,7 @@
 
 package proton.android.pass.features.sharing.manage.item.ui
 
+import proton.android.pass.domain.GroupId
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.shares.ShareMember
@@ -49,5 +50,8 @@ internal sealed interface ManageItemUiEvent {
         internal val shareId: ShareId,
         internal val member: ShareMember
     ) : ManageItemUiEvent
+
+    @JvmInline
+    value class OnViewGroupMembersClick(internal val groupId: GroupId) : ManageItemUiEvent
 
 }

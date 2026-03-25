@@ -31,10 +31,13 @@ import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import proton.android.pass.common.api.FlowUtils.oneShot
+import proton.android.pass.common.api.asLoadingResult
 import proton.android.pass.common.api.combineN
+import proton.android.pass.common.api.getOrNull
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
+import proton.android.pass.data.api.usecases.ObserveGroupMembersByGroup
 import proton.android.pass.data.api.usecases.organization.ObserveOrganizationSharingPolicy
 import proton.android.pass.data.api.usecases.shares.ObserveShare
 import proton.android.pass.data.api.usecases.shares.ObserveShareItemMembers
@@ -56,6 +59,7 @@ class ManageItemViewModel @Inject constructor(
     observeSharePendingInvites: ObserveSharePendingInvites,
     observeShareItemsCount: ObserveShareItemsCount,
     observeOrganizationSharingPolicy: ObserveOrganizationSharingPolicy,
+    observeGroupMembersByGroup: ObserveGroupMembersByGroup,
     private val snackbarDispatcher: SnackbarDispatcher
 ) : ViewModel() {
 
@@ -109,6 +113,9 @@ class ManageItemViewModel @Inject constructor(
 
     private val isLoadingStateFlow = MutableStateFlow<IsLoadingState>(IsLoadingState.NotLoading)
 
+    private val groupMembersFlow = observeGroupMembersByGroup()
+        .asLoadingResult()
+
     internal val stateFlow: StateFlow<ManageItemState> = combineN(
         eventFlow,
         flowOf(itemId),
@@ -119,8 +126,22 @@ class ManageItemViewModel @Inject constructor(
         shareItemMembersFlow,
         isLoadingStateFlow,
         observeOrganizationSharingPolicy(),
-        ManageItemState::Success
-    ).stateIn(
+        groupMembersFlow
+    ) { event, itemId, share, itemPendingInvites, vaultPendingInvites,
+        itemsCount, members, loadingState, orgPolicy, groupMembersResult ->
+        ManageItemState.Success(
+            event = event,
+            itemId = itemId,
+            share = share,
+            itemPendingInvites = itemPendingInvites,
+            vaultPendingInvites = vaultPendingInvites,
+            itemsCount = itemsCount,
+            members = members,
+            isLoadingState = loadingState,
+            organizationSharingPolicy = orgPolicy,
+            groupMembers = groupMembersResult.getOrNull().orEmpty()
+        )
+    }.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5_000L),
         initialValue = ManageItemState.Loading

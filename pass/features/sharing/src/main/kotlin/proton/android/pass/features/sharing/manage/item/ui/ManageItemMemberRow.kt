@@ -19,6 +19,7 @@
 package proton.android.pass.features.sharing.manage.item.ui
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -30,6 +31,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Radius
@@ -37,9 +39,11 @@ import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.composecomponents.impl.container.CircleTextIcon
 import proton.android.pass.composecomponents.impl.item.icon.ThreeDotsMenuButton
 import proton.android.pass.composecomponents.impl.text.Text
+import proton.android.pass.domain.GroupId
 import proton.android.pass.domain.shares.ShareMember
 import proton.android.pass.features.sharing.R
 import proton.android.pass.features.sharing.common.toShortSummary
+import proton.android.pass.composecomponents.impl.R as CompR
 
 @Composable
 internal fun ManageItemMemberRow(
@@ -48,15 +52,21 @@ internal fun ManageItemMemberRow(
     canAdmin: Boolean,
     hasVaultAccess: Boolean,
     isRenameAdminToManagerEnabled: Boolean,
-    onMenuOptionsClick: (ShareMember) -> Unit
+    groupId: GroupId? = null,
+    groupName: String? = null,
+    memberCount: Int = 0,
+    onMenuOptionsClick: (ShareMember) -> Unit,
+    onViewGroupMembersClick: (GroupId) -> Unit = {}
 ) {
     val showMemberShareRole = remember(member.isItemMember, hasVaultAccess) {
         member.isItemMember || hasVaultAccess
     }
 
-    val showMemberOptions = remember(canAdmin, member.isOwner, member.isCurrentUser) {
-        canAdmin && !member.isOwner && !member.isCurrentUser
+    val showMemberOptions = remember(canAdmin, member.isOwner, member.isCurrentUser, member.isGroup) {
+        canAdmin && !member.isOwner && !member.isCurrentUser && !member.isGroup
     }
+
+    val displayName = if (member.isGroup) groupName ?: member.username else member.email
 
     Row(
         modifier = modifier
@@ -66,7 +76,7 @@ internal fun ManageItemMemberRow(
     ) {
         CircleTextIcon(
             modifier = Modifier.padding(start = Spacing.medium),
-            text = member.email,
+            text = displayName,
             backgroundColor = PassTheme.colors.interactionNormMinor1,
             textColor = PassTheme.colors.interactionNormMajor2,
             shape = PassTheme.shapes.squircleMediumShape
@@ -78,9 +88,21 @@ internal fun ManageItemMemberRow(
                 .weight(weight = 1f, fill = true),
             verticalArrangement = Arrangement.spacedBy(space = Spacing.extraSmall)
         ) {
-            Text.Body2Regular(
-                text = member.email
-            )
+            if (member.isGroup && memberCount > 0 && groupId != null) {
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(space = Spacing.extraSmall)
+                ) {
+                    Text.Body2Regular(text = displayName)
+                    Text.Body2Regular(
+                        modifier = Modifier.clickable { onViewGroupMembersClick(groupId) },
+                        text = "(${pluralStringResource(CompR.plurals.members_count, memberCount, memberCount)})",
+                        color = PassTheme.colors.interactionNormMajor2
+                    )
+                }
+            } else {
+                Text.Body2Regular(text = displayName)
+            }
 
             Row(
                 verticalAlignment = Alignment.CenterVertically,

@@ -187,6 +187,9 @@ sealed class Share {
     val canBeCreated: Boolean
         get() = shareRole.toPermissions().canCreate()
 
+    val canBeMonitored: Boolean
+        get() = isOwner || isAdmin || isEditor
+
     val isAdmin: Boolean
         get() = shareRole == ShareRole.Admin
 

@@ -19,26 +19,29 @@
 package proton.android.pass.data.impl.repository
 
 import com.google.common.truth.Truth.assertThat
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
 import me.proton.core.domain.entity.UserId
 import org.junit.Before
 import org.junit.Test
 import proton.android.pass.account.fakes.FakeUserAddressRepository
 import proton.android.pass.account.fakes.FakeUserRepository
+import proton.android.pass.crypto.fakes.context.FakeEncryptionContext
 import proton.android.pass.crypto.fakes.context.FakeEncryptionContextProvider
 import proton.android.pass.crypto.fakes.usecases.FakeCreateVault
 import proton.android.pass.data.fakes.repositories.FakeGroupRepository
 import proton.android.pass.data.fakes.repositories.FakeUserAccessDataRepository
-import proton.android.pass.data.impl.db.entities.ShareEntity
 import proton.android.pass.data.impl.fakes.FakeLocalShareDataSource
 import proton.android.pass.data.impl.fakes.FakePassDatabase
 import proton.android.pass.data.impl.fakes.FakeReencryptShareContents
+import proton.android.pass.data.impl.fakes.mother.ShareEntityTestFactory
 import proton.android.pass.data.impl.fakes.FakeRemoteShareDataSource
 import proton.android.pass.data.impl.fakes.FakeShareKeyRepository
 import proton.android.pass.data.impl.repositories.ShareRepositoryImpl
 import proton.android.pass.data.impl.responses.ShareResponse
 import proton.android.pass.domain.Share
 import proton.android.pass.test.domain.ShareTestFactory
+import proton_pass_vault_v1.VaultV1
 
 class ShareRepositoryTest {
 
@@ -131,12 +134,58 @@ class ShareRepositoryTest {
         assertThat(deleteMemory[0]).isEqualTo(setOf(share4.id))
     }
 
+    @Test
+    fun `observeAllShares skips vault with invalid proto and returns valid shares`() = runTest {
+        val userId = UserId(USER_ID)
+        val validVault = vaultEntityWithValidProto(id = "valid-vault")
+        val invalidVault = vaultEntityWithInvalidProto(id = "invalid-vault")
+
+        local.emitAllSharesForUser(listOf(validVault, invalidVault))
+
+        val shares = instance.observeAllShares(userId, includeHidden = false).first()
+
+        assertThat(shares).hasSize(1)
+        assertThat(shares[0].id.id).isEqualTo("valid-vault")
+    }
+
+    @Test
+    fun `observeAllShares returns empty list when all vaults have unparseable proto`() = runTest {
+        val userId = UserId(USER_ID)
+        local.emitAllSharesForUser(
+            listOf(
+                vaultEntityWithInvalidProto(id = "bad-vault-1"),
+                vaultEntityWithInvalidProto(id = "bad-vault-2")
+            )
+        )
+
+        val shares = instance.observeAllShares(userId, includeHidden = false).first()
+
+        assertThat(shares).isEmpty()
+    }
+
+    private fun vaultEntityWithValidProto(id: String) = ShareEntityTestFactory.Vault.create(
+        id = id,
+        userId = USER_ID,
+        addressId = "addressid-123",
+        encryptedContent = FakeEncryptionContext.encrypt(
+            VaultV1.Vault.newBuilder().setName("Test Vault").build().toByteArray()
+        )
+    )
+
+    private fun vaultEntityWithInvalidProto(id: String) = ShareEntityTestFactory.Vault.create(
+        id = id,
+        userId = USER_ID,
+        addressId = "addressid-123",
+        // 0xFF has wire type 7, which is reserved and causes InvalidProtocolBufferException
+        encryptedContent = FakeEncryptionContext.encrypt(byteArrayOf(0xFF.toByte()))
+    )
+
     private fun Share.toResponse(): ShareResponse = ShareResponse(
         shareId = id.id,
         vaultId = vaultId.id,
         groupId = groupId?.id,
         addressId = "addressid-123",
-        targetType = 1,
+        targetType = shareType.value,
         targetId = vaultId.id,
         permission = 1,
         content = null,
@@ -155,33 +204,44 @@ class ShareRepositoryTest {
         flags = shareFlags.value
     )
 
-    private fun Share.toEntity(): ShareEntity = ShareEntity(
-        id = id.id,
-        userId = USER_ID,
-        addressId = "addressid-123",
-        vaultId = vaultId.id,
-        groupId = groupId?.id,
-        groupEmail = groupEmail,
-        targetType = 1,
-        targetId = vaultId.id,
-        permission = 1,
-        content = null,
-        contentKeyRotation = null,
-        contentFormatVersion = null,
-        expirationTime = null,
-        createTime = 0,
-        encryptedContent = null,
-        isActive = true,
-        owner = isOwner,
-        shareRoleId = shareRole.value,
-        targetMembers = memberCount,
-        shared = shared,
-        targetMaxMembers = maxMembers,
-        newUserInvitesReady = newUserInvitesReady,
-        pendingInvites = pendingInvites,
-        canAutofill = canAutofill,
-        flags = shareFlags.value
-    )
+    private fun Share.toEntity() = when (this) {
+        is Share.Vault -> ShareEntityTestFactory.Vault.create(
+            id = id.id,
+            userId = USER_ID,
+            addressId = "addressid-123",
+            vaultId = vaultId.id,
+            groupId = groupId?.id,
+            groupEmail = groupEmail,
+            targetId = vaultId.id,
+            owner = isOwner,
+            shareRoleId = shareRole.value,
+            targetMembers = memberCount,
+            shared = shared,
+            targetMaxMembers = maxMembers,
+            pendingInvites = pendingInvites,
+            newUserInvitesReady = newUserInvitesReady,
+            canAutofill = canAutofill,
+            flags = shareFlags.value
+        )
+        is Share.Item -> ShareEntityTestFactory.Item.create(
+            id = id.id,
+            userId = USER_ID,
+            addressId = "addressid-123",
+            vaultId = vaultId.id,
+            groupId = groupId?.id,
+            groupEmail = groupEmail,
+            targetId = vaultId.id,
+            owner = isOwner,
+            shareRoleId = shareRole.value,
+            targetMembers = memberCount,
+            shared = shared,
+            targetMaxMembers = maxMembers,
+            pendingInvites = pendingInvites,
+            newUserInvitesReady = newUserInvitesReady,
+            canAutofill = canAutofill,
+            flags = shareFlags.value
+        )
+    }
 
     companion object {
         private const val USER_ID = "123456"

@@ -23,19 +23,36 @@ import com.google.zxing.BinaryBitmap
 import com.google.zxing.DecodeHintType
 import com.google.zxing.LuminanceSource
 import com.google.zxing.MultiFormatReader
-import com.google.zxing.NotFoundException
+import com.google.zxing.ReaderException
+import com.google.zxing.common.GlobalHistogramBinarizer
 import com.google.zxing.common.HybridBinarizer
 
 object ZxingWrapper {
-    private val reader = MultiFormatReader()
-        .apply {
-            setHints(mapOf(DecodeHintType.POSSIBLE_FORMATS to listOf(BarcodeFormat.QR_CODE)))
-        }
+    private val hints = mapOf(
+        DecodeHintType.POSSIBLE_FORMATS to listOf(BarcodeFormat.QR_CODE),
+        DecodeHintType.TRY_HARDER to true,
+        DecodeHintType.ALSO_INVERTED to true
+    )
 
-    fun tryReadingQrCode(source: LuminanceSource): Result<String> = try {
-        val binaryBitmap = BinaryBitmap(HybridBinarizer(source))
-        Result.success(reader.decodeWithState(binaryBitmap).text)
-    } catch (e: NotFoundException) {
-        Result.failure(e)
+    private val reader = MultiFormatReader().apply { setHints(hints) }
+
+    fun tryReadingQrCode(source: LuminanceSource): Result<String> {
+        // First pass: HybridBinarizer (better for real photos)
+        try {
+            val bitmap = BinaryBitmap(HybridBinarizer(source))
+            return Result.success(reader.decodeWithState(bitmap).text)
+        } catch (_: ReaderException) {
+        } finally {
+            reader.reset()
+        }
+        // Second pass: GlobalHistogramBinarizer (better for screens / low contrast)
+        return try {
+            val bitmap = BinaryBitmap(GlobalHistogramBinarizer(source))
+            Result.success(reader.decodeWithState(bitmap).text)
+        } catch (e: ReaderException) {
+            Result.failure(e)
+        } finally {
+            reader.reset()
+        }
     }
 }

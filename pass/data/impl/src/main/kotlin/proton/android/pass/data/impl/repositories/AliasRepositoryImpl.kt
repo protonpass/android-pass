@@ -173,12 +173,12 @@ class AliasRepositoryImpl @Inject constructor(
         itemId: ItemId
     ) {
         val response = remoteDataSource.fetchAliasDetails(userId, shareId, itemId)
-        response.note?.let {
-            val encryptedSlNote = encryptionContextProvider.withEncryptionContext {
-                encrypt(response.note)
+        val encryptedSlNote = response.note?.let {
+            encryptionContextProvider.withEncryptionContext {
+                encrypt(it)
             }
-            localItemDataSource.updateSlNote(userId, shareId, itemId, encryptedSlNote)
         }
+        localItemDataSource.updateSlNote(userId, shareId, itemId, encryptedSlNote)
     }
 
     override suspend fun refreshBulkAliasSlNotes(userId: UserId, shareIds: List<ShareId>) {
@@ -200,10 +200,8 @@ class AliasRepositoryImpl @Inject constructor(
                 encryptionContextProvider.withEncryptionContextSuspendable {
                     responses.forEach { aliasResponse ->
                         val itemId = emailToItemId[aliasResponse.email] ?: return@forEach
-                        aliasResponse.note?.let {
-                            val encryptedSlNote = encrypt(aliasResponse.note)
-                            localItemDataSource.updateSlNote(userId, shareId, itemId, encryptedSlNote)
-                        }
+                        val encryptedSlNote = aliasResponse.note?.let { encrypt(it) }
+                        localItemDataSource.updateSlNote(userId, shareId, itemId, encryptedSlNote)
                     }
                 }
             }

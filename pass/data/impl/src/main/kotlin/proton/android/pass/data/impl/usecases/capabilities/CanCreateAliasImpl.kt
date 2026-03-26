@@ -41,8 +41,8 @@ class CanCreateAliasImpl @Inject constructor(
                 is Some -> when (val settings = organizationSettingsOption.value) {
                     OrganizationSettings.NotAnOrganization -> true
                     is OrganizationSettings.Organization -> when (settings.aliasMode) {
-                        OrganizationAliasMode.Enabled -> true
-                        OrganizationAliasMode.Disabled -> false
+                        OrganizationAliasMode.AllowedForAllMembers -> true
+                        OrganizationAliasMode.Nobody -> false
                     }
                 }
             }

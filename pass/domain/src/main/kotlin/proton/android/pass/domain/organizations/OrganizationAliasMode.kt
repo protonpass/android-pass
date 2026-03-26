@@ -19,15 +19,15 @@
 package proton.android.pass.domain.organizations
 
 enum class OrganizationAliasMode(internal val value: Int) {
-    Enabled(value = 1),
-    Disabled(value = 0);
+    AllowedForAllMembers(value = 0),
+    Nobody(value = 1);
 
     companion object {
 
         fun fromValue(value: Int?): OrganizationAliasMode = when (value) {
-            Enabled.value -> Enabled
-            Disabled.value -> Disabled
-            else -> Enabled
+            AllowedForAllMembers.value -> AllowedForAllMembers
+            Nobody.value -> Nobody
+            else -> AllowedForAllMembers
         }
 
     }

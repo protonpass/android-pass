@@ -181,7 +181,7 @@ class NeedsAuthCheckerTest {
                 itemShareMode = OrganizationItemShareMode.Enabled,
                 secureLinkMode = OrganizationSecureLinkMode.Enabled
             ),
-            aliasMode = OrganizationAliasMode.Enabled
+            aliasMode = OrganizationAliasMode.AllowedForAllMembers
         )
         val now = Clock.System.now()
         val elevenMinutesAgo = now.minus(11.minutes)
@@ -214,7 +214,7 @@ class NeedsAuthCheckerTest {
                 itemShareMode = OrganizationItemShareMode.Enabled,
                 secureLinkMode = OrganizationSecureLinkMode.Enabled
             ),
-            aliasMode = OrganizationAliasMode.Enabled
+            aliasMode = OrganizationAliasMode.AllowedForAllMembers
         )
 
         val result = NeedsAuthChecker.needsAuth(

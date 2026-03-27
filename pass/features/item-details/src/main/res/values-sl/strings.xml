@@ -29,9 +29,9 @@
   <string name="item_details_forbidden_actions_share_trash">Tega predmeta ne morete dati v skupno rabo, ker je v smetnjaku. Pred urejanjem ga premaknite iz smetnjaka.</string>
   <!-- Item details leave item -->
   <string name="item_details_leave_dialog_title">Zapustim ta predmet?</string>
-  <string name="item_details_leave_dialog_message">You will lose access to this item and its details. Do you want to continue?</string>
-  <string name="item_details_leave_item_message_error">There was an error leaving the item</string>
-  <string name="item_details_leave_item_message_success">Item successfully left</string>
+  <string name="item_details_leave_dialog_message">Izgubili boste dostop do tega predmeta in do njegovih podrobnosti. Ali želite nadaljevati?</string>
+  <string name="item_details_leave_item_message_error">Pri zapuščanju predmeta je prišlo do napake</string>
+  <string name="item_details_leave_item_message_success">Predmet ste uspešno zapustili.</string>
   <string name="item_details_snackbar_message_alias_copied">Vzdevek je kopiran</string>
   <string name="item_details_snackbar_message_birthdate_copied">Rojstni datum kopiran</string>
   <string name="item_details_snackbar_message_card_number_copied">Številka kartice je kopirana</string>
@@ -65,11 +65,11 @@
   <string name="item_details_snackbar_message_totp_copied">TOTP je kopiran</string>
   <string name="item_details_snackbar_message_username_copied">Uporabniško ime je kopirano</string>
   <string name="item_details_snackbar_message_website_copied">Naslov spletne strani (URL) je kopiran</string>
-  <string name="item_details_snackbar_message_x_handle_copied">X handle copied</string>
+  <string name="item_details_snackbar_message_x_handle_copied">X uporabniško ime je kopirano</string>
   <string name="item_details_snackbar_message_yahoo_copied">Yahoo kopiran</string>
   <string name="item_details_snackbar_message_zip_or_postal_code_copied">Poštna številka je kopirana</string>
-  <string name="item_details_snackbar_message_public_key_copied">Public key copied</string>
-  <string name="item_details_snackbar_message_private_key_copied">Private key copied</string>
+  <string name="item_details_snackbar_message_public_key_copied">Javni ključ je kopiran</string>
+  <string name="item_details_snackbar_message_private_key_copied">Zasebni ključ je kopiran</string>
   <string name="item_details_snackbar_message_ssid_copied">SSID kopiran</string>
   <string name="open_with">Odpri z:</string>
   <string name="open_attachments_error">Ni bilo mogoče odpreti priponke</string>

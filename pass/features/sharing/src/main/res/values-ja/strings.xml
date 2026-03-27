@@ -134,6 +134,7 @@
   <string name="sharing_edit_permissions_set_access_level_all_members">すべてのメンバーのアクセスレベルを設定する</string>
   <string name="sharing_edit_permissions_set_access_level_single_member">%s のアクセスレベルを設定します</string>
   <string name="sharing_edit_permissions_remove_user">ユーザーを削除する</string>
+  <string name="sharing_edit_permissions_remove_group">Remove group</string>
   <string name="sharing_error_dialog_title">不明なエラー</string>
   <string name="sharing_error_dialog_message">この保管庫への招待の送信中にエラーが発生しました。 問題が解決しない場合は、カスタマーサポートサービスにお問い合わせください。</string>
   <string name="sharing_with_no_addresses_can_be_invited">招待できるアドレスがありません</string>

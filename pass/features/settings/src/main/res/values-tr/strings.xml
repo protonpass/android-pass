@@ -35,6 +35,13 @@
   <string name="settings_preference_display_username">Kullanıcı adı alanı her zaman görüntülensin</string>
   <string name="settings_preference_display_autofill_pinning">Otomatik doldurma sabitleme her zaman görüntülensin</string>
   <string name="view_logs_title">Günlüğü görüntüle</string>
+  <string name="view_logs_clear_logs">Günlük kayıtlarını temizle</string>
+  <string name="view_logs_clear_logs_confirmation_title">Günlük kayıtları temizlensin mi?</string>
+  <string name="view_logs_clear_logs_confirmation_message">Bu işlem şu anda bu aygıtta görüntülenen günlük kayıtlarını kalıcı olarak silecek.</string>
+  <string name="view_logs_share_logs">Günlükleri paylaş</string>
+  <string name="view_logs_load_older_logs">Eski günlük kayıtlarını yükle</string>
+  <string name="view_logs_loading_older_logs">Eski günlük kayıtları yükleniyor...</string>
+  <string name="view_logs_empty">Herhangi bir günlük kaydı bulunamadı</string>
   <string name="clipboard_bottomsheet_title">Pano</string>
   <string name="clipboard_option_clear_clipboard_label">Panoyu temizle</string>
   <string name="clipboard_option_copy_totp_code">Kimlik doğrulama kodlarını kopyala</string>
@@ -44,10 +51,10 @@
   <string name="clipboard_option_clear_clipboard_after_180_seconds">3 dakika sonra</string>
   <string name="settings_use_digital_asset_link_preference_title">Dijital varlık bağlantılarını aç</string>
   <string name="settings_use_digital_asset_link_preference_subtitle">Bir Android uygulaması ile bir site arasında sitenin sahipliğini doğrular.</string>
-  <string name="settings_autofill_display_title">Autofill display</string>
-  <string name="settings_autofill_display_inline">Inline (above keyboard)</string>
-  <string name="settings_autofill_display_popup">Popup (over input field)</string>
-  <string name="settings_autofill_display_subtitle">Inline mode requires a compatible keyboard (e.g. Gboard). If unsupported, popup mode will be used automatically.</string>
-  <string name="settings_autosave_prompt_title">Prompt for auto-save</string>
-  <string name="settings_autosave_prompt_subtitle">Proton Pass will prompt you to save or update logins</string>
+  <string name="settings_autofill_display_title">Otomatik doldurma görünümü</string>
+  <string name="settings_autofill_display_inline">Satır içi (klavyenin üstünde)</string>
+  <string name="settings_autofill_display_popup">Açılır pencere (giriş alanının üzerinde)</string>
+  <string name="settings_autofill_display_subtitle">Satır içi kip için uyumlu bir klavye (Gboard gibi) gereklidir. Bu kip desteklenmiyorsa otomatik olarak açılır pencere kipi kullanılır.</string>
+  <string name="settings_autosave_prompt_title">Otomatik kaydetme uyarısı</string>
+  <string name="settings_autosave_prompt_subtitle">Proton Pass oturum açma bilgilerini kaydetmeniz ya da güncellemeniz için sizi uyaracak</string>
 </resources>

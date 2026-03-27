@@ -5,8 +5,8 @@
     <item quantity="other">Flytta %d objekt till följande valv?</item>
   </plurals>
   <plurals name="migrate_item_to_folder_confirm_title_bottom_sheet">
-    <item quantity="one">Move %d item to the following folder?</item>
-    <item quantity="other">Move %d items to the following folder?</item>
+    <item quantity="one">Flytta %d objekt till följande mapp?</item>
+    <item quantity="other">Flytta %d objekt till följande mapp?</item>
   </plurals>
   <string name="migrate_all_items_confirm_title_bottom_sheet">Flytta alla objekt till följande valv?</string>
   <string name="migrate_item_confirm_confirm_button">Flytta</string>
@@ -24,8 +24,8 @@
   <string name="migrate_folder_error_snackbar">Fel vid flytt av mappen</string>
   <string name="migrate_folder_already_same_parent_snackbar">Mapp finns redan på denna plats</string>
   <plurals name="migrate_disabled_folder_reason_same_folder">
-    <item quantity="one">Item is already in this folder</item>
-    <item quantity="other">%d items are already in this folder</item>
+    <item quantity="one">Objekt är redan i denna mapp</item>
+    <item quantity="other">%d objekt är redan i denna mapp</item>
   </plurals>
   <string name="migrate_disabled_vault_reason_no_permission">Du kan inte skapa objekt i detta valv</string>
   <string name="migrate_disabled_vault_reason_same_vault">Du kan inte flytta ett objekt till samma valv</string>

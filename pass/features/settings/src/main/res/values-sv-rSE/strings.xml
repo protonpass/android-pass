@@ -35,6 +35,13 @@
   <string name="settings_preference_display_username">Fält för användarnamn alltid synligt</string>
   <string name="settings_preference_display_autofill_pinning">Autofyllfästning alltid synlig</string>
   <string name="view_logs_title">Visa loggar</string>
+  <string name="view_logs_clear_logs">Rensa loggar</string>
+  <string name="view_logs_clear_logs_confirmation_title">Rensa loggar?</string>
+  <string name="view_logs_clear_logs_confirmation_message">Detta kommer ta bort loggarna permanent som för närvarande visas på denna enhet.</string>
+  <string name="view_logs_share_logs">Dela loggar</string>
+  <string name="view_logs_load_older_logs">Ladda äldre loggar</string>
+  <string name="view_logs_loading_older_logs">Ladda äldre loggar …</string>
+  <string name="view_logs_empty">Inga loggar tillgängliga</string>
   <string name="clipboard_bottomsheet_title">Urklipp</string>
   <string name="clipboard_option_clear_clipboard_label">Rensa urklipp</string>
   <string name="clipboard_option_copy_totp_code">Kopiera autentiseringskoder</string>
@@ -46,8 +53,8 @@
   <string name="settings_use_digital_asset_link_preference_subtitle">Etablerar verifiering av webbplatsägande mellan en Android-app och en webbplats.</string>
   <string name="settings_autofill_display_title">Autofill display</string>
   <string name="settings_autofill_display_inline">Inline (above keyboard)</string>
-  <string name="settings_autofill_display_popup">Popup (over input field)</string>
+  <string name="settings_autofill_display_popup">Popup (ovan inmatningsfält)</string>
   <string name="settings_autofill_display_subtitle">Inline mode requires a compatible keyboard (e.g. Gboard). If unsupported, popup mode will be used automatically.</string>
-  <string name="settings_autosave_prompt_title">Prompt for auto-save</string>
-  <string name="settings_autosave_prompt_subtitle">Proton Pass will prompt you to save or update logins</string>
+  <string name="settings_autosave_prompt_title">Uppmana för spara automatiskt</string>
+  <string name="settings_autosave_prompt_subtitle">Proton Pass kommer uppmana dig att spara eller uppdatera inloggningar</string>
 </resources>

@@ -139,6 +139,7 @@
   <string name="sharing_edit_permissions_set_access_level_all_members">Stel toegangsniveau in voor alle leden</string>
   <string name="sharing_edit_permissions_set_access_level_single_member">Stel toegangsniveau in voor %s</string>
   <string name="sharing_edit_permissions_remove_user">Gebruiker verwijderen</string>
+  <string name="sharing_edit_permissions_remove_group">Groep verwijderen</string>
   <string name="sharing_error_dialog_title">Onbekende fout</string>
   <string name="sharing_error_dialog_message">Er is een fout opgetreden bij het verzenden van een uitnodiging voor deze kluis. Als het probleem zich blijft voordoen, neem dan contact op met de klantenservice.</string>
   <string name="sharing_with_no_addresses_can_be_invited">Adressen kunnen niet worden uitgenodigd</string>

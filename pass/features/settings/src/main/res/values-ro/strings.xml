@@ -35,6 +35,13 @@
   <string name="settings_preference_display_username">Câmp nume de utilizator permanent vizibil</string>
   <string name="settings_preference_display_autofill_pinning">Fixare autocompletare permanent vizibilă</string>
   <string name="view_logs_title">Afișare jurnale</string>
+  <string name="view_logs_clear_logs">Golire jurnale</string>
+  <string name="view_logs_clear_logs_confirmation_title">Goliți jurnalele?</string>
+  <string name="view_logs_clear_logs_confirmation_message">Aceasta va șterge permanent jurnalele afișate în prezent pe acest dispozitiv.</string>
+  <string name="view_logs_share_logs">Partajare jurnale</string>
+  <string name="view_logs_load_older_logs">Încărcare jurnale vechi</string>
+  <string name="view_logs_loading_older_logs">Se încarcă jurnalele vechi...</string>
+  <string name="view_logs_empty">Nu există jurnale disponibile</string>
   <string name="clipboard_bottomsheet_title">Memorie</string>
   <string name="clipboard_option_clear_clipboard_label">Golire memorie</string>
   <string name="clipboard_option_copy_totp_code">Copiere coduri de autentificare</string>
@@ -44,10 +51,10 @@
   <string name="clipboard_option_clear_clipboard_after_180_seconds">După 3 minute</string>
   <string name="settings_use_digital_asset_link_preference_title">Activare legături web active digitale</string>
   <string name="settings_use_digital_asset_link_preference_subtitle">Stabilește verificarea apartenenței site-ului web între o aplicație Android și un site web.</string>
-  <string name="settings_autofill_display_title">Autofill display</string>
-  <string name="settings_autofill_display_inline">Inline (above keyboard)</string>
-  <string name="settings_autofill_display_popup">Popup (over input field)</string>
-  <string name="settings_autofill_display_subtitle">Inline mode requires a compatible keyboard (e.g. Gboard). If unsupported, popup mode will be used automatically.</string>
-  <string name="settings_autosave_prompt_title">Prompt for auto-save</string>
-  <string name="settings_autosave_prompt_subtitle">Proton Pass will prompt you to save or update logins</string>
+  <string name="settings_autofill_display_title">Afișare completare automată</string>
+  <string name="settings_autofill_display_inline">Integrat (deasupra tastaturii)</string>
+  <string name="settings_autofill_display_popup">Flotant (peste câmpul de intrare)</string>
+  <string name="settings_autofill_display_subtitle">Modul integrat necesită o tastatură compatibilă (de ex. Gboard). Dacă nu este acceptat, modul flotant va fi utilizat automat.</string>
+  <string name="settings_autosave_prompt_title">Solicitare autosalvare</string>
+  <string name="settings_autosave_prompt_subtitle">Proton Pass vă va solicita să salvați sau să actualizați datele.</string>
 </resources>

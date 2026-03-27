@@ -35,6 +35,13 @@
   <string name="settings_preference_display_username">Поле імені користувача завжди видиме</string>
   <string name="settings_preference_display_autofill_pinning">Закріплення автозаповнення завжди видно</string>
   <string name="view_logs_title">Переглянути журнали</string>
+  <string name="view_logs_clear_logs">Clear logs</string>
+  <string name="view_logs_clear_logs_confirmation_title">Clear logs?</string>
+  <string name="view_logs_clear_logs_confirmation_message">This will permanently delete the logs currently shown on this device.</string>
+  <string name="view_logs_share_logs">Share logs</string>
+  <string name="view_logs_load_older_logs">Load older logs</string>
+  <string name="view_logs_loading_older_logs">Loading older logs...</string>
+  <string name="view_logs_empty">No logs available</string>
   <string name="clipboard_bottomsheet_title">Буфер обміну</string>
   <string name="clipboard_option_clear_clipboard_label">Очистити буфер обміну</string>
   <string name="clipboard_option_copy_totp_code">Копіювати коди автентифікації</string>

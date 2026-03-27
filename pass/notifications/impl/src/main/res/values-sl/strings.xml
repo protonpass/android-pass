@@ -4,12 +4,12 @@
   <string name="autofill_notification_channel_name">Samodejno izpolnjevanje</string>
   <string name="autofill_notification_copy_to_clipboard_title">TOTP koda</string>
   <string name="autofill_notification_copy_to_clipboard_body">TOTP je bil kopiran v odložišče</string>
-  <string name="new_item_invite_notification_title">New item invite received</string>
-  <string name="new_item_invite_notification_message" comment="the placeholder will be replaced by an email address">%s wants to share an item with you.</string>
-  <string name="new_vault_invite_notification_title">New vault invite received</string>
-  <string name="new_vault_invite_notification_message" comment="the placeholder will be replaced by an email address">%s wants to share a vault with you.</string>
-  <string name="new_group_item_invite_notification_title">New group item invite received</string>
-  <string name="new_group_item_invite_notification_message" comment="%1$s = inviter email, %2$s = group name">%1$s wants to share an item with your group %2$s.</string>
-  <string name="new_group_vault_invite_notification_title">New group vault invite received</string>
-  <string name="new_group_vault_invite_notification_message" comment="%1$s = inviter email, %2$s = group name">%1$s wants to share a vault with your group %2$s.</string>
+  <string name="new_item_invite_notification_title">Prejeto povabilo za nov predmet</string>
+  <string name="new_item_invite_notification_message" comment="the placeholder will be replaced by an email address">%s želi dati predmet v skupno rabo z vami.</string>
+  <string name="new_vault_invite_notification_title">Prejeto novo povabilo v trezor</string>
+  <string name="new_vault_invite_notification_message" comment="the placeholder will be replaced by an email address">%s želi deliti trezor s tabo.</string>
+  <string name="new_group_item_invite_notification_title">Prejeto povabilo za nov predmet skupine</string>
+  <string name="new_group_item_invite_notification_message" comment="%1$s = inviter email, %2$s = group name">%1$s želi deliti predmet z vašo skupino %2$s.</string>
+  <string name="new_group_vault_invite_notification_title">Prejeto povabilo za nov trezor skupine</string>
+  <string name="new_group_vault_invite_notification_message" comment="%1$s = inviter email, %2$s = group name">%1$s želi deliti trezor z vašo skupino %2$s.</string>
 </resources>

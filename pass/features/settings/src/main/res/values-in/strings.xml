@@ -35,6 +35,13 @@
   <string name="settings_preference_display_username">Kolom nama pengguna selalu terlihat</string>
   <string name="settings_preference_display_autofill_pinning">Penyematan pengisian otomatis selalu terlihat</string>
   <string name="view_logs_title">Lihat log</string>
+  <string name="view_logs_clear_logs">Clear logs</string>
+  <string name="view_logs_clear_logs_confirmation_title">Clear logs?</string>
+  <string name="view_logs_clear_logs_confirmation_message">This will permanently delete the logs currently shown on this device.</string>
+  <string name="view_logs_share_logs">Share logs</string>
+  <string name="view_logs_load_older_logs">Load older logs</string>
+  <string name="view_logs_loading_older_logs">Loading older logs...</string>
+  <string name="view_logs_empty">No logs available</string>
   <string name="clipboard_bottomsheet_title">Papan klip</string>
   <string name="clipboard_option_clear_clipboard_label">Bersihkan papan klip</string>
   <string name="clipboard_option_copy_totp_code">Salin kode autentikasi</string>

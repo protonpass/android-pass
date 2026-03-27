@@ -28,7 +28,7 @@
   <string name="simple_login_sync_management_mailbox_unverified">Ej verifierad brevlåda</string>
   <string name="simple_login_sync_management_mailbox_unverified_change">Ej verifierad ändring av brevlåda</string>
   <string name="simple_login_sync_management_vault_title">SimpleLogin-synkronisering</string>
-  <string name="simple_login_sync_management_no_vault_description">You need at least one vault to manage SimpleLogin sync settings.</string>
+  <string name="simple_login_sync_management_no_vault_description">Du behöver minst ett valv för att hantera synkroniseringsinställningar för SimpleLogin.</string>
   <string name="simple_login_sync_management_snackbar_alias_details_fetch_error">Ett fel uppstod vid hämtning av uppgifter för SL-alias</string>
   <string name="simple_login_sync_management_mailboxes_title">Standardbrevlåda för alias</string>
   <string name="simple_login_sync_management_dialog_title_domains">Standarddomän för alias</string>

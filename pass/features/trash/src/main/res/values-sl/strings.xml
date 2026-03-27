@@ -3,21 +3,21 @@
   <string name="bottomsheet_delete_permanently">Trajno izbriši</string>
   <string name="alert_confirm_delete_item_dialog_title">Trajno izbriši?</string>
   <string name="alert_confirm_delete_item_dialog_message">To dejanje je nepreklicno</string>
-  <string name="alert_confirm_delete_item_dialog_shared_warning_message">This item is currently shared. Deleting it to will remove access for all other users.</string>
+  <string name="alert_confirm_delete_item_dialog_shared_warning_message">Ta predmet je trenutno v skupni rabi. Če ga izbrišete, boste vsem drugim uporabnikom onemogočili dostop.</string>
   <string name="alias_dialog_move_to_trash_title">Premakni v smetnjak?</string>
   <string name="alias_dialog_move_to_trash_content">Če vzdevek premaknete v smetnjak, bo prenehal posredovati e-pošto v vaš nabiralnik.</string>
   <string name="alias_dialog_move_to_trash_confirm">Potrdi</string>
-  <string name="delete_alias_confirm">Delete it, I will never need it</string>
+  <string name="delete_alias_confirm">Izbriši, nikoli ga ne bom potreboval/a</string>
   <string name="delete_alias_title">Izbriši %s</string>
-  <string name="delete_alias_enabled_subtitle">"Please note once deleted, the alias can't be restored. Maybe you want to disable the alias instead? "</string>
+  <string name="delete_alias_enabled_subtitle">"Upoštevajte, da ko je vzdevek izbrisan, ga ni mogoče obnoviti. Morda ga želite raje onemogočiti? "</string>
   <string name="delete_alias_disabled_subtitle">Upoštevajte, da ko je vzdevek izbrisan, ga ni mogoče obnoviti. Vzdevek je že onemogočen in ne bo posredoval e-pošte v vaš poštni predal.</string>
   <plurals name="bulk_delete_alias_title">
-    <item quantity="one">You\'re about to permanently delete %d alias</item>
-    <item quantity="two">You\'re about to permanently delete %d aliases</item>
-    <item quantity="few">You\'re about to permanently delete %d aliases</item>
-    <item quantity="other">You\'re about to permanently delete %d aliases</item>
+    <item quantity="one">Trajno boste izbrisali vzdevek %d</item>
+    <item quantity="two">Trajno boste izbrisali %d vzdevka</item>
+    <item quantity="few">Trajno boste izbrisali %d vzdevkov</item>
+    <item quantity="other">Trajno boste izbrisali %d vzdevkov</item>
   </plurals>
-  <string name="bulk_delete_alias_subtitle">Please note once deleted, the aliases can\'t be restored</string>
-  <string name="bulk_delete_alias_confirm">Understood, I will never need them</string>
+  <string name="bulk_delete_alias_subtitle">Upoštevajte, da ko so vzdevki izbrisani, jih ni mogoče obnoviti.</string>
+  <string name="bulk_delete_alias_confirm">Razumem, nikoli jih ne bom potreboval/a</string>
   <string name="delete_alias_disable">Onemogoči vzdevek</string>
 </resources>

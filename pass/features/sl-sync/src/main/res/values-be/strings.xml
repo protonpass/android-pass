@@ -28,7 +28,7 @@
   <string name="simple_login_sync_management_mailbox_unverified">Неправераная паштовая скрыня</string>
   <string name="simple_login_sync_management_mailbox_unverified_change">Змена неправеранай паштовай скрыні</string>
   <string name="simple_login_sync_management_vault_title">Сінхранізацыя SimpleLogin</string>
-  <string name="simple_login_sync_management_no_vault_description">You need at least one vault to manage SimpleLogin sync settings.</string>
+  <string name="simple_login_sync_management_no_vault_description">Вам неабходна прынамсі адно сховішча, каб кіраваць наладамі сінхранізацыі SimpleLogin.</string>
   <string name="simple_login_sync_management_snackbar_alias_details_fetch_error">Адбылася памылка падчас атрымання падрабязнасцяў псеўданіма SL</string>
   <string name="simple_login_sync_management_mailboxes_title">Прадвызначаная паштовая скрыня для псеўданімаў</string>
   <string name="simple_login_sync_management_dialog_title_domains">Прадвызначаны дамен для псеўданімаў</string>

@@ -32,11 +32,11 @@
   <string name="bottomsheet_monitor_exclude">Exclou del monitoratge</string>
   <string name="bottomsheet_monitor_include">Incloure en el monitoratge</string>
   <string name="bottomsheet_migrate_item">Mou a una altra caixa forta</string>
-  <string name="bottomsheet_create_folder">Creeu una carpeta</string>
-  <string name="folder_tree_create_folder">Creeu una carpeta</string>
-  <string name="bottomsheet_rename_folder">Canvieu el nom</string>
+  <string name="bottomsheet_create_folder">Crea una carpeta</string>
+  <string name="folder_tree_create_folder">Crea una carpeta</string>
+  <string name="bottomsheet_rename_folder">Canvia el nom</string>
   <string name="bottomsheet_create_sub_folder">Creeu una subcarpeta</string>
-  <string name="bottomsheet_move_folder">Moure</string>
+  <string name="bottomsheet_move_folder">Mou</string>
   <string name="bottomsheet_copy_item_note">Copia la nota</string>
   <string name="bottomsheet_delete_permanently">Elimina de manera permanent</string>
   <string name="bottomsheet_restore">Restaura</string>

@@ -35,6 +35,13 @@
   <string name="settings_preference_display_username">Pole s používateľským menom je vždy viditeľné</string>
   <string name="settings_preference_display_autofill_pinning">Vždy viditeľné pripnutie automatického vyplňovania</string>
   <string name="view_logs_title">Zobraziť záznamy</string>
+  <string name="view_logs_clear_logs">Vyčistiť záznamy</string>
+  <string name="view_logs_clear_logs_confirmation_title">Vyčistiť záznamy?</string>
+  <string name="view_logs_clear_logs_confirmation_message">Týmto sa trvalo vymažú aktuálne zobrazené záznamy v tomto zariadení.</string>
+  <string name="view_logs_share_logs">Zdieľať záznamy</string>
+  <string name="view_logs_load_older_logs">Načítať staršie záznamy</string>
+  <string name="view_logs_loading_older_logs">Načítavanie starších záznamov...</string>
+  <string name="view_logs_empty">Nie sú k dispozícii žiadne záznamy</string>
   <string name="clipboard_bottomsheet_title">Schránka</string>
   <string name="clipboard_option_clear_clipboard_label">Vyčistiť schránku</string>
   <string name="clipboard_option_copy_totp_code">Kopírovať overovacie kódy</string>

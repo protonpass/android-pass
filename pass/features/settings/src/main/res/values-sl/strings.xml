@@ -33,8 +33,15 @@
   <string name="settings_preference_updated">Vaša nastavitev je bila posodobljena</string>
   <string name="settings_display_section_title">Zaslon</string>
   <string name="settings_preference_display_username">Polje z uporabniškim imenom je vedno vidno</string>
-  <string name="settings_preference_display_autofill_pinning">Autofill pinning always visible</string>
+  <string name="settings_preference_display_autofill_pinning">Pripenjanje samodejnega izpolnjevanja je vedno vidno</string>
   <string name="view_logs_title">Prikaži dnevnik</string>
+  <string name="view_logs_clear_logs">Počistite vse dnevnike</string>
+  <string name="view_logs_clear_logs_confirmation_title">Počistite vse dnevnike?</string>
+  <string name="view_logs_clear_logs_confirmation_message">S tem boste trajno izbrisali dnevnike, ki so trenutno prikazani v tej napravi.</string>
+  <string name="view_logs_share_logs">Delite dnevnike</string>
+  <string name="view_logs_load_older_logs">Naloži starejše dnevnike</string>
+  <string name="view_logs_loading_older_logs">Nalaganje starejših dnevnikov ...</string>
+  <string name="view_logs_empty">Na voljo ni dnevnikov</string>
   <string name="clipboard_bottomsheet_title">Odložišče</string>
   <string name="clipboard_option_clear_clipboard_label">Počisti odložišče</string>
   <string name="clipboard_option_copy_totp_code">Kopirajte kode za preverjanje pristnosti</string>

@@ -5,8 +5,8 @@
     <item quantity="other">Sei sicuro di voler spostare %d elementi nella seguente cassaforte?</item>
   </plurals>
   <plurals name="migrate_item_to_folder_confirm_title_bottom_sheet">
-    <item quantity="one">Move %d item to the following folder?</item>
-    <item quantity="other">Move %d items to the following folder?</item>
+    <item quantity="one">Spostare %d elemento nella seguente cartella?</item>
+    <item quantity="other">Spostare %d elementi nella seguente cartella?</item>
   </plurals>
   <string name="migrate_all_items_confirm_title_bottom_sheet">Sei sicuro di voler spostare tutti gli elementi nella seguente cassaforte?</string>
   <string name="migrate_item_confirm_confirm_button">Sposta</string>
@@ -24,8 +24,8 @@
   <string name="migrate_folder_error_snackbar">Errore durante lo spostamento della cartella</string>
   <string name="migrate_folder_already_same_parent_snackbar">La cartella è già in questa posizione</string>
   <plurals name="migrate_disabled_folder_reason_same_folder">
-    <item quantity="one">Item is already in this folder</item>
-    <item quantity="other">%d items are already in this folder</item>
+    <item quantity="one">L\'elemento è già in questa cartella</item>
+    <item quantity="other">%d elementi sono già in questa cartella</item>
   </plurals>
   <string name="migrate_disabled_vault_reason_no_permission">Non puoi creare elementi in questa cassaforte</string>
   <string name="migrate_disabled_vault_reason_same_vault">Cassaforte attuale</string>

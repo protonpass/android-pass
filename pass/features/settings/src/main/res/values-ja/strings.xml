@@ -35,6 +35,13 @@
   <string name="settings_preference_display_username">ユーザーネームフィールドは常に表示されます</string>
   <string name="settings_preference_display_autofill_pinning">自動入力ピンは常に表示されます</string>
   <string name="view_logs_title">ログを見る</string>
+  <string name="view_logs_clear_logs">ログをクリア</string>
+  <string name="view_logs_clear_logs_confirmation_title">ログをクリアしますか？</string>
+  <string name="view_logs_clear_logs_confirmation_message">このデバイスに現在表示されているログが完全に削除されます。</string>
+  <string name="view_logs_share_logs">ログを共有</string>
+  <string name="view_logs_load_older_logs">古いログを読み込む</string>
+  <string name="view_logs_loading_older_logs">古いログを読み込んでいます...</string>
+  <string name="view_logs_empty">ログはありません</string>
   <string name="clipboard_bottomsheet_title">クリップボード</string>
   <string name="clipboard_option_clear_clipboard_label">クリップボードをクリア</string>
   <string name="clipboard_option_copy_totp_code">認証コードをコピーする</string>

@@ -35,6 +35,13 @@
   <string name="settings_preference_display_username">Campo de nome de usuário sempre visível</string>
   <string name="settings_preference_display_autofill_pinning">Fixador do preenchimento automático sempre visível</string>
   <string name="view_logs_title">Visualizar registros</string>
+  <string name="view_logs_clear_logs">Limpar registros</string>
+  <string name="view_logs_clear_logs_confirmation_title">Limpar registros?</string>
+  <string name="view_logs_clear_logs_confirmation_message">This will permanently delete the logs currently shown on this device.</string>
+  <string name="view_logs_share_logs">Compartilhar registros</string>
+  <string name="view_logs_load_older_logs">Carregar registros antigos</string>
+  <string name="view_logs_loading_older_logs">Carregando registros antigos...</string>
+  <string name="view_logs_empty">Nenhum registro disponível</string>
   <string name="clipboard_bottomsheet_title">Área de transferência</string>
   <string name="clipboard_option_clear_clipboard_label">Limpar área de transferência</string>
   <string name="clipboard_option_copy_totp_code">Copiar códigos de autenticação</string>
@@ -44,10 +51,10 @@
   <string name="clipboard_option_clear_clipboard_after_180_seconds">Após 3 minutos</string>
   <string name="settings_use_digital_asset_link_preference_title">Ativar os links de ativos digitais</string>
   <string name="settings_use_digital_asset_link_preference_subtitle">Estabelece a verificação de propriedade do site entre uma aplicação Android e um site .</string>
-  <string name="settings_autofill_display_title">Autofill display</string>
-  <string name="settings_autofill_display_inline">Inline (above keyboard)</string>
-  <string name="settings_autofill_display_popup">Popup (over input field)</string>
+  <string name="settings_autofill_display_title">Exibição do preenchimento automático</string>
+  <string name="settings_autofill_display_inline">Incorporada (acima do teclado)</string>
+  <string name="settings_autofill_display_popup">Pop-up (sobre o campo de entrada)</string>
   <string name="settings_autofill_display_subtitle">Inline mode requires a compatible keyboard (e.g. Gboard). If unsupported, popup mode will be used automatically.</string>
-  <string name="settings_autosave_prompt_title">Prompt for auto-save</string>
-  <string name="settings_autosave_prompt_subtitle">Proton Pass will prompt you to save or update logins</string>
+  <string name="settings_autosave_prompt_title">Aviso de salvamento automático</string>
+  <string name="settings_autosave_prompt_subtitle">O Proton Pass solicitará que você salve ou atualize seus dados de início de sessão</string>
 </resources>

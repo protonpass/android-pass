@@ -144,6 +144,7 @@
   <string name="sharing_edit_permissions_set_access_level_all_members">Setare nivel de acces pentru toți membrii</string>
   <string name="sharing_edit_permissions_set_access_level_single_member">Setare nivel de acces pentru %s</string>
   <string name="sharing_edit_permissions_remove_user">Eliminare utilizator</string>
+  <string name="sharing_edit_permissions_remove_group">Eliminare grup</string>
   <string name="sharing_error_dialog_title">Eroare necunoscută</string>
   <string name="sharing_error_dialog_message">A apărut o eroare la trimiterea unei invitații pentru acest seif. Dacă problema persistă, contactați serviciul de asistență pentru clienți.</string>
   <string name="sharing_with_no_addresses_can_be_invited">Nu poate fi invitată nici o adresă</string>

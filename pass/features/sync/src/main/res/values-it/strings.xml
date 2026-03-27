@@ -29,7 +29,7 @@
   <string name="sync_progress_item_count">%1$d / %2$d elementi scaricati</string>
   <string name="sync_dialog_title">Sincronizzazione degli elementi in corso</string>
   <string name="sync_dialog_title_error">Sincronizzazione non riuscita</string>
-  <string name="sync_dialog_title_partial_error">Sync partially completed</string>
+  <string name="sync_dialog_title_partial_error">Sincronizzazione parzialmente completata</string>
   <string name="sync_dialog_title_success">Sincronizzazione completata</string>
   <string name="sync_dialog_subtitle">Scaricamento e decrittografia degli elementi in corso. Questo potrebbe richiedere qualche minuto.</string>
   <string name="sync_dialog_subtitle_error">Scaricamento o decrittografia degli elementi non riuscito. Riprova.</string>

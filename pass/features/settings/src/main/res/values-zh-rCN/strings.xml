@@ -35,6 +35,13 @@
   <string name="settings_preference_display_username">用户名字段始终可见</string>
   <string name="settings_preference_display_autofill_pinning">自动填充固定始终可见</string>
   <string name="view_logs_title">查看日志</string>
+  <string name="view_logs_clear_logs">Clear logs</string>
+  <string name="view_logs_clear_logs_confirmation_title">Clear logs?</string>
+  <string name="view_logs_clear_logs_confirmation_message">This will permanently delete the logs currently shown on this device.</string>
+  <string name="view_logs_share_logs">Share logs</string>
+  <string name="view_logs_load_older_logs">Load older logs</string>
+  <string name="view_logs_loading_older_logs">Loading older logs...</string>
+  <string name="view_logs_empty">No logs available</string>
   <string name="clipboard_bottomsheet_title">剪贴板</string>
   <string name="clipboard_option_clear_clipboard_label">清空剪贴板</string>
   <string name="clipboard_option_copy_totp_code">复制身份验证码</string>
@@ -44,10 +51,10 @@
   <string name="clipboard_option_clear_clipboard_after_180_seconds">3 分钟后</string>
   <string name="settings_use_digital_asset_link_preference_title">启用数字资产链接</string>
   <string name="settings_use_digital_asset_link_preference_subtitle">在 Android 应用程序和网站之间建立网站所有权验证。</string>
-  <string name="settings_autofill_display_title">Autofill display</string>
-  <string name="settings_autofill_display_inline">Inline (above keyboard)</string>
-  <string name="settings_autofill_display_popup">Popup (over input field)</string>
-  <string name="settings_autofill_display_subtitle">Inline mode requires a compatible keyboard (e.g. Gboard). If unsupported, popup mode will be used automatically.</string>
-  <string name="settings_autosave_prompt_title">Prompt for auto-save</string>
-  <string name="settings_autosave_prompt_subtitle">Proton Pass will prompt you to save or update logins</string>
+  <string name="settings_autofill_display_title">自动填充显示样式</string>
+  <string name="settings_autofill_display_inline">内嵌式（键盘上方）</string>
+  <string name="settings_autofill_display_popup">弹窗式（输入框上方）</string>
+  <string name="settings_autofill_display_subtitle">内嵌模式需要兼容的键盘（如 Gboard）。若不支持，将自动使用弹窗模式。</string>
+  <string name="settings_autosave_prompt_title">提示自动保存</string>
+  <string name="settings_autosave_prompt_subtitle">Proton Pass 将提示您保存或更新登录信息</string>
 </resources>

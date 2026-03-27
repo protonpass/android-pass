@@ -149,6 +149,7 @@
   <string name="sharing_edit_permissions_set_access_level_all_members">Nastavit přístupovou úroveň pro všechny členy</string>
   <string name="sharing_edit_permissions_set_access_level_single_member">Nastavte úroveň přístupu pro %s</string>
   <string name="sharing_edit_permissions_remove_user">Odebrat uživatele</string>
+  <string name="sharing_edit_permissions_remove_group">Odebrat skupinu</string>
   <string name="sharing_error_dialog_title">Neznámá chyba</string>
   <string name="sharing_error_dialog_message">Při odesílání pozvánky k tomuto trezoru došlo k chybě. Pokud problém přetrvává, obraťte se na zákaznickou podporu.</string>
   <string name="sharing_with_no_addresses_can_be_invited">Nelze pozvat žádné adresy</string>

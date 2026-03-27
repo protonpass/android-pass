@@ -139,6 +139,7 @@
   <string name="sharing_edit_permissions_set_access_level_all_members">წვდომის დონის დაყენება ყველაწევრისთვის</string>
   <string name="sharing_edit_permissions_set_access_level_single_member">წვდომის დონის დაყენება მომხმარებლისთვის %s</string>
   <string name="sharing_edit_permissions_remove_user">მომხმარებლის წაშლა</string>
+  <string name="sharing_edit_permissions_remove_group">Remove group</string>
   <string name="sharing_error_dialog_title">უცნობი შეცდომა</string>
   <string name="sharing_error_dialog_message">შეცდომა ამ საცავისთვის მოსაწვვის გაგზავნისას. თუ პრობლემა არ მოგვარდება, დაუკავშირდით მომხმარებლის მხარდაჭერის სერვისს.</string>
   <string name="sharing_with_no_addresses_can_be_invited">მოსაწვევი მისამართების გარეშე</string>

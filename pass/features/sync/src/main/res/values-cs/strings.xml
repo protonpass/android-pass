@@ -43,6 +43,6 @@
   <string name="sync_item_failed">Synchronizace selhala</string>
   <string name="sync_dialog_title_inserting">Vkládání položek…</string>
   <string name="sync_dialog_subtitle_inserting">Dokončujeme poslední krok, už je téměř hotovo.</string>
-  <string name="sync_dialog_invalid_address_shares_warning">Některé peněženky nebylo možné synchronizovat, protože příslušná adresa nebyla v tomto účtu nalezena.</string>
-  <string name="sync_dialog_invalid_group_shares_warning">Některé peněženky nebylo možné synchronizovat, protože příslušná skupina nebyla v tomto účtu nalezena.</string>
+  <string name="sync_dialog_invalid_address_shares_warning">Některé trezory nebylo možné synchronizovat, protože příslušná adresa nebyla v tomto účtu nalezena.</string>
+  <string name="sync_dialog_invalid_group_shares_warning">Některé trezory nebylo možné synchronizovat, protože příslušná skupina nebyla v tomto účtu nalezena.</string>
 </resources>

@@ -36,53 +36,53 @@
   <!-- Settings screen -->
   <string name="simple_login_sync_settings_title">Sinhroniziranje vzdevkov</string>
   <string name="simple_login_sync_enable_snackbar_error">Pri omogočanju sinhronizacije vzdevkov SimpleLogin je prišlo do napake</string>
-  <string name="simple_login_sync_enable_snackbar_success">SimpleLogin aliases sync successfully enabled</string>
+  <string name="simple_login_sync_enable_snackbar_success">Sinhronizacija vzdevkov SimpleLogin je bila uspešno omogočena</string>
   <!-- Mailbox create screen -->
   <string name="simple_login_sync_mailbox_create_title">Dodaj poštni predal</string>
-  <string name="simple_login_sync_mailbox_create_message_error">There was an error adding the mailbox</string>
+  <string name="simple_login_sync_mailbox_create_message_error">Pri dodajanju poštnega predala je prišlo do napake.</string>
   <!-- Mailbox change screen -->
   <string name="simple_login_sync_mailbox_change_title">Spremeni poštni predal</string>
-  <string name="simple_login_sync_mailbox_change_message_error">There was an error changing the mailbox</string>
+  <string name="simple_login_sync_mailbox_change_message_error">Pri spreminjanju poštnega predala je prišlo do napake.</string>
   <string name="simple_login_sync_mailbox_change_email_already_in_use_message_error">E-pošta je že v uporabi</string>
   <!-- Mailbox verify screen -->
-  <string name="simple_login_sync_mailbox_verify_title">Confirm your mailbox</string>
+  <string name="simple_login_sync_mailbox_verify_title">Potrdite svoj poštni predal</string>
   <string name="simple_login_sync_mailbox_verify_subtitle" comment="the placeholder will be replaced by an email address">Poslali smo kodo za preverjanje na %s. Vnesite jo spodaj:</string>
-  <string name="simple_login_sync_mailbox_verify_email_fallback" comment="this text will replace the placeholder in the subtitle above in case the email address is not available">your email address</string>
-  <string name="simple_login_sync_mailbox_verify_message_verification_code_error">Invalid mailbox verification code</string>
-  <string name="simple_login_sync_mailbox_verify_message_verification_code_limit_error">Invalid mailbox verification code limit reached, mailbox was deleted</string>
-  <string name="simple_login_sync_mailbox_verify_message_verification_error">There was an error verifying the mailbox</string>
-  <string name="simple_login_sync_mailbox_verify_message_verification_success">Mailbox successfully verified</string>
-  <string name="simple_login_sync_mailbox_verify_message_resend_code_error">There was an error sending verification code</string>
-  <string name="simple_login_sync_mailbox_verify_message_resend_code_success">Verification code successfully sent</string>
+  <string name="simple_login_sync_mailbox_verify_email_fallback" comment="this text will replace the placeholder in the subtitle above in case the email address is not available">vaš e-poštni naslov</string>
+  <string name="simple_login_sync_mailbox_verify_message_verification_code_error">Neveljavna koda za preverjanje poštnega predala</string>
+  <string name="simple_login_sync_mailbox_verify_message_verification_code_limit_error">Dosežena je bila omejitev neveljavnih kod za preverjanje poštnega predala, predal je bil izbrisan</string>
+  <string name="simple_login_sync_mailbox_verify_message_verification_error">Pri preverjanju poštnega predala je prišlo do napake</string>
+  <string name="simple_login_sync_mailbox_verify_message_verification_success">Poštni nabiralnik je bil uspešno preverjen</string>
+  <string name="simple_login_sync_mailbox_verify_message_resend_code_error">Pri pošiljanju kode za preverjanje je prišlo do napake</string>
+  <string name="simple_login_sync_mailbox_verify_message_resend_code_success">Koda za preverjanje je bila uspešno poslana</string>
   <!-- Mailbox delete screen -->
   <string name="simple_login_sync_mailbox_delete_title">Izbriši poštni predal</string>
   <string name="simple_login_sync_mailbox_delete_subtitle">Vsi vzdevki, ki uporabljajo poštni predal %s, bodo prav tako izbrisani. Če želite še naprej prejemati e-pošto, prenesite te vzdevke v drug poštni predal:</string>
   <string name="simple_login_sync_mailbox_delete_tranfer_option_toggle">Prenesi vzdevke</string>
-  <string name="simple_login_sync_mailbox_delete_tranfer_option_mailbox">To mailbox</string>
+  <string name="simple_login_sync_mailbox_delete_tranfer_option_mailbox">V poštni predal</string>
   <string name="simple_login_sync_mailbox_delete_action_delete">Izbriši poštni predal</string>
-  <string name="simple_login_sync_mailbox_delete_action_delete_and_transfer">Transfer and delete mailbox</string>
-  <string name="simple_login_sync_mailbox_delete_message_delete_error">There was an error deleting mailbox</string>
-  <string name="simple_login_sync_mailbox_delete_message_delete_success">Mailbox successfully deleted</string>
-  <string name="simple_login_sync_mailbox_delete_transfer_dialog_title">Transfer aliases to</string>
-  <string name="simple_login_sync_mailbox_delete_warning">Please note that once deleted, aliases can\'t be restored</string>
+  <string name="simple_login_sync_mailbox_delete_action_delete_and_transfer">Prenesi in izbriši poštni predal</string>
+  <string name="simple_login_sync_mailbox_delete_message_delete_error">Pri brisanju poštnega predala je prišlo do napake</string>
+  <string name="simple_login_sync_mailbox_delete_message_delete_success">Poštni predal je bil uspešno izbrisan</string>
+  <string name="simple_login_sync_mailbox_delete_transfer_dialog_title">Prenesi vzdevke v</string>
+  <string name="simple_login_sync_mailbox_delete_warning">Upoštevajte, da vzdevkov, ko so enkrat izbrisani, ni mogoče obnoviti.</string>
   <!-- Domain select screen -->
   <string name="simple_login_sync_domain_select_title">Privzeta domena</string>
   <string name="simple_login_sync_domain_select_title_none">brez</string>
   <string name="simple_login_sync_domain_select_description_none">Brez domene</string>
   <string name="simple_login_sync_domain_select_description_custom">Vaša domena</string>
-  <string name="simple_login_sync_domain_select_description_free">Public domain</string>
+  <string name="simple_login_sync_domain_select_description_free">Javna domena</string>
   <string name="simple_login_sync_domain_select_description_premium">Premijska domena</string>
-  <string name="simple_login_sync_domain_select_snackbar_alias_domain_fetch_error">There was an error fetching SL alias domains</string>
-  <string name="simple_login_sync_domain_select_snackbar_alias_domain_update_error">There was an error updating SL alias domain</string>
-  <string name="simple_login_sync_domain_select_snackbar_alias_domain_update_success">SL alias domain successfully updated</string>
+  <string name="simple_login_sync_domain_select_snackbar_alias_domain_fetch_error">Pri pridobivanju domen z vzdevki SL je prišlo do napake.</string>
+  <string name="simple_login_sync_domain_select_snackbar_alias_domain_update_error">Pri posodabljanju vzdevka domene SL je prišlo do napake.</string>
+  <string name="simple_login_sync_domain_select_snackbar_alias_domain_update_success">Vzdevek domene SL je bil uspešno posodobljen</string>
   <!-- Mailbox options screen -->
-  <string name="simple_login_sync_mailbox_options_snackbar_options_error">Cannot display mailbox options</string>
-  <string name="simple_login_sync_mailbox_options_snackbar_default_error">There was an error updating default mailbox</string>
-  <string name="simple_login_sync_mailbox_options_snackbar_default_success">Default mailbox successfully updated</string>
+  <string name="simple_login_sync_mailbox_options_snackbar_options_error">Ni mogoče prikazati možnosti poštnega predala</string>
+  <string name="simple_login_sync_mailbox_options_snackbar_default_error">Pri posodabljanju privzetega poštnega predala je prišlo do napake.</string>
+  <string name="simple_login_sync_mailbox_options_snackbar_default_success">Privzeti poštni predal je bil posodobljen</string>
   <string name="simple_login_sync_mailbox_change_email_option">Spremeni poštni predal</string>
   <string name="simple_login_sync_mailbox_cancel_change_email_option">Prekliči spremembo poštnega predala</string>
-  <string name="simple_login_sync_mailbox_cancel_email_change_message_delete_error">There was an error cancelling mailbox email change</string>
-  <string name="simple_login_sync_mailbox_cancel_email_change_message_delete_success">Cancelled mailbox email change</string>
+  <string name="simple_login_sync_mailbox_cancel_email_change_message_delete_error">Pri preklicu spremembe e-pošte poštnega predala je prišlo do napake</string>
+  <string name="simple_login_sync_mailbox_cancel_email_change_message_delete_success">Preklicana sprememba e-pošte poštnega predala</string>
   <!-- Shared -->
   <string name="simple_login_sync_shared_default_vault_title">Privzeti trezor SL</string>
   <string name="simple_login_sync_shared_default_vault_description">Vzdevki SimpleLogin bodo uvoženi v ta trezor.</string>

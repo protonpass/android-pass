@@ -35,6 +35,13 @@
   <string name="settings_preference_display_username">Brugernavn-felt altid synligt</string>
   <string name="settings_preference_display_autofill_pinning">Autofyld-fastgørelse altid synlig</string>
   <string name="view_logs_title">Vis logfiler</string>
+  <string name="view_logs_clear_logs">Ryd logfiler</string>
+  <string name="view_logs_clear_logs_confirmation_title">Ryd logfiler?</string>
+  <string name="view_logs_clear_logs_confirmation_message">Dette vil slette de logfiler, der i øjeblikket vises på denne enhed, permanent.</string>
+  <string name="view_logs_share_logs">Del logfiler</string>
+  <string name="view_logs_load_older_logs">Indlæs ældre logfiler</string>
+  <string name="view_logs_loading_older_logs">Indlæs ældre logfiler...</string>
+  <string name="view_logs_empty">Ingen logfiler tilgængelige</string>
   <string name="clipboard_bottomsheet_title">Udklipsholder</string>
   <string name="clipboard_option_clear_clipboard_label">Ryd udklipsholder</string>
   <string name="clipboard_option_copy_totp_code">Kopiér godkendelseskoder</string>

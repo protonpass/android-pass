@@ -3,12 +3,12 @@
   <string name="snackbar_create_vault_success">Trezor ustvarjen</string>
   <string name="snackbar_create_vault_error">Trezor ni ustvarjen</string>
   <string name="snackbar_cannot_create_more_vaults_error">Ni mogoče ustvariti več trezorjev</string>
-  <string name="snackbar_create_folder_success">Folder created</string>
-  <string name="snackbar_create_folder_error">Folder not created</string>
-  <string name="snackbar_update_folder_success">Folder renamed</string>
-  <string name="snackbar_update_folder_error">Folder not renamed</string>
-  <string name="snackbar_delete_folder_success">Folder deleted</string>
-  <string name="snackbar_delete_folder_error">Folder not deleted</string>
+  <string name="snackbar_create_folder_success">Mapa ustvarjena</string>
+  <string name="snackbar_create_folder_error">Mapa ni bila ustvarjena</string>
+  <string name="snackbar_update_folder_success">Mapa je preimenovana</string>
+  <string name="snackbar_update_folder_error">Mapa ni bila preimenovana</string>
+  <string name="snackbar_delete_folder_success">Mapa je izbrisana.</string>
+  <string name="snackbar_delete_folder_error">Mapa ni izbrisana</string>
   <string name="snackbar_edit_vault_success">Trezor urejen</string>
   <string name="snackbar_edit_vault_error">Trezor ni urejen</string>
   <string name="snackbar_delete_vault_success">Trezor je izbrisan</string>
@@ -19,21 +19,21 @@
   <string name="snackbar_find_vault_error">Izbranega trezorja ni mogoče najti</string>
   <string name="snackbar_get_vault_list_error">Seznam trezorja ni bilo mogoče naložiti</string>
   <string name="vault_delete_dialog_title">Izbriši trezor</string>
-  <string name="vault_add_folder_dialog_title">Enter a folder title</string>
-  <string name="vault_edit_folder_dialog_title">Rename folder</string>
-  <string name="vault_add_foldersame_folder_exist">A folder with the same name already exists</string>
-  <string name="folder_delete_dialog_title">Delete folder</string>
-  <string name="folder_delete_dialog_body">This will permanently delete the folder __FOLDER_NAME__ and all its contents. Enter the folder name to confirm deletion.</string>
-  <string name="folder_delete_dialog_placeholder">Folder name</string>
-  <string name="folder_delete_dialog_delete_action">Delete</string>
+  <string name="vault_add_folder_dialog_title">Vnesite naslov mape</string>
+  <string name="vault_edit_folder_dialog_title">Preimenuj mapo</string>
+  <string name="vault_add_foldersame_folder_exist">Mapa s tem imenom že obstaja</string>
+  <string name="folder_delete_dialog_title">Izbriši mapo</string>
+  <string name="folder_delete_dialog_body">S tem boste trajno izbrisali mapo __FOLDER_NAME__ in vso njeno vsebino. Vnesite ime mape, da potrdite brisanje.</string>
+  <string name="folder_delete_dialog_placeholder">Ime mape</string>
+  <string name="folder_delete_dialog_delete_action">Izbriši</string>
   <string name="vault_delete_dialog_body">S tem boste trajno izbrisali trezor __VAULT_NAME__ in vso njegovo vsebino. Vnesite ime trezorja, da potrdite izbris.</string>
   <string name="vault_delete_dialog_placeholder">Ime trezorja</string>
-  <string name="vault_add_folder_dialog_placeholder">Folder name</string>
+  <string name="vault_add_folder_dialog_placeholder">Ime mape</string>
   <string name="vault_delete_dialog_cancel_action">Prekliči</string>
   <string name="vault_delete_dialog_delete_action">Izbriši</string>
-  <string name="vault_add_folder_dialog_create_action">Create</string>
-  <string name="vault_edit_folder_dialog_save_action">Save</string>
-  <string name="vault_delete_dialog_shared_items_warning" comment="The placeholder will be replaced by the number of shared items, e.g 2 shared items">This vault holds %1$s. Deleting it will remove access for all other users.</string>
+  <string name="vault_add_folder_dialog_create_action">Ustvari</string>
+  <string name="vault_edit_folder_dialog_save_action">Shrani</string>
+  <string name="vault_delete_dialog_shared_items_warning" comment="The placeholder will be replaced by the number of shared items, e.g 2 shared items">Ta trezor vsebuje %1$s. Če ga izbrišete, boste vsem drugim uporabnikom onemogočili dostop.</string>
   <string name="vault_leave_dialog_title">Zapusti trezor</string>
   <string name="vault_leave_dialog_body">S tem boste odstranili vaš dostop do trezorja __VAULT_NAME__ in vse njegove vsebine. Ste prepričani, da želite oditi?</string>
   <string name="vault_leave_dialog_cancel_action">Prekliči</string>
@@ -54,16 +54,16 @@
   <string name="bottomsheet_select_vault_only_oldest_vaults">Predmete lahko ustvarite le v svojih starejših trezorjih
 ​</string>
   <string name="vault_title">Trezor</string>
-  <string name="organise_vaults_visible_title">Visible vaults</string>
-  <string name="organise_vaults_hidden_title">Hidden vaults</string>
-  <string name="organise_vaults_hidden_description">These vaults will not be accessible and their content won’t be available to Search or Autofill.</string>
-  <string name="organise_vaults_title">Organize vaults</string>
-  <string name="organise_vaults_snackbar_success">Vaults organized</string>
-  <string name="organise_vaults_snackbar_error">Vaults could not be organized</string>
+  <string name="organise_vaults_visible_title">Vidni trezorji</string>
+  <string name="organise_vaults_hidden_title">Skiti trezorji</string>
+  <string name="organise_vaults_hidden_description">Ti trezorji ne bodo dostopni in njihova vsebina ne bo na voljo za iskanje ali samodejno izpolnjevanje.</string>
+  <string name="organise_vaults_title">Organizirajte trezorje</string>
+  <string name="organise_vaults_snackbar_success">Organizirani trezorji</string>
+  <string name="organise_vaults_snackbar_error">Trezorjev ni bilo mogoče organizirati</string>
   <plurals name="organise_vaults_item_count">
-    <item quantity="one">%d item</item>
-    <item quantity="two">%d items</item>
-    <item quantity="few">%d items</item>
-    <item quantity="other">%d items</item>
+    <item quantity="one">%d predmet</item>
+    <item quantity="two">%d predmeta</item>
+    <item quantity="few">%d predmeti</item>
+    <item quantity="other">%d predmetov</item>
   </plurals>
 </resources>

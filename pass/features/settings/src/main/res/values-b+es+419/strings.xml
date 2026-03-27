@@ -35,6 +35,13 @@
   <string name="settings_preference_display_username">Campo Nombre de usuario siempre visible</string>
   <string name="settings_preference_display_autofill_pinning">Completado automático siempre visible</string>
   <string name="view_logs_title">Ver registros</string>
+  <string name="view_logs_clear_logs">Borrar registros</string>
+  <string name="view_logs_clear_logs_confirmation_title">¿Borrar registros?</string>
+  <string name="view_logs_clear_logs_confirmation_message">Esto eliminará definitivamente los registros de este dispositivo.</string>
+  <string name="view_logs_share_logs">Compartir registros</string>
+  <string name="view_logs_load_older_logs">Cargar registros anteriores</string>
+  <string name="view_logs_loading_older_logs">Cargando los registros anteriores...</string>
+  <string name="view_logs_empty">No hay registros disponibles</string>
   <string name="clipboard_bottomsheet_title">Portapapeles</string>
   <string name="clipboard_option_clear_clipboard_label">Borrar portapapeles</string>
   <string name="clipboard_option_copy_totp_code">Copiar códigos de autenticación</string>

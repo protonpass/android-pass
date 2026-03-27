@@ -5,8 +5,8 @@
     <item quantity="other">Flyt %d elementer til den følgende boks?</item>
   </plurals>
   <plurals name="migrate_item_to_folder_confirm_title_bottom_sheet">
-    <item quantity="one">Move %d item to the following folder?</item>
-    <item quantity="other">Move %d items to the following folder?</item>
+    <item quantity="one">Flyt %d element til den følgende mappe?</item>
+    <item quantity="other">Flyt %d elementer til den følgende mappe?</item>
   </plurals>
   <string name="migrate_all_items_confirm_title_bottom_sheet">Flyt alle elementerne til den følgende boks?</string>
   <string name="migrate_item_confirm_confirm_button">Flyt</string>
@@ -24,8 +24,8 @@
   <string name="migrate_folder_error_snackbar">Fejl ved flytning af mappen</string>
   <string name="migrate_folder_already_same_parent_snackbar">Mappen er allerede på denne placering</string>
   <plurals name="migrate_disabled_folder_reason_same_folder">
-    <item quantity="one">Item is already in this folder</item>
-    <item quantity="other">%d items are already in this folder</item>
+    <item quantity="one">Elementet findes allerede i denne mappe</item>
+    <item quantity="other">%d elementer findes allerede i denne mappe</item>
   </plurals>
   <string name="migrate_disabled_vault_reason_no_permission">Du kan ikke oprette elementer i denne boks</string>
   <string name="migrate_disabled_vault_reason_same_vault">Du kan ikke flytte et element til den samme boks</string>

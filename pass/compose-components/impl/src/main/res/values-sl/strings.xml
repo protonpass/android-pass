@@ -313,9 +313,9 @@
   <!-- Attachments -->
   <plurals name="attachment_file_amount">
     <item quantity="one">Datoteka %1$s</item>
-    <item quantity="two">%1$s files</item>
-    <item quantity="few">%1$s datotek</item>
-    <item quantity="other">%1$s datoteke</item>
+    <item quantity="two">Datoteki %1$s</item>
+    <item quantity="few">Datotek %1$s</item>
+    <item quantity="other">Datotek %1$s</item>
   </plurals>
   <string name="attachment_title">Priponke</string>
   <string name="attachment_no_files">Naloži datoteke iz vaše naprave</string>
@@ -363,16 +363,16 @@
   <string name="field_detail_display_name_title">Prikazno ime</string>
   <string name="display_name_section_description">Prikazno ime pri pošiljanju e-pošte s tega vzdevka.</string>
   <plurals name="alias_forwards_count">
-    <item quantity="one">%1$s forward</item>
-    <item quantity="two">%1$s posredovani</item>
-    <item quantity="few">%1$s posredovana</item>
-    <item quantity="other">%1$s posredovana</item>
+    <item quantity="one">%1$s posredovan</item>
+    <item quantity="two">%1$s posredovana</item>
+    <item quantity="few">%1$s posredovani</item>
+    <item quantity="other">%1$s posredovani</item>
   </plurals>
   <plurals name="alias_replies_count">
     <item quantity="one">%1$s odgovor</item>
-    <item quantity="two">%1$s replies</item>
-    <item quantity="few">%1$s replies</item>
-    <item quantity="other">%1$s replies</item>
+    <item quantity="two">%1$s odgovora</item>
+    <item quantity="few">%1$s odgovori</item>
+    <item quantity="other">%1$s odgovori</item>
   </plurals>
   <plurals name="alias_blocks_count">
     <item quantity="one">%1$s blokiran</item>

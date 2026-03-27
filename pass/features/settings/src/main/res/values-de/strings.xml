@@ -35,6 +35,13 @@
   <string name="settings_preference_display_username">Feld Benutzername immer sichtbar</string>
   <string name="settings_preference_display_autofill_pinning">Autofill-Anheftung immer sichtbar</string>
   <string name="view_logs_title">Protokolle anzeigen</string>
+  <string name="view_logs_clear_logs">Protokolle leeren</string>
+  <string name="view_logs_clear_logs_confirmation_title">Protokolle leeren?</string>
+  <string name="view_logs_clear_logs_confirmation_message">Dadurch werden die derzeit auf diesem Gerät angezeigten Protokolle endgültig gelöscht.</string>
+  <string name="view_logs_share_logs">Protokolle teilen</string>
+  <string name="view_logs_load_older_logs">Ältere Protokolle laden</string>
+  <string name="view_logs_loading_older_logs">Ältere Protokolle werden geladen …</string>
+  <string name="view_logs_empty">Keine Protokolle verfügbar</string>
   <string name="clipboard_bottomsheet_title">Zwischenablage</string>
   <string name="clipboard_option_clear_clipboard_label">Zwischenablage leeren</string>
   <string name="clipboard_option_copy_totp_code">Authentifizierungscodes kopieren</string>

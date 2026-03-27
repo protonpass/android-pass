@@ -7,10 +7,10 @@
     <item quantity="other">Перамясціць %d элементаў у наступнае сховішча?</item>
   </plurals>
   <plurals name="migrate_item_to_folder_confirm_title_bottom_sheet">
-    <item quantity="one">Move %d item to the following folder?</item>
-    <item quantity="few">Move %d items to the following folder?</item>
-    <item quantity="many">Move %d items to the following folder?</item>
-    <item quantity="other">Move %d items to the following folder?</item>
+    <item quantity="one">Перамясціць %d элемент у наступную папку?</item>
+    <item quantity="few">Перамясціць %d элементы ў наступную папку?</item>
+    <item quantity="many">Перамясціць %d элементаў у наступную папку?</item>
+    <item quantity="other">Перамясціць %d элементаў у наступную папку?</item>
   </plurals>
   <string name="migrate_all_items_confirm_title_bottom_sheet">Перамясціць усе элементы ў наступнае сховішча?</string>
   <string name="migrate_item_confirm_confirm_button">Перамясціць</string>
@@ -28,10 +28,10 @@
   <string name="migrate_folder_error_snackbar">Памылка пры перамяшчэнні папкі</string>
   <string name="migrate_folder_already_same_parent_snackbar">Папка ўжо знаходзіцца ў гэтым размяшчэнні</string>
   <plurals name="migrate_disabled_folder_reason_same_folder">
-    <item quantity="one">Item is already in this folder</item>
-    <item quantity="few">%d items are already in this folder</item>
-    <item quantity="many">%d items are already in this folder</item>
-    <item quantity="other">%d items are already in this folder</item>
+    <item quantity="one">Элемент ужо знаходзіцца ў гэтай папцы</item>
+    <item quantity="few">%d элементы ўжо знаходзяцца ў гэтай папцы</item>
+    <item quantity="many">%d элементаў ужо знаходзяцца ў гэтай папцы</item>
+    <item quantity="other">%d элементаў ужо знаходзяцца ў гэтай папцы</item>
   </plurals>
   <string name="migrate_disabled_vault_reason_no_permission">Вы не можаце ствараць элементы ў гэтым сховішчы</string>
   <string name="migrate_disabled_vault_reason_same_vault">Вы не можаце перамясціць элемент у тое ж самае сховішча</string>

@@ -35,6 +35,13 @@
   <string name="settings_preference_display_username">Поле імя карыстальніка заўсёды бачнае</string>
   <string name="settings_preference_display_autofill_pinning">Замацаванае аўтазапаўненне заўсёды бачнае</string>
   <string name="view_logs_title">Паглядзець журнал</string>
+  <string name="view_logs_clear_logs">Ачысціць журналы</string>
+  <string name="view_logs_clear_logs_confirmation_title">Ачысціць журналы?</string>
+  <string name="view_logs_clear_logs_confirmation_message">Гэта дзеянне незваротна выдаліць журналы, якія ў цяперашні час паказаны на гэтай прыладзе.</string>
+  <string name="view_logs_share_logs">Абагуліць журналы</string>
+  <string name="view_logs_load_older_logs">Загрузіць больш старыя журналы</string>
+  <string name="view_logs_loading_older_logs">Загрузка больш старых журналаў...</string>
+  <string name="view_logs_empty">Няма даступных журналаў</string>
   <string name="clipboard_bottomsheet_title">Буфер абмену</string>
   <string name="clipboard_option_clear_clipboard_label">Ачыстка буфера абмену</string>
   <string name="clipboard_option_copy_totp_code">Капіяваць коды аўтэнтыфікацыі</string>
@@ -44,10 +51,10 @@
   <string name="clipboard_option_clear_clipboard_after_180_seconds">Праз 3 хвіліны</string>
   <string name="settings_use_digital_asset_link_preference_title">Уключыць Digital Asset Links</string>
   <string name="settings_use_digital_asset_link_preference_subtitle">Усталёўвае праверку права ўласнасці на вэб-сайт паміж праграмай Android і вэб-сайтам.</string>
-  <string name="settings_autofill_display_title">Autofill display</string>
-  <string name="settings_autofill_display_inline">Inline (above keyboard)</string>
-  <string name="settings_autofill_display_popup">Popup (over input field)</string>
-  <string name="settings_autofill_display_subtitle">Inline mode requires a compatible keyboard (e.g. Gboard). If unsupported, popup mode will be used automatically.</string>
-  <string name="settings_autosave_prompt_title">Prompt for auto-save</string>
-  <string name="settings_autosave_prompt_subtitle">Proton Pass will prompt you to save or update logins</string>
+  <string name="settings_autofill_display_title">Адлюстраванне аўтазапаўнення</string>
+  <string name="settings_autofill_display_inline">Убудаваны (над клавіятурай)</string>
+  <string name="settings_autofill_display_popup">Усплывальны (над полем уводу)</string>
+  <string name="settings_autofill_display_subtitle">Убудаваны рэжым патрабуе сумяшчальнай клавіятуры (напрыклад, Gboard). Аўтаматычна будзе выкарыстаны ўсплывальны рэжым, калі нельга задзейнічаць убудаваны.</string>
+  <string name="settings_autosave_prompt_title">Запыт на аўтазахаванне</string>
+  <string name="settings_autosave_prompt_subtitle">Proton Pass прапануе вам захаваць або абнавіць запісы ўваходу</string>
 </resources>

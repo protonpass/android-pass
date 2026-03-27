@@ -35,6 +35,13 @@
   <string name="settings_preference_display_username">使用者名稱欄位始終顯示</string>
   <string name="settings_preference_display_autofill_pinning">自動填入釘選始終顯示</string>
   <string name="view_logs_title">檢視記錄檔</string>
+  <string name="view_logs_clear_logs">Clear logs</string>
+  <string name="view_logs_clear_logs_confirmation_title">Clear logs?</string>
+  <string name="view_logs_clear_logs_confirmation_message">This will permanently delete the logs currently shown on this device.</string>
+  <string name="view_logs_share_logs">Share logs</string>
+  <string name="view_logs_load_older_logs">Load older logs</string>
+  <string name="view_logs_loading_older_logs">Loading older logs...</string>
+  <string name="view_logs_empty">No logs available</string>
   <string name="clipboard_bottomsheet_title">剪貼簿</string>
   <string name="clipboard_option_clear_clipboard_label">清除剪貼簿</string>
   <string name="clipboard_option_copy_totp_code">複製驗證代碼</string>

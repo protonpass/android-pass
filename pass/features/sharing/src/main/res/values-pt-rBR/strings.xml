@@ -139,6 +139,7 @@
   <string name="sharing_edit_permissions_set_access_level_all_members">Definir o nível de acesso para todos os membros</string>
   <string name="sharing_edit_permissions_set_access_level_single_member">Definir nível de acesso para %s</string>
   <string name="sharing_edit_permissions_remove_user">Remover usuário</string>
+  <string name="sharing_edit_permissions_remove_group">Remover grupo</string>
   <string name="sharing_error_dialog_title">Erro desconhecido</string>
   <string name="sharing_error_dialog_message">Ocorreu um erro ao enviar um convite para este cofre. Se o problema persistir, entre em contato com o serviço de suporte ao cliente.</string>
   <string name="sharing_with_no_addresses_can_be_invited">Nenhum endereço pode ser convidado</string>

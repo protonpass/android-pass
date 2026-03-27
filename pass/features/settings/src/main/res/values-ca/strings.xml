@@ -35,6 +35,13 @@
   <string name="settings_preference_display_username">El camp de Nom d\'usuari serà sempre visible</string>
   <string name="settings_preference_display_autofill_pinning">L\'emplenament automàtic serà sempre visible</string>
   <string name="view_logs_title">Mostra els registres</string>
+  <string name="view_logs_clear_logs">Neteja els registres</string>
+  <string name="view_logs_clear_logs_confirmation_title">Voleu netejar els registres?</string>
+  <string name="view_logs_clear_logs_confirmation_message">Això eliminarà permanentment els registres que es mostren actualment en aquest dispositiu.</string>
+  <string name="view_logs_share_logs">Comparteix els registres</string>
+  <string name="view_logs_load_older_logs">Carregar registres més antics</string>
+  <string name="view_logs_loading_older_logs">S\'estan carregant els registres més antics...</string>
+  <string name="view_logs_empty">No hi ha registres disponibles</string>
   <string name="clipboard_bottomsheet_title">Porta-retalls</string>
   <string name="clipboard_option_clear_clipboard_label">Neteja el porta-retalls</string>
   <string name="clipboard_option_copy_totp_code">Copia els codis d\'autenticació</string>

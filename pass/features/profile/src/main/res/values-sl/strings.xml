@@ -49,8 +49,8 @@
   <string name="profile_option_unlock_with">Odkleni z</string>
   <string name="profile_option_change_pin_code">Spremeni kodo PIN</string>
   <string name="profile_passkey_support_section_title">Identifikacijski ključ</string>
-  <string name="profile_passkey_support_subtitle_supported">Passkeys can be supported on this device</string>
-  <string name="profile_passkey_support_subtitle_not_supported_android_version">Your Android version does not support passkeys.</string>
+  <string name="profile_passkey_support_subtitle_supported">Na tej napravi je mogoča podpora za identifikacijske ključe.</string>
+  <string name="profile_passkey_support_subtitle_not_supported_android_version">Vaša različica Androida ne podpira identifikacijskega ključa.</string>
   <string name="profile_passkey_support_subtitle_not_supported_unknown">Ni bilo mogoče preveriti podpore za identifikacijski ključ</string>
   <plurals name="profile_after_days">
     <item quantity="one">Po %d dnevu</item>

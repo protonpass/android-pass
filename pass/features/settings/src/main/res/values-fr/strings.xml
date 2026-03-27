@@ -35,6 +35,13 @@
   <string name="settings_preference_display_username">Champ Nom d’utilisateur toujours visible</string>
   <string name="settings_preference_display_autofill_pinning">Remplissage automatique toujours visible</string>
   <string name="view_logs_title">Afficher les journaux</string>
+  <string name="view_logs_clear_logs">Effacer les journaux</string>
+  <string name="view_logs_clear_logs_confirmation_title">Effacer les journaux ?</string>
+  <string name="view_logs_clear_logs_confirmation_message">Ceci supprimera définitivement les journaux actuellement affichés sur cet appareil.</string>
+  <string name="view_logs_share_logs">Partager les journaux</string>
+  <string name="view_logs_load_older_logs">Charger des journaux plus anciens</string>
+  <string name="view_logs_loading_older_logs">Charger des journaux plus anciens en cours...</string>
+  <string name="view_logs_empty">Aucuns journaux disponibles</string>
   <string name="clipboard_bottomsheet_title">Presse-papiers</string>
   <string name="clipboard_option_clear_clipboard_label">Effacer le presse-papiers</string>
   <string name="clipboard_option_copy_totp_code">Copier les codes d\'authentification</string>

@@ -139,6 +139,7 @@
   <string name="sharing_edit_permissions_set_access_level_all_members">Minden tag hozzáférési szintjének beállítása</string>
   <string name="sharing_edit_permissions_set_access_level_single_member">Hozzáférési szint beillátása %s</string>
   <string name="sharing_edit_permissions_remove_user">Felhasználó eltávolítása</string>
+  <string name="sharing_edit_permissions_remove_group">Remove group</string>
   <string name="sharing_error_dialog_title">Ismeretlen hiba</string>
   <string name="sharing_error_dialog_message">Hiba történt a meghívó elküldésében ehhez a tárolóhoz. Ha a probléma továbbra is fennáll, kérjük, forduljon az ügyfélszolgálathoz.</string>
   <string name="sharing_with_no_addresses_can_be_invited">Nem lehet címeket meghívni</string>

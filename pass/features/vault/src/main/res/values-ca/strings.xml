@@ -20,19 +20,19 @@
   <string name="snackbar_get_vault_list_error">No s\'ha pogut carregar la llista de caixes fortes</string>
   <string name="vault_delete_dialog_title">Elimina la caixa forta</string>
   <string name="vault_add_folder_dialog_title">Introduïu un títol per la carpeta</string>
-  <string name="vault_edit_folder_dialog_title">Canvia el nom de la carpeta</string>
+  <string name="vault_edit_folder_dialog_title">Canvieu el nom de la carpeta</string>
   <string name="vault_add_foldersame_folder_exist">Ja hi ha una carpeta amb el mateix nom</string>
   <string name="folder_delete_dialog_title">Elimineu la carpeta</string>
   <string name="folder_delete_dialog_body">Això eliminarà permanentment la carpeta __FOLDER_NAME__ i tot el seu contingut. Introduïu el nom de la carpeta per confirmar-ne l\'eliminació.</string>
   <string name="folder_delete_dialog_placeholder">Nom de la carpeta</string>
-  <string name="folder_delete_dialog_delete_action">Elimineu-la</string>
+  <string name="folder_delete_dialog_delete_action">Elimina</string>
   <string name="vault_delete_dialog_body">Això suprimirà permanentment la caixa forta __VAULT_NAME__ i tot el seu contingut. Introduïu el nom de la caixa forta per confirmar-ne l\'eliminació.</string>
   <string name="vault_delete_dialog_placeholder">Nom de la caixa forta</string>
   <string name="vault_add_folder_dialog_placeholder">Nom de la carpeta</string>
   <string name="vault_delete_dialog_cancel_action">Cancel·la</string>
   <string name="vault_delete_dialog_delete_action">Elimina</string>
-  <string name="vault_add_folder_dialog_create_action">Creeu-ho</string>
-  <string name="vault_edit_folder_dialog_save_action">Deseu-la</string>
+  <string name="vault_add_folder_dialog_create_action">Crea</string>
+  <string name="vault_edit_folder_dialog_save_action">Desa</string>
   <string name="vault_delete_dialog_shared_items_warning" comment="The placeholder will be replaced by the number of shared items, e.g 2 shared items">Aquesta caixa forta conté %1$s. En eliminar-la, se suprimirà l\'accés a la resta d\'usuaris.</string>
   <string name="vault_leave_dialog_title">Deixa la caixa forta</string>
   <string name="vault_leave_dialog_body">Això suprimirà el vostre accés a la caixa forta __VAULT_NAME__ i a tot el seu contingut. Segur que voleu deixar-la?</string>

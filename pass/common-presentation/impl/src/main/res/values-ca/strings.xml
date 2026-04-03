@@ -22,7 +22,7 @@
   <string name="share_attachments_error">No s\'ha pogut compartir l\'adjunt.</string>
   <string name="upload_attachments_error">No s\'ha pogut carregar l\'adjunt.</string>
   <string name="attachment_size_exceeded_error">El fitxer seleccionat supera el límit de mida. Trieu un fitxer de menys de 100 MB.</string>
-  <string name="attachment_too_many_files_error">S\'han creat massa fitxers darrerament</string>
+  <string name="attachment_too_many_files_error">Massa fitxers creats recentment</string>
   <string name="open_with">Obre amb:</string>
   <string name="share_with">Comparteix amb:</string>
 </resources>

@@ -35,13 +35,13 @@
   <string name="settings_preference_display_username">მომხმარებლის სახელის ველი ყოველთვის ხილულია</string>
   <string name="settings_preference_display_autofill_pinning">ავტოშევსების მიჭიკარტება ყოველთვის ხილულია</string>
   <string name="view_logs_title">ჟურნალის ნახვა</string>
-  <string name="view_logs_clear_logs">Clear logs</string>
-  <string name="view_logs_clear_logs_confirmation_title">Clear logs?</string>
-  <string name="view_logs_clear_logs_confirmation_message">This will permanently delete the logs currently shown on this device.</string>
-  <string name="view_logs_share_logs">Share logs</string>
-  <string name="view_logs_load_older_logs">Load older logs</string>
-  <string name="view_logs_loading_older_logs">Loading older logs...</string>
-  <string name="view_logs_empty">No logs available</string>
+  <string name="view_logs_clear_logs">ჟურნალის გასუფთავება</string>
+  <string name="view_logs_clear_logs_confirmation_title">გასუფთავდეს ჟურნალი?</string>
+  <string name="view_logs_clear_logs_confirmation_message">ეს სამუდამოდ წაშლის ამ მოწყობილობაზე ამჟამად ნაჩვენებ ჟურნალს.</string>
+  <string name="view_logs_share_logs">ჟურნალის გაზიარება</string>
+  <string name="view_logs_load_older_logs">უფრო ძველი ჟურნალის ჩატვირთვა</string>
+  <string name="view_logs_loading_older_logs">უფრო ძველი ჟურნალის ჩატვირთვა...</string>
+  <string name="view_logs_empty">ჟურნალი ხელმისაწვდომი არაა</string>
   <string name="clipboard_bottomsheet_title">ბუფერი</string>
   <string name="clipboard_option_clear_clipboard_label">გაცვლის ბუფერის გასუფთავება</string>
   <string name="clipboard_option_copy_totp_code">ავთენტიკაციის კოდების კოპირება</string>
@@ -51,10 +51,10 @@
   <string name="clipboard_option_clear_clipboard_after_180_seconds">3 წუთის შემდეგ</string>
   <string name="settings_use_digital_asset_link_preference_title">ციფრული აქტივის სიების ჩართვა</string>
   <string name="settings_use_digital_asset_link_preference_subtitle">ამყარებს ვებგვერდის მფლობელობის გადამოწმებას Android-ის აპსა და ვებგვერდს შორის.</string>
-  <string name="settings_autofill_display_title">Autofill display</string>
-  <string name="settings_autofill_display_inline">Inline (above keyboard)</string>
-  <string name="settings_autofill_display_popup">Popup (over input field)</string>
-  <string name="settings_autofill_display_subtitle">Inline mode requires a compatible keyboard (e.g. Gboard). If unsupported, popup mode will be used automatically.</string>
-  <string name="settings_autosave_prompt_title">Prompt for auto-save</string>
-  <string name="settings_autosave_prompt_subtitle">Proton Pass will prompt you to save or update logins</string>
+  <string name="settings_autofill_display_title">ავტოშევსების ჩვენება</string>
+  <string name="settings_autofill_display_inline">ტექსტში (კლავიატურის ზემოთ)</string>
+  <string name="settings_autofill_display_popup">მხტუნარა (შეყვანის ველის ზემოდან)</string>
+  <string name="settings_autofill_display_subtitle">ხაზშივე რეჟიმს თავსებადი კლავიატურა (მაგ: Gboard) სჭირდება. თუ მხარდაჭერილი არაა, ავტომატურად გამოყენებული იქნება მხტუნარას რეჟიმი.</string>
+  <string name="settings_autosave_prompt_title">კითხვა ავტომატური შენახვისას</string>
+  <string name="settings_autosave_prompt_subtitle">Proton Pass გკითხავთ, გნებავთ, თუ არა შესვლის ჩანაწერების შენახვა, ან განახლება</string>
 </resources>

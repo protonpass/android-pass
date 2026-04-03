@@ -24,8 +24,8 @@
   <string name="migrate_folder_error_snackbar">S\'ha produït un error en moure la carpeta</string>
   <string name="migrate_folder_already_same_parent_snackbar">La carpeta ja és en aquesta ubicació</string>
   <plurals name="migrate_disabled_folder_reason_same_folder">
-    <item quantity="one">L\'element ja es troba en aquesta carpeta</item>
-    <item quantity="other">Els %d elements ja es troben en aquesta carpeta</item>
+    <item quantity="one">L\'element ja és en aquesta carpeta</item>
+    <item quantity="other">%d elements ja són en aquesta carpeta</item>
   </plurals>
   <string name="migrate_disabled_vault_reason_no_permission">No podeu crear elements en aquesta caixa forta</string>
   <string name="migrate_disabled_vault_reason_same_vault">No podeu moure un element a la mateixa caixa forta</string>

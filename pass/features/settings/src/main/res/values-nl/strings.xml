@@ -35,13 +35,13 @@
   <string name="settings_preference_display_username">Veld gebruikersnaam is altijd zichtbaar</string>
   <string name="settings_preference_display_autofill_pinning">Autofill vastzetten altijd zichtbaar</string>
   <string name="view_logs_title">Logboeken bekijken</string>
-  <string name="view_logs_clear_logs">Clear logs</string>
-  <string name="view_logs_clear_logs_confirmation_title">Clear logs?</string>
-  <string name="view_logs_clear_logs_confirmation_message">This will permanently delete the logs currently shown on this device.</string>
-  <string name="view_logs_share_logs">Share logs</string>
-  <string name="view_logs_load_older_logs">Load older logs</string>
-  <string name="view_logs_loading_older_logs">Loading older logs...</string>
-  <string name="view_logs_empty">No logs available</string>
+  <string name="view_logs_clear_logs">Logboeken wissen</string>
+  <string name="view_logs_clear_logs_confirmation_title">Logboeken wissen?</string>
+  <string name="view_logs_clear_logs_confirmation_message">Hiermee worden de logbestanden die momenteel op dit apparaat worden weergegeven, permanent verwijderd.</string>
+  <string name="view_logs_share_logs">Logboeken delen</string>
+  <string name="view_logs_load_older_logs">Oudere logboeken laden</string>
+  <string name="view_logs_loading_older_logs">Oudere logboeken laden...</string>
+  <string name="view_logs_empty">Geen logboeken beschikbaar</string>
   <string name="clipboard_bottomsheet_title">Klembord</string>
   <string name="clipboard_option_clear_clipboard_label">Klembord wissen</string>
   <string name="clipboard_option_copy_totp_code">Kopieer authenticatiecodes</string>
@@ -51,10 +51,10 @@
   <string name="clipboard_option_clear_clipboard_after_180_seconds">Na 3 minuten</string>
   <string name="settings_use_digital_asset_link_preference_title">Digital Asset Links Inschakelen</string>
   <string name="settings_use_digital_asset_link_preference_subtitle">Bepaalt de eigendomsverificatie van website tussen een Android-app en een website.</string>
-  <string name="settings_autofill_display_title">Autofill display</string>
-  <string name="settings_autofill_display_inline">Inline (above keyboard)</string>
-  <string name="settings_autofill_display_popup">Popup (over input field)</string>
-  <string name="settings_autofill_display_subtitle">Inline mode requires a compatible keyboard (e.g. Gboard). If unsupported, popup mode will be used automatically.</string>
-  <string name="settings_autosave_prompt_title">Prompt for auto-save</string>
-  <string name="settings_autosave_prompt_subtitle">Proton Pass will prompt you to save or update logins</string>
+  <string name="settings_autofill_display_title">Toon AutoFill</string>
+  <string name="settings_autofill_display_inline">Inline (boven toetsenbord)</string>
+  <string name="settings_autofill_display_popup">Pop-up (over invoerveld)</string>
+  <string name="settings_autofill_display_subtitle">De inline-modus vereist een compatibel toetsenbord (bijv. Gboard). Indien niet ondersteund, wordt automatisch de pop-upmodus gebruikt.</string>
+  <string name="settings_autosave_prompt_title">Vragen om automatisch opslaan</string>
+  <string name="settings_autosave_prompt_subtitle">Proton Pass zal u vragen om inloggegevens op te slaan of te updaten</string>
 </resources>

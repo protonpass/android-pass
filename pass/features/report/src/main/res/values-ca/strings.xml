@@ -42,7 +42,7 @@
   <string name="sharing_tip_secure_links_guide">Teniu problemes amb els enllaços segurs? Consulteu la nostra guia.</string>
   <string name="sync_tip_force_refresh">La vostra pantalla està buida? Intenteu fer una sincronització forçada.</string>
   <string name="send_logs_label">Envia els registres</string>
-  <string name="report_sending_success">S\'ha enviat l\'informe.</string>
+  <string name="report_sending_success">L\'informe s\'ha enviat correctament.</string>
   <string name="report_sending_error">No s\'ha pogut enviar l\'informe.</string>
   <string name="tips_passkey_check_guide">Si teniu problemes, consulteu la nostra guia.</string>
   <string name="tips_passkey_android_not_supported">La vostra versió d\'Android és massa baixa. Proveu d\'actualitzar el vostre dispositiu.</string>

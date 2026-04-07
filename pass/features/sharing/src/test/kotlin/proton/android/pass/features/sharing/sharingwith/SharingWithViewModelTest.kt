@@ -32,16 +32,23 @@ import proton.android.pass.commonui.fakes.FakeSavedStateHandleProvider
 import proton.android.pass.data.api.repositories.UserTarget
 import proton.android.pass.data.api.usecases.CanAddressesBeInvitedResult
 import proton.android.pass.data.fakes.repositories.FakeBulkInviteRepository
-import proton.android.pass.data.fakes.usecases.FakeObserveInviteRecommendations
 import proton.android.pass.data.fakes.usecases.FakeCheckAddressesCanBeInvited
+import proton.android.pass.data.fakes.usecases.FakeGetVaultMembers
+import proton.android.pass.data.fakes.usecases.FakeObserveGroupMembersByGroup
+import proton.android.pass.data.fakes.usecases.FakeObserveInviteRecommendations
 import proton.android.pass.data.fakes.usecases.FakeObserveOrganizationSettings
 import proton.android.pass.data.fakes.usecases.shares.FakeObserveShare
+import proton.android.pass.data.fakes.usecases.shares.FakeObserveShareItemMembers
+import proton.android.pass.data.fakes.usecases.shares.FakeObserveSharePendingInvites
+import proton.android.pass.domain.InviteId
+import proton.android.pass.domain.ShareRole
+import proton.android.pass.domain.shares.SharePendingInvite
+import proton.android.pass.data.api.usecases.VaultMember
 import proton.android.pass.domain.GroupId
 import proton.android.pass.domain.InviteRecommendations
 import proton.android.pass.domain.RecommendedEmail
 import proton.android.pass.domain.RecommendedGroup
 import proton.android.pass.domain.ShareId
-import proton.android.pass.domain.ShareRole
 import proton.android.pass.features.sharing.ShowEditVaultArgId
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.navigation.api.CommonOptionalNavArgId
@@ -57,6 +64,9 @@ class SharingWithViewModelTest {
     private lateinit var savedStateHandleProvider: FakeSavedStateHandleProvider
     private lateinit var bulkInviteRepository: FakeBulkInviteRepository
     private lateinit var checkAddressesCanBeInvited: FakeCheckAddressesCanBeInvited
+    private lateinit var getVaultMembers: FakeGetVaultMembers
+    private lateinit var observeGroupMembersByGroup: FakeObserveGroupMembersByGroup
+    private lateinit var observeSharePendingInvites: FakeObserveSharePendingInvites
 
     @get:Rule
     val dispatcherRule = MainDispatcherRule()
@@ -68,6 +78,9 @@ class SharingWithViewModelTest {
         observeInviteRecommendations = FakeObserveInviteRecommendations()
         bulkInviteRepository = FakeBulkInviteRepository()
         checkAddressesCanBeInvited = FakeCheckAddressesCanBeInvited()
+        getVaultMembers = FakeGetVaultMembers()
+        observeGroupMembersByGroup = FakeObserveGroupMembersByGroup()
+        observeSharePendingInvites = FakeObserveSharePendingInvites().apply { emitValue(emptyList()) }
         savedStateHandleProvider = FakeSavedStateHandleProvider().apply {
             get()[CommonNavArgId.ShareId.key] = SHARE_ID
             get()[ShowEditVaultArgId.key] = false
@@ -80,7 +93,11 @@ class SharingWithViewModelTest {
             observeInviteRecommendations = observeInviteRecommendations,
             bulkInviteRepository = bulkInviteRepository,
             observeOrganizationSettings = FakeObserveOrganizationSettings(),
-            checkCanAddressesBeInvited = checkAddressesCanBeInvited
+            checkCanAddressesBeInvited = checkAddressesCanBeInvited,
+            getVaultMembers = getVaultMembers,
+            observeGroupMembersByGroup = observeGroupMembersByGroup,
+            observeShareItemMembers = FakeObserveShareItemMembers(),
+            observeSharePendingInvites = observeSharePendingInvites
         )
 
         observeShare.emitValue(ShareTestFactory.random())
@@ -170,7 +187,7 @@ class SharingWithViewModelTest {
     }
 
     @Test
-    fun `double click on entered email should remove it from the list`() = runTest {
+    fun `click on entered email chip should remove it from the list`() = runTest {
         val email1 = "test@email.test"
         val email2 = "another@email.test"
         val recommendations = InviteRecommendations(
@@ -203,7 +220,6 @@ class SharingWithViewModelTest {
         }
 
         viewModel.onChipEmailClick(0)
-        viewModel.onChipEmailClick(0)
 
         viewModel.stateFlow.test {
             val state = awaitItem()
@@ -221,7 +237,7 @@ class SharingWithViewModelTest {
     }
 
     @Test
-    fun `double click on selected group chip should focus it and then remove it`() = runTest {
+    fun `click on selected group chip should remove it`() = runTest {
         val groupId = GroupId("group-id")
         val recommendations = InviteRecommendations(
             recommendedItems = listOf(
@@ -253,24 +269,7 @@ class SharingWithViewModelTest {
             )
         }
 
-        viewModel.onChipGroupClick(groupId)
-
-        viewModel.stateFlow.test {
-            val state = awaitItem()
-            val content = state.suggestionsUIState as SuggestionsUIState.Content
-            assertThat(content.recentSortedItems.filterIsInstance<GroupSuggestionUiModel>()).containsExactly(
-                GroupSuggestionUiModel(
-                    id = groupId,
-                    email = "group@proton.test",
-                    name = "Team group",
-                    memberCount = 3,
-                    isSelected = true,
-                    isFocused = true
-                )
-            )
-        }
-
-        viewModel.onChipGroupClick(groupId)
+        viewModel.onChipGroupRemoveClick(groupId)
 
         viewModel.stateFlow.test {
             val state = awaitItem()
@@ -357,6 +356,126 @@ class SharingWithViewModelTest {
 
             // Assert that it does not clean the current state
             assertThat(viewModel.editingEmail).isEqualTo(email)
+        }
+    }
+
+    @Test
+    fun `vault member email appears as already invited in suggestions`() = runTest {
+        val memberEmail = "member@proton.me"
+        getVaultMembers.emitValue(
+            listOf(
+                VaultMember.Member(
+                    email = memberEmail,
+                    shareId = ShareId(SHARE_ID),
+                    username = memberEmail,
+                    isGroup = false,
+                    memberCount = 0,
+                    role = ShareRole.Read,
+                    isCurrentUser = false,
+                    isOwner = false
+                )
+            )
+        )
+        observeInviteRecommendations.emitInvites(
+            InviteRecommendations(
+                recommendedItems = listOf(RecommendedEmail(memberEmail)),
+                groupDisplayName = "",
+                organizationItems = emptyList()
+            )
+        )
+
+        viewModel.stateFlow.test {
+            val content = awaitItem().suggestionsUIState as SuggestionsUIState.Content
+            val emails = content.recentSortedItems.filterIsInstance<EmailUiModel>()
+            assertThat(emails).containsExactly(EmailUiModel(memberEmail, isAlreadyMember = true))
+        }
+    }
+
+    @Test
+    fun `pending invite email appears as already invited in suggestions`() = runTest {
+        val invitedEmail = "pending@proton.me"
+        observeSharePendingInvites.emitValue(
+            listOf(
+                SharePendingInvite.ExistingUser(
+                    email = invitedEmail,
+                    inviteId = InviteId("invite-1"),
+                    targetId = SHARE_ID
+                )
+            )
+        )
+        observeInviteRecommendations.emitInvites(
+            InviteRecommendations(
+                recommendedItems = listOf(RecommendedEmail(invitedEmail)),
+                groupDisplayName = "",
+                organizationItems = emptyList()
+            )
+        )
+
+        viewModel.stateFlow.test {
+            val content = awaitItem().suggestionsUIState as SuggestionsUIState.Content
+            val emails = content.recentSortedItems.filterIsInstance<EmailUiModel>()
+            assertThat(emails).containsExactly(EmailUiModel(invitedEmail, isAlreadyMember = true))
+        }
+    }
+
+    @Test
+    fun `group with vault access appears as already invited in suggestions`() = runTest {
+        val groupEmail = "engineering@proton.me"
+        val groupId = GroupId("group-eng")
+        getVaultMembers.emitValue(
+            listOf(
+                VaultMember.Member(
+                    email = groupEmail,
+                    shareId = ShareId(SHARE_ID),
+                    username = groupEmail,
+                    isGroup = true,
+                    memberCount = 3,
+                    role = ShareRole.Read,
+                    isCurrentUser = false,
+                    isOwner = false
+                )
+            )
+        )
+        observeInviteRecommendations.emitInvites(
+            InviteRecommendations(
+                recommendedItems = listOf(
+                    RecommendedGroup(groupId = groupId, email = groupEmail, name = "Engineering", memberCount = 3)
+                ),
+                groupDisplayName = "",
+                organizationItems = emptyList()
+            )
+        )
+
+        viewModel.stateFlow.test {
+            val content = awaitItem().suggestionsUIState as SuggestionsUIState.Content
+            val groups = content.recentSortedItems.filterIsInstance<GroupSuggestionUiModel>()
+            assertThat(groups).containsExactly(
+                GroupSuggestionUiModel(
+                    id = groupId,
+                    email = groupEmail,
+                    name = "Engineering",
+                    memberCount = 3,
+                    isAlreadyMember = true
+                )
+            )
+        }
+    }
+
+    @Test
+    fun `non-member email is not marked as already invited`() = runTest {
+        val freshEmail = "fresh@proton.me"
+        observeInviteRecommendations.emitInvites(
+            InviteRecommendations(
+                recommendedItems = listOf(RecommendedEmail(freshEmail)),
+                groupDisplayName = "",
+                organizationItems = emptyList()
+            )
+        )
+
+        viewModel.stateFlow.test {
+            val content = awaitItem().suggestionsUIState as SuggestionsUIState.Content
+            val emails = content.recentSortedItems.filterIsInstance<EmailUiModel>()
+            assertThat(emails).containsExactly(EmailUiModel(freshEmail, isAlreadyMember = false))
         }
     }
 

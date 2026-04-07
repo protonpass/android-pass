@@ -26,7 +26,10 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.IntrinsicSize
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -117,6 +120,10 @@ internal fun SharingWithContent(
                 R.string.share_with_email_email_already_added
             }
 
+            ErrorMessage.SomethingWentWrong -> {
+                R.string.sharing_snackbar_invite_sent_error
+            }
+
             ErrorMessage.None -> null
         }
     }
@@ -203,8 +210,8 @@ internal fun SharingWithContent(
                                     SharingChip(
                                         text = label,
                                         isError = false,
-                                        isSelected = group.isFocused,
-                                        onClick = { onEvent(SharingWithUiEvent.ChipGroupClick(group.id)) }
+                                        onRemoveClick = { onEvent(SharingWithUiEvent.ChipGroupRemoveClick(group.id)) },
+                                        onLabelClick = { onEvent(SharingWithUiEvent.ChipGroupNameClick(group.id)) }
                                     )
                                 }
                         }
@@ -216,8 +223,7 @@ internal fun SharingWithContent(
                         SharingChip(
                             text = emailState.email,
                             isError = emailState.isError,
-                            isSelected = emailState.isFocused,
-                            onClick = { onEvent(SharingWithUiEvent.ChipEmailClick(idx)) }
+                            onRemoveClick = { onEvent(SharingWithUiEvent.ChipEmailClick(idx)) }
                         )
                     }
                 }
@@ -275,8 +281,8 @@ private fun SharingChip(
     modifier: Modifier = Modifier,
     text: String,
     isError: Boolean,
-    isSelected: Boolean,
-    onClick: () -> Unit
+    onRemoveClick: () -> Unit,
+    onLabelClick: (() -> Unit)? = null
 ) {
     val contentColor = if (isError) {
         PassTheme.colors.passwordInteractionNormMajor2
@@ -292,17 +298,40 @@ private fun SharingChip(
                 ifTrue = { background(color = PassTheme.colors.passwordInteractionNormMinor1) },
                 ifFalse = { background(color = PassTheme.colors.interactionNormMinor1) }
             )
-            .clickable { onClick() }
-            .padding(all = Spacing.small),
+            .height(IntrinsicSize.Min),
         verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.spacedBy(space = Spacing.small)
+        horizontalArrangement = Arrangement.Start
     ) {
-        Text.Body2Regular(
-            text = text,
-            color = contentColor
-        )
+        Box(
+            modifier = Modifier
+                .fillMaxHeight()
+                .clickable { (onLabelClick ?: onRemoveClick)() }
+                .padding(
+                    start = Spacing.small,
+                    top = Spacing.small,
+                    bottom = Spacing.small,
+                    end = Spacing.extraSmall
+                ),
+            contentAlignment = Alignment.Center
+        ) {
+            Text.Body2Regular(
+                text = text,
+                color = contentColor
+            )
+        }
 
-        if (isSelected) {
+        Box(
+            modifier = Modifier
+                .fillMaxHeight()
+                .clickable { onRemoveClick() }
+                .padding(
+                    start = Spacing.extraSmall,
+                    top = Spacing.small,
+                    bottom = Spacing.small,
+                    end = Spacing.small
+                ),
+            contentAlignment = Alignment.Center
+        ) {
             Icon(
                 modifier = Modifier.size(size = Spacing.mediumSmall),
                 painter = painterResource(id = CoreR.drawable.ic_proton_cross),
@@ -317,15 +346,14 @@ private fun SharingChip(
 internal fun SharingWithChipPreview(
     @PreviewParameter(ThemedBooleanPreviewProvider::class) input: Pair<Boolean, Boolean>
 ) {
-    val (isDark, isSelected) = input
+    val (isDark, isError) = input
 
     PassTheme(isDark = isDark) {
         Surface {
             SharingChip(
                 text = "some@email.test",
-                isError = isSelected,
-                isSelected = isSelected,
-                onClick = {}
+                isError = isError,
+                onRemoveClick = {}
             )
         }
     }

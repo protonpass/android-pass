@@ -24,6 +24,7 @@ import kotlinx.coroutines.flow.flow
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.safeRunCatching
 import proton.android.pass.data.api.repositories.ShareMembersRepository
+import proton.android.pass.data.impl.local.LocalShareDataSource
 import proton.android.pass.data.impl.local.shares.LocalShareMembersDataSource
 import proton.android.pass.data.impl.remote.shares.RemoteShareMembersDataSource
 import proton.android.pass.data.impl.responses.ShareMemberResponse
@@ -37,7 +38,8 @@ import javax.inject.Inject
 
 class ShareMembersRepositoryImpl @Inject constructor(
     private val remoteDataSource: RemoteShareMembersDataSource,
-    private val localDataSource: LocalShareMembersDataSource
+    private val localDataSource: LocalShareMembersDataSource,
+    private val localShareDataSource: LocalShareDataSource
 ) : ShareMembersRepository {
 
     override suspend fun getShareMembers(
@@ -58,9 +60,17 @@ class ShareMembersRepositoryImpl @Inject constructor(
         val itemMembers = remoteDataSource.getShareItemMembers(userId, shareId, itemId)
             .map { it.toDomain(userEmail) }
 
-        val vaultGroupMembers = remoteDataSource.getShareMembers(userId, shareId)
-            .filter { it.isGroupShare }
-            .map { it.toDomain(userEmail) }
+        val isVaultShare = localShareDataSource.getById(userId, shareId)
+            ?.let { ShareType.from(it.targetType).isVaultShare }
+            ?: false
+
+        val vaultGroupMembers = if (isVaultShare) {
+            remoteDataSource.getShareMembers(userId, shareId)
+                .filter { it.isGroupShare }
+                .map { it.toDomain(userEmail) }
+        } else {
+            emptyList()
+        }
 
         val itemMemberIds = itemMembers.mapTo(HashSet()) { it.shareId }
         val mergedMembers = itemMembers + vaultGroupMembers.filter { it.shareId !in itemMemberIds }
@@ -79,7 +89,7 @@ class ShareMembersRepositoryImpl @Inject constructor(
         safeRunCatching {
             remoteDataSource.updateShareMember(userId, shareId, memberShareId, memberShareRole)
         }.onFailure { error ->
-            PassLogger.w(TAG, "There was an error removing a share member")
+            PassLogger.w(TAG, "There was an error updating a share member role")
             PassLogger.w(TAG, error)
             throw error
         }.onSuccess {

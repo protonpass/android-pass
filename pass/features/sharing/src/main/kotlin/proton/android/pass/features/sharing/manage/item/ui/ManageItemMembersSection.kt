@@ -42,6 +42,7 @@ internal fun ManageItemMembersSection(
     sectionTitle: String,
     isItemSection: Boolean,
     isShareAdmin: Boolean,
+    isCurrentUserOwner: Boolean,
     canInviteMore: Boolean,
     vaultOption: Option<Vault>,
     shareItemsCount: Int,
@@ -107,6 +108,7 @@ internal fun ManageItemMembersSection(
                 ManageItemMemberRow(
                     member = member,
                     canAdmin = isShareAdmin,
+                    isCurrentUserOwner = isCurrentUserOwner,
                     hasVaultAccess = vaultOption is Some,
                     isRenameAdminToManagerEnabled = isRenameAdminToManagerEnabled,
                     groupId = groupInfo?.group?.id,

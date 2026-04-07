@@ -27,6 +27,7 @@ data class Vault(
     val userId: UserId,
     val shareId: ShareId,
     val vaultId: VaultId,
+    val groupId: GroupId? = null,
     val name: String,
     val color: ShareColor = ShareColor.Color1,
     val icon: ShareIcon = ShareIcon.Icon1,
@@ -39,6 +40,8 @@ data class Vault(
     val createTime: Date,
     val shareFlags: ShareFlags
 ) {
+
+    val isGroupShare: Boolean get() = groupId != null
 
     val canBeUpdated: Boolean = role.toPermissions().canUpdate()
 

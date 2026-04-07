@@ -41,6 +41,11 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.focus.onFocusChanged
+import androidx.compose.ui.input.key.Key
+import androidx.compose.ui.input.key.KeyEventType
+import androidx.compose.ui.input.key.key
+import androidx.compose.ui.input.key.onPreviewKeyEvent
+import androidx.compose.ui.input.key.type
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.platform.LocalFocusManager
@@ -103,6 +108,14 @@ fun ProtonTextField(
     Column(modifier = modifier, verticalArrangement = verticalArrangement) {
         BasicTextField(
             modifier = textFieldModifier
+                .onPreviewKeyEvent { keyEvent ->
+                    if (singleLine && keyEvent.key == Key.Enter && keyEvent.type == KeyEventType.KeyDown) {
+                        goToNextField()
+                        true
+                    } else {
+                        false
+                    }
+                }
                 .onFocusChanged { state ->
                     if (onFocusChange != null && (state.isFocused || hasBeenFocused)) {
                         hasBeenFocused = true

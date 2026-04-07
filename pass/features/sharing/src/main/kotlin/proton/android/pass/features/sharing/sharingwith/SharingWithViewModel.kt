@@ -28,8 +28,10 @@ import kotlinx.collections.immutable.toPersistentList
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.distinctUntilChanged
@@ -40,14 +42,12 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import me.proton.core.util.kotlin.takeIfNotBlank
 import proton.android.pass.common.api.LoadingResult
-import proton.android.pass.common.api.None
 import proton.android.pass.common.api.safeRunCatching
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.asLoadingResult
 import proton.android.pass.common.api.combineN
 import proton.android.pass.common.api.getOrNull
 import proton.android.pass.common.api.map
-import proton.android.pass.common.api.some
 import proton.android.pass.common.api.toOption
 import proton.android.pass.commonrust.api.EmailValidator
 import proton.android.pass.commonui.api.SavedStateHandleProvider
@@ -59,11 +59,18 @@ import proton.android.pass.data.api.repositories.InviteTarget
 import proton.android.pass.data.api.repositories.UserTarget
 import proton.android.pass.data.api.usecases.CanAddressesBeInvitedResult
 import proton.android.pass.data.api.usecases.CheckCanAddressesBeInvited
+import proton.android.pass.data.api.usecases.GetVaultMembers
+import proton.android.pass.data.api.usecases.ObserveGroupMembersByGroup
 import proton.android.pass.data.api.usecases.ObserveInviteRecommendations
+import proton.android.pass.data.api.usecases.VaultMember
 import proton.android.pass.data.api.usecases.organization.ObserveOrganizationSettings
 import proton.android.pass.data.api.usecases.shares.ObserveShare
+import proton.android.pass.data.api.usecases.shares.ObserveShareItemMembers
+import proton.android.pass.data.api.usecases.shares.ObserveSharePendingInvites
 import proton.android.pass.domain.GroupId
 import proton.android.pass.domain.ItemId
+import proton.android.pass.domain.shares.ShareMember
+import proton.android.pass.domain.shares.SharePendingInvite
 import proton.android.pass.domain.OrganizationSettings
 import proton.android.pass.domain.OrganizationShareMode
 import proton.android.pass.domain.RecommendedEmail
@@ -84,6 +91,10 @@ class SharingWithViewModel @Inject constructor(
     observeShare: ObserveShare,
     observeInviteRecommendations: ObserveInviteRecommendations,
     observeOrganizationSettings: ObserveOrganizationSettings,
+    getVaultMembers: GetVaultMembers,
+    observeGroupMembersByGroup: ObserveGroupMembersByGroup,
+    observeShareItemMembers: ObserveShareItemMembers,
+    observeSharePendingInvites: ObserveSharePendingInvites,
     savedStateHandleProvider: SavedStateHandleProvider
 ) : ViewModel() {
 
@@ -108,22 +119,62 @@ class SharingWithViewModel @Inject constructor(
     private val enteredEmailsState: MutableStateFlow<List<EnteredEmailUiModel>> =
         MutableStateFlow(emptyList())
 
-    private val focusedEmailIndexFlow: MutableStateFlow<Option<Int>> = MutableStateFlow(None)
-    private val focusedGroupIdFlow: MutableStateFlow<Option<GroupId>> = MutableStateFlow(None)
-
     private val checkedEmailFlow = MutableStateFlow<Set<String>>(emptySet())
     private val checkedGroupIdsFlow = MutableStateFlow<Set<GroupId>>(emptySet())
 
+    private val alreadyInvitedEmailsFlow: Flow<Set<String>> = combine(
+        itemIdOption.value()
+            ?.let { itemId ->
+                observeShareItemMembers(shareId, itemId)
+                    .catch {
+                        PassLogger.w(TAG, "Failed to observe share item members")
+                        PassLogger.w(TAG, it)
+                        emit(emptyList<ShareMember>())
+                    }
+            }
+            ?: flowOf(emptyList()),
+        observeSharePendingInvites(shareId, itemIdOption.value())
+            .catch {
+                PassLogger.w(TAG, "Failed to observe share pending invites")
+                PassLogger.w(TAG, it)
+                emit(emptyList<SharePendingInvite>())
+            },
+        getVaultMembers(shareId)
+            .catch {
+                PassLogger.w(TAG, "Failed to get vault members")
+                PassLogger.w(TAG, it)
+                emit(emptyList())
+            },
+        observeGroupMembersByGroup()
+            .catch {
+                PassLogger.w(TAG, "Failed to observe group members by group")
+                PassLogger.w(TAG, it)
+                emit(emptyList())
+            }
+    ) { members, pendingInvites, vaultMembers, allGroupMembers ->
+        val directEmails = members.map { it.email } +
+            pendingInvites.map { it.email } +
+            vaultMembers.map { it.email }
+        val invitedGroupEmails = (
+            members.filter { it.isGroup }.map { it.email } +
+                vaultMembers.filter { it is VaultMember.Member && it.isGroup }.map { it.email }
+            ).toSet()
+        val groupMemberEmails = allGroupMembers
+            .filter { it.group.groupEmail in invitedGroupEmails }
+            .flatMap { it.members }
+            .mapNotNull { it.email }
+        (directEmails + groupMemberEmails).toSet()
+    }
+
     private val inviteEmailsState = combine(
         bulkInviteRepository.observeInvalidAddresses(),
-        enteredEmailsState,
-        focusedEmailIndexFlow
-    ) { invalidAddresses, enteredEmails, focusedEmailIndex ->
-        enteredEmails.mapIndexed { idx, enteredEmail ->
+        enteredEmailsState
+    ) { invalidAddresses, enteredEmails ->
+        enteredEmails.map { enteredEmail ->
             if (invalidAddresses.contains(enteredEmail.email)) {
-                enteredEmail.copy(isError = true, isFocused = idx == focusedEmailIndex.value())
+                enteredEmail.copy(isError = true)
             } else {
-                enteredEmail.copy(isFocused = idx == focusedEmailIndex.value())
+                enteredEmail
             }
         }
     }
@@ -158,8 +209,8 @@ class SharingWithViewModel @Inject constructor(
         recommendationsFlow,
         checkedEmailFlow,
         checkedGroupIdsFlow,
-        focusedGroupIdFlow
-    ) { result, checkedEmails, checkedGroupIds, focusedGroupId ->
+        alreadyInvitedEmailsFlow
+    ) { result, checkedEmails, checkedGroupIds, alreadyInvitedEmails ->
         when (result) {
             is LoadingResult.Error -> SuggestionsUIState.Initial
             LoadingResult.Loading -> SuggestionsUIState.Loading
@@ -167,7 +218,7 @@ class SharingWithViewModel @Inject constructor(
                 val recommendations = result.data
                 val recentEmails = recommendations.recommendedItems
                     .filterIsInstance<RecommendedEmail>()
-                    .map { EmailUiModel(it.email, checkedEmails.contains(it.email)) }
+                    .map { EmailUiModel(it.email, checkedEmails.contains(it.email), it.email in alreadyInvitedEmails) }
 
                 val recentGroups = recommendations.recommendedItems
                     .filterIsInstance<RecommendedGroup>()
@@ -178,13 +229,13 @@ class SharingWithViewModel @Inject constructor(
                             name = group.name,
                             memberCount = group.memberCount,
                             isSelected = group.groupId in checkedGroupIds,
-                            isFocused = group.groupId == focusedGroupId.value()
+                            isAlreadyMember = group.email in alreadyInvitedEmails
                         )
                     }
 
                 val organizationEmails = recommendations.organizationItems
                     .filterIsInstance<RecommendedEmail>()
-                    .map { EmailUiModel(it.email, checkedEmails.contains(it.email)) }
+                    .map { EmailUiModel(it.email, checkedEmails.contains(it.email), it.email in alreadyInvitedEmails) }
 
                 val organizationGroups = recommendations.organizationItems
                     .filterIsInstance<RecommendedGroup>()
@@ -195,7 +246,7 @@ class SharingWithViewModel @Inject constructor(
                             name = group.name,
                             memberCount = group.memberCount,
                             isSelected = group.groupId in checkedGroupIds,
-                            isFocused = group.groupId == focusedGroupId.value()
+                            isAlreadyMember = group.email in alreadyInvitedEmails
                         )
                     }
 
@@ -280,8 +331,6 @@ class SharingWithViewModel @Inject constructor(
         editingEmailState = sanitised
         editingEmailStateFlow.update { sanitised }
         errorMessageFlow.update { ErrorMessage.None }
-        focusedEmailIndexFlow.update { None }
-        focusedGroupIdFlow.update { None }
     }
 
     internal fun onEmailSubmit() {
@@ -304,34 +353,16 @@ class SharingWithViewModel @Inject constructor(
     }
 
     internal fun onChipEmailClick(index: Int) {
-        if (focusedEmailIndexFlow.value.value() == index) {
-            enteredEmailsState.update { currentList ->
-                if (index !in currentList.indices) return@update currentList
-                val email = currentList[index]
-                checkedEmailFlow.update {
-                    if (checkedEmailFlow.value.contains(email.email)) {
-                        checkedEmailFlow.value - email.email
-                    } else {
-                        checkedEmailFlow.value + email.email
-                    }
-                }
-                currentList.filterIndexed { idx, _ -> idx != index }
-            }
-            focusedEmailIndexFlow.update { None }
-        } else {
-            focusedEmailIndexFlow.update { index.some() }
-            focusedGroupIdFlow.update { None }
+        enteredEmailsState.update { currentList ->
+            if (index !in currentList.indices) return@update currentList
+            val email = currentList[index]
+            checkedEmailFlow.update { it - email.email }
+            currentList.filterIndexed { idx, _ -> idx != index }
         }
     }
 
-    internal fun onChipGroupClick(groupId: GroupId) {
-        if (focusedGroupIdFlow.value.value() == groupId) {
-            checkedGroupIdsFlow.update { current -> current - groupId }
-            focusedGroupIdFlow.update { None }
-        } else {
-            focusedGroupIdFlow.update { groupId.some() }
-            focusedEmailIndexFlow.update { None }
-        }
+    internal fun onChipGroupRemoveClick(groupId: GroupId) {
+        checkedGroupIdsFlow.update { it - groupId }
     }
 
     internal fun onContinueClick() {
@@ -359,6 +390,7 @@ class SharingWithViewModel @Inject constructor(
             }.onFailure {
                 PassLogger.w(TAG, "Failed to check if addresses can be invited")
                 PassLogger.w(TAG, it)
+                errorMessageFlow.update { ErrorMessage.SomethingWentWrong }
             }
 
             isLoadingState.update { IsLoadingState.NotLoading }
@@ -408,10 +440,7 @@ class SharingWithViewModel @Inject constructor(
         }
         if (shouldSelect) {
             scrollToBottomFlow.update { true }
-        } else if (focusedGroupIdFlow.value.value() == groupId) {
-            focusedGroupIdFlow.update { None }
         }
-        focusedEmailIndexFlow.update { None }
     }
 
     internal fun onScrolledToBottom() {

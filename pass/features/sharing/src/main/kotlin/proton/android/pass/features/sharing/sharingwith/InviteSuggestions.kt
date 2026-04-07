@@ -165,7 +165,11 @@ internal fun InviteSuggestionList(
                 when (item) {
                     is GroupSuggestionUiModel -> {
                         Row(
-                            modifier = Modifier.clickable { onGroupClicked(item.id, item.isSelected) },
+                            modifier = if (item.isAlreadyMember) {
+                                Modifier
+                            } else {
+                                Modifier.clickable { onGroupClicked(item.id, item.isSelected) }
+                            },
                             verticalAlignment = Alignment.CenterVertically,
                             horizontalArrangement = Arrangement.spacedBy(Spacing.medium)
                         ) {
@@ -202,7 +206,8 @@ internal fun InviteSuggestionList(
                             }
 
                             Checkbox(
-                                checked = item.isSelected,
+                                checked = item.isSelected || item.isAlreadyMember,
+                                enabled = !item.isAlreadyMember,
                                 colors = CheckboxDefaults.colors(
                                     checkedColor = PassTheme.colors.interactionNormMajor2
                                 ),
@@ -214,7 +219,11 @@ internal fun InviteSuggestionList(
                     is EmailUiModel -> {
                         val (email, isChecked) = item
                         Row(
-                            modifier = Modifier.clickable { onEmailClicked(email, isChecked) },
+                            modifier = if (item.isAlreadyMember) {
+                                Modifier
+                            } else {
+                                Modifier.clickable { onEmailClicked(email, isChecked) }
+                            },
                             verticalAlignment = Alignment.CenterVertically,
                             horizontalArrangement = Arrangement.spacedBy(Spacing.medium)
                         ) {
@@ -233,7 +242,8 @@ internal fun InviteSuggestionList(
                             )
 
                             Checkbox(
-                                checked = isChecked,
+                                checked = isChecked || item.isAlreadyMember,
+                                enabled = !item.isAlreadyMember,
                                 colors = CheckboxDefaults.colors(
                                     checkedColor = PassTheme.colors.interactionNormMajor2
                                 ),

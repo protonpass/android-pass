@@ -40,6 +40,7 @@ import proton.android.pass.composecomponents.impl.container.CircleTextIcon
 import proton.android.pass.composecomponents.impl.item.icon.ThreeDotsMenuButton
 import proton.android.pass.composecomponents.impl.text.Text
 import proton.android.pass.domain.GroupId
+import proton.android.pass.domain.ShareRole
 import proton.android.pass.domain.shares.ShareMember
 import proton.android.pass.features.sharing.R
 import proton.android.pass.features.sharing.common.toShortSummary
@@ -50,6 +51,7 @@ internal fun ManageItemMemberRow(
     modifier: Modifier = Modifier,
     member: ShareMember,
     canAdmin: Boolean,
+    isCurrentUserOwner: Boolean,
     hasVaultAccess: Boolean,
     isRenameAdminToManagerEnabled: Boolean,
     groupId: GroupId? = null,
@@ -62,8 +64,17 @@ internal fun ManageItemMemberRow(
         member.isItemMember || hasVaultAccess
     }
 
-    val showMemberOptions = remember(canAdmin, member.isOwner, member.isCurrentUser, member.isGroup) {
-        canAdmin && !member.isOwner && !member.isCurrentUser && !member.isGroup
+    val showMemberOptions = remember(
+        canAdmin, isCurrentUserOwner,
+        member.isOwner, member.isCurrentUser, member.role,
+        member.isGroup, member.isItemMember
+    ) {
+        when {
+            !canAdmin || member.isOwner || member.isCurrentUser -> false
+            member.isGroup && member.isItemMember -> false
+            member.isGroup && member.isVaultMember -> isCurrentUserOwner
+            else -> isCurrentUserOwner || member.role != ShareRole.Admin
+        }
     }
 
     val displayName = if (member.isGroup) groupName ?: member.username else member.email

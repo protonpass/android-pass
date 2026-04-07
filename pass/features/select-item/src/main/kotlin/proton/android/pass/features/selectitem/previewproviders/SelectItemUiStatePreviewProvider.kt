@@ -69,6 +69,7 @@ internal class SelectItemUiStatePreviewProvider : PreviewParameterProvider<Selec
                     displayOnlyPrimaryVaultMessage = false,
                     canUpgrade = false,
                     displayCreateButton = true,
+                    hasVaults = true,
                     accountSwitchState = AccountSwitchUIState(None, emptyList()),
                     isPasswordCredentialCreation = false
                 ),
@@ -100,6 +101,7 @@ internal class SelectItemUiStatePreviewProvider : PreviewParameterProvider<Selec
                     displayOnlyPrimaryVaultMessage = true,
                     canUpgrade = false,
                     displayCreateButton = true,
+                    hasVaults = true,
                     accountSwitchState = AccountSwitchUIState(None, emptyList()),
                     isPasswordCredentialCreation = false
                 ),
@@ -119,6 +121,7 @@ internal class SelectItemUiStatePreviewProvider : PreviewParameterProvider<Selec
                     displayOnlyPrimaryVaultMessage = false,
                     canUpgrade = false,
                     displayCreateButton = true,
+                    hasVaults = true,
                     accountSwitchState = AccountSwitchUIState(None, emptyList()),
                     isPasswordCredentialCreation = false
                 ),

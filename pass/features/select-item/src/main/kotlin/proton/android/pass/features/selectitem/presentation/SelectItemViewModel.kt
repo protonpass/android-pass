@@ -35,6 +35,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.flow.filterIsInstance
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.flatMapLatest
@@ -528,7 +529,7 @@ class SelectItemViewModel @Inject constructor(
 
         val canUpgrade = upgradeInfo.getOrNull()?.isUpgradeAvailable == true
         val hasVaults = shares.values.any { it.isNotEmpty() }
-        val showCreateButton = selectItemState.map { it.showCreateButton }.value() == true && hasVaults
+        val showCreateButton = selectItemState.map { it.showCreateButton }.value() == true
         val isPasswordCredential =
             selectItemState.map { it.isPasswordCredentialCreation }.value() == true
         val autosaveState = selectItemState.value() as? SelectItemState.Autosave
@@ -546,6 +547,7 @@ class SelectItemViewModel @Inject constructor(
             displayOnlyPrimaryVaultMessage = accountData.displayOnlyPrimaryVaultMessage(shares),
             canUpgrade = canUpgrade,
             displayCreateButton = showCreateButton,
+            hasVaults = hasVaults,
             accountSwitchState = accountData.toAccountSwitchUIState(),
             isPasswordCredentialCreation = isPasswordCredential,
             showAutosaveBanner = autosaveState != null,
@@ -629,6 +631,12 @@ class SelectItemViewModel @Inject constructor(
 
     internal fun onScrolledToTop() {
         shouldScrollToTopFlow.update { false }
+    }
+
+    internal fun onNoVaultsAvailable() {
+        viewModelScope.launch {
+            snackbarDispatcher(SelectItemSnackbarMessage.NoVaultsAvailable)
+        }
     }
 
     internal fun onEnterSeeAllPinsMode() {

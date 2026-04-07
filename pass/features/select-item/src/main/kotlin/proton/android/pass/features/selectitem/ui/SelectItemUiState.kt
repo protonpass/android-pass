@@ -94,6 +94,7 @@ internal data class SelectItemListUiState(
     val displayOnlyPrimaryVaultMessage: Boolean,
     val canUpgrade: Boolean,
     val displayCreateButton: Boolean,
+    val hasVaults: Boolean,
     val accountSwitchState: AccountSwitchUIState,
     val isPasswordCredentialCreation: Boolean,
     val showAutosaveBanner: Boolean = false,
@@ -116,6 +117,7 @@ internal data class SelectItemListUiState(
             displayOnlyPrimaryVaultMessage = false,
             canUpgrade = true,
             displayCreateButton = false,
+            hasVaults = false,
             accountSwitchState = AccountSwitchUIState(
                 selectedAccount = None,
                 accountList = emptyList()

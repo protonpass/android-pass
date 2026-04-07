@@ -83,7 +83,9 @@ internal fun SelectItemScreenContent(
                 PassFloatingActionButton(
                     visible = showFab,
                     onClick = {
-                        if (uiState.listUiState.accountSwitchState.hasMultipleAccounts) {
+                        if (!uiState.listUiState.hasVaults) {
+                            onEvent(SelectItemEvent.NoVaultsAvailable)
+                        } else if (uiState.listUiState.accountSwitchState.hasMultipleAccounts) {
                             onNavigate(SelectItemNavigation.SelectAccount)
                         } else {
                             onNavigate(SelectItemNavigation.AddItem)
@@ -230,7 +232,8 @@ internal fun SelectItemScreenContent(
                     onItemClicked = { item, isLongClick ->
                         onEvent(SelectItemEvent.ItemClicked(item, isLongClick))
                     },
-                    onNavigate = onNavigate
+                    onNavigate = onNavigate,
+                    onEvent = onEvent
                 )
             }
         }

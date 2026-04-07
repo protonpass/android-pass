@@ -28,6 +28,7 @@ enum class SelectItemSnackbarMessage(
     override val type: SnackbarType,
     override val isClipboard: Boolean = false
 ) : SnackbarMessage.StructuredMessage {
-    LoadItemsError(R.string.error_loading_items, SnackbarType.ERROR)
+    LoadItemsError(R.string.error_loading_items, SnackbarType.ERROR),
+    NoVaultsAvailable(R.string.error_no_vaults_available, SnackbarType.ERROR)
 }
 

@@ -52,7 +52,8 @@ internal fun SelectItemList(
     onScrolledToTop: () -> Unit,
     onItemClicked: (ItemUiModel, Boolean) -> Unit,
     onItemOptionsClicked: (ItemUiModel) -> Unit,
-    onNavigate: (SelectItemNavigation) -> Unit
+    onNavigate: (SelectItemNavigation) -> Unit,
+    onEvent: (SelectItemEvent) -> Unit
 ) {
     val searchUiState = uiState.searchUiState
     val listUiState = uiState.listUiState
@@ -110,7 +111,9 @@ internal fun SelectItemList(
                     ),
                     canCreate = !listUiState.showAutosaveBanner,
                     onCreateItemClick = {
-                        if (listUiState.accountSwitchState.hasMultipleAccounts) {
+                        if (!listUiState.hasVaults) {
+                            onEvent(SelectItemEvent.NoVaultsAvailable)
+                        } else if (listUiState.accountSwitchState.hasMultipleAccounts) {
                             onNavigate(SelectItemNavigation.SelectAccount)
                         } else {
                             onNavigate(SelectItemNavigation.AddItem)
@@ -196,7 +199,8 @@ internal fun SelectItemListPreview(
                 onItemClicked = { _, _ -> },
                 onItemOptionsClicked = {},
                 onScrolledToTop = {},
-                onNavigate = {}
+                onNavigate = {},
+                onEvent = {}
             )
         }
     }

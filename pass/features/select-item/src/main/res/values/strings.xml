@@ -23,6 +23,7 @@
     <!-- Placeholder will contain the domain / app name we are trying to autofill -->
     <string name="select_item_suggestions_for_placeholder">Suggestions for %s</string>
     <string name="error_loading_items">Could not load the items</string>
+    <string name="error_no_vaults_available">You don\'t have any vaults with editor or admin access. Try creating one in the main app, or ask your organization\'s administrator for support.</string>
     <string name="topbar_search_query">Search in all vaults…</string>
     <string name="topbar_search_pinned_items">Search in Pinned…</string>
     <string name="topbar_search_query_oldest_vaults">Search in your oldest vaults…</string>

@@ -28,7 +28,10 @@ data class UsableShareKey(
     val targetId: String,
     val roleId: String,
     val permissions: Int,
-    val flags: Int
+    val flags: Int,
+    val userIsVaultOwner: Boolean,
+    val isGroupShare: Boolean,
+    val createTime: Long
 )
 
 fun interface UsableShareFilter {

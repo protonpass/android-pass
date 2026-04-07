@@ -34,5 +34,11 @@ data class ShareKeyView(
     @ColumnInfo(name = ShareEntity.Columns.PERMISSION)
     val permissions: Int,
     @ColumnInfo(name = ShareEntity.Columns.FLAGS)
-    val flags: Int
+    val flags: Int,
+    @ColumnInfo(name = ShareEntity.Columns.OWNER)
+    val owner: Boolean,
+    @ColumnInfo(name = ShareEntity.Columns.GROUP_ID)
+    val groupId: String?,
+    @ColumnInfo(name = ShareEntity.Columns.CREATE_TIME)
+    val createTime: Long
 )

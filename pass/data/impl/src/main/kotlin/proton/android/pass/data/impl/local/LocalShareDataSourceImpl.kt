@@ -172,7 +172,10 @@ class LocalShareDataSourceImpl @Inject constructor(
             targetId = it.targetId,
             roleId = it.roleId,
             permissions = it.permissions,
-            flags = it.flags
+            flags = it.flags,
+            userIsVaultOwner = it.owner,
+            isGroupShare = it.groupId != null,
+            createTime = it.createTime
         )
     }
 

@@ -19,6 +19,7 @@
 package proton.android.pass.test.domain
 
 import me.proton.core.domain.entity.UserId
+import proton.android.pass.domain.GroupId
 import proton.android.pass.domain.ShareFlags
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.ShareRole
@@ -34,6 +35,7 @@ object VaultTestFactory {
         userId: UserId = UserId("789"),
         name: String = "Vault ${vaultId.id}",
         isOwned: Boolean = true,
+        groupId: GroupId? = null,
         role: ShareRole = ShareRole.Admin,
         shared: Boolean = false,
         members: Int = 1,
@@ -46,6 +48,7 @@ object VaultTestFactory {
             vaultId = vaultId,
             name = name,
             isOwned = isOwned,
+            groupId = groupId,
             role = role,
             createTime = createTime,
             shared = shared,

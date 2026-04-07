@@ -36,6 +36,7 @@ import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.asLoadingResult
 import proton.android.pass.common.api.combineN
 import proton.android.pass.common.api.getOrNull
+import proton.android.pass.common.api.safeRunCatching
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
 import proton.android.pass.data.api.usecases.ItemTypeFilter
@@ -52,6 +53,7 @@ import proton.android.pass.domain.ShareSelection
 import proton.android.pass.domain.Vault
 import proton.android.pass.features.vault.VaultSnackbarMessage.CannotFindVaultError
 import proton.android.pass.features.vault.VaultSnackbarMessage.CannotGetVaultListError
+import proton.android.pass.features.vault.VaultSnackbarMessage.CannotMigrateVaultError
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.notifications.api.SnackbarDispatcher
@@ -61,7 +63,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class VaultOptionsViewModel @Inject constructor(
-    snackbarDispatcher: SnackbarDispatcher,
+    private val snackbarDispatcher: SnackbarDispatcher,
     observeVaults: ObserveVaults,
     canShareShare: CanShareShare,
     canMigrateVault: CanMigrateVault,
@@ -119,7 +121,7 @@ class VaultOptionsViewModel @Inject constructor(
 
         val canEdit = selectedVault.isOwned
         val canMigrate = canMigrateVault(navShareId)
-        val canLeave = !selectedVault.isOwned
+        val canLeave = if (selectedVault.isGroupShare) false else !selectedVault.isOwned
 
         val vaultAccessData = canManageVaultAccess(selectedVault)
 
@@ -156,23 +158,27 @@ class VaultOptionsViewModel @Inject constructor(
 
     internal fun onMigrateVault() {
         viewModelScope.launch {
-            observeEncryptedItems(
-                selection = ShareSelection.Share(navShareId),
-                itemState = ItemState.Active,
-                filter = ItemTypeFilter.All,
-                includeHidden = true
-            )
-                .first()
-                .any { itemEncrypted -> itemEncrypted.isShared }
-                .also { hasSharedItems ->
-                    if (hasSharedItems) {
-                        VaultOptionsEvent.OnMigrateVaultItemsSharedWarning(navShareId)
-                    } else {
-                        VaultOptionsEvent.OnMigrateVaultItems(navShareId)
-                    }.also { event ->
-                        eventFlow.update { event }
-                    }
+            safeRunCatching {
+                observeEncryptedItems(
+                    selection = ShareSelection.Share(navShareId),
+                    itemState = ItemState.Active,
+                    filter = ItemTypeFilter.All,
+                    includeHidden = true
+                )
+                    .first()
+                    .any { itemEncrypted -> itemEncrypted.isShared }
+            }.onFailure { error ->
+                PassLogger.w(TAG, "Failed to check vault items before migrating")
+                PassLogger.w(TAG, error)
+                snackbarDispatcher(CannotMigrateVaultError)
+            }.onSuccess { hasSharedItems ->
+                val event = if (hasSharedItems) {
+                    VaultOptionsEvent.OnMigrateVaultItemsSharedWarning(navShareId)
+                } else {
+                    VaultOptionsEvent.OnMigrateVaultItems(navShareId)
                 }
+                eventFlow.update { event }
+            }
         }
     }
 

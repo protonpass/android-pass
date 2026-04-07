@@ -43,7 +43,10 @@ internal sealed interface SharingWithUiEvent {
     value class ChipEmailClick(val index: Int) : SharingWithUiEvent
 
     @JvmInline
-    value class ChipGroupClick(val groupId: GroupId) : SharingWithUiEvent
+    value class ChipGroupNameClick(val groupId: GroupId) : SharingWithUiEvent
+
+    @JvmInline
+    value class ChipGroupRemoveClick(val groupId: GroupId) : SharingWithUiEvent
 
     @JvmInline
     value class GroupSuggestionMembersClick(val groupId: GroupId) : SharingWithUiEvent

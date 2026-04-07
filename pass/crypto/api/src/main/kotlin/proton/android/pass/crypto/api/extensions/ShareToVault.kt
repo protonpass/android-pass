@@ -32,6 +32,7 @@ fun Share.Vault.toVault(): Vault = Vault(
     icon = icon,
     members = memberCount,
     isOwned = isOwner,
+    groupId = groupId,
     role = shareRole,
     shared = shared,
     maxMembers = maxMembers,

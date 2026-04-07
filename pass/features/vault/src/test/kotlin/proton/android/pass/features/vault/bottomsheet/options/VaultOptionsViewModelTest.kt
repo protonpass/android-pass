@@ -34,6 +34,7 @@ import proton.android.pass.data.fakes.usecases.FakeCanShareShare
 import proton.android.pass.data.fakes.usecases.FakeObserveEncryptedItems
 import proton.android.pass.data.fakes.usecases.FakeObserveUpgradeInfo
 import proton.android.pass.data.fakes.usecases.FakeObserveVaults
+import proton.android.pass.domain.GroupId
 import proton.android.pass.domain.Plan
 import proton.android.pass.domain.PlanLimit
 import proton.android.pass.domain.ShareId
@@ -286,6 +287,42 @@ class VaultOptionsViewModelTest {
         }
     }
 
+    @Test
+    fun `can leave non-owned regular vault`() = runTest {
+        emitDefaultVault(owned = false)
+        instance.state.test {
+            val item = awaitItem()
+            assertThat(item).isInstanceOf(VaultOptionsUiState.Success::class.java)
+
+            val casted = item as VaultOptionsUiState.Success
+            assertThat(casted.showLeave).isTrue()
+        }
+    }
+
+    @Test
+    fun `cannot leave owned group share vault`() = runTest {
+        emitDefaultVault(owned = true, groupId = GroupId("group-1"))
+        instance.state.test {
+            val item = awaitItem()
+            assertThat(item).isInstanceOf(VaultOptionsUiState.Success::class.java)
+
+            val casted = item as VaultOptionsUiState.Success
+            assertThat(casted.showLeave).isFalse()
+        }
+    }
+
+    @Test
+    fun `cannot leave non-owned group share vault`() = runTest {
+        emitDefaultVault(owned = false, groupId = GroupId("group-1"))
+        instance.state.test {
+            val item = awaitItem()
+            assertThat(item).isInstanceOf(VaultOptionsUiState.Success::class.java)
+
+            val casted = item as VaultOptionsUiState.Success
+            assertThat(casted.showLeave).isFalse()
+        }
+    }
+
     // RemovePrimaryVault tests
     @Test
     fun `if RemovePrimaryVault enabled cannot remove last owned vault if primary`() = runTest {
@@ -327,10 +364,15 @@ class VaultOptionsViewModelTest {
         }
     }
 
-    private fun emitDefaultVault(owned: Boolean = true, shared: Boolean = true): Vault {
+    private fun emitDefaultVault(
+        owned: Boolean = true,
+        shared: Boolean = true,
+        groupId: GroupId? = null
+    ): Vault {
         val defaultVault = VaultTestFactory.create(
             shareId = ShareId(SHARE_ID),
             isOwned = owned,
+            groupId = groupId,
             shared = shared,
             members = if (shared) 2 else 1
         )

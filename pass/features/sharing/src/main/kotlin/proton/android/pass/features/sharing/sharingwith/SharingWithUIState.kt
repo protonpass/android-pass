@@ -27,14 +27,14 @@ import proton.android.pass.domain.Share
 @Stable
 internal data class EnteredEmailUiModel(
     val email: String,
-    val isError: Boolean = false,
-    val isFocused: Boolean = false
+    val isError: Boolean = false
 )
 
 @Stable
 internal data class EmailUiModel(
     val email: String,
-    val isSelected: Boolean = false
+    val isSelected: Boolean = false,
+    val isAlreadyMember: Boolean = false
 ) : SuggestionItem {
     override val sortKey: String = email.lowercase()
 }
@@ -46,7 +46,7 @@ internal data class GroupSuggestionUiModel(
     val name: String,
     val memberCount: Int,
     val isSelected: Boolean = false,
-    val isFocused: Boolean = false
+    val isAlreadyMember: Boolean = false
 ) : SuggestionItem {
     override val sortKey: String = name.lowercase()
 }
@@ -63,6 +63,7 @@ internal enum class ErrorMessage {
     EmailNotValid,
     CannotInviteOutsideOrg,
     EmailAlreadyAdded,
+    SomethingWentWrong,
     None
 }
 

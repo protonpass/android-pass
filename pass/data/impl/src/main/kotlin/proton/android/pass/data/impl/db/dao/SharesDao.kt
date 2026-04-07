@@ -104,7 +104,10 @@ abstract class SharesDao : BaseDao<ShareEntity>() {
             ${ShareEntity.Columns.TARGET_ID},
             ${ShareEntity.Columns.SHARE_ROLE_ID},
             ${ShareEntity.Columns.PERMISSION},
-            ${ShareEntity.Columns.FLAGS}
+            ${ShareEntity.Columns.FLAGS},
+            ${ShareEntity.Columns.OWNER},
+            ${ShareEntity.Columns.GROUP_ID},
+            ${ShareEntity.Columns.CREATE_TIME}
         FROM ${ShareEntity.TABLE}
         WHERE ${ShareEntity.Columns.USER_ID} = :userId
           AND ${ShareEntity.Columns.IS_ACTIVE} = 1

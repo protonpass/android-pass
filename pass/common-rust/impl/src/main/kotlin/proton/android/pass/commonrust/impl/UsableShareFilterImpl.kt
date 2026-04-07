@@ -46,7 +46,10 @@ class UsableShareFilterImpl @Inject constructor(
                     targetId = it.targetId,
                     roleId = it.roleId,
                     permissions = it.permissions.toUShort(),
-                    flags = it.flags.toUShort()
+                    flags = it.flags.toUShort(),
+                    userIsVaultOwner = it.userIsVaultOwner,
+                    isGroupShare = it.isGroupShare,
+                    createTime = it.createTime.toUInt()
                 )
             },
             !includeHidden

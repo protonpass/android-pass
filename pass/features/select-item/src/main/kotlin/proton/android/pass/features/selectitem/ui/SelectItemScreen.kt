@@ -75,6 +75,7 @@ fun SelectItemScreen(
                 SelectItemEvent.SeeAllPinned -> viewModel.onEnterSeeAllPinsMode()
                 SelectItemEvent.StopPinningMode -> viewModel.onStopPinningMode()
                 is SelectItemEvent.SwitchAccount -> viewModel.onAccountSwitch(event.userId)
+                SelectItemEvent.NoVaultsAvailable -> viewModel.onNoVaultsAvailable()
             }
         },
         onNavigate = onNavigate

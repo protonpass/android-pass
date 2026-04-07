@@ -39,4 +39,5 @@ sealed interface SelectItemEvent {
 
     @JvmInline
     value class SwitchAccount(val userId: Option<UserId>) : SelectItemEvent
+    data object NoVaultsAvailable : SelectItemEvent
 }

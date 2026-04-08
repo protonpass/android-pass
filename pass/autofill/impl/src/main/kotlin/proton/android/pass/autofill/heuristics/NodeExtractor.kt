@@ -216,7 +216,8 @@ class NodeExtractor(private val requestFlags: List<RequestFlags> = emptyList()) 
                         text = node.text.toString(),
                         isFocused = node.isFocused,
                         nodePath = context.parentPath,
-                        url = context.parentUrl.orRight(context.node.url).value()
+                        url = context.parentUrl.orRight(context.node.url).value(),
+                        listOptions = node.hintKeywordList.map { it.toString() }
                     ).some()
                 } else {
                     None
@@ -411,7 +412,8 @@ class NodeExtractor(private val requestFlags: List<RequestFlags> = emptyList()) 
                     text = autofillContext.node.text,
                     isFocused = autofillContext.node.isFocused,
                     nodePath = autofillContext.parentPath,
-                    url = autofillContext.parentUrl.orRight(autofillContext.node.url).value()
+                    url = autofillContext.parentUrl.orRight(autofillContext.node.url).value(),
+                    listOptions = autofillContext.node.hintKeywordList.map { it.toString() }
                 ).some()
             } else {
                 None

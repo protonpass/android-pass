@@ -74,6 +74,11 @@ class CreditCardAutofillTest : BaseAutofillTest() {
         runCCAutofillTest("creditcard/chrome_zooplus_credit_card.json")
     }
 
+    @Test
+    fun `can autofill fill chrome`() {
+        runCCAutofillTest("creditcard/chrome_fill_credit_card.json")
+    }
+
     private fun runCCAutofillTest(file: String) {
         runAutofillTest(
             file = file,

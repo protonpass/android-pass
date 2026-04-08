@@ -37,33 +37,8 @@ object CreditCardMapper {
         mappings.add(mappingForCardNumber(autofillItem.number, cluster.cardNumber.id))
 
         if (autofillItem.cardHolder.isNotBlank()) {
-            val cardHolderSplits = autofillItem.cardHolder.split(" ")
             cluster.cardHolder?.let {
-                when (it) {
-                    is NodeCluster.CreditCard.CardHolder.FirstNameLastName -> {
-                        if (cardHolderSplits.size == 2) {
-                            val firstNameValue = cardHolderSplits[0]
-                            val lastNameValue = cardHolderSplits[1]
-
-                            mappings.add(mappingForCardHolder(firstNameValue, it.firstName.id))
-                            mappings.add(mappingForCardHolder(lastNameValue, it.lastName.id))
-                        } else if (cardHolderSplits.size > 2) {
-                            val firstNameValue = cardHolderSplits[0]
-                            val lastNameValue = cardHolderSplits.drop(0).joinToString()
-
-                            mappings.add(mappingForCardHolder(firstNameValue, it.firstName.id))
-                            mappings.add(mappingForCardHolder(lastNameValue, it.lastName.id))
-                        } else {
-                            val cardHolderName = autofillItem.cardHolder
-                            mappings.add(mappingForCardHolder(cardHolderName, it.firstName.id))
-                            mappings.add(mappingForCardHolder("", it.lastName.id))
-                        }
-                    }
-
-                    is NodeCluster.CreditCard.CardHolder.SingleField -> {
-                        mappings.add(mappingForCardHolder(autofillItem.cardHolder, it.field.id))
-                    }
-                }
+                mappings.addAll(mappingsForCardHolder(autofillItem.cardHolder, it))
             }
         }
 
@@ -71,31 +46,63 @@ object CreditCardMapper {
             mappings.add(mappingForCvv(encryptionContext, autofillItem.cvv, it.id))
         }
         cluster.expiration?.let {
-            val expirationSplits = autofillItem.expiration.split("-")
-            if (expirationSplits.size == 2) {
-                val expirationFullYear = expirationSplits[0]
-                val expirationYearLast = expirationFullYear.takeLast(2)
-                val expirationMonth = expirationSplits[1]
-                when (it) {
-                    is NodeCluster.CreditCard.Expiration.MmYyDifferentfields -> {
-                        mappings.add(mappingForExpiration(expirationYearLast, it.year.id))
-                        mappings.add(mappingForExpiration(expirationMonth, it.month.id))
-                    }
-
-                    is NodeCluster.CreditCard.Expiration.MmYyyyDifferentfields -> {
-                        mappings.add(mappingForExpiration(expirationFullYear, it.year.id))
-                        mappings.add(mappingForExpiration(expirationMonth, it.month.id))
-                    }
-
-                    is NodeCluster.CreditCard.Expiration.MmYySameField -> {
-                        val expiration = "$expirationMonth/$expirationYearLast"
-                        mappings.add(mappingForExpiration(expiration, it.field.id))
-                    }
-                }
-            }
+            mappings.addAll(mappingsForExpiration(autofillItem.expiration, it))
         }
 
         return AutofillMappings(mappings)
+    }
+
+    private fun mappingsForCardHolder(
+        cardHolder: String,
+        cluster: NodeCluster.CreditCard.CardHolder
+    ): List<DatasetMapping> {
+        val splits = cardHolder.split(" ")
+        return when (cluster) {
+            is NodeCluster.CreditCard.CardHolder.FirstNameLastName -> when {
+                splits.size == 2 -> listOf(
+                    mappingForCardHolder(splits[0], cluster.firstName.id),
+                    mappingForCardHolder(splits[1], cluster.lastName.id)
+                )
+                splits.size > 2 -> listOf(
+                    mappingForCardHolder(splits[0], cluster.firstName.id),
+                    mappingForCardHolder(splits.drop(1).joinToString(" "), cluster.lastName.id)
+                )
+                else -> listOf(
+                    mappingForCardHolder(cardHolder, cluster.firstName.id),
+                    mappingForCardHolder("", cluster.lastName.id)
+                )
+            }
+            is NodeCluster.CreditCard.CardHolder.SingleField ->
+                listOf(mappingForCardHolder(cardHolder, cluster.field.id))
+        }
+    }
+
+    private fun mappingsForExpiration(
+        expiration: String,
+        cluster: NodeCluster.CreditCard.Expiration
+    ): List<DatasetMapping> {
+        val splits = expiration.split("-")
+        if (splits.size != 2) return emptyList()
+        val fullYear = splits[0]
+        val shortYear = fullYear.takeLast(2)
+        val month = splits[1]
+        return when (cluster) {
+            is NodeCluster.CreditCard.Expiration.MmYyDifferentfields -> listOf(
+                mappingForExpiration(shortYear, cluster.year.id, findListIndex(shortYear, cluster.year.listOptions)),
+                mappingForExpiration(month, cluster.month.id, findListIndex(month, cluster.month.listOptions))
+            )
+            is NodeCluster.CreditCard.Expiration.MmYyyyDifferentfields -> listOf(
+                mappingForExpiration(fullYear, cluster.year.id, findListIndex(fullYear, cluster.year.listOptions)),
+                mappingForExpiration(month, cluster.month.id, findListIndex(month, cluster.month.listOptions))
+            )
+            is NodeCluster.CreditCard.Expiration.MmYySameField -> {
+                val mmYy = "$month/$shortYear"
+                val mmYyyy = "$month/$fullYear"
+                val listIndex = findListIndex(mmYy, cluster.field.listOptions)
+                    ?: findListIndex(mmYyyy, cluster.field.listOptions)
+                listOf(mappingForExpiration(mmYy, cluster.field.id, listIndex))
+            }
+        }
     }
 
     @Suppress("MagicNumber")
@@ -121,10 +128,30 @@ object CreditCardMapper {
         displayValue = ""
     )
 
-    private fun mappingForExpiration(expiration: String, id: AutofillFieldId) = DatasetMapping(
+    private fun mappingForExpiration(
+        expiration: String,
+        id: AutofillFieldId,
+        listIndex: Int? = null
+    ) = DatasetMapping(
         autofillFieldId = id,
         contents = expiration,
-        displayValue = ""
+        displayValue = "",
+        listIndex = listIndex
     )
+
+    private fun findListIndex(value: String, options: List<String>): Int? {
+        if (options.isEmpty()) return null
+        // Android maps AutofillValue.forList(index) to non-blank options only
+        val nonEmptyOptions = options.filter { it.isNotBlank() }
+        val exactIndex = nonEmptyOptions.indexOfFirst { it == value }
+        if (exactIndex >= 0) return exactIndex
+        // For 2-digit year values, try matching against 4-digit year options (e.g. "25" → "2025")
+        if (value.length == 2) {
+            val expandedYear = "20$value"
+            val expandedIndex = nonEmptyOptions.indexOfFirst { it == expandedYear }
+            if (expandedIndex >= 0) return expandedIndex
+        }
+        return null
+    }
 
 }

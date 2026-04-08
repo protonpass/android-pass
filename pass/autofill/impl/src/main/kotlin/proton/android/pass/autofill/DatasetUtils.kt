@@ -88,8 +88,13 @@ object DatasetUtils {
         autofillMappings.mappings
             .forEach { mapping ->
                 PassLogger.d(TAG, "mapping id: ${mapping.autofillFieldId}")
+                val autofillValue = if (mapping.listIndex != null) {
+                    AutofillValue.forList(mapping.listIndex)
+                } else {
+                    AutofillValue.forText(mapping.contents)
+                }
                 val fieldBuilder = Field.Builder()
-                fieldBuilder.setValue(AutofillValue.forText(mapping.contents))
+                fieldBuilder.setValue(autofillValue)
                 setField(
                     mapping.autofillFieldId.asAndroid().autofillId,
                     fieldBuilder.build()
@@ -163,9 +168,14 @@ object DatasetUtils {
         autofillMappings.mappings
             .forEach { mapping ->
                 PassLogger.d(TAG, "mapping id: ${mapping.autofillFieldId}")
+                val autofillValue = if (mapping.listIndex != null) {
+                    AutofillValue.forList(mapping.listIndex)
+                } else {
+                    AutofillValue.forText(mapping.contents)
+                }
                 setValue(
                     mapping.autofillFieldId.asAndroid().autofillId,
-                    AutofillValue.forText(mapping.contents),
+                    autofillValue,
                     remoteView
                 )
             }

@@ -1,0 +1,887 @@
+{
+  "rootContent": {
+    "id": 8242685,
+    "className": "android.widget.FrameLayout",
+    "isImportantForAutofill": true,
+    "children": [
+      {
+        "id": -1059898431,
+        "className": "android.view.View",
+        "isImportantForAutofill": true,
+        "hintKeywordList": [
+          "custom_tabs_handle_view_stub"
+        ]
+      },
+      {
+        "id": -1066988689,
+        "className": "android.view.ViewGroup",
+        "isImportantForAutofill": true,
+        "children": [
+          {
+            "id": -1065916213,
+            "className": "android.widget.FrameLayout",
+            "isImportantForAutofill": true,
+            "children": [
+              {
+                "id": 8332058,
+                "className": "android.widget.FrameLayout",
+                "isImportantForAutofill": true,
+                "isFocused": true,
+                "children": [
+                  {
+                    "id": 260253403,
+                    "isImportantForAutofill": true,
+                    "text": "",
+                    "isFocused": true,
+                    "autofillHints": [
+                      "cc-name"
+                    ],
+                    "expectedAutofill": "card_name",
+                    "htmlAttributes": [
+                      {
+                        "key": "name",
+                        "value": "cc-name"
+                      },
+                      {
+                        "key": "type",
+                        "value": "text"
+                      },
+                      {
+                        "key": "label",
+                        "value": "name on card"
+                      },
+                      {
+                        "key": "ua-autofill-hints",
+                        "value": "credit_card_name_full"
+                      },
+                      {
+                        "key": "id",
+                        "value": "cc-name"
+                      },
+                      {
+                        "key": "crowdsourcing-autofill-hints",
+                        "value": "credit_card_name_full"
+                      },
+                      {
+                        "key": "computed-autofill-hints",
+                        "value": "html_type_credit_card_name_full"
+                      },
+                      {
+                        "key": "visibility",
+                        "value": "visible"
+                      },
+                      {
+                        "key": "crowdsourcing-predictions-autofill-hints",
+                        "value": "credit_card_name_full"
+                      },
+                      {
+                        "key": "maxlength",
+                        "value": "-1"
+                      }
+                    ],
+                    "url": "https://fill.dev",
+                    "hintKeywordList": [
+                      "",
+                      ""
+                    ]
+                  },
+                  {
+                    "id": 260254364,
+                    "isImportantForAutofill": true,
+                    "text": "",
+                    "autofillHints": [
+                      "cc-type"
+                    ],
+                    "htmlAttributes": [
+                      {
+                        "key": "name",
+                        "value": "cc-type"
+                      },
+                      {
+                        "key": "type",
+                        "value": "select-one"
+                      },
+                      {
+                        "key": "label",
+                        "value": "type"
+                      },
+                      {
+                        "key": "ua-autofill-hints",
+                        "value": "credit_card_type"
+                      },
+                      {
+                        "key": "id",
+                        "value": "cc-type"
+                      },
+                      {
+                        "key": "crowdsourcing-autofill-hints",
+                        "value": "credit_card_type"
+                      },
+                      {
+                        "key": "computed-autofill-hints",
+                        "value": "html_type_credit_card_type"
+                      },
+                      {
+                        "key": "visibility",
+                        "value": "visible"
+                      },
+                      {
+                        "key": "crowdsourcing-predictions-autofill-hints",
+                        "value": "credit_card_type"
+                      }
+                    ],
+                    "url": "https://fill.dev",
+                    "hintKeywordList": [
+                      "",
+                      "",
+                      "Choose...",
+                      "Visa",
+                      "Master Card",
+                      "American Express",
+                      "Discover"
+                    ]
+                  },
+                  {
+                    "id": 260255325,
+                    "isImportantForAutofill": true,
+                    "text": "",
+                    "autofillHints": [
+                      "cc-number"
+                    ],
+                    "expectedAutofill": "card_number",
+                    "htmlAttributes": [
+                      {
+                        "key": "name",
+                        "value": "cc-number"
+                      },
+                      {
+                        "key": "type",
+                        "value": "text"
+                      },
+                      {
+                        "key": "label",
+                        "value": "credit card\n\t\t\t\t\t\t\t\tnumber"
+                      },
+                      {
+                        "key": "ua-autofill-hints",
+                        "value": "credit_card_number"
+                      },
+                      {
+                        "key": "id",
+                        "value": "cc-number"
+                      },
+                      {
+                        "key": "crowdsourcing-autofill-hints",
+                        "value": "credit_card_number"
+                      },
+                      {
+                        "key": "computed-autofill-hints",
+                        "value": "html_type_credit_card_number"
+                      },
+                      {
+                        "key": "visibility",
+                        "value": "visible"
+                      },
+                      {
+                        "key": "crowdsourcing-predictions-autofill-hints",
+                        "value": "credit_card_number"
+                      },
+                      {
+                        "key": "maxlength",
+                        "value": "-1"
+                      }
+                    ],
+                    "url": "https://fill.dev",
+                    "hintKeywordList": [
+                      "",
+                      ""
+                    ]
+                  },
+                  {
+                    "id": 260256286,
+                    "isImportantForAutofill": true,
+                    "text": "",
+                    "autofillHints": [
+                      "cc-csc"
+                    ],
+                    "expectedAutofill": "card_cvv",
+                    "htmlAttributes": [
+                      {
+                        "key": "name",
+                        "value": "cc-csc"
+                      },
+                      {
+                        "key": "type",
+                        "value": "text"
+                      },
+                      {
+                        "key": "label",
+                        "value": "cvv"
+                      },
+                      {
+                        "key": "ua-autofill-hints",
+                        "value": "credit_card_verification_code"
+                      },
+                      {
+                        "key": "id",
+                        "value": "cc-csc"
+                      },
+                      {
+                        "key": "crowdsourcing-autofill-hints",
+                        "value": "credit_card_verification_code"
+                      },
+                      {
+                        "key": "computed-autofill-hints",
+                        "value": "html_type_credit_card_verification_code"
+                      },
+                      {
+                        "key": "visibility",
+                        "value": "visible"
+                      },
+                      {
+                        "key": "crowdsourcing-predictions-autofill-hints",
+                        "value": "credit_card_verification_code"
+                      },
+                      {
+                        "key": "maxlength",
+                        "value": "-1"
+                      }
+                    ],
+                    "url": "https://fill.dev",
+                    "hintKeywordList": [
+                      "",
+                      ""
+                    ]
+                  },
+                  {
+                    "id": 260257247,
+                    "isImportantForAutofill": true,
+                    "text": "",
+                    "autofillHints": [
+                      "cc-exp-month"
+                    ],
+                    "expectedAutofill": "card_expiration_month_mm",
+                    "htmlAttributes": [
+                      {
+                        "key": "name",
+                        "value": "cc-exp-month"
+                      },
+                      {
+                        "key": "type",
+                        "value": "select-one"
+                      },
+                      {
+                        "key": "label",
+                        "value": "expiry month"
+                      },
+                      {
+                        "key": "ua-autofill-hints",
+                        "value": "credit_card_exp_month"
+                      },
+                      {
+                        "key": "id",
+                        "value": "cc-exp-month"
+                      },
+                      {
+                        "key": "crowdsourcing-autofill-hints",
+                        "value": "credit_card_exp_month"
+                      },
+                      {
+                        "key": "computed-autofill-hints",
+                        "value": "html_type_credit_card_exp_month"
+                      },
+                      {
+                        "key": "visibility",
+                        "value": "visible"
+                      },
+                      {
+                        "key": "crowdsourcing-predictions-autofill-hints",
+                        "value": "credit_card_exp_month"
+                      }
+                    ],
+                    "url": "https://fill.dev",
+                    "hintKeywordList": [
+                      "",
+                      "",
+                      "01",
+                      "02",
+                      "03",
+                      "04",
+                      "05",
+                      "06",
+                      "07",
+                      "08",
+                      "09",
+                      "10",
+                      "11",
+                      "12"
+                    ]
+                  },
+                  {
+                    "id": 260258208,
+                    "isImportantForAutofill": true,
+                    "text": "",
+                    "autofillHints": [
+                      "cc-exp-year"
+                    ],
+                    "expectedAutofill": "card_expiration_year_yy",
+                    "htmlAttributes": [
+                      {
+                        "key": "name",
+                        "value": "cc-exp-year"
+                      },
+                      {
+                        "key": "type",
+                        "value": "select-one"
+                      },
+                      {
+                        "key": "label",
+                        "value": "expiry year"
+                      },
+                      {
+                        "key": "ua-autofill-hints",
+                        "value": "credit_card_exp_4_digit_year"
+                      },
+                      {
+                        "key": "id",
+                        "value": "cc-exp-year"
+                      },
+                      {
+                        "key": "crowdsourcing-autofill-hints",
+                        "value": "credit_card_exp_4_digit_year"
+                      },
+                      {
+                        "key": "computed-autofill-hints",
+                        "value": "html_type_credit_card_exp_year"
+                      },
+                      {
+                        "key": "visibility",
+                        "value": "visible"
+                      },
+                      {
+                        "key": "crowdsourcing-predictions-autofill-hints",
+                        "value": "credit_card_exp_4_digit_year"
+                      }
+                    ],
+                    "url": "https://fill.dev",
+                    "hintKeywordList": [
+                      "",
+                      "",
+                      "2020",
+                      "2021",
+                      "2022",
+                      "2023",
+                      "2024",
+                      "2025",
+                      "2026",
+                      "2027",
+                      "2028"
+                    ]
+                  }
+                ],
+                "url": "https://fill.dev"
+              },
+              {
+                "id": -1059868640,
+                "className": "android.widget.FrameLayout",
+                "isImportantForAutofill": true
+              }
+            ],
+            "hintKeywordList": [
+              "compositor_view_holder"
+            ]
+          },
+          {
+            "id": -1059838849,
+            "className": "android.widget.FrameLayout",
+            "isImportantForAutofill": true,
+            "hintKeywordList": [
+              "ar_view_holder"
+            ]
+          },
+          {
+            "id": -1059809058,
+            "className": "android.view.View",
+            "isImportantForAutofill": true,
+            "hintKeywordList": [
+              "capture_overlay"
+            ]
+          },
+          {
+            "id": -1059779267,
+            "className": "android.view.View",
+            "isImportantForAutofill": true,
+            "hintKeywordList": [
+              "edge_to_edge_bottom_chin"
+            ]
+          },
+          {
+            "id": -1059749476,
+            "className": "android.view.View",
+            "isImportantForAutofill": true,
+            "hintKeywordList": [
+              "keyboard_accessory_stub"
+            ]
+          },
+          {
+            "id": -1059719685,
+            "className": "android.view.View",
+            "isImportantForAutofill": true,
+            "hintKeywordList": [
+              "keyboard_accessory_sheet_stub"
+            ]
+          },
+          {
+            "id": -1059689894,
+            "className": "android.view.View",
+            "isImportantForAutofill": true,
+            "hintKeywordList": [
+              "bottombar_stub"
+            ]
+          },
+          {
+            "id": -1059660103,
+            "className": "android.view.View",
+            "isImportantForAutofill": true,
+            "hintKeywordList": [
+              "tab_modal_dialog_container_stub"
+            ]
+          },
+          {
+            "id": -1059630312,
+            "className": "android.view.View",
+            "isImportantForAutofill": true,
+            "hintKeywordList": [
+              "tab_modal_dialog_container_sibling_view"
+            ]
+          },
+          {
+            "id": -1060047386,
+            "className": "android.widget.FrameLayout",
+            "isImportantForAutofill": true,
+            "children": [
+              {
+                "id": -1061358190,
+                "className": "androidx.recyclerview.widget.RecyclerView",
+                "children": [
+                  {
+                    "id": -1059600521,
+                    "className": "androidx.recyclerview.widget.RecyclerView",
+                    "hintKeywordList": [
+                      "omnibox_actions_carousel"
+                    ]
+                  },
+                  {
+                    "id": -1059570730,
+                    "className": "androidx.recyclerview.widget.RecyclerView",
+                    "hintKeywordList": [
+                      "omnibox_actions_carousel"
+                    ]
+                  },
+                  {
+                    "id": -1059540939,
+                    "className": "androidx.recyclerview.widget.RecyclerView",
+                    "hintKeywordList": [
+                      "omnibox_actions_carousel"
+                    ]
+                  },
+                  {
+                    "id": -1059511148,
+                    "className": "androidx.recyclerview.widget.RecyclerView",
+                    "hintKeywordList": [
+                      "omnibox_actions_carousel"
+                    ]
+                  },
+                  {
+                    "id": -1059481357,
+                    "className": "androidx.recyclerview.widget.RecyclerView",
+                    "hintKeywordList": [
+                      "omnibox_actions_carousel"
+                    ]
+                  }
+                ],
+                "hintKeywordList": [
+                  "omnibox_suggestions_dropdown"
+                ]
+              }
+            ],
+            "hintKeywordList": [
+              "omnibox_results_container"
+            ]
+          },
+          {
+            "id": -1059451566,
+            "className": "android.widget.FrameLayout",
+            "isImportantForAutofill": true,
+            "hintKeywordList": [
+              "bottom_container"
+            ]
+          },
+          {
+            "id": -1059391984,
+            "className": "android.view.View",
+            "isImportantForAutofill": true,
+            "hintKeywordList": [
+              "action_bar_black_background"
+            ]
+          },
+          {
+            "id": -1065826840,
+            "className": "android.widget.FrameLayout",
+            "isImportantForAutofill": true,
+            "children": [
+              {
+                "id": -1059362193,
+                "className": "android.widget.FrameLayout",
+                "isImportantForAutofill": true,
+                "hintKeywordList": [
+                  "bottom_container_slot"
+                ]
+              }
+            ],
+            "hintKeywordList": [
+              "bottom_controls"
+            ]
+          },
+          {
+            "id": -1059332402,
+            "className": "android.view.View",
+            "isImportantForAutofill": true,
+            "hintKeywordList": [
+              "bookmark_bar_stub"
+            ]
+          },
+          {
+            "id": -1066958898,
+            "className": "android.widget.FrameLayout",
+            "isImportantForAutofill": true,
+            "children": [
+              {
+                "id": -1066929107,
+                "className": "android.view.ViewGroup",
+                "isImportantForAutofill": true,
+                "children": [
+                  {
+                    "id": -1066899316,
+                    "className": "android.widget.FrameLayout",
+                    "isImportantForAutofill": true,
+                    "children": [
+                      {
+                        "id": -1059302611,
+                        "className": "android.view.View",
+                        "isImportantForAutofill": true,
+                        "hintKeywordList": [
+                          "home_page_buttons_stub"
+                        ]
+                      },
+                      {
+                        "id": -1059272820,
+                        "className": "android.view.View",
+                        "isImportantForAutofill": true,
+                        "hintKeywordList": [
+                          "location_bar_background_view"
+                        ]
+                      },
+                      {
+                        "id": -1066839734,
+                        "className": "android.view.ViewGroup",
+                        "isImportantForAutofill": true,
+                        "children": [
+                          {
+                            "id": -1066809943,
+                            "className": "android.widget.LinearLayout",
+                            "isImportantForAutofill": true,
+                            "children": [
+                              {
+                                "id": -1059243029,
+                                "className": "android.view.View",
+                                "isImportantForAutofill": true,
+                                "hintKeywordList": [
+                                  "location_bar_incognito_badge_stub"
+                                ]
+                              },
+                              {
+                                "id": -1066780152,
+                                "className": "android.widget.LinearLayout",
+                                "isImportantForAutofill": true,
+                                "children": [
+                                  {
+                                    "id": -1059213238,
+                                    "className": "android.view.View",
+                                    "isImportantForAutofill": true,
+                                    "hintKeywordList": [
+                                      "location_bar_status_icon_holding_space"
+                                    ]
+                                  }
+                                ],
+                                "hintKeywordList": [
+                                  "location_bar_status_icon_view"
+                                ]
+                              },
+                              {
+                                "id": -1066720570,
+                                "className": "android.widget.TextView",
+                                "isImportantForAutofill": true,
+                                "text": "",
+                                "hintKeywordList": [
+                                  "",
+                                  "location_bar_verbose_status"
+                                ]
+                              },
+                              {
+                                "id": -1059183447,
+                                "className": "android.view.View",
+                                "isImportantForAutofill": true,
+                                "hintKeywordList": [
+                                  "location_bar_verbose_status_separator"
+                                ]
+                              },
+                              {
+                                "id": -1059153656,
+                                "className": "android.view.View",
+                                "isImportantForAutofill": true,
+                                "hintKeywordList": [
+                                  "location_bar_verbose_status_extra_space"
+                                ]
+                              }
+                            ],
+                            "hintKeywordList": [
+                              "location_bar_status"
+                            ]
+                          },
+                          {
+                            "id": -1059123865,
+                            "className": "android.widget.LinearLayout",
+                            "isImportantForAutofill": true,
+                            "hintKeywordList": [
+                              "omnibox_chip_container"
+                            ]
+                          },
+                          {
+                            "id": -1059094074,
+                            "className": "android.view.View",
+                            "isImportantForAutofill": true,
+                            "hintKeywordList": [
+                              "margin_spacer"
+                            ]
+                          },
+                          {
+                            "id": -1059064283,
+                            "className": "android.view.View",
+                            "isImportantForAutofill": true,
+                            "hintKeywordList": [
+                              "action_buttons_segment"
+                            ]
+                          },
+                          {
+                            "id": -1066482242,
+                            "className": "androidx.recyclerview.widget.RecyclerView",
+                            "hintKeywordList": [
+                              "location_bar_attachments"
+                            ]
+                          },
+                          {
+                            "id": -1066422660,
+                            "className": "android.widget.Button",
+                            "isImportantForAutofill": true,
+                            "text": "Modo IA",
+                            "hintKeywordList": [
+                              "Modo IA",
+                              "fusebox_request_type"
+                            ]
+                          }
+                        ],
+                        "hintKeywordList": [
+                          "location_bar"
+                        ]
+                      },
+                      {
+                        "id": -1066363078,
+                        "className": "android.widget.LinearLayout",
+                        "isImportantForAutofill": true,
+                        "children": [
+                          {
+                            "id": -1065767258,
+                            "className": "android.widget.FrameLayout",
+                            "isImportantForAutofill": true,
+                            "children": [
+                              {
+                                "id": -1059034492,
+                                "className": "android.widget.TextView",
+                                "isImportantForAutofill": true,
+                                "text": "",
+                                "hintKeywordList": [
+                                  "",
+                                  "action_chip_label"
+                                ]
+                              }
+                            ],
+                            "hintKeywordList": [
+                              "optional_toolbar_button_container"
+                            ]
+                          },
+                          {
+                            "id": -1066303496,
+                            "className": "android.widget.FrameLayout",
+                            "isImportantForAutofill": true,
+                            "hintKeywordList": [
+                              "menu_button_wrapper"
+                            ]
+                          }
+                        ],
+                        "hintKeywordList": [
+                          "toolbar_buttons"
+                        ]
+                      }
+                    ],
+                    "hintKeywordList": [
+                      "toolbar"
+                    ]
+                  },
+                  {
+                    "id": -1059004701,
+                    "className": "android.view.View",
+                    "isImportantForAutofill": true,
+                    "hintKeywordList": [
+                      "find_toolbar_stub"
+                    ]
+                  }
+                ],
+                "hintKeywordList": [
+                  "toolbar_container"
+                ]
+              },
+              {
+                "id": -1058974910,
+                "className": "android.view.View",
+                "isImportantForAutofill": true,
+                "hintKeywordList": [
+                  "find_toolbar_tablet_stub"
+                ]
+              }
+            ],
+            "hintKeywordList": [
+              "control_container"
+            ]
+          },
+          {
+            "id": -1066184332,
+            "className": "android.widget.FrameLayout",
+            "isImportantForAutofill": true,
+            "hintKeywordList": [
+              "toolbar_progress_bar_container"
+            ]
+          },
+          {
+            "id": -1056710794,
+            "className": "android.widget.FrameLayout",
+            "isImportantForAutofill": true,
+            "hintKeywordList": [
+              "tab_switcher_view_holder"
+            ]
+          },
+          {
+            "id": -1058915328,
+            "className": "android.view.View",
+            "isImportantForAutofill": true,
+            "hintKeywordList": [
+              "tab_hover_card_holder_stub"
+            ]
+          },
+          {
+            "id": -1066094959,
+            "className": "android.widget.FrameLayout",
+            "isImportantForAutofill": true,
+            "hintKeywordList": [
+              "message_container"
+            ]
+          },
+          {
+            "id": -1058885537,
+            "className": "android.view.View",
+            "isImportantForAutofill": true,
+            "hintKeywordList": [
+              "status_indicator_stub"
+            ]
+          },
+          {
+            "id": -1058855746,
+            "className": "android.view.View",
+            "isImportantForAutofill": true,
+            "hintKeywordList": [
+              "readaloud_mini_player_stub"
+            ]
+          },
+          {
+            "id": -1058825955,
+            "className": "android.widget.FrameLayout",
+            "isImportantForAutofill": true,
+            "hintKeywordList": [
+              "survey_container"
+            ]
+          },
+          {
+            "id": -1058796164,
+            "className": "android.view.View",
+            "isImportantForAutofill": true,
+            "hintKeywordList": [
+              "page_zoom_container"
+            ]
+          },
+          {
+            "id": -1058766373,
+            "className": "android.view.View",
+            "isImportantForAutofill": true,
+            "hintKeywordList": [
+              "link_hover_status_bar_stub"
+            ]
+          },
+          {
+            "id": -1058736582,
+            "className": "android.widget.FrameLayout",
+            "isImportantForAutofill": true,
+            "hintKeywordList": [
+              "sheet_container"
+            ]
+          },
+          {
+            "id": -1058706791,
+            "className": "android.widget.FrameLayout",
+            "isImportantForAutofill": true,
+            "hintKeywordList": [
+              "tab_group_ui_dialog_container"
+            ]
+          },
+          {
+            "id": -1066065168,
+            "className": "android.widget.RelativeLayout",
+            "isImportantForAutofill": true,
+            "hintKeywordList": [
+              "loading_fullscreen_container"
+            ]
+          }
+        ],
+        "hintKeywordList": [
+          "coordinator"
+        ]
+      },
+      {
+        "id": -1058677000,
+        "className": "android.view.View",
+        "isImportantForAutofill": true,
+        "hintKeywordList": [
+          "menu_anchor_stub"
+        ]
+      },
+      {
+        "id": -1058647209,
+        "className": "android.view.View",
+        "isImportantForAutofill": true,
+        "hintKeywordList": [
+          "action_mode_bar_stub"
+        ]
+      }
+    ]
+  },
+  "packageName": "com.android.chrome"
+}

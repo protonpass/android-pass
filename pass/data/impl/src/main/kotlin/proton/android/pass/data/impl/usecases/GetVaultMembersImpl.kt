@@ -30,6 +30,7 @@ import proton.android.pass.data.api.usecases.GroupMembers
 import proton.android.pass.data.api.usecases.ObserveCurrentUser
 import proton.android.pass.data.api.usecases.ObserveGroupMembersByGroup
 import proton.android.pass.data.api.usecases.VaultMember
+import proton.android.pass.domain.GroupMemberState
 import proton.android.pass.data.api.usecases.shares.ObserveSharePendingInvites
 import proton.android.pass.domain.NewUserInviteId
 import proton.android.pass.domain.ShareId
@@ -96,7 +97,7 @@ private fun ShareMember.toVaultMember(groupByEmail: Map<String, GroupMembers>): 
         isCurrentUser = isCurrentUser,
         isOwner = isOwner,
         isGroup = isGroup,
-        memberCount = groupInfo?.members?.size ?: 0
+        memberCount = groupInfo?.members?.count { it.state == GroupMemberState.Active.value } ?: 0
     )
 }
 

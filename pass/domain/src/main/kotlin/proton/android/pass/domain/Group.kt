@@ -50,3 +50,15 @@ data class GroupMember(
     val email: String?
 )
 
+enum class GroupMemberState(val value: Int) {
+    Pending(0),
+    Active(1),
+    Outdated(2),
+    Paused(3),
+    Rejected(4);
+
+    companion object {
+        fun from(value: Int): GroupMemberState = entries.firstOrNull { it.value == value } ?: Pending
+    }
+}
+

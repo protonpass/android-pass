@@ -33,6 +33,7 @@ import proton.android.pass.common.api.asLoadingResult
 import proton.android.pass.commonui.api.require
 import proton.android.pass.data.api.usecases.ObserveGroupMembersByGroup
 import proton.android.pass.domain.GroupId
+import proton.android.pass.domain.GroupMemberState
 import proton.android.pass.navigation.api.CommonNavArgId
 import javax.inject.Inject
 
@@ -54,9 +55,9 @@ internal class GroupMembersViewModel @Inject constructor(
                     val groupMembers = result.data.find { it.group.id == groupId }
                     GroupMembersUiState.Loading.copy(
                         groupName = groupMembers?.group?.name ?: "",
-                        members = groupMembers?.members?.mapNotNull { member ->
-                            member.email?.let { GroupMemberUiModel(email = it) }
-                        }
+                        members = groupMembers?.members
+                            ?.filter { it.state == GroupMemberState.Active.value }
+                            ?.mapNotNull { member -> member.email?.let { GroupMemberUiModel(email = it) } }
                             ?.toImmutableList()
                             ?: persistentListOf(),
                         isLoading = false

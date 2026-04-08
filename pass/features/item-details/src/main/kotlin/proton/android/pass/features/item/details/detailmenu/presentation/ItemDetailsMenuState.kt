@@ -47,6 +47,12 @@ internal data class ItemDetailsMenuState(
         is Some -> shareOption.value is Share.Item
     }
 
+    private val isGroupShare = when (shareOption) {
+        None -> false
+        is Some -> shareOption.value.groupId != null
+    }
+
+
     internal val isItemPinned: Boolean = when (itemOption) {
         None -> false
         is Some -> itemOption.value.isPinned
@@ -65,7 +71,7 @@ internal data class ItemDetailsMenuState(
 
     internal val canCopyItemNote: Boolean = itemCategory == ItemCategory.Note
 
-    internal val canLeaveItem: Boolean = isItemShare
+    internal val canLeaveItem: Boolean = isItemShare && !isGroupShare
 
     internal val canMigrateItem: Boolean = when {
         isItemShare -> false

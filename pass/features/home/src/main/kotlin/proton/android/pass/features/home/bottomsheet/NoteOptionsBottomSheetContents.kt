@@ -92,7 +92,7 @@ internal fun NoteOptionsBottomSheetContents(
 
         buildList {
             if (contents.note.isNotEmpty()) {
-                add(copyNote(contents.title, onCopyNote))
+                add(copyNote(contents.note, onCopyNote))
             }
 
             if (itemUiModel.isPinned) {

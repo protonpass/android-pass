@@ -22,6 +22,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -32,11 +33,13 @@ import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.LayoutDirection
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.RequestFocusLaunchedEffect
 import proton.android.pass.commonui.api.Spacing
@@ -57,30 +60,32 @@ internal fun PinInput(
     val focusRequester = remember { FocusRequester() }
     var hasFocus by rememberSaveable { mutableStateOf(false) }
 
-    ProtonSelectableTextField(
-        modifier = modifier
-            .focusRequester(focusRequester)
-            .onFocusChanged { focusState -> hasFocus = focusState.hasFocus }
-            .roundedContainer(
-                backgroundColor = Color.Transparent,
-                borderColor = PassTheme.colors.inputBorderNorm
-            )
-            .padding(Spacing.medium),
-        text = pin,
-        onTextChanged = onPinChanged,
-        isEnabled = data?.isLoadingState?.value() != true,
-        textStyle = PassTheme.typography.heroNorm().copy(textAlign = TextAlign.Center),
-        keyboardActions = KeyboardActions(
-            onDone = { onPinSubmit() }
-        ),
-        keyboardOptions = KeyboardOptions(
-            autoCorrectEnabled = false,
-            keyboardType = KeyboardType.NumberPassword,
-            imeAction = ImeAction.Done
-        ),
-        visualTransformation = PasswordVisualTransformation(),
-        errorText = stringResource(R.string.auth_error_pin_cannot_be_empty).takeIf { error is PinError.PinEmpty }
-    )
+    CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Ltr) {
+        ProtonSelectableTextField(
+            modifier = modifier
+                .focusRequester(focusRequester)
+                .onFocusChanged { focusState -> hasFocus = focusState.hasFocus }
+                .roundedContainer(
+                    backgroundColor = Color.Transparent,
+                    borderColor = PassTheme.colors.inputBorderNorm
+                )
+                .padding(Spacing.medium),
+            text = pin,
+            onTextChanged = onPinChanged,
+            isEnabled = data?.isLoadingState?.value() != true,
+            textStyle = PassTheme.typography.heroNorm().copy(textAlign = TextAlign.Center),
+            keyboardActions = KeyboardActions(
+                onDone = { onPinSubmit() }
+            ),
+            keyboardOptions = KeyboardOptions(
+                autoCorrectEnabled = false,
+                keyboardType = KeyboardType.NumberPassword,
+                imeAction = ImeAction.Done
+            ),
+            visualTransformation = PasswordVisualTransformation(),
+            errorText = stringResource(R.string.auth_error_pin_cannot_be_empty).takeIf { error is PinError.PinEmpty }
+        )
+    }
 
     RequestFocusLaunchedEffect(
         focusRequester = focusRequester,

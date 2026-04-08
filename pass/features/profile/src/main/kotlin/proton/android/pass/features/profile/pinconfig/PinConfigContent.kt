@@ -33,8 +33,11 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.platform.LocalLayoutDirection
+import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
@@ -140,60 +143,62 @@ fun PinConfigContent(
                 else -> false to ""
             }
             val focusRequester = remember { FocusRequester() }
-            ProtonTextField(
-                modifier = Modifier.focusRequester(focusRequester),
-                textFieldModifier = Modifier.applyIf(
-                    condition = !state.isQuest,
-                    ifTrue = {
-                        fillMaxWidth()
-                    }
-                ),
-                value = state.pin,
-                textStyle = PassTheme.typography.heroNorm(),
-                visualTransformation = PasswordVisualTransformation(),
-                keyboardOptions = KeyboardOptions(
-                    autoCorrectEnabled = false,
-                    keyboardType = KeyboardType.NumberPassword,
-                    imeAction = ImeAction.Next
-                ),
-                isError = isError,
-                errorMessage = errorMessage,
-                placeholder = {
-                    ProtonTextFieldPlaceHolder(
-                        text = stringResource(R.string.configure_pin_enter_pin_code),
-                        textStyle = PassTheme.typography.heroWeak()
-                    )
-                },
-                moveToNextOnEnter = true,
-                onChange = onPinChange
-            )
-            RequestFocusLaunchedEffect(focusRequester, true)
-            ProtonTextField(
-                textFieldModifier = Modifier.applyIf(
-                    condition = !state.isQuest,
-                    ifTrue = {
-                        fillMaxWidth()
-                    }
-                ),
-                value = state.repeatPin,
-                textStyle = PassTheme.typography.heroNorm(),
-                keyboardOptions = KeyboardOptions(
-                    autoCorrectEnabled = false,
-                    keyboardType = KeyboardType.NumberPassword,
-                    imeAction = ImeAction.Done
-                ),
-                isError = state.validationErrors.contains(PinDoesNotMatch),
-                errorMessage = stringResource(R.string.configure_pin_pin_does_not_match),
-                visualTransformation = PasswordVisualTransformation(),
-                placeholder = {
-                    ProtonTextFieldPlaceHolder(
-                        text = stringResource(R.string.configure_pin_repeat_pin_code),
-                        textStyle = PassTheme.typography.heroWeak()
-                    )
-                },
-                onChange = onRepeatPinChange,
-                onDoneClick = onSubmit
-            )
+            CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Ltr) {
+                ProtonTextField(
+                    modifier = Modifier.focusRequester(focusRequester),
+                    textFieldModifier = Modifier.applyIf(
+                        condition = !state.isQuest,
+                        ifTrue = {
+                            fillMaxWidth()
+                        }
+                    ),
+                    value = state.pin,
+                    textStyle = PassTheme.typography.heroNorm(),
+                    visualTransformation = PasswordVisualTransformation(),
+                    keyboardOptions = KeyboardOptions(
+                        autoCorrectEnabled = false,
+                        keyboardType = KeyboardType.NumberPassword,
+                        imeAction = ImeAction.Next
+                    ),
+                    isError = isError,
+                    errorMessage = errorMessage,
+                    placeholder = {
+                        ProtonTextFieldPlaceHolder(
+                            text = stringResource(R.string.configure_pin_enter_pin_code),
+                            textStyle = PassTheme.typography.heroWeak()
+                        )
+                    },
+                    moveToNextOnEnter = true,
+                    onChange = onPinChange
+                )
+                RequestFocusLaunchedEffect(focusRequester, true)
+                ProtonTextField(
+                    textFieldModifier = Modifier.applyIf(
+                        condition = !state.isQuest,
+                        ifTrue = {
+                            fillMaxWidth()
+                        }
+                    ),
+                    value = state.repeatPin,
+                    textStyle = PassTheme.typography.heroNorm(),
+                    keyboardOptions = KeyboardOptions(
+                        autoCorrectEnabled = false,
+                        keyboardType = KeyboardType.NumberPassword,
+                        imeAction = ImeAction.Done
+                    ),
+                    isError = state.validationErrors.contains(PinDoesNotMatch),
+                    errorMessage = stringResource(R.string.configure_pin_pin_does_not_match),
+                    visualTransformation = PasswordVisualTransformation(),
+                    placeholder = {
+                        ProtonTextFieldPlaceHolder(
+                            text = stringResource(R.string.configure_pin_repeat_pin_code),
+                            textStyle = PassTheme.typography.heroWeak()
+                        )
+                    },
+                    onChange = onRepeatPinChange,
+                    onDoneClick = onSubmit
+                )
+            }
         }
     }
 }

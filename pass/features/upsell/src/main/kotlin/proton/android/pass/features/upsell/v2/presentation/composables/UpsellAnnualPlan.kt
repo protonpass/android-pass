@@ -78,6 +78,7 @@ internal const val WEIGHT_UNLIMITED_COL3 = 0.38f
 fun UpsellAnnualPlan(
     modifier: Modifier = Modifier,
     plans: List<UpsellPlanUiModel>,
+    isFoldersEnabled: Boolean,
     onPaymentCallback: (ProtonPaymentEvent) -> Unit
 ) {
     val (selectedPlanIndex, onUpdateSelectedPlanIndex) = remember { mutableIntStateOf(0) }
@@ -99,7 +100,7 @@ fun UpsellAnnualPlan(
                 style = ProtonTheme.typography.hero.copy(
                     color = ProtonTheme.colors.textNorm
                 ),
-                maxLines = 1,
+                maxLines = 2,
                 overflow = TextOverflow.Ellipsis
             )
 
@@ -168,7 +169,7 @@ fun UpsellAnnualPlan(
                                 modifier = Modifier.fillMaxWidth(),
                                 leftColumnText = "Free",
                                 rightColumnText = "Plus",
-                                items = elementsPlusPlan,
+                                items = elementsPlusPlan(isFoldersEnabled),
                                 weightCol1 = WEIGHT_PASS_COL1,
                                 weightCol2 = WEIGHT_PASS_COL2,
                                 weightCol3 = WEIGHT_PASS_COL3
@@ -219,6 +220,7 @@ fun UpsellAnnualPlanPreview(@PreviewParameter(ThemePreviewProvider::class) isDar
         Surface {
             UpsellAnnualPlan(
                 plans = mockAnnualPlans,
+                isFoldersEnabled = true,
                 onPaymentCallback = {}
             )
         }

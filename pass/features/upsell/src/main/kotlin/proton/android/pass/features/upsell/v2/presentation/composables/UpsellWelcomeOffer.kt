@@ -69,6 +69,7 @@ fun UpsellWelcomeOffer(
     modifier: Modifier = Modifier,
     stepToDisplay: StepToDisplay,
     plan: UpsellPlanUiModel,
+    isFoldersEnabled: Boolean,
     onPaymentCallback: (ProtonPaymentEvent) -> Unit
 ) {
     Box(
@@ -202,7 +203,8 @@ fun UpsellWelcomeOffer(
 
             WhatsIncluded(
                 modifier = Modifier
-                    .fillMaxWidth()
+                    .fillMaxWidth(),
+                isFoldersEnabled = isFoldersEnabled
             )
 
             Spacer(modifier = Modifier.height(Spacing.mediumLarge))
@@ -234,6 +236,7 @@ fun UpsellWelcomeOfferPreview(@PreviewParameter(ThemePreviewProvider::class) isD
             UpsellWelcomeOffer(
                 stepToDisplay = StepToDisplay.WelcomeOfferMonthly,
                 plan = mockWelcomeMonthlyPlan[0],
+                isFoldersEnabled = true,
                 onPaymentCallback = {}
             )
         }

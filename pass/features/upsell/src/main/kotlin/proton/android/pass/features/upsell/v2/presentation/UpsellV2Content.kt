@@ -94,6 +94,7 @@ fun UpsellV2Content(
         ) {
             UpsellAnnualPlan(
                 plans = uiState.plans,
+                isFoldersEnabled = uiState.isFoldersEnabled,
                 onPaymentCallback = onPaymentCallback
             )
         }
@@ -107,6 +108,7 @@ fun UpsellV2Content(
             UpsellWelcomeOffer(
                 stepToDisplay = uiState.stepToDisplay,
                 plan = uiState.plans[0],
+                isFoldersEnabled = uiState.isFoldersEnabled,
                 onPaymentCallback = onPaymentCallback
             )
         }
@@ -120,6 +122,7 @@ fun UpsellV2Content(
             UpsellWelcomeOffer(
                 stepToDisplay = uiState.stepToDisplay,
                 plan = uiState.plans[0],
+                isFoldersEnabled = uiState.isFoldersEnabled,
                 onPaymentCallback = onPaymentCallback
             )
         }
@@ -201,7 +204,8 @@ fun UpsellPlanContentPreview(@PreviewParameter(ThemePreviewProvider::class) isDa
             onSkipButtonClick = {},
             uiState = UpsellV2UiState(
                 stepToDisplay = StepToDisplay.AnnualPlans,
-                plans = mockAnnualPlans
+                plans = mockAnnualPlans,
+                isFoldersEnabled = true
             ),
             onPaymentCallback = { _ -> }
         )
@@ -216,7 +220,8 @@ fun UpsellPlanContentWelcomeMonthlyPreview(@PreviewParameter(ThemePreviewProvide
             onSkipButtonClick = {},
             uiState = UpsellV2UiState(
                 stepToDisplay = StepToDisplay.WelcomeOfferMonthly,
-                plans = mockWelcomeMonthlyPlan
+                plans = mockWelcomeMonthlyPlan,
+                isFoldersEnabled = true
             ),
             onPaymentCallback = { _ -> }
         )
@@ -231,7 +236,8 @@ fun UpsellPlanContentWelcomeYearlyPreview(@PreviewParameter(ThemePreviewProvider
             onSkipButtonClick = {},
             uiState = UpsellV2UiState(
                 stepToDisplay = StepToDisplay.WelcomeOfferYearly,
-                plans = mockWelcomeYearlyPlan
+                plans = mockWelcomeYearlyPlan,
+                isFoldersEnabled = true
             ),
             onPaymentCallback = { _ -> }
         )

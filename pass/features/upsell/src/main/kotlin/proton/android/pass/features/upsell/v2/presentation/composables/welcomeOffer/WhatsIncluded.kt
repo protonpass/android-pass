@@ -42,7 +42,7 @@ import proton.android.pass.features.upsell.v1.R
 import me.proton.core.presentation.compose.R as CoreR
 
 @Composable
-internal fun WhatsIncluded(modifier: Modifier = Modifier) {
+internal fun WhatsIncluded(modifier: Modifier = Modifier, isFoldersEnabled: Boolean) {
     Column(
         modifier = modifier,
         verticalArrangement = Arrangement.spacedBy(Spacing.small)
@@ -67,10 +67,12 @@ internal fun WhatsIncluded(modifier: Modifier = Modifier) {
             textId = R.string.upsell_plan_plus_welcome_3
         )
 
-        OneInclude(
-            iconId = CoreR.drawable.ic_proton_credit_card,
-            textId = R.string.upsell_plan_plus_welcome_4
-        )
+        if (isFoldersEnabled) {
+            OneInclude(
+                iconId = CoreR.drawable.ic_proton_folder,
+                textId = R.string.upsell_plan_plus_welcome_4
+            )
+        }
 
         OneInclude(
             iconId = CoreR.drawable.ic_proton_shield_2_bolt,
@@ -111,7 +113,9 @@ private fun OneInclude(
 fun WhatsIncludedPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
     PassTheme(isDark = isDark) {
         Surface {
-            WhatsIncluded()
+            WhatsIncluded(
+                isFoldersEnabled = true
+            )
         }
     }
 }

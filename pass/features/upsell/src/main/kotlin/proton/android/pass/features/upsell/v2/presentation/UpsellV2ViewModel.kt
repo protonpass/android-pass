@@ -50,6 +50,8 @@ import proton.android.pass.features.upsell.v2.models.toYearlyUpsellUiModel
 import proton.android.pass.features.upsell.v2.navigation.UpsellV2DisplayOnBoardingArg
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.ToastManager
+import proton.android.pass.preferences.FeatureFlag
+import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import javax.inject.Inject
 import kotlin.time.Duration.Companion.seconds
 import me.proton.core.plan.presentation.R as PaymentR
@@ -62,7 +64,8 @@ class UpsellV2ViewModel @Inject constructor(
     private val accountManager: AccountManager,
     private val getUserPlan: GetUserPlan,
     private val refreshUserAccess: RefreshUserAccess,
-    private val toastManager: ToastManager
+    private val toastManager: ToastManager,
+    private val featureFlagsPreferencesRepository: FeatureFlagsPreferencesRepository
 ) : ViewModel() {
 
     private val displayOnBoarding: Boolean = savedStateHandleProvider.get()
@@ -78,6 +81,12 @@ class UpsellV2ViewModel @Inject constructor(
     val upsellV2UiState: StateFlow<UpsellV2UiState> = _upsellV2UiState
 
     init {
+        viewModelScope.launch {
+            featureFlagsPreferencesRepository.get<Boolean>(FeatureFlag.PASS_FOLDERS)
+                .collect { isFoldersEnabled ->
+                    _upsellV2UiState.update { it.copy(isFoldersEnabled = isFoldersEnabled) }
+                }
+        }
         viewModelScope.launch {
             updatePlans()
         }

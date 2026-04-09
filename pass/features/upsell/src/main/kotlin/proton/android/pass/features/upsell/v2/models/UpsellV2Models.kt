@@ -22,6 +22,7 @@ import android.content.Context
 import androidx.compose.runtime.Stable
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
+import kotlinx.collections.immutable.toPersistentList
 import proton.android.pass.commonpresentation.api.plan.PaymentButtonUiState
 import proton.android.pass.commonpresentation.api.plan.toUiModel
 import proton.android.pass.data.api.usecases.plan.PASS_PLUS_NAME
@@ -124,38 +125,52 @@ data class UpsellItemsUiState(
     val to: PlanTypeUiState
 )
 
-val elementsPlusPlan = persistentListOf(
-    UpsellItemsUiState(
-        R.string.upsell_plan_plus_1,
-        PlanTypeUiState.Text(text = "10"),
-        PlanTypeUiState.Text(text = "∞")
-    ),
-    UpsellItemsUiState(
-        R.string.upsell_plan_plus_2,
-        PlanTypeUiState.Empty,
-        PlanTypeUiState.Check
-    ),
-    UpsellItemsUiState(
-        R.string.upsell_plan_plus_3,
-        PlanTypeUiState.Empty,
-        PlanTypeUiState.Check
-    ),
-    UpsellItemsUiState(
-        R.string.upsell_plan_plus_4,
-        PlanTypeUiState.Empty,
-        PlanTypeUiState.Text(text = "∞")
-    ),
-    UpsellItemsUiState(
-        R.string.upsell_plan_plus_5,
-        PlanTypeUiState.Empty,
-        PlanTypeUiState.Check
-    ),
-    UpsellItemsUiState(
-        R.string.upsell_plan_plus_6,
-        PlanTypeUiState.Empty,
-        PlanTypeUiState.Check
+fun elementsPlusPlan(isFoldersEnabled: Boolean) = buildList {
+    add(
+        UpsellItemsUiState(
+            R.string.upsell_plan_plus_1,
+            PlanTypeUiState.Text(text = "10"),
+            PlanTypeUiState.Text(text = "∞")
+        )
     )
-)
+    add(
+        UpsellItemsUiState(
+            R.string.upsell_plan_plus_2,
+            PlanTypeUiState.Empty,
+            PlanTypeUiState.Check
+        )
+    )
+    add(
+        UpsellItemsUiState(
+            R.string.upsell_plan_plus_3,
+            PlanTypeUiState.Empty,
+            PlanTypeUiState.Check
+        )
+    )
+    if (isFoldersEnabled) {
+        add(
+            UpsellItemsUiState(
+                R.string.upsell_plan_plus_4,
+                PlanTypeUiState.Empty,
+                PlanTypeUiState.Check
+            )
+        )
+    }
+    add(
+        UpsellItemsUiState(
+            R.string.upsell_plan_plus_5,
+            PlanTypeUiState.Empty,
+            PlanTypeUiState.Check
+        )
+    )
+    add(
+        UpsellItemsUiState(
+            R.string.upsell_plan_plus_6,
+            PlanTypeUiState.Empty,
+            PlanTypeUiState.Check
+        )
+    )
+}.toPersistentList()
 
 val elementsUnlimitedPlan = persistentListOf(
     UpsellItemsUiState(
@@ -191,5 +206,6 @@ data class UpsellV2UiState(
     val displayOnBoarding: Boolean = false,
     val displayLoaderDuringPurchase: Boolean = false,
     val stepToDisplay: StepToDisplay = StepToDisplay.Idle,
-    val plans: ImmutableList<UpsellPlanUiModel> = persistentListOf()
+    val plans: ImmutableList<UpsellPlanUiModel> = persistentListOf(),
+    val isFoldersEnabled: Boolean = false
 )

@@ -47,7 +47,6 @@
   <string name="upsell_plan_plus_1">Vzdevki hide-my-email</string>
   <string name="upsell_plan_plus_2">Vgrajena 2FA</string>
   <string name="upsell_plan_plus_3">Dajane v skupno rabo, trezor, predmete in povezave</string>
-  <string name="upsell_plan_plus_4">Plačilne kartice</string>
   <string name="upsell_plan_plus_5">Spremljanje temnega spleta</string>
   <string name="upsell_plan_plus_6">Datotečne priponke</string>
   <string name="upsell_plan_unlimited_1">Shramba</string>
@@ -59,7 +58,6 @@
   <string name="upsell_plan_plus_welcome_1">Neomejeno število vzdevkov Hide-my-email</string>
   <string name="upsell_plan_plus_welcome_2">Vgrajen modul za preverjanje pristnosti 2FA</string>
   <string name="upsell_plan_plus_welcome_3">Varna skupna raba trezorja, predmeta in povezave</string>
-  <string name="upsell_plan_plus_welcome_4">Plačilne kartice</string>
   <string name="upsell_plan_plus_welcome_5">Spremljanje temnega spleta</string>
   <string name="upsell_plan_plus_welcome_6">Datotečne priponke</string>
   <string name="upsell_limited_time_offer">Časovno omejena ponudba</string>

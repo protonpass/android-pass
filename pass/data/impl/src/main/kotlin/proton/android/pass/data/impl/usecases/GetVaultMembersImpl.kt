@@ -54,13 +54,14 @@ class GetVaultMembersImpl @Inject constructor(
             PassLogger.w(TAG, "Failed to load group members, group info will be missing from vault member list")
             PassLogger.w(TAG, groupMembersResult.exception)
         }
+        val isGroupDataLoaded = groupMembersResult is LoadingResult.Success
         val groupByEmail = groupMembersResult.getOrNull().orEmpty().toGroupByEmail()
         val shareMembers = shareMembersRepository.getShareMembers(
             userId = user.userId,
             shareId = shareId,
             userEmail = user.email
         )
-        buildVaultMembers(pendingInvites, shareMembers, groupByEmail, user.email.orEmpty())
+        buildVaultMembers(pendingInvites, shareMembers, groupByEmail, user.email.orEmpty(), isGroupDataLoaded)
     }
 
     companion object {
@@ -76,23 +77,31 @@ private fun buildVaultMembers(
     pendingInvites: List<SharePendingInvite>,
     shareMembers: List<ShareMember>,
     groupByEmail: Map<String, GroupMembers>,
-    currentUserEmail: String
+    currentUserEmail: String,
+    isGroupDataLoaded: Boolean
 ): List<VaultMember> = buildList {
     pendingInvites
         .map(SharePendingInvite::toVaultMember)
         .also(::addAll)
 
     shareMembers
-        .map { it.toVaultMember(groupByEmail, currentUserEmail) }
+        .map { it.toVaultMember(groupByEmail, currentUserEmail, isGroupDataLoaded) }
         .also(::addAll)
 }
 
-private fun ShareMember.toVaultMember(groupByEmail: Map<String, GroupMembers>, currentUserEmail: String): VaultMember {
+private fun ShareMember.toVaultMember(
+    groupByEmail: Map<String, GroupMembers>,
+    currentUserEmail: String,
+    isGroupDataLoaded: Boolean
+): VaultMember {
     val groupInfo = if (isGroup) groupByEmail[email] else null
     val groupMembers = groupInfo?.members
+    // When group data is still loading, default to true so actions stay hidden until
+    // membership can be confirmed. Once loaded, a null groupMembers means the group
+    // was not found in the results, so the user is not a member.
     val isCurrentUserMember = isGroup && (
-        groupMembers == null ||
-            groupMembers.any { it.email == currentUserEmail && it.state == GroupMemberState.Active.value }
+        !isGroupDataLoaded ||
+            groupMembers?.any { it.email == currentUserEmail && it.state == GroupMemberState.Active.value } == true
         )
     return VaultMember.Member(
         shareId = shareId,

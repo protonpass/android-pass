@@ -43,7 +43,6 @@ import proton.android.pass.data.fakes.usecases.shares.FakeObserveSharePendingInv
 import proton.android.pass.domain.InviteId
 import proton.android.pass.domain.ShareRole
 import proton.android.pass.domain.shares.SharePendingInvite
-import proton.android.pass.data.api.usecases.VaultMember
 import proton.android.pass.domain.GroupId
 import proton.android.pass.domain.InviteRecommendations
 import proton.android.pass.domain.RecommendedEmail
@@ -54,6 +53,7 @@ import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.navigation.api.CommonOptionalNavArgId
 import proton.android.pass.test.MainDispatcherRule
 import proton.android.pass.test.domain.ShareTestFactory
+import proton.android.pass.test.domain.VaultMemberTestFactory
 
 class SharingWithViewModelTest {
 
@@ -364,15 +364,10 @@ class SharingWithViewModelTest {
         val memberEmail = "member@proton.me"
         getVaultMembers.emitValue(
             listOf(
-                VaultMember.Member(
+                VaultMemberTestFactory.Member.create(
                     email = memberEmail,
                     shareId = ShareId(SHARE_ID),
-                    username = memberEmail,
-                    isGroup = false,
-                    memberCount = 0,
-                    role = ShareRole.Read,
-                    isCurrentUser = false,
-                    isOwner = false
+                    username = memberEmail
                 )
             )
         )
@@ -424,15 +419,13 @@ class SharingWithViewModelTest {
         val groupId = GroupId("group-eng")
         getVaultMembers.emitValue(
             listOf(
-                VaultMember.Member(
+                VaultMemberTestFactory.Group.create(
                     email = groupEmail,
                     shareId = ShareId(SHARE_ID),
+                    groupId = groupId,
                     username = groupEmail,
-                    isGroup = true,
                     memberCount = 3,
-                    role = ShareRole.Read,
-                    isCurrentUser = false,
-                    isOwner = false
+                    role = ShareRole.Read
                 )
             )
         )

@@ -26,7 +26,6 @@ import me.proton.core.domain.entity.UserId
 import org.junit.Before
 import org.junit.Test
 import proton.android.pass.data.api.usecases.GroupMembers
-import proton.android.pass.data.api.usecases.VaultMember
 import proton.android.pass.data.fakes.repositories.FakeShareMembersRepository
 import proton.android.pass.data.fakes.usecases.FakeObserveCurrentUser
 import proton.android.pass.data.fakes.usecases.FakeObserveGroupMembersByGroup
@@ -38,6 +37,7 @@ import proton.android.pass.domain.ShareType
 import proton.android.pass.domain.shares.ShareMember
 import proton.android.pass.test.domain.GroupTestFactory
 import proton.android.pass.test.domain.UserTestFactory
+import proton.android.pass.test.domain.VaultMemberTestFactory
 
 class GetVaultMembersImplTest {
 
@@ -95,16 +95,10 @@ class GetVaultMembersImplTest {
         val result = instance(shareId).drop(1).first()
 
         assertThat(result).containsExactly(
-            VaultMember.Member(
+            VaultMemberTestFactory.Group.create(
                 email = groupEmail,
                 shareId = ShareId("member-share-id"),
-                groupId = groupId,
-                username = "group",
-                isGroup = true,
-                memberCount = 0,
-                role = ShareRole.Admin,
-                isCurrentUser = false,
-                isOwner = false
+                groupId = groupId
             )
         )
     }

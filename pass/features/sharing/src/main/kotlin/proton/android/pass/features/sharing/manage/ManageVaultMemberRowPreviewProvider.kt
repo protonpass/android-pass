@@ -47,6 +47,7 @@ class ManageVaultMemberRowPreviewProvider : PreviewParameterProvider<VaultMember
                         username = "someuser",
                         role = ShareRole.Admin,
                         isCurrentUser = true,
+                        isCurrentUserMember = false,
                         isOwner = isOwner,
                         isGroup = false,
                         memberCount = 0
@@ -65,6 +66,7 @@ class ManageVaultMemberRowPreviewProvider : PreviewParameterProvider<VaultMember
                         username = "someuser",
                         role = role,
                         isCurrentUser = false,
+                        isCurrentUserMember = false,
                         isOwner = false,
                         isGroup = false,
                         memberCount = 0
@@ -83,6 +85,7 @@ class ManageVaultMemberRowPreviewProvider : PreviewParameterProvider<VaultMember
                             username = "Security Team",
                             role = ShareRole.Admin,
                             isCurrentUser = false,
+                            isCurrentUserMember = false,
                             isOwner = false,
                             isGroup = true,
                             memberCount = 6

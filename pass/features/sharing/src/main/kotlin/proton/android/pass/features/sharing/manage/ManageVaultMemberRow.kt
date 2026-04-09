@@ -92,7 +92,10 @@ fun ManageVaultMemberRow(
     val showActions = when (memberContent) {
         is VaultMemberContent.Member -> when (memberContent.vaultMember) {
             is VaultMember.Member -> {
-                canShowActions && !memberContent.vaultMember.isCurrentUser && !memberContent.vaultMember.isOwner
+                canShowActions &&
+                    !memberContent.vaultMember.isCurrentUser &&
+                    !memberContent.vaultMember.isCurrentUserMember &&
+                    !memberContent.vaultMember.isOwner
             }
 
             is VaultMember.InvitePending -> canShowActions

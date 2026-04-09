@@ -36,6 +36,7 @@ import proton.android.pass.data.fakes.usecases.FakeObserveUpgradeInfo
 import proton.android.pass.data.fakes.usecases.FakeObserveVaults
 import proton.android.pass.domain.GroupId
 import proton.android.pass.domain.Plan
+import proton.android.pass.domain.ShareRole
 import proton.android.pass.domain.PlanLimit
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.Vault
@@ -76,23 +77,29 @@ class VaultOptionsViewModelTest {
     }
 
     @Test
-    fun `can edit vault if owner value set to true`() = runTest {
-        testCanEdit(true)
+    fun `can edit vault if admin role`() = runTest {
+        emitDefaultVault(role = ShareRole.Admin)
+        instance.state.test {
+            val item = awaitItem() as VaultOptionsUiState.Success
+            assertThat(item.showEdit).isTrue()
+        }
     }
 
     @Test
-    fun `cannot edit vault if owner set to false`() = runTest {
-        testCanEdit(false)
+    fun `can edit vault if write role`() = runTest {
+        emitDefaultVault(owned = false, role = ShareRole.Write)
+        instance.state.test {
+            val item = awaitItem() as VaultOptionsUiState.Success
+            assertThat(item.showEdit).isTrue()
+        }
     }
 
-    private suspend fun testCanEdit(expected: Boolean) {
-        emitDefaultVault(owned = expected)
+    @Test
+    fun `cannot edit vault if read role`() = runTest {
+        emitDefaultVault(owned = false, role = ShareRole.Read)
         instance.state.test {
-            val item = awaitItem()
-            assertThat(item).isInstanceOf(VaultOptionsUiState.Success::class.java)
-
-            val casted = item as VaultOptionsUiState.Success
-            assertThat(casted.showEdit).isEqualTo(expected)
+            val item = awaitItem() as VaultOptionsUiState.Success
+            assertThat(item.showEdit).isFalse()
         }
     }
 
@@ -367,14 +374,16 @@ class VaultOptionsViewModelTest {
     private fun emitDefaultVault(
         owned: Boolean = true,
         shared: Boolean = true,
-        groupId: GroupId? = null
+        groupId: GroupId? = null,
+        role: ShareRole = ShareRole.Admin
     ): Vault {
         val defaultVault = VaultTestFactory.create(
             shareId = ShareId(SHARE_ID),
             isOwned = owned,
             groupId = groupId,
             shared = shared,
-            members = if (shared) 2 else 1
+            members = if (shared) 2 else 1,
+            role = role
         )
 
         observeVaults.sendResult(Result.success(listOf(defaultVault)))

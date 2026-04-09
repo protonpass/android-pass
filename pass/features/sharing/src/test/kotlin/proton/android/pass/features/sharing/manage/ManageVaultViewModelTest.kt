@@ -36,6 +36,7 @@ import proton.android.pass.domain.ShareRole
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.notifications.fakes.FakeSnackbarDispatcher
 import proton.android.pass.preferences.FakeFeatureFlagsPreferenceRepository
+import proton.android.pass.test.domain.VaultMemberTestFactory
 
 internal class ManageVaultViewModelTest {
 
@@ -72,46 +73,38 @@ internal class ManageVaultViewModelTest {
 
     @Test
     fun `can sort member and invite list`() {
-        val member1 = VaultMember.Member(
+        val member1 = VaultMemberTestFactory.Member.create(
             email = "email1",
             shareId = ShareId(SHARE_ID),
             username = "username1",
             role = ShareRole.Admin,
             isCurrentUser = true,
-            isOwner = true,
-            isGroup = false,
-            memberCount = 0
+            isOwner = true
         )
-        val member2 = VaultMember.Member(
+        val member2 = VaultMemberTestFactory.Member.create(
             email = "email2",
             shareId = ShareId(SHARE_ID),
             username = "username2",
-            role = ShareRole.Admin,
-            isCurrentUser = false,
-            isOwner = false,
-            isGroup = false,
-            memberCount = 0
+            role = ShareRole.Admin
         )
-        val invite1 = VaultMember.InvitePending(
+        val invite1 = VaultMemberTestFactory.InvitePending.create(
             email = "invited1",
             inviteId = InviteId("123")
         )
-        val invite2 = VaultMember.InvitePending(
+        val invite2 = VaultMemberTestFactory.InvitePending.create(
             email = "invited2",
             inviteId = InviteId("456")
         )
-        val newUserInvite1 = VaultMember.NewUserInvitePending(
+        val newUserInvite1 = VaultMemberTestFactory.NewUserInvitePending.create(
             email = "invited3",
             newUserInviteId = NewUserInviteId("789"),
             role = ShareRole.Write,
-            signature = "",
             inviteState = VaultMember.NewUserInvitePending.InviteState.PendingAccountCreation
         )
-        val newUserInvite2 = VaultMember.NewUserInvitePending(
+        val newUserInvite2 = VaultMemberTestFactory.NewUserInvitePending.create(
             email = "invited4",
             newUserInviteId = NewUserInviteId("abcde"),
             role = ShareRole.Write,
-            signature = "",
             inviteState = VaultMember.NewUserInvitePending.InviteState.PendingAcceptance
         )
         val allInvites = listOf(member1, member2, invite1, invite2, newUserInvite1, newUserInvite2)

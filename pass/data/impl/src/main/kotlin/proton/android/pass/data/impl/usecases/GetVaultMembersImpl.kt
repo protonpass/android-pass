@@ -60,7 +60,7 @@ class GetVaultMembersImpl @Inject constructor(
             shareId = shareId,
             userEmail = user.email
         )
-        buildVaultMembers(pendingInvites, shareMembers, groupByEmail)
+        buildVaultMembers(pendingInvites, shareMembers, groupByEmail, user.email.orEmpty())
     }
 
     companion object {
@@ -75,19 +75,25 @@ private fun List<GroupMembers>.toGroupByEmail(): Map<String, GroupMembers> = map
 private fun buildVaultMembers(
     pendingInvites: List<SharePendingInvite>,
     shareMembers: List<ShareMember>,
-    groupByEmail: Map<String, GroupMembers>
+    groupByEmail: Map<String, GroupMembers>,
+    currentUserEmail: String
 ): List<VaultMember> = buildList {
     pendingInvites
         .map(SharePendingInvite::toVaultMember)
         .also(::addAll)
 
     shareMembers
-        .map { it.toVaultMember(groupByEmail) }
+        .map { it.toVaultMember(groupByEmail, currentUserEmail) }
         .also(::addAll)
 }
 
-private fun ShareMember.toVaultMember(groupByEmail: Map<String, GroupMembers>): VaultMember {
+private fun ShareMember.toVaultMember(groupByEmail: Map<String, GroupMembers>, currentUserEmail: String): VaultMember {
     val groupInfo = if (isGroup) groupByEmail[email] else null
+    val groupMembers = groupInfo?.members
+    val isCurrentUserMember = isGroup && (
+        groupMembers == null ||
+            groupMembers.any { it.email == currentUserEmail && it.state == GroupMemberState.Active.value }
+        )
     return VaultMember.Member(
         shareId = shareId,
         email = email,
@@ -95,6 +101,7 @@ private fun ShareMember.toVaultMember(groupByEmail: Map<String, GroupMembers>): 
         username = groupInfo?.group?.name ?: username,
         role = role,
         isCurrentUser = isCurrentUser,
+        isCurrentUserMember = isCurrentUserMember,
         isOwner = isOwner,
         isGroup = isGroup,
         memberCount = groupInfo?.members?.count { it.state == GroupMemberState.Active.value } ?: 0

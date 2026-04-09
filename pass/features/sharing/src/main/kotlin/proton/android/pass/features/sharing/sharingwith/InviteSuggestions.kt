@@ -186,6 +186,7 @@ internal fun InviteSuggestionList(
                                 horizontalArrangement = Arrangement.spacedBy(Spacing.extraSmall)
                             ) {
                                 Text.Body2Regular(
+                                    modifier = Modifier.weight(1f, fill = false),
                                     text = item.name,
                                     maxLines = 1,
                                     overflow = TextOverflow.Ellipsis

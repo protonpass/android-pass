@@ -119,14 +119,14 @@ class VaultOptionsViewModel @Inject constructor(
         val isUpgradeAvailable = upgradeResult.getOrNull()?.isUpgradeAvailable ?: false
         val canDelete = canDeleteVault(allVaults, selectedVault, allowNoVault)
 
-        val canEdit = selectedVault.isOwned
+        val canEdit = selectedVault.canBeUpdated
         val canMigrate = canMigrateVault(navShareId)
         val canLeave = if (selectedVault.isGroupShare) false else !selectedVault.isOwned
 
         val vaultAccessData = canManageVaultAccess(selectedVault)
 
-        // Only show share if it is not already shared
-        val showShare = canShare && !selectedVault.shared
+        // Only show share if the user is a manager (canShare already gates on Owner/Admin role)
+        val showShare = canShare
 
         // Only show manageVault and viewMembers if vault has not already been shared
         val showManageAccess = selectedVault.shared && vaultAccessData.canManageAccess

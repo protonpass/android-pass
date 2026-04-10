@@ -91,6 +91,7 @@ internal fun ManageItemContent(
                             pendingInvites = state.itemPendingInvites,
                             members = state.itemMembers,
                             isRenameAdminToManagerEnabled = state.isRenameAdminToManagerEnabled,
+                            groupsByEmail = state.groupsByEmail,
                             onPendingInviteMenuOptionsClick = { pendingInvite ->
                                 ManageItemUiEvent.OnPendingInviteOptionsClick(
                                     shareId = state.share.id,
@@ -102,6 +103,9 @@ internal fun ManageItemContent(
                                     shareId = state.share.id,
                                     member = member
                                 ).also(onUiEvent)
+                            },
+                            onViewGroupMembersClick = { groupId ->
+                                ManageItemUiEvent.OnViewGroupMembersClick(groupId).also(onUiEvent)
                             },
                             onInviteMoreClick = {
                                 ManageItemUiEvent.OnInviteToItemClick(

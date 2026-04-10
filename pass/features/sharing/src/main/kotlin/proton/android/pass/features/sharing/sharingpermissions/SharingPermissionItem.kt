@@ -33,6 +33,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
@@ -77,7 +78,10 @@ internal fun SharingPermissionItem(
                             horizontalArrangement = Arrangement.spacedBy(Spacing.extraSmall)
                         ) {
                             Text.Body2Regular(
-                                text = inviteTarget.displayName
+                                modifier = Modifier.weight(1f, fill = false),
+                                text = inviteTarget.displayName,
+                                maxLines = 1,
+                                overflow = TextOverflow.Ellipsis
                             )
                             val label = pluralStringResource(
                                 CompR.plurals.members_count,

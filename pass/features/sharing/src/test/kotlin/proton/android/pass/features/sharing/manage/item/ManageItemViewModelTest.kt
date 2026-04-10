@@ -25,6 +25,7 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import proton.android.pass.commonui.fakes.FakeSavedStateHandleProvider
+import proton.android.pass.data.fakes.usecases.FakeObserveCurrentUser
 import proton.android.pass.data.fakes.usecases.FakeObserveGroupMembersByGroup
 import proton.android.pass.data.fakes.usecases.organizations.FakeObserveOrganizationSharingPolicy
 import proton.android.pass.data.fakes.usecases.shares.FakeObserveShare
@@ -40,6 +41,7 @@ import proton.android.pass.preferences.FeatureFlag
 import proton.android.pass.preferences.FakeFeatureFlagsPreferenceRepository
 import proton.android.pass.test.MainDispatcherRule
 import proton.android.pass.test.domain.ShareTestFactory
+import proton.android.pass.test.domain.UserTestFactory
 
 internal class ManageItemViewModelTest {
 
@@ -52,6 +54,7 @@ internal class ManageItemViewModelTest {
     private lateinit var observeShareItemsCount: FakeObserveShareItemsCount
     private lateinit var observeOrganizationSharingPolicy: FakeObserveOrganizationSharingPolicy
     private lateinit var observeGroupMembersByGroup: FakeObserveGroupMembersByGroup
+    private lateinit var observeCurrentUser: FakeObserveCurrentUser
     private lateinit var featureFlags: FakeFeatureFlagsPreferenceRepository
 
     @Before
@@ -62,6 +65,7 @@ internal class ManageItemViewModelTest {
         observeShareItemsCount = FakeObserveShareItemsCount()
         observeOrganizationSharingPolicy = FakeObserveOrganizationSharingPolicy()
         observeGroupMembersByGroup = FakeObserveGroupMembersByGroup()
+        observeCurrentUser = FakeObserveCurrentUser()
         featureFlags = FakeFeatureFlagsPreferenceRepository()
     }
 
@@ -76,6 +80,7 @@ internal class ManageItemViewModelTest {
         observeShareItemsCount = observeShareItemsCount,
         observeOrganizationSharingPolicy = observeOrganizationSharingPolicy,
         observeGroupMembersByGroup = observeGroupMembersByGroup,
+        observeCurrentUser = observeCurrentUser,
         snackbarDispatcher = FakeSnackbarDispatcher(),
         featureFlagsPreferencesRepository = featureFlags
     )
@@ -86,6 +91,7 @@ internal class ManageItemViewModelTest {
         observeSharePendingInvites.emitValue(emptyList())
         observeShareItemsCount.emitValue(0)
         observeOrganizationSharingPolicy.emitValue(OrganizationSharingPolicy.Default)
+        observeCurrentUser.sendUser(UserTestFactory.create())
     }
 
     @Test

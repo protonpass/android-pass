@@ -25,18 +25,21 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import proton.android.pass.common.api.FlowUtils.oneShot
+import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.asLoadingResult
 import proton.android.pass.common.api.combineN
 import proton.android.pass.common.api.getOrNull
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
+import proton.android.pass.data.api.usecases.ObserveCurrentUser
 import proton.android.pass.data.api.usecases.ObserveGroupMembersByGroup
 import proton.android.pass.data.api.usecases.organization.ObserveOrganizationSharingPolicy
 import proton.android.pass.data.api.usecases.shares.ObserveShare
@@ -62,6 +65,7 @@ class ManageItemViewModel @Inject constructor(
     observeShareItemsCount: ObserveShareItemsCount,
     observeOrganizationSharingPolicy: ObserveOrganizationSharingPolicy,
     observeGroupMembersByGroup: ObserveGroupMembersByGroup,
+    observeCurrentUser: ObserveCurrentUser,
     private val snackbarDispatcher: SnackbarDispatcher,
     featureFlagsPreferencesRepository: FeatureFlagsPreferencesRepository
 ) : ViewModel() {
@@ -116,8 +120,10 @@ class ManageItemViewModel @Inject constructor(
 
     private val isLoadingStateFlow = MutableStateFlow<IsLoadingState>(IsLoadingState.NotLoading)
 
-    private val groupMembersFlow = observeGroupMembersByGroup()
-        .asLoadingResult()
+    private val groupMembersWithUserFlow = combine(
+        observeGroupMembersByGroup().asLoadingResult(),
+        observeCurrentUser()
+    ) { groupResult, user -> groupResult to user }
 
     private val isRenameAdminToManagerEnabledFlow =
         featureFlagsPreferencesRepository.get<Boolean>(FeatureFlag.RENAME_ADMIN_TO_MANAGER)
@@ -132,10 +138,10 @@ class ManageItemViewModel @Inject constructor(
         shareItemMembersFlow,
         isLoadingStateFlow,
         observeOrganizationSharingPolicy(),
-        groupMembersFlow,
+        groupMembersWithUserFlow,
         isRenameAdminToManagerEnabledFlow
-    ) { event, itemId, share, itemPendingInvites, vaultPendingInvites,
-        itemsCount, members, loadingState, orgPolicy, groupMembersResult, isRenameAdminToManagerEnabled ->
+    ) { event, itemId, share, itemPendingInvites, vaultPendingInvites, itemsCount, members,
+        loadingState, orgPolicy, (groupMembersResult, currentUser), isRenameAdminToManagerEnabled ->
         ManageItemState.Success(
             event = event,
             itemId = itemId,
@@ -147,7 +153,9 @@ class ManageItemViewModel @Inject constructor(
             isLoadingState = loadingState,
             organizationSharingPolicy = orgPolicy,
             groupMembers = groupMembersResult.getOrNull().orEmpty(),
-            isRenameAdminToManagerEnabled = isRenameAdminToManagerEnabled
+            isRenameAdminToManagerEnabled = isRenameAdminToManagerEnabled,
+            currentUserEmail = currentUser.email.orEmpty(),
+            isGroupMembersLoaded = groupMembersResult is LoadingResult.Success
         )
     }.stateIn(
         scope = viewModelScope,

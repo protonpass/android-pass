@@ -84,7 +84,6 @@ internal fun ManageItemContent(
                             ),
                             isItemSection = true,
                             isShareAdmin = state.share.isAdmin,
-                            isCurrentUserOwner = state.share.isOwner,
                             canInviteMore = state.canInviteMoreToItem,
                             vaultOption = None,
                             shareItemsCount = state.itemsCount,
@@ -92,6 +91,7 @@ internal fun ManageItemContent(
                             members = state.itemMembers,
                             isRenameAdminToManagerEnabled = state.isRenameAdminToManagerEnabled,
                             groupsByEmail = state.groupsByEmail,
+                            isCurrentUserMemberOf = state::isCurrentUserMemberOf,
                             onPendingInviteMenuOptionsClick = { pendingInvite ->
                                 ManageItemUiEvent.OnPendingInviteOptionsClick(
                                     shareId = state.share.id,
@@ -128,7 +128,6 @@ internal fun ManageItemContent(
                             ),
                             isItemSection = false,
                             isShareAdmin = state.share.isAdmin,
-                            isCurrentUserOwner = state.share.isOwner,
                             canInviteMore = state.canInviteMoreToVault,
                             vaultOption = state.share.toVault(),
                             shareItemsCount = state.itemsCount,
@@ -136,6 +135,7 @@ internal fun ManageItemContent(
                             members = state.vaultMembers,
                             isRenameAdminToManagerEnabled = state.isRenameAdminToManagerEnabled,
                             groupsByEmail = state.groupsByEmail,
+                            isCurrentUserMemberOf = state::isCurrentUserMemberOf,
                             onPendingInviteMenuOptionsClick = { pendingInvite ->
                                 ManageItemUiEvent.OnPendingInviteOptionsClick(
                                     shareId = state.share.id,

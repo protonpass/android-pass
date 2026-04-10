@@ -175,7 +175,7 @@ private fun UserInfo(
             is VaultMemberContent.Member -> when (val member = memberContent.vaultMember) {
                 is VaultMember.Member -> {
                     val groupId = member.groupId
-                    if (member.isGroup && member.memberCount > 0 && groupId != null) {
+                    if (member.isGroup && groupId != null) {
                         Row(
                             verticalAlignment = Alignment.CenterVertically,
                             horizontalArrangement = Arrangement.spacedBy(Spacing.extraSmall)
@@ -196,9 +196,9 @@ private fun UserInfo(
                                 text = "($label)",
                                 color = PassTheme.colors.interactionNormMajor2,
                                 style = PassTheme.typography.body3Norm(),
-                                modifier = Modifier.clickable {
+                                modifier = if (member.memberCount > 0) Modifier.clickable {
                                     onViewGroupMembersClick?.invoke(groupId)
-                                }
+                                } else Modifier
                             )
                         }
                     } else {

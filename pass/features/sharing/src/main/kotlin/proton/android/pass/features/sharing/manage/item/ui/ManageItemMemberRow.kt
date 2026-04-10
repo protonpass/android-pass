@@ -33,6 +33,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextOverflow
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Radius
 import proton.android.pass.commonui.api.Spacing
@@ -103,7 +104,12 @@ internal fun ManageItemMemberRow(
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.spacedBy(space = Spacing.extraSmall)
                 ) {
-                    Text.Body2Regular(text = displayName)
+                    Text.Body2Regular(
+                        modifier = Modifier.weight(1f, fill = false),
+                        text = displayName,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis
+                    )
                     Text.Body2Regular(
                         modifier = Modifier.clickable { onViewGroupMembersClick(groupId) },
                         text = "(${pluralStringResource(CompR.plurals.members_count, memberCount, memberCount)})",

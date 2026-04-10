@@ -22,6 +22,7 @@ import androidx.compose.runtime.Stable
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.data.api.usecases.GroupMembers
 import proton.android.pass.domain.GroupId
+import proton.android.pass.domain.GroupMemberState
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.Share
 import proton.android.pass.domain.organizations.OrganizationSharingPolicy
@@ -52,7 +53,9 @@ internal sealed interface ManageItemState {
         private val isLoadingState: IsLoadingState,
         private val organizationSharingPolicy: OrganizationSharingPolicy,
         private val groupMembers: List<GroupMembers>,
-        internal val isRenameAdminToManagerEnabled: Boolean
+        internal val isRenameAdminToManagerEnabled: Boolean,
+        internal val currentUserEmail: String,
+        internal val isGroupMembersLoaded: Boolean
     ) : ManageItemState {
 
         internal val itemMembers: List<ShareMember> = members.filter { it.isItemMember }
@@ -80,6 +83,18 @@ internal sealed interface ManageItemState {
         internal fun groupIdFor(member: ShareMember): GroupId? = groupsByEmail[member.email]?.group?.id
 
         internal fun memberCountFor(member: ShareMember): Int = groupsByEmail[member.email]?.members?.size ?: 0
+
+        // Returns true when the current user is an active member of the group represented by this
+        // ShareMember. Defaults to true while group data is still loading so that 3-dot actions
+        // stay hidden until membership can be confirmed.
+        internal fun isCurrentUserMemberOf(member: ShareMember): Boolean {
+            if (!member.isGroup) return false
+            if (!isGroupMembersLoaded) return true
+            val groupMemberList = groupsByEmail[member.email]?.members ?: return false
+            return groupMemberList.any {
+                it.email == currentUserEmail && it.state == GroupMemberState.Active.value
+            }
+        }
 
     }
 

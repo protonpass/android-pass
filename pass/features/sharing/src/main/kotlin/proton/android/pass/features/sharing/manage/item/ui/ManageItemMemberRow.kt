@@ -41,7 +41,6 @@ import proton.android.pass.composecomponents.impl.container.CircleTextIcon
 import proton.android.pass.composecomponents.impl.item.icon.ThreeDotsMenuButton
 import proton.android.pass.composecomponents.impl.text.Text
 import proton.android.pass.domain.GroupId
-import proton.android.pass.domain.ShareRole
 import proton.android.pass.domain.shares.ShareMember
 import proton.android.pass.features.sharing.R
 import proton.android.pass.features.sharing.common.toShortSummary
@@ -52,7 +51,7 @@ internal fun ManageItemMemberRow(
     modifier: Modifier = Modifier,
     member: ShareMember,
     canAdmin: Boolean,
-    isCurrentUserOwner: Boolean,
+    isCurrentUserMember: Boolean = false,
     hasVaultAccess: Boolean,
     isRenameAdminToManagerEnabled: Boolean,
     groupId: GroupId? = null,
@@ -66,14 +65,12 @@ internal fun ManageItemMemberRow(
     }
 
     val showMemberOptions = remember(
-        canAdmin, isCurrentUserOwner,
-        member.isOwner, member.isCurrentUser, member.role,
-        member.isGroup
+        canAdmin, isCurrentUserMember,
+        member.isOwner, member.isCurrentUser, member.isGroup
     ) {
         when {
-            !canAdmin || member.isOwner || member.isCurrentUser -> false
-            member.isGroup -> canAdmin
-            else -> isCurrentUserOwner || member.role != ShareRole.Admin
+            !canAdmin || member.isOwner || member.isCurrentUser || isCurrentUserMember -> false
+            else -> true
         }
     }
 
@@ -99,7 +96,7 @@ internal fun ManageItemMemberRow(
                 .weight(weight = 1f, fill = true),
             verticalArrangement = Arrangement.spacedBy(space = Spacing.extraSmall)
         ) {
-            if (member.isGroup && memberCount > 0 && groupId != null) {
+            if (member.isGroup && groupId != null) {
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.spacedBy(space = Spacing.extraSmall)
@@ -110,9 +107,17 @@ internal fun ManageItemMemberRow(
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis
                     )
+                    val membersLabel = "(${
+                        pluralStringResource(CompR.plurals.members_count, memberCount, memberCount)
+                    })"
+                    val membersModifier = if (memberCount > 0) {
+                        Modifier.clickable { onViewGroupMembersClick(groupId) }
+                    } else {
+                        Modifier
+                    }
                     Text.Body2Regular(
-                        modifier = Modifier.clickable { onViewGroupMembersClick(groupId) },
-                        text = "(${pluralStringResource(CompR.plurals.members_count, memberCount, memberCount)})",
+                        modifier = membersModifier,
+                        text = membersLabel,
                         color = PassTheme.colors.interactionNormMajor2
                     )
                 }

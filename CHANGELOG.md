@@ -6,6 +6,25 @@
 
 ### Other
 
+## 1.39.0 (2026-04-10)
+
+### Features :tada:
+
+- Allow user to choose between inline and popup autofill.
+- Allow user to disable autosave on Android.
+- Highlight links in notes and allow opening them.
+- Add clear log option in log screen.
+
+### Fixes :bug:
+
+- Fix items from all accounts showing in autofill extension regardless of user settings.
+- Fix crash when adding a second date in an Identity section.
+- Improve QR code detection.
+
+### Other
+
+- Updated translations.
+
 ## 1.38.0 (2026-03-12)
 
 ### Features :tada:
@@ -36,7 +55,7 @@
 - Enable Meta Quest autofill.
 
 ## 1.37.1 (2026-02-05)
-
+`
 ### Fixes :bug:
 
 - Bug fixes and improvements.

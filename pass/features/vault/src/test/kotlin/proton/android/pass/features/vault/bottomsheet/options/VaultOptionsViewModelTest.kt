@@ -271,6 +271,36 @@ class VaultOptionsViewModelTest {
     }
 
     @Test
+    fun `shows viewMembers for non-owner with write role even when vault shared is false`() = runTest {
+        emitDefaultVault(owned = false, shared = false, role = ShareRole.Write)
+        canManageVaultAccess.setResult(
+            VaultAccessData(
+                canManageAccess = false,
+                canViewMembers = true
+            )
+        )
+        instance.state.test {
+            val item = awaitItem() as VaultOptionsUiState.Success
+            assertThat(item.showViewMembers).isTrue()
+        }
+    }
+
+    @Test
+    fun `shows viewMembers for non-owner with read role even when vault shared is false`() = runTest {
+        emitDefaultVault(owned = false, shared = false, role = ShareRole.Read)
+        canManageVaultAccess.setResult(
+            VaultAccessData(
+                canManageAccess = false,
+                canViewMembers = true
+            )
+        )
+        instance.state.test {
+            val item = awaitItem() as VaultOptionsUiState.Success
+            assertThat(item.showViewMembers).isTrue()
+        }
+    }
+
+    @Test
     fun `cannot delete primary vault`() = runTest {
         emitDefaultVault()
         instance.state.test {

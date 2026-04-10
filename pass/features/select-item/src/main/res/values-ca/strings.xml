@@ -22,6 +22,7 @@
   <!-- Placeholder will contain the domain / app name we are trying to autofill -->
   <string name="select_item_suggestions_for_placeholder">Suggeriments per a %s</string>
   <string name="error_loading_items">No s\'han pogut carregar els elements.</string>
+  <string name="error_no_vaults_available">No teniu cap caixa forta amb permisos d\'editor o d\'administrador. Proveu de crear-ne una a l\'aplicació principal o demaneu assistència a l\'administrador de la vostra organització.</string>
   <string name="topbar_search_query">Cerca en totes les caixes fortes…</string>
   <string name="topbar_search_pinned_items">Cerca als elements fixats…</string>
   <string name="topbar_search_query_oldest_vaults">Cerca a les teves cambres més antigues…</string>

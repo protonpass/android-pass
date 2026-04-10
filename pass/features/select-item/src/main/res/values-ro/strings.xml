@@ -22,6 +22,7 @@
   <!-- Placeholder will contain the domain / app name we are trying to autofill -->
   <string name="select_item_suggestions_for_placeholder">Sugestii pentru %s</string>
   <string name="error_loading_items">Nu s-au putut încărca articolele</string>
+  <string name="error_no_vaults_available">Nu aveți seifuri cu acces de editor sau de administrator. Încercați să creați unul în aplicația principală sau cereți asistență administratorului organizației proprii.</string>
   <string name="topbar_search_query">Căutare în toate seifurile…</string>
   <string name="topbar_search_pinned_items">Căutare în fixate…</string>
   <string name="topbar_search_query_oldest_vaults">Căutare în seifurile vechi…</string>

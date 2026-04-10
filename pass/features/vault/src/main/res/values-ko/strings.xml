@@ -18,6 +18,7 @@
   <string name="snackbar_retrieve_vault_error">금고를 찾을 수 없습니다</string>
   <string name="snackbar_find_vault_error">선택된 금고를 찾을 수 없습니다</string>
   <string name="snackbar_get_vault_list_error">금고 목록을 불러올 수 없습니다</string>
+  <string name="snackbar_migrate_vault_error">Could not migrate vault items</string>
   <string name="vault_delete_dialog_title">금고 삭제</string>
   <string name="vault_add_folder_dialog_title">폴더 제목 입력</string>
   <string name="vault_edit_folder_dialog_title">Rename folder</string>

@@ -18,6 +18,7 @@
   <string name="snackbar_retrieve_vault_error">Kluis niet gevonden</string>
   <string name="snackbar_find_vault_error">Kan geselecteerde kluis niet vinden</string>
   <string name="snackbar_get_vault_list_error">Kluislijst kan niet worden geladen</string>
+  <string name="snackbar_migrate_vault_error">Could not migrate vault items</string>
   <string name="vault_delete_dialog_title">Kluis verwijderen</string>
   <string name="vault_add_folder_dialog_title">Voer een maptitel in</string>
   <string name="vault_edit_folder_dialog_title">Map hernoemen</string>

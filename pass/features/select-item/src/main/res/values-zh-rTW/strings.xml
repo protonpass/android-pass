@@ -22,6 +22,7 @@
   <!-- Placeholder will contain the domain / app name we are trying to autofill -->
   <string name="select_item_suggestions_for_placeholder">給 %s 的建議</string>
   <string name="error_loading_items">無法載入項目</string>
+  <string name="error_no_vaults_available">You don\'t have any vaults with editor or admin access. Try creating one in the main app, or ask your organization\'s administrator for support.</string>
   <string name="topbar_search_query">於保存庫中搜尋…</string>
   <string name="topbar_search_pinned_items">於標籤中搜尋…</string>
   <string name="topbar_search_query_oldest_vaults">於最舊的保存庫搜尋…</string>

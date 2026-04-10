@@ -28,7 +28,7 @@
   <string name="simple_login_sync_management_mailbox_unverified">Niet geverifieerd</string>
   <string name="simple_login_sync_management_mailbox_unverified_change">Niet geverifieerde mailbox wijziging</string>
   <string name="simple_login_sync_management_vault_title">SimpleLogin synchronisatie</string>
-  <string name="simple_login_sync_management_no_vault_description">U hebt tenminste één kluis nodig om SimpleLogin synchronisatie-instellingen te beheren.</string>
+  <string name="simple_login_sync_management_no_vault_description">U heeft tenminste één kluis nodig om SimpleLogin synchronisatie-instellingen te beheren.</string>
   <string name="simple_login_sync_management_snackbar_alias_details_fetch_error">Er is een fout opgetreden bij het ophalen van de SL-alias details</string>
   <string name="simple_login_sync_management_mailboxes_title">Standaard mailbox voor aliassen</string>
   <string name="simple_login_sync_management_dialog_title_domains">Standaarddomein voor aliassen</string>

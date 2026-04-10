@@ -47,6 +47,7 @@
   <string name="upsell_plan_plus_1">Àlies de hide-my-email</string>
   <string name="upsell_plan_plus_2">2FA integrada</string>
   <string name="upsell_plan_plus_3">Compartició de caixes fortes, elements i enllaços</string>
+  <string name="upsell_plan_plus_4">Carpetes</string>
   <string name="upsell_plan_plus_5">Monitoratge del web fosc</string>
   <string name="upsell_plan_plus_6">Fitxers adjunts</string>
   <string name="upsell_plan_unlimited_1">Emmagatzematge</string>
@@ -58,6 +59,7 @@
   <string name="upsell_plan_plus_welcome_1">Nombre il·limitat d\'àlies de hide-my-email</string>
   <string name="upsell_plan_plus_welcome_2">Autenticació de doble factor (2FA) integrada</string>
   <string name="upsell_plan_plus_welcome_3">Compartició segura de caixes fortes, elements i enllaços</string>
+  <string name="upsell_plan_plus_welcome_4">Carpetes</string>
   <string name="upsell_plan_plus_welcome_5">Monitoratge del web fosc</string>
   <string name="upsell_plan_plus_welcome_6">Fitxers adjunts</string>
   <string name="upsell_limited_time_offer">Oferta per temps limitat</string>

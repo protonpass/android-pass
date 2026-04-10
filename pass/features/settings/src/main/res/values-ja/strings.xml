@@ -51,10 +51,10 @@
   <string name="clipboard_option_clear_clipboard_after_180_seconds">3分後</string>
   <string name="settings_use_digital_asset_link_preference_title">デジタル資産リンクを有効化</string>
   <string name="settings_use_digital_asset_link_preference_subtitle">Androidアプリとウェブサイト間でウェブサイトの所有権確認を行います。</string>
-  <string name="settings_autofill_display_title">Autofill display</string>
-  <string name="settings_autofill_display_inline">Inline (above keyboard)</string>
-  <string name="settings_autofill_display_popup">Popup (over input field)</string>
-  <string name="settings_autofill_display_subtitle">Inline mode requires a compatible keyboard (e.g. Gboard). If unsupported, popup mode will be used automatically.</string>
-  <string name="settings_autosave_prompt_title">Prompt for auto-save</string>
-  <string name="settings_autosave_prompt_subtitle">Proton Pass will prompt you to save or update logins</string>
+  <string name="settings_autofill_display_title">自動入力表示</string>
+  <string name="settings_autofill_display_inline">インライン（キーボード上）</string>
+  <string name="settings_autofill_display_popup">ポップアップ（入力フィールド上）</string>
+  <string name="settings_autofill_display_subtitle">インラインモードは互換性のあるキーボード（例：Gboard）が必要です。対応していない場合は、自動的にポップアップモードが使用されます。</string>
+  <string name="settings_autosave_prompt_title">自動保存のプロンプト</string>
+  <string name="settings_autosave_prompt_subtitle">Proton Passはログイン情報の保存または更新を促します</string>
 </resources>

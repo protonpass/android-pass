@@ -22,15 +22,16 @@
   <!-- Placeholder will contain the domain / app name we are trying to autofill -->
   <string name="select_item_suggestions_for_placeholder">%s への提案</string>
   <string name="error_loading_items">アイテムを読み込むことができませんでした</string>
+  <string name="error_no_vaults_available">You don\'t have any vaults with editor or admin access. Try creating one in the main app, or ask your organization\'s administrator for support.</string>
   <string name="topbar_search_query">すべての保管庫を検索...</string>
   <string name="topbar_search_pinned_items">ピン留めされたものを検索...</string>
   <string name="topbar_search_query_oldest_vaults">最も古い保管庫を検索してください…</string>
   <string name="topbar_search_query_uninitialized" comment="Placeholder string before we know where we're searching (all vaults, oldest vaults, etc.)">検索…</string>
   <string name="all_accounts_item" comment="The placeholder argument will have the count of how many accounts the user has added">全てのアカウント(%1$s)</string>
   <plurals name="select_item_autosave_banner">
-    <item quantity="other">Items with the same name already exist.\nSelect one to update or create a new item.</item>
+    <item quantity="other">同じ名前のアイテムがすでに存在しています。\n更新するものを選択するか新しいアイテムを作成してください。</item>
   </plurals>
-  <string name="select_item_autosave_no_match">No matching items found.\nCreate a new one to save these credentials.</string>
+  <string name="select_item_autosave_no_match">一致するアイテムが見つかりません。\nこれらの認証情報を保存するには新しく作成してください。</string>
   <string name="select_item_save_credential_title">パスワード認証情報を保存</string>
   <string name="select_item_save_credential_subtitle">認証情報を保存するアカウントを選択してください。</string>
   <string name="select_item_save_credential_button">アカウントを選択</string>

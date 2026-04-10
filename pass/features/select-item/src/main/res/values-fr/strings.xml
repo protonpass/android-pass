@@ -22,6 +22,7 @@
   <!-- Placeholder will contain the domain / app name we are trying to autofill -->
   <string name="select_item_suggestions_for_placeholder">Suggestions pour %s</string>
   <string name="error_loading_items">Impossible de charger les éléments</string>
+  <string name="error_no_vaults_available">Vous n\'avez pas de coffre-fort avec un accès éditeur ou administrateur. Essayez d\'en créer un dans l\'application principale ou demandez de l\'aide à l\'administrateur de votre organisation.</string>
   <string name="topbar_search_query">Rechercher dans tous les coffres-forts…</string>
   <string name="topbar_search_pinned_items">Rechercher dans les éléments épinglés…</string>
   <string name="topbar_search_query_oldest_vaults">Rechercher dans vos coffres-forts les plus anciens</string>

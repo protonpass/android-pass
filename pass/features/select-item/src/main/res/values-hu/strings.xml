@@ -22,6 +22,7 @@
   <!-- Placeholder will contain the domain / app name we are trying to autofill -->
   <string name="select_item_suggestions_for_placeholder">Javaslatok: %s</string>
   <string name="error_loading_items">Nem sikerült az elemek betöltése</string>
+  <string name="error_no_vaults_available">You don\'t have any vaults with editor or admin access. Try creating one in the main app, or ask your organization\'s administrator for support.</string>
   <string name="topbar_search_query">Keresés az összes tárolóban…</string>
   <string name="topbar_search_pinned_items">Keresés a kitűzöttek között...</string>
   <string name="topbar_search_query_oldest_vaults">Keresés a legrégebbi tárolóiban…</string>

@@ -22,6 +22,7 @@
   <!-- Placeholder will contain the domain / app name we are trying to autofill -->
   <string name="select_item_suggestions_for_placeholder">Υποδείξεις για %s</string>
   <string name="error_loading_items">Αδυναμία φόρτωσης των στοιχείων</string>
+  <string name="error_no_vaults_available">Δεν έχετε κρύπτες με πρόσβαση συντάκτη ή διαχειριστή. Δοκιμάστε να δημιουργήσετε μία στην κύρια εφαρμογή ή ζητήστε υποστήριξη από τον διαχειριστή του οργανισμού σας.</string>
   <string name="topbar_search_query">Αναζήτηση σε όλες τις κρύπτες...</string>
   <string name="topbar_search_pinned_items">Αναζήτηση στα Καρφιτσωμένα…</string>
   <string name="topbar_search_query_oldest_vaults">Αναζήτηση στις παλαιότερες κρύπτες σας…</string>

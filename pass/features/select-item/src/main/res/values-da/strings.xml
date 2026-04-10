@@ -22,6 +22,7 @@
   <!-- Placeholder will contain the domain / app name we are trying to autofill -->
   <string name="select_item_suggestions_for_placeholder">Forslag til %s</string>
   <string name="error_loading_items">Kunne ikke indlæse elementerne</string>
+  <string name="error_no_vaults_available">Du har ikke nogen bokse med redaktør- eller administratoradgang. Prøv at oprette en i hovedappen, eller spørg din organisations administrator om hjælp.</string>
   <string name="topbar_search_query">Søg i alle bokse…</string>
   <string name="topbar_search_pinned_items">Søg i fastgjorte…</string>
   <string name="topbar_search_query_oldest_vaults">Søg i dine ældste bokse…</string>

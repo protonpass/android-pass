@@ -18,6 +18,7 @@
   <string name="snackbar_retrieve_vault_error">Cassaforte non trovata</string>
   <string name="snackbar_find_vault_error">Impossibile trovare la cassaforte selezionata</string>
   <string name="snackbar_get_vault_list_error">Impossibile caricare la lista delle casseforti</string>
+  <string name="snackbar_migrate_vault_error">Could not migrate vault items</string>
   <string name="vault_delete_dialog_title">Elimina la cassaforte</string>
   <string name="vault_add_folder_dialog_title">Inserisci un titolo per la cartella</string>
   <string name="vault_edit_folder_dialog_title">Rinomina cartella</string>

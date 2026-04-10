@@ -127,7 +127,7 @@ internal fun ManageItemContent(
                                 )
                             ),
                             isItemSection = false,
-                            isShareAdmin = state.share.isAdmin,
+                            isShareAdmin = state.isVaultAdmin,
                             canInviteMore = state.canInviteMoreToVault,
                             vaultOption = state.share.toVault(),
                             shareItemsCount = state.itemsCount,

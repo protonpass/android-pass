@@ -21,10 +21,10 @@ package proton.android.pass.features.sharing.manage.item.presentation
 import androidx.compose.runtime.Stable
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.data.api.usecases.GroupMembers
-import proton.android.pass.domain.GroupId
 import proton.android.pass.domain.GroupMemberState
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.Share
+import proton.android.pass.domain.ShareRole
 import proton.android.pass.domain.organizations.OrganizationSharingPolicy
 import proton.android.pass.domain.shares.ShareMember
 import proton.android.pass.domain.shares.SharePendingInvite
@@ -80,9 +80,10 @@ internal sealed interface ManageItemState {
             .mapNotNull { gm -> gm.group.groupEmail?.let { email -> email to gm } }
             .toMap()
 
-        internal fun groupIdFor(member: ShareMember): GroupId? = groupsByEmail[member.email]?.group?.id
-
-        internal fun memberCountFor(member: ShareMember): Int = groupsByEmail[member.email]?.members?.size ?: 0
+        // Vault admin/owner derived from the current user's own vault member entry.
+        // Falls back to false if the user is not a direct vault member (e.g. item-only manager).
+        internal val isVaultAdmin: Boolean =
+            vaultMembers.firstOrNull { it.isCurrentUser }?.role == ShareRole.Admin
 
         // Returns true when the current user is an active member of the group represented by this
         // ShareMember. Defaults to true while group data is still loading so that 3-dot actions

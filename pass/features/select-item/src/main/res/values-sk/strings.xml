@@ -22,6 +22,7 @@
   <!-- Placeholder will contain the domain / app name we are trying to autofill -->
   <string name="select_item_suggestions_for_placeholder">Návrhy pre %s</string>
   <string name="error_loading_items">Položky sa nepodarilo načítať</string>
+  <string name="error_no_vaults_available">Nemáte žiadne trezory s prístupom editora alebo administrátora. Skúste si ich vytvoriť v hlavnej aplikácii alebo požiadajte o podporu správcu vašej organizácie.</string>
   <string name="topbar_search_query">Vyhľadávať vo všetkých trezoroch…</string>
   <string name="topbar_search_pinned_items">Vyhľadávanie v pripnutých...</string>
   <string name="topbar_search_query_oldest_vaults">Hľadať vo vašich najstarších trezoroch…</string>

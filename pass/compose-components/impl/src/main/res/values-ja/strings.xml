@@ -31,11 +31,11 @@
   <string name="bottomsheet_monitor_exclude">監視から除外</string>
   <string name="bottomsheet_monitor_include">監視に含める</string>
   <string name="bottomsheet_migrate_item">別の保管庫に移動</string>
-  <string name="bottomsheet_create_folder">Create folder</string>
-  <string name="folder_tree_create_folder">Create folder</string>
-  <string name="bottomsheet_rename_folder">Rename</string>
-  <string name="bottomsheet_create_sub_folder">Create sub-folder</string>
-  <string name="bottomsheet_move_folder">Move</string>
+  <string name="bottomsheet_create_folder">フォルダを作成</string>
+  <string name="folder_tree_create_folder">フォルダを作成</string>
+  <string name="bottomsheet_rename_folder">リネーム</string>
+  <string name="bottomsheet_create_sub_folder">サブフォルダを作成</string>
+  <string name="bottomsheet_move_folder">移動</string>
   <string name="bottomsheet_copy_item_note">メモをコピー</string>
   <string name="bottomsheet_delete_permanently">完全に削除する</string>
   <string name="bottomsheet_restore">復元</string>

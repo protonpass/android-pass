@@ -22,6 +22,7 @@
   <!-- Placeholder will contain the domain / app name we are trying to autofill -->
   <string name="select_item_suggestions_for_placeholder">Sugerencias para %s</string>
   <string name="error_loading_items">No se pudieron cargar los elementos</string>
+  <string name="error_no_vaults_available">No tiene bóvedas con acceso a edición o administración. Cree una en la aplicación principal o pida ayuda a la administración de su organización.</string>
   <string name="topbar_search_query">Buscar en todas las bóvedas…</string>
   <string name="topbar_search_pinned_items">Buscar en Anclados...</string>
   <string name="topbar_search_query_oldest_vaults">Buscar en sus bóvedas antiguas…</string>

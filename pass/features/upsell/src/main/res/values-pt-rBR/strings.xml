@@ -47,6 +47,7 @@
   <string name="upsell_plan_plus_1">Aliases do hide-my-email</string>
   <string name="upsell_plan_plus_2">A2F integrada</string>
   <string name="upsell_plan_plus_3">Cofre e compartilhamento de link e itens</string>
+  <string name="upsell_plan_plus_4">Pastas</string>
   <string name="upsell_plan_plus_5">Monitoramento da Dark Web</string>
   <string name="upsell_plan_plus_6">Anexos de arquivo</string>
   <string name="upsell_plan_unlimited_1">Armazenamento</string>
@@ -58,6 +59,7 @@
   <string name="upsell_plan_plus_welcome_1">Aliases do Hide-my-email ilimitados</string>
   <string name="upsell_plan_plus_welcome_2">Autenticador A2F integrado</string>
   <string name="upsell_plan_plus_welcome_3">Compartilhamento seguro de item, cofre e link</string>
+  <string name="upsell_plan_plus_welcome_4">Pastas</string>
   <string name="upsell_plan_plus_welcome_5">Monitoramento da Dark Web</string>
   <string name="upsell_plan_plus_welcome_6">Anexos de arquivo</string>
   <string name="upsell_limited_time_offer">Oferta por tempo limitado</string>

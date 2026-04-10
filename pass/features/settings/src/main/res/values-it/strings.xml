@@ -35,13 +35,13 @@
   <string name="settings_preference_display_username">Campo nome utente sempre visibile</string>
   <string name="settings_preference_display_autofill_pinning">Compilazione automatica sempre visibile</string>
   <string name="view_logs_title">Visualizza i log</string>
-  <string name="view_logs_clear_logs">Clear logs</string>
-  <string name="view_logs_clear_logs_confirmation_title">Clear logs?</string>
-  <string name="view_logs_clear_logs_confirmation_message">This will permanently delete the logs currently shown on this device.</string>
-  <string name="view_logs_share_logs">Share logs</string>
-  <string name="view_logs_load_older_logs">Load older logs</string>
-  <string name="view_logs_loading_older_logs">Loading older logs...</string>
-  <string name="view_logs_empty">No logs available</string>
+  <string name="view_logs_clear_logs">Cancella i log</string>
+  <string name="view_logs_clear_logs_confirmation_title">Cancellare i log?</string>
+  <string name="view_logs_clear_logs_confirmation_message">Questa operazione eliminerà definitivamente i registri attualmente visualizzati su questo dispositivo.</string>
+  <string name="view_logs_share_logs">Condividi i log</string>
+  <string name="view_logs_load_older_logs">Carica vecchi log</string>
+  <string name="view_logs_loading_older_logs">Caricamento dei log più vecchi...</string>
+  <string name="view_logs_empty">Nessun log disponibile</string>
   <string name="clipboard_bottomsheet_title">Appunti</string>
   <string name="clipboard_option_clear_clipboard_label">Cancellazione degli appunti</string>
   <string name="clipboard_option_copy_totp_code">Copia dei codici di autenticazione</string>
@@ -54,7 +54,7 @@
   <string name="settings_autofill_display_title">Mostra riempimento automatico</string>
   <string name="settings_autofill_display_inline">Inline (sopra la tastiera)</string>
   <string name="settings_autofill_display_popup">Popup (sopra il campo di input)</string>
-  <string name="settings_autofill_display_subtitle">Inline mode requires a compatible keyboard (e.g. Gboard). If unsupported, popup mode will be used automatically.</string>
-  <string name="settings_autosave_prompt_title">Prompt for auto-save</string>
-  <string name="settings_autosave_prompt_subtitle">Proton Pass will prompt you to save or update logins</string>
+  <string name="settings_autofill_display_subtitle">La modalità in linea richiede una tastiera compatibile (ad esempio Gboard). In caso di tastiera non supportata, verrà utilizzata automaticamente la modalità popup.</string>
+  <string name="settings_autosave_prompt_title">Richiedi il salvataggio automatico</string>
+  <string name="settings_autosave_prompt_subtitle">Proton Pass ti chiederà di salvare o aggiornare le credenziali di accesso.</string>
 </resources>

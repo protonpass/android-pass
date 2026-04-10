@@ -22,6 +22,7 @@
   <!-- Placeholder will contain the domain / app name we are trying to autofill -->
   <string name="select_item_suggestions_for_placeholder">Ehdotukset kohteelle %s</string>
   <string name="error_loading_items">Kohteita ei voitu ladata</string>
+  <string name="error_no_vaults_available">Sinulla ei ole holveja muokkaus- tai ylläpito-oikeuksilla. Yritä luoda sellainen pääsovelluksessa tai pyydä apua organisaatiosi ylläpidolta.</string>
   <string name="topbar_search_query">Etsi kaikista holveista…</string>
   <string name="topbar_search_pinned_items">Etsi kiinnitetyistä…</string>
   <string name="topbar_search_query_oldest_vaults">Etsi vanhimmista holveista…</string>

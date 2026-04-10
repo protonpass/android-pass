@@ -5,8 +5,8 @@
     <item quantity="other">Mover %d itens para o seguinte cofre?</item>
   </plurals>
   <plurals name="migrate_item_to_folder_confirm_title_bottom_sheet">
-    <item quantity="one">Move %d item to the following folder?</item>
-    <item quantity="other">Move %d items to the following folder?</item>
+    <item quantity="one">Mover %d item para o seguinte pasta?</item>
+    <item quantity="other">Mover %d itens para o seguinte pasta?</item>
   </plurals>
   <string name="migrate_all_items_confirm_title_bottom_sheet">Mover todos os itens para o seguinte cofre?</string>
   <string name="migrate_item_confirm_confirm_button">Mover</string>
@@ -22,7 +22,7 @@
   <string name="migrate_folder_to_folder_confirm_title_bottom_sheet">Mover pasta para a seguinte pasta?</string>
   <string name="migrate_folder_success_snackbar">Pasta movida</string>
   <string name="migrate_folder_error_snackbar">Erro ao mover a pasta</string>
-  <string name="migrate_folder_already_same_parent_snackbar">Folder is already in this location</string>
+  <string name="migrate_folder_already_same_parent_snackbar">A pasta já está nessa localização</string>
   <plurals name="migrate_disabled_folder_reason_same_folder">
     <item quantity="one">O item já está nesta pasta</item>
     <item quantity="other">%d itens já estão nesta pasta</item>

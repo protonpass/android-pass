@@ -22,6 +22,7 @@
   <!-- Placeholder will contain the domain / app name we are trying to autofill -->
   <string name="select_item_suggestions_for_placeholder">Vorschläge für %s</string>
   <string name="error_loading_items">Einträge konnten nicht geladen werden. </string>
+  <string name="error_no_vaults_available">Du verfügst über keine Tresore mit Bearbeitungs- oder Administratorrechten. Versuche, einen in der Haupt-App anzulegen, oder bittet den Administrator deiner Organisation um Unterstützung.</string>
   <string name="topbar_search_query">In allen Tresoren suchen…</string>
   <string name="topbar_search_pinned_items">In angehefteten Einträgen suchen…</string>
   <string name="topbar_search_query_oldest_vaults">In den ältesten Tresoren suchen…</string>

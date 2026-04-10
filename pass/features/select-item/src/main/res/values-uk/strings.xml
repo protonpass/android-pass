@@ -22,6 +22,7 @@
   <!-- Placeholder will contain the domain / app name we are trying to autofill -->
   <string name="select_item_suggestions_for_placeholder">Пропозиції для %s</string>
   <string name="error_loading_items">Не вдалося завантажити елементи</string>
+  <string name="error_no_vaults_available">You don\'t have any vaults with editor or admin access. Try creating one in the main app, or ask your organization\'s administrator for support.</string>
   <string name="topbar_search_query">Пошук у всіх сховищах…</string>
   <string name="topbar_search_pinned_items">Пошук в прикріплених…</string>
   <string name="topbar_search_query_oldest_vaults">Пошук у ваших найстаріших сховищах…</string>

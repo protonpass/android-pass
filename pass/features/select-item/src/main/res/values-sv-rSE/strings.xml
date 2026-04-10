@@ -22,6 +22,7 @@
   <!-- Placeholder will contain the domain / app name we are trying to autofill -->
   <string name="select_item_suggestions_for_placeholder">Förslag för %s</string>
   <string name="error_loading_items">Kunde inte ladda objekten</string>
+  <string name="error_no_vaults_available">Du har inga valv med redigerings- eller administratörsåtkomst. Prova skapa ett i huvudappen eller be din organisations administratör om support.</string>
   <string name="topbar_search_query">Sök i alla valv…</string>
   <string name="topbar_search_pinned_items">Sök i fästade…</string>
   <string name="topbar_search_query_oldest_vaults">Sök i dina äldsta valv…</string>

@@ -8,8 +8,8 @@
   <string name="new_item_invite_notification_message" comment="the placeholder will be replaced by an email address">%sがあなたにアイテムを共有したいようです。</string>
   <string name="new_vault_invite_notification_title">新しい保管庫の招待を受け取りました</string>
   <string name="new_vault_invite_notification_message" comment="the placeholder will be replaced by an email address">%sがあなたに保管庫を共有したいようです。</string>
-  <string name="new_group_item_invite_notification_title">New group item invite received</string>
-  <string name="new_group_item_invite_notification_message" comment="%1$s = inviter email, %2$s = group name">%1$s wants to share an item with your group %2$s.</string>
-  <string name="new_group_vault_invite_notification_title">New group vault invite received</string>
-  <string name="new_group_vault_invite_notification_message" comment="%1$s = inviter email, %2$s = group name">%1$s wants to share a vault with your group %2$s.</string>
+  <string name="new_group_item_invite_notification_title">新しいグループアイテムの招待を受け取りました</string>
+  <string name="new_group_item_invite_notification_message" comment="%1$s = inviter email, %2$s = group name">%1$sがグループ%2$sでアイテムを共有したいようです。</string>
+  <string name="new_group_vault_invite_notification_title">新しいグループ保管庫の招待を受け取りました</string>
+  <string name="new_group_vault_invite_notification_message" comment="%1$s = inviter email, %2$s = group name">%1$sがグループ%2$sで保管庫を共有したいようです。</string>
 </resources>

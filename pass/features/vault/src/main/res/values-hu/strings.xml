@@ -18,6 +18,7 @@
   <string name="snackbar_retrieve_vault_error">Tároló nem található</string>
   <string name="snackbar_find_vault_error">Nem található a kiválasztott tároló</string>
   <string name="snackbar_get_vault_list_error">A tárolók listájának betöltése nem sikerült</string>
+  <string name="snackbar_migrate_vault_error">Could not migrate vault items</string>
   <string name="vault_delete_dialog_title">Tároló törlése</string>
   <string name="vault_add_folder_dialog_title">Enter a folder title</string>
   <string name="vault_edit_folder_dialog_title">Rename folder</string>

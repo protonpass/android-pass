@@ -29,7 +29,7 @@
   <string name="sync_progress_item_count">Baixando %1$d de %2$d itens</string>
   <string name="sync_dialog_title">Sincronizando itens…</string>
   <string name="sync_dialog_title_error">Falha na sincronização</string>
-  <string name="sync_dialog_title_partial_error">Sync partially completed</string>
+  <string name="sync_dialog_title_partial_error">Sincronização parcialmente completada</string>
   <string name="sync_dialog_title_success">Sincronização completa</string>
   <string name="sync_dialog_subtitle">Estamos baixando e descriptografando seus itens. Isso pode demorar alguns minutos.</string>
   <string name="sync_dialog_subtitle_error">Ocorreu um erro ao baixar e descriptografar seus itens. Tente novamente.</string>

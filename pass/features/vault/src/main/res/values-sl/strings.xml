@@ -18,6 +18,7 @@
   <string name="snackbar_retrieve_vault_error">Trezorja ni mogoče najti</string>
   <string name="snackbar_find_vault_error">Izbranega trezorja ni mogoče najti</string>
   <string name="snackbar_get_vault_list_error">Seznam trezorja ni bilo mogoče naložiti</string>
+  <string name="snackbar_migrate_vault_error">Could not migrate vault items</string>
   <string name="vault_delete_dialog_title">Izbriši trezor</string>
   <string name="vault_add_folder_dialog_title">Vnesite naslov mape</string>
   <string name="vault_edit_folder_dialog_title">Preimenuj mapo</string>

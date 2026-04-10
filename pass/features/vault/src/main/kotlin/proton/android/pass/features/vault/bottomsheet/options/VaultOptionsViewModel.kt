@@ -128,9 +128,11 @@ class VaultOptionsViewModel @Inject constructor(
         // Only show share if the user is a manager (canShare already gates on Owner/Admin role)
         val showShare = canShare
 
-        // Only show manageVault and viewMembers if vault has not already been shared
-        val showManageAccess = selectedVault.shared && vaultAccessData.canManageAccess
-        val showViewMembers = selectedVault.shared && vaultAccessData.canViewMembers
+        // Non-owners are always in a shared context (vault was shared with them).
+        // Owners only see member options if they've shared the vault with others.
+        val isSharedContext = selectedVault.shared || !selectedVault.isOwned
+        val showManageAccess = isSharedContext && vaultAccessData.canManageAccess
+        val showViewMembers = isSharedContext && vaultAccessData.canViewMembers
 
         VaultOptionsUiState.Success(
             shareId = navShareId,

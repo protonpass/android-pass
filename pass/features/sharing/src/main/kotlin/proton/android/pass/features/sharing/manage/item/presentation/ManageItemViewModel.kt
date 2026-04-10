@@ -49,6 +49,8 @@ import proton.android.pass.features.sharing.SharingSnackbarMessage
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.notifications.api.SnackbarDispatcher
+import proton.android.pass.preferences.FeatureFlag
+import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import javax.inject.Inject
 
 @HiltViewModel
@@ -60,7 +62,8 @@ class ManageItemViewModel @Inject constructor(
     observeShareItemsCount: ObserveShareItemsCount,
     observeOrganizationSharingPolicy: ObserveOrganizationSharingPolicy,
     observeGroupMembersByGroup: ObserveGroupMembersByGroup,
-    private val snackbarDispatcher: SnackbarDispatcher
+    private val snackbarDispatcher: SnackbarDispatcher,
+    featureFlagsPreferencesRepository: FeatureFlagsPreferencesRepository
 ) : ViewModel() {
 
     private val shareId: ShareId = savedStateHandleProvider.get()
@@ -116,6 +119,9 @@ class ManageItemViewModel @Inject constructor(
     private val groupMembersFlow = observeGroupMembersByGroup()
         .asLoadingResult()
 
+    private val isRenameAdminToManagerEnabledFlow =
+        featureFlagsPreferencesRepository.get<Boolean>(FeatureFlag.RENAME_ADMIN_TO_MANAGER)
+
     internal val stateFlow: StateFlow<ManageItemState> = combineN(
         eventFlow,
         flowOf(itemId),
@@ -126,9 +132,10 @@ class ManageItemViewModel @Inject constructor(
         shareItemMembersFlow,
         isLoadingStateFlow,
         observeOrganizationSharingPolicy(),
-        groupMembersFlow
+        groupMembersFlow,
+        isRenameAdminToManagerEnabledFlow
     ) { event, itemId, share, itemPendingInvites, vaultPendingInvites,
-        itemsCount, members, loadingState, orgPolicy, groupMembersResult ->
+        itemsCount, members, loadingState, orgPolicy, groupMembersResult, isRenameAdminToManagerEnabled ->
         ManageItemState.Success(
             event = event,
             itemId = itemId,
@@ -139,7 +146,8 @@ class ManageItemViewModel @Inject constructor(
             members = members,
             isLoadingState = loadingState,
             organizationSharingPolicy = orgPolicy,
-            groupMembers = groupMembersResult.getOrNull().orEmpty()
+            groupMembers = groupMembersResult.getOrNull().orEmpty(),
+            isRenameAdminToManagerEnabled = isRenameAdminToManagerEnabled
         )
     }.stateIn(
         scope = viewModelScope,

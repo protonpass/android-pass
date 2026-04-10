@@ -51,7 +51,8 @@ internal sealed interface ManageItemState {
         private val members: List<ShareMember>,
         private val isLoadingState: IsLoadingState,
         private val organizationSharingPolicy: OrganizationSharingPolicy,
-        private val groupMembers: List<GroupMembers>
+        private val groupMembers: List<GroupMembers>,
+        internal val isRenameAdminToManagerEnabled: Boolean
     ) : ManageItemState {
 
         internal val itemMembers: List<ShareMember> = members.filter { it.isItemMember }
@@ -71,8 +72,6 @@ internal sealed interface ManageItemState {
         internal val canInviteMoreToItem = organizationSharingPolicy.canShareItems
 
         internal val canInviteMoreToVault = true
-
-        internal val isRenameAdminToManagerEnabled = false
 
         internal val groupsByEmail: Map<String, GroupMembers> = groupMembers
             .mapNotNull { gm -> gm.group.groupEmail?.let { email -> email to gm } }

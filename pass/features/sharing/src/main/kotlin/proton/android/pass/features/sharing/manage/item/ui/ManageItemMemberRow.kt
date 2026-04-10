@@ -67,12 +67,11 @@ internal fun ManageItemMemberRow(
     val showMemberOptions = remember(
         canAdmin, isCurrentUserOwner,
         member.isOwner, member.isCurrentUser, member.role,
-        member.isGroup, member.isItemMember, member.isVaultMember
+        member.isGroup
     ) {
         when {
             !canAdmin || member.isOwner || member.isCurrentUser -> false
-            member.isGroup && member.isItemMember -> false
-            member.isGroup && member.isVaultMember -> isCurrentUserOwner
+            member.isGroup -> canAdmin
             else -> isCurrentUserOwner || member.role != ShareRole.Admin
         }
     }

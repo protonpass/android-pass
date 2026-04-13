@@ -52,6 +52,7 @@ internal fun ManageItemMemberRow(
     member: ShareMember,
     canAdmin: Boolean,
     isCurrentUserMember: Boolean = false,
+    currentUserHasDirectMembership: Boolean = false,
     hasVaultAccess: Boolean,
     isRenameAdminToManagerEnabled: Boolean,
     groupId: GroupId? = null,
@@ -65,11 +66,12 @@ internal fun ManageItemMemberRow(
     }
 
     val showMemberOptions = remember(
-        canAdmin, isCurrentUserMember,
+        canAdmin, isCurrentUserMember, currentUserHasDirectMembership,
         member.isOwner, member.isCurrentUser, member.isGroup
     ) {
         when {
-            !canAdmin || member.isOwner || member.isCurrentUser || isCurrentUserMember -> false
+            !canAdmin || member.isOwner || member.isCurrentUser ||
+                isCurrentUserMember && !currentUserHasDirectMembership -> false
             else -> true
         }
     }

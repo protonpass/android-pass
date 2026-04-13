@@ -91,6 +91,7 @@ internal fun ManageItemContent(
                             members = state.itemMembers,
                             isRenameAdminToManagerEnabled = state.isRenameAdminToManagerEnabled,
                             groupsByEmail = state.groupsByEmail,
+                            currentUserHasDirectMembership = state.currentUserHasDirectItemMembership,
                             isCurrentUserMemberOf = state::isCurrentUserMemberOf,
                             onPendingInviteMenuOptionsClick = { pendingInvite ->
                                 ManageItemUiEvent.OnPendingInviteOptionsClick(
@@ -135,6 +136,7 @@ internal fun ManageItemContent(
                             members = state.vaultMembers,
                             isRenameAdminToManagerEnabled = state.isRenameAdminToManagerEnabled,
                             groupsByEmail = state.groupsByEmail,
+                            currentUserHasDirectMembership = state.currentUserHasDirectVaultMembership,
                             isCurrentUserMemberOf = state::isCurrentUserMemberOf,
                             onPendingInviteMenuOptionsClick = { pendingInvite ->
                                 ManageItemUiEvent.OnPendingInviteOptionsClick(

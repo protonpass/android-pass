@@ -80,10 +80,17 @@ internal sealed interface ManageItemState {
             .mapNotNull { gm -> gm.group.groupEmail?.let { email -> email to gm } }
             .toMap()
 
-        // Vault admin/owner derived from the current user's own vault member entry.
-        // Falls back to false if the user is not a direct vault member (e.g. item-only manager).
+        internal val currentUserHasDirectItemMembership: Boolean =
+            itemMembers.any { it.isCurrentUser && !it.isGroup }
+
+        internal val currentUserHasDirectVaultMembership: Boolean =
+            vaultMembers.any { it.isCurrentUser && !it.isGroup }
+
+        // Vault admin/owner derived from the current user's own vault member entry, or from a
+        // group they belong to that has Admin role on the vault.
         internal val isVaultAdmin: Boolean =
-            vaultMembers.firstOrNull { it.isCurrentUser }?.role == ShareRole.Admin
+            vaultMembers.firstOrNull { it.isCurrentUser }?.role == ShareRole.Admin ||
+                vaultMembers.any { it.isGroup && isCurrentUserMemberOf(it) && it.role == ShareRole.Admin }
 
         // Returns true when the current user is an active member of the group represented by this
         // ShareMember. Defaults to true while group data is still loading so that 3-dot actions

@@ -83,33 +83,29 @@ internal fun AddressRowSection(
                 }
 
                 is GroupTargetUiState -> {
-                    if (inviteTarget.memberCount > 0) {
-                        Row(
-                            verticalAlignment = Alignment.CenterVertically,
-                            horizontalArrangement = Arrangement.spacedBy(Spacing.extraSmall)
-                        ) {
-                            Text.Body1Regular(
-                                modifier = Modifier.weight(1f, fill = false),
-                                text = inviteTarget.displayName,
-                                maxLines = 1,
-                                overflow = TextOverflow.Ellipsis
-                            )
-                            val label = pluralStringResource(
-                                CompR.plurals.members_count,
-                                inviteTarget.memberCount,
-                                inviteTarget.memberCount
-                            )
-                            Text.Body1Regular(
-                                text = "($label)",
-                                color = PassTheme.colors.interactionNormMajor2,
-                                modifier = Modifier.clickable {
-                                    onGroupMembersClick(inviteTarget.groupId)
-                                }
-                            )
-                        }
-                    } else {
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.spacedBy(Spacing.extraSmall)
+                    ) {
                         Text.Body1Regular(
-                            text = inviteTarget.displayName
+                            modifier = Modifier.weight(1f, fill = false),
+                            text = inviteTarget.displayName,
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis
+                        )
+                        val label = pluralStringResource(
+                            CompR.plurals.members_count,
+                            inviteTarget.memberCount,
+                            inviteTarget.memberCount
+                        )
+                        Text.Body1Regular(
+                            text = "($label)",
+                            color = PassTheme.colors.interactionNormMajor2,
+                            modifier = if (inviteTarget.memberCount > 0) {
+                                Modifier.clickable { onGroupMembersClick(inviteTarget.groupId) }
+                            } else {
+                                Modifier
+                            }
                         )
                     }
                 }

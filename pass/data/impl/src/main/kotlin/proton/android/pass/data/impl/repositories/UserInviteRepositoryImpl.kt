@@ -386,7 +386,6 @@ class UserInviteRepositoryImpl @Inject constructor(
                 groupDisplayName = null
             )
         )
-
         val isGroupsEnabled =
             featureFlagsPreferencesRepository.get<Boolean>(FeatureFlag.PASS_GROUP_SHARE)
                 .firstOrNull()
@@ -400,7 +399,8 @@ class UserInviteRepositoryImpl @Inject constructor(
         )
         val allGroupsAsRecommendedItems = createAllGroupsAsRecommendedItems(
             groups = groupData.groups,
-            membersMap = groupData.membersMap
+            membersMap = groupData.membersMap,
+            startsWith = startsWith
         )
 
         emit(
@@ -505,18 +505,25 @@ class UserInviteRepositoryImpl @Inject constructor(
 
     private fun createAllGroupsAsRecommendedItems(
         groups: List<Group>,
-        membersMap: Map<Group, List<GroupMember>>
-    ): List<RecommendedGroup> = groups.mapNotNull { group ->
-        group.groupEmail?.takeIf { it.isNotBlank() }?.let { email ->
-            val members = membersMap[group] ?: emptyList()
-            RecommendedGroup(
-                groupId = group.id,
-                email = email,
-                name = group.name,
-                memberCount = members.size
-            )
+        membersMap: Map<Group, List<GroupMember>>,
+        startsWith: String?
+    ): List<RecommendedGroup> = groups
+        .filter { group ->
+            startsWith.isNullOrBlank() ||
+                group.name.startsWith(startsWith, ignoreCase = true) ||
+                group.groupEmail?.startsWith(startsWith, ignoreCase = true) == true
         }
-    }
+        .mapNotNull { group ->
+            group.groupEmail?.takeIf { it.isNotBlank() }?.let { email ->
+                val members = membersMap[group] ?: emptyList()
+                RecommendedGroup(
+                    groupId = group.id,
+                    email = email,
+                    name = group.name,
+                    memberCount = members.size
+                )
+            }
+        }
 
     private data class OrgState(
         val cumulativePlanRecommendedEmails: Set<String>,

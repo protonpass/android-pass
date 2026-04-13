@@ -78,17 +78,9 @@ internal data class SharingWithUIState(
     val scrollToBottom: Boolean = false,
     val isContinueEnabled: Boolean = false,
     val canOnlyPickFromSelection: Boolean = false,
-    val errorMessage: ErrorMessage = ErrorMessage.None
-) {
-    val selectedGroups: Set<GroupSuggestionUiModel> = (suggestionsUIState as? SuggestionsUIState.Content)
-        ?.let { content ->
-            (content.recentSortedItems + content.organizationSortedItems)
-                .filterIsInstance<GroupSuggestionUiModel>()
-                .filter { it.isSelected }
-                .toSet()
-        }
-        ?: emptySet()
-}
+    val errorMessage: ErrorMessage = ErrorMessage.None,
+    val selectedGroups: Set<GroupSuggestionUiModel> = emptySet()
+)
 
 internal sealed interface SuggestionsUIState {
 

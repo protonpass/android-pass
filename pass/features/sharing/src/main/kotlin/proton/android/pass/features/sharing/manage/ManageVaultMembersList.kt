@@ -112,6 +112,7 @@ private fun ManageVaultMembersList(
                             isLoading = isLoading
                         ),
                         canShowActions = content.canEdit,
+                        currentUserHasDirectMembership = content.currentUserHasDirectMembership,
                         onOptionsClick = { onMemberOptionsClick(invite) },
                         isRenameAdminToManagerEnabled = content.isRenameAdminToManagerEnabled,
                         onConfirmInviteClick = onConfirmInviteClick,
@@ -135,6 +136,7 @@ private fun ManageVaultMembersList(
                         vaultMember = member
                     ),
                     canShowActions = content.canEdit,
+                    currentUserHasDirectMembership = content.currentUserHasDirectMembership,
                     isRenameAdminToManagerEnabled = content.isRenameAdminToManagerEnabled,
                     onOptionsClick = { onMemberOptionsClick(member) },
                     onViewGroupMembersClick = onViewGroupMembersClick

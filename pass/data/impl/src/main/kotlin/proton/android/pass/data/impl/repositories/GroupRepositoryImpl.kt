@@ -34,6 +34,7 @@ import proton.android.pass.domain.Group
 import proton.android.pass.domain.GroupAddress
 import proton.android.pass.domain.GroupId
 import proton.android.pass.domain.GroupMember
+import proton.android.pass.domain.GroupMemberState
 import javax.inject.Inject
 
 class GroupRepositoryImpl @Inject constructor(
@@ -119,6 +120,7 @@ class GroupRepositoryImpl @Inject constructor(
             }
 
             members += apiModels.map(GroupMemberApiModel::toDomain)
+                .filter { it.state == GroupMemberState.Active.value }
 
             if (apiModels.size < GROUP_MEMBERS_DEFAULT_PAGE_SIZE) {
                 break

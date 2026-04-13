@@ -40,6 +40,7 @@ import proton.android.pass.features.sharing.common.toShortSummary
 internal fun ManageItemPendingInviteRow(
     modifier: Modifier = Modifier,
     pendingInvite: SharePendingInvite,
+    displayName: String = pendingInvite.email,
     isRenameAdminToManagerEnabled: Boolean,
     onMenuOptionsClick: (SharePendingInvite) -> Unit
 ) {
@@ -69,7 +70,7 @@ internal fun ManageItemPendingInviteRow(
     ) {
         CircleTextIcon(
             modifier = Modifier.padding(start = Spacing.medium),
-            text = pendingInvite.email,
+            text = displayName,
             backgroundColor = PassTheme.colors.interactionNormMinor1,
             textColor = PassTheme.colors.interactionNormMajor2,
             shape = PassTheme.shapes.squircleMediumShape

@@ -18,10 +18,12 @@
 
 package proton.android.pass.features.sharing.sharingwith
 
+import app.cash.turbine.Event
 import app.cash.turbine.test
 import com.google.common.truth.Truth.assertThat
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.test.advanceTimeBy
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Rule
@@ -469,6 +471,31 @@ class SharingWithViewModelTest {
             val content = awaitItem().suggestionsUIState as SuggestionsUIState.Content
             val emails = content.recentSortedItems.filterIsInstance<EmailUiModel>()
             assertThat(emails).containsExactly(EmailUiModel(freshEmail, isAlreadyMember = false))
+        }
+    }
+
+    @Test
+    fun `suggestionsUIState does not become Loading when typing after content is loaded`() = runTest {
+        val email = "test@proton.me"
+        observeInviteRecommendations.emitInvites(
+            InviteRecommendations(
+                recommendedItems = listOf(RecommendedEmail(email)),
+                groupDisplayName = "",
+                organizationItems = emptyList()
+            )
+        )
+
+        viewModel.stateFlow.test {
+            assertThat(awaitItem().suggestionsUIState).isInstanceOf(SuggestionsUIState.Content::class.java)
+
+            viewModel.onEmailChange("a")
+            // Advance past the debounce timeout (300ms) to trigger recommendations refresh
+            advanceTimeBy(301L)
+
+            val loadingEmitted = cancelAndConsumeRemainingEvents()
+                .filterIsInstance<Event.Item<SharingWithUIState>>()
+                .any { it.value.suggestionsUIState == SuggestionsUIState.Loading }
+            assertThat(loadingEmitted).isFalse()
         }
     }
 

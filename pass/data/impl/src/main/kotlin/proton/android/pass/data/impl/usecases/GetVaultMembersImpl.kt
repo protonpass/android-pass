@@ -20,6 +20,8 @@ package proton.android.pass.data.impl.usecases
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.flow
 import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.asLoadingResult
 import proton.android.pass.common.api.getOrNull
@@ -45,23 +47,29 @@ class GetVaultMembersImpl @Inject constructor(
     private val shareMembersRepository: ShareMembersRepository
 ) : GetVaultMembers {
 
-    override fun invoke(shareId: ShareId): Flow<List<VaultMember>> = combine(
-        observeCurrentUser(),
-        observeSharePendingInvites(shareId),
-        observeGroupMembersByGroup().asLoadingResult()
-    ) { user, pendingInvites, groupMembersResult ->
-        if (groupMembersResult is LoadingResult.Error) {
-            PassLogger.w(TAG, "Failed to load group members, group info will be missing from vault member list")
-            PassLogger.w(TAG, groupMembersResult.exception)
+    override fun invoke(shareId: ShareId): Flow<List<VaultMember>> = observeCurrentUser().flatMapLatest { user ->
+        val shareMembersFlow = flow {
+            emit(
+                shareMembersRepository.getShareMembers(
+                    userId = user.userId,
+                    shareId = shareId,
+                    userEmail = user.email
+                )
+            )
         }
-        val isGroupDataLoaded = groupMembersResult is LoadingResult.Success
-        val groupByEmail = groupMembersResult.getOrNull().orEmpty().toGroupByEmail()
-        val shareMembers = shareMembersRepository.getShareMembers(
-            userId = user.userId,
-            shareId = shareId,
-            userEmail = user.email
-        )
-        buildVaultMembers(pendingInvites, shareMembers, groupByEmail, user.email.orEmpty(), isGroupDataLoaded)
+        combine(
+            observeSharePendingInvites(shareId),
+            observeGroupMembersByGroup().asLoadingResult(),
+            shareMembersFlow
+        ) { pendingInvites, groupMembersResult, shareMembers ->
+            if (groupMembersResult is LoadingResult.Error) {
+                PassLogger.w(TAG, "Failed to load group members, group info will be missing from vault member list")
+                PassLogger.w(TAG, groupMembersResult.exception)
+            }
+            val isGroupDataLoaded = groupMembersResult is LoadingResult.Success
+            val groupByEmail = groupMembersResult.getOrNull().orEmpty().toGroupByEmail()
+            buildVaultMembers(pendingInvites, shareMembers, groupByEmail, user.email.orEmpty(), isGroupDataLoaded)
+        }
     }
 
     companion object {

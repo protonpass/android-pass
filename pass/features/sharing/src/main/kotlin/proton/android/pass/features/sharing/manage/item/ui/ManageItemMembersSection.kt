@@ -94,8 +94,10 @@ internal fun ManageItemMembersSection(
             }
 
             pendingInvites.forEach { pendingInvite ->
+                val displayName = groupsByEmail[pendingInvite.email]?.group?.name ?: pendingInvite.email
                 ManageItemPendingInviteRow(
                     pendingInvite = pendingInvite,
+                    displayName = displayName,
                     isRenameAdminToManagerEnabled = isRenameAdminToManagerEnabled,
                     onMenuOptionsClick = onPendingInviteMenuOptionsClick
                 )

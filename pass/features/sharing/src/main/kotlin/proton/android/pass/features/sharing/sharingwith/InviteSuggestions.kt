@@ -75,14 +75,15 @@ internal fun InviteSuggestions(
             color = PassTheme.colors.textWeak
         )
 
+        var selectedIndex by remember { mutableIntStateOf(0) }
+
         when (state) {
             SuggestionsUIState.Initial -> Unit
 
             SuggestionsUIState.Loading -> PassFullScreenLoading()
 
             is SuggestionsUIState.Content -> {
-                var selectedIndex by remember { mutableIntStateOf(0) }
-                if (state.organizationSortedItems.isNotEmpty()) {
+                if (state.groupDisplayName.isNotEmpty()) {
                     TabRow(
                         modifier = Modifier.clip(CircleShape),
                         selectedTabIndex = selectedIndex,
@@ -192,18 +193,20 @@ internal fun InviteSuggestionList(
                                     overflow = TextOverflow.Ellipsis
                                 )
 
-                                if (item.memberCount > 0) {
-                                    val label = pluralStringResource(
-                                        CompR.plurals.members_count,
-                                        item.memberCount,
-                                        item.memberCount
-                                    )
-                                    Text.Body2Regular(
-                                        text = "($label)",
-                                        color = PassTheme.colors.interactionNormMajor2,
-                                        modifier = Modifier.clickable { onGroupMembersClick(item.id) }
-                                    )
-                                }
+                                val label = pluralStringResource(
+                                    CompR.plurals.members_count,
+                                    item.memberCount,
+                                    item.memberCount
+                                )
+                                Text.Body2Regular(
+                                    text = "($label)",
+                                    color = PassTheme.colors.interactionNormMajor2,
+                                    modifier = if (item.memberCount > 0) {
+                                        Modifier.clickable { onGroupMembersClick(item.id) }
+                                    } else {
+                                        Modifier
+                                    }
+                                )
                             }
 
                             Checkbox(

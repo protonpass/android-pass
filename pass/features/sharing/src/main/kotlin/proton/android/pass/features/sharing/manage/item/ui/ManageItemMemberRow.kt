@@ -96,7 +96,7 @@ internal fun ManageItemMemberRow(
                 .weight(weight = 1f, fill = true),
             verticalArrangement = Arrangement.spacedBy(space = Spacing.extraSmall)
         ) {
-            if (member.isGroup && groupId != null) {
+            if (member.isGroup) {
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.spacedBy(space = Spacing.extraSmall)
@@ -107,19 +107,21 @@ internal fun ManageItemMemberRow(
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis
                     )
-                    val membersLabel = "(${
-                        pluralStringResource(CompR.plurals.members_count, memberCount, memberCount)
-                    })"
-                    val membersModifier = if (memberCount > 0) {
-                        Modifier.clickable { onViewGroupMembersClick(groupId) }
-                    } else {
-                        Modifier
+                    if (groupId != null) {
+                        val membersLabel = "(${
+                            pluralStringResource(CompR.plurals.members_count, memberCount, memberCount)
+                        })"
+                        val membersModifier = if (memberCount > 0) {
+                            Modifier.clickable { onViewGroupMembersClick(groupId) }
+                        } else {
+                            Modifier
+                        }
+                        Text.Body2Regular(
+                            modifier = membersModifier,
+                            text = membersLabel,
+                            color = PassTheme.colors.interactionNormMajor2
+                        )
                     }
-                    Text.Body2Regular(
-                        modifier = membersModifier,
-                        text = membersLabel,
-                        color = PassTheme.colors.interactionNormMajor2
-                    )
                 }
             } else {
                 Text.Body2Regular(text = displayName)

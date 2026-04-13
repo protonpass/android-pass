@@ -28,7 +28,6 @@ import kotlinx.collections.immutable.toPersistentList
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
@@ -36,18 +35,20 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.onStart
+import kotlinx.coroutines.flow.scan
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import me.proton.core.util.kotlin.takeIfNotBlank
 import proton.android.pass.common.api.LoadingResult
-import proton.android.pass.common.api.safeRunCatching
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.asLoadingResult
 import proton.android.pass.common.api.combineN
 import proton.android.pass.common.api.getOrNull
 import proton.android.pass.common.api.map
+import proton.android.pass.common.api.safeRunCatching
 import proton.android.pass.common.api.toOption
 import proton.android.pass.commonrust.api.EmailValidator
 import proton.android.pass.commonui.api.SavedStateHandleProvider
@@ -69,8 +70,6 @@ import proton.android.pass.data.api.usecases.shares.ObserveShareItemMembers
 import proton.android.pass.data.api.usecases.shares.ObserveSharePendingInvites
 import proton.android.pass.domain.GroupId
 import proton.android.pass.domain.ItemId
-import proton.android.pass.domain.shares.ShareMember
-import proton.android.pass.domain.shares.SharePendingInvite
 import proton.android.pass.domain.OrganizationSettings
 import proton.android.pass.domain.OrganizationShareMode
 import proton.android.pass.domain.RecommendedEmail
@@ -121,6 +120,7 @@ class SharingWithViewModel @Inject constructor(
 
     private val checkedEmailFlow = MutableStateFlow<Set<String>>(emptySet())
     private val checkedGroupIdsFlow = MutableStateFlow<Set<GroupId>>(emptySet())
+    private val selectedGroupsMapFlow = MutableStateFlow<Map<GroupId, GroupSuggestionUiModel>>(emptyMap())
 
     private val alreadyInvitedEmailsFlow: Flow<Set<String>> = combine(
         itemIdOption.value()
@@ -129,7 +129,7 @@ class SharingWithViewModel @Inject constructor(
                     .catch {
                         PassLogger.w(TAG, "Failed to observe share item members")
                         PassLogger.w(TAG, it)
-                        emit(emptyList<ShareMember>())
+                        emit(emptyList())
                     }
             }
             ?: flowOf(emptyList()),
@@ -137,7 +137,7 @@ class SharingWithViewModel @Inject constructor(
             .catch {
                 PassLogger.w(TAG, "Failed to observe share pending invites")
                 PassLogger.w(TAG, it)
-                emit(emptyList<SharePendingInvite>())
+                emit(emptyList())
             },
         getVaultMembers(shareId)
             .catch {
@@ -265,6 +265,12 @@ class SharingWithViewModel @Inject constructor(
                 )
             }
         }
+    }.scan(SuggestionsUIState.Loading as SuggestionsUIState) { previous, next ->
+        if (next == SuggestionsUIState.Loading && previous is SuggestionsUIState.Content) {
+            previous
+        } else {
+            next
+        }
     }
 
     private val continueEnabledFlow = combine(
@@ -291,9 +297,10 @@ class SharingWithViewModel @Inject constructor(
         scrollToBottomFlow,
         continueEnabledFlow,
         organizationSettingsFlow,
-        errorMessageFlow
+        errorMessageFlow,
+        selectedGroupsMapFlow
     ) { emails, share, isLoading, event, suggestionsUiState,
-        scrollToBottom, continueEnabled, organizationSettingsResult, errorMessage ->
+        scrollToBottom, continueEnabled, organizationSettingsResult, errorMessage, selectedGroupsMap ->
 
         val canOnlyPickFromSelection =
             organizationSettingsResult.map { organizationSettingsOption ->
@@ -318,12 +325,13 @@ class SharingWithViewModel @Inject constructor(
             scrollToBottom = scrollToBottom,
             isContinueEnabled = continueEnabled,
             canOnlyPickFromSelection = canOnlyPickFromSelection,
-            errorMessage = errorMessage
+            errorMessage = errorMessage,
+            selectedGroups = selectedGroupsMap.values.toSet()
         )
     }.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5000),
-        initialValue = SharingWithUIState()
+        initialValue = SharingWithUIState(suggestionsUIState = SuggestionsUIState.Loading)
     )
 
     internal fun onEmailChange(value: String) {
@@ -363,6 +371,7 @@ class SharingWithViewModel @Inject constructor(
 
     internal fun onChipGroupRemoveClick(groupId: GroupId) {
         checkedGroupIdsFlow.update { it - groupId }
+        selectedGroupsMapFlow.update { it - groupId }
     }
 
     internal fun onContinueClick() {
@@ -432,14 +441,23 @@ class SharingWithViewModel @Inject constructor(
     internal fun onGroupToggle(groupId: GroupId, isSelected: Boolean) {
         val shouldSelect = !isSelected
         checkedGroupIdsFlow.update { current ->
-            if (shouldSelect) {
-                current + groupId
-            } else {
-                current - groupId
-            }
+            if (shouldSelect) current + groupId else current - groupId
         }
         if (shouldSelect) {
+            val content = stateFlow.value.suggestionsUIState as? SuggestionsUIState.Content
+            val groupModel = content?.let {
+                (it.recentSortedItems + it.organizationSortedItems)
+                    .filterIsInstance<GroupSuggestionUiModel>()
+                    .firstOrNull { g -> g.id == groupId }
+            }
+            if (groupModel != null) {
+                selectedGroupsMapFlow.update { current -> current + (groupId to groupModel) }
+            }
+            editingEmailState = ""
+            editingEmailStateFlow.update { "" }
             scrollToBottomFlow.update { true }
+        } else {
+            selectedGroupsMapFlow.update { it - groupId }
         }
     }
 

@@ -137,12 +137,14 @@ class ManageVaultViewModel @Inject constructor(
             LoadingResult.Loading -> ManageVaultUiContent.Loading
             is LoadingResult.Success -> {
                 val partitioned = partitionMembers(vaultMembers.data)
+                val currentUserHasDirectMembership = partitioned.members.any { it.isCurrentUser && !it.isGroup }
 
                 ManageVaultUiContent.Content(
                     vaultMembers = partitioned.members,
                     invites = partitioned.invites,
                     loadingInvites = invitesBeingConfirmed.toImmutableSet(),
                     canEdit = canEdit,
+                    currentUserHasDirectMembership = currentUserHasDirectMembership,
                     isRenameAdminToManagerEnabled = isRenameAdminToManagerEnabled
                 )
             }

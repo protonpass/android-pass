@@ -39,6 +39,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
@@ -52,6 +53,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
@@ -191,32 +193,18 @@ internal fun SharingWithContent(
                     verticalArrangement = Arrangement.spacedBy(space = Spacing.small),
                     horizontalArrangement = Arrangement.spacedBy(space = Spacing.small)
                 ) {
-                    when (val content = state.suggestionsUIState) {
-                        is SuggestionsUIState.Content -> {
-                            (content.recentSortedItems + content.organizationSortedItems)
-                                .filterIsInstance<GroupSuggestionUiModel>()
-                                .filter { it.isSelected }
-                                .distinctBy { it.id }
-                                .forEach { group ->
-                                    val label = if (group.memberCount > 0) {
-                                        stringResource(
-                                            id = R.string.share_with_group_entry,
-                                            group.name,
-                                            group.memberCount
-                                        )
-                                    } else {
-                                        group.name
-                                    }
-                                    SharingChip(
-                                        text = label,
-                                        isError = false,
-                                        onRemoveClick = { onEvent(SharingWithUiEvent.ChipGroupRemoveClick(group.id)) },
-                                        onLabelClick = { onEvent(SharingWithUiEvent.ChipGroupNameClick(group.id)) }
-                                    )
-                                }
-                        }
-
-                        else -> {}
+                    state.selectedGroups.forEach { group ->
+                        val label = stringResource(
+                            id = R.string.share_with_group_entry,
+                            group.name,
+                            group.memberCount
+                        )
+                        SharingChip(
+                            text = label,
+                            isError = false,
+                            onRemoveClick = { onEvent(SharingWithUiEvent.ChipGroupRemoveClick(group.id)) },
+                            onLabelClick = { onEvent(SharingWithUiEvent.ChipGroupNameClick(group.id)) }
+                        )
                     }
 
                     state.enteredEmails.forEachIndexed { idx, emailState ->
@@ -229,36 +217,50 @@ internal fun SharingWithContent(
                 }
             }
 
-            ProtonTextField(
-                modifier = Modifier.focusRequester(focusRequester),
-                value = editingEmail,
-                placeholder = {
-                    ProtonTextFieldPlaceHolder(
-                        text = stringResource(R.string.share_with_email_hint),
-                        textStyle = ProtonTheme.typography.subheadlineNorm.copy(
-                            color = ProtonTheme.colors.textHint
+            Column {
+                ProtonTextField(
+                    modifier = Modifier.focusRequester(focusRequester),
+                    value = editingEmail,
+                    placeholder = {
+                        ProtonTextFieldPlaceHolder(
+                            text = stringResource(R.string.share_with_email_hint),
+                            textStyle = ProtonTheme.typography.subheadlineNorm.copy(
+                                color = ProtonTheme.colors.textHint
+                            )
                         )
-                    )
-                },
-                isError = errorMessageRes != null,
-                errorMessage = errorMessageRes?.let { stringResource(it) }.orEmpty(),
-                textStyle = ProtonTheme.typography.subheadlineNorm,
-                keyboardOptions = KeyboardOptions.Default.copy(
-                    capitalization = KeyboardCapitalization.None,
-                    autoCorrectEnabled = false,
-                    keyboardType = KeyboardType.Email
-                ),
-                onChange = { onEvent(SharingWithUiEvent.EmailChange(it)) },
-                onDoneClick = {
-                    if (!state.canOnlyPickFromSelection) {
-                        onEvent(SharingWithUiEvent.EmailSubmit)
+                    },
+                    trailingIcon = {
+                        IconButton(
+                            modifier = Modifier.alpha(if (editingEmail.isNotEmpty()) 1f else 0f),
+                            enabled = editingEmail.isNotEmpty(),
+                            onClick = { onEvent(SharingWithUiEvent.EmailChange("")) }
+                        ) {
+                            Icon(
+                                painter = painterResource(id = CoreR.drawable.ic_proton_cross_small),
+                                contentDescription = null,
+                                tint = ProtonTheme.colors.textHint
+                            )
+                        }
+                    },
+                    isError = errorMessageRes != null,
+                    errorMessage = errorMessageRes?.let { stringResource(it) }.orEmpty(),
+                    textStyle = ProtonTheme.typography.subheadlineNorm,
+                    keyboardOptions = KeyboardOptions.Default.copy(
+                        capitalization = KeyboardCapitalization.None,
+                        autoCorrectEnabled = false,
+                        keyboardType = KeyboardType.Email
+                    ),
+                    onChange = { onEvent(SharingWithUiEvent.EmailChange(it)) },
+                    onDoneClick = {
+                        if (!state.canOnlyPickFromSelection) {
+                            onEvent(SharingWithUiEvent.EmailSubmit)
+                        }
                     }
-                }
-            )
+                )
+                PassDivider()
+            }
 
             RequestFocusLaunchedEffect(focusRequester)
-
-            PassDivider()
 
             InviteSuggestions(
                 state = state.suggestionsUIState,

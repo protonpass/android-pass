@@ -60,7 +60,7 @@ internal fun SharingPermissionItem(
         horizontalArrangement = Arrangement.spacedBy(space = Spacing.medium)
     ) {
         CircleTextIcon(
-            text = inviteTarget.email,
+            text = inviteTarget.displayName,
             backgroundColor = PassTheme.colors.interactionNormMinor1,
             textColor = PassTheme.colors.interactionNormMajor2,
             shape = PassTheme.shapes.squircleMediumShape
@@ -72,33 +72,29 @@ internal fun SharingPermissionItem(
         ) {
             when (inviteTarget) {
                 is GroupTargetUiState -> {
-                    if (inviteTarget.memberCount > 0) {
-                        Row(
-                            verticalAlignment = Alignment.CenterVertically,
-                            horizontalArrangement = Arrangement.spacedBy(Spacing.extraSmall)
-                        ) {
-                            Text.Body2Regular(
-                                modifier = Modifier.weight(1f, fill = false),
-                                text = inviteTarget.displayName,
-                                maxLines = 1,
-                                overflow = TextOverflow.Ellipsis
-                            )
-                            val label = pluralStringResource(
-                                CompR.plurals.members_count,
-                                inviteTarget.memberCount,
-                                inviteTarget.memberCount
-                            )
-                            Text.Body2Regular(
-                                text = "($label)",
-                                color = PassTheme.colors.interactionNormMajor2,
-                                modifier = Modifier.clickable {
-                                    onGroupMembersClick(inviteTarget.groupId)
-                                }
-                            )
-                        }
-                    } else {
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.spacedBy(Spacing.extraSmall)
+                    ) {
                         Text.Body2Regular(
-                            text = inviteTarget.displayName
+                            modifier = Modifier.weight(1f, fill = false),
+                            text = inviteTarget.displayName,
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis
+                        )
+                        val label = pluralStringResource(
+                            CompR.plurals.members_count,
+                            inviteTarget.memberCount,
+                            inviteTarget.memberCount
+                        )
+                        Text.Body2Regular(
+                            text = "($label)",
+                            color = PassTheme.colors.interactionNormMajor2,
+                            modifier = if (inviteTarget.memberCount > 0) {
+                                Modifier.clickable { onGroupMembersClick(inviteTarget.groupId) }
+                            } else {
+                                Modifier
+                            }
                         )
                     }
                 }

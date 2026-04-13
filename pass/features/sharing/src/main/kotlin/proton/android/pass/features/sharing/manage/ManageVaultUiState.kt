@@ -90,6 +90,7 @@ sealed interface ManageVaultUiContent {
         val invites: ImmutableList<VaultMember>,
         val loadingInvites: ImmutableSet<NewUserInviteId>,
         val canEdit: Boolean,
+        val currentUserHasDirectMembership: Boolean,
         val isRenameAdminToManagerEnabled: Boolean
     ) : ManageVaultUiContent
 }

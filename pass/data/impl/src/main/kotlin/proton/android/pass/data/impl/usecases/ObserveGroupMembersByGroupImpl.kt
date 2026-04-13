@@ -18,6 +18,9 @@
 
 package proton.android.pass.data.impl.usecases
 
+import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.flow
@@ -51,15 +54,18 @@ class ObserveGroupMembersByGroupImpl @Inject constructor(
         }
     }
 
-    private suspend fun retrieveGroupMembersByGroup(userId: UserId, forceRefresh: Boolean): List<GroupMembers> {
-        val groups = groupRepository.retrieveGroups(userId, forceRefresh)
-        return groups.map { group ->
-            val members = groupRepository.retrieveGroupMembers(
-                userId = userId,
-                groupId = group.id,
-                forceRefresh = forceRefresh
-            )
-            GroupMembers(group = group, members = members)
+    private suspend fun retrieveGroupMembersByGroup(userId: UserId, forceRefresh: Boolean): List<GroupMembers> =
+        coroutineScope {
+            val groups = groupRepository.retrieveGroups(userId, forceRefresh)
+            groups.map { group ->
+                async {
+                    val members = groupRepository.retrieveGroupMembers(
+                        userId = userId,
+                        groupId = group.id,
+                        forceRefresh = forceRefresh
+                    )
+                    GroupMembers(group = group, members = members)
+                }
+            }.awaitAll()
         }
-    }
 }

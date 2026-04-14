@@ -86,7 +86,8 @@ fun ManageVaultMemberRow(
         VaultMemberContent.Loading -> Modifier.placeholder() to ""
         is VaultMemberContent.Member -> Modifier to when (val member = memberContent.vaultMember) {
             is VaultMember.Member -> if (member.isGroup) member.username else member.email
-            else -> memberContent.vaultMember.email
+            is VaultMember.InvitePending -> member.displayName
+            is VaultMember.NewUserInvitePending -> member.displayName
         }
     }
 
@@ -212,16 +213,68 @@ private fun UserInfo(
                     }
                 }
 
-                else -> {
-                    Text(
-                        text = member.email,
-                        style = PassTheme.typography.body3Norm()
+                is VaultMember.InvitePending -> {
+                    GroupAwarePendingName(
+                        displayName = member.displayName,
+                        groupId = member.groupId,
+                        memberCount = member.memberCount,
+                        onViewGroupMembersClick = onViewGroupMembersClick
+                    )
+                }
+
+                is VaultMember.NewUserInvitePending -> {
+                    GroupAwarePendingName(
+                        displayName = member.displayName,
+                        groupId = member.groupId,
+                        memberCount = member.memberCount,
+                        onViewGroupMembersClick = onViewGroupMembersClick
                     )
                 }
             }
         }
 
         UserInfoSubtitle(member = memberContent, isRenameAdminToManagerEnabled = isRenameAdminToManagerEnabled)
+    }
+}
+
+@Composable
+private fun GroupAwarePendingName(
+    displayName: String,
+    groupId: GroupId?,
+    memberCount: Int,
+    onViewGroupMembersClick: ((GroupId) -> Unit)?
+) {
+    if (groupId != null) {
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(Spacing.extraSmall)
+        ) {
+            Text(
+                modifier = Modifier.weight(1f, fill = false),
+                text = displayName,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis,
+                style = PassTheme.typography.body3Norm()
+            )
+            val label = pluralStringResource(
+                CompR.plurals.members_count,
+                memberCount,
+                memberCount
+            )
+            Text(
+                text = "($label)",
+                color = PassTheme.colors.interactionNormMajor2,
+                style = PassTheme.typography.body3Norm(),
+                modifier = if (memberCount > 0) Modifier.clickable {
+                    onViewGroupMembersClick?.invoke(groupId)
+                } else Modifier
+            )
+        }
+    } else {
+        Text(
+            text = displayName,
+            style = PassTheme.typography.body3Norm()
+        )
     }
 }
 

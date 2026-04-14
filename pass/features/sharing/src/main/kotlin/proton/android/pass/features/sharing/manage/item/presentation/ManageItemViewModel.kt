@@ -142,6 +142,7 @@ class ManageItemViewModel @Inject constructor(
         isRenameAdminToManagerEnabledFlow
     ) { event, itemId, share, itemPendingInvites, vaultPendingInvites, itemsCount, members,
         loadingState, orgPolicy, (groupMembersResult, currentUser), isRenameAdminToManagerEnabled ->
+        if (groupMembersResult is LoadingResult.Loading) return@combineN ManageItemState.Loading
         ManageItemState.Success(
             event = event,
             itemId = itemId,

@@ -89,7 +89,7 @@ private fun buildVaultMembers(
     isGroupDataLoaded: Boolean
 ): List<VaultMember> = buildList {
     pendingInvites
-        .map(SharePendingInvite::toVaultMember)
+        .map { it.toVaultMember(groupByEmail) }
         .also(::addAll)
 
     shareMembers
@@ -125,25 +125,37 @@ private fun ShareMember.toVaultMember(
     )
 }
 
-private fun SharePendingInvite.toVaultMember(): VaultMember = when (this) {
-    is SharePendingInvite.ExistingUser -> VaultMember.InvitePending(
-        email = email,
-        inviteId = inviteId
-    )
+private fun SharePendingInvite.toVaultMember(groupByEmail: Map<String, GroupMembers>): VaultMember {
+    val groupInfo = groupByEmail[email]
+    val displayName = groupInfo?.group?.name ?: email
+    val groupId = groupInfo?.group?.id
+    val memberCount = groupInfo?.members?.count { it.state == GroupMemberState.Active.value } ?: 0
+    return when (this) {
+        is SharePendingInvite.ExistingUser -> VaultMember.InvitePending(
+            email = email,
+            inviteId = inviteId,
+            displayName = displayName,
+            groupId = groupId,
+            memberCount = memberCount
+        )
 
-    is SharePendingInvite.NewUser -> VaultMember.NewUserInvitePending(
-        email = email,
-        newUserInviteId = NewUserInviteId(inviteId.value),
-        role = role,
-        signature = signature,
-        inviteState = when (inviteState) {
-            SharePendingInvite.NewUser.InviteState.PendingAccountCreation -> {
-                VaultMember.NewUserInvitePending.InviteState.PendingAccountCreation
-            }
+        is SharePendingInvite.NewUser -> VaultMember.NewUserInvitePending(
+            email = email,
+            newUserInviteId = NewUserInviteId(inviteId.value),
+            role = role,
+            signature = signature,
+            displayName = displayName,
+            groupId = groupId,
+            memberCount = memberCount,
+            inviteState = when (inviteState) {
+                SharePendingInvite.NewUser.InviteState.PendingAccountCreation -> {
+                    VaultMember.NewUserInvitePending.InviteState.PendingAccountCreation
+                }
 
-            SharePendingInvite.NewUser.InviteState.PendingAcceptance -> {
-                VaultMember.NewUserInvitePending.InviteState.PendingAcceptance
+                SharePendingInvite.NewUser.InviteState.PendingAcceptance -> {
+                    VaultMember.NewUserInvitePending.InviteState.PendingAcceptance
+                }
             }
-        }
-    )
+        )
+    }
 }

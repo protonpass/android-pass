@@ -80,8 +80,13 @@ internal sealed interface ManageItemState {
             .mapNotNull { gm -> gm.group.groupEmail?.let { email -> email to gm } }
             .toMap()
 
+        // True when the current user has a direct (non-group) membership at the item or vault
+        // level. A direct vault member (visible in vaultMembers with isCurrentUser) has admin
+        // rights over all items in the vault independently of any item-level group, so they
+        // should be able to manage item-level groups they happen to be in.
         internal val currentUserHasDirectItemMembership: Boolean =
-            itemMembers.any { it.isCurrentUser && !it.isGroup }
+            itemMembers.any { it.isCurrentUser && !it.isGroup } ||
+                vaultMembers.any { it.isCurrentUser && !it.isGroup }
 
         internal val currentUserHasDirectVaultMembership: Boolean =
             vaultMembers.any { it.isCurrentUser && !it.isGroup }

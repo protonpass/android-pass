@@ -23,22 +23,11 @@ import androidx.compose.animation.expandVertically
 import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.DismissDirection
-import androidx.compose.material.DismissValue
-import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.SwipeToDismiss
-import androidx.compose.material.rememberDismissState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
-import kotlinx.coroutines.launch
 import proton.android.pass.commonui.api.Spacing
-import proton.android.pass.features.home.onboardingtips.OnBoardingTipPage.Autofill
 import proton.android.pass.features.home.onboardingtips.OnBoardingTipPage.Invite
-import proton.android.pass.features.home.onboardingtips.OnBoardingTipPage.NotificationPermission
-import proton.android.pass.features.home.onboardingtips.OnBoardingTipPage.SLSync
 
-@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun OnBoardingTipContent(
     modifier: Modifier = Modifier,
@@ -46,65 +35,7 @@ fun OnBoardingTipContent(
     onClick: (OnBoardingTipPage) -> Unit,
     onDismiss: (OnBoardingTipPage) -> Unit
 ) {
-    val scope = rememberCoroutineScope()
     Box(modifier = modifier) {
-        AnimatedVisibility(
-            visible = tipPage == Autofill,
-            enter = expandVertically(),
-            exit = shrinkVertically()
-        ) {
-            Box(modifier = Modifier.padding(Spacing.medium)) {
-                val dismissState = rememberDismissState(
-                    confirmStateChange = {
-                        if (it != DismissValue.Default) {
-                            onDismiss(tipPage)
-                        }
-                        true
-                    }
-                )
-                SwipeToDismiss(state = dismissState, background = {}) {
-                    AutofillCard(
-                        onClick = { onClick(tipPage) },
-                        onDismiss = {
-                            scope.launch {
-                                dismissState.dismiss(DismissDirection.EndToStart)
-                                onDismiss(tipPage)
-                            }
-                        }
-                    )
-                }
-            }
-        }
-
-        AnimatedVisibility(
-            visible = tipPage is SLSync,
-            enter = expandVertically(),
-            exit = shrinkVertically()
-        ) {
-            Box(modifier = Modifier.padding(Spacing.medium)) {
-                val dismissState = rememberDismissState(
-                    confirmStateChange = {
-                        if (it != DismissValue.Default) {
-                            onDismiss(tipPage)
-                        }
-                        true
-                    }
-                )
-                SwipeToDismiss(state = dismissState, background = {}) {
-                    SLSyncCard(
-                        aliasCount = (tipPage as? SLSync)?.aliasCount ?: 0,
-                        onClick = { onClick(tipPage) },
-                        onDismiss = {
-                            scope.launch {
-                                dismissState.dismiss(DismissDirection.EndToStart)
-                                onDismiss(tipPage)
-                            }
-                        }
-                    )
-                }
-            }
-        }
-
         AnimatedVisibility(
             visible = tipPage is Invite,
             enter = expandVertically(),
@@ -116,34 +47,6 @@ fun OnBoardingTipContent(
                         pendingInvite = invite.pendingInvite,
                         groupName = invite.groupName,
                         onClick = { onClick(tipPage) }
-                    )
-                }
-            }
-        }
-
-        AnimatedVisibility(
-            visible = tipPage == NotificationPermission,
-            enter = expandVertically(),
-            exit = shrinkVertically()
-        ) {
-            Box(modifier = Modifier.padding(Spacing.medium)) {
-                val dismissState = rememberDismissState(
-                    confirmStateChange = {
-                        if (it != DismissValue.Default) {
-                            onDismiss(tipPage)
-                        }
-                        true
-                    }
-                )
-                SwipeToDismiss(state = dismissState, background = {}) {
-                    NotificationPermissionCard(
-                        onClick = { onClick(tipPage) },
-                        onDismiss = {
-                            scope.launch {
-                                dismissState.dismiss(DismissDirection.EndToStart)
-                                onDismiss(tipPage)
-                            }
-                        }
                     )
                 }
             }

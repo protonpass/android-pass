@@ -64,7 +64,7 @@ class InAppMessageModalViewModel @Inject constructor(
     val state = observeInAppMessage(userId, inAppMessageId)
         .asResultWithoutLoading()
         .map { result: LoadingResult<InAppMessage> ->
-            val message = result.getOrNull() ?: return@map InAppMessageModalState.Error
+            val message = result.getOrNull() as? InAppMessage.Modal ?: return@map InAppMessageModalState.Error
             InAppMessageModalState.Success(message)
         }
         .stateIn(

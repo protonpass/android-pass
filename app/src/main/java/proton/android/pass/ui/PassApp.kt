@@ -28,7 +28,6 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import proton.android.pass.commonui.api.LifecycleEffect
 import proton.android.pass.commonui.api.PassTheme
-
 @Composable
 fun PassApp(
     modifier: Modifier = Modifier,
@@ -67,6 +66,10 @@ fun PassApp(
         onInAppMessageBannerCTAClicked = { inAppMessageKey ->
             appViewModel.onInAppMessageBannerCTAClicked(inAppMessageKey)
         },
+        onLocalInAppMessageDismiss = appViewModel::onLocalInAppMessageDismiss,
+        onLocalInAppMessageClick = appViewModel::onLocalInAppMessageClick,
+        onLocalInAppMessageEventConsumed = appViewModel::clearLocalInAppMessageEvent,
+        onNotificationPermissionChanged = appViewModel::onNotificationPermissionChanged,
         supportPayment = supportPayment
     )
 }

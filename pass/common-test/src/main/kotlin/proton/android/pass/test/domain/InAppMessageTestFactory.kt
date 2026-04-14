@@ -44,7 +44,7 @@ object InAppMessageTestFactory {
         range: InAppMessageRange = createInAppMessageRange(),
         userId: UserId = UserId("default-user-id"),
         priority: Int = 1
-    ): InAppMessage.Banner = InAppMessage.Banner(
+    ): InAppMessage.Remote.Banner = InAppMessage.Remote.Banner(
         id = InAppMessageId(id),
         key = InAppMessageKey("default-key"),
         title = title,

@@ -19,6 +19,7 @@
 package proton.android.pass.data.impl.fakes
 
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flowOf
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.FlowUtils.testFlow
 import proton.android.pass.data.impl.local.inappmessages.LocalInAppMessagesDataSource
@@ -87,12 +88,17 @@ class FakeLocalInAppMessagesDataSource : LocalInAppMessagesDataSource {
         return topMessageFlow
     }
 
-    override suspend fun storeMessages(userId: UserId, messages: List<InAppMessage>) {
+    override fun observeAllDeliverableBannerMessages(
+        userId: UserId,
+        currentTimestamp: Long
+    ): Flow<List<InAppMessage.Remote.Banner>> = flowOf(emptyList())
+
+    override suspend fun storeMessages(userId: UserId, messages: List<InAppMessage.Remote>) {
         storeMessagesResult.getOrThrow()
         storedMessages = messages
     }
 
-    override suspend fun updateMessage(userId: UserId, message: InAppMessage) {
+    override suspend fun updateMessage(userId: UserId, message: InAppMessage.Remote) {
         updateMessageResult.getOrThrow()
     }
 }

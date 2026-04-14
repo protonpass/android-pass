@@ -27,20 +27,15 @@ import org.junit.Before
 import proton.android.pass.data.fakes.repositories.FakeInAppMessagesRepository
 import proton.android.pass.data.fakes.usecases.FakeObserveCurrentUser
 import proton.android.pass.domain.inappmessages.InAppMessageStatus
-import proton.android.pass.preferences.LastTimeUserHasSeenIAMPreference
-import proton.android.pass.preferences.FakeInternalSettingsRepository
 import proton.android.pass.test.domain.InAppMessageTestFactory
 import proton.android.pass.test.domain.UserTestFactory
 import kotlin.test.Test
-import kotlin.test.assertNull
-import kotlin.time.Duration.Companion.minutes
 
 internal class ObserveDeliverableBannerInAppMessagesImplTest {
 
     private lateinit var instance: ObserveDeliverableBannerInAppMessagesImpl
     private lateinit var observeCurrentUser: FakeObserveCurrentUser
     private lateinit var inAppMessagesRepository: FakeInAppMessagesRepository
-    private lateinit var internalSettingsRepository: FakeInternalSettingsRepository
     private lateinit var clock: Clock
     private lateinit var userId: UserId
 
@@ -51,56 +46,51 @@ internal class ObserveDeliverableBannerInAppMessagesImplTest {
             sendUser(UserTestFactory.create())
         }
         inAppMessagesRepository = FakeInAppMessagesRepository()
-        internalSettingsRepository = FakeInternalSettingsRepository()
         clock = Clock.System
         instance = ObserveDeliverableBannerInAppMessagesImpl(
             observeCurrentUser = observeCurrentUser,
             inAppMessagesRepository = inAppMessagesRepository,
-            internalSettingsRepository = internalSettingsRepository,
             clock = clock
         )
     }
 
-
     @Test
     fun `test no unread messages returns empty list`() = runTest {
         instance(userId).test {
-            assertNull(awaitItem())
+            assertThat(awaitItem()).isEmpty()
             cancelAndIgnoreRemainingEvents()
         }
     }
 
     @Test
-    fun `test messages are not returned if last time is less than 30 minutes`() = runTest {
-        val now = clock.now()
-        internalSettingsRepository.setLastTimeUserHasSeenIAM(
-            LastTimeUserHasSeenIAMPreference(userId, now.minus(29.minutes).epochSeconds)
-        )
+    fun `test unread banner messages are returned immediately without throttle`() = runTest {
         val message = InAppMessageTestFactory.createBanner(
             state = InAppMessageStatus.Unread,
             range = InAppMessageTestFactory.createInAppMessageRange()
         )
         inAppMessagesRepository.addMessage(userId, message)
         instance(userId).test {
-            assertNull(awaitItem())
+            assertThat(awaitItem()).containsExactly(message)
             cancelAndIgnoreRemainingEvents()
         }
     }
 
     @Test
-    fun `test messages are returned if last time is more than 30 minutes`() = runTest {
-        val now = clock.now()
-        internalSettingsRepository.setLastTimeUserHasSeenIAM(
-            LastTimeUserHasSeenIAMPreference(userId, now.minus(31.minutes).epochSeconds)
-        )
-        val message = InAppMessageTestFactory.createBanner(
+    fun `test multiple banner messages are all returned`() = runTest {
+        val message1 = InAppMessageTestFactory.createBanner(
             state = InAppMessageStatus.Unread,
             range = InAppMessageTestFactory.createInAppMessageRange()
         )
-        inAppMessagesRepository.addMessage(userId, message)
+        val message2 = InAppMessageTestFactory.createBanner(
+            state = InAppMessageStatus.Unread,
+            range = InAppMessageTestFactory.createInAppMessageRange()
+        )
+        inAppMessagesRepository.addMessage(userId, message1)
+        inAppMessagesRepository.addMessage(userId, message2)
         instance(userId).test {
-            val item = awaitItem()
-            assertThat(item).isEqualTo(message)
+            val items = awaitItem()
+            assertThat(items).hasSize(2)
+            assertThat(items).containsAtLeast(message1, message2)
             cancelAndIgnoreRemainingEvents()
         }
     }

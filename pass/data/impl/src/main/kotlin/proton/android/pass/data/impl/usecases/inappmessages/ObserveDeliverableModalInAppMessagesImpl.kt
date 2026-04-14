@@ -19,6 +19,8 @@
 package proton.android.pass.data.impl.usecases.inappmessages
 
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import kotlinx.datetime.Clock
 import me.proton.core.domain.entity.UserId
@@ -28,6 +30,7 @@ import proton.android.pass.data.api.usecases.inappmessages.ObserveDeliverableMod
 import proton.android.pass.domain.inappmessages.InAppMessage
 import proton.android.pass.preferences.InternalSettingsRepository
 import javax.inject.Inject
+import kotlin.time.Duration.Companion.minutes
 
 class ObserveDeliverableModalInAppMessagesImpl @Inject constructor(
     private val observeCurrentUser: ObserveCurrentUser,
@@ -36,16 +39,24 @@ class ObserveDeliverableModalInAppMessagesImpl @Inject constructor(
     private val clock: Clock
 ) : ObserveDeliverableModalInAppMessages {
 
-    override fun invoke(userId: UserId?): Flow<InAppMessage.Modal?> = InAppMessageUtils.observeDeliverableMessages(
-        userId = userId,
-        observeCurrentUser = observeCurrentUser,
-        internalSettingsRepository = internalSettingsRepository,
-        clock = clock,
-        getMessage = { resolvedUserId, currentTimestamp ->
-            inAppMessagesRepository.observeTopDeliverableUserMessage(
-                userId = resolvedUserId,
-                currentTimestamp = currentTimestamp
-            ).map { entity -> entity as? InAppMessage.Modal }
+    override fun invoke(userId: UserId?): Flow<InAppMessage.Modal?> {
+        val userIdFlow = if (userId != null) flowOf(userId) else observeCurrentUser().map { it.userId }
+        return userIdFlow.flatMapLatest { resolvedUserId ->
+            val sessionTimestamp = clock.now().epochSeconds
+            internalSettingsRepository.getLastTimeUserHasSeenIAM(resolvedUserId)
+                .flatMapLatest { preference ->
+                    val now = clock.now()
+                    val lastSeenTime = preference.value()?.timestamp ?: 0L
+                    val shouldShow = lastSeenTime < now.minus(30.minutes).epochSeconds
+                    if (shouldShow) {
+                        inAppMessagesRepository.observeTopDeliverableUserMessage(
+                            userId = resolvedUserId,
+                            currentTimestamp = sessionTimestamp
+                        ).map { it as? InAppMessage.Modal }
+                    } else {
+                        flowOf(null)
+                    }
+                }
         }
-    )
+    }
 }

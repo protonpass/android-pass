@@ -20,6 +20,7 @@ package proton.android.pass.data.impl.usecases.inappmessages
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import kotlinx.datetime.Clock
 import me.proton.core.domain.entity.UserId
@@ -35,12 +36,14 @@ class ObserveDeliverablePromoInAppMessagesImpl @Inject constructor(
     private val clock: Clock
 ) : ObserveDeliverablePromoInAppMessages {
 
-    override fun invoke(userId: UserId?): Flow<InAppMessage.Promo?> =
-        InAppMessageUtils.getUserId(userId, observeCurrentUser).flatMapLatest { resolvedUserId ->
+    override fun invoke(userId: UserId?): Flow<InAppMessage.Promo?> {
+        val userIdFlow = if (userId != null) flowOf(userId) else observeCurrentUser().map { it.userId }
+        return userIdFlow.flatMapLatest { resolvedUserId ->
             inAppMessagesRepository.observeTopDeliverableUserMessage(
                 userId = resolvedUserId,
                 currentTimestamp = clock.now().epochSeconds,
                 refreshOnStart = true
             ).map { entity -> entity as? InAppMessage.Promo }
         }
+    }
 }

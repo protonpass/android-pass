@@ -34,9 +34,17 @@ interface InAppMessagesRepository {
         refreshOnStart: Boolean = false
     ): Flow<InAppMessage?>
 
+    fun observeAllDeliverableBannerMessages(
+        userId: UserId,
+        currentTimestamp: Long,
+        refreshOnStart: Boolean = false
+    ): Flow<List<InAppMessage.Remote.Banner>>
+
     fun observeUserMessage(userId: UserId, inAppMessageId: InAppMessageId): Flow<InAppMessage>
 
     suspend fun refreshUserMessages(userId: UserId)
+
+    suspend fun storeMessages(userId: UserId, messages: List<InAppMessage.Remote>)
 
     suspend fun changeMessageStatus(
         userId: UserId,

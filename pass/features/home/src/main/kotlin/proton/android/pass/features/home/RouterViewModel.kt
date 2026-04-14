@@ -86,7 +86,7 @@ class RouterViewModel @Inject constructor(
                 .flatMapLatest {
                     flowOf(it.map { plan -> plan.isFreePlan }.getOrNull() != false)
                 },
-            featureFlagsPreferencesRepository.get<Boolean>(FeatureFlag.PASS_MOBILE_ON_BOARDING_V2),
+            featureFlagsPreferencesRepository[FeatureFlag.PASS_MOBILE_ON_BOARDING_V2],
             ::routerEvent
         )
             .distinctUntilChanged()

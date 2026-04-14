@@ -241,17 +241,17 @@ internal class InAppMessagesRepositoryImplTest {
     }
 
     @Test
-    fun `changeMessageStatus handles remote failure`() = runTest {
+    fun `changeMessageStatus completes successfully even when remote fails`() = runTest {
         val newStatus = InAppMessageStatus.Read
-        val error = RuntimeException(TEST_ERROR_NETWORK)
+        val originalMessage = InAppMessageTestFactory.createBanner(
+            id = TEST_MESSAGE_ID.value,
+            title = TEST_MESSAGE_TITLE
+        )
+        local.emitUserMessage(originalMessage)
+        remote.setChangeStatusResult(Result.failure(RuntimeException(TEST_ERROR_NETWORK)))
 
-        remote.setChangeStatusResult(Result.failure(error))
-
-        try {
-            instance.changeMessageStatus(TEST_USER_ID, TEST_MESSAGE_ID, newStatus)
-        } catch (e: RuntimeException) {
-            assertThat(e).isEqualTo(error)
-        }
+        // Should not throw — remote failure is logged but local update still happens
+        instance.changeMessageStatus(TEST_USER_ID, TEST_MESSAGE_ID, newStatus)
     }
 
     @Test
@@ -437,18 +437,17 @@ internal class InAppMessagesRepositoryImplTest {
     }
 
     @Test
-    fun `changeMessageStatus propagates remote failure`() = runTest {
+    fun `changeMessageStatus updates locally before remote and tolerates remote failure`() = runTest {
         val newStatus = InAppMessageStatus.Read
-        val error = RuntimeException(TEST_ERROR_REMOTE)
+        val originalMessage = InAppMessageTestFactory.createBanner(
+            id = TEST_MESSAGE_ID.value,
+            title = TEST_MESSAGE_TITLE
+        )
+        local.emitUserMessage(originalMessage)
+        remote.setChangeStatusResult(Result.failure(RuntimeException(TEST_ERROR_REMOTE)))
 
-        remote.setChangeStatusResult(Result.failure(error))
-
-        try {
-            instance.changeMessageStatus(TEST_USER_ID, TEST_MESSAGE_ID, newStatus)
-            assert(false) { "Expected exception to be thrown" }
-        } catch (e: RuntimeException) {
-            assertThat(e).isEqualTo(error)
-        }
+        // Local update happens first; remote failure is swallowed
+        instance.changeMessageStatus(TEST_USER_ID, TEST_MESSAGE_ID, newStatus)
     }
 
     @Test
@@ -511,7 +510,7 @@ internal class InAppMessagesRepositoryImplTest {
     }
 
 
-    private fun createNotificationResponse(message: InAppMessage): NotificationResponse = NotificationResponse(
+    private fun createNotificationResponse(message: InAppMessage.Remote): NotificationResponse = NotificationResponse(
         id = message.id.value,
         notificationKey = message.key.value,
         startTime = message.range.start.epochSeconds,
@@ -521,9 +520,10 @@ internal class InAppMessagesRepositoryImplTest {
         content = proton.android.pass.data.impl.responses.ContentResponse(
             imageUrl = message.imageUrl.value(),
             displayType = when (message) {
-                is InAppMessage.Banner -> 0
+                is InAppMessage.Remote.Banner -> 0
                 is InAppMessage.Modal -> 1
                 is InAppMessage.Promo -> 2
+                else -> error("Unexpected message type: $message")
             },
             title = message.title,
             message = message.message.value() ?: "",
@@ -554,7 +554,7 @@ internal class InAppMessagesRepositoryImplTest {
         )
     )
 
-    private fun createNotificationsResponse(messages: List<InAppMessage>): NotificationsResponse =
+    private fun createNotificationsResponse(messages: List<InAppMessage.Remote>): NotificationsResponse =
         NotificationsResponse(
             list = messages.map(::createNotificationResponse),
             total = messages.size,

@@ -38,9 +38,9 @@ import proton.android.pass.domain.inappmessages.InAppMessagePromoThemedContents
 import proton.android.pass.domain.inappmessages.InAppMessageRange
 import proton.android.pass.domain.inappmessages.InAppMessageStatus
 
-fun List<NotificationResponse>.toDomain(userId: UserId): List<InAppMessage> = this.map { it.toDomain(userId) }
+fun List<NotificationResponse>.toDomain(userId: UserId): List<InAppMessage.Remote> = this.map { it.toDomain(userId) }
 
-fun NotificationResponse.toDomain(userId: UserId): InAppMessage {
+fun NotificationResponse.toDomain(userId: UserId): InAppMessage.Remote {
     val baseMessage = BaseMessageData(
         id = InAppMessageId(this.id),
         key = InAppMessageKey(this.notificationKey),
@@ -58,7 +58,7 @@ fun NotificationResponse.toDomain(userId: UserId): InAppMessage {
     )
 
     return when (this.content.displayType) {
-        0 -> InAppMessage.Banner(
+        0 -> InAppMessage.Remote.Banner(
             baseMessage.id, baseMessage.key, baseMessage.priority, baseMessage.title,
             baseMessage.message, baseMessage.imageUrl, baseMessage.cta, baseMessage.state,
             baseMessage.range, baseMessage.userId

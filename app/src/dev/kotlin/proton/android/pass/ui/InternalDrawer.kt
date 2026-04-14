@@ -42,6 +42,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalLayoutDirection
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
@@ -54,6 +55,7 @@ import kotlin.math.roundToInt
 @Composable
 fun InternalDrawer(
     modifier: Modifier = Modifier,
+    bottomPadding: Dp = 0.dp,
     drawerState: InternalDrawerState,
     onOpenFeatureFlag: () -> Unit,
     onAppNavigation: (AppNavigation) -> Unit,
@@ -103,7 +105,7 @@ fun InternalDrawer(
                             minWidth = this@BoxWithConstraints.minWidth,
                             minHeight = this@BoxWithConstraints.minHeight,
                             maxWidth = this@BoxWithConstraints.maxWidth,
-                            maxHeight = this@BoxWithConstraints.maxHeight
+                            maxHeight = this@BoxWithConstraints.maxHeight - bottomPadding
                         )
                 }
                     .offset { IntOffset(drawerState.offset.value.roundToInt(), 0) },

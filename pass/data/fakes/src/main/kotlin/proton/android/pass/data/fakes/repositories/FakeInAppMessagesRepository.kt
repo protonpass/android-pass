@@ -37,6 +37,14 @@ class FakeInAppMessagesRepository @Inject constructor() : InAppMessagesRepositor
             it[userId]?.filterIsInstance<InAppMessage.Promo>()?.firstOrNull()
         }
 
+    override fun observeAllDeliverableBannerMessages(
+        userId: UserId,
+        currentTimestamp: Long,
+        refreshOnStart: Boolean
+    ): Flow<List<InAppMessage.Remote.Banner>> = messagesFlow.map { map ->
+        map[userId]?.filterIsInstance<InAppMessage.Remote.Banner>() ?: emptyList()
+    }
+
     override fun observeTopDeliverableUserMessage(
         userId: UserId,
         currentTimestamp: Long,
@@ -47,6 +55,12 @@ class FakeInAppMessagesRepository @Inject constructor() : InAppMessagesRepositor
         // no-op
     }
 
+    override suspend fun storeMessages(userId: UserId, messages: List<InAppMessage.Remote>) {
+        messagesFlow.value = messagesFlow.value.toMutableMap().apply {
+            this[userId] = messages
+        }
+    }
+
     override suspend fun changeMessageStatus(
         userId: UserId,
         messageId: InAppMessageId,
@@ -54,11 +68,12 @@ class FakeInAppMessagesRepository @Inject constructor() : InAppMessagesRepositor
     ) {
         messagesFlow.value = messagesFlow.value.toMutableMap().apply {
             this[userId] = this[userId]?.map { message ->
-                if (message.id == messageId) {
+                if (message is InAppMessage.Remote && message.id == messageId) {
                     when (message) {
-                        is InAppMessage.Banner -> message.copy(state = status)
+                        is InAppMessage.Remote.Banner -> message.copy(state = status)
                         is InAppMessage.Modal -> message.copy(state = status)
                         is InAppMessage.Promo -> message.copy(state = status)
+                        else -> message
                     }
                 } else {
                     message
@@ -68,7 +83,7 @@ class FakeInAppMessagesRepository @Inject constructor() : InAppMessagesRepositor
     }
 
     override fun observeUserMessage(userId: UserId, inAppMessageId: InAppMessageId): Flow<InAppMessage> =
-        messagesFlow.map { it[userId]?.find { it.id == inAppMessageId }!! }
+        messagesFlow.map { it[userId]?.find { msg -> msg is InAppMessage.Remote && msg.id == inAppMessageId }!! }
 
     fun addMessage(userId: UserId, message: InAppMessage) {
         messagesFlow.value = messagesFlow.value.toMutableMap().apply {

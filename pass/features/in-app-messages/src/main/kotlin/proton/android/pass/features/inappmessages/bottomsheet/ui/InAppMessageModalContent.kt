@@ -46,7 +46,7 @@ import proton.android.pass.domain.inappmessages.InAppMessageStatus
 @Composable
 fun InAppMessageModalContent(
     modifier: Modifier = Modifier,
-    inAppMessage: InAppMessage,
+    inAppMessage: InAppMessage.Modal,
     onInternalCTAClick: (String) -> Unit,
     onExternalCTAClick: (String) -> Unit,
     onClose: () -> Unit

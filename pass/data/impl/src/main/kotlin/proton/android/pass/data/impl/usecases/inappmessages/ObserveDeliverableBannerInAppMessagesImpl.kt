@@ -19,6 +19,8 @@
 package proton.android.pass.data.impl.usecases.inappmessages
 
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import kotlinx.datetime.Clock
 import me.proton.core.domain.entity.UserId
@@ -26,28 +28,23 @@ import proton.android.pass.data.api.repositories.InAppMessagesRepository
 import proton.android.pass.data.api.usecases.ObserveCurrentUser
 import proton.android.pass.data.api.usecases.inappmessages.ObserveDeliverableBannerInAppMessages
 import proton.android.pass.domain.inappmessages.InAppMessage
-import proton.android.pass.preferences.InternalSettingsRepository
 import javax.inject.Inject
 
 class ObserveDeliverableBannerInAppMessagesImpl @Inject constructor(
     private val observeCurrentUser: ObserveCurrentUser,
     private val inAppMessagesRepository: InAppMessagesRepository,
-    private val internalSettingsRepository: InternalSettingsRepository,
     private val clock: Clock
 ) : ObserveDeliverableBannerInAppMessages {
 
-    override fun invoke(userId: UserId?, refresh: Boolean): Flow<InAppMessage.Banner?> =
-        InAppMessageUtils.observeDeliverableMessages(
-            userId = userId,
-            observeCurrentUser = observeCurrentUser,
-            internalSettingsRepository = internalSettingsRepository,
-            clock = clock,
-            getMessage = { resolvedUserId, currentTimestamp ->
-                inAppMessagesRepository.observeTopDeliverableUserMessage(
-                    userId = resolvedUserId,
-                    currentTimestamp = currentTimestamp,
-                    refreshOnStart = refresh
-                ).map { entity -> entity as? InAppMessage.Banner }
-            }
-        )
+    override fun invoke(userId: UserId?, refresh: Boolean): Flow<List<InAppMessage.Remote.Banner>> {
+        val currentTimestamp = clock.now().epochSeconds
+        val userIdFlow = if (userId != null) flowOf(userId) else observeCurrentUser().map { it.userId }
+        return userIdFlow.flatMapLatest { resolvedUserId ->
+            inAppMessagesRepository.observeAllDeliverableBannerMessages(
+                userId = resolvedUserId,
+                currentTimestamp = currentTimestamp,
+                refreshOnStart = refresh
+            )
+        }
+    }
 }

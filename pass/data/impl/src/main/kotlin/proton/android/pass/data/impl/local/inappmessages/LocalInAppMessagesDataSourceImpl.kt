@@ -85,14 +85,26 @@ class LocalInAppMessagesDataSourceImpl @Inject constructor(
                     ?.toDomain()
             }
 
-    override suspend fun storeMessages(userId: UserId, messages: List<InAppMessage>) {
+    override fun observeAllDeliverableBannerMessages(
+        userId: UserId,
+        currentTimestamp: Long
+    ): Flow<List<InAppMessage.Remote.Banner>> = database.inAppMessagesDao()
+        .observeDeliverableMessages(
+            userId = userId.id,
+            mode = MODE_BANNER,
+            statuses = listOf(STATUS_UNREAD),
+            currentTimestamp = currentTimestamp
+        )
+        .map { entities -> entities.mapNotNull { it.toDomain() as? InAppMessage.Remote.Banner } }
+
+    override suspend fun storeMessages(userId: UserId, messages: List<InAppMessage.Remote>) {
         database.inTransaction(name = "storeMessages") {
             database.inAppMessagesDao().deleteAll(userId.id)
-            database.inAppMessagesDao().insertOrUpdate(*messages.map(InAppMessage::toEntity).toTypedArray())
+            database.inAppMessagesDao().insertOrUpdate(*messages.map(InAppMessage.Remote::toEntity).toTypedArray())
         }
     }
 
-    override suspend fun updateMessage(userId: UserId, message: InAppMessage) {
+    override suspend fun updateMessage(userId: UserId, message: InAppMessage.Remote) {
         database.inAppMessagesDao().insertOrUpdate(message.toEntity())
     }
 }
@@ -119,7 +131,7 @@ private fun InAppMessageEntity.toDomain(): InAppMessage {
     )
 
     return when (mode) {
-        MODE_BANNER -> InAppMessage.Banner(
+        MODE_BANNER -> InAppMessage.Remote.Banner(
             baseMessage.id, baseMessage.key, baseMessage.priority, baseMessage.title,
             baseMessage.message, baseMessage.imageUrl, baseMessage.cta, baseMessage.state,
             baseMessage.range, baseMessage.userId
@@ -191,8 +203,8 @@ private fun InAppMessageEntity.toPromoContents(): Option<InAppMessagePromoConten
 }
 
 @Suppress("LongMethod")
-private fun InAppMessage.toEntity(): InAppMessageEntity = when (this) {
-    is InAppMessage.Banner -> InAppMessageEntity(
+private fun InAppMessage.Remote.toEntity(): InAppMessageEntity = when (this) {
+    is InAppMessage.Remote.Banner -> InAppMessageEntity(
         id = id.value,
         key = key.value,
         mode = MODE_BANNER,

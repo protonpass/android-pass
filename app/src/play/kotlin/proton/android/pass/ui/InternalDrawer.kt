@@ -20,12 +20,15 @@ package proton.android.pass.ui
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.dp
 import proton.android.pass.ui.internal.InternalDrawerState
 
 @Suppress("UnusedPrivateMember")
 @Composable
 fun InternalDrawer(
     modifier: Modifier = Modifier,
+    bottomPadding: Dp = 0.dp,
     drawerState: InternalDrawerState,
     onOpenFeatureFlag: () -> Unit,
     onAppNavigation: (AppNavigation) -> Unit,

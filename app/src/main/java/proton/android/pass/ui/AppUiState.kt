@@ -22,6 +22,7 @@ import androidx.compose.runtime.Immutable
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.domain.inappmessages.InAppMessage
+import proton.android.pass.features.home.localinappmessages.LocalInAppMessagesEvent
 import proton.android.pass.inappupdates.api.InAppUpdateState
 import proton.android.pass.network.api.NetworkStatus
 import proton.android.pass.notifications.api.SnackbarMessage
@@ -31,7 +32,8 @@ data class AppUiState(
     val snackbarMessage: Option<SnackbarMessage>,
     val networkStatus: NetworkStatus,
     val inAppUpdateState: InAppUpdateState,
-    val inAppMessage: InAppMessage.Banner?
+    val inAppMessages: List<InAppMessage.Banner>,
+    val localInAppMessageEvent: LocalInAppMessagesEvent = LocalInAppMessagesEvent.Unknown
 ) {
 
     companion object {
@@ -39,7 +41,8 @@ data class AppUiState(
             snackbarMessage = None,
             networkStatus = NetworkStatus.Online,
             inAppUpdateState = InAppUpdateState.Idle,
-            inAppMessage = null
+            inAppMessages = emptyList(),
+            localInAppMessageEvent = LocalInAppMessagesEvent.Unknown
         )
     }
 }

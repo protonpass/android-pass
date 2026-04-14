@@ -21,7 +21,7 @@ package proton.android.pass.features.inappmessages.bottomsheet.presentation
 import proton.android.pass.domain.inappmessages.InAppMessage
 
 sealed interface InAppMessageModalState {
-    data class Success(val inAppMessage: InAppMessage) : InAppMessageModalState
+    data class Success(val inAppMessage: InAppMessage.Modal) : InAppMessageModalState
     data object Loading : InAppMessageModalState
     data object Error : InAppMessageModalState
 }

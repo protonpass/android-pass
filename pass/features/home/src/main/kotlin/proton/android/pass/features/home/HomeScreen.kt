@@ -80,7 +80,6 @@ import proton.android.pass.features.home.drawer.presentation.HomeDrawerViewModel
 import proton.android.pass.features.home.drawer.ui.HomeDrawerContent
 import proton.android.pass.features.home.drawer.ui.HomeDrawerUiEvent
 import proton.android.pass.features.home.needsupdate.AppNeedsUpdateBanner
-import proton.android.pass.features.home.onboardingtips.NotificationPermissionLaunchedEffect
 import proton.android.pass.features.home.onboardingtips.OnBoardingTips
 import proton.android.pass.features.home.onboardingtips.OnBoardingTipsEvent
 import proton.android.pass.features.home.onboardingtips.OnBoardingTipsViewModel
@@ -229,21 +228,12 @@ fun HomeScreen(
         val homeNavigationEvent = when (val event = onBoardingTipsUiState.event) {
             is OnBoardingTipsEvent.OpenUserInviteScreen -> HomeNavigation.OpenUserInvite(event.inviteToken)
             is OnBoardingTipsEvent.OpenGroupInviteScreen -> HomeNavigation.OpenGroupInvite(event.inviteId)
-            is OnBoardingTipsEvent.OpenSLSyncSettingsScreen -> HomeNavigation.SLSyncSettings(event.shareId)
-            OnBoardingTipsEvent.RequestNotificationPermission,
             OnBoardingTipsEvent.Unknown -> return@LaunchedEffect
         }
 
         onNavigateEvent(homeNavigationEvent)
         onBoardingTipsViewModel.clearEvent()
     }
-
-    NotificationPermissionLaunchedEffect(
-        shouldRequestPermissions = !homeUiState.isQuest &&
-            onBoardingTipsUiState.event == OnBoardingTipsEvent.RequestNotificationPermission,
-        onPermissionRequested = onBoardingTipsViewModel::clearEvent,
-        onPermissionChanged = onBoardingTipsViewModel::onNotificationPermissionChanged
-    )
 
     val scope = rememberCoroutineScope()
     val bottomSheetState = rememberModalBottomSheetState(

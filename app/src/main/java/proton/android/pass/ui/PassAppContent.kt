@@ -20,13 +20,18 @@ package proton.android.pass.ui
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.EnterTransition
+import androidx.compose.animation.ExitTransition
 import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.tween
+import androidx.compose.animation.expandVertically
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
+import androidx.compose.animation.shrinkVertically
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -45,6 +50,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.key
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -58,6 +64,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.google.accompanist.navigation.material.ExperimentalMaterialNavigationApi
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.R
@@ -73,9 +80,14 @@ import proton.android.pass.composecomponents.impl.messages.OfflineIndicator
 import proton.android.pass.composecomponents.impl.messages.PassSnackbarHost
 import proton.android.pass.composecomponents.impl.messages.rememberPassSnackbarHostState
 import proton.android.pass.composecomponents.impl.snackbar.SnackBarLaunchedEffect
+import proton.android.pass.domain.inappmessages.InAppMessage
 import proton.android.pass.domain.inappmessages.InAppMessageId
 import proton.android.pass.domain.inappmessages.InAppMessageKey
 import proton.android.pass.features.auth.AuthOrigin
+import proton.android.pass.features.home.localinappmessages.LocalInAppMessageBanner
+import proton.android.pass.features.home.localinappmessages.LocalInAppMessagesEvent
+import proton.android.pass.features.home.localinappmessages.NotificationPermissionLaunchedEffect
+import proton.android.pass.features.sl.sync.settings.navigation.SimpleLoginSyncSettingsNavItem
 import proton.android.pass.features.featureflags.FeatureFlagRoute
 import proton.android.pass.features.home.HomeNavItem
 import proton.android.pass.features.home.HomeSnackbarMessageWithAction
@@ -104,6 +116,14 @@ import proton.android.pass.ui.navigation.appGraph
 import proton.android.pass.ui.navigation.unAuthGraph
 
 private const val PROTON_RECOVER_URL = "https://proton.me/support/recover-encrypted-messages-files"
+private const val BANNER_ANIM_DURATION_MS = 300
+
+private fun InAppMessage.Banner.stableId(): String = when (this) {
+    is InAppMessage.Local.Autofill -> "local:autofill"
+    is InAppMessage.Local.NotificationPermission -> "local:notification"
+    is InAppMessage.Local.SLSync -> "local:slsync"
+    is InAppMessage.Remote.Banner -> id.value
+}
 
 
 @OptIn(ExperimentalMaterialNavigationApi::class)
@@ -117,6 +137,10 @@ fun PassAppContent(
     onInAppMessageBannerDisplayed: (InAppMessageKey) -> Unit,
     onInAppMessageBannerCTAClicked: (InAppMessageKey) -> Unit,
     onCompleteUpdate: () -> Unit,
+    onLocalInAppMessageDismiss: (InAppMessage.Local) -> Unit,
+    onLocalInAppMessageClick: (InAppMessage.Local) -> Unit,
+    onLocalInAppMessageEventConsumed: () -> Unit,
+    onNotificationPermissionChanged: (Boolean) -> Unit,
     needsAuth: Boolean,
     supportPayment: Boolean
 ) {
@@ -148,6 +172,7 @@ fun PassAppContent(
         animationSpec = tween(),
         label = "BannerBottomPadding"
     )
+    val localInAppMessageEvent = appUiState.localInAppMessageEvent
 
     SnackBarLaunchedEffect(
         snackBarMessage = appUiState.snackbarMessage.value(),
@@ -194,6 +219,34 @@ fun PassAppContent(
     }
     val shouldShowBottomBar = !needsAuth && bottomBarSelected != BottomBarSelection.None
     val bottomSheetJob: MutableState<Job?> = remember { mutableStateOf(null) }
+
+    var shouldRequestNotificationPermission by remember { mutableStateOf(false) }
+
+    NotificationPermissionLaunchedEffect(
+        shouldRequestPermissions = shouldRequestNotificationPermission,
+        onPermissionRequested = {
+            shouldRequestNotificationPermission = false
+            onLocalInAppMessageEventConsumed()
+        },
+        onPermissionChanged = onNotificationPermissionChanged
+    )
+
+    LaunchedEffect(localInAppMessageEvent) {
+        when (val event = localInAppMessageEvent) {
+            is LocalInAppMessagesEvent.OpenSLSyncSettings -> {
+                appNavigator.navigate(
+                    destination = SimpleLoginSyncSettingsNavItem,
+                    route = SimpleLoginSyncSettingsNavItem.createNavRoute(event.shareId)
+                )
+                onLocalInAppMessageEventConsumed()
+            }
+            LocalInAppMessagesEvent.RequestNotificationPermission -> {
+                shouldRequestNotificationPermission = true
+            }
+            LocalInAppMessagesEvent.Unknown -> {}
+        }
+    }
+
     Scaffold(
         modifier = modifier,
         scaffoldState = scaffoldState,
@@ -231,6 +284,7 @@ fun PassAppContent(
         }
     ) { contentPadding ->
         InternalDrawer(
+            bottomPadding = contentPadding.calculateBottomPadding(),
             drawerState = internalDrawerState,
             onOpenFeatureFlag = {
                 appNavigator.navigate(FeatureFlagRoute)
@@ -338,41 +392,98 @@ fun PassAppContent(
                         }
                     }
 
-                    var isBannerVisible by remember { mutableStateOf(false) }
-                    LaunchedEffect(appUiState.inAppMessage, appNavigator.currentRoute) {
-                        isBannerVisible = appUiState.inAppMessage != null &&
-                            appNavigator.currentRoute == HomeNavItem.route
+                    // Local display list: mirrors ViewModel but keeps items alive during exit animation
+                    var displayMessages by remember { mutableStateOf(emptyList<InAppMessage.Banner>()) }
+                    var dismissingIds by remember { mutableStateOf(emptySet<String>()) }
+
+                    LaunchedEffect(appUiState.inAppMessages) {
+                        val incomingIds = appUiState.inAppMessages.map { it.stableId() }.toSet()
+                        val kept = displayMessages.filter { msg ->
+                            msg.stableId() in incomingIds || msg.stableId() in dismissingIds
+                        }
+                        val arrivals = appUiState.inAppMessages.filterNot { msg ->
+                            kept.any { it.stableId() == msg.stableId() }
+                        }
+                        displayMessages = kept + arrivals
                     }
+
+                    val animateDismiss: (String, () -> Unit) -> Unit = remember(coroutineScope) {
+                        { id, realDismiss ->
+                            dismissingIds = dismissingIds + id
+                            coroutineScope.launch {
+                                delay(BANNER_ANIM_DURATION_MS.toLong())
+                                displayMessages = displayMessages.filterNot { it.stableId() == id }
+                                realDismiss()
+                                dismissingIds = dismissingIds - id
+                            }
+                        }
+                    }
+
                     AnimatedVisibility(
                         modifier = Modifier.align(Alignment.BottomCenter),
-                        visible = isBannerVisible,
-                        enter = slideInVertically { it } + fadeIn(),
-                        exit = slideOutVertically { it } + fadeOut()
+                        visible = displayMessages.isNotEmpty() &&
+                            appNavigator.currentRoute == HomeNavItem.route,
+                        enter = EnterTransition.None,
+                        exit = ExitTransition.None
                     ) {
-                        if (appUiState.inAppMessage == null) return@AnimatedVisibility
-                        InAppMessageBanner(
+                        Column(
                             modifier = Modifier.padding(bottom = bannerBottomPadding),
-                            inAppMessage = appUiState.inAppMessage,
-                            onDismiss = { userId, id, key ->
-                                onInAppMessageBannerRead(userId, id, key)
-                                isBannerVisible = false
-                            },
-                            onInternalCTAClick = { userId, id, key, value ->
-                                onInAppMessageBannerRead(userId, id, key)
-                                onInAppMessageBannerCTAClicked(key)
-                                appNavigator.navigateToDeeplink(value)
-                                isBannerVisible = false
-                            },
-                            onExternalCTAClick = { userId, id, key, value ->
-                                onInAppMessageBannerRead(userId, id, key)
-                                onInAppMessageBannerCTAClicked(key)
-                                isBannerVisible = false
-                                BrowserUtils.openWebsite(context, value)
-                            },
-                            onDisplay = { key ->
-                                onInAppMessageBannerDisplayed(key)
+                            verticalArrangement = Arrangement.spacedBy(Spacing.small)
+                        ) {
+                            displayMessages.forEach { message ->
+                                val msgId = message.stableId()
+
+                                key(msgId) {
+                                    var entered by remember { mutableStateOf(false) }
+                                    LaunchedEffect(Unit) { entered = true }
+
+                                    AnimatedVisibility(
+                                        visible = entered && msgId !in dismissingIds,
+                                        enter = fadeIn(tween(BANNER_ANIM_DURATION_MS)) +
+                                            expandVertically(tween(BANNER_ANIM_DURATION_MS)) +
+                                            slideInVertically(tween(BANNER_ANIM_DURATION_MS)) { it / 2 },
+                                        exit = fadeOut(tween(BANNER_ANIM_DURATION_MS)) +
+                                            shrinkVertically(tween(BANNER_ANIM_DURATION_MS)) +
+                                            slideOutVertically(tween(BANNER_ANIM_DURATION_MS)) { it / 2 }
+                                    ) {
+                                        when (message) {
+                                            is InAppMessage.Local -> LocalInAppMessageBanner(
+                                                message = message,
+                                                onClick = { onLocalInAppMessageClick(message) },
+                                                onDismiss = {
+                                                    animateDismiss(msgId) {
+                                                        onLocalInAppMessageDismiss(message)
+                                                    }
+                                                }
+                                            )
+                                            is InAppMessage.Remote.Banner -> InAppMessageBanner(
+                                                inAppMessage = message,
+                                                onDismiss = { userId, id, key ->
+                                                    animateDismiss(msgId) {
+                                                        onInAppMessageBannerRead(userId, id, key)
+                                                    }
+                                                },
+                                                onInternalCTAClick = { userId, id, key, value ->
+                                                    animateDismiss(msgId) {
+                                                        onInAppMessageBannerRead(userId, id, key)
+                                                    }
+                                                    onInAppMessageBannerCTAClicked(key)
+                                                    appNavigator.navigateToDeeplink(value)
+                                                },
+                                                onExternalCTAClick = { userId, id, key, value ->
+                                                    animateDismiss(msgId) {
+                                                        onInAppMessageBannerRead(userId, id, key)
+                                                    }
+                                                    onInAppMessageBannerCTAClicked(key)
+                                                    BrowserUtils.openWebsite(context, value)
+                                                },
+                                                onDisplay = { key -> onInAppMessageBannerDisplayed(key) }
+                                            )
+                                        }
+                                    }
+                                }
                             }
-                        )
+                        }
                     }
                 }
             }

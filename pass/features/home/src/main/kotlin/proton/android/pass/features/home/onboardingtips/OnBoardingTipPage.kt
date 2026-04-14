@@ -19,19 +19,12 @@
 package proton.android.pass.features.home.onboardingtips
 
 import proton.android.pass.domain.PendingInvite
-import proton.android.pass.domain.ShareId
 
 sealed interface OnBoardingTipPage {
-
-    data object Autofill : OnBoardingTipPage
 
     data class Invite(
         val pendingInvite: PendingInvite,
         val groupName: String? = null
     ) : OnBoardingTipPage
-
-    data object NotificationPermission : OnBoardingTipPage
-
-    data class SLSync(val aliasCount: Int, val shareId: ShareId?) : OnBoardingTipPage
 
 }

@@ -18,36 +18,21 @@
 
 package proton.android.pass.features.home
 
-import android.os.Build
 import app.cash.turbine.test
 import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import proton.android.pass.appconfig.fakes.FakeAppConfig
-import proton.android.pass.autofill.api.AutofillStatus
-import proton.android.pass.autofill.api.AutofillSupportedStatus
-import proton.android.pass.autofill.fakes.FakeAutofillManager
 import proton.android.pass.common.api.some
 import proton.android.pass.data.fakes.repositories.FakeGroupRepository
 import proton.android.pass.data.fakes.usecases.FakeObserveCurrentUser
 import proton.android.pass.data.fakes.usecases.FakeObserveInvites
-import proton.android.pass.data.fakes.usecases.simplelogin.FakeObserveSimpleLoginSyncStatus
-import proton.android.pass.domain.simplelogin.SimpleLoginSyncStatus
-import proton.android.pass.features.home.onboardingtips.OnBoardingTipPage.Autofill
 import proton.android.pass.features.home.onboardingtips.OnBoardingTipPage.Invite
-import proton.android.pass.features.home.onboardingtips.OnBoardingTipPage.NotificationPermission
 import proton.android.pass.features.home.onboardingtips.OnBoardingTipsUiState
 import proton.android.pass.features.home.onboardingtips.OnBoardingTipsViewModel
-import proton.android.pass.notifications.fakes.FakeNotificationManager
-import proton.android.pass.preferences.HasDismissedAutofillBanner
-import proton.android.pass.preferences.HasDismissedNotificationBanner
-import proton.android.pass.preferences.HasDismissedSLSyncBanner
-import proton.android.pass.preferences.FakePreferenceRepository
 import proton.android.pass.test.MainDispatcherRule
 import proton.android.pass.test.domain.PendingInviteTestFactory
-import proton.android.pass.test.domain.VaultTestFactory
 
 class OnBoardingTipsViewModelTest {
 
@@ -55,168 +40,32 @@ class OnBoardingTipsViewModelTest {
     val dispatcherRule = MainDispatcherRule()
 
     private lateinit var viewModel: OnBoardingTipsViewModel
-    private lateinit var preferenceRepository: FakePreferenceRepository
-    private lateinit var autofillManager: FakeAutofillManager
     private lateinit var observeInvites: FakeObserveInvites
-    private lateinit var notificationManager: FakeNotificationManager
-    private lateinit var appConfig: FakeAppConfig
-    private lateinit var observeSimpleLoginSyncStatus: FakeObserveSimpleLoginSyncStatus
 
     @Before
     fun setUp() {
-        preferenceRepository = FakePreferenceRepository()
-        autofillManager = FakeAutofillManager()
         observeInvites = FakeObserveInvites()
-        notificationManager = FakeNotificationManager()
-        appConfig = FakeAppConfig()
-        observeSimpleLoginSyncStatus = FakeObserveSimpleLoginSyncStatus()
         viewModel = OnBoardingTipsViewModel(
-            autofillManager = autofillManager,
-            preferencesRepository = preferenceRepository,
             observeInvites = observeInvites,
             observeCurrentUser = FakeObserveCurrentUser(),
-            groupRepository = FakeGroupRepository(),
-            notificationManager = notificationManager,
-            appConfig = appConfig,
-            observeSimpleLoginSyncStatus = observeSimpleLoginSyncStatus
+            groupRepository = FakeGroupRepository()
         )
     }
 
     @Test
-    fun `Should not show banner if autofill is unsupported`() = runTest {
-        setupSyncStatus()
-        autofillManager.emitStatus(AutofillSupportedStatus.Unsupported)
-        preferenceRepository.setHasDismissedAutofillBanner(HasDismissedAutofillBanner.NotDismissed)
+    fun `Should not show tip when there are no invites`() = runTest {
         viewModel.stateFlow.test {
             assertThat(awaitItem()).isEqualTo(OnBoardingTipsUiState())
         }
     }
 
     @Test
-    fun `Should not show banner if autofill is enabled by our service`() = runTest {
-        setupSyncStatus()
-        autofillManager.emitStatus(AutofillSupportedStatus.Supported(AutofillStatus.EnabledByOurService))
-        preferenceRepository.setHasDismissedAutofillBanner(HasDismissedAutofillBanner.NotDismissed)
-        viewModel.stateFlow.test {
-            assertThat(awaitItem()).isEqualTo(OnBoardingTipsUiState())
-        }
-    }
-
-    @Test
-    fun `Should show banner if autofill is enabled by other service`() = runTest {
-        setupSyncStatus()
-        autofillManager.emitStatus(AutofillSupportedStatus.Supported(AutofillStatus.EnabledByOtherService))
-        preferenceRepository.setHasDismissedAutofillBanner(HasDismissedAutofillBanner.NotDismissed)
-        viewModel.stateFlow.test {
-            assertThat(awaitItem()).isEqualTo(OnBoardingTipsUiState(Autofill.some()))
-        }
-    }
-
-    @Test
-    fun `Should show banner if autofill is disabled `() = runTest {
-        setupSyncStatus()
-        autofillManager.emitStatus(AutofillSupportedStatus.Supported(AutofillStatus.Disabled))
-        preferenceRepository.setHasDismissedAutofillBanner(HasDismissedAutofillBanner.NotDismissed)
-        viewModel.stateFlow.test {
-            assertThat(awaitItem()).isEqualTo(OnBoardingTipsUiState(Autofill.some()))
-        }
-    }
-
-    @Test
-    fun `Should not show banner if autofill banner has been dismised`() = runTest {
-        setupSyncStatus()
-        autofillManager.emitStatus(AutofillSupportedStatus.Supported(AutofillStatus.Disabled))
-        preferenceRepository.setHasDismissedAutofillBanner(HasDismissedAutofillBanner.Dismissed)
-        viewModel.stateFlow.test {
-            assertThat(awaitItem()).isEqualTo(OnBoardingTipsUiState())
-        }
-    }
-
-    @Test
-    fun `Should display invite banner regardless of the state of the other conditions`() = runTest {
+    fun `Should show invite tip when there is a pending invite`() = runTest {
         val pendingInvite = PendingInviteTestFactory.Vault.create()
-        setupSyncStatus()
-        autofillManager.emitStatus(AutofillSupportedStatus.Supported(AutofillStatus.Disabled))
-        preferenceRepository.setHasDismissedAutofillBanner(HasDismissedAutofillBanner.NotDismissed)
         observeInvites.emitInvites(listOf(pendingInvite))
 
         viewModel.stateFlow.test {
             assertThat(awaitItem()).isEqualTo(OnBoardingTipsUiState(Invite(pendingInvite).some()))
         }
-    }
-
-    @Test
-    fun `Should display notification permission banner if not notification permission and banner not dismissed`() =
-        runTest {
-            setupSyncStatus()
-            notificationManager.setHasNotificationPermission(false)
-            viewModel.onNotificationPermissionChanged(false)
-            preferenceRepository.setHasDismissedNotificationBanner(HasDismissedNotificationBanner.NotDismissed)
-            appConfig.setAndroidVersion(Build.VERSION_CODES.TIRAMISU)
-
-            viewModel.stateFlow.test {
-                assertThat(awaitItem()).isEqualTo(OnBoardingTipsUiState(NotificationPermission.some()))
-            }
-        }
-
-    @Test
-    fun `Should not display notification permission if has permission and banner not dismissed`() = runTest {
-        setupSyncStatus()
-        notificationManager.setHasNotificationPermission(true)
-        viewModel.onNotificationPermissionChanged(true)
-        preferenceRepository.setHasDismissedNotificationBanner(HasDismissedNotificationBanner.NotDismissed)
-        appConfig.setAndroidVersion(Build.VERSION_CODES.TIRAMISU)
-
-        viewModel.stateFlow.test {
-            assertThat(awaitItem().tipToShow).isNotEqualTo(NotificationPermission)
-        }
-    }
-
-    @Test
-    fun `Should not display notification permission if not permission and banner dismissed`() = runTest {
-        setupSyncStatus()
-        notificationManager.setHasNotificationPermission(false)
-        viewModel.onNotificationPermissionChanged(false)
-        preferenceRepository.setHasDismissedNotificationBanner(HasDismissedNotificationBanner.Dismissed)
-        appConfig.setAndroidVersion(Build.VERSION_CODES.TIRAMISU)
-
-        viewModel.stateFlow.test {
-            assertThat(awaitItem().tipToShow).isNotEqualTo(NotificationPermission)
-        }
-    }
-
-    @Test
-    fun `Should not display notification permission if not permission and banner not dismissed but version LT 13`() =
-        runTest {
-            setupSyncStatus()
-            notificationManager.setHasNotificationPermission(false)
-            viewModel.onNotificationPermissionChanged(false)
-            preferenceRepository.setHasDismissedNotificationBanner(HasDismissedNotificationBanner.Dismissed)
-            appConfig.setAndroidVersion(Build.VERSION_CODES.BASE)
-
-            viewModel.stateFlow.test {
-                assertThat(awaitItem().tipToShow).isNotEqualTo(NotificationPermission)
-            }
-        }
-
-    @Test
-    fun `Should not display SL sync if banner dismissed`() = runTest {
-        setupSyncStatus()
-        preferenceRepository.setHasDismissedSLSyncBanner(HasDismissedSLSyncBanner.Dismissed)
-
-        viewModel.stateFlow.test {
-            assertThat(awaitItem().tipToShow).isNotEqualTo(NotificationPermission)
-        }
-    }
-
-    private fun setupSyncStatus() {
-        val syncStatus = SimpleLoginSyncStatus(
-            isSyncEnabled = false,
-            isPreferenceEnabled = false,
-            pendingAliasCount = 0,
-            defaultVault = VaultTestFactory.create(),
-            canManageAliases = false
-        )
-        observeSimpleLoginSyncStatus.updateSyncStatus(syncStatus)
     }
 }

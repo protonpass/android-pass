@@ -23,7 +23,6 @@ import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.domain.InviteId
 import proton.android.pass.domain.InviteToken
-import proton.android.pass.domain.ShareId
 
 sealed interface OnBoardingTipsEvent {
 
@@ -34,11 +33,6 @@ sealed interface OnBoardingTipsEvent {
 
     @JvmInline
     value class OpenGroupInviteScreen(val inviteId: InviteId) : OnBoardingTipsEvent
-
-    @JvmInline
-    value class OpenSLSyncSettingsScreen(val shareId: ShareId?) : OnBoardingTipsEvent
-
-    data object RequestNotificationPermission : OnBoardingTipsEvent
 
 }
 

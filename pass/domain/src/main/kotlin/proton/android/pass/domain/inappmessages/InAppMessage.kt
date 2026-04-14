@@ -21,6 +21,7 @@ package proton.android.pass.domain.inappmessages
 import kotlinx.datetime.Instant
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.Option
+import proton.android.pass.domain.ShareId
 
 @JvmInline
 value class InAppMessageId(val value: String)
@@ -28,30 +29,41 @@ value class InAppMessageId(val value: String)
 @JvmInline
 value class InAppMessageKey(val value: String)
 
-sealed class InAppMessage {
-    abstract val id: InAppMessageId
-    abstract val key: InAppMessageKey
-    abstract val priority: Int
-    abstract val title: String
-    abstract val message: Option<String>
-    abstract val imageUrl: Option<String>
-    abstract val cta: Option<InAppMessageCTA>
-    abstract val state: InAppMessageStatus
-    abstract val range: InAppMessageRange
-    abstract val userId: UserId
+sealed interface InAppMessage {
 
-    data class Banner(
-        override val id: InAppMessageId,
-        override val key: InAppMessageKey,
-        override val priority: Int,
-        override val title: String,
-        override val message: Option<String>,
-        override val imageUrl: Option<String>,
-        override val cta: Option<InAppMessageCTA>,
-        override val state: InAppMessageStatus,
-        override val range: InAppMessageRange,
-        override val userId: UserId
-    ) : InAppMessage()
+    sealed interface Banner : InAppMessage
+
+    sealed interface Local : Banner {
+        data object Autofill : Local
+        data object NotificationPermission : Local
+        data class SLSync(val aliasCount: Int, val shareId: ShareId?) : Local
+    }
+
+    sealed interface Remote : InAppMessage {
+        val id: InAppMessageId
+        val key: InAppMessageKey
+        val priority: Int
+        val title: String
+        val message: Option<String>
+        val imageUrl: Option<String>
+        val cta: Option<InAppMessageCTA>
+        val state: InAppMessageStatus
+        val range: InAppMessageRange
+        val userId: UserId
+
+        data class Banner(
+            override val id: InAppMessageId,
+            override val key: InAppMessageKey,
+            override val priority: Int,
+            override val title: String,
+            override val message: Option<String>,
+            override val imageUrl: Option<String>,
+            override val cta: Option<InAppMessageCTA>,
+            override val state: InAppMessageStatus,
+            override val range: InAppMessageRange,
+            override val userId: UserId
+        ) : Remote, InAppMessage.Banner
+    }
 
     data class Modal(
         override val id: InAppMessageId,
@@ -64,7 +76,7 @@ sealed class InAppMessage {
         override val state: InAppMessageStatus,
         override val range: InAppMessageRange,
         override val userId: UserId
-    ) : InAppMessage()
+    ) : Remote
 
     data class Promo(
         override val id: InAppMessageId,
@@ -78,7 +90,7 @@ sealed class InAppMessage {
         override val range: InAppMessageRange,
         override val userId: UserId,
         val promoContents: InAppMessagePromoContents
-    ) : InAppMessage()
+    ) : Remote
 }
 
 const val STATUS_UNREAD = 0

@@ -48,6 +48,19 @@ class InAppMessagesRepositoryImpl @Inject constructor(
         local.observePromoMinimizedUserMessages(userId, currentTimestamp)
             .distinctUntilChanged()
 
+    override fun observeAllDeliverableBannerMessages(
+        userId: UserId,
+        currentTimestamp: Long,
+        refreshOnStart: Boolean
+    ): Flow<List<InAppMessage.Remote.Banner>> = flow {
+        if (refreshOnStart) {
+            refreshUserMessages(userId)
+        }
+        emit(Unit)
+    }.flatMapLatest {
+        local.observeAllDeliverableBannerMessages(userId, currentTimestamp)
+    }.distinctUntilChanged()
+
     override fun observeTopDeliverableUserMessage(
         userId: UserId,
         currentTimestamp: Long,
@@ -61,9 +74,13 @@ class InAppMessagesRepositoryImpl @Inject constructor(
         local.observeTopDeliverableUserMessage(userId, currentTimestamp)
     }.distinctUntilChanged()
 
+    override suspend fun storeMessages(userId: UserId, messages: List<InAppMessage.Remote>) {
+        local.storeMessages(userId, messages)
+    }
+
     override suspend fun refreshUserMessages(userId: UserId) {
         coroutineScope {
-            val allMessages = mutableListOf<InAppMessage>()
+            val allMessages = mutableListOf<InAppMessage.Remote>()
             var lastID: String? = null
             safeRunCatching {
                 do {
@@ -89,9 +106,10 @@ class InAppMessagesRepositoryImpl @Inject constructor(
                     }
                 val regularImages = allMessages.mapNotNull { message ->
                     when (message) {
-                        is InAppMessage.Banner -> message.imageUrl.value()
+                        is InAppMessage.Remote.Banner -> message.imageUrl.value()
                         is InAppMessage.Modal -> message.imageUrl.value()
                         is InAppMessage.Promo -> message.imageUrl.value()
+                        else -> null
                     }
                 }
                 imagePreloader.preloadImages((promoImages + regularImages).toSet())
@@ -108,16 +126,21 @@ class InAppMessagesRepositoryImpl @Inject constructor(
         messageId: InAppMessageId,
         status: InAppMessageStatus
     ) {
-        remote.changeMessageStatus(userId, messageId, status)
-
         val originalMessage = local.observeUserMessage(userId, messageId).first()
         val updatedMessage = when (originalMessage) {
-            is InAppMessage.Banner -> originalMessage.copy(state = status)
+            is InAppMessage.Remote.Banner -> originalMessage.copy(state = status)
             is InAppMessage.Modal -> originalMessage.copy(state = status)
             is InAppMessage.Promo -> originalMessage.copy(state = status)
+            else -> error("Unexpected InAppMessage type for status update: $originalMessage")
         }
-
         local.updateMessage(userId, updatedMessage)
+
+        safeRunCatching {
+            remote.changeMessageStatus(userId, messageId, status)
+        }.onFailure {
+            PassLogger.w(TAG, "Failed to update in-app message status remotely for $messageId")
+            PassLogger.w(TAG, it)
+        }
     }
 
     override fun observeUserMessage(userId: UserId, inAppMessageId: InAppMessageId): Flow<InAppMessage> =

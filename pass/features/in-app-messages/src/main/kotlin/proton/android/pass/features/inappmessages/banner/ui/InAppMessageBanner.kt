@@ -69,7 +69,7 @@ import me.proton.core.presentation.R as CoreR
 @Composable
 fun InAppMessageBanner(
     modifier: Modifier = Modifier,
-    inAppMessage: InAppMessage,
+    inAppMessage: InAppMessage.Remote.Banner,
     onInternalCTAClick: (UserId, InAppMessageId, InAppMessageKey, String) -> Unit,
     onExternalCTAClick: (UserId, InAppMessageId, InAppMessageKey, String) -> Unit,
     onDismiss: (UserId, InAppMessageId, InAppMessageKey) -> Unit,
@@ -194,7 +194,7 @@ fun InAppBannerPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Bo
     PassTheme(isDark = isDark) {
         Surface {
             InAppMessageBanner(
-                inAppMessage = InAppMessage.Banner(
+                inAppMessage = InAppMessage.Remote.Banner(
                     id = InAppMessageId("1"),
                     key = InAppMessageKey(""),
                     userId = UserId(""),

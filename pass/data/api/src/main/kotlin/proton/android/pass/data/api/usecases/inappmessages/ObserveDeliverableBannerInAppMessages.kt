@@ -23,5 +23,5 @@ import me.proton.core.domain.entity.UserId
 import proton.android.pass.domain.inappmessages.InAppMessage
 
 interface ObserveDeliverableBannerInAppMessages {
-    operator fun invoke(userId: UserId? = null, refresh: Boolean = false): Flow<InAppMessage.Banner?>
+    operator fun invoke(userId: UserId? = null, refresh: Boolean = false): Flow<List<InAppMessage.Remote.Banner>>
 }

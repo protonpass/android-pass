@@ -31,7 +31,12 @@ interface LocalInAppMessagesDataSource {
 
     fun observeTopDeliverableUserMessage(userId: UserId, currentTimestamp: Long): Flow<InAppMessage?>
 
-    suspend fun storeMessages(userId: UserId, messages: List<InAppMessage>)
+    fun observeAllDeliverableBannerMessages(
+        userId: UserId,
+        currentTimestamp: Long
+    ): Flow<List<InAppMessage.Remote.Banner>>
 
-    suspend fun updateMessage(userId: UserId, message: InAppMessage)
+    suspend fun storeMessages(userId: UserId, messages: List<InAppMessage.Remote>)
+
+    suspend fun updateMessage(userId: UserId, message: InAppMessage.Remote)
 }

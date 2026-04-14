@@ -18,6 +18,7 @@
 
 package proton.android.pass.features.sharing.manage.item.ui
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -26,23 +27,30 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextOverflow
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.composecomponents.impl.container.CircleTextIcon
 import proton.android.pass.composecomponents.impl.item.icon.ThreeDotsMenuButton
 import proton.android.pass.composecomponents.impl.text.Text
+import proton.android.pass.domain.GroupId
 import proton.android.pass.domain.shares.SharePendingInvite
 import proton.android.pass.features.sharing.R
 import proton.android.pass.features.sharing.common.toShortSummary
+import proton.android.pass.composecomponents.impl.R as CompR
 
 @Composable
 internal fun ManageItemPendingInviteRow(
     modifier: Modifier = Modifier,
     pendingInvite: SharePendingInvite,
     displayName: String = pendingInvite.email,
+    groupId: GroupId? = null,
+    memberCount: Int = 0,
     isRenameAdminToManagerEnabled: Boolean,
-    onMenuOptionsClick: (SharePendingInvite) -> Unit
+    onMenuOptionsClick: (SharePendingInvite) -> Unit,
+    onViewGroupMembersClick: (GroupId) -> Unit = {}
 ) {
     val subtitleText = when (pendingInvite) {
         is SharePendingInvite.ExistingUser -> {
@@ -82,9 +90,34 @@ internal fun ManageItemPendingInviteRow(
                 .weight(weight = 1f, fill = true),
             verticalArrangement = Arrangement.spacedBy(space = Spacing.extraSmall)
         ) {
-            Text.Body2Regular(
-                text = pendingInvite.email
-            )
+            if (groupId != null) {
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(space = Spacing.extraSmall)
+                ) {
+                    Text.Body2Regular(
+                        modifier = Modifier.weight(1f, fill = false),
+                        text = displayName,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis
+                    )
+                    val membersLabel = "(${
+                        pluralStringResource(CompR.plurals.members_count, memberCount, memberCount)
+                    })"
+                    val membersModifier = if (memberCount > 0) {
+                        Modifier.clickable { onViewGroupMembersClick(groupId) }
+                    } else {
+                        Modifier
+                    }
+                    Text.Body2Regular(
+                        modifier = membersModifier,
+                        text = membersLabel,
+                        color = PassTheme.colors.interactionNormMajor2
+                    )
+                }
+            } else {
+                Text.Body2Regular(text = displayName)
+            }
 
             Text.Body2Regular(
                 text = subtitleText,

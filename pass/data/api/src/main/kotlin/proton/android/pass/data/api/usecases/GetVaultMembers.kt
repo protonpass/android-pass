@@ -41,7 +41,10 @@ sealed class VaultMember(open val email: String) {
 
     data class InvitePending(
         override val email: String,
-        val inviteId: InviteId
+        val inviteId: InviteId,
+        val displayName: String = email,
+        val groupId: GroupId? = null,
+        val memberCount: Int = 0
     ) : VaultMember(email)
 
     data class NewUserInvitePending(
@@ -49,7 +52,10 @@ sealed class VaultMember(open val email: String) {
         val newUserInviteId: NewUserInviteId,
         val role: ShareRole,
         val signature: String,
-        val inviteState: InviteState
+        val inviteState: InviteState,
+        val displayName: String = email,
+        val groupId: GroupId? = null,
+        val memberCount: Int = 0
     ) : VaultMember(email) {
 
         enum class InviteState {

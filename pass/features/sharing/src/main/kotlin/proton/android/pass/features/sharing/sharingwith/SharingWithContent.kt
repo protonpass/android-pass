@@ -203,7 +203,11 @@ internal fun SharingWithContent(
                             text = label,
                             isError = false,
                             onRemoveClick = { onEvent(SharingWithUiEvent.ChipGroupRemoveClick(group.id)) },
-                            onLabelClick = { onEvent(SharingWithUiEvent.ChipGroupNameClick(group.id)) }
+                            onLabelClick = if (group.memberCount > 0) {
+                                { onEvent(SharingWithUiEvent.ChipGroupNameClick(group.id)) }
+                            } else {
+                                {}
+                            }
                         )
                     }
 

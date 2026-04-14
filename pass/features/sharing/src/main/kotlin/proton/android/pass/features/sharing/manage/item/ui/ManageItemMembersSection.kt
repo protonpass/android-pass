@@ -32,6 +32,7 @@ import proton.android.pass.composecomponents.impl.form.PassDivider
 import proton.android.pass.composecomponents.impl.text.Text
 import proton.android.pass.data.api.usecases.GroupMembers
 import proton.android.pass.domain.GroupId
+import proton.android.pass.domain.GroupMemberState
 import proton.android.pass.domain.Vault
 import proton.android.pass.domain.shares.ShareMember
 import proton.android.pass.domain.shares.SharePendingInvite
@@ -95,12 +96,15 @@ internal fun ManageItemMembersSection(
             }
 
             pendingInvites.forEach { pendingInvite ->
-                val displayName = groupsByEmail[pendingInvite.email]?.group?.name ?: pendingInvite.email
+                val groupInfo = groupsByEmail[pendingInvite.email]
                 ManageItemPendingInviteRow(
                     pendingInvite = pendingInvite,
-                    displayName = displayName,
+                    displayName = groupInfo?.group?.name ?: pendingInvite.email,
+                    groupId = groupInfo?.group?.id,
+                    memberCount = groupInfo?.members?.count { it.state == GroupMemberState.Active.value } ?: 0,
                     isRenameAdminToManagerEnabled = isRenameAdminToManagerEnabled,
-                    onMenuOptionsClick = onPendingInviteMenuOptionsClick
+                    onMenuOptionsClick = onPendingInviteMenuOptionsClick,
+                    onViewGroupMembersClick = onViewGroupMembersClick
                 )
 
                 PassDivider()
@@ -117,7 +121,7 @@ internal fun ManageItemMembersSection(
                     isRenameAdminToManagerEnabled = isRenameAdminToManagerEnabled,
                     groupId = groupInfo?.group?.id,
                     groupName = groupInfo?.group?.name,
-                    memberCount = groupInfo?.members?.size ?: 0,
+                    memberCount = groupInfo?.members?.count { it.state == GroupMemberState.Active.value } ?: 0,
                     onMenuOptionsClick = onMemberMenuOptionsClick,
                     onViewGroupMembersClick = onViewGroupMembersClick
                 )

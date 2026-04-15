@@ -6,6 +6,12 @@
 
 ### Other
 
+## 1.39.1 (2026-04-15)
+
+### Fixes :bug:
+
+- Bug fixes and improvements.
+
 ## 1.39.0 (2026-04-10)
 
 ### Features :tada:

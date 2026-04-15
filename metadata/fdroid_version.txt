@@ -1,2 +1,2 @@
-versionName=1.39.0
-versionCode=13900000
+versionName=1.39.1
+versionCode=13901000

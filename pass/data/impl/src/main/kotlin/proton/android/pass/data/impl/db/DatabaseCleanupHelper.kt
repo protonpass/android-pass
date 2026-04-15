@@ -36,8 +36,8 @@ class DatabaseCleanupHelper @Inject constructor(
         safeRunCatching {
             val db = database.openHelper.writableDatabase
 
-            db.query("PRAGMA wal_checkpoint(PASSIVE)").close()
-            PassLogger.d(TAG, "Performed passive WAL checkpoint")
+            db.query("PRAGMA wal_checkpoint(TRUNCATE)").close()
+            PassLogger.d(TAG, "Performed truncate WAL checkpoint")
 
             PassLogger.i(TAG, "Per-user cleanup completed successfully")
         }.onFailure { e ->

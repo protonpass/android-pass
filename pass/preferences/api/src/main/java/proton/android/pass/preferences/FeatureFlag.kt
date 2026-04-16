@@ -71,5 +71,11 @@ enum class FeatureFlag(
         description = "allow user to create folders",
         key = "PassFolder",
         isEnabledDefault = false
+    ),
+    PASS_AUTOFILL_URL_REGEX(
+        title = "Autofill URL regex matching",
+        description = "Improve autofill domain matching using URL regex",
+        key = "PassAutofillUrlRegex",
+        isEnabledDefault = false
     )
 }

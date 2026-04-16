@@ -40,4 +40,5 @@ message FeatureFlagsPreferences {
   BoolFlagPrefProto pass_mobile_on_boarding_V2_enabled = 32;
   BoolFlagPrefProto pass_allow_credit_card_free_users = 33;
   BoolFlagPrefProto pass_folders_enabled = 34;
+  BoolFlagPrefProto pass_autofill_url_regex_enabled = 35;
 }

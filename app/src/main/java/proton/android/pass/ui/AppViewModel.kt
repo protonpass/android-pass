@@ -63,6 +63,7 @@ import proton.android.pass.network.api.NetworkMonitor
 import proton.android.pass.network.api.NetworkStatus
 import proton.android.pass.notifications.api.NotificationManager
 import proton.android.pass.notifications.api.SnackbarDispatcher
+import proton.android.pass.preferences.HasCompletedOnBoarding
 import proton.android.pass.preferences.HasDismissedAutofillBanner
 import proton.android.pass.preferences.HasDismissedNotificationBanner
 import proton.android.pass.preferences.HasDismissedSLSyncBanner
@@ -141,23 +142,35 @@ class AppViewModel @Inject constructor(
         listOfNotNull(notification, autofill, slSync)
     }.distinctUntilChanged()
 
+    private val systemStatusFlow = combine(
+        snackbarDispatcher.snackbarMessage,
+        networkStatus,
+        inAppUpdatesManager.observeInAppUpdateState()
+    ) { snackbar, net, update -> Triple(snackbar, net, update) }
+
+    private val bannersFlow = combine(
+        observeDeliverableBannerInAppMessages(),
+        localMessagesFlow,
+        localInAppMessageEventFlow,
+        preferencesRepository.getHasCompletedOnBoarding()
+    ) { banners, local, event, onboarding ->
+        val visibleBanners = if (onboarding == HasCompletedOnBoarding.Completed) {
+            (local + banners).take(MAX_VISIBLE_BANNERS)
+        } else {
+            emptyList()
+        }
+        Pair(visibleBanners, event)
+    }
+
     val appUiState: StateFlow<AppUiState> = combine(
-        combine(
-            snackbarDispatcher.snackbarMessage,
-            networkStatus,
-            inAppUpdatesManager.observeInAppUpdateState()
-        ) { snackbar, net, update -> Triple(snackbar, net, update) },
-        combine(
-            observeDeliverableBannerInAppMessages(),
-            localMessagesFlow,
-            localInAppMessageEventFlow
-        ) { banners, local, event -> Triple(banners, local, event) }
-    ) { (snackbar, net, update), (banners, local, event) ->
+        systemStatusFlow,
+        bannersFlow
+    ) { (snackbar, net, update), (messages, event) ->
         AppUiState(
             snackbarMessage = snackbar,
             networkStatus = net,
             inAppUpdateState = update,
-            inAppMessages = (local + banners).take(MAX_VISIBLE_BANNERS),
+            inAppMessages = messages,
             localInAppMessageEvent = event
         )
     }.stateIn(

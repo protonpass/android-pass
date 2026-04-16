@@ -107,7 +107,8 @@ private fun createLogin(
     packageInfoSet = type.packageInfoSet,
     primaryTotp = concealedOrEmpty(type.primaryTotp, decrypt),
     customFields = type.customFields.mapNotNull { it.toContent(decrypt, true) },
-    passkeys = type.passkeys
+    passkeys = type.passkeys,
+    autofillUrls = type.autofillUrls
 )
 
 private fun createNote(

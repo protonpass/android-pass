@@ -49,6 +49,7 @@ import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
 import proton.android.pass.commonui.api.toUiModel
 import proton.android.pass.commonuimodels.api.PackageInfoUi
+import proton.android.pass.commonuimodels.api.UIAutofillUrl
 import proton.android.pass.commonuimodels.api.UIPasskeyContent
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.crypto.api.context.EncryptionContext
@@ -363,6 +364,7 @@ class UpdateLoginViewModel @AssistedInject constructor(
                     primaryTotp = UIHiddenState.Revealed(encrypt(decryptedTotp), decryptedTotp),
                     customFields = customFieldHandler.sanitiseForEditingCustomFields(customFields),
                     passkeys = itemContents.passkeys.map { UIPasskeyContent.from(it) },
+                    autofillUrls = itemContents.autofillUrls.map { UIAutofillUrl.from(it) },
                     isExpandedByContent = itemContents.itemEmail.isNotBlank() && itemContents.itemUsername.isNotBlank()
                 )
             }

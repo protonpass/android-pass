@@ -140,7 +140,8 @@ class FakeObservePinnedItems @Inject constructor() : ObservePinnedItems {
                     primaryTotp
                 ),
                 customFields = emptyList(),
-                passkeys = emptyList()
+                passkeys = emptyList(),
+                autofillUrls = emptyList()
             )
         )
 

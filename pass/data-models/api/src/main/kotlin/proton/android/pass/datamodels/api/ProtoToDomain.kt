@@ -22,6 +22,8 @@ import com.google.protobuf.Timestamp
 import kotlinx.datetime.Instant
 import proton.android.pass.crypto.api.context.EncryptionContext
 import proton.android.pass.domain.AddressDetails
+import proton.android.pass.domain.AutofillUrl
+import proton.android.pass.domain.AutofillUrlMode
 import proton.android.pass.domain.ByteArrayWrapper
 import proton.android.pass.domain.ContactDetails
 import proton.android.pass.domain.CreditCardType
@@ -163,6 +165,20 @@ private fun createLoginItemType(parsed: ItemV1.Item, context: EncryptionContext)
     primaryTotp = context.encrypt(parsed.content.login.totpUri),
     customFields = parsed.extraFieldsList.map { field ->
         field.toDomain(context)
+    },
+    autofillUrls = parsed.content.login.autofillUrlsList.map { protoUrl ->
+        AutofillUrl(
+            url = protoUrl.url,
+            mode = when (protoUrl.mode) {
+                ItemV1.AutofillUrl.Mode.Exact -> AutofillUrlMode.Exact
+                ItemV1.AutofillUrl.Mode.Never -> AutofillUrlMode.Never
+                ItemV1.AutofillUrl.Mode.StartWith -> AutofillUrlMode.StartWith
+                ItemV1.AutofillUrl.Mode.Pattern -> AutofillUrlMode.Pattern
+                ItemV1.AutofillUrl.Mode.RegularExpression -> AutofillUrlMode.RegularExpression
+                ItemV1.AutofillUrl.Mode.ExactPath -> AutofillUrlMode.ExactPath
+                else -> AutofillUrlMode.Default
+            }
+        )
     },
     passkeys = parsed.content.login.passkeysList.map {
         Passkey(

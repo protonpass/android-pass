@@ -95,7 +95,8 @@ class ShouldAskForAssociationTest {
                 }
             },
             primaryTotp = HiddenState.Empty(FakeEncryptionContext.encrypt("")),
-            passkeys = emptyList()
+            passkeys = emptyList(),
+            autofillUrls = emptyList()
         )
 
     companion object {

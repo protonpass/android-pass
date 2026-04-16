@@ -43,7 +43,8 @@ object ItemTypeTestFactory {
         packageInfoSet = packageInfoSet,
         primaryTotp = FakeKeyStoreCrypto.encrypt(primaryTotp),
         customFields = emptyList(),
-        passkeys = passkeys
+        passkeys = passkeys,
+        autofillUrls = emptyList()
     )
 
     fun creditCard(

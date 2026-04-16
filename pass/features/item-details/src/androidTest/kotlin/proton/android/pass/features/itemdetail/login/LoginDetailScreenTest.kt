@@ -285,7 +285,8 @@ class LoginDetailScreenTest {
                     clearText = primaryTotp
                 ),
                 customFields = emptyList(),
-                passkeys = emptyList()
+                passkeys = emptyList(),
+                autofillUrls = emptyList()
             )
         )
         val share = ShareTestFactory.Vault.create(id = SHARE_ID)

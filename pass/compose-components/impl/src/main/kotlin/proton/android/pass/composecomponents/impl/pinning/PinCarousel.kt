@@ -131,7 +131,8 @@ internal fun PinCarouselPreview(@PreviewParameter(ThemePreviewProvider::class) i
                             packageInfoSet = setOf(),
                             primaryTotp = HiddenState.Empty(""),
                             customFields = listOf(),
-                            passkeys = emptyList()
+                            passkeys = emptyList(),
+                            autofillUrls = emptyList()
                         ),
                         state = 0,
                         createTime = Clock.System.now(),

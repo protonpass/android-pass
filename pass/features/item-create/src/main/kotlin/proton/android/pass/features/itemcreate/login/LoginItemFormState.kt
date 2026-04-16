@@ -25,6 +25,7 @@ import kotlinx.parcelize.Parcelize
 import proton.android.pass.common.api.PasswordStrength
 import proton.android.pass.commonrust.api.EmailValidator
 import proton.android.pass.commonuimodels.api.PackageInfoUi
+import proton.android.pass.commonuimodels.api.UIAutofillUrl
 import proton.android.pass.commonuimodels.api.UIPasskeyContent
 import proton.android.pass.crypto.api.context.EncryptionContext
 import proton.android.pass.crypto.api.toEncryptedByteArray
@@ -46,6 +47,7 @@ data class LoginItemFormState(
     val primaryTotp: UIHiddenState,
     val customFields: List<UICustomFieldContent>,
     val passkeys: List<UIPasskeyContent>,
+    val autofillUrls: List<UIAutofillUrl>,
     val passkeyToBeGenerated: UIPasskeyContent?,
     private val isExpandedByContent: Boolean,
     private val isExpandedByUser: Boolean,
@@ -86,7 +88,8 @@ data class LoginItemFormState(
                 passkeyToBeGenerated?.toDomain()?.let { listOf(it) } ?: emptyList()
             } else {
                 passkeys.map(UIPasskeyContent::toDomain)
-            }
+            },
+            autofillUrls = autofillUrls.map(UIAutofillUrl::toDomain)
         )
     }
 
@@ -119,6 +122,7 @@ data class LoginItemFormState(
             packageInfoSet = emptySet(),
             customFields = emptyList(),
             passkeys = emptyList(),
+            autofillUrls = emptyList(),
             passkeyToBeGenerated = null,
             isExpandedByContent = false,
             isExpandedByUser = false,

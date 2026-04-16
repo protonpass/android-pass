@@ -266,7 +266,8 @@ class CreateLoginScreenTest {
                 primaryTotp = HiddenState.Revealed(FakeEncryptionContext.encrypt(totp), totp),
                 password = HiddenState.Concealed(FakeEncryptionContext.encrypt(password)),
                 urls = listOf(website1Full, website2Full),
-                passkeys = emptyList()
+                passkeys = emptyList(),
+                autofillUrls = emptyList()
 
             )
         )
@@ -405,7 +406,8 @@ class CreateLoginScreenTest {
             primaryTotp = HiddenState.Empty(FakeEncryptionContext.encrypt("")),
             password = HiddenState.Empty(FakeEncryptionContext.encrypt("")),
             urls = emptyList(),
-            passkeys = emptyList()
+            passkeys = emptyList(),
+            autofillUrls = emptyList()
         )
         val received = memory.first()
         val receivedItemContents =  received.itemContents as  ItemContents.Login

@@ -214,7 +214,8 @@ internal fun LoginOptionsBottomSheetContentsPreview(
                         packageInfoSet = emptySet(),
                         primaryTotp = HiddenState.Revealed("", ""),
                         customFields = emptyList(),
-                        passkeys = emptyList()
+                        passkeys = emptyList(),
+                        autofillUrls = emptyList()
                     ),
                     state = 0,
                     createTime = Clock.System.now(),

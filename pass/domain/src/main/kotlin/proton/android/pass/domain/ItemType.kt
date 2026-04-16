@@ -183,7 +183,8 @@ sealed interface ItemType {
         val packageInfoSet: Set<PackageInfo>,
         val primaryTotp: EncryptedString,
         val customFields: List<CustomField>,
-        val passkeys: List<Passkey>
+        val passkeys: List<Passkey>,
+        val autofillUrls: List<AutofillUrl>
     ) : ItemType
 
     @Serializable

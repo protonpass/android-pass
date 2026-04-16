@@ -163,7 +163,8 @@ class UpdateLoginViewModelTest {
                 packageInfoSet = emptySet(),
                 primaryTotp = primaryTotp,
                 customFields = emptyList(),
-                passkeys = emptyList()
+                passkeys = emptyList(),
+                autofillUrls = emptyList()
             )
         )
         totpManager.setSanitisedEditResult(Result.success(secret))
@@ -191,7 +192,8 @@ class UpdateLoginViewModelTest {
                 packageInfoSet = emptySet(),
                 primaryTotp = primaryTotp,
                 customFields = emptyList(),
-                passkeys = emptyList()
+                passkeys = emptyList(),
+                autofillUrls = emptyList()
             )
         )
         totpManager.setSanitisedEditResult(Result.success(uri))

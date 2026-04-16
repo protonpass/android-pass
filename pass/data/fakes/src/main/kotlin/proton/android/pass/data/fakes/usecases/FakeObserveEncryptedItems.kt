@@ -165,7 +165,8 @@ class FakeObserveEncryptedItems @Inject constructor() : ObserveEncryptedItems {
                     primaryTotp
                 ),
                 customFields = emptyList(),
-                passkeys = emptyList()
+                passkeys = emptyList(),
+                autofillUrls = emptyList()
             )
         )
 

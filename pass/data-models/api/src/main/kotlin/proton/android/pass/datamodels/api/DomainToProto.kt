@@ -21,6 +21,7 @@ package proton.android.pass.datamodels.api
 import com.google.protobuf.ByteString
 import com.google.protobuf.timestamp
 import proton.android.pass.crypto.api.context.EncryptionContext
+import proton.android.pass.domain.AutofillUrlMode
 import proton.android.pass.domain.CreditCardType
 import proton.android.pass.domain.CustomFieldContent
 import proton.android.pass.domain.ItemContents
@@ -79,6 +80,27 @@ fun ItemContents.serializeToProto(
                     // URLs
                     .clearUrls()
                     .addAllUrls(urls.filter { it.isNotBlank() })
+
+                    // Autofill URLs
+                    .clearAutofillUrls()
+                    .addAllAutofillUrls(
+                        autofillUrls.map { domainUrl ->
+                            ItemV1.AutofillUrl.newBuilder()
+                                .setUrl(domainUrl.url)
+                                .setMode(
+                                    when (domainUrl.mode) {
+                                        AutofillUrlMode.Exact -> ItemV1.AutofillUrl.Mode.Exact
+                                        AutofillUrlMode.Never -> ItemV1.AutofillUrl.Mode.Never
+                                        AutofillUrlMode.StartWith -> ItemV1.AutofillUrl.Mode.StartWith
+                                        AutofillUrlMode.Pattern -> ItemV1.AutofillUrl.Mode.Pattern
+                                        AutofillUrlMode.RegularExpression -> ItemV1.AutofillUrl.Mode.RegularExpression
+                                        AutofillUrlMode.ExactPath -> ItemV1.AutofillUrl.Mode.ExactPath
+                                        AutofillUrlMode.Default -> ItemV1.AutofillUrl.Mode.Default
+                                    }
+                                )
+                                .build()
+                        }
+                    )
 
                     // Passkeys
                     .clearPasskeys()

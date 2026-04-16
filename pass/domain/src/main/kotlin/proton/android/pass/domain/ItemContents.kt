@@ -132,7 +132,8 @@ sealed class ItemContents {
         val urls: List<String>,
         val packageInfoSet: Set<PackageInfo>,
         val primaryTotp: HiddenState,
-        val passkeys: List<Passkey>
+        val passkeys: List<Passkey>,
+        val autofillUrls: List<AutofillUrl>
     ) : ItemContents() {
 
         override val displayValue: String = itemUsername.ifEmpty { itemEmail }
@@ -159,7 +160,8 @@ sealed class ItemContents {
                 primaryTotp = primaryTotp,
                 note = "",
                 customFields = emptyList(),
-                passkeys = emptyList()
+                passkeys = emptyList(),
+                autofillUrls = emptyList()
             )
         }
     }

@@ -371,7 +371,8 @@ class SelectItemScreenTest {
                     ),
                     primaryTotp = HiddenState.Revealed(FakeEncryptionContext.encrypt(""), ""),
                     customFields = emptyList(),
-                    passkeys = emptyList()
+                    passkeys = emptyList(),
+                    autofillUrls = emptyList()
                 )
             )
             ItemData.SuggestedItem(item, Suggestion.Url("$it"))
@@ -397,7 +398,8 @@ class SelectItemScreenTest {
                     ),
                     primaryTotp = HiddenState.Revealed(FakeEncryptionContext.encrypt(""), ""),
                     customFields = emptyList(),
-                    passkeys = emptyList()
+                    passkeys = emptyList(),
+                    autofillUrls = emptyList()
                 )
             )
         }

@@ -161,7 +161,8 @@ internal class ItemUiFilterTest {
                     packageInfoSet = setOf(),
                     primaryTotp = HiddenState.Concealed(""),
                     customFields = emptyList(),
-                    passkeys = emptyList()
+                    passkeys = emptyList(),
+                    autofillUrls = emptyList()
                 )
             ),
             TestItemUiModel.create(
@@ -178,7 +179,8 @@ internal class ItemUiFilterTest {
                     packageInfoSet = setOf(),
                     primaryTotp = HiddenState.Concealed(""),
                     customFields = emptyList(),
-                    passkeys = emptyList()
+                    passkeys = emptyList(),
+                    autofillUrls = emptyList()
                 )
             ),
             TestItemUiModel.create(
@@ -195,7 +197,8 @@ internal class ItemUiFilterTest {
                     packageInfoSet = setOf(),
                     primaryTotp = HiddenState.Concealed(""),
                     customFields = emptyList(),
-                    passkeys = emptyList()
+                    passkeys = emptyList(),
+                    autofillUrls = emptyList()
                 )
             )
         )
@@ -227,7 +230,8 @@ internal class ItemUiFilterTest {
                         CustomFieldContent.Totp(label = "totp", value = HiddenState.Empty(""))
 
                     ),
-                    passkeys = emptyList()
+                    passkeys = emptyList(),
+                    autofillUrls = emptyList()
                 )
             )
         )
@@ -537,7 +541,8 @@ internal class ItemUiFilterTest {
                 packageInfoSet = setOf(),
                 primaryTotp = HiddenState.Empty(""),
                 customFields = listOf(),
-                passkeys = emptyList()
+                passkeys = emptyList(),
+                autofillUrls = emptyList()
             )
         ),
         TestItemUiModel.create(
@@ -551,7 +556,8 @@ internal class ItemUiFilterTest {
                 packageInfoSet = setOf(),
                 primaryTotp = HiddenState.Empty(""),
                 customFields = listOf(),
-                passkeys = emptyList()
+                passkeys = emptyList(),
+                autofillUrls = emptyList()
             )
         )
     )

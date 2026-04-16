@@ -148,7 +148,8 @@ object ItemTestFactory {
                 primaryTotp
             ),
             customFields = emptyList(),
-            passkeys = emptyList()
+            passkeys = emptyList(),
+            autofillUrls = emptyList()
         )
     )
 
@@ -272,7 +273,8 @@ object ItemTestFactory {
             packageInfoSet = emptySet(),
             primaryTotp = randomString().encrypt(FakeKeyStoreCrypto),
             customFields = emptyList(),
-            passkeys = emptyList()
+            passkeys = emptyList(),
+            autofillUrls = emptyList()
         )
         val titleParam = title ?: randomString()
         val noteParam = note ?: randomString()

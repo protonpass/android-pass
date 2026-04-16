@@ -170,7 +170,8 @@ class PeriodicAssetLinkWorkerTest {
                     packageInfoSet = emptySet(),
                     primaryTotp = FakeEncryptionContext.encrypt("") as EncryptedString,
                     customFields = emptyList(),
-                    passkeys = emptyList()
+                    passkeys = emptyList(),
+                    autofillUrls = emptyList()
                 ),
                 title = FakeEncryptionContext.encrypt("") as EncryptedString,
                 note = FakeEncryptionContext.encrypt("") as EncryptedString,

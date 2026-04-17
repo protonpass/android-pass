@@ -72,7 +72,7 @@
   <string name="credit_card_verifcation_number_copied_to_clipboard">Güvenlik kodu panoya kopyalandı</string>
   <!-- Bottomsheet -->
   <string name="move_to_trash_item_detail_bottom_sheet">Çöpe at</string>
-  <string name="migrate_item_detail_bottom_sheet">Başka bir kasaya taşı</string>
+  <string name="migrate_item_detail_bottom_sheet">Başka kasaya taşı</string>
   <!-- More info -->
   <string name="date_today">Bugün %s</string>
   <string name="date_yesterday">Dün %s</string>

@@ -22,7 +22,7 @@
   <!-- Placeholder will contain the domain / app name we are trying to autofill -->
   <string name="select_item_suggestions_for_placeholder">Suggesties voor %s</string>
   <string name="error_loading_items">Kan de items niet laden</string>
-  <string name="error_no_vaults_available">You don\'t have any vaults with editor or admin access. Try creating one in the main app, or ask your organization\'s administrator for support.</string>
+  <string name="error_no_vaults_available">U heeft geen kluizen met editor of beheerderstoegang. Probeer er een aan te maken in de hoofdapplicatie, of vraag de beheerder van uw organisatie om ondersteuning.</string>
   <string name="topbar_search_query">Zoeken in alle kluizen…</string>
   <string name="topbar_search_pinned_items">Zoeken in vastgemaakt...</string>
   <string name="topbar_search_query_oldest_vaults">Zoeken in uw oudste kluizen...</string>

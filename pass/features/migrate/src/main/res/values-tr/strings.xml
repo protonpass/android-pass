@@ -14,7 +14,7 @@
   <string name="migrate_item_error_snackbar">Ögeler taşınırken sorun çıktı</string>
   <string name="migrate_item_some_not_migrated_error_snackbar">Bazı ögeler taşınırken sorun çıktı</string>
   <string name="migrate_item_warning_history">Ögeleri kasalar arasında taşırken, her öge üzerinde yapılmış son 50 değişikliği koruruz</string>
-  <string name="migrate_item_warning_secure_link">Öge başka bir kasaya taşındığında güvenli bağlantıları kaldırılır</string>
+  <string name="migrate_item_warning_secure_link">Öge başka kasaya taşındığında güvenli bağlantıları kaldırılır</string>
   <string name="migrate_all_items_success_snackbar">Tüm ögeler taşındı</string>
   <string name="migrate_all_items_error_snackbar">Tüm kasa ögeleri taşınırken sorun çıktı</string>
   <string name="migrate_init_error_snackbar">Aktarım arayüzü hazırlanamadı</string>
@@ -30,12 +30,12 @@
   <string name="migrate_disabled_vault_reason_no_permission">Bu kasaya ögeler ekleyemezsiniz</string>
   <string name="migrate_disabled_vault_reason_same_vault">Bir ögeyi aynı kasaya taşıyamazsınız</string>
   <plurals name="migrate_items_shared_warning_title">
-    <item quantity="one">Ögeyi başka bir kasaya taşımak ister misiniz?</item>
-    <item quantity="other">%d ögeyi başka bir kasaya taşımak ister misiniz?</item>
+    <item quantity="one">Öge başka kasaya taşınsın mı?</item>
+    <item quantity="other">%d öge başka kasaya taşınsın mı?</item>
   </plurals>
-  <string name="migrate_item_shared_warning_message">Bu öge şu anda paylaşılıyor. Başka bir kasaya taşırsanız diğer kullanıcıların erişimi kaldırılacak.</string>
+  <string name="migrate_item_shared_warning_message">Bu öge şu anda paylaşılıyor. Başka kasaya taşırsanız diğer kullanıcıların erişimi kaldırılacak.</string>
   <plurals name="migrate_items_shared_warning_message">
-    <item quantity="one">%d öge şu anda paylaşılıyor. Başka bir kasaya taşırsanız diğer kullanıcıların erişimi kaldırılacak.</item>
-    <item quantity="other">%d öge şu anda paylaşılıyor. Başka bir kasaya taşırsanız diğer kullanıcıların erişimi kaldırılacak.</item>
+    <item quantity="one">%d öge şu anda paylaşılıyor. Başka kasaya taşırsanız diğer kullanıcıların erişimi kaldırılacak.</item>
+    <item quantity="other">%d öge şu anda paylaşılıyor. Başka kasaya taşırsanız diğer kullanıcıların erişimi kaldırılacak.</item>
   </plurals>
 </resources>

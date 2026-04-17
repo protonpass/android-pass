@@ -400,7 +400,7 @@
     <string name="functionality_not_available">This functionality is not available for your device.</string>
 
     <!-- Autofill URL suggestions screen -->
-    <string name="autofill_suggestions_title">Autofill suggestions</string>
+    <string name="autofill_suggestions_title">URL Matching</string>
     <string name="autofill_suggestions_description">Adjust autofill behaviors to change where logins are suggested and filled for %s.</string>
     <string name="autofill_suggestions_tab_basic">Basic</string>
     <string name="autofill_suggestions_tab_advanced">Advanced</string>

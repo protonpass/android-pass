@@ -24,6 +24,8 @@ import org.junit.Test
 import proton.android.pass.data.api.usecases.Suggestion
 import proton.android.pass.data.fakes.usecases.FakeGetPublicSuffixList
 import proton.android.pass.data.impl.url.HostParserImpl
+import proton.android.pass.domain.AutofillUrl
+import proton.android.pass.domain.AutofillUrlMode
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.entity.AppName
 import proton.android.pass.domain.entity.PackageInfo
@@ -191,5 +193,141 @@ class SuggestionItemFiltererImplTest {
         val items = listOf(item1, item2)
         val res = instance.filter(items, Suggestion.Url(httpsDomain))
         assertThat(res).isEqualTo(listOf(item2))
+    }
+
+    // --- Feature flag ON tests ---
+
+    @Test
+    fun `flag on, no autofillUrls falls through to legacy Default matching`() {
+        val website = "https://proton.me"
+        val item = ItemTestFactory.create(ItemTypeTestFactory.login(websites = listOf(website)))
+
+        val res = instance.filter(listOf(item), Suggestion.Url(website), useAutofillUrlModes = true)
+        assertThat(res).isEqualTo(listOf(item))
+    }
+
+    @Test
+    fun `flag on, Default mode explicit, matches same domain`() {
+        val website = "https://proton.me"
+        val item = ItemTestFactory.create(
+            ItemTypeTestFactory.login(
+                websites = listOf(website),
+                autofillUrls = listOf(AutofillUrl(url = website, mode = AutofillUrlMode.Default))
+            )
+        )
+
+        val res = instance.filter(listOf(item), Suggestion.Url(website), useAutofillUrlModes = true)
+        assertThat(res).isEqualTo(listOf(item))
+    }
+
+    @Test
+    fun `flag on, Exact mode, matching subdomain returns item`() {
+        getPublicSuffixList.setTlds(setOf("me"))
+        val website = "https://account.proton.me"
+        val item = ItemTestFactory.create(
+            ItemTypeTestFactory.login(
+                websites = listOf(website),
+                autofillUrls = listOf(AutofillUrl(url = website, mode = AutofillUrlMode.Exact))
+            )
+        )
+
+        val res = instance.filter(listOf(item), Suggestion.Url(website), useAutofillUrlModes = true)
+        assertThat(res).isEqualTo(listOf(item))
+    }
+
+    @Test
+    fun `flag on, Exact mode, different subdomain does not return item`() {
+        getPublicSuffixList.setTlds(setOf("me"))
+        val stored = "https://account.proton.me"
+        val request = "https://mail.proton.me"
+        val item = ItemTestFactory.create(
+            ItemTypeTestFactory.login(
+                websites = listOf(stored),
+                autofillUrls = listOf(AutofillUrl(url = stored, mode = AutofillUrlMode.Exact))
+            )
+        )
+
+        val res = instance.filter(listOf(item), Suggestion.Url(request), useAutofillUrlModes = true)
+        assertThat(res).isEqualTo(emptyList<Item>())
+    }
+
+    @Test
+    fun `flag on, Exact mode, stored has subdomain but request does not`() {
+        getPublicSuffixList.setTlds(setOf("me"))
+        val stored = "https://account.proton.me"
+        val request = "https://proton.me"
+        val item = ItemTestFactory.create(
+            ItemTypeTestFactory.login(
+                websites = listOf(stored),
+                autofillUrls = listOf(AutofillUrl(url = stored, mode = AutofillUrlMode.Exact))
+            )
+        )
+
+        val res = instance.filter(listOf(item), Suggestion.Url(request), useAutofillUrlModes = true)
+        assertThat(res).isEqualTo(emptyList<Item>())
+    }
+
+    @Test
+    fun `flag on, Never mode, item not returned`() {
+        val website = "https://proton.me"
+        val item = ItemTestFactory.create(
+            ItemTypeTestFactory.login(
+                websites = listOf(website),
+                autofillUrls = listOf(AutofillUrl(url = website, mode = AutofillUrlMode.Never))
+            )
+        )
+
+        val res = instance.filter(listOf(item), Suggestion.Url(website), useAutofillUrlModes = true)
+        assertThat(res).isEqualTo(emptyList<Item>())
+    }
+
+    @Test
+    fun `flag on, Never on one URL and Default on another, item returned via Default URL`() {
+        getPublicSuffixList.setTlds(setOf("me"))
+        val neverUrl = "https://proton.me"
+        val defaultUrl = "https://mail.proton.me"
+        val item = ItemTestFactory.create(
+            ItemTypeTestFactory.login(
+                websites = listOf(neverUrl, defaultUrl),
+                autofillUrls = listOf(
+                    AutofillUrl(url = neverUrl, mode = AutofillUrlMode.Never),
+                    AutofillUrl(url = defaultUrl, mode = AutofillUrlMode.Default)
+                )
+            )
+        )
+
+        // Request matches defaultUrl's domain → item should be suggested
+        val res = instance.filter(listOf(item), Suggestion.Url(defaultUrl), useAutofillUrlModes = true)
+        assertThat(res).isEqualTo(listOf(item))
+    }
+
+    @Test
+    fun `flag on, Never on only URL, item not returned even though domain matches`() {
+        getPublicSuffixList.setTlds(setOf("me"))
+        val neverUrl = "https://proton.me"
+        val item = ItemTestFactory.create(
+            ItemTypeTestFactory.login(
+                websites = listOf(neverUrl),
+                autofillUrls = listOf(AutofillUrl(url = neverUrl, mode = AutofillUrlMode.Never))
+            )
+        )
+
+        val res = instance.filter(listOf(item), Suggestion.Url(neverUrl), useAutofillUrlModes = true)
+        assertThat(res).isEqualTo(emptyList<Item>())
+    }
+
+    @Test
+    fun `flag on, unsupported mode StartWith is skipped`() {
+        getPublicSuffixList.setTlds(setOf("me"))
+        val website = "https://proton.me"
+        val item = ItemTestFactory.create(
+            ItemTypeTestFactory.login(
+                websites = listOf(website),
+                autofillUrls = listOf(AutofillUrl(url = website, mode = AutofillUrlMode.StartWith))
+            )
+        )
+
+        val res = instance.filter(listOf(item), Suggestion.Url(website), useAutofillUrlModes = true)
+        assertThat(res).isEqualTo(emptyList<Item>())
     }
 }

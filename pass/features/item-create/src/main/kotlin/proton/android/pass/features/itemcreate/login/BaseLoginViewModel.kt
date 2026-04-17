@@ -59,6 +59,9 @@ import proton.android.pass.commonrust.api.passwords.strengths.PasswordStrengthCa
 import proton.android.pass.commonui.api.ClassHolder
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonuimodels.api.PackageInfoUi
+import proton.android.pass.commonuimodels.api.UIAutofillUrl
+import proton.android.pass.domain.AutofillUrl
+import proton.android.pass.domain.AutofillUrlMode
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.crypto.api.toEncryptedByteArray
@@ -95,6 +98,8 @@ import proton.android.pass.features.itemcreate.common.formprocessor.LoginItemFor
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.android.pass.preferences.DisplayFileAttachmentsBanner.NotDisplay
+import proton.android.pass.preferences.FeatureFlag
+import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import proton.android.pass.preferences.UserPreferencesRepository
 import proton.android.pass.preferences.value
 import proton.android.pass.totp.api.TotpManager
@@ -112,6 +117,7 @@ abstract class BaseLoginViewModel(
     protected val emailValidator: EmailValidator,
     private val disableTooltip: DisableTooltip,
     private val userPreferencesRepository: UserPreferencesRepository,
+    private val featureFlagsPreferencesRepository: FeatureFlagsPreferencesRepository,
     private val attachmentsHandler: AttachmentsHandler,
     protected val customFieldHandler: CustomFieldHandler,
     private val customFieldDraftRepository: CustomFieldDraftRepository,
@@ -237,6 +243,9 @@ abstract class BaseLoginViewModel(
         val events: Events
     )
 
+    private val autofillUrlRegexEnabledFlow: Flow<Boolean> =
+        featureFlagsPreferencesRepository[FeatureFlag.PASS_AUTOFILL_URL_REGEX]
+
     @VisibleForTesting(otherwise = VisibleForTesting.PROTECTED)
     internal val baseLoginUiState: StateFlow<BaseLoginUiState> = combineN(
         loginItemValidationErrorsState,
@@ -249,10 +258,11 @@ abstract class BaseLoginViewModel(
         observeTooltipEnabled(Tooltip.UsernameSplit),
         userPreferencesRepository.observeDisplayFileAttachmentsOnboarding(),
         attachmentsHandler.attachmentState,
-        combine(canCreateAlias(), canCreateAliasOverride) { policy, override -> policy && override }
+        combine(canCreateAlias(), canCreateAliasOverride) { policy, override -> policy && override },
+        autofillUrlRegexEnabledFlow
     ) { loginItemValidationErrors, primaryEmail, aliasItemFormState, isLoading, totpUiState,
         upgradeInfoResult, userInteraction, isUsernameSplitTooltipEnabled,
-        displayFileAttachmentsOnboarding, attachmentsState, canCreateAlias ->
+        displayFileAttachmentsOnboarding, attachmentsState, canCreateAlias, isAutofillUrlRegexEnabled ->
         val userPlan = upgradeInfoResult.getOrNull()?.plan
         BaseLoginUiState(
             validationErrors = loginItemValidationErrors.toPersistentSet(),
@@ -271,7 +281,8 @@ abstract class BaseLoginViewModel(
             isUsernameSplitTooltipEnabled = isUsernameSplitTooltipEnabled,
             displayFileAttachmentsOnboarding = displayFileAttachmentsOnboarding.value(),
             attachmentsState = attachmentsState,
-            canCreateAlias = canCreateAlias
+            canCreateAlias = canCreateAlias,
+            isAutofillUrlRegexEnabled = isAutofillUrlRegexEnabled
         )
     }
         .stateIn(
@@ -383,6 +394,24 @@ abstract class BaseLoginViewModel(
         focusLastWebsiteState.update { false }
     }
 
+    internal fun onAutofillUrlModeUpdated(index: Int, mode: AutofillUrlMode) {
+        onUserEditedContent()
+        val currentUrls = loginItemFormState.urls
+        val currentAutofillUrls = loginItemFormState.autofillUrls.toMutableList()
+        val url = currentUrls.getOrElse(index) { "" }
+        val updated = UIAutofillUrl(url = url, mode = mode)
+        if (index < currentAutofillUrls.size) {
+            currentAutofillUrls[index] = updated
+        } else {
+            repeat(index - currentAutofillUrls.size) {
+                val fillUrl = currentUrls.getOrElse(currentAutofillUrls.size) { "" }
+                currentAutofillUrls.add(UIAutofillUrl(url = fillUrl, mode = AutofillUrlMode.Default))
+            }
+            currentAutofillUrls.add(updated)
+        }
+        loginItemFormMutableState = loginItemFormState.copy(autofillUrls = currentAutofillUrls)
+    }
+
     internal fun onNoteChange(value: String) {
         onUserEditedContent()
         loginItemFormMutableState = loginItemFormMutableState.copy(note = value)
@@ -443,6 +472,18 @@ abstract class BaseLoginViewModel(
             }
         }
     }
+
+    protected fun mergeAutofillUrls(rawUrls: List<String>, rawAutofillUrls: List<AutofillUrl>): List<AutofillUrl> =
+        if (rawAutofillUrls.isNotEmpty()) {
+            val existing = rawAutofillUrls.map { it.url.trim().lowercase() }.toSet()
+            val additions = rawUrls
+                .filter { it.isNotBlank() && it.trim().lowercase() !in existing }
+                .map { AutofillUrl(url = it, mode = AutofillUrlMode.Default) }
+            rawAutofillUrls + additions
+        } else {
+            rawUrls.filter { it.isNotBlank() }
+                .map { AutofillUrl(url = it, mode = AutofillUrlMode.Default) }
+        }
 
     private fun sanitizeWebsites(websites: List<String>): List<String> = websites.map { url ->
         if (url.isBlank()) {

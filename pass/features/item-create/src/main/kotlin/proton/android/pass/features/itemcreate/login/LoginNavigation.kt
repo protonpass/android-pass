@@ -20,6 +20,7 @@ package proton.android.pass.features.itemcreate.login
 
 import proton.android.pass.common.api.Option
 import proton.android.pass.commonuimodels.api.ItemUiModel
+import proton.android.pass.domain.AutofillUrlMode
 import proton.android.pass.domain.CustomFieldType
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.FolderId
@@ -98,5 +99,16 @@ sealed interface BaseLoginNavigation {
         val shareId: ShareId,
         val itemId: ItemId,
         val attachmentId: AttachmentId
+    ) : BaseLoginNavigation
+
+    data class OpenAutofillUrlSuggestions(
+        val url: String,
+        val urlIndex: Int,
+        val currentMode: AutofillUrlMode
+    ) : BaseLoginNavigation
+
+    data class AutofillUrlSuggestionsResult(
+        val urlIndex: Int,
+        val mode: AutofillUrlMode
     ) : BaseLoginNavigation
 }

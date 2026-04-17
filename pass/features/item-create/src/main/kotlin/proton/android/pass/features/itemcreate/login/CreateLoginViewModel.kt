@@ -57,6 +57,7 @@ import proton.android.pass.commonrust.api.passwords.strengths.PasswordStrengthCa
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.toUiModel
 import proton.android.pass.commonuimodels.api.PackageInfoUi
+import proton.android.pass.commonuimodels.api.UIAutofillUrl
 import proton.android.pass.commonuimodels.api.UIPasskeyContent
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
@@ -121,6 +122,7 @@ import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonOptionalNavArgId
 import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.android.pass.passkeys.api.GeneratePasskey
+import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import proton.android.pass.preferences.InternalSettingsRepository
 import proton.android.pass.preferences.UserPreferencesRepository
 import proton.android.pass.telemetry.api.EventItemType
@@ -158,6 +160,7 @@ class CreateLoginViewModel @Inject constructor(
     attachmentsHandler: AttachmentsHandler,
     customFieldHandler: CustomFieldHandler,
     userPreferencesRepository: UserPreferencesRepository,
+    featureFlagsPreferencesRepository: FeatureFlagsPreferencesRepository,
     customFieldDraftRepository: CustomFieldDraftRepository,
     loginItemFormProcessor: LoginItemFormProcessorType,
     savedStateHandleProvider: SavedStateHandleProvider,
@@ -179,6 +182,7 @@ class CreateLoginViewModel @Inject constructor(
     observeTooltipEnabled = observeTooltipEnabled,
     disableTooltip = disableTooltip,
     userPreferencesRepository = userPreferencesRepository,
+    featureFlagsPreferencesRepository = featureFlagsPreferencesRepository,
     attachmentsHandler = attachmentsHandler,
     customFieldHandler = customFieldHandler,
     customFieldDraftRepository = customFieldDraftRepository,
@@ -317,6 +321,7 @@ class CreateLoginViewModel @Inject constructor(
                 is HiddenState.Concealed,
                 is HiddenState.Revealed -> UIHiddenState.Concealed(hiddenState.encrypted)
             }
+            val mergedAutofillUrls = mergeAutofillUrls(itemContents.urls, itemContents.autofillUrls)
             loginItemFormMutableState = currentValue.copy(
                 title = context.getString(R.string.title_duplicate, decrypt(item.title)),
                 note = decrypt(item.note),
@@ -326,7 +331,7 @@ class CreateLoginViewModel @Inject constructor(
                 passwordStrength = passwordStrengthCalculator.calculateStrength(
                     password = decrypt(itemContents.password.encrypted)
                 ),
-                urls = itemContents.urls.ifEmpty { listOf("") },
+                urls = mergedAutofillUrls.map { it.url }.ifEmpty { listOf("") },
                 packageInfoSet = itemContents.packageInfoSet.map { PackageInfoUi(it) }.toSet(),
                 primaryTotp = UIHiddenState.Revealed(
                     encrypted = itemContents.primaryTotp.encrypted,
@@ -334,6 +339,7 @@ class CreateLoginViewModel @Inject constructor(
                 ),
                 customFields = customFieldHandler.sanitiseForEditingCustomFields(customFields),
                 passkeys = itemContents.passkeys.map { UIPasskeyContent.from(it) },
+                autofillUrls = mergedAutofillUrls.map { UIAutofillUrl.from(it) },
                 isExpandedByContent = itemContents.itemEmail.isNotBlank() && itemContents.itemUsername.isNotBlank()
             )
         }

@@ -46,6 +46,7 @@ import proton.android.pass.features.itemcreate.common.UIHiddenState
 import proton.android.pass.features.itemcreate.common.customfields.CustomFieldHandlerImpl
 import proton.android.pass.features.itemcreate.common.formprocessor.FakeLoginItemFormProcessor
 import proton.android.pass.notifications.fakes.FakeSnackbarDispatcher
+import proton.android.pass.preferences.FakeFeatureFlagsPreferenceRepository
 import proton.android.pass.preferences.FakePreferenceRepository
 import proton.android.pass.test.MainDispatcherRule
 import proton.android.pass.test.StringTestFactory
@@ -90,6 +91,7 @@ internal class BaseLoginViewModelTest {
             observeTooltipEnabled = FakeObserveTooltipEnabled(),
             disableTooltip = FakeDisableTooltip(),
             userPreferencesRepository = FakePreferenceRepository(),
+            featureFlagsPreferencesRepository = FakeFeatureFlagsPreferenceRepository(),
             attachmentsHandler = FakeAttachmentHandler(),
             customFieldDraftRepository = CustomFieldDraftRepositoryImpl(),
             customFieldHandler = CustomFieldHandlerImpl(totpManager, encryptionContextProvider),

@@ -101,6 +101,7 @@ internal fun LoginItemForm(
     isFileAttachmentsEnabled: Boolean,
     displayFileAttachmentsOnboarding: Boolean,
     attachmentsState: AttachmentsState,
+    isAutofillUrlRegexEnabled: Boolean,
     onEvent: (LoginContentEvent) -> Unit
 ) {
     Box(modifier = modifier) {
@@ -200,9 +201,11 @@ internal fun LoginItemForm(
                 WebsitesSection(
                     modifier = Modifier.padding(vertical = Spacing.extraSmall),
                     websites = loginItemFormState.urls.toImmutableList(),
+                    autofillUrls = loginItemFormState.autofillUrls.toImmutableList(),
                     isEditAllowed = isEditAllowed,
                     websitesWithErrors = websitesWithErrors,
                     focusLastWebsite = focusLastWebsite,
+                    isAutofillUrlRegexEnabled = isAutofillUrlRegexEnabled,
                     onWebsiteSectionEvent = { onEvent(OnWebsiteEvent(it)) }
                 )
             }

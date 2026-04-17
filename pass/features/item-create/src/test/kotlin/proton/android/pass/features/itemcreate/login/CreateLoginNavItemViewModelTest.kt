@@ -81,6 +81,7 @@ import proton.android.pass.inappreview.fakes.FakeInAppReviewTriggerMetrics
 import proton.android.pass.notifications.fakes.FakeSnackbarDispatcher
 import proton.android.pass.passkeys.fakes.FakeGeneratePasskey
 import proton.android.pass.preferences.FakeInternalSettingsRepository
+import proton.android.pass.preferences.FakeFeatureFlagsPreferenceRepository
 import proton.android.pass.preferences.FakePreferenceRepository
 import proton.android.pass.telemetry.api.EventItemType
 import proton.android.pass.telemetry.fakes.FakeTelemetryManager
@@ -152,6 +153,7 @@ internal class CreateLoginNavItemViewModelTest {
             disableTooltip = FakeDisableTooltip(),
             workerLauncher = FakeWorkerLauncher(),
             userPreferencesRepository = FakePreferenceRepository(),
+            featureFlagsPreferencesRepository = FakeFeatureFlagsPreferenceRepository(),
             linkAttachmentsToItem = FakeLinkAttachmentsToItem(),
             attachmentsHandler = FakeAttachmentHandler(),
             customFieldDraftRepository = CustomFieldDraftRepositoryImpl(),

@@ -45,6 +45,7 @@ import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.usecases.CanDisplayTotp
 import proton.android.pass.data.api.usecases.GetItemByAliasEmail
 import proton.android.pass.data.api.usecases.folders.GetFolderHierarchy
+import proton.android.pass.domain.AutofillUrl
 import proton.android.pass.domain.HiddenState
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemContents
@@ -61,6 +62,8 @@ import proton.android.pass.features.item.details.detail.navigation.ItemDetailSco
 import proton.android.pass.features.item.details.detail.presentation.PassMonitorItemDetailFromMissing2FA
 import proton.android.pass.features.item.details.detail.presentation.PassMonitorItemDetailFromReusedPassword
 import proton.android.pass.features.item.details.detail.presentation.PassMonitorItemDetailFromWeakPassword
+import proton.android.pass.preferences.FeatureFlag
+import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import proton.android.pass.preferences.UserPreferencesRepository
 import proton.android.pass.preferences.value
 import proton.android.pass.securitycenter.api.passwords.DuplicatedPasswordChecker
@@ -77,6 +80,7 @@ class LoginItemDetailsHandlerObserverImpl @Inject constructor(
     override val observeTotpFromUri: ObserveTotpFromUri,
     override val getFolderHierarchy: GetFolderHierarchy,
     override val canDisplayTotp: CanDisplayTotp,
+    private val featureFlagsPreferencesRepository: FeatureFlagsPreferencesRepository,
     private val userPreferencesRepository: UserPreferencesRepository,
     private val passwordStrengthCalculator: PasswordStrengthCalculator,
     private val insecurePasswordChecker: InsecurePasswordChecker,
@@ -90,6 +94,9 @@ class LoginItemDetailsHandlerObserverImpl @Inject constructor(
     getFolderHierarchy,
     canDisplayTotp
 ) {
+
+    private val autofillUrlRegexEnabledFlow: Flow<Boolean> =
+        featureFlagsPreferencesRepository[FeatureFlag.PASS_AUTOFILL_URL_REGEX]
 
     override fun observe(
         share: Share,
@@ -109,9 +116,10 @@ class LoginItemDetailsHandlerObserverImpl @Inject constructor(
         ),
         observeLinkedAlias(item),
         userPreferencesRepository.getUseFaviconsPreference(),
-        observeBreadcrumbs(item)
+        observeBreadcrumbs(item),
+        autofillUrlRegexEnabledFlow
     ) { loginItemContents, primaryTotp, customFieldTotps, loginMonitorState,
-        linkedAlias, useFaviconsPreference, breadcrumb ->
+        linkedAlias, useFaviconsPreference, breadcrumb, isAutofillUrlRegexEnabled ->
         ItemDetailState.Login(
             itemContents = loginItemContents,
             itemId = item.id,
@@ -137,7 +145,8 @@ class LoginItemDetailsHandlerObserverImpl @Inject constructor(
             loginMonitorState = loginMonitorState,
             detailEvent = detailEvent,
             linkedAlias = linkedAlias,
-            breadcrumbs = breadcrumb
+            breadcrumbs = breadcrumb,
+            isAutofillUrlRegexEnabled = isAutofillUrlRegexEnabled
         )
     }
 
@@ -258,6 +267,7 @@ class LoginItemDetailsHandlerObserverImpl @Inject constructor(
         )
     }
 
+    @Suppress("LongMethod")
     override fun calculateItemDiffs(
         baseItemContents: ItemContents.Login,
         otherItemContents: ItemContents.Login,
@@ -292,8 +302,18 @@ class LoginItemDetailsHandlerObserverImpl @Inject constructor(
                 otherItemFieldValue = otherItemContents.note
             ),
             urls = calculateItemDiffTypes(
-                baseItemFieldValues = baseItemContents.urls,
-                otherItemFieldValues = otherItemContents.urls
+                baseItemFieldValues = baseItemContents.autofillUrls
+                    .takeIf { it.isNotEmpty() }
+                    ?.map { it.url }
+                    ?: baseItemContents.urls,
+                otherItemFieldValues = otherItemContents.autofillUrls
+                    .takeIf { it.isNotEmpty() }
+                    ?.map { it.url }
+                    ?: otherItemContents.urls
+            ),
+            urlModes = calculateUrlModesDiffs(
+                baseUrls = baseItemContents.autofillUrls,
+                otherUrls = otherItemContents.autofillUrls
             ),
             linkedApps = calculateItemDiffTypes(
                 basePackagesInfo = baseItemContents.packageInfoSet,
@@ -356,6 +376,14 @@ class LoginItemDetailsHandlerObserverImpl @Inject constructor(
             }.let { itemDiffTypes ->
                 ItemDiffType.None to itemDiffTypes
             }
+        }
+    }
+
+    private fun calculateUrlModesDiffs(baseUrls: List<AutofillUrl>, otherUrls: List<AutofillUrl>): List<ItemDiffType> {
+        val otherModeByUrl = otherUrls.associateBy { it.url }
+        return baseUrls.map { base ->
+            val otherMode = otherModeByUrl[base.url]?.mode
+            if (otherMode == null || otherMode != base.mode) ItemDiffType.Field else ItemDiffType.None
         }
     }
 

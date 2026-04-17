@@ -27,6 +27,8 @@ import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.ImmutableMap
 import kotlinx.collections.immutable.toPersistentList
 import kotlinx.collections.immutable.toPersistentSet
+import proton.android.pass.domain.AutofillUrl
+import proton.android.pass.domain.AutofillUrlMode
 import kotlinx.datetime.Instant
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.PasswordStrength
@@ -71,6 +73,7 @@ internal fun PassLoginItemDetailSections(
     shouldDisplayItemHistoryButton: Boolean,
     attachmentsState: AttachmentsState,
     linkedAlias: Option<LinkedAliasItem>,
+    isAutofillUrlRegexEnabled: Boolean,
     onEvent: (PassItemDetailsUiEvent) -> Unit
 ) = with(contents) {
     Column(
@@ -100,9 +103,18 @@ internal fun PassLoginItemDetailSections(
             onEvent = onEvent
         )
 
-        if (urls.isNotEmpty()) {
+        val displayUrls: ImmutableList<AutofillUrl> = remember(urls, autofillUrls, isAutofillUrlRegexEnabled) {
+            if (isAutofillUrlRegexEnabled && autofillUrls.isNotEmpty()) {
+                autofillUrls.toPersistentList()
+            } else {
+                urls.map { AutofillUrl(it, AutofillUrlMode.Default) }.toPersistentList()
+            }
+        }
+
+        if (displayUrls.isNotEmpty()) {
             PassLoginItemDetailWebsitesSection(
-                websiteUrls = urls.toPersistentList(),
+                autofillUrls = displayUrls,
+                isAutofillUrlRegexEnabled = isAutofillUrlRegexEnabled,
                 itemColors = itemColors,
                 itemDiffs = itemDiffs,
                 onEvent = onEvent

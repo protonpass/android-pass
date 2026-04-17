@@ -28,7 +28,10 @@ enum class AutofillUrlMode {
     StartWith,
     Pattern,
     RegularExpression,
-    ExactPath
+    ExactPath;
+
+    val isSupported: Boolean
+        get() = this == Default || this == Exact || this == Never
 }
 
 @Serializable

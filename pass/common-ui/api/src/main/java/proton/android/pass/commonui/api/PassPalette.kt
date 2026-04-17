@@ -184,6 +184,8 @@ object PassPalette {
     val PromoYellow = Color(0xFFDBFF00)
     val FolderYellow = Color(0xFFE9A944)
 
+    val GreenTeal = Color(0xFF89CBC3)
+
     val gradientBrushDark = Brush.linearGradient(
         colorStops = arrayOf(
             0f to BlossomPink,

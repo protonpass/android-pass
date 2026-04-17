@@ -26,4 +26,5 @@ sealed interface WebsiteSectionEvent {
 
     data object AddWebsite : WebsiteSectionEvent
     data class RemoveWebsite(val index: Int) : WebsiteSectionEvent
+    data class OpenAutofillSuggestions(val index: Int) : WebsiteSectionEvent
 }

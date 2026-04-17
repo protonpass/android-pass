@@ -67,6 +67,7 @@ import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.navigation.api.CommonOptionalNavArgId
 import proton.android.pass.notifications.fakes.FakeSnackbarDispatcher
 import proton.android.pass.preferences.FakeInternalSettingsRepository
+import proton.android.pass.preferences.FakeFeatureFlagsPreferenceRepository
 import proton.android.pass.preferences.FakePreferenceRepository
 import proton.android.pass.telemetry.fakes.FakeTelemetryManager
 import proton.android.pass.test.MainDispatcherRule
@@ -132,6 +133,7 @@ class UpdateLoginViewModelTest {
         observeTooltipEnabled = FakeObserveTooltipEnabled(),
         disableTooltip = FakeDisableTooltip(),
         userPreferencesRepository = FakePreferenceRepository(),
+        featureFlagsPreferencesRepository = FakeFeatureFlagsPreferenceRepository(),
         workerLauncher = FakeWorkerLauncher(),
         attachmentsHandler = FakeAttachmentHandler(),
         linkAttachmentsToItem = FakeLinkAttachmentsToItem(),

@@ -73,6 +73,8 @@ fun CreateLoginScreen(
     selectVault: ShareId?,
     selectFolder: FolderId? = null,
     canUseAttachments: Boolean,
+    navAutofillUrlIndex: Int? = null,
+    navAutofillUrlMode: String? = null,
     onNavigate: (BaseLoginNavigation) -> Unit,
     viewModel: CreateLoginViewModel = hiltViewModel()
 ) {
@@ -98,6 +100,12 @@ fun CreateLoginScreen(
         if (clearAlias) {
             viewModel.onRemoveAlias()
         }
+    }
+
+    LaunchedEffect(navAutofillUrlIndex, navAutofillUrlMode) {
+        val index = navAutofillUrlIndex ?: return@LaunchedEffect
+        val modeName = navAutofillUrlMode ?: return@LaunchedEffect
+        viewModel.onAutofillUrlModeUpdated(index, proton.android.pass.domain.AutofillUrlMode.valueOf(modeName))
     }
 
     LaunchedEffect(selectVault) {
@@ -183,6 +191,18 @@ fun CreateLoginScreen(
                         is WebsiteSectionEvent.RemoveWebsite -> viewModel.onRemoveWebsite(event.index)
                         is WebsiteSectionEvent.WebsiteValueChanged ->
                             viewModel.onWebsiteChange(event.value, event.index)
+                        is WebsiteSectionEvent.OpenAutofillSuggestions -> {
+                            val url = viewModel.loginItemFormState.urls.getOrElse(event.index) { "" }
+                            val mode = viewModel.loginItemFormState.autofillUrls
+                                .getOrNull(event.index)
+                                ?.mode
+                                ?: proton.android.pass.domain.AutofillUrlMode.Default
+                            actionAfterKeyboardHide = {
+                                onNavigate(
+                                    BaseLoginNavigation.OpenAutofillUrlSuggestions(url, event.index, mode)
+                                )
+                            }
+                        }
                     }
 
                     is LoginContentEvent.OnNoteChange -> viewModel.onNoteChange(it.note)

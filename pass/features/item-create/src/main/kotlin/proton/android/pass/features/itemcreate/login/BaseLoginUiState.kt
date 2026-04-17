@@ -51,7 +51,8 @@ internal data class BaseLoginUiState(
     val isUsernameSplitTooltipEnabled: Boolean,
     val displayFileAttachmentsOnboarding: Boolean,
     val attachmentsState: AttachmentsState,
-    val canCreateAlias: Boolean
+    val canCreateAlias: Boolean,
+    val isAutofillUrlRegexEnabled: Boolean
 ) {
     internal companion object {
 
@@ -72,7 +73,8 @@ internal data class BaseLoginUiState(
             isUsernameSplitTooltipEnabled = false,
             displayFileAttachmentsOnboarding = false,
             attachmentsState = AttachmentsState.Initial,
-            canCreateAlias = true
+            canCreateAlias = true,
+            isAutofillUrlRegexEnabled = false
         )
 
     }

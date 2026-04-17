@@ -56,6 +56,8 @@ import proton.android.pass.domain.AliasSuffix
 import proton.android.pass.domain.CustomFieldContent
 import proton.android.pass.domain.CustomFieldType
 import proton.android.pass.domain.HiddenState
+import proton.android.pass.domain.AutofillUrl
+import proton.android.pass.domain.AutofillUrlMode
 import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.Plan
 import proton.android.pass.domain.PlanLimit
@@ -267,8 +269,10 @@ class CreateLoginScreenTest {
                 password = HiddenState.Concealed(FakeEncryptionContext.encrypt(password)),
                 urls = listOf(website1Full, website2Full),
                 passkeys = emptyList(),
-                autofillUrls = emptyList()
-
+                autofillUrls = listOf(
+                    AutofillUrl(url = website1Full, mode = AutofillUrlMode.Default),
+                    AutofillUrl(url = website2Full, mode = AutofillUrlMode.Default)
+                )
             )
         )
         assertThat(memory).isEqualTo(listOf(expected))

@@ -29,6 +29,8 @@ import proton.android.pass.commonuimodels.api.UIAutofillUrl
 import proton.android.pass.commonuimodels.api.UIPasskeyContent
 import proton.android.pass.crypto.api.context.EncryptionContext
 import proton.android.pass.crypto.api.toEncryptedByteArray
+import proton.android.pass.domain.AutofillUrl
+import proton.android.pass.domain.AutofillUrlMode
 import proton.android.pass.domain.ItemContents
 import proton.android.pass.features.itemcreate.common.UICustomFieldContent
 import proton.android.pass.features.itemcreate.common.UIHiddenState
@@ -74,13 +76,21 @@ data class LoginItemFormState(
             else -> if (emailValidator.isValid(email)) "" else email
         }
 
+        val nonBlankUrls = urls.filter(String::isNotBlank)
+        val syncedAutofillUrls: List<AutofillUrl> = nonBlankUrls.mapIndexed { idx, url ->
+            val mode = autofillUrls.getOrNull(idx)?.mode ?: AutofillUrlMode.Default
+            AutofillUrl(url = url, mode = mode)
+        }
         return ItemContents.Login(
             title = title,
             note = note,
             itemEmail = itemEmail,
             itemUsername = itemUsername,
             password = password.toHiddenState(),
-            urls = urls.filter(String::isNotBlank),
+            urls = syncedAutofillUrls
+                .filter { it.mode == AutofillUrlMode.Default }
+                .map { it.url }
+                .distinct(),
             packageInfoSet = packageInfoSet.map(PackageInfoUi::toPackageInfo).toSet(),
             primaryTotp = primaryTotp.toHiddenState(),
             customFields = customFields.map(UICustomFieldContent::toCustomFieldContent),
@@ -89,7 +99,7 @@ data class LoginItemFormState(
             } else {
                 passkeys.map(UIPasskeyContent::toDomain)
             },
-            autofillUrls = autofillUrls.map(UIAutofillUrl::toDomain)
+            autofillUrls = syncedAutofillUrls
         )
     }
 

@@ -24,6 +24,7 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import proton.android.pass.data.api.core.repositories.SentinelRepository
 import proton.android.pass.data.api.crypto.GetShareAndItemKey
+import proton.android.pass.data.api.url.HostParser
 import proton.android.pass.data.api.repositories.AliasRepository
 import proton.android.pass.data.api.repositories.AssetLinkRepository
 import proton.android.pass.data.api.repositories.BulkInviteRepository
@@ -498,6 +499,7 @@ import proton.android.pass.data.fakes.usecases.tooltips.FakeObserveTooltipEnable
 import proton.android.pass.data.fakes.usecases.vaults.FakeBatchChangeShareVisibility
 import proton.android.pass.data.fakes.usecases.vaults.FakeObserveVaultsGroupedByShareId
 import proton.android.pass.data.fakes.usecases.vaults.FakeObserveVaultsGroupedByVisibility
+import proton.android.pass.data.fakes.url.FakeHostParser
 import proton.android.pass.data.fakes.work.FakeWorkManagerFacade
 import proton.android.pass.data.fakes.work.FakeWorkerLauncher
 import javax.inject.Singleton
@@ -1299,4 +1301,7 @@ abstract class FakesDataModule {
 
     @Binds
     abstract fun bindGroupRepository(impl: FakeGroupRepository): GroupRepository
+
+    @Binds
+    abstract fun bindHostParser(impl: FakeHostParser): HostParser
 }

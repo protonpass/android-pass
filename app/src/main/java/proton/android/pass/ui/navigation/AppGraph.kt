@@ -149,6 +149,9 @@ import proton.android.pass.features.itemcreate.login.CreateLoginNavItem
 import proton.android.pass.features.itemcreate.login.CreateLoginNavigation
 import proton.android.pass.features.itemcreate.login.EditLoginNavItem
 import proton.android.pass.features.itemcreate.login.UpdateLoginNavigation
+import proton.android.pass.features.itemcreate.login.autofillsuggestions.AUTOFILL_URL_INDEX_KEY
+import proton.android.pass.features.itemcreate.login.autofillsuggestions.AUTOFILL_URL_MODE_KEY
+import proton.android.pass.features.itemcreate.login.autofillsuggestions.AutofillUrlSuggestionsNavItem
 import proton.android.pass.features.itemcreate.login.bottomsheet.aliasoptions.AliasOptionsBottomSheet
 import proton.android.pass.features.itemcreate.login.bottomsheet.aliasoptions.CLEAR_ALIAS_NAV_PARAMETER_KEY
 import proton.android.pass.features.itemcreate.login.createUpdateLoginGraph
@@ -1144,6 +1147,25 @@ fun NavGraphBuilder.appGraph(
 
                 BaseLoginNavigation.TotpCancel -> appNavigator.navigateBack()
                 is BaseLoginNavigation.TotpSuccess -> appNavigator.navigateBackWithResult(it.results)
+
+                is BaseLoginNavigation.OpenAutofillUrlSuggestions ->
+                    appNavigator.navigate(
+                        destination = AutofillUrlSuggestionsNavItem,
+                        route = AutofillUrlSuggestionsNavItem.createNavRoute(
+                            url = it.url,
+                            urlIndex = it.urlIndex,
+                            mode = it.currentMode
+                        )
+                    )
+
+                is BaseLoginNavigation.AutofillUrlSuggestionsResult ->
+                    appNavigator.navigateBackWithResult(
+                        mapOf(
+                            AUTOFILL_URL_INDEX_KEY to it.urlIndex,
+                            AUTOFILL_URL_MODE_KEY to it.mode.name
+                        )
+                    )
+
                 BaseLoginNavigation.AddAttachment ->
                     appNavigator.navigate(AddAttachmentNavItem)
 

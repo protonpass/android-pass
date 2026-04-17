@@ -20,6 +20,7 @@ package proton.android.pass.features.itemcreate.login
 
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.navigation
@@ -31,6 +32,10 @@ import proton.android.pass.features.itemcreate.bottomsheets.customfield.customFi
 import proton.android.pass.features.itemcreate.common.CustomFieldPrefix
 import proton.android.pass.features.itemcreate.dialogs.customfield.CustomFieldNameNavigation
 import proton.android.pass.features.itemcreate.dialogs.customfield.customFieldNameDialogGraph
+import proton.android.pass.features.itemcreate.login.autofillsuggestions.AUTOFILL_URL_INDEX_KEY
+import proton.android.pass.features.itemcreate.login.autofillsuggestions.AUTOFILL_URL_MODE_KEY
+import proton.android.pass.features.itemcreate.login.autofillsuggestions.AutofillUrlSuggestionsNavItem
+import proton.android.pass.features.itemcreate.login.autofillsuggestions.AutofillUrlSuggestionsScreen
 import proton.android.pass.features.itemcreate.login.bottomsheet.aliasoptions.CLEAR_ALIAS_NAV_PARAMETER_KEY
 import proton.android.pass.features.itemcreate.login.bottomsheet.aliasoptions.aliasOptionsBottomSheetGraph
 import proton.android.pass.features.itemcreate.totp.INDEX_NAV_PARAMETER_KEY
@@ -61,6 +66,25 @@ fun NavGraphBuilder.updateLoginGraph(
         startDestination = EditLoginNavItem.route
     ) {
         composable(EditLoginNavItem) { navBackStack ->
+            val viewModel: UpdateLoginViewModel = hiltViewModel(
+                creationCallback = { factory: UpdateLoginViewModel.AddInitialUpdateLoginUiState ->
+                    factory.create(initialUpdateLoginUiState)
+                }
+            )
+
+            val navAutofillUrlIndex by navBackStack.savedStateHandle
+                .getStateFlow<Int?>(AUTOFILL_URL_INDEX_KEY, null)
+                .collectAsStateWithLifecycle()
+            val navAutofillUrlMode by navBackStack.savedStateHandle
+                .getStateFlow<String?>(AUTOFILL_URL_MODE_KEY, null)
+                .collectAsStateWithLifecycle()
+
+            LaunchedEffect(navAutofillUrlIndex, navAutofillUrlMode) {
+                if (navAutofillUrlIndex != null && navAutofillUrlMode != null) {
+                    navBackStack.savedStateHandle.remove<Int?>(AUTOFILL_URL_INDEX_KEY)
+                    navBackStack.savedStateHandle.remove<String?>(AUTOFILL_URL_MODE_KEY)
+                }
+            }
 
             val navTotpUri by navBackStack.savedStateHandle
                 .getStateFlow<String?>(TOTP_NAV_PARAMETER_KEY, null)
@@ -90,6 +114,8 @@ fun NavGraphBuilder.updateLoginGraph(
                 clearAlias = clearAlias,
                 navTotpUri = navTotpUri,
                 navTotpIndex = navTotpIndex,
+                navAutofillUrlIndex = navAutofillUrlIndex,
+                navAutofillUrlMode = navAutofillUrlMode,
                 canUseAttachments = canUseAttachments,
                 onNavigate = onNavigate,
                 initialUpdateLoginUiState = initialUpdateLoginUiState
@@ -130,5 +156,13 @@ fun NavGraphBuilder.updateLoginGraph(
                 onNavigate(BaseLoginNavigation.OpenImagePicker(index.toOption()))
             }
         )
+        composable(AutofillUrlSuggestionsNavItem) {
+            AutofillUrlSuggestionsScreen(
+                onSave = { idx, selectedMode ->
+                    onNavigate(BaseLoginNavigation.AutofillUrlSuggestionsResult(idx, selectedMode))
+                },
+                onClose = { onNavigate(BaseLoginNavigation.CloseScreen) }
+            )
+        }
     }
 }

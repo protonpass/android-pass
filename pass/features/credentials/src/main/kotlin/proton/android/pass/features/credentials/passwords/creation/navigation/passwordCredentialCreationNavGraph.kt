@@ -247,6 +247,9 @@ internal fun NavGraphBuilder.passwordCredentialCreationNavGraph(
                     values = destination.results
                 )
 
+                is BaseLoginNavigation.OpenAutofillUrlSuggestions,
+                is BaseLoginNavigation.AutofillUrlSuggestionsResult -> Unit
+
                 BaseLoginNavigation.AddAttachment,
                 BaseLoginNavigation.UpsellAttachments,
                 is BaseLoginNavigation.OpenAttachmentOptions,

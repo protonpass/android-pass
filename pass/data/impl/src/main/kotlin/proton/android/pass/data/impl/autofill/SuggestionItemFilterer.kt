@@ -21,21 +21,30 @@ package proton.android.pass.data.impl.autofill
 import proton.android.pass.data.api.url.HostInfo
 import proton.android.pass.data.api.url.HostParser
 import proton.android.pass.data.api.usecases.Suggestion
+import proton.android.pass.domain.AutofillUrlMode
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemType
 import javax.inject.Inject
 
 interface SuggestionItemFilterer {
-    fun filter(items: List<Item>, suggestion: Suggestion): List<Item>
+    fun filter(
+        items: List<Item>,
+        suggestion: Suggestion,
+        useAutofillUrlModes: Boolean = false
+    ): List<Item>
 }
 
 class SuggestionItemFiltererImpl @Inject constructor(
     private val hostParser: HostParser
 ) : SuggestionItemFilterer {
 
-    override fun filter(items: List<Item>, suggestion: Suggestion): List<Item> = items.filter { item ->
+    override fun filter(
+        items: List<Item>,
+        suggestion: Suggestion,
+        useAutofillUrlModes: Boolean
+    ): List<Item> = items.filter { item ->
         when (item.itemType) {
-            is ItemType.Login -> isMatch(suggestion, item)
+            is ItemType.Login -> isMatch(suggestion, item, useAutofillUrlModes)
             is ItemType.CreditCard -> true
             is ItemType.Identity -> true
             is ItemType.Alias,
@@ -48,44 +57,62 @@ class SuggestionItemFiltererImpl @Inject constructor(
         }
     }
 
-    private fun isMatch(suggestion: Suggestion, item: Item): Boolean = when (suggestion) {
+    private fun isMatch(
+        suggestion: Suggestion,
+        item: Item,
+        useAutofillUrlModes: Boolean
+    ): Boolean = when (suggestion) {
         is Suggestion.PackageName -> isPackageNameMatch(suggestion.value, item)
-        is Suggestion.Url -> isUrlMatch(suggestion.value, item.itemType as ItemType.Login)
+        is Suggestion.Url -> isUrlMatch(suggestion.value, item.itemType as ItemType.Login, useAutofillUrlModes)
     }
 
     private fun isPackageNameMatch(packageName: String, item: Item): Boolean =
         item.packageInfoSet.map { it.packageName.value }.contains(packageName)
 
-    private fun isUrlMatch(url: String, login: ItemType.Login): Boolean {
-        val parsedUrl = hostParser.parse(url).fold(
+    private fun isUrlMatch(
+        url: String,
+        login: ItemType.Login,
+        useAutofillUrlModes: Boolean
+    ): Boolean {
+        val parsedRequest = hostParser.parse(url).fold(
             onSuccess = { it },
             onFailure = { return false }
         )
 
-        val parsedWebsites = login.websites
-            .map { hostParser.parse(it) }
-            .filter { it.isSuccess }
-            .mapNotNull { it.getOrNull() }
+        if (!useAutofillUrlModes || login.autofillUrls.isEmpty()) {
+            val parsedWebsites = login.websites.mapNotNull { hostParser.parse(it).getOrNull() }
+            return isLegacyMatch(parsedRequest, parsedWebsites)
+        }
 
-        return isMatch(parsedUrl, parsedWebsites)
-    }
-
-    private fun isMatch(requestUrl: HostInfo, items: List<HostInfo>): Boolean = items.any {
-        when (it) {
-            is HostInfo.Ip -> when (requestUrl) {
-                is HostInfo.Ip -> it.ip == requestUrl.ip
-                else -> false
-            }
-
-            is HostInfo.Host -> when (requestUrl) {
-                is HostInfo.Host -> {
-                    requestUrl.protocol == it.protocol &&
-                        requestUrl.tld == it.tld &&
-                        requestUrl.domain == it.domain
-                }
-
-                else -> false
-            }
+        return login.autofillUrls.any { autofillUrl ->
+            websiteMatchesRequest(parsedRequest, autofillUrl.url, autofillUrl.mode)
         }
     }
+
+    private fun websiteMatchesRequest(
+        parsedRequest: HostInfo,
+        storedWebsite: String,
+        mode: AutofillUrlMode
+    ): Boolean {
+        if (mode == AutofillUrlMode.Never || !mode.isSupported) return false
+        val parsedStored = hostParser.parse(storedWebsite).getOrNull() ?: return false
+        return hostMatches(parsedRequest, parsedStored, exactSubdomain = mode == AutofillUrlMode.Exact)
+    }
+
+    private fun hostMatches(
+        request: HostInfo,
+        stored: HostInfo,
+        exactSubdomain: Boolean
+    ): Boolean = when {
+        request is HostInfo.Ip && stored is HostInfo.Ip -> request.ip == stored.ip
+        request is HostInfo.Host && stored is HostInfo.Host ->
+            request.protocol == stored.protocol &&
+                (!exactSubdomain || request.subdomain == stored.subdomain) &&
+                request.domain == stored.domain &&
+                request.tld == stored.tld
+        else -> false
+    }
+
+    private fun isLegacyMatch(requestUrl: HostInfo, items: List<HostInfo>): Boolean =
+        items.any { hostMatches(requestUrl, it, exactSubdomain = false) }
 }

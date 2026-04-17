@@ -104,6 +104,7 @@ import proton.android.pass.features.itemcreate.login.LoginSnackbarMessages.Updat
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.notifications.api.SnackbarDispatcher
+import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import proton.android.pass.preferences.InternalSettingsRepository
 import proton.android.pass.preferences.UserPreferencesRepository
 import proton.android.pass.telemetry.api.EventItemType
@@ -137,6 +138,7 @@ class UpdateLoginViewModel @AssistedInject constructor(
     attachmentsHandler: AttachmentsHandler,
     customFieldHandler: CustomFieldHandler,
     userPreferencesRepository: UserPreferencesRepository,
+    featureFlagsPreferencesRepository: FeatureFlagsPreferencesRepository,
     customFieldDraftRepository: CustomFieldDraftRepository,
     loginItemFormProcessor: LoginItemFormProcessorType,
     savedStateHandleProvider: SavedStateHandleProvider,
@@ -161,6 +163,7 @@ class UpdateLoginViewModel @AssistedInject constructor(
     attachmentsHandler = attachmentsHandler,
     customFieldHandler = customFieldHandler,
     userPreferencesRepository = userPreferencesRepository,
+    featureFlagsPreferencesRepository = featureFlagsPreferencesRepository,
     customFieldDraftRepository = customFieldDraftRepository,
     loginItemFormProcessor = loginItemFormProcessor,
     canCreateAlias = canCreateAlias,
@@ -350,6 +353,7 @@ class UpdateLoginViewModel @AssistedInject constructor(
                 originalTotpCustomFields =
                     customFields.filterIsInstance<UICustomFieldContent.Totp>()
 
+                val mergedAutofillUrls = mergeAutofillUrls(itemContents.urls, itemContents.autofillUrls)
                 loginItemFormMutableState = loginItemFormState.copy(
                     title = itemContents.title,
                     email = itemContents.itemEmail,
@@ -358,13 +362,13 @@ class UpdateLoginViewModel @AssistedInject constructor(
                     passwordStrength = passwordStrengthCalculator.calculateStrength(
                         password = decrypt(initialPasswordEncrypted ?: itemContents.password.encrypted)
                     ),
-                    urls = itemContents.urls.ifEmpty { listOf("") },
+                    urls = mergedAutofillUrls.map { it.url }.ifEmpty { listOf("") },
                     note = itemContents.note,
                     packageInfoSet = item.packageInfoSet.map(::PackageInfoUi).toSet(),
                     primaryTotp = UIHiddenState.Revealed(encrypt(decryptedTotp), decryptedTotp),
                     customFields = customFieldHandler.sanitiseForEditingCustomFields(customFields),
                     passkeys = itemContents.passkeys.map { UIPasskeyContent.from(it) },
-                    autofillUrls = itemContents.autofillUrls.map { UIAutofillUrl.from(it) },
+                    autofillUrls = mergedAutofillUrls.map { UIAutofillUrl.from(it) },
                     isExpandedByContent = itemContents.itemEmail.isNotBlank() && itemContents.itemUsername.isNotBlank()
                 )
             }

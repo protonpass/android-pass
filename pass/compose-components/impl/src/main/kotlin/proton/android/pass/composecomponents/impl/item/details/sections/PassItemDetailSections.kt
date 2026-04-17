@@ -136,7 +136,8 @@ internal fun PassItemDetailSections(
             attachmentsState = attachmentsState,
             shouldDisplayItemHistorySection = shouldDisplayItemHistorySection,
             shouldDisplayItemHistoryButton = shouldDisplayItemHistoryButton,
-            linkedAlias = linkedAlias
+            linkedAlias = linkedAlias,
+            isAutofillUrlRegexEnabled = isAutofillUrlRegexEnabled
         )
 
         is ItemDetailState.SSHKey -> PassSSHKeyItemDetailSections(

@@ -69,6 +69,8 @@ internal fun UpdateLogin(
     draftAlias: AliasItemFormState? = null,
     navTotpUri: String? = null,
     navTotpIndex: Int? = null,
+    navAutofillUrlIndex: Int? = null,
+    navAutofillUrlMode: String? = null,
     canUseAttachments: Boolean,
     onNavigate: (BaseLoginNavigation) -> Unit,
     initialUpdateLoginUiState: InitialUpdateLoginUiState? = null,
@@ -125,6 +127,12 @@ internal fun UpdateLogin(
         }
     }
 
+    LaunchedEffect(navAutofillUrlIndex, navAutofillUrlMode) {
+        val index = navAutofillUrlIndex ?: return@LaunchedEffect
+        val modeName = navAutofillUrlMode ?: return@LaunchedEffect
+        viewModel.onAutofillUrlModeUpdated(index, proton.android.pass.domain.AutofillUrlMode.valueOf(modeName))
+    }
+
     var warningSharedDialog by rememberSaveable { mutableStateOf(DialogWarningType.None) }
 
     Box(
@@ -168,6 +176,18 @@ internal fun UpdateLogin(
                         is WebsiteSectionEvent.RemoveWebsite -> viewModel.onRemoveWebsite(event.index)
                         is WebsiteSectionEvent.WebsiteValueChanged ->
                             viewModel.onWebsiteChange(event.value, event.index)
+                        is WebsiteSectionEvent.OpenAutofillSuggestions -> {
+                            val url = viewModel.loginItemFormState.urls.getOrElse(event.index) { "" }
+                            val mode = viewModel.loginItemFormState.autofillUrls
+                                .getOrNull(event.index)
+                                ?.mode
+                                ?: proton.android.pass.domain.AutofillUrlMode.Default
+                            actionAfterKeyboardHide = {
+                                onNavigate(
+                                    BaseLoginNavigation.OpenAutofillUrlSuggestions(url, event.index, mode)
+                                )
+                            }
+                        }
                     }
 
                     is LoginContentEvent.OnNoteChange -> viewModel.onNoteChange(it.note)

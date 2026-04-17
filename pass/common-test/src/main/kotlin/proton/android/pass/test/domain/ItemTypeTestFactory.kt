@@ -19,6 +19,7 @@
 package proton.android.pass.test.domain
 
 import proton.android.pass.account.fakes.FakeKeyStoreCrypto
+import proton.android.pass.domain.AutofillUrl
 import proton.android.pass.domain.CreditCardType
 import proton.android.pass.domain.ItemType
 import proton.android.pass.domain.Passkey
@@ -34,7 +35,8 @@ object ItemTypeTestFactory {
         primaryTotp: String = "",
         websites: List<String> = emptyList(),
         packageInfoSet: Set<PackageInfo> = emptySet(),
-        passkeys: List<Passkey> = emptyList()
+        passkeys: List<Passkey> = emptyList(),
+        autofillUrls: List<AutofillUrl> = emptyList()
     ): ItemType.Login = ItemType.Login(
         itemEmail = email,
         itemUsername = username,
@@ -44,7 +46,7 @@ object ItemTypeTestFactory {
         primaryTotp = FakeKeyStoreCrypto.encrypt(primaryTotp),
         customFields = emptyList(),
         passkeys = passkeys,
-        autofillUrls = emptyList()
+        autofillUrls = autofillUrls
     )
 
     fun creditCard(

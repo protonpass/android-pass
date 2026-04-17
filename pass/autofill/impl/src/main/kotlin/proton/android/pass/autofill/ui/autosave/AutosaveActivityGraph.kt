@@ -178,6 +178,9 @@ fun NavGraphBuilder.autosaveActivityGraph(
                 is BaseLoginNavigation.TotpSuccess ->
                     appNavigator.navigateBackWithResult(it.results)
 
+                is BaseLoginNavigation.OpenAutofillUrlSuggestions,
+                is BaseLoginNavigation.AutofillUrlSuggestionsResult -> Unit
+
                 BaseLoginNavigation.AddAttachment,
                 BaseLoginNavigation.UpsellAttachments,
                 is BaseLoginNavigation.OpenAttachmentOptions,

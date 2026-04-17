@@ -31,7 +31,7 @@
   <string name="bottomsheet_view_item_history">Geçmişi görüntüle</string>
   <string name="bottomsheet_monitor_exclude">İzlemeye katma</string>
   <string name="bottomsheet_monitor_include">İzlemeye kat</string>
-  <string name="bottomsheet_migrate_item">Başka bir kasaya taşı</string>
+  <string name="bottomsheet_migrate_item">Başka kasaya taşı</string>
   <string name="bottomsheet_create_folder">Klasör oluştur</string>
   <string name="folder_tree_create_folder">Klasör oluştur</string>
   <string name="bottomsheet_rename_folder">Yeniden adlandır</string>

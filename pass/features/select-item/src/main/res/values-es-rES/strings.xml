@@ -22,7 +22,7 @@
   <!-- Placeholder will contain the domain / app name we are trying to autofill -->
   <string name="select_item_suggestions_for_placeholder">Sugerencias para %s</string>
   <string name="error_loading_items">No se han podido cargar los elementos.</string>
-  <string name="error_no_vaults_available">You don\'t have any vaults with editor or admin access. Try creating one in the main app, or ask your organization\'s administrator for support.</string>
+  <string name="error_no_vaults_available">No tienes ninguna caja fuerte con permiso de editor o de administrador. Intenta crear una en la aplicación principal o solicita ayuda al administrador de tu organización.</string>
   <string name="topbar_search_query">Buscar en todas las cajas fuertes…</string>
   <string name="topbar_search_pinned_items">Buscar en Anclados...</string>
   <string name="topbar_search_query_oldest_vaults">Buscar en tus cajas fuertes antiguas…</string>

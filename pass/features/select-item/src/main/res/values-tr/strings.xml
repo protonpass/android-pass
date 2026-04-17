@@ -22,7 +22,7 @@
   <!-- Placeholder will contain the domain / app name we are trying to autofill -->
   <string name="select_item_suggestions_for_placeholder">%s için öneriler</string>
   <string name="error_loading_items">Ögeler yüklenemedi</string>
-  <string name="error_no_vaults_available">Düzenleyicisi veya yöneticisi olduğunuz herhangi bir kasa yok. Ana uygulamadan bir kasa oluşturmayı deneyin veya kuruluşunuzun yöneticisinden destek isteyin.</string>
+  <string name="error_no_vaults_available">Düzenleyicisi veya yöneticisi olduğunuz bir kasa yok. Ana uygulamadan bir kasa oluşturmayı deneyin ya da kuruluşunuzun yöneticisinden destek isteyin.</string>
   <string name="topbar_search_query">Tüm kasalarda ara…</string>
   <string name="topbar_search_pinned_items">Sabitlenmişlerde ara…</string>
   <string name="topbar_search_query_oldest_vaults">En eski kasalarınızda arayın…</string>

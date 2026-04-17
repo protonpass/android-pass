@@ -22,7 +22,7 @@
   <!-- Placeholder will contain the domain / app name we are trying to autofill -->
   <string name="select_item_suggestions_for_placeholder">%s 的补全建议</string>
   <string name="error_loading_items">加载项目失败</string>
-  <string name="error_no_vaults_available">You don\'t have any vaults with editor or admin access. Try creating one in the main app, or ask your organization\'s administrator for support.</string>
+  <string name="error_no_vaults_available">您没有任何具有编辑或管理员权限的保险库。请尝试在主应用程序中创建一个，或向您组织的管理员寻求支持。</string>
   <string name="topbar_search_query">在所有的保险库中搜索…</string>
   <string name="topbar_search_pinned_items">在 Pin 中搜索…</string>
   <string name="topbar_search_query_oldest_vaults">搜索您最早的保险库……</string>

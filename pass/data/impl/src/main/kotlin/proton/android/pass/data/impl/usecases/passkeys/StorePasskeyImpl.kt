@@ -18,8 +18,7 @@
 
 package proton.android.pass.data.impl.usecases.passkeys
 
-import kotlinx.coroutines.flow.first
-import me.proton.core.accountmanager.domain.AccountManager
+import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.api.repositories.ItemRepository
 import proton.android.pass.data.api.usecases.passkeys.StorePasskey
 import proton.android.pass.domain.ItemId
@@ -31,15 +30,14 @@ import javax.inject.Singleton
 
 @Singleton
 class StorePasskeyImpl @Inject constructor(
-    private val accountManager: AccountManager,
     private val itemRepository: ItemRepository
 ) : StorePasskey {
     override suspend fun invoke(
+        userId: UserId,
         shareId: ShareId,
         itemId: ItemId,
         passkey: Passkey
     ) {
-        val userId = requireNotNull(accountManager.getPrimaryUserId().first())
         val item = itemRepository.getById(userId, shareId, itemId)
         val itemType = item.itemType
         if (itemType is ItemType.Login) {

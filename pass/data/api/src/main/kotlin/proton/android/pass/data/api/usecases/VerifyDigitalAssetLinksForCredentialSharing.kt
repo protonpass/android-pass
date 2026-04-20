@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2025-2026 Proton AG
+ * Copyright (c) 2026 Proton AG
  * This file is part of Proton AG and Proton Pass.
  *
  * Proton Pass is free software: you can redistribute it and/or modify
@@ -16,20 +16,13 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.credentials.shared.passkeys.search
+package proton.android.pass.data.api.usecases
 
-import android.content.Context
-import androidx.credentials.provider.Action
-import androidx.credentials.provider.BeginGetPublicKeyCredentialOption
-import androidx.credentials.provider.CallingAppInfo
-import androidx.credentials.provider.CredentialEntry
+interface VerifyDigitalAssetLinksForCredentialSharing {
 
-internal interface PasskeyCredentialsSearcher {
-
-    suspend fun search(
-        context: Context,
-        callingAppInfo: CallingAppInfo?,
-        option: BeginGetPublicKeyCredentialOption
-    ): Pair<List<CredentialEntry>, Action>?
-
+    suspend operator fun invoke(
+        website: String,
+        packageName: String,
+        certificateFingerprints: Set<String>
+    ): Boolean
 }

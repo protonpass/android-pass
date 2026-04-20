@@ -274,6 +274,7 @@ import proton.android.pass.data.api.usecases.simplelogin.VerifySimpleLoginAliasM
 import proton.android.pass.data.api.usecases.sync.ForceSyncItems
 import proton.android.pass.data.api.usecases.tooltips.DisableTooltip
 import proton.android.pass.data.api.usecases.tooltips.ObserveTooltipEnabled
+import proton.android.pass.data.api.usecases.VerifyDigitalAssetLinksForCredentialSharing
 import proton.android.pass.data.api.usecases.vaults.ObserveVaultsGroupedByShareId
 import proton.android.pass.data.api.usecases.vaults.ObserveVaultsGroupedByVisibility
 import proton.android.pass.data.impl.autofill.SuggestionItemFilterer
@@ -534,6 +535,7 @@ import proton.android.pass.data.impl.usecases.simplelogin.VerifySimpleLoginAlias
 import proton.android.pass.data.impl.usecases.sync.ForceSyncItemsImpl
 import proton.android.pass.data.impl.usecases.tooltips.DisableTooltipImpl
 import proton.android.pass.data.impl.usecases.tooltips.ObserveTooltipEnabledImpl
+import proton.android.pass.data.impl.usecases.VerifyDigitalAssetLinksForCredentialSharingImpl
 import proton.android.pass.data.impl.usecases.vaults.ObserveVaultsGroupedByShareIdImpl
 import proton.android.pass.data.impl.usecases.vaults.ObserveVaultsGroupedByVisibilityImpl
 import javax.inject.Singleton
@@ -1398,5 +1400,10 @@ abstract class DataUseCaseModule {
 
     @[Binds Singleton]
     abstract fun bindObserveFolderItemCounts(impl: ObserveFolderItemCountsImpl): ObserveFolderItemCounts
+
+    @[Binds Singleton]
+    abstract fun bindVerifyDALForCredentialSharing(
+        impl: VerifyDigitalAssetLinksForCredentialSharingImpl
+    ): VerifyDigitalAssetLinksForCredentialSharing
 
 }

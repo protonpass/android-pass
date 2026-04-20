@@ -143,6 +143,7 @@ internal class PasskeyCredentialCreationViewModel @Inject constructor(
                     request = request.requestJson
                 ).also { generatedPasskey ->
                     storePasskey(
+                        userId = itemUiModel.userId,
                         shareId = itemUiModel.shareId,
                         itemId = itemUiModel.id,
                         passkey = generatedPasskey.passkey

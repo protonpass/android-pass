@@ -138,7 +138,11 @@ class PassCredentialProviderService : CredentialProviderService() {
                     }
 
                     is BeginGetPublicKeyCredentialOption -> {
-                        passkeyCredentialsSearcher.search(applicationContext, option)
+                        passkeyCredentialsSearcher.search(
+                            context = applicationContext,
+                            callingAppInfo = request.callingAppInfo,
+                            option = option
+                        )
                     }
 
                     else -> {

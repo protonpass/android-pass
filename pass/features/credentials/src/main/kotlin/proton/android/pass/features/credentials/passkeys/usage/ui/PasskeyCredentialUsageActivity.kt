@@ -42,17 +42,24 @@ import proton.android.pass.domain.ShareId
 import proton.android.pass.features.credentials.passkeys.usage.presentation.PasskeyCredentialUsageRequest
 import proton.android.pass.features.credentials.passkeys.usage.presentation.PasskeyCredentialUsageState
 import proton.android.pass.features.credentials.passkeys.usage.presentation.PasskeyCredentialUsageViewModel
+import proton.android.pass.features.credentials.shared.passkeys.search.PasskeyActivityOriginResolver
 import proton.android.pass.log.api.PassLogger
+import javax.inject.Inject
 
 @[AndroidEntryPoint RequiresApi(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)]
 internal class PasskeyCredentialUsageActivity : FragmentActivity() {
+
+    @Inject
+    internal lateinit var passkeyActivityOriginResolver: PasskeyActivityOriginResolver
 
     private val viewModel: PasskeyCredentialUsageViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        viewModel.onUpdateRequest(getPasskeyUsageRequest())
+        lifecycleScope.launch {
+            viewModel.onUpdateRequest(getPasskeyUsageRequest())
+        }
 
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
@@ -79,10 +86,16 @@ internal class PasskeyCredentialUsageActivity : FragmentActivity() {
     }
 
     @Suppress("ReturnCount")
-    private fun getPasskeyUsageRequest(): PasskeyCredentialUsageRequest? {
-        val passkeyCredentialOptions = PendingIntentHandler.retrieveProviderGetCredentialRequest(intent)
-            ?.credentialOptions
-            ?.firstOrNull { it is GetPublicKeyCredentialOption }
+    private suspend fun getPasskeyUsageRequest(): PasskeyCredentialUsageRequest? {
+        val providerRequest = PendingIntentHandler.retrieveProviderGetCredentialRequest(intent)
+            ?: run {
+                PassLogger.w(TAG, "Passkey usage request does not contain ProviderGetCredentialRequest")
+                return null
+            }
+
+        val passkeyCredentialOptions = providerRequest
+            .credentialOptions
+            .firstOrNull { it is GetPublicKeyCredentialOption }
             ?.let { it as GetPublicKeyCredentialOption }
             ?: run {
                 PassLogger.w(TAG, "Passkey usage request does not contain GetPublicKeyCredentialOption")
@@ -93,8 +106,11 @@ internal class PasskeyCredentialUsageActivity : FragmentActivity() {
 
         val clientDataHash = passkeyCredentialOptions.clientDataHash
 
-        val requestOrigin = intent.getStringExtra(EXTRAS_REQUEST_ORIGIN) ?: run {
-            PassLogger.w(TAG, "Passkey usage request does not contain requestOrigin")
+        val requestOrigin = passkeyActivityOriginResolver.resolve(
+            callingAppInfo = providerRequest.callingAppInfo,
+            requestJson = requestJson
+        ) ?: run {
+            PassLogger.w(TAG, "Passkey usage request: origin validation failed")
             return null
         }
 
@@ -150,22 +166,16 @@ internal class PasskeyCredentialUsageActivity : FragmentActivity() {
 
         private const val TAG = "PasskeyCredentialUsageActivity"
 
-        private const val EXTRAS_REQUEST_ORIGIN = "REQUEST_ORIGIN"
         private const val EXTRAS_SHARE_ID = "SHARE_ID"
         private const val EXTRAS_ITEM_ID = "ITEM_ID_ID"
         private const val EXTRAS_PASSKEY_ID = "PASSKEY_ID"
 
-        internal fun createPasskeyCredentialIntent(
-            context: Context,
-            origin: String,
-            passkeyItem: PasskeyItem
-        ): Intent = Intent(
+        internal fun createPasskeyCredentialIntent(context: Context, passkeyItem: PasskeyItem): Intent = Intent(
             context,
             PasskeyCredentialUsageActivity::class.java
         ).apply {
             setPackage(context.packageName)
 
-            putExtra(EXTRAS_REQUEST_ORIGIN, origin)
             putExtra(EXTRAS_SHARE_ID, passkeyItem.shareId.id)
             putExtra(EXTRAS_ITEM_ID, passkeyItem.itemId.id)
             putExtra(EXTRAS_PASSKEY_ID, passkeyItem.passkey.id.value)

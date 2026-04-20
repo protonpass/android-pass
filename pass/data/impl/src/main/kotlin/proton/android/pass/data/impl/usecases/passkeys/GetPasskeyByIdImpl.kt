@@ -18,8 +18,6 @@
 
 package proton.android.pass.data.impl.usecases.passkeys
 
-import kotlinx.coroutines.flow.firstOrNull
-import me.proton.core.accountmanager.domain.AccountManager
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.toOption
@@ -36,7 +34,6 @@ import javax.inject.Singleton
 
 @Singleton
 class GetPasskeyByIdImpl @Inject constructor(
-    private val accountManager: AccountManager,
     private val itemRepository: ItemRepository
 ) : GetPasskeyById {
     override suspend fun invoke(
@@ -44,7 +41,8 @@ class GetPasskeyByIdImpl @Inject constructor(
         itemId: ItemId,
         passkeyId: PasskeyId
     ): Option<Passkey> {
-        val userId = accountManager.getPrimaryUserId().firstOrNull()
+        val userId = itemRepository.findUserId(shareId, itemId)
+            .value()
             ?: throw UserIdNotAvailableError()
         val item = itemRepository.getById(userId, shareId, itemId)
         val passkeys = when (val itemType = item.itemType) {

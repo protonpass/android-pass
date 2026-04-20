@@ -27,8 +27,8 @@ import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.Response
 import okio.IOException
+import proton.android.pass.data.api.PublicOkhttpClient
 import proton.android.pass.data.api.errors.ResponseSizeExceededError
-import proton.android.pass.data.impl.remote.PublicOkhttpClient
 import proton.android.pass.data.impl.responses.AssetLinkResponse
 import proton.android.pass.data.impl.responses.IgnoredAssetLinkResponse
 import proton.android.pass.log.api.PassLogger

@@ -40,7 +40,7 @@ import proton.android.pass.appconfig.api.AppConfig
 import proton.android.pass.appconfig.api.BuildFlavor
 import proton.android.pass.autofill.AppIcon
 import proton.android.pass.commonui.api.PassTheme
-import proton.android.pass.data.impl.remote.PublicOkhttpClient
+import proton.android.pass.data.api.PublicOkhttpClient
 import proton.android.pass.notifications.api.MainActivityAnnotation
 import proton.android.pass.ui.MainActivity
 import javax.inject.Singleton

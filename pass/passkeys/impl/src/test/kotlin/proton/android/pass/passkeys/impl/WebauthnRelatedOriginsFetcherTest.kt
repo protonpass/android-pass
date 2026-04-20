@@ -24,10 +24,13 @@ import okhttp3.OkHttpClient
 import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.MockWebServer
 import okhttp3.mockwebserver.SocketPolicy
+import okhttp3.tls.HandshakeCertificates
+import okhttp3.tls.HeldCertificate
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
 import proton.android.pass.commonrust.MobileFetchException
+import java.net.InetAddress
 
 class WebauthnRelatedOriginsFetcherTest {
 
@@ -36,9 +39,25 @@ class WebauthnRelatedOriginsFetcherTest {
 
     @Before
     fun setUp() {
+        val localhost = InetAddress.getByName("localhost").canonicalHostName
+        val localhostCert = HeldCertificate.Builder()
+            .addSubjectAlternativeName(localhost)
+            .build()
+        val serverCerts = HandshakeCertificates.Builder()
+            .heldCertificate(localhostCert)
+            .build()
+        val clientCerts = HandshakeCertificates.Builder()
+            .addTrustedCertificate(localhostCert.certificate)
+            .build()
+
         server = MockWebServer()
+        server.useHttps(serverCerts.sslSocketFactory(), false)
         server.start()
-        fetcher = WebauthnRelatedOriginsFetcher(OkHttpClient())
+
+        val okHttpClient = OkHttpClient.Builder()
+            .sslSocketFactory(clientCerts.sslSocketFactory(), clientCerts.trustManager)
+            .build()
+        fetcher = WebauthnRelatedOriginsFetcher(okHttpClient)
     }
 
     @After
@@ -124,6 +143,15 @@ class WebauthnRelatedOriginsFetcherTest {
         server.enqueue(MockResponse().setSocketPolicy(SocketPolicy.DISCONNECT_AFTER_REQUEST))
 
         val exception = runCatching { fetcher.fetch(serverUrl()) }.exceptionOrNull()
+
+        assertThat(exception).isInstanceOf(MobileFetchException.CannotFetch::class.java)
+    }
+
+    @Test
+    fun `throws CannotFetch when URL is not HTTPS`() = runTest {
+        val exception = runCatching {
+            fetcher.fetch("http://example.com/.well-known/webauthn")
+        }.exceptionOrNull()
 
         assertThat(exception).isInstanceOf(MobileFetchException.CannotFetch::class.java)
     }

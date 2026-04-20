@@ -23,6 +23,7 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import proton.android.pass.commonrust.MobileWebauthnClientFetcher
 import proton.android.pass.passkeys.api.AuthenticateWithPasskey
 import proton.android.pass.passkeys.api.CanDeviceSupportPasskeys
 import proton.android.pass.passkeys.api.GeneratePasskey
@@ -47,12 +48,15 @@ abstract class PasskeyBindsModule {
 
     @Binds
     abstract fun bindGetPasskeyCreationData(impl: GetPasskeyCreationDataImpl): GetPasskeyCreationData
+
+    @Binds
+    internal abstract fun bindWebauthnFetcher(impl: WebauthnRelatedOriginsFetcher): MobileWebauthnClientFetcher
 }
 
 @[Module InstallIn(SingletonComponent::class)]
 object PasskeyModule {
 
     @[Provides Singleton]
-    fun providePasskeyManager(): RustPasskeyManager = RustPasskeyManager()
-
+    fun providePasskeyManager(fetcher: MobileWebauthnClientFetcher): RustPasskeyManager =
+        RustPasskeyManager().apply { registerWebauthnFetcher(fetcher) }
 }

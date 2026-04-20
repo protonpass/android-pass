@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023-2026 Proton AG
+ * Copyright (c) 2026 Proton AG
  * This file is part of Proton AG and Proton Pass.
  *
  * Proton Pass is free software: you can redistribute it and/or modify
@@ -16,7 +16,7 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.data.impl.remote
+package proton.android.pass.data.api
 
 import javax.inject.Qualifier
 

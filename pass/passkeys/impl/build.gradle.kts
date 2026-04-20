@@ -47,6 +47,8 @@ dependencies {
     implementation(libs.kotlinx.datetime)
     implementation(libs.kotlinx.serialization.json)
     implementation(projects.pass.crypto.api)
+    implementation(libs.okhttp)
+    implementation(projects.pass.data.api)
 
     implementation(libs.dagger.hilt.android)
     implementation(libs.androidx.credentials)
@@ -61,4 +63,6 @@ dependencies {
     testImplementation(libs.kotlinTest)
     testImplementation(libs.truth)
     testImplementation(libs.turbine)
+    testImplementation(libs.coroutines.test)
+    testImplementation(libs.okhttp.mockwebserver)
 }

@@ -20,17 +20,16 @@ package proton.android.pass.passkeys.impl
 
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.SerializationException
 import kotlinx.serialization.json.Json
 import okhttp3.OkHttpClient
 import okhttp3.Request
-import okio.Buffer
 import proton.android.pass.commonrust.MobileFetchException
 import proton.android.pass.commonrust.MobileWebauthnClientFetcher
 import proton.android.pass.commonrust.MobileWebauthnDomainsResponse
 import proton.android.pass.data.api.PublicOkhttpClient
+import java.net.HttpURLConnection.HTTP_NOT_FOUND
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -50,10 +49,13 @@ internal class WebauthnRelatedOriginsFetcher @Inject constructor(
                     else -> {
                         val source = response.body?.source()
                             ?: throw MobileFetchException.CannotFetch("empty body")
-                        val buffer = Buffer()
-                        val read = source.read(buffer, MAX_BODY_SIZE + 1L)
-                        if (read > MAX_BODY_SIZE) throw MobileFetchException.CannotFetch("Response too large")
-                        parseBody(buffer.readUtf8())
+                        // request() fills the internal buffer until n bytes are available or EOF —
+                        // unlike a single read() call, it handles multi-segment responses correctly.
+                        source.request(MAX_BODY_SIZE + 1L)
+                        if (source.buffer.size > MAX_BODY_SIZE) {
+                            throw MobileFetchException.CannotFetch("Response too large")
+                        }
+                        parseBody(source.buffer.readUtf8())
                     }
                 }
             }
@@ -78,13 +80,10 @@ internal class WebauthnRelatedOriginsFetcher @Inject constructor(
     }
 
     @Serializable
-    private data class WebauthnDocument(
-        @SerialName("origins") val origins: List<String>
-    )
+    private data class WebauthnDocument(val origins: List<String>)
 
     private companion object {
-        private const val HTTP_NOT_FOUND = 404
-        private const val MAX_BODY_SIZE = 512 * 1024 // 512 KB — ample for an origins list
+        private const val MAX_BODY_SIZE = 512 * 1024L // 512 KB
         private val lenientJson = Json { ignoreUnknownKeys = true }
     }
 }

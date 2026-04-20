@@ -26,6 +26,7 @@ import kotlinx.serialization.SerializationException
 import kotlinx.serialization.json.Json
 import okhttp3.OkHttpClient
 import okhttp3.Request
+import okio.Buffer
 import proton.android.pass.commonrust.MobileFetchException
 import proton.android.pass.commonrust.MobileWebauthnClientFetcher
 import proton.android.pass.commonrust.MobileWebauthnDomainsResponse
@@ -40,14 +41,20 @@ internal class WebauthnRelatedOriginsFetcher @Inject constructor(
 
     override suspend fun fetch(url: String): MobileWebauthnDomainsResponse = withContext(Dispatchers.IO) {
         runCatching {
+            if (!url.startsWith("https://")) throw MobileFetchException.CannotFetch("Only HTTPS URLs are allowed")
             val request = Request.Builder().url(url).build()
             okHttpClient.newCall(request).execute().use { response ->
                 when {
                     response.code == HTTP_NOT_FOUND -> throw MobileFetchException.NotFound(url)
                     !response.isSuccessful -> throw MobileFetchException.CannotFetch("HTTP ${response.code}")
-                    response.body?.contentLength().let { it != null && it != -1L && it > MAX_BODY_SIZE } ->
-                        throw MobileFetchException.CannotFetch("Response too large")
-                    else -> parseBody(response.body?.string().orEmpty())
+                    else -> {
+                        val source = response.body?.source()
+                            ?: throw MobileFetchException.CannotFetch("empty body")
+                        val buffer = Buffer()
+                        val read = source.read(buffer, MAX_BODY_SIZE + 1L)
+                        if (read > MAX_BODY_SIZE) throw MobileFetchException.CannotFetch("Response too large")
+                        parseBody(buffer.readUtf8())
+                    }
                 }
             }
         }.getOrElse { error ->
@@ -60,7 +67,6 @@ internal class WebauthnRelatedOriginsFetcher @Inject constructor(
 
     @Suppress("SwallowedException")
     private fun parseBody(body: String): MobileWebauthnDomainsResponse {
-        if (body.length > MAX_BODY_SIZE) throw MobileFetchException.CannotFetch("Response too large")
         return try {
             val parsed = lenientJson.decodeFromString(WebauthnDocument.serializer(), body)
             MobileWebauthnDomainsResponse(parsed.origins)

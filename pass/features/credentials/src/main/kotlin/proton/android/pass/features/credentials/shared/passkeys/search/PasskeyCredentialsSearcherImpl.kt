@@ -24,6 +24,7 @@ import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.credentials.provider.Action
 import androidx.credentials.provider.BeginGetPublicKeyCredentialOption
+import androidx.credentials.provider.CallingAppInfo
 import androidx.credentials.provider.PublicKeyCredentialEntry
 import kotlinx.coroutines.flow.first
 import kotlinx.serialization.json.Json
@@ -43,6 +44,7 @@ import javax.inject.Inject
 internal class PasskeyCredentialsSearcherImpl @Inject constructor(
     private val getPasskeyCredentialItems: GetPasskeyCredentialItems,
     private val needsBiometricAuth: NeedsBiometricAuth,
+    private val passkeyOriginVerifier: PasskeyOriginVerifier,
     private val telemetryManager: TelemetryManager
 ) : PasskeyCredentialsSearcher {
 
@@ -62,9 +64,15 @@ internal class PasskeyCredentialsSearcherImpl @Inject constructor(
 
     override suspend fun search(
         context: Context,
+        callingAppInfo: CallingAppInfo?,
         option: BeginGetPublicKeyCredentialOption
     ): Pair<List<PublicKeyCredentialEntry>, Action>? {
         val passkeyCredential = createPasskeyCredential(option) ?: return null
+
+        passkeyOriginVerifier.verifyOrigin(
+            callingAppInfo = callingAppInfo,
+            requestedRpId = passkeyCredential.domain
+        ) ?: return null
 
         val passkeyCredentialEntries = createPasskeyCredentialEntries(
             credential = passkeyCredential,
@@ -74,8 +82,7 @@ internal class PasskeyCredentialsSearcherImpl @Inject constructor(
         )
 
         val passkeyCredentialAction = createPasskeyCredentialAction(
-            context = context,
-            credential = passkeyCredential
+            context = context
         )
 
         return Pair(passkeyCredentialEntries, passkeyCredentialAction)
@@ -106,7 +113,6 @@ internal class PasskeyCredentialsSearcherImpl @Inject constructor(
             beginGetPublicKeyCredentialOption = option,
             pendingIntent = createPasskeyPendingIntent(
                 context = context,
-                credential = credential,
                 passkeyItem = passkeyCredentialItem.passkeyItem,
                 isBiometricAuthRequired = isBiometricAuthRequired
             )
@@ -118,19 +124,16 @@ internal class PasskeyCredentialsSearcherImpl @Inject constructor(
 
     private fun createPasskeyPendingIntent(
         context: Context,
-        credential: PasskeyCredential,
         passkeyItem: PasskeyItem,
         isBiometricAuthRequired: Boolean
     ) = if (isBiometricAuthRequired) {
         PasskeyCredentialSelectionActivity.createPasskeyCredentialIntent(
-            origin = credential.domain,
             context = context,
             passkeyItem = passkeyItem
         )
     } else {
         PasskeyCredentialUsageActivity.createPasskeyCredentialIntent(
             context = context,
-            origin = credential.domain,
             passkeyItem = passkeyItem
         )
     }.let { intent ->
@@ -142,10 +145,9 @@ internal class PasskeyCredentialsSearcherImpl @Inject constructor(
         )
     }
 
-    private fun createPasskeyCredentialAction(context: Context, credential: PasskeyCredential) =
+    private fun createPasskeyCredentialAction(context: Context) =
         PasskeyCredentialSelectionActivity.createPasskeyCredentialIntent(
-            context = context,
-            origin = credential.domain
+            context = context
         )
             .let { intent ->
                 PendingIntent.getActivity(

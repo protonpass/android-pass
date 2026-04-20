@@ -37,6 +37,7 @@ import me.proton.core.accountmanager.domain.getAccounts
 import me.proton.core.domain.entity.UserId
 import me.proton.core.user.domain.entity.UserAddress
 import me.proton.core.user.domain.repository.UserAddressRepository
+import proton.android.pass.common.api.AppDispatchers
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
@@ -128,7 +129,8 @@ class ItemRepositoryImpl @Inject constructor(
     private val migrateItem: MigrateItem,
     private val encryptionContextProvider: EncryptionContextProvider,
     private val getShareAndItemKey: GetShareAndItemKey,
-    private val folderKeyRepository: FolderKeyRepository
+    private val folderKeyRepository: FolderKeyRepository,
+    private val appDispatchers: AppDispatchers
 ) : BaseRepository(userAddressRepository), ItemRepository {
 
     @Suppress("TooGenericExceptionCaught")
@@ -1233,7 +1235,7 @@ class ItemRepositoryImpl @Inject constructor(
     }
 
     override suspend fun findUserId(shareId: ShareId, itemId: ItemId): Option<UserId> =
-        localItemDataSource.findUserId(shareId, itemId)
+        withContext(appDispatchers.io) { localItemDataSource.findUserId(shareId, itemId) }
 
     override suspend fun deleteItemRevisions(
         userId: UserId,

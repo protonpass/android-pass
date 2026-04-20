@@ -123,6 +123,7 @@ dependencies {
     testImplementation(libs.kotlinTest)
     testImplementation(libs.truth)
     testImplementation(libs.turbine)
+    testImplementation(libs.okhttp.mockwebserver)
 
     testImplementation(projects.pass.account.fakes)
     testImplementation(projects.pass.appConfig.fakes)

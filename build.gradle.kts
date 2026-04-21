@@ -53,6 +53,16 @@ val passCommonAarPath = project.findProperty("passCommonAarPath")?.toString()
     ?: "libs/lib-release.aar"
 val passCommonAar = File(rootProject.projectDir, passCommonAarPath)
 
+// Skip AAR-replacement when composite build is active (settings-phase substitution wins)
+val localPropertiesForBuild = java.util.Properties().apply {
+    val f = rootProject.projectDir.resolve("local.properties")
+    if (f.exists()) load(f.inputStream())
+}
+val isPassCommonLocalBuild = (
+    localPropertiesForBuild.getProperty("pass.common.local.path")
+        ?: System.getenv("PASS_COMMON_LOCAL_PATH")
+    )?.let { File(it).isDirectory } == true
+
 val versionCatalog = extensions.findByType<VersionCatalogsExtension>()?.named("libs")
 val passCommon = versionCatalog?.findLibrary("pass-common")?.get()?.get()
 val jna = versionCatalog?.findLibrary("jna")?.get()?.get()
@@ -72,6 +82,7 @@ subprojects {
 
     // Pass Common AAR replacement
     afterEvaluate {
+        if (isPassCommonLocalBuild) return@afterEvaluate  // composite build handles substitution
         configurations.configureEach {
             withDependencies {
                 if (passCommon == null || jna == null) return@withDependencies

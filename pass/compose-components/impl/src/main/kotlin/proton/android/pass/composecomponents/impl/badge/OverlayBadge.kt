@@ -73,7 +73,7 @@ fun OverlayBadgePreview(@PreviewParameter(ThemePreviewProvider::class) isDark: B
                         size = 60,
                         shape = PassTheme.shapes.squircleMediumLargeShape,
                         text = "My title",
-                        website = null,
+                        websites = emptyList(),
                         packageName = null,
                         canLoadExternalImages = false
                     )

@@ -140,7 +140,7 @@ private fun SecureLinksListGridCellIcon(
         modifier = modifier,
         text = itemTitle,
         canLoadExternalImages = canLoadExternalImages,
-        website = itemWebsite,
+        websites = listOfNotNull(itemWebsite),
         packageName = itemPackageName
     )
     ItemCategory.SSHKey,

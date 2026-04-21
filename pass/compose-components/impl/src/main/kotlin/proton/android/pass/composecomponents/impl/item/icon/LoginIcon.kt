@@ -29,6 +29,7 @@ import androidx.compose.material.Icon
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -86,7 +87,7 @@ fun LoginIcon(
 fun LoginIcon(
     modifier: Modifier = Modifier,
     text: String,
-    website: String?,
+    websites: List<String>,
     packageName: String?,
     size: Int = 40,
     favIconPadding: Dp = Spacing.small,
@@ -104,7 +105,10 @@ fun LoginIcon(
         PassTheme.colors.textHint
     }
 ) {
-    if (website == null || !canLoadExternalImages) {
+    var urlIndex by remember(websites) { mutableIntStateOf(0) }
+    val currentWebsite = websites.getOrNull(urlIndex)
+
+    if (currentWebsite == null || !canLoadExternalImages) {
         FallbackLoginIcon(
             modifier = modifier,
             text = text,
@@ -116,8 +120,8 @@ fun LoginIcon(
             foregroundColor = foregroundColor
         )
     } else {
-        var isLoaded by remember { mutableStateOf(false) }
-        var isError by remember { mutableStateOf(false) }
+        var isLoaded by remember(urlIndex) { mutableStateOf(false) }
+        var isExhausted by remember(urlIndex) { mutableStateOf(false) }
 
         val animatedBackgroundColor by if (CROSSFADE_ENABLED) {
             animateColorAsState(
@@ -139,7 +143,7 @@ fun LoginIcon(
                     .clip(shape)
                     .size(size.dp),
                 model = ImageRequest.Builder(LocalContext.current)
-                    .data(WebsiteUrl(website))
+                    .data(WebsiteUrl(currentWebsite))
                     .size(size)
                     .apply {
                         if (CROSSFADE_ENABLED) {
@@ -156,18 +160,31 @@ fun LoginIcon(
                     )
                 },
                 onError = {
-                    isError = true
+                    if (urlIndex < websites.size - 1) {
+                        urlIndex++
+                    } else {
+                        isExhausted = true
+                    }
                 },
                 error = {
-                    FallbackLoginIcon(
-                        text = text,
-                        packageName = packageName,
-                        size = size,
-                        shape = shape,
-                        enabled = enabled,
-                        backgroundColor = backgroundColor,
-                        foregroundColor = foregroundColor
-                    )
+                    if (!isExhausted) {
+                        TwoLetterLoginIcon(
+                            text = text,
+                            shape = shape,
+                            backgroundColor = backgroundColor,
+                            foregroundColor = foregroundColor
+                        )
+                    } else {
+                        FallbackLoginIcon(
+                            text = text,
+                            packageName = packageName,
+                            size = size,
+                            shape = shape,
+                            enabled = enabled,
+                            backgroundColor = backgroundColor,
+                            foregroundColor = foregroundColor
+                        )
+                    }
                 },
                 onSuccess = {
                     isLoaded = true
@@ -188,7 +205,7 @@ fun LoginIcon(
                 contentDescription = null
             )
 
-            if (!enabled && !isError) {
+            if (!enabled && !isExhausted) {
                 Box(
                     modifier = Modifier
                         .size(size.dp)
@@ -268,7 +285,7 @@ fun LoginIconPreview(@PreviewParameter(ThemedBooleanPreviewProvider::class) inpu
         Surface {
             LoginIcon(
                 text = "login text",
-                website = null,
+                websites = emptyList(),
                 packageName = null,
                 canLoadExternalImages = false,
                 enabled = input.second

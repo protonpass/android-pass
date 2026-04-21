@@ -90,11 +90,10 @@ internal fun LoginOptionsBottomSheetContents(
             leftIcon = {
                 val sortedPackages = contents.packageInfoSet.sortedBy { it.packageName.value }
                 val packageName = sortedPackages.firstOrNull()?.packageName?.value
-                val website = contents.urls.firstOrNull()
                 LoginIcon(
                     text = contents.title,
                     canLoadExternalImages = canLoadExternalImages,
-                    website = website,
+                    websites = contents.urls,
                     packageName = packageName
                 )
             }

@@ -92,8 +92,6 @@ fun LoginRow(
                     content.packageInfoSet.sortedBy { it.packageName.value }
                 }
                 val packageName = remember { sortedPackages.firstOrNull()?.packageName?.value }
-                val website = remember { content.urls.firstOrNull() }
-
                 val enabled = remember(selection) {
                     when (selection) {
                         is ItemSelectionModeState.NotInSelectionMode -> true
@@ -115,7 +113,7 @@ fun LoginRow(
                         LoginIcon(
                             text = fields.title.text,
                             canLoadExternalImages = canLoadExternalImages,
-                            website = website,
+                            websites = content.urls,
                             packageName = packageName,
                             enabled = enabled
                         )

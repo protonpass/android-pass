@@ -167,7 +167,7 @@ private fun ReusedPasswordCarouselItem(
             canLoadExternalImages = canLoadExternalImages,
             size = REUSED_LOGIN_ITEM_ICON_SIZE,
             favIconPadding = 2.dp,
-            website = urls.firstOrNull(),
+            websites = urls,
             packageName = packageInfoSet.firstOrNull()?.packageName?.value,
             backgroundColor = PassTheme.colors.loginInteractionNormMinor2
         )

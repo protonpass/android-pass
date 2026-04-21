@@ -94,7 +94,7 @@ fun PinItem(
                 canLoadExternalImages = canLoadExternalImages,
                 size = ICON_SIZE,
                 favIconPadding = 2.dp,
-                website = contents.urls.firstOrNull(),
+                websites = contents.urls,
                 packageName = contents.packageInfoSet.firstOrNull()?.packageName?.value,
                 backgroundColor = PassTheme.colors.loginInteractionNormMinor2
             )

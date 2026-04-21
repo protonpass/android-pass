@@ -57,7 +57,7 @@ fun PassItemIcon(
         ItemCategory.Login -> LoginIcon(
             modifier = modifier,
             text = text,
-            website = website,
+            websites = listOfNotNull(website.takeIf { it.isNotEmpty() }),
             packageName = packageName,
             canLoadExternalImages = canLoadExternalImages
         )

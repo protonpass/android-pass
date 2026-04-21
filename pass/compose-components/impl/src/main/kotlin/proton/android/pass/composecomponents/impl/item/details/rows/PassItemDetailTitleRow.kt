@@ -136,7 +136,7 @@ internal fun PassItemDetailTitleRow(
                     size = 60,
                     shape = PassTheme.shapes.squircleMediumLargeShape,
                     text = itemContents.title,
-                    website = itemContents.websiteUrl,
+                    websites = itemContents.urls,
                     packageName = itemContents.packageName,
                     canLoadExternalImages = canLoadExternalImages
                 )

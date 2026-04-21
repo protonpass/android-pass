@@ -692,11 +692,10 @@ fun HomeScreen(
                                         contents.packageInfoSet.sortedBy { it.packageName.value }
                                     val packageName =
                                         sortedPackages.firstOrNull()?.packageName?.value
-                                    val website = contents.urls.firstOrNull()
                                     LoginIcon(
                                         text = item.contents.title,
                                         canLoadExternalImages = homeUiState.homeListUiState.canLoadExternalImages,
-                                        website = website,
+                                        websites = contents.urls,
                                         packageName = packageName
                                     )
                                 }

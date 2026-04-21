@@ -29,7 +29,7 @@ import proton.android.pass.common.api.safeRunCatching
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import proton.android.pass.data.api.usecases.VerifyDigitalAssetLinksForCredentialSharing
-import proton.android.pass.data.impl.remote.PublicOkhttpClient
+import proton.android.pass.data.api.PublicOkhttpClient
 import proton.android.pass.log.api.PassLogger
 import javax.inject.Inject
 
@@ -70,8 +70,7 @@ class VerifyDigitalAssetLinksForCredentialSharingImpl @Inject constructor(
                 }
             }
         }.getOrElse { error ->
-            PassLogger.w(TAG, "Failed to validate native app Digital Asset Links")
-            PassLogger.w(TAG, error)
+            PassLogger.w(TAG, error.javaClass.simpleName + ": Failed to validate native app Digital Asset Links")
             false
         }
     }

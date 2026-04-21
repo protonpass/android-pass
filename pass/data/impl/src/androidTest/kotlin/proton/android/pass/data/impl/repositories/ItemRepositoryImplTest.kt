@@ -41,6 +41,7 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import proton.android.pass.account.fakes.FakeAccountManager
+import proton.android.pass.common.fakes.FakeAppDispatchers
 import proton.android.pass.account.fakes.FakeUserAddressRepository
 import proton.android.pass.crypto.api.usecases.OpenItemOutput
 import proton.android.pass.crypto.fakes.context.FakeEncryptionContextProvider
@@ -131,7 +132,8 @@ class ItemRepositoryImplTest {
             migrateItem = FakeMigrateItem(),
             encryptionContextProvider = FakeEncryptionContextProvider(),
             getShareAndItemKey = FakeGetShareAndItemKey(),
-            folderKeyRepository = FakeFolderKeyRepository()
+            folderKeyRepository = FakeFolderKeyRepository(),
+            appDispatchers = FakeAppDispatchers()
         )
     }
 

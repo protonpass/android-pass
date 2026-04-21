@@ -121,6 +121,25 @@ buildCache {
 
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 
+// Pass Common local composite build
+// To use local sources add to local.properties (git-ignored):
+//   pass.common.local.path=/Users/<you>/Development/proton-pass-common/proton-pass-mobile/android
+// Or set env var: PASS_COMMON_LOCAL_PATH
+// NOTE: pre-built .so files in lib/src/main/jniLibs/ are used automatically.
+//       Re-run `make android-lib-aarch64 android-lib-armv7 android-lib-x86_64`
+//       only when you change Rust code in proton-pass-common.
+val passCommonLocalPath = localProperties.getProperty("pass.common.local.path")
+    ?: System.getenv("PASS_COMMON_LOCAL_PATH")
+val passCommonLocalDir = passCommonLocalPath?.let { File(it) }
+if (passCommonLocalDir?.isDirectory == true) {
+    logger.lifecycle("pass-common: using LOCAL composite build from $passCommonLocalDir")
+    includeBuild(passCommonLocalDir) {
+        dependencySubstitution {
+            substitute(module("me.proton.pass.common:lib")).using(project(":lib"))
+        }
+    }
+}
+
 include(":app")
 include(":appmacrobenchmark")
 include(":pass:account:api")

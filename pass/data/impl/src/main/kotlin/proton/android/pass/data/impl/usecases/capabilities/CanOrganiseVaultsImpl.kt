@@ -19,17 +19,18 @@
 package proton.android.pass.data.impl.usecases.capabilities
 
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
+import proton.android.pass.data.api.usecases.ObserveVaults
 import proton.android.pass.data.api.usecases.capabilities.CanOrganiseVaults
-import proton.android.pass.preferences.FeatureFlag
-import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
 class CanOrganiseVaultsImpl @Inject constructor(
-    private val featureFlagsPreferencesRepository: FeatureFlagsPreferencesRepository
+    private val observeVaults: ObserveVaults
 ) : CanOrganiseVaults {
 
-    override fun invoke(): Flow<Boolean> = featureFlagsPreferencesRepository[FeatureFlag.PASS_HIDE_SHOW_VAULT]
+    override fun invoke(): Flow<Boolean> = observeVaults(includeHidden = true)
+        .map { vaults -> vaults.isNotEmpty() }
 
 }

@@ -21,6 +21,7 @@ package proton.android.pass.data.impl.usecases
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import kotlinx.serialization.json.Json
+import javax.net.ssl.SSLHandshakeException
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.jsonArray
 import kotlinx.serialization.json.jsonObject
@@ -30,6 +31,7 @@ import okhttp3.OkHttpClient
 import okhttp3.Request
 import proton.android.pass.data.api.usecases.VerifyDigitalAssetLinksForCredentialSharing
 import proton.android.pass.data.api.PublicOkhttpClient
+import proton.android.pass.data.impl.AppCertificate
 import proton.android.pass.log.api.PassLogger
 import javax.inject.Inject
 
@@ -44,7 +46,7 @@ class VerifyDigitalAssetLinksForCredentialSharingImpl @Inject constructor(
     ): Boolean = withContext(Dispatchers.IO) {
         safeRunCatching {
             val normalizedFingerprints = certificateFingerprints
-                .map(::normalizeFingerprint)
+                .map(AppCertificate::normalizeSha256Fingerprint)
                 .toSet()
             if (normalizedFingerprints.isEmpty()) return@safeRunCatching false
 
@@ -70,7 +72,16 @@ class VerifyDigitalAssetLinksForCredentialSharingImpl @Inject constructor(
                 }
             }
         }.getOrElse { error ->
-            PassLogger.w(TAG, error.javaClass.simpleName + ": Failed to validate native app Digital Asset Links")
+            if (error is SSLHandshakeException) {
+                PassLogger.w(
+                    TAG,
+                    "TLS handshake failed during DAL verification," +
+                        " possible MITM or server misconfiguration"
+                )
+            } else {
+                PassLogger.w(TAG, "Failed to validate Digital Asset Links")
+            }
+            PassLogger.w(TAG, error)
             false
         }
     }
@@ -91,7 +102,7 @@ class VerifyDigitalAssetLinksForCredentialSharingImpl @Inject constructor(
 
         val fingerprints = target["sha256_cert_fingerprints"]?.jsonArray ?: return false
         return fingerprints.any { element ->
-            normalizeFingerprint(element.jsonPrimitive.content) in normalizedFingerprints
+            AppCertificate.normalizeSha256Fingerprint(element.jsonPrimitive.content) in normalizedFingerprints
         }
     }
 
@@ -101,7 +112,5 @@ class VerifyDigitalAssetLinksForCredentialSharingImpl @Inject constructor(
         private const val RELATION_GET_LOGIN_CREDS = "delegate_permission/common.get_login_creds"
 
         private val jsonParser = Json { ignoreUnknownKeys = true }
-
-        private fun normalizeFingerprint(value: String): String = value.replace(":", "").lowercase()
     }
 }

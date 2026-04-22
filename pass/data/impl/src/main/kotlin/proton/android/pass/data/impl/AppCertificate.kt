@@ -19,7 +19,11 @@
 package proton.android.pass.data.impl
 
 import android.content.Context
+import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
+import android.content.pm.Signature
+import android.content.pm.SigningInfo
+import android.os.Build
 import proton.android.pass.log.api.PassLogger
 import java.security.MessageDigest
 
@@ -27,27 +31,50 @@ object AppCertificate {
 
     private const val TAG = "AppCertificate"
 
+    /**
+     * Normalizes SHA-256 cert fingerprints for comparison. Asset Links JSON and the OS may use
+     * different casing, optional colon separators, spaces, or a `sha256:` prefix.
+     */
+    fun normalizeSha256Fingerprint(value: String): String = value
+        .trim()
+        .lowercase()
+        .removePrefix("sha256:")
+        .replace(":", "")
+        .replace(" ", "")
+
     fun getAppSigningCertificates(context: Context, packageName: String): List<String> = try {
-        val packageInfo = if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.P) {
+        val packageInfo = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
             context.packageManager.getPackageInfo(packageName, PackageManager.GET_SIGNING_CERTIFICATES)
         } else {
             context.packageManager.getPackageInfo(packageName, PackageManager.GET_SIGNATURES)
         }
 
-        val signatures = if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.P) {
-            packageInfo.signingInfo?.apkContentsSigners
-        } else {
-            packageInfo.signatures
-        }.orEmpty()
-
-        signatures.map { signature ->
-            val md = MessageDigest.getInstance("SHA-256")
-            val digest = md.digest(signature.toByteArray())
-            digest.joinToString(":") { "%02X".format(it) }
-        }
+        collectSigningSignatures(packageInfo)
+            .map { signature ->
+                val md = MessageDigest.getInstance("SHA-256")
+                val digest = md.digest(signature.toByteArray())
+                digest.joinToString("") { "%02x".format(it) }
+            }
+            .distinct()
     } catch (e: PackageManager.NameNotFoundException) {
-        PassLogger.w(TAG, "Package not found: $packageName")
+        PassLogger.w(TAG, "Package not found during fingerprint lookup, DAL matching skipped")
         PassLogger.w(TAG, e)
         emptyList()
+    }
+
+    private fun collectSigningSignatures(packageInfo: PackageInfo): List<Signature> {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.P) {
+            return packageInfo.signatures?.filterNotNull().orEmpty()
+        }
+        val signingInfo: SigningInfo = packageInfo.signingInfo ?: return emptyList()
+        val apkSigners = signingInfo.apkContentsSigners?.filterNotNull().orEmpty()
+        val historySigners = signingInfo.signingCertificateHistory?.filterNotNull().orEmpty()
+        // Merge lineage certs: Play/App updates can rotate the signing key while `assetlinks.json`
+        // (and our DB) still list older SHA-256 entries. Matching is only against DB rows we stored
+        // from TLS-fetched `/.well-known/assetlinks.json` for this package.
+        return buildList {
+            apkSigners.toCollection(this)
+            historySigners.toCollection(this)
+        }.distinct()
     }
 }

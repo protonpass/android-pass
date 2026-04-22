@@ -157,14 +157,15 @@ class GetSuggestedAutofillItemsImpl @Inject constructor(
             ) { items, digitalAssetLinkSuggestions, isDALEnabled ->
                 val filteredItems = suggestionItemFilter.filter(items, suggestion)
                     .map { item -> ItemData.SuggestedItem(item, suggestion) }
-                val combinedItems: List<ItemData.SuggestedItem> = if (isDALEnabled) {
-                    filteredItems + digitalAssetLinkSuggestions.flatMap {
-                        suggestionItemFilter.filter(items, it)
-                            .map { item -> ItemData.SuggestedItem(item, it) }
+                val dalExtraItems: List<ItemData.SuggestedItem> = if (isDALEnabled) {
+                    digitalAssetLinkSuggestions.flatMap { dalSuggestion ->
+                        suggestionItemFilter.filter(items, dalSuggestion)
+                            .map { item -> ItemData.SuggestedItem(item, dalSuggestion) }
                     }
                 } else {
-                    filteredItems
+                    emptyList()
                 }
+                val combinedItems = filteredItems + dalExtraItems
 
                 val uniqueItems = mutableSetOf<Pair<ShareId, ItemId>>()
                 val deduplicatedItems = combinedItems.filter { item ->

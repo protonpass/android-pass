@@ -18,20 +18,26 @@
 
 package proton.android.pass.features.sharing.groupmembers
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import proton.android.pass.commonui.api.PassTheme
+import proton.android.pass.commonui.api.Radius
 import proton.android.pass.commonui.api.Spacing
+import proton.android.pass.features.sharing.R
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetTitle
 import proton.android.pass.composecomponents.impl.container.CircleTextIcon
 import proton.android.pass.composecomponents.impl.loading.Loading
@@ -76,11 +82,30 @@ private fun GroupMemberRow(modifier: Modifier = Modifier, member: GroupMemberUiM
             shape = PassTheme.shapes.squircleMediumShape
         )
 
-        Text.Body2Regular(
+        Row(
             modifier = Modifier.weight(1f),
-            text = member.email,
-            maxLines = 1,
-            overflow = TextOverflow.Ellipsis
-        )
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(Spacing.small)
+        ) {
+            Text.Body2Regular(
+                modifier = Modifier.weight(1f),
+                text = member.email,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis
+            )
+            if (member.isCurrentUser) {
+                Text.OverlineRegular(
+                    modifier = Modifier
+                        .clip(shape = RoundedCornerShape(size = Radius.medium))
+                        .background(color = PassTheme.colors.interactionNormMajor2)
+                        .padding(
+                            horizontal = Spacing.small,
+                            vertical = Spacing.extraSmall
+                        ),
+                    text = stringResource(id = R.string.share_manage_vault_current_user_indicator),
+                    color = PassTheme.colors.textInvert
+                )
+            }
+        }
     }
 }

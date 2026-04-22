@@ -26,11 +26,12 @@ import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.asLoadingResult
 import proton.android.pass.commonui.api.require
+import proton.android.pass.data.api.usecases.ObserveCurrentUser
 import proton.android.pass.data.api.usecases.ObserveGroupMembersByGroup
 import proton.android.pass.domain.GroupId
 import proton.android.pass.domain.GroupMemberState
@@ -40,31 +41,41 @@ import javax.inject.Inject
 @HiltViewModel
 internal class GroupMembersViewModel @Inject constructor(
     observeGroupMembersByGroup: ObserveGroupMembersByGroup,
+    observeCurrentUser: ObserveCurrentUser,
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
     val groupId: GroupId = GroupId(savedStateHandle.require(CommonNavArgId.GroupId.key))
 
-    val uiState: StateFlow<GroupMembersUiState> = observeGroupMembersByGroup()
-        .asLoadingResult()
-        .map { result ->
-            when (result) {
-                is LoadingResult.Loading -> GroupMembersUiState.Loading
-                is LoadingResult.Error -> GroupMembersUiState.Loading.copy(isError = true)
-                is LoadingResult.Success -> {
-                    val groupMembers = result.data.find { it.group.id == groupId }
-                    GroupMembersUiState.Loading.copy(
-                        groupName = groupMembers?.group?.name ?: "",
-                        members = groupMembers?.members
-                            ?.filter { it.state == GroupMemberState.Active.value }
-                            ?.mapNotNull { member -> member.email?.let { GroupMemberUiModel(email = it) } }
-                            ?.toImmutableList()
-                            ?: persistentListOf(),
-                        isLoading = false
-                    )
-                }
+    val uiState: StateFlow<GroupMembersUiState> = combine(
+        observeGroupMembersByGroup().asLoadingResult(),
+        observeCurrentUser()
+    ) { result, currentUser ->
+        val currentEmail = currentUser.email.orEmpty()
+        when (result) {
+            is LoadingResult.Loading -> GroupMembersUiState.Loading
+            is LoadingResult.Error -> GroupMembersUiState.Loading.copy(isError = true)
+            is LoadingResult.Success -> {
+                val groupMembers = result.data.find { it.group.id == groupId }
+                GroupMembersUiState.Loading.copy(
+                    groupName = groupMembers?.group?.name ?: "",
+                    members = groupMembers?.members
+                        ?.filter { it.state == GroupMemberState.Active.value }
+                        ?.mapNotNull { member ->
+                            member.email?.let { email ->
+                                GroupMemberUiModel(
+                                    email = email,
+                                    isCurrentUser = email == currentEmail
+                                )
+                            }
+                        }
+                        ?.toImmutableList()
+                        ?: persistentListOf(),
+                    isLoading = false
+                )
             }
         }
+    }
         .stateIn(
             scope = viewModelScope,
             started = SharingStarted.WhileSubscribed(5000),

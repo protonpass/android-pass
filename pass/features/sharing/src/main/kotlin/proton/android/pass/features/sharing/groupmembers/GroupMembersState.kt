@@ -22,8 +22,10 @@ import androidx.compose.runtime.Stable
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 
-@JvmInline
-internal value class GroupMemberUiModel(val email: String)
+internal data class GroupMemberUiModel(
+    val email: String,
+    val isCurrentUser: Boolean
+)
 
 @Stable
 internal data class GroupMembersUiState(

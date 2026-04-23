@@ -248,9 +248,10 @@ class ProfileViewModel @Inject constructor(
         .scan(emptyMap<UserId, AccountState>() to emptySet<UserId>()) { (previousStates, _), accounts ->
             val currentStates = accounts.associate { it.userId to it.state }
             val newReadyUserIds = currentStates.filter { (userId, currentState) ->
-                previousStates[userId] == AccountState.NotReady && currentState == AccountState.Ready
+                previousStates.containsKey(userId) &&
+                    previousStates[userId] != AccountState.Ready &&
+                    currentState == AccountState.Ready
             }.keys
-
             currentStates to newReadyUserIds
         }
         .map { (_, readyUserIds) -> readyUserIds }

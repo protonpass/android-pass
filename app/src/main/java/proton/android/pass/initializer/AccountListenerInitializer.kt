@@ -49,7 +49,7 @@ import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.safeRunCatching
 import proton.android.pass.commonui.api.PassAppLifecycleProvider
 import proton.android.pass.data.api.repositories.ItemSyncStatusRepository
-import proton.android.pass.data.api.repositories.toSyncMode
+import proton.android.pass.data.api.repositories.SyncMode
 import proton.android.pass.data.api.usecases.ClearUserData
 import proton.android.pass.data.api.usecases.RefreshBreaches
 import proton.android.pass.data.api.usecases.RefreshUserAccess
@@ -106,22 +106,16 @@ class AccountListenerInitializer : Initializer<Unit> {
         }
 
         accountManager.onAccountStateChanged(initialState = false)
-            .scan(mutableMapOf<UserId, Pair<Account?, Account>>()) { stateMap, currentAccount ->
-                val userId = currentAccount.userId
-                val previousAccount = stateMap[userId]?.second
-                stateMap[userId] = Pair(previousAccount, currentAccount)
-                stateMap
+            .scan(emptyMap<UserId, AccountState>() to false) { (stateMap, _), currentAccount ->
+                val updatedMap = stateMap + (currentAccount.userId to currentAccount.state)
+                val justBecameReady = stateMap[currentAccount.userId] != AccountState.Ready &&
+                    currentAccount.state == AccountState.Ready
+                updatedMap to justBecameReady
             }
-            .onEach { map ->
-                val anyUserNeedsSync = map.any {
-                    val previousState = it.value.first?.state
-                    val currentState = it.value.second.state
-                    previousState == AccountState.NotReady && currentState == AccountState.Ready
-                }
-                if (anyUserNeedsSync) {
+            .onEach { (_, justBecameReady) ->
+                if (justBecameReady) {
                     launchInAppLifecycleScope(lifecycleProvider) {
-                        val itemSyncStatus = itemSyncStatusRepository.observeSyncStatus().first()
-                        itemSyncStatusRepository.setMode(itemSyncStatus.toSyncMode())
+                        itemSyncStatusRepository.setMode(SyncMode.ShownToUser)
                     }
                 }
             }

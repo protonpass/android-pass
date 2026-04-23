@@ -88,6 +88,7 @@ import proton.android.pass.features.home.localinappmessages.LocalInAppMessageBan
 import proton.android.pass.features.home.localinappmessages.LocalInAppMessagesEvent
 import proton.android.pass.features.home.localinappmessages.NotificationPermissionLaunchedEffect
 import proton.android.pass.features.sl.sync.settings.navigation.SimpleLoginSyncSettingsNavItem
+import proton.android.pass.features.explore.navigation.ExploreNavItem
 import proton.android.pass.features.featureflags.FeatureFlagRoute
 import proton.android.pass.features.home.HomeNavItem
 import proton.android.pass.features.home.HomeSnackbarMessageWithAction
@@ -269,6 +270,7 @@ fun PassAppContent(
             ) {
                 PassHomeBottomBar(
                     selection = bottomBarSelected,
+                    showExplore = appUiState.showExplore,
                     onEvent = {
                         handleBottomBarEvent(
                             event = it,
@@ -501,6 +503,7 @@ private fun determineBottomBarSelection(route: String?): BottomBarSelection = wh
 
     ProfileNavItem.route -> BottomBarSelection.Profile
     SecurityCenterHomeNavItem.route -> BottomBarSelection.SecurityCenter
+    ExploreNavItem.route -> BottomBarSelection.Explore
     CreateItemBottomsheetNavItem.route -> BottomBarSelection.ItemCreate
     else -> BottomBarSelection.None
 }
@@ -522,6 +525,7 @@ private fun handleBottomBarEvent(
 
         HomeBottomBarEvent.OnProfileSelected -> ProfileNavItem to null
         HomeBottomBarEvent.OnSecurityCenterSelected -> SecurityCenterHomeNavItem to null
+        HomeBottomBarEvent.OnExploreSelected -> ExploreNavItem to null
     }
 
     if (event == HomeBottomBarEvent.OnNewItemSelected && currentRoute == CreateItemBottomsheetNavItem.route) return
@@ -554,7 +558,8 @@ private fun navigateWithDismiss(
             appNavigator.findCloserDestination(
                 HomeNavItem,
                 ProfileNavItem,
-                SecurityCenterHomeNavItem
+                SecurityCenterHomeNavItem,
+                ExploreNavItem
             )
         } else null
 

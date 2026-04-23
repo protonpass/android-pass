@@ -34,6 +34,7 @@ import proton.android.pass.preferences.FeatureFlag.RENAME_ADMIN_TO_MANAGER
 import proton.android.pass.preferences.FeatureFlag.PASS_FOLDERS
 import proton.android.pass.preferences.FeatureFlag.PASS_AUTOFILL_URL_ADVANCED_MODES
 import proton.android.pass.preferences.FeatureFlag.ENABLE_PAGINATION
+import proton.android.pass.preferences.FeatureFlag.PASS_EXPLORE_TAB
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -57,6 +58,7 @@ class FakeFeatureFlagsPreferenceRepository @Inject constructor() :
             PASS_FOLDERS -> it.getOrDefault(FeatureFlag.PASS_FOLDERS, false) as T
             PASS_AUTOFILL_URL_ADVANCED_MODES -> it.getOrDefault(PASS_AUTOFILL_URL_ADVANCED_MODES, false) as T
             ENABLE_PAGINATION -> it.getOrDefault(ENABLE_PAGINATION, false) as T
+            PASS_EXPLORE_TAB -> it.getOrDefault(PASS_EXPLORE_TAB, false) as T
         }
     }
 

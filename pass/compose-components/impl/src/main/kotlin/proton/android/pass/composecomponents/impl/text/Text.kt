@@ -288,13 +288,17 @@ object Text {
         text: String,
         modifier: Modifier = Modifier,
         color: Color = ProtonTheme.colors.textWeak,
-        textAlign: TextAlign = TextAlign.Start
+        textAlign: TextAlign = TextAlign.Start,
+        maxLines: Int = Int.MAX_VALUE,
+        overflow: TextOverflow = TextOverflow.Clip
     ) {
         Body3Weak(
             annotatedText = text.asAnnotatedString(),
             modifier = modifier,
             color = color,
-            textAlign = textAlign
+            textAlign = textAlign,
+            maxLines = maxLines,
+            overflow = overflow
         )
     }
 
@@ -303,13 +307,17 @@ object Text {
         annotatedText: AnnotatedString,
         modifier: Modifier = Modifier,
         color: Color = ProtonTheme.colors.textWeak,
-        textAlign: TextAlign = TextAlign.Start
+        textAlign: TextAlign = TextAlign.Start,
+        maxLines: Int = Int.MAX_VALUE,
+        overflow: TextOverflow = TextOverflow.Clip
     ) {
         Text(
             text = annotatedText,
             style = PassTheme.typography.body3Weak().copy(color = color),
             modifier = modifier,
-            textAlign = textAlign
+            textAlign = textAlign,
+            maxLines = maxLines,
+            overflow = overflow
         )
     }
 

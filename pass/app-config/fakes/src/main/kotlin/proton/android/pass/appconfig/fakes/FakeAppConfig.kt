@@ -29,13 +29,14 @@ import javax.inject.Singleton
 class FakeAppConfig @Inject constructor() : AppConfig {
 
     private var androidVersionValue = Build.VERSION_CODES.TIRAMISU
+    private var flavorValue: BuildFlavor = BuildFlavor.Play(BuildEnv.PROD)
 
     override val isDebug: Boolean
         get() = false
     override val applicationId: String
         get() = ""
     override val flavor: BuildFlavor
-        get() = BuildFlavor.Play(BuildEnv.PROD)
+        get() = flavorValue
     override val versionCode: Int
         get() = 0
     override val versionName: String
@@ -59,5 +60,9 @@ class FakeAppConfig @Inject constructor() : AppConfig {
 
     fun setAndroidVersion(value: Int) {
         androidVersionValue = value
+    }
+
+    fun setFlavor(value: BuildFlavor) {
+        flavorValue = value
     }
 }

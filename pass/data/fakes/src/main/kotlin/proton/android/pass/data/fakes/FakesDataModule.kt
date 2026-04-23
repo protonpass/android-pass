@@ -102,6 +102,7 @@ import proton.android.pass.data.api.usecases.ObserveItemById
 import proton.android.pass.data.api.usecases.ObserveItemCount
 import proton.android.pass.data.api.usecases.ObserveItems
 import proton.android.pass.data.api.usecases.ObserveMFACount
+import proton.android.pass.data.api.usecases.ObserveLoginTotpEntries
 import proton.android.pass.data.api.usecases.ObservePinnedItems
 import proton.android.pass.data.api.usecases.ObserveUpgradeInfo
 import proton.android.pass.data.api.usecases.ObserveUserAccessData
@@ -365,6 +366,7 @@ import proton.android.pass.data.fakes.usecases.FakeObserveItems
 import proton.android.pass.data.fakes.usecases.FakeObserveItemsWithPasskeys
 import proton.android.pass.data.fakes.usecases.FakeObserveMFACount
 import proton.android.pass.data.fakes.usecases.FakeObserveOrganizationSettings
+import proton.android.pass.data.fakes.usecases.FakeObserveLoginTotpEntries
 import proton.android.pass.data.fakes.usecases.FakeObservePinnedItems
 import proton.android.pass.data.fakes.usecases.FakeObserveRecentSearchItems
 import proton.android.pass.data.fakes.usecases.FakeObserveSearchEntry
@@ -696,6 +698,9 @@ abstract class FakesDataModule {
 
     @Binds
     abstract fun bindObserveRecentSearchItems(impl: FakeObserveRecentSearchItems): ObserveRecentSearchItems
+
+    @Binds
+    abstract fun bindObserveLoginTotpEntries(impl: FakeObserveLoginTotpEntries): ObserveLoginTotpEntries
 
     @Binds
     abstract fun bindItemSyncStatusRepository(impl: FakeItemSyncStatusRepository): ItemSyncStatusRepository

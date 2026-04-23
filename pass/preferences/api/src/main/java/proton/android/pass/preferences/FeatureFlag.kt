@@ -83,5 +83,11 @@ enum class FeatureFlag(
         description = "Enable pagination on item list",
         key = "PassEnablePagination",
         isEnabledDefault = false
+    ),
+    PASS_EXPLORE_TAB(
+        title = "Pass Explore tab",
+        description = "Show the new Explore tab with cross-product promotion and Pass shortcuts",
+        key = "PassExploreTab",
+        isEnabledDefault = false
     )
 }

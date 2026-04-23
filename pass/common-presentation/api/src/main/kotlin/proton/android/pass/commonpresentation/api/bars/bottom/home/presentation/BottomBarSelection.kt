@@ -25,6 +25,7 @@ enum class BottomBarSelection {
     Home,
     Profile,
     SecurityCenter,
+    Explore,
     ItemCreate,
     None
 }

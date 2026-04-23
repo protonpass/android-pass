@@ -59,6 +59,9 @@ import proton.android.pass.features.extrapassword.infosheet.navigation.ExtraPass
 import proton.android.pass.features.extrapassword.options.navigation.ExtraPasswordOptionsNavItem
 import proton.android.pass.autofill.autofillhealth.ui.AutofillHealthDebugRoute
 import proton.android.pass.autofill.autofillhealth.ui.autofillHealthDebugGraph
+import proton.android.pass.features.explore.navigation.CodesNavItem
+import proton.android.pass.features.explore.navigation.ExploreNavDestination
+import proton.android.pass.features.explore.navigation.exploreNavGraph
 import proton.android.pass.features.featureflags.FeatureFlagRoute
 import proton.android.pass.features.featureflags.featureFlagsGraph
 import proton.android.pass.features.home.HOME_ENABLE_BULK_ACTIONS_KEY
@@ -2602,6 +2605,40 @@ fun NavGraphBuilder.appGraph(
                 SecurityCenterNavDestination.BackToDarkWebMonitoring -> dismissBottomSheet {
                     appNavigator.popUpTo(DarkWebMonitorNavItem)
                 }
+            }
+        }
+    )
+
+    exploreNavGraph(
+        onNavigated = { destination ->
+            when (destination) {
+                ExploreNavDestination.PasswordGenerator -> appNavigator.navigate(
+                    destination = GeneratePasswordBottomsheet,
+                    route = GeneratePasswordBottomsheet.buildRoute(
+                        mode = GeneratePasswordBottomsheetModeValue.CopyAndClose
+                    )
+                )
+
+                ExploreNavDestination.DarkWebMonitor -> appNavigator.navigate(
+                    destination = DarkWebMonitorNavItem
+                )
+
+                ExploreNavDestination.PasswordHealth -> appNavigator.navigate(
+                    destination = SecurityCenterHomeNavItem
+                )
+
+                ExploreNavDestination.Codes -> appNavigator.navigate(
+                    destination = CodesNavItem
+                )
+
+                ExploreNavDestination.CodesBack -> appNavigator.navigateBack()
+
+                ExploreNavDestination.Aliases -> appNavigator.navigate(
+                    destination = CreateAliasNavItem,
+                    route = CreateAliasNavItem.createNavRoute()
+                )
+
+                is ExploreNavDestination.ExternalUrl -> Unit // handled inside exploreNavGraph
             }
         }
     )

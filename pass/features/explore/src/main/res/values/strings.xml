@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="explore_tab_title">Explore</string>
+    <string name="explore_section_tools_title">Tools</string>
+    <string name="explore_section_expand_security_title">Expand your security</string>
+    <string name="explore_tool_password_generator_title">Password generator</string>
+    <string name="explore_tool_dark_web_monitor_title">Dark web monitoring</string>
+    <string name="explore_tool_dark_web_monitor_subtitle">Start monitoring for data breaches.</string>
+    <string name="explore_tool_password_health_title">Password health</string>
+    <string name="explore_tool_password_health_subtitle">Identify vulnerable, weak and reused passwords.</string>
+    <string name="explore_tool_codes_title">Codes</string>
+    <string name="explore_tool_codes_subtitle">One-time codes for two-factor authentication.</string>
+    <string name="codes_screen_title">Codes</string>
+    <string name="codes_search_placeholder">Search in all items</string>
+    <string name="codes_snackbar_code_copied">Code copied to clipboard</string>
+    <string name="explore_tool_aliases_title">Protect emails with aliases</string>
+    <string name="explore_tool_aliases_subtitle">Safeguard addresses, reduce spam, and block phishing attempts.</string>
+    <string name="explore_product_vpn_title">Proton VPN</string>
+    <string name="explore_product_vpn_subtitle">Browse without being tracked and access blocked content.</string>
+    <string name="explore_product_mail_title">Proton Mail</string>
+    <string name="explore_product_mail_subtitle">Protect your inbox from spam, tracking, and targeted ads.</string>
+    <string name="explore_product_drive_title">Proton Drive</string>
+    <string name="explore_product_drive_subtitle">Give your precious photos and files the safe home they deserve.</string>
+    <string name="explore_product_lumo_title">Lumo AI</string>
+    <string name="explore_product_lumo_subtitle">Ask and ideate with a privacy-first AI assistant.</string>
+    <string name="explore_product_meet_title">Proton Meet</string>
+    <string name="explore_product_meet_subtitle">Talk in private with confidential video conferencing.</string>
+    <string name="explore_business_banner_title">Proton For Business</string>
+    <string name="explore_business_banner_cta">Explore Proton for Business</string>
+</resources>

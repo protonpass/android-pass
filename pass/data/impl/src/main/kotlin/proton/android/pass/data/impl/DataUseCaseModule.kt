@@ -101,10 +101,12 @@ import proton.android.pass.data.api.usecases.ObserveIndexingStatus
 import proton.android.pass.data.api.usecases.ObserveItemTypeCounts
 import proton.android.pass.data.api.usecases.ObserveInviteRecommendations
 import proton.android.pass.data.api.usecases.ObserveInvites
+import proton.android.pass.data.api.usecases.ObserveShouldShowExploreTab
 import proton.android.pass.data.api.usecases.ObserveItemById
 import proton.android.pass.data.api.usecases.ObserveItemCount
 import proton.android.pass.data.api.usecases.ObserveItems
 import proton.android.pass.data.api.usecases.ObserveItemsPaging
+import proton.android.pass.data.api.usecases.ObserveLoginTotpEntries
 import proton.android.pass.data.api.usecases.ObserveMFACount
 import proton.android.pass.data.api.usecases.ObservePagedItems
 import proton.android.pass.data.api.usecases.ObservePinnedItems
@@ -373,10 +375,12 @@ import proton.android.pass.data.impl.usecases.ObserveIndexingStatusImpl
 import proton.android.pass.data.impl.usecases.ObserveItemTypeCountsImpl
 import proton.android.pass.data.impl.usecases.ObserveInviteRecommendationsImpl
 import proton.android.pass.data.impl.usecases.ObserveInvitesImpl
+import proton.android.pass.data.impl.usecases.ObserveShouldShowExploreTabImpl
 import proton.android.pass.data.impl.usecases.ObserveItemByIdImpl
 import proton.android.pass.data.impl.usecases.ObserveItemCountImpl
 import proton.android.pass.data.impl.usecases.ObserveItemsImpl
 import proton.android.pass.data.impl.usecases.ObserveItemsPagingImpl
+import proton.android.pass.data.impl.usecases.ObserveLoginTotpEntriesImpl
 import proton.android.pass.data.impl.usecases.ObserveMFACountImpl
 import proton.android.pass.data.impl.usecases.ObservePagedItemsImpl
 import proton.android.pass.data.impl.usecases.ObservePinnedItemsImpl
@@ -643,6 +647,9 @@ abstract class DataUseCaseModule {
 
     @Binds
     abstract fun bindObserveItemTypeCounts(impl: ObserveItemTypeCountsImpl): ObserveItemTypeCounts
+
+    @Binds
+    abstract fun bindObserveLoginTotpEntries(impl: ObserveLoginTotpEntriesImpl): ObserveLoginTotpEntries
 
     @Binds
     abstract fun bindObserveShares(impl: ObserveAllSharesImpl): ObserveAllShares
@@ -1467,5 +1474,8 @@ abstract class DataUseCaseModule {
     abstract fun bindVerifyDALForCredentialSharing(
         impl: VerifyDigitalAssetLinksForCredentialSharingImpl
     ): VerifyDigitalAssetLinksForCredentialSharing
+
+    @Binds
+    abstract fun bindObserveShouldShowExploreTab(impl: ObserveShouldShowExploreTabImpl): ObserveShouldShowExploreTab
 
 }

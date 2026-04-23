@@ -87,6 +87,7 @@
     <string name="bottom_bar_add_item_icon_content_description">Add item</string>
     <string name="bottom_bar_profile_icon_content_description">Profile</string>
     <string name="bottom_bar_security_center_icon_content_description">Security center</string>
+    <string name="bottom_bar_explore_icon_content_description">Explore</string>
     <!-- List group by most recents -->
     <string name="most_recent_today">Today</string>
     <string name="most_recent_yesterday">Yesterday</string>

@@ -43,6 +43,7 @@ import proton.android.pass.preferences.FeatureFlag.RENAME_ADMIN_TO_MANAGER
 import proton.android.pass.preferences.FeatureFlag.PASS_FOLDERS
 import proton.android.pass.preferences.FeatureFlag.PASS_AUTOFILL_URL_ADVANCED_MODES
 import proton.android.pass.preferences.FeatureFlag.ENABLE_PAGINATION
+import proton.android.pass.preferences.FeatureFlag.PASS_EXPLORE_TAB
 import java.io.IOException
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -105,6 +106,11 @@ class FeatureFlagsPreferencesRepositoryImpl @Inject constructor(
             key = featureFlag.key,
             defaultValue = featureFlag.isEnabledDefault
         ) { enablePagination.value }
+
+        PASS_EXPLORE_TAB -> getFeatureFlag(
+            key = featureFlag.key,
+            defaultValue = featureFlag.isEnabledDefault
+        ) { passExploreTabEnabled.value }
     }
 
     @Suppress("UNCHECKED_CAST")
@@ -150,6 +156,10 @@ class FeatureFlagsPreferencesRepositoryImpl @Inject constructor(
 
         ENABLE_PAGINATION -> setFeatureFlag {
             enablePagination = boolFlagPrefProto(value)
+        }
+
+        PASS_EXPLORE_TAB -> setFeatureFlag {
+            passExploreTabEnabled = boolFlagPrefProto(value)
         }
     }
 
@@ -251,6 +261,7 @@ class FeatureFlagsPreferencesRepositoryImpl @Inject constructor(
             PASS_FOLDERS -> passFoldersEnabled
             PASS_AUTOFILL_URL_ADVANCED_MODES -> passAutofillUrlRegexEnabled
             ENABLE_PAGINATION -> enablePagination
+            PASS_EXPLORE_TAB -> passExploreTabEnabled
         }.value
     }
 }

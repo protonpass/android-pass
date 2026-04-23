@@ -33,6 +33,7 @@ data class AppUiState(
     val networkStatus: NetworkStatus,
     val inAppUpdateState: InAppUpdateState,
     val inAppMessages: List<InAppMessage.Banner>,
+    val showExplore: Boolean,
     val localInAppMessageEvent: LocalInAppMessagesEvent = LocalInAppMessagesEvent.Unknown
 ) {
 
@@ -42,6 +43,7 @@ data class AppUiState(
             networkStatus = NetworkStatus.Online,
             inAppUpdateState = InAppUpdateState.Idle,
             inAppMessages = emptyList(),
+            showExplore = false,
             localInAppMessageEvent = LocalInAppMessagesEvent.Unknown
         )
     }

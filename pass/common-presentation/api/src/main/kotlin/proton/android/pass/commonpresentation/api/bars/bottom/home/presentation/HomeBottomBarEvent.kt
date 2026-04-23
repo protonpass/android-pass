@@ -28,4 +28,6 @@ sealed interface HomeBottomBarEvent {
 
     data object OnSecurityCenterSelected : HomeBottomBarEvent
 
+    data object OnExploreSelected : HomeBottomBarEvent
+
 }

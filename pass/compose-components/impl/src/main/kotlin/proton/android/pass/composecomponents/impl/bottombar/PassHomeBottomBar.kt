@@ -57,6 +57,7 @@ import proton.android.pass.composecomponents.impl.R as CompR
 fun PassHomeBottomBar(
     modifier: Modifier = Modifier,
     selection: BottomBarSelection,
+    showExplore: Boolean,
     onEvent: (HomeBottomBarEvent) -> Unit,
     viewModel: HomeBottomBarViewModel = hiltViewModel<HomeBottomBarViewModelImpl>()
 ) = with(viewModel) {
@@ -65,6 +66,7 @@ fun PassHomeBottomBar(
     HomeBottomBarContent(
         modifier = modifier,
         selection = selection,
+        showExplore = showExplore,
         onEvent = onEvent,
         state = state
     )
@@ -74,6 +76,7 @@ fun PassHomeBottomBar(
 fun HomeBottomBarContent(
     modifier: Modifier = Modifier,
     selection: BottomBarSelection,
+    showExplore: Boolean,
     onEvent: (HomeBottomBarEvent) -> Unit,
     state: HomeBottomBarState
 ) = with(state) {
@@ -95,58 +98,127 @@ fun HomeBottomBarContent(
         modifier = modifier,
         backgroundColor = PassTheme.colors.bottomBarBackground
     ) {
-        BottomNavigationItem(
-            modifier = Modifier.padding(bottom = bottomPadding),
-            selected = selection == BottomBarSelection.Home,
-            selectedContentColor = PassTheme.colors.interactionNormMajor2,
-            unselectedContentColor = PassTheme.colors.textNorm,
-            onClick = { onEvent(HomeBottomBarEvent.OnHomeSelected) },
-            icon = {
-                Icon(
-                    painter = painterResource(R.drawable.ic_proton_list_bullets),
-                    contentDescription = stringResource(CompR.string.bottom_bar_list_items_icon_content_description)
-                )
-            }
-        )
+        if (showExplore) {
+            BottomNavigationItem(
+                modifier = Modifier.padding(bottom = bottomPadding),
+                selected = selection == BottomBarSelection.Home,
+                selectedContentColor = PassTheme.colors.interactionNormMajor2,
+                unselectedContentColor = PassTheme.colors.textNorm,
+                onClick = { onEvent(HomeBottomBarEvent.OnHomeSelected) },
+                icon = {
+                    Icon(
+                        painter = painterResource(R.drawable.ic_proton_list_bullets),
+                        contentDescription = stringResource(CompR.string.bottom_bar_list_items_icon_content_description)
+                    )
+                }
+            )
 
-        BottomNavigationItem(
-            modifier = Modifier.padding(bottom = bottomPadding),
-            selected = selection == BottomBarSelection.ItemCreate,
-            selectedContentColor = PassTheme.colors.interactionNormMajor2,
-            unselectedContentColor = PassTheme.colors.textNorm,
-            onClick = { onEvent(HomeBottomBarEvent.OnNewItemSelected) },
-            icon = {
-                Icon(
-                    painter = painterResource(R.drawable.ic_proton_plus),
-                    contentDescription = stringResource(CompR.string.bottom_bar_add_item_icon_content_description)
-                )
-            }
-        )
+            BottomNavigationItem(
+                modifier = Modifier.padding(bottom = bottomPadding),
+                selected = selection == BottomBarSelection.SecurityCenter,
+                selectedContentColor = PassTheme.colors.interactionNormMajor2,
+                unselectedContentColor = PassTheme.colors.textNorm,
+                onClick = { onEvent(HomeBottomBarEvent.OnSecurityCenterSelected) },
+                icon = {
+                    PassHomeBottomBarMonitorIcon(
+                        planType = planType,
+                        monitorStatus = monitorStatus
+                    )
+                }
+            )
 
-        BottomNavigationItem(
-            modifier = Modifier.padding(bottom = bottomPadding),
-            selected = selection == BottomBarSelection.SecurityCenter,
-            selectedContentColor = PassTheme.colors.interactionNormMajor2,
-            unselectedContentColor = PassTheme.colors.textNorm,
-            onClick = { onEvent(HomeBottomBarEvent.OnSecurityCenterSelected) },
-            icon = {
-                PassHomeBottomBarMonitorIcon(
-                    planType = planType,
-                    monitorStatus = monitorStatus
-                )
-            }
-        )
+            BottomNavigationItem(
+                modifier = Modifier.padding(bottom = bottomPadding),
+                selected = selection == BottomBarSelection.ItemCreate,
+                selectedContentColor = PassTheme.colors.interactionNormMajor2,
+                unselectedContentColor = PassTheme.colors.textNorm,
+                onClick = { onEvent(HomeBottomBarEvent.OnNewItemSelected) },
+                icon = {
+                    Icon(
+                        painter = painterResource(R.drawable.ic_proton_plus),
+                        contentDescription = stringResource(CompR.string.bottom_bar_add_item_icon_content_description)
+                    )
+                }
+            )
 
-        BottomNavigationItem(
-            selected = selection == BottomBarSelection.Profile,
-            selectedContentColor = PassTheme.colors.interactionNormMajor2,
-            unselectedContentColor = PassTheme.colors.textNorm,
-            onClick = { onEvent(HomeBottomBarEvent.OnProfileSelected) },
-            icon = {
-                ProfileBottomBarIcon(planType = planType)
-            },
-            modifier = Modifier.padding(bottom = bottomPadding).testTag(BottomBarTestTag.PROFILE_TEST_TAG)
-        )
+            BottomNavigationItem(
+                modifier = Modifier.padding(bottom = bottomPadding),
+                selected = selection == BottomBarSelection.Explore,
+                selectedContentColor = PassTheme.colors.interactionNormMajor2,
+                unselectedContentColor = PassTheme.colors.textNorm,
+                onClick = { onEvent(HomeBottomBarEvent.OnExploreSelected) },
+                icon = {
+                    Icon(
+                        painter = painterResource(R.drawable.ic_proton_grid_2),
+                        contentDescription = stringResource(CompR.string.bottom_bar_explore_icon_content_description)
+                    )
+                }
+            )
+
+            BottomNavigationItem(
+                selected = selection == BottomBarSelection.Profile,
+                selectedContentColor = PassTheme.colors.interactionNormMajor2,
+                unselectedContentColor = PassTheme.colors.textNorm,
+                onClick = { onEvent(HomeBottomBarEvent.OnProfileSelected) },
+                icon = {
+                    ProfileBottomBarIcon(planType = planType)
+                },
+                modifier = Modifier.padding(bottom = bottomPadding).testTag(BottomBarTestTag.PROFILE_TEST_TAG)
+            )
+        } else {
+            BottomNavigationItem(
+                modifier = Modifier.padding(bottom = bottomPadding),
+                selected = selection == BottomBarSelection.Home,
+                selectedContentColor = PassTheme.colors.interactionNormMajor2,
+                unselectedContentColor = PassTheme.colors.textNorm,
+                onClick = { onEvent(HomeBottomBarEvent.OnHomeSelected) },
+                icon = {
+                    Icon(
+                        painter = painterResource(R.drawable.ic_proton_list_bullets),
+                        contentDescription = stringResource(CompR.string.bottom_bar_list_items_icon_content_description)
+                    )
+                }
+            )
+
+            BottomNavigationItem(
+                modifier = Modifier.padding(bottom = bottomPadding),
+                selected = selection == BottomBarSelection.ItemCreate,
+                selectedContentColor = PassTheme.colors.interactionNormMajor2,
+                unselectedContentColor = PassTheme.colors.textNorm,
+                onClick = { onEvent(HomeBottomBarEvent.OnNewItemSelected) },
+                icon = {
+                    Icon(
+                        painter = painterResource(R.drawable.ic_proton_plus),
+                        contentDescription = stringResource(CompR.string.bottom_bar_add_item_icon_content_description)
+                    )
+                }
+            )
+
+            BottomNavigationItem(
+                modifier = Modifier.padding(bottom = bottomPadding),
+                selected = selection == BottomBarSelection.SecurityCenter,
+                selectedContentColor = PassTheme.colors.interactionNormMajor2,
+                unselectedContentColor = PassTheme.colors.textNorm,
+                onClick = { onEvent(HomeBottomBarEvent.OnSecurityCenterSelected) },
+                icon = {
+                    PassHomeBottomBarMonitorIcon(
+                        planType = planType,
+                        monitorStatus = monitorStatus
+                    )
+                }
+            )
+
+            BottomNavigationItem(
+                selected = selection == BottomBarSelection.Profile,
+                selectedContentColor = PassTheme.colors.interactionNormMajor2,
+                unselectedContentColor = PassTheme.colors.textNorm,
+                onClick = { onEvent(HomeBottomBarEvent.OnProfileSelected) },
+                icon = {
+                    ProfileBottomBarIcon(planType = planType)
+                },
+                modifier = Modifier.padding(bottom = bottomPadding).testTag(BottomBarTestTag.PROFILE_TEST_TAG)
+            )
+        }
     }
 }
 
@@ -160,6 +232,24 @@ fun HomeBottomBarContentPreview(@PreviewParameter(ThemePreviewProvider::class) i
         Surface {
             HomeBottomBarContent(
                 selection = BottomBarSelection.Home,
+                showExplore = false,
+                onEvent = {},
+                state = HomeBottomBarState(
+                    planType = PlanType.Unknown(),
+                    monitorStatus = MonitorStatusPreference.NoIssues
+                )
+            )
+        }
+    }
+}
+
+@[Preview Composable]
+fun HomeBottomBarContentWithExplorePreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
+    PassTheme(isDark = isDark) {
+        Surface {
+            HomeBottomBarContent(
+                selection = BottomBarSelection.Home,
+                showExplore = true,
                 onEvent = {},
                 state = HomeBottomBarState(
                     planType = PlanType.Unknown(),

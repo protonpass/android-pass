@@ -46,6 +46,7 @@ import proton.android.pass.common.api.getOrNull
 import proton.android.pass.common.api.onError
 import proton.android.pass.common.api.onSuccess
 import proton.android.pass.common.api.runCatching
+import proton.android.pass.data.api.usecases.ObserveShouldShowExploreTab
 import proton.android.pass.data.api.usecases.inappmessages.ChangeInAppMessageStatus
 import proton.android.pass.data.api.usecases.inappmessages.ObserveDeliverableBannerInAppMessages
 import proton.android.pass.data.api.usecases.simplelogin.ObserveSimpleLoginSyncStatus
@@ -84,7 +85,8 @@ class AppViewModel @Inject constructor(
     networkMonitor: NetworkMonitor,
     notificationManager: NotificationManager,
     observeDeliverableBannerInAppMessages: ObserveDeliverableBannerInAppMessages,
-    observeSimpleLoginSyncStatus: ObserveSimpleLoginSyncStatus
+    observeSimpleLoginSyncStatus: ObserveSimpleLoginSyncStatus,
+    observeShouldShowExploreTab: ObserveShouldShowExploreTab
 ) : ViewModel() {
 
     private val networkStatus: Flow<NetworkStatus> = networkMonitor
@@ -164,19 +166,23 @@ class AppViewModel @Inject constructor(
 
     val appUiState: StateFlow<AppUiState> = combine(
         systemStatusFlow,
-        bannersFlow
-    ) { (snackbar, net, update), (messages, event) ->
+        bannersFlow,
+        observeShouldShowExploreTab()
+    ) { (snackbar, net, update), (messages, event), showExplore ->
         AppUiState(
             snackbarMessage = snackbar,
             networkStatus = net,
             inAppUpdateState = update,
             inAppMessages = messages,
+            showExplore = showExplore,
             localInAppMessageEvent = event
         )
     }.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5000),
-        initialValue = AppUiState.Initial
+        initialValue = AppUiState.Initial.copy(
+            showExplore = runBlocking { observeShouldShowExploreTab().first() }
+        )
     )
 
     fun onStop() = viewModelScope.launch {

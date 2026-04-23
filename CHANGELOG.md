@@ -6,6 +6,12 @@
 
 ### Other
 
+## 1.39.2 (2026-04-23)
+
+### Fixes :bug:
+
+- Bug fixes and improvements.
+
 ## 1.39.1 (2026-04-15)
 
 ### Fixes :bug:

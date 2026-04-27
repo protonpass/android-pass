@@ -28,7 +28,6 @@ plugins {
     id("dagger.hilt.android.plugin")
     id("kotlin-parcelize")
     id("io.sentry.android.gradle")
-    id("org.jetbrains.kotlin.kapt")
     id("androidx.baselineprofile")
     alias(libs.plugins.gradlePlugin.proton.environmentConfig)
     alias(libs.plugins.gradlePlugin.dependency.guard)
@@ -245,10 +244,6 @@ android {
         resources.excludes.add("META-INF/LGPL2.1")
         resources.excludes.add("META-INF/LICENSE.md")
         resources.excludes.add("META-INF/LICENSE-notice.md")
-    }
-
-    kapt {
-        correctErrorTypes = true
     }
 
     testOptions {
@@ -516,10 +511,10 @@ dependencies {
     debugImplementation(libs.androidx.compose.uiTooling)
 
     implementation(libs.dagger.hilt.android)
-    kapt(libs.dagger.hilt.android.compiler)
-    kapt(libs.androidx.hilt.compiler)
+    ksp(libs.dagger.hilt.android.compiler)
+    ksp(libs.androidx.hilt.compiler)
 
-    kaptAndroidTest(libs.dagger.hilt.android.compiler)
+    kspAndroidTest(libs.dagger.hilt.android.compiler)
     androidTestImplementation(libs.bundles.test.android) {
         exclude(module = "protobuf-lite")
     }

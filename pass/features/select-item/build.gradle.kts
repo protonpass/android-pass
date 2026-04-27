@@ -21,7 +21,6 @@ plugins {
     id("org.jetbrains.kotlin.android")
     id("com.google.devtools.ksp")
     id("dagger.hilt.android.plugin")
-    id("org.jetbrains.kotlin.kapt")
     alias(libs.plugins.gradlePlugin.compose.compiler)
 }
 
@@ -76,8 +75,8 @@ dependencies {
     kspDebug(libs.showkaseProcessor)
 
     implementation(libs.dagger.hilt.android)
-    kapt(libs.dagger.hilt.android.compiler)
-    kapt(libs.androidx.hilt.compiler)
+    ksp(libs.dagger.hilt.android.compiler)
+    ksp(libs.androidx.hilt.compiler)
 
     implementation(projects.pass.common.api)
     implementation(projects.pass.commonUi.api)
@@ -93,7 +92,7 @@ dependencies {
     implementation(projects.pass.notifications.api)
     implementation(projects.pass.preferences.api)
 
-    kaptAndroidTest(libs.dagger.hilt.android.compiler)
+    kspAndroidTest(libs.dagger.hilt.android.compiler)
     androidTestImplementation(libs.androidx.test.espresso.core)
     androidTestImplementation(projects.pass.account.fakes)
     androidTestImplementation(projects.pass.clipboard.fakes)

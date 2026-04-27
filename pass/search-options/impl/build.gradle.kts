@@ -21,7 +21,6 @@ plugins {
     id("org.jetbrains.kotlin.android")
     id("com.google.devtools.ksp")
     id("dagger.hilt.android.plugin")
-    id("org.jetbrains.kotlin.kapt")
 }
 
 android {
@@ -47,8 +46,8 @@ dependencies {
     implementation(libs.core.user.domain)
 
     implementation(libs.dagger.hilt.android)
-    kapt(libs.dagger.hilt.android.compiler)
-    kapt(libs.androidx.hilt.compiler)
+    ksp(libs.dagger.hilt.android.compiler)
+    ksp(libs.androidx.hilt.compiler)
 
     implementation(projects.pass.domain)
     implementation(projects.pass.preferences.api)

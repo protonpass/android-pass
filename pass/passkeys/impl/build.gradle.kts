@@ -21,7 +21,7 @@ plugins {
     id("org.jetbrains.kotlin.android")
     id("dagger.hilt.android.plugin")
     kotlin("plugin.serialization")
-    id("org.jetbrains.kotlin.kapt")
+    id("com.google.devtools.ksp")
 }
 
 android {
@@ -52,8 +52,8 @@ dependencies {
 
     implementation(libs.dagger.hilt.android)
     implementation(libs.androidx.credentials)
-    kapt(libs.dagger.hilt.android.compiler)
-    kapt(libs.androidx.hilt.compiler)
+    ksp(libs.dagger.hilt.android.compiler)
+    ksp(libs.androidx.hilt.compiler)
 
     implementation(projects.pass.appConfig.api)
     implementation(projects.pass.domain)

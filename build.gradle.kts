@@ -1,8 +1,8 @@
 import com.adarshr.gradle.testlogger.TestLoggerExtension
 import com.adarshr.gradle.testlogger.theme.ThemeType
-import org.jetbrains.kotlin.gradle.dsl.KotlinTopLevelExtension
+import org.jetbrains.kotlin.gradle.dsl.KotlinBaseExtension
 import org.jetbrains.kotlin.gradle.plugin.KotlinBasePlugin
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompilationTask
 
 /*
  * Copyright (c) 2022-2026 Proton Technologies AG
@@ -145,13 +145,13 @@ tasks.register("clean", Delete::class) {
 }
 
 for (project in subprojects) {
-    project.tasks.withType<KotlinCompile> {
-        kotlinOptions {
-            freeCompilerArgs = freeCompilerArgs + listOf(
+    project.tasks.withType<KotlinCompilationTask<*>> {
+        compilerOptions {
+            freeCompilerArgs.addAll(listOf(
                 "-opt-in=kotlin.RequiresOptIn",
                 // Enables experimental Time (Turbine).
                 "-opt-in=kotlin.time.ExperimentalTime"
-            )
+            ))
             val hasCoroutines = project.configurations.findByName("implementation")
                 ?.dependencies
                 ?.any { it.name.contains("kotlinx-coroutines-core") } == true
@@ -159,8 +159,7 @@ for (project in subprojects) {
                 ?.dependencies
                 ?.any { it.name.contains("kotlinx-coroutines-test") } == true
             if (hasCoroutines || hasCoroutinesInTest) {
-                freeCompilerArgs =
-                    freeCompilerArgs + "-opt-in=kotlinx.coroutines.ExperimentalCoroutinesApi"
+                freeCompilerArgs.add("-opt-in=kotlinx.coroutines.ExperimentalCoroutinesApi")
             }
         }
     }
@@ -173,24 +172,24 @@ protonDetekt {
 allprojects {
     // Force JVM toolchain to 17 for all subprojects
     plugins.withType<KotlinBasePlugin> {
-        extensions.configure<KotlinTopLevelExtension> {
+        extensions.configure<KotlinBaseExtension> {
             jvmToolchain(17)
         }
     }
 
-    tasks.withType(org.jetbrains.kotlin.gradle.dsl.KotlinCompile::class.java).configureEach {
-        kotlinOptions {
+    tasks.withType(KotlinCompilationTask::class.java).configureEach {
+        compilerOptions {
             // Trigger this with:
             // ./gradlew assembleRelease -PenableMultiModuleComposeReports=true --rerun-tasks
             if (project.findProperty("enableMultiModuleComposeReports") == "true") {
-                freeCompilerArgs = freeCompilerArgs + listOf(
+                freeCompilerArgs.addAll(listOf(
                     "-P",
-                    "plugin:androidx.compose.compiler.plugins.kotlin:reportsDestination=" + rootProject.buildDir.absolutePath + "/compose_metrics/"
-                )
-                freeCompilerArgs = freeCompilerArgs + listOf(
+                    "plugin:androidx.compose.compiler.plugins.kotlin:reportsDestination=" + rootProject.layout.buildDirectory.get().asFile.absolutePath + "/compose_metrics/"
+                ))
+                freeCompilerArgs.addAll(listOf(
                     "-P",
-                    "plugin:androidx.compose.compiler.plugins.kotlin:metricsDestination=" + rootProject.buildDir.absolutePath + "/compose_metrics/"
-                )
+                    "plugin:androidx.compose.compiler.plugins.kotlin:metricsDestination=" + rootProject.layout.buildDirectory.get().asFile.absolutePath + "/compose_metrics/"
+                ))
             }
         }
     }

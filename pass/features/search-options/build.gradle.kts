@@ -21,7 +21,6 @@ plugins {
     id("org.jetbrains.kotlin.android")
     id("com.google.devtools.ksp")
     id("dagger.hilt.android.plugin")
-    id("org.jetbrains.kotlin.kapt")
     alias(libs.plugins.gradlePlugin.compose.compiler)
 }
 
@@ -57,8 +56,8 @@ dependencies {
     implementation(libs.androidx.compose.runtime)
 
     implementation(libs.dagger.hilt.android)
-    kapt(libs.dagger.hilt.android.compiler)
-    kapt(libs.androidx.hilt.compiler)
+    ksp(libs.dagger.hilt.android.compiler)
+    ksp(libs.androidx.hilt.compiler)
 
     debugImplementation(libs.showkase)
     kspDebug(libs.showkaseProcessor)

@@ -20,7 +20,7 @@ plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     id("dagger.hilt.android.plugin")
-    id("org.jetbrains.kotlin.kapt")
+    id("com.google.devtools.ksp")
     id("androidx.baselineprofile")
     alias(libs.plugins.gradlePlugin.compose.compiler)
 }
@@ -122,6 +122,6 @@ dependencies {
     implementation(projects.pass.securityCenter.fakes)
 
     implementation(libs.dagger.hilt.android)
-    kapt(libs.dagger.hilt.android.compiler)
-    kapt(libs.androidx.hilt.compiler)
+    ksp(libs.dagger.hilt.android.compiler)
+    ksp(libs.androidx.hilt.compiler)
 }

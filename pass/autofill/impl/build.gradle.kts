@@ -23,7 +23,6 @@ plugins {
     id("kotlin-parcelize")
     kotlin("plugin.serialization")
     id("com.google.devtools.ksp")
-    id("org.jetbrains.kotlin.kapt")
     alias(libs.plugins.gradlePlugin.compose.compiler)
 }
 
@@ -96,8 +95,8 @@ dependencies {
     implementation(libs.kotlinx.serialization.json)
 
     implementation(libs.dagger.hilt.android)
-    kapt(libs.dagger.hilt.android.compiler)
-    kapt(libs.androidx.hilt.compiler)
+    ksp(libs.dagger.hilt.android.compiler)
+    ksp(libs.androidx.hilt.compiler)
 
     implementation(projects.pass.account.api)
     implementation(projects.pass.biometry.api)

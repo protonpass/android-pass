@@ -21,7 +21,7 @@ plugins {
     id("org.jetbrains.kotlin.android")
     id("dagger.hilt.android.plugin")
     id("com.google.protobuf")
-    id("org.jetbrains.kotlin.kapt")
+    id("com.google.devtools.ksp")
 }
 
 android {
@@ -44,6 +44,11 @@ android {
 
 androidComponents.beforeVariants { variant ->
     variant.enableAndroidTest = false
+}
+
+afterEvaluate {
+    tasks.named("kspDebugKotlin").configure { dependsOn("generateDebugProto") }
+    tasks.named("kspReleaseKotlin").configure { dependsOn("generateReleaseProto") }
 }
 
 protobuf {
@@ -76,8 +81,8 @@ dependencies {
     implementation(libs.kotlinx.datetime)
 
     implementation(libs.dagger.hilt.android)
-    kapt(libs.dagger.hilt.android.compiler)
-    kapt(libs.androidx.hilt.compiler)
+    ksp(libs.dagger.hilt.android.compiler)
+    ksp(libs.androidx.hilt.compiler)
 
     implementation(projects.pass.appConfig.api)
     implementation(projects.pass.common.api)

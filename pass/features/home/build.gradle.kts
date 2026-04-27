@@ -21,7 +21,6 @@ plugins {
     id("org.jetbrains.kotlin.android")
     id("com.google.devtools.ksp")
     id("dagger.hilt.android.plugin")
-    id("org.jetbrains.kotlin.kapt")
     id("androidx.baselineprofile")
     alias(libs.plugins.gradlePlugin.compose.compiler)
 }
@@ -76,8 +75,8 @@ dependencies {
     kspDebug(libs.showkaseProcessor)
 
     implementation(libs.dagger.hilt.android)
-    kapt(libs.dagger.hilt.android.compiler)
-    kapt(libs.androidx.hilt.compiler)
+    ksp(libs.dagger.hilt.android.compiler)
+    ksp(libs.androidx.hilt.compiler)
 
     implementation(projects.pass.appConfig.api)
     implementation(projects.pass.autofill.api)
@@ -123,7 +122,7 @@ dependencies {
     testImplementation(projects.pass.telemetry.fakes)
     testImplementation(projects.pass.searchOptions.fakes)
 
-    kaptAndroidTest(libs.dagger.hilt.android.compiler)
+    kspAndroidTest(libs.dagger.hilt.android.compiler)
     androidTestImplementation(libs.kotlinTest)
     androidTestImplementation(libs.truth)
     androidTestImplementation(projects.pass.account.fakes)
@@ -143,10 +142,6 @@ dependencies {
     androidTestImplementation(projects.pass.securityCenter.fakes)
 
     baselineProfile(projects.pass.features.homeBenchmark)
-}
-
-kapt {
-    correctErrorTypes = true
 }
 
 baselineProfile {

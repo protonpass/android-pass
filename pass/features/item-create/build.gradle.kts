@@ -22,7 +22,6 @@ plugins {
     id("dagger.hilt.android.plugin")
     id("kotlin-parcelize")
     id("com.google.devtools.ksp")
-    id("org.jetbrains.kotlin.kapt")
     alias(libs.plugins.gradlePlugin.compose.compiler)
 }
 
@@ -75,8 +74,8 @@ dependencies {
     implementation(libs.zxing.core)
 
     implementation(libs.dagger.hilt.android)
-    kapt(libs.dagger.hilt.android.compiler)
-    kapt(libs.androidx.hilt.compiler)
+    ksp(libs.dagger.hilt.android.compiler)
+    ksp(libs.androidx.hilt.compiler)
 
     implementation(projects.pass.biometry.api)
     implementation(projects.pass.clipboard.api)
@@ -126,7 +125,7 @@ dependencies {
     testImplementation(projects.pass.telemetry.fakes)
     testImplementation(projects.pass.totp.fakes)
 
-    kaptAndroidTest(libs.dagger.hilt.android.compiler)
+    kspAndroidTest(libs.dagger.hilt.android.compiler)
     androidTestImplementation(libs.truth)
     androidTestImplementation(libs.kotlinTest)
     androidTestImplementation(libs.androidx.test.espresso.core)

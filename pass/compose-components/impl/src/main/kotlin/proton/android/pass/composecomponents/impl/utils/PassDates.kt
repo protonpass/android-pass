@@ -37,56 +37,56 @@ fun passFormattedDateText(
     startInstant: Instant = Instant.fromEpochSeconds(epochSeconds = 0),
     locale: Locale = Locale.getDefault(),
     useCompactMonth: Boolean = false
-): String = when (
-    DateFormatUtils.getFormat(
-        now = startInstant,
-        toFormat = endInstant,
-        timeZone = TimeZone.currentSystemDefault(),
-        acceptedFormats = listOf(
-            DateFormatUtils.Format.Today,
-            DateFormatUtils.Format.Yesterday,
-            DateFormatUtils.Format.DateOfSameYear,
-            DateFormatUtils.Format.Date
+): String {
+    val timeZone = TimeZone.currentSystemDefault()
+    val localDateTime = runCatching { endInstant.toLocalDateTime(timeZone) }
+        .getOrNull()
+        ?: return DEFAULT_DATE_TEXT
+    return when (
+        DateFormatUtils.getFormat(
+            now = startInstant,
+            toFormat = endInstant,
+            timeZone = timeZone,
+            acceptedFormats = listOf(
+                DateFormatUtils.Format.Today,
+                DateFormatUtils.Format.Yesterday,
+                DateFormatUtils.Format.DateOfSameYear,
+                DateFormatUtils.Format.Date
+            )
         )
-    )
-) {
-    DateFormatUtils.Format.Date -> runCatching {
-        val pattern = if (useCompactMonth) {
-            stringResource(R.string.date_full_date_format_with_year_compact_month)
-        } else {
-            stringResource(R.string.date_full_date_format_with_year)
+    ) {
+        DateFormatUtils.Format.Date -> {
+            val pattern = if (useCompactMonth) {
+                stringResource(R.string.date_full_date_format_with_year_compact_month)
+            } else {
+                stringResource(R.string.date_full_date_format_with_year)
+            }
+            runCatching {
+                DateTimeFormatter.ofPattern(pattern)
+                    .withLocale(locale)
+                    .format(localDateTime.toJavaLocalDateTime())
+            }.getOrDefault(DEFAULT_DATE_TEXT)
         }
 
-        DateTimeFormatter.ofPattern(pattern)
-            .withLocale(locale)
-            .format(endInstant.toLocalDateTime(TimeZone.currentSystemDefault()).toJavaLocalDateTime())
-    }.getOrDefault(DEFAULT_DATE_TEXT)
-
-    DateFormatUtils.Format.DateOfSameYear -> runCatching {
-        val pattern = if (useCompactMonth) {
-            stringResource(R.string.date_full_date_format_compact_month)
-        } else {
-            stringResource(R.string.date_full_date_format)
+        DateFormatUtils.Format.DateOfSameYear -> {
+            val pattern = if (useCompactMonth) {
+                stringResource(R.string.date_full_date_format_compact_month)
+            } else {
+                stringResource(R.string.date_full_date_format)
+            }
+            runCatching {
+                DateTimeFormatter.ofPattern(pattern)
+                    .withLocale(locale)
+                    .format(localDateTime.toJavaLocalDateTime())
+            }.getOrDefault(DEFAULT_DATE_TEXT)
         }
 
-        DateTimeFormatter.ofPattern(pattern)
-            .withLocale(locale)
-            .format(endInstant.toLocalDateTime(TimeZone.currentSystemDefault()).toJavaLocalDateTime())
-    }.getOrDefault(DEFAULT_DATE_TEXT)
+        DateFormatUtils.Format.Today ->
+            stringResource(R.string.date_today, DateFormatUtils.getTime(localDateTime))
 
-    DateFormatUtils.Format.Today -> runCatching {
-        stringResource(
-            R.string.date_today,
-            DateFormatUtils.getTime(endInstant.toLocalDateTime(TimeZone.currentSystemDefault()))
-        )
-    }.getOrDefault(DEFAULT_DATE_TEXT)
+        DateFormatUtils.Format.Yesterday ->
+            stringResource(R.string.date_yesterday, DateFormatUtils.getTime(localDateTime))
 
-    DateFormatUtils.Format.Yesterday -> runCatching {
-        stringResource(
-            R.string.date_yesterday,
-            DateFormatUtils.getTime(endInstant.toLocalDateTime(TimeZone.currentSystemDefault()))
-        )
-    }.getOrDefault(DEFAULT_DATE_TEXT)
-
-    else -> throw IllegalStateException("Unexpected date format")
+        else -> throw IllegalStateException("Unexpected date format")
+    }
 }

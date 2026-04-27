@@ -22,7 +22,6 @@ plugins {
     id("com.google.devtools.ksp")
     kotlin("plugin.serialization")
     id("dagger.hilt.android.plugin")
-    id("org.jetbrains.kotlin.kapt")
 }
 
 android {
@@ -54,10 +53,8 @@ android {
     }
 }
 
-kapt {
-    arguments {
-        arg("room.schemaLocation", "$projectDir/schemas")
-    }
+ksp {
+    arg("room.schemaLocation", "$projectDir/schemas")
 }
 
 dependencies {
@@ -100,11 +97,11 @@ dependencies {
     implementation(libs.kotlinx.serialization.json)
     implementation(libs.retrofit)
 
-    kapt(libs.androidx.room.compiler)
+    ksp(libs.androidx.room.compiler)
 
     implementation(libs.dagger.hilt.android)
-    kapt(libs.dagger.hilt.android.compiler)
-    kapt(libs.androidx.hilt.compiler)
+    ksp(libs.dagger.hilt.android.compiler)
+    ksp(libs.androidx.hilt.compiler)
 
     implementation(projects.pass.appConfig.api)
     implementation(projects.pass.crypto.api)

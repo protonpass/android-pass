@@ -118,4 +118,12 @@ class FakeAuthRepository @Inject constructor() : AuthRepository {
     ): Pair<RawSessionForkPayload?, Session.Authenticated> {
         TODO("Not yet implemented")
     }
+
+    override suspend fun performLoginTokenMdm(
+        token: String,
+        group: String,
+        deviceId: String?
+    ): SessionInfo {
+        TODO("Not yet implemented")
+    }
 }

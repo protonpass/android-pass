@@ -30,6 +30,7 @@ import org.junit.Test
 import proton.android.pass.common.fakes.FakeAppDispatchers
 import timber.log.Timber
 import java.io.File
+import kotlin.io.path.createTempDirectory
 
 class FileLoggingTreeTest {
 
@@ -43,7 +44,7 @@ class FileLoggingTreeTest {
 
     @Before
     fun setup() {
-        tempDir = createTempDir("file-logging-tree-test")
+        tempDir = createTempDirectory("file-logging-tree-test").toFile()
         context = TestContext(tempDir)
         appDispatchers = FakeAppDispatchers()
         logFileManager = LogFileManagerImpl(context, appDispatchers)

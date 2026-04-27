@@ -27,6 +27,7 @@ import org.junit.Before
 import org.junit.Test
 import proton.android.pass.common.fakes.FakeAppDispatchers
 import java.io.File
+import kotlin.io.path.createTempDirectory
 
 class LogFileManagerImplTest {
 
@@ -36,7 +37,7 @@ class LogFileManagerImplTest {
 
     @Before
     fun setup() {
-        tempDir = createTempDir("log-test")
+        tempDir = createTempDirectory("log-test").toFile()
         context = TestContext(tempDir)
         logFileManager = LogFileManagerImpl(context, FakeAppDispatchers())
     }

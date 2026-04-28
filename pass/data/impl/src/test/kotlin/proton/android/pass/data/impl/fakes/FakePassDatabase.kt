@@ -29,6 +29,7 @@ import proton.android.pass.data.impl.db.dao.GroupInviteDao
 import proton.android.pass.data.impl.db.dao.GroupInviteKeyDao
 import proton.android.pass.data.impl.db.dao.ItemsDao
 import proton.android.pass.data.impl.db.dao.LiveTelemetryDao
+import proton.android.pass.data.impl.db.dao.LiveTelemetryGrowthDao
 import proton.android.pass.data.impl.db.dao.PassDataMigrationDao
 import proton.android.pass.data.impl.db.dao.PassEventsDao
 import proton.android.pass.data.impl.db.dao.PassOrganizationSettingsDao
@@ -38,6 +39,7 @@ import proton.android.pass.data.impl.db.dao.SearchEntryDao
 import proton.android.pass.data.impl.db.dao.ShareKeysDao
 import proton.android.pass.data.impl.db.dao.SharesDao
 import proton.android.pass.data.impl.db.dao.TelemetryDao
+import proton.android.pass.data.impl.db.dao.TelemetryGrowthDao
 import proton.android.pass.data.impl.db.dao.UserAccessDataDao
 import proton.android.pass.data.impl.db.dao.UserEventsDao
 import proton.android.pass.data.impl.db.dao.UserInviteDao
@@ -80,6 +82,10 @@ internal class FakePassDatabase : PassDatabase {
     }
 
     override fun telemetryEventsDao(): TelemetryDao {
+        throw IllegalStateException("This method should not be called")
+    }
+
+    override fun telemetryGrowthDao(): TelemetryGrowthDao {
         throw IllegalStateException("This method should not be called")
     }
 
@@ -144,6 +150,10 @@ internal class FakePassDatabase : PassDatabase {
     }
 
     override fun liveTelemetryDao(): LiveTelemetryDao {
+        throw IllegalStateException("This method should not be called")
+    }
+
+    override fun liveTelemetryGrowthDao(): LiveTelemetryGrowthDao {
         throw IllegalStateException("This method should not be called")
     }
 

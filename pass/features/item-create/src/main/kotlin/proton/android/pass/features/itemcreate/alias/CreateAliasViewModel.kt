@@ -101,7 +101,9 @@ import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.android.pass.preferences.InternalSettingsRepository
 import proton.android.pass.preferences.UserPreferencesRepository
 import proton.android.pass.telemetry.api.EventItemType
+import proton.android.pass.telemetry.api.TelemetryGrowthFeatureUsageAction
 import proton.android.pass.telemetry.api.TelemetryManager
+import proton.android.pass.telemetry.api.TelemetryGrowthFeatureUsageEvent
 import javax.inject.Inject
 
 @Suppress("LongParameterList")
@@ -445,6 +447,11 @@ open class CreateAliasViewModel @Inject constructor(
                     }
                     persistDefaultVaultAndFolder(viewModelScope, shareUiState, setDefaultVault, TAG)
                     telemetryManager.sendEvent(ItemCreate(EventItemType.Alias))
+                    telemetryManager.sendEvent(
+                        event = TelemetryGrowthFeatureUsageEvent(
+                            action = TelemetryGrowthFeatureUsageAction.ItemCreatedAlias
+                        )
+                    )
                 }
         } else {
             PassLogger.i(TAG, "Empty User Id")

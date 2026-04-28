@@ -26,18 +26,30 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import proton.android.pass.account.fakes.FakeAccountManager
+import proton.android.pass.appconfig.fakes.FakeAppConfig
 import proton.android.pass.data.fakes.usecases.FakeGetUserPlan
 import proton.android.pass.data.impl.db.entities.TelemetryEntity
 import proton.android.pass.data.impl.fakes.FakeIsTelemetryEnabled
+import proton.android.pass.data.impl.fakes.FakeLocalTelemetryGrowthDataSource
 import proton.android.pass.data.impl.fakes.FakeLocalTelemetryDataSource
+import proton.android.pass.telemetry.fakes.FakeTelemetryGrowthDeviceInfoProvider
+import proton.android.pass.data.impl.fakes.FakeRemoteTelemetryGrowthDataSource
 import proton.android.pass.data.impl.fakes.FakeRemoteTelemetryDataSource
 import proton.android.pass.data.impl.repositories.TelemetryRepositoryImpl
 import proton.android.pass.data.impl.util.DimensionsSerializer
 import proton.android.pass.domain.Plan
 import proton.android.pass.domain.PlanLimit
 import proton.android.pass.domain.PlanType
+import proton.android.pass.telemetry.api.TelemetryEvent
 import proton.android.pass.test.FixedClock
 import proton.android.pass.test.MainDispatcherRule
+
+private data class TestDeferredEvent(
+    val name: String,
+    val dims: Map<String, String> = emptyMap()
+) : TelemetryEvent.DeferredTelemetryEvent(name) {
+    override fun dimensions(): Map<String, String> = dims
+}
 
 class TelemetryRepositoryTest {
 
@@ -48,39 +60,53 @@ class TelemetryRepositoryTest {
     private lateinit var accountManager: FakeAccountManager
     private lateinit var getUserPlan: FakeGetUserPlan
     private lateinit var localDataSource: FakeLocalTelemetryDataSource
+    private lateinit var localTelemetryGrowthDataSource: FakeLocalTelemetryGrowthDataSource
     private lateinit var remoteDataSource: FakeRemoteTelemetryDataSource
+    private lateinit var remoteTelemetryGrowthDataSource: FakeRemoteTelemetryGrowthDataSource
     private lateinit var clock: Clock
     private lateinit var telemetryEnabled: FakeIsTelemetryEnabled
+    private lateinit var appConfig: FakeAppConfig
+    private lateinit var telemetryGrowthDeviceInfoProvider: FakeTelemetryGrowthDeviceInfoProvider
 
     @Before
     fun setup() {
         accountManager = FakeAccountManager()
         getUserPlan = FakeGetUserPlan()
         localDataSource = FakeLocalTelemetryDataSource()
+        localTelemetryGrowthDataSource = FakeLocalTelemetryGrowthDataSource()
         remoteDataSource = FakeRemoteTelemetryDataSource()
+        remoteTelemetryGrowthDataSource = FakeRemoteTelemetryGrowthDataSource()
         clock = FixedClock(Clock.System.now())
         telemetryEnabled = FakeIsTelemetryEnabled()
+        appConfig = FakeAppConfig()
+        telemetryGrowthDeviceInfoProvider = FakeTelemetryGrowthDeviceInfoProvider()
 
         instance = TelemetryRepositoryImpl(
             localDataSource = localDataSource,
+            localTelemetryGrowthDataSource = localTelemetryGrowthDataSource,
             remoteDataSource = remoteDataSource,
+            remoteTelemetryGrowthDataSource = remoteTelemetryGrowthDataSource,
+            telemetryGrowthDeviceInfoProvider = telemetryGrowthDeviceInfoProvider,
             accountManager = accountManager,
             getUserPlan = getUserPlan,
             clock = clock,
-            isTelemetryEnabled = telemetryEnabled
+            isTelemetryEnabled = telemetryEnabled,
+            appConfig = appConfig
         )
     }
 
     @Test
     fun `store stores the correct values into local data source`() = runTest {
         // GIVEN
-        val event = "testevent"
-        val dimensions = mapOf("some" to "dimension", "other" to "value")
+        val event = TestDeferredEvent(
+            name = "testevent",
+            dims = mapOf("some" to "dimension", "other" to "value")
+        )
         val userId = "123"
         accountManager.sendPrimaryUserId(UserId(userId))
 
         // WHEN
-        instance.storeEntry(event, dimensions)
+        instance.storeEntry(event)
 
         // THEN
         val memory = localDataSource.getMemory()
@@ -89,7 +115,7 @@ class TelemetryRepositoryTest {
         val item = memory[0]
         assertThat(item.id).isEqualTo(0)
         assertThat(item.userId).isEqualTo(userId)
-        assertThat(item.event).isEqualTo(event)
+        assertThat(item.event).isEqualTo("testevent")
         assertThat(item.createTime).isEqualTo(clock.now().epochSeconds)
 
         val deserializedDimensions = DimensionsSerializer.deserialize(item.dimensions)

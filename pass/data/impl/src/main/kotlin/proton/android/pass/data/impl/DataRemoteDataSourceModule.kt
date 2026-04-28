@@ -44,6 +44,8 @@ import proton.android.pass.data.impl.remote.RemoteItemKeyDataSource
 import proton.android.pass.data.impl.remote.RemoteItemKeyDataSourceImpl
 import proton.android.pass.data.impl.remote.RemoteLiveTelemetryDataSource
 import proton.android.pass.data.impl.remote.RemoteLiveTelemetryDataSourceImpl
+import proton.android.pass.data.impl.remote.RemoteTelemetryGrowthDataSource
+import proton.android.pass.data.impl.remote.RemoteTelemetryGrowthDataSourceImpl
 import proton.android.pass.data.impl.remote.RemoteOrganizationKeyDataSource
 import proton.android.pass.data.impl.remote.RemoteOrganizationKeyDataSourceImpl
 import proton.android.pass.data.impl.remote.RemoteOrganizationReportDataSource
@@ -187,6 +189,11 @@ abstract class DataRemoteDataSourceModule {
 
     @[Binds Singleton]
     abstract fun bindRemoteFolderDataSource(impl: RemoteFolderDataSourceImpl): RemoteFolderDataSource
+
+    @Binds
+    abstract fun bindRemoteTelemetryGrowthDataSource(
+        impl: RemoteTelemetryGrowthDataSourceImpl
+    ): RemoteTelemetryGrowthDataSource
 
 }
 

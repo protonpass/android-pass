@@ -63,7 +63,9 @@ import proton.android.pass.notifications.fakes.FakeSnackbarDispatcher
 import proton.android.pass.preferences.FakeInternalSettingsRepository
 import proton.android.pass.preferences.FakePreferenceRepository
 import proton.android.pass.telemetry.api.EventItemType
+import proton.android.pass.telemetry.api.TelemetryGrowthFeatureUsageAction
 import proton.android.pass.telemetry.fakes.FakeTelemetryManager
+import proton.android.pass.telemetry.api.TelemetryGrowthFeatureUsageEvent
 import proton.android.pass.test.MainDispatcherRule
 import proton.android.pass.test.domain.ItemTestFactory
 import proton.android.pass.test.domain.ShareTestFactory
@@ -189,8 +191,11 @@ class CreateAliasViewModelTest {
         }
 
         val events = telemetryManager.getMemory()
-        assertThat(events.size).isEqualTo(1)
+        assertThat(events.size).isEqualTo(2)
         assertThat(events[0]).isEqualTo(ItemCreate(EventItemType.Alias))
+        assertThat(events[1]).isEqualTo(
+            TelemetryGrowthFeatureUsageEvent(TelemetryGrowthFeatureUsageAction.ItemCreatedAlias)
+        )
     }
 
     @Test

@@ -126,7 +126,9 @@ import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import proton.android.pass.preferences.InternalSettingsRepository
 import proton.android.pass.preferences.UserPreferencesRepository
 import proton.android.pass.telemetry.api.EventItemType
+import proton.android.pass.telemetry.api.TelemetryGrowthFeatureUsageAction
 import proton.android.pass.telemetry.api.TelemetryManager
+import proton.android.pass.telemetry.api.TelemetryGrowthFeatureUsageEvent
 import proton.android.pass.totp.api.TotpManager
 import javax.inject.Inject
 
@@ -572,6 +574,11 @@ class CreateLoginViewModel @Inject constructor(
                 persistDefaultVaultAndFolder(viewModelScope, shareUiState, setDefaultVault, TAG)
                 telemetryManager.sendEvent(ItemCreate(EventItemType.Alias))
                 telemetryManager.sendEvent(ItemCreate(EventItemType.Login))
+                telemetryManager.sendEvent(
+                    event = TelemetryGrowthFeatureUsageEvent(
+                        action = TelemetryGrowthFeatureUsageAction.ItemCreatedLogin
+                    )
+                )
                 send2FACreatedTelemetryEvent(item.itemType as ItemType.Login)
                 draftRepository.delete<AliasItemFormState>(CreateAliasViewModel.KEY_DRAFT_ALIAS)
             }
@@ -630,6 +637,11 @@ class CreateLoginViewModel @Inject constructor(
                 }
                 persistDefaultVaultAndFolder(viewModelScope, shareUiState, setDefaultVault, TAG)
                 telemetryManager.sendEvent(ItemCreate(EventItemType.Login))
+                telemetryManager.sendEvent(
+                    TelemetryGrowthFeatureUsageEvent(
+                        TelemetryGrowthFeatureUsageAction.ItemCreatedLogin
+                    )
+                )
                 send2FACreatedTelemetryEvent(item.itemType as ItemType.Login)
             }
     }

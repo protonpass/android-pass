@@ -72,6 +72,7 @@ dependencies {
     implementation(projects.pass.notifications.api)
     implementation(projects.pass.preferences.api)
     implementation(projects.pass.protos)
+    implementation(projects.pass.telemetry.api)
 
     debugImplementation(libs.androidx.compose.uiTooling)
     implementation(libs.androidx.compose.uiToolingPreview)
@@ -91,6 +92,7 @@ dependencies {
     testImplementation(projects.pass.notifications.fakes)
     testImplementation(projects.pass.preferences.fakes)
     testImplementation(projects.pass.account.fakes)
+    testImplementation(projects.pass.telemetry.fakes)
 
     kaptAndroidTest(libs.dagger.hilt.android.compiler)
     androidTestImplementation(libs.kotlinTest)

@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 91,
-    "identityHash": "163463681146723027a2eef846c58e20",
+    "identityHash": "e001c8088ac4fd36134f87c185f3c44d",
     "entities": [
       {
         "tableName": "AccountEntity",
@@ -3846,6 +3846,42 @@
         ]
       },
       {
+        "tableName": "TelemetryGrowthEntity",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `event` TEXT NOT NULL, `dimensions` TEXT NOT NULL, `create_time` INTEGER NOT NULL)",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "event",
+            "columnName": "event",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "dimensions",
+            "columnName": "dimensions",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "createTime",
+            "columnName": "create_time",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": true,
+          "columnNames": [
+            "id"
+          ]
+        }
+      },
+      {
         "tableName": "SearchEntryEntity",
         "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`item_id` TEXT NOT NULL, `share_id` TEXT NOT NULL, `user_id` TEXT NOT NULL, `create_time` INTEGER NOT NULL, PRIMARY KEY(`share_id`, `item_id`), FOREIGN KEY(`item_id`, `share_id`) REFERENCES `ItemEntity`(`id`, `share_id`) ON UPDATE NO ACTION ON DELETE CASCADE )",
         "fields": [
@@ -4938,6 +4974,42 @@
         ]
       },
       {
+        "tableName": "LiveTelemetryGrowthEntity",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `event` TEXT NOT NULL, `dimensions` TEXT NOT NULL, `create_time` INTEGER NOT NULL)",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "event",
+            "columnName": "event",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "dimensions",
+            "columnName": "dimensions",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "createTime",
+            "columnName": "create_time",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": true,
+          "columnNames": [
+            "id"
+          ]
+        }
+      },
+      {
         "tableName": "AssetLinkEntity",
         "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`website` TEXT NOT NULL, `package_name` TEXT NOT NULL, `created_at` INTEGER NOT NULL, `signature` TEXT NOT NULL, PRIMARY KEY(`website`, `package_name`, `signature`))",
         "fields": [
@@ -5917,7 +5989,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '163463681146723027a2eef846c58e20')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'e001c8088ac4fd36134f87c185f3c44d')"
     ]
   }
 }

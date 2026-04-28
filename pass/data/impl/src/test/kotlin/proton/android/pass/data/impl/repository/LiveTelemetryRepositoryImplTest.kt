@@ -19,15 +19,19 @@
 package proton.android.pass.data.impl.repository
 
 import com.google.common.truth.Truth.assertThat
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
 import me.proton.core.domain.entity.UserId
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
+import proton.android.pass.appconfig.fakes.FakeAppConfig
 import proton.android.pass.data.fakes.usecases.FakeGetUserPlan
+import proton.android.pass.data.impl.fakes.FakeLocalLiveTelemetryGrowthDataSource
 import proton.android.pass.data.impl.db.entities.LiveTelemetryEntity
 import proton.android.pass.data.impl.fakes.FakeLocalLiveTelemetryDataSource
 import proton.android.pass.data.impl.fakes.FakeRemoteLiveTelemetryDataSource
+import proton.android.pass.data.impl.fakes.FakeRemoteTelemetryGrowthDataSource
 import proton.android.pass.data.impl.repositories.LiveTelemetryRepositoryImpl
 import proton.android.pass.data.impl.requests.ItemReadBody
 import proton.android.pass.data.impl.requests.ItemReadRequest
@@ -39,8 +43,12 @@ import proton.android.pass.domain.PlanType
 import proton.android.pass.domain.ShareId
 import proton.android.pass.network.api.NetworkStatus
 import proton.android.pass.network.fakes.FakeNetworkMonitor
+import proton.android.pass.preferences.FakeInternalSettingsRepository
 import proton.android.pass.telemetry.api.TelemetryEvent.LiveTelemetryEvent
+import proton.android.pass.telemetry.api.TelemetryGrowthFeatureUsageAction
+import proton.android.pass.telemetry.api.TelemetryGrowthFeatureUsageEvent
 import proton.android.pass.telemetry.api.events.ItemViewed
+import proton.android.pass.telemetry.fakes.FakeTelemetryGrowthDeviceInfoProvider
 import proton.android.pass.test.FixedClock
 import proton.android.pass.test.MainDispatcherRule
 
@@ -56,6 +64,8 @@ class LiveTelemetryRepositoryImplTest {
     private lateinit var getUserPlan: FakeGetUserPlan
     private lateinit var local: FakeLocalLiveTelemetryDataSource
     private lateinit var remote: FakeRemoteLiveTelemetryDataSource
+    private lateinit var growthRemote: FakeRemoteTelemetryGrowthDataSource
+    private lateinit var internalSettings: FakeInternalSettingsRepository
 
     @Before
     fun setup() {
@@ -64,13 +74,20 @@ class LiveTelemetryRepositoryImplTest {
         getUserPlan = FakeGetUserPlan()
         local = FakeLocalLiveTelemetryDataSource()
         remote = FakeRemoteLiveTelemetryDataSource()
+        growthRemote = FakeRemoteTelemetryGrowthDataSource()
+        internalSettings = FakeInternalSettingsRepository()
 
         instance = LiveTelemetryRepositoryImpl(
             networkMonitor = networkMonitor,
             local = local,
+            localGrowth = FakeLocalLiveTelemetryGrowthDataSource(),
             remote = remote,
+            remoteTelemetryGrowthDataSource = growthRemote,
+            telemetryGrowthDeviceInfoProvider = FakeTelemetryGrowthDeviceInfoProvider(),
             clock = clock,
-            getUserPlan = getUserPlan
+            getUserPlan = getUserPlan,
+            appConfig = FakeAppConfig(),
+            internalSettingsRepository = internalSettings
         )
 
         // Initialize to business plan for most of the tests
@@ -262,6 +279,51 @@ class LiveTelemetryRepositoryImplTest {
             )
             assertThat(remoteMemoryItem.request).isEqualTo(request)
         }
+    }
+
+    @Test
+    fun `sends once-per-install feature usage event only on first trigger`() = runTest {
+        val event = TelemetryGrowthFeatureUsageEvent(TelemetryGrowthFeatureUsageAction.ItemCreatedLogin)
+
+        instance.sendGrowthEvent(event)
+        instance.sendGrowthEvent(event)
+        instance.sendGrowthEvent(event)
+
+        assertThat(growthRemote.getMemory().flatten()).hasSize(1)
+    }
+
+    @Test
+    fun `records once-per-install action after sending it`() = runTest {
+        val event = TelemetryGrowthFeatureUsageEvent(TelemetryGrowthFeatureUsageAction.ItemCreatedLogin)
+
+        instance.sendGrowthEvent(event)
+
+        val sent = internalSettings.getTelemetryGrowthSentActions().first()
+        assertThat(sent).containsExactly(TelemetryGrowthFeatureUsageAction.ItemCreatedLogin.actionName)
+    }
+
+    @Test
+    fun `tracks once-per-install actions independently`() = runTest {
+        val login = TelemetryGrowthFeatureUsageEvent(TelemetryGrowthFeatureUsageAction.ItemCreatedLogin)
+        val vault = TelemetryGrowthFeatureUsageEvent(TelemetryGrowthFeatureUsageAction.VaultCreated)
+
+        instance.sendGrowthEvent(login)
+        instance.sendGrowthEvent(vault)
+        instance.sendGrowthEvent(login)
+        instance.sendGrowthEvent(vault)
+
+        assertThat(growthRemote.getMemory().flatten()).hasSize(2)
+    }
+
+    @Test
+    fun `sends non once-per-install feature usage event on every trigger`() = runTest {
+        val event = TelemetryGrowthFeatureUsageEvent(TelemetryGrowthFeatureUsageAction.OfferClicked)
+
+        instance.sendGrowthEvent(event)
+        instance.sendGrowthEvent(event)
+        instance.sendGrowthEvent(event)
+
+        assertThat(growthRemote.getMemory().flatten()).hasSize(3)
     }
 
     private fun setupPlan(planType: PlanType) {

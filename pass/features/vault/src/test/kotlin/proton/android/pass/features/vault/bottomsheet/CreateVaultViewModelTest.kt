@@ -45,6 +45,7 @@ import proton.android.pass.domain.ShareId
 import proton.android.pass.features.vault.VaultSnackbarMessage
 import proton.android.pass.navigation.api.CommonOptionalNavArgId
 import proton.android.pass.notifications.fakes.FakeSnackbarDispatcher
+import proton.android.pass.telemetry.fakes.FakeTelemetryManager
 import proton.android.pass.test.MainDispatcherRule
 import proton.android.pass.test.TestConstants
 import proton.android.pass.test.domain.ItemTestFactory
@@ -387,7 +388,8 @@ class CreateVaultViewModelTest {
             encryptionContextProvider = FakeEncryptionContextProvider(),
             savedStateHandleProvider = savedState,
             migrateItems = migrateItem,
-            observeUpgradeInfo = getUpgradeInfo
+            observeUpgradeInfo = getUpgradeInfo,
+            telemetryManager = FakeTelemetryManager()
         )
     }
 

@@ -31,14 +31,20 @@ object UpsellV2DisplayOnBoardingArg : OptionalNavArgId {
     override val navType = NavType.BoolType
 }
 
+object UpsellV2ManualDisplayArg : OptionalNavArgId {
+    override val key = "manualDisplay"
+    override val navType = NavType.BoolType
+}
+
 object UpsellV2NavItem : NavItem(
     baseRoute = "upsellv2",
-    optionalArgIds = listOf(UpsellV2DisplayOnBoardingArg)
+    optionalArgIds = listOf(UpsellV2DisplayOnBoardingArg, UpsellV2ManualDisplayArg)
 ) {
-    fun createRoute(displayOnBoardingAfter: Boolean = false): String = buildString {
+    fun createRoute(displayOnBoardingAfter: Boolean = false, manualDisplay: Boolean = false): String = buildString {
         append(baseRoute)
         val params = mapOf(
-            UpsellV2DisplayOnBoardingArg.key to displayOnBoardingAfter
+            UpsellV2DisplayOnBoardingArg.key to displayOnBoardingAfter,
+            UpsellV2ManualDisplayArg.key to manualDisplay
         )
         append(params.toPath())
     }

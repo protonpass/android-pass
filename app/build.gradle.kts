@@ -494,6 +494,13 @@ dependencies {
     implementation(projects.pass.securityCenter.api)
     implementation(projects.pass.securityCenter.impl)
     implementation(projects.pass.telemetry.impl)
+    addSpecialLib(
+        default = projects.pass.installReferrer.impl,
+        overrides = mapOf(
+            "fdroid" to projects.pass.installReferrer.noOp,
+            "nogms" to projects.pass.installReferrer.noOp
+        )
+    )
     implementation(projects.pass.totp.impl)
     implementation(projects.pass.files.api)
     implementation(projects.pass.files.impl)

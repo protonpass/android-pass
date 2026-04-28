@@ -53,6 +53,9 @@ import proton.android.pass.features.password.GeneratePasswordBottomsheetMode
 import proton.android.pass.features.password.GeneratePasswordBottomsheetModeValue
 import proton.android.pass.features.password.GeneratePasswordSnackbarMessage
 import proton.android.pass.notifications.api.SnackbarDispatcher
+import proton.android.pass.telemetry.api.TelemetryGrowthFeatureUsageAction
+import proton.android.pass.telemetry.api.TelemetryManager
+import proton.android.pass.telemetry.api.TelemetryGrowthFeatureUsageEvent
 import javax.inject.Inject
 
 @HiltViewModel
@@ -67,7 +70,8 @@ class GeneratePasswordViewModel @Inject constructor(
     private val draftRepository: DraftRepository,
     private val encryptionContextProvider: EncryptionContextProvider,
     private val addOnePasswordHistoryEntryToUser: AddOnePasswordHistoryEntryToUser,
-    private val clock: Clock
+    private val clock: Clock,
+    private val telemetryManager: TelemetryManager
 ) : ViewModel() {
 
     private val mode = stateHandleProvider.get()
@@ -146,6 +150,12 @@ class GeneratePasswordViewModel @Inject constructor(
                 encrypt(stateFlow.value.password)
             }.also { encryptedPassword ->
                 draftRepository.save(DRAFT_PASSWORD_KEY, encryptedPassword)
+                telemetryManager.sendEvent(
+                    event = TelemetryGrowthFeatureUsageEvent(
+                        action = TelemetryGrowthFeatureUsageAction.ItemCreatedPassword
+                    )
+                )
+
                 eventFlow.update { GeneratePasswordEvent.OnPasswordConfirmed }
 
                 addPasswordToHistoryEntry(
@@ -160,6 +170,11 @@ class GeneratePasswordViewModel @Inject constructor(
         viewModelScope.launch {
             snackbarDispatcher(GeneratePasswordSnackbarMessage.CopiedToClipboard)
             eventFlow.update { GeneratePasswordEvent.OnPasswordCopied }
+            telemetryManager.sendEvent(
+                event = TelemetryGrowthFeatureUsageEvent(
+                    action = TelemetryGrowthFeatureUsageAction.ItemCreatedPassword
+                )
+            )
 
             encryptionContextProvider.withEncryptionContextSuspendable {
                 encrypt(stateFlow.value.password)

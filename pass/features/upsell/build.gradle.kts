@@ -89,6 +89,7 @@ dependencies {
     implementation(libs.androidx.compose.material.icons.core)
     implementation(projects.pass.commonPresentation.impl)
     implementation(libs.core.payment.presentation)
+    implementation(projects.pass.telemetry.api)
 
     kaptAndroidTest(libs.dagger.hilt.android.compiler)
     androidTestImplementation(libs.kotlinTest)

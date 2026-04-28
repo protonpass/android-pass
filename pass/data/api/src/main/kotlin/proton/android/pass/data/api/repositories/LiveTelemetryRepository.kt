@@ -23,5 +23,7 @@ import proton.android.pass.telemetry.api.TelemetryEvent
 
 interface LiveTelemetryRepository {
     suspend fun sendEvent(userId: UserId, event: TelemetryEvent.LiveTelemetryEvent)
+    suspend fun sendGrowthEvent(event: TelemetryEvent.LiveTelemetryGrowthEvent)
     suspend fun flushPendingEvents(userId: UserId)
+    suspend fun flushPendingGrowthEvents()
 }

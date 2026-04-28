@@ -75,13 +75,60 @@ enum class EventItemType(val itemTypeName: String) {
     }
 }
 
+enum class TelemetryGrowthEventNames(val eventName: String) {
+
+    Install("install"),
+    Signup("signup"),
+    Subscription("sub"),
+    FeatureUsage("feature_usage"),
+    Uninstall("uninstall"),
+    Open("open"),
+    OptOut("opt_out")
+}
+
+enum class TelemetryGrowthFeatureUsageAction(
+    val actionName: String,
+    val sendOncePerInstall: Boolean = false
+) {
+    AccountCreated("account_created"),
+    SkippedOnboarding("skipped_onboarding"),
+    CompletedOnboarding("completed_onboarding"),
+    OfferServed("offer_served"),
+    OfferClicked("offer_clicked"),
+    InAppSubscriptionPaywall("in_app_subscription_paywall"),
+    InAppSubscriptionOnboarding("in_app_subscription_onboarding"),
+    InAppSubscriptionManual("in_app_subscription_manual"),
+    ItemCreatedLogin("item_created_login", sendOncePerInstall = true),
+    ItemCreatedAlias("item_created_alias", sendOncePerInstall = true),
+    ItemCreatedPassword("item_created_password", sendOncePerInstall = true),
+    ItemCreatedCreditCard("item_created_cc", sendOncePerInstall = true),
+    VaultShared("vault_shared", sendOncePerInstall = true),
+    ItemShared("item_shared", sendOncePerInstall = true),
+    VaultCreated("vault_created", sendOncePerInstall = true)
+}
+
 sealed class TelemetryEvent(val eventName: String) {
     open fun dimensions(): Map<String, String> = emptyMap()
 
     @Suppress("UnnecessaryAbstractClass")
     abstract class DeferredTelemetryEvent(eventName: String) : TelemetryEvent(eventName)
 
+    /**
+     * DO NOT USE for new MMP/growth events. Prefer [LiveTelemetryGrowthEvent] which sends
+     * immediately via the unauthenticated session — required for accurate Singular install
+     * attribution (deferred 6h batch is too slow to fit Singular's attribution window).
+     *
+     * Kept only as an extension point if a future event genuinely needs the deferred 6h
+     * pipeline. The plumbing (TelemetryGrowthEntity, TelemetryRepositoryImpl growth path,
+     * 6h worker) remains in place for that case.
+     */
+    @Suppress("UnnecessaryAbstractClass")
+    abstract class DeferredTelemetryGrowthEvent(eventName: String) : DeferredTelemetryEvent(eventName)
+
     @Suppress("UnnecessaryAbstractClass")
     abstract class LiveTelemetryEvent(eventName: String) : TelemetryEvent(eventName)
+
+    @Suppress("UnnecessaryAbstractClass")
+    abstract class LiveTelemetryGrowthEvent(eventName: String) : LiveTelemetryEvent(eventName)
 
 }

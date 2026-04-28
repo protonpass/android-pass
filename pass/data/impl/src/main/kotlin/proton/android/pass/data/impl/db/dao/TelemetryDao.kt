@@ -30,7 +30,7 @@ abstract class TelemetryDao : BaseDao<TelemetryEntity>() {
         """
         SELECT * FROM ${TelemetryEntity.TABLE} 
         WHERE ${TelemetryEntity.Columns.USER_ID} = :userId
-        ORDER BY ${TelemetryEntity.Columns.CREATE_TIME} ASC
+        ORDER BY ${TelemetryEntity.Columns.ID} ASC
         """
     )
     abstract suspend fun getAllByUserId(userId: String): List<TelemetryEntity>
@@ -38,7 +38,7 @@ abstract class TelemetryDao : BaseDao<TelemetryEntity>() {
     @Query(
         """
         SELECT * FROM ${TelemetryEntity.TABLE} 
-        ORDER BY ${TelemetryEntity.Columns.CREATE_TIME} ASC
+        ORDER BY ${TelemetryEntity.Columns.ID} ASC
         """
     )
     abstract suspend fun getAll(): List<TelemetryEntity>

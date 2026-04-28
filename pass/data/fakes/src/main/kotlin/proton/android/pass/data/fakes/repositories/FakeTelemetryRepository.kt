@@ -19,16 +19,17 @@
 package proton.android.pass.data.fakes.repositories
 
 import proton.android.pass.data.api.repositories.TelemetryRepository
+import proton.android.pass.telemetry.api.TelemetryEvent
 import javax.inject.Inject
 
 class FakeTelemetryRepository @Inject constructor() : TelemetryRepository {
 
-    private val memory: MutableList<Entry> = mutableListOf()
+    private val memory: MutableList<TelemetryEvent.DeferredTelemetryEvent> = mutableListOf()
     private var sendInvoked = false
     private var storeResult: Result<Unit> = Result.failure(IllegalStateException("storeResult not set"))
     private var sendResult: Result<Unit> = Result.success(Unit)
 
-    fun getMemory(): List<Entry> = memory
+    fun getMemory(): List<TelemetryEvent.DeferredTelemetryEvent> = memory
     fun getSendInvoked() = sendInvoked
     fun setStoreResult(value: Result<Unit>) {
         storeResult = value
@@ -38,8 +39,8 @@ class FakeTelemetryRepository @Inject constructor() : TelemetryRepository {
         sendResult = value
     }
 
-    override suspend fun storeEntry(event: String, dimensions: Map<String, String>) {
-        memory.add(Entry(event, dimensions))
+    override suspend fun storeEntry(event: TelemetryEvent.DeferredTelemetryEvent) {
+        memory.add(event)
         storeResult.onFailure { throw it }
     }
 
@@ -48,5 +49,4 @@ class FakeTelemetryRepository @Inject constructor() : TelemetryRepository {
         sendResult.getOrThrow()
     }
 
-    data class Entry(val event: String, val dimensions: Map<String, String>)
 }

@@ -31,4 +31,7 @@ message InternalSettings {
   map<string, bool> is_default_vault_has_been_created = 21;
   bool has_shown_item_in_shared_vault_warning = 22;
   bool has_shown_reload_app_warning = 23;
+  bool telemetry_growth_install_event_sent = 24;
+  int64 last_background_timestamp = 25;
+  repeated string telemetry_growth_sent_feature_usage_actions = 26;
 }

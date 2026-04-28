@@ -67,8 +67,10 @@ import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.navigation.api.CommonOptionalNavArgId
 import proton.android.pass.notifications.api.SnackbarDispatcher
-import proton.android.pass.preferences.FeatureFlag
+import proton.android.pass.telemetry.api.TelemetryGrowthFeatureUsageAction
+import proton.android.pass.telemetry.api.TelemetryGrowthFeatureUsageEvent
 import proton.android.pass.telemetry.api.TelemetryManager
+import proton.android.pass.preferences.FeatureFlag
 import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import proton.android.pass.preferences.UserPreferencesRepository
 import javax.inject.Inject
@@ -194,6 +196,11 @@ class SharingSummaryViewModel @Inject constructor(
                 bulkInviteRepository.clear()
                 telemetryManager.sendEvent(InviteCreate(TARGET_TYPE_ITEM, EventItemType.from(itemCategory)))
                 snackbarDispatcher(SharingSnackbarMessage.InviteSentSuccess)
+                telemetryManager.sendEvent(
+                    event = TelemetryGrowthFeatureUsageEvent(
+                        action = TelemetryGrowthFeatureUsageAction.ItemShared
+                    )
+                )
                 eventFlow.update { SharingSummaryEvent.OnSharingItemSuccess(itemCategory) }
             }
 
@@ -213,6 +220,11 @@ class SharingSummaryViewModel @Inject constructor(
                 isLoadingStateFlow.update { IsLoadingState.NotLoading }
                 telemetryManager.sendEvent(InviteCreate(TARGET_TYPE_VAULT))
                 snackbarDispatcher(SharingSnackbarMessage.InviteSentSuccess)
+                telemetryManager.sendEvent(
+                    TelemetryGrowthFeatureUsageEvent(
+                        TelemetryGrowthFeatureUsageAction.VaultShared
+                    )
+                )
                 PassLogger.i(TAG, "Vault invite successfully sent")
                 eventFlow.update { SharingSummaryEvent.OnSharingVaultSuccess(shareId) }
             }.onFailure { error ->

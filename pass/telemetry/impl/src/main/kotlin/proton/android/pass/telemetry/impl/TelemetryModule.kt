@@ -22,6 +22,7 @@ import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import proton.android.pass.telemetry.api.TelemetryGrowthDeviceInfoProvider
 import proton.android.pass.telemetry.api.TelemetryManager
 import proton.android.pass.telemetry.impl.startup.TelemetryStartupManager
 import proton.android.pass.telemetry.impl.startup.TelemetryStartupManagerImpl
@@ -44,5 +45,10 @@ abstract class TelemetryModule {
 
     @Binds
     abstract fun bindLiveTelemetrySender(impl: LiveTelemetrySenderImpl): LiveTelemetrySender
+
+    @Binds
+    abstract fun bindTelemetryGrowthDeviceInfoProvider(
+        impl: TelemetryGrowthDeviceInfoProviderImpl
+    ): TelemetryGrowthDeviceInfoProvider
 }
 

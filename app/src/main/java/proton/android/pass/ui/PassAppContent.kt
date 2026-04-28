@@ -365,7 +365,9 @@ fun PassAppContent(
                                                             appNavigator.navigate(
                                                                 destination = UpsellV2NavItem,
                                                                 force = true,
-                                                                route = UpsellV2NavItem.createRoute()
+                                                                route = UpsellV2NavItem.createRoute(
+                                                                    manualDisplay = true
+                                                                )
                                                             )
                                                         } else {
                                                             onNavigate(it)

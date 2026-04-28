@@ -32,8 +32,13 @@ import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import me.proton.core.accountmanager.domain.AccountManager
+import me.proton.core.domain.entity.UserId
 import me.proton.core.payment.presentation.viewmodel.ProtonPaymentEvent
 import proton.android.pass.common.api.safeRunCatching
+import proton.android.pass.telemetry.api.TelemetryGrowthFeatureUsageAction
+import proton.android.pass.telemetry.api.TelemetryManager
+import proton.android.pass.telemetry.api.TelemetryGrowthFeatureUsageEvent
+import proton.android.pass.telemetry.api.TelemetryGrowthSubEvent
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.data.api.usecases.GetUserPlan
 import proton.android.pass.data.api.usecases.RefreshUserAccess
@@ -48,6 +53,7 @@ import proton.android.pass.features.upsell.v2.models.toWelcomeOfferMonthlyUpsell
 import proton.android.pass.features.upsell.v2.models.toWelcomeOfferYearlyUpsellUiModel
 import proton.android.pass.features.upsell.v2.models.toYearlyUpsellUiModel
 import proton.android.pass.features.upsell.v2.navigation.UpsellV2DisplayOnBoardingArg
+import proton.android.pass.features.upsell.v2.navigation.UpsellV2ManualDisplayArg
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.ToastManager
 import proton.android.pass.preferences.FeatureFlag
@@ -65,11 +71,17 @@ class UpsellV2ViewModel @Inject constructor(
     private val getUserPlan: GetUserPlan,
     private val refreshUserAccess: RefreshUserAccess,
     private val toastManager: ToastManager,
-    private val featureFlagsPreferencesRepository: FeatureFlagsPreferencesRepository
+    private val featureFlagsPreferencesRepository: FeatureFlagsPreferencesRepository,
+    private val telemetryManager: TelemetryManager
 ) : ViewModel() {
 
     private val displayOnBoarding: Boolean = savedStateHandleProvider.get()
         .get<Boolean>(UpsellV2DisplayOnBoardingArg.key)
+        ?: false
+
+    // true if comes from a manual action for displaying upsell
+    private val manualDisplay: Boolean = savedStateHandleProvider.get()
+        .get<Boolean>(UpsellV2ManualDisplayArg.key)
         ?: false
 
     private val _upsellV2UiState = MutableStateFlow(
@@ -101,6 +113,7 @@ class UpsellV2ViewModel @Inject constructor(
             ProtonPaymentEvent.Error.GoogleProductDetailsNotFound -> {
                 toastManager.showToast(PaymentR.string.payments_error_google_prices)
             }
+
             ProtonPaymentEvent.Error.UserCancelled -> {
                 // do nothing
             }
@@ -119,13 +132,30 @@ class UpsellV2ViewModel @Inject constructor(
         }
     }
 
-    internal fun upgrade() = viewModelScope.launch {
+    internal fun onOfferClicked() {
+        telemetryManager.sendEvent(
+            TelemetryGrowthFeatureUsageEvent(
+                TelemetryGrowthFeatureUsageAction.OfferClicked
+            )
+        )
+    }
+
+    internal fun upgrade(giapSuccess: ProtonPaymentEvent.GiapSuccess?) = viewModelScope.launch {
         getPrimaryUserIdOrNull()?.let { userId ->
             _upsellV2UiState.update {
                 it.copy(
                     displayLoaderDuringPurchase = true
                 )
             }
+
+            val subscriptionSource = when {
+                displayOnBoarding -> TelemetryGrowthFeatureUsageAction.InAppSubscriptionOnboarding
+                manualDisplay -> TelemetryGrowthFeatureUsageAction.InAppSubscriptionManual
+                else -> TelemetryGrowthFeatureUsageAction.InAppSubscriptionPaywall
+            }
+            telemetryManager.sendEvent(TelemetryGrowthFeatureUsageEvent(subscriptionSource))
+
+            giapSuccess?.let { sendTelemetryGrowthSubEvent(giapSuccess, userId) }
 
             viewModelScope.launch {
                 safeRunCatching {
@@ -164,6 +194,25 @@ class UpsellV2ViewModel @Inject constructor(
                 }
             }
         }
+    }
+
+    private suspend fun sendTelemetryGrowthSubEvent(giapSuccess: ProtonPaymentEvent.GiapSuccess, userId: UserId) {
+        val previousPlan: Plan? = getUserPlan(userId).firstOrNull()
+        val isFreeToPaid = previousPlan?.isFreePlan == true
+        val cycle = giapSuccess.cycle
+        val instance = giapSuccess.plan.instances[cycle]
+        val priceEntry = instance?.price?.entries?.firstOrNull()
+
+        telemetryManager.sendEvent(
+            event = TelemetryGrowthSubEvent(
+                contentList = giapSuccess.purchase.productIds.map { it.id },
+                price = priceEntry?.value?.current?.toDouble()?.div(other = 100) ?: 0.0,
+                currency = priceEntry?.value?.currency.orEmpty(),
+                cycle = cycle,
+                transactionId = giapSuccess.purchase.orderId,
+                isFreeToPaid = isFreeToPaid
+            )
+        )
     }
 
     private suspend fun updatePlans() {
@@ -221,6 +270,11 @@ class UpsellV2ViewModel @Inject constructor(
         plans.toWelcomeOfferMonthlyUpsellUiModel(
             context = context
         )?.let { monthly ->
+            telemetryManager.sendEvent(
+                event = TelemetryGrowthFeatureUsageEvent(
+                    action = TelemetryGrowthFeatureUsageAction.OfferServed
+                )
+            )
             _upsellV2UiState.update {
                 it.copy(
                     plans = persistentListOf(monthly),
@@ -240,6 +294,11 @@ class UpsellV2ViewModel @Inject constructor(
         plans.toWelcomeOfferYearlyUpsellUiModel(
             context = context
         )?.let { yearly ->
+            telemetryManager.sendEvent(
+                TelemetryGrowthFeatureUsageEvent(
+                    TelemetryGrowthFeatureUsageAction.OfferServed
+                )
+            )
             _upsellV2UiState.update {
                 it.copy(
                     plans = persistentListOf(yearly),
@@ -261,6 +320,12 @@ class UpsellV2ViewModel @Inject constructor(
             .toPersistentList()
 
         if (annualPlans.size == 2) {
+            telemetryManager.sendEvent(
+                event = TelemetryGrowthFeatureUsageEvent(
+                    action = TelemetryGrowthFeatureUsageAction.OfferServed
+                )
+            )
+
             _upsellV2UiState.update {
                 it.copy(
                     plans = annualPlans,

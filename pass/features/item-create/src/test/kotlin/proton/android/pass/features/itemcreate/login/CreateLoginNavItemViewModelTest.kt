@@ -84,7 +84,9 @@ import proton.android.pass.preferences.FakeInternalSettingsRepository
 import proton.android.pass.preferences.FakeFeatureFlagsPreferenceRepository
 import proton.android.pass.preferences.FakePreferenceRepository
 import proton.android.pass.telemetry.api.EventItemType
+import proton.android.pass.telemetry.api.TelemetryGrowthFeatureUsageAction
 import proton.android.pass.telemetry.fakes.FakeTelemetryManager
+import proton.android.pass.telemetry.api.TelemetryGrowthFeatureUsageEvent
 import proton.android.pass.test.MainDispatcherRule
 import proton.android.pass.test.StringTestFactory
 import proton.android.pass.test.domain.ItemTestFactory
@@ -253,9 +255,12 @@ internal class CreateLoginNavItemViewModelTest {
         }
 
         val memory = telemetryManager.getMemory()
-        assertThat(memory.size).isEqualTo(2)
+        assertThat(memory.size).isEqualTo(3)
         assertThat(memory[0]).isEqualTo(ItemCreate(EventItemType.Login))
-        assertThat(memory[1]).isEqualTo(MFACreated)
+        assertThat(memory[1]).isEqualTo(
+            TelemetryGrowthFeatureUsageEvent(TelemetryGrowthFeatureUsageAction.ItemCreatedLogin)
+        )
+        assertThat(memory[2]).isEqualTo(MFACreated)
     }
 
     @Test

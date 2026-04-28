@@ -18,8 +18,10 @@
 
 package proton.android.pass.data.api.repositories
 
+import proton.android.pass.telemetry.api.TelemetryEvent
+
 interface TelemetryRepository {
-    suspend fun storeEntry(event: String, dimensions: Map<String, String>)
+    suspend fun storeEntry(event: TelemetryEvent.DeferredTelemetryEvent)
 
     suspend fun sendEvents()
 }

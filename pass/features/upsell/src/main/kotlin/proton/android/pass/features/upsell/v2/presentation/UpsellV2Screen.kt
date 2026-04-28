@@ -59,7 +59,7 @@ fun UpsellV2Screen(
         contract = ActivityResultContracts.StartActivityForResult()
     ) {
         if (it.resultCode == Activity.RESULT_OK) {
-            viewModel.upgrade()
+            viewModel.upgrade(giapSuccess = null)
         }
     }
 
@@ -68,8 +68,11 @@ fun UpsellV2Screen(
         uiState = state,
         onPaymentCallback = {
             when (it) {
+                is ProtonPaymentEvent.Loading -> {
+                    viewModel.onOfferClicked()
+                }
                 is ProtonPaymentEvent.GiapSuccess -> {
-                    viewModel.upgrade()
+                    viewModel.upgrade(giapSuccess = it)
                 }
 
                 is ProtonPaymentEvent.Error -> {

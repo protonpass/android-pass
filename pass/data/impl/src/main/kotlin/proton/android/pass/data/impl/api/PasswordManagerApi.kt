@@ -40,6 +40,7 @@ import proton.android.pass.data.impl.requests.DeleteFoldersRequest
 import proton.android.pass.data.impl.requests.ExtraPasswordSendSrpDataRequest
 import proton.android.pass.data.impl.requests.ItemReadRequest
 import proton.android.pass.data.impl.requests.MigrateItemsRequest
+import proton.android.pass.data.impl.requests.TelemetryGrowthEventRequest
 import proton.android.pass.data.impl.requests.MoveItemsToFolderRequest
 import proton.android.pass.data.impl.requests.MoveFolderRequest
 import proton.android.pass.data.impl.requests.SendUserMonitorCredentialsRequest
@@ -83,6 +84,7 @@ import proton.android.pass.data.impl.responses.BreachesResponse
 import proton.android.pass.data.impl.responses.ChangeNotificationStateResponse
 import proton.android.pass.data.impl.responses.CheckAddressesCanBeInvitedResponse
 import proton.android.pass.data.impl.responses.CodeOnlyResponse
+import proton.android.pass.data.impl.responses.TelemetryGrowthEventResponse
 import proton.android.pass.data.impl.responses.CreateItemAliasResponse
 import proton.android.pass.data.impl.responses.CreateSecureLinkResponse
 import proton.android.pass.data.impl.responses.CreateVaultResponse
@@ -378,6 +380,12 @@ interface PasswordManagerApi : BaseRetrofitApi {
 
     @PUT("$PREFIX/share/{shareId}/item/read")
     suspend fun sendItemReadEvent(@Path("shareId") shareId: String, @Body request: ItemReadRequest): CodeOnlyResponse
+
+    // TelemetryGrowth
+    @POST("growth/v1/measurements")
+    suspend fun sendTelemetryGrowthEvents(
+        @Body events: @JvmSuppressWildcards List<TelemetryGrowthEventRequest>
+    ): TelemetryGrowthEventResponse
 
     // Sharing
     @POST("$PREFIX/share/{shareId}/invite/batch")

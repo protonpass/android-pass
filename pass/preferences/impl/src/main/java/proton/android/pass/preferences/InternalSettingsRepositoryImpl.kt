@@ -279,6 +279,32 @@ class InternalSettingsRepositoryImpl @Inject constructor(
 
     override fun hasShownReloadAppWarning(): Flow<Boolean> = getPreference { it.hasShownReloadAppWarning }
 
+    override fun setTelemetryGrowthInstallEventSent(value: Boolean): Result<Unit> =
+        setPreference { it.setTelemetryGrowthInstallEventSent(value) }
+
+    override fun hasTelemetryGrowthInstallEventBeenSent(): Flow<Boolean> = getPreference {
+        it.telemetryGrowthInstallEventSent
+    }
+
+    override fun addTelemetryGrowthSentAction(action: String): Result<Unit> = setPreference {
+        if (it.telemetryGrowthSentFeatureUsageActionsList.contains(action)) {
+            it
+        } else {
+            it.addTelemetryGrowthSentFeatureUsageActions(action)
+        }
+    }
+
+    override fun getTelemetryGrowthSentActions(): Flow<Set<String>> = getPreference {
+        it.telemetryGrowthSentFeatureUsageActionsList.toSet()
+    }
+
+    override fun setLastBackgroundTimestamp(timestampMs: Long): Result<Unit> =
+        setPreference { it.setLastBackgroundTimestamp(timestampMs) }
+
+    override fun getLastBackgroundTimestamp(): Flow<Long> = getPreference {
+        it.lastBackgroundTimestamp
+    }
+
     private fun setPreference(mapper: (InternalSettings.Builder) -> InternalSettings.Builder): Result<Unit> =
         runCatching {
             runBlocking(Dispatchers.IO) {

@@ -74,6 +74,7 @@ import me.proton.core.accountmanager.presentation.onAccountTwoPassModeFailed
 import me.proton.core.accountmanager.presentation.onAccountTwoPassModeNeeded
 import me.proton.core.accountmanager.presentation.onSessionSecondFactorNeeded
 import me.proton.core.auth.presentation.AuthOrchestrator
+import me.proton.core.auth.presentation.entity.AddAccountWorkflow
 import me.proton.core.auth.presentation.onAddAccountResult
 import me.proton.core.domain.entity.UserId
 import me.proton.core.plan.presentation.PlansOrchestrator
@@ -96,6 +97,8 @@ import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.android.pass.preferences.InternalSettingsRepository
 import proton.android.pass.preferences.ThemePreference
 import proton.android.pass.preferences.UserPreferencesRepository
+import proton.android.pass.telemetry.api.TelemetryManager
+import proton.android.pass.telemetry.api.TelemetryGrowthSignupEvent
 import javax.inject.Inject
 import kotlin.time.Duration.Companion.seconds
 
@@ -117,7 +120,8 @@ class LauncherViewModel @Inject constructor(
     userPreferencesRepository: UserPreferencesRepository,
     commonLibraryVersionChecker: CommonLibraryVersionChecker,
     private val appConfig: AppConfig,
-    private val checkUnredeemedGooglePurchase: CheckUnredeemedGooglePurchase
+    private val checkUnredeemedGooglePurchase: CheckUnredeemedGooglePurchase,
+    private val telemetryManager: TelemetryManager
 ) : ViewModel() {
 
     private val canDisplayUnredeemedPopup = MutableStateFlow(false)
@@ -188,12 +192,16 @@ class LauncherViewModel @Inject constructor(
         userSettingsOrchestrator.register(context)
 
         authOrchestrator.onAddAccountResult { result ->
+            if (result != null && result.workflow == AddAccountWorkflow.SignUp) {
+                telemetryManager.sendEvent(TelemetryGrowthSignupEvent())
+            }
             viewModelScope.launch {
                 if (result == null && getPrimaryUserIdOrNull() == null) {
                     context.finish()
                 }
             }
         }
+
 
         accountManager.observe(context.lifecycle, Lifecycle.State.CREATED)
             .onAccountTwoPassModeFailed { accountManager.disableAccount(it.userId) }

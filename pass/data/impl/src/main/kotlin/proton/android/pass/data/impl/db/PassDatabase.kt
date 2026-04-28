@@ -29,6 +29,7 @@ import proton.android.pass.data.impl.db.dao.GroupInviteDao
 import proton.android.pass.data.impl.db.dao.GroupInviteKeyDao
 import proton.android.pass.data.impl.db.dao.ItemsDao
 import proton.android.pass.data.impl.db.dao.LiveTelemetryDao
+import proton.android.pass.data.impl.db.dao.LiveTelemetryGrowthDao
 import proton.android.pass.data.impl.db.dao.PassDataMigrationDao
 import proton.android.pass.data.impl.db.dao.PassEventsDao
 import proton.android.pass.data.impl.db.dao.PassOrganizationSettingsDao
@@ -38,6 +39,7 @@ import proton.android.pass.data.impl.db.dao.SearchEntryDao
 import proton.android.pass.data.impl.db.dao.ShareKeysDao
 import proton.android.pass.data.impl.db.dao.SharesDao
 import proton.android.pass.data.impl.db.dao.TelemetryDao
+import proton.android.pass.data.impl.db.dao.TelemetryGrowthDao
 import proton.android.pass.data.impl.db.dao.UserAccessDataDao
 import proton.android.pass.data.impl.db.dao.UserEventsDao
 import proton.android.pass.data.impl.db.dao.UserInviteDao
@@ -69,6 +71,8 @@ interface PassDatabase : Database {
 
     fun telemetryEventsDao(): TelemetryDao
 
+    fun telemetryGrowthDao(): TelemetryGrowthDao
+
     fun searchEntryDao(): SearchEntryDao
 
     fun planDao(): PlanDao
@@ -88,6 +92,8 @@ interface PassDatabase : Database {
     fun organizationSettingsDao(): PassOrganizationSettingsDao
 
     fun liveTelemetryDao(): LiveTelemetryDao
+
+    fun liveTelemetryGrowthDao(): LiveTelemetryGrowthDao
 
     fun secureLinksDao(): SecureLinksDao
 

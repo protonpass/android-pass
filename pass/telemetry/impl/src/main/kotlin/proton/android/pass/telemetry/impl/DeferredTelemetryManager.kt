@@ -66,7 +66,7 @@ class DeferredTelemetryManagerImpl @Inject constructor(
     }
 
     private suspend fun performSendEvent(event: TelemetryEvent.DeferredTelemetryEvent) {
-        deferredTelemetryRepository.storeEntry(event.eventName, event.dimensions())
+        deferredTelemetryRepository.storeEntry(event)
     }
 
     companion object {

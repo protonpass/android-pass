@@ -66,7 +66,9 @@ import proton.android.pass.notifications.fakes.FakeSnackbarDispatcher
 import proton.android.pass.preferences.FakeInternalSettingsRepository
 import proton.android.pass.preferences.FakePreferenceRepository
 import proton.android.pass.telemetry.api.EventItemType
+import proton.android.pass.telemetry.api.TelemetryGrowthFeatureUsageAction
 import proton.android.pass.telemetry.fakes.FakeTelemetryManager
+import proton.android.pass.telemetry.api.TelemetryGrowthFeatureUsageEvent
 import proton.android.pass.test.MainDispatcherRule
 import proton.android.pass.test.domain.ItemTestFactory
 import proton.android.pass.test.domain.VaultTestFactory
@@ -232,8 +234,11 @@ class CreateCreditCardViewModelTest {
         }
 
         val memory = telemetryManager.getMemory()
-        assertThat(memory.size).isEqualTo(1)
+        assertThat(memory.size).isEqualTo(2)
         assertThat(memory[0]).isEqualTo(ItemCreate(EventItemType.CreditCard))
+        assertThat(memory[1]).isEqualTo(
+            TelemetryGrowthFeatureUsageEvent(TelemetryGrowthFeatureUsageAction.ItemCreatedCreditCard)
+        )
 
         val message = snackbarDispatcher.snackbarMessage.first().value()!!
         assertThat(message).isInstanceOf(CreditCardSnackbarMessage.ItemCreated::class.java)

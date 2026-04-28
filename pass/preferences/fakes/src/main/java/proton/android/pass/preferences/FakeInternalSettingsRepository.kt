@@ -63,7 +63,9 @@ class FakeInternalSettingsRepository @Inject constructor() : InternalSettingsRep
     private val isEmptyVaultHasBeenCreated = MutableStateFlow(false)
 
     private val hasShownReloadAppWarning = MutableStateFlow(false)
-
+    private val telemetryGrowthInstallEventSentFlow = MutableStateFlow(false)
+    private val telemetryGrowthSentActionsFlow = MutableStateFlow(emptySet<String>())
+    private val lastBackgroundTimestampFlow = MutableStateFlow(0L)
 
     override fun setLastUnlockedTime(time: Long): Result<Unit> {
         lastUnlockedTimeFlow.update { Some(time) }
@@ -217,4 +219,25 @@ class FakeInternalSettingsRepository @Inject constructor() : InternalSettingsRep
     }
 
     override fun hasShownReloadAppWarning(): Flow<Boolean> = hasShownReloadAppWarning
+
+    override fun setTelemetryGrowthInstallEventSent(value: Boolean): Result<Unit> {
+        telemetryGrowthInstallEventSentFlow.update { value }
+        return Result.success(Unit)
+    }
+
+    override fun hasTelemetryGrowthInstallEventBeenSent(): Flow<Boolean> = telemetryGrowthInstallEventSentFlow
+
+    override fun addTelemetryGrowthSentAction(action: String): Result<Unit> {
+        telemetryGrowthSentActionsFlow.update { it + action }
+        return Result.success(Unit)
+    }
+
+    override fun getTelemetryGrowthSentActions(): Flow<Set<String>> = telemetryGrowthSentActionsFlow
+
+    override fun setLastBackgroundTimestamp(timestampMs: Long): Result<Unit> {
+        lastBackgroundTimestampFlow.update { timestampMs }
+        return Result.success(Unit)
+    }
+
+    override fun getLastBackgroundTimestamp(): Flow<Long> = lastBackgroundTimestampFlow
 }

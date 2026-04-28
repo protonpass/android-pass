@@ -172,6 +172,7 @@ co.touchlab:stately-strict:2.0.6
 com.airbnb.android:lottie:4.1.0
 com.android.billingclient:billing-ktx:7.1.1
 com.android.billingclient:billing:7.1.1
+com.android.installreferrer:installreferrer:2.2
 com.appmattus.certificatetransparency:certificatetransparency-android:2.7.1
 com.appmattus.certificatetransparency:certificatetransparency:2.7.1
 com.caverock:androidsvg-aar:1.4

@@ -58,6 +58,8 @@ import proton.android.pass.preferences.settings.AutosavePreference
 import proton.android.pass.preferences.settings.SettingsDisplayAutofillPinningPreference
 import proton.android.pass.preferences.settings.SettingsDisplayUsernameFieldPreference
 import proton.android.pass.telemetry.api.CanConfigureTelemetry
+import proton.android.pass.telemetry.api.TelemetryGrowthOptOutEvent
+import proton.android.pass.telemetry.api.TelemetryManager
 import javax.inject.Inject
 
 @HiltViewModel
@@ -72,7 +74,8 @@ class SettingsViewModel @Inject constructor(
     private val initialWorkerLauncher: InitialWorkerLauncher,
     private val assetLinkRepository: AssetLinkRepository,
     autofillManager: AutofillManager,
-    syncStatusRepository: ItemSyncStatusRepository
+    syncStatusRepository: ItemSyncStatusRepository,
+    private val telemetryManager: TelemetryManager
 ) : ViewModel() {
 
     private val themeState: Flow<ThemePreference> = preferencesRepository
@@ -223,6 +226,9 @@ class SettingsViewModel @Inject constructor(
     }
 
     internal fun onTelemetryChange(value: Boolean) = viewModelScope.launch {
+        if (!value) {
+            telemetryManager.sendEvent(TelemetryGrowthOptOutEvent)
+        }
         deviceSettingsRepository.updateIsTelemetryEnabled(value)
         snackbarDispatcher(SettingsSnackbarMessage.PreferenceUpdated)
     }

@@ -89,6 +89,7 @@ dependencies {
     implementation(projects.pass.notifications.api)
     implementation(projects.pass.navigation.api)
     implementation(projects.pass.preferences.api)
+    implementation(projects.pass.telemetry.api)
 
     implementation(projects.pass.domain)
     implementation(libs.kotlinx.datetime)
@@ -107,4 +108,5 @@ dependencies {
     testImplementation(projects.pass.data.fakes)
     testImplementation(projects.pass.notifications.fakes)
     testImplementation(projects.pass.preferences.fakes)
+    testImplementation(projects.pass.telemetry.fakes)
 }

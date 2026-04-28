@@ -47,6 +47,9 @@ import proton.android.pass.features.vault.VaultSnackbarMessage
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonOptionalNavArgId
 import proton.android.pass.notifications.api.SnackbarDispatcher
+import proton.android.pass.telemetry.api.TelemetryGrowthFeatureUsageAction
+import proton.android.pass.telemetry.api.TelemetryManager
+import proton.android.pass.telemetry.api.TelemetryGrowthFeatureUsageEvent
 import javax.inject.Inject
 
 @HiltViewModel
@@ -57,6 +60,7 @@ class CreateVaultViewModel @Inject constructor(
     private val encryptionContextProvider: EncryptionContextProvider,
     private val savedStateHandleProvider: SavedStateHandleProvider,
     private val migrateItems: MigrateItems,
+    private val telemetryManager: TelemetryManager,
     observeUpgradeInfo: ObserveUpgradeInfo
 ) : BaseVaultViewModel() {
 
@@ -122,6 +126,7 @@ class CreateVaultViewModel @Inject constructor(
 
     private suspend fun onVaultCreated(newVault: Share) {
         PassLogger.d(TAG, "Vault created successfully")
+        telemetryManager.sendEvent(TelemetryGrowthFeatureUsageEvent(TelemetryGrowthFeatureUsageAction.VaultCreated))
 
         when (val action = nextAction) {
             CreateVaultNextAction.Done -> {

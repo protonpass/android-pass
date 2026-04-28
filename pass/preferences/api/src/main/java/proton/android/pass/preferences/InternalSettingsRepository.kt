@@ -93,4 +93,13 @@ interface InternalSettingsRepository {
 
     fun setHasShownReloadAppWarning(value: Boolean): Result<Unit>
     fun hasShownReloadAppWarning(): Flow<Boolean>
+
+    fun setTelemetryGrowthInstallEventSent(value: Boolean): Result<Unit>
+    fun hasTelemetryGrowthInstallEventBeenSent(): Flow<Boolean>
+
+    fun addTelemetryGrowthSentAction(action: String): Result<Unit>
+    fun getTelemetryGrowthSentActions(): Flow<Set<String>>
+
+    fun setLastBackgroundTimestamp(timestampMs: Long): Result<Unit>
+    fun getLastBackgroundTimestamp(): Flow<Long>
 }

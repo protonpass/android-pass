@@ -40,6 +40,8 @@ import proton.android.pass.data.impl.local.LocalItemDataSource
 import proton.android.pass.data.impl.local.LocalItemDataSourceImpl
 import proton.android.pass.data.impl.local.LocalLiveTelemetryDataSource
 import proton.android.pass.data.impl.local.LocalLiveTelemetryDataSourceImpl
+import proton.android.pass.data.impl.local.LocalLiveTelemetryGrowthDataSource
+import proton.android.pass.data.impl.local.LocalLiveTelemetryGrowthDataSourceImpl
 import proton.android.pass.data.impl.local.LocalOrganizationSettingsDataSource
 import proton.android.pass.data.impl.local.LocalOrganizationSettingsDataSourceImpl
 import proton.android.pass.data.impl.local.LocalPasswordHistoryEntryDataSource
@@ -52,6 +54,8 @@ import proton.android.pass.data.impl.local.LocalShareDataSource
 import proton.android.pass.data.impl.local.LocalShareDataSourceImpl
 import proton.android.pass.data.impl.local.LocalShareKeyDataSource
 import proton.android.pass.data.impl.local.LocalShareKeyDataSourceImpl
+import proton.android.pass.data.impl.local.LocalTelemetryGrowthDataSource
+import proton.android.pass.data.impl.local.LocalTelemetryGrowthDataSourceImpl
 import proton.android.pass.data.impl.local.LocalTelemetryDataSource
 import proton.android.pass.data.impl.local.LocalTelemetryDataSourceImpl
 import proton.android.pass.data.impl.local.LocalUserAccessDataDataSource
@@ -103,6 +107,11 @@ abstract class DataLocalDataSourceModule {
     abstract fun bindLocalTelemetryDataSource(impl: LocalTelemetryDataSourceImpl): LocalTelemetryDataSource
 
     @Binds
+    abstract fun bindLocalTelemetryGrowthDataSource(
+        impl: LocalTelemetryGrowthDataSourceImpl
+    ): LocalTelemetryGrowthDataSource
+
+    @Binds
     abstract fun bindLocalSearchEntryDataSource(impl: LocalSearchEntryDataSourceImpl): LocalSearchEntryDataSource
 
     @Binds
@@ -138,6 +147,11 @@ abstract class DataLocalDataSourceModule {
 
     @Binds
     abstract fun bindLocalLiveTelemetryDataSource(impl: LocalLiveTelemetryDataSourceImpl): LocalLiveTelemetryDataSource
+
+    @Binds
+    abstract fun bindLocalLiveTelemetryGrowthDataSource(
+        impl: LocalLiveTelemetryGrowthDataSourceImpl
+    ): LocalLiveTelemetryGrowthDataSource
 
     @[Binds Singleton]
     abstract fun bindLocalSimpleLoginDataSource(impl: LocalSimpleLoginDataSourceImpl): LocalSimpleLoginDataSource

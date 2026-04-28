@@ -38,6 +38,7 @@ import proton.android.pass.data.fakes.usecases.passwords.FakeUpdatePasswordConfi
 import proton.android.pass.features.password.GeneratePasswordBottomsheetMode
 import proton.android.pass.features.password.GeneratePasswordBottomsheetModeValue
 import proton.android.pass.notifications.fakes.FakeSnackbarDispatcher
+import proton.android.pass.telemetry.fakes.FakeTelemetryManager
 import proton.android.pass.test.FixedClock
 import proton.android.pass.test.MainDispatcherRule
 
@@ -69,7 +70,8 @@ internal class GeneratePasswordViewModelTest {
             observePasswordConfig = FakeObservePasswordConfig(),
             updatePasswordConfig = FakeUpdatePasswordConfig(),
             addOnePasswordHistoryEntryToUser = FakeAddOnePasswordHistoryEntryToUser(),
-            clock = FixedClock()
+            clock = FixedClock(),
+            telemetryManager = FakeTelemetryManager()
         )
     }
 

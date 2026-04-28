@@ -69,8 +69,13 @@ class LiveTelemetryManagerImpl @Inject constructor(
     }
 
     private suspend fun performSendEvent(event: TelemetryEvent.LiveTelemetryEvent) {
-        val userId = observeCurrentUser().firstOrNull()?.userId ?: return
-        repository.sendEvent(userId, event)
+        when (event) {
+            is TelemetryEvent.LiveTelemetryGrowthEvent -> repository.sendGrowthEvent(event)
+            else -> {
+                val userId = observeCurrentUser().firstOrNull()?.userId ?: return
+                repository.sendEvent(userId, event)
+            }
+        }
     }
 
     companion object {

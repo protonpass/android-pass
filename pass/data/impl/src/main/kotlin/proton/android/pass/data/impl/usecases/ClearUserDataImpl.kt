@@ -24,6 +24,7 @@ import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.api.repositories.ShareRepository
 import proton.android.pass.data.api.usecases.ClearUserData
 import proton.android.pass.data.impl.db.DatabaseCleanupHelper
+import proton.android.pass.data.impl.local.LocalTelemetryGrowthDataSource
 import proton.android.pass.data.impl.repositories.ExtraPasswordRepository
 import proton.android.pass.log.api.LogFileManager
 import javax.inject.Inject
@@ -32,6 +33,7 @@ class ClearUserDataImpl @Inject constructor(
     private val shareRepository: ShareRepository,
     private val extraPasswordRepository: ExtraPasswordRepository,
     private val databaseCleanupHelper: DatabaseCleanupHelper,
+    private val localTelemetryGrowthDataSource: LocalTelemetryGrowthDataSource,
     private val logFileManager: LogFileManager
 ) : ClearUserData {
 
@@ -42,6 +44,9 @@ class ClearUserDataImpl @Inject constructor(
             databaseCleanupHelper.cleanupUserData()
             val logFile = logFileManager.getLogFile(userId)
             logFileManager.deleteLogFile(logFile)
+
+            // even if it is not linked to the user
+            localTelemetryGrowthDataSource.deleteAll()
         }
     }
 

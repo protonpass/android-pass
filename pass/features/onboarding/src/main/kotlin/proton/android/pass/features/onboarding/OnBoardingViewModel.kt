@@ -61,6 +61,9 @@ import proton.android.pass.preferences.FeatureFlag
 import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import proton.android.pass.preferences.HasCompletedOnBoarding
 import proton.android.pass.preferences.UserPreferencesRepository
+import proton.android.pass.telemetry.api.TelemetryGrowthFeatureUsageAction
+import proton.android.pass.telemetry.api.TelemetryManager
+import proton.android.pass.telemetry.api.TelemetryGrowthFeatureUsageEvent
 import javax.inject.Inject
 import kotlin.time.Duration.Companion.milliseconds
 
@@ -72,6 +75,7 @@ class OnBoardingViewModel @Inject constructor(
     private val snackbarDispatcher: SnackbarDispatcher,
     private val observeUserAccessData: ObserveUserAccessData,
     private val storeAuthSuccessful: StoreAuthSuccessful,
+    private val telemetryManager: TelemetryManager,
     appConfig: AppConfig,
     featureFlagsPreferencesRepository: FeatureFlagsPreferencesRepository
 ) : ViewModel() {
@@ -160,14 +164,27 @@ class OnBoardingViewModel @Inject constructor(
 
     private fun onFinishOnBoarding() {
         viewModelScope.launch {
+            telemetryManager.sendEvent(
+                event = TelemetryGrowthFeatureUsageEvent(
+                    action = TelemetryGrowthFeatureUsageAction.CompletedOnboarding
+                )
+            )
             saveOnBoardingCompleteFlag()
         }
     }
 
     fun onSkipButtonClick(page: OnBoardingPageName) {
         when (page) {
-            Autofill -> goToNextPage()
-            Fingerprint -> goToNextPage()
+            Autofill,
+            Fingerprint -> {
+                telemetryManager.sendEvent(
+                    event = TelemetryGrowthFeatureUsageEvent(
+                        action = TelemetryGrowthFeatureUsageAction.SkippedOnboarding
+                    )
+                )
+                goToNextPage()
+            }
+
             Last -> {}
             InvitePending -> {}
         }

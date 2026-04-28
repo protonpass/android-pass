@@ -584,7 +584,9 @@ abstract class BaseCustomItemViewModel(
         uri: URI,
         mimetype: String
     ) {
-        attachmentsHandler.openDraftAttachment(contextHolder, uri, mimetype)
+        viewModelScope.launch {
+            attachmentsHandler.openDraftAttachment(contextHolder, uri, mimetype)
+        }
     }
 
     private fun retryUploadDraftAttachment(metadata: FileMetadata) {

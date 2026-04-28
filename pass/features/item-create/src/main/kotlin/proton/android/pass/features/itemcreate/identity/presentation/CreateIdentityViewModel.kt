@@ -43,6 +43,7 @@ import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.asLoadingResult
 import proton.android.pass.common.api.safeRunCatching
 import proton.android.pass.common.api.toOption
+import proton.android.pass.commonui.api.ClassHolder
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
@@ -77,6 +78,7 @@ import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.android.pass.preferences.InternalSettingsRepository
 import proton.android.pass.telemetry.api.EventItemType
 import proton.android.pass.telemetry.api.TelemetryManager
+import java.net.URI
 import javax.inject.Inject
 
 @Suppress("LongParameterList")
@@ -258,6 +260,16 @@ class CreateIdentityViewModel @Inject constructor(
 
     fun onRetryUploadDraftAttachment(metadata: FileMetadata) {
         viewModelScope.launch { identityActionsProvider.retryUploadDraftAttachment(metadata) }
+    }
+
+    fun onOpenDraftAttachment(
+        contextHolder: ClassHolder<Context>,
+        uri: URI,
+        mimetype: String
+    ) {
+        viewModelScope.launch {
+            identityActionsProvider.openDraftAttachment(contextHolder, uri, mimetype)
+        }
     }
 
     fun dismissFileAttachmentsOnboarding() {

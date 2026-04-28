@@ -181,7 +181,9 @@ abstract class BaseNoteViewModel(
         uri: URI,
         mimetype: String
     ) {
-        attachmentsHandler.openDraftAttachment(contextHolder, uri, mimetype)
+        viewModelScope.launch {
+            attachmentsHandler.openDraftAttachment(contextHolder, uri, mimetype)
+        }
     }
 
     fun onAttachmentOpen(contextHolder: ClassHolder<Context>, attachment: Attachment) {

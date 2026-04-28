@@ -26,7 +26,6 @@ import android.webkit.MimeTypeMap
 import androidx.core.content.FileProvider
 import androidx.core.net.toUri
 import kotlinx.coroutines.withContext
-import me.proton.core.util.kotlin.takeIfNotBlank
 import proton.android.pass.appconfig.api.AppConfig
 import proton.android.pass.common.api.AppDispatchers
 import proton.android.pass.commonui.api.ClassHolder
@@ -84,7 +83,7 @@ class FileHandlerImpl @Inject constructor(
             ?: throw IllegalStateException("Could not get context")
         val cacheFolder = File(context.cacheDir, CacheDirectories.Share.value)
         if (!cacheFolder.exists()) cacheFolder.mkdirs()
-        val fileName = fileTitle.takeIfNotBlank() ?: "share_file"
+        val fileName = FileNameSanitizer.sanitize(fileTitle)
         val renamedFileName = if (!fileName.hasExtension()) {
             val extension = getExtensionFromMimeType(mimeType)
             "$fileName.$extension"
@@ -92,6 +91,10 @@ class FileHandlerImpl @Inject constructor(
             fileName
         }
         val renamedFile = File(cacheFolder, renamedFileName)
+        val cacheFolderCanonical = cacheFolder.canonicalPath
+        require(
+            renamedFile.canonicalPath.startsWith(cacheFolderCanonical + File.separator)
+        ) { "Resolved file path escapes cache directory" }
         context.contentResolver.openInputStream(contentUri)?.use { input ->
             renamedFile.outputStream().use { output ->
                 input.copyTo(output)
@@ -107,15 +110,23 @@ class FileHandlerImpl @Inject constructor(
     private fun getExtensionFromMimeType(mimeType: String): String =
         MimeTypeMap.getSingleton().getExtensionFromMimeType(mimeType) ?: "bin"
 
-    override fun openFile(
+    override suspend fun openFile(
         contextHolder: ClassHolder<Context>,
         uri: URI,
         mimeType: String,
         chooserTitle: String
     ) {
         val contentUri = uri.toContentUri(contextHolder)
+        val openContentUri = if (contentUri.hasExtension()) {
+            contentUri
+        } else {
+            withContext(appDispatchers.io) {
+                val fallbackTitle = contentUri.lastPathSegment.orEmpty()
+                createTempFile(contextHolder, fallbackTitle, contentUri, mimeType)
+            }
+        }
         val intent = Intent(Intent.ACTION_VIEW)
-            .setDataAndType(contentUri, mimeType)
+            .setDataAndType(openContentUri, mimeType)
         performFileAction(contextHolder, intent, chooserTitle)
     }
 

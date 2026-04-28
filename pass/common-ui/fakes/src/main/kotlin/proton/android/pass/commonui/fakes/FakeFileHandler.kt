@@ -50,7 +50,7 @@ class FakeFileHandler @Inject constructor() : FileHandler {
         // no-op
     }
 
-    override fun openFile(
+    override suspend fun openFile(
         contextHolder: ClassHolder<Context>,
         uri: URI,
         mimeType: String,

@@ -34,7 +34,7 @@ interface AttachmentsHandler {
 
     val attachmentState: Flow<AttachmentsState>
 
-    fun openDraftAttachment(
+    suspend fun openDraftAttachment(
         contextHolder: ClassHolder<Context>,
         uri: URI,
         mimetype: String

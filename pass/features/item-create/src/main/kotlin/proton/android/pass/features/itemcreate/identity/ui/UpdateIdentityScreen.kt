@@ -201,7 +201,7 @@ fun UpdateIdentityScreen(
                             )
 
                         is AttachmentContentEvent.OnDraftAttachmentOpen ->
-                            viewModel.openDraftAttachment(
+                            viewModel.onOpenDraftAttachment(
                                 contextHolder = context.toClassHolder(),
                                 uri = event.uri,
                                 mimetype = event.mimetype

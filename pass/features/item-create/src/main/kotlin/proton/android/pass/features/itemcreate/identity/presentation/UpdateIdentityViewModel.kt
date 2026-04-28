@@ -63,6 +63,7 @@ import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.android.pass.preferences.InternalSettingsRepository
 import proton.android.pass.telemetry.api.EventItemType
 import proton.android.pass.telemetry.api.TelemetryManager
+import java.net.URI
 import javax.inject.Inject
 
 @HiltViewModel
@@ -207,6 +208,16 @@ class UpdateIdentityViewModel @Inject constructor(
 
     fun onRetryUploadDraftAttachment(metadata: FileMetadata) {
         viewModelScope.launch { identityActionsProvider.retryUploadDraftAttachment(metadata) }
+    }
+
+    fun onOpenDraftAttachment(
+        contextHolder: ClassHolder<Context>,
+        uri: URI,
+        mimetype: String
+    ) {
+        viewModelScope.launch {
+            identityActionsProvider.openDraftAttachment(contextHolder, uri, mimetype)
+        }
     }
 
     override fun onCleared() {

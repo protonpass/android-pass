@@ -316,7 +316,7 @@ fun NavGraphBuilder.sharingGraph(onNavigateEvent: (SharingNavigation) -> Unit) {
         ManageVaultScreen(
             refresh = refresh,
             onNavigateEvent = onNavigateEvent,
-            clearRefreshFlag = { it.savedStateHandle.remove<String>(REFRESH_MEMBER_LIST_FLAG) }
+            clearRefreshFlag = { it.savedStateHandle[REFRESH_MEMBER_LIST_FLAG] = false }
         )
     }
 

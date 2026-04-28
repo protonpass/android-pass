@@ -39,7 +39,7 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import proton.android.pass.common.api.LoadingResult
-import proton.android.pass.common.api.asLoadingResult
+import proton.android.pass.common.api.asResultWithoutLoading
 import proton.android.pass.common.api.combineN
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
@@ -86,7 +86,7 @@ class ManageVaultViewModel @Inject constructor(
     private val membersFlow: Flow<LoadingResult<List<VaultMember>>> = refreshFlow
         .filter { it }
         .flatMapLatest {
-            getVaultMembers(navShareId).asLoadingResult()
+            getVaultMembers(navShareId).asResultWithoutLoading()
         }
         .onEach { refreshFlow.update { false } }
         .distinctUntilChanged()

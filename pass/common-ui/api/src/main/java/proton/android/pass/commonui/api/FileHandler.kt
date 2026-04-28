@@ -43,7 +43,7 @@ interface FileHandler {
         subject: String
     )
 
-    fun openFile(
+    suspend fun openFile(
         contextHolder: ClassHolder<Context>,
         uri: URI,
         mimeType: String,

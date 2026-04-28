@@ -69,7 +69,7 @@ interface IdentityFormActions {
     ): Boolean
     fun clearDraftData()
 
-    fun openDraftAttachment(
+    suspend fun openDraftAttachment(
         contextHolder: ClassHolder<Context>,
         uri: URI,
         mimetype: String

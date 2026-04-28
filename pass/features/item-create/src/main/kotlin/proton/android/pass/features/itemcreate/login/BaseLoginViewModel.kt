@@ -809,7 +809,9 @@ abstract class BaseLoginViewModel(
         uri: URI,
         mimetype: String
     ) {
-        attachmentsHandler.openDraftAttachment(contextHolder, uri, mimetype)
+        viewModelScope.launch {
+            attachmentsHandler.openDraftAttachment(contextHolder, uri, mimetype)
+        }
     }
 
     fun openAttachment(contextHolder: ClassHolder<Context>, attachment: Attachment) {

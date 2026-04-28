@@ -121,18 +121,24 @@ class AttachmentsHandlerImpl @Inject constructor(
         )
     }.distinctUntilChanged()
 
-    override fun openDraftAttachment(
+    override suspend fun openDraftAttachment(
         contextHolder: ClassHolder<Context>,
         uri: URI,
         mimetype: String
     ) {
         authOverrideState.setAuthOverride(true)
-        fileHandler.openFile(
-            contextHolder = contextHolder,
-            uri = uri,
-            mimeType = mimetype,
-            chooserTitle = contextHolder.get().value()?.getString(R.string.open_with) ?: ""
-        )
+        safeRunCatching {
+            fileHandler.openFile(
+                contextHolder = contextHolder,
+                uri = uri,
+                mimeType = mimetype,
+                chooserTitle = contextHolder.get().value()?.getString(R.string.open_with) ?: ""
+            )
+        }.onFailure {
+            PassLogger.w(TAG, "Could not open draft attachment")
+            PassLogger.w(TAG, it)
+            snackbarDispatcher(OpenAttachmentsError)
+        }
     }
 
     override suspend fun openAttachment(contextHolder: ClassHolder<Context>, attachment: Attachment) {

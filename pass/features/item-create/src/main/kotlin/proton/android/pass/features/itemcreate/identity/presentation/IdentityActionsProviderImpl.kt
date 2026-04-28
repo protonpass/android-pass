@@ -675,7 +675,7 @@ class IdentityActionsProviderImpl @Inject constructor(
         }
     }
 
-    override fun openDraftAttachment(
+    override suspend fun openDraftAttachment(
         contextHolder: ClassHolder<Context>,
         uri: URI,
         mimetype: String

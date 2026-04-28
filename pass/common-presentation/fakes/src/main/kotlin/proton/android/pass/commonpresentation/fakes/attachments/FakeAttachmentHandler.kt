@@ -39,7 +39,7 @@ class FakeAttachmentHandler : AttachmentsHandler {
     override val attachmentState: Flow<AttachmentsState>
         get() = flowOf(AttachmentsState.Initial)
 
-    override fun openDraftAttachment(
+    override suspend fun openDraftAttachment(
         contextHolder: ClassHolder<Context>,
         uri: URI,
         mimetype: String

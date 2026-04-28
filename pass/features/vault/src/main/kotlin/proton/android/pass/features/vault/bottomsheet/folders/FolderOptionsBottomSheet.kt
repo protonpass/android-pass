@@ -19,8 +19,10 @@
 package proton.android.pass.features.vault.bottomsheet.folders
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import proton.android.pass.features.vault.VaultNavigation
 import proton.android.pass.features.vault.VaultNavigation.AddFolder
 import proton.android.pass.features.vault.VaultNavigation.MoveFolder
@@ -33,8 +35,11 @@ fun FolderOptionsBottomSheet(
     onNavigate: (VaultNavigation) -> Unit,
     viewModel: FolderOptionsViewModel = hiltViewModel()
 ) {
+    val canCreateSubFolder by viewModel.canCreateSubFolder.collectAsStateWithLifecycle()
+
     FolderOptionsBottomSheetContents(
         modifier = modifier,
+        canCreateSubFolder = canCreateSubFolder,
         onEvent = {
             when (it) {
                 FolderOptionsUserEvent.OnCreateSubFolder ->

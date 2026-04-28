@@ -38,12 +38,15 @@ import proton.android.pass.composecomponents.impl.bottomsheet.withDividers
 @Composable
 internal fun FolderOptionsBottomSheetContents(
     modifier: Modifier = Modifier,
+    canCreateSubFolder: Boolean = true,
     onEvent: (FolderOptionsUserEvent) -> Unit
 ) {
     buildList {
-        createSubFolder {
-            onEvent(FolderOptionsUserEvent.OnCreateSubFolder)
-        }.also(::add)
+        if (canCreateSubFolder) {
+            createSubFolder {
+                onEvent(FolderOptionsUserEvent.OnCreateSubFolder)
+            }.also(::add)
+        }
 
         moveFolder {
             onEvent(FolderOptionsUserEvent.OnMoveFolder)

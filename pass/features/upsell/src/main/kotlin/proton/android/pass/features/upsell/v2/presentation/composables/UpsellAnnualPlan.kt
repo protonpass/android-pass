@@ -97,7 +97,7 @@ fun UpsellAnnualPlan(
         ) {
             Text(
                 text = stringResource(id = R.string.upsell_plan_title),
-                style = ProtonTheme.typography.hero.copy(
+                style = ProtonTheme.typography.headline.copy(
                     color = ProtonTheme.colors.textNorm
                 ),
                 maxLines = 2,

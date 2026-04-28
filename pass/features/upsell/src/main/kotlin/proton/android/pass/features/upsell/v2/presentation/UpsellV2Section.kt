@@ -25,6 +25,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -115,10 +116,13 @@ internal fun UpsellV2Section(
         }
 
         Row(
+            modifier = Modifier.height(IntrinsicSize.Min),
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
-                modifier = Modifier.weight(weightCol1),
+                modifier = Modifier
+                    .weight(weightCol1)
+                    .padding(vertical = Spacing.medium),
                 text = stringResource(id = R.string.upsell_plan_what_included),
                 style = ProtonTheme.typography.body1Bold.copy(
                     color = ProtonTheme.colors.textNorm
@@ -157,6 +161,7 @@ internal fun UpsellV2Section(
             Box(
                 modifier = Modifier
                     .weight(weightCol3)
+                    .fillMaxHeight()
                     .background(color = rightColumnBackgroundColor)
                     .padding(horizontal = 12.dp),
                 contentAlignment = Alignment.Center
@@ -189,14 +194,17 @@ internal fun UpsellV2Section(
         }
 
         // all items
-        items.forEachIndexed { index, it ->
+        items.forEach {
             Row(
                 modifier = Modifier
-                    .fillMaxWidth(),
+                    .fillMaxWidth()
+                    .height(IntrinsicSize.Min),
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
-                    modifier = Modifier.weight(weightCol1),
+                    modifier = Modifier
+                        .weight(weightCol1)
+                        .padding(vertical = Spacing.medium),
                     text = stringResource(id = it.title),
                     style = ProtonTheme.typography.body1Regular.copy(
                         color = ProtonTheme.colors.textNorm
@@ -206,7 +214,8 @@ internal fun UpsellV2Section(
 
                 OnePlan(
                     modifier = Modifier
-                        .weight(weightCol2),
+                        .weight(weightCol2)
+                        .padding(vertical = Spacing.medium),
 
                     plan = it.from,
                     textAlign = TextAlign.Center
@@ -215,18 +224,12 @@ internal fun UpsellV2Section(
                 OnePlan(
                     modifier = Modifier
                         .weight(weightCol3)
+                        .fillMaxHeight()
                         .background(
                             color = rightColumnBackgroundColor,
                             shape = RectangleShape
                         )
-                        .padding(vertical = Spacing.extraSmall)
-                        .then(
-                            other = if (index == items.lastIndex) {
-                                Modifier.padding(vertical = 8.dp)
-                            } else {
-                                Modifier.padding(vertical = 16.dp)
-                            }
-                        ),
+                        .padding(vertical = Spacing.medium),
                     plan = it.to,
                     textAlign = TextAlign.Center
                 )

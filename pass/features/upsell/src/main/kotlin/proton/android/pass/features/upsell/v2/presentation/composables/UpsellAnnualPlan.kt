@@ -93,7 +93,7 @@ fun UpsellAnnualPlan(
                 .verticalScroll(state = rememberScrollState())
                 .padding(horizontal = Spacing.mediumLarge)
                 .statusBarsPadding()
-                .padding(top = 140.dp)
+                .padding(top = 113.dp)
         ) {
             Text(
                 text = stringResource(id = R.string.upsell_plan_title),

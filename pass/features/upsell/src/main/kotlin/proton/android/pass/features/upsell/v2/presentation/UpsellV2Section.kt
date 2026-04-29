@@ -274,25 +274,33 @@ private fun OnePlan(
 ) {
     when (plan) {
         is PlanTypeUiState.TextRes -> {
-            Text(
+            Box(
                 modifier = modifier,
-                text = stringResource(id = plan.id),
-                style = ProtonTheme.typography.body1Regular.copy(
-                    color = ProtonTheme.colors.textNorm
-                ),
-                textAlign = textAlign
-            )
+                contentAlignment = Alignment.Center
+            ) {
+                Text(
+                    text = stringResource(id = plan.id),
+                    style = ProtonTheme.typography.body1Regular.copy(
+                        color = ProtonTheme.colors.textNorm
+                    ),
+                    textAlign = textAlign
+                )
+            }
         }
 
         is PlanTypeUiState.Text -> {
-            Text(
+            Box(
                 modifier = modifier,
-                text = plan.text,
-                style = ProtonTheme.typography.body1Regular.copy(
-                    color = ProtonTheme.colors.textNorm
-                ),
-                textAlign = textAlign
-            )
+                contentAlignment = Alignment.Center
+            ) {
+                Text(
+                    text = plan.text,
+                    style = ProtonTheme.typography.body1Regular.copy(
+                        color = ProtonTheme.colors.textNorm
+                    ),
+                    textAlign = textAlign
+                )
+            }
         }
 
         PlanTypeUiState.Check -> {
@@ -318,15 +326,19 @@ private fun OnePlan(
         }
 
         PlanTypeUiState.Empty -> {
-            Text(
+            Box(
                 modifier = modifier,
-                text = "-",
-                style = ProtonTheme.typography.body1Regular.copy(
-                    color = ProtonTheme.colors.textHint
-                ),
-                maxLines = 1,
-                textAlign = textAlign
-            )
+                contentAlignment = Alignment.Center
+            ) {
+                Text(
+                    text = "-",
+                    style = ProtonTheme.typography.body1Regular.copy(
+                        color = ProtonTheme.colors.textHint
+                    ),
+                    maxLines = 1,
+                    textAlign = textAlign
+                )
+            }
         }
     }
 }

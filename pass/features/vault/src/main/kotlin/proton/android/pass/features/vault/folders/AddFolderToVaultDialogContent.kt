@@ -31,8 +31,11 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.tooling.preview.Preview
@@ -41,6 +44,7 @@ import androidx.compose.ui.unit.dp
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.defaultNorm
 import proton.android.pass.commonui.api.PassTheme
+import proton.android.pass.commonui.api.RequestFocusLaunchedEffect
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.ThemePairPreviewProvider
 import proton.android.pass.composecomponents.impl.container.roundedContainerNorm
@@ -75,10 +79,12 @@ internal fun AddFolderToVaultDialogContent(
         modifier = modifier,
         show = true,
         isLoading = state.isLoading,
-        isConfirmActionDestructive = true,
+        isConfirmActionDestructive = false,
         isConfirmEnabled = state.isButtonEnabled.value(),
         title = title,
         content = {
+            val focusRequester = remember { FocusRequester() }
+
             Column(
                 verticalArrangement = Arrangement.spacedBy(Spacing.medium)
             ) {
@@ -104,7 +110,9 @@ internal fun AddFolderToVaultDialogContent(
                         .padding(Spacing.medium)
                 ) {
                     ProtonTextField(
-                        modifier = Modifier.fillMaxWidth(),
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .focusRequester(focusRequester),
                         value = state.folderName,
                         onChange = onVaultTextChange,
                         editable = !state.isLoading,
@@ -118,6 +126,8 @@ internal fun AddFolderToVaultDialogContent(
                     )
                 }
             }
+
+            RequestFocusLaunchedEffect(focusRequester)
         },
         confirmText = confirmText,
         cancelText = stringResource(R.string.vault_delete_dialog_cancel_action),

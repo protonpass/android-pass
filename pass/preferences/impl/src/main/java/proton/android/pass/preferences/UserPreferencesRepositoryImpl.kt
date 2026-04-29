@@ -184,6 +184,13 @@ class UserPreferencesRepositoryImpl @Inject constructor(
         it.passwordGeneration.toValue()
     }
 
+    override fun setUsernameGenerationPreference(preference: UsernameGenerationPreference): Result<Unit> =
+        setPreference { it.setUsernameGeneration(preference.toProto()) }
+
+    override fun getUsernameGenerationPreference(): Flow<UsernameGenerationPreference> = getPreference {
+        it.usernameGeneration.toValue()
+    }
+
     override fun setHasDismissedTrialBanner(state: HasDismissedTrialBanner): Result<Unit> = setPreference {
         it.setHasDismissedTrialBanner(state.value().toBooleanPrefProto())
     }

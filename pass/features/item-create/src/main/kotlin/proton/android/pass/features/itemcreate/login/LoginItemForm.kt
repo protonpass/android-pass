@@ -74,6 +74,7 @@ import proton.android.pass.features.itemcreate.login.LoginStickyFormOptionsConte
 import proton.android.pass.features.itemcreate.login.LoginStickyFormOptionsContentType.AliasOptions
 import proton.android.pass.features.itemcreate.login.LoginStickyFormOptionsContentType.GeneratePassword
 import proton.android.pass.features.itemcreate.login.LoginStickyFormOptionsContentType.NoOption
+import proton.android.pass.features.itemcreate.login.LoginStickyFormOptionsContentType.UsernameGenerator
 import proton.android.pass.features.itemcreate.login.passkey.PasskeyEditRow
 import proton.android.pass.features.itemcreate.login.passkey.PasskeysSection
 
@@ -107,7 +108,7 @@ internal fun LoginItemForm(
     Box(modifier = modifier) {
         val currentStickyFormOption = when (focusedField) {
             LoginField.Email -> AliasOptions
-            LoginField.Username -> NoOption
+            LoginField.Username -> UsernameGenerator
             LoginField.Password -> GeneratePassword
             LoginField.PrimaryTotp -> AddTotp
             is LoginField.CustomField -> when (focusedField.field.type) {
@@ -279,6 +280,7 @@ internal fun LoginItemForm(
                 AliasOptions -> StickyUsernameOptions(
                     showCreateAliasButton = showCreateAliasButton,
                     primaryEmail = primaryEmail,
+                    isExpanded = loginItemFormState.isExpanded,
                     onCreateAliasClick = {
                         selectedShareId ?: return@StickyUsernameOptions
                         onEvent(
@@ -291,7 +293,12 @@ internal fun LoginItemForm(
                     },
                     onPrefillCurrentEmailClick = { prefillEmail ->
                         onEvent(OnEmailChanged(prefillEmail))
-                    }
+                    },
+                    onGenerateUsernameClick = { onEvent(LoginContentEvent.OnGenerateUsername) }
+                )
+
+                UsernameGenerator -> StickyUsernameGenerator(
+                    onGenerateUsernameClick = { onEvent(LoginContentEvent.OnGenerateUsername) }
                 )
 
                 AddTotp -> {

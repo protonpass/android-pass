@@ -292,6 +292,10 @@ fun CreateLoginScreen(
                         actionAfterKeyboardHide =
                             { onNavigate(BaseLoginNavigation.GeneratePassword) }
 
+                    LoginContentEvent.OnGenerateUsername ->
+                        actionAfterKeyboardHide =
+                            { onNavigate(BaseLoginNavigation.GenerateUsername) }
+
                     is LoginContentEvent.OnScanTotp ->
                         actionAfterKeyboardHide =
                             { onNavigate(BaseLoginNavigation.ScanTotp(it.index)) }

@@ -383,4 +383,19 @@
   <string name="warning_dialog_item_shared_vault_reminder">Nu-mi mai reaminti</string>
   <string name="upgrade_to_pass_plus">Treceți la Pass Plus</string>
   <string name="warning_dialog_reload_app_after_purchase_description">Urmează să se deschidă pagina site-ului nostru. Dacă achiziționați un plan, reporniți aplicația.</string>
+      <string name="word_separator">Separator cuvinte</string>
+      <string name="bottomsheet_option_capitalise">Litere mari</string>
+      <string name="bottomsheet_option_word_separator_hyphens">Cratimă ( - )</string>
+      <string name="bottomsheet_option_word_separator_spaces">Spații</string>
+      <string name="bottomsheet_option_word_separator_periods">Punct ( . )</string>
+      <string name="bottomsheet_option_word_separator_commas">Virgulă ( , )</string>
+      <string name="bottomsheet_option_word_separator_underscores">Subliniere ( _ )</string>
+      <string name="bottomsheet_option_word_separator_numbers">Cifre</string>
+      <string name="bottomsheet_option_word_separator_numbers_and_symbols">Cifre și simboluri</string>
+
+  <plurals name="word_count">
+    <item quantity="one">%s cuvânt</item>
+    <item quantity="few">%s cuvinte</item>
+    <item quantity="other">%s de cuvinte</item>
+  </plurals>
 </resources>

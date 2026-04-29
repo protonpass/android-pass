@@ -364,4 +364,18 @@
   <string name="warning_dialog_item_shared_vault_reminder">Don\'t remind me again</string>
   <string name="upgrade_to_pass_plus">Upgrade to Pass Plus</string>
   <string name="warning_dialog_reload_app_after_purchase_description">You are about to be redirected to our website. If you purchase a plan, please restart the app.</string>
+      <string name="word_separator">Separador de palavras</string>
+      <string name="bottomsheet_option_capitalise">Em maiúsculas</string>
+      <string name="bottomsheet_option_word_separator_hyphens">Hífens ( - )</string>
+      <string name="bottomsheet_option_word_separator_spaces">Espaços</string>
+      <string name="bottomsheet_option_word_separator_periods">Pontos ( . )</string>
+      <string name="bottomsheet_option_word_separator_commas">Vírgulas ( , )</string>
+      <string name="bottomsheet_option_word_separator_underscores">Sublinhados ( _ )</string>
+      <string name="bottomsheet_option_word_separator_numbers">Números</string>
+      <string name="bottomsheet_option_word_separator_numbers_and_symbols">Números e símbolos</string>
+
+  <plurals name="word_count">
+    <item quantity="one">%s palavra</item>
+    <item quantity="other">%s palavras</item>
+  </plurals>
 </resources>

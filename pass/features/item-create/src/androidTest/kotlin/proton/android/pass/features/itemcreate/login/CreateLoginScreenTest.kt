@@ -485,7 +485,7 @@ class CreateLoginScreenTest {
             val fillUsernameText =
                 activity.getString(R.string.sticky_button_use_account_email, USER_EMAIL)
             waitUntilExists(hasText(fillUsernameText))
-            onNodeWithText(fillUsernameText).performClick()
+            onNodeWithText(fillUsernameText).performScrollTo().performClick()
 
             waitUntilExists(hasText(USER_EMAIL))
         }

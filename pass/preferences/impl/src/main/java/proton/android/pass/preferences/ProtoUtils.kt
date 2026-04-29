@@ -23,6 +23,8 @@ import me.proton.android.pass.preferences.BooleanPrefProto
 import me.proton.android.pass.preferences.LockAppPrefProto
 import me.proton.android.pass.preferences.MonitorStatusPrefProto
 import me.proton.android.pass.preferences.PasswordGenerationPrefProto
+import me.proton.android.pass.preferences.UsernameGenerationPrefProto
+import me.proton.android.pass.preferences.UsernameWordTypesPrefProto
 import proton.android.pass.preferences.monitor.MonitorStatusPreference
 import me.proton.android.pass.preferences.PasswordGenerationMode as ProtoPasswordGenerationMode
 import me.proton.android.pass.preferences.WordSeparator as ProtoWordSeparator
@@ -163,6 +165,61 @@ fun PasswordGenerationPrefProto.toValue() = PasswordGenerationPreference(
         default = PasswordDefaults.Words.INCLUDE_NUMBER
     )
 )
+
+private fun WordSeparator.toProtoWordSeparator(): ProtoWordSeparator = when (this) {
+    WordSeparator.Hyphen -> ProtoWordSeparator.WORD_SEPARATOR_HYPHEN
+    WordSeparator.Space -> ProtoWordSeparator.WORD_SEPARATOR_SPACE
+    WordSeparator.Period -> ProtoWordSeparator.WORD_SEPARATOR_PERIOD
+    WordSeparator.Comma -> ProtoWordSeparator.WORD_SEPARATOR_COMMA
+    WordSeparator.Underscore -> ProtoWordSeparator.WORD_SEPARATOR_UNDERSCORE
+    WordSeparator.Numbers -> ProtoWordSeparator.WORD_SEPARATOR_NUMBERS
+    WordSeparator.NumbersAndSymbols -> ProtoWordSeparator.WORD_SEPARATOR_NUMBERS_AND_SYMBOLS
+}
+
+private fun ProtoWordSeparator.toDomain(default: WordSeparator): WordSeparator = when (this) {
+    ProtoWordSeparator.WORD_SEPARATOR_HYPHEN -> WordSeparator.Hyphen
+    ProtoWordSeparator.WORD_SEPARATOR_SPACE -> WordSeparator.Space
+    ProtoWordSeparator.WORD_SEPARATOR_PERIOD -> WordSeparator.Period
+    ProtoWordSeparator.WORD_SEPARATOR_COMMA -> WordSeparator.Comma
+    ProtoWordSeparator.WORD_SEPARATOR_UNDERSCORE -> WordSeparator.Underscore
+    ProtoWordSeparator.WORD_SEPARATOR_NUMBERS -> WordSeparator.Numbers
+    ProtoWordSeparator.WORD_SEPARATOR_NUMBERS_AND_SYMBOLS -> WordSeparator.NumbersAndSymbols
+    else -> default
+}
+
+fun UsernameGenerationPreference.toProto(): UsernameGenerationPrefProto = UsernameGenerationPrefProto.newBuilder()
+    .setWordCount(wordCount)
+    .setWordsSeparator(wordsSeparator.toProtoWordSeparator())
+    .setCapitalise(capitalise.toBooleanPrefProto())
+    .setIncludeNumbers(includeNumbers.toBooleanPrefProto())
+    .setLeetspeak(leetspeak.toBooleanPrefProto())
+    .setWordTypes(wordTypes.toProto())
+    .build()
+
+fun UsernameWordTypesPreference.toProto(): UsernameWordTypesPrefProto = UsernameWordTypesPrefProto.newBuilder()
+    .setAdjectives(adjectives.toBooleanPrefProto())
+    .setNouns(nouns.toBooleanPrefProto())
+    .setVerbs(verbs.toBooleanPrefProto())
+    .build()
+
+fun UsernameGenerationPrefProto.toValue(): UsernameGenerationPreference {
+    val default = UsernameGenerationPreference.Default
+    return UsernameGenerationPreference(
+        wordCount = if (wordCount > 0) wordCount else default.wordCount,
+        wordsSeparator = wordsSeparator.toDomain(default.wordsSeparator),
+        capitalise = fromBooleanPrefProto(capitalise, default.capitalise),
+        includeNumbers = fromBooleanPrefProto(includeNumbers, default.includeNumbers),
+        leetspeak = fromBooleanPrefProto(leetspeak, default.leetspeak),
+        wordTypes = wordTypes.toValue(default.wordTypes)
+    )
+}
+
+fun UsernameWordTypesPrefProto.toValue(default: UsernameWordTypesPreference): UsernameWordTypesPreference =
+    UsernameWordTypesPreference(
+        adjectives = fromBooleanPrefProto(adjectives, default.adjectives),
+        nouns = fromBooleanPrefProto(nouns, default.nouns),
+        verbs = fromBooleanPrefProto(verbs, default.verbs)
+    )
 
 internal fun MonitorStatusPreference.toProto(): MonitorStatusPrefProto = when (this) {
     MonitorStatusPreference.BreachIssues -> MonitorStatusPrefProto.BREACH_ISSUES

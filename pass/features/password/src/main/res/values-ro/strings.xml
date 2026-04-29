@@ -9,23 +9,8 @@
     <item quantity="one">%s caracter</item>
     <item quantity="few">%s caractere</item>
     <item quantity="other">%s de caractere</item>
-  </plurals>
-  <plurals name="word_count">
-    <item quantity="one">%s cuvânt</item>
-    <item quantity="few">%s cuvinte</item>
-    <item quantity="other">%s de cuvinte</item>
-  </plurals>
-  <string name="word_separator">Separator cuvinte</string>
-  <string name="bottomsheet_option_capital_letters">Majuscule (A–Z)</string>
-  <string name="bottomsheet_option_capitalise">Litere mari</string>
+  </plurals>  <string name="bottomsheet_option_capital_letters">Majuscule (A–Z)</string>
   <string name="bottomsheet_option_include_numbers">Includere cifre (0–9)</string>
-  <string name="bottomsheet_option_word_separator_hyphens">Cratimă ( - )</string>
-  <string name="bottomsheet_option_word_separator_spaces">Spații</string>
-  <string name="bottomsheet_option_word_separator_periods">Punct ( . )</string>
-  <string name="bottomsheet_option_word_separator_commas">Virgulă ( , )</string>
-  <string name="bottomsheet_option_word_separator_underscores">Subliniere ( _ )</string>
-  <string name="bottomsheet_option_word_separator_numbers">Cifre</string>
-  <string name="bottomsheet_option_word_separator_numbers_and_symbols">Cifre și simboluri</string>
   <string name="regenerate_password_icon_content_description">Buton regenerare parolă</string>
   <string name="password_mode_memorable">Parolă ușor de reținut</string>
   <string name="password_mode_random">Parolă aleatorie</string>

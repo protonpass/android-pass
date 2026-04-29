@@ -39,8 +39,10 @@ import proton.android.pass.commonrust.api.UsableShareFilter
 import proton.android.pass.commonrust.api.WifiNetworkQRGenerator
 import proton.android.pass.commonrust.api.passwords.PasswordGenerator
 import proton.android.pass.commonrust.api.passwords.strengths.PasswordStrengthCalculator
+import proton.android.pass.commonrust.api.usernames.UsernameGenerator
 import proton.android.pass.commonrust.impl.passwords.PasswordGeneratorImpl
 import proton.android.pass.commonrust.impl.passwords.strengths.RustPasswordStrengthCalculator
+import proton.android.pass.commonrust.impl.usernames.UsernameGeneratorImpl
 import javax.inject.Singleton
 
 @Module
@@ -63,6 +65,9 @@ abstract class CommonRustModule {
 
     @[Binds Singleton]
     abstract fun bindPasswordGenerator(impl: PasswordGeneratorImpl): PasswordGenerator
+
+    @[Binds Singleton]
+    abstract fun bindUsernameGenerator(impl: UsernameGeneratorImpl): UsernameGenerator
 
     @Binds
     abstract fun bindPasswordScorer(impl: PasswordScorerImpl): PasswordScorer

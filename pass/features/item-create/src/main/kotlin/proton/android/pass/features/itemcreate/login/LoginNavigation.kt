@@ -53,6 +53,7 @@ sealed interface BaseLoginNavigation {
     ) : BaseLoginNavigation
 
     data object GeneratePassword : BaseLoginNavigation
+    data object GenerateUsername : BaseLoginNavigation
     data object Upgrade : BaseLoginNavigation
     data class ScanTotp(
         val index: Option<Int>

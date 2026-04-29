@@ -18,12 +18,18 @@
 
 package proton.android.pass.features.itemcreate.login
 
+import androidx.annotation.DrawableRes
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material.Divider
 import androidx.compose.material.Icon
 import androidx.compose.material.Surface
@@ -49,71 +55,116 @@ fun StickyUsernameOptions(
     modifier: Modifier = Modifier,
     primaryEmail: String?,
     showCreateAliasButton: Boolean,
+    isExpanded: Boolean,
     onCreateAliasClick: () -> Unit,
-    onPrefillCurrentEmailClick: (String) -> Unit
+    onPrefillCurrentEmailClick: (String) -> Unit,
+    onGenerateUsernameClick: () -> Unit
 ) {
     if (!showCreateAliasButton && primaryEmail == null) return
     val focusManager = LocalFocusManager.current
 
-    StickyImeRow(modifier) {
+    val items: List<@Composable () -> Unit> = buildList {
         if (showCreateAliasButton) {
-            Row(
-                modifier = Modifier
-                    .weight(1f)
-                    .clickable {
+            add {
+                StickyUsernameAction(
+                    icon = me.proton.core.presentation.R.drawable.ic_proton_alias,
+                    text = stringResource(id = R.string.sticky_button_create_alias),
+                    onClick = {
                         focusManager.clearFocus()
                         onCreateAliasClick()
                     }
-                    .fillMaxHeight()
-                    .padding(6.dp, 0.dp),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.spacedBy(8.dp, Alignment.CenterHorizontally)
-            ) {
-                Icon(
-                    painter = painterResource(me.proton.core.presentation.R.drawable.ic_proton_alias),
-                    contentDescription = null,
-                    tint = PassTheme.colors.loginInteractionNormMajor2
                 )
-                Text(
-                    text = stringResource(id = R.string.sticky_button_create_alias),
-                    color = PassTheme.colors.loginInteractionNormMajor2,
-                    style = ProtonTheme.typography.defaultNorm,
-                    overflow = TextOverflow.Ellipsis,
-                    maxLines = 1
+            }
+        }
+        if (!isExpanded) {
+            add {
+                StickyUsernameAction(
+                    icon = me.proton.core.presentation.R.drawable.ic_proton_arrows_rotate,
+                    text = stringResource(id = R.string.sticky_button_generate_username),
+                    onClick = {
+                        focusManager.clearFocus()
+                        onGenerateUsernameClick()
+                    }
                 )
             }
         }
         if (primaryEmail != null) {
-            Divider(
-                modifier = Modifier
-                    .width(1.dp)
-                    .fillMaxHeight()
-                    .padding(0.dp, 9.dp)
-            )
-            Row(
-                modifier = Modifier
-                    .weight(1f)
-                    .clickable {
+            add {
+                StickyUsernameAction(
+                    icon = null,
+                    text = stringResource(id = R.string.sticky_button_use_account_email, primaryEmail),
+                    onClick = {
                         focusManager.clearFocus()
                         onPrefillCurrentEmailClick(primaryEmail)
                     }
-                    .fillMaxHeight()
-                    .padding(6.dp, 0.dp),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.Center
-            ) {
-                Text(
-                    text = stringResource(
-                        id = R.string.sticky_button_use_account_email,
-                        primaryEmail
-                    ),
-                    color = PassTheme.colors.loginInteractionNormMajor2,
-                    style = ProtonTheme.typography.defaultNorm,
-                    overflow = TextOverflow.Ellipsis,
-                    maxLines = 1
                 )
             }
         }
+    }
+
+    val isScrollable = items.size >= 2
+
+    Row(
+        modifier = modifier
+            .fillMaxWidth()
+            .height(48.dp)
+            .background(PassTheme.colors.backgroundNorm)
+            .then(if (isScrollable) Modifier.horizontalScroll(rememberScrollState()) else Modifier)
+            .padding(horizontal = 12.dp),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = if (isScrollable) {
+            Arrangement.spacedBy(8.dp)
+        } else {
+            Arrangement.Center
+        }
+    ) {
+        items.forEachIndexed { index, item ->
+            if (index > 0) {
+                StickyUsernameSeparator()
+            }
+            item()
+        }
+    }
+}
+
+@Composable
+private fun StickyUsernameSeparator() {
+    Divider(
+        modifier = Modifier
+            .width(1.dp)
+            .fillMaxHeight()
+            .padding(vertical = 9.dp)
+    )
+}
+
+@Composable
+private fun StickyUsernameAction(
+    @DrawableRes icon: Int?,
+    text: String,
+    onClick: () -> Unit
+) {
+    Row(
+        modifier = Modifier
+            .fillMaxHeight()
+            .clickable(onClick = onClick)
+            .padding(horizontal = 4.dp),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(8.dp)
+    ) {
+        if (icon != null) {
+            Icon(
+                painter = painterResource(icon),
+                contentDescription = null,
+                tint = PassTheme.colors.loginInteractionNormMajor2
+            )
+        }
+        Text(
+            text = text,
+            color = PassTheme.colors.loginInteractionNormMajor2,
+            style = ProtonTheme.typography.defaultNorm,
+            overflow = TextOverflow.Ellipsis,
+            maxLines = 1
+        )
     }
 }
 
@@ -130,8 +181,10 @@ fun StickyUsernameOptionsPreview(
             StickyUsernameOptions(
                 primaryEmail = input.second.primaryEmail.value(),
                 showCreateAliasButton = input.second.showCreateAlias,
+                isExpanded = input.second.isExpanded,
                 onCreateAliasClick = {},
-                onPrefillCurrentEmailClick = {}
+                onPrefillCurrentEmailClick = {},
+                onGenerateUsernameClick = {}
             )
         }
     }

@@ -85,6 +85,8 @@ class FakePreferenceRepository @Inject constructor() : UserPreferencesRepository
             wordsIncludeNumbers = false
         )
     )
+    private val usernameGenerationPreference =
+        MutableStateFlow(UsernameGenerationPreference.Default)
     private val useUseDigitalAssetLinksPreference =
         MutableStateFlow(UseDigitalAssetLinksPreference.Disabled)
 
@@ -220,6 +222,13 @@ class FakePreferenceRepository @Inject constructor() : UserPreferencesRepository
     }
 
     override fun getPasswordGenerationPreference(): Flow<PasswordGenerationPreference> = passwordGenerationPreference
+
+    override fun setUsernameGenerationPreference(preference: UsernameGenerationPreference): Result<Unit> {
+        usernameGenerationPreference.tryEmit(preference)
+        return Result.success(Unit)
+    }
+
+    override fun getUsernameGenerationPreference(): Flow<UsernameGenerationPreference> = usernameGenerationPreference
 
     override fun setAllowScreenshotsPreference(preference: AllowScreenshotsPreference): Result<Unit> {
         allowScreenshotsPreference.tryEmit(preference)

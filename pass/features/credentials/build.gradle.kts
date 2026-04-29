@@ -108,6 +108,7 @@ dependencies {
     implementation(projects.pass.features.password)
     implementation(projects.pass.features.searchOptions)
     implementation(projects.pass.features.selectItem)
+    implementation(projects.pass.features.username)
     implementation(projects.pass.features.vault)
 
     testImplementation(libs.truth)

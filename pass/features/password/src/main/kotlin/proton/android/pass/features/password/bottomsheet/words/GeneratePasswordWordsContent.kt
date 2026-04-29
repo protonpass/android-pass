@@ -38,6 +38,7 @@ import proton.android.pass.composecomponents.impl.buttons.ShowAdvancedOptionsBut
 import proton.android.pass.composecomponents.impl.container.AnimatedVisibilityWithOnComplete
 import proton.android.pass.composecomponents.impl.container.rememberAnimatedVisibilityState
 import proton.android.pass.composecomponents.impl.form.PassDivider
+import proton.android.pass.composecomponents.impl.R as CompR
 import proton.android.pass.features.password.R
 import proton.android.pass.features.password.bottomsheet.GeneratePasswordSelectorRow
 import proton.android.pass.features.password.bottomsheet.GeneratePasswordSliderRow
@@ -71,7 +72,7 @@ internal fun GeneratePasswordWordsContent(
         PassDivider()
 
         GeneratePasswordSliderRow(
-            text = pluralStringResource(R.plurals.word_count, wordsCount, wordsCount),
+            text = pluralStringResource(CompR.plurals.word_count, wordsCount, wordsCount),
             value = wordsCount,
             minValue = minWordsCount,
             maxValue = maxWordsCount,
@@ -85,7 +86,7 @@ internal fun GeneratePasswordWordsContent(
         PassDivider()
 
         GeneratePasswordToggleRow(
-            text = stringResource(R.string.bottomsheet_option_capitalise),
+            text = stringResource(CompR.string.bottomsheet_option_capitalise),
             value = capitalizeWords,
             isEnabled = canToggleCapitalise,
             onChange = { newCapitalizeWords ->
@@ -118,7 +119,7 @@ internal fun GeneratePasswordWordsContent(
                 verticalArrangement = Arrangement.spacedBy(space = Spacing.small)
             ) {
                 GeneratePasswordSelectorRow(
-                    title = stringResource(R.string.word_separator),
+                    title = stringResource(CompR.string.word_separator),
                     selectedValue = wordSeparator.toResourceString(),
                     iconContentDescription = stringResource(R.string.password_words_separator_icon),
                     onClick = {

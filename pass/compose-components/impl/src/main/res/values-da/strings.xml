@@ -364,4 +364,18 @@
   <string name="warning_dialog_item_shared_vault_reminder">Påmind mig ikke igen</string>
   <string name="upgrade_to_pass_plus">Opgrader til Pass Plus</string>
   <string name="warning_dialog_reload_app_after_purchase_description">Du vil blive omdirigeret til vores websted. Hvis du køber et abonnement, så genstart venligst appen.</string>
+      <string name="word_separator">Ordseparator</string>
+      <string name="bottomsheet_option_capitalise">Ændr til versaler</string>
+      <string name="bottomsheet_option_word_separator_hyphens">Bindestreger ( - )</string>
+      <string name="bottomsheet_option_word_separator_spaces">Mellemrum</string>
+      <string name="bottomsheet_option_word_separator_periods">Punktummer (.)</string>
+      <string name="bottomsheet_option_word_separator_commas">Kommaer ( , )</string>
+      <string name="bottomsheet_option_word_separator_underscores">Bundstreg ( _ )</string>
+      <string name="bottomsheet_option_word_separator_numbers">Tal</string>
+      <string name="bottomsheet_option_word_separator_numbers_and_symbols">Tal og symboler</string>
+
+  <plurals name="word_count">
+    <item quantity="one">%s ord</item>
+    <item quantity="other">%s ord</item>
+  </plurals>
 </resources>

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023-2026 Proton AG
+ * Copyright (c) 2026 Proton AG
  * This file is part of Proton AG and Proton Pass.
  *
  * Proton Pass is free software: you can redistribute it and/or modify
@@ -16,65 +16,68 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.password.dialog
+package proton.android.pass.features.username.bottomsheet
 
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material.RadioButton
-import androidx.compose.material.RadioButtonDefaults
 import androidx.compose.material.Surface
+import androidx.compose.material.Switch
+import androidx.compose.material.SwitchDefaults
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
+import me.proton.core.compose.theme.ProtonTheme
+import me.proton.core.compose.theme.defaultSmallNorm
 import proton.android.pass.commonui.api.PassTheme
-import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.ThemedBooleanPreviewProvider
 
 @Composable
-fun DialogOptionRow(
+internal fun GenerateUsernameToggleRow(
     modifier: Modifier = Modifier,
-    value: String,
-    isSelected: Boolean,
-    onClick: () -> Unit
+    text: String,
+    value: Boolean,
+    isEnabled: Boolean,
+    onChange: (Boolean) -> Unit
 ) {
     Row(
-        modifier = modifier
-            .fillMaxWidth()
-            .clickable(onClick = onClick)
-            .padding(horizontal = Spacing.medium),
-        horizontalArrangement = Arrangement.spacedBy(Spacing.small),
+        modifier = modifier.fillMaxWidth(),
+        horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically
     ) {
-        RadioButton(
-            selected = isSelected,
-            colors = RadioButtonDefaults.colors(
-                selectedColor = PassTheme.colors.loginInteractionNormMajor1
-            ),
-            onClick = { onClick() }
-        )
         Text(
-            modifier = Modifier.fillMaxWidth(),
-            text = value,
-            color = PassTheme.colors.textNorm
+            text = text,
+            color = PassTheme.colors.textNorm,
+            style = ProtonTheme.typography.defaultSmallNorm
+        )
+
+        Switch(
+            checked = value,
+            enabled = isEnabled,
+            colors = SwitchDefaults.colors(
+                checkedThumbColor = PassTheme.colors.loginInteractionNormMajor1
+            ),
+            onCheckedChange = onChange
         )
     }
 }
 
-@Preview
-@Composable
-fun DialogOptionRowPreview(@PreviewParameter(ThemedBooleanPreviewProvider::class) input: Pair<Boolean, Boolean>) {
-    PassTheme(isDark = input.first) {
+@[Preview Composable]
+internal fun GenerateUsernameToggleRowPreview(
+    @PreviewParameter(ThemedBooleanPreviewProvider::class) input: Pair<Boolean, Boolean>
+) {
+    val (isDark, isChecked) = input
+
+    PassTheme(isDark = isDark) {
         Surface {
-            DialogOptionRow(
-                value = "Option",
-                isSelected = input.second,
-                onClick = {}
+            GenerateUsernameToggleRow(
+                text = "Some preference",
+                value = isChecked,
+                isEnabled = true,
+                onChange = {}
             )
         }
     }

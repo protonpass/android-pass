@@ -1,0 +1,22 @@
+syntax = "proto3";
+
+import "proton/android/pass/preferences/boolean_pref.proto";
+import "proton/android/pass/preferences/password_generation_pref.proto";
+
+option java_package = "me.proton.android.pass.preferences";
+option java_multiple_files = true;
+
+message UsernameWordTypesPrefProto {
+  BooleanPrefProto adjectives = 1;
+  BooleanPrefProto nouns = 2;
+  BooleanPrefProto verbs = 3;
+}
+
+message UsernameGenerationPrefProto {
+  int32 wordCount = 1;
+  WordSeparator wordsSeparator = 2;
+  BooleanPrefProto capitalise = 3;
+  BooleanPrefProto includeNumbers = 4;
+  BooleanPrefProto leetspeak = 5;
+  UsernameWordTypesPrefProto wordTypes = 6;
+}

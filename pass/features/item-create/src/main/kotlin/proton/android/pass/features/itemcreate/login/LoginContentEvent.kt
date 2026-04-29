@@ -77,6 +77,8 @@ internal sealed interface LoginContentEvent {
 
     data object OnCreatePassword : LoginContentEvent
 
+    data object OnGenerateUsername : LoginContentEvent
+
     data class OnAliasOptions(
         val shareId: ShareId,
         val hasReachedAliasLimit: Boolean

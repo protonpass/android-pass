@@ -8,22 +8,8 @@
   <plurals name="character_count">
     <item quantity="one">%s χαρακτήρας</item>
     <item quantity="other">%s χαρακτήρες</item>
-  </plurals>
-  <plurals name="word_count">
-    <item quantity="one">%s λέξη</item>
-    <item quantity="other">%s λέξεις</item>
-  </plurals>
-  <string name="word_separator">Διαχωριστής λέξεων</string>
-  <string name="bottomsheet_option_capital_letters">Κεφαλαία γράμματα (Α–Ζ)</string>
-  <string name="bottomsheet_option_capitalise">Κεφαλαιοποίηση</string>
+  </plurals>  <string name="bottomsheet_option_capital_letters">Κεφαλαία γράμματα (Α–Ζ)</string>
   <string name="bottomsheet_option_include_numbers">Συμπερίληψη αριθμών (0–9)</string>
-  <string name="bottomsheet_option_word_separator_hyphens">Παύλες ( - )</string>
-  <string name="bottomsheet_option_word_separator_spaces">Διαστήματα</string>
-  <string name="bottomsheet_option_word_separator_periods">Τελείες ( . )</string>
-  <string name="bottomsheet_option_word_separator_commas">Κόμματα ( , )</string>
-  <string name="bottomsheet_option_word_separator_underscores">Κάτω παύλες ( _ )</string>
-  <string name="bottomsheet_option_word_separator_numbers">Αριθμοί</string>
-  <string name="bottomsheet_option_word_separator_numbers_and_symbols">Αριθμοί και σύμβολα</string>
   <string name="regenerate_password_icon_content_description">Κουμπί αναδημιουργίας κωδικού πρόσβασης</string>
   <string name="password_mode_memorable">Αξιομνημόνευτος κωδικός πρόσβασης</string>
   <string name="password_mode_random">Τυχαίος κωδικός πρόσβασης</string>

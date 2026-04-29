@@ -26,13 +26,14 @@ import proton.android.pass.common.api.toOption
 class StickyUsernameOptionsPreviewProvider : PreviewParameterProvider<StickyUsernameInput> {
     override val values: Sequence<StickyUsernameInput>
         get() = sequenceOf(
-            StickyUsernameInput("myemail@proton.me".toOption(), true),
-            StickyUsernameInput("myemail@proton.me".toOption(), false),
-            StickyUsernameInput(None, true)
+            StickyUsernameInput("myemail@proton.me".toOption(), true, false),
+            StickyUsernameInput("myemail@proton.me".toOption(), true, true),
+            StickyUsernameInput(None, true, true)
         )
 }
 
 data class StickyUsernameInput(
     val primaryEmail: Option<String>,
-    val showCreateAlias: Boolean
+    val showCreateAlias: Boolean,
+    val isExpanded: Boolean
 )

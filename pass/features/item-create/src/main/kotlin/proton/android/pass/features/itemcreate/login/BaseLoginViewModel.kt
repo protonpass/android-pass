@@ -66,6 +66,7 @@ import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.crypto.api.toEncryptedByteArray
 import proton.android.pass.data.api.repositories.DRAFT_PASSWORD_KEY
+import proton.android.pass.data.api.repositories.DRAFT_USERNAME_KEY
 import proton.android.pass.data.api.repositories.DraftRepository
 import proton.android.pass.data.api.url.UrlSanitizer
 import proton.android.pass.data.api.usecases.ObserveCurrentUser
@@ -158,6 +159,7 @@ abstract class BaseLoginViewModel(
     init {
         viewModelScope.launch {
             launch { observeGeneratedPassword() }
+            launch { observeGeneratedUsername() }
             launch { observeCustomField() }
             launch { observeDisplayUsernameFieldPreference() }
         }
@@ -580,6 +582,19 @@ abstract class BaseLoginViewModel(
     protected fun onUserEditedContent() {
         if (hasUserEditedContentFlow.value) return
         hasUserEditedContentFlow.update { true }
+    }
+
+    private suspend fun observeGeneratedUsername() {
+        draftRepository
+            .get<String>(DRAFT_USERNAME_KEY)
+            .collect {
+                if (it is Some) {
+                    draftRepository.delete<String>(DRAFT_USERNAME_KEY).value()
+                        ?.let { generatedUsername ->
+                            onEmailChanged(generatedUsername)
+                        }
+                }
+            }
     }
 
     private suspend fun observeGeneratedPassword() {

@@ -27,7 +27,9 @@ import androidx.compose.ui.res.stringResource
 import me.proton.core.compose.component.ProtonDialogTitle
 import proton.android.pass.commonrust.api.passwords.PasswordWordSeparator
 import proton.android.pass.commonui.api.Spacing
-import proton.android.pass.features.password.R
+import proton.android.pass.composecomponents.impl.R as CompR
+import proton.android.pass.composecomponents.impl.dialogs.WordSeparatorList
+import proton.android.pass.features.password.extensions.toResourceString
 
 @Composable
 internal fun WordSeparatorDialogContent(
@@ -41,12 +43,13 @@ internal fun WordSeparatorDialogContent(
     ) {
         ProtonDialogTitle(
             modifier = Modifier.padding(start = Spacing.large),
-            title = stringResource(R.string.word_separator)
+            title = stringResource(CompR.string.word_separator)
         )
 
         WordSeparatorList(
             options = options,
             selected = selected,
+            label = { it.toResourceString() },
             onSelected = onOptionSelected
         )
     }

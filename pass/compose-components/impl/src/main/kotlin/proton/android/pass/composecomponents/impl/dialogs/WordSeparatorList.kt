@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023-2026 Proton AG
+ * Copyright (c) 2026 Proton AG
  * This file is part of Proton AG and Proton Pass.
  *
  * Proton Pass is free software: you can redistribute it and/or modify
@@ -16,7 +16,7 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.password.dialog.separator
+package proton.android.pass.composecomponents.impl.dialogs
 
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -25,20 +25,19 @@ import androidx.compose.ui.Modifier
 import kotlinx.collections.immutable.PersistentList
 import proton.android.pass.common.api.Option
 import proton.android.pass.commonrust.api.passwords.PasswordWordSeparator
-import proton.android.pass.features.password.dialog.DialogOptionRow
-import proton.android.pass.features.password.extensions.toResourceString
 
 @Composable
 fun WordSeparatorList(
     modifier: Modifier = Modifier,
     options: PersistentList<PasswordWordSeparator>,
     selected: Option<PasswordWordSeparator>,
+    label: @Composable (PasswordWordSeparator) -> String,
     onSelected: (PasswordWordSeparator) -> Unit
 ) {
     LazyColumn(modifier = modifier) {
         items(items = options, key = { it.name }) { option ->
             DialogOptionRow(
-                value = option.toResourceString(),
+                value = label(option),
                 isSelected = selected.value() == option,
                 onClick = { onSelected(option) }
             )

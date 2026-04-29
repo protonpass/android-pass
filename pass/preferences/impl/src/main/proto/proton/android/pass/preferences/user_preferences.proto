@@ -5,6 +5,7 @@ import "proton/android/pass/preferences/clipboard_pref.proto";
 import "proton/android/pass/preferences/boolean_pref.proto";
 import "proton/android/pass/preferences/lock_app_pref.proto";
 import "proton/android/pass/preferences/password_generation_pref.proto";
+import "proton/android/pass/preferences/username_generation_pref.proto";
 import "proton/android/pass/preferences/app_lock_type_pref.proto";
 import "proton/android/pass/preferences/monitor_status_pref.proto";
 
@@ -42,4 +43,5 @@ message UserPreferences {
   int32 autofill_display = 28;
   BooleanPrefProto autosave_enabled = 29;
   map<string, string> last_item_folder_per_user = 30;  // userId → folderId ("" = no folder)
+  UsernameGenerationPrefProto username_generation = 31;
 }

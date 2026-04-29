@@ -364,4 +364,18 @@
   <string name="warning_dialog_item_shared_vault_reminder">Bir daha hatırlatma</string>
   <string name="upgrade_to_pass_plus">Pass Plus tarifesine yükselt</string>
   <string name="warning_dialog_reload_app_after_purchase_description">Sitemize yönlendirilmek üzeresiniz. Bir tarife satın alırsanız lütfen uygulamayı yeniden başlatın.</string>
+      <string name="word_separator">Sözcük ayracı</string>
+      <string name="bottomsheet_option_capitalise">Harfleri büyüt</string>
+      <string name="bottomsheet_option_word_separator_hyphens">Tire ( - )</string>
+      <string name="bottomsheet_option_word_separator_spaces">Boşluk</string>
+      <string name="bottomsheet_option_word_separator_periods">Nokta ( . )</string>
+      <string name="bottomsheet_option_word_separator_commas">Virgül ( , )</string>
+      <string name="bottomsheet_option_word_separator_underscores">Alt çizgi ( _ )</string>
+      <string name="bottomsheet_option_word_separator_numbers">Rakamlar</string>
+      <string name="bottomsheet_option_word_separator_numbers_and_symbols">Rakamlar ve simgeler</string>
+
+  <plurals name="word_count">
+    <item quantity="one">%s sözcük</item>
+    <item quantity="other">%s sözcük</item>
+  </plurals>
 </resources>

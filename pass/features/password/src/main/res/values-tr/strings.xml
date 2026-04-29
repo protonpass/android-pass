@@ -8,22 +8,8 @@
   <plurals name="character_count">
     <item quantity="one">%s karakter</item>
     <item quantity="other">%s karakter</item>
-  </plurals>
-  <plurals name="word_count">
-    <item quantity="one">%s sözcük</item>
-    <item quantity="other">%s sözcük</item>
-  </plurals>
-  <string name="word_separator">Sözcük ayracı</string>
-  <string name="bottomsheet_option_capital_letters">Büyük harfler (A–Z)</string>
-  <string name="bottomsheet_option_capitalise">Harfleri büyüt</string>
+  </plurals>  <string name="bottomsheet_option_capital_letters">Büyük harfler (A–Z)</string>
   <string name="bottomsheet_option_include_numbers">Sayılar katılsın (0-9)</string>
-  <string name="bottomsheet_option_word_separator_hyphens">Tire ( - )</string>
-  <string name="bottomsheet_option_word_separator_spaces">Boşluk</string>
-  <string name="bottomsheet_option_word_separator_periods">Nokta ( . )</string>
-  <string name="bottomsheet_option_word_separator_commas">Virgül ( , )</string>
-  <string name="bottomsheet_option_word_separator_underscores">Alt çizgi ( _ )</string>
-  <string name="bottomsheet_option_word_separator_numbers">Rakamlar</string>
-  <string name="bottomsheet_option_word_separator_numbers_and_symbols">Rakamlar ve simgeler</string>
   <string name="regenerate_password_icon_content_description">Yeniden parola oluştur düğmesi</string>
   <string name="password_mode_memorable">Hatırlanabilir parola</string>
   <string name="password_mode_random">Rastgele parola</string>

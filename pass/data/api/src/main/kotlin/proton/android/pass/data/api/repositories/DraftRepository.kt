@@ -22,6 +22,7 @@ import kotlinx.coroutines.flow.Flow
 import proton.android.pass.common.api.Option
 
 const val DRAFT_PASSWORD_KEY = "draftpassword"
+const val DRAFT_USERNAME_KEY = "draftusername"
 const val DRAFT_IDENTITY_CUSTOM_FIELD_KEY = "identityCustomField"
 
 interface DraftRepository {

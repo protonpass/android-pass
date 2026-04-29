@@ -8,22 +8,8 @@
   <plurals name="character_count">
     <item quantity="one">%s tecken</item>
     <item quantity="other">%s tecken</item>
-  </plurals>
-  <plurals name="word_count">
-    <item quantity="one">%s ord</item>
-    <item quantity="other">%s ord</item>
-  </plurals>
-  <string name="word_separator">Ordavgränsare</string>
-  <string name="bottomsheet_option_capital_letters">Versaler (A–Ö)</string>
-  <string name="bottomsheet_option_capitalise">Versaler</string>
+  </plurals>  <string name="bottomsheet_option_capital_letters">Versaler (A–Ö)</string>
   <string name="bottomsheet_option_include_numbers">Inkludera siffror (0–9)</string>
-  <string name="bottomsheet_option_word_separator_hyphens">Bindestreck (-)</string>
-  <string name="bottomsheet_option_word_separator_spaces">Mellanslag</string>
-  <string name="bottomsheet_option_word_separator_periods">Punkter (.)</string>
-  <string name="bottomsheet_option_word_separator_commas">Kommatecken (,)</string>
-  <string name="bottomsheet_option_word_separator_underscores">Understreck (_)</string>
-  <string name="bottomsheet_option_word_separator_numbers">Nummer</string>
-  <string name="bottomsheet_option_word_separator_numbers_and_symbols">Nummer och symboler</string>
   <string name="regenerate_password_icon_content_description">Knapp för ”Generera lösenord igen”</string>
   <string name="password_mode_memorable">Minnesvärt lösenord</string>
   <string name="password_mode_random">Slumpmässigt lösenord</string>

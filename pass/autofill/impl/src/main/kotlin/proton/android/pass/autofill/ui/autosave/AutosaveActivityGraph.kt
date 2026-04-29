@@ -45,6 +45,11 @@ import proton.android.pass.features.password.GeneratePasswordNavigation
 import proton.android.pass.features.password.dialog.mode.PasswordModeDialog
 import proton.android.pass.features.password.dialog.separator.WordSeparatorDialog
 import proton.android.pass.features.password.generatePasswordBottomsheetGraph
+import proton.android.pass.features.username.GenerateUsernameBottomsheet
+import proton.android.pass.features.username.GenerateUsernameBottomsheetModeValue
+import proton.android.pass.features.username.GenerateUsernameNavigation
+import proton.android.pass.features.username.dialog.separator.UsernameWordSeparatorDialog
+import proton.android.pass.features.username.generateUsernameBottomsheetGraph
 import proton.android.pass.features.vault.VaultNavigation
 import proton.android.pass.features.vault.bottomsheet.select.SelectVaultBottomsheet
 import proton.android.pass.features.vault.vaultGraph
@@ -91,6 +96,13 @@ fun NavGraphBuilder.autosaveActivityGraph(
                     destination = GeneratePasswordBottomsheet,
                     route = GeneratePasswordBottomsheet.buildRoute(
                         mode = GeneratePasswordBottomsheetModeValue.CancelConfirm
+                    )
+                )
+
+                BaseLoginNavigation.GenerateUsername -> appNavigator.navigate(
+                    destination = GenerateUsernameBottomsheet,
+                    route = GenerateUsernameBottomsheet.buildRoute(
+                        mode = GenerateUsernameBottomsheetModeValue.CancelConfirm
                     )
                 )
 
@@ -202,6 +214,17 @@ fun NavGraphBuilder.autosaveActivityGraph(
 
                 GeneratePasswordNavigation.OnSelectPasswordMode -> appNavigator.navigate(
                     destination = PasswordModeDialog
+                )
+            }
+        }
+    )
+    generateUsernameBottomsheetGraph(
+        onNavigate = { navigation ->
+            when (navigation) {
+                GenerateUsernameNavigation.CloseDialog -> appNavigator.navigateBack()
+                GenerateUsernameNavigation.DismissBottomsheet -> dismissBottomSheet {}
+                GenerateUsernameNavigation.OnSelectWordSeparator -> appNavigator.navigate(
+                    destination = UsernameWordSeparatorDialog
                 )
             }
         }

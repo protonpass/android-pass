@@ -184,6 +184,11 @@ import proton.android.pass.features.password.dialog.separator.WordSeparatorDialo
 import proton.android.pass.features.password.generatePasswordBottomsheetGraph
 import proton.android.pass.features.password.history.PassWordHistoryNavItem
 import proton.android.pass.features.password.history.passwordHistoryGraph
+import proton.android.pass.features.username.GenerateUsernameBottomsheet
+import proton.android.pass.features.username.GenerateUsernameBottomsheetModeValue
+import proton.android.pass.features.username.GenerateUsernameNavigation
+import proton.android.pass.features.username.dialog.separator.UsernameWordSeparatorDialog
+import proton.android.pass.features.username.generateUsernameBottomsheetGraph
 import proton.android.pass.features.profile.AppLockTimeBottomsheet
 import proton.android.pass.features.profile.AppLockTypeBottomsheet
 import proton.android.pass.features.profile.ENTER_PIN_PARAMETER_KEY
@@ -845,6 +850,17 @@ fun NavGraphBuilder.appGraph(
             }
         }
     )
+    generateUsernameBottomsheetGraph(
+        onNavigate = { navigation ->
+            when (navigation) {
+                GenerateUsernameNavigation.CloseDialog -> appNavigator.navigateBack()
+                GenerateUsernameNavigation.DismissBottomsheet -> dismissBottomSheet {}
+                GenerateUsernameNavigation.OnSelectWordSeparator -> appNavigator.navigate(
+                    destination = UsernameWordSeparatorDialog
+                )
+            }
+        }
+    )
     accountGraph(
         onNavigate = {
             when (it) {
@@ -1026,6 +1042,14 @@ fun NavGraphBuilder.appGraph(
                         destination = GeneratePasswordBottomsheet,
                         route = GeneratePasswordBottomsheet.buildRoute(
                             mode = GeneratePasswordBottomsheetModeValue.CancelConfirm
+                        )
+                    )
+
+                BaseLoginNavigation.GenerateUsername ->
+                    appNavigator.navigate(
+                        destination = GenerateUsernameBottomsheet,
+                        route = GenerateUsernameBottomsheet.buildRoute(
+                            mode = GenerateUsernameBottomsheetModeValue.CancelConfirm
                         )
                     )
 

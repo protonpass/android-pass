@@ -8,22 +8,8 @@
   <plurals name="character_count">
     <item quantity="one">%s teken</item>
     <item quantity="other">%s tekens</item>
-  </plurals>
-  <plurals name="word_count">
-    <item quantity="one">%s woord</item>
-    <item quantity="other">%s woorden</item>
-  </plurals>
-  <string name="word_separator">Woordscheidingsteken</string>
-  <string name="bottomsheet_option_capital_letters">Hoofdletters (A–Z)</string>
-  <string name="bottomsheet_option_capitalise">Hoofdletters</string>
+  </plurals>  <string name="bottomsheet_option_capital_letters">Hoofdletters (A–Z)</string>
   <string name="bottomsheet_option_include_numbers">Nummers toevoegen (0–9)</string>
-  <string name="bottomsheet_option_word_separator_hyphens">Koppeltekens ( - )</string>
-  <string name="bottomsheet_option_word_separator_spaces">Spaties</string>
-  <string name="bottomsheet_option_word_separator_periods">Punten ( . )</string>
-  <string name="bottomsheet_option_word_separator_commas">Komma\'s ( , )</string>
-  <string name="bottomsheet_option_word_separator_underscores">Onderstrepingstekens ( _ )</string>
-  <string name="bottomsheet_option_word_separator_numbers">Nummers</string>
-  <string name="bottomsheet_option_word_separator_numbers_and_symbols">Nummers en symbolen</string>
   <string name="regenerate_password_icon_content_description">Wachtwoord opnieuw genereren knop</string>
   <string name="password_mode_memorable">Memorabel wachtwoord</string>
   <string name="password_mode_random">Willekeurig wachtwoord</string>

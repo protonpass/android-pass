@@ -21,6 +21,7 @@ package proton.android.pass.features.itemcreate.login
 enum class LoginStickyFormOptionsContentType {
     GeneratePassword,
     AliasOptions,
+    UsernameGenerator,
     AddTotp,
     NoOption
 }

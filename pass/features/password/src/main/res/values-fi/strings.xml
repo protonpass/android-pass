@@ -8,22 +8,8 @@
   <plurals name="character_count">
     <item quantity="one">%s merkki</item>
     <item quantity="other">%s merkkiä</item>
-  </plurals>
-  <plurals name="word_count">
-    <item quantity="one">%s sana</item>
-    <item quantity="other">%s sanaa</item>
-  </plurals>
-  <string name="word_separator">Sanojen erotin</string>
-  <string name="bottomsheet_option_capital_letters">Isot kirjaimet (A-Z)</string>
-  <string name="bottomsheet_option_capitalise">Isot kirjaimet</string>
+  </plurals>  <string name="bottomsheet_option_capital_letters">Isot kirjaimet (A-Z)</string>
   <string name="bottomsheet_option_include_numbers">Sisällytä numerot (0-9)</string>
-  <string name="bottomsheet_option_word_separator_hyphens">Yhdysmerkki ( - )</string>
-  <string name="bottomsheet_option_word_separator_spaces">Välilyönti</string>
-  <string name="bottomsheet_option_word_separator_periods">Piste ( . )</string>
-  <string name="bottomsheet_option_word_separator_commas">Pilkku ( , )</string>
-  <string name="bottomsheet_option_word_separator_underscores">Alaviiva ( _ )</string>
-  <string name="bottomsheet_option_word_separator_numbers">Numerot</string>
-  <string name="bottomsheet_option_word_separator_numbers_and_symbols">Numerot ja erikoismerkit</string>
   <string name="regenerate_password_icon_content_description">Luo uusi salasana -painike</string>
   <string name="password_mode_memorable">Mieleenpainuva salasana</string>
   <string name="password_mode_random">Satunnainen salasana</string>

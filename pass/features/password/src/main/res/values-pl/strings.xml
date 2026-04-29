@@ -10,24 +10,8 @@
     <item quantity="few">%s znaki</item>
     <item quantity="many">%s znaków</item>
     <item quantity="other">%s znaków</item>
-  </plurals>
-  <plurals name="word_count">
-    <item quantity="one">%s słowo</item>
-    <item quantity="few">%s słowa</item>
-    <item quantity="many">%s słów</item>
-    <item quantity="other">%s słowa</item>
-  </plurals>
-  <string name="word_separator">Separator słów</string>
-  <string name="bottomsheet_option_capital_letters">Wielkie litery (A-Z)</string>
-  <string name="bottomsheet_option_capitalise">Wielkie litery</string>
+  </plurals>  <string name="bottomsheet_option_capital_letters">Wielkie litery (A-Z)</string>
   <string name="bottomsheet_option_include_numbers">Cyfry (0-9)</string>
-  <string name="bottomsheet_option_word_separator_hyphens">Myślniki ( - )</string>
-  <string name="bottomsheet_option_word_separator_spaces">Spacje</string>
-  <string name="bottomsheet_option_word_separator_periods">Kropki ( . )</string>
-  <string name="bottomsheet_option_word_separator_commas">Przecinki ( , )</string>
-  <string name="bottomsheet_option_word_separator_underscores">Podkreślenia ( _ )</string>
-  <string name="bottomsheet_option_word_separator_numbers">Cyfry</string>
-  <string name="bottomsheet_option_word_separator_numbers_and_symbols">Cyfry i znaki specjalne</string>
   <string name="regenerate_password_icon_content_description">Przycisk wygenerowania hasła ponownie</string>
   <string name="password_mode_memorable">Hasło wyrazowe</string>
   <string name="password_mode_random">Hasło losowe</string>

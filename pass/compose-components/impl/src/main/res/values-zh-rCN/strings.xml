@@ -345,4 +345,17 @@
   <string name="warning_dialog_item_shared_vault_reminder">不再提示</string>
   <string name="upgrade_to_pass_plus">升级至 Pass Plus</string>
   <string name="warning_dialog_reload_app_after_purchase_description">您即将被重定向到我们的网站。如果您购买了套餐，请重新启动应用。</string>
+      <string name="word_separator">单词分隔符</string>
+      <string name="bottomsheet_option_capitalise">大写</string>
+      <string name="bottomsheet_option_word_separator_hyphens">连字符 ( - )</string>
+      <string name="bottomsheet_option_word_separator_spaces">空格</string>
+      <string name="bottomsheet_option_word_separator_periods">句点 ( . )</string>
+      <string name="bottomsheet_option_word_separator_commas">逗号（，）</string>
+      <string name="bottomsheet_option_word_separator_underscores">下划线 ( _ )</string>
+      <string name="bottomsheet_option_word_separator_numbers">数字</string>
+      <string name="bottomsheet_option_word_separator_numbers_and_symbols">数字和符号</string>
+
+  <plurals name="word_count">
+    <item quantity="other">%s 个单词</item>
+  </plurals>
 </resources>

@@ -10,24 +10,8 @@
     <item quantity="few">%s символи</item>
     <item quantity="many">%s символів</item>
     <item quantity="other">%s символів</item>
-  </plurals>
-  <plurals name="word_count">
-    <item quantity="one">%s слово</item>
-    <item quantity="few">%s слова</item>
-    <item quantity="many">%s слів</item>
-    <item quantity="other">%s слів</item>
-  </plurals>
-  <string name="word_separator">Розділювач слів</string>
-  <string name="bottomsheet_option_capital_letters">Великі літери (А-Я)</string>
-  <string name="bottomsheet_option_capitalise">Великими літерами</string>
+  </plurals>  <string name="bottomsheet_option_capital_letters">Великі літери (А-Я)</string>
   <string name="bottomsheet_option_include_numbers">Додати цифри (0-9)</string>
-  <string name="bottomsheet_option_word_separator_hyphens">Дефіси ( - )</string>
-  <string name="bottomsheet_option_word_separator_spaces">Пробіли</string>
-  <string name="bottomsheet_option_word_separator_periods">Крапки ( . )</string>
-  <string name="bottomsheet_option_word_separator_commas">Коми ( , )</string>
-  <string name="bottomsheet_option_word_separator_underscores">Підкреслення ( _ )</string>
-  <string name="bottomsheet_option_word_separator_numbers">Цифри</string>
-  <string name="bottomsheet_option_word_separator_numbers_and_symbols">Цифри та символи</string>
   <string name="regenerate_password_icon_content_description">Кнопка скидання пароля</string>
   <string name="password_mode_memorable">Пароль, який легко запам\'ятати</string>
   <string name="password_mode_random">Випадковий пароль</string>

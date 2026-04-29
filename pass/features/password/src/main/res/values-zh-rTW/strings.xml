@@ -7,21 +7,8 @@
   <string name="special_characters">特殊字元 (!&amp;&amp;*)</string>
   <plurals name="character_count">
     <item quantity="other">%s 個字元</item>
-  </plurals>
-  <plurals name="word_count">
-    <item quantity="other">%s 個字</item>
-  </plurals>
-  <string name="word_separator">單字分隔字元</string>
-  <string name="bottomsheet_option_capital_letters">大寫字母(A–Z)</string>
-  <string name="bottomsheet_option_capitalise">大寫</string>
+  </plurals>  <string name="bottomsheet_option_capital_letters">大寫字母(A–Z)</string>
   <string name="bottomsheet_option_include_numbers">包含數字(0–9)</string>
-  <string name="bottomsheet_option_word_separator_hyphens">連字號 ( - )</string>
-  <string name="bottomsheet_option_word_separator_spaces">空格</string>
-  <string name="bottomsheet_option_word_separator_periods">句號 ( . )</string>
-  <string name="bottomsheet_option_word_separator_commas">逗號 ( , )</string>
-  <string name="bottomsheet_option_word_separator_underscores">底線 ( _ )</string>
-  <string name="bottomsheet_option_word_separator_numbers">數字</string>
-  <string name="bottomsheet_option_word_separator_numbers_and_symbols">數字和符號</string>
   <string name="regenerate_password_icon_content_description">重新產生密碼按鈕</string>
   <string name="password_mode_memorable">可記得的密碼</string>
   <string name="password_mode_random">隨機生成密碼</string>

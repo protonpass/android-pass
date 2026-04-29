@@ -248,6 +248,8 @@ import proton.android.pass.data.api.usecases.passwordHistoryEntry.GetPasswordHis
 import proton.android.pass.data.api.usecases.passwordHistoryEntry.ObservePasswordHistoryEntryForUser
 import proton.android.pass.data.api.usecases.passwords.ObservePasswordConfig
 import proton.android.pass.data.api.usecases.passwords.UpdatePasswordConfig
+import proton.android.pass.data.api.usecases.usernames.ObserveUsernameConfig
+import proton.android.pass.data.api.usecases.usernames.UpdateUsernameConfig
 import proton.android.pass.data.api.usecases.plan.ObservePlansWithPrice
 import proton.android.pass.data.api.usecases.report.SendReport
 import proton.android.pass.data.api.usecases.searchentry.AddSearchEntry
@@ -523,6 +525,8 @@ import proton.android.pass.data.impl.usecases.passwordHistoryEntry.GetPasswordHi
 import proton.android.pass.data.impl.usecases.passwordHistoryEntry.ObservePasswordHistoryEntryForUserImpl
 import proton.android.pass.data.impl.usecases.passwords.ObservePasswordConfigImpl
 import proton.android.pass.data.impl.usecases.passwords.UpdatePasswordConfigImpl
+import proton.android.pass.data.impl.usecases.usernames.ObserveUsernameConfigImpl
+import proton.android.pass.data.impl.usecases.usernames.UpdateUsernameConfigImpl
 import proton.android.pass.data.impl.usecases.plan.ObservePlansWithPriceImpl
 import proton.android.pass.data.impl.usecases.report.SendReportImpl
 import proton.android.pass.data.impl.usecases.searchentry.AddSearchEntryImpl
@@ -1267,6 +1271,12 @@ abstract class DataUseCaseModule {
 
     @[Binds Singleton]
     abstract fun bindUpdatePasswordConfig(impl: UpdatePasswordConfigImpl): UpdatePasswordConfig
+
+    @[Binds Singleton]
+    abstract fun bindObserveUsernameConfig(impl: ObserveUsernameConfigImpl): ObserveUsernameConfig
+
+    @[Binds Singleton]
+    abstract fun bindUpdateUsernameConfig(impl: UpdateUsernameConfigImpl): UpdateUsernameConfig
 
     @[Binds Singleton]
     abstract fun bindChangeInAppMessageStatus(impl: ChangeInAppMessageStatusImpl): ChangeInAppMessageStatus

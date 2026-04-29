@@ -10,24 +10,8 @@
     <item quantity="few">%s символа</item>
     <item quantity="many">%s символов</item>
     <item quantity="other">%s символов</item>
-  </plurals>
-  <plurals name="word_count">
-    <item quantity="one">%s слово</item>
-    <item quantity="few">%s слова</item>
-    <item quantity="many">%s слов</item>
-    <item quantity="other">%s слов</item>
-  </plurals>
-  <string name="word_separator">Разделитель слов</string>
-  <string name="bottomsheet_option_capital_letters">Заглавные буквы (A–Z)</string>
-  <string name="bottomsheet_option_capitalise">Прописные</string>
+  </plurals>  <string name="bottomsheet_option_capital_letters">Заглавные буквы (A–Z)</string>
   <string name="bottomsheet_option_include_numbers">Включить числа (0–9)</string>
-  <string name="bottomsheet_option_word_separator_hyphens">Дефисы ( - )</string>
-  <string name="bottomsheet_option_word_separator_spaces">Пробелы</string>
-  <string name="bottomsheet_option_word_separator_periods">Точки ( . )</string>
-  <string name="bottomsheet_option_word_separator_commas">Запятые ( , )</string>
-  <string name="bottomsheet_option_word_separator_underscores">Подчёркивания ( _ )</string>
-  <string name="bottomsheet_option_word_separator_numbers">Цифры</string>
-  <string name="bottomsheet_option_word_separator_numbers_and_symbols">Цифры и символы</string>
   <string name="regenerate_password_icon_content_description">Кнопка для повторного создания пароля</string>
   <string name="password_mode_memorable">Запоминающийся пароль</string>
   <string name="password_mode_random">Случайный пароль</string>

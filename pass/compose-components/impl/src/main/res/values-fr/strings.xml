@@ -364,4 +364,18 @@
   <string name="warning_dialog_item_shared_vault_reminder">Ne plus me le rappeler</string>
   <string name="upgrade_to_pass_plus">Souscrire à Pass Plus</string>
   <string name="warning_dialog_reload_app_after_purchase_description">Vous allez être redirigé vers notre site internet. Si vous achetez un abonnement, veuillez redémarrer l\'application.</string>
+      <string name="word_separator">Séparateur de mots</string>
+      <string name="bottomsheet_option_capitalise">Ajouter des majuscules</string>
+      <string name="bottomsheet_option_word_separator_hyphens">Tirets ( - )</string>
+      <string name="bottomsheet_option_word_separator_spaces">Espaces</string>
+      <string name="bottomsheet_option_word_separator_periods">Points ( . )</string>
+      <string name="bottomsheet_option_word_separator_commas">Virgules ( , )</string>
+      <string name="bottomsheet_option_word_separator_underscores">Tirets bas/Underscore ( _ )</string>
+      <string name="bottomsheet_option_word_separator_numbers">Chiffres</string>
+      <string name="bottomsheet_option_word_separator_numbers_and_symbols">Chiffres et symboles</string>
+
+  <plurals name="word_count">
+    <item quantity="one">%s mot</item>
+    <item quantity="other">%s mots</item>
+  </plurals>
 </resources>

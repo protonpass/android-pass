@@ -75,4 +75,18 @@
   <!-- Advanced options -->
   <string name="show_advanced_options">Avanserte innstillinger</string>
   <string name="hide_advanced_options">Skjul avanserte innstillinger</string>
+      <string name="word_separator">Skilletegn for ord</string>
+      <string name="bottomsheet_option_capitalise">Gjør bokstaver store</string>
+      <string name="bottomsheet_option_word_separator_hyphens">Bindestreker ( - )</string>
+      <string name="bottomsheet_option_word_separator_spaces">Mellomrom</string>
+      <string name="bottomsheet_option_word_separator_periods">Punktum ( . )</string>
+      <string name="bottomsheet_option_word_separator_commas">Komma ( , )</string>
+      <string name="bottomsheet_option_word_separator_underscores">Understrekingstegn ( _ )</string>
+      <string name="bottomsheet_option_word_separator_numbers">Tall</string>
+      <string name="bottomsheet_option_word_separator_numbers_and_symbols">Tall og symboler</string>
+
+  <plurals name="word_count">
+    <item quantity="one">%s ord</item>
+    <item quantity="other">%s ord</item>
+  </plurals>
 </resources>

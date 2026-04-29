@@ -24,7 +24,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import kotlinx.collections.immutable.PersistentList
 import proton.android.pass.common.api.Option
-import proton.android.pass.features.password.dialog.DialogOptionRow
+import proton.android.pass.composecomponents.impl.dialogs.DialogOptionRow
 import proton.android.pass.features.password.extensions.toResourceString
 import proton.android.pass.preferences.PasswordGenerationMode
 

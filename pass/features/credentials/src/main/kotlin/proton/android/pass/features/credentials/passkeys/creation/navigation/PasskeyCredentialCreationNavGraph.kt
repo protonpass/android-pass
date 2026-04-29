@@ -57,6 +57,11 @@ import proton.android.pass.features.password.GeneratePasswordNavigation
 import proton.android.pass.features.password.dialog.mode.PasswordModeDialog
 import proton.android.pass.features.password.dialog.separator.WordSeparatorDialog
 import proton.android.pass.features.password.generatePasswordBottomsheetGraph
+import proton.android.pass.features.username.GenerateUsernameBottomsheet
+import proton.android.pass.features.username.GenerateUsernameBottomsheetModeValue
+import proton.android.pass.features.username.GenerateUsernameNavigation
+import proton.android.pass.features.username.dialog.separator.UsernameWordSeparatorDialog
+import proton.android.pass.features.username.generateUsernameBottomsheetGraph
 import proton.android.pass.features.report.navigation.AccountSwitchNavItem
 import proton.android.pass.features.report.navigation.AccountSwitchNavigation
 import proton.android.pass.features.report.navigation.accountSwitchNavGraph
@@ -233,6 +238,13 @@ internal fun NavGraphBuilder.passkeyCredentialCreationNavGraph(
                     )
                 )
 
+                BaseLoginNavigation.GenerateUsername -> appNavigator.navigate(
+                    destination = GenerateUsernameBottomsheet,
+                    route = GenerateUsernameBottomsheet.buildRoute(
+                        mode = GenerateUsernameBottomsheetModeValue.CancelConfirm
+                    )
+                )
+
                 is BaseLoginNavigation.OnCreateLoginEvent -> when (val event = destination.event) {
                     is CreateLoginNavigation.LoginCreated -> {
                         throw IllegalStateException("Should not invoke this on PasskeyCredentialCreation")
@@ -374,6 +386,18 @@ internal fun NavGraphBuilder.passkeyCredentialCreationNavGraph(
 
                 GeneratePasswordNavigation.OnSelectPasswordMode -> appNavigator.navigate(
                     destination = PasswordModeDialog
+                )
+            }
+        }
+    )
+
+    generateUsernameBottomsheetGraph(
+        onNavigate = { destination ->
+            when (destination) {
+                GenerateUsernameNavigation.CloseDialog -> appNavigator.navigateBack()
+                GenerateUsernameNavigation.DismissBottomsheet -> dismissBottomSheet {}
+                GenerateUsernameNavigation.OnSelectWordSeparator -> appNavigator.navigate(
+                    destination = UsernameWordSeparatorDialog
                 )
             }
         }

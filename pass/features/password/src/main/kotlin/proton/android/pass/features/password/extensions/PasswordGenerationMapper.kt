@@ -21,19 +21,20 @@ package proton.android.pass.features.password.extensions
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 import proton.android.pass.commonrust.api.passwords.PasswordWordSeparator
+import proton.android.pass.composecomponents.impl.R as CompR
 import proton.android.pass.features.password.R
 import proton.android.pass.preferences.PasswordGenerationMode
 
 @Composable
 internal fun PasswordWordSeparator.toResourceString() = when (this) {
-    PasswordWordSeparator.Hyphen -> stringResource(R.string.bottomsheet_option_word_separator_hyphens)
-    PasswordWordSeparator.Space -> stringResource(R.string.bottomsheet_option_word_separator_spaces)
-    PasswordWordSeparator.Period -> stringResource(R.string.bottomsheet_option_word_separator_periods)
-    PasswordWordSeparator.Comma -> stringResource(R.string.bottomsheet_option_word_separator_commas)
-    PasswordWordSeparator.Underscore -> stringResource(R.string.bottomsheet_option_word_separator_underscores)
-    PasswordWordSeparator.Numbers -> stringResource(R.string.bottomsheet_option_word_separator_numbers)
+    PasswordWordSeparator.Hyphen -> stringResource(CompR.string.bottomsheet_option_word_separator_hyphens)
+    PasswordWordSeparator.Space -> stringResource(CompR.string.bottomsheet_option_word_separator_spaces)
+    PasswordWordSeparator.Period -> stringResource(CompR.string.bottomsheet_option_word_separator_periods)
+    PasswordWordSeparator.Comma -> stringResource(CompR.string.bottomsheet_option_word_separator_commas)
+    PasswordWordSeparator.Underscore -> stringResource(CompR.string.bottomsheet_option_word_separator_underscores)
+    PasswordWordSeparator.Numbers -> stringResource(CompR.string.bottomsheet_option_word_separator_numbers)
     PasswordWordSeparator.NumbersAndSymbols ->
-        stringResource(R.string.bottomsheet_option_word_separator_numbers_and_symbols)
+        stringResource(CompR.string.bottomsheet_option_word_separator_numbers_and_symbols)
 }
 
 @Composable

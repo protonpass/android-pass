@@ -8,22 +8,8 @@
   <plurals name="character_count">
     <item quantity="one">%s caràcter</item>
     <item quantity="other">%s caràcters</item>
-  </plurals>
-  <plurals name="word_count">
-    <item quantity="one">%s paraula</item>
-    <item quantity="other">%s paraules</item>
-  </plurals>
-  <string name="word_separator">Separador de paraules</string>
-  <string name="bottomsheet_option_capital_letters">Lletres majúscules (A-Z)</string>
-  <string name="bottomsheet_option_capitalise">Majúscules</string>
+  </plurals>  <string name="bottomsheet_option_capital_letters">Lletres majúscules (A-Z)</string>
   <string name="bottomsheet_option_include_numbers">Incloeu números (0-9)</string>
-  <string name="bottomsheet_option_word_separator_hyphens">Guions ( - )</string>
-  <string name="bottomsheet_option_word_separator_spaces">Espais</string>
-  <string name="bottomsheet_option_word_separator_periods">Punts ( . )</string>
-  <string name="bottomsheet_option_word_separator_commas">Comes ( , )</string>
-  <string name="bottomsheet_option_word_separator_underscores">Guions baixos ( _ )</string>
-  <string name="bottomsheet_option_word_separator_numbers">Números</string>
-  <string name="bottomsheet_option_word_separator_numbers_and_symbols">Nombres i símbols</string>
   <string name="regenerate_password_icon_content_description">Botó de regeneració de contrasenya</string>
   <string name="password_mode_memorable">Contrasenya fàcil de recordar</string>
   <string name="password_mode_random">Contrasenya aleatòria</string>

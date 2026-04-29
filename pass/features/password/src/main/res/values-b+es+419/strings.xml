@@ -8,22 +8,8 @@
   <plurals name="character_count">
     <item quantity="one">%s carácter</item>
     <item quantity="other">%s caracteres</item>
-  </plurals>
-  <plurals name="word_count">
-    <item quantity="one">%s palabra</item>
-    <item quantity="other">%s palabras</item>
-  </plurals>
-  <string name="word_separator">Separador de palabra</string>
-  <string name="bottomsheet_option_capital_letters">Letras mayúsculas (A–Z)</string>
-  <string name="bottomsheet_option_capitalise">Mayúsculas</string>
+  </plurals>  <string name="bottomsheet_option_capital_letters">Letras mayúsculas (A–Z)</string>
   <string name="bottomsheet_option_include_numbers">Incluir números (0–9)</string>
-  <string name="bottomsheet_option_word_separator_hyphens">Guiones ( - )</string>
-  <string name="bottomsheet_option_word_separator_spaces">Espacios</string>
-  <string name="bottomsheet_option_word_separator_periods">Puntos ( . )</string>
-  <string name="bottomsheet_option_word_separator_commas">Comas ( , )</string>
-  <string name="bottomsheet_option_word_separator_underscores">Guiones bajos ( _ )</string>
-  <string name="bottomsheet_option_word_separator_numbers">Números</string>
-  <string name="bottomsheet_option_word_separator_numbers_and_symbols">Números y símbolos</string>
   <string name="regenerate_password_icon_content_description">Botón de regenerar contraseña</string>
   <string name="password_mode_memorable">Contraseña memorizable</string>
   <string name="password_mode_random">Contraseña aleatoria</string>

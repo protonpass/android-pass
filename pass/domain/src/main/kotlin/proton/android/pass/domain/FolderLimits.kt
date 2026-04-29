@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2025-2026 Proton AG
+ * Copyright (c) 2026 Proton AG
  * This file is part of Proton AG and Proton Pass.
  *
  * Proton Pass is free software: you can redistribute it and/or modify
@@ -16,14 +16,10 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.data.api.usecases.folders
+package proton.android.pass.domain
 
-import kotlinx.coroutines.flow.Flow
-import me.proton.core.domain.entity.UserId
-import proton.android.pass.domain.Folder
-import proton.android.pass.domain.ShareId
-
-interface ObserveFolders {
-
-    operator fun invoke(userId: UserId, shareId: ShareId): Flow<List<Folder>>
+object FolderLimits {
+    const val MAX_FOLDER_DEPTH = 5
+    const val MAX_FOLDER_WIDTH = 10
+    const val MAX_FOLDERS_PER_VAULT = 100
 }

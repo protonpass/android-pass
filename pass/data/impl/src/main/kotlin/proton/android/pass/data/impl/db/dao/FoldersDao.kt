@@ -27,18 +27,25 @@ import proton.android.pass.data.impl.db.entities.FolderEntity
 @Dao
 abstract class FoldersDao : BaseDao<FolderEntity>() {
 
-    /**
-     * Observes folders for a user and share.
-     *
-     * @param parentFolderId When null, returns ALL folders for the share (flat list).
-     *                       When non-null, returns only folders with matching parent.
-     */
     @Query(
         """
         SELECT * FROM ${FolderEntity.TABLE}
         WHERE ${FolderEntity.Columns.USER_ID} = :userId
           AND ${FolderEntity.Columns.SHARE_ID} = :shareId
-          AND (:parentFolderId IS NULL OR ${FolderEntity.Columns.PARENT_FOLDER_ID} = :parentFolderId)
+        ORDER BY ${FolderEntity.Columns.ID}
+        """
+    )
+    abstract fun observeAllFolders(userId: String, shareId: String): Flow<List<FolderEntity>>
+
+    @Query(
+        """
+        SELECT * FROM ${FolderEntity.TABLE}
+        WHERE ${FolderEntity.Columns.USER_ID} = :userId
+          AND ${FolderEntity.Columns.SHARE_ID} = :shareId
+          AND (
+            (:parentFolderId IS NULL AND ${FolderEntity.Columns.PARENT_FOLDER_ID} IS NULL)
+            OR ${FolderEntity.Columns.PARENT_FOLDER_ID} = :parentFolderId
+          )
         ORDER BY ${FolderEntity.Columns.ID}
         """
     )

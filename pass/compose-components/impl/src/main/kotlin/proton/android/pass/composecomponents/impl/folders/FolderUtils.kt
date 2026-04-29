@@ -21,6 +21,52 @@ package proton.android.pass.composecomponents.impl.folders
 import proton.android.pass.commonuimodels.api.FolderUiModel
 import proton.android.pass.domain.FolderId
 
+data class FlatFolderItem(val folder: FolderUiModel, val depth: Int)
+
+fun flattenVisibleFolders(
+    folders: List<FolderUiModel>,
+    expandedState: Map<String, Boolean>,
+    depth: Int = 0
+): List<FlatFolderItem> {
+    val result = mutableListOf<FlatFolderItem>()
+    for (folder in folders) {
+        result.add(FlatFolderItem(folder, depth))
+        if (expandedState[folder.id.id] == true && folder.folders.isNotEmpty()) {
+            result.addAll(flattenVisibleFolders(folder.folders, expandedState, depth + 1))
+        }
+    }
+    return result
+}
+
+/**
+ * Wraps a flat map so that all key operations are transparently namespaced.
+ * Used to share a single SnapshotStateMap across multiple vaults while keeping
+ * each vault's folder expand state isolated (folder IDs are only unique per vault).
+ */
+class NamespacedExpandedState(
+    private val delegate: MutableMap<String, Boolean>,
+    private val namespace: String
+) : AbstractMutableMap<String, Boolean>() {
+
+    override val entries: MutableSet<MutableMap.MutableEntry<String, Boolean>>
+        get() = delegate.entries
+            .filter { it.key.startsWith("$namespace::") }
+            .mapTo(mutableSetOf()) { delegateEntry ->
+                object : MutableMap.MutableEntry<String, Boolean> {
+                    override val key = delegateEntry.key.removePrefix("$namespace::")
+                    override val value get() = delegateEntry.value
+                    override fun setValue(newValue: Boolean) = delegateEntry.setValue(newValue)
+                }
+            }
+
+    private fun key(k: String) = "$namespace::$k"
+
+    override fun put(key: String, value: Boolean) = delegate.put(key(key), value)
+    override fun get(key: String) = delegate[key(key)]
+    override fun containsKey(key: String) = delegate.containsKey(key(key))
+    override fun remove(key: String) = delegate.remove(key(key))
+}
+
 fun containsFolderId(folders: List<FolderUiModel>, folderId: FolderId): Boolean {
     for (folder in folders) {
         if (folder.id == folderId) return true

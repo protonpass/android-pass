@@ -34,7 +34,7 @@ import proton.android.pass.data.fakes.usecases.FakeCanOrganiseVaults
 import proton.android.pass.data.fakes.usecases.FakeObserveItemCount
 import proton.android.pass.data.fakes.usecases.FakeObserveUpgradeInfo
 import proton.android.pass.data.fakes.usecases.FakeObserveVaultsWithItemCount
-import proton.android.pass.data.fakes.usecases.folders.FakeObserveFolders
+import proton.android.pass.data.fakes.usecases.folders.FakeObserveFoldersByParentId
 import proton.android.pass.domain.FolderId
 import proton.android.pass.domain.Plan
 import proton.android.pass.domain.PlanLimit
@@ -61,7 +61,7 @@ internal class HomeDrawerViewModelTest {
     private lateinit var observeUpgradeInfo: FakeObserveUpgradeInfo
     private lateinit var featureFlags: FakeFeatureFlagsPreferenceRepository
     private lateinit var homeSearchOptionsRepository: FakeHomeSearchOptionsRepository
-    private lateinit var observeFolders: FakeObserveFolders
+    private lateinit var observeFolders: FakeObserveFoldersByParentId
 
     private lateinit var viewModel: HomeDrawerViewModel
 
@@ -75,7 +75,7 @@ internal class HomeDrawerViewModelTest {
         observeUpgradeInfo = FakeObserveUpgradeInfo()
         featureFlags = FakeFeatureFlagsPreferenceRepository()
         homeSearchOptionsRepository = FakeHomeSearchOptionsRepository()
-        observeFolders = FakeObserveFolders()
+        observeFolders = FakeObserveFoldersByParentId()
 
         canCreateFolder.sendValue(true)
         canCreateVault.sendValue(true)
@@ -308,6 +308,63 @@ internal class HomeDrawerViewModelTest {
             assertThat(state.needsToUpgrade).isFalse()
         }
     }
+
+    // endregion
+
+    // region vaultFolderAtLimit
+
+    @Test
+    internal fun `share appears in vaultFolderAtLimit when folder count reaches MAX_FOLDERS_PER_VAULT`() = runTest {
+        val userId = UserId("user-1")
+        val shareId = ShareId("share-1")
+        val vault = VaultTestFactory.create(userId = userId, shareId = shareId)
+        val folders = (0 until 100).map { index ->
+            FolderTestFactory.create(
+                userId = userId,
+                shareId = shareId,
+                folderId = FolderId("folder-$index"),
+                name = "Folder $index"
+            )
+        }
+
+        featureFlags.set(FeatureFlag.PASS_FOLDERS, true)
+        observeFolders.sendResult(userId, shareId, Result.success(folders))
+        observeVaultsWithItemCount.sendResult(
+            Result.success(listOf(VaultWithItemCount(vault = vault, activeItemCount = 0, trashedItemCount = 0)))
+        )
+
+        viewModel.stateFlow.test {
+            val state = awaitNextMatching { it.vaultFolderAtLimit.isNotEmpty() }
+            assertThat(state.vaultFolderAtLimit).contains(shareId)
+        }
+    }
+
+    @Test
+    internal fun `share does not appear in vaultFolderAtLimit when folder count is below MAX_FOLDERS_PER_VAULT`() =
+        runTest {
+            val userId = UserId("user-1")
+            val shareId = ShareId("share-1")
+            val vault = VaultTestFactory.create(userId = userId, shareId = shareId)
+            val folders = (0 until 99).map { index ->
+                FolderTestFactory.create(
+                    userId = userId,
+                    shareId = shareId,
+                    folderId = FolderId("folder-$index"),
+                    name = "Folder $index"
+                )
+            }
+
+            featureFlags.set(FeatureFlag.PASS_FOLDERS, true)
+            observeFolders.sendResult(userId, shareId, Result.success(folders))
+            observeVaultsWithItemCount.sendResult(
+                Result.success(listOf(VaultWithItemCount(vault = vault, activeItemCount = 0, trashedItemCount = 0)))
+            )
+
+            viewModel.stateFlow.test {
+                val state = awaitNextMatching { it.vaultFolders[shareId]?.size == 99 }
+                assertThat(state.vaultFolderAtLimit).doesNotContain(shareId)
+            }
+        }
 
     // endregion
 

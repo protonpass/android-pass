@@ -87,7 +87,6 @@ import proton.android.pass.data.api.usecases.folders.MoveFolder
 import proton.android.pass.data.api.usecases.folders.MoveItemsInsideShare
 import proton.android.pass.data.api.usecases.folders.ObserveFolder
 import proton.android.pass.data.api.usecases.folders.ObserveFolderItemCounts
-import proton.android.pass.data.api.usecases.folders.ObserveFolders
 import proton.android.pass.data.api.usecases.folders.ObserveFoldersByParentId
 import proton.android.pass.data.api.usecases.folders.RefreshFolders
 import proton.android.pass.data.api.usecases.folders.UpdateFolder
@@ -347,7 +346,6 @@ import proton.android.pass.data.impl.usecases.folders.MoveFolderImpl
 import proton.android.pass.data.impl.usecases.folders.MoveItemsInsideShareImpl
 import proton.android.pass.data.impl.usecases.folders.ObserveFolderImpl
 import proton.android.pass.data.impl.usecases.folders.ObserveFolderItemCountsImpl
-import proton.android.pass.data.impl.usecases.folders.ObserveFoldersImpl
 import proton.android.pass.data.impl.usecases.folders.ObserveFoldersByParentIdImpl
 import proton.android.pass.data.impl.usecases.folders.RefreshFoldersImpl
 import proton.android.pass.data.impl.usecases.folders.UpdateFolderImpl
@@ -607,9 +605,6 @@ abstract class DataUseCaseModule {
 
     @Binds
     abstract fun bindObserveVaults(impl: ObserveVaultsImpl): ObserveVaults
-
-    @Binds
-    abstract fun bindObserveFolders(impl: ObserveFoldersImpl): ObserveFolders
 
     @Binds
     abstract fun bindObserveFolder(impl: ObserveFolderImpl): ObserveFolder

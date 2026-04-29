@@ -28,9 +28,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -63,18 +60,12 @@ internal fun HomeDrawerRow(
     isSelected: Boolean,
     onClick: () -> Unit,
     membersCount: Int = 0,
-    showFoldersInitially: Boolean = false,
     onShareClick: (() -> Unit)? = null,
     onMenuOptionsClick: (() -> Unit)? = null,
-    expandVault: Boolean = false,
-    folderContent: (@Composable () -> Unit)? = null
+    hasFolderContent: Boolean = false,
+    showFolders: Boolean = false,
+    onShowFoldersToggle: (() -> Unit)? = null
 ) {
-    val (showFolders, onShowFolders) = rememberSaveable { mutableStateOf(showFoldersInitially) }
-
-    LaunchedEffect(expandVault) {
-        if (expandVault) onShowFolders(true)
-    }
-
     Column(
         modifier = modifier.fillMaxWidth()
     ) {
@@ -90,13 +81,11 @@ internal fun HomeDrawerRow(
             verticalAlignment = Alignment.CenterVertically
         ) {
             AnimatedVisibility(
-                visible = folderContent != null
+                visible = hasFolderContent
             ) {
                 ExpandCollapseIcon(
                     expanded = showFolders,
-                    onClick = {
-                        onShowFolders(!showFolders)
-                    }
+                    onClick = { onShowFoldersToggle?.invoke() }
                 )
             }
 
@@ -153,12 +142,6 @@ internal fun HomeDrawerRow(
                 )
             }
         }
-
-        AnimatedVisibility(
-            visible = folderContent != null && showFolders
-        ) {
-            folderContent?.invoke()
-        }
     }
 }
 
@@ -179,7 +162,8 @@ internal fun HomeDrawerRowEmptyFoldersPreview(
                 itemsCount = 16,
                 membersCount = 5,
                 isSelected = isSelected,
-                showFoldersInitially = true,
+                hasFolderContent = true,
+                showFolders = true,
                 onClick = {},
                 onShareClick = {},
                 onMenuOptionsClick = {}

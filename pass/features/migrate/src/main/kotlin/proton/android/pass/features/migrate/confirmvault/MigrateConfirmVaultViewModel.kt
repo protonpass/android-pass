@@ -61,7 +61,7 @@ import proton.android.pass.data.api.usecases.MigrateItems
 import proton.android.pass.data.api.usecases.MigrateVault
 import proton.android.pass.data.api.usecases.folders.MoveFolder
 import proton.android.pass.data.api.usecases.folders.MoveItemsInsideShare
-import proton.android.pass.data.api.usecases.folders.ObserveFolders
+import proton.android.pass.data.api.usecases.folders.ObserveFoldersByParentId
 import proton.android.pass.data.api.usecases.securelink.ObserveHasAssociatedSecureLinks
 import proton.android.pass.data.api.usecases.shares.ObserveShare
 import proton.android.pass.domain.FolderId
@@ -89,7 +89,7 @@ class MigrateConfirmVaultViewModel @Inject constructor(
     private val snackbarDispatcher: SnackbarDispatcher,
     private val bulkMoveToVaultRepository: BulkMoveToVaultRepository,
     private val observeHasAssociatedSecureLinks: ObserveHasAssociatedSecureLinks,
-    private val observeFolders: ObserveFolders,
+    private val observeFolders: ObserveFoldersByParentId,
     getVaultById: GetVaultWithItemCountById,
     observeShare: ObserveShare,
     private val settingsRepository: InternalSettingsRepository

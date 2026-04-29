@@ -29,6 +29,8 @@ interface LocalFolderDataSource {
 
     suspend fun upsertFolders(folders: List<FolderEntity>)
 
+    fun observeAllFolders(userId: UserId, shareId: ShareId): Flow<List<FolderEntity>>
+
     fun observeFolders(
         userId: UserId,
         shareId: ShareId,

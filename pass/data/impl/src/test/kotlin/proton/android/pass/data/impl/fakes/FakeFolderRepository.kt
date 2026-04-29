@@ -46,7 +46,7 @@ class FakeFolderRepository : FolderRepository {
     var lastGetFolderHierarchyCall: GetFolderHierarchyCall? = null
     val refreshedShareIds: MutableList<ShareId> = mutableListOf()
 
-    override fun observeFolders(userId: UserId, shareId: ShareId): Flow<List<Folder>> = emptyFlow()
+    override fun observeAllFolders(userId: UserId, shareId: ShareId): Flow<List<Folder>> = emptyFlow()
 
     override fun observeFoldersByParentId(
         userId: UserId,

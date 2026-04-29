@@ -49,7 +49,7 @@ import proton.android.pass.data.api.usecases.ObserveVaultsWithItemCount
 import proton.android.pass.data.api.usecases.UpgradeInfo
 import proton.android.pass.data.api.usecases.capabilities.CanCreateItemInVault
 import proton.android.pass.data.api.usecases.defaultvault.SetDefaultVault
-import proton.android.pass.data.api.usecases.folders.ObserveFolders
+import proton.android.pass.data.api.usecases.folders.ObserveFoldersByParentId
 import proton.android.pass.domain.FolderId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.VaultWithItemCount
@@ -69,7 +69,7 @@ class SelectVaultViewModel @Inject constructor(
     observeVaultsWithItemCount: ObserveVaultsWithItemCount,
     observeUpgradeInfo: ObserveUpgradeInfo,
     featureFlagsPreferencesRepository: FeatureFlagsPreferencesRepository,
-    private val observeFolders: ObserveFolders,
+    private val observeFolders: ObserveFoldersByParentId,
     savedStateHandle: SavedStateHandleProvider
 ) : ViewModel() {
 

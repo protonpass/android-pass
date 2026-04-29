@@ -52,6 +52,14 @@ class FakeLocalFolderDataSource : LocalFolderDataSource {
         publish()
     }
 
+    override fun observeAllFolders(userId: UserId, shareId: ShareId): Flow<List<FolderEntity>> =
+        state.map { folders ->
+            folders.filter {
+                it.userId == userId.id &&
+                    it.shareId == shareId.id
+            }
+        }
+
     override fun observeFolders(userId: UserId, shareId: ShareId, parentFolderId: FolderId?): Flow<List<FolderEntity>> =
         state.map { folders ->
             folders.filter {

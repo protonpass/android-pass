@@ -21,6 +21,8 @@ package proton.android.pass.composecomponents.impl.folders
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.lazy.LazyListScope
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -39,6 +41,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
@@ -152,6 +155,54 @@ private fun CreateFolderButton(
         if (needsToUpgrade) {
             PassPlusIcon()
         }
+    }
+}
+
+fun LazyListScope.folderTreeItems(
+    folders: List<FolderUiModel>,
+    expandedState: MutableMap<String, Boolean>,
+    selectedFolderId: Option<FolderId>,
+    startPadding: Dp = 0.dp,
+    canCreateFolder: Boolean = false,
+    needsToUpgrade: Boolean = false,
+    keyPrefix: String = "",
+    createButtonModifier: Modifier = Modifier,
+    onFolderClick: ((FolderId) -> Unit)?,
+    onThreeDotsClick: ((FolderId) -> Unit)? = null,
+    onCreateFolderClick: (() -> Unit)? = null,
+    disabledFolderId: Option<FolderId> = None,
+    disabledFolderReason: String? = null
+) {
+    if (folders.isEmpty() && canCreateFolder && onCreateFolderClick != null) {
+        item(key = "${keyPrefix}create_folder") {
+            CreateFolderButton(
+                modifier = createButtonModifier,
+                needsToUpgrade = needsToUpgrade,
+                onClick = { onCreateFolderClick() }
+            )
+        }
+        return
+    }
+
+    val flatItems = flattenVisibleFolders(folders, expandedState)
+
+    items(flatItems, key = { "${keyPrefix}${it.folder.id.id}" }) { flatItem ->
+        val folder = flatItem.folder
+        val isFolderDisabled = disabledFolderId is Some && folder.id == disabledFolderId.value
+
+        OneFolderItem(
+            modifier = Modifier
+                .animateItem()
+                .padding(start = startPadding + (flatItem.depth * 16).dp),
+            folderName = folder.name,
+            folders = folder.folders,
+            isExpanded = expandedState.isExpanded(folder.id.id),
+            isSelected = selectedFolderId is Some && folder.id == selectedFolderId.value,
+            disabledReason = if (isFolderDisabled) disabledFolderReason else null,
+            onExpandToggle = { expandedState.toggle(folder.id.id) },
+            onThreeDotsClick = onThreeDotsClick?.let { { it(folder.id) } },
+            onFolderClick = if (isFolderDisabled) null else onFolderClick?.let { { it(folder.id) } }
+        )
     }
 }
 

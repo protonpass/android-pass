@@ -35,6 +35,12 @@ class LocalFolderDataSourceImpl @Inject constructor(
     override suspend fun upsertFolders(folders: List<FolderEntity>) =
         database.foldersDao().insertOrUpdate(*folders.toTypedArray())
 
+    override fun observeAllFolders(userId: UserId, shareId: ShareId): Flow<List<FolderEntity>> =
+        database.foldersDao().observeAllFolders(
+            userId = userId.id,
+            shareId = shareId.id
+        )
+
     override fun observeFolders(
         userId: UserId,
         shareId: ShareId,

@@ -47,6 +47,8 @@ import proton.android.pass.data.api.usecases.capabilities.CanCreateFolder
 import proton.android.pass.data.api.usecases.capabilities.CanManageVaultAccess
 import proton.android.pass.data.api.usecases.capabilities.CanMigrateVault
 import proton.android.pass.data.api.usecases.capabilities.CanShareShare
+import proton.android.pass.data.api.usecases.folders.ObserveFoldersByParentId
+import proton.android.pass.domain.FolderLimits
 import proton.android.pass.domain.ItemState
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.ShareSelection
@@ -72,7 +74,8 @@ class VaultOptionsViewModel @Inject constructor(
     observeUpgradeInfo: ObserveUpgradeInfo,
     savedStateHandle: SavedStateHandleProvider,
     private val observeEncryptedItems: ObserveEncryptedItems,
-    preferencesRepository: FeatureFlagsPreferencesRepository
+    preferencesRepository: FeatureFlagsPreferencesRepository,
+    observeFoldersByParentId: ObserveFoldersByParentId
 ) : ViewModel() {
 
     private val navShareId: ShareId = savedStateHandle.get()
@@ -87,6 +90,9 @@ class VaultOptionsViewModel @Inject constructor(
         value = VaultOptionsEvent.Idle
     )
 
+    private val rootFolderCountFlow = observeFoldersByParentId(navShareId, null)
+        .map { folders -> folders.size }
+
     internal val state: StateFlow<VaultOptionsUiState> = combineN(
         observeVaults(includeHidden = true).asLoadingResult(),
         canShare,
@@ -94,8 +100,9 @@ class VaultOptionsViewModel @Inject constructor(
         preferencesRepository.get<Boolean>(FeatureFlag.PASS_ALLOW_NO_VAULT),
         preferencesRepository.get<Boolean>(FeatureFlag.PASS_FOLDERS),
         canCreateFolder(),
-        observeUpgradeInfo().asLoadingResult()
-    ) { vaultResult, canShare, event, allowNoVault, foldersEnabled, canCreateFolder, upgradeResult ->
+        observeUpgradeInfo().asLoadingResult(),
+        rootFolderCountFlow
+    ) { vaultResult, canShare, event, allowNoVault, foldersEnabled, canCreateFolder, upgradeResult, rootFolderCount ->
         val (allVaults, selectedVault) = when (vaultResult) {
             is LoadingResult.Error -> {
                 snackbarDispatcher(CannotGetVaultListError)
@@ -145,8 +152,12 @@ class VaultOptionsViewModel @Inject constructor(
             showViewMembers = showViewMembers,
             event = event,
             isLastVault = vaultResult.data.size == 1,
-            canAddFolder = foldersEnabled && (canCreateFolder || isUpgradeAvailable),
-            canAddFolderNeedsUpgrade = foldersEnabled && !canCreateFolder && isUpgradeAvailable
+            canAddFolder = foldersEnabled &&
+                rootFolderCount < FolderLimits.MAX_FOLDER_WIDTH &&
+                (canCreateFolder || isUpgradeAvailable),
+            canAddFolderNeedsUpgrade = foldersEnabled &&
+                rootFolderCount < FolderLimits.MAX_FOLDER_WIDTH &&
+                !canCreateFolder && isUpgradeAvailable
         )
     }.stateIn(
         scope = viewModelScope,
@@ -199,9 +210,7 @@ class VaultOptionsViewModel @Inject constructor(
     }
 
     private companion object {
-
         private const val TAG = "VaultOptionsViewModel"
-
     }
 
 }

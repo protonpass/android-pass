@@ -94,7 +94,7 @@ internal class FolderRepositoryImplTest {
     }
 
     @Test
-    fun `observeFolders decrypts encrypted content into domain names`() = runTest {
+    fun `observeFoldersByParentId decrypts encrypted content into domain names`() = runTest {
         localFolderDataSource.upsertFolder(
             folderEntity(
                 folderId = "root-1",
@@ -110,11 +110,33 @@ internal class FolderRepositoryImplTest {
             )
         )
 
-        val result = repository.observeFolders(userId, shareId).first()
+        val result = repository.observeFoldersByParentId(userId, shareId, parentFolderId = null).first()
 
         assertThat(result).hasSize(1)
         assertThat(result.first().folderId.id).isEqualTo("root-1")
         assertThat(result.first().name).isEqualTo("Personal")
+    }
+
+    @Test
+    fun `observeAllFolders returns root and nested folders`() = runTest {
+        localFolderDataSource.upsertFolder(
+            folderEntity(
+                folderId = "root-1",
+                name = "Personal",
+                parentFolderId = null
+            )
+        )
+        localFolderDataSource.upsertFolder(
+            folderEntity(
+                folderId = "child-1",
+                name = "Nested",
+                parentFolderId = "root-1"
+            )
+        )
+
+        val result = repository.observeAllFolders(userId, shareId).first()
+
+        assertThat(result.map { it.folderId.id }).containsExactly("root-1", "child-1")
     }
 
     @Test

@@ -76,6 +76,7 @@ internal fun HomeDrawerContent(
                 .weight(weight = 1f, fill = true),
             vaultShares = vaultShares.toPersistentList(),
             vaultFolders = vaultFolders,
+            vaultFolderAtLimit = vaultFolderAtLimit,
             vaultSelectionOption = vaultSelectionOption,
             allItemsCount = allItemsCount,
             hasSharedWithMeItems = hasSharedWithMeItems,

@@ -55,7 +55,7 @@ import proton.android.pass.data.api.repositories.BulkMoveToVaultRepository
 import proton.android.pass.data.api.repositories.ParentContainer
 import proton.android.pass.data.api.repositories.flattenByShare
 import proton.android.pass.data.api.usecases.ObserveVaultsWithItemCount
-import proton.android.pass.data.api.usecases.folders.ObserveFolders
+import proton.android.pass.data.api.usecases.folders.ObserveFoldersByParentId
 import proton.android.pass.domain.Folder
 import proton.android.pass.domain.FolderId
 import proton.android.pass.domain.ItemId
@@ -80,7 +80,7 @@ class MigrateSelectVaultViewModel @Inject constructor(
     private val savedStateHandle: SavedStateHandleProvider,
     bulkMoveToVaultRepository: BulkMoveToVaultRepository,
     observeVaults: ObserveVaultsWithItemCount,
-    private val observeFolders: ObserveFolders,
+    private val observeFolders: ObserveFoldersByParentId,
     private val snackbarDispatcher: SnackbarDispatcher
 ) : ViewModel() {
 

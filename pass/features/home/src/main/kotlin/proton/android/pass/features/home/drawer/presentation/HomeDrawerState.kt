@@ -32,6 +32,7 @@ import proton.android.pass.searchoptions.api.VaultSelectionOption
 internal data class HomeDrawerState(
     internal val vaultShares: List<VaultWithItemCount>,
     internal val vaultFolders: Map<ShareId, List<FolderUiModel>>,
+    internal val vaultFolderAtLimit: Set<ShareId>,
     internal val canCreateFolder: Boolean,
     internal val canCreateVault: Boolean,
     internal val canOrganiseVaults: Boolean,
@@ -86,6 +87,7 @@ internal data class HomeDrawerState(
         internal val Initial: HomeDrawerState = HomeDrawerState(
             vaultShares = emptyList(),
             vaultFolders = emptyMap(),
+            vaultFolderAtLimit = emptySet(),
             canCreateFolder = false,
             canCreateVault = false,
             canOrganiseVaults = false,

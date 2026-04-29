@@ -31,7 +31,7 @@ import javax.inject.Singleton
 @Singleton
 class FakeGetFolder @Inject constructor() : GetFolder {
 
-    private var result: Result<Folder> = Result.success(
+    private var defaultResult: Result<Folder> = Result.success(
         FolderTestFactory.create(
             userId = UserId("fake-user-id"),
             shareId = ShareId("fake-share-id"),
@@ -42,9 +42,16 @@ class FakeGetFolder @Inject constructor() : GetFolder {
         )
     )
 
+    private val perFolderResults = mutableMapOf<FolderId, Result<Folder>>()
+
     fun setResult(result: Result<Folder>) {
-        this.result = result
+        this.defaultResult = result
     }
 
-    override suspend fun invoke(shareId: ShareId, folderId: FolderId): Folder = result.getOrThrow()
+    fun setResult(folderId: FolderId, result: Result<Folder>) {
+        perFolderResults[folderId] = result
+    }
+
+    override suspend fun invoke(shareId: ShareId, folderId: FolderId): Folder =
+        (perFolderResults[folderId] ?: defaultResult).getOrThrow()
 }

@@ -31,7 +31,7 @@ import proton.android.pass.data.api.repositories.ParentContainer
 import proton.android.pass.data.fakes.repositories.FakeBulkMoveToVaultRepository
 import proton.android.pass.data.api.repositories.toBulkMoveToVaultSelection
 import proton.android.pass.data.fakes.usecases.FakeObserveVaultsWithItemCount
-import proton.android.pass.data.fakes.usecases.folders.FakeObserveFolders
+import proton.android.pass.data.fakes.usecases.folders.FakeObserveFoldersByParentId
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.toOption
 import proton.android.pass.domain.FolderId
@@ -54,14 +54,14 @@ class MigrateSelectVaultViewModelTest {
 
     private lateinit var instance: MigrateSelectVaultViewModel
     private lateinit var observeVaults: FakeObserveVaultsWithItemCount
-    private lateinit var observeFolders: FakeObserveFolders
+    private lateinit var observeFolders: FakeObserveFoldersByParentId
     private lateinit var snackbarDispatcher: FakeSnackbarDispatcher
     private lateinit var bulkMoveToVaultRepository: FakeBulkMoveToVaultRepository
 
     @Before
     fun setup() {
         observeVaults = FakeObserveVaultsWithItemCount()
-        observeFolders = FakeObserveFolders()
+        observeFolders = FakeObserveFoldersByParentId()
         snackbarDispatcher = FakeSnackbarDispatcher()
         bulkMoveToVaultRepository = FakeBulkMoveToVaultRepository().apply {
             runBlocking { save(mapOf(SHARE_ID to listOf(ITEM_ID)).toBulkMoveToVaultSelection()) }

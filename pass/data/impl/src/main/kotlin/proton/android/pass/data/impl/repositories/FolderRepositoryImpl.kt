@@ -198,11 +198,10 @@ class FolderRepositoryImpl @Inject constructor(
         )
     }
 
-    override fun observeFolders(userId: UserId, shareId: ShareId): Flow<List<Folder>> =
-        localFolderDataSource.observeFolders(
+    override fun observeAllFolders(userId: UserId, shareId: ShareId): Flow<List<Folder>> =
+        localFolderDataSource.observeAllFolders(
             userId = userId,
-            shareId = shareId,
-            parentFolderId = null
+            shareId = shareId
         ).map { folderEntities ->
             encryptionContextProvider.withEncryptionContextSuspendable {
                 folderEntities.map { it.toDomain(this) }

@@ -22,6 +22,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -32,18 +33,17 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
-import kotlinx.collections.immutable.persistentListOf
 import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.toOption
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetCancelConfirm
-import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemList
+import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItem
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetVaultRow
 import proton.android.pass.composecomponents.impl.bottomsheet.bottomSheetDivider
 import proton.android.pass.composecomponents.impl.container.PassInfoWarningBanner
-import proton.android.pass.composecomponents.impl.folders.FolderTree
 import proton.android.pass.composecomponents.impl.folders.expandAncestors
+import proton.android.pass.composecomponents.impl.folders.folderTreeItems
 import proton.android.pass.features.migrate.R
 
 @Composable
@@ -80,81 +80,82 @@ internal fun MigrateConfirmVaultContents(
     val targetFolderId = state.newParentFolderId ?: state.destFolderId.value()
     val showFolderTree = targetFolderId != null && state.folderTree.isNotEmpty()
 
-    Column(
-        modifier = modifier,
-        verticalArrangement = Arrangement.spacedBy(space = Spacing.medium)
-    ) {
-        Column(
-            verticalArrangement = Arrangement.spacedBy(space = Spacing.small)
-        ) {
-            if (!state.isSameVaultMove) {
-                PassInfoWarningBanner(
-                    modifier = Modifier.align(Alignment.CenterHorizontally),
-                    text = stringResource(id = R.string.migrate_item_warning_history)
-                )
-            }
+    val folderExpandedMap = remember { mutableStateMapOf<String, Boolean>() }
 
-            if (state.hasAssociatedSecureLinks) {
-                PassInfoWarningBanner(
-                    modifier = Modifier.align(Alignment.CenterHorizontally),
-                    text = stringResource(id = R.string.migrate_item_warning_secure_link)
-                )
+    if (showFolderTree && targetFolderId != null) {
+        LaunchedEffect(state.folderTree) {
+            state.folderTree.forEach { folder ->
+                if (!folderExpandedMap.contains(folder.id.id)) {
+                    folderExpandedMap[folder.id.id] = false
+                }
             }
         }
+        LaunchedEffect(targetFolderId, state.folderTree) {
+            expandAncestors(state.folderTree, targetFolderId, folderExpandedMap)
+        }
+    }
 
-        Text(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = Spacing.medium),
-            text = title,
-            textAlign = TextAlign.Center,
-            color = PassTheme.colors.textNorm
-        )
+    Column(modifier = modifier) {
+        LazyColumn(
+            modifier = Modifier.weight(1f),
+            verticalArrangement = Arrangement.spacedBy(space = Spacing.medium)
+        ) {
+            item {
+                Column(
+                    modifier = Modifier.padding(top = Spacing.medium),
+                    verticalArrangement = Arrangement.spacedBy(space = Spacing.small)
+                ) {
+                    if (!state.isSameVaultMove) {
+                        PassInfoWarningBanner(
+                            modifier = Modifier.align(Alignment.CenterHorizontally),
+                            text = stringResource(id = R.string.migrate_item_warning_history)
+                        )
+                    }
 
-        if (state.vault is Some) {
-            BottomSheetItemList(
-                items = if (showFolderTree) {
-                    persistentListOf(
-                        bottomSheetDivider(),
-                        BottomSheetVaultRow(
+                    if (state.hasAssociatedSecureLinks) {
+                        PassInfoWarningBanner(
+                            modifier = Modifier.align(Alignment.CenterHorizontally),
+                            text = stringResource(id = R.string.migrate_item_warning_secure_link)
+                        )
+                    }
+                }
+            }
+
+            item {
+                Text(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = Spacing.medium),
+                    text = title,
+                    textAlign = TextAlign.Center,
+                    color = PassTheme.colors.textNorm
+                )
+            }
+
+            if (state.vault is Some) {
+                item { BottomSheetItem(item = bottomSheetDivider()) }
+
+                item {
+                    BottomSheetItem(
+                        item = BottomSheetVaultRow(
                             vault = state.vault.value,
                             isSelected = false,
                             onVaultClick = null
                         )
                     )
-                } else {
-                    persistentListOf(
-                        bottomSheetDivider(),
-                        BottomSheetVaultRow(
-                            vault = state.vault.value,
-                            isSelected = false,
-                            onVaultClick = null
-                        ),
-                        bottomSheetDivider()
+                }
+
+                if (showFolderTree && targetFolderId != null) {
+                    folderTreeItems(
+                        folders = state.folderTree,
+                        expandedState = folderExpandedMap,
+                        selectedFolderId = targetFolderId.toOption(),
+                        startPadding = Spacing.large,
+                        onFolderClick = null
                     )
                 }
-            )
 
-            if (targetFolderId != null && showFolderTree) {
-                val expandedState = remember { mutableStateMapOf<String, Boolean>() }
-                LaunchedEffect(state.folderTree, targetFolderId) {
-                    state.folderTree.forEach { folder ->
-                        if (!expandedState.contains(folder.id.id)) {
-                            expandedState[folder.id.id] = false
-                        }
-                    }
-                    expandAncestors(state.folderTree, targetFolderId, expandedState)
-                }
-                FolderTree(
-                    modifier = Modifier.padding(start = Spacing.large),
-                    folders = state.folderTree,
-                    expandedState = expandedState,
-                    onFolderClick = null,
-                    onThreeDotsClick = null,
-                    onCreateFolderClick = null,
-                    selectedFolderId = targetFolderId.toOption()
-                )
-                BottomSheetItemList(items = persistentListOf(bottomSheetDivider()))
+                item { BottomSheetItem(item = bottomSheetDivider()) }
             }
         }
 

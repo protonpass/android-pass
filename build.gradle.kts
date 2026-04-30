@@ -255,3 +255,25 @@ val filterFlankConfig = tasks.register("filterFlankConfigForSelectiveTests") {
 tasks.matching { it.name == "execFlank" }.configureEach {
     dependsOn(filterFlankConfig)
 }
+
+tasks.register("resolveDependencies") {
+    notCompatibleWithConfigurationCache("Resolves runtime/compile configurations eagerly")
+    doLast {
+        // Warm the Gradle artifact cache so parallel CI jobs don't hit Maven cold.
+        // Uses lenient artifact view: AGP creates configurations for every flavor × build-type
+        // cross-product (including unused combos like alphaBlack, benchmarkRelease, androidTest
+        // self-refs) that fail variant selection when resolved directly. Lenient mode downloads
+        // what it can and silently skips the rest — real network failures still surface in
+        // downstream jobs that actually need those artifacts.
+        project.project(":app").configurations
+            .filter { config ->
+                config.isCanBeResolved && (
+                    config.name.endsWith("RuntimeClasspath") ||
+                    config.name.endsWith("CompileClasspath")
+                )
+            }
+            .forEach { config ->
+                config.incoming.artifactView { lenient(true) }.files.files
+            }
+    }
+}

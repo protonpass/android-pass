@@ -30,10 +30,12 @@ import proton.android.pass.common.api.Some
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.data.api.repositories.MigrateItemsResult
 import proton.android.pass.data.fakes.repositories.FakeBulkMoveToVaultRepository
+import proton.android.pass.data.api.repositories.flattenByShare
 import proton.android.pass.data.api.repositories.toBulkMoveToVaultSelection
-import proton.android.pass.data.fakes.usecases.FakeGetVaultWithItemCountById
 import proton.android.pass.data.fakes.usecases.FakeMigrateItems
 import proton.android.pass.data.fakes.usecases.FakeMigrateVault
+import proton.android.pass.data.fakes.usecases.FakeObserveVaultsWithItemCount
+import proton.android.pass.data.fakes.usecases.folders.FakeDissolveFolder
 import proton.android.pass.data.fakes.usecases.folders.FakeMoveFolder
 import proton.android.pass.data.fakes.usecases.folders.FakeMoveItemsInsideShare
 import proton.android.pass.data.fakes.usecases.folders.FakeObserveFoldersByParentId
@@ -45,7 +47,8 @@ import proton.android.pass.domain.VaultWithItemCount
 import proton.android.pass.features.migrate.MigrateModeArg
 import proton.android.pass.features.migrate.MigrateModeValue
 import proton.android.pass.features.migrate.MigrateSnackbarMessage
-import proton.android.pass.navigation.api.DestinationShareNavArgId
+import proton.android.pass.features.migrate.MigrateVaultFilter
+import proton.android.pass.features.migrate.MigrateVaultFilterArg
 import proton.android.pass.notifications.fakes.FakeSnackbarDispatcher
 import proton.android.pass.preferences.FakeInternalSettingsRepository
 import proton.android.pass.test.MainDispatcherRule
@@ -61,7 +64,7 @@ class MigrateConfirmVaultForMigrateItemsViewModelTest {
     private lateinit var instance: MigrateConfirmVaultViewModel
     private lateinit var migrateItem: FakeMigrateItems
     private lateinit var migrateVault: FakeMigrateVault
-    private lateinit var getVaultById: FakeGetVaultWithItemCountById
+    private lateinit var observeVaults: FakeObserveVaultsWithItemCount
     private lateinit var snackbarDispatcher: FakeSnackbarDispatcher
     private lateinit var bulkMoveToVaultRepository: FakeBulkMoveToVaultRepository
     private lateinit var observeHasAssociatedSecureLinks: FakeObserveHasAssociatedSecureLinks
@@ -72,8 +75,8 @@ class MigrateConfirmVaultForMigrateItemsViewModelTest {
     fun setup() {
         migrateItem = FakeMigrateItems()
         migrateVault = FakeMigrateVault()
+        observeVaults = FakeObserveVaultsWithItemCount()
         snackbarDispatcher = FakeSnackbarDispatcher()
-        getVaultById = FakeGetVaultWithItemCountById()
         bulkMoveToVaultRepository = FakeBulkMoveToVaultRepository().apply {
             runBlocking { save(mapOf(SHARE_ID to listOf(ITEM_ID)).toBulkMoveToVaultSelection()) }
         }
@@ -85,16 +88,17 @@ class MigrateConfirmVaultForMigrateItemsViewModelTest {
             migrateItems = migrateItem,
             migrateVault = migrateVault,
             snackbarDispatcher = snackbarDispatcher,
-            getVaultById = getVaultById,
+            observeVaults = observeVaults,
             bulkMoveToVaultRepository = bulkMoveToVaultRepository,
             observeHasAssociatedSecureLinks = observeHasAssociatedSecureLinks,
             savedStateHandle = SavedStateHandleTestFactory.create().apply {
-                set(DestinationShareNavArgId.key, DESTINATION_SHARE_ID.id)
                 set(MigrateModeArg.key, MODE.name)
+                set(MigrateVaultFilterArg.key, MigrateVaultFilter.All.name)
             },
             observeShare = observeShare,
             settingsRepository = settingsRepository,
             moveFolder = FakeMoveFolder(),
+            dissolveFolder = FakeDissolveFolder(),
             observeFolders = FakeObserveFoldersByParentId(),
             moveItemsInsideShare = FakeMoveItemsInsideShare()
         )
@@ -106,27 +110,38 @@ class MigrateConfirmVaultForMigrateItemsViewModelTest {
             val expected = MigrateConfirmVaultUiState.initial(
                 mode = MigrateMode.MigrateSelectedItems(1)
             ).copy(
-                isLoading = IsLoadingState.Loading // Retrieve vault is loading
+                isLoading = IsLoadingState.Loading // vault list is loading
             )
             assertThat(awaitItem()).isEqualTo(expected)
+            cancelAndIgnoreRemainingEvents()
         }
     }
 
     @Test
-    fun `can migrate item`() = runTest {
-        getVaultById.emitValue(sourceVault())
-
+    fun `can migrate item after selecting destination vault`() = runTest {
+        val (sourceVault, destVault) = initialVaults()
         val expectedItem = ItemTestFactory.create().copy(id = ITEM_ID, shareId = DESTINATION_SHARE_ID)
         migrateItem.setResult(Result.success(MigrateItemsResult.AllMigrated(listOf(expectedItem))))
 
         instance.state.test {
+            observeVaults.sendResult(Result.success(listOf(sourceVault, destVault)))
+            // Wait until we have a non-loading state with vault list populated
+            var state = awaitItem()
+            while (state.vaultList.isEmpty()) {
+                state = awaitItem()
+            }
+
+            instance.onVaultSelected(destVault.vault.shareId)
+            state = awaitItem() // selectedShareId updated
             instance.onConfirm()
 
-            skipItems(2) // Skip initial state and loading
+            // Wait for migration event
+            state = awaitItem()
+            while (state.event.isEmpty()) {
+                state = awaitItem()
+            }
 
-            val state = awaitItem()
             assertThat(state.event.isEmpty()).isFalse()
-
             val eventCasted = state.event as Some<ConfirmMigrateEvent>
             assertThat(eventCasted.value).isInstanceOf(ConfirmMigrateEvent.ItemMigrated::class.java)
 
@@ -139,32 +154,56 @@ class MigrateConfirmVaultForMigrateItemsViewModelTest {
 
             val message = snackbarMessage.value()!!
             assertThat(message).isInstanceOf(MigrateSnackbarMessage.ItemMigrated::class.java)
+
+            cancelAndIgnoreRemainingEvents()
         }
     }
 
     @Test
     fun `displays error if cannot migrate items`() = runTest {
-        getVaultById.emitValue(sourceVault())
+        val (sourceVault, destVault) = initialVaults()
         migrateItem.setResult(Result.failure(IllegalStateException("test")))
 
         instance.state.test {
+            observeVaults.sendResult(Result.success(listOf(sourceVault, destVault)))
+            // Wait until vault list is populated
+            var state = awaitItem()
+            while (state.vaultList.isEmpty()) {
+                state = awaitItem()
+            }
+
+            instance.onVaultSelected(destVault.vault.shareId)
+            awaitItem() // selectedShareId updated
             instance.onConfirm()
-            val state = awaitItem()
-            assertThat(state.isLoading).isInstanceOf(IsLoadingState.NotLoading::class.java)
 
-            val snackbarMessage = snackbarDispatcher.snackbarMessage.first()
-            assertThat(snackbarMessage.isNotEmpty()).isTrue()
-
-            val message = snackbarMessage.value()!!
-            assertThat(message).isInstanceOf(MigrateSnackbarMessage.ItemNotMigrated::class.java)
+            cancelAndIgnoreRemainingEvents()
         }
+
+        // After migration fails, verify the error snackbar was dispatched
+        val snackbarMessage = snackbarDispatcher.snackbarMessage.first()
+        assertThat(snackbarMessage.isNotEmpty()).isTrue()
+
+        val message = snackbarMessage.value()!!
+        assertThat(message).isInstanceOf(MigrateSnackbarMessage.ItemNotMigrated::class.java)
     }
 
+    @Test
+    fun `bulk repository retains items before migration`() = runTest {
+        val bulkMemory = bulkMoveToVaultRepository.observe().first()
+        assertThat(bulkMemory.value()?.flattenByShare()).isEqualTo(mapOf(SHARE_ID to listOf(ITEM_ID)))
+    }
 
-    private fun sourceVault(): VaultWithItemCount = VaultWithItemCount(
-        vault = VaultTestFactory.create(shareId = SHARE_ID),
-        activeItemCount = 1,
-        trashedItemCount = 0
+    private fun initialVaults(): Pair<VaultWithItemCount, VaultWithItemCount> = Pair(
+        VaultWithItemCount(
+            vault = VaultTestFactory.create(shareId = SHARE_ID, name = "vault1"),
+            activeItemCount = 1,
+            trashedItemCount = 0
+        ),
+        VaultWithItemCount(
+            vault = VaultTestFactory.create(shareId = DESTINATION_SHARE_ID, name = "vault2"),
+            activeItemCount = 1,
+            trashedItemCount = 0
+        )
     )
 
     companion object {

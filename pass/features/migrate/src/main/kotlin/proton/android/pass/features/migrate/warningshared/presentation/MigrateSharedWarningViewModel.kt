@@ -46,7 +46,7 @@ import proton.android.pass.features.migrate.MigrateModeArg
 import proton.android.pass.features.migrate.MigrateModeValue
 import proton.android.pass.features.migrate.MigrateVaultFilter
 import proton.android.pass.features.migrate.MigrateVaultFilterArg
-import proton.android.pass.features.migrate.selectvault.MigrateSelectVaultViewModel.Mode
+import proton.android.pass.features.migrate.confirmvault.MigrateConfirmVaultViewModel.Mode
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.navigation.api.CommonOptionalNavArgId
 import javax.inject.Inject

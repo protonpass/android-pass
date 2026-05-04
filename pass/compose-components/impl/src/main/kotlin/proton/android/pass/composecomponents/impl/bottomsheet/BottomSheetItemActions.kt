@@ -62,7 +62,7 @@ fun copyNote(onClick: () -> Unit): BottomSheetItem = object : BottomSheetItem {
 fun migrate(action: BottomSheetItemAction, onClick: () -> Unit): BottomSheetItem = object : BottomSheetItem {
 
     override val title: @Composable () -> Unit = {
-        BottomSheetItemTitle(text = stringResource(R.string.bottomsheet_migrate_item))
+        BottomSheetItemTitle(text = stringResource(R.string.bottomsheet_migrate_item_v2))
     }
 
     override val subtitle: @Composable (() -> Unit)? = null

@@ -93,7 +93,7 @@ class VaultOptionsBottomSheetTest {
         setVault(owned = true, shared = false)
         migrateVault.setResult(true)
         observeEncryptedItems.emitValue(emptyList())
-        runTest(R.string.bottomsheet_migrate) { event, checker ->
+        runTest(R.string.bottomsheet_migrate_v2) { event, checker ->
             if (event is VaultNavigation.VaultMigrate) {
                 checker.call(event.shareId)
             }

@@ -45,6 +45,7 @@ fun BottomSheetCancelConfirm(
     modifier: Modifier = Modifier,
     isLoading: Boolean = false,
     showUpgrade: Boolean = false,
+    confirmEnabled: Boolean = true,
     confirmText: String = stringResource(R.string.bottomsheet_confirm_button),
     onCancel: () -> Unit,
     onConfirm: () -> Unit,
@@ -85,7 +86,12 @@ fun BottomSheetCancelConfirm(
             LoadingCircleButton(
                 modifier = Modifier.weight(1f),
                 isLoading = isLoading,
-                color = PassTheme.colors.loginInteractionNormMajor1,
+                color = if (confirmEnabled) {
+                    PassTheme.colors.loginInteractionNormMajor1
+                } else {
+                    PassTheme.colors.textDisabled
+                },
+                buttonEnabled = confirmEnabled,
                 onClick = onConfirm,
                 buttonHeight = 26.dp,
                 text = {

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023-2026 Proton AG
+ * Copyright (c) 2026 Proton AG
  * This file is part of Proton AG and Proton Pass.
  *
  * Proton Pass is free software: you can redistribute it and/or modify
@@ -16,7 +16,7 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.migrate.selectvault
+package proton.android.pass.features.migrate.confirmvault
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Row
@@ -37,6 +37,7 @@ import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
 import proton.android.pass.commonui.api.PassTheme
+import proton.android.pass.commonuimodels.api.FolderUiModel
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItem
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemList
@@ -51,10 +52,12 @@ import proton.android.pass.domain.ShareId
 import proton.android.pass.features.migrate.R
 
 @Composable
-fun MigrateSelectVaultContents(
+internal fun MigrateVaultSelectorContents(
     modifier: Modifier = Modifier,
     vaults: ImmutableList<MigrateVaultState>,
     folderIdToExpand: Option<FolderId>,
+    selectedShareId: Option<ShareId> = None,
+    selectedFolderId: Option<FolderId> = None,
     disabledFolderId: Option<FolderId> = None,
     disabledFolderItemCount: Int = 0,
     onVaultSelected: (ShareId) -> Unit,
@@ -79,15 +82,17 @@ fun MigrateSelectVaultContents(
                 val vaultWithCount = vaultPair.vaultWithItemCount
                 val vaultModel = vaultWithCount.vault
                 val shareIdStr = vaultModel.shareId.id
-                val showFolders = vaultShowFoldersMap[shareIdStr]
-                    ?: (folderIdToExpand is Some && vaultPair.folderTree.isNotEmpty())
+                val hasFolderToExpand = folderIdToExpand is Some
+                val showFolders = vaultShowFoldersMap[shareIdStr] ?: hasFolderToExpand
                 val vaultFolderExpandedMap = NamespacedExpandedState(folderExpandedMap, shareIdStr)
+                val isVaultSelected = selectedShareId is Some &&
+                    selectedShareId.value == vaultModel.shareId &&
+                    selectedFolderId is None
 
                 item(key = shareIdStr) {
                     LaunchedEffect(Unit) {
                         if (!vaultShowFoldersMap.contains(shareIdStr)) {
-                            vaultShowFoldersMap[shareIdStr] =
-                                folderIdToExpand is Some && vaultPair.folderTree.isNotEmpty()
+                            vaultShowFoldersMap[shareIdStr] = folderIdToExpand is Some
                         }
                         vaultPair.folderTree.forEach { folder ->
                             if (!vaultFolderExpandedMap.contains(folder.id.id)) {
@@ -103,6 +108,20 @@ fun MigrateSelectVaultContents(
                                 folderIdToExpand.value,
                                 vaultFolderExpandedMap
                             )
+                        }
+                    }
+
+                    LaunchedEffect(vaultPair.folderTree) {
+                        if (folderIdToExpand is Some) {
+                            fun initExpanded(folders: List<FolderUiModel>) {
+                                folders.forEach { folder ->
+                                    if (!vaultFolderExpandedMap.contains(folder.id.id)) {
+                                        vaultFolderExpandedMap[folder.id.id] = true
+                                    }
+                                    initExpanded(folder.folders)
+                                }
+                            }
+                            initExpanded(vaultPair.folderTree)
                         }
                     }
 
@@ -126,14 +145,13 @@ fun MigrateSelectVaultContents(
 
                         BottomSheetVaultRow(
                             vault = vaultWithCount,
-                            isSelected = false,
+                            isSelected = isVaultSelected,
                             customSubtitle = when (vaultPair.status) {
                                 is VaultStatus.Enabled -> null
                                 is VaultStatus.Disabled -> when (vaultPair.status.reason) {
                                     VaultStatus.DisabledReason.NoPermission -> stringResource(
                                         R.string.migrate_disabled_vault_reason_no_permission
                                     )
-
                                     VaultStatus.DisabledReason.SameVault -> stringResource(
                                         R.string.migrate_disabled_vault_reason_same_vault
                                     )
@@ -142,10 +160,7 @@ fun MigrateSelectVaultContents(
                             enabled = vaultPair.status is VaultStatus.Enabled,
                             onVaultClick = { onVaultSelected(vaultModel.shareId) }
                         ).let { item ->
-                            BottomSheetItem(
-                                item = item,
-                                horizontalPadding = 0.dp
-                            )
+                            BottomSheetItem(item = item, horizontalPadding = 0.dp)
                         }
                     }
                 }
@@ -154,7 +169,7 @@ fun MigrateSelectVaultContents(
                     folderTreeItems(
                         folders = vaultPair.folderTree,
                         expandedState = vaultFolderExpandedMap,
-                        selectedFolderId = folderIdToExpand,
+                        selectedFolderId = selectedFolderId,
                         startPadding = Spacing.large,
                         keyPrefix = shareIdStr,
                         onFolderClick = { folderId ->
@@ -172,16 +187,18 @@ fun MigrateSelectVaultContents(
             items = vaults.map { vault ->
                 val vaultWithCount = vault.vaultWithItemCount
                 val vaultModel = vaultWithCount.vault
+                val isVaultSelected = selectedShareId is Some &&
+                    selectedShareId.value == vaultModel.shareId &&
+                    selectedFolderId is None
                 BottomSheetVaultRow(
                     vault = vaultWithCount,
-                    isSelected = false,
+                    isSelected = isVaultSelected,
                     customSubtitle = when (vault.status) {
                         is VaultStatus.Enabled -> null
                         is VaultStatus.Disabled -> when (vault.status.reason) {
                             VaultStatus.DisabledReason.NoPermission -> stringResource(
                                 R.string.migrate_disabled_vault_reason_no_permission
                             )
-
                             VaultStatus.DisabledReason.SameVault -> stringResource(
                                 R.string.migrate_disabled_vault_reason_same_vault
                             )

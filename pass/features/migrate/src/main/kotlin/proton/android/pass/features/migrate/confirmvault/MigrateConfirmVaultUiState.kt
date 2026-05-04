@@ -19,12 +19,17 @@
 package proton.android.pass.features.migrate.confirmvault
 
 import androidx.compose.runtime.Stable
+import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.PersistentList
 import kotlinx.collections.immutable.persistentListOf
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
+import proton.android.pass.common.api.Some
+import proton.android.pass.common.api.toOption
 import proton.android.pass.commonuimodels.api.FolderUiModel
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
+import proton.android.pass.data.api.repositories.BulkMoveToVaultSelection
+import proton.android.pass.data.api.repositories.ParentContainer
 import proton.android.pass.domain.FolderId
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
@@ -61,27 +66,100 @@ internal sealed interface MigrateMode {
 internal data class MigrateConfirmVaultUiState(
     val isLoading: IsLoadingState,
     val event: Option<ConfirmMigrateEvent>,
-    val vault: Option<VaultWithItemCount>,
+    val vaultList: ImmutableList<MigrateVaultState>,
+    val folderIdToExpand: Option<FolderId>,
+    val disabledFolderId: Option<FolderId>,
+    val disabledFolderItemCount: Int,
+    val selectedShareId: Option<ShareId>,
+    val selectedFolderId: Option<FolderId>,
     val mode: MigrateMode,
     val hasAssociatedSecureLinks: Boolean,
     val canDisplayWarningVaultSharedDialog: Boolean,
-    val folderTree: PersistentList<FolderUiModel> = persistentListOf(),
-    val newParentFolderId: FolderId? = null,
-    val destFolderId: Option<FolderId> = None,
-    val isSameVaultMove: Boolean = false
+    val isSameVaultMove: Boolean,
+    val showDissolveFolderDialog: Boolean
 ) {
-
     internal companion object {
-
         internal fun initial(mode: MigrateMode) = MigrateConfirmVaultUiState(
             isLoading = IsLoadingState.NotLoading,
             event = None,
-            vault = None,
+            vaultList = persistentListOf(),
+            folderIdToExpand = None,
+            disabledFolderId = None,
+            disabledFolderItemCount = 0,
+            selectedShareId = None,
+            selectedFolderId = None,
             mode = mode,
             hasAssociatedSecureLinks = false,
-            canDisplayWarningVaultSharedDialog = false
+            canDisplayWarningVaultSharedDialog = false,
+            isSameVaultMove = false,
+            showDissolveFolderDialog = false
         )
-
     }
+}
 
+// Vault-list shared types (moved from selectvault package)
+
+@Stable
+sealed interface VaultStatus {
+    @Stable
+    data object Enabled : VaultStatus
+
+    @JvmInline
+    @Stable
+    value class Disabled(val reason: DisabledReason) : VaultStatus
+
+    @Stable
+    sealed interface DisabledReason {
+        @Stable data object NoPermission : DisabledReason
+
+        @Stable data object SameVault : DisabledReason
+    }
+}
+
+data class MigrateVaultState(
+    val vaultWithItemCount: VaultWithItemCount,
+    val status: VaultStatus,
+    val folderTree: PersistentList<FolderUiModel> = persistentListOf()
+)
+
+internal data class SelectedItemsAnalysis(
+    val sourceShareId: ShareId?,
+    val disableSourceVault: Boolean,
+    val disabledFolderId: Option<FolderId>,
+    val disabledFolderItemCount: Int
+) {
+    companion object {
+        val Empty = SelectedItemsAnalysis(
+            sourceShareId = null,
+            disableSourceVault = false,
+            disabledFolderId = None,
+            disabledFolderItemCount = 0
+        )
+    }
+}
+
+internal fun analyzeSelectedItems(selection: BulkMoveToVaultSelection): SelectedItemsAnalysis {
+    if (selection.size != 1) return SelectedItemsAnalysis.Empty
+    val sourceShareId = selection.keys.firstOrNull() ?: return SelectedItemsAnalysis.Empty
+    val containers = selection[sourceShareId].orEmpty().filterValues { it.isNotEmpty() }
+    val hasRootItems = containers.keys.any { it is ParentContainer.Share }
+    val folderIds = containers.keys.mapNotNull { it as? ParentContainer.Folder }.map { it.folderId }.toSet()
+    val disableSourceVault = hasRootItems && folderIds.isEmpty()
+    val disabledFolderId = when {
+        !hasRootItems && folderIds.size == 1 -> folderIds.first().toOption()
+        else -> None
+    }
+    val disabledFolderItemCount = if (disabledFolderId is Some) {
+        containers.entries
+            .firstOrNull { (c, _) -> c is ParentContainer.Folder && c.folderId == disabledFolderId.value }
+            ?.value
+            ?.size
+            ?: 0
+    } else 0
+    return SelectedItemsAnalysis(
+        sourceShareId = sourceShareId,
+        disableSourceVault = disableSourceVault,
+        disabledFolderId = disabledFolderId,
+        disabledFolderItemCount = disabledFolderItemCount
+    )
 }

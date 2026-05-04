@@ -16,7 +16,7 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.migrate.selectvault
+package proton.android.pass.features.migrate.confirmvault
 
 import com.google.common.truth.Truth.assertThat
 import org.junit.Test

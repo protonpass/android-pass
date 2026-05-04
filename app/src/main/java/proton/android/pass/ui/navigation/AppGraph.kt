@@ -163,7 +163,6 @@ import proton.android.pass.features.itemcreate.totp.PhotoPickerTotpNavItem
 import proton.android.pass.features.migrate.MigrateConfirmVault
 import proton.android.pass.features.migrate.MigrateModeValue
 import proton.android.pass.features.migrate.MigrateNavigation
-import proton.android.pass.features.migrate.MigrateSelectVault
 import proton.android.pass.features.migrate.MigrateVaultFilter
 import proton.android.pass.features.migrate.migrateGraph
 import proton.android.pass.features.migrate.warningshared.navigation.MigrateSharedWarningNavItem
@@ -495,8 +494,8 @@ fun NavGraphBuilder.appGraph(
                 )
 
                 is HomeNavigation.MoveToVault -> appNavigator.navigate(
-                    destination = MigrateSelectVault,
-                    route = MigrateSelectVault.createNavRouteForMigrateSelectedItems(
+                    destination = MigrateConfirmVault,
+                    route = MigrateConfirmVault.createNavRouteForMigrateSelectedItems(
                         filter = MigrateVaultFilter.All
                     )
                 )
@@ -724,8 +723,8 @@ fun NavGraphBuilder.appGraph(
                 }
 
                 is VaultNavigation.VaultMigrate -> appNavigator.navigate(
-                    destination = MigrateSelectVault,
-                    route = MigrateSelectVault.createNavRouteForMigrateAll(
+                    destination = MigrateConfirmVault,
+                    route = MigrateConfirmVault.createNavRouteForMigrateAll(
                         shareId = it.shareId
                     )
                 )
@@ -799,8 +798,8 @@ fun NavGraphBuilder.appGraph(
 
                 is VaultNavigation.MoveFolder -> dismissBottomSheet {
                     appNavigator.navigate(
-                        destination = MigrateSelectVault,
-                        route = MigrateSelectVault.createNavRouteForMoveFolder(
+                        destination = MigrateConfirmVault,
+                        route = MigrateConfirmVault.createNavRouteForMoveFolder(
                             shareId = it.shareId,
                             folderId = it.folderId
                         )
@@ -2031,8 +2030,8 @@ fun NavGraphBuilder.appGraph(
 
                 is ItemDetailsNavDestination.ItemMigration -> dismissBottomSheet {
                     appNavigator.navigate(
-                        destination = MigrateSelectVault,
-                        route = MigrateSelectVault.createNavRouteForMigrateSelectedItems(
+                        destination = MigrateConfirmVault,
+                        route = MigrateConfirmVault.createNavRouteForMigrateSelectedItems(
                             filter = MigrateVaultFilter.All,
                             folderId = itemDetailsNavDestination.folderId.toOption()
                         )
@@ -2223,17 +2222,6 @@ fun NavGraphBuilder.appGraph(
             when (it) {
                 MigrateNavigation.Close -> appNavigator.navigateBack()
 
-                is MigrateNavigation.VaultSelectedForMigrateItem -> dismissBottomSheet {
-                    appNavigator.navigate(
-                        destination = MigrateConfirmVault,
-                        route = MigrateConfirmVault.createNavRouteForMigrateSelectedItems(
-                            destShareId = it.destShareId,
-                            destFolderId = it.destFolderId
-                        ),
-                        backDestination = ItemDetailsNavItem
-                    )
-                }
-
                 is MigrateNavigation.ItemMigrated -> dismissBottomSheet {
                     // Only navigate to detail if we already were in a detail screen
                     if (appNavigator.hasDestinationInStack(ItemDetailsNavItem)) {
@@ -2250,37 +2238,14 @@ fun NavGraphBuilder.appGraph(
 
                 MigrateNavigation.VaultMigrated -> dismissBottomSheet {}
 
-                is MigrateNavigation.VaultSelectedForMigrateAll -> dismissBottomSheet {
-                    appNavigator.navigate(
-                        destination = MigrateConfirmVault,
-                        route = MigrateConfirmVault.createNavRouteForMigrateAll(
-                            sourceShareId = it.sourceShareId,
-                            destShareId = it.destShareId
-                        ),
-                        backDestination = HomeNavItem
-                    )
-                }
-
-                is MigrateNavigation.VaultSelectedForMoveFolder -> dismissBottomSheet {
-                    appNavigator.navigate(
-                        destination = MigrateConfirmVault,
-                        route = MigrateConfirmVault.createNavRouteForMoveFolder(
-                            shareId = it.shareId,
-                            folderId = it.folderId,
-                            newParentFolderId = it.newParentFolderId
-                        ),
-                        backDestination = HomeNavItem
-                    )
-                }
-
                 MigrateNavigation.FolderMoved -> dismissBottomSheet {}
 
                 MigrateNavigation.DismissBottomsheet -> dismissBottomSheet {}
 
                 is MigrateNavigation.VaultSelectionForItemsMigration -> {
                     appNavigator.navigate(
-                        destination = MigrateSelectVault,
-                        route = MigrateSelectVault.createNavRouteForMigrateSelectedItems(
+                        destination = MigrateConfirmVault,
+                        route = MigrateConfirmVault.createNavRouteForMigrateSelectedItems(
                             filter = it.filter,
                             folderId = it.folderId
                         ),
@@ -2290,8 +2255,8 @@ fun NavGraphBuilder.appGraph(
 
                 is MigrateNavigation.VaultSelectionForVaultMigration -> {
                     appNavigator.navigate(
-                        destination = MigrateSelectVault,
-                        route = MigrateSelectVault.createNavRouteForMigrateAll(
+                        destination = MigrateConfirmVault,
+                        route = MigrateConfirmVault.createNavRouteForMigrateAll(
                             shareId = it.shareId
                         ),
                         backDestination = MigrateSharedWarningNavItem
@@ -2745,8 +2710,8 @@ fun NavGraphBuilder.appGraph(
 
             is SharingNavigation.MoveItemToSharedVault -> dismissBottomSheet {
                 appNavigator.navigate(
-                    destination = MigrateSelectVault,
-                    route = MigrateSelectVault.createNavRouteForMigrateSelectedItems(
+                    destination = MigrateConfirmVault,
+                    route = MigrateConfirmVault.createNavRouteForMigrateSelectedItems(
                         filter = MigrateVaultFilter.Shared
                     )
                 )

@@ -129,7 +129,7 @@ private fun editVault(onEdit: () -> Unit): BottomSheetItem = object : BottomShee
 
 private fun migrateVault(onMigrate: () -> Unit): BottomSheetItem = object : BottomSheetItem {
     override val title: @Composable () -> Unit
-        get() = { BottomSheetItemTitle(text = stringResource(id = R.string.bottomsheet_migrate)) }
+        get() = { BottomSheetItemTitle(text = stringResource(id = R.string.bottomsheet_migrate_v2)) }
     override val subtitle: (@Composable () -> Unit)?
         get() = null
     override val leftIcon: (@Composable () -> Unit)

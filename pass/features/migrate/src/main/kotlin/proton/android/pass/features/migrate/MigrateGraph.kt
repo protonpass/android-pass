@@ -71,7 +71,8 @@ object MigrateModeArg : NavArgId {
 enum class MigrateModeValue {
     SelectedItems,
     AllVaultItems,
-    MoveFolder
+    MoveFolder,
+    MoveAllItemsInFolder
 }
 
 enum class MigrateVaultFilter {
@@ -119,6 +120,16 @@ object MigrateConfirmVault : NavItem(
 
     fun createNavRouteForMoveFolder(shareId: ShareId, folderId: FolderId) = buildString {
         append("$baseRoute/${MigrateModeValue.MoveFolder.name}")
+        append(
+            mapOf(
+                CommonOptionalNavArgId.ShareId.key to shareId.id,
+                CommonOptionalNavArgId.FolderId.key to folderId.id
+            ).toPath()
+        )
+    }
+
+    fun createNavRouteForMoveAllItemsInFolder(shareId: ShareId, folderId: FolderId) = buildString {
+        append("$baseRoute/${MigrateModeValue.MoveAllItemsInFolder.name}")
         append(
             mapOf(
                 CommonOptionalNavArgId.ShareId.key to shareId.id,

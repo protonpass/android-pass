@@ -148,6 +148,26 @@ fun moveFolder(onClick: () -> Unit): BottomSheetItem = object : BottomSheetItem 
 
 }
 
+fun moveAllItemsInFolder(onClick: () -> Unit): BottomSheetItem = object : BottomSheetItem {
+
+    override val title: @Composable () -> Unit = {
+        BottomSheetItemTitle(text = stringResource(R.string.bottomsheet_move_all_items_in_folder))
+    }
+
+    override val subtitle: @Composable (() -> Unit)? = null
+
+    override val leftIcon: @Composable (() -> Unit) = {
+        BottomSheetItemIcon(iconId = CoreR.drawable.ic_proton_folder_arrow_in)
+    }
+
+    override val endIcon: (@Composable () -> Unit)? = null
+
+    override val onClick: () -> Unit = onClick
+
+    override val isDivider = false
+
+}
+
 fun renameFolder(onClick: () -> Unit): BottomSheetItem = object : BottomSheetItem {
     override val title: @Composable () -> Unit = {
         BottomSheetItemTitle(text = stringResource(R.string.bottomsheet_rename_folder))

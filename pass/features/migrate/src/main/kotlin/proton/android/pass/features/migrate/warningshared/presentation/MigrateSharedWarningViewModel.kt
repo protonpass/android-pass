@@ -81,6 +81,7 @@ class MigrateSharedWarningViewModel @Inject constructor(
         )
 
         MigrateModeValue.MoveFolder -> error("MoveFolder mode is not supported in shared warning")
+        MigrateModeValue.MoveAllItemsInFolder -> error("MoveAllItemsInFolder mode is not supported in shared warning")
     }
 
     private val eventFlow = MutableStateFlow<MigrateSharedWarningEvent>(
@@ -107,6 +108,7 @@ class MigrateSharedWarningViewModel @Inject constructor(
             }
 
         is Mode.MoveFolder -> flowOf(emptyMap())
+        is Mode.MoveAllItemsInFolder -> flowOf(emptyMap())
     }.mapLatest(getMigrationItemsSelection::invoke)
 
     internal val stateFlow: StateFlow<MigrateSharedWarningState> = combine(
@@ -136,6 +138,7 @@ class MigrateSharedWarningViewModel @Inject constructor(
             )
 
             is Mode.MoveFolder -> MigrateSharedWarningEvent.Idle
+            is Mode.MoveAllItemsInFolder -> MigrateSharedWarningEvent.Idle
         }.also { event ->
             eventFlow.update { event }
         }

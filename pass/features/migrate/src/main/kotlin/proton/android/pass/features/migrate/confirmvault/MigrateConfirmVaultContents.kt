@@ -73,6 +73,12 @@ internal fun MigrateConfirmVaultContents(
         } else {
             stringResource(R.string.migrate_folder_confirm_title_bottom_sheet)
         }
+
+        MigrateMode.MoveAllItemsInFolder -> if (folderSelected) {
+            stringResource(R.string.migrate_move_all_items_to_folder_confirm_title_bottom_sheet)
+        } else {
+            stringResource(R.string.migrate_move_all_items_confirm_title_bottom_sheet)
+        }
     }
 
     Column(modifier = modifier) {

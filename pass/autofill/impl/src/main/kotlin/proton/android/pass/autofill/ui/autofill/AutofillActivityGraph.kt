@@ -746,6 +746,7 @@ internal fun NavGraphBuilder.autofillActivityGraph(
                 is VaultNavigation.AddFolder,
                 is VaultNavigation.RemoveFolder,
                 is VaultNavigation.MoveFolder,
+                is VaultNavigation.MoveAllItemsInFolder,
                 is VaultNavigation.RenameFolder -> Unit
             }
         }

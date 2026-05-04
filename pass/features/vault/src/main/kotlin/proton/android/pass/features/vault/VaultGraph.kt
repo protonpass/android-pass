@@ -66,6 +66,7 @@ sealed interface VaultNavigation {
 
     data class RemoveFolder(val shareId: ShareId, val folderId: FolderId) : VaultNavigation
     data class MoveFolder(val shareId: ShareId, val folderId: FolderId) : VaultNavigation
+    data class MoveAllItemsInFolder(val shareId: ShareId, val folderId: FolderId) : VaultNavigation
     data class RenameFolder(val shareId: ShareId, val folderId: FolderId) : VaultNavigation
 
     data class VaultAndFolderSelected(val shareId: ShareId, val folderId: FolderId) : VaultNavigation

@@ -30,6 +30,7 @@ import proton.android.pass.data.fakes.usecases.FakeMigrateItems
 import proton.android.pass.data.fakes.usecases.FakeMigrateVault
 import proton.android.pass.data.fakes.usecases.FakeObserveVaultsWithItemCount
 import proton.android.pass.data.fakes.usecases.folders.FakeDissolveFolder
+import proton.android.pass.data.fakes.usecases.folders.FakeMoveAllItemsInFolder
 import proton.android.pass.data.fakes.usecases.folders.FakeMoveFolder
 import proton.android.pass.data.fakes.usecases.folders.FakeMoveItemsInsideShare
 import proton.android.pass.data.fakes.usecases.folders.FakeObserveFoldersByParentId
@@ -63,12 +64,22 @@ internal class MigrateConfirmVaultForMoveFolderViewModelTest {
         observeVaults = FakeObserveVaultsWithItemCount()
         observeFolders = FakeObserveFoldersByParentId()
 
+        val fakeSnackbar = FakeSnackbarDispatcher()
+        val fakeBulkRepo = FakeBulkMoveToVaultRepository()
         instance = MigrateConfirmVaultViewModel(
-            migrateItems = FakeMigrateItems(),
-            migrateVault = FakeMigrateVault(),
-            snackbarDispatcher = FakeSnackbarDispatcher(),
+            migrator = MigrateConfirmVaultMigrator(
+                migrateItems = FakeMigrateItems(),
+                migrateVault = FakeMigrateVault(),
+                moveFolder = FakeMoveFolder(),
+                dissolveFolder = FakeDissolveFolder(),
+                moveAllItemsInFolder = FakeMoveAllItemsInFolder(),
+                moveItemsInsideShare = FakeMoveItemsInsideShare(),
+                snackbarDispatcher = fakeSnackbar,
+                bulkMoveToVaultRepository = fakeBulkRepo
+            ),
+            snackbarDispatcher = fakeSnackbar,
             observeVaults = observeVaults,
-            bulkMoveToVaultRepository = FakeBulkMoveToVaultRepository(),
+            bulkMoveToVaultRepository = fakeBulkRepo,
             observeHasAssociatedSecureLinks = FakeObserveHasAssociatedSecureLinks(),
             savedStateHandle = SavedStateHandleTestFactory.create().apply {
                 set(CommonNavArgId.ShareId.key, SHARE_ID.id)
@@ -77,10 +88,7 @@ internal class MigrateConfirmVaultForMoveFolderViewModelTest {
             },
             observeShare = FakeObserveShare(),
             settingsRepository = FakeInternalSettingsRepository(),
-            moveFolder = FakeMoveFolder(),
-            dissolveFolder = FakeDissolveFolder(),
-            observeFolders = observeFolders,
-            moveItemsInsideShare = FakeMoveItemsInsideShare()
+            observeFolders = observeFolders
         )
     }
 

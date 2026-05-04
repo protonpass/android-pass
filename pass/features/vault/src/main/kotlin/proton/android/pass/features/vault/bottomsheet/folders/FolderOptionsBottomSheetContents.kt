@@ -31,6 +31,7 @@ import proton.android.pass.commonui.api.bottomSheet
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemList
 import proton.android.pass.composecomponents.impl.bottomsheet.createSubFolder
 import proton.android.pass.composecomponents.impl.bottomsheet.delete
+import proton.android.pass.composecomponents.impl.bottomsheet.moveAllItemsInFolder
 import proton.android.pass.composecomponents.impl.bottomsheet.moveFolder
 import proton.android.pass.composecomponents.impl.bottomsheet.renameFolder
 import proton.android.pass.composecomponents.impl.bottomsheet.withDividers
@@ -50,6 +51,10 @@ internal fun FolderOptionsBottomSheetContents(
 
         moveFolder {
             onEvent(FolderOptionsUserEvent.OnMoveFolder)
+        }.also(::add)
+
+        moveAllItemsInFolder {
+            onEvent(FolderOptionsUserEvent.OnMoveAllItemsInFolder)
         }.also(::add)
 
         renameFolder {

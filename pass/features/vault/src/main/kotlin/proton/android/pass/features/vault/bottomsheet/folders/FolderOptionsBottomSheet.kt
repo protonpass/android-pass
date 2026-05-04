@@ -25,6 +25,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import proton.android.pass.features.vault.VaultNavigation
 import proton.android.pass.features.vault.VaultNavigation.AddFolder
+import proton.android.pass.features.vault.VaultNavigation.MoveAllItemsInFolder
 import proton.android.pass.features.vault.VaultNavigation.MoveFolder
 import proton.android.pass.features.vault.VaultNavigation.RemoveFolder
 import proton.android.pass.features.vault.VaultNavigation.RenameFolder
@@ -53,6 +54,9 @@ fun FolderOptionsBottomSheet(
 
                 FolderOptionsUserEvent.OnMoveFolder ->
                     onNavigate(MoveFolder(viewModel.navShareId, viewModel.navFolderId))
+
+                FolderOptionsUserEvent.OnMoveAllItemsInFolder ->
+                    onNavigate(MoveAllItemsInFolder(viewModel.navShareId, viewModel.navFolderId))
             }
         }
     )

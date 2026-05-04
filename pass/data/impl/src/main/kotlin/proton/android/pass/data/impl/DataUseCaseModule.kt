@@ -84,6 +84,7 @@ import proton.android.pass.data.api.usecases.folders.DissolveFolder
 import proton.android.pass.data.api.usecases.folders.DeleteFoldersLocally
 import proton.android.pass.data.api.usecases.folders.GetFolder
 import proton.android.pass.data.api.usecases.folders.GetFolderHierarchy
+import proton.android.pass.data.api.usecases.folders.MoveAllItemsInFolder
 import proton.android.pass.data.api.usecases.folders.MoveFolder
 import proton.android.pass.data.api.usecases.folders.MoveItemsInsideShare
 import proton.android.pass.data.api.usecases.folders.ObserveFolder
@@ -342,6 +343,7 @@ import proton.android.pass.data.impl.usecases.folders.CreateFolderImpl
 import proton.android.pass.data.impl.usecases.folders.DeleteFoldersImpl
 import proton.android.pass.data.impl.usecases.folders.DissolveFolderImpl
 import proton.android.pass.data.impl.usecases.folders.DeleteFoldersLocallyImpl
+import proton.android.pass.data.impl.usecases.folders.MoveAllItemsInFolderImpl
 import proton.android.pass.data.impl.usecases.folders.GetFolderImpl
 import proton.android.pass.data.impl.usecases.folders.GetFolderHierarchyImpl
 import proton.android.pass.data.impl.usecases.folders.MoveFolderImpl
@@ -631,6 +633,9 @@ abstract class DataUseCaseModule {
 
     @Binds
     abstract fun bindMoveItemsToFolder(impl: MoveItemsInsideShareImpl): MoveItemsInsideShare
+
+    @Binds
+    abstract fun bindMoveAllItemsInFolder(impl: MoveAllItemsInFolderImpl): MoveAllItemsInFolder
 
     @Binds
     abstract fun bindDeleteFolders(impl: DeleteFoldersImpl): DeleteFolders

@@ -805,6 +805,16 @@ fun NavGraphBuilder.appGraph(
                         )
                     )
                 }
+
+                is VaultNavigation.MoveAllItemsInFolder -> dismissBottomSheet {
+                    appNavigator.navigate(
+                        destination = MigrateConfirmVault,
+                        route = MigrateConfirmVault.createNavRouteForMoveAllItemsInFolder(
+                            shareId = it.shareId,
+                            folderId = it.folderId
+                        )
+                    )
+                }
             }
         }
     )

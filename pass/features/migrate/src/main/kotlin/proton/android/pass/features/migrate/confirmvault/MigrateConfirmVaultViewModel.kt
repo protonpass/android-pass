@@ -31,6 +31,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.flatMapLatest
@@ -48,23 +49,15 @@ import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.asLoadingResult
 import proton.android.pass.common.api.combineN
-import proton.android.pass.common.api.safeRunCatching
 import proton.android.pass.common.api.toOption
 import proton.android.pass.commonpresentation.api.folders.FolderTreeBuilder
 import proton.android.pass.commonui.api.require
 import proton.android.pass.commonuimodels.api.FolderUiModel
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
-import proton.android.pass.data.api.repositories.BulkMoveToVaultEvent
 import proton.android.pass.data.api.repositories.BulkMoveToVaultRepository
 import proton.android.pass.data.api.repositories.BulkMoveToVaultSelection
-import proton.android.pass.data.api.repositories.MigrateItemsResult
 import proton.android.pass.data.api.repositories.flattenByShare
-import proton.android.pass.data.api.usecases.MigrateItems
-import proton.android.pass.data.api.usecases.MigrateVault
 import proton.android.pass.data.api.usecases.ObserveVaultsWithItemCount
-import proton.android.pass.data.api.usecases.folders.DissolveFolder
-import proton.android.pass.data.api.usecases.folders.MoveFolder
-import proton.android.pass.data.api.usecases.folders.MoveItemsInsideShare
 import proton.android.pass.data.api.usecases.folders.ObserveFoldersByParentId
 import proton.android.pass.data.api.usecases.securelink.ObserveHasAssociatedSecureLinks
 import proton.android.pass.data.api.usecases.shares.ObserveShare
@@ -90,18 +83,14 @@ import javax.inject.Inject
 @HiltViewModel
 class MigrateConfirmVaultViewModel @Inject constructor(
     private val savedStateHandle: SavedStateHandle,
-    private val migrateItems: MigrateItems,
-    private val migrateVault: MigrateVault,
-    private val moveFolder: MoveFolder,
-    private val dissolveFolder: DissolveFolder,
-    private val moveItemsInsideShare: MoveItemsInsideShare,
+    private val migrator: MigrateConfirmVaultMigrator,
     private val snackbarDispatcher: SnackbarDispatcher,
-    private val bulkMoveToVaultRepository: BulkMoveToVaultRepository,
     private val observeHasAssociatedSecureLinks: ObserveHasAssociatedSecureLinks,
     private val observeFolders: ObserveFoldersByParentId,
     private val observeShare: ObserveShare,
-    private val observeVaults: ObserveVaultsWithItemCount,
-    private val settingsRepository: InternalSettingsRepository
+    private val settingsRepository: InternalSettingsRepository,
+    bulkMoveToVaultRepository: BulkMoveToVaultRepository,
+    observeVaults: ObserveVaultsWithItemCount
 ) : ViewModel() {
 
     private data class VaultShareKey(val userId: UserId, val shareId: ShareId)
@@ -201,7 +190,12 @@ class MigrateConfirmVaultViewModel @Inject constructor(
         vaultSharesFlow,
         vaultFoldersFlow,
         ::VaultsWithFolders
-    )
+    ).catch { e ->
+        PassLogger.w(TAG, "Error observing vaults")
+        PassLogger.w(TAG, e)
+        snackbarDispatcher(MigrateSnackbarMessage.CouldNotInit)
+        emit(VaultsWithFolders(emptyList(), emptyMap()))
+    }
 
     private val hasAssociatedSecureLinksFlow = selectedItemsFlow
         .flatMapLatest { selectedItemsOption ->
@@ -238,12 +232,7 @@ class MigrateConfirmVaultViewModel @Inject constructor(
 
         val (vaultList, isLoadingVaults) = when (vaultsResult) {
             LoadingResult.Loading -> persistentListOf<MigrateVaultState>() to true
-            is LoadingResult.Error -> {
-                PassLogger.w(TAG, "Error observing vaults")
-                PassLogger.w(TAG, vaultsResult.exception)
-                viewModelScope.launch { snackbarDispatcher(MigrateSnackbarMessage.CouldNotInit) }
-                persistentListOf<MigrateVaultState>() to false
-            }
+            is LoadingResult.Error -> persistentListOf<MigrateVaultState>() to false
             is LoadingResult.Success -> prepareVaults(
                 vaultsResult.data.vaultShares,
                 vaultsResult.data.vaultFolders,
@@ -259,6 +248,7 @@ class MigrateConfirmVaultViewModel @Inject constructor(
                 selectedDest.value()?.shareId != null &&
                     selectedItems.value()?.keys?.singleOrNull() == selectedDest.value()?.shareId
             is Mode.MigrateAllItems -> false
+            is Mode.MoveAllItemsInFolder -> selectedDest.value()?.shareId == mode.sourceShareId
         }
 
         MigrateConfirmVaultUiState(
@@ -308,17 +298,12 @@ class MigrateConfirmVaultViewModel @Inject constructor(
         val currentMode = mode as? Mode.MoveFolder ?: return
         viewModelScope.launch {
             isLoadingFlow.update { IsLoadingState.Loading }
-            safeRunCatching {
-                dissolveFolder(shareId = currentMode.sourceShareId, folderId = currentMode.folderId)
-            }.onSuccess {
-                snackbarDispatcher(MigrateSnackbarMessage.FolderMoved)
-                eventFlow.update { ConfirmMigrateEvent.FolderMoved.toOption() }
-            }.onFailure {
-                PassLogger.w(TAG, "Error dissolving folder")
-                PassLogger.w(TAG, it)
-                snackbarDispatcher(MigrateSnackbarMessage.FolderNotMoved)
-            }
+            val result = migrator.performFolderDissolve(
+                shareId = currentMode.sourceShareId,
+                folderId = currentMode.folderId
+            )
             isLoadingFlow.update { IsLoadingState.NotLoading }
+            result.value()?.let { event -> eventFlow.update { event.toOption() } }
         }
     }
 
@@ -339,6 +324,9 @@ class MigrateConfirmVaultViewModel @Inject constructor(
                     SelectedDestination(shareId = currentMode.sourceShareId, folderId = folderId.toOption()).toOption()
                 }
             }
+            is Mode.MoveAllItemsInFolder -> selectedDestinationFlow.update {
+                SelectedDestination(shareId = shareId, folderId = folderId.toOption()).toOption()
+            }
             else -> Unit
         }
     }
@@ -350,21 +338,38 @@ class MigrateConfirmVaultViewModel @Inject constructor(
     internal fun onConfirm() {
         val destination = selectedDestinationFlow.value.value() ?: return
         viewModelScope.launch {
-            when (mode) {
-                is Mode.MigrateAllItems -> performAllItemsMigration(
+            isLoadingFlow.update { IsLoadingState.Loading }
+            val result = when (mode) {
+                is Mode.MigrateAllItems -> migrator.performAllItemsMigration(
                     sourceShareId = mode.shareId,
                     destShareId = destination.shareId
                 )
-                is Mode.MigrateSelectedItems -> performItemMigration(
-                    destShareId = destination.shareId,
-                    destFolderId = destination.folderId
-                )
-                is Mode.MoveFolder -> performFolderMove(
+                is Mode.MigrateSelectedItems -> {
+                    val itemsToMigrate = selectedItemsFlow.value.value() ?: run {
+                        PassLogger.w(TAG, "Wanted to migrate selected items but none were selected")
+                        isLoadingFlow.update { IsLoadingState.NotLoading }
+                        return@launch
+                    }
+                    migrator.performItemMigration(
+                        destShareId = destination.shareId,
+                        destFolderId = destination.folderId,
+                        itemsToMigrate = itemsToMigrate
+                    )
+                }
+                is Mode.MoveFolder -> migrator.performFolderMove(
                     shareId = mode.sourceShareId,
                     folderId = mode.folderId,
                     newParentFolderId = destination.folderId.value()
                 )
+                is Mode.MoveAllItemsInFolder -> migrator.performMoveAllItemsInFolder(
+                    sourceShareId = mode.sourceShareId,
+                    sourceFolderId = mode.folderId,
+                    destShareId = destination.shareId,
+                    destFolderId = destination.folderId.value()
+                )
             }
+            isLoadingFlow.update { IsLoadingState.NotLoading }
+            result.value()?.let { event -> eventFlow.update { event.toOption() } }
         }
     }
 
@@ -384,6 +389,7 @@ class MigrateConfirmVaultViewModel @Inject constructor(
                     mode.filter != MigrateVaultFilter.Shared || it.vault.shared
                 is Mode.MoveFolder -> it.vault.shareId == mode.sourceShareId
                 is Mode.MigrateAllItems -> true
+                is Mode.MoveAllItemsInFolder -> true
             }
         }
         .map { prepareVault(it, vaultFolders, selectedItems, selectedItemsAnalysis) }
@@ -439,6 +445,12 @@ class MigrateConfirmVaultViewModel @Inject constructor(
                 status = VaultStatus.Enabled,
                 folderTree = folderTree
             )
+            is Mode.MoveAllItemsInFolder -> MigrateVaultState(
+                vaultWithItemCount = vault,
+                status = if (canCreate) VaultStatus.Enabled
+                else VaultStatus.Disabled(VaultStatus.DisabledReason.NoPermission),
+                folderTree = folderTree
+            )
         }
     }
 
@@ -466,147 +478,24 @@ class MigrateConfirmVaultViewModel @Inject constructor(
             .map { it.copy(folders = removeFolderFromTree(it.folders, folderId)) }
             .toPersistentList()
 
-    private suspend fun performFolderMove(
-        shareId: ShareId,
-        folderId: FolderId,
-        newParentFolderId: FolderId?
-    ) {
-        isLoadingFlow.update { IsLoadingState.Loading }
-        safeRunCatching {
-            moveFolder(shareId = shareId, folderId = folderId, newParentFolderId = newParentFolderId)
-        }.onSuccess {
-            eventFlow.update { ConfirmMigrateEvent.FolderMoved.toOption() }
-            snackbarDispatcher(MigrateSnackbarMessage.FolderMoved)
-            isLoadingFlow.update { IsLoadingState.NotLoading }
-        }.onFailure {
-            isLoadingFlow.update { IsLoadingState.NotLoading }
-            PassLogger.w(TAG, "Error moving folder")
-            PassLogger.w(TAG, it)
-            snackbarDispatcher(MigrateSnackbarMessage.FolderNotMoved)
-        }
-    }
-
-    private suspend fun performAllItemsMigration(sourceShareId: ShareId, destShareId: ShareId) {
-        isLoadingFlow.update { IsLoadingState.Loading }
-        safeRunCatching {
-            migrateVault(origin = sourceShareId, dest = destShareId)
-        }.onSuccess {
-            eventFlow.update { ConfirmMigrateEvent.AllItemsMigrated.toOption() }
-            snackbarDispatcher(MigrateSnackbarMessage.VaultItemsMigrated)
-            isLoadingFlow.update { IsLoadingState.NotLoading }
-        }.onFailure {
-            isLoadingFlow.update { IsLoadingState.NotLoading }
-            PassLogger.w(TAG, "Error migrating all items")
-            PassLogger.w(TAG, it)
-            snackbarDispatcher(MigrateSnackbarMessage.VaultItemsNotMigrated)
-        }
-    }
-
-    @Suppress("LongMethod")
-    private suspend fun performItemMigration(destShareId: ShareId, destFolderId: Option<FolderId>) {
-        val itemsToMigrate = selectedItemsFlow.value.value() ?: run {
-            PassLogger.w(TAG, "Wanted to migrate selected items but none were selected")
-            return
-        }
-        val isSameVaultFolderMove = itemsToMigrate.keys.singleOrNull() == destShareId
-        isLoadingFlow.update { IsLoadingState.Loading }
-
-        if (isSameVaultFolderMove) {
-            safeRunCatching {
-                moveItemsInsideShare(
-                    shareId = destShareId,
-                    folderId = destFolderId.value(),
-                    itemIds = itemsToMigrate.values.flatten()
-                )
-            }.onSuccess {
-                val firstEntry = itemsToMigrate.entries.first()
-                eventFlow.update {
-                    ConfirmMigrateEvent.ItemMigrated(
-                        shareId = firstEntry.key,
-                        itemId = firstEntry.value.first()
-                    ).toOption()
-                }
-                bulkMoveToVaultRepository.emitEvent(BulkMoveToVaultEvent.Completed)
-                bulkMoveToVaultRepository.delete()
-                snackbarDispatcher(MigrateSnackbarMessage.ItemMigrated)
-            }.onFailure {
-                PassLogger.w(TAG, "Error moving items to folder")
-                PassLogger.w(TAG, it)
-                snackbarDispatcher(MigrateSnackbarMessage.ItemNotMigrated)
-            }
-        } else {
-            safeRunCatching {
-                migrateItems(
-                    items = itemsToMigrate,
-                    destinationShare = destShareId,
-                    destinationFolderId = destFolderId
-                )
-            }.onSuccess { migrateResult ->
-                when (migrateResult) {
-                    is MigrateItemsResult.AllMigrated -> {
-                        val migratedItem = migrateResult.items.firstOrNull() ?: run {
-                            PassLogger.w(TAG, "No items were migrated")
-                            snackbarDispatcher(MigrateSnackbarMessage.ItemNotMigrated)
-                            return@onSuccess
-                        }
-                        eventFlow.update {
-                            ConfirmMigrateEvent.ItemMigrated(
-                                shareId = migratedItem.shareId,
-                                itemId = migratedItem.id
-                            ).toOption()
-                        }
-                        bulkMoveToVaultRepository.emitEvent(BulkMoveToVaultEvent.Completed)
-                        bulkMoveToVaultRepository.delete()
-                        snackbarDispatcher(MigrateSnackbarMessage.ItemMigrated)
-                    }
-                    is MigrateItemsResult.SomeMigrated -> {
-                        val migratedItem = migrateResult.migratedItems.firstOrNull() ?: run {
-                            PassLogger.w(TAG, "No items were migrated")
-                            snackbarDispatcher(MigrateSnackbarMessage.ItemNotMigrated)
-                            return@onSuccess
-                        }
-                        eventFlow.update {
-                            ConfirmMigrateEvent.ItemMigrated(
-                                shareId = migratedItem.shareId,
-                                itemId = migratedItem.id
-                            ).toOption()
-                        }
-                        snackbarDispatcher(MigrateSnackbarMessage.SomeItemsNotMigrated)
-                    }
-                    is MigrateItemsResult.NoneMigrated -> {
-                        PassLogger.w(TAG, "Error migrating items")
-                        PassLogger.w(TAG, migrateResult.exception)
-                        snackbarDispatcher(MigrateSnackbarMessage.ItemNotMigrated)
-                    }
-                }
-            }.onFailure {
-                PassLogger.w(TAG, "Error migrating item")
-                PassLogger.w(TAG, it)
-                snackbarDispatcher(MigrateSnackbarMessage.ItemNotMigrated)
-            }
-        }
-
-        isLoadingFlow.update { IsLoadingState.NotLoading }
-    }
-
-    private fun getMode(): Mode {
-        return when (MigrateModeValue.valueOf(savedStateHandle.require(MigrateModeArg.key))) {
-            MigrateModeValue.SelectedItems -> Mode.MigrateSelectedItems(
-                filter = MigrateVaultFilter.valueOf(
-                    savedStateHandle.require(MigrateVaultFilterArg.key)
-                ),
-                sourceFolderId = savedStateHandle.get<String>(CommonOptionalNavArgId.FolderId.key)
-                    ?.let(::FolderId)
-                    .toOption()
-            )
-            MigrateModeValue.AllVaultItems -> Mode.MigrateAllItems(
-                shareId = ShareId(savedStateHandle.require(CommonNavArgId.ShareId.key))
-            )
-            MigrateModeValue.MoveFolder -> Mode.MoveFolder(
-                sourceShareId = ShareId(savedStateHandle.require(CommonNavArgId.ShareId.key)),
-                folderId = FolderId(savedStateHandle.require(CommonOptionalNavArgId.FolderId.key))
-            )
-        }
+    private fun getMode(): Mode = when (MigrateModeValue.valueOf(savedStateHandle.require(MigrateModeArg.key))) {
+        MigrateModeValue.SelectedItems -> Mode.MigrateSelectedItems(
+            filter = MigrateVaultFilter.valueOf(savedStateHandle.require(MigrateVaultFilterArg.key)),
+            sourceFolderId = savedStateHandle.get<String>(CommonOptionalNavArgId.FolderId.key)
+                ?.let(::FolderId)
+                .toOption()
+        )
+        MigrateModeValue.AllVaultItems -> Mode.MigrateAllItems(
+            shareId = ShareId(savedStateHandle.require(CommonNavArgId.ShareId.key))
+        )
+        MigrateModeValue.MoveFolder -> Mode.MoveFolder(
+            sourceShareId = ShareId(savedStateHandle.require(CommonNavArgId.ShareId.key)),
+            folderId = FolderId(savedStateHandle.require(CommonOptionalNavArgId.FolderId.key))
+        )
+        MigrateModeValue.MoveAllItemsInFolder -> Mode.MoveAllItemsInFolder(
+            sourceShareId = ShareId(savedStateHandle.require(CommonNavArgId.ShareId.key)),
+            folderId = FolderId(savedStateHandle.require(CommonOptionalNavArgId.FolderId.key))
+        )
     }
 
     internal sealed interface Mode {
@@ -622,10 +511,16 @@ class MigrateConfirmVaultViewModel @Inject constructor(
             val folderId: FolderId
         ) : Mode
 
+        data class MoveAllItemsInFolder(
+            val sourceShareId: ShareId,
+            val folderId: FolderId
+        ) : Mode
+
         fun migrateMode(selectedItemCount: Option<Int>): MigrateMode = when (this) {
             is MigrateSelectedItems -> MigrateMode.MigrateSelectedItems(selectedItemCount.value() ?: 0)
             is MigrateAllItems -> MigrateMode.MigrateAll
             is MoveFolder -> MigrateMode.MoveFolder
+            is MoveAllItemsInFolder -> MigrateMode.MoveAllItemsInFolder
         }
     }
 

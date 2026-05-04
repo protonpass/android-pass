@@ -34,6 +34,7 @@ import proton.android.pass.data.fakes.usecases.FakeMigrateItems
 import proton.android.pass.data.fakes.usecases.FakeMigrateVault
 import proton.android.pass.data.fakes.usecases.FakeObserveVaultsWithItemCount
 import proton.android.pass.data.fakes.usecases.folders.FakeDissolveFolder
+import proton.android.pass.data.fakes.usecases.folders.FakeMoveAllItemsInFolder
 import proton.android.pass.data.fakes.usecases.folders.FakeMoveFolder
 import proton.android.pass.data.fakes.usecases.folders.FakeMoveItemsInsideShare
 import proton.android.pass.data.fakes.usecases.folders.FakeObserveFoldersByParentId
@@ -81,8 +82,16 @@ class MigrateConfirmVaultVaultListTest {
         bulkRepo: FakeBulkMoveToVaultRepository = bulkMoveToVaultRepository,
         filter: MigrateVaultFilter = MigrateVaultFilter.All
     ): MigrateConfirmVaultViewModel = MigrateConfirmVaultViewModel(
-        migrateItems = FakeMigrateItems(),
-        migrateVault = FakeMigrateVault(),
+        migrator = MigrateConfirmVaultMigrator(
+            migrateItems = FakeMigrateItems(),
+            migrateVault = FakeMigrateVault(),
+            moveFolder = FakeMoveFolder(),
+            dissolveFolder = FakeDissolveFolder(),
+            moveAllItemsInFolder = FakeMoveAllItemsInFolder(),
+            moveItemsInsideShare = FakeMoveItemsInsideShare(),
+            snackbarDispatcher = snackbarDispatcher,
+            bulkMoveToVaultRepository = bulkRepo
+        ),
         snackbarDispatcher = snackbarDispatcher,
         observeVaults = observeVaults,
         bulkMoveToVaultRepository = bulkRepo,
@@ -93,10 +102,7 @@ class MigrateConfirmVaultVaultListTest {
         },
         observeShare = FakeObserveShare(),
         settingsRepository = FakeInternalSettingsRepository(),
-        moveFolder = FakeMoveFolder(),
-        dissolveFolder = FakeDissolveFolder(),
-        observeFolders = observeFolders,
-        moveItemsInsideShare = FakeMoveItemsInsideShare()
+        observeFolders = observeFolders
     )
 
     @Test

@@ -60,6 +60,9 @@ internal sealed interface MigrateMode {
     @Stable
     data object MoveFolder : MigrateMode
 
+    @Stable
+    data object MoveAllItemsInFolder : MigrateMode
+
 }
 
 @Stable

@@ -275,7 +275,7 @@ internal class HomeDrawerViewModelTest {
 
         viewModel.stateFlow.test {
             val state = awaitNextMatching { it.foldersEnabled && it.vaultShares.isNotEmpty() }
-            assertThat(state.canCreateFolder).isTrue()
+            assertThat(state.canCreateFolderShareIds).isNotEmpty()
             assertThat(state.needsToUpgrade).isFalse()
         }
     }
@@ -289,7 +289,7 @@ internal class HomeDrawerViewModelTest {
 
         viewModel.stateFlow.test {
             val state = awaitNextMatching { it.foldersEnabled && it.vaultShares.isNotEmpty() }
-            assertThat(state.canCreateFolder).isFalse()
+            assertThat(state.canCreateFolderShareIds).isEmpty()
             assertThat(state.needsToUpgrade).isTrue()
         }
     }
@@ -304,7 +304,7 @@ internal class HomeDrawerViewModelTest {
         viewModel.stateFlow.test {
             val state = awaitNextMatching { it.vaultShares.isNotEmpty() }
             assertThat(state.foldersEnabled).isTrue()
-            assertThat(state.canCreateFolder).isFalse()
+            assertThat(state.canCreateFolderShareIds).isEmpty()
             assertThat(state.needsToUpgrade).isFalse()
         }
     }

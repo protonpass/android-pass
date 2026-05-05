@@ -86,7 +86,7 @@ internal fun HomeDrawerContent(
             trashedItemsCount = trashedItemsCount,
             onUiEvent = onUiEvent,
             foldersEnabled = foldersEnabled,
-            canCreateFolder = canCreateFolder,
+            canCreateFolderShareIds = canCreateFolderShareIds,
             needsToUpgrade = needsToUpgrade
         )
 

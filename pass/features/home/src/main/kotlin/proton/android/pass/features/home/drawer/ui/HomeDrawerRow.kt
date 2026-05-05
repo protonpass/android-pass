@@ -19,8 +19,9 @@
 package proton.android.pass.features.home.drawer.ui
 
 import androidx.annotation.DrawableRes
-import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -34,6 +35,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
+import androidx.compose.ui.unit.dp
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.ThemedBooleanPreviewProvider
@@ -62,6 +64,7 @@ internal fun HomeDrawerRow(
     membersCount: Int = 0,
     onShareClick: (() -> Unit)? = null,
     onMenuOptionsClick: (() -> Unit)? = null,
+    foldersEnabled: Boolean = false,
     hasFolderContent: Boolean = false,
     showFolders: Boolean = false,
     onShowFoldersToggle: (() -> Unit)? = null
@@ -80,13 +83,12 @@ internal fun HomeDrawerRow(
                 ),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            AnimatedVisibility(
-                visible = hasFolderContent
-            ) {
-                ExpandCollapseIcon(
+            when {
+                hasFolderContent -> ExpandCollapseIcon(
                     expanded = showFolders,
                     onClick = { onShowFoldersToggle?.invoke() }
                 )
+                foldersEnabled -> Box(modifier = Modifier.size(36.dp))
             }
 
             OverlayBadge(

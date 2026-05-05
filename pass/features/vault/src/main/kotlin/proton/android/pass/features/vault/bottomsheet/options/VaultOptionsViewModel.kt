@@ -99,7 +99,7 @@ class VaultOptionsViewModel @Inject constructor(
         eventFlow,
         preferencesRepository.get<Boolean>(FeatureFlag.PASS_ALLOW_NO_VAULT),
         preferencesRepository.get<Boolean>(FeatureFlag.PASS_FOLDERS),
-        canCreateFolder(),
+        canCreateFolder(navShareId),
         observeUpgradeInfo().asLoadingResult(),
         rootFolderCountFlow
     ) { vaultResult, canShare, event, allowNoVault, foldersEnabled, canCreateFolder, upgradeResult, rootFolderCount ->

@@ -24,6 +24,7 @@ import kotlinx.coroutines.test.runTest
 import org.junit.Rule
 import org.junit.Test
 import proton.android.pass.commonui.fakes.FakeSavedStateHandleProvider
+import proton.android.pass.data.fakes.usecases.FakeCanCreateFolder
 import proton.android.pass.data.fakes.usecases.folders.FakeGetFolder
 import proton.android.pass.data.fakes.usecases.folders.FakeObserveFoldersByParentId
 import proton.android.pass.domain.Folder
@@ -251,6 +252,28 @@ class FolderOptionsViewModelTest {
         }
     }
 
+    @Test
+    fun `cannot create subfolder when canCreateFolder returns false`() = runTest {
+        val canCreateFolder = FakeCanCreateFolder().apply { sendValue(false) }
+
+        createInstance(emptyObserve(), canCreateFolder = canCreateFolder).canCreateSubFolder.test {
+            assertThat(awaitItem()).isFalse()
+        }
+    }
+
+    @Test
+    fun `can create subfolder updates when canCreateFolder flips to true`() = runTest {
+        val canCreateFolder = FakeCanCreateFolder().apply { sendValue(false) }
+
+        createInstance(emptyObserve(), canCreateFolder = canCreateFolder).canCreateSubFolder.test {
+            assertThat(awaitItem()).isFalse()
+
+            canCreateFolder.sendValue(true)
+
+            assertThat(awaitItem()).isTrue()
+        }
+    }
+
     private fun createInstance(
         observeFoldersByParentId: FakeObserveFoldersByParentId,
         getFolder: FakeGetFolder = FakeGetFolder().apply {
@@ -262,12 +285,14 @@ class FolderOptionsViewModelTest {
                     )
                 )
             )
-        }
+        },
+        canCreateFolder: FakeCanCreateFolder = FakeCanCreateFolder()
     ) = FolderOptionsViewModel(
         savedStateHandle = FakeSavedStateHandleProvider().apply {
             get()[CommonNavArgId.ShareId.key] = SHARE_ID.id
             get()[CommonOptionalNavArgId.FolderId.key] = PARENT_FOLDER_ID.id
         },
+        canCreateFolder = canCreateFolder,
         getFolder = getFolder,
         observeFoldersByParentId = observeFoldersByParentId
     )

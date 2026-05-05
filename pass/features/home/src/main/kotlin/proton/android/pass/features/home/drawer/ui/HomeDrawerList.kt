@@ -65,7 +65,7 @@ internal fun HomeDrawerList(
     vaultSelectionOption: VaultSelectionOption,
     allItemsCount: Int,
     foldersEnabled: Boolean,
-    canCreateFolder: Boolean,
+    canCreateFolderShareIds: Set<ShareId>,
     needsToUpgrade: Boolean,
     hasSharedWithMeItems: Boolean,
     sharedWithMeItemsCount: Int,
@@ -102,7 +102,7 @@ internal fun HomeDrawerList(
                     ?.takeIf { it.shareId == shareId }
                     ?.folderId
             val folders = vaultFolders[shareId] ?: emptyList()
-            val effectiveCanCreate = canCreateFolder && !vaultFolderAtLimit.contains(shareId)
+            val effectiveCanCreate = canCreateFolderShareIds.contains(shareId) && !vaultFolderAtLimit.contains(shareId)
             val shouldShowFolderContent = foldersEnabled &&
                 (folders.isNotEmpty() || effectiveCanCreate || needsToUpgrade)
             val isShowingFolders = vaultShowFoldersMap[shareIdStr] ?: false
@@ -155,6 +155,7 @@ internal fun HomeDrawerList(
                         HomeDrawerUiEvent.OnVaultOptionsClick(shareId = vaultShare.vault.shareId)
                             .also(onUiEvent)
                     },
+                    foldersEnabled = foldersEnabled,
                     hasFolderContent = shouldShowFolderContent,
                     showFolders = isShowingFolders && shouldShowFolderContent,
                     onShowFoldersToggle = if (shouldShowFolderContent) {
@@ -173,7 +174,7 @@ internal fun HomeDrawerList(
                     createButtonModifier = Modifier
                         .padding(start = 20.dp)
                         .padding(bottom = Spacing.medium),
-                    onThreeDotsClick = if (canCreateFolder) {
+                    onThreeDotsClick = if (canCreateFolderShareIds.contains(shareId)) {
                         { HomeDrawerUiEvent.OnFolderOptionsClick(shareId, it).also(onUiEvent) }
                     } else null,
                     onFolderClick = {

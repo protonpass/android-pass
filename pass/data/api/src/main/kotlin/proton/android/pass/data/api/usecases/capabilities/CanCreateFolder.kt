@@ -19,7 +19,9 @@
 package proton.android.pass.data.api.usecases.capabilities
 
 import kotlinx.coroutines.flow.Flow
+import proton.android.pass.domain.ShareId
 
 interface CanCreateFolder {
-    operator fun invoke(): Flow<Boolean>
+    operator fun invoke(shareId: ShareId): Flow<Boolean>
+    operator fun invoke(shareIds: List<ShareId>): Flow<Boolean>
 }

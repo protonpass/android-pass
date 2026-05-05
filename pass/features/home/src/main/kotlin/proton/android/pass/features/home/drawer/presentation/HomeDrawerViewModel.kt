@@ -113,6 +113,14 @@ class HomeDrawerViewModel @Inject constructor(
     private val vaultFoldersFlow: Flow<Pair<Map<ShareId, PersistentList<FolderUiModel>>, Set<ShareId>>> =
         folderFlowInput.flatMapLatest(::observeVaultFolders)
 
+    private val canCreateFolderFlow: Flow<Set<ShareId>> = vaultShareKeysFlow
+        .flatMapLatest { keys ->
+            if (keys.isEmpty()) return@flatMapLatest flowOf(emptySet())
+            combine(keys.map { key -> canCreateFolder(key.shareId).map { key.shareId to it } }) { pairs ->
+                pairs.filter { (_, canCreate) -> canCreate }.mapTo(mutableSetOf()) { (id, _) -> id }
+            }
+        }
+
     private val vaultsWithFoldersFlow: Flow<VaultsWithFolders> = combine(
         vaultSharesItemsCountFlow,
         vaultFoldersFlow
@@ -127,7 +135,7 @@ class HomeDrawerViewModel @Inject constructor(
     internal val stateFlow: StateFlow<HomeDrawerState> = combineN(
         foldersEnabledFlow,
         vaultsWithFoldersFlow,
-        canCreateFolder(),
+        canCreateFolderFlow,
         canCreateVault(),
         canOrganiseVaults(),
         homeSearchOptionsRepository.observeVaultSelectionOption(),
@@ -135,7 +143,7 @@ class HomeDrawerViewModel @Inject constructor(
         observeUpgradeInfo().asLoadingResult()
     ) { isFoldersEnabled,
         vaultsWithFolders,
-        canCreateFolder,
+        canCreateFolderShareIds,
         canCreateVault,
         canOrganiseVaults,
         vaultSelectionOption,
@@ -144,7 +152,7 @@ class HomeDrawerViewModel @Inject constructor(
         buildHomeDrawerState(
             isFoldersEnabled = isFoldersEnabled,
             vaultsWithFolders = vaultsWithFolders,
-            canCreateFolder = canCreateFolder,
+            canCreateFolderShareIds = canCreateFolderShareIds,
             canCreateVault = canCreateVault,
             canOrganiseVaults = canOrganiseVaults,
             vaultSelectionOption = vaultSelectionOption,
@@ -182,7 +190,7 @@ class HomeDrawerViewModel @Inject constructor(
     private fun buildHomeDrawerState(
         isFoldersEnabled: Boolean,
         vaultsWithFolders: VaultsWithFolders,
-        canCreateFolder: Boolean,
+        canCreateFolderShareIds: Set<ShareId>,
         canCreateVault: Boolean,
         canOrganiseVaults: Boolean,
         vaultSelectionOption: VaultSelectionOption,
@@ -192,7 +200,7 @@ class HomeDrawerViewModel @Inject constructor(
         vaultShares = vaultsWithFolders.vaultShares,
         vaultFolders = vaultsWithFolders.vaultFolders,
         vaultFolderAtLimit = vaultsWithFolders.vaultFolderAtLimit,
-        canCreateFolder = canCreateFolder,
+        canCreateFolderShareIds = canCreateFolderShareIds,
         canCreateVault = canCreateVault,
         canOrganiseVaults = canOrganiseVaults,
         vaultSelectionOption = vaultSelectionOption,

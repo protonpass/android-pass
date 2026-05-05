@@ -19,17 +19,51 @@
 package proton.android.pass.data.impl.usecases.capabilities
 
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.mapLatest
+import proton.android.pass.data.api.repositories.ShareRepository
+import proton.android.pass.data.api.usecases.ObserveCurrentUser
 import proton.android.pass.data.api.usecases.ObserveUserAccessData
 import proton.android.pass.data.api.usecases.capabilities.CanCreateFolder
+import proton.android.pass.domain.ShareId
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
 class CanCreateFolderImpl @Inject constructor(
-    private val observeUserAccessData: ObserveUserAccessData
+    private val observeCurrentUser: ObserveCurrentUser,
+    private val observeUserAccessData: ObserveUserAccessData,
+    private val shareRepository: ShareRepository
 ) : CanCreateFolder {
 
-    override fun invoke(): Flow<Boolean> = observeUserAccessData()
-        .map { it?.folderAllowed ?: false }
+    override fun invoke(shareId: ShareId): Flow<Boolean> = observeCurrentUser()
+        .mapLatest { it.userId }
+        .flatMapLatest { userId ->
+            combine(
+                observeUserAccessData(),
+                shareRepository.observeById(userId, shareId)
+            ) { userAccess, share ->
+                userAccess?.folderAllowed ?: false && share.canBeCreated
+            }
+        }
+
+    override fun invoke(shareIds: List<ShareId>): Flow<Boolean> {
+        if (shareIds.isEmpty()) return flowOf(false)
+        val shareIdSet = shareIds.toSet()
+        return observeCurrentUser()
+            .mapLatest { it.userId }
+            .flatMapLatest { userId ->
+                combine(
+                    observeUserAccessData(),
+                    shareRepository.observeAllShares(userId, includeHidden = false)
+                ) { userAccess, shares ->
+                    val folderAllowed = userAccess?.folderAllowed ?: false
+                    shares
+                        .filter { it.id in shareIdSet }
+                        .any { share -> folderAllowed && share.canBeCreated }
+                }
+            }
+    }
 }

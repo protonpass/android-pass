@@ -21,6 +21,7 @@ package proton.android.pass.data.fakes.usecases
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import proton.android.pass.data.api.usecases.capabilities.CanCreateFolder
+import proton.android.pass.domain.ShareId
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -33,5 +34,7 @@ class FakeCanCreateFolder @Inject constructor() : CanCreateFolder {
         resultFlow.tryEmit(value)
     }
 
-    override fun invoke(): Flow<Boolean> = resultFlow
+    override fun invoke(shareId: ShareId): Flow<Boolean> = resultFlow
+
+    override fun invoke(shareIds: List<ShareId>): Flow<Boolean> = resultFlow
 }

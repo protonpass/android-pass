@@ -21,16 +21,17 @@ package proton.android.pass.features.vault.bottomsheet.folders
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.update
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.flow.emitAll
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.stateIn
 import proton.android.pass.common.api.safeRunCatching
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
+import proton.android.pass.data.api.usecases.capabilities.CanCreateFolder
 import proton.android.pass.data.api.usecases.folders.GetFolder
 import proton.android.pass.data.api.usecases.folders.ObserveFoldersByParentId
 import proton.android.pass.domain.FolderId
@@ -44,6 +45,7 @@ import javax.inject.Inject
 @HiltViewModel
 class FolderOptionsViewModel @Inject constructor(
     savedStateHandle: SavedStateHandleProvider,
+    canCreateFolder: CanCreateFolder,
     private val getFolder: GetFolder,
     private val observeFoldersByParentId: ObserveFoldersByParentId
 ) : ViewModel() {
@@ -56,37 +58,35 @@ class FolderOptionsViewModel @Inject constructor(
         .require<String>(CommonOptionalNavArgId.FolderId.key)
         .let(::FolderId)
 
-    private val _canCreateSubFolder = MutableStateFlow(true)
-    val canCreateSubFolder: StateFlow<Boolean> = _canCreateSubFolder.asStateFlow()
+    val canCreateSubFolder: StateFlow<Boolean> = flow {
+        val depth = safeRunCatching {
+            computeFolderDepth(navShareId, navFolderId)
+        }.getOrElse {
+            PassLogger.w(TAG, it, "Failed to compute folder depth")
+            emit(false)
+            return@flow
+        }
 
-    init {
-        viewModelScope.launch {
-            val depth = safeRunCatching {
-                computeFolderDepth(navShareId, navFolderId)
-            }.onFailure {
-                PassLogger.w(TAG, it, "Failed to compute folder depth")
-                _canCreateSubFolder.update { false }
-            }.getOrNull() ?: return@launch
-
+        emitAll(
             combine(
+                canCreateFolder(navShareId),
                 observeFoldersByParentId(navShareId, navFolderId),
                 observeFoldersByParentId(navShareId)
-            ) { children, folders ->
-                val childrenCount = children.size
-                val totalCount = folders.size
-                depth < FolderLimits.MAX_FOLDER_DEPTH &&
-                    childrenCount < FolderLimits.MAX_FOLDER_WIDTH &&
-                    totalCount < FolderLimits.MAX_FOLDERS_PER_VAULT
+            ) { canCreate, children, folders ->
+                canCreate &&
+                    depth < FolderLimits.MAX_FOLDER_DEPTH &&
+                    children.size < FolderLimits.MAX_FOLDER_WIDTH &&
+                    folders.size < FolderLimits.MAX_FOLDERS_PER_VAULT
             }.catch { error ->
                 PassLogger.w(TAG, error, "Failed to observe folder limits")
-                _canCreateSubFolder.update { false }
-            }.collect { canCreateSubFolder ->
-                _canCreateSubFolder.update {
-                    canCreateSubFolder
-                }
+                emit(false)
             }
-        }
-    }
+        )
+    }.stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.WhileSubscribed(5_000),
+        initialValue = false
+    )
 
     private suspend fun computeFolderDepth(shareId: ShareId, folderId: FolderId): Int {
         var depth = 1

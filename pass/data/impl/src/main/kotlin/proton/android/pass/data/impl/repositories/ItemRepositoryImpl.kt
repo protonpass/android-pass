@@ -1095,7 +1095,8 @@ class ItemRepositoryImpl @Inject constructor(
     override suspend fun migrateAllVaultItems(
         userId: UserId,
         source: ShareId,
-        destination: ShareId
+        destination: ShareId,
+        destinationFolderId: FolderId?
     ) {
         val items = localItemDataSource.observeItems(
             userId = userId,
@@ -1104,14 +1105,26 @@ class ItemRepositoryImpl @Inject constructor(
             filter = ItemTypeFilter.All,
             itemFlags = emptyMap()
         ).first()
-        val destinationKey = shareKeyRepository.getLatestKeyForShare(destination).first()
 
+        if (source == destination) {
+            val itemIds = items.map { ItemId(it.id) }
+            moveItemsInsideShare(
+                userId = userId,
+                shareId = source,
+                folderId = destinationFolderId,
+                itemIds = itemIds
+            )
+            return
+        }
+
+        val destinationKey = shareKeyRepository.getLatestKeyForShare(destination).first()
         migrateItemsForShare(
             userId = userId,
             source = source,
             destination = destination,
             destinationKey = destinationKey,
-            items = items
+            items = items,
+            destinationFolderId = destinationFolderId
         )
     }
 

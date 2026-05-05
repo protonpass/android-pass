@@ -18,9 +18,14 @@
 
 package proton.android.pass.data.api.usecases
 
+import proton.android.pass.domain.FolderId
 import proton.android.pass.domain.ShareId
 
 interface MigrateVault {
-    suspend operator fun invoke(origin: ShareId, dest: ShareId)
+    suspend operator fun invoke(
+        origin: ShareId,
+        dest: ShareId,
+        destFolderId: FolderId? = null
+    )
 }
 

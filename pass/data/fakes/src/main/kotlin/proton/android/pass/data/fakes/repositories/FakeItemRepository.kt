@@ -385,7 +385,8 @@ class FakeItemRepository @Inject constructor() : ItemRepository {
     override suspend fun migrateAllVaultItems(
         userId: UserId,
         source: ShareId,
-        destination: ShareId
+        destination: ShareId,
+        destinationFolderId: FolderId?
     ) {
         TODO("Not yet implemented")
     }

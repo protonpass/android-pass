@@ -85,16 +85,6 @@ object MigrateVaultFilterArg : OptionalNavArgId {
     override val navType = NavType.StringType
 }
 
-object MigrateNewParentFolderNavArgId : OptionalNavArgId {
-    override val key = "newParentFolderId"
-    override val navType = NavType.StringType
-}
-
-object MigrateDestinationFolderNavArgId : OptionalNavArgId {
-    override val key = "destinationFolderId"
-    override val navType = NavType.StringType
-}
-
 object MigrateConfirmVault : NavItem(
     baseRoute = "migrate/confirm",
     navArgIds = listOf(MigrateModeArg),

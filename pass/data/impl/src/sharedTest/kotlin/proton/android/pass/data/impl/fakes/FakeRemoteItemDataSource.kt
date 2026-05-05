@@ -50,6 +50,11 @@ class FakeRemoteItemDataSource : RemoteItemDataSource {
         { throw IllegalStateException("response not set") }
     private var updateItemMemory: MutableList<UpdateItemParams> = mutableListOf()
 
+    private var migrateItemsCallCount = 0
+    private var migrateItemsResponse: () -> List<ItemRevision> = { emptyList() }
+    private var moveItemsToFolderCallCount = 0
+    private var moveItemsToFolderResponse: () -> List<MoveItemRevisionApiModel> = { emptyList() }
+
     fun getCreateItemMemory(): List<CreateItemParams> = createItemMemory
 
     fun setCreateItemResponse(delegate: () -> ItemRevision) {
@@ -160,12 +165,23 @@ class FakeRemoteItemDataSource : RemoteItemDataSource {
         throw IllegalStateException("Not yet implemented")
     }
 
+    fun getMigrateItemsCallCount(): Int = migrateItemsCallCount
+    fun setMigrateItemsResponse(delegate: () -> List<ItemRevision>) {
+        migrateItemsResponse = delegate
+    }
+
     override suspend fun migrateItems(
         userId: UserId,
         shareId: ShareId,
         body: MigrateItemsRequest
     ): List<ItemRevision> {
-        throw IllegalStateException("Not yet implemented")
+        migrateItemsCallCount++
+        return migrateItemsResponse()
+    }
+
+    fun getMoveItemsToFolderCallCount(): Int = moveItemsToFolderCallCount
+    fun setMoveItemsToFolderResponse(delegate: () -> List<MoveItemRevisionApiModel>) {
+        moveItemsToFolderResponse = delegate
     }
 
     override suspend fun moveItemsToFolder(
@@ -173,7 +189,8 @@ class FakeRemoteItemDataSource : RemoteItemDataSource {
         shareId: ShareId,
         body: MoveItemsToFolderRequest
     ): List<MoveItemRevisionApiModel> {
-        throw IllegalStateException("Not yet implemented")
+        moveItemsToFolderCallCount++
+        return moveItemsToFolderResponse()
     }
 
     override suspend fun pinItem(

@@ -83,8 +83,11 @@ class MigrateConfirmVaultMigrator @Inject constructor(
 
     internal suspend fun performAllItemsMigration(
         sourceShareId: ShareId,
-        destShareId: ShareId
-    ): Option<ConfirmMigrateEvent> = safeRunCatching { migrateVault(origin = sourceShareId, dest = destShareId) }
+        destShareId: ShareId,
+        destFolderId: FolderId? = null
+    ): Option<ConfirmMigrateEvent> = safeRunCatching {
+        migrateVault(origin = sourceShareId, dest = destShareId, destFolderId = destFolderId)
+    }
         .onSuccess { snackbarDispatcher(MigrateSnackbarMessage.VaultItemsMigrated) }
         .onFailure {
             PassLogger.w(TAG, "Error migrating all items")

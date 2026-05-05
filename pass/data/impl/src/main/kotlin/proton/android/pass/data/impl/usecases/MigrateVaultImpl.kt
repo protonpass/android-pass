@@ -22,6 +22,7 @@ import kotlinx.coroutines.flow.firstOrNull
 import me.proton.core.accountmanager.domain.AccountManager
 import proton.android.pass.data.api.repositories.ItemRepository
 import proton.android.pass.data.api.usecases.MigrateVault
+import proton.android.pass.domain.FolderId
 import proton.android.pass.domain.ShareId
 import javax.inject.Inject
 
@@ -30,8 +31,17 @@ class MigrateVaultImpl @Inject constructor(
     private val itemRepository: ItemRepository
 ) : MigrateVault {
 
-    override suspend fun invoke(origin: ShareId, dest: ShareId) {
+    override suspend fun invoke(
+        origin: ShareId,
+        dest: ShareId,
+        destFolderId: FolderId?
+    ) {
         val userId = requireNotNull(accountManager.getPrimaryUserId().firstOrNull())
-        itemRepository.migrateAllVaultItems(userId = userId, source = origin, destination = dest)
+        itemRepository.migrateAllVaultItems(
+            userId = userId,
+            source = origin,
+            destination = dest,
+            destinationFolderId = destFolderId
+        )
     }
 }

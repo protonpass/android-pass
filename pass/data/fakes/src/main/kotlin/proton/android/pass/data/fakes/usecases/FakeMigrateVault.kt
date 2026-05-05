@@ -19,6 +19,7 @@
 package proton.android.pass.data.fakes.usecases
 
 import proton.android.pass.data.api.usecases.MigrateVault
+import proton.android.pass.domain.FolderId
 import proton.android.pass.domain.ShareId
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -36,13 +37,18 @@ class FakeMigrateVault @Inject constructor() : MigrateVault {
         result = value
     }
 
-    override suspend fun invoke(origin: ShareId, dest: ShareId) {
-        memory.add(Memory(origin, dest))
+    override suspend fun invoke(
+        origin: ShareId,
+        dest: ShareId,
+        destFolderId: FolderId?
+    ) {
+        memory.add(Memory(origin, dest, destFolderId))
         result.getOrThrow()
     }
 
     data class Memory(
         val origin: ShareId,
-        val destination: ShareId
+        val destination: ShareId,
+        val destFolderId: FolderId? = null
     )
 }

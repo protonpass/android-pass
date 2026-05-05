@@ -19,6 +19,7 @@
 package proton.android.pass.data.impl.repository
 
 import kotlinx.coroutines.test.runTest
+import com.google.common.truth.Truth.assertThat
 import me.proton.core.crypto.common.keystore.EncryptedByteArray
 import me.proton.core.domain.entity.UserId
 import org.junit.Assert.assertThrows
@@ -278,6 +279,60 @@ class ItemRepositoryImplTest {
 
         assertEquals(folderKey, getShareAndItemKey.lastDecryptionKeyOverride)
         assertEquals(1, remoteItemDataSource.getUpdateItemMemory().size)
+    }
+
+    // migrateAllVaultItems routing
+
+    @Test
+    fun `migrateAllVaultItems routes to moveItemsToFolder when source equals destination with folder`() = runTest {
+        val folderId = FolderId("dest-folder")
+        val folderKey = FolderKey(
+            rotation = 1L,
+            key = EncryptedByteArray(byteArrayOf(1, 2, 3)),
+            responseKey = "folder-key"
+        )
+        folderKeyRepository.setGetFolderKeyResult(Result.success(folderKey))
+        shareKeyRepository.emitGetLatestKeyForShare(ShareKeyTestFactory.createPrivate())
+
+        repository.migrateAllVaultItems(
+            userId = userId,
+            source = share.id,
+            destination = share.id,
+            destinationFolderId = folderId
+        )
+
+        assertThat(remoteItemDataSource.getMoveItemsToFolderCallCount()).isEqualTo(1)
+        assertThat(remoteItemDataSource.getMigrateItemsCallCount()).isEqualTo(0)
+    }
+
+    @Test
+    fun `migrateAllVaultItems does not call moveItemsToFolder when source differs from destination`() = runTest {
+        val otherShareId = proton.android.pass.domain.ShareId("other-share")
+        shareKeyRepository.emitGetLatestKeyForShare(ShareKeyTestFactory.createPrivate())
+
+        repository.migrateAllVaultItems(
+            userId = userId,
+            source = share.id,
+            destination = otherShareId,
+            destinationFolderId = null
+        )
+
+        assertThat(remoteItemDataSource.getMoveItemsToFolderCallCount()).isEqualTo(0)
+    }
+
+    @Test
+    fun `migrateAllVaultItems routes to moveItemsToFolder when source equals destination without folder`() = runTest {
+        shareKeyRepository.emitGetLatestKeyForShare(ShareKeyTestFactory.createPrivate())
+
+        repository.migrateAllVaultItems(
+            userId = userId,
+            source = share.id,
+            destination = share.id,
+            destinationFolderId = null
+        )
+
+        assertThat(remoteItemDataSource.getMoveItemsToFolderCallCount()).isEqualTo(1)
+        assertThat(remoteItemDataSource.getMigrateItemsCallCount()).isEqualTo(0)
     }
 
 }

@@ -23,8 +23,6 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -32,7 +30,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.unit.dp
-import proton.android.pass.composecomponents.impl.icon.Icon
+import proton.android.pass.commonui.api.defaultTint
+import proton.android.pass.composecomponents.impl.form.ChevronDownIcon
 
 @Composable
 fun ExpandCollapseIcon(
@@ -41,25 +40,23 @@ fun ExpandCollapseIcon(
     onClick: () -> Unit
 ) {
     val rotation by animateFloatAsState(
-        targetValue = if (expanded) 90f else 0f,
-        label = "triangleRotation"
+        targetValue = if (expanded) 0f else -90f,
+        label = "expandCollapseRotation"
     )
 
     Box(
         modifier = modifier
             .size(36.dp)
             .clip(CircleShape)
-            .clickable {
-                onClick()
-            },
+            .clickable { onClick() },
         contentAlignment = Alignment.Center
     ) {
-        Icon.Default(
-            imageVector = Icons.AutoMirrored.Filled.KeyboardArrowRight,
-            contentDescription = null,
+        ChevronDownIcon(
             modifier = Modifier
                 .size(12.dp)
-                .rotate(rotation)
+                .rotate(rotation),
+            contentDescription = null,
+            tint = defaultTint()
         )
     }
 }

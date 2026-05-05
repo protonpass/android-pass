@@ -45,7 +45,8 @@ class CanCreateFolderImpl @Inject constructor(
                 observeUserAccessData(),
                 shareRepository.observeById(userId, shareId)
             ) { userAccess, share ->
-                userAccess?.folderAllowed ?: false && share.canBeCreated
+                val folderAllowed = userAccess?.folderAllowed ?: false
+                folderAllowed && share.canBeCreated
             }
         }
 

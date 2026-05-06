@@ -36,7 +36,6 @@ import proton.android.pass.composecomponents.impl.uievents.IsButtonEnabled
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.data.api.usecases.folders.CreateFolder
 import proton.android.pass.data.api.usecases.folders.GetFolder
-import proton.android.pass.data.api.usecases.folders.ObserveFoldersByParentId
 import proton.android.pass.data.api.usecases.folders.UpdateFolder
 import proton.android.pass.domain.FolderId
 import proton.android.pass.domain.ShareId
@@ -53,7 +52,6 @@ class AddFolderToVaultViewModel @Inject constructor(
     private val getFolder: GetFolder,
     private val createFolder: CreateFolder,
     private val updateFolder: UpdateFolder,
-    private val observeFoldersByParentId: ObserveFoldersByParentId,
     private val snackbarDispatcher: SnackbarDispatcher
 ) : ViewModel() {
 
@@ -81,32 +79,18 @@ class AddFolderToVaultViewModel @Inject constructor(
     private val isLoadingState: MutableStateFlow<IsLoadingState> =
         MutableStateFlow(IsLoadingState.NotLoading)
 
-    private val siblingFoldersFlow = observeFoldersByParentId(shareId, parentFolderId)
-
     internal val state: StateFlow<AddFolderToVaultUiState> = combine(
         eventFlow,
         formFlow,
-        isLoadingState,
-        siblingFoldersFlow
-    ) { event, form, isLoadingState, siblings ->
-        val hasDuplicateName = siblings.any { sibling ->
-            sibling.name.equals(form.text, ignoreCase = true) &&
-                sibling.folderId != editFolderId
-        }
-
+        isLoadingState
+    ) { event, form, isLoadingState ->
         AddFolderToVaultUiState(
             folderName = form.text,
-            isButtonEnabled = if (hasDuplicateName) {
-                IsButtonEnabled.Disabled
-            } else {
-                form.isButtonEnabled
-            },
+            isButtonEnabled = form.isButtonEnabled,
             isLoadingState = isLoadingState,
             event = event,
-            showSameFolderExist = hasDuplicateName && form.text.isNotEmpty(),
             isEditMode = isEditMode
         )
-
     }.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5_000L),

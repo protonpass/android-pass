@@ -73,7 +73,7 @@ class FolderOptionsViewModel @Inject constructor(
                 observeFoldersByParentId(navShareId, navFolderId),
                 observeFoldersByParentId(navShareId)
             ) { canCreate, children, folders ->
-                canCreate &&
+                canCreate.isAllowed &&
                     depth < FolderLimits.MAX_FOLDER_DEPTH &&
                     children.size < FolderLimits.MAX_FOLDER_WIDTH &&
                     folders.size < FolderLimits.MAX_FOLDERS_PER_VAULT

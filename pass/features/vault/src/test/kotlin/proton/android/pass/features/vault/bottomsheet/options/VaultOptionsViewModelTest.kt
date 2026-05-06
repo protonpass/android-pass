@@ -27,6 +27,7 @@ import org.junit.Test
 import proton.android.pass.commonui.fakes.FakeSavedStateHandleProvider
 import proton.android.pass.data.api.usecases.UpgradeInfo
 import proton.android.pass.data.api.usecases.capabilities.VaultAccessData
+import proton.android.pass.data.api.usecases.capabilities.CanCreateFolderResult
 import proton.android.pass.data.fakes.usecases.FakeCanCreateFolder
 import proton.android.pass.data.fakes.usecases.FakeCanManageVaultAccess
 import proton.android.pass.data.fakes.usecases.FakeCanMigrateVault
@@ -484,6 +485,23 @@ class VaultOptionsViewModelTest {
         }
         canCreateFolder.sendValue(false)
         observeUpgradeInfo.setResult(upgradeInfoWithUpgrade(false))
+        setNavShareId(ShareId(SHARE_ID), featureFlags)
+        emitDefaultVault()
+
+        instance.state.test {
+            val item = awaitItem() as VaultOptionsUiState.Success
+            assertThat(item.canAddFolder).isFalse()
+            assertThat(item.canAddFolderNeedsUpgrade).isFalse()
+        }
+    }
+
+    @Test
+    fun `canAddFolder hidden for viewer role even when upgrade is available`() = runTest {
+        val featureFlags = FakeFeatureFlagsPreferenceRepository().apply {
+            set(FeatureFlag.PASS_FOLDERS, true)
+        }
+        canCreateFolder.sendValue(CanCreateFolderResult(roleAllows = false, planAllows = false))
+        observeUpgradeInfo.setResult(upgradeInfoWithUpgrade(true))
         setNavShareId(ShareId(SHARE_ID), featureFlags)
         emitDefaultVault()
 

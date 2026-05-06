@@ -28,6 +28,7 @@ import org.junit.Rule
 import org.junit.Test
 import proton.android.pass.data.api.ItemCountSummary
 import proton.android.pass.data.api.usecases.UpgradeInfo
+import proton.android.pass.data.api.usecases.capabilities.CanCreateFolderResult
 import proton.android.pass.data.fakes.usecases.FakeCanCreateFolder
 import proton.android.pass.data.fakes.usecases.FakeCanCreateVault
 import proton.android.pass.data.fakes.usecases.FakeCanOrganiseVaults
@@ -290,7 +291,7 @@ internal class HomeDrawerViewModelTest {
         viewModel.stateFlow.test {
             val state = awaitNextMatching { it.foldersEnabled && it.vaultShares.isNotEmpty() }
             assertThat(state.canCreateFolderShareIds).isEmpty()
-            assertThat(state.needsToUpgrade).isTrue()
+            assertThat(state.canCreateFolderNeedsUpgradeShareIds).isNotEmpty()
         }
     }
 
@@ -305,7 +306,21 @@ internal class HomeDrawerViewModelTest {
             val state = awaitNextMatching { it.vaultShares.isNotEmpty() }
             assertThat(state.foldersEnabled).isTrue()
             assertThat(state.canCreateFolderShareIds).isEmpty()
-            assertThat(state.needsToUpgrade).isFalse()
+            assertThat(state.canCreateFolderNeedsUpgradeShareIds).isEmpty()
+        }
+    }
+
+    @Test
+    internal fun `folder upsell hidden for viewer vault even when upgrade is available`() = runTest {
+        featureFlags.set(FeatureFlag.PASS_FOLDERS, true)
+        canCreateFolder.sendValue(CanCreateFolderResult(roleAllows = false, planAllows = false))
+        observeUpgradeInfo.setResult(upgradeInfoWithUpgrade(true))
+        emitSingleVault()
+
+        viewModel.stateFlow.test {
+            val state = awaitNextMatching { it.foldersEnabled && it.vaultShares.isNotEmpty() }
+            assertThat(state.canCreateFolderShareIds).isEmpty()
+            assertThat(state.canCreateFolderNeedsUpgradeShareIds).isEmpty()
         }
     }
 

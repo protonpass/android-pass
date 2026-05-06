@@ -67,6 +67,35 @@ class NamespacedExpandedState(
     override fun remove(key: String) = delegate.remove(key(key))
 }
 
+fun allFolderIds(folders: List<FolderUiModel>): Set<String> {
+    val ids = mutableSetOf<String>()
+    fun traverse(list: List<FolderUiModel>) {
+        for (folder in list) {
+            ids.add(folder.id.id)
+            traverse(folder.folders)
+        }
+    }
+    traverse(folders)
+    return ids
+}
+
+fun foldersToExpand(
+    previousIds: Set<String>?,
+    currentIds: Set<String>,
+    folders: List<FolderUiModel>
+): Set<String> {
+    if (previousIds.isNullOrEmpty()) return emptySet()
+    val newIds = currentIds - previousIds
+    if (newIds.isEmpty()) return emptySet()
+    val toExpand = mutableSetOf<String>()
+    newIds.forEach { newId ->
+        val expandedState = mutableMapOf<String, Boolean>()
+        expandAncestors(folders, FolderId(newId), expandedState)
+        toExpand += expandedState.keys
+    }
+    return toExpand
+}
+
 fun containsFolderId(folders: List<FolderUiModel>, folderId: FolderId): Boolean {
     for (folder in folders) {
         if (folder.id == folderId) return true

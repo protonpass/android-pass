@@ -22,7 +22,6 @@
     <string name="vault_delete_dialog_title">Delete vault</string>
     <string name="vault_add_folder_dialog_title">Enter a folder title</string>
     <string name="vault_edit_folder_dialog_title">Rename folder</string>
-    <string name="vault_add_foldersame_folder_exist">A folder with the same name already exists</string>
     <string name="folder_delete_dialog_title">Delete folder</string>
     <string name="folder_delete_dialog_body">This will permanently delete the folder __FOLDER_NAME__ and all its contents. Enter the folder name to confirm deletion.</string>
     <string name="folder_delete_dialog_placeholder">Folder name</string>

@@ -87,7 +87,7 @@ internal fun HomeDrawerContent(
             onUiEvent = onUiEvent,
             foldersEnabled = foldersEnabled,
             canCreateFolderShareIds = canCreateFolderShareIds,
-            needsToUpgrade = needsToUpgrade
+            canCreateFolderNeedsUpgradeShareIds = canCreateFolderNeedsUpgradeShareIds
         )
 
         HomeDrawerFooter(

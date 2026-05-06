@@ -154,10 +154,10 @@ class VaultOptionsViewModel @Inject constructor(
             isLastVault = vaultResult.data.size == 1,
             canAddFolder = foldersEnabled &&
                 rootFolderCount < FolderLimits.MAX_FOLDER_WIDTH &&
-                (canCreateFolder || isUpgradeAvailable),
+                (canCreateFolder.isAllowed || canCreateFolder.needsUpgrade && isUpgradeAvailable),
             canAddFolderNeedsUpgrade = foldersEnabled &&
                 rootFolderCount < FolderLimits.MAX_FOLDER_WIDTH &&
-                !canCreateFolder && isUpgradeAvailable
+                canCreateFolder.needsUpgrade && isUpgradeAvailable
         )
     }.stateIn(
         scope = viewModelScope,

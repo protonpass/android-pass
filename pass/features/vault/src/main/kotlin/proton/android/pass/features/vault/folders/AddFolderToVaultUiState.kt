@@ -33,7 +33,6 @@ internal data class AddFolderToVaultUiState(
     internal val event: AddFolderToVaultEvent,
     internal val isButtonEnabled: IsButtonEnabled,
     private val isLoadingState: IsLoadingState,
-    val showSameFolderExist: Boolean,
     val isEditMode: Boolean
 ) {
     internal val isLoading: Boolean = isLoadingState.value()
@@ -45,7 +44,6 @@ internal data class AddFolderToVaultUiState(
             event = AddFolderToVaultEvent.Unknown,
             isButtonEnabled = IsButtonEnabled.Disabled,
             isLoadingState = IsLoadingState.NotLoading,
-            showSameFolderExist = false,
             isEditMode = false
         )
     }

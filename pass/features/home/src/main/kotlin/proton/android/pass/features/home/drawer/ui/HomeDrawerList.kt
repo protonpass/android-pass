@@ -22,6 +22,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.mutableStateMapOf
 import androidx.compose.runtime.saveable.mapSaver
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -35,9 +36,11 @@ import proton.android.pass.commonuimodels.api.FolderUiModel
 import proton.android.pass.composecomponents.impl.extension.toColor
 import proton.android.pass.composecomponents.impl.extension.toResource
 import proton.android.pass.composecomponents.impl.folders.NamespacedExpandedState
+import proton.android.pass.composecomponents.impl.folders.folderTreeItems
+import proton.android.pass.composecomponents.impl.folders.allFolderIds
 import proton.android.pass.composecomponents.impl.folders.containsFolderId
 import proton.android.pass.composecomponents.impl.folders.expandAncestors
-import proton.android.pass.composecomponents.impl.folders.folderTreeItems
+import proton.android.pass.composecomponents.impl.folders.foldersToExpand
 import proton.android.pass.composecomponents.impl.form.PassDivider
 import proton.android.pass.domain.FolderId
 import proton.android.pass.domain.ShareId
@@ -66,7 +69,7 @@ internal fun HomeDrawerList(
     allItemsCount: Int,
     foldersEnabled: Boolean,
     canCreateFolderShareIds: Set<ShareId>,
-    needsToUpgrade: Boolean,
+    canCreateFolderNeedsUpgradeShareIds: Set<ShareId>,
     hasSharedWithMeItems: Boolean,
     sharedWithMeItemsCount: Int,
     hasSharedByMeItems: Boolean,
@@ -103,13 +106,23 @@ internal fun HomeDrawerList(
                     ?.folderId
             val folders = vaultFolders[shareId] ?: emptyList()
             val effectiveCanCreate = canCreateFolderShareIds.contains(shareId) && !vaultFolderAtLimit.contains(shareId)
+            val vaultNeedsUpgrade = canCreateFolderNeedsUpgradeShareIds.contains(shareId)
             val shouldShowFolderContent = foldersEnabled &&
-                (folders.isNotEmpty() || effectiveCanCreate || needsToUpgrade)
+                (folders.isNotEmpty() || effectiveCanCreate || vaultNeedsUpgrade)
             val isShowingFolders = vaultShowFoldersMap[shareIdStr] ?: false
             val vaultFolderExpandedMap = NamespacedExpandedState(folderExpandedMap, shareIdStr)
 
             item(key = shareIdStr) {
+                val knownFolderIds = remember { arrayOfNulls<Set<String>>(1) }
+
                 LaunchedEffect(folders) {
+                    val currentIds = allFolderIds(folders)
+                    val toExpand = foldersToExpand(knownFolderIds[0], currentIds, folders)
+                    if (toExpand.isNotEmpty()) {
+                        vaultShowFoldersMap[shareIdStr] = true
+                        toExpand.forEach { id -> vaultFolderExpandedMap[id] = true }
+                    }
+                    knownFolderIds[0] = currentIds
                     folders.forEach { folder ->
                         if (!vaultFolderExpandedMap.contains(folder.id.id)) {
                             vaultFolderExpandedMap[folder.id.id] = false
@@ -117,9 +130,6 @@ internal fun HomeDrawerList(
                     }
                 }
 
-                // Intentionally keyed only on selectedFolderIdForVault, not folders.
-                // Including folders would re-run expandAncestors on every folder creation,
-                // overriding manually collapsed ancestors (the bug this branch fixes).
                 LaunchedEffect(selectedFolderIdForVault) {
                     if (selectedFolderIdForVault != null &&
                         containsFolderId(folders, selectedFolderIdForVault)
@@ -170,7 +180,9 @@ internal fun HomeDrawerList(
                     expandedState = vaultFolderExpandedMap,
                     selectedFolderId = selectedFolderIdForVault.toOption(),
                     startPadding = Spacing.large,
-                    keyPrefix = shareIdStr,
+                    canCreateFolder = effectiveCanCreate || vaultNeedsUpgrade,
+                    needsToUpgrade = vaultNeedsUpgrade,
+                    keyPrefix = "${shareIdStr}_",
                     createButtonModifier = Modifier
                         .padding(start = 20.dp)
                         .padding(bottom = Spacing.medium),
@@ -180,14 +192,12 @@ internal fun HomeDrawerList(
                     onFolderClick = {
                         HomeDrawerUiEvent.OnFolderClick(shareId, it).also(onUiEvent)
                     },
-                    onCreateFolderClick = if (effectiveCanCreate || needsToUpgrade) {
+                    onCreateFolderClick = if (effectiveCanCreate || vaultNeedsUpgrade) {
                         {
-                            if (needsToUpgrade) onUiEvent(HomeDrawerUiEvent.OnUpgradeClick)
+                            if (vaultNeedsUpgrade) onUiEvent(HomeDrawerUiEvent.OnUpgradeClick)
                             else HomeDrawerUiEvent.OnCreateFolderClick(shareId).also(onUiEvent)
                         }
-                    } else null,
-                    canCreateFolder = effectiveCanCreate || needsToUpgrade,
-                    needsToUpgrade = needsToUpgrade
+                    } else null
                 )
             }
 

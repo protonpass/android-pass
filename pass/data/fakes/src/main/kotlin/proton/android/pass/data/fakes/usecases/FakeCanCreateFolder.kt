@@ -20,7 +20,9 @@ package proton.android.pass.data.fakes.usecases
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.map
 import proton.android.pass.data.api.usecases.capabilities.CanCreateFolder
+import proton.android.pass.data.api.usecases.capabilities.CanCreateFolderResult
 import proton.android.pass.domain.ShareId
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -28,13 +30,20 @@ import javax.inject.Singleton
 @Singleton
 class FakeCanCreateFolder @Inject constructor() : CanCreateFolder {
 
-    private val resultFlow: MutableStateFlow<Boolean> = MutableStateFlow(true)
+    private val resultFlow: MutableStateFlow<CanCreateFolderResult> =
+        MutableStateFlow(CanCreateFolderResult(roleAllows = true, planAllows = true))
 
+    // Convenience: true → both allow; false → role allows, plan blocks (upsell scenario)
     fun sendValue(value: Boolean) {
+        resultFlow.tryEmit(CanCreateFolderResult(roleAllows = true, planAllows = value))
+    }
+
+    fun sendValue(value: CanCreateFolderResult) {
         resultFlow.tryEmit(value)
     }
 
-    override fun invoke(shareId: ShareId): Flow<Boolean> = resultFlow
+    override fun invoke(shareId: ShareId): Flow<CanCreateFolderResult> = resultFlow
 
-    override fun invoke(shareIds: List<ShareId>): Flow<Boolean> = resultFlow
+    override fun invoke(shareIds: List<ShareId>): Flow<Map<ShareId, CanCreateFolderResult>> =
+        resultFlow.map { result -> shareIds.associateWith { result } }
 }

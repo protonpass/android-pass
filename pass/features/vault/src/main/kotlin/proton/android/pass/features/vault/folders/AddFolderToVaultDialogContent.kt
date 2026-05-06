@@ -18,10 +18,6 @@
 
 package proton.android.pass.features.vault.folders
 
-import androidx.compose.animation.AnimatedContent
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
-import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -85,25 +81,16 @@ internal fun AddFolderToVaultDialogContent(
         content = {
             val focusRequester = remember { FocusRequester() }
 
-            Column(
-                verticalArrangement = Arrangement.spacedBy(Spacing.medium)
-            ) {
-                AnimatedContent(
-                    targetState = state.showSameFolderExist,
-                    transitionSpec = {
-                        fadeIn().togetherWith(fadeOut())
-                    }
-                ) { visible ->
-                    if (visible) {
-                        Text(text = stringResource(R.string.vault_add_foldersame_folder_exist))
-                    } else {
-                        Text(
-                            text = "",
-                            modifier = Modifier.height(0.dp)
-                        )
-                    }
-                }
-
+            Column(verticalArrangement = Arrangement.spacedBy(Spacing.medium)) {
+                // Material2 AlertDialog uses baseline-based layout (AlertDialogBaselineLayout).
+                // It positions the text slot by aligning its first text baseline at a fixed
+                // distance from the title baseline. A non-text element (like a Box or Spacer)
+                // has no baseline, so the layout would fall back to the TextField's baseline,
+                // shifting the entire content block upward and eliminating the gap.
+                // This zero-height Text anchors the baseline at y=0 so the layout places the
+                // content block top at the correct distance from the title, and spacedBy then
+                // adds the visual gap before the input field.
+                Text(text = "", modifier = Modifier.height(0.dp))
                 Box(
                     modifier = Modifier
                         .roundedContainerNorm()

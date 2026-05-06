@@ -26,20 +26,17 @@ internal class AddFolderToVaultDialogPreviewProvider : PreviewParameterProvider<
 
     override val values: Sequence<AddFolderToVaultUiState> = sequence {
         for (button in listOf(IsButtonEnabled.Enabled, IsButtonEnabled.Disabled)) {
-            for (showSameFolderExist in listOf(false, true)) {
-                for (text in listOf("", "a folder name")) {
-                    for (isEditMode in listOf(false, true)) {
-                        yield(
-                            AddFolderToVaultUiState(
-                                folderName = text,
-                                event = AddFolderToVaultEvent.Unknown,
-                                isButtonEnabled = button,
-                                isLoadingState = IsLoadingState.NotLoading,
-                                showSameFolderExist = showSameFolderExist,
-                                isEditMode = isEditMode
-                            )
+            for (text in listOf("", "a folder name")) {
+                for (isEditMode in listOf(false, true)) {
+                    yield(
+                        AddFolderToVaultUiState(
+                            folderName = text,
+                            event = AddFolderToVaultEvent.Unknown,
+                            isButtonEnabled = button,
+                            isLoadingState = IsLoadingState.NotLoading,
+                            isEditMode = isEditMode
                         )
-                    }
+                    )
                 }
             }
         }

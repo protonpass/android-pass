@@ -21,7 +21,17 @@ package proton.android.pass.data.api.usecases.capabilities
 import kotlinx.coroutines.flow.Flow
 import proton.android.pass.domain.ShareId
 
+data class CanCreateFolderResult(
+    val roleAllows: Boolean,
+    val planAllows: Boolean
+) {
+    val isAllowed: Boolean get() = roleAllows && planAllows
+
+    // Role allows but plan blocks: upgrading would unlock folder creation
+    val needsUpgrade: Boolean get() = roleAllows && !planAllows
+}
+
 interface CanCreateFolder {
-    operator fun invoke(shareId: ShareId): Flow<Boolean>
-    operator fun invoke(shareIds: List<ShareId>): Flow<Boolean>
+    operator fun invoke(shareId: ShareId): Flow<CanCreateFolderResult>
+    operator fun invoke(shareIds: List<ShareId>): Flow<Map<ShareId, CanCreateFolderResult>>
 }

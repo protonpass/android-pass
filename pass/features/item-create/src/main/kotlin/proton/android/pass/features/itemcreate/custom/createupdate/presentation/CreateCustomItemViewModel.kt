@@ -41,14 +41,18 @@ import proton.android.pass.clipboard.api.ClipboardManager
 import proton.android.pass.common.api.AppDispatchers
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
+import proton.android.pass.common.api.PasswordStrength
 import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.asLoadingResult
 import proton.android.pass.common.api.some
 import proton.android.pass.common.api.toOption
 import proton.android.pass.commonpresentation.api.attachments.AttachmentsHandler
+import proton.android.pass.commonrust.api.PasswordScorer
 import proton.android.pass.commonrust.api.SshKeyGenerator
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
+import proton.android.pass.commonuimodels.api.passwords.PasswordChecksUiState
+import proton.android.pass.composecomponents.impl.item.toPasswordChecksUiState
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.usecases.CanPerformPaidAction
@@ -92,6 +96,7 @@ import proton.android.pass.inappreview.api.InAppReviewTriggerMetrics
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonOptionalNavArgId
 import proton.android.pass.notifications.api.SnackbarDispatcher
+import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import proton.android.pass.preferences.InternalSettingsRepository
 import proton.android.pass.preferences.UserPreferencesRepository
 import proton.android.pass.telemetry.api.EventItemType
@@ -125,6 +130,8 @@ class CreateCustomItemViewModel @Inject constructor(
     savedStateHandleProvider: SavedStateHandleProvider,
     observeShare: ObserveShare,
     sshKeyGenerator: SshKeyGenerator,
+    passwordScorer: PasswordScorer,
+    featureFlagsPreferencesRepository: FeatureFlagsPreferencesRepository,
     private val canCreateItemsInFolder: CanCreateItemsInFolder,
     private val settingsRepository: InternalSettingsRepository
 ) : BaseCustomItemViewModel(
@@ -140,7 +147,9 @@ class CreateCustomItemViewModel @Inject constructor(
     customItemFormProcessor = customItemFormProcessor,
     appDispatchers = appDispatchers,
     savedStateHandleProvider = savedStateHandleProvider,
-    sshKeyGenerator = sshKeyGenerator
+    sshKeyGenerator = sshKeyGenerator,
+    passwordScorer = passwordScorer,
+    featureFlagsPreferencesRepository = featureFlagsPreferencesRepository
 ) {
 
     private val navShareId: Option<ShareId> =
@@ -280,6 +289,8 @@ class CreateCustomItemViewModel @Inject constructor(
                 TemplateType.WIFI_NETWORK -> ItemStaticFields.WifiNetwork(
                     ssid = "",
                     password = UIHiddenState.Empty(encrypt("")),
+                    passwordStrength = PasswordStrength.None,
+                    passwordChecks = PasswordChecksUiState.Initial,
                     wifiSecurityType = WifiSecurityType.Unknown
                 )
 
@@ -354,9 +365,12 @@ class CreateCustomItemViewModel @Inject constructor(
             val type = item.itemType
             when (type) {
                 is ItemType.WifiNetwork -> {
+                    val evaluation = passwordScorer.evaluate(decrypt(type.password))
                     staticFields = ItemStaticFields.WifiNetwork(
                         ssid = type.ssid,
                         password = UIHiddenState.Concealed(type.password),
+                        passwordStrength = evaluation.strength,
+                        passwordChecks = evaluation.penalties.toPasswordChecksUiState(),
                         wifiSecurityType = type.wifiSecurityType
                     )
                     val itemContents = item.toItemContents<ItemContents.WifiNetwork> { decrypt(it) }

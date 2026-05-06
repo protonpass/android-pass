@@ -418,4 +418,12 @@
         <item quantity="one">%s word</item>
         <item quantity="other">%s words</item>
     </plurals>
+
+    <!-- Password checks (Login create/edit + Generate Password BS) -->
+    <string name="password_strength_prefix">Password strength</string>
+    <string name="password_check_min_length">At least 12 characters</string>
+    <string name="password_check_lowercase">Lowercase letters</string>
+    <string name="password_check_uppercase">Uppercase letters</string>
+    <string name="password_check_no_consecutive">No repeated characters</string>
+    <string name="password_check_no_common">No common password</string>
 </resources>

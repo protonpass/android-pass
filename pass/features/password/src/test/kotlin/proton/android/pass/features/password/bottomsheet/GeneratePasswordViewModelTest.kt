@@ -27,7 +27,7 @@ import org.junit.Test
 import proton.android.pass.clipboard.fakes.FakeClipboardManager
 import proton.android.pass.common.api.PasswordStrength
 import proton.android.pass.commonrust.fakes.FakePasswordGenerator
-import proton.android.pass.commonrust.fakes.passwords.strengths.FakePasswordStrengthCalculator
+import proton.android.pass.commonrust.fakes.FakePasswordScorer
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.fakes.FakeSavedStateHandleProvider
 import proton.android.pass.crypto.fakes.context.FakeEncryptionContextProvider
@@ -38,6 +38,7 @@ import proton.android.pass.data.fakes.usecases.passwords.FakeUpdatePasswordConfi
 import proton.android.pass.features.password.GeneratePasswordBottomsheetMode
 import proton.android.pass.features.password.GeneratePasswordBottomsheetModeValue
 import proton.android.pass.notifications.fakes.FakeSnackbarDispatcher
+import proton.android.pass.preferences.FakeFeatureFlagsPreferenceRepository
 import proton.android.pass.telemetry.fakes.FakeTelemetryManager
 import proton.android.pass.test.FixedClock
 import proton.android.pass.test.MainDispatcherRule
@@ -48,7 +49,6 @@ internal class GeneratePasswordViewModelTest {
     internal val dispatcherRule = MainDispatcherRule()
 
     private lateinit var stateHandleProvider: SavedStateHandleProvider
-    private lateinit var passwordStrengthCalculator: FakePasswordStrengthCalculator
     private lateinit var viewModel: GeneratePasswordViewModel
 
     @Before
@@ -57,11 +57,9 @@ internal class GeneratePasswordViewModelTest {
         stateHandleProvider.get()[GeneratePasswordBottomsheetMode.key] =
             GeneratePasswordBottomsheetModeValue.CancelConfirm.name
 
-        passwordStrengthCalculator = FakePasswordStrengthCalculator()
-
         viewModel = GeneratePasswordViewModel(
             stateHandleProvider = stateHandleProvider,
-            passwordStrengthCalculator = passwordStrengthCalculator,
+            passwordScorer = FakePasswordScorer(),
             snackbarDispatcher = FakeSnackbarDispatcher(),
             clipboardManager = FakeClipboardManager(),
             draftRepository = FakeDraftRepository(),
@@ -71,13 +69,14 @@ internal class GeneratePasswordViewModelTest {
             updatePasswordConfig = FakeUpdatePasswordConfig(),
             addOnePasswordHistoryEntryToUser = FakeAddOnePasswordHistoryEntryToUser(),
             clock = FixedClock(),
-            telemetryManager = FakeTelemetryManager()
+            telemetryManager = FakeTelemetryManager(),
+            featureFlagsPreferencesRepository = FakeFeatureFlagsPreferenceRepository()
         )
     }
 
     @Test
-    internal fun `WHEN view model is initialized THEN password strength is None`() = runTest {
-        val expectedPasswordStrength = PasswordStrength.None
+    internal fun `WHEN view model is initialized THEN password strength reflects the scorer`() = runTest {
+        val expectedPasswordStrength = PasswordStrength.Strong
 
         viewModel.stateFlow.test {
             assertThat(awaitItem().passwordStrength).isEqualTo(expectedPasswordStrength)
@@ -87,7 +86,6 @@ internal class GeneratePasswordViewModelTest {
     @Test
     internal fun `WHEN a new password is generated THEN password strength is updated`() = runTest {
         val expectedPasswordStrength = PasswordStrength.Strong
-        passwordStrengthCalculator.setPasswordStrength(expectedPasswordStrength)
 
         viewModel.onRegeneratePassword()
 

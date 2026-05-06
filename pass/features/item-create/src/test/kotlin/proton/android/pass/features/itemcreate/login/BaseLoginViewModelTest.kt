@@ -28,6 +28,7 @@ import proton.android.pass.clipboard.fakes.FakeClipboardManager
 import proton.android.pass.common.api.PasswordStrength
 import proton.android.pass.commonpresentation.fakes.attachments.FakeAttachmentHandler
 import proton.android.pass.commonrust.fakes.FakeEmailValidator
+import proton.android.pass.commonrust.fakes.FakePasswordScorer
 import proton.android.pass.commonrust.fakes.passwords.strengths.FakePasswordStrengthCalculator
 import proton.android.pass.commonui.fakes.FakeSavedStateHandleProvider
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
@@ -86,7 +87,7 @@ internal class BaseLoginViewModelTest {
             observeCurrentUser = observeCurrentUser,
             observeUpgradeInfo = FakeObserveUpgradeInfo(),
             encryptionContextProvider = encryptionContextProvider,
-            passwordStrengthCalculator = passwordStrengthCalculator,
+            passwordScorer = FakePasswordScorer(),
             savedStateHandleProvider = FakeSavedStateHandleProvider(),
             emailValidator = emailValidator,
             observeTooltipEnabled = FakeObserveTooltipEnabled(),

@@ -21,6 +21,7 @@ package proton.android.pass.features.password.bottomsheet
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -36,11 +37,12 @@ import kotlinx.coroutines.launch
 import kotlinx.datetime.Clock
 import me.proton.core.crypto.common.keystore.EncryptedString
 import proton.android.pass.clipboard.api.ClipboardManager
+import proton.android.pass.commonrust.api.PasswordScorer
 import proton.android.pass.commonrust.api.passwords.PasswordConfig
 import proton.android.pass.commonrust.api.passwords.PasswordGenerator
-import proton.android.pass.commonrust.api.passwords.strengths.PasswordStrengthCalculator
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
+import proton.android.pass.composecomponents.impl.item.toPasswordChecksUiState
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.repositories.DRAFT_PASSWORD_KEY
 import proton.android.pass.data.api.repositories.DraftRepository
@@ -56,6 +58,8 @@ import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.android.pass.telemetry.api.TelemetryGrowthFeatureUsageAction
 import proton.android.pass.telemetry.api.TelemetryManager
 import proton.android.pass.telemetry.api.TelemetryGrowthFeatureUsageEvent
+import proton.android.pass.preferences.FeatureFlag
+import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import javax.inject.Inject
 
 @HiltViewModel
@@ -63,7 +67,8 @@ class GeneratePasswordViewModel @Inject constructor(
     stateHandleProvider: SavedStateHandleProvider,
     observePasswordConfig: ObservePasswordConfig,
     passwordGenerator: PasswordGenerator,
-    passwordStrengthCalculator: PasswordStrengthCalculator,
+    passwordScorer: PasswordScorer,
+    featureFlagsPreferencesRepository: FeatureFlagsPreferencesRepository,
     private val updatePasswordConfig: UpdatePasswordConfig,
     private val snackbarDispatcher: SnackbarDispatcher,
     private val clipboardManager: ClipboardManager,
@@ -106,20 +111,26 @@ class GeneratePasswordViewModel @Inject constructor(
         replay = 1
     )
 
-    private val passwordStrengthFlow = passwordFlow
-        .mapLatest(passwordStrengthCalculator::calculateStrength)
+    private val passwordEvaluationFlow = passwordFlow
+        .mapLatest(passwordScorer::evaluate)
 
     private val eventFlow = MutableStateFlow<GeneratePasswordEvent>(GeneratePasswordEvent.Idle)
 
+    private val passwordChecksEnabledFlow: Flow<Boolean> =
+        featureFlagsPreferencesRepository[FeatureFlag.PASS_PASSWORD_CHECKS]
+
     internal val stateFlow: StateFlow<GeneratePasswordUiState> = combine(
         passwordFlow,
-        passwordStrengthFlow,
+        passwordEvaluationFlow,
         passwordConfigFlow,
-        eventFlow
-    ) { password, passwordStrength, passwordConfig, event ->
+        eventFlow,
+        passwordChecksEnabledFlow
+    ) { password, passwordEvaluation, passwordConfig, event, isPasswordChecksEnabled ->
         GeneratePasswordUiState(
             password = password,
-            passwordStrength = passwordStrength,
+            passwordStrength = passwordEvaluation.strength,
+            passwordChecks = passwordEvaluation.penalties.toPasswordChecksUiState(),
+            isPasswordChecksEnabled = isPasswordChecksEnabled,
             passwordConfig = passwordConfig,
             mode = mode,
             event = event

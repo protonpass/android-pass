@@ -54,9 +54,7 @@ internal fun GeneratePasswordBottomSheetContent(
             .bottomSheet(horizontalPadding = PassTheme.dimens.bottomsheetHorizontalPadding),
         verticalArrangement = Arrangement.spacedBy(Spacing.mediumSmall)
     ) {
-        GeneratePasswordBottomSheetTitle(
-            onRegenerate = { onEvent(GeneratePasswordUiEvent.OnRegeneratePasswordClick) }
-        )
+        GeneratePasswordBottomSheetTitle()
 
         GeneratePasswordViewContent(
             state = state,

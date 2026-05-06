@@ -19,9 +19,10 @@
 package proton.android.pass.commonrust.impl.passwords.strengths
 
 import proton.android.pass.common.api.PasswordStrength
-import proton.android.pass.commonrust.PasswordScore
 import proton.android.pass.commonrust.PasswordScorer
 import proton.android.pass.commonrust.api.passwords.strengths.PasswordStrengthCalculator
+import proton.android.pass.commonrust.api.toPasswordStrength
+import proton.android.pass.commonrust.impl.toPasswordScore
 import javax.inject.Inject
 
 class RustPasswordStrengthCalculator @Inject constructor() : PasswordStrengthCalculator {
@@ -31,13 +32,7 @@ class RustPasswordStrengthCalculator @Inject constructor() : PasswordStrengthCal
     override fun calculateStrength(password: String): PasswordStrength = if (password.isEmpty()) {
         PasswordStrength.None
     } else {
-        passwordScorer.checkScore(password).toPasswordStrength()
+        passwordScorer.checkScore(password).toPasswordScore().toPasswordStrength()
     }
 
-}
-
-internal fun PasswordScore.toPasswordStrength(): PasswordStrength = when (this) {
-    PasswordScore.VULNERABLE -> PasswordStrength.Vulnerable
-    PasswordScore.WEAK -> PasswordStrength.Weak
-    PasswordScore.STRONG -> PasswordStrength.Strong
 }

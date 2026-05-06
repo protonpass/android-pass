@@ -166,6 +166,7 @@ internal fun CustomItemForm(
                         modifier = Modifier.padding(horizontal = Spacing.medium).padding(vertical = Spacing.extraSmall),
                         itemStaticFields = itemFormState.itemStaticFields,
                         isEditAllowed = itemSharedProperties.isFormEnabled,
+                        isPasswordChecksEnabled = itemSharedProperties.sharedState.isPasswordChecksEnabled,
                         onEvent = onEvent
                     )
                 }

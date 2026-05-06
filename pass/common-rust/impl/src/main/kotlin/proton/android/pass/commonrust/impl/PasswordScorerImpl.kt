@@ -18,8 +18,11 @@
 
 package proton.android.pass.commonrust.impl
 
+import proton.android.pass.commonrust.api.PasswordEvaluation
 import proton.android.pass.commonrust.api.PasswordScore
 import proton.android.pass.commonrust.api.PasswordScorer
+import proton.android.pass.commonrust.api.toPasswordStrength
+import proton.android.pass.commonrust.impl.passwords.toPasswordPenalty
 import javax.inject.Inject
 import javax.inject.Singleton
 import proton.android.pass.commonrust.PasswordScore as RustPasswordScore
@@ -28,10 +31,21 @@ import proton.android.pass.commonrust.PasswordScorer as RustPasswordScorer
 @Singleton
 class PasswordScorerImpl @Inject constructor() : PasswordScorer {
 
-    override fun check(input: String): PasswordScore = RustPasswordScorer().checkScore(input).toPasswordScore()
+    private val rustScorer: RustPasswordScorer by lazy { RustPasswordScorer() }
+
+    override fun check(input: String): PasswordScore = rustScorer.checkScore(input).toPasswordScore()
+
+    override fun evaluate(input: String): PasswordEvaluation {
+        if (input.isEmpty()) return PasswordEvaluation.Empty
+        val result = rustScorer.scorePassword(input)
+        return PasswordEvaluation(
+            strength = result.passwordScore.toPasswordScore().toPasswordStrength(),
+            penalties = result.penalties.map { it.toPasswordPenalty() }
+        )
+    }
 }
 
-fun RustPasswordScore.toPasswordScore(): PasswordScore = when (this) {
+internal fun RustPasswordScore.toPasswordScore(): PasswordScore = when (this) {
     RustPasswordScore.WEAK -> PasswordScore.WEAK
     RustPasswordScore.VULNERABLE -> PasswordScore.VULNERABLE
     RustPasswordScore.STRONG -> PasswordScore.STRONG

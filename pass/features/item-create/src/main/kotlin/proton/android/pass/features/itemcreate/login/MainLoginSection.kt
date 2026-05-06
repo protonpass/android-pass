@@ -39,7 +39,8 @@ internal fun MainLoginSection(
     hasReachedAliasLimit: Boolean,
     onEvent: (LoginContentEvent) -> Unit,
     onFocusChange: (LoginField, Boolean) -> Unit,
-    isUsernameSplitTooltipEnabled: Boolean
+    isUsernameSplitTooltipEnabled: Boolean,
+    isPasswordChecksEnabled: Boolean
 ) {
     Column(
         modifier = modifier.roundedContainerNorm()
@@ -64,6 +65,8 @@ internal fun MainLoginSection(
         PasswordInput(
             value = loginItemFormState.password,
             passwordStrength = loginItemFormState.passwordStrength,
+            passwordChecks = loginItemFormState.passwordChecks,
+            isPasswordChecksEnabled = isPasswordChecksEnabled,
             isEditAllowed = isEditAllowed,
             onChange = { onEvent(LoginContentEvent.OnPasswordChange(it)) },
             onFocus = { isFocused ->

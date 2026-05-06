@@ -103,6 +103,7 @@ internal fun LoginItemForm(
     displayFileAttachmentsOnboarding: Boolean,
     attachmentsState: AttachmentsState,
     isAutofillUrlRegexEnabled: Boolean,
+    isPasswordChecksEnabled: Boolean,
     onEvent: (LoginContentEvent) -> Unit
 ) {
     Box(modifier = modifier) {
@@ -194,7 +195,8 @@ internal fun LoginItemForm(
                     onFocusChange = { field, isFocused ->
                         onEvent(OnFocusChange(field, isFocused))
                     },
-                    isUsernameSplitTooltipEnabled = isUsernameSplitTooltipEnabled
+                    isUsernameSplitTooltipEnabled = isUsernameSplitTooltipEnabled,
+                    isPasswordChecksEnabled = isPasswordChecksEnabled
                 )
             }
 

@@ -32,7 +32,7 @@ import proton.android.pass.account.fakes.FakeAccountManager
 import proton.android.pass.clipboard.fakes.FakeClipboardManager
 import proton.android.pass.commonpresentation.fakes.attachments.FakeAttachmentHandler
 import proton.android.pass.commonrust.fakes.FakeEmailValidator
-import proton.android.pass.commonrust.fakes.passwords.strengths.FakePasswordStrengthCalculator
+import proton.android.pass.commonrust.fakes.FakePasswordScorer
 import proton.android.pass.commonui.fakes.FakeSavedStateHandleProvider
 import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
@@ -41,13 +41,13 @@ import proton.android.pass.crypto.fakes.context.FakeEncryptionContext
 import proton.android.pass.crypto.fakes.context.FakeEncryptionContextProvider
 import proton.android.pass.data.api.errors.EmailNotValidatedError
 import proton.android.pass.data.fakes.repositories.FakeDraftRepository
-import proton.android.pass.data.fakes.usecases.FakeGetItemById
+import proton.android.pass.data.fakes.usecases.FakeCanCreateAlias
 import proton.android.pass.data.fakes.usecases.FakeCreateItem
 import proton.android.pass.data.fakes.usecases.FakeCreateLoginAndAlias
+import proton.android.pass.data.fakes.usecases.FakeGetItemById
 import proton.android.pass.data.fakes.usecases.FakeObserveCurrentUser
-import proton.android.pass.data.fakes.usecases.FakeObserveDefaultVault
-import proton.android.pass.data.fakes.usecases.FakeCanCreateAlias
 import proton.android.pass.data.fakes.usecases.FakeCanCreateItemsInFolder
+import proton.android.pass.data.fakes.usecases.FakeObserveDefaultVault
 import proton.android.pass.data.fakes.usecases.FakeObserveUpgradeInfo
 import proton.android.pass.data.fakes.usecases.FakeObserveVaultsWithItemCount
 import proton.android.pass.data.fakes.usecases.FakeSetDefaultVault
@@ -57,8 +57,8 @@ import proton.android.pass.data.fakes.usecases.shares.FakeObserveShare
 import proton.android.pass.data.fakes.usecases.tooltips.FakeDisableTooltip
 import proton.android.pass.data.fakes.usecases.tooltips.FakeObserveTooltipEnabled
 import proton.android.pass.data.fakes.work.FakeWorkerLauncher
-import proton.android.pass.domain.ItemState
 import proton.android.pass.domain.FolderId
+import proton.android.pass.domain.ItemState
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.VaultWithItemCount
 import proton.android.pass.domain.items.ItemCategory
@@ -139,7 +139,7 @@ internal class CreateLoginNavItemViewModelTest {
             snackbarDispatcher = snackbarDispatcher,
             savedStateHandleProvider = FakeSavedStateHandleProvider(),
             encryptionContextProvider = encryptionContextProvider,
-            passwordStrengthCalculator = FakePasswordStrengthCalculator(),
+            passwordScorer = FakePasswordScorer(),
             createLoginAndAlias = createItemAndAlias,
             observeVaults = observeVaults,
             observeCurrentUser = FakeObserveCurrentUser().apply { sendUser(UserTestFactory.create()) },

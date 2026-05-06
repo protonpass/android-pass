@@ -21,7 +21,6 @@ package proton.android.pass.features.itemcreate.custom.createupdate.ui
 import androidx.compose.foundation.layout.Column
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import proton.android.pass.common.api.PasswordStrength
 import proton.android.pass.composecomponents.impl.container.roundedContainerNorm
 import proton.android.pass.composecomponents.impl.form.PassDivider
 import proton.android.pass.features.itemcreate.common.PasswordInput
@@ -32,6 +31,7 @@ internal fun WifiNetworkContent(
     modifier: Modifier = Modifier,
     itemStaticFields: ItemStaticFields.WifiNetwork,
     isEditAllowed: Boolean,
+    isPasswordChecksEnabled: Boolean,
     onEvent: (ItemContentEvent) -> Unit
 ) {
     Column(modifier = modifier.roundedContainerNorm()) {
@@ -47,7 +47,9 @@ internal fun WifiNetworkContent(
 
         PasswordInput(
             value = itemStaticFields.password,
-            passwordStrength = PasswordStrength.None,
+            passwordStrength = itemStaticFields.passwordStrength,
+            passwordChecks = itemStaticFields.passwordChecks,
+            isPasswordChecksEnabled = isPasswordChecksEnabled,
             isEditAllowed = isEditAllowed,
             showLeadingIcon = false,
             onChange = {

@@ -21,7 +21,9 @@ package proton.android.pass.features.itemcreate.custom.createupdate.presentation
 import android.os.Parcelable
 import androidx.compose.runtime.Immutable
 import kotlinx.parcelize.Parcelize
+import proton.android.pass.common.api.PasswordStrength
 import proton.android.pass.common.api.Some
+import proton.android.pass.commonuimodels.api.passwords.PasswordChecksUiState
 import proton.android.pass.domain.ExtraSectionContent
 import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.WifiSecurityType
@@ -41,6 +43,8 @@ sealed interface ItemStaticFields : Parcelable {
     data class WifiNetwork(
         val ssid: String,
         val password: UIHiddenState,
+        val passwordStrength: PasswordStrength,
+        val passwordChecks: PasswordChecksUiState,
         val wifiSecurityType: WifiSecurityType
     ) : ItemStaticFields
 
@@ -74,6 +78,8 @@ data class ItemFormState(
         itemStaticFields = ItemStaticFields.WifiNetwork(
             ssid = itemContents.ssid,
             password = UIHiddenState.from(itemContents.password),
+            passwordStrength = PasswordStrength.None,
+            passwordChecks = PasswordChecksUiState.Initial,
             wifiSecurityType = itemContents.wifiSecurityType
         ),
         customFieldList = itemContents.customFields.map(UICustomFieldContent.Companion::from),

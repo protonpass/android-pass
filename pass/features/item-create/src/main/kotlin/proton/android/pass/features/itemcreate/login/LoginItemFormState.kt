@@ -27,6 +27,7 @@ import proton.android.pass.commonrust.api.EmailValidator
 import proton.android.pass.commonuimodels.api.PackageInfoUi
 import proton.android.pass.commonuimodels.api.UIAutofillUrl
 import proton.android.pass.commonuimodels.api.UIPasskeyContent
+import proton.android.pass.commonuimodels.api.passwords.PasswordChecksUiState
 import proton.android.pass.crypto.api.context.EncryptionContext
 import proton.android.pass.crypto.api.toEncryptedByteArray
 import proton.android.pass.domain.AutofillUrl
@@ -44,6 +45,7 @@ data class LoginItemFormState(
     val username: String,
     val password: UIHiddenState,
     val passwordStrength: PasswordStrength,
+    val passwordChecks: PasswordChecksUiState,
     val urls: List<String>,
     val packageInfoSet: Set<PackageInfoUi>,
     val primaryTotp: UIHiddenState,
@@ -127,6 +129,7 @@ data class LoginItemFormState(
             username = "",
             password = UIHiddenState.Empty(encryptionContext.encrypt("")),
             passwordStrength = PasswordStrength.None,
+            passwordChecks = PasswordChecksUiState.Initial,
             urls = listOf(""),
             primaryTotp = UIHiddenState.Empty(encryptionContext.encrypt("")),
             packageInfoSet = emptySet(),

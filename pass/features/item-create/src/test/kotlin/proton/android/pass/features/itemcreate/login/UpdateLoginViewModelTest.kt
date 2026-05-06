@@ -30,21 +30,21 @@ import proton.android.pass.clipboard.fakes.FakeClipboardManager
 import proton.android.pass.common.api.some
 import proton.android.pass.commonpresentation.fakes.attachments.FakeAttachmentHandler
 import proton.android.pass.commonrust.fakes.FakeEmailValidator
-import proton.android.pass.commonrust.fakes.passwords.strengths.FakePasswordStrengthCalculator
+import proton.android.pass.commonrust.fakes.FakePasswordScorer
 import proton.android.pass.commonui.fakes.FakeSavedStateHandleProvider
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.crypto.fakes.context.FakeEncryptionContext
 import proton.android.pass.crypto.fakes.context.FakeEncryptionContextProvider
 import proton.android.pass.data.api.errors.InvalidContentFormatVersionError
-import proton.android.pass.data.fakes.repositories.FakePendingAttachmentLinkRepository
 import proton.android.pass.data.fakes.repositories.FakeDraftRepository
+import proton.android.pass.data.fakes.repositories.FakePendingAttachmentLinkRepository
+import proton.android.pass.data.fakes.usecases.FakeCanCreateAlias
 import proton.android.pass.data.fakes.usecases.FakeCanCreateItemsInFolder
 import proton.android.pass.data.fakes.usecases.FakeCreateAlias
 import proton.android.pass.data.fakes.usecases.FakeGetItemById
 import proton.android.pass.data.fakes.usecases.FakeObserveCurrentUser
 import proton.android.pass.data.fakes.usecases.FakeObserveItemById
 import proton.android.pass.data.fakes.usecases.FakeObserveUpgradeInfo
-import proton.android.pass.data.fakes.usecases.FakeCanCreateAlias
 import proton.android.pass.data.fakes.usecases.FakeUpdateItem
 import proton.android.pass.data.fakes.usecases.attachments.FakeLinkAttachmentsToItem
 import proton.android.pass.data.fakes.usecases.attachments.FakeRenameAttachments
@@ -121,7 +121,7 @@ class UpdateLoginViewModelTest {
             get()[CommonNavArgId.ItemId.key] = ITEM_ID
         },
         encryptionContextProvider = encryptionContextProvider,
-        passwordStrengthCalculator = FakePasswordStrengthCalculator(),
+        passwordScorer = FakePasswordScorer(),
         observeCurrentUser = FakeObserveCurrentUser().apply { sendUser(UserTestFactory.create()) },
         telemetryManager = FakeTelemetryManager(),
         draftRepository = FakeDraftRepository(),

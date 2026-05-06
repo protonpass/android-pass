@@ -18,12 +18,21 @@
 
 package proton.android.pass.features.itemcreate.common
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Icon
 import androidx.compose.material.Surface
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontFamily
@@ -39,27 +48,65 @@ import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.ThemePairPreviewProvider
 import proton.android.pass.commonui.api.applyIf
+import proton.android.pass.commonuimodels.api.passwords.PasswordChecksUiState
 import proton.android.pass.composecomponents.impl.form.ProtonTextField
 import proton.android.pass.composecomponents.impl.form.ProtonTextFieldLabel
 import proton.android.pass.composecomponents.impl.form.ProtonTextFieldPlaceHolder
 import proton.android.pass.composecomponents.impl.form.SmallCrossIconButton
 import proton.android.pass.composecomponents.impl.icon.PassPasswordStrengthIcon
+import proton.android.pass.composecomponents.impl.item.PassPasswordChecksList
 import proton.android.pass.composecomponents.impl.labels.PassPasswordStrengthLabel
 import proton.android.pass.features.itemcreate.R
 import proton.android.pass.features.itemcreate.login.PASSWORD_CONCEALED_LENGTH
 import proton.android.pass.features.itemcreate.login.PasswordInputPreviewParams
 import proton.android.pass.features.itemcreate.login.PasswordInputPreviewProvider
 
+const val PASSWORD_INPUT_TAG = "password_input_field"
+
 @Composable
 internal fun PasswordInput(
     value: UIHiddenState,
     passwordStrength: PasswordStrength,
     modifier: Modifier = Modifier,
+    passwordChecks: PasswordChecksUiState,
+    isPasswordChecksEnabled: Boolean,
     placeholder: String = stringResource(id = R.string.field_password_hint),
     isEditAllowed: Boolean,
     showLeadingIcon: Boolean = true,
     onChange: (String) -> Unit,
     onFocus: (Boolean) -> Unit
+) {
+    var isFocused by remember { mutableStateOf(false) }
+
+    PasswordInputContent(
+        value = value,
+        passwordStrength = passwordStrength,
+        modifier = modifier,
+        passwordChecks = passwordChecks,
+        arePasswordChecksVisible = isFocused && isPasswordChecksEnabled,
+        placeholder = placeholder,
+        isEditAllowed = isEditAllowed,
+        showLeadingIcon = showLeadingIcon,
+        onChange = onChange,
+        onFocusChange = { focused ->
+            isFocused = focused
+            onFocus(focused)
+        }
+    )
+}
+
+@Composable
+private fun PasswordInputContent(
+    value: UIHiddenState,
+    passwordStrength: PasswordStrength,
+    modifier: Modifier = Modifier,
+    passwordChecks: PasswordChecksUiState,
+    arePasswordChecksVisible: Boolean,
+    placeholder: String,
+    isEditAllowed: Boolean,
+    showLeadingIcon: Boolean,
+    onChange: (String) -> Unit,
+    onFocusChange: (Boolean) -> Unit
 ) {
     val (text, visualTransformation) = when (value) {
         is UIHiddenState.Concealed -> "x".repeat(PASSWORD_CONCEALED_LENGTH) to PasswordVisualTransformation()
@@ -76,6 +123,31 @@ internal fun PasswordInput(
                 bottom = Spacing.medium
             )
             .applyIf(!showLeadingIcon, { padding(start = Spacing.medium) }),
+        textFieldModifier = Modifier
+            .fillMaxWidth()
+            .testTag(PASSWORD_INPUT_TAG),
+        label = {
+            Column {
+                PasswordInputLabel(
+                    passwordStrength = passwordStrength
+                )
+
+                AnimatedVisibility(
+                    visible = arePasswordChecksVisible
+                ) {
+                    Column {
+                        PassPasswordChecksList(
+                            modifier = Modifier.padding(
+                                top = Spacing.small
+                            ),
+                            checks = passwordChecks
+                        )
+
+                        Text(text = "")
+                    }
+                }
+            }
+        },
         value = text,
         editable = isEditAllowed,
         moveToNextOnEnter = true,
@@ -86,7 +158,6 @@ internal fun PasswordInput(
         textStyle = ProtonTheme.typography.defaultNorm(isEditAllowed)
             .copy(fontFamily = FontFamily.Monospace),
         onChange = onChange,
-        label = { PasswordInputLabel(passwordStrength) },
         placeholder = { ProtonTextFieldPlaceHolder(text = placeholder) },
         leadingIcon = if (showLeadingIcon) {
             { PasswordInputLeadingIcon(passwordStrength) }
@@ -97,7 +168,7 @@ internal fun PasswordInput(
             }
         },
         visualTransformation = visualTransformation,
-        onFocusChange = { onFocus(it) }
+        onFocusChange = onFocusChange
     )
 }
 
@@ -122,7 +193,7 @@ private fun PasswordInputLabel(passwordStrength: PasswordStrength, modifier: Mod
 }
 
 @Composable
-private fun PasswordInputLeadingIcon(passwordStrength: PasswordStrength, modifier: Modifier = Modifier) {
+fun PasswordInputLeadingIcon(passwordStrength: PasswordStrength, modifier: Modifier = Modifier) {
     when (passwordStrength) {
         PasswordStrength.None -> Icon(
             modifier = modifier,
@@ -150,12 +221,16 @@ fun PasswordInputPreview(
 ) {
     PassTheme(isDark = input.first) {
         Surface {
-            PasswordInput(
+            PasswordInputContent(
                 value = input.second.hiddenState,
                 passwordStrength = input.second.passwordStrength,
+                passwordChecks = input.second.passwordChecks,
+                arePasswordChecksVisible = input.second.arePasswordChecksVisible,
+                placeholder = stringResource(id = R.string.field_password_hint),
                 isEditAllowed = input.second.isEditAllowed,
+                showLeadingIcon = true,
                 onChange = {},
-                onFocus = {}
+                onFocusChange = {}
             )
         }
     }

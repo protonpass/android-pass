@@ -20,11 +20,28 @@ package proton.android.pass.features.itemcreate.login
 
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import proton.android.pass.common.api.PasswordStrength
+import proton.android.pass.commonuimodels.api.passwords.PasswordChecksUiState
 import proton.android.pass.features.itemcreate.common.UIHiddenState
 
 private const val PASSWORD_EMPTY = ""
 private const val PASSWORD_ENCRYPTED = "Encrypted password"
 private const val PASSWORD_PLAIN = "Plain password"
+
+private val PASSWORD_CHECKS_ALL_PASSED = PasswordChecksUiState(
+    hasMinLength = true,
+    hasLowercase = true,
+    hasUppercase = true,
+    hasNoRepeatedCharacters = true,
+    hasNoCommonPassword = true
+)
+
+private val PASSWORD_CHECKS_PARTIALLY_PASSED = PasswordChecksUiState(
+    hasMinLength = false,
+    hasLowercase = true,
+    hasUppercase = false,
+    hasNoRepeatedCharacters = true,
+    hasNoCommonPassword = false
+)
 
 class PasswordInputPreviewProvider : PreviewParameterProvider<PasswordInputPreviewParams> {
 
@@ -99,6 +116,26 @@ class PasswordInputPreviewProvider : PreviewParameterProvider<PasswordInputPrevi
                 hiddenState = UIHiddenState.Concealed(PASSWORD_ENCRYPTED),
                 passwordStrength = PasswordStrength.Weak,
                 isEditAllowed = true
+            ),
+            PasswordInputPreviewParams(
+                hiddenState = UIHiddenState.Revealed(PASSWORD_ENCRYPTED, PASSWORD_PLAIN),
+                passwordStrength = PasswordStrength.Weak,
+                passwordChecks = PASSWORD_CHECKS_PARTIALLY_PASSED,
+                arePasswordChecksVisible = true,
+                isEditAllowed = true
+            ),
+            PasswordInputPreviewParams(
+                hiddenState = UIHiddenState.Revealed(PASSWORD_ENCRYPTED, PASSWORD_PLAIN),
+                passwordStrength = PasswordStrength.Strong,
+                passwordChecks = PASSWORD_CHECKS_ALL_PASSED,
+                arePasswordChecksVisible = true,
+                isEditAllowed = true
+            ),
+            PasswordInputPreviewParams(
+                hiddenState = UIHiddenState.Revealed(PASSWORD_EMPTY, PASSWORD_EMPTY),
+                passwordStrength = PasswordStrength.None,
+                arePasswordChecksVisible = true,
+                isEditAllowed = true
             )
         )
 
@@ -107,5 +144,7 @@ class PasswordInputPreviewProvider : PreviewParameterProvider<PasswordInputPrevi
 data class PasswordInputPreviewParams(
     internal val hiddenState: UIHiddenState,
     internal val passwordStrength: PasswordStrength,
+    internal val passwordChecks: PasswordChecksUiState = PasswordChecksUiState.Initial,
+    internal val arePasswordChecksVisible: Boolean = false,
     internal val isEditAllowed: Boolean
 )

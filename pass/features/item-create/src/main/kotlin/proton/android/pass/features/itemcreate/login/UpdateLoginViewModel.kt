@@ -44,13 +44,14 @@ import proton.android.pass.common.api.safeRunCatching
 import proton.android.pass.common.api.some
 import proton.android.pass.commonpresentation.api.attachments.AttachmentsHandler
 import proton.android.pass.commonrust.api.EmailValidator
-import proton.android.pass.commonrust.api.passwords.strengths.PasswordStrengthCalculator
+import proton.android.pass.commonrust.api.PasswordScorer
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
 import proton.android.pass.commonui.api.toUiModel
 import proton.android.pass.commonuimodels.api.PackageInfoUi
 import proton.android.pass.commonuimodels.api.UIAutofillUrl
 import proton.android.pass.commonuimodels.api.UIPasskeyContent
+import proton.android.pass.composecomponents.impl.item.toPasswordChecksUiState
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.crypto.api.context.EncryptionContext
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
@@ -126,7 +127,7 @@ class UpdateLoginViewModel @AssistedInject constructor(
     private val linkAttachmentsToItem: LinkAttachmentsToItem,
     private val renameAttachments: RenameAttachments,
     private val pendingAttachmentLinkRepository: PendingAttachmentLinkRepository,
-    passwordStrengthCalculator: PasswordStrengthCalculator,
+    passwordScorer: PasswordScorer,
     accountManager: AccountManager,
     clipboardManager: ClipboardManager,
     observeCurrentUser: ObserveCurrentUser,
@@ -156,7 +157,7 @@ class UpdateLoginViewModel @AssistedInject constructor(
     observeUpgradeInfo = observeUpgradeInfo,
     draftRepository = draftRepository,
     encryptionContextProvider = encryptionContextProvider,
-    passwordStrengthCalculator = passwordStrengthCalculator,
+    passwordScorer = passwordScorer,
     emailValidator = emailValidator,
     observeTooltipEnabled = observeTooltipEnabled,
     disableTooltip = disableTooltip,
@@ -358,14 +359,16 @@ class UpdateLoginViewModel @AssistedInject constructor(
                     rawAutofillUrls = itemContents.autofillUrls,
                     contentFormatVersion = item.contentFormatVersion
                 )
+                val decryptedPassword =
+                    decrypt(initialPasswordEncrypted ?: itemContents.password.encrypted)
+                val passwordEvaluation = passwordScorer.evaluate(decryptedPassword)
                 loginItemFormMutableState = loginItemFormState.copy(
                     title = itemContents.title,
                     email = itemContents.itemEmail,
                     username = itemContents.itemUsername,
                     password = passwordHiddenState,
-                    passwordStrength = passwordStrengthCalculator.calculateStrength(
-                        password = decrypt(initialPasswordEncrypted ?: itemContents.password.encrypted)
-                    ),
+                    passwordStrength = passwordEvaluation.strength,
+                    passwordChecks = passwordEvaluation.penalties.toPasswordChecksUiState(),
                     urls = mergedAutofillUrls.map { it.url }.ifEmpty { listOf("") },
                     note = itemContents.note,
                     packageInfoSet = item.packageInfoSet.map(::PackageInfoUi).toSet(),

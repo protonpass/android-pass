@@ -19,6 +19,7 @@
 package proton.android.pass.features.itemcreate.login
 
 import androidx.compose.ui.test.hasContentDescription
+import androidx.compose.ui.test.hasTestTag
 import androidx.compose.ui.test.hasText
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.onNodeWithTag
@@ -73,6 +74,7 @@ import proton.android.pass.features.itemcreate.alias.AliasSuffixUiModel
 import proton.android.pass.features.itemcreate.alias.CreateAliasViewModel
 import proton.android.pass.features.itemcreate.common.CustomFieldDraftRepository
 import proton.android.pass.features.itemcreate.common.DraftFormFieldEvent
+import proton.android.pass.features.itemcreate.common.PASSWORD_INPUT_TAG
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.test.CallChecker
 import proton.android.pass.test.HiltComponentActivity
@@ -219,9 +221,8 @@ class CreateLoginScreenTest {
             writeTextAndWait(hasText(usernameText), email)
 
             // Password
-            val passwordText = activity.getString(R.string.field_password_title)
-            onNode(hasText(passwordText)).performScrollTo()
-            writeTextAndWait(hasText(passwordText), password)
+            onNodeWithTag(PASSWORD_INPUT_TAG).performScrollTo()
+            writeTextAndWait(hasTestTag(PASSWORD_INPUT_TAG), password)
 
             // TOTP
             val totpText = activity.getString(R.string.totp_create_login_field_title)

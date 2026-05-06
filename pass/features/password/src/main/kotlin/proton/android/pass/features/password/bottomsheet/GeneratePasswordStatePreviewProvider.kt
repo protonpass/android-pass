@@ -21,6 +21,7 @@ package proton.android.pass.features.password.bottomsheet
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import proton.android.pass.common.api.PasswordStrength
 import proton.android.pass.commonrust.api.passwords.PasswordConfig
+import proton.android.pass.commonuimodels.api.passwords.PasswordChecksUiState
 
 internal class GeneratePasswordStatePreviewProvider :
     PreviewParameterProvider<GeneratePasswordUiState> {
@@ -29,6 +30,14 @@ internal class GeneratePasswordStatePreviewProvider :
         GeneratePasswordUiState(
             password = "a1b!c_d3e#fg",
             passwordStrength = PasswordStrength.Strong,
+            passwordChecks = PasswordChecksUiState.Initial.copy(
+                hasMinLength = true,
+                hasLowercase = true,
+                hasUppercase = true,
+                hasNoRepeatedCharacters = true,
+                hasNoCommonPassword = true
+            ),
+            isPasswordChecksEnabled = true,
             passwordConfig = PasswordConfig.Random(
                 passwordLength = 12,
                 includeSymbols = true,
@@ -41,6 +50,14 @@ internal class GeneratePasswordStatePreviewProvider :
         GeneratePasswordUiState(
             password = "a1!2",
             passwordStrength = PasswordStrength.Strong,
+            passwordChecks = PasswordChecksUiState(
+                hasMinLength = false,
+                hasLowercase = true,
+                hasUppercase = false,
+                hasNoRepeatedCharacters = true,
+                hasNoCommonPassword = true
+            ),
+            isPasswordChecksEnabled = true,
             passwordConfig = PasswordConfig.Random(
                 passwordLength = 4,
                 includeSymbols = false,
@@ -53,6 +70,8 @@ internal class GeneratePasswordStatePreviewProvider :
         GeneratePasswordUiState(
             password = buildString { repeat(64) { append("a") } },
             passwordStrength = PasswordStrength.Strong,
+            passwordChecks = PasswordChecksUiState.Initial,
+            isPasswordChecksEnabled = true,
             passwordConfig = PasswordConfig.Random(
                 passwordLength = 64,
                 includeSymbols = false,

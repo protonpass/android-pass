@@ -18,8 +18,11 @@
 
 package proton.android.pass.commonrust.fakes
 
+import proton.android.pass.commonrust.api.PasswordEvaluation
+import proton.android.pass.commonrust.api.PasswordPenalty
 import proton.android.pass.commonrust.api.PasswordScore
 import proton.android.pass.commonrust.api.PasswordScorer
+import proton.android.pass.commonrust.api.toPasswordStrength
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -27,12 +30,26 @@ import javax.inject.Singleton
 class FakePasswordScorer @Inject constructor() : PasswordScorer {
 
     private val definedScores = mutableMapOf<String, PasswordScore>()
+    private val definedPenalties = mutableMapOf<String, List<PasswordPenalty>>()
 
     fun defineScore(input: String, score: PasswordScore) {
         definedScores[input] = score
     }
 
+    fun definePenalties(input: String, penalties: List<PasswordPenalty>) {
+        definedPenalties[input] = penalties
+    }
+
     override fun check(input: String): PasswordScore = definedScores.getOrElse(input) {
         PasswordScore.STRONG
+    }
+
+    override fun evaluate(input: String): PasswordEvaluation = if (input.isEmpty()) {
+        PasswordEvaluation.Empty
+    } else {
+        PasswordEvaluation(
+            strength = check(input).toPasswordStrength(),
+            penalties = definedPenalties[input].orEmpty()
+        )
     }
 }

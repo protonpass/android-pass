@@ -19,35 +19,31 @@
 package proton.android.pass.commonrust.impl.passwords.strengths
 
 import com.google.common.truth.Truth.assertThat
+import com.google.testing.junit.testparameterinjector.TestParameter
+import com.google.testing.junit.testparameterinjector.TestParameterInjector
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.junit.runners.Parameterized
 import proton.android.pass.common.api.PasswordStrength
 import proton.android.pass.commonrust.PasswordScore
+import proton.android.pass.commonrust.api.toPasswordStrength
+import proton.android.pass.commonrust.impl.toPasswordScore
 
-@RunWith(Parameterized::class)
-internal class RustPasswordStrengthMapperTest(
-    private val passwordScore: PasswordScore,
-    private val expectedPasswordStrength: PasswordStrength
-) {
+@RunWith(TestParameterInjector::class)
+internal class RustPasswordStrengthMapperTest {
 
     @Test
-    internal fun `WHEN mapping password scores THEN return expected password strengths`() {
-        val passwordStrength = passwordScore.toPasswordStrength()
-
-        assertThat(passwordStrength).isEqualTo(expectedPasswordStrength)
+    internal fun `WHEN mapping password scores THEN return expected password strengths`(
+        @TestParameter case: ScoreCase
+    ) {
+        assertThat(case.score.toPasswordScore().toPasswordStrength()).isEqualTo(case.expected)
     }
 
-    private companion object {
-
-        @JvmStatic
-        @Parameterized.Parameters
-        fun scoreToStrengthMapping() = listOf(
-            arrayOf(PasswordScore.VULNERABLE, PasswordStrength.Vulnerable),
-            arrayOf(PasswordScore.STRONG, PasswordStrength.Strong),
-            arrayOf(PasswordScore.WEAK, PasswordStrength.Weak)
-        )
-
+    internal enum class ScoreCase(
+        val score: PasswordScore,
+        val expected: PasswordStrength
+    ) {
+        Vulnerable(PasswordScore.VULNERABLE, PasswordStrength.Vulnerable),
+        Strong(PasswordScore.STRONG, PasswordStrength.Strong),
+        Weak(PasswordScore.WEAK, PasswordStrength.Weak)
     }
-
 }

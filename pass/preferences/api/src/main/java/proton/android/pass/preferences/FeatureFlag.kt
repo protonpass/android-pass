@@ -89,5 +89,11 @@ enum class FeatureFlag(
         description = "Show the new Explore tab with cross-product promotion and Pass shortcuts",
         key = "PassExploreTab",
         isEnabledDefault = false
+    ),
+    PASS_PASSWORD_CHECKS(
+        title = "Password checks",
+        description = "Show the password requirement checks while editing or generating a password",
+        key = "PassPasswordChecks",
+        isEnabledDefault = false
     )
 }

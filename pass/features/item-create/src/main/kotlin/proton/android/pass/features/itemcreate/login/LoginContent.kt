@@ -110,6 +110,7 @@ internal fun LoginContent(
             isFileAttachmentsEnabled = canUseAttachments,
             attachmentsState = uiState.attachmentsState,
             isAutofillUrlRegexEnabled = uiState.isAutofillUrlRegexEnabled,
+            isPasswordChecksEnabled = uiState.isPasswordChecksEnabled,
             onEvent = onEvent
         )
     }

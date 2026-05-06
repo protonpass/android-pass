@@ -51,5 +51,6 @@ dependencies {
     ksp(libs.androidx.hilt.compiler)
 
     testImplementation(libs.junit)
+    testImplementation(libs.testParameterInjector)
     testImplementation(libs.truth)
 }

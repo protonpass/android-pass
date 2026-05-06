@@ -55,11 +55,12 @@ import proton.android.pass.common.api.some
 import proton.android.pass.common.api.toOption
 import proton.android.pass.commonpresentation.api.attachments.AttachmentsHandler
 import proton.android.pass.commonrust.api.EmailValidator
-import proton.android.pass.commonrust.api.passwords.strengths.PasswordStrengthCalculator
+import proton.android.pass.commonrust.api.PasswordScorer
 import proton.android.pass.commonui.api.ClassHolder
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonuimodels.api.PackageInfoUi
 import proton.android.pass.commonuimodels.api.UIAutofillUrl
+import proton.android.pass.composecomponents.impl.item.toPasswordChecksUiState
 import proton.android.pass.domain.AutofillUrl
 import proton.android.pass.domain.AutofillUrlMode
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
@@ -114,7 +115,7 @@ abstract class BaseLoginViewModel(
     private val totpManager: TotpManager,
     private val draftRepository: DraftRepository,
     private val encryptionContextProvider: EncryptionContextProvider,
-    protected val passwordStrengthCalculator: PasswordStrengthCalculator,
+    protected val passwordScorer: PasswordScorer,
     protected val emailValidator: EmailValidator,
     private val disableTooltip: DisableTooltip,
     private val userPreferencesRepository: UserPreferencesRepository,
@@ -248,6 +249,9 @@ abstract class BaseLoginViewModel(
     private val autofillUrlRegexEnabledFlow: Flow<Boolean> =
         featureFlagsPreferencesRepository[FeatureFlag.PASS_AUTOFILL_URL_ADVANCED_MODES]
 
+    private val passwordChecksEnabledFlow: Flow<Boolean> =
+        featureFlagsPreferencesRepository[FeatureFlag.PASS_PASSWORD_CHECKS]
+
     @VisibleForTesting(otherwise = VisibleForTesting.PROTECTED)
     internal val baseLoginUiState: StateFlow<BaseLoginUiState> = combineN(
         loginItemValidationErrorsState,
@@ -261,10 +265,12 @@ abstract class BaseLoginViewModel(
         userPreferencesRepository.observeDisplayFileAttachmentsOnboarding(),
         attachmentsHandler.attachmentState,
         combine(canCreateAlias(), canCreateAliasOverride) { policy, override -> policy && override },
-        autofillUrlRegexEnabledFlow
+        autofillUrlRegexEnabledFlow,
+        passwordChecksEnabledFlow
     ) { loginItemValidationErrors, primaryEmail, aliasItemFormState, isLoading, totpUiState,
         upgradeInfoResult, userInteraction, isUsernameSplitTooltipEnabled,
-        displayFileAttachmentsOnboarding, attachmentsState, canCreateAlias, isAutofillUrlRegexEnabled ->
+        displayFileAttachmentsOnboarding, attachmentsState, canCreateAlias, isAutofillUrlRegexEnabled,
+        isPasswordChecksEnabled ->
         val userPlan = upgradeInfoResult.getOrNull()?.plan
         BaseLoginUiState(
             validationErrors = loginItemValidationErrors.toPersistentSet(),
@@ -284,7 +290,8 @@ abstract class BaseLoginViewModel(
             displayFileAttachmentsOnboarding = displayFileAttachmentsOnboarding.value(),
             attachmentsState = attachmentsState,
             canCreateAlias = canCreateAlias,
-            isAutofillUrlRegexEnabled = isAutofillUrlRegexEnabled
+            isAutofillUrlRegexEnabled = isAutofillUrlRegexEnabled,
+            isPasswordChecksEnabled = isPasswordChecksEnabled
         )
     }
         .stateIn(
@@ -338,13 +345,15 @@ abstract class BaseLoginViewModel(
 
     internal fun onPasswordChange(newPasswordValue: String) {
         onUserEditedContent()
+        val evaluation = passwordScorer.evaluate(newPasswordValue)
         loginItemFormMutableState = encryptionContextProvider.withEncryptionContext {
             loginItemFormMutableState.copy(
                 password = UIHiddenState.Revealed(
                     encrypted = encrypt(newPasswordValue),
                     clearText = newPasswordValue
                 ),
-                passwordStrength = passwordStrengthCalculator.calculateStrength(newPasswordValue)
+                passwordStrength = evaluation.strength,
+                passwordChecks = evaluation.penalties.toPasswordChecksUiState()
             )
         }
     }
@@ -611,14 +620,14 @@ abstract class BaseLoginViewModel(
                             val password = encryptionContextProvider.withEncryptionContext {
                                 decrypt(encryptedPassword)
                             }
+                            val evaluation = passwordScorer.evaluate(password)
                             loginItemFormMutableState = loginItemFormState.copy(
                                 password = UIHiddenState.Revealed(
                                     encrypted = encryptedPassword,
                                     clearText = password
                                 ),
-                                passwordStrength = passwordStrengthCalculator.calculateStrength(
-                                    password
-                                )
+                                passwordStrength = evaluation.strength,
+                                passwordChecks = evaluation.penalties.toPasswordChecksUiState()
                             )
                         }
                 }

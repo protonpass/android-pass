@@ -53,12 +53,13 @@ import proton.android.pass.common.api.some
 import proton.android.pass.common.api.toOption
 import proton.android.pass.commonpresentation.api.attachments.AttachmentsHandler
 import proton.android.pass.commonrust.api.EmailValidator
-import proton.android.pass.commonrust.api.passwords.strengths.PasswordStrengthCalculator
+import proton.android.pass.commonrust.api.PasswordScorer
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.toUiModel
 import proton.android.pass.commonuimodels.api.PackageInfoUi
 import proton.android.pass.commonuimodels.api.UIAutofillUrl
 import proton.android.pass.commonuimodels.api.UIPasskeyContent
+import proton.android.pass.composecomponents.impl.item.toPasswordChecksUiState
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.errors.AliasRateLimitError
@@ -148,7 +149,7 @@ class CreateLoginViewModel @Inject constructor(
     private val linkAttachmentsToItem: LinkAttachmentsToItem,
     private val getItemById: GetItemById,
     private val setDefaultVault: SetDefaultVault,
-    passwordStrengthCalculator: PasswordStrengthCalculator,
+    passwordScorer: PasswordScorer,
     accountManager: AccountManager,
     clipboardManager: ClipboardManager,
     totpManager: TotpManager,
@@ -179,7 +180,7 @@ class CreateLoginViewModel @Inject constructor(
     observeUpgradeInfo = observeUpgradeInfo,
     draftRepository = draftRepository,
     encryptionContextProvider = encryptionContextProvider,
-    passwordStrengthCalculator = passwordStrengthCalculator,
+    passwordScorer = passwordScorer,
     emailValidator = emailValidator,
     observeTooltipEnabled = observeTooltipEnabled,
     disableTooltip = disableTooltip,
@@ -328,15 +329,16 @@ class CreateLoginViewModel @Inject constructor(
                 rawAutofillUrls = itemContents.autofillUrls,
                 contentFormatVersion = item.contentFormatVersion
             )
+            val decryptedPassword = decrypt(itemContents.password.encrypted)
+            val passwordEvaluation = passwordScorer.evaluate(decryptedPassword)
             loginItemFormMutableState = currentValue.copy(
                 title = context.getString(R.string.title_duplicate, decrypt(item.title)),
                 note = decrypt(item.note),
                 email = itemContents.itemEmail,
                 username = itemContents.itemUsername,
                 password = passwordHiddenState,
-                passwordStrength = passwordStrengthCalculator.calculateStrength(
-                    password = decrypt(itemContents.password.encrypted)
-                ),
+                passwordStrength = passwordEvaluation.strength,
+                passwordChecks = passwordEvaluation.penalties.toPasswordChecksUiState(),
                 urls = mergedAutofillUrls.map { it.url }.ifEmpty { listOf("") },
                 packageInfoSet = itemContents.packageInfoSet.map { PackageInfoUi(it) }.toSet(),
                 primaryTotp = UIHiddenState.Revealed(
@@ -431,6 +433,7 @@ class CreateLoginViewModel @Inject constructor(
             username = username,
             password = password,
             passwordStrength = currentValue.passwordStrength,
+            passwordChecks = currentValue.passwordChecks,
             urls = websites,
             packageInfoSet = packageInfoSet,
             primaryTotp = primaryTotp,

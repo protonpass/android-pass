@@ -34,10 +34,12 @@ import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.safeRunCatching
 import proton.android.pass.common.api.some
 import proton.android.pass.commonpresentation.api.attachments.AttachmentsHandler
+import proton.android.pass.commonrust.api.PasswordScorer
 import proton.android.pass.commonrust.api.SshKeyGenerator
 import proton.android.pass.commonui.api.ClassHolder
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
+import proton.android.pass.composecomponents.impl.item.toPasswordChecksUiState
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.repositories.PendingAttachmentLinkRepository
@@ -67,6 +69,7 @@ import proton.android.pass.features.itemcreate.common.formprocessor.CustomItemFo
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.notifications.api.SnackbarDispatcher
+import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import proton.android.pass.preferences.InternalSettingsRepository
 import proton.android.pass.preferences.UserPreferencesRepository
 import proton.android.pass.telemetry.api.EventItemType
@@ -97,6 +100,8 @@ class UpdateCustomItemViewModel @Inject constructor(
     observeShare: ObserveShare,
     observeItemById: ObserveItemById,
     sshKeyGenerator: SshKeyGenerator,
+    passwordScorer: PasswordScorer,
+    featureFlagsPreferencesRepository: FeatureFlagsPreferencesRepository,
     private val settingsRepository: InternalSettingsRepository
 ) : BaseCustomItemViewModel(
     canPerformPaidAction = canPerformPaidAction,
@@ -111,7 +116,9 @@ class UpdateCustomItemViewModel @Inject constructor(
     customItemFormProcessor = customItemFormProcessor,
     appDispatchers = appDispatchers,
     savedStateHandleProvider = savedStateHandleProvider,
-    sshKeyGenerator = sshKeyGenerator
+    sshKeyGenerator = sshKeyGenerator,
+    passwordScorer = passwordScorer,
+    featureFlagsPreferencesRepository = featureFlagsPreferencesRepository
 ) {
 
     private val navShareId: ShareId =
@@ -275,7 +282,19 @@ class UpdateCustomItemViewModel @Inject constructor(
                     customFields = customFieldHandler.sanitiseForEditingCustomFields(section.customFields)
                 )
             }
+            val staticFields = formState.itemStaticFields
+            val staticFieldsForEdit = if (staticFields is ItemStaticFields.WifiNetwork) {
+                val evaluation = passwordScorer.evaluate(decrypt(staticFields.password.encrypted))
+                staticFields.copy(
+                    passwordStrength = evaluation.strength,
+                    passwordChecks = evaluation.penalties.toPasswordChecksUiState()
+                )
+            } else {
+                staticFields
+            }
+
             itemFormState = formState.copy(
+                itemStaticFields = staticFieldsForEdit,
                 customFieldList = customFieldHandler.sanitiseForEditingCustomFields(formState.customFieldList),
                 sectionList = sectionsForEdit
             )

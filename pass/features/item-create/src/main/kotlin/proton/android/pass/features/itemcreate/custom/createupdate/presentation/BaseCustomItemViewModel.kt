@@ -42,9 +42,11 @@ import proton.android.pass.common.api.safeRunCatching
 import proton.android.pass.common.api.some
 import proton.android.pass.common.api.toOption
 import proton.android.pass.commonpresentation.api.attachments.AttachmentsHandler
+import proton.android.pass.commonrust.api.PasswordScorer
 import proton.android.pass.commonui.api.ClassHolder
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.toUiModel
+import proton.android.pass.composecomponents.impl.item.toPasswordChecksUiState
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.crypto.api.toEncryptedByteArray
@@ -75,6 +77,8 @@ import proton.android.pass.features.itemcreate.custom.createupdate.presentation.
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.android.pass.preferences.DisplayFileAttachmentsBanner.NotDisplay
+import proton.android.pass.preferences.FeatureFlag
+import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import proton.android.pass.preferences.UserPreferencesRepository
 import proton.android.pass.preferences.value
 import java.net.URI
@@ -166,6 +170,8 @@ abstract class BaseCustomItemViewModel(
     private val canPerformPaidAction: CanPerformPaidAction,
     private val customItemFormProcessor: CustomItemFormProcessor,
     private val sshKeyGenerator: proton.android.pass.commonrust.api.SshKeyGenerator,
+    protected val passwordScorer: PasswordScorer,
+    private val featureFlagsPreferencesRepository: FeatureFlagsPreferencesRepository,
     savedStateHandleProvider: SavedStateHandleProvider
 ) : ViewModel() {
 
@@ -185,6 +191,9 @@ abstract class BaseCustomItemViewModel(
     private val isSshKeyGeneratingState = MutableStateFlow(false)
     private val isPublicKeyFocusedState = MutableStateFlow(false)
     private val isPrivateKeyFocusedState = MutableStateFlow(false)
+
+    private val passwordChecksEnabledFlow: Flow<Boolean> =
+        featureFlagsPreferencesRepository[FeatureFlag.PASS_PASSWORD_CHECKS]
 
     protected fun processCommonIntent(intent: BaseCustomItemCommonIntent) {
         when (intent) {
@@ -696,8 +705,13 @@ abstract class BaseCustomItemViewModel(
                 )
             }
         }
+        val evaluation = passwordScorer.evaluate(value)
         val updatedStaticFields = (itemFormState.itemStaticFields as ItemStaticFields.WifiNetwork)
-            .copy(password = password)
+            .copy(
+                password = password,
+                passwordStrength = evaluation.strength,
+                passwordChecks = evaluation.penalties.toPasswordChecksUiState()
+            )
         itemFormState = itemFormState.copy(itemStaticFields = updatedStaticFields)
     }
 
@@ -735,10 +749,11 @@ abstract class BaseCustomItemViewModel(
         attachmentsHandler.attachmentState,
         isSshKeyGeneratingState,
         isPublicKeyFocusedState,
-        isPrivateKeyFocusedState
+        isPrivateKeyFocusedState,
+        passwordChecksEnabledFlow
     ) { isLoading, hasEdited, errors, savedState, lastAddedField, canPerformPaidAction,
         displayFileAttachmentsOnboarding, attachmentsState, isSshKeyGenerating,
-        isPublicKeyFocused, isPrivateKeyFocused ->
+        isPublicKeyFocused, isPrivateKeyFocused, isPasswordChecksEnabled ->
         ItemSharedUiState(
             isLoadingState = isLoading,
             hasUserEditedContent = hasEdited,
@@ -750,7 +765,8 @@ abstract class BaseCustomItemViewModel(
             attachmentsState = attachmentsState,
             isSshKeyGenerating = isSshKeyGenerating,
             isPublicKeyFocused = isPublicKeyFocused,
-            isPrivateKeyFocused = isPrivateKeyFocused
+            isPrivateKeyFocused = isPrivateKeyFocused,
+            isPasswordChecksEnabled = isPasswordChecksEnabled
         )
     }
 

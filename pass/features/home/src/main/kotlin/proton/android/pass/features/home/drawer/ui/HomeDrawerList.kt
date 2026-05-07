@@ -79,6 +79,7 @@ internal fun HomeDrawerList(
 ) {
     val vaultShowFoldersMap = rememberSaveable(saver = booleanMapSaver()) { mutableStateMapOf() }
     val folderExpandedMap = rememberSaveable(saver = booleanMapSaver()) { mutableStateMapOf() }
+    val knownFolderIdsMap = remember { mutableMapOf<String, Set<String>>() }
 
     LazyColumn(modifier = modifier) {
         item {
@@ -113,16 +114,14 @@ internal fun HomeDrawerList(
             val vaultFolderExpandedMap = NamespacedExpandedState(folderExpandedMap, shareIdStr)
 
             item(key = shareIdStr) {
-                val knownFolderIds = remember { arrayOfNulls<Set<String>>(1) }
-
                 LaunchedEffect(folders) {
                     val currentIds = allFolderIds(folders)
-                    val toExpand = foldersToExpand(knownFolderIds[0], currentIds, folders)
+                    val toExpand = foldersToExpand(knownFolderIdsMap[shareIdStr], currentIds, folders)
                     if (toExpand.isNotEmpty()) {
                         vaultShowFoldersMap[shareIdStr] = true
                         toExpand.forEach { id -> vaultFolderExpandedMap[id] = true }
                     }
-                    knownFolderIds[0] = currentIds
+                    knownFolderIdsMap[shareIdStr] = currentIds
                     folders.forEach { folder ->
                         if (!vaultFolderExpandedMap.contains(folder.id.id)) {
                             vaultFolderExpandedMap[folder.id.id] = false

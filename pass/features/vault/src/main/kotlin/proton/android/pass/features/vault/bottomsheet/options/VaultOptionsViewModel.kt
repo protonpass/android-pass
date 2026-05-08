@@ -23,6 +23,7 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.distinctUntilChanged
@@ -90,8 +91,13 @@ class VaultOptionsViewModel @Inject constructor(
         value = VaultOptionsEvent.Idle
     )
 
-    private val rootFolderCountFlow = observeFoldersByParentId(navShareId, null)
-        .map { folders -> folders.size }
+    private data class FolderCounts(val rootCount: Int, val totalCount: Int)
+
+    private val folderCountsFlow = combine(
+        observeFoldersByParentId(navShareId, null).map { it.size },
+        observeFoldersByParentId(navShareId).map { it.size },
+        ::FolderCounts
+    )
 
     internal val state: StateFlow<VaultOptionsUiState> = combineN(
         observeVaults(includeHidden = true).asLoadingResult(),
@@ -101,8 +107,10 @@ class VaultOptionsViewModel @Inject constructor(
         preferencesRepository.get<Boolean>(FeatureFlag.PASS_FOLDERS),
         canCreateFolder(navShareId),
         observeUpgradeInfo().asLoadingResult(),
-        rootFolderCountFlow
-    ) { vaultResult, canShare, event, allowNoVault, foldersEnabled, canCreateFolder, upgradeResult, rootFolderCount ->
+        folderCountsFlow
+    ) { vaultResult, canShare, event, allowNoVault, foldersEnabled, canCreateFolder, upgradeResult, folderCounts ->
+        val rootFolderCount = folderCounts.rootCount
+        val totalFolderCount = folderCounts.totalCount
         val (allVaults, selectedVault) = when (vaultResult) {
             is LoadingResult.Error -> {
                 snackbarDispatcher(CannotGetVaultListError)
@@ -154,9 +162,11 @@ class VaultOptionsViewModel @Inject constructor(
             isLastVault = vaultResult.data.size == 1,
             canAddFolder = foldersEnabled &&
                 rootFolderCount < FolderLimits.MAX_FOLDER_WIDTH &&
+                totalFolderCount < FolderLimits.MAX_FOLDERS_PER_VAULT &&
                 (canCreateFolder.isAllowed || canCreateFolder.needsUpgrade && isUpgradeAvailable),
             canAddFolderNeedsUpgrade = foldersEnabled &&
                 rootFolderCount < FolderLimits.MAX_FOLDER_WIDTH &&
+                totalFolderCount < FolderLimits.MAX_FOLDERS_PER_VAULT &&
                 canCreateFolder.needsUpgrade && isUpgradeAvailable
         )
     }.stateIn(

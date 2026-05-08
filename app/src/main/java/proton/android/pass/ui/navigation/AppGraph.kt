@@ -2232,7 +2232,7 @@ fun NavGraphBuilder.appGraph(
             when (it) {
                 MigrateNavigation.Close -> appNavigator.navigateBack()
 
-                is MigrateNavigation.ItemMigrated -> dismissBottomSheet {
+                is MigrateNavigation.ItemMigrated -> {
                     // Only navigate to detail if we already were in a detail screen
                     if (appNavigator.hasDestinationInStack(ItemDetailsNavItem)) {
                         appNavigator.navigate(
@@ -2245,12 +2245,11 @@ fun NavGraphBuilder.appGraph(
                     }
                 }
 
+                MigrateNavigation.VaultMigrated -> appNavigator.navigateBack()
 
-                MigrateNavigation.VaultMigrated -> dismissBottomSheet {}
+                MigrateNavigation.FolderMoved -> appNavigator.navigateBack()
 
-                MigrateNavigation.FolderMoved -> dismissBottomSheet {}
-
-                MigrateNavigation.DismissBottomsheet -> dismissBottomSheet {}
+                MigrateNavigation.CloseScreen -> appNavigator.navigateBack()
 
                 is MigrateNavigation.VaultSelectionForItemsMigration -> {
                     appNavigator.navigate(

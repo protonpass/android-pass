@@ -26,15 +26,14 @@ import proton.android.pass.common.api.Some
 import proton.android.pass.domain.FolderId
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
-import proton.android.pass.features.migrate.confirmvault.MigrateConfirmVaultBottomSheet
+import proton.android.pass.features.migrate.confirmvault.MigrateConfirmVaultScreen
 import proton.android.pass.features.migrate.warningshared.navigation.MigrateSharedWarningNavItem
 import proton.android.pass.features.migrate.warningshared.ui.MigrateSharedWarningDialog
 import proton.android.pass.navigation.api.CommonOptionalNavArgId
 import proton.android.pass.navigation.api.NavArgId
 import proton.android.pass.navigation.api.NavItem
-import proton.android.pass.navigation.api.NavItemType
 import proton.android.pass.navigation.api.OptionalNavArgId
-import proton.android.pass.navigation.api.bottomSheet
+import proton.android.pass.navigation.api.composable
 import proton.android.pass.navigation.api.dialog
 import proton.android.pass.navigation.api.toPath
 
@@ -49,7 +48,7 @@ sealed interface MigrateNavigation {
 
     data object VaultMigrated : MigrateNavigation
 
-    data object DismissBottomsheet : MigrateNavigation
+    data object CloseScreen : MigrateNavigation
 
     data object FolderMoved : MigrateNavigation
 
@@ -92,8 +91,7 @@ object MigrateConfirmVault : NavItem(
         CommonOptionalNavArgId.ShareId,
         CommonOptionalNavArgId.FolderId,
         MigrateVaultFilterArg
-    ),
-    navItemType = NavItemType.Bottomsheet
+    )
 ) {
     fun createNavRouteForMigrateAll(shareId: ShareId) = buildString {
         append("$baseRoute/${MigrateModeValue.AllVaultItems.name}")
@@ -130,8 +128,8 @@ object MigrateConfirmVault : NavItem(
 }
 
 fun NavGraphBuilder.migrateGraph(navigation: (MigrateNavigation) -> Unit) {
-    bottomSheet(MigrateConfirmVault) {
-        MigrateConfirmVaultBottomSheet(
+    composable(MigrateConfirmVault) {
+        MigrateConfirmVaultScreen(
             navigation = navigation
         )
     }

@@ -274,7 +274,10 @@ class MigrateConfirmVaultViewModel @Inject constructor(
             event = event,
             vaultList = vaultList,
             folderIdToExpand = (mode as? Mode.MoveFolder)?.folderId.toOption(),
-            disabledFolderId = selectedItemsAnalysis.disabledFolderId,
+            disabledFolderId = when (val m = mode) {
+                is Mode.MoveAllItemsInFolder -> m.folderId.toOption()
+                else -> selectedItemsAnalysis.disabledFolderId
+            },
             disabledFolderItemCount = selectedItemsAnalysis.disabledFolderItemCount,
             selectedShareId = selectedDest.map { it.shareId },
             selectedFolderId = selectedDest.flatMap { it.folderId },
@@ -427,7 +430,7 @@ class MigrateConfirmVaultViewModel @Inject constructor(
     ): MigrateVaultState {
         val canCreate = vault.vault.role.toPermissions().canCreate()
         val folderTree = vaultFolders[vault.vault.shareId] ?: persistentListOf()
-        return when (mode) {
+        val state = when (mode) {
             is Mode.MigrateSelectedItems -> {
                 when (selectedItems) {
                     None -> MigrateVaultState(
@@ -460,11 +463,16 @@ class MigrateConfirmVaultViewModel @Inject constructor(
             is Mode.MigrateAllItems -> MigrateVaultState(
                 vaultWithItemCount = vault,
                 status = when {
+                    !canCreate -> VaultStatus.Disabled(VaultStatus.DisabledReason.NoPermission)
                     vault.vault.shareId != mode.shareId -> VaultStatus.Enabled
                     hasItemsInFolders -> VaultStatus.Enabled
                     else -> VaultStatus.Disabled(VaultStatus.DisabledReason.SameVault)
                 },
-                folderTree = folderTree
+                folderTree = if (vault.vault.shareId == mode.shareId && !hasItemsInFolders) {
+                    persistentListOf()
+                } else {
+                    folderTree
+                }
             )
             is Mode.MoveFolder -> MigrateVaultState(
                 vaultWithItemCount = vault,
@@ -478,6 +486,7 @@ class MigrateConfirmVaultViewModel @Inject constructor(
                 folderTree = folderTree
             )
         }
+        return if (!canCreate) state.copy(folderTree = persistentListOf()) else state
     }
 
     private fun observeFolderTreeForShare(shareKey: VaultShareKey): Flow<Pair<ShareId, PersistentList<FolderUiModel>>> {

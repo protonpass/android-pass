@@ -123,7 +123,9 @@ data class MigrateVaultState(
     val vaultWithItemCount: VaultWithItemCount,
     val status: VaultStatus,
     val folderTree: PersistentList<FolderUiModel> = persistentListOf()
-)
+) {
+    val hasFolders: Boolean get() = folderTree.isNotEmpty()
+}
 
 internal data class SelectedItemsAnalysis(
     val sourceShareId: ShareId?,

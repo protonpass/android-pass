@@ -35,6 +35,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import me.proton.core.compose.theme.ProtonTheme
 import proton.android.pass.commonui.api.PassPalette
@@ -53,6 +54,7 @@ import me.proton.core.presentation.R as CoreR
 @Composable
 fun OneFolderItem(
     modifier: Modifier = Modifier,
+    startIndent: Dp = 0.dp,
     folderName: String,
     folders: List<FolderUiModel> = emptyList(),
     isExpanded: Boolean,
@@ -63,10 +65,19 @@ fun OneFolderItem(
     onThreeDotsClick: (() -> Unit)? = null
 ) {
     Row(
-        modifier = modifier,
+        modifier = modifier
+            .fillMaxWidth()
+            .then(
+                if (onFolderClick != null) Modifier.clickable { onFolderClick() } else Modifier
+            )
+            .minimumInteractiveComponentSize()
+            .then(
+                if (onThreeDotsClick == null) Modifier.padding(end = Spacing.medium) else Modifier
+            ),
         verticalAlignment = Alignment.CenterVertically
     ) {
         AnimatedContent(
+            modifier = Modifier.padding(start = startIndent),
             targetState = folders.isNotEmpty()
         ) { hasFolders ->
             if (hasFolders) {
@@ -82,15 +93,7 @@ fun OneFolderItem(
         }
 
         Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .then(
-                    if (onFolderClick != null) Modifier.clickable { onFolderClick() } else Modifier
-                )
-                .minimumInteractiveComponentSize()
-                .then(
-                    if (onThreeDotsClick == null) Modifier.padding(end = Spacing.medium) else Modifier
-                ),
+            modifier = Modifier.weight(1f),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(16.dp)
         ) {

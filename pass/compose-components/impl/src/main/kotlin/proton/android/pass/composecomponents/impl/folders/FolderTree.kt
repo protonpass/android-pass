@@ -191,9 +191,8 @@ fun LazyListScope.folderTreeItems(
         val isFolderDisabled = disabledFolderId is Some && folder.id == disabledFolderId.value
 
         OneFolderItem(
-            modifier = Modifier
-                .animateItem()
-                .padding(start = startPadding + (flatItem.depth * 16).dp),
+            modifier = Modifier.animateItem(),
+            startIndent = startPadding + (flatItem.depth * 16).dp,
             folderName = folder.name,
             folders = folder.folders,
             isExpanded = expandedState.isExpanded(folder.id.id),

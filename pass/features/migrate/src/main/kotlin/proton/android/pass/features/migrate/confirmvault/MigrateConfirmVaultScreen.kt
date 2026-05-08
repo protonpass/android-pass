@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023-2026 Proton AG
+ * Copyright (c) 2026 Proton AG
  * This file is part of Proton AG and Proton Pass.
  *
  * Proton Pass is free software: you can redistribute it and/or modify
@@ -18,6 +18,7 @@
 
 package proton.android.pass.features.migrate.confirmvault
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -36,21 +37,23 @@ import me.proton.core.compose.component.ProtonDialogTitle
 import proton.android.pass.common.api.Some
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
-import proton.android.pass.commonui.api.bottomSheet
 import proton.android.pass.composecomponents.impl.dialogs.DialogCancelConfirmSection
 import proton.android.pass.composecomponents.impl.dialogs.NoPaddingDialog
 import proton.android.pass.composecomponents.impl.dialogs.WarningSharedItemDialog
 import proton.android.pass.composecomponents.impl.text.Text
 import proton.android.pass.features.migrate.MigrateNavigation
 import proton.android.pass.features.migrate.R
+import proton.android.pass.composecomponents.impl.R as CompR
 
 @Composable
-fun MigrateConfirmVaultBottomSheet(
+fun MigrateConfirmVaultScreen(
     modifier: Modifier = Modifier,
     navigation: (MigrateNavigation) -> Unit,
     viewModel: MigrateConfirmVaultViewModel = hiltViewModel()
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
+
+    BackHandler { viewModel.onCancel() }
 
     LaunchedEffect(state.event) {
         val event = state.event
@@ -61,7 +64,7 @@ fun MigrateConfirmVaultBottomSheet(
                 ConfirmMigrateEvent.AllItemsMigrated ->
                     navigation(MigrateNavigation.VaultMigrated)
                 ConfirmMigrateEvent.Close ->
-                    navigation(MigrateNavigation.DismissBottomsheet)
+                    navigation(MigrateNavigation.CloseScreen)
                 ConfirmMigrateEvent.FolderMoved ->
                     navigation(MigrateNavigation.FolderMoved)
             }
@@ -71,12 +74,11 @@ fun MigrateConfirmVaultBottomSheet(
     var showWarningVaultSharedDialog by rememberSaveable { mutableStateOf(false) }
 
     MigrateConfirmVaultContents(
-        modifier = modifier
-            .bottomSheet(horizontalPadding = PassTheme.dimens.bottomsheetHorizontalPadding),
+        modifier = modifier,
         state = state,
         onVaultSelected = { viewModel.onVaultSelected(it) },
         onFolderSelected = { shareId, folderId -> viewModel.onFolderSelected(shareId, folderId) },
-        onCancel = { viewModel.onCancel() },
+        onClose = { viewModel.onCancel() },
         onConfirm = {
             if (state.canDisplayWarningVaultSharedDialog) {
                 showWarningVaultSharedDialog = true
@@ -88,7 +90,7 @@ fun MigrateConfirmVaultBottomSheet(
 
     if (showWarningVaultSharedDialog) {
         WarningSharedItemDialog(
-            description = proton.android.pass.composecomponents.impl.R.string.warning_dialog_item_shared_vault_moving,
+            description = CompR.string.warning_dialog_item_shared_vault_moving,
             onOkClick = { reminderCheck ->
                 showWarningVaultSharedDialog = false
                 if (reminderCheck) viewModel.doNotDisplayWarningDialog()

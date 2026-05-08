@@ -18,8 +18,9 @@
 
 package proton.android.pass.features.migrate.confirmvault
 
-import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
@@ -73,7 +74,7 @@ internal fun MigrateVaultSelectorContents(
     } else {
         null
     }
-    if (vaults.any { it.folderTree.isNotEmpty() }) {
+    if (vaults.any { it.hasFolders }) {
         val vaultShowFoldersMap = remember { mutableStateMapOf<String, Boolean>() }
         val folderExpandedMap = remember { mutableStateMapOf<String, Boolean>() }
 
@@ -125,47 +126,63 @@ internal fun MigrateVaultSelectorContents(
                         }
                     }
 
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically,
-                        modifier = Modifier.padding(
-                            start = if (vaultPair.folderTree.isEmpty()) {
-                                PassTheme.dimens.bottomsheetHorizontalPadding
-                            } else {
-                                0.dp
-                            },
-                            end = PassTheme.dimens.bottomsheetHorizontalPadding
-                        )
-                    ) {
-                        AnimatedVisibility(visible = vaultPair.folderTree.isNotEmpty()) {
+                    val customSubtitle = when (vaultPair.status) {
+                        is VaultStatus.Enabled -> null
+                        is VaultStatus.Disabled -> when (vaultPair.status.reason) {
+                            VaultStatus.DisabledReason.NoPermission -> stringResource(
+                                R.string.migrate_disabled_vault_reason_no_permission
+                            )
+                            VaultStatus.DisabledReason.SameVault -> stringResource(
+                                R.string.migrate_disabled_vault_reason_same_vault
+                            )
+                        }
+                    }
+                    val isEnabled = vaultPair.status is VaultStatus.Enabled
+
+                    if (vaultPair.hasFolders) {
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .clickable(enabled = isEnabled) { onVaultSelected(vaultModel.shareId) }
+                                .padding(end = PassTheme.dimens.bottomsheetHorizontalPadding)
+                        ) {
                             ExpandCollapseIcon(
                                 expanded = showFolders,
                                 onClick = { vaultShowFoldersMap[shareIdStr] = !showFolders }
                             )
+                            BottomSheetVaultRow(
+                                vault = vaultWithCount,
+                                isSelected = isVaultSelected,
+                                customSubtitle = customSubtitle,
+                                enabled = isEnabled,
+                                onVaultClick = null
+                            ).let { item ->
+                                BottomSheetItem(item = item, horizontalPadding = 0.dp)
+                            }
                         }
-
-                        BottomSheetVaultRow(
-                            vault = vaultWithCount,
-                            isSelected = isVaultSelected,
-                            customSubtitle = when (vaultPair.status) {
-                                is VaultStatus.Enabled -> null
-                                is VaultStatus.Disabled -> when (vaultPair.status.reason) {
-                                    VaultStatus.DisabledReason.NoPermission -> stringResource(
-                                        R.string.migrate_disabled_vault_reason_no_permission
-                                    )
-                                    VaultStatus.DisabledReason.SameVault -> stringResource(
-                                        R.string.migrate_disabled_vault_reason_same_vault
-                                    )
-                                }
-                            },
-                            enabled = vaultPair.status is VaultStatus.Enabled,
-                            onVaultClick = { onVaultSelected(vaultModel.shareId) }
-                        ).let { item ->
-                            BottomSheetItem(item = item, horizontalPadding = 0.dp)
+                    } else {
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .clickable(enabled = isEnabled) { onVaultSelected(vaultModel.shareId) }
+                                .padding(horizontal = PassTheme.dimens.bottomsheetHorizontalPadding)
+                        ) {
+                            BottomSheetVaultRow(
+                                vault = vaultWithCount,
+                                isSelected = isVaultSelected,
+                                customSubtitle = customSubtitle,
+                                enabled = isEnabled,
+                                onVaultClick = null
+                            ).let { item ->
+                                BottomSheetItem(item = item, horizontalPadding = 0.dp)
+                            }
                         }
                     }
                 }
 
-                if (vaultPair.folderTree.isNotEmpty() && showFolders) {
+                if (vaultPair.hasFolders && showFolders) {
                     folderTreeItems(
                         folders = vaultPair.folderTree,
                         expandedState = vaultFolderExpandedMap,

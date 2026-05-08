@@ -42,6 +42,8 @@ import proton.android.pass.data.fakes.usecases.shares.FakeObserveShare
 import proton.android.pass.domain.FolderId
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.ShareRole
+import proton.android.pass.test.domain.FolderTestFactory
 import proton.android.pass.domain.VaultWithItemCount
 import proton.android.pass.features.migrate.MigrateModeArg
 import proton.android.pass.features.migrate.MigrateModeValue
@@ -324,8 +326,117 @@ internal class MigrateConfirmVaultViewModelTest {
         assertThat(memory.first().destFolderId).isNull()
     }
 
+    @Test
+    fun `MigrateAllItems - viewer-access destination vault is disabled`() = runTest {
+        instance = buildViewModel(MigrateModeValue.AllVaultItems)
+        val viewerVault = VaultWithItemCount(
+            vault = VaultTestFactory.create(shareId = OTHER_SHARE_ID, role = ShareRole.Read),
+            activeItemCount = 5,
+            trashedItemCount = 0
+        )
+        observeVaults.sendResult(Result.success(listOf(sourceVault(), viewerVault)))
+
+        instance.state.test {
+            val state = awaitItem()
+            val viewerVaultState = state.vaultList.first { it.vaultWithItemCount.vault.shareId == OTHER_SHARE_ID }
+            assertThat(viewerVaultState.status)
+                .isEqualTo(VaultStatus.Disabled(VaultStatus.DisabledReason.NoPermission))
+            cancelAndConsumeRemainingEvents()
+        }
+    }
+
+    @Test
+    fun `MigrateAllItems - admin-access destination vault is enabled`() = runTest {
+        instance = buildViewModel(MigrateModeValue.AllVaultItems)
+        val adminVault = VaultWithItemCount(
+            vault = VaultTestFactory.create(shareId = OTHER_SHARE_ID, role = ShareRole.Admin),
+            activeItemCount = 5,
+            trashedItemCount = 0
+        )
+        observeVaults.sendResult(Result.success(listOf(sourceVault(), adminVault)))
+
+        instance.state.test {
+            val state = awaitItem()
+            val adminVaultState = state.vaultList.first { it.vaultWithItemCount.vault.shareId == OTHER_SHARE_ID }
+            assertThat(adminVaultState.status).isEqualTo(VaultStatus.Enabled)
+            cancelAndConsumeRemainingEvents()
+        }
+    }
+
+    @Test
+    fun `MigrateAllItems - read-only vault has no folders exposed`() = runTest {
+        val folder = FolderTestFactory.create()
+        val fakeFolders = FakeObserveFoldersByParentId().apply {
+            sendResult(Result.success(listOf(folder)))
+        }
+        instance = buildViewModel(MigrateModeValue.AllVaultItems, fakeFolders)
+        val viewerVault = VaultWithItemCount(
+            vault = VaultTestFactory.create(shareId = OTHER_SHARE_ID, role = ShareRole.Read),
+            activeItemCount = 5,
+            trashedItemCount = 0
+        )
+        observeVaults.sendResult(Result.success(listOf(sourceVault(), viewerVault)))
+
+        instance.state.test {
+            val state = awaitItem()
+            val viewerVaultState = state.vaultList.first { it.vaultWithItemCount.vault.shareId == OTHER_SHARE_ID }
+            assertThat(viewerVaultState.folderTree).isEmpty()
+            cancelAndConsumeRemainingEvents()
+        }
+    }
+
+    @Test
+    fun `MigrateAllItems - source vault folders are not exposed`() = runTest {
+        val folder = FolderTestFactory.create()
+        val fakeFolders = FakeObserveFoldersByParentId().apply {
+            sendResult(Result.success(listOf(folder)))
+        }
+        instance = buildViewModel(MigrateModeValue.AllVaultItems, fakeFolders)
+        observeVaults.sendResult(Result.success(listOf(sourceVault())))
+
+        instance.state.test {
+            val state = awaitItem()
+            val sourceVaultState = state.vaultList.first { it.vaultWithItemCount.vault.shareId == SHARE_ID }
+            assertThat(sourceVaultState.folderTree).isEmpty()
+            cancelAndConsumeRemainingEvents()
+        }
+    }
+
+    @Test
+    fun `hasFolders is true when vault has folders`() = runTest {
+        val folder = FolderTestFactory.create()
+        val fakeFolders = FakeObserveFoldersByParentId().apply {
+            sendResult(Result.success(listOf(folder)))
+        }
+        val vm = buildViewModel(MigrateModeValue.SelectedItems, fakeFolders) {
+            set(MigrateVaultFilterArg.key, MigrateVaultFilter.All.name)
+            set(CommonOptionalNavArgId.ItemId.key, ITEM_ID.id)
+        }
+        observeVaults.sendResult(Result.success(listOf(sourceVault())))
+
+        vm.state.test {
+            val state = awaitItem()
+            val vaultState = state.vaultList.firstOrNull { it.vaultWithItemCount.vault.shareId == SHARE_ID }
+            assertThat(vaultState?.hasFolders).isTrue()
+            cancelAndConsumeRemainingEvents()
+        }
+    }
+
+    @Test
+    fun `hasFolders is false when vault has no folders`() = runTest {
+        observeVaults.sendResult(Result.success(listOf(sourceVault())))
+
+        instance.state.test {
+            val state = awaitItem()
+            val vaultState = state.vaultList.firstOrNull { it.vaultWithItemCount.vault.shareId == SHARE_ID }
+            assertThat(vaultState?.hasFolders).isFalse()
+            cancelAndConsumeRemainingEvents()
+        }
+    }
+
     private fun buildViewModel(
         mode: MigrateModeValue,
+        observeFoldersByParentId: FakeObserveFoldersByParentId = FakeObserveFoldersByParentId(),
         extraArgs: (androidx.lifecycle.SavedStateHandle.() -> Unit)? = null
     ): MigrateConfirmVaultViewModel = MigrateConfirmVaultViewModel(
         migrator = MigrateConfirmVaultMigrator(
@@ -349,7 +460,7 @@ internal class MigrateConfirmVaultViewModelTest {
         },
         observeShare = observeShare,
         settingsRepository = settingsRepository,
-        observeFolders = FakeObserveFoldersByParentId(),
+        observeFolders = observeFoldersByParentId,
         observeFolderItemCounts = observeFolderItemCounts
     )
 

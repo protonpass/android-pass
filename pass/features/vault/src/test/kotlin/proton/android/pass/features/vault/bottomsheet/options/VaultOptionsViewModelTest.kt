@@ -36,6 +36,7 @@ import proton.android.pass.data.fakes.usecases.FakeObserveEncryptedItems
 import proton.android.pass.data.fakes.usecases.FakeObserveUpgradeInfo
 import proton.android.pass.data.fakes.usecases.FakeObserveVaults
 import proton.android.pass.data.fakes.usecases.folders.FakeObserveFoldersByParentId
+import proton.android.pass.domain.Folder
 import proton.android.pass.domain.FolderId
 import proton.android.pass.domain.GroupId
 import proton.android.pass.domain.Plan
@@ -50,6 +51,7 @@ import proton.android.pass.preferences.FeatureFlag
 import proton.android.pass.test.MainDispatcherRule
 import proton.android.pass.test.StringTestFactory
 import proton.android.pass.test.TestConstants
+import proton.android.pass.test.domain.FolderTestFactory
 import proton.android.pass.test.domain.VaultTestFactory
 
 class VaultOptionsViewModelTest {
@@ -553,13 +555,64 @@ class VaultOptionsViewModelTest {
         }
     }
 
+    @Test
+    fun `canAddFolder is false when total folder count reaches MAX_FOLDERS_PER_VAULT`() = runTest {
+        val featureFlags = FakeFeatureFlagsPreferenceRepository().apply {
+            set(FeatureFlag.PASS_FOLDERS, true)
+        }
+        canCreateFolder.sendValue(true)
+        observeUpgradeInfo.setResult(upgradeInfoWithUpgrade(false))
+        val shareId = ShareId(SHARE_ID)
+        val fakeFolders = FakeObserveFoldersByParentId().apply {
+            sendResult(shareId, null, Result.success(rootFolders(count = 5)))
+            sendResult(shareId, Result.success(allFolders(count = 100)))
+        }
+        setNavShareId(shareId, featureFlags, fakeFolders)
+        emitDefaultVault()
+
+        instance.state.test {
+            val item = awaitItem() as VaultOptionsUiState.Success
+            assertThat(item.canAddFolder).isFalse()
+            assertThat(item.canAddFolderNeedsUpgrade).isFalse()
+        }
+    }
+
+    @Test
+    fun `canAddFolder is true when total folder count is below MAX_FOLDERS_PER_VAULT`() = runTest {
+        val featureFlags = FakeFeatureFlagsPreferenceRepository().apply {
+            set(FeatureFlag.PASS_FOLDERS, true)
+        }
+        canCreateFolder.sendValue(true)
+        observeUpgradeInfo.setResult(upgradeInfoWithUpgrade(false))
+        val shareId = ShareId(SHARE_ID)
+        val fakeFolders = FakeObserveFoldersByParentId().apply {
+            sendResult(shareId, null, Result.success(rootFolders(count = 5)))
+            sendResult(shareId, Result.success(allFolders(count = 99)))
+        }
+        setNavShareId(shareId, featureFlags, fakeFolders)
+        emitDefaultVault()
+
+        instance.state.test {
+            val item = awaitItem() as VaultOptionsUiState.Success
+            assertThat(item.canAddFolder).isTrue()
+        }
+    }
+
     // endregion
 
-    private fun rootFolders(count: Int): List<proton.android.pass.domain.Folder> = (0 until count).map { index ->
-        proton.android.pass.test.domain.FolderTestFactory.create(
+    private fun rootFolders(count: Int): List<Folder> = (0 until count).map { index ->
+        FolderTestFactory.create(
             shareId = ShareId(SHARE_ID),
             folderId = FolderId("root-folder-$index"),
             parentFolderId = null
+        )
+    }
+
+    private fun allFolders(count: Int): List<Folder> = (0 until count).map { index ->
+        FolderTestFactory.create(
+            shareId = ShareId(SHARE_ID),
+            folderId = FolderId("folder-$index"),
+            parentFolderId = if (index < 5) null else FolderId("root-folder-${index % 5}")
         )
     }
 

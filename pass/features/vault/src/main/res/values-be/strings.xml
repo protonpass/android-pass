@@ -22,7 +22,6 @@
   <string name="vault_delete_dialog_title">Выдаліць сховішча</string>
   <string name="vault_add_folder_dialog_title">Увядзіце назву папкі</string>
   <string name="vault_edit_folder_dialog_title">Перайменаваць папку</string>
-  <string name="vault_add_foldersame_folder_exist">Папка з такой назвай ужо існуе</string>
   <string name="folder_delete_dialog_title">Выдаліць папку</string>
   <string name="folder_delete_dialog_body">Дзеянне прывядзе да незваротнага выдалення папкі з назвай __FOLDER_NAME__ і ўсяго яе змесціва. Увядзіце назву папкі, каб пацвердзіць выдаленне.</string>
   <string name="folder_delete_dialog_placeholder">Назва папкі</string>
@@ -45,7 +44,7 @@
   <string name="bottomsheet_cannot_create_more_vaults">Вы дасягнулі абмежавання па колькасці сховішчаў, якія вы можаце стварыць. Стварэнне неабмежаванай колькасці сховішчаў стане даступна пасля паляпшэння падпіскі.</string>
   <string name="bottomsheet_cannot_select_not_primary_vault">Палепшыце падпіску свайго ўліковага запісу, каб мець магчымасць узаемадзейнічаць з іншымі сховішчамі.</string>
   <string name="bottomsheet_edit">Рэдагаваць</string>
-  <string name="bottomsheet_migrate">Перамясціць усе элементы ў іншае сховішча</string>
+  <string name="bottomsheet_migrate_v2">Перамяшчэнне ўсіх элементаў</string>
   <string name="bottomsheet_delete_vault">Выдаліць сховішча</string>
   <string name="bottomsheet_share_vault">Абагуліць</string>
   <string name="bottomsheet_leave_vault">Выйсці са сховішча</string>

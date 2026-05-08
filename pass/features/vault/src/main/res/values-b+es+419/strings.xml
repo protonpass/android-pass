@@ -22,7 +22,6 @@
   <string name="vault_delete_dialog_title">Eliminar bóveda</string>
   <string name="vault_add_folder_dialog_title">Ingrese un título de carpeta</string>
   <string name="vault_edit_folder_dialog_title">Renombrar carpeta</string>
-  <string name="vault_add_foldersame_folder_exist">Ya existe una carpeta con el mismo nombre</string>
   <string name="folder_delete_dialog_title">Eliminar carpeta</string>
   <string name="folder_delete_dialog_body">Esto eliminará de forma permanente la carpeta __FOLDER_NAME__ y todo su contenido. Ingrese el nombre de la carpeta para confirmar la eliminación.</string>
   <string name="folder_delete_dialog_placeholder">Nombre de carpeta</string>
@@ -45,7 +44,7 @@
   <string name="bottomsheet_cannot_create_more_vaults">Ha alcanzado el límite de bóvedas que puede crear. Cree bóvedas ilimitadas al actualizar la suscripción.</string>
   <string name="bottomsheet_cannot_select_not_primary_vault">Para interactuar con las otras bóvedas, necesita actualizar la cuenta.</string>
   <string name="bottomsheet_edit">Editar</string>
-  <string name="bottomsheet_migrate">Mover todos los elementos a otra bóveda</string>
+  <string name="bottomsheet_migrate_v2">Mover todos los elementos</string>
   <string name="bottomsheet_delete_vault">Eliminar bóveda</string>
   <string name="bottomsheet_share_vault">Compartir</string>
   <string name="bottomsheet_leave_vault">Dejar la bóveda</string>

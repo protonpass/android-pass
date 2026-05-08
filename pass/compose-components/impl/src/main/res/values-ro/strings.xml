@@ -32,12 +32,13 @@
   <string name="bottomsheet_view_item_history">Afișare istoric</string>
   <string name="bottomsheet_monitor_exclude">Excludere din monitorizare</string>
   <string name="bottomsheet_monitor_include">Includere în monitorizare</string>
-  <string name="bottomsheet_migrate_item">Mutare în alt seif</string>
+  <string name="bottomsheet_migrate_item_v2">Mutare</string>
   <string name="bottomsheet_create_folder">Creare folder</string>
   <string name="folder_tree_create_folder">Creare folder</string>
   <string name="bottomsheet_rename_folder">Redenumire</string>
   <string name="bottomsheet_create_sub_folder">Creare subfolder</string>
-  <string name="bottomsheet_move_folder">Mutare</string>
+  <string name="bottomsheet_move_folder">Mutare folder</string>
+  <string name="bottomsheet_move_all_items_in_folder">Mutare toate articolele</string>
   <string name="bottomsheet_copy_item_note">Copiere notiță</string>
   <string name="bottomsheet_delete_permanently">Ștergere permanentă</string>
   <string name="bottomsheet_restore">Restaurare</string>

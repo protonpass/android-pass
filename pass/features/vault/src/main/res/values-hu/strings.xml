@@ -22,7 +22,6 @@
   <string name="vault_delete_dialog_title">Tároló törlése</string>
   <string name="vault_add_folder_dialog_title">Enter a folder title</string>
   <string name="vault_edit_folder_dialog_title">Rename folder</string>
-  <string name="vault_add_foldersame_folder_exist">A folder with the same name already exists</string>
   <string name="folder_delete_dialog_title">Delete folder</string>
   <string name="folder_delete_dialog_body">This will permanently delete the folder __FOLDER_NAME__ and all its contents. Enter the folder name to confirm deletion.</string>
   <string name="folder_delete_dialog_placeholder">Folder name</string>
@@ -45,7 +44,7 @@
   <string name="bottomsheet_cannot_create_more_vaults">Elérte a létrehozható tárolók számát. Előfizetésének módosításakor korlátlan számú tárolót hozhat létre.</string>
   <string name="bottomsheet_cannot_select_not_primary_vault">A többi tároló kezeléséhez nagyobb csomagra kell váltania.</string>
   <string name="bottomsheet_edit">Szerkesztés</string>
-  <string name="bottomsheet_migrate">Összes elem áthelyezése egy másik tárolóba</string>
+  <string name="bottomsheet_migrate_v2">Move all items</string>
   <string name="bottomsheet_delete_vault">Tároló törlése</string>
   <string name="bottomsheet_share_vault">Megosztás</string>
   <string name="bottomsheet_leave_vault">Tároló elhagyása</string>

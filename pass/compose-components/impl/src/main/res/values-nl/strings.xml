@@ -31,12 +31,13 @@
   <string name="bottomsheet_view_item_history">Geschiedenis bekijken</string>
   <string name="bottomsheet_monitor_exclude">Uitsluiten van controle</string>
   <string name="bottomsheet_monitor_include">Opnemen in monitoring</string>
-  <string name="bottomsheet_migrate_item">Verplaatsen naar andere kluis</string>
+  <string name="bottomsheet_migrate_item_v2">Verplaatsen</string>
   <string name="bottomsheet_create_folder">Map aanmaken</string>
   <string name="folder_tree_create_folder">Map aanmaken</string>
   <string name="bottomsheet_rename_folder">Hernoemen</string>
   <string name="bottomsheet_create_sub_folder">Maak submap</string>
-  <string name="bottomsheet_move_folder">Verplaatsen</string>
+  <string name="bottomsheet_move_folder">Verplaats map</string>
+  <string name="bottomsheet_move_all_items_in_folder">Alle items verplaatsen</string>
   <string name="bottomsheet_copy_item_note">Notitie kopiëren</string>
   <string name="bottomsheet_delete_permanently">Permanent verwijderen</string>
   <string name="bottomsheet_restore">Herstel</string>

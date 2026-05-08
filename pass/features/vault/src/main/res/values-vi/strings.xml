@@ -22,7 +22,6 @@
   <string name="vault_delete_dialog_title">Xóa két sắt</string>
   <string name="vault_add_folder_dialog_title">Enter a folder title</string>
   <string name="vault_edit_folder_dialog_title">Rename folder</string>
-  <string name="vault_add_foldersame_folder_exist">A folder with the same name already exists</string>
   <string name="folder_delete_dialog_title">Delete folder</string>
   <string name="folder_delete_dialog_body">This will permanently delete the folder __FOLDER_NAME__ and all its contents. Enter the folder name to confirm deletion.</string>
   <string name="folder_delete_dialog_placeholder">Folder name</string>
@@ -45,7 +44,7 @@
   <string name="bottomsheet_cannot_create_more_vaults">Bạn đã đạt giới hạn số két sắt được phép tạo. Để tạo két sắt vô giới hạn, bạn hãy nâng cấp gói đăng ký của mình.</string>
   <string name="bottomsheet_cannot_select_not_primary_vault">Để tương tác với các két sắt khác, bạn cần phải nâng cấp tài khoản của mình.</string>
   <string name="bottomsheet_edit">Sửa</string>
-  <string name="bottomsheet_migrate">Chuyển tất cả mục sang két sắt khác</string>
+  <string name="bottomsheet_migrate_v2">Move all items</string>
   <string name="bottomsheet_delete_vault">Xóa két sắt</string>
   <string name="bottomsheet_share_vault">Chia sẽ</string>
   <string name="bottomsheet_leave_vault">Rời khỏi két sắt</string>

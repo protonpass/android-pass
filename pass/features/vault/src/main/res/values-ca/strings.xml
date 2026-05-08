@@ -22,7 +22,6 @@
   <string name="vault_delete_dialog_title">Elimina la caixa forta</string>
   <string name="vault_add_folder_dialog_title">Introduïu un títol per a la carpeta</string>
   <string name="vault_edit_folder_dialog_title">Canvieu el nom de la carpeta</string>
-  <string name="vault_add_foldersame_folder_exist">Ja hi ha una carpeta amb el mateix nom</string>
   <string name="folder_delete_dialog_title">Elimineu la carpeta</string>
   <string name="folder_delete_dialog_body">Això eliminarà permanentment la carpeta __FOLDER_NAME__ i tot el seu contingut. Introduïu el nom de la carpeta per confirmar-ne l\'eliminació.</string>
   <string name="folder_delete_dialog_placeholder">Nom de la carpeta</string>
@@ -45,7 +44,7 @@
   <string name="bottomsheet_cannot_create_more_vaults">Heu assolit el límit de caixes fortes que podeu crear. Creeu un nombre il·limitat de caixes fortes en millorar la vostra subscripció.</string>
   <string name="bottomsheet_cannot_select_not_primary_vault">Per a interactuar amb les vostres altres caixes fortes, heu de millorar el vostre compte.</string>
   <string name="bottomsheet_edit">Edita</string>
-  <string name="bottomsheet_migrate">Mou tots els elements a una altra caixa forta</string>
+  <string name="bottomsheet_migrate_v2">Mou tots els elements</string>
   <string name="bottomsheet_delete_vault">Elimina la caixa forta</string>
   <string name="bottomsheet_share_vault">Comparteix</string>
   <string name="bottomsheet_leave_vault">Deixa la caixa forta</string>

@@ -22,7 +22,6 @@
   <string name="vault_delete_dialog_title">Poista holvi</string>
   <string name="vault_add_folder_dialog_title">Syötä kansion nimi</string>
   <string name="vault_edit_folder_dialog_title">Nimeä kansio uudelleen</string>
-  <string name="vault_add_foldersame_folder_exist">Samanniminen kansio on jo olemassa</string>
   <string name="folder_delete_dialog_title">Poista kansio</string>
   <string name="folder_delete_dialog_body">This will permanently delete the folder __FOLDER_NAME__ and all its contents. Enter the folder name to confirm deletion.</string>
   <string name="folder_delete_dialog_placeholder">Kansion nimi</string>
@@ -45,7 +44,7 @@
   <string name="bottomsheet_cannot_create_more_vaults">Luotujen holvien enimmäismäärä on saavutettu. Luo holveja rajattomasti päivittämällä tilauksesi.</string>
   <string name="bottomsheet_cannot_select_not_primary_vault">Käyttääksesi muita holvejasi, sinun on päivitettävä tilisi.</string>
   <string name="bottomsheet_edit">Muokkaa</string>
-  <string name="bottomsheet_migrate">Siirrä kaikki kohteet toiseen holviin</string>
+  <string name="bottomsheet_migrate_v2">Move all items</string>
   <string name="bottomsheet_delete_vault">Poista holvi</string>
   <string name="bottomsheet_share_vault">Jaa</string>
   <string name="bottomsheet_leave_vault">Poistu holvista</string>

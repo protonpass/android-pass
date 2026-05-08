@@ -22,7 +22,6 @@
   <string name="vault_delete_dialog_title">刪除保管庫</string>
   <string name="vault_add_folder_dialog_title">Enter a folder title</string>
   <string name="vault_edit_folder_dialog_title">Rename folder</string>
-  <string name="vault_add_foldersame_folder_exist">A folder with the same name already exists</string>
   <string name="folder_delete_dialog_title">Delete folder</string>
   <string name="folder_delete_dialog_body">This will permanently delete the folder __FOLDER_NAME__ and all its contents. Enter the folder name to confirm deletion.</string>
   <string name="folder_delete_dialog_placeholder">Folder name</string>
@@ -45,7 +44,7 @@
   <string name="bottomsheet_cannot_create_more_vaults">你已達到保管庫創建上限。升級訂購授權已創建無限保管庫</string>
   <string name="bottomsheet_cannot_select_not_primary_vault">若需使用您其他保管庫，需升級您的帳號</string>
   <string name="bottomsheet_edit">編輯</string>
-  <string name="bottomsheet_migrate">將全部項目移至保管庫</string>
+  <string name="bottomsheet_migrate_v2">Move all items</string>
   <string name="bottomsheet_delete_vault">刪除保管庫</string>
   <string name="bottomsheet_share_vault">分享</string>
   <string name="bottomsheet_leave_vault">離開保管庫</string>

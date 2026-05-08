@@ -34,7 +34,7 @@
   <string name="security_center_home_row_reused_passwords_subtitle">Генерацыя ўнікальных пароляў</string>
   <string name="security_center_home_row_missing_tfa_title">Неактыўныя 2ФА</string>
   <string name="security_center_home_row_missing_tfa_subtitle">Наладзьце 2ФА для большай бяспекі</string>
-  <string name="security_center_home_row_excludes_items_title">Выключана з назірання</string>
+  <string name="security_center_home_row_excludes_items_title">Выключаныя з назірання</string>
   <string name="security_center_home_row_excludes_items_subtitle">Гэтыя элементы застаюцца ў зоне рызыкі</string>
   <string name="security_center_get_breaches_error">Немагчыма загрузіць парушэнні</string>
   <string name="security_center_home_section_password_health">Якасць пароля</string>
@@ -135,13 +135,13 @@
   <string name="security_center_report_detail_note" comment="The placeholder argument contains the name of the service where the breach occurred.">Адбылася ўцечка скампраметаваных звестак з %s. Гэта не закранула звесткі вашага ўліковага запісу, бо яны зашыфраваны і знаходзяцца ў бяспецы.</string>
   <string name="security_center_report_detail_learn_more">Даведацца больш</string>
   <string name="security_center_report_detail_snackbar_error">Немагчыма загрузіць падрабязнасці парушэння</string>
-  <string name="security_center_report_detail_excluded_from_monitoring">Выключана з назірання</string>
+  <string name="security_center_report_detail_excluded_from_monitoring">Выключаныя з назірання</string>
   <string name="security_center_report_resolve_confirmation_dialog_title">Вырашыць усе парушэнні?</string>
   <string name="security_center_report_resolve_confirmation_dialog_message">Усе бягучыя парушэнні будуць пазначаны як вырашаныя. Вы будзеце апавешчаны ў выпадку, калі адбудзецца ўцечка даных.</string>
   <!-- Proton list -->
   <string name="security_center_proton_list_top_bar_title">Адрасы Proton</string>
   <string name="security_center_proton_list_no_breaches_detected">Парушэнні не выяўлены</string>
-  <string name="security_center_proton_list_excluded_from_monitoring">Выключана з назірання</string>
+  <string name="security_center_proton_list_excluded_from_monitoring">Выключаныя з назірання</string>
   <string name="security_center_proton_list_error">Немагчыма загрузіць адрасы</string>
   <string name="security_center_proton_list_included_in_monitoring">Уключыце назіранне для таго, каб быць у курсе пры выяўленні ўцечкі вашых адрасоў Proton.</string>
   <string name="security_center_proton_list_options_menu">Меню параметра экрана Proton</string>
@@ -158,7 +158,7 @@
   <string name="security_center_address_bottomsheet_snackbar_message_remove_custom_email_success">Карыстальніцкія электронная пошта выдалена</string>
   <!-- Alias list -->
   <string name="security_center_alias_list_top_bar_title">Псеўданімы Hide-my-email</string>
-  <string name="security_center_alias_list_excluded_from_monitoring">Выключана з назірання</string>
+  <string name="security_center_alias_list_excluded_from_monitoring">Выключаныя з назірання</string>
   <string name="security_center_alias_list_error">Немагчыма загрузіць адрасы</string>
   <string name="security_center_alias_list_included_in_monitoring">Уключыце назіранне для таго, каб быць у курсе пры выяўленні ўцечкі вашых псеўданімаў Hide-my-email.</string>
   <string name="security_center_alias_list_monitored">Назіраецца</string>

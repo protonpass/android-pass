@@ -27,6 +27,9 @@
   <string name="migrate_folder_success_snackbar">Папка перамешчана</string>
   <string name="migrate_folder_error_snackbar">Памылка пры перамяшчэнні папкі</string>
   <string name="migrate_folder_already_same_parent_snackbar">Папка ўжо знаходзіцца ў гэтым размяшчэнні</string>
+  <string name="migrate_dissolve_folder_dialog_title">Перамясціць змесціва папкі</string>
+  <string name="migrate_dissolve_folder_dialog_message">Гэта папка ўжо знаходзіцца ў корані сховішча. Яе элементы і падпапкі будуць перамешчаны ў корань сховішча.</string>
+  <string name="migrate_dissolve_folder_dialog_confirm">Перамясціць</string>
   <plurals name="migrate_disabled_folder_reason_same_folder">
     <item quantity="one">Элемент ужо знаходзіцца ў гэтай папцы</item>
     <item quantity="few">%d элементы ўжо знаходзяцца ў гэтай папцы</item>
@@ -48,4 +51,9 @@
     <item quantity="many">%d элементаў у цяперашні час абагулены. Іх перамяшчэнне ў іншае сховішча пазбавіць доступу ўсіх іншых карыстальнікаў.</item>
     <item quantity="other">%d элементаў у цяперашні час абагулены. Іх перамяшчэнне ў іншае сховішча пазбавіць доступу ўсіх іншых карыстальнікаў.</item>
   </plurals>
+  <string name="migrate_select_vault_title">Выбраць сховішча</string>
+  <string name="migrate_move_all_items_confirm_title_bottom_sheet">Перамясціць усе элементы ў наступнае сховішча?</string>
+  <string name="migrate_move_all_items_to_folder_confirm_title_bottom_sheet">Перамясціць усе элементы ў наступную папку?</string>
+  <string name="migrate_folder_items_moved_success_snackbar">Элементы перамешчаны</string>
+  <string name="migrate_folder_items_moved_error_snackbar">Памылка перамяшчэння элементаў</string>
 </resources>

@@ -22,7 +22,6 @@
   <string name="vault_delete_dialog_title">Izbriši trezor</string>
   <string name="vault_add_folder_dialog_title">Vnesite naslov mape</string>
   <string name="vault_edit_folder_dialog_title">Preimenuj mapo</string>
-  <string name="vault_add_foldersame_folder_exist">Mapa s tem imenom že obstaja</string>
   <string name="folder_delete_dialog_title">Izbriši mapo</string>
   <string name="folder_delete_dialog_body">S tem boste trajno izbrisali mapo __FOLDER_NAME__ in vso njeno vsebino. Vnesite ime mape, da potrdite brisanje.</string>
   <string name="folder_delete_dialog_placeholder">Ime mape</string>
@@ -45,7 +44,7 @@
   <string name="bottomsheet_cannot_create_more_vaults">Dosegli ste omejitev trezorjev, ki jih lahko ustvarite. Ko nadgradite svojo naročnino, ustvarite neomejene trezorje.</string>
   <string name="bottomsheet_cannot_select_not_primary_vault">Za interakcijo z drugimi trezorji morate nadgraditi svoj račun.</string>
   <string name="bottomsheet_edit">Uredi</string>
-  <string name="bottomsheet_migrate">Premaknite vse predmete v drug trezor</string>
+  <string name="bottomsheet_migrate_v2">Move all items</string>
   <string name="bottomsheet_delete_vault">Izbriši trezor</string>
   <string name="bottomsheet_share_vault">Deli</string>
   <string name="bottomsheet_leave_vault">Zapusti trezor</string>

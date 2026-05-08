@@ -22,7 +22,6 @@
   <string name="vault_delete_dialog_title">Elimina la cassaforte</string>
   <string name="vault_add_folder_dialog_title">Inserisci un titolo per la cartella</string>
   <string name="vault_edit_folder_dialog_title">Rinomina cartella</string>
-  <string name="vault_add_foldersame_folder_exist">Esiste già una cartella con lo stesso nome</string>
   <string name="folder_delete_dialog_title">Elimina la cartella</string>
   <string name="folder_delete_dialog_body">Questo eliminerà definitivamente la cartella __FOLDER_NAME__ e tutti i suoi contenuti. Inserisci il nome della cartella per confermare l\'eliminazione.</string>
   <string name="folder_delete_dialog_placeholder">Nome cartella</string>
@@ -45,7 +44,7 @@
   <string name="bottomsheet_cannot_create_more_vaults">Hai raggiunto il limite di casseforti da poter creare. Crea casseforti illimitate aggiornando il tuo abbonamento.</string>
   <string name="bottomsheet_cannot_select_not_primary_vault">Per interagire con le altre casseforti, devi effettuare l\'upgrade del tuo account.</string>
   <string name="bottomsheet_edit">Modifica</string>
-  <string name="bottomsheet_migrate">Sposta tutti gli elementi in un\'altra cassaforte</string>
+  <string name="bottomsheet_migrate_v2">Move all items</string>
   <string name="bottomsheet_delete_vault">Elimina la cassaforte</string>
   <string name="bottomsheet_share_vault">Condividi</string>
   <string name="bottomsheet_leave_vault">Abbandona la cassaforte</string>

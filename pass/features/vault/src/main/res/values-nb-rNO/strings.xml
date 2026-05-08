@@ -22,7 +22,6 @@
   <string name="vault_delete_dialog_title">Slett hvelv</string>
   <string name="vault_add_folder_dialog_title">Skriv inn en mappetittel</string>
   <string name="vault_edit_folder_dialog_title">Gi nytt navn til mappe</string>
-  <string name="vault_add_foldersame_folder_exist">En mappe med samme navn finnes allerede</string>
   <string name="folder_delete_dialog_title">Slett mappe</string>
   <string name="folder_delete_dialog_body">Dette vil slette mappen __FOLDER_NAME__ og alt innholdet permanent. Skriv inn mappenavnet for å bekrefte slettingen.</string>
   <string name="folder_delete_dialog_placeholder">Mappenavn</string>
@@ -45,7 +44,7 @@
   <string name="bottomsheet_cannot_create_more_vaults">Du har nådd grensen for hvor mange hvelv du kan opprette. Opprett et ubegrenset antall hvelv når du oppgraderer abonnementet.</string>
   <string name="bottomsheet_cannot_select_not_primary_vault">For å samhandle med de andre hvelvene dine, må du oppgradere kontoen din.</string>
   <string name="bottomsheet_edit">Rediger</string>
-  <string name="bottomsheet_migrate">Flytt alle elementene til et annet hvelv</string>
+  <string name="bottomsheet_migrate_v2">Move all items</string>
   <string name="bottomsheet_delete_vault">Slett hvelv</string>
   <string name="bottomsheet_share_vault">Del</string>
   <string name="bottomsheet_leave_vault">Forlat hvelv</string>

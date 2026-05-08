@@ -22,7 +22,6 @@
   <string name="vault_delete_dialog_title">Supprimer le coffre-fort</string>
   <string name="vault_add_folder_dialog_title">Saisir un titre de dossier</string>
   <string name="vault_edit_folder_dialog_title">Modifier le nom d\'un dossier</string>
-  <string name="vault_add_foldersame_folder_exist">Un dossier portant le même nom existe déjà.</string>
   <string name="folder_delete_dialog_title">Supprimer le dossier</string>
   <string name="folder_delete_dialog_body">Ceci supprimera définitivement le dossier __FOLDER_NAME__ et tout son contenu. Saisissez le nom du dossier pour confirmer la suppression.</string>
   <string name="folder_delete_dialog_placeholder">Nom du dossier</string>
@@ -45,7 +44,7 @@
   <string name="bottomsheet_cannot_create_more_vaults">Vous avez atteint le nombre maximum de coffres-forts que vous pouvez créer. Changez d\'abonnement pour créer un nombre illimité de coffres-forts.</string>
   <string name="bottomsheet_cannot_select_not_primary_vault">Pour interagir avec vos autres coffres-forts, vous devez changer d\'abonnement.</string>
   <string name="bottomsheet_edit">Modifier</string>
-  <string name="bottomsheet_migrate">Déplacer tous les éléments vers un autre coffre-fort</string>
+  <string name="bottomsheet_migrate_v2">Déplacer tous les éléments</string>
   <string name="bottomsheet_delete_vault">Supprimer le coffre-fort</string>
   <string name="bottomsheet_share_vault">Partager</string>
   <string name="bottomsheet_leave_vault">Quitter le coffre-fort</string>

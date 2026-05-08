@@ -21,6 +21,9 @@
   <string name="migrate_folder_success_snackbar">文件夹已移动</string>
   <string name="migrate_folder_error_snackbar">移动文件夹时出错</string>
   <string name="migrate_folder_already_same_parent_snackbar">文件夹已在此位置</string>
+  <string name="migrate_dissolve_folder_dialog_title">移动文件夹内容</string>
+  <string name="migrate_dissolve_folder_dialog_message">该文件夹已在保险库根目录中，其中的项目及子文件夹将被移动到保险库根目录。</string>
+  <string name="migrate_dissolve_folder_dialog_confirm">移动</string>
   <plurals name="migrate_disabled_folder_reason_same_folder">
     <item quantity="other">%d 个项目已在此文件夹中</item>
   </plurals>
@@ -33,4 +36,9 @@
   <plurals name="migrate_items_shared_warning_message">
     <item quantity="other">%d 个项目目前是共享的。将它们移到另一个保险库将取消所有其他用户的访问权限。</item>
   </plurals>
+  <string name="migrate_select_vault_title">选择一个保险库</string>
+  <string name="migrate_move_all_items_confirm_title_bottom_sheet">将所有项目移动到以下保险库？</string>
+  <string name="migrate_move_all_items_to_folder_confirm_title_bottom_sheet">将所有项目移动到以下文件夹？</string>
+  <string name="migrate_folder_items_moved_success_snackbar">项目已移动</string>
+  <string name="migrate_folder_items_moved_error_snackbar">移动项目时出错</string>
 </resources>

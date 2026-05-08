@@ -22,7 +22,6 @@
   <string name="vault_delete_dialog_title">Ta bort valv</string>
   <string name="vault_add_folder_dialog_title">Ange en mapprubrik</string>
   <string name="vault_edit_folder_dialog_title">Byt namn på mapp</string>
-  <string name="vault_add_foldersame_folder_exist">En mapp med samma namn finns redan</string>
   <string name="folder_delete_dialog_title">Ta bort mapp</string>
   <string name="folder_delete_dialog_body">Detta kommer ta bort mappen __FOLDER_NAME__ och allt dess innehåll permanent. Ange mappens namn för att bekräfta borttagning.</string>
   <string name="folder_delete_dialog_placeholder">Mappnamn</string>
@@ -45,7 +44,7 @@
   <string name="bottomsheet_cannot_create_more_vaults">Du har nått gränsen för valv du kan skapa. Skapa ett obegränsat antal valv när du uppgraderar din prenumeration.</string>
   <string name="bottomsheet_cannot_select_not_primary_vault">För att interagera med dina andra valv måste du uppgradera ditt konto.</string>
   <string name="bottomsheet_edit">Redigera</string>
-  <string name="bottomsheet_migrate">Flytta alla objekt till annat valv</string>
+  <string name="bottomsheet_migrate_v2">Flytta alla objekt</string>
   <string name="bottomsheet_delete_vault">Ta bort valv</string>
   <string name="bottomsheet_share_vault">Dela</string>
   <string name="bottomsheet_leave_vault">Lämna valv</string>

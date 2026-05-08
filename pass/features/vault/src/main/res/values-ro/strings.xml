@@ -22,7 +22,6 @@
   <string name="vault_delete_dialog_title">Ștergere seif</string>
   <string name="vault_add_folder_dialog_title">Introduceți titlul folderului</string>
   <string name="vault_edit_folder_dialog_title">Redenumire folder</string>
-  <string name="vault_add_foldersame_folder_exist">Deja există un folder cu același nume.</string>
   <string name="folder_delete_dialog_title">Ștergere folder</string>
   <string name="folder_delete_dialog_body">Acesta va șterge permanent folderul __FOLDER_NAME__ și tot conținutul acestuia. Introduceți numele folderului pentru a confirma ștergerea.</string>
   <string name="folder_delete_dialog_placeholder">Nume folder</string>
@@ -45,7 +44,7 @@
   <string name="bottomsheet_cannot_create_more_vaults">Ați atins limita seifurilor pe care le puteți crea. Puteți crea seifuri nelimitate dacă vă modificați abonamentul.</string>
   <string name="bottomsheet_cannot_select_not_primary_vault">Pentru a interacționa cu celelalte seifuri, trebuie să vă modificați contul.</string>
   <string name="bottomsheet_edit">Editare</string>
-  <string name="bottomsheet_migrate">Mutare toate articolele în alt seif</string>
+  <string name="bottomsheet_migrate_v2">Mutare toate articolele</string>
   <string name="bottomsheet_delete_vault">Ștergere seif</string>
   <string name="bottomsheet_share_vault">Partajare</string>
   <string name="bottomsheet_leave_vault">Părăsire seif</string>

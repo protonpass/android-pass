@@ -25,6 +25,9 @@
   <string name="migrate_folder_success_snackbar">Folderul s-a mutat.</string>
   <string name="migrate_folder_error_snackbar">Eroare la mutarea folderului.</string>
   <string name="migrate_folder_already_same_parent_snackbar">Folderul există deja în acest loc.</string>
+  <string name="migrate_dissolve_folder_dialog_title">Mutare conținut folder</string>
+  <string name="migrate_dissolve_folder_dialog_message">Acest folder se află deja la rădăcina seifului. Articolele și subfolderele sale vor fi mutate la rădăcina seifului.</string>
+  <string name="migrate_dissolve_folder_dialog_confirm">Mutare</string>
   <plurals name="migrate_disabled_folder_reason_same_folder">
     <item quantity="one">Articolul există deja în acest folder.</item>
     <item quantity="few">În acest folder există deja %d articole.</item>
@@ -43,4 +46,9 @@
     <item quantity="few">Sunt partajate %d articole. Dacă le mutați în alt seif, ceilalți utilizatori nu le vor mai putea accesa.</item>
     <item quantity="other">Sunt partajate %d de articole. Dacă le mutați în alt seif, ceilalți utilizatori nu le vor mai putea accesa.</item>
   </plurals>
+  <string name="migrate_select_vault_title">Selectare seif</string>
+  <string name="migrate_move_all_items_confirm_title_bottom_sheet">Mutați toate articolele în seiful următor?</string>
+  <string name="migrate_move_all_items_to_folder_confirm_title_bottom_sheet">Mutați toate articolele în folderul următor?</string>
+  <string name="migrate_folder_items_moved_success_snackbar">Articole au fost mutate.</string>
+  <string name="migrate_folder_items_moved_error_snackbar">Eroare la mutarea articolelor.</string>
 </resources>

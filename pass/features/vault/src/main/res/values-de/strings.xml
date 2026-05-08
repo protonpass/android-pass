@@ -22,7 +22,6 @@
   <string name="vault_delete_dialog_title">Tresor löschen</string>
   <string name="vault_add_folder_dialog_title">Namen des Ordners eingeben</string>
   <string name="vault_edit_folder_dialog_title">Ordner umbenennen</string>
-  <string name="vault_add_foldersame_folder_exist">Ein Ordner mit diesem Namen existiert bereits</string>
   <string name="folder_delete_dialog_title">Ordner löschen</string>
   <string name="folder_delete_dialog_body">Dadurch werden der Ordner __FOLDER_NAME__ und sein gesamter Inhalt dauerhaft gelöscht. Geben Sie den Namen des Ordners ein, um den Löschvorgang zu bestätigen.</string>
   <string name="folder_delete_dialog_placeholder">Namen des Ordners</string>
@@ -45,7 +44,7 @@
   <string name="bottomsheet_cannot_create_more_vaults">Du hast das Limit an Tresoren erreicht, die du erstellen kannst. Ein Upgrade deines Abonnements ermöglicht dir das Erstellen von unbegrenzten Tresoren.</string>
   <string name="bottomsheet_cannot_select_not_primary_vault">Um mit deinen anderen Tresoren zu interagieren, musst du dein Konto upgraden.</string>
   <string name="bottomsheet_edit">Bearbeiten</string>
-  <string name="bottomsheet_migrate">Alle Einträge in einen anderen Tresor verschieben</string>
+  <string name="bottomsheet_migrate_v2">Alle Einträge verschieben</string>
   <string name="bottomsheet_delete_vault">Tresor löschen</string>
   <string name="bottomsheet_share_vault">Teilen</string>
   <string name="bottomsheet_leave_vault">Tresor verlassen</string>

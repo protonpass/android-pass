@@ -22,7 +22,6 @@
   <string name="vault_delete_dialog_title">Slet boks</string>
   <string name="vault_add_folder_dialog_title">Indtast en mappetitel</string>
   <string name="vault_edit_folder_dialog_title">Omdøb mappe</string>
-  <string name="vault_add_foldersame_folder_exist">En mappe med det samme navn findes allerede</string>
   <string name="folder_delete_dialog_title">Slet mappe</string>
   <string name="folder_delete_dialog_body">Dette vil permanent slette mappen __FOLDER_NAME__ og alt dens indhold. Indtast mappenavnet for at bekræfte sletningen.</string>
   <string name="folder_delete_dialog_placeholder">Mappenavn</string>
@@ -45,7 +44,7 @@
   <string name="bottomsheet_cannot_create_more_vaults">Du har nået grænsen for, hvor mange bokse du kan oprette. Opret et ubegrænset antal bokse, når du opgraderer dit abonnement.</string>
   <string name="bottomsheet_cannot_select_not_primary_vault">Hvis du vil interagere med dine andre bokse, skal du opgradere din konto.</string>
   <string name="bottomsheet_edit">Rediger</string>
-  <string name="bottomsheet_migrate">Flyt alle elementer til en anden boks</string>
+  <string name="bottomsheet_migrate_v2">Flyt alle elementer</string>
   <string name="bottomsheet_delete_vault">Slet boks</string>
   <string name="bottomsheet_share_vault">Del</string>
   <string name="bottomsheet_leave_vault">Forlad boks</string>

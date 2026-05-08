@@ -22,7 +22,6 @@
   <string name="vault_delete_dialog_title">Hapus brankas</string>
   <string name="vault_add_folder_dialog_title">Enter a folder title</string>
   <string name="vault_edit_folder_dialog_title">Rename folder</string>
-  <string name="vault_add_foldersame_folder_exist">A folder with the same name already exists</string>
   <string name="folder_delete_dialog_title">Delete folder</string>
   <string name="folder_delete_dialog_body">This will permanently delete the folder __FOLDER_NAME__ and all its contents. Enter the folder name to confirm deletion.</string>
   <string name="folder_delete_dialog_placeholder">Folder name</string>
@@ -45,7 +44,7 @@
   <string name="bottomsheet_cannot_create_more_vaults">Anda telah mencapai batas jumlah brankas yang dapat Anda buat. Dapatkan kemampuan untuk membuat brankas tanpa batasan jumlah dengan meningkatkan paket langganan Anda.</string>
   <string name="bottomsheet_cannot_select_not_primary_vault">Untuk dapat berinteraksi dengan brankas lainnya, Anda perlu untuk meningkatkan akun Anda.</string>
   <string name="bottomsheet_edit">Sunting</string>
-  <string name="bottomsheet_migrate">Pindahkan seluruh item ke brankas lain</string>
+  <string name="bottomsheet_migrate_v2">Move all items</string>
   <string name="bottomsheet_delete_vault">Hapus brankas</string>
   <string name="bottomsheet_share_vault">Bagikan</string>
   <string name="bottomsheet_leave_vault">Tinggalkan brankas</string>

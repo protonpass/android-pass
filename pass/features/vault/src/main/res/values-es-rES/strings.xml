@@ -22,7 +22,6 @@
   <string name="vault_delete_dialog_title">Eliminar caja fuerte</string>
   <string name="vault_add_folder_dialog_title">Ingresa un título de carpeta</string>
   <string name="vault_edit_folder_dialog_title">Cambiar el nombre de una carpeta</string>
-  <string name="vault_add_foldersame_folder_exist">Ya existe una carpeta con el mismo nombre</string>
   <string name="folder_delete_dialog_title">Eliminar carpeta</string>
   <string name="folder_delete_dialog_body">Esta acción eliminará de forma permanente la carpeta __FOLDER_NAME__ y todo su contenido. Introduce el nombre de la carpeta para confirmar la eliminación.</string>
   <string name="folder_delete_dialog_placeholder">Nombre de la carpeta</string>
@@ -45,7 +44,7 @@
   <string name="bottomsheet_cannot_create_more_vaults">Has alcanzado el límite de cajas fuertes que puedes crear. Crea cajas fuertes ilimitadas al actualizar tu suscripción.</string>
   <string name="bottomsheet_cannot_select_not_primary_vault">Para interactuar con tus otras cajas fuertes, necesitas actualizar tu cuenta.</string>
   <string name="bottomsheet_edit">Editar</string>
-  <string name="bottomsheet_migrate">Mover todos los elementos a otra caja fuerte</string>
+  <string name="bottomsheet_migrate_v2">Move all items</string>
   <string name="bottomsheet_delete_vault">Eliminar la caja fuerte</string>
   <string name="bottomsheet_share_vault">Compartir</string>
   <string name="bottomsheet_leave_vault">Abandonar la caja fuerte</string>

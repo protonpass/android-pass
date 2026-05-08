@@ -30,12 +30,13 @@
   <string name="bottomsheet_view_item_history">기록 보기</string>
   <string name="bottomsheet_monitor_exclude">감시에서 제외하기</string>
   <string name="bottomsheet_monitor_include">모니터링에 포함</string>
-  <string name="bottomsheet_migrate_item">다른 금고로 이동</string>
+  <string name="bottomsheet_migrate_item_v2">Move</string>
   <string name="bottomsheet_create_folder">폴더 만들기</string>
   <string name="folder_tree_create_folder">폴더 만들기</string>
   <string name="bottomsheet_rename_folder">이름 바꾸기</string>
   <string name="bottomsheet_create_sub_folder">하위 폴더 만들기</string>
-  <string name="bottomsheet_move_folder">Move</string>
+  <string name="bottomsheet_move_folder">Move folder</string>
+  <string name="bottomsheet_move_all_items_in_folder">Move all items</string>
   <string name="bottomsheet_copy_item_note">메모 복사</string>
   <string name="bottomsheet_delete_permanently">영구적으로 삭제</string>
   <string name="bottomsheet_restore">복원</string>

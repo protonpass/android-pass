@@ -23,6 +23,9 @@
   <string name="migrate_folder_success_snackbar">Le dossier a été déplacé</string>
   <string name="migrate_folder_error_snackbar">Une erreur s\'est produite lors du déplacement du dossier</string>
   <string name="migrate_folder_already_same_parent_snackbar">Le dossier est déjà à cet emplacement</string>
+  <string name="migrate_dissolve_folder_dialog_title">Déplacer le contenu du dossier</string>
+  <string name="migrate_dissolve_folder_dialog_message">Ce dossier se trouve déjà à la racine du coffre-fort. Les éléments et sous-dossiers qu\'il contient seront déplacés à la racine.</string>
+  <string name="migrate_dissolve_folder_dialog_confirm">Déplacer</string>
   <plurals name="migrate_disabled_folder_reason_same_folder">
     <item quantity="one">L\'élément est déjà dans ce dossier</item>
     <item quantity="other">%d éléments sont déjà dans ce dossier</item>
@@ -38,4 +41,9 @@
     <item quantity="one">%d élément est actuellement partagé. Son déplacement vers un autre coffre-fort retirera également son accès aux autres utilisateurs.</item>
     <item quantity="other">%d éléments sont actuellement partagés. Leur déplacement vers un autre coffre-fort retirera également leur accès aux autres utilisateurs.</item>
   </plurals>
+  <string name="migrate_select_vault_title">Sélectionner un coffre-fort</string>
+  <string name="migrate_move_all_items_confirm_title_bottom_sheet">Déplacer tous les éléments vers ce coffre-fort ?</string>
+  <string name="migrate_move_all_items_to_folder_confirm_title_bottom_sheet">Déplacer tous les éléments vers ce dossier ?</string>
+  <string name="migrate_folder_items_moved_success_snackbar">Les éléments ont été déplacés.</string>
+  <string name="migrate_folder_items_moved_error_snackbar">Une erreur s\'est produite lors du déplacement des éléments.</string>
 </resources>

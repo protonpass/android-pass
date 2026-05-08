@@ -22,7 +22,6 @@
   <string name="vault_delete_dialog_title">საცავის წაშლა</string>
   <string name="vault_add_folder_dialog_title">შეიყვანეთ საქაღალდის სახელი</string>
   <string name="vault_edit_folder_dialog_title">საქაღალდის სახელის გადარქმევა</string>
-  <string name="vault_add_foldersame_folder_exist">საქაღალდე იგივე სახელით უკვე არსებობს</string>
   <string name="folder_delete_dialog_title">საქაღალდის წაშლა</string>
   <string name="folder_delete_dialog_body">ეს სამუდამოდ წაშლის საქაღალდეს __FOLDER_NAME__ და მის შემცველობას. წაშლის დასადასტურებლად შეიყვანეთ საქაღალდის სახელი.</string>
   <string name="folder_delete_dialog_placeholder">საქაღალდის სახელი</string>
@@ -45,7 +44,7 @@
   <string name="bottomsheet_cannot_create_more_vaults">მიაღწიეთ შესაძლო საცავების რაოდენობს ზღვარს. სატარიფო გეგმის აწევის შემთხვევაში საცავების რაოდენობა უსაზღვროა.</string>
   <string name="bottomsheet_cannot_select_not_primary_vault">სხვა საცავებთან ურთიერთობისთვის ტარიფის აწევა გჭირდებათ.</string>
   <string name="bottomsheet_edit">ჩასწორება</string>
-  <string name="bottomsheet_migrate">ყველა ელემენტის სხვა საცავში გადატანა</string>
+  <string name="bottomsheet_migrate_v2">Move all items</string>
   <string name="bottomsheet_delete_vault">საცავის წაშლა</string>
   <string name="bottomsheet_share_vault">გაზიარება</string>
   <string name="bottomsheet_leave_vault">საცავის დატოვება</string>

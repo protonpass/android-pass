@@ -27,6 +27,9 @@
   <string name="migrate_folder_success_snackbar">Priečinok presunutý</string>
   <string name="migrate_folder_error_snackbar">Chyba pri presúvaní priečinka</string>
   <string name="migrate_folder_already_same_parent_snackbar">Priečinok sa už na tejto lokalite nachádza</string>
+  <string name="migrate_dissolve_folder_dialog_title">Presunúť obsah priečinka</string>
+  <string name="migrate_dissolve_folder_dialog_message">Tento priečinok sa už nachádza v koreňovom adresári trezoru. Jeho položky a podpriečinky budú presunuté do koreňového adresára trezoru.</string>
+  <string name="migrate_dissolve_folder_dialog_confirm">Presunúť</string>
   <plurals name="migrate_disabled_folder_reason_same_folder">
     <item quantity="one">Položka sa už v tomto priečinku nachádza</item>
     <item quantity="few">%d položky sa už v tomto priečinku nachádzajú</item>
@@ -48,4 +51,9 @@
     <item quantity="many">%d položky sú v súčasnosti zdieľané. Ich presunutím do iného trezora sa zruší prístup pre všetkých ostatných používateľov.</item>
     <item quantity="other">%d položiek je v súčasnosti zdieľaných. Ich presunutím do iného trezora sa zruší prístup pre všetkých ostatných používateľov.</item>
   </plurals>
+  <string name="migrate_select_vault_title">Vyberte trezor</string>
+  <string name="migrate_move_all_items_confirm_title_bottom_sheet">Presunúť všetky položky do nasledovného trezora?</string>
+  <string name="migrate_move_all_items_to_folder_confirm_title_bottom_sheet">Presunúť všetky položky do nasledovného priečinka?</string>
+  <string name="migrate_folder_items_moved_success_snackbar">Položky boli presunuté</string>
+  <string name="migrate_folder_items_moved_error_snackbar">Chyba pri presúvaní položiek</string>
 </resources>

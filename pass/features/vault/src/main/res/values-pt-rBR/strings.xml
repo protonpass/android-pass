@@ -22,7 +22,6 @@
   <string name="vault_delete_dialog_title">Excluir cofre</string>
   <string name="vault_add_folder_dialog_title">Insira um título para a pasta</string>
   <string name="vault_edit_folder_dialog_title">Renomear pasta</string>
-  <string name="vault_add_foldersame_folder_exist">Uma pasta com o mesmo nome já existe.</string>
   <string name="folder_delete_dialog_title">Excluir pasta</string>
   <string name="folder_delete_dialog_body">Isso irá excluir permanentemente a pasta __FOLDER_NAME__ e todo o seu conteúdo. Insira o nome da pasta para confirmar a exclusão.</string>
   <string name="folder_delete_dialog_placeholder">Nome da pasta</string>
@@ -45,7 +44,7 @@
   <string name="bottomsheet_cannot_create_more_vaults">Você atingiu o limite de cofres que pode criar. Crie cofres ilimitados ao fazer upgrade de sua assinatura.</string>
   <string name="bottomsheet_cannot_select_not_primary_vault">Para interagir com seus outros cofres, você precisa fazer upgrade de sua conta.</string>
   <string name="bottomsheet_edit">Editar</string>
-  <string name="bottomsheet_migrate">Mover todos os itens para outro cofre</string>
+  <string name="bottomsheet_migrate_v2">Move all items</string>
   <string name="bottomsheet_delete_vault">Excluir cofre</string>
   <string name="bottomsheet_share_vault">Compartilhar</string>
   <string name="bottomsheet_leave_vault">Deixar cofre</string>

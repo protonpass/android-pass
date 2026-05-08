@@ -22,7 +22,6 @@
   <string name="vault_delete_dialog_title">Видалити сховище</string>
   <string name="vault_add_folder_dialog_title">Enter a folder title</string>
   <string name="vault_edit_folder_dialog_title">Rename folder</string>
-  <string name="vault_add_foldersame_folder_exist">A folder with the same name already exists</string>
   <string name="folder_delete_dialog_title">Delete folder</string>
   <string name="folder_delete_dialog_body">This will permanently delete the folder __FOLDER_NAME__ and all its contents. Enter the folder name to confirm deletion.</string>
   <string name="folder_delete_dialog_placeholder">Folder name</string>
@@ -45,7 +44,7 @@
   <string name="bottomsheet_cannot_create_more_vaults">Ви досягли обмеження кількості сховищ. Щоб створювати сховища без обмежень, передплатіть тарифний план.</string>
   <string name="bottomsheet_cannot_select_not_primary_vault">Щоб взаємодіяти з іншими сховищами, вам потрібно передплатити тарифний план.</string>
   <string name="bottomsheet_edit">Редагувати</string>
-  <string name="bottomsheet_migrate">Перемістити всі елементи до іншого сховища</string>
+  <string name="bottomsheet_migrate_v2">Move all items</string>
   <string name="bottomsheet_delete_vault">Видалити сховище</string>
   <string name="bottomsheet_share_vault">Поділитися</string>
   <string name="bottomsheet_leave_vault">Покинути сховище</string>

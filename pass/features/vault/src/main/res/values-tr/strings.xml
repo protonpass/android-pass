@@ -22,7 +22,6 @@
   <string name="vault_delete_dialog_title">Kasayı sil</string>
   <string name="vault_add_folder_dialog_title">Bir klasör başlığı yazın</string>
   <string name="vault_edit_folder_dialog_title">Klasörü yeniden adlandır</string>
-  <string name="vault_add_foldersame_folder_exist">Aynı adlı bir klasör zaten var</string>
   <string name="folder_delete_dialog_title">Klasörü sil</string>
   <string name="folder_delete_dialog_body">Bu işlem __FOLDER_NAME__ klasörünü ve içindeki tüm içeriği kalıcı olarak silecek. Silme işlemini onaylamak için klasör adını yazın.</string>
   <string name="folder_delete_dialog_placeholder">Klasör adı</string>
@@ -45,7 +44,7 @@
   <string name="bottomsheet_cannot_create_more_vaults">Oluşturabileceğiniz kasa sayısı sınırına ulaştınız. Abonelik tarifenizi yükselterek sınırsız sayıda kasa oluşturabilirsiniz.</string>
   <string name="bottomsheet_cannot_select_not_primary_vault">Diğer kasalarla etkileşime geçebilmek için abonelik tarifenizi yükseltmelisiniz.</string>
   <string name="bottomsheet_edit">Düzenle</string>
-  <string name="bottomsheet_migrate">Tüm ögeleri başka kasaya taşı</string>
+  <string name="bottomsheet_migrate_v2">Tüm öğeleri taşı</string>
   <string name="bottomsheet_delete_vault">Kasayı sil</string>
   <string name="bottomsheet_share_vault">Paylaş</string>
   <string name="bottomsheet_leave_vault">Kasayı bırak</string>

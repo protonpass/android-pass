@@ -28,7 +28,7 @@
   <string name="onboarding_slide_1_subtitle">安全地集中在一处，并受到最值得信赖的隐私保护。</string>
   <string name="onboarding_slide_2_subtitle">使用 Hide-My-Email 别名应对网络钓鱼威胁。</string>
   <string name="onboarding_slide_3_subtitle">安全、轻松地共享密码和敏感信息。</string>
-  <string name="onboarding_slide_4_subtitle">当您的电子邮件在暗网上被发现时将获得警报。</string>
+  <string name="onboarding_slide_4_subtitle">当您的邮箱在暗网中被发现时将会收到警报。</string>
   <string name="create_an_account_button">创建账号</string>
   <string name="sign_in_button">登录</string>
 </resources>

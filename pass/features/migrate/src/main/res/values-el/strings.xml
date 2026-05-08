@@ -23,6 +23,9 @@
   <string name="migrate_folder_success_snackbar">Ο φάκελος μετακινήθηκε</string>
   <string name="migrate_folder_error_snackbar">Σφάλμα κατά τη μετακίνηση του φακέλου</string>
   <string name="migrate_folder_already_same_parent_snackbar">Ο φάκελος βρίσκεται ήδη σε αυτήν την τοποθεσία</string>
+  <string name="migrate_dissolve_folder_dialog_title">Μετακίνηση περιεχομένου φακέλου</string>
+  <string name="migrate_dissolve_folder_dialog_message">Αυτός ο φάκελος βρίσκεται ήδη στη ρίζα της κρύπτης. Τα αντικείμενα και οι υποφάκελοί του θα μετακινηθούν στη ρίζα της κρύπτης.</string>
+  <string name="migrate_dissolve_folder_dialog_confirm">Μετακίνηση</string>
   <plurals name="migrate_disabled_folder_reason_same_folder">
     <item quantity="one">Το στοιχείο υπάρχει ήδη σε αυτόν τον φάκελο</item>
     <item quantity="other">%d στοιχεία υπάρχουν ήδη σε αυτόν τον φάκελο</item>
@@ -38,4 +41,9 @@
     <item quantity="one">%d στοιχείο είναι κοινόχρηστο. Αν μεταφερθεί σε άλλη κρύπτη, όλοι οι υπόλοιποι χρήστες θα χάσουν την πρόσβασή τους σε αυτό.</item>
     <item quantity="other">%d στοιχεία είναι κοινόχρηστα. Αν μεταφερθούν σε άλλη κρύπτη, όλοι οι υπόλοιποι χρήστες θα χάσουν την πρόσβασή τους σε αυτά.</item>
   </plurals>
+  <string name="migrate_select_vault_title">Επιλογή κρύπτης</string>
+  <string name="migrate_move_all_items_confirm_title_bottom_sheet">Μετακίνηση όλων των στοιχείων στην ακόλουθη κρύπτη;</string>
+  <string name="migrate_move_all_items_to_folder_confirm_title_bottom_sheet">Μετακίνηση όλων των στοιχείων στον ακόλουθο φάκελο;</string>
+  <string name="migrate_folder_items_moved_success_snackbar">Τα στοιχεία μετακινήθηκαν</string>
+  <string name="migrate_folder_items_moved_error_snackbar">Σφάλμα κατά τη μετακίνηση των στοιχείων</string>
 </resources>

@@ -23,6 +23,9 @@
   <string name="migrate_folder_success_snackbar">Ordner verschoben</string>
   <string name="migrate_folder_error_snackbar">Fehler beim Verschieben des Ordners</string>
   <string name="migrate_folder_already_same_parent_snackbar">Der Ordner befindet sich bereits in diesem Speicherort</string>
+  <string name="migrate_dissolve_folder_dialog_title">Ordnerinhalt verschieben</string>
+  <string name="migrate_dissolve_folder_dialog_message">Dieser Ordner befindet sich bereits im Stammverzeichnis des Tresors. Seine Einträge und Unterordner werden in das Stammverzeichnis des Tresors verschoben.</string>
+  <string name="migrate_dissolve_folder_dialog_confirm">Verschieben</string>
   <plurals name="migrate_disabled_folder_reason_same_folder">
     <item quantity="one">Eintrag befindet sich bereits in diesem Ordner</item>
     <item quantity="other">%d Einträge befindet sich bereits in diesem Ordner</item>
@@ -38,4 +41,9 @@
     <item quantity="one">%d Eintrag wird derzeit geteilt. Wenn du ihn in einen anderen Tresor verschiebst, verlieren alle anderen Benutzer den Zugriff.</item>
     <item quantity="other">%d Einträge werden derzeit geteilt. Wenn du sie in einen anderen Tresor verschiebst, verlieren alle anderen Benutzer den Zugriff.</item>
   </plurals>
+  <string name="migrate_select_vault_title">Tresor auswählen</string>
+  <string name="migrate_move_all_items_confirm_title_bottom_sheet">Alle Einträge in den folgenden Tresor verschieben?</string>
+  <string name="migrate_move_all_items_to_folder_confirm_title_bottom_sheet">Alle Einträge in den folgenden Ordner verschieben?</string>
+  <string name="migrate_folder_items_moved_success_snackbar">Einträge verschoben</string>
+  <string name="migrate_folder_items_moved_error_snackbar">Fehler beim Verschieben der Einträge</string>
 </resources>

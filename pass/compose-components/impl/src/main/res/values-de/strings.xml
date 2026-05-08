@@ -31,12 +31,13 @@
   <string name="bottomsheet_view_item_history">Verlauf anzeigen</string>
   <string name="bottomsheet_monitor_exclude">Von der Überwachung ausschließen</string>
   <string name="bottomsheet_monitor_include">In die Überwachung einbeziehen</string>
-  <string name="bottomsheet_migrate_item">In einen anderen Tresor verschieben</string>
+  <string name="bottomsheet_migrate_item_v2">Verschieben</string>
   <string name="bottomsheet_create_folder">Ordner erstellen</string>
   <string name="folder_tree_create_folder">Ordner erstellen</string>
   <string name="bottomsheet_rename_folder">Umbenennen</string>
   <string name="bottomsheet_create_sub_folder">Unterordner erstellen</string>
-  <string name="bottomsheet_move_folder">Verschieben</string>
+  <string name="bottomsheet_move_folder">Ordner verschieben</string>
+  <string name="bottomsheet_move_all_items_in_folder">Alle Einträge verschieben</string>
   <string name="bottomsheet_copy_item_note">Notiz kopieren</string>
   <string name="bottomsheet_delete_permanently">Dauerhaft löschen</string>
   <string name="bottomsheet_restore">Wiederherstellen</string>

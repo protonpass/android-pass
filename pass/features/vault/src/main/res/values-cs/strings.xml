@@ -22,7 +22,6 @@
   <string name="vault_delete_dialog_title">Smazat trezor</string>
   <string name="vault_add_folder_dialog_title">Zadejte název složky</string>
   <string name="vault_edit_folder_dialog_title">Přejmenovat složku</string>
-  <string name="vault_add_foldersame_folder_exist">Složka se stejným názvem již existuje</string>
   <string name="folder_delete_dialog_title">Smazat složku</string>
   <string name="folder_delete_dialog_body">Toto trvale smaže složku __FOLDER_NAME__ a veškerý její obsah. Zadejte název složky pro potvrzení smazání.</string>
   <string name="folder_delete_dialog_placeholder">Název složky</string>
@@ -45,7 +44,7 @@
   <string name="bottomsheet_cannot_create_more_vaults">Dosáhli jste limitu trezorů, které můžete vytvořit. Po navýšení předplatného můžete vytvářet neomezený počet trezorů.</string>
   <string name="bottomsheet_cannot_select_not_primary_vault">Chcete-li používat další trezory, musíte svůj účet navýšit.</string>
   <string name="bottomsheet_edit">Upravit</string>
-  <string name="bottomsheet_migrate">Přesunout všechny položky do jiného trezoru</string>
+  <string name="bottomsheet_migrate_v2">Přesunout všechny položky</string>
   <string name="bottomsheet_delete_vault">Smazat trezor</string>
   <string name="bottomsheet_share_vault">Sdílet</string>
   <string name="bottomsheet_leave_vault">Opustit trezor</string>

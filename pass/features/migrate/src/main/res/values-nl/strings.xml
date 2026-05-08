@@ -23,6 +23,9 @@
   <string name="migrate_folder_success_snackbar">Map verplaatst</string>
   <string name="migrate_folder_error_snackbar">Fout bij het verplaatsen van de map</string>
   <string name="migrate_folder_already_same_parent_snackbar">Map bevindt zich al op deze locatie</string>
+  <string name="migrate_dissolve_folder_dialog_title">Verplaats map inhoud</string>
+  <string name="migrate_dissolve_folder_dialog_message">Deze map bevindt zich al in de hoofdmap van de kluis. De items en submappen hierin worden naar de hoofdmap van de kluis verplaatst.</string>
+  <string name="migrate_dissolve_folder_dialog_confirm">Verplaatsen</string>
   <plurals name="migrate_disabled_folder_reason_same_folder">
     <item quantity="one">Item bevindt zich al in deze map</item>
     <item quantity="other">%d Items bevinden zich al in deze map</item>
@@ -38,4 +41,9 @@
     <item quantity="one">%d item wordt momenteel gedeeld. Als u het naar de prullenbak verplaatst, wordt de toegang voor alle andere gebruikers verwijderd.</item>
     <item quantity="other">%d items worden momenteel gedeeld. Als u deze naar de prullenbak verplaatst, wordt de toegang voor alle andere gebruikers verwijderd.</item>
   </plurals>
+  <string name="migrate_select_vault_title">Selecteer een kluis</string>
+  <string name="migrate_move_all_items_confirm_title_bottom_sheet">Alle items naar de volgende kluis verplaatsen?</string>
+  <string name="migrate_move_all_items_to_folder_confirm_title_bottom_sheet">Alle items naar de volgende map verplaatsen?</string>
+  <string name="migrate_folder_items_moved_success_snackbar">Items verplaatst</string>
+  <string name="migrate_folder_items_moved_error_snackbar">Fout bij het verplaatsen van de items</string>
 </resources>

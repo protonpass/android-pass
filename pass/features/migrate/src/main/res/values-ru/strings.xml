@@ -27,6 +27,9 @@
   <string name="migrate_folder_success_snackbar">Folder moved</string>
   <string name="migrate_folder_error_snackbar">Error moving the folder</string>
   <string name="migrate_folder_already_same_parent_snackbar">Folder is already in this location</string>
+  <string name="migrate_dissolve_folder_dialog_title">Move folder contents</string>
+  <string name="migrate_dissolve_folder_dialog_message">This folder is already at the vault root. Its items and subfolders will be moved to the vault root.</string>
+  <string name="migrate_dissolve_folder_dialog_confirm">Move</string>
   <plurals name="migrate_disabled_folder_reason_same_folder">
     <item quantity="one">Item is already in this folder</item>
     <item quantity="few">%d items are already in this folder</item>
@@ -48,4 +51,9 @@
     <item quantity="many">%d элементов в настоящее время находятся в общем доступе. Если переместить их в другое хранилище, доступ к ним будет закрыт для всех остальных пользователей.</item>
     <item quantity="other">%d элементов в настоящее время находятся в общем доступе. Если переместить их в другое хранилище, доступ к ним будет закрыт для всех остальных пользователей.</item>
   </plurals>
+  <string name="migrate_select_vault_title">Select a vault</string>
+  <string name="migrate_move_all_items_confirm_title_bottom_sheet">Move all items to the following vault?</string>
+  <string name="migrate_move_all_items_to_folder_confirm_title_bottom_sheet">Move all items to the following folder?</string>
+  <string name="migrate_folder_items_moved_success_snackbar">Items moved</string>
+  <string name="migrate_folder_items_moved_error_snackbar">Error moving the items</string>
 </resources>

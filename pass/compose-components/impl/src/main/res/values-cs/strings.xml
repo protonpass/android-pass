@@ -33,12 +33,13 @@
   <string name="bottomsheet_view_item_history">Zobrazit historii</string>
   <string name="bottomsheet_monitor_exclude">Vyloučit ze sledování</string>
   <string name="bottomsheet_monitor_include">Zahrnout do sledování</string>
-  <string name="bottomsheet_migrate_item">Přesunout do jiného trezoru</string>
+  <string name="bottomsheet_migrate_item_v2">Přesunout</string>
   <string name="bottomsheet_create_folder">Vytvořit složku</string>
   <string name="folder_tree_create_folder">Vytvořit složku</string>
   <string name="bottomsheet_rename_folder">Přejmenovat</string>
   <string name="bottomsheet_create_sub_folder">Vytvořit podsložku</string>
-  <string name="bottomsheet_move_folder">Přesunout</string>
+  <string name="bottomsheet_move_folder">Přesunout složku</string>
+  <string name="bottomsheet_move_all_items_in_folder">Přesunout všechny položky</string>
   <string name="bottomsheet_copy_item_note">Kopírovat poznámku</string>
   <string name="bottomsheet_delete_permanently">Trvale smazat</string>
   <string name="bottomsheet_restore">Obnovit</string>

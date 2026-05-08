@@ -22,7 +22,6 @@
   <string name="vault_delete_dialog_title">Odstrániť trezor</string>
   <string name="vault_add_folder_dialog_title">Zadajte názov priečinka</string>
   <string name="vault_edit_folder_dialog_title">Premenovať priečinok</string>
-  <string name="vault_add_foldersame_folder_exist">Priečinok s rovnakým názvom už existuje</string>
   <string name="folder_delete_dialog_title">Vymazať priečinok</string>
   <string name="folder_delete_dialog_body">Týmto sa natrvalo odstráni priečinok __FOLDER_NAME__ a celý jeho obsah. Zadaním názvu priečinka potvrdíte vymazanie.</string>
   <string name="folder_delete_dialog_placeholder">Názov priečinka</string>
@@ -45,7 +44,7 @@
   <string name="bottomsheet_cannot_create_more_vaults">Dosiahli ste limit trezorov, ktoré môžete vytvoriť. Vytvorte neobmedzený počet trezorov po navýšení predplatného.</string>
   <string name="bottomsheet_cannot_select_not_primary_vault">Pre prácu s ostatnými trezormi je potrebné svoj účet navýšiť.</string>
   <string name="bottomsheet_edit">Upraviť</string>
-  <string name="bottomsheet_migrate">Presunúť všetky položky do iného trezoru</string>
+  <string name="bottomsheet_migrate_v2">Presunúť všetky položky</string>
   <string name="bottomsheet_delete_vault">Vymazať trezor</string>
   <string name="bottomsheet_share_vault">Zdieľať</string>
   <string name="bottomsheet_leave_vault">Opustiť trezor</string>

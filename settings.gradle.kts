@@ -89,7 +89,16 @@ pluginManagement {
 }
 
 plugins {
+    id("com.gradle.develocity") version "3.19.2"
     id("me.proton.core.gradle-plugins.include-core-build") version "1.3.1"
+}
+
+develocity {
+    buildScan {
+        publishing.onlyIf { System.getenv("BUILD_SCAN_PUBLISH") == "true" }
+        termsOfUseUrl = "https://gradle.com/terms-of-service"
+        termsOfUseAgree = "yes"
+    }
 }
 
 includeCoreBuild {

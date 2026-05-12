@@ -45,6 +45,12 @@
             android:name="proton.android.pass.autofill.sample.personalinfoactivity.PersonalInfoActivity"
             android:exported="true" />
         <activity
+            android:name="proton.android.pass.autofill.sample.changepassword.ChangePasswordActivity"
+            android:exported="true" />
+        <activity
+            android:name="proton.android.pass.autofill.sample.otp.OtpActivity"
+            android:exported="true" />
+        <activity
             android:name="proton.android.pass.autofill.sample.passkeys.PasskeysActivity"
             android:exported="true" />
         <activity

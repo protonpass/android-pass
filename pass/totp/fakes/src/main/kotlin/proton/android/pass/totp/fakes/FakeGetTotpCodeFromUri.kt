@@ -24,5 +24,12 @@ import javax.inject.Singleton
 
 @Singleton
 class FakeGetTotpCodeFromUri @Inject constructor() : GetTotpCodeFromUri {
-    override suspend fun invoke(uri: String): Result<String> = Result.success("")
+
+    private var result: Result<String> = Result.success("")
+
+    fun setResult(value: Result<String>) {
+        result = value
+    }
+
+    override suspend fun invoke(uri: String): Result<String> = result
 }

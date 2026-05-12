@@ -34,6 +34,7 @@ import proton.android.pass.data.fakes.usecases.FakeGetItemById
 import proton.android.pass.data.fakes.usecases.FakeGetSuggestedAutofillItems
 import proton.android.pass.data.fakes.usecases.FakeGetUserPlan
 import proton.android.pass.data.fakes.usecases.FakeObserveItems
+import proton.android.pass.totp.fakes.FakeGetTotpCodeFromUri
 import proton.android.pass.data.fakes.usecases.shares.FakeObserveAutofillShares
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ItemState
@@ -72,11 +73,15 @@ class E2EApp : Application() {
     @Inject
     lateinit var getUserPlan: FakeGetUserPlan
 
+    @Inject
+    lateinit var getTotpCodeFromUri: FakeGetTotpCodeFromUri
+
     override fun onCreate() {
         super.onCreate()
         setupAccount()
         setupVault()
         setupItems()
+        setupTotp()
         setupLogger()
     }
 
@@ -110,6 +115,15 @@ class E2EApp : Application() {
                 title = "Item2",
                 username = "user2",
                 password = "pass2"
+            ),
+            // Item with TOTP URI for testing direct OTP field fill
+            ItemTestFactory.createLogin(
+                shareId = VAULT_SHARE_ID,
+                itemId = ItemId("item3"),
+                title = "Item3 (TOTP)",
+                username = "user3",
+                password = "pass3",
+                primaryTotp = "otpauth://totp/TestAccount?secret=JBSWY3DPEHPK3PXP&issuer=TestIssuer"
             )
         ).map { ItemData.SuggestedItem(it, Suggestion.PackageName("")) }
         autofillItems.sendValue(
@@ -187,6 +201,10 @@ class E2EApp : Application() {
         }
     }
 
+    private fun setupTotp() {
+        getTotpCodeFromUri.setResult(Result.success(DEFAULT_TOTP_CODE))
+    }
+
     private fun setupLogger() {
         Timber.plant(Timber.DebugTree())
         CoreLogger.set(TimberLogger)
@@ -212,5 +230,6 @@ class E2EApp : Application() {
     private companion object {
         private val PRIMARY_USER_ID = UserId("E2EApp-UserID")
         private val VAULT_SHARE_ID = ShareId("E2EApp-ShareID")
+        private const val DEFAULT_TOTP_CODE = "123456"
     }
 }

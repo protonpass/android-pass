@@ -23,9 +23,11 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import proton.android.pass.autofill.sample.autofillmanageractivity.AutofillManagerLoginActivity
+import proton.android.pass.autofill.sample.changepassword.ChangePasswordActivity
 import proton.android.pass.autofill.sample.creditcardactivity.CreditCardActivity
 import proton.android.pass.autofill.sample.databinding.ActivitySampleSelectionBinding
 import proton.android.pass.autofill.sample.multistep.MultiStepFirstLoginActivity
+import proton.android.pass.autofill.sample.otp.OtpActivity
 import proton.android.pass.autofill.sample.passkeys.PasskeysActivity
 import proton.android.pass.autofill.sample.passwordcredentials.PasswordCredentialsActivity
 import proton.android.pass.autofill.sample.personalinfoactivity.PersonalInfoActivity
@@ -43,45 +45,18 @@ class SampleSelectionActivity : AppCompatActivity() {
         val binding = ActivitySampleSelectionBinding.inflate(layoutInflater)
         enableEdgeToEdgeProtonPassCompat(view = binding.root)
 
-        binding.simpleActivityLoginButton.setOnClickListener {
-            openActivity(SimpleLoginActivity::class.java)
-        }
-
-        binding.simpleAutofillManagerLoginButton.setOnClickListener {
-            openActivity(AutofillManagerLoginActivity::class.java)
-        }
-
-        binding.multiStepLoginButton.setOnClickListener {
-            openActivity(MultiStepFirstLoginActivity::class.java)
-        }
-
-        binding.simpleFragmentLoginButton.setOnClickListener {
-            openActivity(SimpleFragmentLoginActivity::class.java)
-        }
-
-        binding.simpleComposeLoginButton.setOnClickListener {
-            openActivity(SimpleComposeLoginActivity::class.java)
-        }
-
-        binding.creditCardButton.setOnClickListener {
-            openActivity(CreditCardActivity::class.java)
-        }
-
-        binding.personalInfoButton.setOnClickListener {
-            openActivity(PersonalInfoActivity::class.java)
-        }
-
-        binding.webviewLoginButton.setOnClickListener {
-            openActivity(WebViewLoginActivity::class.java)
-        }
-
-        binding.passkeysLoginButton.setOnClickListener {
-            openActivity(PasskeysActivity::class.java)
-        }
-
-        binding.passwordCredentialsButton.setOnClickListener {
-            openActivity(PasswordCredentialsActivity::class.java)
-        }
+        binding.simpleActivityLoginItem.setOnClickListener { openActivity(SimpleLoginActivity::class.java) }
+        binding.autofillManagerLoginItem.setOnClickListener { openActivity(AutofillManagerLoginActivity::class.java) }
+        binding.multiStepLoginItem.setOnClickListener { openActivity(MultiStepFirstLoginActivity::class.java) }
+        binding.simpleFragmentLoginItem.setOnClickListener { openActivity(SimpleFragmentLoginActivity::class.java) }
+        binding.simpleComposeLoginItem.setOnClickListener { openActivity(SimpleComposeLoginActivity::class.java) }
+        binding.changePasswordItem.setOnClickListener { openActivity(ChangePasswordActivity::class.java) }
+        binding.otpItem.setOnClickListener { openActivity(OtpActivity::class.java) }
+        binding.creditCardItem.setOnClickListener { openActivity(CreditCardActivity::class.java) }
+        binding.personalInfoItem.setOnClickListener { openActivity(PersonalInfoActivity::class.java) }
+        binding.webviewLoginItem.setOnClickListener { openActivity(WebViewLoginActivity::class.java) }
+        binding.passkeysLoginItem.setOnClickListener { openActivity(PasskeysActivity::class.java) }
+        binding.passwordCredentialsItem.setOnClickListener { openActivity(PasswordCredentialsActivity::class.java) }
 
         setContentView(binding.root)
     }

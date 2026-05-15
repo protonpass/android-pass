@@ -24,7 +24,7 @@
   <string name="migrate_folder_error_snackbar">Error al mover la carpeta</string>
   <string name="migrate_folder_already_same_parent_snackbar">La carpeta ya está en esta ubicación</string>
   <string name="migrate_dissolve_folder_dialog_title">Mover el contenido de la carpeta</string>
-  <string name="migrate_dissolve_folder_dialog_message">Esta carpeta ya está en la raiz de bóveda. Sus elementos y sub carpetas se moverán a la raiz de la bóveda.</string>
+  <string name="migrate_dissolve_folder_dialog_message">Esta carpeta ya está en la raíz de la bóveda. Sus elementos y subcarpetas se moverán a la raíz de la bóveda.</string>
   <string name="migrate_dissolve_folder_dialog_confirm">Mover</string>
   <plurals name="migrate_disabled_folder_reason_same_folder">
     <item quantity="one">El elemento ya está en esta carpeta</item>

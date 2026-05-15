@@ -24,7 +24,7 @@
   <string name="migrate_folder_error_snackbar">Klasör taşınırken sorun çıktı</string>
   <string name="migrate_folder_already_same_parent_snackbar">Klasör zaten bu konumda</string>
   <string name="migrate_dissolve_folder_dialog_title">Klasör içeriğini taşı</string>
-  <string name="migrate_dissolve_folder_dialog_message">Bu klasör halihazırda kasanın kök dizininde bulunuyor. İçindeki öğeler ve alt klasörler kasanın kök dizinine taşınacak.</string>
+  <string name="migrate_dissolve_folder_dialog_message">Bu klasör zaten kasanın kök klasöründe bulunuyor. İçindeki ögeler ve alt klasörler kasanın kök klasörüne taşınacak.</string>
   <string name="migrate_dissolve_folder_dialog_confirm">Taşı</string>
   <plurals name="migrate_disabled_folder_reason_same_folder">
     <item quantity="one">Öge zaten bu klasörde bulunuyor</item>
@@ -41,9 +41,9 @@
     <item quantity="one">%d öge şu anda paylaşılıyor. Başka kasaya taşırsanız diğer kullanıcıların erişimi kaldırılacak.</item>
     <item quantity="other">%d öge şu anda paylaşılıyor. Başka kasaya taşırsanız diğer kullanıcıların erişimi kaldırılacak.</item>
   </plurals>
-  <string name="migrate_select_vault_title">Kasa seçin</string>
-  <string name="migrate_move_all_items_confirm_title_bottom_sheet">Tüm öğeler aşağıdaki kasaya taşınsın mı?</string>
-  <string name="migrate_move_all_items_to_folder_confirm_title_bottom_sheet">Tüm öğeler aşağıdaki klasöre taşınsın mı?</string>
+  <string name="migrate_select_vault_title">Bir kasa seçin</string>
+  <string name="migrate_move_all_items_confirm_title_bottom_sheet">Tüm ögeler şu kasaya taşınsın mı?</string>
+  <string name="migrate_move_all_items_to_folder_confirm_title_bottom_sheet">Tüm ögeler şu klasöre taşınsın mı?</string>
   <string name="migrate_folder_items_moved_success_snackbar">Ögeler taşındı</string>
-  <string name="migrate_folder_items_moved_error_snackbar">Ögeler taşınırken hata oluştu</string>
+  <string name="migrate_folder_items_moved_error_snackbar">Ögeler taşınırken sorun çıktı</string>
 </resources>

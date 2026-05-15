@@ -37,7 +37,7 @@
   <string name="bottomsheet_rename_folder">Yeniden adlandır</string>
   <string name="bottomsheet_create_sub_folder">Alt klasör oluştur</string>
   <string name="bottomsheet_move_folder">Klasörü taşı</string>
-  <string name="bottomsheet_move_all_items_in_folder">Tüm öğeleri taşı</string>
+  <string name="bottomsheet_move_all_items_in_folder">Tüm ögeleri taşı</string>
   <string name="bottomsheet_copy_item_note">Notu kopyala</string>
   <string name="bottomsheet_delete_permanently">Kalıcı olarak sil</string>
   <string name="bottomsheet_restore">Geri yükle</string>

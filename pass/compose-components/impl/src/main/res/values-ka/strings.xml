@@ -31,13 +31,13 @@
   <string name="bottomsheet_view_item_history">ისტორიის ნახვა</string>
   <string name="bottomsheet_monitor_exclude">მონიტორინგიდან ამოღება</string>
   <string name="bottomsheet_monitor_include">მონიტორინგში ჩასმა</string>
-  <string name="bottomsheet_migrate_item_v2">Move</string>
+  <string name="bottomsheet_migrate_item_v2">გადატანა</string>
   <string name="bottomsheet_create_folder">საქაღალდის შექმნა</string>
   <string name="folder_tree_create_folder">საქაღალდის შექმნა</string>
   <string name="bottomsheet_rename_folder">სახელის გადარქმევა</string>
   <string name="bottomsheet_create_sub_folder">ქვესაქაღალდის შექმნა</string>
-  <string name="bottomsheet_move_folder">Move folder</string>
-  <string name="bottomsheet_move_all_items_in_folder">Move all items</string>
+  <string name="bottomsheet_move_folder">საქაღალდის გადატანა</string>
+  <string name="bottomsheet_move_all_items_in_folder">ყველა ელემენტის გადატანა</string>
   <string name="bottomsheet_copy_item_note">შენიშვნის კოპირება</string>
   <string name="bottomsheet_delete_permanently">სამუდამოდ წაშლა</string>
   <string name="bottomsheet_restore">აღდგენა</string>

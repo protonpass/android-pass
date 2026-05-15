@@ -39,7 +39,7 @@
   <string name="view_logs_clear_logs_confirmation_title">Voleu netejar els registres?</string>
   <string name="view_logs_clear_logs_confirmation_message">Això eliminarà permanentment els registres que es mostren actualment en aquest dispositiu.</string>
   <string name="view_logs_share_logs">Comparteix els registres</string>
-  <string name="view_logs_load_older_logs">Carregar registres més antics</string>
+  <string name="view_logs_load_older_logs">Carrega registres més antics</string>
   <string name="view_logs_loading_older_logs">S\'estan carregant els registres més antics...</string>
   <string name="view_logs_empty">No hi ha registres disponibles</string>
   <string name="clipboard_bottomsheet_title">Porta-retalls</string>

@@ -23,9 +23,9 @@
   <string name="migrate_folder_success_snackbar">საქაღალდე გადატანილია</string>
   <string name="migrate_folder_error_snackbar">საქაღალდის გადატანის შეცდომა</string>
   <string name="migrate_folder_already_same_parent_snackbar">საქაღალდე უკვე ამ ადგილასაა</string>
-  <string name="migrate_dissolve_folder_dialog_title">Move folder contents</string>
-  <string name="migrate_dissolve_folder_dialog_message">This folder is already at the vault root. Its items and subfolders will be moved to the vault root.</string>
-  <string name="migrate_dissolve_folder_dialog_confirm">Move</string>
+  <string name="migrate_dissolve_folder_dialog_title">საქაღალდის შემცველობის გადატანა</string>
+  <string name="migrate_dissolve_folder_dialog_message">ეს საქაღალდე უკვე საცავის ძირითად საქაღალდეშია. მოხდება მისი ელემენტებისა და ქვესაქაღალდეების გადატანა საცავის ზირითად საქაღალდეში.</string>
+  <string name="migrate_dissolve_folder_dialog_confirm">გადატანა</string>
   <plurals name="migrate_disabled_folder_reason_same_folder">
     <item quantity="one">ელემენტი უკვე ამ საქაღალდეშია</item>
     <item quantity="other">%d ელემენტი უკვე ამ საქაღალდეშია</item>
@@ -41,9 +41,9 @@
     <item quantity="one">ამჟამად გაზიარებულია %d ელემენტი. მისი სხვა საცავში გადატანა სხვა მომხმარებლებს მასზე წვდომას დაუკავრავს.</item>
     <item quantity="other">ამჟამად გაზიარებულია %d ელემენტი. მისი სხვა საცავში გადატანა სხვა მომხმარებლებს მასზე წვდომას დაუკავრავს.</item>
   </plurals>
-  <string name="migrate_select_vault_title">Select a vault</string>
-  <string name="migrate_move_all_items_confirm_title_bottom_sheet">Move all items to the following vault?</string>
-  <string name="migrate_move_all_items_to_folder_confirm_title_bottom_sheet">Move all items to the following folder?</string>
-  <string name="migrate_folder_items_moved_success_snackbar">Items moved</string>
-  <string name="migrate_folder_items_moved_error_snackbar">Error moving the items</string>
+  <string name="migrate_select_vault_title">აირჩიეთ საცავი</string>
+  <string name="migrate_move_all_items_confirm_title_bottom_sheet">გადავიტანო ყველა ელემენტი შემდეგ საცავში?</string>
+  <string name="migrate_move_all_items_to_folder_confirm_title_bottom_sheet">გადავიტანო ყველა ელემენტი შემდეგ საქაღალდეში?</string>
+  <string name="migrate_folder_items_moved_success_snackbar">ელემენტები გადატანილია</string>
+  <string name="migrate_folder_items_moved_error_snackbar">ელემენტების გადატანის შეცდომა</string>
 </resources>

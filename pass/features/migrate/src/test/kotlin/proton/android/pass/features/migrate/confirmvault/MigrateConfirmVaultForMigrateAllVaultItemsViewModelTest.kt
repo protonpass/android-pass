@@ -36,10 +36,11 @@ import proton.android.pass.data.fakes.usecases.folders.FakeDissolveFolder
 import proton.android.pass.data.fakes.usecases.folders.FakeMoveAllItemsInFolder
 import proton.android.pass.data.fakes.usecases.folders.FakeMoveFolder
 import proton.android.pass.data.fakes.usecases.folders.FakeMoveItemsInsideShare
-import proton.android.pass.data.fakes.usecases.folders.FakeObserveFolderItemCounts
 import proton.android.pass.data.fakes.usecases.folders.FakeObserveFoldersByParentId
+import proton.android.pass.data.fakes.usecases.items.FakeGetMigrationItemsSelection
 import proton.android.pass.data.fakes.usecases.securelink.FakeObserveHasAssociatedSecureLinks
 import proton.android.pass.data.fakes.usecases.shares.FakeObserveShare
+import proton.android.pass.domain.FolderId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.VaultWithItemCount
 import proton.android.pass.features.migrate.MigrateModeArg
@@ -50,6 +51,9 @@ import proton.android.pass.notifications.fakes.FakeSnackbarDispatcher
 import proton.android.pass.preferences.FakeInternalSettingsRepository
 import proton.android.pass.test.MainDispatcherRule
 import proton.android.pass.test.SavedStateHandleTestFactory
+import proton.android.pass.domain.items.MigrationItemsSelection
+import proton.android.pass.test.domain.FolderTestFactory
+import proton.android.pass.test.domain.ItemTestFactory
 import proton.android.pass.test.domain.VaultTestFactory
 
 internal class MigrateConfirmVaultForMigrateAllVaultItemsViewModelTest {
@@ -61,6 +65,7 @@ internal class MigrateConfirmVaultForMigrateAllVaultItemsViewModelTest {
     private lateinit var migrateItem: FakeMigrateItems
     private lateinit var migrateVault: FakeMigrateVault
     private lateinit var observeVaults: FakeObserveVaultsWithItemCount
+    private lateinit var observeFolders: FakeObserveFoldersByParentId
     private lateinit var snackbarDispatcher: FakeSnackbarDispatcher
     private lateinit var bulkMoveToVaultRepository: FakeBulkMoveToVaultRepository
     private lateinit var observeHasAssociatedSecureLinks: FakeObserveHasAssociatedSecureLinks
@@ -72,6 +77,7 @@ internal class MigrateConfirmVaultForMigrateAllVaultItemsViewModelTest {
         migrateItem = FakeMigrateItems()
         migrateVault = FakeMigrateVault()
         observeVaults = FakeObserveVaultsWithItemCount()
+        observeFolders = FakeObserveFoldersByParentId()
         snackbarDispatcher = FakeSnackbarDispatcher()
         bulkMoveToVaultRepository = FakeBulkMoveToVaultRepository()
         observeHasAssociatedSecureLinks = FakeObserveHasAssociatedSecureLinks()
@@ -99,8 +105,8 @@ internal class MigrateConfirmVaultForMigrateAllVaultItemsViewModelTest {
             },
             observeShare = observeShare,
             settingsRepository = settingsRepository,
-            observeFolders = FakeObserveFoldersByParentId(),
-            observeFolderItemCounts = FakeObserveFolderItemCounts()
+            observeFolders = observeFolders,
+            getMigrationItemsSelection = FakeGetMigrationItemsSelection()
         )
     }
 
@@ -111,6 +117,43 @@ internal class MigrateConfirmVaultForMigrateAllVaultItemsViewModelTest {
                 isLoading = IsLoadingState.Loading // vault list is loading
             )
             assertThat(awaitItem()).isEqualTo(expected)
+        }
+    }
+
+    @Test
+    fun `hasItemsWithHighRevisionCount is true when vault has items exceeding revision limit`() = runTest {
+        val highRevisionItem = ItemTestFactory.create()
+            .copy(revision = MigrationItemsSelection.REVISION_LIMIT + 1)
+        val fakeGetMigration = FakeGetMigrationItemsSelection().apply {
+            setMigrationItemsSelection(MigrationItemsSelection(listOf(highRevisionItem)))
+        }
+        val testInstance = MigrateConfirmVaultViewModel(
+            migrator = MigrateConfirmVaultMigrator(
+                migrateItems = migrateItem,
+                migrateVault = migrateVault,
+                moveFolder = FakeMoveFolder(),
+                dissolveFolder = FakeDissolveFolder(),
+                moveAllItemsInFolder = FakeMoveAllItemsInFolder(),
+                moveItemsInsideShare = FakeMoveItemsInsideShare(),
+                snackbarDispatcher = snackbarDispatcher,
+                bulkMoveToVaultRepository = bulkMoveToVaultRepository
+            ),
+            snackbarDispatcher = snackbarDispatcher,
+            observeVaults = observeVaults,
+            bulkMoveToVaultRepository = bulkMoveToVaultRepository,
+            observeHasAssociatedSecureLinks = observeHasAssociatedSecureLinks,
+            savedStateHandle = SavedStateHandleTestFactory.create().apply {
+                set(CommonNavArgId.ShareId.key, SHARE_ID.id)
+                set(MigrateModeArg.key, MODE.name)
+            },
+            observeShare = observeShare,
+            settingsRepository = settingsRepository,
+            observeFolders = observeFolders,
+            getMigrationItemsSelection = fakeGetMigration
+        )
+
+        testInstance.state.test {
+            assertThat(awaitItem().hasItemsWithHighRevisionCount).isTrue()
         }
     }
 
@@ -181,6 +224,74 @@ internal class MigrateConfirmVaultForMigrateAllVaultItemsViewModelTest {
         }
     }
 
+    @Test
+    fun `source vault exposes its folders but keeps root disabled when folders are empty`() = runTest {
+        observeFolders.sendResult(
+            Result.success(listOf(FolderTestFactory.create(shareId = SHARE_ID, folderId = FOLDER_ID)))
+        )
+        val (sourceVault, destVault) = initialVaults()
+        observeVaults.sendResult(Result.success(listOf(sourceVault, destVault)))
+
+        instance.state.test {
+            val state = awaitItem()
+            val sourceState = state.vaultList.find { it.vaultWithItemCount.vault.shareId == SHARE_ID }
+            assertThat(sourceState).isNotNull()
+            assertThat(sourceState!!.status).isEqualTo(VaultStatus.Disabled(VaultStatus.DisabledReason.SameVault))
+            assertThat(sourceState.folderTree).isNotEmpty()
+            cancelAndConsumeRemainingEvents()
+        }
+    }
+
+    @Test
+    fun `source vault with items in folders is enabled as destination`() = runTest {
+        val fakeGetMigration = FakeGetMigrationItemsSelection().apply {
+            setMigrationItemsSelection(
+                MigrationItemsSelection(
+                    items = listOf(ItemTestFactory.create(shareId = SHARE_ID, folderId = FOLDER_ID))
+                )
+            )
+        }
+        val testInstance = MigrateConfirmVaultViewModel(
+            migrator = MigrateConfirmVaultMigrator(
+                migrateItems = migrateItem,
+                migrateVault = migrateVault,
+                moveFolder = FakeMoveFolder(),
+                dissolveFolder = FakeDissolveFolder(),
+                moveAllItemsInFolder = FakeMoveAllItemsInFolder(),
+                moveItemsInsideShare = FakeMoveItemsInsideShare(),
+                snackbarDispatcher = snackbarDispatcher,
+                bulkMoveToVaultRepository = bulkMoveToVaultRepository
+            ),
+            snackbarDispatcher = snackbarDispatcher,
+            observeVaults = observeVaults,
+            bulkMoveToVaultRepository = bulkMoveToVaultRepository,
+            observeHasAssociatedSecureLinks = observeHasAssociatedSecureLinks,
+            savedStateHandle = SavedStateHandleTestFactory.create().apply {
+                set(CommonNavArgId.ShareId.key, SHARE_ID.id)
+                set(MigrateModeArg.key, MODE.name)
+            },
+            observeShare = observeShare,
+            settingsRepository = settingsRepository,
+            observeFolders = observeFolders,
+            getMigrationItemsSelection = fakeGetMigration
+        )
+
+        observeFolders.sendResult(
+            Result.success(listOf(FolderTestFactory.create(shareId = SHARE_ID, folderId = FOLDER_ID)))
+        )
+        val (sourceVault, destVault) = initialVaults()
+        observeVaults.sendResult(Result.success(listOf(sourceVault, destVault)))
+
+        testInstance.state.test {
+            val state = awaitItem()
+            val sourceState = state.vaultList.find { it.vaultWithItemCount.vault.shareId == SHARE_ID }
+            assertThat(sourceState).isNotNull()
+            assertThat(sourceState!!.status).isEqualTo(VaultStatus.Enabled)
+            assertThat(sourceState.folderTree).isNotEmpty()
+            cancelAndConsumeRemainingEvents()
+        }
+    }
+
     private fun initialVaults(): Pair<VaultWithItemCount, VaultWithItemCount> = Pair(
         VaultWithItemCount(
             vault = VaultTestFactory.create(shareId = SHARE_ID),
@@ -197,6 +308,7 @@ internal class MigrateConfirmVaultForMigrateAllVaultItemsViewModelTest {
     companion object {
         private val SHARE_ID = ShareId("123")
         private val DESTINATION_SHARE_ID = ShareId("456")
+        private val FOLDER_ID = FolderId("folder-1")
 
         private val MODE = MigrateModeValue.AllVaultItems
     }

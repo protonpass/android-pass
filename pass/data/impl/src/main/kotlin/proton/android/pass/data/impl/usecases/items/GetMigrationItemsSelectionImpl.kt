@@ -21,13 +21,17 @@ package proton.android.pass.data.impl.usecases.items
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.firstOrNull
 import me.proton.core.accountmanager.domain.AccountManager
 import proton.android.pass.data.api.errors.UserIdNotAvailableError
 import proton.android.pass.data.api.repositories.ItemRepository
 import proton.android.pass.data.api.usecases.items.GetMigrationItemsSelection
+import proton.android.pass.domain.FolderId
 import proton.android.pass.domain.ItemId
+import proton.android.pass.domain.ItemState
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.ShareSelection
 import proton.android.pass.domain.items.MigrationItemsSelection
 import javax.inject.Inject
 
@@ -46,5 +50,23 @@ class GetMigrationItemsSelectionImpl @Inject constructor(
         .awaitAll()
         .flatten()
         .let(::MigrationItemsSelection)
+
+    override suspend fun invoke(shareId: ShareId): MigrationItemsSelection =
+        getItemsForSelection(ShareSelection.Share(shareId))
+
+    override suspend fun invoke(shareId: ShareId, folderId: FolderId): MigrationItemsSelection =
+        getItemsForSelection(ShareSelection.Folder(shareId, folderId))
+
+    private suspend fun getItemsForSelection(shareSelection: ShareSelection): MigrationItemsSelection {
+        val userId = accountManager.getPrimaryUserId().firstOrNull()
+            ?: throw UserIdNotAvailableError()
+        return itemRepository.observeItems(
+            userId = userId,
+            shareSelection = shareSelection,
+            itemState = ItemState.Active,
+            itemFlags = emptyMap(),
+            includeHidden = false
+        ).first().let(::MigrationItemsSelection)
+    }
 
 }

@@ -26,7 +26,6 @@ import androidx.compose.ui.test.performClick
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import kotlinx.collections.immutable.persistentListOf
-import kotlinx.collections.immutable.persistentMapOf
 import me.proton.core.domain.entity.UserId
 import org.junit.Before
 import org.junit.Rule
@@ -52,12 +51,9 @@ import proton.android.pass.domain.VaultId
 import proton.android.pass.domain.VaultWithItemCount
 import proton.android.pass.features.vault.R
 import proton.android.pass.features.vault.VaultNavigation
+import proton.android.pass.composecomponents.impl.folders.FolderTree
 import proton.android.pass.features.vault.bottomsheet.select.SelectVaultBottomsheet
-import proton.android.pass.features.vault.bottomsheet.select.SelectVaultBottomsheetContent
-import proton.android.pass.features.vault.bottomsheet.select.SelectVaultUiState
 import proton.android.pass.features.vault.bottomsheet.select.SelectedVaultArg
-import proton.android.pass.features.vault.bottomsheet.select.VaultStatus
-import proton.android.pass.features.vault.bottomsheet.select.VaultWithStatus
 import proton.android.pass.test.CallChecker
 import proton.android.pass.test.HiltComponentActivity
 import proton.android.pass.test.TestConstants
@@ -295,51 +291,24 @@ class SelectVaultBottomSheetTest {
 
     @Test
     fun foldersInDisabledVaultHaveNoClickAction() {
-        val shareId = shareIdForIndex(0)
         val folderId = FolderId("folder-0")
         val folderName = "Folder0"
-        val vault = VaultWithItemCount(
-            vault = Vault(
-                userId = UserId(""),
-                shareId = shareId,
-                vaultId = VaultId("vault-id"),
-                name = vaultNameForIndex(0),
-                role = ShareRole.Read,
-                createTime = Date(),
-                shareFlags = ShareFlags(0)
-            ),
-            activeItemCount = 1,
-            trashedItemCount = 1
-        )
 
         composeTestRule.apply {
             setContent {
                 PassTheme {
-                    SelectVaultBottomsheetContent(
-                        state = SelectVaultUiState.Success(
-                            vaults = persistentListOf(
-                                VaultWithStatus(
-                                    vaultWithItemCount = vault,
-                                    status = VaultStatus.Disabled(VaultStatus.Reason.ReadOnly)
-                                )
-                            ),
-                            selected = vault,
-                            showUpgradeMessage = false,
-                            foldersEnabled = true,
-                            vaultFolders = persistentMapOf(
-                                shareId to persistentListOf(
-                                    FolderUiModel(
-                                        id = folderId,
-                                        name = folderName,
-                                        folders = persistentListOf()
-                                    )
-                                )
-                            ),
-                            selectedFolderId = folderId.some()
+                    FolderTree(
+                        folders = listOf(
+                            FolderUiModel(
+                                id = folderId,
+                                name = folderName,
+                                folders = persistentListOf()
+                            )
                         ),
-                        onVaultClick = {},
-                        onFolderClick = { _, _ -> },
-                        onUpgrade = {}
+                        expandedState = mutableMapOf(),
+                        selectedFolderId = folderId.some(),
+                        allDisabledReason = "Read-only",
+                        onFolderClick = { _ -> }
                     )
                 }
             }

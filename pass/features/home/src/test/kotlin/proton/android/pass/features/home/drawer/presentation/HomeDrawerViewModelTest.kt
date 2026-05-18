@@ -381,6 +381,35 @@ internal class HomeDrawerViewModelTest {
             }
         }
 
+    @Test
+    internal fun `vault appears in vaultFolderAtLimit while folders are still loading`() = runTest {
+        val userId = UserId("user-1")
+        val shareId = ShareId("share-1")
+        val vault = VaultTestFactory.create(userId = userId, shareId = shareId)
+
+        val vm = HomeDrawerViewModel(
+            canCreateFolder = canCreateFolder,
+            canCreateVault = canCreateVault,
+            canOrganiseVaults = canOrganiseVaults,
+            observeVaultsWithItemCount = observeVaultsWithItemCount,
+            observeItemCount = observeItemCount,
+            homeSearchOptionsRepository = homeSearchOptionsRepository,
+            observeUpgradeInfo = observeUpgradeInfo,
+            featureFlagsPreferencesRepository = featureFlags,
+            observeFolders = FakeObserveFoldersByParentId(defaultResult = null)
+        )
+
+        featureFlags.set(FeatureFlag.PASS_FOLDERS, true)
+        observeVaultsWithItemCount.sendResult(
+            Result.success(listOf(VaultWithItemCount(vault = vault, activeItemCount = 0, trashedItemCount = 0)))
+        )
+
+        vm.stateFlow.test {
+            val state = awaitNextMatching { it.vaultFolderAtLimit.contains(shareId) }
+            assertThat(state.vaultFolderAtLimit).contains(shareId)
+        }
+    }
+
     // endregion
 
     private fun emitSingleVault(userId: UserId = UserId("user-1"), shareId: ShareId = ShareId("share-1")) {

@@ -72,6 +72,7 @@ fun FolderTree(
     selectedFolderId: Option<FolderId>,
     disabledFolderId: Option<FolderId> = None,
     disabledFolderReason: String? = null,
+    allDisabledReason: String? = null,
     depth: Int = 0, // no padding when depth == 0
     needsToUpgrade: Boolean = false,
     canCreateFolder: Boolean = false,
@@ -97,16 +98,18 @@ fun FolderTree(
 
             val isExpanded = expandedState.isExpanded(folder.id.id)
             val isFolderDisabled = disabledFolderId is Some && folder.id == disabledFolderId.value
+            val effectiveDisabledReason = allDisabledReason
+                ?: if (isFolderDisabled) disabledFolderReason else null
 
             OneFolderItem(
                 folderName = folder.name,
                 folders = folder.folders,
                 isExpanded = isExpanded,
                 isSelected = selectedFolderId is Some && folder.id == selectedFolderId.value,
-                disabledReason = if (isFolderDisabled) disabledFolderReason else null,
+                disabledReason = effectiveDisabledReason,
                 onExpandToggle = { expandedState.toggle(folder.id.id) },
                 onThreeDotsClick = onThreeDotsClick?.let { { it(folder.id) } },
-                onFolderClick = if (isFolderDisabled) null else onFolderClick?.let { { it(folder.id) } }
+                onFolderClick = if (effectiveDisabledReason != null) null else onFolderClick?.let { { it(folder.id) } }
             )
 
             AnimatedVisibility(visible = folder.folders.isNotEmpty() && isExpanded) {
@@ -119,6 +122,7 @@ fun FolderTree(
                     selectedFolderId = selectedFolderId,
                     disabledFolderId = disabledFolderId,
                     disabledFolderReason = disabledFolderReason,
+                    allDisabledReason = allDisabledReason,
                     depth = depth + 1,
                     onFolderClick = onFolderClick
                 )
@@ -170,8 +174,7 @@ fun LazyListScope.folderTreeItems(
     onFolderClick: ((FolderId) -> Unit)?,
     onThreeDotsClick: ((FolderId) -> Unit)? = null,
     onCreateFolderClick: (() -> Unit)? = null,
-    disabledFolderId: Option<FolderId> = None,
-    disabledFolderReason: String? = null
+    disabledFolders: Map<FolderId, String> = emptyMap()
 ) {
     if (folders.isEmpty() && canCreateFolder && onCreateFolderClick != null) {
         item(key = "${keyPrefix}create_folder") {
@@ -188,7 +191,7 @@ fun LazyListScope.folderTreeItems(
 
     items(flatItems, key = { "${keyPrefix}${it.folder.id.id}" }) { flatItem ->
         val folder = flatItem.folder
-        val isFolderDisabled = disabledFolderId is Some && folder.id == disabledFolderId.value
+        val disabledReason = disabledFolders[folder.id]
 
         OneFolderItem(
             modifier = Modifier.animateItem(),
@@ -197,10 +200,10 @@ fun LazyListScope.folderTreeItems(
             folders = folder.folders,
             isExpanded = expandedState.isExpanded(folder.id.id),
             isSelected = selectedFolderId is Some && folder.id == selectedFolderId.value,
-            disabledReason = if (isFolderDisabled) disabledFolderReason else null,
+            disabledReason = disabledReason,
             onExpandToggle = { expandedState.toggle(folder.id.id) },
             onThreeDotsClick = onThreeDotsClick?.let { { it(folder.id) } },
-            onFolderClick = if (isFolderDisabled) null else onFolderClick?.let { { it(folder.id) } }
+            onFolderClick = if (disabledReason != null) null else onFolderClick?.let { { it(folder.id) } }
         )
     }
 }

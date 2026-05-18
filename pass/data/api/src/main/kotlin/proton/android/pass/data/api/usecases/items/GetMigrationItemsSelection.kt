@@ -18,6 +18,7 @@
 
 package proton.android.pass.data.api.usecases.items
 
+import proton.android.pass.domain.FolderId
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.items.MigrationItemsSelection
@@ -25,5 +26,9 @@ import proton.android.pass.domain.items.MigrationItemsSelection
 interface GetMigrationItemsSelection {
 
     suspend operator fun invoke(selectedItems: Map<ShareId, List<ItemId>>): MigrationItemsSelection
+
+    suspend operator fun invoke(shareId: ShareId): MigrationItemsSelection
+
+    suspend operator fun invoke(shareId: ShareId, folderId: FolderId): MigrationItemsSelection
 
 }

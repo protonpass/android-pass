@@ -722,20 +722,24 @@ fun NavGraphBuilder.appGraph(
                     )
                 }
 
-                is VaultNavigation.VaultMigrate -> appNavigator.navigate(
-                    destination = MigrateConfirmVault,
-                    route = MigrateConfirmVault.createNavRouteForMigrateAll(
-                        shareId = it.shareId
+                is VaultNavigation.VaultMigrate -> dismissBottomSheet {
+                    appNavigator.navigate(
+                        destination = MigrateConfirmVault,
+                        route = MigrateConfirmVault.createNavRouteForMigrateAll(
+                            shareId = it.shareId
+                        )
                     )
-                )
+                }
 
-                is VaultNavigation.VaultMigrateSharedWarning -> appNavigator.navigate(
-                    destination = MigrateSharedWarningNavItem,
-                    route = MigrateSharedWarningNavItem.createNavRoute(
-                        migrateMode = MigrateModeValue.AllVaultItems,
-                        shareId = it.shareId
+                is VaultNavigation.VaultMigrateSharedWarning -> dismissBottomSheet {
+                    appNavigator.navigate(
+                        destination = MigrateSharedWarningNavItem,
+                        route = MigrateSharedWarningNavItem.createNavRoute(
+                            migrateMode = MigrateModeValue.AllVaultItems,
+                            shareId = it.shareId
+                        )
                     )
-                )
+                }
 
                 is VaultNavigation.VaultRemove -> dismissBottomSheet {
                     appNavigator.navigate(

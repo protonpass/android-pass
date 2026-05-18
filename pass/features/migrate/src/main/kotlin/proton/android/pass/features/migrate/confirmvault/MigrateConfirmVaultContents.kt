@@ -20,10 +20,13 @@ package proton.android.pass.features.migrate.confirmvault
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.systemBarsPadding
+import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Icon
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Surface
@@ -79,7 +82,8 @@ internal fun MigrateConfirmVaultContents(
             else -> stringResource(R.string.migrate_select_vault_title)
         }
 
-        MigrateMode.MigrateAll -> stringResource(R.string.migrate_all_items_confirm_title_bottom_sheet)
+        MigrateMode.MigrateAll ->
+            stringResource(R.string.migrate_select_destination_for_source_title, state.sourceName)
 
         MigrateMode.MoveFolder -> if (folderSelected) {
             stringResource(R.string.migrate_folder_to_folder_confirm_title_bottom_sheet)
@@ -87,11 +91,8 @@ internal fun MigrateConfirmVaultContents(
             stringResource(R.string.migrate_folder_confirm_title_bottom_sheet)
         }
 
-        MigrateMode.MoveAllItemsInFolder -> if (folderSelected) {
-            stringResource(R.string.migrate_move_all_items_to_folder_confirm_title_bottom_sheet)
-        } else {
-            stringResource(R.string.migrate_move_all_items_confirm_title_bottom_sheet)
-        }
+        MigrateMode.MoveAllItemsInFolder ->
+            stringResource(R.string.migrate_select_destination_for_source_title, state.sourceName)
     }
 
     Scaffold(
@@ -152,7 +153,7 @@ internal fun MigrateConfirmVaultContents(
                 modifier = Modifier.padding(horizontal = Spacing.medium),
                 verticalArrangement = Arrangement.spacedBy(space = Spacing.small)
             ) {
-                AnimatedVisibility(visible = hasSelection && !state.isSameVaultMove) {
+                AnimatedVisibility(visible = state.showHistoryWarning) {
                     PassInfoWarningBanner(
                         modifier = Modifier.align(Alignment.CenterHorizontally),
                         text = stringResource(id = R.string.migrate_item_warning_history),
@@ -160,7 +161,7 @@ internal fun MigrateConfirmVaultContents(
                     )
                 }
 
-                AnimatedVisibility(visible = hasSelection && state.hasAssociatedSecureLinks) {
+                AnimatedVisibility(visible = state.showSecureLinkWarning) {
                     PassInfoWarningBanner(
                         modifier = Modifier.align(Alignment.CenterHorizontally),
                         text = stringResource(id = R.string.migrate_item_warning_secure_link),
@@ -169,17 +170,42 @@ internal fun MigrateConfirmVaultContents(
                 }
             }
 
-            MigrateVaultSelectorContents(
-                modifier = Modifier.weight(1f),
-                vaults = state.vaultList,
-                folderIdToExpand = state.folderIdToExpand,
-                selectedShareId = state.selectedShareId,
-                selectedFolderId = state.selectedFolderId,
-                disabledFolderId = state.disabledFolderId,
-                disabledFolderItemCount = state.disabledFolderItemCount,
-                onVaultSelected = onVaultSelected,
-                onFolderSelected = onFolderSelected
-            )
+            if (state.isLoadingVaults) {
+                Box(
+                    modifier = Modifier
+                        .weight(1f)
+                        .fillMaxSize(),
+                    contentAlignment = Alignment.Center
+                ) {
+                    CircularProgressIndicator()
+                }
+            } else {
+                MigrateVaultSelectorContents(
+                    modifier = Modifier.weight(1f),
+                    vaults = state.vaultList,
+                    folderIdToExpand = state.folderIdToExpand,
+                    selectedShareId = state.selectedShareId,
+                    selectedFolderId = state.selectedFolderId,
+                    disabledFolderId = state.disabledFolderId,
+                    disabledFolderItemCount = state.disabledFolderItemCount,
+                    disabledFolderReasonOverride = if (state.mode is MigrateMode.MoveFolder) {
+                        stringResource(id = R.string.migrate_disabled_folder_reason_same_location)
+                    } else {
+                        null
+                    },
+                    disabledDescendantFolderIds = state.disabledDescendantFolderIds,
+                    disabledDescendantFolderReason = if (state.mode is MigrateMode.MoveFolder) {
+                        stringResource(id = R.string.migrate_disabled_folder_reason_descendant)
+                    } else {
+                        null
+                    },
+                    movingFolderId = state.movingFolderId,
+                    movingFolderReason = stringResource(id = R.string.migrate_disabled_folder_reason_being_moved),
+                    startWithVaultExpanded = state.mode is MigrateMode.MoveFolder,
+                    onVaultSelected = onVaultSelected,
+                    onFolderSelected = onFolderSelected
+                )
+            }
         }
     }
 }

@@ -61,18 +61,41 @@ internal fun MigrateVaultSelectorContents(
     selectedFolderId: Option<FolderId> = None,
     disabledFolderId: Option<FolderId> = None,
     disabledFolderItemCount: Int = 0,
+    disabledFolderReasonOverride: String? = null,
+    disabledDescendantFolderIds: Set<FolderId> = emptySet(),
+    disabledDescendantFolderReason: String? = null,
+    movingFolderId: Option<FolderId> = None,
+    movingFolderReason: String? = null,
+    startWithVaultExpanded: Boolean = false,
     onVaultSelected: (ShareId) -> Unit,
     onFolderSelected: ((ShareId, FolderId) -> Unit)? = null
 ) {
     val disabledCount = disabledFolderItemCount.coerceAtLeast(1)
-    val disabledFolderReason = if (disabledFolderId is Some) {
-        pluralStringResource(
+    val primaryDisabledReason = if (disabledFolderId is Some) {
+        disabledFolderReasonOverride ?: pluralStringResource(
             id = R.plurals.migrate_disabled_folder_reason_same_folder,
             count = disabledCount,
             disabledCount
         )
     } else {
         null
+    }
+    val disabledFolders = remember(
+        disabledFolderId, primaryDisabledReason,
+        movingFolderId, movingFolderReason,
+        disabledDescendantFolderIds, disabledDescendantFolderReason
+    ) {
+        buildMap {
+            if (disabledFolderId is Some && primaryDisabledReason != null) {
+                put(disabledFolderId.value, primaryDisabledReason)
+            }
+            if (movingFolderId is Some && movingFolderReason != null) {
+                put(movingFolderId.value, movingFolderReason)
+            }
+            if (disabledDescendantFolderReason != null) {
+                disabledDescendantFolderIds.forEach { put(it, disabledDescendantFolderReason) }
+            }
+        }
     }
     if (vaults.any { it.hasFolders }) {
         val vaultShowFoldersMap = remember { mutableStateMapOf<String, Boolean>() }
@@ -84,7 +107,7 @@ internal fun MigrateVaultSelectorContents(
                 val vaultModel = vaultWithCount.vault
                 val shareIdStr = vaultModel.shareId.id
                 val hasFolderToExpand = folderIdToExpand is Some
-                val showFolders = vaultShowFoldersMap[shareIdStr] ?: hasFolderToExpand
+                val showFolders = vaultShowFoldersMap[shareIdStr] ?: (hasFolderToExpand || startWithVaultExpanded)
                 val vaultFolderExpandedMap = NamespacedExpandedState(folderExpandedMap, shareIdStr)
                 val isVaultSelected = selectedShareId is Some &&
                     selectedShareId.value == vaultModel.shareId &&
@@ -93,7 +116,7 @@ internal fun MigrateVaultSelectorContents(
                 item(key = shareIdStr) {
                     LaunchedEffect(Unit) {
                         if (!vaultShowFoldersMap.contains(shareIdStr)) {
-                            vaultShowFoldersMap[shareIdStr] = folderIdToExpand is Some
+                            vaultShowFoldersMap[shareIdStr] = folderIdToExpand is Some || startWithVaultExpanded
                         }
                         vaultPair.folderTree.forEach { folder ->
                             if (!vaultFolderExpandedMap.contains(folder.id.id)) {
@@ -192,8 +215,7 @@ internal fun MigrateVaultSelectorContents(
                         onFolderClick = { folderId ->
                             onFolderSelected?.invoke(vaultModel.shareId, folderId)
                         },
-                        disabledFolderId = disabledFolderId,
-                        disabledFolderReason = disabledFolderReason
+                        disabledFolders = disabledFolders
                     )
                 }
             }

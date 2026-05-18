@@ -35,6 +35,7 @@ internal class MigrateConfirmVaultContentsPreviewProvider :
     override val values: Sequence<MigrateConfirmVaultUiState> = sequenceOf(
         MigrateConfirmVaultUiState.initial(MigrateMode.MigrateSelectedItems(3))
             .copy(
+                isLoadingVaults = false,
                 vaultList = persistentListOf(
                     MigrateVaultState(
                         vaultWithItemCount = VaultWithItemCount(

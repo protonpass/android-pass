@@ -253,7 +253,7 @@ class HomeDrawerViewModel @Inject constructor(
             Triple(shareKey.shareId, FolderTreeBuilder.build(folderList), folderList.size)
         }
         .onStart {
-            emit(Triple(shareKey.shareId, FolderTreeBuilder.build(emptyList()), 0))
+            emit(Triple(shareKey.shareId, FolderTreeBuilder.build(emptyList()), FolderLimits.MAX_FOLDERS_PER_VAULT))
         }
 
 }

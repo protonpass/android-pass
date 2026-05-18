@@ -68,34 +68,52 @@ internal sealed interface MigrateMode {
 @Stable
 internal data class MigrateConfirmVaultUiState(
     val isLoading: IsLoadingState,
+    val isLoadingVaults: Boolean,
     val event: Option<ConfirmMigrateEvent>,
     val vaultList: ImmutableList<MigrateVaultState>,
     val folderIdToExpand: Option<FolderId>,
     val disabledFolderId: Option<FolderId>,
     val disabledFolderItemCount: Int,
+    val disabledDescendantFolderIds: Set<FolderId>,
+    val movingFolderId: Option<FolderId>,
     val selectedShareId: Option<ShareId>,
     val selectedFolderId: Option<FolderId>,
     val mode: MigrateMode,
     val hasAssociatedSecureLinks: Boolean,
     val canDisplayWarningVaultSharedDialog: Boolean,
     val isSameVaultMove: Boolean,
-    val showDissolveFolderDialog: Boolean
+    val showDissolveFolderDialog: Boolean,
+    val hasItemsWithHighRevisionCount: Boolean,
+    val sourceHasChildFolders: Boolean,
+    val sourceName: String
 ) {
+    val showHistoryWarning: Boolean
+        get() = selectedShareId is Some && !isSameVaultMove && hasItemsWithHighRevisionCount
+
+    val showSecureLinkWarning: Boolean
+        get() = selectedShareId is Some && hasAssociatedSecureLinks
+
     internal companion object {
         internal fun initial(mode: MigrateMode) = MigrateConfirmVaultUiState(
             isLoading = IsLoadingState.NotLoading,
+            isLoadingVaults = true,
             event = None,
             vaultList = persistentListOf(),
             folderIdToExpand = None,
             disabledFolderId = None,
             disabledFolderItemCount = 0,
+            disabledDescendantFolderIds = emptySet(),
+            movingFolderId = None,
             selectedShareId = None,
             selectedFolderId = None,
             mode = mode,
             hasAssociatedSecureLinks = false,
             canDisplayWarningVaultSharedDialog = false,
             isSameVaultMove = false,
-            showDissolveFolderDialog = false
+            showDissolveFolderDialog = false,
+            hasItemsWithHighRevisionCount = false,
+            sourceHasChildFolders = false,
+            sourceName = ""
         )
     }
 }

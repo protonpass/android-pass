@@ -33,8 +33,8 @@ import proton.android.pass.data.fakes.usecases.folders.FakeDissolveFolder
 import proton.android.pass.data.fakes.usecases.folders.FakeMoveAllItemsInFolder
 import proton.android.pass.data.fakes.usecases.folders.FakeMoveFolder
 import proton.android.pass.data.fakes.usecases.folders.FakeMoveItemsInsideShare
-import proton.android.pass.data.fakes.usecases.folders.FakeObserveFolderItemCounts
 import proton.android.pass.data.fakes.usecases.folders.FakeObserveFoldersByParentId
+import proton.android.pass.data.fakes.usecases.items.FakeGetMigrationItemsSelection
 import proton.android.pass.data.fakes.usecases.securelink.FakeObserveHasAssociatedSecureLinks
 import proton.android.pass.data.fakes.usecases.shares.FakeObserveShare
 import proton.android.pass.domain.FolderId
@@ -90,7 +90,7 @@ internal class MigrateConfirmVaultForMoveFolderViewModelTest {
             observeShare = FakeObserveShare(),
             settingsRepository = FakeInternalSettingsRepository(),
             observeFolders = observeFolders,
-            observeFolderItemCounts = FakeObserveFolderItemCounts()
+            getMigrationItemsSelection = FakeGetMigrationItemsSelection()
         )
     }
 
@@ -139,6 +139,76 @@ internal class MigrateConfirmVaultForMoveFolderViewModelTest {
 
             expectNoEvents()
             assertThat(instance.state.value.vaultList[0].folderTree).isEqualTo(initialTree)
+            cancelAndConsumeRemainingEvents()
+        }
+    }
+
+    @Test
+    fun `direct child of moving folder appears in disabledDescendantFolderIds`() = runTest {
+        observeFolders.sendResult(
+            userId = USER_ID,
+            shareId = SHARE_ID,
+            result = Result.success(listOf(childFolder()))
+        )
+        observeVaults.sendResult(Result.success(listOf(sourceVault())))
+
+        instance.state.test {
+            val state = awaitItem()
+            assertThat(state.disabledDescendantFolderIds).contains(CHILD_FOLDER_ID)
+            cancelAndConsumeRemainingEvents()
+        }
+    }
+
+    @Test
+    fun `grandchild of moving folder appears in disabledDescendantFolderIds`() = runTest {
+        observeFolders.sendResult(
+            userId = USER_ID,
+            shareId = SHARE_ID,
+            result = Result.success(listOf(childFolder(), grandchildFolder()))
+        )
+        observeVaults.sendResult(Result.success(listOf(sourceVault())))
+
+        instance.state.test {
+            val state = awaitItem()
+            assertThat(state.disabledDescendantFolderIds).containsAtLeast(CHILD_FOLDER_ID, GRANDCHILD_FOLDER_ID)
+            cancelAndConsumeRemainingEvents()
+        }
+    }
+
+    @Test
+    fun `selecting a direct child folder is ignored`() = runTest {
+        observeFolders.sendResult(
+            userId = USER_ID,
+            shareId = SHARE_ID,
+            result = Result.success(listOf(childFolder()))
+        )
+        observeVaults.sendResult(Result.success(listOf(sourceVault())))
+
+        instance.state.test {
+            // Subscribe first so descendantFolderIdsFlow becomes active before the guard check.
+            awaitItem()
+            instance.onFolderSelected(SHARE_ID, CHILD_FOLDER_ID)
+            expectNoEvents()
+            assertThat(instance.state.value.selectedFolderId).isEqualTo(proton.android.pass.common.api.None)
+            cancelAndConsumeRemainingEvents()
+        }
+    }
+
+    @Test
+    fun `selecting a nested descendant folder is ignored`() = runTest {
+        observeFolders.sendResult(
+            userId = USER_ID,
+            shareId = SHARE_ID,
+            result = Result.success(listOf(childFolder(), grandchildFolder()))
+        )
+        observeVaults.sendResult(Result.success(listOf(sourceVault())))
+
+        instance.state.test {
+            // Subscribe first so descendantFolderIdsFlow becomes active before the guard check.
+            awaitItem()
+            instance.onFolderSelected(SHARE_ID, GRANDCHILD_FOLDER_ID)
+            expectNoEvents()
+            assertThat(instance.state.value.selectedFolderId).isEqualTo(proton.android.pass.common.api.None)
             cancelAndConsumeRemainingEvents()
         }
     }
@@ -201,11 +271,19 @@ internal class MigrateConfirmVaultForMoveFolderViewModelTest {
         parentFolderId = MOVING_FOLDER_ID
     )
 
+    private fun grandchildFolder() = FolderTestFactory.create(
+        userId = USER_ID,
+        shareId = SHARE_ID,
+        folderId = GRANDCHILD_FOLDER_ID,
+        parentFolderId = CHILD_FOLDER_ID
+    )
+
     companion object {
         private val USER_ID = UserId("789") // matches VaultTestFactory default
         private val SHARE_ID = ShareId("share-1")
         private val MOVING_FOLDER_ID = FolderId("moving-folder")
         private val CHILD_FOLDER_ID = FolderId("child-folder")
+        private val GRANDCHILD_FOLDER_ID = FolderId("grandchild-folder")
         private val DESTINATION_FOLDER_ID = FolderId("destination-folder")
     }
 }

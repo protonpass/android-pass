@@ -26,7 +26,6 @@ import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.PersistentList
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
-import kotlinx.collections.immutable.toPersistentList
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -35,8 +34,10 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.take
@@ -58,8 +59,9 @@ import proton.android.pass.data.api.repositories.BulkMoveToVaultRepository
 import proton.android.pass.data.api.repositories.BulkMoveToVaultSelection
 import proton.android.pass.data.api.repositories.flattenByShare
 import proton.android.pass.data.api.usecases.ObserveVaultsWithItemCount
-import proton.android.pass.data.api.usecases.folders.ObserveFolderItemCounts
 import proton.android.pass.data.api.usecases.folders.ObserveFoldersByParentId
+import proton.android.pass.data.api.usecases.items.GetMigrationItemsSelection
+import proton.android.pass.domain.items.MigrationItemsSelection
 import proton.android.pass.data.api.usecases.securelink.ObserveHasAssociatedSecureLinks
 import proton.android.pass.data.api.usecases.shares.ObserveShare
 import proton.android.pass.domain.Folder
@@ -90,7 +92,7 @@ class MigrateConfirmVaultViewModel @Inject constructor(
     private val observeFolders: ObserveFoldersByParentId,
     private val observeShare: ObserveShare,
     private val settingsRepository: InternalSettingsRepository,
-    private val observeFolderItemCounts: ObserveFolderItemCounts,
+    private val getMigrationItemsSelection: GetMigrationItemsSelection,
     bulkMoveToVaultRepository: BulkMoveToVaultRepository,
     observeVaults: ObserveVaultsWithItemCount
 ) : ViewModel() {
@@ -98,8 +100,10 @@ class MigrateConfirmVaultViewModel @Inject constructor(
     private data class VaultShareKey(val userId: UserId, val shareId: ShareId)
     private data class VaultsWithFolders(
         val vaultShares: List<VaultWithItemCount>,
-        val vaultFolders: Map<ShareId, PersistentList<FolderUiModel>>
-    )
+        val vaultFolders: Map<ShareId, PersistentList<FolderUiModel>?>
+    ) {
+        val isFoldersLoading: Boolean get() = vaultFolders.values.any { it == null }
+    }
 
     private val mode: Mode = getMode()
 
@@ -181,7 +185,17 @@ class MigrateConfirmVaultViewModel @Inject constructor(
         else -> MutableStateFlow(None)
     }
 
-    private val vaultFoldersFlow: Flow<Map<ShareId, PersistentList<FolderUiModel>>> =
+    private val descendantFolderIdsFlow: StateFlow<Set<FolderId>> = sourceFoldersFlow
+        .map { folders ->
+            if (mode is Mode.MoveFolder) findDescendantIds(folders, mode.folderId) else emptySet()
+        }
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(5_000L),
+            initialValue = emptySet()
+        )
+
+    private val vaultFoldersFlow: Flow<Map<ShareId, PersistentList<FolderUiModel>?>> =
         vaultShareKeysFlow.flatMapLatest { shareKeys ->
             if (shareKeys.isEmpty()) return@flatMapLatest flowOf(emptyMap())
             combine(shareKeys.map(::observeFolderTreeForShare)) { pairs -> pairs.toMap() }
@@ -196,20 +210,7 @@ class MigrateConfirmVaultViewModel @Inject constructor(
         PassLogger.w(TAG, "Error observing vaults")
         PassLogger.w(TAG, e)
         snackbarDispatcher(MigrateSnackbarMessage.CouldNotInit)
-        emit(VaultsWithFolders(emptyList(), emptyMap()))
-    }
-
-    private val sourceVaultHasItemsInFoldersFlow: Flow<Boolean> = when (val m = mode) {
-        is Mode.MigrateAllItems ->
-            vaultSharesFlow.flatMapLatest { vaults ->
-                val userId = vaults.firstOrNull()?.vault?.userId
-                    ?: return@flatMapLatest flowOf(false)
-                observeFolderItemCounts(userId, m.shareId)
-                    .map { counts -> counts.any { (_, count) -> count > 0 } }
-            }
-                .onStart { emit(false) }
-                .distinctUntilChanged()
-        else -> flowOf(false)
+        emit(VaultsWithFolders(vaultShares = emptyList(), vaultFolders = emptyMap()))
     }
 
     private val hasAssociatedSecureLinksFlow = selectedItemsFlow
@@ -219,6 +220,52 @@ class MigrateConfirmVaultViewModel @Inject constructor(
                 is Some -> observeHasAssociatedSecureLinks(selectedItemsOption.value)
             }
         }
+
+    private val hasItemsWithHighRevisionCountFlow: Flow<Boolean> = when (val m = mode) {
+        is Mode.MigrateSelectedItems ->
+            selectedItemsFlow
+                .mapLatest { selectedItemsOption ->
+                    when (selectedItemsOption) {
+                        None -> false
+                        is Some -> getMigrationItemsSelection(selectedItemsOption.value).hasItemsExceedingRevisionLimit
+                    }
+                }
+                .catch { emit(false) }
+                .onStart { emit(false) }
+        is Mode.MoveAllItemsInFolder ->
+            revisionLimitFlow { getMigrationItemsSelection(m.sourceShareId, m.folderId) }
+        is Mode.MoveFolder ->
+            revisionLimitFlow { getMigrationItemsSelection(m.sourceShareId, m.folderId) }
+        is Mode.MigrateAllItems ->
+            revisionLimitFlow { getMigrationItemsSelection(m.shareId) }
+    }
+
+    private val sourceHasNestedFolderItemsFlow: Flow<Boolean> = when (val m = mode) {
+        is Mode.MoveAllItemsInFolder ->
+            flow {
+                emit(
+                    getMigrationItemsSelection(m.sourceShareId, m.folderId)
+                        .hasItemsInDescendantFolders(m.folderId)
+                )
+            }
+                .catch { emit(false) }
+                .onStart { emit(false) }
+        is Mode.MigrateAllItems ->
+            flow { emit(getMigrationItemsSelection(m.shareId).hasItemsInFolders) }
+                .catch { emit(false) }
+                .onStart { emit(false) }
+        else -> flowOf(false)
+    }
+
+    private data class ItemSelectionAnalysis(
+        val hasItemsWithHighRevisionCount: Boolean,
+        val sourceHasNestedFolderItems: Boolean
+    )
+
+    private val itemSelectionAnalysisFlow: Flow<ItemSelectionAnalysis> = combine(
+        hasItemsWithHighRevisionCountFlow,
+        sourceHasNestedFolderItemsFlow
+    ) { highRevision, nestedItems -> ItemSelectionAnalysis(highRevision, nestedItems) }
 
     private val canDisplayWarningVaultSharedDialogFlow = selectedDestinationFlow
         .flatMapLatest { destOpt ->
@@ -242,21 +289,46 @@ class MigrateConfirmVaultViewModel @Inject constructor(
         canDisplayWarningVaultSharedDialogFlow,
         selectedDestinationFlow,
         showDissolveFolderDialogFlow,
-        sourceVaultHasItemsInFoldersFlow
+        itemSelectionAnalysisFlow,
+        currentParentFolderIdFlow,
+        descendantFolderIdsFlow
     ) { isLoading, event, selectedItems, selectedItemsAnalysis, vaultsResult,
         hasSecureLinks, canDisplayWarning, selectedDest, showDissolveDialog,
-        hasItemsInFolders ->
+        itemSelectionAnalysis, currentParentFolderId, descendantFolderIds ->
+
+        val hasItemsWithHighRevisionCount = itemSelectionAnalysis.hasItemsWithHighRevisionCount
+        val sourceHasChildFolders = itemSelectionAnalysis.sourceHasNestedFolderItems
 
         val (vaultList, isLoadingVaults) = when (vaultsResult) {
             LoadingResult.Loading -> persistentListOf<MigrateVaultState>() to true
             is LoadingResult.Error -> persistentListOf<MigrateVaultState>() to false
-            is LoadingResult.Success -> prepareVaults(
-                vaultsResult.data.vaultShares,
-                vaultsResult.data.vaultFolders,
-                selectedItems,
-                selectedItemsAnalysis,
-                hasItemsInFolders
-            ) to false
+            is LoadingResult.Success -> {
+                val data = vaultsResult.data
+                if (data.isFoldersLoading) {
+                    persistentListOf<MigrateVaultState>() to true
+                } else {
+                    prepareVaults(
+                        data.vaultShares,
+                        data.vaultFolders.mapValues { it.value ?: persistentListOf() },
+                        selectedItems,
+                        selectedItemsAnalysis,
+                        sourceHasChildFolders
+                    ) to false
+                }
+            }
+        }
+
+        val sourceName = when (vaultsResult) {
+            is LoadingResult.Success -> when (val m = mode) {
+                is Mode.MigrateAllItems ->
+                    vaultsResult.data.vaultShares.find { it.vault.shareId == m.shareId }?.vault?.name ?: ""
+                is Mode.MoveAllItemsInFolder -> {
+                    val folders = vaultsResult.data.vaultFolders[m.sourceShareId] ?: persistentListOf()
+                    findFolderName(folders, m.folderId) ?: ""
+                }
+                else -> ""
+            }
+            else -> ""
         }
 
         val itemCount = selectedItems.map { entries -> entries.values.sumOf { it.size } }
@@ -271,21 +343,29 @@ class MigrateConfirmVaultViewModel @Inject constructor(
 
         MigrateConfirmVaultUiState(
             isLoading = IsLoadingState.from(isLoading is IsLoadingState.Loading || isLoadingVaults),
+            isLoadingVaults = isLoadingVaults,
             event = event,
             vaultList = vaultList,
-            folderIdToExpand = (mode as? Mode.MoveFolder)?.folderId.toOption(),
-            disabledFolderId = when (val m = mode) {
-                is Mode.MoveAllItemsInFolder -> m.folderId.toOption()
+            folderIdToExpand = if (mode is Mode.MoveFolder) currentParentFolderId else None,
+            disabledFolderId = when (mode) {
+                is Mode.MoveFolder -> currentParentFolderId
+                is Mode.MoveAllItemsInFolder ->
+                    if (sourceHasChildFolders) None else mode.folderId.toOption()
                 else -> selectedItemsAnalysis.disabledFolderId
             },
             disabledFolderItemCount = selectedItemsAnalysis.disabledFolderItemCount,
+            disabledDescendantFolderIds = descendantFolderIds,
+            movingFolderId = if (mode is Mode.MoveFolder) mode.folderId.toOption() else None,
             selectedShareId = selectedDest.map { it.shareId },
             selectedFolderId = selectedDest.flatMap { it.folderId },
             mode = mode.migrateMode(itemCount),
             hasAssociatedSecureLinks = hasSecureLinks,
             canDisplayWarningVaultSharedDialog = canDisplayWarning,
             isSameVaultMove = isSameVaultMove,
-            showDissolveFolderDialog = showDissolveDialog
+            showDissolveFolderDialog = showDissolveDialog,
+            hasItemsWithHighRevisionCount = hasItemsWithHighRevisionCount,
+            sourceHasChildFolders = sourceHasChildFolders,
+            sourceName = sourceName
         )
     }.stateIn(
         scope = viewModelScope,
@@ -334,6 +414,7 @@ class MigrateConfirmVaultViewModel @Inject constructor(
                 SelectedDestination(shareId = shareId, folderId = folderId.toOption()).toOption()
             }
             is Mode.MoveFolder -> {
+                if (folderId == currentMode.folderId || folderId in descendantFolderIdsFlow.value) return
                 val currentParent = currentParentFolderIdFlow.value
                 if (currentParent is Some && currentParent.value == folderId) {
                     viewModelScope.launch {
@@ -345,8 +426,11 @@ class MigrateConfirmVaultViewModel @Inject constructor(
                     SelectedDestination(shareId = currentMode.sourceShareId, folderId = folderId.toOption()).toOption()
                 }
             }
-            is Mode.MoveAllItemsInFolder -> selectedDestinationFlow.update {
-                SelectedDestination(shareId = shareId, folderId = folderId.toOption()).toOption()
+            is Mode.MoveAllItemsInFolder -> {
+                if (folderId == currentMode.folderId && !state.value.sourceHasChildFolders) return
+                selectedDestinationFlow.update {
+                    SelectedDestination(shareId = shareId, folderId = folderId.toOption()).toOption()
+                }
             }
             is Mode.MigrateAllItems -> selectedDestinationFlow.update {
                 SelectedDestination(shareId = shareId, folderId = folderId.toOption()).toOption()
@@ -406,7 +490,7 @@ class MigrateConfirmVaultViewModel @Inject constructor(
         vaultFolders: Map<ShareId, PersistentList<FolderUiModel>>,
         selectedItems: Option<Map<ShareId, List<ItemId>>>,
         selectedItemsAnalysis: SelectedItemsAnalysis,
-        hasItemsInFolders: Boolean = false
+        sourceHasChildFolders: Boolean = false
     ): ImmutableList<MigrateVaultState> = vaults
         .filter {
             when (mode) {
@@ -417,7 +501,7 @@ class MigrateConfirmVaultViewModel @Inject constructor(
                 is Mode.MoveAllItemsInFolder -> true
             }
         }
-        .map { prepareVault(it, vaultFolders, selectedItems, selectedItemsAnalysis, hasItemsInFolders) }
+        .map { prepareVault(it, vaultFolders, selectedItems, selectedItemsAnalysis, sourceHasChildFolders) }
         .toImmutableList()
 
     @Suppress("LongMethod")
@@ -426,7 +510,7 @@ class MigrateConfirmVaultViewModel @Inject constructor(
         vaultFolders: Map<ShareId, PersistentList<FolderUiModel>>,
         selectedItems: Option<Map<ShareId, List<ItemId>>>,
         selectedItemsAnalysis: SelectedItemsAnalysis,
-        hasItemsInFolders: Boolean = false
+        sourceHasChildFolders: Boolean = false
     ): MigrateVaultState {
         val canCreate = vault.vault.role.toPermissions().canCreate()
         val folderTree = vaultFolders[vault.vault.shareId] ?: persistentListOf()
@@ -465,14 +549,10 @@ class MigrateConfirmVaultViewModel @Inject constructor(
                 status = when {
                     !canCreate -> VaultStatus.Disabled(VaultStatus.DisabledReason.NoPermission)
                     vault.vault.shareId != mode.shareId -> VaultStatus.Enabled
-                    hasItemsInFolders -> VaultStatus.Enabled
+                    sourceHasChildFolders -> VaultStatus.Enabled
                     else -> VaultStatus.Disabled(VaultStatus.DisabledReason.SameVault)
                 },
-                folderTree = if (vault.vault.shareId == mode.shareId && !hasItemsInFolders) {
-                    persistentListOf()
-                } else {
-                    folderTree
-                }
+                folderTree = folderTree
             )
             is Mode.MoveFolder -> MigrateVaultState(
                 vaultWithItemCount = vault,
@@ -489,7 +569,9 @@ class MigrateConfirmVaultViewModel @Inject constructor(
         return if (!canCreate) state.copy(folderTree = persistentListOf()) else state
     }
 
-    private fun observeFolderTreeForShare(shareKey: VaultShareKey): Flow<Pair<ShareId, PersistentList<FolderUiModel>>> {
+    private fun observeFolderTreeForShare(
+        shareKey: VaultShareKey
+    ): Flow<Pair<ShareId, PersistentList<FolderUiModel>?>> {
         val foldersFlow: Flow<List<Folder>> = when (mode) {
             is Mode.MoveFolder -> sourceFoldersFlow
             else -> observeFolders(shareKey.userId, shareKey.shareId)
@@ -497,21 +579,30 @@ class MigrateConfirmVaultViewModel @Inject constructor(
         return foldersFlow
             .distinctUntilChanged()
             .map { folderList ->
-                val tree = FolderTreeBuilder.build(folderList)
-                val filteredTree = when (val m = mode) {
-                    is Mode.MoveFolder -> removeFolderFromTree(tree, m.folderId)
-                    else -> tree
-                }
-                shareKey.shareId to filteredTree
+                val tree: PersistentList<FolderUiModel>? = FolderTreeBuilder.build(folderList)
+                shareKey.shareId to tree
             }
-            .onStart { emit(shareKey.shareId to persistentListOf()) }
+            .onStart { emit(shareKey.shareId to null) }
     }
 
-    private fun removeFolderFromTree(folders: List<FolderUiModel>, folderId: FolderId): PersistentList<FolderUiModel> =
-        folders
-            .filter { it.id != folderId }
-            .map { it.copy(folders = removeFolderFromTree(it.folders, folderId)) }
-            .toPersistentList()
+    private fun revisionLimitFlow(block: suspend () -> MigrationItemsSelection): Flow<Boolean> =
+        flow { emit(block().hasItemsExceedingRevisionLimit) }
+            .catch { emit(true) }
+            .onStart { emit(false) }
+
+    private fun findDescendantIds(folders: List<Folder>, rootId: FolderId): Set<FolderId> {
+        val result = mutableSetOf<FolderId>()
+        val queue = ArrayDeque<FolderId>()
+        queue.add(rootId)
+        while (queue.isNotEmpty()) {
+            val current = queue.removeFirst()
+            folders.filter { it.parentFolderId == current }.forEach { child ->
+                result.add(child.folderId)
+                queue.add(child.folderId)
+            }
+        }
+        return result
+    }
 
     private fun getMode(): Mode = when (MigrateModeValue.valueOf(savedStateHandle.require(MigrateModeArg.key))) {
         MigrateModeValue.SelectedItems -> Mode.MigrateSelectedItems(
@@ -557,6 +648,14 @@ class MigrateConfirmVaultViewModel @Inject constructor(
             is MoveFolder -> MigrateMode.MoveFolder
             is MoveAllItemsInFolder -> MigrateMode.MoveAllItemsInFolder
         }
+    }
+
+    private fun findFolderName(folders: List<FolderUiModel>, folderId: FolderId): String? {
+        for (folder in folders) {
+            if (folder.id == folderId) return folder.name
+            findFolderName(folder.folders, folderId)?.let { return it }
+        }
+        return null
     }
 
     private companion object {

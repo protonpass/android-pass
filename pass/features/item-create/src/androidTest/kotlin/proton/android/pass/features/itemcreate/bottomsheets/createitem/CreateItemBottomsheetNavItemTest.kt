@@ -29,6 +29,7 @@ import org.junit.Rule
 import org.junit.Test
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.fakes.FakeSavedStateHandleProvider
+import proton.android.pass.data.fakes.usecases.FakeObserveVaultsWithItemCount
 import proton.android.pass.data.fakes.usecases.items.FakeObserveCanCreateItems
 import proton.android.pass.features.itemcreate.R
 import proton.android.pass.test.CallChecker
@@ -49,6 +50,9 @@ class CreateItemBottomsheetNavItemTest {
 
     @Inject
     lateinit var observeCanCreateItems: FakeObserveCanCreateItems
+
+    @Inject
+    lateinit var observeVaultsWithItemCount: FakeObserveVaultsWithItemCount
 
     @Before
     fun setup() {
@@ -148,6 +152,7 @@ class CreateItemBottomsheetNavItemTest {
             set(CreateItemBottomSheetModeNavArgId.key, mode)
         }
         observeCanCreateItems.emit(canCreateItems = true)
+        observeVaultsWithItemCount.sendResult(Result.success(emptyList()))
 
         val checker = CallChecker<Unit>()
         composeTestRule.apply {

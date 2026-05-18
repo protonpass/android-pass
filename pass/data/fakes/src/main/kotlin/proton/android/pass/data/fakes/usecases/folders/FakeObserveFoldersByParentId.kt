@@ -19,7 +19,7 @@
 package proton.android.pass.data.fakes.usecases.folders
 
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.map
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.api.usecases.folders.ObserveFoldersByParentId
@@ -39,13 +39,17 @@ class FakeObserveFoldersByParentId @Inject constructor() : ObserveFoldersByParen
         val allFolders: Boolean
     )
 
-    private var defaultResult: Result<List<Folder>> = Result.success(emptyList())
-    private val observeFoldersFlows = mutableMapOf<Key, MutableStateFlow<Result<List<Folder>>>>()
+    private var currentDefault: Result<List<Folder>>? = Result.success(emptyList())
+    private val observeFoldersFlows = mutableMapOf<Key, MutableSharedFlow<Result<List<Folder>>>>()
     private val invocationCounts = mutableMapOf<Key, Int>()
 
+    constructor(defaultResult: Result<List<Folder>>?) : this() {
+        currentDefault = defaultResult
+    }
+
     fun sendResult(result: Result<List<Folder>>): Boolean {
-        defaultResult = result
-        observeFoldersFlows.values.forEach { it.value = result }
+        currentDefault = result
+        observeFoldersFlows.values.forEach { it.tryEmit(result) }
         return true
     }
 
@@ -54,7 +58,7 @@ class FakeObserveFoldersByParentId @Inject constructor() : ObserveFoldersByParen
         parentFolderId: FolderId?,
         result: Result<List<Folder>>
     ): Boolean {
-        flowFor(Key(null, shareId, parentFolderId, allFolders = false)).value = result
+        flowFor(Key(null, shareId, parentFolderId, allFolders = false)).tryEmit(result)
         return true
     }
 
@@ -64,7 +68,7 @@ class FakeObserveFoldersByParentId @Inject constructor() : ObserveFoldersByParen
         parentFolderId: FolderId?,
         result: Result<List<Folder>>
     ): Boolean {
-        flowFor(Key(userId, shareId, parentFolderId, allFolders = false)).value = result
+        flowFor(Key(userId, shareId, parentFolderId, allFolders = false)).tryEmit(result)
         return true
     }
 
@@ -73,12 +77,12 @@ class FakeObserveFoldersByParentId @Inject constructor() : ObserveFoldersByParen
         shareId: ShareId,
         result: Result<List<Folder>>
     ): Boolean {
-        flowFor(Key(userId, shareId, parentFolderId = null, allFolders = true)).value = result
+        flowFor(Key(userId, shareId, parentFolderId = null, allFolders = true)).tryEmit(result)
         return true
     }
 
     fun sendResult(shareId: ShareId, result: Result<List<Folder>>): Boolean {
-        flowFor(Key(null, shareId, parentFolderId = null, allFolders = true)).value = result
+        flowFor(Key(null, shareId, parentFolderId = null, allFolders = true)).tryEmit(result)
         return true
     }
 
@@ -91,8 +95,10 @@ class FakeObserveFoldersByParentId @Inject constructor() : ObserveFoldersByParen
     fun invocationCount(userId: UserId, shareId: ShareId): Int =
         invocationCounts[Key(userId, shareId, parentFolderId = null, allFolders = true)] ?: 0
 
-    private fun flowFor(key: Key): MutableStateFlow<Result<List<Folder>>> = observeFoldersFlows.getOrPut(key) {
-        MutableStateFlow(defaultResult)
+    private fun flowFor(key: Key): MutableSharedFlow<Result<List<Folder>>> = observeFoldersFlows.getOrPut(key) {
+        MutableSharedFlow<Result<List<Folder>>>(replay = 1).also { flow ->
+            currentDefault?.let { flow.tryEmit(it) }
+        }
     }
 
     override fun invoke(

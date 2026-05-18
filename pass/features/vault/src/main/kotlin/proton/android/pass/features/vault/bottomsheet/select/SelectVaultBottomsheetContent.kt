@@ -170,7 +170,6 @@ fun SelectVaultBottomsheetContent(
                         }
                     }
                     if (hasSelectedFolder) {
-                        showFoldersState.value = true
                         expandAncestors(folders, (state.selectedFolderId as Some).value, expandedState)
                     }
                 }
@@ -292,6 +291,7 @@ private fun VaultRowWithFolders(
                     folders = folders,
                     expandedState = expandedState,
                     selectedFolderId = selectedFolderId,
+                    allDisabledReason = if (!enabled) subtitle else null,
                     onFolderClick = onFolderClick
                 )
             }

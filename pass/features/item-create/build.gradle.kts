@@ -118,6 +118,7 @@ dependencies {
     testImplementation(projects.pass.commonPresentation.fakes)
     testImplementation(projects.pass.crypto.fakes)
     testImplementation(projects.pass.data.fakes)
+    testImplementation(projects.pass.searchOptions.fakes)
     testImplementation(projects.pass.inAppReview.fakes)
     testImplementation(projects.pass.notifications.fakes)
     testImplementation(projects.pass.passkeys.fakes)

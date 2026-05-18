@@ -19,6 +19,7 @@
 package proton.android.pass.data.fakes.usecases.items
 
 import proton.android.pass.data.api.usecases.items.GetMigrationItemsSelection
+import proton.android.pass.domain.FolderId
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.items.MigrationItemsSelection
@@ -38,5 +39,9 @@ class FakeGetMigrationItemsSelection @Inject constructor() : GetMigrationItemsSe
 
     override suspend fun invoke(selectedItems: Map<ShareId, List<ItemId>>): MigrationItemsSelection =
         migrationItemsSelection
+
+    override suspend fun invoke(shareId: ShareId): MigrationItemsSelection = migrationItemsSelection
+
+    override suspend fun invoke(shareId: ShareId, folderId: FolderId): MigrationItemsSelection = migrationItemsSelection
 
 }

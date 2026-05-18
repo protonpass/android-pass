@@ -33,7 +33,9 @@ import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.toOption
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.data.api.usecases.ObserveUpgradeInfo
+import proton.android.pass.data.api.usecases.ObserveVaultsWithItemCount
 import proton.android.pass.data.api.usecases.capabilities.CanCreateAlias
+import proton.android.pass.data.api.usecases.capabilities.CanCreateItemInVault
 import proton.android.pass.data.api.usecases.items.ObserveCanCreateItems
 import proton.android.pass.domain.FolderId
 import proton.android.pass.domain.ShareId
@@ -48,7 +50,9 @@ class CreateItemBottomSheetViewModel @Inject constructor(
     observeUpgradeInfo: ObserveUpgradeInfo,
     savedStateHandleProvider: SavedStateHandleProvider,
     observeCanCreateItems: ObserveCanCreateItems,
-    canCreateAlias: CanCreateAlias
+    canCreateAlias: CanCreateAlias,
+    observeVaultsWithItemCount: ObserveVaultsWithItemCount,
+    private val canCreateItemInVault: CanCreateItemInVault
 ) : ViewModel() {
 
     private val navShareIdFlow: Flow<Option<ShareId>> =
@@ -68,21 +72,31 @@ class CreateItemBottomSheetViewModel @Inject constructor(
         navShareIdFlow,
         navFolderIdFlow,
         homeSearchOptionsRepository.observeVaultSelectionOption().take(1),
-        createItemModeFlow
+        createItemModeFlow,
+        observeVaultsWithItemCount(includeHidden = true)
     ) { navShareId: Option<ShareId>, navFolderId: Option<FolderId>,
-        vaultSelectionOption: VaultSelectionOption, mode: CreateItemBottomSheetMode? ->
+        vaultSelectionOption: VaultSelectionOption, mode: CreateItemBottomSheetMode?,
+        vaults ->
         val shareId: ShareId? = when {
             navShareId is Some -> navShareId.value
-            mode == CreateItemBottomSheetMode.HomeFull &&
-                vaultSelectionOption is VaultSelectionOption.Vault -> vaultSelectionOption.shareId
-            mode == CreateItemBottomSheetMode.HomeFull &&
-                vaultSelectionOption is VaultSelectionOption.Folder -> vaultSelectionOption.shareId
+            mode == CreateItemBottomSheetMode.HomeFull -> {
+                val selectionShareId = when (vaultSelectionOption) {
+                    is VaultSelectionOption.Vault -> vaultSelectionOption.shareId
+                    is VaultSelectionOption.Folder -> vaultSelectionOption.shareId
+                    else -> null
+                }
+                selectionShareId?.let { sid ->
+                    val vault = vaults.find { it.vault.shareId == sid }
+                    if (vault != null && canCreateItemInVault(vault.vault)) sid else null
+                }
+            }
             else -> null
         }
         val folderId: FolderId? = when {
             navFolderId is Some -> navFolderId.value
             mode == CreateItemBottomSheetMode.HomeFull &&
-                vaultSelectionOption is VaultSelectionOption.Folder -> vaultSelectionOption.folderId
+                vaultSelectionOption is VaultSelectionOption.Folder &&
+                shareId != null -> vaultSelectionOption.folderId
             else -> null
         }
         shareId to folderId

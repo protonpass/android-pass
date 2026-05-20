@@ -19,10 +19,9 @@
 package proton.android.pass.data.impl.repositories
 
 import FileV1
-import android.content.Context
+import android.content.ContentResolver
 import android.net.Uri
 import androidx.core.net.toUri
-import dagger.hilt.android.qualifiers.ApplicationContext
 import fileMetadata
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.Flow
@@ -80,14 +79,21 @@ import proton.android.pass.domain.attachments.PersistentAttachmentId
 import proton.android.pass.files.api.FileType
 import proton.android.pass.files.api.FileUriGenerator
 import proton.android.pass.log.api.PassLogger
+import java.io.DataOutputStream
 import java.io.File
 import java.net.URI
+import java.util.concurrent.atomic.AtomicBoolean
 import javax.inject.Inject
 import kotlin.math.ceil
 import kotlin.math.max
 
+fun interface LegacyAttachmentsDirProvider {
+    fun getLegacyDir(): File
+}
+
 class AttachmentRepositoryImpl @Inject constructor(
-    @param:ApplicationContext private val context: Context,
+    private val contentResolver: ContentResolver,
+    private val legacyAttachmentsDirProvider: LegacyAttachmentsDirProvider,
     private val appDispatchers: AppDispatchers,
     private val remote: RemoteAttachmentsDataSource,
     private val local: LocalAttachmentsDataSource,
@@ -102,6 +108,8 @@ class AttachmentRepositoryImpl @Inject constructor(
     private val encryptFileAttachmentChunk: EncryptFileAttachmentChunk,
     private val decryptFileAttachmentChunk: DecryptFileAttachmentChunk
 ) : AttachmentRepository {
+
+    private val legacyDirCleanupDone = AtomicBoolean(false)
 
     override suspend fun createPendingAttachment(userId: UserId, metadata: FileMetadata): PendingAttachmentId {
         val userAccessData = userAccessDataRepository.observe(userId).first()
@@ -169,7 +177,7 @@ class AttachmentRepositoryImpl @Inject constructor(
         val contentUri: Uri = uri.toString().toUri()
         withContext(appDispatchers.io) {
             encryptionContextProvider.withEncryptionContextSuspendable(linkData.linkKey) {
-                context.contentResolver.openInputStream(contentUri)?.use { inputStream ->
+                contentResolver.openInputStream(contentUri)?.use { inputStream ->
                     val buffer = ByteArray(CHUNK_SIZE)
                     var chunkIndex = 0
                     var bytesRead: Int
@@ -459,7 +467,7 @@ class AttachmentRepositoryImpl @Inject constructor(
         )
     }
 
-    private suspend fun AttachmentRepositoryImpl.saveRetrievedAttachments(
+    private suspend fun saveRetrievedAttachments(
         userId: UserId,
         shareId: ShareId,
         itemId: ItemId,
@@ -505,6 +513,12 @@ class AttachmentRepositoryImpl @Inject constructor(
     override suspend fun downloadAttachment(userId: UserId, attachment: Attachment): URI {
         if (attachment.chunks.isEmpty()) throw IllegalStateException("No chunks provided")
 
+        if (!legacyDirCleanupDone.getAndSet(true)) {
+            withContext(appDispatchers.io) {
+                legacyAttachmentsDirProvider.getLegacyDir().deleteRecursively()
+            }
+        }
+
         val fileType = FileType.ItemAttachment(
             userId = userId,
             shareId = attachment.shareId,
@@ -512,54 +526,63 @@ class AttachmentRepositoryImpl @Inject constructor(
             persistentId = attachment.persistentId
         )
         val directory = fileUriGenerator.getDirectoryForFileType(fileType)
-        val existingFileUri = withContext(appDispatchers.io) {
-            val file = File(directory, attachment.persistentId.id)
-            if (file.exists() && file.length() != 0L) {
-                fileUriGenerator.getFileProviderUri(file)
-            } else null
+        val encryptedCacheFile = File(directory, attachment.persistentId.id)
+
+        if (!encryptedCacheFile.exists() || encryptedCacheFile.length() == 0L) {
+            downloadAndEncrypt(userId, attachment, encryptedCacheFile)
         }
-        if (existingFileUri != null) return existingFileUri
+        return fileUriGenerator.getAttachmentPipeUri(
+            userId = userId,
+            shareId = attachment.shareId,
+            itemId = attachment.itemId,
+            persistentId = attachment.persistentId,
+            mimeType = attachment.mimeType
+        )
+    }
 
-        val uri: URI = fileUriGenerator.generate(fileType)
-        val contentUri = uri.toString().toUri()
-
-        withContext(appDispatchers.io) {
-            safeRunCatching {
-                context.contentResolver.openOutputStream(contentUri)?.buffered()
-                    ?.use { outputStream ->
-                        val fileKey = encryptionContextProvider.withEncryptionContextSuspendable {
-                            EncryptionKey(decrypt(attachment.reencryptedKey))
-                        }
-
-                        encryptionContextProvider.withEncryptionContextSuspendable(fileKey) {
-                            attachment.chunks.sortedBy { it.index }.forEach { chunk ->
-                                val encryptedChunk = remote.downloadChunk(
+    private suspend fun downloadAndEncrypt(
+        userId: UserId,
+        attachment: Attachment,
+        encryptedCacheFile: File
+    ) {
+        safeRunCatching {
+            val fileKey = encryptionContextProvider.withEncryptionContextSuspendable {
+                EncryptionKey(decrypt(attachment.reencryptedKey))
+            }
+            val sortedChunks = attachment.chunks.sortedBy { it.index }
+            encryptionContextProvider.withEncryptionContextSuspendable(fileKey) {
+                withContext(appDispatchers.io) {
+                    val fileKeyCtx = this@withEncryptionContextSuspendable
+                    encryptionContextProvider.withEncryptionContextSuspendable {
+                        val localCtx = this
+                        DataOutputStream(encryptedCacheFile.outputStream().buffered()).use { dos ->
+                            for (chunk in sortedChunks) {
+                                val remoteEncrypted = remote.downloadChunk(
                                     userId = userId,
                                     shareId = attachment.shareId,
                                     itemId = attachment.itemId,
                                     attachmentId = attachment.id,
                                     chunkId = chunk.id
                                 )
-                                decryptFileAttachmentChunk(
-                                    encryptionContext = this@withEncryptionContextSuspendable,
-                                    chunk = encryptedChunk,
+                                val decrypted = decryptFileAttachmentChunk(
+                                    encryptionContext = fileKeyCtx,
+                                    chunk = remoteEncrypted,
                                     chunkIndex = chunk.index,
-                                    numChunks = attachment.chunks.size,
+                                    numChunks = sortedChunks.size,
                                     encryptionVersion = attachment.encryptionVersion
-                                ).inputStream().use { decryptedStream ->
-                                    decryptedStream.copyTo(outputStream)
-                                }
+                                )
+                                val localEncrypted = localCtx.encrypt(decrypted)
+                                dos.writeInt(localEncrypted.array.size)
+                                dos.write(localEncrypted.array)
                             }
                         }
                     }
-                    ?: throw IllegalStateException("Unable to open output stream for URI: $contentUri")
-            }.onFailure {
-                context.contentResolver.delete(contentUri, null, null)
-                throw it
+                }
             }
+        }.onFailure {
+            withContext(appDispatchers.io) { encryptedCacheFile.delete() }
+            throw it
         }
-
-        return URI.create(contentUri.toString())
     }
 
     companion object {

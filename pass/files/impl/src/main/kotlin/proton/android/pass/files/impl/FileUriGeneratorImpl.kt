@@ -19,14 +19,23 @@
 package proton.android.pass.files.impl
 
 import android.content.Context
+import android.content.ContentResolver
+import android.net.Uri
 import androidx.core.content.FileProvider
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.withContext
+import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.AppDispatchers
 import proton.android.pass.common.api.SpecialCharacters
+import proton.android.pass.domain.ItemId
+import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.attachments.PersistentAttachmentId
 import proton.android.pass.files.api.CacheDirectories
 import proton.android.pass.files.api.FileType
 import proton.android.pass.files.api.FileUriGenerator
+import proton.android.pass.files.api.FileUriGenerator.Companion.ATTACHMENT_PIPE_AUTHORITY_SUFFIX
+import proton.android.pass.files.api.FileUriGenerator.Companion.ATTACHMENT_PIPE_MIME_PARAM
+import proton.android.pass.files.api.FileUriGenerator.Companion.ATTACHMENT_PIPE_PATH
 import proton.android.pass.files.api.FilesDirectories
 import java.io.File
 import java.io.IOException
@@ -62,6 +71,10 @@ class FileUriGeneratorImpl @Inject constructor(
         }
     }
 
+    override suspend fun getShareTempDirectory(): File = withContext(appDispatchers.io) {
+        File(context.cacheDir, CacheDirectories.Share.value).apply { ensureDirectoryExists(this) }
+    }
+
     override suspend fun getDirectoryForFileType(fileType: FileType): File = withContext(appDispatchers.io) {
         when (fileType) {
             FileType.CameraCache -> File(
@@ -71,7 +84,7 @@ class FileUriGeneratorImpl @Inject constructor(
 
             is FileType.ItemAttachment -> File(
                 context.filesDir,
-                FilesDirectories.Attachments.value +
+                FilesDirectories.AttachmentsEnc.value +
                     SpecialCharacters.SLASH +
                     fileType.userId.id +
                     SpecialCharacters.SLASH +
@@ -80,6 +93,27 @@ class FileUriGeneratorImpl @Inject constructor(
                     fileType.itemId.id
             ).apply { ensureDirectoryExists(this) }
         }
+    }
+
+    override fun getAttachmentPipeUri(
+        userId: UserId,
+        shareId: ShareId,
+        itemId: ItemId,
+        persistentId: PersistentAttachmentId,
+        mimeType: String
+    ): URI {
+        val authority = "${context.packageName}.$ATTACHMENT_PIPE_AUTHORITY_SUFFIX"
+        val uri = Uri.Builder()
+            .scheme(ContentResolver.SCHEME_CONTENT)
+            .authority(authority)
+            .appendPath(ATTACHMENT_PIPE_PATH)
+            .appendPath(userId.id)
+            .appendPath(shareId.id)
+            .appendPath(itemId.id)
+            .appendPath(persistentId.id)
+            .appendQueryParameter(ATTACHMENT_PIPE_MIME_PARAM, mimeType)
+            .build()
+        return URI.create(uri.toString())
     }
 
     private suspend fun createUniqueFile(

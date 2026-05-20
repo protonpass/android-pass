@@ -38,7 +38,7 @@ import proton.android.pass.files.api.CacheDirectories.Camera
 import proton.android.pass.files.api.CacheDirectories.Share
 import proton.android.pass.files.api.DirectoryCleaner
 import proton.android.pass.files.api.DirectoryType
-import proton.android.pass.files.api.FilesDirectories.Attachments
+import proton.android.pass.files.api.FilesDirectories.AttachmentsEnc
 import proton.android.pass.log.api.PassLogger
 import java.io.File
 import javax.inject.Inject
@@ -69,7 +69,7 @@ class DirectoryCleanerImpl @Inject constructor(
                 }
 
                 DirectoryType.OrphanedAttachments -> safeRunCatching {
-                    val attachmentsDirectory = File(context.filesDir, Attachments.value)
+                    val attachmentsDirectory = File(context.filesDir, AttachmentsEnc.value)
 
                     coroutineScope {
                         processUserDirsAsync(attachmentsDirectory)

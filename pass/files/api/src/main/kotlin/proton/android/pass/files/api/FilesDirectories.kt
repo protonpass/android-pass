@@ -19,5 +19,6 @@
 package proton.android.pass.files.api
 
 enum class FilesDirectories(val value: String) {
-    Attachments("attachments")
+    Attachments("attachments"),
+    AttachmentsEnc("attachments_enc")
 }

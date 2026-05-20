@@ -18,6 +18,10 @@
 
 package proton.android.pass.files.api
 
+import me.proton.core.domain.entity.UserId
+import proton.android.pass.domain.ItemId
+import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.attachments.PersistentAttachmentId
 import java.io.File
 import java.net.URI
 
@@ -25,5 +29,19 @@ interface FileUriGenerator {
     suspend fun generate(fileType: FileType): URI
     suspend fun getDirectoryForFileType(fileType: FileType): File
     fun getFileProviderUri(file: File): URI
+    suspend fun getShareTempDirectory(): File
+    fun getAttachmentPipeUri(
+        userId: UserId,
+        shareId: ShareId,
+        itemId: ItemId,
+        persistentId: PersistentAttachmentId,
+        mimeType: String
+    ): URI
+
+    companion object {
+        const val ATTACHMENT_PIPE_AUTHORITY_SUFFIX = "attachmentprovider"
+        const val ATTACHMENT_PIPE_PATH = "attachment"
+        const val ATTACHMENT_PIPE_MIME_PARAM = "mimeType"
+    }
 }
 

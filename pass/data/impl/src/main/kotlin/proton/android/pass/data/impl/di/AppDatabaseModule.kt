@@ -18,7 +18,11 @@
 
 package proton.android.pass.data.impl.di
 
+import android.content.ContentResolver
 import android.content.Context
+import proton.android.pass.data.impl.repositories.LegacyAttachmentsDirProvider
+import proton.android.pass.files.api.FilesDirectories
+import java.io.File
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
@@ -54,6 +58,17 @@ object AppDatabaseModule {
     @Provides
     @Singleton
     fun provideAppDatabase(@ApplicationContext context: Context): AppDatabase = AppDatabase.buildDatabase(context)
+
+    @Provides
+    @Singleton
+    fun provideContentResolver(@ApplicationContext context: Context): ContentResolver = context.contentResolver
+
+    @Provides
+    @Singleton
+    fun provideLegacyAttachmentsDirProvider(@ApplicationContext context: Context): LegacyAttachmentsDirProvider =
+        LegacyAttachmentsDirProvider {
+            File(context.filesDir, FilesDirectories.Attachments.value)
+        }
 }
 
 @Module

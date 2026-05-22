@@ -28,6 +28,7 @@ import proton.android.pass.data.api.repositories.ItemSyncStatus
 import proton.android.pass.data.api.usecases.sync.ForceSyncResult
 import proton.android.pass.data.fakes.repositories.FakeItemRepository
 import proton.android.pass.data.fakes.repositories.ItemRevisionTestFactory
+import proton.android.pass.data.fakes.repositories.FakeSearchIndexRepository
 import proton.android.pass.data.fakes.usecases.FakeItemSyncStatusRepository
 import proton.android.pass.data.fakes.usecases.FakeRefreshAliasSlNotes
 import proton.android.pass.data.fakes.usecases.folders.FakeRefreshFolders
@@ -39,6 +40,7 @@ class ForceSyncItemsImplTest {
     private lateinit var itemRepository: FakeItemRepository
     private lateinit var itemSyncStatusRepository: FakeItemSyncStatusRepository
     private lateinit var refreshAliasSlNotes: FakeRefreshAliasSlNotes
+    private lateinit var searchIndexRepository: FakeSearchIndexRepository
     private lateinit var instance: ForceSyncItemsImpl
 
     @Before
@@ -47,11 +49,13 @@ class ForceSyncItemsImplTest {
         itemRepository = FakeItemRepository()
         itemSyncStatusRepository = FakeItemSyncStatusRepository()
         refreshAliasSlNotes = FakeRefreshAliasSlNotes()
+        searchIndexRepository = FakeSearchIndexRepository()
         instance = ForceSyncItemsImpl(
             refreshFolders = refreshFolders,
             itemRepository = itemRepository,
             itemSyncStatusRepository = itemSyncStatusRepository,
-            refreshAliasSlNotes = refreshAliasSlNotes
+            refreshAliasSlNotes = refreshAliasSlNotes,
+            searchIndexRepository = searchIndexRepository
         )
     }
 

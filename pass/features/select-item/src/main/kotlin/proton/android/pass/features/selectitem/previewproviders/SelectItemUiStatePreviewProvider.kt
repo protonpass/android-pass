@@ -74,7 +74,8 @@ internal class SelectItemUiStatePreviewProvider : PreviewParameterProvider<Selec
                     isPasswordCredentialCreation = false
                 ),
                 SearchUiState.Initial,
-                PinningUiState.Initial
+                PinningUiState.Initial,
+                isPaginationEnabled = false
             ),
             SelectItemUiState(
                 SelectItemListUiState(
@@ -106,7 +107,8 @@ internal class SelectItemUiStatePreviewProvider : PreviewParameterProvider<Selec
                     isPasswordCredentialCreation = false
                 ),
                 SearchUiState.Initial,
-                PinningUiState.Initial
+                PinningUiState.Initial,
+                isPaginationEnabled = false
             ),
             SelectItemUiState(
                 SelectItemListUiState(
@@ -131,7 +133,8 @@ internal class SelectItemUiStatePreviewProvider : PreviewParameterProvider<Selec
                     isProcessingSearch = IsProcessingSearchState.NotLoading,
                     searchInMode = SearchInMode.AllVaults
                 ),
-                PinningUiState.Initial
+                PinningUiState.Initial,
+                isPaginationEnabled = false
             )
         )
 

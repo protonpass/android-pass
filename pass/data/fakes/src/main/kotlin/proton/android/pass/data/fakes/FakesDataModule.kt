@@ -39,6 +39,7 @@ import proton.android.pass.data.api.repositories.MetadataResolver
 import proton.android.pass.data.api.repositories.PasswordHistoryEntryRepository
 import proton.android.pass.data.api.repositories.PendingAttachmentLinkRepository
 import proton.android.pass.data.api.repositories.PendingAttachmentUpdaterRepository
+import proton.android.pass.data.api.repositories.SearchIndexRepository
 import proton.android.pass.data.api.repositories.UserAccessDataRepository
 import proton.android.pass.data.api.repositories.UserInviteRepository
 import proton.android.pass.data.api.usecases.AcceptInvite
@@ -68,6 +69,7 @@ import proton.android.pass.data.api.usecases.GetInviteUserMode
 import proton.android.pass.data.api.usecases.GetItemActions
 import proton.android.pass.data.api.usecases.GetItemByAliasEmail
 import proton.android.pass.data.api.usecases.GetItemById
+import proton.android.pass.data.api.usecases.GetItemsBySearchResult
 import proton.android.pass.data.api.usecases.GetShareById
 import proton.android.pass.data.api.usecases.GetSuggestedAutofillItems
 import proton.android.pass.data.api.usecases.GetUserPlan
@@ -88,8 +90,12 @@ import proton.android.pass.data.api.usecases.ObserveConfirmedInviteToken
 import proton.android.pass.data.api.usecases.ObserveCurrentUser
 import proton.android.pass.data.api.usecases.ObserveCurrentUserSettings
 import proton.android.pass.data.api.usecases.ObserveEncryptedItems
+import proton.android.pass.data.api.usecases.ObserveEncryptedItemsPaging
 import proton.android.pass.data.api.usecases.ObserveGlobalMonitorState
 import proton.android.pass.data.api.usecases.ObserveGroupMembersByGroup
+import proton.android.pass.data.api.usecases.ObserveIndexingStatus
+import proton.android.pass.data.api.usecases.ObserveItemTypeCounts
+import proton.android.pass.data.api.usecases.ObservePagedItems
 import proton.android.pass.data.api.usecases.ObserveInviteRecommendations
 import proton.android.pass.data.api.usecases.ObserveInvites
 import proton.android.pass.data.api.usecases.ObserveItemById
@@ -199,6 +205,7 @@ import proton.android.pass.data.api.usecases.items.GetItemOptions
 import proton.android.pass.data.api.usecases.items.GetMigrationItemsSelection
 import proton.android.pass.data.api.usecases.items.ObserveCanCreateItems
 import proton.android.pass.data.api.usecases.items.ObserveEncryptedSharedItems
+import proton.android.pass.data.api.usecases.items.ObserveEncryptedSharedItemsPaging
 import proton.android.pass.data.api.usecases.items.ObserveItemRevisions
 import proton.android.pass.data.api.usecases.items.ObserveMonitoredItems
 import proton.android.pass.data.api.usecases.items.ObserveSharedItemCountSummary
@@ -223,6 +230,7 @@ import proton.android.pass.data.api.usecases.plan.ObservePlansWithPrice
 import proton.android.pass.data.api.usecases.searchentry.AddSearchEntry
 import proton.android.pass.data.api.usecases.searchentry.DeleteAllSearchEntry
 import proton.android.pass.data.api.usecases.searchentry.DeleteSearchEntry
+import proton.android.pass.data.api.usecases.searchentry.ObserveRecentSearchItems
 import proton.android.pass.data.api.usecases.searchentry.ObserveSearchEntry
 import proton.android.pass.data.api.usecases.securelink.DeleteInactiveSecureLinks
 import proton.android.pass.data.api.usecases.securelink.DeleteSecureLink
@@ -276,6 +284,7 @@ import proton.android.pass.data.fakes.repositories.FakeMetadataResolver
 import proton.android.pass.data.fakes.repositories.FakePasswordHistoryEntryRepository
 import proton.android.pass.data.fakes.repositories.FakePendingAttachmentLinkRepository
 import proton.android.pass.data.fakes.repositories.FakePendingAttachmentUpdaterRepository
+import proton.android.pass.data.fakes.repositories.FakeSearchIndexRepository
 import proton.android.pass.data.fakes.repositories.FakeSentinelRepository
 import proton.android.pass.data.fakes.repositories.FakeUserAccessDataRepository
 import proton.android.pass.data.fakes.repositories.FakeUserInviteRepository
@@ -318,6 +327,7 @@ import proton.android.pass.data.fakes.usecases.FakeGetInviteUserMode
 import proton.android.pass.data.fakes.usecases.FakeGetItemActions
 import proton.android.pass.data.fakes.usecases.FakeGetItemByAliasEmail
 import proton.android.pass.data.fakes.usecases.FakeGetItemById
+import proton.android.pass.data.fakes.usecases.FakeGetItemsBySearchResult
 import proton.android.pass.data.fakes.usecases.FakeGetPasskeyById
 import proton.android.pass.data.fakes.usecases.FakeGetShareById
 import proton.android.pass.data.fakes.usecases.FakeGetSuggestedAutofillItems
@@ -342,8 +352,12 @@ import proton.android.pass.data.fakes.usecases.FakeObserveCurrentUser
 import proton.android.pass.data.fakes.usecases.FakeObserveCurrentUserSettings
 import proton.android.pass.data.fakes.usecases.FakeObserveDefaultVault
 import proton.android.pass.data.fakes.usecases.FakeObserveEncryptedItems
+import proton.android.pass.data.fakes.usecases.FakeObserveEncryptedItemsPaging
 import proton.android.pass.data.fakes.usecases.FakeObserveGroupMembersByGroup
+import proton.android.pass.data.fakes.usecases.FakeObserveIndexingStatus
 import proton.android.pass.data.fakes.usecases.FakeObserveInviteRecommendations
+import proton.android.pass.data.fakes.usecases.FakeObserveItemTypeCounts
+import proton.android.pass.data.fakes.usecases.FakeObservePagedItems
 import proton.android.pass.data.fakes.usecases.FakeObserveInvites
 import proton.android.pass.data.fakes.usecases.FakeObserveItemById
 import proton.android.pass.data.fakes.usecases.FakeObserveItemCount
@@ -352,6 +366,7 @@ import proton.android.pass.data.fakes.usecases.FakeObserveItemsWithPasskeys
 import proton.android.pass.data.fakes.usecases.FakeObserveMFACount
 import proton.android.pass.data.fakes.usecases.FakeObserveOrganizationSettings
 import proton.android.pass.data.fakes.usecases.FakeObservePinnedItems
+import proton.android.pass.data.fakes.usecases.FakeObserveRecentSearchItems
 import proton.android.pass.data.fakes.usecases.FakeObserveSearchEntry
 import proton.android.pass.data.fakes.usecases.FakeObserveUpgradeInfo
 import proton.android.pass.data.fakes.usecases.FakeObserveUserAccessData
@@ -461,6 +476,7 @@ import proton.android.pass.data.fakes.usecases.securelink.FakeObserveSecureLinks
 import proton.android.pass.data.fakes.usecases.securelink.FakeObserveSecureLinksCount
 import proton.android.pass.data.fakes.usecases.shares.FakeObserveAutofillShares
 import proton.android.pass.data.fakes.usecases.shares.FakeObserveEncryptedSharedItems
+import proton.android.pass.data.fakes.usecases.shares.FakeObserveEncryptedSharedItemsPaging
 import proton.android.pass.data.fakes.usecases.shares.FakeObserveHasShares
 import proton.android.pass.data.fakes.usecases.shares.FakeObserveShare
 import proton.android.pass.data.fakes.usecases.shares.FakeObserveShareItemMembers
@@ -622,6 +638,9 @@ abstract class FakesDataModule {
     abstract fun bindGetItemById(impl: FakeGetItemById): GetItemById
 
     @Binds
+    abstract fun bindGetItemsBySearchResult(impl: FakeGetItemsBySearchResult): GetItemsBySearchResult
+
+    @Binds
     abstract fun bindObserveItemById(impl: FakeObserveItemById): ObserveItemById
 
     @Binds
@@ -661,7 +680,22 @@ abstract class FakesDataModule {
     abstract fun bindObserveEncryptedItems(impl: FakeObserveEncryptedItems): ObserveEncryptedItems
 
     @Binds
+    abstract fun bindObserveEncryptedItemsPaging(impl: FakeObserveEncryptedItemsPaging): ObserveEncryptedItemsPaging
+
+    @Binds
     abstract fun bindObservePinnedItems(impl: FakeObservePinnedItems): ObservePinnedItems
+
+    @Binds
+    abstract fun bindObservePagedItems(impl: FakeObservePagedItems): ObservePagedItems
+
+    @Binds
+    abstract fun bindObserveIndexingStatus(impl: FakeObserveIndexingStatus): ObserveIndexingStatus
+
+    @Binds
+    abstract fun bindObserveItemTypeCounts(impl: FakeObserveItemTypeCounts): ObserveItemTypeCounts
+
+    @Binds
+    abstract fun bindObserveRecentSearchItems(impl: FakeObserveRecentSearchItems): ObserveRecentSearchItems
 
     @Binds
     abstract fun bindItemSyncStatusRepository(impl: FakeItemSyncStatusRepository): ItemSyncStatusRepository
@@ -1196,6 +1230,11 @@ abstract class FakesDataModule {
     abstract fun bindObserveEncryptedSharedItems(impl: FakeObserveEncryptedSharedItems): ObserveEncryptedSharedItems
 
     @Binds
+    abstract fun bindObserveEncryptedSharedItemsPaging(
+        impl: FakeObserveEncryptedSharedItemsPaging
+    ): ObserveEncryptedSharedItemsPaging
+
+    @Binds
     abstract fun bindPendingAttachmentUpdaterRepository(
         impl: FakePendingAttachmentUpdaterRepository
     ): PendingAttachmentUpdaterRepository
@@ -1304,4 +1343,7 @@ abstract class FakesDataModule {
 
     @Binds
     abstract fun bindHostParser(impl: FakeHostParser): HostParser
+
+    @Binds
+    abstract fun bindSearchIndexRepository(impl: FakeSearchIndexRepository): SearchIndexRepository
 }

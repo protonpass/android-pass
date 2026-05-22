@@ -42,6 +42,7 @@ import proton.android.pass.preferences.FeatureFlag.PASS_USER_EVENTS_V1
 import proton.android.pass.preferences.FeatureFlag.RENAME_ADMIN_TO_MANAGER
 import proton.android.pass.preferences.FeatureFlag.PASS_FOLDERS
 import proton.android.pass.preferences.FeatureFlag.PASS_AUTOFILL_URL_REGEX
+import proton.android.pass.preferences.FeatureFlag.ENABLE_PAGINATION
 import java.io.IOException
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -99,6 +100,11 @@ class FeatureFlagsPreferencesRepositoryImpl @Inject constructor(
             key = featureFlag.key,
             defaultValue = featureFlag.isEnabledDefault
         ) { passAutofillUrlRegexEnabled.value }
+
+        ENABLE_PAGINATION -> getFeatureFlag(
+            key = featureFlag.key,
+            defaultValue = featureFlag.isEnabledDefault
+        ) { enablePagination.value }
     }
 
     override fun <T> set(featureFlag: FeatureFlag, value: T?): Result<Unit> = when (featureFlag) {
@@ -130,12 +136,16 @@ class FeatureFlagsPreferencesRepositoryImpl @Inject constructor(
             passMobileOnBoardingV2Enabled = boolFlagPrefProto(value)
         }
 
-        FeatureFlag.PASS_FOLDERS -> setFeatureFlag {
+        PASS_FOLDERS -> setFeatureFlag {
             passFoldersEnabled = boolFlagPrefProto(value)
         }
 
         PASS_AUTOFILL_URL_REGEX -> setFeatureFlag {
             passAutofillUrlRegexEnabled = boolFlagPrefProto(value)
+        }
+
+        ENABLE_PAGINATION -> setFeatureFlag {
+            enablePagination = boolFlagPrefProto(value)
         }
     }
 
@@ -234,8 +244,9 @@ class FeatureFlagsPreferencesRepositoryImpl @Inject constructor(
             PASS_USER_EVENTS_V1 -> passUserEventsV1Enabled
             PASS_GROUP_SHARE -> groupsEnabled
             PASS_MOBILE_ON_BOARDING_V2 -> passMobileOnBoardingV2Enabled
-            FeatureFlag.PASS_FOLDERS -> passFoldersEnabled
+            PASS_FOLDERS -> passFoldersEnabled
             PASS_AUTOFILL_URL_REGEX -> passAutofillUrlRegexEnabled
+            ENABLE_PAGINATION -> enablePagination
         }.value
     }
 }

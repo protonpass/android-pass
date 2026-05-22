@@ -48,6 +48,7 @@ import proton.android.pass.crypto.api.usecases.UpdateVault
 import proton.android.pass.data.api.errors.ShareNotAvailableError
 import proton.android.pass.data.api.repositories.GroupRepository
 import proton.android.pass.data.api.repositories.RefreshSharesResult
+import proton.android.pass.data.api.repositories.SearchIndexRepository
 import proton.android.pass.data.api.repositories.ShareRepository
 import proton.android.pass.data.api.repositories.UpdateShareEvent
 import proton.android.pass.data.api.repositories.UserAccessDataRepository
@@ -94,7 +95,8 @@ class ShareRepositoryImpl @Inject constructor(
     private val encryptionContextProvider: EncryptionContextProvider,
     private val shareKeyRepository: ShareKeyRepository,
     private val userAccessDataRepository: UserAccessDataRepository,
-    private val groupRepository: GroupRepository
+    private val groupRepository: GroupRepository,
+    private val searchIndexRepository: SearchIndexRepository
 ) : ShareRepository {
 
     override suspend fun createVault(userId: UserId, vault: NewVault): Share {
@@ -155,7 +157,18 @@ class ShareRepositoryImpl @Inject constructor(
     override suspend fun deleteVault(userId: UserId, shareId: ShareId) {
         remoteShareDataSource.deleteVault(userId, shareId)
         localShareDataSource.deleteShares(userId, setOf(shareId))
+        removeSharesFromSearchIndex(setOf(shareId))
         refreshDefaultShareIfNeeded(userId, setOf(shareId))
+    }
+
+    private suspend fun removeSharesFromSearchIndex(shareIds: Collection<ShareId>) {
+        shareIds.forEach { shareId ->
+            safeRunCatching { searchIndexRepository.removeShareFromIndex(shareId) }
+                .onFailure {
+                    PassLogger.w(TAG, "Failed to remove share ${shareId.id} from search index")
+                    PassLogger.w(TAG, it)
+                }
+        }
     }
 
     override fun observeAllShares(userId: UserId, includeHidden: Boolean): Flow<List<Share>> =
@@ -242,6 +255,9 @@ class ShareRepositoryImpl @Inject constructor(
                     val deletedShareResult = localShareDataSource.deleteShares(userId, toDelete)
                     PassLogger.i(TAG, "Deleted $deletedShareResult shares")
                 }
+            }
+            if (toDelete.isNotEmpty()) {
+                removeSharesFromSearchIndex(toDelete)
             }
         }
 
@@ -400,8 +416,11 @@ class ShareRepositoryImpl @Inject constructor(
         localShareDataSource.deleteSharesForUser(userId)
     }
 
-    override suspend fun deleteLocalShares(userId: UserId, list: List<ShareId>): Boolean =
-        localShareDataSource.deleteShares(userId, list.toSet())
+    override suspend fun deleteLocalShares(userId: UserId, list: List<ShareId>): Boolean {
+        val deleted = localShareDataSource.deleteShares(userId, list.toSet())
+        removeSharesFromSearchIndex(list)
+        return deleted
+    }
 
     override fun observeVaultCount(userId: UserId, includeHidden: Boolean): Flow<Int> =
         localShareDataSource.observeActiveVaultCount(userId, includeHidden)
@@ -409,6 +428,7 @@ class ShareRepositoryImpl @Inject constructor(
     override suspend fun leaveVault(userId: UserId, shareId: ShareId) {
         remoteShareDataSource.leaveVault(userId, shareId)
         localShareDataSource.deleteShares(userId, setOf(shareId))
+        removeSharesFromSearchIndex(setOf(shareId))
     }
 
     override suspend fun applyPendingShareEvent(userId: UserId, event: UpdateShareEvent) {
@@ -442,6 +462,14 @@ class ShareRepositoryImpl @Inject constructor(
         val (_, skippedCount) = storeShares(userId, response)
         if (skippedCount > 0) {
             PassLogger.w(TAG, "Skipped $skippedCount shares due to missing group information")
+        }
+        shareVisibilityChanges.forEach { (shareId, visible) ->
+            safeRunCatching {
+                searchIndexRepository.updateShareHidden(shareId, isHidden = !visible)
+            }.onFailure {
+                PassLogger.w(TAG, "Failed to update search index visibility for share ${shareId.id}")
+                PassLogger.w(TAG, it)
+            }
         }
     }
 

@@ -56,6 +56,7 @@ import proton.android.pass.data.api.usecases.GetInviteUserMode
 import proton.android.pass.data.api.usecases.GetItemActions
 import proton.android.pass.data.api.usecases.GetItemByAliasEmail
 import proton.android.pass.data.api.usecases.GetItemById
+import proton.android.pass.data.api.usecases.GetItemsBySearchResult
 import proton.android.pass.data.api.usecases.GetPublicSuffixList
 import proton.android.pass.data.api.usecases.GetShareById
 import proton.android.pass.data.api.usecases.GetSuggestedAutofillItems
@@ -78,6 +79,7 @@ import proton.android.pass.data.api.usecases.ObserveConfirmedInviteToken
 import proton.android.pass.data.api.usecases.ObserveCurrentUser
 import proton.android.pass.data.api.usecases.ObserveCurrentUserSettings
 import proton.android.pass.data.api.usecases.ObserveEncryptedItems
+import proton.android.pass.data.api.usecases.ObserveEncryptedItemsPaging
 import proton.android.pass.data.api.usecases.folders.CreateFolder
 import proton.android.pass.data.api.usecases.folders.DeleteFolders
 import proton.android.pass.data.api.usecases.folders.DissolveFolder
@@ -95,12 +97,16 @@ import proton.android.pass.data.api.usecases.folders.RefreshFolders
 import proton.android.pass.data.api.usecases.folders.UpdateFolder
 import proton.android.pass.data.api.usecases.ObserveGlobalMonitorState
 import proton.android.pass.data.api.usecases.ObserveGroupMembersByGroup
+import proton.android.pass.data.api.usecases.ObserveIndexingStatus
+import proton.android.pass.data.api.usecases.ObserveItemTypeCounts
 import proton.android.pass.data.api.usecases.ObserveInviteRecommendations
 import proton.android.pass.data.api.usecases.ObserveInvites
 import proton.android.pass.data.api.usecases.ObserveItemById
 import proton.android.pass.data.api.usecases.ObserveItemCount
 import proton.android.pass.data.api.usecases.ObserveItems
+import proton.android.pass.data.api.usecases.ObserveItemsPaging
 import proton.android.pass.data.api.usecases.ObserveMFACount
+import proton.android.pass.data.api.usecases.ObservePagedItems
 import proton.android.pass.data.api.usecases.ObservePinnedItems
 import proton.android.pass.data.api.usecases.ObserveUpgradeInfo
 import proton.android.pass.data.api.usecases.ObserveUserAccessData
@@ -210,6 +216,7 @@ import proton.android.pass.data.api.usecases.items.GetItemOptions
 import proton.android.pass.data.api.usecases.items.GetMigrationItemsSelection
 import proton.android.pass.data.api.usecases.items.ObserveCanCreateItems
 import proton.android.pass.data.api.usecases.items.ObserveEncryptedSharedItems
+import proton.android.pass.data.api.usecases.items.ObserveEncryptedSharedItemsPaging
 import proton.android.pass.data.api.usecases.items.ObserveItemRevisions
 import proton.android.pass.data.api.usecases.items.ObserveMonitoredItems
 import proton.android.pass.data.api.usecases.items.ObserveSharedItemCountSummary
@@ -240,6 +247,7 @@ import proton.android.pass.data.api.usecases.report.SendReport
 import proton.android.pass.data.api.usecases.searchentry.AddSearchEntry
 import proton.android.pass.data.api.usecases.searchentry.DeleteAllSearchEntry
 import proton.android.pass.data.api.usecases.searchentry.DeleteSearchEntry
+import proton.android.pass.data.api.usecases.searchentry.ObserveRecentSearchItems
 import proton.android.pass.data.api.usecases.searchentry.ObserveSearchEntry
 import proton.android.pass.data.api.usecases.securelink.DeleteInactiveSecureLinks
 import proton.android.pass.data.api.usecases.securelink.DeleteSecureLink
@@ -319,6 +327,7 @@ import proton.android.pass.data.impl.usecases.GetInviteUserModeImpl
 import proton.android.pass.data.impl.usecases.GetItemActionsImpl
 import proton.android.pass.data.impl.usecases.GetItemByAliasEmailImpl
 import proton.android.pass.data.impl.usecases.GetItemByIdImpl
+import proton.android.pass.data.impl.usecases.GetItemsBySearchResultImpl
 import proton.android.pass.data.impl.usecases.GetPublicSuffixListImpl
 import proton.android.pass.data.impl.usecases.GetShareByIdImpl
 import proton.android.pass.data.impl.usecases.GetSuggestedAutofillItemsImpl
@@ -342,6 +351,7 @@ import proton.android.pass.data.impl.usecases.ObserveCurrentUserImpl
 import proton.android.pass.data.impl.usecases.ObserveCurrentUserSettingsImpl
 import proton.android.pass.data.impl.usecases.ObserveDefaultVaultImpl
 import proton.android.pass.data.impl.usecases.ObserveEncryptedItemsImpl
+import proton.android.pass.data.impl.usecases.ObserveEncryptedItemsPagingImpl
 import proton.android.pass.data.impl.usecases.folders.CreateFolderImpl
 import proton.android.pass.data.impl.usecases.folders.DeleteFoldersImpl
 import proton.android.pass.data.impl.usecases.folders.DissolveFolderImpl
@@ -359,12 +369,16 @@ import proton.android.pass.data.impl.usecases.folders.RefreshFoldersImpl
 import proton.android.pass.data.impl.usecases.folders.UpdateFolderImpl
 import proton.android.pass.data.impl.usecases.ObserveGlobalMonitorStateImpl
 import proton.android.pass.data.impl.usecases.ObserveGroupMembersByGroupImpl
+import proton.android.pass.data.impl.usecases.ObserveIndexingStatusImpl
+import proton.android.pass.data.impl.usecases.ObserveItemTypeCountsImpl
 import proton.android.pass.data.impl.usecases.ObserveInviteRecommendationsImpl
 import proton.android.pass.data.impl.usecases.ObserveInvitesImpl
 import proton.android.pass.data.impl.usecases.ObserveItemByIdImpl
 import proton.android.pass.data.impl.usecases.ObserveItemCountImpl
 import proton.android.pass.data.impl.usecases.ObserveItemsImpl
+import proton.android.pass.data.impl.usecases.ObserveItemsPagingImpl
 import proton.android.pass.data.impl.usecases.ObserveMFACountImpl
+import proton.android.pass.data.impl.usecases.ObservePagedItemsImpl
 import proton.android.pass.data.impl.usecases.ObservePinnedItemsImpl
 import proton.android.pass.data.impl.usecases.ObserveUpgradeInfoImpl
 import proton.android.pass.data.impl.usecases.ObserveUserAccessDataImpl
@@ -475,6 +489,7 @@ import proton.android.pass.data.impl.usecases.items.GetItemOptionsImpl
 import proton.android.pass.data.impl.usecases.items.GetMigrationItemsSelectionImpl
 import proton.android.pass.data.impl.usecases.items.ObserveCanCreateItemsImpl
 import proton.android.pass.data.impl.usecases.items.ObserveEncryptedSharedItemsImpl
+import proton.android.pass.data.impl.usecases.items.ObserveEncryptedSharedItemsPagingImpl
 import proton.android.pass.data.impl.usecases.items.ObserveItemRevisionsImpl
 import proton.android.pass.data.impl.usecases.items.ObserveMonitoredItemsImpl
 import proton.android.pass.data.impl.usecases.items.ObserveSharedItemCountSummaryImpl
@@ -505,6 +520,7 @@ import proton.android.pass.data.impl.usecases.report.SendReportImpl
 import proton.android.pass.data.impl.usecases.searchentry.AddSearchEntryImpl
 import proton.android.pass.data.impl.usecases.searchentry.DeleteAllSearchEntryImpl
 import proton.android.pass.data.impl.usecases.searchentry.DeleteSearchEntryImpl
+import proton.android.pass.data.impl.usecases.searchentry.ObserveRecentSearchItemsImpl
 import proton.android.pass.data.impl.usecases.searchentry.ObserveSearchEntryImpl
 import proton.android.pass.data.impl.usecases.securelink.DeleteInactiveSecureLinksImpl
 import proton.android.pass.data.impl.usecases.securelink.DeleteSecureLinkImpl
@@ -587,6 +603,9 @@ abstract class DataUseCaseModule {
     abstract fun bindGetItemById(impl: GetItemByIdImpl): GetItemById
 
     @Binds
+    abstract fun bindGetItemsBySearchResult(impl: GetItemsBySearchResultImpl): GetItemsBySearchResult
+
+    @Binds
     abstract fun bindObserveItemById(impl: ObserveItemByIdImpl): ObserveItemById
 
     @Binds
@@ -605,10 +624,25 @@ abstract class DataUseCaseModule {
     abstract fun bindObserveItems(impl: ObserveItemsImpl): ObserveItems
 
     @Binds
+    abstract fun bindObserveItemsPaging(impl: ObserveItemsPagingImpl): ObserveItemsPaging
+
+    @Binds
     abstract fun bindObserveEncryptedItems(impl: ObserveEncryptedItemsImpl): ObserveEncryptedItems
 
     @Binds
+    abstract fun bindObserveEncryptedItemsPaging(impl: ObserveEncryptedItemsPagingImpl): ObserveEncryptedItemsPaging
+
+    @Binds
     abstract fun bindObservePinnedItems(impl: ObservePinnedItemsImpl): ObservePinnedItems
+
+    @Binds
+    abstract fun bindObservePagedItems(impl: ObservePagedItemsImpl): ObservePagedItems
+
+    @Binds
+    abstract fun bindObserveIndexingStatus(impl: ObserveIndexingStatusImpl): ObserveIndexingStatus
+
+    @Binds
+    abstract fun bindObserveItemTypeCounts(impl: ObserveItemTypeCountsImpl): ObserveItemTypeCounts
 
     @Binds
     abstract fun bindObserveShares(impl: ObserveAllSharesImpl): ObserveAllShares
@@ -738,6 +772,9 @@ abstract class DataUseCaseModule {
 
     @Binds
     abstract fun bindObserveSearchEntry(impl: ObserveSearchEntryImpl): ObserveSearchEntry
+
+    @Binds
+    abstract fun bindObserveRecentSearchItems(impl: ObserveRecentSearchItemsImpl): ObserveRecentSearchItems
 
     @Binds
     abstract fun bindClearUserData(impl: ClearUserDataImpl): ClearUserData
@@ -1291,6 +1328,11 @@ abstract class DataUseCaseModule {
 
     @[Binds Singleton]
     abstract fun bindObserveEncryptedSharedItems(impl: ObserveEncryptedSharedItemsImpl): ObserveEncryptedSharedItems
+
+    @[Binds Singleton]
+    abstract fun bindObserveEncryptedSharedItemsPaging(
+        impl: ObserveEncryptedSharedItemsPagingImpl
+    ): ObserveEncryptedSharedItemsPaging
 
     @[Binds Singleton]
     abstract fun bindCheckIfUserExists(impl: CheckIfUserExistsImpl): CheckIfUserExists

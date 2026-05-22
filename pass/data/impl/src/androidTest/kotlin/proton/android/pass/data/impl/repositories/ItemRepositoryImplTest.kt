@@ -63,6 +63,7 @@ import proton.android.pass.data.impl.fakes.FakeShareKeyRepository
 import proton.android.pass.data.impl.fakes.FakeShareRepository
 import proton.android.pass.domain.ShareId
 import proton.android.pass.test.domain.ItemTestFactory
+import proton.android.pass.data.fakes.repositories.FakeSearchIndexRepository
 import proton.android.pass.test.domain.ShareKeyTestFactory
 import proton.android.pass.test.domain.ShareTestFactory
 import kotlin.test.assertEquals
@@ -133,7 +134,8 @@ class ItemRepositoryImplTest {
             encryptionContextProvider = FakeEncryptionContextProvider(),
             getShareAndItemKey = FakeGetShareAndItemKey(),
             folderKeyRepository = FakeFolderKeyRepository(),
-            appDispatchers = FakeAppDispatchers()
+            appDispatchers = FakeAppDispatchers(),
+            searchIndexRepository = FakeSearchIndexRepository()
         )
     }
 

@@ -38,6 +38,7 @@ import dagger.assisted.AssistedInject
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.safeRunCatching
 import proton.android.pass.data.api.repositories.ItemRepository
+import proton.android.pass.data.api.repositories.SearchIndexRepository
 import proton.android.pass.data.api.repositories.VaultProgress
 import proton.android.pass.data.api.usecases.folders.RefreshFolders
 import proton.android.pass.data.impl.R
@@ -52,6 +53,7 @@ open class FetchShareItemsWorker @AssistedInject constructor(
     @Assisted workerParameters: WorkerParameters,
     private val fetchShareItemsStatusRepository: FetchShareItemsStatusRepository,
     private val itemRepository: ItemRepository,
+    private val searchIndexRepository: SearchIndexRepository,
     private val refreshFolders: RefreshFolders
 ) : CoroutineWorker(context, workerParameters) {
 
@@ -82,6 +84,7 @@ open class FetchShareItemsWorker @AssistedInject constructor(
                     items = mapOf(shareId to itemRevisions),
                     onProgress = { progress -> onInsertProgress(shareId, progress) }
                 )
+                searchIndexRepository.indexShare(userId, shareId)
                 (result.insertedCountByShare[shareId] ?: 0) to result.failedShareIds.contains(shareId)
             }
         }.fold(

@@ -18,10 +18,12 @@
 
 package proton.android.pass.features.home
 
+import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.expandVertically
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
+import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -52,6 +54,8 @@ import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.paging.compose.LazyPagingItems
+import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.PersistentSet
 import kotlinx.collections.immutable.persistentMapOf
 import kotlinx.collections.immutable.toPersistentSet
@@ -59,8 +63,12 @@ import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.toOption
+import proton.android.pass.commonui.api.GroupedItemList
+import proton.android.pass.commonui.api.HomeListItem
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
+import proton.android.pass.data.api.repositories.IndexingStatus
+import proton.android.pass.features.home.indexing.IndexingBanner
 import proton.android.pass.commonui.api.applyIf
 import proton.android.pass.commonui.api.TestTags.HOME_EMPTY_TAG
 import proton.android.pass.commonui.api.TestTags.HOME_ITEM_LIST_TAG
@@ -73,6 +81,7 @@ import proton.android.pass.composecomponents.impl.icon.PromoIcon
 import proton.android.pass.composecomponents.impl.icon.TrashVaultIcon
 import proton.android.pass.composecomponents.impl.icon.VaultIcon
 import proton.android.pass.composecomponents.impl.item.ItemsList
+import proton.android.pass.composecomponents.impl.item.ItemsListPaging
 import proton.android.pass.composecomponents.impl.item.header.ItemCount
 import proton.android.pass.composecomponents.impl.item.header.ItemListHeader
 import proton.android.pass.composecomponents.impl.item.header.SortingButton
@@ -96,6 +105,8 @@ import proton.android.pass.composecomponents.impl.R as ComponentsR
 internal fun HomeContent(
     modifier: Modifier = Modifier,
     uiState: HomeUiState,
+    itemsPagingData: LazyPagingItems<HomeListItem>,
+    filteredSearchEntries: ImmutableList<GroupedItemList>,
     shouldScrollToTop: Boolean,
     canCreateVault: Boolean,
     scrollableState: LazyListState,
@@ -241,8 +252,10 @@ internal fun HomeContent(
         }
     ) { contentPadding ->
         val keyboardController = LocalSoftwareKeyboardController.current
-        val listItemCount = remember(uiState.homeListUiState.items) {
-            uiState.homeListUiState.items.map { it.items }.flatten().count()
+        val listItemCount = remember(uiState.searchUiState.itemTypeCount) {
+            with(uiState.searchUiState.itemTypeCount) {
+                loginCount + aliasCount + noteCount + creditCardCount + identityCount + customCount
+            }
         }
         val pinningItemsCount = remember(uiState.pinningUiState.filteredItems) {
             uiState.pinningUiState.filteredItems.map { it.items }.flatten().count()
@@ -250,71 +263,99 @@ internal fun HomeContent(
         Column(
             modifier = Modifier.padding(contentPadding)
         ) {
-            if (!isPinningOrSearch && !isTrashMode) {
-                PinCarousel(
-                    modifier = Modifier.height(48.dp),
-                    list = uiState.pinningUiState.unFilteredItems,
-                    canLoadExternalImages = uiState.homeListUiState.canLoadExternalImages,
-                    onItemClick = { item -> onEvent(HomeUiEvent.ItemClick(item)) },
-                    onSeeAllClick = { onEvent(HomeUiEvent.SeeAllPinned) }
-                )
-
-                if (uiState.pinningUiState.unFilteredItems.isNotEmpty()) {
-                    Spacer(modifier = Modifier.height(Spacing.medium))
+            val headerState = remember(isPinningOrSearch, isTrashMode) {
+                when {
+                    isPinningOrSearch -> HomeHeaderState.SearchOrPinning
+                    isTrashMode -> HomeHeaderState.Trash
+                    else -> HomeHeaderState.Normal
                 }
             }
-            AnimatedVisibility(
-                visible = isPinningOrSearch && firstItemVisible,
-                label = "HomeContent-ItemTypeFilterList"
-            ) {
-                val itemTypeCount = if (uiState.pinningUiState.inPinningMode) {
-                    uiState.pinningUiState.itemTypeCount
-                } else {
-                    uiState.searchUiState.itemTypeCount
-                }
-                ItemTypeFilterList(
-                    selected = uiState.homeListUiState.searchFilterType,
-                    itemTypeCount = itemTypeCount,
-                    onItemTypeClick = { onEvent(HomeUiEvent.ItemTypeSelected(it)) }
-                )
-            }
 
-            val showItemListHeader = remember(uiState) { uiState.shouldShowItemListHeader() }
-            if (showItemListHeader) {
-                ItemListHeader(
-                    countContent = {
-                        val itemCount = if (uiState.pinningUiState.inPinningMode) {
-                            pinningItemsCount
-                        } else {
-                            listItemCount
+            AnimatedContent(
+                targetState = headerState,
+                label = "HomeContent-HeaderAnimatedContent",
+                transitionSpec = {
+                    fadeIn() togetherWith fadeOut()
+                }
+            ) { state ->
+                when (state) {
+                    HomeHeaderState.Normal -> {
+                        Column {
+                            PinCarousel(
+                                modifier = Modifier.height(48.dp),
+                                list = uiState.pinningUiState.unFilteredItems,
+                                canLoadExternalImages = uiState.homeListUiState.canLoadExternalImages,
+                                onItemClick = { item -> onEvent(HomeUiEvent.ItemClick(item)) },
+                                onSeeAllClick = { onEvent(HomeUiEvent.SeeAllPinned) }
+                            )
+                            if (uiState.pinningUiState.unFilteredItems.isNotEmpty()) {
+                                Spacer(modifier = Modifier.height(Spacing.medium))
+                            }
                         }
-                        ItemCount(
-                            modifier = Modifier.padding(
-                                Spacing.medium,
-                                Spacing.none,
-                                Spacing.none,
-                                Spacing.none
-                            ),
-                            showSearchResults = isPinningOrSearch && uiState.searchUiState.searchQuery.isNotEmpty(),
-                            itemType = uiState.homeListUiState.searchFilterType,
-                            itemCount = itemCount.takeIf { !uiState.searchUiState.isProcessingSearch.value() },
-                            isPinnedMode = uiState.pinningUiState.inPinningMode
-                        )
-                    },
-                    sortingContent = {
-                        SortingButton(
-                            sortingType = uiState.homeListUiState.sortingType,
-                            onSortingOptionsClick = { onEvent(HomeUiEvent.SortingOptionsClick) }
-                        )
                     }
-                )
+
+                    HomeHeaderState.SearchOrPinning -> {
+                        Column {
+                            if (firstItemVisible) {
+                                val itemTypeCount = if (uiState.pinningUiState.inPinningMode) {
+                                    uiState.pinningUiState.itemTypeCount
+                                } else {
+                                    uiState.searchUiState.itemTypeCount
+                                }
+                                ItemTypeFilterList(
+                                    selected = uiState.homeListUiState.searchFilterType,
+                                    itemTypeCount = itemTypeCount,
+                                    onItemTypeClick = { onEvent(HomeUiEvent.ItemTypeSelected(it)) }
+                                )
+                            }
+                            val itemCount = if (uiState.pinningUiState.inPinningMode) {
+                                pinningItemsCount
+                            } else {
+                                listItemCount
+                            }
+                            ItemListHeader(
+                                countContent = {
+                                    ItemCount(
+                                        modifier = Modifier.padding(
+                                            Spacing.medium,
+                                            Spacing.none,
+                                            Spacing.none,
+                                            Spacing.none
+                                        ),
+                                        showSearchResults = isPinningOrSearch &&
+                                            uiState.searchUiState.searchQuery.isNotEmpty(),
+                                        itemType = uiState.homeListUiState.searchFilterType,
+                                        itemCount = itemCount.takeIf {
+                                            !uiState.searchUiState.isProcessingSearch.value()
+                                        },
+                                        isPinnedMode = uiState.pinningUiState.inPinningMode
+                                    )
+                                },
+                                sortingContent = {
+                                    SortingButton(
+                                        sortingType = uiState.homeListUiState.sortingType,
+                                        onSortingOptionsClick = { onEvent(HomeUiEvent.SortingOptionsClick) }
+                                    )
+                                }
+                            )
+                        }
+                    }
+
+                    HomeHeaderState.Trash -> {
+                        // No header in trash mode
+                    }
+                }
             }
 
             val showRecentSearchHeader =
                 remember(uiState) { uiState.shouldShowRecentSearchHeader() }
-            if (showRecentSearchHeader) {
-                val itemCount = remember(uiState.homeListUiState.items) {
-                    uiState.homeListUiState.items.map { it.items }.flatten().count()
+            AnimatedVisibility(
+                visible = showRecentSearchHeader,
+                enter = fadeIn(),
+                exit = fadeOut()
+            ) {
+                val itemCount = remember(filteredSearchEntries) {
+                    filteredSearchEntries.map { it.items }.flatten().count()
                 }
                 RecentSearchListHeader(
                     itemCount = itemCount,
@@ -326,12 +367,6 @@ internal fun HomeContent(
                 !uiState.searchUiState.inSearchMode
             }
 
-            val items = if (!uiState.pinningUiState.inPinningMode) {
-                uiState.homeListUiState.items
-            } else {
-                uiState.pinningUiState.filteredItems
-            }
-
             val selectedItemIds: PersistentSet<Pair<ShareId, ItemId>> = remember(
                 key1 = uiState.homeListUiState.selectionState.selectedItems
             ) {
@@ -340,61 +375,132 @@ internal fun HomeContent(
                     .toPersistentSet()
             }
 
-            ItemsList(
-                modifier = Modifier.testTag(HOME_ITEM_LIST_TAG),
-                items = items,
-                shares = uiState.homeListUiState.shares,
-                isShareSelected = uiState.homeListUiState.selectedShare.isNotEmpty(),
-                scrollableState = scrollableState,
-                shouldScrollToTop = shouldScrollToTop,
-                highlight = uiState.searchUiState.searchQuery,
-                isRefreshing = uiState.homeListUiState.isRefreshing,
-                isLoading = uiState.homeListUiState.isLoading,
-                isProcessingSearch = uiState.searchUiState.isProcessingSearch,
-                forceShowHeader = forceShowHeader,
-                header = header,
-                onRefresh = { onEvent(HomeUiEvent.Refresh) },
-                onItemClick = { item ->
-                    keyboardController?.hide()
-                    if (uiState.homeListUiState.selectionState.isInSelectMode) {
-                        onEvent(HomeUiEvent.SelectItem(item))
-                    } else {
-                        onEvent(HomeUiEvent.ItemClick(item))
-                    }
-                },
-                onItemMenuClick = { onEvent(HomeUiEvent.ItemMenuClick(it)) },
-                onItemLongClick = {
-                    val readOnly = uiState.isSelectedVaultReadOnly()
-                    if (!readOnly) {
-                        onEvent(HomeUiEvent.SelectItem(it))
-                    }
-                },
-                onScrollToTop = { onEvent(HomeUiEvent.ScrollToTop) },
-                canLoadExternalImages = uiState.homeListUiState.canLoadExternalImages,
-                isInSelectionMode = uiState.homeListUiState.selectionState.isInSelectMode,
-                selectedItemIds = selectedItemIds,
-                emptyContent = {
-                    val selectedFolder = uiState.homeListUiState.selectedFolder.value()
-                    val shareId = selectedFolder?.shareId ?: uiState.homeListUiState.selectedShare.map { it.id }.value()
-                    val folderId = selectedFolder?.folderId?.takeIf { uiState.canCreateItemsInFolder }
-                    HomeEmptyContent(
-                        modifier = Modifier.testTag(HOME_EMPTY_TAG),
-                        hasShares = uiState.hasShares,
-                        canCreateItems = uiState.canCreateItems,
-                        canCreateAlias = uiState.canCreateAlias,
-                        canCreateVault = canCreateVault,
-                        canCreateItemsInFolder = uiState.canCreateItemsInFolder,
-                        vaultSelectionOption = uiState.homeListUiState.homeVaultSelection,
-                        inSearchMode = isPinningOrSearch,
-                        filterType = uiState.homeListUiState.searchFilterType,
-                        readOnly = uiState.isSelectedVaultReadOnly(),
-                        shareId = shareId.toOption(),
-                        folderId = folderId.toOption(),
-                        onEvent = onEvent
-                    )
-                },
-                accounts = persistentMapOf()
-            )
+            val indexingStatus = uiState.homeListUiState.indexingStatus
+            if (indexingStatus is IndexingStatus.Indexing || indexingStatus is IndexingStatus.InProgress) {
+                IndexingBanner(indexingStatus = indexingStatus)
+            }
+
+            if (uiState.isPaginationEnabled) {
+                // Pagination mode - everything goes through pagingItems
+                ItemsListPaging(
+                    modifier = Modifier.testTag(HOME_ITEM_LIST_TAG),
+                    pagingItems = itemsPagingData,
+                    shares = uiState.homeListUiState.shares,
+                    isShareSelected = uiState.homeListUiState.selectedShare.isNotEmpty(),
+                    scrollableState = scrollableState,
+                    shouldScrollToTop = shouldScrollToTop,
+                    highlight = uiState.searchUiState.searchQuery,
+                    forceShowHeader = forceShowHeader,
+                    header = header,
+                    onRefresh = { onEvent(HomeUiEvent.Refresh) },
+                    onItemClick = { item ->
+                        keyboardController?.hide()
+                        if (uiState.homeListUiState.selectionState.isInSelectMode) {
+                            onEvent(HomeUiEvent.SelectItem(item))
+                        } else {
+                            onEvent(HomeUiEvent.ItemClick(item))
+                        }
+                    },
+                    onItemMenuClick = { onEvent(HomeUiEvent.ItemMenuClick(it)) },
+                    onItemLongClick = {
+                        val readOnly = uiState.isSelectedVaultReadOnly()
+                        if (!readOnly) {
+                            onEvent(HomeUiEvent.SelectItem(it))
+                        }
+                    },
+                    onScrollToTop = { onEvent(HomeUiEvent.ScrollToTop) },
+                    canLoadExternalImages = uiState.homeListUiState.canLoadExternalImages,
+                    isInSelectionMode = uiState.homeListUiState.selectionState.isInSelectMode,
+                    selectedItemIds = selectedItemIds,
+                    emptyContent = {
+                        val selectedFolder = uiState.homeListUiState.selectedFolder.value()
+                        val shareId = selectedFolder?.shareId
+                            ?: uiState.homeListUiState.selectedShare.map { it.id }.value()
+                        val folderId = selectedFolder?.folderId?.takeIf { uiState.canCreateItemsInFolder }
+                        HomeEmptyContent(
+                            modifier = Modifier.testTag(HOME_EMPTY_TAG),
+                            hasShares = uiState.hasShares,
+                            canCreateItems = uiState.canCreateItems,
+                            canCreateAlias = uiState.canCreateAlias,
+                            canCreateVault = canCreateVault,
+                            canCreateItemsInFolder = uiState.canCreateItemsInFolder,
+                            vaultSelectionOption = uiState.homeListUiState.homeVaultSelection,
+                            inSearchMode = isPinningOrSearch,
+                            filterType = uiState.homeListUiState.searchFilterType,
+                            readOnly = uiState.isSelectedVaultReadOnly(),
+                            shareId = shareId.toOption(),
+                            folderId = folderId.toOption(),
+                            onEvent = onEvent
+                        )
+                    },
+                    accounts = persistentMapOf(),
+                    isRefreshing = uiState.homeListUiState.isRefreshing
+                )
+            } else {
+                // Non-pagination mode (legacy)
+                val items = if (!uiState.pinningUiState.inPinningMode) {
+                    uiState.homeListUiState.items
+                } else {
+                    uiState.pinningUiState.filteredItems
+                }
+
+                ItemsList(
+                    modifier = Modifier.testTag(HOME_ITEM_LIST_TAG),
+                    items = items,
+                    shares = uiState.homeListUiState.shares,
+                    isShareSelected = uiState.homeListUiState.selectedShare.isNotEmpty(),
+                    scrollableState = scrollableState,
+                    shouldScrollToTop = shouldScrollToTop,
+                    highlight = uiState.searchUiState.searchQuery,
+                    isRefreshing = uiState.homeListUiState.isRefreshing,
+                    isLoading = uiState.homeListUiState.isLoading,
+                    isProcessingSearch = uiState.searchUiState.isProcessingSearch,
+                    forceShowHeader = forceShowHeader,
+                    header = header,
+                    onRefresh = { onEvent(HomeUiEvent.Refresh) },
+                    onItemClick = { item ->
+                        keyboardController?.hide()
+                        if (uiState.homeListUiState.selectionState.isInSelectMode) {
+                            onEvent(HomeUiEvent.SelectItem(item))
+                        } else {
+                            onEvent(HomeUiEvent.ItemClick(item))
+                        }
+                    },
+                    onItemMenuClick = { onEvent(HomeUiEvent.ItemMenuClick(it)) },
+                    onItemLongClick = {
+                        val readOnly = uiState.isSelectedVaultReadOnly()
+                        if (!readOnly) {
+                            onEvent(HomeUiEvent.SelectItem(it))
+                        }
+                    },
+                    onScrollToTop = { onEvent(HomeUiEvent.ScrollToTop) },
+                    canLoadExternalImages = uiState.homeListUiState.canLoadExternalImages,
+                    isInSelectionMode = uiState.homeListUiState.selectionState.isInSelectMode,
+                    selectedItemIds = selectedItemIds,
+                    emptyContent = {
+                        val selectedFolder = uiState.homeListUiState.selectedFolder.value()
+                        val shareId = selectedFolder?.shareId
+                            ?: uiState.homeListUiState.selectedShare.map { it.id }.value()
+                        val folderId = selectedFolder?.folderId?.takeIf { uiState.canCreateItemsInFolder }
+                        HomeEmptyContent(
+                            modifier = Modifier.testTag(HOME_EMPTY_TAG),
+                            hasShares = uiState.hasShares,
+                            canCreateItems = uiState.canCreateItems,
+                            canCreateAlias = uiState.canCreateAlias,
+                            canCreateVault = canCreateVault,
+                            canCreateItemsInFolder = uiState.canCreateItemsInFolder,
+                            vaultSelectionOption = uiState.homeListUiState.homeVaultSelection,
+                            inSearchMode = isPinningOrSearch,
+                            filterType = uiState.homeListUiState.searchFilterType,
+                            readOnly = uiState.isSelectedVaultReadOnly(),
+                            shareId = shareId.toOption(),
+                            folderId = folderId.toOption(),
+                            onEvent = onEvent
+                        )
+                    },
+                    accounts = persistentMapOf()
+                )
+            }
         }
     }
 }
@@ -465,6 +571,7 @@ private fun HomeDrawerIcon(
                             onClick = { onEvent(HomeUiEvent.DrawerIconClick) }
                         )
                     }
+
                     VaultSelectionOption.SharedByMe -> {
                         VaultIcon(
                             modifier = modifier.size(48.dp),
@@ -520,3 +627,10 @@ private fun HomeDrawerIcon(
 object HomeContentTestTag {
     const val DRAWER_ICON_TEST_TAG = "drawerIcon"
 }
+
+private enum class HomeHeaderState {
+    Normal,
+    SearchOrPinning,
+    Trash
+}
+

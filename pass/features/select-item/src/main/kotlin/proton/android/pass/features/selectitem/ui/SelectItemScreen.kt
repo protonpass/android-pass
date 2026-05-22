@@ -24,6 +24,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.paging.compose.collectAsLazyPagingItems
 import proton.android.pass.features.selectitem.navigation.SelectItemNavigation
 import proton.android.pass.features.selectitem.navigation.SelectItemState
 import proton.android.pass.features.selectitem.presentation.SelectItemViewModel
@@ -37,6 +38,7 @@ fun SelectItemScreen(
     viewModel: SelectItemViewModel = hiltViewModel()
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+    val pagingItems = viewModel.selectItemPagingFlow.collectAsLazyPagingItems()
 
     LaunchedEffect(Unit) {
         onScreenShown()
@@ -52,6 +54,7 @@ fun SelectItemScreen(
     SelectItemScreenContent(
         modifier = modifier,
         uiState = uiState,
+        pagingItems = pagingItems,
         onEvent = { event ->
             when (event) {
                 is SelectItemEvent.ItemClicked -> if (event.isSuggestion) {

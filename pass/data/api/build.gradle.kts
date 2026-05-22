@@ -30,6 +30,7 @@ dependencies {
     implementation(libs.core.report.domain)
     implementation(libs.core.user.domain)
     implementation(libs.core.userSettings.domain)
+    implementation(libs.androidx.room.paging)
 
     implementation(projects.pass.common.api)
     implementation(projects.pass.commonRust.api)

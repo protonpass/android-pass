@@ -22,11 +22,14 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.appconfig.api.AppConfig
@@ -66,6 +69,14 @@ class RouterViewModel @Inject constructor(
 
 
     internal val routerEventState = MutableSharedFlow<RouterEvent>(replay = 1)
+
+    internal val isPaginationEnabled: StateFlow<Boolean> = featureFlagsPreferencesRepository
+        .get<Boolean>(FeatureFlag.ENABLE_PAGINATION)
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.Eagerly,
+            initialValue = false
+        )
 
     init {
         combineN(

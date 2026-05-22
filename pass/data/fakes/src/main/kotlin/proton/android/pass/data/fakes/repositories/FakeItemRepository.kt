@@ -18,6 +18,7 @@
 
 package proton.android.pass.data.fakes.repositories
 
+import androidx.paging.PagingData
 import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -245,6 +246,17 @@ class FakeItemRepository @Inject constructor() : ItemRepository {
         includeHidden: Boolean
     ): Flow<List<Item>> = observeItemListFlow
 
+    override fun observeItemsPaging(
+        userId: UserId,
+        shareSelection: ShareSelection,
+        itemState: ItemState?,
+        itemTypeFilter: ItemTypeFilter,
+        itemFlags: Map<ItemFlag, Boolean>,
+        includeHidden: Boolean
+    ): Flow<PagingData<Item>> {
+        TODO("Not yet implemented")
+    }
+
     override fun observeEncryptedItems(
         userId: UserId,
         shareSelection: ShareSelection,
@@ -254,17 +266,48 @@ class FakeItemRepository @Inject constructor() : ItemRepository {
         includeHidden: Boolean
     ): Flow<List<ItemEncrypted>> = observeItemEncryptedListFlow
 
+    override fun observeEncryptedItemsPaging(
+        userId: UserId,
+        shareSelection: ShareSelection,
+        itemState: ItemState?,
+        itemTypeFilter: ItemTypeFilter,
+        itemFlags: Map<ItemFlag, Boolean>,
+        includeHidden: Boolean
+    ): Flow<PagingData<ItemEncrypted>> {
+        TODO("Not yet implemented")
+    }
+
     override fun observeSharedByMeEncryptedItems(
         userId: UserId,
         itemState: ItemState?,
         includeHiddenVault: Boolean
     ): Flow<List<ItemEncrypted>> = encryptedSharedItemsFlow
 
+    override fun observeSharedByMeEncryptedItemsPaging(
+        userId: UserId,
+        itemState: ItemState?,
+        includeHiddenVault: Boolean
+    ): Flow<PagingData<ItemEncrypted>> {
+        TODO("Not yet implemented")
+    }
+
     override fun observeSharedWithMeEncryptedItems(
         userId: UserId,
         itemState: ItemState?,
         includeHiddenVault: Boolean
     ): Flow<List<ItemEncrypted>> = encryptedSharedItemsFlow
+
+    override fun observeSharedWithMeEncryptedItemsPaging(
+        userId: UserId,
+        itemState: ItemState?,
+        includeHiddenVault: Boolean
+    ): Flow<PagingData<ItemEncrypted>> {
+        TODO("Not yet implemented")
+    }
+
+    override fun observeRecentSearchItems(userId: UserId, shareId: ShareId?): Flow<List<ItemEncrypted>> {
+        TODO("Not yet implemented")
+    }
 
     override fun observePinnedItems(
         userId: UserId,

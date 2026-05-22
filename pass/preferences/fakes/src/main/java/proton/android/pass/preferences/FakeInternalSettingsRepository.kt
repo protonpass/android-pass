@@ -67,6 +67,8 @@ class FakeInternalSettingsRepository @Inject constructor() : InternalSettingsRep
     private val telemetryGrowthSentActionsFlow = MutableStateFlow(emptySet<String>())
     private val lastBackgroundTimestampFlow = MutableStateFlow(0L)
 
+    private val searchIndexRebuildTimes = mutableMapOf<String, Long>()
+
     override fun setLastUnlockedTime(time: Long): Result<Unit> {
         lastUnlockedTimeFlow.update { Some(time) }
         return Result.success(Unit)
@@ -240,4 +242,10 @@ class FakeInternalSettingsRepository @Inject constructor() : InternalSettingsRep
     }
 
     override fun getLastBackgroundTimestamp(): Flow<Long> = lastBackgroundTimestampFlow
+
+    override suspend fun setSearchIndexRebuildTime(userId: UserId, time: Long) {
+        searchIndexRebuildTimes[userId.id] = time
+    }
+
+    override suspend fun getSearchIndexRebuildTime(userId: UserId): Long = searchIndexRebuildTimes[userId.id] ?: 0L
 }

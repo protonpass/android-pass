@@ -18,6 +18,9 @@
 
 package proton.android.pass.data.impl.local
 
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.flatMapLatest
@@ -33,6 +36,7 @@ import proton.android.pass.data.api.ItemCountSummary
 import proton.android.pass.data.api.repositories.ShareItemCount
 import proton.android.pass.data.api.usecases.ItemTypeFilter
 import proton.android.pass.data.impl.db.PassDatabase
+import proton.android.pass.data.impl.db.dao.ItemEntityWithRowId
 import proton.android.pass.data.impl.db.dao.SummaryRow
 import proton.android.pass.data.impl.db.entities.ItemEntity
 import proton.android.pass.domain.FolderId
@@ -82,6 +86,58 @@ class LocalItemDataSourceImpl @Inject constructor(
         )
     }
 
+    override suspend fun getItemsPageForIndex(
+        userId: UserId,
+        shareIds: List<ShareId>,
+        itemState: ItemState,
+        afterRowId: Long,
+        limit: Int
+    ): List<ItemEntityWithRowId> = database.itemsDao().getItemsPageForIndex(
+        userId = userId.id,
+        shareIds = shareIds.map(ShareId::id),
+        itemState = itemState.value,
+        afterRowId = afterRowId,
+        limit = limit
+    )
+
+    override suspend fun countItemsForIndex(
+        userId: UserId,
+        shareIds: List<ShareId>,
+        itemState: ItemState
+    ): Int = database.itemsDao().countItemsForIndex(
+        userId = userId.id,
+        shareIds = shareIds.map(ShareId::id),
+        itemState = itemState.value
+    )
+
+    override fun observeItemsPaging(
+        userId: UserId,
+        shareIds: List<ShareId>,
+        itemState: ItemState?,
+        filter: ItemTypeFilter,
+        itemFlags: Map<ItemFlag, Boolean>
+    ): Flow<PagingData<ItemEntity>> = Pager(
+        config = PagingConfig(pageSize = 20),
+        pagingSourceFactory = {
+            val (setFlags, clearFlags) = foldFlags(itemFlags)
+            val itemTypes = filter.value()
+            database.itemsDao().observeItemsPaging(
+                userId = userId.id,
+                shareIds = shareIds.map(ShareId::id),
+                itemIds = null,
+                applyItemIds = false,
+                itemTypes = itemTypes,
+                applyItemTypes = itemTypes != null,
+                itemState = itemState?.value,
+                isPinned = null,
+                hasTotp = null,
+                hasPasskeys = null,
+                setFlags = setFlags,
+                clearFlags = clearFlags
+            )
+        }
+    ).flow
+
     override fun observePinnedItems(
         userId: UserId,
         shareIds: List<ShareId>,
@@ -129,21 +185,17 @@ class LocalItemDataSourceImpl @Inject constructor(
         userId: UserId,
         shareId: ShareId,
         itemIds: List<ItemId>
-    ): List<ItemEntity> = database.itemsDao().observeItems(
+    ): List<ItemEntity> = database.itemsDao().getByIds(
         userId = userId.id,
-        shareIds = listOf(shareId.id),
-        itemIds = itemIds.map { it.id },
-        applyItemIds = true,
-        itemTypes = null,
-        applyItemTypes = false,
-        itemState = null,
-        isPinned = null,
-        hasTotp = null,
-        hasPasskeys = null,
-        setFlags = null,
-        clearFlags = null
-    ).firstOrNull()
-        ?: emptyList()
+        shareId = shareId.id,
+        itemIds = itemIds.map { it.id }
+    )
+
+    override suspend fun getByShareItemPairs(userId: UserId, pairs: List<Pair<ShareId, ItemId>>): List<ItemEntity> =
+        database.itemsDao().getByShareItemKeys(
+            userId = userId.id,
+            shareItemKeys = pairs.map { (shareId, itemId) -> "${shareId.id}-${itemId.id}" }
+        )
 
     override suspend fun setItemStates(
         userId: UserId,
@@ -466,6 +518,12 @@ class LocalItemDataSourceImpl @Inject constructor(
         )
     }
 
+    override fun observeRecentSearchItems(userId: UserId, shareId: ShareId?): Flow<List<ItemEntity>> =
+        database.itemsDao().observeRecentSearchItems(
+            userId = userId.id,
+            shareId = shareId?.id
+        )
+
     private fun ItemEntity.toItemWithTotp(): ItemWithTotp = ItemWithTotp(
         shareId = ShareId(shareId),
         itemId = ItemId(id),
@@ -473,7 +531,8 @@ class LocalItemDataSourceImpl @Inject constructor(
     )
 
     private fun ItemTypeFilter.value(): List<Int>? = when (this) {
-        ItemTypeFilter.Logins -> listOf(ItemCategory.Login.value)
+        ItemTypeFilter.Logins,
+        ItemTypeFilter.LoginWithTotp -> listOf(ItemCategory.Login.value)
         ItemTypeFilter.Aliases -> listOf(ItemCategory.Alias.value)
         ItemTypeFilter.Notes -> listOf(ItemCategory.Note.value)
         ItemTypeFilter.CreditCards -> listOf(ItemCategory.CreditCard.value)

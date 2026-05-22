@@ -30,6 +30,7 @@ import proton.android.pass.crypto.fakes.context.FakeEncryptionContext
 import proton.android.pass.crypto.fakes.context.FakeEncryptionContextProvider
 import proton.android.pass.crypto.fakes.usecases.FakeCreateVault
 import proton.android.pass.data.fakes.repositories.FakeGroupRepository
+import proton.android.pass.data.fakes.repositories.FakeSearchIndexRepository
 import proton.android.pass.data.fakes.repositories.FakeUserAccessDataRepository
 import proton.android.pass.data.impl.fakes.FakeLocalShareDataSource
 import proton.android.pass.data.impl.fakes.FakePassDatabase
@@ -78,7 +79,8 @@ class ShareRepositoryTest {
             userAccessDataRepository = FakeUserAccessDataRepository().apply {
                 sendValue(null)
             },
-            groupRepository = FakeGroupRepository()
+            groupRepository = FakeGroupRepository(),
+            searchIndexRepository = FakeSearchIndexRepository()
         )
     }
 

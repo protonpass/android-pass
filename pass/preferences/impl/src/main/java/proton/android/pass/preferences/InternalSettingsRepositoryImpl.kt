@@ -25,6 +25,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.FlowCollector
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.runBlocking
 import kotlinx.datetime.Instant
@@ -304,6 +305,19 @@ class InternalSettingsRepositoryImpl @Inject constructor(
     override fun getLastBackgroundTimestamp(): Flow<Long> = getPreference {
         it.lastBackgroundTimestamp
     }
+
+    override suspend fun setSearchIndexRebuildTime(userId: UserId, time: Long) {
+        dataStore.updateData { settings ->
+            settings.toBuilder()
+                .putSearchIndexRebuildTime(userId.id, time)
+                .build()
+        }
+    }
+
+    override suspend fun getSearchIndexRebuildTime(userId: UserId): Long =
+        dataStore.data.map { it.searchIndexRebuildTimeMap[userId.id] ?: 0L }
+            .catch { emit(0L) }
+            .first()
 
     private fun setPreference(mapper: (InternalSettings.Builder) -> InternalSettings.Builder): Result<Unit> =
         runCatching {

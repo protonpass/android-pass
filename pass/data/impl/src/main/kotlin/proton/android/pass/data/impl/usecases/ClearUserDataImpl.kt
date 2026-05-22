@@ -21,6 +21,7 @@ package proton.android.pass.data.impl.usecases
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import me.proton.core.domain.entity.UserId
+import proton.android.pass.data.api.repositories.SearchIndexRepository
 import proton.android.pass.data.api.repositories.ShareRepository
 import proton.android.pass.data.api.usecases.ClearUserData
 import proton.android.pass.data.impl.db.DatabaseCleanupHelper
@@ -34,7 +35,8 @@ class ClearUserDataImpl @Inject constructor(
     private val extraPasswordRepository: ExtraPasswordRepository,
     private val databaseCleanupHelper: DatabaseCleanupHelper,
     private val localTelemetryGrowthDataSource: LocalTelemetryGrowthDataSource,
-    private val logFileManager: LogFileManager
+    private val logFileManager: LogFileManager,
+    private val searchIndexRepository: SearchIndexRepository
 ) : ClearUserData {
 
     override suspend fun invoke(userId: UserId) {
@@ -47,6 +49,7 @@ class ClearUserDataImpl @Inject constructor(
 
             // even if it is not linked to the user
             localTelemetryGrowthDataSource.deleteAll()
+            searchIndexRepository.clearIndex(userId)
         }
     }
 

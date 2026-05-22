@@ -46,6 +46,7 @@ import proton.android.pass.data.api.repositories.PendingAttachmentLinkRepository
 import proton.android.pass.data.api.repositories.PendingAttachmentUpdaterRepository
 import proton.android.pass.data.api.repositories.ReportRepository
 import proton.android.pass.data.api.repositories.SearchEntryRepository
+import proton.android.pass.data.api.repositories.SearchIndexRepository
 import proton.android.pass.data.api.repositories.ShareInvitesRepository
 import proton.android.pass.data.api.repositories.ShareMembersRepository
 import proton.android.pass.data.api.repositories.ShareRepository
@@ -90,6 +91,7 @@ import proton.android.pass.data.impl.repositories.PlanRepository
 import proton.android.pass.data.impl.repositories.PlanRepositoryImpl
 import proton.android.pass.data.impl.repositories.ReportRepositoryImpl
 import proton.android.pass.data.impl.repositories.SearchEntryRepositoryImpl
+import proton.android.pass.data.impl.repositories.SearchIndexRepositoryImpl
 import proton.android.pass.data.impl.repositories.SecureLinkRepository
 import proton.android.pass.data.impl.repositories.SecureLinkRepositoryImpl
 import proton.android.pass.data.impl.repositories.ShareInvitesRepositoryImpl
@@ -241,5 +243,8 @@ abstract class DataRepositoryModule {
 
     @[Binds Singleton]
     abstract fun bindFolderKeyRepository(impl: FolderKeyRepositoryImpl): FolderKeyRepository
+
+    @[Binds Singleton]
+    abstract fun bindSearchIndexRepository(impl: SearchIndexRepositoryImpl): SearchIndexRepository
 
 }

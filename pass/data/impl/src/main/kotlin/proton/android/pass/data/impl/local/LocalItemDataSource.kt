@@ -18,6 +18,7 @@
 
 package proton.android.pass.data.impl.local
 
+import androidx.paging.PagingData
 import kotlinx.coroutines.flow.Flow
 import kotlinx.datetime.Instant
 import me.proton.core.domain.entity.UserId
@@ -26,6 +27,7 @@ import proton.android.pass.data.api.ItemCountSummary
 import proton.android.pass.data.api.repositories.ShareItemCount
 import proton.android.pass.data.api.usecases.ItemTypeFilter
 import me.proton.core.crypto.common.keystore.EncryptedString
+import proton.android.pass.data.impl.db.dao.ItemEntityWithRowId
 import proton.android.pass.data.impl.db.entities.ItemEntity
 import proton.android.pass.domain.FolderId
 import proton.android.pass.domain.ItemFlag
@@ -53,6 +55,28 @@ interface LocalItemDataSource {
         itemFlags: Map<ItemFlag, Boolean>
     ): Flow<List<ItemEntity>>
 
+    suspend fun getItemsPageForIndex(
+        userId: UserId,
+        shareIds: List<ShareId>,
+        itemState: ItemState,
+        afterRowId: Long,
+        limit: Int
+    ): List<ItemEntityWithRowId>
+
+    suspend fun countItemsForIndex(
+        userId: UserId,
+        shareIds: List<ShareId>,
+        itemState: ItemState
+    ): Int
+
+    fun observeItemsPaging(
+        userId: UserId,
+        shareIds: List<ShareId>,
+        itemState: ItemState?,
+        filter: ItemTypeFilter,
+        itemFlags: Map<ItemFlag, Boolean>
+    ): Flow<PagingData<ItemEntity>>
+
     fun observePinnedItems(
         userId: UserId,
         shareIds: List<ShareId>,
@@ -76,6 +100,11 @@ interface LocalItemDataSource {
         shareId: ShareId,
         itemIds: List<ItemId>
     ): List<ItemEntity>
+
+    /**
+     * Fetch multiple items across different shares in a single query.
+     */
+    suspend fun getByShareItemPairs(userId: UserId, pairs: List<Pair<ShareId, ItemId>>): List<ItemEntity>
 
     suspend fun setItemStates(
         userId: UserId,
@@ -156,5 +185,7 @@ interface LocalItemDataSource {
         filter: ItemTypeFilter,
         itemFlags: Map<ItemFlag, Boolean>
     ): Flow<List<ItemEntity>>
+
+    fun observeRecentSearchItems(userId: UserId, shareId: ShareId?): Flow<List<ItemEntity>>
 
 }

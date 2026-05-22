@@ -69,6 +69,8 @@ dependencies {
     implementation(libs.kotlinx.coroutines.core)
     implementation(libs.kotlinx.datetime)
     implementation(libs.kotlinx.serialization.json)
+    implementation(libs.androidx.paging.compose)
+
 
     debugImplementation(libs.showkase)
     kspDebug(libs.showkaseProcessor)

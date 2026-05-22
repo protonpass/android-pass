@@ -34,4 +34,5 @@ message InternalSettings {
   bool telemetry_growth_install_event_sent = 24;
   int64 last_background_timestamp = 25;
   repeated string telemetry_growth_sent_feature_usage_actions = 26;
+  map<string, int64> search_index_rebuild_time = 27;
 }

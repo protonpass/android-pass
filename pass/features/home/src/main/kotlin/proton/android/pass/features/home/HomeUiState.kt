@@ -26,6 +26,7 @@ import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.persistentMapOf
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
+import proton.android.pass.data.api.repositories.IndexingStatus
 import proton.android.pass.commonui.api.GroupedItemList
 import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.composecomponents.impl.bottombar.AccountType
@@ -89,15 +90,10 @@ internal data class HomeUiState(
     val isUpgradeAvailable: Boolean,
     val isQuest: Boolean,
     val foldersEnabled: Boolean = false,
-    val canCreateItemsInFolder: Boolean = true
+    val canCreateItemsInFolder: Boolean = true,
+    val isPaginationEnabled: Boolean,
+    val sharedTrashedItemsCount: Int = 0
 ) {
-
-    internal val sharedTrashedItemsCount: Int = homeListUiState.items
-        .sumOf { groupedItemList ->
-            groupedItemList.items
-                .filter { item -> item.isInTrash() && item.isShared }
-                .size
-        }
 
     internal val hasSharedTrashedItems: Boolean = sharedTrashedItemsCount > 0
 
@@ -105,14 +101,7 @@ internal data class HomeUiState(
 
     internal val isDrawerAvailable: Boolean = hasShares
 
-    internal fun shouldShowRecentSearchHeader() =
-        homeListUiState.items.isNotEmpty() && searchUiState.inSearchMode && searchUiState.isInSuggestionsMode
-
-    internal fun shouldShowItemListHeader() = homeListUiState.items.isNotEmpty() &&
-        homeListUiState.isLoading == IsLoadingState.NotLoading &&
-        !searchUiState.isInSuggestionsMode &&
-        !searchUiState.isProcessingSearch.value() &&
-        (searchUiState.inSearchMode || pinningUiState.inPinningMode)
+    internal fun shouldShowRecentSearchHeader() = searchUiState.inSearchMode && searchUiState.isInSuggestionsMode
 
     internal fun isSelectedVaultReadOnly() = when (val selection = homeListUiState.homeVaultSelection) {
         is VaultSelectionOption.Vault ->
@@ -151,7 +140,9 @@ internal data class HomeUiState(
             aliasTrashDialogStatusPreference = AliasTrashDialogStatusPreference.Disabled,
             hasShares = false,
             isUpgradeAvailable = false,
-            isQuest = false
+            isQuest = false,
+            isPaginationEnabled = false,
+            sharedTrashedItemsCount = 0
         )
 
     }
@@ -234,10 +225,11 @@ internal data class HomeSelectionState(
 internal data class HomeListUiState(
     val isLoading: IsLoadingState,
     val isRefreshing: IsRefreshingState,
+    val indexingStatus: IndexingStatus,
     val shouldScrollToTop: Boolean,
     val canLoadExternalImages: Boolean,
     val actionState: ActionState = ActionState.Unknown,
-    val items: ImmutableList<GroupedItemList>,
+    val items: ImmutableList<GroupedItemList> = persistentListOf(), // if FF == false
     val selectedShare: Option<Share> = None,
     val selectedFolder: Option<SelectedFolder> = None,
     val shares: ImmutableMap<ShareId, Share>,
@@ -275,9 +267,9 @@ internal data class HomeListUiState(
         internal val Loading = HomeListUiState(
             isLoading = IsLoadingState.Loading,
             isRefreshing = IsRefreshingState.NotRefreshing,
+            indexingStatus = IndexingStatus.Idle,
             shouldScrollToTop = false,
             canLoadExternalImages = false,
-            items = persistentListOf(),
             shares = persistentMapOf(),
             selectionState = HomeSelectionState.Initial,
             showNeedsUpdate = false,

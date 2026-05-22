@@ -42,8 +42,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
+import androidx.paging.compose.LazyPagingItems
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Some
+import proton.android.pass.commonui.api.HomeListItem
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.composecomponents.impl.buttons.PassFloatingActionButton
@@ -61,6 +63,7 @@ import proton.android.pass.composecomponents.impl.R as CompR
 internal fun SelectItemScreenContent(
     modifier: Modifier = Modifier,
     uiState: SelectItemUiState,
+    pagingItems: LazyPagingItems<HomeListItem>,
     onEvent: (SelectItemEvent) -> Unit,
     onNavigate: (SelectItemNavigation) -> Unit
 ) {
@@ -226,6 +229,7 @@ internal fun SelectItemScreenContent(
 
                 SelectItemList(
                     uiState = uiState,
+                    pagingItems = pagingItems,
                     scrollState = verticalScroll,
                     onScrolledToTop = { onEvent(SelectItemEvent.ScrolledToTop) },
                     onItemOptionsClicked = { onEvent(SelectItemEvent.ItemOptionsClicked(it)) },

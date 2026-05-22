@@ -18,6 +18,8 @@
 
 package proton.android.pass.data.impl.repositories
 
+import androidx.paging.PagingData
+import androidx.paging.map
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
@@ -59,6 +61,7 @@ import proton.android.pass.data.api.errors.ItemNotFoundError
 import proton.android.pass.data.api.repositories.ItemRepository
 import proton.android.pass.data.api.repositories.ItemRevision
 import proton.android.pass.data.api.repositories.MigrateItemsResult
+import proton.android.pass.data.api.repositories.SearchIndexRepository
 import proton.android.pass.data.api.repositories.PinItemsResult
 import proton.android.pass.data.api.repositories.ShareItemCount
 import proton.android.pass.data.api.repositories.ShareRepository
@@ -132,7 +135,8 @@ class ItemRepositoryImpl @Inject constructor(
     private val encryptionContextProvider: EncryptionContextProvider,
     private val getShareAndItemKey: GetShareAndItemKey,
     private val folderKeyRepository: FolderKeyRepository,
-    private val appDispatchers: AppDispatchers
+    private val appDispatchers: AppDispatchers,
+    private val searchIndexRepository: SearchIndexRepository
 ) : BaseRepository(userAddressRepository), ItemRepository {
 
     @Suppress("TooGenericExceptionCaught")
@@ -165,6 +169,9 @@ class ItemRepositoryImpl @Inject constructor(
             listOf(shareKey)
         )
         localItemDataSource.upsertItem(entity)
+
+        // Index the new item for search
+        searchIndexRepository.indexItem(userId, share.id, ItemId(entity.id))
 
         encryptionContextProvider.withEncryptionContextSuspendable {
             entity.toDomain(this)
@@ -207,11 +214,16 @@ class ItemRepositoryImpl @Inject constructor(
             listOf(shareKey)
         )
         localItemDataSource.upsertItem(entity)
+
+        // Index the new alias for search
+        searchIndexRepository.indexItem(userId, share.id, ItemId(entity.id))
+
         encryptionContextProvider.withEncryptionContextSuspendable {
             entity.toDomain(this)
         }
     }
 
+    @SuppressWarnings("LongMethod")
     override suspend fun createLoginAndAlias(
         userId: UserId,
         shareId: ShareId,
@@ -273,6 +285,15 @@ class ItemRepositoryImpl @Inject constructor(
             localItemDataSource.upsertItem(itemEntity)
             localItemDataSource.upsertItem(aliasEntity)
         }
+
+        // Index both items for search
+        searchIndexRepository.indexItems(
+            userId,
+            listOf(
+                share.id to ItemId(itemEntity.id),
+                share.id to ItemId(aliasEntity.id)
+            )
+        )
 
         encryptionContextProvider.withEncryptionContextSuspendable {
             itemEntity.toDomain(this)
@@ -395,6 +416,9 @@ class ItemRepositoryImpl @Inject constructor(
     ) {
         val itemEntity = fetchItemEntity(userId, shareId, itemId)
         localItemDataSource.upsertItem(itemEntity)
+
+        // Update search index for remote item changes
+        searchIndexRepository.indexItem(userId, shareId, itemId)
     }
 
     override suspend fun refreshItems(userId: UserId, items: List<SyncEventShareItem>) {
@@ -479,6 +503,28 @@ class ItemRepositoryImpl @Inject constructor(
         }
     }
 
+    override fun observeItemsPaging(
+        userId: UserId,
+        shareSelection: ShareSelection,
+        itemState: ItemState?,
+        itemTypeFilter: ItemTypeFilter,
+        itemFlags: Map<ItemFlag, Boolean>,
+        includeHidden: Boolean
+    ): Flow<PagingData<Item>> = innerObserveItemsPaging(
+        shareSelection,
+        userId,
+        itemState,
+        itemTypeFilter,
+        itemFlags,
+        includeHidden
+    ).map { pagingData ->
+        pagingData.map { itemEntity ->
+            encryptionContextProvider.withEncryptionContext {
+                itemEntity.toDomain(this)
+            }
+        }
+    }
+
     override fun observeEncryptedItems(
         userId: UserId,
         shareSelection: ShareSelection,
@@ -495,6 +541,24 @@ class ItemRepositoryImpl @Inject constructor(
         includeHidden
     ).conflate().map { items ->
         items.map(ItemEntity::toEncryptedDomain)
+    }
+
+    override fun observeEncryptedItemsPaging(
+        userId: UserId,
+        shareSelection: ShareSelection,
+        itemState: ItemState?,
+        itemTypeFilter: ItemTypeFilter,
+        itemFlags: Map<ItemFlag, Boolean>,
+        includeHidden: Boolean
+    ): Flow<PagingData<ItemEncrypted>> = innerObserveItemsPaging(
+        shareSelection,
+        userId,
+        itemState,
+        itemTypeFilter,
+        itemFlags,
+        includeHidden
+    ).map { pagingData ->
+        pagingData.map(ItemEntity::toEncryptedDomain)
     }
 
     override fun observeSharedByMeEncryptedItems(
@@ -517,6 +581,24 @@ class ItemRepositoryImpl @Inject constructor(
                 .map(ItemEntity::toEncryptedDomain)
         }
 
+    override fun observeSharedByMeEncryptedItemsPaging(
+        userId: UserId,
+        itemState: ItemState?,
+        includeHiddenVault: Boolean
+    ): Flow<PagingData<ItemEncrypted>> = shareRepository.observeSharedByMeIds(userId, includeHiddenVault)
+        .flatMapLatest { shareIds ->
+            localItemDataSource.observeItemsPaging(
+                userId,
+                shareIds,
+                itemState,
+                ItemTypeFilter.All,
+                emptyMap()
+            )
+        }
+        .map { pagingData ->
+            pagingData.map(ItemEntity::toEncryptedDomain)
+        }
+
     override fun observeSharedWithMeEncryptedItems(
         userId: UserId,
         itemState: ItemState?,
@@ -532,6 +614,32 @@ class ItemRepositoryImpl @Inject constructor(
             )
         }
         .map { itemEntities ->
+            itemEntities.map(ItemEntity::toEncryptedDomain)
+        }
+
+    override fun observeSharedWithMeEncryptedItemsPaging(
+        userId: UserId,
+        itemState: ItemState?,
+        includeHiddenVault: Boolean
+    ): Flow<PagingData<ItemEncrypted>> = shareRepository.observeSharedWithMeIds(userId, includeHiddenVault)
+        .flatMapLatest { shareIds ->
+            localItemDataSource.observeItemsPaging(
+                userId,
+                shareIds,
+                itemState,
+                ItemTypeFilter.All,
+                emptyMap()
+            )
+        }
+        .map { pagingData ->
+            pagingData.map(ItemEntity::toEncryptedDomain)
+        }
+
+    override fun observeRecentSearchItems(userId: UserId, shareId: ShareId?): Flow<List<ItemEncrypted>> =
+        localItemDataSource.observeRecentSearchItems(
+            userId = userId,
+            shareId = shareId
+        ).map { itemEntities ->
             itemEntities.map(ItemEntity::toEncryptedDomain)
         }
 
@@ -581,6 +689,57 @@ class ItemRepositoryImpl @Inject constructor(
             filter = itemTypeFilter,
             itemFlags = itemFlags
         )
+    }
+
+    private fun innerObserveItemsPaging(
+        shareSelection: ShareSelection,
+        userId: UserId,
+        itemState: ItemState?,
+        itemTypeFilter: ItemTypeFilter,
+        itemFlags: Map<ItemFlag, Boolean>,
+        includeHidden: Boolean
+    ) = when (shareSelection) {
+        is ShareSelection.Share -> localItemDataSource.observeItemsPaging(
+            userId = userId,
+            shareIds = listOf(shareSelection.shareId),
+            itemState = itemState,
+            filter = itemTypeFilter,
+            itemFlags = itemFlags
+        )
+
+        is ShareSelection.Shares -> localItemDataSource.observeItemsPaging(
+            userId = userId,
+            shareIds = shareSelection.shareIds,
+            itemState = itemState,
+            filter = itemTypeFilter,
+            itemFlags = itemFlags
+        )
+
+        is ShareSelection.AllShares -> shareRepository.observeAllUsableShareIds(
+            userId,
+            includeHidden
+        )
+            .flatMapLatest {
+                localItemDataSource.observeItemsPaging(
+                    userId = userId,
+                    shareIds = it,
+                    itemState = itemState,
+                    filter = itemTypeFilter,
+                    itemFlags = itemFlags
+                )
+            }
+
+        is ShareSelection.Folder -> {
+            // Folders
+            localItemDataSource.observeItemsPaging(
+                userId = userId,
+                shareIds = listOf(shareSelection.shareId),
+                itemState = itemState,
+                filter = itemTypeFilter,
+                itemFlags = itemFlags
+            )
+
+        }
     }
 
     override fun observePinnedItems(
@@ -667,6 +826,13 @@ class ItemRepositoryImpl @Inject constructor(
             results.onFailure {
                 throw it
             }
+
+            // Update item state in search index to Trashed
+            items.forEach { (shareId, itemIds) ->
+                itemIds.forEach { itemId ->
+                    searchIndexRepository.updateItemState(shareId, itemId, ItemState.Trashed)
+                }
+            }
         }
     }
 
@@ -701,6 +867,13 @@ class ItemRepositoryImpl @Inject constructor(
 
             results.onFailure {
                 throw it
+            }
+
+            // Update item state in search index to Active
+            items.forEach { (shareId, itemIds) ->
+                itemIds.forEach { itemId ->
+                    searchIndexRepository.updateItemState(shareId, itemId, ItemState.Active)
+                }
             }
         }
     }
@@ -813,6 +986,13 @@ class ItemRepositoryImpl @Inject constructor(
             results.onFailure {
                 throw it
             }
+
+            // Remove items from search index (safety measure, should already be removed when trashed)
+            items.forEach { (shareId, itemIds) ->
+                itemIds.forEach { itemId ->
+                    searchIndexRepository.removeItemFromIndex(shareId, itemId)
+                }
+            }
         }
     }
 
@@ -822,6 +1002,7 @@ class ItemRepositoryImpl @Inject constructor(
                 localItemDataSource.delete(userId, shareId, list)
             }
         }
+        items.forEach { (shareId, list) -> removeEventItemsFromIndex(shareId, list) }
     }
 
     private suspend fun deleteItemsForShare(
@@ -1012,12 +1193,27 @@ class ItemRepositoryImpl @Inject constructor(
             folderKeysMap = folderKeysMap
         )
         localItemDataSource.upsertItems(items)
+        indexEventItems(userId, items)
+    }
+
+    private suspend fun indexEventItems(userId: UserId, items: List<ItemEntity>) {
+        safeRunCatching {
+            searchIndexRepository.indexItems(userId, items.map { ShareId(it.shareId) to ItemId(it.id) })
+        }.onFailure { PassLogger.w(TAG, "Failed to index synced items: ${it.message}") }
+    }
+
+    private suspend fun removeEventItemsFromIndex(shareId: ShareId, itemIds: List<ItemId>) {
+        safeRunCatching {
+            itemIds.forEach { searchIndexRepository.removeItemFromIndex(shareId, it) }
+        }.onFailure { PassLogger.w(TAG, "Failed to remove synced items from index: ${it.message}") }
     }
 
     override suspend fun purgePendingEvent(event: ItemPendingEvent) = with(event) {
         if (!hasDeletedItemIds) return false
 
-        localItemDataSource.delete(userId, shareId, deletedItemIds)
+        val deleted = localItemDataSource.delete(userId, shareId, deletedItemIds)
+        removeEventItemsFromIndex(shareId, deletedItemIds)
+        deleted
     }
 
     override fun observeItemCountSummary(
@@ -1238,6 +1434,9 @@ class ItemRepositoryImpl @Inject constructor(
         }
 
         localItemDataSource.upsertItems(updatedEntities)
+
+        // Refresh the search index so the new folderId is reflected in paginated/search results
+        searchIndexRepository.indexItems(userId, itemIds.map { shareId to it })
     }
 
     override suspend fun getItemByAliasEmail(userId: UserId, aliasEmail: String): Item? {
@@ -1573,6 +1772,15 @@ class ItemRepositoryImpl @Inject constructor(
             localItemDataSource.delete(userAddress.userId, source, itemIdsToDelete)
         }
 
+        // Update search index: remove from source, add to destination
+        itemIdsToDelete.forEach { itemId ->
+            searchIndexRepository.removeItemFromIndex(source, itemId)
+        }
+        searchIndexRepository.indexItems(
+            userAddress.userId,
+            resAsEntities.map { destination to ItemId(it.id) }
+        )
+
         return resAsEntities
     }
 
@@ -1721,6 +1929,10 @@ class ItemRepositoryImpl @Inject constructor(
             listOf(shareKey)
         )
         localItemDataSource.upsertItem(entity)
+
+        // Re-index the updated item for search
+        searchIndexRepository.indexItem(userId, share.id, ItemId(entity.id))
+
         encryptionContextProvider.withEncryptionContextSuspendable {
             entity.toDomain(this)
         }

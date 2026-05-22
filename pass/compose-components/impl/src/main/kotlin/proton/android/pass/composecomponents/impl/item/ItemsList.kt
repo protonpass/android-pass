@@ -18,6 +18,9 @@
 
 package proton.android.pass.composecomponents.impl.item
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -35,6 +38,7 @@ import androidx.compose.material.Text
 import androidx.compose.material.pullrefresh.PullRefreshIndicator
 import androidx.compose.material.pullrefresh.pullRefresh
 import androidx.compose.material.pullrefresh.rememberPullRefreshState
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
@@ -84,7 +88,7 @@ import proton.android.pass.domain.ShareId
 
 private const val PLACEHOLDER_ELEMENTS = 40
 
-@OptIn(ExperimentalMaterialApi::class)
+@OptIn(ExperimentalMaterialApi::class, ExperimentalMaterial3Api::class)
 @Composable
 fun ItemsList(
     modifier: Modifier = Modifier,
@@ -134,15 +138,39 @@ fun ItemsList(
             .fillMaxSize()
             .applyIf(enableSwipeRefresh, ifTrue = { pullRefresh(pullRefreshState) })
     ) {
-        if (isProcessingSearch == IsProcessingSearchState.Loading) {
+        val searchLoading = isProcessingSearch == IsProcessingSearchState.Loading
+        val generalLoading = isLoading == IsLoadingState.Loading
+        val displayItems = items.isNotEmpty() || forceContent
+
+        AnimatedVisibility(
+            visible = searchLoading,
+            enter = fadeIn(),
+            exit = fadeOut()
+        ) {
             Loading(Modifier.fillMaxSize())
-        } else if (isLoading == IsLoadingState.Loading) {
-            Column(modifier = Modifier.fillMaxSize().testTag(HOME_LOADING_TAG)) {
+        }
+
+        AnimatedVisibility(
+            visible = !searchLoading && generalLoading,
+            enter = fadeIn(),
+            exit = fadeOut()
+        ) {
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .testTag(HOME_LOADING_TAG)
+            ) {
                 repeat(PLACEHOLDER_ELEMENTS) {
-                    PlaceholderItemRow()
+                    PlaceholderItemRowNew()
                 }
             }
-        } else if (items.isNotEmpty() || forceContent) {
+        }
+
+        AnimatedVisibility(
+            visible = !searchLoading && !generalLoading && displayItems,
+            enter = fadeIn(),
+            exit = fadeOut()
+        ) {
             LazyColumn(modifier = Modifier.fillMaxSize(), state = scrollableState) {
                 header()
                 items.forEach { (key, value) ->
@@ -187,16 +215,27 @@ fun ItemsList(
                 }
                 footer()
             }
-        } else {
-            Column {
-                if (forceShowHeader) {
-                    LazyColumn {
-                        header()
+        }
+
+        AnimatedVisibility(
+            visible = !searchLoading && !generalLoading && !displayItems,
+            enter = fadeIn(),
+            exit = fadeOut()
+        ) {
+            // During AnimatedVisibility exit animation, isProcessingSearch may already
+            // be Loading. Skip rendering to prevent flash.
+            if (!searchLoading && !generalLoading && !displayItems) {
+                Column {
+                    if (forceShowHeader) {
+                        LazyColumn {
+                            header()
+                        }
                     }
+                    emptyContent()
                 }
-                emptyContent()
             }
         }
+
         PullRefreshIndicator(
             refreshing = isRefreshing.value(),
             state = pullRefreshState,

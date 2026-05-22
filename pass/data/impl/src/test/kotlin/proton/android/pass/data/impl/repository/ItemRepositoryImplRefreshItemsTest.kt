@@ -34,6 +34,7 @@ import proton.android.pass.crypto.fakes.usecases.FakeMigrateItem
 import proton.android.pass.crypto.fakes.usecases.FakeOpenItem
 import proton.android.pass.crypto.fakes.usecases.FakeUpdateItem
 import proton.android.pass.data.fakes.crypto.FakeGetShareAndItemKey
+import proton.android.pass.data.fakes.repositories.FakeSearchIndexRepository
 import proton.android.pass.data.impl.fakes.FakeFolderKeyRepository
 import proton.android.pass.data.impl.fakes.FakeLocalItemDataSource
 import proton.android.pass.data.impl.fakes.FakePassDatabase
@@ -95,7 +96,8 @@ class ItemRepositoryImplRefreshItemsTest {
             migrateItem = FakeMigrateItem(),
             getShareAndItemKey = FakeGetShareAndItemKey(),
             folderKeyRepository = FakeFolderKeyRepository(),
-            appDispatchers = FakeAppDispatchers()
+            appDispatchers = FakeAppDispatchers(),
+            searchIndexRepository = FakeSearchIndexRepository()
         )
     }
 

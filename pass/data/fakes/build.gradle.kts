@@ -44,6 +44,7 @@ dependencies {
     implementation(libs.core.userSettings.domain)
     implementation(libs.kotlinx.collections)
     implementation(libs.kotlinx.datetime)
+    implementation(libs.androidx.paging.common)
     implementation(projects.pass.common.api)
     implementation(projects.pass.commonTest)
     implementation(projects.pass.commonRust.api)

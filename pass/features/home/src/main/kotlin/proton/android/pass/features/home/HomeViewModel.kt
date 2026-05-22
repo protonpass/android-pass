@@ -21,6 +21,10 @@ package proton.android.pass.features.home
 import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.paging.PagingData
+import androidx.paging.cachedIn
+import androidx.paging.insertSeparators
+import androidx.paging.map
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.ImmutableMap
@@ -31,6 +35,7 @@ import kotlinx.collections.immutable.toPersistentList
 import kotlinx.collections.immutable.toPersistentMap
 import kotlinx.collections.immutable.toPersistentSet
 import kotlinx.coroutines.CoroutineExceptionHandler
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -52,8 +57,12 @@ import kotlinx.coroutines.flow.shareIn
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
+import kotlinx.datetime.TimeZone
+import kotlinx.datetime.toJavaLocalDateTime
+import kotlinx.datetime.toLocalDateTime
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.appconfig.api.AppConfig
 import proton.android.pass.appconfig.api.BuildFlavor.Companion.isQuest
@@ -72,8 +81,11 @@ import proton.android.pass.common.api.toOption
 import proton.android.pass.commonui.api.AppUrls
 import proton.android.pass.commonui.api.BrowserUtils
 import proton.android.pass.commonui.api.ClassHolder
+import proton.android.pass.commonui.api.DateFormatUtils
 import proton.android.pass.commonui.api.GroupedItemList
+import proton.android.pass.commonui.api.GroupingKeys
 import proton.android.pass.commonui.api.GroupingKeys.NoGrouping
+import proton.android.pass.commonui.api.HomeListItem
 import proton.android.pass.commonui.api.ItemSorter.groupAndSortByCreationAsc
 import proton.android.pass.commonui.api.ItemSorter.groupAndSortByCreationDesc
 import proton.android.pass.commonui.api.ItemSorter.groupAndSortByMostRecent
@@ -93,10 +105,12 @@ import proton.android.pass.data.api.SearchEntry
 import proton.android.pass.data.api.repositories.AliasItemsChangeStatusResult
 import proton.android.pass.data.api.repositories.BulkMoveToVaultEvent
 import proton.android.pass.data.api.repositories.BulkMoveToVaultRepository
+import proton.android.pass.data.api.repositories.IndexingStatus
 import proton.android.pass.data.api.repositories.ParentContainer
 import proton.android.pass.data.api.repositories.ItemSyncStatus
 import proton.android.pass.data.api.repositories.ItemSyncStatusRepository
 import proton.android.pass.data.api.repositories.PinItemsResult
+import proton.android.pass.data.api.repositories.SearchSortBy
 import proton.android.pass.data.api.repositories.SyncMode
 import proton.android.pass.data.api.usecases.ChangeAliasStatus
 import proton.android.pass.data.api.usecases.ClearTrash
@@ -107,6 +121,9 @@ import proton.android.pass.data.api.usecases.ObserveAllShares
 import proton.android.pass.data.api.usecases.ObserveAppNeedsUpdate
 import proton.android.pass.data.api.usecases.ObserveCurrentUser
 import proton.android.pass.data.api.usecases.ObserveEncryptedItems
+import proton.android.pass.data.api.usecases.ObserveIndexingStatus
+import proton.android.pass.data.api.usecases.ObserveItemTypeCounts
+import proton.android.pass.data.api.usecases.ObservePagedItems
 import proton.android.pass.data.api.usecases.ObservePinnedItems
 import proton.android.pass.data.api.usecases.ObserveUpgradeInfo
 import proton.android.pass.data.api.usecases.PerformSync
@@ -126,6 +143,7 @@ import proton.android.pass.data.api.usecases.items.ObserveEncryptedSharedItems
 import proton.android.pass.data.api.usecases.searchentry.AddSearchEntry
 import proton.android.pass.data.api.usecases.searchentry.DeleteAllSearchEntry
 import proton.android.pass.data.api.usecases.searchentry.DeleteSearchEntry
+import proton.android.pass.data.api.usecases.searchentry.ObserveRecentSearchItems
 import proton.android.pass.data.api.usecases.searchentry.ObserveSearchEntry
 import proton.android.pass.data.api.usecases.searchentry.ObserveSearchEntry.SearchEntrySelection
 import proton.android.pass.data.api.usecases.shares.ObserveHasShares
@@ -183,6 +201,7 @@ import proton.android.pass.searchoptions.api.SortingOption
 import proton.android.pass.searchoptions.api.VaultSelectionOption
 import proton.android.pass.telemetry.api.EventItemType
 import proton.android.pass.telemetry.api.TelemetryManager
+import java.time.format.DateTimeFormatter
 import javax.inject.Inject
 
 @Suppress("LongParameterList", "LargeClass", "TooManyFunctions")
@@ -212,13 +231,13 @@ class HomeViewModel @Inject constructor(
     private val changeAliasStatus: ChangeAliasStatus,
     private val observeCurrentUser: ObserveCurrentUser,
     observeAllShares: ObserveAllShares,
-    clock: Clock,
+    private val clock: Clock,
     observeEncryptedItems: ObserveEncryptedItems,
     observeEncryptedSharedItems: ObserveEncryptedSharedItems,
     observePinnedItems: ObservePinnedItems,
     preferencesRepository: UserPreferencesRepository,
     observeAppNeedsUpdate: ObserveAppNeedsUpdate,
-    appDispatchers: AppDispatchers,
+    private val appDispatchers: AppDispatchers,
     getUserPlan: GetUserPlan,
     observeCanCreateItems: ObserveCanCreateItems,
     canCreateAlias: CanCreateAlias,
@@ -229,7 +248,12 @@ class HomeViewModel @Inject constructor(
     featureFlagsPreferencesRepository: FeatureFlagsPreferencesRepository,
     observeFolder: ObserveFolder,
     private val syncStatusRepository: ItemSyncStatusRepository,
-    private val canCreateItemsInFolder: CanCreateItemsInFolder
+    private val canCreateItemsInFolder: CanCreateItemsInFolder,
+    // Pagination dependencies
+    private val observePagedItems: ObservePagedItems,
+    private val observeIndexingStatus: ObserveIndexingStatus,
+    private val observeItemTypeCounts: ObserveItemTypeCounts,
+    private val observeRecentSearchItems: ObserveRecentSearchItems
 ) : ViewModel() {
 
     private val coroutineExceptionHandler = CoroutineExceptionHandler { _, throwable ->
@@ -239,7 +263,6 @@ class HomeViewModel @Inject constructor(
     // Variable to keep track of whether the user has entered the search in this session, so we
     // don't send an EnterSearch event every time they click on the search bar
     private var hasEnteredSearch = false
-
 
     private val shouldScrollToTopFlow: MutableStateFlow<Boolean> = MutableStateFlow(false)
     private val searchQueryState: MutableStateFlow<String> = MutableStateFlow("")
@@ -253,6 +276,26 @@ class HomeViewModel @Inject constructor(
 
     private val navEventState: MutableStateFlow<HomeNavEvent> =
         MutableStateFlow(HomeNavEvent.Unknown)
+
+
+    // ========== Pagination Support ==========
+    private val isPaginationEnabledFlow: StateFlow<Boolean> = featureFlagsPreferencesRepository
+        .get<Boolean>(FeatureFlag.ENABLE_PAGINATION)
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.Eagerly,
+            initialValue = runBlocking {
+                // Need the real initialValue at startup for better UX/UI
+                featureFlagsPreferencesRepository
+                    .get<Boolean>(FeatureFlag.ENABLE_PAGINATION)
+                    .firstOrNull()
+                    ?: false
+            }
+        )
+
+    private val monthlyFormatter =
+        DateTimeFormatter.ofPattern("LLLL yyyy", java.util.Locale.ENGLISH)
+    // ========== Pagination Support ==========
 
     @OptIn(FlowPreview::class)
     private val debouncedSearchQueryState = searchQueryState
@@ -330,7 +373,8 @@ class HomeViewModel @Inject constructor(
             shares = shareMap,
             selectedShare = selectedShare
         )
-    }.distinctUntilChanged()
+    }
+        .distinctUntilChanged()
 
     private data class ShareListWrapper(
         val shares: ImmutableMap<ShareId, Share>,
@@ -373,76 +417,83 @@ class HomeViewModel @Inject constructor(
     private val actionStateFlow: MutableStateFlow<ActionState> =
         MutableStateFlow(ActionState.Unknown)
 
-    private val itemUiModelFlow = searchOptionsFlow.map { it.vaultSelectionOption }
-        .flatMapLatest { vaultSelectionOption ->
-            when (vaultSelectionOption) {
-                VaultSelectionOption.AllVaults -> {
-                    observeEncryptedItems(
-                        selection = ShareSelection.AllShares,
-                        itemState = ItemState.Active,
-                        filter = ItemTypeFilter.All,
-                        includeHidden = false
-                    )
-                }
-
-                VaultSelectionOption.Trash -> {
-                    observeEncryptedItems(
-                        selection = ShareSelection.AllShares,
-                        itemState = ItemState.Trashed,
-                        filter = ItemTypeFilter.All,
-                        includeHidden = false
-                    )
-                }
-
-                is VaultSelectionOption.Vault -> {
-                    observeEncryptedItems(
-                        selection = ShareSelection.Share(vaultSelectionOption.shareId),
-                        itemState = ItemState.Active,
-                        filter = ItemTypeFilter.All,
-                        includeHidden = false
-                    )
-                }
-
-                is VaultSelectionOption.Folder -> {
-                    observeEncryptedItems(
-                        selection = ShareSelection.Folder(
-                            shareId = vaultSelectionOption.shareId,
-                            folderId = vaultSelectionOption.folderId
-                        ),
-                        itemState = ItemState.Active,
-                        filter = ItemTypeFilter.All,
-                        includeHidden = false
-                    )
-                }
-
-                VaultSelectionOption.SharedByMe -> {
-                    observeEncryptedSharedItems(
-                        itemSharedType = ItemSharedType.SharedByMe,
-                        includeHiddenVault = false
-                    )
-                }
-
-                VaultSelectionOption.SharedWithMe -> {
-                    observeEncryptedSharedItems(
-                        itemSharedType = ItemSharedType.SharedWithMe,
-                        includeHiddenVault = false
-                    )
-                }
-            }.asResultWithoutLoading()
-                .map { itemResult ->
-                    itemResult.map { list ->
-                        encryptionContextProvider.withEncryptionContextSuspendable {
-                            list.asSequence()
-                                .map { item -> item.toUiModel(this@withEncryptionContextSuspendable) }
-                                .toList()
+    @OptIn(ExperimentalCoroutinesApi::class)
+    private val itemUiModelFlow = isPaginationEnabledFlow.flatMapLatest { isPaginationEnabled ->
+        if (isPaginationEnabled) {
+            flowOf(LoadingResult.Success(emptyList()))
+        } else {
+            searchOptionsFlow.map { it.vaultSelectionOption }
+                .flatMapLatest { vaultSelectionOption ->
+                    when (vaultSelectionOption) {
+                        VaultSelectionOption.AllVaults -> {
+                            observeEncryptedItems(
+                                selection = ShareSelection.AllShares,
+                                itemState = ItemState.Active,
+                                filter = ItemTypeFilter.All,
+                                includeHidden = false
+                            )
                         }
-                    }
+
+                        VaultSelectionOption.Trash -> {
+                            observeEncryptedItems(
+                                selection = ShareSelection.AllShares,
+                                itemState = ItemState.Trashed,
+                                filter = ItemTypeFilter.All,
+                                includeHidden = false
+                            )
+                        }
+
+                        is VaultSelectionOption.Vault -> {
+                            observeEncryptedItems(
+                                selection = ShareSelection.Share(vaultSelectionOption.shareId),
+                                itemState = ItemState.Active,
+                                filter = ItemTypeFilter.All,
+                                includeHidden = false
+                            )
+                        }
+
+                        is VaultSelectionOption.Folder -> {
+                            observeEncryptedItems(
+                                selection = ShareSelection.Folder(
+                                    shareId = vaultSelectionOption.shareId,
+                                    folderId = vaultSelectionOption.folderId
+                                ),
+                                itemState = ItemState.Active,
+                                filter = ItemTypeFilter.All,
+                                includeHidden = false
+                            )
+                        }
+
+                        VaultSelectionOption.SharedByMe -> {
+                            observeEncryptedSharedItems(
+                                itemSharedType = ItemSharedType.SharedByMe,
+                                includeHiddenVault = false
+                            )
+                        }
+
+                        VaultSelectionOption.SharedWithMe -> {
+                            observeEncryptedSharedItems(
+                                itemSharedType = ItemSharedType.SharedWithMe,
+                                includeHiddenVault = false
+                            )
+                        }
+                    }.asResultWithoutLoading()
+                        .map { itemResult ->
+                            itemResult.map { list ->
+                                encryptionContextProvider.withEncryptionContextSuspendable {
+                                    list.asSequence()
+                                        .map { item -> item.toUiModel(this@withEncryptionContextSuspendable) }
+                                        .toList()
+                                }
+                            }
+                        }
                 }
         }
-        .distinctUntilChanged()
+    }
+        .flowOn(appDispatchers.default)
         .shareIn(viewModelScope, SharingStarted.Lazily, replay = 1)
 
-    private val filteredSearchEntriesFlow = combine(
+    private val filteredSearchEntriesFlowInternal = combine(
         itemUiModelFlow.onEach {
             PassLogger.i(TAG, "Item list size: ${it.getOrNull()?.size}")
         },
@@ -457,6 +508,17 @@ class HomeViewModel @Inject constructor(
                 ?: persistentListOf()
         }
     }.distinctUntilChanged()
+
+    // Public version for HomeScreen - switches based on pagination flag
+    @OptIn(ExperimentalCoroutinesApi::class)
+    internal val filteredSearchEntriesFlow: Flow<ImmutableList<GroupedItemList>> =
+        isPaginationEnabledFlow.flatMapLatest { isPaginationEnabled ->
+            if (isPaginationEnabled) {
+                recentSearchEntriesFlow
+            } else {
+                filteredSearchEntriesFlowInternal.map { it.getOrNull() ?: persistentListOf() }
+            }
+        }
 
     private val sortedListItemFlow = combine(
         itemUiModelFlow,
@@ -481,7 +543,7 @@ class HomeViewModel @Inject constructor(
     }.flowOn(appDispatchers.default)
 
     private val resultsFlow = combine(
-        filteredSearchEntriesFlow,
+        filteredSearchEntriesFlowInternal,
         textFilterListItemFlow,
         searchOptionsFlow,
         isInSuggestionsModeState,
@@ -552,7 +614,18 @@ class HomeViewModel @Inject constructor(
         ::ActionRefreshingWrapper
     ).distinctUntilChanged()
 
-    private val itemTypeCountFlow = textFilterListItemFlow.map { result ->
+    // Item type counts - switches between pagination and non-pagination mode
+    @OptIn(ExperimentalCoroutinesApi::class)
+    private val itemTypeCountFlow = isPaginationEnabledFlow.flatMapLatest { isPaginationEnabled ->
+        if (isPaginationEnabled) {
+            paginatedItemTypeCountFlow
+        } else {
+            nonPaginatedItemTypeCountFlow
+        }
+    }.distinctUntilChanged()
+
+    // Non-paginated item type counts (original implementation)
+    private val nonPaginatedItemTypeCountFlow = textFilterListItemFlow.map { result ->
         when (result) {
             is LoadingResult.Error -> ItemTypeCount.Initial
             LoadingResult.Loading -> ItemTypeCount.Initial
@@ -577,7 +650,7 @@ class HomeViewModel @Inject constructor(
                 }
             }
         }
-    }.distinctUntilChanged()
+    }
 
     private val searchUiStateFlow = combine(
         searchQueryState,
@@ -602,7 +675,14 @@ class HomeViewModel @Inject constructor(
         selectionState,
         appNeedsUpdateFlow,
         observeDeliverableMinimizedPromoInAppMessages(),
-        selectedFolderFlow
+        selectedFolderFlow,
+        isPaginationEnabledFlow.flatMapLatest { isPaginationEnabled ->
+            if (isPaginationEnabled) {
+                observeIndexingStatus()
+            } else {
+                flowOf(IndexingStatus.Idle)
+            }
+        }
     ) { itemsResult,
         refreshingLoading,
         shouldScrollToTop,
@@ -612,24 +692,31 @@ class HomeViewModel @Inject constructor(
         selection,
         appNeedsUpdate,
         promoInAppMessages,
-        selectedFolder ->
+        selectedFolder,
+        indexingStatus ->
         val isLoadingState = IsLoadingState.from(itemsResult is LoadingResult.Loading)
 
-        val (items, isLoading) = when (itemsResult) {
-            LoadingResult.Loading -> persistentListOf<GroupedItemList>() to IsLoadingState.Loading
-            is LoadingResult.Success -> itemsResult.data to isLoadingState
+        // Show loading if items are loading OR if indexing is in progress
+        val isIndexing = indexingStatus == IndexingStatus.Indexing || indexingStatus is IndexingStatus.InProgress
 
-            is LoadingResult.Error -> {
+        val (items, isLoading) = when {
+            isIndexing -> persistentListOf<GroupedItemList>() to IsLoadingState.Loading
+            itemsResult is LoadingResult.Loading -> persistentListOf<GroupedItemList>() to IsLoadingState.Loading
+            itemsResult is LoadingResult.Success -> itemsResult.data to isLoadingState
+            itemsResult is LoadingResult.Error -> {
                 PassLogger.w(TAG, "Observe items error")
                 PassLogger.e(TAG, itemsResult.exception)
                 snackbarDispatcher(ObserveItemsError)
                 persistentListOf<GroupedItemList>() to IsLoadingState.NotLoading
             }
+
+            else -> persistentListOf<GroupedItemList>() to IsLoadingState.NotLoading
         }
 
         HomeListUiState(
             isLoading = isLoading,
             isRefreshing = refreshingLoading.refreshing,
+            indexingStatus = indexingStatus,
             shouldScrollToTop = shouldScrollToTop,
             actionState = refreshingLoading.actionState,
             items = items,
@@ -651,6 +738,8 @@ class HomeViewModel @Inject constructor(
     private val bottomSheetItemActionFlow: MutableStateFlow<BottomSheetItemAction> =
         MutableStateFlow(BottomSheetItemAction.None)
 
+    private val isQuest = appConfig.flavor.isQuest()
+
     internal val homeUiState: StateFlow<HomeUiState> = combineN(
         homeListUiStateFlow,
         searchUiStateFlow,
@@ -663,7 +752,8 @@ class HomeViewModel @Inject constructor(
         observeHasShares(includeHidden = true),
         observeUpgradeInfo().asLoadingResult(),
         folderCapabilitiesFlow,
-        canCreateAlias()
+        canCreateAlias(),
+        isPaginationEnabledFlow
     ) { homeListUiState,
         searchUiState,
         userPlan,
@@ -675,7 +765,8 @@ class HomeViewModel @Inject constructor(
         hasShares,
         upgradeInfo,
         folderCapabilities,
-        canCreateAlias ->
+        canCreateAlias,
+        isPaginationEnabled ->
         HomeUiState(
             homeListUiState = homeListUiState,
             searchUiState = searchUiState,
@@ -689,14 +780,17 @@ class HomeViewModel @Inject constructor(
             canCreateAlias = canCreateAlias,
             hasShares = hasShares,
             isUpgradeAvailable = upgradeInfo.getOrNull()?.isUpgradeAvailable ?: false,
-            isQuest = appConfig.flavor.isQuest(),
+            isQuest = isQuest,
             foldersEnabled = folderCapabilities.foldersEnabled,
-            canCreateItemsInFolder = folderCapabilities.canCreateItemsInFolder
+            canCreateItemsInFolder = folderCapabilities.canCreateItemsInFolder,
+            isPaginationEnabled = isPaginationEnabled
         )
     }.stateIn(
         scope = viewModelScope,
         started = SharingStarted.Lazily,
-        initialValue = HomeUiState.Loading
+        initialValue = HomeUiState.Loading.copy(
+            isPaginationEnabled = isPaginationEnabledFlow.value
+        )
     )
 
 
@@ -744,6 +838,7 @@ class HomeViewModel @Inject constructor(
         searchQueryState.update { "" }
         isInSearchModeState.update { false }
         isInSuggestionsModeState.update { false }
+        shouldScrollToTopFlow.update { true }
     }
 
     fun onStopSeeAllPinned() {
@@ -1430,6 +1525,324 @@ class HomeViewModel @Inject constructor(
             )
         }
     }
+
+    // ========== Pagination Support ==========
+    @SuppressWarnings("ClassOrdering", "UnusedParameter")
+    @OptIn(ExperimentalCoroutinesApi::class)
+    internal val homeListItemPagingFlow: Flow<PagingData<HomeListItem>> =
+        isPaginationEnabledFlow.flatMapLatest { isPaginationEnabled ->
+            if (!isPaginationEnabled) {
+                return@flatMapLatest flowOf(PagingData.empty())
+            }
+            homeListItemPagingFlowInternal
+        }
+
+    @SuppressWarnings("ClassOrdering")
+    private val homeListItemPagingFlowInternal: Flow<PagingData<HomeListItem>> = combineN(
+        observeCurrentUser().map { it.userId },
+        searchQueryState,
+        searchOptionsFlow,
+        shareListWrapperFlow,
+        isInSearchModeState,
+        isInSuggestionsModeState,
+        observeIndexingStatus()
+    ) { userId, query, searchOptions, _, isInSearchMode, isInSuggestionsMode, indexingStatus ->
+        val vaultSelectionOption = searchOptions.vaultSelectionOption
+
+        // Determine shareIds, itemState, and itemSharedType based on vaultSelectionOption
+        val (shareIds, itemState, itemSharedType) = when (vaultSelectionOption) {
+            VaultSelectionOption.AllVaults -> Triple(null, ItemState.Active, null)
+            is VaultSelectionOption.Vault -> Triple(
+                listOf(vaultSelectionOption.shareId),
+                ItemState.Active,
+                null
+            )
+
+            VaultSelectionOption.Trash -> Triple(null, ItemState.Trashed, null)
+            VaultSelectionOption.SharedByMe -> Triple(
+                null,
+                ItemState.Active,
+                ItemSharedType.SharedByMe
+            )
+
+            VaultSelectionOption.SharedWithMe -> Triple(
+                null,
+                ItemState.Active,
+                ItemSharedType.SharedWithMe
+            )
+
+            is VaultSelectionOption.Folder -> Triple(
+                listOf(vaultSelectionOption.shareId),
+                ItemState.Active,
+                null
+            )
+        }
+
+        val folderId = (vaultSelectionOption as? VaultSelectionOption.Folder)?.folderId
+
+        PagingParams(
+            userId = userId,
+            query = if (isInSearchMode && !isInSuggestionsMode) query else null,
+            sortingType = searchOptions.sortingOption.searchSortingType,
+            vaultSelectionOption = vaultSelectionOption,
+            filterType = searchOptions.filterOption.searchFilterType,
+            shareIds = shareIds,
+            folderId = folderId,
+            itemState = itemState,
+            itemSharedType = itemSharedType,
+            isIndexing = indexingStatus == IndexingStatus.Indexing || indexingStatus is IndexingStatus.InProgress
+        )
+    }
+        .distinctUntilChanged()
+        .flatMapLatest { params ->
+            // Return empty PagingData while indexing is in progress
+            if (params.isIndexing) {
+                return@flatMapLatest flowOf(PagingData.empty())
+            }
+            val userId = params.userId ?: return@flatMapLatest flowOf(PagingData.empty())
+            val sortBy = params.sortingType.toSearchSortBy()
+
+            observePagedItems(
+                userId = userId,
+                query = params.query,
+                sortBy = sortBy,
+                shareIds = params.shareIds,
+                folderId = params.folderId,
+                itemState = params.itemState,
+                itemSharedType = params.itemSharedType,
+                itemTypeFilter = params.filterType.toItemTypeFilter()
+            ).map { pagingData ->
+                // Convert Item to HomeListItem.Item
+                encryptionContextProvider.withEncryptionContext {
+                    pagingData.map { item ->
+                        item
+                            .toUiModel(context = this)
+                            .let {
+                                HomeListItem.Item(itemUiModel = it)
+                            }
+                    }
+                }
+            }.map { pagingData ->
+                // add a HomeListItem.Header for each new group of items
+                pagingData.insertSeparators { before: HomeListItem.Item?, after: HomeListItem.Item? ->
+                    if (after == null) return@insertSeparators null
+
+                    val afterKey = getGroupingKey(after.itemUiModel, params.sortingType)
+                    val beforeKey =
+                        before?.let { getGroupingKey(it.itemUiModel, params.sortingType) }
+
+                    // Compare only the logical key part, ignoring instant values
+                    if (!isSameGroupingKey(beforeKey, afterKey)) {
+                        HomeListItem.Header(afterKey)
+                    } else {
+                        null
+                    }
+                }
+            }
+        }
+        .cachedIn(viewModelScope)
+
+    private fun getGroupingKey(item: ItemUiModel, sortingType: SearchSortingType): GroupingKeys {
+        val now = clock.now()
+        return when (sortingType) {
+            SearchSortingType.TitleAsc,
+            SearchSortingType.TitleDesc -> {
+                val firstChar = item.contents.title.firstOrNull()
+                    ?.takeIf { it.isLetter() }
+                    ?.uppercaseChar()
+                    ?: '#'
+                GroupingKeys.AlphabeticalKey(firstChar)
+            }
+
+            SearchSortingType.CreationAsc,
+            SearchSortingType.CreationDesc -> {
+                val monthKey = monthlyFormatter.format(
+                    item.createTime.toLocalDateTime(TimeZone.UTC).toJavaLocalDateTime()
+                )
+                GroupingKeys.MonthlyKey(monthKey, item.createTime)
+            }
+
+            SearchSortingType.MostRecent -> {
+                val recentTime = item.lastAutofillTime?.let { maxOf(it, item.modificationTime) }
+                    ?: item.modificationTime
+                val format = DateFormatUtils.getFormat(
+                    now = now,
+                    toFormat = recentTime,
+                    acceptedFormats = listOf(
+                        DateFormatUtils.Format.Today,
+                        DateFormatUtils.Format.Yesterday,
+                        DateFormatUtils.Format.ThisWeek,
+                        DateFormatUtils.Format.LastTwoWeeks,
+                        DateFormatUtils.Format.Last30Days,
+                        DateFormatUtils.Format.Last60Days,
+                        DateFormatUtils.Format.Last90Days,
+                        DateFormatUtils.Format.LastYear,
+                        DateFormatUtils.Format.MoreThan1Year
+                    )
+                )
+                GroupingKeys.MostRecentKey(format, recentTime)
+            }
+        }
+    }
+
+    /**
+     * Compare two grouping keys by their logical key part only, ignoring instant values.
+     * This is necessary because MonthlyKey and MostRecentKey include an instant field
+     * that differs per item even when they belong to the same logical group.
+     */
+    private fun isSameGroupingKey(before: GroupingKeys?, after: GroupingKeys): Boolean {
+        if (before == null) return false
+        return when {
+            before is GroupingKeys.AlphabeticalKey && after is GroupingKeys.AlphabeticalKey ->
+                before.character == after.character
+
+            before is GroupingKeys.MonthlyKey && after is GroupingKeys.MonthlyKey ->
+                before.monthKey == after.monthKey
+
+            before is GroupingKeys.MostRecentKey && after is GroupingKeys.MostRecentKey ->
+                before.formatResultKey == after.formatResultKey
+
+            before is GroupingKeys.NoGrouping && after is GroupingKeys.NoGrouping ->
+                true
+
+            else -> false
+        }
+    }
+
+    // Recent search items flow for suggestions mode (pagination version)
+    @SuppressWarnings("ClassOrdering")
+    internal val recentSearchEntriesFlow: Flow<ImmutableList<GroupedItemList>> =
+        combine(
+            searchOptionsFlow.map { it.vaultSelectionOption },
+            isInSuggestionsModeState,
+            isInSearchModeState
+        ) { vaultSelection, isInSuggestionsMode, isInSearchMode ->
+            Triple(vaultSelection, isInSuggestionsMode, isInSearchMode)
+        }
+            .flatMapLatest { (vaultSelection, isInSuggestionsMode, isInSearchMode) ->
+                if (!isInSuggestionsMode || !isInSearchMode) {
+                    return@flatMapLatest flowOf(persistentListOf<GroupedItemList>())
+                }
+
+                val shareId = when (vaultSelection) {
+                    is VaultSelectionOption.Vault -> vaultSelection.shareId
+                    else -> null
+                }
+
+                observeRecentSearchItems(shareId)
+                    .map { encryptedItems ->
+                        val items = encryptionContextProvider.withEncryptionContext {
+                            encryptedItems.map { it.toUiModel(this) }
+                        }
+                        if (items.isNotEmpty()) {
+                            persistentListOf(GroupedItemList(NoGrouping, items))
+                        } else {
+                            persistentListOf()
+                        }
+                    }
+            }
+
+    private fun SearchSortingType.toSearchSortBy(): SearchSortBy = when (this) {
+        SearchSortingType.TitleAsc -> SearchSortBy.TITLE_ASC
+        SearchSortingType.TitleDesc -> SearchSortBy.TITLE_DESC
+        SearchSortingType.CreationAsc -> SearchSortBy.CREATION_DATE_ASC
+        SearchSortingType.CreationDesc -> SearchSortBy.CREATION_DATE_DESC
+        SearchSortingType.MostRecent -> SearchSortBy.MOST_RECENT
+    }
+
+    private fun SearchFilterType.toItemTypeFilter(): ItemTypeFilter = when (this) {
+        SearchFilterType.All -> ItemTypeFilter.All
+        SearchFilterType.Login -> ItemTypeFilter.Logins
+        SearchFilterType.LoginMFA -> ItemTypeFilter.LoginWithTotp
+        SearchFilterType.Alias -> ItemTypeFilter.Aliases
+        SearchFilterType.Note -> ItemTypeFilter.Notes
+        SearchFilterType.CreditCard -> ItemTypeFilter.CreditCards
+        SearchFilterType.Identity -> ItemTypeFilter.Identity
+        SearchFilterType.Custom -> ItemTypeFilter.Custom
+        // These filters cannot be handled at database level, return All and filter in UI
+        SearchFilterType.SharedWithMe,
+        SearchFilterType.SharedByMe -> ItemTypeFilter.All
+    }
+
+    private data class PagingParams(
+        val userId: UserId?,
+        val query: String?,
+        val sortingType: SearchSortingType,
+        val vaultSelectionOption: VaultSelectionOption,
+        val filterType: SearchFilterType,
+        val shareIds: List<ShareId>?,
+        val folderId: FolderId?,
+        val itemState: ItemState?,
+        val itemSharedType: ItemSharedType?,
+        val isIndexing: Boolean = false
+    )
+
+    // Item type counts from search index (for pagination mode)
+    @SuppressWarnings("ClassOrdering")
+    private val paginatedItemTypeCountFlow: Flow<ItemTypeCount> = combine(
+        observeCurrentUser().map { it.userId },
+        searchOptionsFlow,
+        searchQueryState
+    ) { userId, searchOptions, searchQuery ->
+        Triple(userId, searchOptions, searchQuery)
+    }.flatMapLatest { (userId, searchOptions, searchQuery) ->
+
+        val vaultSelectionOption = searchOptions.vaultSelectionOption
+
+        val (shareIds, itemState, itemSharedType) = when (vaultSelectionOption) {
+            VaultSelectionOption.AllVaults -> Triple(
+                null,
+                ItemState.Active,
+                null
+            )
+
+            is VaultSelectionOption.Vault -> Triple(
+                listOf(vaultSelectionOption.shareId),
+                ItemState.Active,
+                null
+            )
+
+            VaultSelectionOption.Trash -> Triple(null, ItemState.Trashed, null)
+            VaultSelectionOption.SharedByMe -> Triple(
+                null,
+                ItemState.Active,
+                ItemSharedType.SharedByMe
+            )
+
+            VaultSelectionOption.SharedWithMe -> Triple(
+                null,
+                ItemState.Active,
+                ItemSharedType.SharedWithMe
+            )
+
+            is VaultSelectionOption.Folder -> Triple(
+                listOf(vaultSelectionOption.shareId),
+                ItemState.Active,
+                null
+            )
+        }
+
+        val folderId = (vaultSelectionOption as? VaultSelectionOption.Folder)?.folderId
+
+        observeItemTypeCounts(
+            userId = userId,
+            shareIds = shareIds,
+            folderId = folderId,
+            itemState = itemState,
+            itemSharedType = itemSharedType,
+            query = searchQuery.takeIf { it.isNotBlank() }
+        ).map { counts ->
+            ItemTypeCount(
+                loginCount = counts.loginCount,
+                aliasCount = counts.aliasCount,
+                noteCount = counts.noteCount,
+                creditCardCount = counts.creditCardCount,
+                identityCount = counts.identityCount,
+                customCount = counts.customCount
+            )
+        }
+    }
+    // ========== Pagination Support ==========
 
     companion object {
         private const val DEBOUNCE_TIMEOUT = 300L

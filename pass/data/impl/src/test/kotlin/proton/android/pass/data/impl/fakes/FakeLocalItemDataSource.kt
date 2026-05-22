@@ -18,6 +18,7 @@
 
 package proton.android.pass.data.impl.fakes
 
+import androidx.paging.PagingData
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.flowOf
@@ -29,6 +30,7 @@ import proton.android.pass.common.api.Option
 import proton.android.pass.data.api.ItemCountSummary
 import proton.android.pass.data.api.repositories.ShareItemCount
 import proton.android.pass.data.api.usecases.ItemTypeFilter
+import proton.android.pass.data.impl.db.dao.ItemEntityWithRowId
 import proton.android.pass.data.impl.db.entities.ItemEntity
 import proton.android.pass.data.impl.local.ItemWithTotp
 import proton.android.pass.data.impl.local.LocalItemDataSource
@@ -91,6 +93,30 @@ class FakeLocalItemDataSource : LocalItemDataSource {
         itemFlags: Map<ItemFlag, Boolean>
     ): Flow<List<ItemEntity>> = flowOf(memory)
 
+    override suspend fun getItemsPageForIndex(
+        userId: UserId,
+        shareIds: List<ShareId>,
+        itemState: ItemState,
+        afterRowId: Long,
+        limit: Int
+    ): List<ItemEntityWithRowId> = emptyList()
+
+    override suspend fun countItemsForIndex(
+        userId: UserId,
+        shareIds: List<ShareId>,
+        itemState: ItemState
+    ): Int = 0
+
+    override fun observeItemsPaging(
+        userId: UserId,
+        shareIds: List<ShareId>,
+        itemState: ItemState?,
+        filter: ItemTypeFilter,
+        itemFlags: Map<ItemFlag, Boolean>
+    ): Flow<PagingData<ItemEntity>> {
+        throw IllegalStateException("Not yet implemented")
+    }
+
     override fun observePinnedItems(
         userId: UserId,
         shareIds: List<ShareId>,
@@ -123,6 +149,9 @@ class FakeLocalItemDataSource : LocalItemDataSource {
             it.userId == userId.id && it.shareId == shareId.id && it.id in ids
         }
     }
+
+    override suspend fun getByShareItemPairs(userId: UserId, pairs: List<Pair<ShareId, ItemId>>): List<ItemEntity> =
+        emptyList()
 
     override suspend fun setItemStates(
         userId: UserId,
@@ -216,6 +245,10 @@ class FakeLocalItemDataSource : LocalItemDataSource {
     ): Flow<List<ItemEntity>> = flowOf(
         memory.filter { it.shareId == shareId.id && it.folderId == folderId.id }
     )
+
+    override fun observeRecentSearchItems(userId: UserId, shareId: ShareId?): Flow<List<ItemEntity>> {
+        throw IllegalStateException("Not yet implemented")
+    }
 
     override suspend fun getItemsPendingForPasskeyMigration(): List<ItemEntity> {
         throw IllegalStateException("Not yet implemented")

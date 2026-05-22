@@ -46,7 +46,8 @@ internal sealed interface SearchInMode {
 internal data class SelectItemUiState(
     val listUiState: SelectItemListUiState,
     val searchUiState: SearchUiState,
-    val pinningUiState: PinningUiState
+    val pinningUiState: PinningUiState,
+    val isPaginationEnabled: Boolean
 ) {
 
     fun shouldShowItemListHeader() = listUiState.items.items.isNotEmpty() &&
@@ -62,7 +63,8 @@ internal data class SelectItemUiState(
         val Loading = SelectItemUiState(
             listUiState = SelectItemListUiState.Loading,
             searchUiState = SearchUiState.Initial,
-            pinningUiState = PinningUiState.Initial
+            pinningUiState = PinningUiState.Initial,
+            isPaginationEnabled = false
         )
 
     }
@@ -98,7 +100,8 @@ internal data class SelectItemListUiState(
     val accountSwitchState: AccountSwitchUIState,
     val isPasswordCredentialCreation: Boolean,
     val showAutosaveBanner: Boolean = false,
-    val autosaveMatchCount: Int = 0
+    val autosaveMatchCount: Int = 0,
+    val paginatedItemCount: Int = 0
 ) {
 
     val itemCount: Int = items.items.map { it.items }.flatten().count() + items.suggestions.count()

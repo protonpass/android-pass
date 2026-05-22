@@ -1,0 +1,93 @@
+/*
+ * Copyright (c) 2026 Proton AG
+ * This file is part of Proton AG and Proton Pass.
+ *
+ * Proton Pass is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * Proton Pass is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
+package proton.android.pass.data.impl.usecases
+
+import androidx.paging.PagingData
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.filter
+import kotlinx.coroutines.flow.flatMapLatest
+import me.proton.core.domain.entity.UserId
+import proton.android.pass.data.api.repositories.ItemRepository
+import proton.android.pass.data.api.repositories.ItemSyncStatusRepository
+import proton.android.pass.data.api.usecases.ItemTypeFilter
+import proton.android.pass.data.api.usecases.ObserveCurrentUser
+import proton.android.pass.data.api.usecases.ObserveItemsPaging
+import proton.android.pass.domain.Item
+import proton.android.pass.domain.ItemFlag
+import proton.android.pass.domain.ItemState
+import proton.android.pass.domain.ShareSelection
+import javax.inject.Inject
+
+class ObserveItemsPagingImpl @Inject constructor(
+    private val syncStatusRepository: ItemSyncStatusRepository,
+    private val itemRepository: ItemRepository,
+    private val observeCurrentUser: ObserveCurrentUser
+) : ObserveItemsPaging {
+
+    override fun invoke(
+        selection: ShareSelection,
+        itemState: ItemState?,
+        filter: ItemTypeFilter,
+        userId: UserId?,
+        itemFlags: Map<ItemFlag, Boolean>,
+        includeHidden: Boolean
+    ): Flow<PagingData<Item>> = syncStatusRepository.observeSyncState()
+        .filter { syncState -> !syncState.isVisibleSyncing }
+        .flatMapLatest {
+            if (userId == null) {
+                observeCurrentUser()
+                    .flatMapLatest { currentUser ->
+                        observeItems(
+                            userId = currentUser.userId,
+                            selection = selection,
+                            itemState = itemState,
+                            filter = filter,
+                            itemFlags = itemFlags,
+                            includeHidden = includeHidden
+                        )
+                    }
+            } else {
+                observeItems(
+                    userId = userId,
+                    selection = selection,
+                    itemState = itemState,
+                    filter = filter,
+                    itemFlags = itemFlags,
+                    includeHidden = includeHidden
+                )
+            }
+        }
+
+    @Suppress("LongParameterList")
+    private fun observeItems(
+        userId: UserId,
+        selection: ShareSelection,
+        itemState: ItemState?,
+        filter: ItemTypeFilter,
+        itemFlags: Map<ItemFlag, Boolean>,
+        includeHidden: Boolean
+    ): Flow<PagingData<Item>> = itemRepository.observeItemsPaging(
+        userId = userId,
+        shareSelection = selection,
+        itemState = itemState,
+        itemTypeFilter = filter,
+        itemFlags = itemFlags,
+        includeHidden = includeHidden
+    )
+}

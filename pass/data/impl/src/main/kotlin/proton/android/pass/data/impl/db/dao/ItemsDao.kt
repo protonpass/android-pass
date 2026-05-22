@@ -18,13 +18,17 @@
 
 package proton.android.pass.data.impl.db.dao
 
+import androidx.paging.PagingSource
+import androidx.room.ColumnInfo
 import androidx.room.Dao
+import androidx.room.Embedded
 import androidx.room.Query
 import kotlinx.coroutines.flow.Flow
 import me.proton.core.crypto.common.keystore.EncryptedString
 import me.proton.core.data.room.db.BaseDao
 import proton.android.pass.data.impl.db.entities.FolderEntity
 import proton.android.pass.data.impl.db.entities.ItemEntity
+import proton.android.pass.data.impl.db.entities.SearchEntryEntity
 import proton.android.pass.data.impl.db.entities.ShareEntity
 import proton.android.pass.domain.ItemStateValues
 
@@ -48,6 +52,11 @@ data class ShareIdCountRow(
 data class FolderItemCountRow(
     val folderId: String,
     val itemCount: Long
+)
+
+data class ItemEntityWithRowId(
+    @Embedded val item: ItemEntity,
+    @ColumnInfo(name = "rowid") val rowId: Long
 )
 
 @Dao
@@ -88,6 +97,71 @@ abstract class ItemsDao : BaseDao<ItemEntity>() {
 
     @Query(
         """
+        SELECT *, rowid AS rowid FROM ${ItemEntity.TABLE}
+        WHERE ${ItemEntity.Columns.USER_ID} = :userId
+          AND ${ItemEntity.Columns.SHARE_ID} IN (:shareIds)
+          AND ${ItemEntity.Columns.STATE} = :itemState
+          AND rowid > :afterRowId
+        ORDER BY rowid ASC
+        LIMIT :limit
+        """
+    )
+    abstract suspend fun getItemsPageForIndex(
+        userId: String,
+        shareIds: List<String>,
+        itemState: Int,
+        afterRowId: Long,
+        limit: Int
+    ): List<ItemEntityWithRowId>
+
+    @Query(
+        """
+        SELECT COUNT(*) FROM ${ItemEntity.TABLE}
+        WHERE ${ItemEntity.Columns.USER_ID} = :userId
+          AND ${ItemEntity.Columns.SHARE_ID} IN (:shareIds)
+          AND ${ItemEntity.Columns.STATE} = :itemState
+        """
+    )
+    abstract suspend fun countItemsForIndex(
+        userId: String,
+        shareIds: List<String>,
+        itemState: Int
+    ): Int
+
+    @Suppress("LongParameterList")
+    @Query(
+        """
+        SELECT * FROM ${ItemEntity.TABLE}
+        WHERE ${ItemEntity.Columns.USER_ID} = :userId
+          AND ${ItemEntity.Columns.SHARE_ID} IN (:shareIds)
+          AND (NOT :applyItemIds OR ${ItemEntity.Columns.ID} IN (:itemIds))
+          AND (NOT :applyItemTypes OR ${ItemEntity.Columns.ITEM_TYPE} IN (:itemTypes))
+          AND (:itemState IS NULL OR ${ItemEntity.Columns.STATE} = :itemState)
+          AND (:setFlags IS NULL OR (flags & :setFlags) == :setFlags)
+          AND (:clearFlags IS NULL OR (flags & :clearFlags) == 0)
+          AND (:isPinned IS NULL OR ${ItemEntity.Columns.IS_PINNED} = :isPinned)
+          AND (:hasTotp IS NULL OR ${ItemEntity.Columns.HAS_TOTP} = :hasTotp)
+          AND (:hasPasskeys IS NULL OR ${ItemEntity.Columns.HAS_PASSKEYS} = :hasPasskeys)
+        ORDER BY ${ItemEntity.Columns.CREATE_TIME} DESC
+        """
+    )
+    abstract fun observeItemsPaging(
+        userId: String,
+        shareIds: List<String>,
+        itemIds: List<String>?,
+        applyItemIds: Boolean,
+        itemTypes: List<Int>?,
+        applyItemTypes: Boolean,
+        itemState: Int?,
+        isPinned: Boolean?,
+        hasTotp: Boolean?,
+        hasPasskeys: Boolean?,
+        setFlags: Int?,
+        clearFlags: Int?
+    ): PagingSource<Int, ItemEntity>
+
+    @Query(
+        """
         SELECT * FROM ${ItemEntity.TABLE}
         WHERE ${ItemEntity.Columns.USER_ID} = :userId
           AND ${ItemEntity.Columns.SHARE_ID} = :shareId
@@ -99,6 +173,33 @@ abstract class ItemsDao : BaseDao<ItemEntity>() {
         shareId: String,
         itemId: String
     ): Flow<ItemEntity?>
+
+    @Query(
+        """
+        SELECT * FROM ${ItemEntity.TABLE}
+        WHERE ${ItemEntity.Columns.USER_ID} = :userId
+          AND ${ItemEntity.Columns.SHARE_ID} = :shareId
+          AND ${ItemEntity.Columns.ID} IN (:itemIds)
+        """
+    )
+    abstract suspend fun getByIds(
+        userId: String,
+        shareId: String,
+        itemIds: List<String>
+    ): List<ItemEntity>
+
+    /**
+     * Fetch multiple items across different shares in a single query.
+     * @param shareItemKeys List of "shareId-itemId" concatenated keys
+     */
+    @Query(
+        """
+        SELECT * FROM ${ItemEntity.TABLE}
+        WHERE ${ItemEntity.Columns.USER_ID} = :userId
+          AND (${ItemEntity.Columns.SHARE_ID} || '-' || ${ItemEntity.Columns.ID}) IN (:shareItemKeys)
+        """
+    )
+    abstract suspend fun getByShareItemKeys(userId: String, shareItemKeys: List<String>): List<ItemEntity>
 
     @Query(
         """
@@ -371,7 +472,7 @@ abstract class ItemsDao : BaseDao<ItemEntity>() {
 
     @Query(
         """
-        SELECT 
+        SELECT
           ${ItemEntity.Columns.SHARE_ID} as shareId,
           COUNT(${ItemEntity.Columns.ITEM_TYPE}) as itemCount
         FROM ${ItemEntity.TABLE}
@@ -382,5 +483,19 @@ abstract class ItemsDao : BaseDao<ItemEntity>() {
         """
     )
     abstract fun countTrashedItems(userId: String, shareIds: List<String>): Flow<List<ShareIdCountRow>>
+
+    @Query(
+        """
+        SELECT item.* FROM ${ItemEntity.TABLE} AS item
+        INNER JOIN ${SearchEntryEntity.TABLE} AS search
+        ON item.${ItemEntity.Columns.ID} = search.${SearchEntryEntity.Columns.ITEM_ID}
+          AND item.${ItemEntity.Columns.SHARE_ID} = search.${SearchEntryEntity.Columns.SHARE_ID}
+        WHERE item.${ItemEntity.Columns.USER_ID} = :userId
+          AND item.${ItemEntity.Columns.STATE} = ${ItemStateValues.ACTIVE}
+          AND (:shareId IS NULL OR item.${ItemEntity.Columns.SHARE_ID} = :shareId)
+        ORDER BY search.${SearchEntryEntity.Columns.CREATE_TIME} DESC
+        """
+    )
+    abstract fun observeRecentSearchItems(userId: String, shareId: String?): Flow<List<ItemEntity>>
 
 }

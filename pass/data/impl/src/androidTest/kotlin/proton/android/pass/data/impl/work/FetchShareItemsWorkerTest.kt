@@ -34,6 +34,7 @@ import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import proton.android.pass.data.fakes.repositories.FakeItemRepository
+import proton.android.pass.data.fakes.repositories.FakeSearchIndexRepository
 import proton.android.pass.data.fakes.repositories.ItemRevisionTestFactory
 import proton.android.pass.data.fakes.usecases.folders.FakeRefreshFolders
 import proton.android.pass.data.impl.repositories.FetchShareItemsStatus
@@ -168,6 +169,7 @@ class FetchShareItemsWorkerTest {
                     workerParameters = workerParameters,
                     fetchShareItemsStatusRepository = fakeStatusRepository,
                     itemRepository = fakeItemRepository,
+                    searchIndexRepository = FakeSearchIndexRepository(),
                     refreshFolders = fakeRefreshFolders
                 )
             })

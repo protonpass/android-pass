@@ -51,6 +51,9 @@ import proton.android.pass.data.fakes.usecases.FakeDeleteAllSearchEntry
 import proton.android.pass.data.fakes.usecases.FakeDeleteItems
 import proton.android.pass.data.fakes.usecases.FakeDeleteSearchEntry
 import proton.android.pass.data.fakes.usecases.FakeGetUserPlan
+import proton.android.pass.data.fakes.usecases.FakeObserveIndexingStatus
+import proton.android.pass.data.fakes.usecases.FakeObserveItemTypeCounts
+import proton.android.pass.data.fakes.usecases.FakeObservePagedItems
 import proton.android.pass.data.fakes.usecases.FakeItemSyncStatusRepository
 import proton.android.pass.data.fakes.usecases.FakeObserveAllShares
 import proton.android.pass.data.fakes.usecases.FakeObserveAppNeedsUpdate
@@ -69,7 +72,7 @@ import proton.android.pass.data.fakes.usecases.inappmessages.FakeObserveDelivera
 import proton.android.pass.data.fakes.usecases.items.FakeObserveCanCreateItems
 import proton.android.pass.data.fakes.usecases.shares.FakeObserveEncryptedSharedItems
 import proton.android.pass.data.fakes.usecases.shares.FakeObserveHasShares
-import proton.android.pass.preferences.FakeFeatureFlagsPreferenceRepository
+import proton.android.pass.data.fakes.usecases.FakeObserveRecentSearchItems
 import proton.android.pass.domain.FolderId
 import proton.android.pass.domain.ItemEncrypted
 import proton.android.pass.domain.ItemId
@@ -78,7 +81,9 @@ import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.ShareSelection
 import proton.android.pass.notifications.fakes.FakeSnackbarDispatcher
 import proton.android.pass.notifications.fakes.FakeToastManager
+import proton.android.pass.preferences.FakeFeatureFlagsPreferenceRepository
 import proton.android.pass.preferences.FakePreferenceRepository
+import proton.android.pass.preferences.FeatureFlag
 import proton.android.pass.preferences.UseFaviconsPreference
 import proton.android.pass.searchoptions.api.VaultSelectionOption
 import proton.android.pass.searchoptions.fakes.FakeHomeSearchOptionsRepository
@@ -125,6 +130,10 @@ internal class HomeViewModelTest {
     private lateinit var appConfig: FakeAppConfig
     private lateinit var featureFlags: FakeFeatureFlagsPreferenceRepository
     private lateinit var observeFolder: FakeObserveFolder
+    private lateinit var observeRecentSearchItems: FakeObserveRecentSearchItems
+    private lateinit var observeEncryptedSharedItems: FakeObserveEncryptedSharedItems
+    private lateinit var observePagedItems: FakeObservePagedItems
+    private lateinit var observeIndexingStatus: FakeObserveIndexingStatus
 
     @Before
     internal fun setup() {
@@ -158,6 +167,10 @@ internal class HomeViewModelTest {
         appConfig = FakeAppConfig()
         featureFlags = FakeFeatureFlagsPreferenceRepository()
         observeFolder = FakeObserveFolder()
+        observeRecentSearchItems = FakeObserveRecentSearchItems()
+        observeEncryptedSharedItems = FakeObserveEncryptedSharedItems()
+        observePagedItems = FakeObservePagedItems()
+        observeIndexingStatus = FakeObserveIndexingStatus()
         createViewModel()
     }
 
@@ -200,6 +213,7 @@ internal class HomeViewModelTest {
         // Change vault and emit empty
         instance.setVaultSelection(VaultSelectionOption.Vault(ShareId("random")))
         observeEncryptedItems.emitValue(emptyList())
+        observeEncryptedSharedItems.emitValue(emptyList())
 
         instance.homeUiState.test {
             val state = awaitItem()
@@ -237,9 +251,11 @@ internal class HomeViewModelTest {
         }
         observeAllShares.sendResult(Result.success(vaultShares))
         observeEncryptedItems.emitValue(items)
+        observeEncryptedSharedItems.emitValue(emptyList())
         observeSearchEntry.emit(searchEntries)
         observeCanCreateItems.emit(canCreateItems = true)
         observeHasShares.emit(hasShares = true)
+        observeRecentSearchItems.emit(emptyList())
 
         return items
     }
@@ -280,6 +296,31 @@ internal class HomeViewModelTest {
     }
 
     @Test
+    fun `paginated folder selection forwards folderId to paged items query`() = runTest {
+        val shareId = ShareId("share-folder-paged")
+        val folderId = FolderId("folder-paged-123")
+
+        // Pagination flag must be set before the VM is created: its initial value
+        // is read synchronously at construction time.
+        featureFlags.set(FeatureFlag.ENABLE_PAGINATION, true)
+        createViewModel()
+
+        observeAllShares.sendResult(Result.success(emptyList()))
+        observeIndexingStatus.emitReady()
+        observePagedItems.emitEmpty()
+
+        instance.setVaultSelection(VaultSelectionOption.Folder(shareId, folderId))
+
+        instance.homeListItemPagingFlow.test {
+            awaitItem()
+            cancelAndIgnoreRemainingEvents()
+        }
+
+        assertThat(observePagedItems.lastFolderId).isEqualTo(folderId)
+        assertThat(observePagedItems.lastShareIds).isEqualTo(listOf(shareId))
+    }
+
+    @Test
     internal fun `WHEN read only item is selected THEN show toast message`() {
         instance.onReadOnlyItemSelected()
 
@@ -310,23 +351,23 @@ internal class HomeViewModelTest {
             observeSearchEntry = observeSearchEntry,
             telemetryManager = telemetryManager,
             homeSearchOptionsRepository = searchOptionsRepository,
-            observeAllShares = observeAllShares,
-            clock = clock,
-            observeEncryptedItems = observeEncryptedItems,
-            observePinnedItems = observePinnedItems,
-            preferencesRepository = preferencesRepository,
-            getUserPlan = getUserPlan,
             bulkMoveToVaultRepository = bulkMoveToVaultRepository,
             toastManager = toastManager,
             pinItem = FakePinItem(),
             unpinItem = FakeUnpinItem(),
             pinItems = FakePinItems(),
             unpinItems = FakeUnpinItems(),
+            changeAliasStatus = FakeChangeAliasStatus(),
+            observeCurrentUser = observeCurrentUser,
+            observeAllShares = observeAllShares,
+            clock = clock,
+            observeEncryptedItems = observeEncryptedItems,
+            observeEncryptedSharedItems = observeEncryptedSharedItems,
+            observePinnedItems = observePinnedItems,
+            preferencesRepository = preferencesRepository,
             observeAppNeedsUpdate = FakeObserveAppNeedsUpdate(),
             appDispatchers = FakeAppDispatchers(),
-            observeCurrentUser = observeCurrentUser,
-            changeAliasStatus = FakeChangeAliasStatus(),
-            observeEncryptedSharedItems = FakeObserveEncryptedSharedItems(),
+            getUserPlan = getUserPlan,
             observeCanCreateItems = observeCanCreateItems,
             observeHasShares = observeHasShares,
             observeDeliverableMinimizedPromoInAppMessages = FakeObserveDeliverableMinimizedPromoInAppMessage()
@@ -337,7 +378,11 @@ internal class HomeViewModelTest {
             featureFlagsPreferencesRepository = featureFlags,
             observeFolder = observeFolder,
             canCreateAlias = FakeCanCreateAlias(),
-            canCreateItemsInFolder = FakeCanCreateItemsInFolder()
+            canCreateItemsInFolder = FakeCanCreateItemsInFolder(),
+            observePagedItems = observePagedItems,
+            observeIndexingStatus = observeIndexingStatus,
+            observeItemTypeCounts = FakeObserveItemTypeCounts(),
+            observeRecentSearchItems = observeRecentSearchItems
         )
     }
 }

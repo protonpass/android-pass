@@ -1,0 +1,253 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 1,
+    "identityHash": "364276e619032e8fb49c29dec7f12d8a",
+    "entities": [
+      {
+        "tableName": "search_items",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`rowId` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `user_id` TEXT NOT NULL, `share_id` TEXT NOT NULL, `folder_id` TEXT, `item_id` TEXT NOT NULL, `title` TEXT NOT NULL, `subtitle` TEXT, `item_type` INTEGER NOT NULL, `create_time` INTEGER NOT NULL, `modify_time` INTEGER NOT NULL, `item_state` INTEGER NOT NULL DEFAULT 0, `is_shared_by_me` INTEGER NOT NULL DEFAULT 0, `is_shared_with_me` INTEGER NOT NULL DEFAULT 0, `last_autofill_time` INTEGER, `has_totp` INTEGER NOT NULL DEFAULT 0, `is_hidden` INTEGER NOT NULL DEFAULT 0)",
+        "fields": [
+          {
+            "fieldPath": "rowId",
+            "columnName": "rowId",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "userId",
+            "columnName": "user_id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "shareId",
+            "columnName": "share_id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "folderId",
+            "columnName": "folder_id",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "itemId",
+            "columnName": "item_id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "title",
+            "columnName": "title",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "subtitle",
+            "columnName": "subtitle",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "itemType",
+            "columnName": "item_type",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "createTime",
+            "columnName": "create_time",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "modifyTime",
+            "columnName": "modify_time",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "itemState",
+            "columnName": "item_state",
+            "affinity": "INTEGER",
+            "notNull": true,
+            "defaultValue": "0"
+          },
+          {
+            "fieldPath": "isSharedByMe",
+            "columnName": "is_shared_by_me",
+            "affinity": "INTEGER",
+            "notNull": true,
+            "defaultValue": "0"
+          },
+          {
+            "fieldPath": "isSharedWithMe",
+            "columnName": "is_shared_with_me",
+            "affinity": "INTEGER",
+            "notNull": true,
+            "defaultValue": "0"
+          },
+          {
+            "fieldPath": "lastAutofillTime",
+            "columnName": "last_autofill_time",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "hasTotp",
+            "columnName": "has_totp",
+            "affinity": "INTEGER",
+            "notNull": true,
+            "defaultValue": "0"
+          },
+          {
+            "fieldPath": "isHidden",
+            "columnName": "is_hidden",
+            "affinity": "INTEGER",
+            "notNull": true,
+            "defaultValue": "0"
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": true,
+          "columnNames": [
+            "rowId"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_search_items_user_id",
+            "unique": false,
+            "columnNames": [
+              "user_id"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_search_items_user_id` ON `${TABLE_NAME}` (`user_id`)"
+          },
+          {
+            "name": "index_search_items_share_id",
+            "unique": false,
+            "columnNames": [
+              "share_id"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_search_items_share_id` ON `${TABLE_NAME}` (`share_id`)"
+          },
+          {
+            "name": "index_search_items_folder_id",
+            "unique": false,
+            "columnNames": [
+              "folder_id"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_search_items_folder_id` ON `${TABLE_NAME}` (`folder_id`)"
+          },
+          {
+            "name": "index_search_items_item_id",
+            "unique": false,
+            "columnNames": [
+              "item_id"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_search_items_item_id` ON `${TABLE_NAME}` (`item_id`)"
+          },
+          {
+            "name": "index_search_items_title",
+            "unique": false,
+            "columnNames": [
+              "title"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_search_items_title` ON `${TABLE_NAME}` (`title`)"
+          },
+          {
+            "name": "index_search_items_create_time",
+            "unique": false,
+            "columnNames": [
+              "create_time"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_search_items_create_time` ON `${TABLE_NAME}` (`create_time`)"
+          },
+          {
+            "name": "index_search_items_modify_time",
+            "unique": false,
+            "columnNames": [
+              "modify_time"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_search_items_modify_time` ON `${TABLE_NAME}` (`modify_time`)"
+          },
+          {
+            "name": "index_search_items_item_state",
+            "unique": false,
+            "columnNames": [
+              "item_state"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_search_items_item_state` ON `${TABLE_NAME}` (`item_state`)"
+          },
+          {
+            "name": "index_search_items_is_shared_by_me",
+            "unique": false,
+            "columnNames": [
+              "is_shared_by_me"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_search_items_is_shared_by_me` ON `${TABLE_NAME}` (`is_shared_by_me`)"
+          },
+          {
+            "name": "index_search_items_is_shared_with_me",
+            "unique": false,
+            "columnNames": [
+              "is_shared_with_me"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_search_items_is_shared_with_me` ON `${TABLE_NAME}` (`is_shared_with_me`)"
+          },
+          {
+            "name": "index_search_items_last_autofill_time",
+            "unique": false,
+            "columnNames": [
+              "last_autofill_time"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_search_items_last_autofill_time` ON `${TABLE_NAME}` (`last_autofill_time`)"
+          },
+          {
+            "name": "index_search_items_has_totp",
+            "unique": false,
+            "columnNames": [
+              "has_totp"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_search_items_has_totp` ON `${TABLE_NAME}` (`has_totp`)"
+          },
+          {
+            "name": "index_search_items_is_hidden",
+            "unique": false,
+            "columnNames": [
+              "is_hidden"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_search_items_is_hidden` ON `${TABLE_NAME}` (`is_hidden`)"
+          },
+          {
+            "name": "index_search_items_user_id_share_id_item_id",
+            "unique": true,
+            "columnNames": [
+              "user_id",
+              "share_id",
+              "item_id"
+            ],
+            "orders": [],
+            "createSql": "CREATE UNIQUE INDEX IF NOT EXISTS `index_search_items_user_id_share_id_item_id` ON `${TABLE_NAME}` (`user_id`, `share_id`, `item_id`)"
+          }
+        ]
+      }
+    ],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '364276e619032e8fb49c29dec7f12d8a')"
+    ]
+  }
+}

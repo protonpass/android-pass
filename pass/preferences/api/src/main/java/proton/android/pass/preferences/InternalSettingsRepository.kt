@@ -102,4 +102,7 @@ interface InternalSettingsRepository {
 
     fun setLastBackgroundTimestamp(timestampMs: Long): Result<Unit>
     fun getLastBackgroundTimestamp(): Flow<Long>
+
+    suspend fun setSearchIndexRebuildTime(userId: UserId, time: Long)
+    suspend fun getSearchIndexRebuildTime(userId: UserId): Long
 }

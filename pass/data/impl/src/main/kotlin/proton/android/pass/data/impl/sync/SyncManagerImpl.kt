@@ -22,12 +22,14 @@ import androidx.lifecycle.coroutineScope
 import androidx.lifecycle.flowWithLifecycle
 import androidx.work.ExistingPeriodicWorkPolicy
 import androidx.work.WorkManager
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.currentCoroutineContext
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.isActive
+import kotlinx.coroutines.launch
 import me.proton.core.account.domain.entity.Account
 import me.proton.core.account.domain.entity.AccountState
 import me.proton.core.accountmanager.domain.AccountManager
@@ -35,6 +37,7 @@ import me.proton.core.accountmanager.domain.getAccounts
 import me.proton.core.eventmanager.domain.work.EventWorkerManager
 import me.proton.core.presentation.app.AppLifecycleProvider
 import proton.android.pass.common.api.safeRunCatching
+import proton.android.pass.data.api.repositories.SearchIndexRepository
 import proton.android.pass.data.api.usecases.PerformSync
 import proton.android.pass.data.impl.sync.SyncWorker.Companion.WORKER_UNIQUE_NAME
 import proton.android.pass.log.api.PassLogger
@@ -48,8 +51,11 @@ class SyncManagerImpl @Inject constructor(
     private val eventWorkerManager: EventWorkerManager,
     private val performSync: PerformSync,
     private val appLifecycleProvider: AppLifecycleProvider,
-    private val accountManager: AccountManager
+    private val accountManager: AccountManager,
+    private val searchIndexRepository: SearchIndexRepository
 ) : SyncManager {
+
+    private var rebuildJob: Job? = null
 
     override fun start() {
         PassLogger.i(TAG, "SyncManager start")
@@ -69,6 +75,19 @@ class SyncManagerImpl @Inject constructor(
 
             AppLifecycleProvider.State.Foreground -> {
                 cancelWorker()
+
+                // Check and rebuild search index in a separate coroutine
+                // Cancel any previous rebuild to avoid concurrent jobs piling up
+                rebuildJob?.cancel()
+                rebuildJob = appLifecycleProvider.lifecycle.coroutineScope.launch {
+                    accounts.forEach { account ->
+                        safeRunCatching { searchIndexRepository.checkAndRebuildIfNeeded(account.userId) }
+                            .onFailure { error ->
+                                PassLogger.w(TAG, "Error checking search index rebuild")
+                                PassLogger.w(TAG, error)
+                            }
+                    }
+                }
 
                 while (currentCoroutineContext().isActive) {
                     accounts.forEach {

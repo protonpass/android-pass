@@ -32,6 +32,7 @@ import proton.android.pass.preferences.FeatureFlag.PASS_USER_EVENTS_V1
 import proton.android.pass.preferences.FeatureFlag.RENAME_ADMIN_TO_MANAGER
 import proton.android.pass.preferences.FeatureFlag.PASS_FOLDERS
 import proton.android.pass.preferences.FeatureFlag.PASS_AUTOFILL_URL_REGEX
+import proton.android.pass.preferences.FeatureFlag.ENABLE_PAGINATION
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -54,6 +55,7 @@ class FakeFeatureFlagsPreferenceRepository @Inject constructor() :
             PASS_MOBILE_ON_BOARDING_V2 -> it.getOrDefault(PASS_MOBILE_ON_BOARDING_V2, false) as T
             PASS_FOLDERS -> it.getOrDefault(FeatureFlag.PASS_FOLDERS, false) as T
             PASS_AUTOFILL_URL_REGEX -> it.getOrDefault(PASS_AUTOFILL_URL_REGEX, false) as T
+            ENABLE_PAGINATION -> it.getOrDefault(ENABLE_PAGINATION, false) as T
         }
     }
 

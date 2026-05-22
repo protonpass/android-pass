@@ -26,6 +26,7 @@ import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.toOption
+import proton.android.pass.data.api.repositories.IndexingStatus
 import proton.android.pass.data.api.repositories.ItemSyncStatus
 import proton.android.pass.data.api.repositories.ItemSyncStatusPayload
 import proton.android.pass.domain.ShareId
@@ -36,7 +37,8 @@ internal data class SyncDialogState(
     private val itemSyncStatus: ItemSyncStatus,
     private val downloadedItemsMap: Map<ShareId, ItemSyncStatusPayload>,
     private val insertedItems: Option<ItemSyncStatusPayload>,
-    private val vaultsLoadingResult: LoadingResult<List<Vault>>
+    private val vaultsLoadingResult: LoadingResult<List<Vault>>,
+    internal val indexingStatus: IndexingStatus = IndexingStatus.Idle
 ) {
 
     internal val hasSyncFailed: Boolean = itemSyncStatus is ItemSyncStatus.SyncError
@@ -51,7 +53,14 @@ internal data class SyncDialogState(
     internal val hasInvalidGroupShares: Boolean =
         (itemSyncStatus as? ItemSyncStatus.SyncSuccess)?.hasInvalidGroupShares ?: false
 
-    internal val hasSyncFinished: Boolean = hasSyncFailed || hasSyncSucceeded
+    internal val isIndexing: Boolean =
+        indexingStatus == IndexingStatus.Indexing || indexingStatus is IndexingStatus.InProgress
+
+    internal val isIndexReady: Boolean = indexingStatus == IndexingStatus.Ready
+
+    // Sync is finished when: failed OR (succeeded AND index is ready)
+    internal val hasSyncFinished: Boolean =
+        hasSyncFailed || hasSyncSucceeded && isIndexReady
 
     internal val isInserting: Boolean =
         insertedItems.map { it.current > 0 && it.current != it.total }.value() ?: false
@@ -92,7 +101,8 @@ internal data class SyncDialogState(
             itemSyncStatus = ItemSyncStatus.SyncNotStarted,
             downloadedItemsMap = emptyMap(),
             insertedItems = None,
-            vaultsLoadingResult = LoadingResult.Loading
+            vaultsLoadingResult = LoadingResult.Loading,
+            indexingStatus = IndexingStatus.Idle
         )
 
     }

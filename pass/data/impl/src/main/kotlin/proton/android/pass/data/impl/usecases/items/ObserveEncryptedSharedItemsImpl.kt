@@ -52,5 +52,4 @@ class ObserveEncryptedSharedItemsImpl @Inject constructor(
             )
         }
     }
-
 }

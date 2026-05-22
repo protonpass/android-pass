@@ -18,6 +18,7 @@
 
 package proton.android.pass.data.api.repositories
 
+import androidx.paging.PagingData
 import kotlinx.coroutines.flow.Flow
 import kotlinx.serialization.Serializable
 import me.proton.core.domain.entity.UserId
@@ -124,6 +125,15 @@ interface ItemRepository {
         includeHidden: Boolean
     ): Flow<List<Item>>
 
+    fun observeItemsPaging(
+        userId: UserId,
+        shareSelection: ShareSelection,
+        itemState: ItemState?,
+        itemTypeFilter: ItemTypeFilter = ItemTypeFilter.All,
+        itemFlags: Map<ItemFlag, Boolean>,
+        includeHidden: Boolean
+    ): Flow<PagingData<Item>>
+
     fun observeEncryptedItems(
         userId: UserId,
         shareSelection: ShareSelection,
@@ -132,6 +142,15 @@ interface ItemRepository {
         itemFlags: Map<ItemFlag, Boolean>,
         includeHidden: Boolean
     ): Flow<List<ItemEncrypted>>
+
+    fun observeEncryptedItemsPaging(
+        userId: UserId,
+        shareSelection: ShareSelection,
+        itemState: ItemState?,
+        itemTypeFilter: ItemTypeFilter = ItemTypeFilter.All,
+        itemFlags: Map<ItemFlag, Boolean>,
+        includeHidden: Boolean
+    ): Flow<PagingData<ItemEncrypted>>
 
     fun observePinnedItems(
         userId: UserId,
@@ -256,11 +275,25 @@ interface ItemRepository {
         includeHiddenVault: Boolean
     ): Flow<List<ItemEncrypted>>
 
+    fun observeSharedByMeEncryptedItemsPaging(
+        userId: UserId,
+        itemState: ItemState?,
+        includeHiddenVault: Boolean
+    ): Flow<PagingData<ItemEncrypted>>
+
     fun observeSharedWithMeEncryptedItems(
         userId: UserId,
         itemState: ItemState?,
         includeHiddenVault: Boolean
     ): Flow<List<ItemEncrypted>>
+
+    fun observeSharedWithMeEncryptedItemsPaging(
+        userId: UserId,
+        itemState: ItemState?,
+        includeHiddenVault: Boolean
+    ): Flow<PagingData<ItemEncrypted>>
+
+    fun observeRecentSearchItems(userId: UserId, shareId: ShareId?): Flow<List<ItemEncrypted>>
 }
 
 data class VaultProgress(

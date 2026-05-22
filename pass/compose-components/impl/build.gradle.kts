@@ -50,6 +50,7 @@ dependencies {
     implementation(libs.accompanist.navigation.material)
     implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.annotation)
+    implementation(libs.androidx.paging.compose)
 
     implementation(libs.androidx.lifecycle.runtime.compose)
     implementation(libs.coil.compose)

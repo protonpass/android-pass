@@ -77,5 +77,11 @@ enum class FeatureFlag(
         description = "Improve autofill domain matching using URL regex",
         key = "PassAutofillUrlRegex",
         isEnabledDefault = false
+    ),
+    ENABLE_PAGINATION(
+        title = "Enable pagination",
+        description = "Enable pagination on item list",
+        key = "PassEnablePagination",
+        isEnabledDefault = false
     )
 }

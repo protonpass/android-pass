@@ -45,6 +45,8 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.paging.compose.collectAsLazyPagingItems
+import kotlinx.collections.immutable.persistentListOf
 import kotlinx.coroutines.launch
 import proton.android.pass.common.api.Some
 import proton.android.pass.commonui.api.PassTheme
@@ -115,6 +117,12 @@ fun HomeScreen(
     val routerEvent by routerViewModel.routerEventState.collectAsStateWithLifecycle(RouterEvent.None)
     val homeUiState by homeViewModel.homeUiState.collectAsStateWithLifecycle()
     val onBoardingTipsUiState by onBoardingTipsViewModel.stateFlow.collectAsStateWithLifecycle()
+
+    // pagination only
+    val itemsPagingData = homeViewModel.homeListItemPagingFlow.collectAsLazyPagingItems()
+    val filteredSearchEntries by homeViewModel.filteredSearchEntriesFlow.collectAsStateWithLifecycle(
+        persistentListOf()
+    )
 
     LaunchedEffect(homeUiState.navEvent) {
         when (homeUiState.navEvent) {
@@ -854,6 +862,8 @@ fun HomeScreen(
             HomeContent(
                 modifier = Modifier.background(PassTheme.colors.backgroundStrong),
                 uiState = homeUiState,
+                itemsPagingData = itemsPagingData,
+                filteredSearchEntries = filteredSearchEntries,
                 scrollableState = scrollableState,
                 shouldScrollToTop = homeUiState.homeListUiState.shouldScrollToTop,
                 header = {
@@ -870,12 +880,14 @@ fun HomeScreen(
                             }
                         }
                     }
-                    item("header") {
-                        OnBoardingTips(
-                            onClick = onBoardingTipsViewModel::onClick,
-                            onDismiss = onBoardingTipsViewModel::onDismiss,
-                            state = onBoardingTipsUiState
-                        )
+                    if (onBoardingTipsUiState.tipToShow is Some) {
+                        item("header") {
+                            OnBoardingTips(
+                                onClick = onBoardingTipsViewModel::onClick,
+                                onDismiss = onBoardingTipsViewModel::onDismiss,
+                                state = onBoardingTipsUiState
+                            )
+                        }
                     }
                 },
                 onEvent = { homeUiEvent ->

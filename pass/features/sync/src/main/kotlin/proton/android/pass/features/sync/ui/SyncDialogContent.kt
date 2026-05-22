@@ -32,6 +32,8 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
+import proton.android.pass.composecomponents.impl.loading.ProgressWithLabel
+import proton.android.pass.data.api.repositories.IndexingStatus
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -65,7 +67,8 @@ internal fun SyncDialogContent(
             val titlesResId = when {
                 canRetry -> R.string.sync_dialog_title_error
                 hasSyncFailed -> R.string.sync_dialog_title_partial_error
-                hasSyncSucceeded -> R.string.sync_dialog_title_success
+                hasSyncFinished -> R.string.sync_dialog_title_success
+                isIndexing -> R.string.sync_dialog_title_indexing
                 isInserting -> R.string.sync_dialog_title_inserting
                 else -> R.string.sync_dialog_title
             }
@@ -84,7 +87,8 @@ internal fun SyncDialogContent(
                 val subtitleResId = when {
                     canRetry -> R.string.sync_dialog_subtitle_error
                     hasSyncFailed -> R.string.sync_dialog_subtitle_partial_error
-                    hasSyncSucceeded -> R.string.sync_dialog_subtitle_success
+                    hasSyncFinished -> R.string.sync_dialog_subtitle_success
+                    isIndexing -> R.string.sync_dialog_subtitle_indexing
                     isInserting -> R.string.sync_dialog_subtitle_inserting
                     else -> R.string.sync_dialog_subtitle
                 }
@@ -99,6 +103,24 @@ internal fun SyncDialogContent(
                     isInserting -> {
                         Spacer(modifier = Modifier.height(Spacing.small))
                         CircularProgressIndicator()
+                    }
+
+                    isIndexing -> {
+                        val indexingProgress = (indexingStatus as? IndexingStatus.InProgress)
+                            ?.let { it.current.toFloat() / it.total }
+                        val indexingLabel = when (indexingStatus) {
+                            is IndexingStatus.InProgress -> stringResource(
+                                R.string.sync_dialog_subtitle_indexing_progress,
+                                indexingStatus.current,
+                                indexingStatus.total
+                            )
+                            else -> stringResource(R.string.sync_dialog_subtitle_indexing)
+                        }
+                        Spacer(modifier = Modifier.height(Spacing.small))
+                        ProgressWithLabel(
+                            label = indexingLabel,
+                            progress = indexingProgress
+                        )
                     }
 
                     else -> {
@@ -156,7 +178,7 @@ internal fun SyncDialogContent(
                 )
             }
 
-            AnimatedVisibility(visible = hasSyncSucceeded) {
+            AnimatedVisibility(visible = hasSyncFinished && !hasSyncFailed) {
                 SyncDialogButton(
                     textResId = CompR.string.action_continue,
                     onClick = { onUiEvent(SyncDialogUiEvent.OnCompleteSync) }

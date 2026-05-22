@@ -79,6 +79,7 @@ class GetSuggestedAutofillItemsImpl @Inject constructor(
         .flatMapLatest { userIds ->
             when (itemTypeFilter) {
                 ItemTypeFilter.Logins,
+                ItemTypeFilter.LoginWithTotp,
                 ItemTypeFilter.Identity ->
                     handleAllowedItems(userIds, itemTypeFilter, suggestion)
 

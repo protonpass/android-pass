@@ -23,6 +23,7 @@ androidx-hilt = "1.2.0"
 androidx-hilt-navigation-compose = "1.2.0"
 androidx-lifecycle = "2.7.0"
 androidx-navigation = "2.7.7"
+androidx-paging = "3.3.6"
 androidx-profileinstaller = "1.4.1"
 androidx-room = "2.7.2"
 androidx-startup = "1.1.1"
@@ -90,6 +91,9 @@ junit = "4.13.2"
 testParameterInjector = "1.16"
 truth = "1.4.4"
 fusion = "0.9.52"
+# SQLCipher
+sqlcipher = "4.16.0"
+androidx-sqlite = "2.6.2"
 # Zxing
 zxing = "3.5.3"
 coreKtx = "1.17.0"
@@ -177,12 +181,16 @@ androidx-lifecycle-viewmodel-ktx = { module = "androidx.lifecycle:lifecycle-view
 androidx-lifecycle-viewmodel-savedstate = { module = "androidx.lifecycle:lifecycle-viewmodel-savedstate", version.ref = "androidx-lifecycle" }
 ## Navigation
 androidx-navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "androidx-navigation" }
+## Paging
+androidx-paging-common = { module= "androidx.paging:paging-common", version.ref = "androidx-paging"}
+androidx-paging-compose = { module = "androidx.paging:paging-compose", version.ref = "androidx-paging" }
 ## Profile installer
 androidx-profileinstaller = { module = "androidx.profileinstaller:profileinstaller", version.ref = "androidx-profileinstaller" }
 ## Room
 androidx-room-ktx = { module = "androidx.room:room-ktx", version.ref = "androidx-room" }
 androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref = "androidx-room" }
 androidx-room-testing = { module = "androidx.room:room-testing", version.ref = "androidx-room" }
+androidx-room-paging = { module = "androidx.room:room-paging", version.ref = "androidx-room" }
 ## Startup
 androidx-startup-runtime = { module = "androidx.startup:startup-runtime", version.ref = "androidx-startup" }
 ## Work
@@ -314,6 +322,10 @@ pass-common = { module = "me.proton.pass.common:lib", version.ref = "passCommon"
 # Showkase
 showkase = { module = "com.airbnb.android:showkase", version.ref = "showkase" }
 showkaseProcessor = { module = "com.airbnb.android:showkase-processor", version.ref = "showkase" }
+
+# SQLCipher
+sqlcipher = { module = "net.zetetic:sqlcipher-android", version.ref = "sqlcipher" }
+androidx-sqlite = { module = "androidx.sqlite:sqlite", version.ref = "androidx-sqlite" }
 
 # Squareup
 leakCanary = { module = "com.squareup.leakcanary:leakcanary-android", version.ref = "leakCanary" }

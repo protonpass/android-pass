@@ -21,6 +21,7 @@ package proton.android.pass.data.api.usecases
 enum class ItemTypeFilter {
     All,
     Logins,
+    LoginWithTotp,
     Aliases,
     Notes,
     CreditCards,

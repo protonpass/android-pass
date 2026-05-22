@@ -32,11 +32,13 @@ import proton.android.pass.crypto.api.usecases.EncryptedUpdateItemRequest
 import proton.android.pass.crypto.api.usecases.OpenItemOutput
 import proton.android.pass.crypto.fakes.context.FakeEncryptionContextProvider
 import proton.android.pass.crypto.fakes.usecases.FakeCreateItem
+import proton.android.pass.crypto.api.usecases.ItemKeyWithRotation
 import proton.android.pass.crypto.fakes.usecases.FakeMigrateItem
 import proton.android.pass.crypto.fakes.usecases.FakeOpenItem
 import proton.android.pass.crypto.fakes.usecases.FakeUpdateItem
 import proton.android.pass.data.fakes.crypto.FakeGetShareAndItemKey
 import proton.android.pass.data.impl.fakes.FakeFolderKeyRepository
+import proton.android.pass.data.fakes.repositories.FakeSearchIndexRepository
 import proton.android.pass.data.impl.fakes.FakeItemKeyRepository
 import proton.android.pass.common.fakes.FakeAppDispatchers
 import proton.android.pass.data.impl.fakes.FakeLocalItemDataSource
@@ -78,6 +80,8 @@ class ItemRepositoryImplTest {
     private lateinit var getShareAndItemKey: FakeGetShareAndItemKey
     private lateinit var folderKeyRepository: FakeFolderKeyRepository
     private lateinit var encryptionContextProvider: FakeEncryptionContextProvider
+    private lateinit var migrateItem: FakeMigrateItem
+    private lateinit var searchIndexRepository: FakeSearchIndexRepository
     private lateinit var userAddress: me.proton.core.user.domain.entity.UserAddress
 
     private val userId = UserId("test-123")
@@ -97,6 +101,8 @@ class ItemRepositoryImplTest {
         getShareAndItemKey = FakeGetShareAndItemKey()
         folderKeyRepository = FakeFolderKeyRepository()
         encryptionContextProvider = FakeEncryptionContextProvider()
+        migrateItem = FakeMigrateItem()
+        searchIndexRepository = FakeSearchIndexRepository()
 
         share = ShareTestFactory.random()
         userAddress = userAddressRepository.generateAddress("test1", userId)
@@ -118,10 +124,11 @@ class ItemRepositoryImplTest {
             openItem = openItem,
             encryptionContextProvider = encryptionContextProvider,
             shareKeyRepository = shareKeyRepository,
-            migrateItem = FakeMigrateItem(),
+            migrateItem = migrateItem,
             getShareAndItemKey = getShareAndItemKey,
             folderKeyRepository = folderKeyRepository,
-            appDispatchers = FakeAppDispatchers()
+            appDispatchers = FakeAppDispatchers(),
+            searchIndexRepository = searchIndexRepository
         )
     }
 
@@ -224,6 +231,47 @@ class ItemRepositoryImplTest {
 
         assertEquals("FolderKey not found for source folderId=folder-1", error.message)
         assertEquals(0, getShareAndItemKey.callCount)
+    }
+
+    @Test
+    fun `moveItemsInsideShare reindexes moved items so they appear in paginated results`() = runTest {
+        val itemId = ItemId("item-to-move")
+        val destFolderId = FolderId("dest-folder")
+        val folderKey = FolderKey(
+            rotation = 1L,
+            key = EncryptedByteArray(byteArrayOf(1, 2, 3)),
+            responseKey = "folder-key"
+        )
+        val itemKey = ItemKey(
+            rotation = 1L,
+            key = EncryptedByteArray(byteArrayOf(1, 2, 3)),
+            responseKey = "item-key"
+        )
+
+        // Item currently at the vault root (no folder)
+        localItemDataSource.upsertItem(
+            ItemEntityTestFactory.create(
+                id = itemId.id,
+                userId = userId.id,
+                addressId = userAddress.addressId.id,
+                shareId = share.id.id,
+                folderId = null
+            )
+        )
+        folderKeyRepository.setGetFolderKeyResult(Result.success(folderKey))
+        getShareAndItemKey.setItemKeys(ShareKeyTestFactory.createPrivate() to itemKey)
+        migrateItem.setOutput(
+            listOf(ItemKeyWithRotation(EncryptedByteArray(byteArrayOf(9, 9, 9)), 1L))
+        )
+
+        repository.moveItemsInsideShare(
+            userId = userId,
+            shareId = share.id,
+            folderId = destFolderId,
+            itemIds = listOf(itemId)
+        )
+
+        assertThat(searchIndexRepository.isItemIndexed(share.id, itemId)).isTrue()
     }
 
     @Test

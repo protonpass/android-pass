@@ -20,6 +20,11 @@ package proton.android.pass.features.selectitem.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.paging.PagingData
+import androidx.paging.cachedIn
+import androidx.paging.filter
+import androidx.paging.insertSeparators
+import androidx.paging.map
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.PersistentMap
 import kotlinx.collections.immutable.persistentListOf
@@ -38,6 +43,7 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.flow.filterIsInstance
 import kotlinx.coroutines.flow.filterNotNull
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.flowOn
@@ -47,8 +53,12 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.runBlocking
 import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
+import kotlinx.datetime.TimeZone
+import kotlinx.datetime.toJavaLocalDateTime
+import kotlinx.datetime.toLocalDateTime
 import me.proton.core.account.domain.entity.AccountState
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.accountmanager.domain.getAccounts
@@ -65,7 +75,10 @@ import proton.android.pass.common.api.combineN
 import proton.android.pass.common.api.getOrNull
 import proton.android.pass.common.api.map
 import proton.android.pass.common.api.toOption
+import proton.android.pass.commonui.api.DateFormatUtils
 import proton.android.pass.commonui.api.GroupedItemList
+import proton.android.pass.commonui.api.GroupingKeys
+import proton.android.pass.commonui.api.HomeListItem
 import proton.android.pass.commonui.api.ItemSorter.groupAndSortByCreationAsc
 import proton.android.pass.commonui.api.ItemSorter.groupAndSortByCreationDesc
 import proton.android.pass.commonui.api.ItemSorter.groupAndSortByMostRecent
@@ -82,17 +95,23 @@ import proton.android.pass.composecomponents.impl.uievents.IsRefreshingState
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.ItemFilterProcessor
 import proton.android.pass.data.api.autosave.AutosaveLoginMatcher
+import proton.android.pass.data.api.repositories.IndexingStatus
+import proton.android.pass.data.api.repositories.SearchSortBy
 import proton.android.pass.data.api.usecases.GetSuggestedAutofillItems
 import proton.android.pass.data.api.usecases.GetUserPlan
 import proton.android.pass.data.api.usecases.ItemData
 import proton.android.pass.data.api.usecases.ItemTypeFilter
+import proton.android.pass.data.api.usecases.ObserveIndexingStatus
+import proton.android.pass.data.api.usecases.ObserveItemTypeCounts
 import proton.android.pass.data.api.usecases.ObserveItems
+import proton.android.pass.data.api.usecases.ObservePagedItems
 import proton.android.pass.data.api.usecases.ObservePinnedItems
 import proton.android.pass.data.api.usecases.ObserveUpgradeInfo
 import proton.android.pass.data.api.usecases.SuggestedAutofillItemsResult
 import proton.android.pass.data.api.usecases.passkeys.ObserveItemsWithPasskeys
 import proton.android.pass.data.api.usecases.shares.ObserveAutofillShares
 import proton.android.pass.domain.Item
+import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ItemState
 import proton.android.pass.domain.ItemType
 import proton.android.pass.domain.Plan
@@ -114,11 +133,14 @@ import proton.android.pass.features.selectitem.ui.SelectItemSnackbarMessage
 import proton.android.pass.features.selectitem.ui.SelectItemUiState
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.SnackbarDispatcher
+import proton.android.pass.preferences.FeatureFlag
+import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import proton.android.pass.preferences.UserPreferencesRepository
 import proton.android.pass.preferences.value
 import proton.android.pass.searchoptions.api.AutofillSearchOptionsRepository
 import proton.android.pass.searchoptions.api.SearchSortingType
 import proton.android.pass.searchoptions.api.SortingOption
+import java.time.format.DateTimeFormatter
 import javax.inject.Inject
 
 @Suppress("LongParameterList", "LargeClass")
@@ -128,6 +150,7 @@ class SelectItemViewModel @Inject constructor(
     private val encryptionContextProvider: EncryptionContextProvider,
     private val getSuggestedAutofillItems: GetSuggestedAutofillItems,
     private val observeItemsWithPasskeys: ObserveItemsWithPasskeys,
+    private val clock: Clock,
     accountManager: AccountManager,
     userManager: UserManager,
     preferenceRepository: UserPreferencesRepository,
@@ -137,7 +160,10 @@ class SelectItemViewModel @Inject constructor(
     observeAutofillShares: ObserveAutofillShares,
     observeUpgradeInfo: ObserveUpgradeInfo,
     getUserPlan: GetUserPlan,
-    clock: Clock
+    private val observePagedItems: ObservePagedItems,
+    private val observeItemTypeCounts: ObserveItemTypeCounts,
+    private val observeIndexingStatus: ObserveIndexingStatus,
+    featureFlagsPreferencesRepository: FeatureFlagsPreferencesRepository
 ) : ViewModel() {
 
     private val selectItemStateFlow: MutableStateFlow<Option<SelectItemState>> =
@@ -161,6 +187,24 @@ class SelectItemViewModel @Inject constructor(
     private val sortingOptionFlow = autofillSearchOptionsRepository.observeSortingOption()
         .distinctUntilChanged()
         .onEach { shouldScrollToTopFlow.update { true } }
+
+    // ========== Pagination Support ==========
+    private val isPaginationEnabledFlow: StateFlow<Boolean> = featureFlagsPreferencesRepository
+        .get<Boolean>(FeatureFlag.ENABLE_PAGINATION)
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.Eagerly,
+            initialValue = runBlocking {
+                featureFlagsPreferencesRepository
+                    .get<Boolean>(FeatureFlag.ENABLE_PAGINATION)
+                    .firstOrNull()
+                    ?: false
+            }
+        )
+
+    private val monthlyFormatter =
+        DateTimeFormatter.ofPattern("LLLL yyyy", java.util.Locale.ENGLISH)
+    // ========== Pagination Support ==========
 
     private val searchWrapper = combine(
         searchQueryState,
@@ -206,7 +250,16 @@ class SelectItemViewModel @Inject constructor(
             combine(flows) { it.toMap() }
         }
 
-    private val itemUiModelFlow: Flow<LoadingResult<List<ItemUiModel>>> = combine(
+    private val itemUiModelFlow: Flow<LoadingResult<List<ItemUiModel>>> = isPaginationEnabledFlow
+        .flatMapLatest { isPaginationEnabled ->
+            if (isPaginationEnabled) {
+                flowOf(LoadingResult.Success(emptyList()))
+            } else {
+                itemUiModelFlowLegacy
+            }
+        }
+
+    private val itemUiModelFlowLegacy: Flow<LoadingResult<List<ItemUiModel>>> = combine(
         selectItemStateFlow,
         usersAutofillSharesMapFlow,
         selectedAccountFlow
@@ -415,6 +468,10 @@ class SelectItemViewModel @Inject constructor(
                 }
             }
 
+    private val suggestionIdsFlow: Flow<Set<ItemId>> = suggestionsItemUIModelFlow
+        .map { result -> result.getOrNull()?.map { it.id }?.toSet() ?: emptySet() }
+        .distinctUntilChanged()
+
     private val resultsFlow: Flow<LoadingResult<SelectItemListItems>> = combine(
         selectItemStateFlow,
         textFilterListItemFlow,
@@ -491,6 +548,55 @@ class SelectItemViewModel @Inject constructor(
         SelectItemViewModel::AccountsData
     )
 
+    private val paginatedItemCountFlow: Flow<Int> = combineN(
+        selectItemStateFlow,
+        usersAutofillSharesMapFlow,
+        selectedAccountFlow,
+        searchQueryState,
+        isInSearchModeState,
+        isPaginationEnabledFlow
+    ) { selectItemState, usersAutofillShares, selectedAccount, query, isInSearchMode, isPaginationEnabled ->
+        val state = selectItemState.value()
+        if (!isPaginationEnabled || state == null || state is SelectItemState.Autosave) {
+            null
+        } else {
+            val shareIds = usersAutofillShares
+                .filter { it.matchesSelectedAccount(selectedAccount) }
+                .values
+                .flatten()
+                .map { it.id }
+                .ifEmpty { null }
+            val userId = if (selectedAccount is Some) {
+                selectedAccount.value
+            } else {
+                usersAutofillShares.keys.firstOrNull()
+            }
+            userId?.let {
+                ItemCountQuery(
+                    userId = it,
+                    shareIds = shareIds,
+                    query = if (isInSearchMode) query.takeIf { q -> q.isNotBlank() } else null
+                )
+            }
+        }
+    }
+        .distinctUntilChanged()
+        .flatMapLatest { params ->
+            if (params == null) {
+                flowOf(0)
+            } else {
+                observeItemTypeCounts(
+                    userId = params.userId,
+                    shareIds = params.shareIds,
+                    itemState = ItemState.Active,
+                    query = params.query
+                ).map { counts ->
+                    counts.loginCount + counts.aliasCount + counts.noteCount +
+                        counts.creditCardCount + counts.identityCount + counts.customCount
+                }
+            }
+        }
+
     private val selectItemListUiStateFlow = combineN(
         accountsDataFlow,
         resultsFlow,
@@ -501,7 +607,8 @@ class SelectItemViewModel @Inject constructor(
         shouldScrollToTopFlow,
         preferenceRepository.getUseFaviconsPreference(),
         observeUpgradeInfo().asLoadingResult(),
-        selectItemStateFlow
+        selectItemStateFlow,
+        paginatedItemCountFlow
     ) { accountData,
         itemsResult,
         isRefreshing,
@@ -511,7 +618,8 @@ class SelectItemViewModel @Inject constructor(
         shouldScrollToTop,
         useFavicons,
         upgradeInfo,
-        selectItemState ->
+        selectItemState,
+        paginatedItemCount ->
         val isLoading = IsLoadingState.from(itemsResult is LoadingResult.Loading)
         val items = when (itemsResult) {
             LoadingResult.Loading -> SelectItemListItems.Initial
@@ -551,21 +659,24 @@ class SelectItemViewModel @Inject constructor(
             accountSwitchState = accountData.toAccountSwitchUIState(),
             isPasswordCredentialCreation = isPasswordCredential,
             showAutosaveBanner = autosaveState != null,
-            autosaveMatchCount = autosaveLogin?.matchCount ?: 0
+            autosaveMatchCount = autosaveLogin?.matchCount ?: 0,
+            paginatedItemCount = paginatedItemCount
         )
     }
 
-    internal val uiState: StateFlow<SelectItemUiState> = combine(
+    internal val uiState: StateFlow<SelectItemUiState> = combineN(
         selectItemListUiStateFlow,
         searchWrapper,
         pinningUiStateFlow,
         getUserPlan().asLoadingResult(),
-        shareIdToSharesFlow
+        shareIdToSharesFlow,
+        isPaginationEnabledFlow
     ) { selectItemListUiState,
         search,
         pinningUiState,
         planRes,
-        shares ->
+        shares,
+        isPaginationEnabled ->
         val searchIn = planRes.getOrNull()?.run {
             when (planType) {
                 is PlanType.Free -> {
@@ -591,7 +702,8 @@ class SelectItemViewModel @Inject constructor(
                 isProcessingSearch = search.isProcessingSearch,
                 searchInMode = searchIn
             ),
-            pinningUiState = pinningUiState
+            pinningUiState = pinningUiState,
+            isPaginationEnabled = isPaginationEnabled
         )
     }
         .stateIn(
@@ -728,6 +840,218 @@ class SelectItemViewModel @Inject constructor(
         } else {
             true
         }
+
+    // ========== Pagination Support ==========
+    @SuppressWarnings("ClassOrdering")
+    internal val selectItemPagingFlow: Flow<PagingData<HomeListItem>> = combineN(
+        selectItemStateFlow,
+        usersAutofillSharesMapFlow,
+        selectedAccountFlow,
+        searchQueryState,
+        sortingOptionFlow,
+        isInSearchModeState,
+        observeIndexingStatus(),
+        suggestionIdsFlow
+    ) { selectItemState, usersAutofillShares, selectedAccount, query, sortingOption,
+        isInSearchMode, indexingStatus, suggestionIds ->
+        val state = selectItemState.value()
+
+        val isAutosave = state is SelectItemState.Autosave
+        val shareIds = when (state) {
+            null -> null
+            else -> {
+                val filteredShares = usersAutofillShares
+                    .filter { it.matchesSelectedAccount(selectedAccount) }
+                    .values
+                    .flatten()
+                    .let { shares ->
+                        if (isAutosave) shares.filter { it.canBeUpdated } else shares
+                    }
+                    .map { it.id }
+                filteredShares.ifEmpty { null }
+            }
+        }
+
+        val autosaveFilter = (state as? SelectItemState.Autosave.Login)?.let {
+            AutosaveFilter(
+                usernameFilter = it.usernameFilter,
+                websiteFilter = it.websiteFilter,
+                packageNameFilter = it.packageNameFilter
+            )
+        }
+
+        val itemTypeFilter = state?.itemTypeFilter ?: ItemTypeFilter.All
+        val userId = if (selectedAccount is Some) {
+            selectedAccount.value
+        } else {
+            usersAutofillShares.keys.firstOrNull()
+        }
+
+        PagingParams(
+            userId = userId,
+            query = if (isInSearchMode) query else null,
+            sortingType = sortingOption.searchSortingType,
+            shareIds = shareIds,
+            itemState = ItemState.Active,
+            itemTypeFilter = itemTypeFilter,
+            isIndexing = indexingStatus == IndexingStatus.Indexing,
+            autosaveFilter = autosaveFilter,
+            suggestionIds = if (isInSearchMode) emptySet() else suggestionIds
+        )
+    }
+        .distinctUntilChanged()
+        .flatMapLatest { params ->
+            if (params.isIndexing) {
+                return@flatMapLatest flowOf(PagingData.empty())
+            }
+            val userId = params.userId ?: return@flatMapLatest flowOf(PagingData.empty())
+            val sortBy = params.sortingType.toSearchSortBy()
+
+            observePagedItems(
+                userId = userId,
+                query = params.query,
+                sortBy = sortBy,
+                shareIds = params.shareIds,
+                itemState = params.itemState,
+                itemTypeFilter = params.itemTypeFilter
+            ).map { pagingData ->
+                val filtered = params.autosaveFilter?.let { filter ->
+                    val matcher = AutosaveLoginMatcher(
+                        username = filter.usernameFilter,
+                        website = filter.websiteFilter,
+                        packageName = filter.packageNameFilter
+                    )
+                    pagingData.filter { item ->
+                        val login = item.itemType as? ItemType.Login ?: return@filter false
+                        matcher.matchesUsername(login) && matcher.matchesSource(login)
+                    }
+                } ?: pagingData
+                val deduped = if (params.suggestionIds.isEmpty()) {
+                    filtered
+                } else {
+                    filtered.filter { item -> item.id !in params.suggestionIds }
+                }
+                encryptionContextProvider.withEncryptionContext {
+                    deduped.map { item ->
+                        item
+                            .toUiModel(context = this)
+                            .let {
+                                HomeListItem.Item(itemUiModel = it)
+                            }
+                    }
+                }
+            }.map { pagingData ->
+                pagingData.insertSeparators { before: HomeListItem.Item?, after: HomeListItem.Item? ->
+                    if (after == null) return@insertSeparators null
+
+                    val afterKey = getGroupingKey(after.itemUiModel, params.sortingType)
+                    val beforeKey =
+                        before?.let { getGroupingKey(it.itemUiModel, params.sortingType) }
+
+                    if (!isSameGroupingKey(beforeKey, afterKey)) {
+                        HomeListItem.Header(afterKey)
+                    } else {
+                        null
+                    }
+                }
+            }
+        }
+        .cachedIn(viewModelScope)
+
+    private fun getGroupingKey(item: ItemUiModel, sortingType: SearchSortingType): GroupingKeys {
+        val now = clock.now()
+        return when (sortingType) {
+            SearchSortingType.TitleAsc,
+            SearchSortingType.TitleDesc -> {
+                val firstChar = item.contents.title.firstOrNull()
+                    ?.takeIf { it.isLetter() }
+                    ?.uppercaseChar()
+                    ?: '#'
+                GroupingKeys.AlphabeticalKey(firstChar)
+            }
+
+            SearchSortingType.CreationAsc,
+            SearchSortingType.CreationDesc -> {
+                val monthKey = monthlyFormatter.format(
+                    item.createTime.toLocalDateTime(TimeZone.UTC).toJavaLocalDateTime()
+                )
+                GroupingKeys.MonthlyKey(monthKey, item.createTime)
+            }
+
+            SearchSortingType.MostRecent -> {
+                val recentTime = item.lastAutofillTime?.let { maxOf(it, item.modificationTime) }
+                    ?: item.modificationTime
+                val format = DateFormatUtils.getFormat(
+                    now = now,
+                    toFormat = recentTime,
+                    acceptedFormats = listOf(
+                        DateFormatUtils.Format.Today,
+                        DateFormatUtils.Format.Yesterday,
+                        DateFormatUtils.Format.ThisWeek,
+                        DateFormatUtils.Format.LastTwoWeeks,
+                        DateFormatUtils.Format.Last30Days,
+                        DateFormatUtils.Format.Last60Days,
+                        DateFormatUtils.Format.Last90Days,
+                        DateFormatUtils.Format.LastYear,
+                        DateFormatUtils.Format.MoreThan1Year
+                    )
+                )
+                GroupingKeys.MostRecentKey(format, recentTime)
+            }
+        }
+    }
+
+    private fun isSameGroupingKey(before: GroupingKeys?, after: GroupingKeys): Boolean {
+        if (before == null) return false
+        return when {
+            before is GroupingKeys.AlphabeticalKey && after is GroupingKeys.AlphabeticalKey ->
+                before.character == after.character
+
+            before is GroupingKeys.MonthlyKey && after is GroupingKeys.MonthlyKey ->
+                before.monthKey == after.monthKey
+
+            before is GroupingKeys.MostRecentKey && after is GroupingKeys.MostRecentKey ->
+                before.formatResultKey == after.formatResultKey
+
+            before is GroupingKeys.NoGrouping && after is GroupingKeys.NoGrouping ->
+                true
+
+            else -> false
+        }
+    }
+
+    private fun SearchSortingType.toSearchSortBy(): SearchSortBy = when (this) {
+        SearchSortingType.TitleAsc -> SearchSortBy.TITLE_ASC
+        SearchSortingType.TitleDesc -> SearchSortBy.TITLE_DESC
+        SearchSortingType.CreationAsc -> SearchSortBy.CREATION_DATE_ASC
+        SearchSortingType.CreationDesc -> SearchSortBy.CREATION_DATE_DESC
+        SearchSortingType.MostRecent -> SearchSortBy.MOST_RECENT
+    }
+
+    private data class AutosaveFilter(
+        val usernameFilter: String,
+        val websiteFilter: String?,
+        val packageNameFilter: String?
+    )
+
+    private data class PagingParams(
+        val userId: UserId?,
+        val query: String?,
+        val sortingType: SearchSortingType,
+        val shareIds: List<ShareId>?,
+        val itemState: ItemState?,
+        val itemTypeFilter: ItemTypeFilter,
+        val isIndexing: Boolean = false,
+        val autosaveFilter: AutosaveFilter? = null,
+        val suggestionIds: Set<ItemId> = emptySet()
+    )
+
+    private data class ItemCountQuery(
+        val userId: UserId,
+        val shareIds: List<ShareId>?,
+        val query: String?
+    )
+    // ========== Pagination Support ==========
 
     private companion object {
 

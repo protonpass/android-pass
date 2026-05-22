@@ -26,6 +26,7 @@ import proton.android.pass.data.api.repositories.ItemSyncStatus
 import proton.android.pass.data.api.repositories.ItemSyncStatus.SyncError.CryptoError
 import proton.android.pass.data.api.repositories.ItemSyncStatus.SyncError.DownloadError
 import proton.android.pass.data.api.repositories.ItemSyncStatusRepository
+import proton.android.pass.data.api.repositories.SearchIndexRepository
 import proton.android.pass.data.api.repositories.SyncMode
 import proton.android.pass.data.api.repositories.VaultProgress
 import proton.android.pass.data.api.usecases.RefreshAliasSlNotes
@@ -41,7 +42,8 @@ class ForceSyncItemsImpl @Inject constructor(
     private val refreshFolders: RefreshFolders,
     private val itemRepository: ItemRepository,
     private val itemSyncStatusRepository: ItemSyncStatusRepository,
-    private val refreshAliasSlNotes: RefreshAliasSlNotes
+    private val refreshAliasSlNotes: RefreshAliasSlNotes,
+    private val searchIndexRepository: SearchIndexRepository
 ) : ForceSyncItems {
 
     @SuppressWarnings("LongMethod")
@@ -123,6 +125,15 @@ class ForceSyncItemsImpl @Inject constructor(
 
         val result = when {
             failedShareIds.isEmpty() -> {
+                // Rebuild search index after successful insertion
+                runCatching {
+                    PassLogger.i(TAG, "Starting search index rebuild for user: $userId")
+                    searchIndexRepository.rebuildIndex(userId)
+                    PassLogger.i(TAG, "Search index rebuild completed for user: $userId")
+                }.onFailure { error ->
+                    PassLogger.w(TAG, "Search index rebuild failed: ${error.message}")
+                }
+
                 itemSyncStatusRepository.emit(
                     status = ItemSyncStatus.SyncSuccess(
                         hasInactiveShares = hasInactiveShares,

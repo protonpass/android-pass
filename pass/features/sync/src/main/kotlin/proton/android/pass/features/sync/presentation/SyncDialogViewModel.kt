@@ -31,6 +31,7 @@ import proton.android.pass.common.api.onError
 import proton.android.pass.common.api.runCatching
 import proton.android.pass.data.api.repositories.ItemSyncStatusRepository
 import proton.android.pass.data.api.repositories.SyncMode
+import proton.android.pass.data.api.usecases.ObserveIndexingStatus
 import proton.android.pass.data.api.usecases.ObserveVaults
 import proton.android.pass.data.api.usecases.RefreshContent
 import proton.android.pass.log.api.PassLogger
@@ -39,6 +40,7 @@ import javax.inject.Inject
 @HiltViewModel
 class SyncDialogViewModel @Inject constructor(
     observeVaults: ObserveVaults,
+    observeIndexingStatus: ObserveIndexingStatus,
     private val syncStatusRepository: ItemSyncStatusRepository,
     private val refreshContent: RefreshContent
 ) : ViewModel() {
@@ -48,6 +50,7 @@ class SyncDialogViewModel @Inject constructor(
         syncStatusRepository.observeDownloadedItemsStatus(),
         syncStatusRepository.observeInsertedItemsStatus(),
         observeVaults(includeHidden = true).asLoadingResult(),
+        observeIndexingStatus(),
         ::SyncDialogState
     ).stateIn(
         scope = viewModelScope,

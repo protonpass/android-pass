@@ -92,7 +92,7 @@ class ItemSorterTest {
             GroupingKeys.MonthlyKey(AUGUST_2019, item1Aug().createTime)
         val sortingKeyFebruary =
             GroupingKeys.MonthlyKey(FEBRUARY_2022, item1Feb().createTime)
-        val sorted = itemList.groupAndSortByCreationAsc()
+        val sorted = itemList.groupAndSortByCreationAsc(TimeZone.UTC)
         assertThat(sorted).isNotEmpty()
         assertThat(sorted).hasSize(3)
 
@@ -122,7 +122,7 @@ class ItemSorterTest {
             GroupingKeys.MonthlyKey(AUGUST_2019, item1Aug().createTime)
         val sortingKeyFebruary =
             GroupingKeys.MonthlyKey(FEBRUARY_2022, item1Feb().createTime)
-        val sorted = itemList.groupAndSortByCreationDesc()
+        val sorted = itemList.groupAndSortByCreationDesc(TimeZone.UTC)
         assertThat(sorted).isNotEmpty()
         assertThat(sorted).hasSize(3)
 
@@ -151,7 +151,7 @@ class ItemSorterTest {
             formatResultKey = DateFormatUtils.Format.Today,
             instant = itemToday().modificationTime
         )
-        val sorted = itemList.groupAndSortByMostRecent(now)
+        val sorted = itemList.groupAndSortByMostRecent(now, TimeZone.UTC)
         assertThat(sorted).isNotEmpty()
         assertThat(sorted).hasSize(3)
         sorted.onEachIndexed { index, entry ->
@@ -171,6 +171,24 @@ class ItemSorterTest {
 
         assertThat(sortedToday.items[0].modificationTime).isEqualTo(itemToday().modificationTime)
         assertThat(sortedToday.items[1].lastAutofillTime).isEqualTo(itemAutofillToday().lastAutofillTime)
+    }
+
+    @Test
+    fun `most recent grouping uses the device timezone instead of UTC`() {
+        val timeZone = TimeZone.of("UTC+2")
+        // 2023-02-17 08:00 UTC == 2023-02-17 10:00 in UTC+2
+        val now = LocalDateTime(2023, 2, 17, 8, 0, 0, 0).toInstant(TimeZone.UTC)
+        // 2023-02-16 23:00 UTC == 2023-02-17 01:00 in UTC+2, i.e. earlier today locally
+        val editedToday = TestItemUiModel.create(
+            title = "Edited today locally",
+            modificationTime = LocalDateTime(2023, 2, 16, 23, 0, 0, 0).toInstant(TimeZone.UTC)
+        )
+
+        val sorted = listOf(editedToday).groupAndSortByMostRecent(now, timeZone)
+
+        assertThat(sorted).hasSize(1)
+        assertThat((sorted.first().key as GroupingKeys.MostRecentKey).formatResultKey)
+            .isEqualTo(DateFormatUtils.Format.Today)
     }
 
     private fun item15Feb() = TestItemUiModel.create(

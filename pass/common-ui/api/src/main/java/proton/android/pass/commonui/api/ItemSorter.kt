@@ -106,19 +106,23 @@ object ItemSorter {
 
     fun List<ItemUiModel>.sortByTitleDesc(): List<ItemUiModel> = sortedByDescending { it.contents.title.lowercase() }
 
-    private fun List<ItemUiModel>.groupByMonthAndYear() = groupBy {
+    private fun List<ItemUiModel>.groupByMonthAndYear(timeZone: TimeZone) = groupBy {
         monthlyFormatter.format(
-            it.createTime.toLocalDateTime(TimeZone.UTC).toJavaLocalDateTime()
+            it.createTime.toLocalDateTime(timeZone).toJavaLocalDateTime()
         )
     }.mapKeys { GroupingKeys.MonthlyKey(it.key, it.value.first().createTime) }
 
-    fun List<ItemUiModel>.groupAndSortByCreationAsc(): List<GroupedItemList> = groupByMonthAndYear()
+    fun List<ItemUiModel>.groupAndSortByCreationAsc(
+        timeZone: TimeZone = TimeZone.currentSystemDefault()
+    ): List<GroupedItemList> = groupByMonthAndYear(timeZone)
         .toSortedMap(MonthlyKeyComparator)
         .map { entry -> GroupedItemList(entry.key, entry.value.sortByCreationAsc()) }
 
     fun List<ItemUiModel>.sortByCreationAsc(): List<ItemUiModel> = sortedBy { it.createTime }
 
-    fun List<ItemUiModel>.groupAndSortByCreationDesc(): List<GroupedItemList> = groupByMonthAndYear()
+    fun List<ItemUiModel>.groupAndSortByCreationDesc(
+        timeZone: TimeZone = TimeZone.currentSystemDefault()
+    ): List<GroupedItemList> = groupByMonthAndYear(timeZone)
         .toSortedMap(MonthlyKeyComparator.reversed())
         .map { entry ->
             GroupedItemList(entry.key, entry.value.sortByCreationDesc())
@@ -126,10 +130,14 @@ object ItemSorter {
 
     fun List<ItemUiModel>.sortByCreationDesc(): List<ItemUiModel> = sortedByDescending { it.createTime }
 
-    fun List<ItemUiModel>.groupAndSortByMostRecent(now: Instant): List<GroupedItemList> = groupBy { item ->
+    fun List<ItemUiModel>.groupAndSortByMostRecent(
+        now: Instant,
+        timeZone: TimeZone = TimeZone.currentSystemDefault()
+    ): List<GroupedItemList> = groupBy { item ->
         DateFormatUtils.getFormat(
             now = now,
             toFormat = recentDate(item.modificationTime, item.lastAutofillTime),
+            timeZone = timeZone,
             acceptedFormats = listOf(
                 Today,
                 Yesterday,

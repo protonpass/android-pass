@@ -31,6 +31,7 @@ import proton.android.pass.data.impl.local.LocalUserAccessDataDataSource
 import proton.android.pass.data.impl.remote.accessdata.RemoteUserAccessDataDataSource
 import proton.android.pass.data.impl.responses.PlanResponse
 import proton.android.pass.data.impl.responses.UserAccessResponse
+import proton.android.pass.domain.FolderLimits
 import proton.android.pass.domain.UserAccessData
 import javax.inject.Inject
 
@@ -103,7 +104,10 @@ class UserAccessDataRepositoryImpl @Inject constructor(
         storageUsed = accessResponse.planResponse.storageUsed,
         storageQuota = accessResponse.planResponse.storageQuota,
         storageMaxFileSize = accessResponse.planResponse.storageMaxFileSize,
-        folderAllowed = accessResponse.planResponse.folderAllowed
+        folderAllowed = accessResponse.planResponse.folderAllowed,
+        folderMaxCount = accessResponse.planResponse.folderMaxCount,
+        folderMaxChildren = accessResponse.planResponse.folderMaxChildren,
+        folderMaxDepth = accessResponse.planResponse.folderMaxDepth
     )
 
     private fun UserAccessDataEntity.toDomain() = UserAccessData(
@@ -121,7 +125,10 @@ class UserAccessDataRepositoryImpl @Inject constructor(
         storageUsed = storageUsed,
         storageQuota = storageQuota,
         storageMaxFileSize = storageMaxFileSize,
-        folderAllowed = folderAllowed
+        folderAllowed = folderAllowed,
+        folderMaxCount = folderMaxCount ?: FolderLimits.MAX_FOLDERS_PER_VAULT,
+        folderMaxChildren = folderMaxChildren ?: FolderLimits.MAX_FOLDER_WIDTH,
+        folderMaxDepth = folderMaxDepth ?: FolderLimits.MAX_FOLDER_DEPTH
     )
 
     private fun UserAccessData.toEntity(userId: UserId) = UserAccessDataEntity(
@@ -139,6 +146,9 @@ class UserAccessDataRepositoryImpl @Inject constructor(
         storageUsed = storageUsed,
         storageQuota = storageQuota,
         storageMaxFileSize = storageMaxFileSize,
-        folderAllowed = folderAllowed
+        folderAllowed = folderAllowed,
+        folderMaxCount = folderMaxCount,
+        folderMaxChildren = folderMaxChildren,
+        folderMaxDepth = folderMaxDepth
     )
 }

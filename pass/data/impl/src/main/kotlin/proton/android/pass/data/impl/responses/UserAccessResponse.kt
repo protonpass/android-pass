@@ -82,7 +82,13 @@ data class PlanResponse(
     @SerialName("StorageMaxFileSize")
     val storageMaxFileSize: Long,
     @SerialName("FolderAllowed")
-    val folderAllowed: Boolean
+    val folderAllowed: Boolean,
+    @SerialName("FolderMaxCount")
+    val folderMaxCount: Int? = null,
+    @SerialName("FolderMaxChildren")
+    val folderMaxChildren: Int? = null,
+    @SerialName("FolderMaxDepth")
+    val folderMaxDepth: Int? = null
 )
 
 @Serializable

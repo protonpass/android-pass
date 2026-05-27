@@ -26,6 +26,7 @@ import org.junit.Test
 import proton.android.pass.commonui.fakes.FakeSavedStateHandleProvider
 import proton.android.pass.data.fakes.usecases.FakeCanCreateFolder
 import proton.android.pass.data.fakes.usecases.folders.FakeGetFolder
+import proton.android.pass.data.fakes.usecases.folders.FakeObserveFolderLimits
 import proton.android.pass.data.fakes.usecases.folders.FakeObserveFoldersByParentId
 import proton.android.pass.domain.Folder
 import proton.android.pass.domain.FolderId
@@ -286,7 +287,8 @@ class FolderOptionsViewModelTest {
                 )
             )
         },
-        canCreateFolder: FakeCanCreateFolder = FakeCanCreateFolder()
+        canCreateFolder: FakeCanCreateFolder = FakeCanCreateFolder(),
+        observeFolderLimits: FakeObserveFolderLimits = FakeObserveFolderLimits()
     ) = FolderOptionsViewModel(
         savedStateHandle = FakeSavedStateHandleProvider().apply {
             get()[CommonNavArgId.ShareId.key] = SHARE_ID.id
@@ -294,7 +296,8 @@ class FolderOptionsViewModelTest {
         },
         canCreateFolder = canCreateFolder,
         getFolder = getFolder,
-        observeFoldersByParentId = observeFoldersByParentId
+        observeFoldersByParentId = observeFoldersByParentId,
+        observeFolderLimits = observeFolderLimits
     )
 
     private fun emptyObserve(): FakeObserveFoldersByParentId = FakeObserveFoldersByParentId().apply {

@@ -182,6 +182,7 @@ import proton.android.pass.data.api.usecases.folders.GetFolderHierarchy
 import proton.android.pass.data.api.usecases.folders.MoveFolder
 import proton.android.pass.data.api.usecases.folders.ObserveFolder
 import proton.android.pass.data.api.usecases.folders.ObserveFolderItemCounts
+import proton.android.pass.data.api.usecases.folders.ObserveFolderLimits
 import proton.android.pass.data.api.usecases.folders.ObserveFoldersByParentId
 import proton.android.pass.data.api.usecases.folders.RefreshFolders
 import proton.android.pass.data.api.usecases.folders.UpdateFolder
@@ -483,6 +484,7 @@ import proton.android.pass.data.fakes.usecases.folders.FakeGetFolder
 import proton.android.pass.data.fakes.usecases.folders.FakeGetFolderHierarchy
 import proton.android.pass.data.fakes.usecases.folders.FakeMoveFolder
 import proton.android.pass.data.fakes.usecases.folders.FakeObserveFolder
+import proton.android.pass.data.fakes.usecases.folders.FakeObserveFolderLimits
 import proton.android.pass.data.fakes.usecases.folders.FakeObserveFolderItemCounts
 import proton.android.pass.data.fakes.usecases.folders.FakeObserveFoldersByParentId
 import proton.android.pass.data.fakes.usecases.folders.FakeRefreshFolders
@@ -581,6 +583,9 @@ abstract class FakesDataModule {
 
     @Binds
     abstract fun bindObserveFolder(impl: FakeObserveFolder): ObserveFolder
+
+    @Binds
+    abstract fun bindObserveFolderLimits(impl: FakeObserveFolderLimits): ObserveFolderLimits
 
     @Binds
     abstract fun bindObserveFoldersByParentId(impl: FakeObserveFoldersByParentId): ObserveFoldersByParentId

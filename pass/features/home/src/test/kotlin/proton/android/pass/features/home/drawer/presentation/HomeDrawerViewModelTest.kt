@@ -35,6 +35,7 @@ import proton.android.pass.data.fakes.usecases.FakeCanOrganiseVaults
 import proton.android.pass.data.fakes.usecases.FakeObserveItemCount
 import proton.android.pass.data.fakes.usecases.FakeObserveUpgradeInfo
 import proton.android.pass.data.fakes.usecases.FakeObserveVaultsWithItemCount
+import proton.android.pass.data.fakes.usecases.folders.FakeObserveFolderLimits
 import proton.android.pass.data.fakes.usecases.folders.FakeObserveFoldersByParentId
 import proton.android.pass.domain.FolderId
 import proton.android.pass.domain.Plan
@@ -93,7 +94,8 @@ internal class HomeDrawerViewModelTest {
             homeSearchOptionsRepository = homeSearchOptionsRepository,
             observeUpgradeInfo = observeUpgradeInfo,
             featureFlagsPreferencesRepository = featureFlags,
-            observeFolders = observeFolders
+            observeFolders = observeFolders,
+            observeFolderLimits = FakeObserveFolderLimits()
         )
     }
 
@@ -396,7 +398,8 @@ internal class HomeDrawerViewModelTest {
             homeSearchOptionsRepository = homeSearchOptionsRepository,
             observeUpgradeInfo = observeUpgradeInfo,
             featureFlagsPreferencesRepository = featureFlags,
-            observeFolders = FakeObserveFoldersByParentId(defaultResult = null)
+            observeFolders = FakeObserveFoldersByParentId(defaultResult = null),
+            observeFolderLimits = FakeObserveFolderLimits()
         )
 
         featureFlags.set(FeatureFlag.PASS_FOLDERS, true)

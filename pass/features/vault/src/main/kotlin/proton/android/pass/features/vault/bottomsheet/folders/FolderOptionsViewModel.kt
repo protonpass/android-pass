@@ -33,9 +33,9 @@ import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
 import proton.android.pass.data.api.usecases.capabilities.CanCreateFolder
 import proton.android.pass.data.api.usecases.folders.GetFolder
+import proton.android.pass.data.api.usecases.folders.ObserveFolderLimits
 import proton.android.pass.data.api.usecases.folders.ObserveFoldersByParentId
 import proton.android.pass.domain.FolderId
-import proton.android.pass.domain.FolderLimits
 import proton.android.pass.domain.ShareId
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonNavArgId
@@ -47,7 +47,8 @@ class FolderOptionsViewModel @Inject constructor(
     savedStateHandle: SavedStateHandleProvider,
     canCreateFolder: CanCreateFolder,
     private val getFolder: GetFolder,
-    private val observeFoldersByParentId: ObserveFoldersByParentId
+    private val observeFoldersByParentId: ObserveFoldersByParentId,
+    observeFolderLimits: ObserveFolderLimits
 ) : ViewModel() {
 
     val navShareId: ShareId = savedStateHandle.get()
@@ -57,6 +58,8 @@ class FolderOptionsViewModel @Inject constructor(
     val navFolderId: FolderId = savedStateHandle.get()
         .require<String>(CommonOptionalNavArgId.FolderId.key)
         .let(::FolderId)
+
+    private val folderLimitsFlow = observeFolderLimits()
 
     val canCreateSubFolder: StateFlow<Boolean> = flow {
         val depth = safeRunCatching {
@@ -71,12 +74,13 @@ class FolderOptionsViewModel @Inject constructor(
             combine(
                 canCreateFolder(navShareId),
                 observeFoldersByParentId(navShareId, navFolderId),
-                observeFoldersByParentId(navShareId)
-            ) { canCreate, children, folders ->
+                observeFoldersByParentId(navShareId),
+                folderLimitsFlow
+            ) { canCreate, children, folders, folderLimits ->
                 canCreate.isAllowed &&
-                    depth < FolderLimits.MAX_FOLDER_DEPTH &&
-                    children.size < FolderLimits.MAX_FOLDER_WIDTH &&
-                    folders.size < FolderLimits.MAX_FOLDERS_PER_VAULT
+                    depth < folderLimits.maxDepth &&
+                    children.size < folderLimits.maxChildren &&
+                    folders.size < folderLimits.maxCount
             }.catch { error ->
                 PassLogger.w(TAG, error, "Failed to observe folder limits")
                 emit(false)
@@ -92,7 +96,7 @@ class FolderOptionsViewModel @Inject constructor(
         var depth = 1
         var currentFolderId: FolderId? = folderId
         val visited = mutableSetOf<FolderId>()
-        while (currentFolderId != null && depth <= FolderLimits.MAX_FOLDER_DEPTH) {
+        while (currentFolderId != null) {
             if (!visited.add(currentFolderId)) break
             val folder = getFolder(shareId, currentFolderId)
             currentFolderId = folder.parentFolderId

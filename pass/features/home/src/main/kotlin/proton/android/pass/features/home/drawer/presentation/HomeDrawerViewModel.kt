@@ -48,8 +48,9 @@ import proton.android.pass.data.api.usecases.ObserveVaultsWithItemCount
 import proton.android.pass.data.api.usecases.capabilities.CanCreateFolder
 import proton.android.pass.data.api.usecases.capabilities.CanCreateVault
 import proton.android.pass.data.api.usecases.capabilities.CanOrganiseVaults
+import proton.android.pass.data.api.usecases.folders.FolderLimitsData
+import proton.android.pass.data.api.usecases.folders.ObserveFolderLimits
 import proton.android.pass.data.api.usecases.folders.ObserveFoldersByParentId
-import proton.android.pass.domain.FolderLimits
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.ShareSelection
 import proton.android.pass.domain.VaultWithItemCount
@@ -69,7 +70,8 @@ class HomeDrawerViewModel @Inject constructor(
     private val homeSearchOptionsRepository: HomeSearchOptionsRepository,
     observeUpgradeInfo: ObserveUpgradeInfo,
     featureFlagsPreferencesRepository: FeatureFlagsPreferencesRepository,
-    private val observeFolders: ObserveFoldersByParentId
+    private val observeFolders: ObserveFoldersByParentId,
+    observeFolderLimits: ObserveFolderLimits
 ) : ViewModel() {
     private data class VaultShareKey(
         val userId: UserId,
@@ -78,7 +80,8 @@ class HomeDrawerViewModel @Inject constructor(
 
     private data class FolderFlowInput(
         val isFoldersEnabled: Boolean,
-        val shareKeys: List<VaultShareKey>
+        val shareKeys: List<VaultShareKey>,
+        val folderLimits: FolderLimitsData
     )
 
     private data class VaultsWithFolders(
@@ -104,11 +107,15 @@ class HomeDrawerViewModel @Inject constructor(
         .map(::toVaultShareKeys)
         .distinctUntilChanged()
 
+    private val folderLimitsFlow: Flow<FolderLimitsData> = observeFolderLimits()
+
     private val folderFlowInput: Flow<FolderFlowInput> = combine(
         foldersEnabledFlow,
         vaultShareKeysFlow,
-        ::FolderFlowInput
-    )
+        folderLimitsFlow
+    ) { isFoldersEnabled, shareKeys, folderLimits ->
+        FolderFlowInput(isFoldersEnabled, shareKeys, folderLimits)
+    }
 
     private val vaultFoldersFlow: Flow<Pair<Map<ShareId, PersistentList<FolderUiModel>>, Set<ShareId>>> =
         folderFlowInput.flatMapLatest(::observeVaultFolders)
@@ -235,25 +242,26 @@ class HomeDrawerViewModel @Inject constructor(
             return flowOf(emptyMap<ShareId, PersistentList<FolderUiModel>>() to emptySet())
         }
 
-        val folderFlows = input.shareKeys.map(::observeFolderTreeForShare)
+        val folderFlows = input.shareKeys.map { observeFolderTreeForShare(it, input.folderLimits) }
         return combine(folderFlows) { entries ->
             val folders = entries.associate { (shareId, tree, _) -> shareId to tree }
             val atLimit = entries
-                .filter { (_, _, count) -> count >= FolderLimits.MAX_FOLDERS_PER_VAULT }
+                .filter { (_, _, count) -> count >= input.folderLimits.maxCount }
                 .mapTo(mutableSetOf()) { (shareId, _, _) -> shareId }
             folders to atLimit
         }.distinctUntilChanged()
     }
 
     private fun observeFolderTreeForShare(
-        shareKey: VaultShareKey
+        shareKey: VaultShareKey,
+        limits: FolderLimitsData
     ): Flow<Triple<ShareId, PersistentList<FolderUiModel>, Int>> = observeFolders(shareKey.userId, shareKey.shareId)
         .distinctUntilChanged()
         .map { folderList ->
             Triple(shareKey.shareId, FolderTreeBuilder.build(folderList), folderList.size)
         }
         .onStart {
-            emit(Triple(shareKey.shareId, FolderTreeBuilder.build(emptyList()), FolderLimits.MAX_FOLDERS_PER_VAULT))
+            emit(Triple(shareKey.shareId, FolderTreeBuilder.build(emptyList()), limits.maxCount))
         }
 
 }

@@ -89,6 +89,7 @@ import proton.android.pass.data.api.usecases.folders.MoveFolder
 import proton.android.pass.data.api.usecases.folders.MoveItemsInsideShare
 import proton.android.pass.data.api.usecases.folders.ObserveFolder
 import proton.android.pass.data.api.usecases.folders.ObserveFolderItemCounts
+import proton.android.pass.data.api.usecases.folders.ObserveFolderLimits
 import proton.android.pass.data.api.usecases.folders.ObserveFoldersByParentId
 import proton.android.pass.data.api.usecases.folders.RefreshFolders
 import proton.android.pass.data.api.usecases.folders.UpdateFolder
@@ -350,6 +351,7 @@ import proton.android.pass.data.impl.usecases.folders.MoveFolderImpl
 import proton.android.pass.data.impl.usecases.folders.MoveItemsInsideShareImpl
 import proton.android.pass.data.impl.usecases.folders.ObserveFolderImpl
 import proton.android.pass.data.impl.usecases.folders.ObserveFolderItemCountsImpl
+import proton.android.pass.data.impl.usecases.folders.ObserveFolderLimitsImpl
 import proton.android.pass.data.impl.usecases.folders.ObserveFoldersByParentIdImpl
 import proton.android.pass.data.impl.usecases.folders.RefreshFoldersImpl
 import proton.android.pass.data.impl.usecases.folders.UpdateFolderImpl
@@ -1405,6 +1407,9 @@ abstract class DataUseCaseModule {
 
     @[Binds Singleton]
     abstract fun bindObserveFolderItemCounts(impl: ObserveFolderItemCountsImpl): ObserveFolderItemCounts
+
+    @[Binds Singleton]
+    abstract fun bindObserveFolderLimits(impl: ObserveFolderLimitsImpl): ObserveFolderLimits
 
     @[Binds Singleton]
     abstract fun bindVerifyDALForCredentialSharing(

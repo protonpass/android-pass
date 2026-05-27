@@ -18,6 +18,7 @@
 
 package proton.android.pass.test.domain
 
+import proton.android.pass.domain.FolderLimits
 import proton.android.pass.domain.UserAccessData
 import proton.android.pass.test.StringTestFactory
 import kotlin.random.Random
@@ -40,7 +41,10 @@ object UserAccessDataTestFactory {
         storageUsed: Long = 1,
         storageQuota: Long = 100,
         storageMaxFileSize: Long = 1_048_576,
-        folderAllowed: Boolean = false
+        folderAllowed: Boolean = false,
+        folderMaxCount: Int = FolderLimits.MAX_FOLDERS_PER_VAULT,
+        folderMaxChildren: Int = FolderLimits.MAX_FOLDER_WIDTH,
+        folderMaxDepth: Int = FolderLimits.MAX_FOLDER_DEPTH
     ): UserAccessData = UserAccessData(
         pendingInvites = pendingInvites,
         waitingNewUserInvites = waitingNewUserInvites,
@@ -56,7 +60,10 @@ object UserAccessDataTestFactory {
         storageUsed = storageUsed,
         storageQuota = storageQuota,
         storageMaxFileSize = storageMaxFileSize,
-        folderAllowed = folderAllowed
+        folderAllowed = folderAllowed,
+        folderMaxCount = folderMaxCount,
+        folderMaxChildren = folderMaxChildren,
+        folderMaxDepth = folderMaxDepth
     )
 
     fun random(): UserAccessData = UserAccessData(
@@ -74,6 +81,9 @@ object UserAccessDataTestFactory {
         storageUsed = Random.nextLong(0, 1_000_000),
         storageQuota = Random.nextLong(1_000_000, 10_000_000),
         storageMaxFileSize = Random.nextLong(100_000, 1_000_000),
-        folderAllowed = Random.nextBoolean()
+        folderAllowed = Random.nextBoolean(),
+        folderMaxCount = Random.nextInt(1, 500),
+        folderMaxChildren = Random.nextInt(1, 50),
+        folderMaxDepth = Random.nextInt(1, 10)
     )
 }

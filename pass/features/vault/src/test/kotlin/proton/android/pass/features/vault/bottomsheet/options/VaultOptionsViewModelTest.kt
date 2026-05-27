@@ -35,6 +35,7 @@ import proton.android.pass.data.fakes.usecases.FakeCanShareShare
 import proton.android.pass.data.fakes.usecases.FakeObserveEncryptedItems
 import proton.android.pass.data.fakes.usecases.FakeObserveUpgradeInfo
 import proton.android.pass.data.fakes.usecases.FakeObserveVaults
+import proton.android.pass.data.fakes.usecases.folders.FakeObserveFolderLimits
 import proton.android.pass.data.fakes.usecases.folders.FakeObserveFoldersByParentId
 import proton.android.pass.domain.Folder
 import proton.android.pass.domain.FolderId
@@ -650,7 +651,8 @@ class VaultOptionsViewModelTest {
             observeUpgradeInfo = observeUpgradeInfo,
             observeEncryptedItems = FakeObserveEncryptedItems(),
             preferencesRepository = featureFlags,
-            observeFoldersByParentId = observeFoldersByParentId
+            observeFoldersByParentId = observeFoldersByParentId,
+            observeFolderLimits = FakeObserveFolderLimits()
         )
     }
 

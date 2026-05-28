@@ -24,6 +24,7 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import me.proton.core.crypto.common.keystore.EncryptedString
 import proton.android.pass.features.itemcreate.alias.AliasItemFormState
+import proton.android.pass.features.itemcreate.common.CommonFieldValidationError
 import proton.android.pass.features.itemcreate.creditcard.CreditCardItemFormState
 import proton.android.pass.features.itemcreate.custom.createupdate.presentation.ItemFormState
 import proton.android.pass.features.itemcreate.identity.presentation.IdentityItemFormState
@@ -157,4 +158,31 @@ class FakeAliasItemFormProcessor @Inject constructor() :
         decrypt: (EncryptedString) -> String,
         encrypt: (String) -> EncryptedString
     ): FormProcessingResult<AliasItemFormState> = result ?: FormProcessingResult.Success(input.formState)
+}
+
+class ValidatingFakeAliasItemFormProcessor :
+    FormProcessor<AliasItemFormProcessor.Input, AliasItemFormState> {
+    private var result: FormProcessingResult<AliasItemFormState>? = null
+
+    fun setResult(result: FormProcessingResult<AliasItemFormState>) {
+        this.result = result
+    }
+
+    override suspend fun process(
+        input: AliasItemFormProcessor.Input,
+        decrypt: (EncryptedString) -> String,
+        encrypt: (String) -> EncryptedString
+    ): FormProcessingResult<AliasItemFormState> {
+        result?.let { return it }
+        val errors = buildSet {
+            if (input.formState.title.isBlank()) {
+                add(CommonFieldValidationError.BlankTitle)
+            }
+        }
+        return if (errors.isEmpty()) {
+            FormProcessingResult.Success(input.formState)
+        } else {
+            FormProcessingResult.Error(errors)
+        }
+    }
 }

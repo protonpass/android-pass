@@ -155,6 +155,9 @@ class CreateAliasBottomSheetViewModel @Inject constructor(
                 if (aliasItemFormMutableState.prefix.isBlank()) {
                     if (title.isBlank()) {
                         onPrefixChange(randomPrefix())
+                        aliasItemFormMutableState = aliasItemFormMutableState.copy(
+                            title = aliasItemFormMutableState.prefix
+                        )
                     } else {
                         titlePrefixInSync = true
                         onTitleChange(title)

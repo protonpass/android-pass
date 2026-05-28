@@ -53,7 +53,9 @@ import proton.android.pass.features.itemcreate.alias.draftrepositories.MailboxDr
 import proton.android.pass.features.itemcreate.alias.draftrepositories.SuffixDraftRepositoryImpl
 import proton.android.pass.features.itemcreate.common.CustomFieldDraftRepositoryImpl
 import proton.android.pass.features.itemcreate.common.customfields.CustomFieldHandlerImpl
+import proton.android.pass.features.itemcreate.common.formprocessor.AliasItemFormProcessorType
 import proton.android.pass.features.itemcreate.common.formprocessor.FakeAliasItemFormProcessor
+import proton.android.pass.features.itemcreate.common.formprocessor.ValidatingFakeAliasItemFormProcessor
 import proton.android.pass.inappreview.fakes.FakeInAppReviewTriggerMetrics
 import proton.android.pass.navigation.api.AliasOptionalNavArgId
 import proton.android.pass.navigation.api.CommonNavArgId
@@ -222,6 +224,33 @@ class CreateAliasViewModelTest {
     }
 
     @Test
+    fun `emits success when draft alias is stored with blank login title`() = runTest {
+        viewModel = createAliasViewModel(
+            isDraft = true,
+            aliasItemFormProcessor = ValidatingFakeAliasItemFormProcessor()
+        )
+        setupAliasOptions()
+        viewModel.onPrefixChange(TEST_ALIAS_PREFIX)
+
+        viewModel.createAliasUiState.test { awaitItem() }
+        viewModel.createAlias(ShareTestFactory.random().id)
+        viewModel.createAliasUiState.test {
+            val item = awaitItem()
+
+            assertThat(item.baseAliasUiState.isLoadingState).isEqualTo(IsLoadingState.NotLoading)
+            assertThat(item.baseAliasUiState.isAliasDraftSavedState)
+                .isInstanceOf(AliasDraftSavedState.Success::class.java)
+        }
+
+        val draft = draftRepository.get<AliasItemFormState>(CreateAliasViewModel.KEY_DRAFT_ALIAS)
+            .first()
+            .value()
+        assertThat(draft).isNotNull()
+        assertThat(draft!!.title).isEqualTo(TEST_ALIAS_PREFIX)
+        assertThat(draft.prefix).isEqualTo(TEST_ALIAS_PREFIX)
+    }
+
+    @Test
     fun `spaces in title are properly formatted`() = runTest {
         viewModel = createAliasViewModel()
         setupAliasOptions()
@@ -248,7 +277,11 @@ class CreateAliasViewModelTest {
         assertThat(viewModel.aliasItemFormState.prefix).isEqualTo(firstPrefix)
     }
 
-    private fun createAliasViewModel(title: String? = null, isDraft: Boolean = false) = CreateAliasViewModel(
+    private fun createAliasViewModel(
+        title: String? = null,
+        isDraft: Boolean = false,
+        aliasItemFormProcessor: AliasItemFormProcessorType = FakeAliasItemFormProcessor()
+    ) = CreateAliasViewModel(
         accountManager = FakeAccountManager().apply {
             sendPrimaryUserId(UserId("123"))
         },
@@ -277,7 +310,7 @@ class CreateAliasViewModelTest {
         customFieldHandler = CustomFieldHandlerImpl(FakeTotpManager(), FakeEncryptionContextProvider()),
         customFieldDraftRepository = CustomFieldDraftRepositoryImpl(),
         canPerformPaidAction = FakeCanPerformPaidAction(),
-        aliasItemFormProcessor = FakeAliasItemFormProcessor(),
+        aliasItemFormProcessor = aliasItemFormProcessor,
         clipboardManager = FakeClipboardManager(),
         observeShare = observeShare,
         settingsRepository = settingsRepository,

@@ -51,7 +51,7 @@ fun CreateAliasBottomSheet(
 
     val isAliasDraftSaved = state.baseAliasUiState.isAliasDraftSavedState
     if (isAliasDraftSaved is AliasDraftSavedState.Success) {
-        LaunchedEffect(state.shareUiState) {
+        LaunchedEffect(isAliasDraftSaved) {
             if (state.shareUiState is ShareUiState.Success) {
                 val event = BaseAliasNavigation.OnCreateAliasEvent(
                     CreatedFromBottomsheet(

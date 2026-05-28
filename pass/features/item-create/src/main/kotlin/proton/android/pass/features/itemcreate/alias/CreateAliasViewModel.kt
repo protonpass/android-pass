@@ -371,6 +371,11 @@ open class CreateAliasViewModel @Inject constructor(
     }
 
     fun createAlias(shareId: ShareId) = viewModelScope.launch(coroutineExceptionHandler) {
+        if (isDraft && aliasItemFormState.title.isBlank() && aliasItemFormState.prefix.isNotBlank()) {
+            aliasItemFormMutableState = aliasItemFormMutableState.copy(
+                title = aliasItemFormMutableState.prefix
+            )
+        }
         val aliasItem = aliasItemFormState
         if (aliasItem.selectedSuffix == null) {
             PassLogger.w(TAG, "Cannot create alias as SelectedSuffix is null")
@@ -382,7 +387,9 @@ open class CreateAliasViewModel @Inject constructor(
         if (isDraft) {
             PassLogger.d(TAG, "Creating draft alias")
             draftRepository.save(KEY_DRAFT_ALIAS, aliasItem)
-            isAliasDraftSavedState.tryEmit(AliasDraftSavedState.Success(shareId, aliasItem))
+            isAliasDraftSavedState.update {
+                AliasDraftSavedState.Success(shareId, aliasItem)
+            }
         } else {
             PassLogger.d(TAG, "Performing create alias")
             isLoadingState.update { IsLoadingState.Loading }

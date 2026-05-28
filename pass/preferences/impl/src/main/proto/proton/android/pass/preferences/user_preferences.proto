@@ -41,4 +41,5 @@ message UserPreferences {
   map<string, BooleanPrefProto> feature_discovery_banners = 27;
   int32 autofill_display = 28;
   BooleanPrefProto autosave_enabled = 29;
+  map<string, string> last_item_folder_per_user = 30;  // userId → folderId ("" = no folder)
 }

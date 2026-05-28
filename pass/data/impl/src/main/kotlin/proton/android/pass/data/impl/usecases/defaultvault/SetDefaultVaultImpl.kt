@@ -21,6 +21,7 @@ package proton.android.pass.data.impl.usecases.defaultvault
 import kotlinx.coroutines.flow.firstOrNull
 import proton.android.pass.data.api.usecases.ObserveCurrentUser
 import proton.android.pass.data.api.usecases.defaultvault.SetDefaultVault
+import proton.android.pass.domain.FolderId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.preferences.UserPreferencesRepository
 import javax.inject.Inject
@@ -32,7 +33,13 @@ class SetDefaultVaultImpl @Inject constructor(
     private val userPreferencesRepository: UserPreferencesRepository
 ) : SetDefaultVault {
 
-    override suspend fun invoke(shareId: ShareId): Result<Unit> = observeCurrentUser().firstOrNull()
-        ?.let { userPreferencesRepository.setDefaultVault(it.userId, shareId) }
-        ?: Result.failure(Exception("No user found"))
+    override suspend fun invoke(shareId: ShareId, folderId: FolderId?): Result<Unit> =
+        observeCurrentUser().firstOrNull()
+            ?.let { user ->
+                userPreferencesRepository.setLastItemFolder(user.userId, folderId)
+                    .mapCatching {
+                        userPreferencesRepository.setDefaultVault(user.userId, shareId).getOrThrow()
+                    }
+            }
+            ?: Result.failure(Exception("No user found"))
 }

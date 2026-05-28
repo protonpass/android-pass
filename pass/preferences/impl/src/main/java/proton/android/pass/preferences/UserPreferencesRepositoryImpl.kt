@@ -30,9 +30,11 @@ import kotlinx.coroutines.withContext
 import me.proton.android.pass.preferences.BooleanPrefProto
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.appconfig.api.AppConfig
+import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.safeRunCatching
 import proton.android.pass.common.api.toOption
+import proton.android.pass.domain.FolderId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.preferences.featurediscovery.FeatureDiscoveryBannerPreference
@@ -217,6 +219,14 @@ class UserPreferencesRepositoryImpl @Inject constructor(
             defaultVaultPerUser[userId.id].toOption()
         }
     }
+
+    override fun setLastItemFolder(userId: UserId, folderId: FolderId?): Result<Unit> = setPreference {
+        it.putLastItemFolderPerUser(userId.id, folderId?.id ?: "")
+    }
+
+    override fun getLastItemFolder(userId: UserId): Flow<Option<String>> =
+        getPreference { it.lastItemFolderPerUserMap[userId.id] }
+            .map { rawStr -> if (rawStr.isNullOrEmpty()) None else rawStr.toOption() }
 
     override fun tryClearPreferences(): Result<Unit> = runBlocking { clearPreferences() }
 

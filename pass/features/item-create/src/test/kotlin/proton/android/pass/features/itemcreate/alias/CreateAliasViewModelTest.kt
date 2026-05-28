@@ -40,6 +40,7 @@ import proton.android.pass.data.fakes.usecases.FakeObserveAliasOptions
 import proton.android.pass.data.fakes.usecases.FakeObserveDefaultVault
 import proton.android.pass.data.fakes.usecases.FakeObserveUpgradeInfo
 import proton.android.pass.data.fakes.usecases.FakeObserveVaultsWithItemCount
+import proton.android.pass.data.fakes.usecases.FakeSetDefaultVault
 import proton.android.pass.data.fakes.usecases.attachments.FakeLinkAttachmentsToItem
 import proton.android.pass.data.fakes.usecases.folders.FakeObserveFolder
 import proton.android.pass.data.fakes.usecases.shares.FakeObserveShare
@@ -86,6 +87,7 @@ class CreateAliasViewModelTest {
     private lateinit var inAppReviewTriggerMetrics: FakeInAppReviewTriggerMetrics
     private lateinit var observeShare: FakeObserveShare
     private lateinit var settingsRepository: FakeInternalSettingsRepository
+    private lateinit var setDefaultVault: FakeSetDefaultVault
 
     @Before
     fun setUp() {
@@ -103,6 +105,7 @@ class CreateAliasViewModelTest {
         inAppReviewTriggerMetrics = FakeInAppReviewTriggerMetrics()
         observeShare = FakeObserveShare()
         settingsRepository = FakeInternalSettingsRepository()
+        setDefaultVault = FakeSetDefaultVault()
     }
 
 
@@ -265,6 +268,7 @@ class CreateAliasViewModelTest {
         inAppReviewTriggerMetrics = FakeInAppReviewTriggerMetrics(),
         encryptionContextProvider = FakeEncryptionContextProvider(),
         observeDefaultVault = FakeObserveDefaultVault(),
+        setDefaultVault = setDefaultVault,
         linkAttachmentsToItem = FakeLinkAttachmentsToItem(),
         attachmentsHandler = FakeAttachmentHandler(),
         userPreferencesRepository = FakePreferenceRepository(),

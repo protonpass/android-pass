@@ -49,6 +49,7 @@ import proton.android.pass.data.fakes.usecases.FakeObserveDefaultVault
 import proton.android.pass.data.fakes.usecases.FakeCanCreateAlias
 import proton.android.pass.data.fakes.usecases.FakeObserveUpgradeInfo
 import proton.android.pass.data.fakes.usecases.FakeObserveVaultsWithItemCount
+import proton.android.pass.data.fakes.usecases.FakeSetDefaultVault
 import proton.android.pass.data.fakes.usecases.attachments.FakeLinkAttachmentsToItem
 import proton.android.pass.data.fakes.usecases.folders.FakeObserveFolder
 import proton.android.pass.data.fakes.usecases.shares.FakeObserveShare
@@ -108,6 +109,7 @@ internal class CreateLoginNavItemViewModelTest {
     private lateinit var loginItemFormProcessor: FakeLoginItemFormProcessor
     private lateinit var observeShare: FakeObserveShare
     private lateinit var settingsRepository: FakeInternalSettingsRepository
+    private lateinit var setDefaultVault: FakeSetDefaultVault
 
     @Before
     fun setUp() {
@@ -124,6 +126,7 @@ internal class CreateLoginNavItemViewModelTest {
         loginItemFormProcessor = FakeLoginItemFormProcessor()
         observeShare = FakeObserveShare()
         settingsRepository = FakeInternalSettingsRepository()
+        setDefaultVault = FakeSetDefaultVault()
         instance = CreateLoginViewModel(
             accountManager = accountManager,
             createItem = createItem,
@@ -141,6 +144,7 @@ internal class CreateLoginNavItemViewModelTest {
             observeUpgradeInfo = observeUpgradeInfo,
             inAppReviewTriggerMetrics = FakeInAppReviewTriggerMetrics(),
             observeDefaultVault = FakeObserveDefaultVault(),
+            setDefaultVault = setDefaultVault,
             generatePasskey = FakeGeneratePasskey(),
             emailValidator = FakeEmailValidator(),
             observeTooltipEnabled = FakeObserveTooltipEnabled(),

@@ -23,18 +23,18 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.data.api.usecases.defaultvault.ObserveDefaultVault
-import proton.android.pass.domain.VaultWithItemCount
+import proton.android.pass.data.api.usecases.defaultvault.VaultWithFolder
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
 class FakeObserveDefaultVault @Inject constructor() : ObserveDefaultVault {
 
-    private val flow = MutableStateFlow<Option<VaultWithItemCount>>(None)
+    private val flow = MutableStateFlow<Option<VaultWithFolder>>(None)
 
-    fun emitValue(value: Option<VaultWithItemCount>) {
+    fun emitValue(value: Option<VaultWithFolder>) {
         flow.tryEmit(value)
     }
 
-    override fun invoke(): Flow<Option<VaultWithItemCount>> = flow
+    override fun invoke(): Flow<Option<VaultWithFolder>> = flow
 }

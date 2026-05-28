@@ -20,8 +20,7 @@ package proton.android.pass.data.api.usecases.defaultvault
 
 import kotlinx.coroutines.flow.Flow
 import proton.android.pass.common.api.Option
-import proton.android.pass.domain.VaultWithItemCount
 
 interface ObserveDefaultVault {
-    operator fun invoke(): Flow<Option<VaultWithItemCount>>
+    operator fun invoke(): Flow<Option<VaultWithFolder>>
 }

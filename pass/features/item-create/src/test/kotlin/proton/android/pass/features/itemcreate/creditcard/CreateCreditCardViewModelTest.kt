@@ -40,6 +40,7 @@ import proton.android.pass.data.fakes.usecases.FakeCreateItem
 import proton.android.pass.data.fakes.usecases.FakeGetItemById
 import proton.android.pass.data.fakes.usecases.FakeObserveDefaultVault
 import proton.android.pass.data.fakes.usecases.FakeObserveVaultsWithItemCount
+import proton.android.pass.data.fakes.usecases.FakeSetDefaultVault
 import proton.android.pass.data.fakes.usecases.attachments.FakeLinkAttachmentsToItem
 import proton.android.pass.data.fakes.usecases.folders.FakeObserveFolder
 import proton.android.pass.data.fakes.usecases.shares.FakeObserveShare
@@ -83,6 +84,7 @@ class CreateCreditCardViewModelTest {
     private lateinit var creditCardItemFormProcessor: FakeCreditCardItemFormProcessor
     private lateinit var observeShare: FakeObserveShare
     private lateinit var settingsRepository: FakeInternalSettingsRepository
+    private lateinit var setDefaultVault: FakeSetDefaultVault
 
     @Before
     fun setUp() {
@@ -95,6 +97,7 @@ class CreateCreditCardViewModelTest {
         creditCardItemFormProcessor = FakeCreditCardItemFormProcessor()
         observeShare = FakeObserveShare()
         settingsRepository = FakeInternalSettingsRepository()
+        setDefaultVault = FakeSetDefaultVault()
         instance = CreateCreditCardViewModel(
             accountManager = FakeAccountManager().apply {
                 sendPrimaryUserId(UserId("user-id"))
@@ -108,6 +111,7 @@ class CreateCreditCardViewModelTest {
             canPerformPaidAction = canPerformPaidAction,
             inAppReviewTriggerMetrics = FakeInAppReviewTriggerMetrics(),
             observeDefaultVault = FakeObserveDefaultVault(),
+            setDefaultVault = setDefaultVault,
             linkAttachmentsToItem = FakeLinkAttachmentsToItem(),
             attachmentsHandler = FakeAttachmentHandler(),
             userPreferencesRepository = FakePreferenceRepository(),
@@ -280,6 +284,35 @@ class CreateCreditCardViewModelTest {
             val shareState = (state as CreateCreditCardUiState.Success).shareUiState as? ShareUiState.Success
             assertThat(shareState?.selectedFolder?.id).isNull()
         }
+    }
+
+    @Test
+    fun `setDefaultVault is called with correct shareId and null folderId after successful createItem`() = runTest {
+        val shareId = ShareId("shareId")
+        val item = ItemTestFactory.createCreditCard()
+        sendInitialVault(shareId)
+        instance.onTitleChange("Title")
+        createItem.sendItem(Result.success(item))
+
+        instance.state.test {
+            instance.createItem()
+            // Consume emitted states until isItemSaved is set (success), or timeout
+            var found = false
+            while (!found) {
+                val state = awaitItem()
+                if (state is CreateCreditCardUiState.Success &&
+                    state.baseState.isItemSaved is ItemSavedState.Success
+                ) {
+                    found = true
+                }
+            }
+            cancelAndIgnoreRemainingEvents()
+        }
+
+        val memory = setDefaultVault.getMemory()
+        assertThat(memory).isNotEmpty()
+        assertThat(memory.last().shareId).isEqualTo(shareId)
+        assertThat(memory.last().folderId).isNull()
     }
 
     private fun sendInitialVault(shareId: ShareId): VaultWithItemCount {

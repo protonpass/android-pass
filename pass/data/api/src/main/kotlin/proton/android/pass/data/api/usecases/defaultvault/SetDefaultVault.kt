@@ -18,8 +18,9 @@
 
 package proton.android.pass.data.api.usecases.defaultvault
 
+import proton.android.pass.domain.FolderId
 import proton.android.pass.domain.ShareId
 
 interface SetDefaultVault {
-    suspend operator fun invoke(shareId: ShareId): Result<Unit>
+    suspend operator fun invoke(shareId: ShareId, folderId: FolderId? = null): Result<Unit>
 }

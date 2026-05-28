@@ -26,6 +26,7 @@ import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.toOption
+import proton.android.pass.domain.FolderId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.preferences.featurediscovery.FeatureDiscoveryBannerPreference
 import proton.android.pass.preferences.featurediscovery.FeatureDiscoveryFeature
@@ -70,6 +71,7 @@ class FakePreferenceRepository @Inject constructor() : UserPreferencesRepository
     private val biometricSystemLockPreference: MutableStateFlow<BiometricSystemLockPreference> =
         MutableStateFlow(BiometricSystemLockPreference.Enabled)
     private val defaultVaultPreference = MutableStateFlow<Option<String>>(None)
+    private val lastItemFolderPreference = MutableStateFlow<Option<String>>(None)
     private val passwordGenerationPreference = MutableStateFlow(
         PasswordGenerationPreference(
             mode = PasswordGenerationMode.Words,
@@ -232,6 +234,13 @@ class FakePreferenceRepository @Inject constructor() : UserPreferencesRepository
     }
 
     override fun getDefaultVault(userId: UserId): Flow<Option<String>> = defaultVaultPreference
+
+    override fun setLastItemFolder(userId: UserId, folderId: FolderId?): Result<Unit> {
+        lastItemFolderPreference.tryEmit(folderId?.id.toOption())
+        return Result.success(Unit)
+    }
+
+    override fun getLastItemFolder(userId: UserId): Flow<Option<String>> = lastItemFolderPreference
 
     override fun tryClearPreferences(): Result<Unit> = Result.success(Unit)
 

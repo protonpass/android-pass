@@ -21,6 +21,7 @@ package proton.android.pass.preferences
 import kotlinx.coroutines.flow.Flow
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.Option
+import proton.android.pass.domain.FolderId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.preferences.featurediscovery.FeatureDiscoveryBannerPreference
 import proton.android.pass.preferences.featurediscovery.FeatureDiscoveryFeature
@@ -83,6 +84,9 @@ interface UserPreferencesRepository {
 
     fun setDefaultVault(userId: UserId, shareId: ShareId): Result<Unit>
     fun getDefaultVault(userId: UserId): Flow<Option<String>>
+
+    fun setLastItemFolder(userId: UserId, folderId: FolderId?): Result<Unit>
+    fun getLastItemFolder(userId: UserId): Flow<Option<String>>
 
     fun tryClearPreferences(): Result<Unit>
     suspend fun clearPreferences(): Result<Unit>

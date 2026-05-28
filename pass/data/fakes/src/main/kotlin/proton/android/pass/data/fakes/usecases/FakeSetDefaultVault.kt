@@ -19,6 +19,7 @@
 package proton.android.pass.data.fakes.usecases
 
 import proton.android.pass.data.api.usecases.defaultvault.SetDefaultVault
+import proton.android.pass.domain.FolderId
 import proton.android.pass.domain.ShareId
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -35,12 +36,11 @@ class FakeSetDefaultVault @Inject constructor() : SetDefaultVault {
         result = value
     }
 
-    override suspend fun invoke(shareId: ShareId): Result<Unit> {
-        memory.add(Payload(shareId))
+    override suspend fun invoke(shareId: ShareId, folderId: FolderId?): Result<Unit> {
+        memory.add(Payload(shareId = shareId, folderId = folderId))
         return result
     }
 
-    @JvmInline
-    value class Payload(val shareId: ShareId)
+    data class Payload(val shareId: ShareId, val folderId: FolderId?)
 
 }

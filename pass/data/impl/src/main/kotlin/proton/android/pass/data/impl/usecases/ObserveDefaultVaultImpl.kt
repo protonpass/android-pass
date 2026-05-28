@@ -33,9 +33,11 @@ import proton.android.pass.data.api.usecases.GetVaultWithItemCountById
 import proton.android.pass.data.api.usecases.ObserveCurrentUser
 import proton.android.pass.data.api.usecases.ObserveVaults
 import proton.android.pass.data.api.usecases.defaultvault.ObserveDefaultVault
+import proton.android.pass.data.api.usecases.defaultvault.VaultWithFolder
+import proton.android.pass.data.api.usecases.folders.ObserveFolder
+import proton.android.pass.domain.FolderId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.Vault
-import proton.android.pass.domain.VaultWithItemCount
 import proton.android.pass.domain.canCreate
 import proton.android.pass.domain.toPermissions
 import proton.android.pass.log.api.PassLogger
@@ -48,10 +50,11 @@ class ObserveDefaultVaultImpl @Inject constructor(
     private val observeCurrentUser: ObserveCurrentUser,
     private val preferencesRepository: UserPreferencesRepository,
     private val getVaultWithItemCount: GetVaultWithItemCountById,
-    private val observeVaults: ObserveVaults
+    private val observeVaults: ObserveVaults,
+    private val observeFolder: ObserveFolder
 ) : ObserveDefaultVault {
 
-    override fun invoke(): Flow<Option<VaultWithItemCount>> = observeCurrentUser()
+    override fun invoke(): Flow<Option<VaultWithFolder>> = observeCurrentUser()
         .flatMapLatest { user ->
             combine(
                 observeVaults(includeHidden = true),
@@ -63,6 +66,34 @@ class ObserveDefaultVaultImpl @Inject constructor(
                     None -> flowOf(None)
                     is Some -> getVaultWithItemCount(shareId = shareIdOption.value)
                         .map { it.toOption() }
+                        .combine(preferencesRepository.getLastItemFolder(user.userId)) { vaultOpt, folderIdStrOpt ->
+                            Pair(vaultOpt, folderIdStrOpt.map(::FolderId))
+                        }
+                        .flatMapLatest { (vaultOpt, folderIdOpt) ->
+                            val vault = vaultOpt.value()
+                            val folderId = folderIdOpt.value()
+                            when {
+                                vault == null -> flowOf(None)
+                                folderId == null -> flowOf(
+                                    Some(
+                                        VaultWithFolder(
+                                            vault = vault,
+                                            folderId = None
+                                        )
+                                    )
+                                )
+
+                                else -> observeFolder(user.userId, vault.vault.shareId, folderId)
+                                    .map { folder ->
+                                        Some(
+                                            VaultWithFolder(
+                                                vault = vault,
+                                                folderId = folder?.folderId.toOption()
+                                            )
+                                        )
+                                    }
+                            }
+                        }
                 }
             }
         }
@@ -82,6 +113,7 @@ class ObserveDefaultVaultImpl @Inject constructor(
                 setDefaultVault(userId, oldestVault.shareId)
                 oldestVault.shareId.some()
             }
+
             is Some -> {
                 if (vaults.none { it.shareId == defaultVaultShareIdOption.value }) {
                     oldestVault.shareId.some()

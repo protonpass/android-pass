@@ -32,6 +32,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import me.proton.core.accountmanager.domain.AccountManager
@@ -48,6 +49,7 @@ import proton.android.pass.data.api.usecases.CreateItem
 import proton.android.pass.data.api.usecases.GetItemById
 import proton.android.pass.data.api.usecases.ObserveVaultsWithItemCount
 import proton.android.pass.data.api.usecases.defaultvault.ObserveDefaultVault
+import proton.android.pass.data.api.usecases.defaultvault.SetDefaultVault
 import proton.android.pass.data.api.usecases.folders.ObserveFolder
 import proton.android.pass.data.api.usecases.shares.ObserveShare
 import proton.android.pass.domain.FolderId
@@ -62,6 +64,7 @@ import proton.android.pass.features.itemcreate.common.ShareUiState
 import proton.android.pass.features.itemcreate.common.canDisplayWarningMessageForCreationFlow
 import proton.android.pass.features.itemcreate.common.getFolderNameFlow
 import proton.android.pass.features.itemcreate.common.getShareUiStateFlow
+import proton.android.pass.features.itemcreate.common.persistDefaultVaultAndFolder
 import proton.android.pass.features.itemcreate.identity.presentation.IdentitySnackbarMessage.ItemCreated
 import proton.android.pass.features.itemcreate.identity.presentation.IdentitySnackbarMessage.ItemCreationError
 import proton.android.pass.inappreview.api.InAppReviewTriggerMetrics
@@ -83,6 +86,7 @@ class CreateIdentityViewModel @Inject constructor(
     private val inAppReviewTriggerMetrics: InAppReviewTriggerMetrics,
     private val snackbarDispatcher: SnackbarDispatcher,
     private val getItemById: GetItemById,
+    private val setDefaultVault: SetDefaultVault,
     observeVaults: ObserveVaultsWithItemCount,
     observeDefaultVault: ObserveDefaultVault,
     observeFolder: ObserveFolder,
@@ -136,12 +140,16 @@ class CreateIdentityViewModel @Inject constructor(
                 initialValue = navFolderId.toOption()
             )
 
+    private val defaultVaultFlow = observeDefaultVault()
+
     private val selectedFolderNameFlow = getFolderNameFlow(
         accountManager = accountManager,
         observeFolder = observeFolder,
         selectedShareIdState = selectedShareIdState,
         selectedFolderIdFlow = selectedFolderIdState,
-        navShareIdState = flowOf(navShareId)
+        navShareIdState = flowOf(navShareId),
+        defaultVaultShareIdFlow = defaultVaultFlow.map { it.map { vwf -> vwf.shareId } },
+        defaultVaultFolderIdFlow = defaultVaultFlow.map { it.flatMap { vwf -> vwf.folderId } }
     )
 
     private val canDisplayWarningVaultSharedDialogFlow =
@@ -156,7 +164,7 @@ class CreateIdentityViewModel @Inject constructor(
         navShareIdState = flowOf(navShareId),
         selectedShareIdState = selectedShareIdState,
         observeAllVaultsFlow = observeVaults(includeHidden = true).asLoadingResult(),
-        observeDefaultVaultFlow = observeDefaultVault().asLoadingResult(),
+        observeDefaultVaultFlow = defaultVaultFlow.asLoadingResult(),
         viewModelScope = viewModelScope,
         tag = TAG,
         selectedFolderNameFlow = selectedFolderNameFlow,
@@ -230,6 +238,7 @@ class CreateIdentityViewModel @Inject constructor(
                 snackbarDispatcher(ItemCreated)
                 inAppReviewTriggerMetrics.incrementItemCreatedCount()
                 identityActionsProvider.onItemSavedState(item)
+                persistDefaultVaultAndFolder(viewModelScope, shareUiState, setDefaultVault, TAG)
                 telemetryManager.sendEvent(ItemCreate(EventItemType.Identity))
             }
         identityActionsProvider.updateLoadingState(IsLoadingState.NotLoading)

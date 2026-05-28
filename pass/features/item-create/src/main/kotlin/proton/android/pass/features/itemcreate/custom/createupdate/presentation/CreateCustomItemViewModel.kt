@@ -32,6 +32,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import me.proton.core.accountmanager.domain.AccountManager
@@ -55,6 +56,7 @@ import proton.android.pass.data.api.usecases.GetItemById
 import proton.android.pass.data.api.usecases.ObserveVaultsWithItemCount
 import proton.android.pass.data.api.usecases.attachments.LinkAttachmentsToItem
 import proton.android.pass.data.api.usecases.defaultvault.ObserveDefaultVault
+import proton.android.pass.data.api.usecases.defaultvault.SetDefaultVault
 import proton.android.pass.data.api.usecases.folders.ObserveFolder
 import proton.android.pass.data.api.usecases.shares.ObserveShare
 import proton.android.pass.domain.FolderId
@@ -78,6 +80,7 @@ import proton.android.pass.features.itemcreate.common.customfields.CustomFieldHa
 import proton.android.pass.features.itemcreate.common.formprocessor.CustomItemFormProcessor
 import proton.android.pass.features.itemcreate.common.getFolderNameFlow
 import proton.android.pass.features.itemcreate.common.getShareUiStateFlow
+import proton.android.pass.features.itemcreate.common.persistDefaultVaultAndFolder
 import proton.android.pass.features.itemcreate.custom.createupdate.navigation.TemplateTypeNavArgId
 import proton.android.pass.features.itemcreate.custom.createupdate.presentation.CreateSpecificIntent.OnVaultSelected
 import proton.android.pass.features.itemcreate.custom.createupdate.presentation.CreateSpecificIntent.PrefillTemplate
@@ -104,6 +107,7 @@ class CreateCustomItemViewModel @Inject constructor(
     private val snackbarDispatcher: SnackbarDispatcher,
     private val encryptionContextProvider: EncryptionContextProvider,
     private val getItemById: GetItemById,
+    private val setDefaultVault: SetDefaultVault,
     canPerformPaidAction: CanPerformPaidAction,
     linkAttachmentsToItem: LinkAttachmentsToItem,
     attachmentsHandler: AttachmentsHandler,
@@ -183,19 +187,23 @@ class CreateCustomItemViewModel @Inject constructor(
                 initialValue = navFolderId.toOption()
             )
 
+    private val defaultVaultFlow = observeDefaultVault()
+
     private val selectedFolderNameFlow = getFolderNameFlow(
         accountManager = accountManager,
         observeFolder = observeFolder,
         selectedShareIdState = selectedShareIdState,
         selectedFolderIdFlow = selectedFolderIdState,
-        navShareIdState = flowOf(navShareId)
+        navShareIdState = flowOf(navShareId),
+        defaultVaultShareIdFlow = defaultVaultFlow.map { it.map { vwf -> vwf.shareId } },
+        defaultVaultFolderIdFlow = defaultVaultFlow.map { it.flatMap { vwf -> vwf.folderId } }
     )
 
     private val shareUiState: StateFlow<ShareUiState> = getShareUiStateFlow(
         navShareIdState = flowOf(navShareId),
         selectedShareIdState = selectedShareIdState,
         observeAllVaultsFlow = observeVaults(includeHidden = true).asLoadingResult(),
-        observeDefaultVaultFlow = observeDefaultVault().asLoadingResult(),
+        observeDefaultVaultFlow = defaultVaultFlow.asLoadingResult(),
         viewModelScope = viewModelScope,
         tag = TAG,
         selectedFolderNameFlow = selectedFolderNameFlow,
@@ -305,6 +313,7 @@ class CreateCustomItemViewModel @Inject constructor(
                     linkAttachments(item.shareId, item.id, item.revision)
                     inAppReviewTriggerMetrics.incrementItemCreatedCount()
                     onItemSavedState(item)
+                    persistDefaultVaultAndFolder(viewModelScope, shareUiState, setDefaultVault, TAG)
                     telemetryManager.sendEvent(ItemCreate(EventItemType.Custom))
                 }
             updateLoadingState(IsLoadingState.NotLoading)

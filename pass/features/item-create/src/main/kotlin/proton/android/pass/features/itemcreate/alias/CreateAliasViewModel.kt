@@ -67,6 +67,7 @@ import proton.android.pass.data.api.usecases.ObserveUpgradeInfo
 import proton.android.pass.data.api.usecases.ObserveVaultsWithItemCount
 import proton.android.pass.data.api.usecases.attachments.LinkAttachmentsToItem
 import proton.android.pass.data.api.usecases.defaultvault.ObserveDefaultVault
+import proton.android.pass.data.api.usecases.defaultvault.SetDefaultVault
 import proton.android.pass.data.api.usecases.folders.ObserveFolder
 import proton.android.pass.data.api.usecases.shares.ObserveShare
 import proton.android.pass.domain.AliasOptions
@@ -92,6 +93,7 @@ import proton.android.pass.features.itemcreate.common.customfields.CustomFieldHa
 import proton.android.pass.features.itemcreate.common.formprocessor.AliasItemFormProcessorType
 import proton.android.pass.features.itemcreate.common.getFolderNameFlow
 import proton.android.pass.features.itemcreate.common.getShareUiStateFlow
+import proton.android.pass.features.itemcreate.common.persistDefaultVaultAndFolder
 import proton.android.pass.inappreview.api.InAppReviewTriggerMetrics
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonOptionalNavArgId
@@ -116,6 +118,7 @@ open class CreateAliasViewModel @Inject constructor(
     private val linkAttachmentsToItem: LinkAttachmentsToItem,
     private val mailboxDraftRepository: MailboxDraftRepository,
     private val suffixDraftRepository: SuffixDraftRepository,
+    private val setDefaultVault: SetDefaultVault,
     userPreferencesRepository: UserPreferencesRepository,
     observeAliasOptions: ObserveAliasOptions,
     observeVaults: ObserveVaultsWithItemCount,
@@ -183,12 +186,16 @@ open class CreateAliasViewModel @Inject constructor(
                 initialValue = navFolderId.toOption()
             )
 
+    private val defaultVaultFlow = observeDefaultVault()
+
     private val selectedFolderNameFlow = getFolderNameFlow(
         accountManager = accountManager,
         observeFolder = observeFolder,
         selectedShareIdState = selectedShareIdState,
         selectedFolderIdFlow = selectedFolderIdState,
-        navShareIdState = flowOf(navShareId)
+        navShareIdState = flowOf(navShareId),
+        defaultVaultShareIdFlow = defaultVaultFlow.map { it.map { vwf -> vwf.shareId } },
+        defaultVaultFolderIdFlow = defaultVaultFlow.map { it.flatMap { vwf -> vwf.folderId } }
     )
 
     private val observeAllVaultsFlow: Flow<List<VaultWithItemCount>> =
@@ -199,7 +206,7 @@ open class CreateAliasViewModel @Inject constructor(
         selectedShareIdState = selectedShareIdState,
         observeAllVaultsFlow = observeAllVaultsFlow.asLoadingResult(),
         viewModelScope = viewModelScope,
-        observeDefaultVaultFlow = observeDefaultVault().asLoadingResult(),
+        observeDefaultVaultFlow = defaultVaultFlow.asLoadingResult(),
         tag = TAG,
         selectedFolderNameFlow = selectedFolderNameFlow,
         selectedFolderIdFlow = selectedFolderIdState
@@ -429,6 +436,7 @@ open class CreateAliasViewModel @Inject constructor(
                     isItemSavedState.update {
                         ItemSavedState.Success(item.id, itemUiModel)
                     }
+                    persistDefaultVaultAndFolder(viewModelScope, shareUiState, setDefaultVault, TAG)
                     telemetryManager.sendEvent(ItemCreate(EventItemType.Alias))
                 }
         } else {

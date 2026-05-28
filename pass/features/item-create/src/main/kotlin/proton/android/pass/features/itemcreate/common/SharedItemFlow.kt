@@ -19,19 +19,26 @@
 package proton.android.pass.features.itemcreate.common
 
 import androidx.compose.runtime.snapshotFlow
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.NonCancellable
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onStart
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
 import proton.android.pass.data.api.usecases.ObserveItemById
+import proton.android.pass.data.api.usecases.defaultvault.SetDefaultVault
 import proton.android.pass.data.api.usecases.shares.ObserveShare
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
+import proton.android.pass.log.api.PassLogger
 import proton.android.pass.preferences.InternalSettingsRepository
 
 fun canDisplayWarningMessageForCreationFlow(
@@ -93,6 +100,26 @@ fun canDisplaySharedItemWarningDialogFlow(
 ) { hasShownItemInSharedVaultWarning, item ->
     !hasShownItemInSharedVaultWarning && (item?.shareCount ?: 0) > 0
 }.onStart { emit(false) }
+
+fun persistDefaultVaultAndFolder(
+    scope: CoroutineScope,
+    shareUiState: StateFlow<ShareUiState>,
+    setDefaultVault: SetDefaultVault,
+    tag: String
+) {
+    scope.launch {
+        withContext(NonCancellable) {
+            val currentState = shareUiState.value as? ShareUiState.Success ?: return@withContext
+            val shareId = currentState.currentVault.vault.shareId
+            val folderId = currentState.selectedFolder?.id
+            setDefaultVault(shareId, folderId)
+                .onFailure { e ->
+                    PassLogger.w(tag, e)
+                    PassLogger.w(tag, "Failed to persist default vault/folder")
+                }
+        }
+    }
+}
 
 enum class DialogWarningType {
     None,

@@ -86,6 +86,8 @@ fun CreateNoteScreen(
     LaunchedEffect(selectFolder) {
         if (selectFolder != null) {
             viewModel.changeFolder(selectFolder)
+        } else if (selectVault != null) {
+            viewModel.changeVault(selectVault)
         }
     }
     LaunchedEffect(navTotpUri) {

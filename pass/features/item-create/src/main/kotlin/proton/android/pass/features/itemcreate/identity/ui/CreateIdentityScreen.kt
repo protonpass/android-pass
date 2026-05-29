@@ -87,6 +87,8 @@ fun CreateIdentityScreen(
     LaunchedEffect(selectFolder) {
         if (selectFolder != null) {
             viewModel.onFolderSelect(selectFolder)
+        } else if (selectVault != null) {
+            viewModel.onVaultSelect(selectVault)
         }
     }
     TotpSetLaunchEffect(totpNavParams) { field, uri ->

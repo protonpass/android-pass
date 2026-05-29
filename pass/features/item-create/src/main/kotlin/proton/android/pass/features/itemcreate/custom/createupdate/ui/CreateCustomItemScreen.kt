@@ -96,6 +96,8 @@ fun CreateCustomItemScreen(
     LaunchedEffect(selectFolder) {
         if (selectFolder is Some) {
             viewModel.onFolderSelected(selectFolder.value)
+        } else if (selectVault is Some) {
+            viewModel.processIntent(OnVaultSelected(selectVault.value))
         }
     }
     LaunchedEffect(selectTotp) {

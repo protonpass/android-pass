@@ -90,6 +90,7 @@ dependencies {
     testImplementation(libs.truth)
     testImplementation(libs.coroutines.test)
     testImplementation(projects.pass.account.fakes)
+    testImplementation(projects.pass.biometry.fakes)
     testImplementation(projects.pass.common.fakes)
     testImplementation(projects.pass.commonTest)
     testImplementation(projects.pass.log.api)

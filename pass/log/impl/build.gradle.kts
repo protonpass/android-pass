@@ -68,6 +68,7 @@ dependencies {
 
     implementation(projects.pass.common.api)
     implementation(projects.pass.commonUi.api)
+    implementation(projects.pass.biometry.api)
     implementation(libs.core.accountManager.domain)
 
     addSpecialLib(

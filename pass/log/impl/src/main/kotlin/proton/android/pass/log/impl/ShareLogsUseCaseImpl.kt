@@ -25,10 +25,12 @@ import android.os.Build
 import android.os.Environment
 import android.os.LocaleList
 import android.os.StatFs
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.withContext
 import me.proton.core.accountmanager.domain.AccountManager
 import proton.android.pass.appconfig.api.AppConfig
+import proton.android.pass.biometry.NeedsBiometricAuth
 import proton.android.pass.common.api.AppDispatchers
 import proton.android.pass.common.api.FileSizeUtil.toHumanReadableSize
 import proton.android.pass.common.api.Some
@@ -49,14 +51,19 @@ class ShareLogsUseCaseImpl @Inject constructor(
     private val logFileManager: LogFileManager,
     private val accountManager: AccountManager,
     private val fileHandler: FileHandler,
-    private val appDispatchers: AppDispatchers
+    private val appDispatchers: AppDispatchers,
+    private val needsBiometricAuth: NeedsBiometricAuth
 ) : ShareLogsUseCase {
 
     @SuppressLint("LogNotTimber")
     override suspend fun invoke(context: Context): Result<File> = runCatching {
         // Prepare file and URI on IO dispatcher
         val (tempFile, tempFileUri) = withContext(appDispatchers.io) {
-            val userId = accountManager.getPrimaryUserId().firstOrNull()
+            var userId = accountManager.getPrimaryUserId().firstOrNull()
+            if (userId != null && needsBiometricAuth().first()) {
+                userId = null // do not share private logs in that case
+            }
+
             val logFile = logFileManager.getLogFile(userId)
             logFileManager.ensureLogFileExists(logFile)
 

@@ -33,6 +33,7 @@ import proton.android.pass.account.fakes.FakeAccountManager
 import proton.android.pass.appconfig.api.AppConfig
 import proton.android.pass.appconfig.api.BuildEnv
 import proton.android.pass.appconfig.api.BuildFlavor
+import proton.android.pass.biometry.FakeNeedsBiometricAuth
 import proton.android.pass.common.api.Some
 import proton.android.pass.common.fakes.FakeAppDispatchers
 import proton.android.pass.commonui.api.ClassHolder
@@ -59,6 +60,7 @@ class LogViewViewModelTest {
     private lateinit var shareLogsUseCase: ShareLogsUseCase
     private lateinit var fileHandler: TestFileHandler
     private lateinit var appDispatchers: FakeAppDispatchers
+    private lateinit var needsBiometricAuth: FakeNeedsBiometricAuth
     private lateinit var viewModel: LogViewViewModel
     private lateinit var tempDir: File
     private lateinit var context: Context
@@ -70,6 +72,7 @@ class LogViewViewModelTest {
         appDispatchers = FakeAppDispatchers()
         logFileManager = LogFileManagerImpl(context, appDispatchers)
         accountManager = FakeAccountManager()
+        needsBiometricAuth = FakeNeedsBiometricAuth()
 
         fileHandler = TestFileHandler()
         val appConfig = TestAppConfig()
@@ -78,7 +81,8 @@ class LogViewViewModelTest {
             logFileManager = logFileManager,
             accountManager = accountManager,
             fileHandler = fileHandler,
-            appDispatchers = appDispatchers
+            appDispatchers = appDispatchers,
+            needsBiometricAuth = needsBiometricAuth
         )
     }
 
@@ -404,6 +408,32 @@ class LogViewViewModelTest {
         val content = sharedFile.readText()
         assertThat(content).contains("-----------------------------------------")
         assertThat(content).contains("Unlogged content")
+    }
+
+    @Test
+    fun `shares only anonymous logs when app is locked even with a logged in user`() = runTest {
+        val userId = UserId("locked-user")
+        accountManager.sendPrimaryUserId(userId)
+        needsBiometricAuth.sendValue(true)
+        viewModel = createViewModel()
+
+        val userLogFile = logFileManager.getLogFile(userId)
+        userLogFile.parentFile?.mkdirs()
+        userLogFile.writeText("Sensitive authenticated content")
+
+        val anonymousFile = logFileManager.getLogFile(null)
+        anonymousFile.parentFile?.mkdirs()
+        anonymousFile.writeText("Anonymous content")
+
+        val contextHolder = ClassHolder(Some(WeakReference(context)))
+        viewModel.startShareIntent(contextHolder)
+        appDispatchers.testDispatcher.scheduler.advanceUntilIdle()
+
+        assertThat(fileHandler.lastSharedUri).isNotNull()
+        val sharedFile = File(fileHandler.lastSharedUri!!.path)
+        val content = sharedFile.readText()
+        assertThat(content).contains("Anonymous content")
+        assertThat(content).doesNotContain("Sensitive authenticated content")
     }
 
     @Test

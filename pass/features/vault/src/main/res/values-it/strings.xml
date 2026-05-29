@@ -44,7 +44,7 @@
   <string name="bottomsheet_cannot_create_more_vaults">Hai raggiunto il limite di casseforti da poter creare. Crea casseforti illimitate aggiornando il tuo abbonamento.</string>
   <string name="bottomsheet_cannot_select_not_primary_vault">Per interagire con le altre casseforti, devi effettuare l\'upgrade del tuo account.</string>
   <string name="bottomsheet_edit">Modifica</string>
-  <string name="bottomsheet_migrate_v2">Move all items</string>
+  <string name="bottomsheet_migrate_v2">Sposta tutti gli elementi</string>
   <string name="bottomsheet_delete_vault">Elimina la cassaforte</string>
   <string name="bottomsheet_share_vault">Condividi</string>
   <string name="bottomsheet_leave_vault">Abbandona la cassaforte</string>

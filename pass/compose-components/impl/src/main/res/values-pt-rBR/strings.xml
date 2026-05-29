@@ -31,13 +31,13 @@
   <string name="bottomsheet_view_item_history">Visualizar histórico</string>
   <string name="bottomsheet_monitor_exclude">Excluir do monitoramento</string>
   <string name="bottomsheet_monitor_include">Incluir no monitoramento</string>
-  <string name="bottomsheet_migrate_item_v2">Move</string>
+  <string name="bottomsheet_migrate_item_v2">Mover</string>
   <string name="bottomsheet_create_folder">Criar pasta</string>
   <string name="folder_tree_create_folder">Criar pasta</string>
   <string name="bottomsheet_rename_folder">Renomear</string>
   <string name="bottomsheet_create_sub_folder">Criar subpasta</string>
-  <string name="bottomsheet_move_folder">Move folder</string>
-  <string name="bottomsheet_move_all_items_in_folder">Move all items</string>
+  <string name="bottomsheet_move_folder">Mover pasta</string>
+  <string name="bottomsheet_move_all_items_in_folder">Mover todos os itens</string>
   <string name="bottomsheet_copy_item_note">Copiar nota</string>
   <string name="bottomsheet_delete_permanently">Excluir permanentemente</string>
   <string name="bottomsheet_restore">Restaurar</string>

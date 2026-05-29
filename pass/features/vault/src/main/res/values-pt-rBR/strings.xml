@@ -44,7 +44,7 @@
   <string name="bottomsheet_cannot_create_more_vaults">Você atingiu o limite de cofres que pode criar. Crie cofres ilimitados ao fazer upgrade de sua assinatura.</string>
   <string name="bottomsheet_cannot_select_not_primary_vault">Para interagir com seus outros cofres, você precisa fazer upgrade de sua conta.</string>
   <string name="bottomsheet_edit">Editar</string>
-  <string name="bottomsheet_migrate_v2">Move all items</string>
+  <string name="bottomsheet_migrate_v2">Mover todos os itens</string>
   <string name="bottomsheet_delete_vault">Excluir cofre</string>
   <string name="bottomsheet_share_vault">Compartilhar</string>
   <string name="bottomsheet_leave_vault">Deixar cofre</string>

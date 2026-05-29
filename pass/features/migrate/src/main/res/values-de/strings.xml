@@ -8,7 +8,6 @@
     <item quantity="one">Soll %d Eintrag in den folgenden Ordner verschoben werden?</item>
     <item quantity="other">Sollen %d Einträge in den folgenden Ordner verschoben werden?</item>
   </plurals>
-  <string name="migrate_all_items_confirm_title_bottom_sheet">Alle Einträge in folgenden Tresor verschieben?</string>
   <string name="migrate_item_confirm_confirm_button">Verschieben</string>
   <string name="migrate_item_success_snackbar">Einträge verschoben</string>
   <string name="migrate_item_error_snackbar">Fehler beim Verschieben des Eintrags.</string>
@@ -30,6 +29,9 @@
     <item quantity="one">Eintrag befindet sich bereits in diesem Ordner</item>
     <item quantity="other">%d Einträge befindet sich bereits in diesem Ordner</item>
   </plurals>
+  <string name="migrate_disabled_folder_reason_same_location">Der Ordner befindet sich bereits in diesem Speicherort</string>
+  <string name="migrate_disabled_folder_reason_being_moved">Dieser Ordner wird verschoben</string>
+  <string name="migrate_disabled_folder_reason_descendant">Dieser Ordner befindet sich in dem Ordner, der verschoben wird</string>
   <string name="migrate_disabled_vault_reason_no_permission">Du kannst in diesem Tresor keine Einträge erstellen.</string>
   <string name="migrate_disabled_vault_reason_same_vault">Du kannst einen Eintrag nicht in denselben Tresor verschieben.</string>
   <plurals name="migrate_items_shared_warning_title">
@@ -42,8 +44,7 @@
     <item quantity="other">%d Einträge werden derzeit geteilt. Wenn du sie in einen anderen Tresor verschiebst, verlieren alle anderen Benutzer den Zugriff.</item>
   </plurals>
   <string name="migrate_select_vault_title">Tresor auswählen</string>
-  <string name="migrate_move_all_items_confirm_title_bottom_sheet">Alle Einträge in den folgenden Tresor verschieben?</string>
-  <string name="migrate_move_all_items_to_folder_confirm_title_bottom_sheet">Alle Einträge in den folgenden Ordner verschieben?</string>
+  <string name="migrate_select_destination_for_source_title">Wähle den Zielort aus, an den alle Elemente aus %s verschoben werden sollen</string>
   <string name="migrate_folder_items_moved_success_snackbar">Einträge verschoben</string>
   <string name="migrate_folder_items_moved_error_snackbar">Fehler beim Verschieben der Einträge</string>
 </resources>

@@ -12,7 +12,6 @@
     <item quantity="many">Перамясціць %d элементаў у наступную папку?</item>
     <item quantity="other">Перамясціць %d элементаў у наступную папку?</item>
   </plurals>
-  <string name="migrate_all_items_confirm_title_bottom_sheet">Перамясціць усе элементы ў наступнае сховішча?</string>
   <string name="migrate_item_confirm_confirm_button">Перамясціць</string>
   <string name="migrate_item_success_snackbar">Элементы перамешчаны</string>
   <string name="migrate_item_error_snackbar">Памылка перамяшчэння элементаў</string>
@@ -36,6 +35,9 @@
     <item quantity="many">%d элементаў ужо знаходзяцца ў гэтай папцы</item>
     <item quantity="other">%d элементаў ужо знаходзяцца ў гэтай папцы</item>
   </plurals>
+  <string name="migrate_disabled_folder_reason_same_location">Папка ўжо знаходзіцца ў гэтым размяшчэнні</string>
+  <string name="migrate_disabled_folder_reason_being_moved">Гэта папка перамяшчаецца</string>
+  <string name="migrate_disabled_folder_reason_descendant">Гэтая папка знаходзіцца ўнутры папкі, якая перамяшчаецца</string>
   <string name="migrate_disabled_vault_reason_no_permission">Вы не можаце ствараць элементы ў гэтым сховішчы</string>
   <string name="migrate_disabled_vault_reason_same_vault">Вы не можаце перамясціць элемент у тое ж самае сховішча</string>
   <plurals name="migrate_items_shared_warning_title">
@@ -52,8 +54,7 @@
     <item quantity="other">%d элементаў у цяперашні час абагулены. Іх перамяшчэнне ў іншае сховішча пазбавіць доступу ўсіх іншых карыстальнікаў.</item>
   </plurals>
   <string name="migrate_select_vault_title">Выбраць сховішча</string>
-  <string name="migrate_move_all_items_confirm_title_bottom_sheet">Перамясціць усе элементы ў наступнае сховішча?</string>
-  <string name="migrate_move_all_items_to_folder_confirm_title_bottom_sheet">Перамясціць усе элементы ў наступную папку?</string>
+  <string name="migrate_select_destination_for_source_title">Выберыце прызначэнне для перамяшчэння ўсіх элементаў з %s</string>
   <string name="migrate_folder_items_moved_success_snackbar">Элементы перамешчаны</string>
   <string name="migrate_folder_items_moved_error_snackbar">Памылка перамяшчэння элементаў</string>
 </resources>

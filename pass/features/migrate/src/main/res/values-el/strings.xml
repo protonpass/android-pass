@@ -8,7 +8,6 @@
     <item quantity="one">Μετακίνηση %d στοιχείου στον ακόλουθο φάκελο;</item>
     <item quantity="other">Μετακίνηση %d στοιχείων στον ακόλουθο φάκελο;</item>
   </plurals>
-  <string name="migrate_all_items_confirm_title_bottom_sheet">Μετακινήστε όλα τα στοιχεία στην ακόλουθη θυρίδα αποθήκευσης;</string>
   <string name="migrate_item_confirm_confirm_button">Μεταφορά</string>
   <string name="migrate_item_success_snackbar">Τα στοιχεία μετακινήθηκαν</string>
   <string name="migrate_item_error_snackbar">Σφάλμα κατά τη μετακίνηση των στοιχείων</string>
@@ -30,6 +29,9 @@
     <item quantity="one">Το στοιχείο υπάρχει ήδη σε αυτόν τον φάκελο</item>
     <item quantity="other">%d στοιχεία υπάρχουν ήδη σε αυτόν τον φάκελο</item>
   </plurals>
+  <string name="migrate_disabled_folder_reason_same_location">Αυτός ο φάκελος βρίσκεται ήδη σε αυτήν την τοποθεσία</string>
+  <string name="migrate_disabled_folder_reason_being_moved">Αυτός ο φάκελος μετακινείται</string>
+  <string name="migrate_disabled_folder_reason_descendant">Αυτός ο φάκελος βρίσκεται μέσα στον φάκελο που μετακινείται</string>
   <string name="migrate_disabled_vault_reason_no_permission">Δεν μπορείτε να δημιουργήσετε στοιχεία σε αυτήν την κρύπτη</string>
   <string name="migrate_disabled_vault_reason_same_vault">Δεν μπορείτε να μετακινήσετε ένα στοιχείο στην ίδια κρύπτη</string>
   <plurals name="migrate_items_shared_warning_title">
@@ -42,8 +44,7 @@
     <item quantity="other">%d στοιχεία είναι κοινόχρηστα. Αν μεταφερθούν σε άλλη κρύπτη, όλοι οι υπόλοιποι χρήστες θα χάσουν την πρόσβασή τους σε αυτά.</item>
   </plurals>
   <string name="migrate_select_vault_title">Επιλογή κρύπτης</string>
-  <string name="migrate_move_all_items_confirm_title_bottom_sheet">Μετακίνηση όλων των στοιχείων στην ακόλουθη κρύπτη;</string>
-  <string name="migrate_move_all_items_to_folder_confirm_title_bottom_sheet">Μετακίνηση όλων των στοιχείων στον ακόλουθο φάκελο;</string>
+  <string name="migrate_select_destination_for_source_title">Επιλέξτε τον προορισμό από τον οποίο θα μετακινηθούν όλα τα στοιχεία %s</string>
   <string name="migrate_folder_items_moved_success_snackbar">Τα στοιχεία μετακινήθηκαν</string>
   <string name="migrate_folder_items_moved_error_snackbar">Σφάλμα κατά τη μετακίνηση των στοιχείων</string>
 </resources>

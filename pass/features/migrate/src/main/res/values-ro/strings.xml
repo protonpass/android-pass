@@ -10,7 +10,6 @@
     <item quantity="few">Mutați %d articole în folderul următor?</item>
     <item quantity="other">Mutați %d de articole în folderul următor?</item>
   </plurals>
-  <string name="migrate_all_items_confirm_title_bottom_sheet">Mutați toate aceste articole în seiful următor?</string>
   <string name="migrate_item_confirm_confirm_button">Mutare</string>
   <string name="migrate_item_success_snackbar">Articole au fost mutate.</string>
   <string name="migrate_item_error_snackbar">Eroare la mutarea articolelor.</string>
@@ -33,6 +32,9 @@
     <item quantity="few">În acest folder există deja %d articole.</item>
     <item quantity="other">În acest folder există deja %d de articole.</item>
   </plurals>
+  <string name="migrate_disabled_folder_reason_same_location">Acest folder există deja în acest loc.</string>
+  <string name="migrate_disabled_folder_reason_being_moved">Acest folder este mutat.</string>
+  <string name="migrate_disabled_folder_reason_descendant">Acest folder se află în folderul care este mutat.</string>
   <string name="migrate_disabled_vault_reason_no_permission">Nu puteți crea articole în acest seif.</string>
   <string name="migrate_disabled_vault_reason_same_vault">Nu puteți muta un articol în același seif.</string>
   <plurals name="migrate_items_shared_warning_title">
@@ -47,8 +49,7 @@
     <item quantity="other">Sunt partajate %d de articole. Dacă le mutați în alt seif, ceilalți utilizatori nu le vor mai putea accesa.</item>
   </plurals>
   <string name="migrate_select_vault_title">Selectare seif</string>
-  <string name="migrate_move_all_items_confirm_title_bottom_sheet">Mutați toate articolele în seiful următor?</string>
-  <string name="migrate_move_all_items_to_folder_confirm_title_bottom_sheet">Mutați toate articolele în folderul următor?</string>
+  <string name="migrate_select_destination_for_source_title">Selectați destinația unde să fie mutate articolele din %s.</string>
   <string name="migrate_folder_items_moved_success_snackbar">Articole au fost mutate.</string>
   <string name="migrate_folder_items_moved_error_snackbar">Eroare la mutarea articolelor.</string>
 </resources>

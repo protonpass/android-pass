@@ -8,7 +8,6 @@
     <item quantity="one">Move %d item to the following folder?</item>
     <item quantity="other">Move %d items to the following folder?</item>
   </plurals>
-  <string name="migrate_all_items_confirm_title_bottom_sheet">Az összes elem áthelyezése a következő tárolóba?</string>
   <string name="migrate_item_confirm_confirm_button">Áthelyezés</string>
   <string name="migrate_item_success_snackbar">Elemek áthelyezve</string>
   <string name="migrate_item_error_snackbar">Hiba az elemek áthelyezésekor</string>
@@ -30,6 +29,9 @@
     <item quantity="one">Item is already in this folder</item>
     <item quantity="other">%d items are already in this folder</item>
   </plurals>
+  <string name="migrate_disabled_folder_reason_same_location">This folder is already in this location</string>
+  <string name="migrate_disabled_folder_reason_being_moved">This folder is being moved</string>
+  <string name="migrate_disabled_folder_reason_descendant">This folder is inside the folder being moved</string>
   <string name="migrate_disabled_vault_reason_no_permission">Nem hozhat létre elemeket ebben a tárolóban</string>
   <string name="migrate_disabled_vault_reason_same_vault">Nem helyezhet át elemet ugyanabba a tárolóba</string>
   <plurals name="migrate_items_shared_warning_title">
@@ -42,8 +44,7 @@
     <item quantity="other">%d elem jelenleg meg van osztva. Ha áthelyezi egy másik tárolóba, az összes többi felhasználó számára megszűnik a hozzáférés.</item>
   </plurals>
   <string name="migrate_select_vault_title">Select a vault</string>
-  <string name="migrate_move_all_items_confirm_title_bottom_sheet">Move all items to the following vault?</string>
-  <string name="migrate_move_all_items_to_folder_confirm_title_bottom_sheet">Move all items to the following folder?</string>
+  <string name="migrate_select_destination_for_source_title">Select the destination to move all items from %s</string>
   <string name="migrate_folder_items_moved_success_snackbar">Items moved</string>
   <string name="migrate_folder_items_moved_error_snackbar">Error moving the items</string>
 </resources>

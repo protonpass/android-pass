@@ -33,13 +33,13 @@
   <string name="bottomsheet_view_item_history">Prikaži zgodovino</string>
   <string name="bottomsheet_monitor_exclude">Izključi iz spremljanja</string>
   <string name="bottomsheet_monitor_include">Vključi v spremljanje</string>
-  <string name="bottomsheet_migrate_item_v2">Move</string>
+  <string name="bottomsheet_migrate_item_v2">Premakni</string>
   <string name="bottomsheet_create_folder">Ustvari mapo</string>
   <string name="folder_tree_create_folder">Ustvari mapo</string>
   <string name="bottomsheet_rename_folder">Preimenuj</string>
   <string name="bottomsheet_create_sub_folder">Ustvari podmapo</string>
-  <string name="bottomsheet_move_folder">Move folder</string>
-  <string name="bottomsheet_move_all_items_in_folder">Move all items</string>
+  <string name="bottomsheet_move_folder">Premakni mapo</string>
+  <string name="bottomsheet_move_all_items_in_folder">Premakni vse predmete</string>
   <string name="bottomsheet_copy_item_note">Kopiraj opombo</string>
   <string name="bottomsheet_delete_permanently">Trajno izbriši</string>
   <string name="bottomsheet_restore">Obnovi</string>

@@ -8,7 +8,6 @@
     <item quantity="one">Voleu moure l\'element %d a la carpeta següent?</item>
     <item quantity="other">Voleu moure els %d elements a la carpeta següent?</item>
   </plurals>
-  <string name="migrate_all_items_confirm_title_bottom_sheet">Voleu moure tots els elements a la caixa forta següent?</string>
   <string name="migrate_item_confirm_confirm_button">Mou</string>
   <string name="migrate_item_success_snackbar">S\'han mogut els elements.</string>
   <string name="migrate_item_error_snackbar">S\'ha produït un error en moure els elements.</string>
@@ -30,6 +29,9 @@
     <item quantity="one">L\'element ja és en aquesta carpeta</item>
     <item quantity="other">%d elements ja són en aquesta carpeta</item>
   </plurals>
+  <string name="migrate_disabled_folder_reason_same_location">Aquesta carpeta ja és en aquesta ubicació</string>
+  <string name="migrate_disabled_folder_reason_being_moved">Aquesta carpeta s\'està movent</string>
+  <string name="migrate_disabled_folder_reason_descendant">Aquesta carpeta és dins de la carpeta que s\'està movent</string>
   <string name="migrate_disabled_vault_reason_no_permission">No podeu crear elements en aquesta caixa forta</string>
   <string name="migrate_disabled_vault_reason_same_vault">No podeu moure un element a la mateixa caixa forta</string>
   <plurals name="migrate_items_shared_warning_title">
@@ -42,8 +44,7 @@
     <item quantity="other">%d elements estan compartits actualment. Moure\'ls a una altra caixa forta suprimirà l\'accés per a la resta d\'usuaris.</item>
   </plurals>
   <string name="migrate_select_vault_title">Seleccioneu una caixa forta</string>
-  <string name="migrate_move_all_items_confirm_title_bottom_sheet">Voleu moure tots els elements a la caixa forta següent?</string>
-  <string name="migrate_move_all_items_to_folder_confirm_title_bottom_sheet">Voleu moure tots els elements a la carpeta següent?</string>
+  <string name="migrate_select_destination_for_source_title">Seleccioneu la destinació per moure tots els elements de %s</string>
   <string name="migrate_folder_items_moved_success_snackbar">S\'han mogut els elements</string>
   <string name="migrate_folder_items_moved_error_snackbar">S\'ha produït un error en moure els elements</string>
 </resources>

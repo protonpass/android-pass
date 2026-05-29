@@ -31,13 +31,13 @@
   <string name="bottomsheet_view_item_history">Vis historikk</string>
   <string name="bottomsheet_monitor_exclude">Ekskluder fra overvåking</string>
   <string name="bottomsheet_monitor_include">Inkluder i overvåking</string>
-  <string name="bottomsheet_migrate_item_v2">Move</string>
+  <string name="bottomsheet_migrate_item_v2">Flytt</string>
   <string name="bottomsheet_create_folder">Opprett mappe</string>
   <string name="folder_tree_create_folder">Opprett mappe</string>
   <string name="bottomsheet_rename_folder">Gi nytt navn</string>
   <string name="bottomsheet_create_sub_folder">Opprett undermappe</string>
-  <string name="bottomsheet_move_folder">Move folder</string>
-  <string name="bottomsheet_move_all_items_in_folder">Move all items</string>
+  <string name="bottomsheet_move_folder">Flytt mappe</string>
+  <string name="bottomsheet_move_all_items_in_folder">Flytt alle elementer</string>
   <string name="bottomsheet_copy_item_note">Kopier notat</string>
   <string name="bottomsheet_delete_permanently">Slett permanent</string>
   <string name="bottomsheet_restore">Gjenopprett</string>

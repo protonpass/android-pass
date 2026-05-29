@@ -49,6 +49,7 @@ import proton.android.pass.domain.VaultId
 import proton.android.pass.domain.entity.NewAlias
 import proton.android.pass.domain.entity.PackageInfo
 import proton.android.pass.domain.events.EventToken
+import proton.android.pass.domain.events.SyncEventShareItem
 import javax.inject.Inject
 
 @Suppress("NotImplementedDeclaration", "TooManyFunctions")
@@ -209,6 +210,12 @@ class FakeItemRepository @Inject constructor() : ItemRepository {
         val payload = RefreshItemPayload(userId, shareId, itemId, eventToken)
         refreshItemMemory.add(payload)
         onRefreshItem?.invoke(payload)
+    }
+
+    override suspend fun refreshItems(userId: UserId, items: List<SyncEventShareItem>) {
+        items.forEach { (shareId, itemId, eventToken) ->
+            refreshItem(userId, shareId, itemId, eventToken)
+        }
     }
 
     data class RefreshItemPayload(

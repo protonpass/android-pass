@@ -561,6 +561,88 @@ internal class SyncUserEventsImplTest {
         assertThat(userEventRepository.getStoreLatestEventIdMemory()).isNotEmpty()
     }
 
+    @Test
+    fun `items updated - all items are refreshed`() = runTest {
+        val eventId = UserEventId(EVENT_ID_1)
+        setupBasicSync(eventId)
+
+        val items = listOf(
+            SyncEventShareItem(ShareId(SHARE_ID_1), ItemId(ITEM_ID_1), EventToken(TOKEN_1)),
+            SyncEventShareItem(ShareId(SHARE_ID_1), ItemId(ITEM_ID_2), EventToken(TOKEN_2)),
+            SyncEventShareItem(ShareId(SHARE_ID_2), ItemId(ITEM_ID_3), EventToken(TOKEN_3))
+        )
+        userEventRepository.setGetUserEventsResult(
+            createUserEventList(lastEventId = eventId, itemsUpdated = items)
+        )
+
+        instance.invoke(USER_ID)
+
+        val refreshed = itemRepository.getRefreshItemMemory()
+        assertThat(refreshed).hasSize(3)
+        assertThat(refreshed.map { it.shareId to it.itemId }).containsExactly(
+            ShareId(SHARE_ID_1) to ItemId(ITEM_ID_1),
+            ShareId(SHARE_ID_1) to ItemId(ITEM_ID_2),
+            ShareId(SHARE_ID_2) to ItemId(ITEM_ID_3)
+        )
+    }
+
+    @Test
+    fun `items updated - large batch beyond concurrency limit is fully processed`() = runTest {
+        val eventId = UserEventId(EVENT_ID_1)
+        setupBasicSync(eventId)
+
+        val items = (1..30).map { i ->
+            SyncEventShareItem(ShareId(SHARE_ID_1), ItemId("item-$i"), EventToken("token-$i"))
+        }
+        userEventRepository.setGetUserEventsResult(
+            createUserEventList(lastEventId = eventId, itemsUpdated = items)
+        )
+
+        instance.invoke(USER_ID)
+
+        assertThat(itemRepository.getRefreshItemMemory()).hasSize(30)
+    }
+
+    @Test
+    fun `shares created - all shares are recreated`() = runTest {
+        val eventId = UserEventId(EVENT_ID_1)
+        setupBasicSync(eventId)
+
+        val shares = listOf(
+            SyncEventShare(ShareId(SHARE_ID_1), EventToken(TOKEN_1)),
+            SyncEventShare(ShareId(SHARE_ID_2), EventToken(TOKEN_2))
+        )
+        userEventRepository.setGetUserEventsResult(
+            createUserEventList(lastEventId = eventId, sharesCreated = shares)
+        )
+
+        instance.invoke(USER_ID)
+
+        val recreated = shareRepository.getRecreateShareMemory()
+        assertThat(recreated).hasSize(2)
+        assertThat(recreated.map { it.shareId }).containsExactly(ShareId(SHARE_ID_1), ShareId(SHARE_ID_2))
+    }
+
+    @Test
+    fun `shares updated - all shares are refreshed with correct ids`() = runTest {
+        val eventId = UserEventId(EVENT_ID_1)
+        setupBasicSync(eventId)
+
+        val shares = listOf(
+            SyncEventShare(ShareId(SHARE_ID_1), EventToken(TOKEN_1)),
+            SyncEventShare(ShareId(SHARE_ID_2), EventToken(TOKEN_2))
+        )
+        userEventRepository.setGetUserEventsResult(
+            createUserEventList(lastEventId = eventId, sharesUpdated = shares)
+        )
+
+        instance.invoke(USER_ID)
+
+        val refreshed = shareRepository.refreshShareMemory()
+        assertThat(refreshed).hasSize(2)
+        assertThat(refreshed.map { it.shareId }).containsExactly(ShareId(SHARE_ID_1), ShareId(SHARE_ID_2))
+    }
+
     private fun setupBasicSync(initialEventId: UserEventId) {
         val localEventId = UserEventId("${initialEventId.id}-local")
         val remoteEventId = UserEventId("${initialEventId.id}-remote")

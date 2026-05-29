@@ -50,6 +50,9 @@ class FakeRemoteItemDataSource : RemoteItemDataSource {
         { throw IllegalStateException("response not set") }
     private var updateItemMemory: MutableList<UpdateItemParams> = mutableListOf()
 
+    private val getItemResponses: MutableList<() -> ItemRevision> = mutableListOf()
+    private var getItemCallCount = 0
+
     private var migrateItemsCallCount = 0
     private var migrateItemsResponse: () -> List<ItemRevision> = { emptyList() }
     private var moveItemsToFolderCallCount = 0
@@ -129,7 +132,9 @@ class FakeRemoteItemDataSource : RemoteItemDataSource {
         shareId: ShareId,
         itemId: ItemId
     ): ItemRevision {
-        throw IllegalStateException("Not yet implemented")
+        val index = getItemCallCount++
+        return (getItemResponses.getOrNull(index)
+            ?: throw IllegalStateException("No getItem response for call $index"))()
     }
 
     override suspend fun sendToTrash(
@@ -183,6 +188,12 @@ class FakeRemoteItemDataSource : RemoteItemDataSource {
     fun setMoveItemsToFolderResponse(delegate: () -> List<MoveItemRevisionApiModel>) {
         moveItemsToFolderResponse = delegate
     }
+
+    fun addGetItemResponse(delegate: () -> ItemRevision) {
+        getItemResponses.add(delegate)
+    }
+
+    fun getGetItemCallCount(): Int = getItemCallCount
 
     override suspend fun moveItemsToFolder(
         userId: UserId,

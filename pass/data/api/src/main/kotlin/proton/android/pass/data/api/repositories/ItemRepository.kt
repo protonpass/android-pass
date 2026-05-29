@@ -40,6 +40,7 @@ import proton.android.pass.domain.VaultId
 import proton.android.pass.domain.entity.NewAlias
 import proton.android.pass.domain.entity.PackageInfo
 import proton.android.pass.domain.events.EventToken
+import proton.android.pass.domain.events.SyncEventShareItem
 
 data class ShareItemCount(
     val activeItems: Long,
@@ -111,6 +112,8 @@ interface ItemRepository {
         itemId: ItemId,
         eventToken: EventToken
     )
+
+    suspend fun refreshItems(userId: UserId, items: List<SyncEventShareItem>)
 
     fun observeItems(
         userId: UserId,

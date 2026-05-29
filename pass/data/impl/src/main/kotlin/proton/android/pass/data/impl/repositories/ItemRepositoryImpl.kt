@@ -24,6 +24,7 @@ import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.currentCoroutineContext
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.conflate
 import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.firstOrNull
@@ -107,6 +108,7 @@ import proton.android.pass.domain.VaultId
 import proton.android.pass.domain.entity.NewAlias
 import proton.android.pass.domain.entity.PackageInfo
 import proton.android.pass.domain.events.EventToken
+import proton.android.pass.domain.events.SyncEventShareItem
 import proton.android.pass.domain.key.FolderKey
 import proton.android.pass.domain.key.InviteKey
 import proton.android.pass.domain.key.ShareKey
@@ -391,6 +393,38 @@ class ItemRepositoryImpl @Inject constructor(
         itemId: ItemId,
         eventToken: EventToken
     ) {
+        val itemEntity = fetchItemEntity(userId, shareId, itemId)
+        localItemDataSource.upsertItem(itemEntity)
+    }
+
+    override suspend fun refreshItems(userId: UserId, items: List<SyncEventShareItem>) {
+        if (items.isEmpty()) return
+        val entities = coroutineScope {
+            items.chunked(MAX_CONCURRENT_ITEM_REFRESHES).flatMap { chunk ->
+                chunk.map { (shareId, itemId, _) ->
+                    async {
+                        safeRunCatching { fetchItemEntity(userId, shareId, itemId) }
+                            .onFailure { err ->
+                                PassLogger.w(TAG, "Failed to fetch item ${itemId.id} in share ${shareId.id}")
+                                PassLogger.w(TAG, err)
+                            }
+                            .getOrNull()
+                    }
+                }.awaitAll().filterNotNull()
+            }
+        }
+        if (entities.isNotEmpty()) {
+            database.inTransaction("refreshItems") {
+                localItemDataSource.upsertItems(entities)
+            }
+        }
+    }
+
+    private suspend fun fetchItemEntity(
+        userId: UserId,
+        shareId: ShareId,
+        itemId: ItemId
+    ): ItemEntity {
         val itemRevision = remoteItemDataSource.getItem(
             userId = userId,
             shareId = shareId,
@@ -413,7 +447,7 @@ class ItemRepositoryImpl @Inject constructor(
             )
         }
 
-        val itemEntity = encryptionContextProvider.withEncryptionContextSuspendable {
+        return encryptionContextProvider.withEncryptionContextSuspendable {
             itemResponseToEntity(
                 userAddress = userAddress,
                 itemRevision = itemRevision,
@@ -423,8 +457,6 @@ class ItemRepositoryImpl @Inject constructor(
                 encryptionContext = this
             )
         }
-
-        localItemDataSource.upsertItem(itemEntity)
     }
 
     override fun observeItems(
@@ -441,7 +473,7 @@ class ItemRepositoryImpl @Inject constructor(
         itemTypeFilter,
         itemFlags,
         includeHidden
-    ).map { items ->
+    ).conflate().map { items ->
         encryptionContextProvider.withEncryptionContextSuspendable {
             items.map { item -> item.toDomain(this) }
         }
@@ -461,7 +493,7 @@ class ItemRepositoryImpl @Inject constructor(
         itemTypeFilter,
         itemFlags,
         includeHidden
-    ).map { items ->
+    ).conflate().map { items ->
         items.map(ItemEntity::toEncryptedDomain)
     }
 
@@ -1893,5 +1925,7 @@ class ItemRepositoryImpl @Inject constructor(
 
         // Max items to insert per transaction
         const val MAX_ITEMS_PER_TRANSACTION = 100
+
+        private const val MAX_CONCURRENT_ITEM_REFRESHES = 5
     }
 }

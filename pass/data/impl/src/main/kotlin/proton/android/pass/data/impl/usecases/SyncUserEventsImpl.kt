@@ -170,9 +170,9 @@ class SyncUserEventsImpl @Inject constructor(
     }
 
     private suspend fun processItemsUpdated(userId: UserId, itemsUpdated: List<SyncEventShareItem>) {
-        itemsUpdated.forEach { (shareId, itemId, token) ->
-            itemRepository.refreshItem(userId, shareId, itemId, token)
-        }
+        if (itemsUpdated.isEmpty()) return
+        PassLogger.i(TAG, "Refreshing ${itemsUpdated.size} updated items")
+        itemRepository.refreshItems(userId, itemsUpdated)
     }
 
     private suspend fun processSharesDeleted(userId: UserId, sharesDeleted: List<SyncEventShare>) {

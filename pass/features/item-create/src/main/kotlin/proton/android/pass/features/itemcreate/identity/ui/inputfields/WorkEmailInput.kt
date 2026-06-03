@@ -20,19 +20,12 @@ package proton.android.pass.features.itemcreate.identity.ui.inputfields
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.focus.FocusRequester
-import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.res.stringResource
-import me.proton.core.compose.theme.ProtonTheme
-import me.proton.core.compose.theme.defaultNorm
-import proton.android.pass.commonui.api.RequestFocusLaunchedEffect
 import proton.android.pass.commonui.api.Spacing
-import proton.android.pass.composecomponents.impl.form.ProtonTextField
+import proton.android.pass.composecomponents.impl.form.EmailInput
 import proton.android.pass.composecomponents.impl.form.ProtonTextFieldLabel
 import proton.android.pass.composecomponents.impl.form.ProtonTextFieldPlaceHolder
-import proton.android.pass.composecomponents.impl.form.SmallCrossIconButton
 import proton.android.pass.features.itemcreate.R
 
 @Composable
@@ -44,34 +37,23 @@ internal fun WorkEmailInput(
     onChange: (String) -> Unit,
     onFocusChange: (Boolean) -> Unit
 ) {
-    val focusRequester = remember { FocusRequester() }
-    ProtonTextField(
-        modifier = modifier
-            .padding(
-                start = Spacing.medium,
-                top = Spacing.medium,
-                end = Spacing.small,
-                bottom = Spacing.medium
-            )
-            .focusRequester(focusRequester),
+    EmailInput(
+        modifier = modifier.padding(
+            start = Spacing.medium,
+            top = Spacing.medium,
+            end = Spacing.small,
+            bottom = Spacing.medium
+        ),
         value = value,
-        onChange = onChange,
-        moveToNextOnEnter = true,
-        textStyle = ProtonTheme.typography.defaultNorm(enabled),
-        editable = enabled,
+        enabled = enabled,
+        requestFocus = requestFocus,
         label = { ProtonTextFieldLabel(text = stringResource(id = R.string.identity_field_work_email_title)) },
         placeholder = {
             ProtonTextFieldPlaceHolder(
-                text =
-                stringResource(id = R.string.identity_field_work_email_hint)
+                text = stringResource(id = R.string.identity_field_work_email_hint)
             )
         },
-        trailingIcon = {
-            if (value.isNotEmpty()) {
-                SmallCrossIconButton(enabled = true) { onChange("") }
-            }
-        },
-        onFocusChange = onFocusChange
+        onFocusChange = onFocusChange,
+        onChange = onChange
     )
-    RequestFocusLaunchedEffect(focusRequester, requestFocus)
 }

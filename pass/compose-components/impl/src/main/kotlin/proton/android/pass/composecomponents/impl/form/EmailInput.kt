@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023-2026 Proton AG
+ * Copyright (c) 2026 Proton AG
  * This file is part of Proton AG and Proton Pass.
  *
  * Proton Pass is free software: you can redistribute it and/or modify
@@ -16,7 +16,7 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.alias.contacts.create.ui
+package proton.android.pass.composecomponents.impl.form
 
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.runtime.Composable
@@ -24,44 +24,49 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import me.proton.core.compose.theme.ProtonTheme
-import me.proton.core.compose.theme.subheadlineUnspecified
-import me.proton.core.compose.theme.textNorm
+import me.proton.core.compose.theme.defaultNorm
 import proton.android.pass.commonui.api.RequestFocusLaunchedEffect
-import proton.android.pass.composecomponents.impl.form.ProtonTextField
-import proton.android.pass.composecomponents.impl.form.SmallCrossIconButton
-import proton.android.pass.features.aliascontacts.R
 
 @Composable
-internal fun EmailInput(
+fun EmailInput(
     modifier: Modifier = Modifier,
     value: String,
-    enabled: Boolean,
-    isError: Boolean,
+    enabled: Boolean = true,
+    isError: Boolean = false,
+    errorMessage: String = "",
+    requestFocus: Boolean = false,
+    label: @Composable (() -> Unit)? = null,
+    placeholder: @Composable (() -> Unit)? = null,
+    leadingIcon: @Composable (() -> Unit)? = null,
+    trailingIcon: @Composable (() -> Unit)? = null,
+    onFocusChange: ((Boolean) -> Unit)? = null,
     onChange: (String) -> Unit
 ) {
     val focusRequester = remember { FocusRequester() }
     ProtonTextField(
         modifier = modifier.focusRequester(focusRequester),
         value = value,
-        onChange = onChange,
-        moveToNextOnEnter = true,
-        isError = isError,
-        textStyle = ProtonTheme.typography.subheadlineUnspecified.copy(
-            color = ProtonTheme.colors.textNorm(enabled)
-        ),
         editable = enabled,
-        keyboardOptions = KeyboardOptions.Default.copy(
-            keyboardType = KeyboardType.Email
+        isError = isError,
+        errorMessage = errorMessage,
+        moveToNextOnEnter = true,
+        textStyle = ProtonTheme.typography.defaultNorm(enabled),
+        keyboardOptions = KeyboardOptions(
+            keyboardType = KeyboardType.Email,
+            autoCorrectEnabled = false
         ),
-        errorMessage = stringResource(id = R.string.email_input_error),
-        trailingIcon = {
+        label = label,
+        placeholder = placeholder,
+        leadingIcon = leadingIcon,
+        trailingIcon = trailingIcon ?: {
             if (enabled && value.isNotEmpty()) {
                 SmallCrossIconButton(enabled = true) { onChange("") }
             }
-        }
+        },
+        onFocusChange = onFocusChange,
+        onChange = onChange
     )
-    RequestFocusLaunchedEffect(focusRequester, true) {}
+    RequestFocusLaunchedEffect(focusRequester, requestFocus)
 }

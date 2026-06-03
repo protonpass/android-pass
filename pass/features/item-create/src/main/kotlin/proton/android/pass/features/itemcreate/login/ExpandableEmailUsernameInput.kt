@@ -45,7 +45,11 @@ import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
 import me.proton.core.compose.theme.ProtonTheme
 import proton.android.pass.commonui.api.PassTheme
+import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.ThemePairPreviewProvider
+import proton.android.pass.composecomponents.impl.form.EmailInput
+import proton.android.pass.composecomponents.impl.form.ProtonTextFieldLabel
+import proton.android.pass.composecomponents.impl.form.ProtonTextFieldPlaceHolder
 import proton.android.pass.composecomponents.impl.form.SmallCrossIconButton
 import proton.android.pass.composecomponents.impl.tooltips.PassTooltipPopup
 import proton.android.pass.composecomponents.impl.tooltips.findPositionAndSizeForTooltip
@@ -93,16 +97,19 @@ internal fun ExpandableEmailUsernameInput(
         modifier = modifier
     ) {
         EmailInput(
-            emailLabelResId = emailLabelResId,
-            emailPlaceholderResId = emailPlaceholderResId,
-            email = emailOrUsername,
-            isEditable = canUpdateUsername && isEditAllowed,
-            onEmailChange = { newEmail ->
-                onEvent(LoginContentEvent.OnEmailChanged(newEmail))
-            },
-            onFocusChange = { isFocused ->
-                onFocusChange(LoginField.Email, isFocused)
-            },
+            modifier = Modifier.padding(
+                start = Spacing.none,
+                top = Spacing.medium,
+                end = Spacing.extraSmall,
+                bottom = Spacing.medium
+            ),
+            value = emailOrUsername,
+            enabled = canUpdateUsername && isEditAllowed,
+            errorMessage = stringResource(id = R.string.field_email_error),
+            label = { ProtonTextFieldLabel(text = stringResource(id = emailLabelResId)) },
+            placeholder = { ProtonTextFieldPlaceHolder(text = stringResource(id = emailPlaceholderResId)) },
+            onChange = { onEvent(LoginContentEvent.OnEmailChanged(it)) },
+            onFocusChange = { onFocusChange(LoginField.Email, it) },
             leadingIcon = {
                 if (isExpanded) {
                     Icon(

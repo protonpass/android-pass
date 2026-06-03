@@ -20,11 +20,13 @@ package proton.android.pass.features.itemcreate.identity.ui
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.tooling.preview.Preview
@@ -50,8 +52,11 @@ import proton.android.pass.features.itemcreate.identity.navigation.IdentityConte
 import proton.android.pass.features.itemcreate.identity.presentation.IdentityField
 import proton.android.pass.features.itemcreate.identity.presentation.UIPersonalDetails
 import proton.android.pass.features.itemcreate.identity.ui.IdentitySectionType.PersonalDetails
+import proton.android.pass.composecomponents.impl.form.EmailInput
+import proton.android.pass.composecomponents.impl.form.ProtonTextFieldLabel
+import proton.android.pass.composecomponents.impl.form.ProtonTextFieldPlaceHolder
+import proton.android.pass.features.itemcreate.R
 import proton.android.pass.features.itemcreate.identity.ui.inputfields.BirthdateInput
-import proton.android.pass.features.itemcreate.identity.ui.inputfields.EmailInput
 import proton.android.pass.features.itemcreate.identity.ui.inputfields.FirstNameInput
 import proton.android.pass.features.itemcreate.identity.ui.inputfields.FullNameInput
 import proton.android.pass.features.itemcreate.identity.ui.inputfields.GenderInput
@@ -85,8 +90,20 @@ internal fun PersonalDetails(
             )
             PassDivider()
             EmailInput(
+                modifier = Modifier.padding(
+                    start = Spacing.medium,
+                    top = Spacing.medium,
+                    end = Spacing.small,
+                    bottom = Spacing.medium
+                ),
                 value = uiPersonalDetails.email,
                 enabled = enabled,
+                label = { ProtonTextFieldLabel(text = stringResource(id = R.string.identity_field_email_title)) },
+                placeholder = {
+                    ProtonTextFieldPlaceHolder(
+                        text = stringResource(id = R.string.identity_field_email_hint)
+                    )
+                },
                 onChange = { onEvent(OnFieldChange(IdentityField.Email, it)) }
             )
             PassDivider()

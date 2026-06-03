@@ -88,7 +88,7 @@ fun CreateAliasContactContent(
             verticalArrangement = Arrangement.spacedBy(Spacing.mediumSmall)
         ) {
             Text.Hero(stringResource(R.string.create_contact_title))
-            EmailInput(
+            ContactEmailInput(
                 value = email,
                 enabled = !state.isLoading,
                 isError = state.isEmailInvalid,

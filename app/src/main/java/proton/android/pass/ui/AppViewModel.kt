@@ -34,6 +34,9 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
+import me.proton.core.account.domain.entity.AccountState.Ready
+import me.proton.core.accountmanager.domain.AccountManager
+import me.proton.core.accountmanager.domain.getAccounts
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.appconfig.api.AppConfig
 import proton.android.pass.appconfig.api.BuildFlavor.Companion.isQuest
@@ -47,6 +50,9 @@ import proton.android.pass.common.api.onError
 import proton.android.pass.common.api.onSuccess
 import proton.android.pass.common.api.runCatching
 import proton.android.pass.data.api.usecases.ObserveShouldShowExploreTab
+import proton.android.pass.data.api.usecases.ReconcileAppLock
+import proton.android.pass.data.api.usecases.ReconcileAppLockResult
+import proton.android.pass.data.api.usecases.SeedAppLockStore
 import proton.android.pass.data.api.usecases.inappmessages.ChangeInAppMessageStatus
 import proton.android.pass.data.api.usecases.inappmessages.ObserveDeliverableBannerInAppMessages
 import proton.android.pass.data.api.usecases.simplelogin.ObserveSimpleLoginSyncStatus
@@ -73,15 +79,19 @@ import proton.android.pass.telemetry.api.TelemetryManager
 import javax.inject.Inject
 
 @HiltViewModel
+@Suppress("LongParameterList")
 class AppViewModel @Inject constructor(
     private val snackbarDispatcher: SnackbarDispatcher,
     private val needsBiometricAuth: NeedsBiometricAuth,
+    private val reconcileAppLock: ReconcileAppLock,
+    private val seedAppLockStore: SeedAppLockStore,
     private val inAppUpdatesManager: InAppUpdatesManager,
     private val changeInAppMessageStatus: ChangeInAppMessageStatus,
     private val telemetryManager: TelemetryManager,
     private val autofillManager: AutofillManager,
     private val preferencesRepository: UserPreferencesRepository,
     private val appConfig: AppConfig,
+    private val accountManager: AccountManager,
     networkMonitor: NetworkMonitor,
     notificationManager: NotificationManager,
     observeDeliverableBannerInAppMessages: ObserveDeliverableBannerInAppMessages,
@@ -98,6 +108,25 @@ class AppViewModel @Inject constructor(
 
     private val localInAppMessageEventFlow: MutableStateFlow<LocalInAppMessagesEvent> =
         MutableStateFlow(LocalInAppMessagesEvent.Unknown)
+
+    private val appLockReconcile: ReconcileAppLockResult = runBlocking { reconcileAppLock() }
+
+    private val forceReauthFlow = MutableStateFlow(appLockReconcile == ReconcileAppLockResult.RequireReauth)
+    val forceReauth: StateFlow<Boolean> = forceReauthFlow
+
+    init {
+        when (appLockReconcile) {
+            ReconcileAppLockResult.RequireReauth ->
+                PassLogger.w(TAG, "App lock reconcile requires re-auth, forcing it")
+
+            ReconcileAppLockResult.SeedRequired -> viewModelScope.launch {
+                PassLogger.i(TAG, "App lock reconcile requires seeding the durable store")
+                seedAppLockStore()
+            }
+
+            ReconcileAppLockResult.Ok -> Unit
+        }
+    }
 
     val needsAuthState = needsBiometricAuth()
         .stateIn(
@@ -184,6 +213,12 @@ class AppViewModel @Inject constructor(
             showExplore = runBlocking { observeShouldShowExploreTab().first() }
         )
     )
+
+    fun onForceSignOutDispatched() = viewModelScope.launch {
+        accountManager.getAccounts(Ready).first { readyAccounts -> readyAccounts.isEmpty() }
+        PassLogger.i(TAG, "Forced sign out completed, releasing re-auth lock")
+        forceReauthFlow.value = false
+    }
 
     fun onStop() = viewModelScope.launch {
         inAppUpdatesManager.completeUpdate()

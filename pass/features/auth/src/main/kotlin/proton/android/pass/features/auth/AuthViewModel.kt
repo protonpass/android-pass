@@ -75,6 +75,7 @@ import proton.android.pass.data.api.errors.UserIdNotAvailableError
 import proton.android.pass.data.api.errors.WrongExtraPasswordException
 import proton.android.pass.data.api.usecases.CheckMasterPassword
 import proton.android.pass.data.api.usecases.ObserveUserEmail
+import proton.android.pass.data.api.usecases.SetPasswordOnlyLock
 import proton.android.pass.data.api.usecases.extrapassword.AuthWithExtraPassword
 import proton.android.pass.data.api.usecases.extrapassword.CheckLocalExtraPassword
 import proton.android.pass.data.api.usecases.extrapassword.HasExtraPassword
@@ -110,6 +111,7 @@ class AuthViewModel @Inject constructor(
     private val accountManager: AccountManager,
     private val userManager: UserManager,
     private val appDispatchers: AppDispatchers,
+    private val setPasswordOnlyLock: SetPasswordOnlyLock,
     hasExtraPassword: HasExtraPassword,
     observeUserEmail: ObserveUserEmail,
     savedStateHandleProvider: SavedStateHandleProvider
@@ -581,14 +583,13 @@ class AuthViewModel @Inject constructor(
     }
 
     private suspend fun onBiometricEnrollmentChanged() {
-        preferenceRepository.setAppLockState(AppLockState.Enabled)
+        PassLogger.w(TAG, "Biometric enrollment changed, downgrading to password only lock")
+        canUseBiometricAuthMethodFlow.update { false }
+
+        setPasswordOnlyLock()
+            .onSuccess { PassLogger.i(TAG, "Downgraded to password only lock after enrollment change") }
             .onFailure {
-                PassLogger.w(TAG, "Failed to set AppLockState after enrollment change")
-                PassLogger.w(TAG, it)
-            }
-        preferenceRepository.setAppLockTypePreference(AppLockTypePreference.None)
-            .onFailure {
-                PassLogger.w(TAG, "Failed to set AppLockTypePreference after enrollment change")
+                PassLogger.w(TAG, "Failed to downgrade to password only lock after enrollment change")
                 PassLogger.w(TAG, it)
             }
         preferenceRepository.setHasAuthenticated(HasAuthenticated.NotAuthenticated)
@@ -596,7 +597,6 @@ class AuthViewModel @Inject constructor(
                 PassLogger.w(TAG, "Failed to set HasAuthenticated after enrollment change")
                 PassLogger.w(TAG, it)
             }
-        canUseBiometricAuthMethodFlow.update { false }
         snackbarDispatcher(AuthSnackbarMessage.BiometricEnrollmentChanged)
     }
 

@@ -46,6 +46,7 @@ import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.crypto.fakes.context.FakeEncryptionContextProvider
 import proton.android.pass.data.fakes.usecases.FakeCheckMasterPassword
 import proton.android.pass.data.fakes.usecases.FakeObserveUserEmail
+import proton.android.pass.data.fakes.usecases.FakeSetPasswordOnlyLock
 import proton.android.pass.data.fakes.usecases.accesskey.FakeAuthWithExtraPassword
 import proton.android.pass.data.fakes.usecases.accesskey.FakeCheckLocalExtraPassword
 import proton.android.pass.data.fakes.usecases.accesskey.FakeHasExtraPassword
@@ -68,6 +69,7 @@ internal class AuthViewModelTest {
     private lateinit var userManager: FakeUserManager
     private lateinit var accountManager: FakeAccountManager
     private lateinit var internalSettingsRepository: FakeInternalSettingsRepository
+    private lateinit var setPasswordOnlyLock: FakeSetPasswordOnlyLock
 
     @get:Rule
     internal val dispatcherRule = MainDispatcherRule()
@@ -80,6 +82,7 @@ internal class AuthViewModelTest {
         userManager = FakeUserManager()
         accountManager = FakeAccountManager()
         internalSettingsRepository = FakeInternalSettingsRepository()
+        setPasswordOnlyLock = FakeSetPasswordOnlyLock()
         viewModel = AuthViewModel(
             preferenceRepository = preferenceRepository,
             biometryManager = biometryManager,
@@ -98,7 +101,8 @@ internal class AuthViewModelTest {
             checkLocalExtraPassword = FakeCheckLocalExtraPassword(),
             userManager = userManager,
             accountManager = accountManager,
-            appDispatchers = FakeAppDispatchers()
+            appDispatchers = FakeAppDispatchers(),
+            setPasswordOnlyLock = setPasswordOnlyLock
         )
     }
 
@@ -268,8 +272,44 @@ internal class AuthViewModelTest {
                 assertThat(state.event).isEqualTo(None)
                 assertThat(state.content.authMethod).isEqualTo(None)
             }
+            assertThat(setPasswordOnlyLock.invocations).isEqualTo(1)
+            assertThat(preferenceRepository.getHasAuthenticated().first()).isEqualTo(HasAuthenticated.NotAuthenticated)
+        }
+
+    @Test
+    internal fun `GIVEN enrollment changed WHEN requesting biometrics THEN does not write lock prefs directly`() =
+        runTest {
+            preferenceRepository.setAppLockState(AppLockState.Enabled)
+            preferenceRepository.setAppLockTypePreference(AppLockTypePreference.Biometrics)
+            biometryManager.setBiometryStatus(BiometryStatus.CanAuthenticate)
+            biometryManager.emitResult(BiometryResult.Error(BiometryAuthError.EnrollmentChanged))
+
+            viewModel.onBiometricsRequired(ClassHolder(None))
+
+            viewModel.state.test { awaitItem() }
             assertThat(preferenceRepository.getAppLockState().first()).isEqualTo(AppLockState.Enabled)
-            assertThat(preferenceRepository.getAppLockTypePreference().first()).isEqualTo(AppLockTypePreference.None)
+            assertThat(preferenceRepository.getAppLockTypePreference().first())
+                .isEqualTo(AppLockTypePreference.Biometrics)
+        }
+
+    @Test
+    internal fun `GIVEN password only lock fails WHEN enrollment changed THEN stays locked and reports failure`() =
+        runTest {
+            preferenceRepository.setAppLockState(AppLockState.Enabled)
+            preferenceRepository.setAppLockTypePreference(AppLockTypePreference.Biometrics)
+            preferenceRepository.setHasAuthenticated(HasAuthenticated.Authenticated)
+            setPasswordOnlyLock.result = Result.failure(IllegalStateException("boom"))
+            biometryManager.setBiometryStatus(BiometryStatus.CanAuthenticate)
+            biometryManager.emitResult(BiometryResult.Error(BiometryAuthError.EnrollmentChanged))
+
+            viewModel.onBiometricsRequired(ClassHolder(None))
+
+            viewModel.state.test {
+                val state = awaitItem()
+                assertThat(state.event).isEqualTo(None)
+                assertThat(state.content.authMethod).isEqualTo(None)
+            }
+            assertThat(setPasswordOnlyLock.invocations).isEqualTo(1)
             assertThat(preferenceRepository.getHasAuthenticated().first()).isEqualTo(HasAuthenticated.NotAuthenticated)
         }
 

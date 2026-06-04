@@ -71,7 +71,7 @@ class FakeInternalSettingsRepository @Inject constructor() : InternalSettingsRep
     private val trustedAutofillPackagesFlow = MutableStateFlow(emptyMap<String, Set<String>>())
 
     override fun setLastUnlockedTime(time: Long): Result<Unit> {
-        lastUnlockedTimeFlow.update { Some(time) }
+        lastUnlockedTimeFlow.update { if (time == 0L) None else Some(time) }
         return Result.success(Unit)
     }
 

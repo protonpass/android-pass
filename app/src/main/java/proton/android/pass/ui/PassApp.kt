@@ -21,6 +21,7 @@ package proton.android.pass.ui
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -39,6 +40,13 @@ fun PassApp(
         minActiveState = Lifecycle.State.CREATED
     )
     val appUiState by appViewModel.appUiState.collectAsStateWithLifecycle()
+    val forceReauth by appViewModel.forceReauth.collectAsStateWithLifecycle()
+    LaunchedEffect(forceReauth) {
+        if (forceReauth) {
+            onNavigate(AppNavigation.ForceSignOutAllUsers)
+            appViewModel.onForceSignOutDispatched()
+        }
+    }
     LifecycleEffect(
         onStop = { appViewModel.onStop() },
         onResume = { appViewModel.onResume() }
@@ -56,6 +64,7 @@ fun PassApp(
             onNavigate(it)
         },
         onSnackbarMessageDelivered = { appViewModel.onSnackbarMessageDelivered() },
+        forceReauth = forceReauth,
         onCompleteUpdate = { appViewModel.onCompleteUpdate() },
         onInAppMessageBannerRead = { userId, id, key ->
             appViewModel.onInAppMessageBannerRead(userId, id, key)

@@ -24,6 +24,8 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import proton.android.pass.data.api.core.datasources.LocalSentinelDataSource
 import proton.android.pass.data.impl.core.datasources.LocalSentinelDataSourceImpl
+import proton.android.pass.data.impl.local.LocalAppLockTypeDataSource
+import proton.android.pass.data.impl.local.LocalAppLockTypeDataSourceImpl
 import proton.android.pass.data.impl.local.LocalBreachDataSource
 import proton.android.pass.data.impl.local.LocalBreachDataSourceImpl
 import proton.android.pass.data.impl.local.LocalCompromisedPasswordDataSource
@@ -96,6 +98,9 @@ abstract class DataLocalDataSourceModule {
     abstract fun bindLocalPopularServicesDataSource(
         impl: LocalPopularServicesDataSourceImpl
     ): LocalPopularServicesDataSource
+
+    @[Binds Singleton]
+    abstract fun bindLocalAppLockTypeDataSource(impl: LocalAppLockTypeDataSourceImpl): LocalAppLockTypeDataSource
 
     @[Binds Singleton]
     abstract fun bindLocalShareDataSource(impl: LocalShareDataSourceImpl): LocalShareDataSource

@@ -29,6 +29,7 @@ enum class ProfileSnackbarMessage(
 ) : SnackbarMessage.StructuredMessage {
     BiometryFailedToStartError(R.string.profile_error_biometry_failed_to_start, SnackbarType.ERROR),
     BiometryFailedToAuthenticateError(R.string.profile_error_biometry_failed_to_authenticate, SnackbarType.ERROR),
+    AppLockUpdateError(R.string.profile_error_app_lock_update_failed, SnackbarType.ERROR),
     FingerprintLockEnabled(R.string.profile_fingerprint_lock_enabled, SnackbarType.SUCCESS),
     FingerprintLockDisabled(R.string.profile_fingerprint_lock_disabled, SnackbarType.SUCCESS),
     AppVersionCopied(R.string.profile_app_version_copied_to_clipboard, SnackbarType.SUCCESS, true),

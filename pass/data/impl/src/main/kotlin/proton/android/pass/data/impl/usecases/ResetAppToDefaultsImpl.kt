@@ -21,9 +21,10 @@ package proton.android.pass.data.impl.usecases
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import proton.android.pass.data.api.repositories.AssetLinkRepository
-import proton.android.pass.data.api.usecases.ClearPin
 import proton.android.pass.data.api.usecases.ResetAppToDefaults
+import proton.android.pass.data.api.usecases.SetAppLockType
 import proton.android.pass.log.api.PassLogger
+import proton.android.pass.preferences.AppLockTypePreference
 import proton.android.pass.preferences.InternalSettingsRepository
 import proton.android.pass.preferences.UserPreferencesRepository
 import javax.inject.Inject
@@ -31,7 +32,7 @@ import javax.inject.Inject
 class ResetAppToDefaultsImpl @Inject constructor(
     private val preferencesRepository: UserPreferencesRepository,
     private val internalSettingsRepository: InternalSettingsRepository,
-    private val clearPin: ClearPin,
+    private val setAppLockType: SetAppLockType,
     private val assetLinkRepository: AssetLinkRepository
 ) : ResetAppToDefaults {
     override suspend fun invoke() {
@@ -51,7 +52,14 @@ class ResetAppToDefaultsImpl @Inject constructor(
                 PassLogger.w(TAG, it)
             }
 
-        clearPin()
+        PassLogger.i(TAG, "Clearing app lock")
+        setAppLockType(AppLockTypePreference.None)
+            .onSuccess { PassLogger.d(TAG, "App lock cleared") }
+            .onFailure {
+                PassLogger.w(TAG, "Error clearing app lock (durable lock file may persist)")
+                PassLogger.w(TAG, it)
+            }
+
         runCatching { withContext(Dispatchers.IO) { assetLinkRepository.purgeAll() } }
             .onSuccess { PassLogger.d(TAG, "Asset links purged") }
             .onFailure {

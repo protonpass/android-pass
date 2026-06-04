@@ -49,6 +49,7 @@ dependencies {
     implementation(projects.pass.dataModels.api)
     implementation(projects.pass.domain)
     implementation(projects.pass.telemetry.api)
+    implementation(projects.pass.preferences.api)
     implementation(projects.pass.protos)
 
     implementation(libs.dagger.hilt.android)

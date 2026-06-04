@@ -34,6 +34,7 @@ import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
@@ -143,6 +144,7 @@ fun PassAppContent(
     onLocalInAppMessageEventConsumed: () -> Unit,
     onNotificationPermissionChanged: (Boolean) -> Unit,
     needsAuth: Boolean,
+    forceReauth: Boolean,
     supportPayment: Boolean
 ) {
     val context = LocalContext.current
@@ -318,7 +320,12 @@ fun PassAppContent(
                                 progress = appUiState.inAppUpdateState.progress
                             )
                         }
-                        if (needsAuth) {
+                        if (forceReauth) {
+                            // App-lock state is indeterminable; a forced sign-out is navigating
+                            // away. Render nothing — neither content (fail closed) nor a
+                            // misleading PIN/biometric prompt — for the brief hand-off.
+                            Spacer(modifier = Modifier.weight(1f))
+                        } else if (needsAuth) {
                             val unAuthBottomSheetState = rememberModalBottomSheetState(
                                 initialValue = ModalBottomSheetValue.Hidden,
                                 skipHalfExpanded = true

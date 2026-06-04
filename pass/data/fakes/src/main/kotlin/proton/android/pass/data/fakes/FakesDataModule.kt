@@ -122,6 +122,7 @@ import proton.android.pass.data.api.usecases.PerformSync
 import proton.android.pass.data.api.usecases.PinItem
 import proton.android.pass.data.api.usecases.PinItems
 import proton.android.pass.data.api.usecases.PromoteNewInviteToInvite
+import proton.android.pass.data.api.usecases.ReconcileAppLock
 import proton.android.pass.data.api.usecases.RefreshAliasSlNotes
 import proton.android.pass.data.api.usecases.RefreshBreaches
 import proton.android.pass.data.api.usecases.RefreshContent
@@ -135,6 +136,10 @@ import proton.android.pass.data.api.usecases.ResendShareInvite
 import proton.android.pass.data.api.usecases.ResetAppToDefaults
 import proton.android.pass.data.api.usecases.RestoreAllItems
 import proton.android.pass.data.api.usecases.RestoreItems
+import proton.android.pass.data.api.usecases.SeedAppLockStore
+import proton.android.pass.data.api.usecases.SetAppLockTime
+import proton.android.pass.data.api.usecases.SetAppLockType
+import proton.android.pass.data.api.usecases.SetPasswordOnlyLock
 import proton.android.pass.data.api.usecases.TransferVaultOwnership
 import proton.android.pass.data.api.usecases.TrashItems
 import proton.android.pass.data.api.usecases.UnpinItem
@@ -393,6 +398,7 @@ import proton.android.pass.data.fakes.usecases.FakePerformSync
 import proton.android.pass.data.fakes.usecases.FakePinItem
 import proton.android.pass.data.fakes.usecases.FakePinItems
 import proton.android.pass.data.fakes.usecases.FakePromoteNewInviteToInvite
+import proton.android.pass.data.fakes.usecases.FakeReconcileAppLock
 import proton.android.pass.data.fakes.usecases.FakeRefreshAliasSlNotes
 import proton.android.pass.data.fakes.usecases.FakeRefreshBreaches
 import proton.android.pass.data.fakes.usecases.FakeRefreshContent
@@ -407,6 +413,10 @@ import proton.android.pass.data.fakes.usecases.FakeResendShareInvite
 import proton.android.pass.data.fakes.usecases.FakeResetAppToDefaults
 import proton.android.pass.data.fakes.usecases.FakeRestoreAllItems
 import proton.android.pass.data.fakes.usecases.FakeRestoreItems
+import proton.android.pass.data.fakes.usecases.FakeSeedAppLockStore
+import proton.android.pass.data.fakes.usecases.FakeSetAppLockTime
+import proton.android.pass.data.fakes.usecases.FakeSetAppLockType
+import proton.android.pass.data.fakes.usecases.FakeSetPasswordOnlyLock
 import proton.android.pass.data.fakes.usecases.FakeSetDefaultVault
 import proton.android.pass.data.fakes.usecases.FakeTransferVaultOwnership
 import proton.android.pass.data.fakes.usecases.FakeTrashItems
@@ -769,6 +779,21 @@ abstract class FakesDataModule {
 
     @Binds
     abstract fun bindClearAppData(impl: FakeResetAppToDefaults): ResetAppToDefaults
+
+    @Binds
+    abstract fun bindSetAppLockType(impl: FakeSetAppLockType): SetAppLockType
+
+    @Binds
+    abstract fun bindSetPasswordOnlyLock(impl: FakeSetPasswordOnlyLock): SetPasswordOnlyLock
+
+    @Binds
+    abstract fun bindSetAppLockTime(impl: FakeSetAppLockTime): SetAppLockTime
+
+    @Binds
+    abstract fun bindReconcileAppLock(impl: FakeReconcileAppLock): ReconcileAppLock
+
+    @Binds
+    abstract fun bindSeedAppLockStore(impl: FakeSeedAppLockStore): SeedAppLockStore
 
     @Binds
     abstract fun bindClearPin(impl: FakeClearPin): ClearPin

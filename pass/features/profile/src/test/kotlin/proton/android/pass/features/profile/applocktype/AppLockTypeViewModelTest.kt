@@ -20,6 +20,7 @@ package proton.android.pass.features.profile.applocktype
 
 import app.cash.turbine.test
 import com.google.common.truth.Truth.assertThat
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Rule
@@ -31,15 +32,20 @@ import proton.android.pass.biometry.BiometryStatus
 import proton.android.pass.biometry.FakeBiometryManager
 import proton.android.pass.common.api.None
 import proton.android.pass.commonui.api.ClassHolder
-import proton.android.pass.data.fakes.usecases.FakeClearPin
+import proton.android.pass.data.api.usecases.SetAppLockType
 import proton.android.pass.data.fakes.usecases.FakeObserveAnyAccountHasEnforcedLock
+import proton.android.pass.data.fakes.usecases.FakeSetPasswordOnlyLock
+import proton.android.pass.common.api.some
 import proton.android.pass.domain.OrganizationSettings
+import proton.android.pass.features.profile.ProfileSnackbarMessage
 import proton.android.pass.notifications.fakes.FakeSnackbarDispatcher
 import proton.android.pass.preferences.AppLockState
+import proton.android.pass.preferences.AppLockTypePreference
 import proton.android.pass.preferences.AppLockTypePreference.Biometrics
 import proton.android.pass.preferences.AppLockTypePreference.None as NonePreference
 import proton.android.pass.preferences.AppLockTypePreference.Pin
 import proton.android.pass.preferences.FakePreferenceRepository
+import proton.android.pass.preferences.UserPreferencesRepository
 import proton.android.pass.test.MainDispatcherRule
 
 class AppLockTypeViewModelTest {
@@ -51,18 +57,20 @@ class AppLockTypeViewModelTest {
     private lateinit var preferenceRepository: FakePreferenceRepository
     private lateinit var biometryManager: FakeBiometryManager
     private lateinit var snackbarDispatcher: FakeSnackbarDispatcher
-    private lateinit var clearPin: FakeClearPin
+    private lateinit var setPasswordOnlyLock: FakeSetPasswordOnlyLock
     private lateinit var observeEnforcedLock: FakeObserveAnyAccountHasEnforcedLock
     private lateinit var appConfig: FakeAppConfig
+    private lateinit var setAppLockType: TestSetAppLockType
 
     @Before
     fun setup() {
         preferenceRepository = FakePreferenceRepository()
         biometryManager = FakeBiometryManager()
         snackbarDispatcher = FakeSnackbarDispatcher()
-        clearPin = FakeClearPin()
+        setPasswordOnlyLock = FakeSetPasswordOnlyLock()
         observeEnforcedLock = FakeObserveAnyAccountHasEnforcedLock()
         appConfig = FakeAppConfig()
+        setAppLockType = TestSetAppLockType(preferenceRepository)
 
         biometryManager.setBiometryStatus(BiometryStatus.CanAuthenticate)
     }
@@ -72,7 +80,8 @@ class AppLockTypeViewModelTest {
             userPreferencesRepository = preferenceRepository,
             biometryManager = biometryManager,
             snackbarDispatcher = snackbarDispatcher,
-            clearPin = clearPin,
+            setAppLockType = setAppLockType,
+            setPasswordOnlyLock = setPasswordOnlyLock,
             observeAnyAccountHasEnforcedLock = observeEnforcedLock,
             appConfig = appConfig
         )
@@ -234,5 +243,50 @@ class AppLockTypeViewModelTest {
             assertThat(finalState.selected).isEqualTo(NonePreference)
             assertThat(finalState.event).isEqualTo(AppLockTypeEvent.Dismiss)
         }
+    }
+
+    @Test
+    fun `failing to disable the lock surfaces an error and keeps the lock`() = runTest {
+        preferenceRepository.setAppLockTypePreference(Biometrics)
+        preferenceRepository.setAppLockState(AppLockState.Enabled)
+        observeEnforcedLock.emitValue(OrganizationSettings.NotAnOrganization)
+        setAppLockType.shouldFail = true
+
+        createViewModel()
+
+        viewModel.state.test {
+            awaitItem()
+
+            val contextHolder = ClassHolder<Context>(None)
+            viewModel.onChanged(NonePreference, contextHolder)
+
+            biometryManager.emitResult(BiometryResult.Success)
+
+            expectNoEvents()
+        }
+
+        assertThat(snackbarDispatcher.snackbarMessage.first())
+            .isEqualTo(ProfileSnackbarMessage.AppLockUpdateError.some())
+        assertThat(preferenceRepository.getAppLockTypePreference().first()).isEqualTo(Biometrics)
+        assertThat(preferenceRepository.getAppLockState().first()).isEqualTo(AppLockState.Enabled)
+        assertThat(viewModel.state.value.event).isNotEqualTo(AppLockTypeEvent.Dismiss)
+    }
+}
+
+private class TestSetAppLockType(
+    private val userPreferencesRepository: UserPreferencesRepository
+) : SetAppLockType {
+
+    var shouldFail = false
+
+    override suspend fun invoke(type: AppLockTypePreference): Result<Unit> = runCatching {
+        if (shouldFail) error("write failed")
+        userPreferencesRepository.setAppLockTypePreference(type).getOrThrow()
+        val state = if (type == AppLockTypePreference.None) {
+            AppLockState.Disabled
+        } else {
+            AppLockState.Enabled
+        }
+        userPreferencesRepository.setAppLockState(state).getOrThrow()
     }
 }

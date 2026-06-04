@@ -36,6 +36,7 @@ dependencies {
     implementation(projects.pass.commonRust.api)
     implementation(projects.pass.crypto.api)
     implementation(projects.pass.domain)
+    implementation(projects.pass.preferences.api)
     implementation(projects.pass.telemetry.api)
 
     testImplementation(libs.kotlinTest)

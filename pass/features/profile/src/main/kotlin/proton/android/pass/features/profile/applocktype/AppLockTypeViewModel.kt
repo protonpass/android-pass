@@ -40,7 +40,8 @@ import proton.android.pass.biometry.BiometryStatus
 import proton.android.pass.biometry.BiometryType
 import proton.android.pass.common.api.Some
 import proton.android.pass.commonui.api.ClassHolder
-import proton.android.pass.data.api.usecases.ClearPin
+import proton.android.pass.data.api.usecases.SetAppLockType
+import proton.android.pass.data.api.usecases.SetPasswordOnlyLock
 import proton.android.pass.data.api.usecases.organization.ObserveAnyAccountHasEnforcedLock
 import proton.android.pass.features.profile.ProfileSnackbarMessage
 import proton.android.pass.features.profile.ProfileSnackbarMessage.BiometryFailedToAuthenticateError
@@ -62,7 +63,8 @@ class AppLockTypeViewModel @Inject constructor(
     private val userPreferencesRepository: UserPreferencesRepository,
     private val biometryManager: BiometryManager,
     private val snackbarDispatcher: SnackbarDispatcher,
-    private val clearPin: ClearPin,
+    private val setAppLockType: SetAppLockType,
+    private val setPasswordOnlyLock: SetPasswordOnlyLock,
     observeAnyAccountHasEnforcedLock: ObserveAnyAccountHasEnforcedLock,
     private val appConfig: AppConfig
 ) : ViewModel() {
@@ -210,52 +212,59 @@ class AppLockTypeViewModel @Inject constructor(
 
     private fun onBiometryAuthSet() {
         viewModelScope.launch {
-            userPreferencesRepository.setAppLockState(AppLockState.Enabled)
             userPreferencesRepository.setHasAuthenticated(HasAuthenticated.Authenticated)
-            userPreferencesRepository.setAppLockTypePreference(Biometrics)
-            snackbarDispatcher(FingerprintLockEnabled)
-            eventState.update { AppLockTypeEvent.Dismiss }
+            setAppLockType(Biometrics)
+                .onSuccess { onLockUpdated(FingerprintLockEnabled) }
+                .onFailure { onLockUpdateFailed(it) }
         }
     }
 
     private fun onBiometryAuthUnSet() {
         viewModelScope.launch {
-            userPreferencesRepository.setAppLockState(AppLockState.Disabled)
-            userPreferencesRepository.setAppLockTypePreference(None)
-            snackbarDispatcher(ProfileSnackbarMessage.FingerprintLockDisabled)
-            eventState.update { AppLockTypeEvent.Dismiss }
+            setAppLockType(None)
+                .onSuccess { onLockUpdated(ProfileSnackbarMessage.FingerprintLockDisabled) }
+                .onFailure { onLockUpdateFailed(it) }
         }
     }
 
     private fun onBiometryAuthToPassword() {
         viewModelScope.launch {
-            userPreferencesRepository.setAppLockState(AppLockState.Enabled)
-            userPreferencesRepository.setHasAuthenticated(HasAuthenticated.Authenticated)
-            userPreferencesRepository.setAppLockTypePreference(None)
-            snackbarDispatcher(ProfileSnackbarMessage.FingerprintLockDisabled)
-            eventState.update { AppLockTypeEvent.Dismiss }
+            setPasswordOnlyLock()
+                .onSuccess {
+                    userPreferencesRepository.setHasAuthenticated(HasAuthenticated.Authenticated)
+                    onLockUpdated(ProfileSnackbarMessage.FingerprintLockDisabled)
+                }
+                .onFailure { onLockUpdateFailed(it) }
         }
     }
 
     private fun onPinAuthUnSet() {
         viewModelScope.launch {
-            userPreferencesRepository.setAppLockState(AppLockState.Disabled)
-            userPreferencesRepository.setAppLockTypePreference(None)
-            snackbarDispatcher(ProfileSnackbarMessage.PinLockDisabled)
-            clearPin()
-            eventState.update { AppLockTypeEvent.Dismiss }
+            setAppLockType(None)
+                .onSuccess { onLockUpdated(ProfileSnackbarMessage.PinLockDisabled) }
+                .onFailure { onLockUpdateFailed(it) }
         }
     }
 
     private fun onPinAuthToPassword() {
         viewModelScope.launch {
-            userPreferencesRepository.setAppLockState(AppLockState.Enabled)
-            userPreferencesRepository.setHasAuthenticated(HasAuthenticated.Authenticated)
-            userPreferencesRepository.setAppLockTypePreference(None)
-            snackbarDispatcher(ProfileSnackbarMessage.PinLockDisabled)
-            clearPin()
-            eventState.update { AppLockTypeEvent.Dismiss }
+            setPasswordOnlyLock()
+                .onSuccess {
+                    userPreferencesRepository.setHasAuthenticated(HasAuthenticated.Authenticated)
+                    onLockUpdated(ProfileSnackbarMessage.PinLockDisabled)
+                }
+                .onFailure { onLockUpdateFailed(it) }
         }
+    }
+
+    private suspend fun onLockUpdated(message: ProfileSnackbarMessage) {
+        snackbarDispatcher(message)
+        eventState.update { AppLockTypeEvent.Dismiss }
+    }
+
+    private suspend fun onLockUpdateFailed(error: Throwable) {
+        PassLogger.w(TAG, error, "Failed to update app lock type")
+        snackbarDispatcher(ProfileSnackbarMessage.AppLockUpdateError)
     }
 
     companion object {

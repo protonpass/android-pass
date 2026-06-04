@@ -28,13 +28,15 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import proton.android.pass.data.api.usecases.SetAppLockTime
 import proton.android.pass.preferences.AppLockTimePreference
 import proton.android.pass.preferences.UserPreferencesRepository
 import javax.inject.Inject
 
 @HiltViewModel
 class AppLockTimeViewModel @Inject constructor(
-    private val userPreferencesRepository: UserPreferencesRepository
+    private val userPreferencesRepository: UserPreferencesRepository,
+    private val setAppLockTime: SetAppLockTime
 ) : ViewModel() {
 
     private val eventState: MutableStateFlow<AppLockTimeEvent> = MutableStateFlow(AppLockTimeEvent.Unknown)
@@ -55,7 +57,7 @@ class AppLockTimeViewModel @Inject constructor(
     )
 
     fun onChanged(appLockTimePreference: AppLockTimePreference) = viewModelScope.launch {
-        userPreferencesRepository.setAppLockTimePreference(appLockTimePreference)
+        setAppLockTime(appLockTimePreference)
         eventState.update { AppLockTimeEvent.OnChanged }
     }
 }

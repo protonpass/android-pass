@@ -34,21 +34,20 @@ import proton.android.pass.biometry.StoreAuthSuccessful
 import proton.android.pass.biometry.UnlockMethod
 import proton.android.pass.common.api.CommonRegex.NON_DIGIT_REGEX
 import proton.android.pass.data.api.usecases.CreatePin
+import proton.android.pass.data.api.usecases.SetAppLockType
 import proton.android.pass.features.profile.ProfileSnackbarMessage.PinLockEnabled
 import proton.android.pass.features.profile.pinconfig.PinConfigValidationErrors.PinBlank
 import proton.android.pass.features.profile.pinconfig.PinConfigValidationErrors.PinDoesNotMatch
 import proton.android.pass.features.profile.pinconfig.PinConfigValidationErrors.PinTooShort
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.SnackbarDispatcher
-import proton.android.pass.preferences.AppLockState
 import proton.android.pass.preferences.AppLockTypePreference
-import proton.android.pass.preferences.UserPreferencesRepository
 import javax.inject.Inject
 
 @HiltViewModel
 class PinConfigViewModel @Inject constructor(
-    private val userPreferencesRepository: UserPreferencesRepository,
     private val createPin: CreatePin,
+    private val setAppLockType: SetAppLockType,
     private val snackbarDispatcher: SnackbarDispatcher,
     private val storeAuthSuccessful: StoreAuthSuccessful,
     appConfig: AppConfig
@@ -88,8 +87,7 @@ class PinConfigViewModel @Inject constructor(
                     createPin(currentState.pin.encodeToByteArray())
                 }.onSuccess {
                     storeAuthSuccessful(UnlockMethod.PinOrBiometrics)
-                    userPreferencesRepository.setAppLockState(AppLockState.Enabled)
-                    userPreferencesRepository.setAppLockTypePreference(AppLockTypePreference.Pin)
+                    setAppLockType(AppLockTypePreference.Pin)
                         .onSuccess {
                             _state.update { it.copy(event = PinConfigEvent.PinSet) }
                             snackbarDispatcher(PinLockEnabled)

@@ -128,6 +128,7 @@ import proton.android.pass.data.api.usecases.PerformSync
 import proton.android.pass.data.api.usecases.PinItem
 import proton.android.pass.data.api.usecases.PinItems
 import proton.android.pass.data.api.usecases.PromoteNewInviteToInvite
+import proton.android.pass.data.api.usecases.ReconcileAppLock
 import proton.android.pass.data.api.usecases.RefreshAliasSlNotes
 import proton.android.pass.data.api.usecases.RefreshBreaches
 import proton.android.pass.data.api.usecases.RefreshContent
@@ -142,6 +143,10 @@ import proton.android.pass.data.api.usecases.ResendShareInvite
 import proton.android.pass.data.api.usecases.ResetAppToDefaults
 import proton.android.pass.data.api.usecases.RestoreAllItems
 import proton.android.pass.data.api.usecases.RestoreItems
+import proton.android.pass.data.api.usecases.SeedAppLockStore
+import proton.android.pass.data.api.usecases.SetAppLockTime
+import proton.android.pass.data.api.usecases.SetAppLockType
+import proton.android.pass.data.api.usecases.SetPasswordOnlyLock
 import proton.android.pass.data.api.usecases.SyncUserEvents
 import proton.android.pass.data.api.usecases.TransferVaultOwnership
 import proton.android.pass.data.api.usecases.TrashItems
@@ -407,6 +412,7 @@ import proton.android.pass.data.impl.usecases.PerformSyncImpl
 import proton.android.pass.data.impl.usecases.PinItemImpl
 import proton.android.pass.data.impl.usecases.PinItemsImpl
 import proton.android.pass.data.impl.usecases.PromoteNewInviteToInviteImpl
+import proton.android.pass.data.impl.usecases.ReconcileAppLockImpl
 import proton.android.pass.data.impl.usecases.RefreshAliasSlNotesImpl
 import proton.android.pass.data.impl.usecases.RefreshBreachesImpl
 import proton.android.pass.data.impl.usecases.RefreshContentImpl
@@ -421,6 +427,10 @@ import proton.android.pass.data.impl.usecases.ResendShareInviteImpl
 import proton.android.pass.data.impl.usecases.ResetAppToDefaultsImpl
 import proton.android.pass.data.impl.usecases.RestoreAllItemsImpl
 import proton.android.pass.data.impl.usecases.RestoreItemImpl
+import proton.android.pass.data.impl.usecases.SeedAppLockStoreImpl
+import proton.android.pass.data.impl.usecases.SetAppLockTimeImpl
+import proton.android.pass.data.impl.usecases.SetAppLockTypeImpl
+import proton.android.pass.data.impl.usecases.SetPasswordOnlyLockImpl
 import proton.android.pass.data.impl.usecases.SyncUserEventsImpl
 import proton.android.pass.data.impl.usecases.TransferVaultOwnershipImpl
 import proton.android.pass.data.impl.usecases.TrashItemImpl
@@ -847,6 +857,21 @@ abstract class DataUseCaseModule {
 
     @Binds
     abstract fun bindClearData(impl: ResetAppToDefaultsImpl): ResetAppToDefaults
+
+    @Binds
+    abstract fun bindSetAppLockType(impl: SetAppLockTypeImpl): SetAppLockType
+
+    @Binds
+    abstract fun bindSetPasswordOnlyLock(impl: SetPasswordOnlyLockImpl): SetPasswordOnlyLock
+
+    @Binds
+    abstract fun bindSetAppLockTime(impl: SetAppLockTimeImpl): SetAppLockTime
+
+    @Binds
+    abstract fun bindReconcileAppLock(impl: ReconcileAppLockImpl): ReconcileAppLock
+
+    @Binds
+    abstract fun bindSeedAppLockStore(impl: SeedAppLockStoreImpl): SeedAppLockStore
 
     @Binds
     abstract fun bindInviteToVault(impl: InviteToVaultImpl): InviteToVault

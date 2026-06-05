@@ -29,9 +29,9 @@
     <item quantity="one">Elementet finnes allerede i denne mappen</item>
     <item quantity="other">%d elementer finnes allerede i denne mappen</item>
   </plurals>
-  <string name="migrate_disabled_folder_reason_same_location">This folder is already in this location</string>
-  <string name="migrate_disabled_folder_reason_being_moved">This folder is being moved</string>
-  <string name="migrate_disabled_folder_reason_descendant">This folder is inside the folder being moved</string>
+  <string name="migrate_disabled_folder_reason_same_location">Mappen finnes allerede på denne plasseringen</string>
+  <string name="migrate_disabled_folder_reason_being_moved">Denne mappen flyttes</string>
+  <string name="migrate_disabled_folder_reason_descendant">Denne mappen er inne i mappen som flyttes</string>
   <string name="migrate_disabled_vault_reason_no_permission">Du kan ikke opprette elementer i dette hvelvet</string>
   <string name="migrate_disabled_vault_reason_same_vault">Du kan ikke flytte et element til det samme hvelvet</string>
   <plurals name="migrate_items_shared_warning_title">
@@ -44,7 +44,7 @@
     <item quantity="other">%d elementer er for øyeblikket delt. Hvis du flytter dem til et annet hvelv, fjernes tilgangen for alle andre brukere.</item>
   </plurals>
   <string name="migrate_select_vault_title">Velg et hvelv</string>
-  <string name="migrate_select_destination_for_source_title">Select the destination to move all items from %s</string>
+  <string name="migrate_select_destination_for_source_title">Velg destinasjonen du vil flytte alle elementene fra %s</string>
   <string name="migrate_folder_items_moved_success_snackbar">Elementer flyttet</string>
   <string name="migrate_folder_items_moved_error_snackbar">Feil ved flytting av elementene</string>
 </resources>

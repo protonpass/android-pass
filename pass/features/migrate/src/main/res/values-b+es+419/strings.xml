@@ -44,7 +44,7 @@
     <item quantity="other">%d elementos están compartidos actualmente. Si los mueve a otra bóveda, se eliminará el acceso para todos los demás usuarios.</item>
   </plurals>
   <string name="migrate_select_vault_title">Seleccionar una bóveda</string>
-  <string name="migrate_select_destination_for_source_title">Seleccione el destino donde se movrán todos los elementos de %s</string>
+  <string name="migrate_select_destination_for_source_title">Seleccione el destino donde se moverán todos los elementos de %s</string>
   <string name="migrate_folder_items_moved_success_snackbar">Elementos movidos</string>
   <string name="migrate_folder_items_moved_error_snackbar">Error al mover los elementos</string>
 </resources>

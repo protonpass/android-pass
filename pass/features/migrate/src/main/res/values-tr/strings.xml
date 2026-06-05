@@ -44,7 +44,7 @@
     <item quantity="other">%d öge şu anda paylaşılıyor. Başka kasaya taşırsanız diğer kullanıcıların erişimi kaldırılacak.</item>
   </plurals>
   <string name="migrate_select_vault_title">Bir kasa seçin</string>
-  <string name="migrate_select_destination_for_source_title">Tüm öğeleri %s konumundan taşımak için hedefi seçin</string>
+  <string name="migrate_select_destination_for_source_title">%s içindeki tüm ögelerin taşınacağı hedefi seçin</string>
   <string name="migrate_folder_items_moved_success_snackbar">Ögeler taşındı</string>
   <string name="migrate_folder_items_moved_error_snackbar">Ögeler taşınırken sorun çıktı</string>
 </resources>

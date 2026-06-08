@@ -85,7 +85,7 @@ class UpdateCustomItemViewModel @Inject constructor(
     private val accountManager: AccountManager,
     private val snackbarDispatcher: SnackbarDispatcher,
     private val encryptionContextProvider: EncryptionContextProvider,
-    private val attachmentsHandler: AttachmentsHandler,
+    attachmentsHandler: AttachmentsHandler,
     private val renameAttachments: RenameAttachments,
     private val pendingAttachmentLinkRepository: PendingAttachmentLinkRepository,
     customFieldHandler: CustomFieldHandler,

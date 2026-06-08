@@ -25,6 +25,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.filter
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
@@ -56,6 +57,7 @@ import proton.android.pass.data.api.usecases.GetUserPlan
 import proton.android.pass.data.api.usecases.ObserveUserAccessData
 import proton.android.pass.data.api.usecases.attachments.ClearAttachments
 import proton.android.pass.data.api.usecases.attachments.DownloadAttachment
+import proton.android.pass.data.api.usecases.attachments.ObserveItemAttachments
 import proton.android.pass.data.api.usecases.attachments.ObserveUpdateItemAttachments
 import proton.android.pass.data.api.usecases.attachments.UploadAttachment
 import proton.android.pass.domain.ItemId
@@ -78,6 +80,7 @@ class AttachmentsHandlerImpl @Inject constructor(
     private val downloadAttachment: DownloadAttachment,
     private val clearAttachments: ClearAttachments,
     private val observeUpdateItemAttachments: ObserveUpdateItemAttachments,
+    private val observeItemAttachments: ObserveItemAttachments,
     private val fileHandler: FileHandler,
     private val snackbarDispatcher: SnackbarDispatcher,
     private val authOverrideState: AuthOverrideState,
@@ -241,6 +244,37 @@ class AttachmentsHandlerImpl @Inject constructor(
     override suspend fun getAttachmentsForItem(shareId: ShareId, itemId: ItemId) {
         shareIdState.update { Some(shareId) }
         itemIdState.update { Some(itemId) }
+    }
+
+    override suspend fun copyAttachmentsAsDraft(shareId: ShareId, itemId: ItemId) {
+        // Attachments are encrypted with the source item's key; the duplicate is a brand new item
+        // with its own key, so each file must be re-downloaded (decrypted) and re-uploaded as a
+        // draft (re-encrypted). Best effort: a failed download/upload surfaces the existing error
+        // snackbar, skips that file, and still creates the item.
+        val sourceAttachments = safeRunCatching {
+            observeItemAttachments(shareId, itemId).first()
+        }.getOrElse {
+            PassLogger.w(TAG, "Could not read source attachments to duplicate")
+            PassLogger.w(TAG, it)
+            emptyList()
+        }
+        sourceAttachments.forEach { attachment ->
+            when (val uri = preloadAttachment(attachment)) {
+                None -> Unit
+                is Some -> draftAttachmentRepository.add(
+                    DraftAttachment.Loading(
+                        FileMetadata(
+                            uri = uri.value,
+                            name = attachment.name,
+                            size = attachment.size,
+                            mimeType = attachment.mimeType,
+                            attachmentType = attachment.type,
+                            createTime = attachment.createTime
+                        )
+                    )
+                )
+            }
+        }
     }
 
     companion object {

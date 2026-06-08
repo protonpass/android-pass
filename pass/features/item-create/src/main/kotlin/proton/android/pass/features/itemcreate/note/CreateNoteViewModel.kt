@@ -243,6 +243,7 @@ class CreateNoteViewModel @Inject constructor(
                 customFields = customFieldHandler.sanitiseForEditingCustomFields(customFields)
             )
         }
+        attachmentsHandler.copyAttachmentsAsDraft(shareId = shareId, itemId = itemId)
     }
 
     internal fun doNotDisplayWarningDialog() {

@@ -72,7 +72,7 @@ import java.net.URI
 abstract class BaseNoteViewModel(
     private val clipboardManager: ClipboardManager,
     private val snackbarDispatcher: SnackbarDispatcher,
-    private val attachmentsHandler: AttachmentsHandler,
+    protected val attachmentsHandler: AttachmentsHandler,
     private val userPreferencesRepository: UserPreferencesRepository,
     protected val customFieldHandler: CustomFieldHandler,
     private val noteItemFormProcessor: NoteItemFormProcessorType,

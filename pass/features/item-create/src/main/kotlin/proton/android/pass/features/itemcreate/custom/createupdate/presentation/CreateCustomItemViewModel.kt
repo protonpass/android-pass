@@ -407,6 +407,7 @@ class CreateCustomItemViewModel @Inject constructor(
                 sectionList = extraSections
             )
         }
+        attachmentsHandler.copyAttachmentsAsDraft(shareId = shareId, itemId = itemId)
     }
 
     companion object {

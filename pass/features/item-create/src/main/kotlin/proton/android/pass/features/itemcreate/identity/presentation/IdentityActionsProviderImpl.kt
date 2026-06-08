@@ -56,6 +56,8 @@ import proton.android.pass.data.api.usecases.attachments.LinkAttachmentsToItem
 import proton.android.pass.data.api.usecases.attachments.RenameAttachments
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemContents
+import proton.android.pass.domain.ItemId
+import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.attachments.Attachment
 import proton.android.pass.domain.attachments.FileMetadata
 import proton.android.pass.domain.toItemContents
@@ -793,6 +795,10 @@ class IdentityActionsProviderImpl @Inject constructor(
 
     override fun getReceivedItem(): Item =
         itemState.value.value() ?: throw IllegalStateException("Item is not received")
+
+    override suspend fun copyAttachmentsAsDraft(shareId: ShareId, itemId: ItemId) {
+        attachmentsHandler.copyAttachmentsAsDraft(shareId, itemId)
+    }
 
     override fun observeReceivedItem(): Flow<Option<Item>> = itemState
 

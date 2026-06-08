@@ -221,6 +221,7 @@ class CreateIdentityViewModel @Inject constructor(
             return@withEncryptionContextSuspendable encrypt(decryptedTitle)
         }
         identityActionsProvider.onItemReceivedState(item.copy(title = encryptedTitle))
+        identityActionsProvider.copyAttachmentsAsDraft(shareId = shareId, itemId = itemId)
     }
 
     internal fun doNotDisplayWarningDialog() {

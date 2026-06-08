@@ -43,7 +43,7 @@ import proton.android.pass.commonuimodels.api.items.MonitorCheck
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.errors.ItemNotFoundError
 import proton.android.pass.data.api.usecases.attachments.ObserveAllItemRevisionAttachments
-import proton.android.pass.data.api.usecases.attachments.ObserveDetailItemAttachments
+import proton.android.pass.data.api.usecases.attachments.ObserveItemAttachments
 import proton.android.pass.data.api.usecases.shares.ObserveShare
 import proton.android.pass.domain.HiddenState
 import proton.android.pass.domain.Item
@@ -61,7 +61,7 @@ import javax.inject.Inject
 
 class ItemDetailsHandlerImpl @Inject constructor(
     private val observeShare: ObserveShare,
-    private val observeDetailItemAttachments: ObserveDetailItemAttachments,
+    private val observeItemAttachments: ObserveItemAttachments,
     private val observeAllItemRevisionAttachments: ObserveAllItemRevisionAttachments,
     private val observers: Map<ItemCategory, @JvmSuppressWildcards ItemDetailsHandlerObserver<*, *>>,
     private val clipboardManager: ClipboardManager,
@@ -132,7 +132,7 @@ class ItemDetailsHandlerImpl @Inject constructor(
     private fun attachmentsFlow(item: Item, source: ItemDetailsSource): Flow<AttachmentsState> {
         val attachmentsFlow = when (source) {
             ItemDetailsSource.DETAIL -> {
-                if (item.hasAttachments) observeDetailItemAttachments(item.shareId, item.id)
+                if (item.hasAttachments) observeItemAttachments(item.shareId, item.id)
                 else return flowOf(AttachmentsState.Initial)
             }
 

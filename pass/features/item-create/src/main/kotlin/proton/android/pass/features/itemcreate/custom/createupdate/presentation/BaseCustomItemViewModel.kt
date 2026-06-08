@@ -161,7 +161,7 @@ abstract class BaseCustomItemViewModel(
     private val linkAttachmentsToItem: LinkAttachmentsToItem,
     private val snackbarDispatcher: SnackbarDispatcher,
     private val customFieldDraftRepository: CustomFieldDraftRepository,
-    private val attachmentsHandler: AttachmentsHandler,
+    protected val attachmentsHandler: AttachmentsHandler,
     protected val customFieldHandler: CustomFieldHandler,
     private val userPreferencesRepository: UserPreferencesRepository,
     private val encryptionContextProvider: EncryptionContextProvider,

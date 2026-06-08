@@ -66,6 +66,10 @@ class FakeAttachmentHandler : AttachmentsHandler {
         // no-op
     }
 
+    override suspend fun copyAttachmentsAsDraft(shareId: ShareId, itemId: ItemId) {
+        // no-op
+    }
+
     override suspend fun openAttachment(contextHolder: ClassHolder<Context>, attachment: Attachment) {
         // no-op
     }

@@ -161,7 +161,7 @@ import proton.android.pass.data.api.usecases.attachments.DownloadAttachment
 import proton.android.pass.data.api.usecases.attachments.GetAttachment
 import proton.android.pass.data.api.usecases.attachments.LinkAttachmentsToItem
 import proton.android.pass.data.api.usecases.attachments.ObserveAllItemRevisionAttachments
-import proton.android.pass.data.api.usecases.attachments.ObserveDetailItemAttachments
+import proton.android.pass.data.api.usecases.attachments.ObserveItemAttachments
 import proton.android.pass.data.api.usecases.attachments.ObserveUpdateItemAttachments
 import proton.android.pass.data.api.usecases.attachments.RemoveDraftAttachment
 import proton.android.pass.data.api.usecases.attachments.RenameAttachments
@@ -440,7 +440,7 @@ import proton.android.pass.data.impl.usecases.attachments.DownloadAttachmentImpl
 import proton.android.pass.data.impl.usecases.attachments.GetAttachmentImpl
 import proton.android.pass.data.impl.usecases.attachments.LinkAttachmentsToItemImpl
 import proton.android.pass.data.impl.usecases.attachments.ObserveAllItemRevisionAttachmentsImpl
-import proton.android.pass.data.impl.usecases.attachments.ObserveDetailItemAttachmentsImpl
+import proton.android.pass.data.impl.usecases.attachments.ObserveItemAttachmentsImpl
 import proton.android.pass.data.impl.usecases.attachments.ObserveUpdateItemAttachmentsImpl
 import proton.android.pass.data.impl.usecases.attachments.RemoveDraftAttachmentImpl
 import proton.android.pass.data.impl.usecases.attachments.RenameAttachmentsImpl
@@ -1332,7 +1332,7 @@ abstract class DataUseCaseModule {
     abstract fun bindObserveUpdateItemAttachments(impl: ObserveUpdateItemAttachmentsImpl): ObserveUpdateItemAttachments
 
     @[Binds Singleton]
-    abstract fun bindObserveDetailItemAttachments(impl: ObserveDetailItemAttachmentsImpl): ObserveDetailItemAttachments
+    abstract fun bindObserveItemAttachments(impl: ObserveItemAttachmentsImpl): ObserveItemAttachments
 
     @[Binds Singleton]
     abstract fun bindObserveShareMembers(impl: ObserveShareItemMembersImpl): ObserveShareItemMembers

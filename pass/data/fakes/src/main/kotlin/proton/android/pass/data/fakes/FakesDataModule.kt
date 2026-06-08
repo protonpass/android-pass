@@ -147,7 +147,7 @@ import proton.android.pass.data.api.usecases.attachments.ClearAttachments
 import proton.android.pass.data.api.usecases.attachments.DownloadAttachment
 import proton.android.pass.data.api.usecases.attachments.LinkAttachmentsToItem
 import proton.android.pass.data.api.usecases.attachments.ObserveAllItemRevisionAttachments
-import proton.android.pass.data.api.usecases.attachments.ObserveDetailItemAttachments
+import proton.android.pass.data.api.usecases.attachments.ObserveItemAttachments
 import proton.android.pass.data.api.usecases.attachments.ObserveUpdateItemAttachments
 import proton.android.pass.data.api.usecases.attachments.RenameAttachments
 import proton.android.pass.data.api.usecases.attachments.UploadAttachment
@@ -424,7 +424,7 @@ import proton.android.pass.data.fakes.usecases.attachments.FakeClearAttachments
 import proton.android.pass.data.fakes.usecases.attachments.FakeDownloadAttachment
 import proton.android.pass.data.fakes.usecases.attachments.FakeLinkAttachmentsToItem
 import proton.android.pass.data.fakes.usecases.attachments.FakeObserveAllItemRevisionAttachments
-import proton.android.pass.data.fakes.usecases.attachments.FakeObserveDetailItemAttachments
+import proton.android.pass.data.fakes.usecases.attachments.FakeObserveItemAttachments
 import proton.android.pass.data.fakes.usecases.attachments.FakeObserveUpdateItemAttachments
 import proton.android.pass.data.fakes.usecases.attachments.FakeRenameAttachments
 import proton.android.pass.data.fakes.usecases.attachments.FakeUploadAttachment
@@ -1219,7 +1219,7 @@ abstract class FakesDataModule {
     abstract fun bindObserveUpdateItemAttachments(impl: FakeObserveUpdateItemAttachments): ObserveUpdateItemAttachments
 
     @Binds
-    abstract fun bindObserveDetailItemAttachments(impl: FakeObserveDetailItemAttachments): ObserveDetailItemAttachments
+    abstract fun bindObserveItemAttachments(impl: FakeObserveItemAttachments): ObserveItemAttachments
 
     @Binds
     abstract fun bindObserveShareMembers(impl: FakeObserveShareItemMembers): ObserveShareItemMembers

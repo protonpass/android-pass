@@ -351,6 +351,7 @@ class CreateLoginViewModel @Inject constructor(
                 isExpandedByContent = itemContents.itemEmail.isNotBlank() && itemContents.itemUsername.isNotBlank()
             )
         }
+        attachmentsHandler.copyAttachmentsAsDraft(shareId = shareId, itemId = itemId)
     }
 
     @Suppress("ComplexMethod", "LongMethod")

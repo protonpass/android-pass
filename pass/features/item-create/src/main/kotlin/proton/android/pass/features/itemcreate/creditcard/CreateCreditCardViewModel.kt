@@ -250,6 +250,7 @@ class CreateCreditCardViewModel @Inject constructor(
                 customFields = customFieldHandler.sanitiseForEditingCustomFields(formState.customFields)
             )
         }
+        attachmentsHandler.copyAttachmentsAsDraft(shareId = shareId, itemId = itemId)
     }
 
     internal fun doNotDisplayWarningDialog() {

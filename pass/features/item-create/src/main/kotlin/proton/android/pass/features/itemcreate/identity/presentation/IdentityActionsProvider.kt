@@ -29,6 +29,8 @@ import proton.android.pass.commonui.api.ClassHolder
 import proton.android.pass.commonuimodels.api.attachments.AttachmentsState
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.domain.Item
+import proton.android.pass.domain.ItemId
+import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.attachments.Attachment
 import proton.android.pass.domain.attachments.FileMetadata
 import proton.android.pass.features.itemcreate.ItemSavedState
@@ -87,6 +89,7 @@ interface IdentityActionsProvider : IdentityFormActions {
     suspend fun onItemSavedState(item: Item)
     fun updateSelectedSection(customExtraField: IdentityField.CustomField)
     suspend fun onItemReceivedState(item: Item)
+    suspend fun copyAttachmentsAsDraft(shareId: ShareId, itemId: ItemId)
     fun getReceivedItem(): Item
     fun observeReceivedItem(): Flow<Option<Item>>
 }

@@ -57,4 +57,6 @@ interface AttachmentsHandler {
     fun observeHasRenamedAttachments(onAttachmentRenamed: () -> Unit): Flow<Unit>
 
     suspend fun getAttachmentsForItem(shareId: ShareId, itemId: ItemId)
+
+    suspend fun copyAttachmentsAsDraft(shareId: ShareId, itemId: ItemId)
 }

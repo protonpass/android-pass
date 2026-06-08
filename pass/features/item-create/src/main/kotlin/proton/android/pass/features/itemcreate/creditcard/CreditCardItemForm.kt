@@ -163,6 +163,7 @@ internal fun CreditCardItemForm(
                         attachmentsState = attachmentsState,
                         isDetail = false,
                         itemColors = passItemColors(ItemCategory.CreditCard),
+                        isEditAllowed = enabled,
                         onEvent = { onEvent(OnAttachmentEvent(it)) }
                     )
                 }

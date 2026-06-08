@@ -255,6 +255,7 @@ internal fun AliasItemForm(
                         attachmentsState = attachmentsState,
                         isDetail = false,
                         itemColors = passItemColors(ItemCategory.Alias),
+                        isEditAllowed = isEditAllowed,
                         onEvent = { onEvent(OnAttachmentEvent(it)) }
                     )
                 }

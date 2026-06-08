@@ -142,6 +142,7 @@ internal fun NoteItemForm(
                         attachmentsState = attachmentsState,
                         isDetail = false,
                         itemColors = passItemColors(ItemCategory.Note),
+                        isEditAllowed = enabled,
                         onEvent = { onEvent(OnAttachmentEvent(it)) }
                     )
                 }

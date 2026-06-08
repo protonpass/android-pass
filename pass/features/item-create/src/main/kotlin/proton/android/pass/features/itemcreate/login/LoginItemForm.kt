@@ -250,6 +250,7 @@ internal fun LoginItemForm(
                         attachmentsState = attachmentsState,
                         isDetail = false,
                         itemColors = passItemColors(ItemCategory.Login),
+                        isEditAllowed = isEditAllowed,
                         onEvent = { onEvent(OnAttachmentEvent(it)) }
                     )
                 }

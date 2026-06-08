@@ -277,6 +277,7 @@ fun IdentityItemForm(
                     attachmentsState = identityUiState.getAttachmentsState(),
                     isDetail = false,
                     itemColors = passItemColors(ItemCategory.Identity),
+                    isEditAllowed = enabled,
                     onEvent = { onEvent(OnAttachmentEvent(it)) }
                 )
             }

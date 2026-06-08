@@ -59,9 +59,14 @@ fun AttachmentSection(
     isDetail: Boolean,
     itemColors: PassItemColors,
     itemDiffs: Map<AttachmentId, ItemDiffType> = emptyMap(),
+    isEditAllowed: Boolean = true,
     onEvent: (AttachmentContentEvent) -> Unit
 ) {
     if (!attachmentsState.canShowAttachmentSection(isDetail)) return
+    val interactionsEnabled = attachmentsState.isEnabled && isEditAllowed
+    val onGuardedEvent: (AttachmentContentEvent) -> Unit = { event ->
+        if (isEditAllowed) onEvent(event)
+    }
     Column(
         modifier = modifier
             .applyIf(
@@ -79,11 +84,11 @@ fun AttachmentSection(
                 end = Spacing.medium
             ),
             colors = itemColors,
-            isEnabled = attachmentsState.isEnabled,
+            isEnabled = interactionsEnabled,
             fileAmount = attachmentsState.size,
             isDetail = isDetail,
             needsUpgrade = attachmentsState.needsUpgrade,
-            onTrashAll = { onEvent(AttachmentContentEvent.OnDeleteAllAttachments) }
+            onTrashAll = { onGuardedEvent(AttachmentContentEvent.OnDeleteAllAttachments) }
         )
         Column {
             attachmentsState.attachmentsList.forEachIndexed { index, attachment ->
@@ -108,12 +113,12 @@ fun AttachmentSection(
                     attachmentType = attachment.type,
                     size = attachment.size,
                     createTime = attachment.createTime,
-                    isEnabled = attachmentsState.isEnabled,
+                    isEnabled = interactionsEnabled,
                     isError = false,
                     isLoading = attachmentsState.loadingAttachments.contains(attachment.id),
                     onRetryClick = {},
                     onOptionsClick = {
-                        onEvent(
+                        onGuardedEvent(
                             OnAttachmentOptions(
                                 shareId = attachment.shareId,
                                 itemId = attachment.itemId,
@@ -121,7 +126,7 @@ fun AttachmentSection(
                             )
                         )
                     },
-                    onAttachmentOpen = { onEvent(OnAttachmentOpen(attachment)) }
+                    onAttachmentOpen = { onGuardedEvent(OnAttachmentOpen(attachment)) }
                 )
                 if (attachmentsState.shouldDisplayDivider(index)) {
                     PassDivider()
@@ -146,16 +151,16 @@ fun AttachmentSection(
                             ifTrue = { padding(bottom = Spacing.medium) }
                         ),
                     filename = fileMetadata.name,
-                    isEnabled = attachmentsState.isEnabled,
+                    isEnabled = interactionsEnabled,
                     isLoading = attachmentsState.loadingDraftAttachments.contains(fileMetadata.uri),
                     isError = attachmentsState.errorDraftAttachments.contains(fileMetadata.uri),
                     attachmentType = fileMetadata.attachmentType,
                     size = fileMetadata.size,
                     createTime = fileMetadata.createTime,
-                    onRetryClick = { onEvent(OnDraftAttachmentRetry(fileMetadata)) },
-                    onOptionsClick = { onEvent(OnDraftAttachmentOptions(fileMetadata.uri)) },
+                    onRetryClick = { onGuardedEvent(OnDraftAttachmentRetry(fileMetadata)) },
+                    onOptionsClick = { onGuardedEvent(OnDraftAttachmentOptions(fileMetadata.uri)) },
                     onAttachmentOpen = {
-                        onEvent(
+                        onGuardedEvent(
                             OnDraftAttachmentOpen(
                                 uri = fileMetadata.uri,
                                 mimetype = fileMetadata.mimeType
@@ -176,14 +181,14 @@ fun AttachmentSection(
                     bottom = Spacing.medium
                 ),
                 colors = itemColors,
-                isEnabled = attachmentsState.isEnabled,
+                isEnabled = interactionsEnabled,
                 onClick = {
                     when (val needsUpgrade = attachmentsState.needsUpgrade) {
                         None -> {}
                         is Some -> if (needsUpgrade.value) {
-                            onEvent(AttachmentContentEvent.UpsellAttachments)
+                            onGuardedEvent(AttachmentContentEvent.UpsellAttachments)
                         } else {
-                            onEvent(OnAddAttachment)
+                            onGuardedEvent(OnAddAttachment)
                         }
                     }
                 }

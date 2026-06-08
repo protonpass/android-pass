@@ -249,6 +249,7 @@ internal fun CustomItemForm(
                     attachmentsState = itemSharedProperties.attachmentsState,
                     isDetail = false,
                     itemColors = passItemColors(ItemCategory.Custom),
+                    isEditAllowed = itemSharedProperties.isFormEnabled,
                     onEvent = { onEvent(ItemContentEvent.OnAttachmentEvent(it)) }
                 )
             }

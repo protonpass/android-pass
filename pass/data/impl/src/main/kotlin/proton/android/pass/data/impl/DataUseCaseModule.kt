@@ -62,6 +62,7 @@ import proton.android.pass.data.api.usecases.GetItemActions
 import proton.android.pass.data.api.usecases.GetItemByAliasEmail
 import proton.android.pass.data.api.usecases.GetItemById
 import proton.android.pass.data.api.usecases.GetItemsBySearchResult
+import proton.android.pass.data.api.usecases.popularservices.GetPopularServices
 import proton.android.pass.data.api.usecases.GetPublicSuffixList
 import proton.android.pass.data.api.usecases.GetShareById
 import proton.android.pass.data.api.usecases.GetSuggestedAutofillItems
@@ -338,6 +339,7 @@ import proton.android.pass.data.impl.usecases.GetItemActionsImpl
 import proton.android.pass.data.impl.usecases.GetItemByAliasEmailImpl
 import proton.android.pass.data.impl.usecases.GetItemByIdImpl
 import proton.android.pass.data.impl.usecases.GetItemsBySearchResultImpl
+import proton.android.pass.data.impl.usecases.popularservices.GetPopularServicesImpl
 import proton.android.pass.data.impl.usecases.GetPublicSuffixListImpl
 import proton.android.pass.data.impl.usecases.GetShareByIdImpl
 import proton.android.pass.data.impl.usecases.GetSuggestedAutofillItemsImpl
@@ -588,6 +590,9 @@ abstract class DataUseCaseModule {
 
     @Binds
     abstract fun bindCreateItem(impl: CreateItemImpl): CreateItem
+
+    @Binds
+    abstract fun bindGetPopularServices(impl: GetPopularServicesImpl): GetPopularServices
 
     @Binds
     abstract fun bindUpdateItem(impl: UpdateItemImpl): UpdateItem

@@ -25,19 +25,27 @@ import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.compose.SavedStateHandleSaveableApi
 import androidx.lifecycle.viewmodel.compose.saveable
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.persistentListOf
+import kotlinx.collections.immutable.toImmutableList
 import kotlinx.collections.immutable.toImmutableSet
 import kotlinx.coroutines.CoroutineExceptionHandler
+import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.firstOrNull
+import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -69,6 +77,8 @@ import proton.android.pass.data.api.repositories.DraftRepository
 import proton.android.pass.data.api.usecases.CreateItem
 import proton.android.pass.data.api.usecases.CreateLoginAndAlias
 import proton.android.pass.data.api.usecases.GetItemById
+import proton.android.pass.data.api.usecases.popularservices.GetPopularServices
+import proton.android.pass.data.api.usecases.popularservices.PopularService
 import proton.android.pass.data.api.usecases.ObserveCurrentUser
 import proton.android.pass.data.api.usecases.ObserveUpgradeInfo
 import proton.android.pass.data.api.usecases.ObserveVaultsWithItemCount
@@ -123,6 +133,7 @@ import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonOptionalNavArgId
 import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.android.pass.passkeys.api.GeneratePasskey
+import proton.android.pass.preferences.FeatureFlag
 import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import proton.android.pass.preferences.InternalSettingsRepository
 import proton.android.pass.preferences.UserPreferencesRepository
@@ -132,8 +143,9 @@ import proton.android.pass.telemetry.api.TelemetryManager
 import proton.android.pass.telemetry.api.TelemetryGrowthFeatureUsageEvent
 import proton.android.pass.totp.api.TotpManager
 import javax.inject.Inject
+import kotlin.time.Duration.Companion.milliseconds
 
-@Suppress("LongParameterList")
+@Suppress("LongParameterList", "LargeClass")
 @HiltViewModel
 class CreateLoginViewModel @Inject constructor(
     private val createItem: CreateItem,
@@ -168,6 +180,7 @@ class CreateLoginViewModel @Inject constructor(
     loginItemFormProcessor: LoginItemFormProcessorType,
     savedStateHandleProvider: SavedStateHandleProvider,
     observeShare: ObserveShare,
+    getPopularServices: GetPopularServices,
     private val canCreateAlias: CanCreateAlias,
     private val canCreateItemsInFolder: CanCreateItemsInFolder,
     private val settingsRepository: InternalSettingsRepository
@@ -283,17 +296,63 @@ class CreateLoginViewModel @Inject constructor(
         selectedFolderIdFlow = selectedFolderIdState
     )
 
+    private val popularServicesFlow: Flow<List<PopularService>> =
+        featureFlagsPreferencesRepository.get<Boolean>(FeatureFlag.PASS_POPULAR_SERVICES)
+            .flatMapLatest { isPopularServicesEnabled ->
+                if (isPopularServicesEnabled) {
+                    flow {
+                        val services = safeRunCatching { getPopularServices() }
+                            .getOrElse {
+                                PassLogger.w(TAG, "Failed to load popular services")
+                                PassLogger.w(TAG, it)
+                                emptyList()
+                            }
+                        emit(services)
+                    }
+                } else {
+                    flowOf(emptyList())
+                }
+            }
+
+    // Title of the service the user just picked, used to hide the popup right after a selection
+    // (the title then equals the service name). Comparing against the whole catalog instead would
+    // also hide a name the user typed in full, which is not what we want.
+    private val selectedServiceTitleState = MutableStateFlow<String?>(null)
+
+    @OptIn(FlowPreview::class)
+    private val popularServiceSuggestionsFlow: Flow<ImmutableList<PopularService>> = combine(
+        snapshotFlow { loginItemFormState.title }
+            .debounce(timeout = POPULAR_SERVICES_DEBOUNCE)
+            .onStart { emit("") }
+            .distinctUntilChanged(),
+        popularServicesFlow,
+        selectedServiceTitleState
+    ) { title, services, selectedTitle ->
+        if (title.equals(selectedTitle, ignoreCase = true)) {
+            persistentListOf()
+        } else {
+            matchPopularServices(query = title, services = services).toImmutableList()
+        }
+    }
+
     internal val createLoginUiState: StateFlow<CreateLoginUiState> = combine(
         shareUiState,
         baseLoginUiState,
         createPasskeyStateFlow,
         canDisplayWarningVaultSharedDialogFlow,
+        popularServiceSuggestionsFlow,
         ::CreateLoginUiState
     ).stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5_000),
         initialValue = CreateLoginUiState.Initial
     )
+
+    internal fun onPopularServiceSelected(service: PopularService) {
+        selectedServiceTitleState.update { service.title }
+        onTitleChange(service.title)
+        service.urls.firstOrNull()?.let { url -> onWebsiteChange(value = url, index = 0) }
+    }
 
     internal fun changeVault(shareId: ShareId) {
         selectedShareIdMutableState = Some(shareId)
@@ -676,6 +735,6 @@ class CreateLoginViewModel @Inject constructor(
 
         private const val TAG = "CreateLoginViewModel"
 
+        private val POPULAR_SERVICES_DEBOUNCE = 200.milliseconds
     }
-
 }

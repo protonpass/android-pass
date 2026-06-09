@@ -172,6 +172,7 @@ fun CreateLoginScreen(
             topBarActionName = stringResource(id = R.string.title_create),
             canUseAttachments = canUseAttachments,
             isUpdate = false,
+            popularServiceSuggestions = uiState.popularServiceSuggestions,
             onEvent = {
                 when (it) {
                     LoginContentEvent.Up -> onExit()
@@ -259,6 +260,9 @@ fun CreateLoginScreen(
                     is LoginContentEvent.OnDeletePasskey -> {}
 
                     is LoginContentEvent.OnTitleChange -> viewModel.onTitleChange(it.title)
+
+                    is LoginContentEvent.OnPopularServiceSelected ->
+                        viewModel.onPopularServiceSelected(it.service)
 
                     is LoginContentEvent.OnVaultSelect ->
                         actionAfterKeyboardHide = {

@@ -42,6 +42,7 @@ import proton.android.pass.crypto.fakes.context.FakeEncryptionContextProvider
 import proton.android.pass.data.api.errors.EmailNotValidatedError
 import proton.android.pass.data.fakes.repositories.FakeDraftRepository
 import proton.android.pass.data.fakes.usecases.FakeCanCreateAlias
+import proton.android.pass.data.fakes.usecases.popularservices.FakeGetPopularServices
 import proton.android.pass.data.fakes.usecases.FakeCreateItem
 import proton.android.pass.data.fakes.usecases.FakeCreateLoginAndAlias
 import proton.android.pass.data.fakes.usecases.FakeGetItemById
@@ -165,6 +166,7 @@ internal class CreateLoginNavItemViewModelTest {
             observeShare = observeShare,
             settingsRepository = settingsRepository,
             observeFolder = FakeObserveFolder(),
+            getPopularServices = FakeGetPopularServices(),
             canCreateAlias = FakeCanCreateAlias(),
             canCreateItemsInFolder = FakeCanCreateItemsInFolder()
         )

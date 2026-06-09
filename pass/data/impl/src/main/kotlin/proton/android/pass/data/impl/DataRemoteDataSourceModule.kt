@@ -70,6 +70,8 @@ import proton.android.pass.data.impl.remote.accessdata.RemoteUserAccessDataDataS
 import proton.android.pass.data.impl.remote.accessdata.RemoteUserAccessDataDataSourceImpl
 import proton.android.pass.data.impl.remote.assetlink.RemoteAssetLinkDataSource
 import proton.android.pass.data.impl.remote.assetlink.RemoteAssetLinkDataSourceImpl
+import proton.android.pass.data.impl.remote.popularservices.RemotePopularServicesDataSource
+import proton.android.pass.data.impl.remote.popularservices.RemotePopularServicesDataSourceImpl
 import proton.android.pass.data.impl.remote.attachments.RemoteAttachmentsDataSource
 import proton.android.pass.data.impl.remote.attachments.RemoteAttachmentsDataSourceImpl
 import proton.android.pass.data.impl.remote.groups.RemoteGroupInviteDataSource
@@ -155,6 +157,11 @@ abstract class DataRemoteDataSourceModule {
 
     @[Binds Singleton]
     abstract fun bindRemoteAssetLinkDataSource(impl: RemoteAssetLinkDataSourceImpl): RemoteAssetLinkDataSource
+
+    @[Binds Singleton]
+    abstract fun bindRemotePopularServicesDataSource(
+        impl: RemotePopularServicesDataSourceImpl
+    ): RemotePopularServicesDataSource
 
     @[Binds Singleton]
     abstract fun bindRemoteAliasContactsDataSource(

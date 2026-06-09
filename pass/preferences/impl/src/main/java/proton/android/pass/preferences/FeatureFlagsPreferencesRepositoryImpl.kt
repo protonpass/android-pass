@@ -50,6 +50,7 @@ import proton.android.pass.preferences.FeatureFlag.PASS_PASSWORD_CHECKS
 import proton.android.pass.preferences.FeatureFlag.PASS_USERNAME_GENERATOR
 import proton.android.pass.preferences.FeatureFlag.PASS_COMPROMISED_PASSWORDS
 import proton.android.pass.preferences.FeatureFlag.PASS_MONITOR_PER_CHECK_EXCLUSION
+import proton.android.pass.preferences.FeatureFlag.PASS_POPULAR_SERVICES
 import java.io.IOException
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -138,6 +139,11 @@ class FeatureFlagsPreferencesRepositoryImpl @Inject constructor(
             key = featureFlag.key,
             defaultValue = featureFlag.isEnabledDefault
         ) { passMonitorPerCheckExclusionEnabled.value }
+
+        PASS_POPULAR_SERVICES -> getFeatureFlag(
+            key = featureFlag.key,
+            defaultValue = featureFlag.isEnabledDefault
+        ) { passPopularServicesEnabled.value }
     }
 
     @Suppress("UNCHECKED_CAST")
@@ -220,6 +226,10 @@ class FeatureFlagsPreferencesRepositoryImpl @Inject constructor(
 
         PASS_MONITOR_PER_CHECK_EXCLUSION -> setFeatureFlag {
             passMonitorPerCheckExclusionEnabled = boolFlagPrefProto(value)
+        }
+
+        PASS_POPULAR_SERVICES -> setFeatureFlag {
+            passPopularServicesEnabled = boolFlagPrefProto(value)
         }
     }
 
@@ -326,6 +336,7 @@ class FeatureFlagsPreferencesRepositoryImpl @Inject constructor(
             PASS_USERNAME_GENERATOR -> passUsernameGeneratorEnabled
             PASS_COMPROMISED_PASSWORDS -> passCompromisedPasswordsEnabled
             PASS_MONITOR_PER_CHECK_EXCLUSION -> passMonitorPerCheckExclusionEnabled
+            PASS_POPULAR_SERVICES -> passPopularServicesEnabled
         }.value
     }
 

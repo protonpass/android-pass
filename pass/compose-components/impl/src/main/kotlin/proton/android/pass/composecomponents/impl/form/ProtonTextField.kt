@@ -33,6 +33,7 @@ import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.material.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -50,6 +51,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
@@ -61,7 +63,6 @@ import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.ThemePairPreviewProvider
 
-@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun ProtonTextField(
     modifier: Modifier = Modifier,
@@ -82,6 +83,78 @@ fun ProtonTextField(
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
     verticalArrangement: Arrangement.Vertical = Arrangement.Center,
     onChange: (String) -> Unit,
+    onFocusChange: ((Boolean) -> Unit)? = null,
+    onDoneClick: (() -> Unit)? = null,
+    errorMessageModifier: Modifier = if (leadingIcon == null) {
+        Modifier
+    } else {
+        Modifier.padding(start = 50.dp)
+    }
+) {
+    var textFieldValueState by remember { mutableStateOf(TextFieldValue(text = value)) }
+    val textFieldValue = textFieldValueState.copy(text = value)
+    SideEffect {
+        if (textFieldValue.selection != textFieldValueState.selection ||
+            textFieldValue.composition != textFieldValueState.composition
+        ) {
+            textFieldValueState = textFieldValue
+        }
+    }
+    var lastTextValue by remember(value) { mutableStateOf(value) }
+
+    ProtonTextField(
+        modifier = modifier,
+        textFieldModifier = textFieldModifier,
+        value = textFieldValue,
+        textStyle = textStyle,
+        label = label,
+        placeholder = placeholder,
+        leadingIcon = leadingIcon,
+        trailingIcon = trailingIcon,
+        singleLine = singleLine,
+        minLines = minLines,
+        moveToNextOnEnter = moveToNextOnEnter,
+        visualTransformation = visualTransformation,
+        editable = editable,
+        isError = isError,
+        errorMessage = errorMessage,
+        keyboardOptions = keyboardOptions,
+        verticalArrangement = verticalArrangement,
+        onChange = { newTextFieldValue ->
+            textFieldValueState = newTextFieldValue
+            val stringChangedSinceLastInvocation = lastTextValue != newTextFieldValue.text
+            lastTextValue = newTextFieldValue.text
+            if (stringChangedSinceLastInvocation) {
+                onChange(newTextFieldValue.text)
+            }
+        },
+        onFocusChange = onFocusChange,
+        onDoneClick = onDoneClick,
+        errorMessageModifier = errorMessageModifier
+    )
+}
+
+@OptIn(ExperimentalMaterialApi::class)
+@Composable
+fun ProtonTextField(
+    modifier: Modifier = Modifier,
+    textFieldModifier: Modifier = Modifier.fillMaxWidth(),
+    value: TextFieldValue,
+    textStyle: TextStyle,
+    label: @Composable (() -> Unit)? = null,
+    placeholder: @Composable (() -> Unit)? = null,
+    leadingIcon: @Composable (() -> Unit)? = null,
+    trailingIcon: @Composable (() -> Unit)? = null,
+    singleLine: Boolean = true,
+    minLines: Int = 1,
+    moveToNextOnEnter: Boolean = false,
+    visualTransformation: VisualTransformation = VisualTransformation.None,
+    editable: Boolean = true,
+    isError: Boolean = false,
+    errorMessage: String = "",
+    keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
+    verticalArrangement: Arrangement.Vertical = Arrangement.Center,
+    onChange: (TextFieldValue) -> Unit,
     onFocusChange: ((Boolean) -> Unit)? = null,
     onDoneClick: (() -> Unit)? = null,
     errorMessageModifier: Modifier = if (leadingIcon == null) {
@@ -125,7 +198,7 @@ fun ProtonTextField(
             value = value,
             enabled = editable,
             onValueChange = {
-                if (singleLine && it.contains("\n")) {
+                if (singleLine && it.text.contains("\n")) {
                     // If is set to SingleLine and enter is pressed, go to the next field
                     goToNextField()
                 } else {
@@ -148,7 +221,7 @@ fun ProtonTextField(
             cursorBrush = SolidColor(ProtonTheme.colors.textNorm),
             decorationBox = { innerTextField ->
                 TextFieldDefaults.TextFieldDecorationBox(
-                    value = value,
+                    value = value.text,
                     placeholder = placeholder,
                     visualTransformation = visualTransformation,
                     innerTextField = innerTextField,

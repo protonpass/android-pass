@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023-2026 Proton AG
+ * Copyright (c) 2026 Proton AG
  * This file is part of Proton AG and Proton Pass.
  *
  * Proton Pass is free software: you can redistribute it and/or modify
@@ -16,19 +16,13 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.data.api.usecases
+package proton.android.pass.data.api.usecases.popularservices
 
-interface InitialWorkerLauncher {
-    fun start()
-    fun cancel()
-    fun cancelFeature(feature: WorkerFeature)
-}
+data class PopularService(
+    val title: String,
+    val urls: List<String>
+)
 
-enum class WorkerFeature {
-    CLEANUP,
-    FEATURE_DISCOVERY,
-    REPORT,
-    ASSET_LINKS,
-    PASSWORD_HISTORY,
-    POPULAR_SERVICES
+interface GetPopularServices {
+    suspend operator fun invoke(): List<PopularService>
 }

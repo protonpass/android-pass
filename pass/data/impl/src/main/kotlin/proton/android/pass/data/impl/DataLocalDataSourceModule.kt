@@ -40,6 +40,8 @@ import proton.android.pass.data.impl.local.LocalGroupInviteDataSource
 import proton.android.pass.data.impl.local.LocalGroupInviteDataSourceImpl
 import proton.android.pass.data.impl.local.LocalItemDataSource
 import proton.android.pass.data.impl.local.LocalItemDataSourceImpl
+import proton.android.pass.data.impl.local.LocalPopularServicesDataSource
+import proton.android.pass.data.impl.local.LocalPopularServicesDataSourceImpl
 import proton.android.pass.data.impl.local.LocalLiveTelemetryDataSource
 import proton.android.pass.data.impl.local.LocalLiveTelemetryDataSourceImpl
 import proton.android.pass.data.impl.local.LocalLiveTelemetryGrowthDataSource
@@ -89,6 +91,11 @@ abstract class DataLocalDataSourceModule {
 
     @Binds
     abstract fun bindLocalItemDataSource(impl: LocalItemDataSourceImpl): LocalItemDataSource
+
+    @[Binds Singleton]
+    abstract fun bindLocalPopularServicesDataSource(
+        impl: LocalPopularServicesDataSourceImpl
+    ): LocalPopularServicesDataSource
 
     @[Binds Singleton]
     abstract fun bindLocalShareDataSource(impl: LocalShareDataSourceImpl): LocalShareDataSource

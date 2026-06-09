@@ -47,4 +47,5 @@ message FeatureFlagsPreferences {
   BoolFlagPrefProto pass_username_generator_enabled = 39;
   BoolFlagPrefProto pass_compromised_passwords_enabled = 40;
   BoolFlagPrefProto pass_monitor_per_check_exclusion_enabled = 41;
+  BoolFlagPrefProto pass_popular_services_enabled = 42;
 }

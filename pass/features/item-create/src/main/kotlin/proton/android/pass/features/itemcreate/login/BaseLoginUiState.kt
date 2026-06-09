@@ -19,10 +19,13 @@
 package proton.android.pass.features.itemcreate.login
 
 import androidx.compose.runtime.Immutable
+import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.PersistentSet
+import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.persistentSetOf
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
+import proton.android.pass.data.api.usecases.popularservices.PopularService
 import proton.android.pass.commonuimodels.api.UIPasskeyContent
 import proton.android.pass.commonuimodels.api.attachments.AttachmentsState
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
@@ -54,7 +57,8 @@ internal data class BaseLoginUiState(
     val canCreateAlias: Boolean,
     val isAutofillUrlRegexEnabled: Boolean,
     val isPasswordChecksEnabled: Boolean,
-    val isUsernameGeneratorEnabled: Boolean
+    val isUsernameGeneratorEnabled: Boolean,
+    val canLoadExternalImages: Boolean
 ) {
     internal companion object {
 
@@ -78,7 +82,8 @@ internal data class BaseLoginUiState(
             canCreateAlias = true,
             isAutofillUrlRegexEnabled = false,
             isPasswordChecksEnabled = false,
-            isUsernameGeneratorEnabled = false
+            isUsernameGeneratorEnabled = false,
+            canLoadExternalImages = false
         )
 
     }
@@ -89,7 +94,8 @@ internal data class CreateLoginUiState(
     val shareUiState: ShareUiState,
     val baseLoginUiState: BaseLoginUiState,
     val passkeyState: Option<CreatePasskeyState> = None,
-    val canDisplayWarningVaultSharedDialog: Boolean = false
+    val canDisplayWarningVaultSharedDialog: Boolean = false,
+    val popularServiceSuggestions: ImmutableList<PopularService> = persistentListOf()
 ) {
     internal companion object {
 

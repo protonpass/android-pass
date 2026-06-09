@@ -28,13 +28,20 @@ import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.onGloballyPositioned
+import androidx.compose.ui.layout.positionInWindow
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.unit.IntOffset
+import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
+import kotlin.math.roundToInt
 import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.collections.immutable.toImmutableSet
 import kotlinx.collections.immutable.toPersistentSet
@@ -45,6 +52,7 @@ import proton.android.pass.common.api.some
 import proton.android.pass.common.api.toOption
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonuimodels.api.attachments.AttachmentsState
+import proton.android.pass.data.api.usecases.popularservices.PopularService
 import proton.android.pass.composecomponents.impl.attachments.AttachmentSection
 import proton.android.pass.composecomponents.impl.container.roundedContainerNorm
 import proton.android.pass.composecomponents.impl.form.SimpleNoteSection
@@ -105,6 +113,8 @@ internal fun LoginItemForm(
     isAutofillUrlRegexEnabled: Boolean,
     isPasswordChecksEnabled: Boolean,
     isUsernameGeneratorEnabled: Boolean,
+    popularServiceSuggestions: ImmutableList<PopularService> = persistentListOf(),
+    canLoadExternalImages: Boolean = false,
     onEvent: (LoginContentEvent) -> Unit
 ) {
     Box(modifier = modifier) {
@@ -123,6 +133,9 @@ internal fun LoginItemForm(
         }
 
         val isCurrentStickyVisible = currentStickyFormOption != NoOption
+
+        val titlePosition = remember { mutableStateOf(IntOffset.Zero) }
+        val titleSize = remember { mutableStateOf(IntSize.Zero) }
 
         LazyColumn(
             modifier = Modifier
@@ -144,6 +157,12 @@ internal fun LoginItemForm(
                 TitleSection(
                     modifier = Modifier
                         .padding(vertical = Spacing.small)
+                        .onGloballyPositioned { coordinates ->
+                            val position = coordinates.positionInWindow()
+                            titlePosition.value =
+                                IntOffset(position.x.roundToInt(), position.y.roundToInt())
+                            titleSize.value = coordinates.size
+                        }
                         .roundedContainerNorm()
                         .padding(
                             start = Spacing.medium,
@@ -326,6 +345,16 @@ internal fun LoginItemForm(
 
                 NoOption -> {}
             }
+        }
+
+        if (!isUpdate) {
+            PopularServiceSuggestionsPopup(
+                services = popularServiceSuggestions,
+                anchorPosition = titlePosition.value,
+                anchorSize = titleSize.value,
+                canLoadExternalImages = canLoadExternalImages,
+                onServiceSelected = { onEvent(LoginContentEvent.OnPopularServiceSelected(it)) }
+            )
         }
     }
 }

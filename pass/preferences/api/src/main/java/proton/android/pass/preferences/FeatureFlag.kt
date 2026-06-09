@@ -113,5 +113,11 @@ enum class FeatureFlag(
         description = "Allow the user to exclude an item from a subset of Pass Monitor checks",
         key = "PassMonitorPerCheckExclusion",
         isEnabledDefault = false
+    ),
+    PASS_POPULAR_SERVICES(
+        title = "Popular services",
+        description = "Suggest popular services while typing the title of a new login",
+        key = "PassPopularServices",
+        isEnabledDefault = false
     )
 }

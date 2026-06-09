@@ -245,6 +245,9 @@ internal fun UpdateLogin(
                     is LoginContentEvent.OnTitleChange ->
                         viewModel.onTitleChange(it.title)
 
+                    // Popular service suggestions are only shown on item creation.
+                    is LoginContentEvent.OnPopularServiceSelected -> {}
+
                     is LoginContentEvent.OnVaultSelect -> {}
                     is LoginContentEvent.OnAliasOptions ->
                         actionAfterKeyboardHide = {

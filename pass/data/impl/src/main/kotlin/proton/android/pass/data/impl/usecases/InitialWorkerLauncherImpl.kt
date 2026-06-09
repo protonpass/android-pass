@@ -31,8 +31,11 @@ import proton.android.pass.data.impl.work.PeriodicAssetLinkWorker
 import proton.android.pass.data.impl.work.PeriodicCleanupWorker
 import proton.android.pass.data.impl.work.PeriodicFeatureDiscoveryWorker
 import proton.android.pass.data.impl.work.PeriodicIgnoredAssetLinkWorker
+import proton.android.pass.data.impl.work.PeriodicPopularServicesWorker
 import proton.android.pass.data.impl.work.PeriodicReportWorker
 import proton.android.pass.log.api.PassLogger
+import proton.android.pass.preferences.FeatureFlag
+import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import proton.android.pass.preferences.UserPreferencesRepository
 import proton.android.pass.preferences.value
 import javax.inject.Inject
@@ -40,6 +43,7 @@ import javax.inject.Inject
 class InitialWorkerLauncherImpl @Inject constructor(
     private val workManager: WorkManager,
     private val userPreferencesRepository: UserPreferencesRepository,
+    private val featureFlagsPreferencesRepository: FeatureFlagsPreferencesRepository,
     private val appDispatchers: AppDispatchers
 ) : InitialWorkerLauncher {
 
@@ -48,7 +52,8 @@ class InitialWorkerLauncherImpl @Inject constructor(
         WorkerFeature.FEATURE_DISCOVERY to ::launchFeatureDiscoveryWorker,
         WorkerFeature.REPORT to ::launchReportWorker,
         WorkerFeature.ASSET_LINKS to ::launchAssetLinkWorkers,
-        WorkerFeature.PASSWORD_HISTORY to ::launchPasswordHistoryWorker
+        WorkerFeature.PASSWORD_HISTORY to ::launchPasswordHistoryWorker,
+        WorkerFeature.POPULAR_SERVICES to ::launchPopularServicesWorker
     )
 
     private val featureToWorkersMap: Map<WorkerFeature, List<String>> = mapOf(
@@ -59,7 +64,8 @@ class InitialWorkerLauncherImpl @Inject constructor(
             PeriodicAssetLinkWorker.WORKER_UNIQUE_NAME,
             PeriodicIgnoredAssetLinkWorker.WORKER_UNIQUE_NAME
         ),
-        WorkerFeature.PASSWORD_HISTORY to listOf(ClearPasswordHistoryWorker.WORKER_UNIQUE_NAME)
+        WorkerFeature.PASSWORD_HISTORY to listOf(ClearPasswordHistoryWorker.WORKER_UNIQUE_NAME),
+        WorkerFeature.POPULAR_SERVICES to listOf(PeriodicPopularServicesWorker.WORKER_UNIQUE_NAME)
     )
 
     override fun start() {
@@ -75,6 +81,12 @@ class InitialWorkerLauncherImpl @Inject constructor(
             } else {
                 cancelFeature(WorkerFeature.ASSET_LINKS)
             }
+
+            if (isPopularServicesEnabled()) {
+                launchFeature(WorkerFeature.POPULAR_SERVICES)
+            } else {
+                cancelFeature(WorkerFeature.POPULAR_SERVICES)
+            }
         }
     }
 
@@ -82,6 +94,11 @@ class InitialWorkerLauncherImpl @Inject constructor(
         .observeUseDigitalAssetLinksPreference()
         .firstOrNull()
         ?.value()
+        ?: false
+
+    private suspend fun isPopularServicesEnabled(): Boolean = featureFlagsPreferencesRepository
+        .get<Boolean>(FeatureFlag.PASS_POPULAR_SERVICES)
+        .firstOrNull()
         ?: false
 
     private fun launchFeature(feature: WorkerFeature) {
@@ -135,6 +152,14 @@ class InitialWorkerLauncherImpl @Inject constructor(
             ClearPasswordHistoryWorker.WORKER_UNIQUE_NAME,
             ExistingPeriodicWorkPolicy.KEEP,
             ClearPasswordHistoryWorker.getRequestFor()
+        )
+    }
+
+    private fun launchPopularServicesWorker() {
+        workManager.enqueueUniquePeriodicWork(
+            PeriodicPopularServicesWorker.WORKER_UNIQUE_NAME,
+            ExistingPeriodicWorkPolicy.KEEP,
+            PeriodicPopularServicesWorker.getRequestFor()
         )
     }
 

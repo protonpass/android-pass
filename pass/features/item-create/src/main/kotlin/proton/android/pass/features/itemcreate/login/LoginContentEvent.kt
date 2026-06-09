@@ -22,6 +22,7 @@ import proton.android.pass.common.api.Option
 import proton.android.pass.commonuimodels.api.PackageInfoUi
 import proton.android.pass.commonuimodels.api.UIPasskeyContent
 import proton.android.pass.composecomponents.impl.attachments.AttachmentContentEvent
+import proton.android.pass.data.api.usecases.popularservices.PopularService
 import proton.android.pass.domain.FolderId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.tooltips.Tooltip
@@ -66,6 +67,9 @@ internal sealed interface LoginContentEvent {
 
     @JvmInline
     value class OnTitleChange(val title: String) : LoginContentEvent
+
+    @JvmInline
+    value class OnPopularServiceSelected(val service: PopularService) : LoginContentEvent
 
     data class OnVaultSelect(val shareId: ShareId, val folderId: FolderId? = null) : LoginContentEvent
 

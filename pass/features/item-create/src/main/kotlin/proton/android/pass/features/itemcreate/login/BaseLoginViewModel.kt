@@ -272,10 +272,12 @@ abstract class BaseLoginViewModel(
         userPreferencesRepository.observeDisplayFileAttachmentsOnboarding(),
         attachmentsHandler.attachmentState,
         combine(canCreateAlias(), canCreateAliasOverride) { policy, override -> policy && override },
-        featureFlagsFlow
+        featureFlagsFlow,
+        userPreferencesRepository.getUseFaviconsPreference()
     ) { loginItemValidationErrors, primaryEmail, aliasItemFormState, isLoading, totpUiState,
         upgradeInfoResult, userInteraction, isUsernameSplitTooltipEnabled,
-        displayFileAttachmentsOnboarding, attachmentsState, canCreateAlias, featureFlags ->
+        displayFileAttachmentsOnboarding, attachmentsState, canCreateAlias, featureFlags,
+        useFavicons ->
         val userPlan = upgradeInfoResult.getOrNull()?.plan
         BaseLoginUiState(
             validationErrors = loginItemValidationErrors.toPersistentSet(),
@@ -297,7 +299,8 @@ abstract class BaseLoginViewModel(
             canCreateAlias = canCreateAlias,
             isAutofillUrlRegexEnabled = featureFlags.isAutofillUrlRegexEnabled,
             isPasswordChecksEnabled = featureFlags.isPasswordChecksEnabled,
-            isUsernameGeneratorEnabled = featureFlags.isUsernameGeneratorEnabled
+            isUsernameGeneratorEnabled = featureFlags.isUsernameGeneratorEnabled,
+            canLoadExternalImages = useFavicons.value()
         )
     }
         .stateIn(

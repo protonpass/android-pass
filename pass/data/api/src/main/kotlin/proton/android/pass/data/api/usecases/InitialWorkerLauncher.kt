@@ -29,5 +29,6 @@ enum class WorkerFeature {
     FEATURE_DISCOVERY,
     REPORT,
     ASSET_LINKS,
-    PASSWORD_HISTORY
+    PASSWORD_HISTORY,
+    POPULAR_SERVICES
 }

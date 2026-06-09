@@ -25,10 +25,13 @@ import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toPersistentList
 import proton.android.pass.common.api.Option
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
+import proton.android.pass.data.api.usecases.popularservices.PopularService
 import proton.android.pass.domain.FolderId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.Vault
@@ -52,6 +55,7 @@ internal fun LoginContent(
     topBarActionName: String,
     canUseAttachments: Boolean,
     isUpdate: Boolean,
+    popularServiceSuggestions: ImmutableList<PopularService> = persistentListOf(),
     onEvent: (LoginContentEvent) -> Unit
 ) {
     BackHandler { onEvent(LoginContentEvent.Up) }
@@ -112,6 +116,8 @@ internal fun LoginContent(
             isAutofillUrlRegexEnabled = uiState.isAutofillUrlRegexEnabled,
             isPasswordChecksEnabled = uiState.isPasswordChecksEnabled,
             isUsernameGeneratorEnabled = uiState.isUsernameGeneratorEnabled,
+            popularServiceSuggestions = popularServiceSuggestions,
+            canLoadExternalImages = uiState.canLoadExternalImages,
             onEvent = onEvent
         )
     }

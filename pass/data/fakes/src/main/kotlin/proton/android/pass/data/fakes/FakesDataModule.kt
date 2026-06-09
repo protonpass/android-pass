@@ -75,6 +75,7 @@ import proton.android.pass.data.api.usecases.GetItemActions
 import proton.android.pass.data.api.usecases.GetItemByAliasEmail
 import proton.android.pass.data.api.usecases.GetItemById
 import proton.android.pass.data.api.usecases.GetItemsBySearchResult
+import proton.android.pass.data.api.usecases.popularservices.GetPopularServices
 import proton.android.pass.data.api.usecases.GetShareById
 import proton.android.pass.data.api.usecases.GetSuggestedAutofillItems
 import proton.android.pass.data.api.usecases.GetUserPlan
@@ -337,6 +338,7 @@ import proton.android.pass.data.fakes.usecases.FakeGetItemActions
 import proton.android.pass.data.fakes.usecases.FakeGetItemByAliasEmail
 import proton.android.pass.data.fakes.usecases.FakeGetItemById
 import proton.android.pass.data.fakes.usecases.FakeGetItemsBySearchResult
+import proton.android.pass.data.fakes.usecases.popularservices.FakeGetPopularServices
 import proton.android.pass.data.fakes.usecases.FakeGetPasskeyById
 import proton.android.pass.data.fakes.usecases.FakeGetShareById
 import proton.android.pass.data.fakes.usecases.FakeGetSuggestedAutofillItems
@@ -539,6 +541,9 @@ abstract class FakesDataModule {
 
     @Binds
     abstract fun bindGetSuggestedAutofillItems(impl: FakeGetSuggestedAutofillItems): GetSuggestedAutofillItems
+
+    @Binds
+    abstract fun bindGetPopularServices(impl: FakeGetPopularServices): GetPopularServices
 
     @Binds
     abstract fun bindItemRepository(impl: FakeItemRepository): ItemRepository

@@ -23,7 +23,7 @@ plugins {
     alias(libs.plugins.gradlePlugin.compose.compiler)
 }
 
-val appVersionName = "1.39.2"
+val appVersionName = "1.40.0"
 val appVersionCode = versionCode(appVersionName)
 val archivesBaseName = "AutofillTestApp-$appVersionName"
 

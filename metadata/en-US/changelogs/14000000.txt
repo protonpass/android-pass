@@ -1,0 +1,13 @@
+## 1.40.0 (2026-06-10)
+
+### Features :tada:
+
+- Improved synchronization.
+
+### Fixes :bug:
+
+- Bug fixes and improvements.
+
+### Other
+
+- Updated translations.

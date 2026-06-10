@@ -39,10 +39,11 @@ import proton.android.pass.data.api.usecases.folders.RefreshFolders
 import proton.android.pass.data.api.usecases.organization.RefreshOrganizationSettings
 import proton.android.pass.data.api.usecases.simplelogin.SyncSimpleLoginPendingAliases
 import proton.android.pass.data.api.work.FetchItemsState
+import proton.android.pass.data.api.work.UniqueWorkRequest
 import proton.android.pass.data.api.work.WorkManagerFacade
+import proton.android.pass.data.impl.work.FetchItemsWorker
 import proton.android.pass.data.impl.repositories.EventRepository
 import proton.android.pass.data.impl.repositories.UserEventRepository
-import proton.android.pass.data.impl.work.FetchItemsWorker
 import proton.android.pass.domain.UserEventId
 import proton.android.pass.domain.events.SyncEventInvitesChanged
 import proton.android.pass.domain.events.SyncEventShare
@@ -149,9 +150,17 @@ class SyncUserEventsImpl @Inject constructor(
     }
 
     private suspend fun processSharesCreated(userId: UserId, sharesCreated: List<SyncEventShare>) {
+        if (sharesCreated.isEmpty()) return
+        PassLogger.i(TAG, "processSharesCreated: ${sharesCreated.size} new shares")
         sharesCreated.forEach { (shareId, token) ->
             shareRepository.recreateShare(userId, shareId, token)
         }
+        val shareIds = sharesCreated.map { it.shareId }.toSet()
+        workManagerFacade.enqueueUniqueWork(
+            FetchItemsWorker.getOneTimeUniqueWorkName(userId),
+            UniqueWorkRequest.FetchItems(userId = userId, shareIds = shareIds)
+        )
+        waitForFetchItemsWorker(userId)
     }
 
     private suspend fun processSharesUpdated(userId: UserId, sharesUpdated: List<SyncEventShare>) {
@@ -220,10 +229,8 @@ class SyncUserEventsImpl @Inject constructor(
     }
 
     private suspend fun processNewUserInvitesChanged(userId: UserId, sharesWithInvitesToCreate: List<SyncEventShare>) {
-        if (sharesWithInvitesToCreate.isNotEmpty()) {
-            sharesWithInvitesToCreate.forEach { (shareId, _) ->
-                promoteNewInviteToInvite(userId, shareId)
-            }
+        sharesWithInvitesToCreate.forEach { (shareId, _) ->
+            promoteNewInviteToInvite(userId, shareId)
         }
     }
 

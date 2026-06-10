@@ -19,11 +19,13 @@
 package proton.android.pass.data.impl.work
 
 import androidx.lifecycle.asFlow
+import androidx.work.ExistingWorkPolicy
 import androidx.work.WorkInfo
 import androidx.work.WorkManager
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.mapNotNull
 import proton.android.pass.data.api.work.FetchItemsState
+import proton.android.pass.data.api.work.UniqueWorkRequest
 import proton.android.pass.data.api.work.WorkManagerFacade
 import javax.inject.Inject
 
@@ -39,6 +41,22 @@ class WorkManagerFacadeImpl @Inject constructor(
             .first { it.isFinished }
 
         return terminalState.toFetchItemsState()
+    }
+
+    override fun enqueueUniqueWork(name: String, request: UniqueWorkRequest) {
+        val workRequest = when (request) {
+            is UniqueWorkRequest.FetchItems -> FetchItemsWorker.getRequestFor(
+                source = FetchItemsWorker.FetchSource.NewShare,
+                userId = request.userId,
+                shareIds = request.shareIds,
+                warnings = FetchItemsWorker.SyncWarnings(
+                    hasInactiveShares = false,
+                    hasInvalidGroupShares = false,
+                    hasInvalidAddressShares = false
+                )
+            )
+        }
+        workManager.enqueueUniqueWork(name, ExistingWorkPolicy.APPEND, workRequest)
     }
 }
 

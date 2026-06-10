@@ -18,8 +18,19 @@
 
 package proton.android.pass.data.api.work
 
+import me.proton.core.domain.entity.UserId
+import proton.android.pass.domain.ShareId
+
 interface WorkManagerFacade {
     suspend fun awaitUniqueWorkFinished(name: String): FetchItemsState
+    fun enqueueUniqueWork(name: String, request: UniqueWorkRequest)
+}
+
+sealed interface UniqueWorkRequest {
+    data class FetchItems(
+        val userId: UserId,
+        val shareIds: Set<ShareId>
+    ) : UniqueWorkRequest
 }
 
 

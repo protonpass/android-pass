@@ -36,6 +36,7 @@ import proton.android.pass.data.fakes.usecases.FakeRefreshUserAccess
 import proton.android.pass.data.fakes.usecases.folders.FakeDeleteFoldersLocally
 import proton.android.pass.data.fakes.usecases.folders.FakeRefreshFolders
 import proton.android.pass.data.fakes.usecases.simplelogin.FakeSyncSimpleLoginPendingAliases
+import proton.android.pass.data.api.work.UniqueWorkRequest
 import proton.android.pass.data.fakes.work.FakeWorkManagerFacade
 import proton.android.pass.data.impl.fakes.FakeEventRepository
 import proton.android.pass.data.impl.fakes.FakeUserEventRepository
@@ -178,6 +179,11 @@ internal class SyncUserEventsImplTest {
         instance.invoke(USER_ID)
 
         assertThat(userEventRepository.getStoreLatestEventIdMemory()).isNotEmpty()
+        assertThat(workManagerFacade.getEnqueuedWork()).isNotEmpty()
+        val enqueuedWorkRequest = workManagerFacade.getEnqueuedWork().firstOrNull()?.second
+        assertThat(enqueuedWorkRequest).isInstanceOf(UniqueWorkRequest.FetchItems::class.java)
+        val fetchItemsRequest = enqueuedWorkRequest as? UniqueWorkRequest.FetchItems
+        assertThat(fetchItemsRequest?.shareIds).containsExactly(ShareId(SHARE_ID_1), ShareId(SHARE_ID_2))
     }
 
     @Test

@@ -19,6 +19,7 @@
 package proton.android.pass.data.fakes.work
 
 import proton.android.pass.data.api.work.FetchItemsState
+import proton.android.pass.data.api.work.UniqueWorkRequest
 import proton.android.pass.data.api.work.WorkManagerFacade
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -27,8 +28,10 @@ import javax.inject.Singleton
 class FakeWorkManagerFacade @Inject constructor() : WorkManagerFacade {
 
     private val awaitedWorkNames: MutableList<String> = mutableListOf()
+    private val enqueuedWork: MutableList<Pair<String, UniqueWorkRequest>> = mutableListOf()
 
     fun getAwaitedWorkNames(): List<String> = awaitedWorkNames.toList()
+    fun getEnqueuedWork(): List<Pair<String, UniqueWorkRequest>> = enqueuedWork.toList()
 
     fun clearAwaitedWorkNames() {
         awaitedWorkNames.clear()
@@ -37,5 +40,9 @@ class FakeWorkManagerFacade @Inject constructor() : WorkManagerFacade {
     override suspend fun awaitUniqueWorkFinished(name: String): FetchItemsState {
         awaitedWorkNames.add(name)
         return FetchItemsState.Success
+    }
+
+    override fun enqueueUniqueWork(name: String, request: UniqueWorkRequest) {
+        enqueuedWork.add(name to request)
     }
 }

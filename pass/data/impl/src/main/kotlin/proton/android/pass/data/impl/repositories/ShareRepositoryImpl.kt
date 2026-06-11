@@ -390,7 +390,6 @@ class ShareRepositoryImpl @Inject constructor(
                 PassLogger.w(TAG, "Error fetching share from remote [shareId=${shareId.id}]")
                 throw ShareNotAvailableError()
             }
-        localShareDataSource.deleteShares(userId, setOf(shareId))
         val (_, skippedCount) = storeShares(userId, listOf(shareResponse))
         if (skippedCount > 0) {
             PassLogger.w(TAG, "Skipped $skippedCount shares due to missing group information")

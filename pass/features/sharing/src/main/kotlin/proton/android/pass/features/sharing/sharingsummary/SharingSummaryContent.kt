@@ -135,7 +135,7 @@ internal fun SharingSummaryContent(
                                 sectionTitle = stringResource(R.string.share_summary_vault_title),
                                 shareTitle = state.vault.name,
                                 shareSubTitle = pluralStringResource(
-                                    R.plurals.sharing_item_count,
+                                    R.plurals.sharing_invite_item_count,
                                     state.vaultItemCount,
                                     state.vaultItemCount
                                 ),

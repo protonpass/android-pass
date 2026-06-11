@@ -93,7 +93,7 @@ internal fun ShareThisVaultRow(
 
             Text(
                 text = pluralStringResource(
-                    R.plurals.sharing_item_count,
+                    R.plurals.sharing_invite_item_count,
                     itemCount.toInt(),
                     itemCount.toInt()
                 ),

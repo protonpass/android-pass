@@ -78,7 +78,7 @@ internal fun AcceptInviteVaultInfo(
             )
 
             val itemCount = pluralStringResource(
-                R.plurals.sharing_item_count,
+                R.plurals.sharing_invite_item_count,
                 vaultItemCount,
                 vaultItemCount
             )

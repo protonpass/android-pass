@@ -27,7 +27,7 @@
   <string name="file_picker_open_error">No s\'ha pogut obrir el selector de fitxers.</string>
   <string name="media_picker_open_error">No s\'ha pogut obrir el selector de mèdia.</string>
   <string name="camera_open_error">No s\'ha pogut obrir la càmera.</string>
-  <string name="camera_permission_explanation">Cal el permís a la càmera perquè aquesta característica estigui disponible.</string>
+  <string name="camera_permission_explanation">Cal el permís de la càmera per a poder utilitzar aquesta característica.</string>
   <string name="camera_permission_open_settings">Obre les preferències</string>
   <string name="delete_all_attachments_title">Voleu eliminar tots els fitxers adjunts?</string>
   <string name="delete_all_attachments_subtitle">Aquesta acció no es pot desfer.</string>

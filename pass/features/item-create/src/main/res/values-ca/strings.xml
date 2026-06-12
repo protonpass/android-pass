@@ -42,7 +42,7 @@
   <string name="create_login_init_error">Hi ha hagut un problema en recuperar els detalls de l\'inici de sessió</string>
   <string name="create_login_invalid_totp">El contingut 2FA no és vàlid</string>
   <string name="update_login_attachments_init_error">Hi ha hagut un problema en recuperar els adjunts de l\'inici de sessió</string>
-  <string name="login_link_attachments_error">No s\'ha pogut vincular o desvincular els fitxers adjunts a l\'inici de sessió.</string>
+  <string name="login_link_attachments_error">No s\'han pogut vincular o desvincular els fitxers adjunts a l\'inici de sessió.</string>
   <string name="login_rename_attachments_error">No s\'ha pogut canviar el nom dels fitxers adjunts de l\'inici de sessió.</string>
   <string name="login_created">S\'ha creat l\'inici de sessió</string>
   <string name="bottomsheet_modify_alias_title">Modifica l\'àlies</string>
@@ -69,7 +69,7 @@
   <string name="create_note_item_update_error">No s\'ha pogut actualitzar la nota</string>
   <string name="create_note_init_error">Hi ha hagut un problema en recuperar els detalls de la nota</string>
   <string name="update_note_attachments_init_error">Hi ha hagut un problema en recuperar els adjunts de la nota</string>
-  <string name="note_link_attachments_error">No s\'ha pogut vincular o desvincular els fitxers adjunts a la nota.</string>
+  <string name="note_link_attachments_error">No s\'han pogut vincular o desvincular els fitxers adjunts a la nota.</string>
   <string name="note_rename_attachments_error">No s\'ha pogut canviar el nom dels adjunts de la nota.</string>
   <string name="note_created">S\'ha creat la nota</string>
   <!-- Create Alias -->
@@ -88,7 +88,7 @@
   <string name="create_alias_item_update_error">No s\'ha pogut actualitzar l\'àlies</string>
   <string name="create_alias_init_error">Hi ha hagut un problema en recuperar els detalls de l\'àlies</string>
   <string name="update_alias_attachments_init_error">Hi ha hagut un problema en recuperar els adjunts de l\'àlies</string>
-  <string name="alias_link_attachments_error">No s\'ha pogut vincular o desvincular els fitxers adjunts amb l\'àlies.</string>
+  <string name="alias_link_attachments_error">No s\'han pogut vincular o desvincular els fitxers adjunts amb l\'àlies.</string>
   <string name="alias_rename_attachments_error">No s\'ha pogut canviar el nom dels adjunts de l\'àlies.</string>
   <string name="alias_created">S\'ha creat l\'àlies</string>
   <string name="cannot_retrieve_alias_options">No es poden recuperar les opcions d\'àlies</string>
@@ -174,7 +174,7 @@
   <string name="identity_bottomsheet_add_field">Afegeix un camp</string>
   <string name="create_identity_init_error">Hi ha hagut un problema en recuperar els detalls de la identitat</string>
   <string name="update_identity_attachments_init_error">Hi ha hagut un problema en recuperar els adjunts de la identitat</string>
-  <string name="identity_link_attachments_error">No s\'ha pogut vincular o desvincular els fitxers adjunts a la identitat.</string>
+  <string name="identity_link_attachments_error">No s\'han pogut vincular o desvincular els fitxers adjunts a la identitat.</string>
   <string name="identity_rename_attachments_error">No s\'ha pogut canviar el nom dels fitxers adjunts de la identitat.</string>
   <string name="create_identity_item_creation_error">No s\'ha pogut crear la identitat.</string>
   <string name="create_identity_item_creation_success">S\'ha creat la identitat.</string>
@@ -191,7 +191,7 @@
   <string name="close_scree_icon_content_description">Botó de tancament de pantalla</string>
   <string name="totp_paste_code_action">Enganxa el codi</string>
   <string name="totp_scan_code_action">Escaneja el codi</string>
-  <string name="camera_permission_explanation">Cal el permís a la càmera perquè aquesta característica estigui disponible.</string>
+  <string name="camera_permission_explanation">Cal el permís de la càmera per a poder utilitzar aquesta característica.</string>
   <string name="camera_permission_open_settings">Obre les preferències</string>
   <!--  TOTP limit  -->
   <string name="mfa_limit_reached">S\'ha assolit el límit de 2FA</string>
@@ -284,7 +284,7 @@
   <!-- Driver License Fields -->
   <string name="template_driver_license_field_full_name">Nom complet</string>
   <string name="template_driver_license_field_license_number">Número de llicència</string>
-  <string name="template_driver_license_field_issuing_state_country">Estat/País emissor</string>
+  <string name="template_driver_license_field_issuing_state_country">Estat o país emissor</string>
   <string name="template_driver_license_field_expiry_date">Data d\'expiració</string>
   <string name="template_driver_license_field_date_of_birth">Data de naixement</string>
   <string name="template_driver_license_field_class">Classe</string>
@@ -331,7 +331,7 @@
   <string name="add_ssid_name_placeholder">Afegeix un nom (SSID)</string>
   <string name="create_custom_item_init_error">Hi ha hagut un problema en recuperar els detalls de l\'element personalitzat</string>
   <string name="update_custom_item_attachments_init_error">Hi ha hagut un problema en recuperar els adjunts de l\'element personalitzat</string>
-  <string name="custom_item_link_attachments_error">No s\'ha pogut vincular o desvincular els adjunts a l\'element personalitzat</string>
+  <string name="custom_item_link_attachments_error">No s\'han pogut vincular o desvincular els adjunts a l\'element personalitzat</string>
   <string name="custom_item_rename_attachments_error">No s\'ha pogut canviar el nom dels adjunts de l\'element personalitzat</string>
   <string name="create_custom_item_item_creation_error">No s\'ha pogut crear l\'element personalitzat</string>
   <string name="create_custom_item_item_creation_success">S\'ha creat l\'element personalitzat</string>
@@ -339,7 +339,7 @@
   <string name="update_custom_item_item_creation_error">No s\'ha pogut actualitzar l\'element personalitzat</string>
   <!-- Cannot create items dialog -->
   <string name="cannot_create_items_dialog_title">No es poden crear elements</string>
-  <string name="cannot_create_items_dialog_message">No teniu cap caixa forta amb permisos d\'editor o administrador. Creeu una a l\'aplicació principal o demaneu assistència a l\'administrador de la vostra organització.</string>
+  <string name="cannot_create_items_dialog_message">No teniu cap caixa forta amb permisos d\'editor o administrador. Creeu-ne una a l\'aplicació principal o demaneu assistència a l\'administrador de la vostra organització.</string>
   <string name="wifi_security_type_field_label">Tipus de seguretat</string>
   <string name="functionality_not_available">Aquesta funcionalitat no està disponible per al vostre dispositiu.</string>
 </resources>

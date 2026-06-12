@@ -28,6 +28,10 @@
     <item quantity="one">%d Eintrag</item>
     <item quantity="other">%d Einträge</item>
   </plurals>
+  <plurals name="sharing_invite_item_count">
+    <item quantity="one">%d Eintrag (einschließlich der im Papierkorb)</item>
+    <item quantity="other">%d Einträge (einschließlich der im Papierkorb)</item>
+  </plurals>
   <plurals name="sharing_member_count">
     <item quantity="one">%d Mitglied</item>
     <item quantity="other">%d Mitglieder</item>

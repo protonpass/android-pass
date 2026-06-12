@@ -18,7 +18,7 @@
   -->
 <resources>
   <string name="description_field_label">Quin és el vostre problema?</string>
-  <string name="description_field_hint">Descriviu el problema amb el màxim de detall possible. Si apareix un missatge d\'error, indiqueu-nos el contingut.</string>
+  <string name="description_field_hint">Descriviu el problema; com més detalls doneu, millor. Si hi ha un missatge d\'error, indiqueu què diu.</string>
   <string name="email_field_label">Corrreu electrònic</string>
   <string name="email_field_hint">corrreu electrònic</string>
   <string name="attach_image_button">Adjunta una imatge</string>
@@ -33,8 +33,8 @@
   <string name="report_reason_sync">Sincronitza</string>
   <string name="report_reason_passkeys">Claus d\'accés</string>
   <string name="report_reason_other">Altres</string>
-  <string name="tips_title">Solucions ràpides per %1$s</string>
-  <string name="tips_subtitle">Aquests consells podrien ajudar-us a resoldre el vostre problema més ràpid.</string>
+  <string name="tips_title">Solucions ràpides per a %1$s</string>
+  <string name="tips_subtitle">Aquests consells podrien ajudar-vos a resoldre el vostre problema més ràpid.</string>
   <string name="autofill_tip_restart">Proveu de desactivar i activar la funció d\'emplenament automàtic.</string>
   <string name="autofill_tip_browser">Proveu un altre navegador.</string>
   <string name="autofill_tip_another_website">Proveu-ho en un altre lloc web.</string>
@@ -45,7 +45,7 @@
   <string name="report_sending_success">L\'informe s\'ha enviat correctament.</string>
   <string name="report_sending_error">No s\'ha pogut enviar l\'informe.</string>
   <string name="tips_passkey_check_guide">Si teniu problemes, consulteu la nostra guia.</string>
-  <string name="tips_passkey_android_not_supported">La vostra versió d\'Android és massa baixa. Proveu d\'actualitzar el vostre dispositiu.</string>
+  <string name="tips_passkey_android_not_supported">La versió d\'Android és massa antiga. Proveu d\'actualitzar el dispositiu.</string>
   <string name="tips_passkey_supported">S\'admeten claus d\'accés.</string>
   <string name="tips_passkey_not_supported">Les claus d\'accés no són compatibles.</string>
   <string name="report_steps" comment="Indicator showing report progress">Pas %1$d de %2$d</string>

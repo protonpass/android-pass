@@ -214,7 +214,7 @@
   <string name="banner_mailbox_subtitle">Абагульвайце псеўданімы з іншымі, дадаючы іх паштовую скрыню ў якасці дадатковай паштовай скрыні.</string>
   <string name="banner_mailbox_button">Дадаць паштовую скрыню</string>
   <!-- Suffix -->
-  <string name="suffix_subtitle_premium_domain">Прэміяльны дамен</string>
+  <string name="suffix_subtitle_premium_domain">прэміяльны дамен</string>
   <string name="suffix_subtitle_public_domain">Публічны дамен</string>
   <string name="suffix_subtitle_private_domain">Ваш дамен</string>
   <!-- Templates -->

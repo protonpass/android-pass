@@ -29,8 +29,8 @@
     <item quantity="one">O item já está nesta pasta</item>
     <item quantity="other">%d itens já estão nesta pasta</item>
   </plurals>
-  <string name="migrate_disabled_folder_reason_same_location">This folder is already in this location</string>
-  <string name="migrate_disabled_folder_reason_being_moved">This folder is being moved</string>
+  <string name="migrate_disabled_folder_reason_same_location">Essa pasta já está nessa localização</string>
+  <string name="migrate_disabled_folder_reason_being_moved">Essa pasta está sendo movida</string>
   <string name="migrate_disabled_folder_reason_descendant">This folder is inside the folder being moved</string>
   <string name="migrate_disabled_vault_reason_no_permission">Você não pode criar itens neste cofre</string>
   <string name="migrate_disabled_vault_reason_same_vault">Você não pode mover um item para o mesmo cofre</string>

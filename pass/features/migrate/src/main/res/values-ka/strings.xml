@@ -29,9 +29,9 @@
     <item quantity="one">ელემენტი უკვე ამ საქაღალდეშია</item>
     <item quantity="other">%d ელემენტი უკვე ამ საქაღალდეშია</item>
   </plurals>
-  <string name="migrate_disabled_folder_reason_same_location">This folder is already in this location</string>
-  <string name="migrate_disabled_folder_reason_being_moved">This folder is being moved</string>
-  <string name="migrate_disabled_folder_reason_descendant">This folder is inside the folder being moved</string>
+  <string name="migrate_disabled_folder_reason_same_location">ეს საქაღალდე უკვე ამ ადგილასაა</string>
+  <string name="migrate_disabled_folder_reason_being_moved">მიმდინარეობს ამ საქაღალდის გადატანა</string>
+  <string name="migrate_disabled_folder_reason_descendant">ეს საქაღალდე იმ საქაღალდეშია, რომელშიც გადატანასაც ცდილობთ</string>
   <string name="migrate_disabled_vault_reason_no_permission">ამ საცავში ელემენტების შექმნა არ შეგიძლიათ</string>
   <string name="migrate_disabled_vault_reason_same_vault">ელემენტს იგივე საცავში ვერ გადაიტანთ</string>
   <plurals name="migrate_items_shared_warning_title">
@@ -44,7 +44,7 @@
     <item quantity="other">ამჟამად გაზიარებულია %d ელემენტი. მისი სხვა საცავში გადატანა სხვა მომხმარებლებს მასზე წვდომას დაუკავრავს.</item>
   </plurals>
   <string name="migrate_select_vault_title">აირჩიეთ საცავი</string>
-  <string name="migrate_select_destination_for_source_title">Select the destination to move all items from %s</string>
+  <string name="migrate_select_destination_for_source_title">აირჩიეთ სამიზნე ყველა ელემენტის გადასატანად %s-დან</string>
   <string name="migrate_folder_items_moved_success_snackbar">ელემენტები გადატანილია</string>
   <string name="migrate_folder_items_moved_error_snackbar">ელემენტების გადატანის შეცდომა</string>
 </resources>

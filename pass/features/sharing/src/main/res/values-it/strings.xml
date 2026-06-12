@@ -28,6 +28,10 @@
     <item quantity="one">%d elemento</item>
     <item quantity="other">%d elementi</item>
   </plurals>
+  <plurals name="sharing_invite_item_count">
+    <item quantity="one">%d Elemento (cestinati inclusi)</item>
+    <item quantity="other">%d Elementi (cestinati inclusi)</item>
+  </plurals>
   <plurals name="sharing_member_count">
     <item quantity="one">%d membro</item>
     <item quantity="other">%d membri</item>

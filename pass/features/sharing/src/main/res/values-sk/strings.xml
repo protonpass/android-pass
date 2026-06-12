@@ -30,6 +30,12 @@
     <item quantity="many">%d položiek</item>
     <item quantity="other">%d položiek</item>
   </plurals>
+  <plurals name="sharing_invite_item_count">
+    <item quantity="one">%d položka (vrátane tej v koši)</item>
+    <item quantity="few">%d položky (vrátane tých v koši)</item>
+    <item quantity="many">%d položiek (vrátane tých v koši)</item>
+    <item quantity="other">%d položiek (vrátane tých v koši)</item>
+  </plurals>
   <plurals name="sharing_member_count">
     <item quantity="one">%d člen</item>
     <item quantity="few">%d členovia</item>

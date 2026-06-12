@@ -30,6 +30,12 @@
     <item quantity="few">%d predmetov</item>
     <item quantity="other">%d predmetov</item>
   </plurals>
+  <plurals name="sharing_invite_item_count">
+    <item quantity="one">%d item (including trashed)</item>
+    <item quantity="two">%d items (including trashed)</item>
+    <item quantity="few">%d items (including trashed)</item>
+    <item quantity="other">%d items (including trashed)</item>
+  </plurals>
   <plurals name="sharing_member_count">
     <item quantity="one">%d član</item>
     <item quantity="two">%d člana</item>

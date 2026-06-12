@@ -30,6 +30,12 @@
     <item quantity="many">%d элементаў</item>
     <item quantity="other">%d элементаў</item>
   </plurals>
+  <plurals name="sharing_invite_item_count">
+    <item quantity="one">%d элемент (уключаючы перамешчаныя ў сметніцу)</item>
+    <item quantity="few">%d элементы (уключаючы перамешчаныя ў сметніцу)</item>
+    <item quantity="many">%d элементаў (уключаючы перамешчаныя ў сметніцу)</item>
+    <item quantity="other">%d элементаў (уключаючы перамешчаныя ў сметніцу)</item>
+  </plurals>
   <plurals name="sharing_member_count">
     <item quantity="one">%d удзельнік</item>
     <item quantity="few">%d удзельнікі</item>

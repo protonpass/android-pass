@@ -29,9 +29,9 @@
     <item quantity="one">L\'elemento è già in questa cartella</item>
     <item quantity="other">%d elementi sono già in questa cartella</item>
   </plurals>
-  <string name="migrate_disabled_folder_reason_same_location">This folder is already in this location</string>
-  <string name="migrate_disabled_folder_reason_being_moved">This folder is being moved</string>
-  <string name="migrate_disabled_folder_reason_descendant">This folder is inside the folder being moved</string>
+  <string name="migrate_disabled_folder_reason_same_location">Questa cartella è già in questa posizione</string>
+  <string name="migrate_disabled_folder_reason_being_moved">Questa cartella è stata spostata</string>
+  <string name="migrate_disabled_folder_reason_descendant">Questa cartella si trova all\'interno della cartella spostata</string>
   <string name="migrate_disabled_vault_reason_no_permission">Non puoi creare elementi in questa cassaforte</string>
   <string name="migrate_disabled_vault_reason_same_vault">Cassaforte attuale</string>
   <plurals name="migrate_items_shared_warning_title">
@@ -44,7 +44,7 @@
     <item quantity="other">Gli elementi %d sono attualmente condivisi. Lo spostamento in un\'altra cassaforte rimuoverà l\'accesso per tutti gli altri utenti.</item>
   </plurals>
   <string name="migrate_select_vault_title">Seleziona una cassaforte</string>
-  <string name="migrate_select_destination_for_source_title">Select the destination to move all items from %s</string>
+  <string name="migrate_select_destination_for_source_title">Seleziona la destinazione da cui spostare tutti gli elementi %s</string>
   <string name="migrate_folder_items_moved_success_snackbar">Elementi spostati</string>
   <string name="migrate_folder_items_moved_error_snackbar">Spostamento degli elementi non riuscito</string>
 </resources>

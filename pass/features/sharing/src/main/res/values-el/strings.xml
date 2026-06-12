@@ -28,6 +28,10 @@
     <item quantity="one">%d στοιχείο</item>
     <item quantity="other">%d στοιχεία</item>
   </plurals>
+  <plurals name="sharing_invite_item_count">
+    <item quantity="one">%d στοιχείο (συμπεριλαμβανομένων των διαγραμμένων)</item>
+    <item quantity="other">%d στοιχεία (συμπεριλαμβανομένων των διαγραμμένων)</item>
+  </plurals>
   <plurals name="sharing_member_count">
     <item quantity="one">%d μέλος</item>
     <item quantity="other">%d μέλη</item>

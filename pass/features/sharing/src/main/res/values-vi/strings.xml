@@ -27,6 +27,9 @@
   <plurals name="sharing_item_count">
     <item quantity="other">%d nội dung</item>
   </plurals>
+  <plurals name="sharing_invite_item_count">
+    <item quantity="other">%d items (including trashed)</item>
+  </plurals>
   <plurals name="sharing_member_count">
     <item quantity="other">%d thành viên</item>
   </plurals>

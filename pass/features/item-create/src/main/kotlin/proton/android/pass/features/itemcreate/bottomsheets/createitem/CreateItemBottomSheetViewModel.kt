@@ -25,6 +25,8 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.take
@@ -36,6 +38,7 @@ import proton.android.pass.data.api.usecases.ObserveUpgradeInfo
 import proton.android.pass.data.api.usecases.ObserveVaultsWithItemCount
 import proton.android.pass.data.api.usecases.capabilities.CanCreateAlias
 import proton.android.pass.data.api.usecases.capabilities.CanCreateItemInVault
+import proton.android.pass.data.api.usecases.capabilities.CanCreateItemsInFolder
 import proton.android.pass.data.api.usecases.items.ObserveCanCreateItems
 import proton.android.pass.domain.FolderId
 import proton.android.pass.domain.ShareId
@@ -52,7 +55,8 @@ class CreateItemBottomSheetViewModel @Inject constructor(
     observeCanCreateItems: ObserveCanCreateItems,
     canCreateAlias: CanCreateAlias,
     observeVaultsWithItemCount: ObserveVaultsWithItemCount,
-    private val canCreateItemInVault: CanCreateItemInVault
+    private val canCreateItemInVault: CanCreateItemInVault,
+    private val canCreateItemsInFolder: CanCreateItemsInFolder
 ) : ViewModel() {
 
     private val navShareIdFlow: Flow<Option<ShareId>> =
@@ -100,6 +104,14 @@ class CreateItemBottomSheetViewModel @Inject constructor(
             else -> null
         }
         shareId to folderId
+    }.flatMapLatest { (shareId, folderId) ->
+        when {
+            shareId != null && folderId != null ->
+                canCreateItemsInFolder(shareId).map { canCreate ->
+                    shareId to if (canCreate) folderId else null
+                }
+            else -> flowOf(shareId to folderId)
+        }
     }
 
     internal val stateFlow: StateFlow<CreateItemBottomSheetUIState> = combine(

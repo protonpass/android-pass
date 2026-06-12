@@ -28,6 +28,7 @@ import org.junit.Test
 import proton.android.pass.commonui.fakes.FakeSavedStateHandleProvider
 import proton.android.pass.data.fakes.usecases.FakeCanCreateAlias
 import proton.android.pass.data.fakes.usecases.FakeCanCreateItemInVault
+import proton.android.pass.data.fakes.usecases.FakeCanCreateItemsInFolder
 import proton.android.pass.data.fakes.usecases.FakeObserveUpgradeInfo
 import proton.android.pass.data.fakes.usecases.FakeObserveVaultsWithItemCount
 import proton.android.pass.data.fakes.usecases.items.FakeObserveCanCreateItems
@@ -53,6 +54,7 @@ internal class CreateItemBottomSheetViewModelTest {
     private lateinit var observeCanCreateItems: FakeObserveCanCreateItems
     private lateinit var observeUpgradeInfo: FakeObserveUpgradeInfo
     private lateinit var canCreateAlias: FakeCanCreateAlias
+    private lateinit var canCreateItemsInFolder: FakeCanCreateItemsInFolder
 
     @Before
     fun setUp() {
@@ -63,6 +65,7 @@ internal class CreateItemBottomSheetViewModelTest {
         observeCanCreateItems = FakeObserveCanCreateItems()
         observeUpgradeInfo = FakeObserveUpgradeInfo()
         canCreateAlias = FakeCanCreateAlias()
+        canCreateItemsInFolder = FakeCanCreateItemsInFolder()
 
         savedStateHandleProvider.get().set(
             CreateItemBottomSheetModeNavArgId.key,
@@ -77,7 +80,8 @@ internal class CreateItemBottomSheetViewModelTest {
         observeCanCreateItems = observeCanCreateItems,
         canCreateAlias = canCreateAlias,
         observeVaultsWithItemCount = observeVaults,
-        canCreateItemInVault = canCreateItemInVault
+        canCreateItemInVault = canCreateItemInVault,
+        canCreateItemsInFolder = canCreateItemsInFolder
     )
 
     private fun vaultWithItemCount(shareId: ShareId, role: ShareRole = ShareRole.Admin): VaultWithItemCount =
@@ -125,6 +129,7 @@ internal class CreateItemBottomSheetViewModelTest {
         val shareId = ShareId("vault1")
         val folderId = FolderId("folder1")
         homeSearchOptionsRepository.setVaultSelectionOption(VaultSelectionOption.Folder(shareId, folderId))
+        canCreateItemsInFolder.sendValue(true)
         val vm = createViewModel()
         val job = vm.stateFlow.launchIn(this)
 
@@ -134,6 +139,24 @@ internal class CreateItemBottomSheetViewModelTest {
 
         assertThat(vm.stateFlow.value.shareId).isEqualTo(shareId)
         assertThat(vm.stateFlow.value.folderId).isEqualTo(folderId)
+        job.cancel()
+    }
+
+    @Test
+    fun `folderId is null when HomeFull mode and user cannot create items in folder`() = runTest {
+        val shareId = ShareId("vault1")
+        val folderId = FolderId("folder1")
+        homeSearchOptionsRepository.setVaultSelectionOption(VaultSelectionOption.Folder(shareId, folderId))
+        canCreateItemsInFolder.sendValue(false)
+        val vm = createViewModel()
+        val job = vm.stateFlow.launchIn(this)
+
+        observeVaults.sendResult(Result.success(listOf(vaultWithItemCount(shareId, ShareRole.Admin))))
+        observeCanCreateItems.emit(true)
+        advanceUntilIdle()
+
+        assertThat(vm.stateFlow.value.shareId).isEqualTo(shareId)
+        assertThat(vm.stateFlow.value.folderId).isNull()
         job.cancel()
     }
 

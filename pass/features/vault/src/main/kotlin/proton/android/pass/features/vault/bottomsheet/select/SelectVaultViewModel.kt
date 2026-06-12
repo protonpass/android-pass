@@ -48,6 +48,7 @@ import proton.android.pass.data.api.usecases.ObserveUpgradeInfo
 import proton.android.pass.data.api.usecases.ObserveVaultsWithItemCount
 import proton.android.pass.data.api.usecases.UpgradeInfo
 import proton.android.pass.data.api.usecases.capabilities.CanCreateItemInVault
+import proton.android.pass.data.api.usecases.capabilities.CanCreateItemsInFolder
 import proton.android.pass.data.api.usecases.defaultvault.SetDefaultVault
 import proton.android.pass.data.api.usecases.folders.ObserveFoldersByParentId
 import proton.android.pass.domain.FolderId
@@ -70,6 +71,7 @@ class SelectVaultViewModel @Inject constructor(
     observeUpgradeInfo: ObserveUpgradeInfo,
     featureFlagsPreferencesRepository: FeatureFlagsPreferencesRepository,
     private val observeFolders: ObserveFoldersByParentId,
+    canCreateItemsInFolder: CanCreateItemsInFolder,
     savedStateHandle: SavedStateHandleProvider
 ) : ViewModel() {
 
@@ -89,7 +91,10 @@ class SelectVaultViewModel @Inject constructor(
 
     private val foldersEnabledFlow: Flow<Boolean> =
         if (showFolders) {
-            featureFlagsPreferencesRepository[FeatureFlag.PASS_FOLDERS]
+            combine(
+                featureFlagsPreferencesRepository[FeatureFlag.PASS_FOLDERS],
+                canCreateItemsInFolder(selected)
+            ) { featureEnabled: Boolean, planAllows: Boolean -> featureEnabled && planAllows }
         } else {
             flowOf(false)
         }

@@ -185,7 +185,10 @@ internal fun HomeDrawerList(
                     createButtonModifier = Modifier
                         .padding(start = 20.dp)
                         .padding(bottom = Spacing.medium),
-                    onThreeDotsClick = if (canCreateFolderShareIds.contains(shareId)) {
+                    onThreeDotsClick = if (
+                        canCreateFolderShareIds.contains(shareId) ||
+                        canCreateFolderNeedsUpgradeShareIds.contains(shareId)
+                    ) {
                         { HomeDrawerUiEvent.OnFolderOptionsClick(shareId, it).also(onUiEvent) }
                     } else null,
                     onFolderClick = {

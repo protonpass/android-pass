@@ -38,8 +38,9 @@ import proton.android.pass.crypto.fakes.context.FakeEncryptionContextProvider
 import proton.android.pass.data.api.errors.InvalidContentFormatVersionError
 import proton.android.pass.data.fakes.repositories.FakePendingAttachmentLinkRepository
 import proton.android.pass.data.fakes.repositories.FakeDraftRepository
-import proton.android.pass.data.fakes.usecases.FakeGetItemById
+import proton.android.pass.data.fakes.usecases.FakeCanCreateItemsInFolder
 import proton.android.pass.data.fakes.usecases.FakeCreateAlias
+import proton.android.pass.data.fakes.usecases.FakeGetItemById
 import proton.android.pass.data.fakes.usecases.FakeObserveCurrentUser
 import proton.android.pass.data.fakes.usecases.FakeObserveItemById
 import proton.android.pass.data.fakes.usecases.FakeObserveUpgradeInfo
@@ -51,9 +52,13 @@ import proton.android.pass.data.fakes.usecases.shares.FakeObserveShare
 import proton.android.pass.data.fakes.usecases.tooltips.FakeDisableTooltip
 import proton.android.pass.data.fakes.usecases.tooltips.FakeObserveTooltipEnabled
 import proton.android.pass.data.fakes.work.FakeWorkerLauncher
+import proton.android.pass.domain.FolderId
 import proton.android.pass.domain.HiddenState
 import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.ShareId
+import proton.android.pass.features.itemcreate.alias.AliasItemFormState
+import proton.android.pass.features.itemcreate.alias.AliasMailboxUiModel
+import proton.android.pass.features.itemcreate.alias.AliasSuffixUiModel
 import proton.android.pass.features.itemcreate.common.CustomFieldDraftRepositoryImpl
 import proton.android.pass.features.itemcreate.common.UIHiddenState
 import proton.android.pass.features.itemcreate.common.customfields.CustomFieldHandlerImpl
@@ -85,6 +90,8 @@ class UpdateLoginViewModelTest {
     private lateinit var observeShare: FakeObserveShare
     private lateinit var observeItemById: FakeObserveItemById
     private lateinit var settingsRepository: FakeInternalSettingsRepository
+    private lateinit var fakeCreateAlias: FakeCreateAlias
+    private lateinit var fakeCanCreateItemsInFolder: FakeCanCreateItemsInFolder
 
     @Before
     fun setup() {
@@ -96,6 +103,8 @@ class UpdateLoginViewModelTest {
         observeShare = FakeObserveShare()
         observeItemById = FakeObserveItemById()
         settingsRepository = FakeInternalSettingsRepository()
+        fakeCreateAlias = FakeCreateAlias()
+        fakeCanCreateItemsInFolder = FakeCanCreateItemsInFolder()
     }
 
     private fun createInstance(): UpdateLoginViewModel = UpdateLoginViewModel(
@@ -117,7 +126,8 @@ class UpdateLoginViewModelTest {
         draftRepository = FakeDraftRepository(),
         observeUpgradeInfo = FakeObserveUpgradeInfo(),
         updateItem = updateItem,
-        createAlias = FakeCreateAlias(),
+        createAlias = fakeCreateAlias,
+        canCreateItemsInFolder = fakeCanCreateItemsInFolder,
         emailValidator = FakeEmailValidator(),
         observeTooltipEnabled = FakeObserveTooltipEnabled(),
         disableTooltip = FakeDisableTooltip(),
@@ -204,6 +214,75 @@ class UpdateLoginViewModelTest {
         val message = snackbarDispatcher.snackbarMessage.first().value()!!
         assertThat(message).isInstanceOf(LoginSnackbarMessages.UpdateAppToUpdateItemError::class.java)
     }
+
+    @Test
+    fun `alias is created in same folder when item is in folder and user can create items in folder`() = runTest {
+        val folderId = FolderId("folder-id")
+        val shareId = ShareId(SHARE_ID)
+        val item = ItemTestFactory.createLogin(shareId = shareId).copy(folderId = folderId)
+        val aliasItem = ItemTestFactory.createAlias(shareId = shareId)
+
+        getItemById.emit(Result.success(item))
+        fakeCanCreateItemsInFolder.sendValue(true)
+        fakeCreateAlias.setResult(Result.success(aliasItem))
+        instance = createInstance()
+
+        instance.onAliasCreated(testAliasFormState())
+        instance.updateItem(shareId)
+
+        assertThat(fakeCreateAlias.getMemory()).hasSize(1)
+        assertThat(fakeCreateAlias.getMemory().first().folderId).isEqualTo(folderId)
+    }
+
+    @Test
+    fun `alias is created at vault root when item is in folder but user cannot create items in folder`() = runTest {
+        val folderId = FolderId("folder-id")
+        val shareId = ShareId(SHARE_ID)
+        val item = ItemTestFactory.createLogin(shareId = shareId).copy(folderId = folderId)
+        val aliasItem = ItemTestFactory.createAlias(shareId = shareId)
+
+        getItemById.emit(Result.success(item))
+        fakeCanCreateItemsInFolder.sendValue(false)
+        fakeCreateAlias.setResult(Result.success(aliasItem))
+        instance = createInstance()
+
+        instance.onAliasCreated(testAliasFormState())
+        instance.updateItem(shareId)
+
+        assertThat(fakeCreateAlias.getMemory()).hasSize(1)
+        assertThat(fakeCreateAlias.getMemory().first().folderId).isNull()
+    }
+
+    @Test
+    fun `alias is created at vault root when item is not in a folder`() = runTest {
+        val shareId = ShareId(SHARE_ID)
+        val item = ItemTestFactory.createLogin(shareId = shareId)
+        val aliasItem = ItemTestFactory.createAlias(shareId = shareId)
+
+        getItemById.emit(Result.success(item))
+        fakeCanCreateItemsInFolder.sendValue(true)
+        fakeCreateAlias.setResult(Result.success(aliasItem))
+        instance = createInstance()
+
+        instance.onAliasCreated(testAliasFormState())
+        instance.updateItem(shareId)
+
+        assertThat(fakeCreateAlias.getMemory()).hasSize(1)
+        assertThat(fakeCreateAlias.getMemory().first().folderId).isNull()
+    }
+
+    private fun testAliasFormState() = AliasItemFormState(
+        prefix = "alias",
+        selectedSuffix = AliasSuffixUiModel(
+            suffix = "@domain.test",
+            signedSuffix = "signed",
+            isCustom = false,
+            isPremium = false,
+            domain = "domain.test"
+        ),
+        selectedMailboxes = setOf(AliasMailboxUiModel(id = 1, email = "user@proton.me")),
+        customFields = emptyList()
+    )
 
     companion object {
         private const val SHARE_ID = "shareId"

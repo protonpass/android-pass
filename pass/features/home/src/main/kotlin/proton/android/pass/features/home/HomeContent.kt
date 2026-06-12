@@ -376,13 +376,14 @@ internal fun HomeContent(
                 emptyContent = {
                     val selectedFolder = uiState.homeListUiState.selectedFolder.value()
                     val shareId = selectedFolder?.shareId ?: uiState.homeListUiState.selectedShare.map { it.id }.value()
-                    val folderId = selectedFolder?.folderId
+                    val folderId = selectedFolder?.folderId?.takeIf { uiState.canCreateItemsInFolder }
                     HomeEmptyContent(
                         modifier = Modifier.testTag(HOME_EMPTY_TAG),
                         hasShares = uiState.hasShares,
                         canCreateItems = uiState.canCreateItems,
                         canCreateAlias = uiState.canCreateAlias,
                         canCreateVault = canCreateVault,
+                        canCreateItemsInFolder = uiState.canCreateItemsInFolder,
                         vaultSelectionOption = uiState.homeListUiState.homeVaultSelection,
                         inSearchMode = isPinningOrSearch,
                         filterType = uiState.homeListUiState.searchFilterType,

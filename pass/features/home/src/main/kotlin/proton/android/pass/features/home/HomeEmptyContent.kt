@@ -27,6 +27,7 @@ import proton.android.pass.composecomponents.impl.item.EmptySearchResults
 import proton.android.pass.domain.FolderId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.items.ItemSharedType
+import proton.android.pass.features.home.empty.EmptyFolderPlanRestricted
 import proton.android.pass.features.home.empty.EmptyNoVaults
 import proton.android.pass.features.home.empty.EmptyReadOnly
 import proton.android.pass.features.home.empty.EmptySharedItems
@@ -42,6 +43,7 @@ internal fun HomeEmptyContent(
     canCreateItems: Boolean,
     canCreateAlias: Boolean,
     canCreateVault: Boolean,
+    canCreateItemsInFolder: Boolean,
     inSearchMode: Boolean,
     readOnly: Boolean,
     vaultSelectionOption: VaultSelectionOption,
@@ -69,6 +71,8 @@ internal fun HomeEmptyContent(
             modifier = modifier,
             itemSharedType = ItemSharedType.SharedWithMe
         )
+        vaultSelectionOption is VaultSelectionOption.Folder && !canCreateItemsInFolder ->
+            EmptyFolderPlanRestricted(modifier)
         readOnly -> EmptyReadOnly(modifier)
         else -> HomeEmptyList(
             modifier = modifier.fillMaxHeight(),

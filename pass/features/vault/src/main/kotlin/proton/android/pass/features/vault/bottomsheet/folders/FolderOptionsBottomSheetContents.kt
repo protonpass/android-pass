@@ -40,6 +40,7 @@ import proton.android.pass.composecomponents.impl.bottomsheet.withDividers
 internal fun FolderOptionsBottomSheetContents(
     modifier: Modifier = Modifier,
     canCreateSubFolder: Boolean = true,
+    canManageFolderStructure: Boolean = true,
     onEvent: (FolderOptionsUserEvent) -> Unit
 ) {
     buildList {
@@ -49,17 +50,21 @@ internal fun FolderOptionsBottomSheetContents(
             }.also(::add)
         }
 
-        moveFolder {
-            onEvent(FolderOptionsUserEvent.OnMoveFolder)
-        }.also(::add)
+        if (canManageFolderStructure) {
+            moveFolder {
+                onEvent(FolderOptionsUserEvent.OnMoveFolder)
+            }.also(::add)
+        }
 
         moveAllItemsInFolder {
             onEvent(FolderOptionsUserEvent.OnMoveAllItemsInFolder)
         }.also(::add)
 
-        renameFolder {
-            onEvent(FolderOptionsUserEvent.OnRenameFolder)
-        }.also(::add)
+        if (canManageFolderStructure) {
+            renameFolder {
+                onEvent(FolderOptionsUserEvent.OnRenameFolder)
+            }.also(::add)
+        }
 
         delete {
             onEvent(FolderOptionsUserEvent.OnDeleteFolder)

@@ -88,7 +88,8 @@ internal data class HomeUiState(
     private val aliasTrashDialogStatusPreference: AliasTrashDialogStatusPreference,
     val isUpgradeAvailable: Boolean,
     val isQuest: Boolean,
-    val foldersEnabled: Boolean = false
+    val foldersEnabled: Boolean = false,
+    val canCreateItemsInFolder: Boolean = true
 ) {
 
     internal val sharedTrashedItemsCount: Int = homeListUiState.items

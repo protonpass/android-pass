@@ -24,6 +24,8 @@
     <string name="home_empty_no_vaults_subtitle">Please contact your administrator.</string>
     <string name="home_empty_read_only_vault_title">This vault is empty</string>
     <string name="home_empty_read_only_vault_subtitle">You can\'t add items to a read-only vault.</string>
+    <string name="home_empty_folder_plan_restricted_title">This folder is empty</string>
+    <string name="home_empty_folder_plan_restricted_subtitle">Upgrade your plan to create items inside folders.</string>
     <string name="home_empty_vault_create_login">Create a login</string>
     <string name="home_empty_vault_create_alias">Create a Hide-my-email alias</string>
     <string name="home_empty_vault_create_note">Create a note</string>

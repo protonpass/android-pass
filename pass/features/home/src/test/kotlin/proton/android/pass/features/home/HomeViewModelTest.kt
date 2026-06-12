@@ -45,6 +45,7 @@ import proton.android.pass.data.fakes.usecases.FakePinItem
 import proton.android.pass.data.fakes.usecases.FakeUnpinItem
 import proton.android.pass.data.fakes.usecases.FakeAddSearchEntry
 import proton.android.pass.data.fakes.usecases.FakeCanCreateAlias
+import proton.android.pass.data.fakes.usecases.FakeCanCreateItemsInFolder
 import proton.android.pass.data.fakes.usecases.FakeClearTrash
 import proton.android.pass.data.fakes.usecases.FakeDeleteAllSearchEntry
 import proton.android.pass.data.fakes.usecases.FakeDeleteItems
@@ -335,7 +336,8 @@ internal class HomeViewModelTest {
             syncStatusRepository = FakeItemSyncStatusRepository(),
             featureFlagsPreferencesRepository = featureFlags,
             observeFolder = observeFolder,
-            canCreateAlias = FakeCanCreateAlias()
+            canCreateAlias = FakeCanCreateAlias(),
+            canCreateItemsInFolder = FakeCanCreateItemsInFolder()
         )
     }
 }

@@ -18,6 +18,7 @@
 
 package proton.android.pass.features.itemcreate.creditcard
 
+import android.content.ContextWrapper
 import app.cash.turbine.test
 import com.google.common.truth.Truth.assertThat
 import kotlinx.collections.immutable.persistentSetOf
@@ -35,6 +36,7 @@ import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.crypto.fakes.context.FakeEncryptionContext
 import proton.android.pass.crypto.fakes.context.FakeEncryptionContextProvider
+import proton.android.pass.data.fakes.usecases.FakeCanCreateItemsInFolder
 import proton.android.pass.data.fakes.usecases.FakeCanPerformPaidAction
 import proton.android.pass.data.fakes.usecases.FakeCreateItem
 import proton.android.pass.data.fakes.usecases.FakeGetItemById
@@ -59,6 +61,7 @@ import proton.android.pass.features.itemcreate.common.customfields.CustomFieldHa
 import proton.android.pass.features.itemcreate.common.formprocessor.FakeCreditCardItemFormProcessor
 import proton.android.pass.features.itemcreate.common.formprocessor.FormProcessingResult
 import proton.android.pass.inappreview.fakes.FakeInAppReviewTriggerMetrics
+import proton.android.pass.navigation.api.CommonOptionalNavArgId
 import proton.android.pass.notifications.fakes.FakeSnackbarDispatcher
 import proton.android.pass.preferences.FakeInternalSettingsRepository
 import proton.android.pass.preferences.FakePreferenceRepository
@@ -85,6 +88,8 @@ class CreateCreditCardViewModelTest {
     private lateinit var observeShare: FakeObserveShare
     private lateinit var settingsRepository: FakeInternalSettingsRepository
     private lateinit var setDefaultVault: FakeSetDefaultVault
+    private lateinit var getItemById: FakeGetItemById
+    private lateinit var fakeCanCreateItemsInFolder: FakeCanCreateItemsInFolder
 
     @Before
     fun setUp() {
@@ -98,13 +103,18 @@ class CreateCreditCardViewModelTest {
         observeShare = FakeObserveShare()
         settingsRepository = FakeInternalSettingsRepository()
         setDefaultVault = FakeSetDefaultVault()
+        getItemById = FakeGetItemById()
+        fakeCanCreateItemsInFolder = FakeCanCreateItemsInFolder()
         instance = CreateCreditCardViewModel(
             accountManager = FakeAccountManager().apply {
                 sendPrimaryUserId(UserId("user-id"))
             },
             createItem = createItem,
             snackbarDispatcher = snackbarDispatcher,
-            savedStateHandleProvider = FakeSavedStateHandleProvider(),
+            savedStateHandleProvider = FakeSavedStateHandleProvider().apply {
+                get()[CommonOptionalNavArgId.ShareId.key] = SHARE_ID
+                get()[CommonOptionalNavArgId.ItemId.key] = ITEM_ID
+            },
             encryptionContextProvider = FakeEncryptionContextProvider(),
             observeVaults = observeVaults,
             telemetryManager = telemetryManager,
@@ -119,8 +129,9 @@ class CreateCreditCardViewModelTest {
             customFieldDraftRepository = CustomFieldDraftRepositoryImpl(),
             creditCardItemFormProcessor = creditCardItemFormProcessor,
             clipboardManager = FakeClipboardManager(),
-            getItemById = FakeGetItemById(),
+            getItemById = getItemById,
             observeShare = observeShare,
+            canCreateItemsInFolder = fakeCanCreateItemsInFolder,
             settingsRepository = settingsRepository,
             observeFolder = FakeObserveFolder()
         )
@@ -315,6 +326,60 @@ class CreateCreditCardViewModelTest {
         assertThat(memory.last().folderId).isNull()
     }
 
+    @Test
+    fun `duplicateContents sets folder when item is in folder and user can create items in folder`() = runTest {
+        val shareId = ShareId(SHARE_ID)
+        val folderId = FolderId("folder-id")
+        val item = ItemTestFactory.createCreditCard(shareId = shareId).copy(folderId = folderId)
+        getItemById.emit(Result.success(item))
+        fakeCanCreateItemsInFolder.sendValue(true)
+        sendInitialVault(shareId)
+
+        runCatching { instance.duplicateContents(TestContext()) }
+
+        instance.state.test {
+            val shareState = (awaitItem() as? CreateCreditCardUiState.Success)
+                ?.shareUiState as? ShareUiState.Success
+            assertThat(shareState?.selectedFolder?.id).isEqualTo(folderId)
+        }
+    }
+
+    @Test
+    fun `duplicateContents does not set folder when item is in folder but user cannot create items in folder`() =
+        runTest {
+            val shareId = ShareId(SHARE_ID)
+            val folderId = FolderId("folder-id")
+            val item = ItemTestFactory.createCreditCard(shareId = shareId).copy(folderId = folderId)
+            getItemById.emit(Result.success(item))
+            fakeCanCreateItemsInFolder.sendValue(false)
+            sendInitialVault(shareId)
+
+            runCatching { instance.duplicateContents(TestContext()) }
+
+            instance.state.test {
+                val shareState = (awaitItem() as? CreateCreditCardUiState.Success)
+                    ?.shareUiState as? ShareUiState.Success
+                assertThat(shareState?.selectedFolder?.id).isNull()
+            }
+        }
+
+    @Test
+    fun `duplicateContents does not set folder when item is not in a folder`() = runTest {
+        val shareId = ShareId(SHARE_ID)
+        val item = ItemTestFactory.createCreditCard(shareId = shareId)
+        getItemById.emit(Result.success(item))
+        fakeCanCreateItemsInFolder.sendValue(true)
+        sendInitialVault(shareId)
+
+        runCatching { instance.duplicateContents(TestContext()) }
+
+        instance.state.test {
+            val shareState = (awaitItem() as? CreateCreditCardUiState.Success)
+                ?.shareUiState as? ShareUiState.Success
+            assertThat(shareState?.selectedFolder?.id).isNull()
+        }
+    }
+
     private fun sendInitialVault(shareId: ShareId): VaultWithItemCount {
         val vault = VaultTestFactory.create(shareId = shareId, name = "Share")
         val vaultWithItemCount = VaultWithItemCount(
@@ -324,6 +389,13 @@ class CreateCreditCardViewModelTest {
         )
         observeVaults.sendResult(Result.success(listOf(vaultWithItemCount)))
         return vaultWithItemCount
+    }
+
+    private class TestContext : ContextWrapper(null)
+
+    companion object {
+        private const val SHARE_ID = "shareId"
+        private const val ITEM_ID = "itemId"
     }
 
 }

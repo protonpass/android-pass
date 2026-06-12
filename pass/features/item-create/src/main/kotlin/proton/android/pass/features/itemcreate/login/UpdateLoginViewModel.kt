@@ -62,6 +62,7 @@ import proton.android.pass.data.api.usecases.ObserveCurrentUser
 import proton.android.pass.data.api.usecases.ObserveItemById
 import proton.android.pass.data.api.usecases.ObserveUpgradeInfo
 import proton.android.pass.data.api.usecases.capabilities.CanCreateAlias
+import proton.android.pass.data.api.usecases.capabilities.CanCreateItemsInFolder
 import proton.android.pass.data.api.usecases.UpdateItem
 import proton.android.pass.data.api.usecases.attachments.LinkAttachmentsToItem
 import proton.android.pass.data.api.usecases.attachments.RenameAttachments
@@ -117,6 +118,7 @@ class UpdateLoginViewModel @AssistedInject constructor(
     private val encryptionContextProvider: EncryptionContextProvider,
     private val telemetryManager: TelemetryManager,
     private val createAlias: CreateAlias,
+    private val canCreateItemsInFolder: CanCreateItemsInFolder,
     private val workerLauncher: WorkerLauncher,
     private val totpManager: TotpManager,
     private val linkAttachmentsToItem: LinkAttachmentsToItem,
@@ -373,9 +375,18 @@ class UpdateLoginViewModel @AssistedInject constructor(
         aliasItemFormState: AliasItemFormState
     ): Result<Item> = if (aliasItemFormState.selectedSuffix != null) {
         safeRunCatching {
+            val itemFolderId = itemOption.value()?.folderId
+            val targetFolderId = if (itemFolderId != null &&
+                canCreateItemsInFolder(shareId).first()
+            ) {
+                itemFolderId
+            } else {
+                null
+            }
             createAlias(
                 userId = userId,
                 shareId = shareId,
+                folderId = targetFolderId,
                 newAlias = NewAlias(
                     contents = aliasItemFormState.toItemContents(),
                     prefix = aliasItemFormState.prefix,

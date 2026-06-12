@@ -31,6 +31,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.filterNotNull
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
@@ -56,6 +57,7 @@ import proton.android.pass.data.api.usecases.CreateItem
 import proton.android.pass.data.api.usecases.GetItemById
 import proton.android.pass.data.api.usecases.ObserveVaultsWithItemCount
 import proton.android.pass.data.api.usecases.attachments.LinkAttachmentsToItem
+import proton.android.pass.data.api.usecases.capabilities.CanCreateItemsInFolder
 import proton.android.pass.data.api.usecases.defaultvault.ObserveDefaultVault
 import proton.android.pass.data.api.usecases.defaultvault.SetDefaultVault
 import proton.android.pass.data.api.usecases.folders.ObserveFolder
@@ -115,6 +117,7 @@ class CreateCreditCardViewModel @Inject constructor(
     clipboardManager: ClipboardManager,
     savedStateHandleProvider: SavedStateHandleProvider,
     observeShare: ObserveShare,
+    private val canCreateItemsInFolder: CanCreateItemsInFolder,
     private val settingsRepository: InternalSettingsRepository
 ) : BaseCreditCardViewModel(
     userPreferencesRepository = userPreferencesRepository,
@@ -200,7 +203,6 @@ class CreateCreditCardViewModel @Inject constructor(
         selectedFolderIdFlow = selectedFolderIdState
     )
 
-
     internal val state: StateFlow<CreateCreditCardUiState> = combine(
         shareUiState,
         baseState,
@@ -232,7 +234,11 @@ class CreateCreditCardViewModel @Inject constructor(
         val shareId = navShareId.value() ?: return
         val itemId = navItemId.value() ?: return
         val item = getItemById(shareId = shareId, itemId = itemId)
-        item.folderId?.let { selectedFolderIdMutableState = Some(it) }
+        item.folderId?.let { folderId ->
+            if (canCreateItemsInFolder(shareId).first()) {
+                selectedFolderIdMutableState = Some(folderId)
+            }
+        }
 
         encryptionContextProvider.withEncryptionContextSuspendable {
             val formState = CreditCardItemFormState(item.toItemContents { decrypt(it) })

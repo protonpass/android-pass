@@ -57,6 +57,7 @@ import proton.android.pass.data.api.usecases.GetItemById
 import proton.android.pass.data.api.usecases.GetShareById
 import proton.android.pass.data.api.usecases.ObserveVaultsWithItemCount
 import proton.android.pass.data.api.usecases.attachments.LinkAttachmentsToItem
+import proton.android.pass.data.api.usecases.capabilities.CanCreateItemsInFolder
 import proton.android.pass.data.api.usecases.defaultvault.ObserveDefaultVault
 import proton.android.pass.data.api.usecases.defaultvault.SetDefaultVault
 import proton.android.pass.data.api.usecases.folders.ObserveFolder
@@ -119,6 +120,7 @@ class CreateNoteViewModel @Inject constructor(
     noteItemFormProcessor: NoteItemFormProcessor,
     savedStateHandleProvider: SavedStateHandleProvider,
     observeShare: ObserveShare,
+    private val canCreateItemsInFolder: CanCreateItemsInFolder,
     private val settingsRepository: InternalSettingsRepository
 ) : BaseNoteViewModel(
     clipboardManager = clipboardManager,
@@ -225,7 +227,11 @@ class CreateNoteViewModel @Inject constructor(
         val shareId = navShareId.value() ?: return
         val itemId = navItemId.value() ?: return
         val item = getItemById(shareId = shareId, itemId = itemId)
-        item.folderId?.let { selectedFolderIdMutableState = Some(it) }
+        item.folderId?.let { folderId ->
+            if (canCreateItemsInFolder(shareId).first()) {
+                selectedFolderIdMutableState = Some(folderId)
+            }
+        }
 
         val currentValue = noteItemFormState
         encryptionContextProvider.withEncryptionContextSuspendable {

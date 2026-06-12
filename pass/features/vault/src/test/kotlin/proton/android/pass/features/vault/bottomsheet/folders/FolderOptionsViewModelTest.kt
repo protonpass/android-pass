@@ -24,6 +24,7 @@ import kotlinx.coroutines.test.runTest
 import org.junit.Rule
 import org.junit.Test
 import proton.android.pass.commonui.fakes.FakeSavedStateHandleProvider
+import proton.android.pass.data.api.usecases.capabilities.CanCreateFolderResult
 import proton.android.pass.data.fakes.usecases.FakeCanCreateFolder
 import proton.android.pass.data.fakes.usecases.folders.FakeGetFolder
 import proton.android.pass.data.fakes.usecases.folders.FakeObserveFolderLimits
@@ -273,6 +274,49 @@ class FolderOptionsViewModelTest {
 
             assertThat(awaitItem()).isTrue()
         }
+    }
+
+    @Test
+    fun `canManageFolderStructure is false when planAllows is false (free user)`() = runTest {
+        val canCreateFolder = FakeCanCreateFolder().apply {
+            sendValue(CanCreateFolderResult(roleAllows = true, planAllows = false))
+        }
+
+        createInstance(emptyObserve(), canCreateFolder = canCreateFolder)
+            .canManageFolderStructure
+            .test {
+                assertThat(awaitItem()).isFalse()
+            }
+    }
+
+    @Test
+    fun `canManageFolderStructure is true when planAllows is true (paid user)`() = runTest {
+        val canCreateFolder = FakeCanCreateFolder().apply {
+            sendValue(CanCreateFolderResult(roleAllows = true, planAllows = true))
+        }
+
+        createInstance(emptyObserve(), canCreateFolder = canCreateFolder)
+            .canManageFolderStructure
+            .test {
+                assertThat(awaitItem()).isTrue()
+            }
+    }
+
+    @Test
+    fun `canManageFolderStructure updates when planAllows flips`() = runTest {
+        val canCreateFolder = FakeCanCreateFolder().apply {
+            sendValue(CanCreateFolderResult(roleAllows = true, planAllows = false))
+        }
+
+        createInstance(emptyObserve(), canCreateFolder = canCreateFolder)
+            .canManageFolderStructure
+            .test {
+                assertThat(awaitItem()).isFalse()
+
+                canCreateFolder.sendValue(CanCreateFolderResult(roleAllows = true, planAllows = true))
+
+                assertThat(awaitItem()).isTrue()
+            }
     }
 
     private fun createInstance(

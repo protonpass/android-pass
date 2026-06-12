@@ -31,6 +31,7 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.filterNotNull
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
@@ -47,6 +48,7 @@ import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.usecases.CreateItem
 import proton.android.pass.data.api.usecases.GetItemById
+import proton.android.pass.data.api.usecases.capabilities.CanCreateItemsInFolder
 import proton.android.pass.data.api.usecases.ObserveVaultsWithItemCount
 import proton.android.pass.data.api.usecases.defaultvault.ObserveDefaultVault
 import proton.android.pass.data.api.usecases.defaultvault.SetDefaultVault
@@ -76,6 +78,7 @@ import proton.android.pass.telemetry.api.EventItemType
 import proton.android.pass.telemetry.api.TelemetryManager
 import javax.inject.Inject
 
+@Suppress("LongParameterList")
 @HiltViewModel
 class CreateIdentityViewModel @Inject constructor(
     private val accountManager: AccountManager,
@@ -92,6 +95,7 @@ class CreateIdentityViewModel @Inject constructor(
     observeFolder: ObserveFolder,
     savedStateHandleProvider: SavedStateHandleProvider,
     observeShare: ObserveShare,
+    private val canCreateItemsInFolder: CanCreateItemsInFolder,
     private val settingsRepository: InternalSettingsRepository
 ) : ViewModel(), IdentityActionsProvider by identityActionsProvider {
 
@@ -207,7 +211,11 @@ class CreateIdentityViewModel @Inject constructor(
         val shareId = navShareId.value() ?: return
         val itemId = navItemId.value() ?: return
         val item = getItemById(shareId = shareId, itemId = itemId)
-        item.folderId?.let { selectedFolderIdMutableState = Some(it) }
+        item.folderId?.let { folderId ->
+            if (canCreateItemsInFolder(shareId).first()) {
+                selectedFolderIdMutableState = Some(folderId)
+            }
+        }
         val encryptedTitle = encryptionContextProvider.withEncryptionContextSuspendable {
             val decryptedTitle = context.getString(R.string.title_duplicate, decrypt(item.title))
             return@withEncryptionContextSuspendable encrypt(decryptedTitle)

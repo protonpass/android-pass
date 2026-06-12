@@ -27,6 +27,7 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.emitAll
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import proton.android.pass.common.api.safeRunCatching
 import proton.android.pass.commonui.api.SavedStateHandleProvider
@@ -60,6 +61,15 @@ class FolderOptionsViewModel @Inject constructor(
         .let(::FolderId)
 
     private val folderLimitsFlow = observeFolderLimits()
+
+    val canManageFolderStructure: StateFlow<Boolean> = canCreateFolder(navShareId)
+        .map { it.planAllows }
+        .catch { emit(false) }
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(5_000),
+            initialValue = false
+        )
 
     val canCreateSubFolder: StateFlow<Boolean> = flow {
         val depth = safeRunCatching {

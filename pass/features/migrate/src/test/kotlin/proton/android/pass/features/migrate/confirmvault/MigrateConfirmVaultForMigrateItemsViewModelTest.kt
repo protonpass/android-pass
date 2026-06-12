@@ -35,6 +35,7 @@ import proton.android.pass.data.api.repositories.toBulkMoveToVaultSelection
 import proton.android.pass.data.fakes.usecases.FakeMigrateItems
 import proton.android.pass.data.fakes.usecases.FakeMigrateVault
 import proton.android.pass.data.fakes.usecases.FakeObserveVaultsWithItemCount
+import proton.android.pass.data.fakes.usecases.FakeCanCreateItemsInFolder
 import proton.android.pass.data.fakes.usecases.folders.FakeDissolveFolder
 import proton.android.pass.data.fakes.usecases.folders.FakeMoveAllItemsInFolder
 import proton.android.pass.data.fakes.usecases.folders.FakeMoveFolder
@@ -108,7 +109,8 @@ class MigrateConfirmVaultForMigrateItemsViewModelTest {
             observeShare = observeShare,
             settingsRepository = settingsRepository,
             observeFolders = FakeObserveFoldersByParentId(),
-            getMigrationItemsSelection = FakeGetMigrationItemsSelection()
+            getMigrationItemsSelection = FakeGetMigrationItemsSelection(),
+            canCreateItemsInFolder = FakeCanCreateItemsInFolder()
         )
     }
 

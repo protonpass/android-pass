@@ -37,10 +37,12 @@ fun FolderOptionsBottomSheet(
     viewModel: FolderOptionsViewModel = hiltViewModel()
 ) {
     val canCreateSubFolder by viewModel.canCreateSubFolder.collectAsStateWithLifecycle()
+    val canManageFolderStructure by viewModel.canManageFolderStructure.collectAsStateWithLifecycle()
 
     FolderOptionsBottomSheetContents(
         modifier = modifier,
         canCreateSubFolder = canCreateSubFolder,
+        canManageFolderStructure = canManageFolderStructure,
         onEvent = {
             when (it) {
                 FolderOptionsUserEvent.OnCreateSubFolder ->

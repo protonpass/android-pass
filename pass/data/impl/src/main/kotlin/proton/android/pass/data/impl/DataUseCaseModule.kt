@@ -179,6 +179,7 @@ import proton.android.pass.data.api.usecases.breach.UpdateProtonAddressMonitorSt
 import proton.android.pass.data.api.usecases.breach.VerifyBreachCustomEmail
 import proton.android.pass.data.api.usecases.capabilities.CanCreateItemInVault
 import proton.android.pass.data.api.usecases.capabilities.CanCreateFolder
+import proton.android.pass.data.api.usecases.capabilities.CanCreateItemsInFolder
 import proton.android.pass.data.api.usecases.capabilities.CanCreateAlias
 import proton.android.pass.data.api.usecases.capabilities.CanCreateSecureLink
 import proton.android.pass.data.api.usecases.capabilities.CanCreateVault
@@ -444,6 +445,7 @@ import proton.android.pass.data.impl.usecases.breach.UpdateProtonAddressMonitorS
 import proton.android.pass.data.impl.usecases.breach.VerifyBreachCustomEmailImpl
 import proton.android.pass.data.impl.usecases.capabilities.CanCreateItemInVaultImpl
 import proton.android.pass.data.impl.usecases.capabilities.CanCreateFolderImpl
+import proton.android.pass.data.impl.usecases.capabilities.CanCreateItemsInFolderImpl
 import proton.android.pass.data.impl.usecases.capabilities.CanCreateAliasImpl
 import proton.android.pass.data.impl.usecases.capabilities.CanCreateSecureLinkImpl
 import proton.android.pass.data.impl.usecases.capabilities.CanCreateVaultImpl
@@ -850,6 +852,9 @@ abstract class DataUseCaseModule {
 
     @Binds
     abstract fun bindCanCreateFolder(impl: CanCreateFolderImpl): CanCreateFolder
+
+    @Binds
+    abstract fun bindCanCreateItemsInFolder(impl: CanCreateItemsInFolderImpl): CanCreateItemsInFolder
 
     @Binds
     abstract fun bindCanCreateAlias(impl: CanCreateAliasImpl): CanCreateAlias

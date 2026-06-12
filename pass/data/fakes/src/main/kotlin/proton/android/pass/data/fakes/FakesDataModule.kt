@@ -159,6 +159,7 @@ import proton.android.pass.data.api.usecases.breach.UpdateProtonAddressMonitorSt
 import proton.android.pass.data.api.usecases.breach.VerifyBreachCustomEmail
 import proton.android.pass.data.api.usecases.capabilities.CanCreateItemInVault
 import proton.android.pass.data.api.usecases.capabilities.CanCreateFolder
+import proton.android.pass.data.api.usecases.capabilities.CanCreateItemsInFolder
 import proton.android.pass.data.api.usecases.capabilities.CanCreateAlias
 import proton.android.pass.data.api.usecases.capabilities.CanCreateSecureLink
 import proton.android.pass.data.api.usecases.capabilities.CanCreateVault
@@ -282,6 +283,7 @@ import proton.android.pass.data.fakes.usecases.FakeAddSearchEntry
 import proton.android.pass.data.fakes.usecases.FakeApplyPendingEvents
 import proton.android.pass.data.fakes.usecases.FakeCanCreateItemInVault
 import proton.android.pass.data.fakes.usecases.FakeCanCreateFolder
+import proton.android.pass.data.fakes.usecases.FakeCanCreateItemsInFolder
 import proton.android.pass.data.fakes.usecases.FakeCanCreateAlias
 import proton.android.pass.data.fakes.usecases.FakeCanCreateSecureLink
 import proton.android.pass.data.fakes.usecases.FakeCanCreateVault
@@ -787,6 +789,9 @@ abstract class FakesDataModule {
 
     @Binds
     abstract fun bindCanCreateFolder(impl: FakeCanCreateFolder): CanCreateFolder
+
+    @Binds
+    abstract fun bindCanCreateItemsInFolder(impl: FakeCanCreateItemsInFolder): CanCreateItemsInFolder
 
     @Binds
     abstract fun bindCanCreateAlias(impl: FakeCanCreateAlias): CanCreateAlias

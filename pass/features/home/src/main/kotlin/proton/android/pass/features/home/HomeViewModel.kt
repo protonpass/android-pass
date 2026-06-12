@@ -120,6 +120,7 @@ import proton.android.pass.data.api.usecases.UnpinItems
 import proton.android.pass.data.api.usecases.folders.ObserveFolder
 import proton.android.pass.data.api.usecases.inappmessages.ObserveDeliverableMinimizedPromoInAppMessages
 import proton.android.pass.data.api.usecases.capabilities.CanCreateAlias
+import proton.android.pass.data.api.usecases.capabilities.CanCreateItemsInFolder
 import proton.android.pass.data.api.usecases.items.ObserveCanCreateItems
 import proton.android.pass.data.api.usecases.items.ObserveEncryptedSharedItems
 import proton.android.pass.data.api.usecases.searchentry.AddSearchEntry
@@ -227,7 +228,8 @@ class HomeViewModel @Inject constructor(
     appConfig: AppConfig,
     featureFlagsPreferencesRepository: FeatureFlagsPreferencesRepository,
     observeFolder: ObserveFolder,
-    private val syncStatusRepository: ItemSyncStatusRepository
+    private val syncStatusRepository: ItemSyncStatusRepository,
+    private val canCreateItemsInFolder: CanCreateItemsInFolder
 ) : ViewModel() {
 
     private val coroutineExceptionHandler = CoroutineExceptionHandler { _, throwable ->
@@ -263,6 +265,11 @@ class HomeViewModel @Inject constructor(
         .distinctUntilChanged()
         .onEach { shouldScrollToTopFlow.update { true } }
 
+    private data class FolderCapabilities(
+        val foldersEnabled: Boolean,
+        val canCreateItemsInFolder: Boolean
+    )
+
     private val foldersEnabledFlow: Flow<Boolean> =
         featureFlagsPreferencesRepository[FeatureFlag.PASS_FOLDERS]
 
@@ -287,6 +294,16 @@ class HomeViewModel @Inject constructor(
             }
         }
         .distinctUntilChanged()
+
+    private val folderCapabilitiesFlow: Flow<FolderCapabilities> = combine(
+        foldersEnabledFlow,
+        selectedFolderFlow.flatMapLatest { selectedFolder ->
+            val folder = selectedFolder.value()
+            if (folder == null) flowOf(true) else canCreateItemsInFolder(folder.shareId)
+        }
+    ) { foldersEnabled, canCreateItemsInFolder ->
+        FolderCapabilities(foldersEnabled, canCreateItemsInFolder)
+    }
 
     private val shareListWrapperFlow: Flow<ShareListWrapper> = combine(
         searchOptionsFlow,
@@ -645,7 +662,7 @@ class HomeViewModel @Inject constructor(
         observeCanCreateItems(),
         observeHasShares(includeHidden = true),
         observeUpgradeInfo().asLoadingResult(),
-        foldersEnabledFlow,
+        folderCapabilitiesFlow,
         canCreateAlias()
     ) { homeListUiState,
         searchUiState,
@@ -657,7 +674,7 @@ class HomeViewModel @Inject constructor(
         canCreateItems,
         hasShares,
         upgradeInfo,
-        foldersEnabled,
+        folderCapabilities,
         canCreateAlias ->
         HomeUiState(
             homeListUiState = homeListUiState,
@@ -673,7 +690,8 @@ class HomeViewModel @Inject constructor(
             hasShares = hasShares,
             isUpgradeAvailable = upgradeInfo.getOrNull()?.isUpgradeAvailable ?: false,
             isQuest = appConfig.flavor.isQuest(),
-            foldersEnabled = foldersEnabled
+            foldersEnabled = folderCapabilities.foldersEnabled,
+            canCreateItemsInFolder = folderCapabilities.canCreateItemsInFolder
         )
     }.stateIn(
         scope = viewModelScope,

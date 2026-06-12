@@ -34,6 +34,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.filterNotNull
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
@@ -71,6 +72,7 @@ import proton.android.pass.data.api.usecases.ObserveUpgradeInfo
 import proton.android.pass.data.api.usecases.ObserveVaultsWithItemCount
 import proton.android.pass.data.api.usecases.attachments.LinkAttachmentsToItem
 import proton.android.pass.data.api.usecases.capabilities.CanCreateAlias
+import proton.android.pass.data.api.usecases.capabilities.CanCreateItemsInFolder
 import proton.android.pass.data.api.usecases.defaultvault.ObserveDefaultVault
 import proton.android.pass.data.api.usecases.defaultvault.SetDefaultVault
 import proton.android.pass.data.api.usecases.folders.ObserveFolder
@@ -161,6 +163,7 @@ class CreateLoginViewModel @Inject constructor(
     savedStateHandleProvider: SavedStateHandleProvider,
     observeShare: ObserveShare,
     private val canCreateAlias: CanCreateAlias,
+    private val canCreateItemsInFolder: CanCreateItemsInFolder,
     private val settingsRepository: InternalSettingsRepository
 ) : BaseLoginViewModel(
     accountManager = accountManager,
@@ -299,7 +302,11 @@ class CreateLoginViewModel @Inject constructor(
         val shareId = navShareId.value() ?: return
         val itemId = navItemId.value() ?: return
         val item = getItemById(shareId = shareId, itemId = itemId)
-        item.folderId?.let { selectedFolderIdMutableState = Some(it) }
+        item.folderId?.let { folderId ->
+            if (canCreateItemsInFolder(shareId).first()) {
+                selectedFolderIdMutableState = Some(folderId)
+            }
+        }
 
         val currentValue = loginItemFormState
         encryptionContextProvider.withEncryptionContextSuspendable {

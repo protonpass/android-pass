@@ -31,6 +31,7 @@ import proton.android.pass.data.fakes.repositories.FakeBulkMoveToVaultRepository
 import proton.android.pass.data.fakes.usecases.FakeMigrateItems
 import proton.android.pass.data.fakes.usecases.FakeMigrateVault
 import proton.android.pass.data.fakes.usecases.FakeObserveVaultsWithItemCount
+import proton.android.pass.data.fakes.usecases.FakeCanCreateItemsInFolder
 import proton.android.pass.data.fakes.usecases.folders.FakeDissolveFolder
 import proton.android.pass.data.fakes.usecases.folders.FakeMoveAllItemsInFolder
 import proton.android.pass.data.fakes.usecases.folders.FakeMoveFolder
@@ -71,6 +72,7 @@ internal class MigrateConfirmVaultViewModelTest {
     private lateinit var observeHasAssociatedSecureLinks: FakeObserveHasAssociatedSecureLinks
     private lateinit var observeShare: FakeObserveShare
     private lateinit var settingsRepository: FakeInternalSettingsRepository
+    private lateinit var fakeCanCreateItemsInFolder: FakeCanCreateItemsInFolder
 
     @Before
     fun setup() {
@@ -82,6 +84,7 @@ internal class MigrateConfirmVaultViewModelTest {
         observeHasAssociatedSecureLinks = FakeObserveHasAssociatedSecureLinks()
         observeShare = FakeObserveShare()
         settingsRepository = FakeInternalSettingsRepository()
+        fakeCanCreateItemsInFolder = FakeCanCreateItemsInFolder()
 
         instance = buildViewModel(MigrateModeValue.SelectedItems) {
             set(MigrateVaultFilterArg.key, MigrateVaultFilter.All.name)
@@ -390,6 +393,52 @@ internal class MigrateConfirmVaultViewModelTest {
     }
 
     @Test
+    fun `MigrateAllItems - free user cannot see folders in destination vault`() = runTest {
+        val folder = FolderTestFactory.create(shareId = OTHER_SHARE_ID)
+        val fakeFolders = FakeObserveFoldersByParentId().apply {
+            sendResult(Result.success(listOf(folder)))
+        }
+        fakeCanCreateItemsInFolder.sendValue(false)
+        instance = buildViewModel(MigrateModeValue.AllVaultItems, fakeFolders)
+        val destVault = VaultWithItemCount(
+            vault = VaultTestFactory.create(shareId = OTHER_SHARE_ID, role = ShareRole.Admin),
+            activeItemCount = 5,
+            trashedItemCount = 0
+        )
+        observeVaults.sendResult(Result.success(listOf(sourceVault(), destVault)))
+
+        instance.state.test {
+            val state = awaitItem()
+            val destVaultState = state.vaultList.first { it.vaultWithItemCount.vault.shareId == OTHER_SHARE_ID }
+            assertThat(destVaultState.folderTree).isEmpty()
+            cancelAndConsumeRemainingEvents()
+        }
+    }
+
+    @Test
+    fun `MigrateAllItems - paid user can see folders in destination vault`() = runTest {
+        val folder = FolderTestFactory.create(shareId = OTHER_SHARE_ID)
+        val fakeFolders = FakeObserveFoldersByParentId().apply {
+            sendResult(Result.success(listOf(folder)))
+        }
+        fakeCanCreateItemsInFolder.sendValue(true)
+        instance = buildViewModel(MigrateModeValue.AllVaultItems, fakeFolders)
+        val destVault = VaultWithItemCount(
+            vault = VaultTestFactory.create(shareId = OTHER_SHARE_ID, role = ShareRole.Admin),
+            activeItemCount = 5,
+            trashedItemCount = 0
+        )
+        observeVaults.sendResult(Result.success(listOf(sourceVault(), destVault)))
+
+        instance.state.test {
+            val state = awaitItem()
+            val destVaultState = state.vaultList.first { it.vaultWithItemCount.vault.shareId == OTHER_SHARE_ID }
+            assertThat(destVaultState.folderTree).isNotEmpty()
+            cancelAndConsumeRemainingEvents()
+        }
+    }
+
+    @Test
     fun `MigrateAllItems - source vault folders are exposed even though root is disabled`() = runTest {
         val folder = FolderTestFactory.create(shareId = SHARE_ID, folderId = FOLDER_ID)
         val fakeFolders = FakeObserveFoldersByParentId().apply {
@@ -467,7 +516,8 @@ internal class MigrateConfirmVaultViewModelTest {
         observeShare = observeShare,
         settingsRepository = settingsRepository,
         observeFolders = observeFoldersByParentId,
-        getMigrationItemsSelection = FakeGetMigrationItemsSelection()
+        getMigrationItemsSelection = FakeGetMigrationItemsSelection(),
+        canCreateItemsInFolder = fakeCanCreateItemsInFolder
     )
 
     private fun sourceVault(): VaultWithItemCount = VaultWithItemCount(

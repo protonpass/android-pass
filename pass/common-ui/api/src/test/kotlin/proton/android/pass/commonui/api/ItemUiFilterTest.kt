@@ -364,7 +364,8 @@ internal class ItemUiFilterTest {
                     customFields = listOf(
                         CustomFieldContent.Hidden(label = "mysecretlabel", value = HiddenState.Concealed("secretvalue"))
                     ),
-                    passkeys = emptyList()
+                    passkeys = emptyList(),
+                    autofillUrls = emptyList()
                 )
             )
         )
@@ -392,7 +393,8 @@ internal class ItemUiFilterTest {
                     customFields = listOf(
                         CustomFieldContent.Totp(label = "mytotplabel", value = HiddenState.Concealed("totpseed"))
                     ),
-                    passkeys = emptyList()
+                    passkeys = emptyList(),
+                    autofillUrls = emptyList()
                 )
             )
         )
@@ -472,7 +474,8 @@ internal class ItemUiFilterTest {
                     customFields = listOf(
                         CustomFieldContent.Date(label = "mydatelabel", value = 1_700_000_000L)
                     ),
-                    passkeys = emptyList()
+                    passkeys = emptyList(),
+                    autofillUrls = emptyList()
                 )
             )
         )

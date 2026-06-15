@@ -80,6 +80,9 @@ sealed interface TextMask {
         override val masked: String = input.length
             .div(2)
             .let { half -> "${input.take(half)} ${SpecialCharacters.DOT_SEPARATOR} ${input.takeLast(half)}" }
+            .let { code ->
+                "${SpecialCharacters.LTR_ISOLATE}$code${SpecialCharacters.POP_DIRECTIONAL_ISOLATE}"
+            }
 
         override val unmasked: String = input
 

@@ -24,6 +24,8 @@ object SpecialCharacters {
     const val AT_SIGN = '@'
     const val COLON = ':'
     const val DOT_SEPARATOR = '•'
+    const val LTR_ISOLATE = '\u2066'
+    const val POP_DIRECTIONAL_ISOLATE = '\u2069'
     const val QUESTION_MARK = '?'
     const val SLASH = '/'
     const val SPACE = ' '

@@ -45,18 +45,14 @@
   <string name="home_toast_items_selected_shared_with_me">Mit dir geteilte Einträge können nicht ausgewählt werden</string>
   <string name="home_autofill_banner_title">Genieße die Magie von AutoFill</string>
   <string name="home_autofill_banner_text">Ein Fingertipp und – schwups – sofort sind dein Benutzername und dein Passwort ausgefüllt.</string>
-  <string name="home_autofill_banner_settings">AutoFill aktivieren</string>
   <string name="home_drawer_all_items">Alle Einträge</string>
   <string name="sl_sync_banner_title">Synchronisiere deine Aliasse von SimpleLogin</string>
   <plurals name="sl_sync_banner_text">
     <item quantity="one">Du hast %d Alias, der in SimpleLogin vorhanden ist, aber in Proton Pass fehlt. Möchtest du ihn synchronisieren?</item>
     <item quantity="other">Du hast %d Aliasse, die in SimpleLogin vorhanden sind, aber in Proton Pass fehlen. Möchtest du sie synchronisieren?</item>
   </plurals>
-  <string name="sl_sync_banner_settings">Aliasse synchronisieren ›</string>
-  <string name="sl_sync_banner_note">Nach der Synchronisierung werden Aliasnamen, die in Pass gelöscht werden, auch in SimpleLogin gelöscht.</string>
   <string name="home_notification_permission_banner_title">Erhalte wichtige Updates</string>
   <string name="home_notification_permission_banner_text">Aktiviere Push-Benachrichtigungen, um informiert zu werden, wenn andere einen Tresor mit dir teilen.</string>
-  <string name="home_notification_permission_banner_settings">Berechtigung erteilen ›</string>
   <string name="home_item_invite_banner_title" comment="placeholder is replaced by an email address">%s möchte etwas mit dir teilen.</string>
   <string name="home_group_item_invite_banner_title" comment="%1$s = inviter email, %2$s = group name">%1$s möchte einen Eintrag mit deiner Gruppe %2$s teilen.</string>
   <string name="home_group_invite_banner_title" comment="%1$s = inviter email, %2$s = group name">%1$s möchte einen Tresor mit deiner Gruppe %2$s teilen.</string>

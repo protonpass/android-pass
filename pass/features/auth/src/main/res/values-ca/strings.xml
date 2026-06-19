@@ -39,6 +39,7 @@
   <string name="auth_extra_password_label">Introduïu la vostra contrasenya addicional</string>
   <string name="auth_extra_password_error">S\'ha produït un error en autenticar-se amb la contrasenya addicional</string>
   <string name="auth_extra_password_too_many_attempts">Hi ha hagut massa intents fallits d\'inici de sessió. Se us ha tancat la sessió.</string>
+  <string name="auth_biometric_enrollment_changed">Les vostres dades biomètriques han canviat. Torneu a activar el desbloqueig biomètric a la configuració.</string>
   <string name="auth_error_wrong_password_no_attempts">La contrasenya no és correcta.</string>
   <plurals name="auth_error_wrong_password">
     <item quantity="one">La contrasenya és incorrecta. Us queda %d intent.</item>

@@ -29,8 +29,8 @@
     <item quantity="other">%d elementer</item>
   </plurals>
   <plurals name="sharing_invite_item_count">
-    <item quantity="one">%d element (inklusive slettede)</item>
-    <item quantity="other">%d elementer (inklusive slettede)</item>
+    <item quantity="one">%d element (inklusiv slettede)</item>
+    <item quantity="other">%d elementer (inklusiv slettede)</item>
   </plurals>
   <plurals name="sharing_member_count">
     <item quantity="one">%d medlem</item>

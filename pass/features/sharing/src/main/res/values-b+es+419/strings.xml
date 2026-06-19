@@ -29,8 +29,8 @@
     <item quantity="other">%d elementos</item>
   </plurals>
   <plurals name="sharing_invite_item_count">
-    <item quantity="one">%d item (including trashed)</item>
-    <item quantity="other">%d items (including trashed)</item>
+    <item quantity="one">%d elemento (incluido de la papelera)</item>
+    <item quantity="other">%d elementos (incluidos los de la papelera)</item>
   </plurals>
   <plurals name="sharing_member_count">
     <item quantity="one">%d miembro</item>

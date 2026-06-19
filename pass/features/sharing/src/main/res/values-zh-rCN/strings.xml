@@ -28,7 +28,7 @@
     <item quantity="other">%d 项</item>
   </plurals>
   <plurals name="sharing_invite_item_count">
-    <item quantity="other">%d items (including trashed)</item>
+    <item quantity="other">%d 项（包含已删除项）</item>
   </plurals>
   <plurals name="sharing_member_count">
     <item quantity="other">%d 位成员</item>

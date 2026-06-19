@@ -39,6 +39,7 @@
   <string name="auth_extra_password_label">Inserisci la password aggiuntiva</string>
   <string name="auth_extra_password_error">Autenticazione con password aggiuntiva non riuscita</string>
   <string name="auth_extra_password_too_many_attempts">Troppi tentativi di accesso non riusciti. Effettua nuovamente l\'accesso.</string>
+  <string name="auth_biometric_enrollment_changed">I tuoi dati biometrici sono cambiati. Per favore riabilita lo sblocco biometrico nelle Impostazioni.</string>
   <string name="auth_error_wrong_password_no_attempts">Password errata</string>
   <plurals name="auth_error_wrong_password">
     <item quantity="one">Password errata. %d tentativo rimasto.</item>

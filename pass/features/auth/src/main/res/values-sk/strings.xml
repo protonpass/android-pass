@@ -41,6 +41,7 @@
   <string name="auth_extra_password_label">Zadajte vaše dodatočné heslo</string>
   <string name="auth_extra_password_error">Chyba pri overovaní pomocou dodatočného hesla</string>
   <string name="auth_extra_password_too_many_attempts">Príliš veľa neúspešných pokusov o prihlásenie. Došlo k odhláseniu.</string>
+  <string name="auth_biometric_enrollment_changed">Vaše biometrické údaje sa zmenili. V nastaveniach opäť povoľte odomykanie pomocou biometrických údajov, prosím.</string>
   <string name="auth_error_wrong_password_no_attempts">Nesprávne heslo</string>
   <plurals name="auth_error_wrong_password">
     <item quantity="one">Nesprávne heslo. Zostáva %d pokus.</item>

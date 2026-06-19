@@ -39,6 +39,7 @@
   <string name="auth_extra_password_label">Introduza a sua palavra-passe adicional</string>
   <string name="auth_extra_password_error">Erro na autenticação com a palavra-passe adicional</string>
   <string name="auth_extra_password_too_many_attempts">Muitas tentativas de início de sessão não funcionaram. Foi desconectado.</string>
+  <string name="auth_biometric_enrollment_changed">Your biometric data has changed. Please re-enable biometric unlock in Settings.</string>
   <string name="auth_error_wrong_password_no_attempts">Palavra-passe incorreta</string>
   <plurals name="auth_error_wrong_password">
     <item quantity="one">Palavra-passe incorreta. Resta %d tentativa</item>

@@ -29,8 +29,8 @@
     <item quantity="other">%d elements</item>
   </plurals>
   <plurals name="sharing_invite_item_count">
-    <item quantity="one">%d element (inclosos els eliminats)</item>
-    <item quantity="other">%d elements (inclosos els eliminats)</item>
+    <item quantity="one">%d element (incloent-hi els que són a la paperera)</item>
+    <item quantity="other">%d elements (incloent-hi els que són a la paperera)</item>
   </plurals>
   <plurals name="sharing_member_count">
     <item quantity="one">%d membre</item>

@@ -29,8 +29,8 @@
     <item quantity="other">%d kohdetta</item>
   </plurals>
   <plurals name="sharing_invite_item_count">
-    <item quantity="one">%d item (including trashed)</item>
-    <item quantity="other">%d items (including trashed)</item>
+    <item quantity="one">%d kohde (mukaan lukien poistetut)</item>
+    <item quantity="other">%d kohdetta (mukaan lukien poistetut)</item>
   </plurals>
   <plurals name="sharing_member_count">
     <item quantity="one">%d jäsen</item>

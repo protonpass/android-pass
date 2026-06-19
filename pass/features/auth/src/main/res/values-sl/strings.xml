@@ -41,6 +41,7 @@
   <string name="auth_extra_password_label">Vnesite dodatno geslo</string>
   <string name="auth_extra_password_error">Napaka pri preverjanju pristnosti z dodatnim geslom</string>
   <string name="auth_extra_password_too_many_attempts">Preveč neuspešnih poskusov prijave. Bili ste odjavljeni.</string>
+  <string name="auth_biometric_enrollment_changed">Your biometric data has changed. Please re-enable biometric unlock in Settings.</string>
   <string name="auth_error_wrong_password_no_attempts">Napačno geslo</string>
   <plurals name="auth_error_wrong_password">
     <item quantity="one">Napačno geslo. Še %d poskus</item>

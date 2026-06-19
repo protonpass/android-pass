@@ -38,6 +38,7 @@
   <string name="auth_extra_password_label">Nhập mật khẩu phụ</string>
   <string name="auth_extra_password_error">Lỗi với mật khẩu phụ</string>
   <string name="auth_extra_password_too_many_attempts">Quá nhiều lần đăng nhập không thành công. Bạn đã được đăng xuất.</string>
+  <string name="auth_biometric_enrollment_changed">Your biometric data has changed. Please re-enable biometric unlock in Settings.</string>
   <string name="auth_error_wrong_password_no_attempts">Sai mật khẩu</string>
   <plurals name="auth_error_wrong_password">
     <item quantity="other">Mật khẩu không chính xác. %d lần thử còn lại</item>

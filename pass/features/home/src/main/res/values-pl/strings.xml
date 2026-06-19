@@ -45,7 +45,6 @@
   <string name="home_toast_items_selected_shared_with_me">Nie można zaznaczyć elementów udostępnionych Tobie</string>
   <string name="home_autofill_banner_title">Ciesz się magią autouzupełniania</string>
   <string name="home_autofill_banner_text">Jedno kliknięcie i gotowe! Nazwa użytkownika i hasło są uzupełnione.</string>
-  <string name="home_autofill_banner_settings">Włącz autouzupełnianie ›</string>
   <string name="home_drawer_all_items">Wszystkie elementy</string>
   <string name="sl_sync_banner_title">Synchronizuj aliasy z SimpleLogin</string>
   <plurals name="sl_sync_banner_text">
@@ -54,11 +53,8 @@
     <item quantity="many">Masz %d aliasów SimpleLogin, które nie są widoczne w Proton Pass. Czy chcesz je zsynchronizować?</item>
     <item quantity="other">Masz %d aliasów SimpleLogin, które nie są widoczne w Proton Pass. Czy chcesz je zsynchronizować?</item>
   </plurals>
-  <string name="sl_sync_banner_settings">Synchronizuj aliasy ›</string>
-  <string name="sl_sync_banner_note">Po synchronizacji usunięte aliasy w Proton Pass zostaną również usunięte w SimpleLogin.</string>
   <string name="home_notification_permission_banner_title">Otrzymuj ważne aktualizacje</string>
   <string name="home_notification_permission_banner_text">Włącz powiadomienia, aby otrzymywać informacje, gdy inne osoby udostępnią Ci sejf.</string>
-  <string name="home_notification_permission_banner_settings">Włącz uprawnienie ›</string>
   <string name="home_item_invite_banner_title" comment="placeholder is replaced by an email address">Użytkownik %s udostępnia Ci element.</string>
   <string name="home_group_item_invite_banner_title" comment="%1$s = inviter email, %2$s = group name">%1$s wants to share an item with your group %2$s.</string>
   <string name="home_group_invite_banner_title" comment="%1$s = inviter email, %2$s = group name">%1$s wants to share a vault with your group %2$s.</string>

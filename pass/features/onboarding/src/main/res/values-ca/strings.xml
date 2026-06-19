@@ -28,7 +28,7 @@
   <string name="onboarding_slide_1_subtitle">De forma segura en un sol lloc i protegit per l\'empresa més fiable en matèria de privacitat.</string>
   <string name="onboarding_slide_2_subtitle">Utilitzeu els àlies hide-my-email contra amenaces de pesca.</string>
   <string name="onboarding_slide_3_subtitle">Compartiu contrasenyes i informació confidencial de manera segura i sense esforç.</string>
-  <string name="onboarding_slide_4_subtitle">Rebeu alertes si el vostre correu electrònic es troba al web fosc.</string>
+  <string name="onboarding_slide_4_subtitle">Rebeu alertes quan el vostre correu electrònic es trobi al web fosc.</string>
   <string name="create_an_account_button">Crea un compte</string>
   <string name="sign_in_button">Inicia la sessió</string>
 </resources>

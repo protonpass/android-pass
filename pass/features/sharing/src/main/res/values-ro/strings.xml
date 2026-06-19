@@ -30,9 +30,9 @@
     <item quantity="other">%d de articole</item>
   </plurals>
   <plurals name="sharing_invite_item_count">
-    <item quantity="one">%d item (including trashed)</item>
-    <item quantity="few">%d items (including trashed)</item>
-    <item quantity="other">%d items (including trashed)</item>
+    <item quantity="one">%d articol (inclusiv din gunoi)</item>
+    <item quantity="few">%d articole (inclusiv din gunoi)</item>
+    <item quantity="other">%d de articole (inclusiv din gunoi)</item>
   </plurals>
   <plurals name="sharing_member_count">
     <item quantity="one">%d membru</item>

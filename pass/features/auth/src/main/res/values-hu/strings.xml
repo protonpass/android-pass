@@ -39,6 +39,7 @@
   <string name="auth_extra_password_label">Írja be az extra jelszavát</string>
   <string name="auth_extra_password_error">Hiba az extra jelszóval történő hitelesítéskor</string>
   <string name="auth_extra_password_too_many_attempts">Túl sok sikertelen bejelentkezési kísérlet. Kijelentkeztetésre került.</string>
+  <string name="auth_biometric_enrollment_changed">Your biometric data has changed. Please re-enable biometric unlock in Settings.</string>
   <string name="auth_error_wrong_password_no_attempts">Hibás jelszó</string>
   <plurals name="auth_error_wrong_password">
     <item quantity="one">Helytelen jelszó. %d próbálkozás maradt</item>

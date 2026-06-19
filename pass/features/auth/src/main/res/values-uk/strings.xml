@@ -41,6 +41,7 @@
   <string name="auth_extra_password_label">Уведіть ваш додатковий пароль</string>
   <string name="auth_extra_password_error">Помилка при автентифікації з додатковим паролем</string>
   <string name="auth_extra_password_too_many_attempts">Занадто багато невдалих спроб входу. Ви вийшли з системи.</string>
+  <string name="auth_biometric_enrollment_changed">Your biometric data has changed. Please re-enable biometric unlock in Settings.</string>
   <string name="auth_error_wrong_password_no_attempts">Неправильний пароль</string>
   <plurals name="auth_error_wrong_password">
     <item quantity="one">Неправильний пароль. Залишилась %d спроба</item>

@@ -45,7 +45,6 @@
   <string name="home_toast_items_selected_shared_with_me">Položky, ktoré sú s vami zdieľané, nie je možné vybrať</string>
   <string name="home_autofill_banner_title">Vychutnajte si čaro automatického vypĺňania</string>
   <string name="home_autofill_banner_text">Jedno ťuknutie a hotovo! Vaše používateľské meno a heslo bude automaticky vyplnené.</string>
-  <string name="home_autofill_banner_settings">Zapnúť automatické vypĺňanie ›</string>
   <string name="home_drawer_all_items">Všetky položky</string>
   <string name="sl_sync_banner_title">Synchronizujte svoje aliasy z aplikácie SimpleLogin</string>
   <plurals name="sl_sync_banner_text">
@@ -54,11 +53,8 @@
     <item quantity="many">Máte %d aliasov, ktoré sa nachádzajú v SimpleLogin, ale chýbajú v Proton Pass. Chcete ich synchronizovať?</item>
     <item quantity="other">Máte %d aliasov, ktoré sa nachádzajú v SimpleLogin, ale chýbajú v Proton Pass. Chcete ich synchronizovať?</item>
   </plurals>
-  <string name="sl_sync_banner_settings">Synchronizovať aliasy ›</string>
-  <string name="sl_sync_banner_note">Po synchronizácii sa odstránením aliasov v Pass odstránia aj v SimpleLogin.</string>
   <string name="home_notification_permission_banner_title">Získajte dôležité aktualizácie</string>
   <string name="home_notification_permission_banner_text">Povoľte push oznámenia, aby ste dostali informáciu, keď s vami ostatní budú zdieľať trezor.</string>
-  <string name="home_notification_permission_banner_settings">Povoľte oprávnenie ›</string>
   <string name="home_item_invite_banner_title" comment="placeholder is replaced by an email address">%s chce s vami zdieľať položku.</string>
   <string name="home_group_item_invite_banner_title" comment="%1$s = inviter email, %2$s = group name">%1$s chce zdieľať položku s vašou skupinou %2$s.</string>
   <string name="home_group_invite_banner_title" comment="%1$s = inviter email, %2$s = group name">%1$s chce zdieľať trezor s vašou skupinou %2$s.</string>

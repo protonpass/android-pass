@@ -39,6 +39,7 @@
   <string name="auth_extra_password_label">Indtast din ekstra adgangskode</string>
   <string name="auth_extra_password_error">Mislykket godkendelse med ekstra adgangskode</string>
   <string name="auth_extra_password_too_many_attempts">For mange mislykkede login-forsøg. Du er blevet logget ud.</string>
+  <string name="auth_biometric_enrollment_changed">Dine biometriske data har ændret sig. Genaktivér biometrisk oplåsning i Indstillinger.</string>
   <string name="auth_error_wrong_password_no_attempts">Forkert adgangskode</string>
   <plurals name="auth_error_wrong_password">
     <item quantity="one">Forkert adgangskode. %d forsøg tilbage</item>

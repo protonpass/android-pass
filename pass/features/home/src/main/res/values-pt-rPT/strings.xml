@@ -45,18 +45,14 @@
   <string name="home_toast_items_selected_shared_with_me">Os itens partilhados consigo não podem ser selecionados.</string>
   <string name="home_autofill_banner_title">Desfrute da magia do preenchimento automático</string>
   <string name="home_autofill_banner_text">Um clique e já está! O seu nome de utilizador e a sua palavra-passe são preenchidos instantaneamente.</string>
-  <string name="home_autofill_banner_settings">Ativar o preenchimento automático ›</string>
   <string name="home_drawer_all_items">Todos os itens</string>
   <string name="sl_sync_banner_title">Sincronize os seus aliases do SimpleLogin</string>
   <plurals name="sl_sync_banner_text">
     <item quantity="one">Tem %d alias que está presente no SimpleLogin, mas está ausente no Proton Pass. Gostaria de sincronizá-lo?</item>
     <item quantity="other">Tem %d aliases que estão presentes no SimpleLogin, mas estão ausentes no Proton Pass. Gostaria de sincronizá-los?</item>
   </plurals>
-  <string name="sl_sync_banner_settings">Sincronizar os aliases ›</string>
-  <string name="sl_sync_banner_note">Uma vez sincronizados, a eliminação de aliases no Pass eliminará também os mesmos no SimpleLogin.</string>
   <string name="home_notification_permission_banner_title">Obtenha atualizações importantes</string>
   <string name="home_notification_permission_banner_text">Ative as notificações \"push\" para ser informado de quando os outros partilharam um cofre consigo.</string>
-  <string name="home_notification_permission_banner_settings">Ativar permissão ›</string>
   <string name="home_item_invite_banner_title" comment="placeholder is replaced by an email address">%s deseja partilhar um item consigo.</string>
   <string name="home_group_item_invite_banner_title" comment="%1$s = inviter email, %2$s = group name">%1$s wants to share an item with your group %2$s.</string>
   <string name="home_group_invite_banner_title" comment="%1$s = inviter email, %2$s = group name">%1$s wants to share a vault with your group %2$s.</string>

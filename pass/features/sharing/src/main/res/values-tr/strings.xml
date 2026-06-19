@@ -29,8 +29,8 @@
     <item quantity="other">%d öge</item>
   </plurals>
   <plurals name="sharing_invite_item_count">
-    <item quantity="one">%d öğe (çöpe atılanlar dahil)</item>
-    <item quantity="other">%d öğe (çöpe atılanlar dahil)</item>
+    <item quantity="one">%d öge (çöptekiler ile)</item>
+    <item quantity="other">%d öge (çöptekiler ile)</item>
   </plurals>
   <plurals name="sharing_member_count">
     <item quantity="one">%d üye</item>

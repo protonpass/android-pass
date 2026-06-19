@@ -45,17 +45,13 @@
   <string name="home_toast_items_selected_shared_with_me">나와 공유된 항목을 선택할 수 없습니다.</string>
   <string name="home_autofill_banner_title">자동 완성의 마법을 경험해 보세요</string>
   <string name="home_autofill_banner_text">하나의 탭으로 사용자 이름과 비밀번호가 바로 입력되기 때문에 손 아프게 계속 까딱일 필요 없죠.</string>
-  <string name="home_autofill_banner_settings">자동 완성을 켜세요 ›</string>
   <string name="home_drawer_all_items">모든 항목</string>
   <string name="sl_sync_banner_title">SimpleLogin에서 별칭 동기화</string>
   <plurals name="sl_sync_banner_text">
     <item quantity="other">SimpleLogin에 %d개의 별칭이 존재하지만 Proton Pass에는 누락된 별칭이 있어요. 해당 별칭을 연동하시겠어요?</item>
   </plurals>
-  <string name="sl_sync_banner_settings">별칭 동기화 ›</string>
-  <string name="sl_sync_banner_note">한 번 연동하면, Pass에서 별칭 삭제 시 SimpleLogin에서도 삭제됩니다.</string>
   <string name="home_notification_permission_banner_title">중요한 소식 얻기</string>
   <string name="home_notification_permission_banner_text">다른 사람과 금고를 공유할 때 정보를 받을 수 있도록 푸시 알림을 허용하세요.</string>
-  <string name="home_notification_permission_banner_settings">권한 허용 ›</string>
   <string name="home_item_invite_banner_title" comment="placeholder is replaced by an email address">%s님이 나와 항목을 공유하고자 합니다.</string>
   <string name="home_group_item_invite_banner_title" comment="%1$s = inviter email, %2$s = group name">%1$s wants to share an item with your group %2$s.</string>
   <string name="home_group_invite_banner_title" comment="%1$s = inviter email, %2$s = group name">%1$s wants to share a vault with your group %2$s.</string>

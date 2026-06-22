@@ -148,18 +148,26 @@ internal class PasswordCredentialSelectionViewModel @Inject constructor(
     }
 
     private fun onPasswordCredentialSelected(id: String, encryptedPassword: EncryptedString) {
-        encryptionContextProvider.withEncryptionContext {
+        val password = encryptionContextProvider.withEncryptionContext {
             decrypt(encryptedPassword)
-        }.also { password ->
-            eventFlow.update {
-                PasswordCredentialSelectionStateEvent.SendCredentialResponse(
-                    id = id,
-                    password = password
-                )
-            }
-        }.also {
-            telemetryManager.sendEvent(PasswordCredentialsTelemetryEvent.AuthDone)
         }
+
+        if (password.isEmpty()) {
+            PassLogger.w(TAG, "Decrypted password is empty, cannot create PasswordCredential")
+            viewModelScope.launch {
+                toastManager.showToast(R.string.password_credential_selection_empty_password_error)
+            }
+            eventFlow.update { PasswordCredentialSelectionStateEvent.Cancel }
+            return
+        }
+
+        eventFlow.update {
+            PasswordCredentialSelectionStateEvent.SendCredentialResponse(
+                id = id,
+                password = password
+            )
+        }
+        telemetryManager.sendEvent(PasswordCredentialsTelemetryEvent.AuthDone)
     }
 
     internal fun onUpgrade() {

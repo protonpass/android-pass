@@ -20,6 +20,7 @@ package proton.android.pass.features.item.details.detail.presentation.handlers
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.onStart
 import proton.android.pass.common.api.combineN
 import proton.android.pass.common.api.safeRunCatching
@@ -38,6 +39,7 @@ import proton.android.pass.data.api.usecases.ObserveAliasDetails
 import proton.android.pass.data.api.usecases.folders.GetFolderHierarchy
 import proton.android.pass.data.api.usecases.aliascontact.ObserveAliasContacts
 import proton.android.pass.domain.AliasDetails
+import proton.android.pass.domain.aliascontacts.AliasContacts
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.ItemDiffs
@@ -80,7 +82,7 @@ class AliasItemDetailsHandlerObserverImpl @Inject constructor(
     ): Flow<ItemDetailState> = combineN(
         observeItemContents(item),
         observeAliasDetails(item.shareId, item.id).onStart { emit(AliasDetails.EMPTY) },
-        observeAliasContacts(item.shareId, item.id),
+        observeAliasContacts(item.shareId, item.id).catch { emit(AliasContacts(emptyList(), 0)) },
         observeCustomFieldTotps(item),
         observeBreadcrumbs(item),
         userPreferencesRepository.observeDisplayFeatureDiscoverBanner(AliasManagementContacts),

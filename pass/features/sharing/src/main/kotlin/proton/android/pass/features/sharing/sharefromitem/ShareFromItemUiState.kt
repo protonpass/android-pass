@@ -37,6 +37,9 @@ internal sealed interface ShareFromItemNavEvent {
     @Stable
     data object MoveToSharedVault : ShareFromItemNavEvent
 
+    @Stable
+    data object DismissBottomSheet : ShareFromItemNavEvent
+
 }
 
 @Stable

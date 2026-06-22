@@ -41,6 +41,9 @@ fun ShareFromItemBottomSheet(
             ShareFromItemNavEvent.MoveToSharedVault -> {
                 onNavigateEvent(SharingNavigation.MoveItemToSharedVault)
             }
+            ShareFromItemNavEvent.DismissBottomSheet -> {
+                onNavigateEvent(SharingNavigation.CloseBottomSheet(false))
+            }
         }
 
         viewModel.onEventConsumed(state.event)

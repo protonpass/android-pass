@@ -45,6 +45,8 @@ fun DetailAliasContactScreen(
                 onNavigate(AliasContactsNavigation.CreateContact(event.shareId, event.itemId))
             }
 
+            DetailAliasContactEvent.OnItemNotFound -> onNavigate(AliasContactsNavigation.CloseScreen)
+
             DetailAliasContactEvent.Idle -> {}
         }
         viewModel.onEventConsumed(state.event)

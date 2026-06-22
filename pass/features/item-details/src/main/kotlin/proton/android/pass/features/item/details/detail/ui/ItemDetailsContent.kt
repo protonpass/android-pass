@@ -46,7 +46,7 @@ internal fun ItemDetailsContent(
     state: ItemDetailsState
 ) = with(state) {
     when (this) {
-        ItemDetailsState.Error -> Unit
+        is ItemDetailsState.Error -> Unit
 
         ItemDetailsState.Loading -> {
             PassFullScreenLoading()

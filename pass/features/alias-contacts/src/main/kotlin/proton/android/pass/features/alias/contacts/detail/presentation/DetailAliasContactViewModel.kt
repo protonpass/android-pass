@@ -26,6 +26,7 @@ import kotlinx.collections.immutable.toPersistentSet
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.flow.stateIn
@@ -41,6 +42,7 @@ import proton.android.pass.common.api.runCatching
 import proton.android.pass.common.api.some
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
+import proton.android.pass.data.api.errors.ShareNotAvailableError
 import proton.android.pass.data.api.usecases.ObserveAliasDetails
 import proton.android.pass.data.api.usecases.ObserveUserAccessData
 import proton.android.pass.data.api.usecases.aliascontact.ObserveAliasContacts
@@ -103,10 +105,19 @@ class DetailAliasContactViewModel @Inject constructor(
         val emptyPair = emptyList<Contact>() to emptyList<Contact>()
         val (blockedContacts, forwardingContacts) = aliasContactsResult.getOrNull() ?: emptyPair
 
+        val resolvedEvent = if (
+            aliasDetailsResult is LoadingResult.Error &&
+            aliasDetailsResult.exception is ShareNotAvailableError
+        ) {
+            DetailAliasContactEvent.OnItemNotFound
+        } else {
+            event
+        }
+
         DetailAliasContactUIState(
             shareId = shareId.some(),
             itemId = itemId.some(),
-            event = event,
+            event = resolvedEvent,
             hasShownAliasContactsOnboarding = hasShownAliasContactsOnboarding,
             displayName = aliasDetails?.displayName.orEmpty(),
             contactBlockIsLoading = contactBlockIsLoading.toPersistentSet(),
@@ -117,12 +128,15 @@ class DetailAliasContactViewModel @Inject constructor(
             ),
             canManageContacts = userAccessDataResult.getOrNull()?.canManageSimpleLoginAliases ?: false
         )
-    }
-        .stateIn(
-            scope = viewModelScope,
-            started = SharingStarted.WhileSubscribed(),
-            initialValue = DetailAliasContactUIState.Empty
-        )
+    }.catch { error ->
+        PassLogger.w(TAG, "There was an error loading alias contact state")
+        PassLogger.w(TAG, error)
+        emit(DetailAliasContactUIState.Empty.copy(event = DetailAliasContactEvent.OnItemNotFound))
+    }.stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.WhileSubscribed(),
+        initialValue = DetailAliasContactUIState.Empty
+    )
 
     fun onCreateItem() {
         detailAliasContactEventFlow.update { DetailAliasContactEvent.CreateItem(shareId, itemId) }
@@ -179,5 +193,6 @@ class DetailAliasContactViewModel @Inject constructor(
 
 sealed interface DetailAliasContactEvent {
     data object Idle : DetailAliasContactEvent
+    data object OnItemNotFound : DetailAliasContactEvent
     data class CreateItem(val shareId: ShareId, val itemId: ItemId) : DetailAliasContactEvent
 }

@@ -22,6 +22,7 @@ import androidx.compose.runtime.snapshotFlow
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.NonCancellable
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.flatMapLatest
@@ -72,6 +73,7 @@ fun canDisplayWarningMessageForCreationFlow(
         val hasShownItemInSharedVaultWarning = it.second
         flowOf(vault.shared && !hasShownItemInSharedVaultWarning)
     }
+    .catch { emit(false) }
     .onStart { emit(false) }
 
 
@@ -85,7 +87,8 @@ fun canDisplayVaultSharedWarningDialogFlow(
     observeShare(shareId = shareId, userId = userId)
 ) { hasShownItemInSharedVaultWarning, share ->
     !hasShownItemInSharedVaultWarning && share.shared
-}.onStart { emit(false) }
+}.catch { emit(false) }
+    .onStart { emit(false) }
 
 @Suppress("UnnecessaryParentheses")
 fun canDisplaySharedItemWarningDialogFlow(
@@ -99,7 +102,8 @@ fun canDisplaySharedItemWarningDialogFlow(
     observeItemById(shareId = shareId, itemId = itemId, userId = userId)
 ) { hasShownItemInSharedVaultWarning, item ->
     !hasShownItemInSharedVaultWarning && (item?.shareCount ?: 0) > 0
-}.onStart { emit(false) }
+}.catch { emit(false) }
+    .onStart { emit(false) }
 
 fun persistDefaultVaultAndFolder(
     scope: CoroutineScope,

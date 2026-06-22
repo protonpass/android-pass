@@ -37,4 +37,6 @@ internal sealed interface ItemTrashMenuEvent {
 
     data object OnItemRestoreError : ItemTrashMenuEvent
 
+    data object OnItemNotFound : ItemTrashMenuEvent
+
 }

@@ -33,11 +33,9 @@ internal sealed interface ItemDetailsState {
 
     val event: ItemDetailsEvent
 
-    data object Error : ItemDetailsState {
-
+    data class Error(
         override val event: ItemDetailsEvent = ItemDetailsEvent.Idle
-
-    }
+    ) : ItemDetailsState
 
     data object Loading : ItemDetailsState {
 

@@ -24,6 +24,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
@@ -96,7 +97,11 @@ class ItemTrashMenuViewModel @Inject constructor(
         shareOptionFlow,
         itemUiModelOptionFlow,
         ::ItemTrashMenuState
-    ).stateIn(
+    ).catch { error ->
+        PassLogger.w(TAG, "There was an error loading item trash menu state")
+        PassLogger.w(TAG, error)
+        emit(ItemTrashMenuState.Initial.copy(event = ItemTrashMenuEvent.OnItemNotFound))
+    }.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5_000),
         initialValue = ItemTrashMenuState.Initial

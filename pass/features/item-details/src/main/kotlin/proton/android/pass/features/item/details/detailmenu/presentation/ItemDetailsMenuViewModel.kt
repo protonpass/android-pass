@@ -24,6 +24,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.stateIn
@@ -87,19 +88,26 @@ class ItemDetailsMenuViewModel @Inject constructor(
 
     private val shareFlow = oneShot { observeShare(shareId = shareId).first() }
 
+    private val itemActionsFlow = oneShot { getItemActions(shareId = shareId, itemId = itemId) }
+
     internal val state: StateFlow<ItemDetailsMenuState> = combine(
         actionFlow,
         eventFlow,
         itemFlow,
-        shareFlow
-    ) { action, event, item, share ->
+        shareFlow,
+        itemActionsFlow
+    ) { action, event, item, share, itemActions ->
         ItemDetailsMenuState(
             action = action,
             event = event,
             itemOption = item.some(),
-            itemActionsOption = getItemActions(shareId, itemId).some(),
+            itemActionsOption = itemActions.some(),
             shareOption = share.some()
         )
+    }.catch { error ->
+        PassLogger.w(TAG, "There was an error loading item menu state")
+        PassLogger.w(TAG, error)
+        emit(ItemDetailsMenuState.Initial.copy(event = ItemDetailsMenuEvent.OnItemNotFound))
     }.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5_000),

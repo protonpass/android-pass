@@ -137,7 +137,11 @@ class ItemDetailsViewModel @Inject constructor(
             itemFeatures = itemFeatures,
             event = event,
             share = share
-        )
+        ) as ItemDetailsState
+    }.catch { error ->
+        PassLogger.w(TAG, "There was an error loading item state")
+        PassLogger.w(TAG, error)
+        emit(ItemDetailsState.Error(event = ItemDetailsEvent.OnItemNotFound))
     }.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5_000L),
@@ -170,7 +174,7 @@ class ItemDetailsViewModel @Inject constructor(
         hiddenFieldSection: ItemSection
     ) {
         when (state.value) {
-            ItemDetailsState.Error,
+            is ItemDetailsState.Error,
             ItemDetailsState.Loading -> return
 
             is ItemDetailsState.Success -> {

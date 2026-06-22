@@ -24,6 +24,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
@@ -47,6 +48,7 @@ import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.OrganizationSettings
 import proton.android.pass.domain.ShareId
+import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonNavArgId
 import javax.inject.Inject
 
@@ -72,7 +74,8 @@ class ShareFromItemViewModel @Inject constructor(
     private val navEventState: MutableStateFlow<ShareFromItemNavEvent> =
         MutableStateFlow(ShareFromItemNavEvent.Unknown)
 
-    private val itemFlow: StateFlow<Item?> = oneShot { getItemById(shareId = shareId, itemId = itemId) }
+    private val itemFlow: StateFlow<Item?> = oneShot<Item?> { getItemById(shareId = shareId, itemId = itemId) }
+        .catch { emit(null) }
         .stateIn(
             scope = viewModelScope,
             started = SharingStarted.Eagerly,
@@ -104,6 +107,10 @@ class ShareFromItemViewModel @Inject constructor(
             isItemSharingAllowed = isItemSharingAllowed,
             canCreateSecureLinks = canCreateSecureLinks
         )
+    }.catch { error ->
+        PassLogger.w(TAG, "There was an error loading share from item state")
+        PassLogger.w(TAG, error)
+        emit(ShareFromItemUiState.initial(shareId, itemId).copy(event = ShareFromItemNavEvent.DismissBottomSheet))
     }.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5_000L),
@@ -128,6 +135,12 @@ class ShareFromItemViewModel @Inject constructor(
 
     internal fun onEventConsumed(event: ShareFromItemNavEvent) {
         navEventState.compareAndSet(event, ShareFromItemNavEvent.Unknown)
+    }
+
+    private companion object {
+
+        private const val TAG = "ShareFromItemViewModel"
+
     }
 
 }

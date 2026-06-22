@@ -41,8 +41,8 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import proton.android.pass.account.fakes.FakeAccountManager
-import proton.android.pass.common.fakes.FakeAppDispatchers
 import proton.android.pass.account.fakes.FakeUserAddressRepository
+import proton.android.pass.common.fakes.FakeAppDispatchers
 import proton.android.pass.crypto.api.usecases.OpenItemOutput
 import proton.android.pass.crypto.fakes.context.FakeEncryptionContextProvider
 import proton.android.pass.crypto.fakes.usecases.FakeCreateItem
@@ -54,14 +54,15 @@ import proton.android.pass.data.fakes.crypto.FakeGetShareAndItemKey
 import proton.android.pass.data.impl.db.AppDatabase
 import proton.android.pass.data.impl.db.PassDatabase
 import proton.android.pass.data.impl.db.entities.ShareEntity
-import proton.android.pass.data.impl.local.LocalItemDataSourceImpl
-import proton.android.pass.data.impl.local.LocalShareDataSource
-import proton.android.pass.data.impl.local.LocalShareDataSourceImpl
 import proton.android.pass.data.impl.fakes.FakeFolderKeyRepository
 import proton.android.pass.data.impl.fakes.FakeRemoteItemDataSource
 import proton.android.pass.data.impl.fakes.FakeShareKeyRepository
 import proton.android.pass.data.impl.fakes.FakeShareRepository
+import proton.android.pass.data.impl.local.LocalItemDataSourceImpl
+import proton.android.pass.data.impl.local.LocalShareDataSource
+import proton.android.pass.data.impl.local.LocalShareDataSourceImpl
 import proton.android.pass.domain.ShareId
+import proton.android.pass.preferences.FakeFeatureFlagsPreferenceRepository
 import proton.android.pass.test.domain.ItemTestFactory
 import proton.android.pass.data.fakes.repositories.FakeSearchIndexRepository
 import proton.android.pass.test.domain.ShareKeyTestFactory
@@ -135,6 +136,7 @@ class ItemRepositoryImplTest {
             getShareAndItemKey = FakeGetShareAndItemKey(),
             folderKeyRepository = FakeFolderKeyRepository(),
             appDispatchers = FakeAppDispatchers(),
+            featureFlagsRepository = FakeFeatureFlagsPreferenceRepository(),
             searchIndexRepository = FakeSearchIndexRepository()
         )
     }

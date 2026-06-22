@@ -29,5 +29,9 @@ data class EncryptedCreateItem(
 )
 
 interface CreateItem {
-    fun create(parentKey: InviteKey, itemContents: ItemContents): EncryptedCreateItem
+    fun create(
+        parentKey: InviteKey,
+        itemContents: ItemContents,
+        isDomainMatchingEnabled: Boolean
+    ): EncryptedCreateItem
 }

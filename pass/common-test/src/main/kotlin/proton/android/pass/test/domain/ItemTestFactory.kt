@@ -84,6 +84,7 @@ object ItemTestFactory {
             pinTime = None,
             itemFlags = ItemFlags(0),
             shareCount = 0,
+            contentFormatVersion = 0,
             shareType = ShareType.Vault
         )
     }
@@ -119,6 +120,7 @@ object ItemTestFactory {
             pinTime = None,
             itemFlags = ItemFlags(flags),
             shareCount = 0,
+            contentFormatVersion = 0,
             shareType = ShareType.Vault
         )
     }
@@ -303,6 +305,7 @@ object ItemTestFactory {
             pinTime = pinTime?.let { Instant.fromEpochMilliseconds(it) }.toOption(),
             itemFlags = ItemFlags(Random.nextInt()),
             shareCount = Random.nextInt(),
+            contentFormatVersion = 0,
             shareType = ShareType.from(Random.nextInt(1, 2))
         )
     }

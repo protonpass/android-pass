@@ -353,7 +353,11 @@ class UpdateLoginViewModel @AssistedInject constructor(
                 originalTotpCustomFields =
                     customFields.filterIsInstance<UICustomFieldContent.Totp>()
 
-                val mergedAutofillUrls = mergeAutofillUrls(itemContents.urls, itemContents.autofillUrls)
+                val mergedAutofillUrls = mergeAutofillUrls(
+                    rawUrls = itemContents.urls,
+                    rawAutofillUrls = itemContents.autofillUrls,
+                    contentFormatVersion = item.contentFormatVersion
+                )
                 loginItemFormMutableState = loginItemFormState.copy(
                     title = itemContents.title,
                     email = itemContents.itemEmail,

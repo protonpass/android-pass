@@ -42,6 +42,7 @@ import proton.android.pass.data.impl.fakes.FakeRemoteItemDataSource
 import proton.android.pass.data.impl.fakes.FakeShareKeyRepository
 import proton.android.pass.data.impl.fakes.FakeShareRepository
 import proton.android.pass.data.impl.repositories.ItemRepositoryImpl
+import proton.android.pass.preferences.FakeFeatureFlagsPreferenceRepository
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.events.EventToken
 import proton.android.pass.domain.events.SyncEventShareItem
@@ -97,6 +98,7 @@ class ItemRepositoryImplRefreshItemsTest {
             getShareAndItemKey = FakeGetShareAndItemKey(),
             folderKeyRepository = FakeFolderKeyRepository(),
             appDispatchers = FakeAppDispatchers(),
+            featureFlagsRepository = FakeFeatureFlagsPreferenceRepository(),
             searchIndexRepository = FakeSearchIndexRepository()
         )
     }

@@ -49,6 +49,7 @@ import proton.android.pass.data.impl.fakes.FakeShareRepository
 import proton.android.pass.data.impl.fakes.mother.ItemEntityTestFactory
 import proton.android.pass.data.impl.generator.TestProtoItemGenerator
 import proton.android.pass.data.impl.repositories.ItemRepositoryImpl
+import proton.android.pass.preferences.FakeFeatureFlagsPreferenceRepository
 import proton.android.pass.data.api.repositories.VaultProgress
 import proton.android.pass.domain.FolderId
 import proton.android.pass.domain.ItemContents
@@ -128,6 +129,7 @@ class ItemRepositoryImplTest {
             getShareAndItemKey = getShareAndItemKey,
             folderKeyRepository = folderKeyRepository,
             appDispatchers = FakeAppDispatchers(),
+            featureFlagsRepository = FakeFeatureFlagsPreferenceRepository(),
             searchIndexRepository = searchIndexRepository
         )
     }

@@ -77,6 +77,7 @@ fun ItemEntity.toDomain(context: EncryptionContext): Item {
         pinTime = pinTime.toOption().map(Instant::fromEpochSeconds),
         itemFlags = ItemFlags(flags),
         shareCount = shareCount,
+        contentFormatVersion = contentFormatVersion,
         shareType = if (encryptedKey != null) ShareType.Vault else ShareType.Item,
         slNote = slNote
     )

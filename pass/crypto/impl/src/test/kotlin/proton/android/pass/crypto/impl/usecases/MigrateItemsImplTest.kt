@@ -52,7 +52,11 @@ internal class MigrateItemsImplTest {
             note = StringTestFactory.randomString(),
             customFields = emptyList()
         )
-        val item = createItem.create(sourceShareKey, itemContents)
+        val item = createItem.create(
+            parentKey = sourceShareKey,
+            itemContents = itemContents,
+            isDomainMatchingEnabled = false
+        )
         val (destinationShareKey, decryptedDestinationShareKey) = ShareKeyTestFactory.create()
         val encryptedItemKey = encryptionContextProvider.withEncryptionContext {
             encrypt(item.itemKey.toByteArray())

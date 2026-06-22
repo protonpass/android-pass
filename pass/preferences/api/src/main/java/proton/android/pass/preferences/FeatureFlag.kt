@@ -72,10 +72,10 @@ enum class FeatureFlag(
         key = "PassFolder",
         isEnabledDefault = false
     ),
-    PASS_AUTOFILL_URL_REGEX(
-        title = "Autofill URL regex matching",
-        description = "Improve autofill domain matching using URL regex",
-        key = "PassAutofillUrlRegex",
+    PASS_AUTOFILL_URL_ADVANCED_MODES(
+        title = "Autofill URL advanced modes",
+        description = "Enable advanced URL matching modes for autofill",
+        key = "PassAutofillUrlAdvancedModes",
         isEnabledDefault = false
     ),
     ENABLE_PAGINATION(

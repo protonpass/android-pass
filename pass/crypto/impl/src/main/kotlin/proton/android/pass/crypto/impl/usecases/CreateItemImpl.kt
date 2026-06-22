@@ -19,12 +19,12 @@
 package proton.android.pass.crypto.impl.usecases
 
 import proton.android.pass.crypto.api.Base64
+import proton.android.pass.crypto.impl.Constants
 import proton.android.pass.crypto.api.EncryptionKey
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.crypto.api.context.EncryptionTag
 import proton.android.pass.crypto.api.usecases.CreateItem
 import proton.android.pass.crypto.api.usecases.EncryptedCreateItem
-import proton.android.pass.crypto.impl.Constants.ITEM_CONTENT_FORMAT_VERSION
 import proton.android.pass.datamodels.api.serializeToProto
 import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.key.InviteKey
@@ -34,7 +34,16 @@ class CreateItemImpl @Inject constructor(
     private val encryptionContextProvider: EncryptionContextProvider
 ) : CreateItem {
 
-    override fun create(parentKey: InviteKey, itemContents: ItemContents): EncryptedCreateItem {
+    override fun create(
+        parentKey: InviteKey,
+        itemContents: ItemContents,
+        isDomainMatchingEnabled: Boolean
+    ): EncryptedCreateItem {
+        val contentFormatVersion = if (isDomainMatchingEnabled) {
+            Constants.ITEM_CFV
+        } else {
+            Constants.ITEM_CFV_WITHOUT_URL_MATCHING
+        }
         val serializedItem = encryptionContextProvider.withEncryptionContext {
             itemContents.serializeToProto(encryptionContext = this).toByteArray()
         }
@@ -54,7 +63,7 @@ class CreateItemImpl @Inject constructor(
 
         return EncryptedCreateItem(
             keyRotation = parentKey.rotation,
-            contentFormatVersion = ITEM_CONTENT_FORMAT_VERSION,
+            contentFormatVersion = contentFormatVersion,
             content = Base64.encodeBase64String(encryptedContents.array),
             itemKey = Base64.encodeBase64String(encryptedItemKey.array)
         )

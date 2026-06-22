@@ -58,6 +58,7 @@ data class Item(
     val pinTime: Option<Instant>,
     val itemFlags: ItemFlags,
     val shareCount: Int,
+    val contentFormatVersion: Int,
     val shareType: ShareType,
     val slNote: EncryptedString? = null
 ) {

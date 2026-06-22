@@ -244,7 +244,7 @@ abstract class BaseLoginViewModel(
     )
 
     private val autofillUrlRegexEnabledFlow: Flow<Boolean> =
-        featureFlagsPreferencesRepository[FeatureFlag.PASS_AUTOFILL_URL_REGEX]
+        featureFlagsPreferencesRepository[FeatureFlag.PASS_AUTOFILL_URL_ADVANCED_MODES]
 
     @VisibleForTesting(otherwise = VisibleForTesting.PROTECTED)
     internal val baseLoginUiState: StateFlow<BaseLoginUiState> = combineN(
@@ -473,17 +473,16 @@ abstract class BaseLoginViewModel(
         }
     }
 
-    protected fun mergeAutofillUrls(rawUrls: List<String>, rawAutofillUrls: List<AutofillUrl>): List<AutofillUrl> =
-        if (rawAutofillUrls.isNotEmpty()) {
-            val existing = rawAutofillUrls.map { it.url.trim().lowercase() }.toSet()
-            val additions = rawUrls
-                .filter { it.isNotBlank() && it.trim().lowercase() !in existing }
-                .map { AutofillUrl(url = it, mode = AutofillUrlMode.Default) }
-            rawAutofillUrls + additions
-        } else {
-            rawUrls.filter { it.isNotBlank() }
-                .map { AutofillUrl(url = it, mode = AutofillUrlMode.Default) }
-        }
+    protected fun mergeAutofillUrls(
+        rawUrls: List<String>,
+        rawAutofillUrls: List<AutofillUrl>,
+        contentFormatVersion: Int
+    ): List<AutofillUrl> = if (contentFormatVersion >= ITEM_CFV_URL_MATCHING) {
+        rawAutofillUrls
+    } else {
+        rawUrls.filter { it.isNotBlank() }
+            .map { AutofillUrl(url = it, mode = AutofillUrlMode.Default) }
+    }
 
     private fun sanitizeWebsites(websites: List<String>): List<String> = websites.map { url ->
         if (url.isBlank()) {
@@ -808,6 +807,9 @@ abstract class BaseLoginViewModel(
     private companion object {
 
         private const val TAG = "BaseLoginViewModel"
+
+        // CFV 8 introduced autofill_urls with URL match modes (see Constants.ITEM_CFV)
+        private const val ITEM_CFV_URL_MATCHING = 8
 
     }
 

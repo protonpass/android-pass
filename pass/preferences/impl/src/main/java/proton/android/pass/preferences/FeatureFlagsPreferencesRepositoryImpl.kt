@@ -41,7 +41,7 @@ import proton.android.pass.preferences.FeatureFlag.PASS_MOBILE_ON_BOARDING_V2
 import proton.android.pass.preferences.FeatureFlag.PASS_USER_EVENTS_V1
 import proton.android.pass.preferences.FeatureFlag.RENAME_ADMIN_TO_MANAGER
 import proton.android.pass.preferences.FeatureFlag.PASS_FOLDERS
-import proton.android.pass.preferences.FeatureFlag.PASS_AUTOFILL_URL_REGEX
+import proton.android.pass.preferences.FeatureFlag.PASS_AUTOFILL_URL_ADVANCED_MODES
 import proton.android.pass.preferences.FeatureFlag.ENABLE_PAGINATION
 import java.io.IOException
 import javax.inject.Inject
@@ -96,7 +96,7 @@ class FeatureFlagsPreferencesRepositoryImpl @Inject constructor(
             defaultValue = featureFlag.isEnabledDefault
         ) { passFoldersEnabled.value }
 
-        PASS_AUTOFILL_URL_REGEX -> getFeatureFlag(
+        PASS_AUTOFILL_URL_ADVANCED_MODES -> getFeatureFlag(
             key = featureFlag.key,
             defaultValue = featureFlag.isEnabledDefault
         ) { passAutofillUrlRegexEnabled.value }
@@ -140,7 +140,7 @@ class FeatureFlagsPreferencesRepositoryImpl @Inject constructor(
             passFoldersEnabled = boolFlagPrefProto(value)
         }
 
-        PASS_AUTOFILL_URL_REGEX -> setFeatureFlag {
+        PASS_AUTOFILL_URL_ADVANCED_MODES -> setFeatureFlag {
             passAutofillUrlRegexEnabled = boolFlagPrefProto(value)
         }
 
@@ -245,7 +245,7 @@ class FeatureFlagsPreferencesRepositoryImpl @Inject constructor(
             PASS_GROUP_SHARE -> groupsEnabled
             PASS_MOBILE_ON_BOARDING_V2 -> passMobileOnBoardingV2Enabled
             PASS_FOLDERS -> passFoldersEnabled
-            PASS_AUTOFILL_URL_REGEX -> passAutofillUrlRegexEnabled
+            PASS_AUTOFILL_URL_ADVANCED_MODES -> passAutofillUrlRegexEnabled
             ENABLE_PAGINATION -> enablePagination
         }.value
     }

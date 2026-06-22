@@ -49,6 +49,7 @@ import proton.android.pass.common.api.transpose
 import proton.android.pass.crypto.api.Base64
 import proton.android.pass.crypto.api.context.EncryptionContext
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
+import proton.android.pass.data.impl.extensions.isDomainMatchingEnabled
 import proton.android.pass.crypto.api.usecases.CreateItem
 import proton.android.pass.crypto.api.usecases.ItemKeyWithRotation
 import proton.android.pass.crypto.api.usecases.MigrateItem
@@ -116,6 +117,7 @@ import proton.android.pass.domain.key.FolderKey
 import proton.android.pass.domain.key.InviteKey
 import proton.android.pass.domain.key.ShareKey
 import proton.android.pass.log.api.PassLogger
+import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import proton_pass_item_v1.ItemV1
 import javax.inject.Inject
 
@@ -136,8 +138,11 @@ class ItemRepositoryImpl @Inject constructor(
     private val getShareAndItemKey: GetShareAndItemKey,
     private val folderKeyRepository: FolderKeyRepository,
     private val appDispatchers: AppDispatchers,
+    private val featureFlagsRepository: FeatureFlagsPreferencesRepository,
     private val searchIndexRepository: SearchIndexRepository
 ) : BaseRepository(userAddressRepository), ItemRepository {
+
+    private suspend fun isDomainMatchingEnabled() = featureFlagsRepository.isDomainMatchingEnabled()
 
     @Suppress("TooGenericExceptionCaught")
     override suspend fun createItem(
@@ -153,7 +158,7 @@ class ItemRepositoryImpl @Inject constructor(
         } ?: shareKey
 
         val body = try {
-            createItem.create(parentKey, contents)
+            createItem.create(parentKey, contents, isDomainMatchingEnabled())
         } catch (e: Exception) {
             PassLogger.w(TAG, "Error creating item")
             PassLogger.w(TAG, e)
@@ -195,7 +200,7 @@ class ItemRepositoryImpl @Inject constructor(
             folderKeyRepository.getFolderKey(userId, share.id, it)
                 ?: throw IllegalStateException("No folder key found for folderId=${it.id}")
         } ?: shareKey
-        val body = createItem.create(parentKey, itemContents)
+        val body = createItem.create(parentKey, itemContents, isDomainMatchingEnabled())
 
         val mailboxIds = newAlias.mailboxes.map { it.id }
         val requestBody = CreateAliasRequest(
@@ -237,15 +242,16 @@ class ItemRepositoryImpl @Inject constructor(
             folderKeyRepository.getFolderKey(userId, shareId, it)
                 ?: throw IllegalStateException("No folder key found for folderId=${it.id}")
         } ?: shareKey
+        val domainMatchingEnabled = isDomainMatchingEnabled()
         val request = safeRunCatching {
-            val itemBody = createItem.create(parentKey, contents)
+            val itemBody = createItem.create(parentKey, contents, domainMatchingEnabled)
             val aliasContents = ItemContents.Alias(
                 title = contents.title,
                 note = newAlias.contents.note,
                 customFields = newAlias.contents.customFields,
                 aliasEmail = "" // Not used when creating the payload
             )
-            val aliasBody = createItem.create(shareKey, aliasContents)
+            val aliasBody = createItem.create(shareKey, aliasContents, domainMatchingEnabled)
 
             CreateItemAliasRequest(
                 alias = CreateAliasRequest(
@@ -326,7 +332,8 @@ class ItemRepositoryImpl @Inject constructor(
             userId,
             share,
             item,
-            itemContents
+            itemContents,
+            isDomainMatchingEnabled()
         )
     }
 
@@ -1062,7 +1069,8 @@ class ItemRepositoryImpl @Inject constructor(
             userId,
             share,
             item,
-            updatedContents
+            updatedContents,
+            isDomainMatchingEnabled()
         )
     }
 
@@ -1474,7 +1482,8 @@ class ItemRepositoryImpl @Inject constructor(
             userId = userId,
             share = share,
             item = item,
-            itemContents = updatedContents
+            itemContents = updatedContents,
+            isDomainMatchingEnabled = isDomainMatchingEnabled()
         )
     }
 
@@ -1896,7 +1905,8 @@ class ItemRepositoryImpl @Inject constructor(
         userId: UserId,
         share: Share,
         item: Item,
-        itemContents: ItemV1.Item
+        itemContents: ItemV1.Item,
+        isDomainMatchingEnabled: Boolean
     ): Item = withUserAddress(userId) { userAddress ->
         val folderKeyOverride = item.folderId?.let { folderId ->
             folderKeyRepository.getFolderKey(
@@ -1914,7 +1924,8 @@ class ItemRepositoryImpl @Inject constructor(
         val body = updateItem.createRequest(
             itemKey,
             itemContents,
-            item.revision
+            item.revision,
+            isDomainMatchingEnabled
         )
         val itemResponse = remoteItemDataSource.updateItem(
             userId = userId,

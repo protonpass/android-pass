@@ -110,6 +110,7 @@ class FakeObservePinnedItems @Inject constructor() : ObservePinnedItems {
                     pinTime = None,
                     itemFlags = ItemFlags(0),
                     shareCount = 0,
+                    contentFormatVersion = 0,
                     shareType = ShareType.Vault
                 )
             }

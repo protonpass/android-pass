@@ -34,7 +34,9 @@ import proton.android.pass.domain.Vault
 import proton.android.pass.domain.key.ShareKey
 import proton.android.pass.domain.selectSimpleLoginFallbackVault
 import proton.android.pass.domain.simplelogin.SimpleLoginSyncStatus
+import proton.android.pass.data.impl.extensions.isDomainMatchingEnabled
 import proton.android.pass.log.api.PassLogger
+import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import javax.inject.Inject
 
 class SyncSimpleLoginPendingAliasesImpl @Inject constructor(
@@ -42,7 +44,8 @@ class SyncSimpleLoginPendingAliasesImpl @Inject constructor(
     private val createItem: CreateItem,
     private val shareKeyRepository: ShareKeyRepository,
     private val userAccessDataRepository: UserAccessDataRepository,
-    private val observeVaults: ObserveVaults
+    private val observeVaults: ObserveVaults,
+    private val featureFlagsRepository: FeatureFlagsPreferencesRepository
 ) : SyncSimpleLoginPendingAliases {
 
     @Suppress("ReturnCount")
@@ -71,12 +74,13 @@ class SyncSimpleLoginPendingAliasesImpl @Inject constructor(
         var hasMorePendingAliases: Boolean
         val pendingAliasedDefaultShareId = syncStatus.defaultVault.shareId
         val shareKey = shareKeyRepository.getLatestKeyForShare(pendingAliasedDefaultShareId).first()
+        val domainMatchingEnabled = featureFlagsRepository.isDomainMatchingEnabled()
 
         do {
             val pendingAliases = repository.getPendingAliases(userId)
             hasMorePendingAliases = pendingAliases.lastToken != null
             val requests = pendingAliases.aliases.map { alias ->
-                alias.id to requestForItem(shareKey, alias.email)
+                alias.id to requestForItem(shareKey, alias.email, domainMatchingEnabled)
             }
 
             repository.createPendingAliases(
@@ -87,14 +91,19 @@ class SyncSimpleLoginPendingAliasesImpl @Inject constructor(
         } while (hasMorePendingAliases)
     }
 
-    private fun requestForItem(shareKey: ShareKey, email: String): EncryptedCreateItem = createItem.create(
+    private fun requestForItem(
+        shareKey: ShareKey,
+        email: String,
+        isDomainMatchingEnabled: Boolean
+    ): EncryptedCreateItem = createItem.create(
         parentKey = shareKey,
         itemContents = ItemContents.Alias(
             title = email,
             aliasEmail = email,
             note = "",
             customFields = emptyList()
-        )
+        ),
+        isDomainMatchingEnabled = isDomainMatchingEnabled
     )
 
     private suspend fun getFallbackVault(userId: UserId): Vault? = observeVaults(

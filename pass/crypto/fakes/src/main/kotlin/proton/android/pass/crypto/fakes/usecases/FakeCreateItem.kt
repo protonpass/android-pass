@@ -34,8 +34,11 @@ class FakeCreateItem : CreateItem {
         payload = value
     }
 
-    override fun create(parentKey: InviteKey, itemContents: ItemContents): EncryptedCreateItem =
-        payload ?: throw IllegalStateException("payload is not set")
+    override fun create(
+        parentKey: InviteKey,
+        itemContents: ItemContents,
+        isDomainMatchingEnabled: Boolean
+    ): EncryptedCreateItem = payload ?: throw IllegalStateException("payload is not set")
 
     companion object {
         fun createPayload(): EncryptedCreateItem {

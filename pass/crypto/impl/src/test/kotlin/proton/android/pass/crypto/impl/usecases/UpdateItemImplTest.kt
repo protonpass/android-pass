@@ -50,7 +50,8 @@ class UpdateItemImplTest {
         val body = instance.createRequest(
             itemKey,
             contents.serializeToProto(encryptionContext = FakeEncryptionContext),
-            lastRevision
+            lastRevision,
+            isDomainMatchingEnabled = false
         )
 
         assertEquals(lastRevision, body.lastRevision)
@@ -66,4 +67,3 @@ class UpdateItemImplTest {
         assertEquals(contents.note, asItemContents.metadata.note)
     }
 }
-

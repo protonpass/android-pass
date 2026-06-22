@@ -19,12 +19,12 @@
 package proton.android.pass.crypto.impl.usecases
 
 import proton.android.pass.crypto.api.Base64
+import proton.android.pass.crypto.impl.Constants
 import proton.android.pass.crypto.api.EncryptionKey
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.crypto.api.context.EncryptionTag
 import proton.android.pass.crypto.api.usecases.EncryptedUpdateItemRequest
 import proton.android.pass.crypto.api.usecases.UpdateItem
-import proton.android.pass.crypto.impl.Constants.ITEM_CONTENT_FORMAT_VERSION
 import proton.android.pass.domain.key.ItemKey
 import proton_pass_item_v1.ItemV1
 import javax.inject.Inject
@@ -36,8 +36,14 @@ class UpdateItemImpl @Inject constructor(
     override fun createRequest(
         itemKey: ItemKey,
         itemContent: ItemV1.Item,
-        lastRevision: Long
+        lastRevision: Long,
+        isDomainMatchingEnabled: Boolean
     ): EncryptedUpdateItemRequest {
+        val contentFormatVersion = if (isDomainMatchingEnabled) {
+            Constants.ITEM_CFV
+        } else {
+            Constants.ITEM_CFV_WITHOUT_URL_MATCHING
+        }
         val serializedItem = itemContent.toByteArray()
         val decryptedItemKey = encryptionContextProvider.withEncryptionContext {
             EncryptionKey(decrypt(itemKey.key))
@@ -50,7 +56,7 @@ class UpdateItemImpl @Inject constructor(
         return EncryptedUpdateItemRequest(
             keyRotation = itemKey.rotation,
             lastRevision = lastRevision,
-            contentFormatVersion = ITEM_CONTENT_FORMAT_VERSION,
+            contentFormatVersion = contentFormatVersion,
             content = Base64.encodeBase64String(encryptedContents.array)
         )
     }

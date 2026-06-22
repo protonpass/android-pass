@@ -28,25 +28,19 @@ import androidx.work.testing.TestListenableWorkerBuilder
 import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.test.runTest
 import kotlinx.datetime.Clock
-import kotlinx.datetime.Instant
-import me.proton.core.crypto.common.keystore.EncryptedByteArray
-import me.proton.core.crypto.common.keystore.EncryptedString
-import me.proton.core.domain.entity.UserId
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import proton.android.pass.account.fakes.FakeAccountManager
-import proton.android.pass.common.api.None
 import proton.android.pass.crypto.fakes.context.FakeEncryptionContext
 import proton.android.pass.data.fakes.repositories.FakeAssetLinkRepository
 import proton.android.pass.data.fakes.usecases.FakeObserveItems
+import proton.android.pass.domain.HiddenState
 import proton.android.pass.domain.Item
-import proton.android.pass.domain.ItemFlags
+import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.ItemId
-import proton.android.pass.domain.ItemState
-import proton.android.pass.domain.ItemType
 import proton.android.pass.domain.ShareId
-import proton.android.pass.domain.ShareType
+import proton.android.pass.test.domain.ItemTestFactory
 
 @RunWith(AndroidJUnit4::class)
 class PeriodicAssetLinkWorkerTest {
@@ -154,39 +148,22 @@ class PeriodicAssetLinkWorkerTest {
         private fun loginItem(
             itemId: String = "item",
             websites: List<String> = emptyList()
-        ): Item {
-            val now = Instant.fromEpochSeconds(0)
-            return Item(
-                id = ItemId(itemId),
-                userId = UserId("user-id"),
-                itemUuid = "",
-                revision = 1,
-                shareId = ShareId("share-id"),
-                itemType = ItemType.Login(
-                    itemEmail = "",
-                    itemUsername = "",
-                    password = FakeEncryptionContext.encrypt("") as EncryptedString,
-                    websites = websites,
-                    packageInfoSet = emptySet(),
-                    primaryTotp = FakeEncryptionContext.encrypt("") as EncryptedString,
-                    customFields = emptyList(),
-                    passkeys = emptyList(),
-                    autofillUrls = emptyList()
-                ),
-                title = FakeEncryptionContext.encrypt("") as EncryptedString,
-                note = FakeEncryptionContext.encrypt("") as EncryptedString,
-                content = FakeEncryptionContext.encrypt(byteArrayOf()) as EncryptedByteArray,
-                state = ItemState.Active.value,
+        ): Item = ItemTestFactory.create(
+            itemId = ItemId(itemId),
+            shareId = ShareId("share-id"),
+            itemContents = ItemContents.Login(
+                title = "",
+                note = "",
+                itemEmail = "",
+                itemUsername = "",
+                password = HiddenState.Concealed(FakeEncryptionContext.encrypt("")),
+                urls = websites,
                 packageInfoSet = emptySet(),
-                createTime = now,
-                modificationTime = now,
-                lastAutofillTime = None,
-                isPinned = false,
-                pinTime = None,
-                itemFlags = ItemFlags(0),
-                shareCount = 0,
-                shareType = ShareType.Vault
+                primaryTotp = HiddenState.Empty(FakeEncryptionContext.encrypt("")),
+                customFields = emptyList(),
+                passkeys = emptyList(),
+                autofillUrls = emptyList()
             )
-        }
+        )
     }
 }

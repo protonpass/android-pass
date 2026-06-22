@@ -31,7 +31,7 @@ import proton.android.pass.crypto.api.error.KeyNotFound
 import proton.android.pass.crypto.api.usecases.EncryptedItemRevision
 import proton.android.pass.crypto.api.usecases.OpenItem
 import proton.android.pass.crypto.api.usecases.OpenItemOutput
-import proton.android.pass.crypto.impl.Constants.ITEM_CONTENT_FORMAT_VERSION
+import proton.android.pass.crypto.impl.Constants.ITEM_CFV
 import proton.android.pass.datamodels.api.fromParsed
 import proton.android.pass.domain.FolderId
 import proton.android.pass.domain.Item
@@ -129,7 +129,7 @@ class OpenItemImpl @Inject constructor(
             decrypt(EncryptedByteArray(decodedItemContents), EncryptionTag.ItemContent)
         }
 
-        if (response.contentFormatVersion > ITEM_CONTENT_FORMAT_VERSION) {
+        if (response.contentFormatVersion > ITEM_CFV) {
             PassLogger.w(TAG, "Unknown Item ContentFormatVersion: ${response.contentFormatVersion}")
         }
 
@@ -212,6 +212,7 @@ class OpenItemImpl @Inject constructor(
             pinTime = response.pinTime.toOption().map(Instant::fromEpochSeconds),
             itemFlags = ItemFlags(response.flags),
             shareCount = response.shareCount,
+            contentFormatVersion = response.contentFormatVersion,
             shareType = if (response.key != null) ShareType.Vault else ShareType.Item
         )
     }

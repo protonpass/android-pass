@@ -323,7 +323,11 @@ class CreateLoginViewModel @Inject constructor(
                 is HiddenState.Concealed,
                 is HiddenState.Revealed -> UIHiddenState.Concealed(hiddenState.encrypted)
             }
-            val mergedAutofillUrls = mergeAutofillUrls(itemContents.urls, itemContents.autofillUrls)
+            val mergedAutofillUrls = mergeAutofillUrls(
+                rawUrls = itemContents.urls,
+                rawAutofillUrls = itemContents.autofillUrls,
+                contentFormatVersion = item.contentFormatVersion
+            )
             loginItemFormMutableState = currentValue.copy(
                 title = context.getString(R.string.title_duplicate, decrypt(item.title)),
                 note = decrypt(item.note),

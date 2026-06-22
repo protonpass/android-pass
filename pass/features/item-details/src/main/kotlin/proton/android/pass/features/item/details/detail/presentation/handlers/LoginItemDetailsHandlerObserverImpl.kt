@@ -96,7 +96,7 @@ class LoginItemDetailsHandlerObserverImpl @Inject constructor(
 ) {
 
     private val autofillUrlRegexEnabledFlow: Flow<Boolean> =
-        featureFlagsPreferencesRepository[FeatureFlag.PASS_AUTOFILL_URL_REGEX]
+        featureFlagsPreferencesRepository[FeatureFlag.PASS_AUTOFILL_URL_ADVANCED_MODES]
 
     override fun observe(
         share: Share,

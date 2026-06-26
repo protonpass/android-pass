@@ -342,4 +342,20 @@
   <string name="cannot_create_items_dialog_message">Sinulla ei ole holveja muokkaus- tai hallintaoikeuksilla. Yritä luoda holvi pääsovellukseen tai ole yhteydessä organisatiosi tukeen.</string>
   <string name="wifi_security_type_field_label">Suojauksen tyyppi</string>
   <string name="functionality_not_available">Tämä toiminnallisuus ei ole käytettävissä laitteellesi.</string>
+  <!-- Autofill URL suggestions screen -->
+  <string name="autofill_suggestions_title">URL-vastaavuus</string>
+  <string name="autofill_suggestions_description">Määritä automaattisen täytön asetukset, jotta voit muuttaa, missä kirjautumistietoja ehdotetaan ja täytetään %s:n osalta.</string>
+  <string name="autofill_suggestions_tab_basic">Perus</string>
+  <string name="autofill_suggestions_tab_advanced">Edistynyt</string>
+  <string name="autofill_suggestions_mode_default">Pääverkkotunnus ja aliverkkotunnukset</string>
+  <string name="autofill_suggestions_mode_exact">Tarkka (ala)verkkotunnus</string>
+  <string name="autofill_suggestions_mode_never">Älä koskaan täytä tällä verkkosivustolla</string>
+  <string name="autofill_suggestions_mode_start_with">Alkaa</string>
+  <string name="autofill_suggestions_mode_regular_expression">Säännöllinen lauseke</string>
+  <string name="autofill_suggestions_mode_exact_path">Tarkka URL-vastaavuus</string>
+  <string name="autofill_suggestions_android_limitation">Android-laitteilla ei ole käytettävissä lisäasetuksia käyttöjärjestelmän sovellusliittymien (API) rajoitusten vuoksi.</string>
+  <string name="autofill_suggestions_mode_default_badge">OLETUS</string>
+  <string name="autofill_suggestions_url_column">URL</string>
+  <string name="autofill_suggestions_suggested_column">Ehdotukset</string>
+  <string name="field_website_skipped_autofill">Tätä URL-osoitetta ei oteta huomioon automaattisen täytön yhteydessä</string>
 </resources>

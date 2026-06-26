@@ -342,4 +342,20 @@
   <string name="cannot_create_items_dialog_message">Du har inga valv med redigerings- eller administratörsåtkomst. Prova skapa ett i huvudappen eller be din organisations administratör om support.</string>
   <string name="wifi_security_type_field_label">Säkerhetstyp</string>
   <string name="functionality_not_available">Denna funktionalitet är inte tillgänglig för din enhet.</string>
+  <!-- Autofill URL suggestions screen -->
+  <string name="autofill_suggestions_title">URL-matchning</string>
+  <string name="autofill_suggestions_description">Adjust autofill behaviors to change where logins are suggested and filled for %s.</string>
+  <string name="autofill_suggestions_tab_basic">Grundläggande</string>
+  <string name="autofill_suggestions_tab_advanced">Avancerat</string>
+  <string name="autofill_suggestions_mode_default">Överordnad domän och underdomäner</string>
+  <string name="autofill_suggestions_mode_exact">Exact (sub)domain</string>
+  <string name="autofill_suggestions_mode_never">Fyll aldrig på denna webbplats</string>
+  <string name="autofill_suggestions_mode_start_with">Börjar med</string>
+  <string name="autofill_suggestions_mode_regular_expression">Vanligt uttryck</string>
+  <string name="autofill_suggestions_mode_exact_path">Exakt URL-matchning</string>
+  <string name="autofill_suggestions_android_limitation">Advanced rules are not available on Android due to limitations in the operating system APIs.</string>
+  <string name="autofill_suggestions_mode_default_badge">STANDARD</string>
+  <string name="autofill_suggestions_url_column">URL</string>
+  <string name="autofill_suggestions_suggested_column">Föreslagen</string>
+  <string name="field_website_skipped_autofill">This url will be skipped for autofill</string>
 </resources>

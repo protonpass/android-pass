@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
   <!-- Home -->
+  <string name="home_indexing_banner">Opbygger søgeindeks...</string>
+  <string name="home_indexing_banner_progress">Opbygger søgeindeks... (%1$d/%2$d)</string>
   <string name="home_empty_vault_title">Din boks er tom</string>
   <string name="home_empty_vault_subtitle">Kom i gang ved at oprette dit første element.</string>
   <string name="home_empty_vault_login_title">Ingen logins fundet</string>
@@ -24,6 +26,8 @@
   <string name="home_empty_no_vaults_subtitle">Kontakt din administrator.</string>
   <string name="home_empty_read_only_vault_title">Denne boks er tom</string>
   <string name="home_empty_read_only_vault_subtitle">Du kan ikke tilføje elementer til en skrivebeskyttet boks.</string>
+  <string name="home_empty_folder_plan_restricted_title">Denne mappe er tom</string>
+  <string name="home_empty_folder_plan_restricted_subtitle">Opgradér dit abonnement for at oprette elementer i mapper</string>
   <string name="home_empty_vault_create_login">Opret et login</string>
   <string name="home_empty_vault_create_alias">Opret et Hide-my-email alias</string>
   <string name="home_empty_vault_create_note">Opret en note</string>

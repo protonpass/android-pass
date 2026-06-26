@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
   <!-- Home -->
+  <string name="home_indexing_banner">Building search index…</string>
+  <string name="home_indexing_banner_progress">Building search index… (%1$d/%2$d)</string>
   <string name="home_empty_vault_title">La bóveda está vacía</string>
   <string name="home_empty_vault_subtitle">Comience creando el primer elemento.</string>
   <string name="home_empty_vault_login_title">No se encontraron inicios de sesión.</string>
@@ -24,6 +26,8 @@
   <string name="home_empty_no_vaults_subtitle">Contáctese con el administrador.</string>
   <string name="home_empty_read_only_vault_title">Esta bóveda está vacía</string>
   <string name="home_empty_read_only_vault_subtitle">No puede agregar elementos a una bóveda de solo lectura.</string>
+  <string name="home_empty_folder_plan_restricted_title">Esta carpeta está vacía</string>
+  <string name="home_empty_folder_plan_restricted_subtitle">Actualice el plan para crear elementos dentro de las carpetas.</string>
   <string name="home_empty_vault_create_login">Crear un inicio de sesión</string>
   <string name="home_empty_vault_create_alias">Crear un alias de Hide-my-email</string>
   <string name="home_empty_vault_create_note">Crear una nota</string>

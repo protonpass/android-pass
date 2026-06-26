@@ -342,4 +342,20 @@
   <string name="cannot_create_items_dialog_message">Nemáte žádné trezory s přístupem editora nebo správce. Zkuste vytvořit trezor v hlavní aplikaci nebo požádejte vašeho správce organizace o podporu.</string>
   <string name="wifi_security_type_field_label">Typ zabezpečení</string>
   <string name="functionality_not_available">Tato funkce není dostupná pro vaše zařízení</string>
+  <!-- Autofill URL suggestions screen -->
+  <string name="autofill_suggestions_title">Porovnávání URL</string>
+  <string name="autofill_suggestions_description">Upravte chování automatického vyplňování a změňte, kde se pro %s navrhují a vyplňují přihlašovací údaje.</string>
+  <string name="autofill_suggestions_tab_basic">Základní</string>
+  <string name="autofill_suggestions_tab_advanced">Pokročilé</string>
+  <string name="autofill_suggestions_mode_default">Nadřazená doména a subdomény</string>
+  <string name="autofill_suggestions_mode_exact">Přesná (sub)doména</string>
+  <string name="autofill_suggestions_mode_never">Nikdy nevyplňovat na tomto webu</string>
+  <string name="autofill_suggestions_mode_start_with">Začná s</string>
+  <string name="autofill_suggestions_mode_regular_expression">Regulární výraz</string>
+  <string name="autofill_suggestions_mode_exact_path">Přesná shoda URL</string>
+  <string name="autofill_suggestions_android_limitation">Pokročilá pravidla nejsou v systému Android k dispozici kvůli omezením v rozhraních API operačního systému.</string>
+  <string name="autofill_suggestions_mode_default_badge">VÝCHOZÍ</string>
+  <string name="autofill_suggestions_url_column">URL</string>
+  <string name="autofill_suggestions_suggested_column">Doporučeno</string>
+  <string name="field_website_skipped_autofill">Tato URL bude při automatickém vyplňování přeskočena</string>
 </resources>

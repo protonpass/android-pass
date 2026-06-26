@@ -39,4 +39,7 @@
   <string name="sync_dialog_subtitle_inserting">完成最后一步，就快成功了</string>
   <string name="sync_dialog_invalid_address_shares_warning">部分保险库无法同步，因为在此账户上未找到关联地址。</string>
   <string name="sync_dialog_invalid_group_shares_warning">部分保险库无法同步，因为在此账户上未找到关联群组。</string>
+  <string name="sync_dialog_title_indexing">正在索引…</string>
+  <string name="sync_dialog_subtitle_indexing">正在生成搜索索引，即将完成。</string>
+  <string name="sync_dialog_subtitle_indexing_progress">正在生成搜索索引… (%1$d/%2$d)</string>
 </resources>

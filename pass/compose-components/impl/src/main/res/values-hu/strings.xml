@@ -158,6 +158,13 @@
   <string name="item_details_login_section_password_title">Jelszó</string>
   <string name="item_details_login_section_primary_totp_title">Kétlépcsős token (TOTP)</string>
   <string name="item_details_login_section_websites_title">Weboldalak</string>
+  <string name="autofill_mode_label_default">Parent domain and subdomains</string>
+  <string name="autofill_mode_label_exact">Exact (sub)domain</string>
+  <string name="autofill_mode_label_never">Never fill on this website</string>
+  <string name="autofill_mode_label_start_with">Starts with</string>
+  <string name="autofill_mode_label_regular_expression">Regular expression</string>
+  <string name="autofill_mode_label_exact_path">Exact URL matching</string>
+  <string name="autofill_mode_label_unsupported">This url will be skipped for autofill</string>
   <string name="login_item_view_alias_button">Álnév megjelenítése</string>
   <string name="item_details_identity_section_personal_title">Személyes adatok</string>
   <string name="item_details_identity_section_personal_first_name_title">Keresztnév</string>

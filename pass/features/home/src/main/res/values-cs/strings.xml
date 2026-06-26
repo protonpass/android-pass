@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
   <!-- Home -->
+  <string name="home_indexing_banner">Vytváření indexu hledání…</string>
+  <string name="home_indexing_banner_progress">Vytváření indexu hledání… (%1$d/%2$d)</string>
   <string name="home_empty_vault_title">Váš trezor je prázdný</string>
   <string name="home_empty_vault_subtitle">Začněte vytvořením první položky.</string>
   <string name="home_empty_vault_login_title">Nebyla nalezena žádná přihlášení</string>
@@ -24,6 +26,8 @@
   <string name="home_empty_no_vaults_subtitle">Kontaktujte prosím svého správce.</string>
   <string name="home_empty_read_only_vault_title">Tento trezor je prázdný</string>
   <string name="home_empty_read_only_vault_subtitle">Do trezoru určeného pouze ke čtení nelze přidávat položky.</string>
+  <string name="home_empty_folder_plan_restricted_title">Tato složka je prázdná</string>
+  <string name="home_empty_folder_plan_restricted_subtitle">Pro vytvářření položek uvnitř složek navyšte tarif.</string>
   <string name="home_empty_vault_create_login">Vytvořit přihlášení</string>
   <string name="home_empty_vault_create_alias">Vytvořit alias Hide-my-email</string>
   <string name="home_empty_vault_create_note">Vytvořit poznámku</string>

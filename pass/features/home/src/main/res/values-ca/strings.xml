@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
   <!-- Home -->
+  <string name="home_indexing_banner">S\'està construint l\'índex de cerca…</string>
+  <string name="home_indexing_banner_progress">S\'està construint l\'índex de cerca… (%1$d/%2$d)</string>
   <string name="home_empty_vault_title">La vostra caixa forta està buida</string>
   <string name="home_empty_vault_subtitle">Comenceu creant el primer element.</string>
   <string name="home_empty_vault_login_title">No s\'ha trobat cap inici de sessió.</string>
@@ -24,6 +26,8 @@
   <string name="home_empty_no_vaults_subtitle">Poseu-vos en contacte amb l\'administrador.</string>
   <string name="home_empty_read_only_vault_title">Aquesta caixa forta està buida.</string>
   <string name="home_empty_read_only_vault_subtitle">No podeu afegir elements a una caixa forta de només lectura.</string>
+  <string name="home_empty_folder_plan_restricted_title">Aquesta carpeta és buida</string>
+  <string name="home_empty_folder_plan_restricted_subtitle">Milloreu el vostre pla per crear elements dins de carpetes.</string>
   <string name="home_empty_vault_create_login">Crea un inici de sessió</string>
   <string name="home_empty_vault_create_alias">Crea un àlies hide-my-email</string>
   <string name="home_empty_vault_create_note">Crea una nota</string>

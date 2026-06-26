@@ -342,4 +342,20 @@
   <string name="cannot_create_items_dialog_message">Δεν έχετε κρύπτες με πρόσβαση συντάκτη ή διαχειριστή. Δοκιμάστε να δημιουργήσετε μία στην κύρια εφαρμογή ή ζητήστε υποστήριξη από τον διαχειριστή του οργανισμού σας.</string>
   <string name="wifi_security_type_field_label">Τύπος ασφάλειας</string>
   <string name="functionality_not_available">Αυτή η λειτουργία δεν είναι διαθέσιμη για τη συσκευή σας.</string>
+  <!-- Autofill URL suggestions screen -->
+  <string name="autofill_suggestions_title">Αντιστοίχιση URL</string>
+  <string name="autofill_suggestions_description">Προσαρμόστε τις συμπεριφορές αυτόματης συμπλήρωσης για να αλλάξετε πού προτείνονται και συμπληρώνονται οι συνδέσεις για το %s.</string>
+  <string name="autofill_suggestions_tab_basic">Βασικά</string>
+  <string name="autofill_suggestions_tab_advanced">Προχωρημένα</string>
+  <string name="autofill_suggestions_mode_default">Γονικός τομέας και υποτομείς</string>
+  <string name="autofill_suggestions_mode_exact">Ακριβής (υπο)τομέας</string>
+  <string name="autofill_suggestions_mode_never">Ποτέ μην συμπληρώνετε αυτόν τον ιστότοπο</string>
+  <string name="autofill_suggestions_mode_start_with">Ξεκινά με</string>
+  <string name="autofill_suggestions_mode_regular_expression">Κανονική έκφραση</string>
+  <string name="autofill_suggestions_mode_exact_path">Ακριβής αντιστοίχιση URL</string>
+  <string name="autofill_suggestions_android_limitation">Οι προηγμένοι κανόνες δεν είναι διαθέσιμοι στο Android λόγω περιορισμών στα API του λειτουργικού συστήματος.</string>
+  <string name="autofill_suggestions_mode_default_badge">ΠΡΟΕΠΙΛΟΓΗ</string>
+  <string name="autofill_suggestions_url_column">Διεύθυνση URL</string>
+  <string name="autofill_suggestions_suggested_column">Προτεινόμενο</string>
+  <string name="field_website_skipped_autofill">Αυτή η διεύθυνση URL θα παραλειφθεί για αυτόματη συμπλήρωση</string>
 </resources>

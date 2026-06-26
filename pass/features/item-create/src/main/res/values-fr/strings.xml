@@ -342,4 +342,20 @@
   <string name="cannot_create_items_dialog_message">Vous n\'avez pas de coffre-fort avec un accès éditeur ou administrateur. Essayez d\'en créer un dans l\'application principale ou demandez de l\'aide à l\'administrateur de votre organisation.</string>
   <string name="wifi_security_type_field_label">Type de sécurité</string>
   <string name="functionality_not_available">Cette fonctionnalité n\'est pas disponible pour votre appareil.</string>
+  <!-- Autofill URL suggestions screen -->
+  <string name="autofill_suggestions_title">Correspondance d\'URL</string>
+  <string name="autofill_suggestions_description">Modifiez les paramètres de remplissage automatique pour définir où les identifiants de connexion sont suggérés et renseignés pour %s.</string>
+  <string name="autofill_suggestions_tab_basic">Basique</string>
+  <string name="autofill_suggestions_tab_advanced">Avancé</string>
+  <string name="autofill_suggestions_mode_default">Domaine parent et sous-domaines</string>
+  <string name="autofill_suggestions_mode_exact">Domaine ou sous-domaine exact</string>
+  <string name="autofill_suggestions_mode_never">Ne jamais remplir sur ce site</string>
+  <string name="autofill_suggestions_mode_start_with">Commence par</string>
+  <string name="autofill_suggestions_mode_regular_expression">Expression rationnelle</string>
+  <string name="autofill_suggestions_mode_exact_path">Correspondance exacte d\'URL</string>
+  <string name="autofill_suggestions_android_limitation">Les règles avancées ne sont pas disponibles sur Android en raison des limitations des API du système d\'exploitation.</string>
+  <string name="autofill_suggestions_mode_default_badge">PAR DÉFAUT</string>
+  <string name="autofill_suggestions_url_column">URL</string>
+  <string name="autofill_suggestions_suggested_column">Suggestion</string>
+  <string name="field_website_skipped_autofill">Cet URL sera ignoré pour le remplissage automatique.</string>
 </resources>

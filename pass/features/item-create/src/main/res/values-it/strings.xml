@@ -342,4 +342,20 @@
   <string name="cannot_create_items_dialog_message">Non hai alcuna cassaforte con accesso da editor o amministratore. Prova a crearne una nell\'app principale o chiedi supporto all\'amministratore della tua organizzazione.</string>
   <string name="wifi_security_type_field_label">Sicurezza Wi-Fi</string>
   <string name="functionality_not_available">Questa funzionalità non è disponibile per il tuo dispositivo.</string>
+  <!-- Autofill URL suggestions screen -->
+  <string name="autofill_suggestions_title">Corrispondenza URL</string>
+  <string name="autofill_suggestions_description">Modifica il comportamento di compilazione automatica per cambiare dove vengono suggeriti e compilati i login per %s.</string>
+  <string name="autofill_suggestions_tab_basic">Basico</string>
+  <string name="autofill_suggestions_tab_advanced">Avanzato</string>
+  <string name="autofill_suggestions_mode_default">Dominio principale e sottodomini</string>
+  <string name="autofill_suggestions_mode_exact">(sotto)dominio esatto</string>
+  <string name="autofill_suggestions_mode_never">Non compilare mai questo sito web</string>
+  <string name="autofill_suggestions_mode_start_with">Inizia con</string>
+  <string name="autofill_suggestions_mode_regular_expression">Espressione regolare</string>
+  <string name="autofill_suggestions_mode_exact_path">Corrispondenza URL esatta</string>
+  <string name="autofill_suggestions_android_limitation">Le regole avanzate non sono disponibili su Android a causa delle limitazioni delle API del sistema operativo.</string>
+  <string name="autofill_suggestions_mode_default_badge">PREDEFINITO</string>
+  <string name="autofill_suggestions_url_column">URL</string>
+  <string name="autofill_suggestions_suggested_column">Suggeriti</string>
+  <string name="field_website_skipped_autofill">Questo URL verrà ignorato durante il riempimento automatico</string>
 </resources>

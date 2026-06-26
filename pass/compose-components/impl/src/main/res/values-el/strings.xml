@@ -158,6 +158,13 @@
   <string name="item_details_login_section_password_title">Κωδικός</string>
   <string name="item_details_login_section_primary_totp_title">Διακριτικό 2FA (TOTP)</string>
   <string name="item_details_login_section_websites_title">Ιστοσελίδες</string>
+  <string name="autofill_mode_label_default">Γονικός τομέας και υποτομείς</string>
+  <string name="autofill_mode_label_exact">Ακριβής (υπο)τομέας</string>
+  <string name="autofill_mode_label_never">Ποτέ μην συμπληρώνετε αυτόν τον ιστότοπο</string>
+  <string name="autofill_mode_label_start_with">Ξεκινά με</string>
+  <string name="autofill_mode_label_regular_expression">Κανονική έκφραση</string>
+  <string name="autofill_mode_label_exact_path">Ακριβής αντιστοίχιση URL</string>
+  <string name="autofill_mode_label_unsupported">Αυτή η διεύθυνση URL θα παραλειφθεί για αυτόματη συμπλήρωση</string>
   <string name="login_item_view_alias_button">Προβολή ψευδωνύμου</string>
   <string name="item_details_identity_section_personal_title">Προσωπικές πληροφορίες</string>
   <string name="item_details_identity_section_personal_first_name_title">Όνομα</string>

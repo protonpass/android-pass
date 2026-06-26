@@ -156,6 +156,13 @@
   <string name="item_details_login_section_password_title">비밀번호</string>
   <string name="item_details_login_section_primary_totp_title">2단계 인증 토큰 (TOTP)</string>
   <string name="item_details_login_section_websites_title">웹사이트</string>
+  <string name="autofill_mode_label_default">Parent domain and subdomains</string>
+  <string name="autofill_mode_label_exact">Exact (sub)domain</string>
+  <string name="autofill_mode_label_never">Never fill on this website</string>
+  <string name="autofill_mode_label_start_with">Starts with</string>
+  <string name="autofill_mode_label_regular_expression">Regular expression</string>
+  <string name="autofill_mode_label_exact_path">Exact URL matching</string>
+  <string name="autofill_mode_label_unsupported">This url will be skipped for autofill</string>
   <string name="login_item_view_alias_button">별칭 보기</string>
   <string name="item_details_identity_section_personal_title">개인 정보</string>
   <string name="item_details_identity_section_personal_first_name_title">이름</string>

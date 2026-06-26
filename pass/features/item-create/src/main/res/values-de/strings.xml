@@ -342,4 +342,20 @@
   <string name="cannot_create_items_dialog_message">Du hast keine Tresore mit Bearbeitungs- oder Admin-Zugang. Versuche, einen in der Hauptanwendung zu erstellen, oder bitte den Administrator deiner Organisation um Unterstützung.</string>
   <string name="wifi_security_type_field_label">Sicherheitstyp</string>
   <string name="functionality_not_available">Diese Funktion ist für Ihr Gerät nicht verfügbar.</string>
+  <!-- Autofill URL suggestions screen -->
+  <string name="autofill_suggestions_title">URL-Übereinstimmung</string>
+  <string name="autofill_suggestions_description">Passe das Verhalten der automatischen Ausfüllfunktion an, um festzulegen, wo Anmeldungen für %s vorgeschlagen und automatisch ausgefüllt werden sollen.</string>
+  <string name="autofill_suggestions_tab_basic">Standard</string>
+  <string name="autofill_suggestions_tab_advanced">Erweitert</string>
+  <string name="autofill_suggestions_mode_default">Übergeordnete Domain und deren Subdomains</string>
+  <string name="autofill_suggestions_mode_exact">Genaue (Sub-)Domain</string>
+  <string name="autofill_suggestions_mode_never">Niemals auf dieser Website ausfüllen</string>
+  <string name="autofill_suggestions_mode_start_with">Beginnt mit</string>
+  <string name="autofill_suggestions_mode_regular_expression">Regulärer Ausdruck</string>
+  <string name="autofill_suggestions_mode_exact_path">Exakte URL-Übereinstimmung</string>
+  <string name="autofill_suggestions_android_limitation">Erweiterte Regeln sind auf Android aufgrund von Einschränkungen in den APIs des Betriebssystems nicht verfügbar.</string>
+  <string name="autofill_suggestions_mode_default_badge">Standard</string>
+  <string name="autofill_suggestions_url_column">URL</string>
+  <string name="autofill_suggestions_suggested_column">Vorgeschlagen</string>
+  <string name="field_website_skipped_autofill">Diese URL wird beim automatischen Ausfüllen übersprungen</string>
 </resources>

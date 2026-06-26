@@ -158,6 +158,13 @@
   <string name="item_details_login_section_password_title">Adgangskode</string>
   <string name="item_details_login_section_primary_totp_title">2FA-token (TOTP)</string>
   <string name="item_details_login_section_websites_title">Websider</string>
+  <string name="autofill_mode_label_default">Overordnet domæne og underdomæner</string>
+  <string name="autofill_mode_label_exact">Eksakt (under)domæne</string>
+  <string name="autofill_mode_label_never">Udfyld aldrig på dette web-sted</string>
+  <string name="autofill_mode_label_start_with">Begynder med</string>
+  <string name="autofill_mode_label_regular_expression">Regulært udtryk</string>
+  <string name="autofill_mode_label_exact_path">Eksakt URL-overensstemmelse</string>
+  <string name="autofill_mode_label_unsupported">Denne web-adresse springes over til automatisk udfyldning</string>
   <string name="login_item_view_alias_button">Vis alias</string>
   <string name="item_details_identity_section_personal_title">Personlige oplysninger</string>
   <string name="item_details_identity_section_personal_first_name_title">Fornavn</string>

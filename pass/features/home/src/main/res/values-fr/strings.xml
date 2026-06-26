@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
   <!-- Home -->
+  <string name="home_indexing_banner">Initialisation de l\'index de recherche…</string>
+  <string name="home_indexing_banner_progress">Initialisation de l\'index de recherche… %1$d/%2$d</string>
   <string name="home_empty_vault_title">Votre coffre-fort est vide</string>
   <string name="home_empty_vault_subtitle">Commencez par créer votre premier élément.</string>
   <string name="home_empty_vault_login_title">Aucun identifiant n\'a été trouvé.</string>
@@ -24,6 +26,8 @@
   <string name="home_empty_no_vaults_subtitle">Contactez votre administrateur.</string>
   <string name="home_empty_read_only_vault_title">Ce coffre-fort est vide.</string>
   <string name="home_empty_read_only_vault_subtitle">Vous ne pouvez pas ajouter des éléments à un coffre-fort en lecture seule.</string>
+  <string name="home_empty_folder_plan_restricted_title">Ce dossier est vide</string>
+  <string name="home_empty_folder_plan_restricted_subtitle">Changer d\'abonnement pour pouvoir créer des éléments à l\'intérieur de dossiers.</string>
   <string name="home_empty_vault_create_login">Créer un identifiant</string>
   <string name="home_empty_vault_create_alias">Créer un alias « hide-my-email »</string>
   <string name="home_empty_vault_create_note">Créer une note</string>

@@ -158,6 +158,13 @@
   <string name="item_details_login_section_password_title">Password</string>
   <string name="item_details_login_section_primary_totp_title">Token 2FA (TOTP)</string>
   <string name="item_details_login_section_websites_title">Sito web</string>
+  <string name="autofill_mode_label_default">Dominio principale e sottodomini</string>
+  <string name="autofill_mode_label_exact">(sotto)dominio esatto</string>
+  <string name="autofill_mode_label_never">Non compilare mai questo sito web</string>
+  <string name="autofill_mode_label_start_with">Inizia con</string>
+  <string name="autofill_mode_label_regular_expression">Espressione regolare</string>
+  <string name="autofill_mode_label_exact_path">Corrispondenza URL esatta</string>
+  <string name="autofill_mode_label_unsupported">Questo URL verrà ignorato durante il riempimento automatico</string>
   <string name="login_item_view_alias_button">Visualizza l\'alias</string>
   <string name="item_details_identity_section_personal_title">Informazioni personali</string>
   <string name="item_details_identity_section_personal_first_name_title">Nome</string>

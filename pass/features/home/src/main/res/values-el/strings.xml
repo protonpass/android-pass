@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
   <!-- Home -->
+  <string name="home_indexing_banner">Δημιουργία ευρετηρίου αναζήτησης…</string>
+  <string name="home_indexing_banner_progress">Δημιουργία ευρετηρίου αναζήτησης… (%1$d/%2$d)</string>
   <string name="home_empty_vault_title">Η κρύπτη σας είναι άδεια</string>
   <string name="home_empty_vault_subtitle">Ξεκινήστε δημιουργώντας το πρώτο σας στοιχείο.</string>
   <string name="home_empty_vault_login_title">Δεν βρέθηκαν συνδέσεις</string>
@@ -24,6 +26,8 @@
   <string name="home_empty_no_vaults_subtitle">Παρακαλούμε επικοινωνήστε με τον διαχειριστή σας.</string>
   <string name="home_empty_read_only_vault_title">Αυτή η κρύπτη είναι άδεια</string>
   <string name="home_empty_read_only_vault_subtitle">Δεν μπορείτε να προσθέσετε στοιχεία σε κρύπτη ορισμένη μόνο για ανάγνωση.</string>
+  <string name="home_empty_folder_plan_restricted_title">Αυτός ο φάκελος είναι κενός</string>
+  <string name="home_empty_folder_plan_restricted_subtitle">Αναβαθμίστε το πλάνο σας για να δημιουργείτε στοιχεία μέσα σε φακέλους.</string>
   <string name="home_empty_vault_create_login">Δημιουργία σύνδεσης</string>
   <string name="home_empty_vault_create_alias">Δημιουργήστε ένα Hide-my-email ψευδώνυμο</string>
   <string name="home_empty_vault_create_note">Δημιουργία σημείωσης</string>

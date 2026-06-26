@@ -342,4 +342,20 @@
   <string name="cannot_create_items_dialog_message">您没有任何具有编辑或管理员权限的保险库。请尝试在主应用程序中创建一个，或向您组织的管理员寻求支持。</string>
   <string name="wifi_security_type_field_label">安全类型</string>
   <string name="functionality_not_available">此功能不适用于您的设备。</string>
+  <!-- Autofill URL suggestions screen -->
+  <string name="autofill_suggestions_title">URL 匹配</string>
+  <string name="autofill_suggestions_description">调整自动填充行为，以更改在 %s 上建议和填充登录信息的网站。</string>
+  <string name="autofill_suggestions_tab_basic">基本</string>
+  <string name="autofill_suggestions_tab_advanced">高级</string>
+  <string name="autofill_suggestions_mode_default">父域名及子域名</string>
+  <string name="autofill_suggestions_mode_exact">精确匹配 (子) 域名</string>
+  <string name="autofill_suggestions_mode_never">永不填充此网站</string>
+  <string name="autofill_suggestions_mode_start_with">开头为</string>
+  <string name="autofill_suggestions_mode_regular_expression">正则表达式</string>
+  <string name="autofill_suggestions_mode_exact_path">精确 URL 匹配</string>
+  <string name="autofill_suggestions_android_limitation">由于操作系统 API 的限制，高级规则在 Android 上不可用！</string>
+  <string name="autofill_suggestions_mode_default_badge">默认</string>
+  <string name="autofill_suggestions_url_column">URL</string>
+  <string name="autofill_suggestions_suggested_column">建议</string>
+  <string name="field_website_skipped_autofill">此 URL 将被跳过自动填充</string>
 </resources>

@@ -342,4 +342,20 @@
   <string name="cannot_create_items_dialog_message">No tiene bóvedas con acceso a editor o administrador. Cree una en la aplicación principal o pida ayuda al administrador de su organización.</string>
   <string name="wifi_security_type_field_label">Tipo de seguridad</string>
   <string name="functionality_not_available">Esta funcionalidad no está disponible para su dispositivo.</string>
+  <!-- Autofill URL suggestions screen -->
+  <string name="autofill_suggestions_title">Coincidencia de URL</string>
+  <string name="autofill_suggestions_description">Ajuste el comportamiento del completado automático para cambiar dónde se sugieren y completan los inicios de sesión para %s.</string>
+  <string name="autofill_suggestions_tab_basic">Básico</string>
+  <string name="autofill_suggestions_tab_advanced">Avanzado</string>
+  <string name="autofill_suggestions_mode_default">Dominio principal y subdominios</string>
+  <string name="autofill_suggestions_mode_exact">Dominio o subdominio exacto</string>
+  <string name="autofill_suggestions_mode_never">No completar nunca en este sitio web</string>
+  <string name="autofill_suggestions_mode_start_with">Comienza con</string>
+  <string name="autofill_suggestions_mode_regular_expression">Expresión regular</string>
+  <string name="autofill_suggestions_mode_exact_path">Coincidencia exacta de URL</string>
+  <string name="autofill_suggestions_android_limitation">Las reglas avanzadas no están disponibles en Android debido a limitaciones en las API del sistema operativo.</string>
+  <string name="autofill_suggestions_mode_default_badge">POR DEFECTO</string>
+  <string name="autofill_suggestions_url_column">URL</string>
+  <string name="autofill_suggestions_suggested_column">Sugerido</string>
+  <string name="field_website_skipped_autofill">Esta URL se omite para el completado automático</string>
 </resources>

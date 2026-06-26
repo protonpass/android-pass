@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
   <!-- Home -->
+  <string name="home_indexing_banner">Building search index…</string>
+  <string name="home_indexing_banner_progress">Building search index… (%1$d/%2$d)</string>
   <string name="home_empty_vault_title">O seu cofre está vazio.</string>
   <string name="home_empty_vault_subtitle">Comece por criar o seu primeiro item.</string>
   <string name="home_empty_vault_login_title">Nenhum início de sessão foi encontrado.</string>
@@ -24,6 +26,8 @@
   <string name="home_empty_no_vaults_subtitle">Please contact your administrator.</string>
   <string name="home_empty_read_only_vault_title">Este cofre está vazio</string>
   <string name="home_empty_read_only_vault_subtitle">Não pode adicionar itens a um cofre só de leitura.</string>
+  <string name="home_empty_folder_plan_restricted_title">This folder is empty</string>
+  <string name="home_empty_folder_plan_restricted_subtitle">Upgrade your plan to create items inside folders.</string>
   <string name="home_empty_vault_create_login">Criar um acesso</string>
   <string name="home_empty_vault_create_alias">Crie um alias do hide-my-email</string>
   <string name="home_empty_vault_create_note">Criar uma nota</string>

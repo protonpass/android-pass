@@ -342,4 +342,20 @@
   <string name="cannot_create_items_dialog_message">Düzenleyicisi veya yöneticisi olduğunuz herhangi bir kasa yok. Ana uygulamadan bir kasa oluşturmayı deneyin veya kuruluşunuzun yöneticisinden destek isteyin.</string>
   <string name="wifi_security_type_field_label">Güvenlik türü</string>
   <string name="functionality_not_available">Bu özellik aygıtınızda kullanılamıyor.</string>
+  <!-- Autofill URL suggestions screen -->
+  <string name="autofill_suggestions_title">Adres eşleştirme</string>
+  <string name="autofill_suggestions_description">%s için oturum açma bilgilerinin önerileceği ve doldurulacağı yerleri değiştirmek üzere otomatik doldurma davranışlarını ayarlayın.</string>
+  <string name="autofill_suggestions_tab_basic">Temel</string>
+  <string name="autofill_suggestions_tab_advanced">Gelişmiş</string>
+  <string name="autofill_suggestions_mode_default">Ana etki alanı ve alt etki alanları</string>
+  <string name="autofill_suggestions_mode_exact">Tam (alt) etki alanı</string>
+  <string name="autofill_suggestions_mode_never">Bu sitede asla doldurulmasın</string>
+  <string name="autofill_suggestions_mode_start_with">Şöyle başlayan:</string>
+  <string name="autofill_suggestions_mode_regular_expression">Kurallı ifade</string>
+  <string name="autofill_suggestions_mode_exact_path">Tam adres eşleşmesi</string>
+  <string name="autofill_suggestions_android_limitation">İşletim sistemi API kısıtlamaları nedeniyle gelişmiş kurallar Android üzerinde kullanılamaz.</string>
+  <string name="autofill_suggestions_mode_default_badge">VARSAYILAN</string>
+  <string name="autofill_suggestions_url_column">Adres</string>
+  <string name="autofill_suggestions_suggested_column">Önerilen</string>
+  <string name="field_website_skipped_autofill">Bu adres otomatik doldurma sırasında atlanır</string>
 </resources>

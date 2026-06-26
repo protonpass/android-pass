@@ -160,6 +160,13 @@
   <string name="item_details_login_section_password_title">Parola</string>
   <string name="item_details_login_section_primary_totp_title">Cod A2F (TOTP)</string>
   <string name="item_details_login_section_websites_title">Pagini web</string>
+  <string name="autofill_mode_label_default">Domeniu părinte și subdomenii</string>
+  <string name="autofill_mode_label_exact">(Sub)domeniu exact</string>
+  <string name="autofill_mode_label_never">Niciodată pe acest site</string>
+  <string name="autofill_mode_label_start_with">Începe cu</string>
+  <string name="autofill_mode_label_regular_expression">Expresie regulată</string>
+  <string name="autofill_mode_label_exact_path">Potrivire exactă URL</string>
+  <string name="autofill_mode_label_unsupported">Acest URL va fi ignorat la autocompletare</string>
   <string name="login_item_view_alias_button">Afișare alias</string>
   <string name="item_details_identity_section_personal_title">Detalii personale</string>
   <string name="item_details_identity_section_personal_first_name_title">Prenume</string>

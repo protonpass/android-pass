@@ -39,4 +39,7 @@
   <string name="sync_dialog_subtitle_inserting">마지막 단계 완료 중, 거의 마무리됨.</string>
   <string name="sync_dialog_invalid_address_shares_warning">Some vaults could not be synced because the associated address was not found on this account.</string>
   <string name="sync_dialog_invalid_group_shares_warning">Some vaults could not be synced because the associated group was not found on this account.</string>
+  <string name="sync_dialog_title_indexing">Indexing…</string>
+  <string name="sync_dialog_subtitle_indexing">Building search index, almost done.</string>
+  <string name="sync_dialog_subtitle_indexing_progress">Building search index… (%1$d/%2$d)</string>
 </resources>

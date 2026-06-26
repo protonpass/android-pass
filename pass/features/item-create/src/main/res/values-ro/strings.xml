@@ -342,4 +342,20 @@
   <string name="cannot_create_items_dialog_message">Nu aveți seifuri cu acces de editor sau de administrator. Încercați să creați unul în aplicația principală sau solicitați asistență administratorului organizației proprii.</string>
   <string name="wifi_security_type_field_label">Tip de securitate</string>
   <string name="functionality_not_available">Această funcționalitate nu este disponibilă pentru dispozitivul utilizat.</string>
+  <!-- Autofill URL suggestions screen -->
+  <string name="autofill_suggestions_title">Potrivire URL</string>
+  <string name="autofill_suggestions_description">Ajustați modul de completare automată pentru a schimba unde sunt sugerate și completate datele de conectare pentru %s.</string>
+  <string name="autofill_suggestions_tab_basic">De bază</string>
+  <string name="autofill_suggestions_tab_advanced">Avansat</string>
+  <string name="autofill_suggestions_mode_default">Domeniu părinte și subdomenii</string>
+  <string name="autofill_suggestions_mode_exact">(Sub)domeniu exact</string>
+  <string name="autofill_suggestions_mode_never">Niciodată pe acest site</string>
+  <string name="autofill_suggestions_mode_start_with">Începe cu</string>
+  <string name="autofill_suggestions_mode_regular_expression">Expresie regulată</string>
+  <string name="autofill_suggestions_mode_exact_path">Potrivire exactă URL</string>
+  <string name="autofill_suggestions_android_limitation">Regulile avansate nu sunt disponibile pe Android din cauza limitărilor API-urilor sistemului de operare.</string>
+  <string name="autofill_suggestions_mode_default_badge">IMPLICIT</string>
+  <string name="autofill_suggestions_url_column">Adresa URL</string>
+  <string name="autofill_suggestions_suggested_column">Sugerat</string>
+  <string name="field_website_skipped_autofill">Acest URL va fi ignorat la autocompletare</string>
 </resources>

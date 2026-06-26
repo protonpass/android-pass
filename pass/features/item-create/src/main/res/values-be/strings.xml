@@ -342,4 +342,20 @@
   <string name="cannot_create_items_dialog_message">У вас адсутнічаюць сховішчы з магчымасцю рэдагавання або доступам адміністратара. Паспрабуйце стварыць яго ў галоўнай праграме або папрасіце дапамагчы з гэтым адміністратара вашай арганізацыі.</string>
   <string name="wifi_security_type_field_label">Тып бяспекі</string>
   <string name="functionality_not_available">Гэтая функцыя недаступна для вашай прылады.</string>
+  <!-- Autofill URL suggestions screen -->
+  <string name="autofill_suggestions_title">Адпаведнасць URL-адраса</string>
+  <string name="autofill_suggestions_description">Адрэгулюйце паводзіны аўтазапаўнення для змянення таго, дзе прапаноўваць і запаўняць запісы ўваходу для %s.</string>
+  <string name="autofill_suggestions_tab_basic">Базавыя</string>
+  <string name="autofill_suggestions_tab_advanced">Дадатковыя</string>
+  <string name="autofill_suggestions_mode_default">Бацькоўскі дамен і паддамены</string>
+  <string name="autofill_suggestions_mode_exact">Дакладны (пад)дамен</string>
+  <string name="autofill_suggestions_mode_never">Ніколі не запаўняць на гэтым вэб-сайце</string>
+  <string name="autofill_suggestions_mode_start_with">Пачаць з</string>
+  <string name="autofill_suggestions_mode_regular_expression">Рэгулярны выраз</string>
+  <string name="autofill_suggestions_mode_exact_path">Дакладнае супадзенне URL-адраса</string>
+  <string name="autofill_suggestions_android_limitation">Дадатковыя правілы недаступны на Android з прычыны абмежаванняў API аперацыйнай сістэмы.</string>
+  <string name="autofill_suggestions_mode_default_badge">ПРАДВЫЗНАЧАНА</string>
+  <string name="autofill_suggestions_url_column">URL-адрас</string>
+  <string name="autofill_suggestions_suggested_column">Прапанаваныя</string>
+  <string name="field_website_skipped_autofill">Гэты URL-адрас будзе прапушчаны для аўтазапаўнення</string>
 </resources>

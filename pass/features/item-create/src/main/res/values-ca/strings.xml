@@ -342,4 +342,20 @@
   <string name="cannot_create_items_dialog_message">No teniu cap caixa forta amb permisos d\'editor o administrador. Creeu-ne una a l\'aplicació principal o demaneu assistència a l\'administrador de la vostra organització.</string>
   <string name="wifi_security_type_field_label">Tipus de seguretat</string>
   <string name="functionality_not_available">Aquesta funcionalitat no està disponible per al vostre dispositiu.</string>
+  <!-- Autofill URL suggestions screen -->
+  <string name="autofill_suggestions_title">Coincidència d\'URL</string>
+  <string name="autofill_suggestions_description">Ajusteu els comportaments d\'emplenament automàtic per canviar on se suggereixen i s\'emplenen els inicis de sessió per a %s.</string>
+  <string name="autofill_suggestions_tab_basic">Bàsic</string>
+  <string name="autofill_suggestions_tab_advanced">Avançat</string>
+  <string name="autofill_suggestions_mode_default">Domini principal i subdominis</string>
+  <string name="autofill_suggestions_mode_exact">(Sub)domini exacte</string>
+  <string name="autofill_suggestions_mode_never">No ompliu mai res en aquest lloc web</string>
+  <string name="autofill_suggestions_mode_start_with">Comença per</string>
+  <string name="autofill_suggestions_mode_regular_expression">Expressió regular</string>
+  <string name="autofill_suggestions_mode_exact_path">Coincidència exacta d\'URL</string>
+  <string name="autofill_suggestions_android_limitation">Les regles avançades no estan disponibles a Android a causa de limitacions a les interfícies de programació d\'aplicacions (API) del sistema operatiu.</string>
+  <string name="autofill_suggestions_mode_default_badge">PER DEFECTE</string>
+  <string name="autofill_suggestions_url_column">URL</string>
+  <string name="autofill_suggestions_suggested_column">Suggerit</string>
+  <string name="field_website_skipped_autofill">Aquest URL s\'exclourà de l\'emplenament automàtic</string>
 </resources>

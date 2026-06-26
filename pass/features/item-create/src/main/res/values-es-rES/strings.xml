@@ -342,4 +342,20 @@
   <string name="cannot_create_items_dialog_message">No tienes ninguna caja fuerte con permiso de editor o de administrador. Intenta crear una en la aplicación principal o solicita ayuda al administrador de tu organización.</string>
   <string name="wifi_security_type_field_label">Tipo de seguridad</string>
   <string name="functionality_not_available">Esta funcionalidad no está disponible para tu dispositivo.</string>
+  <!-- Autofill URL suggestions screen -->
+  <string name="autofill_suggestions_title">Coincidencia de URL</string>
+  <string name="autofill_suggestions_description">Ajusta el comportamiento del autorrelleno para cambiar dónde se sugieren y rellenan los inicios de sesión para %s.</string>
+  <string name="autofill_suggestions_tab_basic">Básico</string>
+  <string name="autofill_suggestions_tab_advanced">Avanzado</string>
+  <string name="autofill_suggestions_mode_default">Dominio principal y subdominios</string>
+  <string name="autofill_suggestions_mode_exact">Dominio o subdominio exacto</string>
+  <string name="autofill_suggestions_mode_never">No rellenar nunca en este sitio web</string>
+  <string name="autofill_suggestions_mode_start_with">Empieza por</string>
+  <string name="autofill_suggestions_mode_regular_expression">Expresión regular</string>
+  <string name="autofill_suggestions_mode_exact_path">Coincidencia exacta de URL</string>
+  <string name="autofill_suggestions_android_limitation">Las reglas avanzadas no están disponibles en Android debido a limitaciones en las API del sistema operativo.</string>
+  <string name="autofill_suggestions_mode_default_badge">Por defecto</string>
+  <string name="autofill_suggestions_url_column">URL</string>
+  <string name="autofill_suggestions_suggested_column">Sugerido</string>
+  <string name="field_website_skipped_autofill">Esta URL se omite para el autorrelleno</string>
 </resources>

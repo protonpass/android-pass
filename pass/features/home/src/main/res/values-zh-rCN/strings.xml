@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
   <!-- Home -->
+  <string name="home_indexing_banner">正在生成搜索索引…</string>
+  <string name="home_indexing_banner_progress">正在生成搜索索引… (%1$d/%2$d)</string>
   <string name="home_empty_vault_title">您的保险库是空的</string>
   <string name="home_empty_vault_subtitle">开始创建你的第一个项目</string>
   <string name="home_empty_vault_login_title">未找到任何登录项</string>
@@ -24,6 +26,8 @@
   <string name="home_empty_no_vaults_subtitle">请联系您的管理员</string>
   <string name="home_empty_read_only_vault_title">这个保险库是空的</string>
   <string name="home_empty_read_only_vault_subtitle">你不能向只读保险库添加项目。</string>
+  <string name="home_empty_folder_plan_restricted_title">此文件夹为空</string>
+  <string name="home_empty_folder_plan_restricted_subtitle">升级您的套餐以在文件夹内创建项目</string>
   <string name="home_empty_vault_create_login">创建登录</string>
   <string name="home_empty_vault_create_alias">创建 Hide-my-email 别名</string>
   <string name="home_empty_vault_create_note">创建笔记</string>

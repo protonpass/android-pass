@@ -158,6 +158,13 @@
   <string name="item_details_login_section_password_title">Salasana</string>
   <string name="item_details_login_section_primary_totp_title">Vahvistuskoodi (TOTP)</string>
   <string name="item_details_login_section_websites_title">Verkkosivustot</string>
+  <string name="autofill_mode_label_default">Pääverkkotunnus ja aliverkkotunnukset</string>
+  <string name="autofill_mode_label_exact">Tarkka (ala)verkkotunnus</string>
+  <string name="autofill_mode_label_never">Älä koskaan täytä tällä verkkosivustolla</string>
+  <string name="autofill_mode_label_start_with">Alkaa</string>
+  <string name="autofill_mode_label_regular_expression">Säännöllinen lauseke</string>
+  <string name="autofill_mode_label_exact_path">Tarkka URL-vastaavuus</string>
+  <string name="autofill_mode_label_unsupported">Tätä URL-osoitetta ei oteta huomioon automaattisen täytön yhteydessä</string>
   <string name="login_item_view_alias_button">Näytä alias</string>
   <string name="item_details_identity_section_personal_title">Henkilötiedot</string>
   <string name="item_details_identity_section_personal_first_name_title">Etunimi</string>

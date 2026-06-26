@@ -41,4 +41,7 @@
   <string name="sync_dialog_subtitle_inserting">S\'està acabant el darrer pas. Falta poc.</string>
   <string name="sync_dialog_invalid_address_shares_warning">No s\'han pogut sincronitzar algunes caixes fortes perquè no s\'ha trobat l\'adreça associada en aquest compte.</string>
   <string name="sync_dialog_invalid_group_shares_warning">No s\'han pogut sincronitzar algunes caixes fortes perquè no s\'ha trobat el grup associat en aquest compte.</string>
+  <string name="sync_dialog_title_indexing">S\'està indexant…</string>
+  <string name="sync_dialog_subtitle_indexing">S\'està construint l\'índex de cerca, gairebé s\'ha acabat.</string>
+  <string name="sync_dialog_subtitle_indexing_progress">S\'està construint l\'índex de cerca… (%1$d/%2$d)</string>
 </resources>

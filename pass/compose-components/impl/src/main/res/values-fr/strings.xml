@@ -158,6 +158,13 @@
   <string name="item_details_login_section_password_title">Mot de passe</string>
   <string name="item_details_login_section_primary_totp_title">Jeton A2F (TOTP)</string>
   <string name="item_details_login_section_websites_title">Sites internet</string>
+  <string name="autofill_mode_label_default">Domaine parent et sous-domaines</string>
+  <string name="autofill_mode_label_exact">Domaine ou sous-domaine exact</string>
+  <string name="autofill_mode_label_never">Ne jamais remplir sur ce site</string>
+  <string name="autofill_mode_label_start_with">Commencer par</string>
+  <string name="autofill_mode_label_regular_expression">Expression rationnelle</string>
+  <string name="autofill_mode_label_exact_path">Correspondance exacte d\'URL</string>
+  <string name="autofill_mode_label_unsupported">Cet URL sera ignoré pour le remplissage automatique.</string>
   <string name="login_item_view_alias_button">Afficher l\'alias</string>
   <string name="item_details_identity_section_personal_title">Informations personnelles</string>
   <string name="item_details_identity_section_personal_first_name_title">Prénom</string>

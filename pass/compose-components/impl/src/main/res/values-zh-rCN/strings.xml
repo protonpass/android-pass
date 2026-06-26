@@ -156,6 +156,13 @@
   <string name="item_details_login_section_password_title">密码</string>
   <string name="item_details_login_section_primary_totp_title">2FA 令牌 (TOTP)</string>
   <string name="item_details_login_section_websites_title">网站</string>
+  <string name="autofill_mode_label_default">父域名及子域名</string>
+  <string name="autofill_mode_label_exact">精确匹配 (子) 域名</string>
+  <string name="autofill_mode_label_never">永不填充此网站</string>
+  <string name="autofill_mode_label_start_with">开头为</string>
+  <string name="autofill_mode_label_regular_expression">正则表达式</string>
+  <string name="autofill_mode_label_exact_path">精确 URL 匹配</string>
+  <string name="autofill_mode_label_unsupported">此 URL 将被跳过自动填充</string>
   <string name="login_item_view_alias_button">查看别名</string>
   <string name="item_details_identity_section_personal_title">个人资料</string>
   <string name="item_details_identity_section_personal_first_name_title">名</string>

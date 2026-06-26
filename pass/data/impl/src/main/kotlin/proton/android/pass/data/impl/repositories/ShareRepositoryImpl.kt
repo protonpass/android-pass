@@ -256,7 +256,8 @@ class ShareRepositoryImpl @Inject constructor(
                 inactiveLocalShares.contains(ShareId(it.shareId))
         }
 
-        val (storedShares, skippedDueToGroupCount, skippedDueToAddressCount) = storeShares(userId, remoteSharesToSave)
+        val (storedShares, skippedDueToGroupCount, skippedDueToAddressCount, skippedShareIds) =
+            storeShares(userId, remoteSharesToSave)
         val inactiveNotInLocalShares = storedShares
             .filter { !it.isActive }
             .map { ShareId(it.id) }
@@ -266,7 +267,7 @@ class ShareRepositoryImpl @Inject constructor(
         }
 
         val allShareIds = remoteSharesMap.keys.filterNot {
-            inactiveLocalShares.contains(it) || inactiveNotInLocalShares.contains(it)
+            inactiveLocalShares.contains(it) || inactiveNotInLocalShares.contains(it) || skippedShareIds.contains(it)
         }.toSet()
 
         val wasFirstSync = !hadLocalSharesOnStart && allShareIds.isNotEmpty()
@@ -470,6 +471,7 @@ class ShareRepositoryImpl @Inject constructor(
 
         var invalidGroupSharesCount = 0
         var invalidAddressSharesCount = 0
+        val skippedShareIds = mutableSetOf<ShareId>()
         val entities: List<Pair<ShareEntity, List<ShareKeyEntity>>> = shares
             .mapNotNull { response ->
                 val shareAddressId = AddressId(response.addressId)
@@ -479,6 +481,7 @@ class ShareRepositoryImpl @Inject constructor(
                         "Skipping share ${response.shareId} - address ${response.addressId} not found after refresh"
                     )
                     invalidAddressSharesCount++
+                    skippedShareIds.add(ShareId(response.shareId))
                     return@mapNotNull null
                 }
                 val groupEmail = if (response.groupId != null) {
@@ -490,6 +493,7 @@ class ShareRepositoryImpl @Inject constructor(
                                     "group ${response.groupId} not found"
                             )
                             invalidGroupSharesCount++
+                            skippedShareIds.add(ShareId(response.shareId))
                             return@mapNotNull null
                         }
                 } else {
@@ -505,23 +509,23 @@ class ShareRepositoryImpl @Inject constructor(
         val shareEntities = entities.map { (entity, _) -> entity }
         val shareKeyEntities = entities.flatMap { (_, keys) -> keys }
 
-        if (shareEntities.isNotEmpty() || shareKeyEntities.isNotEmpty()) {
-            database.inTransaction("storeShares") {
-                // First, store the shares
-                if (shareEntities.isNotEmpty()) {
-                    PassLogger.i(TAG, "Storing ${shareEntities.size} shares")
-                    localShareDataSource.upsertShares(shareEntities)
-                }
+        persistShareEntities(shareEntities, shareKeyEntities)
 
-                // Now that we have inserted the shares, we can safely insert the shareKeys
-                if (shareKeyEntities.isNotEmpty()) {
-                    PassLogger.i(TAG, "Storing ${shareKeyEntities.size} ShareKeys")
-                    shareKeyRepository.saveShareKeys(shareKeyEntities)
-                }
+        StoreSharesResult(shareEntities, invalidGroupSharesCount, invalidAddressSharesCount, skippedShareIds)
+    }
+
+    private suspend fun persistShareEntities(shareEntities: List<ShareEntity>, shareKeyEntities: List<ShareKeyEntity>) {
+        if (shareEntities.isEmpty() && shareKeyEntities.isEmpty()) return
+        database.inTransaction("storeShares") {
+            if (shareEntities.isNotEmpty()) {
+                PassLogger.i(TAG, "Storing ${shareEntities.size} shares")
+                localShareDataSource.upsertShares(shareEntities)
+            }
+            if (shareKeyEntities.isNotEmpty()) {
+                PassLogger.i(TAG, "Storing ${shareKeyEntities.size} ShareKeys")
+                shareKeyRepository.saveShareKeys(shareKeyEntities)
             }
         }
-
-        StoreSharesResult(shareEntities, invalidGroupSharesCount, invalidAddressSharesCount)
     }
 
     private suspend fun getAvailableAddressIds(userId: UserId, requiredAddressIds: Set<AddressId>): Set<AddressId> {
@@ -768,7 +772,8 @@ class ShareRepositoryImpl @Inject constructor(
     private data class StoreSharesResult(
         val shareEntities: List<ShareEntity>,
         val invalidGroupSharesCount: Int,
-        val invalidAddressSharesCount: Int
+        val invalidAddressSharesCount: Int,
+        val skippedShareIds: Set<ShareId> = emptySet()
     )
 
     private companion object {

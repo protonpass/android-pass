@@ -33,6 +33,7 @@ import proton.android.pass.domain.ItemType
 import proton.android.pass.domain.PasskeyItem
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.ShareSelection
+import proton.android.pass.common.api.toLogToken
 import proton.android.pass.log.api.PassLogger
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -50,7 +51,7 @@ class GetPasskeysForDomainImpl @Inject constructor(
         userId: UserId?
     ): List<PasskeyItem> {
         val parsed = UrlSanitizer.getDomain(domain).getOrElse {
-            PassLogger.w(TAG, "Could not get domain from $domain")
+            PassLogger.w(TAG, "Could not get domain from input=${domain.toLogToken()}")
             return emptyList()
         }
 
@@ -80,40 +81,45 @@ class GetPasskeysForDomainImpl @Inject constructor(
                 }
         }
 
-        val passkeysForDomain = loginItems.mapNotNull { item ->
-            val domainPasskeys = item.login.passkeys.filter {
-                val passkeyDomain = UrlSanitizer.getDomain(it.domain).getOrElse {
-                    return@filter false
-                }
+        val passkeysForDomain = matchPasskeys(loginItems, parsed, selection)
 
-                DomainUtils.isDomainPartOf(needle = parsed, haystack = passkeyDomain)
-            }
-
-            val allowedPasskeys = when (selection) {
-                is PasskeySelection.Allowed -> domainPasskeys.filter { passkey ->
-                    selection.allowedPasskeys.any { it == passkey.id }
-                }
-
-                PasskeySelection.All -> domainPasskeys
-            }
-
-            if (allowedPasskeys.isEmpty()) {
-                null
-            } else {
-                allowedPasskeys.map {
-                    PasskeyItem(
-                        shareId = item.shareId,
-                        itemId = item.itemId,
-                        passkey = it,
-                        itemTitle = item.itemTitle
-                    )
-                }
-            }
-        }.flatten()
-
+        PassLogger.i(
+            TAG,
+            "found ${passkeysForDomain.size} passkeys " +
+                "domain=${domain.toLogToken()} selection=${selection::class.simpleName}"
+        )
         // Sort them by creation date
         return passkeysForDomain.sortedByDescending { it.passkey.createTime }
     }
+
+    private fun matchPasskeys(
+        loginItems: List<LoginItem>,
+        parsedDomain: String,
+        selection: PasskeySelection
+    ): List<PasskeyItem> = loginItems.mapNotNull { item ->
+        val domainPasskeys = item.login.passkeys.filter {
+            val passkeyDomain = UrlSanitizer.getDomain(it.domain).getOrElse {
+                return@filter false
+            }
+            DomainUtils.isDomainPartOf(needle = parsedDomain, haystack = passkeyDomain)
+        }
+
+        val allowedPasskeys = when (selection) {
+            is PasskeySelection.Allowed -> domainPasskeys.filter { passkey ->
+                selection.allowedPasskeys.any { it == passkey.id }
+            }
+            PasskeySelection.All -> domainPasskeys
+        }
+
+        allowedPasskeys.takeIf { it.isNotEmpty() }?.map {
+            PasskeyItem(
+                shareId = item.shareId,
+                itemId = item.itemId,
+                passkey = it,
+                itemTitle = item.itemTitle
+            )
+        }
+    }.flatten()
 
     private data class LoginItem(
         val shareId: ShareId,
@@ -125,7 +131,6 @@ class GetPasskeysForDomainImpl @Inject constructor(
     private companion object {
 
         private const val TAG = "GetPasskeysForDomainImpl"
-
     }
 
 }

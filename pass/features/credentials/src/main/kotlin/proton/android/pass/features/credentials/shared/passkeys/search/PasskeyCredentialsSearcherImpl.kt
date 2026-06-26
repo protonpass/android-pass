@@ -36,6 +36,7 @@ import proton.android.pass.features.credentials.passkeys.selection.ui.PasskeyCre
 import proton.android.pass.features.credentials.passkeys.usage.ui.PasskeyCredentialUsageActivity
 import proton.android.pass.features.credentials.shared.passkeys.domain.PasskeyCredential
 import proton.android.pass.features.credentials.shared.passkeys.events.PasskeyCredentialsTelemetryEvent
+import proton.android.pass.common.api.toLogToken
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.telemetry.api.TelemetryManager
 import javax.inject.Inject
@@ -67,12 +68,22 @@ internal class PasskeyCredentialsSearcherImpl @Inject constructor(
         callingAppInfo: CallingAppInfo?,
         option: BeginGetPublicKeyCredentialOption
     ): Pair<List<PublicKeyCredentialEntry>, Action>? {
-        val passkeyCredential = createPasskeyCredential(option) ?: return null
+        val callerToken = callingAppInfo?.packageName?.toLogToken() ?: "null"
+        PassLogger.i(TAG, "search: caller=$callerToken originPopulated=${callingAppInfo?.isOriginPopulated()}")
+        val passkeyCredential = createPasskeyCredential(option) ?: run {
+            PassLogger.w(TAG, "search: aborting — could not parse PasskeyCredential from requestJson")
+            return null
+        }
+        val rpToken = passkeyCredential.domain.toLogToken()
+        PassLogger.i(TAG, "search: rpId=$rpToken allowedCreds=${passkeyCredential.allowedCredentials?.size}")
 
         passkeyOriginVerifier.verifyOrigin(
             callingAppInfo = callingAppInfo,
             requestedRpId = passkeyCredential.domain
-        ) ?: return null
+        ) ?: run {
+            PassLogger.w(TAG, "search: aborting — origin verification rejected rpId=$rpToken caller=$callerToken")
+            return null
+        }
 
         val passkeyCredentialEntries = createPasskeyCredentialEntries(
             credential = passkeyCredential,
@@ -85,6 +96,7 @@ internal class PasskeyCredentialsSearcherImpl @Inject constructor(
             context = context
         )
 
+        PassLogger.i(TAG, "search: origin verified, returning ${passkeyCredentialEntries.size} entries rpId=$rpToken")
         return Pair(passkeyCredentialEntries, passkeyCredentialAction)
             .also { telemetryManager.sendEvent(PasskeyCredentialsTelemetryEvent.DisplaySuggestions) }
     }

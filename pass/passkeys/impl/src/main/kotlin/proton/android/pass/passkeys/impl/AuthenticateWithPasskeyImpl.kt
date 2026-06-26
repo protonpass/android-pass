@@ -18,6 +18,11 @@
 
 package proton.android.pass.passkeys.impl
 
+import kotlinx.serialization.json.Json
+import kotlinx.serialization.json.jsonArray
+import kotlinx.serialization.json.jsonObject
+import kotlinx.serialization.json.jsonPrimitive
+import proton.android.pass.common.api.toLogToken
 import proton.android.pass.commonrust.AuthenticateWithPasskeyAndroidRequest
 import proton.android.pass.commonrust.PasskeyManager
 import proton.android.pass.domain.Passkey
@@ -26,7 +31,6 @@ import proton.android.pass.passkeys.api.AuthenticateWithPasskey
 import proton.android.pass.passkeys.api.PasskeyAuthenticationResponse
 import javax.inject.Inject
 import javax.inject.Singleton
-import proton.android.pass.crypto.api.Base64
 
 @Singleton
 class AuthenticateWithPasskeyImpl @Inject constructor(
@@ -40,7 +44,7 @@ class AuthenticateWithPasskeyImpl @Inject constructor(
         clientDataHash: ByteArray?
     ): PasskeyAuthenticationResponse {
         val sanitized = PasskeyJsonSanitizer.sanitize(requestJson)
-        PassLogger.d(TAG, "Resolving challenge for origin=$origin")
+        PassLogger.i(TAG, "Resolving challenge")
 
         runCatching {
             val request = AuthenticateWithPasskeyAndroidRequest(
@@ -52,10 +56,17 @@ class AuthenticateWithPasskeyImpl @Inject constructor(
             passkeyManager.resolveChallengeForAndroid(request)
         }.fold(
             onSuccess = {
+                PassLogger.i(TAG, "Challenge resolved successfully")
                 return PasskeyAuthenticationResponse(it)
             },
             onFailure = {
-                PassLogger.w(TAG, Base64.encodeBase64String(requestJson.toByteArray()))
+                val rpToken = extractRpId(requestJson)?.toLogToken() ?: "unknown"
+                val allowedCount = extractAllowedCredentialsCount(requestJson)
+                PassLogger.w(
+                    TAG,
+                    "Challenge resolution failed: ${it::class.simpleName} " +
+                        "rpId=$rpToken allowedCreds=$allowedCount"
+                )
                 throw it
             }
         )
@@ -63,6 +74,14 @@ class AuthenticateWithPasskeyImpl @Inject constructor(
 
     companion object {
         private const val TAG = "AuthenticateWithPasskeyImpl"
+
+        private fun extractRpId(requestJson: String): String? = runCatching {
+            Json.parseToJsonElement(requestJson).jsonObject["rpId"]?.jsonPrimitive?.content
+        }.getOrNull()
+
+        private fun extractAllowedCredentialsCount(requestJson: String): Int = runCatching {
+            Json.parseToJsonElement(requestJson).jsonObject["allowCredentials"]?.jsonArray?.size ?: 0
+        }.getOrElse { 0 }
     }
 
 }

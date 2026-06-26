@@ -27,6 +27,7 @@ import kotlinx.serialization.json.jsonArray
 import kotlinx.serialization.json.jsonObject
 import kotlinx.serialization.json.jsonPrimitive
 import proton.android.pass.common.api.safeRunCatching
+import proton.android.pass.common.api.toLogToken
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import proton.android.pass.data.api.usecases.VerifyDigitalAssetLinksForCredentialSharing
@@ -48,14 +49,23 @@ class VerifyDigitalAssetLinksForCredentialSharingImpl @Inject constructor(
             val normalizedFingerprints = certificateFingerprints
                 .map(AppCertificate::normalizeSha256Fingerprint)
                 .toSet()
-            if (normalizedFingerprints.isEmpty()) return@safeRunCatching false
+            val siteToken = website.toLogToken()
+            val pkgToken = packageName.toLogToken()
+            if (normalizedFingerprints.isEmpty()) {
+                PassLogger.w(TAG, "DAL check skipped: no certificate fingerprints pkg=$pkgToken site=$siteToken")
+                return@safeRunCatching false
+            }
 
+            PassLogger.i(TAG, "DAL check: fetching assetlinks.json site=$siteToken pkg=$pkgToken")
             val request = Request.Builder()
                 .url("${website.trimEnd('/')}/.well-known/assetlinks.json")
                 .build()
 
             okHttpClient.newCall(request).execute().use { response ->
-                if (!response.isSuccessful) return@safeRunCatching false
+                if (!response.isSuccessful) {
+                    PassLogger.w(TAG, "DAL check failed: HTTP ${response.code} site=$siteToken pkg=$pkgToken")
+                    return@safeRunCatching false
+                }
                 val body = response.body ?: return@safeRunCatching false
                 if (body.contentLength() > MAX_RESPONSE_SIZE_BYTES) return@safeRunCatching false
                 val source = body.source()
@@ -68,6 +78,12 @@ class VerifyDigitalAssetLinksForCredentialSharingImpl @Inject constructor(
                         link = element.jsonObject,
                         packageName = packageName,
                         normalizedFingerprints = normalizedFingerprints
+                    )
+                }.also { matched ->
+                    PassLogger.i(
+                        TAG,
+                        "DAL check: match=$matched " +
+                            "entries=${assetLinks.size} site=$siteToken pkg=$pkgToken"
                     )
                 }
             }

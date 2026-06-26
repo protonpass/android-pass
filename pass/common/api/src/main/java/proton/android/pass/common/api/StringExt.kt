@@ -23,6 +23,10 @@ import kotlin.text.Typography.ellipsis
 
 fun String.ellipsize(size: Int) = take(size) + if (length > size) ellipsis else ""
 
+fun String.toLogToken(): String = "#%04x".format(hashCode() and LOG_TOKEN_MASK)
+
+private const val LOG_TOKEN_MASK = 0xFFFF
+
 /**
  * Remove all accents from a string.
  */

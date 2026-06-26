@@ -29,6 +29,7 @@ import proton.android.pass.domain.ItemType
 import proton.android.pass.domain.Passkey
 import proton.android.pass.domain.PasskeyId
 import proton.android.pass.domain.ShareId
+import proton.android.pass.log.api.PassLogger
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -47,9 +48,20 @@ class GetPasskeyByIdImpl @Inject constructor(
         val item = itemRepository.getById(userId, shareId, itemId)
         val passkeys = when (val itemType = item.itemType) {
             is ItemType.Login -> itemType.passkeys
-            else -> return None
+            else -> {
+                PassLogger.w(TAG, "getPasskeyById: item type is ${item.itemType::class.simpleName}, not Login")
+                return None
+            }
         }
 
-        return passkeys.find { it.id == passkeyId }.toOption()
+        return passkeys.find { it.id == passkeyId }.toOption().also { result ->
+            if (result is None) {
+                PassLogger.w(TAG, "getPasskeyById: passkeyId not found among ${passkeys.size} stored passkeys")
+            }
+        }
+    }
+
+    private companion object {
+        private const val TAG = "GetPasskeyByIdImpl"
     }
 }

@@ -24,6 +24,7 @@ import androidx.credentials.provider.CallingAppInfo
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.jsonObject
 import kotlinx.serialization.json.jsonPrimitive
+import proton.android.pass.common.api.toLogToken
 import proton.android.pass.log.api.PassLogger
 import javax.inject.Inject
 
@@ -37,6 +38,9 @@ internal class PasskeyActivityOriginResolver @Inject constructor(
             PassLogger.w(TAG, "Rejecting: unable to extract rpId from requestJson")
             return null
         }
+        val rpToken = rpId.toLogToken()
+        val callerToken = callingAppInfo.packageName.toLogToken()
+        PassLogger.i(TAG, "Resolving origin for rpId=$rpToken caller=$callerToken")
         return passkeyOriginVerifier.verifyOrigin(
             callingAppInfo = callingAppInfo,
             requestedRpId = rpId
@@ -51,5 +55,6 @@ internal class PasskeyActivityOriginResolver @Inject constructor(
             Json.parseToJsonElement(requestJson).jsonObject["rpId"]?.jsonPrimitive?.content
                 ?.takeIf { it.isNotEmpty() }
         }.getOrNull()
+
     }
 }

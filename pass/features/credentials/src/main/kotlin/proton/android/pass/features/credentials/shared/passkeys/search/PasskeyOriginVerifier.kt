@@ -23,6 +23,7 @@ import androidx.annotation.RequiresApi
 import androidx.credentials.provider.CallingAppInfo
 import proton.android.pass.crypto.api.Base64
 import proton.android.pass.data.api.usecases.VerifyDigitalAssetLinksForCredentialSharing
+import proton.android.pass.common.api.toLogToken
 import proton.android.pass.log.api.PassLogger
 import java.security.MessageDigest
 import javax.inject.Inject
@@ -34,25 +35,28 @@ internal class PasskeyOriginVerifier @Inject constructor(
 ) {
 
     internal suspend fun verifyOrigin(callingAppInfo: CallingAppInfo?, requestedRpId: String): String? {
+        val (caller, rpToken, callerToken) = validateRequest(callingAppInfo, requestedRpId) ?: return null
+        return if (caller.isOriginPopulated()) {
+            verifyBrowserOrigin(caller, requestedRpId, rpToken, callerToken)
+        } else {
+            verifyNativeAppOrigin(caller, requestedRpId, rpToken, callerToken)
+        }
+    }
+
+    private fun validateRequest(
+        callingAppInfo: CallingAppInfo?,
+        requestedRpId: String
+    ): Triple<CallingAppInfo, String, String>? {
+        val rpToken = requestedRpId.toLogToken()
         if (!isValidRpId(requestedRpId)) {
-            PassLogger.w(TAG, "Rejecting passkey request: rpId is not a valid hostname")
+            PassLogger.w(TAG, "Rejecting passkey request: rpId=$rpToken is not a valid hostname")
             return null
         }
-
         if (callingAppInfo == null) {
-            PassLogger.w(TAG, "Rejecting passkey request: no caller identity available")
+            PassLogger.w(TAG, "Rejecting passkey request: no caller identity available rpId=$rpToken")
             return null
         }
-
-        if (callingAppInfo.isOriginPopulated()) {
-            val browserOrigin = getBrowserOrigin(callingAppInfo) ?: run {
-                PassLogger.w(TAG, "Rejecting passkey request: privileged caller not in allowlist")
-                return null
-            }
-            return verifyBrowserOrigin(browserOrigin, requestedRpId)
-        }
-
-        return verifyNativeAppOrigin(callingAppInfo, requestedRpId)
+        return Triple(callingAppInfo, rpToken, callingAppInfo.packageName.toLogToken())
     }
 
     private fun getBrowserOrigin(callingAppInfo: CallingAppInfo): String? = runCatching {
@@ -61,21 +65,40 @@ internal class PasskeyOriginVerifier @Inject constructor(
         null
     }
 
-    private fun verifyBrowserOrigin(browserOrigin: String, requestedRpId: String): String? {
+    private fun verifyBrowserOrigin(
+        callingAppInfo: CallingAppInfo,
+        requestedRpId: String,
+        rpToken: String,
+        callerToken: String
+    ): String? {
+        val browserOrigin = getBrowserOrigin(callingAppInfo) ?: run {
+            PassLogger.w(TAG, "Rejecting passkey request: caller=$callerToken not in privileged allowlist")
+            return null
+        }
         val originHost = extractHost(browserOrigin)
         if (originHost == null || !isDomainMatch(originHost, requestedRpId)) {
-            PassLogger.w(TAG, "Rejecting passkey request: browser origin does not match requested rpId")
+            val originToken = browserOrigin.toLogToken()
+            PassLogger.w(
+                TAG,
+                "Rejecting passkey request: origin=$originToken " +
+                    "does not match rpId=$rpToken caller=$callerToken"
+            )
             return null
         }
         return browserOrigin
     }
 
-    private suspend fun verifyNativeAppOrigin(callingAppInfo: CallingAppInfo, requestedRpId: String): String? {
+    private suspend fun verifyNativeAppOrigin(
+        callingAppInfo: CallingAppInfo,
+        requestedRpId: String,
+        rpToken: String,
+        callerToken: String
+    ): String? {
         val packageName = callingAppInfo.packageName
 
         val signingKeyHash = getSigningKeyHash(callingAppInfo)
         if (signingKeyHash == null) {
-            PassLogger.w(TAG, "Rejecting passkey request: unable to determine caller signing key")
+            PassLogger.w(TAG, "Rejecting passkey request: unable to determine signing key caller=$callerToken")
             return null
         }
 
@@ -86,7 +109,7 @@ internal class PasskeyOriginVerifier @Inject constructor(
             certificateFingerprints = certificateFingerprints
         )
         if (!isAuthorized) {
-            PassLogger.w(TAG, "Rejecting passkey request: native app not authorized via live Digital Asset Links")
+            PassLogger.w(TAG, "Rejecting passkey request: caller=$callerToken not authorized via DAL for rpId=$rpToken")
             return null
         }
 
@@ -144,5 +167,6 @@ internal class PasskeyOriginVerifier @Inject constructor(
             if (host.equals(rpId, ignoreCase = true)) return true
             return host.endsWith(".$rpId", ignoreCase = true)
         }
+
     }
 }

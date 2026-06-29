@@ -325,9 +325,7 @@ internal fun HomeContent(
                                         showSearchResults = isPinningOrSearch &&
                                             uiState.searchUiState.searchQuery.isNotEmpty(),
                                         itemType = uiState.homeListUiState.searchFilterType,
-                                        itemCount = itemCount.takeIf {
-                                            !uiState.searchUiState.isProcessingSearch.value()
-                                        },
+                                        itemCount = itemCount,
                                         isPinnedMode = uiState.pinningUiState.inPinningMode
                                     )
                                 },

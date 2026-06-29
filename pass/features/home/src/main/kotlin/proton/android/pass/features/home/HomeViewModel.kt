@@ -1782,7 +1782,7 @@ class HomeViewModel @Inject constructor(
     private val paginatedItemTypeCountFlow: Flow<ItemTypeCount> = combine(
         observeCurrentUser().map { it.userId },
         searchOptionsFlow,
-        searchQueryState
+        debouncedSearchQueryState
     ) { userId, searchOptions, searchQuery ->
         Triple(userId, searchOptions, searchQuery)
     }.flatMapLatest { (userId, searchOptions, searchQuery) ->

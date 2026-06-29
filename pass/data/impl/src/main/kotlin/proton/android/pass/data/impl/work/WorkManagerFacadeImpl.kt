@@ -51,8 +51,7 @@ class WorkManagerFacadeImpl @Inject constructor(
                 shareIds = request.shareIds,
                 warnings = FetchItemsWorker.SyncWarnings(
                     hasInactiveShares = false,
-                    hasInvalidGroupShares = false,
-                    hasInvalidAddressShares = false
+                    hasInvalidGroupShares = false
                 )
             )
         }

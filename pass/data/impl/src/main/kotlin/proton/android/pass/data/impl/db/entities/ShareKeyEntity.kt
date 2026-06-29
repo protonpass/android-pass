@@ -23,7 +23,6 @@ import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.Index
 import me.proton.core.crypto.common.keystore.EncryptedByteArray
-import me.proton.core.user.data.entity.AddressEntity
 import me.proton.core.user.data.entity.UserEntity
 
 @Entity(
@@ -33,12 +32,6 @@ import me.proton.core.user.data.entity.UserEntity
         Index(value = [ShareKeyEntity.Columns.SHARE_ID, ShareKeyEntity.Columns.ROTATION])
     ],
     foreignKeys = [
-        ForeignKey(
-            entity = AddressEntity::class,
-            parentColumns = [ExternalColumns.ADDRESS_ID],
-            childColumns = [ShareKeyEntity.Columns.ADDRESS_ID],
-            onDelete = ForeignKey.CASCADE
-        ),
         ForeignKey(
             entity = UserEntity::class,
             parentColumns = [ExternalColumns.USER_ID],

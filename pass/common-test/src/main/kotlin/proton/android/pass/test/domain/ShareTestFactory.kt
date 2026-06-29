@@ -19,6 +19,7 @@
 package proton.android.pass.test.domain
 
 import me.proton.core.domain.entity.UserId
+import me.proton.core.user.domain.entity.AddressId
 import proton.android.pass.domain.Share
 import proton.android.pass.domain.ShareColor
 import proton.android.pass.domain.ShareFlags
@@ -45,6 +46,7 @@ object ShareTestFactory {
         fun create(
             id: String = StringTestFactory.randomString(),
             userId: String = StringTestFactory.randomString(),
+            addressId: String = StringTestFactory.randomString(),
             targetId: String = StringTestFactory.randomString(),
             permission: SharePermission = SharePermission(SharePermissionFlag.entries.random().value),
             vaultId: String = StringTestFactory.randomString(),
@@ -61,6 +63,7 @@ object ShareTestFactory {
         ): Share.Item = Share.Item(
             id = ShareId(id),
             userId = UserId(userId),
+            addressId = AddressId(addressId),
             targetId = targetId,
             permission = permission,
             vaultId = VaultId(vaultId),
@@ -85,6 +88,7 @@ object ShareTestFactory {
         fun create(
             id: String = StringTestFactory.randomString(),
             userId: String = StringTestFactory.randomString(),
+            addressId: String = StringTestFactory.randomString(),
             targetId: String = StringTestFactory.randomString(),
             permission: SharePermission = SharePermission(SharePermissionFlag.Admin.value),
             vaultId: String = StringTestFactory.randomString(),
@@ -104,6 +108,7 @@ object ShareTestFactory {
         ): Share.Vault = Share.Vault(
             id = ShareId(id),
             userId = UserId(userId),
+            addressId = AddressId(addressId),
             targetId = targetId,
             permission = permission,
             vaultId = VaultId(vaultId),

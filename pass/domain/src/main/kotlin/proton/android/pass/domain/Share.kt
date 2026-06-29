@@ -19,6 +19,7 @@
 package proton.android.pass.domain
 
 import me.proton.core.domain.entity.UserId
+import me.proton.core.user.domain.entity.AddressId
 import me.proton.core.util.kotlin.hasFlag
 import java.util.Date
 
@@ -41,6 +42,8 @@ sealed class Share {
     abstract val id: ShareId
 
     abstract val userId: UserId
+
+    abstract val addressId: AddressId
 
     abstract val shareType: ShareType
 
@@ -91,6 +94,7 @@ sealed class Share {
     data class Item(
         override val id: ShareId,
         override val userId: UserId,
+        override val addressId: AddressId,
         override val targetId: String,
         override val permission: SharePermission,
         override val vaultId: VaultId,
@@ -132,6 +136,7 @@ sealed class Share {
     data class Vault(
         override val id: ShareId,
         override val userId: UserId,
+        override val addressId: AddressId,
         override val targetId: String,
         override val permission: SharePermission,
         override val vaultId: VaultId,

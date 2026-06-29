@@ -131,6 +131,5 @@ data class RefreshSharesResult(
     val newShareIds: Set<ShareId>,
     val wasFirstSync: Boolean,
     val hasInactiveShares: Boolean,
-    val hasInvalidGroupShares: Boolean,
-    val hasInvalidAddressShares: Boolean
+    val hasInvalidGroupShares: Boolean
 )

@@ -143,14 +143,6 @@ internal fun SyncDialogContent(
                                 }
                             }
                         }
-                        AnimatedVisibility(visible = hasSyncSucceeded && hasInvalidAddressShares) {
-                            Text(
-                                modifier = Modifier.fillMaxWidth(),
-                                text = stringResource(R.string.sync_dialog_invalid_address_shares_warning),
-                                style = ProtonTheme.typography.defaultNorm,
-                                color = ProtonTheme.colors.notificationWarning
-                            )
-                        }
                         AnimatedVisibility(visible = hasSyncSucceeded && hasInvalidGroupShares) {
                             Text(
                                 modifier = Modifier.fillMaxWidth(),

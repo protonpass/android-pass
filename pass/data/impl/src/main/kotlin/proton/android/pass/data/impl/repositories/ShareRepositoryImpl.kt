@@ -272,7 +272,7 @@ class ShareRepositoryImpl @Inject constructor(
                 inactiveLocalShares.contains(ShareId(it.shareId))
         }
 
-        val (storedShares, skippedDueToGroupCount, skippedDueToAddressCount, skippedShareIds) =
+        val (storedShares, skippedDueToGroupCount, skippedShareIds) =
             storeShares(userId, remoteSharesToSave)
         val inactiveNotInLocalShares = storedShares
             .filter { !it.isActive }
@@ -295,8 +295,7 @@ class ShareRepositoryImpl @Inject constructor(
             newShareIds = newShares.map { ShareId(it.id) }.toSet(),
             wasFirstSync = wasFirstSync,
             hasInactiveShares = inactiveNotInLocalShares.isNotEmpty(),
-            hasInvalidGroupShares = skippedDueToGroupCount > 0,
-            hasInvalidAddressShares = skippedDueToAddressCount > 0
+            hasInvalidGroupShares = skippedDueToGroupCount > 0
         )
     }
 
@@ -447,9 +446,11 @@ class ShareRepositoryImpl @Inject constructor(
     override suspend fun getAddressForShareId(userId: UserId, shareId: ShareId): UserAddress {
         val entity = localShareDataSource.getById(userId, shareId)
             ?: throw ShareNotAvailableError()
-        val address = userAddressRepository.getAddress(userId, AddressId(entity.addressId))
-            ?: throw IllegalStateException("Could not find address for share")
-        return address
+        val addressId = AddressId(entity.addressId)
+        return userAddressRepository.getAddress(userId, addressId)
+            ?: userAddressRepository.getAddresses(userId, refresh = true)
+                .firstOrNull { it.addressId == addressId }
+            ?: throw IllegalStateException("Could not find address for share ${shareId.id}")
     }
 
     override fun observeSharedWithMeIds(userId: UserId, includeHiddenVault: Boolean): Flow<List<ShareId>> =
@@ -489,29 +490,16 @@ class ShareRepositoryImpl @Inject constructor(
     }
 
     private suspend fun storeShares(userId: UserId, shares: List<ShareResponse>): StoreSharesResult = coroutineScope {
-        if (shares.isEmpty()) return@coroutineScope StoreSharesResult(emptyList(), 0, 0)
+        if (shares.isEmpty()) return@coroutineScope StoreSharesResult(emptyList(), 0)
         PassLogger.i(TAG, "Fetching ShareKeys for ${shares.size} shares")
         val groups = if (shares.any { it.groupId != null }) {
             groupRepository.retrieveGroups(userId, forceRefresh = true)
         } else null
-        val requiredAddressIds = shares.map { AddressId(it.addressId) }.toSet()
-        val availableAddressIds = getAvailableAddressIds(userId, requiredAddressIds)
 
         var invalidGroupSharesCount = 0
-        var invalidAddressSharesCount = 0
         val skippedShareIds = mutableSetOf<ShareId>()
         val entities: List<Pair<ShareEntity, List<ShareKeyEntity>>> = shares
             .mapNotNull { response ->
-                val shareAddressId = AddressId(response.addressId)
-                if (shareAddressId !in availableAddressIds) {
-                    PassLogger.w(
-                        TAG,
-                        "Skipping share ${response.shareId} - address ${response.addressId} not found after refresh"
-                    )
-                    invalidAddressSharesCount++
-                    skippedShareIds.add(ShareId(response.shareId))
-                    return@mapNotNull null
-                }
                 val groupEmail = if (response.groupId != null) {
                     groups?.find { it.id.id == response.groupId }?.groupEmail
                         ?: run {
@@ -539,7 +527,7 @@ class ShareRepositoryImpl @Inject constructor(
 
         persistShareEntities(shareEntities, shareKeyEntities)
 
-        StoreSharesResult(shareEntities, invalidGroupSharesCount, invalidAddressSharesCount, skippedShareIds)
+        StoreSharesResult(shareEntities, invalidGroupSharesCount, skippedShareIds)
     }
 
     private suspend fun persistShareEntities(shareEntities: List<ShareEntity>, shareKeyEntities: List<ShareKeyEntity>) {
@@ -554,22 +542,6 @@ class ShareRepositoryImpl @Inject constructor(
                 shareKeyRepository.saveShareKeys(shareKeyEntities)
             }
         }
-    }
-
-    private suspend fun getAvailableAddressIds(userId: UserId, requiredAddressIds: Set<AddressId>): Set<AddressId> {
-        val localAddressIds = userAddressRepository.getAddresses(userId)
-            .map { it.addressId }
-            .toSet()
-        val missingAddressIds = requiredAddressIds - localAddressIds
-        if (missingAddressIds.isEmpty()) return localAddressIds
-
-        PassLogger.w(
-            TAG,
-            "Missing ${missingAddressIds.size} addresses referenced by shares, refreshing addresses"
-        )
-        return userAddressRepository.getAddresses(userId, refresh = true)
-            .map { it.addressId }
-            .toSet()
     }
 
     private suspend fun createShareResponseEntity(
@@ -667,6 +639,7 @@ class ShareRepositoryImpl @Inject constructor(
     private fun ShareEntity.toItemShare(): Share.Item = Share.Item(
         id = ShareId(id),
         userId = UserId(userId),
+        addressId = AddressId(addressId),
         targetId = targetId,
         permission = SharePermission(permission),
         vaultId = VaultId(vaultId),
@@ -699,6 +672,7 @@ class ShareRepositoryImpl @Inject constructor(
         return Share.Vault(
             id = ShareId(id),
             userId = UserId(userId),
+            addressId = AddressId(addressId),
             targetId = targetId,
             permission = SharePermission(permission),
             vaultId = VaultId(vaultId),
@@ -800,7 +774,6 @@ class ShareRepositoryImpl @Inject constructor(
     private data class StoreSharesResult(
         val shareEntities: List<ShareEntity>,
         val invalidGroupSharesCount: Int,
-        val invalidAddressSharesCount: Int,
         val skippedShareIds: Set<ShareId> = emptySet()
     )
 

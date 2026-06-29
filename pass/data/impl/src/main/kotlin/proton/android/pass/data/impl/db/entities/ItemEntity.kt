@@ -24,7 +24,6 @@ import androidx.room.ForeignKey
 import androidx.room.Index
 import me.proton.core.crypto.common.keystore.EncryptedByteArray
 import me.proton.core.crypto.common.keystore.EncryptedString
-import me.proton.core.user.data.entity.AddressEntity
 import me.proton.core.user.data.entity.UserEntity
 
 @Entity(
@@ -47,12 +46,6 @@ import me.proton.core.user.data.entity.UserEntity
         )
     ],
     foreignKeys = [
-        ForeignKey(
-            entity = AddressEntity::class,
-            parentColumns = [ExternalColumns.ADDRESS_ID],
-            childColumns = [ItemEntity.Columns.ADDRESS_ID],
-            onDelete = ForeignKey.CASCADE
-        ),
         ForeignKey(
             entity = UserEntity::class,
             parentColumns = [ExternalColumns.USER_ID],

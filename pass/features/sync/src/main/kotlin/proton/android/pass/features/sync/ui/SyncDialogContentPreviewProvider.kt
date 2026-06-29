@@ -35,21 +35,18 @@ import java.util.Date
 internal class SyncDialogContentPreviewProvider : PreviewParameterProvider<SyncDialogState> {
 
     override val values: Sequence<SyncDialogState> = sequence {
-        for (hasInvalidAddressShares in listOf(false, true)) {
-            for (hasInvalidGroupShares in listOf(false, true)) {
-                yield(
-                    SyncDialogState(
-                        itemSyncStatus = ItemSyncStatus.SyncSuccess(
-                            hasInactiveShares = false,
-                            hasInvalidGroupShares = hasInvalidGroupShares,
-                            hasInvalidAddressShares = hasInvalidAddressShares
-                        ),
-                        downloadedItemsMap = emptyMap(),
-                        insertedItems = None,
-                        vaultsLoadingResult = LoadingResult.Success(vaults)
-                    )
+        for (hasInvalidGroupShares in listOf(false, true)) {
+            yield(
+                SyncDialogState(
+                    itemSyncStatus = ItemSyncStatus.SyncSuccess(
+                        hasInactiveShares = false,
+                        hasInvalidGroupShares = hasInvalidGroupShares
+                    ),
+                    downloadedItemsMap = emptyMap(),
+                    insertedItems = None,
+                    vaultsLoadingResult = LoadingResult.Success(vaults)
                 )
-            }
+            )
         }
 
         yield(

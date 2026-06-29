@@ -51,8 +51,7 @@ class ForceSyncItemsImpl @Inject constructor(
         userId: UserId,
         shareIds: Set<ShareId>,
         hasInactiveShares: Boolean,
-        hasInvalidGroupShares: Boolean,
-        hasInvalidAddressShares: Boolean
+        hasInvalidGroupShares: Boolean
     ): ForceSyncResult {
         if (shareIds.isEmpty()) return ForceSyncResult.Success
 
@@ -137,8 +136,7 @@ class ForceSyncItemsImpl @Inject constructor(
                 itemSyncStatusRepository.emit(
                     status = ItemSyncStatus.SyncSuccess(
                         hasInactiveShares = hasInactiveShares,
-                        hasInvalidGroupShares = hasInvalidGroupShares,
-                        hasInvalidAddressShares = hasInvalidAddressShares
+                        hasInvalidGroupShares = hasInvalidGroupShares
                     )
                 )
                 ForceSyncResult.Success

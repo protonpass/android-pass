@@ -60,7 +60,6 @@ open class FetchItemsWorker @AssistedInject constructor(
         val fetchSource = inputData.getString(ARG_FETCH_SOURCE)?.let(FetchSource::valueOf)
         val hasInactiveShares = inputData.getBoolean(ARG_INACTIVE_SHARES, false)
         val hasInvalidGroupShares = inputData.getBoolean(ARG_INVALID_GROUP_SHARES, false)
-        val hasInvalidAddressShares = inputData.getBoolean(ARG_INVALID_ADDRESS_SHARES, false)
 
         if (fetchSource == null) {
             PassLogger.w(TAG, "Invalid fetch source")
@@ -73,8 +72,7 @@ open class FetchItemsWorker @AssistedInject constructor(
             userId = userId,
             shareIds = shareIds,
             hasInactiveShares = hasInactiveShares,
-            hasInvalidGroupShares = hasInvalidGroupShares,
-            hasInvalidAddressShares = hasInvalidAddressShares
+            hasInvalidGroupShares = hasInvalidGroupShares
         )
         return when (res) {
             ForceSyncResult.Error -> {
@@ -123,8 +121,7 @@ open class FetchItemsWorker @AssistedInject constructor(
 
     data class SyncWarnings(
         val hasInactiveShares: Boolean,
-        val hasInvalidGroupShares: Boolean,
-        val hasInvalidAddressShares: Boolean
+        val hasInvalidGroupShares: Boolean
     )
 
     companion object {
@@ -134,7 +131,6 @@ open class FetchItemsWorker @AssistedInject constructor(
         private const val ARG_FETCH_SOURCE = "fetch_source"
         private const val ARG_INACTIVE_SHARES = "inactive_shares"
         private const val ARG_INVALID_GROUP_SHARES = "invalid_group_shares"
-        private const val ARG_INVALID_ADDRESS_SHARES = "invalid_address_shares"
 
         private const val SYNC_NOTIFICATION_ID = 0
         private const val SYNC_NOTIFICATION_CHANNEL_ID = "SyncNotificationChannel"
@@ -151,8 +147,7 @@ open class FetchItemsWorker @AssistedInject constructor(
                 ARG_FETCH_SOURCE to source.name,
                 ARG_USER_ID to userId.id,
                 ARG_INACTIVE_SHARES to warnings.hasInactiveShares,
-                ARG_INVALID_GROUP_SHARES to warnings.hasInvalidGroupShares,
-                ARG_INVALID_ADDRESS_SHARES to warnings.hasInvalidAddressShares
+                ARG_INVALID_GROUP_SHARES to warnings.hasInvalidGroupShares
             )
 
             val data = Data.Builder()

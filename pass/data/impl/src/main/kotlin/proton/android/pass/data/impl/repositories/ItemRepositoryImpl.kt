@@ -38,6 +38,7 @@ import me.proton.core.account.domain.entity.AccountState
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.accountmanager.domain.getAccounts
 import me.proton.core.domain.entity.UserId
+import me.proton.core.user.domain.entity.AddressId
 import me.proton.core.user.domain.entity.UserAddress
 import me.proton.core.user.domain.repository.UserAddressRepository
 import proton.android.pass.common.api.AppDispatchers
@@ -168,7 +169,8 @@ class ItemRepositoryImpl @Inject constructor(
         val itemResponse =
             remoteItemDataSource.createItem(userId, share.id, body.toRequest(folderId))
         val entity = itemResponseToEntity(
-            userAddress,
+            userAddress.userId,
+            userAddress.addressId,
             itemResponse,
             share,
             listOf(shareKey)
@@ -213,7 +215,8 @@ class ItemRepositoryImpl @Inject constructor(
 
         val itemResponse = remoteItemDataSource.createAlias(userId, share.id, requestBody)
         val entity = itemResponseToEntity(
-            userAddress,
+            userAddress.userId,
+            userAddress.addressId,
             itemResponse,
             share,
             listOf(shareKey)
@@ -275,14 +278,16 @@ class ItemRepositoryImpl @Inject constructor(
         val itemResponse = remoteItemDataSource.createItemAndAlias(userId, shareId, request)
         val itemEntity =
             itemResponseToEntity(
-                userAddress,
+                userAddress.userId,
+                userAddress.addressId,
                 itemResponse.item.toDomain(),
                 share,
                 listOf(shareKey)
             )
         val aliasEntity =
             itemResponseToEntity(
-                userAddress,
+                userAddress.userId,
+                userAddress.addressId,
                 itemResponse.alias.toDomain(),
                 share,
                 listOf(shareKey)
@@ -359,7 +364,8 @@ class ItemRepositoryImpl @Inject constructor(
     }.let { itemRevision ->
         withUserAddress(userId) { userAddress ->
             itemResponseToEntity(
-                userAddress = userAddress,
+                userId = userAddress.userId,
+                addressId = userAddress.addressId,
                 itemRevision = itemRevision,
                 share = share,
                 shareKeys = listOf(shareKeyRepository.getLatestKeyForShare(share.id).first())
@@ -462,10 +468,9 @@ class ItemRepositoryImpl @Inject constructor(
             itemId = itemId
         )
         val share = shareRepository.getById(userId, shareId)
-        val userAddress = shareRepository.getAddressForShareId(userId, shareId)
         val shareKeys = shareKeyRepository.getShareKeys(
             userId = userId,
-            addressId = userAddress.addressId,
+            addressId = share.addressId,
             shareId = shareId,
             groupEmail = share.groupEmail
         ).firstOrNull() ?: throw IllegalStateException("No ShareKey found for item")
@@ -480,7 +485,8 @@ class ItemRepositoryImpl @Inject constructor(
 
         return encryptionContextProvider.withEncryptionContextSuspendable {
             itemResponseToEntity(
-                userAddress = userAddress,
+                userId = share.userId,
+                addressId = share.addressId,
                 itemRevision = itemRevision,
                 share = share,
                 shareKeys = shareKeys,
@@ -1174,7 +1180,6 @@ class ItemRepositoryImpl @Inject constructor(
     override suspend fun applyPendingEvent(event: ItemPendingEvent) = with(event) {
         if (!hasPendingItemRevisions) return
 
-        val userAddress = requireNotNull(userAddressRepository.getAddress(userId, addressId))
         val share = shareRepository.getById(userId, shareId)
         val shareKeys = shareKeyRepository.getShareKeys(
             userId = userId,
@@ -1195,7 +1200,8 @@ class ItemRepositoryImpl @Inject constructor(
         val items = decryptPendingItemRevisions(
             shareId = shareId,
             pendingRevisions = pendingRevisions,
-            userAddress = userAddress,
+            userId = userId,
+            addressId = addressId,
             share = share,
             shareKeys = shareKeys,
             folderKeysMap = folderKeysMap
@@ -1507,7 +1513,6 @@ class ItemRepositoryImpl @Inject constructor(
         revisions: List<ItemRevision>
     ) = safeRunCatching {
         val share = shareRepository.getById(userId, shareId)
-        val address = shareRepository.getAddressForShareId(userId, shareId)
         val localItemsForShare = localItemDataSource.observeItems(
             userId = userId,
             shareIds = listOf(shareId),
@@ -1524,7 +1529,7 @@ class ItemRepositoryImpl @Inject constructor(
 
         val shareKeys = shareKeyRepository.getShareKeys(
             userId = userId,
-            addressId = address.addressId,
+            addressId = share.addressId,
             shareId = shareId,
             groupEmail = share.groupEmail
         ).first()
@@ -1540,7 +1545,8 @@ class ItemRepositoryImpl @Inject constructor(
         val (itemsToUpsert, hasFailedItems) = decryptItemRevisions(
             shareId = shareId,
             revisions = revisions,
-            address = address,
+            userId = userId,
+            addressId = share.addressId,
             share = share,
             shareKeys = shareKeys,
             folderKeysMap = folderKeysMap
@@ -1660,7 +1666,8 @@ class ItemRepositoryImpl @Inject constructor(
         share: Share
     ) = withUserAddress(userId) { userAddress ->
         itemResponseToEntity(
-            userAddress,
+            userAddress.userId,
+            userAddress.addressId,
             itemRevision,
             share,
             listOf(shareKeyRepository.getLatestKeyForShare(share.id).first())
@@ -1765,7 +1772,8 @@ class ItemRepositoryImpl @Inject constructor(
                         ?: throw IllegalStateException("FolderKey not found in the database")
                 }
                 itemResponseToEntity(
-                    userAddress = userAddress,
+                    userId = userAddress.userId,
+                    addressId = userAddress.addressId,
                     itemRevision = revision,
                     share = destinationShare,
                     shareKeys = listOf(destinationKey),
@@ -1934,7 +1942,8 @@ class ItemRepositoryImpl @Inject constructor(
             body = body.toRequest()
         )
         val entity = itemResponseToEntity(
-            userAddress,
+            userAddress.userId,
+            userAddress.addressId,
             itemResponse,
             share,
             listOf(shareKey)
@@ -1958,21 +1967,23 @@ class ItemRepositoryImpl @Inject constructor(
     }
 
     private suspend fun itemResponseToEntity(
-        userAddress: UserAddress,
+        userId: UserId,
+        addressId: AddressId,
         itemRevision: ItemRevision,
         share: Share,
         shareKeys: List<ShareKey>
     ): ItemEntity = encryptionContextProvider.withEncryptionContextSuspendable {
         val folderKey: FolderKey? = itemRevision.folderId?.let {
             folderKeyRepository.getFolderKey(
-                userId = userAddress.userId,
+                userId = userId,
                 shareId = share.id,
                 folderId = FolderId(it)
             )
         }
 
         itemResponseToEntity(
-            userAddress = userAddress,
+            userId = userId,
+            addressId = addressId,
             itemRevision = itemRevision,
             share = share,
             shareKeys = shareKeys,
@@ -1982,7 +1993,8 @@ class ItemRepositoryImpl @Inject constructor(
     }
 
     private fun itemResponseToEntity(
-        userAddress: UserAddress,
+        userId: UserId,
+        addressId: AddressId,
         itemRevision: ItemRevision,
         share: Share,
         shareKeys: List<ShareKey>,
@@ -1999,8 +2011,8 @@ class ItemRepositoryImpl @Inject constructor(
         val hasTotp = output.item.hasTotp(encryptionContext)
         return ItemEntity(
             id = itemRevision.itemId,
-            userId = userAddress.userId.id,
-            addressId = userAddress.addressId.id,
+            userId = userId.id,
+            addressId = addressId.id,
             shareId = share.id.id,
             revision = itemRevision.revision,
             contentFormatVersion = itemRevision.contentFormatVersion,
@@ -2053,14 +2065,16 @@ class ItemRepositoryImpl @Inject constructor(
     private suspend fun decryptPendingItemRevisions(
         shareId: ShareId,
         pendingRevisions: List<ItemRevision>,
-        userAddress: UserAddress,
+        userId: UserId,
+        addressId: AddressId,
         share: Share,
         shareKeys: List<ShareKey>,
         folderKeysMap: Map<FolderId, FolderKey>
     ): List<ItemEntity> = decryptRevisions(
         shareId = shareId,
         revisions = pendingRevisions,
-        address = userAddress,
+        userId = userId,
+        addressId = addressId,
         share = share,
         shareKeys = shareKeys,
         folderKeysMap = folderKeysMap,
@@ -2070,7 +2084,8 @@ class ItemRepositoryImpl @Inject constructor(
     private suspend fun decryptItemRevisions(
         shareId: ShareId,
         revisions: List<ItemRevision>,
-        address: UserAddress,
+        userId: UserId,
+        addressId: AddressId,
         share: Share,
         shareKeys: List<ShareKey>,
         folderKeysMap: Map<FolderId, FolderKey>
@@ -2078,7 +2093,8 @@ class ItemRepositoryImpl @Inject constructor(
         val (items, failedItemIds) = decryptRevisions(
             shareId = shareId,
             revisions = revisions,
-            address = address,
+            userId = userId,
+            addressId = addressId,
             share = share,
             shareKeys = shareKeys,
             folderKeysMap = folderKeysMap,
@@ -2090,7 +2106,8 @@ class ItemRepositoryImpl @Inject constructor(
     private suspend fun decryptRevisions(
         shareId: ShareId,
         revisions: List<ItemRevision>,
-        address: UserAddress,
+        userId: UserId,
+        addressId: AddressId,
         share: Share,
         shareKeys: List<ShareKey>,
         folderKeysMap: Map<FolderId, FolderKey>,
@@ -2105,7 +2122,8 @@ class ItemRepositoryImpl @Inject constructor(
                             ?: throw IllegalStateException("FolderKey not found in the database")
                     }
                     itemResponseToEntity(
-                        userAddress = address,
+                        userId = userId,
+                        addressId = addressId,
                         itemRevision = revision,
                         share = share,
                         shareKeys = shareKeys,

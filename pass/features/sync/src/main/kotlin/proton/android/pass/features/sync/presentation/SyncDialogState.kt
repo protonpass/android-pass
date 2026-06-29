@@ -47,9 +47,6 @@ internal data class SyncDialogState(
 
     internal val hasSyncSucceeded: Boolean = itemSyncStatus is ItemSyncStatus.SyncSuccess
 
-    internal val hasInvalidAddressShares: Boolean =
-        (itemSyncStatus as? ItemSyncStatus.SyncSuccess)?.hasInvalidAddressShares ?: false
-
     internal val hasInvalidGroupShares: Boolean =
         (itemSyncStatus as? ItemSyncStatus.SyncSuccess)?.hasInvalidGroupShares ?: false
 

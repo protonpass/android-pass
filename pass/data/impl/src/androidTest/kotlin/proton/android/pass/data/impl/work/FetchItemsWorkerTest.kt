@@ -106,14 +106,12 @@ class FetchItemsWorkerTest {
     fun passesWarningFlagsToUseCase() = runTest {
         buildWorker(
             hasInactiveShares = true,
-            hasInvalidGroupShares = true,
-            hasInvalidAddressShares = true
+            hasInvalidGroupShares = true
         ).doWork()
 
         assertThat(fakeForceSyncItems.invocations).hasSize(1)
         assertThat(fakeForceSyncItems.invocations.first().hasInactiveShares).isTrue()
         assertThat(fakeForceSyncItems.invocations.first().hasInvalidGroupShares).isTrue()
-        assertThat(fakeForceSyncItems.invocations.first().hasInvalidAddressShares).isTrue()
     }
 
     private fun buildWorker(
@@ -122,7 +120,6 @@ class FetchItemsWorkerTest {
         fetchSource: FetchItemsWorker.FetchSource = FetchItemsWorker.FetchSource.ForceSync,
         hasInactiveShares: Boolean = false,
         hasInvalidGroupShares: Boolean = false,
-        hasInvalidAddressShares: Boolean = false,
         includeUserId: Boolean = true,
         includeFetchSource: Boolean = true
     ): FetchItemsWorker {
@@ -133,7 +130,6 @@ class FetchItemsWorkerTest {
                 putStringArray("share_ids", shareIds.map { it.id }.toTypedArray())
                 putBoolean("inactive_shares", hasInactiveShares)
                 putBoolean("invalid_group_shares", hasInvalidGroupShares)
-                putBoolean("invalid_address_shares", hasInvalidAddressShares)
             }
             .build()
         return TestListenableWorkerBuilder<FetchItemsWorker>(context)

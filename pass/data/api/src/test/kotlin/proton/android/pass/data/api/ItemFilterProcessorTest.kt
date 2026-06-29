@@ -21,6 +21,7 @@ package proton.android.pass.data.api
 import kotlinx.datetime.Clock
 import me.proton.core.crypto.common.keystore.EncryptedByteArray
 import me.proton.core.domain.entity.UserId
+import me.proton.core.user.domain.entity.AddressId
 import org.junit.Test
 import proton.android.pass.common.api.None
 import proton.android.pass.data.api.usecases.ItemData
@@ -51,6 +52,7 @@ class ItemFilterProcessorTest {
     ): Share.Vault = Share.Vault(
         id = ShareId(id),
         userId = UserId("user-1"),
+        addressId = AddressId("address-1"),
         targetId = "target-1",
         permission = SharePermission(0),
         vaultId = VaultId(vaultId),
@@ -80,6 +82,7 @@ class ItemFilterProcessorTest {
     ): Share.Item = Share.Item(
         id = ShareId(id),
         userId = UserId("user-1"),
+        addressId = AddressId("address-1"),
         targetId = "target-1",
         permission = SharePermission(0),
         vaultId = VaultId(vaultId),

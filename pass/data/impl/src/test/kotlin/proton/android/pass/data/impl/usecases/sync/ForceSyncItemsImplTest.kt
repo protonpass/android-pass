@@ -67,8 +67,7 @@ class ForceSyncItemsImplTest {
             userId = USER_ID,
             shareIds = setOf(shareId),
             hasInactiveShares = false,
-            hasInvalidGroupShares = false,
-            hasInvalidAddressShares = false
+            hasInvalidGroupShares = false
         )
 
         assertThat(result).isEqualTo(ForceSyncResult.Success)
@@ -88,8 +87,7 @@ class ForceSyncItemsImplTest {
                 userId = USER_ID,
                 shareIds = setOf(shareId),
                 hasInactiveShares = false,
-                hasInvalidGroupShares = false,
-                hasInvalidAddressShares = false
+                hasInvalidGroupShares = false
             )
         }
 
@@ -181,14 +179,12 @@ class ForceSyncItemsImplTest {
     private suspend fun invoke(
         shareIds: Set<ShareId>,
         hasInactiveShares: Boolean = false,
-        hasInvalidGroupShares: Boolean = false,
-        hasInvalidAddressShares: Boolean = false
+        hasInvalidGroupShares: Boolean = false
     ) = instance.invoke(
         userId = USER_ID,
         shareIds = shareIds,
         hasInactiveShares = hasInactiveShares,
-        hasInvalidGroupShares = hasInvalidGroupShares,
-        hasInvalidAddressShares = hasInvalidAddressShares
+        hasInvalidGroupShares = hasInvalidGroupShares
     )
 
     private companion object {

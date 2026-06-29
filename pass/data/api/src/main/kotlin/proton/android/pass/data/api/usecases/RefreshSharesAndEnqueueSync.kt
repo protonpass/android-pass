@@ -36,8 +36,7 @@ sealed interface RefreshSharesResult {
         val shareIds: Set<ShareId>,
         val isWorkerEnqueued: Boolean,
         val hasInactiveShares: Boolean,
-        val hasInvalidGroupShares: Boolean,
-        val hasInvalidAddressShares: Boolean
+        val hasInvalidGroupShares: Boolean
     ) : RefreshSharesResult
     data object NoSharesVaultCreated : RefreshSharesResult
     data object NoSharesSkipped : RefreshSharesResult

@@ -32,8 +32,7 @@ class FakeForceSyncItems @Inject constructor() : ForceSyncItems {
         val userId: UserId,
         val shareIds: Set<ShareId>,
         val hasInactiveShares: Boolean,
-        val hasInvalidGroupShares: Boolean,
-        val hasInvalidAddressShares: Boolean
+        val hasInvalidGroupShares: Boolean
     )
 
     val invocations = mutableListOf<Invocation>()
@@ -47,15 +46,13 @@ class FakeForceSyncItems @Inject constructor() : ForceSyncItems {
         userId: UserId,
         shareIds: Set<ShareId>,
         hasInactiveShares: Boolean,
-        hasInvalidGroupShares: Boolean,
-        hasInvalidAddressShares: Boolean
+        hasInvalidGroupShares: Boolean
     ): ForceSyncResult {
         invocations += Invocation(
             userId = userId,
             shareIds = shareIds,
             hasInactiveShares = hasInactiveShares,
-            hasInvalidGroupShares = hasInvalidGroupShares,
-            hasInvalidAddressShares = hasInvalidAddressShares
+            hasInvalidGroupShares = hasInvalidGroupShares
         )
         return result
     }

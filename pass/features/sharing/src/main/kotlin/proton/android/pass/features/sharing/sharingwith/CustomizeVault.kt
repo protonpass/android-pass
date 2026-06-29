@@ -37,6 +37,7 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.defaultSmallNorm
 import me.proton.core.domain.entity.UserId
+import me.proton.core.user.domain.entity.AddressId
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.ThemePreviewProvider
@@ -105,6 +106,7 @@ internal fun CustomizeVaultPreview(@PreviewParameter(ThemePreviewProvider::class
             CustomizeVault(
                 vaultShare = Share.Vault(
                     userId = UserId(id = ""),
+                    addressId = AddressId(""),
                     id = ShareId("1234"),
                     vaultId = VaultId("123"),
                     groupId = null,

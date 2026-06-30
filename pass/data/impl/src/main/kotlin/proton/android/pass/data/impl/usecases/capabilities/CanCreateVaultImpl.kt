@@ -20,16 +20,17 @@ package proton.android.pass.data.impl.usecases.capabilities
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.flatMapLatest
 import me.proton.core.user.domain.entity.User
 import me.proton.core.user.domain.extension.isOrganizationAdmin
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
-import proton.android.pass.data.api.usecases.GetUserPlan
 import proton.android.pass.data.api.usecases.ObserveCurrentUser
 import proton.android.pass.data.api.usecases.ObserveVaults
 import proton.android.pass.data.api.usecases.capabilities.CanCreateVault
 import proton.android.pass.data.api.usecases.organization.ObserveOrganizationVaultsPolicy
+import proton.android.pass.data.impl.repositories.PlanRepository
 import proton.android.pass.domain.Plan
 import proton.android.pass.domain.PlanLimit
 import proton.android.pass.domain.Vault
@@ -42,24 +43,28 @@ import javax.inject.Singleton
 class CanCreateVaultImpl @Inject constructor(
     private val observeOrganizationVaultsPolicy: ObserveOrganizationVaultsPolicy,
     private val observeVaults: ObserveVaults,
-    private val currentUserPlan: GetUserPlan,
+    private val planRepository: PlanRepository,
     private val observeCurrentUser: ObserveCurrentUser
 ) : CanCreateVault {
 
-    override fun invoke(): Flow<Boolean> = combine(
-        observeOrganizationVaultsPolicy(),
-        observeVaults(includeHidden = true),
-        currentUserPlan(),
-        observeCurrentUser(),
-        ::transformVaultCheck
-    )
+    override fun invoke(): Flow<Boolean> = observeCurrentUser()
+        .flatMapLatest { user ->
+            combine(
+                observeOrganizationVaultsPolicy(),
+                observeVaults(includeHidden = true),
+                planRepository.observePlan(user.userId)
+            ) { orgPolicyOption, vaults, plan ->
+                transformVaultCheck(orgPolicyOption, vaults, plan, user)
+            }
+        }
 
     private fun transformVaultCheck(
         organizationVaultsPolicyOption: Option<OrganizationVaultsPolicy>,
         vaults: List<Vault>,
-        plan: Plan,
+        plan: Plan?,
         currentUser: User
     ): Boolean {
+        if (plan == null) return false
         return when (organizationVaultsPolicyOption) {
             None -> false
             is Some -> {

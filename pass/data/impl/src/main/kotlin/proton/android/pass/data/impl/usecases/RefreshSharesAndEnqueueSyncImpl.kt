@@ -39,7 +39,6 @@ import proton.android.pass.data.impl.R
 import proton.android.pass.data.impl.work.FetchItemsWorker
 import proton.android.pass.domain.ShareColor
 import proton.android.pass.domain.ShareIcon
-import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.entity.NewVault
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.preferences.FeatureFlag
@@ -100,13 +99,17 @@ class RefreshSharesAndEnqueueSyncImpl @Inject constructor(
         syncType: RefreshSharesAndEnqueueSync.SyncType
     ): RefreshSharesResult.SharesFound {
         val existingShareIds = repositoryResult.allShareIds - repositoryResult.newShareIds
-        val (sharesToFetch, fetchSource) = getSharesAndSource(repositoryResult, syncType)
+        val fetchSource = getSharesAndSource(repositoryResult, syncType)
 
-        val shouldFetchFoldersAndItems = sharesToFetch.isNotEmpty()
+        val shouldFetchFoldersAndItems = when (fetchSource) {
+            is FetchItemsWorker.FetchSource.ForceSync,
+            is FetchItemsWorker.FetchSource.FirstSync -> true
+            is FetchItemsWorker.FetchSource.NewShare -> fetchSource.shareIds.isNotEmpty()
+        }
+
         if (shouldFetchFoldersAndItems) {
             enqueueWorker(
                 userId = userId,
-                shareIds = sharesToFetch,
                 fetchSource = fetchSource,
                 warnings = FetchItemsWorker.SyncWarnings(
                     hasInactiveShares = repositoryResult.hasInactiveShares,
@@ -126,37 +129,34 @@ class RefreshSharesAndEnqueueSyncImpl @Inject constructor(
     private fun getSharesAndSource(
         result: RepositoryRefreshSharesResult,
         syncType: RefreshSharesAndEnqueueSync.SyncType
-    ): Pair<Set<ShareId>, FetchItemsWorker.FetchSource> = when (syncType) {
+    ): FetchItemsWorker.FetchSource = when (syncType) {
         RefreshSharesAndEnqueueSync.SyncType.INCREMENTAL ->
-            result.newShareIds to if (result.wasFirstSync) {
+            if (result.wasFirstSync) {
                 FetchItemsWorker.FetchSource.FirstSync
             } else {
-                FetchItemsWorker.FetchSource.NewShare
+                FetchItemsWorker.FetchSource.NewShare(result.newShareIds)
             }
-
         RefreshSharesAndEnqueueSync.SyncType.FULL,
         RefreshSharesAndEnqueueSync.SyncType.FULL_BACKGROUND ->
-            result.allShareIds to FetchItemsWorker.FetchSource.ForceSync
+            FetchItemsWorker.FetchSource.ForceSync
     }
 
     private fun enqueueWorker(
         userId: UserId,
-        shareIds: Set<ShareId>,
         fetchSource: FetchItemsWorker.FetchSource,
         warnings: FetchItemsWorker.SyncWarnings
     ) {
         val request = FetchItemsWorker.getRequestFor(
             source = fetchSource,
             userId = userId,
-            shareIds = shareIds,
             warnings = warnings
         )
-        val policy = if (fetchSource == FetchItemsWorker.FetchSource.ForceSync) {
+        val policy = if (fetchSource is FetchItemsWorker.FetchSource.ForceSync) {
             ExistingWorkPolicy.REPLACE
         } else {
             ExistingWorkPolicy.KEEP
         }
-        PassLogger.i(TAG, "Enqueuing FetchItemsWorker with source: $fetchSource, policy: $policy")
+        PassLogger.i(TAG, "Enqueuing FetchItemsWorker with source: ${fetchSource::class.simpleName}, policy: $policy")
         workManager.enqueueUniqueWork(
             FetchItemsWorker.getOneTimeUniqueWorkName(userId),
             policy,

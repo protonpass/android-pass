@@ -46,9 +46,8 @@ class WorkManagerFacadeImpl @Inject constructor(
     override fun enqueueUniqueWork(name: String, request: UniqueWorkRequest) {
         val workRequest = when (request) {
             is UniqueWorkRequest.FetchItems -> FetchItemsWorker.getRequestFor(
-                source = FetchItemsWorker.FetchSource.NewShare,
+                source = FetchItemsWorker.FetchSource.NewShare(request.shareIds),
                 userId = request.userId,
-                shareIds = request.shareIds,
                 warnings = FetchItemsWorker.SyncWarnings(
                     hasInactiveShares = false,
                     hasInvalidGroupShares = false

@@ -34,6 +34,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import proton.android.pass.data.api.usecases.sync.ForceSyncResult
 import proton.android.pass.data.fakes.usecases.sync.FakeForceSyncItems
+import proton.android.pass.data.impl.fakes.FakeShareRepository
 import proton.android.pass.domain.ShareId
 
 @RunWith(AndroidJUnit4::class)
@@ -42,10 +43,13 @@ class FetchItemsWorkerTest {
     private val context = InstrumentationRegistry.getInstrumentation().targetContext
 
     private lateinit var fakeForceSyncItems: FakeForceSyncItems
+    private lateinit var fakeShareRepository: FakeShareRepository
 
     @Before
     fun setup() {
         fakeForceSyncItems = FakeForceSyncItems()
+        fakeShareRepository = FakeShareRepository()
+        fakeShareRepository.emitObserveShares(Result.success(emptyList()))
     }
 
     @Test
@@ -95,7 +99,10 @@ class FetchItemsWorkerTest {
     fun passesCorrectParametersToUseCase() = runTest {
         val shareId = ShareId("test-share-id")
 
-        buildWorker(shareIds = setOf(shareId)).doWork()
+        buildWorker(
+            shareIds = setOf(shareId),
+            fetchSource = FetchItemsWorker.FetchSource.NewShare(setOf(shareId))
+        ).doWork()
 
         assertThat(fakeForceSyncItems.invocations).hasSize(1)
         assertThat(fakeForceSyncItems.invocations.first().userId).isEqualTo(USER_ID)
@@ -126,7 +133,7 @@ class FetchItemsWorkerTest {
         val inputData = Data.Builder()
             .apply {
                 if (includeUserId) putString("user_id", userId.id)
-                if (includeFetchSource) putString("fetch_source", fetchSource.name)
+                if (includeFetchSource) putString("fetch_source", fetchSource.sourceName())
                 putStringArray("share_ids", shareIds.map { it.id }.toTypedArray())
                 putBoolean("inactive_shares", hasInactiveShares)
                 putBoolean("invalid_group_shares", hasInvalidGroupShares)
@@ -142,10 +149,17 @@ class FetchItemsWorkerTest {
                 ): ListenableWorker = FetchItemsWorker(
                     context = appContext,
                     workerParameters = workerParameters,
-                    forceSyncItems = fakeForceSyncItems
+                    forceSyncItems = fakeForceSyncItems,
+                    shareRepository = fakeShareRepository
                 )
             })
             .build()
+    }
+
+    private fun FetchItemsWorker.FetchSource.sourceName(): String = when (this) {
+        is FetchItemsWorker.FetchSource.ForceSync -> "ForceSync"
+        is FetchItemsWorker.FetchSource.FirstSync -> "FirstSync"
+        is FetchItemsWorker.FetchSource.NewShare -> "NewShare"
     }
 
     companion object {

@@ -105,9 +105,6 @@ class ObserveUpgradeInfoImpl @Inject constructor(
     private fun Long.toBoundedInt(): Int = coerceAtMost(Int.MAX_VALUE.toLong()).toInt()
 
     private companion object {
-        // Placeholder emitted while plan data is not yet in the DB (e.g. first login before
-        // user-access has been fetched). Hides upgrade UI and applies no vault/alias/totp limits
-        // so nothing is incorrectly restricted during the loading window.
         val LOADING_PLAN = Plan(
             planType = PlanType.Unknown(),
             hideUpgrade = true,

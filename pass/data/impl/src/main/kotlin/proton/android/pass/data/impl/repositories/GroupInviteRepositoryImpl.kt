@@ -29,6 +29,7 @@ import me.proton.core.crypto.common.keystore.EncryptedByteArray
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.crypto.api.context.EncryptionContext
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
+import proton.android.pass.common.api.safeRunCatching
 import proton.android.pass.data.api.repositories.GroupInviteRepository
 import proton.android.pass.data.impl.crypto.EncryptGroupInviteKeys
 import proton.android.pass.data.impl.crypto.ReencryptGroupInviteContents
@@ -151,8 +152,14 @@ class GroupInviteRepositoryImpl @Inject constructor(
         }
         val hasNewInvites = newInvites.isNotEmpty()
 
-        val invitesWithKeys: List<GroupInviteAndKeysEntity> = newInvites
-            .map { invite -> inviteAndKeysEntity(invite, userId) }
+        val invitesWithKeys: List<GroupInviteAndKeysEntity> = newInvites.mapNotNull { invite ->
+            safeRunCatching { inviteAndKeysEntity(invite, userId) }
+                .onFailure {
+                    PassLogger.w(TAG, "Failed to process invite ${invite.inviteId}, skipping")
+                    PassLogger.w(TAG, it)
+                }
+                .getOrNull()
+        }
 
         if (invitesWithKeys.isNotEmpty()) {
             PassLogger.i(TAG, "Inserting ${invitesWithKeys.size} invites")

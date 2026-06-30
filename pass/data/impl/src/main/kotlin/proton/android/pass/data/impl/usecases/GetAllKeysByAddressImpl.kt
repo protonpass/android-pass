@@ -43,8 +43,11 @@ class GetAllKeysByAddressImpl @Inject constructor(
         val userId = accountManager.getPrimaryUserId().firstOrNull()
             ?: return Result.failure(IllegalStateException("Could not find Primary User Id"))
 
-        // Perform regular lookup
-        val remoteAddress = publicAddressRepository.getPublicAddressOrNull(userId, email)
+        // Primary lookup via proton-libs. Guarded because it can throw (e.g. 422) instead of
+        // returning null for addresses that don't exist as regular internal users.
+        val remoteAddress = safeRunCatching {
+            publicAddressRepository.getPublicAddressOrNull(userId, email)
+        }.getOrNull()
         if (remoteAddress != null && remoteAddress.keys.isNotEmpty()) {
             return Result.success(remoteAddress.keys)
         }

@@ -103,8 +103,7 @@ internal fun SelectItemList(
                     } else {
                         listUiState.paginatedItemCount
                     }
-                    val shouldShowItemListHeader = loadedItemCount > 0 &&
-                        !uiState.searchUiState.isProcessingSearch.value()
+                    val shouldShowItemListHeader = loadedItemCount > 0
                     if (shouldShowItemListHeader) {
                         ItemListHeader(
                             countContent = {

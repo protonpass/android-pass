@@ -847,7 +847,7 @@ class SelectItemViewModel @Inject constructor(
         selectItemStateFlow,
         usersAutofillSharesMapFlow,
         selectedAccountFlow,
-        searchQueryState,
+        debouncedSearchQueryState,
         sortingOptionFlow,
         isInSearchModeState,
         observeIndexingStatus(),

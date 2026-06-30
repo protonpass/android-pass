@@ -1540,7 +1540,7 @@ class HomeViewModel @Inject constructor(
     @SuppressWarnings("ClassOrdering")
     private val homeListItemPagingFlowInternal: Flow<PagingData<HomeListItem>> = combineN(
         observeCurrentUser().map { it.userId },
-        searchQueryState,
+        debouncedSearchQueryState,
         searchOptionsFlow,
         shareListWrapperFlow,
         isInSearchModeState,

@@ -25,10 +25,10 @@ import me.proton.core.domain.entity.UserId
 import org.junit.Before
 import org.junit.Test
 import proton.android.pass.common.api.Some
-import proton.android.pass.data.fakes.usecases.FakeGetUserPlan
 import proton.android.pass.data.fakes.usecases.FakeObserveCurrentUser
 import proton.android.pass.data.fakes.usecases.FakeObserveVaults
 import proton.android.pass.data.fakes.usecases.organizations.FakeObserveOrganizationVaultsPolicy
+import proton.android.pass.data.impl.fakes.FakePlanRepository
 import proton.android.pass.data.impl.usecases.capabilities.CanCreateVaultImpl
 import proton.android.pass.domain.Plan
 import proton.android.pass.domain.PlanLimit
@@ -49,7 +49,7 @@ internal class CanCreateVaultsImplTest {
 
     private lateinit var observeOrganizationVaultsPolicy: FakeObserveOrganizationVaultsPolicy
     private lateinit var observeVaults: FakeObserveVaults
-    private lateinit var currentUserPlan: FakeGetUserPlan
+    private lateinit var planRepository: FakePlanRepository
     private lateinit var observeCurrentUser: FakeObserveCurrentUser
     private lateinit var clock: FixedClock
 
@@ -57,16 +57,22 @@ internal class CanCreateVaultsImplTest {
     fun setup() {
         observeOrganizationVaultsPolicy = FakeObserveOrganizationVaultsPolicy()
         observeVaults = FakeObserveVaults()
-        currentUserPlan = FakeGetUserPlan()
+        planRepository = FakePlanRepository()
         observeCurrentUser = FakeObserveCurrentUser()
         clock = FixedClock()
 
-        observeCurrentUser.sendUser(UserTestFactory.create(email = "test@test.test", name = "test user"))
+        observeCurrentUser.sendUser(
+            UserTestFactory.create(
+                email = "test@test.test",
+                name = "test user",
+                userId = USER_ID
+            )
+        )
 
         instance = CanCreateVaultImpl(
             observeOrganizationVaultsPolicy = observeOrganizationVaultsPolicy,
             observeVaults = observeVaults,
-            currentUserPlan = currentUserPlan,
+            planRepository = planRepository,
             observeCurrentUser = observeCurrentUser
         )
     }
@@ -236,7 +242,7 @@ internal class CanCreateVaultsImplTest {
             totpLimit = limit,
             updatedAt = clock.now().epochSeconds
         )
-        currentUserPlan.setResult(value = Result.success(plan))
+        planRepository.emitPlan(USER_ID, plan)
     }
 
     companion object {

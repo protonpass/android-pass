@@ -21,7 +21,6 @@ package proton.android.pass.data.impl.usecases
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
-import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
@@ -37,6 +36,8 @@ import proton.android.pass.data.api.usecases.ObserveVaultCount
 import proton.android.pass.data.api.usecases.UpgradeInfo
 import proton.android.pass.data.impl.repositories.PlanRepository
 import proton.android.pass.domain.Plan
+import proton.android.pass.domain.PlanLimit
+import proton.android.pass.domain.PlanType
 import proton.android.pass.domain.ShareSelection
 import javax.inject.Inject
 
@@ -83,7 +84,7 @@ class ObserveUpgradeInfoImpl @Inject constructor(
     }
 
     private fun observePlan(userId: UserId): Flow<Plan> = planRepository.observePlan(userId = userId)
-        .filterNotNull()
+        .map { it ?: LOADING_PLAN }
         .distinctUntilChanged()
 
     private fun observeTotpCount(): Flow<Int> = observeMFACount(includeHiddenVault = true).distinctUntilChanged()
@@ -102,4 +103,18 @@ class ObserveUpgradeInfoImpl @Inject constructor(
     private fun shouldDisplayUpgrade(plan: Plan): Boolean = !plan.hideUpgrade && !plan.isPaidPlan
 
     private fun Long.toBoundedInt(): Int = coerceAtMost(Int.MAX_VALUE.toLong()).toInt()
+
+    private companion object {
+        // Placeholder emitted while plan data is not yet in the DB (e.g. first login before
+        // user-access has been fetched). Hides upgrade UI and applies no vault/alias/totp limits
+        // so nothing is incorrectly restricted during the loading window.
+        val LOADING_PLAN = Plan(
+            planType = PlanType.Unknown(),
+            hideUpgrade = true,
+            vaultLimit = PlanLimit.Unlimited,
+            aliasLimit = PlanLimit.Unlimited,
+            totpLimit = PlanLimit.Unlimited,
+            updatedAt = 0L
+        )
+    }
 }

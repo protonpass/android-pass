@@ -18,6 +18,7 @@
 
 package proton.android.pass.data.impl.usecases
 
+import androidx.work.WorkManager
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import me.proton.core.domain.entity.UserId
@@ -27,6 +28,8 @@ import proton.android.pass.data.api.usecases.ClearUserData
 import proton.android.pass.data.impl.db.DatabaseCleanupHelper
 import proton.android.pass.data.impl.local.LocalTelemetryGrowthDataSource
 import proton.android.pass.data.impl.repositories.ExtraPasswordRepository
+import proton.android.pass.data.impl.work.FetchItemsWorker
+import proton.android.pass.data.impl.work.SearchIndexWorker
 import proton.android.pass.log.api.LogFileManager
 import javax.inject.Inject
 
@@ -36,10 +39,13 @@ class ClearUserDataImpl @Inject constructor(
     private val databaseCleanupHelper: DatabaseCleanupHelper,
     private val localTelemetryGrowthDataSource: LocalTelemetryGrowthDataSource,
     private val logFileManager: LogFileManager,
-    private val searchIndexRepository: SearchIndexRepository
+    private val searchIndexRepository: SearchIndexRepository,
+    private val workManager: WorkManager
 ) : ClearUserData {
 
     override suspend fun invoke(userId: UserId) {
+        workManager.cancelUniqueWork(FetchItemsWorker.getOneTimeUniqueWorkName(userId))
+        workManager.cancelUniqueWork(SearchIndexWorker.getWorkName(userId))
         withContext(Dispatchers.IO) {
             shareRepository.deleteLocalSharesForUser(userId)
             extraPasswordRepository.removeLocalExtraPasswordForUser(userId)

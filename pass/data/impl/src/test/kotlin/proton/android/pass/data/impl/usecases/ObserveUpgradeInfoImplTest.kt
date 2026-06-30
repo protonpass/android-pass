@@ -106,13 +106,16 @@ class ObserveUpgradeInfoImplTest {
     }
 
     @Test
-    fun `does not emit until plan becomes available`() = runTest {
+    fun `emits loading plan when plan is null then real plan when available`() = runTest {
         val userId = UserId("user-id")
         val harness = ObserveUpgradeInfoHarness()
         harness.emitPlan(userId, null)
 
         harness.instance(userId).test {
-            expectNoEvents()
+            val loading = awaitItem()
+            assertThat(loading.plan.planType).isInstanceOf(PlanType.Unknown::class.java)
+            assertThat(loading.isUpgradeAvailable).isFalse()
+
             harness.emitPlan(userId, freePlan(hideUpgrade = false))
             val item = awaitItem()
             assertThat(item.plan.planType).isInstanceOf(PlanType.Free::class.java)

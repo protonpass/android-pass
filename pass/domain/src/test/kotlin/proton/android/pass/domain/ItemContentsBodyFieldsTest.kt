@@ -306,7 +306,8 @@ class ItemContentsBodyFieldsTest {
         packageInfoSet = emptySet(),
         primaryTotp = HiddenState.Empty(""),
         customFields = customFields,
-        passkeys = emptyList()
+        passkeys = emptyList(),
+        autofillUrls = emptyList()
     )
 
     private fun identityContents(

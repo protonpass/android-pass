@@ -30,6 +30,7 @@ import dagger.hilt.components.SingletonComponent
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.firstOrNull
@@ -60,6 +61,7 @@ import proton.android.pass.log.api.PassLogger
 import proton.android.pass.preferences.FeatureFlag
 import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
+import kotlin.time.Duration.Companion.milliseconds
 
 class AccountListenerInitializer : Initializer<Unit> {
 
@@ -147,39 +149,53 @@ class AccountListenerInitializer : Initializer<Unit> {
         PassLogger.i(TAG, "Account ready : ${account.userId}")
 
         if (!isUserEventsEnabled) {
-            coroutineScope {
+            refreshAccountData(
+                userId = account.userId,
+                refreshOrganizationSettings = refreshOrganizationSettings,
+                refreshUserAccess = refreshUserAccess,
+                refreshBreaches = refreshBreaches
+            )
+        }
+    }
+
+    private suspend fun refreshAccountData(
+        userId: UserId,
+        refreshOrganizationSettings: RefreshOrganizationSettings,
+        refreshUserAccess: RefreshUserAccess,
+        refreshBreaches: RefreshBreaches
+    ) {
+        val retryDelaysMs = listOf(0L, 3_000L, 5_000L, 10_000L, 20_000L)
+
+        for ((index, delayMs) in retryDelaysMs.withIndex()) {
+            if (delayMs > 0) {
+                PassLogger.i(TAG, "Retrying account data refresh for $userId (attempt ${index + 1})")
+                delay(delayMs.milliseconds)
+            }
+
+            val results = coroutineScope {
                 listOf(
                     async {
-                        safeRunCatching {
-                            refreshOrganizationSettings(account.userId)
-                        }.onSuccess {
-                            PassLogger.i(TAG, "Organization settings refreshed for ${account.userId}")
-                        }.onFailure {
-                            PassLogger.w(TAG, "Could not refresh organization settings for ${account.userId}")
-                            PassLogger.w(TAG, it)
-                        }
+                        safeRunCatching { refreshOrganizationSettings(userId) }
+                            .onFailure { PassLogger.w(TAG, "Could not refresh organization settings for $userId") }
                     },
                     async {
-                        safeRunCatching {
-                            refreshBreaches(account.userId)
-                        }.onSuccess {
-                            PassLogger.i(TAG, "Breaches refreshed for ${account.userId}")
-                        }.onFailure {
-                            PassLogger.w(TAG, "Could not refresh breaches for ${account.userId}")
-                            PassLogger.w(TAG, it)
-                        }
+                        safeRunCatching { refreshBreaches(userId) }
+                            .onFailure { PassLogger.w(TAG, "Could not refresh breaches for $userId") }
                     },
                     async {
-                        safeRunCatching {
-                            refreshUserAccess(account.userId)
-                        }.onSuccess {
-                            PassLogger.i(TAG, "Plan refreshed for ${account.userId}")
-                        }.onFailure {
-                            PassLogger.w(TAG, "Refresh plan errored for ${account.userId}")
-                            PassLogger.w(TAG, it)
-                        }
+                        safeRunCatching { refreshUserAccess(userId) }
+                            .onFailure { PassLogger.w(TAG, "Could not refresh user access for $userId") }
                     }
                 ).awaitAll()
+            }
+
+            if (results.all { it.isSuccess }) {
+                PassLogger.i(TAG, "Account data refresh succeeded for $userId")
+                return
+            }
+
+            if (index == retryDelaysMs.lastIndex) {
+                PassLogger.w(TAG, "Account data refresh failed for $userId after all retries")
             }
         }
     }

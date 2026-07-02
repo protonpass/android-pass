@@ -92,7 +92,6 @@ class RemoteAssetLinkDataSourceImpl @Inject constructor(
                 }.onSuccess(continuation::resume)
                     .onFailure { e ->
                         PassLogger.w(TAG, "Failed to parse response")
-                        PassLogger.w(TAG, e)
                         continuation.resumeWithException(e)
                     }
             },

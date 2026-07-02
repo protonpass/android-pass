@@ -144,7 +144,8 @@ class AccountListenerInitializer : Initializer<Unit> {
         refreshUserAccess: RefreshUserAccess,
         refreshBreaches: RefreshBreaches
     ) {
-        val isUserEventsEnabled = featureFlagsPreferencesRepository.get<Boolean>(FeatureFlag.PASS_USER_EVENTS_V1)
+        val isUserEventsEnabled = featureFlagsPreferencesRepository
+            .get<Boolean>(FeatureFlag.PASS_USER_EVENTS_V1, account.userId)
             .first()
         PassLogger.i(TAG, "Account ready : ${account.userId}")
 

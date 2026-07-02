@@ -41,13 +41,13 @@ class ObserveGroupMembersByGroupImpl @Inject constructor(
 ) : ObserveGroupMembersByGroup {
 
     override fun invoke(userId: UserId?, forceRefresh: Boolean): Flow<List<GroupMembers>> = flow {
+        val currentUserId = userId ?: accountManager.getPrimaryUserId().firstOrNull()
+            ?: throw UserIdNotAvailableError()
         val isGroupSharingEnabled =
-            featureFlagsPreferencesRepository.get<Boolean>(FeatureFlag.PASS_GROUP_SHARE)
+            featureFlagsPreferencesRepository.get<Boolean>(FeatureFlag.PASS_GROUP_SHARE, currentUserId)
                 .firstOrNull()
                 ?: false
         if (isGroupSharingEnabled) {
-            val currentUserId = userId ?: accountManager.getPrimaryUserId().firstOrNull()
-                ?: throw UserIdNotAvailableError()
             emit(retrieveGroupMembersByGroup(currentUserId, forceRefresh))
         } else {
             emit(emptyList())

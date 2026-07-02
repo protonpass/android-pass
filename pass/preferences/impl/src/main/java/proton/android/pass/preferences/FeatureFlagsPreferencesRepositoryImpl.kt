@@ -107,6 +107,10 @@ class FeatureFlagsPreferencesRepositoryImpl @Inject constructor(
         ) { enablePagination.value }
     }
 
+    @Suppress("UNCHECKED_CAST")
+    override fun <T> get(featureFlag: FeatureFlag, userId: UserId): Flow<T> =
+        observeIsFeatureEnabled(featureFlag, userId).map { it as T }
+
     override fun <T> set(featureFlag: FeatureFlag, value: T?): Result<Unit> = when (featureFlag) {
         AUTOFILL_DEBUG_MODE -> setFeatureFlag {
             autofillDebugModeEnabled = boolFlagPrefProto(value)

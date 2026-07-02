@@ -23,6 +23,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.update
+import me.proton.core.domain.entity.UserId
 import proton.android.pass.preferences.FeatureFlag.AUTOFILL_DEBUG_MODE
 import proton.android.pass.preferences.FeatureFlag.EXTRA_LOGGING
 import proton.android.pass.preferences.FeatureFlag.PASS_ALLOW_NO_VAULT
@@ -58,6 +59,8 @@ class FakeFeatureFlagsPreferenceRepository @Inject constructor() :
             ENABLE_PAGINATION -> it.getOrDefault(ENABLE_PAGINATION, false) as T
         }
     }
+
+    override fun <T> get(featureFlag: FeatureFlag, userId: UserId): Flow<T> = get(featureFlag)
 
     override fun <T> set(featureFlag: FeatureFlag, value: T?): Result<Unit> {
         state.update {

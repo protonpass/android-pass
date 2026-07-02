@@ -159,7 +159,7 @@ class GetSuggestedAutofillItemsImpl @Inject constructor(
                 ),
                 getUrlFromPackageNameFlow(suggestion),
                 userPreferencesRepository.observeUseDigitalAssetLinksPreference().map { it.value() },
-                featureFlagsPreferencesRepository[FeatureFlag.PASS_AUTOFILL_URL_ADVANCED_MODES]
+                featureFlagsPreferencesRepository.get<Boolean>(FeatureFlag.PASS_AUTOFILL_URL_ADVANCED_MODES, userId)
             ) { items: List<Item>, digitalAssetLinkSuggestions: List<Suggestion.Url>,
                 isDALEnabled: Boolean, useAutofillUrlModes: Boolean ->
                 val filteredItems = suggestionItemFilter.filter(items, suggestion, useAutofillUrlModes)

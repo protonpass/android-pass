@@ -19,10 +19,13 @@
 package proton.android.pass.preferences
 
 import kotlinx.coroutines.flow.Flow
+import me.proton.core.domain.entity.UserId
 
 interface FeatureFlagsPreferencesRepository {
 
     operator fun <T> get(featureFlag: FeatureFlag): Flow<T>
+
+    operator fun <T> get(featureFlag: FeatureFlag, userId: UserId): Flow<T>
 
     fun <T> set(featureFlag: FeatureFlag, value: T? = null): Result<Unit>
 

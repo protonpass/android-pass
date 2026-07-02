@@ -43,10 +43,10 @@ class ObserveFoldersByParentIdImpl @Inject constructor(
         shareId: ShareId,
         parentFolderId: FolderId?
     ): Flow<List<Folder>> =
-        whenFoldersEnabled { folderRepository.observeFoldersByParentId(userId, shareId, parentFolderId) }
+        whenFoldersEnabled(userId) { folderRepository.observeFoldersByParentId(userId, shareId, parentFolderId) }
 
     override fun invoke(userId: UserId, shareId: ShareId): Flow<List<Folder>> =
-        whenFoldersEnabled { folderRepository.observeAllFolders(userId, shareId) }
+        whenFoldersEnabled(userId) { folderRepository.observeAllFolders(userId, shareId) }
 
     override fun invoke(shareId: ShareId, parentFolderId: FolderId?): Flow<List<Folder>> =
         observeCurrentUser().flatMapLatest { user -> invoke(user.userId, shareId, parentFolderId) }
@@ -54,7 +54,7 @@ class ObserveFoldersByParentIdImpl @Inject constructor(
     override fun invoke(shareId: ShareId): Flow<List<Folder>> =
         observeCurrentUser().flatMapLatest { user -> invoke(user.userId, shareId) }
 
-    private fun whenFoldersEnabled(block: () -> Flow<List<Folder>>): Flow<List<Folder>> =
-        featureFlagsPreferencesRepository.get<Boolean>(FeatureFlag.PASS_FOLDERS)
+    private fun whenFoldersEnabled(userId: UserId, block: () -> Flow<List<Folder>>): Flow<List<Folder>> =
+        featureFlagsPreferencesRepository.get<Boolean>(FeatureFlag.PASS_FOLDERS, userId)
             .flatMapLatest { isEnabled -> if (isEnabled) block() else flowOf(emptyList()) }
 }

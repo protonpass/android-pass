@@ -387,7 +387,7 @@ class UserInviteRepositoryImpl @Inject constructor(
             )
         )
         val isGroupsEnabled =
-            featureFlagsPreferencesRepository.get<Boolean>(FeatureFlag.PASS_GROUP_SHARE)
+            featureFlagsPreferencesRepository.get<Boolean>(FeatureFlag.PASS_GROUP_SHARE, userId)
                 .firstOrNull()
                 ?: false
         val groupData = if (isGroupsEnabled) fetchGroupData(userId) else GroupData()

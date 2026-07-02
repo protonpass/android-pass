@@ -56,9 +56,9 @@ class PerformSyncImpl @Inject constructor(
 
     private suspend fun performSyncWithPendingEvents(userId: UserId, forceSync: Boolean) = coroutineScope {
         val isUserEventsEnabled: Boolean =
-            featureFlagsPreferencesRepository.get<Boolean>(FeatureFlag.PASS_USER_EVENTS_V1).first()
+            featureFlagsPreferencesRepository.get<Boolean>(FeatureFlag.PASS_USER_EVENTS_V1, userId).first()
         val isGroupSharingEnabled =
-            featureFlagsPreferencesRepository.get<Boolean>(FeatureFlag.PASS_GROUP_SHARE).first()
+            featureFlagsPreferencesRepository.get<Boolean>(FeatureFlag.PASS_GROUP_SHARE, userId).first()
 
         val results = if (isUserEventsEnabled) {
             listOf(performSyncUserEvents(userId, forceSync))

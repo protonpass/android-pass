@@ -165,7 +165,7 @@
   <string name="autofill_mode_label_default">Nadřazená doména a subdomény</string>
   <string name="autofill_mode_label_exact">Přesná (sub)doména</string>
   <string name="autofill_mode_label_never">Nikdy nevyplňovat na tomto webu</string>
-  <string name="autofill_mode_label_start_with">Začná s</string>
+  <string name="autofill_mode_label_start_with">Začná</string>
   <string name="autofill_mode_label_regular_expression">Regulární výraz</string>
   <string name="autofill_mode_label_exact_path">Přesná shoda URL</string>
   <string name="autofill_mode_label_unsupported">Tato URL bude při automatickém vyplňování přeskočena</string>

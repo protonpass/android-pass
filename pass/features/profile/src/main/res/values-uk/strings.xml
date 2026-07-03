@@ -45,8 +45,8 @@
   <string name="configure_pin_pin_cannot_be_blank">Потрібно ввести PIN-код</string>
   <string name="configure_pin_pin_lock_enabled">Блокування PIN-кодом увімкнено</string>
   <string name="configure_pin_pin_lock_disabled">Блокування PIN-кодом вимкнено</string>
-  <string name="profile_option_lock_with">Спосіб блокування</string>
-  <string name="profile_option_unlock_with">Спосіб розблокування</string>
+  <string name="profile_option_lock_with">Спосіб замикання</string>
+  <string name="profile_option_unlock_with">Спосіб відмикання</string>
   <string name="profile_option_change_pin_code">Змінити PIN-код</string>
   <string name="profile_passkey_support_section_title">Ключі доступу</string>
   <string name="profile_passkey_support_subtitle_supported">Passkeys can be supported on this device</string>

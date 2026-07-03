@@ -23,15 +23,15 @@
   <string name="migrate_folder_error_snackbar">Fejl ved flytning af mappen</string>
   <string name="migrate_folder_already_same_parent_snackbar">Mappen er allerede på denne placering</string>
   <string name="migrate_dissolve_folder_dialog_title">Flyt mappeindhold</string>
-  <string name="migrate_dissolve_folder_dialog_message">Denne mappe er allerede i boksens rod. Dens elementer og undermapper vil blive rykket til boksens rod.</string>
+  <string name="migrate_dissolve_folder_dialog_message">Denne mappe er allerede i boksens rod. Dens elementer og undermapper vil blive flyttet til boksens rod.</string>
   <string name="migrate_dissolve_folder_dialog_confirm">Flyt</string>
   <plurals name="migrate_disabled_folder_reason_same_folder">
     <item quantity="one">Elementet findes allerede i denne mappe</item>
     <item quantity="other">%d elementer findes allerede i denne mappe</item>
   </plurals>
   <string name="migrate_disabled_folder_reason_same_location">Denne mappe er allerede på denne placering</string>
-  <string name="migrate_disabled_folder_reason_being_moved">Denne mappe bliver rykket</string>
-  <string name="migrate_disabled_folder_reason_descendant">Denne mappe er inden i mappen der bliver rykket</string>
+  <string name="migrate_disabled_folder_reason_being_moved">Denne mappe flyttes</string>
+  <string name="migrate_disabled_folder_reason_descendant">Denne mappe er inde i den mappe, der flyttes</string>
   <string name="migrate_disabled_vault_reason_no_permission">Du kan ikke oprette elementer i denne boks</string>
   <string name="migrate_disabled_vault_reason_same_vault">Du kan ikke flytte et element til den samme boks</string>
   <plurals name="migrate_items_shared_warning_title">

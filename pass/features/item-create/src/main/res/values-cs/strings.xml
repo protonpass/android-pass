@@ -350,7 +350,7 @@
   <string name="autofill_suggestions_mode_default">Nadřazená doména a subdomény</string>
   <string name="autofill_suggestions_mode_exact">Přesná (sub)doména</string>
   <string name="autofill_suggestions_mode_never">Nikdy nevyplňovat na tomto webu</string>
-  <string name="autofill_suggestions_mode_start_with">Začná s</string>
+  <string name="autofill_suggestions_mode_start_with">Začná</string>
   <string name="autofill_suggestions_mode_regular_expression">Regulární výraz</string>
   <string name="autofill_suggestions_mode_exact_path">Přesná shoda URL</string>
   <string name="autofill_suggestions_android_limitation">Pokročilá pravidla nejsou v systému Android k dispozici kvůli omezením v rozhraních API operačního systému.</string>

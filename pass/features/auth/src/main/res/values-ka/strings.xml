@@ -39,7 +39,7 @@
   <string name="auth_extra_password_label">შეიყვანეთ თქვენი დაამატებითი პაროლი</string>
   <string name="auth_extra_password_error">დამატებითი პაროლით ავთენტიკაციის შეცდომა</string>
   <string name="auth_extra_password_too_many_attempts">მეტისმეტად ბევრი შესვლის მცდელობა. ახლა გახვალთ.</string>
-  <string name="auth_biometric_enrollment_changed">Your biometric data has changed. Please re-enable biometric unlock in Settings.</string>
+  <string name="auth_biometric_enrollment_changed">თქვენი ბიომეტრიული მონაცემები შეიცვალა. ჩართეთ თავიდან ბიომეტრიული განბლოკვა მორგების დიალოგში.</string>
   <string name="auth_error_wrong_password_no_attempts">არასწორი პაროლი</string>
   <plurals name="auth_error_wrong_password">
     <item quantity="one">პაროლი არასწორია. დარჩენილია %d ცდა</item>

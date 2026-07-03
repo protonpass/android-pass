@@ -23,7 +23,7 @@
   <string name="bottomsheet_no_actions">Немає доступних дій</string>
   <string name="snackbar_item_move_to_trash_success">Елемент переміщено до смітника</string>
   <string name="snackbar_item_move_to_trash_error">Не вдалося перемістити до смітника</string>
-  <string name="snackbar_item_copy_email_success">Електронний лист скопійовано до буфера обміну</string>
+  <string name="snackbar_item_copy_email_success">Електронну пошту скопійовано до буфера обміну</string>
   <string name="snackbar_item_copy_username_success">Ім\'я користувача скопійовано до буфера обміну</string>
   <string name="snackbar_item_copy_password_success">Пароль скопійовано до буфера обміну</string>
 </resources>

@@ -125,7 +125,7 @@
   <string name="identity_field_phone_number_title">Telefonnummer</string>
   <string name="identity_field_organization_title">Organisasjon</string>
   <string name="identity_field_street_address_title">Gateadresse, postboksadresse</string>
-  <string name="identity_field_zip_or_postal_code_title">Postnummer</string>
+  <string name="identity_field_zip_or_postal_code_title">ZIP-kode eller postnummer</string>
   <string name="identity_field_city_title">Poststed</string>
   <string name="identity_field_state_or_province_title">Delstat eller provins</string>
   <string name="identity_field_country_or_region_title">Land eller region</string>
@@ -343,19 +343,19 @@
   <string name="wifi_security_type_field_label">Sikkerhetstype</string>
   <string name="functionality_not_available">Denne funksjonaliteten er ikke tilgjengelig for enheten din.</string>
   <!-- Autofill URL suggestions screen -->
-  <string name="autofill_suggestions_title">URL Matching</string>
-  <string name="autofill_suggestions_description">Adjust autofill behaviors to change where logins are suggested and filled for %s.</string>
-  <string name="autofill_suggestions_tab_basic">Basic</string>
-  <string name="autofill_suggestions_tab_advanced">Advanced</string>
-  <string name="autofill_suggestions_mode_default">Parent domain and subdomains</string>
-  <string name="autofill_suggestions_mode_exact">Exact (sub)domain</string>
-  <string name="autofill_suggestions_mode_never">Never fill on this website</string>
-  <string name="autofill_suggestions_mode_start_with">Starts with</string>
-  <string name="autofill_suggestions_mode_regular_expression">Regular expression</string>
-  <string name="autofill_suggestions_mode_exact_path">Exact URL matching</string>
-  <string name="autofill_suggestions_android_limitation">Advanced rules are not available on Android due to limitations in the operating system APIs.</string>
-  <string name="autofill_suggestions_mode_default_badge">DEFAULT</string>
+  <string name="autofill_suggestions_title">URL-samsvar</string>
+  <string name="autofill_suggestions_description">Juster autofyll-atferd for å endre hvor pålogginger foreslås og fylles ut for %s.</string>
+  <string name="autofill_suggestions_tab_basic">Grunnleggende</string>
+  <string name="autofill_suggestions_tab_advanced">Avansert</string>
+  <string name="autofill_suggestions_mode_default">Overordnet domene og underdomener</string>
+  <string name="autofill_suggestions_mode_exact">Eksakt (under)domene</string>
+  <string name="autofill_suggestions_mode_never">Aldri fyll ut på dette nettstedet</string>
+  <string name="autofill_suggestions_mode_start_with">Begynner med</string>
+  <string name="autofill_suggestions_mode_regular_expression">Regulært uttrykk</string>
+  <string name="autofill_suggestions_mode_exact_path">Nøyaktig URL-samsvar</string>
+  <string name="autofill_suggestions_android_limitation">Avanserte regler er ikke tilgjengelige på Android på grunn av begrensninger i operativsystemets API-er.</string>
+  <string name="autofill_suggestions_mode_default_badge">STANDARD</string>
   <string name="autofill_suggestions_url_column">URL</string>
-  <string name="autofill_suggestions_suggested_column">Suggested</string>
-  <string name="field_website_skipped_autofill">This url will be skipped for autofill</string>
+  <string name="autofill_suggestions_suggested_column">Foreslått</string>
+  <string name="field_website_skipped_autofill">Denne nettadressen vil bli hoppet over for autofyll</string>
 </resources>

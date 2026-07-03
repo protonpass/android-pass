@@ -43,7 +43,6 @@
   <string name="sync_item_failed">Збой сінхранізацыі</string>
   <string name="sync_dialog_title_inserting">Устаўка элементаў…</string>
   <string name="sync_dialog_subtitle_inserting">Завяршэнне апошняга кроку. Амаль гатова.</string>
-  <string name="sync_dialog_invalid_address_shares_warning">Некаторыя сховішчы не ўдалося сінхранізаваць, бо звязаны адрас не знойдзены ў гэтым уліковым запісе.</string>
   <string name="sync_dialog_invalid_group_shares_warning">Некаторыя сховішчы не ўдалося сінхранізаваць, бо звязаная група не знойдзена ў гэтым уліковым запісе.</string>
   <string name="sync_dialog_title_indexing">Індэксаванне…</string>
   <string name="sync_dialog_subtitle_indexing">Пабудова пошукавага індэксу. Амаль гатова.</string>

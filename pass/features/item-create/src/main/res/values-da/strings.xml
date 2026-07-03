@@ -343,19 +343,19 @@
   <string name="wifi_security_type_field_label">Sikkerhedstype</string>
   <string name="functionality_not_available">Denne funktionalitet er ikke tilgængelig på din enhed.</string>
   <!-- Autofill URL suggestions screen -->
-  <string name="autofill_suggestions_title">URL-overensstemmelse</string>
-  <string name="autofill_suggestions_description">Justér autofyldningsadfærd for at ændre, hvor logins foreslås og udfyldes for %s.</string>
+  <string name="autofill_suggestions_title">URL-matching</string>
+  <string name="autofill_suggestions_description">Juster autofyld for at ændre hvor logins foreslås og udfyldes for %s.</string>
   <string name="autofill_suggestions_tab_basic">Basal</string>
   <string name="autofill_suggestions_tab_advanced">Avanceret</string>
   <string name="autofill_suggestions_mode_default">Overordnet domæne og underdomæner</string>
   <string name="autofill_suggestions_mode_exact">Eksakt (under)domæne</string>
-  <string name="autofill_suggestions_mode_never">Udfyld aldrig på dette web-sted</string>
+  <string name="autofill_suggestions_mode_never">Udfyld aldrig på dette websted</string>
   <string name="autofill_suggestions_mode_start_with">Begynder med</string>
   <string name="autofill_suggestions_mode_regular_expression">Regulært udtryk</string>
-  <string name="autofill_suggestions_mode_exact_path">Eksakt URL-overensstemmelse</string>
+  <string name="autofill_suggestions_mode_exact_path">Eksakt URL-matching</string>
   <string name="autofill_suggestions_android_limitation">Avancerede regler er ikke tilstede i Android på grund af begrænsninger i operativsystemets API\'er.</string>
-  <string name="autofill_suggestions_mode_default_badge">DEFAULT</string>
+  <string name="autofill_suggestions_mode_default_badge">STANDARD</string>
   <string name="autofill_suggestions_url_column">URL</string>
   <string name="autofill_suggestions_suggested_column">Foreslået</string>
-  <string name="field_website_skipped_autofill">Denne web-adresse springes over til automatisk udfyldning</string>
+  <string name="field_website_skipped_autofill">Denne URL springes over for autofyld</string>
 </resources>

@@ -59,7 +59,7 @@
   <string name="snackbar_contact_unblock_error">Не вдалося розблокувати контакт</string>
   <string name="snackbar_delete_contact_success">Контакт видалено</string>
   <string name="snackbar_delete_contact_error">Не вдалося видалити контакт</string>
-  <string name="snackbar_email_copied_success">Електронний лист скопійовано до буфера обміну</string>
+  <string name="snackbar_email_copied_success">Електронну пошту скопійовано до буфера обміну</string>
   <string name="contact_option_send_email">Надіслати лист</string>
   <string name="contact_option_copy_address">Копіювати адресу переадресації</string>
   <string name="contact_option_block_contact">Блокувати контакт</string>

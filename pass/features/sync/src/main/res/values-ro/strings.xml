@@ -41,7 +41,6 @@
   <string name="sync_item_failed">Sincronizarea nereușită</string>
   <string name="sync_dialog_title_inserting">Se inserează articolele…</string>
   <string name="sync_dialog_subtitle_inserting">Se finalizează ultimul pas, e aproape gata.</string>
-  <string name="sync_dialog_invalid_address_shares_warning">Unele seifuri nu au putut fi sincronizate deoarece adresa asociată nu a fost găsită în acest cont.</string>
   <string name="sync_dialog_invalid_group_shares_warning">Unele seifuri nu au putut fi sincronizate deoarece nu a fost găsit grupul cu care sunt asociate în acest cont.</string>
   <string name="sync_dialog_title_indexing">Se indexează…</string>
   <string name="sync_dialog_subtitle_indexing">Se creează indexul de căutare, e aproape gata.</string>

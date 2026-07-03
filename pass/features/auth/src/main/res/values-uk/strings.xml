@@ -18,7 +18,7 @@
   -->
 <resources>
   <string name="enter_your_pin_code">Введіть PIN-код</string>
-  <string name="unlock">Розблокувати</string>
+  <string name="unlock">Відімкнути</string>
   <plurals name="enter_your_pin_code_error">
     <item quantity="one">Неправильний PIN-код. Залишилась %d спроба.</item>
     <item quantity="few">Неправильний PIN-код. Залишилося %d спроби.</item>
@@ -35,7 +35,7 @@
   <string name="auth_action_conceal_password">Приховати основний пароль</string>
   <string name="auth_action_enter_pin_instead" comment="This text shows under the Master password input, in case the user dismissed the PIN input">Введіть PIN-код натомість</string>
   <string name="auth_action_enter_fingerprint_instead" comment="This text shows under the Master password input, in case the user dismissed the PIN input">Натомість скористайтесь відбитком пальця</string>
-  <string name="auth_unlock_button">Розблокувати</string>
+  <string name="auth_unlock_button">Відімкнути</string>
   <string name="auth_error_empty_password">Потрібно ввести пароль</string>
   <string name="auth_error_pin_cannot_be_empty">Потрібно ввести PIN-код</string>
   <string name="auth_extra_password_label">Уведіть ваш додатковий пароль</string>

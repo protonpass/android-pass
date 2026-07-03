@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
   <!-- Home -->
-  <string name="home_indexing_banner">Building search index…</string>
-  <string name="home_indexing_banner_progress">Building search index… (%1$d/%2$d)</string>
+  <string name="home_indexing_banner">Creando índice de búsqueda…</string>
+  <string name="home_indexing_banner_progress">Creando índice de búsqueda… (%1$d/%2$d)</string>
   <string name="home_empty_vault_title">La bóveda está vacía</string>
   <string name="home_empty_vault_subtitle">Comience creando el primer elemento.</string>
   <string name="home_empty_vault_login_title">No se encontraron inicios de sesión.</string>

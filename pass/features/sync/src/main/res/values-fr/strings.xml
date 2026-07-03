@@ -39,7 +39,6 @@
   <string name="sync_item_failed">La synchronisation n\'a pas abouti.</string>
   <string name="sync_dialog_title_inserting">Insertion des éléments…</string>
   <string name="sync_dialog_subtitle_inserting">La dernière étape est en cours. C\'est bientôt terminé !</string>
-  <string name="sync_dialog_invalid_address_shares_warning">Certains coffres-forts n\'ont pas pu être synchronisés car l\'adresse associée n\'a pas été trouvé dans ce compte.</string>
   <string name="sync_dialog_invalid_group_shares_warning">Certains coffres-forts n’ont pas pu être synchronisés car le groupe associé n\'a pas été trouvé dans ce compte.</string>
   <string name="sync_dialog_title_indexing">Indexation en cours…</string>
   <string name="sync_dialog_subtitle_indexing">Initialisation de l\'index de recherche, presque terminé.</string>

@@ -29,8 +29,8 @@
     <item quantity="other">%d ელემენტი</item>
   </plurals>
   <plurals name="sharing_invite_item_count">
-    <item quantity="one">%d item (including trashed)</item>
-    <item quantity="other">%d items (including trashed)</item>
+    <item quantity="one">%d ელემენტი (ნაგვის ყუთში არსებულების ჩათვლით)</item>
+    <item quantity="other">%d ელემენტი (ნაგვის ყუთში არსებულების ჩათვლით)</item>
   </plurals>
   <plurals name="sharing_member_count">
     <item quantity="one">%d წევრი</item>

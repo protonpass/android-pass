@@ -344,18 +344,18 @@
   <string name="functionality_not_available">ეს ფუნქციონალი თქვენი მოწყობილობისთვის მხარდაჭერილი არაა.</string>
   <!-- Autofill URL suggestions screen -->
   <string name="autofill_suggestions_title">URL-ის დამთხვევა</string>
-  <string name="autofill_suggestions_description">Adjust autofill behaviors to change where logins are suggested and filled for %s.</string>
+  <string name="autofill_suggestions_description">მოირგეთ ავტოშევსების ქცევა, რომ შეცვალოთ, სად ხდება ავტორიზაციის დეტალების შეთავაზება და შევსება %s-ისთვის.</string>
   <string name="autofill_suggestions_tab_basic">საბაზისო</string>
   <string name="autofill_suggestions_tab_advanced">დამატებით</string>
-  <string name="autofill_suggestions_mode_default">Parent domain and subdomains</string>
-  <string name="autofill_suggestions_mode_exact">Exact (sub)domain</string>
-  <string name="autofill_suggestions_mode_never">Never fill on this website</string>
+  <string name="autofill_suggestions_mode_default">მშობელი დომენი და ქვედომენები</string>
+  <string name="autofill_suggestions_mode_exact">ზუსტი (ქვე)დომენი</string>
+  <string name="autofill_suggestions_mode_never">არასდროს შეავსო ამ ვებსაიტზე</string>
   <string name="autofill_suggestions_mode_start_with">იწყება რით</string>
-  <string name="autofill_suggestions_mode_regular_expression">Regular expression</string>
-  <string name="autofill_suggestions_mode_exact_path">Exact URL matching</string>
-  <string name="autofill_suggestions_android_limitation">Advanced rules are not available on Android due to limitations in the operating system APIs.</string>
+  <string name="autofill_suggestions_mode_regular_expression">რეგულარული გამოსახულება</string>
+  <string name="autofill_suggestions_mode_exact_path">ზუსტი URL-ის დამთხვევა</string>
+  <string name="autofill_suggestions_android_limitation">დამატებითი წესები Android-ზე ხელმისაწვდომი არაა ოპერაციული სისტემის API-ების შეზღუდვების გამო.</string>
   <string name="autofill_suggestions_mode_default_badge">ნაგულისხმევი</string>
   <string name="autofill_suggestions_url_column">URL</string>
   <string name="autofill_suggestions_suggested_column">გთავაზობთ</string>
-  <string name="field_website_skipped_autofill">This url will be skipped for autofill</string>
+  <string name="field_website_skipped_autofill">ეს url ავტოშევსებისთვის გამოტოვებული იქნება</string>
 </resources>

@@ -39,9 +39,8 @@
   <string name="sync_item_failed">სინქრონიზაცია ჩავარდა</string>
   <string name="sync_dialog_title_inserting">ელემენტების ჩასმა…</string>
   <string name="sync_dialog_subtitle_inserting">ბოლო ნაბიჯის დასრულება სულ ცოტაც.</string>
-  <string name="sync_dialog_invalid_address_shares_warning">ზოგიერთი საცავის სინქრონიზაცია შეუძლებელია, რადგან ასოცირებული მისამართი ამ ანგარიშზე ხელმისაწვდომი არაა.</string>
   <string name="sync_dialog_invalid_group_shares_warning">ზოგიერთი საცავის სინქრონიზაცია შეუძლებელია, რადგან ასოცირებული ჯგუფი ამ ანგარიშზე ხელმისაწვდომი არაა.</string>
   <string name="sync_dialog_title_indexing">დაინდექსება</string>
-  <string name="sync_dialog_subtitle_indexing">Building search index, almost done.</string>
-  <string name="sync_dialog_subtitle_indexing_progress">Building search index… (%1$d/%2$d)</string>
+  <string name="sync_dialog_subtitle_indexing">მიმდინარეობს ძებნის ინდექსის აგება. თითქმის მზადაა.</string>
+  <string name="sync_dialog_subtitle_indexing_progress">მიმდინარეობს ძებნის ინდექსის აგება… (%1$d/%2$d)</string>
 </resources>

@@ -37,9 +37,8 @@
   <string name="sync_item_failed">同步處理失敗</string>
   <string name="sync_dialog_title_inserting">正在插入項目…</string>
   <string name="sync_dialog_subtitle_inserting">正在完成最後步驟，即將完成。</string>
-  <string name="sync_dialog_invalid_address_shares_warning">Some vaults could not be synced because the associated address was not found on this account.</string>
   <string name="sync_dialog_invalid_group_shares_warning">Some vaults could not be synced because the associated group was not found on this account.</string>
-  <string name="sync_dialog_title_indexing">Indexing…</string>
-  <string name="sync_dialog_subtitle_indexing">Building search index, almost done.</string>
-  <string name="sync_dialog_subtitle_indexing_progress">Building search index… (%1$d/%2$d)</string>
+  <string name="sync_dialog_title_indexing">正在建立索引…</string>
+  <string name="sync_dialog_subtitle_indexing">正建立搜尋索引並接近完成.</string>
+  <string name="sync_dialog_subtitle_indexing_progress">正建立搜尋索引…(%1$d/%2$d)</string>
 </resources>

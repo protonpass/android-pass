@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
   <!-- Home -->
-  <string name="home_indexing_banner">Building search index…</string>
-  <string name="home_indexing_banner_progress">Building search index… (%1$d/%2$d)</string>
+  <string name="home_indexing_banner">建立搜尋索引…</string>
+  <string name="home_indexing_banner_progress">正建立搜尋索引…(%1$d/%2$d)</string>
   <string name="home_empty_vault_title">您的保管庫是空的</string>
   <string name="home_empty_vault_subtitle">開始創建您第一個項目</string>
   <string name="home_empty_vault_login_title">沒有找到登入</string>

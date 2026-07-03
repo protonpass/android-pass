@@ -39,7 +39,7 @@
   <string name="auth_extra_password_label">Angi det ekstra passordet ditt</string>
   <string name="auth_extra_password_error">Feil ved autentisering med ekstra passord</string>
   <string name="auth_extra_password_too_many_attempts">For mange mislykkede påloggingsforsøk. Du har blitt logget av.</string>
-  <string name="auth_biometric_enrollment_changed">Your biometric data has changed. Please re-enable biometric unlock in Settings.</string>
+  <string name="auth_biometric_enrollment_changed">Dine biometriske data er endret. Aktiver biometrisk opplåsing på nytt i Innstillinger.</string>
   <string name="auth_error_wrong_password_no_attempts">Feil passord</string>
   <plurals name="auth_error_wrong_password">
     <item quantity="one">Feil passord. %d forsøk gjenstår</item>

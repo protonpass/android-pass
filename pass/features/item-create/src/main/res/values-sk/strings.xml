@@ -343,19 +343,19 @@
   <string name="wifi_security_type_field_label">Typ zabezpečenia</string>
   <string name="functionality_not_available">Táto funkcionalita nie je pre vaše zariadenie k dispozícii.</string>
   <!-- Autofill URL suggestions screen -->
-  <string name="autofill_suggestions_title">URL Matching</string>
-  <string name="autofill_suggestions_description">Adjust autofill behaviors to change where logins are suggested and filled for %s.</string>
-  <string name="autofill_suggestions_tab_basic">Basic</string>
-  <string name="autofill_suggestions_tab_advanced">Advanced</string>
-  <string name="autofill_suggestions_mode_default">Parent domain and subdomains</string>
-  <string name="autofill_suggestions_mode_exact">Exact (sub)domain</string>
-  <string name="autofill_suggestions_mode_never">Never fill on this website</string>
-  <string name="autofill_suggestions_mode_start_with">Starts with</string>
-  <string name="autofill_suggestions_mode_regular_expression">Regular expression</string>
-  <string name="autofill_suggestions_mode_exact_path">Exact URL matching</string>
-  <string name="autofill_suggestions_android_limitation">Advanced rules are not available on Android due to limitations in the operating system APIs.</string>
-  <string name="autofill_suggestions_mode_default_badge">DEFAULT</string>
+  <string name="autofill_suggestions_title">Porovnávanie URL</string>
+  <string name="autofill_suggestions_description">Upravte správanie automatického vypĺňania, aby ste zmenili, kde sa pre %s navrhujú a vypĺňajú prihlasovacie údaje.</string>
+  <string name="autofill_suggestions_tab_basic">Základné</string>
+  <string name="autofill_suggestions_tab_advanced">Pokročilé</string>
+  <string name="autofill_suggestions_mode_default">Nadradená doména a subdomény</string>
+  <string name="autofill_suggestions_mode_exact">Presná (pod)doména</string>
+  <string name="autofill_suggestions_mode_never">Nikdy nevypĺňať formuláre na tejto webovej stránke</string>
+  <string name="autofill_suggestions_mode_start_with">Začína s</string>
+  <string name="autofill_suggestions_mode_regular_expression">Regulárny výraz</string>
+  <string name="autofill_suggestions_mode_exact_path">Presná zhoda URL</string>
+  <string name="autofill_suggestions_android_limitation">Pokročilé pravidlá nie sú v systéme Android k dispozícii kvôli obmedzeniam v rozhraniach API operačného systému.</string>
+  <string name="autofill_suggestions_mode_default_badge">PREDVOLENÉ</string>
   <string name="autofill_suggestions_url_column">URL</string>
-  <string name="autofill_suggestions_suggested_column">Suggested</string>
-  <string name="field_website_skipped_autofill">This url will be skipped for autofill</string>
+  <string name="autofill_suggestions_suggested_column">Odporúčané</string>
+  <string name="field_website_skipped_autofill">Táto URL adresa bude pri automatickom vypĺňaní preskočená</string>
 </resources>

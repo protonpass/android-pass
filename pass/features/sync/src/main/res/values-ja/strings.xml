@@ -37,7 +37,6 @@
   <string name="sync_item_failed">同期に失敗しました</string>
   <string name="sync_dialog_title_inserting">アイテムを入れ込んでいます…</string>
   <string name="sync_dialog_subtitle_inserting">最終段階が完了しました、もうまもなくです。</string>
-  <string name="sync_dialog_invalid_address_shares_warning">いくつかの保管庫が、このアカウント内で関連づけられたアドレスが見つからなかったため同期されませんでした。</string>
   <string name="sync_dialog_invalid_group_shares_warning">いくつかの保管庫が、このアカウント内で関連付けられたグループが見つけられなかったため同期されませんでした。</string>
   <string name="sync_dialog_title_indexing">Indexing…</string>
   <string name="sync_dialog_subtitle_indexing">Building search index, almost done.</string>

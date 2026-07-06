@@ -89,6 +89,11 @@ class RefreshSharesAndEnqueueSyncImpl @Inject constructor(
                 PassLogger.w(TAG, "Error during FULL sync")
                 PassLogger.w(TAG, it)
                 itemSyncStatusRepository.emit(ItemSyncStatus.SyncError.DownloadError())
+            } else {
+                PassLogger.w(
+                    TAG,
+                    "refreshShares for $userId (syncType=$syncType) failed: ${it::class.simpleName}: ${it.message}"
+                )
             }
         }.getOrThrow()
     }

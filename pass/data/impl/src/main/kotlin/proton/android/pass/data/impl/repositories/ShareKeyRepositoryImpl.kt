@@ -31,6 +31,7 @@ import me.proton.core.user.domain.entity.User
 import me.proton.core.user.domain.entity.UserAddress
 import me.proton.core.user.domain.repository.UserAddressRepository
 import me.proton.core.user.domain.repository.UserRepository
+import proton.android.pass.common.api.safeRunCatching
 import proton.android.pass.crypto.api.context.EncryptionContext
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.impl.crypto.ReencryptGroupKeyInput
@@ -126,39 +127,52 @@ class ShareKeyRepositoryImpl @Inject constructor(
     ): List<ShareKeyEntity> {
         val remoteKeys = remoteDataSource.getShareKeys(userId, shareId).first()
         val user = userRepository.getUser(userId)
+        PassLogger.i(
+            TAG,
+            "Requesting ${remoteKeys.size} remote key(s) for share ${shareId.id}, isGroupShare=${groupEmail != null}"
+        )
         return encryptionContextProvider.withEncryptionContextSuspendable {
             remoteKeys.map { response ->
-                val input = if (groupEmail == null) {
-                    ReencryptShareKeyInput(
-                        key = response.key,
-                        userKeyId = response.userKeyId,
-                        addressId = addressId.id
-                    )
-                } else {
-                    createReencryptGroupKeyInput(
+                safeRunCatching {
+                    val input = if (groupEmail == null) {
+                        ReencryptShareKeyInput(
+                            key = response.key,
+                            userKeyId = response.userKeyId,
+                            addressId = addressId.id
+                        )
+                    } else {
+                        createReencryptGroupKeyInput(
+                            user = user,
+                            key = response.key,
+                            addressId = addressId,
+                            groupEmail = groupEmail
+                        )
+                    }
+                    val keyData = reencryptKey(
+                        context = this,
                         user = user,
-                        key = response.key,
-                        addressId = addressId,
-                        groupEmail = groupEmail
+                        input = input
                     )
-                }
-                val keyData = reencryptKey(
-                    context = this,
-                    user = user,
-                    input = input
-                )
 
-                ShareKeyEntity(
-                    rotation = response.keyRotation,
-                    userId = userId.id,
-                    addressId = addressId.id,
-                    shareId = shareId.id,
-                    key = response.key,
-                    createTime = response.createTime,
-                    symmetricallyEncryptedKey = keyData.encryptedKey,
-                    userKeyId = response.userKeyId,
-                    isActive = keyData.isActive
-                )
+                    ShareKeyEntity(
+                        rotation = response.keyRotation,
+                        userId = userId.id,
+                        addressId = addressId.id,
+                        shareId = shareId.id,
+                        key = response.key,
+                        createTime = response.createTime,
+                        symmetricallyEncryptedKey = keyData.encryptedKey,
+                        userKeyId = response.userKeyId,
+                        isActive = keyData.isActive
+                    )
+                }.onFailure { e ->
+                    PassLogger.w(
+                        TAG,
+                        "Failed to process key rotation ${response.keyRotation} for share ${shareId.id} " +
+                            "(isGroupShare=${groupEmail != null})"
+                    )
+                    PassLogger.w(TAG, e)
+                }.getOrThrow()
             }
         }
     }
@@ -229,12 +243,20 @@ class ShareKeyRepositoryImpl @Inject constructor(
         groupEmail: String
     ): ReencryptGroupKeyInput {
         val invitedAddress: UserAddress = userAddressRepository.getAddress(user.userId, addressId)
-            ?: throw IllegalStateException("Invited address not found")
-        val groupPublicKeys = publicAddressRepository.getPublicAddressInfo(
-            sessionUserId = user.userId,
-            email = groupEmail,
-            internalOnly = false
-        )
+            ?: run {
+                PassLogger.w(TAG, "Invited address ${addressId.id} not found locally for user ${user.userId.id}")
+                throw IllegalStateException("Invited address not found")
+            }
+        val groupPublicKeys = safeRunCatching {
+            publicAddressRepository.getPublicAddressInfo(
+                sessionUserId = user.userId,
+                email = groupEmail,
+                internalOnly = false
+            )
+        }.onFailure { e ->
+            PassLogger.w(TAG, "Failed to fetch public keys for group")
+            PassLogger.w(TAG, e)
+        }.getOrThrow()
         return ReencryptGroupKeyInput(
             key = key,
             invitedAddress = invitedAddress,
@@ -257,7 +279,7 @@ class ShareKeyRepositoryImpl @Inject constructor(
     }.fold(
         onSuccess = { ReencryptedKeyData(it, true) },
         onFailure = {
-            PassLogger.w(TAG, "Error reencrypting key")
+            PassLogger.w(TAG, "Error reencrypting key: ${it::class.simpleName}")
             PassLogger.w(TAG, it)
             if (it is UserKeyNotActive) {
                 ReencryptedKeyData(EncryptedByteArray(byteArrayOf()), false)

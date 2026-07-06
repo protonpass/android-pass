@@ -206,8 +206,21 @@ class ShareRepositoryImpl @Inject constructor(
             ShareId(localShareEntity.id)
         }
         val hadLocalSharesOnStart = localShares.isNotEmpty()
+        val localInactiveShareIds = localShares.filterNot { it.isActive }.map { it.id }
+        if (localInactiveShareIds.isNotEmpty()) {
+            PassLogger.i(
+                TAG,
+                "Local shares include ${localInactiveShareIds.size} inactive share(s) hidden from the " +
+                    "vault list until their key becomes usable again: $localInactiveShareIds"
+            )
+        }
 
         val remoteShares = remoteShareDataSource.retrieveShares(userId)
+        PassLogger.i(
+            TAG,
+            "Retrieved ${remoteShares.size} shares from remote: " +
+                remoteShares.map { "${it.shareId}(groupId=${it.groupId})" }
+        )
         val remoteSharesMap = remoteShares.associateBy { remoteShareResponse ->
             ShareId(remoteShareResponse.shareId)
         }
@@ -270,6 +283,14 @@ class ShareRepositoryImpl @Inject constructor(
         val remoteSharesToSave = remoteShares.filter {
             sharesNotInLocal.contains(ShareId(it.shareId)) ||
                 inactiveLocalShares.contains(ShareId(it.shareId))
+        }
+        val remoteSharesSkipped = remoteShares.filterNot { remoteSharesToSave.contains(it) }
+        if (remoteSharesSkipped.isNotEmpty()) {
+            PassLogger.i(
+                TAG,
+                "Skipping ${remoteSharesSkipped.size} remote share(s) already stored and active: " +
+                    remoteSharesSkipped.map { it.shareId }
+            )
         }
 
         val (storedShares, skippedDueToGroupCount, skippedShareIds) =
@@ -501,7 +522,14 @@ class ShareRepositoryImpl @Inject constructor(
         val entities: List<Pair<ShareEntity, List<ShareKeyEntity>>> = shares
             .mapNotNull { response ->
                 val groupEmail = if (response.groupId != null) {
-                    groups?.find { it.id.id == response.groupId }?.groupEmail
+                    val resolvedGroup = groups?.find { it.id.id == response.groupId }
+                    PassLogger.i(
+                        TAG,
+                        "Share ${response.shareId} has groupId=${response.groupId}, " +
+                            "resolved to group=${resolvedGroup?.id?.id}, " +
+                            "hasGroupEmail=${resolvedGroup?.groupEmail != null}"
+                    )
+                    resolvedGroup?.groupEmail
                         ?: run {
                             PassLogger.w(
                                 TAG,
@@ -518,7 +546,17 @@ class ShareRepositoryImpl @Inject constructor(
                 response to groupEmail
             }
             .map { (response, groupEmail) ->
-                async { createShareResponseEntity(response, userId, groupEmail) }
+                async {
+                    safeRunCatching {
+                        createShareResponseEntity(response, userId, groupEmail)
+                    }.onFailure { e ->
+                        PassLogger.w(
+                            TAG,
+                            "Failed to process share ${response.shareId} (groupId=${response.groupId})"
+                        )
+                        PassLogger.w(TAG, e)
+                    }.getOrThrow()
+                }
             }
             .awaitAll()
 

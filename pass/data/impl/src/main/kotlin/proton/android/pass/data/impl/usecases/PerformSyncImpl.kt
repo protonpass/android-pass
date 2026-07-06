@@ -87,7 +87,7 @@ class PerformSyncImpl @Inject constructor(
             PassLogger.i(TAG, "Pending events for $userId finished")
         }
     }.onFailure { error ->
-        PassLogger.w(TAG, "Pending events for $userId error: ${error.message}")
+        PassLogger.w(TAG, "Pending events for $userId error: ${error::class.simpleName}: ${error.message}")
     }
 
     private suspend fun performUserRefreshInvites(userId: UserId): Result<Unit> = safeRunCatching {

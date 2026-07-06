@@ -115,7 +115,7 @@ class ApplyPendingEventsImpl @Inject constructor(
     }
 
     private suspend fun onShareNotAvailable(userId: UserId, shareId: ShareId) {
-        PassLogger.i(TAG, "Deleting share not available")
+        PassLogger.i(TAG, "Deleting share not available: shareId=${shareId.id}, userId=${userId.id}")
         safeRunCatching {
             shareRepository.deleteVault(userId, shareId)
         }.onSuccess {

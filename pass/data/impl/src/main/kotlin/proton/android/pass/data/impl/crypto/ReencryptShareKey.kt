@@ -32,7 +32,10 @@ import proton.android.pass.crypto.api.context.EncryptionContext
 import proton.android.pass.crypto.api.error.InvalidSignature
 import proton.android.pass.data.impl.exception.UserKeyNotActive
 import proton.android.pass.data.impl.extensions.tryUseKeys
+import proton.android.pass.log.api.PassLogger
 import javax.inject.Inject
+
+private const val TAG = "ReencryptShareKey"
 
 sealed interface ReencryptKeyInput
 
@@ -78,6 +81,7 @@ class ReencryptShareKeyImpl @Inject constructor(
         }
 
         if (!hasUserKey) {
+            PassLogger.w(TAG, "reencryptShareKey: userKeyId did not match any locally active key")
             throw UserKeyNotActive()
         }
 
@@ -105,6 +109,7 @@ class ReencryptShareKeyImpl @Inject constructor(
             )
         }
         if (decryptedShareKey.status != VerificationStatus.Success) {
+            PassLogger.w(TAG, "reencryptGroupKey: signature verification failed")
             throw InvalidSignature("ShareKey signature did not match")
         }
         return encryptionContext.encrypt(decryptedShareKey.data)

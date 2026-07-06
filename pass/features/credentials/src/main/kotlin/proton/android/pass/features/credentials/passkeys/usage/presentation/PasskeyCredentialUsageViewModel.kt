@@ -49,11 +49,17 @@ internal class PasskeyCredentialUsageViewModel @Inject constructor(
     private val telemetryManager: TelemetryManager
 ) : ViewModel() {
 
-    private val requestOptionFlow = MutableStateFlow<Option<PasskeyCredentialUsageRequest>>(
-        value = None
+    private val requestOptionFlow = MutableStateFlow<Option<PasskeyCredentialUsageRequest>?>(
+        value = null
     )
 
     internal val stateFlow: StateFlow<PasskeyCredentialUsageState> = requestOptionFlow.mapLatest { requestOption ->
+        if (requestOption == null) {
+            // Request is still being resolved asynchronously (origin validation performs a
+            // network call): do not cancel, wait for onUpdateRequest to deliver the real value.
+            return@mapLatest PasskeyCredentialUsageState.NotReady
+        }
+
         val request = requestOption.value() ?: run {
             PassLogger.w(TAG, "Received Passkey request is null")
             return@mapLatest PasskeyCredentialUsageState.Cancel

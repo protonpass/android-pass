@@ -33,6 +33,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import proton.android.pass.domain.ItemId
@@ -58,7 +59,14 @@ internal class PasskeyCredentialUsageActivity : FragmentActivity() {
         super.onCreate(savedInstanceState)
 
         lifecycleScope.launch {
-            viewModel.onUpdateRequest(getPasskeyUsageRequest())
+            PassLogger.i(TAG, "Resolving passkey usage request")
+
+            try {
+                viewModel.onUpdateRequest(getPasskeyUsageRequest())
+            } catch (cancellation: CancellationException) {
+                PassLogger.w(TAG, "Passkey usage request resolution was cancelled")
+                throw cancellation
+            }
         }
 
         lifecycleScope.launch {
@@ -79,10 +87,24 @@ internal class PasskeyCredentialUsageActivity : FragmentActivity() {
         }
     }
 
+    override fun onPause() {
+        PassLogger.i(TAG, "onPause isFinishing=$isFinishing isChangingConfigurations=$isChangingConfigurations")
+
+        super.onPause()
+    }
+
     override fun onStop() {
+        PassLogger.i(TAG, "onStop isFinishing=$isFinishing isChangingConfigurations=$isChangingConfigurations")
+
         viewModel.onStop()
 
         super.onStop()
+    }
+
+    override fun onDestroy() {
+        PassLogger.i(TAG, "onDestroy isFinishing=$isFinishing isChangingConfigurations=$isChangingConfigurations")
+
+        super.onDestroy()
     }
 
     @Suppress("ReturnCount")

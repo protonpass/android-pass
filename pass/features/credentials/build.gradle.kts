@@ -116,4 +116,10 @@ dependencies {
     testImplementation(libs.coroutines.test)
     testImplementation(libs.junit)
     testImplementation(libs.turbine)
+
+    testImplementation(projects.pass.commonTest)
+    testImplementation(projects.pass.data.fakes)
+    testImplementation(projects.pass.passkeys.fakes)
+    testImplementation(projects.pass.preferences.fakes)
+    testImplementation(projects.pass.telemetry.fakes)
 }

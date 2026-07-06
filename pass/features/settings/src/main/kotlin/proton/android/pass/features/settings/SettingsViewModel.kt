@@ -32,6 +32,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import proton.android.pass.common.api.AppDispatchers
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.usersettings.domain.repository.DeviceSettingsRepository
 import proton.android.pass.autofill.api.AutofillManager
@@ -75,7 +76,8 @@ class SettingsViewModel @Inject constructor(
     private val assetLinkRepository: AssetLinkRepository,
     autofillManager: AutofillManager,
     syncStatusRepository: ItemSyncStatusRepository,
-    private val telemetryManager: TelemetryManager
+    private val telemetryManager: TelemetryManager,
+    private val appDispatchers: AppDispatchers
 ) : ViewModel() {
 
     private val themeState: Flow<ThemePreference> = preferencesRepository
@@ -207,7 +209,7 @@ class SettingsViewModel @Inject constructor(
         )
         if (!useDigitalAssetLinks) {
             initialWorkerLauncher.cancelFeature(WorkerFeature.ASSET_LINKS)
-            viewModelScope.launch {
+            viewModelScope.launch(appDispatchers.io) {
                 runCatching { assetLinkRepository.purgeAll() }
                     .onFailure {
                         PassLogger.w(TAG, "Error purging digital asset links")

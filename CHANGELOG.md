@@ -6,6 +6,12 @@
 
 ### Other
 
+## 1.40.2 (2026-07-08)
+
+### Fixes :bug:
+
+- Fix a Passkey race condition.
+
 ## 1.40.1 (2026-06-29)
 
 ### Fixes :bug:

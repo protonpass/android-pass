@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
   <!-- Home -->
-  <string name="home_indexing_banner">Building search index…</string>
-  <string name="home_indexing_banner_progress">Building search index… (%1$d/%2$d)</string>
+  <string name="home_indexing_banner">Zoekindex opbouwen...</string>
+  <string name="home_indexing_banner_progress">Zoekindex opbouwen... (%1$d/%2$d)</string>
   <string name="home_empty_vault_title">Uw kluis is leeg.</string>
   <string name="home_empty_vault_subtitle">Ga aan de slag door uw eerste item te maken.</string>
   <string name="home_empty_vault_login_title">Geen logins gevonden</string>
@@ -26,8 +26,8 @@
   <string name="home_empty_no_vaults_subtitle">Neem contact op met uw beheerder.</string>
   <string name="home_empty_read_only_vault_title">Deze kluis is leeg</string>
   <string name="home_empty_read_only_vault_subtitle">U kunt geen items toevoegen aan een alleen-lezen kluis.</string>
-  <string name="home_empty_folder_plan_restricted_title">This folder is empty</string>
-  <string name="home_empty_folder_plan_restricted_subtitle">Upgrade your plan to create items inside folders.</string>
+  <string name="home_empty_folder_plan_restricted_title">Deze map is leeg</string>
+  <string name="home_empty_folder_plan_restricted_subtitle">Upgrade uw abonnement om items in mappen aan te maken.</string>
   <string name="home_empty_vault_create_login">Login aanmaken</string>
   <string name="home_empty_vault_create_alias">Maak een hide-my-email-alias</string>
   <string name="home_empty_vault_create_note">Notitie aanmaken</string>

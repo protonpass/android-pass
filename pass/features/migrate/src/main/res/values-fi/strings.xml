@@ -24,7 +24,7 @@
   <string name="migrate_folder_already_same_parent_snackbar">Kansio on jo tässä sijainnissa</string>
   <string name="migrate_dissolve_folder_dialog_title">Move folder contents</string>
   <string name="migrate_dissolve_folder_dialog_message">This folder is already at the vault root. Its items and subfolders will be moved to the vault root.</string>
-  <string name="migrate_dissolve_folder_dialog_confirm">Move</string>
+  <string name="migrate_dissolve_folder_dialog_confirm">Siirrä</string>
   <plurals name="migrate_disabled_folder_reason_same_folder">
     <item quantity="one">Kohde on jo tässä kansiossa</item>
     <item quantity="other">%d kohdetta on jo tässä kansiossa</item>
@@ -43,7 +43,7 @@
     <item quantity="one">%d kohde on jaettu. Sen siirto toiseen holviin poistaa käyttöoikeuden muilta käyttäjiltä.</item>
     <item quantity="other">%d kohdetta on jaettu. Niiden siirto toiseen holviin poistaa käyttöoikeuden muilta käyttäjiltä.</item>
   </plurals>
-  <string name="migrate_select_vault_title">Select a vault</string>
+  <string name="migrate_select_vault_title">Valitse holvi</string>
   <string name="migrate_select_destination_for_source_title">Valitse sijainti, mihin kaikki kohteet siirretään %s</string>
   <string name="migrate_folder_items_moved_success_snackbar">Items moved</string>
   <string name="migrate_folder_items_moved_error_snackbar">Error moving the items</string>

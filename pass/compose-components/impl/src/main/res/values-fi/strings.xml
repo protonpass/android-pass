@@ -31,13 +31,13 @@
   <string name="bottomsheet_view_item_history">Näytä historia</string>
   <string name="bottomsheet_monitor_exclude">Poissulje valvonnasta</string>
   <string name="bottomsheet_monitor_include">Sisällytä valvontaan</string>
-  <string name="bottomsheet_migrate_item_v2">Move</string>
+  <string name="bottomsheet_migrate_item_v2">Siirrä</string>
   <string name="bottomsheet_create_folder">Luo kansio</string>
   <string name="folder_tree_create_folder">Luo kansio</string>
   <string name="bottomsheet_rename_folder">Nimeä uudelleen</string>
   <string name="bottomsheet_create_sub_folder">Luo alikansio</string>
-  <string name="bottomsheet_move_folder">Move folder</string>
-  <string name="bottomsheet_move_all_items_in_folder">Move all items</string>
+  <string name="bottomsheet_move_folder">Siirrä kansio</string>
+  <string name="bottomsheet_move_all_items_in_folder">Siirrä kaikki kohteet</string>
   <string name="bottomsheet_copy_item_note">Kopioi muistiinpano</string>
   <string name="bottomsheet_delete_permanently">Poista pysyvästi</string>
   <string name="bottomsheet_restore">Palauta</string>

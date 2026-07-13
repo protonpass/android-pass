@@ -50,6 +50,24 @@ import proton.android.pass.domain.items.ItemCategory
 import proton.android.pass.log.api.PassLogger
 import javax.inject.Inject
 
+internal fun shareItemKey(shareId: String, itemId: String): String = "$shareId-$itemId"
+
+internal fun needsStoredSlNote(item: ItemEntity): Boolean = item.slNote == null && item.aliasEmail != null
+
+internal fun mergeStoredSlNotes(
+    items: List<ItemEntity>,
+    storedSlNotes: Map<String, EncryptedString>
+): List<ItemEntity> {
+    if (storedSlNotes.isEmpty()) return items
+
+    return items.map { item ->
+        if (!needsStoredSlNote(item)) return@map item
+        storedSlNotes[shareItemKey(item.shareId, item.id)]
+            ?.let { item.copy(slNote = it) }
+            ?: item
+    }
+}
+
 @Suppress("TooManyFunctions")
 class LocalItemDataSourceImpl @Inject constructor(
     private val database: PassDatabase,
@@ -58,8 +76,34 @@ class LocalItemDataSourceImpl @Inject constructor(
 
     override suspend fun upsertItem(item: ItemEntity) = upsertItems(listOf(item))
 
-    override suspend fun upsertItems(items: List<ItemEntity>) =
-        database.itemsDao().insertOrUpdate(*items.toTypedArray())
+    override suspend fun upsertItems(items: List<ItemEntity>) {
+        val itemsToUpsert = keepStoredSlNotes(items)
+        database.itemsDao().insertOrUpdate(*itemsToUpsert.toTypedArray())
+    }
+
+    /**
+     * The SL note lives only in SimpleLogin, so items coming from the Pass API always carry a null
+     * slNote. Without this, every item upsert would wipe the note we fetched from SL. Clearing a
+     * note goes through [updateSlNote], never through an upsert.
+     */
+    private suspend fun keepStoredSlNotes(items: List<ItemEntity>): List<ItemEntity> {
+        val candidates = items.filter(::needsStoredSlNote)
+        if (candidates.isEmpty()) return items
+
+        val storedSlNotes = candidates.groupBy { it.userId }
+            .flatMap { (userId, userItems) ->
+                database.itemsDao().getByShareItemKeys(
+                    userId = userId,
+                    shareItemKeys = userItems.map { shareItemKey(it.shareId, it.id) }
+                )
+            }
+            .mapNotNull { entity ->
+                entity.slNote?.let { shareItemKey(entity.shareId, entity.id) to it }
+            }
+            .toMap()
+
+        return mergeStoredSlNotes(items, storedSlNotes)
+    }
 
     override fun observeItems(
         userId: UserId,

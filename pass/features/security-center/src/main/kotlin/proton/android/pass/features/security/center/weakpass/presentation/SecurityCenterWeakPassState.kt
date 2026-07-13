@@ -20,8 +20,7 @@ package proton.android.pass.features.security.center.weakpass.presentation
 
 import androidx.compose.runtime.Stable
 import kotlinx.collections.immutable.ImmutableList
-import kotlinx.collections.immutable.toPersistentList
-import proton.android.pass.common.api.PasswordStrength
+import kotlinx.collections.immutable.persistentListOf
 import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.domain.ShareIcon
 import proton.android.pass.domain.ShareId
@@ -29,42 +28,20 @@ import proton.android.pass.domain.Vault
 
 @Stable
 internal data class SecurityCenterWeakPassState(
-    private val vulnerablePasswordUiModels: List<ItemUiModel>,
-    private val weakPasswordUiModels: List<ItemUiModel>,
+    internal val itemUiModels: ImmutableList<ItemUiModel>,
     internal val isLoading: Boolean,
     internal val canLoadExternalImages: Boolean,
     private val groupedVaults: Map<ShareId, Vault>
 ) {
 
-    internal val weakPassGroups: ImmutableList<SecurityCenterWeakPassGroup> =
-        mutableListOf<SecurityCenterWeakPassGroup>().apply {
-            if (vulnerablePasswordUiModels.isNotEmpty()) {
-                add(
-                    SecurityCenterWeakPassGroup(
-                        passwordStrength = PasswordStrength.Vulnerable,
-                        itemUiModels = vulnerablePasswordUiModels
-                    )
-                )
-            }
-            if (weakPasswordUiModels.isNotEmpty()) {
-                add(
-                    SecurityCenterWeakPassGroup(
-                        passwordStrength = PasswordStrength.Weak,
-                        itemUiModels = weakPasswordUiModels
-                    )
-                )
-            }
-        }.toPersistentList()
-
-    internal val shouldNavigateBack = !isLoading && weakPassGroups.sumOf { it.itemUiModels.size } == 0
+    internal val shouldNavigateBack = !isLoading && itemUiModels.isEmpty()
 
     internal fun getShareIcon(shareId: ShareId): ShareIcon? = groupedVaults[shareId]?.icon
 
     internal companion object {
 
         internal val Initial = SecurityCenterWeakPassState(
-            vulnerablePasswordUiModels = emptyList(),
-            weakPasswordUiModels = emptyList(),
+            itemUiModels = persistentListOf(),
             isLoading = true,
             canLoadExternalImages = false,
             groupedVaults = emptyMap()
@@ -73,8 +50,3 @@ internal data class SecurityCenterWeakPassState(
     }
 
 }
-
-internal data class SecurityCenterWeakPassGroup(
-    internal val passwordStrength: PasswordStrength,
-    internal val itemUiModels: List<ItemUiModel>
-)

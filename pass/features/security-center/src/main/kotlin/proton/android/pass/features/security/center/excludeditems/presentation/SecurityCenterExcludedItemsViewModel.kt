@@ -27,6 +27,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
+import proton.android.pass.common.api.removeAccents
 import proton.android.pass.commonui.api.toUiModel
 import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
@@ -65,7 +66,7 @@ class SecurityCenterExcludedItemsViewModel @Inject constructor(
         encryptionContextProvider.withEncryptionContext {
             excludedLoginItems.map { excludedLoginItem ->
                 excludedLoginItem.toUiModel(this@withEncryptionContext).copy(isPinned = false)
-            }.sortedBy { it.contents.title.lowercase() }
+            }.sortedBy { it.contents.title.removeAccents().lowercase() }
         }
     }
 

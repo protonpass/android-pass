@@ -26,6 +26,7 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
+import proton.android.pass.common.api.removeAccents
 import proton.android.pass.commonui.api.toUiModel
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.usecases.items.ObserveMonitoredItems
@@ -73,7 +74,7 @@ class SecurityCenterMissingTFAViewModel @Inject constructor(
     private fun List<Item>.toUiModels() = encryptionContextProvider.withEncryptionContext {
         map { item ->
             item.toUiModel(this@withEncryptionContext).copy(isPinned = false)
-        }.sortedBy { it.contents.title.lowercase() }
+        }.sortedBy { it.contents.title.removeAccents().lowercase() }
     }
 
 }

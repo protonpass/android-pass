@@ -59,23 +59,21 @@ internal fun SecurityCenterWeakPassContent(
                 .padding(paddingValues = innerPaddingValues)
                 .padding(top = Spacing.large)
         ) {
-            weakPassGroups.forEach { weakPassGroup ->
-                items(
-                    items = weakPassGroup.itemUiModels,
-                    key = { it.key }
-                ) { itemUiModel ->
-                    SecurityCenterLoginItemRow(
-                        itemUiModel = itemUiModel,
-                        canLoadExternalImages = canLoadExternalImages,
-                        shareIcon = getShareIcon(itemUiModel.shareId),
-                        onClick = {
-                            SecurityCenterWeakPassDestination.ItemDetails(
-                                shareId = itemUiModel.shareId,
-                                itemId = itemUiModel.id
-                            ).also(onNavigated)
-                        }
-                    )
-                }
+            items(
+                items = itemUiModels,
+                key = { it.key }
+            ) { itemUiModel ->
+                SecurityCenterLoginItemRow(
+                    itemUiModel = itemUiModel,
+                    canLoadExternalImages = canLoadExternalImages,
+                    shareIcon = getShareIcon(itemUiModel.shareId),
+                    onClick = {
+                        SecurityCenterWeakPassDestination.ItemDetails(
+                            shareId = itemUiModel.shareId,
+                            itemId = itemUiModel.id
+                        ).also(onNavigated)
+                    }
+                )
             }
         }
     }

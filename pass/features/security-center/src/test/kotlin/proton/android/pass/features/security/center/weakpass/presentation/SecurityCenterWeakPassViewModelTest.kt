@@ -78,9 +78,7 @@ internal class SecurityCenterWeakPassViewModelTest {
 
         viewModel.state.test {
             skipItems(1)
-            val state = awaitItem()
-            val weakGroup = state.weakPassGroups.first()
-            val titles = weakGroup.itemUiModels.map { it.contents.title }
+            val titles = awaitItem().itemUiModels.map { it.contents.title }
             assertThat(titles).isEqualTo(listOf("Alpha", "Bravo", "Charlie"))
         }
     }
@@ -106,10 +104,64 @@ internal class SecurityCenterWeakPassViewModelTest {
 
         viewModel.state.test {
             skipItems(1)
-            val state = awaitItem()
-            val vulnerableGroup = state.weakPassGroups.first()
-            val titles = vulnerableGroup.itemUiModels.map { it.contents.title }
+            val titles = awaitItem().itemUiModels.map { it.contents.title }
             assertThat(titles).isEqualTo(listOf("Alpha", "mike", "Zulu"))
+        }
+    }
+
+    @Test
+    internal fun `WHEN both weak and vulnerable passwords are emitted THEN items are sorted together`() = runTest {
+        val vulnerableZulu = ItemTestFactory.createLogin(itemId = ItemId("z"), title = "Zulu")
+        val vulnerableAlpha = ItemTestFactory.createLogin(itemId = ItemId("a"), title = "Alpha")
+        val weakBravo = ItemTestFactory.createLogin(itemId = ItemId("b"), title = "Bravo")
+        val weakYankee = ItemTestFactory.createLogin(itemId = ItemId("y"), title = "Yankee")
+        val items = listOf(vulnerableZulu, vulnerableAlpha, weakBravo, weakYankee)
+
+        insecurePasswordChecker.setResult(
+            InsecurePasswordsReport(
+                weakPasswordItems = listOf(weakBravo, weakYankee),
+                vulnerablePasswordItems = listOf(vulnerableZulu, vulnerableAlpha)
+            )
+        )
+
+        observeVaultsGroupedByShareId.emitDefault()
+
+        val viewModel = createViewModel()
+
+        observeMonitoredItems.emitMonitoredItems(items)
+
+        viewModel.state.test {
+            skipItems(1)
+            val titles = awaitItem().itemUiModels.map { it.contents.title }
+            assertThat(titles).isEqualTo(listOf("Alpha", "Bravo", "Yankee", "Zulu"))
+        }
+    }
+
+    @Test
+    internal fun `WHEN titles are accented THEN they are sorted next to their unaccented letter`() = runTest {
+        val zeta = ItemTestFactory.createLogin(itemId = ItemId("z"), title = "Zeta")
+        val alvaro = ItemTestFactory.createLogin(itemId = ItemId("a"), title = "Álvaro")
+        val banco = ItemTestFactory.createLogin(itemId = ItemId("b"), title = "Banco")
+        val nube = ItemTestFactory.createLogin(itemId = ItemId("n"), title = "Ñube")
+        val items = listOf(zeta, alvaro, banco, nube)
+
+        insecurePasswordChecker.setResult(
+            InsecurePasswordsReport(
+                weakPasswordItems = items,
+                vulnerablePasswordItems = emptyList()
+            )
+        )
+
+        observeVaultsGroupedByShareId.emitDefault()
+
+        val viewModel = createViewModel()
+
+        observeMonitoredItems.emitMonitoredItems(items)
+
+        viewModel.state.test {
+            skipItems(1)
+            val titles = awaitItem().itemUiModels.map { it.contents.title }
+            assertThat(titles).isEqualTo(listOf("Álvaro", "Banco", "Ñube", "Zeta"))
         }
     }
 

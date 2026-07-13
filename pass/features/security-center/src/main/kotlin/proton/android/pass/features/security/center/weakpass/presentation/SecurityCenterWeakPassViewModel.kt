@@ -21,12 +21,14 @@ package proton.android.pass.features.security.center.weakpass.presentation
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.collections.immutable.toPersistentList
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.withContext
+import proton.android.pass.common.api.removeAccents
 import proton.android.pass.commonui.api.toUiModel
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.usecases.items.ObserveMonitoredItems
@@ -60,8 +62,7 @@ class SecurityCenterWeakPassViewModel @Inject constructor(
     ) { monitoredItems, useFavIconsPreference, groupedVaults ->
         insecurePasswordChecker(monitoredItems).let { report ->
             SecurityCenterWeakPassState(
-                vulnerablePasswordUiModels = report.vulnerablePasswordItems.toUiModels(),
-                weakPasswordUiModels = report.weakPasswordItems.toUiModels(),
+                itemUiModels = report.vulnerablePasswordItems.plus(report.weakPasswordItems).toUiModels(),
                 isLoading = false,
                 canLoadExternalImages = useFavIconsPreference.value(),
                 groupedVaults = groupedVaults
@@ -77,7 +78,9 @@ class SecurityCenterWeakPassViewModel @Inject constructor(
         encryptionContextProvider.withEncryptionContext {
             map { item ->
                 item.toUiModel(this@withEncryptionContext).copy(isPinned = false)
-            }.sortedBy { it.contents.title.lowercase() }
+            }
+                .sortedBy { it.contents.title.removeAccents().lowercase() }
+                .toPersistentList()
         }
     }
 

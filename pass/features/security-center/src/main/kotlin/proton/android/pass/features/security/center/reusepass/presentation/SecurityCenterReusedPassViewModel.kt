@@ -28,6 +28,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.withContext
+import proton.android.pass.common.api.removeAccents
 import proton.android.pass.commonui.api.toUiModel
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.usecases.items.ObserveMonitoredItems
@@ -85,7 +86,7 @@ class SecurityCenterReusedPassViewModel @Inject constructor(
         encryptionContextProvider.withEncryptionContext {
             map { item ->
                 item.toUiModel(this@withEncryptionContext).copy(isPinned = false)
-            }.sortedBy { it.contents.title.lowercase() }
+            }.sortedBy { it.contents.title.removeAccents().lowercase() }
         }
     }
 

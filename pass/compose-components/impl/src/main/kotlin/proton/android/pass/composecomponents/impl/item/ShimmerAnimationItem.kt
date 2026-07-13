@@ -35,12 +35,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemePreviewProvider
+
+private const val SHIMMER_BASE_ALPHA = 0.11f
+private const val SHIMMER_HIGHLIGHT_ALPHA = 0.04f
 
 /**
  * Create a basic shimmer
@@ -48,11 +50,9 @@ import proton.android.pass.commonui.api.ThemePreviewProvider
  */
 @Composable
 fun ShimmerAnimationItem(modifier: Modifier = Modifier) {
-    val shimmerColorShades = listOf(
-        Color.LightGray.copy(0.9f),
-        Color.LightGray.copy(0.2f),
-        Color.LightGray.copy(0.9f)
-    )
+    val baseColor = PassTheme.colors.textNorm.copy(alpha = SHIMMER_BASE_ALPHA)
+    val highlightColor = PassTheme.colors.textNorm.copy(alpha = SHIMMER_HIGHLIGHT_ALPHA)
+    val shimmerColorShades = listOf(baseColor, highlightColor, baseColor)
 
     val transition = rememberInfiniteTransition(label = "")
     val translateAnim by transition.animateFloat(

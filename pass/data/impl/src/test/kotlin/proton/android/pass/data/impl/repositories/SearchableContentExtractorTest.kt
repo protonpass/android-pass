@@ -57,6 +57,22 @@ class SearchableContentExtractorTest {
     }
 
     @Test
+    fun `alias indexes email and SimpleLogin note`() {
+        val item = item(
+            content = ItemV1.Content.newBuilder().setAlias(ItemV1.ItemAlias.newBuilder())
+        )
+
+        val result = extract(
+            item = item,
+            aliasEmail = "alias@passmail.com",
+            slNote = "shopping newsletters"
+        )
+
+        assertThat(result).contains("alias@passmail.com")
+        assertThat(result).contains("shopping newsletters")
+    }
+
+    @Test
     fun `custom fields index name and TEXT value but not HIDDEN or TOTP values`() {
         val item = item(
             content = ItemV1.Content.newBuilder().setLogin(ItemV1.ItemLogin.newBuilder()),
@@ -147,8 +163,14 @@ class SearchableContentExtractorTest {
         assertThat(result).doesNotContain(SECRET_SSH_PRIVATE_KEY)
     }
 
-    private fun extract(item: ItemV1.Item, aliasEmail: String? = null): String =
-        SearchableContentExtractor.extract(itemEntity(item, aliasEmail), FakeEncryptionContext)
+    private fun extract(
+        item: ItemV1.Item,
+        aliasEmail: String? = null,
+        slNote: String? = null
+    ): String = SearchableContentExtractor.extract(
+        itemEntity(item, aliasEmail, slNote),
+        FakeEncryptionContext
+    )
 
     private fun item(content: ItemV1.Content.Builder, extraFields: List<ItemV1.ExtraField> = emptyList()): ItemV1.Item =
         ItemV1.Item.newBuilder()
@@ -156,7 +178,11 @@ class SearchableContentExtractorTest {
             .addAllExtraFields(extraFields)
             .build()
 
-    private fun itemEntity(item: ItemV1.Item, aliasEmail: String?): ItemEntity = ItemEntity(
+    private fun itemEntity(
+        item: ItemV1.Item,
+        aliasEmail: String?,
+        slNote: String? = null
+    ): ItemEntity = ItemEntity(
         id = "item-id",
         userId = "user-id",
         addressId = "address-id",
@@ -170,6 +196,7 @@ class SearchableContentExtractorTest {
         state = 0,
         itemType = 0,
         aliasEmail = aliasEmail,
+        slNote = slNote?.let(FakeEncryptionContext::encrypt),
         createTime = 0L,
         modifyTime = 0L,
         lastUsedTime = null,

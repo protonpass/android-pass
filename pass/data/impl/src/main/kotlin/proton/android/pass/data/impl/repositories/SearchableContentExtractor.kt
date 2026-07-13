@@ -60,6 +60,7 @@ internal object SearchableContentExtractor {
                 }
                 parsed.hasContent() && parsed.content.hasAlias() -> {
                     item.aliasEmail?.let { parts.addIfNotBlank(it) }
+                    item.slNote?.let { parts.addIfNotBlank(context.decrypt(it)) }
                 }
                 parsed.hasContent() && parsed.content.hasCreditCard() -> {
                     parts.addIfNotBlank(parsed.content.creditCard.cardholderName)

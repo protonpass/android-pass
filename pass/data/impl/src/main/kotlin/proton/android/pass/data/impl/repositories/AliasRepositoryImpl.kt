@@ -33,6 +33,7 @@ import proton.android.pass.common.api.safeRunCatching
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.repositories.AliasItemsChangeStatusResult
 import proton.android.pass.data.api.repositories.AliasRepository
+import proton.android.pass.data.api.repositories.SearchIndexRepository
 import proton.android.pass.data.api.usecases.ItemTypeFilter
 import proton.android.pass.data.impl.extensions.toDomain
 import proton.android.pass.data.impl.local.LocalItemDataSource
@@ -55,6 +56,7 @@ import javax.inject.Inject
 class AliasRepositoryImpl @Inject constructor(
     private val remoteDataSource: RemoteAliasDataSource,
     private val localItemDataSource: LocalItemDataSource,
+    private val searchIndexRepository: SearchIndexRepository,
     private val encryptionContextProvider: EncryptionContextProvider
 ) : AliasRepository {
 
@@ -165,6 +167,7 @@ class AliasRepositoryImpl @Inject constructor(
             encrypt(slNote)
         }
         localItemDataSource.updateSlNote(userId, shareId, itemId, encryptedSlNote)
+        searchIndexRepository.indexItem(userId, shareId, itemId)
     }
 
     override suspend fun refreshAliasSlNote(
@@ -179,6 +182,7 @@ class AliasRepositoryImpl @Inject constructor(
             }
         }
         localItemDataSource.updateSlNote(userId, shareId, itemId, encryptedSlNote)
+        searchIndexRepository.indexItem(userId, shareId, itemId)
     }
 
     override suspend fun refreshBulkAliasSlNotes(userId: UserId, shareIds: List<ShareId>) {
@@ -197,13 +201,16 @@ class AliasRepositoryImpl @Inject constructor(
             val itemIds = shareItems.map { ItemId(it.id) }
             itemIds.chunked(MAX_BULK_SIZE).forEach { chunk ->
                 val responses = remoteDataSource.fetchBulkAliasDetails(userId, shareId, chunk)
+                val updatedItemIds = mutableListOf<ItemId>()
                 encryptionContextProvider.withEncryptionContextSuspendable {
                     responses.forEach { aliasResponse ->
                         val itemId = emailToItemId[aliasResponse.email] ?: return@forEach
                         val encryptedSlNote = aliasResponse.note?.let { encrypt(it) }
                         localItemDataSource.updateSlNote(userId, shareId, itemId, encryptedSlNote)
+                        updatedItemIds.add(itemId)
                     }
                 }
+                searchIndexRepository.indexItems(userId, updatedItemIds.map { shareId to it })
             }
         }
     }

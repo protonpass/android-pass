@@ -178,6 +178,10 @@ class SyncUserEventsImpl @Inject constructor(
         if (itemsUpdated.isEmpty()) return
         PassLogger.i(TAG, "Refreshing ${itemsUpdated.size} updated items")
         itemRepository.refreshItems(userId, itemsUpdated)
+        aliasRepository.refreshAliasSlNotesForItems(
+            userId = userId,
+            items = itemsUpdated.map { it.shareId to it.itemId }
+        )
     }
 
     private suspend fun processSharesDeleted(userId: UserId, sharesDeleted: List<SyncEventShare>) {

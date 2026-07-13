@@ -57,6 +57,8 @@ class FakeLocalItemDataSource : LocalItemDataSource {
 
     fun getMemory(): List<ItemEntity> = memory
 
+    fun getSlNoteUpdates(): List<Triple<ShareId, ItemId, EncryptedString?>> = slNoteUpdates
+
     fun emitSummary(value: ItemCountSummary) {
         summary.tryEmit(value)
     }
@@ -151,7 +153,9 @@ class FakeLocalItemDataSource : LocalItemDataSource {
     }
 
     override suspend fun getByShareItemPairs(userId: UserId, pairs: List<Pair<ShareId, ItemId>>): List<ItemEntity> =
-        emptyList()
+        memory.filter { entity ->
+            pairs.any { (shareId, itemId) -> entity.shareId == shareId.id && entity.id == itemId.id }
+        }
 
     override suspend fun setItemStates(
         userId: UserId,

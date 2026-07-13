@@ -80,6 +80,8 @@ interface AliasRepository {
 
     suspend fun refreshBulkAliasSlNotes(userId: UserId, shareIds: List<ShareId>)
 
+    suspend fun refreshAliasSlNotesForItems(userId: UserId, items: List<Pair<ShareId, ItemId>>)
+
 }
 
 sealed interface AliasItemsChangeStatusResult {

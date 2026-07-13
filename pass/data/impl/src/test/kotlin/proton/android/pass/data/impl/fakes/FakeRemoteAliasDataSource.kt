@@ -1,0 +1,100 @@
+/*
+ * Copyright (c) 2026 Proton AG
+ * This file is part of Proton AG and Proton Pass.
+ *
+ * Proton Pass is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * Proton Pass is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
+package proton.android.pass.data.impl.fakes
+
+import kotlinx.coroutines.flow.Flow
+import me.proton.core.domain.entity.UserId
+import proton.android.pass.data.impl.remote.RemoteAliasDataSource
+import proton.android.pass.data.impl.requests.ChangeAliasStatusRequest
+import proton.android.pass.data.impl.requests.UpdateAliasMailboxesRequest
+import proton.android.pass.data.impl.requests.alias.UpdateAliasNameRequest
+import proton.android.pass.data.impl.requests.alias.UpdateAliasNoteRequest
+import proton.android.pass.data.impl.responses.AliasOptionsResponse
+import proton.android.pass.data.impl.responses.AliasResponse
+import proton.android.pass.domain.ItemId
+import proton.android.pass.domain.ShareId
+
+class FakeRemoteAliasDataSource : RemoteAliasDataSource {
+
+    private var bulkAliasDetails: List<AliasResponse> = emptyList()
+    private val fetchBulkAliasDetailsMemory = mutableListOf<Pair<ShareId, List<ItemId>>>()
+
+    fun setBulkAliasDetails(responses: List<AliasResponse>) {
+        bulkAliasDetails = responses
+    }
+
+    fun getFetchBulkAliasDetailsMemory(): List<Pair<ShareId, List<ItemId>>> = fetchBulkAliasDetailsMemory
+
+    override suspend fun fetchBulkAliasDetails(
+        userId: UserId,
+        shareId: ShareId,
+        itemIds: List<ItemId>
+    ): List<AliasResponse> {
+        fetchBulkAliasDetailsMemory.add(shareId to itemIds)
+        return bulkAliasDetails
+    }
+
+    override fun getAliasOptions(userId: UserId, shareId: ShareId): Flow<AliasOptionsResponse> {
+        error("Not needed in tests")
+    }
+
+    override suspend fun fetchAliasDetails(
+        userId: UserId,
+        shareId: ShareId,
+        itemId: ItemId
+    ): AliasResponse {
+        error("Not needed in tests")
+    }
+
+    override fun updateAliasMailboxes(
+        userId: UserId,
+        shareId: ShareId,
+        itemId: ItemId,
+        mailboxes: UpdateAliasMailboxesRequest
+    ): Flow<AliasResponse> {
+        error("Not needed in tests")
+    }
+
+    override suspend fun changeAliasStatus(
+        userId: UserId,
+        shareId: ShareId,
+        itemId: ItemId,
+        request: ChangeAliasStatusRequest
+    ) {
+        error("Not needed in tests")
+    }
+
+    override suspend fun updateAliasName(
+        userId: UserId,
+        shareId: ShareId,
+        itemId: ItemId,
+        request: UpdateAliasNameRequest
+    ) {
+        error("Not needed in tests")
+    }
+
+    override suspend fun updateAliasNote(
+        userId: UserId,
+        shareId: ShareId,
+        itemId: ItemId,
+        request: UpdateAliasNoteRequest
+    ) {
+        error("Not needed in tests")
+    }
+}

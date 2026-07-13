@@ -256,6 +256,43 @@ internal class SyncUserEventsImplTest {
     }
 
     @Test
+    fun `refreshes SL notes of the items updated`() = runTest {
+        val eventId = UserEventId(EVENT_ID_1)
+        setupBasicSync(eventId)
+
+        val item1 = SyncEventShareItem(ShareId(SHARE_ID_1), ItemId(ITEM_ID_1), EventToken(TOKEN_1))
+        val item2 = SyncEventShareItem(ShareId(SHARE_ID_2), ItemId(ITEM_ID_2), EventToken(TOKEN_2))
+
+        userEventRepository.setGetUserEventsResult(
+            createUserEventList(
+                lastEventId = eventId,
+                itemsUpdated = listOf(item1, item2)
+            )
+        )
+
+        instance.invoke(USER_ID)
+
+        assertThat(aliasRepository.getRefreshAliasSlNotesForItemsMemory()).containsExactly(
+            USER_ID to listOf(
+                ShareId(SHARE_ID_1) to ItemId(ITEM_ID_1),
+                ShareId(SHARE_ID_2) to ItemId(ITEM_ID_2)
+            )
+        )
+    }
+
+    @Test
+    fun `does not refresh SL notes when no item was updated`() = runTest {
+        val eventId = UserEventId(EVENT_ID_1)
+        setupBasicSync(eventId)
+
+        userEventRepository.setGetUserEventsResult(createUserEventList(lastEventId = eventId))
+
+        instance.invoke(USER_ID)
+
+        assertThat(aliasRepository.getRefreshAliasSlNotesForItemsMemory()).isEmpty()
+    }
+
+    @Test
     fun `processes folders updated before items updated`() = runTest {
         val eventId = UserEventId(EVENT_ID_1)
         setupBasicSync(eventId)

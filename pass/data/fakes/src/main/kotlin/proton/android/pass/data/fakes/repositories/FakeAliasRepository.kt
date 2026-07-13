@@ -35,6 +35,8 @@ class FakeAliasRepository @Inject constructor() : AliasRepository {
 
     private val refreshAliasSlNoteMemory = mutableListOf<Triple<UserId, ShareId, ItemId>>()
     private val refreshBulkAliasSlNotesMemory = mutableListOf<Pair<UserId, List<ShareId>>>()
+    private val refreshAliasSlNotesForItemsMemory =
+        mutableListOf<Pair<UserId, List<Pair<ShareId, ItemId>>>>()
 
     override fun getAliasOptions(userId: UserId, shareId: ShareId): Flow<AliasOptions> {
         TODO("Not yet implemented")
@@ -105,5 +107,12 @@ class FakeAliasRepository @Inject constructor() : AliasRepository {
 
     override suspend fun refreshBulkAliasSlNotes(userId: UserId, shareIds: List<ShareId>) {
         refreshBulkAliasSlNotesMemory.add(userId to shareIds)
+    }
+
+    fun getRefreshAliasSlNotesForItemsMemory(): List<Pair<UserId, List<Pair<ShareId, ItemId>>>> =
+        refreshAliasSlNotesForItemsMemory
+
+    override suspend fun refreshAliasSlNotesForItems(userId: UserId, items: List<Pair<ShareId, ItemId>>) {
+        refreshAliasSlNotesForItemsMemory.add(userId to items)
     }
 }

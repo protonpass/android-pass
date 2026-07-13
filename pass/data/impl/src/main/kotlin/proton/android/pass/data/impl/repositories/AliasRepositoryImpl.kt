@@ -35,6 +35,7 @@ import proton.android.pass.data.api.repositories.AliasItemsChangeStatusResult
 import proton.android.pass.data.api.repositories.AliasRepository
 import proton.android.pass.data.api.repositories.SearchIndexRepository
 import proton.android.pass.data.api.usecases.ItemTypeFilter
+import proton.android.pass.data.impl.db.entities.ItemEntity
 import proton.android.pass.data.impl.extensions.toDomain
 import proton.android.pass.data.impl.local.LocalItemDataSource
 import proton.android.pass.data.impl.remote.RemoteAliasDataSource
@@ -192,12 +193,26 @@ class AliasRepositoryImpl @Inject constructor(
             itemState = ItemState.Active,
             filter = ItemTypeFilter.Aliases,
             itemFlags = emptyMap()
-        ).first().filter { it.aliasEmail != null }
+        ).first()
+
+        refreshSlNotesForAliasEntities(userId, items)
+    }
+
+    override suspend fun refreshAliasSlNotesForItems(userId: UserId, items: List<Pair<ShareId, ItemId>>) {
         if (items.isEmpty()) return
 
-        val emailToItemId = items.associate { it.aliasEmail to ItemId(it.id) }
+        val entities = localItemDataSource.getByShareItemPairs(userId, items)
 
-        items.groupBy { ShareId(it.shareId) }.forEach { (shareId, shareItems) ->
+        refreshSlNotesForAliasEntities(userId, entities)
+    }
+
+    private suspend fun refreshSlNotesForAliasEntities(userId: UserId, entities: List<ItemEntity>) {
+        val aliasEntities = entities.filter { it.aliasEmail != null }
+        if (aliasEntities.isEmpty()) return
+
+        val emailToItemId = aliasEntities.associate { it.aliasEmail to ItemId(it.id) }
+
+        aliasEntities.groupBy { ShareId(it.shareId) }.forEach { (shareId, shareItems) ->
             val itemIds = shareItems.map { ItemId(it.id) }
             itemIds.chunked(MAX_BULK_SIZE).forEach { chunk ->
                 val responses = remoteDataSource.fetchBulkAliasDetails(userId, shareId, chunk)

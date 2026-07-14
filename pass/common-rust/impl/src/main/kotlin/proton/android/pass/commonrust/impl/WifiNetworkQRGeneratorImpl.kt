@@ -18,9 +18,9 @@
 
 package proton.android.pass.commonrust.impl
 
-import proton.android.pass.commonrust.WifiSecurity
 import proton.android.pass.commonrust.api.WifiNetworkQRGenerator
 import proton.android.pass.domain.WifiSecurityType
+import proton.android.pass.types.WifiSecurity
 import javax.inject.Inject
 import javax.inject.Singleton
 import proton.android.pass.commonrust.WifiQrCodeGenerator as RustWifiQrCodeGenerator
@@ -39,7 +39,7 @@ class WifiNetworkQRGeneratorImpl @Inject constructor() : WifiNetworkQRGenerator 
             ssid = ssid,
             password = password,
             security = when (wifiSecurity) {
-                WifiSecurityType.Unknown -> WifiSecurity.UNSPECIFIED
+                WifiSecurityType.Unknown -> WifiSecurity.UNSPECIFIED_WIFI_SECURITY
                 WifiSecurityType.WPA -> WifiSecurity.WPA
                 WifiSecurityType.WPA2 -> WifiSecurity.WPA2
                 WifiSecurityType.WPA3 -> WifiSecurity.WPA3

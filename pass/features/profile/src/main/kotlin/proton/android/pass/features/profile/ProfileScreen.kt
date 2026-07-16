@@ -27,6 +27,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import proton.android.pass.commonui.api.AndroidUtils
 import proton.android.pass.commonui.api.AppUrls.PASS_STORE
 import proton.android.pass.commonui.api.BrowserUtils.openWebsite
 import proton.android.pass.domain.features.PaidFeature
@@ -94,6 +95,12 @@ fun ProfileScreen(
                 ProfileUiEvent.OnImportExportClick -> openWebsite(context, PASS_IMPORT)
                 ProfileUiEvent.OnRateAppClick -> openWebsite(context, PASS_STORE)
                 ProfileUiEvent.OnSettingsClick -> onNavigateEvent(ProfileNavigation.Settings)
+                ProfileUiEvent.OnTellAFriendClick ->
+                    AndroidUtils.shareTextWithThirdParties(
+                        context = context,
+                        text = context.getString(R.string.profile_spread_the_word_share_message)
+                    )
+
                 ProfileUiEvent.OnUpgradeClick -> onNavigateEvent(ProfileNavigation.Upgrade)
                 ProfileUiEvent.OnAppLockTypeClick -> onNavigateEvent(ProfileNavigation.AppLockType)
                 ProfileUiEvent.OnAppLockTimeClick -> onNavigateEvent(ProfileNavigation.AppLockTime)

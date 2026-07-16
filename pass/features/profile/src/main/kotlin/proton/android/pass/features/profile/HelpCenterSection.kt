@@ -41,7 +41,6 @@ fun HelpCenterProfileSection(
     modifier: Modifier = Modifier,
     onFeedbackClick: () -> Unit,
     onImportExportClick: () -> Unit,
-    onRateAppClick: () -> Unit,
     onTutorialClick: () -> Unit
 ) {
     Column(modifier = modifier, verticalArrangement = Arrangement.spacedBy(Spacing.medium)) {
@@ -68,13 +67,6 @@ fun HelpCenterProfileSection(
                 isLink = true,
                 onClick = onTutorialClick
             )
-            if (SHOW_RATING_OPTION) {
-                PassDivider()
-                SettingOption(
-                    text = stringResource(R.string.profile_option_rating),
-                    onClick = onRateAppClick
-                )
-            }
         }
     }
 }
@@ -87,11 +79,8 @@ fun HelpCenterSectionPreview(@PreviewParameter(ThemePreviewProvider::class) isDa
             HelpCenterProfileSection(
                 onFeedbackClick = {},
                 onImportExportClick = {},
-                onRateAppClick = {},
                 onTutorialClick = {}
             )
         }
     }
 }
-
-const val SHOW_RATING_OPTION = false

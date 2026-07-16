@@ -54,7 +54,6 @@ import proton.android.pass.features.profile.PASS_IMPORT
 import proton.android.pass.features.profile.ProfileNavigation
 import proton.android.pass.features.profile.ProfileScreen
 import proton.android.pass.features.profile.R
-import proton.android.pass.features.profile.SHOW_RATING_OPTION
 import proton.android.pass.test.CallChecker
 import proton.android.pass.test.HiltComponentActivity
 import proton.android.pass.test.TestConstants
@@ -213,7 +212,6 @@ class ProfileScreenTest {
 
     @Test
     fun onRateAppClickCalled() {
-        if (!SHOW_RATING_OPTION) return
         composeTestRule.apply {
             setContent {
                 PassTheme {

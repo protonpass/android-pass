@@ -41,6 +41,8 @@ sealed interface ProfileUiEvent {
 
     data object OnSettingsClick : ProfileUiEvent
 
+    data object OnTellAFriendClick : ProfileUiEvent
+
     @JvmInline
     value class OnToggleBiometricSystemLock(val value: Boolean) : ProfileUiEvent
 

@@ -177,8 +177,12 @@ internal fun ProfileContent(
                     HelpCenterProfileSection(
                         onFeedbackClick = { onEvent(ProfileUiEvent.OnFeedbackClick) },
                         onImportExportClick = { onEvent(ProfileUiEvent.OnImportExportClick) },
-                        onRateAppClick = { onEvent(ProfileUiEvent.OnRateAppClick) },
                         onTutorialClick = { onEvent(ProfileUiEvent.OnTutorialClick) }
+                    )
+
+                    SpreadTheWordSection(
+                        onTellAFriendClick = { onEvent(ProfileUiEvent.OnTellAFriendClick) },
+                        onRateAppClick = { onEvent(ProfileUiEvent.OnRateAppClick) }
                     )
 
                     Box(

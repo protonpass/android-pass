@@ -35,8 +35,8 @@
     <item quantity="few">Predmetov %d je že v tej mapi</item>
     <item quantity="other">Predmetov %d je že v tej mapi</item>
   </plurals>
-  <string name="migrate_disabled_folder_reason_same_location">This folder is already in this location</string>
-  <string name="migrate_disabled_folder_reason_being_moved">This folder is being moved</string>
+  <string name="migrate_disabled_folder_reason_same_location">Mapa je že na tej lokaciji</string>
+  <string name="migrate_disabled_folder_reason_being_moved">Ta mapa je bila premaknjena</string>
   <string name="migrate_disabled_folder_reason_descendant">This folder is inside the folder being moved</string>
   <string name="migrate_disabled_vault_reason_no_permission">V tem trezorju ne morete ustvarjati predmetov</string>
   <string name="migrate_disabled_vault_reason_same_vault">Predmeta ne morete premakniti v isti trezor</string>
@@ -54,7 +54,7 @@
     <item quantity="other">%d predmetov je trenutno v skupni rabi. Če jih premaknete v drug trezor, boste odvzeli dostop vsem drugim uporabnikom.</item>
   </plurals>
   <string name="migrate_select_vault_title">Izberi trezor</string>
-  <string name="migrate_select_destination_for_source_title">Select the destination to move all items from %s</string>
+  <string name="migrate_select_destination_for_source_title">Izberite cilj, kamor želite premakniti vse elemente iz %s</string>
   <string name="migrate_folder_items_moved_success_snackbar">Predmeti premaknjeni</string>
   <string name="migrate_folder_items_moved_error_snackbar">Napaka pri premikanju predmetov</string>
 </resources>

@@ -343,19 +343,19 @@
   <string name="wifi_security_type_field_label">Vrsta varnosti</string>
   <string name="functionality_not_available">Ta funkcionalnost ni na voljo za vašo napravo.</string>
   <!-- Autofill URL suggestions screen -->
-  <string name="autofill_suggestions_title">URL Matching</string>
+  <string name="autofill_suggestions_title">URL ujemanje</string>
   <string name="autofill_suggestions_description">Adjust autofill behaviors to change where logins are suggested and filled for %s.</string>
-  <string name="autofill_suggestions_tab_basic">Basic</string>
-  <string name="autofill_suggestions_tab_advanced">Advanced</string>
+  <string name="autofill_suggestions_tab_basic">Osnovno</string>
+  <string name="autofill_suggestions_tab_advanced">Napredno</string>
   <string name="autofill_suggestions_mode_default">Parent domain and subdomains</string>
   <string name="autofill_suggestions_mode_exact">Exact (sub)domain</string>
   <string name="autofill_suggestions_mode_never">Never fill on this website</string>
-  <string name="autofill_suggestions_mode_start_with">Starts with</string>
+  <string name="autofill_suggestions_mode_start_with">Začne se z</string>
   <string name="autofill_suggestions_mode_regular_expression">Regular expression</string>
   <string name="autofill_suggestions_mode_exact_path">Exact URL matching</string>
   <string name="autofill_suggestions_android_limitation">Advanced rules are not available on Android due to limitations in the operating system APIs.</string>
-  <string name="autofill_suggestions_mode_default_badge">DEFAULT</string>
-  <string name="autofill_suggestions_url_column">URL</string>
-  <string name="autofill_suggestions_suggested_column">Suggested</string>
+  <string name="autofill_suggestions_mode_default_badge">PRIVZETO</string>
+  <string name="autofill_suggestions_url_column">Povezava</string>
+  <string name="autofill_suggestions_suggested_column">Predlagano</string>
   <string name="field_website_skipped_autofill">This url will be skipped for autofill</string>
 </resources>

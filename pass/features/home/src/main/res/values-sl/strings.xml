@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
   <!-- Home -->
-  <string name="home_indexing_banner">Building search index…</string>
+  <string name="home_indexing_banner">Ustvarjanje iskalnega indeksa ...</string>
   <string name="home_indexing_banner_progress">Building search index… (%1$d/%2$d)</string>
   <string name="home_empty_vault_title">Vaš trezor je prazen</string>
   <string name="home_empty_vault_subtitle">Začnite tako, da ustvarite svoj prvi predmet.</string>
@@ -26,7 +26,7 @@
   <string name="home_empty_no_vaults_subtitle">Prosimo, obrnite se na skrbnika.</string>
   <string name="home_empty_read_only_vault_title">Ta trezor je prazen</string>
   <string name="home_empty_read_only_vault_subtitle">Predmetov ne morete dodati v trezor, ki je določen samo za branje.</string>
-  <string name="home_empty_folder_plan_restricted_title">This folder is empty</string>
+  <string name="home_empty_folder_plan_restricted_title">Ta mapa je prazna</string>
   <string name="home_empty_folder_plan_restricted_subtitle">Upgrade your plan to create items inside folders.</string>
   <string name="home_empty_vault_create_login">Ustvarite prijavo</string>
   <string name="home_empty_vault_create_alias">Ustvari vzdevek Hide-my-email</string>

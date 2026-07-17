@@ -35,13 +35,13 @@
   <string name="settings_preference_display_username">사용자 이름 입력란 항상 보이기</string>
   <string name="settings_preference_display_autofill_pinning">자동완성 고정 항상 표시</string>
   <string name="view_logs_title">로그 보기</string>
-  <string name="view_logs_clear_logs">Clear logs</string>
-  <string name="view_logs_clear_logs_confirmation_title">Clear logs?</string>
-  <string name="view_logs_clear_logs_confirmation_message">This will permanently delete the logs currently shown on this device.</string>
-  <string name="view_logs_share_logs">Share logs</string>
-  <string name="view_logs_load_older_logs">Load older logs</string>
-  <string name="view_logs_loading_older_logs">Loading older logs...</string>
-  <string name="view_logs_empty">No logs available</string>
+  <string name="view_logs_clear_logs">로그 삭제</string>
+  <string name="view_logs_clear_logs_confirmation_title">로그를 삭제합니까?</string>
+  <string name="view_logs_clear_logs_confirmation_message">현재 이 기기에서 표시되는 로그가 완전히 삭제됩니다.</string>
+  <string name="view_logs_share_logs">로그 공유</string>
+  <string name="view_logs_load_older_logs">더 오래된 로그 불러오기</string>
+  <string name="view_logs_loading_older_logs">더 오래된 로그 불러오는 중...</string>
+  <string name="view_logs_empty">사용 가능한 로그 없음</string>
   <string name="clipboard_bottomsheet_title">클립보드</string>
   <string name="clipboard_option_clear_clipboard_label">클립보드 비우기</string>
   <string name="clipboard_option_copy_totp_code">인증 코드 복사</string>
@@ -51,10 +51,10 @@
   <string name="clipboard_option_clear_clipboard_after_180_seconds">3분 후</string>
   <string name="settings_use_digital_asset_link_preference_title">디지털 자산 링크 활성화</string>
   <string name="settings_use_digital_asset_link_preference_subtitle">Android 앱과 웹사이트 사이에 웹사이트 소유권 확인을 설정합니다.</string>
-  <string name="settings_autofill_display_title">Autofill display</string>
+  <string name="settings_autofill_display_title">자동 완성 표시</string>
   <string name="settings_autofill_display_inline">Inline (above keyboard)</string>
   <string name="settings_autofill_display_popup">Popup (over input field)</string>
-  <string name="settings_autofill_display_subtitle">Inline mode requires a compatible keyboard (e.g. Gboard). If unsupported, popup mode will be used automatically.</string>
-  <string name="settings_autosave_prompt_title">Prompt for auto-save</string>
-  <string name="settings_autosave_prompt_subtitle">Proton Pass will prompt you to save or update logins</string>
+  <string name="settings_autofill_display_subtitle">인랴인 모드는 호환 가능한 키보드(예: Gboard)가 필요합니다. 만약 지원되지 않는 경우 팝업 모드로 대신 사용됩니다.</string>
+  <string name="settings_autosave_prompt_title">자동 저장할 때 묻기</string>
+  <string name="settings_autosave_prompt_subtitle">Proton Pass가 로그인 항목을 저장하거나 업데이트할 때 묻습니다.</string>
 </resources>

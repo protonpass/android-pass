@@ -211,7 +211,9 @@ class AppLockTypeViewModelTest {
     }
 
     @Test
-    fun `changing from biometrics to password calls correct handler`() = runTest {
+    fun `biometrics to None without enforcement - full disable path`() = runTest {
+        // This test exercises the onBiometryAuthUnSet path (full disable)
+        // vs the onBiometryAuthToPassword path (password fallback)
         preferenceRepository.setAppLockTypePreference(Biometrics)
         preferenceRepository.setAppLockState(AppLockState.Enabled)
         observeEnforcedLock.emitValue(OrganizationSettings.NotAnOrganization)
@@ -224,6 +226,8 @@ class AppLockTypeViewModelTest {
             val contextHolder = ClassHolder<Context>(None)
             viewModel.onChanged(NonePreference, contextHolder)
 
+            // When not enforced and not already in password mode,
+            // biometry success -> onBiometryAuthUnSet (full disable)
             biometryManager.emitResult(BiometryResult.Success)
 
             val finalState = awaitItem()

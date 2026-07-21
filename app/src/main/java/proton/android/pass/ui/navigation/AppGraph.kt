@@ -62,6 +62,10 @@ import proton.android.pass.autofill.autofillhealth.ui.autofillHealthDebugGraph
 import proton.android.pass.features.explore.navigation.CodesNavItem
 import proton.android.pass.features.explore.navigation.ExploreNavDestination
 import proton.android.pass.features.explore.navigation.exploreNavGraph
+import proton.android.pass.autofill.autofillhealth.troubleshooting.ui.AutofillDiagnosticsRoute
+import proton.android.pass.autofill.autofillhealth.troubleshooting.ui.AutofillTroubleshootingRoute
+import proton.android.pass.autofill.autofillhealth.troubleshooting.ui.autofillDiagnosticsGraph
+import proton.android.pass.autofill.autofillhealth.troubleshooting.ui.autofillTroubleshootingGraph
 import proton.android.pass.features.featureflags.FeatureFlagRoute
 import proton.android.pass.features.featureflags.featureFlagsGraph
 import proton.android.pass.features.home.HOME_ENABLE_BULK_ACTIONS_KEY
@@ -934,6 +938,8 @@ fun NavGraphBuilder.appGraph(
                 ProfileNavigation.Settings -> appNavigator.navigate(Settings)
                 ProfileNavigation.Home -> appNavigator.popUpTo(HomeNavItem)
                 ProfileNavigation.Feedback -> appNavigator.navigate(FeedbackBottomsheet)
+                ProfileNavigation.AutofillTroubleshooting ->
+                    appNavigator.navigate(AutofillTroubleshootingRoute)
                 ProfileNavigation.Report -> dismissBottomSheet {
                     appNavigator.navigate(ReportNavItem)
                 }
@@ -2421,6 +2427,11 @@ fun NavGraphBuilder.appGraph(
         onNavigateToAutofillDebug = { appNavigator.navigate(AutofillHealthDebugRoute) }
     )
     autofillHealthDebugGraph()
+    autofillTroubleshootingGraph(
+        onBack = { appNavigator.navigateBack() },
+        onNavigateToDiagnostics = { appNavigator.navigate(AutofillDiagnosticsRoute) }
+    )
+    autofillDiagnosticsGraph(onBack = { appNavigator.navigateBack() })
     securityCenterNavGraph(
         onNavigated = { destination ->
             when (destination) {

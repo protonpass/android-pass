@@ -119,5 +119,11 @@ enum class FeatureFlag(
         description = "Suggest popular services while typing the title of a new login",
         key = "PassPopularServices",
         isEnabledDefault = false
+    ),
+    PASS_AUTOFILL_HEALTH(
+        title = "Autofill health",
+        description = "Show the autofill troubleshooting entry in settings",
+        key = "PassAutofillHealth",
+        isEnabledDefault = false
     )
 }

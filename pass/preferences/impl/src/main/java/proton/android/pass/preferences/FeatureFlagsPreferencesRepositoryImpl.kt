@@ -51,6 +51,7 @@ import proton.android.pass.preferences.FeatureFlag.PASS_USERNAME_GENERATOR
 import proton.android.pass.preferences.FeatureFlag.PASS_COMPROMISED_PASSWORDS
 import proton.android.pass.preferences.FeatureFlag.PASS_MONITOR_PER_CHECK_EXCLUSION
 import proton.android.pass.preferences.FeatureFlag.PASS_POPULAR_SERVICES
+import proton.android.pass.preferences.FeatureFlag.PASS_AUTOFILL_HEALTH
 import java.io.IOException
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -144,6 +145,11 @@ class FeatureFlagsPreferencesRepositoryImpl @Inject constructor(
             key = featureFlag.key,
             defaultValue = featureFlag.isEnabledDefault
         ) { passPopularServicesEnabled.value }
+
+        PASS_AUTOFILL_HEALTH -> getFeatureFlag(
+            key = featureFlag.key,
+            defaultValue = featureFlag.isEnabledDefault
+        ) { passAutofillHealthEnabled.value }
     }
 
     @Suppress("UNCHECKED_CAST")
@@ -230,6 +236,10 @@ class FeatureFlagsPreferencesRepositoryImpl @Inject constructor(
 
         PASS_POPULAR_SERVICES -> setFeatureFlag {
             passPopularServicesEnabled = boolFlagPrefProto(value)
+        }
+
+        PASS_AUTOFILL_HEALTH -> setFeatureFlag {
+            passAutofillHealthEnabled = boolFlagPrefProto(value)
         }
     }
 
@@ -337,6 +347,7 @@ class FeatureFlagsPreferencesRepositoryImpl @Inject constructor(
             PASS_COMPROMISED_PASSWORDS -> passCompromisedPasswordsEnabled
             PASS_MONITOR_PER_CHECK_EXCLUSION -> passMonitorPerCheckExclusionEnabled
             PASS_POPULAR_SERVICES -> passPopularServicesEnabled
+            PASS_AUTOFILL_HEALTH -> passAutofillHealthEnabled
         }.value
     }
 

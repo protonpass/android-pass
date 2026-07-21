@@ -54,6 +54,16 @@ object BrowserUtils {
         }
     }
 
+    fun openApp(context: Context, packageName: String) {
+        val intent = context.packageManager.getLaunchIntentForPackage(packageName) ?: run {
+            PassLogger.w(TAG, "No launch intent for $packageName")
+            return
+        }
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        runCatching { context.startActivity(intent) }
+            .onFailure { PassLogger.w(TAG, "Could not launch $packageName") }
+    }
+
     // Test helper to reset tracking
     fun resetLastUrl() {
         lastAttemptedUrl = null

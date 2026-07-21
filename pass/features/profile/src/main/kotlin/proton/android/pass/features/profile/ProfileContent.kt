@@ -175,6 +175,10 @@ internal fun ProfileContent(
                     )
 
                     HelpCenterProfileSection(
+                        canDisplayAutofillTroubleshooting = state.canDisplayAutofillTroubleshootingSection,
+                        onAutofillTroubleshootingClick = {
+                            onEvent(ProfileUiEvent.OnAutofillTroubleshootingClick)
+                        },
                         onFeedbackClick = { onEvent(ProfileUiEvent.OnFeedbackClick) },
                         onImportExportClick = { onEvent(ProfileUiEvent.OnImportExportClick) },
                         onTutorialClick = { onEvent(ProfileUiEvent.OnTutorialClick) }

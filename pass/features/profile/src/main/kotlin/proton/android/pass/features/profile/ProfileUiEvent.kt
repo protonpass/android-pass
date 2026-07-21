@@ -33,6 +33,8 @@ sealed interface ProfileUiEvent {
 
     data object OnCopyAppVersionClick : ProfileUiEvent
 
+    data object OnAutofillTroubleshootingClick : ProfileUiEvent
+
     data object OnFeedbackClick : ProfileUiEvent
 
     data object OnImportExportClick : ProfileUiEvent

@@ -13,16 +13,16 @@
     <compatibility-package android:name="com.alohamobile.browser" android:maxLongVersionCode="10000000000" />
     <compatibility-package android:name="com.amazon.cloud9" android:maxLongVersionCode="10000000000" />
     <compatibility-package android:name="com.android.browser" android:maxLongVersionCode="10000000000" />
-    <compatibility-package android:name="com.android.chrome" android:maxLongVersionCode="10000000000" />
+    <compatibility-package android:name="com.android.chrome" android:maxLongVersionCode="711900039" />
     <compatibility-package android:name="com.android.htmlviewer" android:maxLongVersionCode="10000000000" />
     <compatibility-package android:name="com.avast.android.secure.browser" android:maxLongVersionCode="10000000000" />
     <compatibility-package android:name="com.avg.android.secure.browser" android:maxLongVersionCode="10000000000" />
-    <compatibility-package android:name="com.brave.browser" android:maxLongVersionCode="10000000000" />
+    <compatibility-package android:name="com.brave.browser" android:maxLongVersionCode="427912623" />
     <compatibility-package android:name="com.brave.browser_beta" android:maxLongVersionCode="10000000000" />
     <compatibility-package android:name="com.brave.browser_default" android:maxLongVersionCode="10000000000" />
     <compatibility-package android:name="com.brave.browser_dev" android:maxLongVersionCode="10000000000" />
     <compatibility-package android:name="com.brave.browser_nightly" android:maxLongVersionCode="10000000000" />
-    <compatibility-package android:name="com.chrome.beta" android:maxLongVersionCode="10000000000" />
+    <compatibility-package android:name="com.chrome.beta" android:maxLongVersionCode="711900039" />
     <compatibility-package android:name="com.chrome.canary" android:maxLongVersionCode="10000000000" />
     <compatibility-package android:name="com.chrome.dev" android:maxLongVersionCode="10000000000" />
     <compatibility-package android:name="com.cookiegames.smartcookie" android:maxLongVersionCode="10000000000" />

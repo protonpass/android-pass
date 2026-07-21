@@ -40,6 +40,7 @@ import proton.android.pass.preferences.FeatureFlag.PASS_USERNAME_GENERATOR
 import proton.android.pass.preferences.FeatureFlag.PASS_COMPROMISED_PASSWORDS
 import proton.android.pass.preferences.FeatureFlag.PASS_MONITOR_PER_CHECK_EXCLUSION
 import proton.android.pass.preferences.FeatureFlag.PASS_POPULAR_SERVICES
+import proton.android.pass.preferences.FeatureFlag.PASS_AUTOFILL_HEALTH
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -70,6 +71,7 @@ class FakeFeatureFlagsPreferenceRepository @Inject constructor() :
             PASS_MONITOR_PER_CHECK_EXCLUSION ->
                 it.getOrDefault(PASS_MONITOR_PER_CHECK_EXCLUSION, false) as T
             PASS_POPULAR_SERVICES -> it.getOrDefault(PASS_POPULAR_SERVICES, false) as T
+            PASS_AUTOFILL_HEALTH -> it.getOrDefault(PASS_AUTOFILL_HEALTH, false) as T
         }
     }
 

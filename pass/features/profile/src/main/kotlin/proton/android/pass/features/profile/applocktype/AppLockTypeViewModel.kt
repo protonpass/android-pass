@@ -78,10 +78,11 @@ class AppLockTypeViewModel @Inject constructor(
         observeAnyAccountHasEnforcedLock().map { if (it is Some) it.value.isEnforced() else false },
         eventState
     ) { biometryStatus, appLockTypePreference, appLockState, isForceLockMandatory, event ->
+        val isAlreadyPasswordOnlyLock = appLockTypePreference == None && appLockState == AppLockState.Enabled
         AppLockTypeUiState(
             items = appLockTypePreferences(biometryStatus),
             selected = appLockTypePreference,
-            isPasswordOption = appLockState == AppLockState.Enabled || isForceLockMandatory,
+            isPasswordOption = isAlreadyPasswordOnlyLock || isForceLockMandatory,
             isForceLockMandatory = isForceLockMandatory,
             event = event
         )

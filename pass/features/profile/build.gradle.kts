@@ -84,6 +84,18 @@ dependencies {
     implementation(projects.pass.preferences.api)
     implementation(projects.pass.searchOptions.api)
 
+    testImplementation(libs.core.test.kotlin)
+    testImplementation(libs.coroutines.test)
+    testImplementation(libs.junit)
+    testImplementation(libs.truth)
+    testImplementation(libs.turbine)
+    testImplementation(projects.pass.appConfig.fakes)
+    testImplementation(projects.pass.biometry.fakes)
+    testImplementation(projects.pass.commonTest)
+    testImplementation(projects.pass.data.fakes)
+    testImplementation(projects.pass.notifications.fakes)
+    testImplementation(projects.pass.preferences.fakes)
+
     androidTestImplementation(libs.androidx.test.espresso.intents)
 
     kaptAndroidTest(libs.dagger.hilt.android.compiler)

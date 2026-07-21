@@ -18,81 +18,80 @@
 
 package proton.android.pass.composecomponents.impl.item.details.sections.login.widgets
 
+import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import me.proton.core.compose.theme.ProtonTheme
 import proton.android.pass.commonui.api.PassTheme
-import proton.android.pass.commonui.api.Radius
 import proton.android.pass.commonui.api.Spacing
-import proton.android.pass.commonui.api.body3Norm
-import proton.android.pass.composecomponents.impl.R
-import proton.android.pass.composecomponents.impl.container.roundedContainer
-import proton.android.pass.composecomponents.impl.utils.PassItemColors
-import proton.android.pass.composecomponents.impl.utils.passItemColors
-import proton.android.pass.domain.items.ItemCategory
+import proton.android.pass.composecomponents.impl.text.Text
 
 @Composable
 internal fun LoginMonitorWidget(
     modifier: Modifier = Modifier,
     title: String,
+    @DrawableRes iconResId: Int,
+    titleColor: Color,
     @StringRes subtitleResId: Int? = null,
-    itemColors: PassItemColors = passItemColors(itemCategory = ItemCategory.Note),
+    subtitle: String? = null,
+    subtitleColor: Color = PassTheme.colors.textWeak,
+    trailingAction: (@Composable RowScope.() -> Unit)? = null,
     additionalContent: (@Composable ColumnScope.() -> Unit)? = null
 ) {
-    Row(
-        modifier = modifier
-            .roundedContainer(
-                backgroundColor = itemColors.minorSecondary,
-                borderColor = itemColors.minorSecondary
-            )
-            .padding(all = Spacing.medium),
-        horizontalArrangement = Arrangement.spacedBy(space = Spacing.small)
+    Column(
+        modifier = modifier,
+        verticalArrangement = Arrangement.spacedBy(space = Spacing.small)
     ) {
-        Icon(
-            modifier = Modifier
-                .size(size = 24.dp)
-                .clip(shape = RoundedCornerShape(Radius.small))
-                .background(color = itemColors.minorPrimary)
-                .padding(all = Spacing.extraSmall),
-            painter = painterResource(id = R.drawable.ic_exclamation_mark),
-            contentDescription = null,
-            tint = itemColors.majorSecondary
-        )
-
-        Column(
-            modifier = Modifier.weight(weight = 1f),
-            verticalArrangement = Arrangement.spacedBy(space = Spacing.small)
+        Row(
+            horizontalArrangement = Arrangement.spacedBy(space = Spacing.small),
+            verticalAlignment = Alignment.Top
         ) {
-            Text(
-                text = title,
-                color = itemColors.majorSecondary,
-                style = ProtonTheme.typography.body1Medium
+            Icon(
+                modifier = Modifier.size(size = 16.dp),
+                painter = painterResource(id = iconResId),
+                contentDescription = null,
+                tint = titleColor
             )
 
-            additionalContent?.let { content -> content() }
-
-            subtitleResId?.let { id ->
-                Text(
-                    text = stringResource(id = id),
-                    color = itemColors.majorSecondary,
-                    style = PassTheme.typography.body3Norm()
+            Column(
+                modifier = Modifier.weight(weight = 1f),
+                verticalArrangement = Arrangement.spacedBy(space = Spacing.extraSmall)
+            ) {
+                Text.Body2Medium(
+                    text = title,
+                    color = titleColor
                 )
+
+                val subtitleText = subtitle ?: subtitleResId?.let { id -> stringResource(id = id) }
+                subtitleText?.let { text ->
+                    Text.Body3Regular(
+                        text = text,
+                        color = subtitleColor
+                    )
+                }
             }
+
+            trailingAction?.invoke(this)
+        }
+
+        additionalContent?.let { content ->
+            Column(
+                modifier = Modifier.padding(start = Spacing.mediumLarge),
+                content = content
+            )
         }
     }
 }

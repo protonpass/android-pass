@@ -23,6 +23,7 @@ import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Test
 import proton.android.pass.crypto.fakes.context.FakeEncryptionContextProvider
+import proton.android.pass.domain.ItemFlag
 import proton.android.pass.securitycenter.api.passwords.RepeatedPasswordsReport
 import proton.android.pass.test.StringTestFactory
 import proton.android.pass.test.domain.ItemTestFactory
@@ -78,6 +79,48 @@ class RepeatedPasswordCheckerTest {
                 )
             )
         )
+    }
+
+    @Test
+    fun `items with SkipReusedPasswordCheck are excluded from duplication count`() = runTest {
+        val shared = StringTestFactory.randomString()
+        val encShared = encrypt(shared)
+
+        val a = ItemTestFactory.random(
+            itemType = ItemTypeTestFactory.login(password = encShared),
+            flags = 0
+        )
+        val b = ItemTestFactory.random(
+            itemType = ItemTypeTestFactory.login(password = encShared),
+            flags = 0
+        )
+        val skipped = ItemTestFactory.random(
+            itemType = ItemTypeTestFactory.login(password = encShared),
+            flags = ItemFlag.SkipReusedPasswordCheck.value
+        )
+
+        val res = instance(listOf(a, b, skipped))
+
+        assertThat(res).isEqualTo(
+            RepeatedPasswordsReport(repeatedPasswords = mapOf(encShared to listOf(a, b)))
+        )
+    }
+
+    @Test
+    fun `items with SkipHealthCheck are also excluded from duplication count`() = runTest {
+        val shared = StringTestFactory.randomString()
+        val encShared = encrypt(shared)
+
+        val items = (0 until 3).map {
+            ItemTestFactory.random(
+                itemType = ItemTypeTestFactory.login(password = encShared),
+                flags = ItemFlag.SkipHealthCheck.value
+            )
+        }
+
+        val res = instance(items)
+
+        assertThat(res).isEqualTo(RepeatedPasswordsReport(repeatedPasswords = emptyMap()))
     }
 
     private fun encrypt(input: String) = encryptionContextProvider.withEncryptionContext {

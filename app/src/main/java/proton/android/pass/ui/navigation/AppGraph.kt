@@ -230,6 +230,7 @@ import proton.android.pass.features.security.center.protonlist.navigation.Securi
 import proton.android.pass.features.security.center.report.navigation.SecurityCenterAliasEmailReportNavItem
 import proton.android.pass.features.security.center.report.navigation.SecurityCenterCustomEmailReportNavItem
 import proton.android.pass.features.security.center.report.navigation.SecurityCenterProtonEmailReportNavItem
+import proton.android.pass.features.security.center.compromisedpass.navigation.SecurityCenterCompromisedPassNavItem
 import proton.android.pass.features.security.center.reusepass.navigation.SecurityCenterReusedPassNavItem
 import proton.android.pass.features.security.center.sentinel.navigation.SecurityCenterSentinelNavItem
 import proton.android.pass.features.security.center.shared.navigation.SecurityCenterNavDestination
@@ -2420,6 +2421,7 @@ fun NavGraphBuilder.appGraph(
                         shareId = destination.shareId,
                         itemId = destination.itemId,
                         scope = when (destination.origin) {
+                            Origin.CompromisedPassword -> ItemDetailNavScope.MonitorCompromisedPassword
                             Origin.Excluded -> ItemDetailNavScope.MonitorExcluded
                             Origin.Missing2fa -> ItemDetailNavScope.MonitorMissing2fa
                             Origin.Report -> ItemDetailNavScope.MonitorReport
@@ -2448,6 +2450,10 @@ fun NavGraphBuilder.appGraph(
 
                 SecurityCenterNavDestination.WeakPasswords -> appNavigator.navigate(
                     destination = SecurityCenterWeakPassNavItem
+                )
+
+                SecurityCenterNavDestination.CompromisedPasswords -> appNavigator.navigate(
+                    destination = SecurityCenterCompromisedPassNavItem
                 )
 
                 SecurityCenterNavDestination.MissingTFA -> appNavigator.navigate(

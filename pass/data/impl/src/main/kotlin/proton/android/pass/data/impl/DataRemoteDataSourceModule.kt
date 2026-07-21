@@ -30,6 +30,8 @@ import proton.android.pass.data.impl.remote.RemoteAliasDataSource
 import proton.android.pass.data.impl.remote.RemoteAliasDataSourceImpl
 import proton.android.pass.data.impl.remote.RemoteBreachDataSource
 import proton.android.pass.data.impl.remote.RemoteBreachDataSourceImpl
+import proton.android.pass.data.impl.remote.RemoteCompromisedPasswordDataSource
+import proton.android.pass.data.impl.remote.RemoteCompromisedPasswordDataSourceImpl
 import proton.android.pass.data.impl.remote.RemoteEventDataSource
 import proton.android.pass.data.impl.remote.RemoteEventDataSourceImpl
 import proton.android.pass.data.impl.remote.RemoteExtraPasswordDataSource
@@ -194,6 +196,11 @@ abstract class DataRemoteDataSourceModule {
     abstract fun bindRemoteTelemetryGrowthDataSource(
         impl: RemoteTelemetryGrowthDataSourceImpl
     ): RemoteTelemetryGrowthDataSource
+
+    @Binds
+    abstract fun bindRemoteCompromisedPasswordDataSource(
+        impl: RemoteCompromisedPasswordDataSourceImpl
+    ): RemoteCompromisedPasswordDataSource
 
 }
 

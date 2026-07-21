@@ -25,34 +25,16 @@ import proton.android.pass.data.impl.requests.SendUserMonitorCredentialsRequest
 import javax.inject.Inject
 
 interface RemoteOrganizationReportDataSource {
-    suspend fun request(
-        userId: UserId,
-        reusedPasswords: Int,
-        inactive2FA: Int,
-        excludedItems: Int,
-        weakPasswords: Int
-    )
+    suspend fun request(userId: UserId, report: SendUserMonitorCredentialsRequest)
 }
 
 class RemoteOrganizationReportDataSourceImpl @Inject constructor(
     private val api: ApiProvider
 ) : RemoteOrganizationReportDataSource {
 
-    override suspend fun request(
-        userId: UserId,
-        reusedPasswords: Int,
-        inactive2FA: Int,
-        excludedItems: Int,
-        weakPasswords: Int
-    ) {
+    override suspend fun request(userId: UserId, report: SendUserMonitorCredentialsRequest) {
         api.get<PasswordManagerApi>(userId).invoke {
-            val request = SendUserMonitorCredentialsRequest(
-                reusedPasswords = reusedPasswords,
-                inactive2FA = inactive2FA,
-                excludedItems = excludedItems,
-                weakPasswords = weakPasswords
-            )
-            sendUserMonitorCredentialsReport(request)
+            sendUserMonitorCredentialsReport(report)
         }.valueOrThrow
     }
 }

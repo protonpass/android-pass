@@ -25,7 +25,10 @@ import org.junit.Before
 import org.junit.Test
 import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.fakes.FakeAppDispatchers
+import proton.android.pass.data.fakes.usecases.compromisedpassword.FakeObserveCompromisedPasswords
+import proton.android.pass.data.fakes.usecases.compromisedpassword.FakeRefreshCompromisedPasswords
 import proton.android.pass.data.fakes.usecases.items.FakeObserveMonitoredItems
+import proton.android.pass.securitycenter.api.CompromisedPasswordsResult
 import proton.android.pass.securitycenter.api.InsecurePasswordsResult
 import proton.android.pass.securitycenter.api.Missing2faResult
 import proton.android.pass.securitycenter.api.SecurityAnalysis
@@ -47,6 +50,8 @@ class ObserveSecurityAnalysisImplTest {
     private lateinit var missing2faChecker: FakeMissing2faChecker
     private lateinit var insecurePasswordChecker: FakeInsecurePasswordChecker
     private lateinit var breachedDataChecker: FakeBreachedDataChecker
+    private lateinit var observeCompromisedPasswords: FakeObserveCompromisedPasswords
+    private lateinit var refreshCompromisedPasswords: FakeRefreshCompromisedPasswords
 
     @Before
     fun setup() {
@@ -55,12 +60,16 @@ class ObserveSecurityAnalysisImplTest {
         missing2faChecker = FakeMissing2faChecker()
         insecurePasswordChecker = FakeInsecurePasswordChecker()
         breachedDataChecker = FakeBreachedDataChecker()
+        observeCompromisedPasswords = FakeObserveCompromisedPasswords()
+        refreshCompromisedPasswords = FakeRefreshCompromisedPasswords()
 
         instance = ObserveSecurityAnalysisImpl(
             repeatedPasswordChecker = repeatedPasswordChecker,
             missing2faChecker = missing2faChecker,
             insecurePasswordChecker = insecurePasswordChecker,
             breachedDataChecker = breachedDataChecker,
+            observeCompromisedPasswords = observeCompromisedPasswords,
+            refreshCompromisedPasswords = refreshCompromisedPasswords,
             observeMonitoredItems = observeMonitoredItems,
             dispatchers = FakeAppDispatchers()
         )
@@ -75,7 +84,8 @@ class ObserveSecurityAnalysisImplTest {
                     breachedData = LoadingResult.Loading,
                     reusedPasswords = LoadingResult.Loading,
                     insecurePasswords = LoadingResult.Loading,
-                    missing2fa = LoadingResult.Loading
+                    missing2fa = LoadingResult.Loading,
+                    compromisedPasswords = LoadingResult.Loading
                 )
             )
         }
@@ -107,7 +117,8 @@ class ObserveSecurityAnalysisImplTest {
                     breachedData = LoadingResult.Success(breachData),
                     reusedPasswords = LoadingResult.Error(error),
                     insecurePasswords = LoadingResult.Success(InsecurePasswordsResult(0)),
-                    missing2fa = LoadingResult.Success(Missing2faResult(0))
+                    missing2fa = LoadingResult.Success(Missing2faResult(0)),
+                    compromisedPasswords = LoadingResult.Success(CompromisedPasswordsResult(0))
                 )
             )
         }

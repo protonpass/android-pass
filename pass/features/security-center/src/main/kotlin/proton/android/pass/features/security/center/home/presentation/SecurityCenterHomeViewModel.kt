@@ -34,7 +34,7 @@ import proton.android.pass.data.api.usecases.ItemTypeFilter
 import proton.android.pass.data.api.usecases.ObserveItems
 import proton.android.pass.data.api.usecases.breach.ObserveAllBreachByUserId
 import proton.android.pass.domain.Item
-import proton.android.pass.domain.ItemFlag
+import proton.android.pass.domain.ItemExclusionCheckFlags
 import proton.android.pass.domain.ItemState
 import proton.android.pass.domain.ShareSelection
 import proton.android.pass.domain.breach.Breach
@@ -65,7 +65,7 @@ class SecurityCenterHomeViewModel @Inject constructor(
         selection = ShareSelection.AllShares,
         filter = ItemTypeFilter.Logins,
         itemState = ItemState.Active,
-        itemFlags = mapOf(ItemFlag.SkipHealthCheck to true),
+        anyFlags = ItemExclusionCheckFlags,
         includeHidden = false
     )
 
@@ -92,6 +92,7 @@ class SecurityCenterHomeViewModel @Inject constructor(
             insecurePasswordsLoadingResult = securityAnalysis.insecurePasswords,
             reusedPasswordsLoadingResult = securityAnalysis.reusedPasswords,
             missing2faResult = securityAnalysis.missing2fa,
+            compromisedPasswordsLoadingResult = securityAnalysis.compromisedPasswords,
             excludedLoginItemsLoadingResult = excludedLoginItemsLoadingResult,
             planType = userPlan.planType
         )

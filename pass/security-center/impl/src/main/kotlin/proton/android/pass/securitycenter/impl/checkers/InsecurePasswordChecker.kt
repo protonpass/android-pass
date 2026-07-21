@@ -29,6 +29,8 @@ import proton.android.pass.crypto.api.context.EncryptionContext
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemType
+import proton.android.pass.securitycenter.api.SecurityCheck
+import proton.android.pass.securitycenter.api.isCheckExcluded
 import proton.android.pass.securitycenter.api.passwords.InsecurePasswordChecker
 import proton.android.pass.securitycenter.api.passwords.InsecurePasswordsReport
 import javax.inject.Inject
@@ -41,8 +43,9 @@ class InsecurePasswordCheckerImpl @Inject constructor(
     override suspend fun invoke(items: List<Item>): InsecurePasswordsReport {
         val weakItems = mutableListOf<Item>()
         val vulnerableItems = mutableListOf<Item>()
+        val filtered = items.filter { !it.isCheckExcluded(SecurityCheck.WeakPassword) }
         encryptionContextProvider.withEncryptionContext {
-            items.forEach {
+            filtered.forEach {
                 when (val itemType = it.itemType) {
                     is ItemType.Login -> when (val score = scorePassword(itemType.password)) {
                         is Some -> when (score.value) {

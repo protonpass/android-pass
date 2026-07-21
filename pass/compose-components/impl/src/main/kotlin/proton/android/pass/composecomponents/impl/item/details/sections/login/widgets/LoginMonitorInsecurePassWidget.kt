@@ -20,6 +20,7 @@ package proton.android.pass.composecomponents.impl.item.details.sections.login.w
 
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -29,11 +30,29 @@ import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.composecomponents.impl.R
 
 @Composable
-internal fun LoginMonitorInsecurePassWidget(modifier: Modifier = Modifier) {
+internal fun LoginMonitorInsecurePassWidget(
+    modifier: Modifier = Modifier,
+    isRestoreMode: Boolean = false,
+    isPending: Boolean = false,
+    canEdit: Boolean = true,
+    onToggleExclude: () -> Unit
+) {
     LoginMonitorWidget(
         modifier = modifier,
         title = stringResource(id = R.string.login_item_monitor_widget_weak_pass_title),
-        subtitleResId = R.string.login_item_monitor_widget_weak_pass_subtitle
+        iconResId = R.drawable.ic_shield_danger,
+        titleColor = PassTheme.colors.passwordInteractionNormMajor2,
+        subtitleResId = R.string.login_item_monitor_widget_weak_pass_subtitle,
+        trailingAction = if (canEdit) {
+            {
+                MonitorCheckActionButton(
+                    modifier = Modifier.align(Alignment.Top),
+                    isRestoreMode = isRestoreMode,
+                    isPending = isPending,
+                    onClick = onToggleExclude
+                )
+            }
+        } else null
     )
 }
 
@@ -41,7 +60,7 @@ internal fun LoginMonitorInsecurePassWidget(modifier: Modifier = Modifier) {
 internal fun LoginMonitorInsecurePassWPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
     PassTheme(isDark = isDark) {
         Surface {
-            LoginMonitorInsecurePassWidget()
+            LoginMonitorInsecurePassWidget(onToggleExclude = {})
         }
     }
 }

@@ -30,7 +30,6 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flatMapLatest
-import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.stateIn
@@ -45,6 +44,7 @@ import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
 import proton.android.pass.commonuimodels.api.items.DetailEvent
 import proton.android.pass.commonuimodels.api.items.ItemDetailState
+import proton.android.pass.commonuimodels.api.items.MonitorCheck
 import proton.android.pass.data.api.usecases.GetItemActions
 import proton.android.pass.data.api.usecases.GetItemById
 import proton.android.pass.data.api.usecases.GetUserPlan
@@ -85,7 +85,7 @@ class ItemDetailsViewModel @Inject constructor(
         it.keys().associateWith { key -> it[key] }
     }
 
-    private val itemFlow = flow { emit(getItemById(shareId = shareId, itemId = itemId)) }
+    private val itemFlow = oneShot { getItemById(shareId = shareId, itemId = itemId) }
         .onEach { item ->
             val eventItemType: EventItemType = EventItemType.from(item.itemType)
             telemetryManager.sendEvent(ItemRead(eventItemType))
@@ -197,6 +197,22 @@ class ItemDetailsViewModel @Inject constructor(
                     }
                 }
             }
+        }
+    }
+
+    internal fun onToggleMonitorCheck(
+        shareId: ShareId,
+        itemId: ItemId,
+        check: MonitorCheck,
+        skip: Boolean
+    ) {
+        viewModelScope.launch {
+            itemDetailsHandler.onToggleMonitorCheck(
+                shareId = shareId,
+                itemId = itemId,
+                check = check,
+                skip = skip
+            )
         }
     }
 

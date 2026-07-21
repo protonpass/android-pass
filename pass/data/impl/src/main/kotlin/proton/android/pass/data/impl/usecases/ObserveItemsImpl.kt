@@ -45,6 +45,7 @@ class ObserveItemsImpl @Inject constructor(
         filter: ItemTypeFilter,
         userId: UserId?,
         itemFlags: Map<ItemFlag, Boolean>,
+        anyFlags: List<ItemFlag>,
         includeHidden: Boolean
     ): Flow<List<Item>> = syncStatusRepository.observeSyncState()
         .filter { syncState -> !syncState.isVisibleSyncing }
@@ -58,6 +59,7 @@ class ObserveItemsImpl @Inject constructor(
                             itemState = itemState,
                             filter = filter,
                             itemFlags = itemFlags,
+                            anyFlags = anyFlags,
                             includeHidden = includeHidden
                         )
                     }
@@ -68,6 +70,7 @@ class ObserveItemsImpl @Inject constructor(
                     itemState = itemState,
                     filter = filter,
                     itemFlags = itemFlags,
+                    anyFlags = anyFlags,
                     includeHidden = includeHidden
                 )
             }
@@ -80,6 +83,7 @@ class ObserveItemsImpl @Inject constructor(
         itemState: ItemState?,
         filter: ItemTypeFilter,
         itemFlags: Map<ItemFlag, Boolean>,
+        anyFlags: List<ItemFlag>,
         includeHidden: Boolean
     ): Flow<List<Item>> = itemRepository.observeItems(
         userId = userId,
@@ -87,6 +91,7 @@ class ObserveItemsImpl @Inject constructor(
         itemState = itemState,
         itemTypeFilter = filter,
         itemFlags = itemFlags,
+        anyFlags = anyFlags,
         includeHidden = includeHidden
     )
 }

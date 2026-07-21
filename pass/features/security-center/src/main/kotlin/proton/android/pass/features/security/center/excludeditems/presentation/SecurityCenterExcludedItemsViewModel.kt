@@ -34,7 +34,7 @@ import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.usecases.ItemTypeFilter
 import proton.android.pass.data.api.usecases.ObserveItems
 import proton.android.pass.data.api.usecases.vaults.ObserveVaultsGroupedByShareId
-import proton.android.pass.domain.ItemFlag
+import proton.android.pass.domain.ItemExclusionCheckFlags
 import proton.android.pass.domain.ItemState
 import proton.android.pass.domain.ShareSelection
 import proton.android.pass.features.security.center.PassMonitorDisplayExcludedItems
@@ -60,7 +60,7 @@ class SecurityCenterExcludedItemsViewModel @Inject constructor(
         selection = ShareSelection.AllShares,
         filter = ItemTypeFilter.Logins,
         itemState = ItemState.Active,
-        itemFlags = mapOf(ItemFlag.SkipHealthCheck to true),
+        anyFlags = ItemExclusionCheckFlags,
         includeHidden = false
     ).map { excludedLoginItems ->
         encryptionContextProvider.withEncryptionContext {

@@ -52,7 +52,8 @@ interface LocalItemDataSource {
         shareIds: List<ShareId>,
         itemState: ItemState?,
         filter: ItemTypeFilter,
-        itemFlags: Map<ItemFlag, Boolean>
+        itemFlags: Map<ItemFlag, Boolean>,
+        anyFlags: List<ItemFlag> = emptyList()
     ): Flow<List<ItemEntity>>
 
     suspend fun getItemsPageForIndex(

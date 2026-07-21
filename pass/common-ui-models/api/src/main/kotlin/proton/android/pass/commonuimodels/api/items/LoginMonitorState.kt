@@ -26,12 +26,19 @@ import proton.android.pass.commonuimodels.api.ItemUiModel
 data class LoginMonitorState(
     internal val isExcludedFromMonitor: Boolean,
     private val navigationScope: ItemDetailNavScope,
+    val isPasswordCompromised: Boolean,
     val isPasswordInsecure: Boolean,
     val isPasswordReused: Boolean,
     val isMissingTwoFa: Boolean,
     val reusedPasswordDisplayMode: ReusedPasswordDisplayMode,
     val reusedPasswordCount: Int,
-    val reusedPasswordItems: ImmutableList<ItemUiModel>
+    val reusedPasswordItems: ImmutableList<ItemUiModel>,
+    val isWeakPasswordCheckSkipped: Boolean = false,
+    val isCompromisedPasswordCheckSkipped: Boolean = false,
+    val isReusedPasswordCheckSkipped: Boolean = false,
+    val isMissing2faCheckSkipped: Boolean = false,
+    val pendingChecks: Set<MonitorCheck> = emptySet(),
+    val canEdit: Boolean = true
 ) {
 
     enum class ReusedPasswordDisplayMode {
@@ -39,14 +46,17 @@ data class LoginMonitorState(
         Expanded
     }
 
-    val shouldDisplayMonitoring: Boolean = when (navigationScope) {
-        ItemDetailNavScope.Default -> false
+    val isRestoreMode: Boolean = navigationScope == ItemDetailNavScope.MonitorExcluded
 
-        ItemDetailNavScope.MonitorExcluded,
-        ItemDetailNavScope.MonitorReport,
-        ItemDetailNavScope.MonitorWeakPassword,
-        ItemDetailNavScope.MonitorMissing2fa,
-        ItemDetailNavScope.MonitorReusedPassword -> true
+    private val anyCheckSkipped: Boolean = isWeakPasswordCheckSkipped ||
+        isCompromisedPasswordCheckSkipped ||
+        isReusedPasswordCheckSkipped ||
+        isMissing2faCheckSkipped
 
-    }
+    val shouldDisplayMonitoring: Boolean =
+        isPasswordCompromised ||
+            isPasswordInsecure ||
+            isPasswordReused ||
+            isMissingTwoFa ||
+            isRestoreMode && anyCheckSkipped
 }

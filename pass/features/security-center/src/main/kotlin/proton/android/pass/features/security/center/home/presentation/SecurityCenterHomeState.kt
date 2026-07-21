@@ -24,6 +24,7 @@ import proton.android.pass.domain.Item
 import proton.android.pass.domain.PlanType
 import proton.android.pass.domain.breach.Breach
 import proton.android.pass.domain.breach.BreachDomainPeek
+import proton.android.pass.securitycenter.api.CompromisedPasswordsResult
 import proton.android.pass.securitycenter.api.InsecurePasswordsResult
 import proton.android.pass.securitycenter.api.Missing2faResult
 import proton.android.pass.securitycenter.api.ReusedPasswordsResult
@@ -35,6 +36,7 @@ internal data class SecurityCenterHomeState(
     private val insecurePasswordsLoadingResult: LoadingResult<InsecurePasswordsResult>,
     private val reusedPasswordsLoadingResult: LoadingResult<ReusedPasswordsResult>,
     private val missing2faResult: LoadingResult<Missing2faResult>,
+    private val compromisedPasswordsLoadingResult: LoadingResult<CompromisedPasswordsResult>,
     private val excludedLoginItemsLoadingResult: LoadingResult<List<Item>>,
     private val planType: PlanType
 ) {
@@ -91,6 +93,20 @@ internal data class SecurityCenterHomeState(
         is LoadingResult.Success -> missing2faResult.data.missing2faCount
     }
 
+    internal val compromisedPasswordsCount: Int? = when (compromisedPasswordsLoadingResult) {
+        is LoadingResult.Error,
+        LoadingResult.Loading -> null
+
+        is LoadingResult.Success -> compromisedPasswordsLoadingResult.data.compromisedPasswordsCount
+    }
+
+    internal val isCompromisedPasswordsPaidFeature: Boolean = when (planType) {
+        is PlanType.Free,
+        is PlanType.Unknown -> true
+
+        is PlanType.Paid -> false
+    }
+
     internal val excludedItemsCount: Int? = when (excludedLoginItemsLoadingResult) {
         is LoadingResult.Error,
         LoadingResult.Loading -> null
@@ -138,6 +154,7 @@ internal data class SecurityCenterHomeState(
             insecurePasswordsLoadingResult = LoadingResult.Loading,
             reusedPasswordsLoadingResult = LoadingResult.Loading,
             missing2faResult = LoadingResult.Loading,
+            compromisedPasswordsLoadingResult = LoadingResult.Loading,
             excludedLoginItemsLoadingResult = LoadingResult.Loading,
             planType = PlanType.Unknown()
         )

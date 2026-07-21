@@ -28,6 +28,9 @@ import proton.android.pass.features.security.center.addressoptions.navigation.Se
 import proton.android.pass.features.security.center.addressoptions.navigation.SecurityCenterGlobalAddressOptionsNavItem
 import proton.android.pass.features.security.center.addressoptions.navigation.SecurityCenterProtonAddressOptionsNavItem
 import proton.android.pass.features.security.center.addressoptions.ui.SecurityCenterAddressOptionsBS
+import proton.android.pass.features.security.center.compromisedpass.navigation.SecurityCenterCompromisedPassDestination
+import proton.android.pass.features.security.center.compromisedpass.navigation.SecurityCenterCompromisedPassNavItem
+import proton.android.pass.features.security.center.compromisedpass.ui.SecurityCenterCompromisedPassScreen
 import proton.android.pass.features.security.center.aliaslist.navigation.SecurityCenterAliasListNavDestination
 import proton.android.pass.features.security.center.aliaslist.navigation.SecurityCenterAliasListNavItem
 import proton.android.pass.features.security.center.aliaslist.ui.SecurityCenterAliasListScreen
@@ -98,6 +101,8 @@ fun NavGraphBuilder.securityCenterNavGraph(onNavigated: (SecurityCenterNavDestin
                     SecurityCenterHomeNavDestination.WeakPasswords -> SecurityCenterNavDestination.WeakPasswords
                     SecurityCenterHomeNavDestination.MissingTFA -> SecurityCenterNavDestination.MissingTFA
                     SecurityCenterHomeNavDestination.Sentinel -> SecurityCenterNavDestination.Sentinel
+                    SecurityCenterHomeNavDestination.CompromisedPasswords ->
+                        SecurityCenterNavDestination.CompromisedPasswords
                     SecurityCenterHomeNavDestination.ExcludedItems -> SecurityCenterNavDestination.ExcludedItems
                     is SecurityCenterHomeNavDestination.Upsell -> SecurityCenterNavDestination.Upsell(
                         paidFeature = destination.paidFeature
@@ -137,6 +142,26 @@ fun NavGraphBuilder.securityCenterNavGraph(onNavigated: (SecurityCenterNavDestin
                     )
 
                     SecurityCenterWeakPassDestination.Empty -> SecurityCenterNavDestination.Empty
+                }.also(onNavigated)
+            }
+        )
+    }
+
+    composable(navItem = SecurityCenterCompromisedPassNavItem) {
+        SecurityCenterCompromisedPassScreen(
+            onNavigated = { destination ->
+                when (destination) {
+                    SecurityCenterCompromisedPassDestination.Back -> SecurityCenterNavDestination.Back(
+                        comesFromBottomSheet = false
+                    )
+
+                    is SecurityCenterCompromisedPassDestination.ItemDetails -> SecurityCenterNavDestination.ItemDetails(
+                        shareId = destination.shareId,
+                        itemId = destination.itemId,
+                        origin = SecurityCenterNavDestination.ItemDetails.Origin.CompromisedPassword
+                    )
+
+                    SecurityCenterCompromisedPassDestination.Empty -> SecurityCenterNavDestination.Empty
                 }.also(onNavigated)
             }
         )

@@ -23,6 +23,7 @@ import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Test
 import proton.android.pass.crypto.fakes.context.FakeEncryptionContextProvider
+import proton.android.pass.domain.ItemFlag
 import proton.android.pass.securitycenter.fakes.passwords.FakeSupports2fa
 import proton.android.pass.test.domain.ItemTestFactory
 import proton.android.pass.test.domain.ItemTypeTestFactory
@@ -134,6 +135,39 @@ class Missing2faCheckerTest {
         assertThat(res.items.size).isEqualTo(2)
         assertThat(res.items[0].id).isEqualTo(item1.id)
         assertThat(res.items[1].id).isEqualTo(item2.id)
+    }
+
+    @Test
+    fun `items with Skip2FACheck flag are not reported`() = runTest {
+        val domain = "some.domain"
+        supports2fa.setSupportsList(listOf(domain))
+
+        val reported = ItemTestFactory.random(
+            itemType = ItemTypeTestFactory.login(websites = listOf(domain)),
+            flags = 0
+        )
+        val skipped = ItemTestFactory.random(
+            itemType = ItemTypeTestFactory.login(websites = listOf(domain)),
+            flags = ItemFlag.Skip2FACheck.value
+        )
+
+        val res = instance.invoke(listOf(reported, skipped))
+        assertThat(res.items.size).isEqualTo(1)
+        assertThat(res.items[0].id).isEqualTo(reported.id)
+    }
+
+    @Test
+    fun `items with SkipHealthCheck are also not reported for 2fa`() = runTest {
+        val domain = "some.domain"
+        supports2fa.setSupportsList(listOf(domain))
+
+        val skipped = ItemTestFactory.random(
+            itemType = ItemTypeTestFactory.login(websites = listOf(domain)),
+            flags = ItemFlag.SkipHealthCheck.value
+        )
+
+        val res = instance.invoke(listOf(skipped))
+        assertThat(res.items).isEmpty()
     }
 
 }

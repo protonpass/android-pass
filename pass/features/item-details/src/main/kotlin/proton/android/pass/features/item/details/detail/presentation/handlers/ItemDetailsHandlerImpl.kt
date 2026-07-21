@@ -39,6 +39,7 @@ import proton.android.pass.commonui.api.ClassHolder
 import proton.android.pass.commonuimodels.api.attachments.AttachmentsState
 import proton.android.pass.commonuimodels.api.items.DetailEvent
 import proton.android.pass.commonuimodels.api.items.ItemDetailState
+import proton.android.pass.commonuimodels.api.items.MonitorCheck
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.errors.ItemNotFoundError
 import proton.android.pass.data.api.usecases.attachments.ObserveAllItemRevisionAttachments
@@ -48,7 +49,9 @@ import proton.android.pass.domain.HiddenState
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.ItemDiffs
+import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ItemSection
+import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.attachments.Attachment
 import proton.android.pass.domain.items.ItemCategory
 import proton.android.pass.features.item.details.detail.presentation.messages.ItemDetailsSnackbarMessage
@@ -224,6 +227,21 @@ class ItemDetailsHandlerImpl @Inject constructor(
 
     override fun consumeEvent(event: DetailEvent) {
         detailEventFlow.compareAndSet(event, DetailEvent.Idle)
+    }
+
+    override suspend fun onToggleMonitorCheck(
+        shareId: ShareId,
+        itemId: ItemId,
+        check: MonitorCheck,
+        skip: Boolean
+    ) {
+        (observers[ItemCategory.Login] as? LoginItemDetailsHandlerObserverImpl)
+            ?.onToggleMonitorCheck(
+                shareId = shareId,
+                itemId = itemId,
+                check = check,
+                skip = skip
+            )
     }
 
     @Suppress("UNCHECKED_CAST")

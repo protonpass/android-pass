@@ -24,10 +24,13 @@ import proton.android.pass.commonpresentation.api.items.details.domain.ItemDetai
 import proton.android.pass.commonui.api.ClassHolder
 import proton.android.pass.commonuimodels.api.items.DetailEvent
 import proton.android.pass.commonuimodels.api.items.ItemDetailState
+import proton.android.pass.commonuimodels.api.items.MonitorCheck
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.ItemDiffs
+import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ItemSection
+import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.attachments.Attachment
 import proton.android.pass.domain.items.ItemCategory
 
@@ -59,6 +62,13 @@ interface ItemDetailsHandler {
     ): ItemDiffs
 
     fun consumeEvent(event: DetailEvent)
+
+    suspend fun onToggleMonitorCheck(
+        shareId: ShareId,
+        itemId: ItemId,
+        check: MonitorCheck,
+        skip: Boolean
+    )
 }
 
 enum class ItemDetailsSource {

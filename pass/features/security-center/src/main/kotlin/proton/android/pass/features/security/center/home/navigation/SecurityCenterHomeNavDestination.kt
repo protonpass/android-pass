@@ -43,4 +43,6 @@ sealed interface SecurityCenterHomeNavDestination {
 
     data object ExcludedItems : SecurityCenterHomeNavDestination
 
+    data object CompromisedPasswords : SecurityCenterHomeNavDestination
+
 }

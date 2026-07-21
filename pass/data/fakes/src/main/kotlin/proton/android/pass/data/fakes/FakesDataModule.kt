@@ -28,6 +28,11 @@ import proton.android.pass.data.api.url.HostParser
 import proton.android.pass.data.api.repositories.AliasRepository
 import proton.android.pass.data.api.repositories.AssetLinkRepository
 import proton.android.pass.data.api.repositories.BulkInviteRepository
+import proton.android.pass.data.api.repositories.CompromisedPasswordRepository
+import proton.android.pass.data.api.usecases.compromisedpassword.ObserveCompromisedPasswords
+import proton.android.pass.data.api.usecases.compromisedpassword.RefreshCompromisedPasswords
+import proton.android.pass.data.fakes.usecases.compromisedpassword.FakeObserveCompromisedPasswords
+import proton.android.pass.data.fakes.usecases.compromisedpassword.FakeRefreshCompromisedPasswords
 import proton.android.pass.data.api.repositories.BulkMoveToVaultRepository
 import proton.android.pass.data.api.repositories.DraftAttachmentRepository
 import proton.android.pass.data.api.repositories.DraftRepository
@@ -275,6 +280,7 @@ import proton.android.pass.data.fakes.crypto.FakeGetShareAndItemKey
 import proton.android.pass.data.fakes.repositories.FakeAliasRepository
 import proton.android.pass.data.fakes.repositories.FakeAssetLinkRepository
 import proton.android.pass.data.fakes.repositories.FakeBulkInviteRepository
+import proton.android.pass.data.fakes.repositories.FakeCompromisedPasswordRepository
 import proton.android.pass.data.fakes.repositories.FakeBulkMoveToVaultRepository
 import proton.android.pass.data.fakes.repositories.FakeDraftAttachmentRepository
 import proton.android.pass.data.fakes.repositories.FakeDraftRepository
@@ -1351,4 +1357,15 @@ abstract class FakesDataModule {
 
     @Binds
     abstract fun bindSearchIndexRepository(impl: FakeSearchIndexRepository): SearchIndexRepository
+
+    @Binds
+    abstract fun bindCompromisedPasswordRepository(
+        impl: FakeCompromisedPasswordRepository
+    ): CompromisedPasswordRepository
+
+    @Binds
+    abstract fun bindObserveCompromisedPasswords(impl: FakeObserveCompromisedPasswords): ObserveCompromisedPasswords
+
+    @Binds
+    abstract fun bindRefreshCompromisedPasswords(impl: FakeRefreshCompromisedPasswords): RefreshCompromisedPasswords
 }

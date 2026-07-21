@@ -27,10 +27,13 @@ import proton.android.pass.commonpresentation.api.items.details.handlers.ItemDet
 import proton.android.pass.commonui.api.ClassHolder
 import proton.android.pass.commonuimodels.api.items.DetailEvent
 import proton.android.pass.commonuimodels.api.items.ItemDetailState
+import proton.android.pass.commonuimodels.api.items.MonitorCheck
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.ItemDiffs
+import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ItemSection
+import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.attachments.Attachment
 import proton.android.pass.domain.items.ItemCategory
 
@@ -61,4 +64,11 @@ class FakeItemDetailsHandler : ItemDetailsHandler {
     ): ItemDiffs = ItemDiffs.None
 
     override fun consumeEvent(event: DetailEvent) = Unit
+
+    override suspend fun onToggleMonitorCheck(
+        shareId: ShareId,
+        itemId: ItemId,
+        check: MonitorCheck,
+        skip: Boolean
+    ) = Unit
 }

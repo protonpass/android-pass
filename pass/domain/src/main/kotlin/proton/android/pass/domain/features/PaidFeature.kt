@@ -20,6 +20,7 @@ package proton.android.pass.domain.features
 
 enum class PaidFeature {
     AdvanceAliasManagement,
+    CompromisedPasswords,
     DarkWebMonitoring,
     ItemSharing,
     SecureLinks,

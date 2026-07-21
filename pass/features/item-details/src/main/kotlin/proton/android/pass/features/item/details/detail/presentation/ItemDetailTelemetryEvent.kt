@@ -36,3 +36,6 @@ data object PassMonitorItemDetailFromMissing2FA :
 
 data object PassMonitorItemDetailFromReusedPassword :
     DeferredTelemetryEvent("pass_monitor.item_detail_from_reused_password")
+
+data object PassMonitorItemDetailFromCompromisedPassword :
+    DeferredTelemetryEvent("pass_monitor.item_detail_from_compromised_password")

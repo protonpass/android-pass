@@ -75,4 +75,5 @@ internal abstract class FakeSecurityCenterModule {
 
     @Binds
     internal abstract fun bindObserveCanEnableSentinel(impl: FakeObserveCanEnableSentinel): ObserveCanEnableSentinel
+
 }

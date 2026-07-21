@@ -59,6 +59,7 @@ class FakeObserveItems @Inject constructor() : ObserveItems {
         filter: ItemTypeFilter,
         userId: UserId?,
         itemFlags: Map<ItemFlag, Boolean>,
+        anyFlags: List<ItemFlag>,
         includeHidden: Boolean
     ): Flow<List<Item>> {
         val params = Params(
@@ -66,7 +67,8 @@ class FakeObserveItems @Inject constructor() : ObserveItems {
             itemState = itemState,
             filter = filter,
             userId = userId,
-            itemFlags = itemFlags
+            itemFlags = itemFlags,
+            anyFlags = anyFlags
         )
         val flow = flowsMap[params]
         return flow ?: fallback.map { it.getOrThrow() }
@@ -94,6 +96,7 @@ class FakeObserveItems @Inject constructor() : ObserveItems {
         val itemState: ItemState? = ItemState.Active,
         val filter: ItemTypeFilter = ItemTypeFilter.All,
         val userId: UserId? = null,
-        val itemFlags: Map<ItemFlag, Boolean> = emptyMap()
+        val itemFlags: Map<ItemFlag, Boolean> = emptyMap(),
+        val anyFlags: List<ItemFlag> = emptyList()
     )
 }

@@ -104,4 +104,11 @@ internal sealed interface ItemDetailsUiEvent {
     ) : ItemDetailsUiEvent
 
     data object OnUpgrade : ItemDetailsUiEvent
+
+    data class OnToggleMonitorCheck(
+        val shareId: ShareId,
+        val itemId: ItemId,
+        val check: proton.android.pass.commonuimodels.api.items.MonitorCheck,
+        val skip: Boolean
+    ) : ItemDetailsUiEvent
 }

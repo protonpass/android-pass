@@ -349,7 +349,12 @@ class ItemRepositoryImpl @Inject constructor(
         flag: ItemFlag,
         isFlagEnabled: Boolean
     ): Item = when (flag) {
-        ItemFlag.SkipHealthCheck -> UpdateItemFlagsRequest().copy(skipHealthCheck = isFlagEnabled)
+        ItemFlag.SkipHealthCheck -> UpdateItemFlagsRequest(skipHealthCheck = isFlagEnabled)
+        ItemFlag.SkipWeakPasswordCheck -> UpdateItemFlagsRequest(skipWeakPasswordCheck = isFlagEnabled)
+        ItemFlag.SkipCompromisedPasswordCheck ->
+            UpdateItemFlagsRequest(skipCompromisedPasswordCheck = isFlagEnabled)
+        ItemFlag.SkipReusedPasswordCheck -> UpdateItemFlagsRequest(skipReusedPasswordCheck = isFlagEnabled)
+        ItemFlag.Skip2FACheck -> UpdateItemFlagsRequest(skip2FACheck = isFlagEnabled)
         ItemFlag.EmailBreached,
         ItemFlag.AliasDisabled,
         ItemFlag.HasAttachments,
@@ -502,6 +507,7 @@ class ItemRepositoryImpl @Inject constructor(
         itemState: ItemState?,
         itemTypeFilter: ItemTypeFilter,
         itemFlags: Map<ItemFlag, Boolean>,
+        anyFlags: List<ItemFlag>,
         includeHidden: Boolean
     ): Flow<List<Item>> = innerObserveItems(
         shareSelection,
@@ -509,6 +515,7 @@ class ItemRepositoryImpl @Inject constructor(
         itemState,
         itemTypeFilter,
         itemFlags,
+        anyFlags,
         includeHidden
     ).conflate().map { items ->
         encryptionContextProvider.withEncryptionContextSuspendable {
@@ -551,6 +558,7 @@ class ItemRepositoryImpl @Inject constructor(
         itemState,
         itemTypeFilter,
         itemFlags,
+        emptyList(),
         includeHidden
     ).conflate().map { items ->
         items.map(ItemEntity::toEncryptedDomain)
@@ -656,12 +664,14 @@ class ItemRepositoryImpl @Inject constructor(
             itemEntities.map(ItemEntity::toEncryptedDomain)
         }
 
+    @Suppress("LongParameterList")
     private fun innerObserveItems(
         shareSelection: ShareSelection,
         userId: UserId,
         itemState: ItemState?,
         itemTypeFilter: ItemTypeFilter,
         itemFlags: Map<ItemFlag, Boolean>,
+        anyFlags: List<ItemFlag>,
         includeHidden: Boolean
     ) = when (shareSelection) {
         is ShareSelection.Share -> localItemDataSource.observeItems(
@@ -669,7 +679,8 @@ class ItemRepositoryImpl @Inject constructor(
             shareIds = listOf(shareSelection.shareId),
             itemState = itemState,
             filter = itemTypeFilter,
-            itemFlags = itemFlags
+            itemFlags = itemFlags,
+            anyFlags = anyFlags
         )
 
         is ShareSelection.Shares -> localItemDataSource.observeItems(
@@ -677,7 +688,8 @@ class ItemRepositoryImpl @Inject constructor(
             shareIds = shareSelection.shareIds,
             itemState = itemState,
             filter = itemTypeFilter,
-            itemFlags = itemFlags
+            itemFlags = itemFlags,
+            anyFlags = anyFlags
         )
 
         is ShareSelection.AllShares -> shareRepository.observeAllUsableShareIds(
@@ -690,7 +702,8 @@ class ItemRepositoryImpl @Inject constructor(
                     shareIds = it,
                     itemState = itemState,
                     filter = itemTypeFilter,
-                    itemFlags = itemFlags
+                    itemFlags = itemFlags,
+                    anyFlags = anyFlags
                 )
             }
 

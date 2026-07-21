@@ -122,6 +122,7 @@ interface ItemRepository {
         itemState: ItemState?,
         itemTypeFilter: ItemTypeFilter = ItemTypeFilter.All,
         itemFlags: Map<ItemFlag, Boolean>,
+        anyFlags: List<ItemFlag> = emptyList(),
         includeHidden: Boolean
     ): Flow<List<Item>>
 

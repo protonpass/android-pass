@@ -37,6 +37,7 @@ import proton.android.pass.composecomponents.impl.item.SectionTitle
 import proton.android.pass.composecomponents.impl.row.CounterRow
 import proton.android.pass.composecomponents.impl.topbar.PassExtendedTopBar
 import proton.android.pass.features.security.center.R
+import proton.android.pass.domain.features.PaidFeature
 import proton.android.pass.features.security.center.home.presentation.SecurityCenterHomeState
 import proton.android.pass.features.security.center.shared.ui.rows.SecurityCenterCounterRow
 import proton.android.pass.features.security.center.shared.ui.rows.SecurityCenterCounterRowModel
@@ -111,6 +112,30 @@ internal fun SecurityCenterHomeContent(
                 ),
                 onClick = { onUiEvent(SecurityCenterHomeUiEvent.OnShowReusedPasswords) }
             )
+
+            if (isCompromisedPasswordsPaidFeature) {
+                CounterRow(
+                    title = stringResource(id = R.string.security_center_home_row_compromised_passwords_title),
+                    subtitle = stringResource(id = R.string.security_center_home_row_compromised_passwords_subtitle),
+                    accentBackgroundColor = PassTheme.colors.interactionNormMinor2,
+                    isClickable = true,
+                    trailingContent = { PassPlusIcon() },
+                    onClick = { onUiEvent(SecurityCenterHomeUiEvent.OnUpsell(PaidFeature.CompromisedPasswords)) }
+                )
+            } else {
+                SecurityCenterCounterRow(
+                    model = SecurityCenterCounterRowModel.Indicator(
+                        title = stringResource(
+                            id = R.string.security_center_home_row_compromised_passwords_title
+                        ),
+                        subtitle = stringResource(
+                            id = R.string.security_center_home_row_compromised_passwords_subtitle
+                        ),
+                        count = compromisedPasswordsCount
+                    ),
+                    onClick = { onUiEvent(SecurityCenterHomeUiEvent.OnShowCompromisedPasswords) }
+                )
+            }
 
             SecurityCenterCounterRow(
                 model = SecurityCenterCounterRowModel.Standard(

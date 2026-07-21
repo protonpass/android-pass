@@ -60,6 +60,10 @@ fun SecurityCenterHomeScreen(
                     onNavigated(SecurityCenterHomeNavDestination.Upsell(uiEvent.paidFeature))
                 }
 
+                SecurityCenterHomeUiEvent.OnShowCompromisedPasswords -> {
+                    onNavigated(SecurityCenterHomeNavDestination.CompromisedPasswords)
+                }
+
                 SecurityCenterHomeUiEvent.OnShowExcludedItems -> {
                     onNavigated(SecurityCenterHomeNavDestination.ExcludedItems)
                 }

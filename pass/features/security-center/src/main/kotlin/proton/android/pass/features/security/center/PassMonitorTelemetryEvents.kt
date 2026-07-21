@@ -44,6 +44,9 @@ data object PassMonitorDisplayMonitoringProtonAddresses :
 data object PassMonitorDisplayMonitoringEmailAliases :
     DeferredTelemetryEvent("pass_monitor.display_monitoring_email_aliases")
 
+data object PassMonitorDisplayCompromisedPasswords :
+    DeferredTelemetryEvent("pass_monitor.display_compromised_passwords")
+
 data object PassMonitorAddCustomEmailFromSuggestion :
     DeferredTelemetryEvent("pass_monitor.add_custom_email_from_suggestion")
 

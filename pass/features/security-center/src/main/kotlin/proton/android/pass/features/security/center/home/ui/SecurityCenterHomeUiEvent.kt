@@ -34,6 +34,8 @@ internal sealed interface SecurityCenterHomeUiEvent {
 
     data object OnShowExcludedItems : SecurityCenterHomeUiEvent
 
+    data object OnShowCompromisedPasswords : SecurityCenterHomeUiEvent
+
     @JvmInline
     value class OnUpsell(internal val paidFeature: PaidFeature) : SecurityCenterHomeUiEvent
 

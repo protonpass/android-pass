@@ -38,11 +38,16 @@ data class BreachDataResult(
     val exposedPasswordCount: Int
 )
 
+data class CompromisedPasswordsResult(
+    val compromisedPasswordsCount: Int
+)
+
 data class SecurityAnalysis(
     val breachedData: LoadingResult<BreachDataResult>,
     val reusedPasswords: LoadingResult<ReusedPasswordsResult>,
     val insecurePasswords: LoadingResult<InsecurePasswordsResult>,
-    val missing2fa: LoadingResult<Missing2faResult>
+    val missing2fa: LoadingResult<Missing2faResult>,
+    val compromisedPasswords: LoadingResult<CompromisedPasswordsResult>
 ) {
 
     private val hasReusedPasswords: Boolean = when (reusedPasswords) {
@@ -66,7 +71,15 @@ data class SecurityAnalysis(
         is LoadingResult.Success -> missing2fa.data.missing2faCount > 0
     }
 
-    val hasSecurityIssues: Boolean = hasReusedPasswords || hasInsecurePasswords || hasMissing2fas
+    private val hasCompromisedPasswords: Boolean = when (compromisedPasswords) {
+        is LoadingResult.Error,
+        LoadingResult.Loading -> false
+
+        is LoadingResult.Success -> compromisedPasswords.data.compromisedPasswordsCount > 0
+    }
+
+    val hasSecurityIssues: Boolean =
+        hasReusedPasswords || hasInsecurePasswords || hasMissing2fas || hasCompromisedPasswords
 
 }
 

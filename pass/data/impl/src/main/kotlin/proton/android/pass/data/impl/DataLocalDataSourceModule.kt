@@ -26,6 +26,8 @@ import proton.android.pass.data.api.core.datasources.LocalSentinelDataSource
 import proton.android.pass.data.impl.core.datasources.LocalSentinelDataSourceImpl
 import proton.android.pass.data.impl.local.LocalBreachDataSource
 import proton.android.pass.data.impl.local.LocalBreachDataSourceImpl
+import proton.android.pass.data.impl.local.LocalCompromisedPasswordDataSource
+import proton.android.pass.data.impl.local.LocalCompromisedPasswordDataSourceImpl
 import proton.android.pass.data.impl.local.LocalDataMigrationDataSource
 import proton.android.pass.data.impl.local.LocalDataMigrationDataSourceImpl
 import proton.android.pass.data.impl.local.LocalEventDataSource
@@ -178,4 +180,9 @@ abstract class DataLocalDataSourceModule {
     abstract fun bindPasswordHistorySource(
         impl: LocalPasswordHistoryEntryDataSourceImpl
     ): LocalPasswordHistoryEntryDataSource
+
+    @[Binds Singleton]
+    abstract fun bindLocalCompromisedPasswordDataSource(
+        impl: LocalCompromisedPasswordDataSourceImpl
+    ): LocalCompromisedPasswordDataSource
 }

@@ -23,6 +23,7 @@ import proton.android.pass.data.impl.db.dao.BreachCustomEmailDao
 import proton.android.pass.data.impl.db.dao.BreachDomainPeekDao
 import proton.android.pass.data.impl.db.dao.BreachEmailDao
 import proton.android.pass.data.impl.db.dao.BreachProtonEmailDao
+import proton.android.pass.data.impl.db.dao.CompromisedPasswordDao
 import proton.android.pass.data.impl.db.dao.FolderKeysDao
 import proton.android.pass.data.impl.db.dao.FoldersDao
 import proton.android.pass.data.impl.db.dao.GroupInviteDao
@@ -116,6 +117,8 @@ interface PassDatabase : Database {
     fun breachEmailDao(): BreachEmailDao
 
     fun breachDomainPeekDao(): BreachDomainPeekDao
+
+    fun compromisedPasswordDao(): CompromisedPasswordDao
 
     suspend fun <R> inTransaction(name: String, block: suspend () -> R): R {
         PassLogger.i(TAG, "$name transaction started")

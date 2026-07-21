@@ -24,6 +24,7 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import proton.android.pass.data.api.core.repositories.SentinelRepository
 import proton.android.pass.data.api.repositories.AliasContactsRepository
+import proton.android.pass.data.api.repositories.CompromisedPasswordRepository
 import proton.android.pass.data.api.repositories.AliasRepository
 import proton.android.pass.data.api.repositories.AssetLinkRepository
 import proton.android.pass.data.api.repositories.AttachmentRepository
@@ -56,6 +57,7 @@ import proton.android.pass.data.api.repositories.UserAccessDataRepository
 import proton.android.pass.data.api.repositories.UserInviteRepository
 import proton.android.pass.data.impl.core.repositories.SentinelRepositoryImpl
 import proton.android.pass.data.impl.repositories.AliasContactsRepositoryImpl
+import proton.android.pass.data.impl.repositories.CompromisedPasswordRepositoryImpl
 import proton.android.pass.data.impl.repositories.AliasRepositoryImpl
 import proton.android.pass.data.impl.repositories.AssetLinkRepositoryImpl
 import proton.android.pass.data.impl.repositories.AttachmentRepositoryImpl
@@ -246,5 +248,10 @@ abstract class DataRepositoryModule {
 
     @[Binds Singleton]
     abstract fun bindSearchIndexRepository(impl: SearchIndexRepositoryImpl): SearchIndexRepository
+
+    @Binds
+    abstract fun bindCompromisedPasswordRepository(
+        impl: CompromisedPasswordRepositoryImpl
+    ): CompromisedPasswordRepository
 
 }

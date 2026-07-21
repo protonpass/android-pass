@@ -23,5 +23,9 @@ enum class ItemFlag(override val value: Int) : Flag {
     EmailBreached(value = 1 shl 1),
     AliasDisabled(value = 1 shl 2),
     HasAttachments(value = 1 shl 3),
-    HasHadAttachments(value = 1 shl 4)
+    HasHadAttachments(value = 1 shl 4),
+    SkipWeakPasswordCheck(value = 1 shl 5),
+    SkipCompromisedPasswordCheck(value = 1 shl 6),
+    SkipReusedPasswordCheck(value = 1 shl 7),
+    Skip2FACheck(value = 1 shl 8)
 }

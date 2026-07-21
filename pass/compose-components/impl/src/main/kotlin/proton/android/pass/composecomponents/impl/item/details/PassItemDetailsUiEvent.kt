@@ -20,6 +20,7 @@ package proton.android.pass.composecomponents.impl.item.details
 
 import proton.android.pass.commonpresentation.api.items.details.domain.ItemDetailsFieldType
 import proton.android.pass.commonuimodels.api.UIPasskeyContent
+import proton.android.pass.commonuimodels.api.items.MonitorCheck
 import proton.android.pass.composecomponents.impl.attachments.AttachmentContentEvent
 import proton.android.pass.domain.HiddenState
 import proton.android.pass.domain.ItemId
@@ -62,4 +63,6 @@ sealed interface PassItemDetailsUiEvent {
     data class OnViewAliasClick(val shareId: ShareId, val itemId: ItemId) : PassItemDetailsUiEvent
 
     data object OnUpgrade : PassItemDetailsUiEvent
+
+    data class OnToggleMonitorCheck(val check: MonitorCheck, val skip: Boolean) : PassItemDetailsUiEvent
 }

@@ -27,6 +27,7 @@ import org.junit.Test
 import proton.android.pass.crypto.fakes.context.FakeEncryptionContextProvider
 import proton.android.pass.data.fakes.usecases.FakeObserveItems
 import proton.android.pass.data.fakes.usecases.vaults.FakeObserveVaultsGroupedByShareId
+import proton.android.pass.domain.ItemFlag
 import proton.android.pass.domain.ItemId
 import proton.android.pass.preferences.FakePreferenceRepository
 import proton.android.pass.telemetry.fakes.FakeTelemetryManager
@@ -55,9 +56,21 @@ internal class SecurityCenterExcludedItemsViewModelTest {
 
     @Test
     internal fun `WHEN excluded items are emitted THEN items are sorted alphabetically by title`() = runTest {
-        val itemC = ItemTestFactory.createLogin(itemId = ItemId("c"), title = "Charlie")
-        val itemA = ItemTestFactory.createLogin(itemId = ItemId("a"), title = "Alpha")
-        val itemB = ItemTestFactory.createLogin(itemId = ItemId("b"), title = "bravo")
+        val itemC = ItemTestFactory.createLogin(
+            itemId = ItemId("c"),
+            title = "Charlie",
+            flags = ItemFlag.SkipHealthCheck.value
+        )
+        val itemA = ItemTestFactory.createLogin(
+            itemId = ItemId("a"),
+            title = "Alpha",
+            flags = ItemFlag.SkipHealthCheck.value
+        )
+        val itemB = ItemTestFactory.createLogin(
+            itemId = ItemId("b"),
+            title = "bravo",
+            flags = ItemFlag.SkipHealthCheck.value
+        )
 
         observeVaultsGroupedByShareId.emitDefault()
 

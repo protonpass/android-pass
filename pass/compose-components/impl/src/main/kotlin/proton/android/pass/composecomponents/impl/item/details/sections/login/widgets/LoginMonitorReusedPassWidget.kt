@@ -18,6 +18,7 @@
 
 package proton.android.pass.composecomponents.impl.item.details.sections.login.widgets
 
+import me.proton.core.presentation.R as CoreR
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
@@ -26,10 +27,10 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Surface
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -38,8 +39,6 @@ import androidx.compose.ui.unit.dp
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.datetime.Clock
-import me.proton.core.compose.theme.ProtonTheme
-import me.proton.core.compose.theme.captionStrongNorm
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.ellipsize
 import proton.android.pass.commonui.api.PassTheme
@@ -51,13 +50,14 @@ import proton.android.pass.composecomponents.impl.R
 import proton.android.pass.composecomponents.impl.container.roundedContainer
 import proton.android.pass.composecomponents.impl.item.details.PassItemDetailsUiEvent
 import proton.android.pass.composecomponents.impl.item.icon.LoginIcon
+import proton.android.pass.composecomponents.impl.text.Text
 import proton.android.pass.domain.HiddenState
 import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.ShareType
 
-private const val REUSED_LOGIN_ITEM_ICON_SIZE = 24
+private const val REUSED_LOGIN_ITEM_ICON_SIZE = 16
 private const val REUSED_LOGIN_ITEM_TITLE_MAX_LENGTH = 20
 
 @Composable
@@ -67,19 +67,37 @@ internal fun LoginMonitorReusedPassWidget(
     reusedPasswordCount: Int,
     reusedPasswordItems: ImmutableList<ItemUiModel>,
     canLoadExternalImages: Boolean,
-    onEvent: (PassItemDetailsUiEvent) -> Unit
+    onEvent: (PassItemDetailsUiEvent) -> Unit,
+    isRestoreMode: Boolean = false,
+    isPending: Boolean = false,
+    canEdit: Boolean = true,
+    onToggleExclude: () -> Unit
 ) {
     LoginMonitorWidget(
         modifier = modifier,
-        title = pluralStringResource(
+        title = stringResource(id = R.string.login_item_monitor_label_reused),
+        iconResId = CoreR.drawable.ic_proton_key,
+        titleColor = PassTheme.colors.noteInteractionNormMajor2,
+        subtitle = pluralStringResource(
             id = R.plurals.login_item_monitor_widget_reused_pass_title,
             count = reusedPasswordCount,
             reusedPasswordCount
         ),
+        subtitleColor = PassTheme.colors.textNorm,
+        trailingAction = if (canEdit) {
+            {
+                MonitorCheckActionButton(
+                    modifier = Modifier.align(Alignment.Top),
+                    isRestoreMode = isRestoreMode,
+                    isPending = isPending,
+                    onClick = onToggleExclude
+                )
+            }
+        } else null,
         additionalContent = {
             when (reusedPasswordDisplayMode) {
                 LoginMonitorState.ReusedPasswordDisplayMode.Compact -> {
-                    Text(
+                    Text.CaptionMedium(
                         modifier = Modifier
                             .roundedContainer(
                                 backgroundColor = PassTheme.colors.noteInteractionNormMinor1,
@@ -91,8 +109,7 @@ internal fun LoginMonitorReusedPassWidget(
                                 horizontal = Spacing.medium
                             ),
                         text = stringResource(id = R.string.action_see_all),
-                        color = PassTheme.colors.noteInteractionNormMajor2,
-                        style = ProtonTheme.typography.captionMedium
+                        color = PassTheme.colors.noteInteractionNormMajor2
                     )
                 }
 
@@ -152,8 +169,8 @@ private fun ReusedPasswordCarouselItem(
     Row(
         modifier = modifier
             .roundedContainer(
-                backgroundColor = PassTheme.colors.noteInteractionNormMinor1,
-                borderColor = PassTheme.colors.noteInteractionNormMinor1
+                backgroundColor = PassTheme.colors.backgroundMedium,
+                borderColor = Color.Transparent
             )
             .clickable(onClick = onClick)
             .padding(Spacing.small),
@@ -172,9 +189,8 @@ private fun ReusedPasswordCarouselItem(
             backgroundColor = PassTheme.colors.loginInteractionNormMinor2
         )
 
-        Text(
-            text = item.contents.title.ellipsize(REUSED_LOGIN_ITEM_TITLE_MAX_LENGTH),
-            style = ProtonTheme.typography.captionStrongNorm
+        Text.CaptionRegular(
+            text = item.contents.title.ellipsize(REUSED_LOGIN_ITEM_TITLE_MAX_LENGTH)
         )
     }
 }
@@ -188,7 +204,8 @@ internal fun LoginMonitorReusedPassWCPreview(@PreviewParameter(ThemePreviewProvi
                 reusedPasswordCount = 8,
                 reusedPasswordItems = persistentListOf(),
                 canLoadExternalImages = false,
-                onEvent = {}
+                onEvent = {},
+                onToggleExclude = {}
             )
         }
     }
@@ -231,7 +248,8 @@ internal fun LoginMonitorReusedPassWEPreview(@PreviewParameter(ThemePreviewProvi
                     )
                 ),
                 canLoadExternalImages = false,
-                onEvent = {}
+                onEvent = {},
+                onToggleExclude = {}
             )
         }
     }

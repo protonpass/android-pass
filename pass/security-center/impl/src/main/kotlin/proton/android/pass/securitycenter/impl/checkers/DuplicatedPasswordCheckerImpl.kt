@@ -29,6 +29,8 @@ import proton.android.pass.domain.ItemFlag
 import proton.android.pass.domain.ItemState
 import proton.android.pass.domain.ItemType
 import proton.android.pass.domain.ShareSelection
+import proton.android.pass.securitycenter.api.SecurityCheck
+import proton.android.pass.securitycenter.api.isCheckExcluded
 import proton.android.pass.securitycenter.api.passwords.DuplicatedPasswordChecker
 import proton.android.pass.securitycenter.api.passwords.DuplicatedPasswordReport
 import javax.inject.Inject
@@ -57,7 +59,9 @@ class DuplicatedPasswordCheckerImpl @Inject constructor(
             filter = ItemTypeFilter.Logins,
             itemFlags = mapOf(ItemFlag.SkipHealthCheck to false),
             includeHidden = false
-        ).first().filter { loginItem -> loginItem.id != item.id }
+        ).first().filter { loginItem ->
+            loginItem.id != item.id && !loginItem.isCheckExcluded(SecurityCheck.ReusedPassword)
+        }
 
         return withContext(Dispatchers.Default) {
             val duplicatedPasswordItems = mutableSetOf<Item>()

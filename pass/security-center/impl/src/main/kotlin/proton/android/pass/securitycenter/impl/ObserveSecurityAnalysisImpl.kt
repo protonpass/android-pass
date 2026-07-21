@@ -26,13 +26,18 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.shareIn
+import kotlinx.coroutines.launch
 import proton.android.pass.common.api.AppDispatchers
 import proton.android.pass.common.api.FlowUtils.oneShot
 import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.asLoadingResult
+import proton.android.pass.data.api.usecases.compromisedpassword.ObserveCompromisedPasswords
+import proton.android.pass.data.api.usecases.compromisedpassword.RefreshCompromisedPasswords
 import proton.android.pass.data.api.usecases.items.ObserveMonitoredItems
+import proton.android.pass.securitycenter.api.CompromisedPasswordsResult
 import proton.android.pass.securitycenter.api.InsecurePasswordsResult
 import proton.android.pass.securitycenter.api.Missing2faResult
 import proton.android.pass.securitycenter.api.ObserveSecurityAnalysis
@@ -51,6 +56,8 @@ class ObserveSecurityAnalysisImpl @Inject constructor(
     private val repeatedPasswordChecker: RepeatedPasswordChecker,
     private val insecurePasswordChecker: InsecurePasswordChecker,
     private val missing2faChecker: MissingTfaChecker,
+    private val observeCompromisedPasswords: ObserveCompromisedPasswords,
+    private val refreshCompromisedPasswords: RefreshCompromisedPasswords,
     observeMonitoredItems: ObserveMonitoredItems,
     dispatchers: AppDispatchers
 ) : ObserveSecurityAnalysis {
@@ -59,6 +66,9 @@ class ObserveSecurityAnalysisImpl @Inject constructor(
 
     private val securityAnalysisFlow: SharedFlow<SecurityAnalysis> =
         observeMonitoredItems(includeHiddenVaults = false)
+            .onEach { items ->
+                coroutineScope.launch { refreshCompromisedPasswords(items) }
+            }
             .flatMapLatest { items ->
                 combine(
                     oneShot { breachedDataChecker(items) }.asLoadingResult(),
@@ -71,8 +81,18 @@ class ObserveSecurityAnalysisImpl @Inject constructor(
                     oneShot { missing2faChecker(items) }.map {
                         Missing2faResult(it.missing2faCount)
                     }.asLoadingResult(),
-                    ::SecurityAnalysis
-                )
+                    observeCompromisedPasswords().map {
+                        CompromisedPasswordsResult(it.size)
+                    }.asLoadingResult()
+                ) { breached, reused, insecure, missing2fa, compromised ->
+                    SecurityAnalysis(
+                        breachedData = breached,
+                        reusedPasswords = reused,
+                        insecurePasswords = insecure,
+                        missing2fa = missing2fa,
+                        compromisedPasswords = compromised
+                    )
+                }
             }
             .onStart {
                 emit(
@@ -80,7 +100,8 @@ class ObserveSecurityAnalysisImpl @Inject constructor(
                         breachedData = LoadingResult.Loading,
                         reusedPasswords = LoadingResult.Loading,
                         insecurePasswords = LoadingResult.Loading,
-                        missing2fa = LoadingResult.Loading
+                        missing2fa = LoadingResult.Loading,
+                        compromisedPasswords = LoadingResult.Loading
                     )
                 )
             }

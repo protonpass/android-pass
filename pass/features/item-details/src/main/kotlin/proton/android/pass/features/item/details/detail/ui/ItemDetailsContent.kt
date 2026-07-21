@@ -182,6 +182,16 @@ internal fun ItemDetailsContent(
                                 else -> Unit
                             }
                         }
+
+                        is PassItemDetailsUiEvent.OnToggleMonitorCheck ->
+                            onEvent(
+                                ItemDetailsUiEvent.OnToggleMonitorCheck(
+                                    shareId = shareId,
+                                    itemId = itemId,
+                                    check = uiEvent.check,
+                                    skip = uiEvent.skip
+                                )
+                            )
                     }
                 }
             )

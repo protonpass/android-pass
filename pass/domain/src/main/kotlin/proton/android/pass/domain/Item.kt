@@ -36,6 +36,10 @@ value class ItemFlags(val value: Int) {
     fun isAliasDisabled(): Boolean = value.hasFlag(ItemFlag.AliasDisabled.value)
     fun hasAttachments(): Boolean = value.hasFlag(ItemFlag.HasAttachments.value)
     fun hasHadAttachments(): Boolean = value.hasFlag(ItemFlag.HasHadAttachments.value)
+    fun hasSkippedWeakPasswordCheck(): Boolean = value.hasFlag(ItemFlag.SkipWeakPasswordCheck.value)
+    fun hasSkippedCompromisedPasswordCheck(): Boolean = value.hasFlag(ItemFlag.SkipCompromisedPasswordCheck.value)
+    fun hasSkippedReusedPasswordCheck(): Boolean = value.hasFlag(ItemFlag.SkipReusedPasswordCheck.value)
+    fun hasSkipped2FACheck(): Boolean = value.hasFlag(ItemFlag.Skip2FACheck.value)
 }
 
 data class Item(
@@ -71,6 +75,10 @@ data class Item(
     val isEmailBreached: Boolean = itemFlags.isEmailBreached()
     val hasAttachments: Boolean = itemFlags.hasAttachments()
     val hasHadAttachments: Boolean = itemFlags.hasHadAttachments()
+    val hasSkippedWeakPasswordCheck: Boolean = itemFlags.hasSkippedWeakPasswordCheck()
+    val hasSkippedCompromisedPasswordCheck: Boolean = itemFlags.hasSkippedCompromisedPasswordCheck()
+    val hasSkippedReusedPasswordCheck: Boolean = itemFlags.hasSkippedReusedPasswordCheck()
+    val hasSkipped2FACheck: Boolean = itemFlags.hasSkipped2FACheck()
 
     val isShared: Boolean = shareCount > 0
 }

@@ -243,6 +243,7 @@ class FakeItemRepository @Inject constructor() : ItemRepository {
         itemState: ItemState?,
         itemTypeFilter: ItemTypeFilter,
         itemFlags: Map<ItemFlag, Boolean>,
+        anyFlags: List<ItemFlag>,
         includeHidden: Boolean
     ): Flow<List<Item>> = observeItemListFlow
 

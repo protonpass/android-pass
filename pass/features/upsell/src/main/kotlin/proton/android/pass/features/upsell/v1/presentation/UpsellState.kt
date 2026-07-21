@@ -42,7 +42,8 @@ internal data class UpsellState(
         PaidFeature.SecureLinks,
         PaidFeature.SentinelFree,
         PaidFeature.FileAttachments,
-        PaidFeature.ViewMissing2fa -> true
+        PaidFeature.ViewMissing2fa,
+        PaidFeature.CompromisedPasswords -> true
     }
 
     @DrawableRes
@@ -54,7 +55,8 @@ internal data class UpsellState(
         PaidFeature.SentinelFree,
         PaidFeature.SecureLinks,
         PaidFeature.FileAttachments,
-        PaidFeature.ViewMissing2fa -> R.drawable.logo_feature_pass_plus
+        PaidFeature.ViewMissing2fa,
+        PaidFeature.CompromisedPasswords -> R.drawable.logo_feature_pass_plus
     }
 
     @StringRes
@@ -66,7 +68,8 @@ internal data class UpsellState(
         PaidFeature.DarkWebMonitoring,
         PaidFeature.SentinelFree,
         PaidFeature.SecureLinks,
-        PaidFeature.ViewMissing2fa -> R.string.upsell_monitor_title
+        PaidFeature.ViewMissing2fa,
+        PaidFeature.CompromisedPasswords -> R.string.upsell_monitor_title
     }
 
     @StringRes
@@ -78,6 +81,8 @@ internal data class UpsellState(
         PaidFeature.SentinelEssential,
         PaidFeature.FileAttachments,
         PaidFeature.SentinelFree -> R.string.upsell_sentinel_subtitle
+
+        PaidFeature.CompromisedPasswords -> R.string.upsell_compromised_passwords_subtitle
 
         PaidFeature.ViewMissing2fa -> R.string.upsell_missing_2fa_subtitle
     }
@@ -91,7 +96,8 @@ internal data class UpsellState(
         PaidFeature.SentinelFree,
         PaidFeature.SecureLinks,
         PaidFeature.FileAttachments,
-        PaidFeature.ViewMissing2fa -> R.string.upsell_button_upgrade
+        PaidFeature.ViewMissing2fa,
+        PaidFeature.CompromisedPasswords -> R.string.upsell_button_upgrade
     }
 
     internal val features: ImmutableList<Pair<Int, Int>> = when (paidFeature) {
@@ -114,7 +120,8 @@ internal data class UpsellState(
         PaidFeature.ItemSharing,
         PaidFeature.SentinelFree,
         PaidFeature.FileAttachments,
-        PaidFeature.ViewMissing2fa -> buildList {
+        PaidFeature.ViewMissing2fa,
+        PaidFeature.CompromisedPasswords -> buildList {
             add(CoreR.drawable.ic_proton_paper_clip to R.string.upsell_paid_feature_file_attachments)
             add(CompR.drawable.ic_shield_union to R.string.upsell_paid_feature_dark_web_monitoring)
             add(CoreR.drawable.ic_proton_user to R.string.upsell_paid_feature_sentinel)

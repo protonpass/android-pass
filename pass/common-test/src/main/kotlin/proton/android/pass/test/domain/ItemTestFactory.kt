@@ -60,7 +60,8 @@ object ItemTestFactory {
         folderId: FolderId? = null,
         packageInfoSet: Set<PackageInfo> = emptySet(),
         keyStoreCrypto: KeyStoreCrypto = FakeKeyStoreCrypto,
-        title: String = "item-title"
+        title: String = "item-title",
+        flags: Int = 0
     ): Item {
         val note = "item-note"
         val now = Clock.System.now()
@@ -82,7 +83,7 @@ object ItemTestFactory {
             lastAutofillTime = None,
             isPinned = false,
             pinTime = None,
-            itemFlags = ItemFlags(0),
+            itemFlags = ItemFlags(flags),
             shareCount = 0,
             contentFormatVersion = 0,
             shareType = ShareType.Vault
@@ -133,10 +134,12 @@ object ItemTestFactory {
         username: String = "username",
         password: String = "",
         primaryTotp: String = "",
-        note: String = "note"
+        note: String = "note",
+        flags: Int = 0
     ): Item = create(
         shareId = shareId,
         itemId = itemId,
+        flags = flags,
         itemContents = ItemContents.Login(
             title = title,
             note = note,
@@ -265,7 +268,8 @@ object ItemTestFactory {
         lastAutofillTime: Long? = null,
         createTime: Long = Clock.System.now().toEpochMilliseconds(),
         modificationTime: Long = createTime,
-        pinTime: Long? = null
+        pinTime: Long? = null,
+        flags: Int = 0
     ): Item {
         val itemTypeParam = itemType ?: ItemType.Login(
             itemEmail = randomString(),
@@ -303,7 +307,7 @@ object ItemTestFactory {
                 .toOption(),
             isPinned = Random.nextBoolean(),
             pinTime = pinTime?.let { Instant.fromEpochMilliseconds(it) }.toOption(),
-            itemFlags = ItemFlags(Random.nextInt()),
+            itemFlags = ItemFlags(flags),
             shareCount = Random.nextInt(),
             contentFormatVersion = 0,
             shareType = ShareType.from(Random.nextInt(1, 2))

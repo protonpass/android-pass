@@ -26,6 +26,7 @@ import proton.android.pass.commonrust.api.PasswordScore
 import proton.android.pass.commonrust.fakes.FakePasswordScorer
 import proton.android.pass.crypto.fakes.context.FakeEncryptionContextProvider
 import proton.android.pass.domain.Item
+import proton.android.pass.domain.ItemFlag
 import proton.android.pass.domain.ItemId
 import proton.android.pass.test.domain.ItemTestFactory
 import proton.android.pass.test.domain.ItemTypeTestFactory
@@ -150,6 +151,48 @@ class InsecurePasswordCheckerTest {
         assertThat(report.insecurePasswordsCount).isEqualTo(weakItems.size + vulnerableItems.size)
         assertThat(report.vulnerablePasswordItems).isEqualTo(vulnerableItems)
         assertThat(report.weakPasswordItems).isEqualTo(weakItems)
+    }
+
+    @Test
+    fun `items with SkipWeakPasswordCheck flag are excluded`() = runTest {
+        val weakPassword = "weakPassword"
+        passwordScorer.defineScore(weakPassword, PasswordScore.WEAK)
+
+        val skipped = (0 until 2).map { idx ->
+            ItemTestFactory.create(
+                itemId = ItemId("SKIP-$idx"),
+                itemType = ItemTypeTestFactory.login(
+                    password = encryptionContextProvider.withEncryptionContext { encrypt(weakPassword) }
+                ),
+                flags = ItemFlag.SkipWeakPasswordCheck.value
+            )
+        }
+        val remaining = generateItemsWithPassword(weakPassword, "WEAK", 1)
+
+        val report = instance.invoke(skipped + remaining)
+
+        assertThat(report.insecurePasswordsCount).isEqualTo(1)
+        assertThat(report.weakPasswordItems).containsExactlyElementsIn(remaining)
+    }
+
+    @Test
+    fun `items with SkipHealthCheck flag are also excluded from weak check`() = runTest {
+        val weakPassword = "weakPassword"
+        passwordScorer.defineScore(weakPassword, PasswordScore.WEAK)
+
+        val items = (0 until 2).map { idx ->
+            ItemTestFactory.create(
+                itemId = ItemId("H-$idx"),
+                itemType = ItemTypeTestFactory.login(
+                    password = encryptionContextProvider.withEncryptionContext { encrypt(weakPassword) }
+                ),
+                flags = ItemFlag.SkipHealthCheck.value
+            )
+        }
+
+        val report = instance.invoke(items)
+
+        assertThat(report.insecurePasswordsCount).isEqualTo(0)
     }
 
     private fun generateItemsWithPassword(

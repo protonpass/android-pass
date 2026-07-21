@@ -345,12 +345,21 @@
 
     <string name="login_item_monitor_widget_weak_pass_title">Weak Password</string>
     <string name="login_item_monitor_widget_weak_pass_subtitle">This account is vulnerable, visit the service and change your password.</string>
+    <string name="login_item_monitor_widget_compromised_pass_title">Compromised password</string>
+    <string name="login_item_monitor_widget_compromised_pass_subtitle">This login password appears in a data breach. Please visit the service and change the password.</string>
     <plurals name="login_item_monitor_widget_reused_pass_title">
         <item quantity="one">%d other login uses the same password</item>
         <item quantity="other">%d other logins use the same password</item>
     </plurals>
     <string name="login_item_monitor_widget_missing_two_fa_title">Set up 2FA for more security</string>
     <string name="login_item_monitor_widget_missing_two_fa_subtitle">This service offers 2FA. Enable it for added account security.</string>
+    <string name="login_item_monitor_action_ignore">Ignore</string>
+    <string name="login_item_monitor_action_restore">Restore alert</string>
+    <string name="login_item_monitor_header">Pass Monitor</string>
+    <string name="login_item_monitor_label_weak">Weak password</string>
+    <string name="login_item_monitor_label_compromised">Compromised password</string>
+    <string name="login_item_monitor_label_reused">Reused password</string>
+    <string name="login_item_monitor_label_missing_2fa">Missing 2FA</string>
     <string name="login_item_reused_passwords_subtitle">Items from your vaults that use this password.</string>
     <string name="mfa_limit_reached">2FA limit reached</string>
 

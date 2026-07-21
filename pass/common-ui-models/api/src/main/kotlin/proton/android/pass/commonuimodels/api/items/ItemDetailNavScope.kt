@@ -24,5 +24,6 @@ enum class ItemDetailNavScope {
     MonitorReport,
     MonitorWeakPassword,
     MonitorReusedPassword,
-    MonitorMissing2fa
+    MonitorMissing2fa,
+    MonitorCompromisedPassword
 }

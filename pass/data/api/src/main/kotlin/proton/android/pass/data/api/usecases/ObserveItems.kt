@@ -33,6 +33,7 @@ interface ObserveItems {
         filter: ItemTypeFilter,
         userId: UserId? = null,
         itemFlags: Map<ItemFlag, Boolean> = emptyMap(),
+        anyFlags: List<ItemFlag> = emptyList(),
         includeHidden: Boolean
     ): Flow<List<Item>>
 

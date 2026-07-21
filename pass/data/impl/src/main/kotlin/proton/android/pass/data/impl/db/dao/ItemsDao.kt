@@ -74,6 +74,7 @@ abstract class ItemsDao : BaseDao<ItemEntity>() {
           AND (:itemState IS NULL OR ${ItemEntity.Columns.STATE} = :itemState)
           AND (:setFlags IS NULL OR (flags & :setFlags) == :setFlags)
           AND (:clearFlags IS NULL OR (flags & :clearFlags) == 0)
+          AND (:anyFlags IS NULL OR (flags & :anyFlags) != 0)
           AND (:isPinned IS NULL OR ${ItemEntity.Columns.IS_PINNED} = :isPinned)
           AND (:hasTotp IS NULL OR ${ItemEntity.Columns.HAS_TOTP} = :hasTotp)
           AND (:hasPasskeys IS NULL OR ${ItemEntity.Columns.HAS_PASSKEYS} = :hasPasskeys)
@@ -92,7 +93,8 @@ abstract class ItemsDao : BaseDao<ItemEntity>() {
         hasTotp: Boolean?,
         hasPasskeys: Boolean?,
         setFlags: Int?,
-        clearFlags: Int?
+        clearFlags: Int?,
+        anyFlags: Int?
     ): Flow<List<ItemEntity>>
 
     @Query(

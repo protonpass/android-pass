@@ -48,6 +48,7 @@ sealed interface SecurityCenterNavDestination {
             data object WeakPasswords : Origin
             data object ReusedPassword : Origin
             data object Missing2fa : Origin
+            data object CompromisedPassword : Origin
             data object Excluded : Origin
             data object Report : Origin
         }
@@ -64,6 +65,8 @@ sealed interface SecurityCenterNavDestination {
     data object ReusedPasswords : SecurityCenterNavDestination
 
     data object WeakPasswords : SecurityCenterNavDestination
+
+    data object CompromisedPasswords : SecurityCenterNavDestination
 
     data object MissingTFA : SecurityCenterNavDestination
 

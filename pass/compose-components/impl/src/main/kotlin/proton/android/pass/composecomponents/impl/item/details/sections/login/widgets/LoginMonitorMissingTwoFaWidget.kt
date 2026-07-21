@@ -20,23 +20,40 @@ package proton.android.pass.composecomponents.impl.item.details.sections.login.w
 
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
+import me.proton.core.presentation.R as CoreR
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.composecomponents.impl.R
-import proton.android.pass.composecomponents.impl.utils.passItemColors
-import proton.android.pass.domain.items.ItemCategory
 
 @Composable
-internal fun LoginMonitorMissingTwoFaWidget(modifier: Modifier = Modifier) {
+internal fun LoginMonitorMissingTwoFaWidget(
+    modifier: Modifier = Modifier,
+    isRestoreMode: Boolean = false,
+    isPending: Boolean = false,
+    canEdit: Boolean = true,
+    onToggleExclude: () -> Unit
+) {
     LoginMonitorWidget(
         modifier = modifier,
         title = stringResource(id = R.string.login_item_monitor_widget_missing_two_fa_title),
+        iconResId = CoreR.drawable.ic_proton_shield_2_bolt,
+        titleColor = PassTheme.colors.textNorm,
         subtitleResId = R.string.login_item_monitor_widget_missing_two_fa_subtitle,
-        itemColors = passItemColors(itemCategory = ItemCategory.Login)
+        trailingAction = if (canEdit) {
+            {
+                MonitorCheckActionButton(
+                    modifier = Modifier.align(Alignment.Top),
+                    isRestoreMode = isRestoreMode,
+                    isPending = isPending,
+                    onClick = onToggleExclude
+                )
+            }
+        } else null
     )
 }
 
@@ -44,7 +61,7 @@ internal fun LoginMonitorMissingTwoFaWidget(modifier: Modifier = Modifier) {
 internal fun LoginMonitorMissingTwoFaWPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
     PassTheme(isDark = isDark) {
         Surface {
-            LoginMonitorMissingTwoFaWidget()
+            LoginMonitorMissingTwoFaWidget(onToggleExclude = {})
         }
     }
 }

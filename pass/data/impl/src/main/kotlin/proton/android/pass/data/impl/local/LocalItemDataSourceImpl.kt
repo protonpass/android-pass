@@ -110,7 +110,8 @@ class LocalItemDataSourceImpl @Inject constructor(
         shareIds: List<ShareId>,
         itemState: ItemState?,
         filter: ItemTypeFilter,
-        itemFlags: Map<ItemFlag, Boolean>
+        itemFlags: Map<ItemFlag, Boolean>,
+        anyFlags: List<ItemFlag>
     ): Flow<List<ItemEntity>> {
         val (setFlags, clearFlags) = foldFlags(itemFlags)
         val itemTypes = filter.value()
@@ -126,7 +127,8 @@ class LocalItemDataSourceImpl @Inject constructor(
             hasTotp = null,
             hasPasskeys = null,
             setFlags = setFlags,
-            clearFlags = clearFlags
+            clearFlags = clearFlags,
+            anyFlags = anyFlags.sumOf { it.value }.takeIf { it != 0 }
         )
     }
 
@@ -200,7 +202,8 @@ class LocalItemDataSourceImpl @Inject constructor(
             hasTotp = null,
             hasPasskeys = null,
             setFlags = null,
-            clearFlags = null
+            clearFlags = null,
+            anyFlags = null
         )
     }
 
@@ -266,7 +269,8 @@ class LocalItemDataSourceImpl @Inject constructor(
             hasTotp = null,
             hasPasskeys = null,
             setFlags = null,
-            clearFlags = null
+            clearFlags = null,
+            anyFlags = null
         ).firstOrNull()
             ?: emptyList()
 
@@ -493,7 +497,8 @@ class LocalItemDataSourceImpl @Inject constructor(
                 hasTotp = true,
                 hasPasskeys = null,
                 setFlags = null,
-                clearFlags = null
+                clearFlags = null,
+                anyFlags = null
             )
             .map { items -> items.map { it.toItemWithTotp() } }
 
@@ -510,7 +515,8 @@ class LocalItemDataSourceImpl @Inject constructor(
             hasTotp = null,
             hasPasskeys = true,
             setFlags = null,
-            clearFlags = null
+            clearFlags = null,
+            anyFlags = null
         )
 
     override suspend fun updateItemFlags(

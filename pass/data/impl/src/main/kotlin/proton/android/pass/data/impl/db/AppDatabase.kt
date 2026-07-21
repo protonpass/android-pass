@@ -91,6 +91,7 @@ import proton.android.pass.common.api.runCatching
 import proton.android.pass.data.impl.db.entities.AssetLinkEntity
 import proton.android.pass.data.impl.db.entities.BreachCustomEmailEntity
 import proton.android.pass.data.impl.db.entities.BreachDomainPeekEntity
+import proton.android.pass.data.impl.db.entities.CompromisedPasswordEntity
 import proton.android.pass.data.impl.db.entities.BreachEmailEntity
 import proton.android.pass.data.impl.db.entities.BreachProtonEmailEntity
 import proton.android.pass.data.impl.db.entities.FolderEntity
@@ -188,7 +189,8 @@ import proton.android.pass.log.api.PassLogger
         BreachCustomEmailEntity::class,
         BreachProtonEmailEntity::class,
         BreachEmailEntity::class,
-        BreachDomainPeekEntity::class
+        BreachDomainPeekEntity::class,
+        CompromisedPasswordEntity::class
     ],
     autoMigrations = [
         AutoMigration(from = 2, to = 3, spec = AppDatabaseMigrations.MIGRATION_2_3::class),
@@ -254,7 +256,8 @@ import proton.android.pass.log.api.PassLogger
         AutoMigration(from = 88, to = 89),
         AutoMigration(from = 89, to = 90),
         AutoMigration(from = 90, to = 91),
-        AutoMigration(from = 91, to = 92)
+        AutoMigration(from = 91, to = 92),
+        AutoMigration(from = 92, to = 93)
     ],
     version = AppDatabase.VERSION,
     exportSchema = true
@@ -300,7 +303,7 @@ abstract class AppDatabase :
 
     companion object {
         private const val TAG = "AppDatabase"
-        const val VERSION = 92
+        const val VERSION = 93
 
         const val DB_NAME = "db-passkey"
 

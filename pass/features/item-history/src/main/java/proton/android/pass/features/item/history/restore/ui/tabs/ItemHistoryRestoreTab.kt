@@ -114,6 +114,10 @@ internal fun ItemHistoryRestoreTab(
                 is PassItemDetailsUiEvent.OnViewAliasClick ->
                     ItemHistoryRestoreUiEvent.OnViewItem(uiEvent.shareId, uiEvent.itemId)
                         .also(onEvent)
+
+                is PassItemDetailsUiEvent.OnToggleMonitorCheck -> {
+                    // We do nothing since monitor actions shouldn't appear on restore screen
+                }
             }
         },
         shouldDisplayItemHistorySection = false,

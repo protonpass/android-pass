@@ -26,7 +26,11 @@ import proton.android.pass.data.api.url.HostParser
 import proton.android.pass.data.api.usecases.AcceptInvite
 import proton.android.pass.data.api.usecases.ApplyPendingEvents
 import proton.android.pass.data.api.usecases.BatchChangeShareVisibility
+import proton.android.pass.data.api.usecases.compromisedpassword.ObserveCompromisedPasswords
+import proton.android.pass.data.api.usecases.compromisedpassword.RefreshCompromisedPasswords
 import proton.android.pass.data.api.usecases.CanDisplayTotp
+import proton.android.pass.data.impl.usecases.compromisedpassword.ObserveCompromisedPasswordsImpl
+import proton.android.pass.data.impl.usecases.compromisedpassword.RefreshCompromisedPasswordsImpl
 import proton.android.pass.data.api.usecases.CanPerformPaidAction
 import proton.android.pass.data.api.usecases.CancelShareInvite
 import proton.android.pass.data.api.usecases.ChangeAliasStatus
@@ -1477,5 +1481,11 @@ abstract class DataUseCaseModule {
 
     @Binds
     abstract fun bindObserveShouldShowExploreTab(impl: ObserveShouldShowExploreTabImpl): ObserveShouldShowExploreTab
+
+    @Binds
+    abstract fun bindObserveCompromisedPasswords(impl: ObserveCompromisedPasswordsImpl): ObserveCompromisedPasswords
+
+    @Binds
+    abstract fun bindRefreshCompromisedPasswords(impl: RefreshCompromisedPasswordsImpl): RefreshCompromisedPasswords
 
 }

@@ -31,7 +31,10 @@ import proton.android.pass.data.api.usecases.ItemTypeFilter
 import proton.android.pass.data.api.usecases.ObserveAllShares
 import proton.android.pass.data.api.usecases.ObserveItems
 import proton.android.pass.data.api.usecases.breach.SendUserMonitorCredentialsReport
+import proton.android.pass.data.api.usecases.compromisedpassword.ObserveCompromisedPasswords
+import proton.android.pass.data.api.usecases.compromisedpassword.RefreshCompromisedPasswords
 import proton.android.pass.data.impl.remote.RemoteOrganizationReportDataSource
+import proton.android.pass.data.impl.requests.SendUserMonitorCredentialsRequest
 import proton.android.pass.data.impl.util.runConcurrently
 import proton.android.pass.domain.ItemFlag
 import proton.android.pass.domain.ItemState
@@ -49,6 +52,8 @@ class SendUserMonitorCredentialsReportImpl @Inject constructor(
     private val repeatedPasswordChecker: RepeatedPasswordChecker,
     private val insecurePasswordChecker: InsecurePasswordChecker,
     private val missing2faChecker: MissingTfaChecker,
+    private val refreshCompromisedPasswords: RefreshCompromisedPasswords,
+    private val observeCompromisedPasswords: ObserveCompromisedPasswords,
     private val observeItems: ObserveItems,
     private val observeAllShares: ObserveAllShares,
     private val dispatchers: AppDispatchers
@@ -81,12 +86,16 @@ class SendUserMonitorCredentialsReportImpl @Inject constructor(
                     itemFlags = mapOf(ItemFlag.SkipHealthCheck to true),
                     includeHidden = false
                 ).first()
+                refreshCompromisedPasswords(userId, monitoredItems)
+                val compromisedItems = observeCompromisedPasswords(userId).first()
                 val report = withContext(dispatchers.default) {
-                    Report(
+                    val monitoredKeys = monitoredItems.mapTo(mutableSetOf()) { it.shareId to it.id }
+                    SendUserMonitorCredentialsRequest(
                         reusedPasswords = repeatedPasswordChecker(monitoredItems).repeatedPasswordsCount,
                         inactive2FA = missing2faChecker(monitoredItems).missing2faCount,
                         excludedItems = excludedItems.count(),
-                        weakPasswords = insecurePasswordChecker(monitoredItems).insecurePasswordsCount
+                        weakPasswords = insecurePasswordChecker(monitoredItems).insecurePasswordsCount,
+                        compromisedPasswords = compromisedItems.count { it.shareId to it.itemId in monitoredKeys }
                     )
                 }
                 userId to report
@@ -94,21 +103,8 @@ class SendUserMonitorCredentialsReportImpl @Inject constructor(
         runConcurrently(
             items = reports.entries,
             block = { (userId, report) ->
-                remoteOrganizationReportDataSource.request(
-                    userId = userId,
-                    reusedPasswords = report.reusedPasswords,
-                    inactive2FA = report.inactive2FA,
-                    excludedItems = report.excludedItems,
-                    weakPasswords = report.weakPasswords
-                )
+                remoteOrganizationReportDataSource.request(userId = userId, report = report)
             }
         )
     }
 }
-
-private data class Report(
-    val reusedPasswords: Int,
-    val inactive2FA: Int,
-    val excludedItems: Int,
-    val weakPasswords: Int
-)

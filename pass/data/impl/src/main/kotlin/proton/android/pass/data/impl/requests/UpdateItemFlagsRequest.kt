@@ -24,5 +24,13 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class UpdateItemFlagsRequest(
     @SerialName("SkipHealthCheck")
-    val skipHealthCheck: Boolean? = null
+    val skipHealthCheck: Boolean? = null,
+    @SerialName("SkipWeakPasswordCheck")
+    val skipWeakPasswordCheck: Boolean? = null,
+    @SerialName("SkipCompromisedPasswordCheck")
+    val skipCompromisedPasswordCheck: Boolean? = null,
+    @SerialName("SkipReusedPasswordCheck")
+    val skipReusedPasswordCheck: Boolean? = null,
+    @SerialName("Skip2FACheck")
+    val skip2FACheck: Boolean? = null
 )

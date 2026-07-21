@@ -22,6 +22,8 @@ import me.proton.core.crypto.common.keystore.EncryptedString
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemType
+import proton.android.pass.securitycenter.api.SecurityCheck
+import proton.android.pass.securitycenter.api.isCheckExcluded
 import proton.android.pass.securitycenter.api.passwords.RepeatedPasswordChecker
 import proton.android.pass.securitycenter.api.passwords.RepeatedPasswordsReport
 import javax.inject.Inject
@@ -32,8 +34,9 @@ class RepeatedPasswordCheckerImpl @Inject constructor(
 
     override fun invoke(items: List<Item>): RepeatedPasswordsReport = encryptionContextProvider.withEncryptionContext {
         val nonEmptyPasswords: MutableMap<String, List<Item>> = mutableMapOf()
+        val filtered = items.filter { !it.isCheckExcluded(SecurityCheck.ReusedPassword) }
 
-        items.forEach { item ->
+        filtered.forEach { item ->
             when (val itemType = item.itemType) {
                 is ItemType.Login -> {
                     DecryptedItem(

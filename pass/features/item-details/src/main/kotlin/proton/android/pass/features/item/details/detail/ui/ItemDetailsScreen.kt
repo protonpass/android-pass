@@ -199,6 +199,14 @@ fun ItemDetailsScreen(
                 is ItemDetailsUiEvent.OnViewAliasItem ->
                     ItemDetailsNavDestination.ViewItem(uiEvent.shareId, uiEvent.itemId)
                         .also(onNavigated)
+
+                is ItemDetailsUiEvent.OnToggleMonitorCheck ->
+                    viewModel.onToggleMonitorCheck(
+                        shareId = uiEvent.shareId,
+                        itemId = uiEvent.itemId,
+                        check = uiEvent.check,
+                        skip = uiEvent.skip
+                    )
             }
         }
     )

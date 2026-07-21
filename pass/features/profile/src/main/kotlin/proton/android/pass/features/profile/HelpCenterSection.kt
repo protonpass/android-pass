@@ -39,6 +39,8 @@ import proton.android.pass.composecomponents.impl.setting.SettingOption
 @Composable
 fun HelpCenterProfileSection(
     modifier: Modifier = Modifier,
+    canDisplayAutofillTroubleshooting: Boolean,
+    onAutofillTroubleshootingClick: () -> Unit,
     onFeedbackClick: () -> Unit,
     onImportExportClick: () -> Unit,
     onTutorialClick: () -> Unit
@@ -51,6 +53,13 @@ fun HelpCenterProfileSection(
         Column(
             modifier = Modifier.roundedContainerNorm()
         ) {
+            if (canDisplayAutofillTroubleshooting) {
+                SettingOption(
+                    text = stringResource(R.string.profile_option_autofill_troubleshooting),
+                    onClick = onAutofillTroubleshootingClick
+                )
+                PassDivider()
+            }
             SettingOption(
                 text = stringResource(R.string.profile_option_feedback),
                 onClick = onFeedbackClick
@@ -77,6 +86,8 @@ fun HelpCenterSectionPreview(@PreviewParameter(ThemePreviewProvider::class) isDa
     PassTheme(isDark = isDark) {
         Surface {
             HelpCenterProfileSection(
+                canDisplayAutofillTroubleshooting = true,
+                onAutofillTroubleshootingClick = {},
                 onFeedbackClick = {},
                 onImportExportClick = {},
                 onTutorialClick = {}

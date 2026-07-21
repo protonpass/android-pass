@@ -22,6 +22,7 @@ data class AutofillHealthEvent(
     val timestamp: Long,
     val type: AutofillHealthEventType,
     val packageName: String? = null,
+    val webDomain: String? = null,
     val details: String? = null
 )
 

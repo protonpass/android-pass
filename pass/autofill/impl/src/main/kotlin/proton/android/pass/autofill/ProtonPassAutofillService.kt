@@ -35,6 +35,7 @@ import kotlinx.coroutines.runBlocking
 import me.proton.core.accountmanager.domain.AccountManager
 import proton.android.pass.autofill.debug.AutofillDebugSaver
 import proton.android.pass.autofill.autofillhealth.service.AutofillHealthMonitor
+import proton.android.pass.autofill.autofillhealth.troubleshooting.data.AutofillWorkingBrowsersStore
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.preferences.FeatureFlag
 import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
@@ -66,6 +67,9 @@ class ProtonPassAutofillService : AutofillService() {
 
     @Inject
     lateinit var healthMonitor: AutofillHealthMonitor
+
+    @Inject
+    lateinit var workingBrowsersStore: AutofillWorkingBrowsersStore
 
     private val serviceScope = CoroutineScope(Dispatchers.Main + SupervisorJob())
 
@@ -116,6 +120,10 @@ class ProtonPassAutofillService : AutofillService() {
         if (requestFlags.isNotEmpty()) {
             PassLogger.i(TAG, "onFillRequest request flags: $requestFlags")
         }
+
+        request.fillContexts.lastOrNull()?.structure?.activityComponent?.packageName
+            ?.let { packageName -> workingBrowsersStore.recordWorkingBrowser(packageName) }
+
         if (isDebugMode) {
             runBlocking {
                 AutofillDebugSaver.save(this@ProtonPassAutofillService, request)

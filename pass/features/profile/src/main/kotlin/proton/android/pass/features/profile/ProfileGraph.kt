@@ -82,6 +82,8 @@ sealed interface ProfileNavigation {
 
     data object Feedback : ProfileNavigation
 
+    data object AutofillTroubleshooting : ProfileNavigation
+
     data object Finish : ProfileNavigation
 
     data object Home : ProfileNavigation

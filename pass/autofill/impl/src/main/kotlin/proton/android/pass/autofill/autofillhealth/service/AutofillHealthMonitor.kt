@@ -66,13 +66,18 @@ class AutofillHealthMonitor @Inject constructor(
         addEvent(AutofillHealthEvent(timestamp = now(), type = AutofillHealthEventType.DISCONNECTED))
     }
 
-    fun recordFillRequest(packageName: String?, type: AutofillHealthEventType) {
+    fun recordFillRequest(
+        packageName: String?,
+        type: AutofillHealthEventType,
+        webDomain: String? = null
+    ) {
         refreshIme()
         addEvent(
             AutofillHealthEvent(
                 timestamp = now(),
                 type = type,
-                packageName = packageName
+                packageName = packageName,
+                webDomain = webDomain
             )
         )
     }

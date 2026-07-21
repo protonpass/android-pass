@@ -180,10 +180,12 @@ object AutoFillHandler {
             autofillServiceManager.createMenuPresentationDataset(autofillData)
         }
 
+        val webDomain = assistInfo.url.value()?.takeIf { it.isNotBlank() }
         if (datasetList.isEmpty()) {
             healthMonitor?.recordFillRequest(
                 packageName = applicationPackageName.value,
-                type = AutofillHealthEventType.FILL_REQUEST_NONE
+                type = AutofillHealthEventType.FILL_REQUEST_NONE,
+                webDomain = webDomain
             )
         } else {
             healthMonitor?.recordFillRequest(
@@ -192,7 +194,8 @@ object AutoFillHandler {
                     AutofillHealthEventType.FILL_REQUEST_INLINE
                 } else {
                     AutofillHealthEventType.FILL_REQUEST_MENU
-                }
+                },
+                webDomain = webDomain
             )
         }
 

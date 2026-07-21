@@ -90,6 +90,8 @@ fun ProfileScreen(
                 ProfileUiEvent.OnAppVersionLongClick -> viewModel.onAppVersionLongClick()
                 is ProfileUiEvent.OnAutofillClicked -> viewModel.onToggleAutofill(it.value)
                 ProfileUiEvent.OnCopyAppVersionClick -> viewModel.copyAppVersion(state.appVersion)
+                ProfileUiEvent.OnAutofillTroubleshootingClick ->
+                    onNavigateEvent(ProfileNavigation.AutofillTroubleshooting)
                 ProfileUiEvent.OnFeedbackClick -> onNavigateEvent(ProfileNavigation.Feedback)
                 ProfileUiEvent.OnImportExportClick -> openWebsite(context, PASS_IMPORT)
                 ProfileUiEvent.OnRateAppClick -> openWebsite(context, state.passStoreUrl)

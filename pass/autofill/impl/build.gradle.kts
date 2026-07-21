@@ -135,6 +135,7 @@ dependencies {
     debugImplementation(libs.androidx.compose.uiTooling)
     implementation(libs.androidx.compose.uiToolingPreview)
 
+    testImplementation(projects.pass.appConfig.fakes)
     testImplementation(projects.pass.biometry.fakes)
     testImplementation(projects.pass.commonTest)
     testImplementation(projects.pass.clipboard.fakes)

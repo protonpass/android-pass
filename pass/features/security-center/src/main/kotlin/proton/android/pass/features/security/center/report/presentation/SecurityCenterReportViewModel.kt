@@ -29,7 +29,6 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.stateIn
-import kotlinx.coroutines.flow.take
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import me.proton.core.user.domain.entity.AddressId
@@ -150,7 +149,6 @@ class SecurityCenterReportViewModel @Inject constructor(
 
     private val breachReportFlow: Flow<LoadingResult<BreachEmailReport>> =
         observeBreachEmailReport(breachEmailId)
-            .take(1)
             .asLoadingResult()
             .onEach {
                 if (it is LoadingResult.Error) {

@@ -42,7 +42,7 @@ abstract class UserAccessDataDao : BaseDao<UserAccessDataEntity>() {
         WHERE ${UserAccessDataEntity.Columns.USER_ID} = :userId
         """
     )
-    abstract fun updateProtonMonitorState(userId: String, enabled: Boolean)
+    abstract suspend fun updateProtonMonitorState(userId: String, enabled: Boolean)
 
     @Query(
         """
@@ -51,6 +51,6 @@ abstract class UserAccessDataDao : BaseDao<UserAccessDataEntity>() {
         WHERE ${UserAccessDataEntity.Columns.USER_ID} = :userId
         """
     )
-    abstract fun updateAliasMonitorState(userId: String, enabled: Boolean)
+    abstract suspend fun updateAliasMonitorState(userId: String, enabled: Boolean)
 }
 

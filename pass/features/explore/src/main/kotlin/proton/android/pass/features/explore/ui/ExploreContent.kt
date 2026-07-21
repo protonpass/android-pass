@@ -65,23 +65,27 @@ internal fun ExploreContent(
         ) {
             item {
                 ExploreToolsSection(
-                    modifier = Modifier.padding(horizontal = 16.dp),
+                    modifier = Modifier.padding(horizontal = Spacing.medium),
                     showPasswordHealth = state.showPasswordHealth,
                     showCodes = state.showCodes,
                     onEvent = onEvent
                 )
             }
-            item {
-                ExploreExpandSecuritySection(
-                    modifier = Modifier.padding(horizontal = 16.dp),
-                    apps = state.protonApps,
-                    onEvent = onEvent
-                )
+            if (state.protonApps.isNotEmpty()) {
+                item(key = "expand_security") {
+                    ExploreExpandSecuritySection(
+                        modifier = Modifier
+                            .padding(horizontal = Spacing.medium)
+                            .animateItem(),
+                        apps = state.protonApps,
+                        onEvent = onEvent
+                    )
+                }
             }
-            if (!state.isBusinessUser) {
-                item {
+            if (!state.isLoading && !state.isBusinessUser) {
+                item(key = "business_banner") {
                     ProtonForBusinessBanner(
-                        modifier = Modifier.padding(bottom = Spacing.medium),
+                        modifier = Modifier.animateItem(),
                         onClick = { onEvent(ExploreUiEvent.BusinessBannerClicked) }
                     )
                 }

@@ -37,6 +37,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import proton.android.pass.commonui.api.PassTheme
+import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.composecomponents.impl.icon.Icon
 import proton.android.pass.composecomponents.impl.text.Text
@@ -63,7 +64,10 @@ internal fun ExploreProductRow(
             id = type.iconRes(),
             tint = Color.Unspecified
         )
-        Column(modifier = Modifier.weight(1f)) {
+        Column(
+            modifier = Modifier.weight(1f),
+            verticalArrangement = Arrangement.spacedBy(Spacing.extraSmall)
+        ) {
             Text.Body1Medium(text = stringResource(type.titleRes()))
             Text.Body2Weak(text = stringResource(type.subtitleRes()))
         }

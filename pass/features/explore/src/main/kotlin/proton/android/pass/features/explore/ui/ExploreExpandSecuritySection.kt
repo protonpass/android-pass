@@ -45,7 +45,6 @@ internal fun ExploreExpandSecuritySection(
     onEvent: (ExploreUiEvent) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    if (apps.isEmpty()) return
     Column(modifier = modifier) {
         Text.Body2Bold(
             modifier = Modifier.padding(vertical = 8.dp),

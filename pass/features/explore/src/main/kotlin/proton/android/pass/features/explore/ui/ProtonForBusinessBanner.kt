@@ -19,12 +19,11 @@
 package proton.android.pass.features.explore.ui
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -38,13 +37,14 @@ import androidx.compose.ui.unit.dp
 import proton.android.pass.commonui.api.LocalDark
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemePreviewProvider
-import proton.android.pass.composecomponents.impl.buttons.PassCircleButton
 import proton.android.pass.features.explore.R
 
 @Composable
 internal fun ProtonForBusinessBanner(onClick: () -> Unit, modifier: Modifier = Modifier) {
     Column(
-        modifier = modifier.fillMaxWidth(),
+        modifier = modifier
+            .fillMaxWidth()
+            .clickable(onClick = onClick),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Image(
@@ -60,30 +60,18 @@ internal fun ProtonForBusinessBanner(onClick: () -> Unit, modifier: Modifier = M
 
         Spacer(modifier = Modifier.height(50.dp))
 
-        Box(
-            modifier = Modifier
-        ) {
-            Image(
-                painter = painterResource(
-                    if (LocalDark.current) {
-                        R.drawable.proton_business_cover_dark
-                    } else {
-                        R.drawable.proton_business_cover_light
-                    }
-                ),
-                contentDescription = stringResource(R.string.explore_business_banner_title),
-                modifier = Modifier.fillMaxWidth(),
-                contentScale = ContentScale.FillWidth
-            )
-
-            PassCircleButton(
-                text = stringResource(R.string.explore_business_banner_cta),
-                onClick = onClick,
-                modifier = Modifier
-                    .align(alignment = Alignment.BottomCenter)
-                    .padding(horizontal = 24.dp)
-            )
-        }
+        Image(
+            painter = painterResource(
+                if (LocalDark.current) {
+                    R.drawable.proton_business_cover_dark
+                } else {
+                    R.drawable.proton_business_cover_light
+                }
+            ),
+            contentDescription = stringResource(R.string.explore_business_banner_title),
+            modifier = Modifier.fillMaxWidth(),
+            contentScale = ContentScale.FillWidth
+        )
     }
 }
 

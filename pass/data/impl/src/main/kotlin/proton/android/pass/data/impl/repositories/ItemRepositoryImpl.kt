@@ -1507,7 +1507,7 @@ class ItemRepositoryImpl @Inject constructor(
     }
 
     override suspend fun findUserId(shareId: ShareId, itemId: ItemId): Option<UserId> =
-        withContext(appDispatchers.io) { localItemDataSource.findUserId(shareId, itemId) }
+        localItemDataSource.findUserId(shareId, itemId)
 
     override suspend fun deleteItemRevisions(
         userId: UserId,

@@ -224,7 +224,7 @@ class FakeLocalItemDataSource : LocalItemDataSource {
         throw IllegalStateException("Not yet implemented")
     }
 
-    override fun getByVaultIdAndItemId(
+    override suspend fun getByVaultIdAndItemId(
         userIds: List<UserId>,
         vaultId: VaultId,
         itemId: ItemId
@@ -232,7 +232,7 @@ class FakeLocalItemDataSource : LocalItemDataSource {
         throw IllegalStateException("Not yet implemented")
     }
 
-    override fun findUserId(shareId: ShareId, itemId: ItemId): Option<UserId> {
+    override suspend fun findUserId(shareId: ShareId, itemId: ItemId): Option<UserId> {
         throw IllegalStateException("Not yet implemented")
     }
 

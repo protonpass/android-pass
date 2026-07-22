@@ -34,7 +34,7 @@ abstract class AttachmentDao : BaseDao<AttachmentEntity>() {
           AND ${AttachmentEntity.Columns.ITEM_ID} = :itemId
         """
     )
-    abstract fun removeByItem(shareId: String, itemId: String)
+    abstract suspend fun removeByItem(shareId: String, itemId: String)
 
     @Query(
         """
@@ -44,7 +44,7 @@ abstract class AttachmentDao : BaseDao<AttachmentEntity>() {
       AND ${AttachmentEntity.Columns.ID} IN (:attachmentIds)
         """
     )
-    abstract fun removeByAttachments(
+    abstract suspend fun removeByAttachments(
         shareId: String,
         itemId: String,
         attachmentIds: List<String>
@@ -79,7 +79,7 @@ abstract class AttachmentDao : BaseDao<AttachmentEntity>() {
         )
         """
     )
-    abstract fun checkIfAttachmentExists(
+    abstract suspend fun checkIfAttachmentExists(
         shareId: String,
         itemId: String,
         persistentId: String
@@ -93,7 +93,7 @@ abstract class AttachmentDao : BaseDao<AttachmentEntity>() {
           AND ${AttachmentEntity.Columns.ID} = :attachmentId
         """
     )
-    abstract fun getAttachmentById(
+    abstract suspend fun getAttachmentById(
         shareId: String,
         itemId: String,
         attachmentId: String

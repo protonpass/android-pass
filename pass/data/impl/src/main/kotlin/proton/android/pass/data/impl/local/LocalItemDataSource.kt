@@ -167,13 +167,13 @@ interface LocalItemDataSource {
         flags: Int
     )
 
-    fun getByVaultIdAndItemId(
+    suspend fun getByVaultIdAndItemId(
         userIds: List<UserId>,
         vaultId: VaultId,
         itemId: ItemId
     ): List<ItemEntity>
 
-    fun findUserId(shareId: ShareId, itemId: ItemId): Option<UserId>
+    suspend fun findUserId(shareId: ShareId, itemId: ItemId): Option<UserId>
 
     fun observeFolderItemCounts(userId: UserId, shareId: ShareId): Flow<Map<FolderId, Long>>
 

@@ -44,7 +44,7 @@ abstract class ChunkDao : BaseDao<ChunkEntity>() {
           AND ${ChunkEntity.Columns.ATTACHMENT_ID} = :attachmentId
         """
     )
-    abstract fun getChunksForAttachment(
+    abstract suspend fun getChunksForAttachment(
         shareId: String,
         itemId: String,
         attachmentId: String

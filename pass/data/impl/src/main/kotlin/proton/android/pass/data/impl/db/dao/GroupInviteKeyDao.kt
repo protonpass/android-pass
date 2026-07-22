@@ -32,5 +32,5 @@ abstract class GroupInviteKeyDao : BaseDao<GroupInviteKeyEntity>() {
         ORDER BY ${GroupInviteKeyEntity.Columns.KEY_ROTATION} ASC
         """
     )
-    abstract fun getAllById(inviteId: String): List<GroupInviteKeyEntity>
+    abstract suspend fun getAllById(inviteId: String): List<GroupInviteKeyEntity>
 }

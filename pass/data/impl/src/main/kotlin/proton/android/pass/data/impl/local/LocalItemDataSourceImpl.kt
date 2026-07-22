@@ -525,7 +525,7 @@ class LocalItemDataSourceImpl @Inject constructor(
         flags: Int
     ) = database.itemsDao().updateItemFlags(shareId.id, itemId.id, flags)
 
-    override fun getByVaultIdAndItemId(
+    override suspend fun getByVaultIdAndItemId(
         userIds: List<UserId>,
         vaultId: VaultId,
         itemId: ItemId
@@ -536,7 +536,7 @@ class LocalItemDataSourceImpl @Inject constructor(
             itemId = itemId.id
         )
 
-    override fun findUserId(shareId: ShareId, itemId: ItemId): Option<UserId> =
+    override suspend fun findUserId(shareId: ShareId, itemId: ItemId): Option<UserId> =
         database.itemsDao().findUserId(shareId.id, itemId.id)?.let(::UserId).toOption()
 
     override fun observeFolderItemCounts(userId: UserId, shareId: ShareId): Flow<Map<FolderId, Long>> =

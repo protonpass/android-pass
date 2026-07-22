@@ -60,6 +60,6 @@ abstract class SecureLinksDao : BaseDao<SecureLinkEntity>() {
             AND ${SecureLinkEntity.Columns.IS_ACTIVE} = 0
         """
     )
-    abstract fun deleteAllInactiveSecureLinks(userId: String)
+    abstract suspend fun deleteAllInactiveSecureLinks(userId: String)
 
 }

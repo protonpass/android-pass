@@ -299,7 +299,7 @@ abstract class ItemsDao : BaseDao<ItemEntity>() {
           AND ${ItemEntity.Columns.SHARE_ID} = :shareId
         """
     )
-    abstract fun updateLastUsedTime(
+    abstract suspend fun updateLastUsedTime(
         shareId: String,
         itemId: String,
         now: Long
@@ -374,7 +374,7 @@ abstract class ItemsDao : BaseDao<ItemEntity>() {
           AND share.${ShareEntity.Columns.USER_ID} IN (:userIds)
         """
     )
-    abstract fun getByVaultIdAndItemId(
+    abstract suspend fun getByVaultIdAndItemId(
         userIds: List<String>,
         vaultId: String,
         itemId: String
@@ -387,7 +387,7 @@ abstract class ItemsDao : BaseDao<ItemEntity>() {
           AND ${ItemEntity.Columns.ID} = :itemId
         """
     )
-    abstract fun findUserId(shareId: String, itemId: String): String?
+    abstract suspend fun findUserId(shareId: String, itemId: String): String?
 
     @Suppress("LongParameterList")
     @Query(

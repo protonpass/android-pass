@@ -33,10 +33,10 @@ import proton.android.pass.data.impl.db.entities.IgnoredAssetLinkEntity
 abstract class AssetLinkDao : BaseDao<AssetLinkEntity>() {
 
     @Query("DELETE FROM ${AssetLinkEntity.TABLE}")
-    abstract fun purge()
+    abstract suspend fun purge()
 
     @Query("DELETE FROM ${AssetLinkEntity.TABLE} WHERE ${AssetLinkEntity.Columns.CREATED_AT} < :date")
-    abstract fun purgeOlderThan(date: Instant)
+    abstract suspend fun purgeOlderThan(date: Instant)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     abstract suspend fun insertOrIgnore(entity: AssetLinkEntity)

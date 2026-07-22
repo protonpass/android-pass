@@ -1,0 +1,7 @@
+<resources>
+    <string name="string_usage">A</string>
+    <plurals name="plurals_usage">
+        <item quantity="one">B</item>
+    </plurals>
+    <string name="xml_usage">C</string>
+</resources>

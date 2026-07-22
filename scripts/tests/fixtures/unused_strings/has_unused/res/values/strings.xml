@@ -1,0 +1,4 @@
+<resources>
+    <string name="used_string">Used</string>
+    <string name="unused_string">Unused</string>
+</resources>

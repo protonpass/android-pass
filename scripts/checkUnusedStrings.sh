@@ -2,60 +2,55 @@
 
 set -u
 
+ROOT="${1:-.}"
+cd "$ROOT" || exit 1
+
 # Make sure dependencies are in place
 if ! command -v rg --help &> /dev/null; then
   echo "Could not find rg"
   exit 1
 fi
 
-# Array to store unused strings
-unused_strings=()
+DECLARED_FILE=$(mktemp)
+USED_FILE=$(mktemp)
+NAME_TO_FILE=$(mktemp)
+trap 'rm -f "$DECLARED_FILE" "$USED_FILE" "$NAME_TO_FILE"' EXIT
 
-# Find all strings.xml files in the project
-string_files=$(find . -name "strings.xml" -path "*res/values/*")
+# Find all strings.xml files in the project, excluding this script's own
+# test fixtures (which deliberately contain unused strings and would
+# otherwise be reported as permanent, unfixable findings) and generated
+# build intermediates (which aren't real source and can contain stale copies)
+string_files=$(find . -name "strings.xml" -path "*res/values/*" -not -path "*/scripts/tests/fixtures/*" -not -path "*/build/*")
 
-# Iterate over each strings.xml file
+# Collect declared string names, remembering which file declared each one
 for file in $string_files; do
-    module_dir=$(dirname "$file")
-
-    # Extract the module name from the file path
-    module_name=$(basename "$module_dir")
-
-    # Get the list of string names from the strings.xml file
-    # -o: only print matching part
-    # -N: do not print line number
-    # -r '$1': Only output the captured group 1, which is the string name in the regex
     string_names=$(rg -oN 'name="([\w_]+)"' -r '$1' "$file")
-
-    # Check if each string is used in the project
     for string_name in $string_names; do
-        # Search for usages of R.string.<string_name> in the project using rg
-        usage_count=$(rg -l "R\.string\.$string_name" . | wc -l)
-
-        # If the string is used, continue to the next string
-        if [ $usage_count -gt 0 ]; then
-          continue 1
-        fi
-
-        # Search for usages of R.plurals.<string_name> in the project using rg
-        usage_count=$(rg -l "R\.plurals\.$string_name" . | wc -l)
-        # If the string is used, continue to the next string
-        if [ $usage_count -gt 0 ]; then
-          continue 1
-        fi
-
-        # Search for usages of @string/<string_name> in the project using rg
-        usage_count=$(rg -l "@string/$string_name" . | wc -l)
-
-        # If after all the checks the resource is not used, add it to the unused_strings array
-        if [ $usage_count -eq 0 ]; then
-            echo "$string_name: $file"
-            unused_strings+=("$string_name: $file")
-        fi
+        echo "$string_name" >> "$DECLARED_FILE"
+        printf '%s\t%s\n' "$string_name" "$file" >> "$NAME_TO_FILE"
     done
 done
 
-# Print the unused strings and their file paths
+# Collect every string name referenced anywhere in the repo, across the
+# three ways a string resource can be referenced. Exactly 3 full-repo rg
+# passes total, regardless of how many strings are declared.
+rg -oIN -g '!scripts/tests/fixtures/**' -g '!**/build/**' -r '$1' 'R\.string\.([A-Za-z0-9_]+)' . >> "$USED_FILE" 2>/dev/null
+rg -oIN -g '!scripts/tests/fixtures/**' -g '!**/build/**' -r '$1' 'R\.plurals\.([A-Za-z0-9_]+)' . >> "$USED_FILE" 2>/dev/null
+rg -oIN -g '!scripts/tests/fixtures/**' -g '!**/build/**' -r '$1' '@string/([A-Za-z0-9_]+)' . >> "$USED_FILE" 2>/dev/null
+
+# unused = declared - used
+unused_names=$(comm -23 <(sort -u "$DECLARED_FILE") <(sort -u "$USED_FILE"))
+
+unused_strings=()
+if [ -n "$unused_names" ]; then
+    while IFS=$'\t' read -r string_name file; do
+        if printf '%s\n' "$unused_names" | grep -qxF "$string_name"; then
+            echo "$string_name: $file"
+            unused_strings+=("$string_name: $file")
+        fi
+    done < "$NAME_TO_FILE"
+fi
+
 if [ ${#unused_strings[@]} -gt 0 ]; then
     echo "Found unused strings"
     exit 1

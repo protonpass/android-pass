@@ -50,6 +50,9 @@ import proton.android.pass.data.impl.fakes.mother.ItemEntityTestFactory
 import proton.android.pass.data.impl.generator.TestProtoItemGenerator
 import proton.android.pass.data.impl.repositories.ItemRepositoryImpl
 import proton.android.pass.preferences.FakeFeatureFlagsPreferenceRepository
+import proton.android.pass.data.api.ItemPendingEvent
+import proton.android.pass.data.api.PendingEventItemRevision
+import proton.android.pass.data.api.PendingEventList
 import proton.android.pass.data.api.repositories.VaultProgress
 import proton.android.pass.domain.FolderId
 import proton.android.pass.domain.ItemContents
@@ -384,5 +387,87 @@ class ItemRepositoryImplTest {
         assertThat(remoteItemDataSource.getMoveItemsToFolderCallCount()).isEqualTo(1)
         assertThat(remoteItemDataSource.getMigrateItemsCallCount()).isEqualTo(0)
     }
+
+    @Test
+    fun `applyPendingEvent upserts synced items without indexing them`() = runTest {
+        val itemId = ItemId("synced-not-indexed")
+        val protoItem = TestProtoItemGenerator.generate(name = "title", note = "note")
+        val openOutputItem = ItemTestFactory.random(content = protoItem.toByteArray())
+        openItem.setOpenBlock { OpenItemOutput(item = openOutputItem, itemKey = null) }
+
+        val event = itemPendingEvent(
+            updatedItemIds = listOf(itemId.id),
+            deletedItemIds = emptyList()
+        )
+
+        repository.applyPendingEvent(event)
+
+        assertThat(localItemDataSource.getMemory().map { it.id }).contains(itemId.id)
+        assertThat(searchIndexRepository.isItemIndexed(share.id, itemId)).isFalse()
+    }
+
+    @Test
+    fun `indexPendingEvent indexes updated items from a synced event`() = runTest {
+        val itemId = ItemId("synced-item")
+        val event = itemPendingEvent(
+            updatedItemIds = listOf(itemId.id),
+            deletedItemIds = emptyList()
+        )
+
+        repository.indexPendingEvent(event)
+
+        assertThat(searchIndexRepository.isItemIndexed(share.id, itemId)).isTrue()
+    }
+
+    @Test
+    fun `indexPendingEvent removes deleted items from the search index`() = runTest {
+        val itemId = ItemId("deleted-item")
+        searchIndexRepository.indexItem(userId, share.id, itemId)
+        assertThat(searchIndexRepository.isItemIndexed(share.id, itemId)).isTrue()
+
+        val event = itemPendingEvent(
+            updatedItemIds = emptyList(),
+            deletedItemIds = listOf(itemId.id)
+        )
+
+        repository.indexPendingEvent(event)
+
+        assertThat(searchIndexRepository.isItemIndexed(share.id, itemId)).isFalse()
+    }
+
+    private fun itemPendingEvent(updatedItemIds: List<String>, deletedItemIds: List<String>): ItemPendingEvent =
+        ItemPendingEvent(
+            userId = userId,
+            shareId = share.id,
+            addressId = userAddress.addressId,
+            lastEventId = "last-event",
+            updateShareEvent = null,
+            pendingEventLists = setOf(
+                PendingEventList(
+                    updatedItems = updatedItemIds.map(::pendingEventItemRevision),
+                    deletedItemIds = deletedItemIds
+                )
+            )
+        )
+
+    private fun pendingEventItemRevision(itemId: String): PendingEventItemRevision = PendingEventItemRevision(
+        itemId = itemId,
+        revision = 1L,
+        contentFormatVersion = 1,
+        keyRotation = 1L,
+        content = "",
+        key = null,
+        state = 1,
+        aliasEmail = null,
+        createTime = 0L,
+        modifyTime = 0L,
+        lastUseTime = null,
+        revisionTime = 0L,
+        isPinned = false,
+        pinTime = null,
+        flags = 0,
+        shareCount = 0,
+        folderId = null
+    )
 
 }

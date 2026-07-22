@@ -209,6 +209,8 @@ interface ItemRepository {
 
     suspend fun purgePendingEvent(event: ItemPendingEvent): Boolean
 
+    suspend fun indexPendingEvent(event: ItemPendingEvent)
+
     @Suppress("LongParameterList")
     fun observeItemCountSummary(
         userId: UserId,

@@ -175,6 +175,8 @@ class ApplyPendingEventsImpl @Inject constructor(
                         eventId = event.lastEventId
                     )
                 }
+
+                itemRepository.indexPendingEvent(event)
             } else {
                 eventRepository.storeLatestEventId(
                     userId = event.userId,

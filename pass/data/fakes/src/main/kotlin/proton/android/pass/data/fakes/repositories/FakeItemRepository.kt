@@ -401,6 +401,8 @@ class FakeItemRepository @Inject constructor() : ItemRepository {
 
     override suspend fun purgePendingEvent(event: ItemPendingEvent): Boolean = true
 
+    override suspend fun indexPendingEvent(event: ItemPendingEvent) {}
+
     override fun observeItemCountSummary(
         userId: UserId,
         shareIds: List<ShareId>,

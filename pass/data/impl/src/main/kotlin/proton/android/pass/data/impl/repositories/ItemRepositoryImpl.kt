@@ -1220,12 +1220,24 @@ class ItemRepositoryImpl @Inject constructor(
             folderKeysMap = folderKeysMap
         )
         localItemDataSource.upsertItems(items)
-        indexEventItems(userId, items)
     }
 
-    private suspend fun indexEventItems(userId: UserId, items: List<ItemEntity>) {
+    override suspend fun indexPendingEvent(event: ItemPendingEvent) = with(event) {
+        if (hasPendingItemRevisions) {
+            indexEventItems(userId, shareId, pendingItemRevisions.map { ItemId(it.itemId) })
+        }
+        if (hasDeletedItemIds) {
+            removeEventItemsFromIndex(shareId, deletedItemIds)
+        }
+    }
+
+    private suspend fun indexEventItems(
+        userId: UserId,
+        shareId: ShareId,
+        itemIds: List<ItemId>
+    ) {
         safeRunCatching {
-            searchIndexRepository.indexItems(userId, items.map { ShareId(it.shareId) to ItemId(it.id) })
+            searchIndexRepository.indexItems(userId, itemIds.map { shareId to it })
         }.onFailure { PassLogger.w(TAG, "Failed to index synced items: ${it.message}") }
     }
 
@@ -1239,7 +1251,6 @@ class ItemRepositoryImpl @Inject constructor(
         if (!hasDeletedItemIds) return false
 
         val deleted = localItemDataSource.delete(userId, shareId, deletedItemIds)
-        removeEventItemsFromIndex(shareId, deletedItemIds)
         deleted
     }
 

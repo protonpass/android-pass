@@ -207,6 +207,9 @@ fladle {
     )
     useOrchestrator.set(true)
     flakyTestAttempts.set(1)
+    providers.gradleProperty("flank.numUniformShards").orNull?.toIntOrNull()?.let { shards ->
+        numUniformShards.set(shards)
+    }
 }
 
 val filterFlankConfig = tasks.register("filterFlankConfigForSelectiveTests") {

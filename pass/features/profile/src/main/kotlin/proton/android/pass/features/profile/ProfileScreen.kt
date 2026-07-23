@@ -28,7 +28,6 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import proton.android.pass.commonui.api.AndroidUtils
-import proton.android.pass.commonui.api.AppUrls.PASS_STORE
 import proton.android.pass.commonui.api.BrowserUtils.openWebsite
 import proton.android.pass.domain.features.PaidFeature
 
@@ -93,7 +92,7 @@ fun ProfileScreen(
                 ProfileUiEvent.OnCopyAppVersionClick -> viewModel.copyAppVersion(state.appVersion)
                 ProfileUiEvent.OnFeedbackClick -> onNavigateEvent(ProfileNavigation.Feedback)
                 ProfileUiEvent.OnImportExportClick -> openWebsite(context, PASS_IMPORT)
-                ProfileUiEvent.OnRateAppClick -> openWebsite(context, PASS_STORE)
+                ProfileUiEvent.OnRateAppClick -> openWebsite(context, state.passStoreUrl)
                 ProfileUiEvent.OnSettingsClick -> onNavigateEvent(ProfileNavigation.Settings)
                 ProfileUiEvent.OnTellAFriendClick ->
                     AndroidUtils.shareTextWithThirdParties(

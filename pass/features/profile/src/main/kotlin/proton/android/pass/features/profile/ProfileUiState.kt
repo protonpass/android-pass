@@ -75,12 +75,13 @@ internal data class ProfileUiState(
     val canCreateAlias: Boolean,
     val accounts: ImmutableList<AccountListItem>,
     val dataStorageState: DataStorageState,
-    val canDisplaySignInToAnotherDeviceSection: Boolean
+    val canDisplaySignInToAnotherDeviceSection: Boolean,
+    val passStoreUrl: String
 ) {
 
     internal companion object {
 
-        internal fun initial(appVersion: String) = ProfileUiState(
+        internal fun initial(appVersion: String, passStoreUrl: String) = ProfileUiState(
             appLockSectionState = AppLockSectionState.Loading,
             autofillStatus = AutofillSupportedStatus.Supported(AutofillStatus.Disabled),
             itemSummaryUiState = ItemSummaryUiState.Default,
@@ -93,7 +94,8 @@ internal data class ProfileUiState(
             canCreateAlias = true,
             accounts = persistentListOf(),
             dataStorageState = DataStorageState.Initial,
-            canDisplaySignInToAnotherDeviceSection = false
+            canDisplaySignInToAnotherDeviceSection = false,
+            passStoreUrl = passStoreUrl
         )
 
     }

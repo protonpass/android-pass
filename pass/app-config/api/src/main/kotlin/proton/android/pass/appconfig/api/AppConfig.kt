@@ -39,6 +39,11 @@ enum class BuildEnv {
     PROD
 }
 
+const val PASS_PLAY_STORE_URL = "https://play.google.com/store/apps/details?id=proton.android.pass"
+const val PASS_FDROID_URL = "https://f-droid.org/packages/proton.android.pass.fdroid/"
+const val PASS_HORIZON_URL =
+    "https://www.meta.com/en-gb/experiences/proton-pass-password-manager/25447164831535276/"
+
 sealed class BuildFlavor(val env: BuildEnv) {
     class Dev(env: BuildEnv) : BuildFlavor(env)
     class Alpha(env: BuildEnv) : BuildFlavor(env)
@@ -101,5 +106,11 @@ sealed class BuildFlavor(val env: BuildEnv) {
         fun BuildFlavor.supportTelemetryGrowth() = this !is Fdroid && this !is Alpha && env == BuildEnv.PROD
 
         fun BuildFlavor.isQuest() = this is Quest
+
+        fun BuildFlavor.passStoreUrl(): String = when (this) {
+            is Fdroid -> PASS_FDROID_URL
+            is Quest -> PASS_HORIZON_URL
+            else -> PASS_PLAY_STORE_URL
+        }
     }
 }

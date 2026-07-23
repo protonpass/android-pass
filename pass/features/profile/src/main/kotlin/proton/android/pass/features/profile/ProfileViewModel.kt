@@ -51,6 +51,7 @@ import me.proton.core.util.kotlin.takeIfNotBlank
 import proton.android.pass.appconfig.api.AppConfig
 import proton.android.pass.appconfig.api.BuildFlavor
 import proton.android.pass.appconfig.api.BuildFlavor.Companion.isQuest
+import proton.android.pass.appconfig.api.BuildFlavor.Companion.passStoreUrl
 import proton.android.pass.autofill.api.AutofillManager
 import proton.android.pass.autofill.api.AutofillSupportedStatus
 import proton.android.pass.clipboard.api.ClipboardManager
@@ -304,13 +305,15 @@ class ProfileViewModel @Inject constructor(
             canCreateAlias = canCreateAliases,
             accounts = accounts,
             dataStorageState = dataStorage,
-            canDisplaySignInToAnotherDeviceSection = !isQuest
+            canDisplaySignInToAnotherDeviceSection = !isQuest,
+            passStoreUrl = appConfig.flavor.passStoreUrl()
         )
     }.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5_000L),
         initialValue = ProfileUiState.initial(
-            appVersion = appConfig.versionName
+            appVersion = appConfig.versionName,
+            passStoreUrl = appConfig.flavor.passStoreUrl()
         )
     )
 

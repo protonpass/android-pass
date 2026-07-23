@@ -39,7 +39,7 @@ import org.junit.Test
 import proton.android.pass.autofill.api.AutofillStatus
 import proton.android.pass.autofill.api.AutofillSupportedStatus
 import proton.android.pass.autofill.fakes.FakeAutofillManager
-import proton.android.pass.commonui.api.AppUrls.PASS_STORE
+import proton.android.pass.appconfig.api.PASS_PLAY_STORE_URL
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.data.api.ItemCountSummary
 import proton.android.pass.data.api.usecases.UpgradeInfo
@@ -232,7 +232,7 @@ class ProfileScreenTest {
                 hasExtra(
                     `is`(Intent.EXTRA_INTENT), allOf(
                         hasAction(ACTION_VIEW),
-                        hasData(PASS_STORE)
+                        hasData(PASS_PLAY_STORE_URL)
                     )
                 )
             )

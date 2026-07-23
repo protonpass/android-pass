@@ -66,6 +66,7 @@ import kotlinx.datetime.toLocalDateTime
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.appconfig.api.AppConfig
 import proton.android.pass.appconfig.api.BuildFlavor.Companion.isQuest
+import proton.android.pass.appconfig.api.BuildFlavor.Companion.passStoreUrl
 import proton.android.pass.clipboard.api.ClipboardManager
 import proton.android.pass.common.api.AppDispatchers
 import proton.android.pass.common.api.LoadingResult
@@ -78,7 +79,6 @@ import proton.android.pass.common.api.combineN
 import proton.android.pass.common.api.getOrNull
 import proton.android.pass.common.api.map
 import proton.android.pass.common.api.toOption
-import proton.android.pass.commonui.api.AppUrls
 import proton.android.pass.commonui.api.BrowserUtils
 import proton.android.pass.commonui.api.ClassHolder
 import proton.android.pass.commonui.api.DateFormatUtils
@@ -740,6 +740,8 @@ class HomeViewModel @Inject constructor(
 
     private val isQuest = appConfig.flavor.isQuest()
 
+    private val passStoreUrl = appConfig.flavor.passStoreUrl()
+
     internal val homeUiState: StateFlow<HomeUiState> = combineN(
         homeListUiStateFlow,
         searchUiStateFlow,
@@ -1291,7 +1293,7 @@ class HomeViewModel @Inject constructor(
 
     fun openUpdateApp(contextHolder: ClassHolder<Context>) {
         contextHolder.get().map {
-            BrowserUtils.openWebsite(it, AppUrls.PASS_STORE)
+            BrowserUtils.openWebsite(it, passStoreUrl)
         }
     }
 

@@ -19,3 +19,8 @@
 plugins {
     id("org.jetbrains.kotlin.jvm")
 }
+
+dependencies {
+    testImplementation(libs.junit)
+    testImplementation(libs.truth)
+}

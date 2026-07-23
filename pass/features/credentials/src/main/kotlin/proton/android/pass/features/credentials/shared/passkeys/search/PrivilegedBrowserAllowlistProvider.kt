@@ -45,8 +45,11 @@ internal class ResourcePrivilegedBrowserAllowlistProvider @Inject constructor(
     private companion object {
         // Vendored snapshot of Google's passkey privileged-apps allowlist.
         // Upstream: https://www.gstatic.com/gpm-passkeys-privileged-apps/apps.json
-        // Snapshot date: 2026-04-20.
-        // Refresh through reviewed source changes; do not fetch at runtime.
+        // Snapshot date: 2026-07-23. Do not fetch at runtime.
+        //
+        // Refresh via scripts/ci/checkPasskeyPrivilegedBrowserAllowlist.sh, which strips
+        // publicly-known AOSP test keys (their private keys are public, so any app
+        // could forge them). PasskeyOriginVerifierTest fails the build if one slips in.
     }
 }
 

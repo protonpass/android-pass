@@ -91,7 +91,7 @@ class SyncManagerImpl @Inject constructor(
 
                 while (currentCoroutineContext().isActive) {
                     accounts.forEach {
-                        safeRunCatching { performSync(it.userId) }
+                        safeRunCatching { performSync(it.userId, trigger = "foreground_manager") }
                             .onSuccess { PassLogger.i(TAG, "Sync finished") }
                             .onFailure { error ->
                                 PassLogger.w(TAG, "Error in performSync")

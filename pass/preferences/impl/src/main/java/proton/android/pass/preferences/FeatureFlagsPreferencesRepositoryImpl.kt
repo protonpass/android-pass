@@ -23,6 +23,8 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.FlowCollector
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.runBlocking
@@ -116,6 +118,23 @@ class FeatureFlagsPreferencesRepositoryImpl @Inject constructor(
     @Suppress("UNCHECKED_CAST")
     override fun <T> get(featureFlag: FeatureFlag, userId: UserId): Flow<T> =
         observeIsFeatureEnabled(featureFlag, userId).map { it as T }
+
+    override suspend fun awaitResolved(featureFlag: FeatureFlag, userId: UserId): Boolean {
+        val override = dataStore.data
+            .catch { exception -> handleExceptions(exception) }
+            .first()
+            .getOverride(featureFlag)
+        if (override != null) return override
+
+        return featureFlag.key
+            ?.let { key ->
+                featureFlagManager.observe(
+                    userId = userId,
+                    featureId = FeatureId(id = key)
+                ).firstOrNull()?.value
+            }
+            ?: featureFlag.isEnabledDefault
+    }
 
     override fun <T> set(featureFlag: FeatureFlag, value: T?): Result<Unit> = when (featureFlag) {
         AUTOFILL_DEBUG_MODE -> setFeatureFlag {
@@ -264,4 +283,11 @@ class FeatureFlagsPreferencesRepositoryImpl @Inject constructor(
             PASS_EXPLORE_TAB -> passExploreTabEnabled
         }.value
     }
+
+    private fun FeatureFlagsPreferences.getOverride(featureFlag: FeatureFlag): Boolean? =
+        when (getPrefProto(featureFlag, this)) {
+            BooleanPrefProto.BOOLEAN_PREFERENCE_TRUE -> true
+            BooleanPrefProto.BOOLEAN_PREFERENCE_FALSE -> false
+            else -> null
+        }
 }

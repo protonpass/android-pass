@@ -22,14 +22,11 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runInterruptible
 import kotlinx.coroutines.withContext
 import kotlinx.coroutines.withTimeoutOrNull
+import proton.android.pass.common.api.safeRunCatching
 import proton.android.pass.commonrust.api.DomainManager
 import proton.android.pass.data.api.errors.ResponseSizeExceededError
 import proton.android.pass.data.api.repositories.AssetLinkRepository
-import proton.android.pass.data.impl.util.runConcurrently
-import proton.android.pass.domain.assetlink.AssetLink
 import proton.android.pass.log.api.PassLogger
-import java.util.concurrent.ConcurrentLinkedQueue
-import java.util.concurrent.atomic.AtomicInteger
 import javax.inject.Inject
 
 class UpdateAssetLinkImpl @Inject constructor(
@@ -48,34 +45,34 @@ class UpdateAssetLinkImpl @Inject constructor(
                 emptySet()
             }
         }
-        val collected = ConcurrentLinkedQueue<AssetLink>()
-        val failureCount = AtomicInteger(0)
-        val sizeErrorCount = AtomicInteger(0)
+        var failureCount = 0
+        var sizeErrorCount = 0
+        var persistedAssetLinkCount = 0
 
         val completed = withTimeoutOrNull(FETCH_TIMEOUT_MS) {
-            runConcurrently(
-                items = cleanWebsites,
-                block = assetLinkRepository::fetch,
-                onSuccess = { _, assetLink -> collected.add(assetLink) },
-                onFailure = { _, e ->
-                    failureCount.incrementAndGet()
-                    if (e is ResponseSizeExceededError) sizeErrorCount.incrementAndGet()
+            cleanWebsites.forEach { website ->
+                val assetLinkResult = safeRunCatching { assetLinkRepository.fetch(website) }
+                val assetLink = assetLinkResult.getOrNull()
+                if (assetLink == null) {
+                    failureCount += 1
+                    if (assetLinkResult.exceptionOrNull() is ResponseSizeExceededError) {
+                        sizeErrorCount += 1
+                    }
+                } else {
+                    assetLinkRepository.insert(listOf(assetLink))
+                    persistedAssetLinkCount += 1
                 }
-            )
+            }
         }
 
         if (completed == null) {
-            PassLogger.w(TAG, "Timed out fetching asset links, saving ${collected.size} partial results")
+            PassLogger.w(TAG, "Timed out fetching asset links after saving $persistedAssetLinkCount results")
         }
-        if (sizeErrorCount.get() > 0) {
-            PassLogger.w(TAG, "${sizeErrorCount.get()} websites returned oversized responses")
+        if (sizeErrorCount > 0) {
+            PassLogger.w(TAG, "$sizeErrorCount websites returned oversized responses")
         }
-        if (failureCount.get() > 0) {
-            PassLogger.w(TAG, "${failureCount.get()} from ${cleanWebsites.size} websites failed to get asset links")
-        }
-        val assetLinks = collected.toList()
-        if (assetLinks.isNotEmpty()) {
-            assetLinkRepository.insert(assetLinks)
+        if (failureCount > 0) {
+            PassLogger.w(TAG, "$failureCount from ${cleanWebsites.size} websites failed to get asset links")
         }
     }
 

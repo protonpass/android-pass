@@ -27,14 +27,18 @@ import org.junit.After
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
+import proton.android.pass.account.fakes.FakeKeyStoreCrypto
 import proton.android.pass.data.impl.db.AppDatabase
+import proton.android.pass.data.impl.db.entities.ItemEntity
 import proton.android.pass.data.impl.db.entities.ShareEntity
 import proton.android.pass.data.impl.fakes.mother.FolderEntityTestFactory
 import proton.android.pass.data.impl.fakes.mother.ItemEntityTestFactory
+import proton.android.pass.data.impl.local.SlNoteUpdate
+import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ItemStateValues
+import proton.android.pass.domain.ShareId
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
-
 
 @RunWith(AndroidJUnit4::class)
 class ItemsDaoTest {
@@ -54,6 +58,86 @@ class ItemsDaoTest {
         itemsDao = db.itemsDao()
         foldersDao = db.foldersDao()
         sharesDao = db.sharesDao()
+    }
+
+    @Test
+    fun updateSlNotes_emitsOnceWithAllCommittedNotesAndExcludesMissingItem() = runTest {
+        val userId = "user-1"
+        val shareId = "share-1"
+        val firstItemId = "item-1"
+        val secondItemId = "item-2"
+        val noteToClearItemId = "item-to-clear"
+        val firstNote = FakeKeyStoreCrypto.encrypt("first note")
+        val secondNote = FakeKeyStoreCrypto.encrypt("second note")
+        val noteToClear = FakeKeyStoreCrypto.encrypt("note to clear")
+
+        insertItem(userId, shareId, firstItemId, folderId = null)
+        insertItem(userId, shareId, secondItemId, folderId = null)
+        insertItem(userId, shareId, noteToClearItemId, folderId = null)
+        itemsDao.updateSlNote(userId, shareId, noteToClearItemId, noteToClear)
+
+        val committedIds = itemsDao.updateSlNotes(
+            userId = userId,
+            updates = listOf(
+                SlNoteUpdate(ShareId(shareId), ItemId(firstItemId), firstNote),
+                SlNoteUpdate(ShareId(shareId), ItemId(secondItemId), secondNote),
+                SlNoteUpdate(ShareId(shareId), ItemId(noteToClearItemId), null),
+                SlNoteUpdate(ShareId(shareId), ItemId("missing-item"), FakeKeyStoreCrypto.encrypt("missing note"))
+            )
+        )
+
+        assertEquals(
+            listOf(
+                ShareId(shareId) to ItemId(firstItemId),
+                ShareId(shareId) to ItemId(secondItemId),
+                ShareId(shareId) to ItemId(noteToClearItemId)
+            ),
+            committedIds
+        )
+
+        val updatedItems = observeItems(userId, shareId)
+        assertEquals(firstNote, updatedItems.getValue(firstItemId).slNote)
+        assertEquals(secondNote, updatedItems.getValue(secondItemId).slNote)
+        assertEquals(null, updatedItems.getValue(noteToClearItemId).slNote)
+    }
+
+    @Test
+    fun updateSlNotes_rollsBackEarlierUpdatesWhenALaterUpdateFails() = runTest {
+        val userId = "user-1"
+        val shareId = "share-1"
+        val firstItemId = "item-1"
+        val secondItemId = "item-2"
+        val originalFirstNote = FakeKeyStoreCrypto.encrypt("original first note")
+
+        insertItem(userId, shareId, firstItemId, folderId = null)
+        insertItem(userId, shareId, secondItemId, folderId = null)
+        itemsDao.updateSlNote(userId, shareId, firstItemId, originalFirstNote)
+        db.openHelper.writableDatabase.execSQL(
+            """
+                CREATE TRIGGER abort_second_sl_note_update
+                BEFORE UPDATE OF sl_note ON ItemEntity
+                WHEN NEW.id = '$secondItemId'
+                BEGIN
+                    SELECT RAISE(ABORT, 'abort second SL note update');
+                END
+            """.trimIndent()
+        )
+
+        var failure: Throwable? = null
+        try {
+            itemsDao.updateSlNotes(
+                userId = userId,
+                updates = listOf(
+                    SlNoteUpdate(ShareId(shareId), ItemId(firstItemId), FakeKeyStoreCrypto.encrypt("new first note")),
+                    SlNoteUpdate(ShareId(shareId), ItemId(secondItemId), FakeKeyStoreCrypto.encrypt("new second note"))
+                )
+            )
+        } catch (error: Throwable) {
+            failure = error
+        }
+
+        assertTrue(failure != null)
+        assertEquals(originalFirstNote, observeItems(userId, shareId).getValue(firstItemId).slNote)
     }
 
     @After
@@ -304,6 +388,23 @@ class ItemsDaoTest {
             )
         )
     }
+
+    private suspend fun observeItems(userId: String, shareId: String): Map<String, ItemEntity> =
+        itemsDao.observeItems(
+            userId = userId,
+            shareIds = listOf(shareId),
+            itemIds = null,
+            applyItemIds = false,
+            itemTypes = null,
+            applyItemTypes = false,
+            itemState = null,
+            isPinned = null,
+            hasTotp = null,
+            hasPasskeys = null,
+            setFlags = null,
+            clearFlags = null,
+            anyFlags = null
+        ).first().associateBy { it.id }
 
     private suspend fun insertItem(
         userId: String,

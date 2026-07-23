@@ -34,12 +34,19 @@ import proton.android.pass.data.impl.db.dao.ItemEntityWithRowId
 import proton.android.pass.data.impl.db.entities.ItemEntity
 import proton.android.pass.data.impl.local.ItemWithTotp
 import proton.android.pass.data.impl.local.LocalItemDataSource
+import proton.android.pass.data.impl.local.SlNoteUpdate
 import proton.android.pass.domain.FolderId
 import proton.android.pass.domain.ItemFlag
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ItemState
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.VaultId
+
+data class AliasItemsPageRequest(
+    val shareId: ShareId,
+    val afterRowId: Long,
+    val limit: Int
+)
 
 class FakeLocalItemDataSource : LocalItemDataSource {
 
@@ -53,11 +60,25 @@ class FakeLocalItemDataSource : LocalItemDataSource {
 
     private val sharedItemsFlow = testFlow<List<ItemEntity>>()
     private val slNoteUpdates = mutableListOf<Triple<ShareId, ItemId, EncryptedString?>>()
+    private val slNoteUpdateBatches = mutableListOf<List<SlNoteUpdate>>()
+    private val observeItemsShareIdsMemory = mutableListOf<List<ShareId>>()
+    private val activeAliasItemsPageRequests = mutableListOf<AliasItemsPageRequest>()
+    private var committedSlNoteUpdateIds: List<Pair<ShareId, ItemId>>? = null
 
 
     fun getMemory(): List<ItemEntity> = memory
 
     fun getSlNoteUpdates(): List<Triple<ShareId, ItemId, EncryptedString?>> = slNoteUpdates
+
+    fun getSlNoteUpdateBatches(): List<List<SlNoteUpdate>> = slNoteUpdateBatches
+
+    fun getObserveItemsShareIdsMemory(): List<List<ShareId>> = observeItemsShareIdsMemory
+
+    fun getActiveAliasItemsPageRequests(): List<AliasItemsPageRequest> = activeAliasItemsPageRequests
+
+    fun setCommittedSlNoteUpdateIds(ids: List<Pair<ShareId, ItemId>>) {
+        committedSlNoteUpdateIds = ids
+    }
 
     fun emitSummary(value: ItemCountSummary) {
         summary.tryEmit(value)
@@ -94,7 +115,10 @@ class FakeLocalItemDataSource : LocalItemDataSource {
         filter: ItemTypeFilter,
         itemFlags: Map<ItemFlag, Boolean>,
         anyFlags: List<ItemFlag>
-    ): Flow<List<ItemEntity>> = flowOf(memory)
+    ): Flow<List<ItemEntity>> {
+        observeItemsShareIdsMemory.add(shareIds)
+        return flowOf(memory.filter { entity -> ShareId(entity.shareId) in shareIds })
+    }
 
     override suspend fun getItemsPageForIndex(
         userId: UserId,
@@ -103,6 +127,21 @@ class FakeLocalItemDataSource : LocalItemDataSource {
         afterRowId: Long,
         limit: Int
     ): List<ItemEntityWithRowId> = emptyList()
+
+    override suspend fun getActiveAliasItemsPage(
+        userId: UserId,
+        shareId: ShareId,
+        afterRowId: Long,
+        limit: Int
+    ): List<ItemEntityWithRowId> {
+        activeAliasItemsPageRequests.add(AliasItemsPageRequest(shareId, afterRowId, limit))
+        return memory.mapIndexed { index, item ->
+            ItemEntityWithRowId(item = item, rowId = index + 1L)
+        }.asSequence()
+            .filter { it.item.shareId == shareId.id && it.item.aliasEmail != null && it.rowId > afterRowId }
+            .take(limit)
+            .toList()
+    }
 
     override suspend fun countItemsForIndex(
         userId: UserId,
@@ -266,6 +305,12 @@ class FakeLocalItemDataSource : LocalItemDataSource {
         slNote: EncryptedString?
     ) {
         slNoteUpdates.add(Triple(shareId, itemId, slNote))
+    }
+
+    override suspend fun updateSlNotes(userId: UserId, updates: List<SlNoteUpdate>): List<Pair<ShareId, ItemId>> {
+        slNoteUpdateBatches.add(updates)
+        slNoteUpdates.addAll(updates.map { Triple(it.shareId, it.itemId, it.encryptedNote) })
+        return committedSlNoteUpdateIds ?: updates.map { it.shareId to it.itemId }
     }
 
     override fun observeItemCountSummary(

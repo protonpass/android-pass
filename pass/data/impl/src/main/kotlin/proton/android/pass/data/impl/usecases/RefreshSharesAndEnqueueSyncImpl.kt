@@ -59,7 +59,11 @@ class RefreshSharesAndEnqueueSyncImpl @Inject constructor(
     private val workManager: WorkManager
 ) : RefreshSharesAndEnqueueSync {
 
-    override suspend fun invoke(userId: UserId, syncType: RefreshSharesAndEnqueueSync.SyncType): RefreshSharesResult {
+    override suspend fun invoke(
+        userId: UserId,
+        syncType: RefreshSharesAndEnqueueSync.SyncType,
+        workerOrigin: String
+    ): RefreshSharesResult {
         PassLogger.i(
             TAG,
             "RefreshSharesAndEnqueueSync started for user: $userId with syncType: $syncType"
@@ -82,7 +86,7 @@ class RefreshSharesAndEnqueueSyncImpl @Inject constructor(
                     repositoryResult.hasInvalidGroupShares
                 )
             } else {
-                handleNonEmptyShares(userId, repositoryResult, syncType)
+                handleNonEmptyShares(userId, repositoryResult, syncType, workerOrigin)
             }
         }.onFailure {
             if (syncType == RefreshSharesAndEnqueueSync.SyncType.FULL) {
@@ -101,10 +105,16 @@ class RefreshSharesAndEnqueueSyncImpl @Inject constructor(
     private fun handleNonEmptyShares(
         userId: UserId,
         repositoryResult: RepositoryRefreshSharesResult,
-        syncType: RefreshSharesAndEnqueueSync.SyncType
+        syncType: RefreshSharesAndEnqueueSync.SyncType,
+        workerOrigin: String
     ): RefreshSharesResult.SharesFound {
         val existingShareIds = repositoryResult.allShareIds - repositoryResult.newShareIds
         val fetchSource = getSharesAndSource(repositoryResult, syncType)
+        PassLogger.i(
+            TAG,
+            "Enqueuing item sync (type=$syncType, source=${fetchSource::class.simpleName}, " +
+                "origin=$workerOrigin)"
+        )
 
         val shouldFetchFoldersAndItems = when (fetchSource) {
             is FetchItemsWorker.FetchSource.ForceSync,
@@ -116,6 +126,7 @@ class RefreshSharesAndEnqueueSyncImpl @Inject constructor(
             enqueueWorker(
                 userId = userId,
                 fetchSource = fetchSource,
+                workerOrigin = workerOrigin,
                 warnings = FetchItemsWorker.SyncWarnings(
                     hasInactiveShares = repositoryResult.hasInactiveShares,
                     hasInvalidGroupShares = repositoryResult.hasInvalidGroupShares
@@ -149,11 +160,13 @@ class RefreshSharesAndEnqueueSyncImpl @Inject constructor(
     private fun enqueueWorker(
         userId: UserId,
         fetchSource: FetchItemsWorker.FetchSource,
+        workerOrigin: String,
         warnings: FetchItemsWorker.SyncWarnings
     ) {
         val request = FetchItemsWorker.getRequestFor(
             source = fetchSource,
             userId = userId,
+            origin = workerOrigin,
             warnings = warnings
         )
         val policy = if (fetchSource is FetchItemsWorker.FetchSource.ForceSync) {

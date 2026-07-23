@@ -77,41 +77,54 @@ class SyncUserEventsImpl @Inject constructor(
     private val refreshAliasSlNotes: RefreshAliasSlNotes
 ) : SyncUserEvents {
 
-    override suspend fun invoke(userId: UserId, forceSync: Boolean) {
-        PassLogger.d(TAG, "Syncing user events for $userId started (forceSync=$forceSync)")
-
+    override suspend fun invoke(
+        userId: UserId,
+        forceSync: Boolean,
+        trigger: String
+    ) {
         if (!forceSync && itemSyncStatusRepository.observeSyncState().first().isSyncing) {
             PassLogger.i(TAG, "Sync in progress, skipping")
             return
         }
 
         if (forceSync) {
-            PassLogger.d(TAG, "Force sync requested, clearing local event IDs")
             userEventRepository.deleteLatestEventId(userId)
             eventRepository.deleteAllLatestEventIds(userId)
         }
 
-        val localEventId = getLocalEventId(userId, forceSync)
+        val localEventId = getLocalEventId(userId, forceSync, trigger)
         val remoteLatestEventId = userEventRepository.fetchLatestEventId(userId)
 
         if (localEventId == remoteLatestEventId && !forceSync) {
-            PassLogger.d(TAG, "Local user events already up to date for $userId")
             return
         }
 
-        processUserEvents(userId, localEventId ?: remoteLatestEventId)
+        processUserEvents(userId, localEventId ?: remoteLatestEventId, trigger)
 
-        PassLogger.i(TAG, "Syncing user events for $userId finished")
     }
 
-    private suspend fun getLocalEventId(userId: UserId, forceSync: Boolean): UserEventId? {
+    private suspend fun getLocalEventId(
+        userId: UserId,
+        forceSync: Boolean,
+        trigger: String
+    ): UserEventId? {
         val localEventId = userEventRepository.getLatestEventId(userId).first()
         if (localEventId != null) return localEventId
-        fullRefresh(userId, forceSync)
+        val reason = if (forceSync) {
+            FullRefreshReason.ExplicitForceSync
+        } else {
+            FullRefreshReason.MissingLocalEventCursor
+        }
+        PassLogger.i(TAG, "Starting full refresh (reason=$reason, trigger=$trigger)")
+        fullRefresh(userId, forceSync, reason, trigger)
         return null
     }
 
-    private suspend fun processUserEvents(userId: UserId, initialEventId: UserEventId) {
+    private suspend fun processUserEvents(
+        userId: UserId,
+        initialEventId: UserEventId,
+        trigger: String
+    ) {
         var currentEventId = initialEventId
 
         do {
@@ -120,7 +133,9 @@ class SyncUserEventsImpl @Inject constructor(
                 // Server-triggered full refresh (e.g. share rotation): always run silently
                 // in the background, regardless of the outer forceSync flag. Showing the
                 // sync dialog here would be unexpected during a routine background sync.
-                fullRefresh(userId, forceSync = false)
+                val reason = FullRefreshReason.ServerRequested
+                PassLogger.i(TAG, "Starting full refresh (reason=$reason, trigger=$trigger)")
+                fullRefresh(userId, forceSync = false, reason, trigger)
             } else {
                 processIncrementalEvents(userId, eventList)
             }
@@ -132,8 +147,6 @@ class SyncUserEventsImpl @Inject constructor(
     }
 
     private suspend fun processIncrementalEvents(userId: UserId, eventList: UserEventList) {
-        PassLogger.i(TAG, "Processing events for $userId")
-
         if (eventList.refreshUser) {
             refreshUserAccess(userId)
         }
@@ -243,7 +256,12 @@ class SyncUserEventsImpl @Inject constructor(
         }
     }
 
-    private suspend fun fullRefresh(userId: UserId, forceSync: Boolean) = coroutineScope {
+    private suspend fun fullRefresh(
+        userId: UserId,
+        forceSync: Boolean,
+        reason: FullRefreshReason,
+        trigger: String
+    ) = coroutineScope {
         PassLogger.i(TAG, "start full refresh (forceSync=$forceSync)")
 
         refreshUserAccess(userId)
@@ -255,10 +273,13 @@ class SyncUserEventsImpl @Inject constructor(
         }
         val refreshShares = refreshSharesAndEnqueueSync(
             userId = userId,
-            syncType = syncType
+            syncType = syncType,
+            workerOrigin = "trigger=$trigger reason=$reason"
         )
 
-        if (refreshShares is RefreshSharesResult.SharesFound && refreshShares.isWorkerEnqueued) {
+        val didCompleteItemWorker =
+            refreshShares is RefreshSharesResult.SharesFound && refreshShares.isWorkerEnqueued
+        if (didCompleteItemWorker) {
             PassLogger.i(TAG, "waiting worker")
             waitForFetchItemsWorker(userId)
             PassLogger.i(TAG, "worker finished")
@@ -307,8 +328,6 @@ class SyncUserEventsImpl @Inject constructor(
             refreshOrganizationSettingsDeferred,
             refreshAliasSlNotesDeferred
         )
-
-        PassLogger.i(TAG, "end full refresh")
     }
 
     private suspend fun processAliasNoteChanged(userId: UserId, events: List<SyncEventShareItem>) {
@@ -324,6 +343,12 @@ class SyncUserEventsImpl @Inject constructor(
             FetchItemsState.Failure,
             FetchItemsState.Cancelled -> error("$uniqueName did not succeed")
         }
+    }
+
+    private enum class FullRefreshReason {
+        ExplicitForceSync,
+        MissingLocalEventCursor,
+        ServerRequested
     }
 
     private companion object {

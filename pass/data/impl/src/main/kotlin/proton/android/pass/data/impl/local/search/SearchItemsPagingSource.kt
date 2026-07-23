@@ -99,7 +99,6 @@ class SearchItemsPagingSource(
             }
 
             PassLogger.d(TAG, "Loaded ${domainItems.size} items for page $page")
-
             LoadResult.Page(
                 data = domainItems,
                 prevKey = if (page == 0) null else page - 1,

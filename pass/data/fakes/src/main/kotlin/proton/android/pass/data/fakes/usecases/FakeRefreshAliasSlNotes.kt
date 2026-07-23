@@ -27,12 +27,16 @@ import javax.inject.Singleton
 class FakeRefreshAliasSlNotes @Inject constructor() : RefreshAliasSlNotes {
 
     private var result: Result<Unit> = Result.success(Unit)
+    private val invocationMemory = mutableListOf<UserId>()
 
     fun setResult(value: Result<Unit>) {
         result = value
     }
 
+    fun getInvocationMemory(): List<UserId> = invocationMemory
+
     override suspend fun invoke(userId: UserId) {
+        invocationMemory.add(userId)
         result.getOrThrow()
     }
 }

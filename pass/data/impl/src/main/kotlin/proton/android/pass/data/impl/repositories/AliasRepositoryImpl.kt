@@ -23,7 +23,6 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import me.proton.core.domain.entity.UserId
@@ -34,10 +33,10 @@ import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.repositories.AliasItemsChangeStatusResult
 import proton.android.pass.data.api.repositories.AliasRepository
 import proton.android.pass.data.api.repositories.SearchIndexRepository
-import proton.android.pass.data.api.usecases.ItemTypeFilter
 import proton.android.pass.data.impl.db.entities.ItemEntity
 import proton.android.pass.data.impl.extensions.toDomain
 import proton.android.pass.data.impl.local.LocalItemDataSource
+import proton.android.pass.data.impl.local.SlNoteUpdate
 import proton.android.pass.data.impl.remote.RemoteAliasDataSource
 import proton.android.pass.data.impl.requests.ChangeAliasStatusRequest
 import proton.android.pass.data.impl.requests.UpdateAliasMailboxesRequest
@@ -49,7 +48,6 @@ import proton.android.pass.domain.AliasMailbox
 import proton.android.pass.domain.AliasOptions
 import proton.android.pass.domain.AliasStats
 import proton.android.pass.domain.ItemId
-import proton.android.pass.domain.ItemState
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.events.EventToken
 import javax.inject.Inject
@@ -187,15 +185,36 @@ class AliasRepositoryImpl @Inject constructor(
     }
 
     override suspend fun refreshBulkAliasSlNotes(userId: UserId, shareIds: List<ShareId>) {
-        val items = localItemDataSource.observeItems(
-            userId = userId,
-            shareIds = shareIds,
-            itemState = ItemState.Active,
-            filter = ItemTypeFilter.Aliases,
-            itemFlags = emptyMap()
-        ).first()
+        val pendingUpdates = mutableListOf<SlNoteUpdate>()
+        shareIds.forEach { shareId ->
+            var afterRowId = 0L
+            while (true) {
+                val page = localItemDataSource.getActiveAliasItemsPage(
+                    userId = userId,
+                    shareId = shareId,
+                    afterRowId = afterRowId,
+                    limit = MAX_BULK_SIZE
+                )
+                if (page.isEmpty()) break
 
-        refreshSlNotesForAliasEntities(userId, items)
+                pendingUpdates += fetchSlNoteUpdates(
+                    userId = userId,
+                    entities = page.map { it.item }
+                )
+                flushFullSlNoteUpdateBatches(
+                    userId = userId,
+                    pendingUpdates = pendingUpdates
+                )
+                if (page.size < MAX_BULK_SIZE) break
+                afterRowId = page.last().rowId
+            }
+        }
+        if (pendingUpdates.isNotEmpty()) {
+            persistSlNoteUpdates(
+                userId = userId,
+                updates = pendingUpdates
+            )
+        }
     }
 
     override suspend fun refreshAliasSlNotesForItems(userId: UserId, items: List<Pair<ShareId, ItemId>>) {
@@ -203,31 +222,58 @@ class AliasRepositoryImpl @Inject constructor(
 
         val entities = localItemDataSource.getByShareItemPairs(userId, items)
 
-        refreshSlNotesForAliasEntities(userId, entities)
+        fetchSlNoteUpdates(
+            userId = userId,
+            entities = entities
+        ).chunked(MAX_BULK_SIZE).forEach { updates ->
+            persistSlNoteUpdates(
+                userId = userId,
+                updates = updates
+            )
+        }
     }
 
-    private suspend fun refreshSlNotesForAliasEntities(userId: UserId, entities: List<ItemEntity>) {
+    private suspend fun fetchSlNoteUpdates(userId: UserId, entities: List<ItemEntity>): List<SlNoteUpdate> {
         val aliasEntities = entities.filter { it.aliasEmail != null }
-        if (aliasEntities.isEmpty()) return
+        if (aliasEntities.isEmpty()) return emptyList()
 
         val emailToItemId = aliasEntities.associate { it.aliasEmail to ItemId(it.id) }
+        val updates = mutableListOf<SlNoteUpdate>()
 
         aliasEntities.groupBy { ShareId(it.shareId) }.forEach { (shareId, shareItems) ->
             val itemIds = shareItems.map { ItemId(it.id) }
             itemIds.chunked(MAX_BULK_SIZE).forEach { chunk ->
                 val responses = remoteDataSource.fetchBulkAliasDetails(userId, shareId, chunk)
-                val updatedItemIds = mutableListOf<ItemId>()
+                val chunkUpdates = mutableListOf<SlNoteUpdate>()
                 encryptionContextProvider.withEncryptionContextSuspendable {
                     responses.forEach { aliasResponse ->
                         val itemId = emailToItemId[aliasResponse.email] ?: return@forEach
                         val encryptedSlNote = aliasResponse.note?.let { encrypt(it) }
-                        localItemDataSource.updateSlNote(userId, shareId, itemId, encryptedSlNote)
-                        updatedItemIds.add(itemId)
+                        chunkUpdates.add(SlNoteUpdate(shareId, itemId, encryptedSlNote))
                     }
                 }
-                searchIndexRepository.indexItems(userId, updatedItemIds.map { shareId to it })
+                updates.addAll(chunkUpdates)
             }
         }
+        return updates
+    }
+
+    private suspend fun flushFullSlNoteUpdateBatches(userId: UserId, pendingUpdates: MutableList<SlNoteUpdate>) {
+        while (pendingUpdates.size >= MAX_BULK_SIZE) {
+            val updates = pendingUpdates.take(MAX_BULK_SIZE)
+            persistSlNoteUpdates(
+                userId = userId,
+                updates = updates
+            )
+            pendingUpdates.subList(0, MAX_BULK_SIZE).clear()
+        }
+    }
+
+    private suspend fun persistSlNoteUpdates(userId: UserId, updates: List<SlNoteUpdate>) {
+        if (updates.isEmpty()) return
+
+        val committedItemIds = localItemDataSource.updateSlNotes(userId, updates)
+        searchIndexRepository.indexItems(userId, committedItemIds)
     }
 
     private fun mapMailboxes(input: List<AliasMailboxResponse>): List<AliasMailbox> =

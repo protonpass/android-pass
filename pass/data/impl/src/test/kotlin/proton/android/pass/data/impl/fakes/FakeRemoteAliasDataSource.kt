@@ -33,10 +33,16 @@ import proton.android.pass.domain.ShareId
 class FakeRemoteAliasDataSource : RemoteAliasDataSource {
 
     private var bulkAliasDetails: List<AliasResponse> = emptyList()
+    private var bulkAliasDetailsByItemId: Map<ItemId, AliasResponse>? = null
     private val fetchBulkAliasDetailsMemory = mutableListOf<Pair<ShareId, List<ItemId>>>()
 
     fun setBulkAliasDetails(responses: List<AliasResponse>) {
         bulkAliasDetails = responses
+        bulkAliasDetailsByItemId = null
+    }
+
+    fun setBulkAliasDetailsByItemId(responses: Map<ItemId, AliasResponse>) {
+        bulkAliasDetailsByItemId = responses
     }
 
     fun getFetchBulkAliasDetailsMemory(): List<Pair<ShareId, List<ItemId>>> = fetchBulkAliasDetailsMemory
@@ -47,7 +53,9 @@ class FakeRemoteAliasDataSource : RemoteAliasDataSource {
         itemIds: List<ItemId>
     ): List<AliasResponse> {
         fetchBulkAliasDetailsMemory.add(shareId to itemIds)
-        return bulkAliasDetails
+        return bulkAliasDetailsByItemId?.let { responses ->
+            itemIds.mapNotNull(responses::get)
+        } ?: bulkAliasDetails
     }
 
     override fun getAliasOptions(userId: UserId, shareId: ShareId): Flow<AliasOptionsResponse> {

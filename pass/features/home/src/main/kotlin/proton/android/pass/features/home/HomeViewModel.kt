@@ -865,7 +865,7 @@ class HomeViewModel @Inject constructor(
         runCatching {
             val userId = observeCurrentUser().firstOrNull()?.userId
                 ?: throw IllegalStateException("User not found")
-            performSync(userId)
+            performSync(userId, trigger = "home_pull_to_refresh")
         }.onFailure {
             PassLogger.e(TAG, it, "Apply pending events failed")
             snackbarDispatcher(RefreshError)
@@ -1534,6 +1534,7 @@ class HomeViewModel @Inject constructor(
     internal val homeListItemPagingFlow: Flow<PagingData<HomeListItem>> =
         isPaginationEnabledFlow.flatMapLatest { isPaginationEnabled ->
             if (!isPaginationEnabled) {
+                PassLogger.i(TAG, "Home paging emitted empty data because pagination is disabled")
                 return@flatMapLatest flowOf(PagingData.empty())
             }
             homeListItemPagingFlowInternal
@@ -1599,9 +1600,13 @@ class HomeViewModel @Inject constructor(
         .flatMapLatest { params ->
             // Return empty PagingData while indexing is in progress
             if (params.isIndexing) {
+                PassLogger.i(TAG, "Home paging emitted empty data because indexing is in progress")
                 return@flatMapLatest flowOf(PagingData.empty())
             }
-            val userId = params.userId ?: return@flatMapLatest flowOf(PagingData.empty())
+            val userId = params.userId ?: run {
+                PassLogger.i(TAG, "Home paging emitted empty data because no user is available")
+                return@flatMapLatest flowOf(PagingData.empty())
+            }
             val sortBy = params.sortingType.toSearchSortBy()
 
             observePagedItems(

@@ -32,7 +32,6 @@ import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.distinctUntilChanged
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -144,9 +143,10 @@ class AccountListenerInitializer : Initializer<Unit> {
         refreshUserAccess: RefreshUserAccess,
         refreshBreaches: RefreshBreaches
     ) {
-        val isUserEventsEnabled = featureFlagsPreferencesRepository
-            .get<Boolean>(FeatureFlag.PASS_USER_EVENTS_V1, account.userId)
-            .first()
+        val isUserEventsEnabled = featureFlagsPreferencesRepository.awaitResolved(
+            FeatureFlag.PASS_USER_EVENTS_V1,
+            account.userId
+        )
         PassLogger.i(TAG, "Account ready : ${account.userId}")
 
         if (!isUserEventsEnabled) {

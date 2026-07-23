@@ -112,7 +112,6 @@ class PeriodicAssetLinkWorker @AssistedInject constructor(
         const val WORKER_UNIQUE_NAME = "periodic_asset_link_worker"
         private const val TAG = "PeriodicAssetLinkWorker"
         private const val REPEAT_DAYS = 14L
-
         fun getRequestFor(): PeriodicWorkRequest =
             PeriodicWorkRequestBuilder<PeriodicAssetLinkWorker>(REPEAT_DAYS, TimeUnit.DAYS)
                 .setInitialDelay(1, TimeUnit.MINUTES)
@@ -122,6 +121,3 @@ class PeriodicAssetLinkWorker @AssistedInject constructor(
                 .build()
     }
 }
-
-
-

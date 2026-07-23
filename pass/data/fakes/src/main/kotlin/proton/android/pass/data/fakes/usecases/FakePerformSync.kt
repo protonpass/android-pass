@@ -33,7 +33,11 @@ class FakePerformSync @Inject constructor() : PerformSync {
         result = value
     }
 
-    override suspend fun invoke(userId: UserId, forceSync: Boolean) {
+    override suspend fun invoke(
+        userId: UserId,
+        forceSync: Boolean,
+        trigger: String
+    ) {
         invokedUserIds += userId
         result.getOrThrow()
     }

@@ -41,14 +41,20 @@ class FakeAssetLinkRepository @Inject constructor() : AssetLinkRepository {
         private set
     private var refreshIgnoredException: Throwable? = null
 
+    val fetchInvocations = mutableListOf<String>()
+    val insertInvocations = mutableListOf<List<AssetLink>>()
     val purgeOlderThanInvocations = mutableListOf<Instant>()
+    var onFetch: suspend (String) -> Unit = {}
 
     fun setRefreshIgnoredException(value: Throwable) {
         refreshIgnoredException = value
     }
 
-    override suspend fun fetch(website: String): AssetLink =
-        fakeData.find { it.website == website } ?: AssetLink(website, emptySet())
+    override suspend fun fetch(website: String): AssetLink {
+        fetchInvocations += website
+        onFetch(website)
+        return fakeData.find { it.website == website } ?: AssetLink(website, emptySet())
+    }
 
     override suspend fun refreshIgnored(): List<String> {
         refreshIgnoredInvocations++
@@ -57,6 +63,7 @@ class FakeAssetLinkRepository @Inject constructor() : AssetLinkRepository {
     }
 
     override suspend fun insert(list: List<AssetLink>) {
+        insertInvocations += list
         fakeData += list
     }
 

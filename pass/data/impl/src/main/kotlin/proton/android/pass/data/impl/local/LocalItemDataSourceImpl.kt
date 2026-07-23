@@ -146,6 +146,20 @@ class LocalItemDataSourceImpl @Inject constructor(
         limit = limit
     )
 
+    override suspend fun getActiveAliasItemsPage(
+        userId: UserId,
+        shareId: ShareId,
+        afterRowId: Long,
+        limit: Int
+    ): List<ItemEntityWithRowId> = database.itemsDao().getItemsPageForShareAndType(
+        userId = userId.id,
+        shareId = shareId.id,
+        itemType = ItemCategory.Alias.value,
+        itemState = ItemState.Active.value,
+        afterRowId = afterRowId,
+        limit = limit
+    )
+
     override suspend fun countItemsForIndex(
         userId: UserId,
         shareIds: List<ShareId>,
@@ -475,7 +489,12 @@ class LocalItemDataSourceImpl @Inject constructor(
         shareId: ShareId,
         itemId: ItemId,
         slNote: EncryptedString?
-    ) = database.itemsDao().updateSlNote(userId.id, shareId.id, itemId.id, slNote)
+    ) {
+        database.itemsDao().updateSlNote(userId.id, shareId.id, itemId.id, slNote)
+    }
+
+    override suspend fun updateSlNotes(userId: UserId, updates: List<SlNoteUpdate>): List<Pair<ShareId, ItemId>> =
+        database.itemsDao().updateSlNotes(userId.id, updates)
 
     override fun countAllItemsWithTotp(userId: UserId, shareIds: List<ShareId>): Flow<Int> = observeItemsWithTotpCount(
         userId = userId,

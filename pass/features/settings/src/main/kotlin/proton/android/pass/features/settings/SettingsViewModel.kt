@@ -243,7 +243,7 @@ class SettingsViewModel @Inject constructor(
     internal fun onForceSync() = viewModelScope.launch {
         val userId = accountManager.getPrimaryUserId().firstOrNull()
         if (userId != null) {
-            safeRunCatching { performSync(userId, forceSync = true) }
+            safeRunCatching { performSync(userId, forceSync = true, trigger = "settings_manual") }
                 .onFailure { error ->
                     PassLogger.w(TAG, "Error performing sync")
                     PassLogger.w(TAG, error)

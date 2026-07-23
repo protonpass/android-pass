@@ -54,6 +54,7 @@ import proton.android.pass.domain.events.SyncEventShare
 import proton.android.pass.domain.events.SyncEventShareFolder
 import proton.android.pass.domain.events.SyncEventShareItem
 import proton.android.pass.domain.events.UserEventList
+import kotlin.test.assertFailsWith
 
 internal class SyncUserEventsImplTest {
 
@@ -470,6 +471,67 @@ internal class SyncUserEventsImplTest {
 
         assertThat(userEventRepository.getStoreLatestEventIdMemory()).isNotEmpty()
         assertThat(workManagerFacade.getAwaitedWorkNames()).contains(uniqueName)
+    }
+
+    @Test
+    fun `full refresh refreshes alias notes after completed item worker`() = runTest {
+        val eventId = UserEventId(EVENT_ID_1)
+        setupBasicSync(eventId)
+
+        userEventRepository.setGetUserEventsResult(
+            createUserEventList(
+                lastEventId = eventId,
+                fullRefresh = true
+            )
+        )
+        refreshSharesAndEnqueueSync.setResult(
+            RefreshSharesResult.SharesFound(
+                shareIds = setOf(ShareId(SHARE_ID_1)),
+                isWorkerEnqueued = true,
+                hasInactiveShares = false,
+                hasInvalidGroupShares = false
+            )
+        )
+
+        instance.invoke(USER_ID)
+
+        assertThat(refreshAliasSlNotes.getInvocationMemory()).containsExactly(USER_ID)
+    }
+
+    @Test
+    fun `full refresh refreshes alias notes when item worker is not enqueued`() = runTest {
+        val eventId = UserEventId(EVENT_ID_1)
+        setupBasicSync(eventId)
+
+        userEventRepository.setGetUserEventsResult(
+            createUserEventList(
+                lastEventId = eventId,
+                fullRefresh = true
+            )
+        )
+        refreshSharesAndEnqueueSync.setResult(RefreshSharesResult.NoSharesSkipped)
+
+        instance.invoke(USER_ID)
+
+        assertThat(refreshAliasSlNotes.getInvocationMemory()).containsExactly(USER_ID)
+    }
+
+    @Test
+    fun `full refresh throws when refreshing alias notes fails`() = runTest {
+        val eventId = UserEventId(EVENT_ID_1)
+        setupBasicSync(eventId)
+        userEventRepository.setGetUserEventsResult(
+            createUserEventList(
+                lastEventId = eventId,
+                fullRefresh = true
+            )
+        )
+        refreshSharesAndEnqueueSync.setResult(RefreshSharesResult.NoSharesSkipped)
+        refreshAliasSlNotes.setResult(Result.failure(IllegalStateException("SL notes refresh failed")))
+
+        assertFailsWith<IllegalStateException> {
+            instance.invoke(USER_ID)
+        }
     }
 
     @Test

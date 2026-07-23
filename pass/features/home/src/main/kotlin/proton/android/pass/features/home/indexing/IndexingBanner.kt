@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2026 Proton AG
- * This file is part of Proton AG and Proton Pass.
+ * This file is part of Proton AG.
  *
  * Proton Pass is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by

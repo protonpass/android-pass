@@ -27,6 +27,12 @@ interface FeatureFlagsPreferencesRepository {
 
     operator fun <T> get(featureFlag: FeatureFlag, userId: UserId): Flow<T>
 
+    /**
+     * Resolves a feature flag for a decision that must not use an unresolved default value.
+     * An explicit local override takes precedence over the remote value.
+     */
+    suspend fun awaitResolved(featureFlag: FeatureFlag, userId: UserId): Boolean
+
     fun <T> set(featureFlag: FeatureFlag, value: T? = null): Result<Unit>
 
     fun observeForAllUsers(featureFlag: FeatureFlag): Flow<Boolean>

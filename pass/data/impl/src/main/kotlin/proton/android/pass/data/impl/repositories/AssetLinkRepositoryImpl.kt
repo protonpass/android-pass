@@ -44,10 +44,8 @@ class AssetLinkRepositoryImpl @Inject constructor(
 ) : AssetLinkRepository {
 
     override suspend fun fetch(website: String): AssetLink {
-        PassLogger.d(TAG, "Fetching asset links for website: $website")
-        val response = remoteAssetLinkDataSource.fetch(website)
-        val androidAppLinks = response.filter { it.target.namespace == "android_app" }
-        return androidAppLinks.toDomain(website)
+        PassLogger.d(TAG, "Fetching asset links")
+        return remoteAssetLinkDataSource.fetch(website).toDomain(website)
     }
 
     override suspend fun refreshIgnored(): List<String> {
@@ -58,7 +56,6 @@ class AssetLinkRepositoryImpl @Inject constructor(
     }
 
     override suspend fun insert(list: List<AssetLink>) {
-        PassLogger.d(TAG, "Inserting asset links: $list")
         localAssetLinkDataSource.insertAssetLink(list.toEntityList(clock.now()))
     }
 

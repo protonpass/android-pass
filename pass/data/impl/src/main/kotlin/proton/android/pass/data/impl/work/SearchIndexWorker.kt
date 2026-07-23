@@ -52,7 +52,7 @@ class SearchIndexWorker @AssistedInject constructor(
         }
 
         return runCatching {
-            PassLogger.i(TAG, "Rebuilding search index for user: $userId")
+            PassLogger.i(TAG, "Rebuilding search index")
             searchIndexRepository.rebuildIndex(userId)
             PassLogger.i(TAG, "Search index rebuild completed successfully")
             Result.success()

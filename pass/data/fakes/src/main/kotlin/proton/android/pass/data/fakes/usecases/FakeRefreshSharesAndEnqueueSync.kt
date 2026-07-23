@@ -33,6 +33,9 @@ class FakeRefreshSharesAndEnqueueSync @Inject constructor() : RefreshSharesAndEn
         result = value
     }
 
-    override suspend fun invoke(userId: UserId, syncType: RefreshSharesAndEnqueueSync.SyncType): RefreshSharesResult =
-        result
+    override suspend fun invoke(
+        userId: UserId,
+        syncType: RefreshSharesAndEnqueueSync.SyncType,
+        workerOrigin: String
+    ): RefreshSharesResult = result
 }

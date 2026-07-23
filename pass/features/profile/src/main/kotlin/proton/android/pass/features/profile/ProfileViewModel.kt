@@ -383,7 +383,7 @@ class ProfileViewModel @Inject constructor(
     }
 
     private suspend fun ProfileViewModel.refreshAccount(userId: UserId) {
-        safeRunCatching { performSync(userId, forceSync = true) }
+        safeRunCatching { performSync(userId, forceSync = true, trigger = "account_ready") }
             .onSuccess {
                 PassLogger.i(TAG, "Sync completed")
             }

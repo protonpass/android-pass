@@ -64,6 +64,9 @@ class FakeFeatureFlagsPreferenceRepository @Inject constructor() :
 
     override fun <T> get(featureFlag: FeatureFlag, userId: UserId): Flow<T> = get(featureFlag)
 
+    override suspend fun awaitResolved(featureFlag: FeatureFlag, userId: UserId): Boolean =
+        state.value[featureFlag] as? Boolean ?: featureFlag.isEnabledDefault
+
     override fun <T> set(featureFlag: FeatureFlag, value: T?): Result<Unit> {
         state.update {
             it[featureFlag] = value

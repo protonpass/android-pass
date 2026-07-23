@@ -23,6 +23,7 @@ import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.room.InvalidationTracker
 import androidx.sqlite.db.SimpleSQLiteQuery
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -75,10 +76,7 @@ class SearchIndexRepositoryImpl @Inject constructor(
         shareId: ShareId,
         itemId: ItemId
     ) {
-        val item = localItemDataSource.getById(userId, shareId, itemId) ?: run {
-            PassLogger.w(TAG, "Item not found for indexing: $shareId/$itemId")
-            return
-        }
+        val item = localItemDataSource.getById(userId, shareId, itemId) ?: return
 
         val flags = shareIndexFlags(userId)
         val entity = encryptionContextProvider.withEncryptionContext {
@@ -92,7 +90,6 @@ class SearchIndexRepositoryImpl @Inject constructor(
             )
         }
         searchDao.upsert(entity)
-        PassLogger.d(TAG, "Indexed item: $shareId/$itemId")
     }
 
     override suspend fun indexItems(userId: UserId, items: List<Pair<ShareId, ItemId>>) {
@@ -148,12 +145,10 @@ class SearchIndexRepositoryImpl @Inject constructor(
 
     override suspend fun updateShareHidden(shareId: ShareId, isHidden: Boolean) {
         searchDao.updateHiddenForShare(shareId.id, isHidden)
-        PassLogger.i(TAG, "Updated hidden=$isHidden in index for share: $shareId")
     }
 
     override suspend fun removeItemFromIndex(shareId: ShareId, itemId: ItemId) {
         searchDao.delete(shareId.id, itemId.id)
-        PassLogger.d(TAG, "Removed item from index: $shareId/$itemId")
     }
 
     override suspend fun updateItemState(
@@ -166,31 +161,42 @@ class SearchIndexRepositoryImpl @Inject constructor(
             ItemState.Trashed -> 1
         }
         searchDao.updateItemState(shareId.id, itemId.id, stateValue)
-        PassLogger.d(TAG, "Updated item state in index: $shareId/$itemId -> $itemState")
     }
 
     override suspend fun removeShareFromIndex(shareId: ShareId) {
         searchDao.clearForShare(shareId.id)
-        PassLogger.i(TAG, "Removed share from index: $shareId")
     }
 
     override suspend fun rebuildIndex(userId: UserId) {
         withContext(Dispatchers.IO) {
-            PassLogger.i(TAG, "Starting index rebuild for user: $userId")
+            PassLogger.i(TAG, "Starting index rebuild")
             _indexingStatus.value = IndexingStatus.Indexing
 
             runCatching {
-                performRebuildIndex(userId)
-            }.onFailure { e ->
-                PassLogger.e(TAG, e, "Error during index rebuild")
+                val result = performRebuildIndex(userId)
+                val completionMessage = "Index rebuild complete. Indexed ${result.indexed} items"
+                if (result.indexed == result.total) {
+                    PassLogger.i(TAG, completionMessage)
+                } else {
+                    PassLogger.w(TAG, "$completionMessage, expected ${result.total}")
+                }
+                markRebuildComplete(userId)
+                _indexingStatus.value = IndexingStatus.Ready
+            }.onFailure { error ->
                 _indexingStatus.value = IndexingStatus.Idle
-                throw e
+                if (error !is CancellationException) {
+                    PassLogger.e(
+                        TAG,
+                        "Index rebuild failed: ${error.javaClass.simpleName}"
+                    )
+                }
+                throw error
             }
         }
     }
 
     @Suppress("LongMethod")
-    private suspend fun performRebuildIndex(userId: UserId) {
+    private suspend fun performRebuildIndex(userId: UserId): IndexRebuildResult {
         // Clear existing index
         searchDao.clearForUser(userId.id)
 
@@ -200,30 +206,23 @@ class SearchIndexRepositoryImpl @Inject constructor(
             .map { ShareId(it.id) }
 
         if (shareIds.isEmpty()) {
-            PassLogger.i(TAG, "No shares found for user")
-            markRebuildComplete(userId)
-            _indexingStatus.value = IndexingStatus.Ready
-            return
+            PassLogger.i(TAG, "No shares found for index rebuild")
+            return IndexRebuildResult(total = 0, indexed = 0)
         }
 
         val flags = shareIndexFlags(userId)
-        val total = ItemState.entries.sumOf {
-            localItemDataSource.countItemsForIndex(userId, shareIds, it)
-        }
+        val activeItems = localItemDataSource.countItemsForIndex(userId, shareIds, ItemState.Active)
+        val trashedItems = localItemDataSource.countItemsForIndex(userId, shareIds, ItemState.Trashed)
+        val total = activeItems + trashedItems
         if (total == 0) {
-            PassLogger.i(TAG, "No items found for user")
-            markRebuildComplete(userId)
-            _indexingStatus.value = IndexingStatus.Ready
-            return
+            PassLogger.i(TAG, "No items found for index rebuild")
+            return IndexRebuildResult(total = 0, indexed = 0)
         }
 
         val indexed = indexItemsForShares(userId, shareIds, flags) { current ->
             _indexingStatus.value = IndexingStatus.InProgress(current = current, total = total)
         }
-
-        PassLogger.i(TAG, "Index rebuild complete. Indexed $indexed items")
-        markRebuildComplete(userId)
-        _indexingStatus.value = IndexingStatus.Ready
+        return IndexRebuildResult(total = total, indexed = indexed)
     }
 
     private suspend fun indexItemsForShares(
@@ -274,8 +273,7 @@ class SearchIndexRepositoryImpl @Inject constructor(
         withContext(Dispatchers.IO) {
             searchDao.clearForShare(shareId.id)
             val flags = shareIndexFlags(userId)
-            val indexed = indexItemsForShares(userId, listOf(shareId), flags)
-            PassLogger.i(TAG, "Indexed $indexed items for share: $shareId")
+            indexItemsForShares(userId, listOf(shareId), flags)
         }
     }
 
@@ -289,15 +287,19 @@ class SearchIndexRepositoryImpl @Inject constructor(
 
     override suspend fun checkAndRebuildIfNeeded(userId: UserId) {
         if (needsRebuild(userId)) {
-            PassLogger.i(TAG, "Search index needs rebuild, starting automatic rebuild for user: $userId")
+            PassLogger.i(TAG, "Search index needs rebuild, starting automatic rebuild")
             rebuildIndex(userId)
         }
     }
 
+    private data class IndexRebuildResult(
+        val total: Int,
+        val indexed: Int
+    )
+
     override suspend fun clearIndex(userId: UserId) {
         searchDao.clearForUser(userId.id)
         clearRebuildTime(userId)
-        PassLogger.i(TAG, "Cleared index for user: $userId")
     }
 
     private fun createSearchEntity(

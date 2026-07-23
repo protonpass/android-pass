@@ -71,7 +71,8 @@ class ApplyPendingEventsImpl @Inject constructor(
         }
         val result = refreshSharesAndEnqueueSync(
             userId = userId,
-            syncType = syncType
+            syncType = syncType,
+            workerOrigin = "apply_pending_events forceSync=$forceSync"
         )
         when (result) {
             RefreshSharesResult.NoSharesVaultCreated,

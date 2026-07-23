@@ -21,12 +21,12 @@ package proton.android.pass.data.impl.usecases
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.withTimeout
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.safeRunCatching
 import proton.android.pass.data.api.usecases.ApplyPendingEvents
 import proton.android.pass.data.api.usecases.PerformSync
+import proton.android.pass.data.api.usecases.RefreshAliasSlNotes
 import proton.android.pass.data.api.usecases.RefreshGroupInvites
 import proton.android.pass.data.api.usecases.RefreshUserInvites
 import proton.android.pass.data.api.usecases.SyncUserEvents
@@ -41,29 +41,49 @@ class PerformSyncImpl @Inject constructor(
     private val applyPendingEvents: ApplyPendingEvents,
     private val refreshUserInvites: RefreshUserInvites,
     private val refreshGroupInvites: RefreshGroupInvites,
+    private val refreshAliasSlNotes: RefreshAliasSlNotes,
     private val syncPendingAliases: SyncSimpleLoginPendingAliases,
     private val syncUserEvents: SyncUserEvents,
     private val featureFlagsPreferencesRepository: FeatureFlagsPreferencesRepository
 ) : PerformSync {
 
-    override suspend fun invoke(userId: UserId, forceSync: Boolean) {
+    override suspend fun invoke(
+        userId: UserId,
+        forceSync: Boolean,
+        trigger: String
+    ) {
         PassLogger.i(TAG, "Performing sync for $userId started (forceSync=$forceSync)")
 
-        performSyncWithPendingEvents(userId, forceSync)
+        performSyncWithPendingEvents(userId, forceSync, trigger)
 
         PassLogger.i(TAG, "Performing sync for $userId finished")
     }
 
-    private suspend fun performSyncWithPendingEvents(userId: UserId, forceSync: Boolean) = coroutineScope {
-        val isUserEventsEnabled: Boolean =
-            featureFlagsPreferencesRepository.get<Boolean>(FeatureFlag.PASS_USER_EVENTS_V1, userId).first()
-        val isGroupSharingEnabled =
-            featureFlagsPreferencesRepository.get<Boolean>(FeatureFlag.PASS_GROUP_SHARE, userId).first()
+    private suspend fun performSyncWithPendingEvents(
+        userId: UserId,
+        forceSync: Boolean,
+        trigger: String
+    ) = coroutineScope {
+        val (isUserEventsEnabled, isGroupSharingEnabled) = awaitAll(
+            async {
+                featureFlagsPreferencesRepository.awaitResolved(
+                    featureFlag = FeatureFlag.PASS_USER_EVENTS_V1,
+                    userId = userId
+                )
+            },
+            async {
+                featureFlagsPreferencesRepository.awaitResolved(
+                    featureFlag = FeatureFlag.PASS_GROUP_SHARE,
+                    userId = userId
+                )
+            }
+        )
 
         val results = if (isUserEventsEnabled) {
-            listOf(performSyncUserEvents(userId, forceSync))
+            listOf(performSyncUserEvents(userId, forceSync, trigger))
         } else {
             performPendingEvents(userId, forceSync)
+            performRefreshAliasSlNotes(userId)
             val tasks = buildList {
                 add(async { performUserRefreshInvites(userId) })
                 if (isGroupSharingEnabled) {
@@ -108,6 +128,15 @@ class PerformSyncImpl @Inject constructor(
         PassLogger.w(TAG, "Refresh group invites for $userId error: ${error.message}")
     }
 
+    private suspend fun performRefreshAliasSlNotes(userId: UserId): Result<Unit> = safeRunCatching {
+        withTimeout(2.minutes) {
+            refreshAliasSlNotes(userId)
+            PassLogger.i(TAG, "Refresh alias SL notes for $userId finished")
+        }
+    }.onFailure { error ->
+        PassLogger.w(TAG, "Refresh alias SL notes for $userId error: ${error.message}")
+    }
+
     private suspend fun syncPendingSlAliases(userId: UserId, forceSync: Boolean): Result<Unit> = safeRunCatching {
         withTimeout(2.minutes) {
             syncPendingAliases(userId, forceSync)
@@ -117,9 +146,13 @@ class PerformSyncImpl @Inject constructor(
         PassLogger.w(TAG, "Pending SL aliases sync for $userId error: ${error.message}")
     }
 
-    private suspend fun performSyncUserEvents(userId: UserId, forceSync: Boolean): Result<Unit> = runCatching {
+    private suspend fun performSyncUserEvents(
+        userId: UserId,
+        forceSync: Boolean,
+        trigger: String
+    ): Result<Unit> = runCatching {
         withTimeout(2.minutes) {
-            syncUserEvents(userId, forceSync)
+            syncUserEvents(userId, forceSync, trigger)
             PassLogger.i(TAG, "User events sync for $userId finished")
         }
     }.onFailure { error ->

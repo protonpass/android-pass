@@ -20,7 +20,9 @@ package proton.android.pass.data.impl.remote.assetlink
 
 import kotlinx.coroutines.CancellableContinuation
 import kotlinx.coroutines.suspendCancellableCoroutine
+import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.json.Json
+import kotlinx.serialization.json.decodeFromStream
 import okhttp3.Call
 import okhttp3.Callback
 import okhttp3.OkHttpClient
@@ -32,6 +34,7 @@ import proton.android.pass.data.api.errors.ResponseSizeExceededError
 import proton.android.pass.data.impl.responses.AssetLinkResponse
 import proton.android.pass.data.impl.responses.IgnoredAssetLinkResponse
 import proton.android.pass.log.api.PassLogger
+import java.io.InputStream
 import javax.inject.Inject
 import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
@@ -42,18 +45,13 @@ class RemoteAssetLinkDataSourceImpl @Inject constructor(
 
     override suspend fun fetch(website: String): List<AssetLinkResponse> {
         val url = "$website/.well-known/assetlinks.json"
-        return makeRequest(url) { json ->
-            Json.decodeFromString<List<AssetLinkResponse>>(json)
-        }
+        return makeRequest(url, ::parseAssetLinkStatements)
     }
 
-    override suspend fun fetchIgnored(): IgnoredAssetLinkResponse {
-        return makeRequest(DENIED_ASSET_LINKS_URL) { json ->
-            Json.decodeFromString<IgnoredAssetLinkResponse>(json)
-        }
-    }
+    override suspend fun fetchIgnored(): IgnoredAssetLinkResponse =
+        makeRequest(DENIED_ASSET_LINKS_URL, ::parseIgnoredAssetLinks)
 
-    private suspend fun <T> makeRequest(url: String, parse: (String) -> T): T =
+    private suspend fun <T> makeRequest(url: String, parse: (InputStream) -> T): T =
         suspendCancellableCoroutine { continuation ->
             val request = Request.Builder().url(url).build()
             val call = okHttpClient.newCall(request)
@@ -78,70 +76,102 @@ class RemoteAssetLinkDataSourceImpl @Inject constructor(
     private fun <T> handleResponse(
         response: Response,
         continuation: CancellableContinuation<T>,
-        parse: (String) -> T
+        parse: (InputStream) -> T
     ) {
         if (!response.isSuccessful) {
             continuation.resumeWithException(IOException("Unexpected response code $response"))
             return
         }
 
-        readAndValidateBody(response).fold(
-            onSuccess = { json ->
-                runCatching {
-                    parse(json)
-                }.onSuccess(continuation::resume)
-                    .onFailure { e ->
-                        PassLogger.w(TAG, "Failed to parse response")
-                        continuation.resumeWithException(e)
-                    }
-            },
+        readAndValidateBody(response, parse).fold(
+            onSuccess = continuation::resume,
             onFailure = { e ->
                 continuation.resumeWithException(e)
             }
         )
     }
 
-    private fun readAndValidateBody(response: Response): Result<String> {
+    private fun <T> readAndValidateBody(response: Response, parse: (InputStream) -> T): Result<T> {
         // Check Content-Length header BEFORE reading body
         val contentLength = response.body?.contentLength() ?: -1
         if (contentLength > MAX_RESPONSE_SIZE_BYTES) {
-            return createSizeExceededError(response.request.url.toString(), contentLength)
+            return Result.failure(createSizeExceededError(response.request.url.toString(), contentLength))
         }
 
-        // Read and validate response body
-        return try {
-            val bodyString = response.body?.string().orEmpty()
-
-            when {
-                bodyString.isEmpty() -> {
-                    Result.failure(IllegalStateException("Empty response"))
-                }
-                bodyString.length > MAX_RESPONSE_SIZE_BYTES -> {
-                    createSizeExceededError(response.request.url.toString(), bodyString.length.toLong())
-                }
-                else -> Result.success(bodyString)
+        // OkHttp transparently decompresses gzip responses. Bound the decoded stream before parsing it.
+        return runCatching {
+            val boundedBody = BoundedInputStream(
+                delegate = response.body?.byteStream()
+                    ?: return Result.failure(IllegalStateException("Empty response")),
+                url = response.request.url.toString(),
+                maxBytes = MAX_RESPONSE_SIZE_BYTES
+            )
+            parse(boundedBody)
+        }.onFailure { error ->
+            when (error) {
+                is ResponseSizeExceededError -> PassLogger.w(TAG, "Response size exceeds maximum allowed")
+                is IOException -> PassLogger.w(TAG, "Failed to read response body")
+                else -> PassLogger.w(TAG, "Failed to parse response")
             }
-        } catch (e: IOException) {
-            PassLogger.w(TAG, "Failed to read response body")
-            PassLogger.w(TAG, e)
-            Result.failure(e)
         }
     }
 
-    private fun createSizeExceededError(url: String, contentLength: Long): Result<String> {
+    @OptIn(ExperimentalSerializationApi::class)
+    private fun parseAssetLinkStatements(body: InputStream): List<AssetLinkResponse> =
+        Json.decodeFromStream<List<AssetLinkResponse>>(body)
+            .filter { it.target.namespace == ANDROID_APP_NAMESPACE }
+
+    @OptIn(ExperimentalSerializationApi::class)
+    private fun parseIgnoredAssetLinks(body: InputStream): IgnoredAssetLinkResponse =
+        Json.decodeFromStream<IgnoredAssetLinkResponse>(body)
+
+    private fun createSizeExceededError(url: String, contentLength: Long): ResponseSizeExceededError {
         PassLogger.w(TAG, "Response size exceeds maximum allowed")
-        return Result.failure(
-            ResponseSizeExceededError(
-                url = url,
-                contentLength = contentLength,
-                maxSize = MAX_RESPONSE_SIZE_BYTES
-            )
+        return ResponseSizeExceededError(
+            url = url,
+            contentLength = contentLength,
+            maxSize = MAX_RESPONSE_SIZE_BYTES
         )
+    }
+
+    private class BoundedInputStream(
+        private val delegate: InputStream,
+        private val url: String,
+        private val maxBytes: Long
+    ) : InputStream() {
+        var bytesRead = 0L
+            private set
+
+        override fun read(): Int = delegate.read().also { byte ->
+            if (byte != -1) bump(1)
+        }
+
+        override fun read(
+            buffer: ByteArray,
+            offset: Int,
+            length: Int
+        ): Int = delegate.read(buffer, offset, length).also { count ->
+            if (count > 0) bump(count.toLong())
+        }
+
+        override fun close() = delegate.close()
+
+        private fun bump(count: Long) {
+            bytesRead += count
+            if (bytesRead > maxBytes) {
+                throw ResponseSizeExceededError(
+                    url = url,
+                    contentLength = bytesRead,
+                    maxSize = maxBytes
+                )
+            }
+        }
     }
 
     companion object {
         private const val TAG = "RemoteAssetLinkDataSource"
-        private const val MAX_RESPONSE_SIZE_BYTES = 2 * 1024 * 1024L
+        private const val MAX_RESPONSE_SIZE_BYTES = 128 * 1024L
+        private const val ANDROID_APP_NAMESPACE = "android_app"
     }
 }
 

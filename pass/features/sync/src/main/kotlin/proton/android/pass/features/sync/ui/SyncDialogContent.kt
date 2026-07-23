@@ -33,7 +33,6 @@ import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import proton.android.pass.composecomponents.impl.loading.ProgressWithLabel
-import proton.android.pass.data.api.repositories.IndexingStatus
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -106,20 +105,9 @@ internal fun SyncDialogContent(
                     }
 
                     isIndexing -> {
-                        val indexingProgress = (indexingStatus as? IndexingStatus.InProgress)
-                            ?.let { it.current.toFloat() / it.total }
-                        val indexingLabel = when (indexingStatus) {
-                            is IndexingStatus.InProgress -> stringResource(
-                                R.string.sync_dialog_subtitle_indexing_progress,
-                                indexingStatus.current,
-                                indexingStatus.total
-                            )
-                            else -> stringResource(R.string.sync_dialog_subtitle_indexing)
-                        }
                         Spacer(modifier = Modifier.height(Spacing.small))
                         ProgressWithLabel(
-                            label = indexingLabel,
-                            progress = indexingProgress
+                            label = stringResource(R.string.sync_dialog_subtitle_indexing)
                         )
                     }
 

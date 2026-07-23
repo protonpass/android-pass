@@ -43,7 +43,8 @@ class RefreshContentImpl @Inject constructor(
         return safeRunCatching {
             refreshSharesAndEnqueueSync(
                 userId = actualUserId,
-                syncType = RefreshSharesAndEnqueueSync.SyncType.FULL
+                syncType = RefreshSharesAndEnqueueSync.SyncType.FULL,
+                workerOrigin = "sync_dialog_retry"
             )
         }.onFailure { error ->
             PassLogger.w(TAG, "Error in RefreshSharesAndEnqueueSync")

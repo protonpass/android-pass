@@ -56,7 +56,7 @@ open class SyncWorker @AssistedInject constructor(
         val result = accountManager.getAccounts(AccountState.Ready)
             .mapLatest { accounts ->
                 accounts.map { account ->
-                    safeRunCatching { performSync(account.userId) }
+                    safeRunCatching { performSync(account.userId, trigger = "background_worker") }
                         .onSuccess {
                             PassLogger.i(TAG, "Sync for ${account.userId} finished successfully")
                         }

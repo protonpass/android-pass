@@ -42,6 +42,12 @@ data class ItemWithTotp(
     val createTime: Instant
 )
 
+data class SlNoteUpdate(
+    val shareId: ShareId,
+    val itemId: ItemId,
+    val encryptedNote: EncryptedString?
+)
+
 @Suppress("TooManyFunctions", "ComplexInterface")
 interface LocalItemDataSource {
     suspend fun upsertItem(item: ItemEntity)
@@ -60,6 +66,13 @@ interface LocalItemDataSource {
         userId: UserId,
         shareIds: List<ShareId>,
         itemState: ItemState,
+        afterRowId: Long,
+        limit: Int
+    ): List<ItemEntityWithRowId>
+
+    suspend fun getActiveAliasItemsPage(
+        userId: UserId,
+        shareId: ShareId,
         afterRowId: Long,
         limit: Int
     ): List<ItemEntityWithRowId>
@@ -154,6 +167,8 @@ interface LocalItemDataSource {
         itemId: ItemId,
         slNote: EncryptedString?
     )
+
+    suspend fun updateSlNotes(userId: UserId, updates: List<SlNoteUpdate>): List<Pair<ShareId, ItemId>>
 
     fun observeItemsWithTotp(userId: UserId, shareIds: List<ShareId>): Flow<List<ItemWithTotp>>
 

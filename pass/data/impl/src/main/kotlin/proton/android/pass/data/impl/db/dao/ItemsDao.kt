@@ -23,6 +23,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Dao
 import androidx.room.Embedded
 import androidx.room.Query
+import androidx.room.Transaction
 import kotlinx.coroutines.flow.Flow
 import me.proton.core.crypto.common.keystore.EncryptedString
 import me.proton.core.data.room.db.BaseDao
@@ -30,7 +31,10 @@ import proton.android.pass.data.impl.db.entities.FolderEntity
 import proton.android.pass.data.impl.db.entities.ItemEntity
 import proton.android.pass.data.impl.db.entities.SearchEntryEntity
 import proton.android.pass.data.impl.db.entities.ShareEntity
+import proton.android.pass.data.impl.local.SlNoteUpdate
+import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ItemStateValues
+import proton.android.pass.domain.ShareId
 
 data class SummaryRow(
     val itemKind: Int,
@@ -111,6 +115,28 @@ abstract class ItemsDao : BaseDao<ItemEntity>() {
     abstract suspend fun getItemsPageForIndex(
         userId: String,
         shareIds: List<String>,
+        itemState: Int,
+        afterRowId: Long,
+        limit: Int
+    ): List<ItemEntityWithRowId>
+
+    @Query(
+        """
+        SELECT *, rowid AS rowid FROM ${ItemEntity.TABLE}
+        WHERE ${ItemEntity.Columns.USER_ID} = :userId
+          AND ${ItemEntity.Columns.SHARE_ID} = :shareId
+          AND ${ItemEntity.Columns.ITEM_TYPE} = :itemType
+          AND ${ItemEntity.Columns.STATE} = :itemState
+          AND rowid > :afterRowId
+        ORDER BY rowid ASC
+        LIMIT :limit
+        """
+    )
+    @Suppress("LongParameterList")
+    abstract suspend fun getItemsPageForShareAndType(
+        userId: String,
+        shareId: String,
+        itemType: Int,
         itemState: Int,
         afterRowId: Long,
         limit: Int
@@ -458,7 +484,19 @@ abstract class ItemsDao : BaseDao<ItemEntity>() {
         shareId: String,
         itemId: String,
         slNote: EncryptedString?
-    )
+    ): Int
+
+    @Transaction
+    open suspend fun updateSlNotes(userId: String, updates: List<SlNoteUpdate>): List<Pair<ShareId, ItemId>> =
+        updates.mapNotNull { update ->
+            val updated = updateSlNote(
+                userId = userId,
+                shareId = update.shareId.id,
+                itemId = update.itemId.id,
+                slNote = update.encryptedNote
+            )
+            if (updated > 0) update.shareId to update.itemId else null
+        }
 
     @Query(
         """

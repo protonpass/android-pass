@@ -22,7 +22,11 @@ import me.proton.core.domain.entity.UserId
 import proton.android.pass.domain.ShareId
 
 interface RefreshSharesAndEnqueueSync {
-    suspend operator fun invoke(userId: UserId, syncType: SyncType): RefreshSharesResult
+    suspend operator fun invoke(
+        userId: UserId,
+        syncType: SyncType,
+        workerOrigin: String = "unknown"
+    ): RefreshSharesResult
 
     enum class SyncType {
         INCREMENTAL,

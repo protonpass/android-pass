@@ -67,11 +67,11 @@ import proton.android.pass.commonui.api.GroupedItemList
 import proton.android.pass.commonui.api.HomeListItem
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
-import proton.android.pass.data.api.repositories.IndexingStatus
-import proton.android.pass.features.home.indexing.IndexingBanner
 import proton.android.pass.commonui.api.applyIf
 import proton.android.pass.commonui.api.TestTags.HOME_EMPTY_TAG
 import proton.android.pass.commonui.api.TestTags.HOME_ITEM_LIST_TAG
+import proton.android.pass.data.api.repositories.IndexingStatus
+import proton.android.pass.features.home.indexing.IndexingBanner
 import proton.android.pass.composecomponents.impl.buttons.UpgradeIcon
 import proton.android.pass.composecomponents.impl.extension.toColor
 import proton.android.pass.composecomponents.impl.extension.toResource
@@ -631,4 +631,3 @@ private enum class HomeHeaderState {
     SearchOrPinning,
     Trash
 }
-

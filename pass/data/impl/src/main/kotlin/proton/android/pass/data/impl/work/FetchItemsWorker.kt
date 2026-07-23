@@ -59,22 +59,9 @@ open class FetchItemsWorker @AssistedInject constructor(
         val userId = inputData.getString(ARG_USER_ID)?.let(::UserId) ?: return Result.failure()
         val hasInactiveShares = inputData.getBoolean(ARG_INACTIVE_SHARES, false)
         val hasInvalidGroupShares = inputData.getBoolean(ARG_INVALID_GROUP_SHARES, false)
+        val origin = inputData.getString(ARG_ORIGIN) ?: UNKNOWN_ORIGIN
 
-        val fetchSource: FetchSource = when (inputData.getString(ARG_FETCH_SOURCE)) {
-            SOURCE_FORCE_SYNC -> FetchSource.ForceSync
-            SOURCE_FIRST_SYNC -> FetchSource.FirstSync
-            SOURCE_NEW_SHARE -> {
-                val ids = inputData.getStringArray(ARG_SHARE_IDS)
-                    ?.map(::ShareId)
-                    ?.toSet()
-                    ?: emptySet()
-                FetchSource.NewShare(ids)
-            }
-            else -> {
-                PassLogger.w(TAG, "Invalid fetch source")
-                return Result.failure()
-            }
-        }
+        val fetchSource = getFetchSource() ?: return Result.failure()
 
         val shareIds: Set<ShareId> = when (fetchSource) {
             is FetchSource.ForceSync,
@@ -86,7 +73,11 @@ open class FetchItemsWorker @AssistedInject constructor(
             is FetchSource.NewShare -> fetchSource.shareIds
         }
 
-        PassLogger.i(TAG, "Fetching items for ${shareIds.size} shares in ${fetchSource::class.simpleName}")
+        PassLogger.i(
+            TAG,
+            "Fetching items for ${shareIds.size} shares in ${fetchSource::class.simpleName} " +
+                "(origin=$origin)"
+        )
 
         val res = forceSyncItems(
             userId = userId,
@@ -116,6 +107,22 @@ open class FetchItemsWorker @AssistedInject constructor(
         SYNC_NOTIFICATION_ID,
         context.syncWorkNotification()
     )
+
+    private fun getFetchSource(): FetchSource? = when (inputData.getString(ARG_FETCH_SOURCE)) {
+        SOURCE_FORCE_SYNC -> FetchSource.ForceSync
+        SOURCE_FIRST_SYNC -> FetchSource.FirstSync
+        SOURCE_NEW_SHARE -> FetchSource.NewShare(
+            inputData.getStringArray(ARG_SHARE_IDS)
+                ?.map(::ShareId)
+                ?.toSet()
+                ?: emptySet()
+        )
+
+        else -> {
+            PassLogger.w(TAG, "Invalid fetch source")
+            null
+        }
+    }
 
     private fun Context.syncWorkNotification(): Notification {
         val channel = NotificationChannel(
@@ -151,6 +158,7 @@ open class FetchItemsWorker @AssistedInject constructor(
         private const val ARG_FETCH_SOURCE = "fetch_source"
         private const val ARG_INACTIVE_SHARES = "inactive_shares"
         private const val ARG_INVALID_GROUP_SHARES = "invalid_group_shares"
+        private const val ARG_ORIGIN = "origin"
 
         private const val SYNC_NOTIFICATION_ID = 0
         private const val SYNC_NOTIFICATION_CHANNEL_ID = "SyncNotificationChannel"
@@ -158,15 +166,18 @@ open class FetchItemsWorker @AssistedInject constructor(
         private const val SOURCE_FORCE_SYNC = "ForceSync"
         private const val SOURCE_FIRST_SYNC = "FirstSync"
         private const val SOURCE_NEW_SHARE = "NewShare"
+        private const val UNKNOWN_ORIGIN = "unknown"
 
         fun getRequestFor(
             source: FetchSource,
             userId: UserId,
+            origin: String = UNKNOWN_ORIGIN,
             warnings: SyncWarnings
         ): OneTimeWorkRequest {
             val extras = mutableMapOf<String, Any>(
                 ARG_FETCH_SOURCE to source.sourceName(),
                 ARG_USER_ID to userId.id,
+                ARG_ORIGIN to origin,
                 ARG_INACTIVE_SHARES to warnings.hasInactiveShares,
                 ARG_INVALID_GROUP_SHARES to warnings.hasInvalidGroupShares
             )

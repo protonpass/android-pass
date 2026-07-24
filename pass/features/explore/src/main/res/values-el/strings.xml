@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="explore_tab_title">Εξερεύνηση</string>
+  <string name="explore_section_tools_title">Εργαλεία</string>
+  <string name="explore_section_expand_security_title">Επεκτείνετε την ασφάλειά σας</string>
+  <string name="explore_tool_password_generator_title">Γεννήτρια κωδικών πρόσβασης</string>
+  <string name="explore_tool_dark_web_monitor_title">Dark web monitoring</string>
+  <string name="explore_tool_dark_web_monitor_subtitle">Έναρξη παρακολούθησης για παραβιάσεις δεδομένων.</string>
+  <string name="explore_tool_password_health_title">Υγεία κωδικού πρόσβασης</string>
+  <string name="explore_tool_password_health_subtitle">Εντοπίστε ευάλωτους, αδύναμους και επαναχρησιμοποιούμενους κωδικούς πρόσβασης.</string>
+  <string name="explore_tool_codes_title">Κωδικοί</string>
+  <string name="explore_tool_codes_subtitle">Κωδικοί μίας χρήσης για έλεγχο ταυτότητας δύο παραγόντων.</string>
+  <string name="codes_screen_title">Κωδικοί</string>
+  <string name="codes_search_placeholder">Αναζήτηση σε όλα τα στοιχεία</string>
+  <string name="codes_snackbar_code_copied">Ο κωδικός αντιγράφηκε στο πρόχειρο</string>
+  <string name="explore_tool_aliases_title">Προστατέψτε τα email με ψευδώνυμα</string>
+  <string name="explore_tool_aliases_subtitle">Προστατέψτε τις διευθύνσεις, μειώστε τα ανεπιθύμητα μηνύματα (spam) και αποκλείστε τις απόπειρες ηλεκτρονικού \"ψαρέματος\" (phishing).</string>
+  <string name="explore_product_vpn_title">Proton VPN</string>
+  <string name="explore_product_vpn_subtitle">Περιηγηθείτε χωρίς να σας παρακολουθούν και αποκτήστε πρόσβαση σε αποκλεισμένο περιεχόμενο.</string>
+  <string name="explore_product_mail_title">Proton Mail</string>
+  <string name="explore_product_mail_subtitle">Προστατέψτε τα εισερχόμενά σας από ανεπιθύμητα μηνύματα, παρακολούθηση και στοχευμένες διαφημίσεις.</string>
+  <string name="explore_product_drive_title">Proton Drive</string>
+  <string name="explore_product_drive_subtitle">Δώστε στις πολύτιμες φωτογραφίες και τα αρχεία σας το ασφαλές σπίτι που τους αξίζει.</string>
+  <string name="explore_product_lumo_title">Lumo AI</string>
+  <string name="explore_product_lumo_subtitle">Ρωτήστε και σκεφτείτε ιδέες με έναν βοηθό Τεχνητής Νοημοσύνης που δίνει προτεραιότητα στην προστασία της ιδιωτικής ζωής.</string>
+  <string name="explore_product_meet_title">Proton Meet</string>
+  <string name="explore_product_meet_subtitle">Μιλήστε κατ\' ιδίαν μέσω εμπιστευτικής βιντεοδιάσκεψης.</string>
+  <string name="explore_business_banner_title">Proton για Business</string>
+</resources>

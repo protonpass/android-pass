@@ -8,7 +8,8 @@
   <plurals name="character_count">
     <item quantity="one">%s tegn</item>
     <item quantity="other">%s tegn</item>
-  </plurals>  <string name="bottomsheet_option_capital_letters">Store bogstaver (A–Z)</string>
+  </plurals>
+  <string name="bottomsheet_option_capital_letters">Store bogstaver (A–Z)</string>
   <string name="bottomsheet_option_include_numbers">Inkluder tal (0-9)</string>
   <string name="regenerate_password_icon_content_description">Regenerér adgangskode-knap</string>
   <string name="password_mode_memorable">Huskværdig adgangskode</string>

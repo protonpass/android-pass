@@ -87,6 +87,7 @@
   <string name="bottom_bar_add_item_icon_content_description">Legg til element</string>
   <string name="bottom_bar_profile_icon_content_description">Profil</string>
   <string name="bottom_bar_security_center_icon_content_description">Sikkerhetssenter</string>
+  <string name="bottom_bar_explore_icon_content_description">Explore</string>
   <!-- List group by most recents -->
   <string name="most_recent_today">I dag</string>
   <string name="most_recent_yesterday">I går</string>
@@ -325,12 +326,21 @@
   <string name="collapse_expanded_text">mindre</string>
   <string name="login_item_monitor_widget_weak_pass_title">Svakt passord</string>
   <string name="login_item_monitor_widget_weak_pass_subtitle">Denne kontoen er sårbar, besøk tjenesten og endre passordet ditt.</string>
+  <string name="login_item_monitor_widget_compromised_pass_title">Compromised password</string>
+  <string name="login_item_monitor_widget_compromised_pass_subtitle">This login password appears in a data breach. Please visit the service and change the password.</string>
   <plurals name="login_item_monitor_widget_reused_pass_title">
     <item quantity="one">%d annen pålogging bruker det samme passordet</item>
     <item quantity="other">%d andre pålogginger bruker det samme passordet</item>
   </plurals>
   <string name="login_item_monitor_widget_missing_two_fa_title">Sett opp 2FA for ekstra sikkerhet</string>
   <string name="login_item_monitor_widget_missing_two_fa_subtitle">Denne tjenesten tilbyr 2FA. Aktiver den for ekstra kontosikkerhet.</string>
+  <string name="login_item_monitor_action_ignore">Ignore</string>
+  <string name="login_item_monitor_action_restore">Restore alert</string>
+  <string name="login_item_monitor_header">Pass Monitor</string>
+  <string name="login_item_monitor_label_weak">Weak password</string>
+  <string name="login_item_monitor_label_compromised">Compromised password</string>
+  <string name="login_item_monitor_label_reused">Reused password</string>
+  <string name="login_item_monitor_label_missing_2fa">Missing 2FA</string>
   <string name="login_item_reused_passwords_subtitle">Elementer fra hvelvene dine som bruker dette passordet.</string>
   <string name="mfa_limit_reached">2FA-grensen nådd</string>
   <string name="activity_in_last_two_weeks">Aktivitet siste 14 dager</string>
@@ -364,16 +374,16 @@
   <string name="warning_dialog_item_shared_vault_reminder">Ikke minn meg på det igjen</string>
   <string name="upgrade_to_pass_plus">Oppgrader til Pass Plus</string>
   <string name="warning_dialog_reload_app_after_purchase_description">Du blir snart omdirigert til nettstedet vårt. Hvis du kjøper et abonnement, må du starte appen på nytt.</string>
-      <string name="word_separator">Skilletegn for ord</string>
-      <string name="bottomsheet_option_capitalise">Gjør bokstaver store</string>
-      <string name="bottomsheet_option_word_separator_hyphens">Bindestreker ( - )</string>
-      <string name="bottomsheet_option_word_separator_spaces">Mellomrom</string>
-      <string name="bottomsheet_option_word_separator_periods">Punktum ( . )</string>
-      <string name="bottomsheet_option_word_separator_commas">Komma ( , )</string>
-      <string name="bottomsheet_option_word_separator_underscores">Understrekingstegn ( _ )</string>
-      <string name="bottomsheet_option_word_separator_numbers">Tall</string>
-      <string name="bottomsheet_option_word_separator_numbers_and_symbols">Tall og symboler</string>
-
+  <!-- Shared word separator dialog (used by password + username generators) -->
+  <string name="word_separator">Skilletegn for ord</string>
+  <string name="bottomsheet_option_capitalise">Gjør bokstaver store</string>
+  <string name="bottomsheet_option_word_separator_hyphens">Bindestreker ( - )</string>
+  <string name="bottomsheet_option_word_separator_spaces">Mellomrom</string>
+  <string name="bottomsheet_option_word_separator_periods">Punktum ( . )</string>
+  <string name="bottomsheet_option_word_separator_commas">Komma ( , )</string>
+  <string name="bottomsheet_option_word_separator_underscores">Understrekingstegn ( _ )</string>
+  <string name="bottomsheet_option_word_separator_numbers">Tall</string>
+  <string name="bottomsheet_option_word_separator_numbers_and_symbols">Tall og symboler</string>
   <plurals name="word_count">
     <item quantity="one">%s ord</item>
     <item quantity="other">%s ord</item>

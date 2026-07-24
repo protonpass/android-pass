@@ -8,7 +8,8 @@
   <plurals name="character_count">
     <item quantity="one">%s χαρακτήρας</item>
     <item quantity="other">%s χαρακτήρες</item>
-  </plurals>  <string name="bottomsheet_option_capital_letters">Κεφαλαία γράμματα (Α–Ζ)</string>
+  </plurals>
+  <string name="bottomsheet_option_capital_letters">Κεφαλαία γράμματα (Α–Ζ)</string>
   <string name="bottomsheet_option_include_numbers">Συμπερίληψη αριθμών (0–9)</string>
   <string name="regenerate_password_icon_content_description">Κουμπί αναδημιουργίας κωδικού πρόσβασης</string>
   <string name="password_mode_memorable">Αξιομνημόνευτος κωδικός πρόσβασης</string>

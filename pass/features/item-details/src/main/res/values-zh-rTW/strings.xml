@@ -32,6 +32,7 @@
   <string name="item_details_leave_dialog_message">您將會失去存取此項目及其詳細資料。您要繼續嗎？</string>
   <string name="item_details_leave_item_message_error">離開項目時發生錯誤</string>
   <string name="item_details_leave_item_message_success">已成功離開項目</string>
+  <string name="item_details_monitor_check_update_error">Couldn\'t update monitoring. Please try again.</string>
   <string name="item_details_snackbar_message_alias_copied">已複製 X handle</string>
   <string name="item_details_snackbar_message_birthdate_copied">已複製生日</string>
   <string name="item_details_snackbar_message_card_number_copied">已複製信用卡卡號</string>

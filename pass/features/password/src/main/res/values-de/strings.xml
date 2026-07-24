@@ -8,7 +8,8 @@
   <plurals name="character_count">
     <item quantity="one">%s Zeichen</item>
     <item quantity="other">%s Zeichen</item>
-  </plurals>  <string name="bottomsheet_option_capital_letters">Großbuchstaben (A–Z)</string>
+  </plurals>
+  <string name="bottomsheet_option_capital_letters">Großbuchstaben (A–Z)</string>
   <string name="bottomsheet_option_include_numbers">Zahlen (0–9) einschließen</string>
   <string name="regenerate_password_icon_content_description">Schaltfläche \"Passwort neu generieren\"</string>
   <string name="password_mode_memorable">Einprägsames Passwort</string>

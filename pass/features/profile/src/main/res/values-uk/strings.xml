@@ -9,6 +9,9 @@
   <string name="profile_option_import_export">Імпорт/експорт</string>
   <string name="profile_option_tutorial">Як користуватися Proton Pass</string>
   <string name="profile_option_rating">Оцінити програму</string>
+  <string name="profile_spread_the_word">Spread the word</string>
+  <string name="profile_option_tell_a_friend">Tell a friend</string>
+  <string name="profile_spread_the_word_share_message">I\'m using Proton Pass to keep my passwords secure. Try it: https://proton.me/pass/download</string>
   <string name="profile_option_autofill">Автозаповнення</string>
   <string name="profile_option_autofill_subtitle">Автоматично заповнюйте ім\'я користувача і паролі.</string>
   <string name="profile_option_secure_links">Безпечні посилання</string>

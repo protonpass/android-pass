@@ -32,6 +32,7 @@
   <string name="item_details_leave_dialog_message">您将无法访问此项目及其详细信息。您想继续吗？</string>
   <string name="item_details_leave_item_message_error">离开项目时出错</string>
   <string name="item_details_leave_item_message_success">已成功离开项目</string>
+  <string name="item_details_monitor_check_update_error">无法更新监测，请重试。</string>
   <string name="item_details_snackbar_message_alias_copied">别名已复制</string>
   <string name="item_details_snackbar_message_birthdate_copied">出生日期已复制</string>
   <string name="item_details_snackbar_message_card_number_copied">卡号已复制</string>

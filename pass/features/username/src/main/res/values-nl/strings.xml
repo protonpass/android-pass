@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="generate_username_title">Genereer gebruikersnaam</string>
+  <string name="generate_username_button_regenerate">Opnieuw genereren</string>
+  <string name="generate_username_button_copy">Kopiëren</string>
+  <string name="generate_username_label_include_numbers">Nummers toevoegen</string>
+  <string name="generate_username_label_leetspeak">Leetspeak</string>
+  <string name="generate_username_label_word_types">Woordtypen</string>
+  <string name="generate_username_label_adjectives">Adjectieven</string>
+  <string name="generate_username_label_nouns">Naamwoorden</string>
+  <string name="generate_username_label_verbs">Werkwoorden</string>
+  <string name="generate_username_snackbar_copied">Gebruikersnaam is naar het klembord gekopieerd</string>
+  <string name="generate_username_snackbar_error">Kon gebruikersnaam niet genereren</string>
+</resources>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="explore_tab_title">Explorare</string>
+  <string name="explore_section_tools_title">Unelte</string>
+  <string name="explore_section_expand_security_title">Extindeți-vă securitatea</string>
+  <string name="explore_tool_password_generator_title">Generator de parole</string>
+  <string name="explore_tool_dark_web_monitor_title">Monitorizare pe internetul ascuns</string>
+  <string name="explore_tool_dark_web_monitor_subtitle">Începere monitorizare breșe de date.</string>
+  <string name="explore_tool_password_health_title">Stare parole</string>
+  <string name="explore_tool_password_health_subtitle">Identificați parolele vulnerabile, slabe și reutilizate.</string>
+  <string name="explore_tool_codes_title">Coduri</string>
+  <string name="explore_tool_codes_subtitle">Coduri unice pentru autentificarea cu doi factori.</string>
+  <string name="codes_screen_title">Coduri</string>
+  <string name="codes_search_placeholder">Căutare în toate articolele</string>
+  <string name="codes_snackbar_code_copied">Cod copiat în memorie.</string>
+  <string name="explore_tool_aliases_title">Protejați e-mailurile cu aliasuri</string>
+  <string name="explore_tool_aliases_subtitle">Protejați adresele, reduceți mesajele nedorite și blocați tentativele de înșelăciune.</string>
+  <string name="explore_product_vpn_title">Proton VPN</string>
+  <string name="explore_product_vpn_subtitle">Navigați fără monitorizare și accesați conținutul blocat.</string>
+  <string name="explore_product_mail_title">Proton Mail</string>
+  <string name="explore_product_mail_subtitle">Protejați-vă contul de mesaje nedorite, monitorizare și reclame țintite.</string>
+  <string name="explore_product_drive_title">Proton Drive</string>
+  <string name="explore_product_drive_subtitle">Oferiți fotografiilor și fișierelor prețioase locul sigur pe care îl merită.</string>
+  <string name="explore_product_lumo_title">IA Lumo</string>
+  <string name="explore_product_lumo_subtitle">Întrebați și formulați idei cu un asistent de inteligență artificială care pune pe primul loc confidențialitatea.</string>
+  <string name="explore_product_meet_title">Proton Meet</string>
+  <string name="explore_product_meet_subtitle">Vorbiți în privat prin videoconferințe confidențiale.</string>
+  <string name="explore_business_banner_title">Proton pentru afaceri</string>
+</resources>

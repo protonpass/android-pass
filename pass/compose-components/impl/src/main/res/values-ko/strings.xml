@@ -86,6 +86,7 @@
   <string name="bottom_bar_add_item_icon_content_description">항목 추가</string>
   <string name="bottom_bar_profile_icon_content_description">프로필</string>
   <string name="bottom_bar_security_center_icon_content_description">보안 센터</string>
+  <string name="bottom_bar_explore_icon_content_description">Explore</string>
   <!-- List group by most recents -->
   <string name="most_recent_today">오늘</string>
   <string name="most_recent_yesterday">어제</string>
@@ -310,11 +311,20 @@
   <string name="collapse_expanded_text">덜 보기</string>
   <string name="login_item_monitor_widget_weak_pass_title">약한 비밀번호</string>
   <string name="login_item_monitor_widget_weak_pass_subtitle">이 계정은 취약합니다. 서비스를 방문하여 비밀번호를 변경하십시오.</string>
+  <string name="login_item_monitor_widget_compromised_pass_title">Compromised password</string>
+  <string name="login_item_monitor_widget_compromised_pass_subtitle">This login password appears in a data breach. Please visit the service and change the password.</string>
   <plurals name="login_item_monitor_widget_reused_pass_title">
     <item quantity="other">%d개의 다른 로그인이 같은 비밀번호를 사용하고 있습니다</item>
   </plurals>
   <string name="login_item_monitor_widget_missing_two_fa_title">더 나은 보안을 위해 2단계 인증 설정</string>
   <string name="login_item_monitor_widget_missing_two_fa_subtitle">이 서비스는 2단계 인증을 지원합니다. 향상된 계정 보안을 위해 활성화 해주세요.</string>
+  <string name="login_item_monitor_action_ignore">Ignore</string>
+  <string name="login_item_monitor_action_restore">Restore alert</string>
+  <string name="login_item_monitor_header">Pass Monitor</string>
+  <string name="login_item_monitor_label_weak">Weak password</string>
+  <string name="login_item_monitor_label_compromised">Compromised password</string>
+  <string name="login_item_monitor_label_reused">Reused password</string>
+  <string name="login_item_monitor_label_missing_2fa">Missing 2FA</string>
   <string name="login_item_reused_passwords_subtitle">이 비밀번호를 사용하는 금고 내 항목의 목록입니다.</string>
   <string name="mfa_limit_reached">2단계 인증 제한 도달</string>
   <string name="activity_in_last_two_weeks">지난 14일간 활동</string>
@@ -345,16 +355,16 @@
   <string name="warning_dialog_item_shared_vault_reminder">다시 보지 않기</string>
   <string name="upgrade_to_pass_plus">Pass Plus로 업그레이드</string>
   <string name="warning_dialog_reload_app_after_purchase_description">Proton 웹사이트로 이동합니다. 요금제를 구매하셨다면 앱을 다시 시작해주세요.</string>
-      <string name="word_separator">Word Separator</string>
-      <string name="bottomsheet_option_capitalise">대문자 포함</string>
-      <string name="bottomsheet_option_word_separator_hyphens">하이픈 ( - )</string>
-      <string name="bottomsheet_option_word_separator_spaces">공백</string>
-      <string name="bottomsheet_option_word_separator_periods">구두점 ( . )</string>
-      <string name="bottomsheet_option_word_separator_commas">콤마 ( , )</string>
-      <string name="bottomsheet_option_word_separator_underscores">밑줄 표시 (  _ )</string>
-      <string name="bottomsheet_option_word_separator_numbers">숫자</string>
-      <string name="bottomsheet_option_word_separator_numbers_and_symbols">숫자 및 기호</string>
-
+  <!-- Shared word separator dialog (used by password + username generators) -->
+  <string name="word_separator">Word Separator</string>
+  <string name="bottomsheet_option_capitalise">대문자 포함</string>
+  <string name="bottomsheet_option_word_separator_hyphens">하이픈 ( - )</string>
+  <string name="bottomsheet_option_word_separator_spaces">공백</string>
+  <string name="bottomsheet_option_word_separator_periods">구두점 ( . )</string>
+  <string name="bottomsheet_option_word_separator_commas">콤마 ( , )</string>
+  <string name="bottomsheet_option_word_separator_underscores">밑줄 표시 (  _ )</string>
+  <string name="bottomsheet_option_word_separator_numbers">숫자</string>
+  <string name="bottomsheet_option_word_separator_numbers_and_symbols">숫자 및 기호</string>
   <plurals name="word_count">
     <item quantity="other">%s 단어</item>
   </plurals>

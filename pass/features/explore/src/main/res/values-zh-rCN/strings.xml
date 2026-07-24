@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="explore_tab_title">探索</string>
+  <string name="explore_section_tools_title">工具</string>
+  <string name="explore_section_expand_security_title">拓展您的安全保障</string>
+  <string name="explore_tool_password_generator_title">密码生成器</string>
+  <string name="explore_tool_dark_web_monitor_title">暗网监测</string>
+  <string name="explore_tool_dark_web_monitor_subtitle">开始监测数据泄露！</string>
+  <string name="explore_tool_password_health_title">密码安全</string>
+  <string name="explore_tool_password_health_subtitle">识别存在风险、薄弱及重复使用的密码。</string>
+  <string name="explore_tool_codes_title">验证码</string>
+  <string name="explore_tool_codes_subtitle">用于双因素身份验证的一次性验证码。</string>
+  <string name="codes_screen_title">验证码</string>
+  <string name="codes_search_placeholder">在所有项目中搜索</string>
+  <string name="codes_snackbar_code_copied">验证码已复制到剪贴板</string>
+  <string name="explore_tool_aliases_title">使用别名保护邮箱</string>
+  <string name="explore_tool_aliases_subtitle">保护邮箱地址、减少垃圾邮件并拦截钓鱼攻击。</string>
+  <string name="explore_product_vpn_title">Proton VPN</string>
+  <string name="explore_product_vpn_subtitle">无痕浏览并访问被屏蔽的内容。</string>
+  <string name="explore_product_mail_title">Proton Mail</string>
+  <string name="explore_product_mail_subtitle">保护您的收件箱免受垃圾邮件、追踪和定向广告的侵扰。</string>
+  <string name="explore_product_drive_title">Proton Drive</string>
+  <string name="explore_product_drive_subtitle">为您珍贵的照片和文件提供一个安全可靠的家。</string>
+  <string name="explore_product_lumo_title">Lumo AI</string>
+  <string name="explore_product_lumo_subtitle">借助注重隐私保护的 AI 助手进行提问和构思。</string>
+  <string name="explore_product_meet_title">Proton Meet</string>
+  <string name="explore_product_meet_subtitle">通过机密视频会议进行私密交谈。</string>
+  <string name="explore_business_banner_title">Proton 企业版</string>
+</resources>

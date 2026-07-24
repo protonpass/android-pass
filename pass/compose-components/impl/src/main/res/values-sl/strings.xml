@@ -89,6 +89,7 @@
   <string name="bottom_bar_add_item_icon_content_description">Dodaj predmet</string>
   <string name="bottom_bar_profile_icon_content_description">Profil</string>
   <string name="bottom_bar_security_center_icon_content_description">Varnostno središče</string>
+  <string name="bottom_bar_explore_icon_content_description">Raziščite</string>
   <!-- List group by most recents -->
   <string name="most_recent_today">Danes</string>
   <string name="most_recent_yesterday">Včeraj</string>
@@ -355,6 +356,8 @@
   <string name="collapse_expanded_text">manj</string>
   <string name="login_item_monitor_widget_weak_pass_title">Šibko geslo</string>
   <string name="login_item_monitor_widget_weak_pass_subtitle">Ta račun je ranljiv, obiščite storitev in spremenite geslo.</string>
+  <string name="login_item_monitor_widget_compromised_pass_title">Compromised password</string>
+  <string name="login_item_monitor_widget_compromised_pass_subtitle">This login password appears in a data breach. Please visit the service and change the password.</string>
   <plurals name="login_item_monitor_widget_reused_pass_title">
     <item quantity="one">%d druga prijava uporablja isto geslo</item>
     <item quantity="two">%d drugi prijavi uporabljata isto geslo</item>
@@ -363,6 +366,13 @@
   </plurals>
   <string name="login_item_monitor_widget_missing_two_fa_title">Nastavite 2FA za večjo varnost</string>
   <string name="login_item_monitor_widget_missing_two_fa_subtitle">Ta storitev ponuja 2FA. Omogočite ga za dodatno varnost računa.</string>
+  <string name="login_item_monitor_action_ignore">Ignore</string>
+  <string name="login_item_monitor_action_restore">Restore alert</string>
+  <string name="login_item_monitor_header">Pass Monitor</string>
+  <string name="login_item_monitor_label_weak">Weak password</string>
+  <string name="login_item_monitor_label_compromised">Compromised password</string>
+  <string name="login_item_monitor_label_reused">Reused password</string>
+  <string name="login_item_monitor_label_missing_2fa">Missing 2FA</string>
   <string name="login_item_reused_passwords_subtitle">Predmeti iz vaših trezorjev, ki uporabljajo to geslo.</string>
   <string name="mfa_limit_reached">Dosežena je omejitev za 2FA</string>
   <string name="activity_in_last_two_weeks">Dejavnost v zadnjih 14 dneh</string>
@@ -402,16 +412,16 @@
   <string name="warning_dialog_item_shared_vault_reminder">Ne opominjaj me več</string>
   <string name="upgrade_to_pass_plus">Nadgradi na Pass Plus</string>
   <string name="warning_dialog_reload_app_after_purchase_description">Pravkar boste preusmerjeni na naše spletno mesto. Če kupite paket, ponovno zaženite aplikacijo.</string>
-      <string name="word_separator">Ločilo besed</string>
-      <string name="bottomsheet_option_capitalise">Napiši veliko začetnico</string>
-      <string name="bottomsheet_option_word_separator_hyphens">Vezaji (-)</string>
-      <string name="bottomsheet_option_word_separator_spaces">Presledki</string>
-      <string name="bottomsheet_option_word_separator_periods">Pike (.)</string>
-      <string name="bottomsheet_option_word_separator_commas">Vejice (,)</string>
-      <string name="bottomsheet_option_word_separator_underscores">Podčrtaji (_)</string>
-      <string name="bottomsheet_option_word_separator_numbers">Številke</string>
-      <string name="bottomsheet_option_word_separator_numbers_and_symbols">Številke in simboli</string>
-
+  <!-- Shared word separator dialog (used by password + username generators) -->
+  <string name="word_separator">Ločilo besed</string>
+  <string name="bottomsheet_option_capitalise">Napiši veliko začetnico</string>
+  <string name="bottomsheet_option_word_separator_hyphens">Vezaji (-)</string>
+  <string name="bottomsheet_option_word_separator_spaces">Presledki</string>
+  <string name="bottomsheet_option_word_separator_periods">Pike (.)</string>
+  <string name="bottomsheet_option_word_separator_commas">Vejice (,)</string>
+  <string name="bottomsheet_option_word_separator_underscores">Podčrtaji (_)</string>
+  <string name="bottomsheet_option_word_separator_numbers">Številke</string>
+  <string name="bottomsheet_option_word_separator_numbers_and_symbols">Številke in simboli</string>
   <plurals name="word_count">
     <item quantity="one">%s beseda</item>
     <item quantity="two">%s besedi</item>

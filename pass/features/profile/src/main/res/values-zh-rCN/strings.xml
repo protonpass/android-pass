@@ -9,6 +9,9 @@
   <string name="profile_option_import_export">导入/导出</string>
   <string name="profile_option_tutorial">如何使用 Proton Pass</string>
   <string name="profile_option_rating">为应用评分</string>
+  <string name="profile_spread_the_word">分享给他人</string>
+  <string name="profile_option_tell_a_friend">推荐给朋友</string>
+  <string name="profile_spread_the_word_share_message">我正在使用 Proton Pass 来保护我的密码安全，试试看：https://proton.me/pass/download</string>
   <string name="profile_option_autofill">自动填充</string>
   <string name="profile_option_autofill_subtitle">自动填写您的用户名和密码。</string>
   <string name="profile_option_secure_links">安全链接</string>

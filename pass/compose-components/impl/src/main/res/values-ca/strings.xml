@@ -87,6 +87,7 @@
   <string name="bottom_bar_add_item_icon_content_description">Afegeix un element</string>
   <string name="bottom_bar_profile_icon_content_description">Perfil</string>
   <string name="bottom_bar_security_center_icon_content_description">Centre de seguretat</string>
+  <string name="bottom_bar_explore_icon_content_description">Explora</string>
   <!-- List group by most recents -->
   <string name="most_recent_today">Avui</string>
   <string name="most_recent_yesterday">Ahir</string>
@@ -325,12 +326,21 @@
   <string name="collapse_expanded_text">menys</string>
   <string name="login_item_monitor_widget_weak_pass_title">Contrasenya feble</string>
   <string name="login_item_monitor_widget_weak_pass_subtitle">Aquest compte és vulnerable, visiteu el servei i canvieu la contrasenya.</string>
+  <string name="login_item_monitor_widget_compromised_pass_title">Contrasenya compromesa</string>
+  <string name="login_item_monitor_widget_compromised_pass_subtitle">Aquesta contrasenya d\'inici de sessió apareix en una filtració de dades. Visiteu el servei i canvieu la contrasenya.</string>
   <plurals name="login_item_monitor_widget_reused_pass_title">
     <item quantity="one">%d altre inici de sessió fa servir la mateixa contrasenya.</item>
     <item quantity="other">%d altres inicis de sessió fan servir la mateixa contrasenya.</item>
   </plurals>
   <string name="login_item_monitor_widget_missing_two_fa_title">Configureu A2F per a més seguretat</string>
   <string name="login_item_monitor_widget_missing_two_fa_subtitle">Aquest servei ofereix A2F. Habiliteu-lo per a augmentar la seguretat del compte.</string>
+  <string name="login_item_monitor_action_ignore">Ignora</string>
+  <string name="login_item_monitor_action_restore">Restablir l\'alerta</string>
+  <string name="login_item_monitor_header">Pass Monitor</string>
+  <string name="login_item_monitor_label_weak">Contrasenya feble</string>
+  <string name="login_item_monitor_label_compromised">Contrasenya compromesa</string>
+  <string name="login_item_monitor_label_reused">Contrasenya reutilitzada</string>
+  <string name="login_item_monitor_label_missing_2fa">Falta el 2FA</string>
   <string name="login_item_reused_passwords_subtitle">Elements de les vostres caixes fortes que utilitzen aquesta contrasenya.</string>
   <string name="mfa_limit_reached">S\'ha assolit el límit de 2FA</string>
   <string name="activity_in_last_two_weeks">Activitat en els darrers 14 dies</string>
@@ -364,16 +374,16 @@
   <string name="warning_dialog_item_shared_vault_reminder">No m\'ho tornis a recordar</string>
   <string name="upgrade_to_pass_plus">Milloreu al Pass Plus</string>
   <string name="warning_dialog_reload_app_after_purchase_description">Esteu a punt de ser redirigit al nostre lloc web. Si compreu un pla, reinicieu l\'aplicació.</string>
-      <string name="word_separator">Separador de paraules</string>
-      <string name="bottomsheet_option_capitalise">Majúscules</string>
-      <string name="bottomsheet_option_word_separator_hyphens">Guions ( - )</string>
-      <string name="bottomsheet_option_word_separator_spaces">Espais</string>
-      <string name="bottomsheet_option_word_separator_periods">Punts ( . )</string>
-      <string name="bottomsheet_option_word_separator_commas">Comes ( , )</string>
-      <string name="bottomsheet_option_word_separator_underscores">Guions baixos ( _ )</string>
-      <string name="bottomsheet_option_word_separator_numbers">Números</string>
-      <string name="bottomsheet_option_word_separator_numbers_and_symbols">Nombres i símbols</string>
-
+  <!-- Shared word separator dialog (used by password + username generators) -->
+  <string name="word_separator">Separador de paraules</string>
+  <string name="bottomsheet_option_capitalise">Majúscules</string>
+  <string name="bottomsheet_option_word_separator_hyphens">Guions ( - )</string>
+  <string name="bottomsheet_option_word_separator_spaces">Espais</string>
+  <string name="bottomsheet_option_word_separator_periods">Punts ( . )</string>
+  <string name="bottomsheet_option_word_separator_commas">Comes ( , )</string>
+  <string name="bottomsheet_option_word_separator_underscores">Guions baixos ( _ )</string>
+  <string name="bottomsheet_option_word_separator_numbers">Números</string>
+  <string name="bottomsheet_option_word_separator_numbers_and_symbols">Nombres i símbols</string>
   <plurals name="word_count">
     <item quantity="one">%s paraula</item>
     <item quantity="other">%s paraules</item>

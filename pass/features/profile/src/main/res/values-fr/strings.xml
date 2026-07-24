@@ -9,6 +9,9 @@
   <string name="profile_option_import_export">Importation/exportation</string>
   <string name="profile_option_tutorial">Comment utiliser Proton Pass</string>
   <string name="profile_option_rating">Évaluer l\'application</string>
+  <string name="profile_spread_the_word">Faites passer le mot</string>
+  <string name="profile_option_tell_a_friend">Parlez-en à un ami</string>
+  <string name="profile_spread_the_word_share_message">J\'utilise Proton Pass pour protéger mes mots de passe. Essayez-le : https://proton.me/pass/download</string>
   <string name="profile_option_autofill">Remplissage automatique</string>
   <string name="profile_option_autofill_subtitle">Vos noms d\'utilisateur et vos mots de passe sont automatiquement complétés.</string>
   <string name="profile_option_secure_links">Liens sécurisés</string>

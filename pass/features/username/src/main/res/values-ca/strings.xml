@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="generate_username_title">Generar un nom d\'usuari</string>
+  <string name="generate_username_button_regenerate">Regenerar-ho</string>
+  <string name="generate_username_button_copy">Copia</string>
+  <string name="generate_username_label_include_numbers">Inclou números</string>
+  <string name="generate_username_label_leetspeak">Leetspeak</string>
+  <string name="generate_username_label_word_types">Tipus de paraules</string>
+  <string name="generate_username_label_adjectives">Adjectius</string>
+  <string name="generate_username_label_nouns">Noms</string>
+  <string name="generate_username_label_verbs">Verbs</string>
+  <string name="generate_username_snackbar_copied">S\'ha copiat el nom d\'usuari al porta-retalls</string>
+  <string name="generate_username_snackbar_error">No s\'ha pogut generar el nom d\'usuari</string>
+</resources>

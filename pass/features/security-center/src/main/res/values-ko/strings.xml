@@ -32,6 +32,8 @@
   <string name="security_center_home_row_insecure_passwords_subtitle">비밀번호 변경</string>
   <string name="security_center_home_row_reused_passwords_title">재사용한 비밀번호</string>
   <string name="security_center_home_row_reused_passwords_subtitle">고유한 비밀번호 만들기</string>
+  <string name="security_center_home_row_compromised_passwords_title">Compromised passwords</string>
+  <string name="security_center_home_row_compromised_passwords_subtitle">Common passwords found in data breaches</string>
   <string name="security_center_home_row_missing_tfa_title">2단계 인증 꺼짐</string>
   <string name="security_center_home_row_missing_tfa_subtitle">더 나은 보안을 위해 2단계 인증 설정</string>
   <string name="security_center_home_row_excludes_items_title">모니터링에서 제외됨</string>
@@ -54,6 +56,9 @@
   <string name="security_center_reused_pass_top_bar_title">재사용한 비밀번호</string>
   <string name="security_center_reused_pass_top_bar_subtitle">보안을 강화하기 위해 각 계정에 고유한 비밀번호를 생성하십시오.</string>
   <string name="security_center_reused_pass_list_sticky_header_label" comment="Shows the number of times that an item has a reused password (e.g. Reused 3 times). Note that there's not singular case as that would mean that the password has been never been reused">재사용한 횟수 %1$d회</string>
+  <!-- Compromised passwords screen -->
+  <string name="security_center_compromised_pass_top_bar_title">Compromised passwords</string>
+  <string name="security_center_compromised_pass_top_bar_subtitle">Compromised passwords are the ones exposed in data breaches. Never reuse passwords to limit the impact when a data breach occurs.</string>
   <!-- Missing 2FA -->
   <string name="security_center_missing_tfa_top_bar_title">2단계 인증 꺼짐</string>
   <string name="security_center_missing_tfa_top_bar_subtitle">더 나은 보안을 위해 다음 계정에 2단계 인증을 설정하세요.</string>

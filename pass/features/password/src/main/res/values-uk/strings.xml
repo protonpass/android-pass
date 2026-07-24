@@ -10,7 +10,8 @@
     <item quantity="few">%s символи</item>
     <item quantity="many">%s символів</item>
     <item quantity="other">%s символів</item>
-  </plurals>  <string name="bottomsheet_option_capital_letters">Великі літери (А-Я)</string>
+  </plurals>
+  <string name="bottomsheet_option_capital_letters">Великі літери (А-Я)</string>
   <string name="bottomsheet_option_include_numbers">Додати цифри (0-9)</string>
   <string name="regenerate_password_icon_content_description">Кнопка скидання пароля</string>
   <string name="password_mode_memorable">Пароль, який легко запам\'ятати</string>

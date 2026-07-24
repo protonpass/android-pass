@@ -86,6 +86,7 @@
   <string name="bottom_bar_add_item_icon_content_description">添加项目</string>
   <string name="bottom_bar_profile_icon_content_description">收藏</string>
   <string name="bottom_bar_security_center_icon_content_description">安全中心</string>
+  <string name="bottom_bar_explore_icon_content_description">探索</string>
   <!-- List group by most recents -->
   <string name="most_recent_today">今天</string>
   <string name="most_recent_yesterday">昨天</string>
@@ -310,11 +311,20 @@
   <string name="collapse_expanded_text">收起</string>
   <string name="login_item_monitor_widget_weak_pass_title">弱密码</string>
   <string name="login_item_monitor_widget_weak_pass_subtitle">此账户存在安全风险，请访问该服务并更改密码。</string>
+  <string name="login_item_monitor_widget_compromised_pass_title">泄露密码</string>
+  <string name="login_item_monitor_widget_compromised_pass_subtitle">此登录密码出现在数据泄露中，请访问该服务并更改密码。</string>
   <plurals name="login_item_monitor_widget_reused_pass_title">
     <item quantity="other">%d 其他登录使用相同密码</item>
   </plurals>
   <string name="login_item_monitor_widget_missing_two_fa_title">设置 2FA 以获得更多安全</string>
   <string name="login_item_monitor_widget_missing_two_fa_subtitle">该服务提供 2FA。启用它可提高账户安全性。</string>
+  <string name="login_item_monitor_action_ignore">忽略</string>
+  <string name="login_item_monitor_action_restore">恢复提醒</string>
+  <string name="login_item_monitor_header">Pass Monitor</string>
+  <string name="login_item_monitor_label_weak">弱密码</string>
+  <string name="login_item_monitor_label_compromised">泄露密码</string>
+  <string name="login_item_monitor_label_reused">重复使用的密码</string>
+  <string name="login_item_monitor_label_missing_2fa">缺少 2FA</string>
   <string name="login_item_reused_passwords_subtitle">使用此密码的保险库项目。</string>
   <string name="mfa_limit_reached">已达 2FA 数量上限</string>
   <string name="activity_in_last_two_weeks">最近 14 天的活动</string>
@@ -345,16 +355,16 @@
   <string name="warning_dialog_item_shared_vault_reminder">不再提示</string>
   <string name="upgrade_to_pass_plus">升级至 Pass Plus</string>
   <string name="warning_dialog_reload_app_after_purchase_description">您即将被重定向到我们的网站。如果您购买了套餐，请重新启动应用。</string>
-      <string name="word_separator">单词分隔符</string>
-      <string name="bottomsheet_option_capitalise">大写</string>
-      <string name="bottomsheet_option_word_separator_hyphens">连字符 ( - )</string>
-      <string name="bottomsheet_option_word_separator_spaces">空格</string>
-      <string name="bottomsheet_option_word_separator_periods">句点 ( . )</string>
-      <string name="bottomsheet_option_word_separator_commas">逗号（，）</string>
-      <string name="bottomsheet_option_word_separator_underscores">下划线 ( _ )</string>
-      <string name="bottomsheet_option_word_separator_numbers">数字</string>
-      <string name="bottomsheet_option_word_separator_numbers_and_symbols">数字和符号</string>
-
+  <!-- Shared word separator dialog (used by password + username generators) -->
+  <string name="word_separator">单词分隔符</string>
+  <string name="bottomsheet_option_capitalise">大写</string>
+  <string name="bottomsheet_option_word_separator_hyphens">连字符 ( - )</string>
+  <string name="bottomsheet_option_word_separator_spaces">空格</string>
+  <string name="bottomsheet_option_word_separator_periods">句点 ( . )</string>
+  <string name="bottomsheet_option_word_separator_commas">逗号（，）</string>
+  <string name="bottomsheet_option_word_separator_underscores">下划线 ( _ )</string>
+  <string name="bottomsheet_option_word_separator_numbers">数字</string>
+  <string name="bottomsheet_option_word_separator_numbers_and_symbols">数字和符号</string>
   <plurals name="word_count">
     <item quantity="other">%s 个单词</item>
   </plurals>

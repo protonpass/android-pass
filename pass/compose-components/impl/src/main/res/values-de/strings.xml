@@ -87,6 +87,7 @@
   <string name="bottom_bar_add_item_icon_content_description">Eintrag hinzufügen</string>
   <string name="bottom_bar_profile_icon_content_description">Profil</string>
   <string name="bottom_bar_security_center_icon_content_description">Sicherheitszentrum</string>
+  <string name="bottom_bar_explore_icon_content_description">Entdecken</string>
   <!-- List group by most recents -->
   <string name="most_recent_today">Heute</string>
   <string name="most_recent_yesterday">Gestern</string>
@@ -325,12 +326,21 @@
   <string name="collapse_expanded_text">weniger</string>
   <string name="login_item_monitor_widget_weak_pass_title">Schwaches Kennwort</string>
   <string name="login_item_monitor_widget_weak_pass_subtitle">Dieses Konto ist angreifbar, besuche den Dienst und ändere dein Passwort.</string>
+  <string name="login_item_monitor_widget_compromised_pass_title">Kompromittierte Passwörter</string>
+  <string name="login_item_monitor_widget_compromised_pass_subtitle">Dieses Anmeldepasswort ist von einer Datenpanne betroffen. Bitte rufe den Dienst auf und ändere umgehend das Passwort.</string>
   <plurals name="login_item_monitor_widget_reused_pass_title">
     <item quantity="one">%d weitere Anmeldeinformation verwendet das selbe Passwort.</item>
     <item quantity="other">%d andere Zugangsdaten verwenden das selbe Passwort.</item>
   </plurals>
   <string name="login_item_monitor_widget_missing_two_fa_title">Richte 2FA für mehr Sicherheit ein</string>
   <string name="login_item_monitor_widget_missing_two_fa_subtitle">Dieser Dienst unterstützt 2FA. Aktiviere sie für zusätzliche Kontosicherheit.</string>
+  <string name="login_item_monitor_action_ignore">Ignorieren</string>
+  <string name="login_item_monitor_action_restore">Warnmeldung wiederherstellen</string>
+  <string name="login_item_monitor_header">Passwortüberwachung</string>
+  <string name="login_item_monitor_label_weak">Schwaches Passwort</string>
+  <string name="login_item_monitor_label_compromised">Kompromittierte Passwörter</string>
+  <string name="login_item_monitor_label_reused">Wiederverwendetes Passwort</string>
+  <string name="login_item_monitor_label_missing_2fa">2FA fehlt</string>
   <string name="login_item_reused_passwords_subtitle">Einträge aus deinen Tresoren, die dieses Passwort verwenden.</string>
   <string name="mfa_limit_reached">2FA-Limit erreicht</string>
   <string name="activity_in_last_two_weeks">Aktivität in den letzten 14 Tagen</string>
@@ -364,16 +374,16 @@
   <string name="warning_dialog_item_shared_vault_reminder">Nicht erneut erinnern</string>
   <string name="upgrade_to_pass_plus">Auf Pass Plus umsteigen</string>
   <string name="warning_dialog_reload_app_after_purchase_description">Du wirst gleich auf unsere Website weitergeleitet. Wenn du einen Abonnent kaufst, starte die App bitte neu.</string>
-      <string name="word_separator">Trennzeichen</string>
-      <string name="bottomsheet_option_capitalise">Großschreiben</string>
-      <string name="bottomsheet_option_word_separator_hyphens">Bindestriche ( - )</string>
-      <string name="bottomsheet_option_word_separator_spaces">Leerzeichen</string>
-      <string name="bottomsheet_option_word_separator_periods">Punkte ( . )</string>
-      <string name="bottomsheet_option_word_separator_commas">Kommas ( , )</string>
-      <string name="bottomsheet_option_word_separator_underscores">Unterstriche ( _ )</string>
-      <string name="bottomsheet_option_word_separator_numbers">Zahlen</string>
-      <string name="bottomsheet_option_word_separator_numbers_and_symbols">Zahlen und Symbole</string>
-
+  <!-- Shared word separator dialog (used by password + username generators) -->
+  <string name="word_separator">Trennzeichen</string>
+  <string name="bottomsheet_option_capitalise">Großschreiben</string>
+  <string name="bottomsheet_option_word_separator_hyphens">Bindestriche ( - )</string>
+  <string name="bottomsheet_option_word_separator_spaces">Leerzeichen</string>
+  <string name="bottomsheet_option_word_separator_periods">Punkte ( . )</string>
+  <string name="bottomsheet_option_word_separator_commas">Kommas ( , )</string>
+  <string name="bottomsheet_option_word_separator_underscores">Unterstriche ( _ )</string>
+  <string name="bottomsheet_option_word_separator_numbers">Zahlen</string>
+  <string name="bottomsheet_option_word_separator_numbers_and_symbols">Zahlen und Symbole</string>
   <plurals name="word_count">
     <item quantity="one">%s Wort</item>
     <item quantity="other">%s Wörter</item>

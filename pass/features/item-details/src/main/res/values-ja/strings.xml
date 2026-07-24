@@ -32,6 +32,7 @@
   <string name="item_details_leave_dialog_message">このアイテムとその詳細にアクセスできなくなります。続行しますか？</string>
   <string name="item_details_leave_item_message_error">アイテムからの退出中にエラーが発生しました</string>
   <string name="item_details_leave_item_message_success">アイテムを正常に退出しました</string>
+  <string name="item_details_monitor_check_update_error">Couldn\'t update monitoring. Please try again.</string>
   <string name="item_details_snackbar_message_alias_copied">エイリアスをコピーしました</string>
   <string name="item_details_snackbar_message_birthdate_copied">生年月日をコピーしました</string>
   <string name="item_details_snackbar_message_card_number_copied">カード番号をコピーしました</string>

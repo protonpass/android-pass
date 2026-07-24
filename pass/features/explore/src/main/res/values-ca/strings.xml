@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="explore_tab_title">Explora</string>
+  <string name="explore_section_tools_title">Eines</string>
+  <string name="explore_section_expand_security_title">Augmenteu la vostra seguretat</string>
+  <string name="explore_tool_password_generator_title">Generador de contrasenyes</string>
+  <string name="explore_tool_dark_web_monitor_title">Monitoratge del web fosc</string>
+  <string name="explore_tool_dark_web_monitor_subtitle">Començar a monitorar les filtracions de dades.</string>
+  <string name="explore_tool_password_health_title">Salut de les contrasenyes</string>
+  <string name="explore_tool_password_health_subtitle">Identifiqueu contrasenyes vulnerables, febles i reutilitzades.</string>
+  <string name="explore_tool_codes_title">Codis</string>
+  <string name="explore_tool_codes_subtitle">Codis d\'un sol ús per l\'autenticació de doble factor.</string>
+  <string name="codes_screen_title">Codis</string>
+  <string name="codes_search_placeholder">Cerca a tots els elements</string>
+  <string name="codes_snackbar_code_copied">S\'ha copiat el codi al porta-retalls</string>
+  <string name="explore_tool_aliases_title">Protegiu els correus electrònics amb àlies</string>
+  <string name="explore_tool_aliases_subtitle">Protegiu les adreces, reduïu el correu brossa i bloquegeu els intents de suplantació d\'identitat.</string>
+  <string name="explore_product_vpn_title">Proton VPN</string>
+  <string name="explore_product_vpn_subtitle">Navegueu sense ser rastrejat i accediu a contingut bloquejat.</string>
+  <string name="explore_product_mail_title">Proton Mail</string>
+  <string name="explore_product_mail_subtitle">Protegiu la vostra safata d\'entrada de correu brossa, seguiment i anuncis personalitzats.</string>
+  <string name="explore_product_drive_title">Proton Drive</string>
+  <string name="explore_product_drive_subtitle">Doneu a les vostres precioses fotografies i fitxers la llar segura que es mereixen.</string>
+  <string name="explore_product_lumo_title">Lumo AI</string>
+  <string name="explore_product_lumo_subtitle">Pregunteu i genereu idees amb un assistent d\'IA que prioritza la privadesa.</string>
+  <string name="explore_product_meet_title">Proton Meet</string>
+  <string name="explore_product_meet_subtitle">Parleu en privat amb videoconferències confidencials.</string>
+  <string name="explore_business_banner_title">Proton per empreses</string>
+</resources>

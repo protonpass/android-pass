@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="explore_tab_title">Découvrir</string>
+  <string name="explore_section_tools_title">Outils</string>
+  <string name="explore_section_expand_security_title">Renforcez votre sécurité</string>
+  <string name="explore_tool_password_generator_title">Générateur de mots de passe</string>
+  <string name="explore_tool_dark_web_monitor_title">Surveillance du dark web</string>
+  <string name="explore_tool_dark_web_monitor_subtitle">Commencez à surveiller les fuites de données.</string>
+  <string name="explore_tool_password_health_title">Sécurité des mots de passe</string>
+  <string name="explore_tool_password_health_subtitle">Identifiez les mots de passe vulnérables, faibles et réutilisés.</string>
+  <string name="explore_tool_codes_title">Codes</string>
+  <string name="explore_tool_codes_subtitle">Codes à usage unique pour l’authentification à deux facteurs.</string>
+  <string name="codes_screen_title">Codes</string>
+  <string name="codes_search_placeholder">Rechercher dans tous les éléments</string>
+  <string name="codes_snackbar_code_copied">Le code a été copié dans le presse-papiers.</string>
+  <string name="explore_tool_aliases_title">Protégez vos adresses e-mail grâce à des alias</string>
+  <string name="explore_tool_aliases_subtitle">Protégez vos adresses e-mail, réduisez les indésirables/spam et bloquez les tentatives d’hameçonnage.</string>
+  <string name="explore_product_vpn_title">Proton VPN</string>
+  <string name="explore_product_vpn_subtitle">Naviguez sans être suivi et accédez aux contenus bloqués.</string>
+  <string name="explore_product_mail_title">Proton Mail</string>
+  <string name="explore_product_mail_subtitle">Protégez votre boîte de réception contre les indésirables/spam, le suivi et les publicités ciblées.</string>
+  <string name="explore_product_drive_title">Proton Drive</string>
+  <string name="explore_product_drive_subtitle">Offrez à vos précieuses photos et vos fichiers le lieu sûr qu’ils méritent.</string>
+  <string name="explore_product_lumo_title">Lumo IA</string>
+  <string name="explore_product_lumo_subtitle">Posez vos questions et trouvez des idées avec un assistant IA axé sur la confidentialité.</string>
+  <string name="explore_product_meet_title">Proton Meet</string>
+  <string name="explore_product_meet_subtitle">Communiquez en privé grâce à la visioconférence confidentielle.</string>
+  <string name="explore_business_banner_title">Proton For Business</string>
+</resources>

@@ -32,6 +32,7 @@
   <string name="item_details_leave_dialog_message">Perderás el acceso a este artículo y a sus detalles. ¿Deseas continuar?</string>
   <string name="item_details_leave_item_message_error">Se ha producido un error al abandonar el elemento.</string>
   <string name="item_details_leave_item_message_success">Se ha dejado el elemento.</string>
+  <string name="item_details_monitor_check_update_error">Couldn\'t update monitoring. Please try again.</string>
   <string name="item_details_snackbar_message_alias_copied">Se ha copiado el alias.</string>
   <string name="item_details_snackbar_message_birthdate_copied">Se ha copiado la fecha de nacimiento.</string>
   <string name="item_details_snackbar_message_card_number_copied">Se ha copiado el número de la tarjeta.</string>

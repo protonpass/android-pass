@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="generate_username_title">Δημιουργία ονόματος χρήστη</string>
+  <string name="generate_username_button_regenerate">Αναπαραγωγή</string>
+  <string name="generate_username_button_copy">Αντιγραφή</string>
+  <string name="generate_username_label_include_numbers">Συμπερίληψη αριθμών</string>
+  <string name="generate_username_label_leetspeak">Leetspeak</string>
+  <string name="generate_username_label_word_types">Τύποι λέξεων</string>
+  <string name="generate_username_label_adjectives">Επίθετα</string>
+  <string name="generate_username_label_nouns">Ουσιαστικά</string>
+  <string name="generate_username_label_verbs">Ρήματα</string>
+  <string name="generate_username_snackbar_copied">Το όνομα χρήστη αντιγράφηκε στο πρόχειρο</string>
+  <string name="generate_username_snackbar_error">Δεν ήταν δυνατή η δημιουργία ονόματος χρήστη</string>
+</resources>

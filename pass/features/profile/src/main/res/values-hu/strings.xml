@@ -9,6 +9,9 @@
   <string name="profile_option_import_export">Importálás és exportálás</string>
   <string name="profile_option_tutorial">A Proton Pass használata</string>
   <string name="profile_option_rating">Értékelje az alkalmazást</string>
+  <string name="profile_spread_the_word">Spread the word</string>
+  <string name="profile_option_tell_a_friend">Tell a friend</string>
+  <string name="profile_spread_the_word_share_message">I\'m using Proton Pass to keep my passwords secure. Try it: https://proton.me/pass/download</string>
   <string name="profile_option_autofill">Automatikus kitöltés</string>
   <string name="profile_option_autofill_subtitle">A felhasználónevek és jelszavak automatikus kitöltése.</string>
   <string name="profile_option_secure_links">Biztonságos hivatkozások</string>

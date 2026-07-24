@@ -8,7 +8,8 @@
   <plurals name="character_count">
     <item quantity="one">%s caràcter</item>
     <item quantity="other">%s caràcters</item>
-  </plurals>  <string name="bottomsheet_option_capital_letters">Lletres majúscules (A-Z)</string>
+  </plurals>
+  <string name="bottomsheet_option_capital_letters">Lletres majúscules (A-Z)</string>
   <string name="bottomsheet_option_include_numbers">Incloeu números (0-9)</string>
   <string name="regenerate_password_icon_content_description">Botó de regeneració de contrasenya</string>
   <string name="password_mode_memorable">Contrasenya fàcil de recordar</string>

@@ -87,6 +87,7 @@
   <string name="bottom_bar_add_item_icon_content_description">Adicionar um item</string>
   <string name="bottom_bar_profile_icon_content_description">Perfil</string>
   <string name="bottom_bar_security_center_icon_content_description">Centro de segurança</string>
+  <string name="bottom_bar_explore_icon_content_description">Explore</string>
   <!-- List group by most recents -->
   <string name="most_recent_today">Hoje</string>
   <string name="most_recent_yesterday">Ontem</string>
@@ -325,12 +326,21 @@
   <string name="collapse_expanded_text">menos</string>
   <string name="login_item_monitor_widget_weak_pass_title">Palavra-passe fraca</string>
   <string name="login_item_monitor_widget_weak_pass_subtitle">Esta conta está vulnerável. Consulte o serviço e altere a sua palavra-passe.</string>
+  <string name="login_item_monitor_widget_compromised_pass_title">Compromised password</string>
+  <string name="login_item_monitor_widget_compromised_pass_subtitle">This login password appears in a data breach. Please visit the service and change the password.</string>
   <plurals name="login_item_monitor_widget_reused_pass_title">
     <item quantity="one">%d outro início de sessão usa a mesma palavra-passe.</item>
     <item quantity="other">%d outros inícios de sessão usam a mesma palavra-passe.</item>
   </plurals>
   <string name="login_item_monitor_widget_missing_two_fa_title">Configure a autenticação A2F para mais segurança</string>
   <string name="login_item_monitor_widget_missing_two_fa_subtitle">Este serviço oferece autenticação de dois fatores (A2F). Ative-a para aumentar a segurança da sua conta.</string>
+  <string name="login_item_monitor_action_ignore">Ignore</string>
+  <string name="login_item_monitor_action_restore">Restore alert</string>
+  <string name="login_item_monitor_header">Pass Monitor</string>
+  <string name="login_item_monitor_label_weak">Weak password</string>
+  <string name="login_item_monitor_label_compromised">Compromised password</string>
+  <string name="login_item_monitor_label_reused">Reused password</string>
+  <string name="login_item_monitor_label_missing_2fa">Missing 2FA</string>
   <string name="login_item_reused_passwords_subtitle">Itens dos seus cofres que utilizam esta palavra-passe.</string>
   <string name="mfa_limit_reached">Limite A2F atingido</string>
   <string name="activity_in_last_two_weeks">Atividade nos últimos 14 dias</string>
@@ -364,16 +374,16 @@
   <string name="warning_dialog_item_shared_vault_reminder">Don\'t remind me again</string>
   <string name="upgrade_to_pass_plus">Upgrade to Pass Plus</string>
   <string name="warning_dialog_reload_app_after_purchase_description">You are about to be redirected to our website. If you purchase a plan, please restart the app.</string>
-      <string name="word_separator">Separador de palavras</string>
-      <string name="bottomsheet_option_capitalise">Em maiúsculas</string>
-      <string name="bottomsheet_option_word_separator_hyphens">Hífens ( - )</string>
-      <string name="bottomsheet_option_word_separator_spaces">Espaços</string>
-      <string name="bottomsheet_option_word_separator_periods">Pontos ( . )</string>
-      <string name="bottomsheet_option_word_separator_commas">Vírgulas ( , )</string>
-      <string name="bottomsheet_option_word_separator_underscores">Sublinhados ( _ )</string>
-      <string name="bottomsheet_option_word_separator_numbers">Números</string>
-      <string name="bottomsheet_option_word_separator_numbers_and_symbols">Números e símbolos</string>
-
+  <!-- Shared word separator dialog (used by password + username generators) -->
+  <string name="word_separator">Separador de palavras</string>
+  <string name="bottomsheet_option_capitalise">Em maiúsculas</string>
+  <string name="bottomsheet_option_word_separator_hyphens">Hífens ( - )</string>
+  <string name="bottomsheet_option_word_separator_spaces">Espaços</string>
+  <string name="bottomsheet_option_word_separator_periods">Pontos ( . )</string>
+  <string name="bottomsheet_option_word_separator_commas">Vírgulas ( , )</string>
+  <string name="bottomsheet_option_word_separator_underscores">Sublinhados ( _ )</string>
+  <string name="bottomsheet_option_word_separator_numbers">Números</string>
+  <string name="bottomsheet_option_word_separator_numbers_and_symbols">Números e símbolos</string>
   <plurals name="word_count">
     <item quantity="one">%s palavra</item>
     <item quantity="other">%s palavras</item>

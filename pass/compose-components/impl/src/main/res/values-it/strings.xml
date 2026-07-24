@@ -87,6 +87,7 @@
   <string name="bottom_bar_add_item_icon_content_description">Aggiungi un elemento</string>
   <string name="bottom_bar_profile_icon_content_description">Profilo</string>
   <string name="bottom_bar_security_center_icon_content_description">Centro sicurezza</string>
+  <string name="bottom_bar_explore_icon_content_description">Esplora</string>
   <!-- List group by most recents -->
   <string name="most_recent_today">Oggi</string>
   <string name="most_recent_yesterday">Ieri</string>
@@ -325,12 +326,21 @@
   <string name="collapse_expanded_text">Mostra meno</string>
   <string name="login_item_monitor_widget_weak_pass_title">Password debole</string>
   <string name="login_item_monitor_widget_weak_pass_subtitle">Questo account è vulnerabile, visita il servizio e cambia la password.</string>
+  <string name="login_item_monitor_widget_compromised_pass_title">Password compromessa</string>
+  <string name="login_item_monitor_widget_compromised_pass_subtitle">Questa password di accesso è stata compromessa in seguito a una violazione dei dati. Ti invitiamo ad accedere al servizio e a modificare la password.</string>
   <plurals name="login_item_monitor_widget_reused_pass_title">
     <item quantity="one">%d altro login utilizza la stessa password</item>
     <item quantity="other">Altri %d login utilizzano la stessa password</item>
   </plurals>
   <string name="login_item_monitor_widget_missing_two_fa_title">Configura 2FA per maggiore sicurezza</string>
   <string name="login_item_monitor_widget_missing_two_fa_subtitle">Questo servizio offre 2FA. Abilitalo per una maggiore sicurezza dell\'account.</string>
+  <string name="login_item_monitor_action_ignore">Ignora</string>
+  <string name="login_item_monitor_action_restore">Ripristina avviso</string>
+  <string name="login_item_monitor_header">Pass Monitor</string>
+  <string name="login_item_monitor_label_weak">Password debole</string>
+  <string name="login_item_monitor_label_compromised">Password compromessa</string>
+  <string name="login_item_monitor_label_reused">Password già utilizzata</string>
+  <string name="login_item_monitor_label_missing_2fa">2FA mancante</string>
   <string name="login_item_reused_passwords_subtitle">Elementi delle tue casseforti che utilizzano questa password.</string>
   <string name="mfa_limit_reached">Limite 2FA raggiunto</string>
   <string name="activity_in_last_two_weeks">Attività negli ultimi 14 giorni</string>
@@ -364,16 +374,16 @@
   <string name="warning_dialog_item_shared_vault_reminder">Non ricordarmelo di nuovo</string>
   <string name="upgrade_to_pass_plus">Passa a Pass Plus</string>
   <string name="warning_dialog_reload_app_after_purchase_description">Stai per essere reindirizzato al nostro sito web. Se acquisti un piano, riavvia l’app.</string>
-      <string name="word_separator">Separatore delle parole</string>
-      <string name="bottomsheet_option_capitalise">Iniziali maiuscole (A–Z)</string>
-      <string name="bottomsheet_option_word_separator_hyphens">Trattino ( - )</string>
-      <string name="bottomsheet_option_word_separator_spaces">Spazio</string>
-      <string name="bottomsheet_option_word_separator_periods">Punto ( . )</string>
-      <string name="bottomsheet_option_word_separator_commas">Virgola ( , )</string>
-      <string name="bottomsheet_option_word_separator_underscores">Trattino basso ( _ )</string>
-      <string name="bottomsheet_option_word_separator_numbers">Numero (0–9)</string>
-      <string name="bottomsheet_option_word_separator_numbers_and_symbols">Numero (0–9) o simbolo (!&amp;*)</string>
-
+  <!-- Shared word separator dialog (used by password + username generators) -->
+  <string name="word_separator">Separatore delle parole</string>
+  <string name="bottomsheet_option_capitalise">Iniziali maiuscole (A–Z)</string>
+  <string name="bottomsheet_option_word_separator_hyphens">Trattino ( - )</string>
+  <string name="bottomsheet_option_word_separator_spaces">Spazio</string>
+  <string name="bottomsheet_option_word_separator_periods">Punto ( . )</string>
+  <string name="bottomsheet_option_word_separator_commas">Virgola ( , )</string>
+  <string name="bottomsheet_option_word_separator_underscores">Trattino basso ( _ )</string>
+  <string name="bottomsheet_option_word_separator_numbers">Numero (0–9)</string>
+  <string name="bottomsheet_option_word_separator_numbers_and_symbols">Numero (0–9) o simbolo (!&amp;*)</string>
   <plurals name="word_count">
     <item quantity="one">%s parola</item>
     <item quantity="other">%s parole</item>

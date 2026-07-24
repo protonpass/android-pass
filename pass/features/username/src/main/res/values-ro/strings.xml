@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="generate_username_title">Generare nume de utilizator</string>
+  <string name="generate_username_button_regenerate">Regenerare</string>
+  <string name="generate_username_button_copy">Copiere</string>
+  <string name="generate_username_label_include_numbers">Includere cifre</string>
+  <string name="generate_username_label_leetspeak">Leetspeak</string>
+  <string name="generate_username_label_word_types">Tipuri de cuvinte</string>
+  <string name="generate_username_label_adjectives">Adjective</string>
+  <string name="generate_username_label_nouns">Substantive</string>
+  <string name="generate_username_label_verbs">Verbe</string>
+  <string name="generate_username_snackbar_copied">Nume de utilizator copiat în memorie.</string>
+  <string name="generate_username_snackbar_error">Nu s-a putut genera numele de utilizator.</string>
+</resources>

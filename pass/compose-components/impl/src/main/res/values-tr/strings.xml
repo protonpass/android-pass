@@ -87,6 +87,7 @@
   <string name="bottom_bar_add_item_icon_content_description">Öge ekle</string>
   <string name="bottom_bar_profile_icon_content_description">Profil</string>
   <string name="bottom_bar_security_center_icon_content_description">Güvenlik merkezi</string>
+  <string name="bottom_bar_explore_icon_content_description">Keşfet</string>
   <!-- List group by most recents -->
   <string name="most_recent_today">Bugün</string>
   <string name="most_recent_yesterday">Dün</string>
@@ -325,12 +326,21 @@
   <string name="collapse_expanded_text">daha az</string>
   <string name="login_item_monitor_widget_weak_pass_title">Parola zayıf</string>
   <string name="login_item_monitor_widget_weak_pass_subtitle">Bu hesap ele geçirilebilir. Hizmeti ziyaret edin ve parolanızı değiştirin.</string>
+  <string name="login_item_monitor_widget_compromised_pass_title">Güvenliği ihlal edilmiş parola</string>
+  <string name="login_item_monitor_widget_compromised_pass_subtitle">Bu oturum açma şifresi bir veri sızıntısında ortaya çıkmış. Lütfen ilgili hizmeti ziyaret edin ve parolanızı değiştirin.</string>
   <plurals name="login_item_monitor_widget_reused_pass_title">
     <item quantity="one">%d oturum açma kaydı aynı parolayı kullanıyor</item>
     <item quantity="other">%d oturum açma kaydı aynı parolayı kullanıyor</item>
   </plurals>
   <string name="login_item_monitor_widget_missing_two_fa_title">Güvenliği artırmak için iki adımlı doğrulamayı açın</string>
   <string name="login_item_monitor_widget_missing_two_fa_subtitle">Bu hizmette iki adımlı doğrulama özelliği var. Hesap güvenliğini artırmak için bunu kullanın.</string>
+  <string name="login_item_monitor_action_ignore">Yok say</string>
+  <string name="login_item_monitor_action_restore">Uyarıyı geri yükle</string>
+  <string name="login_item_monitor_header">Pass Monitor</string>
+  <string name="login_item_monitor_label_weak">Zayıf parola</string>
+  <string name="login_item_monitor_label_compromised">Güvenliği ihlal edilmiş parola</string>
+  <string name="login_item_monitor_label_reused">Yeniden kullanılan parola</string>
+  <string name="login_item_monitor_label_missing_2fa">İki adımlı doğrulama eksik</string>
   <string name="login_item_reused_passwords_subtitle">Kasalarınızda bu parolayı kullanan ögeler.</string>
   <string name="mfa_limit_reached">İki adımlı doğrulama sınırına ulaşıldı</string>
   <string name="activity_in_last_two_weeks">Son 14 gündeki etkinlikler</string>
@@ -364,16 +374,16 @@
   <string name="warning_dialog_item_shared_vault_reminder">Bir daha hatırlatma</string>
   <string name="upgrade_to_pass_plus">Pass Plus tarifesine yükselt</string>
   <string name="warning_dialog_reload_app_after_purchase_description">Sitemize yönlendirilmek üzeresiniz. Bir tarife satın alırsanız lütfen uygulamayı yeniden başlatın.</string>
-      <string name="word_separator">Sözcük ayracı</string>
-      <string name="bottomsheet_option_capitalise">Harfleri büyüt</string>
-      <string name="bottomsheet_option_word_separator_hyphens">Tire ( - )</string>
-      <string name="bottomsheet_option_word_separator_spaces">Boşluk</string>
-      <string name="bottomsheet_option_word_separator_periods">Nokta ( . )</string>
-      <string name="bottomsheet_option_word_separator_commas">Virgül ( , )</string>
-      <string name="bottomsheet_option_word_separator_underscores">Alt çizgi ( _ )</string>
-      <string name="bottomsheet_option_word_separator_numbers">Rakamlar</string>
-      <string name="bottomsheet_option_word_separator_numbers_and_symbols">Rakamlar ve simgeler</string>
-
+  <!-- Shared word separator dialog (used by password + username generators) -->
+  <string name="word_separator">Sözcük ayracı</string>
+  <string name="bottomsheet_option_capitalise">Harfleri büyüt</string>
+  <string name="bottomsheet_option_word_separator_hyphens">Tire ( - )</string>
+  <string name="bottomsheet_option_word_separator_spaces">Boşluk</string>
+  <string name="bottomsheet_option_word_separator_periods">Nokta ( . )</string>
+  <string name="bottomsheet_option_word_separator_commas">Virgül ( , )</string>
+  <string name="bottomsheet_option_word_separator_underscores">Alt çizgi ( _ )</string>
+  <string name="bottomsheet_option_word_separator_numbers">Rakamlar</string>
+  <string name="bottomsheet_option_word_separator_numbers_and_symbols">Rakamlar ve simgeler</string>
   <plurals name="word_count">
     <item quantity="one">%s sözcük</item>
     <item quantity="other">%s sözcük</item>

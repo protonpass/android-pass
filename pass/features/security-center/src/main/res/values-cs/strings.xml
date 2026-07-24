@@ -32,6 +32,8 @@
   <string name="security_center_home_row_insecure_passwords_subtitle">Změňte svá hesla</string>
   <string name="security_center_home_row_reused_passwords_title">Opakovaně použitá hesla</string>
   <string name="security_center_home_row_reused_passwords_subtitle">Vygenerujte jedinečná hesla</string>
+  <string name="security_center_home_row_compromised_passwords_title">Compromised passwords</string>
+  <string name="security_center_home_row_compromised_passwords_subtitle">Common passwords found in data breaches</string>
   <string name="security_center_home_row_missing_tfa_title">Neaktivní 2FA</string>
   <string name="security_center_home_row_missing_tfa_subtitle">Nastavte 2FA pro větší bezpečnost</string>
   <string name="security_center_home_row_excludes_items_title">Vyloučeno ze sledování</string>
@@ -54,6 +56,9 @@
   <string name="security_center_reused_pass_top_bar_title">Opakovaně použitá hesla</string>
   <string name="security_center_reused_pass_top_bar_subtitle">Pro každý účet si vygenerujte jedinečné heslo, abyste zvýšili zabezpečení.</string>
   <string name="security_center_reused_pass_list_sticky_header_label" comment="Shows the number of times that an item has a reused password (e.g. Reused 3 times). Note that there's not singular case as that would mean that the password has been never been reused">Opakovaně použito %1$d krát</string>
+  <!-- Compromised passwords screen -->
+  <string name="security_center_compromised_pass_top_bar_title">Compromised passwords</string>
+  <string name="security_center_compromised_pass_top_bar_subtitle">Compromised passwords are the ones exposed in data breaches. Never reuse passwords to limit the impact when a data breach occurs.</string>
   <!-- Missing 2FA -->
   <string name="security_center_missing_tfa_top_bar_title">Neaktivní 2FA</string>
   <string name="security_center_missing_tfa_top_bar_subtitle">Pro zvýšení bezpečnosti nastavte dvoufázové ověření na následujících účtech.</string>

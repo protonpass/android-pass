@@ -32,6 +32,8 @@
   <string name="security_center_home_row_insecure_passwords_subtitle">Altere suas senhas</string>
   <string name="security_center_home_row_reused_passwords_title">Senhas reutilizadas</string>
   <string name="security_center_home_row_reused_passwords_subtitle">Gerar senhas originais</string>
+  <string name="security_center_home_row_compromised_passwords_title">Senhas comprometidas</string>
+  <string name="security_center_home_row_compromised_passwords_subtitle">Common passwords found in data breaches</string>
   <string name="security_center_home_row_missing_tfa_title">A2F inativa</string>
   <string name="security_center_home_row_missing_tfa_subtitle">Configure A2F para mais segurança</string>
   <string name="security_center_home_row_excludes_items_title">Excluído do monitoramento</string>
@@ -54,6 +56,9 @@
   <string name="security_center_reused_pass_top_bar_title">Senhas reutilizadas</string>
   <string name="security_center_reused_pass_top_bar_subtitle">Gere senhas exclusivas para cada conta para aumentar sua segurança.</string>
   <string name="security_center_reused_pass_list_sticky_header_label" comment="Shows the number of times that an item has a reused password (e.g. Reused 3 times). Note that there's not singular case as that would mean that the password has been never been reused">Reutilizada %1$d vezes</string>
+  <!-- Compromised passwords screen -->
+  <string name="security_center_compromised_pass_top_bar_title">Senhas comprometidas</string>
+  <string name="security_center_compromised_pass_top_bar_subtitle">Compromised passwords are the ones exposed in data breaches. Never reuse passwords to limit the impact when a data breach occurs.</string>
   <!-- Missing 2FA -->
   <string name="security_center_missing_tfa_top_bar_title">A2F inativa</string>
   <string name="security_center_missing_tfa_top_bar_subtitle">Por motivos de segurança, configure autenticação de dois fatores para as seguintes contas.</string>

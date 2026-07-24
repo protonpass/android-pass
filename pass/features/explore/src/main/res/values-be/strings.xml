@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="explore_tab_title">Даследуйце</string>
+  <string name="explore_section_tools_title">Інструменты</string>
+  <string name="explore_section_expand_security_title">Пашырце сваю бяспеку</string>
+  <string name="explore_tool_password_generator_title">Генератар пароляў</string>
+  <string name="explore_tool_dark_web_monitor_title">Dark Web Monitoring</string>
+  <string name="explore_tool_dark_web_monitor_subtitle">Пачаць маніторынг за парушэннем даных</string>
+  <string name="explore_tool_password_health_title">Якасць пароля</string>
+  <string name="explore_tool_password_health_subtitle">Вызначыце ўразлівыя, ненадзейныя і паўторна выкарыстаныя паролі.</string>
+  <string name="explore_tool_codes_title">Коды</string>
+  <string name="explore_tool_codes_subtitle">Аднаразовы код для двухфактарнай аўтэнтыфікацыі</string>
+  <string name="codes_screen_title">Коды</string>
+  <string name="codes_search_placeholder">Пошук ва ўсіх элементах</string>
+  <string name="codes_snackbar_code_copied">Код скапіяваны ў буфер абмену</string>
+  <string name="explore_tool_aliases_title">Абараніць адрасы электроннай пошты з дапамогай псеўданімаў</string>
+  <string name="explore_tool_aliases_subtitle">Абараніце адрасы, паменшыце колькасць спаму і заблакіруйце спробы фішынгу</string>
+  <string name="explore_product_vpn_title">Proton VPN</string>
+  <string name="explore_product_vpn_subtitle">Праглядайце без сачэння і атрымлівайце доступ да заблакіраванага змесціва.</string>
+  <string name="explore_product_mail_title">Proton Mail</string>
+  <string name="explore_product_mail_subtitle">Абараніце сваю паштовую скрыню ад спаму, сачэння і мэтавай рэкламы.</string>
+  <string name="explore_product_drive_title">Proton Drive</string>
+  <string name="explore_product_drive_subtitle">Дайце сваім бясцэнным фатаграфіям і файлам бяспечны дом, якога яны заслугоўваюць.</string>
+  <string name="explore_product_lumo_title">Lumo AI</string>
+  <string name="explore_product_lumo_subtitle">Задавайце пытанні і стварайце ідэі з дапамогай памочніка ШІ, у якога прыватнасць на першым месцы.</string>
+  <string name="explore_product_meet_title">Proton Meet</string>
+  <string name="explore_product_meet_subtitle">Размаўляйце прыватна з дапамогай канфідэнцыяльных відэаканферэнцый.</string>
+  <string name="explore_business_banner_title">Proton for Business</string>
+</resources>

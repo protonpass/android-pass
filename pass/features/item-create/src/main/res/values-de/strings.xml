@@ -18,6 +18,7 @@
   <string name="item_type_identity_description" comment="Subtitle of the Item Type IDENTITY in the Create new item bottomsheet">Fülle deine persönlichen Daten aus</string>
   <string name="item_type_more_description" comment="Subtitle of the Item Type CUSTOM in the Create new item bottomsheet">WLAN, Reisepass, SSH oder Benutzerdefiniertes speichern</string>
   <string name="item_type_password_description" comment="Subtitle of the Item Type PASSWORD in the Create new item bottomsheet">Sicheres Passwort generieren</string>
+  <string name="sticky_button_generate_username">Benutzernamen erzeugen</string>
   <!-- Create Login -->
   <string name="field_email_title">E‐Mail‐Adresse</string>
   <string name="field_email_hint">E-Mail-Adresse hinzufügen</string>

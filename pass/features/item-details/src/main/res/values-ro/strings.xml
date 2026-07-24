@@ -32,6 +32,7 @@
   <string name="item_details_leave_dialog_message">Veți pierde accesul la acest articol și la detaliile sale. Doriți să continuați?</string>
   <string name="item_details_leave_item_message_error">A apărut o eroare la părăsirea articolului.</string>
   <string name="item_details_leave_item_message_success">Articolul a fost părăsit.</string>
+  <string name="item_details_monitor_check_update_error">Nu s-a putut actualiza monitorizarea. Reîncercați.</string>
   <string name="item_details_snackbar_message_alias_copied">Aliasul a fost copiat.</string>
   <string name="item_details_snackbar_message_birthdate_copied">Data nașterii s-a copiat.</string>
   <string name="item_details_snackbar_message_card_number_copied">Număr card a fost copiat.</string>

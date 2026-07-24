@@ -32,6 +32,7 @@
   <string name="item_details_leave_dialog_message">Du vil miste adgang til dette element og dets detaljer. Ønsker du at fortsætte?</string>
   <string name="item_details_leave_item_message_error">Der opstod en fejl med at forlade elementet</string>
   <string name="item_details_leave_item_message_success">Element forladt</string>
+  <string name="item_details_monitor_check_update_error">Kunne ikke opdatere monitorering. Prøv igen.</string>
   <string name="item_details_snackbar_message_alias_copied">Alias kopieret</string>
   <string name="item_details_snackbar_message_birthdate_copied">Fødselsdato kopieret</string>
   <string name="item_details_snackbar_message_card_number_copied">Kortnummer kopieret</string>

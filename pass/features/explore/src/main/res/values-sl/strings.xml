@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="explore_tab_title">Raziščite</string>
+  <string name="explore_section_tools_title">Orodja</string>
+  <string name="explore_section_expand_security_title">Poskrbite za večjo varnost</string>
+  <string name="explore_tool_password_generator_title">Ustvarjalnik gesel</string>
+  <string name="explore_tool_dark_web_monitor_title">Spremljanje temnega spleta</string>
+  <string name="explore_tool_dark_web_monitor_subtitle">Začnite spremljati uhajanje podatkov.</string>
+  <string name="explore_tool_password_health_title">Kakovost gesla</string>
+  <string name="explore_tool_password_health_subtitle">Prepoznajte ranljiva, šibka in ponovno uporabljena gesla.</string>
+  <string name="explore_tool_codes_title">Kode</string>
+  <string name="explore_tool_codes_subtitle">Enkratne kode za dvofaktorsko avtentifikacijo.</string>
+  <string name="codes_screen_title">Kode</string>
+  <string name="codes_search_placeholder">Iskanje v vseh predmetih</string>
+  <string name="codes_snackbar_code_copied">Koda kopirana v odložišče</string>
+  <string name="explore_tool_aliases_title">Zaščitite svoje e-poštne naslove s pomočjo vzdevkov</string>
+  <string name="explore_tool_aliases_subtitle">Zaščitite naslove, zmanjšajte količino neželene pošte in blokirajte poskuse lažnega predstavljanja.</string>
+  <string name="explore_product_vpn_title">Proton VPN</string>
+  <string name="explore_product_vpn_subtitle">Brskajte po spletu, ne da bi vam kdo sledil in dostopajte do blokiranih vsebin.</string>
+  <string name="explore_product_mail_title">Proton Mail</string>
+  <string name="explore_product_mail_subtitle">Zaščitite svoj predal za prejete e-pošte pred neželeno pošto, sledenjem in ciljno usmerjenimi oglasi.</string>
+  <string name="explore_product_drive_title">Proton Drive</string>
+  <string name="explore_product_drive_subtitle">Zagotovite svojim dragocenim fotografijam in datotekam varno mesto, ki si ga zaslužijo.</string>
+  <string name="explore_product_lumo_title">Lumo AI</string>
+  <string name="explore_product_lumo_subtitle">Vprašajte in razvijajte ideje s pomočjo AI-pomočnika, ki daje prednost zasebnosti.</string>
+  <string name="explore_product_meet_title">Proton Meet</string>
+  <string name="explore_product_meet_subtitle">Komunicirajte zasebno prek zaupne videokonference.</string>
+  <string name="explore_business_banner_title">Proton za podjetja</string>
+</resources>

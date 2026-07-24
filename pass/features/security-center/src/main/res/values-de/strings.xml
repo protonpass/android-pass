@@ -32,6 +32,8 @@
   <string name="security_center_home_row_insecure_passwords_subtitle">Ändere deine Passwörter</string>
   <string name="security_center_home_row_reused_passwords_title">Wiederverwendete Passwörter</string>
   <string name="security_center_home_row_reused_passwords_subtitle">Generiere einzigartige Passwörter</string>
+  <string name="security_center_home_row_compromised_passwords_title">Kompromittierte Passwörter</string>
+  <string name="security_center_home_row_compromised_passwords_subtitle">Bei Datenlecks häufig vorgefundene Passwörter</string>
   <string name="security_center_home_row_missing_tfa_title">Inaktive 2FA</string>
   <string name="security_center_home_row_missing_tfa_subtitle">Richte 2FA für mehr Sicherheit ein</string>
   <string name="security_center_home_row_excludes_items_title">Von der Überwachung ausgeschlossen</string>
@@ -54,6 +56,9 @@
   <string name="security_center_reused_pass_top_bar_title">Wiederverwendete Passwörter</string>
   <string name="security_center_reused_pass_top_bar_subtitle">Generiere einzigartige Passwörter für jedes Konto, um deine Sicherheit zu erhöhen.</string>
   <string name="security_center_reused_pass_list_sticky_header_label" comment="Shows the number of times that an item has a reused password (e.g. Reused 3 times). Note that there's not singular case as that would mean that the password has been never been reused">%1$d Mal wiederverwendet</string>
+  <!-- Compromised passwords screen -->
+  <string name="security_center_compromised_pass_top_bar_title">Kompromittierte Passwörter</string>
+  <string name="security_center_compromised_pass_top_bar_subtitle">Kompromittierte Passwörter sind solche, die bei Datenlecks offengelegt wurden. Verwende Passwörter niemals mehrfach, um die Auswirkungen im Falle eines Datenlecks zu begrenzen.</string>
   <!-- Missing 2FA -->
   <string name="security_center_missing_tfa_top_bar_title">Inaktive 2FA</string>
   <string name="security_center_missing_tfa_top_bar_subtitle">Für zusätzliche Sicherheit solltest du die Zwei-Faktor-Authentifizierung für die folgenden Konten einrichten.</string>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="generate_username_title">Згенерыраваць імя карыстальніка</string>
+  <string name="generate_username_button_regenerate">Згенераваць яшчэ раз</string>
+  <string name="generate_username_button_copy">Скапіяваць</string>
+  <string name="generate_username_label_include_numbers">Уключаць лічбы</string>
+  <string name="generate_username_label_leetspeak">Leetspeak</string>
+  <string name="generate_username_label_word_types">Тыпы слоў</string>
+  <string name="generate_username_label_adjectives">Прыметнікі</string>
+  <string name="generate_username_label_nouns">Назоўнікі</string>
+  <string name="generate_username_label_verbs">Дзеясловы</string>
+  <string name="generate_username_snackbar_copied">Імя карыстальніка скапіявана ў буфер абмену</string>
+  <string name="generate_username_snackbar_error">Немагчыма згенерыраваць імя карыстальніка</string>
+</resources>

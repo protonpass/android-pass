@@ -87,6 +87,7 @@
   <string name="bottom_bar_add_item_icon_content_description">Agregar elemento</string>
   <string name="bottom_bar_profile_icon_content_description">Perfil</string>
   <string name="bottom_bar_security_center_icon_content_description">Centro de seguridad</string>
+  <string name="bottom_bar_explore_icon_content_description">Explore</string>
   <!-- List group by most recents -->
   <string name="most_recent_today">Hoy</string>
   <string name="most_recent_yesterday">Ayer</string>
@@ -325,12 +326,21 @@
   <string name="collapse_expanded_text">menos</string>
   <string name="login_item_monitor_widget_weak_pass_title">Contraseña débil</string>
   <string name="login_item_monitor_widget_weak_pass_subtitle">Esta cuenta es vulnerable. Visite el servicio y cambie la contraseña.</string>
+  <string name="login_item_monitor_widget_compromised_pass_title">Compromised password</string>
+  <string name="login_item_monitor_widget_compromised_pass_subtitle">This login password appears in a data breach. Please visit the service and change the password.</string>
   <plurals name="login_item_monitor_widget_reused_pass_title">
     <item quantity="one">otro (%d) inicio de sesión usa la misma contraseña.</item>
     <item quantity="other">otros %d inicios de sesión usan la misma contraseña.</item>
   </plurals>
   <string name="login_item_monitor_widget_missing_two_fa_title">Configure la 2FA para más seguridad</string>
   <string name="login_item_monitor_widget_missing_two_fa_subtitle">Este servicio ofrece 2FA. Actívelo para agregar seguridad a la cuenta.</string>
+  <string name="login_item_monitor_action_ignore">Ignore</string>
+  <string name="login_item_monitor_action_restore">Restore alert</string>
+  <string name="login_item_monitor_header">Pass Monitor</string>
+  <string name="login_item_monitor_label_weak">Weak password</string>
+  <string name="login_item_monitor_label_compromised">Compromised password</string>
+  <string name="login_item_monitor_label_reused">Reused password</string>
+  <string name="login_item_monitor_label_missing_2fa">Missing 2FA</string>
   <string name="login_item_reused_passwords_subtitle">Elementos de las bóvedas que usan esta contraseña.</string>
   <string name="mfa_limit_reached">Límite de 2FA alcanzado</string>
   <string name="activity_in_last_two_weeks">Actividad en los últimos 14 días</string>
@@ -364,16 +374,16 @@
   <string name="warning_dialog_item_shared_vault_reminder">No volver a recordarme</string>
   <string name="upgrade_to_pass_plus">Mejorar a Pass Plus</string>
   <string name="warning_dialog_reload_app_after_purchase_description">Está a punto de redirigirse a nuestro sitio web. Si compra un plan, reinicie la aplicación.</string>
-      <string name="word_separator">Separador de palabra</string>
-      <string name="bottomsheet_option_capitalise">Mayúsculas</string>
-      <string name="bottomsheet_option_word_separator_hyphens">Guiones ( - )</string>
-      <string name="bottomsheet_option_word_separator_spaces">Espacios</string>
-      <string name="bottomsheet_option_word_separator_periods">Puntos ( . )</string>
-      <string name="bottomsheet_option_word_separator_commas">Comas ( , )</string>
-      <string name="bottomsheet_option_word_separator_underscores">Guiones bajos ( _ )</string>
-      <string name="bottomsheet_option_word_separator_numbers">Números</string>
-      <string name="bottomsheet_option_word_separator_numbers_and_symbols">Números y símbolos</string>
-
+  <!-- Shared word separator dialog (used by password + username generators) -->
+  <string name="word_separator">Separador de palabra</string>
+  <string name="bottomsheet_option_capitalise">Mayúsculas</string>
+  <string name="bottomsheet_option_word_separator_hyphens">Guiones ( - )</string>
+  <string name="bottomsheet_option_word_separator_spaces">Espacios</string>
+  <string name="bottomsheet_option_word_separator_periods">Puntos ( . )</string>
+  <string name="bottomsheet_option_word_separator_commas">Comas ( , )</string>
+  <string name="bottomsheet_option_word_separator_underscores">Guiones bajos ( _ )</string>
+  <string name="bottomsheet_option_word_separator_numbers">Números</string>
+  <string name="bottomsheet_option_word_separator_numbers_and_symbols">Números y símbolos</string>
   <plurals name="word_count">
     <item quantity="one">%s palabra</item>
     <item quantity="other">%s palabras</item>

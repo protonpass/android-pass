@@ -18,6 +18,7 @@
   <string name="item_type_identity_description" comment="Subtitle of the Item Type IDENTITY in the Create new item bottomsheet">個人情報を入力してください</string>
   <string name="item_type_more_description" comment="Subtitle of the Item Type CUSTOM in the Create new item bottomsheet">WiFi、パスポート、SSH、またはカスタムを保存</string>
   <string name="item_type_password_description" comment="Subtitle of the Item Type PASSWORD in the Create new item bottomsheet">安全なパスワードの生成</string>
+  <string name="sticky_button_generate_username">Generate username</string>
   <!-- Create Login -->
   <string name="field_email_title">メールアドレス</string>
   <string name="field_email_hint">メールアドレスの追加</string>

@@ -9,6 +9,9 @@
   <string name="profile_option_import_export">Tuonti ja vienti</string>
   <string name="profile_option_tutorial">Miten Proton Passia käytetään</string>
   <string name="profile_option_rating">Arvioi sovellus</string>
+  <string name="profile_spread_the_word">Levitä sanaa</string>
+  <string name="profile_option_tell_a_friend">Kerro kaverille</string>
+  <string name="profile_spread_the_word_share_message">Käytän Proton Passia salasanojeni suojaamiseen. Kokeile sitä: https://proton.me/pass/download</string>
   <string name="profile_option_autofill">Automaattitäyttö</string>
   <string name="profile_option_autofill_subtitle">Täytä käyttäjätunnukset ja salasanat automaattisesti.</string>
   <string name="profile_option_secure_links">Suojatut linkit</string>

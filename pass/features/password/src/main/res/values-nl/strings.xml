@@ -8,7 +8,8 @@
   <plurals name="character_count">
     <item quantity="one">%s teken</item>
     <item quantity="other">%s tekens</item>
-  </plurals>  <string name="bottomsheet_option_capital_letters">Hoofdletters (A–Z)</string>
+  </plurals>
+  <string name="bottomsheet_option_capital_letters">Hoofdletters (A–Z)</string>
   <string name="bottomsheet_option_include_numbers">Nummers toevoegen (0–9)</string>
   <string name="regenerate_password_icon_content_description">Wachtwoord opnieuw genereren knop</string>
   <string name="password_mode_memorable">Memorabel wachtwoord</string>

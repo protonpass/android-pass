@@ -21,6 +21,7 @@
   <string name="upsell_dark_web_monitoring_subtitle">暗网监测通过付费套餐提供。立即升级，即刻访问。</string>
   <string name="upsell_missing_2fa_subtitle">查看可添加第二身份验证因素的网站列表，以保护您的在线形象。升级后可立即访问。</string>
   <string name="upsell_sentinel_subtitle">解锁高级安全功能和详细日志，保护您的在线形象。</string>
+  <string name="upsell_compromised_passwords_subtitle">检查您的密码是否已在数据泄露中暴露，升级以立即访问。</string>
   <string name="upsell_paid_feature_file_attachments">附件文件</string>
   <string name="upsell_paid_feature_dark_web_monitoring">暗网监测</string>
   <string name="upsell_paid_feature_sentinel">Proton Sentinel</string>

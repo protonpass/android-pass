@@ -87,6 +87,7 @@
   <string name="bottom_bar_add_item_icon_content_description">Lägg till objekt</string>
   <string name="bottom_bar_profile_icon_content_description">Profil</string>
   <string name="bottom_bar_security_center_icon_content_description">Säkerhetscenter</string>
+  <string name="bottom_bar_explore_icon_content_description">Utforska</string>
   <!-- List group by most recents -->
   <string name="most_recent_today">Idag</string>
   <string name="most_recent_yesterday">Igår</string>
@@ -164,7 +165,7 @@
   <string name="autofill_mode_label_start_with">Börjar med</string>
   <string name="autofill_mode_label_regular_expression">Vanligt uttryck</string>
   <string name="autofill_mode_label_exact_path">Exakt URL-matchning</string>
-  <string name="autofill_mode_label_unsupported">This url will be skipped for autofill</string>
+  <string name="autofill_mode_label_unsupported">Denna URL kommer att hoppas över för automatisk ifyllning</string>
   <string name="login_item_view_alias_button">Visa alias</string>
   <string name="item_details_identity_section_personal_title">Personliga detaljer</string>
   <string name="item_details_identity_section_personal_first_name_title">Förnamn</string>
@@ -325,12 +326,21 @@
   <string name="collapse_expanded_text">mindre</string>
   <string name="login_item_monitor_widget_weak_pass_title">Svagt lösenord</string>
   <string name="login_item_monitor_widget_weak_pass_subtitle">Detta konto är sårbart, besök tjänsten och ändra ditt lösenord.</string>
+  <string name="login_item_monitor_widget_compromised_pass_title">Komprometterade lösenord</string>
+  <string name="login_item_monitor_widget_compromised_pass_subtitle">Detta inloggningslösenord förekommer i ett dataintrång. Besök tjänsten och ändra lösenordet.</string>
   <plurals name="login_item_monitor_widget_reused_pass_title">
     <item quantity="one">%d annan inloggning använder samma lösenord</item>
     <item quantity="other">%d andra inloggningar använder samma lösenord</item>
   </plurals>
   <string name="login_item_monitor_widget_missing_two_fa_title">Ställ in 2FA för mer säkerhet</string>
   <string name="login_item_monitor_widget_missing_two_fa_subtitle">Denna tjänst erbjuder 2FA. Aktivera det för extra kontosäkerhet.</string>
+  <string name="login_item_monitor_action_ignore">Ignorera</string>
+  <string name="login_item_monitor_action_restore">Återställ notis</string>
+  <string name="login_item_monitor_header">Pass Monitor</string>
+  <string name="login_item_monitor_label_weak">Svagt lösenord</string>
+  <string name="login_item_monitor_label_compromised">Komprometterat lösenord</string>
+  <string name="login_item_monitor_label_reused">Återanvänt lösenord</string>
+  <string name="login_item_monitor_label_missing_2fa">Saknar 2FA</string>
   <string name="login_item_reused_passwords_subtitle">Objekt från dina valv som använder detta lösenord.</string>
   <string name="mfa_limit_reached">2FA-gränsen uppnådd</string>
   <string name="activity_in_last_two_weeks">Aktivitet under de senaste 14 dagarna</string>
@@ -364,16 +374,16 @@
   <string name="warning_dialog_item_shared_vault_reminder">Påminn mig inte igen</string>
   <string name="upgrade_to_pass_plus">Uppgradera till Pass Plus</string>
   <string name="warning_dialog_reload_app_after_purchase_description">Du kommer att omdirigeras till vår webbplats. Om du köper ett paket, starta om appen.</string>
-      <string name="word_separator">Ordavgränsare</string>
-      <string name="bottomsheet_option_capitalise">Versaler</string>
-      <string name="bottomsheet_option_word_separator_hyphens">Bindestreck (-)</string>
-      <string name="bottomsheet_option_word_separator_spaces">Mellanslag</string>
-      <string name="bottomsheet_option_word_separator_periods">Punkter (.)</string>
-      <string name="bottomsheet_option_word_separator_commas">Kommatecken (,)</string>
-      <string name="bottomsheet_option_word_separator_underscores">Understreck (_)</string>
-      <string name="bottomsheet_option_word_separator_numbers">Nummer</string>
-      <string name="bottomsheet_option_word_separator_numbers_and_symbols">Nummer och symboler</string>
-
+  <!-- Shared word separator dialog (used by password + username generators) -->
+  <string name="word_separator">Ordavgränsare</string>
+  <string name="bottomsheet_option_capitalise">Versaler</string>
+  <string name="bottomsheet_option_word_separator_hyphens">Bindestreck (-)</string>
+  <string name="bottomsheet_option_word_separator_spaces">Mellanslag</string>
+  <string name="bottomsheet_option_word_separator_periods">Punkter (.)</string>
+  <string name="bottomsheet_option_word_separator_commas">Kommatecken (,)</string>
+  <string name="bottomsheet_option_word_separator_underscores">Understreck (_)</string>
+  <string name="bottomsheet_option_word_separator_numbers">Nummer</string>
+  <string name="bottomsheet_option_word_separator_numbers_and_symbols">Nummer och symboler</string>
   <plurals name="word_count">
     <item quantity="one">%s ord</item>
     <item quantity="other">%s ord</item>

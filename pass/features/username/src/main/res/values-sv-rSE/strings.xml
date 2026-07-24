@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="generate_username_title">Generera användarnamn</string>
+  <string name="generate_username_button_regenerate">Generera igen</string>
+  <string name="generate_username_button_copy">Kopiera</string>
+  <string name="generate_username_label_include_numbers">Inkludera nummer</string>
+  <string name="generate_username_label_leetspeak">Leetspeak</string>
+  <string name="generate_username_label_word_types">Ordtyper</string>
+  <string name="generate_username_label_adjectives">Adjektiv</string>
+  <string name="generate_username_label_nouns">Substantiv</string>
+  <string name="generate_username_label_verbs">Verb</string>
+  <string name="generate_username_snackbar_copied">Användarnamn kopierat till urklipp</string>
+  <string name="generate_username_snackbar_error">Kunde inte generera användarnamn</string>
+</resources>

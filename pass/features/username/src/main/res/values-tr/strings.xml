@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="generate_username_title">Kullanıcı adı üret</string>
+  <string name="generate_username_button_regenerate">Yeniden üret</string>
+  <string name="generate_username_button_copy">Kopyala</string>
+  <string name="generate_username_label_include_numbers">Sayıları dahil et</string>
+  <string name="generate_username_label_leetspeak">Leetspeak</string>
+  <string name="generate_username_label_word_types">Kelime türleri</string>
+  <string name="generate_username_label_adjectives">Sıfatlar</string>
+  <string name="generate_username_label_nouns">İsimler</string>
+  <string name="generate_username_label_verbs">Fiiller</string>
+  <string name="generate_username_snackbar_copied">Kullanıcı adı panoya kopyalandı</string>
+  <string name="generate_username_snackbar_error">Kullanıcı adı üretilemedi</string>
+</resources>

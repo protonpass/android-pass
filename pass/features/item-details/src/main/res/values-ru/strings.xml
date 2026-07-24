@@ -32,6 +32,7 @@
   <string name="item_details_leave_dialog_message">Вы потеряете доступ к этому элементу и информации о нем. Вы хотите продолжить?</string>
   <string name="item_details_leave_item_message_error">Произошла ошибка при покидании элемента</string>
   <string name="item_details_leave_item_message_success">Элемент успешно покинут</string>
+  <string name="item_details_monitor_check_update_error">Couldn\'t update monitoring. Please try again.</string>
   <string name="item_details_snackbar_message_alias_copied">Псевдоним скопирован</string>
   <string name="item_details_snackbar_message_birthdate_copied">Дата рождения скопирована</string>
   <string name="item_details_snackbar_message_card_number_copied">Номер карты скопирован</string>

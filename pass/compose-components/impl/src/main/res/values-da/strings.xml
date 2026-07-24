@@ -87,6 +87,7 @@
   <string name="bottom_bar_add_item_icon_content_description">Tilføj element</string>
   <string name="bottom_bar_profile_icon_content_description">Profil</string>
   <string name="bottom_bar_security_center_icon_content_description">Sikkerhedscenter</string>
+  <string name="bottom_bar_explore_icon_content_description">Udforsk</string>
   <!-- List group by most recents -->
   <string name="most_recent_today">I dag</string>
   <string name="most_recent_yesterday">I går</string>
@@ -325,12 +326,21 @@
   <string name="collapse_expanded_text">mindre</string>
   <string name="login_item_monitor_widget_weak_pass_title">Svag adgangskode</string>
   <string name="login_item_monitor_widget_weak_pass_subtitle">Denne konto er sårbar. Besøg tjenesten og skift din adgangskode.</string>
+  <string name="login_item_monitor_widget_compromised_pass_title">Kompromitterede adgangskoder</string>
+  <string name="login_item_monitor_widget_compromised_pass_subtitle">Denne adgangskode fremgår i et databrud. Besøg tjenesten og skift adgangskoden.</string>
   <plurals name="login_item_monitor_widget_reused_pass_title">
     <item quantity="one">%d andet login bruger samme adgangskode</item>
     <item quantity="other">%d andre logins bruger samme adgangskode</item>
   </plurals>
   <string name="login_item_monitor_widget_missing_two_fa_title">Indstil 2FA for mere sikkerhed</string>
   <string name="login_item_monitor_widget_missing_two_fa_subtitle">Denne tjeneste tilbyder 2FA. Aktivér det for at få ekstra kontosikkerhed.</string>
+  <string name="login_item_monitor_action_ignore">Ignorer</string>
+  <string name="login_item_monitor_action_restore">Gendan advarsel</string>
+  <string name="login_item_monitor_header">Pass Monitor</string>
+  <string name="login_item_monitor_label_weak">Svag adgangskode</string>
+  <string name="login_item_monitor_label_compromised">Kompromitterede adgangskode</string>
+  <string name="login_item_monitor_label_reused">Genbrugt adgangskode</string>
+  <string name="login_item_monitor_label_missing_2fa">Mangler 2FA</string>
   <string name="login_item_reused_passwords_subtitle">Elementer fra dine bokse, der bruger denne adgangskode.</string>
   <string name="mfa_limit_reached">2FA-grænse nået</string>
   <string name="activity_in_last_two_weeks">Aktivitet de sidste 14 dage</string>
@@ -364,16 +374,16 @@
   <string name="warning_dialog_item_shared_vault_reminder">Påmind mig ikke igen</string>
   <string name="upgrade_to_pass_plus">Opgrader til Pass Plus</string>
   <string name="warning_dialog_reload_app_after_purchase_description">Du vil blive omdirigeret til vores websted. Hvis du køber et abonnement, så genstart venligst appen.</string>
-      <string name="word_separator">Ordseparator</string>
-      <string name="bottomsheet_option_capitalise">Ændr til versaler</string>
-      <string name="bottomsheet_option_word_separator_hyphens">Bindestreger ( - )</string>
-      <string name="bottomsheet_option_word_separator_spaces">Mellemrum</string>
-      <string name="bottomsheet_option_word_separator_periods">Punktummer (.)</string>
-      <string name="bottomsheet_option_word_separator_commas">Kommaer ( , )</string>
-      <string name="bottomsheet_option_word_separator_underscores">Bundstreg ( _ )</string>
-      <string name="bottomsheet_option_word_separator_numbers">Tal</string>
-      <string name="bottomsheet_option_word_separator_numbers_and_symbols">Tal og symboler</string>
-
+  <!-- Shared word separator dialog (used by password + username generators) -->
+  <string name="word_separator">Ordseparator</string>
+  <string name="bottomsheet_option_capitalise">Ændr til versaler</string>
+  <string name="bottomsheet_option_word_separator_hyphens">Bindestreger ( - )</string>
+  <string name="bottomsheet_option_word_separator_spaces">Mellemrum</string>
+  <string name="bottomsheet_option_word_separator_periods">Punktummer (.)</string>
+  <string name="bottomsheet_option_word_separator_commas">Kommaer ( , )</string>
+  <string name="bottomsheet_option_word_separator_underscores">Bundstreg ( _ )</string>
+  <string name="bottomsheet_option_word_separator_numbers">Tal</string>
+  <string name="bottomsheet_option_word_separator_numbers_and_symbols">Tal og symboler</string>
   <plurals name="word_count">
     <item quantity="one">%s ord</item>
     <item quantity="other">%s ord</item>

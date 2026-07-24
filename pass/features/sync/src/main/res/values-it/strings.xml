@@ -40,7 +40,7 @@
   <string name="sync_dialog_title_inserting">Inserimento degli elementi in corso</string>
   <string name="sync_dialog_subtitle_inserting">Quasi finito</string>
   <string name="sync_dialog_invalid_group_shares_warning">Alcune casseforti non sono state sincronizzate perché il gruppo associato non è stato trovato su questo account.</string>
-  <string name="sync_dialog_title_indexing">Indexing…</string>
-  <string name="sync_dialog_subtitle_indexing">Building search index, almost done.</string>
-  <string name="sync_dialog_subtitle_indexing_progress">Building search index… (%1$d/%2$d)</string>
+  <string name="sync_dialog_title_indexing">Indicizzazione in corso…</string>
+  <string name="sync_dialog_subtitle_indexing">Creazione dell\'indice di ricerca, quasi completata.</string>
+  <string name="sync_dialog_subtitle_indexing_progress">Creazione dell\'indice di ricerca… (%1$d/%2$d)</string>
 </resources>

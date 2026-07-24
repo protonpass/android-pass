@@ -9,7 +9,8 @@
     <item quantity="one">%s caracter</item>
     <item quantity="few">%s caractere</item>
     <item quantity="other">%s de caractere</item>
-  </plurals>  <string name="bottomsheet_option_capital_letters">Majuscule (A–Z)</string>
+  </plurals>
+  <string name="bottomsheet_option_capital_letters">Majuscule (A–Z)</string>
   <string name="bottomsheet_option_include_numbers">Includere cifre (0–9)</string>
   <string name="regenerate_password_icon_content_description">Buton regenerare parolă</string>
   <string name="password_mode_memorable">Parolă ușor de reținut</string>

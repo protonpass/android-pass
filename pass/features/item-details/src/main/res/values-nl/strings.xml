@@ -32,6 +32,7 @@
   <string name="item_details_leave_dialog_message">U zult toegang tot dit item en de bijbehorende gegevens verliezen. Wilt u doorgaan?</string>
   <string name="item_details_leave_item_message_error">Er is een fout opgetreden bij het verlaten van dit item</string>
   <string name="item_details_leave_item_message_success">Item succesvol verlaten</string>
+  <string name="item_details_monitor_check_update_error">Kan monitoring niet bijwerken. Probeer het opnieuw.</string>
   <string name="item_details_snackbar_message_alias_copied">Alias gekopieerd</string>
   <string name="item_details_snackbar_message_birthdate_copied">Geboortedatum gekopieerd</string>
   <string name="item_details_snackbar_message_card_number_copied">Kaartnummer gekopieerd</string>

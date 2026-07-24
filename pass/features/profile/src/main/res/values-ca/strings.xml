@@ -9,6 +9,9 @@
   <string name="profile_option_import_export">Importa/exporta</string>
   <string name="profile_option_tutorial">Com utilitzar el Proton Pass</string>
   <string name="profile_option_rating">Valora l\'aplicació</string>
+  <string name="profile_spread_the_word">Feu córrer la veu</string>
+  <string name="profile_option_tell_a_friend">Digueu-ho a una amistat</string>
+  <string name="profile_spread_the_word_share_message">Faig servir Proton Pass per mantenir les meves contrasenyes segures. Proveu-lo: [https://proton.me/pass/download](https://proton.me/pass/download)</string>
   <string name="profile_option_autofill">Emplenament automàtic</string>
   <string name="profile_option_autofill_subtitle">Empleneu automàticament els vostres noms d\'usuari i contrasenyes.</string>
   <string name="profile_option_secure_links">Enllaços segurs</string>

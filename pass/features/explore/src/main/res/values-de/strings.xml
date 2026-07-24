@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="explore_tab_title">Entdecken</string>
+  <string name="explore_section_tools_title">Extras</string>
+  <string name="explore_section_expand_security_title">Erhöhe deine Sicherheit</string>
+  <string name="explore_tool_password_generator_title">Passwort-Generator</string>
+  <string name="explore_tool_dark_web_monitor_title">Dark Web-Überwachung</string>
+  <string name="explore_tool_dark_web_monitor_subtitle">Beginne mit der Überwachung auf Datenschutzverletzungen.</string>
+  <string name="explore_tool_password_health_title">Passwortsicherheit</string>
+  <string name="explore_tool_password_health_subtitle">Erkenne unsichere, schwache und wiederverwendete Passwörter.</string>
+  <string name="explore_tool_codes_title">Codes</string>
+  <string name="explore_tool_codes_subtitle">Einmalcodes für die Zwei-Faktor-Authentifizierung.</string>
+  <string name="codes_screen_title">Codes</string>
+  <string name="codes_search_placeholder">In allen Einträgen suchen </string>
+  <string name="codes_snackbar_code_copied">Code in die Zwischenablage kopiert</string>
+  <string name="explore_tool_aliases_title">E-Mails mit Aliasnamen schützen</string>
+  <string name="explore_tool_aliases_subtitle">Schütze deine E-Mail-Adressen, reduziere Spam und unterbinde Phishing-Versuche.</string>
+  <string name="explore_product_vpn_title">Proton VPN</string>
+  <string name="explore_product_vpn_subtitle">Surfe, ohne dass deine Aktivitäten nachverfolgt werden, und greife auf gesperrte Inhalte zu.</string>
+  <string name="explore_product_mail_title">Proton Mail</string>
+  <string name="explore_product_mail_subtitle">Schütze deinen Posteingang vor Spam, Tracking und gezielter Werbung.</string>
+  <string name="explore_product_drive_title">Proton Drive</string>
+  <string name="explore_product_drive_subtitle">Gib deinen wertvollen Fotos und Dateien den sicheren Aufbewahrungsort, den sie verdienen.</string>
+  <string name="explore_product_lumo_title">Lumo AI</string>
+  <string name="explore_product_lumo_subtitle">Stelle Fragen und entwickle deine Ideen gemeinsam mit einem KI-Assistenten, bei dem der Datenschutz an erster Stelle steht.</string>
+  <string name="explore_product_meet_title">Proton Meet</string>
+  <string name="explore_product_meet_subtitle">Unterhalte dich privat über vertrauliche Videokonferenzen.</string>
+  <string name="explore_business_banner_title">Proton für Unternehmen</string>
+</resources>

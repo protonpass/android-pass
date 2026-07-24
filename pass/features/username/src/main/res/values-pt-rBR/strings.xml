@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="generate_username_title">Gerar nome de usuário</string>
+  <string name="generate_username_button_regenerate">Gerar novamente</string>
+  <string name="generate_username_button_copy">Copiar</string>
+  <string name="generate_username_label_include_numbers">Incluir números</string>
+  <string name="generate_username_label_leetspeak">Leetspeak</string>
+  <string name="generate_username_label_word_types">Word types</string>
+  <string name="generate_username_label_adjectives">Adjetivos</string>
+  <string name="generate_username_label_nouns">Substantivos</string>
+  <string name="generate_username_label_verbs">Verbos</string>
+  <string name="generate_username_snackbar_copied">O nome de usuário foi copiado para a área de transferência</string>
+  <string name="generate_username_snackbar_error">Não foi possível criar este nome de usuário</string>
+</resources>

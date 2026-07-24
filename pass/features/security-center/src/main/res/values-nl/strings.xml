@@ -32,6 +32,8 @@
   <string name="security_center_home_row_insecure_passwords_subtitle">Uw wachtwoorden wijzigen</string>
   <string name="security_center_home_row_reused_passwords_title">Hergebruikte wachtwoorden</string>
   <string name="security_center_home_row_reused_passwords_subtitle">Genereer unieke wachtwoorden</string>
+  <string name="security_center_home_row_compromised_passwords_title">Gecompromitteerde wachtwoorden</string>
+  <string name="security_center_home_row_compromised_passwords_subtitle">Veelvoorkomende wachtwoorden gevonden bij datalekken</string>
   <string name="security_center_home_row_missing_tfa_title">Inactieve 2FA</string>
   <string name="security_center_home_row_missing_tfa_subtitle">2FA instellen voor meer beveiliging</string>
   <string name="security_center_home_row_excludes_items_title">Uitgesloten van monitoring</string>
@@ -54,6 +56,9 @@
   <string name="security_center_reused_pass_top_bar_title">Hergebruikte wachtwoorden</string>
   <string name="security_center_reused_pass_top_bar_subtitle">Genereer unieke wachtwoorden voor iedere account om uw veiligheid te verhogen.</string>
   <string name="security_center_reused_pass_list_sticky_header_label" comment="Shows the number of times that an item has a reused password (e.g. Reused 3 times). Note that there's not singular case as that would mean that the password has been never been reused">%1$d keer hergebruikt</string>
+  <!-- Compromised passwords screen -->
+  <string name="security_center_compromised_pass_top_bar_title">Gecompromitteerde wachtwoorden</string>
+  <string name="security_center_compromised_pass_top_bar_subtitle">Gecompromitteerde wachtwoorden zijn de wachtwoorden die aan het licht komen bij datalekken. Gebruik wachtwoorden nooit opnieuw om de impact te beperken wanneer zich een datalek voordoet.</string>
   <!-- Missing 2FA -->
   <string name="security_center_missing_tfa_top_bar_title">Inactieve 2FA</string>
   <string name="security_center_missing_tfa_top_bar_subtitle">Voor extra beveiliging, stel tweestapsverificatie in op de volgende accounts.</string>

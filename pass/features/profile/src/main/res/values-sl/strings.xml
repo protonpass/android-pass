@@ -9,6 +9,9 @@
   <string name="profile_option_import_export">Uvoz/izvoz</string>
   <string name="profile_option_tutorial">Kako uporabljati Proton Pass</string>
   <string name="profile_option_rating">Oceni aplikacijo</string>
+  <string name="profile_spread_the_word">Spread the word</string>
+  <string name="profile_option_tell_a_friend">Tell a friend</string>
+  <string name="profile_spread_the_word_share_message">I\'m using Proton Pass to keep my passwords secure. Try it: https://proton.me/pass/download</string>
   <string name="profile_option_autofill">Samodejno izpolnjevanje</string>
   <string name="profile_option_autofill_subtitle">Samodejno izpolnite svoja uporabniška imena in gesla.</string>
   <string name="profile_option_secure_links">Varne povezave</string>

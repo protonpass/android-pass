@@ -32,6 +32,7 @@
   <string name="item_details_leave_dialog_message">Вы згубіце доступ да гэтага элемента і яго падрабязнасцяў. Вы сапраўды хочаце працягнуць?</string>
   <string name="item_details_leave_item_message_error">Адбылася памылка падчас выхаду з элемента</string>
   <string name="item_details_leave_item_message_success">Вы паспяхова выйшлі з элемента</string>
+  <string name="item_details_monitor_check_update_error">Немагчыма абнавіць маніторынг. Паспрабуйце яшчэ раз.</string>
   <string name="item_details_snackbar_message_alias_copied">Псеўданім скапіяваны</string>
   <string name="item_details_snackbar_message_birthdate_copied">Дата нараджэння скапіявана</string>
   <string name="item_details_snackbar_message_card_number_copied">Нумар карткі скапіяваны</string>

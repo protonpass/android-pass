@@ -32,6 +32,7 @@
   <string name="item_details_leave_dialog_message">Menetät pääsyn tähän kohteeseen ja sen tietoihin. Haluatko jatkaa?</string>
   <string name="item_details_leave_item_message_error">Virhe poistuttaessa kohteesta</string>
   <string name="item_details_leave_item_message_success">Kohteesta poistuttiin</string>
+  <string name="item_details_monitor_check_update_error">Couldn\'t update monitoring. Please try again.</string>
   <string name="item_details_snackbar_message_alias_copied">Alias kopioitiin</string>
   <string name="item_details_snackbar_message_birthdate_copied">Syntymäpäivä kopioitiin</string>
   <string name="item_details_snackbar_message_card_number_copied">Kortin numero kopioitiin</string>

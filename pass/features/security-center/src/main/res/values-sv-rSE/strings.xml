@@ -32,6 +32,8 @@
   <string name="security_center_home_row_insecure_passwords_subtitle">Ändra dina lösenord</string>
   <string name="security_center_home_row_reused_passwords_title">Återanvända lösenord</string>
   <string name="security_center_home_row_reused_passwords_subtitle">Generera unika lösenord</string>
+  <string name="security_center_home_row_compromised_passwords_title">Komprometterat lösenord</string>
+  <string name="security_center_home_row_compromised_passwords_subtitle">Vanliga lösenord funna i dataintrång</string>
   <string name="security_center_home_row_missing_tfa_title">Inaktiv 2FA</string>
   <string name="security_center_home_row_missing_tfa_subtitle">Ställ in 2FA för mer säkerhet</string>
   <string name="security_center_home_row_excludes_items_title">Exkluderat från övervakning</string>
@@ -54,6 +56,9 @@
   <string name="security_center_reused_pass_top_bar_title">Återanvända lösenord</string>
   <string name="security_center_reused_pass_top_bar_subtitle">Generera unika lösenord för varje konto för att öka din säkerhet.</string>
   <string name="security_center_reused_pass_list_sticky_header_label" comment="Shows the number of times that an item has a reused password (e.g. Reused 3 times). Note that there's not singular case as that would mean that the password has been never been reused">Återanvänt %1$d gånger</string>
+  <!-- Compromised passwords screen -->
+  <string name="security_center_compromised_pass_top_bar_title">Komprometterade lösenord</string>
+  <string name="security_center_compromised_pass_top_bar_subtitle">Komprometterade lösenord är sådana som exponerats i dataintrång. Återanvänd aldrig lösenord för att minimera riskerna när ett dataintrång inträffar.</string>
   <!-- Missing 2FA -->
   <string name="security_center_missing_tfa_top_bar_title">Inaktiv 2FA</string>
   <string name="security_center_missing_tfa_top_bar_subtitle">För ökad säkerhet, ställ in tvåfaktorsautentisering på följande konton.</string>

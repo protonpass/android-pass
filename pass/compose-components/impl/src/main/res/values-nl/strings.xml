@@ -87,6 +87,7 @@
   <string name="bottom_bar_add_item_icon_content_description">Item toevoegen</string>
   <string name="bottom_bar_profile_icon_content_description">Profiel</string>
   <string name="bottom_bar_security_center_icon_content_description">Beveiligingscentrum</string>
+  <string name="bottom_bar_explore_icon_content_description">Ontdek</string>
   <!-- List group by most recents -->
   <string name="most_recent_today">Vandaag</string>
   <string name="most_recent_yesterday">Gisteren</string>
@@ -325,12 +326,21 @@
   <string name="collapse_expanded_text">minder</string>
   <string name="login_item_monitor_widget_weak_pass_title">Zwak wachtwoord</string>
   <string name="login_item_monitor_widget_weak_pass_subtitle">Dit account is kwetsbaar, bezoek de service en wijzig uw wachtwoord.</string>
+  <string name="login_item_monitor_widget_compromised_pass_title">Gecompromitteerde wachtwoorden</string>
+  <string name="login_item_monitor_widget_compromised_pass_subtitle">Dit aanmeldwachtwoord verschijnt bij een datalek. Bezoek de service en wijzig het wachtwoord.</string>
   <plurals name="login_item_monitor_widget_reused_pass_title">
     <item quantity="one">%d andere login gebruikt hetzelfde wachtwoord</item>
     <item quantity="other">%d andere logins gebruiken hetzelfde wachtwoord</item>
   </plurals>
   <string name="login_item_monitor_widget_missing_two_fa_title">2FA instellen voor meer beveiliging</string>
   <string name="login_item_monitor_widget_missing_two_fa_subtitle">Deze service biedt 2FA aan. Schakel het in voor extra accountveiligheid.</string>
+  <string name="login_item_monitor_action_ignore">Negeren</string>
+  <string name="login_item_monitor_action_restore">Herstel waarschuwing</string>
+  <string name="login_item_monitor_header">Pass Monitor</string>
+  <string name="login_item_monitor_label_weak">Zwak wachtwoord</string>
+  <string name="login_item_monitor_label_compromised">Gecompromitteerd wachtwoord</string>
+  <string name="login_item_monitor_label_reused">Hergebruikt Wachtwoord</string>
+  <string name="login_item_monitor_label_missing_2fa">2FA ontbreekt</string>
   <string name="login_item_reused_passwords_subtitle">Items van uw kluis die dit wachtwoord gebruiken.</string>
   <string name="mfa_limit_reached">2FA-limiet bereikt</string>
   <string name="activity_in_last_two_weeks">Activiteiten tijdens de voorbije 14 dagen</string>
@@ -364,16 +374,16 @@
   <string name="warning_dialog_item_shared_vault_reminder">Niet opnieuw herinneren</string>
   <string name="upgrade_to_pass_plus">Opwaarderen naar Pass Plus</string>
   <string name="warning_dialog_reload_app_after_purchase_description">U wordt doorgestuurd naar onze website. Als u een abonnement aanschaft, herstart dan de app.</string>
-      <string name="word_separator">Woordscheidingsteken</string>
-      <string name="bottomsheet_option_capitalise">Hoofdletters</string>
-      <string name="bottomsheet_option_word_separator_hyphens">Koppeltekens ( - )</string>
-      <string name="bottomsheet_option_word_separator_spaces">Spaties</string>
-      <string name="bottomsheet_option_word_separator_periods">Punten ( . )</string>
-      <string name="bottomsheet_option_word_separator_commas">Komma\'s ( , )</string>
-      <string name="bottomsheet_option_word_separator_underscores">Onderstrepingstekens ( _ )</string>
-      <string name="bottomsheet_option_word_separator_numbers">Nummers</string>
-      <string name="bottomsheet_option_word_separator_numbers_and_symbols">Nummers en symbolen</string>
-
+  <!-- Shared word separator dialog (used by password + username generators) -->
+  <string name="word_separator">Woordscheidingsteken</string>
+  <string name="bottomsheet_option_capitalise">Hoofdletters</string>
+  <string name="bottomsheet_option_word_separator_hyphens">Koppeltekens ( - )</string>
+  <string name="bottomsheet_option_word_separator_spaces">Spaties</string>
+  <string name="bottomsheet_option_word_separator_periods">Punten ( . )</string>
+  <string name="bottomsheet_option_word_separator_commas">Komma\'s ( , )</string>
+  <string name="bottomsheet_option_word_separator_underscores">Onderstrepingstekens ( _ )</string>
+  <string name="bottomsheet_option_word_separator_numbers">Nummers</string>
+  <string name="bottomsheet_option_word_separator_numbers_and_symbols">Nummers en symbolen</string>
   <plurals name="word_count">
     <item quantity="one">%s woord</item>
     <item quantity="other">%s woorden</item>

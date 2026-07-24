@@ -9,6 +9,9 @@
   <string name="profile_option_import_export">Εισαγωγή/εξαγωγή</string>
   <string name="profile_option_tutorial">Πώς να χρησιμοποιήσετε το Proton Pass</string>
   <string name="profile_option_rating">Βαθμολογήστε την εφαρμογή</string>
+  <string name="profile_spread_the_word">Διαδώστε το μήνυμα</string>
+  <string name="profile_option_tell_a_friend">Πες σε έναν φίλο</string>
+  <string name="profile_spread_the_word_share_message">Χρησιμοποιώ το Proton Pass για να διατηρώ τους κωδικούς πρόσβασής μου ασφαλείς. Δοκιμάστε το: https://proton.me/pass/download</string>
   <string name="profile_option_autofill">Αυτόματη συμπλήρωση</string>
   <string name="profile_option_autofill_subtitle">Συμπληρώστε αυτόματα τα ονόματα χρήστη και τους κωδικούς πρόσβασής σας.</string>
   <string name="profile_option_secure_links">Ασφαλείς σύνδεσμοι</string>

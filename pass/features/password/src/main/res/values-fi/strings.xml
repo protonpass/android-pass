@@ -8,7 +8,8 @@
   <plurals name="character_count">
     <item quantity="one">%s merkki</item>
     <item quantity="other">%s merkkiä</item>
-  </plurals>  <string name="bottomsheet_option_capital_letters">Isot kirjaimet (A-Z)</string>
+  </plurals>
+  <string name="bottomsheet_option_capital_letters">Isot kirjaimet (A-Z)</string>
   <string name="bottomsheet_option_include_numbers">Sisällytä numerot (0-9)</string>
   <string name="regenerate_password_icon_content_description">Luo uusi salasana -painike</string>
   <string name="password_mode_memorable">Mieleenpainuva salasana</string>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="generate_username_title">Generer brugernavn</string>
+  <string name="generate_username_button_regenerate">Generer igen</string>
+  <string name="generate_username_button_copy">Kopiér</string>
+  <string name="generate_username_label_include_numbers">Inkluder tal</string>
+  <string name="generate_username_label_leetspeak">Leetspeak</string>
+  <string name="generate_username_label_word_types">Ordklasser</string>
+  <string name="generate_username_label_adjectives">Tillægsord</string>
+  <string name="generate_username_label_nouns">Navneord</string>
+  <string name="generate_username_label_verbs">Udsagnord</string>
+  <string name="generate_username_snackbar_copied">Brugernavn kopieret til udklipsholder</string>
+  <string name="generate_username_snackbar_error">Kunne ikke generere brugernavn</string>
+</resources>

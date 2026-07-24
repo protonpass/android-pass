@@ -32,6 +32,8 @@
   <string name="security_center_home_row_insecure_passwords_subtitle">更改密码</string>
   <string name="security_center_home_row_reused_passwords_title">重复使用的密码</string>
   <string name="security_center_home_row_reused_passwords_subtitle">生成唯一密码</string>
+  <string name="security_center_home_row_compromised_passwords_title">泄露密码</string>
+  <string name="security_center_home_row_compromised_passwords_subtitle">数据泄露中发现的常见密码</string>
   <string name="security_center_home_row_missing_tfa_title">未启用 2FA</string>
   <string name="security_center_home_row_missing_tfa_subtitle">设置 2FA 以获得更多安全</string>
   <string name="security_center_home_row_excludes_items_title">从监测中移除</string>
@@ -54,6 +56,9 @@
   <string name="security_center_reused_pass_top_bar_title">重复使用的密码</string>
   <string name="security_center_reused_pass_top_bar_subtitle">为每个账户生成唯一的密码，以提高安全性。</string>
   <string name="security_center_reused_pass_list_sticky_header_label" comment="Shows the number of times that an item has a reused password (e.g. Reused 3 times). Note that there's not singular case as that would mean that the password has been never been reused">重复使用 %1$d 次</string>
+  <!-- Compromised passwords screen -->
+  <string name="security_center_compromised_pass_top_bar_title">泄露密码</string>
+  <string name="security_center_compromised_pass_top_bar_subtitle">泄露密码是指在数据泄露中被暴露的密码。请勿重复使用密码，以限制数据泄露时造成的影响。</string>
   <!-- Missing 2FA -->
   <string name="security_center_missing_tfa_top_bar_title">未启用 2FA</string>
   <string name="security_center_missing_tfa_top_bar_subtitle">为提高安全性，请在以下账户中设置双因素身份验证。</string>

@@ -32,6 +32,7 @@
   <string name="item_details_leave_dialog_message">You will lose access to this item and its details. Do you want to continue?</string>
   <string name="item_details_leave_item_message_error">There was an error leaving the item</string>
   <string name="item_details_leave_item_message_success">Item successfully left</string>
+  <string name="item_details_monitor_check_update_error">Couldn\'t update monitoring. Please try again.</string>
   <string name="item_details_snackbar_message_alias_copied">Đã sao chép alias</string>
   <string name="item_details_snackbar_message_birthdate_copied">Đã sao chép ngày sinh</string>
   <string name="item_details_snackbar_message_card_number_copied">Đã sao chép số thẻ</string>

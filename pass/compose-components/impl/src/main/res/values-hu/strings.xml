@@ -87,6 +87,7 @@
   <string name="bottom_bar_add_item_icon_content_description">Új elem</string>
   <string name="bottom_bar_profile_icon_content_description">Profil</string>
   <string name="bottom_bar_security_center_icon_content_description">Biztonsági központ</string>
+  <string name="bottom_bar_explore_icon_content_description">Explore</string>
   <!-- List group by most recents -->
   <string name="most_recent_today">Ma</string>
   <string name="most_recent_yesterday">Tegnap</string>
@@ -325,12 +326,21 @@
   <string name="collapse_expanded_text">kevesebb</string>
   <string name="login_item_monitor_widget_weak_pass_title">Gyenge jelszó</string>
   <string name="login_item_monitor_widget_weak_pass_subtitle">Ez a fiók sérülékeny, látogasson el a szolgáltatáshoz, és változtassa meg jelszavát.</string>
+  <string name="login_item_monitor_widget_compromised_pass_title">Compromised password</string>
+  <string name="login_item_monitor_widget_compromised_pass_subtitle">This login password appears in a data breach. Please visit the service and change the password.</string>
   <plurals name="login_item_monitor_widget_reused_pass_title">
     <item quantity="one">%d másik bejelentkezés ugyanazt a jelszót használja</item>
     <item quantity="other">%d másik bejelentkezés ugyanazt a jelszót használja</item>
   </plurals>
   <string name="login_item_monitor_widget_missing_two_fa_title">Kapcsolja be a kétlépcsős hitelesítést nagyobb biztonságért</string>
   <string name="login_item_monitor_widget_missing_two_fa_subtitle">Ez a szolgáltatás kétlépcsős hitelesítést tesz lehetővé. Engedélyezze a biztonság növelése érdekében.</string>
+  <string name="login_item_monitor_action_ignore">Ignore</string>
+  <string name="login_item_monitor_action_restore">Restore alert</string>
+  <string name="login_item_monitor_header">Pass Monitor</string>
+  <string name="login_item_monitor_label_weak">Weak password</string>
+  <string name="login_item_monitor_label_compromised">Compromised password</string>
+  <string name="login_item_monitor_label_reused">Reused password</string>
+  <string name="login_item_monitor_label_missing_2fa">Missing 2FA</string>
   <string name="login_item_reused_passwords_subtitle">A tárolókból származó elemek, amelyek ezt a jelszót használják.</string>
   <string name="mfa_limit_reached">Kétlépcsős kód korlát elérve</string>
   <string name="activity_in_last_two_weeks">Tevékenység az elmúlt 14 napban</string>
@@ -364,16 +374,16 @@
   <string name="warning_dialog_item_shared_vault_reminder">Ne emlékeztessen újra</string>
   <string name="upgrade_to_pass_plus">Upgrade to Pass Plus</string>
   <string name="warning_dialog_reload_app_after_purchase_description">Hamarosan átirányítjuk a weboldalunkra. Ha előfizetést vásárol, indítsa újra az alkalmazást.</string>
-      <string name="word_separator">Szóelválasztó</string>
-      <string name="bottomsheet_option_capitalise">Nagy kezdőbetű</string>
-      <string name="bottomsheet_option_word_separator_hyphens">Kötőjelek ( - )</string>
-      <string name="bottomsheet_option_word_separator_spaces">Szóközök</string>
-      <string name="bottomsheet_option_word_separator_periods">Pontok ( . )</string>
-      <string name="bottomsheet_option_word_separator_commas">Vesszők ( , )</string>
-      <string name="bottomsheet_option_word_separator_underscores">Aláhúzások ( _ )</string>
-      <string name="bottomsheet_option_word_separator_numbers">Számok</string>
-      <string name="bottomsheet_option_word_separator_numbers_and_symbols">Számok és szimbólumok</string>
-
+  <!-- Shared word separator dialog (used by password + username generators) -->
+  <string name="word_separator">Szóelválasztó</string>
+  <string name="bottomsheet_option_capitalise">Nagy kezdőbetű</string>
+  <string name="bottomsheet_option_word_separator_hyphens">Kötőjelek ( - )</string>
+  <string name="bottomsheet_option_word_separator_spaces">Szóközök</string>
+  <string name="bottomsheet_option_word_separator_periods">Pontok ( . )</string>
+  <string name="bottomsheet_option_word_separator_commas">Vesszők ( , )</string>
+  <string name="bottomsheet_option_word_separator_underscores">Aláhúzások ( _ )</string>
+  <string name="bottomsheet_option_word_separator_numbers">Számok</string>
+  <string name="bottomsheet_option_word_separator_numbers_and_symbols">Számok és szimbólumok</string>
   <plurals name="word_count">
     <item quantity="one">%s szó</item>
     <item quantity="other">%s szó</item>

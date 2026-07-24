@@ -32,6 +32,8 @@
   <string name="security_center_home_row_insecure_passwords_subtitle">Canvieu les vostres contrasenyes</string>
   <string name="security_center_home_row_reused_passwords_title">Contrasenyes reutilitzades</string>
   <string name="security_center_home_row_reused_passwords_subtitle">Generi contrasenyes úniques</string>
+  <string name="security_center_home_row_compromised_passwords_title">Contrasenyes compromeses</string>
+  <string name="security_center_home_row_compromised_passwords_subtitle">Contrasenyes habituals trobades en filtracions de dades</string>
   <string name="security_center_home_row_missing_tfa_title">A2F inactiva</string>
   <string name="security_center_home_row_missing_tfa_subtitle">Configureu A2F per a més seguretat</string>
   <string name="security_center_home_row_excludes_items_title">Exclòs del monitoratge</string>
@@ -54,6 +56,9 @@
   <string name="security_center_reused_pass_top_bar_title">Contrasenyes reutilitzades</string>
   <string name="security_center_reused_pass_top_bar_subtitle">Genereu contrasenyes úniques per a cada compte per a augmentar la seguretat.</string>
   <string name="security_center_reused_pass_list_sticky_header_label" comment="Shows the number of times that an item has a reused password (e.g. Reused 3 times). Note that there's not singular case as that would mean that the password has been never been reused">Reutilitzat %1$d vegades</string>
+  <!-- Compromised passwords screen -->
+  <string name="security_center_compromised_pass_top_bar_title">Contrasenyes compromeses</string>
+  <string name="security_center_compromised_pass_top_bar_subtitle">Les contrasenyes en risc són les que han estat exposades en filtracions de dades. No reutilitzeu mai les contrasenyes per tal de limitar-ne l\'impacte quan hi hagi una filtració.</string>
   <!-- Missing 2FA -->
   <string name="security_center_missing_tfa_top_bar_title">A2F inactiva</string>
   <string name="security_center_missing_tfa_top_bar_subtitle">Per a obtenir una major seguretat, configureu l\'autenticació de doble factor als comptes següents.</string>

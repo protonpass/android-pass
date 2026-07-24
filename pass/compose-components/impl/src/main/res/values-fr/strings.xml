@@ -87,6 +87,7 @@
   <string name="bottom_bar_add_item_icon_content_description">Ajouter un élément</string>
   <string name="bottom_bar_profile_icon_content_description">Profil</string>
   <string name="bottom_bar_security_center_icon_content_description">Centre de sécurité</string>
+  <string name="bottom_bar_explore_icon_content_description">Découvrir</string>
   <!-- List group by most recents -->
   <string name="most_recent_today">Aujourd\'hui</string>
   <string name="most_recent_yesterday">Hier</string>
@@ -325,12 +326,21 @@
   <string name="collapse_expanded_text">moins</string>
   <string name="login_item_monitor_widget_weak_pass_title">Mot de passe faible</string>
   <string name="login_item_monitor_widget_weak_pass_subtitle">Ce compte est vulnérable. Rendez-vous sur le service et changez votre mot de passe.</string>
+  <string name="login_item_monitor_widget_compromised_pass_title">Mot de passe compromis</string>
+  <string name="login_item_monitor_widget_compromised_pass_subtitle">Ce mot de passe de connexion a été compromis lors d\'une fuite de données. Veuillez vous connecter au service et modifier votre mot de passe.</string>
   <plurals name="login_item_monitor_widget_reused_pass_title">
     <item quantity="one">%d autre identifiant utilise le même mot de passe.</item>
     <item quantity="other">%d autres identifiants utilisent le même mot de passe.</item>
   </plurals>
   <string name="login_item_monitor_widget_missing_two_fa_title">Configurez l\'A2F pour plus de sécurité</string>
   <string name="login_item_monitor_widget_missing_two_fa_subtitle">Ce service propose l\'A2F. Activez-la pour améliorer votre sécurité.</string>
+  <string name="login_item_monitor_action_ignore">Ignorer</string>
+  <string name="login_item_monitor_action_restore">Rétablir l\'alerte</string>
+  <string name="login_item_monitor_header">Pass Monitor</string>
+  <string name="login_item_monitor_label_weak">Mot de passe peu sécurisé</string>
+  <string name="login_item_monitor_label_compromised">Mot de passe compromis</string>
+  <string name="login_item_monitor_label_reused">Mot de passe réutilisé</string>
+  <string name="login_item_monitor_label_missing_2fa">A2F manquante</string>
   <string name="login_item_reused_passwords_subtitle">Éléments de vos coffres-forts qui utilisent ce mot de passe.</string>
   <string name="mfa_limit_reached">La limite de l\'A2F est atteinte.</string>
   <string name="activity_in_last_two_weeks">Activité au cours des 14 derniers jours</string>
@@ -364,16 +374,16 @@
   <string name="warning_dialog_item_shared_vault_reminder">Ne plus me le rappeler</string>
   <string name="upgrade_to_pass_plus">Souscrire à Pass Plus</string>
   <string name="warning_dialog_reload_app_after_purchase_description">Vous allez être redirigé vers notre site internet. Si vous achetez un abonnement, veuillez redémarrer l\'application.</string>
-      <string name="word_separator">Séparateur de mots</string>
-      <string name="bottomsheet_option_capitalise">Ajouter des majuscules</string>
-      <string name="bottomsheet_option_word_separator_hyphens">Tirets ( - )</string>
-      <string name="bottomsheet_option_word_separator_spaces">Espaces</string>
-      <string name="bottomsheet_option_word_separator_periods">Points ( . )</string>
-      <string name="bottomsheet_option_word_separator_commas">Virgules ( , )</string>
-      <string name="bottomsheet_option_word_separator_underscores">Tirets bas/Underscore ( _ )</string>
-      <string name="bottomsheet_option_word_separator_numbers">Chiffres</string>
-      <string name="bottomsheet_option_word_separator_numbers_and_symbols">Chiffres et symboles</string>
-
+  <!-- Shared word separator dialog (used by password + username generators) -->
+  <string name="word_separator">Séparateur de mots</string>
+  <string name="bottomsheet_option_capitalise">Ajouter des majuscules</string>
+  <string name="bottomsheet_option_word_separator_hyphens">Tirets ( - )</string>
+  <string name="bottomsheet_option_word_separator_spaces">Espaces</string>
+  <string name="bottomsheet_option_word_separator_periods">Points ( . )</string>
+  <string name="bottomsheet_option_word_separator_commas">Virgules ( , )</string>
+  <string name="bottomsheet_option_word_separator_underscores">Tirets bas/Underscore ( _ )</string>
+  <string name="bottomsheet_option_word_separator_numbers">Chiffres</string>
+  <string name="bottomsheet_option_word_separator_numbers_and_symbols">Chiffres et symboles</string>
   <plurals name="word_count">
     <item quantity="one">%s mot</item>
     <item quantity="other">%s mots</item>

@@ -34,6 +34,7 @@ import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.crypto.fakes.context.FakeEncryptionContext
 import proton.android.pass.crypto.fakes.context.FakeEncryptionContextProvider
 import proton.android.pass.data.api.repositories.DRAFT_PASSWORD_KEY
+import proton.android.pass.data.api.repositories.DRAFT_USERNAME_KEY
 import proton.android.pass.data.api.repositories.DraftRepository
 import proton.android.pass.data.fakes.repositories.FakeDraftRepository
 import proton.android.pass.data.fakes.usecases.FakeCanCreateAlias
@@ -149,6 +150,31 @@ internal class BaseLoginViewModelTest {
 
         assertThat(baseLoginViewModel.loginItemFormState.username).isEqualTo(usernameInput)
     }
+
+    @Test
+    internal fun `GIVEN form is collapsed WHEN a username is generated THEN username is updated`() = runTest {
+        val generatedUsername = "brave.tiger.42"
+        emailValidator.setResult(false)
+
+        draftRepository.save(DRAFT_USERNAME_KEY, generatedUsername)
+
+        assertThat(baseLoginViewModel.loginItemFormState.username).isEqualTo(generatedUsername)
+        assertThat(baseLoginViewModel.loginItemFormState.email).isEqualTo("")
+    }
+
+    @Test
+    internal fun `GIVEN form is expanded WHEN a username is generated THEN username is updated and email untouched`() =
+        runTest {
+            val emailInput = "user@email.com"
+            val generatedUsername = "brave.tiger.42"
+            baseLoginViewModel.onUsernameOrEmailManuallyExpanded()
+            baseLoginViewModel.onEmailChanged(emailInput)
+
+            draftRepository.save(DRAFT_USERNAME_KEY, generatedUsername)
+
+            assertThat(baseLoginViewModel.loginItemFormState.username).isEqualTo(generatedUsername)
+            assertThat(baseLoginViewModel.loginItemFormState.email).isEqualTo(emailInput)
+        }
 
     @Test
     fun `when the password has changed the state should hold it`() = runTest {

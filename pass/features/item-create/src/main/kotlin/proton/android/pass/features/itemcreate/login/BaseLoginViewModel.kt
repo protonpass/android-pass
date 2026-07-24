@@ -591,7 +591,11 @@ abstract class BaseLoginViewModel(
                 if (it is Some) {
                     draftRepository.delete<String>(DRAFT_USERNAME_KEY).value()
                         ?.let { generatedUsername ->
-                            onEmailChanged(generatedUsername)
+                            if (loginItemFormState.isExpanded) {
+                                onUsernameChanged(generatedUsername)
+                            } else {
+                                onEmailChanged(generatedUsername)
+                            }
                         }
                 }
             }

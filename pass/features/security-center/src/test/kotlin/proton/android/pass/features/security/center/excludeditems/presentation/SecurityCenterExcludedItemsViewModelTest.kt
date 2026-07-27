@@ -29,6 +29,7 @@ import proton.android.pass.data.fakes.usecases.FakeObserveItems
 import proton.android.pass.data.fakes.usecases.vaults.FakeObserveVaultsGroupedByShareId
 import proton.android.pass.domain.ItemFlag
 import proton.android.pass.domain.ItemId
+import proton.android.pass.preferences.FakeFeatureFlagsPreferenceRepository
 import proton.android.pass.preferences.FakePreferenceRepository
 import proton.android.pass.telemetry.fakes.FakeTelemetryManager
 import proton.android.pass.test.MainDispatcherRule
@@ -44,6 +45,7 @@ internal class SecurityCenterExcludedItemsViewModelTest {
     private lateinit var userPreferencesRepository: FakePreferenceRepository
     private lateinit var telemetryManager: FakeTelemetryManager
     private lateinit var encryptionContextProvider: FakeEncryptionContextProvider
+    private lateinit var featureFlagsPreferencesRepository: FakeFeatureFlagsPreferenceRepository
 
     @Before
     internal fun setUp() {
@@ -52,6 +54,7 @@ internal class SecurityCenterExcludedItemsViewModelTest {
         userPreferencesRepository = FakePreferenceRepository()
         telemetryManager = FakeTelemetryManager()
         encryptionContextProvider = FakeEncryptionContextProvider()
+        featureFlagsPreferencesRepository = FakeFeatureFlagsPreferenceRepository()
     }
 
     @Test
@@ -90,6 +93,7 @@ internal class SecurityCenterExcludedItemsViewModelTest {
         observeVaultsGroupedByShareId = observeVaultsGroupedByShareId,
         userPreferencesRepository = userPreferencesRepository,
         encryptionContextProvider = encryptionContextProvider,
+        featureFlagsPreferencesRepository = featureFlagsPreferencesRepository,
         telemetryManager = telemetryManager
     )
 }

@@ -218,12 +218,13 @@ private fun RenderCheckRow(
     canLoadExternalImages: Boolean,
     onEvent: (PassItemDetailsUiEvent) -> Unit
 ) {
+    val canEdit = monitorState.canEdit && monitorState.isPerCheckExclusionEnabled
     when (check) {
         MonitorCheck.CompromisedPassword -> LoginMonitorCompromisedPassWidget(
             modifier = Modifier.padding(vertical = Spacing.small),
             isRestoreMode = restore,
             isPending = isPending,
-            canEdit = monitorState.canEdit,
+            canEdit = canEdit,
             onToggleExclude = {
                 onEvent(
                     PassItemDetailsUiEvent.OnToggleMonitorCheck(
@@ -238,7 +239,7 @@ private fun RenderCheckRow(
             modifier = Modifier.padding(vertical = Spacing.small),
             isRestoreMode = restore,
             isPending = isPending,
-            canEdit = monitorState.canEdit,
+            canEdit = canEdit,
             onToggleExclude = {
                 onEvent(
                     PassItemDetailsUiEvent.OnToggleMonitorCheck(
@@ -258,7 +259,7 @@ private fun RenderCheckRow(
             onEvent = onEvent,
             isRestoreMode = restore,
             isPending = isPending,
-            canEdit = monitorState.canEdit,
+            canEdit = canEdit,
             onToggleExclude = {
                 onEvent(
                     PassItemDetailsUiEvent.OnToggleMonitorCheck(
@@ -273,7 +274,7 @@ private fun RenderCheckRow(
             modifier = Modifier.padding(vertical = Spacing.small),
             isRestoreMode = restore,
             isPending = isPending,
-            canEdit = monitorState.canEdit,
+            canEdit = canEdit,
             onToggleExclude = {
                 onEvent(
                     PassItemDetailsUiEvent.OnToggleMonitorCheck(

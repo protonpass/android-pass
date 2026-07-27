@@ -24,6 +24,8 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.stateIn
 import proton.android.pass.common.api.LoadingResult
@@ -35,6 +37,7 @@ import proton.android.pass.data.api.usecases.ObserveItems
 import proton.android.pass.data.api.usecases.breach.ObserveAllBreachByUserId
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemExclusionCheckFlags
+import proton.android.pass.domain.ItemFlag
 import proton.android.pass.domain.ItemState
 import proton.android.pass.domain.ShareSelection
 import proton.android.pass.domain.breach.Breach
@@ -64,13 +67,28 @@ class SecurityCenterHomeViewModel @Inject constructor(
         telemetryManager.sendEvent(PassMonitorDisplayHome)
     }
 
-    private val excludedLoginItemsFlow: Flow<List<Item>> = observeItems(
-        selection = ShareSelection.AllShares,
-        filter = ItemTypeFilter.Logins,
-        itemState = ItemState.Active,
-        anyFlags = ItemExclusionCheckFlags,
-        includeHidden = false
-    )
+    private val perCheckExclusionEnabledFlow: Flow<Boolean> =
+        featureFlagsPreferencesRepository[FeatureFlag.PASS_MONITOR_PER_CHECK_EXCLUSION]
+
+    private val exclusionCheckFlagsFlow: Flow<List<ItemFlag>> = perCheckExclusionEnabledFlow
+        .map { isPerCheckExclusionEnabled ->
+            if (isPerCheckExclusionEnabled) {
+                ItemExclusionCheckFlags
+            } else {
+                listOf(ItemFlag.SkipHealthCheck)
+            }
+        }
+
+    private val excludedLoginItemsFlow: Flow<List<Item>> = exclusionCheckFlagsFlow
+        .flatMapLatest { exclusionCheckFlags ->
+            observeItems(
+                selection = ShareSelection.AllShares,
+                filter = ItemTypeFilter.Logins,
+                itemState = ItemState.Active,
+                anyFlags = exclusionCheckFlags,
+                includeHidden = false
+            )
+        }
 
     private val observeBreachesFlow: Flow<LoadingResult<Breach>> = observeAllBreachByUserId()
         .asLoadingResult()

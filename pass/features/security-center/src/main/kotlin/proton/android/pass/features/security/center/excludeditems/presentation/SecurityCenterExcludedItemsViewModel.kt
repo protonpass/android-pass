@@ -25,6 +25,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import proton.android.pass.common.api.removeAccents
@@ -35,9 +36,12 @@ import proton.android.pass.data.api.usecases.ItemTypeFilter
 import proton.android.pass.data.api.usecases.ObserveItems
 import proton.android.pass.data.api.usecases.vaults.ObserveVaultsGroupedByShareId
 import proton.android.pass.domain.ItemExclusionCheckFlags
+import proton.android.pass.domain.ItemFlag
 import proton.android.pass.domain.ItemState
 import proton.android.pass.domain.ShareSelection
 import proton.android.pass.features.security.center.PassMonitorDisplayExcludedItems
+import proton.android.pass.preferences.FeatureFlag
+import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import proton.android.pass.preferences.UserPreferencesRepository
 import proton.android.pass.preferences.value
 import proton.android.pass.telemetry.api.TelemetryManager
@@ -49,6 +53,7 @@ class SecurityCenterExcludedItemsViewModel @Inject constructor(
     observeVaultsGroupedByShareId: ObserveVaultsGroupedByShareId,
     userPreferencesRepository: UserPreferencesRepository,
     encryptionContextProvider: EncryptionContextProvider,
+    featureFlagsPreferencesRepository: FeatureFlagsPreferencesRepository,
     telemetryManager: TelemetryManager
 ) : ViewModel() {
 
@@ -56,19 +61,35 @@ class SecurityCenterExcludedItemsViewModel @Inject constructor(
         telemetryManager.sendEvent(PassMonitorDisplayExcludedItems)
     }
 
-    private val excludedLoginItemsUiModelFlow: Flow<List<ItemUiModel>> = observeItems(
-        selection = ShareSelection.AllShares,
-        filter = ItemTypeFilter.Logins,
-        itemState = ItemState.Active,
-        anyFlags = ItemExclusionCheckFlags,
-        includeHidden = false
-    ).map { excludedLoginItems ->
-        encryptionContextProvider.withEncryptionContext {
-            excludedLoginItems.map { excludedLoginItem ->
-                excludedLoginItem.toUiModel(this@withEncryptionContext).copy(isPinned = false)
-            }.sortedBy { it.contents.title.removeAccents().lowercase() }
+    private val perCheckExclusionEnabledFlow: Flow<Boolean> =
+        featureFlagsPreferencesRepository[FeatureFlag.PASS_MONITOR_PER_CHECK_EXCLUSION]
+
+    private val exclusionCheckFlagsFlow: Flow<List<ItemFlag>> = perCheckExclusionEnabledFlow
+        .map { isPerCheckExclusionEnabled ->
+            if (isPerCheckExclusionEnabled) {
+                ItemExclusionCheckFlags
+            } else {
+                listOf(ItemFlag.SkipHealthCheck)
+            }
         }
-    }
+
+    private val excludedLoginItemsUiModelFlow: Flow<List<ItemUiModel>> = exclusionCheckFlagsFlow
+        .flatMapLatest { exclusionCheckFlags ->
+            observeItems(
+                selection = ShareSelection.AllShares,
+                filter = ItemTypeFilter.Logins,
+                itemState = ItemState.Active,
+                anyFlags = exclusionCheckFlags,
+                includeHidden = false
+            )
+        }
+        .map { excludedLoginItems ->
+            encryptionContextProvider.withEncryptionContext {
+                excludedLoginItems.map { excludedLoginItem ->
+                    excludedLoginItem.toUiModel(this@withEncryptionContext).copy(isPinned = false)
+                }.sortedBy { it.contents.title.removeAccents().lowercase() }
+            }
+        }
 
     internal val state: StateFlow<SecurityCenterExcludedItemsState> = combine(
         excludedLoginItemsUiModelFlow,

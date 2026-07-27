@@ -49,6 +49,7 @@ import proton.android.pass.preferences.FeatureFlag.PASS_EXPLORE_TAB
 import proton.android.pass.preferences.FeatureFlag.PASS_PASSWORD_CHECKS
 import proton.android.pass.preferences.FeatureFlag.PASS_USERNAME_GENERATOR
 import proton.android.pass.preferences.FeatureFlag.PASS_COMPROMISED_PASSWORDS
+import proton.android.pass.preferences.FeatureFlag.PASS_MONITOR_PER_CHECK_EXCLUSION
 import java.io.IOException
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -61,6 +62,7 @@ class FeatureFlagsPreferencesRepositoryImpl @Inject constructor(
     private val dataStore: DataStore<FeatureFlagsPreferences>
 ) : FeatureFlagsPreferencesRepository {
 
+    @Suppress("LongMethod")
     override fun <T> get(featureFlag: FeatureFlag): Flow<T> = when (featureFlag) {
         AUTOFILL_DEBUG_MODE -> getFeatureFlag(
             key = featureFlag.key,
@@ -131,6 +133,11 @@ class FeatureFlagsPreferencesRepositoryImpl @Inject constructor(
             key = featureFlag.key,
             defaultValue = featureFlag.isEnabledDefault
         ) { passCompromisedPasswordsEnabled.value }
+
+        PASS_MONITOR_PER_CHECK_EXCLUSION -> getFeatureFlag(
+            key = featureFlag.key,
+            defaultValue = featureFlag.isEnabledDefault
+        ) { passMonitorPerCheckExclusionEnabled.value }
     }
 
     @Suppress("UNCHECKED_CAST")
@@ -209,6 +216,10 @@ class FeatureFlagsPreferencesRepositoryImpl @Inject constructor(
 
         PASS_COMPROMISED_PASSWORDS -> setFeatureFlag {
             passCompromisedPasswordsEnabled = boolFlagPrefProto(value)
+        }
+
+        PASS_MONITOR_PER_CHECK_EXCLUSION -> setFeatureFlag {
+            passMonitorPerCheckExclusionEnabled = boolFlagPrefProto(value)
         }
     }
 
@@ -314,6 +325,7 @@ class FeatureFlagsPreferencesRepositoryImpl @Inject constructor(
             PASS_PASSWORD_CHECKS -> passPasswordChecksEnabled
             PASS_USERNAME_GENERATOR -> passUsernameGeneratorEnabled
             PASS_COMPROMISED_PASSWORDS -> passCompromisedPasswordsEnabled
+            PASS_MONITOR_PER_CHECK_EXCLUSION -> passMonitorPerCheckExclusionEnabled
         }.value
     }
 

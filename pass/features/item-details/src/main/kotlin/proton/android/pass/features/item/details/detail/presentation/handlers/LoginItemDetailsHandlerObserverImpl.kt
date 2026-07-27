@@ -121,6 +121,9 @@ class LoginItemDetailsHandlerObserverImpl @Inject constructor(
     private val compromisedPasswordsEnabledFlow: Flow<Boolean> =
         featureFlagsPreferencesRepository[FeatureFlag.PASS_COMPROMISED_PASSWORDS]
 
+    private val perCheckExclusionEnabledFlow: Flow<Boolean> =
+        featureFlagsPreferencesRepository[FeatureFlag.PASS_MONITOR_PER_CHECK_EXCLUSION]
+
     private val pendingMonitorChecksFlow = MutableStateFlow<Set<MonitorCheck>>(emptySet())
 
     private val skippedCheckOverridesFlow = MutableStateFlow<Map<MonitorCheck, Boolean>>(emptyMap())
@@ -179,27 +182,30 @@ class LoginItemDetailsHandlerObserverImpl @Inject constructor(
         )
     }
 
+    @Suppress("LongMethod")
     private fun observeLoginMonitorState(
         item: Item,
         scope: ItemDetailNavScope,
         canEdit: Boolean,
         userId: UserId
-    ) = combine(
+    ) = combineN(
         observeCompromisedPasswords(userId, item.shareId, item.id),
         getUserPlan(),
         pendingMonitorChecksFlow,
         skippedCheckOverridesFlow,
-        compromisedPasswordsEnabledFlow
-    ) { isItemCompromised, userPlan, pendingChecks, skippedOverrides, isCompromisedPasswordsEnabled ->
+        compromisedPasswordsEnabledFlow,
+        perCheckExclusionEnabledFlow
+    ) { isItemCompromised, userPlan, pendingChecks, skippedOverrides, isCompromisedPasswordsEnabled,
+        isPerCheckExclusionEnabled ->
         sendTelemetry(scope)
-        val isWeakSkipped = skippedOverrides[MonitorCheck.WeakPassword]
-            ?: item.hasSkippedWeakPasswordCheck
-        val isCompromisedSkipped = skippedOverrides[MonitorCheck.CompromisedPassword]
-            ?: item.hasSkippedCompromisedPasswordCheck
-        val isReusedSkipped = skippedOverrides[MonitorCheck.ReusedPassword]
-            ?: item.hasSkippedReusedPasswordCheck
-        val isMissing2faSkipped = skippedOverrides[MonitorCheck.Missing2fa]
-            ?: item.hasSkipped2FACheck
+        val isWeakSkipped = isPerCheckExclusionEnabled &&
+            skippedOverrides[MonitorCheck.WeakPassword] ?: item.hasSkippedWeakPasswordCheck
+        val isCompromisedSkipped = isPerCheckExclusionEnabled &&
+            skippedOverrides[MonitorCheck.CompromisedPassword] ?: item.hasSkippedCompromisedPasswordCheck
+        val isReusedSkipped = isPerCheckExclusionEnabled &&
+            skippedOverrides[MonitorCheck.ReusedPassword] ?: item.hasSkippedReusedPasswordCheck
+        val isMissing2faSkipped = isPerCheckExclusionEnabled &&
+            skippedOverrides[MonitorCheck.Missing2fa] ?: item.hasSkipped2FACheck
         val isCompromised = !isCompromisedSkipped &&
             !item.hasSkippedHealthCheck &&
             isItemCompromised
@@ -239,7 +245,8 @@ class LoginItemDetailsHandlerObserverImpl @Inject constructor(
             isReusedPasswordCheckSkipped = isReusedSkipped,
             isMissing2faCheckSkipped = isMissing2faSkipped,
             canEdit = canEdit,
-            pendingChecks = pendingChecks
+            pendingChecks = pendingChecks,
+            isPerCheckExclusionEnabled = isPerCheckExclusionEnabled
         ).applyCompromisedPasswordGating(userPlan.isPaidPlan && isCompromisedPasswordsEnabled)
     }
 

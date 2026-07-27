@@ -38,7 +38,8 @@ data class LoginMonitorState(
     val isReusedPasswordCheckSkipped: Boolean = false,
     val isMissing2faCheckSkipped: Boolean = false,
     val pendingChecks: Set<MonitorCheck> = emptySet(),
-    val canEdit: Boolean = true
+    val canEdit: Boolean = true,
+    val isPerCheckExclusionEnabled: Boolean = true
 ) {
 
     enum class ReusedPasswordDisplayMode {

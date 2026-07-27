@@ -107,5 +107,11 @@ enum class FeatureFlag(
         description = "Show the compromised passwords check in Pass Monitor and item details",
         key = "PassCompromisedPasswords",
         isEnabledDefault = false
+    ),
+    PASS_MONITOR_PER_CHECK_EXCLUSION(
+        title = "Monitor per check exclusion",
+        description = "Allow the user to exclude an item from a subset of Pass Monitor checks",
+        key = "PassMonitorPerCheckExclusion",
+        isEnabledDefault = false
     )
 }

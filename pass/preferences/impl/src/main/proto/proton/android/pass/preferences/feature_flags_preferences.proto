@@ -44,4 +44,5 @@ message FeatureFlagsPreferences {
   BoolFlagPrefProto enable_pagination = 36;
   BoolFlagPrefProto pass_explore_tab_enabled = 37;
   BoolFlagPrefProto pass_password_checks_enabled = 38;
+  BoolFlagPrefProto pass_username_generator_enabled = 39;
 }

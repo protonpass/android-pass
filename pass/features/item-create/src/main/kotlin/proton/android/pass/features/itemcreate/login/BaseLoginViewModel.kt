@@ -246,11 +246,18 @@ abstract class BaseLoginViewModel(
         val events: Events
     )
 
-    private val autofillUrlRegexEnabledFlow: Flow<Boolean> =
-        featureFlagsPreferencesRepository[FeatureFlag.PASS_AUTOFILL_URL_ADVANCED_MODES]
+    private val featureFlagsFlow: Flow<FeatureFlagsWrapper> = combine(
+        featureFlagsPreferencesRepository[FeatureFlag.PASS_AUTOFILL_URL_ADVANCED_MODES],
+        featureFlagsPreferencesRepository[FeatureFlag.PASS_PASSWORD_CHECKS],
+        featureFlagsPreferencesRepository[FeatureFlag.PASS_USERNAME_GENERATOR],
+        ::FeatureFlagsWrapper
+    )
 
-    private val passwordChecksEnabledFlow: Flow<Boolean> =
-        featureFlagsPreferencesRepository[FeatureFlag.PASS_PASSWORD_CHECKS]
+    private data class FeatureFlagsWrapper(
+        val isAutofillUrlRegexEnabled: Boolean,
+        val isPasswordChecksEnabled: Boolean,
+        val isUsernameGeneratorEnabled: Boolean
+    )
 
     @VisibleForTesting(otherwise = VisibleForTesting.PROTECTED)
     internal val baseLoginUiState: StateFlow<BaseLoginUiState> = combineN(
@@ -265,12 +272,10 @@ abstract class BaseLoginViewModel(
         userPreferencesRepository.observeDisplayFileAttachmentsOnboarding(),
         attachmentsHandler.attachmentState,
         combine(canCreateAlias(), canCreateAliasOverride) { policy, override -> policy && override },
-        autofillUrlRegexEnabledFlow,
-        passwordChecksEnabledFlow
+        featureFlagsFlow
     ) { loginItemValidationErrors, primaryEmail, aliasItemFormState, isLoading, totpUiState,
         upgradeInfoResult, userInteraction, isUsernameSplitTooltipEnabled,
-        displayFileAttachmentsOnboarding, attachmentsState, canCreateAlias, isAutofillUrlRegexEnabled,
-        isPasswordChecksEnabled ->
+        displayFileAttachmentsOnboarding, attachmentsState, canCreateAlias, featureFlags ->
         val userPlan = upgradeInfoResult.getOrNull()?.plan
         BaseLoginUiState(
             validationErrors = loginItemValidationErrors.toPersistentSet(),
@@ -290,8 +295,9 @@ abstract class BaseLoginViewModel(
             displayFileAttachmentsOnboarding = displayFileAttachmentsOnboarding.value(),
             attachmentsState = attachmentsState,
             canCreateAlias = canCreateAlias,
-            isAutofillUrlRegexEnabled = isAutofillUrlRegexEnabled,
-            isPasswordChecksEnabled = isPasswordChecksEnabled
+            isAutofillUrlRegexEnabled = featureFlags.isAutofillUrlRegexEnabled,
+            isPasswordChecksEnabled = featureFlags.isPasswordChecksEnabled,
+            isUsernameGeneratorEnabled = featureFlags.isUsernameGeneratorEnabled
         )
     }
         .stateIn(

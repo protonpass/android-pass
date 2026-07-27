@@ -104,12 +104,13 @@ internal fun LoginItemForm(
     attachmentsState: AttachmentsState,
     isAutofillUrlRegexEnabled: Boolean,
     isPasswordChecksEnabled: Boolean,
+    isUsernameGeneratorEnabled: Boolean,
     onEvent: (LoginContentEvent) -> Unit
 ) {
     Box(modifier = modifier) {
         val currentStickyFormOption = when (focusedField) {
             LoginField.Email -> AliasOptions
-            LoginField.Username -> UsernameGenerator
+            LoginField.Username -> if (isUsernameGeneratorEnabled) UsernameGenerator else NoOption
             LoginField.Password -> GeneratePassword
             LoginField.PrimaryTotp -> AddTotp
             is LoginField.CustomField -> when (focusedField.field.type) {
@@ -283,6 +284,7 @@ internal fun LoginItemForm(
                     showCreateAliasButton = showCreateAliasButton,
                     primaryEmail = primaryEmail,
                     isExpanded = loginItemFormState.isExpanded,
+                    isUsernameGeneratorEnabled = isUsernameGeneratorEnabled,
                     onCreateAliasClick = {
                         selectedShareId ?: return@StickyUsernameOptions
                         onEvent(

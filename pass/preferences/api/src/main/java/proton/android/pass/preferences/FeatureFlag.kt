@@ -95,5 +95,11 @@ enum class FeatureFlag(
         description = "Show the password requirement checks while editing or generating a password",
         key = "PassPasswordChecks",
         isEnabledDefault = false
+    ),
+    PASS_USERNAME_GENERATOR(
+        title = "Username generator",
+        description = "Allow the user to generate a username while creating or editing a login",
+        key = "PassUsernameGenerator",
+        isEnabledDefault = false
     )
 }

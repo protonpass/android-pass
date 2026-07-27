@@ -111,6 +111,7 @@ internal fun LoginContent(
             attachmentsState = uiState.attachmentsState,
             isAutofillUrlRegexEnabled = uiState.isAutofillUrlRegexEnabled,
             isPasswordChecksEnabled = uiState.isPasswordChecksEnabled,
+            isUsernameGeneratorEnabled = uiState.isUsernameGeneratorEnabled,
             onEvent = onEvent
         )
     }

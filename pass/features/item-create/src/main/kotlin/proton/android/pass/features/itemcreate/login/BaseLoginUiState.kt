@@ -53,7 +53,8 @@ internal data class BaseLoginUiState(
     val attachmentsState: AttachmentsState,
     val canCreateAlias: Boolean,
     val isAutofillUrlRegexEnabled: Boolean,
-    val isPasswordChecksEnabled: Boolean
+    val isPasswordChecksEnabled: Boolean,
+    val isUsernameGeneratorEnabled: Boolean
 ) {
     internal companion object {
 
@@ -76,7 +77,8 @@ internal data class BaseLoginUiState(
             attachmentsState = AttachmentsState.Initial,
             canCreateAlias = true,
             isAutofillUrlRegexEnabled = false,
-            isPasswordChecksEnabled = false
+            isPasswordChecksEnabled = false,
+            isUsernameGeneratorEnabled = false
         )
 
     }

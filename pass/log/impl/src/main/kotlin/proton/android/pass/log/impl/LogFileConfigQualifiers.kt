@@ -27,3 +27,7 @@ annotation class LogFileMaxSize
 @Qualifier
 @Retention(AnnotationRetention.BINARY)
 annotation class LogRotationLines
+
+@Qualifier
+@Retention(AnnotationRetention.BINARY)
+annotation class LogQueueCapacity

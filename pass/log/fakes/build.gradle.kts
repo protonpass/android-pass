@@ -55,6 +55,7 @@ dependencies {
     implementation(libs.core.account.domain)
     implementation(libs.core.domain)
     implementation(libs.kotlinx.coroutines.core)
+    implementation(libs.kotlinx.datetime)
 
     implementation(libs.dagger.hilt.android)
     implementation(libs.dagger.hilt.android.testing)

@@ -54,5 +54,10 @@ abstract class LogsModule {
         @Singleton
         @LogRotationLines
         fun provideLogRotationLines(): Int = FileLoggingTree.DEFAULT_ROTATION_LINES
+
+        @Provides
+        @Singleton
+        @LogQueueCapacity
+        fun provideLogQueueCapacity(): Int = FileLoggingTree.DEFAULT_QUEUE_CAPACITY
     }
 }

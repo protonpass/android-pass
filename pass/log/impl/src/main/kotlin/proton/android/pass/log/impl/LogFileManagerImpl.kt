@@ -20,6 +20,7 @@ package proton.android.pass.log.impl
 
 import android.content.Context
 import dagger.hilt.android.qualifiers.ApplicationContext
+import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.withContext
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.AppDispatchers
@@ -35,8 +36,19 @@ class LogFileManagerImpl @Inject constructor(
     private val appDispatchers: AppDispatchers
 ) : LogFileManager {
 
+    private val logFileMutex = Mutex()
+
     private val logsDirectory: File
         get() = File(context.cacheDir, LOGS_DIR_NAME)
+
+    override suspend fun <T> withLogFileLock(block: suspend () -> T): T {
+        logFileMutex.lock()
+        return try {
+            block()
+        } finally {
+            logFileMutex.unlock()
+        }
+    }
 
     override suspend fun getLogFile(userId: UserId?): File = withContext(appDispatchers.io) {
         val fileName = if (userId != null) {
@@ -78,11 +90,18 @@ class LogFileManagerImpl @Inject constructor(
         }.getOrElse { emptyList() }
     }
 
-    override suspend fun deleteLogFile(file: File) = withContext<Unit>(appDispatchers.io) {
-        safeRunCatching {
-            if (file.exists()) {
-                file.delete()
+    override suspend fun deleteLogFile(file: File) {
+        logFileMutex.lock()
+        try {
+            withContext(appDispatchers.io) {
+                safeRunCatching {
+                    if (file.exists()) {
+                        file.delete()
+                    }
+                }
             }
+        } finally {
+            logFileMutex.unlock()
         }
     }
 

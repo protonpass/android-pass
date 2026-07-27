@@ -101,5 +101,11 @@ enum class FeatureFlag(
         description = "Allow the user to generate a username while creating or editing a login",
         key = "PassUsernameGenerator",
         isEnabledDefault = false
+    ),
+    PASS_COMPROMISED_PASSWORDS(
+        title = "Compromised passwords",
+        description = "Show the compromised passwords check in Pass Monitor and item details",
+        key = "PassCompromisedPasswords",
+        isEnabledDefault = false
     )
 }

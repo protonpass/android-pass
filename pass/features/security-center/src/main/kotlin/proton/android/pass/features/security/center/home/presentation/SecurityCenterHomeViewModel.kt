@@ -24,11 +24,11 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.stateIn
 import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.asLoadingResult
+import proton.android.pass.common.api.combineN
 import proton.android.pass.data.api.usecases.GetUserPlan
 import proton.android.pass.data.api.usecases.ItemTypeFilter
 import proton.android.pass.data.api.usecases.ObserveItems
@@ -41,6 +41,8 @@ import proton.android.pass.domain.breach.Breach
 import proton.android.pass.features.security.center.PassMonitorDisplayHome
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.SnackbarDispatcher
+import proton.android.pass.preferences.FeatureFlag
+import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import proton.android.pass.securitycenter.api.ObserveSecurityAnalysis
 import proton.android.pass.securitycenter.api.sentinel.ObserveIsSentinelEnabled
 import proton.android.pass.telemetry.api.TelemetryManager
@@ -54,6 +56,7 @@ class SecurityCenterHomeViewModel @Inject constructor(
     observeIsSentinelEnabled: ObserveIsSentinelEnabled,
     getUserPlan: GetUserPlan,
     telemetryManager: TelemetryManager,
+    featureFlagsPreferencesRepository: FeatureFlagsPreferencesRepository,
     private val snackbarDispatcher: SnackbarDispatcher
 ) : ViewModel() {
 
@@ -79,13 +82,18 @@ class SecurityCenterHomeViewModel @Inject constructor(
             }
         }
 
-    internal val state: StateFlow<SecurityCenterHomeState> = combine(
+    private val compromisedPasswordsEnabledFlow: Flow<Boolean> =
+        featureFlagsPreferencesRepository[FeatureFlag.PASS_COMPROMISED_PASSWORDS]
+
+    internal val state: StateFlow<SecurityCenterHomeState> = combineN(
         observeIsSentinelEnabled(),
         observeBreachesFlow,
         observeSecurityAnalysis(),
         excludedLoginItemsFlow.asLoadingResult(),
-        getUserPlan()
-    ) { isSentinelEnabled, breachLoadingResult, securityAnalysis, excludedLoginItemsLoadingResult, userPlan ->
+        getUserPlan(),
+        compromisedPasswordsEnabledFlow
+    ) { isSentinelEnabled, breachLoadingResult, securityAnalysis, excludedLoginItemsLoadingResult, userPlan,
+        isCompromisedPasswordsEnabled ->
         SecurityCenterHomeState(
             isSentinelEnabled = isSentinelEnabled,
             breachLoadingResult = breachLoadingResult,
@@ -94,7 +102,8 @@ class SecurityCenterHomeViewModel @Inject constructor(
             missing2faResult = securityAnalysis.missing2fa,
             compromisedPasswordsLoadingResult = securityAnalysis.compromisedPasswords,
             excludedLoginItemsLoadingResult = excludedLoginItemsLoadingResult,
-            planType = userPlan.planType
+            planType = userPlan.planType,
+            isCompromisedPasswordsEnabled = isCompromisedPasswordsEnabled
         )
     }.stateIn(
         scope = viewModelScope,

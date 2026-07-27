@@ -37,6 +37,7 @@ import proton.android.pass.preferences.FeatureFlag.ENABLE_PAGINATION
 import proton.android.pass.preferences.FeatureFlag.PASS_EXPLORE_TAB
 import proton.android.pass.preferences.FeatureFlag.PASS_PASSWORD_CHECKS
 import proton.android.pass.preferences.FeatureFlag.PASS_USERNAME_GENERATOR
+import proton.android.pass.preferences.FeatureFlag.PASS_COMPROMISED_PASSWORDS
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -63,6 +64,7 @@ class FakeFeatureFlagsPreferenceRepository @Inject constructor() :
             PASS_EXPLORE_TAB -> it.getOrDefault(PASS_EXPLORE_TAB, false) as T
             PASS_PASSWORD_CHECKS -> it.getOrDefault(PASS_PASSWORD_CHECKS, false) as T
             PASS_USERNAME_GENERATOR -> it.getOrDefault(PASS_USERNAME_GENERATOR, false) as T
+            PASS_COMPROMISED_PASSWORDS -> it.getOrDefault(PASS_COMPROMISED_PASSWORDS, false) as T
         }
     }
 

@@ -113,28 +113,36 @@ internal fun SecurityCenterHomeContent(
                 onClick = { onUiEvent(SecurityCenterHomeUiEvent.OnShowReusedPasswords) }
             )
 
-            if (isCompromisedPasswordsPaidFeature) {
-                CounterRow(
-                    title = stringResource(id = R.string.security_center_home_row_compromised_passwords_title),
-                    subtitle = stringResource(id = R.string.security_center_home_row_compromised_passwords_subtitle),
-                    accentBackgroundColor = PassTheme.colors.interactionNormMinor2,
-                    isClickable = true,
-                    trailingContent = { PassPlusIcon() },
-                    onClick = { onUiEvent(SecurityCenterHomeUiEvent.OnUpsell(PaidFeature.CompromisedPasswords)) }
-                )
-            } else {
-                SecurityCenterCounterRow(
-                    model = SecurityCenterCounterRowModel.Indicator(
+            if (isCompromisedPasswordsEnabled) {
+                if (isCompromisedPasswordsPaidFeature) {
+                    CounterRow(
                         title = stringResource(
                             id = R.string.security_center_home_row_compromised_passwords_title
                         ),
                         subtitle = stringResource(
                             id = R.string.security_center_home_row_compromised_passwords_subtitle
                         ),
-                        count = compromisedPasswordsCount
-                    ),
-                    onClick = { onUiEvent(SecurityCenterHomeUiEvent.OnShowCompromisedPasswords) }
-                )
+                        accentBackgroundColor = PassTheme.colors.interactionNormMinor2,
+                        isClickable = true,
+                        trailingContent = { PassPlusIcon() },
+                        onClick = {
+                            onUiEvent(SecurityCenterHomeUiEvent.OnUpsell(PaidFeature.CompromisedPasswords))
+                        }
+                    )
+                } else {
+                    SecurityCenterCounterRow(
+                        model = SecurityCenterCounterRowModel.Indicator(
+                            title = stringResource(
+                                id = R.string.security_center_home_row_compromised_passwords_title
+                            ),
+                            subtitle = stringResource(
+                                id = R.string.security_center_home_row_compromised_passwords_subtitle
+                            ),
+                            count = compromisedPasswordsCount
+                        ),
+                        onClick = { onUiEvent(SecurityCenterHomeUiEvent.OnShowCompromisedPasswords) }
+                    )
+                }
             }
 
             SecurityCenterCounterRow(

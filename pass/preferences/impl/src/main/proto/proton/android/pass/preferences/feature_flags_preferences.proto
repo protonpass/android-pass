@@ -45,4 +45,5 @@ message FeatureFlagsPreferences {
   BoolFlagPrefProto pass_explore_tab_enabled = 37;
   BoolFlagPrefProto pass_password_checks_enabled = 38;
   BoolFlagPrefProto pass_username_generator_enabled = 39;
+  BoolFlagPrefProto pass_compromised_passwords_enabled = 40;
 }

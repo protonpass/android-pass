@@ -118,6 +118,9 @@ class LoginItemDetailsHandlerObserverImpl @Inject constructor(
     private val autofillUrlRegexEnabledFlow: Flow<Boolean> =
         featureFlagsPreferencesRepository[FeatureFlag.PASS_AUTOFILL_URL_ADVANCED_MODES]
 
+    private val compromisedPasswordsEnabledFlow: Flow<Boolean> =
+        featureFlagsPreferencesRepository[FeatureFlag.PASS_COMPROMISED_PASSWORDS]
+
     private val pendingMonitorChecksFlow = MutableStateFlow<Set<MonitorCheck>>(emptySet())
 
     private val skippedCheckOverridesFlow = MutableStateFlow<Map<MonitorCheck, Boolean>>(emptyMap())
@@ -185,8 +188,9 @@ class LoginItemDetailsHandlerObserverImpl @Inject constructor(
         observeCompromisedPasswords(userId, item.shareId, item.id),
         getUserPlan(),
         pendingMonitorChecksFlow,
-        skippedCheckOverridesFlow
-    ) { isItemCompromised, userPlan, pendingChecks, skippedOverrides ->
+        skippedCheckOverridesFlow,
+        compromisedPasswordsEnabledFlow
+    ) { isItemCompromised, userPlan, pendingChecks, skippedOverrides, isCompromisedPasswordsEnabled ->
         sendTelemetry(scope)
         val isWeakSkipped = skippedOverrides[MonitorCheck.WeakPassword]
             ?: item.hasSkippedWeakPasswordCheck
@@ -236,17 +240,18 @@ class LoginItemDetailsHandlerObserverImpl @Inject constructor(
             isMissing2faCheckSkipped = isMissing2faSkipped,
             canEdit = canEdit,
             pendingChecks = pendingChecks
-        ).applyPlanGating(userPlan.isPaidPlan)
+        ).applyCompromisedPasswordGating(userPlan.isPaidPlan && isCompromisedPasswordsEnabled)
     }
 
-    private fun LoginMonitorState.applyPlanGating(isPaidPlan: Boolean): LoginMonitorState = if (isPaidPlan) {
-        this
-    } else {
-        copy(
-            isPasswordCompromised = false,
-            isCompromisedPasswordCheckSkipped = false
-        )
-    }
+    private fun LoginMonitorState.applyCompromisedPasswordGating(isCompromisedPasswordAllowed: Boolean) =
+        if (isCompromisedPasswordAllowed) {
+            this
+        } else {
+            copy(
+                isPasswordCompromised = false,
+                isCompromisedPasswordCheckSkipped = false
+            )
+        }
 
     suspend fun onToggleMonitorCheck(
         shareId: ShareId,

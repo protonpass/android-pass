@@ -48,6 +48,7 @@ import proton.android.pass.preferences.FeatureFlag.ENABLE_PAGINATION
 import proton.android.pass.preferences.FeatureFlag.PASS_EXPLORE_TAB
 import proton.android.pass.preferences.FeatureFlag.PASS_PASSWORD_CHECKS
 import proton.android.pass.preferences.FeatureFlag.PASS_USERNAME_GENERATOR
+import proton.android.pass.preferences.FeatureFlag.PASS_COMPROMISED_PASSWORDS
 import java.io.IOException
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -125,6 +126,11 @@ class FeatureFlagsPreferencesRepositoryImpl @Inject constructor(
             key = featureFlag.key,
             defaultValue = featureFlag.isEnabledDefault
         ) { passUsernameGeneratorEnabled.value }
+
+        PASS_COMPROMISED_PASSWORDS -> getFeatureFlag(
+            key = featureFlag.key,
+            defaultValue = featureFlag.isEnabledDefault
+        ) { passCompromisedPasswordsEnabled.value }
     }
 
     @Suppress("UNCHECKED_CAST")
@@ -199,6 +205,10 @@ class FeatureFlagsPreferencesRepositoryImpl @Inject constructor(
 
         PASS_USERNAME_GENERATOR -> setFeatureFlag {
             passUsernameGeneratorEnabled = boolFlagPrefProto(value)
+        }
+
+        PASS_COMPROMISED_PASSWORDS -> setFeatureFlag {
+            passCompromisedPasswordsEnabled = boolFlagPrefProto(value)
         }
     }
 
@@ -303,6 +313,7 @@ class FeatureFlagsPreferencesRepositoryImpl @Inject constructor(
             PASS_EXPLORE_TAB -> passExploreTabEnabled
             PASS_PASSWORD_CHECKS -> passPasswordChecksEnabled
             PASS_USERNAME_GENERATOR -> passUsernameGeneratorEnabled
+            PASS_COMPROMISED_PASSWORDS -> passCompromisedPasswordsEnabled
         }.value
     }
 

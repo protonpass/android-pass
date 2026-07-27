@@ -23,10 +23,12 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.components.SingletonComponent
 import dagger.hilt.testing.TestInstallIn
+import kotlinx.datetime.Clock
 import proton.android.pass.log.api.LogFileManager
 import proton.android.pass.log.api.PrivacySanitizer
 import proton.android.pass.log.api.ShareLogsUseCase
 import proton.android.pass.log.impl.LogFileMaxSize
+import proton.android.pass.log.impl.LogQueueCapacity
 import proton.android.pass.log.impl.LogRotationLines
 import proton.android.pass.log.impl.LogsModule
 import javax.inject.Singleton
@@ -54,6 +56,11 @@ abstract class FakesLogModule {
 
         private const val LOG_FILE_MAX_SIZE: Long = 4 * 1024 * 1024
         private const val LOG_ROTATION_LINES: Int = 500
+        private const val LOG_QUEUE_CAPACITY: Int = 1_024
+
+        @Provides
+        @Singleton
+        fun provideClock(): Clock = Clock.System
 
         @Provides
         @Singleton
@@ -64,5 +71,10 @@ abstract class FakesLogModule {
         @Singleton
         @LogRotationLines
         fun provideLogRotationLines(): Int = LOG_ROTATION_LINES
+
+        @Provides
+        @Singleton
+        @LogQueueCapacity
+        fun provideLogQueueCapacity(): Int = LOG_QUEUE_CAPACITY
     }
 }

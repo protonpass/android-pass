@@ -127,6 +127,15 @@ class PrivacySanitizerImplTest {
     }
 
     @Test
+    fun `sanitize should preserve a long ordinary message byte for byte`() {
+        val input = "debug-value ".repeat(350)
+
+        val result = sanitizer.sanitize(input)
+
+        assertThat(result).isEqualTo(input)
+    }
+
+    @Test
     fun `sanitize should handle empty string`() {
         val result = sanitizer.sanitize("")
 
@@ -239,6 +248,21 @@ class PrivacySanitizerImplTest {
         val shareId = "a".repeat(84) + "VA=="
         val input = "Share ID: $shareId found"
         val expected = "Share ID: aaaa…VA== found"
+
+        val result = sanitizer.sanitize(input)
+
+        assertThat(result).isEqualTo(expected)
+    }
+
+    @Test
+    fun `sanitize should redact every sensitive value in a mixed message`() {
+        val shareId = "a".repeat(88)
+        val input = "Authorization: bEaReR token.value==; encoded=alice%40proton.me; " +
+            "email=bob@proton.me; url=https://pass.test/image?dOmAiN=secret.example&Size=64; " +
+            "share=/$shareId"
+        val expected = "Authorization: Bearer [REDACTED]; encoded=[EMAIL_REDACTED]; " +
+            "email=[EMAIL_REDACTED]; url=https://pass.test/image?dOmAiN=[DOMAIN_REDACTED]&Size=64; " +
+            "share=/aaaa…aaaa"
 
         val result = sanitizer.sanitize(input)
 

@@ -20,14 +20,28 @@ package proton.android.pass.log.impl
 
 import android.content.Context
 import android.content.ContextWrapper
+import android.util.Log
 import com.google.common.truth.Truth.assertThat
+import kotlinx.coroutines.CompletableDeferred
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.test.StandardTestDispatcher
+import kotlinx.coroutines.test.TestDispatcher
 import kotlinx.coroutines.test.runTest
+import kotlinx.datetime.Clock
+import kotlinx.datetime.Instant
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.account.fakes.FakeAccountManager
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
 import proton.android.pass.common.fakes.FakeAppDispatchers
+import proton.android.pass.log.api.LogFileManager
+import proton.android.pass.log.fakes.FakeBatchedLogoutInterleavingLogFileManager
+import proton.android.pass.log.fakes.FakeFinalValidationLogoutInterleavingLogFileManager
+import proton.android.pass.log.fakes.FakeLogFileManager
+import proton.android.pass.log.fakes.FakeLogoutInterleavingLogFileManager
+import proton.android.pass.log.fakes.FakePreEnsureLogoutInterleavingLogFileManager
+import proton.android.pass.test.FixedClock
 import timber.log.Timber
 import java.io.File
 import kotlin.io.path.createTempDirectory
@@ -56,7 +70,9 @@ class FileLoggingTreeTest {
             accountManager = accountManager,
             appDispatchers = appDispatchers,
             maxFileSize = 50_000,
-            rotationLines = 500
+            rotationLines = 500,
+            clock = Clock.System,
+            queueCapacity = FileLoggingTree.DEFAULT_QUEUE_CAPACITY
         )
         Timber.plant(fileLoggingTree)
     }
@@ -324,6 +340,337 @@ class FileLoggingTreeTest {
         val content = file.readText()
         assertThat(content).contains("Concurrent message")
     }
+
+    @Test
+    fun `logs retain submission order and call-time UTC millisecond timestamps`() = runTest {
+        val dispatcher = StandardTestDispatcher(testScheduler)
+        val clock = FixedClock(Instant.parse("2026-07-27T10:00:00Z"))
+        val file = File(tempDir, "ordered.log")
+        val tree = orderedFileLoggingTree(
+            dispatcher = dispatcher,
+            clock = clock,
+            logFileManager = FakeLogFileManager(file)
+        )
+
+        tree.log(Log.INFO, "first")
+        clock.updateInstant(Instant.parse("2026-07-27T10:00:00.001Z"))
+        tree.log(Log.INFO, "second")
+
+        dispatcher.scheduler.advanceUntilIdle()
+
+        assertThat(file.readLines()).containsExactly(
+            "2026-07-27 10:00:00.000 I: EmptyTag - first",
+            "2026-07-27 10:00:00.001 I: EmptyTag - second"
+        ).inOrder()
+    }
+
+    @Test
+    fun `writer continues after an unexpected file preparation failure`() = runTest {
+        val dispatcher = StandardTestDispatcher(testScheduler)
+        val file = File(tempDir, "recovery.log")
+        val tree = orderedFileLoggingTree(
+            dispatcher = dispatcher,
+            clock = FixedClock(Instant.parse("2026-07-27T10:00:00Z")),
+            logFileManager = FakeLogFileManager(file, failFirstEnsureLogFileExists = true)
+        )
+
+        tree.log(Log.INFO, "first")
+        tree.log(Log.INFO, "second")
+        dispatcher.scheduler.advanceUntilIdle()
+
+        assertThat(file.readText()).contains("second")
+        assertThat(file.readText()).doesNotContain("first")
+    }
+
+    @Test
+    fun `queue drops second entry when capacity is full without suspending the logging caller`() = runTest {
+        val dispatcher = StandardTestDispatcher(testScheduler)
+        val file = File(tempDir, "overflow.log")
+        val writerStarted = CompletableDeferred<Unit>()
+        val releaseWriter = CompletableDeferred<Unit>()
+        val tree = orderedFileLoggingTree(
+            dispatcher = dispatcher,
+            clock = FixedClock(Instant.parse("2026-07-27T10:00:00Z")),
+            logFileManager = FakeLogFileManager(
+                file = file,
+                writerStarted = writerStarted,
+                releaseWriter = releaseWriter
+            ),
+            queueCapacity = 1
+        )
+
+        tree.log(Log.INFO, "first")
+        tree.log(Log.INFO, "second")
+
+        try {
+            dispatcher.scheduler.runCurrent()
+            assertThat(writerStarted.isCompleted).isTrue()
+        } finally {
+            releaseWriter.complete(Unit)
+            dispatcher.scheduler.advanceUntilIdle()
+        }
+
+        assertThat(file.readText()).contains("first")
+        assertThat(file.readText()).doesNotContain("second")
+    }
+
+    @Test
+    fun `burst larger than writer batch preserves FIFO order and call-time timestamps`() = runTest {
+        val dispatcher = StandardTestDispatcher(testScheduler)
+        val clock = FixedClock(Instant.parse("2026-07-27T10:00:00Z"))
+        val file = File(tempDir, "high-volume.log")
+        val entryCount = FileLoggingTree.DEFAULT_WRITER_BATCH_SIZE + 1
+        val tree = orderedFileLoggingTree(
+            dispatcher = dispatcher,
+            clock = clock,
+            logFileManager = FakeLogFileManager(file),
+            queueCapacity = 128
+        )
+
+        repeat(entryCount) { index ->
+            clock.updateInstant(Instant.fromEpochMilliseconds(1_785_146_400_000 + index))
+            tree.log(Log.INFO, "message-$index")
+        }
+        dispatcher.scheduler.advanceUntilIdle()
+
+        val lines = file.readLines()
+        assertThat(lines.map { it.substringAfter(" - ") }).containsExactlyElementsIn(
+            (0 until entryCount).map { "message-$it" }
+        ).inOrder()
+        val timestamps = lines.map { it.substringBefore(" I:") }
+        assertThat(timestamps.zipWithNext().all { (first, second) -> first <= second }).isTrue()
+    }
+
+    @Test
+    fun `destination is reselected after logout between batches`() = runTest {
+        val dispatcher = StandardTestDispatcher(testScheduler)
+        val authenticatedUserId = UserId("logged-in-user")
+        val authenticatedFile = logFileManager.getLogFile(authenticatedUserId)
+        val notAuthenticatedFile = logFileManager.getLogFile(null)
+        val tree = orderedFileLoggingTree(
+            dispatcher = dispatcher,
+            clock = FixedClock(Instant.parse("2026-07-27T10:00:00Z")),
+            logFileManager = logFileManager
+        )
+        accountManager.sendPrimaryUserId(authenticatedUserId)
+
+        tree.log(Log.INFO, "authenticated entry")
+        dispatcher.scheduler.advanceUntilIdle()
+
+        accountManager.sendPrimaryUserId(null)
+        tree.log(Log.INFO, "anonymous entry")
+        dispatcher.scheduler.advanceUntilIdle()
+
+        assertThat(authenticatedFile.readText()).contains("authenticated entry")
+        assertThat(authenticatedFile.readText()).doesNotContain("anonymous entry")
+        assertThat(notAuthenticatedFile.readText()).contains("anonymous entry")
+    }
+
+    @Test
+    fun `rotation during a burst retains ordered recent records`() = runTest {
+        val dispatcher = StandardTestDispatcher(testScheduler)
+        val file = File(tempDir, "rotating-burst.log")
+        val rotationLines = 3
+        val tree = orderedFileLoggingTree(
+            dispatcher = dispatcher,
+            clock = FixedClock(Instant.parse("2026-07-27T10:00:00Z")),
+            logFileManager = FakeLogFileManager(file),
+            maxFileSize = 1,
+            rotationLines = rotationLines
+        )
+        file.parentFile?.mkdirs()
+        file.writeText((0..4).joinToString(separator = "\n", postfix = "\n") { "pre-burst-$it" })
+
+        repeat(8) { index -> tree.log(Log.INFO, "burst-$index") }
+        dispatcher.scheduler.advanceUntilIdle()
+
+        val lines = file.readLines()
+        assertThat(file.readText()).doesNotContain("pre-burst-0")
+        assertThat(lines.map { it.substringAfter(" - ") }).containsExactly(
+            "burst-4",
+            "burst-5",
+            "burst-6",
+            "burst-7"
+        ).inOrder()
+        assertThat(lines.size).isAtMost(rotationLines + 1)
+    }
+
+    @Test
+    fun `logout while second ready-batch entry resolves writes it only anonymously`() = runTest {
+        val dispatcher = StandardTestDispatcher(testScheduler)
+        val authenticatedUserId = UserId("logged-in-user")
+        val authenticatedFile = File(tempDir, "user_logged_in_user.log")
+        val notAuthenticatedFile = File(tempDir, "not_authenticated.log")
+        val secondEntryStartedResolving = CompletableDeferred<Unit>()
+        val resumeSecondEntryResolution = CompletableDeferred<Unit>()
+        val tree = orderedFileLoggingTree(
+            dispatcher = dispatcher,
+            clock = FixedClock(Instant.parse("2026-07-27T10:00:00Z")),
+            logFileManager = FakeBatchedLogoutInterleavingLogFileManager(
+                authenticatedUserId = authenticatedUserId,
+                authenticatedFile = authenticatedFile,
+                notAuthenticatedFile = notAuthenticatedFile,
+                secondEntryStartedResolving = secondEntryStartedResolving,
+                resumeSecondEntryResolution = resumeSecondEntryResolution
+            )
+        )
+        accountManager.sendPrimaryUserId(authenticatedUserId)
+
+        tree.log(Log.INFO, "first ready-batch entry")
+        tree.log(Log.INFO, "second ready-batch entry")
+
+        try {
+            dispatcher.scheduler.runCurrent()
+            assertThat(secondEntryStartedResolving.isCompleted).isTrue()
+
+            accountManager.sendPrimaryUserId(null)
+            assertThat(authenticatedFile.delete()).isTrue()
+        } finally {
+            resumeSecondEntryResolution.complete(Unit)
+            dispatcher.scheduler.advanceUntilIdle()
+        }
+
+        assertThat(authenticatedFile.exists()).isFalse()
+        assertThat(notAuthenticatedFile.readText()).contains("second ready-batch entry")
+        assertThat(notAuthenticatedFile.readText()).doesNotContain("first ready-batch entry")
+    }
+
+    @Test
+    fun `logout cleanup prevents a paused authenticated write from recreating its user log`() = runTest {
+        val dispatcher = StandardTestDispatcher(testScheduler)
+        val authenticatedUserId = UserId("logged-in-user")
+        val authenticatedFile = File(tempDir, "user_logged_in_user.log")
+        val notAuthenticatedFile = File(tempDir, "not_authenticated.log")
+        val authenticatedFileEnsured = CompletableDeferred<Unit>()
+        val resumeWriter = CompletableDeferred<Unit>()
+        val tree = orderedFileLoggingTree(
+            dispatcher = dispatcher,
+            clock = FixedClock(Instant.parse("2026-07-27T10:00:00Z")),
+            logFileManager = FakeLogoutInterleavingLogFileManager(
+                authenticatedUserId = authenticatedUserId,
+                authenticatedFile = authenticatedFile,
+                notAuthenticatedFile = notAuthenticatedFile,
+                authenticatedFileEnsured = authenticatedFileEnsured,
+                resumeWriter = resumeWriter
+            )
+        )
+        accountManager.sendPrimaryUserId(authenticatedUserId)
+
+        tree.log(Log.INFO, "queued entry after logout")
+
+        try {
+            dispatcher.scheduler.runCurrent()
+            assertThat(authenticatedFileEnsured.isCompleted).isTrue()
+
+            accountManager.sendPrimaryUserId(null)
+            assertThat(authenticatedFile.delete()).isTrue()
+        } finally {
+            resumeWriter.complete(Unit)
+            dispatcher.scheduler.advanceUntilIdle()
+        }
+
+        assertThat(authenticatedFile.exists()).isFalse()
+        assertThat(notAuthenticatedFile.readText()).contains("queued entry after logout")
+    }
+
+    @Test
+    fun `logout deletion waits for a final validated authenticated entry before removing its log`() = runTest {
+        val dispatcher = StandardTestDispatcher(testScheduler)
+        val authenticatedUserId = UserId("logged-in-user")
+        val authenticatedFile = File(tempDir, "user_logged_in_user.log")
+        val notAuthenticatedFile = File(tempDir, "not_authenticated.log")
+        val authenticatedFileReadyForWriter = CompletableDeferred<Unit>()
+        val releaseWriter = CompletableDeferred<Unit>()
+        val logFileManager = FakeFinalValidationLogoutInterleavingLogFileManager(
+            authenticatedUserId = authenticatedUserId,
+            authenticatedFile = authenticatedFile,
+            notAuthenticatedFile = notAuthenticatedFile,
+            authenticatedFileReadyForWriter = authenticatedFileReadyForWriter,
+            releaseWriter = releaseWriter
+        )
+        val tree = orderedFileLoggingTree(
+            dispatcher = dispatcher,
+            clock = FixedClock(Instant.parse("2026-07-27T10:00:00Z")),
+            logFileManager = logFileManager
+        )
+        accountManager.sendPrimaryUserId(authenticatedUserId)
+
+        tree.log(Log.INFO, "entry written before logout cleanup")
+
+        try {
+            dispatcher.scheduler.runCurrent()
+            assertThat(authenticatedFileReadyForWriter.isCompleted).isTrue()
+
+            accountManager.sendPrimaryUserId(null)
+            val deleteJob = launch(dispatcher) {
+                logFileManager.deleteLogFile(authenticatedFile)
+            }
+            dispatcher.scheduler.runCurrent()
+            assertThat(deleteJob.isCompleted).isFalse()
+        } finally {
+            releaseWriter.complete(Unit)
+            dispatcher.scheduler.advanceUntilIdle()
+        }
+
+        assertThat(authenticatedFile.exists()).isFalse()
+    }
+
+    @Test
+    fun `logout before initial file creation does not recreate authenticated log`() = runTest {
+        val dispatcher = StandardTestDispatcher(testScheduler)
+        val authenticatedUserId = UserId("logged-in-user")
+        val authenticatedFile = File(tempDir, "user_logged_in_user.log")
+        val notAuthenticatedFile = File(tempDir, "not_authenticated.log")
+        val initialDestinationResolved = CompletableDeferred<Unit>()
+        val releaseInitialDestination = CompletableDeferred<Unit>()
+        val tree = orderedFileLoggingTree(
+            dispatcher = dispatcher,
+            clock = FixedClock(Instant.parse("2026-07-27T10:00:00Z")),
+            logFileManager = FakePreEnsureLogoutInterleavingLogFileManager(
+                authenticatedUserId = authenticatedUserId,
+                authenticatedFile = authenticatedFile,
+                notAuthenticatedFile = notAuthenticatedFile,
+                initialDestinationResolved = initialDestinationResolved,
+                releaseInitialDestination = releaseInitialDestination
+            )
+        )
+        accountManager.sendPrimaryUserId(authenticatedUserId)
+        assertThat(authenticatedFile.createNewFile()).isTrue()
+
+        tree.log(Log.INFO, "queued entry after logout")
+
+        try {
+            dispatcher.scheduler.runCurrent()
+            assertThat(initialDestinationResolved.isCompleted).isTrue()
+
+            accountManager.sendPrimaryUserId(null)
+            assertThat(authenticatedFile.delete()).isTrue()
+        } finally {
+            releaseInitialDestination.complete(Unit)
+            dispatcher.scheduler.advanceUntilIdle()
+        }
+
+        assertThat(authenticatedFile.exists()).isFalse()
+        assertThat(notAuthenticatedFile.readText()).contains("queued entry after logout")
+    }
+
+    private fun orderedFileLoggingTree(
+        dispatcher: TestDispatcher,
+        clock: Clock,
+        logFileManager: LogFileManager,
+        queueCapacity: Int = 128,
+        maxFileSize: Long = 50_000,
+        rotationLines: Int = 500
+    ): FileLoggingTree = FileLoggingTree(
+        logFileManager = logFileManager,
+        privacySanitizer = privacySanitizer,
+        accountManager = accountManager,
+        appDispatchers = FakeAppDispatchers.withTestDispatcher(dispatcher),
+        maxFileSize = maxFileSize,
+        rotationLines = rotationLines,
+        clock = clock,
+        queueCapacity = queueCapacity
+    )
 
     private class TestContext(private val cacheDirectory: File) : ContextWrapper(null) {
         override fun getCacheDir(): File = cacheDirectory

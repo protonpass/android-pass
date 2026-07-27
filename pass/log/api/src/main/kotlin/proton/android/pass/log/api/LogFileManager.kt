@@ -22,6 +22,7 @@ import me.proton.core.domain.entity.UserId
 import java.io.File
 
 interface LogFileManager {
+    suspend fun <T> withLogFileLock(block: suspend () -> T): T
     suspend fun getLogFile(userId: UserId?): File
     suspend fun initializeLogDirectory()
     suspend fun ensureLogFileExists(file: File)

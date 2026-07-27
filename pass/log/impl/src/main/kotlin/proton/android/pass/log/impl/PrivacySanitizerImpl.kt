@@ -51,13 +51,26 @@ class PrivacySanitizerImpl @Inject constructor() : PrivacySanitizer {
 
     override fun sanitize(message: String): String {
         var sanitized = message
-        sanitized = sanitized.replace(bearerTokenRegex, "Bearer [REDACTED]")
-        sanitized = sanitized.replace(encodedEmailRegex, EMAIL_REDACTED)
-        sanitized = sanitized.replace(plainEmailRegex, EMAIL_REDACTED)
-        sanitized = sanitized.replace(domainQueryParamRegex) { matchResult ->
-            "${matchResult.groupValues[1]}=$DOMAIN_REDACTED"
+        if (sanitized.contains(BEARER_TOKEN_PREFIX, ignoreCase = true)) {
+            sanitized = sanitized.replace(bearerTokenRegex, "Bearer [REDACTED]")
         }
-        sanitized = sanitizeIds(sanitized)
+        if (sanitized.contains(ENCODED_EMAIL_MARKER)) {
+            sanitized = sanitized.replace(encodedEmailRegex, EMAIL_REDACTED)
+        }
+        if (sanitized.contains(EMAIL_MARKER)) {
+            sanitized = sanitized.replace(plainEmailRegex, EMAIL_REDACTED)
+        }
+        if (
+            sanitized.contains(DOMAIN_QUERY_PARAM_PREFIX, ignoreCase = true) ||
+            sanitized.contains(DOMAIN_QUERY_PARAM_SEPARATOR, ignoreCase = true)
+        ) {
+            sanitized = sanitized.replace(domainQueryParamRegex) { matchResult ->
+                "${matchResult.groupValues[1]}=$DOMAIN_REDACTED"
+            }
+        }
+        if (sanitized.length >= SHARE_ID_LENGTH) {
+            sanitized = sanitizeIds(sanitized)
+        }
         return sanitized
     }
 
@@ -75,6 +88,12 @@ class PrivacySanitizerImpl @Inject constructor() : PrivacySanitizer {
         private const val TAG = "PrivacySanitizerImpl"
         private const val EMAIL_REDACTED = "[EMAIL_REDACTED]"
         private const val DOMAIN_REDACTED = "[DOMAIN_REDACTED]"
+        private const val BEARER_TOKEN_PREFIX = "Bearer"
+        private const val ENCODED_EMAIL_MARKER = "%40"
+        private const val EMAIL_MARKER = "@"
+        private const val DOMAIN_QUERY_PARAM_PREFIX = "?Domain="
+        private const val DOMAIN_QUERY_PARAM_SEPARATOR = "&Domain="
+        private const val SHARE_ID_LENGTH = 88
         private const val ID_OFFSET = 4
     }
 }

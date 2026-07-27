@@ -19,6 +19,7 @@
 package proton.android.pass.common.fakes
 
 import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.test.TestDispatcher
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import proton.android.pass.common.api.AppDispatchers
 import javax.inject.Inject
@@ -27,13 +28,23 @@ import javax.inject.Singleton
 @Singleton
 class FakeAppDispatchers @Inject constructor() : AppDispatchers {
 
-    val testDispatcher = UnconfinedTestDispatcher()
+    var testDispatcher: TestDispatcher = UnconfinedTestDispatcher()
+        private set
 
-    override val main: CoroutineDispatcher = testDispatcher
-    override val default: CoroutineDispatcher = testDispatcher
-    override val io: CoroutineDispatcher = testDispatcher
+    override val main: CoroutineDispatcher
+        get() = testDispatcher
+    override val default: CoroutineDispatcher
+        get() = testDispatcher
+    override val io: CoroutineDispatcher
+        get() = testDispatcher
 
     fun advanceTimeBy(delay: Long) {
         testDispatcher.scheduler.advanceTimeBy(delay)
+    }
+
+    companion object {
+        fun withTestDispatcher(testDispatcher: TestDispatcher): FakeAppDispatchers = FakeAppDispatchers().apply {
+            this.testDispatcher = testDispatcher
+        }
     }
 }

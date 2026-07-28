@@ -6,6 +6,12 @@
 
 ### Other
 
+## 1.40.3 (2026-07-28)
+
+### Fixes :bug:
+
+- Fix sync issue due to logout.
+
 ## 1.40.2 (2026-07-08)
 
 ### Fixes :bug:

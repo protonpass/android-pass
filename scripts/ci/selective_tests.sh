@@ -128,5 +128,14 @@ done
 [ ${#BUILT_APKS[@]} -eq 0 ] && die "No test APKs found after build — assembleDebugAndroidTest may have failed silently."
 log "Test APKs (${#BUILT_APKS[@]}): ${BUILT_APKS[*]}"
 APKS_COMMA=$(IFS=','; echo "${BUILT_APKS[*]}")
-run_gradle runFlank "-Pselective.test.apks=$APKS_COMMA"
+
+# Without real historical timing data, Flank's default time-estimate sharding
+# can pack far more tests into one shard than another (seen: 85 vs 4 tests),
+# so one straggling shard ends up gating the whole job. Force count-based
+# uniform sharding instead — scale shard count with the number of APKs built
+# so small changesets don't spin up idle matrices.
+NUM_SHARDS=${#BUILT_APKS[@]}
+[ "$NUM_SHARDS" -gt 16 ] && NUM_SHARDS=16
+[ "$NUM_SHARDS" -lt 2 ] && NUM_SHARDS=2
+run_gradle runFlank "-Pselective.test.apks=$APKS_COMMA" "-Pflank.numUniformShards=$NUM_SHARDS"
 log "=== Done ==="

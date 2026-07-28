@@ -71,6 +71,7 @@ class FakeShareRepository : ShareRepository {
         Result.failure(IllegalStateException("UserAddress not set"))
 
     private val deleteVaultMemory: MutableList<ShareId> = mutableListOf()
+    private val deleteLocalSharesForUserMemory: MutableList<UserId> = mutableListOf()
     private val refreshShareMemory: MutableList<RefreshSharePayload> = mutableListOf()
 
     private val observeSharedWithMeIds = testFlow<Result<List<ShareId>>>()
@@ -82,6 +83,7 @@ class FakeShareRepository : ShareRepository {
     private val updateMembersCountMemory: MutableList<UpdateMembersCountPayload> = mutableListOf()
 
     fun deleteVaultMemory(): List<ShareId> = deleteVaultMemory
+    fun deleteLocalSharesForUserMemory(): List<UserId> = deleteLocalSharesForUserMemory
     fun refreshShareMemory(): List<RefreshSharePayload> = refreshShareMemory
 
     fun setCreateVaultResult(result: Result<Share>) {
@@ -198,8 +200,10 @@ class FakeShareRepository : ShareRepository {
         val eventToken: EventToken?
     )
 
-    override suspend fun deleteLocalSharesForUser(userId: UserId): Boolean =
-        deleteSharesResult.getOrThrow()
+    override suspend fun deleteLocalSharesForUser(userId: UserId): Boolean {
+        deleteLocalSharesForUserMemory.add(userId)
+        return deleteSharesResult.getOrThrow()
+    }
 
     override suspend fun deleteLocalShares(
         userId: UserId,

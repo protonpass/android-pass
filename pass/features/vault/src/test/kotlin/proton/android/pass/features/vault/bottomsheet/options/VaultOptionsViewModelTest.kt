@@ -47,7 +47,10 @@ import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.Vault
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.notifications.fakes.FakeSnackbarDispatcher
+import proton.android.pass.account.fakes.FakeAccountManager
+import proton.android.pass.data.fakes.usecases.attachments.FakeSetVaultOfflineAttachments
 import proton.android.pass.preferences.FakeFeatureFlagsPreferenceRepository
+import proton.android.pass.preferences.FakePreferenceRepository
 import proton.android.pass.preferences.FeatureFlag
 import proton.android.pass.test.MainDispatcherRule
 import proton.android.pass.test.StringTestFactory
@@ -652,7 +655,10 @@ class VaultOptionsViewModelTest {
             observeEncryptedItems = FakeObserveEncryptedItems(),
             preferencesRepository = featureFlags,
             observeFoldersByParentId = observeFoldersByParentId,
-            observeFolderLimits = FakeObserveFolderLimits()
+            observeFolderLimits = FakeObserveFolderLimits(),
+            userPreferencesRepository = FakePreferenceRepository(),
+            setVaultOfflineAttachments = FakeSetVaultOfflineAttachments(),
+            accountManager = FakeAccountManager()
         )
     }
 

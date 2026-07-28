@@ -61,6 +61,7 @@ internal fun AttachmentList(
                 isLoading = attachmentsState.loadingAttachments.contains(attachment.id),
                 isEnabled = attachmentsState.isEnabled,
                 isError = false,
+                downloadStatus = attachment.downloadStatus,
                 onOptionsClick = {
                     onEvent(
                         OnAttachmentEvent(

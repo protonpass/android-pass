@@ -43,6 +43,11 @@ import javax.inject.Singleton
 @Singleton
 class FakePreferenceRepository @Inject constructor() : UserPreferencesRepository {
 
+    private val downloadSharedItemsAttachmentsPref =
+        MutableStateFlow<DownloadSharedItemsAttachmentsPreference>(
+            DownloadSharedItemsAttachmentsPreference.Enabled
+        )
+
     private val appLockState =
         MutableStateFlow<AppLockState>(AppLockState.Disabled)
     private val themePreference = MutableStateFlow(ThemePreference.Dark)
@@ -117,6 +122,12 @@ class FakePreferenceRepository @Inject constructor() : UserPreferencesRepository
 
     private val autofillDisplayPreference =
         MutableStateFlow(AutofillDisplayPreference.Inline)
+
+    private val downloadAllAttachmentsPreference =
+        MutableStateFlow<DownloadAllAttachmentsPreference>(DownloadAllAttachmentsPreference.Disabled)
+
+    private val allowCellularDownloadPreference =
+        MutableStateFlow<AllowCellularDownloadPreference>(AllowCellularDownloadPreference.Disabled)
 
     override fun setAppLockState(state: AppLockState): Result<Unit> {
         appLockState.tryEmit(state)
@@ -348,5 +359,38 @@ class FakePreferenceRepository @Inject constructor() : UserPreferencesRepository
     }
 
     override fun getAutofillDisplayPreference(): Flow<AutofillDisplayPreference> = autofillDisplayPreference
+
+    override fun setDownloadAllAttachmentsPref(
+        userId: UserId,
+        preference: DownloadAllAttachmentsPreference
+    ): Result<Unit> {
+        downloadAllAttachmentsPreference.tryEmit(preference)
+        return Result.success(Unit)
+    }
+
+    override fun observeDownloadAllAttachmentsPref(userId: UserId): Flow<DownloadAllAttachmentsPreference> =
+        downloadAllAttachmentsPreference
+
+    override fun setAllowCellularDownloadPref(
+        userId: UserId,
+        preference: AllowCellularDownloadPreference
+    ): Result<Unit> {
+        allowCellularDownloadPreference.tryEmit(preference)
+        return Result.success(Unit)
+    }
+
+    override fun observeAllowCellularDownloadPref(userId: UserId): Flow<AllowCellularDownloadPreference> =
+        allowCellularDownloadPreference
+
+    override fun setSharedItemsDownloadPref(
+        userId: UserId,
+        preference: DownloadSharedItemsAttachmentsPreference
+    ): Result<Unit> {
+        downloadSharedItemsAttachmentsPref.tryEmit(preference)
+        return Result.success(Unit)
+    }
+
+    override fun observeSharedItemsDownloadPref(userId: UserId): Flow<DownloadSharedItemsAttachmentsPreference> =
+        downloadSharedItemsAttachmentsPref
 
 }

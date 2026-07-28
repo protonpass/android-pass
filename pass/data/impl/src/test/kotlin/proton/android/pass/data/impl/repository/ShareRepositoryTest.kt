@@ -36,9 +36,9 @@ import proton.android.pass.data.fakes.repositories.FakeUserAccessDataRepository
 import proton.android.pass.data.impl.fakes.FakeLocalShareDataSource
 import proton.android.pass.data.impl.fakes.FakePassDatabase
 import proton.android.pass.data.impl.fakes.FakeReencryptShareContents
-import proton.android.pass.data.impl.fakes.mother.ShareEntityTestFactory
 import proton.android.pass.data.impl.fakes.FakeRemoteShareDataSource
 import proton.android.pass.data.impl.fakes.FakeShareKeyRepository
+import proton.android.pass.data.impl.fakes.mother.ShareEntityTestFactory
 import proton.android.pass.data.impl.repositories.ShareRepositoryImpl
 import proton.android.pass.data.impl.responses.ShareResponse
 import proton.android.pass.domain.Share

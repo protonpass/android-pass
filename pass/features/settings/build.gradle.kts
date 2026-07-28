@@ -79,6 +79,7 @@ dependencies {
     implementation(projects.pass.navigation.api)
     implementation(projects.pass.notifications.api)
     implementation(projects.pass.preferences.api)
+    implementation(projects.pass.features.attachments)
     implementation(projects.pass.telemetry.api)
 
     debugImplementation(libs.androidx.compose.uiTooling)
@@ -108,6 +109,8 @@ dependencies {
     androidTestImplementation(projects.pass.log.fakes)
     androidTestImplementation(projects.pass.notifications.fakes)
     androidTestImplementation(projects.pass.preferences.fakes)
+    androidTestImplementation(projects.pass.biometry.fakes)
+    androidTestImplementation(projects.pass.files.fakes)
     androidTestImplementation(projects.pass.securityCenter.fakes)
     androidTestImplementation(projects.pass.telemetry.fakes)
 }

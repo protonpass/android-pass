@@ -26,6 +26,7 @@ import proton.android.pass.data.api.core.repositories.SentinelRepository
 import proton.android.pass.data.api.crypto.GetShareAndItemKey
 import proton.android.pass.data.api.url.HostParser
 import proton.android.pass.data.api.repositories.AliasRepository
+import proton.android.pass.data.api.repositories.AttachmentRepository
 import proton.android.pass.data.api.repositories.AssetLinkRepository
 import proton.android.pass.data.api.repositories.BulkInviteRepository
 import proton.android.pass.data.api.repositories.CompromisedPasswordRepository
@@ -150,13 +151,27 @@ import proton.android.pass.data.api.usecases.UpdateAutofillItem
 import proton.android.pass.data.api.usecases.UpdateItem
 import proton.android.pass.data.api.usecases.UpdateVault
 import proton.android.pass.data.api.usecases.aliascontact.ObserveAliasContacts
+import proton.android.pass.data.api.usecases.attachments.AttachmentDownloadScheduler
 import proton.android.pass.data.api.usecases.attachments.ClearAttachments
 import proton.android.pass.data.api.usecases.attachments.DownloadAttachment
+import proton.android.pass.data.api.usecases.attachments.GetAttachment
 import proton.android.pass.data.api.usecases.attachments.LinkAttachmentsToItem
 import proton.android.pass.data.api.usecases.attachments.ObserveAllItemRevisionAttachments
 import proton.android.pass.data.api.usecases.attachments.ObserveItemAttachments
 import proton.android.pass.data.api.usecases.attachments.ObserveUpdateItemAttachments
+import proton.android.pass.data.api.usecases.attachments.RemoveDraftAttachment
+import proton.android.pass.data.api.usecases.attachments.RenameDraftAttachment
 import proton.android.pass.data.api.usecases.attachments.RenameAttachments
+import proton.android.pass.data.api.usecases.attachments.SetAttachmentToBeRenamed
+import proton.android.pass.data.api.usecases.attachments.SetAttachmentToBeUnlinked
+import proton.android.pass.data.api.usecases.attachments.EnableAllOfflineAttachments
+import proton.android.pass.data.api.usecases.attachments.ObserveOfflineEnabledShareIds
+import proton.android.pass.data.api.usecases.attachments.SetSharedItemsOfflineAttachments
+import proton.android.pass.data.api.usecases.attachments.GetVaultUsage
+import proton.android.pass.data.api.usecases.attachments.ObserveActiveAttachments
+import proton.android.pass.data.api.usecases.attachments.RefreshAttachmentsForItems
+import proton.android.pass.data.api.usecases.attachments.SetVaultOfflineAttachments
+import proton.android.pass.data.api.usecases.attachments.UpdateAttachmentDownloadStatus
 import proton.android.pass.data.api.usecases.attachments.UploadAttachment
 import proton.android.pass.data.api.usecases.breach.AddBreachCustomEmail
 import proton.android.pass.data.api.usecases.breach.MarkEmailBreachAsResolved
@@ -287,6 +302,7 @@ import proton.android.pass.data.api.work.WorkManagerFacade
 import proton.android.pass.data.api.work.WorkerLauncher
 import proton.android.pass.data.fakes.crypto.FakeGetShareAndItemKey
 import proton.android.pass.data.fakes.repositories.FakeAliasRepository
+import proton.android.pass.data.fakes.repositories.FakeAttachmentRepository
 import proton.android.pass.data.fakes.repositories.FakeAssetLinkRepository
 import proton.android.pass.data.fakes.repositories.FakeBulkInviteRepository
 import proton.android.pass.data.fakes.repositories.FakeCompromisedPasswordRepository
@@ -434,13 +450,27 @@ import proton.android.pass.data.fakes.usecases.accesskey.FakeHasExtraPassword
 import proton.android.pass.data.fakes.usecases.accesskey.FakeRemoveExtraPassword
 import proton.android.pass.data.fakes.usecases.accesskey.FakeSetupExtraPassword
 import proton.android.pass.data.fakes.usecases.aliascontact.FakeObserveAliasContacts
+import proton.android.pass.data.fakes.usecases.attachments.FakeAttachmentDownloadScheduler
 import proton.android.pass.data.fakes.usecases.attachments.FakeClearAttachments
 import proton.android.pass.data.fakes.usecases.attachments.FakeDownloadAttachment
+import proton.android.pass.data.fakes.usecases.attachments.FakeGetAttachment
 import proton.android.pass.data.fakes.usecases.attachments.FakeLinkAttachmentsToItem
 import proton.android.pass.data.fakes.usecases.attachments.FakeObserveAllItemRevisionAttachments
 import proton.android.pass.data.fakes.usecases.attachments.FakeObserveItemAttachments
 import proton.android.pass.data.fakes.usecases.attachments.FakeObserveUpdateItemAttachments
+import proton.android.pass.data.fakes.usecases.attachments.FakeRemoveDraftAttachment
+import proton.android.pass.data.fakes.usecases.attachments.FakeRenameDraftAttachment
 import proton.android.pass.data.fakes.usecases.attachments.FakeRenameAttachments
+import proton.android.pass.data.fakes.usecases.attachments.FakeSetAttachmentToBeRenamed
+import proton.android.pass.data.fakes.usecases.attachments.FakeSetAttachmentToBeUnlinked
+import proton.android.pass.data.fakes.usecases.attachments.FakeEnableAllOfflineAttachments
+import proton.android.pass.data.fakes.usecases.attachments.FakeObserveOfflineEnabledShareIds
+import proton.android.pass.data.fakes.usecases.attachments.FakeSetSharedItemsOfflineAttachments
+import proton.android.pass.data.fakes.usecases.attachments.FakeGetVaultUsage
+import proton.android.pass.data.fakes.usecases.attachments.FakeObserveActiveAttachments
+import proton.android.pass.data.fakes.usecases.attachments.FakeRefreshAttachmentsForItems
+import proton.android.pass.data.fakes.usecases.attachments.FakeUpdateAttachmentDownloadStatus
+import proton.android.pass.data.fakes.usecases.attachments.FakeSetVaultOfflineAttachments
 import proton.android.pass.data.fakes.usecases.attachments.FakeUploadAttachment
 import proton.android.pass.data.fakes.usecases.breach.FakeAddBreachCustomEmail
 import proton.android.pass.data.fakes.usecases.breach.FakeMarkEmailBreachAsResolved
@@ -1413,4 +1443,55 @@ abstract class FakesDataModule {
 
     @Binds
     abstract fun bindRefreshCompromisedPasswords(impl: FakeRefreshCompromisedPasswords): RefreshCompromisedPasswords
+
+    @Binds
+    abstract fun bindAttachmentRepository(impl: FakeAttachmentRepository): AttachmentRepository
+
+    @Binds
+    abstract fun bindSetVaultOfflineAttachments(impl: FakeSetVaultOfflineAttachments): SetVaultOfflineAttachments
+
+    @Binds
+    abstract fun bindGetVaultUsage(impl: FakeGetVaultUsage): GetVaultUsage
+
+    @Binds
+    abstract fun bindObserveActiveAttachments(impl: FakeObserveActiveAttachments): ObserveActiveAttachments
+
+    @Binds
+    abstract fun bindUpdateAttachmentDownloadStatus(
+        impl: FakeUpdateAttachmentDownloadStatus
+    ): UpdateAttachmentDownloadStatus
+
+    @Binds
+    abstract fun bindRefreshAttachmentsForItems(impl: FakeRefreshAttachmentsForItems): RefreshAttachmentsForItems
+
+    @Binds
+    abstract fun bindEnableAllOfflineAttachments(impl: FakeEnableAllOfflineAttachments): EnableAllOfflineAttachments
+
+    @Binds
+    abstract fun bindSetSharedItemsOfflineAttachments(
+        impl: FakeSetSharedItemsOfflineAttachments
+    ): SetSharedItemsOfflineAttachments
+
+    @Binds
+    abstract fun bindObserveOfflineEnabledShareIds(
+        impl: FakeObserveOfflineEnabledShareIds
+    ): ObserveOfflineEnabledShareIds
+
+    @Binds
+    abstract fun bindGetAttachment(impl: FakeGetAttachment): GetAttachment
+
+    @Binds
+    abstract fun bindSetAttachmentToBeUnlinked(impl: FakeSetAttachmentToBeUnlinked): SetAttachmentToBeUnlinked
+
+    @Binds
+    abstract fun bindRemoveDraftAttachment(impl: FakeRemoveDraftAttachment): RemoveDraftAttachment
+
+    @Binds
+    abstract fun bindAttachmentDownloadScheduler(impl: FakeAttachmentDownloadScheduler): AttachmentDownloadScheduler
+
+    @Binds
+    abstract fun bindSetAttachmentToBeRenamed(impl: FakeSetAttachmentToBeRenamed): SetAttachmentToBeRenamed
+
+    @Binds
+    abstract fun bindRenameDraftAttachment(impl: FakeRenameDraftAttachment): RenameDraftAttachment
 }

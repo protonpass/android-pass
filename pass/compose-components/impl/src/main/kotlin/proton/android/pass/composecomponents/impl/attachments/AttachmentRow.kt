@@ -18,12 +18,14 @@
 
 package proton.android.pass.composecomponents.impl.attachments
 
+import androidx.compose.animation.Crossfade
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.IconButton
@@ -49,6 +51,7 @@ import proton.android.pass.commonui.api.applyIf
 import proton.android.pass.composecomponents.impl.R
 import proton.android.pass.composecomponents.impl.icon.Icon
 import proton.android.pass.composecomponents.impl.text.Text
+import proton.android.pass.domain.attachments.AttachmentDownloadStatus
 import proton.android.pass.domain.attachments.AttachmentType
 import java.util.Locale
 import me.proton.core.presentation.R as CoreR
@@ -64,6 +67,7 @@ fun AttachmentRow(
     isLoading: Boolean,
     isEnabled: Boolean,
     isError: Boolean,
+    downloadStatus: AttachmentDownloadStatus = AttachmentDownloadStatus.Idle,
     onOptionsClick: () -> Unit,
     onRetryClick: () -> Unit,
     onAttachmentOpen: () -> Unit
@@ -121,18 +125,46 @@ fun AttachmentRow(
                 }
             }
         }
-        when {
-            isLoading -> CircularProgressIndicator(
-                modifier = Modifier
-                    .padding(horizontal = Spacing.mediumSmall)
-                    .size(24.dp)
-            )
+        Crossfade(
+            targetState = downloadStatus,
+            animationSpec = tween(durationMillis = 300),
+            label = "download_status"
+        ) { status ->
+            when (status) {
+                AttachmentDownloadStatus.Downloaded -> Icon.Default(
+                    modifier = Modifier.size(16.dp),
+                    id = CoreR.drawable.ic_proton_checkmark_circle,
+                    tint = PassTheme.colors.signalSuccess
+                )
 
-            isEnabled -> IconButton(onOptionsClick) {
-                Icon.Default(
-                    id = CoreR.drawable.ic_proton_three_dots_vertical,
+                AttachmentDownloadStatus.Pending -> Icon.Default(
+                    modifier = Modifier.size(16.dp),
+                    id = CoreR.drawable.ic_proton_arrow_down_to_square,
                     tint = PassTheme.colors.textWeak
                 )
+
+                AttachmentDownloadStatus.Idle,
+                AttachmentDownloadStatus.Downloading,
+                AttachmentDownloadStatus.Paused,
+                AttachmentDownloadStatus.Failed -> {}
+            }
+        }
+        Box(
+            modifier = Modifier.size(48.dp),
+            contentAlignment = Alignment.Center
+        ) {
+            when {
+                isLoading || downloadStatus == AttachmentDownloadStatus.Downloading ->
+                    CircularProgressIndicator(
+                        modifier = Modifier.size(24.dp)
+                    )
+
+                isEnabled -> IconButton(onOptionsClick) {
+                    Icon.Default(
+                        id = CoreR.drawable.ic_proton_three_dots_vertical,
+                        tint = PassTheme.colors.textWeak
+                    )
+                }
             }
         }
     }
@@ -156,6 +188,46 @@ fun AttachmentRowPreview(@PreviewParameter(ThemedBooleanPreviewProvider::class) 
                 onRetryClick = {},
                 onOptionsClick = {}
             )
+        }
+    }
+}
+
+@Preview
+@Composable
+fun AttachmentRowDownloadedPreview(
+    @PreviewParameter(ThemedBooleanPreviewProvider::class) input: Pair<Boolean, Boolean>
+) {
+    PassTheme(isDark = input.first) {
+        Surface {
+            val seconds = 1_630_000_000L
+            Column {
+                AttachmentRow(
+                    filename = "downloaded.pdf",
+                    attachmentType = AttachmentType.Pdf,
+                    size = 2_097_152L,
+                    createTime = Instant.fromEpochSeconds(seconds),
+                    isLoading = false,
+                    isEnabled = true,
+                    isError = false,
+                    downloadStatus = AttachmentDownloadStatus.Downloaded,
+                    onAttachmentOpen = {},
+                    onRetryClick = {},
+                    onOptionsClick = {}
+                )
+                AttachmentRow(
+                    filename = "pending.jpg",
+                    attachmentType = AttachmentType.RasterImage,
+                    size = 1_572_864L,
+                    createTime = Instant.fromEpochSeconds(seconds),
+                    isLoading = false,
+                    isEnabled = true,
+                    isError = false,
+                    downloadStatus = AttachmentDownloadStatus.Pending,
+                    onAttachmentOpen = {},
+                    onRetryClick = {},
+                    onOptionsClick = {}
+                )
+            }
         }
     }
 }

@@ -53,17 +53,9 @@ class CheckIfAttachmentExistsLocallyImpl @Inject constructor(
         return withContext(appDispatchers.io) {
             File(
                 context.filesDir,
-                buildString {
-                    append(FilesDirectories.Attachments.value)
-                    append("/")
-                    append(userId.id)
-                    append("/")
-                    append(shareId.id)
-                    append("/")
-                    append(itemId.id)
-                    append("/")
-                    append(attachment.persistentId.id)
-                }
+                FilesDirectories.AttachmentsEnc.buildPath(
+                    userId.id, shareId.id, itemId.id, attachment.persistentId.id
+                )
             ).exists()
         }
     }

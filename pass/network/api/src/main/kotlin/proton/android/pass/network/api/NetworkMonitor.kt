@@ -27,4 +27,5 @@ enum class NetworkStatus {
 
 interface NetworkMonitor {
     val connectivity: Flow<NetworkStatus>
+    val isMetered: Flow<Boolean>
 }

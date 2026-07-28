@@ -129,6 +129,7 @@ import proton.android.pass.data.impl.responses.UpdateLastUsedTimeResponse
 import proton.android.pass.data.impl.responses.UpdateMonitorAddressStateRequest
 import proton.android.pass.data.impl.responses.UserAccessResponse
 import proton.android.pass.data.impl.responses.UserSyncEventsResponse
+import proton.android.pass.data.impl.responses.VaultUsageResponse
 import proton.android.pass.data.impl.responses.aliascontacts.CreateAliasContactResponse
 import proton.android.pass.data.impl.responses.aliascontacts.GetAliasContactResponse
 import proton.android.pass.data.impl.responses.aliascontacts.GetAliasContactsResponse
@@ -175,6 +176,9 @@ interface PasswordManagerApi : BaseRetrofitApi {
 
     @PUT("$PREFIX/vault/{shareId}/primary")
     suspend fun markAsPrimary(@Path("shareId") shareId: String)
+
+    @GET("$PREFIX/vault/usage/{shareId}")
+    suspend fun getVaultUsage(@Path("shareId") shareId: String): VaultUsageResponse
 
     // Share Keys
     @GET("$PREFIX/share/{shareId}/key")

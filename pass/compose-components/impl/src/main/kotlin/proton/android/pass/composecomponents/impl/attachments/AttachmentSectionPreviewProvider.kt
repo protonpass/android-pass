@@ -26,6 +26,7 @@ import proton.android.pass.commonuimodels.api.attachments.AttachmentsState
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.attachments.Attachment
+import proton.android.pass.domain.attachments.AttachmentDownloadStatus
 import proton.android.pass.domain.attachments.AttachmentId
 import proton.android.pass.domain.attachments.AttachmentType
 import proton.android.pass.domain.attachments.DraftAttachment
@@ -122,7 +123,8 @@ class AttachmentSectionPreviewProvider :
         mimeType = "",
         reencryptedKey = EncryptedByteArray(byteArrayOf()),
         chunks = listOf(),
-        encryptionVersion = 1
+        encryptionVersion = 1,
+        downloadStatus = AttachmentDownloadStatus.Pending
     )
 
     private fun createSuccessDraftAttachment(

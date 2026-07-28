@@ -22,19 +22,23 @@ import kotlinx.coroutines.flow.Flow
 import proton.android.pass.data.impl.db.entities.attachments.AttachmentEntity
 import proton.android.pass.data.impl.db.entities.attachments.AttachmentWithChunks
 import proton.android.pass.data.impl.db.entities.attachments.ChunkEntity
+import me.proton.core.domain.entity.UserId
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.attachments.AttachmentDownloadStatus
 import proton.android.pass.domain.attachments.AttachmentId
 
+@Suppress("TooManyFunctions", "ComplexInterface")
 interface LocalAttachmentsDataSource {
 
     suspend fun removeAttachmentsForItem(shareId: ShareId, itemId: ItemId)
 
     suspend fun removeAttachmentsById(
+        userId: UserId,
         shareId: ShareId,
         itemId: ItemId,
         attachmentIdList: List<AttachmentId>
-    )
+    ): List<String>
 
     @Suppress("FunctionMaxLength")
     fun observeActiveAttachmentsWithChunksForItem(shareId: ShareId, itemId: ItemId): Flow<List<AttachmentWithChunks>>
@@ -60,4 +64,45 @@ interface LocalAttachmentsDataSource {
     ): List<ChunkEntity>
 
     suspend fun updateAttachment(attachmentEntity: AttachmentEntity)
+
+    fun observeAllActiveAttachments(userId: UserId, shareIds: List<ShareId>): Flow<List<AttachmentWithChunks>>
+
+    fun observePendingDownloads(
+        userId: UserId,
+        shareIds: List<ShareId>,
+        includeFailed: Boolean
+    ): Flow<List<AttachmentWithChunks>>
+
+    suspend fun updateDownloadStatus(
+        userId: UserId,
+        shareId: ShareId,
+        itemId: ItemId,
+        attachmentId: AttachmentId,
+        status: AttachmentDownloadStatus
+    )
+
+    suspend fun resetDownloadingToPending(userId: UserId, shareIds: List<ShareId>)
+
+    suspend fun resetDownloadingToIdle(userId: UserId, shareIds: List<ShareId>)
+
+    suspend fun resetDownloadedToIdle(userId: UserId, shareIds: List<ShareId>)
+
+    suspend fun resetAllDownloadingToIdle(userId: UserId)
+
+    suspend fun resetAllDownloadedToIdle(userId: UserId)
+
+    suspend fun resetIdleToPending(userId: UserId, shareIds: List<ShareId>)
+
+    suspend fun resetPausedToPending(userId: UserId, shareIds: List<ShareId>)
+
+    fun observeDownloadedCount(userId: UserId, shareIds: List<ShareId>): Flow<Int>
+
+    fun observeTotalCount(userId: UserId, shareIds: List<ShareId>): Flow<Int>
+
+    fun observeAttachmentById(
+        userId: UserId,
+        shareId: ShareId,
+        itemId: ItemId,
+        attachmentId: AttachmentId
+    ): Flow<AttachmentWithChunks?>
 }

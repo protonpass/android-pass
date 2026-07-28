@@ -36,19 +36,27 @@ import javax.inject.Inject
 class NetworkMonitorImpl @Inject constructor(
     @param:ApplicationContext private val context: Context
 ) : NetworkMonitor {
-    override val connectivity: Flow<NetworkStatus> = callbackFlow {
+    override val connectivity: Flow<NetworkStatus> = networkCallbackFlow { connectivityManager ->
+        connectivityManager.isCurrentlyConnected()
+    }
+
+    override val isMetered: Flow<Boolean> = networkCallbackFlow { connectivityManager ->
+        connectivityManager.isCurrentlyMetered()
+    }
+
+    private inline fun <T> networkCallbackFlow(crossinline read: (ConnectivityManager?) -> T): Flow<T> = callbackFlow {
         val connectivityManager = context.getSystemService<ConnectivityManager>()
         val callback = object : ConnectivityManager.NetworkCallback() {
             override fun onAvailable(network: Network) {
-                channel.trySend(connectivityManager.isCurrentlyConnected())
+                channel.trySend(read(connectivityManager))
             }
 
             override fun onLost(network: Network) {
-                channel.trySend(connectivityManager.isCurrentlyConnected())
+                channel.trySend(read(connectivityManager))
             }
 
             override fun onCapabilitiesChanged(network: Network, networkCapabilities: NetworkCapabilities) {
-                channel.trySend(connectivityManager.isCurrentlyConnected())
+                channel.trySend(read(connectivityManager))
             }
         }
 
@@ -61,7 +69,7 @@ class NetworkMonitorImpl @Inject constructor(
             callback
         )
 
-        channel.trySend(connectivityManager.isCurrentlyConnected())
+        channel.trySend(read(connectivityManager))
 
         awaitClose {
             connectivityManager?.unregisterNetworkCallback(callback)
@@ -81,5 +89,10 @@ class NetworkMonitorImpl @Inject constructor(
                 NetworkStatus.Offline
             }
         }
+    }
+
+    private fun ConnectivityManager?.isCurrentlyMetered(): Boolean {
+        val capabilities = this?.activeNetwork?.let(::getNetworkCapabilities) ?: return true
+        return !capabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_NOT_METERED)
     }
 }

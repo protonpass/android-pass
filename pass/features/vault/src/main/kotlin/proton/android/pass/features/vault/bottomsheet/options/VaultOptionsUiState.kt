@@ -51,6 +51,8 @@ internal sealed interface VaultOptionsUiState {
         val showViewMembers: Boolean,
         val canAddFolder: Boolean,
         val canAddFolderNeedsUpgrade: Boolean,
+        val showOfflineAttachments: Boolean = false,
+        val isOfflineAttachmentsEnabled: Boolean = true,
         override val event: VaultOptionsEvent
     ) : VaultOptionsUiState
 

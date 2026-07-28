@@ -257,7 +257,8 @@ import proton.android.pass.log.api.PassLogger
         AutoMigration(from = 89, to = 90),
         AutoMigration(from = 90, to = 91),
         AutoMigration(from = 91, to = 92),
-        AutoMigration(from = 92, to = 93)
+        AutoMigration(from = 92, to = 93),
+        AutoMigration(from = 94, to = 95)
     ],
     version = AppDatabase.VERSION,
     exportSchema = true
@@ -276,7 +277,8 @@ import proton.android.pass.log.api.PassLogger
     PushConverters::class,
     AuthConverters::class,
     InstantConverter::class,
-    BreachTypeConverters::class
+    BreachTypeConverters::class,
+    AttachmentDownloadStatusConverter::class
 )
 abstract class AppDatabase :
     BaseDatabase(),
@@ -303,7 +305,7 @@ abstract class AppDatabase :
 
     companion object {
         private const val TAG = "AppDatabase"
-        const val VERSION = 94
+        const val VERSION = 95
 
         const val DB_NAME = "db-passkey"
 

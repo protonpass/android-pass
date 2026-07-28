@@ -18,6 +18,7 @@
 
 package proton.android.pass.features.attachments
 
+import androidx.compose.ui.window.DialogProperties
 import androidx.navigation.NavGraphBuilder
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
@@ -49,6 +50,8 @@ import proton.android.pass.features.attachments.renameattachment.ui.RenameAttach
 import proton.android.pass.features.attachments.storagefull.navigation.StorageFullNavItem
 import proton.android.pass.features.attachments.storagefull.navigation.StorageFullNavigation
 import proton.android.pass.features.attachments.storagefull.ui.StorageFullBottomsheet
+import proton.android.pass.features.attachments.syncdialog.AttachmentSyncDialog
+import proton.android.pass.features.attachments.syncdialog.AttachmentSyncDialogNavItem
 import proton.android.pass.navigation.api.bottomSheet
 import proton.android.pass.navigation.api.composable
 import proton.android.pass.navigation.api.dialog
@@ -149,6 +152,15 @@ fun NavGraphBuilder.attachmentsGraph(onNavigate: (AttachmentsNavigation) -> Unit
                 RenameAttachmentNavigation.CloseDialog -> onNavigate(AttachmentsNavigation.CloseScreen)
             }
         }
+    }
+    dialog(
+        navItem = AttachmentSyncDialogNavItem,
+        dialogProperties = DialogProperties(
+            dismissOnBackPress = false,
+            dismissOnClickOutside = false
+        )
+    ) {
+        AttachmentSyncDialog(onNavigate = onNavigate)
     }
     bottomSheet(navItem = StorageFullNavItem) {
         StorageFullBottomsheet(

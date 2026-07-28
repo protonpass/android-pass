@@ -48,7 +48,8 @@ object ShareEntityTestFactory {
             pendingInvites: Int = 0,
             newUserInvitesReady: Int = 0,
             canAutofill: Boolean = false,
-            flags: Int = 0
+            flags: Int = 0,
+            offlineAttachments: Boolean = false
         ): ShareEntity {
             val resolvedVaultId = vaultId ?: "vault-$id"
             return ShareEntity(
@@ -76,7 +77,8 @@ object ShareEntityTestFactory {
                 pendingInvites = pendingInvites,
                 newUserInvitesReady = newUserInvitesReady,
                 canAutofill = canAutofill,
-                flags = flags
+                flags = flags,
+                offlineAttachments = offlineAttachments
             )
         }
     }

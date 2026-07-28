@@ -73,6 +73,7 @@ class MainInitializer : Initializer<Unit> {
         UnAuthSessionFetcherInitializer::class.java,
         AccountListenerInitializer::class.java,
         AppLockListenerInitializer::class.java,
+        AttachmentDownloadInitializer::class.java,
         DeviceRecoveryInitializer::class.java,
         ThemeObserverInitializer::class.java
     )

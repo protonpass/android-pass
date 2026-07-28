@@ -4,6 +4,8 @@
 
     <uses-sdk tools:overrideLibrary="proton.android.pass.autofill.service" />
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_DATA_SYNC" />
 
     <application
         android:name=".App"
@@ -166,6 +168,11 @@
         <meta-data
             android:name="io.sentry.auto-init"
             android:value="false" />
+
+        <service
+            android:name="androidx.work.impl.foreground.SystemForegroundService"
+            android:foregroundServiceType="dataSync"
+            tools:node="merge" />
 
     </application>
 

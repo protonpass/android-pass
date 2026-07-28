@@ -31,6 +31,7 @@ import dagger.hilt.android.EntryPointAccessors
 import dagger.hilt.components.SingletonComponent
 import me.proton.core.crypto.common.keystore.EncryptedByteArray
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
+import proton.android.pass.data.impl.util.MAX_ENCRYPTED_CHUNK_SIZE
 import proton.android.pass.files.api.FilesDirectories
 import proton.android.pass.files.api.FileUriGenerator.Companion.ATTACHMENT_PIPE_MIME_PARAM
 import proton.android.pass.files.api.FileUriGenerator.Companion.ATTACHMENT_PIPE_PATH
@@ -153,7 +154,6 @@ class AttachmentPipeProvider : ContentProvider(), ContentProvider.PipeDataWriter
 
     companion object {
         private const val TAG = "AttachmentPipeProvider"
-        private const val MAX_ENCRYPTED_CHUNK_SIZE = 10 * 1024 * 1024 + 64
         private const val PATH_SEGMENT_COUNT = 5
     }
 }

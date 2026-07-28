@@ -23,18 +23,25 @@ import android.content.ContentResolver
 import android.net.Uri
 import androidx.core.net.toUri
 import fileMetadata
+import java.util.concurrent.ConcurrentHashMap
+import kotlinx.coroutines.currentCoroutineContext
 import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.ensureActive
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.isActive
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
 import kotlinx.coroutines.withContext
 import kotlinx.datetime.Instant
 import me.proton.core.crypto.common.keystore.EncryptedByteArray
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.AppDispatchers
+import proton.android.pass.files.api.FilesDirectories
 import proton.android.pass.common.api.safeRunCatching
 import proton.android.pass.commonrust.api.FileTypeDetector
 import proton.android.pass.commonrust.api.MimeType
@@ -68,9 +75,11 @@ import proton.android.pass.data.impl.responses.attachments.ChunkApiModel
 import proton.android.pass.data.impl.responses.attachments.FileApiModel
 import proton.android.pass.data.impl.util.PaginatedResponse
 import proton.android.pass.data.impl.util.fetchAllPaginated
+import proton.android.pass.data.impl.util.isCompleteEncryptedFile
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.attachments.Attachment
+import proton.android.pass.domain.attachments.AttachmentDownloadStatus
 import proton.android.pass.domain.attachments.AttachmentId
 import proton.android.pass.domain.attachments.Chunk
 import proton.android.pass.domain.attachments.ChunkId
@@ -92,7 +101,13 @@ fun interface LegacyAttachmentsDirProvider {
     fun getLegacyDir(): File
 }
 
+fun interface AttachmentsFilesDirProvider {
+    fun getFilesDir(): File
+}
+
+@Suppress("LargeClass", "LongParameterList", "TooManyFunctions")
 class AttachmentRepositoryImpl @Inject constructor(
+    private val filesDirProvider: AttachmentsFilesDirProvider,
     private val contentResolver: ContentResolver,
     private val legacyAttachmentsDirProvider: LegacyAttachmentsDirProvider,
     private val appDispatchers: AppDispatchers,
@@ -111,6 +126,8 @@ class AttachmentRepositoryImpl @Inject constructor(
 ) : AttachmentRepository {
 
     private val legacyDirCleanupDone = AtomicBoolean(false)
+
+    private val downloadMutexes = ConcurrentHashMap<String, Mutex>()
 
     override suspend fun createPendingAttachment(userId: UserId, metadata: FileMetadata): PendingAttachmentId {
         val userAccessData = userAccessDataRepository.observe(userId).first()
@@ -242,11 +259,23 @@ class AttachmentRepositoryImpl @Inject constructor(
                 filesToRemove = batchedToUnlink.getOrNull(i)?.toSet() ?: emptySet()
             )
             withContext(appDispatchers.io) {
-                local.removeAttachmentsById(
+                val persistentIds = local.removeAttachmentsById(
+                    userId = userId,
                     shareId = shareId,
                     itemId = itemId,
                     attachmentIdList = batchedToUnlink.getOrNull(i) ?: emptyList()
                 )
+                persistentIds.forEach { persistentId ->
+                    val file = File(
+                        filesDirProvider.getFilesDir(),
+                        FilesDirectories.AttachmentsEnc.buildPath(
+                            userId.id, shareId.id, itemId.id, persistentId
+                        )
+                    )
+                    if (file.exists()) {
+                        file.delete()
+                    }
+                }
             }
         }
     }
@@ -366,7 +395,7 @@ class AttachmentRepositoryImpl @Inject constructor(
         .onStart {
             coroutineScope {
                 launch {
-                    runCatching { refreshAttachmentsForAllRevisions(userId, shareId, itemId) }
+                    safeRunCatching { refreshAttachmentsForAllRevisions(userId, shareId, itemId) }
                         .onSuccess { PassLogger.i(TAG, "Refreshed attachments") }
                         .onFailure {
                             PassLogger.i(
@@ -511,6 +540,7 @@ class AttachmentRepositoryImpl @Inject constructor(
         )
     }
 
+    @Suppress("LongMethod")
     override suspend fun downloadAttachment(userId: UserId, attachment: Attachment): URI {
         if (attachment.chunks.isEmpty()) throw IllegalStateException("No chunks provided")
 
@@ -529,35 +559,44 @@ class AttachmentRepositoryImpl @Inject constructor(
         val directory = fileUriGenerator.getDirectoryForFileType(fileType)
         val encryptedCacheFile = File(directory, attachment.persistentId.id)
 
-        if (!encryptedCacheFile.exists() || encryptedCacheFile.length() == 0L) {
-            downloadAndEncrypt(userId, attachment, encryptedCacheFile)
+        downloadMutexFor(attachment.persistentId).withLock {
+            if (!isCompleteEncryptedFile(encryptedCacheFile, attachment.chunks.size)) {
+                downloadAndEncrypt(userId, attachment, encryptedCacheFile)
+            }
         }
-        return fileUriGenerator.getAttachmentPipeUri(
+        val result = fileUriGenerator.getAttachmentPipeUri(
             userId = userId,
             shareId = attachment.shareId,
             itemId = attachment.itemId,
             persistentId = attachment.persistentId,
             mimeType = attachment.mimeType
         )
+        updateDownloadStatus(userId, attachment, AttachmentDownloadStatus.Downloaded)
+        return result
     }
+
+    private fun downloadMutexFor(persistentId: PersistentAttachmentId): Mutex =
+        downloadMutexes.getOrPut(persistentId.id) { Mutex() }
 
     private suspend fun downloadAndEncrypt(
         userId: UserId,
         attachment: Attachment,
         encryptedCacheFile: File
     ) {
-        safeRunCatching {
-            val fileKey = encryptionContextProvider.withEncryptionContextSuspendable {
-                EncryptionKey(decrypt(attachment.reencryptedKey))
-            }
-            val sortedChunks = attachment.chunks.sortedBy { it.index }
-            encryptionContextProvider.withEncryptionContextSuspendable(fileKey) {
-                withContext(appDispatchers.io) {
+        withContext(appDispatchers.io) {
+            var success = false
+            try {
+                val fileKey = encryptionContextProvider.withEncryptionContextSuspendable {
+                    EncryptionKey(decrypt(attachment.reencryptedKey))
+                }
+                val sortedChunks = attachment.chunks.sortedBy { it.index }
+                encryptionContextProvider.withEncryptionContextSuspendable(fileKey) {
                     val fileKeyCtx = this@withEncryptionContextSuspendable
                     encryptionContextProvider.withEncryptionContextSuspendable {
                         val localCtx = this
                         DataOutputStream(encryptedCacheFile.outputStream().buffered()).use { dos ->
                             for (chunk in sortedChunks) {
+                                currentCoroutineContext().ensureActive()
                                 val remoteEncrypted = remote.downloadChunk(
                                     userId = userId,
                                     shareId = attachment.shareId,
@@ -579,11 +618,155 @@ class AttachmentRepositoryImpl @Inject constructor(
                         }
                     }
                 }
+                success = true
+            } finally {
+                if (!success) {
+                    encryptedCacheFile.delete()
+                }
             }
-        }.onFailure {
-            withContext(appDispatchers.io) { encryptedCacheFile.delete() }
-            throw it
         }
+    }
+
+    override suspend fun updateDownloadStatus(
+        userId: UserId,
+        attachment: Attachment,
+        status: AttachmentDownloadStatus
+    ) {
+        withContext(appDispatchers.io) {
+            local.updateDownloadStatus(
+                userId = userId,
+                shareId = attachment.shareId,
+                itemId = attachment.itemId,
+                attachmentId = attachment.id,
+                status = status
+            )
+        }
+    }
+
+    override suspend fun resetDownloadingToPending(userId: UserId, shareIds: List<ShareId>) {
+        withContext(appDispatchers.io) {
+            local.resetDownloadingToPending(userId, shareIds)
+        }
+    }
+
+    override suspend fun resetIdleToPending(userId: UserId, shareIds: List<ShareId>) {
+        withContext(appDispatchers.io) {
+            local.resetIdleToPending(userId, shareIds)
+        }
+    }
+
+    override suspend fun resetPausedToPending(userId: UserId, shareIds: List<ShareId>) {
+        withContext(appDispatchers.io) {
+            local.resetPausedToPending(userId, shareIds)
+        }
+    }
+
+    override suspend fun clearDownloadedAttachments(userId: UserId, shareIds: List<ShareId>) {
+        withContext(appDispatchers.io) {
+            val baseDir = File(
+                filesDirProvider.getFilesDir(),
+                FilesDirectories.AttachmentsEnc.buildPath(userId.id)
+            )
+            shareIds.forEach { shareId ->
+                File(baseDir, shareId.id).deleteRecursively()
+            }
+            local.resetDownloadedToIdle(userId, shareIds)
+            local.resetDownloadingToIdle(userId, shareIds)
+        }
+    }
+
+    override suspend fun clearAllDownloadedAttachments(userId: UserId) {
+        withContext(appDispatchers.io) {
+            val rootDir = File(
+                filesDirProvider.getFilesDir(),
+                FilesDirectories.AttachmentsEnc.buildPath(userId.id)
+            )
+            rootDir.deleteRecursively()
+            local.resetAllDownloadingToIdle(userId)
+            local.resetAllDownloadedToIdle(userId)
+        }
+    }
+
+    override fun observeAllActiveAttachments(userId: UserId, shareIds: List<ShareId>): Flow<List<Attachment>> =
+        local.observeAllActiveAttachments(userId, shareIds)
+            .map { attachmentsWithChunks ->
+                encryptionContextProvider.withEncryptionContextSuspendable {
+                    attachmentsWithChunks.map { awc ->
+                        val shareId = ShareId(awc.attachment.shareId)
+                        val itemId = ItemId(awc.attachment.itemId)
+                        awc.attachment.toDomain(
+                            encryptionContext = this,
+                            fileTypeDetector = fileTypeDetector,
+                            shareId = shareId,
+                            itemId = itemId,
+                            chunks = awc.chunks.map(ChunkEntity::toDomain)
+                        )
+                    }
+                }
+            }
+
+    override fun observePendingDownloads(
+        userId: UserId,
+        shareIds: List<ShareId>,
+        includeFailed: Boolean
+    ): Flow<List<Attachment>> = local.observePendingDownloads(userId, shareIds, includeFailed)
+        .map { attachmentsWithChunks ->
+            encryptionContextProvider.withEncryptionContextSuspendable {
+                attachmentsWithChunks.map { awc ->
+                    val shareId = ShareId(awc.attachment.shareId)
+                    val itemId = ItemId(awc.attachment.itemId)
+                    awc.attachment.toDomain(
+                        encryptionContext = this,
+                        fileTypeDetector = fileTypeDetector,
+                        shareId = shareId,
+                        itemId = itemId,
+                        chunks = awc.chunks.map(ChunkEntity::toDomain)
+                    )
+                }
+            }
+        }
+
+    override fun observeDownloadProgress(userId: UserId, shareIds: List<ShareId>): Flow<Pair<Int, Int>> = combine(
+        local.observeDownloadedCount(userId, shareIds),
+        local.observeTotalCount(userId, shareIds)
+    ) { downloaded, total ->
+        downloaded to total
+    }
+
+    override fun observeAttachmentById(
+        userId: UserId,
+        shareId: ShareId,
+        itemId: ItemId,
+        attachmentId: AttachmentId
+    ): Flow<Attachment?> = local.observeAttachmentById(userId, shareId, itemId, attachmentId)
+        .map { awc ->
+            awc?.let {
+                encryptionContextProvider.withEncryptionContextSuspendable {
+                    it.attachment.toDomain(
+                        encryptionContext = this,
+                        fileTypeDetector = fileTypeDetector,
+                        shareId = shareId,
+                        itemId = itemId,
+                        chunks = it.chunks.map(ChunkEntity::toDomain)
+                    )
+                }
+            }
+        }
+
+    override suspend fun refreshAttachmentsForItems(
+        userId: UserId,
+        items: List<Pair<ShareId, ItemId>>
+    ): List<Pair<ShareId, ItemId>> {
+        val failed = mutableListOf<Pair<ShareId, ItemId>>()
+        items.forEach { (shareId, itemId) ->
+            safeRunCatching { refreshActiveAttachments(userId, shareId, itemId) }
+                .onFailure { error ->
+                    PassLogger.w(TAG, "Failed to refresh attachments for $shareId / $itemId")
+                    PassLogger.w(TAG, error)
+                    failed += shareId to itemId
+                }
+        }
+        return failed
     }
 
     companion object {
@@ -619,7 +802,8 @@ fun FileApiModel.toEntity(
     revisionRemoved = this.revisionRemoved,
     reencryptedKey = reencryptedKey,
     reencryptedMetadata = reencryptedMetadata,
-    encryptionVersion = this.encryptionVersion ?: DEFAULT_ENCRYPTION_VERSION
+    encryptionVersion = this.encryptionVersion ?: DEFAULT_ENCRYPTION_VERSION,
+    downloadStatus = AttachmentDownloadStatus.Idle
 )
 
 fun ChunkApiModel.toChunkEntity(
@@ -660,7 +844,8 @@ fun AttachmentEntity.toDomain(
         revisionAdded = this.revisionAdded,
         revisionRemoved = this.revisionRemoved,
         chunks = chunks,
-        encryptionVersion = this.encryptionVersion
+        encryptionVersion = this.encryptionVersion,
+        downloadStatus = this.downloadStatus
     )
 }
 

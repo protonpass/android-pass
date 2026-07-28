@@ -135,4 +135,13 @@ interface UserPreferencesRepository {
 
     fun setAutosavePreference(preference: AutosavePreference): Result<Unit>
     fun observeAutosavePreference(): Flow<AutosavePreference>
+
+    fun setDownloadAllAttachmentsPref(userId: UserId, preference: DownloadAllAttachmentsPreference): Result<Unit>
+    fun observeDownloadAllAttachmentsPref(userId: UserId): Flow<DownloadAllAttachmentsPreference>
+
+    fun setAllowCellularDownloadPref(userId: UserId, preference: AllowCellularDownloadPreference): Result<Unit>
+    fun observeAllowCellularDownloadPref(userId: UserId): Flow<AllowCellularDownloadPreference>
+
+    fun setSharedItemsDownloadPref(userId: UserId, preference: DownloadSharedItemsAttachmentsPreference): Result<Unit>
+    fun observeSharedItemsDownloadPref(userId: UserId): Flow<DownloadSharedItemsAttachmentsPreference>
 }

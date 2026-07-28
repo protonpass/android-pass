@@ -23,6 +23,7 @@ import proton.android.pass.data.impl.remote.RemoteShareDataSource
 import proton.android.pass.data.impl.requests.CreateVaultRequest
 import proton.android.pass.data.impl.requests.UpdateVaultRequest
 import proton.android.pass.data.impl.responses.ShareResponse
+import proton.android.pass.data.impl.responses.VaultUsageResponse
 import proton.android.pass.domain.ShareId
 
 class FakeRemoteShareDataSource : RemoteShareDataSource {
@@ -99,5 +100,12 @@ class FakeRemoteShareDataSource : RemoteShareDataSource {
         userId: UserId,
         shareVisibilityChanges: Map<ShareId, Boolean>
     ): List<ShareResponse> = changeShareVisibilityResponse.getOrThrow()
+
+    override suspend fun getVaultUsage(userId: UserId, shareId: ShareId): VaultUsageResponse = VaultUsageResponse(
+        code = 1000,
+        vaultId = shareId.id,
+        totalSize = 0L,
+        largestFiles = emptyList()
+    )
 
 }

@@ -107,5 +107,11 @@ enum class FeatureFlag(
         description = "Show the autofill troubleshooting entry in settings",
         key = "PassAutofillHealth",
         isEnabledDefault = false
+    ),
+    PASS_OFFLINE_ATTACHMENTS(
+        title = "Offline attachments",
+        description = "Enable offline attachment downloads",
+        key = "PassOfflineAttachments",
+        isEnabledDefault = false
     )
 }

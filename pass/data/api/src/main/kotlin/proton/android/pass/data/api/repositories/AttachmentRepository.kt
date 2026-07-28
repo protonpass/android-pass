@@ -23,11 +23,13 @@ import me.proton.core.domain.entity.UserId
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.attachments.Attachment
+import proton.android.pass.domain.attachments.AttachmentDownloadStatus
 import proton.android.pass.domain.attachments.AttachmentId
 import proton.android.pass.domain.attachments.FileMetadata
 import proton.android.pass.domain.attachments.PendingAttachmentId
 import java.net.URI
 
+@Suppress("TooManyFunctions", "ComplexInterface")
 interface AttachmentRepository {
 
     suspend fun createPendingAttachment(userId: UserId, metadata: FileMetadata): PendingAttachmentId
@@ -89,4 +91,42 @@ interface AttachmentRepository {
     ): Attachment
 
     suspend fun downloadAttachment(userId: UserId, attachment: Attachment): URI
+
+    suspend fun updateDownloadStatus(
+        userId: UserId,
+        attachment: Attachment,
+        status: AttachmentDownloadStatus
+    )
+
+    suspend fun resetDownloadingToPending(userId: UserId, shareIds: List<ShareId>)
+
+    suspend fun resetIdleToPending(userId: UserId, shareIds: List<ShareId>)
+
+    suspend fun resetPausedToPending(userId: UserId, shareIds: List<ShareId>)
+
+    suspend fun clearDownloadedAttachments(userId: UserId, shareIds: List<ShareId>)
+
+    suspend fun clearAllDownloadedAttachments(userId: UserId)
+
+    fun observeAllActiveAttachments(userId: UserId, shareIds: List<ShareId>): Flow<List<Attachment>>
+
+    fun observePendingDownloads(
+        userId: UserId,
+        shareIds: List<ShareId>,
+        includeFailed: Boolean
+    ): Flow<List<Attachment>>
+
+    fun observeDownloadProgress(userId: UserId, shareIds: List<ShareId>): Flow<Pair<Int, Int>>
+
+    fun observeAttachmentById(
+        userId: UserId,
+        shareId: ShareId,
+        itemId: ItemId,
+        attachmentId: AttachmentId
+    ): Flow<Attachment?>
+
+    suspend fun refreshAttachmentsForItems(
+        userId: UserId,
+        items: List<Pair<ShareId, ItemId>>
+    ): List<Pair<ShareId, ItemId>>
 }

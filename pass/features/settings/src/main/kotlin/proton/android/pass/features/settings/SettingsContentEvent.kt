@@ -55,4 +55,17 @@ internal sealed interface SettingsContentEvent {
     @JvmInline
     value class OnAutosaveChange(val isEnabled: Boolean) : SettingsContentEvent
 
+    @JvmInline
+    value class OnDownloadAllAttachmentsToggled(val isEnabled: Boolean) : SettingsContentEvent
+
+    @JvmInline
+    value class OnSharedItemsToggled(val isEnabled: Boolean) : SettingsContentEvent
+
+    @JvmInline
+    value class OnAllowCellularDownloadToggled(val isEnabled: Boolean) : SettingsContentEvent
+
+    data object OnOpenDownloadStatus : SettingsContentEvent
+
+    data object OnOfflineAttachmentsUpsell : SettingsContentEvent
+
 }

@@ -497,6 +497,28 @@ class ShareRepositoryImpl @Inject constructor(
         }
     }
 
+    override suspend fun setOfflineAttachments(
+        userId: UserId,
+        shareId: ShareId,
+        enabled: Boolean
+    ) {
+        localShareDataSource.setOfflineAttachments(userId, shareId, enabled)
+    }
+
+    override fun observeOfflineEnabledShareIds(userId: UserId): Flow<List<ShareId>> =
+        localShareDataSource.observeOfflineEnabledShareIds(userId)
+
+    override suspend fun enableAllOfflineAttachments(userId: UserId) {
+        localShareDataSource.enableAllOfflineAttachments(userId)
+    }
+
+    override fun observeSharedItemsOfflineEnabled(userId: UserId): Flow<Boolean> =
+        localShareDataSource.observeSharedItemsOfflineEnabled(userId)
+
+    override suspend fun setSharedItemsOfflineAttachments(userId: UserId, enabled: Boolean) {
+        localShareDataSource.setSharedItemsOfflineAttachments(userId, enabled)
+    }
+
     override suspend fun filterShareIdsByType(
         userId: UserId,
         shareIds: Set<ShareId>,
@@ -730,7 +752,8 @@ class ShareRepositoryImpl @Inject constructor(
             name = vault.name,
             color = vault.display.color.toDomain(),
             icon = vault.display.icon.toDomain(),
-            shareFlags = ShareFlags(flags)
+            shareFlags = ShareFlags(flags),
+            offlineAttachments = offlineAttachments
         )
     }
 

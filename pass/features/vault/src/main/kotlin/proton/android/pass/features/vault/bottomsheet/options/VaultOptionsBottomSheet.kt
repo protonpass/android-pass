@@ -97,6 +97,10 @@ fun VaultOptionsBottomSheet(
                     VaultOptionsUserEvent.OnUpgradeForFolder -> {
                         onNavigate(VaultNavigation.Upgrade)
                     }
+
+                    is VaultOptionsUserEvent.OnToggleOfflineAttachments -> {
+                        viewModel.onToggleOfflineAttachments(it.enabled)
+                    }
                 }
             }
         )

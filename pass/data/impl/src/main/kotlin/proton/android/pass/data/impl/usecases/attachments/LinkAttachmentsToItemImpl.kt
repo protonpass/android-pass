@@ -20,15 +20,21 @@ package proton.android.pass.data.impl.usecases.attachments
 
 import kotlinx.coroutines.flow.firstOrNull
 import me.proton.core.accountmanager.domain.AccountManager
+import me.proton.core.domain.entity.UserId
+import proton.android.pass.common.api.safeRunCatching
 import proton.android.pass.data.api.errors.UserIdNotAvailableError
 import proton.android.pass.data.api.repositories.AttachmentRepository
 import proton.android.pass.data.api.repositories.ItemRepository
 import proton.android.pass.data.api.repositories.PendingAttachmentLinkRepository
+import proton.android.pass.data.api.repositories.ShareRepository
+import proton.android.pass.data.api.usecases.attachments.AttachmentDownloadScheduler
 import proton.android.pass.data.api.usecases.attachments.LinkAttachmentsToItem
 import proton.android.pass.domain.ItemFlag
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.log.api.PassLogger
+import proton.android.pass.preferences.UserPreferencesRepository
+import proton.android.pass.preferences.value
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -37,7 +43,10 @@ class LinkAttachmentsToItemImpl @Inject constructor(
     private val accountManager: AccountManager,
     private val attachmentRepository: AttachmentRepository,
     private val itemRepository: ItemRepository,
-    private val pendingAttachmentLinkRepository: PendingAttachmentLinkRepository
+    private val pendingAttachmentLinkRepository: PendingAttachmentLinkRepository,
+    private val shareRepository: ShareRepository,
+    private val preferencesRepository: UserPreferencesRepository,
+    private val downloadScheduler: AttachmentDownloadScheduler
 ) : LinkAttachmentsToItem {
 
     override suspend fun invoke(
@@ -74,7 +83,27 @@ class LinkAttachmentsToItemImpl @Inject constructor(
                 flag = ItemFlag.HasAttachments,
                 isFlagEnabled = true
             )
+            scheduleDownloadIfEnabled(userId, shareId)
         }
+    }
+
+    private suspend fun scheduleDownloadIfEnabled(userId: UserId, shareId: ShareId) {
+        val isEnabled = preferencesRepository
+            .observeDownloadAllAttachmentsPref(userId)
+            .firstOrNull()
+            ?.value() == true
+        if (!isEnabled) return
+
+        val offlineShareIds = shareRepository.observeOfflineEnabledShareIds(userId)
+            .firstOrNull()
+            .orEmpty()
+        if (shareId !in offlineShareIds) return
+
+        safeRunCatching { downloadScheduler.scheduleAll(userId) }
+            .onFailure { error ->
+                PassLogger.w(TAG, "Error scheduling downloads after linking attachments")
+                PassLogger.w(TAG, error)
+            }
     }
 
     companion object {

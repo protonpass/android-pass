@@ -61,7 +61,9 @@ sealed interface SettingsNavigation {
     data object ViewLogs : SettingsNavigation
     data object Restart : SettingsNavigation
     data object SyncDialog : SettingsNavigation
+    data object AttachmentSyncDialog : SettingsNavigation
     data object SelectAutofillDisplay : SettingsNavigation
+    data object OfflineAttachmentsUpsell : SettingsNavigation
 }
 
 fun NavGraphBuilder.settingsGraph(onNavigate: (SettingsNavigation) -> Unit) {

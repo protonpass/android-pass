@@ -42,6 +42,7 @@ import proton.android.pass.common.api.toOption
 import proton.android.pass.commonpresentation.api.attachments.AttachmentsHandler
 import proton.android.pass.commonpresentation.impl.R
 import proton.android.pass.commonpresentation.impl.attachments.AttachmentSnackbarMessages.AttachmentSizeExceededError
+import proton.android.pass.commonpresentation.impl.attachments.AttachmentSnackbarMessages.AttachmentNotAvailableOffline
 import proton.android.pass.commonpresentation.impl.attachments.AttachmentSnackbarMessages.DownloadAttachmentsError
 import proton.android.pass.commonpresentation.impl.attachments.AttachmentSnackbarMessages.OpenAttachmentsError
 import proton.android.pass.commonpresentation.impl.attachments.AttachmentSnackbarMessages.ShareAttachmentsError
@@ -63,10 +64,13 @@ import proton.android.pass.data.api.usecases.attachments.UploadAttachment
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.attachments.Attachment
+import proton.android.pass.domain.attachments.AttachmentDownloadStatus
 import proton.android.pass.domain.attachments.AttachmentId
 import proton.android.pass.domain.attachments.DraftAttachment
 import proton.android.pass.domain.attachments.FileMetadata
 import proton.android.pass.log.api.PassLogger
+import proton.android.pass.network.api.NetworkMonitor
+import proton.android.pass.network.api.NetworkStatus
 import proton.android.pass.notifications.api.SnackbarDispatcher
 import java.net.URI
 import javax.inject.Inject
@@ -84,6 +88,7 @@ class AttachmentsHandlerImpl @Inject constructor(
     private val fileHandler: FileHandler,
     private val snackbarDispatcher: SnackbarDispatcher,
     private val authOverrideState: AuthOverrideState,
+    private val networkMonitor: NetworkMonitor,
     observeUserAccessData: ObserveUserAccessData,
     getUserPlan: GetUserPlan
 ) : AttachmentsHandler {
@@ -144,6 +149,17 @@ class AttachmentsHandlerImpl @Inject constructor(
     override suspend fun openAttachment(contextHolder: ClassHolder<Context>, attachment: Attachment) {
         loadingAttachments.update { it + attachment.id }
         authOverrideState.setAuthOverride(true)
+
+        val isOffline = networkMonitor.connectivity.first() == NetworkStatus.Offline
+
+        if (isOffline && attachment.downloadStatus != AttachmentDownloadStatus.Downloaded) {
+            PassLogger.i(TAG, "Offline and attachment not downloaded")
+            snackbarDispatcher(AttachmentNotAvailableOffline)
+            loadingAttachments.update { it - attachment.id }
+            authOverrideState.setAuthOverride(false)
+            return
+        }
+
         safeRunCatching {
             val uri = downloadAttachment(attachment)
             fileHandler.openFile(
@@ -153,9 +169,9 @@ class AttachmentsHandlerImpl @Inject constructor(
                 chooserTitle = contextHolder.get().value()?.getString(R.string.open_with) ?: ""
             )
         }.onSuccess {
-            PassLogger.i(TAG, "Attachment opened: ${attachment.id}")
+            PassLogger.i(TAG, "Attachment opened")
         }.onFailure {
-            PassLogger.w(TAG, "Could not open attachment: ${attachment.id}")
+            PassLogger.w(TAG, "Could not open attachment")
             PassLogger.w(TAG, it)
             snackbarDispatcher(OpenAttachmentsError)
         }
@@ -168,9 +184,9 @@ class AttachmentsHandlerImpl @Inject constructor(
         val result = safeRunCatching {
             downloadAttachment(attachment)
         }.onSuccess {
-            PassLogger.i(TAG, "Attachment downloaded: ${attachment.id}")
+            PassLogger.i(TAG, "Attachment downloaded")
         }.onFailure {
-            PassLogger.w(TAG, "Could not download attachment: ${attachment.id}")
+            PassLogger.w(TAG, "Could not download attachment")
             PassLogger.w(TAG, it)
             snackbarDispatcher(DownloadAttachmentsError)
         }
@@ -191,9 +207,9 @@ class AttachmentsHandlerImpl @Inject constructor(
                 chooserTitle = contextHolder.get().value()?.getString(R.string.share_with) ?: ""
             )
         }.onSuccess {
-            PassLogger.i(TAG, "Attachment shared: ${attachment.id}")
+            PassLogger.i(TAG, "Attachment shared")
         }.onFailure {
-            PassLogger.w(TAG, "Could not share attachment: ${attachment.id}")
+            PassLogger.w(TAG, "Could not share attachment")
             PassLogger.w(TAG, it)
             snackbarDispatcher(ShareAttachmentsError)
         }

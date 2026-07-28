@@ -27,4 +27,5 @@ sealed interface VaultOptionsUserEvent {
     data object OnVaultAccess : VaultOptionsUserEvent
     data object OnCreateFolder : VaultOptionsUserEvent
     data object OnUpgradeForFolder : VaultOptionsUserEvent
+    data class OnToggleOfflineAttachments(val enabled: Boolean) : VaultOptionsUserEvent
 }

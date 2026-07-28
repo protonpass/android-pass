@@ -73,10 +73,13 @@ dependencies {
     ksp(libs.dagger.hilt.android.compiler)
     ksp(libs.androidx.hilt.compiler)
 
+    implementation(libs.core.accountManager.domain)
+
     implementation(projects.pass.biometry.api)
     implementation(projects.pass.common.api)
     implementation(projects.pass.commonUi.api)
     implementation(projects.pass.commonPresentation.api)
+    implementation(projects.pass.crypto.api)
     implementation(projects.pass.commonUiModels.api)
     implementation(projects.pass.composeComponents.impl)
     implementation(projects.pass.data.api)
@@ -84,5 +87,7 @@ dependencies {
     implementation(projects.pass.files.api)
     implementation(projects.pass.log.api)
     implementation(projects.pass.navigation.api)
+    implementation(projects.pass.network.api)
     implementation(projects.pass.notifications.api)
+    implementation(projects.pass.preferences.api)
 }

@@ -40,6 +40,7 @@ import proton.android.pass.features.attachments.addattachment.navigation.AddAtta
 import proton.android.pass.features.attachments.attachmentoptionsondetail.navigation.AttachmentOptionsOnDetailNavItem
 import proton.android.pass.features.attachments.attachmentoptionsonedit.navigation.AttachmentOptionsOnEditNavItem
 import proton.android.pass.features.attachments.attachmentsGraph
+import proton.android.pass.features.attachments.syncdialog.AttachmentSyncDialogNavItem
 import proton.android.pass.features.attachments.camera.navigation.CameraNavItem
 import proton.android.pass.features.attachments.deleteall.navigation.DeleteAllAttachmentsDialogNavItem
 import proton.android.pass.features.attachments.filepicker.navigation.FilePickerNavItem
@@ -1023,8 +1024,20 @@ fun NavGraphBuilder.appGraph(
 
                 SettingsNavigation.Restart -> onNavigate(AppNavigation.Restart)
                 SettingsNavigation.SyncDialog -> appNavigator.navigate(SyncNavItem)
+                SettingsNavigation.AttachmentSyncDialog -> appNavigator.navigate(
+                    AttachmentSyncDialogNavItem
+                )
+
                 SettingsNavigation.SelectAutofillDisplay ->
                     appNavigator.navigate(AutofillDisplaySelector)
+
+                SettingsNavigation.OfflineAttachmentsUpsell ->
+                    appNavigator.navigate(
+                        destination = UpsellNavItem,
+                        route = UpsellNavItem.createNavRoute(
+                            paidFeature = PaidFeature.FileAttachments
+                        )
+                    )
             }
         }
     )

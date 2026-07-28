@@ -52,6 +52,8 @@ import proton.android.pass.features.auth.EnterPinSnackbarMessage.PinTooManyAttem
 import proton.android.pass.features.auth.EnterPinUiState.NotInitialised
 import proton.android.pass.features.auth.PinConstants.MAX_PIN_ATTEMPTS
 import proton.android.pass.features.auth.PinConstants.MAX_PIN_LENGTH
+import proton.android.pass.log.api.LogoutLogger
+import proton.android.pass.log.api.LogoutReason
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.android.pass.preferences.InternalSettingsRepository
@@ -129,6 +131,7 @@ class EnterPinViewModel @Inject constructor(
                             ?: throw UserIdNotAvailableError()
                         when (origin) {
                             AuthOrigin.CONFIGURE_PIN_OR_BIOMETRY -> {
+                                LogoutLogger.record(LogoutReason.SecurityLockoutPin)
                                 snackbarDispatcher(PinTooManyAttemptsError)
                                 delay(1.seconds)
                                 eventState.update { EnterPinEvent.ForceSignOutAllUsers }

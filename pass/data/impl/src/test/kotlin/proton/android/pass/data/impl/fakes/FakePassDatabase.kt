@@ -54,6 +54,9 @@ import proton.android.pass.data.impl.db.dao.securelinks.SecureLinksDao
 
 internal class FakePassDatabase : PassDatabase {
 
+    var isInTransaction = false
+        private set
+
     override fun sharesDao(): SharesDao {
         throw IllegalStateException("This method should not be called")
     }
@@ -182,5 +185,12 @@ internal class FakePassDatabase : PassDatabase {
         throw IllegalStateException("This method should not be called")
     }
 
-    override suspend fun <R> inTransaction(block: suspend () -> R): R = block()
+    override suspend fun <R> inTransaction(block: suspend () -> R): R {
+        isInTransaction = true
+        return try {
+            block()
+        } finally {
+            isInTransaction = false
+        }
+    }
 }

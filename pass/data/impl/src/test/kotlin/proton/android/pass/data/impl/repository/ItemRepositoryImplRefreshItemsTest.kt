@@ -44,6 +44,7 @@ import proton.android.pass.data.impl.fakes.FakeShareRepository
 import proton.android.pass.data.impl.repositories.ItemRepositoryImpl
 import proton.android.pass.preferences.FakeFeatureFlagsPreferenceRepository
 import proton.android.pass.domain.ItemId
+import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.events.EventToken
 import proton.android.pass.domain.events.SyncEventShareItem
 import proton.android.pass.test.MainDispatcherRule
@@ -63,6 +64,7 @@ class ItemRepositoryImplRefreshItemsTest {
     private lateinit var shareKeyRepository: FakeShareKeyRepository
     private lateinit var shareRepository: FakeShareRepository
     private lateinit var userAddressRepository: FakeUserAddressRepository
+    private lateinit var searchIndexRepository: FakeSearchIndexRepository
 
     private val userId = UserId("test-123")
     private lateinit var share: proton.android.pass.domain.Share
@@ -75,6 +77,7 @@ class ItemRepositoryImplRefreshItemsTest {
         shareKeyRepository = FakeShareKeyRepository()
         shareRepository = FakeShareRepository()
         userAddressRepository = FakeUserAddressRepository()
+        searchIndexRepository = FakeSearchIndexRepository()
 
         share = ShareTestFactory.random()
         val userAddress = userAddressRepository.generateAddress("test1", userId)
@@ -99,7 +102,7 @@ class ItemRepositoryImplRefreshItemsTest {
             folderKeyRepository = FakeFolderKeyRepository(),
             appDispatchers = FakeAppDispatchers(),
             featureFlagsRepository = FakeFeatureFlagsPreferenceRepository(),
-            searchIndexRepository = FakeSearchIndexRepository()
+            searchIndexRepository = searchIndexRepository
         )
     }
 
@@ -139,6 +142,33 @@ class ItemRepositoryImplRefreshItemsTest {
 
         assertThat(remoteItemDataSource.getGetItemCallCount()).isEqualTo(2)
         assertThat(localItemDataSource.getMemory()).hasSize(1)
+    }
+
+    @Test
+    fun `refreshItems indexes the items it wrote so they appear in the paginated list`() = runTest {
+        val item = ItemTestFactory.random()
+        remoteItemDataSource.addGetItemResponse { FakeRemoteItemDataSource.createItemRevision(item) }
+        openItem.setOutput(OpenItemOutput(item = item, itemKey = null))
+
+        repository.refreshItems(
+            userId,
+            listOf(SyncEventShareItem(share.id, ItemId("item-1"), EventToken("t")))
+        )
+
+        val indexed = localItemDataSource.getMemory().single()
+        assertThat(searchIndexRepository.isItemIndexed(ShareId(indexed.shareId), ItemId(indexed.id))).isTrue()
+    }
+
+    @Test
+    fun `refreshItems does not index items that failed to fetch`() = runTest {
+        remoteItemDataSource.addGetItemResponse { throw IllegalStateException("network error") }
+
+        repository.refreshItems(
+            userId,
+            listOf(SyncEventShareItem(share.id, ItemId("item-fail"), EventToken("t")))
+        )
+
+        assertThat(searchIndexRepository.isItemIndexed(share.id, ItemId("item-fail"))).isFalse()
     }
 
     @Test

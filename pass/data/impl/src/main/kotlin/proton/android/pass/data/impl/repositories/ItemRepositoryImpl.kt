@@ -459,7 +459,14 @@ class ItemRepositoryImpl @Inject constructor(
             database.inTransaction("refreshItems") {
                 localItemDataSource.upsertItems(entities)
             }
+            indexRefreshedItems(userId, entities)
         }
+    }
+
+    private suspend fun indexRefreshedItems(userId: UserId, entities: List<ItemEntity>) {
+        safeRunCatching {
+            searchIndexRepository.indexItems(userId, entities.map { ShareId(it.shareId) to ItemId(it.id) })
+        }.onFailure { PassLogger.w(TAG, "Failed to index refreshed items: ${it.message}") }
     }
 
     private suspend fun fetchItemEntity(

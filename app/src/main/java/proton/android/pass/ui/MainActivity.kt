@@ -67,6 +67,8 @@ import proton.android.pass.commonui.api.setSecureMode
 import proton.android.pass.composecomponents.impl.dialogs.WarningReloadAppDialog
 import proton.android.pass.composecomponents.impl.theme.isDark
 import proton.android.pass.features.welcome.WelcomeScreen
+import proton.android.pass.log.api.LogoutLogger
+import proton.android.pass.log.api.LogoutReason
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.preferences.AllowScreenshotsPreference
 import proton.android.pass.ui.launcher.AccountState.AccountNeeded
@@ -204,8 +206,10 @@ class MainActivity : FragmentActivity(), ProductMetricsDelegateOwner {
                             onNavigate = {
                                 when (it) {
                                     is AppNavigation.Finish -> finish()
-                                    is AppNavigation.SignOut ->
+                                    is AppNavigation.SignOut -> {
+                                        LogoutLogger.record(LogoutReason.UserInitiatedSignOut)
                                         SignOutDialogActivity.start(this, it.userId)
+                                    }
 
                                     is AppNavigation.SignIn -> launcherViewModel.signIn(it.userId)
                                     is AppNavigation.ForceSignOut -> launcherViewModel.disable(it.userId)

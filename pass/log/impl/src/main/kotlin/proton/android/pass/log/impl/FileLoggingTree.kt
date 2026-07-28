@@ -35,6 +35,7 @@ import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.AppDispatchers
 import proton.android.pass.log.api.LogFileManager
+import proton.android.pass.log.api.LogoutLogger
 import proton.android.pass.log.api.PrivacySanitizer
 import timber.log.Timber
 import java.io.BufferedWriter
@@ -65,12 +66,12 @@ class FileLoggingTree @Inject constructor(
         .ofPattern("yyyy-MM-dd HH:mm:ss.SSS", Locale.ENGLISH)
         .withZone(ZoneId.from(ZoneOffset.UTC))
     private val scope = CoroutineScope(SupervisorJob() + appDispatchers.io)
-    private val entries = Channel<String>(queueCapacity)
+    private val entries = Channel<LogEntry>(queueCapacity)
 
     init {
         scope.launch {
             for (firstEntry in entries) {
-                val batch = ArrayList<String>(DEFAULT_WRITER_BATCH_SIZE)
+                val batch = ArrayList<LogEntry>(DEFAULT_WRITER_BATCH_SIZE)
                 batch.add(firstEntry)
                 while (batch.size < DEFAULT_WRITER_BATCH_SIZE) {
                     val entry = entries.tryReceive().getOrNull() ?: break
@@ -152,7 +153,11 @@ class FileLoggingTree @Inject constructor(
         t: Throwable?
     ) {
         if (priority < Log.INFO) return
-        val entry = buildLog(clock.now(), priority, tag, message)
+        val target = if (tag == LogoutLogger.TAG) LogTarget.NotAuthenticated else LogTarget.CurrentUser
+        enqueue(LogEntry(buildLog(clock.now(), priority, tag, message), target))
+    }
+
+    private fun enqueue(entry: LogEntry) {
         val result = entries.trySend(entry)
         if (result.isFailure && !result.isClosed) {
             logWarning("Log entry dropped because the queue is full")
@@ -177,7 +182,7 @@ class FileLoggingTree @Inject constructor(
         }
     }
 
-    private suspend fun writeBatch(entries: List<String>) {
+    private suspend fun writeBatch(entries: List<LogEntry>) {
         var writer: BufferedWriter? = null
         var writerFile: File? = null
 
@@ -194,7 +199,7 @@ class FileLoggingTree @Inject constructor(
             entries.forEach { entry ->
                 logFileManager.withLogFileLock {
                     try {
-                        val file = resolveLogFile()
+                        val file = resolveLogFile(entry.target)
                         if (writerFile != file) {
                             closeWriter()
                         }
@@ -207,7 +212,7 @@ class FileLoggingTree @Inject constructor(
                             writerFile = file
                         }
                         writer?.apply {
-                            append(entry)
+                            append(entry.message)
                             newLine()
                             flush()
                         }
@@ -241,7 +246,10 @@ class FileLoggingTree @Inject constructor(
         cancellationException?.let { throw it }
     }
 
-    private suspend fun resolveLogFile(): File {
+    private suspend fun resolveLogFile(target: LogTarget): File {
+        if (target == LogTarget.NotAuthenticated) {
+            return logFileManager.getLogFile(null).also { logFileManager.ensureLogFileExists(it) }
+        }
         val initialUserId = accountManager.getPrimaryUserId().firstOrNull()
         val initialFile = logFileManager.getLogFile(initialUserId)
         val (fileUserId, initialEnsuredFile) = ensureCurrentLogFile(initialUserId, initialFile)
@@ -294,6 +302,16 @@ class FileLoggingTree @Inject constructor(
         Log.ERROR -> 'E'
         Log.ASSERT -> 'A'
         else -> '-'
+    }
+
+    private data class LogEntry(
+        val message: String,
+        val target: LogTarget
+    )
+
+    private enum class LogTarget {
+        CurrentUser,
+        NotAuthenticated
     }
 
     companion object {

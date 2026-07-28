@@ -18,27 +18,32 @@
 
 package proton.android.pass.data.impl.usecases
 
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import me.proton.core.domain.entity.UserId
-import proton.android.pass.data.api.repositories.ShareRepository
+import proton.android.pass.common.api.AppDispatchers
+import proton.android.pass.data.api.repositories.PasswordHistoryEntryRepository
 import proton.android.pass.data.api.usecases.ClearUserData
+import proton.android.pass.data.api.usecases.ClearUserSyncState
 import proton.android.pass.data.impl.db.DatabaseCleanupHelper
 import proton.android.pass.data.impl.repositories.ExtraPasswordRepository
 import proton.android.pass.log.api.LogFileManager
 import javax.inject.Inject
 
 class ClearUserDataImpl @Inject constructor(
-    private val shareRepository: ShareRepository,
+    private val clearUserSyncState: ClearUserSyncState,
     private val extraPasswordRepository: ExtraPasswordRepository,
+    private val passwordHistoryEntryRepository: PasswordHistoryEntryRepository,
     private val databaseCleanupHelper: DatabaseCleanupHelper,
-    private val logFileManager: LogFileManager
+    private val logFileManager: LogFileManager,
+
+    private val appDispatchers: AppDispatchers
 ) : ClearUserData {
 
     override suspend fun invoke(userId: UserId) {
-        withContext(Dispatchers.IO) {
-            shareRepository.deleteLocalSharesForUser(userId)
+        withContext(appDispatchers.io) {
+            clearUserSyncState(userId)
             extraPasswordRepository.removeLocalExtraPasswordForUser(userId)
+            passwordHistoryEntryRepository.deletePasswordHistoryEntryForUser(userId)
             databaseCleanupHelper.cleanupUserData()
             val logFile = logFileManager.getLogFile(userId)
             logFileManager.deleteLogFile(logFile)

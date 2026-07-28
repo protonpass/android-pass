@@ -27,8 +27,13 @@ import proton.android.pass.domain.ShareId
 class FakeEventRepository : EventRepository {
 
     private val deletedUserIds = mutableListOf<UserId>()
+    private var events: EventList? = null
 
     fun getDeletedAllLatestEventIdsMemory(): List<UserId> = deletedUserIds.toList()
+
+    fun setEvents(value: EventList) {
+        events = value
+    }
 
     override suspend fun getLatestEventId(userId: UserId, shareId: ShareId): String = ""
 
@@ -36,7 +41,7 @@ class FakeEventRepository : EventRepository {
         lastEventId: String,
         userId: UserId,
         shareId: ShareId
-    ): EventList = EventList(
+    ): EventList = events ?: EventList(
         shareResponse = null,
         updatedItems = emptyList(),
         deletedItemIds = emptyList(),

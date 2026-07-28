@@ -75,6 +75,8 @@ class FakeItemRepository @Inject constructor() : ItemRepository {
     private val deleteLocalItemsMemory: MutableList<DeleteLocalItemsPayload> = mutableListOf()
     private val refreshItemMemory: MutableList<RefreshItemPayload> = mutableListOf()
     var onRefreshItem: ((RefreshItemPayload) -> Unit)? = null
+    private val indexPendingEventMemory: MutableList<ItemPendingEvent> = mutableListOf()
+    var onIndexPendingEvent: ((ItemPendingEvent) -> Unit)? = null
 
     private val encryptedSharedItemsFlow = testFlow<List<ItemEncrypted>>()
 
@@ -401,7 +403,16 @@ class FakeItemRepository @Inject constructor() : ItemRepository {
 
     override suspend fun purgePendingEvent(event: ItemPendingEvent): Boolean = true
 
-    override suspend fun indexPendingEvent(event: ItemPendingEvent) {}
+    fun getIndexPendingEventMemory(): List<ItemPendingEvent> = indexPendingEventMemory.toList()
+
+    fun clearIndexPendingEventMemory() {
+        indexPendingEventMemory.clear()
+    }
+
+    override suspend fun indexPendingEvent(event: ItemPendingEvent) {
+        indexPendingEventMemory.add(event)
+        onIndexPendingEvent?.invoke(event)
+    }
 
     override fun observeItemCountSummary(
         userId: UserId,

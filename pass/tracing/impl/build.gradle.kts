@@ -39,6 +39,7 @@ androidComponents.beforeVariants { variant ->
 
 dependencies {
     implementation(projects.pass.appConfig.api)
+    implementation(projects.pass.log.api)
 
     implementation(libs.androidx.startup.runtime)
     implementation(libs.core.userSettings.domain)

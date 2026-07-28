@@ -45,6 +45,7 @@ import me.proton.core.accountmanager.presentation.observe
 import me.proton.core.accountmanager.presentation.onAccountDisabled
 import me.proton.core.accountmanager.presentation.onAccountReady
 import me.proton.core.accountmanager.presentation.onAccountRemoved
+import me.proton.core.accountmanager.presentation.onSessionForceLogout
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.safeRunCatching
 import proton.android.pass.commonui.api.PassAppLifecycleProvider
@@ -56,6 +57,8 @@ import proton.android.pass.data.api.usecases.RefreshUserAccess
 import proton.android.pass.data.api.usecases.ResetAppToDefaults
 import proton.android.pass.data.api.usecases.organization.RefreshOrganizationSettings
 import proton.android.pass.data.impl.db.DatabaseCleanupHelper
+import proton.android.pass.log.api.LogoutLogger
+import proton.android.pass.log.api.LogoutReason
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.preferences.FeatureFlag
 import proton.android.pass.notifications.api.SnackbarDispatcher
@@ -94,6 +97,8 @@ class AccountListenerInitializer : Initializer<Unit> {
             launchInAppLifecycleScope(lifecycleProvider) {
                 performCleanup(account, entryPoint)
             }
+        }.onSessionForceLogout {
+            LogoutLogger.record(LogoutReason.ServerSessionRejected)
         }.onAccountReady { account ->
             launchInAppLifecycleScope(lifecycleProvider) {
                 onAccountReady(

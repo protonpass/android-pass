@@ -82,6 +82,8 @@ import proton.android.pass.data.api.usecases.extrapassword.RemoveExtraPassword
 import proton.android.pass.features.auth.AuthSnackbarMessage.AuthExtraPasswordError
 import proton.android.pass.features.auth.AuthSnackbarMessage.AuthTooManyAttemptsError
 import proton.android.pass.features.auth.PinConstants.MAX_PIN_ATTEMPTS
+import proton.android.pass.log.api.LogoutLogger
+import proton.android.pass.log.api.LogoutReason
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.notifications.api.SnackbarDispatcher
@@ -357,6 +359,7 @@ class AuthViewModel @Inject constructor(
         when (err) {
             is TooManyExtraPasswordAttemptsException -> {
                 PassLogger.w(TAG, "Too many attempts")
+                LogoutLogger.record(LogoutReason.SecurityLockoutExtraPassword)
                 snackbarDispatcher(AuthTooManyAttemptsError)
                 withContext(appDispatchers.default) {
                     delay(WRONG_PASSWORD_DELAY_SECONDS)
@@ -384,6 +387,7 @@ class AuthViewModel @Inject constructor(
                     .first()
                 val remainingAttempts = MAX_WRONG_PASSWORD_ATTEMPTS - currentFailedAttempts - 1
                 if (remainingAttempts <= 0) {
+                    LogoutLogger.record(LogoutReason.SecurityLockoutExtraPassword)
                     snackbarDispatcher(AuthTooManyAttemptsError)
                     withContext(appDispatchers.default) {
                         delay(WRONG_PASSWORD_DELAY_SECONDS)
@@ -441,6 +445,7 @@ class AuthViewModel @Inject constructor(
                         if (remainingAttempts <= 0) {
                             snackbarDispatcher(AuthTooManyAttemptsError)
                             PassLogger.w(TAG, "Too many wrong attempts, logging user out")
+                            LogoutLogger.record(LogoutReason.SecurityLockoutMasterPassword)
                             withContext(appDispatchers.default) {
                                 delay(WRONG_PASSWORD_DELAY_SECONDS)
                             }

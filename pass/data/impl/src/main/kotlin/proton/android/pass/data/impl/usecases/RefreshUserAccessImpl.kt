@@ -32,6 +32,8 @@ import proton.android.pass.data.api.usecases.RefreshUserAccess
 import proton.android.pass.data.impl.R
 import proton.android.pass.data.impl.repositories.PlanRepository
 import proton.android.pass.domain.Plan
+import proton.android.pass.log.api.LogoutLogger
+import proton.android.pass.log.api.LogoutReason
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.ToastManager
 import javax.inject.Inject
@@ -76,6 +78,7 @@ class RefreshUserAccessImpl @Inject constructor(
             toastManager.showToast(R.string.logging_out_free_users)
             freePlansToDisable.map { (userId, _) ->
                 PassLogger.i(TAG, "Disabling free account: $userId")
+                LogoutLogger.record(LogoutReason.PlanPolicy)
                 accountManager.disableAccount(userId)
             }
         }

@@ -364,14 +364,25 @@ class LogViewViewModelTest {
     }
 
     @Test
-    fun `shares current user log file with device info`() = runTest {
+    fun `shares tagged log files and collapses consecutive duplicate lines`() = runTest {
         val userId = UserId("share-user")
         accountManager.sendPrimaryUserId(userId)
         viewModel = createViewModel()
 
         val logFile = logFileManager.getLogFile(userId)
         logFile.parentFile?.mkdirs()
-        logFile.writeText("User log content")
+        logFile.writeText(
+            """
+                2026-07-28 07:28:41.431 I: ObserveCurrentUserImpl - Current user is null
+                2026-07-28 07:28:42.431 I: ObserveCurrentUserImpl - Current user is null
+                2026-07-28 07:28:43.431 W: ObserveCurrentUserImpl - Current user is unavailable
+            """.trimIndent() + "\n"
+        )
+        val anonymousFile = logFileManager.getLogFile(null)
+        anonymousFile.writeText(
+            "2026-07-28 07:28:42.500 I: LogoutObservability - " +
+                "logout reason=user_initiated_sign_out\n"
+        )
 
         val contextHolder = ClassHolder(Some(WeakReference(context)))
         viewModel.startShareIntent(contextHolder)
@@ -383,8 +394,24 @@ class LogViewViewModelTest {
         val sharedFile = File(fileHandler.lastSharedUri!!.path)
         assertThat(sharedFile.exists()).isTrue()
         val content = sharedFile.readText()
+        val unavailableUserEntry =
+            "2026-07-28 07:28:43.431 [AU] W: ObserveCurrentUserImpl " +
+                "- Current user is unavailable"
+        val anonymousEntry =
+            "2026-07-28 07:28:42.500 [NA] I: LogoutObservability " +
+                "- logout reason=user_initiated_sign_out"
         assertThat(content).contains("-----------------------------------------")
-        assertThat(content).contains("User log content")
+        assertThat(content).contains(
+            "2026-07-28 07:28:41.431 [AU] I: ObserveCurrentUserImpl - Current user is null " +
+                "[repeated 2 times; last at 2026-07-28 07:28:42.431]"
+        )
+        assertThat(content).contains(unavailableUserEntry)
+        assertThat(content).contains(anonymousEntry)
+        assertThat(content).doesNotContain(
+            "2026-07-28 07:28:42.431 [AU] I: " +
+                "ObserveCurrentUserImpl - Current user is null"
+        )
+        assertThat(content.indexOf(anonymousEntry)).isLessThan(content.indexOf(unavailableUserEntry))
     }
 
     @Test
@@ -433,7 +460,9 @@ class LogViewViewModelTest {
         val sharedFile = File(fileHandler.lastSharedUri!!.path)
         val content = sharedFile.readText()
         assertThat(content).contains("Anonymous content")
+        assertThat(content).contains("[NA] Anonymous content")
         assertThat(content).doesNotContain("Sensitive authenticated content")
+        assertThat(content).doesNotContain("[AU]")
     }
 
     @Test

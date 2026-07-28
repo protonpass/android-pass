@@ -41,6 +41,8 @@ import proton.android.pass.log.fakes.FakeFinalValidationLogoutInterleavingLogFil
 import proton.android.pass.log.fakes.FakeLogFileManager
 import proton.android.pass.log.fakes.FakeLogoutInterleavingLogFileManager
 import proton.android.pass.log.fakes.FakePreEnsureLogoutInterleavingLogFileManager
+import proton.android.pass.log.api.LogoutLogger
+import proton.android.pass.log.api.LogoutReason
 import proton.android.pass.test.FixedClock
 import timber.log.Timber
 import java.io.File
@@ -464,6 +466,26 @@ class FileLoggingTreeTest {
         assertThat(authenticatedFile.readText()).contains("authenticated entry")
         assertThat(authenticatedFile.readText()).doesNotContain("anonymous entry")
         assertThat(notAuthenticatedFile.readText()).contains("anonymous entry")
+    }
+
+    @Test
+    fun `manual logout reason is retained in the anonymous log when an account is active`() = runTest {
+        val userId = UserId("active-user")
+        val authenticatedFile = logFileManager.getLogFile(userId)
+        val notAuthenticatedFile = logFileManager.getLogFile(null)
+        accountManager.sendPrimaryUserId(userId)
+
+        Timber.tag(LogoutLogger.TAG).i("logout reason=${LogoutReason.UserInitiatedSignOut.value}")
+        appDispatchers.testDispatcher.scheduler.advanceUntilIdle()
+
+        assertThat(notAuthenticatedFile.readText()).contains("logout reason=user_initiated_sign_out")
+        assertThat(authenticatedFile.exists()).isFalse()
+    }
+
+    @Test
+    fun `manual logout reason has a stable privacy-safe value`() {
+        assertThat(LogoutReason.entries.map(LogoutReason::value))
+            .contains("user_initiated_sign_out")
     }
 
     @Test

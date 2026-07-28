@@ -40,6 +40,8 @@ import proton.android.pass.log.api.LogFileManager
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.log.api.ShareLogsConstants
 import proton.android.pass.log.api.ShareLogsUseCase
+import java.io.BufferedReader
+import java.io.BufferedWriter
 import java.io.File
 import java.io.IOException
 import java.lang.ref.WeakReference
@@ -64,8 +66,10 @@ class ShareLogsUseCaseImpl @Inject constructor(
                 userId = null // do not share private logs in that case
             }
 
-            val logFile = logFileManager.getLogFile(userId)
-            logFileManager.ensureLogFileExists(logFile)
+            val authenticatedLogFile = userId?.let { logFileManager.getLogFile(it) }
+            val anonymousLogFile = logFileManager.getLogFile(null)
+            authenticatedLogFile?.let { logFileManager.ensureLogFileExists(it) }
+            logFileManager.ensureLogFileExists(anonymousLogFile)
 
             // Use share subdirectory which is configured in FileProvider
             val shareDir = File(context.cacheDir, "share")
@@ -77,10 +81,12 @@ class ShareLogsUseCaseImpl @Inject constructor(
                 writer.append(generateDeviceInfo(context))
                 writer.newLine()
 
-                if (logFile.exists()) {
-                    logFile.bufferedReader().use { reader ->
-                        reader.copyTo(writer)
-                    }
+                if (anonymousLogFile.exists()) {
+                    appendMergedLogFiles(
+                        writer = writer,
+                        authenticatedLogFile = authenticatedLogFile?.takeIf(File::exists),
+                        anonymousLogFile = anonymousLogFile
+                    )
                 }
             }
             file to file.toURI()
@@ -173,7 +179,106 @@ class ShareLogsUseCaseImpl @Inject constructor(
 
     private fun floatForm(d: Double) = DecimalFormat("#.##").format(d)
 
+    private fun appendMergedLogFiles(
+        writer: BufferedWriter,
+        authenticatedLogFile: File?,
+        anonymousLogFile: File
+    ) {
+        if (authenticatedLogFile == null) {
+            anonymousLogFile.bufferedReader().use { anonymousReader ->
+                appendMergedLogLines(
+                    writer = writer,
+                    authenticatedReader = null,
+                    anonymousReader = anonymousReader
+                )
+            }
+            return
+        }
+
+        authenticatedLogFile.bufferedReader().use { authenticatedReader ->
+            anonymousLogFile.bufferedReader().use { anonymousReader ->
+                appendMergedLogLines(writer, authenticatedReader, anonymousReader)
+            }
+        }
+    }
+
+    private fun appendMergedLogLines(
+        writer: BufferedWriter,
+        authenticatedReader: BufferedReader?,
+        anonymousReader: BufferedReader
+    ) {
+        var firstLine: String? = null
+        var previousSource: LogSource? = null
+        var previousMessage: String? = null
+        var repetitions = 0
+        var lastTimestamp: String? = null
+
+        fun writePreviousLine() {
+            val line = firstLine ?: return
+            writer.write(line.withSourceTag(requireNotNull(previousSource)))
+            if (repetitions > 1) {
+                writer.write(" [repeated $repetitions times; last at $lastTimestamp]")
+            }
+            writer.newLine()
+        }
+
+        var authenticatedLine = authenticatedReader?.readLine()
+        var anonymousLine = anonymousReader.readLine()
+        while (authenticatedLine != null || anonymousLine != null) {
+            val source: LogSource
+            val line: String
+            if (shouldWriteAuthenticatedLine(authenticatedLine, anonymousLine)) {
+                source = LogSource.Authenticated
+                line = requireNotNull(authenticatedLine)
+                authenticatedLine = authenticatedReader?.readLine()
+            } else {
+                source = LogSource.Anonymous
+                line = requireNotNull(anonymousLine)
+                anonymousLine = anonymousReader.readLine()
+            }
+
+            val message = line.messageWithoutTimestamp()
+            if (source == previousSource && message != null && message == previousMessage) {
+                repetitions++
+                lastTimestamp = line.timestampOrNull()
+            } else {
+                writePreviousLine()
+                firstLine = line
+                previousSource = source
+                previousMessage = message
+                repetitions = 1
+                lastTimestamp = line.timestampOrNull()
+            }
+        }
+        writePreviousLine()
+    }
+
+    private fun shouldWriteAuthenticatedLine(authenticatedLine: String?, anonymousLine: String?): Boolean = when {
+        authenticatedLine == null -> false
+        anonymousLine == null -> true
+        else -> authenticatedLine.timestampOrNull().orEmpty() <=
+            anonymousLine.timestampOrNull().orEmpty()
+    }
+
+    private fun String.withSourceTag(source: LogSource): String = timestampOrNull()?.let { timestamp ->
+        "$timestamp ${source.tag} ${substring(LOG_TIMESTAMP_LENGTH + 1)}"
+    } ?: "${source.tag} $this"
+
+    private fun String.messageWithoutTimestamp(): String? = timestampOrNull()?.let {
+        substring(LOG_TIMESTAMP_LENGTH + 1)
+    }
+
+    private fun String.timestampOrNull(): String? = takeIf {
+        length > LOG_TIMESTAMP_LENGTH && it[LOG_TIMESTAMP_LENGTH] == ' '
+    }?.take(LOG_TIMESTAMP_LENGTH)
+
+    private enum class LogSource(val tag: String) {
+        Authenticated("[AU]"),
+        Anonymous("[NA]")
+    }
+
     companion object {
         private const val TAG = "ShareLogsUseCaseImpl"
+        private const val LOG_TIMESTAMP_LENGTH = 23
     }
 }

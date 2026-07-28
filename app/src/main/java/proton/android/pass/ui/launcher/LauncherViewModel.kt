@@ -92,6 +92,8 @@ import proton.android.pass.data.api.usecases.RefreshUserAccess
 import proton.android.pass.data.api.usecases.passwordHistoryEntry.DeletePasswordHistoryEntryForUser
 import proton.android.pass.domain.Plan
 import proton.android.pass.inappupdates.api.InAppUpdatesManager
+import proton.android.pass.log.api.LogoutLogger
+import proton.android.pass.log.api.LogoutReason
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.android.pass.preferences.InternalSettingsRepository
@@ -204,8 +206,14 @@ class LauncherViewModel @Inject constructor(
 
 
         accountManager.observe(context.lifecycle, Lifecycle.State.CREATED)
-            .onAccountTwoPassModeFailed { accountManager.disableAccount(it.userId) }
-            .onAccountCreateAddressFailed { accountManager.disableAccount(it.userId) }
+            .onAccountTwoPassModeFailed {
+                LogoutLogger.record(LogoutReason.AccountSetupTwoPassFailed)
+                accountManager.disableAccount(it.userId)
+            }
+            .onAccountCreateAddressFailed {
+                LogoutLogger.record(LogoutReason.AccountSetupCreateAddressFailed)
+                accountManager.disableAccount(it.userId)
+            }
             .onSessionSecondFactorNeeded { authOrchestrator.startSecondFactorWorkflow(it) }
             .onAccountTwoPassModeNeeded { authOrchestrator.startTwoPassModeWorkflow(it) }
             .onAccountCreateAddressNeeded { authOrchestrator.startChooseAddressWorkflow(it) }

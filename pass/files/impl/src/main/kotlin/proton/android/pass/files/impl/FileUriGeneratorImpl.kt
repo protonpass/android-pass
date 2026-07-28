@@ -26,7 +26,6 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.withContext
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.AppDispatchers
-import proton.android.pass.common.api.SpecialCharacters
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.attachments.PersistentAttachmentId
@@ -84,13 +83,9 @@ class FileUriGeneratorImpl @Inject constructor(
 
             is FileType.ItemAttachment -> File(
                 context.filesDir,
-                FilesDirectories.AttachmentsEnc.value +
-                    SpecialCharacters.SLASH +
-                    fileType.userId.id +
-                    SpecialCharacters.SLASH +
-                    fileType.shareId.id +
-                    SpecialCharacters.SLASH +
-                    fileType.itemId.id
+                FilesDirectories.AttachmentsEnc.buildPath(
+                    fileType.userId.id, fileType.shareId.id, fileType.itemId.id
+                )
             ).apply { ensureDirectoryExists(this) }
         }
     }

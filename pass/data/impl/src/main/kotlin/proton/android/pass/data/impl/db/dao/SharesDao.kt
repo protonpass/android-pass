@@ -182,4 +182,70 @@ abstract class SharesDao : BaseDao<ShareEntity>() {
         shareId: String,
         count: Int
     )
+
+    @Query(
+        """
+        UPDATE ${ShareEntity.TABLE}
+        SET ${ShareEntity.Columns.OFFLINE_ATTACHMENTS} = :enabled
+        WHERE ${ShareEntity.Columns.USER_ID} = :userId
+          AND ${ShareEntity.Columns.ID} = :shareId
+        """
+    )
+    abstract suspend fun setOfflineAttachments(
+        userId: String,
+        shareId: String,
+        enabled: Boolean
+    )
+
+    @Query(
+        """
+        SELECT ${ShareEntity.Columns.ID} FROM ${ShareEntity.TABLE}
+        WHERE ${ShareEntity.Columns.USER_ID} = :userId
+          AND ${ShareEntity.Columns.OFFLINE_ATTACHMENTS} = 1
+          AND ${ShareEntity.Columns.ID} IN (:shareIds)
+        """
+    )
+    abstract suspend fun getOfflineEnabledShareIds(userId: String, shareIds: List<String>): List<String>
+
+    @Query(
+        """
+        SELECT ${ShareEntity.Columns.ID} FROM ${ShareEntity.TABLE}
+        WHERE ${ShareEntity.Columns.OFFLINE_ATTACHMENTS} = 1
+          AND ${ShareEntity.Columns.USER_ID} = :userId
+        """
+    )
+    abstract fun observeOfflineEnabledShareIds(userId: String): Flow<List<String>>
+
+    @Query(
+        """
+        UPDATE ${ShareEntity.TABLE}
+        SET ${ShareEntity.Columns.OFFLINE_ATTACHMENTS} = 1
+        WHERE ${ShareEntity.Columns.USER_ID} = :userId
+        """
+    )
+    abstract suspend fun enableAllOfflineAttachments(userId: String)
+
+    @Query(
+        """
+        SELECT COUNT(*) > 0 FROM ${ShareEntity.TABLE}
+        WHERE ${ShareEntity.Columns.USER_ID} = :userId
+          AND ${ShareEntity.Columns.SHARE_TYPE} = :itemType
+          AND ${ShareEntity.Columns.OFFLINE_ATTACHMENTS} = 1
+        """
+    )
+    abstract fun observeSharedItemsOfflineEnabled(userId: String, itemType: Int): Flow<Boolean>
+
+    @Query(
+        """
+        UPDATE ${ShareEntity.TABLE}
+        SET ${ShareEntity.Columns.OFFLINE_ATTACHMENTS} = :enabled
+        WHERE ${ShareEntity.Columns.USER_ID} = :userId
+          AND ${ShareEntity.Columns.SHARE_TYPE} = :itemType
+        """
+    )
+    abstract suspend fun setSharedItemsOfflineAttachments(
+        userId: String,
+        enabled: Boolean,
+        itemType: Int
+    )
 }

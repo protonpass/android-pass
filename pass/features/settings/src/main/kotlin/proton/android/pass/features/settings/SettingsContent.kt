@@ -79,6 +79,17 @@ internal fun SettingsContent(
                 onEvent = onEvent
             )
 
+            if (state.isOfflineAttachmentsFeatureEnabled) {
+                OfflineAttachmentsSection(
+                    isDownloadAllEnabled = state.downloadAllAttachments.value(),
+                    isSharedItemsEnabled = state.sharedItemsEnabled,
+                    isAllowCellularEnabled = state.allowCellularDownload.value(),
+                    isDownloadEnabled = state.isDownloadEnabled,
+                    isPaidFeature = state.isOfflineAttachmentsPaidFeature,
+                    onEvent = onEvent
+                )
+            }
+
             DisplaySection(
                 isDisplayUsernameFieldEnabled = state.displayUsernameFieldPreference.value,
                 displayAutofillPinningPreference = state.displayAutofillPinningPreference.value,

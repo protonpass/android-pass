@@ -22,8 +22,10 @@ import androidx.compose.runtime.Stable
 import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.data.api.repositories.SyncState
 import proton.android.pass.autofill.api.AutofillSupportedStatus
+import proton.android.pass.preferences.AllowCellularDownloadPreference
 import proton.android.pass.preferences.AllowScreenshotsPreference
 import proton.android.pass.preferences.CopyTotpToClipboard
+import proton.android.pass.preferences.DownloadAllAttachmentsPreference
 import proton.android.pass.preferences.ThemePreference
 import proton.android.pass.preferences.UseDigitalAssetLinksPreference
 import proton.android.pass.preferences.UseFaviconsPreference
@@ -37,6 +39,8 @@ internal sealed interface SettingsEvent {
     data object Unknown : SettingsEvent
 
     data object RestartApp : SettingsEvent
+
+    data object OpenAttachmentConfigDialog : SettingsEvent
 
 }
 
@@ -65,6 +69,12 @@ internal data class SettingsUiState(
     val autofillDisplayPreference: AutofillDisplayPreference,
     val autofillStatus: AutofillSupportedStatus,
     val autosavePreference: AutosavePreference,
+    val downloadAllAttachments: DownloadAllAttachmentsPreference,
+    val sharedItemsEnabled: Boolean,
+    val allowCellularDownload: AllowCellularDownloadPreference,
+    val isDownloadEnabled: Boolean,
+    val isOfflineAttachmentsFeatureEnabled: Boolean,
+    val isOfflineAttachmentsPaidFeature: Boolean,
     private val syncStateLoadingResult: LoadingResult<SyncState>
 ) {
 
@@ -98,7 +108,13 @@ internal data class SettingsUiState(
             autofillStatus = AutofillSupportedStatus.Supported(
                 proton.android.pass.autofill.api.AutofillStatus.Disabled
             ),
-            autosavePreference = AutosavePreference.Enabled
+            autosavePreference = AutosavePreference.Enabled,
+            downloadAllAttachments = DownloadAllAttachmentsPreference.Disabled,
+            sharedItemsEnabled = true,
+            allowCellularDownload = AllowCellularDownloadPreference.Disabled,
+            isDownloadEnabled = false,
+            isOfflineAttachmentsFeatureEnabled = false,
+            isOfflineAttachmentsPaidFeature = true
         )
 
     }

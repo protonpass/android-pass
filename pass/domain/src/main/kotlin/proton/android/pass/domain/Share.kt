@@ -155,7 +155,8 @@ sealed class Share {
         override val shareFlags: ShareFlags,
         val name: String,
         val color: ShareColor,
-        val icon: ShareIcon
+        val icon: ShareIcon,
+        val offlineAttachments: Boolean = false
     ) : Share() {
 
         override val shareType: ShareType = ShareType.Vault

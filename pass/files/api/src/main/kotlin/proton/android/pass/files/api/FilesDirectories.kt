@@ -20,5 +20,13 @@ package proton.android.pass.files.api
 
 enum class FilesDirectories(val value: String) {
     Attachments("attachments"),
-    AttachmentsEnc("attachments_enc")
+    AttachmentsEnc("attachments_enc");
+
+    fun buildPath(vararg segments: String): String = buildString {
+        append(value)
+        segments.forEach { segment ->
+            append('/')
+            append(segment)
+        }
+    }
 }

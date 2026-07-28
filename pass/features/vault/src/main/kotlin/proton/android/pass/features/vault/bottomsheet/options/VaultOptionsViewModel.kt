@@ -28,11 +28,15 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.firstOrNull
+import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import me.proton.core.accountmanager.domain.AccountManager
 import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.asLoadingResult
 import proton.android.pass.common.api.combineN
@@ -44,6 +48,7 @@ import proton.android.pass.data.api.usecases.ItemTypeFilter
 import proton.android.pass.data.api.usecases.ObserveEncryptedItems
 import proton.android.pass.data.api.usecases.ObserveUpgradeInfo
 import proton.android.pass.data.api.usecases.ObserveVaults
+import proton.android.pass.data.api.usecases.attachments.SetVaultOfflineAttachments
 import proton.android.pass.data.api.usecases.capabilities.CanCreateFolder
 import proton.android.pass.data.api.usecases.capabilities.CanManageVaultAccess
 import proton.android.pass.data.api.usecases.capabilities.CanMigrateVault
@@ -60,8 +65,11 @@ import proton.android.pass.features.vault.VaultSnackbarMessage.CannotMigrateVaul
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.notifications.api.SnackbarDispatcher
+import proton.android.pass.preferences.DownloadAllAttachmentsPreference
 import proton.android.pass.preferences.FeatureFlag
 import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
+import proton.android.pass.preferences.UserPreferencesRepository
+import proton.android.pass.preferences.value
 import javax.inject.Inject
 
 @HiltViewModel
@@ -77,7 +85,10 @@ class VaultOptionsViewModel @Inject constructor(
     private val observeEncryptedItems: ObserveEncryptedItems,
     preferencesRepository: FeatureFlagsPreferencesRepository,
     observeFoldersByParentId: ObserveFoldersByParentId,
-    observeFolderLimits: ObserveFolderLimits
+    observeFolderLimits: ObserveFolderLimits,
+    userPreferencesRepository: UserPreferencesRepository,
+    private val setVaultOfflineAttachments: SetVaultOfflineAttachments,
+    private val accountManager: AccountManager
 ) : ViewModel() {
 
     private val navShareId: ShareId = savedStateHandle.get()
@@ -111,9 +122,14 @@ class VaultOptionsViewModel @Inject constructor(
         canCreateFolder(navShareId),
         observeUpgradeInfo().asLoadingResult(),
         folderCountsFlow,
-        folderLimitsFlow
+        folderLimitsFlow,
+        accountManager.getPrimaryUserId().flatMapLatest { userId ->
+            if (userId == null) flowOf(DownloadAllAttachmentsPreference.Disabled)
+            else userPreferencesRepository.observeDownloadAllAttachmentsPref(userId)
+        },
+        preferencesRepository.get<Boolean>(FeatureFlag.PASS_OFFLINE_ATTACHMENTS)
     ) { vaultResult, canShare, event, allowNoVault, foldersEnabled, canCreateFolder,
-        upgradeResult, folderCounts, folderLimits ->
+        upgradeResult, folderCounts, folderLimits, downloadAllPref, offlineAttachmentsFF ->
         val rootFolderCount = folderCounts.rootCount
         val totalFolderCount = folderCounts.totalCount
         val (allVaults, selectedVault) = when (vaultResult) {
@@ -172,7 +188,9 @@ class VaultOptionsViewModel @Inject constructor(
             canAddFolderNeedsUpgrade = foldersEnabled &&
                 rootFolderCount < folderLimits.maxChildren &&
                 totalFolderCount < folderLimits.maxCount &&
-                canCreateFolder.needsUpgrade && isUpgradeAvailable
+                canCreateFolder.needsUpgrade && isUpgradeAvailable,
+            showOfflineAttachments = offlineAttachmentsFF && downloadAllPref.value(),
+            isOfflineAttachmentsEnabled = selectedVault.offlineAttachments
         )
     }.stateIn(
         scope = viewModelScope,
@@ -182,6 +200,17 @@ class VaultOptionsViewModel @Inject constructor(
 
     internal fun onEventConsumed(event: VaultOptionsEvent) {
         eventFlow.compareAndSet(event, VaultOptionsEvent.Idle)
+    }
+
+    internal fun onToggleOfflineAttachments(enabled: Boolean) {
+        viewModelScope.launch {
+            val userId = accountManager.getPrimaryUserId().firstOrNull() ?: return@launch
+            safeRunCatching { setVaultOfflineAttachments(userId, navShareId, enabled) }
+                .onFailure { error ->
+                    PassLogger.w(TAG, "Failed to toggle offline attachments")
+                    PassLogger.w(TAG, error)
+                }
+        }
     }
 
     internal fun onMigrateVault() {

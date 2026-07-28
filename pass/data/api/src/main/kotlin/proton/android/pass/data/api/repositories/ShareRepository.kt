@@ -99,6 +99,20 @@ interface ShareRepository {
         shareId: ShareId,
         count: Int
     )
+
+    suspend fun setOfflineAttachments(
+        userId: UserId,
+        shareId: ShareId,
+        enabled: Boolean
+    )
+
+    fun observeOfflineEnabledShareIds(userId: UserId): Flow<List<ShareId>>
+
+    suspend fun enableAllOfflineAttachments(userId: UserId)
+
+    fun observeSharedItemsOfflineEnabled(userId: UserId): Flow<Boolean>
+
+    suspend fun setSharedItemsOfflineAttachments(userId: UserId, enabled: Boolean)
 }
 
 data class UpdateShareEvent(

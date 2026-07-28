@@ -23,6 +23,11 @@
 
     <string name="logging_out_free_users">Logging out extra free users</string>
 
+    <string name="attachment_download_channel">Attachment downloads</string>
+    <string name="attachment_download_channel_description">Notifications channel for attachment downloads</string>
+    <string name="downloading_attachments">Downloading attachments</string>
+    <string name="downloading_attachments_progress" comment="%1$s is the download progress counter, e.g. 3 / 10">%1$s files</string>
+
     <string name="vault_name" translatable="false">Personal</string>
     <string name="vault_description" translatable="false">Personal vault</string>
 

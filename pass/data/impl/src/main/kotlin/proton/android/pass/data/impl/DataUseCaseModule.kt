@@ -164,10 +164,14 @@ import proton.android.pass.data.api.usecases.aliascontact.ObserveAliasContacts
 import proton.android.pass.data.api.usecases.aliascontact.UpdateBlockedAliasContact
 import proton.android.pass.data.api.usecases.attachments.CheckIfAttachmentExistsLocally
 import proton.android.pass.data.api.usecases.attachments.ClearAttachments
+import proton.android.pass.data.api.usecases.attachments.AttachmentDownloadScheduler
+import proton.android.pass.data.api.usecases.attachments.DownloadAllAttachments
 import proton.android.pass.data.api.usecases.attachments.DownloadAttachment
+import proton.android.pass.data.api.usecases.attachments.DownloadSingleAttachment
 import proton.android.pass.data.api.usecases.attachments.GetAttachment
 import proton.android.pass.data.api.usecases.attachments.LinkAttachmentsToItem
 import proton.android.pass.data.api.usecases.attachments.ObserveAllItemRevisionAttachments
+import proton.android.pass.data.api.usecases.attachments.ObserveAttachmentDownloadProgress
 import proton.android.pass.data.api.usecases.attachments.ObserveItemAttachments
 import proton.android.pass.data.api.usecases.attachments.ObserveUpdateItemAttachments
 import proton.android.pass.data.api.usecases.attachments.RemoveDraftAttachment
@@ -176,6 +180,14 @@ import proton.android.pass.data.api.usecases.attachments.RenameDraftAttachment
 import proton.android.pass.data.api.usecases.attachments.RestoreAttachments
 import proton.android.pass.data.api.usecases.attachments.SetAttachmentToBeRenamed
 import proton.android.pass.data.api.usecases.attachments.SetAttachmentToBeUnlinked
+import proton.android.pass.data.api.usecases.attachments.EnableAllOfflineAttachments
+import proton.android.pass.data.api.usecases.attachments.ObserveOfflineEnabledShareIds
+import proton.android.pass.data.api.usecases.attachments.SetSharedItemsOfflineAttachments
+import proton.android.pass.data.api.usecases.attachments.GetVaultUsage
+import proton.android.pass.data.api.usecases.attachments.ObserveActiveAttachments
+import proton.android.pass.data.api.usecases.attachments.RefreshAttachmentsForItems
+import proton.android.pass.data.api.usecases.attachments.SetVaultOfflineAttachments
+import proton.android.pass.data.api.usecases.attachments.UpdateAttachmentDownloadStatus
 import proton.android.pass.data.api.usecases.attachments.UploadAttachment
 import proton.android.pass.data.api.usecases.breach.AddBreachCustomEmail
 import proton.android.pass.data.api.usecases.breach.MarkEmailBreachAsResolved
@@ -450,10 +462,14 @@ import proton.android.pass.data.impl.usecases.assetlink.UpdateAssetLink
 import proton.android.pass.data.impl.usecases.assetlink.UpdateAssetLinkImpl
 import proton.android.pass.data.impl.usecases.attachments.CheckIfAttachmentExistsLocallyImpl
 import proton.android.pass.data.impl.usecases.attachments.ClearAttachmentsImpl
+import proton.android.pass.data.impl.usecases.attachments.DownloadAllAttachmentsImpl
+import proton.android.pass.data.impl.work.AttachmentDownloadSchedulerImpl
 import proton.android.pass.data.impl.usecases.attachments.DownloadAttachmentImpl
+import proton.android.pass.data.impl.usecases.attachments.DownloadSingleAttachmentImpl
 import proton.android.pass.data.impl.usecases.attachments.GetAttachmentImpl
 import proton.android.pass.data.impl.usecases.attachments.LinkAttachmentsToItemImpl
 import proton.android.pass.data.impl.usecases.attachments.ObserveAllItemRevisionAttachmentsImpl
+import proton.android.pass.data.impl.usecases.attachments.ObserveAttachmentDownloadProgressImpl
 import proton.android.pass.data.impl.usecases.attachments.ObserveItemAttachmentsImpl
 import proton.android.pass.data.impl.usecases.attachments.ObserveUpdateItemAttachmentsImpl
 import proton.android.pass.data.impl.usecases.attachments.RemoveDraftAttachmentImpl
@@ -462,6 +478,14 @@ import proton.android.pass.data.impl.usecases.attachments.RenameDraftAttachmentI
 import proton.android.pass.data.impl.usecases.attachments.RestoreAttachmentsImpl
 import proton.android.pass.data.impl.usecases.attachments.SetAttachmentToBeRenamedImpl
 import proton.android.pass.data.impl.usecases.attachments.SetAttachmentToBeUnlinkedImpl
+import proton.android.pass.data.impl.usecases.attachments.EnableAllOfflineAttachmentsImpl
+import proton.android.pass.data.impl.usecases.attachments.ObserveOfflineEnabledShareIdsImpl
+import proton.android.pass.data.impl.usecases.attachments.SetSharedItemsOfflineAttachmentsImpl
+import proton.android.pass.data.impl.usecases.attachments.GetVaultUsageImpl
+import proton.android.pass.data.impl.usecases.attachments.ObserveActiveAttachmentsImpl
+import proton.android.pass.data.impl.usecases.attachments.RefreshAttachmentsForItemsImpl
+import proton.android.pass.data.impl.usecases.attachments.SetVaultOfflineAttachmentsImpl
+import proton.android.pass.data.impl.usecases.attachments.UpdateAttachmentDownloadStatusImpl
 import proton.android.pass.data.impl.usecases.attachments.UploadAttachmentImpl
 import proton.android.pass.data.impl.usecases.breach.AddBreachCustomEmailImpl
 import proton.android.pass.data.impl.usecases.breach.MarkEmailBreachAsResolvedImpl
@@ -1377,6 +1401,50 @@ abstract class DataUseCaseModule {
 
     @[Binds Singleton]
     abstract fun bindDownloadAttachment(impl: DownloadAttachmentImpl): DownloadAttachment
+
+    @[Binds Singleton]
+    abstract fun bindDownloadAllAttachments(impl: DownloadAllAttachmentsImpl): DownloadAllAttachments
+
+    @[Binds Singleton]
+    abstract fun bindDownloadSingleAttachment(impl: DownloadSingleAttachmentImpl): DownloadSingleAttachment
+
+    @[Binds Singleton]
+    abstract fun bindAttachmentDownloadScheduler(impl: AttachmentDownloadSchedulerImpl): AttachmentDownloadScheduler
+
+    @[Binds Singleton]
+    abstract fun bindSetVaultOfflineAttachments(impl: SetVaultOfflineAttachmentsImpl): SetVaultOfflineAttachments
+
+    @[Binds Singleton]
+    abstract fun bindGetVaultUsage(impl: GetVaultUsageImpl): GetVaultUsage
+
+    @[Binds Singleton]
+    abstract fun bindObserveActiveAttachments(impl: ObserveActiveAttachmentsImpl): ObserveActiveAttachments
+
+    @[Binds Singleton]
+    abstract fun bindUpdateAttachmentDownloadStatus(
+        impl: UpdateAttachmentDownloadStatusImpl
+    ): UpdateAttachmentDownloadStatus
+
+    @[Binds Singleton]
+    abstract fun bindRefreshAttachmentsForItems(impl: RefreshAttachmentsForItemsImpl): RefreshAttachmentsForItems
+
+    @[Binds Singleton]
+    abstract fun bindObserveAttachmentDownloadProgress(
+        impl: ObserveAttachmentDownloadProgressImpl
+    ): ObserveAttachmentDownloadProgress
+
+    @[Binds Singleton]
+    abstract fun bindEnableAllOfflineAttachments(impl: EnableAllOfflineAttachmentsImpl): EnableAllOfflineAttachments
+
+    @[Binds Singleton]
+    abstract fun bindSetSharedItemsOfflineAttachments(
+        impl: SetSharedItemsOfflineAttachmentsImpl
+    ): SetSharedItemsOfflineAttachments
+
+    @[Binds Singleton]
+    abstract fun bindObserveOfflineEnabledShareIds(
+        impl: ObserveOfflineEnabledShareIdsImpl
+    ): ObserveOfflineEnabledShareIds
 
     @[Binds Singleton]
     abstract fun bindObserveShareItemsCount(impl: ObserveShareItemsCountImpl): ObserveShareItemsCount

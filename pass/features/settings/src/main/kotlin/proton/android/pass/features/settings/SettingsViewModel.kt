@@ -28,6 +28,8 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.firstOrNull
+import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
@@ -43,27 +45,38 @@ import proton.android.pass.common.api.safeRunCatching
 import proton.android.pass.data.api.repositories.AssetLinkRepository
 import proton.android.pass.data.api.repositories.ItemSyncStatusRepository
 import proton.android.pass.data.api.usecases.InitialWorkerLauncher
+import proton.android.pass.data.api.usecases.attachments.AttachmentDownloadScheduler
 import proton.android.pass.data.api.usecases.PerformSync
 import proton.android.pass.data.api.usecases.WorkerFeature
 import proton.android.pass.image.api.ClearIconCache
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.SnackbarDispatcher
+import proton.android.pass.preferences.AllowCellularDownloadPreference
 import proton.android.pass.preferences.AllowScreenshotsPreference
 import proton.android.pass.preferences.AutofillDisplayPreference
 import proton.android.pass.preferences.CopyTotpToClipboard
+import proton.android.pass.preferences.DownloadAllAttachmentsPreference
 import proton.android.pass.preferences.ThemePreference
 import proton.android.pass.preferences.UseDigitalAssetLinksPreference
+import proton.android.pass.data.api.usecases.GetUserPlan
+import proton.android.pass.domain.PlanType
+import proton.android.pass.preferences.FeatureFlag
+import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import proton.android.pass.preferences.UseFaviconsPreference
 import proton.android.pass.preferences.UserPreferencesRepository
 import proton.android.pass.preferences.settings.AutosavePreference
 import proton.android.pass.preferences.settings.SettingsDisplayAutofillPinningPreference
 import proton.android.pass.preferences.settings.SettingsDisplayUsernameFieldPreference
+import proton.android.pass.preferences.value
 import proton.android.pass.telemetry.api.CanConfigureTelemetry
+import proton.android.pass.data.api.usecases.attachments.EnableAllOfflineAttachments
+import proton.android.pass.data.api.usecases.attachments.SetSharedItemsOfflineAttachments
 import proton.android.pass.telemetry.api.TelemetryGrowthOptOutEvent
 import proton.android.pass.telemetry.api.TelemetryManager
 import javax.inject.Inject
 
 @HiltViewModel
+@Suppress("LongParameterList")
 class SettingsViewModel @Inject constructor(
     private val preferencesRepository: UserPreferencesRepository,
     private val snackbarDispatcher: SnackbarDispatcher,
@@ -74,11 +87,41 @@ class SettingsViewModel @Inject constructor(
     private val canConfigureTelemetry: CanConfigureTelemetry,
     private val initialWorkerLauncher: InitialWorkerLauncher,
     private val assetLinkRepository: AssetLinkRepository,
+    private val enableAllOfflineAttachments: EnableAllOfflineAttachments,
+    private val setSharedItemsOfflineAttachments: SetSharedItemsOfflineAttachments,
+    private val attachmentDownloadScheduler: AttachmentDownloadScheduler,
+    featureFlagsRepository: FeatureFlagsPreferencesRepository,
+    getUserPlan: GetUserPlan,
     autofillManager: AutofillManager,
-    syncStatusRepository: ItemSyncStatusRepository,
+    private val syncStatusRepository: ItemSyncStatusRepository,
     private val telemetryManager: TelemetryManager,
     private val appDispatchers: AppDispatchers
 ) : ViewModel() {
+
+    private val offlineAttachmentsFeatureEnabled: Flow<Boolean> =
+        featureFlagsRepository.get<Boolean>(FeatureFlag.PASS_OFFLINE_ATTACHMENTS)
+            .distinctUntilChanged()
+
+    private val isOfflineAttachmentsPaidFeature: Flow<Boolean> = getUserPlan()
+        .map { plan ->
+            when (plan.planType) {
+                is PlanType.Free, is PlanType.Unknown -> true
+                is PlanType.Paid -> false
+            }
+        }
+        .distinctUntilChanged()
+
+    init {
+        viewModelScope.launch {
+            var previousValue: Boolean? = null
+            offlineAttachmentsFeatureEnabled.collect { isEnabled ->
+                if (previousValue == true && !isEnabled) {
+                    onDownloadAllAttachmentsToggled(isEnabled = false)
+                }
+                previousValue = isEnabled
+            }
+        }
+    }
 
     private val themeState: Flow<ThemePreference> = preferencesRepository
         .getThemePreference()
@@ -123,6 +166,18 @@ class SettingsViewModel @Inject constructor(
             .observeAutosavePreference()
             .distinctUntilChanged()
 
+    private val downloadAllAttachmentsFlow: Flow<DownloadAllAttachmentsPreference> =
+        accountManager.getPrimaryUserId().flatMapLatest { userId ->
+            if (userId == null) flowOf(DownloadAllAttachmentsPreference.Disabled)
+            else preferencesRepository.observeDownloadAllAttachmentsPref(userId)
+        }.distinctUntilChanged()
+
+    private val allowCellularDownloadFlow: Flow<AllowCellularDownloadPreference> =
+        accountManager.getPrimaryUserId().flatMapLatest { userId ->
+            if (userId == null) flowOf(AllowCellularDownloadPreference.Disabled)
+            else preferencesRepository.observeAllowCellularDownloadPref(userId)
+        }.distinctUntilChanged()
+
     private val eventState: MutableStateFlow<SettingsEvent> =
         MutableStateFlow(SettingsEvent.Unknown)
 
@@ -134,7 +189,9 @@ class SettingsViewModel @Inject constructor(
         val displayUsernameFieldPreference: SettingsDisplayUsernameFieldPreference,
         val displayAutofillPinningPreference: SettingsDisplayAutofillPinningPreference,
         val autofillDisplayPreference: AutofillDisplayPreference,
-        val autosavePreference: AutosavePreference
+        val autosavePreference: AutosavePreference,
+        val downloadAllAttachments: DownloadAllAttachmentsPreference,
+        val allowCellularDownload: AllowCellularDownloadPreference
     )
 
     private val preferencesState: Flow<PreferencesState> = combineN(
@@ -146,8 +203,17 @@ class SettingsViewModel @Inject constructor(
         preferencesRepository.observeDisplayAutofillPinningPreference(),
         autofillDisplayPreferenceFlow,
         autosavePreferenceFlow,
+        downloadAllAttachmentsFlow,
+        allowCellularDownloadFlow,
         ::PreferencesState
     )
+
+    private val sharedItemsEnabledFlow = accountManager.getPrimaryUserId()
+        .flatMapLatest { userId ->
+            if (userId == null) flowOf(false)
+            else preferencesRepository.observeSharedItemsDownloadPref(userId).map { it.value() }
+        }
+        .distinctUntilChanged()
 
     internal val state: StateFlow<SettingsUiState> = combineN(
         preferencesState,
@@ -155,8 +221,13 @@ class SettingsViewModel @Inject constructor(
         allowScreenshotsState,
         syncStatusRepository.observeSyncState().asLoadingResult(),
         eventState,
-        autofillStatusFlow
-    ) { preferences, deviceSettings, allowScreenshots, syncStateLoadingResult, event, autofillStatus ->
+        autofillStatusFlow,
+        sharedItemsEnabledFlow,
+        offlineAttachmentsFeatureEnabled,
+        isOfflineAttachmentsPaidFeature
+    ) { preferences, deviceSettings, allowScreenshots,
+        syncStateLoadingResult, event, autofillStatus, sharedItemsEnabled,
+        isOfflineAttachmentsFeatureEnabled, isOfflineAttachmentsPaid ->
         val telemetryStatus = if (canConfigureTelemetry()) {
             TelemetryStatus.Show(
                 shareTelemetry = deviceSettings.isTelemetryEnabled,
@@ -179,7 +250,13 @@ class SettingsViewModel @Inject constructor(
             displayAutofillPinningPreference = preferences.displayAutofillPinningPreference,
             autofillDisplayPreference = preferences.autofillDisplayPreference,
             autofillStatus = autofillStatus,
-            autosavePreference = preferences.autosavePreference
+            autosavePreference = preferences.autosavePreference,
+            downloadAllAttachments = preferences.downloadAllAttachments,
+            sharedItemsEnabled = sharedItemsEnabled,
+            allowCellularDownload = preferences.allowCellularDownload,
+            isDownloadEnabled = preferences.downloadAllAttachments.value(),
+            isOfflineAttachmentsFeatureEnabled = isOfflineAttachmentsFeatureEnabled,
+            isOfflineAttachmentsPaidFeature = isOfflineAttachmentsPaid
         )
     }.stateIn(
         scope = viewModelScope,
@@ -267,6 +344,84 @@ class SettingsViewModel @Inject constructor(
         AutosavePreference.from(isEnabled)
             .also(preferencesRepository::setAutosavePreference)
     }
+
+    internal fun onDownloadAllAttachmentsToggled(isEnabled: Boolean) {
+        viewModelScope.launch {
+            val userId = accountManager.getPrimaryUserId().firstOrNull()
+            if (userId == null) {
+                PassLogger.w(TAG, "Cannot toggle download attachments: userId not available")
+                return@launch
+            }
+            preferencesRepository.setDownloadAllAttachmentsPref(
+                userId,
+                DownloadAllAttachmentsPreference.from(isEnabled)
+            )
+            if (isEnabled) {
+                safeRunCatching {
+                    enableAllOfflineAttachments(userId)
+                }.onFailure { error ->
+                    PassLogger.w(TAG, "Error enabling all offline attachments")
+                    PassLogger.w(TAG, error)
+                }
+                eventState.update { SettingsEvent.OpenAttachmentConfigDialog }
+            } else {
+                safeRunCatching { attachmentDownloadScheduler.cancelAll(userId) }
+                    .onFailure { error ->
+                        PassLogger.w(TAG, "Error cancelling attachment downloads")
+                        PassLogger.w(TAG, error)
+                    }
+            }
+        }
+    }
+
+    internal fun onSharedItemsToggled(isEnabled: Boolean) {
+        viewModelScope.launch {
+            val userId = accountManager.getPrimaryUserId().firstOrNull() ?: return@launch
+            preferencesRepository.setSharedItemsDownloadPref(
+                userId,
+                proton.android.pass.preferences.DownloadSharedItemsAttachmentsPreference.from(isEnabled)
+            )
+            safeRunCatching {
+                setSharedItemsOfflineAttachments(userId, isEnabled)
+            }.onFailure { error ->
+                PassLogger.w(TAG, "Error toggling shared items offline attachments")
+                PassLogger.w(TAG, error)
+            }
+            if (isEnabled) {
+                safeRunCatching { attachmentDownloadScheduler.scheduleAll(userId, force = true) }
+                    .onFailure { error ->
+                        PassLogger.w(TAG, "Error scheduling shared items download")
+                        PassLogger.w(TAG, error)
+                    }
+            } else {
+                safeRunCatching { attachmentDownloadScheduler.cancelSharedItems(userId) }
+                    .onFailure { error ->
+                        PassLogger.w(TAG, "Error cancelling shared items download workers")
+                        PassLogger.w(TAG, error)
+                    }
+            }
+        }
+    }
+
+    internal fun onAllowCellularDownloadToggled(isEnabled: Boolean) {
+        viewModelScope.launch {
+            val userId = accountManager.getPrimaryUserId().firstOrNull() ?: return@launch
+            preferencesRepository.setAllowCellularDownloadPref(
+                userId,
+                AllowCellularDownloadPreference.from(isEnabled)
+            )
+            safeRunCatching { attachmentDownloadScheduler.scheduleAll(userId, force = true) }
+                .onFailure { error ->
+                    PassLogger.w(TAG, "Error rescheduling downloads after cellular toggle")
+                    PassLogger.w(TAG, error)
+                }
+        }
+    }
+
+    internal fun onEventConsumed(event: SettingsEvent) {
+        eventState.compareAndSet(event, SettingsEvent.Unknown)
+    }
+
 
     private companion object {
 

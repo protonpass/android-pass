@@ -38,7 +38,8 @@ data class Vault(
     val maxMembers: Int = 10,
     val canAutofill: Boolean = true,
     val createTime: Date,
-    val shareFlags: ShareFlags
+    val shareFlags: ShareFlags,
+    val offlineAttachments: Boolean = false
 ) {
 
     val isGroupShare: Boolean get() = groupId != null

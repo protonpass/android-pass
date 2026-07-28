@@ -204,6 +204,7 @@ class NotificationManagerImpl @Inject constructor(
         private const val GROUP_VAULT_INVITE_RECEIVED_UNIQUE_ID = 6
         private const val AUTOFILL_CHANNEL_ID = "AUTOFILL"
         private const val UPDATES_CHANNEL_ID = "UPDATES"
+        const val DOWNLOAD_CHANNEL_ID = "ATTACHMENT_DOWNLOAD"
     }
 
 }

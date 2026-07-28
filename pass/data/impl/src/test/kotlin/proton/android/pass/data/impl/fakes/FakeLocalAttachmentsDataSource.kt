@@ -20,23 +20,28 @@ package proton.android.pass.data.impl.fakes
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
+import kotlinx.coroutines.flow.flowOf
+import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.impl.db.entities.attachments.AttachmentEntity
 import proton.android.pass.data.impl.db.entities.attachments.AttachmentWithChunks
 import proton.android.pass.data.impl.db.entities.attachments.ChunkEntity
 import proton.android.pass.data.impl.local.attachments.LocalAttachmentsDataSource
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.attachments.AttachmentDownloadStatus
 import proton.android.pass.domain.attachments.AttachmentId
 
+@Suppress("TooManyFunctions")
 class FakeLocalAttachmentsDataSource : LocalAttachmentsDataSource {
 
     override suspend fun removeAttachmentsForItem(shareId: ShareId, itemId: ItemId) = Unit
 
     override suspend fun removeAttachmentsById(
+        userId: UserId,
         shareId: ShareId,
         itemId: ItemId,
         attachmentIdList: List<AttachmentId>
-    ) = Unit
+    ): List<String> = emptyList()
 
     override fun observeActiveAttachmentsWithChunksForItem(
         shareId: ShareId,
@@ -66,4 +71,48 @@ class FakeLocalAttachmentsDataSource : LocalAttachmentsDataSource {
     ): List<ChunkEntity> = emptyList()
 
     override suspend fun updateAttachment(attachmentEntity: AttachmentEntity) = Unit
+
+    override fun observeAllActiveAttachments(
+        userId: UserId,
+        shareIds: List<ShareId>
+    ): Flow<List<AttachmentWithChunks>> = emptyFlow()
+
+    override fun observePendingDownloads(
+        userId: UserId,
+        shareIds: List<ShareId>,
+        includeFailed: Boolean
+    ): Flow<List<AttachmentWithChunks>> = emptyFlow()
+
+    override suspend fun updateDownloadStatus(
+        userId: UserId,
+        shareId: ShareId,
+        itemId: ItemId,
+        attachmentId: AttachmentId,
+        status: AttachmentDownloadStatus
+    ) = Unit
+
+    override suspend fun resetDownloadingToPending(userId: UserId, shareIds: List<ShareId>) = Unit
+
+    override suspend fun resetDownloadedToIdle(userId: UserId, shareIds: List<ShareId>) = Unit
+
+    override suspend fun resetDownloadingToIdle(userId: UserId, shareIds: List<ShareId>) = Unit
+
+    override suspend fun resetAllDownloadingToIdle(userId: UserId) = Unit
+
+    override suspend fun resetAllDownloadedToIdle(userId: UserId) = Unit
+
+    override suspend fun resetIdleToPending(userId: UserId, shareIds: List<ShareId>) = Unit
+
+    override suspend fun resetPausedToPending(userId: UserId, shareIds: List<ShareId>) = Unit
+
+    override fun observeDownloadedCount(userId: UserId, shareIds: List<ShareId>): Flow<Int> = flowOf(0)
+
+    override fun observeTotalCount(userId: UserId, shareIds: List<ShareId>): Flow<Int> = flowOf(0)
+
+    override fun observeAttachmentById(
+        userId: UserId,
+        shareId: ShareId,
+        itemId: ItemId,
+        attachmentId: AttachmentId
+    ): Flow<AttachmentWithChunks?> = emptyFlow()
 }

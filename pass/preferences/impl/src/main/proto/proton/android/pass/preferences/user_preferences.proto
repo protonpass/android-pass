@@ -44,4 +44,7 @@ message UserPreferences {
   BooleanPrefProto autosave_enabled = 29;
   map<string, string> last_item_folder_per_user = 30;  // userId → folderId ("" = no folder)
   UsernameGenerationPrefProto username_generation = 31;
+  map<string, BooleanPrefProto> download_all_attachments_per_user = 32;
+  map<string, BooleanPrefProto> allow_cellular_download_per_user = 33;
+  map<string, BooleanPrefProto> download_shared_items_per_user = 34;
 }

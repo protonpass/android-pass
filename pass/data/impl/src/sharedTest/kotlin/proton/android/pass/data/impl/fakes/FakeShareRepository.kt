@@ -262,6 +262,22 @@ class FakeShareRepository : ShareRepository {
         updateMembersCountMemory.add(UpdateMembersCountPayload(userId, shareId, count))
     }
 
+    override suspend fun setOfflineAttachments(
+        userId: UserId,
+        shareId: ShareId,
+        enabled: Boolean
+    ) {}
+
+    override fun observeOfflineEnabledShareIds(userId: UserId): Flow<List<ShareId>> =
+        observeUsableShareIdsFlow.map { it.getOrThrow() }
+
+    override suspend fun enableAllOfflineAttachments(userId: UserId) {}
+
+    override fun observeSharedItemsOfflineEnabled(userId: UserId): Flow<Boolean> =
+        kotlinx.coroutines.flow.flowOf(true)
+
+    override suspend fun setSharedItemsOfflineAttachments(userId: UserId, enabled: Boolean) {}
+
     data class UpdateMembersCountPayload(
         val userId: UserId,
         val shareId: ShareId,

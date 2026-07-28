@@ -28,6 +28,7 @@ import me.proton.core.user.data.entity.UserEntity
 import proton.android.pass.data.impl.db.entities.ExternalColumns
 import proton.android.pass.data.impl.db.entities.ItemEntity
 import proton.android.pass.data.impl.db.entities.ShareEntity
+import proton.android.pass.domain.attachments.AttachmentDownloadStatus
 
 @Entity(
     tableName = AttachmentEntity.TABLE,
@@ -88,7 +89,9 @@ data class AttachmentEntity(
     @ColumnInfo(name = Columns.REENCRYPTED_METADATA)
     val reencryptedMetadata: EncryptedByteArray,
     @ColumnInfo(name = Columns.ENCRYPTION_VERSION, defaultValue = "1")
-    val encryptionVersion: Int
+    val encryptionVersion: Int,
+    @ColumnInfo(name = Columns.DOWNLOAD_STATUS, defaultValue = "0")
+    val downloadStatus: AttachmentDownloadStatus
 ) {
     object Columns {
         const val ID = "id"
@@ -107,6 +110,7 @@ data class AttachmentEntity(
         const val REENCRYPTED_KEY = "reencrypted_key"
         const val REENCRYPTED_METADATA = "reencrypted_metadata"
         const val ENCRYPTION_VERSION = "encryptionVersion"
+        const val DOWNLOAD_STATUS = "download_status"
     }
 
     companion object {

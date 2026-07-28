@@ -68,4 +68,21 @@
     <string name="settings_autofill_display_subtitle">Inline mode requires a compatible keyboard (e.g. Gboard). If unsupported, popup mode will be used automatically.</string>
     <string name="settings_autosave_prompt_title">Prompt for auto-save</string>
     <string name="settings_autosave_prompt_subtitle">Proton Pass will prompt you to save or update logins</string>
+
+    <string name="settings_offline_attachments_section_title">Offline attachments</string>
+    <string name="settings_offline_attachments_download_all">Make attachments available offline</string>
+    <string name="settings_offline_attachments_cellular">Download also on cellular data</string>
+    <string name="settings_offline_attachments_download_status">Download status</string>
+    <string name="notification_permission_dialog_title">Notification permission required</string>
+    <string name="notification_permission_dialog_message">To show download progress notifications, you need to enable notifications for this app in system settings.</string>
+    <string name="notification_permission_dialog_open_settings">Open settings</string>
+    <string name="notification_permission_dialog_cancel">Cancel</string>
+
+    <string name="attachment_config_dialog_title">Download options</string>
+    <string name="attachment_config_dialog_all_vaults">All vaults</string>
+    <string name="attachment_config_dialog_select_vaults">Select vaults to download</string>
+    <string name="attachment_config_dialog_shared_items">Shared with me</string>
+    <string name="attachment_config_dialog_start">Download</string>
+    <string name="attachment_config_dialog_cancel">Cancel</string>
+    <string name="settings_offline_attachments_shared_items">Shared with me</string>
 </resources>

@@ -140,4 +140,18 @@ class FakeLocalShareDataSource : LocalShareDataSource {
         count: Int
     ) = Unit
 
+    override suspend fun setOfflineAttachments(
+        userId: UserId,
+        shareId: ShareId,
+        enabled: Boolean
+    ) = Unit
+
+    override fun observeOfflineEnabledShareIds(userId: UserId): Flow<List<ShareId>> = usableShareIdsFlow
+
+    override suspend fun enableAllOfflineAttachments(userId: UserId) = Unit
+
+    override fun observeSharedItemsOfflineEnabled(userId: UserId): Flow<Boolean> = kotlinx.coroutines.flow.flowOf(true)
+
+    override suspend fun setSharedItemsOfflineAttachments(userId: UserId, enabled: Boolean) = Unit
+
 }

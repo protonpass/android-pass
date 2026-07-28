@@ -45,6 +45,7 @@ import proton.android.pass.data.impl.fakes.FakeRemoteAttachmentsDataSource
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.attachments.Attachment
+import proton.android.pass.domain.attachments.AttachmentDownloadStatus
 import proton.android.pass.domain.attachments.AttachmentId
 import proton.android.pass.domain.attachments.AttachmentType
 import proton.android.pass.domain.attachments.Chunk
@@ -90,6 +91,7 @@ internal class AttachmentRepositoryImplTest {
         fakeFileUriGenerator = FakeFileUriGenerator(filesDir, cacheDir)
 
         instance = AttachmentRepositoryImpl(
+            filesDirProvider = { filesDir },
             contentResolver = FakeContentResolver(),
             legacyAttachmentsDirProvider = FakeLegacyAttachmentsDirProvider(
                 tmpFolder.root.resolve("legacy_attachments")
@@ -275,7 +277,8 @@ internal class AttachmentRepositoryImplTest {
                 ByteArray(32) { it.toByte() } + byteArrayOf(0xCA.toByte(), 0xFE.toByte())
             ),
             chunks = chunks,
-            encryptionVersion = 1
+            encryptionVersion = 1,
+            downloadStatus = AttachmentDownloadStatus.Idle
         )
     }
 }

@@ -23,7 +23,10 @@ import androidx.room.Query
 import kotlinx.coroutines.flow.Flow
 import me.proton.core.data.room.db.BaseDao
 import proton.android.pass.data.impl.db.entities.attachments.AttachmentEntity
+import proton.android.pass.domain.attachments.AttachmentDownloadStatus
+import proton.android.pass.domain.attachments.AttachmentDownloadStatusIndex
 
+@Suppress("TooManyFunctions")
 @Dao
 abstract class AttachmentDao : BaseDao<AttachmentEntity>() {
 
@@ -38,9 +41,25 @@ abstract class AttachmentDao : BaseDao<AttachmentEntity>() {
 
     @Query(
         """
-        DELETE FROM ${AttachmentEntity.TABLE} 
-        WHERE ${AttachmentEntity.Columns.SHARE_ID} = :shareId 
-          AND ${AttachmentEntity.Columns.ITEM_ID} = :itemId 
+        SELECT ${AttachmentEntity.Columns.PERSISTENT_ID} FROM ${AttachmentEntity.TABLE}
+        WHERE ${AttachmentEntity.Columns.USER_ID} = :userId
+          AND ${AttachmentEntity.Columns.SHARE_ID} = :shareId
+          AND ${AttachmentEntity.Columns.ITEM_ID} = :itemId
+          AND ${AttachmentEntity.Columns.ID} IN (:attachmentIds)
+        """
+    )
+    abstract fun getPersistentIdsByAttachmentIds(
+        userId: String,
+        shareId: String,
+        itemId: String,
+        attachmentIds: List<String>
+    ): List<String>
+
+    @Query(
+        """
+        DELETE FROM ${AttachmentEntity.TABLE}
+        WHERE ${AttachmentEntity.Columns.SHARE_ID} = :shareId
+          AND ${AttachmentEntity.Columns.ITEM_ID} = :itemId
       AND ${AttachmentEntity.Columns.ID} IN (:attachmentIds)
         """
     )
@@ -88,8 +107,8 @@ abstract class AttachmentDao : BaseDao<AttachmentEntity>() {
     @Query(
         """
         SELECT * FROM ${AttachmentEntity.TABLE}
-        WHERE ${AttachmentEntity.Columns.SHARE_ID} = :shareId 
-          AND ${AttachmentEntity.Columns.ITEM_ID} = :itemId 
+        WHERE ${AttachmentEntity.Columns.SHARE_ID} = :shareId
+          AND ${AttachmentEntity.Columns.ITEM_ID} = :itemId
           AND ${AttachmentEntity.Columns.ID} = :attachmentId
         """
     )
@@ -98,4 +117,139 @@ abstract class AttachmentDao : BaseDao<AttachmentEntity>() {
         itemId: String,
         attachmentId: String
     ): AttachmentEntity?
+
+    @Query(
+        """
+        SELECT * FROM ${AttachmentEntity.TABLE}
+        WHERE ${AttachmentEntity.Columns.ID} IN (:attachmentIds)
+        """
+    )
+    abstract suspend fun getAttachmentsByIds(attachmentIds: List<String>): List<AttachmentEntity>
+
+    @Query(
+        """
+        SELECT * FROM ${AttachmentEntity.TABLE}
+        WHERE ${AttachmentEntity.Columns.USER_ID} = :userId
+          AND (
+            ${AttachmentEntity.Columns.DOWNLOAD_STATUS} = ${AttachmentDownloadStatusIndex.PENDING}
+            OR (:includeFailed AND ${AttachmentEntity.Columns.DOWNLOAD_STATUS} = ${AttachmentDownloadStatusIndex.FAILED})
+          )
+          AND ${AttachmentEntity.Columns.REVISION_REMOVED} IS NULL
+          AND ${AttachmentEntity.Columns.SHARE_ID} IN (:shareIds)
+        """
+    )
+    abstract fun observePendingDownloads(
+        userId: String,
+        shareIds: List<String>,
+        includeFailed: Boolean
+    ): Flow<List<AttachmentEntity>>
+
+    @Query(
+        """
+        UPDATE ${AttachmentEntity.TABLE}
+        SET ${AttachmentEntity.Columns.DOWNLOAD_STATUS} = :downloadStatus
+        WHERE ${AttachmentEntity.Columns.USER_ID} = :userId
+          AND ${AttachmentEntity.Columns.SHARE_ID} = :shareId
+          AND ${AttachmentEntity.Columns.ITEM_ID} = :itemId
+          AND ${AttachmentEntity.Columns.ID} = :attachmentId
+        """
+    )
+    abstract suspend fun updateDownloadStatus(
+        userId: String,
+        shareId: String,
+        itemId: String,
+        attachmentId: String,
+        downloadStatus: AttachmentDownloadStatus
+    )
+
+    @Query(
+        """
+        UPDATE ${AttachmentEntity.TABLE}
+        SET ${AttachmentEntity.Columns.DOWNLOAD_STATUS} = :downloadStatus
+        WHERE ${AttachmentEntity.Columns.USER_ID} = :userId
+          AND ${AttachmentEntity.Columns.ID} IN (:attachmentIds)
+        """
+    )
+    abstract suspend fun updateDownloadStatusForIds(
+        userId: String,
+        attachmentIds: List<String>,
+        downloadStatus: AttachmentDownloadStatus
+    )
+
+    @Query(
+        """
+        UPDATE ${AttachmentEntity.TABLE}
+        SET ${AttachmentEntity.Columns.DOWNLOAD_STATUS} = :newStatus
+        WHERE ${AttachmentEntity.Columns.USER_ID} = :userId
+          AND ${AttachmentEntity.Columns.DOWNLOAD_STATUS} = :currentStatus
+        """
+    )
+    abstract suspend fun resetDownloadStatusForUser(
+        userId: String,
+        currentStatus: AttachmentDownloadStatus,
+        newStatus: AttachmentDownloadStatus
+    )
+
+    @Query(
+        """
+        UPDATE ${AttachmentEntity.TABLE}
+        SET ${AttachmentEntity.Columns.DOWNLOAD_STATUS} = :newStatus
+        WHERE ${AttachmentEntity.Columns.USER_ID} = :userId
+          AND ${AttachmentEntity.Columns.DOWNLOAD_STATUS} = :currentStatus
+          AND ${AttachmentEntity.Columns.SHARE_ID} IN (:shareIds)
+        """
+    )
+    abstract suspend fun resetDownloadStatusForShares(
+        userId: String,
+        currentStatus: AttachmentDownloadStatus,
+        newStatus: AttachmentDownloadStatus,
+        shareIds: List<String>
+    )
+
+    @Query(
+        """
+        SELECT * FROM ${AttachmentEntity.TABLE}
+        WHERE ${AttachmentEntity.Columns.USER_ID} = :userId
+          AND ${AttachmentEntity.Columns.REVISION_REMOVED} IS NULL
+          AND ${AttachmentEntity.Columns.SHARE_ID} IN (:shareIds)
+        """
+    )
+    abstract fun observeAllActiveAttachments(userId: String, shareIds: List<String>): Flow<List<AttachmentEntity>>
+
+    @Query(
+        """
+        SELECT COUNT(*) FROM ${AttachmentEntity.TABLE}
+        WHERE ${AttachmentEntity.Columns.USER_ID} = :userId
+          AND ${AttachmentEntity.Columns.DOWNLOAD_STATUS} = ${AttachmentDownloadStatusIndex.DOWNLOADED}
+          AND ${AttachmentEntity.Columns.REVISION_REMOVED} IS NULL
+          AND ${AttachmentEntity.Columns.SHARE_ID} IN (:shareIds)
+        """
+    )
+    abstract fun observeDownloadedCount(userId: String, shareIds: List<String>): Flow<Int>
+
+    @Query(
+        """
+        SELECT COUNT(*) FROM ${AttachmentEntity.TABLE}
+        WHERE ${AttachmentEntity.Columns.USER_ID} = :userId
+          AND ${AttachmentEntity.Columns.REVISION_REMOVED} IS NULL
+          AND ${AttachmentEntity.Columns.SHARE_ID} IN (:shareIds)
+        """
+    )
+    abstract fun observeTotalCount(userId: String, shareIds: List<String>): Flow<Int>
+
+    @Query(
+        """
+        SELECT * FROM ${AttachmentEntity.TABLE}
+        WHERE ${AttachmentEntity.Columns.USER_ID} = :userId
+          AND ${AttachmentEntity.Columns.SHARE_ID} = :shareId
+          AND ${AttachmentEntity.Columns.ITEM_ID} = :itemId
+          AND ${AttachmentEntity.Columns.ID} = :attachmentId
+        """
+    )
+    abstract fun observeAttachmentById(
+        userId: String,
+        shareId: String,
+        itemId: String,
+        attachmentId: String
+    ): Flow<AttachmentEntity?>
 }

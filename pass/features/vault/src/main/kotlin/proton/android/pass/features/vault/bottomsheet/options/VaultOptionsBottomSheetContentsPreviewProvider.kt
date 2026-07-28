@@ -36,6 +36,8 @@ internal class VaultOptionsBottomSheetContentsPreviewProvider :
             showViewMembers = true,
             canAddFolder = true,
             canAddFolderNeedsUpgrade = false,
+            showOfflineAttachments = true,
+            isOfflineAttachmentsEnabled = true,
             event = VaultOptionsEvent.Idle,
             isLastVault = false
         )

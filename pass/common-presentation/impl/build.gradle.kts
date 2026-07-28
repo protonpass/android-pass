@@ -57,6 +57,7 @@ dependencies {
     implementation(projects.pass.data.api)
     implementation(projects.pass.domain)
     implementation(projects.pass.log.api)
+    implementation(projects.pass.network.api)
     implementation(projects.pass.notifications.api)
     implementation(projects.pass.preferences.api)
     implementation(projects.pass.securityCenter.api)

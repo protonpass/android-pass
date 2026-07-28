@@ -22,6 +22,7 @@ import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.impl.requests.CreateVaultRequest
 import proton.android.pass.data.impl.requests.UpdateVaultRequest
 import proton.android.pass.data.impl.responses.ShareResponse
+import proton.android.pass.data.impl.responses.VaultUsageResponse
 import proton.android.pass.domain.ShareId
 
 interface RemoteShareDataSource {
@@ -48,4 +49,6 @@ interface RemoteShareDataSource {
         userId: UserId,
         shareVisibilityChanges: Map<ShareId, Boolean>
     ): List<ShareResponse>
+
+    suspend fun getVaultUsage(userId: UserId, shareId: ShareId): VaultUsageResponse
 }

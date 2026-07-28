@@ -41,4 +41,17 @@
 
     <string name="attachments_saved_to_location_success">Attachment saved to location</string>
     <string name="attachments_saved_to_location_error">Could not save attachment to location</string>
+
+    <string name="attachment_sync_dialog_title_waiting">Waiting for connection</string>
+    <string name="attachment_sync_dialog_title_downloading">Downloading attachments</string>
+    <string name="attachment_sync_dialog_title_done">Download complete</string>
+    <string name="attachment_sync_dialog_title_partial_failure">Download failed</string>
+
+    <string name="attachment_sync_dialog_subtitle_waiting">Waiting for network connection to download attachments.</string>
+    <string name="attachment_sync_dialog_subtitle_downloading">Downloading %1$d/%2$d attachments</string>
+    <string name="attachment_sync_dialog_subtitle_done">All attachments have been downloaded successfully.</string>
+    <string name="attachment_sync_dialog_subtitle_partial_failure">Some attachments could not be downloaded. You can retry the failed ones below.</string>
+
+    <string name="attachment_sync_dialog_retry_content_description">Retry download</string>
+    <string name="attachment_sync_vault_files_count">%1$d / %2$d files</string>
 </resources>

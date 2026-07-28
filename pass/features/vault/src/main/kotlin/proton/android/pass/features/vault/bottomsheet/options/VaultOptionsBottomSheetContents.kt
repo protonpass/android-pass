@@ -34,6 +34,7 @@ import proton.android.pass.commonui.api.bottomSheet
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItem
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemIcon
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemList
+import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemSubtitle
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemTitle
 import proton.android.pass.composecomponents.impl.bottomsheet.createFolder
 import proton.android.pass.composecomponents.impl.bottomsheet.withDividers
@@ -85,6 +86,12 @@ internal fun VaultOptionsBottomSheetContents(
         if (state.showViewMembers) {
             viewMembers {
                 onEvent(VaultOptionsUserEvent.OnVaultAccess)
+            }.also(::add)
+        }
+
+        if (state.showOfflineAttachments) {
+            offlineAttachments(state.isOfflineAttachmentsEnabled) { enabled ->
+                onEvent(VaultOptionsUserEvent.OnToggleOfflineAttachments(enabled))
             }.also(::add)
         }
 
@@ -228,6 +235,37 @@ private fun viewMembers(onClick: () -> Unit): BottomSheetItem = object : BottomS
         get() = { onClick() }
     override val isDivider = false
 }
+
+private fun offlineAttachments(isEnabled: Boolean, onToggle: (Boolean) -> Unit): BottomSheetItem =
+    object : BottomSheetItem {
+        override val title: @Composable () -> Unit
+            get() = {
+                BottomSheetItemTitle(
+                    text = stringResource(id = R.string.bottomsheet_offline_attachments)
+                )
+            }
+        override val subtitle: (@Composable () -> Unit)
+            get() = {
+                BottomSheetItemSubtitle(
+                    text = stringResource(
+                        id = if (isEnabled) {
+                            R.string.bottomsheet_offline_attachments_enabled
+                        } else {
+                            R.string.bottomsheet_offline_attachments_disabled
+                        }
+                    )
+                )
+            }
+        override val leftIcon: (@Composable () -> Unit)
+            get() = {
+                BottomSheetItemIcon(iconId = CoreR.drawable.ic_proton_arrow_down_to_square)
+            }
+        override val endIcon: (@Composable () -> Unit)?
+            get() = null
+        override val onClick: () -> Unit
+            get() = { onToggle(!isEnabled) }
+        override val isDivider = false
+    }
 
 private fun manageAccess(onClick: () -> Unit): BottomSheetItem = object : BottomSheetItem {
     override val title: @Composable () -> Unit

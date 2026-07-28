@@ -101,7 +101,9 @@ data class ShareEntity(
     @ColumnInfo(name = Columns.FLAGS, defaultValue = "0")
     val flags: Int,
     @ColumnInfo(name = Columns.GROUP_EMAIL)
-    val groupEmail: String?
+    val groupEmail: String?,
+    @ColumnInfo(name = Columns.OFFLINE_ATTACHMENTS, defaultValue = "0")
+    val offlineAttachments: Boolean = false
 ) {
     object Columns {
         const val ID = "id"
@@ -130,6 +132,7 @@ data class ShareEntity(
         const val NEW_USER_INVITES_READY = "new_user_invites_ready"
         const val CAN_AUTOFILL = "can_autofill"
         const val FLAGS = "flags"
+        const val OFFLINE_ATTACHMENTS = "offline_attachments"
     }
 
     companion object {

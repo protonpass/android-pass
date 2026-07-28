@@ -49,6 +49,7 @@ import proton.android.pass.composecomponents.impl.item.details.modifiers.content
 import proton.android.pass.composecomponents.impl.utils.PassItemColors
 import proton.android.pass.composecomponents.impl.utils.passItemColors
 import proton.android.pass.domain.ItemDiffType
+import proton.android.pass.domain.attachments.AttachmentDownloadStatus
 import proton.android.pass.domain.attachments.AttachmentId
 import proton.android.pass.domain.items.ItemCategory
 
@@ -116,6 +117,7 @@ fun AttachmentSection(
                     isEnabled = interactionsEnabled,
                     isError = false,
                     isLoading = attachmentsState.loadingAttachments.contains(attachment.id),
+                    downloadStatus = if (isDetail) attachment.downloadStatus else AttachmentDownloadStatus.Idle,
                     onRetryClick = {},
                     onOptionsClick = {
                         onGuardedEvent(

@@ -27,6 +27,7 @@ import proton.android.pass.data.impl.requests.BatchHideUnhideShareRequest
 import proton.android.pass.data.impl.requests.CreateVaultRequest
 import proton.android.pass.data.impl.requests.UpdateVaultRequest
 import proton.android.pass.data.impl.responses.ShareResponse
+import proton.android.pass.data.impl.responses.VaultUsageResponse
 import proton.android.pass.domain.ShareId
 import javax.inject.Inject
 
@@ -103,6 +104,11 @@ class RemoteShareDataSourceImpl @Inject constructor(
             changeShareVisibility(request).list
         }
         .valueOrThrow
+
+    override suspend fun getVaultUsage(userId: UserId, shareId: ShareId): VaultUsageResponse =
+        api.get<PasswordManagerApi>(userId)
+            .invoke { getVaultUsage(shareId.id) }
+            .valueOrThrow
 
     private companion object {
 

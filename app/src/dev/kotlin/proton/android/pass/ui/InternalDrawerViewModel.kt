@@ -167,7 +167,7 @@ class InternalDrawerViewModel @Inject constructor(
     internal fun clearAttachments() {
         viewModelScope.launch {
             withContext(appDispatchers.io) {
-                val file = File(context.filesDir, FilesDirectories.Attachments.value)
+                val file = File(context.filesDir, FilesDirectories.AttachmentsEnc.value)
                 if (file.exists()) {
                     file.deleteRecursively()
                     withContext(appDispatchers.main) {

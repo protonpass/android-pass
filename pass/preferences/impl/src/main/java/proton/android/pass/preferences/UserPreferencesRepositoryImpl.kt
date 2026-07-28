@@ -393,6 +393,51 @@ class UserPreferencesRepositoryImpl @Inject constructor(
     override fun getAutofillDisplayPreference(): Flow<AutofillDisplayPreference> =
         getPreference { AutofillDisplayPreference.from(it.autofillDisplay) }
 
+    override fun setDownloadAllAttachmentsPref(
+        userId: UserId,
+        preference: DownloadAllAttachmentsPreference
+    ): Result<Unit> = setPreference {
+        it.putDownloadAllAttachmentsPerUser(userId.id, preference.value().toBooleanPrefProto())
+    }
+
+    override fun observeDownloadAllAttachmentsPref(userId: UserId): Flow<DownloadAllAttachmentsPreference> =
+        getPreference { prefs ->
+            val value = prefs.downloadAllAttachmentsPerUserMap[userId.id]
+                ?: BooleanPrefProto.BOOLEAN_PREFERENCE_UNSPECIFIED
+            fromBooleanPrefProto(pref = value, default = false)
+                .let(DownloadAllAttachmentsPreference::from)
+        }
+
+    override fun setAllowCellularDownloadPref(
+        userId: UserId,
+        preference: AllowCellularDownloadPreference
+    ): Result<Unit> = setPreference {
+        it.putAllowCellularDownloadPerUser(userId.id, preference.value().toBooleanPrefProto())
+    }
+
+    override fun observeAllowCellularDownloadPref(userId: UserId): Flow<AllowCellularDownloadPreference> =
+        getPreference { prefs ->
+            val value = prefs.allowCellularDownloadPerUserMap[userId.id]
+                ?: BooleanPrefProto.BOOLEAN_PREFERENCE_UNSPECIFIED
+            fromBooleanPrefProto(pref = value, default = false)
+                .let(AllowCellularDownloadPreference::from)
+        }
+
+    override fun setSharedItemsDownloadPref(
+        userId: UserId,
+        preference: DownloadSharedItemsAttachmentsPreference
+    ): Result<Unit> = setPreference {
+        it.putDownloadSharedItemsPerUser(userId.id, preference.value().toBooleanPrefProto())
+    }
+
+    override fun observeSharedItemsDownloadPref(userId: UserId): Flow<DownloadSharedItemsAttachmentsPreference> =
+        getPreference { prefs ->
+            val value = prefs.downloadSharedItemsPerUserMap[userId.id]
+                ?: BooleanPrefProto.BOOLEAN_PREFERENCE_UNSPECIFIED
+            fromBooleanPrefProto(pref = value, default = true)
+                .let(DownloadSharedItemsAttachmentsPreference::from)
+        }
+
     private fun setPreference(mapper: suspend (UserPreferences.Builder) -> UserPreferences.Builder): Result<Unit> =
         runBlocking {
             setPreferenceSuspend(mapper)

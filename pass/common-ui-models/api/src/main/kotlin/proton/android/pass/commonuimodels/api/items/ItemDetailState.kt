@@ -75,6 +75,8 @@ sealed interface ItemDetailState {
 
     fun update(itemContents: ItemContents, itemDiffs: ItemDiffs = ItemDiffs.None): ItemDetailState
 
+    fun copyWithAttachments(attachmentsState: AttachmentsState): ItemDetailState
+
     @Stable
     data class Alias(
         override val itemContents: ItemContents.Alias,
@@ -117,6 +119,8 @@ sealed interface ItemDetailState {
 
             else -> this
         }
+
+        override fun copyWithAttachments(attachmentsState: AttachmentsState) = copy(attachmentsState = attachmentsState)
     }
 
     @Stable
@@ -158,6 +162,7 @@ sealed interface ItemDetailState {
             else -> this
         }
 
+        override fun copyWithAttachments(attachmentsState: AttachmentsState) = copy(attachmentsState = attachmentsState)
     }
 
     @Stable
@@ -203,6 +208,7 @@ sealed interface ItemDetailState {
             else -> this
         }
 
+        override fun copyWithAttachments(attachmentsState: AttachmentsState) = copy(attachmentsState = attachmentsState)
     }
 
     @Stable
@@ -251,6 +257,7 @@ sealed interface ItemDetailState {
             else -> this
         }
 
+        override fun copyWithAttachments(attachmentsState: AttachmentsState) = copy(attachmentsState = attachmentsState)
     }
 
     @Stable
@@ -292,6 +299,7 @@ sealed interface ItemDetailState {
             else -> this
         }
 
+        override fun copyWithAttachments(attachmentsState: AttachmentsState) = copy(attachmentsState = attachmentsState)
     }
 
     @Stable
@@ -334,6 +342,7 @@ sealed interface ItemDetailState {
             else -> this
         }
 
+        override fun copyWithAttachments(attachmentsState: AttachmentsState) = copy(attachmentsState = attachmentsState)
     }
 
     @Stable
@@ -375,6 +384,7 @@ sealed interface ItemDetailState {
             else -> this
         }
 
+        override fun copyWithAttachments(attachmentsState: AttachmentsState) = copy(attachmentsState = attachmentsState)
     }
 
     @Stable
@@ -416,6 +426,7 @@ sealed interface ItemDetailState {
             else -> this
         }
 
+        override fun copyWithAttachments(attachmentsState: AttachmentsState) = copy(attachmentsState = attachmentsState)
     }
 
     @Stable
@@ -442,6 +453,7 @@ sealed interface ItemDetailState {
 
         override fun update(itemContents: ItemContents, itemDiffs: ItemDiffs): ItemDetailState = this
 
+        override fun copyWithAttachments(attachmentsState: AttachmentsState) = copy(attachmentsState = attachmentsState)
     }
 
 }

@@ -79,18 +79,20 @@ class ItemDetailsHandlerImpl @Inject constructor(
         savedStateEntries: Map<String, Any?>
     ): Flow<ItemDetailState> = combine(
         oneShot { observeShare(shareId = item.shareId).first() },
-        attachmentsFlow(item, source),
         detailEventFlow,
-        ::Triple
+        ::Pair
     )
-        .flatMapLatest { (share, attachments, detailEvent) ->
+        .flatMapLatest { (share, detailEvent) ->
             getItemDetailsObserver(item.itemType.category).observe(
                 share = share,
                 item = item,
-                attachmentsState = attachments,
+                attachmentsState = AttachmentsState.Initial,
                 savedStateEntries = savedStateEntries.plus(ItemDetailsSource.KEY to source),
                 detailEvent = detailEvent
             )
+        }
+        .combine(attachmentsFlow(item, source)) { detailState, attachments ->
+            detailState.copyWithAttachments(attachments)
         }
         .catch { error ->
             if (error !is ItemNotFoundError) {

@@ -29,11 +29,17 @@ import javax.inject.Singleton
 class FakeNetworkMonitor @Inject constructor() : NetworkMonitor {
 
     private val flow: MutableStateFlow<NetworkStatus> = MutableStateFlow(NetworkStatus.Online)
+    private val meteredFlow: MutableStateFlow<Boolean> = MutableStateFlow(false)
 
     override val connectivity: Flow<NetworkStatus> = flow
+    override val isMetered: Flow<Boolean> = meteredFlow
 
     fun emit(value: NetworkStatus) {
         flow.tryEmit(value)
+    }
+
+    fun emitMetered(value: Boolean) {
+        meteredFlow.tryEmit(value)
     }
 
 }

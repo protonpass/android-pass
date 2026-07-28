@@ -29,6 +29,7 @@ import proton.android.pass.commonrust.api.UsableShareKey
 import proton.android.pass.data.impl.db.PassDatabase
 import proton.android.pass.data.impl.db.entities.ShareEntity
 import proton.android.pass.data.impl.db.entities.ShareKeyView
+import proton.android.pass.data.impl.util.sqliteChunks
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.ShareRole
 import proton.android.pass.domain.ShareType
@@ -41,8 +42,21 @@ class LocalShareDataSourceImpl @Inject constructor(
 
     override suspend fun upsertShares(shares: List<ShareEntity>) {
         val (active, inactive) = shares.partition { it.isActive }
-        database.sharesDao().insertOrUpdate(*active.toTypedArray())
-        database.sharesDao().delete(*inactive.toTypedArray())
+        val dao = database.sharesDao()
+        database.inTransaction(name = "upsertShares") {
+            val offlineEnabledIds = active.groupBy { it.userId }
+                .flatMap { (userId, userShares) ->
+                    userShares.map { it.id }
+                        .sqliteChunks(otherBoundArgs = 1)
+                        .flatMap { chunk -> dao.getOfflineEnabledShareIds(userId, chunk) }
+                }
+                .toSet()
+            val merged = active.map { share ->
+                if (share.id in offlineEnabledIds) share.copy(offlineAttachments = true) else share
+            }
+            dao.insertOrUpdate(*merged.toTypedArray())
+            dao.delete(*inactive.toTypedArray())
+        }
     }
 
     override suspend fun getById(userId: UserId, shareId: ShareId): ShareEntity? =
@@ -163,6 +177,29 @@ class LocalShareDataSourceImpl @Inject constructor(
         )
         .map(::ShareId)
         .toSet()
+
+    override suspend fun setOfflineAttachments(
+        userId: UserId,
+        shareId: ShareId,
+        enabled: Boolean
+    ) {
+        database.sharesDao().setOfflineAttachments(userId.id, shareId.id, enabled)
+    }
+
+    override fun observeOfflineEnabledShareIds(userId: UserId): Flow<List<ShareId>> =
+        database.sharesDao().observeOfflineEnabledShareIds(userId.id)
+            .map { list -> list.map(::ShareId) }
+
+    override suspend fun enableAllOfflineAttachments(userId: UserId) {
+        database.sharesDao().enableAllOfflineAttachments(userId.id)
+    }
+
+    override fun observeSharedItemsOfflineEnabled(userId: UserId): Flow<Boolean> =
+        database.sharesDao().observeSharedItemsOfflineEnabled(userId.id, ShareType.Item.value)
+
+    override suspend fun setSharedItemsOfflineAttachments(userId: UserId, enabled: Boolean) {
+        database.sharesDao().setSharedItemsOfflineAttachments(userId.id, enabled, ShareType.Item.value)
+    }
 
     private fun mapToUsableShareKeys(entities: List<ShareKeyView>): List<UsableShareKey> = entities.map {
         UsableShareKey(

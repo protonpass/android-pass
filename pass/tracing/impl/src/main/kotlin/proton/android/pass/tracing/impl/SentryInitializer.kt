@@ -51,6 +51,7 @@ import me.proton.core.util.android.sentry.TimberLoggerIntegration
 import me.proton.core.util.android.sentry.project.AccountSentryHubBuilder
 import proton.android.pass.appconfig.api.AppConfig
 import proton.android.pass.appconfig.api.BuildFlavor.Companion.toValue
+import proton.android.pass.log.api.PrivacySanitizer
 import java.util.concurrent.atomic.AtomicBoolean
 
 class SentryInitializer : Initializer<Unit> {
@@ -61,6 +62,7 @@ class SentryInitializer : Initializer<Unit> {
             SentryInitializerEntryPoint::class.java
         )
         val appConfig = entryPoint.appConfig()
+        val privacySanitizer = entryPoint.privacySanitizer()
         val isCrashReportEnabled = AtomicBoolean(true)
 
         entryPoint.deviceSettingsHandler()
@@ -76,6 +78,8 @@ class SentryInitializer : Initializer<Unit> {
                             options.release = appConfig.versionName
                             options.environment = appConfig.flavor.toValue()
                             options.isAttachAnrThreadDump = true
+                            options.beforeBreadcrumb = sanitizingBeforeBreadcrumbCallback(privacySanitizer)
+                            options.beforeSend = sanitizingBeforeSendCallback(privacySanitizer)
                             if (!appConfig.isDebug) {
                                 options.addIntegration(
                                     TimberLoggerIntegration(
@@ -105,11 +109,36 @@ class SentryInitializer : Initializer<Unit> {
 
     override fun dependencies(): List<Class<out Initializer<*>>> = emptyList()
 
+    private fun sanitizingBeforeBreadcrumbCallback(privacySanitizer: PrivacySanitizer) =
+        SentryOptions.BeforeBreadcrumbCallback { breadcrumb, _ ->
+            breadcrumb.apply {
+                message = message?.let(privacySanitizer::sanitize)
+            }
+        }
+
+    private fun sanitizingBeforeSendCallback(privacySanitizer: PrivacySanitizer) =
+        SentryOptions.BeforeSendCallback { event, _ ->
+            event.apply {
+                message?.let { msg ->
+                    msg.message = msg.message?.let(privacySanitizer::sanitize)
+                    msg.formatted = msg.formatted?.let(privacySanitizer::sanitize)
+                    msg.params = msg.params?.map(privacySanitizer::sanitize)
+                }
+                exceptions?.forEach { exception ->
+                    exception.value = exception.value?.let(privacySanitizer::sanitize)
+                }
+                breadcrumbs?.forEach { breadcrumb ->
+                    breadcrumb.message = breadcrumb.message?.let(privacySanitizer::sanitize)
+                }
+            }
+        }
+
     @EntryPoint
     @InstallIn(SingletonComponent::class)
     interface SentryInitializerEntryPoint {
         fun accountSentryHubBuilder(): AccountSentryHubBuilder
         fun appConfig(): AppConfig
         fun deviceSettingsHandler(): DeviceSettingsHandler
+        fun privacySanitizer(): PrivacySanitizer
     }
 }

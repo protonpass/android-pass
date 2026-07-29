@@ -207,7 +207,8 @@ fladle {
     useOrchestrator.set(true)
     flakyTestAttempts.set(1)
     testTimeout.set("15m")
-    runTimeout.set("20m")
+    runTimeout.set("30m")
+    recordVideo.set(false)
     providers.gradleProperty("flank.numUniformShards").orNull?.toIntOrNull()?.let { shards ->
         numUniformShards.set(shards)
     }

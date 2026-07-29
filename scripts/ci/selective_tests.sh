@@ -97,6 +97,17 @@ module_has_flavor() {
   grep -q "\"${flavor}\"" "$module_dir/build.gradle.kts" 2>/dev/null
 }
 
+# Counts @Test methods under a module's androidTest source sets.
+count_module_tests() {
+  local module_dir="$1"
+  local dirs=()
+  while IFS= read -r dir; do dirs+=("$dir"); done < <(
+    find "$module_dir/src" -maxdepth 1 -type d -iname "androidtest*" 2>/dev/null
+  )
+  [ ${#dirs[@]} -eq 0 ] && { echo 0; return; }
+  grep -rhoE --include="*.kt" "@Test\b" "${dirs[@]}" 2>/dev/null | wc -l | tr -d ' '
+}
+
 # Always build the main debug APK (Fladle requires it as debugApk)
 declare -a GRADLE_TASKS=( ":app:assemble${FLAVOR_CAP}BlackDebug" )
 
@@ -129,13 +140,29 @@ done
 log "Test APKs (${#BUILT_APKS[@]}): ${BUILT_APKS[*]}"
 APKS_COMMA=$(IFS=','; echo "${BUILT_APKS[*]}")
 
-# Without real historical timing data, Flank's default time-estimate sharding
-# can pack far more tests into one shard than another (seen: 85 vs 4 tests),
-# so one straggling shard ends up gating the whole job. Force count-based
-# uniform sharding instead — scale shard count with the number of APKs built
-# so small changesets don't spin up idle matrices.
-NUM_SHARDS=${#BUILT_APKS[@]}
+# Size shards by actual @Test count, not APK/module count — tests are
+# unevenly distributed across modules (e.g. 85 vs 6).
+TOTAL_TEST_COUNT=0
+MIN_MODULE_TEST_COUNT=0
+for module in "${TESTABLE_MODULES[@]}"; do
+  module_dir="$REPO_ROOT/$(echo "$module" | sed 's/^://' | tr ':' '/')"
+  module_count=$(count_module_tests "$module_dir")
+  TOTAL_TEST_COUNT=$((TOTAL_TEST_COUNT + module_count))
+  if [ "$module_count" -gt 0 ] && { [ "$MIN_MODULE_TEST_COUNT" -eq 0 ] || [ "$module_count" -lt "$MIN_MODULE_TEST_COUNT" ]; }; then
+    MIN_MODULE_TEST_COUNT=$module_count
+  fi
+done
+[ "$TOTAL_TEST_COUNT" -eq 0 ] && TOTAL_TEST_COUNT=1
+[ "$MIN_MODULE_TEST_COUNT" -eq 0 ] && MIN_MODULE_TEST_COUNT=1
+
+TARGET_TESTS_PER_SHARD=15
+NUM_SHARDS=$(( (TOTAL_TEST_COUNT + TARGET_TESTS_PER_SHARD - 1) / TARGET_TESTS_PER_SHARD ))
 [ "$NUM_SHARDS" -gt 16 ] && NUM_SHARDS=16
 [ "$NUM_SHARDS" -lt 2 ] && NUM_SHARDS=2
+# numUniformShards doesn't clamp to a module's test count - excess shards
+# come back empty, and Firebase fails empty shards outright. Cap to the
+# smallest changed module's count so that can't happen.
+[ "$NUM_SHARDS" -gt "$MIN_MODULE_TEST_COUNT" ] && NUM_SHARDS=$MIN_MODULE_TEST_COUNT
+log "Total tests (~$TOTAL_TEST_COUNT, smallest module ~$MIN_MODULE_TEST_COUNT) → $NUM_SHARDS shards"
 run_gradle runFlank "-Pselective.test.apks=$APKS_COMMA" "-Pflank.numUniformShards=$NUM_SHARDS"
 log "=== Done ==="

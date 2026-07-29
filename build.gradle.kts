@@ -47,6 +47,13 @@ plugins {
 
 val isCI = System.getenv().containsKey("CI")
 
+// Lets the selective test job run multiple runFlank invocations concurrently
+// (e.g. a sharded bucket and an unsharded bucket) without racing on the same
+// generated build/fladle/flank.yml.
+providers.gradleProperty("selective.flank.runId").orNull?.let { runId ->
+    layout.buildDirectory.set(layout.projectDirectory.dir("build-flank-$runId"))
+}
+
 // Pass Common AAR replacement setup
 val passCommonAarPath = project.findProperty("passCommonAarPath")?.toString()
     ?: System.getenv("PASS_COMMON_AAR_PATH")
@@ -200,7 +207,7 @@ fladle {
     serviceAccountCredentials.set(File("/tmp/service-account.json"))
     devices.set(
         listOf(
-            mapOf("model" to "SmallPhone.arm", "version" to "\"27\""),
+            mapOf("model" to "MediumPhone.arm", "version" to "\"27\""),
             mapOf("model" to "Pixel2.arm", "version" to "\"33\""),
         )
     )

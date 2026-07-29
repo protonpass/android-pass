@@ -125,44 +125,64 @@ run_gradle "${GRADLE_TASKS[@]}"
 
 # -- Step 6: Run Fladle with only the APKs we just built -------------------
 log "=== Step 6: Run Fladle ==="
-# Collect paths of every test APK produced by the selective build.
-# Passed to Fladle via -Pselective.test.apks so it overrides Fulladle's
-# full-project auto-discovery (which would list modules we never built).
-BUILT_APKS=()
+# numUniformShards doesn't guarantee an even split even when shard count
+# doesn't exceed a module's test count — Test Orchestrator's assignment
+# isn't a perfect round-robin, and Firebase marks a 0-test shard as failed
+# outright. Confirmed in production: a module with exactly 5 tests and
+# numUniformShards=5 still produced an empty, failed shard. Splitting a
+# module's tests only makes sense once there are enough of them to keep a
+# safety margin above the shard count; below that, force a single
+# (unsharded) run instead — small modules run fast regardless.
+SHARD_MIN_TESTS=30
+LARGE_APKS=()
+SMALL_APKS=()
+LARGE_TOTAL=0
+LARGE_MIN_COUNT=0
 for module in "${TESTABLE_MODULES[@]}"; do
   module_dir="$REPO_ROOT/$(echo "$module" | sed 's/^://' | tr ':' '/')"
-  while IFS= read -r apk; do
-    BUILT_APKS+=("$apk")
-  done < <(find "$module_dir/build/outputs/apk/androidTest" -name "*-androidTest.apk" 2>/dev/null | sort)
-done
-
-[ ${#BUILT_APKS[@]} -eq 0 ] && die "No test APKs found after build — assembleDebugAndroidTest may have failed silently."
-log "Test APKs (${#BUILT_APKS[@]}): ${BUILT_APKS[*]}"
-APKS_COMMA=$(IFS=','; echo "${BUILT_APKS[*]}")
-
-# Size shards by actual @Test count, not APK/module count — tests are
-# unevenly distributed across modules (e.g. 85 vs 6).
-TOTAL_TEST_COUNT=0
-MIN_MODULE_TEST_COUNT=0
-for module in "${TESTABLE_MODULES[@]}"; do
-  module_dir="$REPO_ROOT/$(echo "$module" | sed 's/^://' | tr ':' '/')"
+  apk=$(find "$module_dir/build/outputs/apk/androidTest" -name "*-androidTest.apk" 2>/dev/null | sort | head -1)
+  [ -z "$apk" ] && continue
   module_count=$(count_module_tests "$module_dir")
-  TOTAL_TEST_COUNT=$((TOTAL_TEST_COUNT + module_count))
-  if [ "$module_count" -gt 0 ] && { [ "$MIN_MODULE_TEST_COUNT" -eq 0 ] || [ "$module_count" -lt "$MIN_MODULE_TEST_COUNT" ]; }; then
-    MIN_MODULE_TEST_COUNT=$module_count
+  if [ "$module_count" -ge "$SHARD_MIN_TESTS" ]; then
+    LARGE_APKS+=("$apk")
+    LARGE_TOTAL=$((LARGE_TOTAL + module_count))
+    [ "$LARGE_MIN_COUNT" -eq 0 ] || [ "$module_count" -lt "$LARGE_MIN_COUNT" ] && LARGE_MIN_COUNT=$module_count
+  else
+    SMALL_APKS+=("$apk")
   fi
 done
-[ "$TOTAL_TEST_COUNT" -eq 0 ] && TOTAL_TEST_COUNT=1
-[ "$MIN_MODULE_TEST_COUNT" -eq 0 ] && MIN_MODULE_TEST_COUNT=1
 
-TARGET_TESTS_PER_SHARD=15
-NUM_SHARDS=$(( (TOTAL_TEST_COUNT + TARGET_TESTS_PER_SHARD - 1) / TARGET_TESTS_PER_SHARD ))
-[ "$NUM_SHARDS" -gt 16 ] && NUM_SHARDS=16
-[ "$NUM_SHARDS" -lt 2 ] && NUM_SHARDS=2
-# numUniformShards doesn't clamp to a module's test count - excess shards
-# come back empty, and Firebase fails empty shards outright. Cap to the
-# smallest changed module's count so that can't happen.
-[ "$NUM_SHARDS" -gt "$MIN_MODULE_TEST_COUNT" ] && NUM_SHARDS=$MIN_MODULE_TEST_COUNT
-log "Total tests (~$TOTAL_TEST_COUNT, smallest module ~$MIN_MODULE_TEST_COUNT) → $NUM_SHARDS shards"
-run_gradle runFlank "-Pselective.test.apks=$APKS_COMMA" "-Pflank.numUniformShards=$NUM_SHARDS"
+[ $(( ${#LARGE_APKS[@]} + ${#SMALL_APKS[@]} )) -eq 0 ] && die "No test APKs found after build — assembleDebugAndroidTest may have failed silently."
+
+# The sharded and unsharded runs are independent Flank invocations, so run
+# them concurrently (each gets its own build dir via selective.flank.runId,
+# see root build.gradle.kts, to avoid racing on the generated flank.yml).
+LARGE_PID=""
+SMALL_PID=""
+
+if [ ${#LARGE_APKS[@]} -gt 0 ]; then
+  TARGET_TESTS_PER_SHARD=15
+  NUM_SHARDS=$(( (LARGE_TOTAL + TARGET_TESTS_PER_SHARD - 1) / TARGET_TESTS_PER_SHARD ))
+  [ "$NUM_SHARDS" -gt 16 ] && NUM_SHARDS=16
+  # Keep at least 2 tests/shard of margin against the smallest large module.
+  SAFE_MAX=$(( LARGE_MIN_COUNT / 2 ))
+  [ "$NUM_SHARDS" -gt "$SAFE_MAX" ] && NUM_SHARDS=$SAFE_MAX
+  [ "$NUM_SHARDS" -lt 2 ] && NUM_SHARDS=2
+  LARGE_APKS_COMMA=$(IFS=','; echo "${LARGE_APKS[*]}")
+  log "Sharded run: ${#LARGE_APKS[@]} APKs, ~$LARGE_TOTAL tests → $NUM_SHARDS shards"
+  ( run_gradle runFlank "-Pselective.test.apks=$LARGE_APKS_COMMA" "-Pflank.numUniformShards=$NUM_SHARDS" "-Pselective.flank.runId=large" ) &
+  LARGE_PID=$!
+fi
+
+if [ ${#SMALL_APKS[@]} -gt 0 ]; then
+  SMALL_APKS_COMMA=$(IFS=','; echo "${SMALL_APKS[*]}")
+  log "Unsharded run: ${#SMALL_APKS[@]} APKs (each under $SHARD_MIN_TESTS tests)"
+  ( run_gradle runFlank "-Pselective.test.apks=$SMALL_APKS_COMMA" "-Pselective.flank.runId=small" ) &
+  SMALL_PID=$!
+fi
+
+RUN_FAILED=0
+[ -n "$LARGE_PID" ] && { wait "$LARGE_PID" || RUN_FAILED=1; }
+[ -n "$SMALL_PID" ] && { wait "$SMALL_PID" || RUN_FAILED=1; }
+[ "$RUN_FAILED" -eq 1 ] && die "One or more Flank runs failed."
 log "=== Done ==="

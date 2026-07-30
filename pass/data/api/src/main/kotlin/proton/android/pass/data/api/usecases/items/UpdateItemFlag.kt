@@ -28,8 +28,18 @@ interface UpdateItemFlag {
     suspend operator fun invoke(
         shareId: ShareId,
         itemId: ItemId,
+        flags: Map<ItemFlag, Boolean>
+    ): Item
+
+    suspend operator fun invoke(
+        shareId: ShareId,
+        itemId: ItemId,
         flag: ItemFlag,
         isFlagEnabled: Boolean
-    ): Item
+    ): Item = invoke(
+        shareId = shareId,
+        itemId = itemId,
+        flags = mapOf(flag to isFlagEnabled)
+    )
 
 }

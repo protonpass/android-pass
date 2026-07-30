@@ -21,6 +21,8 @@ package proton.android.pass.features.security.center.home.ui
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.rememberScrollState
@@ -36,8 +38,8 @@ import proton.android.pass.composecomponents.impl.icon.PassPlusIcon
 import proton.android.pass.composecomponents.impl.item.SectionTitle
 import proton.android.pass.composecomponents.impl.row.CounterRow
 import proton.android.pass.composecomponents.impl.topbar.PassExtendedTopBar
-import proton.android.pass.features.security.center.R
 import proton.android.pass.domain.features.PaidFeature
+import proton.android.pass.features.security.center.R
 import proton.android.pass.features.security.center.home.presentation.SecurityCenterHomeState
 import proton.android.pass.features.security.center.shared.ui.rows.SecurityCenterCounterRow
 import proton.android.pass.features.security.center.shared.ui.rows.SecurityCenterCounterRowModel
@@ -164,6 +166,8 @@ internal fun SecurityCenterHomeContent(
                 ),
                 onClick = { onUiEvent(SecurityCenterHomeUiEvent.OnShowExcludedItems) }
             )
+
+            Spacer(modifier = Modifier.height(height = Spacing.large))
         }
     }
 }

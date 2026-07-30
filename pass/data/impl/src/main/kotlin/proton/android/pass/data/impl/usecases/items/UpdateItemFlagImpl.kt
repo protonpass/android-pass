@@ -38,8 +38,7 @@ class UpdateItemFlagImpl @Inject constructor(
     override suspend fun invoke(
         shareId: ShareId,
         itemId: ItemId,
-        flag: ItemFlag,
-        isFlagEnabled: Boolean
+        flags: Map<ItemFlag, Boolean>
     ): Item {
         val userId = requireNotNull(accountManager.getPrimaryUserId().first())
         val share = shareRepository.getById(userId, shareId)
@@ -48,8 +47,7 @@ class UpdateItemFlagImpl @Inject constructor(
             userId = userId,
             share = share,
             itemId = itemId,
-            flag = flag,
-            isFlagEnabled = isFlagEnabled
+            flags = flags
         )
     }
 

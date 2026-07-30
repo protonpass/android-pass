@@ -346,19 +346,19 @@ class ItemRepositoryImpl @Inject constructor(
         userId: UserId,
         share: Share,
         itemId: ItemId,
-        flag: ItemFlag,
-        isFlagEnabled: Boolean
-    ): Item = when (flag) {
-        ItemFlag.SkipHealthCheck -> UpdateItemFlagsRequest(skipHealthCheck = isFlagEnabled)
-        ItemFlag.SkipWeakPasswordCheck -> UpdateItemFlagsRequest(skipWeakPasswordCheck = isFlagEnabled)
-        ItemFlag.SkipCompromisedPasswordCheck ->
-            UpdateItemFlagsRequest(skipCompromisedPasswordCheck = isFlagEnabled)
-        ItemFlag.SkipReusedPasswordCheck -> UpdateItemFlagsRequest(skipReusedPasswordCheck = isFlagEnabled)
-        ItemFlag.Skip2FACheck -> UpdateItemFlagsRequest(skip2FACheck = isFlagEnabled)
-        ItemFlag.EmailBreached,
-        ItemFlag.AliasDisabled,
-        ItemFlag.HasAttachments,
-        ItemFlag.HasHadAttachments -> UpdateItemFlagsRequest()
+        flags: Map<ItemFlag, Boolean>
+    ): Item = flags.entries.fold(UpdateItemFlagsRequest()) { request, (flag, isFlagEnabled) ->
+        when (flag) {
+            ItemFlag.SkipHealthCheck -> request.copy(skipHealthCheck = isFlagEnabled)
+            ItemFlag.SkipWeakPasswordCheck -> request.copy(skipWeakPasswordCheck = isFlagEnabled)
+            ItemFlag.SkipCompromisedPasswordCheck -> request.copy(skipCompromisedPasswordCheck = isFlagEnabled)
+            ItemFlag.SkipReusedPasswordCheck -> request.copy(skipReusedPasswordCheck = isFlagEnabled)
+            ItemFlag.Skip2FACheck -> request.copy(skip2FACheck = isFlagEnabled)
+            ItemFlag.EmailBreached,
+            ItemFlag.AliasDisabled,
+            ItemFlag.HasAttachments,
+            ItemFlag.HasHadAttachments -> request
+        }
     }.let { updateItemFlagsRequest ->
         remoteItemDataSource.updateItemFlags(
             userId = userId,

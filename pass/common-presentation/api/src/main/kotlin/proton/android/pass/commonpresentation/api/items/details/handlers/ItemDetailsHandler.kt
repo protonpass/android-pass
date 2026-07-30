@@ -69,6 +69,8 @@ interface ItemDetailsHandler {
         check: MonitorCheck,
         skip: Boolean
     )
+
+    fun onRefreshMonitorState()
 }
 
 enum class ItemDetailsSource {

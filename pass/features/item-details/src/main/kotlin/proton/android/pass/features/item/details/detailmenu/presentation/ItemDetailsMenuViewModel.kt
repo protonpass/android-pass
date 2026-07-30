@@ -48,6 +48,7 @@ import proton.android.pass.data.api.usecases.TrashItems
 import proton.android.pass.data.api.usecases.UnpinItem
 import proton.android.pass.data.api.usecases.items.UpdateItemFlag
 import proton.android.pass.data.api.usecases.shares.ObserveShare
+import proton.android.pass.domain.ItemExclusionCheckFlags
 import proton.android.pass.domain.ItemFlag
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
@@ -68,6 +69,7 @@ class ItemDetailsMenuViewModel @Inject constructor(
     private val pinItem: PinItem,
     private val unpinItem: UnpinItem,
     private val updateItemFlag: UpdateItemFlag,
+    private val resolveTriggeredMonitorChecks: ResolveTriggeredMonitorChecks,
     private val trashItem: TrashItems,
     private val snackbarDispatcher: SnackbarDispatcher
 ) : ViewModel() {
@@ -212,19 +214,21 @@ class ItemDetailsMenuViewModel @Inject constructor(
             actionFlow.update { BottomSheetItemAction.MonitorExclude }
 
             runCatching {
+                val triggeredChecks = resolveTriggeredMonitorChecks(itemFlow.first())
+
                 updateItemFlag(
                     shareId = shareId,
                     itemId = itemId,
-                    flag = ItemFlag.SkipHealthCheck,
-                    isFlagEnabled = true
+                    flags = triggeredChecks.associateWith { true }
+                        .plus(ItemFlag.SkipHealthCheck to true)
                 )
             }.onFailure { error ->
                 PassLogger.w(TAG, "Error excluding item from monitoring")
                 PassLogger.w(TAG, error)
-                eventFlow.update { ItemDetailsMenuEvent.OnItemMonitorExcluded }
+                eventFlow.update { ItemDetailsMenuEvent.OnItemMonitorExcludedError }
                 snackbarDispatcher(ItemDetailMenuSnackBarMessage.ItemMonitorExcludedError)
             }.onSuccess {
-                eventFlow.update { ItemDetailsMenuEvent.OnItemMonitorExcludedError }
+                eventFlow.update { ItemDetailsMenuEvent.OnItemMonitorExcluded }
                 snackbarDispatcher(ItemDetailMenuSnackBarMessage.ItemMonitorExcludedSuccess)
             }
 
@@ -240,16 +244,15 @@ class ItemDetailsMenuViewModel @Inject constructor(
                 updateItemFlag(
                     shareId = shareId,
                     itemId = itemId,
-                    flag = ItemFlag.SkipHealthCheck,
-                    isFlagEnabled = false
+                    flags = ItemExclusionCheckFlags.associateWith { false }
                 )
             }.onFailure { error ->
                 PassLogger.w(TAG, "Error including item in monitoring")
                 PassLogger.w(TAG, error)
-                eventFlow.update { ItemDetailsMenuEvent.OnItemMonitorIncluded }
+                eventFlow.update { ItemDetailsMenuEvent.OnItemMonitorIncludedError }
                 snackbarDispatcher(ItemDetailMenuSnackBarMessage.ItemMonitorIncludedError)
             }.onSuccess {
-                eventFlow.update { ItemDetailsMenuEvent.OnItemMonitorIncludedError }
+                eventFlow.update { ItemDetailsMenuEvent.OnItemMonitorIncluded }
                 snackbarDispatcher(ItemDetailMenuSnackBarMessage.ItemMonitorIncludedSuccess)
             }
 

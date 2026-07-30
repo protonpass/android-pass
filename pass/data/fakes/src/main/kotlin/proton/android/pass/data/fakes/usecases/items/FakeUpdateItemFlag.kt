@@ -30,6 +30,8 @@ class FakeUpdateItemFlag @Inject constructor() : UpdateItemFlag {
 
     private var item: Item = ItemTestFactory.random()
 
+    private val memory: MutableList<Payload> = mutableListOf()
+
     fun setItem(newItem: Item) {
         item = newItem
     }
@@ -37,8 +39,15 @@ class FakeUpdateItemFlag @Inject constructor() : UpdateItemFlag {
     override suspend fun invoke(
         shareId: ShareId,
         itemId: ItemId,
-        flag: ItemFlag,
-        isFlagEnabled: Boolean
-    ): Item = item
+        flags: Map<ItemFlag, Boolean>
+    ): Item = item.also { memory.add(Payload(shareId, itemId, flags)) }
+
+    fun memory(): List<Payload> = memory
+
+    data class Payload(
+        val shareId: ShareId,
+        val itemId: ItemId,
+        val flags: Map<ItemFlag, Boolean>
+    )
 
 }

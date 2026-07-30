@@ -71,4 +71,6 @@ class FakeItemDetailsHandler : ItemDetailsHandler {
         check: MonitorCheck,
         skip: Boolean
     ) = Unit
+
+    override fun onRefreshMonitorState() = Unit
 }

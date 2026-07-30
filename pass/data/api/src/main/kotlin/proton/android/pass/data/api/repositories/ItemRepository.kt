@@ -88,8 +88,7 @@ interface ItemRepository {
         userId: UserId,
         share: Share,
         itemId: ItemId,
-        flag: ItemFlag,
-        isFlagEnabled: Boolean
+        flags: Map<ItemFlag, Boolean>
     ): Item
 
     suspend fun updateLocalItemFlags(

@@ -157,8 +157,7 @@ class FakeItemRepository @Inject constructor() : ItemRepository {
         userId: UserId,
         share: Share,
         itemId: ItemId,
-        flag: ItemFlag,
-        isFlagEnabled: Boolean
+        flags: Map<ItemFlag, Boolean>
     ): Item {
         TODO("Not yet implemented")
     }

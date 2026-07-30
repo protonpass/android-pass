@@ -26,6 +26,11 @@ import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.platform.LocalContext
 import androidx.core.view.WindowCompat
 import androidx.credentials.GetCredentialResponse
 import androidx.credentials.GetPublicKeyCredentialOption
@@ -39,8 +44,12 @@ import androidx.lifecycle.repeatOnLifecycle
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import proton.android.pass.appconfig.api.AppConfig
+import proton.android.pass.appconfig.api.BuildFlavor.Companion.upgradeUrl
+import proton.android.pass.commonui.api.BrowserUtils
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.enableEdgeToEdgeProtonPass
+import proton.android.pass.composecomponents.impl.dialogs.WarningReloadAppDialog
 import proton.android.pass.composecomponents.impl.theme.isDark
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.PasskeyId
@@ -65,6 +74,9 @@ internal class PasskeyCredentialSelectionActivity : FragmentActivity() {
 
     @Inject
     internal lateinit var passkeyActivityOriginResolver: PasskeyActivityOriginResolver
+
+    @Inject
+    internal lateinit var appConfig: AppConfig
 
     private val viewModel: PasskeyCredentialSelectionViewModel by viewModels()
 
@@ -94,12 +106,13 @@ internal class PasskeyCredentialSelectionActivity : FragmentActivity() {
         super.onStop()
     }
 
-    @Suppress("LongMethod")
     private fun setContent(state: PasskeyCredentialSelectionState.Ready) {
         enableEdgeToEdgeProtonPass()
 
         setContent {
+            val context = LocalContext.current
             val isDark = isDark(state.themePreference)
+            var showWarningReloadAppDialog by rememberSaveable { mutableStateOf(false) }
             LaunchedEffect(isDark) {
                 WindowCompat.getInsetsController(window, window.decorView).apply {
                     isAppearanceLightNavigationBars = !isDark
@@ -110,58 +123,91 @@ internal class PasskeyCredentialSelectionActivity : FragmentActivity() {
                 PasskeyCredentialSelectionScreen(
                     state = state,
                     onNavigate = { destination ->
-                        when (destination) {
-                            PasskeyCredentialSelectionNavEvent.Cancel -> {
-                                onCancelAuthRequest()
-                            }
-
-                            is PasskeyCredentialSelectionNavEvent.ForceSignOut -> {
-                                viewModel.onSignOut(destination.userId)
-                            }
-
-                            is PasskeyCredentialSelectionNavEvent.SendResponse -> {
-                                onProceedAuthRequest(destination.response)
-                            }
-
-                            PasskeyCredentialSelectionNavEvent.Upgrade -> {
-                                viewModel.onUpgrade()
-                            }
-                        }
+                        onSelectionNavigate(
+                            destination = destination,
+                            state = state,
+                            context = context,
+                            onShowWarningReloadAppDialog = { showWarningReloadAppDialog = true }
+                        )
                     },
-                    onEvent = { event ->
-                        when (event) {
-                            PasskeyCredentialSelectionEvent.OnAuthPerformed -> {
-                                viewModel.onAuthPerformed(request = state.request)
-                            }
-
-                            is PasskeyCredentialSelectionEvent.OnItemSelected -> {
-                                viewModel.onItemSelected(
-                                    itemUiModel = event.itemUiModel,
-                                    origin = state.request.requestOrigin,
-                                    request = state.request.requestJson,
-                                    clientDataHash = state.request.clientDataHash
-                                )
-                            }
-
-                            is PasskeyCredentialSelectionEvent.OnPasskeySelected -> {
-                                viewModel.onPasskeySelected(
-                                    passkey = event.passkey,
-                                    origin = state.request.requestOrigin,
-                                    request = state.request.requestJson,
-                                    clientDataHash = state.request.clientDataHash
-                                )
-                            }
-
-                            PasskeyCredentialSelectionEvent.OnSelectScreenShown -> {
-                                viewModel.onScreenShown()
-                            }
-
-                            is PasskeyCredentialSelectionEvent.OnEventConsumed -> {
-                                viewModel.onConsumeEvent(event = event.event)
-                            }
-                        }
-                    }
+                    onEvent = { event -> onSelectionEvent(event = event, state = state) }
                 )
+
+                if (showWarningReloadAppDialog) {
+                    WarningReloadAppDialog(
+                        onOkClick = { reminderCheck ->
+                            showWarningReloadAppDialog = false
+                            if (reminderCheck) {
+                                viewModel.doNotDisplayReloadAppWarningDialog()
+                            }
+                            openUpgradeWebsite(context)
+                        },
+                        onCancelClick = {
+                            showWarningReloadAppDialog = false
+                        }
+                    )
+                }
+            }
+        }
+    }
+
+    private fun onSelectionNavigate(
+        destination: PasskeyCredentialSelectionNavEvent,
+        state: PasskeyCredentialSelectionState.Ready,
+        context: Context,
+        onShowWarningReloadAppDialog: () -> Unit
+    ) {
+        when (destination) {
+            PasskeyCredentialSelectionNavEvent.Cancel -> onCancelAuthRequest()
+            is PasskeyCredentialSelectionNavEvent.ForceSignOut -> viewModel.onSignOut(destination.userId)
+            is PasskeyCredentialSelectionNavEvent.SendResponse -> onProceedAuthRequest(destination.response)
+            PasskeyCredentialSelectionNavEvent.Upgrade -> {
+                if (state.canShowWarningReloadApp) {
+                    onShowWarningReloadAppDialog()
+                } else {
+                    openUpgradeWebsite(context)
+                }
+            }
+        }
+    }
+
+    private fun openUpgradeWebsite(context: Context) {
+        BrowserUtils.openWebsite(
+            context = context,
+            website = appConfig.flavor.upgradeUrl()
+        )
+    }
+
+    private fun onSelectionEvent(event: PasskeyCredentialSelectionEvent, state: PasskeyCredentialSelectionState.Ready) {
+        when (event) {
+            PasskeyCredentialSelectionEvent.OnAuthPerformed -> {
+                viewModel.onAuthPerformed(request = state.request)
+            }
+
+            is PasskeyCredentialSelectionEvent.OnItemSelected -> {
+                viewModel.onItemSelected(
+                    itemUiModel = event.itemUiModel,
+                    origin = state.request.requestOrigin,
+                    request = state.request.requestJson,
+                    clientDataHash = state.request.clientDataHash
+                )
+            }
+
+            is PasskeyCredentialSelectionEvent.OnPasskeySelected -> {
+                viewModel.onPasskeySelected(
+                    passkey = event.passkey,
+                    origin = state.request.requestOrigin,
+                    request = state.request.requestJson,
+                    clientDataHash = state.request.clientDataHash
+                )
+            }
+
+            PasskeyCredentialSelectionEvent.OnSelectScreenShown -> {
+                viewModel.onScreenShown()
+            }
+
+            is PasskeyCredentialSelectionEvent.OnEventConsumed -> {
+                viewModel.onConsumeEvent(event = event.event)
             }
         }
     }

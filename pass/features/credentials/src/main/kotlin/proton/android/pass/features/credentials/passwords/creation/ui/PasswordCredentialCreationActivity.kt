@@ -18,6 +18,7 @@
 
 package proton.android.pass.features.credentials.passwords.creation.ui
 
+import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
@@ -25,6 +26,11 @@ import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.platform.LocalContext
 import androidx.core.view.WindowCompat
 import androidx.credentials.CreatePasswordRequest
 import androidx.credentials.CreatePasswordResponse
@@ -36,8 +42,12 @@ import androidx.lifecycle.repeatOnLifecycle
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import proton.android.pass.appconfig.api.AppConfig
+import proton.android.pass.appconfig.api.BuildFlavor.Companion.upgradeUrl
+import proton.android.pass.commonui.api.BrowserUtils
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.enableEdgeToEdgeProtonPass
+import proton.android.pass.composecomponents.impl.dialogs.WarningReloadAppDialog
 import proton.android.pass.composecomponents.impl.theme.isDark
 import proton.android.pass.features.credentials.passwords.creation.navigation.PasswordCredentialCreationNavEvent
 import proton.android.pass.features.credentials.passwords.creation.presentation.PasswordCredentialCreationEvent
@@ -53,14 +63,15 @@ internal class PasswordCredentialCreationActivity : FragmentActivity() {
     @Inject
     internal lateinit var snackbarDispatcher: SnackbarDispatcher
 
+    @Inject
+    internal lateinit var appConfig: AppConfig
+
     private val viewModel: PasswordCredentialCreationViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         viewModel.onUpdateRequest(getPasswordCredentialCreationRequest())
-
-        viewModel.onRegister(this)
 
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
@@ -84,7 +95,9 @@ internal class PasswordCredentialCreationActivity : FragmentActivity() {
     private fun setContent(state: PasswordCredentialCreationState.Ready) {
         enableEdgeToEdgeProtonPass()
         setContent {
+            val context = LocalContext.current
             val isDark = isDark(state.themePreference)
+            var showWarningReloadAppDialog by rememberSaveable { mutableStateOf(false) }
             LaunchedEffect(isDark) {
                 WindowCompat.getInsetsController(window, window.decorView).apply {
                     isAppearanceLightNavigationBars = !isDark
@@ -95,23 +108,12 @@ internal class PasswordCredentialCreationActivity : FragmentActivity() {
                 PasswordCredentialCreationScreen(
                     state = state,
                     onNavigate = { destination ->
-                        when (destination) {
-                            PasswordCredentialCreationNavEvent.Cancel -> {
-                                onCancelCreationRequest()
-                            }
-
-                            is PasswordCredentialCreationNavEvent.ForceSignOut -> {
-                                viewModel.onSignOut(userId = destination.userId)
-                            }
-
-                            PasswordCredentialCreationNavEvent.SendResponse -> {
-                                onProceedCreationRequest()
-                            }
-
-                            PasswordCredentialCreationNavEvent.Upgrade -> {
-                                viewModel.onUpgrade()
-                            }
-                        }
+                        onCreationNavigate(
+                            destination = destination,
+                            state = state,
+                            context = context,
+                            onShowWarningReloadAppDialog = { showWarningReloadAppDialog = true }
+                        )
                     },
                     onEvent = { event ->
                         when (event) {
@@ -121,8 +123,53 @@ internal class PasswordCredentialCreationActivity : FragmentActivity() {
                         }
                     }
                 )
+
+                if (showWarningReloadAppDialog) {
+                    WarningReloadAppDialog(
+                        onOkClick = { reminderCheck ->
+                            showWarningReloadAppDialog = false
+                            if (reminderCheck) {
+                                viewModel.doNotDisplayReloadAppWarningDialog()
+                            }
+                            openUpgradeWebsite(context)
+                        },
+                        onCancelClick = {
+                            showWarningReloadAppDialog = false
+                        }
+                    )
+                }
             }
         }
+    }
+
+    private fun onCreationNavigate(
+        destination: PasswordCredentialCreationNavEvent,
+        state: PasswordCredentialCreationState.Ready,
+        context: Context,
+        onShowWarningReloadAppDialog: () -> Unit
+    ) {
+        when (destination) {
+            PasswordCredentialCreationNavEvent.Cancel -> onCancelCreationRequest()
+            is PasswordCredentialCreationNavEvent.ForceSignOut -> {
+                viewModel.onSignOut(userId = destination.userId)
+            }
+
+            PasswordCredentialCreationNavEvent.SendResponse -> onProceedCreationRequest()
+            PasswordCredentialCreationNavEvent.Upgrade -> {
+                if (state.canShowWarningReloadApp) {
+                    onShowWarningReloadAppDialog()
+                } else {
+                    openUpgradeWebsite(context)
+                }
+            }
+        }
+    }
+
+    private fun openUpgradeWebsite(context: Context) {
+        BrowserUtils.openWebsite(
+            context = context,
+            website = appConfig.flavor.upgradeUrl()
+        )
     }
 
     private fun getPasswordCredentialCreationRequest(): PasswordCredentialCreationRequest? =

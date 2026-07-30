@@ -19,7 +19,6 @@
 package proton.android.pass.features.upsell.v2.presentation.mocks
 
 import kotlinx.collections.immutable.persistentListOf
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.commonpresentation.api.plan.PaymentButtonUiState
 import proton.android.pass.features.upsell.v2.models.SelectorUiState
 import proton.android.pass.features.upsell.v2.models.UpsellPlanUiModel
@@ -33,20 +32,20 @@ internal val mockAnnualPlans = persistentListOf(
         selector = mockSelectors[0],
         bottomAnnualPrice = "Plan annual",
         paymentButtonUiState = PaymentButtonUiState(
-            currency = "EUR",
-            cycle = 12,
-            plan = null,
-            userId = UserId("foo")
+            productId = "pass_plus_12",
+            offerToken = "token-plus",
+            formattedPrice = "CHF 2.99",
+            currency = "CHF"
         )
     ),
     UpsellPlanUiModel(
         selector = mockSelectors[1],
         bottomAnnualPrice = "Plan annual",
         paymentButtonUiState = PaymentButtonUiState(
-            currency = "EUR",
-            cycle = 12,
-            plan = null,
-            userId = UserId("foo")
+            productId = "pass_unlimited_12",
+            offerToken = "token-unlimited",
+            formattedPrice = "CHF 9.99",
+            currency = "CHF"
         )
     )
 )
@@ -56,10 +55,10 @@ internal val mockWelcomeMonthlyPlan = persistentListOf(
         selector = mockSelectors[0],
         bottomAnnualPrice = "Plan monthly",
         paymentButtonUiState = PaymentButtonUiState(
-            currency = "EUR",
-            cycle = 12,
-            plan = null,
-            userId = UserId("foo")
+            productId = "pass_plus_1",
+            offerToken = "token-plus-monthly",
+            formattedPrice = "CHF 4.99",
+            currency = "CHF"
         ),
         defaultPricePerMonth = "CHF 4.99"
     )
@@ -70,10 +69,10 @@ internal val mockWelcomeYearlyPlan = persistentListOf(
         selector = mockSelectors[0],
         bottomAnnualPrice = "Plan yearly",
         paymentButtonUiState = PaymentButtonUiState(
-            currency = "EUR",
-            cycle = 12,
-            plan = null,
-            userId = UserId("foo")
+            productId = "pass_plus_12",
+            offerToken = "token-plus-yearly",
+            formattedPrice = "CHF 2.99",
+            currency = "CHF"
         ),
         pricePerYear = "CHF 23.88"
     )

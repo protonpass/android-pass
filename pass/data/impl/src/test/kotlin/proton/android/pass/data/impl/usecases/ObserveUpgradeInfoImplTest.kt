@@ -26,8 +26,6 @@ import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.runTest
 import me.proton.core.domain.entity.UserId
 import org.junit.Test
-import proton.android.pass.account.fakes.FakePaymentManager
-import proton.android.pass.appconfig.fakes.FakeAppConfig
 import proton.android.pass.data.api.ItemCountSummary
 import proton.android.pass.data.api.usecases.UpgradeInfo
 import proton.android.pass.data.fakes.usecases.FakeObserveCurrentUser
@@ -38,6 +36,7 @@ import proton.android.pass.data.impl.fakes.FakePlanRepository
 import proton.android.pass.domain.Plan
 import proton.android.pass.domain.PlanLimit
 import proton.android.pass.domain.PlanType
+import proton.android.pass.payments.fakes.FakePayments
 import proton.android.pass.test.domain.UserTestFactory
 import proton.android.pass.test.domain.plans.PlanTestFactory
 
@@ -47,8 +46,6 @@ class ObserveUpgradeInfoImplTest {
     fun `emits upgrade info from all dependencies`() = runTest {
         val userId = UserId("user-id")
         val harness = ObserveUpgradeInfoHarness()
-        harness.paymentManager.isUpgradeAvailable = true
-        harness.paymentManager.isSubscriptionAvailable = false
         harness.planRepository.emitPlan(
             userId = userId,
             plan = freePlan(hideUpgrade = false)
@@ -60,7 +57,7 @@ class ObserveUpgradeInfoImplTest {
         val result = harness.instance(userId).first()
 
         assertThat(result.isUpgradeAvailable).isTrue()
-        assertThat(result.isSubscriptionAvailable).isFalse()
+        assertThat(result.isSubscriptionAvailable).isTrue()
         assertThat(result.totalTotp).isEqualTo(2)
         assertThat(result.totalAlias).isEqualTo(11)
         assertThat(result.totalVaults).isEqualTo(5)
@@ -70,7 +67,6 @@ class ObserveUpgradeInfoImplTest {
     fun `hides upgrade when plan requests it`() = runTest {
         val userId = UserId("user-id")
         val harness = ObserveUpgradeInfoHarness()
-        harness.paymentManager.isUpgradeAvailable = true
         harness.planRepository.emitPlan(
             userId = userId,
             plan = freePlan(hideUpgrade = true)
@@ -156,7 +152,7 @@ class ObserveUpgradeInfoImplTest {
             harness.sendCurrentUser(userId)
             advanceUntilIdle()
             expectNoEvents()
-            assertThat(harness.paymentManager.subscriptionAvailabilityCalls).isEqualTo(1)
+            assertThat(harness.payments.getProductsCallCount).isEqualTo(0)
             cancelAndIgnoreRemainingEvents()
         }
     }
@@ -165,7 +161,6 @@ class ObserveUpgradeInfoImplTest {
     fun `paid plans always disable upgrade display`() = runTest {
         val userId = UserId("user-id")
         val harness = ObserveUpgradeInfoHarness()
-        harness.paymentManager.isUpgradeAvailable = true
         harness.emitPlan(userId, plusPlan())
 
         val result = harness.instance(userId).first()
@@ -173,14 +168,50 @@ class ObserveUpgradeInfoImplTest {
     }
 
     @Test
-    fun `upgrade remains visible when payment manager says unavailable`() = runTest {
+    fun `upgrade remains visible regardless of subscription availability`() = runTest {
         val userId = UserId("user-id")
         val harness = ObserveUpgradeInfoHarness()
-        harness.paymentManager.isUpgradeAvailable = false
         harness.emitPlan(userId, freePlan(hideUpgrade = false))
 
         val result = harness.instance(userId).first()
         assertThat(result.isUpgradeAvailable).isTrue()
+    }
+
+    @Test
+    fun `subscription is available when loading products fails`() = runTest {
+        val userId = UserId("user-id")
+        val harness = ObserveUpgradeInfoHarness()
+        harness.payments.productsResult = Result.failure(IllegalStateException("not available"))
+        harness.emitPlan(userId, freePlan(hideUpgrade = false))
+
+        val result = harness.instance(userId).first()
+        assertThat(result.isSubscriptionAvailable).isTrue()
+        assertThat(result.isUpgradeAvailable).isTrue()
+        assertThat(harness.payments.getProductsCallCount).isEqualTo(0)
+    }
+
+    @Test
+    fun `subscription is unavailable when store payments are unsupported`() = runTest {
+        val userId = UserId("user-id")
+        val harness = ObserveUpgradeInfoHarness()
+        harness.payments.supportsStorePayments = false
+        harness.emitPlan(userId, freePlan(hideUpgrade = false))
+
+        val result = harness.instance(userId).first()
+        assertThat(result.isSubscriptionAvailable).isFalse()
+    }
+
+    @Test
+    fun `alias count is bounded to Int max`() = runTest {
+        val userId = UserId("user-id")
+        val harness = ObserveUpgradeInfoHarness()
+        harness.emitPlan(userId, freePlan(hideUpgrade = false))
+        harness.observeItemCount.sendResult(
+            Result.success(ItemCountSummary.Initial.copy(alias = Long.MAX_VALUE))
+        )
+
+        val result = harness.instance(userId).first()
+        assertThat(result.totalAlias).isEqualTo(Int.MAX_VALUE)
     }
 
     @Test
@@ -205,46 +236,18 @@ class ObserveUpgradeInfoImplTest {
         }
     }
 
-    @Test
-    fun `subscription is false when payment manager fails`() = runTest {
-        val userId = UserId("user-id")
-        val harness = ObserveUpgradeInfoHarness()
-        harness.paymentManager.subscriptionAvailableThrowable = IllegalStateException("not available")
-        harness.emitPlan(userId, freePlan(hideUpgrade = false))
-
-        val result = harness.instance(userId).first()
-        assertThat(result.isSubscriptionAvailable).isFalse()
-        assertThat(result.isUpgradeAvailable).isTrue()
-    }
-
-    @Test
-    fun `alias count is bounded to Int max`() = runTest {
-        val userId = UserId("user-id")
-        val harness = ObserveUpgradeInfoHarness()
-        harness.emitPlan(userId, freePlan(hideUpgrade = false))
-        harness.observeItemCount.sendResult(
-            Result.success(ItemCountSummary.Initial.copy(alias = Long.MAX_VALUE))
-        )
-
-        val result = harness.instance(userId).first()
-        assertThat(result.totalAlias).isEqualTo(Int.MAX_VALUE)
-    }
-
     private class ObserveUpgradeInfoHarness {
-        val paymentManager = FakePaymentManager()
+        val payments = FakePayments()
         val observeCurrentUser = FakeObserveCurrentUser()
         val observeMFACount = FakeObserveMFACount()
         val observeItemCount = FakeObserveItemCount()
         val observeVaultCount = FakeObserveVaultCount()
         val planRepository = FakePlanRepository()
-        private val appConfig = FakeAppConfig()
-
         private val instance = ObserveUpgradeInfoImpl(
-            appConfig = appConfig,
             observeCurrentUser = observeCurrentUser,
             observeMFACount = observeMFACount,
             observeItemCount = observeItemCount,
-            paymentManager = paymentManager,
+            payments = payments,
             planRepository = planRepository,
             observeVaultCount = observeVaultCount
         )

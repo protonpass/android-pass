@@ -228,6 +228,20 @@ android {
         getByName("androidTest").assets.srcDirs("src/uiTest/assets")
         getByName("dev").res.srcDirs("src/dev/res")
         getByName("alpha").res.srcDirs("src/alpha/res")
+        // Shared source set for GMS-only (Play/dev/alpha) code
+        listOf("dev", "alpha", "play").forEach {
+            getByName(it).apply {
+                java.srcDirs("src/gms/kotlin")
+                manifest.srcFile("src/gms/AndroidManifest.xml")
+            }
+        }
+        listOf("testDev", "testAlpha", "testPlay").forEach {
+            getByName(it).java.srcDirs("src/gmsTest/kotlin")
+        }
+        // Shared source set for builds without payment support.
+        listOf("fdroid", "quest", "nogms").forEach {
+            getByName(it).java.srcDirs("src/nonGms/kotlin")
+        }
     }
 
     compileOptions {
@@ -363,7 +377,16 @@ dependencies {
     )
 
     addSpecialLib(
-        default = libs.core.paymentIap,
+        default = libs.protonAndroidPayment,
+        overrides = mapOf("fdroid" to null, "quest" to null, "nogms" to null)
+    )
+
+    addSpecialLib(
+        default = libs.protonAndroidPayment.billingGoogle,
+        overrides = mapOf("fdroid" to null, "quest" to null, "nogms" to null)
+    )
+    addSpecialLib(
+        default = libs.protonAndroidPayment.ui,
         overrides = mapOf("fdroid" to null, "quest" to null, "nogms" to null)
     )
     addSpecialLib(
@@ -443,6 +466,16 @@ dependencies {
         )
     )
 
+    implementation(projects.pass.payments.api)
+    addSpecialLib(
+        default = projects.pass.payments.impl,
+        overrides = mapOf(
+            "fdroid" to projects.pass.payments.noOp,
+            "quest" to projects.pass.payments.noOp,
+            "nogms" to projects.pass.payments.noOp
+        )
+    )
+
     implementation(projects.pass.features.account)
     implementation(projects.pass.features.aliasContacts)
     implementation(projects.pass.features.auth)
@@ -515,6 +548,12 @@ dependencies {
     ksp(libs.dagger.hilt.android.compiler)
     ksp(libs.androidx.hilt.compiler)
 
+    testImplementation(libs.junit)
+    testImplementation(libs.truth)
+    testImplementation(libs.coroutines.test)
+    testImplementation(projects.pass.commonTest)
+    testImplementation(projects.pass.payments.fakes)
+
     kspAndroidTest(libs.dagger.hilt.android.compiler)
     androidTestImplementation(libs.bundles.test.android) {
         exclude(module = "protobuf-lite")
@@ -523,6 +562,7 @@ dependencies {
         exclude(module = "protobuf-lite")
     }
     androidTestImplementation(libs.core.test.android.test.rule)
+    androidTestImplementation(projects.pass.payments.fakes)
     androidTestUtil(libs.androidx.test.orchestrator)
     baselineProfile(projects.appmacrobenchmark)
 

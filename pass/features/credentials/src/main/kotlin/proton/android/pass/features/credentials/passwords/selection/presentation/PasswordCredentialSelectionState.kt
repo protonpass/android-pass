@@ -36,7 +36,9 @@ internal sealed interface PasswordCredentialSelectionState {
         internal val themePreference: ThemePreference,
         internal val isBiometricAuthRequired: Boolean,
         internal val request: PasswordCredentialSelectionRequest,
-        internal val event: PasswordCredentialSelectionStateEvent
+        internal val event: PasswordCredentialSelectionStateEvent,
+        internal val supportPayment: Boolean = false,
+        internal val canShowWarningReloadApp: Boolean = false
     ) : PasswordCredentialSelectionState {
 
         internal val actionAfterAuth: PasswordCredentialSelectionActionAfterAuth = when (request) {

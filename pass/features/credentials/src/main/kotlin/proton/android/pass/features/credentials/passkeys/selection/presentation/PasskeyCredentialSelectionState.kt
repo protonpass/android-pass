@@ -35,7 +35,9 @@ internal sealed interface PasskeyCredentialSelectionState {
         internal val themePreference: ThemePreference,
         internal val isBiometricAuthRequired: Boolean,
         internal val request: PasskeyCredentialSelectionRequest,
-        internal val event: PasskeyCredentialSelectionStateEvent
+        internal val event: PasskeyCredentialSelectionStateEvent,
+        internal val supportPayment: Boolean = false,
+        internal val canShowWarningReloadApp: Boolean = false
     ) : PasskeyCredentialSelectionState {
 
         internal val actionAfterAuth: PasskeyCredentialSelectionActionAfterAuth = when (request) {

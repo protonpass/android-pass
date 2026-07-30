@@ -18,7 +18,6 @@
 
 package proton.android.pass.features.credentials.passkeys.creation.presentation
 
-import androidx.activity.ComponentActivity
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -28,6 +27,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.firstOrNull
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -35,9 +35,10 @@ import me.proton.core.account.domain.entity.AccountState
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.accountmanager.domain.getAccounts
 import me.proton.core.domain.entity.UserId
-import proton.android.pass.account.api.AccountOrchestrators
-import proton.android.pass.account.api.Orchestrator
+import proton.android.pass.appconfig.api.AppConfig
+import proton.android.pass.appconfig.api.BuildFlavor.Companion.supportPayment
 import proton.android.pass.biometry.NeedsBiometricAuth
+import proton.android.pass.common.api.combineN
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
@@ -60,8 +61,8 @@ import javax.inject.Inject
 internal class PasskeyCredentialCreationViewModel @Inject constructor(
     needsBiometricAuth: NeedsBiometricAuth,
     userPreferenceRepository: UserPreferencesRepository,
+    appConfig: AppConfig,
     private val accountManager: AccountManager,
-    private val accountOrchestrators: AccountOrchestrators,
     private val generatePasskey: GeneratePasskey,
     private val internalSettingsRepository: InternalSettingsRepository,
     private val snackbarDispatcher: SnackbarDispatcher,
@@ -84,15 +85,24 @@ internal class PasskeyCredentialCreationViewModel @Inject constructor(
         value = PasskeyCredentialCreationStateEvent.Idle
     )
 
-    internal val stateFlow: StateFlow<PasskeyCredentialCreationState> = combine(
+    private val paymentStateFlow = combine(
+        flowOf(appConfig.flavor.supportPayment()),
+        internalSettingsRepository.hasShownReloadAppWarning()
+    ) { supportsPayment, hasShownWarning ->
+        supportsPayment to !hasShownWarning
+    }
+
+    internal val stateFlow: StateFlow<PasskeyCredentialCreationState> = combineN(
         closeScreenFlow,
         requestOptionFlow,
         themePreferenceFlow,
         needsBiometricAuth(),
-        eventFlow
-    ) { shouldCloseScreen, requestOption, themePreference, isBiometricAuthRequired, event ->
+        eventFlow,
+        paymentStateFlow
+    ) { shouldCloseScreen, requestOption, themePreference, isBiometricAuthRequired, event, paymentState ->
+        val (supportsPayment, canShowWarningReloadApp) = paymentState
         if (shouldCloseScreen) {
-            return@combine PasskeyCredentialCreationState.Close
+            return@combineN PasskeyCredentialCreationState.Close
         }
 
         when (requestOption) {
@@ -104,7 +114,9 @@ internal class PasskeyCredentialCreationViewModel @Inject constructor(
                             request = request,
                             themePreference = themePreference,
                             isBiometricAuthRequired = isBiometricAuthRequired,
-                            event = event
+                            event = event,
+                            supportPayment = supportsPayment,
+                            canShowWarningReloadApp = canShowWarningReloadApp
                         )
                     }
                     ?: PasskeyCredentialCreationState.Close
@@ -165,10 +177,6 @@ internal class PasskeyCredentialCreationViewModel @Inject constructor(
         }
     }
 
-    internal fun onRegister(context: ComponentActivity) {
-        accountOrchestrators.register(context, listOf(Orchestrator.PlansOrchestrator))
-    }
-
     internal fun onUpdateRequest(newRequest: PasskeyCredentialCreationRequest?) {
         requestOptionFlow.update { newRequest.some() }
     }
@@ -177,10 +185,8 @@ internal class PasskeyCredentialCreationViewModel @Inject constructor(
         telemetryManager.sendEvent(PasskeyCredentialsTelemetryEvent.CreateDone)
     }
 
-    internal fun onUpgrade() {
-        viewModelScope.launch {
-            accountOrchestrators.start(Orchestrator.PlansOrchestrator)
-        }
+    internal fun doNotDisplayReloadAppWarningDialog() {
+        internalSettingsRepository.setHasShownReloadAppWarning(true)
     }
 
     internal fun onSignOut(userId: UserId) {

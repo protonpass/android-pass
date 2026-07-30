@@ -62,7 +62,6 @@ dependencies {
     implementation(libs.core.presentation.compose)
     implementation(libs.core.user.domain)
     implementation(libs.core.userSettings.domain)
-    implementation(libs.core.payment.domain)
     implementation(libs.kotlinx.collections)
 
     implementation(libs.androidx.hilt.navigation.compose)

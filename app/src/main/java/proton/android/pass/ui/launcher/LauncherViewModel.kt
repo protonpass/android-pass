@@ -46,16 +46,13 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
-import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
@@ -77,9 +74,6 @@ import me.proton.core.auth.presentation.AuthOrchestrator
 import me.proton.core.auth.presentation.entity.AddAccountWorkflow
 import me.proton.core.auth.presentation.onAddAccountResult
 import me.proton.core.domain.entity.UserId
-import me.proton.core.plan.presentation.PlansOrchestrator
-import me.proton.core.plan.presentation.onUpgradeResult
-import me.proton.core.plan.presentation.usecase.CheckUnredeemedGooglePurchase
 import me.proton.core.usersettings.presentation.UserSettingsOrchestrator
 import proton.android.pass.appconfig.api.AppConfig
 import proton.android.pass.appconfig.api.BuildFlavor.Companion.supportPayment
@@ -109,7 +103,6 @@ import kotlin.time.Duration.Companion.seconds
 class LauncherViewModel @Inject constructor(
     private val accountManager: AccountManager,
     private val authOrchestrator: AuthOrchestrator,
-    private val plansOrchestrator: PlansOrchestrator,
     private val userSettingsOrchestrator: UserSettingsOrchestrator,
     private val initialWorkerLauncher: InitialWorkerLauncher,
     private val getUserPlan: GetUserPlan,
@@ -122,11 +115,8 @@ class LauncherViewModel @Inject constructor(
     userPreferencesRepository: UserPreferencesRepository,
     commonLibraryVersionChecker: CommonLibraryVersionChecker,
     private val appConfig: AppConfig,
-    private val checkUnredeemedGooglePurchase: CheckUnredeemedGooglePurchase,
     private val telemetryManager: TelemetryManager
 ) : ViewModel() {
-
-    private val canDisplayUnredeemedPopup = MutableStateFlow(false)
 
     init {
         viewModelScope.launch {
@@ -136,24 +126,20 @@ class LauncherViewModel @Inject constructor(
                 PassLogger.i(TAG, "Common library version: $version")
             }
         }
-
-        checkUnredeemed()
     }
 
     internal val state: StateFlow<LauncherState> = combine(
         accountManager.getAccounts().map { accounts -> getState(accounts) },
         userPreferencesRepository.getThemePreference(),
         flowOf(appConfig.flavor.supportPayment()),
-        settingsRepository.hasShownReloadAppWarning(),
-        canDisplayUnredeemedPopup
-    ) { accountState, themePreference, supportPayment, hasShownReloadAppWarning, canDisplayUnredeemedPopup ->
+        settingsRepository.hasShownReloadAppWarning()
+    ) { accountState, themePreference, supportPayment, hasShownReloadAppWarning ->
         LauncherState(
             accountState = accountState,
             themePreference = themePreference,
             isNewLoginFlowEnabled = false,
             supportPayment = supportPayment,
-            canShowWarningReloadApp = !hasShownReloadAppWarning,
-            canDisplayUnredeemedPopup = canDisplayUnredeemedPopup
+            canShowWarningReloadApp = !hasShownReloadAppWarning
         )
     }.stateIn(
         scope = viewModelScope,
@@ -166,31 +152,13 @@ class LauncherViewModel @Inject constructor(
                 themePreference = themePreference,
                 isNewLoginFlowEnabled = false,
                 supportPayment = false,
-                canShowWarningReloadApp = false,
-                canDisplayUnredeemedPopup = false
+                canShowWarningReloadApp = false
             )
         }
     )
 
-    private fun checkUnredeemed() {
-        viewModelScope.launch {
-            if (appConfig.flavor.supportPayment()) {
-                val userId = accountManager.getPrimaryUserId().first() ?: return@launch
-                val unredeemed = checkUnredeemedGooglePurchase.invoke(userId)
-                canDisplayUnredeemedPopup.update { unredeemed != null }
-            } else {
-                canDisplayUnredeemedPopup.update { false }
-            }
-        }
-    }
-
-    fun onRedeemedEnd() {
-        canDisplayUnredeemedPopup.update { false }
-    }
-
     internal fun register(context: ComponentActivity) {
         authOrchestrator.register(context as ActivityResultCaller)
-        plansOrchestrator.register(context)
         userSettingsOrchestrator.register(context)
 
         authOrchestrator.onAddAccountResult { result ->
@@ -287,12 +255,6 @@ class LauncherViewModel @Inject constructor(
         accountManager.setAsPrimary(userId)
     }
 
-    internal fun subscription() = viewModelScope.launch {
-        getPrimaryUserIdOrNull()?.let {
-            plansOrchestrator.showCurrentPlanWorkflow(it)
-        }
-    }
-
     fun tryUpgrade(id: UserId? = null) {
         viewModelScope.launch {
             val internalUserId = id ?: getPrimaryUserIdOrNull()
@@ -323,18 +285,6 @@ class LauncherViewModel @Inject constructor(
                     PassLogger.w(TAG, e)
                 }
             }
-        }
-    }
-
-    internal fun upgradeWithClassicWorkflow() = viewModelScope.launch {
-        getPrimaryUserIdOrNull()?.let { userId ->
-            plansOrchestrator
-                .onUpgradeResult { result ->
-                    if (result != null) {
-                        tryUpgrade(userId)
-                    }
-                }
-                .startUpgradeWorkflow(userId)
         }
     }
 
@@ -419,6 +369,5 @@ internal data class LauncherState(
     val themePreference: ThemePreference,
     val isNewLoginFlowEnabled: Boolean,
     val supportPayment: Boolean,
-    val canShowWarningReloadApp: Boolean,
-    val canDisplayUnredeemedPopup: Boolean
+    val canShowWarningReloadApp: Boolean
 )

@@ -19,6 +19,7 @@
 package proton.android.pass.account.fakes
 
 import dagger.Binds
+import dagger.BindsOptionalOf
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -52,6 +53,7 @@ import me.proton.core.payment.domain.repository.PaymentsRepository
 import me.proton.core.payment.domain.repository.PurchaseRepository
 import me.proton.core.payment.domain.usecase.CreatePaymentTokenForGooglePurchase
 import me.proton.core.payment.domain.usecase.FindGooglePurchaseForPaymentOrderId
+import me.proton.core.payment.domain.usecase.GoogleServicesUtils
 import me.proton.core.plan.domain.repository.PlansRepository
 import me.proton.core.plan.domain.usecase.PerformSubscribe
 import me.proton.core.user.domain.UserAddressManager
@@ -66,7 +68,6 @@ import me.proton.core.usersettings.domain.usecase.ObserveRegisteredSecurityKeys
 import me.proton.core.usersettings.domain.usecase.ObserveUserSettings
 import me.proton.core.util.kotlin.CoroutineScopeProvider
 import me.proton.core.util.kotlin.DispatcherProvider
-import proton.android.pass.account.api.AccountOrchestrators
 import proton.android.pass.account.fakes.accountmanager.FakeAccountWorkflowHandler
 import proton.android.pass.account.fakes.accountmanager.FakeSessionManager
 import proton.android.pass.account.fakes.auth.FakeAuthRepository
@@ -86,8 +87,8 @@ import proton.android.pass.account.fakes.payment.FakeCreatePaymentTokenForGoogle
 import proton.android.pass.account.fakes.payment.FakeFindGooglePurchaseForPaymentOrderId
 import proton.android.pass.account.fakes.payment.FakeIsOmnichannelEnabled
 import proton.android.pass.account.fakes.payment.FakePaymentsRepository
+import proton.android.pass.account.fakes.payment.FakePerformSubscribe
 import proton.android.pass.account.fakes.payment.FakePurchaseRepository
-import proton.android.pass.account.fakes.plan.FakePerformSubscribe
 import proton.android.pass.account.fakes.plan.FakePlansRepository
 import proton.android.pass.account.fakes.user.FakeDomainRepository
 import proton.android.pass.account.fakes.user.FakeUserAddressManager
@@ -97,9 +98,6 @@ import java.util.Optional
 @InstallIn(SingletonComponent::class)
 @Suppress("TooManyFunctions")
 abstract class FakesAccountModule {
-
-    @Binds
-    abstract fun bindAccountOrchestrators(impl: FakeAccountOrchestrators): AccountOrchestrators
 
     @Binds
     abstract fun bindAccountManager(impl: FakeAccountManager): AccountManager
@@ -176,18 +174,6 @@ abstract class FakesAccountModule {
     abstract fun bindAccountWorkflowHandler(impl: FakeAccountWorkflowHandler): AccountWorkflowHandler
 
     @Binds
-    abstract fun bindPerformSubscribe(impl: FakePerformSubscribe): PerformSubscribe
-
-    @Binds
-    abstract fun bindPurchaseRepository(impl: FakePurchaseRepository): PurchaseRepository
-
-    @Binds
-    abstract fun bindPaymentsRepository(impl: FakePaymentsRepository): PaymentsRepository
-
-    @Binds
-    abstract fun bindPlansRepository(impl: FakePlansRepository): PlansRepository
-
-    @Binds
     abstract fun bindUserCheck(impl: FakeUserCheck): PostLoginAccountSetup.UserCheck
 
     @Binds
@@ -206,12 +192,27 @@ abstract class FakesAccountModule {
     abstract fun bindDomainRepository(impl: FakeDomainRepository): DomainRepository
 
     @Binds
-    abstract fun bindCreatePaymentTokenForGooglePurchase(
-        impl: FakeCreatePaymentTokenForGooglePurchase
-    ): CreatePaymentTokenForGooglePurchase
+    abstract fun bindPurchaseRepository(impl: FakePurchaseRepository): PurchaseRepository
+
+    @Binds
+    abstract fun bindPaymentsRepository(impl: FakePaymentsRepository): PaymentsRepository
+
+    @Binds
+    abstract fun bindPerformSubscribe(impl: FakePerformSubscribe): PerformSubscribe
+
+    @Binds
+    abstract fun bindPlansRepository(impl: FakePlansRepository): PlansRepository
 
     @Binds
     abstract fun bindIsOmnichannelEnabled(impl: FakeIsOmnichannelEnabled): IsOmnichannelEnabled
+
+    @BindsOptionalOf
+    abstract fun bindGoogleServicesUtils(): GoogleServicesUtils
+
+    @Binds
+    abstract fun bindCreatePaymentTokenForGooglePurchase(
+        impl: FakeCreatePaymentTokenForGooglePurchase
+    ): CreatePaymentTokenForGooglePurchase
 
     @Binds
     abstract fun bindFindGooglePurchaseForPaymentOrderId(

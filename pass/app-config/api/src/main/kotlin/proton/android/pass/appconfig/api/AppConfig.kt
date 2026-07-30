@@ -44,6 +44,12 @@ const val PASS_FDROID_URL = "https://f-droid.org/packages/proton.android.pass.fd
 const val PASS_HORIZON_URL =
     "https://www.meta.com/en-gb/experiences/proton-pass-password-manager/25447164831535276/"
 
+const val PROTON_DEFAULT_UPGRADE_URL = "https://account.proton.me/pass/upgrade"
+const val PROTON_HORIZON_UPGRADE_URL =
+    "https://go.getproton.me/aff_c?offer_id=48&aff_id=11853&url_id=1283"
+
+fun upgradeUrl(isQuest: Boolean): String = if (isQuest) PROTON_HORIZON_UPGRADE_URL else PROTON_DEFAULT_UPGRADE_URL
+
 sealed class BuildFlavor(val env: BuildEnv) {
     class Dev(env: BuildEnv) : BuildFlavor(env)
     class Alpha(env: BuildEnv) : BuildFlavor(env)
@@ -112,5 +118,7 @@ sealed class BuildFlavor(val env: BuildEnv) {
             is Quest -> PASS_HORIZON_URL
             else -> PASS_PLAY_STORE_URL
         }
+
+        fun BuildFlavor.upgradeUrl(): String = upgradeUrl(isQuest = isQuest())
     }
 }

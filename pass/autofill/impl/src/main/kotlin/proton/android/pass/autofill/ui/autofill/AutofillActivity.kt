@@ -42,7 +42,7 @@ import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import proton.android.pass.appconfig.api.AppConfig
-import proton.android.pass.appconfig.api.BuildFlavor.Companion.isQuest
+import proton.android.pass.appconfig.api.BuildFlavor.Companion.upgradeUrl
 import proton.android.pass.autofill.DatasetBuilderOptions
 import proton.android.pass.autofill.DatasetUtils
 import proton.android.pass.autofill.di.UserPreferenceEntryPoint
@@ -64,10 +64,6 @@ import proton.android.pass.preferences.AllowScreenshotsPreference
 import proton.android.pass.preferences.ThemePreference
 import javax.inject.Inject
 
-private const val PROTON_DEFAULT_UPGRADE_URL = "https://account.proton.me/pass/upgrade"
-private const val PROTON_HORIZON_UPGRADE_URL =
-    "https://go.getproton.me/aff_c?offer_id=48&aff_id=11853&url_id=1283"
-
 @AndroidEntryPoint
 class AutofillActivity : FragmentActivity() {
 
@@ -84,8 +80,6 @@ class AutofillActivity : FragmentActivity() {
             }
         }
         super.onCreate(savedInstanceState)
-
-        viewModel.register(this)
 
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
@@ -124,23 +118,14 @@ class AutofillActivity : FragmentActivity() {
                                     is AutofillNavigation.SendResponse -> onAutofillSuccess(it.mappings)
                                     AutofillNavigation.Upgrade -> {
                                         when {
-                                            autofillUiState.supportPayment -> {
-                                                viewModel.upgrade()
-                                            }
-
-                                            !autofillUiState.supportPayment &&
-                                                autofillUiState.canShowWarningReloadApp -> {
+                                            autofillUiState.canShowWarningReloadApp -> {
                                                 showWarningReloadAppDialog = true
                                             }
 
                                             else -> {
                                                 BrowserUtils.openWebsite(
                                                     context = context,
-                                                    website = when {
-                                                        appConfig.flavor.isQuest() -> PROTON_HORIZON_UPGRADE_URL
-
-                                                        else -> PROTON_DEFAULT_UPGRADE_URL
-                                                    }
+                                                    website = appConfig.flavor.upgradeUrl()
                                                 )
                                             }
                                         }
@@ -159,11 +144,7 @@ class AutofillActivity : FragmentActivity() {
                                     }
                                     BrowserUtils.openWebsite(
                                         context = context,
-                                        website = when {
-                                            appConfig.flavor.isQuest() -> PROTON_HORIZON_UPGRADE_URL
-
-                                            else -> PROTON_DEFAULT_UPGRADE_URL
-                                        }
+                                        website = appConfig.flavor.upgradeUrl()
                                     )
                                 },
                                 onCancelClick = {

@@ -38,7 +38,9 @@ internal sealed interface PasskeyCredentialCreationState {
         internal val request: PasskeyCredentialCreationRequest,
         internal val themePreference: ThemePreference,
         internal val isBiometricAuthRequired: Boolean,
-        internal val event: PasskeyCredentialCreationStateEvent
+        internal val event: PasskeyCredentialCreationStateEvent,
+        internal val supportPayment: Boolean = false,
+        internal val canShowWarningReloadApp: Boolean = false
     ) : PasskeyCredentialCreationState {
 
         internal val initialCreateLoginUiState: InitialCreateLoginUiState = InitialCreateLoginUiState(

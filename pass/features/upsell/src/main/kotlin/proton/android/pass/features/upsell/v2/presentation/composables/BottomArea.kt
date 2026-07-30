@@ -18,8 +18,6 @@
 
 package proton.android.pass.features.upsell.v2.presentation.composables
 
-import android.view.ContextThemeWrapper
-import android.view.ViewGroup
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
@@ -48,19 +46,12 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.toArgb
-import androidx.compose.ui.platform.LocalInspectionMode
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.viewinterop.AndroidView
 import me.proton.core.compose.theme.ProtonTheme
-import me.proton.core.payment.presentation.view.ProtonPaymentButton
-import me.proton.core.payment.presentation.viewmodel.ProtonPaymentEvent
-import me.proton.core.presentation.R
 import proton.android.pass.commonpresentation.api.plan.PaymentButtonUiState
 import proton.android.pass.commonui.api.LocalDark
-import proton.android.pass.commonui.api.LocalIsScreenshotTest
 import proton.android.pass.commonui.api.PassPalette
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
@@ -79,10 +70,9 @@ internal fun BottomArea(
     } else {
         PassPalette.upsellLightBackgroundColor
     },
-    onPaymentCallback: (ProtonPaymentEvent) -> Unit
+    onPurchaseClick: () -> Unit
 ) {
-    val preview = LocalInspectionMode.current
-    var bottomAreaVisible by remember { mutableStateOf(preview) }
+    var bottomAreaVisible by remember { mutableStateOf(false) }
     LaunchedEffect(Unit) { bottomAreaVisible = true }
 
     AnimatedVisibility(
@@ -100,68 +90,23 @@ internal fun BottomArea(
         ) {
             Spacer(modifier = Modifier.height(24.dp))
 
-            if (LocalInspectionMode.current || LocalIsScreenshotTest.current) {
-                CircleButton(
-                    modifier = Modifier
-                        .padding(Spacing.mediumLarge, Spacing.none)
-                        .fillMaxWidth()
-                        .height(52.dp),
-                    color = PassTheme.colors.signalNorm,
-                    onClick = { },
-                    content = {
-                        Text(
-                            text = "Pay",
-                            style = ProtonTheme.typography.body2Regular.copy(
-                                color = PassTheme.colors.interactionNormMinor2
-                            )
+            CircleButton(
+                modifier = Modifier
+                    .padding(Spacing.mediumLarge, Spacing.none)
+                    .fillMaxWidth()
+                    .height(52.dp),
+                color = PassTheme.colors.signalNorm,
+                onClick = onPurchaseClick,
+                content = {
+                    Text(
+                        text = paymentButtonUiState.defaultButtonText
+                            ?: paymentButtonUiState.formattedPrice,
+                        style = ProtonTheme.typography.body2Regular.copy(
+                            color = PassTheme.colors.interactionNormMinor2
                         )
-                    }
-                )
-            } else {
-
-                val color = PassTheme.colors.signalNorm
-                val textColor = PassTheme.colors.interactionNormMinor2
-                val isDark = LocalDark.current
-
-                AndroidView(
-                    modifier = Modifier
-                        .padding(horizontal = Spacing.mediumLarge, Spacing.none)
-                        .fillMaxWidth()
-                        .height(52.dp),
-                    factory = { context ->
-                        val themedContext =
-                            ContextThemeWrapper(
-                                context,
-                                when (isDark) {
-                                    true -> R.style.Theme_Material3_Dark
-                                    false -> R.style.Theme_Material3_Light
-                                }
-                            )
-
-                        ProtonPaymentButton(themedContext).apply {
-                            this.layoutParams = ViewGroup.LayoutParams(
-                                ViewGroup.LayoutParams.MATCH_PARENT,
-                                ViewGroup.LayoutParams.MATCH_PARENT
-                            )
-                            this.setBackgroundColor(color.toArgb())
-                            this.setTextColor(textColor.toArgb())
-                            paymentButtonUiState.defaultButtonText?.let {
-                                this.buttonText = it
-                            }
-                        }
-                    },
-                    update = { view ->
-                        view.currency = paymentButtonUiState.currency
-                        view.cycle = paymentButtonUiState.cycle
-                        paymentButtonUiState.plan?.let {
-                            view.plan = it
-                        }
-                        view.paymentProvider = null // determined automatically
-                        view.userId = paymentButtonUiState.userId
-                        view.setOnEventListener { event -> onPaymentCallback(event) }
-                    }
-                )
-            }
+                    )
+                }
+            )
 
             Spacer(modifier = Modifier.height(18.dp))
 
@@ -179,7 +124,6 @@ internal fun BottomArea(
                 )
             }
 
-
             Spacer(modifier = Modifier.height(10.dp))
 
             Spacer(
@@ -196,9 +140,13 @@ fun BottomAreaPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boo
     PassTheme(isDark = isDark) {
         Surface {
             BottomArea(
-                paymentButtonUiState = PaymentButtonUiState(),
+                paymentButtonUiState = PaymentButtonUiState(
+                    productId = "pass_plus_12",
+                    offerToken = "preview-offer-token",
+                    formattedPrice = "$9.99"
+                ),
                 bottomText = "The bottom text displayed",
-                onPaymentCallback = {}
+                onPurchaseClick = {}
             )
         }
     }

@@ -19,37 +19,37 @@
 package proton.android.pass.account.fakes.payment
 
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.mapNotNull
 import me.proton.core.payment.domain.entity.Purchase
 import me.proton.core.payment.domain.repository.PurchaseRepository
 import javax.inject.Inject
 
-@Suppress("NotImplementedDeclaration")
 class FakePurchaseRepository @Inject constructor() : PurchaseRepository {
-    override fun observePurchase(planName: String): Flow<Purchase?> {
-        TODO("Not yet implemented")
-    }
 
-    override fun observePurchases(): Flow<List<Purchase>> {
-        TODO("Not yet implemented")
-    }
+    private val purchases = MutableStateFlow<List<Purchase>>(emptyList())
+    private val purchaseStateChanged = MutableSharedFlow<Purchase>(extraBufferCapacity = 64)
 
-    override suspend fun getPurchase(planName: String): Purchase? {
-        TODO("Not yet implemented")
-    }
+    override fun observePurchase(planName: String): Flow<Purchase?> =
+        purchases.mapNotNull { list -> list.firstOrNull { it.planName == planName } }
 
-    override suspend fun getPurchases(): List<Purchase> {
-        TODO("Not yet implemented")
-    }
+    override fun observePurchases(): Flow<List<Purchase>> = purchases
+
+    override suspend fun getPurchase(planName: String): Purchase? =
+        purchases.value.firstOrNull { it.planName == planName }
+
+    override suspend fun getPurchases(): List<Purchase> = purchases.value
 
     override suspend fun upsertPurchase(purchase: Purchase) {
-        TODO("Not yet implemented")
+        purchases.value = purchases.value
+            .filterNot { it.planName == purchase.planName } + purchase
+        purchaseStateChanged.emit(purchase)
     }
 
     override suspend fun deletePurchase(planName: String) {
-        TODO("Not yet implemented")
+        purchases.value = purchases.value.filterNot { it.planName == planName }
     }
 
-    override fun onPurchaseStateChanged(initialState: Boolean): Flow<Purchase> {
-        TODO("Not yet implemented")
-    }
+    override fun onPurchaseStateChanged(initialState: Boolean): Flow<Purchase> = purchaseStateChanged
 }

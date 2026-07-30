@@ -21,7 +21,6 @@ package proton.android.pass.ui
 import android.content.ComponentName
 import android.content.Intent
 import android.os.Bundle
-import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.compose.setContent
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.ActivityResultLauncher
@@ -51,14 +50,13 @@ import me.proton.core.accountmanager.presentation.compose.SignOutDialogActivity
 import me.proton.core.compose.component.ProtonCenteredProgress
 import me.proton.core.notification.presentation.deeplink.DeeplinkManager
 import me.proton.core.notification.presentation.deeplink.onActivityCreate
-import me.proton.core.plan.presentation.ui.StartUnredeemedPurchase
 import me.proton.core.telemetry.domain.TelemetryManager
 import me.proton.core.telemetry.presentation.ProductMetricsDelegate
 import me.proton.core.telemetry.presentation.ProductMetricsDelegateOwner
 import me.proton.core.telemetry.presentation.compose.LocalProductMetricsDelegateOwner
 import proton.android.pass.PassActivityOrchestrator
 import proton.android.pass.appconfig.api.AppConfig
-import proton.android.pass.appconfig.api.BuildFlavor.Companion.isQuest
+import proton.android.pass.appconfig.api.BuildFlavor.Companion.upgradeUrl
 import proton.android.pass.autofill.di.UserPreferenceEntryPoint
 import proton.android.pass.commonui.api.BrowserUtils
 import proton.android.pass.commonui.api.PassTheme
@@ -77,10 +75,6 @@ import proton.android.pass.ui.launcher.AccountState.Processing
 import proton.android.pass.ui.launcher.AccountState.StepNeeded
 import proton.android.pass.ui.launcher.LauncherViewModel
 import javax.inject.Inject
-
-private const val PROTON_DEFAULT_UPGRADE_URL = "https://account.proton.me/pass/upgrade"
-private const val PROTON_HORIZON_UPGRADE_URL =
-    "https://go.getproton.me/aff_c?offer_id=48&aff_id=11853&url_id=1283"
 
 @AndroidEntryPoint
 class MainActivity : FragmentActivity(), ProductMetricsDelegateOwner {
@@ -156,23 +150,6 @@ class MainActivity : FragmentActivity(), ProductMetricsDelegateOwner {
             }
 
 
-            val launcher = rememberLauncherForActivityResult(
-                contract = ActivityResultContracts.StartActivityForResult()
-            ) {
-                if (it.resultCode == RESULT_OK) {
-                    launcherViewModel.tryUpgrade()
-                }
-                launcherViewModel.onRedeemedEnd()
-            }
-
-            LaunchedEffect(state.canDisplayUnredeemedPopup) {
-                if (state.canDisplayUnredeemedPopup) {
-                    launcher.launch(
-                        StartUnredeemedPurchase.createIntent(context, Unit)
-                    )
-                }
-            }
-
             val isDark = isDark(state.themePreference)
             LaunchedEffect(isDark) {
                 WindowCompat.getInsetsController(window, window.decorView).apply {
@@ -213,28 +190,21 @@ class MainActivity : FragmentActivity(), ProductMetricsDelegateOwner {
 
                                     is AppNavigation.SignIn -> launcherViewModel.signIn(it.userId)
                                     is AppNavigation.ForceSignOut -> launcherViewModel.disable(it.userId)
-                                    is AppNavigation.Subscription -> launcherViewModel.subscription()
                                     is AppNavigation.Upgrade -> {
                                         when {
-                                            state.supportPayment -> {
-                                                launcherViewModel.upgradeWithClassicWorkflow()
-                                            }
-
                                             !state.supportPayment &&
                                                 state.canShowWarningReloadApp -> {
                                                 showWarningReloadAppDialog = true
                                             }
 
-                                            else -> {
+                                            !state.supportPayment -> {
                                                 BrowserUtils.openWebsite(
                                                     context = context,
-                                                    website = when {
-                                                        appConfig.flavor.isQuest() -> PROTON_HORIZON_UPGRADE_URL
-
-                                                        else -> PROTON_DEFAULT_UPGRADE_URL
-                                                    }
+                                                    website = appConfig.flavor.upgradeUrl()
                                                 )
                                             }
+
+                                            else -> Unit // handled by PassAppContent → UpsellV2NavItem
                                         }
                                     }
 
@@ -263,11 +233,7 @@ class MainActivity : FragmentActivity(), ProductMetricsDelegateOwner {
                             }
                             BrowserUtils.openWebsite(
                                 context = context,
-                                website = when {
-                                    appConfig.flavor.isQuest() -> PROTON_HORIZON_UPGRADE_URL
-
-                                    else -> PROTON_DEFAULT_UPGRADE_URL
-                                }
+                                website = appConfig.flavor.upgradeUrl()
                             )
                         },
                         onCancelClick = {

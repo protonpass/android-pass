@@ -32,13 +32,20 @@ import androidx.compose.material.Scaffold
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import proton.android.pass.appconfig.api.upgradeUrl
 import proton.android.pass.commonpresentation.api.snackbar.SnackbarViewModel
 import proton.android.pass.commonpresentation.impl.snackbar.SnackBarViewModelImpl
+import proton.android.pass.commonui.api.BrowserUtils
 import proton.android.pass.commonui.api.PassTheme
+import proton.android.pass.composecomponents.impl.dialogs.WarningReloadAppDialog
 import proton.android.pass.composecomponents.impl.messages.PassSnackbarHost
 import proton.android.pass.composecomponents.impl.messages.rememberPassSnackbarHostState
 import proton.android.pass.composecomponents.impl.snackbar.SnackBarLaunchedEffect
@@ -78,19 +85,50 @@ fun AutoSaveApp(
 
             when (state) {
                 is AutoSaveAppViewState.Ready -> {
+                    var showWarningReloadAppDialog by rememberSaveable { mutableStateOf(false) }
+                    val context = LocalContext.current
                     AutosaveAppContent(
                         modifier = Modifier.padding(padding),
                         arguments = arguments,
                         state = state,
                         onItemSelectedForUpdate = viewModel::onItemSelectedForUpdate,
                         onClearSelectedItemForUpdate = viewModel::onClearSelectedItemForUpdate,
-                        onNavigate = {
-                            if (it == AutosaveNavigation.Success) {
-                                viewModel.onItemAutoSaved()
+                        onNavigate = { nav ->
+                            when {
+                                nav == AutosaveNavigation.Upgrade && state.canShowWarningReloadApp -> {
+                                    showWarningReloadAppDialog = true
+                                }
+                                nav == AutosaveNavigation.Upgrade -> {
+                                    BrowserUtils.openWebsite(
+                                        context = context,
+                                        website = upgradeUrl(isQuest = state.isQuest)
+                                    )
+                                }
+                                nav == AutosaveNavigation.Success -> {
+                                    viewModel.onItemAutoSaved()
+                                    onNavigate(nav)
+                                }
+                                else -> onNavigate(nav)
                             }
-                            onNavigate(it)
                         }
                     )
+                    if (showWarningReloadAppDialog) {
+                        WarningReloadAppDialog(
+                            onOkClick = { reminderCheck ->
+                                showWarningReloadAppDialog = false
+                                if (reminderCheck) {
+                                    viewModel.doNotDisplayReloadAppWarningDialog()
+                                }
+                                BrowserUtils.openWebsite(
+                                    context = context,
+                                    website = upgradeUrl(isQuest = state.isQuest)
+                                )
+                            },
+                            onCancelClick = {
+                                showWarningReloadAppDialog = false
+                            }
+                        )
+                    }
                 }
 
                 is AutoSaveAppViewState.Loading -> {

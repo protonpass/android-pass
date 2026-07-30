@@ -64,6 +64,7 @@ internal fun AutofillApp(
             autofillAppState = autofillUiState.autofillAppState,
             selectedAutofillItem = autofillUiState.selectedAutofillItem.value(),
             needsAuth = autofillUiState.needsAuth,
+            supportPayment = autofillUiState.supportPayment,
             onNavigate = {
                 snackbarViewModel.onSnackbarMessageDelivered()
                 onNavigate(it)

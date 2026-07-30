@@ -19,27 +19,47 @@
 package proton.android.pass.uitest.flow
 
 import dagger.hilt.android.testing.HiltAndroidTest
-import me.proton.core.plan.test.MinimalSubscriptionTests
-import me.proton.core.plan.test.robot.SubscriptionRobot
-import me.proton.core.test.rule.ProtonRule
-import me.proton.core.test.rule.extension.protonAndroidComposeRule
-import org.junit.Rule
+import org.junit.Assert.assertEquals
+import org.junit.Test
 import proton.android.pass.features.onboarding.OnBoardingPageName
-import proton.android.pass.ui.MainActivity
+import proton.android.pass.uitest.BaseTest
+import proton.android.pass.payments.fakes.FakePayments
+import proton.android.pass.uitest.robot.AccountRobot
 import proton.android.pass.uitest.robot.HomeRobot
 import proton.android.pass.uitest.robot.OnBoardingRobot
+import proton.android.pass.uitest.robot.SubscriptionManagementRobot
+import proton.android.pass.uitest.robot.UpsellRobot
+import javax.inject.Inject
 
 @HiltAndroidTest
-open class SubscriptionFlowTest : MinimalSubscriptionTests() {
+class SubscriptionFlowTest : BaseTest() {
 
-    // TODO: rework and fix account tests - CP-8721.
+    @Inject
+    lateinit var fakePayments: FakePayments
 
-    @get:Rule
-    val protonRule: ProtonRule = protonAndroidComposeRule<MainActivity>(
-        logoutBefore = true
-    )
+    @Test
+    fun opensPaymentSubscriptionManagementFromAccount() {
+        navigateToAccount()
 
-    override fun startSubscription(): SubscriptionRobot {
+        SubscriptionManagementRobot.screenDisplayed()
+    }
+
+    @Test
+    fun startsPurchaseFromUpsell() {
+        navigateToAccount(upgrade = true)
+
+        UpsellRobot
+            .annualPlansDisplayed()
+            .clickUpgrade()
+
+        composeTestRule.waitUntil { fakePayments.purchases.isNotEmpty() }
+        assertEquals(
+            listOf(FakePayments.Purchase(productId = "pass_plus_12", offerToken = "pass_plus_12-token")),
+            fakePayments.purchases
+        )
+    }
+
+    private fun navigateToAccount(upgrade: Boolean = false) {
         OnBoardingRobot
             .onBoardingScreenDisplayed()
             .clickSkip(OnBoardingPageName.Autofill)
@@ -51,7 +71,11 @@ open class SubscriptionFlowTest : MinimalSubscriptionTests() {
             .profileScreenDisplayed()
             .clickAccount()
             .accountScreenDisplayed()
-            .clickSubscription()
-        return SubscriptionRobot
+
+        if (upgrade) {
+            AccountRobot.clickUpgrade()
+        } else {
+            AccountRobot.clickSubscription()
+        }
     }
 }

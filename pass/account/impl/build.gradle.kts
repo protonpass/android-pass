@@ -39,8 +39,6 @@ androidComponents.beforeVariants { variant ->
 dependencies {
     api(projects.pass.account.api)
 
-    implementation(libs.core.plan)
-
     implementation(libs.dagger.hilt.android)
     ksp(libs.dagger.hilt.android.compiler)
     ksp(libs.androidx.hilt.compiler)

@@ -53,7 +53,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import me.proton.core.compose.theme.ProtonTheme
-import me.proton.core.payment.presentation.viewmodel.ProtonPaymentEvent
 import proton.android.pass.commonui.api.LocalDark
 import proton.android.pass.commonui.api.PassPalette
 import proton.android.pass.commonui.api.PassTheme
@@ -79,7 +78,7 @@ fun UpsellAnnualPlan(
     modifier: Modifier = Modifier,
     plans: List<UpsellPlanUiModel>,
     isFoldersEnabled: Boolean,
-    onPaymentCallback: (ProtonPaymentEvent) -> Unit
+    onPurchaseClick: (productId: String, offerToken: String) -> Unit
 ) {
     val (selectedPlanIndex, onUpdateSelectedPlanIndex) = remember { mutableIntStateOf(0) }
 
@@ -207,7 +206,9 @@ fun UpsellAnnualPlan(
                     .align(alignment = Alignment.BottomCenter),
                 bottomText = it.bottomAnnualPrice,
                 paymentButtonUiState = it.paymentButtonUiState,
-                onPaymentCallback = onPaymentCallback
+                onPurchaseClick = {
+                    onPurchaseClick(it.paymentButtonUiState.productId, it.paymentButtonUiState.offerToken)
+                }
             )
         }
     }
@@ -221,7 +222,7 @@ fun UpsellAnnualPlanPreview(@PreviewParameter(ThemePreviewProvider::class) isDar
             UpsellAnnualPlan(
                 plans = mockAnnualPlans,
                 isFoldersEnabled = true,
-                onPaymentCallback = {}
+                onPurchaseClick = { _, _ -> }
             )
         }
     }

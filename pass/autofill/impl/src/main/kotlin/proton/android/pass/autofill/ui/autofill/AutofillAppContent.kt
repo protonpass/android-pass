@@ -48,6 +48,8 @@ import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.composecomponents.impl.bottomsheet.PassModalBottomSheetLayout
 import proton.android.pass.features.auth.AUTH_GRAPH
 import proton.android.pass.features.selectitem.navigation.SelectItem
+import proton.android.pass.features.upsell.v2.navigation.UpsellV2NavItem
+import proton.android.pass.features.upsell.v2.navigation.upsellV2NavGraph
 import proton.android.pass.navigation.api.rememberAppNavigator
 import proton.android.pass.navigation.api.rememberBottomSheetNavigator
 
@@ -62,6 +64,7 @@ internal fun AutofillAppContent(
     autofillAppState: AutofillAppState,
     selectedAutofillItem: AutofillItem?,
     needsAuth: Boolean,
+    supportPayment: Boolean,
     onNavigate: (AutofillNavigation) -> Unit,
     viewModel: AutofillAppViewModel = hiltViewModel()
 ) {
@@ -121,7 +124,17 @@ internal fun AutofillAppContent(
                 appNavigator = appNavigator,
                 autofillAppState = autofillAppState,
                 selectedAutofillItem = selectedAutofillItem,
-                onNavigate = onNavigate,
+                onNavigate = { nav ->
+                    if (nav == AutofillNavigation.Upgrade && supportPayment) {
+                        appNavigator.navigate(
+                            destination = UpsellV2NavItem,
+                            force = true,
+                            route = UpsellV2NavItem.createRoute(manualDisplay = true)
+                        )
+                    } else {
+                        onNavigate(nav)
+                    }
+                },
                 onEvent = {
                     when (it) {
                         is AutofillEvent.AutofillItemSelected -> {
@@ -153,6 +166,11 @@ internal fun AutofillAppContent(
                         block = block
                     )
                 }
+            )
+            upsellV2NavGraph(
+                onNextScreen = { _ -> appNavigator.navigateBack() },
+                onSkip = { _ -> appNavigator.navigateBack() },
+                onNavigateBack = { _ -> appNavigator.navigateBack() }
             )
         }
 

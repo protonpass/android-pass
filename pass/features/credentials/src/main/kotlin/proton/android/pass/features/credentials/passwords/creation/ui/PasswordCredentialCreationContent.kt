@@ -39,6 +39,8 @@ import proton.android.pass.features.credentials.passwords.creation.navigation.Pa
 import proton.android.pass.features.credentials.passwords.creation.navigation.passwordCredentialCreationNavGraph
 import proton.android.pass.features.credentials.passwords.creation.presentation.PasswordCredentialCreationState
 import proton.android.pass.features.itemcreate.login.CREATE_LOGIN_GRAPH
+import proton.android.pass.features.upsell.v2.navigation.UpsellV2NavItem
+import proton.android.pass.features.upsell.v2.navigation.upsellV2NavGraph
 import proton.android.pass.features.selectitem.navigation.SelectItem
 import proton.android.pass.navigation.api.AppNavigator
 import proton.android.pass.navigation.api.rememberBottomSheetNavigator
@@ -73,7 +75,17 @@ internal fun PasswordCredentialCreationContent(
                     appNavigator = appNavigator,
                     initialCreateLoginUiState = initialCreateLoginUiState,
                     selectItemState = selectItemState,
-                    onNavigate = onNavigate,
+                    onNavigate = { nav ->
+                        if (nav == PasswordCredentialCreationNavEvent.Upgrade && supportPayment) {
+                            appNavigator.navigate(
+                                destination = UpsellV2NavItem,
+                                force = true,
+                                route = UpsellV2NavItem.createRoute(manualDisplay = true)
+                            )
+                        } else {
+                            onNavigate(nav)
+                        }
+                    },
                     dismissBottomSheet = { block ->
                         onBottomSheetDismissed(
                             coroutineScope = coroutineScope,
@@ -82,6 +94,11 @@ internal fun PasswordCredentialCreationContent(
                             block = block
                         )
                     }
+                )
+                upsellV2NavGraph(
+                    onNextScreen = { _ -> appNavigator.navigateBack() },
+                    onSkip = { _ -> appNavigator.navigateBack() },
+                    onNavigateBack = { _ -> appNavigator.navigateBack() }
                 )
             }
         }
@@ -108,7 +125,17 @@ internal fun PasswordCredentialCreationContent(
                     appNavigator = appNavigator,
                     initialCreateLoginUiState = initialCreateLoginUiState,
                     selectItemState = selectItemState,
-                    onNavigate = onNavigate,
+                    onNavigate = { nav ->
+                        if (nav == PasswordCredentialCreationNavEvent.Upgrade && supportPayment) {
+                            appNavigator.navigate(
+                                destination = UpsellV2NavItem,
+                                force = true,
+                                route = UpsellV2NavItem.createRoute(manualDisplay = true)
+                            )
+                        } else {
+                            onNavigate(nav)
+                        }
+                    },
                     dismissBottomSheet = { block ->
                         onBottomSheetDismissed(
                             coroutineScope = coroutineScope,
@@ -117,6 +144,11 @@ internal fun PasswordCredentialCreationContent(
                             block = block
                         )
                     }
+                )
+                upsellV2NavGraph(
+                    onNextScreen = { _ -> appNavigator.navigateBack() },
+                    onSkip = { _ -> appNavigator.navigateBack() },
+                    onNavigateBack = { _ -> appNavigator.navigateBack() }
                 )
             }
         }

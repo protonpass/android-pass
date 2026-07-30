@@ -48,7 +48,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import me.proton.core.compose.theme.ProtonTheme
-import me.proton.core.payment.presentation.viewmodel.ProtonPaymentEvent
 import proton.android.pass.commonui.api.LocalDark
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
@@ -70,7 +69,7 @@ fun UpsellWelcomeOffer(
     stepToDisplay: StepToDisplay,
     plan: UpsellPlanUiModel,
     isFoldersEnabled: Boolean,
-    onPaymentCallback: (ProtonPaymentEvent) -> Unit
+    onPurchaseClick: (productId: String, offerToken: String) -> Unit
 ) {
     Box(
         modifier = modifier
@@ -218,7 +217,9 @@ fun UpsellWelcomeOffer(
                 .align(alignment = Alignment.BottomCenter),
             bottomText = plan.bottomAnnualPrice,
             paymentButtonUiState = plan.paymentButtonUiState,
-            onPaymentCallback = onPaymentCallback,
+            onPurchaseClick = {
+                onPurchaseClick(plan.paymentButtonUiState.productId, plan.paymentButtonUiState.offerToken)
+            },
             backgroundColor = if (LocalDark.current) {
                 Color(color = 0xFF472A6A)
             } else {
@@ -237,7 +238,7 @@ fun UpsellWelcomeOfferPreview(@PreviewParameter(ThemePreviewProvider::class) isD
                 stepToDisplay = StepToDisplay.WelcomeOfferMonthly,
                 plan = mockWelcomeMonthlyPlan[0],
                 isFoldersEnabled = true,
-                onPaymentCallback = {}
+                onPurchaseClick = { _, _ -> }
             )
         }
     }

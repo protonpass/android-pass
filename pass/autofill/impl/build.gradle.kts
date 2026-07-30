@@ -113,6 +113,7 @@ dependencies {
     implementation(projects.pass.domain)
     implementation(projects.pass.features.auth)
     implementation(projects.pass.features.accountSelector)
+    implementation(projects.pass.features.upsell)
     implementation(projects.pass.features.itemCreate)
     implementation(projects.pass.searchOptions.api)
     implementation(projects.pass.features.searchOptions)

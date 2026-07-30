@@ -21,7 +21,9 @@ package proton.android.pass.features.item.details.detail.presentation.handlers
 import kotlinx.collections.immutable.toPersistentList
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
@@ -46,10 +48,11 @@ import proton.android.pass.commonuimodels.api.items.LoginMonitorState
 import proton.android.pass.commonuimodels.api.items.LoginMonitorState.ReusedPasswordDisplayMode
 import proton.android.pass.commonuimodels.api.items.MonitorCheck
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
-import proton.android.pass.data.api.usecases.compromisedpassword.ObserveCompromisedPasswords
 import proton.android.pass.data.api.usecases.CanDisplayTotp
 import proton.android.pass.data.api.usecases.GetItemByAliasEmail
+import proton.android.pass.data.api.usecases.GetItemById
 import proton.android.pass.data.api.usecases.GetUserPlan
+import proton.android.pass.data.api.usecases.compromisedpassword.ObserveCompromisedPasswords
 import proton.android.pass.data.api.usecases.folders.GetFolderHierarchy
 import proton.android.pass.data.api.usecases.items.UpdateItemFlag
 import proton.android.pass.domain.AutofillUrl
@@ -59,6 +62,7 @@ import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.ItemDiffType
 import proton.android.pass.domain.ItemDiffs
 import proton.android.pass.domain.ItemFlag
+import proton.android.pass.domain.ItemFlags
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ItemSection
 import proton.android.pass.domain.ItemState
@@ -105,6 +109,7 @@ class LoginItemDetailsHandlerObserverImpl @Inject constructor(
     private val missingTfaChecker: MissingTfaChecker,
     private val telemetryManager: TelemetryManager,
     private val getItemByAliasEmail: GetItemByAliasEmail,
+    private val getItemById: GetItemById,
     private val getUserPlan: GetUserPlan,
     private val updateItemFlag: UpdateItemFlag,
     private val snackbarDispatcher: SnackbarDispatcher
@@ -126,7 +131,16 @@ class LoginItemDetailsHandlerObserverImpl @Inject constructor(
 
     private val pendingMonitorChecksFlow = MutableStateFlow<Set<MonitorCheck>>(emptySet())
 
-    private val skippedCheckOverridesFlow = MutableStateFlow<Map<MonitorCheck, Boolean>>(emptyMap())
+    private val monitorRefreshFlow = MutableStateFlow(value = 0)
+
+    fun onRefreshMonitorState() {
+        monitorRefreshFlow.update { it + 1 }
+    }
+
+    private fun observeItemFlags(userId: UserId? = null, item: Item): Flow<ItemFlags> = monitorRefreshFlow
+        .map { getItemById(userId = userId, shareId = item.shareId, itemId = item.id).itemFlags }
+        .catch { emit(item.itemFlags) }
+        .distinctUntilChanged()
 
     override fun observe(
         share: Share,
@@ -192,41 +206,40 @@ class LoginItemDetailsHandlerObserverImpl @Inject constructor(
         observeCompromisedPasswords(userId, item.shareId, item.id),
         getUserPlan(),
         pendingMonitorChecksFlow,
-        skippedCheckOverridesFlow,
+        observeItemFlags(userId = userId, item = item),
         compromisedPasswordsEnabledFlow,
         perCheckExclusionEnabledFlow
-    ) { isItemCompromised, userPlan, pendingChecks, skippedOverrides, isCompromisedPasswordsEnabled,
+    ) { isItemCompromised, userPlan, pendingChecks, itemFlags, isCompromisedPasswordsEnabled,
         isPerCheckExclusionEnabled ->
         sendTelemetry(scope)
-        val isWeakSkipped = isPerCheckExclusionEnabled &&
-            skippedOverrides[MonitorCheck.WeakPassword] ?: item.hasSkippedWeakPasswordCheck
-        val isCompromisedSkipped = isPerCheckExclusionEnabled &&
-            skippedOverrides[MonitorCheck.CompromisedPassword] ?: item.hasSkippedCompromisedPasswordCheck
-        val isReusedSkipped = isPerCheckExclusionEnabled &&
-            skippedOverrides[MonitorCheck.ReusedPassword] ?: item.hasSkippedReusedPasswordCheck
-        val isMissing2faSkipped = isPerCheckExclusionEnabled &&
-            skippedOverrides[MonitorCheck.Missing2fa] ?: item.hasSkipped2FACheck
+        fun isCheckSkipped(hasSkippedCheck: Boolean): Boolean = isPerCheckExclusionEnabled && hasSkippedCheck
+        val isWeakSkipped = isCheckSkipped(itemFlags.hasSkippedWeakPasswordCheck())
+        val isCompromisedSkipped = isCheckSkipped(itemFlags.hasSkippedCompromisedPasswordCheck())
+        val isReusedSkipped = isCheckSkipped(itemFlags.hasSkippedReusedPasswordCheck())
+        val isMissing2faSkipped = isCheckSkipped(itemFlags.hasSkipped2FACheck())
+        val isExcludedFromMonitor = itemFlags.hasSkippedHealthCheck()
         val isCompromised = !isCompromisedSkipped &&
-            !item.hasSkippedHealthCheck &&
+            !isExcludedFromMonitor &&
             isItemCompromised
-        val insecurePasswordsReport = insecurePasswordChecker(listOf(item))
-        val duplicatedPasswordsReport = duplicatedPasswordChecker(item)
-        val missing2faReport = missingTfaChecker(listOf(item))
+        val monitoredItem = item.copy(itemFlags = itemFlags)
+        val insecurePasswordsReport = insecurePasswordChecker(listOf(monitoredItem))
+        val duplicatedPasswordsReport = duplicatedPasswordChecker(monitoredItem)
+        val missing2faReport = missingTfaChecker(listOf(monitoredItem))
         val hasExceededDuplicationThreshold =
             duplicatedPasswordsReport.duplicationCount > REUSED_PASSWORD_DISPLAY_MODE_THRESHOLD
         LoginMonitorState(
-            isExcludedFromMonitor = item.hasSkippedHealthCheck,
+            isExcludedFromMonitor = isExcludedFromMonitor,
             navigationScope = scope,
             isPasswordCompromised = isCompromised,
             isPasswordInsecure = insecurePasswordsReport.hasInsecurePasswords &&
                 !isWeakSkipped &&
-                !item.hasSkippedHealthCheck,
+                !isExcludedFromMonitor,
             isPasswordReused = duplicatedPasswordsReport.hasDuplications &&
                 !isReusedSkipped &&
-                !item.hasSkippedHealthCheck,
+                !isExcludedFromMonitor,
             isMissingTwoFa = missing2faReport.isMissingTwoFa &&
                 !isMissing2faSkipped &&
-                !item.hasSkippedHealthCheck,
+                !isExcludedFromMonitor,
             reusedPasswordDisplayMode = if (hasExceededDuplicationThreshold) {
                 ReusedPasswordDisplayMode.Compact
             } else {
@@ -282,13 +295,13 @@ class LoginItemDetailsHandlerObserverImpl @Inject constructor(
                 isFlagEnabled = skip
             )
         }.onSuccess {
-            skippedCheckOverridesFlow.update { it + (check to skip) }
+            onRefreshMonitorState()
         }.onFailure { error ->
             PassLogger.w(TAG, "Error toggling monitor check")
             PassLogger.w(TAG, error)
-            pendingMonitorChecksFlow.update { it - check }
             snackbarDispatcher(ItemDetailsMonitorMessage.MonitorCheckUpdateError)
         }
+        pendingMonitorChecksFlow.update { it - check }
     }
 
     private fun sendTelemetry(scope: ItemDetailNavScope) {

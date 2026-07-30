@@ -244,6 +244,11 @@ class ItemDetailsHandlerImpl @Inject constructor(
             )
     }
 
+    override fun onRefreshMonitorState() {
+        (observers[ItemCategory.Login] as? LoginItemDetailsHandlerObserverImpl)
+            ?.onRefreshMonitorState()
+    }
+
     @Suppress("UNCHECKED_CAST")
     private fun getItemDetailsObserver(
         itemCategory: ItemCategory

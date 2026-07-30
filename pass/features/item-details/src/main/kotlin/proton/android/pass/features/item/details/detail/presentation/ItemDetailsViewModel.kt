@@ -148,6 +148,10 @@ class ItemDetailsViewModel @Inject constructor(
         initialValue = ItemDetailsState.Loading
     )
 
+    internal fun onRefresh() {
+        itemDetailsHandler.onRefreshMonitorState()
+    }
+
     internal fun onConsumeEvent(event: ItemDetailsEvent) {
         eventFlow.compareAndSet(event, ItemDetailsEvent.Idle)
     }

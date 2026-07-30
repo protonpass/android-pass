@@ -23,6 +23,8 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.compose.LifecycleEventEffect
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import proton.android.pass.commonui.api.BrowserUtils
 import proton.android.pass.commonui.api.toClassHolder
@@ -55,6 +57,10 @@ fun ItemDetailsScreen(
 ) = with(viewModel) {
     val state by state.collectAsStateWithLifecycle()
     val context = LocalContext.current
+
+    LifecycleEventEffect(Lifecycle.Event.ON_RESUME) {
+        onRefresh()
+    }
 
     LaunchedEffect(state.event) {
         when (state.event) {

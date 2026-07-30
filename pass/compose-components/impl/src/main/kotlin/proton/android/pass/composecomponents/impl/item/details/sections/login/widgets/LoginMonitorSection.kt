@@ -86,7 +86,7 @@ internal fun LoginMonitorSection(
                     shape = RoundedCornerShape(size = Radius.medium)
                 )
                 .padding(all = Spacing.medium),
-            verticalArrangement = Arrangement.spacedBy(space = Spacing.extraSmall)
+            verticalArrangement = Arrangement.spacedBy(space = 10.dp)
         ) {
             MonitorHeader(
                 showChevron = showChevron,
@@ -182,14 +182,20 @@ private fun RenderChecks(
     onEvent: (PassItemDetailsUiEvent) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    Column(modifier = modifier) {
+    Column(
+        modifier = modifier,
+        verticalArrangement = Arrangement.spacedBy(space = 10.dp)
+    ) {
         MonitorCheck.entries.forEach { check ->
             val isVisible = check in checks
             val isFirstVisible = check == checks.firstOrNull()
             AnimatedVisibility(visible = isVisible) {
-                Column {
+                Column(
+                    verticalArrangement = Arrangement.spacedBy(space = 10.dp)
+                ) {
                     if (!isFirstVisible) {
                         Divider(
+                            modifier = Modifier.padding(vertical = Spacing.extraSmall),
                             thickness = 1.dp,
                             color = PassTheme.colors.inputBorderNorm
                         )
@@ -221,7 +227,6 @@ private fun RenderCheckRow(
     val canEdit = monitorState.canEdit && monitorState.isPerCheckExclusionEnabled
     when (check) {
         MonitorCheck.CompromisedPassword -> LoginMonitorCompromisedPassWidget(
-            modifier = Modifier.padding(vertical = Spacing.small),
             isRestoreMode = restore,
             isPending = isPending,
             canEdit = canEdit,
@@ -236,7 +241,6 @@ private fun RenderCheckRow(
         )
 
         MonitorCheck.WeakPassword -> LoginMonitorInsecurePassWidget(
-            modifier = Modifier.padding(vertical = Spacing.small),
             isRestoreMode = restore,
             isPending = isPending,
             canEdit = canEdit,
@@ -251,7 +255,6 @@ private fun RenderCheckRow(
         )
 
         MonitorCheck.ReusedPassword -> LoginMonitorReusedPassWidget(
-            modifier = Modifier.padding(vertical = Spacing.small),
             reusedPasswordDisplayMode = monitorState.reusedPasswordDisplayMode,
             reusedPasswordCount = monitorState.reusedPasswordCount,
             reusedPasswordItems = monitorState.reusedPasswordItems,
@@ -271,7 +274,6 @@ private fun RenderCheckRow(
         )
 
         MonitorCheck.Missing2fa -> LoginMonitorMissingTwoFaWidget(
-            modifier = Modifier.padding(vertical = Spacing.small),
             isRestoreMode = restore,
             isPending = isPending,
             canEdit = canEdit,
@@ -325,7 +327,6 @@ internal fun LoginMonitorSectionMultiPreview(@PreviewParameter(ThemePreviewProvi
     PassTheme(isDark = isDark) {
         Surface {
             LoginMonitorSection(
-                modifier = Modifier.padding(Spacing.medium),
                 monitorState = LoginMonitorState(
                     isExcludedFromMonitor = false,
                     navigationScope = ItemDetailNavScope.Default,
@@ -349,7 +350,6 @@ internal fun LoginMonitorSectionMExpPreview(@PreviewParameter(ThemePreviewProvid
     PassTheme(isDark = isDark) {
         Surface {
             LoginMonitorSection(
-                modifier = Modifier.padding(Spacing.medium),
                 monitorState = LoginMonitorState(
                     isExcludedFromMonitor = false,
                     navigationScope = ItemDetailNavScope.Default,

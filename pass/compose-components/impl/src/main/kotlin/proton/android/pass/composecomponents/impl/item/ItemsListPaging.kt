@@ -53,7 +53,6 @@ import androidx.paging.compose.itemKey
 import kotlinx.collections.immutable.ImmutableMap
 import kotlinx.collections.immutable.ImmutableSet
 import kotlinx.collections.immutable.persistentSetOf
-import kotlinx.coroutines.delay
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.SpecialCharacters.AT_SIGN
@@ -125,46 +124,10 @@ fun ItemsListPaging(
         }
     }
 
-    var hasSeenRefreshLoading by rememberSaveable { mutableStateOf(false) }
-
-    // workaround to show at the very first launch the skeleton loading instead of the empty screen
-    LaunchedEffect(pagingItems.loadState.refresh) {
-        if (pagingItems.loadState.refresh is LoadState.Loading) {
-            try {
-                delay(timeMillis = 300)
-            } finally {
-                hasSeenRefreshLoading = true
-            }
-        }
-    }
-
-    val listState = remember(
-        pagingItems.itemCount,
-        pagingItems.loadState.refresh,
-        hasSeenRefreshLoading
-    ) {
-        when {
-            pagingItems.itemCount == 0 && pagingItems.loadState.refresh is LoadState.Loading -> {
-                ItemListPagingState.SkeletonLoading
-            }
-
-            pagingItems.itemCount == 0 && pagingItems.loadState.refresh is LoadState.NotLoading -> {
-                if (hasSeenRefreshLoading) {
-                    ItemListPagingState.Empty
-                } else {
-                    ItemListPagingState.SkeletonLoading
-                }
-            }
-
-            // A local read error with no items: fall back to the empty state for parity with
-            // the non-paginated list, which also swallows errors and shows the empty content.
-            pagingItems.itemCount == 0 && pagingItems.loadState.refresh is LoadState.Error -> {
-                ItemListPagingState.Empty
-            }
-
-            else -> ItemListPagingState.Content
-        }
-    }
+    val listState = itemListPagingState(
+        itemCount = pagingItems.itemCount,
+        refreshState = pagingItems.loadState.refresh
+    )
 
     PullToRefreshBox(
         modifier = modifier,
@@ -315,7 +278,13 @@ private fun StickyItemListHeader(modifier: Modifier = Modifier, groupingKey: Gro
     }
 }
 
-private enum class ItemListPagingState {
+internal fun itemListPagingState(itemCount: Int, refreshState: LoadState): ItemListPagingState = when {
+    itemCount == 0 && refreshState is LoadState.Loading -> ItemListPagingState.SkeletonLoading
+    itemCount == 0 -> ItemListPagingState.Empty
+    else -> ItemListPagingState.Content
+}
+
+internal enum class ItemListPagingState {
     SkeletonLoading,
     Content,
     Empty

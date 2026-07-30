@@ -32,6 +32,9 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -41,6 +44,8 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.compose.LifecycleEventEffect
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.defaultNorm
 import proton.android.pass.common.api.PasswordStrength
@@ -77,6 +82,23 @@ internal fun PasswordInput(
     onFocus: (Boolean) -> Unit
 ) {
     var isFocused by remember { mutableStateOf(false) }
+    var restoreFocus by remember { mutableStateOf(false) }
+    val focusManager = LocalFocusManager.current
+    val focusRequester = remember { FocusRequester() }
+
+    LifecycleEventEffect(Lifecycle.Event.ON_PAUSE) {
+        if (isFocused) {
+            restoreFocus = true
+            focusManager.clearFocus()
+        }
+    }
+
+    LifecycleEventEffect(Lifecycle.Event.ON_RESUME) {
+        if (restoreFocus) {
+            restoreFocus = false
+            focusRequester.requestFocus()
+        }
+    }
 
     PasswordInputContent(
         value = value,
@@ -87,6 +109,7 @@ internal fun PasswordInput(
         placeholder = placeholder,
         isEditAllowed = isEditAllowed,
         showLeadingIcon = showLeadingIcon,
+        focusRequester = focusRequester,
         onChange = onChange,
         onFocusChange = { focused ->
             isFocused = focused
@@ -105,6 +128,7 @@ private fun PasswordInputContent(
     placeholder: String,
     isEditAllowed: Boolean,
     showLeadingIcon: Boolean,
+    focusRequester: FocusRequester,
     onChange: (String) -> Unit,
     onFocusChange: (Boolean) -> Unit
 ) {
@@ -125,6 +149,7 @@ private fun PasswordInputContent(
             .applyIf(!showLeadingIcon, { padding(start = Spacing.medium) }),
         textFieldModifier = Modifier
             .fillMaxWidth()
+            .focusRequester(focusRequester)
             .testTag(PASSWORD_INPUT_TAG),
         label = {
             Column {
@@ -229,6 +254,7 @@ fun PasswordInputPreview(
                 placeholder = stringResource(id = R.string.field_password_hint),
                 isEditAllowed = input.second.isEditAllowed,
                 showLeadingIcon = true,
+                focusRequester = remember { FocusRequester() },
                 onChange = {},
                 onFocusChange = {}
             )

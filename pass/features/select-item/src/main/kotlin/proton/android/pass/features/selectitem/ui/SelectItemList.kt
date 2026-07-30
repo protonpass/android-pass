@@ -74,6 +74,7 @@ internal fun SelectItemList(
             highlight = searchUiState.searchQuery,
             isRefreshing = listUiState.isRefreshing,
             showMenuIcon = !showAutosaveBanner,
+            forceShowHeader = listUiState.displayOnlyPrimaryVaultMessage || showAutosaveBanner,
             accounts = accounts,
             header = {
                 if (!pinningUiState.inPinningMode) {

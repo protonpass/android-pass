@@ -87,7 +87,7 @@ dependencies {
     implementation(projects.pass.data.api)
     implementation(libs.androidx.compose.material.icons.core)
     implementation(projects.pass.commonPresentation.impl)
-    implementation(libs.core.payment.presentation)
+    implementation(projects.pass.payments.api)
     implementation(projects.pass.telemetry.api)
 
     kspAndroidTest(libs.dagger.hilt.android.compiler)
@@ -97,4 +97,8 @@ dependencies {
     androidTestImplementation(projects.pass.data.fakes)
     androidTestImplementation(projects.pass.notifications.fakes)
     androidTestImplementation(projects.pass.preferences.fakes)
+
+    testImplementation(projects.pass.commonUi.fakes)
+    testImplementation(libs.junit)
+    testImplementation(libs.truth)
 }

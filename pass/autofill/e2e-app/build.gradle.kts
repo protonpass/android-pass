@@ -91,7 +91,9 @@ dependencies {
 
     implementation(projects.pass.account.fakes)
     implementation(projects.pass.appConfig.fakes)
-    implementation(projects.pass.autofill.impl)
+    implementation(projects.pass.autofill.impl) {
+        exclude(module = "upsell")
+    }
     implementation(projects.pass.biometry.fakes)
     implementation(projects.pass.clipboard.fakes)
     implementation(projects.pass.common.fakes)
@@ -113,6 +115,7 @@ dependencies {
     implementation(projects.pass.preferences.api)
     implementation(projects.pass.preferences.impl)
     implementation(projects.pass.securityCenter.fakes)
+    implementation(projects.pass.features.upsell.fakes)
 
     implementation(libs.dagger.hilt.android)
     ksp(libs.dagger.hilt.android.compiler)

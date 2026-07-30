@@ -19,7 +19,6 @@
 package proton.android.pass.autofill.ui.autofill
 
 import android.os.Bundle
-import androidx.activity.ComponentActivity
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -38,8 +37,6 @@ import me.proton.core.account.domain.entity.AccountState
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.accountmanager.domain.getAccounts
 import me.proton.core.domain.entity.UserId
-import proton.android.pass.account.api.AccountOrchestrators
-import proton.android.pass.account.api.Orchestrator
 import proton.android.pass.appconfig.api.AppConfig
 import proton.android.pass.appconfig.api.BuildFlavor.Companion.supportPayment
 import proton.android.pass.autofill.api.suggestions.PackageNameUrlSuggestionAdapter
@@ -60,7 +57,6 @@ import javax.inject.Inject
 
 @HiltViewModel
 class AutofillActivityViewModel @Inject constructor(
-    private val accountOrchestrators: AccountOrchestrators,
     private val accountManager: AccountManager,
     private val toastManager: ToastManager,
     private val internalSettingsRepository: InternalSettingsRepository,
@@ -132,16 +128,6 @@ class AutofillActivityViewModel @Inject constructor(
             started = SharingStarted.WhileSubscribed(5_000),
             initialValue = UninitialisedAutofillUiState
         )
-
-    internal fun register(context: ComponentActivity) {
-        accountOrchestrators.register(context, listOf(Orchestrator.PlansOrchestrator))
-    }
-
-    internal fun upgrade() {
-        viewModelScope.launch {
-            accountOrchestrators.start(Orchestrator.PlansOrchestrator)
-        }
-    }
 
     internal fun signOut(userId: UserId) {
         viewModelScope.launch {

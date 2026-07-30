@@ -46,7 +46,6 @@ import androidx.compose.ui.unit.dp
 import kotlinx.collections.immutable.persistentListOf
 import me.proton.core.compose.component.ProtonTextButton
 import me.proton.core.compose.theme.ProtonTheme
-import me.proton.core.payment.presentation.viewmodel.ProtonPaymentEvent
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.ThemePreviewProvider
@@ -66,7 +65,7 @@ import proton.android.pass.composecomponents.impl.R as ComposeR
 fun UpsellV2Content(
     modifier: Modifier = Modifier,
     uiState: UpsellV2UiState,
-    onPaymentCallback: (ProtonPaymentEvent) -> Unit,
+    onPurchaseClick: (productId: String, offerToken: String) -> Unit,
     onSkipButtonClick: () -> Unit
 ) {
     Box(
@@ -95,7 +94,7 @@ fun UpsellV2Content(
             UpsellAnnualPlan(
                 plans = uiState.plans,
                 isFoldersEnabled = uiState.isFoldersEnabled,
-                onPaymentCallback = onPaymentCallback
+                onPurchaseClick = onPurchaseClick
             )
         }
 
@@ -109,7 +108,7 @@ fun UpsellV2Content(
                 stepToDisplay = uiState.stepToDisplay,
                 plan = uiState.plans[0],
                 isFoldersEnabled = uiState.isFoldersEnabled,
-                onPaymentCallback = onPaymentCallback
+                onPurchaseClick = onPurchaseClick
             )
         }
 
@@ -123,7 +122,7 @@ fun UpsellV2Content(
                 stepToDisplay = uiState.stepToDisplay,
                 plan = uiState.plans[0],
                 isFoldersEnabled = uiState.isFoldersEnabled,
-                onPaymentCallback = onPaymentCallback
+                onPurchaseClick = onPurchaseClick
             )
         }
 
@@ -207,7 +206,7 @@ fun UpsellPlanContentPreview(@PreviewParameter(ThemePreviewProvider::class) isDa
                 plans = mockAnnualPlans,
                 isFoldersEnabled = true
             ),
-            onPaymentCallback = { _ -> }
+            onPurchaseClick = { _, _ -> }
         )
     }
 }
@@ -223,7 +222,7 @@ fun UpsellPlanContentWelcomeMonthlyPreview(@PreviewParameter(ThemePreviewProvide
                 plans = mockWelcomeMonthlyPlan,
                 isFoldersEnabled = true
             ),
-            onPaymentCallback = { _ -> }
+            onPurchaseClick = { _, _ -> }
         )
     }
 }
@@ -239,7 +238,7 @@ fun UpsellPlanContentWelcomeYearlyPreview(@PreviewParameter(ThemePreviewProvider
                 plans = mockWelcomeYearlyPlan,
                 isFoldersEnabled = true
             ),
-            onPaymentCallback = { _ -> }
+            onPurchaseClick = { _, _ -> }
         )
     }
 }
@@ -254,7 +253,7 @@ fun UpsellPlanContentLoadingPreview(@PreviewParameter(ThemePreviewProvider::clas
                 stepToDisplay = StepToDisplay.Loading,
                 plans = persistentListOf()
             ),
-            onPaymentCallback = { _ -> }
+            onPurchaseClick = { _, _ -> }
         )
     }
 }
@@ -269,7 +268,7 @@ fun UpsellPlanContentEmptyPreview(@PreviewParameter(ThemePreviewProvider::class)
                 stepToDisplay = StepToDisplay.NoPlans,
                 plans = persistentListOf()
             ),
-            onPaymentCallback = { _ -> }
+            onPurchaseClick = { _, _ -> }
         )
     }
 }

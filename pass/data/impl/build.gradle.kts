@@ -82,6 +82,7 @@ dependencies {
     implementation(libs.core.network)
     implementation(libs.core.notification)
     implementation(libs.core.observability)
+    implementation(projects.pass.payments.api)
     implementation(libs.core.payment)
     implementation(libs.core.push)
     implementation(libs.core.telemetry.data)
@@ -135,6 +136,7 @@ dependencies {
     testImplementation(projects.pass.network.fakes)
     testImplementation(projects.pass.notifications.fakes)
     testImplementation(projects.pass.preferences.fakes)
+    testImplementation(projects.pass.payments.fakes)
     testImplementation(projects.pass.telemetry.fakes)
 
     androidTestImplementation(projects.pass.account.fakes)

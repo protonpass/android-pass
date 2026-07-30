@@ -26,6 +26,7 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import me.proton.core.account.domain.entity.AccountState
@@ -48,6 +49,9 @@ import proton.android.pass.data.api.usecases.ObserveAllShares
 import proton.android.pass.data.api.usecases.ObserveItems
 import proton.android.pass.domain.Item
 import me.proton.core.domain.entity.UserId
+import proton.android.pass.appconfig.api.AppConfig
+import proton.android.pass.appconfig.api.BuildFlavor.Companion.isQuest
+import proton.android.pass.appconfig.api.BuildFlavor.Companion.supportPayment
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ItemState
 import proton.android.pass.domain.ItemType
@@ -55,6 +59,7 @@ import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.ShareSelection
 import proton.android.pass.features.itemcreate.login.InitialUpdateLoginUiState
 import proton.android.pass.log.api.PassLogger
+import proton.android.pass.preferences.InternalSettingsRepository
 import proton.android.pass.telemetry.api.TelemetryManager
 import javax.inject.Inject
 
@@ -62,6 +67,8 @@ import javax.inject.Inject
 class AutoSaveAppViewModel @Inject constructor(
     private val needsBiometricAuth: NeedsBiometricAuth,
     private val telemetryManager: TelemetryManager,
+    private val appConfig: AppConfig,
+    private val internalSettingsRepository: InternalSettingsRepository,
     savedStateHandleProvider: SavedStateHandleProvider,
     observeItems: ObserveItems,
     observeAllShares: ObserveAllShares,
@@ -124,6 +131,13 @@ class AutoSaveAppViewModel @Inject constructor(
     private val selectedItemForUpdateFlow: MutableStateFlow<InitialUpdateLoginUiState?> =
         MutableStateFlow(null)
 
+    private val paymentStateFlow = combine(
+        flowOf(appConfig.flavor.supportPayment()),
+        internalSettingsRepository.hasShownReloadAppWarning()
+    ) { supportPayment, hasShownWarning ->
+        supportPayment to !hasShownWarning
+    }
+
     init {
         telemetryManager.sendEvent(AutosaveDisplay)
     }
@@ -138,8 +152,10 @@ class AutoSaveAppViewModel @Inject constructor(
     val state: StateFlow<AutoSaveAppViewState> = combine(
         needsBiometricAuth(),
         baseAutosaveModeFlow,
-        selectedItemForUpdateFlow
-    ) { needsAuth, baseMode, selectedItemForUpdate ->
+        selectedItemForUpdateFlow,
+        paymentStateFlow
+    ) { needsAuth, baseMode, selectedItemForUpdate, paymentState ->
+        val (supportPayment, canShowWarningReloadApp) = paymentState
         val autosaveMode =
             if (selectedItemForUpdate != null && baseMode is AutosaveMode.CreateOrUpdate) {
                 baseMode.copy(selectedUpdateState = selectedItemForUpdate)
@@ -148,7 +164,10 @@ class AutoSaveAppViewModel @Inject constructor(
             }
         AutoSaveAppViewState.Ready(
             needsAuth = needsAuth,
-            autosaveMode = autosaveMode
+            autosaveMode = autosaveMode,
+            supportPayment = supportPayment,
+            canShowWarningReloadApp = canShowWarningReloadApp,
+            isQuest = appConfig.flavor.isQuest()
         )
     }.stateIn(
         scope = viewModelScope,
@@ -178,6 +197,10 @@ class AutoSaveAppViewModel @Inject constructor(
 
     fun onClearSelectedItemForUpdate() {
         selectedItemForUpdateFlow.value = null
+    }
+
+    fun doNotDisplayReloadAppWarningDialog() {
+        internalSettingsRepository.setHasShownReloadAppWarning(true)
     }
 
     private fun determineAutosaveMode(loginItems: List<Item>, updatableShareIds: Set<ShareId>): AutosaveMode {
@@ -238,7 +261,10 @@ sealed class AutoSaveAppViewState {
 
     data class Ready(
         val needsAuth: Boolean,
-        val autosaveMode: AutosaveMode = AutosaveMode.Create
+        val autosaveMode: AutosaveMode = AutosaveMode.Create,
+        val supportPayment: Boolean = false,
+        val canShowWarningReloadApp: Boolean = false,
+        val isQuest: Boolean = false
     ) : AutoSaveAppViewState()
 }
 

@@ -54,7 +54,6 @@ class AutoSaveActivity : FragmentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         setSecureMode()
         super.onCreate(savedInstanceState)
-        viewModel.register(this)
 
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
@@ -78,8 +77,8 @@ class AutoSaveActivity : FragmentActivity() {
                         when (it) {
                             AutosaveNavigation.Success -> finishApp()
                             AutosaveNavigation.Cancel -> finishApp()
-                            AutosaveNavigation.Upgrade -> viewModel.upgrade()
                             is AutosaveNavigation.ForceSignOut -> viewModel.signOut(it.userId)
+                            AutosaveNavigation.Upgrade -> Unit
                         }
                     }
                 )

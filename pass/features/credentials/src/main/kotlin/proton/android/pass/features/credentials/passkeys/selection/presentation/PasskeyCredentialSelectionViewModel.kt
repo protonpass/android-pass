@@ -28,6 +28,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.firstOrNull
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -35,9 +36,10 @@ import me.proton.core.account.domain.entity.AccountState
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.accountmanager.domain.getAccounts
 import me.proton.core.domain.entity.UserId
-import proton.android.pass.account.api.AccountOrchestrators
-import proton.android.pass.account.api.Orchestrator
+import proton.android.pass.appconfig.api.AppConfig
+import proton.android.pass.appconfig.api.BuildFlavor.Companion.supportPayment
 import proton.android.pass.biometry.NeedsBiometricAuth
+import proton.android.pass.common.api.combineN
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
@@ -62,7 +64,7 @@ import javax.inject.Inject
 internal class PasskeyCredentialSelectionViewModel @Inject constructor(
     userPreferenceRepository: UserPreferencesRepository,
     needsBiometricAuth: NeedsBiometricAuth,
-    private val accountOrchestrators: AccountOrchestrators,
+    appConfig: AppConfig,
     private val accountManager: AccountManager,
     private val toastManager: ToastManager,
     private val internalSettingsRepository: InternalSettingsRepository,
@@ -85,15 +87,24 @@ internal class PasskeyCredentialSelectionViewModel @Inject constructor(
         .getThemePreference()
         .distinctUntilChanged()
 
-    internal val stateFlow: StateFlow<PasskeyCredentialSelectionState> = combine(
+    private val paymentStateFlow = combine(
+        flowOf(appConfig.flavor.supportPayment()),
+        internalSettingsRepository.hasShownReloadAppWarning()
+    ) { supportsPayment, hasShownWarning ->
+        supportsPayment to !hasShownWarning
+    }
+
+    internal val stateFlow: StateFlow<PasskeyCredentialSelectionState> = combineN(
         closeScreenFlow,
         requestOptionFlow,
         themePreferenceFlow,
         needsBiometricAuth(),
-        eventFlow
-    ) { shouldCloseScreen, requestOption, themePreference, isBiometricAuthRequired, event ->
+        eventFlow,
+        paymentStateFlow
+    ) { shouldCloseScreen, requestOption, themePreference, isBiometricAuthRequired, event, paymentState ->
+        val (supportsPayment, canShowWarningReloadApp) = paymentState
         if (shouldCloseScreen) {
-            return@combine PasskeyCredentialSelectionState.Close
+            return@combineN PasskeyCredentialSelectionState.Close
         }
 
         when (requestOption) {
@@ -105,7 +116,9 @@ internal class PasskeyCredentialSelectionViewModel @Inject constructor(
                             themePreference = themePreference,
                             isBiometricAuthRequired = isBiometricAuthRequired,
                             request = request,
-                            event = event
+                            event = event,
+                            supportPayment = supportsPayment,
+                            canShowWarningReloadApp = canShowWarningReloadApp
                         )
                     }
                     ?: PasskeyCredentialSelectionState.Close
@@ -124,10 +137,8 @@ internal class PasskeyCredentialSelectionViewModel @Inject constructor(
         requestOptionFlow.update { newRequest.some() }
     }
 
-    internal fun onUpgrade() {
-        viewModelScope.launch {
-            accountOrchestrators.start(Orchestrator.PlansOrchestrator)
-        }
+    internal fun doNotDisplayReloadAppWarningDialog() {
+        internalSettingsRepository.setHasShownReloadAppWarning(true)
     }
 
     internal fun onAuthPerformed(request: PasskeyCredentialSelectionRequest) {

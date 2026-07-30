@@ -26,6 +26,11 @@ import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.platform.LocalContext
 import androidx.core.view.WindowCompat
 import androidx.credentials.GetCredentialResponse
 import androidx.credentials.PasswordCredential
@@ -37,10 +42,14 @@ import androidx.lifecycle.repeatOnLifecycle
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import proton.android.pass.appconfig.api.AppConfig
+import proton.android.pass.appconfig.api.BuildFlavor.Companion.upgradeUrl
 import proton.android.pass.autofill.api.suggestions.PackageNameUrlSuggestionAdapter
 import proton.android.pass.commonui.api.AndroidUtils
+import proton.android.pass.commonui.api.BrowserUtils
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.enableEdgeToEdgeProtonPass
+import proton.android.pass.composecomponents.impl.dialogs.WarningReloadAppDialog
 import proton.android.pass.composecomponents.impl.theme.isDark
 import proton.android.pass.data.api.usecases.Suggestion
 import proton.android.pass.domain.credentials.PasswordCredentialItem
@@ -63,6 +72,9 @@ internal class PasswordCredentialSelectionActivity : FragmentActivity() {
 
     @Inject
     internal lateinit var snackbarDispatcher: SnackbarDispatcher
+
+    @Inject
+    internal lateinit var appConfig: AppConfig
 
     private val viewModel: PasswordCredentialSelectionViewModel by viewModels()
 
@@ -93,7 +105,9 @@ internal class PasswordCredentialSelectionActivity : FragmentActivity() {
     private fun setContent(state: PasswordCredentialSelectionState.Ready) {
         enableEdgeToEdgeProtonPass()
         setContent {
+            val context = LocalContext.current
             val isDark = isDark(state.themePreference)
+            var showWarningReloadAppDialog by rememberSaveable { mutableStateOf(false) }
             LaunchedEffect(isDark) {
                 WindowCompat.getInsetsController(window, window.decorView).apply {
                     isAppearanceLightNavigationBars = !isDark
@@ -104,26 +118,12 @@ internal class PasswordCredentialSelectionActivity : FragmentActivity() {
                 PasswordCredentialSelectionScreen(
                     state = state,
                     onNavigate = { destination ->
-                        when (destination) {
-                            PasswordCredentialSelectionNavEvent.Cancel -> {
-                                onCancelSelectionRequest()
-                            }
-
-                            is PasswordCredentialSelectionNavEvent.ForceSignOut -> {
-                                viewModel.onSignOut(userId = destination.userId)
-                            }
-
-                            is PasswordCredentialSelectionNavEvent.SendResponse -> {
-                                onProceedSelectionRequest(
-                                    id = destination.id,
-                                    password = destination.password
-                                )
-                            }
-
-                            PasswordCredentialSelectionNavEvent.Upgrade -> {
-                                viewModel.onUpgrade()
-                            }
-                        }
+                        onSelectionNavigate(
+                            destination = destination,
+                            state = state,
+                            context = context,
+                            onShowWarningReloadAppDialog = { showWarningReloadAppDialog = true }
+                        )
                     },
                     onEvent = { event ->
                         when (event) {
@@ -145,8 +145,59 @@ internal class PasswordCredentialSelectionActivity : FragmentActivity() {
                         }
                     }
                 )
+
+                if (showWarningReloadAppDialog) {
+                    WarningReloadAppDialog(
+                        onOkClick = { reminderCheck ->
+                            showWarningReloadAppDialog = false
+                            if (reminderCheck) {
+                                viewModel.doNotDisplayReloadAppWarningDialog()
+                            }
+                            openUpgradeWebsite(context)
+                        },
+                        onCancelClick = {
+                            showWarningReloadAppDialog = false
+                        }
+                    )
+                }
             }
         }
+    }
+
+    private fun onSelectionNavigate(
+        destination: PasswordCredentialSelectionNavEvent,
+        state: PasswordCredentialSelectionState.Ready,
+        context: Context,
+        onShowWarningReloadAppDialog: () -> Unit
+    ) {
+        when (destination) {
+            PasswordCredentialSelectionNavEvent.Cancel -> onCancelSelectionRequest()
+            is PasswordCredentialSelectionNavEvent.ForceSignOut -> {
+                viewModel.onSignOut(userId = destination.userId)
+            }
+
+            is PasswordCredentialSelectionNavEvent.SendResponse -> {
+                onProceedSelectionRequest(
+                    id = destination.id,
+                    password = destination.password
+                )
+            }
+
+            PasswordCredentialSelectionNavEvent.Upgrade -> {
+                if (state.canShowWarningReloadApp) {
+                    onShowWarningReloadAppDialog()
+                } else {
+                    openUpgradeWebsite(context)
+                }
+            }
+        }
+    }
+
+    private fun openUpgradeWebsite(context: Context) {
+        BrowserUtils.openWebsite(
+            context = context,
+            website = appConfig.flavor.upgradeUrl()
+        )
     }
 
     private fun getPasswordSelectionRequest(): PasswordCredentialSelectionRequest? = intent.extras

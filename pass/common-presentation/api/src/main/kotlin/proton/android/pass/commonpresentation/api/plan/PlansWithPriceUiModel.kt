@@ -19,23 +19,20 @@
 package proton.android.pass.commonpresentation.api.plan
 
 import androidx.compose.runtime.Stable
-import me.proton.core.domain.entity.UserId
-import me.proton.core.plan.domain.entity.DynamicPlan
 import proton.android.pass.domain.plan.PaymentButton
 
 fun PaymentButton.toUiModel() = PaymentButtonUiState(
-    currency = this.currency,
-    cycle = this.cycle,
-    plan = this.plan,
-    userId = this.userId
+    productId = this.productId,
+    offerToken = this.offerToken,
+    formattedPrice = this.formattedPrice,
+    currency = this.currency
 )
 
 @Stable
 data class PaymentButtonUiState(
+    val productId: String,
+    val offerToken: String,
+    val formattedPrice: String = "",
     val currency: String = "",
-    val cycle: Int = 1,
-    val plan: DynamicPlan? = null,
-    val userId: UserId? = null,
     val defaultButtonText: String? = null
 )
-

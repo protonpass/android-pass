@@ -23,42 +23,77 @@ import me.proton.core.domain.entity.SessionUserId
 import me.proton.core.payment.domain.entity.PaymentMethod
 import me.proton.core.payment.domain.entity.PaymentStatus
 import me.proton.core.payment.domain.entity.PaymentTokenResult
+import me.proton.core.payment.domain.entity.PaymentTokenStatus
 import me.proton.core.payment.domain.entity.PaymentType
 import me.proton.core.payment.domain.entity.ProtonPaymentToken
 import me.proton.core.payment.domain.repository.PaymentsRepository
 import javax.inject.Inject
 
-@Suppress("NotImplementedDeclaration")
 class FakePaymentsRepository @Inject constructor() : PaymentsRepository {
+
+    var createOmnichannelPaymentTokenResult: PaymentTokenResult.CreatePaymentTokenResult =
+        PaymentTokenResult.CreatePaymentTokenResult(
+            status = PaymentTokenStatus.CHARGEABLE,
+            approvalUrl = null,
+            token = ProtonPaymentToken("fake-token"),
+            returnHost = null
+        )
+
+    var createPaymentTokenResult: PaymentTokenResult.CreatePaymentTokenResult =
+        PaymentTokenResult.CreatePaymentTokenResult(
+            status = PaymentTokenStatus.CHARGEABLE,
+            approvalUrl = null,
+            token = ProtonPaymentToken("fake-token"),
+            returnHost = null
+        )
+
+    var getPaymentTokenStatusResult: PaymentTokenResult.PaymentTokenStatusResult =
+        PaymentTokenResult.PaymentTokenStatusResult(status = PaymentTokenStatus.CHARGEABLE)
+
+    var getAvailablePaymentMethodsResult: List<PaymentMethod> = emptyList()
+
+    var getPaymentStatusResult: PaymentStatus = PaymentStatus(card = true, inApp = true, paypal = false)
+
+    var createOmnichannelPaymentTokenCallCount: Int = 0
+    var createPaymentTokenCallCount: Int = 0
+    var getPaymentTokenStatusCallCount: Int = 0
+    var getAvailablePaymentMethodsCallCount: Int = 0
+    var getPaymentStatusCallCount: Int = 0
+
     override suspend fun createOmnichannelPaymentToken(
         sessionUserId: SessionUserId?,
         packageName: String,
         productId: String,
         orderId: String
     ): PaymentTokenResult.CreatePaymentTokenResult {
-        TODO("Not yet implemented")
+        createOmnichannelPaymentTokenCallCount++
+        return createOmnichannelPaymentTokenResult
     }
 
+    @Deprecated("Use createOmnichannelPaymentToken instead")
     override suspend fun createPaymentToken(
         sessionUserId: SessionUserId?,
         paymentType: PaymentType
     ): PaymentTokenResult.CreatePaymentTokenResult {
-        TODO("Not yet implemented")
+        createPaymentTokenCallCount++
+        return createPaymentTokenResult
     }
 
     override suspend fun getPaymentTokenStatus(
         sessionUserId: SessionUserId?,
         paymentToken: ProtonPaymentToken
     ): PaymentTokenResult.PaymentTokenStatusResult {
-        TODO("Not yet implemented")
+        getPaymentTokenStatusCallCount++
+        return getPaymentTokenStatusResult
     }
 
     override suspend fun getAvailablePaymentMethods(sessionUserId: SessionUserId): List<PaymentMethod> {
-        TODO("Not yet implemented")
+        getAvailablePaymentMethodsCallCount++
+        return getAvailablePaymentMethodsResult
     }
 
     override suspend fun getPaymentStatus(sessionUserId: SessionUserId?, appStore: AppStore): PaymentStatus {
-        TODO("Not yet implemented")
+        getPaymentStatusCallCount++
+        return getPaymentStatusResult
     }
-
 }

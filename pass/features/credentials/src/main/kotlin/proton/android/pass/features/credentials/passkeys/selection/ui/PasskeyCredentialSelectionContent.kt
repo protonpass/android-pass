@@ -47,6 +47,8 @@ import proton.android.pass.features.credentials.passkeys.selection.presentation.
 import proton.android.pass.features.credentials.passkeys.selection.presentation.PasskeyCredentialSelectionStateEvent
 import proton.android.pass.features.passkeys.select.navigation.SelectPasskeyBottomsheet
 import proton.android.pass.features.selectitem.navigation.SelectItem
+import proton.android.pass.features.upsell.v2.navigation.UpsellV2NavItem
+import proton.android.pass.features.upsell.v2.navigation.upsellV2NavGraph
 import proton.android.pass.navigation.api.AppNavigator
 import proton.android.pass.navigation.api.rememberBottomSheetNavigator
 
@@ -174,7 +176,17 @@ internal fun PasskeyCredentialSelectionContent(
                 passkeyCredentialSelectionNavGraph(
                     appNavigator = appNavigator,
                     passkeyDomain = request.requestOrigin,
-                    onNavigate = onNavigate,
+                    onNavigate = { nav ->
+                        if (nav == PasskeyCredentialSelectionNavEvent.Upgrade && supportPayment) {
+                            appNavigator.navigate(
+                                destination = UpsellV2NavItem,
+                                force = true,
+                                route = UpsellV2NavItem.createRoute(manualDisplay = true)
+                            )
+                        } else {
+                            onNavigate(nav)
+                        }
+                    },
                     onEvent = onEvent,
                     dismissBottomSheet = { block ->
                         onBottomSheetDismissed(
@@ -184,6 +196,11 @@ internal fun PasskeyCredentialSelectionContent(
                             block = block
                         )
                     }
+                )
+                upsellV2NavGraph(
+                    onNextScreen = { _ -> appNavigator.navigateBack() },
+                    onSkip = { _ -> appNavigator.navigateBack() },
+                    onNavigateBack = { _ -> appNavigator.navigateBack() }
                 )
             }
         }

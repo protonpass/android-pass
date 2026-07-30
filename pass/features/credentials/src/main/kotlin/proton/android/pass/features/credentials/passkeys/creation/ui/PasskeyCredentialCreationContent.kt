@@ -43,6 +43,8 @@ import proton.android.pass.features.credentials.passkeys.creation.navigation.pas
 import proton.android.pass.features.credentials.passkeys.creation.presentation.PasskeyCredentialCreationEvent
 import proton.android.pass.features.credentials.passkeys.creation.presentation.PasskeyCredentialCreationState
 import proton.android.pass.features.selectitem.navigation.SelectItem
+import proton.android.pass.features.upsell.v2.navigation.UpsellV2NavItem
+import proton.android.pass.features.upsell.v2.navigation.upsellV2NavGraph
 import proton.android.pass.navigation.api.AppNavigator
 import proton.android.pass.navigation.api.rememberBottomSheetNavigator
 
@@ -139,7 +141,17 @@ internal fun PasskeyCredentialCreationContent(
                     appNavigator = appNavigator,
                     initialCreateLoginUiState = initialCreateLoginUiState,
                     selectItemState = selectItemState,
-                    onNavigate = onNavigate,
+                    onNavigate = { nav ->
+                        if (nav == PasskeyCredentialCreationNavEvent.Upgrade && supportPayment) {
+                            appNavigator.navigate(
+                                destination = UpsellV2NavItem,
+                                force = true,
+                                route = UpsellV2NavItem.createRoute(manualDisplay = true)
+                            )
+                        } else {
+                            onNavigate(nav)
+                        }
+                    },
                     onEvent = onEvent,
                     dismissBottomSheet = { block ->
                         onBottomSheetDismissed(
@@ -149,6 +161,11 @@ internal fun PasskeyCredentialCreationContent(
                             block = block
                         )
                     }
+                )
+                upsellV2NavGraph(
+                    onNextScreen = { _ -> appNavigator.navigateBack() },
+                    onSkip = { _ -> appNavigator.navigateBack() },
+                    onNavigateBack = { _ -> appNavigator.navigateBack() }
                 )
             }
         }

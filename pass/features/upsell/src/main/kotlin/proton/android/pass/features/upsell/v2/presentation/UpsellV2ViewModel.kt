@@ -33,7 +33,6 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.domain.entity.UserId
-import me.proton.core.payment.presentation.viewmodel.ProtonPaymentEvent
 import proton.android.pass.common.api.safeRunCatching
 import proton.android.pass.telemetry.api.TelemetryGrowthFeatureUsageAction
 import proton.android.pass.telemetry.api.TelemetryManager
@@ -44,7 +43,9 @@ import proton.android.pass.data.api.usecases.GetUserPlan
 import proton.android.pass.data.api.usecases.RefreshUserAccess
 import proton.android.pass.data.api.usecases.plan.ObservePlansWithPrice
 import proton.android.pass.domain.Plan
+import proton.android.pass.domain.plan.OnePlanWithPrice
 import proton.android.pass.domain.plan.PlanWithPriceState
+import proton.android.pass.features.upsell.v1.R
 import proton.android.pass.features.upsell.v2.models.StepToDisplay
 import proton.android.pass.features.upsell.v2.models.UpsellV2UiState
 import proton.android.pass.features.upsell.v2.models.filterWelcomeOfferMonthly
@@ -55,12 +56,14 @@ import proton.android.pass.features.upsell.v2.models.toYearlyUpsellUiModel
 import proton.android.pass.features.upsell.v2.navigation.UpsellV2DisplayOnBoardingArg
 import proton.android.pass.features.upsell.v2.navigation.UpsellV2ManualDisplayArg
 import proton.android.pass.log.api.PassLogger
+import proton.android.pass.payments.api.PaymentSessionState
+import proton.android.pass.payments.api.Payments
+import proton.android.pass.payments.api.ReconciledPayment
 import proton.android.pass.notifications.api.ToastManager
 import proton.android.pass.preferences.FeatureFlag
 import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import javax.inject.Inject
 import kotlin.time.Duration.Companion.seconds
-import me.proton.core.plan.presentation.R as PaymentR
 
 @HiltViewModel
 class UpsellV2ViewModel @Inject constructor(
@@ -72,8 +75,11 @@ class UpsellV2ViewModel @Inject constructor(
     private val refreshUserAccess: RefreshUserAccess,
     private val toastManager: ToastManager,
     private val featureFlagsPreferencesRepository: FeatureFlagsPreferencesRepository,
-    private val telemetryManager: TelemetryManager
+    private val telemetryManager: TelemetryManager,
+    private val payments: Payments
 ) : ViewModel() {
+
+    private val reconciledPaymentTracker = ReconciledPaymentTracker(savedStateHandleProvider)
 
     private val displayOnBoarding: Boolean = savedStateHandleProvider.get()
         .get<Boolean>(UpsellV2DisplayOnBoardingArg.key)
@@ -92,6 +98,8 @@ class UpsellV2ViewModel @Inject constructor(
     )
     val upsellV2UiState: StateFlow<UpsellV2UiState> = _upsellV2UiState
 
+    private var lastPlansAvailable: PlanWithPriceState.PlansAvailable? = null
+
     init {
         viewModelScope.launch {
             featureFlagsPreferencesRepository.get<Boolean>(FeatureFlag.PASS_FOLDERS)
@@ -102,34 +110,48 @@ class UpsellV2ViewModel @Inject constructor(
         viewModelScope.launch {
             updatePlans()
         }
+        viewModelScope.launch {
+            payments.observeSessionState().collect { state ->
+                when (state) {
+                    is PaymentSessionState.Reconciled -> {
+                        if (reconciledPaymentTracker.consume(state.purchase)) {
+                            upgrade(state.purchase)
+                        }
+                    }
+                    is PaymentSessionState.Failure -> {
+                        val messageRes = if (state.isStoreError) {
+                            R.string.upsell_error_google_prices
+                        } else {
+                            R.string.upsell_error_general
+                        }
+                        toastManager.showToast(messageRes)
+                        _upsellV2UiState.update {
+                            it.copy(
+                                displayLoaderDuringPurchase = false,
+                                stepToDisplay = StepToDisplay.Next
+                            )
+                        }
+                    }
+                    is PaymentSessionState.Idle -> {
+                        _upsellV2UiState.update { it.copy(displayLoaderDuringPurchase = false) }
+                    }
+                    else -> {
+                        _upsellV2UiState.update { it.copy(displayLoaderDuringPurchase = true) }
+                    }
+                }
+            }
+        }
     }
 
     private suspend fun getPrimaryUserIdOrNull() = accountManager.getPrimaryUserId().firstOrNull()
 
-    internal fun manageError(error: ProtonPaymentEvent.Error) {
-        PassLogger.w(TAG, "Error during payment : $error")
-
-        when (error) {
-            ProtonPaymentEvent.Error.GoogleProductDetailsNotFound -> {
-                toastManager.showToast(PaymentR.string.payments_error_google_prices)
+    fun onPurchaseClicked(productId: String, offerToken: String) = viewModelScope.launch {
+        _upsellV2UiState.update { it.copy(displayLoaderDuringPurchase = true) }
+        payments.purchase(productId, offerToken)
+            .onFailure { t ->
+                PassLogger.w(TAG, "Failed to initiate purchase: $t")
+                _upsellV2UiState.update { it.copy(displayLoaderDuringPurchase = false) }
             }
-
-            ProtonPaymentEvent.Error.UserCancelled -> {
-                // do nothing
-            }
-
-            else -> {
-                toastManager.showToast(PaymentR.string.payments_general_error)
-            }
-        }
-
-        if (error !is ProtonPaymentEvent.Error.UserCancelled) {
-            _upsellV2UiState.update {
-                it.copy(
-                    stepToDisplay = StepToDisplay.Next
-                )
-            }
-        }
     }
 
     internal fun onOfferClicked() {
@@ -140,7 +162,7 @@ class UpsellV2ViewModel @Inject constructor(
         )
     }
 
-    internal fun upgrade(giapSuccess: ProtonPaymentEvent.GiapSuccess?) = viewModelScope.launch {
+    internal fun upgrade(purchase: ReconciledPayment) = viewModelScope.launch {
         getPrimaryUserIdOrNull()?.let { userId ->
             _upsellV2UiState.update {
                 it.copy(
@@ -155,7 +177,7 @@ class UpsellV2ViewModel @Inject constructor(
             }
             telemetryManager.sendEvent(TelemetryGrowthFeatureUsageEvent(subscriptionSource))
 
-            giapSuccess?.let { sendTelemetryGrowthSubEvent(giapSuccess, userId) }
+            sendTelemetryGrowthSubEvent(purchase, userId)
 
             viewModelScope.launch {
                 safeRunCatching {
@@ -196,20 +218,26 @@ class UpsellV2ViewModel @Inject constructor(
         }
     }
 
-    private suspend fun sendTelemetryGrowthSubEvent(giapSuccess: ProtonPaymentEvent.GiapSuccess, userId: UserId) {
+    private suspend fun sendTelemetryGrowthSubEvent(purchase: ReconciledPayment, userId: UserId) {
+        val matchedPlan: OnePlanWithPrice? = lastPlansAvailable
+            ?.let { it.monthlyPlans + it.annualPlans }
+            ?.firstOrNull { it.paymentInfo.productId == purchase.planId }
+
+        if (matchedPlan == null) {
+            PassLogger.w(TAG, "Could not match purchased plan, skipping TelemetryGrowthSubEvent")
+            return
+        }
+
         val previousPlan: Plan? = getUserPlan(userId).firstOrNull()
         val isFreeToPaid = previousPlan?.isFreePlan == true
-        val cycle = giapSuccess.cycle
-        val instance = giapSuccess.plan.instances[cycle]
-        val priceEntry = instance?.price?.entries?.firstOrNull()
 
         telemetryManager.sendEvent(
             event = TelemetryGrowthSubEvent(
-                contentList = giapSuccess.purchase.productIds.map { it.id },
-                price = priceEntry?.value?.current?.toDouble()?.div(other = 100) ?: 0.0,
-                currency = priceEntry?.value?.currency.orEmpty(),
-                cycle = cycle,
-                transactionId = giapSuccess.purchase.orderId,
+                contentList = listOf(purchase.planId),
+                price = matchedPlan.paymentInfo.rawPrice,
+                currency = matchedPlan.paymentInfo.currency,
+                cycle = purchase.cycle ?: matchedPlan.cycle,
+                transactionId = purchase.orderId,
                 isFreeToPaid = isFreeToPaid
             )
         )
@@ -218,6 +246,9 @@ class UpsellV2ViewModel @Inject constructor(
     private suspend fun updatePlans() {
         observePlansWithPrice()
             .collect { plans ->
+                if (plans is PlanWithPriceState.PlansAvailable) {
+                    lastPlansAvailable = plans
+                }
                 // we display only the first correct plans
                 if (_upsellV2UiState.value.plans.isEmpty()) {
                     if (plans is PlanWithPriceState.PlansAvailable) {
@@ -316,7 +347,7 @@ class UpsellV2ViewModel @Inject constructor(
 
     private fun buildAnnualPlans(plans: PlanWithPriceState.PlansAvailable) {
         val annualPlans = plans
-            .toYearlyUpsellUiModel()
+            .toYearlyUpsellUiModel(context)
             .toPersistentList()
 
         if (annualPlans.size == 2) {

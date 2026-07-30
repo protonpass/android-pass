@@ -39,7 +39,9 @@ internal sealed interface PasswordCredentialCreationState {
         internal val themePreference: ThemePreference,
         internal val isBiometricAuthRequired: Boolean,
         internal val hasSingleAccount: Boolean,
-        internal val event: PasswordCredentialCreationStateEvent
+        internal val event: PasswordCredentialCreationStateEvent,
+        internal val supportPayment: Boolean = false,
+        internal val canShowWarningReloadApp: Boolean = false
     ) : PasswordCredentialCreationState {
 
         internal val initialCreateLoginUiState: InitialCreateLoginUiState = InitialCreateLoginUiState(

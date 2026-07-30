@@ -82,6 +82,7 @@ dependencies {
     ksp(libs.androidx.hilt.compiler)
 
     implementation(projects.pass.account.api)
+    implementation(projects.pass.appConfig.api)
     implementation(projects.pass.autofill.api)
     implementation(projects.pass.biometry.api)
     implementation(projects.pass.common.api)
@@ -103,6 +104,7 @@ dependencies {
 
     implementation(projects.pass.features.accountSelector)
     implementation(projects.pass.features.auth)
+    implementation(projects.pass.features.upsell)
     implementation(projects.pass.features.itemCreate)
     implementation(projects.pass.features.passkeys)
     implementation(projects.pass.features.password)

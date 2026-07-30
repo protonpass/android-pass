@@ -18,21 +18,15 @@
 
 package proton.android.pass.data.impl.usecases.plan
 
+import android.content.Context
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.filterNotNull
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.onStart
-import me.proton.core.accountmanager.domain.AccountManager
-import me.proton.core.accountmanager.domain.getPrimaryAccount
-import me.proton.core.domain.entity.UserId
-import me.proton.core.plan.domain.entity.DynamicPlan
-import me.proton.core.plan.domain.entity.DynamicPlans
-import me.proton.core.plan.domain.usecase.GetDynamicPlansAdjustedPrices
-import me.proton.core.plan.presentation.usecase.ComposeAutoRenewText
 import me.proton.core.presentation.utils.formatCentsPriceDefaultLocale
 import proton.android.pass.common.api.AppDispatchers
+import proton.android.pass.data.impl.R
 import proton.android.pass.data.api.usecases.plan.ANNUAL_PLAN_CYCLE
 import proton.android.pass.data.api.usecases.plan.MONTHLY_PLAN_CYCLE
 import proton.android.pass.data.api.usecases.plan.ObservePlansWithPrice
@@ -42,62 +36,38 @@ import proton.android.pass.domain.plan.OnePlanWithPrice
 import proton.android.pass.domain.plan.PaymentButton
 import proton.android.pass.domain.plan.PlanWithPriceState
 import proton.android.pass.log.api.PassLogger
+import proton.android.pass.payments.api.PaymentPricingPhase
+import proton.android.pass.payments.api.PaymentProduct
+import proton.android.pass.payments.api.Payments
 import javax.inject.Inject
 
 class ObservePlansWithPriceImpl @Inject constructor(
-    private val accountManager: AccountManager,
-    private val getDynamicPlansAdjustedPrices: GetDynamicPlansAdjustedPrices,
-    private val autoRenewText: ComposeAutoRenewText,
+    @ApplicationContext private val context: Context,
+    private val payments: Payments,
     private val appDispatchers: AppDispatchers
 ) : ObservePlansWithPrice {
 
     override fun invoke(): Flow<PlanWithPriceState> = flow {
-        accountManager
-            .getPrimaryAccount()
-            .filterNotNull()
-            .first()
-            .let { account ->
-                runCatching {
-                    getDynamicPlansAdjustedPrices(userId = account.userId)
-                }.onSuccess { prices ->
-                    if (prices.plans.isEmpty()) {
-                        PassLogger.w(TAG, "getDynamicPlans plans empty")
-                        emit(PlanWithPriceState.NoPlan)
-                    } else {
-                        emit(
-                            managePlans(
-                                prices = prices,
-                                userId = account.userId
-                            )
-                        )
-                    }
-                }.onFailure {
-                    PassLogger.w(TAG, "getDynamicPlans error : $it")
-                    emit(PlanWithPriceState.Error)
-                }
+        payments.getProducts().onSuccess { products ->
+            if (products.isEmpty()) {
+                PassLogger.w(TAG, "Payments returned an empty product list")
+                emit(PlanWithPriceState.NoPlan)
+            } else {
+                emit(managePlans(products))
             }
+        }.onFailure { t ->
+            PassLogger.w(TAG, "Failed to get payment products: $t")
+            emit(PlanWithPriceState.Error)
+        }
     }.onStart { emit(PlanWithPriceState.Loading) }
         .flowOn(appDispatchers.io)
 
-
-    private fun managePlans(prices: DynamicPlans, userId: UserId): PlanWithPriceState {
-
-        val monthlyPlans =
-            getPlanByCycle(
-                prices = prices,
-                cycle = MONTHLY_PLAN_CYCLE,
-                userId = userId
-            )
-
-        val annualPlans =
-            getPlanByCycle(
-                prices = prices,
-                cycle = ANNUAL_PLAN_CYCLE,
-                userId = userId
-            )
+    private fun managePlans(products: List<PaymentProduct>): PlanWithPriceState {
+        val monthlyPlans = products.toOnePlanList(MONTHLY_PLAN_CYCLE)
+        val annualPlans = products.toOnePlanList(ANNUAL_PLAN_CYCLE)
 
         if (annualPlans.isEmpty() && monthlyPlans.isEmpty()) {
-            PassLogger.i(TAG, "managePlans no plan available")
+            PassLogger.i(TAG, "managePlans: no plans available")
             return PlanWithPriceState.NoPlan
         }
 
@@ -107,94 +77,84 @@ class ObservePlansWithPriceImpl @Inject constructor(
         )
     }
 
-    @SuppressWarnings("LongMethod")
-    private fun getPlanByCycle(
-        prices: DynamicPlans,
-        userId: UserId,
-        cycle: Int
-    ): List<OnePlanWithPrice> {
-        val plans = mutableListOf<OnePlanWithPrice>()
-
-        prices.plans
-            // order : Pass Plus then Pass Unlimited
-            .sortedBy {
-                when (it.name) {
-                    PASS_PLUS_NAME -> 0
-                    PASS_UNLIMITED_NAME -> 1
-                    else -> 2
-                }
+    private fun List<PaymentProduct>.toOnePlanList(targetCycle: Int): List<OnePlanWithPrice> = this
+        .filter { product ->
+            val baseOffer = product.offers.firstOrNull { !it.isDiscounted }
+                ?: return@filter false
+            val period = baseOffer.pricingPhases.lastOrNull()?.period ?: return@filter false
+            period == targetCycle.toPeriod() &&
+                (product.id.contains(PASS_PLUS_NAME) || product.id.contains(PASS_UNLIMITED_NAME))
+        }
+        .sortedBy { product ->
+            when {
+                product.id.contains(PASS_PLUS_NAME) -> 0
+                product.id.contains(PASS_UNLIMITED_NAME) -> 1
+                else -> 2
             }
-            .take(n = 2)
-            .forEach {
-                // GetDynamicPlansAdjustedPrices contains exactly one currency per plan:
-                // the currency configured in Google Play
-                val currency =
-                    it.instances[cycle]?.price?.values?.firstOrNull()?.currency ?: return@forEach
+        }
+        .mapNotNull { it.toOnePlanWithPrice(targetCycle) }
 
-                plans.add(
-                    OnePlanWithPrice(
-                        internalName = it.name.orEmpty(),
-                        title = when (it.name) {
-                            PASS_PLUS_NAME -> "Plus"
-                            PASS_UNLIMITED_NAME -> "Unlimited"
-                            else -> ""
-                        },
-                        pricePerMonth = it.getMonthlyPrice(
-                            currency = currency,
-                            cycle = cycle
-                        ).orEmpty(),
-                        defaultPricePerMonth = it.getDefaultMonthlyPrice(
-                            currency = currency,
-                            cycle = cycle
-                        ),
-                        pricePerYear = it.getYearlyPrice(
-                            currency = currency,
-                            cycle = cycle
-                        ).orEmpty(),
-                        annualPrice = autoRenewText(
-                            price = it.instances[cycle]?.price?.values
-                                ?.firstOrNull { it.currency == currency },
-                            cycle = cycle
-                        ).orEmpty(),
-                        paymentInfo = PaymentButton(
-                            currency = currency,
-                            cycle = cycle,
-                            plan = it,
-                            userId = userId
-                        ),
-                        cycle = cycle
-                    )
-                )
-            }
+    private fun PaymentProduct.toOnePlanWithPrice(cycle: Int): OnePlanWithPrice? {
+        val introOffer = offers.firstOrNull { it.isDiscounted }
+        val baseOffer = offers.firstOrNull { !it.isDiscounted } ?: return null
+        val phases = introOffer?.pricingPhases ?: baseOffer.pricingPhases
+        val currentPhase = phases.firstOrNull() ?: return null
+        val recurringPhase = phases.last()
+        val currency = currentPhase.currency
+        val hasOffer = introOffer != null
 
-        return plans
+        return OnePlanWithPrice(
+            internalName = when {
+                id.contains(PASS_PLUS_NAME) -> PASS_PLUS_NAME
+                id.contains(PASS_UNLIMITED_NAME) -> PASS_UNLIMITED_NAME
+                else -> id
+            },
+            title = when {
+                id.contains(PASS_PLUS_NAME) -> "Plus"
+                id.contains(PASS_UNLIMITED_NAME) -> "Unlimited"
+                else -> ""
+            },
+            pricePerMonth = currentPhase.toMonthlyFormatted(cycle, currency),
+            defaultPricePerMonth = if (hasOffer) {
+                recurringPhase.toMonthlyFormatted(cycle, currency)
+            } else null,
+            pricePerYear = currentPhase.formattedAmount,
+            annualPrice = context.getString(
+                when {
+                    hasOffer && cycle == ANNUAL_PLAN_CYCLE -> R.string.plan_welcome_offer_auto_renews_annual
+                    hasOffer -> R.string.plan_welcome_offer_auto_renews_monthly
+                    cycle == ANNUAL_PLAN_CYCLE -> R.string.plan_subscription_auto_renews_annual
+                    else -> R.string.plan_subscription_auto_renews_monthly
+                },
+                recurringPhase.formattedAmount
+            ),
+            paymentInfo = PaymentButton(
+                productId = id,
+                offerToken = introOffer?.token ?: baseOffer.token,
+                formattedPrice = currentPhase.formattedAmount,
+                currency = currency,
+                rawPrice = currentPhase.amount.toDouble() / MICROS_PER_UNIT
+            ),
+            cycle = cycle
+        )
+    }
+}
+
+// Money.amount is in micros (1,000,000 micros = 1 currency unit = 100 cents).
+// formatCentsPriceDefaultLocale expects a Double in cents.
+private fun PaymentPricingPhase.toMonthlyFormatted(cycle: Int, currency: String): String =
+    if (cycle == MONTHLY_PLAN_CYCLE) {
+        formattedAmount
+    } else {
+        (amount.toDouble() / cycle / MICROS_PER_CENT).formatCentsPriceDefaultLocale(currency)
     }
 
-    private fun DynamicPlan.getYearlyPrice(currency: String, cycle: Int): String? = instances[cycle]
-        ?.price
-        ?.values
-        ?.firstOrNull { it.currency == currency }
-        ?.current
-        ?.toDouble()
-        ?.formatCentsPriceDefaultLocale(currency)
-
-    private fun DynamicPlan.getMonthlyPrice(currency: String, cycle: Int): String? = instances[cycle]
-        ?.price
-        ?.values
-        ?.firstOrNull { it.currency == currency }
-        ?.current
-        ?.div(other = cycle.toFloat())
-        ?.toDouble()
-        ?.formatCentsPriceDefaultLocale(currency)
-
-    private fun DynamicPlan.getDefaultMonthlyPrice(currency: String, cycle: Int): String? = instances[cycle]
-        ?.price
-        ?.values
-        ?.firstOrNull { it.currency == currency }
-        ?.default
-        ?.div(other = cycle.toFloat())
-        ?.toDouble()
-        ?.formatCentsPriceDefaultLocale(currency)
+private fun Int.toPeriod(): String = when (this) {
+    MONTHLY_PLAN_CYCLE -> "P1M"
+    ANNUAL_PLAN_CYCLE -> "P1Y"
+    else -> ""
 }
 
 private const val TAG = "ObservePlansWithPrice"
+private const val MICROS_PER_CENT = 10_000.0
+private const val MICROS_PER_UNIT = 1_000_000.0

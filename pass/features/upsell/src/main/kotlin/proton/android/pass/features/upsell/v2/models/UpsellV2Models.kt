@@ -26,6 +26,7 @@ import kotlinx.collections.immutable.toPersistentList
 import proton.android.pass.commonpresentation.api.plan.PaymentButtonUiState
 import proton.android.pass.commonpresentation.api.plan.toUiModel
 import proton.android.pass.data.api.usecases.plan.PASS_PLUS_NAME
+import proton.android.pass.data.api.usecases.plan.PASS_UNLIMITED_NAME
 import proton.android.pass.domain.plan.OnePlanWithPrice
 import proton.android.pass.domain.plan.PlanWithPriceState
 import proton.android.pass.features.upsell.v1.R
@@ -94,20 +95,28 @@ fun PlanWithPriceState.PlansAvailable.toWelcomeOfferYearlyUpsellUiModel(context:
         )
     }
 
-fun PlanWithPriceState.PlansAvailable.toYearlyUpsellUiModel(): List<UpsellPlanUiModel> = this.annualPlans
-    .map {
-        UpsellPlanUiModel(
-            selector = SelectorUiState(
-                it.title,
-                it.pricePerMonth
-            ),
-            defaultPricePerMonth = it.defaultPricePerMonth,
-            pricePerYear = it.pricePerYear,
-            paymentButtonUiState = it.paymentInfo.toUiModel(),
-            bottomAnnualPrice = it.annualPrice
-        )
-    }
-    .take(n = 2)
+fun PlanWithPriceState.PlansAvailable.toYearlyUpsellUiModel(context: Context): List<UpsellPlanUiModel> =
+    this.annualPlans
+        .map {
+            UpsellPlanUiModel(
+                selector = SelectorUiState(
+                    it.title,
+                    it.pricePerMonth
+                ),
+                defaultPricePerMonth = it.defaultPricePerMonth,
+                pricePerYear = it.pricePerYear,
+                paymentButtonUiState = it.paymentInfo.toUiModel().copy(
+                    defaultButtonText = context.getString(
+                        when (it.internalName) {
+                            PASS_UNLIMITED_NAME -> R.string.upsell_button_upgrade_unlimited
+                            else -> R.string.upsell_button_upgrade
+                        }
+                    )
+                ),
+                bottomAnnualPrice = it.annualPrice
+            )
+        }
+        .take(n = 2)
 
 
 sealed class PlanTypeUiState {

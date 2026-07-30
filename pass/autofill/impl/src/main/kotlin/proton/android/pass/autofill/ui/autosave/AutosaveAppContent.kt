@@ -38,6 +38,8 @@ import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.features.auth.AUTH_GRAPH
 import proton.android.pass.features.auth.AuthNavigation
+import proton.android.pass.features.upsell.v2.navigation.UpsellV2NavItem
+import proton.android.pass.features.upsell.v2.navigation.upsellV2NavGraph
 import proton.android.pass.features.auth.EnterPin
 import proton.android.pass.features.auth.authGraph
 import proton.android.pass.features.itemcreate.login.CREATE_LOGIN_GRAPH
@@ -151,8 +153,23 @@ fun AutosaveAppContent(
                         autosaveActivityGraph(
                             appNavigator = appNavigator,
                             arguments = arguments,
-                            onNavigate = onNavigate,
+                            onNavigate = { nav ->
+                                if (nav == AutosaveNavigation.Upgrade && state.supportPayment) {
+                                    appNavigator.navigate(
+                                        destination = UpsellV2NavItem,
+                                        force = true,
+                                        route = UpsellV2NavItem.createRoute(manualDisplay = true)
+                                    )
+                                } else {
+                                    onNavigate(nav)
+                                }
+                            },
                             dismissBottomSheet = dismissBottomSheet
+                        )
+                        upsellV2NavGraph(
+                            onNextScreen = { _ -> appNavigator.navigateBack() },
+                            onSkip = { _ -> appNavigator.navigateBack() },
+                            onNavigateBack = { _ -> appNavigator.navigateBack() }
                         )
                     }
                 }
@@ -207,8 +224,17 @@ fun AutosaveAppContent(
                                                 )
                                             )
 
-                                        SelectItemNavigation.Upgrade ->
-                                            onNavigate(AutosaveNavigation.Upgrade)
+                                        SelectItemNavigation.Upgrade -> {
+                                            if (state.supportPayment) {
+                                                appNavigator.navigate(
+                                                    destination = UpsellV2NavItem,
+                                                    force = true,
+                                                    route = UpsellV2NavItem.createRoute(manualDisplay = true)
+                                                )
+                                            } else {
+                                                onNavigate(AutosaveNavigation.Upgrade)
+                                            }
+                                        }
 
                                         SelectItemNavigation.SelectAccount ->
                                             appNavigator.navigate(AccountSwitchNavItem)
@@ -220,7 +246,17 @@ fun AutosaveAppContent(
                             autosaveActivityGraph(
                                 appNavigator = appNavigator,
                                 arguments = arguments,
-                                onNavigate = onNavigate,
+                                onNavigate = { nav ->
+                                    if (nav == AutosaveNavigation.Upgrade && state.supportPayment) {
+                                        appNavigator.navigate(
+                                            destination = UpsellV2NavItem,
+                                            force = true,
+                                            route = UpsellV2NavItem.createRoute(manualDisplay = true)
+                                        )
+                                    } else {
+                                        onNavigate(nav)
+                                    }
+                                },
                                 dismissBottomSheet = dismissBottomSheet
                             )
                             searchOptionsGraph(
@@ -251,6 +287,11 @@ fun AutosaveAppContent(
                                         dismissBottomSheet {}
                                 }
                             }
+                            upsellV2NavGraph(
+                                onNextScreen = { _ -> appNavigator.navigateBack() },
+                                onSkip = { _ -> appNavigator.navigateBack() },
+                                onNavigateBack = { _ -> appNavigator.navigateBack() }
+                            )
                         }
                     } else {
                         NavHost(
@@ -262,9 +303,24 @@ fun AutosaveAppContent(
                                 appNavigator = appNavigator,
                                 arguments = arguments,
                                 initialUpdateLoginUiState = selectedUpdateState,
-                                onNavigate = onNavigate,
+                                onNavigate = { nav ->
+                                    if (nav == AutosaveNavigation.Upgrade && state.supportPayment) {
+                                        appNavigator.navigate(
+                                            destination = UpsellV2NavItem,
+                                            force = true,
+                                            route = UpsellV2NavItem.createRoute(manualDisplay = true)
+                                        )
+                                    } else {
+                                        onNavigate(nav)
+                                    }
+                                },
                                 dismissBottomSheet = dismissBottomSheet,
                                 onCloseEditScreen = onClearSelectedItemForUpdate
+                            )
+                            upsellV2NavGraph(
+                                onNextScreen = { _ -> appNavigator.navigateBack() },
+                                onSkip = { _ -> appNavigator.navigateBack() },
+                                onNavigateBack = { _ -> appNavigator.navigateBack() }
                             )
                         }
                     }
@@ -280,9 +336,24 @@ fun AutosaveAppContent(
                             appNavigator = appNavigator,
                             arguments = arguments,
                             initialUpdateLoginUiState = state.autosaveMode.initialUpdateLoginUiState,
-                            onNavigate = onNavigate,
+                            onNavigate = { nav ->
+                                if (nav == AutosaveNavigation.Upgrade && state.supportPayment) {
+                                    appNavigator.navigate(
+                                        destination = UpsellV2NavItem,
+                                        force = true,
+                                        route = UpsellV2NavItem.createRoute(manualDisplay = true)
+                                    )
+                                } else {
+                                    onNavigate(nav)
+                                }
+                            },
                             dismissBottomSheet = dismissBottomSheet,
                             onCloseEditScreen = { onNavigate(AutosaveNavigation.Cancel) }
+                        )
+                        upsellV2NavGraph(
+                            onNextScreen = { _ -> appNavigator.navigateBack() },
+                            onSkip = { _ -> appNavigator.navigateBack() },
+                            onNavigateBack = { _ -> appNavigator.navigateBack() }
                         )
                     }
                 }

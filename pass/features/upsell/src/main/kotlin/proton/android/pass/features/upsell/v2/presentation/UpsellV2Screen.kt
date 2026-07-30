@@ -18,19 +18,13 @@
 
 package proton.android.pass.features.upsell.v2.presentation
 
-import android.app.Activity
 import androidx.activity.compose.BackHandler
-import androidx.activity.compose.rememberLauncherForActivityResult
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import me.proton.core.payment.presentation.viewmodel.ProtonPaymentEvent
-import me.proton.core.plan.presentation.ui.StartUnredeemedPurchase
 import proton.android.pass.features.upsell.v2.models.StepToDisplay
 
 @Composable
@@ -54,45 +48,11 @@ fun UpsellV2Screen(
         }
     }
 
-    val context = LocalContext.current
-    val launcher = rememberLauncherForActivityResult(
-        contract = ActivityResultContracts.StartActivityForResult()
-    ) {
-        if (it.resultCode == Activity.RESULT_OK) {
-            viewModel.upgrade(giapSuccess = null)
-        }
-    }
-
     UpsellV2Content(
         modifier = modifier,
         uiState = state,
-        onPaymentCallback = {
-            when (it) {
-                is ProtonPaymentEvent.Loading -> {
-                    viewModel.onOfferClicked()
-                }
-                is ProtonPaymentEvent.GiapSuccess -> {
-                    viewModel.upgrade(giapSuccess = it)
-                }
-
-                is ProtonPaymentEvent.Error -> {
-                    when (it) {
-                        is ProtonPaymentEvent.Error.GiapUnredeemed -> {
-                            launcher.launch(
-                                input = StartUnredeemedPurchase.createIntent(context, Unit)
-                            )
-                        }
-
-                        else -> {
-                            viewModel.manageError(it)
-                        }
-                    }
-                }
-
-                else -> {
-                    // nothing to do : stay where the user is
-                }
-            }
+        onPurchaseClick = { productId, offerToken ->
+            viewModel.onPurchaseClicked(productId, offerToken)
         },
         onSkipButtonClick = {
             onSkip(state.displayOnBoarding)

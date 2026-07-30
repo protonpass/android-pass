@@ -25,9 +25,6 @@ import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import me.proton.core.domain.entity.UserId
-import me.proton.core.payment.domain.PaymentManager
-import proton.android.pass.appconfig.api.AppConfig
-import proton.android.pass.appconfig.api.BuildFlavor.Companion.supportPayment
 import proton.android.pass.data.api.usecases.ObserveCurrentUser
 import proton.android.pass.data.api.usecases.ObserveItemCount
 import proton.android.pass.data.api.usecases.ObserveMFACount
@@ -39,22 +36,20 @@ import proton.android.pass.domain.Plan
 import proton.android.pass.domain.PlanLimit
 import proton.android.pass.domain.PlanType
 import proton.android.pass.domain.ShareSelection
+import proton.android.pass.payments.api.Payments
 import javax.inject.Inject
 
 class ObserveUpgradeInfoImpl @Inject constructor(
-    private val appConfig: AppConfig,
     private val observeCurrentUser: ObserveCurrentUser,
     private val observeMFACount: ObserveMFACount,
     private val observeItemCount: ObserveItemCount,
-    private val paymentManager: PaymentManager,
+    private val payments: Payments,
     private val planRepository: PlanRepository,
     private val observeVaultCount: ObserveVaultCount
 ) : ObserveUpgradeInfo {
-    private val supportsPayments: Boolean = appConfig.flavor.supportPayment()
-
     override fun invoke(userId: UserId?): Flow<UpgradeInfo> = getUserIdFlow(userId)
         .flatMapLatest { id ->
-            val isSubscriptionAvailable = resolveSubscriptionAvailability(id)
+            val isSubscriptionAvailable = payments.supportsStorePayments
 
             combine(
                 observePlan(id),
@@ -62,8 +57,9 @@ class ObserveUpgradeInfoImpl @Inject constructor(
                 observeAliasCount(),
                 observeVaultTotal(id)
             ) { plan, totalTotp, totalAlias, totalVaults ->
+                val isUpgradeAvailable = shouldDisplayUpgrade(plan)
                 UpgradeInfo(
-                    isUpgradeAvailable = shouldDisplayUpgrade(plan),
+                    isUpgradeAvailable = isUpgradeAvailable,
                     isSubscriptionAvailable = isSubscriptionAvailable,
                     plan = plan,
                     totalVaults = totalVaults,
@@ -77,11 +73,6 @@ class ObserveUpgradeInfoImpl @Inject constructor(
         ?: observeCurrentUser()
             .map { it.userId }
             .distinctUntilChanged()
-
-    private suspend fun resolveSubscriptionAvailability(userId: UserId): Boolean {
-        if (!supportsPayments) return true
-        return runCatching { paymentManager.isSubscriptionAvailable(userId) }.getOrDefault(false)
-    }
 
     private fun observePlan(userId: UserId): Flow<Plan> = planRepository.observePlan(userId = userId)
         .map { it ?: LOADING_PLAN }

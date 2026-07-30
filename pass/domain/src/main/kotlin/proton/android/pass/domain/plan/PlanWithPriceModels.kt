@@ -18,14 +18,12 @@
 
 package proton.android.pass.domain.plan
 
-import me.proton.core.domain.entity.UserId
-import me.proton.core.plan.domain.entity.DynamicPlan
-
 data class PaymentButton(
+    val productId: String,
+    val offerToken: String,
+    val formattedPrice: String = "",
     val currency: String = "",
-    val cycle: Int = 1,
-    val plan: DynamicPlan? = null,
-    val userId: UserId? = null
+    val rawPrice: Double = 0.0
 )
 
 data class OnePlanWithPrice(

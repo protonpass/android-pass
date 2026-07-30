@@ -43,6 +43,8 @@ coil = "2.2.2"
 compose-stable-marker = "1.0.5"
 # Core
 core = "36.5.0"
+# Proton Android Payment
+protonAndroidPayment = "1.2.0"
 # Dagger
 dagger = "2.58"
 # Google
@@ -250,8 +252,9 @@ core-notification = { module = "me.proton.core:notification", version.ref = "cor
 core-observability = { module = "me.proton.core:observability", version.ref = "core" }
 core-passValidator = { module = "me.proton.core:pass-validator", version.ref = "core" }
 core-payment = { module = "me.proton.core:payment", version.ref = "core" }
-core-paymentIap = { module = "me.proton.core:payment-iap", version.ref = "core" }
-# core-payment-iap-test = { module = "me.proton.core:payment-iap-test", version.ref = "core" }
+protonAndroidPayment = { module = "me.proton.android.payment:payment", version.ref = "protonAndroidPayment" }
+protonAndroidPayment-billingGoogle = { module = "me.proton.android.payment:payment-billing-google", version.ref = "protonAndroidPayment" }
+protonAndroidPayment-ui = { module = "me.proton.android.payment:payment-ui", version.ref = "protonAndroidPayment" }
 core-payment-domain = { module = "me.proton.core:payment-domain", version.ref = "core" }
 core-payment-presentation = { module = "me.proton.core:payment-presentation", version.ref = "core" }
 core-plan = { module = "me.proton.core:plan", version.ref = "core" }

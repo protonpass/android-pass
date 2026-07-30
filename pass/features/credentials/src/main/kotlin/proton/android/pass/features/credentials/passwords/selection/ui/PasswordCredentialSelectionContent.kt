@@ -41,6 +41,8 @@ import proton.android.pass.features.credentials.passwords.selection.presentation
 import proton.android.pass.features.credentials.passwords.selection.presentation.PasswordCredentialSelectionState
 import proton.android.pass.features.credentials.passwords.selection.presentation.PasswordCredentialSelectionStateEvent
 import proton.android.pass.features.selectitem.navigation.SelectItem
+import proton.android.pass.features.upsell.v2.navigation.UpsellV2NavItem
+import proton.android.pass.features.upsell.v2.navigation.upsellV2NavGraph
 import proton.android.pass.navigation.api.rememberAppNavigator
 import proton.android.pass.navigation.api.rememberBottomSheetNavigator
 
@@ -96,7 +98,17 @@ internal fun PasswordCredentialSelectionContent(
                 appNavigator = appNavigator,
                 actionAfterAuth = actionAfterAuth,
                 selectItemState = selectItemState,
-                onNavigate = onNavigate,
+                onNavigate = { nav ->
+                    if (nav == PasswordCredentialSelectionNavEvent.Upgrade && supportPayment) {
+                        appNavigator.navigate(
+                            destination = UpsellV2NavItem,
+                            force = true,
+                            route = UpsellV2NavItem.createRoute(manualDisplay = true)
+                        )
+                    } else {
+                        onNavigate(nav)
+                    }
+                },
                 onEvent = onEvent,
                 dismissBottomSheet = { block ->
                     onBottomSheetDismissed(
@@ -106,6 +118,11 @@ internal fun PasswordCredentialSelectionContent(
                         block = block
                     )
                 }
+            )
+            upsellV2NavGraph(
+                onNextScreen = { _ -> appNavigator.navigateBack() },
+                onSkip = { _ -> appNavigator.navigateBack() },
+                onNavigateBack = { _ -> appNavigator.navigateBack() }
             )
         }
     }

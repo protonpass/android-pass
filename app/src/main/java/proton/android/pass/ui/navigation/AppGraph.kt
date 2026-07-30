@@ -312,6 +312,8 @@ import proton.android.pass.navigation.api.CommonNavArgKey
 import proton.android.pass.ui.AppNavigation
 import proton.android.pass.ui.navigation.account.AccountRedirectsDestination
 import proton.android.pass.ui.navigation.account.accountRedirectsGraph
+import proton.android.pass.ui.navigation.account.SubscriptionManagementNavItem
+import proton.android.pass.ui.navigation.account.subscriptionManagementGraph
 
 @Suppress("LongMethod", "ComplexMethod", "ThrowsCount")
 fun NavGraphBuilder.appGraph(
@@ -870,7 +872,10 @@ fun NavGraphBuilder.appGraph(
             when (it) {
                 AccountNavigation.CloseScreen -> appNavigator.navigateBack()
                 is AccountNavigation.SignOut -> onNavigate(AppNavigation.SignOut(it.userId))
-                AccountNavigation.Subscription -> onNavigate(AppNavigation.Subscription)
+                AccountNavigation.Subscription -> appNavigator.navigate(
+                    destination = SubscriptionManagementNavItem,
+                    force = true
+                )
                 AccountNavigation.Upgrade -> onNavigate(AppNavigation.Upgrade)
                 AccountNavigation.PasswordManagement -> onNavigate(AppNavigation.PasswordManagement)
                 AccountNavigation.RecoveryEmail -> onNavigate(AppNavigation.RecoveryEmail)
@@ -2935,7 +2940,10 @@ fun NavGraphBuilder.appGraph(
             when (upsellNavDestination) {
                 UpsellNavDestination.CloseScreen -> appNavigator.navigateBack()
                 UpsellNavDestination.Upgrade -> onNavigate(AppNavigation.Upgrade)
-                UpsellNavDestination.Subscription -> onNavigate(AppNavigation.Subscription)
+                UpsellNavDestination.Subscription -> appNavigator.navigate(
+                    destination = SubscriptionManagementNavItem,
+                    force = true
+                )
             }
         }
     )
@@ -3141,6 +3149,8 @@ fun NavGraphBuilder.appGraph(
             }
         }
     }
+
+    subscriptionManagementGraph(appNavigator)
 
     accountRedirectsGraph {
         when (it) {

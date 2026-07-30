@@ -18,7 +18,6 @@
 
 package proton.android.pass.autofill.ui.autosave
 
-import androidx.activity.ComponentActivity
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -34,8 +33,6 @@ import me.proton.core.account.domain.entity.AccountState
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.accountmanager.domain.getAccounts
 import me.proton.core.domain.entity.UserId
-import proton.android.pass.account.api.AccountOrchestrators
-import proton.android.pass.account.api.Orchestrator
 import proton.android.pass.autofill.service.R
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
@@ -48,7 +45,6 @@ import javax.inject.Inject
 
 @HiltViewModel
 class AutosaveActivityViewModel @Inject constructor(
-    private val accountOrchestrators: AccountOrchestrators,
     private val accountManager: AccountManager,
     private val toastManager: ToastManager,
     private val internalSettingsRepository: InternalSettingsRepository,
@@ -66,14 +62,6 @@ class AutosaveActivityViewModel @Inject constructor(
                     ?: ThemePreference.System
             }
         )
-
-    fun register(context: ComponentActivity) {
-        accountOrchestrators.register(context, listOf(Orchestrator.PlansOrchestrator))
-    }
-
-    fun upgrade() = viewModelScope.launch {
-        accountOrchestrators.start(Orchestrator.PlansOrchestrator)
-    }
 
     fun signOut(userId: UserId) = viewModelScope.launch {
         val accounts = accountManager.getAccounts(AccountState.Ready).firstOrNull() ?: emptyList()

@@ -170,6 +170,16 @@ protonDetekt {
 }
 
 allprojects {
+    // KAPT is unsupported: it blocks Gradle configuration cache and is slower than KSP.
+    // All annotation processing (including Dagger Hilt) must use `com.google.devtools.ksp`.
+    plugins.withId("org.jetbrains.kotlin.kapt") {
+        throw GradleException(
+            "Module '${project.path}' applies the kotlin-kapt plugin, which is forbidden in this " +
+                "project. KAPT is incompatible with Gradle configuration cache and is slower than KSP. " +
+                "Use `com.google.devtools.ksp` with `ksp(...)` dependencies instead."
+        )
+    }
+
     // Force JVM toolchain to 17 for all subprojects
     plugins.withType<KotlinBasePlugin> {
         extensions.configure<KotlinBaseExtension> {

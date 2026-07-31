@@ -22,12 +22,12 @@ import proton.android.pass.data.api.usecases.Suggestion
 
 sealed interface SuggestionSource {
 
-    data class WithPackageName(val packageName: String) : SuggestionSource
+    data class WithPackageName(val packageName: String, val hashes: Set<String> = emptySet()) : SuggestionSource
 
     data class WithUrl(val url: String) : SuggestionSource
 
     fun toSuggestion(): Suggestion = when (this) {
-        is WithPackageName -> Suggestion.PackageName(packageName)
+        is WithPackageName -> Suggestion.PackageName(packageName, hashes)
         is WithUrl -> Suggestion.Url(url)
     }
 

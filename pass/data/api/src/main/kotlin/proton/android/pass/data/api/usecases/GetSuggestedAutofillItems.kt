@@ -56,8 +56,7 @@ sealed interface ItemData {
 sealed interface Suggestion {
     val value: String
 
-    @JvmInline
-    value class PackageName(override val value: String) : Suggestion
+    data class PackageName(override val value: String, val hashes: Set<String> = emptySet()) : Suggestion
 
     data class Url(
         override val value: String,

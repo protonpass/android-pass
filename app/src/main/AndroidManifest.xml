@@ -146,7 +146,7 @@
             android:name=".ui.shortcuts.ShortcutActivity"
             android:exported="true"
             android:launchMode="singleInstance"
-            android:theme="@android:style/Theme.NoDisplay" />
+            android:theme="@android:style/Theme.DeviceDefault.Dialog.Alert" />
 
         <activity
             android:name="proton.android.pass.enterextrapassword.EnterExtraPasswordActivity"

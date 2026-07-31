@@ -91,7 +91,7 @@ object AutoFillHandler {
             PassLogger.w(TAG, "Error handling autofill")
             PassLogger.w(TAG, exception)
             healthMonitor?.recordFillRequest(
-                packageName = Utils.getApplicationPackageName(windowNode),
+                packageName = Utils.getApplicationPackageName(request.fillContexts),
                 type = AutofillHealthEventType.FILL_REQUEST_ERROR
             )
             callback.onSuccess(null)
@@ -131,7 +131,7 @@ object AutoFillHandler {
         isAutosaveEnabled: Boolean,
         healthMonitor: AutofillHealthMonitor? = null
     ): Option<FillResponse> {
-        val applicationPackageName = PackageName(Utils.getApplicationPackageName(windowNode))
+        val applicationPackageName = PackageName(Utils.getApplicationPackageName(request.fillContexts))
         val shouldAutofill = shouldAutofill(
             context = context,
             accountManager = accountManager,

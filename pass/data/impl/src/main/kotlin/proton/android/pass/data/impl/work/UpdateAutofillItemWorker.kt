@@ -130,8 +130,9 @@ class UpdateAutofillItemWorker @AssistedInject constructor(
         )
         val packageName = inputData.getString(ARG_PACKAGE_NAME).toOption().map { PackageName(it) }
         val appName = inputData.getString(ARG_APP_NAME).toOption().map { AppName(it) }
+        val hashes = inputData.getStringArray(ARG_HASHES)?.toSet().orEmpty()
         val packageInfo = packageName.map {
-            PackageInfo(it, appName.value() ?: AppName(it.value))
+            PackageInfo(it, appName.value() ?: AppName(it.value), hashes)
         }
         val url = inputData.getString(ARG_URL).toOption()
         val shouldAssociate = inputData.getBoolean(ARG_SHOULD_ASSOCIATE, false)
@@ -168,11 +169,12 @@ class UpdateAutofillItemWorker @AssistedInject constructor(
         private const val ARG_ITEM_ID = "arg_item_id"
         private const val ARG_PACKAGE_NAME = "arg_package_name"
         private const val ARG_APP_NAME = "arg_app_name"
+        private const val ARG_HASHES = "arg_hashes"
         private const val ARG_URL = "arg_url"
         private const val ARG_SHOULD_ASSOCIATE = "arg_should_associate"
 
         fun create(data: UpdateAutofillItemData): Data {
-            val extras = mutableMapOf(
+            val extras = mutableMapOf<String, Any>(
                 ARG_SHARE_ID to data.shareId.id,
                 ARG_ITEM_ID to data.itemId.id,
                 ARG_SHOULD_ASSOCIATE to data.shouldAssociate
@@ -182,6 +184,7 @@ class UpdateAutofillItemWorker @AssistedInject constructor(
             if (packageInfoOption is Some && packageInfoOption.value.packageName.value.isNotBlank()) {
                 extras[ARG_PACKAGE_NAME] = packageInfoOption.value.packageName.value
                 extras[ARG_APP_NAME] = packageInfoOption.value.appName.value
+                extras[ARG_HASHES] = packageInfoOption.value.hashes.toTypedArray()
             }
 
             val url = data.url

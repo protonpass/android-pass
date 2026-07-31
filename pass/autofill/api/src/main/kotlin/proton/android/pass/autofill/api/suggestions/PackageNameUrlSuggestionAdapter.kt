@@ -22,6 +22,10 @@ import proton.android.pass.domain.entity.PackageName
 
 interface PackageNameUrlSuggestionAdapter {
 
-    fun adapt(packageName: PackageName, url: String, hashes: Set<String> = emptySet()): SuggestionSource
+    fun adapt(
+        packageName: PackageName,
+        url: String,
+        hashes: Set<String> = emptySet()
+    ): SuggestionSource
 
 }

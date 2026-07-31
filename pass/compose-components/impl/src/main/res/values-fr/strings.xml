@@ -388,4 +388,11 @@
     <item quantity="one">%s mot</item>
     <item quantity="other">%s mots</item>
   </plurals>
+  <!-- Password checks (Login create/edit + Generate Password BS) -->
+  <string name="password_strength_prefix">Niveau de sécurité du mot de passe</string>
+  <string name="password_check_min_length">Au moins 12 caractères</string>
+  <string name="password_check_lowercase">Lettres minuscules</string>
+  <string name="password_check_uppercase">Lettres majuscules</string>
+  <string name="password_check_no_consecutive">Aucun caractère répété</string>
+  <string name="password_check_no_common">Aucun mot de passe commun</string>
 </resources>

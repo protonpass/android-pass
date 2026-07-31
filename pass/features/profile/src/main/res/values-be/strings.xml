@@ -5,6 +5,7 @@
   <string name="profile_option_account">Уліковы запіс</string>
   <string name="profile_help_center">Цэнтр дапамогі</string>
   <string name="profile_security">Бяспека</string>
+  <string name="profile_option_autofill_troubleshooting">Выпраўленне непаладак з аўтазапаўненнем</string>
   <string name="profile_option_feedback">Зваротная сувязь</string>
   <string name="profile_option_import_export">Імпарт/экспарт</string>
   <string name="profile_option_tutorial">Як выкарыстоўваць Proton Pass</string>

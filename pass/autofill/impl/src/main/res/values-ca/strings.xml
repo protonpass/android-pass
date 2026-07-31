@@ -13,4 +13,40 @@
   <string name="autofill_confirm_dangerous_title" comment="Title for the dialog that will appear when the user clicks on Autofill but we think it may be a dangerous action">Confirmeu l\'acció</string>
   <string name="autofill_confirm_dangerous_body" comment="Body for the dialog that will appear when the user clicks on Autofill but we think it may be a dangerous action">Esteu a punt d\'emplenar automàticament les vostres credencials en un lloc web que ha obert l\'aplicació actual. L\'aplicació pot tenir accés a les credencials després de l\'emplenament automàtic. Feu-ho només si hi confieu.</string>
   <string name="autofill_confirm_button" comment="Confirmation button for actually performing the autofill action">Emplenament automàtic</string>
+  <string name="autofill_troubleshooting_title">Resolució de problemes d\'emplenament automàtic</string>
+  <string name="autofill_troubleshooting_subtitle">Comproveu que el vostre dispositiu estigui configurat correctament per a l\'emplenament automàtic.</string>
+  <string name="autofill_troubleshooting_verdict_all_good">L\'emplenament automàtic està totalment configurat</string>
+  <string name="autofill_troubleshooting_verdict_attention">Cal que reviseu algunes qüestions</string>
+  <string name="autofill_troubleshooting_service_ok">Proton Pass és el vostre servei d\'emplenament automàtic</string>
+  <string name="autofill_troubleshooting_service_current_other">Està definit actualment a %1$s.</string>
+  <string name="autofill_troubleshooting_service_not_default_title">Proton Pass no és el vostre servei d\'emplenament automàtic</string>
+  <string name="autofill_troubleshooting_service_not_default_body">Establiu-lo per defecte per l\'emplenament automàtic a totes les vostres aplicacions.</string>
+  <string name="autofill_troubleshooting_service_enable_action">Habilitar l\'emplenament automàtic</string>
+  <string name="autofill_troubleshooting_service_unsupported_title">Aquest dispositiu no admet l\'emplenament automàtic</string>
+  <string name="autofill_troubleshooting_browsers_header">Emplenament automàtic als navegadors</string>
+  <string name="autofill_troubleshooting_browsers_body">Els navegadors necessiten que l\'emplenament automàtic s\'activi per separat.</string>
+  <string name="autofill_troubleshooting_browser_open_action">Obrir-ho</string>
+  <string name="autofill_troubleshooting_browser_ready">L\'emplenament automàtic funciona directament aquí.</string>
+  <string name="autofill_troubleshooting_browser_working">L\'emplenament automàtic funciona en aquest navegador.</string>
+  <string name="autofill_troubleshooting_browser_pending_service">Disponible un cop configureu Proton Pass com a servei d\'emplenament automàtic.</string>
+  <string name="autofill_troubleshooting_browser_steps_generic">Obriu la configuració del navegador, busqueu la secció d\'emplenament automàtic o contrasenyes, i trieu Proton Pass com a servei d\'emplenament automàtic.</string>
+  <string name="autofill_troubleshooting_browser_steps_chrome">1. Obriu el menú del navegador i aneu a les Preferències, després a Serveis d\'emplenament automàtic.\n2. Activeu «Utilitzar un altre servei» i seleccioneu Proton Pass.</string>
+  <string name="autofill_troubleshooting_browser_steps_firefox">1. Obriu el menú del navegador i aneu a les Preferències, després a Emplenament automàtic.\n2. Trieu Proton Pass com a servei d\'emplenament automàtic.</string>
+  <string name="autofill_troubleshooting_browser_steps_samsung">Obriu la Configuració i després el servei d\'Emplenament automàtic.\n2. Seleccioneu Proton Pass.</string>
+  <string name="autofill_troubleshooting_inline_info">Els suggeriments en línia apareixen al teclat. Requereixen Android 11 o posterior i un teclat compatible com ara Gboard.</string>
+  <string name="autofill_troubleshooting_share_diagnostics">Compartir el diagnòstic</string>
+  <string name="autofill_troubleshooting_open_diagnostics">Diagnòstic avançat</string>
+  <string name="autofill_diagnostics_title">Diagnòstic avançat</string>
+  <string name="autofill_diagnostics_enable">Habilitar el diagnòstic d\'emplenament automàtic</string>
+  <string name="autofill_diagnostics_enable_description">Quan està activat, Proton Pass registra què passa durant l\'emplenament automàtic perquè pugueu veure per què no s\'ha omplert. Desactiveu-ho un cop hàgiu acabat.</string>
+  <string name="autofill_diagnostics_instructions">Reproduïu el problema d\'emplenament automàtic a l\'aplicació o al navegador i torneu a aquesta pantalla.</string>
+  <string name="autofill_diagnostics_last_attempt_title">Últim intent d\'emplenament automàtic</string>
+  <string name="autofill_diagnostics_no_attempts">Encara no s\'ha registrat cap intent d\'emplenament automàtic.</string>
+  <string name="autofill_diagnostics_reason_not_default">Proton Pass no és el vostre servei d\'emplenament automàtic, de manera que encara no pot omplir res.</string>
+  <string name="autofill_diagnostics_outcome_offered">Proton Pass ha fet suggeriments a %1$s.</string>
+  <string name="autofill_diagnostics_outcome_nothing">S\'ha activat l\'emplenament automàtic a %1$s, però no s\'ha proporcionat cap inici de sessió coincident. La pàgina pot no tenir camps d\'inici de sessió detectables o no teniu cap element per a aquest lloc web.</string>
+  <string name="autofill_diagnostics_outcome_error">L\'emplenament automàtic ha trobat un error a %1$s.</string>
+  <string name="autofill_diagnostics_recent_title">Intents recents</string>
+  <string name="autofill_diagnostics_clear">Netejar-ho</string>
+  <string name="autofill_diagnostics_share">Compartir-ho amb el suport</string>
 </resources>

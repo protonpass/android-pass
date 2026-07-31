@@ -326,8 +326,8 @@
   <string name="collapse_expanded_text">daha az</string>
   <string name="login_item_monitor_widget_weak_pass_title">Parola zayıf</string>
   <string name="login_item_monitor_widget_weak_pass_subtitle">Bu hesap ele geçirilebilir. Hizmeti ziyaret edin ve parolanızı değiştirin.</string>
-  <string name="login_item_monitor_widget_compromised_pass_title">Güvenliği ihlal edilmiş parola</string>
-  <string name="login_item_monitor_widget_compromised_pass_subtitle">Bu oturum açma şifresi bir veri sızıntısında ortaya çıkmış. Lütfen ilgili hizmeti ziyaret edin ve parolanızı değiştirin.</string>
+  <string name="login_item_monitor_widget_compromised_pass_title">Bilinen parola</string>
+  <string name="login_item_monitor_widget_compromised_pass_subtitle">Bu oturum açma parolası bir veri sızıntısında açığa çıkmış. Lütfen ilgili hizmete giderek parolanızı değiştirin.</string>
   <plurals name="login_item_monitor_widget_reused_pass_title">
     <item quantity="one">%d oturum açma kaydı aynı parolayı kullanıyor</item>
     <item quantity="other">%d oturum açma kaydı aynı parolayı kullanıyor</item>
@@ -337,9 +337,9 @@
   <string name="login_item_monitor_action_ignore">Yok say</string>
   <string name="login_item_monitor_action_restore">Uyarıyı geri yükle</string>
   <string name="login_item_monitor_header">Pass Monitor</string>
-  <string name="login_item_monitor_label_weak">Zayıf parola</string>
-  <string name="login_item_monitor_label_compromised">Güvenliği ihlal edilmiş parola</string>
-  <string name="login_item_monitor_label_reused">Yeniden kullanılan parola</string>
+  <string name="login_item_monitor_label_weak">Parola zayıf</string>
+  <string name="login_item_monitor_label_compromised">Bilinen parola</string>
+  <string name="login_item_monitor_label_reused">Yeniden kullanılmış parola</string>
   <string name="login_item_monitor_label_missing_2fa">İki adımlı doğrulama eksik</string>
   <string name="login_item_reused_passwords_subtitle">Kasalarınızda bu parolayı kullanan ögeler.</string>
   <string name="mfa_limit_reached">İki adımlı doğrulama sınırına ulaşıldı</string>
@@ -388,4 +388,11 @@
     <item quantity="one">%s sözcük</item>
     <item quantity="other">%s sözcük</item>
   </plurals>
+  <!-- Password checks (Login create/edit + Generate Password BS) -->
+  <string name="password_strength_prefix">Parola zorluğu</string>
+  <string name="password_check_min_length">En az 12 karakter</string>
+  <string name="password_check_lowercase">Küçük harfler</string>
+  <string name="password_check_uppercase">Büyük harfler</string>
+  <string name="password_check_no_consecutive">Yinelenen karakterler bulunmamalı</string>
+  <string name="password_check_no_common">Yaygın parolalar kullanılmamalı</string>
 </resources>

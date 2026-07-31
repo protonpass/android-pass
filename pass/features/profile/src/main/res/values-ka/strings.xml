@@ -5,6 +5,7 @@
   <string name="profile_option_account">ანგარიში</string>
   <string name="profile_help_center">დახმარების ცენტრი</string>
   <string name="profile_security">უსაფრთხოება</string>
+  <string name="profile_option_autofill_troubleshooting">Autofill troubleshooting</string>
   <string name="profile_option_feedback">უკუკავშირი</string>
   <string name="profile_option_import_export">შემოტანა/გატანა</string>
   <string name="profile_option_tutorial">როგორ გამოვიყენო Proton Pass</string>

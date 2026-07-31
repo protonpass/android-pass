@@ -5,6 +5,7 @@
   <string name="profile_option_account">账号</string>
   <string name="profile_help_center">帮助中心</string>
   <string name="profile_security">安全</string>
+  <string name="profile_option_autofill_troubleshooting">Autofill troubleshooting</string>
   <string name="profile_option_feedback">意见反馈</string>
   <string name="profile_option_import_export">导入/导出</string>
   <string name="profile_option_tutorial">如何使用 Proton Pass</string>

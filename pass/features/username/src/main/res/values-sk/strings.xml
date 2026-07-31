@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <string name="generate_username_title">Generate username</string>
-  <string name="generate_username_button_regenerate">Regenerate</string>
-  <string name="generate_username_button_copy">Copy</string>
-  <string name="generate_username_label_include_numbers">Include numbers</string>
+  <string name="generate_username_title">Vygenerovať používateľské meno</string>
+  <string name="generate_username_button_regenerate">Generovať znova</string>
+  <string name="generate_username_button_copy">Kopírovať</string>
+  <string name="generate_username_label_include_numbers">Vrátane čísiel</string>
   <string name="generate_username_label_leetspeak">Leetspeak</string>
-  <string name="generate_username_label_word_types">Word types</string>
-  <string name="generate_username_label_adjectives">Adjectives</string>
-  <string name="generate_username_label_nouns">Nouns</string>
-  <string name="generate_username_label_verbs">Verbs</string>
-  <string name="generate_username_snackbar_copied">Username copied to clipboard</string>
-  <string name="generate_username_snackbar_error">Could not generate username</string>
+  <string name="generate_username_label_word_types">Typy slov</string>
+  <string name="generate_username_label_adjectives">Prídavné mená</string>
+  <string name="generate_username_label_nouns">Podstatné mená</string>
+  <string name="generate_username_label_verbs">Slovesá</string>
+  <string name="generate_username_snackbar_copied">Používateľské meno bolo skopírované do schránky</string>
+  <string name="generate_username_snackbar_error">Nepodarilo sa vygenerovať používateľské meno</string>
 </resources>

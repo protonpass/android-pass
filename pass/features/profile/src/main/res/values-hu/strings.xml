@@ -5,6 +5,7 @@
   <string name="profile_option_account">Fiók</string>
   <string name="profile_help_center">Súgóközpont</string>
   <string name="profile_security">Biztonság</string>
+  <string name="profile_option_autofill_troubleshooting">Autofill troubleshooting</string>
   <string name="profile_option_feedback">Visszajelzés</string>
   <string name="profile_option_import_export">Importálás és exportálás</string>
   <string name="profile_option_tutorial">A Proton Pass használata</string>

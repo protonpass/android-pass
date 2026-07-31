@@ -13,4 +13,40 @@
   <string name="autofill_confirm_dangerous_title" comment="Title for the dialog that will appear when the user clicks on Autofill but we think it may be a dangerous action">Επιβεβαίωση ενέργειας</string>
   <string name="autofill_confirm_dangerous_body" comment="Body for the dialog that will appear when the user clicks on Autofill but we think it may be a dangerous action">Πρόκειται να συμπληρώσετε αυτόματα τα διαπιστευτήριά σας σε έναν ιστότοπο που ανοίγει από την τρέχουσα εφαρμογή σας. Η εφαρμογή μπορεί να έχει πρόσβαση στα διαπιστευτήρια μετά την αυτόματη συμπλήρωση - κάντε το μόνο εάν εμπιστεύεστε την εφαρμογή.</string>
   <string name="autofill_confirm_button" comment="Confirmation button for actually performing the autofill action">Αυτόματη συμπλήρωση</string>
+  <string name="autofill_troubleshooting_title">Αντιμετώπιση προβλημάτων αυτόματης συμπλήρωσης</string>
+  <string name="autofill_troubleshooting_subtitle">Ελέγξτε ότι η συσκευή σας έχει ρυθμιστεί σωστά για αυτόματη συμπλήρωση.</string>
+  <string name="autofill_troubleshooting_verdict_all_good">Η αυτόματη συμπλήρωση έχει ρυθμιστεί πλήρως</string>
+  <string name="autofill_troubleshooting_verdict_attention">Μερικά πράγματα χρειάζονται την προσοχή σας</string>
+  <string name="autofill_troubleshooting_service_ok">Το Proton Pass είναι η υπηρεσία αυτόματης συμπλήρωσης σας</string>
+  <string name="autofill_troubleshooting_service_current_other">Επί του παρόντος ορισμένο σε %1$s.</string>
+  <string name="autofill_troubleshooting_service_not_default_title">Το Proton Pass δεν είναι η υπηρεσία αυτόματης συμπλήρωσης σας</string>
+  <string name="autofill_troubleshooting_service_not_default_body">Ορίστε το ως προεπιλογή για αυτόματη συμπλήρωση σε όλες τις εφαρμογές σας.</string>
+  <string name="autofill_troubleshooting_service_enable_action">Ενεργοποίηση αυτόματης συμπλήρωσης</string>
+  <string name="autofill_troubleshooting_service_unsupported_title">Αυτή η συσκευή δεν υποστηρίζει αυτόματη συμπλήρωση</string>
+  <string name="autofill_troubleshooting_browsers_header">Αυτόματη συμπλήρωση σε προγράμματα περιήγησης</string>
+  <string name="autofill_troubleshooting_browsers_body">Τα προγράμματα περιήγησης χρειάζονται ξεχωριστά ενεργοποιημένη την αυτόματη συμπλήρωση.</string>
+  <string name="autofill_troubleshooting_browser_open_action">Άνοιγμα</string>
+  <string name="autofill_troubleshooting_browser_ready">Η αυτόματη συμπλήρωση λειτουργεί αυτόματα εδώ.</string>
+  <string name="autofill_troubleshooting_browser_working">Η αυτόματη συμπλήρωση λειτουργεί σε αυτό το πρόγραμμα περιήγησης.</string>
+  <string name="autofill_troubleshooting_browser_pending_service">Διαθέσιμο μόλις το Proton Pass οριστεί ως υπηρεσία αυτόματης συμπλήρωσης.</string>
+  <string name="autofill_troubleshooting_browser_steps_generic">Ανοίξτε τις ρυθμίσεις του προγράμματος περιήγησης, βρείτε την ενότητα αυτόματης συμπλήρωσης ή κωδικών πρόσβασης και επιλέξτε Proton Pass ως υπηρεσία αυτόματης συμπλήρωσης.</string>
+  <string name="autofill_troubleshooting_browser_steps_chrome">1. Ανοίξτε το μενού του προγράμματος περιήγησης και μεταβείτε στις Ρυθμίσεις και, στη συνέχεια, στις Υπηρεσίες αυτόματης συμπλήρωσης.\n2. Ενεργοποιήστε την επιλογή \"Χρήση άλλης υπηρεσίας\" και επιλέξτε Proton Pass.</string>
+  <string name="autofill_troubleshooting_browser_steps_firefox">1. Ανοίξτε το μενού του προγράμματος περιήγησης και μεταβείτε στις Ρυθμίσεις και, στη συνέχεια, στην Αυτόματη συμπλήρωση.\n2. Επιλέξτε το Proton Pass ως υπηρεσία αυτόματης συμπλήρωσης.</string>
+  <string name="autofill_troubleshooting_browser_steps_samsung">1. Ανοίξτε τις Ρυθμίσεις και, στη συνέχεια, την Υπηρεσία Αυτόματης Συμπλήρωσης.\n2. Επιλέξτε Proton Pass.</string>
+  <string name="autofill_troubleshooting_inline_info">Οι ενσωματωμένες προτάσεις εμφανίζονται στο πληκτρολόγιό σας. Απαιτούν Android 11 ή νεότερη έκδοση και ένα συμβατό πληκτρολόγιο, όπως το Gboard.</string>
+  <string name="autofill_troubleshooting_share_diagnostics">Κοινοποίηση διαγνωστικών</string>
+  <string name="autofill_troubleshooting_open_diagnostics">Προηγμένα διαγνωστικά</string>
+  <string name="autofill_diagnostics_title">Προηγμένα διαγνωστικά</string>
+  <string name="autofill_diagnostics_enable">Ενεργοποίηση διαγνωστικών αυτόματης συμπλήρωσης</string>
+  <string name="autofill_diagnostics_enable_description">Όταν είναι ενεργοποιημένη, η λειτουργία Proton Pass καταγράφει τι συμβαίνει κατά την αυτόματη συμπλήρωση, ώστε να μπορείτε να δείτε γιατί δε συμπληρώθηκε. Απενεργοποιήστε την όταν τελειώσετε.</string>
+  <string name="autofill_diagnostics_instructions">Αναπαράγετε το πρόβλημα αυτόματης συμπλήρωσης στην εφαρμογή ή στο πρόγραμμα περιήγησης και, στη συνέχεια, επιστρέψτε σε αυτήν την οθόνη.</string>
+  <string name="autofill_diagnostics_last_attempt_title">Τελευταία προσπάθεια αυτόματης συμπλήρωσης</string>
+  <string name="autofill_diagnostics_no_attempts">Δεν έχει καταγραφεί ακόμη προσπάθεια αυτόματης συμπλήρωσης.</string>
+  <string name="autofill_diagnostics_reason_not_default">Το Proton Pass δεν είναι η υπηρεσία αυτόματης συμπλήρωσης, επομένως δεν μπορεί να συμπληρωθεί πουθενά ακόμα.</string>
+  <string name="autofill_diagnostics_outcome_offered">Το Proton Pass προσέφερε προτάσεις στο %1$s.</string>
+  <string name="autofill_diagnostics_outcome_nothing">Η αυτόματη συμπλήρωση ενεργοποιήθηκε στο %1$s, αλλά δεν προσφέρθηκε αντίστοιχη σύνδεση. Η σελίδα ενδέχεται να μην έχει ανιχνεύσιμα πεδία σύνδεσης ή δεν έχετε κανένα στοιχείο για αυτόν τον ιστότοπο.</string>
+  <string name="autofill_diagnostics_outcome_error">Η Αυτόματη Συμπλήρωση παρουσίασε σφάλμα στο %1$s.</string>
+  <string name="autofill_diagnostics_recent_title">Πρόσφατες προσπάθειες</string>
+  <string name="autofill_diagnostics_clear">Εκκαθάριση</string>
+  <string name="autofill_diagnostics_share">Κοινοποίηση στην υποστήρηξη</string>
 </resources>

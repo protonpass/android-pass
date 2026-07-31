@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <string name="generate_username_title">Generate username</string>
-  <string name="generate_username_button_regenerate">Regenerate</string>
-  <string name="generate_username_button_copy">Copy</string>
-  <string name="generate_username_label_include_numbers">Include numbers</string>
+  <string name="generate_username_title">Generer brukernavn</string>
+  <string name="generate_username_button_regenerate">Generer på nytt</string>
+  <string name="generate_username_button_copy">Kopier</string>
+  <string name="generate_username_label_include_numbers">Inkluder tall</string>
   <string name="generate_username_label_leetspeak">Leetspeak</string>
-  <string name="generate_username_label_word_types">Word types</string>
-  <string name="generate_username_label_adjectives">Adjectives</string>
-  <string name="generate_username_label_nouns">Nouns</string>
-  <string name="generate_username_label_verbs">Verbs</string>
-  <string name="generate_username_snackbar_copied">Username copied to clipboard</string>
-  <string name="generate_username_snackbar_error">Could not generate username</string>
+  <string name="generate_username_label_word_types">Ordtyper</string>
+  <string name="generate_username_label_adjectives">Adjektiver</string>
+  <string name="generate_username_label_nouns">Substantiver</string>
+  <string name="generate_username_label_verbs">Verb</string>
+  <string name="generate_username_snackbar_copied">Brukernavn kopiert til utklippstavlen</string>
+  <string name="generate_username_snackbar_error">Kunne ikke generere brukernavn</string>
 </resources>

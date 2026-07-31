@@ -5,6 +5,7 @@
   <string name="profile_option_account">Cont</string>
   <string name="profile_help_center">Centru de ajutor</string>
   <string name="profile_security">Securitate</string>
+  <string name="profile_option_autofill_troubleshooting">Depanare completare automată</string>
   <string name="profile_option_feedback">Feedback</string>
   <string name="profile_option_import_export">Importare/Exportare</string>
   <string name="profile_option_tutorial">Cum se folosește Proton Pass</string>

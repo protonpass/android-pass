@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <string name="generate_username_title">Generate username</string>
-  <string name="generate_username_button_regenerate">Regenerate</string>
-  <string name="generate_username_button_copy">Copy</string>
-  <string name="generate_username_label_include_numbers">Include numbers</string>
-  <string name="generate_username_label_leetspeak">Leetspeak</string>
-  <string name="generate_username_label_word_types">Word types</string>
-  <string name="generate_username_label_adjectives">Adjectives</string>
-  <string name="generate_username_label_nouns">Nouns</string>
-  <string name="generate_username_label_verbs">Verbs</string>
-  <string name="generate_username_snackbar_copied">Username copied to clipboard</string>
-  <string name="generate_username_snackbar_error">Could not generate username</string>
+  <string name="generate_username_title">生成用户名</string>
+  <string name="generate_username_button_regenerate">重新生成</string>
+  <string name="generate_username_button_copy">复制</string>
+  <string name="generate_username_label_include_numbers">包含数字</string>
+  <string name="generate_username_label_leetspeak">黑客语</string>
+  <string name="generate_username_label_word_types">单词类型</string>
+  <string name="generate_username_label_adjectives">形容词</string>
+  <string name="generate_username_label_nouns">名词</string>
+  <string name="generate_username_label_verbs">动词</string>
+  <string name="generate_username_snackbar_copied">用户名已复制到剪贴板</string>
+  <string name="generate_username_snackbar_error">无法生成用户名</string>
 </resources>

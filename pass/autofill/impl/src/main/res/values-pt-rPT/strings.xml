@@ -13,4 +13,40 @@
   <string name="autofill_confirm_dangerous_title" comment="Title for the dialog that will appear when the user clicks on Autofill but we think it may be a dangerous action">Confirmar a sua ação</string>
   <string name="autofill_confirm_dangerous_body" comment="Body for the dialog that will appear when the user clicks on Autofill but we think it may be a dangerous action">Está prestes a preencher automaticamente as suas credenciais num sítio web aberto pela sua aplicação atual. A aplicação pode ter acesso às credenciais após o preenchimento automático — só faça isso se confiar na aplicação.</string>
   <string name="autofill_confirm_button" comment="Confirmation button for actually performing the autofill action">Preenchimento automático</string>
+  <string name="autofill_troubleshooting_title">Autofill troubleshooting</string>
+  <string name="autofill_troubleshooting_subtitle">Check your device is set up correctly for autofill.</string>
+  <string name="autofill_troubleshooting_verdict_all_good">Autofill is fully set up</string>
+  <string name="autofill_troubleshooting_verdict_attention">A few things need your attention</string>
+  <string name="autofill_troubleshooting_service_ok">Proton Pass is your autofill service</string>
+  <string name="autofill_troubleshooting_service_current_other">Currently set to %1$s.</string>
+  <string name="autofill_troubleshooting_service_not_default_title">Proton Pass isn\'t your autofill service</string>
+  <string name="autofill_troubleshooting_service_not_default_body">Set it as the default to autofill across your apps.</string>
+  <string name="autofill_troubleshooting_service_enable_action">Enable autofill</string>
+  <string name="autofill_troubleshooting_service_unsupported_title">This device doesn\'t support autofill</string>
+  <string name="autofill_troubleshooting_browsers_header">Autofill in browsers</string>
+  <string name="autofill_troubleshooting_browsers_body">Browsers need autofill turned on separately.</string>
+  <string name="autofill_troubleshooting_browser_open_action">Open</string>
+  <string name="autofill_troubleshooting_browser_ready">Autofill works automatically here.</string>
+  <string name="autofill_troubleshooting_browser_working">Autofill is working in this browser.</string>
+  <string name="autofill_troubleshooting_browser_pending_service">Available once Proton Pass is set as your autofill service.</string>
+  <string name="autofill_troubleshooting_browser_steps_generic">Open the browser settings, find the autofill or passwords section, and choose Proton Pass as the autofill service.</string>
+  <string name="autofill_troubleshooting_browser_steps_chrome">1. Open the browser menu and go to Settings, then Autofill services.\n2. Turn on \"Use another service\" and select Proton Pass.</string>
+  <string name="autofill_troubleshooting_browser_steps_firefox">1. Open the browser menu and go to Settings, then Autofill.\n2. Choose Proton Pass as the autofill service.</string>
+  <string name="autofill_troubleshooting_browser_steps_samsung">1. Open Settings, then Autofill service.\n2. Select Proton Pass.</string>
+  <string name="autofill_troubleshooting_inline_info">Inline suggestions appear in your keyboard. They need Android 11 or later and a compatible keyboard such as Gboard.</string>
+  <string name="autofill_troubleshooting_share_diagnostics">Share diagnostics</string>
+  <string name="autofill_troubleshooting_open_diagnostics">Advanced diagnostics</string>
+  <string name="autofill_diagnostics_title">Advanced diagnostics</string>
+  <string name="autofill_diagnostics_enable">Enable autofill diagnostics</string>
+  <string name="autofill_diagnostics_enable_description">When on, Proton Pass records what happens during autofill so you can see why it didn\'t fill. Turn it off when you\'re done.</string>
+  <string name="autofill_diagnostics_instructions">Reproduce the autofill problem in the app or browser, then come back to this screen.</string>
+  <string name="autofill_diagnostics_last_attempt_title">Last autofill attempt</string>
+  <string name="autofill_diagnostics_no_attempts">No autofill attempt recorded yet.</string>
+  <string name="autofill_diagnostics_reason_not_default">Proton Pass isn\'t your autofill service, so it can\'t fill anywhere yet.</string>
+  <string name="autofill_diagnostics_outcome_offered">Proton Pass offered suggestions in %1$s.</string>
+  <string name="autofill_diagnostics_outcome_nothing">Autofill was triggered in %1$s, but no matching login was offered. The page may have no detectable login fields, or you have no item for this site.</string>
+  <string name="autofill_diagnostics_outcome_error">Autofill ran into an error in %1$s.</string>
+  <string name="autofill_diagnostics_recent_title">Recent attempts</string>
+  <string name="autofill_diagnostics_clear">Clear</string>
+  <string name="autofill_diagnostics_share">Share with support</string>
 </resources>

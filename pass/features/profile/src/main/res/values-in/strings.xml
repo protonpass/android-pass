@@ -5,6 +5,7 @@
   <string name="profile_option_account">Akun</string>
   <string name="profile_help_center">Pusat bantuan</string>
   <string name="profile_security">Keamanan</string>
+  <string name="profile_option_autofill_troubleshooting">Autofill troubleshooting</string>
   <string name="profile_option_feedback">Masukan</string>
   <string name="profile_option_import_export">Impor/ekspor</string>
   <string name="profile_option_tutorial">Cara menggunakan Proton Pass</string>

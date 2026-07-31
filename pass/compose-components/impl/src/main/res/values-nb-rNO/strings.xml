@@ -87,7 +87,7 @@
   <string name="bottom_bar_add_item_icon_content_description">Legg til element</string>
   <string name="bottom_bar_profile_icon_content_description">Profil</string>
   <string name="bottom_bar_security_center_icon_content_description">Sikkerhetssenter</string>
-  <string name="bottom_bar_explore_icon_content_description">Explore</string>
+  <string name="bottom_bar_explore_icon_content_description">Utforsk</string>
   <!-- List group by most recents -->
   <string name="most_recent_today">I dag</string>
   <string name="most_recent_yesterday">I går</string>
@@ -326,21 +326,21 @@
   <string name="collapse_expanded_text">mindre</string>
   <string name="login_item_monitor_widget_weak_pass_title">Svakt passord</string>
   <string name="login_item_monitor_widget_weak_pass_subtitle">Denne kontoen er sårbar, besøk tjenesten og endre passordet ditt.</string>
-  <string name="login_item_monitor_widget_compromised_pass_title">Compromised password</string>
-  <string name="login_item_monitor_widget_compromised_pass_subtitle">This login password appears in a data breach. Please visit the service and change the password.</string>
+  <string name="login_item_monitor_widget_compromised_pass_title">Kompromittert passord</string>
+  <string name="login_item_monitor_widget_compromised_pass_subtitle">Dette påloggingspassordet dukker opp i et datainnbrudd. Gå til tjenesten og endre passordet.</string>
   <plurals name="login_item_monitor_widget_reused_pass_title">
     <item quantity="one">%d annen pålogging bruker det samme passordet</item>
     <item quantity="other">%d andre pålogginger bruker det samme passordet</item>
   </plurals>
   <string name="login_item_monitor_widget_missing_two_fa_title">Sett opp 2FA for ekstra sikkerhet</string>
   <string name="login_item_monitor_widget_missing_two_fa_subtitle">Denne tjenesten tilbyr 2FA. Aktiver den for ekstra kontosikkerhet.</string>
-  <string name="login_item_monitor_action_ignore">Ignore</string>
-  <string name="login_item_monitor_action_restore">Restore alert</string>
+  <string name="login_item_monitor_action_ignore">Ignorer</string>
+  <string name="login_item_monitor_action_restore">Gjenopprett varsel</string>
   <string name="login_item_monitor_header">Pass Monitor</string>
-  <string name="login_item_monitor_label_weak">Weak password</string>
-  <string name="login_item_monitor_label_compromised">Compromised password</string>
-  <string name="login_item_monitor_label_reused">Reused password</string>
-  <string name="login_item_monitor_label_missing_2fa">Missing 2FA</string>
+  <string name="login_item_monitor_label_weak">Svakt passord</string>
+  <string name="login_item_monitor_label_compromised">Kompromittert passord</string>
+  <string name="login_item_monitor_label_reused">Gjenbrukt passord</string>
+  <string name="login_item_monitor_label_missing_2fa">Mangler 2FA</string>
   <string name="login_item_reused_passwords_subtitle">Elementer fra hvelvene dine som bruker dette passordet.</string>
   <string name="mfa_limit_reached">2FA-grensen nådd</string>
   <string name="activity_in_last_two_weeks">Aktivitet siste 14 dager</string>
@@ -388,4 +388,11 @@
     <item quantity="one">%s ord</item>
     <item quantity="other">%s ord</item>
   </plurals>
+  <!-- Password checks (Login create/edit + Generate Password BS) -->
+  <string name="password_strength_prefix">Password strength</string>
+  <string name="password_check_min_length">At least 12 characters</string>
+  <string name="password_check_lowercase">Lowercase letters</string>
+  <string name="password_check_uppercase">Uppercase letters</string>
+  <string name="password_check_no_consecutive">No repeated characters</string>
+  <string name="password_check_no_common">No common password</string>
 </resources>

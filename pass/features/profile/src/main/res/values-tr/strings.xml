@@ -5,13 +5,14 @@
   <string name="profile_option_account">Hesap</string>
   <string name="profile_help_center">Yardım merkezi</string>
   <string name="profile_security">Güvenlik</string>
+  <string name="profile_option_autofill_troubleshooting">Otomatik doldurma sorun giderme</string>
   <string name="profile_option_feedback">Geri bildirim</string>
   <string name="profile_option_import_export">İçe/dışa aktarma</string>
   <string name="profile_option_tutorial">Proton Pass nasıl kullanılır</string>
   <string name="profile_option_rating">Uygulamayı değerlendirin</string>
-  <string name="profile_spread_the_word">Duymayan kalmasın</string>
-  <string name="profile_option_tell_a_friend">Bir arkadaşına söyle</string>
-  <string name="profile_spread_the_word_share_message">Parolalarımı güvende tutmak için Proton Pass kullanıyorum. Siz de deneyin: https://proton.me/pass/download</string>
+  <string name="profile_spread_the_word">Herkese duyurun</string>
+  <string name="profile_option_tell_a_friend">Arkadaşınıza önerin</string>
+  <string name="profile_spread_the_word_share_message">Parolalarımı korumak için Proton Pass kullanıyorum. Sen de dene: https://proton.me/pass/download</string>
   <string name="profile_option_autofill">Otomatik doldurma</string>
   <string name="profile_option_autofill_subtitle">Kullanıcı adı ve parolalarınızı otomatik olarak doldurun.</string>
   <string name="profile_option_secure_links">Güvenli bağlantılar</string>

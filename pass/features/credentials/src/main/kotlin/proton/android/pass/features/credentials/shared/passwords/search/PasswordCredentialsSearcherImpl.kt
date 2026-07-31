@@ -35,6 +35,7 @@ import proton.android.pass.data.api.usecases.credentials.passwords.GetPasswordCr
 import proton.android.pass.domain.credentials.PasswordCredentialItem
 import proton.android.pass.domain.entity.PackageName
 import proton.android.pass.features.credentials.R
+import proton.android.pass.signingcertificates.SigningCertificateFingerprints
 import proton.android.pass.features.credentials.passwords.selection.ui.PasswordCredentialSelectionActivity
 import proton.android.pass.features.credentials.passwords.usage.ui.PasswordCredentialUsageActivity
 import proton.android.pass.features.credentials.shared.passwords.events.PasswordCredentialsTelemetryEvent
@@ -82,9 +83,17 @@ internal class PasswordCredentialsSearcherImpl @Inject constructor(
             }
         )
 
+        val signingInfo = callingAppInfo?.signingInfo
+        val hashes = if (signingInfo != null && SigningCertificateFingerprints.hasSingleSigner(signingInfo)) {
+            SigningCertificateFingerprints.of(signingInfo)
+        } else {
+            emptySet()
+        }
+
         val suggestion = packageNameUrlSuggestionAdapter.adapt(
             packageName = PackageName(value = callingPackageName),
-            url = url
+            url = url,
+            hashes = hashes
         ).toSuggestion()
 
         val passwordCredentialEntries = createPasswordCredentialEntries(

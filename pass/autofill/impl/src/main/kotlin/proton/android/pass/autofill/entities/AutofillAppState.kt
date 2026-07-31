@@ -102,7 +102,8 @@ internal data class AutofillAppState(
                     title = suggestionsTitle,
                     suggestion = packageNameUrlSuggestionAdapter.adapt(
                         packageName = autofillData.packageInfo.packageName,
-                        url = autofillData.assistInfo.url.value().orEmpty()
+                        url = autofillData.assistInfo.url.value().orEmpty(),
+                        hashes = autofillData.packageInfo.hashes
                     ).toSuggestion()
                 )
             }

@@ -45,14 +45,16 @@ class SuggestionItemFiltererImplTest {
     }
 
     @Test
-    fun `given an item with an allowed package name should return the suggested element`() {
+    fun `given an item with an allowed package name and matching hash should return the suggested element`() {
         val firstPackageInfo = PackageInfo(
             PackageName("my.first.package.name"),
-            AppName("")
+            AppName(""),
+            hashes = setOf("AA:BB:CC")
         )
         val secondPackageInfo = PackageInfo(
             PackageName("my.second.package.name"),
-            AppName("")
+            AppName(""),
+            hashes = setOf("DD:EE:FF")
         )
         val firstItem = ItemTestFactory.create(
             itemType = ItemTypeTestFactory.login(),
@@ -66,7 +68,10 @@ class SuggestionItemFiltererImplTest {
             )
         )
 
-        val res = instance.filter(items, Suggestion.PackageName(firstPackageInfo.packageName.value))
+        val res = instance.filter(
+            items,
+            Suggestion.PackageName(firstPackageInfo.packageName.value, hashes = firstPackageInfo.hashes)
+        )
         assertThat(res).isEqualTo(listOf(firstItem))
     }
 
@@ -74,11 +79,13 @@ class SuggestionItemFiltererImplTest {
     fun `given an item with an allowed package name should return empty list on no matches`() {
         val firstPackageInfo = PackageInfo(
             PackageName("my.first.package.name"),
-            AppName("")
+            AppName(""),
+            hashes = setOf("AA:BB:CC")
         )
         val secondPackageInfo = PackageInfo(
             PackageName("my.second.package.name"),
-            AppName("")
+            AppName(""),
+            hashes = setOf("DD:EE:FF")
         )
         val item = ItemTestFactory.create(
             itemType = ItemTypeTestFactory.login(),
@@ -86,7 +93,66 @@ class SuggestionItemFiltererImplTest {
         )
         val items = listOf(item)
 
-        val res = instance.filter(items, Suggestion.PackageName(secondPackageInfo.packageName.value))
+        val res = instance.filter(
+            items,
+            Suggestion.PackageName(secondPackageInfo.packageName.value, hashes = secondPackageInfo.hashes)
+        )
+        assertThat(res).isEqualTo(emptyList<Item>())
+    }
+
+    @Test
+    fun `given a matching package name but no matching hash should not return the item`() {
+        val storedPackageInfo = PackageInfo(
+            PackageName("my.package.name"),
+            AppName(""),
+            hashes = setOf("AA:BB:CC")
+        )
+        val item = ItemTestFactory.create(
+            itemType = ItemTypeTestFactory.login(),
+            packageInfoSet = setOf(storedPackageInfo)
+        )
+
+        val res = instance.filter(
+            listOf(item),
+            Suggestion.PackageName(storedPackageInfo.packageName.value, hashes = setOf("11:22:33"))
+        )
+        assertThat(res).isEqualTo(emptyList<Item>())
+    }
+
+    @Test
+    fun `given a matching package name and a matching hash should return the item`() {
+        val storedPackageInfo = PackageInfo(
+            PackageName("my.package.name"),
+            AppName(""),
+            hashes = setOf("AA:BB:CC")
+        )
+        val item = ItemTestFactory.create(
+            itemType = ItemTypeTestFactory.login(),
+            packageInfoSet = setOf(storedPackageInfo)
+        )
+
+        val res = instance.filter(
+            listOf(item),
+            Suggestion.PackageName(storedPackageInfo.packageName.value, hashes = setOf("AA:BB:CC"))
+        )
+        assertThat(res).isEqualTo(listOf(item))
+    }
+
+    @Test
+    fun `given a matching package name but no stored hashes should not return the item`() {
+        val storedPackageInfo = PackageInfo(
+            PackageName("my.package.name"),
+            AppName("")
+        )
+        val item = ItemTestFactory.create(
+            itemType = ItemTypeTestFactory.login(),
+            packageInfoSet = setOf(storedPackageInfo)
+        )
+
+        val res = instance.filter(
+            listOf(item),
+            Suggestion.PackageName(storedPackageInfo.packageName.value, hashes = setOf("AA:BB:CC"))
+        )
         assertThat(res).isEqualTo(emptyList<Item>())
     }
 

@@ -27,7 +27,7 @@ import javax.inject.Singleton
 @Singleton
 class PackageNameUrlSuggestionAdapterImpl @Inject constructor() : PackageNameUrlSuggestionAdapter {
 
-    override fun adapt(packageName: PackageName, url: String): SuggestionSource {
+    override fun adapt(packageName: PackageName, url: String, hashes: Set<String>): SuggestionSource {
         val autofillDataPackageName = packageName
             .takeIf { !it.isBrowser() }
             ?.value
@@ -38,7 +38,7 @@ class PackageNameUrlSuggestionAdapterImpl @Inject constructor() : PackageNameUrl
                 SuggestionSource.WithUrl(url)
 
             !autofillDataPackageName.isNullOrBlank() && url.isBlank() ->
-                SuggestionSource.WithPackageName(autofillDataPackageName)
+                SuggestionSource.WithPackageName(autofillDataPackageName, hashes)
 
             autofillDataPackageName.isNullOrBlank() -> SuggestionSource.WithUrl(url)
 

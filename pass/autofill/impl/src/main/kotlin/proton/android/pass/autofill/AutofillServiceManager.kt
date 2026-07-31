@@ -183,7 +183,8 @@ class AutofillServiceManager @Inject constructor(
     ): List<ItemData.SuggestedItem> {
         val suggestionSource = packageNameUrlSuggestionAdapter.adapt(
             packageName = autofillData.packageInfo.packageName,
-            url = autofillData.assistInfo.url.value().orEmpty()
+            url = autofillData.assistInfo.url.value().orEmpty(),
+            hashes = autofillData.packageInfo.hashes
         )
         val itemTypeFilter = when (suggestionType) {
             SuggestionType.CreditCard -> ItemTypeFilter.CreditCards

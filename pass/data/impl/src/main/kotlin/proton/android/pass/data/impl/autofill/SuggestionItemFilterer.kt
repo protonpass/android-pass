@@ -62,12 +62,14 @@ class SuggestionItemFiltererImpl @Inject constructor(
         item: Item,
         useAutofillUrlModes: Boolean
     ): Boolean = when (suggestion) {
-        is Suggestion.PackageName -> isPackageNameMatch(suggestion.value, item)
+        is Suggestion.PackageName -> isPackageNameMatch(suggestion, item)
         is Suggestion.Url -> isUrlMatch(suggestion.value, item.itemType as ItemType.Login, useAutofillUrlModes)
     }
 
-    private fun isPackageNameMatch(packageName: String, item: Item): Boolean =
-        item.packageInfoSet.map { it.packageName.value }.contains(packageName)
+    private fun isPackageNameMatch(suggestion: Suggestion.PackageName, item: Item): Boolean =
+        item.packageInfoSet.any { stored ->
+            stored.packageName.value == suggestion.value && stored.hashes.any { it in suggestion.hashes }
+        }
 
     private fun isUrlMatch(
         url: String,

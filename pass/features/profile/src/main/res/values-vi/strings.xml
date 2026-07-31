@@ -5,6 +5,7 @@
   <string name="profile_option_account">Tài khoản</string>
   <string name="profile_help_center">Trung tâm trợ giúp</string>
   <string name="profile_security">Bảo mật</string>
+  <string name="profile_option_autofill_troubleshooting">Autofill troubleshooting</string>
   <string name="profile_option_feedback">Phản hồi</string>
   <string name="profile_option_import_export">Nhập/Xuất</string>
   <string name="profile_option_tutorial">Cách sử dụng Proton Pass</string>

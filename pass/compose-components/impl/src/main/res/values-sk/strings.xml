@@ -89,7 +89,7 @@
   <string name="bottom_bar_add_item_icon_content_description">Pridať položku</string>
   <string name="bottom_bar_profile_icon_content_description">Profil</string>
   <string name="bottom_bar_security_center_icon_content_description">Centrum zabezpečenia</string>
-  <string name="bottom_bar_explore_icon_content_description">Explore</string>
+  <string name="bottom_bar_explore_icon_content_description">Preskúmať</string>
   <!-- List group by most recents -->
   <string name="most_recent_today">Dnes</string>
   <string name="most_recent_yesterday">Včera</string>
@@ -356,8 +356,8 @@
   <string name="collapse_expanded_text">menej</string>
   <string name="login_item_monitor_widget_weak_pass_title">Slabé heslo</string>
   <string name="login_item_monitor_widget_weak_pass_subtitle">Tento účet je zraniteľný. Navštívte službu a zmeňte si heslo.</string>
-  <string name="login_item_monitor_widget_compromised_pass_title">Compromised password</string>
-  <string name="login_item_monitor_widget_compromised_pass_subtitle">This login password appears in a data breach. Please visit the service and change the password.</string>
+  <string name="login_item_monitor_widget_compromised_pass_title">Kompromitované heslo</string>
+  <string name="login_item_monitor_widget_compromised_pass_subtitle">Toto prihlasovacie heslo sa objavilo v súvislosti s únikom údajov. Navštívte danú službu a zmeňte si heslo, prosím.</string>
   <plurals name="login_item_monitor_widget_reused_pass_title">
     <item quantity="one">%d iné prihlásenie používa rovnaké heslo</item>
     <item quantity="few">%d iné prihlásenia už používajú rovnaké heslo</item>
@@ -366,13 +366,13 @@
   </plurals>
   <string name="login_item_monitor_widget_missing_two_fa_title">Nastavte 2FA na zvýšenie bezpečnosti</string>
   <string name="login_item_monitor_widget_missing_two_fa_subtitle">Táto služba ponúka 2FA. Aktiváciou tejto funkcie zvýšite bezpečnosť účtu.</string>
-  <string name="login_item_monitor_action_ignore">Ignore</string>
-  <string name="login_item_monitor_action_restore">Restore alert</string>
+  <string name="login_item_monitor_action_ignore">Ignorovať</string>
+  <string name="login_item_monitor_action_restore">Obnoviť upozornenie</string>
   <string name="login_item_monitor_header">Pass Monitor</string>
-  <string name="login_item_monitor_label_weak">Weak password</string>
-  <string name="login_item_monitor_label_compromised">Compromised password</string>
-  <string name="login_item_monitor_label_reused">Reused password</string>
-  <string name="login_item_monitor_label_missing_2fa">Missing 2FA</string>
+  <string name="login_item_monitor_label_weak">Slabé heslo</string>
+  <string name="login_item_monitor_label_compromised">Kompromitované heslo</string>
+  <string name="login_item_monitor_label_reused">Opakovane použité heslo</string>
+  <string name="login_item_monitor_label_missing_2fa">Chýbajúca 2FA</string>
   <string name="login_item_reused_passwords_subtitle">Položky z vašich trezorov, ktoré používajú toto heslo.</string>
   <string name="mfa_limit_reached">2FA limit dosiahnutý</string>
   <string name="activity_in_last_two_weeks">Aktivita za posledných 14 dní</string>
@@ -428,4 +428,11 @@
     <item quantity="many">%s slová</item>
     <item quantity="other">%s slová</item>
   </plurals>
+  <!-- Password checks (Login create/edit + Generate Password BS) -->
+  <string name="password_strength_prefix">Sila hesla</string>
+  <string name="password_check_min_length">Aspoň 12 znakov</string>
+  <string name="password_check_lowercase">Malé písmená</string>
+  <string name="password_check_uppercase">Veľké písmená</string>
+  <string name="password_check_no_consecutive">Žiadne opakujúce sa znaky</string>
+  <string name="password_check_no_common">Žiadne bežné heslá</string>
 </resources>

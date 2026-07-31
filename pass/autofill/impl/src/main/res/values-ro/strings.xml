@@ -13,4 +13,40 @@
   <string name="autofill_confirm_dangerous_title" comment="Title for the dialog that will appear when the user clicks on Autofill but we think it may be a dangerous action">Confirmare acțiune</string>
   <string name="autofill_confirm_dangerous_body" comment="Body for the dialog that will appear when the user clicks on Autofill but we think it may be a dangerous action">Sunteți pe cale să vă completați automat acreditările într-un site web deschis de aplicația actuală. Aplicația poate avea acces la acreditări după completarea automată - faceți-o doar dacă aveți încredere în aplicație.</string>
   <string name="autofill_confirm_button" comment="Confirmation button for actually performing the autofill action">Autocompletare</string>
+  <string name="autofill_troubleshooting_title">Depanare completare automată</string>
+  <string name="autofill_troubleshooting_subtitle">Verificați ca dispozitivul să fie setat corect pentru completare automată.</string>
+  <string name="autofill_troubleshooting_verdict_all_good">Completarea automată este complet setată</string>
+  <string name="autofill_troubleshooting_verdict_attention">Câteva lucruri vă necesită atenția</string>
+  <string name="autofill_troubleshooting_service_ok">Proton Pass vă este serviciul de autocompletare</string>
+  <string name="autofill_troubleshooting_service_current_other">Setat curent la %1$s.</string>
+  <string name="autofill_troubleshooting_service_not_default_title">Proton Pass nu vă este serviciul de autocompletare</string>
+  <string name="autofill_troubleshooting_service_not_default_body">Setași-l ca implicit pentru autocompletare în toate aplicațiile.</string>
+  <string name="autofill_troubleshooting_service_enable_action">Activare autocompletare</string>
+  <string name="autofill_troubleshooting_service_unsupported_title">Acest dispozitiv nu suportă autocompletarea</string>
+  <string name="autofill_troubleshooting_browsers_header">Autocompletare în navigatoare web</string>
+  <string name="autofill_troubleshooting_browsers_body">Navigatoarele web necesită activarea separată a autocompletării.</string>
+  <string name="autofill_troubleshooting_browser_open_action">Deschidere</string>
+  <string name="autofill_troubleshooting_browser_ready">Completarea automată funcționează automat aici.</string>
+  <string name="autofill_troubleshooting_browser_working">Completarea automată funcționează în acest navigator web.</string>
+  <string name="autofill_troubleshooting_browser_pending_service">Disponibil după ce Proton Pass este setat ca serviciu de completare automată.</string>
+  <string name="autofill_troubleshooting_browser_steps_generic">Deschideți setările navigatorului web, găsiți secțiunea de completare automată sau parole și alegeți Proton Pass ca serviciu de completare automată.</string>
+  <string name="autofill_troubleshooting_browser_steps_chrome">1. Deschideți meniul navigatorului web și accesați Setări, apoi Servicii de completare automată.\n2. Activați „Utilizare alt serviciu” și selectați Proton Pass.</string>
+  <string name="autofill_troubleshooting_browser_steps_firefox">1. Deschideți meniul navigatorului web și accesați Setări, apoi Completare automată.\n2. Alegeți Proton Pass ca serviciu de completare automată.</string>
+  <string name="autofill_troubleshooting_browser_steps_samsung">1. Deschideți Setări, apoi serviciul de completare automată.\n2. Selectați Proton Pass.</string>
+  <string name="autofill_troubleshooting_inline_info">Sugestiile încorporate apar pe tastatură. Acestea necesită Android 11 sau o versiune ulterioară și o tastatură compatibilă, cum ar fi Gboard.</string>
+  <string name="autofill_troubleshooting_share_diagnostics">Partajare diagnostice</string>
+  <string name="autofill_troubleshooting_open_diagnostics">Diagnostice avansate</string>
+  <string name="autofill_diagnostics_title">Diagnostice avansate</string>
+  <string name="autofill_diagnostics_enable">Activare diagnostice autocompletare</string>
+  <string name="autofill_diagnostics_enable_description">Când este activată, funcția Proton Pass înregistrează ce se întâmplă în timpul completării automate, astfel încât să puteți vedea de ce nu s-a completat. Dezactivați-o când ați terminat.</string>
+  <string name="autofill_diagnostics_instructions">Reproduceți problema completării automate în aplicație sau în navigatorul web, apoi reveniți la acest ecran.</string>
+  <string name="autofill_diagnostics_last_attempt_title">Ultima încercare de autocompletare</string>
+  <string name="autofill_diagnostics_no_attempts">Încă nu s-a înregistrat nici o încercare de autocompletare.</string>
+  <string name="autofill_diagnostics_reason_not_default">Proton Pass nu este serviciul de autocompletare activ, așa că încă nu poate autocompleta nicăieri.</string>
+  <string name="autofill_diagnostics_outcome_offered">Proton Pass a oferit sugestii în %1$s.</string>
+  <string name="autofill_diagnostics_outcome_nothing">Completarea automată a fost declanșată în %1$s, dar nu au fost oferite date de autentificare corespunzătoare. Este posibil ca pagina să nu aibă câmpuri de autentificare detectabile sau să nu existe niciun articol pentru acest site.</string>
+  <string name="autofill_diagnostics_outcome_error">Completarea automată a generat o eroare în %1$s.</string>
+  <string name="autofill_diagnostics_recent_title">Încercări recente</string>
+  <string name="autofill_diagnostics_clear">Golire</string>
+  <string name="autofill_diagnostics_share">Partajare cu asistența</string>
 </resources>

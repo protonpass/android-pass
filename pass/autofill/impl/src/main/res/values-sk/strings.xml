@@ -13,4 +13,40 @@
   <string name="autofill_confirm_dangerous_title" comment="Title for the dialog that will appear when the user clicks on Autofill but we think it may be a dangerous action">Potvrďte vašu akciu</string>
   <string name="autofill_confirm_dangerous_body" comment="Body for the dialog that will appear when the user clicks on Autofill but we think it may be a dangerous action">Chystáte sa automaticky vyplniť svoje prihlasovacie údaje na webovej lokalite, otvorenej vašou aktuálnou aplikáciou. Aplikácia môže mať po automatickom vyplnení prístup k prihlasovacím údajom - urobte to len vtedy, ak aplikácii dôverujete.</string>
   <string name="autofill_confirm_button" comment="Confirmation button for actually performing the autofill action">Automatické vypĺňanie</string>
+  <string name="autofill_troubleshooting_title">Riešenie problémov s automatickým vypĺňaním</string>
+  <string name="autofill_troubleshooting_subtitle">Skontrolujte, či je vaše zariadenie správne nastavené na automatické vypĺňanie.</string>
+  <string name="autofill_troubleshooting_verdict_all_good">Automatické vypĺňanie je nastavené v plnom rozsahu</string>
+  <string name="autofill_troubleshooting_verdict_attention">Je tu niekoľko vecí, ktorým by ste mali venovať pozornosť</string>
+  <string name="autofill_troubleshooting_service_ok">Proton Pass je vaša služba automatického vypĺňania</string>
+  <string name="autofill_troubleshooting_service_current_other">Momentálne je nastavené na %1$s.</string>
+  <string name="autofill_troubleshooting_service_not_default_title">Proton Pass nie je vaša služba automatického vypĺňania</string>
+  <string name="autofill_troubleshooting_service_not_default_body">Nastavte ho ako predvolené, aby sa údaje automaticky vypĺňali vo všetkých vašich aplikáciách.</string>
+  <string name="autofill_troubleshooting_service_enable_action">Povoliť automatické vypĺňanie</string>
+  <string name="autofill_troubleshooting_service_unsupported_title">Toto zariadenie nepodporuje automatické vypĺňanie</string>
+  <string name="autofill_troubleshooting_browsers_header">Automatické vypĺňanie v prehliadačoch</string>
+  <string name="autofill_troubleshooting_browsers_body">V prehliadačoch je potrebné zapnúť automatické vypĺňanie zvlášť.</string>
+  <string name="autofill_troubleshooting_browser_open_action">Otvoriť</string>
+  <string name="autofill_troubleshooting_browser_ready">Automatické vypĺňanie tu funguje automaticky.</string>
+  <string name="autofill_troubleshooting_browser_working">V tomto prehliadači automatičné vypĺňanie funguje.</string>
+  <string name="autofill_troubleshooting_browser_pending_service">Táto funkcia bude k dispozícii, akonáhle nastavíte Proton Pass ako službu automatického vypĺňania.</string>
+  <string name="autofill_troubleshooting_browser_steps_generic">Otvorte nastavenia prehliadača, vyhľadajte sekciu „Automatické vypĺňanie“ alebo „Heslá“ a ako službu automatického vypĺňania vyberte Proton Pass.</string>
+  <string name="autofill_troubleshooting_browser_steps_chrome">1. Otvorte menu prehliadača, prejdite do Nastavení a potom do položky Služby automatického vypĺňania.\n2. Zapnite možnosť „Použiť inú službu“ a vyberte Proton Pass.</string>
+  <string name="autofill_troubleshooting_browser_steps_firefox">1. Otvorte menu prehliadača, prejdite do Nastavení a potom do položky Automatické vypĺňanie.\n2. Ako službu automatického vypĺňania vyberte Proton Pass.</string>
+  <string name="autofill_troubleshooting_browser_steps_samsung">1. Otvorte Nastavenia a potom službu Automatické vypĺňanie.\n2. Vyberte Proton Pass.</string>
+  <string name="autofill_troubleshooting_inline_info">Návrhy priamo v texte sa zobrazujú na klávesnici. Na ich fungovanie je potrebný systém Android 11 alebo novší a kompatibilná klávesnica, napríklad Gboard.</string>
+  <string name="autofill_troubleshooting_share_diagnostics">Zdieľať diagnostiku</string>
+  <string name="autofill_troubleshooting_open_diagnostics">Pokročilá diagnostika</string>
+  <string name="autofill_diagnostics_title">Pokročilá diagnostika</string>
+  <string name="autofill_diagnostics_enable">Povoliť diagnostiku automatického vypĺňania</string>
+  <string name="autofill_diagnostics_enable_description">Keď je tento režim zapnutý, Proton Pass zaznamenáva, čo sa deje počas automatického vypĺňania, aby ste mohli zistiť, prečo sa údaje nevypĺňali. Po dokončení ho vypnite.</string>
+  <string name="autofill_diagnostics_instructions">V aplikácii alebo prehliadači napodobnite problém s automatickým vypĺňaním a potom sa vráťte na túto obrazovku.</string>
+  <string name="autofill_diagnostics_last_attempt_title">Posledný pokus o automatické vyplnenie</string>
+  <string name="autofill_diagnostics_no_attempts">Zatiaľ nebol zaznamenaný žiadny pokus o automatické vyplnenie.</string>
+  <string name="autofill_diagnostics_reason_not_default">Proton Pass nie je vaša služba automatického vypĺňania, takže zatiaľ nemôže vypĺňať údaje nikde.</string>
+  <string name="autofill_diagnostics_outcome_offered">Proton Pass ponúkol návrhy v %1$s.</string>
+  <string name="autofill_diagnostics_outcome_nothing">V %1$s sa spustila funkcia automatického vypĺňania, ale nebolo ponúknuté žiadne zodpovedajúce prihlásenie. Je možné, že stránka neobsahuje žiadne rozpoznateľné prihlasovacie polia, alebo nemáte pre túto stránku žiadnu položku.</string>
+  <string name="autofill_diagnostics_outcome_error">Pri automatickom vypĺňaní došlo k chybe v %1$s.</string>
+  <string name="autofill_diagnostics_recent_title">Nedávne pokusy</string>
+  <string name="autofill_diagnostics_clear">Vyčistiť</string>
+  <string name="autofill_diagnostics_share">Zdieľať s podporou</string>
 </resources>

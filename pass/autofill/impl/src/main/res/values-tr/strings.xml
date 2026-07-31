@@ -13,4 +13,40 @@
   <string name="autofill_confirm_dangerous_title" comment="Title for the dialog that will appear when the user clicks on Autofill but we think it may be a dangerous action">İşleminizi onaylayın</string>
   <string name="autofill_confirm_dangerous_body" comment="Body for the dialog that will appear when the user clicks on Autofill but we think it may be a dangerous action">Geçerli uygulamanız tarafından açılan bir sitede kimlik bilgilerinizi otomatik olarak doldurmak üzeresiniz. Uygulama, otomatik doldurmanın ardından kimlik bilgilerine erişebilir. Bu işlemi yalnızca uygulamaya güveniyorsanız yapın.</string>
   <string name="autofill_confirm_button" comment="Confirmation button for actually performing the autofill action">Otomatik doldur</string>
+  <string name="autofill_troubleshooting_title">Otomatik doldurma sorun giderme</string>
+  <string name="autofill_troubleshooting_subtitle">Aygıtınızın otomatik doldurma için doğru ayarlandığını denetleyin.</string>
+  <string name="autofill_troubleshooting_verdict_all_good">Otomatik doldurma tümüyle ayarlandı</string>
+  <string name="autofill_troubleshooting_verdict_attention">Dikkat etmeniz gereken birkaç şey var</string>
+  <string name="autofill_troubleshooting_service_ok">Otomatik doldurma hizmetiniz Proton Pass</string>
+  <string name="autofill_troubleshooting_service_current_other">Şu anda %1$s olarak ayarlanmış.</string>
+  <string name="autofill_troubleshooting_service_not_default_title">Otomatik doldurma hizmetiniz Proton Pass değil</string>
+  <string name="autofill_troubleshooting_service_not_default_body">Uygulamalarınızda otomatik doldurma için varsayılan olarak ayarlayın.</string>
+  <string name="autofill_troubleshooting_service_enable_action">Otomatik doldurmayı aç</string>
+  <string name="autofill_troubleshooting_service_unsupported_title">Bu aygıt otomatik doldurmayı desteklemiyor</string>
+  <string name="autofill_troubleshooting_browsers_header">Tarayıcılarda otomatik doldurma</string>
+  <string name="autofill_troubleshooting_browsers_body">Tarayıcılarda otomatik doldurma ayrı olarak açılmalıdır.</string>
+  <string name="autofill_troubleshooting_browser_open_action">Aç</string>
+  <string name="autofill_troubleshooting_browser_ready">Otomatik doldurma burada otomatik olarak çalışır.</string>
+  <string name="autofill_troubleshooting_browser_working">Otomatik doldurma bu tarayıcıda çalışıyor.</string>
+  <string name="autofill_troubleshooting_browser_pending_service">Otomatik doldurma hizmetiniz olarak Proton Pass ayarlandığında kullanılabilir.</string>
+  <string name="autofill_troubleshooting_browser_steps_generic">Tarayıcı ayarlarını açın, otomatik doldurma veya parolalar bölümünü bulun ve otomatik doldurma hizmetini Proton Pass olarak seçin.</string>
+  <string name="autofill_troubleshooting_browser_steps_chrome">1. Tarayıcı menüsünü açın ve Ayarlar altında Otomatik doldurma hizmetlerine gidin.\n2. \"Başka bir hizmet kullan\" seçeneğini açın ve Proton Pass olarak seçin.</string>
+  <string name="autofill_troubleshooting_browser_steps_firefox">1. Tarayıcı menüsünü açın ve Ayarlar altından Otomatik doldurmaya gidin.\n2. Otomatik doldurma hizmetini Proton Pass olarak seçin.</string>
+  <string name="autofill_troubleshooting_browser_steps_samsung">1. Ayarları açın ardından Otomatik doldurma hizmetini seçin.\n2. Proton Pass olarak seçin.</string>
+  <string name="autofill_troubleshooting_inline_info">Anlık öneriler klavyenizde görüntülenir. Bu özelliğin kullanılabilmesi için Android 11 veya daha yeni bir sürüm ile Gboard gibi uyumlu klavye gereklidir.</string>
+  <string name="autofill_troubleshooting_share_diagnostics">Tanılamayı paylaş</string>
+  <string name="autofill_troubleshooting_open_diagnostics">Gelişmiş tanılama</string>
+  <string name="autofill_diagnostics_title">Gelişmiş tanılama</string>
+  <string name="autofill_diagnostics_enable">Otomatik doldurma tanılamasını aç</string>
+  <string name="autofill_diagnostics_enable_description">Açıkken, Proton Pass otomatik doldurma sırasında ne olduğunu kaydeder. Böylece neden doldurulmadığını görebilirsiniz. İşiniz bittiğinde kapatın.</string>
+  <string name="autofill_diagnostics_instructions">Uygulamada veya tarayıcıda otomatik doldurma sorununu yeniden oluşturun ardından bu ekrana geri dönün.</string>
+  <string name="autofill_diagnostics_last_attempt_title">Son otomatik doldurma denemesi</string>
+  <string name="autofill_diagnostics_no_attempts">Henüz herhangi bir otomatik doldurma denemesi kaydedilmemiş.</string>
+  <string name="autofill_diagnostics_reason_not_default">Otomatik doldurma hizmetiniz Proton Pass değil. Bu yüzden henüz hiçbir alanı dolduramaz.</string>
+  <string name="autofill_diagnostics_outcome_offered">Proton Pass %1$s içinde öneriler sundu.</string>
+  <string name="autofill_diagnostics_outcome_nothing">%1$s üzerinde otomatik doldurma özelliği tetiklendi ancak eşleşen bir oturum açma bilgisi önerilmedi. Sayfada algılanabilen oturum açma alanları olmayabilir ya da bu site için herhangi bir öge kaydı olmayabilir.</string>
+  <string name="autofill_diagnostics_outcome_error">Otomatik doldurma %1$s içinde bir sorunla karşılaştı.</string>
+  <string name="autofill_diagnostics_recent_title">Son denemeler</string>
+  <string name="autofill_diagnostics_clear">Temizle</string>
+  <string name="autofill_diagnostics_share">Destek ile paylaş</string>
 </resources>

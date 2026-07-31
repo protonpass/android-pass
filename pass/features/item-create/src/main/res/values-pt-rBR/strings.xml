@@ -348,8 +348,8 @@
   <string name="autofill_suggestions_description">Adjust autofill behaviors to change where logins are suggested and filled for %s.</string>
   <string name="autofill_suggestions_tab_basic">Básico</string>
   <string name="autofill_suggestions_tab_advanced">Avançado</string>
-  <string name="autofill_suggestions_mode_default">Parent domain and subdomains</string>
-  <string name="autofill_suggestions_mode_exact">Exact (sub)domain</string>
+  <string name="autofill_suggestions_mode_default">Domínio principal e subdomínios</string>
+  <string name="autofill_suggestions_mode_exact">(Sub)domínio exato</string>
   <string name="autofill_suggestions_mode_never">Nunca preencher neste site</string>
   <string name="autofill_suggestions_mode_start_with">Iniciar com</string>
   <string name="autofill_suggestions_mode_regular_expression">Expressão regular</string>

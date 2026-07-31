@@ -5,6 +5,7 @@
   <string name="profile_option_account">Conta</string>
   <string name="profile_help_center">Centro de ajuda</string>
   <string name="profile_security">Segurança</string>
+  <string name="profile_option_autofill_troubleshooting">Autofill troubleshooting</string>
   <string name="profile_option_feedback">Comentários</string>
   <string name="profile_option_import_export">Importar/exportar</string>
   <string name="profile_option_tutorial">Como utilizar o Proton Pass</string>

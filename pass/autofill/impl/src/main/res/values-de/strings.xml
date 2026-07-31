@@ -13,4 +13,40 @@
   <string name="autofill_confirm_dangerous_title" comment="Title for the dialog that will appear when the user clicks on Autofill but we think it may be a dangerous action">Aktion bestätigen</string>
   <string name="autofill_confirm_dangerous_body" comment="Body for the dialog that will appear when the user clicks on Autofill but we think it may be a dangerous action">Du bist dabei, deine Zugangsdaten auf einer Website automatisch auszufüllen, die von deiner aktuellen Anwendung geöffnet wird. Die App kann nach dem automatischen Ausfüllen Zugriff auf die Anmeldeinformationen haben - tue dies nur, wenn du der App vertraust.</string>
   <string name="autofill_confirm_button" comment="Confirmation button for actually performing the autofill action">AutoFill</string>
+  <string name="autofill_troubleshooting_title">Fehlerbehebung beim automatischen Ausfüllen</string>
+  <string name="autofill_troubleshooting_subtitle">Überprüfe, ob dein Gerät für das automatische Ausfüllen vollständige eingerichtet ist.</string>
+  <string name="autofill_troubleshooting_verdict_all_good">Automatisches Ausfüllen ist vollständig eingerichtet</string>
+  <string name="autofill_troubleshooting_verdict_attention">Einige Dinge erfordern deine Aufmerksamkeit</string>
+  <string name="autofill_troubleshooting_service_ok">Proton Pass ist dein Dienst zum automatischen Ausfüllen von Formularen</string>
+  <string name="autofill_troubleshooting_service_current_other">Derzeit auf %1$s festgelegt.</string>
+  <string name="autofill_troubleshooting_service_not_default_title">Proton Pass ist nicht dein Dienst zum automatischen Ausfüllen von Formularen</string>
+  <string name="autofill_troubleshooting_service_not_default_body">Lege als Standard fest, dass Daten in all deinen Apps automatisch ausgefüllt werden.</string>
+  <string name="autofill_troubleshooting_service_enable_action">Automatisches Ausfüllen aktivieren</string>
+  <string name="autofill_troubleshooting_service_unsupported_title">Das automatische Ausfüllen ist auf diesem Gerät nicht unterstützt</string>
+  <string name="autofill_troubleshooting_browsers_header">In Browsern automatisch ausfüllen</string>
+  <string name="autofill_troubleshooting_browsers_body">In Browsern muss das automatische Ausfüllen separat aktiviert werden.</string>
+  <string name="autofill_troubleshooting_browser_open_action">Öffnen</string>
+  <string name="autofill_troubleshooting_browser_ready">Automatisches Ausfüllen funktioniert hier automatisch.</string>
+  <string name="autofill_troubleshooting_browser_working">Automatisches Ausfüllen funktioniert in diesem Browser.</string>
+  <string name="autofill_troubleshooting_browser_pending_service">Verfügbar, sobald Proton Pass als dein Dienst zum automatischen Ausfüllen festgelegt wurde.</string>
+  <string name="autofill_troubleshooting_browser_steps_generic">Öffne die Browsereinstellungen, suche „Automatisches Ausfüllen“ oder „Passwörter“ und wähle „Proton Pass“ als Dienst zum automatischen Ausfüllen aus.</string>
+  <string name="autofill_troubleshooting_browser_steps_chrome">1. Öffne das Browser-Menü, gehe zu „Einstellungen“ und dann zu „Automatisches Ausfüllen“.\n2. Aktiviere „Anderen Dienst verwenden“ und wähle „Proton Pass“ aus.</string>
+  <string name="autofill_troubleshooting_browser_steps_firefox">1. Öffne das Browser-Menü, gehe zu „Einstellungen“ und dann zu „Automatisches Ausfüllen“.\n2. Wähle „Proton Pass“ als Dienst zum automatischen Ausfüllen aus.</string>
+  <string name="autofill_troubleshooting_browser_steps_samsung">1. Öffne „Einstellungen“ und anschließend den Dienst „Automatisches Ausfüllen“.\n2. Wähle „Proton Pass“ aus.</string>
+  <string name="autofill_troubleshooting_inline_info">Inline-Vorschläge werden auf deiner Tastatur angezeigt. Dazu sind Android 11 oder höher sowie eine kompatible Tastatur wie beispielsweise Gboard erforderlich.</string>
+  <string name="autofill_troubleshooting_share_diagnostics">Diagnosen teilen</string>
+  <string name="autofill_troubleshooting_open_diagnostics">Erweiterte Diagnosen</string>
+  <string name="autofill_diagnostics_title">Erweiterte Diagnosen</string>
+  <string name="autofill_diagnostics_enable">Diagnose des automatischen Ausfüllens aktivieren</string>
+  <string name="autofill_diagnostics_enable_description">Wenn aktiviert, zeichnet Proton Pass auf, was während des automatischen Ausfüllens passiert, damit du sehen kannst, warum das Ausfüllen nicht funktioniert hat. Deaktiviere es, wenn du fertig bist.</string>
+  <string name="autofill_diagnostics_instructions">Stellen das Problem mit dem automatischen Ausfüllen in der App oder im Browser nach und kehre anschließend zu diesem Bildschirm zurück.</string>
+  <string name="autofill_diagnostics_last_attempt_title">Letzter Versuch des automatischen Ausfüllens</string>
+  <string name="autofill_diagnostics_no_attempts">Noch kein Versuch des automatischen Ausfüllens registriert</string>
+  <string name="autofill_diagnostics_reason_not_default">Proton Pass ist nicht dein Dienst zum automatischen Ausfüllen. Darum kann er noch nicht angewendet werden.</string>
+  <string name="autofill_diagnostics_outcome_offered">Proton Pass hat Vorschläge in %1$s gemacht.</string>
+  <string name="autofill_diagnostics_outcome_nothing">Automatisches Ausfüllen wurde in %1$s ausgelöst, es wurden jedoch keine passenden Anmeldedaten vorgeschlagen. Möglicherweise enthält die Seite keine erkennbaren Anmeldefelder, oder du hast keinen Eintrag für diese Website.</string>
+  <string name="autofill_diagnostics_outcome_error">Beim automatischen Ausfüllung ist in %1$s ein Fehler aufgetreten.</string>
+  <string name="autofill_diagnostics_recent_title">Jüngste Versuche</string>
+  <string name="autofill_diagnostics_clear">Entfernen</string>
+  <string name="autofill_diagnostics_share">Mit Support teilen</string>
 </resources>

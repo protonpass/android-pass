@@ -23,7 +23,7 @@ import kotlinx.datetime.Instant
 import proton.android.pass.data.impl.db.entities.AssetLinkEntity
 
 interface LocalAssetLinkDataSource {
-    suspend fun insertAssetLink(list: List<AssetLinkEntity>)
+    suspend fun replaceAssetLinks(website: String, list: List<AssetLinkEntity>)
     suspend fun purgeAll()
     suspend fun purgeOlderThan(date: Instant)
     fun observeByPackageName(packageName: String): Flow<List<AssetLinkEntity>>

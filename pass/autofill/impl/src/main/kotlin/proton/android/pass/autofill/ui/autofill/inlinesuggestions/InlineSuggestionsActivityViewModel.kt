@@ -27,6 +27,7 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import kotlinx.datetime.Clock
@@ -38,6 +39,7 @@ import proton.android.pass.autofill.api.suggestions.PackageNameUrlSuggestionAdap
 import proton.android.pass.autofill.entities.AutofillAppState
 import proton.android.pass.autofill.entities.AutofillItem
 import proton.android.pass.autofill.entities.AutofillMappings
+import proton.android.pass.autofill.extensions.isTrustedAutofillPackage
 import proton.android.pass.autofill.heuristics.ItemFieldMapper
 import proton.android.pass.autofill.service.R
 import proton.android.pass.autofill.ui.autofill.AutofillIntentExtras
@@ -109,10 +111,15 @@ class InlineSuggestionsActivityViewModel @Inject constructor(
         .getThemePreference()
         .distinctUntilChanged()
 
+    private val isTrustedPackageState: Flow<Boolean> = flow {
+        emit(internalSettingsRepository.isTrustedAutofillPackage(appState.autofillData.packageInfo))
+    }
+
     val state: StateFlow<InlineSuggestionAutofillNoUiState> = combine(
         copyTotpToClipboardState,
-        themeState
-    ) { copyTotpToClipboard, theme ->
+        themeState,
+        isTrustedPackageState
+    ) { copyTotpToClipboard, theme, isTrusted ->
         val mappingsOption = selectedAutofillItem
             .map { autofillItem ->
                 getMappings(autofillItem, copyTotpToClipboard, appState)
@@ -130,10 +137,14 @@ class InlineSuggestionsActivityViewModel @Inject constructor(
                 inAppReviewTriggerMetrics.incrementItemAutofillCount()
                 PassLogger.i(TAG, "Mappings found: ${mappingsOption.value.mappings.size}")
 
-                if (appState.autofillData.isDangerousAutofill) {
+                if (appState.autofillData.isDangerousAutofill && !isTrusted) {
                     InlineSuggestionAutofillNoUiState.SuccessWithConfirmation(
                         autofillMappings = mappingsOption.value,
-                        mode = AutofillConfirmMode.DangerousAutofill,
+                        mode = if (appState.autofillData.isUnverifiedBrowser) {
+                            AutofillConfirmMode.UnverifiedBrowser
+                        } else {
+                            AutofillConfirmMode.DangerousAutofill
+                        },
                         theme = theme
                     )
                 } else {
@@ -153,6 +164,15 @@ class InlineSuggestionsActivityViewModel @Inject constructor(
             started = SharingStarted.WhileSubscribed(5_000),
             initialValue = InlineSuggestionAutofillNoUiState.NotInitialised
         )
+
+    fun onDangerousAutofillConfirmed(rememberChoice: Boolean) {
+        if (rememberChoice) {
+            internalSettingsRepository.addTrustedAutofillPackage(
+                appState.autofillData.packageInfo.packageName.value,
+                appState.autofillData.packageInfo.hashes
+            )
+        }
+    }
 
     private fun getMappings(
         autofillItem: AutofillItem,

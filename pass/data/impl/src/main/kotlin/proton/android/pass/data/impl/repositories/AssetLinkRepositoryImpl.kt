@@ -56,7 +56,9 @@ class AssetLinkRepositoryImpl @Inject constructor(
     }
 
     override suspend fun insert(list: List<AssetLink>) {
-        localAssetLinkDataSource.insertAssetLink(list.toEntityList(clock.now()))
+        list.groupBy(AssetLink::website).forEach { (website, assetLinks) ->
+            localAssetLinkDataSource.replaceAssetLinks(website, assetLinks.toEntityList(clock.now()))
+        }
     }
 
     override suspend fun purgeAll() {

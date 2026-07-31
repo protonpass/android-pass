@@ -63,9 +63,56 @@ internal class TestAddPackageToItem {
         assertThat(source.platformSpecific.android.allowedAppsList.size).isEqualTo(1)
     }
 
-    private fun createItemWithPackageName(packageName: String?): ItemV1.Item {
+    @Test
+    fun `adding package association preserves its signing hashes`() {
+        val packageInfo = PackageInfo(
+            packageName = PackageName("new.package.name"),
+            appName = AppName("New app"),
+            hashes = setOf("certificate-a", "certificate-b")
+        )
+
+        val updated = createItemWithPackageName(null).with(packageInfo)
+
+        assertThat(updated.platformSpecific.android.allowedAppsList.last().hashesList)
+            .containsExactly("certificate-a", "certificate-b")
+    }
+
+    @Test
+    fun `adding signing hashes upgrades an existing package association`() {
+        val packageInfo = PackageInfo(
+            packageName = PackageName("existing.package"),
+            appName = AppName("Existing app"),
+            hashes = setOf("certificate-a")
+        )
+
+        val updated = createItemWithPackageName("existing.package").with(packageInfo)
+
+        assertThat(updated.platformSpecific.android.allowedAppsList).hasSize(1)
+        assertThat(updated.platformSpecific.android.allowedAppsList.single().hashesList)
+            .containsExactly("certificate-a")
+    }
+
+    @Test
+    fun `adding existing signing hashes does not duplicate them`() {
+        val packageInfo = PackageInfo(
+            packageName = PackageName("existing.package"),
+            appName = AppName("Existing app"),
+            hashes = setOf("certificate-a", "certificate-b")
+        )
+
+        val updated = createItemWithPackageName(
+            packageName = "existing.package",
+            hashes = listOf("certificate-a")
+        ).with(packageInfo)
+
+        assertThat(updated.platformSpecific.android.allowedAppsList.single().hashesList)
+            .containsExactly("certificate-a", "certificate-b")
+    }
+
+    private fun createItemWithPackageName(packageName: String?, hashes: List<String> = emptyList()): ItemV1.Item {
         val androidSpecificBuilder = ItemV1.AllowedAndroidApp.newBuilder()
         packageName?.let { androidSpecificBuilder.setPackageName(it) }
+        androidSpecificBuilder.addAllHashes(hashes)
 
         val androidSpecific = androidSpecificBuilder.build()
         return ItemV1.Item.newBuilder()
@@ -81,5 +128,3 @@ internal class TestAddPackageToItem {
             .build()
     }
 }
-
-

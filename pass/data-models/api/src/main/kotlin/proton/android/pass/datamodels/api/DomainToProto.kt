@@ -59,6 +59,7 @@ fun ItemContents.serializeToProto(
                 ItemV1.AllowedAndroidApp.newBuilder()
                     .setPackageName(it.packageName.value)
                     .setAppName(it.appName.value)
+                    .addAllHashes(it.hashes)
                     .build()
             }
             builder.platformSpecific = builder.platformSpecific.toBuilder()

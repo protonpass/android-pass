@@ -160,7 +160,11 @@ private fun createLoginItemType(parsed: ItemV1.Item, context: EncryptionContext)
     password = context.encrypt(parsed.content.login.password),
     websites = parsed.content.login.urlsList,
     packageInfoSet = parsed.platformSpecific.android.allowedAppsList.map {
-        PackageInfo(PackageName(it.packageName), AppName(it.appName))
+        PackageInfo(
+            packageName = PackageName(it.packageName),
+            appName = AppName(it.appName),
+            hashes = it.hashesList.toSet()
+        )
     }.toSet(),
     primaryTotp = context.encrypt(parsed.content.login.totpUri),
     customFields = parsed.extraFieldsList.map { field ->

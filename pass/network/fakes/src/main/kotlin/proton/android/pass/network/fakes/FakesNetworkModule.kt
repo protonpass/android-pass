@@ -37,6 +37,7 @@ import me.proton.core.network.domain.serverconnection.DohAlternativesListener
 import okhttp3.HttpUrl
 import okhttp3.HttpUrl.Companion.toHttpUrl
 import proton.android.pass.network.api.NetworkMonitor
+import proton.android.pass.network.api.NetworkRestrictionDiagnostics
 import javax.inject.Singleton
 
 @Module
@@ -78,4 +79,9 @@ abstract class FakesBindNetworkModule {
 
     @Binds
     abstract fun bindNetworkMonitor(impl: FakeNetworkMonitor): NetworkMonitor
+
+    @Binds
+    abstract fun bindNetworkRestrictionDiagnostics(
+        impl: FakeNetworkRestrictionDiagnostics
+    ): NetworkRestrictionDiagnostics
 }

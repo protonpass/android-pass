@@ -68,6 +68,7 @@ class FakeInternalSettingsRepository @Inject constructor() : InternalSettingsRep
     private val lastBackgroundTimestampFlow = MutableStateFlow(0L)
 
     private val searchIndexRebuildTimes = mutableMapOf<String, Long>()
+    private val trustedAutofillPackagesFlow = MutableStateFlow(emptyMap<String, Set<String>>())
 
     override fun setLastUnlockedTime(time: Long): Result<Unit> {
         lastUnlockedTimeFlow.update { Some(time) }
@@ -248,4 +249,14 @@ class FakeInternalSettingsRepository @Inject constructor() : InternalSettingsRep
     }
 
     override suspend fun getSearchIndexRebuildTime(userId: UserId): Long = searchIndexRebuildTimes[userId.id] ?: 0L
+
+    override fun addTrustedAutofillPackage(packageName: String, fingerprints: Set<String>): Result<Unit> = runCatching {
+        trustedAutofillPackagesFlow.update { it + (packageName to fingerprints) }
+    }
+
+    override fun removeTrustedAutofillPackage(packageName: String): Result<Unit> = runCatching {
+        trustedAutofillPackagesFlow.update { it - packageName }
+    }
+
+    override fun getTrustedAutofillPackages(): Flow<Map<String, Set<String>>> = trustedAutofillPackagesFlow
 }

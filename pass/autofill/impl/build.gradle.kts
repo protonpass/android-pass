@@ -100,6 +100,7 @@ dependencies {
 
     implementation(projects.pass.account.api)
     implementation(projects.pass.biometry.api)
+    implementation(projects.pass.browserAllowlist.api)
     implementation(projects.pass.clipboard.api)
     implementation(projects.pass.common.api)
     implementation(projects.pass.commonPresentation.api)
@@ -111,6 +112,7 @@ dependencies {
     implementation(projects.pass.crypto.api)
     implementation(projects.pass.data.api)
     implementation(projects.pass.domain)
+    implementation(projects.pass.signingCertificates)
     implementation(projects.pass.features.auth)
     implementation(projects.pass.features.accountSelector)
     implementation(projects.pass.features.upsell)

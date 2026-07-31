@@ -18,32 +18,19 @@
 
 package proton.android.pass.autofill.ui.autofill.select
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material.Card
 import androidx.compose.material.Surface
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.window.Dialog
 import kotlinx.datetime.Clock
-import me.proton.core.compose.theme.ProtonTheme
-import me.proton.core.compose.theme.defaultNorm
-import me.proton.core.compose.theme.headlineNorm
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.autofill.service.R
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemePreviewProvider
+import proton.android.pass.commonui.impl.dialogs.AssociateItemDialog
 import proton.android.pass.commonuimodels.api.ItemUiModel
-import proton.android.pass.composecomponents.impl.dialogs.DialogButton
 import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
@@ -60,49 +47,24 @@ internal fun AssociateAutofillItemDialog(
 ) {
     itemUiModel ?: return onDismiss()
 
-    Dialog(
-        onDismissRequest = onDismiss
-    ) {
-        Card(backgroundColor = PassTheme.colors.backgroundNorm) {
-            Column(
-                modifier = modifier.padding(16.dp),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.spacedBy(8.dp)
-            ) {
-                Text(
-                    text = stringResource(R.string.autofill_dialog_associate_title),
-                    style = ProtonTheme.typography.headlineNorm
-                )
-                Spacer(modifier = Modifier.height(8.dp))
-                Text(
-                    modifier = Modifier.padding(horizontal = 8.dp),
-                    text = stringResource(
-                        R.string.autofill_associate_web_app_name_dialog_title,
-                        itemUiModel.contents.title
-                    ),
-                    style = ProtonTheme.typography.defaultNorm
-                )
-                DialogButton(
-                    modifier = Modifier.align(Alignment.End),
-                    text = stringResource(R.string.autofill_dialog_associate_and_autofill),
-                    onClick = { onAssociateAndAutofill(itemUiModel) }
-                )
-                DialogButton(
-                    modifier = Modifier.align(Alignment.End),
-                    text = stringResource(R.string.autofill_dialog_just_autofill),
-                    onClick = { onAutofill(itemUiModel) }
-                )
-                DialogButton(
-                    modifier = Modifier.align(Alignment.End),
-                    text = stringResource(R.string.autofill_dialog_cancel),
-                    onClick = {
-                        onCancel()
-                        onDismiss()
-                    }
-                )
-            }
-        }
-    }
+    AssociateItemDialog(
+        modifier = modifier,
+        title = stringResource(R.string.autofill_dialog_associate_title),
+        message = stringResource(
+            R.string.autofill_associate_web_app_name_dialog_title,
+            itemUiModel.contents.title
+        ),
+        confirmLabel = stringResource(R.string.autofill_dialog_associate_and_autofill),
+        secondaryLabel = stringResource(R.string.autofill_dialog_just_autofill),
+        cancelLabel = stringResource(R.string.autofill_dialog_cancel),
+        onConfirm = { onAssociateAndAutofill(itemUiModel) },
+        onSecondary = { onAutofill(itemUiModel) },
+        onCancel = {
+            onCancel()
+            onDismiss()
+        },
+        onDismiss = onDismiss
+    )
 }
 
 @Preview

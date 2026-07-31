@@ -46,13 +46,14 @@ android {
                     apiLevel = 30
                     systemImageSource = "aosp-atd"
                 }
+                maybeCreate<com.android.build.api.dsl.ManagedVirtualDevice>("pixel2api34").apply {
+                    device = "Pixel 2"
+                    apiLevel = 34
+                    systemImageSource = "default"
+                }
             }
         }
     }
-}
-
-androidComponents.beforeVariants { variant ->
-    variant.enableAndroidTest = false
 }
 
 dependencies {
@@ -85,6 +86,7 @@ dependencies {
     implementation(projects.pass.appConfig.api)
     implementation(projects.pass.autofill.api)
     implementation(projects.pass.biometry.api)
+    implementation(projects.pass.browserAllowlist.api)
     implementation(projects.pass.common.api)
     implementation(projects.pass.commonPresentation.api)
     implementation(projects.pass.commonPresentation.impl)
@@ -100,6 +102,7 @@ dependencies {
     implementation(projects.pass.notifications.api)
     implementation(projects.pass.passkeys.api)
     implementation(projects.pass.preferences.api)
+    implementation(projects.pass.signingCertificates)
     implementation(projects.pass.telemetry.api)
 
     implementation(projects.pass.features.accountSelector)
@@ -119,9 +122,19 @@ dependencies {
     testImplementation(libs.junit)
     testImplementation(libs.turbine)
 
+    testImplementation(projects.pass.account.fakes)
+    testImplementation(projects.pass.appConfig.fakes)
+    testImplementation(projects.pass.biometry.fakes)
     testImplementation(projects.pass.commonTest)
+    testImplementation(projects.pass.crypto.fakes)
     testImplementation(projects.pass.data.fakes)
+    testImplementation(projects.pass.notifications.fakes)
     testImplementation(projects.pass.passkeys.fakes)
     testImplementation(projects.pass.preferences.fakes)
     testImplementation(projects.pass.telemetry.fakes)
+
+    kspAndroidTest(libs.dagger.hilt.android.compiler)
+    androidTestImplementation(libs.truth)
+    androidTestImplementation(libs.androidx.test.runner)
+    androidTestImplementation(projects.pass.commonTest)
 }

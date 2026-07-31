@@ -49,7 +49,11 @@ fun ItemEntity.allowedApps(context: EncryptionContext): Set<PackageInfo> {
     val decrypted = context.decrypt(encryptedContent)
     val parsed = ItemV1.Item.parseFrom(decrypted)
     return parsed.platformSpecific.android.allowedAppsList.map {
-        PackageInfo(PackageName(it.packageName), AppName(it.appName))
+        PackageInfo(
+            packageName = PackageName(it.packageName),
+            appName = AppName(it.appName),
+            hashes = it.hashesList.toSet()
+        )
     }.toSet()
 }
 

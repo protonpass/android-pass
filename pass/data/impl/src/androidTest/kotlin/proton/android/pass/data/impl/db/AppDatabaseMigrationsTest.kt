@@ -24,10 +24,13 @@ import androidx.room.testing.MigrationTestHelper
 import androidx.sqlite.db.framework.FrameworkSQLiteOpenHelperFactory
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
+import com.google.common.truth.Truth.assertThat
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import java.io.IOException
+import proton.android.pass.data.impl.db.entities.AssetLinkEntity
+import proton.android.pass.data.impl.db.entities.IgnoredAssetLinkEntity
 
 private const val VALIDATE_DROPPED_TABLES = true
 
@@ -72,5 +75,44 @@ class MigrationTest {
         // Open latest version of the database. Room will validate the schema
         // once all migrations execute.
         database.openHelper.writableDatabase.close()
+    }
+
+    @Test
+    @Throws(IOException::class)
+    fun migration93To94ClearsLegacyAssetLinksOnly() {
+        val databaseName = "migration-93-94"
+        helper.createDatabase(databaseName, 93).apply {
+            execSQL(
+                """
+                    INSERT INTO ${AssetLinkEntity.TABLE} (
+                        ${AssetLinkEntity.Columns.WEBSITE},
+                        ${AssetLinkEntity.Columns.PACKAGE_NAME},
+                        ${AssetLinkEntity.Columns.CREATED_AT},
+                        ${AssetLinkEntity.Columns.SIGNATURE}
+                    ) VALUES ('example.com', 'com.example.app', 0, 'signature')
+                """.trimIndent()
+            )
+            execSQL(
+                "INSERT INTO ${IgnoredAssetLinkEntity.TABLE} " +
+                    "(${IgnoredAssetLinkEntity.Columns.WEBSITE}) VALUES ('ignored.example.com')"
+            )
+            close()
+        }
+
+        helper.runMigrationsAndValidate(
+            databaseName,
+            94,
+            VALIDATE_DROPPED_TABLES,
+            *AppDatabase.migrations.toTypedArray()
+        ).use { database ->
+            database.query("SELECT COUNT(*) FROM ${AssetLinkEntity.TABLE}").use { cursor ->
+                cursor.moveToFirst()
+                assertThat(cursor.getInt(0)).isEqualTo(0)
+            }
+            database.query("SELECT COUNT(*) FROM ${IgnoredAssetLinkEntity.TABLE}").use { cursor ->
+                cursor.moveToFirst()
+                assertThat(cursor.getInt(0)).isEqualTo(1)
+            }
+        }
     }
 }

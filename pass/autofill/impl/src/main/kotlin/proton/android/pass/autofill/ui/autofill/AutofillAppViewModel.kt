@@ -38,6 +38,7 @@ import proton.android.pass.autofill.entities.AutofillAppState
 import proton.android.pass.autofill.entities.AutofillItem
 import proton.android.pass.autofill.entities.AutofillMappings
 import proton.android.pass.autofill.extensions.isBrowser
+import proton.android.pass.autofill.extensions.isTrustedAutofillPackage
 import proton.android.pass.autofill.extensions.toAutoFillItem
 import proton.android.pass.autofill.heuristics.ItemFieldMapper
 import proton.android.pass.autofill.service.R
@@ -52,7 +53,7 @@ import proton.android.pass.data.api.usecases.GetItemById
 import proton.android.pass.data.api.usecases.UpdateAutofillItem
 import proton.android.pass.data.api.usecases.UpdateAutofillItemData
 import proton.android.pass.domain.ItemContents
-import proton.android.pass.domain.entity.PackageName
+import proton.android.pass.domain.entity.PackageInfo
 import proton.android.pass.inappreview.api.InAppReviewTriggerMetrics
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.ToastManager
@@ -145,10 +146,11 @@ class AutofillAppViewModel @Inject constructor(
                 item.toUiModel(this@withEncryptionContext)
             }
 
+            val isTrusted = internalSettingsRepository.isTrustedAutofillPackage(state.autofillData.packageInfo)
+
             when {
-                state.autofillData.isDangerousAutofill -> _eventFlow.update {
-                    AutofillAppEvent.ShowWarningDialog(itemUiModel)
-                }
+                state.autofillData.isDangerousAutofill && !isTrusted ->
+                    _eventFlow.update { AutofillAppEvent.ShowWarningDialog(itemUiModel) }
 
                 !isSuggestion && shouldAskForAssociation(itemUiModel.contents, state) -> {
                     _eventFlow.update {
@@ -175,8 +177,18 @@ class AutofillAppViewModel @Inject constructor(
         }
     }
 
-    internal fun onWarningConfirmed(state: AutofillAppState, item: ItemUiModel) {
+    internal fun onWarningConfirmed(
+        state: AutofillAppState,
+        item: ItemUiModel,
+        rememberChoice: Boolean
+    ) {
         viewModelScope.launch {
+            if (rememberChoice) {
+                internalSettingsRepository.addTrustedAutofillPackage(
+                    state.autofillData.packageInfo.packageName.value,
+                    state.autofillData.packageInfo.hashes
+                )
+            }
             if (shouldAskForAssociation(state = state, item = item.contents)) {
                 _eventFlow.update { AutofillAppEvent.ShowAssociateDialog(item) }
             } else {
@@ -293,7 +305,7 @@ class AutofillAppViewModel @Inject constructor(
         private fun shouldAskForAssociation(item: ItemContents, state: AutofillAppState): Boolean = when (item) {
             is ItemContents.Login -> shouldAskForAssociation(
                 item = item,
-                packageName = state.autofillData.packageInfo.packageName,
+                packageInfo = state.autofillData.packageInfo,
                 webDomain = state.autofillData.assistInfo.url.value()
             )
 
@@ -303,26 +315,31 @@ class AutofillAppViewModel @Inject constructor(
         @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
         fun shouldAskForAssociation(
             item: ItemContents.Login,
-            packageName: PackageName,
+            packageInfo: PackageInfo,
             webDomain: String?
-        ): Boolean = when {
-            // If the package name is not a browser and the package name is already associated with the item
-            // do not ask for association
-            !packageName.isBrowser() && item.packageInfoSet.map {
-                it.packageName
-            }.contains(packageName) -> false
+        ): Boolean {
+            val existingAssociation = item.packageInfoSet.firstOrNull { existing ->
+                existing.packageName == packageInfo.packageName
+            }
 
-            // If the package name is not a browser and there is no web domain, ask for association
-            !packageName.isBrowser() && webDomain.isNullOrBlank() -> true
+            return when {
+                !packageInfo.packageName.isBrowser() &&
+                    existingAssociation?.hashes?.any { it in packageInfo.hashes } == true -> false
 
-            // From then on we are sure that there is a webDomain
-            // Check if is already there, and if it is, do not ask for association
-            !webDomain.isNullOrBlank() &&
-                item.urls
-                    .map { it.trimEnd('/') }
-                    .contains(webDomain.trimEnd('/')) -> false
+                !packageInfo.packageName.isBrowser() && existingAssociation != null -> true
 
-            else -> true
+                // If the package name is not a browser and there is no web domain, ask for association
+                !packageInfo.packageName.isBrowser() && webDomain.isNullOrBlank() -> true
+
+                // From then on we are sure that there is a webDomain
+                // Check if is already there, and if it is, do not ask for association
+                !webDomain.isNullOrBlank() &&
+                    item.urls
+                        .map { it.trimEnd('/') }
+                        .contains(webDomain.trimEnd('/')) -> false
+
+                else -> true
+            }
         }
     }
 }

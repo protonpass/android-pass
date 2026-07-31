@@ -39,8 +39,10 @@ import me.proton.core.accountmanager.domain.AccountManager
 import proton.android.pass.autofill.Utils.getWindowNodes
 import proton.android.pass.autofill.entities.AssistInfo
 import proton.android.pass.autofill.entities.AutofillData
+import proton.android.pass.autofill.extensions.BrowserVerification
 import proton.android.pass.autofill.extensions.addSaveInfo
 import proton.android.pass.autofill.extensions.isBrowser
+import proton.android.pass.autofill.extensions.verifyBrowser
 import proton.android.pass.autofill.heuristics.NodeCluster
 import proton.android.pass.autofill.heuristics.NodeClusterer
 import proton.android.pass.autofill.heuristics.NodeExtractor
@@ -57,6 +59,7 @@ import proton.android.pass.domain.entity.PackageInfo
 import proton.android.pass.domain.entity.PackageName
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.preferences.AutofillDisplayPreference
+import proton.android.pass.signingcertificates.SigningCertificateFingerprints
 import proton.android.pass.telemetry.api.TelemetryManager
 
 object AutoFillHandler {
@@ -157,14 +160,22 @@ object AutoFillHandler {
             packageName = applicationPackageName,
             appName = AndroidUtils.getApplicationName(context, applicationPackageName.value).value()
                 ?.let { appName -> AppName(appName) }
-                ?: AppName(applicationPackageName.value)
+                ?: AppName(applicationPackageName.value),
+            hashes = SigningCertificateFingerprints.of(
+                context = context,
+                packageName = applicationPackageName.value
+            )
         )
 
         val hasUrl = assistInfo.url.isNotEmpty()
 
-        val isDangerousAutofill = !applicationPackageName.isBrowser() && hasUrl
+        val browserVerification = packageInfo.verifyBrowser(
+            allowedFingerprints = BrowserSigningCertificateAllowlist.get(context, applicationPackageName.value)
+        )
+        val isDangerousAutofill = browserVerification != BrowserVerification.VERIFIED && hasUrl
+        val isUnverifiedBrowser = browserVerification == BrowserVerification.UNVERIFIED
 
-        val autofillData = AutofillData(assistInfo, packageInfo, isDangerousAutofill)
+        val autofillData = AutofillData(assistInfo, packageInfo, isDangerousAutofill, isUnverifiedBrowser)
         val windowDisplayId = getWindowDisplayId(windowNode)
         PassLogger.i(TAG, "Window displayId: $windowDisplayId")
         val usedInlinePath = autofillDisplayPreference == AutofillDisplayPreference.Inline &&

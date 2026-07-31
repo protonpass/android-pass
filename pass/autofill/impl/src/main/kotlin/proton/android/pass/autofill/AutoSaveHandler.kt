@@ -31,7 +31,8 @@ import proton.android.pass.autofill.entities.SaveItemType
 import proton.android.pass.autofill.extensions.MultiStepUtils
 import proton.android.pass.autofill.extensions.MultiStepUtils.getPasswordFromState
 import proton.android.pass.autofill.extensions.MultiStepUtils.getUsernameFromState
-import proton.android.pass.autofill.extensions.isBrowser
+import proton.android.pass.autofill.extensions.BrowserVerification
+import proton.android.pass.autofill.extensions.verifyBrowser
 import proton.android.pass.autofill.heuristics.NodeExtractor
 import proton.android.pass.autofill.heuristics.findChildById
 import proton.android.pass.autofill.service.R
@@ -43,8 +44,11 @@ import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.SpecialCharacters.DOT_SEPARATOR
 import proton.android.pass.commonui.api.AndroidUtils.getApplicationName
 import proton.android.pass.data.api.url.UrlSanitizer
+import proton.android.pass.domain.entity.AppName
+import proton.android.pass.domain.entity.PackageInfo
 import proton.android.pass.domain.entity.PackageName
 import proton.android.pass.log.api.PassLogger
+import proton.android.pass.signingcertificates.SigningCertificateFingerprints
 
 object AutoSaveHandler {
 
@@ -128,8 +132,9 @@ object AutoSaveHandler {
         val infoUrl = assistInfo.mainUrl()
 
         val packageName = getApplicationPackageName(windowNode)
+        val isVerifiedBrowser = isVerifiedBrowser(context, packageName)
 
-        val itemTitle = getItemTitle(context, packageName, infoUrl)
+        val itemTitle = getItemTitle(context, packageName, infoUrl, isVerifiedBrowser)
 
         val usernameValue: String = usernameField?.autofillValue?.textValue.orEmpty()
         val passwordValue: String = passwordField?.autofillValue?.textValue.orEmpty().let {
@@ -157,7 +162,7 @@ object AutoSaveHandler {
             else -> return
         }
 
-        val linkedAppInfo = if (PackageName(packageName).isBrowser()) {
+        val linkedAppInfo = if (isVerifiedBrowser) {
             null
         } else {
             val appName = getApplicationName(context, packageName).value() ?: ""
@@ -173,11 +178,22 @@ object AutoSaveHandler {
         )
     }
 
+    private fun isVerifiedBrowser(context: Context, packageName: String): Boolean {
+        val packageInfo = PackageInfo(
+            packageName = PackageName(packageName),
+            appName = AppName(""),
+            hashes = SigningCertificateFingerprints.of(context, packageName)
+        )
+        val allowedFingerprints = BrowserSigningCertificateAllowlist.get(context, packageName)
+        return packageInfo.verifyBrowser(allowedFingerprints) == BrowserVerification.VERIFIED
+    }
+
     private fun getItemTitle(
         context: Context,
         packageName: String,
-        url: Option<String>
-    ): String = if (BROWSERS.contains(packageName)) {
+        url: Option<String>,
+        isVerifiedBrowser: Boolean
+    ): String = if (isVerifiedBrowser) {
         when (url) {
             None -> ""
             is Some -> UrlSanitizer.getDomain(url.value).fold(

@@ -43,6 +43,7 @@ import me.proton.core.user.data.db.UserKeyDatabase
 import me.proton.core.userrecovery.data.db.DeviceRecoveryDatabase
 import me.proton.core.usersettings.data.db.OrganizationDatabase
 import me.proton.core.usersettings.data.db.UserSettingsDatabase
+import proton.android.pass.data.impl.db.entities.AssetLinkEntity
 import proton.android.pass.data.impl.db.entities.ItemEntity
 import proton.android.pass.data.impl.db.entities.ShareEntity
 import proton.android.pass.data.impl.db.entities.ShareKeyEntity
@@ -334,6 +335,12 @@ object AppDatabaseMigrations {
     val MIGRATION_76_77 = object : Migration(76, 77) {
         override fun migrate(db: SupportSQLiteDatabase) {
             AccountDatabase.MIGRATION_11.migrate(db)
+        }
+    }
+
+    val MIGRATION_93_94 = object : Migration(93, 94) {
+        override fun migrate(db: SupportSQLiteDatabase) {
+            db.execSQL("DELETE FROM ${AssetLinkEntity.TABLE}")
         }
     }
 }

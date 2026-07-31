@@ -27,12 +27,24 @@ fun ItemV1.Item.hasPackageName(packageName: PackageName): Boolean =
 
 fun ItemV1.Item.with(packageInfo: PackageInfo): ItemV1.Item {
     val allowedApps = platformSpecific.android.allowedAppsList.toMutableList()
-    allowedApps.add(
-        ItemV1.AllowedAndroidApp.newBuilder()
+    val existingIndex = allowedApps.indexOfFirst { it.packageName == packageInfo.packageName.value }
+    val existingApp = allowedApps.getOrNull(existingIndex)
+    val updatedApp = existingApp
+        ?.toBuilder()
+        ?.clearHashes()
+        ?.addAllHashes((existingApp.hashesList + packageInfo.hashes).distinct())
+        ?.build()
+        ?: ItemV1.AllowedAndroidApp.newBuilder()
             .setAppName(packageInfo.appName.value)
             .setPackageName(packageInfo.packageName.value)
+            .addAllHashes(packageInfo.hashes)
             .build()
-    )
+
+    if (existingIndex == -1) {
+        allowedApps.add(updatedApp)
+    } else {
+        allowedApps[existingIndex] = updatedApp
+    }
 
     return this.toBuilder()
         .setPlatformSpecific(

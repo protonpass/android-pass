@@ -16,7 +16,7 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.credentials.shared.passkeys.search
+package proton.android.pass.browserallowlist.impl
 
 import android.content.Context
 import dagger.Binds
@@ -24,12 +24,8 @@ import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import dagger.hilt.android.qualifiers.ApplicationContext
-import proton.android.pass.features.credentials.R
+import proton.android.pass.browserallowlist.api.PrivilegedBrowserAllowlistProvider
 import javax.inject.Inject
-
-internal interface PrivilegedBrowserAllowlistProvider {
-    val json: String
-}
 
 internal class ResourcePrivilegedBrowserAllowlistProvider @Inject constructor(
     @param:ApplicationContext private val context: Context
@@ -50,6 +46,9 @@ internal class ResourcePrivilegedBrowserAllowlistProvider @Inject constructor(
         // Refresh via scripts/ci/checkPasskeyPrivilegedBrowserAllowlist.sh, which strips
         // publicly-known AOSP test keys (their private keys are public, so any app
         // could forge them). PasskeyOriginVerifierTest fails the build if one slips in.
+        //
+        // Every autofill/passkey consumer of "is this a known browser" reads this single
+        // file, so a rotated signing key only needs updating in one place.
     }
 }
 

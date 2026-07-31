@@ -31,5 +31,6 @@ value class AppName(val value: String)
 @Serializable
 data class PackageInfo(
     val packageName: PackageName,
-    val appName: AppName
+    val appName: AppName,
+    val hashes: Set<String> = emptySet()
 )

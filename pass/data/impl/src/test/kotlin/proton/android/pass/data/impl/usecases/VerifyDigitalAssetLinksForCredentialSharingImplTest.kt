@@ -26,6 +26,8 @@ import okhttp3.mockwebserver.MockWebServer
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
+import proton.android.pass.common.fakes.FakeAppDispatchers
+import proton.android.pass.network.fakes.FakeNetworkRestrictionDiagnostics
 
 class VerifyDigitalAssetLinksForCredentialSharingImplTest {
 
@@ -45,7 +47,11 @@ class VerifyDigitalAssetLinksForCredentialSharingImplTest {
         val client = OkHttpClient.Builder()
             .retryOnConnectionFailure(false)
             .build()
-        verifier = VerifyDigitalAssetLinksForCredentialSharingImpl(client)
+        verifier = VerifyDigitalAssetLinksForCredentialSharingImpl(
+            client,
+            FakeNetworkRestrictionDiagnostics(),
+            FakeAppDispatchers()
+        )
     }
 
     @After

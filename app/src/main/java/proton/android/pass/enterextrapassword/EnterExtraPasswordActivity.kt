@@ -24,14 +24,18 @@ import androidx.compose.runtime.getValue
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dagger.hilt.android.AndroidEntryPoint
+import dagger.hilt.android.EntryPointAccessors
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.runBlocking
 import me.proton.core.domain.entity.UserId
+import proton.android.pass.autofill.di.UserPreferenceEntryPoint
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.enableEdgeToEdgeProtonPass
+import proton.android.pass.commonui.api.setSecureMode
 import proton.android.pass.composecomponents.impl.theme.isDark
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.SnackbarDispatcher
+import proton.android.pass.preferences.AllowScreenshotsPreference
 import proton.android.pass.preferences.ThemePreference
 import proton.android.pass.preferences.UserPreferencesRepository
 import proton.android.pass.ui.AppNavigation
@@ -47,6 +51,7 @@ class EnterExtraPasswordActivity : FragmentActivity() {
     lateinit var snackbarDispatcher: SnackbarDispatcher
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        setSecureMode()
         super.onCreate(savedInstanceState)
 
         enableEdgeToEdgeProtonPass()
@@ -85,6 +90,20 @@ class EnterExtraPasswordActivity : FragmentActivity() {
         snackbarDispatcher.reset()
         setResult(if (success) RESULT_OK else RESULT_CANCELED)
         finish()
+    }
+
+    private fun setSecureMode() {
+        val factory = EntryPointAccessors.fromApplication(
+            context = this,
+            entryPoint = UserPreferenceEntryPoint::class.java
+        )
+        val repository = factory.getRepository()
+        val setting = runBlocking {
+            repository.getAllowScreenshotsPreference()
+                .firstOrNull()
+                ?: AllowScreenshotsPreference.Disabled
+        }
+        setSecureMode(setting)
     }
 
     companion object {

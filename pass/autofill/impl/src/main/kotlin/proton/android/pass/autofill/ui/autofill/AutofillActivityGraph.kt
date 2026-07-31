@@ -237,9 +237,9 @@ internal fun NavGraphBuilder.autofillActivityGraph(
             url = autofillAppState.autofillData.assistInfo.url.value(),
             aliasItemFormState = null,
 
-            // Only pass PackageInfoUi if the packageName is not a browser
+            // Only pass PackageInfoUi if the packageName is not a verified browser
             packageInfoUi = autofillAppState.autofillData.packageInfo
-                .takeIf { !it.packageName.isBrowser() }
+                .takeIf { !it.packageName.isBrowser() || autofillAppState.autofillData.isUnverifiedBrowser }
                 ?.let { PackageInfoUi(it) }
         ),
         canUseAttachments = false,

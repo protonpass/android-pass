@@ -38,6 +38,9 @@ abstract class AssetLinkDao : BaseDao<AssetLinkEntity>() {
     @Query("DELETE FROM ${AssetLinkEntity.TABLE} WHERE ${AssetLinkEntity.Columns.CREATED_AT} < :date")
     abstract suspend fun purgeOlderThan(date: Instant)
 
+    @Query("DELETE FROM ${AssetLinkEntity.TABLE} WHERE ${AssetLinkEntity.Columns.WEBSITE} = :website")
+    abstract suspend fun deleteByWebsite(website: String)
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     abstract suspend fun insertOrIgnore(entity: AssetLinkEntity)
 
@@ -46,6 +49,12 @@ abstract class AssetLinkDao : BaseDao<AssetLinkEntity>() {
         list.forEach { entity ->
             insertOrIgnore(entity)
         }
+    }
+
+    @Transaction
+    open suspend fun replaceAssetLinks(website: String, list: List<AssetLinkEntity>) {
+        deleteByWebsite(website)
+        insertAssetLinks(list)
     }
 
     @Query(

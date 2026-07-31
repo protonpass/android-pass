@@ -95,6 +95,7 @@ dependencies {
         exclude(module = "upsell")
     }
     implementation(projects.pass.biometry.fakes)
+    implementation(projects.pass.browserAllowlist.impl)
     implementation(projects.pass.clipboard.fakes)
     implementation(projects.pass.common.fakes)
     implementation(projects.pass.commonRust.fakes)

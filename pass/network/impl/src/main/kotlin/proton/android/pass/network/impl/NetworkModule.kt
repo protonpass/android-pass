@@ -37,6 +37,7 @@ import okhttp3.HttpUrl
 import okhttp3.HttpUrl.Companion.toHttpUrl
 import proton.android.pass.appconfig.api.AppConfig
 import proton.android.pass.network.api.NetworkMonitor
+import proton.android.pass.network.api.NetworkRestrictionDiagnostics
 import javax.inject.Singleton
 
 @Module
@@ -81,6 +82,11 @@ abstract class NetworkBindModule {
 
     @Binds
     abstract fun bindNetworkMonitor(impl: NetworkMonitorImpl): NetworkMonitor
+
+    @Binds
+    abstract fun bindNetworkRestrictionDiagnostics(
+        impl: NetworkRestrictionDiagnosticsImpl
+    ): NetworkRestrictionDiagnostics
 
     @Binds
     abstract fun bindApiClient(apiClient: PassApiClient): ApiClient

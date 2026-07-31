@@ -31,20 +31,42 @@ import proton.android.pass.domain.entity.PackageName
 class ShouldAskForAssociationTest {
 
     @Test
-    fun `should not ask for association if package name is already present`() {
+    fun `should ask for association if existing package association has no signing hashes`() {
         val res = shouldAskForAssociation(
-            item = itemContent(packageName = appPackageName),
-            packageName = appPackageName,
+            item = itemContent(packageInfo = legacyAppPackageInfo),
+            packageInfo = appPackageInfo,
+            webDomain = null
+        )
+        assertThat(res).isTrue()
+    }
+
+    @Test
+    fun `should not ask for association if existing package association has a matching signing hash`() {
+        val res = shouldAskForAssociation(
+            item = itemContent(packageInfo = appPackageInfo),
+            packageInfo = appPackageInfo,
             webDomain = null
         )
         assertThat(res).isFalse()
     }
 
     @Test
+    fun `should ask for association if existing package association has no matching signing hash`() {
+        val res = shouldAskForAssociation(
+            item = itemContent(
+                packageInfo = appPackageInfo.copy(hashes = setOf("old-certificate"))
+            ),
+            packageInfo = appPackageInfo,
+            webDomain = "some.url"
+        )
+        assertThat(res).isTrue()
+    }
+
+    @Test
     fun `should not ask for association if url is already present`() {
         val res = shouldAskForAssociation(
             item = itemContent(url = "some.url"),
-            packageName = appPackageName,
+            packageInfo = appPackageInfo,
             webDomain = "some.url"
         )
         assertThat(res).isFalse()
@@ -54,7 +76,7 @@ class ShouldAskForAssociationTest {
     fun `should ask for association if package name is not browser and url is empty`() {
         val res = shouldAskForAssociation(
             item = itemContent(),
-            packageName = appPackageName,
+            packageInfo = appPackageInfo,
             webDomain = null
         )
         assertThat(res).isTrue()
@@ -64,7 +86,7 @@ class ShouldAskForAssociationTest {
     fun `should ask for association if package name is not browser and url is not empty`() {
         val res = shouldAskForAssociation(
             item = itemContent(),
-            packageName = appPackageName,
+            packageInfo = appPackageInfo,
             webDomain = "some.domain"
         )
         assertThat(res).isTrue()
@@ -74,13 +96,13 @@ class ShouldAskForAssociationTest {
     fun `should ask for association if package name is browser and url is not empty`() {
         val res = shouldAskForAssociation(
             item = itemContent(),
-            packageName = browserPackageName,
+            packageInfo = browserPackageInfo,
             webDomain = "some.domain"
         )
         assertThat(res).isTrue()
     }
 
-    private fun itemContent(url: String? = null, packageName: PackageName? = null): ItemContents.Login =
+    private fun itemContent(url: String? = null, packageInfo: PackageInfo? = null): ItemContents.Login =
         ItemContents.Login(
             title = "title",
             note = "note",
@@ -90,9 +112,7 @@ class ShouldAskForAssociationTest {
             urls = mutableListOf<String>().apply { url?.let { add(it) } },
             customFields = emptyList(),
             packageInfoSet = mutableSetOf<PackageInfo>().apply {
-                packageName?.let {
-                    add(PackageInfo(it, AppName("app name")))
-                }
+                packageInfo?.let(::add)
             },
             primaryTotp = HiddenState.Empty(FakeEncryptionContext.encrypt("")),
             passkeys = emptyList(),
@@ -102,6 +122,16 @@ class ShouldAskForAssociationTest {
     companion object {
         private val browserPackageName = PackageName("com.android.chrome")
         private val appPackageName = PackageName("some.other.app")
+        private val appPackageInfo = PackageInfo(
+            packageName = appPackageName,
+            appName = AppName("app name"),
+            hashes = setOf("certificate")
+        )
+        private val legacyAppPackageInfo = appPackageInfo.copy(hashes = emptySet())
+        private val browserPackageInfo = PackageInfo(
+            packageName = browserPackageName,
+            appName = AppName("Chrome")
+        )
     }
 
 }

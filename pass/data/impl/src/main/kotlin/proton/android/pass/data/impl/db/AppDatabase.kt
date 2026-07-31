@@ -303,7 +303,7 @@ abstract class AppDatabase :
 
     companion object {
         private const val TAG = "AppDatabase"
-        const val VERSION = 93
+        const val VERSION = 94
 
         const val DB_NAME = "db-passkey"
 
@@ -334,7 +334,8 @@ abstract class AppDatabase :
             AppDatabaseMigrations.MIGRATION_58_59,
             AppDatabaseMigrations.MIGRATION_74_75,
             AppDatabaseMigrations.MIGRATION_75_76,
-            AppDatabaseMigrations.MIGRATION_76_77
+            AppDatabaseMigrations.MIGRATION_76_77,
+            AppDatabaseMigrations.MIGRATION_93_94
         )
 
         fun buildDatabase(context: Context): AppDatabase = databaseBuilder<AppDatabase>(context, DB_NAME)

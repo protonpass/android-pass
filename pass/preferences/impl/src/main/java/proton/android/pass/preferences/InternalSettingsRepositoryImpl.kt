@@ -319,6 +319,21 @@ class InternalSettingsRepositoryImpl @Inject constructor(
             .catch { emit(0L) }
             .first()
 
+    override fun addTrustedAutofillPackage(packageName: String, fingerprints: Set<String>): Result<Unit> =
+        setPreference {
+            it.putTrustedAutofillPackageFingerprints(packageName, fingerprints.sorted().joinToString(","))
+        }
+
+    override fun removeTrustedAutofillPackage(packageName: String): Result<Unit> = setPreference {
+        it.removeTrustedAutofillPackageFingerprints(packageName)
+    }
+
+    override fun getTrustedAutofillPackages(): Flow<Map<String, Set<String>>> = getPreference {
+        it.trustedAutofillPackageFingerprintsMap.mapValues { (_, value) ->
+            value.split(",").filter { fingerprint -> fingerprint.isNotBlank() }.toSet()
+        }
+    }
+
     private fun setPreference(mapper: (InternalSettings.Builder) -> InternalSettings.Builder): Result<Unit> =
         runCatching {
             runBlocking(Dispatchers.IO) {

@@ -50,7 +50,6 @@ import proton.android.pass.common.api.transpose
 import proton.android.pass.crypto.api.Base64
 import proton.android.pass.crypto.api.context.EncryptionContext
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
-import proton.android.pass.data.impl.extensions.isDomainMatchingEnabled
 import proton.android.pass.crypto.api.usecases.CreateItem
 import proton.android.pass.crypto.api.usecases.ItemKeyWithRotation
 import proton.android.pass.crypto.api.usecases.MigrateItem
@@ -63,18 +62,18 @@ import proton.android.pass.data.api.errors.ItemNotFoundError
 import proton.android.pass.data.api.repositories.ItemRepository
 import proton.android.pass.data.api.repositories.ItemRevision
 import proton.android.pass.data.api.repositories.MigrateItemsResult
-import proton.android.pass.data.api.repositories.SearchIndexRepository
 import proton.android.pass.data.api.repositories.PinItemsResult
+import proton.android.pass.data.api.repositories.SearchIndexRepository
+import proton.android.pass.data.api.repositories.SetShareItemsResult
 import proton.android.pass.data.api.repositories.ShareItemCount
 import proton.android.pass.data.api.repositories.ShareRepository
-import proton.android.pass.data.api.repositories.SetShareItemsResult
 import proton.android.pass.data.api.repositories.VaultProgress
 import proton.android.pass.data.api.usecases.ItemTypeFilter
 import proton.android.pass.data.impl.db.PassDatabase
 import proton.android.pass.data.impl.db.entities.ItemEntity
-import proton.android.pass.data.impl.extensions.hasPackageName
 import proton.android.pass.data.impl.extensions.hasTotp
 import proton.android.pass.data.impl.extensions.hasWebsite
+import proton.android.pass.data.impl.extensions.isDomainMatchingEnabled
 import proton.android.pass.data.impl.extensions.toCrypto
 import proton.android.pass.data.impl.extensions.toDomain
 import proton.android.pass.data.impl.extensions.toEncryptedDomain
@@ -1895,16 +1894,17 @@ class ItemRepositoryImpl @Inject constructor(
         val itemContentsWithPackageName = when (packageInfoOption) {
             None -> itemProto
             is Some -> {
-                if (itemProto.hasPackageName(packageInfoOption.value.packageName)) {
+                val updatedItem = itemProto.with(packageInfoOption.value)
+                if (updatedItem == itemProto) {
                     PassLogger.i(
                         TAG,
-                        "Item already has this package name " +
-                            "[shareId=${item.shareId}] [itemId=${item.id}] [packageName=$packageInfoOption]"
+                        "Item already has this package association " +
+                            "[shareId=${item.shareId}] [itemId=${item.id}]"
                     )
                     itemProto
                 } else {
                     needsToUpdate = true
-                    itemProto.with(packageInfoOption.value)
+                    updatedItem
                 }
             }
         }

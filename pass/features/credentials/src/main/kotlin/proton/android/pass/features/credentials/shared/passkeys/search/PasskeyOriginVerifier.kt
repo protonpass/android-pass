@@ -21,11 +21,11 @@ package proton.android.pass.features.credentials.shared.passkeys.search
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.credentials.provider.CallingAppInfo
-import proton.android.pass.crypto.api.Base64
+import proton.android.pass.browserallowlist.api.PrivilegedBrowserAllowlistProvider
 import proton.android.pass.data.api.usecases.VerifyDigitalAssetLinksForCredentialSharing
 import proton.android.pass.common.api.toLogToken
 import proton.android.pass.log.api.PassLogger
-import java.security.MessageDigest
+import proton.android.pass.signingcertificates.SigningCertificateFingerprints
 import javax.inject.Inject
 
 @RequiresApi(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
@@ -96,13 +96,12 @@ internal class PasskeyOriginVerifier @Inject constructor(
     ): String? {
         val packageName = callingAppInfo.packageName
 
-        val signingKeyHash = getSigningKeyHash(callingAppInfo)
-        if (signingKeyHash == null) {
+        if (!SigningCertificateFingerprints.hasSingleSigner(callingAppInfo.signingInfo)) {
             PassLogger.w(TAG, "Rejecting passkey request: unable to determine signing key caller=$callerToken")
             return null
         }
 
-        val certificateFingerprints = getSigningCertificateFingerprints(callingAppInfo)
+        val certificateFingerprints = SigningCertificateFingerprints.of(callingAppInfo.signingInfo)
         val isAuthorized = verifyDigitalAssetLinksForCredentialSharing(
             website = "https://$requestedRpId",
             packageName = packageName,
@@ -125,39 +124,6 @@ internal class PasskeyOriginVerifier @Inject constructor(
         private val rpIdRegex = Regex("^[a-zA-Z0-9]([a-zA-Z0-9._-]*[a-zA-Z0-9])?$")
 
         internal fun isValidRpId(rpId: String): Boolean = rpIdRegex.matches(rpId)
-
-        internal fun getSigningKeyHash(callingAppInfo: CallingAppInfo): String? {
-            val signingInfo = callingAppInfo.signingInfo
-            val signers = signingInfo.apkContentsSigners.map { signer -> signer.toByteArray() }
-            return getSigningKeyHash(
-                signingCertificateBytes = signers,
-                hasMultipleSigners = signingInfo.hasMultipleSigners()
-            )
-        }
-
-        internal fun getSigningKeyHash(signingCertificateBytes: List<ByteArray>, hasMultipleSigners: Boolean): String? {
-            if (hasMultipleSigners) return null
-            val certBytes = signingCertificateBytes.singleOrNull() ?: return null
-            val digest = MessageDigest.getInstance("SHA-256").digest(certBytes)
-            return Base64.encodeBase64String(digest, Base64.Mode.UrlSafe)
-        }
-
-        internal fun getSigningCertificateFingerprints(callingAppInfo: CallingAppInfo): Set<String> {
-            val signingInfo = callingAppInfo.signingInfo
-            val signers = if (signingInfo.hasMultipleSigners()) {
-                signingInfo.apkContentsSigners.toList()
-            } else {
-                signingInfo.signingCertificateHistory?.toList()
-                    ?: signingInfo.apkContentsSigners.toList()
-            }
-
-            val md = MessageDigest.getInstance("SHA-256")
-            return signers.map { signer ->
-                md.reset()
-                val digest = md.digest(signer.toByteArray())
-                digest.joinToString(":") { byte -> "%02X".format(byte) }
-            }.toSet()
-        }
 
         internal fun extractHost(origin: String): String? = runCatching {
             java.net.URI(origin).host

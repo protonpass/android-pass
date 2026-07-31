@@ -206,11 +206,16 @@ internal fun AutofillAppContent(
 
         showWarningDialog?.let { itemUiModel ->
             ConfirmAutofillDialog(
-                mode = AutofillConfirmMode.DangerousAutofill,
-                onConfirm = {
+                mode = if (autofillAppState.autofillData.isUnverifiedBrowser) {
+                    AutofillConfirmMode.UnverifiedBrowser
+                } else {
+                    AutofillConfirmMode.DangerousAutofill
+                },
+                onConfirm = { rememberChoice ->
                     viewModel.onWarningConfirmed(
                         state = autofillAppState,
-                        item = itemUiModel
+                        item = itemUiModel,
+                        rememberChoice = rememberChoice
                     )
                     showWarningDialog = null
                 },

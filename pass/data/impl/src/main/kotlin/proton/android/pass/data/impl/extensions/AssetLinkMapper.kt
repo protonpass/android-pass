@@ -24,7 +24,10 @@ import proton.android.pass.data.impl.responses.AssetLinkResponse
 import proton.android.pass.domain.assetlink.AssetLink
 
 fun List<AssetLinkResponse>.toDomain(url: String): AssetLink {
-    val packages = this.mapNotNull { response ->
+    val packages = this.filter { response ->
+        response.target.namespace == ANDROID_APP_NAMESPACE &&
+            GET_LOGIN_CREDENTIALS_RELATION in response.relation
+    }.mapNotNull { response ->
         response.target.packageName?.let { packageName ->
             AssetLink.Package(
                 packageName = packageName,
@@ -37,6 +40,9 @@ fun List<AssetLinkResponse>.toDomain(url: String): AssetLink {
         packages = packages.toSet()
     )
 }
+
+private const val ANDROID_APP_NAMESPACE = "android_app"
+private const val GET_LOGIN_CREDENTIALS_RELATION = "delegate_permission/common.get_login_creds"
 
 fun List<AssetLink>.toEntityList(now: Instant): List<AssetLinkEntity> = this.flatMap { assetLink ->
     assetLink.packages.flatMap { pkg ->

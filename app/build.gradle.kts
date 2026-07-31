@@ -428,6 +428,7 @@ dependencies {
     implementation(projects.pass.autofill.impl)
     implementation(projects.pass.biometry.api)
     implementation(projects.pass.biometry.impl)
+    implementation(projects.pass.browserAllowlist.impl)
     implementation(projects.pass.clipboard.impl)
     implementation(projects.pass.common.api)
     implementation(projects.pass.common.impl)

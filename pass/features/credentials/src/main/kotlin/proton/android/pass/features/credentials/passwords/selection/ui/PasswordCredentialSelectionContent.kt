@@ -27,12 +27,14 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.NavHost
 import com.google.accompanist.navigation.material.ExperimentalMaterialNavigationApi
 import kotlinx.coroutines.Job
 import proton.android.pass.commonui.api.onBottomSheetDismissed
+import proton.android.pass.commonui.impl.dialogs.AssociateItemDialog
 import proton.android.pass.composecomponents.impl.bottomsheet.PassModalBottomSheetLayout
 import proton.android.pass.features.auth.AUTH_GRAPH
 import proton.android.pass.features.credentials.passwords.selection.navigation.PasswordCredentialSelectionNavEvent
@@ -40,6 +42,7 @@ import proton.android.pass.features.credentials.passwords.selection.navigation.p
 import proton.android.pass.features.credentials.passwords.selection.presentation.PasswordCredentialSelectionEvent
 import proton.android.pass.features.credentials.passwords.selection.presentation.PasswordCredentialSelectionState
 import proton.android.pass.features.credentials.passwords.selection.presentation.PasswordCredentialSelectionStateEvent
+import proton.android.pass.features.credentials.R
 import proton.android.pass.features.selectitem.navigation.SelectItem
 import proton.android.pass.features.upsell.v2.navigation.UpsellV2NavItem
 import proton.android.pass.features.upsell.v2.navigation.upsellV2NavGraph
@@ -125,5 +128,16 @@ internal fun PasswordCredentialSelectionContent(
                 onNavigateBack = { _ -> appNavigator.navigateBack() }
             )
         }
+    }
+
+    associationCandidate?.let { item ->
+        AssociateItemDialog(
+            title = stringResource(R.string.password_credential_associate_title),
+            message = stringResource(R.string.password_credential_associate_message, item.contents.title),
+            confirmLabel = stringResource(R.string.password_credential_associate_confirm),
+            cancelLabel = stringResource(R.string.password_credential_associate_cancel),
+            onConfirm = { onEvent(PasswordCredentialSelectionEvent.OnAssociationConfirmed) },
+            onCancel = { onEvent(PasswordCredentialSelectionEvent.OnAssociationCancelled) }
+        )
     }
 }

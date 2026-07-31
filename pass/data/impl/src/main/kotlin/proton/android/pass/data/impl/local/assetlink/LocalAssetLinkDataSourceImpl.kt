@@ -29,8 +29,8 @@ class LocalAssetLinkDataSourceImpl @Inject constructor(
     private val database: PassDatabase
 ) : LocalAssetLinkDataSource {
 
-    override suspend fun insertAssetLink(list: List<AssetLinkEntity>) {
-        database.assetLinkDao().insertAssetLinks(list)
+    override suspend fun replaceAssetLinks(website: String, list: List<AssetLinkEntity>) {
+        database.assetLinkDao().replaceAssetLinks(website, list)
     }
 
     override suspend fun purgeAll() {

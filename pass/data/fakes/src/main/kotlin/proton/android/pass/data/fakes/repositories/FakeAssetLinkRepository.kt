@@ -46,6 +46,12 @@ class FakeAssetLinkRepository @Inject constructor() : AssetLinkRepository {
     val purgeOlderThanInvocations = mutableListOf<Instant>()
     var onFetch: suspend (String) -> Unit = {}
 
+    private val configuredAssetLinksByPackage = mutableMapOf<String, List<AssetLink>>()
+
+    fun setAssetLinks(packageName: String, assetLinks: List<AssetLink>) {
+        configuredAssetLinksByPackage[packageName] = assetLinks
+    }
+
     fun setRefreshIgnoredException(value: Throwable) {
         refreshIgnoredException = value
     }
@@ -64,7 +70,10 @@ class FakeAssetLinkRepository @Inject constructor() : AssetLinkRepository {
 
     override suspend fun insert(list: List<AssetLink>) {
         insertInvocations += list
-        fakeData += list
+        list.groupBy(AssetLink::website).forEach { (website, assetLinks) ->
+            fakeData.removeAll { it.website == website }
+            fakeData += assetLinks
+        }
     }
 
     override suspend fun purgeAll() {
@@ -76,5 +85,10 @@ class FakeAssetLinkRepository @Inject constructor() : AssetLinkRepository {
         fakeData.clear()
     }
 
-    override fun observeByPackageName(packageName: String): Flow<List<AssetLink>> = flowOf(fakeData)
+    override fun observeByPackageName(packageName: String): Flow<List<AssetLink>> = flowOf(
+        configuredAssetLinksByPackage[packageName]
+            ?: fakeData.filter { assetLink ->
+                assetLink.packages.any { assetLinkPackage -> assetLinkPackage.packageName == packageName }
+            }
+    )
 }

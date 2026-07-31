@@ -2,7 +2,7 @@
 set -euo pipefail
 
 SOURCE_URL="https://www.gstatic.com/gpm-passkeys-privileged-apps/apps.json"
-TARGET_FILE="pass/features/credentials/src/main/res/raw/passkey_privileged_browsers_allowlist.json"
+TARGET_FILE="pass/browser-allowlist/impl/src/main/res/raw/passkey_privileged_browsers_allowlist.json"
 MODE="${PASSKEY_PRIVILEGED_ALLOWLIST_MODE:-check}"
 
 tmp_file="$(mktemp)"

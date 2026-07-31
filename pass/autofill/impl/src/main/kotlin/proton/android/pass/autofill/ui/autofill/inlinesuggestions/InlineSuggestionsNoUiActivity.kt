@@ -79,7 +79,10 @@ class InlineSuggestionsNoUiActivity : FragmentActivity() {
             PassTheme(isDark = isDark(theme)) {
                 ConfirmAutofillDialog(
                     mode = mode,
-                    onConfirm = { onAutofillSuccess(autofillMappings) },
+                    onConfirm = { rememberChoice ->
+                        viewModel.onDangerousAutofillConfirmed(rememberChoice)
+                        onAutofillSuccess(autofillMappings)
+                    },
                     onClose = { onAutofillError() }
                 )
             }

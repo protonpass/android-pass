@@ -83,10 +83,13 @@ class FakeItemRepository @Inject constructor() : ItemRepository {
     private val itemFlow = testFlow<Item>()
 
     private val migrateItemMemory = mutableListOf<MigrateItemPayload>()
+    private val addPackageAndUrlToItemMemory = mutableListOf<AddPackageAndUrlToItemPayload>()
 
     fun setItem(newItem: Item) {
         item = newItem
     }
+
+    fun getAddPackageAndUrlToItemMemory(): List<AddPackageAndUrlToItemPayload> = addPackageAndUrlToItemMemory.toList()
 
     fun setItemRevisions(newItemRevisions: List<ItemRevision>) {
         itemRevisions = newItemRevisions
@@ -363,7 +366,14 @@ class FakeItemRepository @Inject constructor() : ItemRepository {
         packageInfo: Option<PackageInfo>,
         url: Option<String>
     ): Item {
-        TODO("Not yet implemented")
+        addPackageAndUrlToItemMemory += AddPackageAndUrlToItemPayload(
+            userId = userId,
+            shareId = shareId,
+            itemId = itemId,
+            packageInfo = packageInfo,
+            url = url
+        )
+        return requireNotNull(item) { "Item has not been configured" }
     }
 
     override suspend fun downloadItemsAndObserveProgress(
@@ -503,6 +513,14 @@ class FakeItemRepository @Inject constructor() : ItemRepository {
     ) {
         TODO("Not yet implemented")
     }
+
+    data class AddPackageAndUrlToItemPayload(
+        val userId: UserId,
+        val shareId: ShareId,
+        val itemId: ItemId,
+        val packageInfo: Option<PackageInfo>,
+        val url: Option<String>
+    )
 
     data class MigrateItemPayload(
         val userId: UserId,

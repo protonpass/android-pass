@@ -105,4 +105,8 @@ interface InternalSettingsRepository {
 
     suspend fun setSearchIndexRebuildTime(userId: UserId, time: Long)
     suspend fun getSearchIndexRebuildTime(userId: UserId): Long
+
+    fun addTrustedAutofillPackage(packageName: String, fingerprints: Set<String>): Result<Unit>
+    fun removeTrustedAutofillPackage(packageName: String): Result<Unit>
+    fun getTrustedAutofillPackages(): Flow<Map<String, Set<String>>>
 }

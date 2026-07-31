@@ -67,17 +67,25 @@ internal data class AutofillAppState(
         val packageInfo = autofillData.packageInfo
         val optionUrl = autofillData.assistInfo.url
 
-        if (packageInfo.packageName.isBrowser()) {
+        val isVerifiedBrowser = packageInfo.packageName.isBrowser() && !autofillData.isUnverifiedBrowser
+        if (isVerifiedBrowser) {
             return None to optionUrl
         }
 
-        // We are sure it's not a browser
+        // We are sure it's not a verified browser
         if (optionUrl.value().isNullOrBlank()) {
             return packageInfo.some() to None
         }
 
-        // It's not a browser and we have a url, then the URL takes precedence
-        return None to optionUrl
+        // Check if this is an unverified browser (in browsers list but cert failed to verify)
+        val isUnverifiedBrowser = packageInfo.packageName.isBrowser() && autofillData.isUnverifiedBrowser
+        return if (isUnverifiedBrowser) {
+            // Unverified browser: keep packageInfo, don't trust the URL
+            packageInfo.some() to None
+        } else {
+            // Plain app with URL: trust the URL
+            None to optionUrl
+        }
     }
 
     internal fun isValid(): Boolean = autofillData.assistInfo.cluster != NodeCluster.Empty

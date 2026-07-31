@@ -19,6 +19,7 @@
 package proton.android.pass.features.credentials.passwords.selection.presentation
 
 import androidx.compose.runtime.Immutable
+import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.features.selectitem.navigation.SelectItemState
 import proton.android.pass.preferences.ThemePreference
 
@@ -37,6 +38,7 @@ internal sealed interface PasswordCredentialSelectionState {
         internal val isBiometricAuthRequired: Boolean,
         internal val request: PasswordCredentialSelectionRequest,
         internal val event: PasswordCredentialSelectionStateEvent,
+        internal val associationCandidate: ItemUiModel?,
         internal val supportPayment: Boolean = false,
         internal val canShowWarningReloadApp: Boolean = false
     ) : PasswordCredentialSelectionState {

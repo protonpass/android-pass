@@ -20,6 +20,7 @@ package proton.android.pass.features.credentials.passwords.selection.presentatio
 
 import me.proton.core.crypto.common.keystore.EncryptedString
 import proton.android.pass.data.api.usecases.Suggestion
+import proton.android.pass.features.credentials.shared.passwords.search.PasswordCallerContext
 
 internal sealed interface PasswordCredentialSelectionRequest {
 
@@ -29,7 +30,8 @@ internal sealed interface PasswordCredentialSelectionRequest {
 
     data class Select(
         override val title: String,
-        override val suggestion: Suggestion
+        override val suggestion: Suggestion,
+        internal val callerContext: PasswordCallerContext?
     ) : PasswordCredentialSelectionRequest
 
     data class Use(

@@ -34,6 +34,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.core.view.WindowCompat
 import androidx.credentials.GetCredentialResponse
 import androidx.credentials.PasswordCredential
+import androidx.credentials.provider.CallingAppInfo
 import androidx.credentials.provider.PendingIntentHandler
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.Lifecycle
@@ -57,8 +58,12 @@ import proton.android.pass.domain.entity.PackageName
 import proton.android.pass.features.credentials.passwords.selection.navigation.PasswordCredentialSelectionNavEvent
 import proton.android.pass.features.credentials.passwords.selection.presentation.PasswordCredentialSelectionEvent
 import proton.android.pass.features.credentials.passwords.selection.presentation.PasswordCredentialSelectionRequest
+import proton.android.pass.features.credentials.passwords.selection.presentation.PasswordCredentialSelectionRequestType
+import proton.android.pass.features.credentials.passwords.selection.presentation.dispatch
 import proton.android.pass.features.credentials.passwords.selection.presentation.PasswordCredentialSelectionState
 import proton.android.pass.features.credentials.passwords.selection.presentation.PasswordCredentialSelectionViewModel
+import proton.android.pass.features.credentials.shared.passwords.search.PasswordCallerContext
+import proton.android.pass.features.credentials.shared.passwords.search.PasswordCallerContextResolver
 import proton.android.pass.features.credentials.shared.passwords.domain.PasswordRequestType
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.SnackbarDispatcher
@@ -75,6 +80,9 @@ internal class PasswordCredentialSelectionActivity : FragmentActivity() {
 
     @Inject
     internal lateinit var appConfig: AppConfig
+
+    @Inject
+    internal lateinit var passwordCallerContextResolver: PasswordCallerContextResolver
 
     private val viewModel: PasswordCredentialSelectionViewModel by viewModels()
 
@@ -125,25 +133,7 @@ internal class PasswordCredentialSelectionActivity : FragmentActivity() {
                             onShowWarningReloadAppDialog = { showWarningReloadAppDialog = true }
                         )
                     },
-                    onEvent = { event ->
-                        when (event) {
-                            PasswordCredentialSelectionEvent.OnAuthPerformed -> {
-                                viewModel.onAuthPerformed(request = state.request)
-                            }
-
-                            is PasswordCredentialSelectionEvent.OnItemSelected -> {
-                                viewModel.onItemSelected(itemUiModel = event.itemUiModel)
-                            }
-
-                            PasswordCredentialSelectionEvent.OnSelectScreenShown -> {
-                                viewModel.onScreenShown()
-                            }
-
-                            is PasswordCredentialSelectionEvent.OnEventConsumed -> {
-                                viewModel.onEventConsumed(event = event.event)
-                            }
-                        }
-                    }
+                    onEvent = { event -> onSelectionEvent(event, state) }
                 )
 
                 if (showWarningReloadAppDialog) {
@@ -160,6 +150,37 @@ internal class PasswordCredentialSelectionActivity : FragmentActivity() {
                         }
                     )
                 }
+            }
+        }
+    }
+
+    private fun onSelectionEvent(
+        event: PasswordCredentialSelectionEvent,
+        state: PasswordCredentialSelectionState.Ready
+    ) {
+        when (event) {
+            PasswordCredentialSelectionEvent.OnAuthPerformed -> {
+                viewModel.onAuthPerformed(request = state.request)
+            }
+
+            is PasswordCredentialSelectionEvent.OnItemSelected -> {
+                viewModel.onItemSelected(itemUiModel = event.itemUiModel)
+            }
+
+            PasswordCredentialSelectionEvent.OnAssociationConfirmed -> {
+                viewModel.onAssociationConfirmed()
+            }
+
+            PasswordCredentialSelectionEvent.OnAssociationCancelled -> {
+                viewModel.onAssociationCancelled()
+            }
+
+            PasswordCredentialSelectionEvent.OnSelectScreenShown -> {
+                viewModel.onScreenShown()
+            }
+
+            is PasswordCredentialSelectionEvent.OnEventConsumed -> {
+                viewModel.onEventConsumed(event = event.event)
             }
         }
     }
@@ -202,30 +223,36 @@ internal class PasswordCredentialSelectionActivity : FragmentActivity() {
 
     private fun getPasswordSelectionRequest(): PasswordCredentialSelectionRequest? = intent.extras
         ?.let { extrasBundle ->
-            when (extrasBundle.getString(EXTRAS_REQUEST_TYPE_KEY)) {
-                PasswordRequestType.SelectPassword.name -> {
-                    createPasswordSelectRequest(extrasBundle)
-                }
-
-                PasswordRequestType.UsePassword.name -> {
-                    createPasswordUseRequest(extrasBundle)
-                }
-
-                else -> {
-                    PassLogger.w(TAG, "Unknown Password Credential selection request type")
-                    return null
-                }
-            }
+            PasswordCredentialSelectionRequestType
+                .from(extrasBundle.getString(EXTRAS_REQUEST_TYPE_KEY))
+                .dispatch(
+                    onSelect = { createPasswordSelectRequest(extrasBundle) },
+                    onUse = { createPasswordUseRequest(extrasBundle) },
+                    onUnknown = {
+                        PassLogger.w(TAG, "Unknown Password Credential selection request type")
+                        null
+                    }
+                )
         }
 
     private fun createPasswordSelectRequest(extrasBundle: Bundle): PasswordCredentialSelectionRequest? {
         val suggestion = getSuggestionFromExtras(extrasBundle)
         val title = getTitleFromSuggestion(suggestion)
+        val callerContext = getPasswordCallerContext()
 
         return PasswordCredentialSelectionRequest.Select(
             title = title,
-            suggestion = suggestion
+            suggestion = suggestion,
+            callerContext = callerContext
         )
+    }
+
+    private fun getPasswordCallerContext(): PasswordCallerContext? {
+        val callingAppInfo = extractPasswordCallingAppInfo(intent) ?: run {
+            PassLogger.w(TAG, "Password selection request does not contain BeginGetCredentialRequest")
+            return null
+        }
+        return passwordCallerContextResolver.resolve(callingAppInfo)
     }
 
     private fun createPasswordUseRequest(extrasBundle: Bundle): PasswordCredentialSelectionRequest? {
@@ -330,3 +357,6 @@ internal class PasswordCredentialSelectionActivity : FragmentActivity() {
     }
 
 }
+
+internal fun extractPasswordCallingAppInfo(intent: Intent): CallingAppInfo? =
+    PendingIntentHandler.retrieveBeginGetCredentialRequest(intent)?.callingAppInfo

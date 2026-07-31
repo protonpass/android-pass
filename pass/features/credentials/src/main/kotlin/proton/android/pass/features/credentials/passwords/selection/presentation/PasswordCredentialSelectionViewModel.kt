@@ -27,6 +27,7 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.stateIn
@@ -41,14 +42,23 @@ import proton.android.pass.appconfig.api.AppConfig
 import proton.android.pass.appconfig.api.BuildFlavor.Companion.supportPayment
 import proton.android.pass.biometry.NeedsBiometricAuth
 import proton.android.pass.common.api.None
-import proton.android.pass.common.api.combineN
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.some
 import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
+import proton.android.pass.data.api.repositories.AssetLinkRepository
+import proton.android.pass.data.api.repositories.ItemRepository
+import proton.android.pass.data.api.usecases.GetItemById
+import proton.android.pass.data.api.usecases.VerifyDigitalAssetLinksForCredentialSharing
 import proton.android.pass.domain.ItemContents
+import proton.android.pass.domain.entity.AppName
+import proton.android.pass.domain.entity.PackageInfo
+import proton.android.pass.domain.entity.PackageName
 import proton.android.pass.features.credentials.R
+import proton.android.pass.features.credentials.shared.passwords.search.PasswordCallerContext
+import proton.android.pass.features.credentials.shared.passwords.search.PasswordOriginResolver
+import proton.android.pass.features.credentials.shared.passwords.search.StoredPasswordAppAssociationAuthorizer
 import proton.android.pass.features.credentials.shared.passwords.events.PasswordCredentialsTelemetryEvent
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.ToastManager
@@ -67,7 +77,13 @@ internal class PasswordCredentialSelectionViewModel @Inject constructor(
     private val encryptionContextProvider: EncryptionContextProvider,
     private val toastManager: ToastManager,
     private val internalSettingsRepository: InternalSettingsRepository,
-    private val telemetryManager: TelemetryManager
+    private val telemetryManager: TelemetryManager,
+    private val assetLinkRepository: AssetLinkRepository,
+    private val verifyDigitalAssetLinksForCredentialSharing: VerifyDigitalAssetLinksForCredentialSharing,
+    private val getItemById: GetItemById,
+    private val itemRepository: ItemRepository,
+    private val storedPasswordAppAssociationAuthorizer: StoredPasswordAppAssociationAuthorizer,
+    private val passwordOriginResolver: PasswordOriginResolver
 ) : ViewModel() {
 
     private val closeScreenFlow = MutableStateFlow<Boolean>(value = false)
@@ -84,6 +100,8 @@ internal class PasswordCredentialSelectionViewModel @Inject constructor(
         value = PasswordCredentialSelectionStateEvent.Idle
     )
 
+    private val associationCandidateFlow = MutableStateFlow<ItemUiModel?>(null)
+
     private val paymentStateFlow = combine(
         flowOf(appConfig.flavor.supportPayment()),
         internalSettingsRepository.hasShownReloadAppWarning()
@@ -91,17 +109,25 @@ internal class PasswordCredentialSelectionViewModel @Inject constructor(
         supportsPayment to !hasShownWarning
     }
 
-    internal val stateFlow: StateFlow<PasswordCredentialSelectionState> = combineN(
+    private val eventAssociationAndPaymentFlow = combine(
+        eventFlow,
+        associationCandidateFlow,
+        paymentStateFlow
+    ) { event, candidate, paymentState ->
+        Triple(event, candidate, paymentState)
+    }
+
+    internal val stateFlow: StateFlow<PasswordCredentialSelectionState> = combine(
         closeScreenFlow,
         requestOptionFlow,
         themePreferenceFlow,
         needsBiometricAuth(),
-        eventFlow,
-        paymentStateFlow
-    ) { shouldCloseScreen, requestOption, themePreference, isBiometricAuthRequired, event, paymentState ->
+        eventAssociationAndPaymentFlow
+    ) { shouldCloseScreen, requestOption, themePreference, isBiometricAuthRequired,
+        (event, associationCandidate, paymentState) ->
         val (supportsPayment, canShowWarningReloadApp) = paymentState
         if (shouldCloseScreen) {
-            return@combineN PasswordCredentialSelectionState.Close
+            return@combine PasswordCredentialSelectionState.Close
         }
 
         when (requestOption) {
@@ -114,6 +140,7 @@ internal class PasswordCredentialSelectionViewModel @Inject constructor(
                             isBiometricAuthRequired = isBiometricAuthRequired,
                             request = request,
                             event = event,
+                            associationCandidate = associationCandidate,
                             supportPayment = supportsPayment,
                             canShowWarningReloadApp = canShowWarningReloadApp
                         )
@@ -154,9 +181,133 @@ internal class PasswordCredentialSelectionViewModel @Inject constructor(
             return
         }
 
-        onPasswordCredentialSelected(
-            id = loginItemContents.displayValue,
-            encryptedPassword = loginItemContents.password.encrypted
+        val request = (requestOptionFlow.value as? Some)?.value as? PasswordCredentialSelectionRequest.Select ?: run {
+            PassLogger.w(TAG, "Received item selection outside of a Select request")
+            eventFlow.update { PasswordCredentialSelectionStateEvent.Cancel }
+            return
+        }
+
+        viewModelScope.launch {
+            val storedAssociations = runCatching {
+                getItemById(
+                    userId = itemUiModel.userId,
+                    shareId = itemUiModel.shareId,
+                    itemId = itemUiModel.id
+                ).packageInfoSet
+            }.getOrDefault(emptySet())
+            val isAuthorizedForCredentialSharing = isAuthorizedForCredentialSharing(
+                callerContext = request.callerContext,
+                loginUrls = loginItemContents.urls,
+                storedAssociations = storedAssociations
+            )
+
+            if (!isAuthorizedForCredentialSharing) {
+                if (request.callerContext is PasswordCallerContext.Native && loginItemContents.urls.isEmpty()) {
+                    associationCandidateFlow.value = itemUiModel
+                    return@launch
+                }
+                PassLogger.w(TAG, "Selected item is not authorized for credential sharing with calling app")
+                eventFlow.update { PasswordCredentialSelectionStateEvent.Cancel }
+                return@launch
+            }
+
+            onPasswordCredentialSelected(
+                id = loginItemContents.displayValue,
+                encryptedPassword = loginItemContents.password.encrypted
+            )
+        }
+    }
+
+    internal fun onAssociationConfirmed() {
+        val candidate = associationCandidateFlow.value ?: return
+        val request = (requestOptionFlow.value as? Some)?.value as? PasswordCredentialSelectionRequest.Select ?: return
+        val caller = request.callerContext as? PasswordCallerContext.Native ?: return
+        val login = candidate.contents as? ItemContents.Login ?: return
+
+        viewModelScope.launch {
+            val result = runCatching {
+                itemRepository.addPackageAndUrlToItem(
+                    userId = candidate.userId,
+                    shareId = candidate.shareId,
+                    itemId = candidate.id,
+                    packageInfo = PackageInfo(
+                        packageName = PackageName(caller.packageName),
+                        appName = AppName(caller.packageName),
+                        hashes = caller.certificateFingerprints
+                    ).some(),
+                    url = None
+                )
+            }
+            associationCandidateFlow.value = null
+            result.onSuccess {
+                onPasswordCredentialSelected(
+                    id = login.displayValue,
+                    encryptedPassword = login.password.encrypted
+                )
+            }.onFailure {
+                PassLogger.w(TAG, "Unable to save the selected app association")
+                eventFlow.value = PasswordCredentialSelectionStateEvent.Cancel
+            }
+        }
+    }
+
+    internal fun onAssociationCancelled() {
+        associationCandidateFlow.value = null
+        eventFlow.value = PasswordCredentialSelectionStateEvent.Cancel
+    }
+
+    private suspend fun isAuthorizedForCredentialSharing(
+        callerContext: PasswordCallerContext?,
+        loginUrls: List<String>,
+        storedAssociations: Set<PackageInfo>
+    ): Boolean = when (callerContext) {
+        is PasswordCallerContext.Browser -> loginUrls.isEmpty() || loginUrls
+            .mapNotNull(passwordOriginResolver::canonicalizeLoginUrl)
+            .any { it == callerContext.origin }
+
+        is PasswordCallerContext.Native -> isNativeCallerAuthorized(
+            callerContext = callerContext,
+            loginUrls = loginUrls,
+            storedAssociations = storedAssociations
+        )
+
+        null -> false
+    }
+
+    private suspend fun isNativeCallerAuthorized(
+        callerContext: PasswordCallerContext.Native,
+        loginUrls: List<String>,
+        storedAssociations: Set<PackageInfo>
+    ): Boolean {
+        val loginOrigins = loginUrls
+            .mapNotNull(passwordOriginResolver::canonicalizeLoginUrl)
+            .distinct()
+
+        return storedPasswordAppAssociationAuthorizer(callerContext, storedAssociations) ||
+            loginOrigins.takeIf(List<String>::isNotEmpty)?.let { origins ->
+                hasCachedAssociation(callerContext.packageName, origins) ||
+                    hasLiveDigitalAssetLinkAssociation(callerContext, origins)
+            } == true
+    }
+
+    private suspend fun hasCachedAssociation(packageName: String, loginOrigins: List<String>): Boolean {
+        val cachedOrigins = assetLinkRepository
+            .observeByPackageName(packageName)
+            .first()
+            .mapNotNull { assetLink -> passwordOriginResolver.canonicalizeLoginUrl(assetLink.website) }
+            .toSet()
+
+        return loginOrigins.any { it in cachedOrigins }
+    }
+
+    private suspend fun hasLiveDigitalAssetLinkAssociation(
+        callerContext: PasswordCallerContext.Native,
+        loginOrigins: List<String>
+    ): Boolean = loginOrigins.any { origin ->
+        verifyDigitalAssetLinksForCredentialSharing(
+            website = origin,
+            packageName = callerContext.packageName,
+            certificateFingerprints = callerContext.certificateFingerprints
         )
     }
 

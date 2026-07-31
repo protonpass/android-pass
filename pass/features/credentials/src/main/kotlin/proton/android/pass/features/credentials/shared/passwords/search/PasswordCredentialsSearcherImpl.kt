@@ -47,7 +47,10 @@ internal class PasswordCredentialsSearcherImpl @Inject constructor(
     private val packageNameUrlSuggestionAdapter: PackageNameUrlSuggestionAdapter,
     private val getPasswordCredentialItems: GetPasswordCredentialItems,
     private val needsBiometricAuth: NeedsBiometricAuth,
-    private val telemetryManager: TelemetryManager
+    private val telemetryManager: TelemetryManager,
+    private val cachedWebsiteResolver: CachedWebsiteResolver,
+    private val passwordCallerContextResolver: PasswordCallerContextResolver,
+    private val passwordDirectSuggestionResolver: PasswordDirectSuggestionResolver
 ) : PasswordCredentialsSearcher {
 
     private val requestCodes = mutableSetOf<Int>()
@@ -68,12 +71,16 @@ internal class PasswordCredentialsSearcherImpl @Inject constructor(
         option: BeginGetPasswordOption
     ): Pair<List<PasswordCredentialEntry>, Action>? {
         val callingPackageName = callingAppInfo?.packageName.orEmpty()
-
-        val url = assetLinkRepository.observeByPackageName(callingPackageName)
-            .first()
-            .firstOrNull()
-            ?.website
-            .orEmpty()
+        val callerContext = callingAppInfo?.let(passwordCallerContextResolver::resolve)
+        val url = passwordDirectSuggestionResolver.resolve(
+            callerContext = callerContext,
+            isBrowserOriginPresent = callingAppInfo?.isOriginPopulated() == true,
+            cachedWebsite = {
+                cachedWebsiteResolver(
+                    assetLinkRepository.observeByPackageName(callingPackageName).first()
+                )
+            }
+        )
 
         val suggestion = packageNameUrlSuggestionAdapter.adapt(
             packageName = PackageName(value = callingPackageName),
@@ -123,14 +130,19 @@ internal class PasswordCredentialsSearcherImpl @Inject constructor(
         context: Context,
         passwordCredentialItem: PasswordCredentialItem,
         suggestion: Suggestion
-    ) = if (isBiometricAuthRequired) {
-        PasswordCredentialSelectionActivity.createPasswordCredentialIntent(
+    ) = when {
+        suggestion is Suggestion.PackageName -> PasswordCredentialSelectionActivity.createPasswordCredentialIntent(
+            context = context,
+            suggestion = suggestion
+        )
+
+        isBiometricAuthRequired -> PasswordCredentialSelectionActivity.createPasswordCredentialIntent(
             context = context,
             passwordCredentialItem = passwordCredentialItem,
             suggestion = suggestion
         )
-    } else {
-        PasswordCredentialUsageActivity.createPasswordCredentialIntent(
+
+        else -> PasswordCredentialUsageActivity.createPasswordCredentialIntent(
             context = context,
             passwordCredentialItem = passwordCredentialItem
         )

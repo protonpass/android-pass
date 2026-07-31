@@ -26,6 +26,10 @@ internal sealed interface PasswordCredentialSelectionEvent {
 
     data class OnItemSelected(internal val itemUiModel: ItemUiModel) : PasswordCredentialSelectionEvent
 
+    data object OnAssociationConfirmed : PasswordCredentialSelectionEvent
+
+    data object OnAssociationCancelled : PasswordCredentialSelectionEvent
+
     data object OnSelectScreenShown : PasswordCredentialSelectionEvent
 
     @JvmInline

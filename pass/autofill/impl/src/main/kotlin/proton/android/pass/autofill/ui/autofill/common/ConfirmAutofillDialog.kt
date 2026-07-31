@@ -18,11 +18,19 @@
 
 package proton.android.pass.autofill.ui.autofill.common
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.Checkbox
+import androidx.compose.material.CheckboxDefaults
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -40,14 +48,17 @@ import proton.android.pass.composecomponents.impl.R as CompR
 fun ConfirmAutofillDialog(
     modifier: Modifier = Modifier,
     mode: AutofillConfirmMode,
-    onConfirm: () -> Unit,
+    onConfirm: (rememberChoice: Boolean) -> Unit,
     onClose: () -> Unit
 ) {
     val (title, body) = when (mode) {
-        AutofillConfirmMode.DangerousAutofill -> {
+        AutofillConfirmMode.DangerousAutofill ->
             R.string.autofill_confirm_dangerous_title to R.string.autofill_confirm_dangerous_body
-        }
+
+        AutofillConfirmMode.UnverifiedBrowser ->
+            R.string.autofill_confirm_unverified_browser_title to R.string.autofill_confirm_unverified_browser_body
     }
+    val (rememberChoice, onRememberChoiceChanged) = remember { mutableStateOf(false) }
 
     NoPaddingDialog(
         modifier = modifier,
@@ -68,12 +79,36 @@ fun ConfirmAutofillDialog(
                 style = ProtonTheme.typography.defaultUnspecified
             )
 
+            if (mode == AutofillConfirmMode.UnverifiedBrowser) {
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .clickable { onRememberChoiceChanged(!rememberChoice) },
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Checkbox(
+                        colors = CheckboxDefaults.colors(
+                            checkedColor = PassTheme.colors.interactionNormMajor1,
+                            checkmarkColor = PassTheme.colors.textInvert
+                        ),
+                        checked = rememberChoice,
+                        onCheckedChange = onRememberChoiceChanged
+                    )
+                    Text(
+                        text = stringResource(R.string.autofill_confirm_dont_ask_again),
+                        style = ProtonTheme.typography.defaultUnspecified
+                    )
+                }
+            }
+
             DialogCancelConfirmSection(
                 color = PassTheme.colors.interactionNormMajor2,
                 confirmText = stringResource(R.string.autofill_confirm_button),
                 cancelText = stringResource(CompR.string.bottomsheet_cancel_button),
                 onDismiss = onClose,
-                onConfirm = onConfirm
+                onConfirm = {
+                    onConfirm(mode == AutofillConfirmMode.UnverifiedBrowser && rememberChoice)
+                }
             )
         }
     }

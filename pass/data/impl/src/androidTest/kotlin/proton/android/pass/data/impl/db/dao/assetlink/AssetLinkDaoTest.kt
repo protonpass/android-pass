@@ -104,6 +104,45 @@ class AssetLinkDaoTest {
         assertEquals(expectedResults.size, observedResults.size)
         assertContentEquals(expectedResults, observedResults)
     }
+
+    @Test
+    fun testReplaceAssetLinksRemovesStaleRowsForOneWebsiteAndKeepsOtherWebsites() = runTest {
+        val now = getFormattedCurrentTime()
+        val packageName = "com.example.package"
+        val refreshedWebsite = "refreshed.example.com"
+        val otherWebsite = "other.example.com"
+        val staleAssetLink = AssetLinkEntity(refreshedWebsite, packageName, now, "stale-signature")
+        val replacementAssetLink = AssetLinkEntity(refreshedWebsite, packageName, now, "new-signature")
+        val otherAssetLink = AssetLinkEntity(otherWebsite, packageName, now, "other-signature")
+
+        assetLinkDao.insertAssetLinks(listOf(staleAssetLink, otherAssetLink))
+
+        assetLinkDao.replaceAssetLinks(refreshedWebsite, listOf(replacementAssetLink))
+
+        assertEquals(
+            setOf(replacementAssetLink, otherAssetLink),
+            assetLinkDao.observeByPackageName(packageName).first().toSet()
+        )
+    }
+
+    @Test
+    fun testReplaceAssetLinksWithEmptyResultRemovesRowsOnlyForThatWebsite() = runTest {
+        val now = getFormattedCurrentTime()
+        val packageName = "com.example.package"
+        val refreshedWebsite = "refreshed.example.com"
+        val otherWebsite = "other.example.com"
+        val staleAssetLink = AssetLinkEntity(refreshedWebsite, packageName, now, "stale-signature")
+        val otherAssetLink = AssetLinkEntity(otherWebsite, packageName, now, "other-signature")
+
+        assetLinkDao.insertAssetLinks(listOf(staleAssetLink, otherAssetLink))
+
+        assetLinkDao.replaceAssetLinks(refreshedWebsite, emptyList())
+
+        assertContentEquals(
+            listOf(otherAssetLink),
+            assetLinkDao.observeByPackageName(packageName).first()
+        )
+    }
 }
 
 fun getFormattedCurrentTime(): Instant {

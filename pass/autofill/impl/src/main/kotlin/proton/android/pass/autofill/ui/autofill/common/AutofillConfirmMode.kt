@@ -22,5 +22,6 @@ import androidx.compose.runtime.Stable
 
 @Stable
 enum class AutofillConfirmMode {
-    DangerousAutofill
+    DangerousAutofill,
+    UnverifiedBrowser
 }

@@ -83,6 +83,7 @@ object AutoSaveHandler {
         runCatching {
             saveCredentials(
                 context = context,
+                packageName = getApplicationPackageName(request.fillContexts),
                 windowNode = windowNode,
                 usernameField = usernameField,
                 passwordField = passwordField
@@ -124,6 +125,7 @@ object AutoSaveHandler {
 
     private fun saveCredentials(
         context: Context,
+        packageName: String,
         windowNode: AssistStructure.WindowNode,
         usernameField: AssistStructure.ViewNode?,
         passwordField: AssistStructure.ViewNode?
@@ -131,7 +133,6 @@ object AutoSaveHandler {
         val assistInfo = NodeExtractor().extract(windowNode.rootViewNode)
         val infoUrl = assistInfo.mainUrl()
 
-        val packageName = getApplicationPackageName(windowNode)
         val isVerifiedBrowser = isVerifiedBrowser(context, packageName)
 
         val itemTitle = getItemTitle(context, packageName, infoUrl, isVerifiedBrowser)
@@ -223,8 +224,7 @@ object AutoSaveHandler {
     }
 
     private fun logAutosavePackageNames(fillContexts: List<FillContext>) {
-        val windowNodes = getWindowNodes(fillContexts)
-        val packageNames = windowNodes.joinToString(", ") { getApplicationPackageName(it) }
-        PassLogger.i(TAG, "Received autosave request for packageNames [$packageNames]")
+        val packageName = getApplicationPackageName(fillContexts)
+        PassLogger.i(TAG, "Received autosave request for packageName [$packageName]")
     }
 }

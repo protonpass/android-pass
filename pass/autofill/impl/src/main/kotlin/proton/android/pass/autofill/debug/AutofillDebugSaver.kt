@@ -68,7 +68,7 @@ object AutofillDebugSaver {
     suspend fun save(context: Context, request: FillRequest) {
         val windowNode = Utils.getWindowNodes(request.fillContexts).lastOrNull()
         val rootViewNode = windowNode?.rootViewNode ?: return
-        val packageName = Utils.getApplicationPackageName(windowNode)
+        val packageName = Utils.getApplicationPackageName(request.fillContexts)
 
         safeRunCatching {
             val debugEntry = DebugAutofillEntry(

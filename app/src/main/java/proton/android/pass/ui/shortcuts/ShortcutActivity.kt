@@ -18,12 +18,14 @@
 
 package proton.android.pass.ui.shortcuts
 
+import android.app.AlertDialog
 import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.lifecycleScope
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import proton.android.pass.R
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.log.api.ShareLogsUseCase
 import javax.inject.Inject
@@ -40,19 +42,26 @@ class ShortcutActivity : FragmentActivity() {
         val shortcutAction = intent.extras?.getString("shortcutaction")
         PassLogger.i(TAG, "Started from shortcut $shortcutAction")
         when (shortcutAction) {
-            "sharelogs" -> {
-                onShareLogs()
-            }
-
+            "sharelogs" -> confirmShareLogs()
             else -> finish()
         }
+    }
+
+    private fun confirmShareLogs() {
+        AlertDialog.Builder(this)
+            .setTitle(R.string.shortcut_share_logs_confirmation_title)
+            .setMessage(R.string.shortcut_share_logs_confirmation_message)
+            .setPositiveButton(android.R.string.ok) { _, _ -> onShareLogs() }
+            .setNegativeButton(android.R.string.cancel) { _, _ -> finish() }
+            .setOnCancelListener { finish() }
+            .show()
     }
 
     private fun onShareLogs() {
         lifecycleScope.launch {
             shareLogsUseCase(this@ShortcutActivity as Context)
+            finish()
         }
-        finish()
     }
 
     companion object {

@@ -163,7 +163,8 @@ sealed interface IdentityUiState : IdentitySharedStateAccessor {
         }
 
     fun shouldShowVaultSelector(): Boolean = when {
-        this is CreateIdentity && shareUiState is ShareUiState.Success -> shareUiState.vaultList.size > 1
+        this is CreateIdentity && shareUiState is ShareUiState.Success ->
+            shareUiState.vaultList.size > 1 || shareUiState.hasFolders
         else -> false
     }
 

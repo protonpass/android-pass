@@ -23,6 +23,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.flatMapLatest
@@ -37,6 +38,7 @@ import proton.android.pass.common.api.Some
 import proton.android.pass.commonuimodels.api.FolderUiModel
 import proton.android.pass.data.api.usecases.defaultvault.VaultWithFolder
 import proton.android.pass.data.api.usecases.folders.ObserveFolder
+import proton.android.pass.data.api.usecases.folders.ObserveFoldersByParentId
 import proton.android.pass.domain.FolderId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.VaultWithItemCount
@@ -88,6 +90,7 @@ fun getShareUiStateFlow(
     selectedFolderIdFlow: Flow<Option<FolderId>>,
     observeAllVaultsFlow: Flow<LoadingResult<List<VaultWithItemCount>>>,
     observeDefaultVaultFlow: Flow<LoadingResult<Option<VaultWithFolder>>>,
+    observeFoldersByParentId: ObserveFoldersByParentId,
     viewModelScope: CoroutineScope,
     tag: String
 ): StateFlow<ShareUiState> = combine(
@@ -120,6 +123,14 @@ fun getShareUiStateFlow(
         selectedFolderName = selectedFolderName,
         selectedFolderId = selectedFolderIdOption.value()
     )
+}.flatMapLatest { state ->
+    if (state !is ShareUiState.Success) return@flatMapLatest flowOf(state)
+    observeFoldersByParentId(state.currentVault.vault.shareId)
+        .catch { error ->
+            PassLogger.w(tag, error)
+            emit(emptyList())
+        }
+        .map { folders -> state.copy(hasFolders = folders.isNotEmpty()) }
 }.stateIn(
     scope = viewModelScope,
     started = SharingStarted.WhileSubscribed(5000),

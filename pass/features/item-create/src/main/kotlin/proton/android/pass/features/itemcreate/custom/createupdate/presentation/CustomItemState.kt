@@ -58,7 +58,8 @@ sealed interface CustomItemState : ItemSharedProperties {
     ) : CustomItemState {
 
         override val shouldShowVaultSelector: Boolean
-            get() = shareUiState is ShareUiState.Success && shareUiState.vaultList.size > 1
+            get() = shareUiState is ShareUiState.Success &&
+                (shareUiState.vaultList.size > 1 || shareUiState.hasFolders)
 
         override val selectedVault: Option<Vault>
             get() = if (shareUiState is ShareUiState.Success) {

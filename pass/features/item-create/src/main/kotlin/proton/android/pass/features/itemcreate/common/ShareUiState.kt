@@ -28,7 +28,8 @@ sealed class ShareUiState {
     data class Success(
         val vaultList: List<VaultWithItemCount>,
         val currentVault: VaultWithItemCount,
-        val selectedFolder: FolderUiModel? = null
+        val selectedFolder: FolderUiModel? = null,
+        val hasFolders: Boolean = false
     ) : ShareUiState()
 }
 

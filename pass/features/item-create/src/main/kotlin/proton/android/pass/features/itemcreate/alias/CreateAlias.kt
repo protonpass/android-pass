@@ -139,7 +139,7 @@ fun CreateAliasScreen(
         }
 
         is ShareUiState.Success -> Triple(
-            shares.vaultList.size > 1,
+            shares.vaultList.size > 1 || shares.hasFolders,
             shares.currentVault,
             shares.selectedFolder?.name?.takeIf { it.isNotBlank() }
         )

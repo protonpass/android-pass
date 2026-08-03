@@ -53,6 +53,7 @@ import proton.android.pass.data.api.usecases.ObserveVaultsWithItemCount
 import proton.android.pass.data.api.usecases.defaultvault.ObserveDefaultVault
 import proton.android.pass.data.api.usecases.defaultvault.SetDefaultVault
 import proton.android.pass.data.api.usecases.folders.ObserveFolder
+import proton.android.pass.data.api.usecases.folders.ObserveFoldersByParentId
 import proton.android.pass.data.api.usecases.shares.ObserveShare
 import proton.android.pass.domain.FolderId
 import proton.android.pass.domain.ItemId
@@ -93,6 +94,7 @@ class CreateIdentityViewModel @Inject constructor(
     observeVaults: ObserveVaultsWithItemCount,
     observeDefaultVault: ObserveDefaultVault,
     observeFolder: ObserveFolder,
+    private val observeFoldersByParentId: ObserveFoldersByParentId,
     savedStateHandleProvider: SavedStateHandleProvider,
     observeShare: ObserveShare,
     private val canCreateItemsInFolder: CanCreateItemsInFolder,
@@ -169,6 +171,7 @@ class CreateIdentityViewModel @Inject constructor(
         selectedShareIdState = selectedShareIdState,
         observeAllVaultsFlow = observeVaults(includeHidden = true).asLoadingResult(),
         observeDefaultVaultFlow = defaultVaultFlow.asLoadingResult(),
+        observeFoldersByParentId = observeFoldersByParentId,
         viewModelScope = viewModelScope,
         tag = TAG,
         selectedFolderNameFlow = selectedFolderNameFlow,

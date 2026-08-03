@@ -81,7 +81,7 @@ fun ItemDetailsScreen(
                     ContactSection(event.shareId, event.itemId)
                         .also(onNavigated)
                 is AliasDetailEvent.CreateLoginFromAlias ->
-                    OnCreateLoginFromAlias(event.alias, event.shareId)
+                    OnCreateLoginFromAlias(event.alias, event.shareId, event.folderId)
                         .also(onNavigated)
                 DetailEvent.Idle -> {}
             }

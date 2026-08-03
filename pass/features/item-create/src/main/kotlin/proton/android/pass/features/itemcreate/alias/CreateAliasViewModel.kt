@@ -69,6 +69,7 @@ import proton.android.pass.data.api.usecases.attachments.LinkAttachmentsToItem
 import proton.android.pass.data.api.usecases.defaultvault.ObserveDefaultVault
 import proton.android.pass.data.api.usecases.defaultvault.SetDefaultVault
 import proton.android.pass.data.api.usecases.folders.ObserveFolder
+import proton.android.pass.data.api.usecases.folders.ObserveFoldersByParentId
 import proton.android.pass.data.api.usecases.shares.ObserveShare
 import proton.android.pass.domain.AliasOptions
 import proton.android.pass.domain.FolderId
@@ -111,6 +112,7 @@ import javax.inject.Inject
 open class CreateAliasViewModel @Inject constructor(
     private val accountManager: AccountManager,
     private val observeFolder: ObserveFolder,
+    private val observeFoldersByParentId: ObserveFoldersByParentId,
     private val createAlias: CreateAlias,
     private val snackbarDispatcher: SnackbarDispatcher,
     private val telemetryManager: TelemetryManager,
@@ -207,6 +209,7 @@ open class CreateAliasViewModel @Inject constructor(
         navShareIdState = flowOf(navShareId),
         selectedShareIdState = selectedShareIdState,
         observeAllVaultsFlow = observeAllVaultsFlow.asLoadingResult(),
+        observeFoldersByParentId = observeFoldersByParentId,
         viewModelScope = viewModelScope,
         observeDefaultVaultFlow = defaultVaultFlow.asLoadingResult(),
         tag = TAG,

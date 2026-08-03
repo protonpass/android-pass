@@ -40,6 +40,7 @@ import proton.android.pass.data.api.usecases.folders.GetFolderHierarchy
 import proton.android.pass.data.api.usecases.aliascontact.ObserveAliasContacts
 import proton.android.pass.domain.AliasDetails
 import proton.android.pass.domain.aliascontacts.AliasContacts
+import proton.android.pass.domain.FolderId
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.ItemDiffs
@@ -73,44 +74,49 @@ class AliasItemDetailsHandlerObserverImpl @Inject constructor(
     private val isAliasStateTogglingState: MutableStateFlow<IsLoadingState> =
         MutableStateFlow(IsLoadingState.NotLoading)
 
+    private var currentFolderId: FolderId? = null
+
     override fun observe(
         share: Share,
         item: Item,
         attachmentsState: AttachmentsState,
         savedStateEntries: Map<String, Any?>,
         detailEvent: DetailEvent
-    ): Flow<ItemDetailState> = combineN(
-        observeItemContents(item),
-        observeAliasDetails(item.shareId, item.id).onStart { emit(AliasDetails.EMPTY) },
-        observeAliasContacts(item.shareId, item.id).catch { emit(AliasContacts(emptyList(), 0)) },
-        observeCustomFieldTotps(item),
-        observeBreadcrumbs(item),
-        userPreferencesRepository.observeDisplayFeatureDiscoverBanner(AliasManagementContacts),
-        isAliasStateTogglingState
-    ) { aliasItemContents, aliasDetails, aliasContacts, customFieldTotps, breadcrumb, displayContactsBanner,
-        isAliasStateToggling ->
-        ItemDetailState.Alias(
-            itemContents = aliasItemContents,
-            itemId = item.id,
-            shareId = item.shareId,
-            isItemPinned = item.isPinned,
-            itemShare = share,
-            itemCreatedAt = item.createTime,
-            itemModifiedAt = item.modificationTime,
-            itemLastAutofillAtOption = item.lastAutofillTime,
-            isAliasStateToggling = isAliasStateToggling.value(),
-            itemRevision = item.revision,
-            itemState = ItemState.from(item.state),
-            itemDiffs = ItemDiffs.Alias(),
-            itemShareCount = item.shareCount,
-            aliasDetails = aliasDetails,
-            aliasContacts = aliasContacts,
-            attachmentsState = attachmentsState,
-            customFieldTotps = customFieldTotps,
-            breadcrumbs = breadcrumb,
-            displayContactsBanner = displayContactsBanner.value,
-            detailEvent = detailEvent
-        )
+    ): Flow<ItemDetailState> {
+        currentFolderId = item.folderId
+        return combineN(
+            observeItemContents(item),
+            observeAliasDetails(item.shareId, item.id).onStart { emit(AliasDetails.EMPTY) },
+            observeAliasContacts(item.shareId, item.id).catch { emit(AliasContacts(emptyList(), 0)) },
+            observeCustomFieldTotps(item),
+            observeBreadcrumbs(item),
+            userPreferencesRepository.observeDisplayFeatureDiscoverBanner(AliasManagementContacts),
+            isAliasStateTogglingState
+        ) { aliasItemContents, aliasDetails, aliasContacts, customFieldTotps, breadcrumb, displayContactsBanner,
+            isAliasStateToggling ->
+            ItemDetailState.Alias(
+                itemContents = aliasItemContents,
+                itemId = item.id,
+                shareId = item.shareId,
+                isItemPinned = item.isPinned,
+                itemShare = share,
+                itemCreatedAt = item.createTime,
+                itemModifiedAt = item.modificationTime,
+                itemLastAutofillAtOption = item.lastAutofillTime,
+                isAliasStateToggling = isAliasStateToggling.value(),
+                itemRevision = item.revision,
+                itemState = ItemState.from(item.state),
+                itemDiffs = ItemDiffs.Alias(),
+                itemShareCount = item.shareCount,
+                aliasDetails = aliasDetails,
+                aliasContacts = aliasContacts,
+                attachmentsState = attachmentsState,
+                customFieldTotps = customFieldTotps,
+                breadcrumbs = breadcrumb,
+                displayContactsBanner = displayContactsBanner.value,
+                detailEvent = detailEvent
+            )
+        }
     }
 
     override fun updateHiddenFieldsContents(
@@ -166,7 +172,7 @@ class AliasItemDetailsHandlerObserverImpl @Inject constructor(
             }
 
             is ItemDetailsFieldType.AliasItemAction.CreateLoginFromAlias ->
-                callback(CreateLoginFromAlias(fieldType.alias, fieldType.shareId))
+                callback(CreateLoginFromAlias(fieldType.alias, fieldType.shareId, currentFolderId))
             is ItemDetailsFieldType.AliasItemAction.ToggleAlias -> {
                 isAliasStateTogglingState.emit(IsLoadingState.Loading)
                 safeRunCatching { changeAliasStatus(fieldType.shareId, fieldType.itemId, fieldType.value) }

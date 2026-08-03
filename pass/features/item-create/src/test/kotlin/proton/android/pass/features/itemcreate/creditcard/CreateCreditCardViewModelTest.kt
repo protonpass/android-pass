@@ -45,6 +45,7 @@ import proton.android.pass.data.fakes.usecases.FakeObserveVaultsWithItemCount
 import proton.android.pass.data.fakes.usecases.FakeSetDefaultVault
 import proton.android.pass.data.fakes.usecases.attachments.FakeLinkAttachmentsToItem
 import proton.android.pass.data.fakes.usecases.folders.FakeObserveFolder
+import proton.android.pass.data.fakes.usecases.folders.FakeObserveFoldersByParentId
 import proton.android.pass.data.fakes.usecases.shares.FakeObserveShare
 import proton.android.pass.domain.ItemState
 import proton.android.pass.domain.FolderId
@@ -135,7 +136,8 @@ class CreateCreditCardViewModelTest {
             observeShare = observeShare,
             canCreateItemsInFolder = fakeCanCreateItemsInFolder,
             settingsRepository = settingsRepository,
-            observeFolder = FakeObserveFolder()
+            observeFolder = FakeObserveFolder(),
+            observeFoldersByParentId = FakeObserveFoldersByParentId()
         )
     }
 

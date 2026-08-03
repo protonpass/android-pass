@@ -25,6 +25,9 @@ import proton.android.pass.crypto.api.Base64
 import proton.android.pass.crypto.api.EncryptionKey
 import proton.android.pass.crypto.api.context.EncryptionTag
 import proton.android.pass.crypto.api.error.BadTagException
+import java.util.concurrent.CyclicBarrier
+import java.util.concurrent.Executors
+import java.util.concurrent.TimeUnit
 import kotlin.test.assertContentEquals
 import kotlin.test.assertEquals
 
@@ -91,6 +94,40 @@ class EncryptionContextImplTest {
         }
     }
 
+    @Test
+    fun failsIfEncryptedContentIsShorterThanIv() {
+        val context = EncryptionContextImpl(provideKey())
+
+        assertThrows(IllegalArgumentException::class.java) {
+            context.decrypt(EncryptedByteArray(ByteArray(11)))
+        }
+    }
+
+    @Test
+    fun decryptsCorrectlyWhenCalledConcurrentlyFromMultipleThreads() {
+        val context = EncryptionContextImpl(provideKey())
+        val threadCount = 8
+        val encryptedByPlaintext = (0 until threadCount).associate { index ->
+            val plaintext = "concurrent-content-$index"
+            plaintext to context.encrypt(plaintext)
+        }
+
+        val executor = Executors.newFixedThreadPool(threadCount)
+        val barrier = CyclicBarrier(threadCount)
+        try {
+            val results = encryptedByPlaintext.map { (plaintext, encrypted) ->
+                executor.submit<Pair<String, String>> {
+                    barrier.await()
+                    plaintext to context.decrypt(encrypted)
+                }
+            }.map { it.get(10, TimeUnit.SECONDS) }
+
+            results.forEach { (expected, actual) -> assertEquals(expected, actual) }
+        } finally {
+            executor.shutdown()
+        }
+    }
+
     private fun provideKey(): EncryptionKey = EncryptionKey(
         ByteArray(
             32,
@@ -99,4 +136,3 @@ class EncryptionContextImplTest {
     )
 
 }
-

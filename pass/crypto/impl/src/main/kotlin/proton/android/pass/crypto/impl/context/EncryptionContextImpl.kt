@@ -35,22 +35,30 @@ class EncryptionContextImpl(key: EncryptionKey) : EncryptionContext {
 
     private val secretKeySpec = SecretKeySpec(key.value(), ALGORITHM)
 
+    private val cipher: Cipher by lazy {
+        Cipher.getInstance(CIPHER_TRANSFORMATION)
+    }
+
     override fun encrypt(content: String): EncryptedString {
         val encrypted = encrypt(content.encodeToByteArray())
         return Base64.encodeBase64String(encrypted.array)
     }
 
-    override fun encrypt(content: ByteArray, tag: EncryptionTag?): EncryptedByteArray {
-        val cipher = cipherFactory()
+    override fun encrypt(content: ByteArray, tag: EncryptionTag?): EncryptedByteArray = synchronized(cipher) {
         cipher.init(Cipher.ENCRYPT_MODE, secretKeySpec)
 
         tag?.let { cipher.updateAAD(it.value) }
 
-        val cipherByteArray = cipher.doFinal(content)
-        val result = ByteArray(IV_SIZE + cipherByteArray.size)
+        val encryptedSize = cipher.getOutputSize(content.size)
+        val result = ByteArray(IV_SIZE + encryptedSize)
         arraycopy(cipher.iv, 0, result, 0, IV_SIZE)
-        arraycopy(cipherByteArray, 0, result, IV_SIZE, cipherByteArray.size)
-        return EncryptedByteArray(result)
+        val writtenBytes = cipher.doFinal(content, 0, content.size, result, IV_SIZE)
+        val encrypted = if (writtenBytes == encryptedSize) {
+            result
+        } else {
+            result.copyOf(IV_SIZE + writtenBytes)
+        }
+        EncryptedByteArray(encrypted)
     }
 
     override fun decrypt(content: EncryptedString): String {
@@ -60,19 +68,20 @@ class EncryptionContextImpl(key: EncryptionKey) : EncryptionContext {
     }
 
     override fun decrypt(content: EncryptedByteArray, tag: EncryptionTag?): ByteArray {
-        val cipher = cipherFactory()
+        require(content.array.size >= IV_SIZE) { "Encrypted content is shorter than its IV" }
 
         val iv = content.array.copyOfRange(0, IV_SIZE)
-        val cipherByteArray = content.array.copyOfRange(IV_SIZE, content.array.size)
 
-        cipher.init(Cipher.DECRYPT_MODE, secretKeySpec, GCMParameterSpec(CIPHER_GCM_TAG_BITS, iv))
+        return synchronized(cipher) {
+            cipher.init(Cipher.DECRYPT_MODE, secretKeySpec, GCMParameterSpec(CIPHER_GCM_TAG_BITS, iv))
 
-        tag?.let { cipher.updateAAD(it.value) }
-        try {
-            return cipher.doFinal(cipherByteArray)
-        } catch (e: AEADBadTagException) {
-            val tagName = tag?.name ?: "null"
-            throw BadTagException("Bad AEAD Tag when decoding content [tag=$tagName]", e)
+            tag?.let { cipher.updateAAD(it.value) }
+            try {
+                cipher.doFinal(content.array, IV_SIZE, content.array.size - IV_SIZE)
+            } catch (e: AEADBadTagException) {
+                val tagName = tag?.name ?: "null"
+                throw BadTagException("Bad AEAD Tag when decoding content [tag=$tagName]", e)
+            }
         }
     }
 
@@ -81,7 +90,5 @@ class EncryptionContextImpl(key: EncryptionKey) : EncryptionContext {
         private const val CIPHER_TRANSFORMATION = "AES/GCM/NoPadding"
         private const val IV_SIZE = 12
         private const val CIPHER_GCM_TAG_BITS = 128
-
-        private fun cipherFactory(): Cipher = Cipher.getInstance(CIPHER_TRANSFORMATION)
     }
 }

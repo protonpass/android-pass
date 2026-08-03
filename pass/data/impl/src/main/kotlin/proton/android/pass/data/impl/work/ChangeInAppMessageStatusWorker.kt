@@ -29,11 +29,13 @@ import androidx.work.WorkerParameters
 import androidx.work.workDataOf
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
+import kotlinx.coroutines.withContext
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.safeRunCatching
 import proton.android.pass.data.api.usecases.inappmessages.ChangeInAppMessageStatus
 import proton.android.pass.domain.inappmessages.InAppMessageId
 import proton.android.pass.domain.inappmessages.InAppMessageStatus
+import proton.android.pass.log.api.LogAccountContext
 import proton.android.pass.log.api.PassLogger
 
 @HiltWorker
@@ -52,7 +54,9 @@ class ChangeInAppMessageStatusWorker @AssistedInject constructor(
         val status = workerParameters.inputData.getInt(IN_APP_MESSAGE_STATUS_KEY, -1)
             .let { InAppMessageStatus.fromValue(it) }
         if (userId != null && inAppMessageId != null && status != InAppMessageStatus.Unknown) {
-            changeInAppMessageStatus(userId, inAppMessageId, status)
+            withContext(LogAccountContext(userId)) {
+                changeInAppMessageStatus(userId, inAppMessageId, status)
+            }
         } else {
             PassLogger.w(TAG, "Failed to get userId or inAppMessageId")
             return Result.failure()

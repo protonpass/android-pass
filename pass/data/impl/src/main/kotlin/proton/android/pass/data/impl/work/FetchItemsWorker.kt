@@ -36,12 +36,14 @@ import androidx.work.WorkerParameters
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.withContext
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.api.repositories.ShareRepository
 import proton.android.pass.data.api.usecases.sync.ForceSyncItems
 import proton.android.pass.data.api.usecases.sync.ForceSyncResult
 import proton.android.pass.data.impl.R
 import proton.android.pass.domain.ShareId
+import proton.android.pass.log.api.LogAccountContext
 import proton.android.pass.log.api.PassLogger
 import me.proton.core.notification.R as CoreR
 
@@ -57,48 +59,51 @@ open class FetchItemsWorker @AssistedInject constructor(
         PassLogger.i(TAG, "Starting $TAG attempt $runAttemptCount")
 
         val userId = inputData.getString(ARG_USER_ID)?.let(::UserId) ?: return Result.failure()
-        val hasInactiveShares = inputData.getBoolean(ARG_INACTIVE_SHARES, false)
-        val hasInvalidGroupShares = inputData.getBoolean(ARG_INVALID_GROUP_SHARES, false)
-        val origin = inputData.getString(ARG_ORIGIN) ?: UNKNOWN_ORIGIN
 
-        val fetchSource = getFetchSource() ?: return Result.failure()
+        return withContext(LogAccountContext(userId)) {
+            val hasInactiveShares = inputData.getBoolean(ARG_INACTIVE_SHARES, false)
+            val hasInvalidGroupShares = inputData.getBoolean(ARG_INVALID_GROUP_SHARES, false)
+            val origin = inputData.getString(ARG_ORIGIN) ?: UNKNOWN_ORIGIN
 
-        val shareIds: Set<ShareId> = when (fetchSource) {
-            is FetchSource.ForceSync,
-            is FetchSource.FirstSync ->
-                shareRepository.observeAllShares(userId, includeHidden = true)
-                    .first()
-                    .map { it.id }
-                    .toSet()
-            is FetchSource.NewShare -> fetchSource.shareIds
-        }
+            val fetchSource = getFetchSource() ?: return@withContext Result.failure()
 
-        PassLogger.i(
-            TAG,
-            "Fetching items for ${shareIds.size} shares in ${fetchSource::class.simpleName} " +
-                "(origin=$origin)"
-        )
-
-        val res = forceSyncItems(
-            userId = userId,
-            shareIds = shareIds,
-            hasInactiveShares = hasInactiveShares,
-            hasInvalidGroupShares = hasInvalidGroupShares
-        )
-        return when (res) {
-            ForceSyncResult.Error -> {
-                PassLogger.i(TAG, "$TAG finished with errors")
-                Result.retry()
+            val shareIds: Set<ShareId> = when (fetchSource) {
+                is FetchSource.ForceSync,
+                is FetchSource.FirstSync ->
+                    shareRepository.observeAllShares(userId, includeHidden = true)
+                        .first()
+                        .map { it.id }
+                        .toSet()
+                is FetchSource.NewShare -> fetchSource.shareIds
             }
 
-            ForceSyncResult.PartialSuccess -> {
-                PassLogger.w(TAG, "$TAG finished with partial success")
-                Result.success()
-            }
+            PassLogger.i(
+                TAG,
+                "Fetching items for ${shareIds.size} shares in ${fetchSource::class.simpleName} " +
+                    "(origin=$origin)"
+            )
 
-            ForceSyncResult.Success -> {
-                PassLogger.i(TAG, "$TAG finished successfully")
-                Result.success()
+            val res = forceSyncItems(
+                userId = userId,
+                shareIds = shareIds,
+                hasInactiveShares = hasInactiveShares,
+                hasInvalidGroupShares = hasInvalidGroupShares
+            )
+            when (res) {
+                ForceSyncResult.Error -> {
+                    PassLogger.i(TAG, "$TAG finished with errors")
+                    Result.retry()
+                }
+
+                ForceSyncResult.PartialSuccess -> {
+                    PassLogger.w(TAG, "$TAG finished with partial success")
+                    Result.success()
+                }
+
+                ForceSyncResult.Success -> {
+                    PassLogger.i(TAG, "$TAG finished successfully")
+                    Result.success()
+                }
             }
         }
     }

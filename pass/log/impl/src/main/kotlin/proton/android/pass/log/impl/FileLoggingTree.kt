@@ -34,6 +34,7 @@ import kotlinx.datetime.toJavaInstant
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.AppDispatchers
+import proton.android.pass.log.api.LogAccountContext
 import proton.android.pass.log.api.LogFileManager
 import proton.android.pass.log.api.LogoutLogger
 import proton.android.pass.log.api.PrivacySanitizer
@@ -153,7 +154,10 @@ class FileLoggingTree @Inject constructor(
         t: Throwable?
     ) {
         if (priority < Log.INFO) return
-        val target = if (tag == LogoutLogger.TAG) LogTarget.NotAuthenticated else LogTarget.CurrentUser
+        val target = when {
+            tag == LogoutLogger.TAG -> LogTarget.NotAuthenticated
+            else -> LogAccountContext.current()?.let { LogTarget.SpecificUser(it) } ?: LogTarget.CurrentUser
+        }
         enqueue(LogEntry(buildLog(clock.now(), priority, tag, message), target))
     }
 
@@ -250,6 +254,9 @@ class FileLoggingTree @Inject constructor(
         if (target == LogTarget.NotAuthenticated) {
             return logFileManager.getLogFile(null).also { logFileManager.ensureLogFileExists(it) }
         }
+        if (target is LogTarget.SpecificUser) {
+            return logFileManager.getLogFile(target.userId).also { logFileManager.ensureLogFileExists(it) }
+        }
         val initialUserId = accountManager.getPrimaryUserId().firstOrNull()
         val initialFile = logFileManager.getLogFile(initialUserId)
         val (fileUserId, initialEnsuredFile) = ensureCurrentLogFile(initialUserId, initialFile)
@@ -309,9 +316,10 @@ class FileLoggingTree @Inject constructor(
         val target: LogTarget
     )
 
-    private enum class LogTarget {
-        CurrentUser,
-        NotAuthenticated
+    private sealed interface LogTarget {
+        data object CurrentUser : LogTarget
+        data object NotAuthenticated : LogTarget
+        data class SpecificUser(val userId: UserId) : LogTarget
     }
 
     companion object {

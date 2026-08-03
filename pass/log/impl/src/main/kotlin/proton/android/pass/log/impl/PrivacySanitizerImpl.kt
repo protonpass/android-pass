@@ -41,6 +41,12 @@ class PrivacySanitizerImpl @Inject constructor() : PrivacySanitizer {
         option = RegexOption.IGNORE_CASE
     )
 
+    // Match session id values (e.g., SessionId=rnxaf6mwolp4rxyvs773zayu4f3eg62h)
+    private val sessionIdRegex = Regex(
+        pattern = "(SessionId)=(?!null\\b)[^,\\s})]+",
+        option = RegexOption.IGNORE_CASE
+    )
+
     // Match share IDs (88 characters)
     private val shareIdRegex = Regex("[a-zA-Z0-9_=-]{88}")
 
@@ -68,6 +74,11 @@ class PrivacySanitizerImpl @Inject constructor() : PrivacySanitizer {
                 "${matchResult.groupValues[1]}=$DOMAIN_REDACTED"
             }
         }
+        if (sanitized.contains(SESSION_ID_MARKER, ignoreCase = true)) {
+            sanitized = sanitized.replace(sessionIdRegex) { matchResult ->
+                "${matchResult.groupValues[1]}=$SESSION_ID_REDACTED"
+            }
+        }
         if (sanitized.length >= SHARE_ID_LENGTH) {
             sanitized = sanitizeIds(sanitized)
         }
@@ -88,6 +99,8 @@ class PrivacySanitizerImpl @Inject constructor() : PrivacySanitizer {
         private const val TAG = "PrivacySanitizerImpl"
         private const val EMAIL_REDACTED = "[EMAIL_REDACTED]"
         private const val DOMAIN_REDACTED = "[DOMAIN_REDACTED]"
+        private const val SESSION_ID_REDACTED = "[SESSION_ID_REDACTED]"
+        private const val SESSION_ID_MARKER = "SessionId="
         private const val BEARER_TOKEN_PREFIX = "Bearer"
         private const val ENCODED_EMAIL_MARKER = "%40"
         private const val EMAIL_MARKER = "@"

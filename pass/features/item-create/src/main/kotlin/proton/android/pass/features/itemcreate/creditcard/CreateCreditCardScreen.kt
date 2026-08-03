@@ -146,7 +146,7 @@ fun CreateCreditCardScreen(
                 }
 
                 is ShareUiState.Success -> Triple(
-                    first = shares.vaultList.size > 1,
+                    first = shares.vaultList.size > 1 || shares.hasFolders,
                     second = shares.currentVault,
                     third = shares.selectedFolder?.name?.takeIf { it.isNotBlank() }
                 )

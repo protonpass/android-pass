@@ -103,7 +103,8 @@ sealed interface ItemDetailsNavDestination {
 
     data class OnCreateLoginFromAlias(
         val alias: String,
-        val shareId: ShareId
+        val shareId: ShareId,
+        val folderId: FolderId?
     ) : ItemDetailsNavDestination
 
     data class ViewItem(val shareId: ShareId, val itemId: ItemId) : ItemDetailsNavDestination

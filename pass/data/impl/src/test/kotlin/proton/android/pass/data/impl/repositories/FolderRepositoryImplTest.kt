@@ -547,6 +547,64 @@ internal class FolderRepositoryImplTest {
     }
 
     @Test
+    fun `refreshFolders removes locally stored folder that server no longer returns`() = runTest {
+        localFolderDataSource.upsertFolder(
+            folderEntity(
+                folderId = "kept",
+                name = "Kept",
+                parentFolderId = null
+            )
+        )
+        localFolderDataSource.upsertFolder(
+            folderEntity(
+                folderId = "deleted-by-other-member",
+                name = "Deleted",
+                parentFolderId = null
+            )
+        )
+        localShareKeyDataSource.setShareKey(
+            userId = userId,
+            shareId = shareId,
+            rotation = 2,
+            keyBytes = byteArrayOf(21)
+        )
+        remoteFolderDataSource.retrieveFoldersResponses.add(
+            RemoteFolderDataSource.FoldersPage(
+                folders = listOf(
+                    FolderApiModelTestFactory.create(folderId = "kept", parentFolderId = null, keyRotation = 2)
+                ),
+                lastToken = null
+            )
+        )
+        openFolder.setOutput("kept", "Kept", encryptedBytes(31))
+
+        repository.refreshFolders(userId, shareId)
+
+        assertThat(localFolderDataSource.memory.map { it.id }).containsExactly("kept")
+    }
+
+    @Test
+    fun `refreshFolders removes all locally stored folders when server returns none`() = runTest {
+        localFolderDataSource.upsertFolder(
+            folderEntity(
+                folderId = "deleted-by-other-member",
+                name = "Deleted",
+                parentFolderId = null
+            )
+        )
+        remoteFolderDataSource.retrieveFoldersResponses.add(
+            RemoteFolderDataSource.FoldersPage(
+                folders = emptyList(),
+                lastToken = null
+            )
+        )
+
+        repository.refreshFolders(userId, shareId)
+
+        assertThat(localFolderDataSource.memory).isEmpty()
+    }
+
+    @Test
     fun `updateFolder successfully updates folder name`() = runTest {
         // Setup share key for root folder
         localShareKeyDataSource.setShareKey(

@@ -719,7 +719,9 @@ fun NavGraphBuilder.appGraph(
                 VaultNavigation.CloseScreen -> appNavigator.navigateBack()
                 VaultNavigation.DismissBottomsheet -> dismissBottomSheet {}
 
-                VaultNavigation.Upgrade -> onNavigate(AppNavigation.Upgrade)
+                VaultNavigation.Upgrade -> dismissBottomSheet {
+                    onNavigate(AppNavigation.Upgrade)
+                }
                 is VaultNavigation.VaultSelected -> dismissBottomSheet {
                     appNavigator.setResult(mapOf(KEY_VAULT_SELECTED to it.shareId.id, KEY_FOLDER_SELECTED to null))
                 }
@@ -2178,7 +2180,8 @@ fun NavGraphBuilder.appGraph(
                     destination = CreateLoginNavItem,
                     route = CreateLoginNavItem.createNavRoute(
                         emailOption = itemDetailsNavDestination.alias.some(),
-                        shareId = itemDetailsNavDestination.shareId.some()
+                        shareId = itemDetailsNavDestination.shareId.some(),
+                        folderId = itemDetailsNavDestination.folderId.toOption()
                     ),
                     backDestination = HomeNavItem
                 )

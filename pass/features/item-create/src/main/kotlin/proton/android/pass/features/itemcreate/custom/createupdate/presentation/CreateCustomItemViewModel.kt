@@ -64,6 +64,7 @@ import proton.android.pass.data.api.usecases.attachments.LinkAttachmentsToItem
 import proton.android.pass.data.api.usecases.defaultvault.ObserveDefaultVault
 import proton.android.pass.data.api.usecases.defaultvault.SetDefaultVault
 import proton.android.pass.data.api.usecases.folders.ObserveFolder
+import proton.android.pass.data.api.usecases.folders.ObserveFoldersByParentId
 import proton.android.pass.data.api.usecases.shares.ObserveShare
 import proton.android.pass.domain.FolderId
 import proton.android.pass.domain.ItemContents
@@ -123,6 +124,7 @@ class CreateCustomItemViewModel @Inject constructor(
     observeVaults: ObserveVaultsWithItemCount,
     observeDefaultVault: ObserveDefaultVault,
     observeFolder: ObserveFolder,
+    observeFoldersByParentId: ObserveFoldersByParentId,
     customFieldDraftRepository: CustomFieldDraftRepository,
     clipboardManager: ClipboardManager,
     customItemFormProcessor: CustomItemFormProcessor,
@@ -216,6 +218,7 @@ class CreateCustomItemViewModel @Inject constructor(
         selectedShareIdState = selectedShareIdState,
         observeAllVaultsFlow = observeVaults(includeHidden = true).asLoadingResult(),
         observeDefaultVaultFlow = defaultVaultFlow.asLoadingResult(),
+        observeFoldersByParentId = observeFoldersByParentId,
         viewModelScope = viewModelScope,
         tag = TAG,
         selectedFolderNameFlow = selectedFolderNameFlow,

@@ -61,6 +61,7 @@ import proton.android.pass.data.api.usecases.capabilities.CanCreateItemsInFolder
 import proton.android.pass.data.api.usecases.defaultvault.ObserveDefaultVault
 import proton.android.pass.data.api.usecases.defaultvault.SetDefaultVault
 import proton.android.pass.data.api.usecases.folders.ObserveFolder
+import proton.android.pass.data.api.usecases.folders.ObserveFoldersByParentId
 import proton.android.pass.data.api.usecases.shares.ObserveShare
 import proton.android.pass.domain.FolderId
 import proton.android.pass.domain.ItemId
@@ -103,6 +104,7 @@ class CreateCreditCardViewModel @Inject constructor(
     private val createItem: CreateItem,
     private val accountManager: AccountManager,
     private val observeFolder: ObserveFolder,
+    private val observeFoldersByParentId: ObserveFoldersByParentId,
     private val telemetryManager: TelemetryManager,
     private val inAppReviewTriggerMetrics: InAppReviewTriggerMetrics,
     private val linkAttachmentsToItem: LinkAttachmentsToItem,
@@ -199,6 +201,7 @@ class CreateCreditCardViewModel @Inject constructor(
         selectedShareIdState = selectedShareIdState,
         observeAllVaultsFlow = observeAllVaultsFlow.asLoadingResult(),
         observeDefaultVaultFlow = defaultVaultFlow.asLoadingResult(),
+        observeFoldersByParentId = observeFoldersByParentId,
         viewModelScope = viewModelScope,
         tag = TAG,
         selectedFolderNameFlow = selectedFolderNameFlow,

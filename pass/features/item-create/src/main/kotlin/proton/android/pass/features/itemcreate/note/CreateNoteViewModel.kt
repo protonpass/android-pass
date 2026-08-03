@@ -61,6 +61,7 @@ import proton.android.pass.data.api.usecases.capabilities.CanCreateItemsInFolder
 import proton.android.pass.data.api.usecases.defaultvault.ObserveDefaultVault
 import proton.android.pass.data.api.usecases.defaultvault.SetDefaultVault
 import proton.android.pass.data.api.usecases.folders.ObserveFolder
+import proton.android.pass.data.api.usecases.folders.ObserveFoldersByParentId
 import proton.android.pass.data.api.usecases.shares.ObserveShare
 import proton.android.pass.domain.FolderId
 import proton.android.pass.domain.ItemContents
@@ -100,6 +101,7 @@ import javax.inject.Inject
 class CreateNoteViewModel @Inject constructor(
     private val accountManager: AccountManager,
     private val observeFolder: ObserveFolder,
+    private val observeFoldersByParentId: ObserveFoldersByParentId,
     private val getShare: GetShareById,
     private val itemRepository: ItemRepository,
     private val snackbarDispatcher: SnackbarDispatcher,
@@ -206,6 +208,7 @@ class CreateNoteViewModel @Inject constructor(
         selectedShareIdState = selectedShareIdState,
         observeAllVaultsFlow = observeAllVaultsFlow.asLoadingResult(),
         observeDefaultVaultFlow = defaultVaultFlow.asLoadingResult(),
+        observeFoldersByParentId = observeFoldersByParentId,
         viewModelScope = viewModelScope,
         tag = TAG,
         selectedFolderNameFlow = selectedFolderNameFlow,

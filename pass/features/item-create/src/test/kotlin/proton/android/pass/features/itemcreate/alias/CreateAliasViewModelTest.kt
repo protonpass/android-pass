@@ -43,6 +43,7 @@ import proton.android.pass.data.fakes.usecases.FakeObserveVaultsWithItemCount
 import proton.android.pass.data.fakes.usecases.FakeSetDefaultVault
 import proton.android.pass.data.fakes.usecases.attachments.FakeLinkAttachmentsToItem
 import proton.android.pass.data.fakes.usecases.folders.FakeObserveFolder
+import proton.android.pass.data.fakes.usecases.folders.FakeObserveFoldersByParentId
 import proton.android.pass.data.fakes.usecases.shares.FakeObserveShare
 import proton.android.pass.domain.AliasOptions
 import proton.android.pass.domain.ShareId
@@ -319,7 +320,8 @@ class CreateAliasViewModelTest {
         clipboardManager = FakeClipboardManager(),
         observeShare = observeShare,
         settingsRepository = settingsRepository,
-        observeFolder = FakeObserveFolder()
+        observeFolder = FakeObserveFolder(),
+        observeFoldersByParentId = FakeObserveFoldersByParentId()
     ).apply {
         setDraftStatus(isDraft)
     }

@@ -25,6 +25,7 @@ import proton.android.pass.common.api.PasswordStrength
 import proton.android.pass.commonuimodels.api.UIPasskeyContent
 import proton.android.pass.commonuimodels.api.attachments.AttachmentsState
 import proton.android.pass.domain.AliasDetails
+import proton.android.pass.domain.FolderId
 import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.ItemDiffs
 import proton.android.pass.domain.ItemId
@@ -455,7 +456,11 @@ sealed interface DetailEvent {
     data object Idle : AliasDetailEvent
 }
 sealed interface AliasDetailEvent : DetailEvent {
-    data class CreateLoginFromAlias(val alias: String, val shareId: ShareId) : AliasDetailEvent
+    data class CreateLoginFromAlias(
+        val alias: String,
+        val shareId: ShareId,
+        val folderId: FolderId?
+    ) : AliasDetailEvent
     data class ContactSection(val shareId: ShareId, val itemId: ItemId) : AliasDetailEvent
 }
 

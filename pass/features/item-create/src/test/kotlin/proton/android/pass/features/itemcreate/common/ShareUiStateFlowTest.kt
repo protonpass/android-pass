@@ -30,10 +30,12 @@ import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
 import proton.android.pass.data.api.usecases.defaultvault.VaultWithFolder
+import proton.android.pass.data.fakes.usecases.folders.FakeObserveFoldersByParentId
 import proton.android.pass.domain.FolderId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.VaultWithItemCount
 import proton.android.pass.test.MainDispatcherRule
+import proton.android.pass.test.domain.FolderTestFactory
 import proton.android.pass.test.domain.VaultTestFactory
 
 class ShareUiStateFlowTest {
@@ -51,6 +53,9 @@ class ShareUiStateFlowTest {
         trashedItemCount = 0
     )
 
+    private fun makeObserveFoldersByParentId(): FakeObserveFoldersByParentId =
+        FakeObserveFoldersByParentId(Result.success(emptyList()))
+
     /**
      * Invokes [getShareUiStateFlow] with the given parameters and collects the first
      * [ShareUiState.Success] item emitted. Uses [TestScope.backgroundScope] so the
@@ -61,7 +66,8 @@ class ShareUiStateFlowTest {
         selectedShareId: Option<ShareId> = None,
         selectedFolderId: Option<FolderId> = None,
         defaultVaultWithFolder: Option<VaultWithFolder> = None,
-        vault: VaultWithItemCount = makeVaultWithItemCount()
+        vault: VaultWithItemCount = makeVaultWithItemCount(),
+        observeFoldersByParentId: FakeObserveFoldersByParentId = makeObserveFoldersByParentId()
     ): ShareUiState.Success {
         val stateFlow = getShareUiStateFlow(
             navShareIdState = flowOf(navShareId),
@@ -70,6 +76,7 @@ class ShareUiStateFlowTest {
             selectedFolderIdFlow = flowOf(selectedFolderId),
             observeAllVaultsFlow = flowOf(LoadingResult.Success(listOf(vault))),
             observeDefaultVaultFlow = flowOf(LoadingResult.Success(defaultVaultWithFolder)),
+            observeFoldersByParentId = observeFoldersByParentId,
             viewModelScope = backgroundScope,
             tag = "TestTag"
         )
@@ -171,5 +178,34 @@ class ShareUiStateFlowTest {
 
         // User's explicit folder selection wins
         assertThat(state.selectedFolder?.id).isEqualTo(userSelectedFolderId)
+    }
+
+    // -----------------------------------------------------------------------
+    // Test 5: hasFolders reflects folder existence in the current vault
+    // -----------------------------------------------------------------------
+
+    @Test
+    fun `hasFolders is true when the current vault contains a folder`() = runTest {
+        val vault = makeVaultWithItemCount()
+        val folder = FolderTestFactory.create(shareId = vault.vault.shareId)
+
+        val state = collectSuccess(
+            vault = vault,
+            observeFoldersByParentId = FakeObserveFoldersByParentId(Result.success(listOf(folder)))
+        )
+
+        assertThat(state.hasFolders).isTrue()
+    }
+
+    @Test
+    fun `hasFolders is false when the current vault has no folders`() = runTest {
+        val vault = makeVaultWithItemCount()
+
+        val state = collectSuccess(
+            vault = vault,
+            observeFoldersByParentId = FakeObserveFoldersByParentId(Result.success(emptyList()))
+        )
+
+        assertThat(state.hasFolders).isFalse()
     }
 }

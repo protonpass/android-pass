@@ -275,10 +275,27 @@ class FolderRepositoryImpl @Inject constructor(
         if (allFolders.isNotEmpty()) {
             decryptAndStoreFolders(userId, shareId, allFolders)
         }
+        deleteStaleFolders(userId, shareId, allFolders)
     }.onFailure { error ->
         PassLogger.w(TAG, "Folder sync failed for shareId=${shareId.id}")
         PassLogger.w(TAG, error)
     }.getOrThrow()
+
+    private suspend fun deleteStaleFolders(
+        userId: UserId,
+        shareId: ShareId,
+        serverFolders: List<FolderApiModel>
+    ) {
+        val serverFolderIds = serverFolders.map { it.folderId }.toSet()
+        val localFolderIds = localFolderDataSource.observeAllFolders(userId, shareId)
+            .firstOrNull()
+            .orEmpty()
+            .map { it.id }
+        val staleFolderIds = localFolderIds.filterNot { it in serverFolderIds }.map(::FolderId)
+        if (staleFolderIds.isNotEmpty()) {
+            localFolderDataSource.deleteFolders(userId, shareId, staleFolderIds)
+        }
+    }
 
     override fun observeFolder(
         userId: UserId,

@@ -25,6 +25,7 @@ import androidx.work.Data
 import androidx.work.WorkerParameters
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
+import kotlinx.coroutines.withContext
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
@@ -38,6 +39,7 @@ import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.entity.AppName
 import proton.android.pass.domain.entity.PackageInfo
 import proton.android.pass.domain.entity.PackageName
+import proton.android.pass.log.api.LogAccountContext
 import proton.android.pass.log.api.PassLogger
 
 @HiltWorker
@@ -66,10 +68,12 @@ class UpdateAutofillItemWorker @AssistedInject constructor(
 
     private suspend fun executeWork(inputData: InputData) = getUserID(inputData)
         .map { userID ->
-            if (inputData.shouldAssociate) {
-                updateItemWithPackageNameOrUrl(userID, inputData)
-            } else {
-                updateLastUsed(userID, inputData)
+            withContext(LogAccountContext(userID)) {
+                if (inputData.shouldAssociate) {
+                    updateItemWithPackageNameOrUrl(userID, inputData)
+                } else {
+                    updateLastUsed(userID, inputData)
+                }
             }
         }
 

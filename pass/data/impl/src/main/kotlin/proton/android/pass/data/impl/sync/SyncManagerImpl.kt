@@ -30,6 +30,7 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import me.proton.core.account.domain.entity.Account
 import me.proton.core.account.domain.entity.AccountState
 import me.proton.core.accountmanager.domain.AccountManager
@@ -40,6 +41,7 @@ import proton.android.pass.common.api.safeRunCatching
 import proton.android.pass.data.api.repositories.SearchIndexRepository
 import proton.android.pass.data.api.usecases.PerformSync
 import proton.android.pass.data.impl.sync.SyncWorker.Companion.WORKER_UNIQUE_NAME
+import proton.android.pass.log.api.LogAccountContext
 import proton.android.pass.log.api.PassLogger
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -81,22 +83,26 @@ class SyncManagerImpl @Inject constructor(
                 rebuildJob?.cancel()
                 rebuildJob = appLifecycleProvider.lifecycle.coroutineScope.launch {
                     accounts.forEach { account ->
-                        safeRunCatching { searchIndexRepository.checkAndRebuildIfNeeded(account.userId) }
-                            .onFailure { error ->
-                                PassLogger.w(TAG, "Error checking search index rebuild")
-                                PassLogger.w(TAG, error)
-                            }
+                        withContext(LogAccountContext(account.userId)) {
+                            safeRunCatching { searchIndexRepository.checkAndRebuildIfNeeded(account.userId) }
+                                .onFailure { error ->
+                                    PassLogger.w(TAG, "Error checking search index rebuild")
+                                    PassLogger.w(TAG, error)
+                                }
+                        }
                     }
                 }
 
                 while (currentCoroutineContext().isActive) {
-                    accounts.forEach {
-                        safeRunCatching { performSync(it.userId, trigger = "foreground_manager") }
-                            .onSuccess { PassLogger.i(TAG, "Sync finished") }
-                            .onFailure { error ->
-                                PassLogger.w(TAG, "Error in performSync")
-                                PassLogger.w(TAG, error)
-                            }
+                    accounts.forEach { account ->
+                        withContext(LogAccountContext(account.userId)) {
+                            safeRunCatching { performSync(account.userId, trigger = "foreground_manager") }
+                                .onSuccess { PassLogger.i(TAG, "Sync finished") }
+                                .onFailure { error ->
+                                    PassLogger.w(TAG, "Error in performSync")
+                                    PassLogger.w(TAG, error)
+                                }
+                        }
                     }
 
                     delay(eventWorkerManager.getRepeatIntervalForeground())

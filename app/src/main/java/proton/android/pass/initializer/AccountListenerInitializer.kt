@@ -37,6 +37,7 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.scan
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import me.proton.core.account.domain.entity.Account
 import me.proton.core.account.domain.entity.AccountState
 import me.proton.core.accountmanager.domain.AccountManager
@@ -57,6 +58,7 @@ import proton.android.pass.data.api.usecases.RefreshUserAccess
 import proton.android.pass.data.api.usecases.ResetAppToDefaults
 import proton.android.pass.data.api.usecases.organization.RefreshOrganizationSettings
 import proton.android.pass.data.impl.db.DatabaseCleanupHelper
+import proton.android.pass.log.api.LogAccountContext
 import proton.android.pass.log.api.LogoutLogger
 import proton.android.pass.log.api.LogoutReason
 import proton.android.pass.log.api.PassLogger
@@ -88,26 +90,32 @@ class AccountListenerInitializer : Initializer<Unit> {
             lifecycle = lifecycleProvider.lifecycle,
             minActiveState = Lifecycle.State.CREATED
         ).onAccountDisabled { account ->
-            PassLogger.i(TAG, "Account disabled : ${account.userId}")
             launchInAppLifecycleScope(lifecycleProvider) {
-                performCleanup(account, entryPoint)
+                withContext(LogAccountContext(account.userId)) {
+                    PassLogger.i(TAG, "Account disabled : ${account.userId}")
+                    performCleanup(account, entryPoint)
+                }
             }
         }.onAccountRemoved { account ->
-            PassLogger.i(TAG, "Account removed : ${account.userId}")
             launchInAppLifecycleScope(lifecycleProvider) {
-                performCleanup(account, entryPoint)
+                withContext(LogAccountContext(account.userId)) {
+                    PassLogger.i(TAG, "Account removed : ${account.userId}")
+                    performCleanup(account, entryPoint)
+                }
             }
         }.onSessionForceLogout {
             LogoutLogger.record(LogoutReason.ServerSessionRejected)
         }.onAccountReady { account ->
             launchInAppLifecycleScope(lifecycleProvider) {
-                onAccountReady(
-                    account = account,
-                    featureFlagsPreferencesRepository = featureFlagsPreferencesRepository,
-                    refreshOrganizationSettings = refreshOrganizationSettings,
-                    refreshUserAccess = refreshUserAccess,
-                    refreshBreaches = refreshBreaches
-                )
+                withContext(LogAccountContext(account.userId)) {
+                    onAccountReady(
+                        account = account,
+                        featureFlagsPreferencesRepository = featureFlagsPreferencesRepository,
+                        refreshOrganizationSettings = refreshOrganizationSettings,
+                        refreshUserAccess = refreshUserAccess,
+                        refreshBreaches = refreshBreaches
+                    )
+                }
             }
         }
 

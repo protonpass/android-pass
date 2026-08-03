@@ -30,8 +30,10 @@ import androidx.work.WorkManager
 import androidx.work.WorkerParameters
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
+import kotlinx.coroutines.withContext
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.api.repositories.SearchIndexRepository
+import proton.android.pass.log.api.LogAccountContext
 import proton.android.pass.log.api.PassLogger
 
 @HiltWorker
@@ -51,22 +53,24 @@ class SearchIndexWorker @AssistedInject constructor(
             return Result.failure()
         }
 
-        return runCatching {
-            PassLogger.i(TAG, "Rebuilding search index")
-            searchIndexRepository.rebuildIndex(userId)
-            PassLogger.i(TAG, "Search index rebuild completed successfully")
-            Result.success()
-        }.fold(
-            onSuccess = { it },
-            onFailure = {
-                PassLogger.e(TAG, it, "Error rebuilding search index")
-                if (runAttemptCount < MAX_RETRIES) {
-                    Result.retry()
-                } else {
-                    Result.failure()
+        return withContext(LogAccountContext(userId)) {
+            runCatching {
+                PassLogger.i(TAG, "Rebuilding search index")
+                searchIndexRepository.rebuildIndex(userId)
+                PassLogger.i(TAG, "Search index rebuild completed successfully")
+                Result.success()
+            }.fold(
+                onSuccess = { it },
+                onFailure = {
+                    PassLogger.e(TAG, it, "Error rebuilding search index")
+                    if (runAttemptCount < MAX_RETRIES) {
+                        Result.retry()
+                    } else {
+                        Result.failure()
+                    }
                 }
-            }
-        )
+            )
+        }
     }
 
     companion object {

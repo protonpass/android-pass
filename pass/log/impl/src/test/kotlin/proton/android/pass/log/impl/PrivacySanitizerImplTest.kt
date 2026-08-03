@@ -255,6 +255,47 @@ class PrivacySanitizerImplTest {
     }
 
     @Test
+    fun `sanitize should redact session id values`() {
+        val input = "Processing accounts: UserId=UserId(id=abc), " +
+            "SessionId=rnxaf6mwolp4rxyvs773zayu4f3eg62h, State=NotReady}"
+        val expected = "Processing accounts: UserId=UserId(id=abc), " +
+            "SessionId=[SESSION_ID_REDACTED], State=NotReady}"
+
+        val result = sanitizer.sanitize(input)
+
+        assertThat(result).isEqualTo(expected)
+    }
+
+    @Test
+    fun `sanitize should not redact null session id values`() {
+        val input = "Processing accounts: UserId=UserId(id=abc), SessionId=null, State=NotReady}"
+
+        val result = sanitizer.sanitize(input)
+
+        assertThat(result).isEqualTo(input)
+    }
+
+    @Test
+    fun `sanitize should redact session id case insensitively`() {
+        val input = "sessionid=rnxaf6mwolp4rxyvs773zayu4f3eg62h found"
+        val expected = "sessionid=[SESSION_ID_REDACTED] found"
+
+        val result = sanitizer.sanitize(input)
+
+        assertThat(result).isEqualTo(expected)
+    }
+
+    @Test
+    fun `sanitize should not swallow a closing paren after session id`() {
+        val input = "(SessionId=rnxaf6mwolp4rxyvs773zayu4f3eg62h)"
+        val expected = "(SessionId=[SESSION_ID_REDACTED])"
+
+        val result = sanitizer.sanitize(input)
+
+        assertThat(result).isEqualTo(expected)
+    }
+
+    @Test
     fun `sanitize should redact every sensitive value in a mixed message`() {
         val shareId = "a".repeat(88)
         val input = "Authorization: bEaReR token.value==; encoded=alice%40proton.me; " +

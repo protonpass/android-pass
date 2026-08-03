@@ -334,14 +334,15 @@ class LauncherViewModel @Inject constructor(
         }
 
         else -> {
-            PassLogger.i(TAG, "Processing accounts: ${accounts.toLogString()}}")
+            PassLogger.i(TAG, "Processing accounts: ${accounts.toLogString()}")
             AccountState.Processing
         }
     }
 
     private fun Account.toLogString(): String = "UserId=$userId, SessionId=${sessionId?.id ?: "null"}, State=$state"
 
-    private fun List<Account>.toLogString(): String = joinToString { it.toLogString() }
+    private fun List<Account>.toLogString(): String =
+        groupBy { it.state }.entries.joinToString { (state, group) -> "$state=${group.size}" }
 
     private suspend fun getAccountOrNull(it: UserId) = accountManager.getAccount(it).firstOrNull()
 

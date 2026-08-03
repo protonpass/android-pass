@@ -35,6 +35,7 @@ import androidx.work.WorkRequest
 import androidx.work.WorkerParameters
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
+import kotlinx.coroutines.withContext
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.safeRunCatching
 import proton.android.pass.data.api.repositories.ItemRepository
@@ -45,6 +46,7 @@ import proton.android.pass.data.impl.R
 import proton.android.pass.data.impl.repositories.FetchShareItemsStatus
 import proton.android.pass.data.impl.repositories.FetchShareItemsStatusRepository
 import proton.android.pass.domain.ShareId
+import proton.android.pass.log.api.LogAccountContext
 import proton.android.pass.log.api.PassLogger
 
 @HiltWorker
@@ -70,39 +72,41 @@ open class FetchShareItemsWorker @AssistedInject constructor(
 
         fetchShareItemsStatusRepository.emit(shareId, FetchShareItemsStatus.NotStarted)
 
-        return safeRunCatching {
+        return withContext(LogAccountContext(userId)) {
+            safeRunCatching {
 
-            refreshFolders(userId, setOf(shareId))
+                refreshFolders(userId, setOf(shareId))
 
-            itemRepository.downloadItemsAndObserveProgress(
-                userId = userId,
-                shareId = shareId,
-                onProgress = {}
-            ).let { itemRevisions ->
-                val result = itemRepository.setShareItems(
+                itemRepository.downloadItemsAndObserveProgress(
                     userId = userId,
-                    items = mapOf(shareId to itemRevisions),
-                    onProgress = { progress -> onInsertProgress(shareId, progress) }
-                )
-                searchIndexRepository.indexShare(userId, shareId)
-                (result.insertedCountByShare[shareId] ?: 0) to result.failedShareIds.contains(shareId)
-            }
-        }.fold(
-            onSuccess = { (itemCount, hasCryptoFailure) ->
-                fetchShareItemsStatusRepository.emit(shareId, FetchShareItemsStatus.Done(itemCount))
-                if (hasCryptoFailure) {
-                    PassLogger.w(TAG, "$TAG finished with permanent decrypt failures for shareId=${shareId.id}")
-                    Result.failure()
-                } else {
-                    PassLogger.i(TAG, "$TAG finished successfully")
-                    Result.success()
+                    shareId = shareId,
+                    onProgress = {}
+                ).let { itemRevisions ->
+                    val result = itemRepository.setShareItems(
+                        userId = userId,
+                        items = mapOf(shareId to itemRevisions),
+                        onProgress = { progress -> onInsertProgress(shareId, progress) }
+                    )
+                    searchIndexRepository.indexShare(userId, shareId)
+                    (result.insertedCountByShare[shareId] ?: 0) to result.failedShareIds.contains(shareId)
                 }
-            },
-            onFailure = {
-                PassLogger.w(TAG, "$TAG failed")
-                Result.retry()
-            }
-        )
+            }.fold(
+                onSuccess = { (itemCount, hasCryptoFailure) ->
+                    fetchShareItemsStatusRepository.emit(shareId, FetchShareItemsStatus.Done(itemCount))
+                    if (hasCryptoFailure) {
+                        PassLogger.w(TAG, "$TAG finished with permanent decrypt failures for shareId=${shareId.id}")
+                        Result.failure()
+                    } else {
+                        PassLogger.i(TAG, "$TAG finished successfully")
+                        Result.success()
+                    }
+                },
+                onFailure = {
+                    PassLogger.w(TAG, "$TAG failed")
+                    Result.retry()
+                }
+            )
+        }
     }
 
     private suspend fun onInsertProgress(shareId: ShareId, progress: VaultProgress) {

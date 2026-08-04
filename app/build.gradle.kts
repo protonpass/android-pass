@@ -50,6 +50,7 @@ val atlasProxyToken: String? = privateProperties.getProperty("PROXY_TOKEN")
 val customEnvUrl: String? = System.getenv("PROD_ENV_URL")
 val isCustomBuild: Boolean = !customEnvUrl.isNullOrBlank()
 val isApkBuild: Boolean = project.findProperty("apkBuild") == "true"
+val disableSentryUpload: Boolean = project.findProperty("disableSentryUpload") == "true"
 
 println(
     """
@@ -588,6 +589,7 @@ sentry {
     autoInstallation.enabled.set(false)
     ignoredBuildTypes.set(setOf("debug"))
     ignoredFlavors.set(setOf("fdroid"))
+    autoUploadProguardMapping.set(!disableSentryUpload)
 }
 
 fun VariantDimension.setAssetLinksResValue(host: String) {

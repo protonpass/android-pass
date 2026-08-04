@@ -22,12 +22,12 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.toPersistentList
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.withContext
+import proton.android.pass.common.api.AppDispatchers
 import proton.android.pass.common.api.removeAccents
 import proton.android.pass.commonui.api.toUiModel
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
@@ -48,6 +48,7 @@ class SecurityCenterWeakPassViewModel @Inject constructor(
     insecurePasswordChecker: InsecurePasswordChecker,
     userPreferencesRepository: UserPreferencesRepository,
     telemetryManager: TelemetryManager,
+    private val appDispatchers: AppDispatchers,
     private val encryptionContextProvider: EncryptionContextProvider
 ) : ViewModel() {
 
@@ -74,7 +75,7 @@ class SecurityCenterWeakPassViewModel @Inject constructor(
         initialValue = SecurityCenterWeakPassState.Initial
     )
 
-    private suspend fun List<Item>.toUiModels() = withContext(Dispatchers.Default) {
+    private suspend fun List<Item>.toUiModels() = withContext(appDispatchers.default) {
         encryptionContextProvider.withEncryptionContext {
             map { item ->
                 item.toUiModel(this@withEncryptionContext).copy(isPinned = false)

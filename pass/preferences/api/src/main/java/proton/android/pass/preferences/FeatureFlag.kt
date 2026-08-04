@@ -30,12 +30,6 @@ enum class FeatureFlag(
         key = null, // Cannot be activated server-side,
         isEnabledDefault = false
     ),
-    EXTRA_LOGGING(
-        title = "Extra logging",
-        description = "Enable extra logging",
-        key = "PassAndroidExtraLogging",
-        isEnabledDefault = false
-    ),
     RENAME_ADMIN_TO_MANAGER(
         title = "Rename Admin to Manager",
         description = "Enable Rename Admin to Manager",
@@ -52,18 +46,6 @@ enum class FeatureFlag(
         title = "User Events V1",
         description = "Enable user events",
         key = "PassUserEventsV1",
-        isEnabledDefault = false
-    ),
-    PASS_GROUP_SHARE(
-        title = "Enable group sharing",
-        description = "Enable group sharing",
-        key = "PassGroupInvitesV1",
-        isEnabledDefault = false
-    ),
-    PASS_MOBILE_ON_BOARDING_V2(
-        title = "Enable new OnBoarding",
-        description = "Enable new OnBoarding",
-        key = "PassMobileOnboardingV2",
         isEnabledDefault = false
     ),
     PASS_FOLDERS(

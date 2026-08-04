@@ -64,19 +64,9 @@ class PerformSyncImpl @Inject constructor(
         forceSync: Boolean,
         trigger: String
     ) = coroutineScope {
-        val (isUserEventsEnabled, isGroupSharingEnabled) = awaitAll(
-            async {
-                featureFlagsPreferencesRepository.awaitResolved(
-                    featureFlag = FeatureFlag.PASS_USER_EVENTS_V1,
-                    userId = userId
-                )
-            },
-            async {
-                featureFlagsPreferencesRepository.awaitResolved(
-                    featureFlag = FeatureFlag.PASS_GROUP_SHARE,
-                    userId = userId
-                )
-            }
+        val isUserEventsEnabled = featureFlagsPreferencesRepository.awaitResolved(
+            featureFlag = FeatureFlag.PASS_USER_EVENTS_V1,
+            userId = userId
         )
 
         val results = if (isUserEventsEnabled) {
@@ -86,9 +76,7 @@ class PerformSyncImpl @Inject constructor(
             val tasks = buildList {
                 add(async { performRefreshAliasSlNotes(userId) })
                 add(async { performUserRefreshInvites(userId) })
-                if (isGroupSharingEnabled) {
-                    add(async { performGroupRefreshInvites(userId) })
-                }
+                add(async { performGroupRefreshInvites(userId) })
                 add(async { syncPendingSlAliases(userId, forceSync) })
             }
             tasks.awaitAll()

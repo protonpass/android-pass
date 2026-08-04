@@ -6,39 +6,24 @@ option java_package = "proton.android.pass.preferences";
 option java_multiple_files = true;
 
 message FeatureFlagsPreferences {
-  BoolFlagPrefProto custom_fields_enabled = 1;
-  BoolFlagPrefProto credit_cards_enabled = 2;
+  reserved 1, 2, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25,
+      26, 28, 31, 32, 33;
+  reserved "custom_fields_enabled", "credit_cards_enabled", "sharing_v1_enabled",
+      "remove_primary_vault_enabled", "sharing_new_users_enabled", "credit_card_autofill_enabled",
+      "pinning_v1_enabled", "history_v1_enabled", "security_center_v1_enabled",
+      "identity_item_type_enabled", "username_split_enabled", "access_key_v1_enabled",
+      "public_link_v1_enabled", "account_switch_v1_enabled", "simple_login_aliases_sync_enabled",
+      "digital_asset_link_enabled", "advance_alias_management_v1_enabled",
+      "item_sharing_v1_enabled", "extra_logging_enabled", "in_app_messages_v1_enabled",
+      "file_attachments_v1_enabled", "secure_link_new_crypto_v1_enabled", "new_login_flow_enabled",
+      "custom_type_v1_enabled", "file_attachment_encryption_v2_enabled",
+      "pass_hide_show_vault_enabled", "groups_enabled", "pass_mobile_on_boarding_V2_enabled",
+      "pass_allow_credit_card_free_users";
+
   BoolFlagPrefProto autofill_debug_mode_enabled = 3;
-  BoolFlagPrefProto sharing_v1_enabled = 4;
-  BoolFlagPrefProto remove_primary_vault_enabled = 5;
-  BoolFlagPrefProto sharing_new_users_enabled = 6;
-  BoolFlagPrefProto credit_card_autofill_enabled = 7;
-  BoolFlagPrefProto pinning_v1_enabled = 8;
-  BoolFlagPrefProto history_v1_enabled = 9;
-  BoolFlagPrefProto security_center_v1_enabled = 10;
-  BoolFlagPrefProto identity_item_type_enabled = 11;
-  BoolFlagPrefProto username_split_enabled = 12;
-  BoolFlagPrefProto access_key_v1_enabled = 13;
-  BoolFlagPrefProto public_link_v1_enabled = 14;
-  BoolFlagPrefProto account_switch_v1_enabled = 15;
-  BoolFlagPrefProto simple_login_aliases_sync_enabled = 16;
-  BoolFlagPrefProto digital_asset_link_enabled = 17;
-  BoolFlagPrefProto advance_alias_management_v1_enabled = 18;
-  BoolFlagPrefProto item_sharing_v1_enabled = 19;
-  BoolFlagPrefProto extra_logging_enabled = 20;
-  BoolFlagPrefProto in_app_messages_v1_enabled = 21;
-  BoolFlagPrefProto file_attachments_v1_enabled = 22;
-  BoolFlagPrefProto secure_link_new_crypto_v1_enabled = 23;
-  BoolFlagPrefProto new_login_flow_enabled = 24;
-  BoolFlagPrefProto custom_type_v1_enabled = 25;
-  BoolFlagPrefProto file_attachment_encryption_v2_enabled = 26;
   BoolFlagPrefProto rename_admin_to_manager_enabled = 27;
-  BoolFlagPrefProto pass_hide_show_vault_enabled = 28;
   BoolFlagPrefProto pass_allow_no_vault = 29;
   BoolFlagPrefProto pass_user_events_v1_enabled = 30;
-  BoolFlagPrefProto groups_enabled = 31;
-  BoolFlagPrefProto pass_mobile_on_boarding_V2_enabled = 32;
-  BoolFlagPrefProto pass_allow_credit_card_free_users = 33;
   BoolFlagPrefProto pass_folders_enabled = 34;
   BoolFlagPrefProto pass_autofill_url_regex_enabled = 35;
   BoolFlagPrefProto enable_pagination = 36;

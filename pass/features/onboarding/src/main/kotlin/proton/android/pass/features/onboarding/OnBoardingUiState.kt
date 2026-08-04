@@ -37,8 +37,7 @@ sealed interface OnboardingEvent {
 data class OnBoardingUiState(
     val selectedPage: Int,
     val enabledPages: ImmutableList<OnBoardingPageName>,
-    val event: OnboardingEvent,
-    val isOnBoardingV2Enable: Boolean = false
+    val event: OnboardingEvent
 ) {
     companion object {
         val Initial = OnBoardingUiState(
@@ -82,9 +81,6 @@ private val onBoardingMock = listOf(
     )
 )
 
-private val onBoardingMockV2 = onBoardingMock.map { it.copy(isOnBoardingV2Enable = true) }
-
 open class OnBoardingUiStatePreviewProvider : PreviewParameterProvider<OnBoardingUiState> {
-    override val values: Sequence<OnBoardingUiState> =
-        (onBoardingMock + onBoardingMockV2).asSequence()
+    override val values: Sequence<OnBoardingUiState> = onBoardingMock.asSequence()
 }

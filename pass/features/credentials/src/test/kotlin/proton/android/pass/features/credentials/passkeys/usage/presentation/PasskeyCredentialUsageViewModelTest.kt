@@ -25,8 +25,10 @@ import kotlinx.datetime.Instant
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
+import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.Some
 import proton.android.pass.data.fakes.usecases.FakeGetPasskeyById
+import proton.android.pass.data.fakes.usecases.FakeHasActiveAccount
 import proton.android.pass.domain.ByteArrayWrapper
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.Passkey
@@ -45,6 +47,7 @@ internal class PasskeyCredentialUsageViewModelTest {
 
     private lateinit var authenticateWithPasskey: FakeAuthenticateWithPasskey
     private lateinit var getPasskeyById: FakeGetPasskeyById
+    private lateinit var hasActiveAccount: FakeHasActiveAccount
     private lateinit var preferenceRepository: FakePreferenceRepository
     private lateinit var telemetryManager: FakeTelemetryManager
     private lateinit var viewModel: PasskeyCredentialUsageViewModel
@@ -53,12 +56,14 @@ internal class PasskeyCredentialUsageViewModelTest {
     internal fun setUp() {
         authenticateWithPasskey = FakeAuthenticateWithPasskey()
         getPasskeyById = FakeGetPasskeyById()
+        hasActiveAccount = FakeHasActiveAccount()
         preferenceRepository = FakePreferenceRepository()
         telemetryManager = FakeTelemetryManager()
 
         viewModel = PasskeyCredentialUsageViewModel(
             authenticateWithPasskey = authenticateWithPasskey,
             getPasskeyById = getPasskeyById,
+            hasActiveAccount = hasActiveAccount,
             preferenceRepository = preferenceRepository,
             telemetryManager = telemetryManager
         )
@@ -102,6 +107,30 @@ internal class PasskeyCredentialUsageViewModelTest {
         }
     }
 
+    @Test
+    internal fun `WHEN no active account for userId THEN stateFlow emits Cancel`() = runTest {
+        val hasAccountFalse = FakeHasActiveAccount()
+        hasAccountFalse.setResult(false)
+        val passkey = createPasskey()
+        getPasskeyById.setResult(Some(passkey))
+
+        val viewModelWithoutAccount = PasskeyCredentialUsageViewModel(
+            authenticateWithPasskey = authenticateWithPasskey,
+            getPasskeyById = getPasskeyById,
+            hasActiveAccount = hasAccountFalse,
+            preferenceRepository = preferenceRepository,
+            telemetryManager = telemetryManager
+        )
+
+        viewModelWithoutAccount.stateFlow.test {
+            assertThat(awaitItem()).isEqualTo(PasskeyCredentialUsageState.NotReady)
+
+            viewModelWithoutAccount.onUpdateRequest(createRequest(passkey))
+
+            assertThat(awaitItem()).isEqualTo(PasskeyCredentialUsageState.Cancel)
+        }
+    }
+
     private fun createPasskey(): Passkey = Passkey(
         id = PasskeyId("passkey-id"),
         domain = "example.com",
@@ -122,6 +151,7 @@ internal class PasskeyCredentialUsageViewModelTest {
         requestJson = "{}",
         requestOrigin = "https://example.com",
         clientDataHash = null,
+        userId = UserId("test-user-id"),
         shareId = ShareId("share-id"),
         itemId = ItemId("item-id"),
         passkeyId = passkey.id

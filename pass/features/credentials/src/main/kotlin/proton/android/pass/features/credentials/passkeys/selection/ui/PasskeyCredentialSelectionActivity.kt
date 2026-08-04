@@ -44,6 +44,7 @@ import androidx.lifecycle.repeatOnLifecycle
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import me.proton.core.domain.entity.UserId
 import proton.android.pass.appconfig.api.AppConfig
 import proton.android.pass.appconfig.api.BuildFlavor.Companion.upgradeUrl
 import proton.android.pass.commonui.api.BrowserUtils
@@ -292,6 +293,11 @@ internal class PasskeyCredentialSelectionActivity : FragmentActivity() {
             return null
         }
 
+        val userId = extrasBundle.getString(EXTRAS_USER_ID)?.let(::UserId) ?: run {
+            PassLogger.w(TAG, "Passkey usage request does not contain UserId")
+            return null
+        }
+
         val shareId = extrasBundle.getString(EXTRAS_SHARE_ID)?.let(::ShareId) ?: run {
             PassLogger.w(TAG, "Passkey usage request does not contain ShareId")
             return null
@@ -311,6 +317,7 @@ internal class PasskeyCredentialSelectionActivity : FragmentActivity() {
             requestJson = options.requestJson,
             requestOrigin = requestOrigin,
             clientDataHash = options.clientDataHash,
+            userId = userId,
             shareId = shareId,
             itemId = itemId,
             passkeyId = passKeyId
@@ -345,6 +352,7 @@ internal class PasskeyCredentialSelectionActivity : FragmentActivity() {
         private const val TAG = "PasskeyCredentialSelectionActivity"
 
         private const val EXTRAS_REQUEST_TYPE_KEY = "REQUEST_TYPE"
+        private const val EXTRAS_USER_ID = "USER_ID"
         private const val EXTRAS_SHARE_ID = "SHARE_ID"
         private const val EXTRAS_ITEM_ID = "ITEM_ID_ID"
         private const val EXTRAS_PASSKEY_ID = "PASSKEY_ID"
@@ -356,6 +364,7 @@ internal class PasskeyCredentialSelectionActivity : FragmentActivity() {
             setPackage(context.packageName)
 
             putExtra(EXTRAS_REQUEST_TYPE_KEY, PasskeyRequestType.UsePasskey.name)
+            putExtra(EXTRAS_USER_ID, passkeyItem.userId.id)
             putExtra(EXTRAS_SHARE_ID, passkeyItem.shareId.id)
             putExtra(EXTRAS_ITEM_ID, passkeyItem.itemId.id)
             putExtra(EXTRAS_PASSKEY_ID, passkeyItem.passkey.id.value)

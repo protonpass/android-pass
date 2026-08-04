@@ -32,6 +32,8 @@ import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.some
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
+import proton.android.pass.data.api.usecases.HasActiveAccount
+import proton.android.pass.log.api.PassLogger
 import proton.android.pass.preferences.HasAuthenticated
 import proton.android.pass.preferences.UserPreferencesRepository
 import javax.inject.Inject
@@ -39,6 +41,7 @@ import javax.inject.Inject
 @HiltViewModel
 internal class PasswordCredentialUsageViewModel @Inject constructor(
     private val encryptionContextProvider: EncryptionContextProvider,
+    private val hasActiveAccount: HasActiveAccount,
     private val userPreferenceRepository: UserPreferencesRepository
 ) : ViewModel() {
 
@@ -51,6 +54,14 @@ internal class PasswordCredentialUsageViewModel @Inject constructor(
             when (requestOption) {
                 None -> PasswordCredentialUsageState.NotReady
                 is Some -> requestOption.value?.let { request ->
+                    if (!hasActiveAccount(request.userId)) {
+                        PassLogger.w(
+                            TAG,
+                            "Denying stale password credential usage request: no active account for userId"
+                        )
+                        return@let PasswordCredentialUsageState.Cancel
+                    }
+
                     encryptionContextProvider.withEncryptionContextSuspendable {
                         decrypt(request.encryptedPassword)
                     }.let { password ->
@@ -74,6 +85,12 @@ internal class PasswordCredentialUsageViewModel @Inject constructor(
 
     internal fun onStop() {
         userPreferenceRepository.setHasAuthenticated(HasAuthenticated.NotAuthenticated)
+    }
+
+    private companion object {
+
+        private const val TAG = "PasswordCredentialUsageViewModel"
+
     }
 
 }

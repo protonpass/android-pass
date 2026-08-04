@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2025-2026 Proton AG
+ * Copyright (c) 2026 Proton AG
  * This file is part of Proton AG and Proton Pass.
  *
  * Proton Pass is free software: you can redistribute it and/or modify
@@ -16,13 +16,22 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.credentials.passwords.usage.presentation
+package proton.android.pass.data.fakes.usecases
 
-import me.proton.core.crypto.common.keystore.EncryptedString
 import me.proton.core.domain.entity.UserId
+import proton.android.pass.data.api.usecases.HasActiveAccount
+import javax.inject.Inject
+import javax.inject.Singleton
 
-internal data class PasswordCredentialUsageRequest(
-    internal val userId: UserId,
-    internal val username: String,
-    internal val encryptedPassword: EncryptedString
-)
+@Singleton
+class FakeHasActiveAccount @Inject constructor() : HasActiveAccount {
+
+    private var result: Boolean = true
+
+    fun setResult(value: Boolean) {
+        result = value
+    }
+
+    override suspend fun invoke(userId: UserId): Boolean = result
+
+}

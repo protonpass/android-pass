@@ -36,6 +36,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import me.proton.core.domain.entity.UserId
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.PasskeyId
 import proton.android.pass.domain.PasskeyItem
@@ -136,6 +137,11 @@ internal class PasskeyCredentialUsageActivity : FragmentActivity() {
             return null
         }
 
+        val userId = intent.getStringExtra(EXTRAS_USER_ID)?.let(::UserId) ?: run {
+            PassLogger.w(TAG, "Could not get UserId")
+            return null
+        }
+
         val shareId = intent.getStringExtra(EXTRAS_SHARE_ID)?.let(::ShareId) ?: run {
             PassLogger.w(TAG, "Could not get ShareId")
             return null
@@ -155,6 +161,7 @@ internal class PasskeyCredentialUsageActivity : FragmentActivity() {
             requestJson = requestJson,
             requestOrigin = requestOrigin,
             clientDataHash = clientDataHash,
+            userId = userId,
             shareId = shareId,
             itemId = itemId,
             passkeyId = passkeyId
@@ -188,6 +195,7 @@ internal class PasskeyCredentialUsageActivity : FragmentActivity() {
 
         private const val TAG = "PasskeyCredentialUsageActivity"
 
+        private const val EXTRAS_USER_ID = "USER_ID"
         private const val EXTRAS_SHARE_ID = "SHARE_ID"
         private const val EXTRAS_ITEM_ID = "ITEM_ID_ID"
         private const val EXTRAS_PASSKEY_ID = "PASSKEY_ID"
@@ -198,6 +206,7 @@ internal class PasskeyCredentialUsageActivity : FragmentActivity() {
         ).apply {
             setPackage(context.packageName)
 
+            putExtra(EXTRAS_USER_ID, passkeyItem.userId.id)
             putExtra(EXTRAS_SHARE_ID, passkeyItem.shareId.id)
             putExtra(EXTRAS_ITEM_ID, passkeyItem.itemId.id)
             putExtra(EXTRAS_PASSKEY_ID, passkeyItem.passkey.id.value)

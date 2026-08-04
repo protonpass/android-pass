@@ -46,6 +46,7 @@ import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.some
 import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
+import proton.android.pass.data.api.usecases.HasActiveAccount
 import proton.android.pass.data.api.usecases.passkeys.GetPasskeyById
 import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.Passkey
@@ -70,6 +71,7 @@ internal class PasskeyCredentialSelectionViewModel @Inject constructor(
     private val internalSettingsRepository: InternalSettingsRepository,
     private val authenticateWithPasskey: AuthenticateWithPasskey,
     private val getPasskeyById: GetPasskeyById,
+    private val hasActiveAccount: HasActiveAccount,
     private val telemetryManager: TelemetryManager
 ) : ViewModel() {
 
@@ -145,6 +147,12 @@ internal class PasskeyCredentialSelectionViewModel @Inject constructor(
         if (request !is PasskeyCredentialSelectionRequest.Use) return
 
         viewModelScope.launch {
+            if (!hasActiveAccount(request.userId)) {
+                PassLogger.w(TAG, "Denying stale passkey credential selection request: no active account for userId")
+                eventFlow.update { PasskeyCredentialSelectionStateEvent.Cancel }
+                return@launch
+            }
+
             when (val passkey = getPasskeyById(request.shareId, request.itemId, request.passkeyId)) {
                 None -> {
                     PassLogger.w(TAG, "Passkey not found")

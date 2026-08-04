@@ -50,6 +50,7 @@ import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.repositories.AssetLinkRepository
 import proton.android.pass.data.api.repositories.ItemRepository
 import proton.android.pass.data.api.usecases.GetItemById
+import proton.android.pass.data.api.usecases.HasActiveAccount
 import proton.android.pass.data.api.usecases.VerifyDigitalAssetLinksForCredentialSharing
 import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.entity.AppName
@@ -81,6 +82,7 @@ internal class PasswordCredentialSelectionViewModel @Inject constructor(
     private val assetLinkRepository: AssetLinkRepository,
     private val verifyDigitalAssetLinksForCredentialSharing: VerifyDigitalAssetLinksForCredentialSharing,
     private val getItemById: GetItemById,
+    private val hasActiveAccount: HasActiveAccount,
     private val itemRepository: ItemRepository,
     private val storedPasswordAppAssociationAuthorizer: StoredPasswordAppAssociationAuthorizer,
     private val passwordOriginResolver: PasswordOriginResolver
@@ -168,10 +170,21 @@ internal class PasswordCredentialSelectionViewModel @Inject constructor(
     internal fun onAuthPerformed(request: PasswordCredentialSelectionRequest) {
         if (request !is PasswordCredentialSelectionRequest.Use) return
 
-        onPasswordCredentialSelected(
-            id = request.username,
-            encryptedPassword = request.encryptedPassword
-        )
+        viewModelScope.launch {
+            if (!hasActiveAccount(request.userId)) {
+                PassLogger.w(
+                    TAG,
+                    "Denying stale password credential selection request: no active account for userId"
+                )
+                eventFlow.update { PasswordCredentialSelectionStateEvent.Cancel }
+                return@launch
+            }
+
+            onPasswordCredentialSelected(
+                id = request.username,
+                encryptedPassword = request.encryptedPassword
+            )
+        }
     }
 
     internal fun onItemSelected(itemUiModel: ItemUiModel) {

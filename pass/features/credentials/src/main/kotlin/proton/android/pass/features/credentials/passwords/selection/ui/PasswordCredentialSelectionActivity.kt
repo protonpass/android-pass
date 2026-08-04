@@ -43,6 +43,7 @@ import androidx.lifecycle.repeatOnLifecycle
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import me.proton.core.domain.entity.UserId
 import proton.android.pass.appconfig.api.AppConfig
 import proton.android.pass.appconfig.api.BuildFlavor.Companion.upgradeUrl
 import proton.android.pass.autofill.api.suggestions.PackageNameUrlSuggestionAdapter
@@ -256,26 +257,38 @@ internal class PasswordCredentialSelectionActivity : FragmentActivity() {
     }
 
     private fun createPasswordUseRequest(extrasBundle: Bundle): PasswordCredentialSelectionRequest? {
-        val username = extrasBundle.getString(EXTRAS_REQUEST_USERNAME) ?: run {
-            PassLogger.w(TAG, "Password selection request does not contain username")
-            return null
+        val userId = extrasBundle.getString(EXTRAS_REQUEST_USER_ID)
+        val username = extrasBundle.getString(EXTRAS_REQUEST_USERNAME)
+        val encryptedPassword = extrasBundle.getString(EXTRAS_REQUEST_ENCRYPTED_PASSWORD)
+
+        return when {
+            userId == null -> {
+                PassLogger.w(TAG, "Password selection request does not contain userId")
+                null
+            }
+
+            username == null -> {
+                PassLogger.w(TAG, "Password selection request does not contain username")
+                null
+            }
+
+            encryptedPassword == null -> {
+                PassLogger.w(TAG, "Password selection request does not contain encrypted password")
+                null
+            }
+
+            else -> {
+                val suggestion = getSuggestionFromExtras(extrasBundle)
+
+                PasswordCredentialSelectionRequest.Use(
+                    userId = UserId(userId),
+                    username = username,
+                    encryptedPassword = encryptedPassword,
+                    suggestion = suggestion,
+                    title = getTitleFromSuggestion(suggestion)
+                )
+            }
         }
-
-        val encryptedPassword = extrasBundle.getString(EXTRAS_REQUEST_ENCRYPTED_PASSWORD) ?: run {
-            PassLogger.w(TAG, "Password selection request does not contain username")
-            return null
-        }
-
-        val suggestion = getSuggestionFromExtras(extrasBundle)
-
-        val title = getTitleFromSuggestion(suggestion)
-
-        return PasswordCredentialSelectionRequest.Use(
-            username = username,
-            encryptedPassword = encryptedPassword,
-            suggestion = suggestion,
-            title = title
-        )
     }
 
     private fun getSuggestionFromExtras(extrasBundle: Bundle): Suggestion {
@@ -320,6 +333,7 @@ internal class PasswordCredentialSelectionActivity : FragmentActivity() {
 
         private const val TAG = "PasswordCredentialSelectionActivity"
 
+        private const val EXTRAS_REQUEST_USER_ID = "REQUEST_USER_ID"
         private const val EXTRAS_REQUEST_USERNAME = "REQUEST_USERNAME"
         private const val EXTRAS_REQUEST_ENCRYPTED_PASSWORD = "REQUEST_ENCRYPTED_PASSWORD"
         private const val EXTRAS_REQUEST_URL = "REQUEST_ENCRYPTED_URL"
@@ -336,6 +350,7 @@ internal class PasswordCredentialSelectionActivity : FragmentActivity() {
         ).apply {
             setPackage(context.packageName)
 
+            putExtra(EXTRAS_REQUEST_USER_ID, passwordCredentialItem.userId.id)
             putExtra(EXTRAS_REQUEST_USERNAME, passwordCredentialItem.username)
             putExtra(EXTRAS_REQUEST_ENCRYPTED_PASSWORD, passwordCredentialItem.encryptedPassword)
             putExtra(EXTRAS_REQUEST_URL, (suggestion as? Suggestion.Url)?.value)

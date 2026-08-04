@@ -50,6 +50,7 @@ import proton.android.pass.commonui.api.toUiModel
 import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.usecases.GetItemById
+import proton.android.pass.data.api.usecases.HasActiveAccount
 import proton.android.pass.data.api.usecases.UpdateAutofillItem
 import proton.android.pass.data.api.usecases.UpdateAutofillItemData
 import proton.android.pass.domain.ItemContents
@@ -99,6 +100,7 @@ class AutofillAppViewModel @Inject constructor(
     private val telemetryManager: TelemetryManager,
     private val inAppReviewTriggerMetrics: InAppReviewTriggerMetrics,
     private val getItemById: GetItemById,
+    private val hasActiveAccount: HasActiveAccount,
     private val internalSettingsRepository: InternalSettingsRepository,
     private val clock: Clock
 ) : ViewModel() {
@@ -131,6 +133,12 @@ class AutofillAppViewModel @Inject constructor(
         isSuggestion: Boolean
     ) {
         viewModelScope.launch {
+            if (isSuggestion && !hasActiveAccount(autofillItem.userId())) {
+                PassLogger.w(TAG, "Denying stale autofill suggestion: no active account for userId")
+                _eventFlow.update { AutofillAppEvent.Cancel }
+                return@launch
+            }
+
             val item = runCatching {
                 getItemById(
                     shareId = autofillItem.shareId(),

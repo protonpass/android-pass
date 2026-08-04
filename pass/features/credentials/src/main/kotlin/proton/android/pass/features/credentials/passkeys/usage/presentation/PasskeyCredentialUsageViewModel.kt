@@ -32,6 +32,7 @@ import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.safeRunCatching
 import proton.android.pass.common.api.toOption
+import proton.android.pass.data.api.usecases.HasActiveAccount
 import proton.android.pass.data.api.usecases.passkeys.GetPasskeyById
 import proton.android.pass.features.credentials.shared.passkeys.events.PasskeyCredentialsTelemetryEvent
 import proton.android.pass.log.api.PassLogger
@@ -45,6 +46,7 @@ import javax.inject.Inject
 internal class PasskeyCredentialUsageViewModel @Inject constructor(
     private val authenticateWithPasskey: AuthenticateWithPasskey,
     private val getPasskeyById: GetPasskeyById,
+    private val hasActiveAccount: HasActiveAccount,
     private val preferenceRepository: UserPreferencesRepository,
     private val telemetryManager: TelemetryManager
 ) : ViewModel() {
@@ -79,6 +81,11 @@ internal class PasskeyCredentialUsageViewModel @Inject constructor(
     )
 
     private suspend fun resolveChallenge(request: PasskeyCredentialUsageRequest): Result<String> = safeRunCatching {
+        if (!hasActiveAccount(request.userId)) {
+            PassLogger.w(TAG, "Denying stale passkey credential usage request: no active account for userId")
+            throw IllegalStateException("No active account for userId")
+        }
+
         getPasskeyById(
             shareId = request.shareId,
             itemId = request.itemId,

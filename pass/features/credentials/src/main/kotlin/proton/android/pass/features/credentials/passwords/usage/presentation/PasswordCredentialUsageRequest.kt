@@ -19,8 +19,10 @@
 package proton.android.pass.features.credentials.passwords.usage.presentation
 
 import me.proton.core.crypto.common.keystore.EncryptedString
+import me.proton.core.domain.entity.UserId
 
 internal data class PasswordCredentialUsageRequest(
+    internal val userId: UserId,
     internal val username: String,
     internal val encryptedPassword: EncryptedString
 )

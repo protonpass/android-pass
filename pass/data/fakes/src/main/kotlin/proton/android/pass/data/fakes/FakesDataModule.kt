@@ -75,6 +75,7 @@ import proton.android.pass.data.api.usecases.GetItemActions
 import proton.android.pass.data.api.usecases.GetItemByAliasEmail
 import proton.android.pass.data.api.usecases.GetItemById
 import proton.android.pass.data.api.usecases.GetItemsBySearchResult
+import proton.android.pass.data.api.usecases.HasActiveAccount
 import proton.android.pass.data.api.usecases.popularservices.GetPopularServices
 import proton.android.pass.data.api.usecases.GetShareById
 import proton.android.pass.data.api.usecases.GetSuggestedAutofillItems
@@ -338,6 +339,7 @@ import proton.android.pass.data.fakes.usecases.FakeGetItemActions
 import proton.android.pass.data.fakes.usecases.FakeGetItemByAliasEmail
 import proton.android.pass.data.fakes.usecases.FakeGetItemById
 import proton.android.pass.data.fakes.usecases.FakeGetItemsBySearchResult
+import proton.android.pass.data.fakes.usecases.FakeHasActiveAccount
 import proton.android.pass.data.fakes.usecases.popularservices.FakeGetPopularServices
 import proton.android.pass.data.fakes.usecases.FakeGetPasskeyById
 import proton.android.pass.data.fakes.usecases.FakeGetShareById
@@ -1305,6 +1307,9 @@ abstract class FakesDataModule {
 
     @Binds
     abstract fun bindGetPasskeyCredentialItems(impl: FakeGetPasskeyCredentialItems): GetPasskeyCredentialItems
+
+    @Binds
+    abstract fun bindHasActiveAccount(impl: FakeHasActiveAccount): HasActiveAccount
 
     @Binds
     abstract fun bindObserveMinimizedPromoInAppMessages(

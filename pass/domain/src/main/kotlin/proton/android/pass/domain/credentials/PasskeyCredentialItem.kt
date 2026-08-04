@@ -25,6 +25,8 @@ data class PasskeyCredentialItem(
     val displayName: String = passkeyItem.itemTitle
 ) {
 
+    val userId = passkeyItem.userId
+
     val username: String = passkeyItem.passkey.userName
 
 }

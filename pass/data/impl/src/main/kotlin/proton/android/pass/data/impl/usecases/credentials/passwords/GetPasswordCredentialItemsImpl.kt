@@ -91,6 +91,7 @@ class GetPasswordCredentialItemsImpl @Inject constructor(
                 .filter { it.displayValue.isNotBlank() && it.password !is HiddenState.Empty }
                 .map { loginItemContents ->
                     PasswordCredentialItem(
+                        userId = account.userId,
                         displayName = accountsMap.getDisplayName(account.userId, loginItemContents.title),
                         username = loginItemContents.displayValue,
                         encryptedPassword = loginItemContents.password.encrypted

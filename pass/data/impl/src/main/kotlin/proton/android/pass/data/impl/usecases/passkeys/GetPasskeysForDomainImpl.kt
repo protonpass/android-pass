@@ -73,6 +73,7 @@ class GetPasskeysForDomainImpl @Inject constructor(
                 }
                 .map {
                     LoginItem(
+                        userId = it.userId,
                         shareId = it.shareId,
                         itemId = it.id,
                         login = it.itemType as ItemType.Login,
@@ -113,6 +114,7 @@ class GetPasskeysForDomainImpl @Inject constructor(
 
         allowedPasskeys.takeIf { it.isNotEmpty() }?.map {
             PasskeyItem(
+                userId = item.userId,
                 shareId = item.shareId,
                 itemId = item.itemId,
                 passkey = it,
@@ -122,6 +124,7 @@ class GetPasskeysForDomainImpl @Inject constructor(
     }.flatten()
 
     private data class LoginItem(
+        val userId: UserId,
         val shareId: ShareId,
         val itemId: ItemId,
         val login: ItemType.Login,

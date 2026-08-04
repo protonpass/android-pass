@@ -39,6 +39,7 @@ import proton.android.pass.crypto.fakes.context.FakeEncryptionContext
 import proton.android.pass.data.fakes.repositories.FakeAssetLinkRepository
 import proton.android.pass.data.fakes.repositories.FakeItemRepository
 import proton.android.pass.data.fakes.usecases.FakeGetItemById
+import proton.android.pass.data.fakes.usecases.FakeHasActiveAccount
 import proton.android.pass.data.api.usecases.Suggestion
 import proton.android.pass.data.api.usecases.VerifyDigitalAssetLinksForCredentialSharing
 import proton.android.pass.domain.HiddenState
@@ -95,6 +96,7 @@ internal class PasswordCredentialSelectionViewModelTest {
             assetLinkRepository = assetLinkRepository,
             verifyDigitalAssetLinksForCredentialSharing = dalVerifier,
             getItemById = getItemById,
+            hasActiveAccount = FakeHasActiveAccount(),
             itemRepository = itemRepository,
             storedPasswordAppAssociationAuthorizer = StoredPasswordAppAssociationAuthorizer(),
             passwordOriginResolver = PasswordOriginResolver()
@@ -415,6 +417,51 @@ internal class PasswordCredentialSelectionViewModelTest {
             val state = awaitItem() as PasswordCredentialSelectionState.Ready
             assertThat(state.event).isEqualTo(PasswordCredentialSelectionStateEvent.Cancel)
             assertThat(dalVerifier.invocations).isEmpty()
+        }
+    }
+
+    @Test
+    internal fun `WHEN no active account for userId THEN onAuthPerformed denies request`() = runTest {
+        val hasActiveAccount = FakeHasActiveAccount()
+        hasActiveAccount.setResult(false)
+
+        val viewModelWithoutAccount = PasswordCredentialSelectionViewModel(
+            userPreferenceRepository = FakePreferenceRepository(),
+            needsBiometricAuth = FakeNeedsBiometricAuth(),
+            appConfig = FakeAppConfig(),
+            accountManager = FakeAccountManager(),
+            encryptionContextProvider = encryptionContextProvider,
+            toastManager = toastManager,
+            internalSettingsRepository = FakeInternalSettingsRepository(),
+            telemetryManager = FakeTelemetryManager(),
+            assetLinkRepository = assetLinkRepository,
+            verifyDigitalAssetLinksForCredentialSharing = dalVerifier,
+            getItemById = getItemById,
+            hasActiveAccount = hasActiveAccount,
+            itemRepository = itemRepository,
+            storedPasswordAppAssociationAuthorizer = StoredPasswordAppAssociationAuthorizer(),
+            passwordOriginResolver = PasswordOriginResolver()
+        )
+
+        viewModelWithoutAccount.onUpdateRequest(
+            createSelectRequest(callingPackageName = "com.example.app")
+        )
+
+        viewModelWithoutAccount.stateFlow.test {
+            skipItems(1)
+
+            viewModelWithoutAccount.onAuthPerformed(
+                PasswordCredentialSelectionRequest.Use(
+                    title = "Select a password",
+                    suggestion = Suggestion.PackageName("com.example.app"),
+                    userId = UserId("user-id"),
+                    username = "alice",
+                    encryptedPassword = FakeEncryptionContext.encrypt("s3cret")
+                )
+            )
+
+            val state = awaitItem() as PasswordCredentialSelectionState.Ready
+            assertThat(state.event).isEqualTo(PasswordCredentialSelectionStateEvent.Cancel)
         }
     }
 

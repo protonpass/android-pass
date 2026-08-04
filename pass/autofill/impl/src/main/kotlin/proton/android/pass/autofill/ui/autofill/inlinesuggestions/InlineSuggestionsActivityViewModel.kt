@@ -50,6 +50,7 @@ import proton.android.pass.common.api.Some
 import proton.android.pass.commonui.api.require
 import proton.android.pass.crypto.api.context.EncryptionContext
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
+import proton.android.pass.data.api.usecases.HasActiveAccount
 import proton.android.pass.data.api.usecases.UpdateAutofillItem
 import proton.android.pass.data.api.usecases.UpdateAutofillItemData
 import proton.android.pass.inappreview.api.InAppReviewTriggerMetrics
@@ -68,6 +69,7 @@ import javax.inject.Inject
 @HiltViewModel
 class InlineSuggestionsActivityViewModel @Inject constructor(
     private val encryptionContextProvider: EncryptionContextProvider,
+    private val hasActiveAccount: HasActiveAccount,
     private val clipboardManager: ClipboardManager,
     private val getTotpCodeFromUri: GetTotpCodeFromUri,
     private val toastManager: ToastManager,
@@ -115,11 +117,25 @@ class InlineSuggestionsActivityViewModel @Inject constructor(
         emit(internalSettingsRepository.isTrustedAutofillPackage(appState.autofillData.packageInfo))
     }
 
+    private val hasActiveAccountState: Flow<Boolean> = flow {
+        val result = when (val autofillItem = selectedAutofillItem) {
+            is Some -> hasActiveAccount(autofillItem.value.userId())
+            else -> true
+        }
+        emit(result)
+    }
+
     val state: StateFlow<InlineSuggestionAutofillNoUiState> = combine(
         copyTotpToClipboardState,
         themeState,
-        isTrustedPackageState
-    ) { copyTotpToClipboard, theme, isTrusted ->
+        isTrustedPackageState,
+        hasActiveAccountState
+    ) { copyTotpToClipboard, theme, isTrusted, hasActiveAccount ->
+        if (!hasActiveAccount) {
+            PassLogger.w(TAG, "Denying stale autofill suggestion: no active account for userId")
+            return@combine InlineSuggestionAutofillNoUiState.Close
+        }
+
         val mappingsOption = selectedAutofillItem
             .map { autofillItem ->
                 getMappings(autofillItem, copyTotpToClipboard, appState)

@@ -62,6 +62,7 @@ import proton.android.pass.data.api.usecases.GetItemActions
 import proton.android.pass.data.api.usecases.GetItemByAliasEmail
 import proton.android.pass.data.api.usecases.GetItemById
 import proton.android.pass.data.api.usecases.GetItemsBySearchResult
+import proton.android.pass.data.api.usecases.HasActiveAccount
 import proton.android.pass.data.api.usecases.popularservices.GetPopularServices
 import proton.android.pass.data.api.usecases.GetPublicSuffixList
 import proton.android.pass.data.api.usecases.GetShareById
@@ -339,6 +340,7 @@ import proton.android.pass.data.impl.usecases.GetItemActionsImpl
 import proton.android.pass.data.impl.usecases.GetItemByAliasEmailImpl
 import proton.android.pass.data.impl.usecases.GetItemByIdImpl
 import proton.android.pass.data.impl.usecases.GetItemsBySearchResultImpl
+import proton.android.pass.data.impl.usecases.HasActiveAccountImpl
 import proton.android.pass.data.impl.usecases.popularservices.GetPopularServicesImpl
 import proton.android.pass.data.impl.usecases.GetPublicSuffixListImpl
 import proton.android.pass.data.impl.usecases.GetShareByIdImpl
@@ -1448,6 +1450,9 @@ abstract class DataUseCaseModule {
 
     @[Binds Singleton]
     abstract fun bindGetPasskeyCredentialItems(impl: GetPasskeyCredentialItemsImpl): GetPasskeyCredentialItems
+
+    @[Binds Singleton]
+    abstract fun bindHasActiveAccount(impl: HasActiveAccountImpl): HasActiveAccount
 
     @[Binds Singleton]
     abstract fun bindAddOnePasswordHistoryEntryToUser(

@@ -33,6 +33,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import me.proton.core.domain.entity.UserId
 import proton.android.pass.domain.credentials.PasswordCredentialItem
 import proton.android.pass.features.credentials.passwords.usage.presentation.PasswordCredentialUsageRequest
 import proton.android.pass.features.credentials.passwords.usage.presentation.PasswordCredentialUsageState
@@ -74,20 +75,32 @@ internal class PasswordCredentialUsageActivity : FragmentActivity() {
     }
 
     private fun getPasswordUsageRequest(): PasswordCredentialUsageRequest? {
-        val username = intent.getStringExtra(EXTRAS_CREDENTIAL_USERNAME) ?: run {
-            PassLogger.w(TAG, "Password usage request does not contain username")
-            return null
-        }
+        val userId = intent.getStringExtra(EXTRAS_CREDENTIAL_USER_ID)
+        val username = intent.getStringExtra(EXTRAS_CREDENTIAL_USERNAME)
+        val encryptedPassword = intent.getStringExtra(EXTRAS_CREDENTIAL_PASSWORD)
 
-        val encryptedPassword = intent.getStringExtra(EXTRAS_CREDENTIAL_PASSWORD) ?: run {
-            PassLogger.w(TAG, "Password usage request does not contain password")
-            return null
-        }
+        return when {
+            userId == null -> {
+                PassLogger.w(TAG, "Password usage request does not contain userId")
+                null
+            }
 
-        return PasswordCredentialUsageRequest(
-            username = username,
-            encryptedPassword = encryptedPassword
-        )
+            username == null -> {
+                PassLogger.w(TAG, "Password usage request does not contain username")
+                null
+            }
+
+            encryptedPassword == null -> {
+                PassLogger.w(TAG, "Password usage request does not contain password")
+                null
+            }
+
+            else -> PasswordCredentialUsageRequest(
+                userId = UserId(userId),
+                username = username,
+                encryptedPassword = encryptedPassword
+            )
+        }
     }
 
     private fun onCancelAuthRequest() {
@@ -117,6 +130,7 @@ internal class PasswordCredentialUsageActivity : FragmentActivity() {
 
         private const val TAG = "PasswordCredentialUsageActivity"
 
+        private const val EXTRAS_CREDENTIAL_USER_ID = "CREDENTIAL_USER_ID"
         private const val EXTRAS_CREDENTIAL_USERNAME = "CREDENTIAL_USERNAME"
         private const val EXTRAS_CREDENTIAL_PASSWORD = "CREDENTIAL_PASSWORD"
 
@@ -129,6 +143,7 @@ internal class PasswordCredentialUsageActivity : FragmentActivity() {
         ).apply {
             setPackage(context.packageName)
 
+            putExtra(EXTRAS_CREDENTIAL_USER_ID, passwordCredentialItem.userId.id)
             putExtra(EXTRAS_CREDENTIAL_USERNAME, passwordCredentialItem.username)
             putExtra(EXTRAS_CREDENTIAL_PASSWORD, passwordCredentialItem.encryptedPassword)
         }

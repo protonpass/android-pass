@@ -18,6 +18,7 @@
 
 package proton.android.pass.features.credentials.passkeys.selection.presentation
 
+import me.proton.core.domain.entity.UserId
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.PasskeyId
 import proton.android.pass.domain.ShareId
@@ -62,6 +63,7 @@ internal sealed interface PasskeyCredentialSelectionRequest {
         override val requestJson: String,
         override val requestOrigin: String,
         override val clientDataHash: ByteArray?,
+        internal val userId: UserId,
         internal val shareId: ShareId,
         internal val itemId: ItemId,
         internal val passkeyId: PasskeyId
@@ -77,6 +79,7 @@ internal sealed interface PasskeyCredentialSelectionRequest {
             if (requestJson != other.requestJson) return false
             if (requestOrigin != other.requestOrigin) return false
             if (!clientDataHash.contentEquals(other.clientDataHash)) return false
+            if (userId != other.userId) return false
             if (shareId != other.shareId) return false
             if (itemId != other.itemId) return false
             if (passkeyId != other.passkeyId) return false
@@ -88,6 +91,7 @@ internal sealed interface PasskeyCredentialSelectionRequest {
             var result = requestJson.hashCode()
             result = 31 * result + requestOrigin.hashCode()
             result = 31 * result + clientDataHash.contentHashCode()
+            result = 31 * result + userId.hashCode()
             result = 31 * result + shareId.hashCode()
             result = 31 * result + itemId.hashCode()
             result = 31 * result + passkeyId.hashCode()

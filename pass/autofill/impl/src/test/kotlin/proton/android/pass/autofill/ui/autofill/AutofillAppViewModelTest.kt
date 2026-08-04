@@ -38,6 +38,7 @@ import proton.android.pass.common.api.None
 import proton.android.pass.crypto.fakes.context.FakeEncryptionContext
 import proton.android.pass.crypto.fakes.context.FakeEncryptionContextProvider
 import proton.android.pass.data.fakes.usecases.FakeGetItemById
+import proton.android.pass.data.fakes.usecases.FakeHasActiveAccount
 import proton.android.pass.data.fakes.usecases.FakeUpdateAutofillItem
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemFlags
@@ -85,6 +86,7 @@ class AutofillAppViewModelTest {
             telemetryManager = FakeTelemetryManager(),
             inAppReviewTriggerMetrics = FakeInAppReviewTriggerMetrics(),
             getItemById = getItemById,
+            hasActiveAccount = FakeHasActiveAccount(),
             internalSettingsRepository = internalSettingsRepository,
             clock = Clock.System
         )

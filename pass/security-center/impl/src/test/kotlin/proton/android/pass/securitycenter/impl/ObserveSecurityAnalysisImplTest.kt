@@ -25,9 +25,11 @@ import org.junit.Before
 import org.junit.Test
 import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.fakes.FakeAppDispatchers
+import proton.android.pass.data.api.repositories.CompromisedPasswordItem
 import proton.android.pass.data.fakes.usecases.compromisedpassword.FakeObserveCompromisedPasswords
 import proton.android.pass.data.fakes.usecases.compromisedpassword.FakeRefreshCompromisedPasswords
 import proton.android.pass.data.fakes.usecases.items.FakeObserveMonitoredItems
+import proton.android.pass.domain.ItemFlag
 import proton.android.pass.securitycenter.api.CompromisedPasswordsResult
 import proton.android.pass.securitycenter.api.InsecurePasswordsResult
 import proton.android.pass.securitycenter.api.Missing2faResult
@@ -121,6 +123,46 @@ class ObserveSecurityAnalysisImplTest {
                     compromisedPasswords = LoadingResult.Success(CompromisedPasswordsResult(0))
                 )
             )
+        }
+    }
+
+    @Test
+    fun `compromised passwords count ignores items that skip the compromised check`() = runTest {
+        val ignored = ItemTestFactory.random(flags = ItemFlag.SkipCompromisedPasswordCheck.value)
+        val compromised = ItemTestFactory.random()
+
+        observeMonitoredItems.emitMonitoredItems(listOf(ignored, compromised))
+        observeCompromisedPasswords.emit(
+            listOf(
+                CompromisedPasswordItem(ignored.shareId, ignored.id),
+                CompromisedPasswordItem(compromised.shareId, compromised.id)
+            )
+        )
+
+        instance().test {
+            skipItems(1) // Initial loading
+            assertThat(awaitItem().compromisedPasswords)
+                .isEqualTo(LoadingResult.Success(CompromisedPasswordsResult(1)))
+        }
+    }
+
+    @Test
+    fun `compromised passwords count ignores items that are not monitored`() = runTest {
+        val monitored = ItemTestFactory.random()
+        val notMonitored = ItemTestFactory.random()
+
+        observeMonitoredItems.emitMonitoredItems(listOf(monitored))
+        observeCompromisedPasswords.emit(
+            listOf(
+                CompromisedPasswordItem(monitored.shareId, monitored.id),
+                CompromisedPasswordItem(notMonitored.shareId, notMonitored.id)
+            )
+        )
+
+        instance().test {
+            skipItems(1) // Initial loading
+            assertThat(awaitItem().compromisedPasswords)
+                .isEqualTo(LoadingResult.Success(CompromisedPasswordsResult(1)))
         }
     }
 

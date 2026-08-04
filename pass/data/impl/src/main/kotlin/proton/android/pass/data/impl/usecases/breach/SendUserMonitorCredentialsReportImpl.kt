@@ -40,6 +40,8 @@ import proton.android.pass.domain.ItemFlag
 import proton.android.pass.domain.ItemState
 import proton.android.pass.domain.Share
 import proton.android.pass.domain.ShareSelection
+import proton.android.pass.securitycenter.api.SecurityCheck
+import proton.android.pass.securitycenter.api.isCheckExcluded
 import proton.android.pass.securitycenter.api.passwords.InsecurePasswordChecker
 import proton.android.pass.securitycenter.api.passwords.MissingTfaChecker
 import proton.android.pass.securitycenter.api.passwords.RepeatedPasswordChecker
@@ -89,7 +91,9 @@ class SendUserMonitorCredentialsReportImpl @Inject constructor(
                 refreshCompromisedPasswords(userId, monitoredItems)
                 val compromisedItems = observeCompromisedPasswords(userId).first()
                 val report = withContext(dispatchers.default) {
-                    val monitoredKeys = monitoredItems.mapTo(mutableSetOf()) { it.shareId to it.id }
+                    val monitoredKeys = monitoredItems
+                        .filterNot { it.isCheckExcluded(SecurityCheck.CompromisedPassword) }
+                        .mapTo(mutableSetOf()) { it.shareId to it.id }
                     SendUserMonitorCredentialsRequest(
                         reusedPasswords = repeatedPasswordChecker(monitoredItems).repeatedPasswordsCount,
                         inactive2FA = missing2faChecker(monitoredItems).missing2faCount,

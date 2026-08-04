@@ -1,0 +1,2 @@
+<TextView android:drawable="@drawable/xml_usage" />
+<ImageView android:drawable="@drawable/density_usage" />

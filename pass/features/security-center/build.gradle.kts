@@ -53,6 +53,7 @@ android {
 }
 
 dependencies {
+    implementation(projects.pass.common.api)
     implementation(projects.pass.commonPresentation.api)
     implementation(projects.pass.commonUi.api)
     implementation(projects.pass.commonUiModels.api)
@@ -96,6 +97,7 @@ dependencies {
     testImplementation(libs.kotlinx.datetime)
 
     testImplementation(projects.pass.crypto.fakes)
+    testImplementation(projects.pass.common.fakes)
     testImplementation(projects.pass.commonTest)
     testImplementation(projects.pass.commonUi.fakes)
     testImplementation(projects.pass.data.fakes)
@@ -110,6 +112,7 @@ dependencies {
     androidTestImplementation(libs.kotlinTest)
 
     androidTestImplementation(projects.pass.commonTest)
+    androidTestImplementation(projects.pass.common.fakes)
     androidTestImplementation(projects.pass.commonUi.fakes)
     androidTestImplementation(projects.pass.data.fakes)
     androidTestImplementation(projects.pass.notifications.fakes)

@@ -20,10 +20,13 @@ package proton.android.pass.features.security.center.weakpass.presentation
 
 import app.cash.turbine.test
 import com.google.common.truth.Truth.assertThat
+import kotlinx.coroutines.flow.filterNot
+import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
+import proton.android.pass.common.fakes.FakeAppDispatchers
 import proton.android.pass.crypto.fakes.context.FakeEncryptionContextProvider
 import proton.android.pass.data.fakes.usecases.items.FakeObserveMonitoredItems
 import proton.android.pass.data.fakes.usecases.vaults.FakeObserveVaultsGroupedByShareId
@@ -37,14 +40,17 @@ import proton.android.pass.test.domain.ItemTestFactory
 
 internal class SecurityCenterWeakPassViewModelTest {
 
+    private val testDispatcher = UnconfinedTestDispatcher()
+
     @get:Rule
-    internal val dispatcherRule = MainDispatcherRule()
+    internal val dispatcherRule = MainDispatcherRule(testDispatcher)
 
     private lateinit var observeMonitoredItems: FakeObserveMonitoredItems
     private lateinit var observeVaultsGroupedByShareId: FakeObserveVaultsGroupedByShareId
     private lateinit var insecurePasswordChecker: FakeInsecurePasswordChecker
     private lateinit var userPreferencesRepository: FakePreferenceRepository
     private lateinit var telemetryManager: FakeTelemetryManager
+    private lateinit var appDispatchers: FakeAppDispatchers
     private lateinit var encryptionContextProvider: FakeEncryptionContextProvider
 
     @Before
@@ -54,6 +60,7 @@ internal class SecurityCenterWeakPassViewModelTest {
         insecurePasswordChecker = FakeInsecurePasswordChecker()
         userPreferencesRepository = FakePreferenceRepository()
         telemetryManager = FakeTelemetryManager()
+        appDispatchers = FakeAppDispatchers.withTestDispatcher(testDispatcher)
         encryptionContextProvider = FakeEncryptionContextProvider()
     }
 
@@ -76,8 +83,7 @@ internal class SecurityCenterWeakPassViewModelTest {
 
         observeMonitoredItems.emitMonitoredItems(listOf(itemC, itemA, itemB))
 
-        viewModel.state.test {
-            skipItems(1)
+        viewModel.state.filterNot { it.isLoading }.test {
             val titles = awaitItem().itemUiModels.map { it.contents.title }
             assertThat(titles).isEqualTo(listOf("Alpha", "Bravo", "Charlie"))
         }
@@ -102,8 +108,7 @@ internal class SecurityCenterWeakPassViewModelTest {
 
         observeMonitoredItems.emitMonitoredItems(listOf(itemZ, itemM, itemA))
 
-        viewModel.state.test {
-            skipItems(1)
+        viewModel.state.filterNot { it.isLoading }.test {
             val titles = awaitItem().itemUiModels.map { it.contents.title }
             assertThat(titles).isEqualTo(listOf("Alpha", "mike", "Zulu"))
         }
@@ -130,8 +135,7 @@ internal class SecurityCenterWeakPassViewModelTest {
 
         observeMonitoredItems.emitMonitoredItems(items)
 
-        viewModel.state.test {
-            skipItems(1)
+        viewModel.state.filterNot { it.isLoading }.test {
             val titles = awaitItem().itemUiModels.map { it.contents.title }
             assertThat(titles).isEqualTo(listOf("Alpha", "Bravo", "Yankee", "Zulu"))
         }
@@ -158,8 +162,7 @@ internal class SecurityCenterWeakPassViewModelTest {
 
         observeMonitoredItems.emitMonitoredItems(items)
 
-        viewModel.state.test {
-            skipItems(1)
+        viewModel.state.filterNot { it.isLoading }.test {
             val titles = awaitItem().itemUiModels.map { it.contents.title }
             assertThat(titles).isEqualTo(listOf("Álvaro", "Banco", "Ñube", "Zeta"))
         }
@@ -171,6 +174,7 @@ internal class SecurityCenterWeakPassViewModelTest {
         insecurePasswordChecker = insecurePasswordChecker,
         userPreferencesRepository = userPreferencesRepository,
         telemetryManager = telemetryManager,
+        appDispatchers = appDispatchers,
         encryptionContextProvider = encryptionContextProvider
     )
 }

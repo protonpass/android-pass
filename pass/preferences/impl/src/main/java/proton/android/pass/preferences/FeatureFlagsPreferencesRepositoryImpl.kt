@@ -24,7 +24,6 @@ import kotlinx.coroutines.flow.FlowCollector
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.runBlocking
@@ -163,14 +162,14 @@ class FeatureFlagsPreferencesRepositoryImpl @Inject constructor(
             .getOverride(featureFlag)
         if (override != null) return override
 
-        return featureFlag.key
-            ?.let { key ->
-                featureFlagManager.observe(
-                    userId = userId,
-                    featureId = FeatureId(id = key)
-                ).firstOrNull()?.value
-            }
-            ?: featureFlag.isEnabledDefault
+        val remoteValue = featureFlag.key?.let { key ->
+            val featureId = FeatureId(id = key)
+            featureFlagManager.get(userId = userId, featureId = featureId)
+                ?: runCatching {
+                    featureFlagManager.get(userId = userId, featureId = featureId, refresh = true)
+                }.getOrNull()
+        }?.value
+        return remoteValue ?: featureFlag.isEnabledDefault
     }
 
     override fun <T> set(featureFlag: FeatureFlag, value: T?): Result<Unit> = when (featureFlag) {

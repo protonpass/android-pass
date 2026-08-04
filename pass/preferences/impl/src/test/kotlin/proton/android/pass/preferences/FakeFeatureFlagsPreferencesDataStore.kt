@@ -16,11 +16,23 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.data.impl.extensions
+package proton.android.pass.preferences
 
-import me.proton.core.domain.entity.UserId
-import proton.android.pass.preferences.FeatureFlag
-import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
+import androidx.datastore.core.DataStore
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
 
-internal suspend fun FeatureFlagsPreferencesRepository.isDomainMatchingEnabled(userId: UserId): Boolean =
-    awaitResolved(FeatureFlag.PASS_AUTOFILL_URL_ADVANCED_MODES, userId)
+internal class FakeFeatureFlagsPreferencesDataStore : DataStore<FeatureFlagsPreferences> {
+
+    private val state = MutableStateFlow(FeatureFlagsPreferences.getDefaultInstance())
+
+    override val data: Flow<FeatureFlagsPreferences> = state
+
+    override suspend fun updateData(
+        transform: suspend (t: FeatureFlagsPreferences) -> FeatureFlagsPreferences
+    ): FeatureFlagsPreferences {
+        val updated = transform(state.value)
+        state.value = updated
+        return updated
+    }
+}

@@ -74,7 +74,7 @@ class SyncSimpleLoginPendingAliasesImpl @Inject constructor(
         var hasMorePendingAliases: Boolean
         val pendingAliasedDefaultShareId = syncStatus.defaultVault.shareId
         val shareKey = shareKeyRepository.getLatestKeyForShare(pendingAliasedDefaultShareId).first()
-        val domainMatchingEnabled = featureFlagsRepository.isDomainMatchingEnabled()
+        val domainMatchingEnabled = featureFlagsRepository.isDomainMatchingEnabled(userId)
 
         do {
             val pendingAliases = repository.getPendingAliases(userId)

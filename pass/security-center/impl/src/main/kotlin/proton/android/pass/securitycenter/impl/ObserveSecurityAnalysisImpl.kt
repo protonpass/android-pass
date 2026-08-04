@@ -43,7 +43,9 @@ import proton.android.pass.securitycenter.api.Missing2faResult
 import proton.android.pass.securitycenter.api.ObserveSecurityAnalysis
 import proton.android.pass.securitycenter.api.ReusedPasswordsResult
 import proton.android.pass.securitycenter.api.SecurityAnalysis
+import proton.android.pass.securitycenter.api.SecurityCheck
 import proton.android.pass.securitycenter.api.checkers.BreachedDataChecker
+import proton.android.pass.securitycenter.api.isCheckExcluded
 import proton.android.pass.securitycenter.api.passwords.InsecurePasswordChecker
 import proton.android.pass.securitycenter.api.passwords.MissingTfaChecker
 import proton.android.pass.securitycenter.api.passwords.RepeatedPasswordChecker
@@ -81,8 +83,13 @@ class ObserveSecurityAnalysisImpl @Inject constructor(
                     oneShot { missing2faChecker(items) }.map {
                         Missing2faResult(it.missing2faCount)
                     }.asLoadingResult(),
-                    observeCompromisedPasswords().map {
-                        CompromisedPasswordsResult(it.size)
+                    observeCompromisedPasswords().map { compromisedPasswords ->
+                        val compromisedKeys = compromisedPasswords
+                            .mapTo(mutableSetOf()) { it.shareId to it.itemId }
+                        items.count { item ->
+                            item.shareId to item.id in compromisedKeys &&
+                                !item.isCheckExcluded(SecurityCheck.CompromisedPassword)
+                        }.let(::CompromisedPasswordsResult)
                     }.asLoadingResult()
                 ) { breached, reused, insecure, missing2fa, compromised ->
                     SecurityAnalysis(

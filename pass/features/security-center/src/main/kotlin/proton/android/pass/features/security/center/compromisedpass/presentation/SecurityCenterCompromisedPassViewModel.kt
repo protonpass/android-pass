@@ -38,6 +38,8 @@ import proton.android.pass.domain.Item
 import proton.android.pass.features.security.center.PassMonitorDisplayCompromisedPasswords
 import proton.android.pass.preferences.UserPreferencesRepository
 import proton.android.pass.preferences.value
+import proton.android.pass.securitycenter.api.SecurityCheck
+import proton.android.pass.securitycenter.api.isCheckExcluded
 import proton.android.pass.telemetry.api.TelemetryManager
 import javax.inject.Inject
 
@@ -62,7 +64,8 @@ class SecurityCenterCompromisedPassViewModel @Inject constructor(
     ) { monitoredItems, compromisedIds ->
         val compromisedSet = compromisedIds.map { it.shareId to it.itemId }.toSet()
         monitoredItems.filter { item ->
-            item.shareId to item.id in compromisedSet
+            item.shareId to item.id in compromisedSet &&
+                !item.isCheckExcluded(SecurityCheck.CompromisedPassword)
         }
     }
         .distinctUntilChanged()

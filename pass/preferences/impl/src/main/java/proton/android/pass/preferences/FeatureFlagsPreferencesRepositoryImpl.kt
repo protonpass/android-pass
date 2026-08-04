@@ -35,10 +35,7 @@ import me.proton.core.featureflag.domain.entity.FeatureId
 import me.proton.core.featureflag.domain.repository.FeatureFlagRepository
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.preferences.FeatureFlag.AUTOFILL_DEBUG_MODE
-import proton.android.pass.preferences.FeatureFlag.EXTRA_LOGGING
 import proton.android.pass.preferences.FeatureFlag.PASS_ALLOW_NO_VAULT
-import proton.android.pass.preferences.FeatureFlag.PASS_GROUP_SHARE
-import proton.android.pass.preferences.FeatureFlag.PASS_MOBILE_ON_BOARDING_V2
 import proton.android.pass.preferences.FeatureFlag.PASS_USER_EVENTS_V1
 import proton.android.pass.preferences.FeatureFlag.RENAME_ADMIN_TO_MANAGER
 import proton.android.pass.preferences.FeatureFlag.PASS_FOLDERS
@@ -70,11 +67,6 @@ class FeatureFlagsPreferencesRepositoryImpl @Inject constructor(
             defaultValue = featureFlag.isEnabledDefault
         ) { autofillDebugModeEnabled.value }
 
-        EXTRA_LOGGING -> getFeatureFlag(
-            key = featureFlag.key,
-            defaultValue = featureFlag.isEnabledDefault
-        ) { extraLoggingEnabled.value }
-
         RENAME_ADMIN_TO_MANAGER -> getFeatureFlag(
             key = featureFlag.key,
             defaultValue = featureFlag.isEnabledDefault
@@ -89,16 +81,6 @@ class FeatureFlagsPreferencesRepositoryImpl @Inject constructor(
             key = featureFlag.key,
             defaultValue = featureFlag.isEnabledDefault
         ) { passUserEventsV1Enabled.value }
-
-        PASS_GROUP_SHARE -> getFeatureFlag(
-            key = featureFlag.key,
-            defaultValue = featureFlag.isEnabledDefault
-        ) { groupsEnabled.value }
-
-        PASS_MOBILE_ON_BOARDING_V2 -> getFeatureFlag(
-            key = featureFlag.key,
-            defaultValue = featureFlag.isEnabledDefault
-        ) { passMobileOnBoardingV2Enabled.value }
 
         PASS_FOLDERS -> getFeatureFlag(
             key = featureFlag.key,
@@ -177,10 +159,6 @@ class FeatureFlagsPreferencesRepositoryImpl @Inject constructor(
             autofillDebugModeEnabled = boolFlagPrefProto(value)
         }
 
-        EXTRA_LOGGING -> setFeatureFlag {
-            extraLoggingEnabled = boolFlagPrefProto(value)
-        }
-
         RENAME_ADMIN_TO_MANAGER -> setFeatureFlag {
             renameAdminToManagerEnabled = boolFlagPrefProto(value)
         }
@@ -191,14 +169,6 @@ class FeatureFlagsPreferencesRepositoryImpl @Inject constructor(
 
         PASS_USER_EVENTS_V1 -> setFeatureFlag {
             passUserEventsV1Enabled = boolFlagPrefProto(value)
-        }
-
-        PASS_GROUP_SHARE -> setFeatureFlag {
-            groupsEnabled = boolFlagPrefProto(value)
-        }
-
-        PASS_MOBILE_ON_BOARDING_V2 -> setFeatureFlag {
-            passMobileOnBoardingV2Enabled = boolFlagPrefProto(value)
         }
 
         PASS_FOLDERS -> setFeatureFlag {
@@ -331,12 +301,9 @@ class FeatureFlagsPreferencesRepositoryImpl @Inject constructor(
     private fun getPrefProto(featureFlag: FeatureFlag, preferences: FeatureFlagsPreferences) = with(preferences) {
         when (featureFlag) {
             AUTOFILL_DEBUG_MODE -> autofillDebugModeEnabled
-            EXTRA_LOGGING -> extraLoggingEnabled
             RENAME_ADMIN_TO_MANAGER -> renameAdminToManagerEnabled
             PASS_ALLOW_NO_VAULT -> passAllowNoVault
             PASS_USER_EVENTS_V1 -> passUserEventsV1Enabled
-            PASS_GROUP_SHARE -> groupsEnabled
-            PASS_MOBILE_ON_BOARDING_V2 -> passMobileOnBoardingV2Enabled
             PASS_FOLDERS -> passFoldersEnabled
             PASS_AUTOFILL_URL_ADVANCED_MODES -> passAutofillUrlRegexEnabled
             ENABLE_PAGINATION -> enablePagination

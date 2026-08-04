@@ -49,22 +49,17 @@ import proton.android.pass.domain.GroupId
 import proton.android.pass.domain.InviteToken
 import proton.android.pass.domain.RecommendedGroup
 import proton.android.pass.domain.ShareId
-import proton.android.pass.preferences.FakeFeatureFlagsPreferenceRepository
-import proton.android.pass.preferences.FeatureFlag
 
 class UserInviteRepositoryImplTest {
 
     private lateinit var repository: UserInviteRepositoryImpl
     private lateinit var groupRepository: FakeGroupRepository
-    private lateinit var featureFlags: FakeFeatureFlagsPreferenceRepository
     private lateinit var remoteDataSource: FakeRemoteUserInviteDataSource
 
     @Before
     fun setup() {
         groupRepository = FakeGroupRepository()
-        featureFlags = FakeFeatureFlagsPreferenceRepository()
         remoteDataSource = FakeRemoteUserInviteDataSource()
-        featureFlags.set(FeatureFlag.PASS_GROUP_SHARE, true)
 
         repository = UserInviteRepositoryImpl(
             remoteDataSource = remoteDataSource,
@@ -74,7 +69,6 @@ class UserInviteRepositoryImplTest {
             encryptUserInviteKeys = StubEncryptUserInviteKeys,
             observeConfirmedInviteToken = FakeObserveConfirmedInviteToken(),
             groupRepository = groupRepository,
-            featureFlagsPreferencesRepository = featureFlags,
             shareRepository = FakeShareRepository(),
             encryptShareKeysForUser = FakeEncryptShareKeysForUser(),
             shareKeyRepository = FakeShareKeyRepository(),

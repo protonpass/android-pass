@@ -75,8 +75,6 @@ import proton.android.pass.domain.ShareRole
 import proton.android.pass.domain.ShareType
 import proton.android.pass.domain.events.EventToken
 import proton.android.pass.log.api.PassLogger
-import proton.android.pass.preferences.FeatureFlag
-import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import proton_pass_vault_v1.VaultV1
 import javax.inject.Inject
 
@@ -88,7 +86,6 @@ class UserInviteRepositoryImpl @Inject constructor(
     private val encryptUserInviteKeys: EncryptUserInviteKeys,
     private val observeConfirmedInviteToken: ObserveConfirmedInviteToken,
     private val groupRepository: GroupRepository,
-    private val featureFlagsPreferencesRepository: FeatureFlagsPreferencesRepository,
     private val shareRepository: ShareRepository,
     private val encryptShareKeysForUser: EncryptShareKeysForUser,
     private val shareKeyRepository: ShareKeyRepository,
@@ -386,9 +383,7 @@ class UserInviteRepositoryImpl @Inject constructor(
                 groupDisplayName = null
             )
         )
-        val isGroupsEnabled =
-            featureFlagsPreferencesRepository.awaitResolved(FeatureFlag.PASS_GROUP_SHARE, userId)
-        val groupData = if (isGroupsEnabled) fetchGroupData(userId) else GroupData()
+        val groupData = fetchGroupData(userId)
         val recommendedItems = processSuggestedItems(suggestedResponse.suggested, groupData)
 
         val organizationItems = processOrganizationItems(

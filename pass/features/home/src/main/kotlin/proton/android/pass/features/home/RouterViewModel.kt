@@ -97,7 +97,6 @@ class RouterViewModel @Inject constructor(
                 .flatMapLatest {
                     flowOf(it.map { plan -> plan.isFreePlan }.getOrNull() != false)
                 },
-            featureFlagsPreferencesRepository[FeatureFlag.PASS_MOBILE_ON_BOARDING_V2],
             ::routerEvent
         )
             .distinctUntilChanged()
@@ -119,15 +118,13 @@ class RouterViewModel @Inject constructor(
         modalOption: InAppMessage.Modal?,
         promoOption: InAppMessage.Promo?,
         supportPayment: Boolean,
-        isFreePlan: Boolean,
-        isOnboardingV2Enable: Boolean
+        isFreePlan: Boolean
     ): RouterEvent = when {
         inviteTokenOption is Some -> RouterEvent.ConfirmedInvite(inviteTokenOption.value)
         hasCompletedOnBoarding == HasCompletedOnBoarding.NotCompleted -> {
             RouterEvent.OnBoarding(
                 supportPayment = supportPayment,
-                isFreePlan = isFreePlan,
-                isOnboardingV2Enable = isOnboardingV2Enable
+                isFreePlan = isFreePlan
             )
         }
 
@@ -146,8 +143,7 @@ sealed interface RouterEvent {
 
     data class OnBoarding(
         val supportPayment: Boolean,
-        val isFreePlan: Boolean,
-        val isOnboardingV2Enable: Boolean
+        val isFreePlan: Boolean
     ) :
         RouterEvent
 

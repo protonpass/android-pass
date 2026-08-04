@@ -30,26 +30,17 @@ import proton.android.pass.data.api.errors.UserIdNotAvailableError
 import proton.android.pass.data.api.repositories.GroupRepository
 import proton.android.pass.data.api.usecases.GroupMembers
 import proton.android.pass.data.api.usecases.ObserveGroupMembersByGroup
-import proton.android.pass.preferences.FeatureFlag
-import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import javax.inject.Inject
 
 class ObserveGroupMembersByGroupImpl @Inject constructor(
     private val accountManager: AccountManager,
-    private val groupRepository: GroupRepository,
-    private val featureFlagsPreferencesRepository: FeatureFlagsPreferencesRepository
+    private val groupRepository: GroupRepository
 ) : ObserveGroupMembersByGroup {
 
     override fun invoke(userId: UserId?, forceRefresh: Boolean): Flow<List<GroupMembers>> = flow {
         val currentUserId = userId ?: accountManager.getPrimaryUserId().firstOrNull()
             ?: throw UserIdNotAvailableError()
-        val isGroupSharingEnabled =
-            featureFlagsPreferencesRepository.awaitResolved(FeatureFlag.PASS_GROUP_SHARE, currentUserId)
-        if (isGroupSharingEnabled) {
-            emit(retrieveGroupMembersByGroup(currentUserId, forceRefresh))
-        } else {
-            emit(emptyList())
-        }
+        emit(retrieveGroupMembersByGroup(currentUserId, forceRefresh))
     }
 
     private suspend fun retrieveGroupMembersByGroup(userId: UserId, forceRefresh: Boolean): List<GroupMembers> =

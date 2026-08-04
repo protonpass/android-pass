@@ -39,8 +39,6 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Brush
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -49,12 +47,10 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import com.google.accompanist.pager.HorizontalPagerIndicator
 import kotlinx.coroutines.flow.collectLatest
-import me.proton.core.compose.theme.ProtonTheme
 import proton.android.pass.commonui.api.LocalDark
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.ThemePairPreviewProvider
-import proton.android.pass.commonui.api.applyIf
 import proton.android.pass.features.onboarding.OnBoardingPageName.Autofill
 import proton.android.pass.features.onboarding.OnBoardingPageName.Fingerprint
 import proton.android.pass.features.onboarding.OnBoardingPageName.InvitePending
@@ -76,12 +72,7 @@ fun OnBoardingContent(
     Column(
         modifier = modifier
             .fillMaxSize()
-            .applyIf(
-                condition = uiState.isOnBoardingV2Enable,
-                ifTrue = {
-                    Modifier.background(brush = PassTheme.colors.backgroundBrush)
-                }
-            ),
+            .background(brush = PassTheme.colors.backgroundBrush),
         verticalArrangement = Arrangement.Bottom
     ) {
         LaunchedEffect(
@@ -105,35 +96,19 @@ fun OnBoardingContent(
         ) { page ->
             val pageState = when (uiState.enabledPages.getOrNull(page)) {
                 null -> null
-                Autofill -> if (uiState.isOnBoardingV2Enable)
-                    autofillPageUiStateV2() else autofillPageUiState()
-
-                Fingerprint -> if (uiState.isOnBoardingV2Enable)
-                    fingerPrintPageUiStateV2() else fingerPrintPageUiState()
-
-                Last -> if (uiState.isOnBoardingV2Enable)
-                    lastPageUiStateV2() else lastPageUiState()
-
-                InvitePending -> if (uiState.isOnBoardingV2Enable)
-                    pendingAccessPageUiStateV2() else pendingAccessPageUiState()
+                Autofill -> autofillPageUiStateV2()
+                Fingerprint -> fingerPrintPageUiStateV2()
+                Last -> lastPageUiStateV2()
+                InvitePending -> pendingAccessPageUiStateV2()
             }
 
             if (pageState != null) {
-                if (uiState.isOnBoardingV2Enable) {
-                    OnBoardingPageV2(
-                        modifier = Modifier.testTag(pageState.page.name),
-                        onBoardingPageData = pageState,
-                        onMainButtonClick = onMainButtonClick,
-                        onSkipButtonClick = onSkipButtonClick
-                    )
-                } else {
-                    OnBoardingPage(
-                        modifier = Modifier.testTag(pageState.page.name),
-                        onBoardingPageData = pageState,
-                        onMainButtonClick = onMainButtonClick,
-                        onSkipButtonClick = onSkipButtonClick
-                    )
-                }
+                OnBoardingPageV2(
+                    modifier = Modifier.testTag(pageState.page.name),
+                    onBoardingPageData = pageState,
+                    onMainButtonClick = onMainButtonClick,
+                    onSkipButtonClick = onSkipButtonClick
+                )
             }
         }
         Spacer(modifier = Modifier.padding(Spacing.extraSmall))
@@ -142,108 +117,11 @@ fun OnBoardingContent(
             modifier = Modifier
                 .align(Alignment.CenterHorizontally)
                 .padding(Spacing.medium)
-                .then(
-                    if (uiState.isOnBoardingV2Enable) {
-                        Modifier.navigationBarsPadding()
-                    } else {
-                        Modifier
-                    }
-                ),
+                .navigationBarsPadding(),
             pageCount = uiState.enabledPages.size
         )
     }
 }
-
-@Composable
-private fun onBoardingBrush() = Brush.linearGradient(
-    colors = listOf(
-        ProtonTheme.colors.brandNorm.copy(alpha = 0.3F),
-        Color.Transparent,
-        Color.Transparent,
-        Color.Transparent
-    )
-)
-
-@Composable
-fun pendingAccessPageUiState(): OnBoardingPageUiState = OnBoardingPageUiState(
-    page = InvitePending,
-    title = stringResource(R.string.on_boarding_pending_invite_title),
-    subtitle = stringResource(R.string.on_boarding_pending_invite_content),
-    image = @Composable {
-        Image(
-            modifier = Modifier
-                .fillMaxWidth()
-                .weight(1f)
-                .background(onBoardingBrush())
-                .padding(38.dp, Spacing.none),
-            painter = painterResource(id = R.drawable.account_setup),
-            contentDescription = ""
-        )
-    },
-    mainButton = stringResource(R.string.on_boarding_pending_invite_button),
-    showSkipButton = false
-)
-
-@Composable
-fun autofillPageUiState(): OnBoardingPageUiState = OnBoardingPageUiState(
-    page = Autofill,
-    title = stringResource(R.string.on_boarding_autofill_title),
-    subtitle = stringResource(R.string.on_boarding_autofill_content),
-    image = @Composable {
-        Image(
-            modifier = Modifier
-                .fillMaxWidth()
-                .weight(1f)
-                .background(onBoardingBrush())
-                .padding(38.dp, Spacing.none),
-            painter = painterResource(id = R.drawable.onboarding_autofill),
-            contentDescription = ""
-        )
-    },
-    mainButton = stringResource(R.string.on_boarding_autofill_button),
-    showSkipButton = true
-)
-
-
-@Composable
-fun fingerPrintPageUiState(): OnBoardingPageUiState = OnBoardingPageUiState(
-    page = Fingerprint,
-    title = stringResource(R.string.on_boarding_fingerprint_title),
-    subtitle = stringResource(R.string.on_boarding_fingerprint_content),
-    image = @Composable {
-        Image(
-            modifier = Modifier
-                .fillMaxWidth()
-                .weight(1f)
-                .background(onBoardingBrush()),
-            painter = painterResource(id = R.drawable.onboarding_fingerprint),
-            contentDescription = ""
-        )
-    },
-    mainButton = stringResource(R.string.on_boarding_fingerprint_button),
-    showSkipButton = true
-)
-
-@Composable
-fun lastPageUiState(): OnBoardingPageUiState = OnBoardingPageUiState(
-    page = Last,
-    title = stringResource(R.string.on_boarding_last_page_title),
-    subtitle = stringResource(R.string.on_boarding_last_page_content),
-    image = @Composable {
-        Image(
-            modifier = Modifier
-                .fillMaxWidth()
-                .weight(1f)
-                .background(onBoardingBrush()),
-            painter = painterResource(id = R.drawable.onboarding_last),
-            contentDescription = ""
-        )
-    },
-    mainButton = stringResource(R.string.on_boarding_last_page_button),
-    showSkipButton = false,
-    showVideoTutorialButton = true
-)
-
 
 @Composable
 fun pendingAccessPageUiStateV2(): OnBoardingPageUiState = OnBoardingPageUiState(
@@ -340,13 +218,7 @@ fun OnBoardingContentPreview(
     PassTheme(isDark = input.first) {
         Surface {
             OnBoardingContent(
-                modifier = Modifier.then(
-                    other = if (input.second.isOnBoardingV2Enable) {
-                        Modifier.background(brush = PassTheme.colors.backgroundBrush)
-                    } else {
-                        Modifier
-                    }
-                ),
+                modifier = Modifier,
                 input.second,
                 {},
                 {},

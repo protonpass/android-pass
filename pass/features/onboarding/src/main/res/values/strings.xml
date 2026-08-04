@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="on_boarding_autofill_content">Let Proton Pass fill in login details for you. No typing or copy-paste required.</string>
-    <string name="on_boarding_autofill_title">Log in to apps instantly</string>
     <string name="on_boarding_autofill_content_v2">Proton pass fill in login details for you. No typing or copy paste required.</string>
     <string name="on_boarding_autofill_title_v2">Enjoy the magic of AutoFill</string>
     <string name="on_boarding_autofill_button">Autofill with Proton Pass</string>
@@ -13,7 +11,6 @@
     <string name="on_boarding_last_page_title">Control what lands in your inbox</string>
     <string name="on_boarding_last_page_button">Start using Proton Pass</string>
     <string name="on_boarding_skip">Not now</string>
-    <string name="on_boarding_tutorial">Watch a short video on how to use Proton Pass</string>
     <string name="on_boarding_tutorial_v2">Learn how to use Proton Pass</string>
     <string name="on_boarding_pending_invite_content">For security reasons, your access needs to be confirmed.</string>
     <string name="on_boarding_pending_invite_title">Pending access to the shared data</string>

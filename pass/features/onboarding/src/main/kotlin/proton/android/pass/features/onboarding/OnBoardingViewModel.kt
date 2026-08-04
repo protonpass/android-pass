@@ -57,8 +57,6 @@ import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.android.pass.preferences.AppLockState
 import proton.android.pass.preferences.AppLockTypePreference
-import proton.android.pass.preferences.FeatureFlag
-import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import proton.android.pass.preferences.HasCompletedOnBoarding
 import proton.android.pass.preferences.UserPreferencesRepository
 import proton.android.pass.telemetry.api.TelemetryGrowthFeatureUsageAction
@@ -76,8 +74,7 @@ class OnBoardingViewModel @Inject constructor(
     private val observeUserAccessData: ObserveUserAccessData,
     private val storeAuthSuccessful: StoreAuthSuccessful,
     private val telemetryManager: TelemetryManager,
-    appConfig: AppConfig,
-    featureFlagsPreferencesRepository: FeatureFlagsPreferencesRepository
+    appConfig: AppConfig
 ) : ViewModel() {
 
     private val isQuest = appConfig.flavor.isQuest()
@@ -85,23 +82,10 @@ class OnBoardingViewModel @Inject constructor(
     val onBoardingUiState: StateFlow<OnBoardingUiState> = _onBoardingUiState
 
     init {
-        viewModelScope.launch {
-            val isOnBoardingV2Enable = featureFlagsPreferencesRepository
-                .get<Boolean>(FeatureFlag.PASS_MOBILE_ON_BOARDING_V2)
-                .firstOrNull()
-                ?: false
-
-            _onBoardingUiState.update {
-                it.copy(
-                    isOnBoardingV2Enable = isOnBoardingV2Enable
-                )
-            }
-
-            initOnBoarding(isOnBoardingV2Enable)
-        }
+        initOnBoarding()
     }
 
-    private fun initOnBoarding(isOnBoardingV2Enable: Boolean) {
+    private fun initOnBoarding() {
         viewModelScope.launch {
             val showInvitePendingAcceptance = async { shouldShowInvitePendingAcceptance() }
             val autofillStatus = async { autofillManager.getAutofillStatus().firstOrNull() }
@@ -110,20 +94,11 @@ class OnBoardingViewModel @Inject constructor(
             if (showInvitePendingAcceptance.await()) {
                 supportedPages.add(InvitePending)
             }
-            if (isOnBoardingV2Enable) {
-                if (shouldShowFingerprint(biometryStatus.await())) {
-                    supportedPages.add(Fingerprint)
-                }
-                if (shouldShowAutofill(autofillStatus.await())) {
-                    supportedPages.add(Autofill)
-                }
-            } else {
-                if (shouldShowAutofill(autofillStatus.await())) {
-                    supportedPages.add(Autofill)
-                }
-                if (shouldShowFingerprint(biometryStatus.await())) {
-                    supportedPages.add(Fingerprint)
-                }
+            if (shouldShowFingerprint(biometryStatus.await())) {
+                supportedPages.add(Fingerprint)
+            }
+            if (shouldShowAutofill(autofillStatus.await())) {
+                supportedPages.add(Autofill)
             }
             supportedPages.add(Last)
             _onBoardingUiState.update { it.copy(enabledPages = supportedPages.toPersistentList()) }

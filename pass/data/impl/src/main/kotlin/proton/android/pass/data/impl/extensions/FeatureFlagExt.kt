@@ -18,9 +18,9 @@
 
 package proton.android.pass.data.impl.extensions
 
-import kotlinx.coroutines.flow.first
+import me.proton.core.domain.entity.UserId
 import proton.android.pass.preferences.FeatureFlag
 import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 
-internal suspend fun FeatureFlagsPreferencesRepository.isDomainMatchingEnabled(): Boolean =
-    get<Boolean>(FeatureFlag.PASS_AUTOFILL_URL_ADVANCED_MODES).first()
+internal suspend fun FeatureFlagsPreferencesRepository.isDomainMatchingEnabled(userId: UserId): Boolean =
+    awaitResolved(FeatureFlag.PASS_AUTOFILL_URL_ADVANCED_MODES, userId)

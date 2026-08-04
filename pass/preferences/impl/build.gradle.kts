@@ -90,4 +90,11 @@ dependencies {
     implementation(projects.pass.domain)
     implementation(projects.pass.data.api)
     implementation(projects.pass.log.api)
+
+    testImplementation(libs.junit)
+    testImplementation(libs.truth)
+    testImplementation(libs.turbine)
+    testImplementation(libs.coroutines.test)
+
+    testImplementation(projects.pass.account.fakes)
 }

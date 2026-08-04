@@ -142,7 +142,7 @@ class ItemRepositoryImpl @Inject constructor(
     private val searchIndexRepository: SearchIndexRepository
 ) : BaseRepository(userAddressRepository), ItemRepository {
 
-    private suspend fun isDomainMatchingEnabled() = featureFlagsRepository.isDomainMatchingEnabled()
+    private suspend fun isDomainMatchingEnabled(userId: UserId) = featureFlagsRepository.isDomainMatchingEnabled(userId)
 
     @Suppress("TooGenericExceptionCaught")
     override suspend fun createItem(
@@ -158,7 +158,7 @@ class ItemRepositoryImpl @Inject constructor(
         } ?: shareKey
 
         val body = try {
-            createItem.create(parentKey, contents, isDomainMatchingEnabled())
+            createItem.create(parentKey, contents, isDomainMatchingEnabled(userId))
         } catch (e: Exception) {
             PassLogger.w(TAG, "Error creating item")
             PassLogger.w(TAG, e)
@@ -201,7 +201,7 @@ class ItemRepositoryImpl @Inject constructor(
             folderKeyRepository.getFolderKey(userId, share.id, it)
                 ?: throw IllegalStateException("No folder key found for folderId=${it.id}")
         } ?: shareKey
-        val body = createItem.create(parentKey, itemContents, isDomainMatchingEnabled())
+        val body = createItem.create(parentKey, itemContents, isDomainMatchingEnabled(userId))
 
         val mailboxIds = newAlias.mailboxes.map { it.id }
         val requestBody = CreateAliasRequest(
@@ -244,7 +244,7 @@ class ItemRepositoryImpl @Inject constructor(
             folderKeyRepository.getFolderKey(userId, shareId, it)
                 ?: throw IllegalStateException("No folder key found for folderId=${it.id}")
         } ?: shareKey
-        val domainMatchingEnabled = isDomainMatchingEnabled()
+        val domainMatchingEnabled = isDomainMatchingEnabled(userId)
         val request = safeRunCatching {
             val itemBody = createItem.create(parentKey, contents, domainMatchingEnabled)
             val aliasContents = ItemContents.Alias(
@@ -337,7 +337,7 @@ class ItemRepositoryImpl @Inject constructor(
             share,
             item,
             itemContents,
-            isDomainMatchingEnabled()
+            isDomainMatchingEnabled(userId)
         )
     }
 
@@ -1095,7 +1095,7 @@ class ItemRepositoryImpl @Inject constructor(
             share,
             item,
             updatedContents,
-            isDomainMatchingEnabled()
+            isDomainMatchingEnabled(userId)
         )
     }
 
@@ -1519,7 +1519,7 @@ class ItemRepositoryImpl @Inject constructor(
             share = share,
             item = item,
             itemContents = updatedContents,
-            isDomainMatchingEnabled = isDomainMatchingEnabled()
+            isDomainMatchingEnabled = isDomainMatchingEnabled(userId)
         )
     }
 

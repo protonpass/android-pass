@@ -44,9 +44,7 @@ class ObserveGroupMembersByGroupImpl @Inject constructor(
         val currentUserId = userId ?: accountManager.getPrimaryUserId().firstOrNull()
             ?: throw UserIdNotAvailableError()
         val isGroupSharingEnabled =
-            featureFlagsPreferencesRepository.get<Boolean>(FeatureFlag.PASS_GROUP_SHARE, currentUserId)
-                .firstOrNull()
-                ?: false
+            featureFlagsPreferencesRepository.awaitResolved(FeatureFlag.PASS_GROUP_SHARE, currentUserId)
         if (isGroupSharingEnabled) {
             emit(retrieveGroupMembersByGroup(currentUserId, forceRefresh))
         } else {

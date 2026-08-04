@@ -19,7 +19,9 @@
 package proton.android.pass.account.fakes
 
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.update
 import me.proton.core.domain.entity.UserId
 import me.proton.core.featureflag.domain.entity.FeatureFlag
 import me.proton.core.featureflag.domain.entity.FeatureId
@@ -30,34 +32,43 @@ import javax.inject.Singleton
 
 @Singleton
 class FakeFeatureFlagRepository @Inject constructor() : FeatureFlagRepository {
+
+    private val flagsFlow = MutableStateFlow<Map<FeatureId, FeatureFlag?>>(emptyMap())
+
+    fun setFeatureFlag(featureId: FeatureId, featureFlag: FeatureFlag?) {
+        flagsFlow.update { it + (featureId to featureFlag) }
+    }
+
     override suspend fun get(
         userId: UserId?,
         featureIds: Set<FeatureId>,
         refresh: Boolean
-    ): List<FeatureFlag> = emptyList()
+    ): List<FeatureFlag> = flagsFlow.value.filterKeys { it in featureIds }.values.filterNotNull()
 
     override suspend fun get(
         userId: UserId?,
         featureId: FeatureId,
         refresh: Boolean
-    ): FeatureFlag? = null
+    ): FeatureFlag? = flagsFlow.value[featureId]
 
-    override suspend fun getAll(userId: UserId?): List<FeatureFlag> = emptyList()
+    override suspend fun getAll(userId: UserId?): List<FeatureFlag> = flagsFlow.value.values.filterNotNull()
     override suspend fun awaitNotEmptyScope(userId: UserId?, scope: Scope) = Unit
 
-    override fun getValue(userId: UserId?, featureId: FeatureId): Boolean? = null
+    override fun getValue(userId: UserId?, featureId: FeatureId): Boolean? = flagsFlow.value[featureId]?.value
 
     override fun observe(
         userId: UserId?,
         featureIds: Set<FeatureId>,
         refresh: Boolean
-    ): Flow<List<FeatureFlag>> = flowOf(emptyList())
+    ): Flow<List<FeatureFlag>> = flagsFlow.map { flags ->
+        flags.filterKeys { it in featureIds }.values.filterNotNull()
+    }
 
     override fun observe(
         userId: UserId?,
         featureId: FeatureId,
         refresh: Boolean
-    ): Flow<FeatureFlag?> = flowOf(null)
+    ): Flow<FeatureFlag?> = flagsFlow.map { it[featureId] }
 
     override fun prefetch(userId: UserId?, featureIds: Set<FeatureId>) {
 
@@ -70,5 +81,6 @@ class FakeFeatureFlagRepository @Inject constructor() : FeatureFlagRepository {
     }
 
     override suspend fun update(featureFlag: FeatureFlag) {
+        setFeatureFlag(featureFlag.featureId, featureFlag)
     }
 }

@@ -34,8 +34,6 @@ import proton.android.pass.data.impl.work.PeriodicIgnoredAssetLinkWorker
 import proton.android.pass.data.impl.work.PeriodicPopularServicesWorker
 import proton.android.pass.data.impl.work.PeriodicReportWorker
 import proton.android.pass.log.api.PassLogger
-import proton.android.pass.preferences.FeatureFlag
-import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import proton.android.pass.preferences.UserPreferencesRepository
 import proton.android.pass.preferences.value
 import javax.inject.Inject
@@ -43,7 +41,6 @@ import javax.inject.Inject
 class InitialWorkerLauncherImpl @Inject constructor(
     private val workManager: WorkManager,
     private val userPreferencesRepository: UserPreferencesRepository,
-    private val featureFlagsPreferencesRepository: FeatureFlagsPreferencesRepository,
     private val appDispatchers: AppDispatchers
 ) : InitialWorkerLauncher {
 
@@ -74,18 +71,13 @@ class InitialWorkerLauncherImpl @Inject constructor(
         launchFeature(WorkerFeature.FEATURE_DISCOVERY)
         launchFeature(WorkerFeature.REPORT)
         launchFeature(WorkerFeature.PASSWORD_HISTORY)
+        launchFeature(WorkerFeature.POPULAR_SERVICES)
 
         CoroutineScope(appDispatchers.io).launch {
             if (isDALEnabled()) {
                 launchFeature(WorkerFeature.ASSET_LINKS)
             } else {
                 cancelFeature(WorkerFeature.ASSET_LINKS)
-            }
-
-            if (isPopularServicesEnabled()) {
-                launchFeature(WorkerFeature.POPULAR_SERVICES)
-            } else {
-                cancelFeature(WorkerFeature.POPULAR_SERVICES)
             }
         }
     }
@@ -94,11 +86,6 @@ class InitialWorkerLauncherImpl @Inject constructor(
         .observeUseDigitalAssetLinksPreference()
         .firstOrNull()
         ?.value()
-        ?: false
-
-    private suspend fun isPopularServicesEnabled(): Boolean = featureFlagsPreferencesRepository
-        .get<Boolean>(FeatureFlag.PASS_POPULAR_SERVICES)
-        .firstOrNull()
         ?: false
 
     private fun launchFeature(feature: WorkerFeature) {

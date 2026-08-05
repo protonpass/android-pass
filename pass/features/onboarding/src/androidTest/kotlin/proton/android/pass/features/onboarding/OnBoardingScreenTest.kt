@@ -33,6 +33,7 @@ import proton.android.pass.autofill.api.AutofillSupportedStatus
 import proton.android.pass.autofill.fakes.FakeAutofillManager
 import proton.android.pass.biometry.BiometryStatus
 import proton.android.pass.biometry.FakeBiometryManager
+import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.data.fakes.usecases.FakeObserveUserAccessData
 import proton.android.pass.test.domain.UserAccessDataTestFactory
 import proton.android.pass.test.CallChecker
@@ -52,8 +53,8 @@ class OnBoardingScreenTest {
         hasText(composeTestRule.activity.resources.getString(R.string.on_boarding_skip))
     }
 
-    private val fingerprintMatcher by lazy {
-        hasText(composeTestRule.activity.resources.getString(R.string.on_boarding_fingerprint_button))
+    private val autofillMatcher by lazy {
+        hasText(composeTestRule.activity.resources.getString(R.string.on_boarding_autofill_button))
     }
 
     private val startMatcher by lazy {
@@ -83,9 +84,11 @@ class OnBoardingScreenTest {
 
         val checker = CallChecker<Unit>()
         composeTestRule.setContent {
-            OnBoardingScreen(
-                onBoardingShown = { checker.call() },
-            )
+            PassTheme {
+                OnBoardingScreen(
+                    onBoardingShown = { checker.call() },
+                )
+            }
         }
 
         composeTestRule
@@ -102,9 +105,11 @@ class OnBoardingScreenTest {
 
         val checker = CallChecker<Unit>()
         composeTestRule.setContent {
-            OnBoardingScreen(
-                onBoardingShown = { checker.call() },
-            )
+            PassTheme {
+                OnBoardingScreen(
+                    onBoardingShown = { checker.call() },
+                )
+            }
         }
 
         composeTestRule
@@ -133,9 +138,11 @@ class OnBoardingScreenTest {
 
         val checker = CallChecker<Unit>()
         composeTestRule.setContent {
-            OnBoardingScreen(
-                onBoardingShown = { checker.call() },
-            )
+            PassTheme {
+                OnBoardingScreen(
+                    onBoardingShown = { checker.call() },
+                )
+            }
         }
 
         composeTestRule
@@ -164,9 +171,11 @@ class OnBoardingScreenTest {
 
         val checker = CallChecker<Unit>()
         composeTestRule.setContent {
-            OnBoardingScreen(
-                onBoardingShown = { checker.call() },
-            )
+            PassTheme {
+                OnBoardingScreen(
+                    onBoardingShown = { checker.call() },
+                )
+            }
         }
 
         composeTestRule
@@ -174,7 +183,7 @@ class OnBoardingScreenTest {
             .performClick()
         composeTestRule.waitUntil {
             composeTestRule
-                .onNode(fingerprintMatcher)
+                .onNode(autofillMatcher)
                 .assertIsDisplayed()
                 .fetchSemanticsNode()
                 .size != IntSize.Zero

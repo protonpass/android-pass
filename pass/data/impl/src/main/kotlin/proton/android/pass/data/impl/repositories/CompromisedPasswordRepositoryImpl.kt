@@ -72,16 +72,17 @@ class CompromisedPasswordRepositoryImpl @Inject constructor(
         val plan = classify(hashToItems, existingByItemKey, dbUpdatedAtMs)
         if (plan.isEmpty()) return
 
-        val prefixCache = mutableMapOf<Pair<String, String?>, PrefixQueryResult>()
         val now = System.currentTimeMillis()
         val toPersist = mutableListOf<CompromisedPasswordEntity>()
 
-        for (entry in plan) {
-            val result = prefixCache.getOrPut(entry.prefix to entry.etagToSend) {
-                remoteDataSource.getCompromisedSuffixes(entry.prefix, entry.etagToSend)
+        plan.groupBy { entry -> entry.prefix to entry.etagToSend }
+            .forEach { (request, entries) ->
+                val (prefix, etagToSend) = request
+                val result = remoteDataSource.getCompromisedSuffixes(prefix, etagToSend)
+                entries.forEach { entry ->
+                    toPersist += applyResult(entry, result, existingByItemKey, userId, now)
+                }
             }
-            toPersist += applyResult(entry, result, existingByItemKey, userId, now)
-        }
 
         if (toPersist.isNotEmpty()) {
             try {

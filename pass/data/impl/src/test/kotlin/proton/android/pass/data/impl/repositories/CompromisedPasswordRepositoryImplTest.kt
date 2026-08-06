@@ -366,6 +366,74 @@ internal class CompromisedPasswordRepositoryImplTest {
         assertThat(remote.suffixCalls).isEmpty()
     }
 
+    @Test
+    fun `many items sharing a prefix still issue a single request`() = runTest {
+        val items = (1..25).map { index ->
+            ItemTestFactory.createLogin(
+                shareId = ShareId("s1"),
+                itemId = ItemId("i$index"),
+                password = "hunter2"
+            )
+        }
+        val prefix = sha1Upper("hunter2").substring(0, 6)
+        val suffix = sha1Upper("hunter2").substring(6)
+
+        remote.lastChangeValue = 1_000L
+        remote.suffixResultByKey[prefix to null] =
+            PrefixQueryResult.Ok(etag = "shared", suffixes = setOf(suffix))
+
+        instance.refresh(userId, items)
+
+        assertThat(remote.suffixCalls).containsExactly(
+            FakeRemoteCompromisedPasswordDataSource.SuffixCall(prefix, null)
+        )
+        val snapshot = local.snapshot()
+        assertThat(snapshot).hasSize(25)
+        assertThat(snapshot.all { it.isCompromised }).isTrue()
+        assertThat(snapshot.map { it.lastEtag }.toSet()).containsExactly("shared")
+    }
+
+    @Test
+    fun `same prefix requested with different etags issues one request per etag`() = runTest {
+        val fresh = ItemTestFactory.createLogin(
+            shareId = ShareId("s1"),
+            itemId = ItemId("fresh"),
+            password = "hunter2"
+        )
+        val conditional = ItemTestFactory.createLogin(
+            shareId = ShareId("s1"),
+            itemId = ItemId("conditional"),
+            password = "hunter2"
+        )
+        val prefix = sha1Upper("hunter2").substring(0, 6)
+
+        local.seed(
+            listOf(
+                CompromisedPasswordEntity(
+                    userId = FakeAccountManager.USER_ID,
+                    shareId = "s1",
+                    itemId = "conditional",
+                    isCompromised = false,
+                    passwordHash = prefix,
+                    checkedAt = 1_000L,
+                    lastEtag = "stored-etag"
+                )
+            )
+        )
+        remote.lastChangeValue = 10L // 10_000 ms > 1_000, so the stored row is revalidated
+        remote.suffixResultByKey[prefix to null] =
+            PrefixQueryResult.Ok(etag = "plain", suffixes = emptySet())
+        remote.suffixResultByKey[prefix to "stored-etag"] = PrefixQueryResult.NotModified
+
+        instance.refresh(userId, listOf(fresh, conditional))
+
+        assertThat(remote.suffixCalls).containsExactly(
+            FakeRemoteCompromisedPasswordDataSource.SuffixCall(prefix, null),
+            FakeRemoteCompromisedPasswordDataSource.SuffixCall(prefix, "stored-etag")
+        )
+        assertThat(local.snapshot()).hasSize(2)
+    }
+
     private fun sha1Upper(s: String): String {
         val md = java.security.MessageDigest.getInstance("SHA-1")
         return md.digest(s.toByteArray(Charsets.UTF_8))

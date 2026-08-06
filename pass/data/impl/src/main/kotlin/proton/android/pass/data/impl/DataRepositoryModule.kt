@@ -57,6 +57,8 @@ import proton.android.pass.data.api.repositories.UserAccessDataRepository
 import proton.android.pass.data.api.repositories.UserInviteRepository
 import proton.android.pass.data.impl.core.repositories.SentinelRepositoryImpl
 import proton.android.pass.data.impl.repositories.AliasContactsRepositoryImpl
+import proton.android.pass.data.impl.repositories.CompromisedPasswordChecker
+import proton.android.pass.data.impl.repositories.CompromisedPasswordCheckerImpl
 import proton.android.pass.data.impl.repositories.CompromisedPasswordRepositoryImpl
 import proton.android.pass.data.impl.repositories.AliasRepositoryImpl
 import proton.android.pass.data.impl.repositories.AssetLinkRepositoryImpl
@@ -249,9 +251,12 @@ abstract class DataRepositoryModule {
     @[Binds Singleton]
     abstract fun bindSearchIndexRepository(impl: SearchIndexRepositoryImpl): SearchIndexRepository
 
-    @Binds
+    @[Binds Singleton]
     abstract fun bindCompromisedPasswordRepository(
         impl: CompromisedPasswordRepositoryImpl
     ): CompromisedPasswordRepository
+
+    @[Binds Singleton]
+    abstract fun bindCompromisedPasswordChecker(impl: CompromisedPasswordCheckerImpl): CompromisedPasswordChecker
 
 }

@@ -20,6 +20,8 @@ package proton.android.pass.data.impl.repositories
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.repositories.CompromisedPasswordItem
@@ -37,12 +39,16 @@ import proton.android.pass.domain.isCheckSkipped
 import proton.android.pass.log.api.PassLogger
 import java.security.MessageDigest
 import javax.inject.Inject
+import javax.inject.Singleton
 
+@Singleton
 class CompromisedPasswordRepositoryImpl @Inject constructor(
     private val encryptionContextProvider: EncryptionContextProvider,
     private val remoteDataSource: RemoteCompromisedPasswordDataSource,
     private val localDataSource: LocalCompromisedPasswordDataSource
 ) : CompromisedPasswordRepository {
+
+    private val runMutex = Mutex()
 
     override fun observeCompromisedItems(userId: UserId): Flow<List<CompromisedPasswordItem>> =
         localDataSource.observeCompromisedItems(userId).map { entities ->
@@ -61,13 +67,29 @@ class CompromisedPasswordRepositoryImpl @Inject constructor(
     ): Flow<Boolean> = localDataSource.observeIsCompromised(userId, shareId, itemId)
 
     override suspend fun refresh(userId: UserId, items: List<Item>) {
+        runMutex.withLock { run(userId, items, pollCorpus = true) }
+    }
+
+    override suspend fun checkNow(userId: UserId, items: List<Item>) {
+        runMutex.withLock { run(userId, items, pollCorpus = false) }
+    }
+
+    private suspend fun run(
+        userId: UserId,
+        items: List<Item>,
+        pollCorpus: Boolean
+    ) {
         val hashToItems = buildHashToItemsMap(items)
         if (hashToItems.isEmpty()) return
 
         val existingByItemKey = localDataSource.getAllCheckedItems(userId)
             .associateBy { it.shareId to it.itemId }
 
-        val dbUpdatedAtMs = remoteDataSource.getLastChange()?.let { it * SECONDS_TO_MS }
+        val dbUpdatedAtMs = if (pollCorpus) {
+            remoteDataSource.getLastChange()?.let { it * SECONDS_TO_MS }
+        } else {
+            null
+        }
 
         val plan = classify(hashToItems, existingByItemKey, dbUpdatedAtMs)
         if (plan.isEmpty()) return

@@ -19,10 +19,13 @@
 package proton.android.pass.data.api.usecases.items
 
 import kotlinx.coroutines.flow.Flow
+import me.proton.core.domain.entity.UserId
 import proton.android.pass.domain.Item
 
 interface ObserveMonitoredItems {
 
     operator fun invoke(includeHiddenVaults: Boolean): Flow<List<Item>>
+
+    operator fun invoke(userId: UserId, includeHiddenVaults: Boolean): Flow<List<Item>>
 
 }

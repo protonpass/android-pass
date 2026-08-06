@@ -27,7 +27,6 @@ import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.fakes.FakeAppDispatchers
 import proton.android.pass.data.api.repositories.CompromisedPasswordItem
 import proton.android.pass.data.fakes.usecases.compromisedpassword.FakeObserveCompromisedPasswords
-import proton.android.pass.data.fakes.usecases.compromisedpassword.FakeRefreshCompromisedPasswords
 import proton.android.pass.data.fakes.usecases.items.FakeObserveMonitoredItems
 import proton.android.pass.domain.ItemFlag
 import proton.android.pass.securitycenter.api.CompromisedPasswordsResult
@@ -53,7 +52,6 @@ class ObserveSecurityAnalysisImplTest {
     private lateinit var insecurePasswordChecker: FakeInsecurePasswordChecker
     private lateinit var breachedDataChecker: FakeBreachedDataChecker
     private lateinit var observeCompromisedPasswords: FakeObserveCompromisedPasswords
-    private lateinit var refreshCompromisedPasswords: FakeRefreshCompromisedPasswords
 
     @Before
     fun setup() {
@@ -63,7 +61,6 @@ class ObserveSecurityAnalysisImplTest {
         insecurePasswordChecker = FakeInsecurePasswordChecker()
         breachedDataChecker = FakeBreachedDataChecker()
         observeCompromisedPasswords = FakeObserveCompromisedPasswords()
-        refreshCompromisedPasswords = FakeRefreshCompromisedPasswords()
 
         instance = ObserveSecurityAnalysisImpl(
             repeatedPasswordChecker = repeatedPasswordChecker,
@@ -71,7 +68,6 @@ class ObserveSecurityAnalysisImplTest {
             insecurePasswordChecker = insecurePasswordChecker,
             breachedDataChecker = breachedDataChecker,
             observeCompromisedPasswords = observeCompromisedPasswords,
-            refreshCompromisedPasswords = refreshCompromisedPasswords,
             observeMonitoredItems = observeMonitoredItems,
             dispatchers = FakeAppDispatchers()
         )

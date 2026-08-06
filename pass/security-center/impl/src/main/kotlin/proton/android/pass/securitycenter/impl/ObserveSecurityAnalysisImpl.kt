@@ -26,16 +26,13 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.shareIn
-import kotlinx.coroutines.launch
 import proton.android.pass.common.api.AppDispatchers
 import proton.android.pass.common.api.FlowUtils.oneShot
 import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.asLoadingResult
 import proton.android.pass.data.api.usecases.compromisedpassword.ObserveCompromisedPasswords
-import proton.android.pass.data.api.usecases.compromisedpassword.RefreshCompromisedPasswords
 import proton.android.pass.data.api.usecases.items.ObserveMonitoredItems
 import proton.android.pass.securitycenter.api.CompromisedPasswordsResult
 import proton.android.pass.securitycenter.api.InsecurePasswordsResult
@@ -59,7 +56,6 @@ class ObserveSecurityAnalysisImpl @Inject constructor(
     private val insecurePasswordChecker: InsecurePasswordChecker,
     private val missing2faChecker: MissingTfaChecker,
     private val observeCompromisedPasswords: ObserveCompromisedPasswords,
-    private val refreshCompromisedPasswords: RefreshCompromisedPasswords,
     observeMonitoredItems: ObserveMonitoredItems,
     dispatchers: AppDispatchers
 ) : ObserveSecurityAnalysis {
@@ -68,9 +64,6 @@ class ObserveSecurityAnalysisImpl @Inject constructor(
 
     private val securityAnalysisFlow: SharedFlow<SecurityAnalysis> =
         observeMonitoredItems(includeHiddenVaults = false)
-            .onEach { items ->
-                coroutineScope.launch { refreshCompromisedPasswords(items) }
-            }
             .flatMapLatest { items ->
                 combine(
                     oneShot { breachedDataChecker(items) }.asLoadingResult(),

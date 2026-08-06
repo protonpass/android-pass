@@ -37,4 +37,5 @@ interface CompromisedPasswordRepository {
         itemId: ItemId
     ): Flow<Boolean>
     suspend fun refresh(userId: UserId, items: List<Item>)
+    suspend fun checkNow(userId: UserId, items: List<Item>)
 }

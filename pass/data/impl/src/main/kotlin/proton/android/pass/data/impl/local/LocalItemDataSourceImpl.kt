@@ -39,6 +39,7 @@ import proton.android.pass.data.impl.db.PassDatabase
 import proton.android.pass.data.impl.db.dao.ItemEntityWithRowId
 import proton.android.pass.data.impl.db.dao.SummaryRow
 import proton.android.pass.data.impl.db.entities.ItemEntity
+import proton.android.pass.data.impl.repositories.CompromisedPasswordChecker
 import proton.android.pass.domain.FolderId
 import proton.android.pass.domain.ItemFlag
 import proton.android.pass.domain.ItemId
@@ -71,7 +72,8 @@ internal fun mergeStoredSlNotes(
 @Suppress("TooManyFunctions")
 class LocalItemDataSourceImpl @Inject constructor(
     private val database: PassDatabase,
-    private val localShareDataSource: LocalShareDataSource
+    private val localShareDataSource: LocalShareDataSource,
+    private val compromisedPasswordChecker: CompromisedPasswordChecker
 ) : LocalItemDataSource {
 
     override suspend fun upsertItem(item: ItemEntity) = upsertItems(listOf(item))
@@ -79,6 +81,7 @@ class LocalItemDataSourceImpl @Inject constructor(
     override suspend fun upsertItems(items: List<ItemEntity>) {
         val itemsToUpsert = keepStoredSlNotes(items)
         database.itemsDao().insertOrUpdate(*itemsToUpsert.toTypedArray())
+        compromisedPasswordChecker.onItemsUpserted(itemsToUpsert)
     }
 
     /**

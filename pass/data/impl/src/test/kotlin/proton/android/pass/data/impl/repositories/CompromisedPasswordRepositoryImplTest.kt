@@ -434,6 +434,91 @@ internal class CompromisedPasswordRepositoryImplTest {
         assertThat(local.snapshot()).hasSize(2)
     }
 
+    @Test
+    fun `checkNow never polls last_change`() = runTest {
+        val item = ItemTestFactory.createLogin(
+            shareId = ShareId("s1"),
+            itemId = ItemId("i1"),
+            password = "hunter2"
+        )
+        val prefix = sha1Upper("hunter2").substring(0, 6)
+        remote.suffixResultByKey[prefix to null] =
+            PrefixQueryResult.Ok(etag = "abc", suffixes = emptySet())
+
+        instance.checkNow(userId, listOf(item))
+
+        assertThat(remote.lastChangeCallCount).isEqualTo(0)
+        assertThat(remote.suffixCalls).containsExactly(
+            FakeRemoteCompromisedPasswordDataSource.SuffixCall(prefix, null)
+        )
+    }
+
+    @Test
+    fun `checkNow skips an item whose password prefix is unchanged`() = runTest {
+        val item = ItemTestFactory.createLogin(
+            shareId = ShareId("s1"),
+            itemId = ItemId("i1"),
+            password = "hunter2"
+        )
+        val prefix = sha1Upper("hunter2").substring(0, 6)
+
+        local.seed(
+            listOf(
+                CompromisedPasswordEntity(
+                    userId = FakeAccountManager.USER_ID,
+                    shareId = "s1",
+                    itemId = "i1",
+                    isCompromised = true,
+                    passwordHash = prefix,
+                    checkedAt = 1_000L,
+                    lastEtag = "stored-etag"
+                )
+            )
+        )
+
+        instance.checkNow(userId, listOf(item))
+
+        assertThat(remote.lastChangeCallCount).isEqualTo(0)
+        assertThat(remote.suffixCalls).isEmpty()
+        assertThat(local.snapshot().single().checkedAt).isEqualTo(1_000L)
+    }
+
+    @Test
+    fun `checkNow rechecks an item whose password changed`() = runTest {
+        val item = ItemTestFactory.createLogin(
+            shareId = ShareId("s1"),
+            itemId = ItemId("i1"),
+            password = "new-password"
+        )
+        val newPrefix = sha1Upper("new-password").substring(0, 6)
+
+        local.seed(
+            listOf(
+                CompromisedPasswordEntity(
+                    userId = FakeAccountManager.USER_ID,
+                    shareId = "s1",
+                    itemId = "i1",
+                    isCompromised = true,
+                    passwordHash = "ABCDEF",
+                    checkedAt = 9_000_000L,
+                    lastEtag = "old-etag"
+                )
+            )
+        )
+        remote.suffixResultByKey[newPrefix to null] =
+            PrefixQueryResult.Ok(etag = "new-etag", suffixes = emptySet())
+
+        instance.checkNow(userId, listOf(item))
+
+        assertThat(remote.lastChangeCallCount).isEqualTo(0)
+        assertThat(remote.suffixCalls).containsExactly(
+            FakeRemoteCompromisedPasswordDataSource.SuffixCall(newPrefix, null)
+        )
+        val row = local.snapshot().single()
+        assertThat(row.passwordHash).isEqualTo(newPrefix)
+        assertThat(row.isCompromised).isFalse()
+    }
+
     private fun sha1Upper(s: String): String {
         val md = java.security.MessageDigest.getInstance("SHA-1")
         return md.digest(s.toByteArray(Charsets.UTF_8))

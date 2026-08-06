@@ -29,6 +29,7 @@ import proton.android.pass.data.api.usecases.WorkerFeature
 import proton.android.pass.data.impl.work.ClearPasswordHistoryWorker
 import proton.android.pass.data.impl.work.PeriodicAssetLinkWorker
 import proton.android.pass.data.impl.work.PeriodicCleanupWorker
+import proton.android.pass.data.impl.work.PeriodicCompromisedPasswordWorker
 import proton.android.pass.data.impl.work.PeriodicFeatureDiscoveryWorker
 import proton.android.pass.data.impl.work.PeriodicIgnoredAssetLinkWorker
 import proton.android.pass.data.impl.work.PeriodicPopularServicesWorker
@@ -50,7 +51,8 @@ class InitialWorkerLauncherImpl @Inject constructor(
         WorkerFeature.REPORT to ::launchReportWorker,
         WorkerFeature.ASSET_LINKS to ::launchAssetLinkWorkers,
         WorkerFeature.PASSWORD_HISTORY to ::launchPasswordHistoryWorker,
-        WorkerFeature.POPULAR_SERVICES to ::launchPopularServicesWorker
+        WorkerFeature.POPULAR_SERVICES to ::launchPopularServicesWorker,
+        WorkerFeature.COMPROMISED_PASSWORDS to ::launchCompromisedPasswordWorker
     )
 
     private val featureToWorkersMap: Map<WorkerFeature, List<String>> = mapOf(
@@ -62,7 +64,8 @@ class InitialWorkerLauncherImpl @Inject constructor(
             PeriodicIgnoredAssetLinkWorker.WORKER_UNIQUE_NAME
         ),
         WorkerFeature.PASSWORD_HISTORY to listOf(ClearPasswordHistoryWorker.WORKER_UNIQUE_NAME),
-        WorkerFeature.POPULAR_SERVICES to listOf(PeriodicPopularServicesWorker.WORKER_UNIQUE_NAME)
+        WorkerFeature.POPULAR_SERVICES to listOf(PeriodicPopularServicesWorker.WORKER_UNIQUE_NAME),
+        WorkerFeature.COMPROMISED_PASSWORDS to listOf(PeriodicCompromisedPasswordWorker.WORKER_UNIQUE_NAME)
     )
 
     override fun start() {
@@ -72,6 +75,7 @@ class InitialWorkerLauncherImpl @Inject constructor(
         launchFeature(WorkerFeature.REPORT)
         launchFeature(WorkerFeature.PASSWORD_HISTORY)
         launchFeature(WorkerFeature.POPULAR_SERVICES)
+        launchFeature(WorkerFeature.COMPROMISED_PASSWORDS)
 
         CoroutineScope(appDispatchers.io).launch {
             if (isDALEnabled()) {
@@ -147,6 +151,14 @@ class InitialWorkerLauncherImpl @Inject constructor(
             PeriodicPopularServicesWorker.WORKER_UNIQUE_NAME,
             ExistingPeriodicWorkPolicy.KEEP,
             PeriodicPopularServicesWorker.getRequestFor()
+        )
+    }
+
+    private fun launchCompromisedPasswordWorker() {
+        workManager.enqueueUniquePeriodicWork(
+            PeriodicCompromisedPasswordWorker.WORKER_UNIQUE_NAME,
+            ExistingPeriodicWorkPolicy.KEEP,
+            PeriodicCompromisedPasswordWorker.getRequestFor()
         )
     }
 

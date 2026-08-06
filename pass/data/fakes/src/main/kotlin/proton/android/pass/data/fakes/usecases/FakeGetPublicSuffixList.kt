@@ -23,10 +23,15 @@ import proton.android.pass.data.api.usecases.GetPublicSuffixList
 class FakeGetPublicSuffixList : GetPublicSuffixList {
 
     private var tlds: Set<String> = emptySet()
+    private var failure: Throwable? = null
 
     fun setTlds(value: Set<String>) {
         tlds = value
     }
 
-    override fun invoke(): Set<String> = tlds
+    fun setLoadFailure(throwable: Throwable) {
+        failure = throwable
+    }
+
+    override fun invoke(): Result<Set<String>> = failure?.let { Result.failure(it) } ?: Result.success(tlds)
 }

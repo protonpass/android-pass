@@ -19,5 +19,5 @@
 package proton.android.pass.data.api.usecases
 
 interface GetPublicSuffixList {
-    operator fun invoke(): Set<String>
+    operator fun invoke(): Result<Set<String>>
 }

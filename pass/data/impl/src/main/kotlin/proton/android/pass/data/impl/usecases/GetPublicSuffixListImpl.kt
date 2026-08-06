@@ -19,6 +19,7 @@
 package proton.android.pass.data.impl.usecases
 
 import android.content.Context
+import android.content.res.Resources
 import dagger.hilt.android.qualifiers.ApplicationContext
 import proton.android.pass.data.api.usecases.GetPublicSuffixList
 import proton.android.pass.data.impl.R
@@ -30,24 +31,30 @@ class GetPublicSuffixListImpl @Inject constructor(
     @param:ApplicationContext private val context: Context
 ) : GetPublicSuffixList {
 
-    private var suffixes: Set<String> = emptySet()
+    private var suffixes: Set<String>? = null
+    private var loadFailure: Throwable? = null
 
-    override fun invoke(): Set<String> {
-        if (suffixes.isEmpty()) {
-            suffixes = loadSuffixes()
-        }
-        return suffixes
+    override fun invoke(): Result<Set<String>> {
+        loadFailure?.let { return Result.failure(it) }
+        suffixes?.let { return Result.success(it) }
+
+        return loadSuffixes()
+            .onSuccess { suffixes = it }
+            .onFailure { loadFailure = it }
     }
 
-    private fun loadSuffixes(): Set<String> = try {
+    private fun loadSuffixes(): Result<Set<String>> = try {
         val contents = context.resources
             .openRawResource(R.raw.public_suffix_list)
             .bufferedReader()
             .use { it.readText() }
-        contents.lineSequence().toHashSet()
+        Result.success(contents.lineSequence().toHashSet())
     } catch (e: IOException) {
         PassLogger.e(TAG, e, "Error reading public_suffix_list")
-        emptySet()
+        Result.failure(e)
+    } catch (e: Resources.NotFoundException) {
+        PassLogger.e(TAG, e, "Error reading public_suffix_list")
+        Result.failure(e)
     }
 
     companion object {

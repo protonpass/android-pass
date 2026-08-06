@@ -396,4 +396,36 @@ class SuggestionItemFiltererImplTest {
         val res = instance.filter(listOf(item), Suggestion.Url(website), useAutofillUrlModes = true)
         assertThat(res).isEqualTo(emptyList<Item>())
     }
+
+    @Test
+    fun `regression- cross-tenant subdomains on a known shared-hosting suffix do not match`() {
+        getPublicSuffixList.setTlds(setOf("shared-hosting.example"))
+        val stored = "https://customer1.shared-hosting.example"
+        val request = "https://customer2.shared-hosting.example"
+        val item = ItemTestFactory.create(ItemTypeTestFactory.login(websites = listOf(stored)))
+
+        val res = instance.filter(listOf(item), Suggestion.Url(request))
+        assertThat(res).isEqualTo(emptyList<Item>())
+    }
+
+    @Test
+    fun `when public suffix list is unavailable, only exact host matches are returned`() {
+        getPublicSuffixList.setLoadFailure(IllegalStateException("psl unavailable"))
+        val stored = "https://customer1.shared-hosting.example"
+        val request = "https://customer2.shared-hosting.example"
+        val item = ItemTestFactory.create(ItemTypeTestFactory.login(websites = listOf(stored)))
+
+        val res = instance.filter(listOf(item), Suggestion.Url(request))
+        assertThat(res).isEqualTo(emptyList<Item>())
+    }
+
+    @Test
+    fun `when public suffix list is unavailable, identical host still matches`() {
+        getPublicSuffixList.setLoadFailure(IllegalStateException("psl unavailable"))
+        val website = "https://accounts.example.com"
+        val item = ItemTestFactory.create(ItemTypeTestFactory.login(websites = listOf(website)))
+
+        val res = instance.filter(listOf(item), Suggestion.Url(website))
+        assertThat(res).isEqualTo(listOf(item))
+    }
 }

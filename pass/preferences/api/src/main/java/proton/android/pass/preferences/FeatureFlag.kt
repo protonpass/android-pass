@@ -46,7 +46,7 @@ enum class FeatureFlag(
         title = "User Events V1",
         description = "Enable user events",
         key = "PassUserEventsV1",
-        isEnabledDefault = false
+        isEnabledDefault = true
     ),
     PASS_FOLDERS(
         title = "folders",

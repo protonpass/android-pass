@@ -428,4 +428,15 @@ class SuggestionItemFiltererImplTest {
         val res = instance.filter(listOf(item), Suggestion.Url(website))
         assertThat(res).isEqualTo(listOf(item))
     }
+
+    @Test
+    fun `regression- wildcard shared-hosting suffix keeps unrelated tenants apart`() {
+        getPublicSuffixList.setWildcardBases(setOf("shared-hosting.example"))
+        val stored = "https://a.tenant1.shared-hosting.example"
+        val request = "https://a.tenant2.shared-hosting.example"
+        val item = ItemTestFactory.create(ItemTypeTestFactory.login(websites = listOf(stored)))
+
+        val res = instance.filter(listOf(item), Suggestion.Url(request))
+        assertThat(res).isEqualTo(emptyList<Item>())
+    }
 }

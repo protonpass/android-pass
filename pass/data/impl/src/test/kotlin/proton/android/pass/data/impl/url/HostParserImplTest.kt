@@ -351,4 +351,36 @@ class HostParserImplTest {
         assertEquals("shared-hosting.example".some(), tenantA.tld)
         assertEquals("shared-hosting.example".some(), tenantB.tld)
     }
+
+    @Test
+    fun `regression- wildcard rule consumes one label as part of the tld, not flattened away`() {
+        publicSuffixList.setWildcardBases(setOf("shared-hosting.example"))
+
+        val tenantA = instance.parse("https://a.tenant1.shared-hosting.example").getOrNull()
+        val tenantB = instance.parse("https://a.tenant2.shared-hosting.example").getOrNull()
+
+        assertNotNull(tenantA)
+        assertNotNull(tenantB)
+        assertTrue(tenantA is HostInfo.Host)
+        assertTrue(tenantB is HostInfo.Host)
+        assertEquals("a", tenantA.domain)
+        assertEquals("a", tenantB.domain)
+        assertEquals("tenant1.shared-hosting.example".some(), tenantA.tld)
+        assertEquals("tenant2.shared-hosting.example".some(), tenantB.tld)
+    }
+
+    @Test
+    fun `exception rule overrides the wildcard it exempts`() {
+        publicSuffixList.setWildcardBases(setOf("shared-hosting.example"))
+        publicSuffixList.setExceptions(setOf("plain.shared-hosting.example"))
+
+        val res = instance.parse("https://plain.shared-hosting.example")
+
+        assertTrue(res.isSuccess)
+        val hostInfo = res.getOrNull()
+        assertNotNull(hostInfo)
+        assertTrue(hostInfo is HostInfo.Host)
+        assertEquals("plain", hostInfo.domain)
+        assertEquals("shared-hosting.example".some(), hostInfo.tld)
+    }
 }

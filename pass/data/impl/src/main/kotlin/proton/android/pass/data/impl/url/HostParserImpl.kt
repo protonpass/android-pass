@@ -25,6 +25,7 @@ import proton.android.pass.data.api.url.HostInfo
 import proton.android.pass.data.api.url.HostParser
 import proton.android.pass.data.api.url.UrlSanitizer
 import proton.android.pass.data.api.usecases.GetPublicSuffixList
+import proton.android.pass.data.api.usecases.PublicSuffixRules
 import javax.inject.Inject
 
 class HostParserImpl @Inject constructor(
@@ -47,7 +48,11 @@ class HostParserImpl @Inject constructor(
     }
 
     @Suppress("ReturnCount")
-    private fun parseHostInfo(protocol: String, domain: String, publicSuffixes: Set<String>): Result<HostInfo.Host> {
+    private fun parseHostInfo(
+        protocol: String,
+        domain: String,
+        publicSuffixes: PublicSuffixRules
+    ): Result<HostInfo.Host> {
         val parts: List<String> = domain.split('.')
         if (parts.isEmpty()) {
             return Result.failure(IllegalArgumentException("host is empty"))
@@ -59,11 +64,26 @@ class HostParserImpl @Inject constructor(
             )
         }
 
-        // Has multiple parts, find the widest match that is a TLD
+        // Has multiple parts, find the widest match that is a TLD.
+        // An exception rule (e.g. "!www.ck") overrides a wildcard that would otherwise
+        // apply here, so it's checked first, and it narrows the TLD by one label rather
+        // than widening it.
         for (i in parts.indices) {
             val portion = stringFromParts(parts, i)
-            if (publicSuffixes.contains(portion)) {
+            val narrower = if (i < parts.size - 1) stringFromParts(parts, i + 1) else null
 
+            if (narrower != null && publicSuffixes.exceptions.contains(portion)) {
+                val res = hostWithTld(
+                    protocol = protocol,
+                    parts = parts,
+                    tldStartingPart = i + 1,
+                    tld = narrower
+                )
+                return Result.success(res)
+            }
+
+            val isWildcardMatch = narrower != null && publicSuffixes.wildcardBases.contains(narrower)
+            if (publicSuffixes.exact.contains(portion) || isWildcardMatch) {
                 // Check if the widest match is only the TLD
                 return if (i == 0) {
                     Result.failure(IllegalArgumentException("host is a TLD"))
@@ -91,8 +111,8 @@ class HostParserImpl @Inject constructor(
     private fun handleDomainWithSinglePart(
         protocol: String,
         domain: String,
-        publicSuffixes: Set<String>
-    ): Result<HostInfo.Host> = if (publicSuffixes.contains(domain)) {
+        publicSuffixes: PublicSuffixRules
+    ): Result<HostInfo.Host> = if (publicSuffixes.exact.contains(domain)) {
         Result.failure(IllegalArgumentException("host is a TLD"))
     } else {
         Result.success(

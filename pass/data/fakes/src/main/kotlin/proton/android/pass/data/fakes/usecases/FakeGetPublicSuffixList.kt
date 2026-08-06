@@ -19,19 +19,31 @@
 package proton.android.pass.data.fakes.usecases
 
 import proton.android.pass.data.api.usecases.GetPublicSuffixList
+import proton.android.pass.data.api.usecases.PublicSuffixRules
 
 class FakeGetPublicSuffixList : GetPublicSuffixList {
 
     private var tlds: Set<String> = emptySet()
+    private var wildcardBases: Set<String> = emptySet()
+    private var exceptions: Set<String> = emptySet()
     private var failure: Throwable? = null
 
     fun setTlds(value: Set<String>) {
         tlds = value
     }
 
+    fun setWildcardBases(value: Set<String>) {
+        wildcardBases = value
+    }
+
+    fun setExceptions(value: Set<String>) {
+        exceptions = value
+    }
+
     fun setLoadFailure(throwable: Throwable) {
         failure = throwable
     }
 
-    override fun invoke(): Result<Set<String>> = failure?.let { Result.failure(it) } ?: Result.success(tlds)
+    override fun invoke(): Result<PublicSuffixRules> = failure?.let { Result.failure(it) }
+        ?: Result.success(PublicSuffixRules(exact = tlds, wildcardBases = wildcardBases, exceptions = exceptions))
 }

@@ -18,6 +18,12 @@
 
 package proton.android.pass.data.api.usecases
 
+data class PublicSuffixRules(
+    val exact: Set<String>,
+    val wildcardBases: Set<String>,
+    val exceptions: Set<String>
+)
+
 interface GetPublicSuffixList {
-    operator fun invoke(): Result<Set<String>>
+    operator fun invoke(): Result<PublicSuffixRules>
 }

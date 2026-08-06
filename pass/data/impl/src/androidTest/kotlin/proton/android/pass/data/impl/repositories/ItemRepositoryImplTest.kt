@@ -58,6 +58,7 @@ import proton.android.pass.data.impl.fakes.FakeFolderKeyRepository
 import proton.android.pass.data.impl.fakes.FakeRemoteItemDataSource
 import proton.android.pass.data.impl.fakes.FakeShareKeyRepository
 import proton.android.pass.data.impl.fakes.FakeShareRepository
+import proton.android.pass.data.impl.fakes.FakeCompromisedPasswordChecker
 import proton.android.pass.data.impl.local.LocalItemDataSourceImpl
 import proton.android.pass.data.impl.local.LocalShareDataSource
 import proton.android.pass.data.impl.local.LocalShareDataSourceImpl
@@ -116,7 +117,11 @@ class ItemRepositoryImplTest {
             shareRepository = shareRepository,
             createItem = FakeCreateItem(),
             updateItem = FakeUpdateItem(),
-            localItemDataSource = LocalItemDataSourceImpl(database, localShareDataSource),
+            localItemDataSource = LocalItemDataSourceImpl(
+                database,
+                localShareDataSource,
+                FakeCompromisedPasswordChecker()
+            ),
             remoteItemDataSource = FakeRemoteItemDataSource(),
             shareKeyRepository = FakeShareKeyRepository().apply {
                 emitGetShareKeys(listOf(ShareKeyTestFactory.createPrivate()))

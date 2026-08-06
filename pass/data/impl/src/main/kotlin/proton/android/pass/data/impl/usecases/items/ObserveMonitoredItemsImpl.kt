@@ -19,6 +19,7 @@
 package proton.android.pass.data.impl.usecases.items
 
 import kotlinx.coroutines.flow.Flow
+import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.api.usecases.ItemTypeFilter
 import proton.android.pass.data.api.usecases.ObserveItems
 import proton.android.pass.data.api.usecases.items.ObserveMonitoredItems
@@ -32,10 +33,17 @@ class ObserveMonitoredItemsImpl @Inject constructor(
     private val observeItems: ObserveItems
 ) : ObserveMonitoredItems {
 
-    override fun invoke(includeHiddenVaults: Boolean): Flow<List<Item>> = observeItems(
+    override fun invoke(includeHiddenVaults: Boolean): Flow<List<Item>> =
+        observeMonitored(userId = null, includeHiddenVaults = includeHiddenVaults)
+
+    override fun invoke(userId: UserId, includeHiddenVaults: Boolean): Flow<List<Item>> =
+        observeMonitored(userId = userId, includeHiddenVaults = includeHiddenVaults)
+
+    private fun observeMonitored(userId: UserId?, includeHiddenVaults: Boolean): Flow<List<Item>> = observeItems(
         selection = ShareSelection.AllShares,
         itemState = ItemState.Active,
         filter = ItemTypeFilter.Logins,
+        userId = userId,
         itemFlags = mapOf(ItemFlag.SkipHealthCheck to false),
         includeHidden = includeHiddenVaults
     )

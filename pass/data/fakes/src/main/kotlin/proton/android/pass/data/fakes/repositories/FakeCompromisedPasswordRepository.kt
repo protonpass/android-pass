@@ -48,4 +48,8 @@ class FakeCompromisedPasswordRepository @Inject constructor() : CompromisedPassw
     override suspend fun refresh(userId: UserId, items: List<Item>) {
         // No-op in fake
     }
+
+    override suspend fun checkNow(userId: UserId, items: List<Item>) {
+        // No-op in fake
+    }
 }

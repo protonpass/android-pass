@@ -30,10 +30,6 @@ android {
     }
 }
 
-androidComponents.beforeVariants { variant ->
-    variant.enableAndroidTest = false
-}
-
 dependencies {
     testImplementation(libs.junit)
     testImplementation(libs.truth)

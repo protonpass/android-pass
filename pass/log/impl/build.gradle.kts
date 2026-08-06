@@ -43,10 +43,6 @@ android {
     }
 }
 
-androidComponents.beforeVariants { variant ->
-    variant.enableAndroidTest = false
-}
-
 fun DependencyHandlerScope.addSpecialLib(
     default: Any,
     overrides: Map<String, Any?> = emptyMap()

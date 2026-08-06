@@ -42,10 +42,6 @@ android {
     }
 }
 
-androidComponents.beforeVariants { variant ->
-    variant.enableAndroidTest = false
-}
-
 afterEvaluate {
     tasks.named("kspDebugKotlin").configure { dependsOn("generateDebugProto") }
     tasks.named("kspReleaseKotlin").configure { dependsOn("generateReleaseProto") }

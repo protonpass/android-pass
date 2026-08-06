@@ -34,10 +34,6 @@ android {
     
 }
 
-androidComponents.beforeVariants { variant ->
-    variant.enableAndroidTest = false
-}
-
 dependencies {
     api(projects.pass.commonRust.api)
     implementation(projects.pass.common.api)

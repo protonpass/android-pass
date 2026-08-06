@@ -390,7 +390,6 @@
   </plurals>
   <!-- Password checks (Login create/edit + Generate Password BS) -->
   <string name="password_strength_prefix">Sicurezza della password</string>
-  <string name="password_check_min_length">Almeno 12 caratteri</string>
   <string name="password_check_lowercase">lettere minuscole</string>
   <string name="password_check_uppercase">Lettere maiuscole</string>
   <string name="password_check_no_consecutive">Nessun carattere ripetuto</string>

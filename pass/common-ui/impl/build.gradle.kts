@@ -37,10 +37,6 @@ android {
     }
 }
 
-androidComponents.beforeVariants { variant ->
-    variant.enableAndroidTest = false
-}
-
 dependencies {
     api(projects.pass.commonUi.api)
 

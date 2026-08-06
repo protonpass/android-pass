@@ -33,10 +33,6 @@ android {
     }
 }
 
-androidComponents.beforeVariants { variant ->
-    variant.enableAndroidTest = false
-}
-
 dependencies {
     implementation(libs.androidx.startup.runtime)
     implementation(libs.core.utilKotlin)

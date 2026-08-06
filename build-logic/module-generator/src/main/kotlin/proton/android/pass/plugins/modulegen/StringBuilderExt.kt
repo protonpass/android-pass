@@ -51,10 +51,6 @@ fun StringBuilder.appendAndroidLibraryPlugin(namespace: String): StringBuilder =
                 jvmTarget = JavaVersion.VERSION_17.toString()
             }
         }
-        
-        androidComponents.beforeVariants { variant ->
-            variant.enableAndroidTest = false
-        }
     """.trimIndent()
 )
 

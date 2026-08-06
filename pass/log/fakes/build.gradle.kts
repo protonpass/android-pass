@@ -44,10 +44,6 @@ android {
 
 }
 
-androidComponents.beforeVariants { variant ->
-    variant.enableAndroidTest = false
-}
-
 dependencies {
     api(projects.pass.log.api)
     api(projects.pass.log.impl)

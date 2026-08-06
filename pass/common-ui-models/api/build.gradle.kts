@@ -32,10 +32,6 @@ android {
         
     }}
 
-androidComponents.beforeVariants { variant ->
-    variant.enableAndroidTest = false
-}
-
 dependencies {
     implementation(projects.pass.domain)
     implementation(projects.pass.protos)

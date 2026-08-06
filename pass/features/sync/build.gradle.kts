@@ -38,10 +38,6 @@ android {
     }
 }
 
-androidComponents.beforeVariants { variant ->
-    variant.enableAndroidTest = false
-}
-
 dependencies {
     implementation(libs.core.presentation.compose)
     implementation(libs.core.presentation)

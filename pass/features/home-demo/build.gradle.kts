@@ -67,10 +67,6 @@ android {
     }
 }
 
-androidComponents.beforeVariants { variant ->
-    variant.enableAndroidTest = false
-}
-
 dependencies {
     implementation(libs.accompanist.navigation.material)
     implementation(libs.androidx.activity)

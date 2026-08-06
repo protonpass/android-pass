@@ -30,10 +30,6 @@ android {
     }
 }
 
-androidComponents.beforeVariants { variant ->
-    variant.enableAndroidTest = false
-}
-
 dependencies {
     api(projects.pass.protonApps.api)
     implementation(libs.kotlinx.coroutines.core)

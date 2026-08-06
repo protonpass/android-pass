@@ -1,5 +1,8 @@
 import com.adarshr.gradle.testlogger.TestLoggerExtension
 import com.adarshr.gradle.testlogger.theme.ThemeType
+import com.android.build.api.variant.ApplicationAndroidComponentsExtension
+import com.android.build.api.variant.LibraryAndroidComponentsExtension
+import com.android.build.gradle.BaseExtension
 import org.jetbrains.kotlin.gradle.dsl.KotlinBaseExtension
 import org.jetbrains.kotlin.gradle.plugin.KotlinBasePlugin
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompilationTask
@@ -67,9 +70,34 @@ val versionCatalog = extensions.findByType<VersionCatalogsExtension>()?.named("l
 val passCommon = versionCatalog?.findLibrary("pass-common")?.get()?.get()
 val jna = versionCatalog?.findLibrary("jna")?.get()?.get()
 
+fun Project.hasAndroidTestSources(): Boolean {
+    val android = extensions.findByType(BaseExtension::class.java) ?: return false
+    val declared = android.sourceSets.findByName("androidTest")?.java?.srcDirs.orEmpty()
+    val conventional = file("src").listFiles().orEmpty()
+        .filter { it.isDirectory && it.name.startsWith("androidTest") }
+    return (declared + conventional).any { dir ->
+        dir.walkTopDown().any { it.isFile && (it.extension == "kt" || it.extension == "java") }
+    }
+}
+
 subprojects {
     apply {
         plugin("com.adarshr.test-logger")
+    }
+
+    pluginManager.withPlugin("com.android.library") {
+        extensions.configure<LibraryAndroidComponentsExtension> {
+            beforeVariants { variant ->
+                if (!hasAndroidTestSources()) variant.enableAndroidTest = false
+            }
+        }
+    }
+    pluginManager.withPlugin("com.android.application") {
+        extensions.configure<ApplicationAndroidComponentsExtension> {
+            beforeVariants { variant ->
+                if (!hasAndroidTestSources()) variant.enableAndroidTest = false
+            }
+        }
     }
 
     tasks.withType<Test> {

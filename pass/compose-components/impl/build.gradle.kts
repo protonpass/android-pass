@@ -37,10 +37,6 @@ android {
     }
 }
 
-androidComponents.beforeVariants { variant ->
-    variant.enableAndroidTest = false
-}
-
 dependencies {
     implementation(platform(libs.androidx.compose.bom))
     implementation(libs.bundles.core.compose)

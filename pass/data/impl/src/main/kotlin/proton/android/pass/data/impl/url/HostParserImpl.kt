@@ -40,12 +40,14 @@ class HostParserImpl @Inject constructor(
     private fun getHostInfoFromDomain(protocol: String, domain: String): Result<HostInfo> = if (isIp(domain)) {
         Result.success(HostInfo.Ip(domain))
     } else {
-        parseHostInfo(protocol, domain)
+        getPublicSuffixList().fold(
+            onSuccess = { publicSuffixes -> parseHostInfo(protocol, domain, publicSuffixes) },
+            onFailure = { Result.success(HostInfo.Unparseable(protocol, domain)) }
+        )
     }
 
     @Suppress("ReturnCount")
-    private fun parseHostInfo(protocol: String, domain: String): Result<HostInfo.Host> {
-        val publicSuffixes = getPublicSuffixList()
+    private fun parseHostInfo(protocol: String, domain: String, publicSuffixes: Set<String>): Result<HostInfo.Host> {
         val parts: List<String> = domain.split('.')
         if (parts.isEmpty()) {
             return Result.failure(IllegalArgumentException("host is empty"))

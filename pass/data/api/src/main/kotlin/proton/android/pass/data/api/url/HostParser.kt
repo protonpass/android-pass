@@ -29,6 +29,8 @@ sealed interface HostInfo {
     ) : HostInfo
 
     data class Ip(val ip: String) : HostInfo
+
+    data class Unparseable(val protocol: String, val rawHost: String) : HostInfo
 }
 
 interface HostParser {

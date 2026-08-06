@@ -308,4 +308,47 @@ class HostParserImplTest {
 
         assertTrue(res.isFailure)
     }
+
+    @Test
+    fun `when public suffix list fails to load, returns Unparseable instead of guessing`() {
+        publicSuffixList.setLoadFailure(IllegalStateException("psl unavailable"))
+        val res = instance.parse("https://customer1.shared-hosting.example")
+
+        assertTrue(res.isSuccess)
+        val hostInfo = res.getOrNull()
+        assertNotNull(hostInfo)
+        assertTrue(hostInfo is HostInfo.Unparseable)
+        assertEquals("https", hostInfo.protocol)
+        assertEquals("customer1.shared-hosting.example", hostInfo.rawHost)
+    }
+
+    @Test
+    fun `when public suffix list fails to load, ip detection still works`() {
+        publicSuffixList.setLoadFailure(IllegalStateException("psl unavailable"))
+        val ip = "127.0.0.1"
+        val res = instance.parse(ip)
+
+        assertTrue(res.isSuccess)
+        val hostInfo = res.getOrNull()
+        assertNotNull(hostInfo)
+        assertTrue(hostInfo is HostInfo.Ip)
+        assertEquals(ip, hostInfo.ip)
+    }
+
+    @Test
+    fun `when the shared-hosting suffix is known, different tenants parse to different domains`() {
+        publicSuffixList.setTlds(setOf("shared-hosting.example"))
+
+        val tenantA = instance.parse("https://customer1.shared-hosting.example").getOrNull()
+        val tenantB = instance.parse("https://customer2.shared-hosting.example").getOrNull()
+
+        assertNotNull(tenantA)
+        assertNotNull(tenantB)
+        assertTrue(tenantA is HostInfo.Host)
+        assertTrue(tenantB is HostInfo.Host)
+        assertEquals("customer1", tenantA.domain)
+        assertEquals("customer2", tenantB.domain)
+        assertEquals("shared-hosting.example".some(), tenantA.tld)
+        assertEquals("shared-hosting.example".some(), tenantB.tld)
+    }
 }

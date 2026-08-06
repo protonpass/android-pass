@@ -89,6 +89,7 @@ class SuggestionSorterImpl @Inject constructor(
 
         return when (parsed) {
             is HostInfo.Ip -> defaultSorting // If it's an IP, there's no sorting that we can perform
+            is HostInfo.Unparseable -> defaultSorting // Can't derive domain/subdomain info, keep default order
             is HostInfo.Host ->
                 packageNameItems +
                     sortWithDomainInfo(parsed, regularUrlItems) +

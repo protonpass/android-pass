@@ -323,6 +323,35 @@ internal class HomeDrawerViewModelTest {
             val state = awaitNextMatching { it.foldersEnabled && it.vaultShares.isNotEmpty() }
             assertThat(state.canCreateFolderShareIds).isEmpty()
             assertThat(state.canCreateFolderNeedsUpgradeShareIds).isEmpty()
+            assertThat(state.canManageFolderShareIds).isEmpty()
+        }
+    }
+
+    @Test
+    internal fun `folder options available when plan blocks folders and no upgrade is available`() = runTest {
+        featureFlags.set(FeatureFlag.PASS_FOLDERS, true)
+        canCreateFolder.sendValue(CanCreateFolderResult(roleAllows = true, planAllows = false))
+        observeUpgradeInfo.setResult(upgradeInfoWithUpgrade(false))
+        emitSingleVault()
+
+        viewModel.stateFlow.test {
+            val state = awaitNextMatching { it.foldersEnabled && it.vaultShares.isNotEmpty() }
+            assertThat(state.canCreateFolderShareIds).isEmpty()
+            assertThat(state.canCreateFolderNeedsUpgradeShareIds).isEmpty()
+            assertThat(state.canManageFolderShareIds).isNotEmpty()
+        }
+    }
+
+    @Test
+    internal fun `folder options available for free user when plan blocks folders`() = runTest {
+        featureFlags.set(FeatureFlag.PASS_FOLDERS, true)
+        canCreateFolder.sendValue(CanCreateFolderResult(roleAllows = true, planAllows = false))
+        observeUpgradeInfo.setResult(upgradeInfoWithUpgrade(true))
+        emitSingleVault()
+
+        viewModel.stateFlow.test {
+            val state = awaitNextMatching { it.foldersEnabled && it.vaultShares.isNotEmpty() }
+            assertThat(state.canManageFolderShareIds).isNotEmpty()
         }
     }
 

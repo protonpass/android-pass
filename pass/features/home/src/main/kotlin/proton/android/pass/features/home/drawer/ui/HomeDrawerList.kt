@@ -70,6 +70,7 @@ internal fun HomeDrawerList(
     foldersEnabled: Boolean,
     canCreateFolderShareIds: Set<ShareId>,
     canCreateFolderNeedsUpgradeShareIds: Set<ShareId>,
+    canManageFolderShareIds: Set<ShareId>,
     hasSharedWithMeItems: Boolean,
     sharedWithMeItemsCount: Int,
     hasSharedByMeItems: Boolean,
@@ -185,10 +186,7 @@ internal fun HomeDrawerList(
                     createButtonModifier = Modifier
                         .padding(start = 20.dp)
                         .padding(bottom = Spacing.medium),
-                    onThreeDotsClick = if (
-                        canCreateFolderShareIds.contains(shareId) ||
-                        canCreateFolderNeedsUpgradeShareIds.contains(shareId)
-                    ) {
+                    onThreeDotsClick = if (canManageFolderShareIds.contains(shareId)) {
                         { HomeDrawerUiEvent.OnFolderOptionsClick(shareId, it).also(onUiEvent) }
                     } else null,
                     onFolderClick = {

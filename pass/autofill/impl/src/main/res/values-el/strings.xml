@@ -13,6 +13,9 @@
   <string name="autofill_confirm_dangerous_title" comment="Title for the dialog that will appear when the user clicks on Autofill but we think it may be a dangerous action">Επιβεβαίωση ενέργειας</string>
   <string name="autofill_confirm_dangerous_body" comment="Body for the dialog that will appear when the user clicks on Autofill but we think it may be a dangerous action">Πρόκειται να συμπληρώσετε αυτόματα τα διαπιστευτήριά σας σε έναν ιστότοπο που ανοίγει από την τρέχουσα εφαρμογή σας. Η εφαρμογή μπορεί να έχει πρόσβαση στα διαπιστευτήρια μετά την αυτόματη συμπλήρωση - κάντε το μόνο εάν εμπιστεύεστε την εφαρμογή.</string>
   <string name="autofill_confirm_button" comment="Confirmation button for actually performing the autofill action">Αυτόματη συμπλήρωση</string>
+  <string name="autofill_confirm_unverified_browser_title">Αυτή η εφαρμογή ισχυρίζεται ότι είναι ένα αξιόπιστο πρόγραμμα περιήγησης</string>
+  <string name="autofill_confirm_unverified_browser_body">Αυτή η εφαρμογή αυτοπροσδιορίζεται ως γνωστό πρόγραμμα περιήγησης, αλλά το Pass δεν μπόρεσε να την επαληθεύσει. Το πιστοποιητικό υπογραφής της δεν ταιριάζει με αυτό που περιμένουμε, κάτι που μπορεί να συμβεί εάν το πρόγραμμα περιήγησης έχει ασυνήθιστα διαμορφωθεί ή εάν κάποια άλλη εφαρμογή το μιμείται για να υποκλέψει τα διαπιστευτήριά σας. Συνεχίστε μόνο εάν είστε βέβαιοι ότι αυτή η εφαρμογή είναι νόμιμη.</string>
+  <string name="autofill_confirm_dont_ask_again">Μην ρωτήσετε ξανά για αυτήν την εφαρμογή</string>
   <string name="autofill_troubleshooting_title">Αντιμετώπιση προβλημάτων αυτόματης συμπλήρωσης</string>
   <string name="autofill_troubleshooting_subtitle">Ελέγξτε ότι η συσκευή σας έχει ρυθμιστεί σωστά για αυτόματη συμπλήρωση.</string>
   <string name="autofill_troubleshooting_verdict_all_good">Η αυτόματη συμπλήρωση έχει ρυθμιστεί πλήρως</string>

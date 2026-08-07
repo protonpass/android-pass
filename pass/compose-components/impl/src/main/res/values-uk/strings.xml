@@ -89,7 +89,7 @@
   <string name="bottom_bar_add_item_icon_content_description">Додати елемент</string>
   <string name="bottom_bar_profile_icon_content_description">Профіль</string>
   <string name="bottom_bar_security_center_icon_content_description">Центр безпеки</string>
-  <string name="bottom_bar_explore_icon_content_description">Explore</string>
+  <string name="bottom_bar_explore_icon_content_description">нижня_панель_дослідження_піктограма_вміст_опис</string>
   <!-- List group by most recents -->
   <string name="most_recent_today">Сьогодні</string>
   <string name="most_recent_yesterday">Вчора</string>
@@ -430,6 +430,7 @@
   </plurals>
   <!-- Password checks (Login create/edit + Generate Password BS) -->
   <string name="password_strength_prefix">Password strength</string>
+  <string name="password_check_min_length">Password is too short</string>
   <string name="password_check_lowercase">Lowercase letters</string>
   <string name="password_check_uppercase">Uppercase letters</string>
   <string name="password_check_no_consecutive">No repeated characters</string>

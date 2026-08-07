@@ -21,4 +21,8 @@
   <string name="sync_channel_description">Canal de notificacions per a sincronitzar els elements</string>
   <string name="syncing_vaults">S\'estan sincronitzant les caixes fortes i els elements</string>
   <string name="logging_out_free_users">S\'estan desconnectant els usuaris addicionals gratuïts</string>
+  <string name="plan_subscription_auto_renews_monthly">La subscripció es renovarà automàticament a %1$s/mes</string>
+  <string name="plan_subscription_auto_renews_annual">La subscripció es renovarà automàticament a %1$s/any</string>
+  <string name="plan_welcome_offer_auto_renews_monthly">Oferta de benvinguda. Es renovarà automàticament a %1$s/mes</string>
+  <string name="plan_welcome_offer_auto_renews_annual">Oferta de benvinguda. Es renovarà automàticament a %1$s/any</string>
 </resources>

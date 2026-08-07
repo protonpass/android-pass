@@ -6,6 +6,8 @@
   <string name="restart_to_complete_the_update">アップデートを完了させるために再起動</string>
   <string name="action_restart">再起動</string>
   <string name="shortcut_share_logs_title">ログを共有する</string>
+  <string name="shortcut_share_logs_confirmation_title">Share diagnostic logs?</string>
+  <string name="shortcut_share_logs_confirmation_message">This opens your email app to send Proton Pass diagnostic logs. No vault data is included.</string>
   <string name="no_account_found">アカウントが見つかりませんでした</string>
   <string name="no_session_found">セッションが見つかりませんでした</string>
   <string name="auth_with_extra_password_failed">追加パスワードによる認証に失敗しました</string>

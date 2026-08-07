@@ -38,6 +38,7 @@
   <string name="upsell_paid_feature_item_sharing_subtitle">Палепшыце сёння, каб мець магчымасць абагульваць элементы з любым карыстальнікам Pass. Вы таксама атрымаеце перавагі іншых прэміяльных функцый:</string>
   <string name="upsell_paid_feature_file_attachments_title">Файлы з далучэннямі</string>
   <string name="upsell_button_upgrade">Атрымаць Pass Plus</string>
+  <string name="upsell_button_upgrade_unlimited">Атрымаць Proton Unlimited</string>
   <string name="upsell_button_upgrade_essentials">Атрымаць Pass Business</string>
   <string name="price_per_month_type1">%s/месяц</string>
   <string name="upsell_skip">Не цяпер</string>
@@ -71,4 +72,6 @@
   <string name="upsell_get_one_month">Атрымайце 1 месяц за %s</string>
   <string name="upsell_get_the_deal">Атрымаць прапанову</string>
   <string name="upsell_whats_included">Што ўключана</string>
+  <string name="upsell_error_google_prices">Праблема атрымання цэн з Google Play Store</string>
+  <string name="upsell_error_general">Адбылася памылка.</string>
 </resources>

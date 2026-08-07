@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <string name="on_boarding_autofill_content">Разрешите Proton Pass заполнять детали входа для вас. Без ручного ввода или копирования/вставки.</string>
-  <string name="on_boarding_autofill_title">Мгновенно входите в приложения</string>
   <string name="on_boarding_autofill_content_v2">Proton pass fill in login details for you. No typing or copy paste required.</string>
   <string name="on_boarding_autofill_title_v2">Enjoy the magic of AutoFill</string>
   <string name="on_boarding_autofill_button">Автозаполнение через Proton Pass</string>
@@ -12,7 +10,6 @@
   <string name="on_boarding_last_page_title">Контролируйте, что попадает в ваши входящие</string>
   <string name="on_boarding_last_page_button">Начать использовать Proton Pass</string>
   <string name="on_boarding_skip">Не сейчас</string>
-  <string name="on_boarding_tutorial">Посмотрите короткое видео о том, как пользоваться Proton Pass</string>
   <string name="on_boarding_tutorial_v2">Learn how to use Proton Pass</string>
   <string name="on_boarding_pending_invite_content">По соображениям безопасности ваш доступ должен быть подтверждён.</string>
   <string name="on_boarding_pending_invite_title">Ожидание доступа к общим данным</string>

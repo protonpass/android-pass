@@ -48,7 +48,7 @@
   <string name="blocked_addresses_subtitle">Adreces bloquejades</string>
   <string name="forwarding_addresses_subtitle">Adreces de reenviament</string>
   <string name="snackbar_contact_block_success">S\'ha bloqueat el contacte.</string>
-  <string name="snackbar_contact_block_error">No s\'ha pogut bloquejar el contacte.</string>
+  <string name="snackbar_contact_block_error">No s\'ha pogut blocar el contacte.</string>
   <string name="snackbar_contact_unblock_success">S\'ha desbloquejat el contacte.</string>
   <string name="snackbar_contact_unblock_error">No s\'ha pogut desbloquejar el contacte</string>
   <string name="snackbar_delete_contact_success">S\'ha eliminat el contacte.</string>

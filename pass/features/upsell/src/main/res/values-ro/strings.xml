@@ -38,6 +38,7 @@
   <string name="upsell_paid_feature_item_sharing_subtitle">Modificați planul acum pentru a partaja un articol cu orice utilizator al Pass. Și beneficiați și de alte funcții premium:</string>
   <string name="upsell_paid_feature_file_attachments_title">Fișiere atașate</string>
   <string name="upsell_button_upgrade">Luați Pass Plus</string>
+  <string name="upsell_button_upgrade_unlimited">Luați Proton Unlimited</string>
   <string name="upsell_button_upgrade_essentials">Luați Pass Business</string>
   <string name="price_per_month_type1">%s/lună</string>
   <string name="upsell_skip">Nu acum</string>
@@ -71,4 +72,6 @@
   <string name="upsell_get_one_month">Obțineți o lună cu %s</string>
   <string name="upsell_get_the_deal">Luați oferta</string>
   <string name="upsell_whats_included">Ce este inclus</string>
+  <string name="upsell_error_google_prices">În acest moment există o problemă la preluarea prețurilor din Magazinul Google Play.</string>
+  <string name="upsell_error_general">A apărut o eroare.</string>
 </resources>

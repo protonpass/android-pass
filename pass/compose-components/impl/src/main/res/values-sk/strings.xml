@@ -430,6 +430,7 @@
   </plurals>
   <!-- Password checks (Login create/edit + Generate Password BS) -->
   <string name="password_strength_prefix">Sila hesla</string>
+  <string name="password_check_min_length">Password is too short</string>
   <string name="password_check_lowercase">Malé písmená</string>
   <string name="password_check_uppercase">Veľké písmená</string>
   <string name="password_check_no_consecutive">Žiadne opakujúce sa znaky</string>

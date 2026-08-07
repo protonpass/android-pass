@@ -13,6 +13,9 @@
   <string name="autofill_confirm_dangerous_title" comment="Title for the dialog that will appear when the user clicks on Autofill but we think it may be a dangerous action">Пацвердзіце сваё дзеянне</string>
   <string name="autofill_confirm_dangerous_body" comment="Body for the dialog that will appear when the user clicks on Autofill but we think it may be a dangerous action">Вы збіраецеся аўтаматычна запоўніць свае ўліковыя даныя на вэб-сайце, які адкрыты з дапамогай вашай бягучай праграмы. Гэта праграма будзе мець доступ да вашых уліковых даных. Рабіце дадзенае дзеянне толькі ў выпадку, калі давяраеце ёй.</string>
   <string name="autofill_confirm_button" comment="Confirmation button for actually performing the autofill action">Аўтазапоўніць</string>
+  <string name="autofill_confirm_unverified_browser_title">This app claims to be a trusted browser</string>
+  <string name="autofill_confirm_unverified_browser_body">This app identifies itself as a known browser, but Pass could not verify it. Its signing certificate does not match what we expect, which can happen if the browser is unusually configured, or if another app is impersonating it to intercept your credentials. Only continue if you are certain this app is legitimate.</string>
+  <string name="autofill_confirm_dont_ask_again">Don\'t ask again for this app</string>
   <string name="autofill_troubleshooting_title">Выпраўленне непаладак з аўтазапаўненнем</string>
   <string name="autofill_troubleshooting_subtitle">Праверце, ці наладжана ваша прылада для слушнага аўтазапаўнення</string>
   <string name="autofill_troubleshooting_verdict_all_good">Аўтазапаўненне цалкам наладжана</string>
@@ -24,29 +27,29 @@
   <string name="autofill_troubleshooting_service_enable_action">Уключыць аўтазапаўненне</string>
   <string name="autofill_troubleshooting_service_unsupported_title">Гэта прылада не падтрымлівае аўтазапаўненне</string>
   <string name="autofill_troubleshooting_browsers_header">Аўтазапаўненне ў браўзеры</string>
-  <string name="autofill_troubleshooting_browsers_body">Browsers need autofill turned on separately.</string>
-  <string name="autofill_troubleshooting_browser_open_action">Open</string>
-  <string name="autofill_troubleshooting_browser_ready">Autofill works automatically here.</string>
-  <string name="autofill_troubleshooting_browser_working">Autofill is working in this browser.</string>
-  <string name="autofill_troubleshooting_browser_pending_service">Available once Proton Pass is set as your autofill service.</string>
-  <string name="autofill_troubleshooting_browser_steps_generic">Open the browser settings, find the autofill or passwords section, and choose Proton Pass as the autofill service.</string>
-  <string name="autofill_troubleshooting_browser_steps_chrome">1. Open the browser menu and go to Settings, then Autofill services.\n2. Turn on \"Use another service\" and select Proton Pass.</string>
-  <string name="autofill_troubleshooting_browser_steps_firefox">1. Open the browser menu and go to Settings, then Autofill.\n2. Choose Proton Pass as the autofill service.</string>
-  <string name="autofill_troubleshooting_browser_steps_samsung">1. Open Settings, then Autofill service.\n2. Select Proton Pass.</string>
-  <string name="autofill_troubleshooting_inline_info">Inline suggestions appear in your keyboard. They need Android 11 or later and a compatible keyboard such as Gboard.</string>
-  <string name="autofill_troubleshooting_share_diagnostics">Share diagnostics</string>
-  <string name="autofill_troubleshooting_open_diagnostics">Advanced diagnostics</string>
-  <string name="autofill_diagnostics_title">Advanced diagnostics</string>
-  <string name="autofill_diagnostics_enable">Enable autofill diagnostics</string>
-  <string name="autofill_diagnostics_enable_description">When on, Proton Pass records what happens during autofill so you can see why it didn\'t fill. Turn it off when you\'re done.</string>
-  <string name="autofill_diagnostics_instructions">Reproduce the autofill problem in the app or browser, then come back to this screen.</string>
-  <string name="autofill_diagnostics_last_attempt_title">Last autofill attempt</string>
-  <string name="autofill_diagnostics_no_attempts">No autofill attempt recorded yet.</string>
-  <string name="autofill_diagnostics_reason_not_default">Proton Pass isn\'t your autofill service, so it can\'t fill anywhere yet.</string>
-  <string name="autofill_diagnostics_outcome_offered">Proton Pass offered suggestions in %1$s.</string>
-  <string name="autofill_diagnostics_outcome_nothing">Autofill was triggered in %1$s, but no matching login was offered. The page may have no detectable login fields, or you have no item for this site.</string>
-  <string name="autofill_diagnostics_outcome_error">Autofill ran into an error in %1$s.</string>
-  <string name="autofill_diagnostics_recent_title">Recent attempts</string>
-  <string name="autofill_diagnostics_clear">Clear</string>
-  <string name="autofill_diagnostics_share">Share with support</string>
+  <string name="autofill_troubleshooting_browsers_body">У браўзерах аўтазапаўненне патрабуецца ўключаць асобна.</string>
+  <string name="autofill_troubleshooting_browser_open_action">Адкрыць</string>
+  <string name="autofill_troubleshooting_browser_ready">У гэтым браўзеры аўтазапаўненне працуе аўтаматычна.</string>
+  <string name="autofill_troubleshooting_browser_working">У гэтым браўзеры аўтазапаўненне будзе працаваць.</string>
+  <string name="autofill_troubleshooting_browser_pending_service">Даступна пасля таго, як Proton Pass будзе наладжаны ў якасці сэрвісу аўтазапаўнення.</string>
+  <string name="autofill_troubleshooting_browser_steps_generic">Адкрыйце налады браўзера, знайдзіце раздзел з аўтазапаўненнем або паролямі, а потым выберыце Proton Pass у якасці сэрвісу аўтазапаўнення.</string>
+  <string name="autofill_troubleshooting_browser_steps_chrome">1. Адкрыйце меню браўзера і перайдзіце ў налады, а потым выберыце сэрвісы аўтазапаўнення.\n2. Уключыце \"Выкарыстоўваць іншы сэрвіс\" і выберыце Proton Pass.</string>
+  <string name="autofill_troubleshooting_browser_steps_firefox">1. Адкрыйце меню браўзера і перайдзіце ў налады, а потым аўтазапаўненне.\n2. Выберыце Proton Pass у якасці сэрвісу аўтазапаўнення.</string>
+  <string name="autofill_troubleshooting_browser_steps_samsung">1. Адкрыйце налады, а потым выберыце сэрвіс аўтазапаўнення.\n2. Выберыце Proton Pass.</string>
+  <string name="autofill_troubleshooting_inline_info">Убудаваныя прапановы з\'явяцца ў вашай клавіятуры. Для гэтага неабходны Android 11 або больш позняя версія, а таксама сумяшчальная клавіятура (напрыклад, Gboard).</string>
+  <string name="autofill_troubleshooting_share_diagnostics">Абагуліць дыягностыку</string>
+  <string name="autofill_troubleshooting_open_diagnostics">Пашыраная дыягностыка</string>
+  <string name="autofill_diagnostics_title">Пашыраная дыягностыка</string>
+  <string name="autofill_diagnostics_enable">Уключыць аўтазапаўненне дыягностык</string>
+  <string name="autofill_diagnostics_enable_description">Proton Pass запісвае ўсё, што адбываецца падчас аўтазапаўнення, калі функцыя ўключана. Такім чынам, вы можаце ўбачыць чаму той або іншы элемент не запаўняецца. Выключыце гэту функцыю, калі адладка будзе завершана.</string>
+  <string name="autofill_diagnostics_instructions">Узнавіце праблему аўтазапаўнення ў праграме або браўзеры, а потым зноў вярніцеся на гэты экран.</string>
+  <string name="autofill_diagnostics_last_attempt_title">Апошняя спроба аўтазапаўенння</string>
+  <string name="autofill_diagnostics_no_attempts">Пакуль што не зарэгістравана спроб аўтазапаўнення.</string>
+  <string name="autofill_diagnostics_reason_not_default">Proton Pass не з\'яўляецца вашым сэрвісам аўтазапаўнення. Пакуль ён нідзе не можа запаўняць.</string>
+  <string name="autofill_diagnostics_outcome_offered">Proton Pass прапануе рэкамендацыі ў %1$s.</string>
+  <string name="autofill_diagnostics_outcome_nothing">Аўтазапаўненне выклікана ў %1$s, але не быў прапанаваны адпаведны запіс уваходу. Магчыма, што на старонцы адсутнічаюць выяўленыя палі ўваходу, або ў вас проста адсутнічае элемент для гэтага вэб-сайта.</string>
+  <string name="autofill_diagnostics_outcome_error">Аўзапаўненне выклікала памылку ў %1$s</string>
+  <string name="autofill_diagnostics_recent_title">Апошнія спробы</string>
+  <string name="autofill_diagnostics_clear">Ачысціць</string>
+  <string name="autofill_diagnostics_share">Абагуліць з падтрымкай</string>
 </resources>

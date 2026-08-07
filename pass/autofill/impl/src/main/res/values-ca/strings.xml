@@ -13,6 +13,9 @@
   <string name="autofill_confirm_dangerous_title" comment="Title for the dialog that will appear when the user clicks on Autofill but we think it may be a dangerous action">Confirmeu l\'acció</string>
   <string name="autofill_confirm_dangerous_body" comment="Body for the dialog that will appear when the user clicks on Autofill but we think it may be a dangerous action">Esteu a punt d\'emplenar automàticament les vostres credencials en un lloc web que ha obert l\'aplicació actual. L\'aplicació pot tenir accés a les credencials després de l\'emplenament automàtic. Feu-ho només si hi confieu.</string>
   <string name="autofill_confirm_button" comment="Confirmation button for actually performing the autofill action">Emplenament automàtic</string>
+  <string name="autofill_confirm_unverified_browser_title">Aquesta aplicació afirma ser un navegador de confiança</string>
+  <string name="autofill_confirm_unverified_browser_body">Aquesta aplicació s\'identifica com un navegador conegut, però Pass no l\'ha pogut verificar. El seu certificat de signatura no coincideix amb el que esperàvem, cosa que pot passar si el navegador està configurat de manera inusual o si una altra aplicació s\'hi fa passar per interceptar les vostres credencials. Continueu només si esteu segur que aquesta aplicació és legítima.</string>
+  <string name="autofill_confirm_dont_ask_again">No m\'ho torneu a preguntar per aquesta aplicació</string>
   <string name="autofill_troubleshooting_title">Resolució de problemes d\'emplenament automàtic</string>
   <string name="autofill_troubleshooting_subtitle">Comproveu que el vostre dispositiu estigui configurat correctament per a l\'emplenament automàtic.</string>
   <string name="autofill_troubleshooting_verdict_all_good">L\'emplenament automàtic està totalment configurat</string>

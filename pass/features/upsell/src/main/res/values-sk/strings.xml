@@ -38,6 +38,7 @@
   <string name="upsell_paid_feature_item_sharing_subtitle">Upgradujte ešte dnes, aby ste mohli zdieľať položku s ktorýmkoľvek používateľom služby Pass. A využívajte ďalšie prémiové funkcie:</string>
   <string name="upsell_paid_feature_file_attachments_title">Priložené súbory</string>
   <string name="upsell_button_upgrade">Získajte Pass Plus</string>
+  <string name="upsell_button_upgrade_unlimited">Získajte Proton Unlimited</string>
   <string name="upsell_button_upgrade_essentials">Získajte Pass Business</string>
   <string name="price_per_month_type1">%s/mesiac</string>
   <string name="upsell_skip">Teraz nie</string>
@@ -71,4 +72,6 @@
   <string name="upsell_get_one_month">Získajte 1 mesiac za %s</string>
   <string name="upsell_get_the_deal">Využiť ponuku</string>
   <string name="upsell_whats_included">Čo obsahuje</string>
+  <string name="upsell_error_google_prices">V súčasnosti je problém s načítaním cien v obchode Google Play.</string>
+  <string name="upsell_error_general">Vyskytla sa chyba.</string>
 </resources>

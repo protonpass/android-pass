@@ -6,6 +6,8 @@
   <string name="restart_to_complete_the_update">Перазапусціце, каб завяршыць абнаўленне</string>
   <string name="action_restart">Перазапусціць</string>
   <string name="shortcut_share_logs_title">Абагуліць журналы</string>
+  <string name="shortcut_share_logs_confirmation_title">Share diagnostic logs?</string>
+  <string name="shortcut_share_logs_confirmation_message">This opens your email app to send Proton Pass diagnostic logs. No vault data is included.</string>
   <string name="no_account_found">Уліковы запіс не знойдзены</string>
   <string name="no_session_found">Сеанс не знойдзены</string>
   <string name="auth_with_extra_password_failed">Збой пры аўтэнтыфікацыі з дадатковым паролем</string>

@@ -6,6 +6,8 @@
   <string name="restart_to_complete_the_update">Reinicieu per a completar l\'actualització</string>
   <string name="action_restart">Reinicia</string>
   <string name="shortcut_share_logs_title">Comparteix els registres</string>
+  <string name="shortcut_share_logs_confirmation_title">Voleu compartir els registres de diagnòstic?</string>
+  <string name="shortcut_share_logs_confirmation_message">Això obre la vostra aplicació de correu electrònic per enviar registres de diagnòstic de Proton Pass. No s\'inclou cap dada de la caixa forta.</string>
   <string name="no_account_found">No s\'ha trobat cap compte.</string>
   <string name="no_session_found">No s\'ha trobat cap sessió.</string>
   <string name="auth_with_extra_password_failed">L\'autenticació amb contrasenya addicional no ha funcionat.</string>

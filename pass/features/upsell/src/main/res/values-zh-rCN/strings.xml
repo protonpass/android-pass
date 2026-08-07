@@ -38,6 +38,7 @@
   <string name="upsell_paid_feature_item_sharing_subtitle">立即升级，与任何 Pass 用户共享项目，并享受其他高级功能：</string>
   <string name="upsell_paid_feature_file_attachments_title">附件文件</string>
   <string name="upsell_button_upgrade">获取 Pass Plus</string>
+  <string name="upsell_button_upgrade_unlimited">Get Proton Unlimited</string>
   <string name="upsell_button_upgrade_essentials">获取 Pass Business</string>
   <string name="price_per_month_type1">%s/月</string>
   <string name="upsell_skip">暂时不要</string>
@@ -71,4 +72,6 @@
   <string name="upsell_get_one_month">仅需 %s 即可获得 1 个月服务</string>
   <string name="upsell_get_the_deal">立即获取</string>
   <string name="upsell_whats_included">包含内容</string>
+  <string name="upsell_error_google_prices">Problem retrieving Google Play Store prices at the moment.</string>
+  <string name="upsell_error_general">An error occurred.</string>
 </resources>

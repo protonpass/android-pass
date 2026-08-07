@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <string name="on_boarding_autofill_content">Låt Proton Pass fylla i inloggningsuppgifter åt dig. Inget att skriva eller kopiera och klistra in.</string>
-  <string name="on_boarding_autofill_title">Logga in på appar omedelbart</string>
   <string name="on_boarding_autofill_content_v2">Proton Pass fyller i inloggningsuppgifter åt dig. Inget att skriva eller kopiera och klistra in.</string>
   <string name="on_boarding_autofill_title_v2">Njut av magin med automatisk ifyllning</string>
   <string name="on_boarding_autofill_button">Fyll automatiskt med Proton Pass</string>
@@ -12,7 +10,6 @@
   <string name="on_boarding_last_page_title">Kontrollera vad som hamnar i din inkorg</string>
   <string name="on_boarding_last_page_button">Börja använda Proton Pass</string>
   <string name="on_boarding_skip">Inte nu</string>
-  <string name="on_boarding_tutorial">Se en kort video om hur man använder Proton Pass</string>
   <string name="on_boarding_tutorial_v2">Lär dig hur man använder Proton Pass</string>
   <string name="on_boarding_pending_invite_content">Av säkerhetsskäl måste din åtkomst bekräftas.</string>
   <string name="on_boarding_pending_invite_title">Väntar på åtkomst till delade data</string>

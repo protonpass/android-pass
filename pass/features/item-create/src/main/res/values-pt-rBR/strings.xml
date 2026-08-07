@@ -358,5 +358,5 @@
   <string name="autofill_suggestions_mode_default_badge">PADRÃO</string>
   <string name="autofill_suggestions_url_column">URL</string>
   <string name="autofill_suggestions_suggested_column">Recomendado</string>
-  <string name="field_website_skipped_autofill">This url will be skipped for autofill</string>
+  <string name="field_website_skipped_autofill">Esta URL será ignorada pelo preenchimento automático</string>
 </resources>

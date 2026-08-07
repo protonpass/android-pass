@@ -21,4 +21,8 @@
   <string name="sync_channel_description">Canal de notification pour la synchronisation d\'éléments</string>
   <string name="syncing_vaults">Synchronisation des coffres-forts et des éléments</string>
   <string name="logging_out_free_users">Déconnexion des utilisateurs gratuits supplémentaires</string>
+  <string name="plan_subscription_auto_renews_monthly">L\'abonnement est renouvelé automatiquement à %1$s par mois.</string>
+  <string name="plan_subscription_auto_renews_annual">L\'abonnement est renouvelé automatiquement à %1$s par an.</string>
+  <string name="plan_welcome_offer_auto_renews_monthly">Offre de bienvenue. Renouvellement automatique à %1$s par mois.</string>
+  <string name="plan_welcome_offer_auto_renews_annual">Offre de bienvenue. Renouvellement automatique à %1$s par an.</string>
 </resources>

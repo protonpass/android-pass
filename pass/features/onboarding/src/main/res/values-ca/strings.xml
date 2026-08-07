@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <string name="on_boarding_autofill_content">Deixeu que Proton Pass ompli els detalls d\'inici de sessió. No cal escriure ni copiar i enganxar.</string>
-  <string name="on_boarding_autofill_title">Inicieu la sessió a les aplicacions instantàniament</string>
   <string name="on_boarding_autofill_content_v2">Proton Pass us emplena les dades d\'inici de sessió. No cal escriure ni copiar i enganxar.</string>
   <string name="on_boarding_autofill_title_v2">Gaudiu de la màgia de l\'emplenament automàtic</string>
   <string name="on_boarding_autofill_button">Emplena automàticament amb Proton Pass</string>
@@ -12,7 +10,6 @@
   <string name="on_boarding_last_page_title">Controleu què us arriba a la safata d\'entrada</string>
   <string name="on_boarding_last_page_button">Comenceu a utilitzar Proton Pass</string>
   <string name="on_boarding_skip">Ara no</string>
-  <string name="on_boarding_tutorial">Mireu un vídeo breu sobre com utilitzar Proton Pass</string>
   <string name="on_boarding_tutorial_v2">Apreneu a utilitzar el Proton Pass</string>
   <string name="on_boarding_pending_invite_content">Per motius de seguretat, cal confirmar el vostre accés.</string>
   <string name="on_boarding_pending_invite_title">L\'accés a les dades compartides està pendent.</string>

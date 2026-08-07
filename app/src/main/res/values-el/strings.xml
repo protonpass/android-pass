@@ -6,6 +6,8 @@
   <string name="restart_to_complete_the_update">Για ολοκλήρωση της ενημέρωσης, κάντε επανεκκίνηση</string>
   <string name="action_restart">Επανεκκίνηση</string>
   <string name="shortcut_share_logs_title">Κοινοποίηση αρχείων καταγραφής</string>
+  <string name="shortcut_share_logs_confirmation_title">Κοινοποίηση αρχείων καταγραφής διαγνωστικών;</string>
+  <string name="shortcut_share_logs_confirmation_message">Αυτό ανοίγει την εφαρμογή ηλεκτρονικού ταχυδρομείου σας για να στείλει αρχεία καταγραφής διαγνωστικών του Proton Pass. Δεν περιλαμβάνονται δεδομένα κρυπτών.</string>
   <string name="no_account_found">Δεν βρέθηκε λογαριασμός</string>
   <string name="no_session_found">Δεν βρέθηκε συνεδρία</string>
   <string name="auth_with_extra_password_failed">Ο έλεγχος ταυτότητας με επιπλέον κωδικό πρόσβασης απέτυχε</string>

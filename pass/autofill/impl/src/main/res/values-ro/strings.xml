@@ -13,6 +13,9 @@
   <string name="autofill_confirm_dangerous_title" comment="Title for the dialog that will appear when the user clicks on Autofill but we think it may be a dangerous action">Confirmare acțiune</string>
   <string name="autofill_confirm_dangerous_body" comment="Body for the dialog that will appear when the user clicks on Autofill but we think it may be a dangerous action">Sunteți pe cale să vă completați automat acreditările într-un site web deschis de aplicația actuală. Aplicația poate avea acces la acreditări după completarea automată - faceți-o doar dacă aveți încredere în aplicație.</string>
   <string name="autofill_confirm_button" comment="Confirmation button for actually performing the autofill action">Autocompletare</string>
+  <string name="autofill_confirm_unverified_browser_title">Această aplicație pretinde a fi un navigator web de încredere</string>
+  <string name="autofill_confirm_unverified_browser_body">Această aplicație se identifică ca un navigator web cunoscut, dar Pass nu a putut să o verifice. Certificatul său de semnare nu corespunde cu ceea ce era de așteptat, ceea ce se poate întâmpla dacă navigatorul web este configurat neobișnuit sau dacă o altă aplicație îl impersonifică pentru a vă intercepta datele de autentificare. Continuați numai dacă aveți siguranța că această aplicație este legitimă.</string>
+  <string name="autofill_confirm_dont_ask_again">NU mai întreba pentru această aplicație</string>
   <string name="autofill_troubleshooting_title">Depanare completare automată</string>
   <string name="autofill_troubleshooting_subtitle">Verificați ca dispozitivul să fie setat corect pentru completare automată.</string>
   <string name="autofill_troubleshooting_verdict_all_good">Completarea automată este complet setată</string>

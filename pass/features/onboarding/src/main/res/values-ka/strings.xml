@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <string name="on_boarding_autofill_content">მიეცით უფლება Proton-ს, ეს თქვენთვის გააკეთოს. კოპირება და ჩასმა აღარ დაგჭირდებათ.</string>
-  <string name="on_boarding_autofill_title">შედით აპში სწრაფად</string>
   <string name="on_boarding_autofill_content_v2">Proton Pass შეავსებს თქვენთვის ავტორიზაციის დეტალებს. აკრეფა ან კოპირება-ჩასმაარ საჭირო არაა.</string>
   <string name="on_boarding_autofill_title_v2">ისიამოვნეთ ავტომატური შევსების ჯადოქრობით</string>
   <string name="on_boarding_autofill_button">ავტომატური შევსება Proton Pass-ით</string>
@@ -12,7 +10,6 @@
   <string name="on_boarding_last_page_title">აკონტროლეთ, საფოსტო ყუთში რას დაინახავთ</string>
   <string name="on_boarding_last_page_button">Proton Pass-ის გამოყენების დაწყება</string>
   <string name="on_boarding_skip">არა ახლა</string>
-  <string name="on_boarding_tutorial">უყურეთ მოკლე ვიდეოს, როგორ გამოიყენოთ Proton Pass</string>
   <string name="on_boarding_tutorial_v2">ისწავლეთ Proton Pass-ის გამოყენება</string>
   <string name="on_boarding_pending_invite_content">უსაფრთხოებისთვის თქვენს წვდომას დადასტურება სჭირდება.</string>
   <string name="on_boarding_pending_invite_title">გაზიარებულ მონაცემებთან წვდომის მოლოდინი</string>

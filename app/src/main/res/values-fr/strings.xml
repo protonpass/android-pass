@@ -6,6 +6,8 @@
   <string name="restart_to_complete_the_update">Redémarrer pour terminer la mise à jour</string>
   <string name="action_restart">Redémarrer</string>
   <string name="shortcut_share_logs_title">Partager les journaux</string>
+  <string name="shortcut_share_logs_confirmation_title">Partager les journaux de diagnostics ?</string>
+  <string name="shortcut_share_logs_confirmation_message">Cela ouvre votre application de messagerie pour envoyer les journaux de diagnostic de Proton Pass. Aucune donnée du coffre-fort n\'est incluse.</string>
   <string name="no_account_found">Aucun compte n\'a été trouvé.</string>
   <string name="no_session_found">Aucune session n\'a été trouvée.</string>
   <string name="auth_with_extra_password_failed">L\'authentification avec un mot de passe supplémentaire n\'a pas abouti.</string>

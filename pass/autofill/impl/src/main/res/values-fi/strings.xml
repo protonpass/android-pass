@@ -13,19 +13,22 @@
   <string name="autofill_confirm_dangerous_title" comment="Title for the dialog that will appear when the user clicks on Autofill but we think it may be a dangerous action">Vahvista toimintosi</string>
   <string name="autofill_confirm_dangerous_body" comment="Body for the dialog that will appear when the user clicks on Autofill but we think it may be a dangerous action">Olet automaattitäyttämässä tunnistetietojasi verkkosivustolle, jonka parhaillaan käyttämäsi sovellus on avannut. Tämä sovellus saattaa nähdä täytetyt tiedot, eli täytä ne vain, jos luotat siihen.</string>
   <string name="autofill_confirm_button" comment="Confirmation button for actually performing the autofill action">Automaattitäytä</string>
-  <string name="autofill_troubleshooting_title">Autofill troubleshooting</string>
+  <string name="autofill_confirm_unverified_browser_title">This app claims to be a trusted browser</string>
+  <string name="autofill_confirm_unverified_browser_body">This app identifies itself as a known browser, but Pass could not verify it. Its signing certificate does not match what we expect, which can happen if the browser is unusually configured, or if another app is impersonating it to intercept your credentials. Only continue if you are certain this app is legitimate.</string>
+  <string name="autofill_confirm_dont_ask_again">Älä kysy uudelleen tälle sovellukselle</string>
+  <string name="autofill_troubleshooting_title">Automaattitäytön vianetsintä</string>
   <string name="autofill_troubleshooting_subtitle">Check your device is set up correctly for autofill.</string>
-  <string name="autofill_troubleshooting_verdict_all_good">Autofill is fully set up</string>
-  <string name="autofill_troubleshooting_verdict_attention">A few things need your attention</string>
+  <string name="autofill_troubleshooting_verdict_all_good">Automaattitäyttö on määritetty</string>
+  <string name="autofill_troubleshooting_verdict_attention">Muutama asia vaatii huomiotasi</string>
   <string name="autofill_troubleshooting_service_ok">Proton Pass is your autofill service</string>
   <string name="autofill_troubleshooting_service_current_other">Currently set to %1$s.</string>
   <string name="autofill_troubleshooting_service_not_default_title">Proton Pass isn\'t your autofill service</string>
   <string name="autofill_troubleshooting_service_not_default_body">Set it as the default to autofill across your apps.</string>
-  <string name="autofill_troubleshooting_service_enable_action">Enable autofill</string>
+  <string name="autofill_troubleshooting_service_enable_action">Ota automaattitäyttö käyttöön</string>
   <string name="autofill_troubleshooting_service_unsupported_title">This device doesn\'t support autofill</string>
   <string name="autofill_troubleshooting_browsers_header">Autofill in browsers</string>
   <string name="autofill_troubleshooting_browsers_body">Browsers need autofill turned on separately.</string>
-  <string name="autofill_troubleshooting_browser_open_action">Open</string>
+  <string name="autofill_troubleshooting_browser_open_action">Avaa</string>
   <string name="autofill_troubleshooting_browser_ready">Autofill works automatically here.</string>
   <string name="autofill_troubleshooting_browser_working">Autofill is working in this browser.</string>
   <string name="autofill_troubleshooting_browser_pending_service">Available once Proton Pass is set as your autofill service.</string>
@@ -47,6 +50,6 @@
   <string name="autofill_diagnostics_outcome_nothing">Autofill was triggered in %1$s, but no matching login was offered. The page may have no detectable login fields, or you have no item for this site.</string>
   <string name="autofill_diagnostics_outcome_error">Autofill ran into an error in %1$s.</string>
   <string name="autofill_diagnostics_recent_title">Recent attempts</string>
-  <string name="autofill_diagnostics_clear">Clear</string>
+  <string name="autofill_diagnostics_clear">Tyhjennä</string>
   <string name="autofill_diagnostics_share">Share with support</string>
 </resources>

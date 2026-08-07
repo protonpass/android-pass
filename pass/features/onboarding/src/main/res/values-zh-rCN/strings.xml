@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <string name="on_boarding_autofill_content">让 Proton Pass 为您填写登录信息。无需打字或复制粘贴。</string>
-  <string name="on_boarding_autofill_title">瞬间登录各类应用</string>
   <string name="on_boarding_autofill_content_v2">Proton Pass 会为您填写登录信息。无需键入或复制粘贴。</string>
   <string name="on_boarding_autofill_title_v2">享受自动填充的魔力</string>
   <string name="on_boarding_autofill_button">使用 Proton Pass 自动填充</string>
@@ -12,7 +10,6 @@
   <string name="on_boarding_last_page_title">控制收件箱中的内容</string>
   <string name="on_boarding_last_page_button">开始使用 Proton Pass</string>
   <string name="on_boarding_skip">以后再说</string>
-  <string name="on_boarding_tutorial">观看如何使用 Proton Pass 的简短视频</string>
   <string name="on_boarding_tutorial_v2">了解如何使用 Proton Pass</string>
   <string name="on_boarding_pending_invite_content">出于安全原因，需要确认您的访问权限.</string>
   <string name="on_boarding_pending_invite_title">等待访问共享数据</string>

@@ -87,7 +87,7 @@
   <string name="bottom_bar_add_item_icon_content_description">Lisää kohde</string>
   <string name="bottom_bar_profile_icon_content_description">Profiili</string>
   <string name="bottom_bar_security_center_icon_content_description">Suojauskeskus</string>
-  <string name="bottom_bar_explore_icon_content_description">Explore</string>
+  <string name="bottom_bar_explore_icon_content_description">Tutustu</string>
   <!-- List group by most recents -->
   <string name="most_recent_today">Tänään</string>
   <string name="most_recent_yesterday">Eilen</string>
@@ -334,13 +334,13 @@
   </plurals>
   <string name="login_item_monitor_widget_missing_two_fa_title">Vahvista suojausta määrittämällä 2FA</string>
   <string name="login_item_monitor_widget_missing_two_fa_subtitle">Palvelu mahdollistaa kaksivaiheisen tunnistautumisen. Paranna tilin suojausta ottamalla se käyttöön.</string>
-  <string name="login_item_monitor_action_ignore">Ignore</string>
-  <string name="login_item_monitor_action_restore">Restore alert</string>
+  <string name="login_item_monitor_action_ignore">Ohita</string>
+  <string name="login_item_monitor_action_restore">Palauta hälytys</string>
   <string name="login_item_monitor_header">Pass Monitor</string>
-  <string name="login_item_monitor_label_weak">Weak password</string>
-  <string name="login_item_monitor_label_compromised">Compromised password</string>
+  <string name="login_item_monitor_label_weak">Heikko salasana</string>
+  <string name="login_item_monitor_label_compromised">Vaarantunut salasana</string>
   <string name="login_item_monitor_label_reused">Reused password</string>
-  <string name="login_item_monitor_label_missing_2fa">Missing 2FA</string>
+  <string name="login_item_monitor_label_missing_2fa">Puuttuva 2FA</string>
   <string name="login_item_reused_passwords_subtitle">Holviesi tätä salasanaa käyttävät kohteet.</string>
   <string name="mfa_limit_reached">Kaksivaiheisen tunnistautumisen rajoitus on saavutettu</string>
   <string name="activity_in_last_two_weeks">Tapahtumat viimeisten kahden viikon ajalta</string>
@@ -390,6 +390,7 @@
   </plurals>
   <!-- Password checks (Login create/edit + Generate Password BS) -->
   <string name="password_strength_prefix">Salasanan vahvuus</string>
+  <string name="password_check_min_length">Password is too short</string>
   <string name="password_check_lowercase">Pienet kirjaimet</string>
   <string name="password_check_uppercase">Isot kirjaimet</string>
   <string name="password_check_no_consecutive">Ei toistuvia merkkejä</string>

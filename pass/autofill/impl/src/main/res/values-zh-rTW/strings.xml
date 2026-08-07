@@ -13,6 +13,9 @@
   <string name="autofill_confirm_dangerous_title" comment="Title for the dialog that will appear when the user clicks on Autofill but we think it may be a dangerous action">確認您的動作</string>
   <string name="autofill_confirm_dangerous_body" comment="Body for the dialog that will appear when the user clicks on Autofill but we think it may be a dangerous action">您將自動填入驗證資訊至目前應用程式開啟的網站。在自動填入後，應用程式將能存取驗證資訊 - 僅在您信任此應用時執行此操作</string>
   <string name="autofill_confirm_button" comment="Confirmation button for actually performing the autofill action">自動填入</string>
+  <string name="autofill_confirm_unverified_browser_title">This app claims to be a trusted browser</string>
+  <string name="autofill_confirm_unverified_browser_body">This app identifies itself as a known browser, but Pass could not verify it. Its signing certificate does not match what we expect, which can happen if the browser is unusually configured, or if another app is impersonating it to intercept your credentials. Only continue if you are certain this app is legitimate.</string>
+  <string name="autofill_confirm_dont_ask_again">Don\'t ask again for this app</string>
   <string name="autofill_troubleshooting_title">Autofill troubleshooting</string>
   <string name="autofill_troubleshooting_subtitle">Check your device is set up correctly for autofill.</string>
   <string name="autofill_troubleshooting_verdict_all_good">Autofill is fully set up</string>

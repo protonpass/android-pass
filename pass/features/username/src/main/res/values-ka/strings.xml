@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <string name="generate_username_title">Generate username</string>
-  <string name="generate_username_button_regenerate">Regenerate</string>
-  <string name="generate_username_button_copy">Copy</string>
-  <string name="generate_username_label_include_numbers">Include numbers</string>
+  <string name="generate_username_title">მომხმარებლის სახელის გენერაცია</string>
+  <string name="generate_username_button_regenerate">რეგენერაცია</string>
+  <string name="generate_username_button_copy">კოპირება</string>
+  <string name="generate_username_label_include_numbers">რიცხვების ჩათვლით</string>
   <string name="generate_username_label_leetspeak">Leetspeak</string>
-  <string name="generate_username_label_word_types">Word types</string>
-  <string name="generate_username_label_adjectives">Adjectives</string>
-  <string name="generate_username_label_nouns">Nouns</string>
-  <string name="generate_username_label_verbs">Verbs</string>
-  <string name="generate_username_snackbar_copied">Username copied to clipboard</string>
-  <string name="generate_username_snackbar_error">Could not generate username</string>
+  <string name="generate_username_label_word_types">სიტყვის ტიპები</string>
+  <string name="generate_username_label_adjectives">ზედსართავი სახელები</string>
+  <string name="generate_username_label_nouns">არსებითი სახელები</string>
+  <string name="generate_username_label_verbs">ზმნები</string>
+  <string name="generate_username_snackbar_copied">მომხმარებელი დაკოპირებულია მიმოცვლის ბუფერში</string>
+  <string name="generate_username_snackbar_error">მომხმარებლის სახელის გენერაცია შეუძლებელია</string>
 </resources>

@@ -6,6 +6,8 @@
   <string name="restart_to_complete_the_update">Neu starten, um das Update abzuschließen.</string>
   <string name="action_restart">Neu starten</string>
   <string name="shortcut_share_logs_title">Logs teilen</string>
+  <string name="shortcut_share_logs_confirmation_title">Diagnoseprotokolle teilen?</string>
+  <string name="shortcut_share_logs_confirmation_message">Dadurch wird deine E-Mail-App geöffnet, um Diagnoseprotokolle von Proton Pass zu senden. Es werden keine Daten aus dem Tresor übertragen.</string>
   <string name="no_account_found">Kein Konto gefunden</string>
   <string name="no_session_found">Keine Sitzung gefunden</string>
   <string name="auth_with_extra_password_failed">Authentifizierung mit zusätzlichem Passwort fehlgeschlagen</string>

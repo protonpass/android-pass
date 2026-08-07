@@ -6,6 +6,8 @@
   <string name="restart_to_complete_the_update">Güncellemeyi tamamlamak için yeniden başlatın</string>
   <string name="action_restart">Yeniden başlat</string>
   <string name="shortcut_share_logs_title">Günlüğü paylaş</string>
+  <string name="shortcut_share_logs_confirmation_title">Tanılama günlüğü paylaşılsın mı?</string>
+  <string name="shortcut_share_logs_confirmation_message">Proton Pass tanılama günlüklerini göndermek için e-posta uygulamanızı açar. Herhangi bir kasa verisi eklenmez.</string>
   <string name="no_account_found">Herhangi bir hesap bulunamadı</string>
   <string name="no_session_found">Herhangi bir oturum bulunamadı</string>
   <string name="auth_with_extra_password_failed">Ek parola ile kimlik doğrulanamadı</string>

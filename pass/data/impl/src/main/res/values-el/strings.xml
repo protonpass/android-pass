@@ -21,4 +21,8 @@
   <string name="sync_channel_description">Κανάλι ειδοποιήσεων για συγχρονισμό στοιχείων</string>
   <string name="syncing_vaults">Συγχρονισμός κρυπτών και στοιχείων</string>
   <string name="logging_out_free_users">Αποσύνδεση επιπλέον δωρεάν χρηστών</string>
+  <string name="plan_subscription_auto_renews_monthly">Η συνδρομή ανανεώνεται αυτόματα στα %1$s/μήνα</string>
+  <string name="plan_subscription_auto_renews_annual">Η συνδρομή ανανεώνεται αυτόματα στα %1$s/χρόνο</string>
+  <string name="plan_welcome_offer_auto_renews_monthly">Προσφορά καλωσορίσματος. Αυτόματη ανανέωση στα %1$s/μήνα</string>
+  <string name="plan_welcome_offer_auto_renews_annual">Προσφορά καλωσορίσματος. Αυτόματη ανανέωση στα %1$s/χρόνο</string>
 </resources>

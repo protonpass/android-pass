@@ -16,14 +16,14 @@
   <string name="explore_tool_aliases_title">Ptoteja e-mails com aliases</string>
   <string name="explore_tool_aliases_subtitle">Safeguard addresses, reduce spam, and block phishing attempts.</string>
   <string name="explore_product_vpn_title">Proton VPN</string>
-  <string name="explore_product_vpn_subtitle">Browse without being tracked and access blocked content.</string>
+  <string name="explore_product_vpn_subtitle">Navegue sem ser rastreado e acesse conteúdos bloqueados.</string>
   <string name="explore_product_mail_title">Proton Mail</string>
-  <string name="explore_product_mail_subtitle">Protect your inbox from spam, tracking, and targeted ads.</string>
+  <string name="explore_product_mail_subtitle">Proteja sua caixa de entrada contra spam, rastreamento e anúncios direcionados.</string>
   <string name="explore_product_drive_title">Proton Drive</string>
-  <string name="explore_product_drive_subtitle">Give your precious photos and files the safe home they deserve.</string>
+  <string name="explore_product_drive_subtitle">Dê às suas fotos e arquivos preciosos o lugar seguro que eles merecem.</string>
   <string name="explore_product_lumo_title">Lumo AI</string>
-  <string name="explore_product_lumo_subtitle">Ask and ideate with a privacy-first AI assistant.</string>
+  <string name="explore_product_lumo_subtitle">Faça perguntas e desenvolva ideias com um assistente de IA que prioriza a privacidade.</string>
   <string name="explore_product_meet_title">Proton Meet</string>
-  <string name="explore_product_meet_subtitle">Talk in private with confidential video conferencing.</string>
+  <string name="explore_product_meet_subtitle">Converse em particular por meio de videoconferências confidenciais.</string>
   <string name="explore_business_banner_title">Proton For Business</string>
 </resources>

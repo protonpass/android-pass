@@ -13,6 +13,9 @@
   <string name="autofill_confirm_dangerous_title" comment="Title for the dialog that will appear when the user clicks on Autofill but we think it may be a dangerous action">Aktion bestätigen</string>
   <string name="autofill_confirm_dangerous_body" comment="Body for the dialog that will appear when the user clicks on Autofill but we think it may be a dangerous action">Du bist dabei, deine Zugangsdaten auf einer Website automatisch auszufüllen, die von deiner aktuellen Anwendung geöffnet wird. Die App kann nach dem automatischen Ausfüllen Zugriff auf die Anmeldeinformationen haben - tue dies nur, wenn du der App vertraust.</string>
   <string name="autofill_confirm_button" comment="Confirmation button for actually performing the autofill action">AutoFill</string>
+  <string name="autofill_confirm_unverified_browser_title">Diese App gibt vor, ein vertrauenswürdiger Browser zu sein</string>
+  <string name="autofill_confirm_unverified_browser_body">Diese App gibt an, ein bekannter Browser zu sein, konnte jedoch von Proton Pass nicht verifiziert werden. Das Signaturzertifikat stimmt nicht mit unseren Erwartungen überein. Dies kann vorkommen, wenn der Browser ungewöhnlich konfiguriert ist oder wenn eine andere App sich als dieser Browser ausgibt, um deine Anmeldedaten abzufangen. Fahre nur fort, wenn du sicher bist, dass diese App seriös ist.</string>
+  <string name="autofill_confirm_dont_ask_again">Für diese App nicht erneut nachfragen</string>
   <string name="autofill_troubleshooting_title">Fehlerbehebung beim automatischen Ausfüllen</string>
   <string name="autofill_troubleshooting_subtitle">Überprüfe, ob dein Gerät für das automatische Ausfüllen vollständige eingerichtet ist.</string>
   <string name="autofill_troubleshooting_verdict_all_good">Automatisches Ausfüllen ist vollständig eingerichtet</string>

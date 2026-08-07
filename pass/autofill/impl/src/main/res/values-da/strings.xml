@@ -13,6 +13,9 @@
   <string name="autofill_confirm_dangerous_title" comment="Title for the dialog that will appear when the user clicks on Autofill but we think it may be a dangerous action">Bekræft din handling</string>
   <string name="autofill_confirm_dangerous_body" comment="Body for the dialog that will appear when the user clicks on Autofill but we think it may be a dangerous action">Du er ved at autofylde dine legitimationsoplysninger på en hjemmeside, der er åbnet af din nuværende app. Appen kan have adgang til legitimationsoplysningerne efter autofyldning - gør det kun, hvis du stoler på appen.</string>
   <string name="autofill_confirm_button" comment="Confirmation button for actually performing the autofill action">Autofyld</string>
+  <string name="autofill_confirm_unverified_browser_title">Denne app påstår at være en betroet browser</string>
+  <string name="autofill_confirm_unverified_browser_body">Denne app identificerer sig selv som en kendt browser, men Pass kunne ikke bekræfte det. Dens signeringscertifikat matcher ikke, hvad vi forventer, hvilket kan ske, hvis browseren er usædvanligt konfigureret, eller hvis en anden app efterligner den for at opsnappe dine legitimationsoplysninger. Fortsæt kun, hvis du er sikker på, at denne app er legitim.</string>
+  <string name="autofill_confirm_dont_ask_again">Spørg ikke igen for denne app</string>
   <string name="autofill_troubleshooting_title">Fejlfinding til autofyld</string>
   <string name="autofill_troubleshooting_subtitle">Tjek om din enhed er konfigureret korrekt til autofyld.</string>
   <string name="autofill_troubleshooting_verdict_all_good">Autofyld er helt sat op</string>

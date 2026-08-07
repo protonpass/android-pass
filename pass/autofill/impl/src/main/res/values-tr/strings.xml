@@ -13,6 +13,9 @@
   <string name="autofill_confirm_dangerous_title" comment="Title for the dialog that will appear when the user clicks on Autofill but we think it may be a dangerous action">İşleminizi onaylayın</string>
   <string name="autofill_confirm_dangerous_body" comment="Body for the dialog that will appear when the user clicks on Autofill but we think it may be a dangerous action">Geçerli uygulamanız tarafından açılan bir sitede kimlik bilgilerinizi otomatik olarak doldurmak üzeresiniz. Uygulama, otomatik doldurmanın ardından kimlik bilgilerine erişebilir. Bu işlemi yalnızca uygulamaya güveniyorsanız yapın.</string>
   <string name="autofill_confirm_button" comment="Confirmation button for actually performing the autofill action">Otomatik doldur</string>
+  <string name="autofill_confirm_unverified_browser_title">Bu uygulama güvenilir bir tarayıcı olduğunu iddia ediyor</string>
+  <string name="autofill_confirm_unverified_browser_body">Bu uygulama kendisini bilinen bir tarayıcı olarak tanımlıyor, ancak Pass bunu doğrulayamadı. İmza sertifikası beklediğimizle eşleşmiyor. Bu durum tarayıcı alışılmadık bir şekilde yapılandırılmışsa veya kimlik bilgilerinizi ele geçirmek için başka bir uygulama onu taklit ediyorsa ortaya çıkabilir. Yalnızca bu uygulamanın sorunsuz olduğundan eminseniz ilerleyin.</string>
+  <string name="autofill_confirm_dont_ask_again">Bu uygulama bir daha sorulmasın</string>
   <string name="autofill_troubleshooting_title">Otomatik doldurma sorun giderme</string>
   <string name="autofill_troubleshooting_subtitle">Aygıtınızın otomatik doldurma için doğru ayarlandığını denetleyin.</string>
   <string name="autofill_troubleshooting_verdict_all_good">Otomatik doldurma tümüyle ayarlandı</string>

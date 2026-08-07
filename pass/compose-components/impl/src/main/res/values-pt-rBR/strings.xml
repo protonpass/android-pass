@@ -390,6 +390,7 @@
   </plurals>
   <!-- Password checks (Login create/edit + Generate Password BS) -->
   <string name="password_strength_prefix">Força da senha</string>
+  <string name="password_check_min_length">Password is too short</string>
   <string name="password_check_lowercase">Letras minúsculas</string>
   <string name="password_check_uppercase">Letras maiúsculas</string>
   <string name="password_check_no_consecutive">Nenhum caractere repetido</string>

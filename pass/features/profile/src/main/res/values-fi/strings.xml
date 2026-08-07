@@ -5,7 +5,7 @@
   <string name="profile_option_account">Tili</string>
   <string name="profile_help_center">Tukikeskus</string>
   <string name="profile_security">Suojaus</string>
-  <string name="profile_option_autofill_troubleshooting">Autofill troubleshooting</string>
+  <string name="profile_option_autofill_troubleshooting">Automaattitäytön vianetsintä</string>
   <string name="profile_option_feedback">Palaute</string>
   <string name="profile_option_import_export">Tuonti ja vienti</string>
   <string name="profile_option_tutorial">Miten Proton Passia käytetään</string>

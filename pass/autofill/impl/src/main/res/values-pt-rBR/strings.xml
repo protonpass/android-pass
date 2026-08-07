@@ -13,21 +13,24 @@
   <string name="autofill_confirm_dangerous_title" comment="Title for the dialog that will appear when the user clicks on Autofill but we think it may be a dangerous action">Confirmar sua ação</string>
   <string name="autofill_confirm_dangerous_body" comment="Body for the dialog that will appear when the user clicks on Autofill but we think it may be a dangerous action">Você está prestes a preencher automaticamente suas credenciais em um site aberto pelo seu aplicativo atual. O aplicativo pode ter acesso às credenciais após o preenchimento automático - somente faça isto se você confiar no aplicativo.</string>
   <string name="autofill_confirm_button" comment="Confirmation button for actually performing the autofill action">Preenchimento automático</string>
-  <string name="autofill_troubleshooting_title">Autofill troubleshooting</string>
+  <string name="autofill_confirm_unverified_browser_title">This app claims to be a trusted browser</string>
+  <string name="autofill_confirm_unverified_browser_body">This app identifies itself as a known browser, but Pass could not verify it. Its signing certificate does not match what we expect, which can happen if the browser is unusually configured, or if another app is impersonating it to intercept your credentials. Only continue if you are certain this app is legitimate.</string>
+  <string name="autofill_confirm_dont_ask_again">Não voltar a perguntar para este aplicativo de novo</string>
+  <string name="autofill_troubleshooting_title">Solução de problemas de preenchimento automático</string>
   <string name="autofill_troubleshooting_subtitle">Check your device is set up correctly for autofill.</string>
-  <string name="autofill_troubleshooting_verdict_all_good">Autofill is fully set up</string>
+  <string name="autofill_troubleshooting_verdict_all_good">O preenchimento automático está totalmente configurado</string>
   <string name="autofill_troubleshooting_verdict_attention">A few things need your attention</string>
   <string name="autofill_troubleshooting_service_ok">Proton Pass is your autofill service</string>
   <string name="autofill_troubleshooting_service_current_other">Currently set to %1$s.</string>
   <string name="autofill_troubleshooting_service_not_default_title">Proton Pass isn\'t your autofill service</string>
   <string name="autofill_troubleshooting_service_not_default_body">Set it as the default to autofill across your apps.</string>
-  <string name="autofill_troubleshooting_service_enable_action">Enable autofill</string>
+  <string name="autofill_troubleshooting_service_enable_action">Ativar preenchimento automático</string>
   <string name="autofill_troubleshooting_service_unsupported_title">This device doesn\'t support autofill</string>
-  <string name="autofill_troubleshooting_browsers_header">Autofill in browsers</string>
+  <string name="autofill_troubleshooting_browsers_header">Preenchimento automático nos navegadores</string>
   <string name="autofill_troubleshooting_browsers_body">Browsers need autofill turned on separately.</string>
-  <string name="autofill_troubleshooting_browser_open_action">Open</string>
-  <string name="autofill_troubleshooting_browser_ready">Autofill works automatically here.</string>
-  <string name="autofill_troubleshooting_browser_working">Autofill is working in this browser.</string>
+  <string name="autofill_troubleshooting_browser_open_action">Abrir</string>
+  <string name="autofill_troubleshooting_browser_ready">O preenchimento automático funciona automaticamente aqui.</string>
+  <string name="autofill_troubleshooting_browser_working">O preenchimento automático está funcionando neste navegador.</string>
   <string name="autofill_troubleshooting_browser_pending_service">Available once Proton Pass is set as your autofill service.</string>
   <string name="autofill_troubleshooting_browser_steps_generic">Open the browser settings, find the autofill or passwords section, and choose Proton Pass as the autofill service.</string>
   <string name="autofill_troubleshooting_browser_steps_chrome">1. Open the browser menu and go to Settings, then Autofill services.\n2. Turn on \"Use another service\" and select Proton Pass.</string>

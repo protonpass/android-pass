@@ -38,6 +38,7 @@
   <string name="upsell_paid_feature_item_sharing_subtitle">Oppgrader i dag, slik at du kan dele et element med alle Pass-brukere. Og nyt andre premiumfunksjoner:</string>
   <string name="upsell_paid_feature_file_attachments_title">Filvedlegg</string>
   <string name="upsell_button_upgrade">Skaff deg Pass Plus</string>
+  <string name="upsell_button_upgrade_unlimited">Get Proton Unlimited</string>
   <string name="upsell_button_upgrade_essentials">Skaff deg Pass Business</string>
   <string name="price_per_month_type1">%s/måned</string>
   <string name="upsell_skip">Ikke nå</string>
@@ -71,4 +72,6 @@
   <string name="upsell_get_one_month">Få én måned for %s</string>
   <string name="upsell_get_the_deal">Skaff deg tilbudet</string>
   <string name="upsell_whats_included">Hva som er inkludert</string>
+  <string name="upsell_error_google_prices">Problem retrieving Google Play Store prices at the moment.</string>
+  <string name="upsell_error_general">An error occurred.</string>
 </resources>

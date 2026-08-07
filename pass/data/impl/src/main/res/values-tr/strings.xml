@@ -21,4 +21,8 @@
   <string name="sync_channel_description">Ögelerin eşitlenmesi için bildirim kanalı</string>
   <string name="syncing_vaults">Kasalar ve ögeler eşitleniyor</string>
   <string name="logging_out_free_users">Ek ücretsiz kullanıcıların oturumu kapatılıyor</string>
+  <string name="plan_subscription_auto_renews_monthly">Abonelik %1$s/ay tutar ile otomatik olarak yenilenir</string>
+  <string name="plan_subscription_auto_renews_annual">Abonelik %1$s/yıl tutar ile otomatik olarak yenilenir</string>
+  <string name="plan_welcome_offer_auto_renews_monthly">Karşılama teklifi. %1$s/ay tutar ile otomatik olarak yenilenir</string>
+  <string name="plan_welcome_offer_auto_renews_annual">Karşılama teklifi. %1$s/yıl tutar ile otomatik olarak yenilenir</string>
 </resources>

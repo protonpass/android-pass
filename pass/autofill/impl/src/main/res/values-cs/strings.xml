@@ -13,6 +13,9 @@
   <string name="autofill_confirm_dangerous_title" comment="Title for the dialog that will appear when the user clicks on Autofill but we think it may be a dangerous action">Potvrďte vaší akci</string>
   <string name="autofill_confirm_dangerous_body" comment="Body for the dialog that will appear when the user clicks on Autofill but we think it may be a dangerous action">Chystáte se automaticky vyplnit přihlašovací údaje na webové stránce, kterou otevře vaše aktuální aplikace. Aplikace může mít k automaticky vyplněným údajům přístup - proveďte to pouze v případě, že aplikaci důvěřujete.</string>
   <string name="autofill_confirm_button" comment="Confirmation button for actually performing the autofill action">Automatické vyplňování</string>
+  <string name="autofill_confirm_unverified_browser_title">This app claims to be a trusted browser</string>
+  <string name="autofill_confirm_unverified_browser_body">This app identifies itself as a known browser, but Pass could not verify it. Its signing certificate does not match what we expect, which can happen if the browser is unusually configured, or if another app is impersonating it to intercept your credentials. Only continue if you are certain this app is legitimate.</string>
+  <string name="autofill_confirm_dont_ask_again">Don\'t ask again for this app</string>
   <string name="autofill_troubleshooting_title">Řešení problémů s automatickým vyplňováním</string>
   <string name="autofill_troubleshooting_subtitle">Zkontrolujte, zda je vaše zařízení správně nastaveno pro automatické vyplňování.</string>
   <string name="autofill_troubleshooting_verdict_all_good">Automatické vyplňování je nastaveno</string>

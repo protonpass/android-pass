@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <string name="on_boarding_autofill_content">Дазвольце Proton Pass запаўняць запісы ўваходу за вас. Няма неабходнасці нічога ўводзіць або выконваць аперацыі капіявання і ўстаўкі.</string>
-  <string name="on_boarding_autofill_title">Імгненна ўваходзьце ў праграмы</string>
   <string name="on_boarding_autofill_content_v2">Дазвольце Proton Pass запаўняць запісы ўваходу за вас. Няма неабходнасці нічога ўводзіць або выконваць аперацыі капіявання і ўстаўкі.</string>
   <string name="on_boarding_autofill_title_v2">Атрымлівайце асалоду ад магіі аўтазапаўнення</string>
   <string name="on_boarding_autofill_button">Аўтазапаўняць з Proton Pass</string>
@@ -12,7 +10,6 @@
   <string name="on_boarding_last_page_title">Кантралюйце, што трапляе ў вашу паштовую скрыню</string>
   <string name="on_boarding_last_page_button">Пачаць выкарыстоўваць Proton Pass</string>
   <string name="on_boarding_skip">Не зараз</string>
-  <string name="on_boarding_tutorial">Паглядзець кароткае відэа пра тое, як карыстацца Proton Pass</string>
   <string name="on_boarding_tutorial_v2">Даведайцеся, як выкарыстоўваць Proton Pass</string>
   <string name="on_boarding_pending_invite_content">У мэтах бяспекі вам неабходна пацвердзіць свой доступ.</string>
   <string name="on_boarding_pending_invite_title">Чаканне доступу да абагуленых даных</string>

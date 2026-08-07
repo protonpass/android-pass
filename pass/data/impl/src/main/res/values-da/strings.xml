@@ -21,4 +21,8 @@
   <string name="sync_channel_description">Notifikationskanal for elementsynkronisering</string>
   <string name="syncing_vaults">Synkroniserer bokse og elementer</string>
   <string name="logging_out_free_users">Ekstra gratis brugere logges ud</string>
+  <string name="plan_subscription_auto_renews_monthly">Abonnement fornyes automatisk til %1$s/måned</string>
+  <string name="plan_subscription_auto_renews_annual">Abonnementet fornyes automatisk til %1$s/år</string>
+  <string name="plan_welcome_offer_auto_renews_monthly">Velkomsttilbud. Fornyes automatisk til %1$s/måned</string>
+  <string name="plan_welcome_offer_auto_renews_annual">Velkomsttilbud. Fornyes automatisk til %1$s pr. år.</string>
 </resources>

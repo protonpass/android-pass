@@ -21,4 +21,8 @@
   <string name="sync_channel_description">Ilmoituskanava kohteiden synkronointia varten</string>
   <string name="syncing_vaults">Holveja ja kohteita synkronoidaan</string>
   <string name="logging_out_free_users">Ylimääräisiä ilmaiskäyttäjiä kirjataan ulos</string>
+  <string name="plan_subscription_auto_renews_monthly">Tilaus uudistuu automaattisesti hintaan %1$s/kuukausi</string>
+  <string name="plan_subscription_auto_renews_annual">Tilaus uudistuu automaattisesti hintaan %1$s/vuosi</string>
+  <string name="plan_welcome_offer_auto_renews_monthly">Tervetuliaistarjous. Uudistuu automaattisesti hintaan %1$s/kuukausi.</string>
+  <string name="plan_welcome_offer_auto_renews_annual">Tervetuliaistarjous. Uudistuu automaattisesti hintaan %1$s/vuosi.</string>
 </resources>

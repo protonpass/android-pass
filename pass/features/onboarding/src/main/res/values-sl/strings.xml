@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <string name="on_boarding_autofill_content">Naj Proton Pass izpolni podatke za prijavo namesto vas. Brez tipkanja ali kopiranja in lepljenja.</string>
-  <string name="on_boarding_autofill_title">Takoj se prijavite v aplikacije</string>
   <string name="on_boarding_autofill_content_v2">Proton Pass za vas samodejno izpolni podatke za prijavo. Ni vam treba ničesar tipkati ali kopirati in lepiti.</string>
   <string name="on_boarding_autofill_title_v2">Uživajte v čarobnosti samodejnega izpolnjevanja</string>
   <string name="on_boarding_autofill_button">Samodejno izpolnjevanje s Proton Pass</string>
@@ -12,7 +10,6 @@
   <string name="on_boarding_last_page_title">Nadzorujte, kaj pristane v vaši mapi »Prejeto«.</string>
   <string name="on_boarding_last_page_button">Začnite uporabljati Proton Pass</string>
   <string name="on_boarding_skip">Ne zdaj</string>
-  <string name="on_boarding_tutorial">Oglejte si kratek video o uporabi Proton Pass</string>
   <string name="on_boarding_tutorial_v2">Naučite se uporabljati Proton Pass</string>
   <string name="on_boarding_pending_invite_content">Iz varnostnih razlogov mora biti vaš dostop potrjen.</string>
   <string name="on_boarding_pending_invite_title">Čakanje na dostop do podatkov v skupni rabi</string>

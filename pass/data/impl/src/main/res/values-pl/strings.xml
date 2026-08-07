@@ -21,4 +21,8 @@
   <string name="sync_channel_description">Kanał powiadomień dla synchronizacji elementów</string>
   <string name="syncing_vaults">Synchronizacja sejfów i elementów</string>
   <string name="logging_out_free_users">Trwa wylogowywanie dodatkowych darmowych użytkowników</string>
+  <string name="plan_subscription_auto_renews_monthly">Subscription auto renews at %1$s/month</string>
+  <string name="plan_subscription_auto_renews_annual">Subscription auto renews at %1$s/year</string>
+  <string name="plan_welcome_offer_auto_renews_monthly">Welcome offer. Auto renews at %1$s/month</string>
+  <string name="plan_welcome_offer_auto_renews_annual">Welcome offer. Auto renews at %1$s/year</string>
 </resources>

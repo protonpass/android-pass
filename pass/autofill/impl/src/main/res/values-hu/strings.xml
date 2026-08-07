@@ -13,6 +13,9 @@
   <string name="autofill_confirm_dangerous_title" comment="Title for the dialog that will appear when the user clicks on Autofill but we think it may be a dangerous action">Művelet megerősítése</string>
   <string name="autofill_confirm_dangerous_body" comment="Body for the dialog that will appear when the user clicks on Autofill but we think it may be a dangerous action">A bejelentkezési adatai kitöltésére készül egy weboldalon, ami az aktuális alkalmazásban van megnyitva. Az alkalmazás hozzáférhet a bejelentkezési adataihoz - csak akkor folytassa ha megbízik az alkalmazásban.</string>
   <string name="autofill_confirm_button" comment="Confirmation button for actually performing the autofill action">Automatikus kitöltés</string>
+  <string name="autofill_confirm_unverified_browser_title">This app claims to be a trusted browser</string>
+  <string name="autofill_confirm_unverified_browser_body">This app identifies itself as a known browser, but Pass could not verify it. Its signing certificate does not match what we expect, which can happen if the browser is unusually configured, or if another app is impersonating it to intercept your credentials. Only continue if you are certain this app is legitimate.</string>
+  <string name="autofill_confirm_dont_ask_again">Don\'t ask again for this app</string>
   <string name="autofill_troubleshooting_title">Autofill troubleshooting</string>
   <string name="autofill_troubleshooting_subtitle">Check your device is set up correctly for autofill.</string>
   <string name="autofill_troubleshooting_verdict_all_good">Autofill is fully set up</string>

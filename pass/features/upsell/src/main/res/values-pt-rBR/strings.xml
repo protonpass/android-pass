@@ -38,6 +38,7 @@
   <string name="upsell_paid_feature_item_sharing_subtitle">Atualize hoje para poder compartilhar um item com qualquer usuário do Pass. E aproveite outros recursos premium:</string>
   <string name="upsell_paid_feature_file_attachments_title">Anexos de arquivo</string>
   <string name="upsell_button_upgrade">Obter Pass Plus</string>
+  <string name="upsell_button_upgrade_unlimited">Obter o Proton Unlimited</string>
   <string name="upsell_button_upgrade_essentials">Obtenha o Pass Business</string>
   <string name="price_per_month_type1">%s/mês</string>
   <string name="upsell_skip">Agora não</string>
@@ -71,4 +72,6 @@
   <string name="upsell_get_one_month">Obtenha 1 mês por %s</string>
   <string name="upsell_get_the_deal">Aproveitar a oferta</string>
   <string name="upsell_whats_included">O que está incluído</string>
+  <string name="upsell_error_google_prices">Problem retrieving Google Play Store prices at the moment.</string>
+  <string name="upsell_error_general">An error occurred.</string>
 </resources>

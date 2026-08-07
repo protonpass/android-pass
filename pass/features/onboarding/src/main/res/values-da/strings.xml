@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <string name="on_boarding_autofill_content">Lad Proton Pass udfylde loginoplysningerne for dig. Ingen indtastning eller copy-paste nødvendig.</string>
-  <string name="on_boarding_autofill_title">Log ind på apps øjeblikkeligt</string>
   <string name="on_boarding_autofill_content_v2">Proton Pass udfylder loginoplysninger for dig. Ingen indtastning eller kopiering og indsættelse er nødvendig.</string>
   <string name="on_boarding_autofill_title_v2">Nyd magien ved autofyld</string>
   <string name="on_boarding_autofill_button">Autofyld med Proton Pass</string>
@@ -12,7 +10,6 @@
   <string name="on_boarding_last_page_title">Få kontrol over, hvad der lander i din indbakke</string>
   <string name="on_boarding_last_page_button">Begynd at bruge Proton Pass</string>
   <string name="on_boarding_skip">Ikke nu</string>
-  <string name="on_boarding_tutorial">Se en kort video om, hvordan du bruger Proton Pass</string>
   <string name="on_boarding_tutorial_v2">Lær, hvordan du bruger Proton Pass</string>
   <string name="on_boarding_pending_invite_content">Af sikkerhedsmæssige årsager skal din adgang bekræftes.</string>
   <string name="on_boarding_pending_invite_title">Afventer adgang til de delte data</string>

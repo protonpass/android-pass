@@ -45,6 +45,6 @@
   </plurals>
   <string name="migrate_select_vault_title">Valitse holvi</string>
   <string name="migrate_select_destination_for_source_title">Valitse sijainti, mihin kaikki kohteet siirretään %s</string>
-  <string name="migrate_folder_items_moved_success_snackbar">Items moved</string>
+  <string name="migrate_folder_items_moved_success_snackbar">Kohteet siirrettiin</string>
   <string name="migrate_folder_items_moved_error_snackbar">Error moving the items</string>
 </resources>

@@ -21,4 +21,8 @@
   <string name="sync_channel_description">Benachrichtigungskanal für das Synchronisieren von Einträgen</string>
   <string name="syncing_vaults">Tresore und Einträge werden synchronisiert</string>
   <string name="logging_out_free_users">Zusätzliche kostenlose Benutzer werden abgemeldet</string>
+  <string name="plan_subscription_auto_renews_monthly">Abonnement verlängert sich automatisch für %1$s/Monat</string>
+  <string name="plan_subscription_auto_renews_annual">Abonnement verlängert sich automatisch für %1$s/Jahr</string>
+  <string name="plan_welcome_offer_auto_renews_monthly">Willkommensangebot. Verlängert sich automatisch für %1$s/Monat</string>
+  <string name="plan_welcome_offer_auto_renews_annual">Willkommensangebot. Verlängert sich automatisch für %1$s/Jahr</string>
 </resources>

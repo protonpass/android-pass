@@ -21,4 +21,8 @@
   <string name="sync_channel_description">შეტყობინებების არხი ელემენტების სინქრონიზაციისთვის</string>
   <string name="syncing_vaults">საცავებისა და ელემენტების სინქრონიზაცია</string>
   <string name="logging_out_free_users">დამატებითი უფასო მომხმარებლების გაყვანა</string>
+  <string name="plan_subscription_auto_renews_monthly">გამოწერა ავტომატურად განახლდება ტარიფით %1$s/თვეში</string>
+  <string name="plan_subscription_auto_renews_annual">გამოწერა ავტომატურად განახლდება ტარიფით %1$s/წელიწადში</string>
+  <string name="plan_welcome_offer_auto_renews_monthly">შეთავაზება ახალი მომხამრებლებისთვის. ავტომატური განახლება ფასით %1$s/თვეში</string>
+  <string name="plan_welcome_offer_auto_renews_annual">შეთავაზება ახალი მომხამრებლებისთვის. ავტომატური განახლება ფასით %1$s/წელიწადში</string>
 </resources>

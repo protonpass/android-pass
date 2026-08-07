@@ -21,4 +21,8 @@
   <string name="sync_channel_description">Canal de notificaciones para sincronización de elementos</string>
   <string name="syncing_vaults">Sincronizando bóvedas y elementos</string>
   <string name="logging_out_free_users">Cerrando sesión de usuarios gratuitos adicionales</string>
+  <string name="plan_subscription_auto_renews_monthly">La suscripción se renueva automáticamente por %1$s/mes</string>
+  <string name="plan_subscription_auto_renews_annual">La suscripción se renueva automáticamente por %1$s/año</string>
+  <string name="plan_welcome_offer_auto_renews_monthly">Oferta de bienvenida. Renovación automática por %1$s/mes</string>
+  <string name="plan_welcome_offer_auto_renews_annual">Oferta de bienvenida. Renovación automática por %1$s/año</string>
 </resources>

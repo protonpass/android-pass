@@ -156,7 +156,8 @@ fun ItemDetailsScreen(
                 is ItemDetailsUiEvent.OnMenuClicked -> when (uiEvent.itemState) {
                     ItemState.Active -> ItemOptionsMenu(
                         shareId = uiEvent.shareId,
-                        itemId = uiEvent.itemId
+                        itemId = uiEvent.itemId,
+                        scope = navScope
                     )
 
                     ItemState.Trashed -> ItemTrashMenu(

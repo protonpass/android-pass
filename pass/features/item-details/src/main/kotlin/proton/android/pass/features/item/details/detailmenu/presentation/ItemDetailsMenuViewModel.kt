@@ -27,6 +27,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -35,12 +36,13 @@ import proton.android.pass.common.api.FlowUtils.oneShot
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.some
-import proton.android.pass.data.api.repositories.ParentContainer
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
+import proton.android.pass.commonuimodels.api.items.ItemDetailNavScope
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemAction
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.repositories.BulkMoveToVaultRepository
+import proton.android.pass.data.api.repositories.ParentContainer
 import proton.android.pass.data.api.usecases.GetItemActions
 import proton.android.pass.data.api.usecases.GetItemById
 import proton.android.pass.data.api.usecases.PinItem
@@ -48,10 +50,14 @@ import proton.android.pass.data.api.usecases.TrashItems
 import proton.android.pass.data.api.usecases.UnpinItem
 import proton.android.pass.data.api.usecases.items.UpdateItemFlag
 import proton.android.pass.data.api.usecases.shares.ObserveShare
+import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemExclusionCheckFlags
 import proton.android.pass.domain.ItemFlag
 import proton.android.pass.domain.ItemId
+import proton.android.pass.domain.MonitorCheckFlags
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.isCheckSkipped
+import proton.android.pass.features.item.details.detail.navigation.ItemDetailScopeNavArgId
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.notifications.api.SnackbarDispatcher
@@ -82,6 +88,10 @@ class ItemDetailsMenuViewModel @Inject constructor(
         .require<String>(CommonNavArgId.ItemId.key)
         .let(::ItemId)
 
+    private val navScope: ItemDetailNavScope = savedStateHandleProvider.get()
+        .get<ItemDetailNavScope>(ItemDetailScopeNavArgId.key)
+        ?: ItemDetailNavScope.Default
+
     private val actionFlow = MutableStateFlow(BottomSheetItemAction.None)
 
     private val eventFlow = MutableStateFlow<ItemDetailsMenuEvent>(ItemDetailsMenuEvent.Idle)
@@ -92,19 +102,23 @@ class ItemDetailsMenuViewModel @Inject constructor(
 
     private val itemActionsFlow = oneShot { getItemActions(shareId = shareId, itemId = itemId) }
 
+    private val itemWithChecksFlow = itemFlow.map { item -> item to resolveTriggeredChecks(item) }
+
     internal val state: StateFlow<ItemDetailsMenuState> = combine(
         actionFlow,
         eventFlow,
-        itemFlow,
+        itemWithChecksFlow,
         shareFlow,
         itemActionsFlow
-    ) { action, event, item, share, itemActions ->
+    ) { action, event, (item, triggeredChecks), share, itemActions ->
         ItemDetailsMenuState(
             action = action,
             event = event,
             itemOption = item.some(),
             itemActionsOption = itemActions.some(),
-            shareOption = share.some()
+            shareOption = share.some(),
+            triggeredChecks = triggeredChecks,
+            isOpenedFromExcludedSection = navScope == ItemDetailNavScope.MonitorExcluded
         )
     }.catch { error ->
         PassLogger.w(TAG, "There was an error loading item menu state")
@@ -115,6 +129,11 @@ class ItemDetailsMenuViewModel @Inject constructor(
         started = SharingStarted.WhileSubscribed(5_000),
         initialValue = ItemDetailsMenuState.Initial
     )
+
+    private suspend fun resolveTriggeredChecks(item: Item): Set<ItemFlag> = when {
+        MonitorCheckFlags.none { flag -> item.isCheckSkipped(flag) } -> emptySet()
+        else -> resolveTriggeredMonitorChecks(item)
+    }
 
     internal fun onConsumeEvent(event: ItemDetailsMenuEvent) {
         eventFlow.compareAndSet(event, ItemDetailsMenuEvent.Idle)

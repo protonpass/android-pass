@@ -25,7 +25,10 @@ import proton.android.pass.common.api.Some
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemAction
 import proton.android.pass.data.api.usecases.ItemActions
 import proton.android.pass.domain.Item
+import proton.android.pass.domain.ItemFlag
+import proton.android.pass.domain.MonitorCheckFlags
 import proton.android.pass.domain.Share
+import proton.android.pass.domain.isCheckSkipped
 import proton.android.pass.domain.items.ItemCategory
 
 @Stable
@@ -34,7 +37,9 @@ internal data class ItemDetailsMenuState(
     internal val event: ItemDetailsMenuEvent,
     internal val itemOption: Option<Item>,
     private val itemActionsOption: Option<ItemActions>,
-    private val shareOption: Option<Share>
+    private val shareOption: Option<Share>,
+    private val triggeredChecks: Set<ItemFlag> = emptySet(),
+    private val isOpenedFromExcludedSection: Boolean = false
 ) {
 
     private val itemCategory = when (itemOption) {
@@ -92,11 +97,25 @@ internal data class ItemDetailsMenuState(
         is Some -> itemActionsOption.value.canMoveToTrash
     }
 
-    internal val isItemExcludedFromMonitoring: Boolean by lazy {
+    private val skippedChecks: Set<ItemFlag> by lazy {
         when (itemOption) {
+            None -> emptySet()
+            is Some ->
+                MonitorCheckFlags
+                    .filterTo(mutableSetOf()) { flag -> itemOption.value.isCheckSkipped(flag) }
+        }
+    }
+
+    internal val isItemExcludedFromMonitoring: Boolean by lazy {
+        val isGloballyExcluded = when (itemOption) {
             None -> false
             is Some -> itemOption.value.hasSkippedHealthCheck
         }
+        val areAllAlertsSkipped = triggeredChecks.isNotEmpty() && skippedChecks.containsAll(triggeredChecks)
+
+        isGloballyExcluded ||
+            areAllAlertsSkipped ||
+            isOpenedFromExcludedSection && skippedChecks.isNotEmpty()
     }
 
     internal val itemEncryptedNote: String by lazy {

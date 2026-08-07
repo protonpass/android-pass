@@ -21,6 +21,7 @@ package proton.android.pass.features.item.details.shared.navigation
 import proton.android.pass.commonpresentation.api.items.details.domain.ItemDetailsActionForbiddenReason
 import proton.android.pass.commonuimodels.api.UIPasskeyContent
 import proton.android.pass.domain.FolderId
+import proton.android.pass.commonuimodels.api.items.ItemDetailNavScope
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.attachments.AttachmentId
@@ -64,7 +65,8 @@ sealed interface ItemDetailsNavDestination {
 
     data class ItemOptionsMenu(
         val shareId: ShareId,
-        val itemId: ItemId
+        val itemId: ItemId,
+        val scope: ItemDetailNavScope
     ) : ItemDetailsNavDestination
 
     data class ItemTrashMenu(

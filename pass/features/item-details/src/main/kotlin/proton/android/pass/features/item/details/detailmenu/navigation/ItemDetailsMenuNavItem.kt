@@ -18,11 +18,14 @@
 
 package proton.android.pass.features.item.details.detailmenu.navigation
 
+import proton.android.pass.commonuimodels.api.items.ItemDetailNavScope
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
+import proton.android.pass.features.item.details.detail.navigation.ItemDetailScopeNavArgId
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.navigation.api.NavItem
 import proton.android.pass.navigation.api.NavItemType
+import proton.android.pass.navigation.api.toPath
 
 object ItemDetailsMenuNavItem : NavItem(
     baseRoute = "item/details/menu",
@@ -30,9 +33,17 @@ object ItemDetailsMenuNavItem : NavItem(
     navArgIds = listOf(
         CommonNavArgId.ShareId,
         CommonNavArgId.ItemId
-    )
+    ),
+    optionalArgIds = listOf(ItemDetailScopeNavArgId)
 ) {
 
-    fun createNavRoute(shareId: ShareId, itemId: ItemId) = "$baseRoute/${shareId.id}/${itemId.id}"
+    fun createNavRoute(
+        shareId: ShareId,
+        itemId: ItemId,
+        scope: ItemDetailNavScope = ItemDetailNavScope.Default
+    ) = buildString {
+        append("$baseRoute/${shareId.id}/${itemId.id}")
+        append(mapOf(ItemDetailScopeNavArgId.key to scope).toPath())
+    }
 
 }

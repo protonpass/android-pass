@@ -20,12 +20,13 @@ package proton.android.pass.domain
 
 import me.proton.core.util.kotlin.hasFlag
 
-val ItemExclusionCheckFlags: List<ItemFlag> = listOf(
-    ItemFlag.SkipHealthCheck,
+val MonitorCheckFlags: List<ItemFlag> = listOf(
     ItemFlag.SkipWeakPasswordCheck,
     ItemFlag.SkipCompromisedPasswordCheck,
     ItemFlag.SkipReusedPasswordCheck,
     ItemFlag.Skip2FACheck
 )
+
+val ItemExclusionCheckFlags: List<ItemFlag> = listOf(ItemFlag.SkipHealthCheck) + MonitorCheckFlags
 
 fun Item.isCheckSkipped(flag: ItemFlag): Boolean = itemFlags.value.hasFlag(flag.value)

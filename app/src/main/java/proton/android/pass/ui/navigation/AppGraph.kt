@@ -2093,7 +2093,8 @@ fun NavGraphBuilder.appGraph(
                     destination = ItemDetailsMenuNavItem,
                     route = ItemDetailsMenuNavItem.createNavRoute(
                         shareId = itemDetailsNavDestination.shareId,
-                        itemId = itemDetailsNavDestination.itemId
+                        itemId = itemDetailsNavDestination.itemId,
+                        scope = itemDetailsNavDestination.scope
                     )
                 )
 

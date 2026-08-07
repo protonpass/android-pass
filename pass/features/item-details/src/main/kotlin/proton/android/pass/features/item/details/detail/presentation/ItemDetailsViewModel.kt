@@ -41,6 +41,8 @@ import proton.android.pass.commonpresentation.api.items.details.handlers.ItemDet
 import proton.android.pass.commonpresentation.api.items.details.handlers.ItemDetailsSource
 import proton.android.pass.commonui.api.ClassHolder
 import proton.android.pass.commonui.api.SavedStateHandleProvider
+import proton.android.pass.features.item.details.detail.navigation.ItemDetailScopeNavArgId
+import proton.android.pass.commonuimodels.api.items.ItemDetailNavScope
 import proton.android.pass.commonui.api.require
 import proton.android.pass.commonuimodels.api.items.DetailEvent
 import proton.android.pass.commonuimodels.api.items.ItemDetailState
@@ -84,6 +86,10 @@ class ItemDetailsViewModel @Inject constructor(
     private val savedStateEntries: Map<String, Any?> = savedStateHandleProvider.get().let {
         it.keys().associateWith { key -> it[key] }
     }
+
+    internal val navScope: ItemDetailNavScope = savedStateEntries[ItemDetailScopeNavArgId.key]
+        ?.let { it as? ItemDetailNavScope }
+        ?: ItemDetailNavScope.Default
 
     private val itemFlow = oneShot { getItemById(shareId = shareId, itemId = itemId) }
         .onEach { item ->

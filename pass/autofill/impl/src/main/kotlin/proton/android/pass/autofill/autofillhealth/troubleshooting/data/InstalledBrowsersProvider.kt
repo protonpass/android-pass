@@ -40,7 +40,9 @@ enum class BrowserAutofillCoverage {
 data class BrowserInfo(
     val packageName: String,
     val label: String,
-    val coverage: BrowserAutofillCoverage
+    val coverage: BrowserAutofillCoverage,
+    val canOpenAutofillSettings: Boolean = false,
+    val canDetectAutofillState: Boolean = false
 )
 
 interface InstalledBrowsersProvider {

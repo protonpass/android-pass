@@ -26,6 +26,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.compose.LifecycleEventEffect
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import proton.android.pass.autofill.autofillhealth.troubleshooting.data.BrowserAutofillSettingsLauncher
 import proton.android.pass.autofill.autofillhealth.troubleshooting.presentation.AutofillTroubleshootingViewModel
 import proton.android.pass.commonui.api.BrowserUtils
 
@@ -50,8 +51,12 @@ fun AutofillTroubleshootingScreen(
             when (event) {
                 AutofillTroubleshootingUiEvent.OnBack -> onBack()
                 AutofillTroubleshootingUiEvent.OnEnableAutofill -> viewModel.openAutofillSelector()
-                is AutofillTroubleshootingUiEvent.OnOpenBrowser ->
-                    BrowserUtils.openApp(context, event.browser.packageName)
+                is AutofillTroubleshootingUiEvent.OnOpenBrowser -> {
+                    val packageName = event.browser.packageName
+                    if (!BrowserAutofillSettingsLauncher.openAutofillSettings(context, packageName)) {
+                        BrowserUtils.openApp(context, packageName)
+                    }
+                }
                 AutofillTroubleshootingUiEvent.OnShareDiagnostics ->
                     AutofillTroubleshootingActions.shareDiagnostics(context, state)
                 AutofillTroubleshootingUiEvent.OnOpenDiagnostics -> onNavigateToDiagnostics()

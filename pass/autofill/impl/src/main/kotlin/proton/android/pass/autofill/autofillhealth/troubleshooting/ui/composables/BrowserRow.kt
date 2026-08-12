@@ -99,9 +99,20 @@ internal fun BrowserRow(
                     else -> {
                         Text.Body3Weak(
                             stringResource(
-                                BrowserAutofillInstructions.stepsResIdFor(browser.packageName)
+                                if (browser.canOpenAutofillSettings) {
+                                    R.string.autofill_troubleshooting_browser_steps_direct
+                                } else {
+                                    BrowserAutofillInstructions.stepsResIdFor(browser.packageName)
+                                }
                             )
                         )
+                        if (!browser.canDetectAutofillState) {
+                            Text.Body3Weak(
+                                stringResource(
+                                    R.string.autofill_troubleshooting_browser_steps_confirm
+                                )
+                            )
+                        }
                         Text.Body3Medium(
                             modifier = Modifier.clickable(onClick = onOpenClick),
                             text = stringResource(R.string.autofill_troubleshooting_browser_open_action),

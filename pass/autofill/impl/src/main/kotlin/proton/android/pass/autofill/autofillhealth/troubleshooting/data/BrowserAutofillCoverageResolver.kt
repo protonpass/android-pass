@@ -18,24 +18,38 @@
 
 package proton.android.pass.autofill.autofillhealth.troubleshooting.data
 
+import proton.android.pass.autofill.ThirdPartyMode
+
 /**
  * Decides whether a browser is covered by our autofill compatibility handling.
  *
- * A browser is [BrowserAutofillCoverage.Ready] when it is declared in our autofill compatibility
- * list and the installed version is at or below the declared `maxLongVersionCode` (so compatibility
- * mode applies automatically). Otherwise the user likely needs to enable autofill in the browser,
- * so it is [BrowserAutofillCoverage.NeedsSetup].
+ * [ThirdPartyMode.Disabled] is our only authoritative negative signal, but it only breaks autofill
+ * for browsers the platform compatibility mode does not cover. Chrome dropped compatibility mode, so
+ * third-party mode off really means broken there, and that outranks the sticky `hasBeenSeenWorking`
+ * flag which would otherwise keep the browser green forever. Browsers still under their declared
+ * `maxLongVersionCode` keep working through compatibility mode whatever that toggle says, so the
+ * signal must not demote them.
+ *
+ * Failing that the user likely needs to turn autofill on in the browser, so it is
+ * [BrowserAutofillCoverage.NeedsSetup].
  */
 object BrowserAutofillCoverageResolver {
 
     fun resolve(
         browserVersionCode: Long,
         compatMaxVersionCode: Long?,
-        hasBeenSeenWorking: Boolean
-    ): BrowserAutofillCoverage = when {
-        hasBeenSeenWorking -> BrowserAutofillCoverage.Working
-        compatMaxVersionCode != null && browserVersionCode <= compatMaxVersionCode ->
-            BrowserAutofillCoverage.Ready
-        else -> BrowserAutofillCoverage.NeedsSetup
+        hasBeenSeenWorking: Boolean,
+        thirdPartyMode: ThirdPartyMode = ThirdPartyMode.Unknown
+    ): BrowserAutofillCoverage {
+        val compatModeApplies =
+            compatMaxVersionCode != null && browserVersionCode <= compatMaxVersionCode
+        return when {
+            thirdPartyMode == ThirdPartyMode.Disabled && !compatModeApplies ->
+                BrowserAutofillCoverage.NeedsSetup
+            hasBeenSeenWorking -> BrowserAutofillCoverage.Working
+            thirdPartyMode == ThirdPartyMode.Enabled -> BrowserAutofillCoverage.Ready
+            compatModeApplies -> BrowserAutofillCoverage.Ready
+            else -> BrowserAutofillCoverage.NeedsSetup
+        }
     }
 }

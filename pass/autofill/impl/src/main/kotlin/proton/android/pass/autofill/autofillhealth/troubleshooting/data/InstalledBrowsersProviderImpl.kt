@@ -28,12 +28,15 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.xmlpull.v1.XmlPullParser
+import proton.android.pass.autofill.ThirdPartyMode
+import proton.android.pass.autofill.ThirdPartyModeProvider
 import proton.android.pass.autofill.service.R
 import javax.inject.Inject
 
 class InstalledBrowsersProviderImpl @Inject constructor(
     @param:ApplicationContext private val context: Context,
-    private val workingBrowsersStore: AutofillWorkingBrowsersStore
+    private val workingBrowsersStore: AutofillWorkingBrowsersStore,
+    private val thirdPartyModeProvider: ThirdPartyModeProvider
 ) : InstalledBrowsersProvider {
 
     override suspend fun getInstalledBrowsers(): List<BrowserInfo> = withContext(Dispatchers.IO) {
@@ -49,14 +52,19 @@ class InstalledBrowsersProviderImpl @Inject constructor(
             .mapNotNull { resolveInfo ->
                 val packageName = resolveInfo.activityInfo?.packageName
                     ?: return@mapNotNull null
+                val thirdPartyMode = thirdPartyModeProvider.getThirdPartyMode(packageName)
                 BrowserInfo(
                     packageName = packageName,
                     label = resolveInfo.loadLabel(packageManager).toString(),
                     coverage = BrowserAutofillCoverageResolver.resolve(
                         browserVersionCode = versionCodeOf(packageManager, packageName),
                         compatMaxVersionCode = compatVersionCaps[packageName],
-                        hasBeenSeenWorking = packageName in workingBrowsers
-                    )
+                        hasBeenSeenWorking = packageName in workingBrowsers,
+                        thirdPartyMode = thirdPartyMode
+                    ),
+                    canOpenAutofillSettings = BrowserAutofillSettingsLauncher
+                        .canOpenAutofillSettings(context, packageName),
+                    canDetectAutofillState = thirdPartyMode != ThirdPartyMode.Unknown
                 )
             }
             .distinctBy { browser -> browser.packageName }

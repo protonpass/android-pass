@@ -20,6 +20,7 @@ package proton.android.pass.autofill.autofillhealth.troubleshooting
 
 import com.google.common.truth.Truth.assertThat
 import org.junit.Test
+import proton.android.pass.autofill.ThirdPartyMode
 import proton.android.pass.autofill.autofillhealth.troubleshooting.data.BrowserAutofillCoverage
 import proton.android.pass.autofill.autofillhealth.troubleshooting.data.BrowserAutofillCoverageResolver
 
@@ -51,5 +52,73 @@ class BrowserAutofillCoverageResolverTest {
             .isEqualTo(BrowserAutofillCoverage.Working)
         assertThat(BrowserAutofillCoverageResolver.resolve(500, null, hasBeenSeenWorking = true))
             .isEqualTo(BrowserAutofillCoverage.Working)
+    }
+
+    @Test
+    fun `needs setup when the browser reports third party mode turned off`() {
+        assertThat(
+            BrowserAutofillCoverageResolver.resolve(
+                browserVersionCode = 1001,
+                compatMaxVersionCode = 1000,
+                hasBeenSeenWorking = true,
+                thirdPartyMode = ThirdPartyMode.Disabled
+            )
+        ).isEqualTo(BrowserAutofillCoverage.NeedsSetup)
+    }
+
+    @Test
+    fun `disabled third party mode does not demote a browser covered by compat mode`() {
+        assertThat(
+            BrowserAutofillCoverageResolver.resolve(
+                browserVersionCode = 500,
+                compatMaxVersionCode = 1000,
+                hasBeenSeenWorking = false,
+                thirdPartyMode = ThirdPartyMode.Disabled
+            )
+        ).isEqualTo(BrowserAutofillCoverage.Ready)
+    }
+
+    @Test
+    fun `disabled third party mode demotes when compat mode does not apply`() {
+        assertThat(
+            BrowserAutofillCoverageResolver.resolve(
+                browserVersionCode = 1001,
+                compatMaxVersionCode = 1000,
+                hasBeenSeenWorking = false,
+                thirdPartyMode = ThirdPartyMode.Disabled
+            )
+        ).isEqualTo(BrowserAutofillCoverage.NeedsSetup)
+    }
+
+    @Test
+    fun `ready when the browser reports third party mode turned on`() {
+        assertThat(
+            BrowserAutofillCoverageResolver.resolve(
+                browserVersionCode = 1001,
+                compatMaxVersionCode = null,
+                hasBeenSeenWorking = false,
+                thirdPartyMode = ThirdPartyMode.Enabled
+            )
+        ).isEqualTo(BrowserAutofillCoverage.Ready)
+    }
+
+    @Test
+    fun `unknown third party mode falls back to the compat list`() {
+        assertThat(
+            BrowserAutofillCoverageResolver.resolve(
+                browserVersionCode = 500,
+                compatMaxVersionCode = 1000,
+                hasBeenSeenWorking = false,
+                thirdPartyMode = ThirdPartyMode.Unknown
+            )
+        ).isEqualTo(BrowserAutofillCoverage.Ready)
+        assertThat(
+            BrowserAutofillCoverageResolver.resolve(
+                browserVersionCode = 1001,
+                compatMaxVersionCode = 1000,
+                hasBeenSeenWorking = false,
+                thirdPartyMode = ThirdPartyMode.Unknown
+            )
+        ).isEqualTo(BrowserAutofillCoverage.NeedsSetup)
     }
 }

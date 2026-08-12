@@ -54,10 +54,12 @@ data class LoginMonitorState(
         isReusedPasswordCheckSkipped ||
         isMissing2faCheckSkipped
 
-    val shouldDisplayMonitoring: Boolean =
-        isPasswordCompromised ||
-            isPasswordInsecure ||
-            isPasswordReused ||
-            isMissingTwoFa ||
-            isRestoreMode && anyCheckSkipped
+    val shouldDisplayMonitoring: Boolean = isPerCheckExclusionEnabled &&
+        (
+            isPasswordCompromised ||
+                isPasswordInsecure ||
+                isPasswordReused ||
+                isMissingTwoFa ||
+                isRestoreMode && anyCheckSkipped
+            )
 }

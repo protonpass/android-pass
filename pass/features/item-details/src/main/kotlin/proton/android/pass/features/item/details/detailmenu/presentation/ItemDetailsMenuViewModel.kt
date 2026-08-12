@@ -24,10 +24,9 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -35,10 +34,10 @@ import proton.android.pass.clipboard.api.ClipboardManager
 import proton.android.pass.common.api.FlowUtils.oneShot
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Some
+import proton.android.pass.common.api.combineN
 import proton.android.pass.common.api.some
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
-import proton.android.pass.commonuimodels.api.items.ItemDetailNavScope
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemAction
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.repositories.BulkMoveToVaultRepository
@@ -50,17 +49,15 @@ import proton.android.pass.data.api.usecases.TrashItems
 import proton.android.pass.data.api.usecases.UnpinItem
 import proton.android.pass.data.api.usecases.items.UpdateItemFlag
 import proton.android.pass.data.api.usecases.shares.ObserveShare
-import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemExclusionCheckFlags
 import proton.android.pass.domain.ItemFlag
 import proton.android.pass.domain.ItemId
-import proton.android.pass.domain.MonitorCheckFlags
 import proton.android.pass.domain.ShareId
-import proton.android.pass.domain.isCheckSkipped
-import proton.android.pass.features.item.details.detail.navigation.ItemDetailScopeNavArgId
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.notifications.api.SnackbarDispatcher
+import proton.android.pass.preferences.FeatureFlag
+import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import javax.inject.Inject
 
 @HiltViewModel
@@ -76,6 +73,7 @@ class ItemDetailsMenuViewModel @Inject constructor(
     private val unpinItem: UnpinItem,
     private val updateItemFlag: UpdateItemFlag,
     private val resolveTriggeredMonitorChecks: ResolveTriggeredMonitorChecks,
+    featureFlagsPreferencesRepository: FeatureFlagsPreferencesRepository,
     private val trashItem: TrashItems,
     private val snackbarDispatcher: SnackbarDispatcher
 ) : ViewModel() {
@@ -88,10 +86,6 @@ class ItemDetailsMenuViewModel @Inject constructor(
         .require<String>(CommonNavArgId.ItemId.key)
         .let(::ItemId)
 
-    private val navScope: ItemDetailNavScope = savedStateHandleProvider.get()
-        .get<ItemDetailNavScope>(ItemDetailScopeNavArgId.key)
-        ?: ItemDetailNavScope.Default
-
     private val actionFlow = MutableStateFlow(BottomSheetItemAction.None)
 
     private val eventFlow = MutableStateFlow<ItemDetailsMenuEvent>(ItemDetailsMenuEvent.Idle)
@@ -102,23 +96,24 @@ class ItemDetailsMenuViewModel @Inject constructor(
 
     private val itemActionsFlow = oneShot { getItemActions(shareId = shareId, itemId = itemId) }
 
-    private val itemWithChecksFlow = itemFlow.map { item -> item to resolveTriggeredChecks(item) }
+    private val perCheckExclusionEnabledFlow: Flow<Boolean> =
+        featureFlagsPreferencesRepository[FeatureFlag.PASS_MONITOR_PER_CHECK_EXCLUSION]
 
-    internal val state: StateFlow<ItemDetailsMenuState> = combine(
+    internal val state: StateFlow<ItemDetailsMenuState> = combineN(
         actionFlow,
         eventFlow,
-        itemWithChecksFlow,
+        itemFlow,
         shareFlow,
-        itemActionsFlow
-    ) { action, event, (item, triggeredChecks), share, itemActions ->
+        itemActionsFlow,
+        perCheckExclusionEnabledFlow
+    ) { action, event, item, share, itemActions, isPerCheckExclusionEnabled ->
         ItemDetailsMenuState(
             action = action,
             event = event,
             itemOption = item.some(),
             itemActionsOption = itemActions.some(),
             shareOption = share.some(),
-            triggeredChecks = triggeredChecks,
-            isOpenedFromExcludedSection = navScope == ItemDetailNavScope.MonitorExcluded
+            isPerCheckExclusionEnabled = isPerCheckExclusionEnabled
         )
     }.catch { error ->
         PassLogger.w(TAG, "There was an error loading item menu state")
@@ -129,11 +124,6 @@ class ItemDetailsMenuViewModel @Inject constructor(
         started = SharingStarted.WhileSubscribed(5_000),
         initialValue = ItemDetailsMenuState.Initial
     )
-
-    private suspend fun resolveTriggeredChecks(item: Item): Set<ItemFlag> = when {
-        MonitorCheckFlags.none { flag -> item.isCheckSkipped(flag) } -> emptySet()
-        else -> resolveTriggeredMonitorChecks(item)
-    }
 
     internal fun onConsumeEvent(event: ItemDetailsMenuEvent) {
         eventFlow.compareAndSet(event, ItemDetailsMenuEvent.Idle)

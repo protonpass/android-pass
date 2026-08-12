@@ -19,7 +19,6 @@
 package proton.android.pass.features.itemcreate.login
 
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.expandVertically
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
@@ -70,8 +69,12 @@ import proton.android.pass.data.api.usecases.popularservices.PopularService
 import kotlin.math.roundToInt
 
 private const val SUGGESTIONS_WIDTH_FRACTION = 0.9f
+private const val SUGGESTIONS_KEY_SEPARATOR = "|"
 private const val SUGGESTIONS_MAX_VISIBLE_ITEMS = 3.5f
 private val SUGGESTIONS_ROW_HEIGHT = 56.dp
+private val SUGGESTIONS_DIVIDER_HEIGHT = 1.dp
+private val SUGGESTIONS_MAX_HEIGHT =
+    (SUGGESTIONS_ROW_HEIGHT + SUGGESTIONS_DIVIDER_HEIGHT) * SUGGESTIONS_MAX_VISIBLE_ITEMS
 private val SUGGESTIONS_ELEVATION = 6.dp
 private val SUGGESTIONS_CORNER_RADIUS = 12.dp
 
@@ -144,24 +147,20 @@ private fun PopularServiceSuggestionsContent(
         color = PassTheme.colors.backgroundNorm,
         shadowElevation = SUGGESTIONS_ELEVATION
     ) {
-        LazyColumn(
-            modifier = Modifier
-                .heightIn(max = SUGGESTIONS_ROW_HEIGHT * SUGGESTIONS_MAX_VISIBLE_ITEMS)
-                .animateContentSize()
-        ) {
+        LazyColumn(modifier = Modifier.heightIn(max = SUGGESTIONS_MAX_HEIGHT)) {
             itemsIndexed(
                 items = services,
-                key = { _, service -> service.title + service.urls.firstOrNull().orEmpty() }
+                key = { _, service ->
+                    "${service.title}$SUGGESTIONS_KEY_SEPARATOR${service.urls.firstOrNull().orEmpty()}"
+                }
             ) { index, service ->
-                Column(modifier = Modifier.animateItem()) {
-                    PopularServiceRow(
-                        service = service,
-                        canLoadExternalImages = canLoadExternalImages,
-                        onClick = { onServiceSelected(service) }
-                    )
-                    if (index < services.lastIndex) {
-                        PassDivider()
-                    }
+                PopularServiceRow(
+                    service = service,
+                    canLoadExternalImages = canLoadExternalImages,
+                    onClick = { onServiceSelected(service) }
+                )
+                if (index < services.lastIndex) {
+                    PassDivider()
                 }
             }
         }

@@ -286,13 +286,17 @@ class LoginItemDetailsHandlerObserverImpl @Inject constructor(
             MonitorCheck.ReusedPassword -> ItemFlag.SkipReusedPasswordCheck
             MonitorCheck.Missing2fa -> ItemFlag.Skip2FACheck
         }
+        val flags = if (skip) {
+            mapOf(flag to true)
+        } else {
+            mapOf(flag to false, ItemFlag.SkipHealthCheck to false)
+        }
         pendingMonitorChecksFlow.update { it + check }
         runCatching {
             updateItemFlag(
                 shareId = shareId,
                 itemId = itemId,
-                flag = flag,
-                isFlagEnabled = skip
+                flags = flags
             )
         }.onSuccess {
             onRefreshMonitorState()

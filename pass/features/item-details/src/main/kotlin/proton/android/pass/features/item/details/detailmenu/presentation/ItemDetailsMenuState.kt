@@ -38,8 +38,7 @@ internal data class ItemDetailsMenuState(
     internal val itemOption: Option<Item>,
     private val itemActionsOption: Option<ItemActions>,
     private val shareOption: Option<Share>,
-    private val triggeredChecks: Set<ItemFlag> = emptySet(),
-    private val isOpenedFromExcludedSection: Boolean = false
+    private val isPerCheckExclusionEnabled: Boolean = true
 ) {
 
     private val itemCategory = when (itemOption) {
@@ -98,11 +97,13 @@ internal data class ItemDetailsMenuState(
     }
 
     private val skippedChecks: Set<ItemFlag> by lazy {
-        when (itemOption) {
-            None -> emptySet()
-            is Some ->
+        when {
+            !isPerCheckExclusionEnabled -> emptySet()
+            itemOption is Some ->
                 MonitorCheckFlags
                     .filterTo(mutableSetOf()) { flag -> itemOption.value.isCheckSkipped(flag) }
+
+            else -> emptySet()
         }
     }
 
@@ -111,11 +112,8 @@ internal data class ItemDetailsMenuState(
             None -> false
             is Some -> itemOption.value.hasSkippedHealthCheck
         }
-        val areAllAlertsSkipped = triggeredChecks.isNotEmpty() && skippedChecks.containsAll(triggeredChecks)
 
-        isGloballyExcluded ||
-            areAllAlertsSkipped ||
-            isOpenedFromExcludedSection && skippedChecks.isNotEmpty()
+        isGloballyExcluded || skippedChecks.isNotEmpty()
     }
 
     internal val itemEncryptedNote: String by lazy {

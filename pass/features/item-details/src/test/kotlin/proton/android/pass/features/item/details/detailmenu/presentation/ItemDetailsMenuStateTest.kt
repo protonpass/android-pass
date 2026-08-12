@@ -30,94 +30,87 @@ import proton.android.pass.test.domain.ItemTestFactory
 internal class ItemDetailsMenuStateTest {
 
     @Test
-    fun `healthy item with no alerts offers exclude`() {
+    fun `healthy item with no skipped check offers exclude`() {
         val state = stateOf(item = itemWith())
 
         assertThat(state.isItemExcludedFromMonitoring).isFalse()
     }
 
     @Test
-    fun `item with alerts and none skipped offers exclude`() {
-        val state = stateOf(
-            item = itemWith(),
-            triggeredChecks = setOf(ItemFlag.SkipWeakPasswordCheck, ItemFlag.SkipReusedPasswordCheck)
-        )
+    fun `item with a single skipped check offers include`() {
+        val state = stateOf(item = itemWith(ItemFlag.SkipReusedPasswordCheck))
 
-        assertThat(state.isItemExcludedFromMonitoring).isFalse()
+        assertThat(state.isItemExcludedFromMonitoring).isTrue()
     }
 
     @Test
-    fun `item with some alerts skipped offers exclude when not opened from excluded section`() {
+    fun `item with several skipped checks offers include`() {
         val state = stateOf(
-            item = itemWith(ItemFlag.SkipReusedPasswordCheck),
-            triggeredChecks = setOf(
-                ItemFlag.SkipReusedPasswordCheck,
-                ItemFlag.SkipWeakPasswordCheck
-            )
-        )
-
-        assertThat(state.isItemExcludedFromMonitoring).isFalse()
-    }
-
-    @Test
-    fun `item with some alerts skipped offers include when opened from excluded section`() {
-        val state = stateOf(
-            item = itemWith(ItemFlag.SkipReusedPasswordCheck),
-            triggeredChecks = setOf(
-                ItemFlag.SkipReusedPasswordCheck,
-                ItemFlag.SkipWeakPasswordCheck
-            ),
-            isOpenedFromExcludedSection = true
+            item = itemWith(ItemFlag.SkipReusedPasswordCheck, ItemFlag.SkipCompromisedPasswordCheck)
         )
 
         assertThat(state.isItemExcludedFromMonitoring).isTrue()
     }
 
     @Test
-    fun `item with all alerts skipped offers include from any view`() {
-        val item = itemWith(ItemFlag.SkipReusedPasswordCheck, ItemFlag.SkipCompromisedPasswordCheck)
-        val triggered = setOf(ItemFlag.SkipReusedPasswordCheck, ItemFlag.SkipCompromisedPasswordCheck)
+    fun `globally excluded item offers include`() {
+        val state = stateOf(item = itemWith(ItemFlag.SkipHealthCheck))
 
-        assertThat(stateOf(item, triggered).isItemExcludedFromMonitoring).isTrue()
-        assertThat(
-            stateOf(item, triggered, isOpenedFromExcludedSection = true).isItemExcludedFromMonitoring
-        ).isTrue()
+        assertThat(state.isItemExcludedFromMonitoring).isTrue()
     }
 
     @Test
-    fun `globally excluded item offers include from any view`() {
-        val item = itemWith(ItemFlag.SkipHealthCheck)
+    fun `item keeps offering include while a skipped check remains after a restore`() {
+        val state = stateOf(item = itemWith(ItemFlag.SkipWeakPasswordCheck))
 
-        assertThat(stateOf(item).isItemExcludedFromMonitoring).isTrue()
-        assertThat(stateOf(item, isOpenedFromExcludedSection = true).isItemExcludedFromMonitoring).isTrue()
+        assertThat(state.isItemExcludedFromMonitoring).isTrue()
     }
 
     @Test
-    fun `excluded section with no skipped check offers exclude`() {
+    fun `item offers exclude again once the last skipped check is restored`() {
+        val state = stateOf(item = itemWith())
+
+        assertThat(state.isItemExcludedFromMonitoring).isFalse()
+    }
+
+    @Test
+    fun `flags unrelated to monitoring do not offer include`() {
+        val state = stateOf(item = itemWith(ItemFlag.HasAttachments))
+
+        assertThat(state.isItemExcludedFromMonitoring).isFalse()
+    }
+
+    @Test
+    fun `per check flags are ignored when the feature flag is off`() {
         val state = stateOf(
-            item = itemWith(),
-            triggeredChecks = setOf(ItemFlag.SkipWeakPasswordCheck),
-            isOpenedFromExcludedSection = true
+            item = itemWith(ItemFlag.SkipReusedPasswordCheck),
+            isPerCheckExclusionEnabled = false
         )
 
         assertThat(state.isItemExcludedFromMonitoring).isFalse()
+    }
+
+    @Test
+    fun `globally excluded item still offers include when the feature flag is off`() {
+        val state = stateOf(
+            item = itemWith(ItemFlag.SkipHealthCheck),
+            isPerCheckExclusionEnabled = false
+        )
+
+        assertThat(state.isItemExcludedFromMonitoring).isTrue()
     }
 
     private fun itemWith(vararg flags: ItemFlag): Item = ItemTestFactory.createLogin(
         flags = flags.sumOf { flag -> flag.value }
     )
 
-    private fun stateOf(
-        item: Item,
-        triggeredChecks: Set<ItemFlag> = emptySet(),
-        isOpenedFromExcludedSection: Boolean = false
-    ): ItemDetailsMenuState = ItemDetailsMenuState(
-        action = BottomSheetItemAction.None,
-        event = ItemDetailsMenuEvent.Idle,
-        itemOption = item.some(),
-        itemActionsOption = None,
-        shareOption = None,
-        triggeredChecks = triggeredChecks,
-        isOpenedFromExcludedSection = isOpenedFromExcludedSection
-    )
+    private fun stateOf(item: Item, isPerCheckExclusionEnabled: Boolean = true): ItemDetailsMenuState =
+        ItemDetailsMenuState(
+            action = BottomSheetItemAction.None,
+            event = ItemDetailsMenuEvent.Idle,
+            itemOption = item.some(),
+            itemActionsOption = None,
+            shareOption = None,
+            isPerCheckExclusionEnabled = isPerCheckExclusionEnabled
+        )
 }

@@ -31,7 +31,6 @@
   <string name="autofill_troubleshooting_browser_open_action">Deschidere</string>
   <string name="autofill_troubleshooting_browser_ready">Completarea automată funcționează automat aici.</string>
   <string name="autofill_troubleshooting_browser_working">Completarea automată funcționează în acest navigator web.</string>
-  <string name="autofill_troubleshooting_browser_pending_service">Disponibil după ce Proton Pass este setat ca serviciu de completare automată.</string>
   <string name="autofill_troubleshooting_browser_steps_generic">Deschideți setările navigatorului web, găsiți secțiunea de completare automată sau parole și alegeți Proton Pass ca serviciu de completare automată.</string>
   <string name="autofill_troubleshooting_browser_steps_chrome">1. Deschideți meniul navigatorului web și accesați Setări, apoi Servicii de completare automată.\n2. Activați „Utilizare alt serviciu” și selectați Proton Pass.</string>
   <string name="autofill_troubleshooting_browser_steps_firefox">1. Deschideți meniul navigatorului web și accesați Setări, apoi Completare automată.\n2. Alegeți Proton Pass ca serviciu de completare automată.</string>

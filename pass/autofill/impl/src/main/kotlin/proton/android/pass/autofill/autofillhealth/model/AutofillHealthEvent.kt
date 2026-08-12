@@ -33,6 +33,7 @@ enum class AutofillHealthEventType {
     FILL_REQUEST_INLINE,
     FILL_REQUEST_MENU,
     FILL_REQUEST_NONE,
+    FILL_REQUEST_SKIPPED,
     FILL_REQUEST_ERROR
 }
 

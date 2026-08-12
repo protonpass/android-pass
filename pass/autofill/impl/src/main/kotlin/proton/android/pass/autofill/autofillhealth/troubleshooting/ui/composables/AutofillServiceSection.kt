@@ -72,6 +72,8 @@ internal fun AutofillServiceSection(
                 fillMaxWidth = false,
                 contentHorizontalPadding = Spacing.large,
                 text = stringResource(R.string.autofill_troubleshooting_service_enable_action),
+                backgroundColor = PassTheme.colors.interactionNormMinor1,
+                textColor = PassTheme.colors.interactionNormMajor2,
                 onClick = onEnableClick
             )
         }

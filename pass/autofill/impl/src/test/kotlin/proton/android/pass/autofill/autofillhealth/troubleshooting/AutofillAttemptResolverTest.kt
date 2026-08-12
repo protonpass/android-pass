@@ -49,6 +49,28 @@ class AutofillAttemptResolverTest {
     }
 
     @Test
+    fun `ignores requests skipped before any field was matched`() {
+        val events = listOf(
+            AutofillHealthEvent(
+                timestamp = 1,
+                type = AutofillHealthEventType.FILL_REQUEST_SKIPPED,
+                packageName = "com.Slack",
+                details = "No fields found"
+            ),
+            AutofillHealthEvent(
+                timestamp = 2,
+                type = AutofillHealthEventType.FILL_REQUEST_MENU,
+                packageName = "com.android.chrome"
+            )
+        )
+
+        val result = AutofillAttemptResolver.resolve(events, labelResolver)
+
+        assertThat(result).hasSize(1)
+        assertThat(result.first().packageName).isEqualTo("com.android.chrome")
+    }
+
+    @Test
     fun `maps each fill request type to the matching outcome`() {
         val events = listOf(
             AutofillHealthEvent(timestamp = 1, type = AutofillHealthEventType.FILL_REQUEST_INLINE),

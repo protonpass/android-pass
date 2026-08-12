@@ -145,7 +145,8 @@ object AutoFillHandler {
                 PassLogger.i(TAG, "Should not autofill, reason: ${shouldAutofill.reason}")
                 healthMonitor?.recordFillRequest(
                     packageName = applicationPackageName.value,
-                    type = AutofillHealthEventType.FILL_REQUEST_NONE
+                    type = AutofillHealthEventType.FILL_REQUEST_SKIPPED,
+                    details = shouldAutofill.reason
                 )
                 return None
             }

@@ -31,7 +31,6 @@
   <string name="autofill_troubleshooting_browser_open_action">Адкрыць</string>
   <string name="autofill_troubleshooting_browser_ready">У гэтым браўзеры аўтазапаўненне працуе аўтаматычна.</string>
   <string name="autofill_troubleshooting_browser_working">У гэтым браўзеры аўтазапаўненне будзе працаваць.</string>
-  <string name="autofill_troubleshooting_browser_pending_service">Даступна пасля таго, як Proton Pass будзе наладжаны ў якасці сэрвісу аўтазапаўнення.</string>
   <string name="autofill_troubleshooting_browser_steps_generic">Адкрыйце налады браўзера, знайдзіце раздзел з аўтазапаўненнем або паролямі, а потым выберыце Proton Pass у якасці сэрвісу аўтазапаўнення.</string>
   <string name="autofill_troubleshooting_browser_steps_chrome">1. Адкрыйце меню браўзера і перайдзіце ў налады, а потым выберыце сэрвісы аўтазапаўнення.\n2. Уключыце \"Выкарыстоўваць іншы сэрвіс\" і выберыце Proton Pass.</string>
   <string name="autofill_troubleshooting_browser_steps_firefox">1. Адкрыйце меню браўзера і перайдзіце ў налады, а потым аўтазапаўненне.\n2. Выберыце Proton Pass у якасці сэрвісу аўтазапаўнення.</string>

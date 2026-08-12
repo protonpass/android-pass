@@ -21,6 +21,7 @@ package proton.android.pass.autofill.autofillhealth.troubleshooting.data
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.content.pm.ResolveInfo
 import android.net.Uri
 import android.os.Build
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -39,10 +40,12 @@ class InstalledBrowsersProviderImpl @Inject constructor(
         val packageManager = context.packageManager
         val compatVersionCaps = readCompatVersionCaps()
         val workingBrowsers = workingBrowsersStore.getWorkingBrowsers()
-        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(PROBE_URL))
+        val intent = Intent(Intent.ACTION_VIEW, Uri.fromParts(SCHEME_HTTP, "", null))
             .addCategory(Intent.CATEGORY_BROWSABLE)
+        val queryFlags = PackageManager.GET_RESOLVED_FILTER or PackageManager.MATCH_ALL
 
-        packageManager.queryIntentActivities(intent, PackageManager.MATCH_ALL)
+        packageManager.queryIntentActivities(intent, queryFlags)
+            .filter { resolveInfo -> resolveInfo.isFullBrowser() }
             .mapNotNull { resolveInfo ->
                 val packageName = resolveInfo.activityInfo?.packageName
                     ?: return@mapNotNull null
@@ -64,6 +67,14 @@ class InstalledBrowsersProviderImpl @Inject constructor(
                     { browser -> browser.label.lowercase() }
                 )
             )
+    }
+
+    private fun ResolveInfo.isFullBrowser(): Boolean {
+        val resolvedFilter = filter ?: return false
+        return FullBrowserResolver.isFullBrowser(
+            hasAuthorities = resolvedFilter.authoritiesIterator() != null,
+            schemes = resolvedFilter.schemesIterator()?.asSequence()?.toSet().orEmpty()
+        )
     }
 
     private fun versionCodeOf(packageManager: PackageManager, packageName: String): Long = runCatching {
@@ -100,7 +111,7 @@ class InstalledBrowsersProviderImpl @Inject constructor(
     }
 
     private companion object {
-        private const val PROBE_URL = "https://example.com"
+        private const val SCHEME_HTTP = "http"
         private const val ANDROID_NAMESPACE = "http://schemas.android.com/apk/res/android"
         private const val COMPAT_PACKAGE_TAG = "compatibility-package"
         private const val ATTR_NAME = "name"

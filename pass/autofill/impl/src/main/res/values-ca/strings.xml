@@ -31,7 +31,6 @@
   <string name="autofill_troubleshooting_browser_open_action">Obrir-ho</string>
   <string name="autofill_troubleshooting_browser_ready">L\'emplenament automàtic funciona directament aquí.</string>
   <string name="autofill_troubleshooting_browser_working">L\'emplenament automàtic funciona en aquest navegador.</string>
-  <string name="autofill_troubleshooting_browser_pending_service">Disponible un cop configureu Proton Pass com a servei d\'emplenament automàtic.</string>
   <string name="autofill_troubleshooting_browser_steps_generic">Obriu la configuració del navegador, busqueu la secció d\'emplenament automàtic o contrasenyes, i trieu Proton Pass com a servei d\'emplenament automàtic.</string>
   <string name="autofill_troubleshooting_browser_steps_chrome">1. Obriu el menú del navegador i aneu a les Preferències, després a Serveis d\'emplenament automàtic.\n2. Activeu «Utilitzar un altre servei» i seleccioneu Proton Pass.</string>
   <string name="autofill_troubleshooting_browser_steps_firefox">1. Obriu el menú del navegador i aneu a les Preferències, després a Emplenament automàtic.\n2. Trieu Proton Pass com a servei d\'emplenament automàtic.</string>

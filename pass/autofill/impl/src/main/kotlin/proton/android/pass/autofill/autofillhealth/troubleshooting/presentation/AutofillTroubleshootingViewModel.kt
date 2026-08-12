@@ -34,6 +34,8 @@ import proton.android.pass.autofill.api.AutofillSupportedStatus
 import proton.android.pass.autofill.autofillhealth.troubleshooting.data.CurrentAutofillServiceProvider
 import proton.android.pass.autofill.autofillhealth.troubleshooting.data.InstalledBrowsersProvider
 import proton.android.pass.appconfig.api.AppConfig
+import proton.android.pass.preferences.AutofillDisplayPreference
+import proton.android.pass.preferences.UserPreferencesRepository
 import javax.inject.Inject
 
 @HiltViewModel
@@ -41,6 +43,7 @@ class AutofillTroubleshootingViewModel @Inject constructor(
     private val autofillManager: AutofillManager,
     private val installedBrowsersProvider: InstalledBrowsersProvider,
     private val currentAutofillServiceProvider: CurrentAutofillServiceProvider,
+    private val userPreferencesRepository: UserPreferencesRepository,
     private val appConfig: AppConfig
 ) : ViewModel() {
 
@@ -56,11 +59,13 @@ class AutofillTroubleshootingViewModel @Inject constructor(
             val serviceStatus = autofillManager.getAutofillStatus().first().toServiceStatus()
             val browsers = installedBrowsersProvider.getInstalledBrowsers()
             val conflictingServiceLabel = currentAutofillServiceProvider.getActiveOtherServiceLabel()
+            val autofillDisplay = userPreferencesRepository.getAutofillDisplayPreference().first()
             stateFlow.update { current ->
                 current.copy(
                     serviceStatus = serviceStatus,
                     installedBrowsers = browsers,
                     supportsInlineSuggestions = appConfig.androidVersion >= Build.VERSION_CODES.R,
+                    isInlineSuggestionsEnabled = autofillDisplay == AutofillDisplayPreference.Inline,
                     conflictingServiceLabel = conflictingServiceLabel
                 )
             }

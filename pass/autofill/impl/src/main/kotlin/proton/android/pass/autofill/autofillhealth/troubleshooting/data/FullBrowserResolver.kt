@@ -16,27 +16,22 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.autofill.autofillhealth.troubleshooting.presentation
+package proton.android.pass.autofill.autofillhealth.troubleshooting.data
 
-import androidx.compose.runtime.Immutable
-import proton.android.pass.autofill.autofillhealth.troubleshooting.data.BrowserInfo
+/**
+ * Decides whether an activity resolved for a browsable web intent is a full browser.
+ *
+ * Many apps declare `ACTION_VIEW` + `CATEGORY_BROWSABLE` filters without being browsers: deep links
+ * restrict themselves to specific hosts, and apps embedding a web view usually declare a single
+ * scheme. A full browser handles both `http` and `https` for any host.
+ */
+object FullBrowserResolver {
 
-enum class AutofillServiceStatus {
-    Loading,
-    EnabledByOurService,
-    NotDefault,
-    Unsupported
-}
+    private const val SCHEME_HTTP = "http"
+    private const val SCHEME_HTTPS = "https"
 
-@Immutable
-data class AutofillTroubleshootingState(
-    val serviceStatus: AutofillServiceStatus = AutofillServiceStatus.Loading,
-    val installedBrowsers: List<BrowserInfo> = emptyList(),
-    val supportsInlineSuggestions: Boolean = false,
-    val isInlineSuggestionsEnabled: Boolean = true,
-    val conflictingServiceLabel: String? = null
-) {
-    companion object {
-        val Initial = AutofillTroubleshootingState()
+    fun isFullBrowser(hasAuthorities: Boolean, schemes: Set<String>): Boolean = when {
+        hasAuthorities -> false
+        else -> SCHEME_HTTP in schemes && SCHEME_HTTPS in schemes
     }
 }

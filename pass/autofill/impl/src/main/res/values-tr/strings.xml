@@ -31,7 +31,6 @@
   <string name="autofill_troubleshooting_browser_open_action">Aç</string>
   <string name="autofill_troubleshooting_browser_ready">Otomatik doldurma burada otomatik olarak çalışır.</string>
   <string name="autofill_troubleshooting_browser_working">Otomatik doldurma bu tarayıcıda çalışıyor.</string>
-  <string name="autofill_troubleshooting_browser_pending_service">Otomatik doldurma hizmetiniz olarak Proton Pass ayarlandığında kullanılabilir.</string>
   <string name="autofill_troubleshooting_browser_steps_generic">Tarayıcı ayarlarını açın, otomatik doldurma veya parolalar bölümünü bulun ve otomatik doldurma hizmetini Proton Pass olarak seçin.</string>
   <string name="autofill_troubleshooting_browser_steps_chrome">1. Tarayıcı menüsünü açın ve Ayarlar altında Otomatik doldurma hizmetlerine gidin.\n2. \"Başka bir hizmet kullan\" seçeneğini açın ve Proton Pass olarak seçin.</string>
   <string name="autofill_troubleshooting_browser_steps_firefox">1. Tarayıcı menüsünü açın ve Ayarlar altından Otomatik doldurmaya gidin.\n2. Otomatik doldurma hizmetini Proton Pass olarak seçin.</string>

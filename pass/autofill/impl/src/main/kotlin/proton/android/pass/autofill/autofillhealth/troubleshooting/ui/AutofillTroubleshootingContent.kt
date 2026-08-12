@@ -59,6 +59,8 @@ internal fun AutofillTroubleshootingContent(
     onEvent: (AutofillTroubleshootingUiEvent) -> Unit,
     modifier: Modifier = Modifier
 ) {
+    val isServiceEnabled = state.serviceStatus == AutofillServiceStatus.EnabledByOurService
+
     Scaffold(
         modifier = modifier.systemBarsPadding(),
         topBar = {
@@ -87,7 +89,10 @@ internal fun AutofillTroubleshootingContent(
                 val showVerdict = verdict == AutofillHealthVerdict.AllGood ||
                     verdict == AutofillHealthVerdict.NeedsAttention
                 val showService = state.serviceStatus != AutofillServiceStatus.Loading
-                val showBrowsers = state.installedBrowsers.isNotEmpty()
+                val showBrowsers = isServiceEnabled && state.installedBrowsers.isNotEmpty()
+                val showInlineInfo = isServiceEnabled &&
+                    state.supportsInlineSuggestions &&
+                    !state.isInlineSuggestionsEnabled
 
                 TroubleshootingCard {
                     if (showVerdict) {
@@ -107,75 +112,77 @@ internal fun AutofillTroubleshootingContent(
                         if (showVerdict || showService) PassDivider()
                         BrowsersSection(
                             browsers = state.installedBrowsers,
-                            isServiceEnabled =
-                            state.serviceStatus == AutofillServiceStatus.EnabledByOurService,
                             onOpenBrowser = { browser ->
                                 onEvent(AutofillTroubleshootingUiEvent.OnOpenBrowser(browser))
                             }
                         )
                     }
 
-                    if (showVerdict || showService || showBrowsers) PassDivider()
-                    InlineSuggestionsRow()
+                    if (showInlineInfo) {
+                        if (showVerdict || showService || showBrowsers) PassDivider()
+                        InlineSuggestionsRow()
+                    }
                 }
             }
 
-            Column(
-                modifier = Modifier
-                    .padding(horizontal = Spacing.medium)
-                    .padding(top = Spacing.medium, bottom = Spacing.large),
-                verticalArrangement = Arrangement.spacedBy(Spacing.medium)
-            ) {
-                PassCircleButton(
-                    text = stringResource(R.string.autofill_troubleshooting_share_diagnostics),
-                    backgroundColor = PassTheme.colors.interactionNormMinor1,
-                    textColor = PassTheme.colors.interactionNormMajor2,
-                    onClick = { onEvent(AutofillTroubleshootingUiEvent.OnShareDiagnostics) }
-                )
+            if (isServiceEnabled) {
+                Column(
+                    modifier = Modifier
+                        .padding(horizontal = Spacing.medium)
+                        .padding(top = Spacing.medium, bottom = Spacing.large),
+                    verticalArrangement = Arrangement.spacedBy(Spacing.medium)
+                ) {
+                    PassCircleButton(
+                        text = stringResource(R.string.autofill_troubleshooting_share_diagnostics),
+                        backgroundColor = PassTheme.colors.interactionNormMinor1,
+                        textColor = PassTheme.colors.interactionNormMajor2,
+                        onClick = { onEvent(AutofillTroubleshootingUiEvent.OnShareDiagnostics) }
+                    )
 
-                PassCircleButton(
-                    text = stringResource(R.string.autofill_troubleshooting_open_diagnostics),
-                    backgroundColor = PassTheme.colors.backgroundStrong,
-                    textColor = PassTheme.colors.textNorm,
-                    onClick = { onEvent(AutofillTroubleshootingUiEvent.OnOpenDiagnostics) }
-                )
+                    PassCircleButton(
+                        text = stringResource(R.string.autofill_troubleshooting_open_diagnostics),
+                        backgroundColor = PassTheme.colors.backgroundStrong,
+                        textColor = PassTheme.colors.textNorm,
+                        onClick = { onEvent(AutofillTroubleshootingUiEvent.OnOpenDiagnostics) }
+                    )
+                }
             }
         }
     }
 }
 
+private val previewBrowsers = listOf(
+    BrowserInfo(
+        packageName = "org.mozilla.firefox",
+        label = "Firefox",
+        coverage = BrowserAutofillCoverage.NeedsSetup
+    ),
+    BrowserInfo(
+        packageName = "com.android.chrome",
+        label = "Chrome",
+        coverage = BrowserAutofillCoverage.Ready
+    )
+)
+
 internal class AutofillTroubleshootingPreviewProvider :
     PreviewParameterProvider<AutofillTroubleshootingState> {
-    override val values: Sequence<AutofillTroubleshootingState> = sequenceOf(
-        AutofillTroubleshootingState(
-            serviceStatus = AutofillServiceStatus.NotDefault,
-            installedBrowsers = listOf(
-                BrowserInfo(
-                    packageName = "org.mozilla.firefox",
-                    label = "Firefox",
-                    coverage = BrowserAutofillCoverage.NeedsSetup
-                ),
-                BrowserInfo(
-                    packageName = "com.android.chrome",
-                    label = "Chrome",
-                    coverage = BrowserAutofillCoverage.Ready
-                )
-            ),
-            supportsInlineSuggestions = true,
-            conflictingServiceLabel = "Google"
-        ),
-        AutofillTroubleshootingState(
-            serviceStatus = AutofillServiceStatus.EnabledByOurService,
-            installedBrowsers = listOf(
-                BrowserInfo(
-                    packageName = "com.android.chrome",
-                    label = "Chrome",
-                    coverage = BrowserAutofillCoverage.Ready
-                )
-            ),
-            supportsInlineSuggestions = true
-        )
+
+    private val enabled = AutofillTroubleshootingState(
+        serviceStatus = AutofillServiceStatus.EnabledByOurService,
+        installedBrowsers = previewBrowsers,
+        supportsInlineSuggestions = true,
+        isInlineSuggestionsEnabled = false
     )
+
+    private val notEnabled = AutofillTroubleshootingState(
+        serviceStatus = AutofillServiceStatus.NotDefault,
+        installedBrowsers = previewBrowsers,
+        supportsInlineSuggestions = true,
+        isInlineSuggestionsEnabled = false,
+        conflictingServiceLabel = "Google"
+    )
+
+    override val values: Sequence<AutofillTroubleshootingState> = sequenceOf(enabled, notEnabled)
 }
 
 internal class ThemedAutofillTroubleshootingPreviewProvider :

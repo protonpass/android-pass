@@ -31,7 +31,6 @@
   <string name="autofill_troubleshooting_browser_open_action">Abrir</string>
   <string name="autofill_troubleshooting_browser_ready">O preenchimento automático funciona automaticamente aqui.</string>
   <string name="autofill_troubleshooting_browser_working">O preenchimento automático está funcionando neste navegador.</string>
-  <string name="autofill_troubleshooting_browser_pending_service">Available once Proton Pass is set as your autofill service.</string>
   <string name="autofill_troubleshooting_browser_steps_generic">Open the browser settings, find the autofill or passwords section, and choose Proton Pass as the autofill service.</string>
   <string name="autofill_troubleshooting_browser_steps_chrome">1. Open the browser menu and go to Settings, then Autofill services.\n2. Turn on \"Use another service\" and select Proton Pass.</string>
   <string name="autofill_troubleshooting_browser_steps_firefox">1. Open the browser menu and go to Settings, then Autofill.\n2. Choose Proton Pass as the autofill service.</string>

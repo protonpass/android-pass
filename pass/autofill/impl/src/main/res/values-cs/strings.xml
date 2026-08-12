@@ -31,7 +31,6 @@
   <string name="autofill_troubleshooting_browser_open_action">Otevřít</string>
   <string name="autofill_troubleshooting_browser_ready">Zde automatické vyplňování funguje automaticky.</string>
   <string name="autofill_troubleshooting_browser_working">Automatické vyplňování v tomto prohlížeči funguje.</string>
-  <string name="autofill_troubleshooting_browser_pending_service">Dostupné po nastavení Proton Pass jako výchozí služby pro automatické vyplňování.</string>
   <string name="autofill_troubleshooting_browser_steps_generic">Otevřete nastavení prohlížeče, najděte sekci automatického vyplňování nebo hesel a zvolte Proton Pass jako službu automatického vyplňování.</string>
   <string name="autofill_troubleshooting_browser_steps_chrome">1. Otevřete menu prohlížeče a přejděte do Nastavení, poté na Služby automatického vyplňování.\n2. Zapněte možnost „Použít jinou službu“ a vyberte Proton Pass.</string>
   <string name="autofill_troubleshooting_browser_steps_firefox">1. Otevřete menu prohlížeče a přejděte do Nastavení, poté na Automatické vyplňování.\n2. Zvolte Proton Pass jako službu pro automatické vyplňování.</string>

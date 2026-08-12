@@ -31,7 +31,6 @@
   <string name="autofill_troubleshooting_browser_open_action">Άνοιγμα</string>
   <string name="autofill_troubleshooting_browser_ready">Η αυτόματη συμπλήρωση λειτουργεί αυτόματα εδώ.</string>
   <string name="autofill_troubleshooting_browser_working">Η αυτόματη συμπλήρωση λειτουργεί σε αυτό το πρόγραμμα περιήγησης.</string>
-  <string name="autofill_troubleshooting_browser_pending_service">Διαθέσιμο μόλις το Proton Pass οριστεί ως υπηρεσία αυτόματης συμπλήρωσης.</string>
   <string name="autofill_troubleshooting_browser_steps_generic">Ανοίξτε τις ρυθμίσεις του προγράμματος περιήγησης, βρείτε την ενότητα αυτόματης συμπλήρωσης ή κωδικών πρόσβασης και επιλέξτε Proton Pass ως υπηρεσία αυτόματης συμπλήρωσης.</string>
   <string name="autofill_troubleshooting_browser_steps_chrome">1. Ανοίξτε το μενού του προγράμματος περιήγησης και μεταβείτε στις Ρυθμίσεις και, στη συνέχεια, στις Υπηρεσίες αυτόματης συμπλήρωσης.\n2. Ενεργοποιήστε την επιλογή \"Χρήση άλλης υπηρεσίας\" και επιλέξτε Proton Pass.</string>
   <string name="autofill_troubleshooting_browser_steps_firefox">1. Ανοίξτε το μενού του προγράμματος περιήγησης και μεταβείτε στις Ρυθμίσεις και, στη συνέχεια, στην Αυτόματη συμπλήρωση.\n2. Επιλέξτε το Proton Pass ως υπηρεσία αυτόματης συμπλήρωσης.</string>

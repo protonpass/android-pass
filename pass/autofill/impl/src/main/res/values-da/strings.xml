@@ -31,7 +31,6 @@
   <string name="autofill_troubleshooting_browser_open_action">Åbn</string>
   <string name="autofill_troubleshooting_browser_ready">Autofyld fungerer automatisk her.</string>
   <string name="autofill_troubleshooting_browser_working">Autofyld fungerer i denne browser.</string>
-  <string name="autofill_troubleshooting_browser_pending_service">Tilgængelig så snart Proton Pass er sat til din tjeneste til autofyld.</string>
   <string name="autofill_troubleshooting_browser_steps_generic">Åbn browserindstillinger, find autofyld- eller adgangskoder-sektionen og vælg Proton Pass som din tjeneste til autofyld.</string>
   <string name="autofill_troubleshooting_browser_steps_chrome">1. Åbn browsermenuen, gå til Indstillinger, og derefter Autofyld-tjenester.\n2. Slå \"Brug en anden tjeneste\" til og vælg Proton Pass.</string>
   <string name="autofill_troubleshooting_browser_steps_firefox">1. Åbn browsermenuen, gå til Indstillinger, og derefter Autofyld.\n2. Vælg Proton Pass som tjenesten til autofyld.</string>

@@ -31,7 +31,6 @@
   <string name="autofill_troubleshooting_browser_open_action">Abrir</string>
   <string name="autofill_troubleshooting_browser_ready">El completado automático funciona automáticamente aquí.</string>
   <string name="autofill_troubleshooting_browser_working">El completado automático funciona en este navegador.</string>
-  <string name="autofill_troubleshooting_browser_pending_service">Disponible una vez que Proton Pass se configure como su servicio de completado automático.</string>
   <string name="autofill_troubleshooting_browser_steps_generic">Abra los ajustes del navegador, encuentre la sección de completado automático o contraseñas y elija Proton Pass como servicio de completado automático.</string>
   <string name="autofill_troubleshooting_browser_steps_chrome">1. Abra el menú del navegador y vaya a Ajustes, luego servicios de completado automático.\n2. Active «Usar otro servicio» y seleccione Proton Pass.</string>
   <string name="autofill_troubleshooting_browser_steps_firefox">1. Abra el menú del navegador y vaya a Ajustes, luego Completado automático.\n2. Elija Proton Pass como servicio de completado automático.</string>

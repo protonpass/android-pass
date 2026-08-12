@@ -31,7 +31,6 @@
   <string name="autofill_troubleshooting_browser_open_action">Öffnen</string>
   <string name="autofill_troubleshooting_browser_ready">Automatisches Ausfüllen funktioniert hier automatisch.</string>
   <string name="autofill_troubleshooting_browser_working">Automatisches Ausfüllen funktioniert in diesem Browser.</string>
-  <string name="autofill_troubleshooting_browser_pending_service">Verfügbar, sobald Proton Pass als dein Dienst zum automatischen Ausfüllen festgelegt wurde.</string>
   <string name="autofill_troubleshooting_browser_steps_generic">Öffne die Browsereinstellungen, suche „Automatisches Ausfüllen“ oder „Passwörter“ und wähle „Proton Pass“ als Dienst zum automatischen Ausfüllen aus.</string>
   <string name="autofill_troubleshooting_browser_steps_chrome">1. Öffne das Browser-Menü, gehe zu „Einstellungen“ und dann zu „Automatisches Ausfüllen“.\n2. Aktiviere „Anderen Dienst verwenden“ und wähle „Proton Pass“ aus.</string>
   <string name="autofill_troubleshooting_browser_steps_firefox">1. Öffne das Browser-Menü, gehe zu „Einstellungen“ und dann zu „Automatisches Ausfüllen“.\n2. Wähle „Proton Pass“ als Dienst zum automatischen Ausfüllen aus.</string>

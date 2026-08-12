@@ -74,6 +74,13 @@ internal fun EventRow(event: AutofillHealthEvent) {
                     color = Color.Gray
                 )
             }
+            event.details?.let { details ->
+                Text(
+                    text = details,
+                    fontSize = 11.sp,
+                    color = Color.Gray
+                )
+            }
         }
     }
 }
@@ -90,6 +97,7 @@ internal fun colorForEventType(type: AutofillHealthEventType): Color = when (typ
     AutofillHealthEventType.FILL_REQUEST_INLINE -> ColorBlue
     AutofillHealthEventType.FILL_REQUEST_MENU -> ColorOrange
     AutofillHealthEventType.FILL_REQUEST_NONE -> Color.Gray
+    AutofillHealthEventType.FILL_REQUEST_SKIPPED -> Color.DarkGray
     AutofillHealthEventType.FILL_REQUEST_ERROR -> ColorRed
 }
 

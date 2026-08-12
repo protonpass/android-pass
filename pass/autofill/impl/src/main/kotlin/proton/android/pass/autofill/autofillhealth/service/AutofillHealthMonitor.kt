@@ -69,7 +69,8 @@ class AutofillHealthMonitor @Inject constructor(
     fun recordFillRequest(
         packageName: String?,
         type: AutofillHealthEventType,
-        webDomain: String? = null
+        webDomain: String? = null,
+        details: String? = null
     ) {
         refreshIme()
         addEvent(
@@ -77,7 +78,8 @@ class AutofillHealthMonitor @Inject constructor(
                 timestamp = now(),
                 type = type,
                 packageName = packageName,
-                webDomain = webDomain
+                webDomain = webDomain,
+                details = details
             )
         )
     }
@@ -114,6 +116,7 @@ class AutofillHealthMonitor @Inject constructor(
             AutofillHealthEventType.FILL_REQUEST_INLINE,
             AutofillHealthEventType.FILL_REQUEST_MENU,
             AutofillHealthEventType.FILL_REQUEST_NONE,
+            AutofillHealthEventType.FILL_REQUEST_SKIPPED,
             AutofillHealthEventType.FILL_REQUEST_ERROR
         )
     }

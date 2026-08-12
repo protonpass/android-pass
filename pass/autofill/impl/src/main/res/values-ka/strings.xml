@@ -31,7 +31,6 @@
   <string name="autofill_troubleshooting_browser_open_action">გახსნა</string>
   <string name="autofill_troubleshooting_browser_ready">აქ ავტოშევსება ავტომატურად მუშაობს.</string>
   <string name="autofill_troubleshooting_browser_working">ამ ბრაუზერში ავტოშევსება მუშაობს.</string>
-  <string name="autofill_troubleshooting_browser_pending_service">ხელმისაწვდომია, როცა Proton Pass თქვენი ავტოშევსების სერვისია.</string>
   <string name="autofill_troubleshooting_browser_steps_generic">გახსენით ბრაუზერის მორგების ფანჯარა, იპოვეთ ავტოშევსება და აირჩიეთ Proton Pass ავტოშევსების სერვისად.</string>
   <string name="autofill_troubleshooting_browser_steps_chrome">1. გახსენით ბრაუზერის მენიუ და გადადით მორგების ფანჯარაში, შემდეგ კი ავტოშევსების სერვისებზე.\n2. ჩართეთ \"სხვა სერვისის გამოყენება\" და აირჩიეთ Proton Pass.</string>
   <string name="autofill_troubleshooting_browser_steps_firefox">1. გახსენით ბრაუზერის მენიუ და გადადით მორგების ფანჯარაში, შემდეგ კი ავტოშევსებაზე.\n2. აირჩიეთ Proton Pass ავტოშევსების სერვისად.</string>

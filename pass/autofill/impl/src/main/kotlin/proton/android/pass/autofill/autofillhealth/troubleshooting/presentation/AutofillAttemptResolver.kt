@@ -45,6 +45,7 @@ object AutofillAttemptResolver {
         AutofillHealthEventType.FILL_REQUEST_MENU -> AutofillAttemptOutcome.Offered
         AutofillHealthEventType.FILL_REQUEST_NONE -> AutofillAttemptOutcome.NothingOffered
         AutofillHealthEventType.FILL_REQUEST_ERROR -> AutofillAttemptOutcome.Error
+        AutofillHealthEventType.FILL_REQUEST_SKIPPED,
         AutofillHealthEventType.CREATED,
         AutofillHealthEventType.CONNECTED,
         AutofillHealthEventType.DISCONNECTED -> null

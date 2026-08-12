@@ -33,6 +33,7 @@ data class AutofillTroubleshootingState(
     val serviceStatus: AutofillServiceStatus = AutofillServiceStatus.Loading,
     val installedBrowsers: List<BrowserInfo> = emptyList(),
     val supportsInlineSuggestions: Boolean = false,
+    val isInlineSuggestionsEnabled: Boolean = true,
     val conflictingServiceLabel: String? = null
 ) {
     companion object {

@@ -81,7 +81,7 @@ class ProtonPassAutofillService : AutofillService() {
         serviceScope.launch {
             ffRepo.get<Boolean>(FeatureFlag.AUTOFILL_DEBUG_MODE)
                 .collect {
-                    if (isDebugMode) {
+                    if (it) {
                         healthMonitor.recordCreate()
                     }
                     isDebugMode = it

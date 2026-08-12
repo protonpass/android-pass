@@ -35,6 +35,7 @@ object BrowserAutofillInstructions {
         "com.opera.browser" to R.string.autofill_troubleshooting_browser_steps_chrome,
         "com.kiwibrowser.browser" to R.string.autofill_troubleshooting_browser_steps_chrome,
         "org.mozilla.firefox" to R.string.autofill_troubleshooting_browser_steps_firefox,
+        "org.mozilla.firefox_beta" to R.string.autofill_troubleshooting_browser_steps_firefox,
         "org.mozilla.fenix" to R.string.autofill_troubleshooting_browser_steps_firefox,
         "com.sec.android.app.sbrowser" to R.string.autofill_troubleshooting_browser_steps_samsung
     )

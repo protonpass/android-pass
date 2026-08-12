@@ -137,7 +137,8 @@ class AutofillHealthDebugViewModel @Inject constructor(
                 events.forEach { event ->
                     val ts = tsFormat.format(Date(event.timestamp))
                     val pkg = event.packageName?.let { " [$it]" }.orEmpty()
-                    writer.append("$ts ${event.type.name}$pkg")
+                    val details = event.details?.let { " - $it" }.orEmpty()
+                    writer.append("$ts ${event.type.name}$pkg$details")
                     writer.newLine()
                 }
             }

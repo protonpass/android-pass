@@ -38,7 +38,6 @@ import proton.android.pass.composecomponents.impl.text.Text
 @Composable
 internal fun BrowsersSection(
     browsers: List<BrowserInfo>,
-    isServiceEnabled: Boolean,
     onOpenBrowser: (BrowserInfo) -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -53,7 +52,6 @@ internal fun BrowsersSection(
                 if (index > 0) PassDivider()
                 BrowserRow(
                     browser = browser,
-                    isServiceEnabled = isServiceEnabled,
                     onOpenClick = { onOpenBrowser(browser) }
                 )
             }
@@ -80,7 +78,6 @@ internal fun BrowsersSectionPreview() {
                             coverage = BrowserAutofillCoverage.Ready
                         )
                     ),
-                    isServiceEnabled = true,
                     onOpenBrowser = {}
                 )
             }

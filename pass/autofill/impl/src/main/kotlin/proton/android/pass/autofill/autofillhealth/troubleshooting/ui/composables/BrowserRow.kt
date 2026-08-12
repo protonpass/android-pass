@@ -49,7 +49,6 @@ import me.proton.core.presentation.R as CoreR
 @Composable
 internal fun BrowserRow(
     browser: BrowserInfo,
-    isServiceEnabled: Boolean,
     onOpenClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -68,9 +67,6 @@ internal fun BrowserRow(
             horizontalArrangement = Arrangement.spacedBy(Spacing.small)
         ) {
             val (statusIconRes, statusTint) = when {
-                !isServiceEnabled ->
-                    CoreR.drawable.ic_proton_info_circle to PassTheme.colors.textWeak
-
                 browser.coverage == BrowserAutofillCoverage.NeedsSetup ->
                     CoreR.drawable.ic_proton_exclamation_circle_filled to PassTheme.colors.signalWarning
 
@@ -92,10 +88,6 @@ internal fun BrowserRow(
                 verticalArrangement = Arrangement.spacedBy(Spacing.small)
             ) {
                 when {
-                    !isServiceEnabled -> Text.Body3Weak(
-                        stringResource(R.string.autofill_troubleshooting_browser_pending_service)
-                    )
-
                     browser.coverage == BrowserAutofillCoverage.Working -> Text.Body3Weak(
                         stringResource(R.string.autofill_troubleshooting_browser_working)
                     )
@@ -133,7 +125,6 @@ internal fun BrowserRowReadyPreview() {
                     label = "Chrome",
                     coverage = BrowserAutofillCoverage.Ready
                 ),
-                isServiceEnabled = true,
                 onOpenClick = {}
             )
         }
@@ -151,7 +142,6 @@ internal fun BrowserRowNeedsSetupPreview() {
                     label = "Firefox",
                     coverage = BrowserAutofillCoverage.NeedsSetup
                 ),
-                isServiceEnabled = true,
                 onOpenClick = {}
             )
         }
@@ -169,25 +159,6 @@ internal fun BrowserRowWorkingPreview() {
                     label = "Chrome",
                     coverage = BrowserAutofillCoverage.Working
                 ),
-                isServiceEnabled = true,
-                onOpenClick = {}
-            )
-        }
-    }
-}
-
-@Preview
-@Composable
-internal fun BrowserRowPendingServicePreview() {
-    PassTheme {
-        Surface {
-            BrowserRow(
-                browser = BrowserInfo(
-                    packageName = "com.android.chrome",
-                    label = "Chrome",
-                    coverage = BrowserAutofillCoverage.Ready
-                ),
-                isServiceEnabled = false,
                 onOpenClick = {}
             )
         }

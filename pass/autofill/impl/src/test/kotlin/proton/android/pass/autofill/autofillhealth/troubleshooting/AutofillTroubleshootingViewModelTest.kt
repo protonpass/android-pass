@@ -34,6 +34,8 @@ import proton.android.pass.autofill.autofillhealth.troubleshooting.data.CurrentA
 import proton.android.pass.autofill.autofillhealth.troubleshooting.presentation.AutofillServiceStatus
 import proton.android.pass.autofill.autofillhealth.troubleshooting.presentation.AutofillTroubleshootingViewModel
 import proton.android.pass.appconfig.fakes.FakeAppConfig
+import proton.android.pass.preferences.AutofillDisplayPreference
+import proton.android.pass.preferences.FakePreferenceRepository
 import proton.android.pass.test.MainDispatcherRule
 
 class AutofillTroubleshootingViewModelTest {
@@ -59,11 +61,15 @@ class AutofillTroubleshootingViewModelTest {
         status: AutofillSupportedStatus,
         provider: FakeInstalledBrowsersProvider,
         sdkInt: Int,
-        conflictingServiceLabel: String? = null
+        conflictingServiceLabel: String? = null,
+        autofillDisplay: AutofillDisplayPreference = AutofillDisplayPreference.Inline
     ) = AutofillTroubleshootingViewModel(
         autofillManager = FakeAutofillManager(status),
         installedBrowsersProvider = provider,
         currentAutofillServiceProvider = FakeCurrentAutofillServiceProvider(conflictingServiceLabel),
+        userPreferencesRepository = FakePreferenceRepository().apply {
+            setAutofillDisplayPreference(autofillDisplay)
+        },
         appConfig = FakeAppConfig().apply { setAndroidVersion(sdkInt) }
     )
 
@@ -127,6 +133,34 @@ class AutofillTroubleshootingViewModelTest {
 
         viewModel.state.test {
             assertThat(awaitItem().conflictingServiceLabel).isEqualTo("Google")
+        }
+    }
+
+    @Test
+    fun `flags inline suggestions as enabled when display preference is Inline`() = runTest {
+        val viewModel = createViewModel(
+            status = AutofillSupportedStatus.Supported(AutofillStatus.EnabledByOurService),
+            provider = FakeInstalledBrowsersProvider(),
+            sdkInt = 34,
+            autofillDisplay = AutofillDisplayPreference.Inline
+        )
+
+        viewModel.state.test {
+            assertThat(awaitItem().isInlineSuggestionsEnabled).isTrue()
+        }
+    }
+
+    @Test
+    fun `flags inline suggestions as disabled when display preference is Popup`() = runTest {
+        val viewModel = createViewModel(
+            status = AutofillSupportedStatus.Supported(AutofillStatus.EnabledByOurService),
+            provider = FakeInstalledBrowsersProvider(),
+            sdkInt = 34,
+            autofillDisplay = AutofillDisplayPreference.Popup
+        )
+
+        viewModel.state.test {
+            assertThat(awaitItem().isInlineSuggestionsEnabled).isFalse()
         }
     }
 

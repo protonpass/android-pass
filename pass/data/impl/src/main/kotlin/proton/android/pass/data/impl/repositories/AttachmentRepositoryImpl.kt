@@ -60,6 +60,7 @@ import proton.android.pass.data.impl.crypto.attachment.ReencryptedMetadata
 import proton.android.pass.data.impl.db.entities.attachments.AttachmentEntity
 import proton.android.pass.data.impl.db.entities.attachments.AttachmentWithChunks
 import proton.android.pass.data.impl.db.entities.attachments.ChunkEntity
+import proton.android.pass.data.impl.extensions.readChunk
 import proton.android.pass.data.impl.extensions.toDomain
 import proton.android.pass.data.impl.local.attachments.LocalAttachmentsDataSource
 import proton.android.pass.data.impl.remote.attachments.RemoteAttachmentsDataSource
@@ -183,8 +184,8 @@ class AttachmentRepositoryImpl @Inject constructor(
                     var bytesRead: Int
 
                     while (isActive) {
-                        bytesRead = inputStream.read(buffer)
-                        if (bytesRead == -1) break
+                        bytesRead = inputStream.readChunk(buffer)
+                        if (bytesRead == 0) break
 
                         PassLogger.d(
                             TAG,

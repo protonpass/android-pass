@@ -195,6 +195,25 @@ class InsecurePasswordCheckerTest {
         assertThat(report.insecurePasswordsCount).isEqualTo(0)
     }
 
+    @Test
+    fun `excluded item reports the weak check again once it is restored`() = runTest {
+        val weakPassword = "weakPassword"
+        passwordScorer.defineScore(weakPassword, PasswordScore.WEAK)
+
+        val restored = ItemTestFactory.create(
+            itemId = ItemId("RESTORED"),
+            itemType = ItemTypeTestFactory.login(
+                password = encryptionContextProvider.withEncryptionContext { encrypt(weakPassword) }
+            ),
+            flags = ItemFlag.SkipHealthCheck.value or ItemFlag.Skip2FACheck.value
+        )
+
+        val report = instance.invoke(listOf(restored))
+
+        assertThat(report.insecurePasswordsCount).isEqualTo(1)
+        assertThat(report.weakPasswordItems).containsExactly(restored)
+    }
+
     private fun generateItemsWithPassword(
         password: String,
         prefix: String,

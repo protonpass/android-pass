@@ -31,12 +31,12 @@ import proton.android.pass.data.impl.local.LocalCompromisedPasswordDataSource
 import proton.android.pass.data.impl.remote.PrefixQueryResult
 import proton.android.pass.data.impl.remote.RemoteCompromisedPasswordDataSource
 import proton.android.pass.domain.Item
-import proton.android.pass.domain.ItemFlag
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ItemType
 import proton.android.pass.domain.ShareId
-import proton.android.pass.domain.isCheckSkipped
 import proton.android.pass.log.api.PassLogger
+import proton.android.pass.securitycenter.api.SecurityCheck
+import proton.android.pass.securitycenter.api.isCheckExcluded
 import java.security.MessageDigest
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -120,9 +120,7 @@ class CompromisedPasswordRepositoryImpl @Inject constructor(
         val hashToItems = mutableMapOf<String, MutableList<Item>>()
         encryptionContextProvider.withEncryptionContext {
             items.forEach { item ->
-                if (item.hasSkippedHealthCheck ||
-                    item.isCheckSkipped(ItemFlag.SkipCompromisedPasswordCheck)
-                ) return@forEach
+                if (item.isCheckExcluded(SecurityCheck.CompromisedPassword)) return@forEach
                 when (val itemType = item.itemType) {
                     is ItemType.Login -> {
                         val password = decrypt(itemType.password)

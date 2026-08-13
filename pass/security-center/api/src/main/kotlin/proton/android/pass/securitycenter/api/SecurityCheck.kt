@@ -21,6 +21,7 @@ package proton.android.pass.securitycenter.api
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemFlag
 import proton.android.pass.domain.isCheckSkipped
+import proton.android.pass.domain.isFullyExcludedFromMonitoring
 
 enum class SecurityCheck(val flag: ItemFlag) {
     WeakPassword(ItemFlag.SkipWeakPasswordCheck),
@@ -29,4 +30,4 @@ enum class SecurityCheck(val flag: ItemFlag) {
     Missing2fa(ItemFlag.Skip2FACheck)
 }
 
-fun Item.isCheckExcluded(check: SecurityCheck): Boolean = hasSkippedHealthCheck || isCheckSkipped(check.flag)
+fun Item.isCheckExcluded(check: SecurityCheck): Boolean = isCheckSkipped(check.flag) || isFullyExcludedFromMonitoring

@@ -24,8 +24,11 @@ import proton.android.pass.data.api.usecases.GetUserPlan
 import proton.android.pass.data.api.usecases.compromisedpassword.ObserveCompromisedPasswords
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemFlag
+import proton.android.pass.domain.ItemType
 import proton.android.pass.preferences.FeatureFlag
 import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
+import proton.android.pass.securitycenter.api.SecurityCheck
+import proton.android.pass.securitycenter.api.isCheckExcluded
 import proton.android.pass.securitycenter.api.passwords.DuplicatedPasswordChecker
 import proton.android.pass.securitycenter.api.passwords.InsecurePasswordChecker
 import proton.android.pass.securitycenter.api.passwords.MissingTfaChecker
@@ -44,19 +47,32 @@ class ResolveTriggeredMonitorChecks @Inject constructor(
         featureFlagsPreferencesRepository[FeatureFlag.PASS_COMPROMISED_PASSWORDS]
 
     suspend operator fun invoke(item: Item): Set<ItemFlag> = buildSet {
-        if (insecurePasswordChecker(listOf(item)).hasInsecurePasswords) {
+        if (item.itemType !is ItemType.Login) return emptySet()
+        if (item.isCheckTriggered(SecurityCheck.WeakPassword) {
+                insecurePasswordChecker(listOf(item)).hasInsecurePasswords
+            }
+        ) {
             add(ItemFlag.SkipWeakPasswordCheck)
         }
-        if (duplicatedPasswordChecker(item).hasDuplications) {
+        if (item.isCheckTriggered(SecurityCheck.ReusedPassword) {
+                duplicatedPasswordChecker(item).hasDuplications
+            }
+        ) {
             add(ItemFlag.SkipReusedPasswordCheck)
         }
-        if (missingTfaChecker(listOf(item)).isMissingTwoFa) {
+        if (item.isCheckTriggered(SecurityCheck.Missing2fa) {
+                missingTfaChecker(listOf(item)).isMissingTwoFa
+            }
+        ) {
             add(ItemFlag.Skip2FACheck)
         }
-        if (isPasswordCompromised(item)) {
+        if (item.isCheckTriggered(SecurityCheck.CompromisedPassword) { isPasswordCompromised(item) }) {
             add(ItemFlag.SkipCompromisedPasswordCheck)
         }
     }
+
+    private suspend fun Item.isCheckTriggered(check: SecurityCheck, fires: suspend () -> Boolean): Boolean =
+        !isCheckExcluded(check) && fires()
 
     private suspend fun isPasswordCompromised(item: Item): Boolean {
         val isAllowed = compromisedPasswordsEnabledFlow.first() && getUserPlan().first().isPaidPlan

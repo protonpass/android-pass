@@ -19,14 +19,15 @@
 package proton.android.pass.data.impl.usecases.items
 
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.api.usecases.ItemTypeFilter
 import proton.android.pass.data.api.usecases.ObserveItems
 import proton.android.pass.data.api.usecases.items.ObserveMonitoredItems
 import proton.android.pass.domain.Item
-import proton.android.pass.domain.ItemFlag
 import proton.android.pass.domain.ItemState
 import proton.android.pass.domain.ShareSelection
+import proton.android.pass.domain.isFullyExcludedFromMonitoring
 import javax.inject.Inject
 
 class ObserveMonitoredItemsImpl @Inject constructor(
@@ -44,8 +45,7 @@ class ObserveMonitoredItemsImpl @Inject constructor(
         itemState = ItemState.Active,
         filter = ItemTypeFilter.Logins,
         userId = userId,
-        itemFlags = mapOf(ItemFlag.SkipHealthCheck to false),
         includeHidden = includeHiddenVaults
-    )
+    ).map { items -> items.filterNot { item -> item.isFullyExcludedFromMonitoring } }
 
 }

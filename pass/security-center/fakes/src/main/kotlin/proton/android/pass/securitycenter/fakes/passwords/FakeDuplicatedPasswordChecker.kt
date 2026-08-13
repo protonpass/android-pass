@@ -22,9 +22,24 @@ import proton.android.pass.domain.Item
 import proton.android.pass.securitycenter.api.passwords.DuplicatedPasswordChecker
 import proton.android.pass.securitycenter.api.passwords.DuplicatedPasswordReport
 import javax.inject.Inject
+import javax.inject.Singleton
 
+@Singleton
 class FakeDuplicatedPasswordChecker @Inject constructor() : DuplicatedPasswordChecker {
 
-    override suspend fun invoke(item: Item): DuplicatedPasswordReport = DuplicatedPasswordReport(emptySet())
+    private var result: DuplicatedPasswordReport = DuplicatedPasswordReport(emptySet())
+
+    private val memory: MutableList<Item> = mutableListOf()
+
+    fun memory(): List<Item> = memory
+
+    fun setResult(value: DuplicatedPasswordReport) {
+        result = value
+    }
+
+    override suspend fun invoke(item: Item): DuplicatedPasswordReport {
+        memory.add(item)
+        return result
+    }
 
 }

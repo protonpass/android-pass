@@ -30,3 +30,11 @@ val MonitorCheckFlags: List<ItemFlag> = listOf(
 val ItemExclusionCheckFlags: List<ItemFlag> = listOf(ItemFlag.SkipHealthCheck) + MonitorCheckFlags
 
 fun Item.isCheckSkipped(flag: ItemFlag): Boolean = itemFlags.value.hasFlag(flag.value)
+
+fun ItemFlags.hasSkippedMonitorChecks(): Boolean = MonitorCheckFlags.any { flag -> value.hasFlag(flag.value) }
+
+val ItemFlags.isFullyExcludedFromMonitoring: Boolean
+    get() = hasSkippedHealthCheck() && !hasSkippedMonitorChecks()
+
+val Item.isFullyExcludedFromMonitoring: Boolean
+    get() = itemFlags.isFullyExcludedFromMonitoring

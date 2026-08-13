@@ -28,8 +28,9 @@ import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.repositories.CompromisedPasswordRepository
 import proton.android.pass.data.impl.db.entities.ItemEntity
 import proton.android.pass.data.impl.extensions.toDomain
-import proton.android.pass.domain.ItemFlag
+import proton.android.pass.domain.ItemFlags
 import proton.android.pass.domain.ItemState
+import proton.android.pass.domain.isFullyExcludedFromMonitoring
 import proton.android.pass.domain.items.ItemCategory
 import proton.android.pass.log.api.PassLogger
 import javax.inject.Inject
@@ -62,7 +63,7 @@ class CompromisedPasswordCheckerImpl @Inject constructor(
         val logins = entities.filter { entity ->
             entity.itemType == ItemCategory.Login.value &&
                 entity.state == ItemState.Active.value &&
-                entity.flags and ItemFlag.SkipHealthCheck.value == 0
+                !ItemFlags(entity.flags).isFullyExcludedFromMonitoring
         }
         if (logins.isEmpty()) return
         pending.trySend(logins)

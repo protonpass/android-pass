@@ -101,6 +101,8 @@ dependencies {
     testImplementation(projects.pass.commonUi.fakes)
     testImplementation(projects.pass.data.fakes)
     testImplementation(projects.pass.notifications.fakes)
+    testImplementation(projects.pass.preferences.fakes)
+    testImplementation(projects.pass.securityCenter.fakes)
     testImplementation(projects.pass.telemetry.fakes)
 
     kspAndroidTest(libs.dagger.hilt.android.compiler)

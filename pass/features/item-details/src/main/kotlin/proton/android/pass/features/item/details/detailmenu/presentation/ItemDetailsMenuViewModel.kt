@@ -38,6 +38,7 @@ import proton.android.pass.common.api.combineN
 import proton.android.pass.common.api.some
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
+import proton.android.pass.commonuimodels.api.items.ItemDetailNavScope
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemAction
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.repositories.BulkMoveToVaultRepository
@@ -53,6 +54,7 @@ import proton.android.pass.domain.ItemExclusionCheckFlags
 import proton.android.pass.domain.ItemFlag
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
+import proton.android.pass.features.item.details.detail.navigation.ItemDetailScopeNavArgId
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.notifications.api.SnackbarDispatcher
@@ -86,6 +88,10 @@ class ItemDetailsMenuViewModel @Inject constructor(
         .require<String>(CommonNavArgId.ItemId.key)
         .let(::ItemId)
 
+    private val navScope: ItemDetailNavScope = savedStateHandleProvider.get()
+        .get<ItemDetailNavScope>(ItemDetailScopeNavArgId.key)
+        ?: ItemDetailNavScope.Default
+
     private val actionFlow = MutableStateFlow(BottomSheetItemAction.None)
 
     private val eventFlow = MutableStateFlow<ItemDetailsMenuEvent>(ItemDetailsMenuEvent.Idle)
@@ -96,6 +102,8 @@ class ItemDetailsMenuViewModel @Inject constructor(
 
     private val itemActionsFlow = oneShot { getItemActions(shareId = shareId, itemId = itemId) }
 
+    private val triggeredChecksFlow = oneShot { resolveTriggeredMonitorChecks(itemFlow.first()) }
+
     private val perCheckExclusionEnabledFlow: Flow<Boolean> =
         featureFlagsPreferencesRepository[FeatureFlag.PASS_MONITOR_PER_CHECK_EXCLUSION]
 
@@ -105,14 +113,17 @@ class ItemDetailsMenuViewModel @Inject constructor(
         itemFlow,
         shareFlow,
         itemActionsFlow,
+        triggeredChecksFlow,
         perCheckExclusionEnabledFlow
-    ) { action, event, item, share, itemActions, isPerCheckExclusionEnabled ->
+    ) { action, event, item, share, itemActions, triggeredChecks, isPerCheckExclusionEnabled ->
         ItemDetailsMenuState(
             action = action,
             event = event,
             itemOption = item.some(),
             itemActionsOption = itemActions.some(),
             shareOption = share.some(),
+            triggeredChecks = triggeredChecks,
+            isOpenedFromExcludedSection = navScope == ItemDetailNavScope.MonitorExcluded,
             isPerCheckExclusionEnabled = isPerCheckExclusionEnabled
         )
     }.catch { error ->
@@ -223,12 +234,10 @@ class ItemDetailsMenuViewModel @Inject constructor(
             actionFlow.update { BottomSheetItemAction.MonitorExclude }
 
             runCatching {
-                val triggeredChecks = resolveTriggeredMonitorChecks(itemFlow.first())
-
                 updateItemFlag(
                     shareId = shareId,
                     itemId = itemId,
-                    flags = triggeredChecks.associateWith { true }
+                    flags = triggeredChecksFlow.first().associateWith { true }
                         .plus(ItemFlag.SkipHealthCheck to true)
                 )
             }.onFailure { error ->

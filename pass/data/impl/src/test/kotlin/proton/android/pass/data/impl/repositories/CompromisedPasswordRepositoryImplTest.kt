@@ -367,6 +367,24 @@ internal class CompromisedPasswordRepositoryImplTest {
     }
 
     @Test
+    fun `excluded item is queried again once the compromised check is restored`() = runTest {
+        val item = ItemTestFactory.createLogin(
+            shareId = ShareId("s1"),
+            itemId = ItemId("i1"),
+            password = "hunter2",
+            flags = ItemFlag.SkipHealthCheck.value or ItemFlag.SkipWeakPasswordCheck.value
+        )
+
+        remote.lastChangeValue = 1_000L
+        remote.suffixResultByKey[sha1Upper("hunter2").substring(0, 6) to null] =
+            PrefixQueryResult.Ok(etag = "a", suffixes = emptySet())
+
+        instance.refresh(userId, listOf(item))
+
+        assertThat(remote.suffixCalls).isNotEmpty()
+    }
+
+    @Test
     fun `many items sharing a prefix still issue a single request`() = runTest {
         val items = (1..25).map { index ->
             ItemTestFactory.createLogin(

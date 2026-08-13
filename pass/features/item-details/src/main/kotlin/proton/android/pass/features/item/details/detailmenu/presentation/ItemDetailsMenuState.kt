@@ -38,6 +38,8 @@ internal data class ItemDetailsMenuState(
     internal val itemOption: Option<Item>,
     private val itemActionsOption: Option<ItemActions>,
     private val shareOption: Option<Share>,
+    private val triggeredChecks: Set<ItemFlag> = emptySet(),
+    private val isOpenedFromExcludedSection: Boolean = false,
     private val isPerCheckExclusionEnabled: Boolean = true
 ) {
 
@@ -112,8 +114,9 @@ internal data class ItemDetailsMenuState(
             None -> false
             is Some -> itemOption.value.hasSkippedHealthCheck
         }
+        val hasIgnoredChecks = isGloballyExcluded || skippedChecks.isNotEmpty()
 
-        isGloballyExcluded || skippedChecks.isNotEmpty()
+        hasIgnoredChecks && (triggeredChecks.isEmpty() || isOpenedFromExcludedSection)
     }
 
     internal val itemEncryptedNote: String by lazy {

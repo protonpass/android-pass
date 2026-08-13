@@ -26,5 +26,11 @@ class FakeFileTypeDetector : FileTypeDetector {
 
     override fun getMimeTypeFromBytes(bytes: ByteArray): MimeType = MimeType("application/octet-stream")
 
+    override fun getMimeTypeFromHeadTail(
+        head: ByteArray,
+        tail: ByteArray,
+        fileSize: Long
+    ): MimeType = MimeType("application/octet-stream")
+
     override fun getFileTypeFromMimeType(mimeType: MimeType): FileType = FileType.Unknown
 }

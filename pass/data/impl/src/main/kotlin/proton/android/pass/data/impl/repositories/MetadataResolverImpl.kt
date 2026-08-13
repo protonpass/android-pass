@@ -21,6 +21,7 @@ package proton.android.pass.data.impl.repositories
 import android.content.Context
 import android.database.Cursor
 import android.net.Uri
+import android.os.ParcelFileDescriptor.AutoCloseInputStream
 import android.provider.OpenableColumns
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.withContext
@@ -34,6 +35,7 @@ import proton.android.pass.data.api.repositories.MetadataResolver
 import proton.android.pass.domain.attachments.AttachmentType
 import proton.android.pass.domain.attachments.FileMetadata
 import proton.android.pass.log.api.PassLogger
+import java.io.InputStream
 import java.net.URI
 import javax.inject.Inject
 
@@ -119,19 +121,56 @@ class MetadataResolverImpl @Inject constructor(
     }
 
     private suspend fun detectMimeType(contentUri: Uri): String? = withContext(appDispatchers.io) {
-        safeRunCatching {
-            context.contentResolver.openInputStream(contentUri)?.use { inputStream ->
-                val buffer = ByteArray(200)
-                val bytesRead = inputStream.read(buffer, 0, buffer.size)
-                if (bytesRead > 0) {
-                    fileTypeDetector.getMimeTypeFromBytes(buffer.copyOf(bytesRead)).value
-                } else {
+        detectFromDescriptor(contentUri) ?: detectFromPrefix(contentUri)
+    }
+
+    private suspend fun detectFromDescriptor(contentUri: Uri): String? = safeRunCatching {
+        context.contentResolver.openFileDescriptor(contentUri, FILE_READ_MODE)?.let { descriptor ->
+            AutoCloseInputStream(descriptor).use { stream ->
+                val fileSize = descriptor.statSize
+                if (fileSize <= 0) {
+                    logWarning("Unknown size for URI: $contentUri")
                     null
+                } else if (fileSize <= DETECTION_BUFFER_SIZE) {
+                    detectFromWholeFile(stream, fileSize)
+                } else {
+                    detectFromHeadAndTail(stream, fileSize)
                 }
             }
-        }.onFailure { e ->
-            logWarning("Failed to read bytes for MIME type detection", e)
-        }.getOrNull()
+        }
+    }.getOrNull()
+
+    private fun detectFromWholeFile(stream: InputStream, fileSize: Long): String? = stream
+        .readExactly(fileSize.toInt())
+        .takeIf { it.isNotEmpty() }
+        ?.let { fileTypeDetector.getMimeTypeFromBytes(it).value }
+
+    private fun detectFromHeadAndTail(stream: AutoCloseInputStream, fileSize: Long): String {
+        val head = stream.readExactly(DETECTION_BUFFER_SIZE)
+        stream.channel.position(fileSize - DETECTION_BUFFER_SIZE_END)
+        val tail = stream.readExactly(DETECTION_BUFFER_SIZE_END)
+        return fileTypeDetector.getMimeTypeFromHeadTail(head, tail, fileSize).value
+    }
+
+    private suspend fun detectFromPrefix(contentUri: Uri): String? = safeRunCatching {
+        context.contentResolver.openInputStream(contentUri)?.use { stream ->
+            stream.readExactly(DETECTION_BUFFER_SIZE)
+                .takeIf { it.isNotEmpty() }
+                ?.let { fileTypeDetector.getMimeTypeFromBytes(it).value }
+        }
+    }.onFailure { e ->
+        logWarning("Failed to read bytes for MIME type detection", e)
+    }.getOrNull()
+
+    private fun InputStream.readExactly(size: Int): ByteArray {
+        val buffer = ByteArray(size)
+        var offset = 0
+        while (offset < size) {
+            val read = read(buffer, offset, size - offset)
+            if (read <= 0) break
+            offset += read
+        }
+        return if (offset == size) buffer else buffer.copyOf(offset)
     }
 
     private fun isValidUri(uri: URI): Boolean = runCatching {
@@ -146,5 +185,8 @@ class MetadataResolverImpl @Inject constructor(
 
     companion object {
         private const val TAG = "MetadataResolverImpl"
+        private const val FILE_READ_MODE = "r"
+        private const val DETECTION_BUFFER_SIZE = 1_468_000
+        private const val DETECTION_BUFFER_SIZE_END = 128_000
     }
 }

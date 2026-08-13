@@ -34,6 +34,14 @@ class FileTypeDetectorImpl @Inject constructor() : FileTypeDetector {
     override fun getMimeTypeFromBytes(bytes: ByteArray): MimeType =
         fileDecoder.getMimetypeFromContent(bytes).let(::MimeType)
 
+    override fun getMimeTypeFromHeadTail(
+        head: ByteArray,
+        tail: ByteArray,
+        fileSize: Long
+    ): MimeType = fileDecoder
+        .getMimetypeFromContentHeadTail(head, tail, fileSize.toULong())
+        .let(::MimeType)
+
     override fun getFileTypeFromMimeType(mimeType: MimeType): FileType =
         fileDecoder.getFilegroupFromMimetype(mimeType.value)
             .let {

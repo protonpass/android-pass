@@ -22,6 +22,12 @@ interface FileTypeDetector {
 
     fun getMimeTypeFromBytes(bytes: ByteArray): MimeType
 
+    fun getMimeTypeFromHeadTail(
+        head: ByteArray,
+        tail: ByteArray,
+        fileSize: Long
+    ): MimeType
+
     fun getFileTypeFromMimeType(mimeType: MimeType): FileType
 }
 

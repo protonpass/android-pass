@@ -175,7 +175,10 @@ internal fun LoginItemForm(
                     onTitleRequiredError = isTitleError,
                     enabled = isEditAllowed,
                     isRounded = true,
-                    onChange = { onEvent(OnTitleChange(it)) }
+                    onChange = { onEvent(OnTitleChange(it)) },
+                    onFocusChange = { isFocused ->
+                        onEvent(OnFocusChange(LoginField.Title, isFocused))
+                    }
                 )
             }
 
@@ -347,7 +350,7 @@ internal fun LoginItemForm(
             }
         }
 
-        if (!isUpdate) {
+        if (!isUpdate && focusedField == LoginField.Title) {
             PopularServiceSuggestionsPopup(
                 services = popularServiceSuggestions,
                 anchorPosition = titlePosition.value,

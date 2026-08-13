@@ -57,7 +57,8 @@ fun TitleSection(
     requestFocus: Boolean = false,
     moveToNextOnEnter: Boolean = true,
     onChange: (String) -> Unit,
-    onDoneClick: (() -> Unit)? = null
+    onDoneClick: (() -> Unit)? = null,
+    onFocusChange: ((Boolean) -> Unit)? = null
 ) {
     val focusRequester = remember { FocusRequester() }
     var textFieldValueState by remember {
@@ -120,6 +121,7 @@ fun TitleSection(
         },
         moveToNextOnEnter = moveToNextOnEnter,
         onDoneClick = onDoneClick,
+        onFocusChange = onFocusChange,
         isError = onTitleRequiredError,
         errorMessage = stringResource(id = R.string.field_title_required),
         keyboardOptions = KeyboardOptions(capitalization = KeyboardCapitalization.Sentences)

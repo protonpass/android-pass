@@ -13,9 +13,9 @@
   <string name="autofill_confirm_dangerous_title" comment="Title for the dialog that will appear when the user clicks on Autofill but we think it may be a dangerous action">Пацвердзіце сваё дзеянне</string>
   <string name="autofill_confirm_dangerous_body" comment="Body for the dialog that will appear when the user clicks on Autofill but we think it may be a dangerous action">Вы збіраецеся аўтаматычна запоўніць свае ўліковыя даныя на вэб-сайце, які адкрыты з дапамогай вашай бягучай праграмы. Гэта праграма будзе мець доступ да вашых уліковых даных. Рабіце дадзенае дзеянне толькі ў выпадку, калі давяраеце ёй.</string>
   <string name="autofill_confirm_button" comment="Confirmation button for actually performing the autofill action">Аўтазапоўніць</string>
-  <string name="autofill_confirm_unverified_browser_title">This app claims to be a trusted browser</string>
-  <string name="autofill_confirm_unverified_browser_body">This app identifies itself as a known browser, but Pass could not verify it. Its signing certificate does not match what we expect, which can happen if the browser is unusually configured, or if another app is impersonating it to intercept your credentials. Only continue if you are certain this app is legitimate.</string>
-  <string name="autofill_confirm_dont_ask_again">Don\'t ask again for this app</string>
+  <string name="autofill_confirm_unverified_browser_title">Гэта праграма заяўляе, што з\'яўляецца надзейным браўзерам</string>
+  <string name="autofill_confirm_unverified_browser_body">Гэта праграма ідэнтыфікуе сябе як вядомы браўзер, але Pass не змог яе спраўдзіць. Яе сертыфікат подпісу не адпавядае чаканням. Гэта можа адбыцца ў выпадку, калі браўзер мае нестандартную канфігурацыю або калі іншая праграма выдае сябе за яго, каб перахапіць вашы ўліковыя даныя. Працягвайце толькі ў тым выпадку, калі ўпэўненыя ў яе сапраўднасці.</string>
+  <string name="autofill_confirm_dont_ask_again">Больш не пытацца для гэтай праграмы</string>
   <string name="autofill_troubleshooting_title">Выпраўленне непаладак з аўтазапаўненнем</string>
   <string name="autofill_troubleshooting_subtitle">Праверце, ці наладжана ваша прылада для слушнага аўтазапаўнення</string>
   <string name="autofill_troubleshooting_verdict_all_good">Аўтазапаўненне цалкам наладжана</string>
@@ -31,9 +31,12 @@
   <string name="autofill_troubleshooting_browser_open_action">Адкрыць</string>
   <string name="autofill_troubleshooting_browser_ready">У гэтым браўзеры аўтазапаўненне працуе аўтаматычна.</string>
   <string name="autofill_troubleshooting_browser_working">У гэтым браўзеры аўтазапаўненне будзе працаваць.</string>
-  <string name="autofill_troubleshooting_browser_steps_generic">Адкрыйце налады браўзера, знайдзіце раздзел з аўтазапаўненнем або паролямі, а потым выберыце Proton Pass у якасці сэрвісу аўтазапаўнення.</string>
+  <string name="autofill_troubleshooting_browser_steps_direct">Turn on autofill in your browser</string>
+  <string name="autofill_troubleshooting_browser_steps_generic">Open the browser settings and find the autofill or passwords section. Either choose Proton Pass as the autofill service, or turn off the browser\'s built-in autofill so that Proton Pass can take over.</string>
+  <string name="autofill_troubleshooting_browser_steps_confirm">Then do your first autofill in this browser to confirm the setup.</string>
   <string name="autofill_troubleshooting_browser_steps_chrome">1. Адкрыйце меню браўзера і перайдзіце ў налады, а потым выберыце сэрвісы аўтазапаўнення.\n2. Уключыце \"Выкарыстоўваць іншы сэрвіс\" і выберыце Proton Pass.</string>
-  <string name="autofill_troubleshooting_browser_steps_firefox">1. Адкрыйце меню браўзера і перайдзіце ў налады, а потым аўтазапаўненне.\n2. Выберыце Proton Pass у якасці сэрвісу аўтазапаўнення.</string>
+  <string name="autofill_troubleshooting_browser_steps_edge">1. Open the browser menu and go to Settings, then Microsoft password manager.\n2. Open Password settings and turn off \"Offer to save passwords and passkeys\" so that Proton Pass can fill your credentials instead.</string>
+  <string name="autofill_troubleshooting_browser_steps_firefox">1. Open the browser menu and go to Settings, then Passwords (called Logins and passwords in older versions).\n2. Turn off \"Autofill in Firefox\" so that Proton Pass can fill your credentials instead.</string>
   <string name="autofill_troubleshooting_browser_steps_samsung">1. Адкрыйце налады, а потым выберыце сэрвіс аўтазапаўнення.\n2. Выберыце Proton Pass.</string>
   <string name="autofill_troubleshooting_inline_info">Убудаваныя прапановы з\'явяцца ў вашай клавіятуры. Для гэтага неабходны Android 11 або больш позняя версія, а таксама сумяшчальная клавіятура (напрыклад, Gboard).</string>
   <string name="autofill_troubleshooting_share_diagnostics">Абагуліць дыягностыку</string>

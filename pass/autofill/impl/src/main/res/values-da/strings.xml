@@ -31,9 +31,12 @@
   <string name="autofill_troubleshooting_browser_open_action">Åbn</string>
   <string name="autofill_troubleshooting_browser_ready">Autofyld fungerer automatisk her.</string>
   <string name="autofill_troubleshooting_browser_working">Autofyld fungerer i denne browser.</string>
-  <string name="autofill_troubleshooting_browser_steps_generic">Åbn browserindstillinger, find autofyld- eller adgangskoder-sektionen og vælg Proton Pass som din tjeneste til autofyld.</string>
+  <string name="autofill_troubleshooting_browser_steps_direct">Turn on autofill in your browser</string>
+  <string name="autofill_troubleshooting_browser_steps_generic">Open the browser settings and find the autofill or passwords section. Either choose Proton Pass as the autofill service, or turn off the browser\'s built-in autofill so that Proton Pass can take over.</string>
+  <string name="autofill_troubleshooting_browser_steps_confirm">Then do your first autofill in this browser to confirm the setup.</string>
   <string name="autofill_troubleshooting_browser_steps_chrome">1. Åbn browsermenuen, gå til Indstillinger, og derefter Autofyld-tjenester.\n2. Slå \"Brug en anden tjeneste\" til og vælg Proton Pass.</string>
-  <string name="autofill_troubleshooting_browser_steps_firefox">1. Åbn browsermenuen, gå til Indstillinger, og derefter Autofyld.\n2. Vælg Proton Pass som tjenesten til autofyld.</string>
+  <string name="autofill_troubleshooting_browser_steps_edge">1. Open the browser menu and go to Settings, then Microsoft password manager.\n2. Open Password settings and turn off \"Offer to save passwords and passkeys\" so that Proton Pass can fill your credentials instead.</string>
+  <string name="autofill_troubleshooting_browser_steps_firefox">1. Open the browser menu and go to Settings, then Passwords (called Logins and passwords in older versions).\n2. Turn off \"Autofill in Firefox\" so that Proton Pass can fill your credentials instead.</string>
   <string name="autofill_troubleshooting_browser_steps_samsung">1. Åbn Indstillinger, og derefter Autofyld-tjeneste.\n2. Vælg Proton Pass.</string>
   <string name="autofill_troubleshooting_inline_info">Inline-forslag vises på dit tastatur. De skal bruge Android 11 eller senere, og et kompatibelt tastatur såsom Gboard.</string>
   <string name="autofill_troubleshooting_share_diagnostics">Del diagnostik</string>

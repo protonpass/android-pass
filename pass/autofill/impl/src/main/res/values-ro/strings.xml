@@ -31,9 +31,12 @@
   <string name="autofill_troubleshooting_browser_open_action">Deschidere</string>
   <string name="autofill_troubleshooting_browser_ready">Completarea automată funcționează automat aici.</string>
   <string name="autofill_troubleshooting_browser_working">Completarea automată funcționează în acest navigator web.</string>
-  <string name="autofill_troubleshooting_browser_steps_generic">Deschideți setările navigatorului web, găsiți secțiunea de completare automată sau parole și alegeți Proton Pass ca serviciu de completare automată.</string>
+  <string name="autofill_troubleshooting_browser_steps_direct">Turn on autofill in your browser</string>
+  <string name="autofill_troubleshooting_browser_steps_generic">Deschideți setările navigatorului web și găsiți secțiunea de completare automată sau parole. Fie alegeți Proton Pass ca serviciu de completare automată, fie dezactivați completarea automată încorporată în navigatorul web, astfel încât Proton Pass să poată prelua controlul.</string>
+  <string name="autofill_troubleshooting_browser_steps_confirm">Then do your first autofill in this browser to confirm the setup.</string>
   <string name="autofill_troubleshooting_browser_steps_chrome">1. Deschideți meniul navigatorului web și accesați Setări, apoi Servicii de completare automată.\n2. Activați „Utilizare alt serviciu” și selectați Proton Pass.</string>
-  <string name="autofill_troubleshooting_browser_steps_firefox">1. Deschideți meniul navigatorului web și accesați Setări, apoi Completare automată.\n2. Alegeți Proton Pass ca serviciu de completare automată.</string>
+  <string name="autofill_troubleshooting_browser_steps_edge">1. Open the browser menu and go to Settings, then Microsoft password manager.\n2. Open Password settings and turn off \"Offer to save passwords and passkeys\" so that Proton Pass can fill your credentials instead.</string>
+  <string name="autofill_troubleshooting_browser_steps_firefox">1. Deschideți meniul navigatorului web și accesați Setări, apoi Parole (numite Autentificări și parole în versiunile mai vechi).\n2. Dezactivați „Completare automată în Firefox” pentru ca Proton Pass să vă poată completa datele de autentificare.</string>
   <string name="autofill_troubleshooting_browser_steps_samsung">1. Deschideți Setări, apoi serviciul de completare automată.\n2. Selectați Proton Pass.</string>
   <string name="autofill_troubleshooting_inline_info">Sugestiile încorporate apar pe tastatură. Acestea necesită Android 11 sau o versiune ulterioară și o tastatură compatibilă, cum ar fi Gboard.</string>
   <string name="autofill_troubleshooting_share_diagnostics">Partajare diagnostice</string>

@@ -31,9 +31,12 @@
   <string name="autofill_troubleshooting_browser_open_action">Aç</string>
   <string name="autofill_troubleshooting_browser_ready">Otomatik doldurma burada otomatik olarak çalışır.</string>
   <string name="autofill_troubleshooting_browser_working">Otomatik doldurma bu tarayıcıda çalışıyor.</string>
-  <string name="autofill_troubleshooting_browser_steps_generic">Tarayıcı ayarlarını açın, otomatik doldurma veya parolalar bölümünü bulun ve otomatik doldurma hizmetini Proton Pass olarak seçin.</string>
+  <string name="autofill_troubleshooting_browser_steps_direct">Tarayıcınızda otomatik doldurmayı etkinleştirin</string>
+  <string name="autofill_troubleshooting_browser_steps_generic">Tarayıcı ayarlarını açın ve otomatik doldurma veya parolalar bölümünü bulun. Otomatik doldurma hizmetini Proton Pass olarak seçin ya da bu işlevin Proton Pass tarafından görülebilmesi için tarayıcının yerleşik otomatik doldurma özelliğini kapatın.</string>
+  <string name="autofill_troubleshooting_browser_steps_confirm">Ardından kurulumu onaylamak için bu tarayıcıda ilk otomatik doldurmayı gerçekleştirin.</string>
   <string name="autofill_troubleshooting_browser_steps_chrome">1. Tarayıcı menüsünü açın ve Ayarlar altında Otomatik doldurma hizmetlerine gidin.\n2. \"Başka bir hizmet kullan\" seçeneğini açın ve Proton Pass olarak seçin.</string>
-  <string name="autofill_troubleshooting_browser_steps_firefox">1. Tarayıcı menüsünü açın ve Ayarlar altından Otomatik doldurmaya gidin.\n2. Otomatik doldurma hizmetini Proton Pass olarak seçin.</string>
+  <string name="autofill_troubleshooting_browser_steps_edge">1. Tarayıcı menüsünü açın ve Ayarlara ardından Microsoft parola yöneticisine gidin.\n2. Parola ayarlarını açın ve “Parolaları ve geçiş anahtarlarını kaydetmeyi öner” seçeneğini devre dışı bırakın. Böylece Proton Pass kimlik bilgilerinizi sizin yerinize doldurabilir.</string>
+  <string name="autofill_troubleshooting_browser_steps_firefox">1. Tarayıcı menüsünü açın ve Ayarlar altında Parolalar ve otomatik doldurma bölümüne gidin (eski sürümlerde Oturum açma bilgileri ve Parolalar olarak adlandırılır).\n2. Oturum açma bilgilerinizin Proton Pass tarafından sizin adınıza doldurulabilmesi için “Kullanıcı adlarını ve parolaları kaydedip otomatik doldur” seçeneğini kapatın.</string>
   <string name="autofill_troubleshooting_browser_steps_samsung">1. Ayarları açın ardından Otomatik doldurma hizmetini seçin.\n2. Proton Pass olarak seçin.</string>
   <string name="autofill_troubleshooting_inline_info">Anlık öneriler klavyenizde görüntülenir. Bu özelliğin kullanılabilmesi için Android 11 veya daha yeni bir sürüm ile Gboard gibi uyumlu klavye gereklidir.</string>
   <string name="autofill_troubleshooting_share_diagnostics">Tanılamayı paylaş</string>

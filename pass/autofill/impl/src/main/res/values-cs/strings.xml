@@ -31,9 +31,12 @@
   <string name="autofill_troubleshooting_browser_open_action">Otevřít</string>
   <string name="autofill_troubleshooting_browser_ready">Zde automatické vyplňování funguje automaticky.</string>
   <string name="autofill_troubleshooting_browser_working">Automatické vyplňování v tomto prohlížeči funguje.</string>
-  <string name="autofill_troubleshooting_browser_steps_generic">Otevřete nastavení prohlížeče, najděte sekci automatického vyplňování nebo hesel a zvolte Proton Pass jako službu automatického vyplňování.</string>
+  <string name="autofill_troubleshooting_browser_steps_direct">Turn on autofill in your browser</string>
+  <string name="autofill_troubleshooting_browser_steps_generic">Open the browser settings and find the autofill or passwords section. Either choose Proton Pass as the autofill service, or turn off the browser\'s built-in autofill so that Proton Pass can take over.</string>
+  <string name="autofill_troubleshooting_browser_steps_confirm">Then do your first autofill in this browser to confirm the setup.</string>
   <string name="autofill_troubleshooting_browser_steps_chrome">1. Otevřete menu prohlížeče a přejděte do Nastavení, poté na Služby automatického vyplňování.\n2. Zapněte možnost „Použít jinou službu“ a vyberte Proton Pass.</string>
-  <string name="autofill_troubleshooting_browser_steps_firefox">1. Otevřete menu prohlížeče a přejděte do Nastavení, poté na Automatické vyplňování.\n2. Zvolte Proton Pass jako službu pro automatické vyplňování.</string>
+  <string name="autofill_troubleshooting_browser_steps_edge">1. Open the browser menu and go to Settings, then Microsoft password manager.\n2. Open Password settings and turn off \"Offer to save passwords and passkeys\" so that Proton Pass can fill your credentials instead.</string>
+  <string name="autofill_troubleshooting_browser_steps_firefox">1. Open the browser menu and go to Settings, then Passwords (called Logins and passwords in older versions).\n2. Turn off \"Autofill in Firefox\" so that Proton Pass can fill your credentials instead.</string>
   <string name="autofill_troubleshooting_browser_steps_samsung">1. Otevřete Nastavení, poté Služba automatického vyplňování.\n2. Vyberte Proton Pass.</string>
   <string name="autofill_troubleshooting_inline_info">Návrhy v textu se zobrazují přímo na klávesnici. Vyžadují Android 11 nebo novější a kompatibilní klávesnici, jako je Gboard.</string>
   <string name="autofill_troubleshooting_share_diagnostics">Sdílet diagnostiku</string>

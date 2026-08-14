@@ -73,5 +73,5 @@
   <string name="upsell_get_the_deal">Aproveitar a oferta</string>
   <string name="upsell_whats_included">O que está incluído</string>
   <string name="upsell_error_google_prices">Problem retrieving Google Play Store prices at the moment.</string>
-  <string name="upsell_error_general">An error occurred.</string>
+  <string name="upsell_error_general">Ocorreu um erro.</string>
 </resources>

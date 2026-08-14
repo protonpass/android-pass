@@ -4,7 +4,7 @@
   <string name="explore_section_tools_title">Työkalut</string>
   <string name="explore_section_expand_security_title">Expand your security</string>
   <string name="explore_tool_password_generator_title">Password generator</string>
-  <string name="explore_tool_dark_web_monitor_title">Dark web monitoring</string>
+  <string name="explore_tool_dark_web_monitor_title">Pimeän verkon valvonta</string>
   <string name="explore_tool_dark_web_monitor_subtitle">Start monitoring for data breaches.</string>
   <string name="explore_tool_password_health_title">Password health</string>
   <string name="explore_tool_password_health_subtitle">Identify vulnerable, weak and reused passwords.</string>

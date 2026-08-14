@@ -31,9 +31,12 @@
   <string name="autofill_troubleshooting_browser_open_action">Otvoriť</string>
   <string name="autofill_troubleshooting_browser_ready">Automatické vypĺňanie tu funguje automaticky.</string>
   <string name="autofill_troubleshooting_browser_working">V tomto prehliadači automatičné vypĺňanie funguje.</string>
-  <string name="autofill_troubleshooting_browser_steps_generic">Otvorte nastavenia prehliadača, vyhľadajte sekciu „Automatické vypĺňanie“ alebo „Heslá“ a ako službu automatického vypĺňania vyberte Proton Pass.</string>
+  <string name="autofill_troubleshooting_browser_steps_direct">Turn on autofill in your browser</string>
+  <string name="autofill_troubleshooting_browser_steps_generic">Otvorte nastavenia prehliadača a vyhľadajte sekciu „Automatické vypĺňanie“ alebo „Heslá“. Buď si ako službu automatického vypĺňania vyberte Proton Pass, alebo vypnite integrovanú funkciu automatického vypĺňania v prehliadači, aby túto úlohu mohol prevziať Proton Pass.</string>
+  <string name="autofill_troubleshooting_browser_steps_confirm">Then do your first autofill in this browser to confirm the setup.</string>
   <string name="autofill_troubleshooting_browser_steps_chrome">1. Otvorte menu prehliadača, prejdite do Nastavení a potom do položky Služby automatického vypĺňania.\n2. Zapnite možnosť „Použiť inú službu“ a vyberte Proton Pass.</string>
-  <string name="autofill_troubleshooting_browser_steps_firefox">1. Otvorte menu prehliadača, prejdite do Nastavení a potom do položky Automatické vypĺňanie.\n2. Ako službu automatického vypĺňania vyberte Proton Pass.</string>
+  <string name="autofill_troubleshooting_browser_steps_edge">1. Open the browser menu and go to Settings, then Microsoft password manager.\n2. Open Password settings and turn off \"Offer to save passwords and passkeys\" so that Proton Pass can fill your credentials instead.</string>
+  <string name="autofill_troubleshooting_browser_steps_firefox">1. Otvorte ponuku prehliadača, prejdite do Nastavení a potom do časti Heslá (v starších verziách sa táto časť nazýva Prihlasovacie údaje a heslá).\n2. Vypnite funkciu „Automatické vypĺňanie vo Firefoxe“, aby vaše prihlasovacie údaje mohol namiesto toho vypĺňať Proton Pass.</string>
   <string name="autofill_troubleshooting_browser_steps_samsung">1. Otvorte Nastavenia a potom službu Automatické vypĺňanie.\n2. Vyberte Proton Pass.</string>
   <string name="autofill_troubleshooting_inline_info">Návrhy priamo v texte sa zobrazujú na klávesnici. Na ich fungovanie je potrebný systém Android 11 alebo novší a kompatibilná klávesnica, napríklad Gboard.</string>
   <string name="autofill_troubleshooting_share_diagnostics">Zdieľať diagnostiku</string>

@@ -326,7 +326,7 @@
   <string name="collapse_expanded_text">vähemmän</string>
   <string name="login_item_monitor_widget_weak_pass_title">Heikko salasana</string>
   <string name="login_item_monitor_widget_weak_pass_subtitle">Tämä tili on vaarassa. Käy vaihtamassa salasanasi palvelun tiliasetuksista.</string>
-  <string name="login_item_monitor_widget_compromised_pass_title">Compromised password</string>
+  <string name="login_item_monitor_widget_compromised_pass_title">Vaarantunut salasana</string>
   <string name="login_item_monitor_widget_compromised_pass_subtitle">This login password appears in a data breach. Please visit the service and change the password.</string>
   <plurals name="login_item_monitor_widget_reused_pass_title">
     <item quantity="one">%d toinen kirjautumistieto käyttää samaa salasanaa</item>

@@ -430,7 +430,7 @@
   </plurals>
   <!-- Password checks (Login create/edit + Generate Password BS) -->
   <string name="password_strength_prefix">Надзейнасць пароля</string>
-  <string name="password_check_min_length">Password is too short</string>
+  <string name="password_check_min_length">Пароль занадта кароткі</string>
   <string name="password_check_lowercase">Малыя літары</string>
   <string name="password_check_uppercase">Вялікія літары</string>
   <string name="password_check_no_consecutive">Сімвалы, якія паўтараюцца адсутнічаюць</string>

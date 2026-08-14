@@ -31,9 +31,12 @@
   <string name="autofill_troubleshooting_browser_open_action">Öffnen</string>
   <string name="autofill_troubleshooting_browser_ready">Automatisches Ausfüllen funktioniert hier automatisch.</string>
   <string name="autofill_troubleshooting_browser_working">Automatisches Ausfüllen funktioniert in diesem Browser.</string>
-  <string name="autofill_troubleshooting_browser_steps_generic">Öffne die Browsereinstellungen, suche „Automatisches Ausfüllen“ oder „Passwörter“ und wähle „Proton Pass“ als Dienst zum automatischen Ausfüllen aus.</string>
+  <string name="autofill_troubleshooting_browser_steps_direct">Turn on autofill in your browser</string>
+  <string name="autofill_troubleshooting_browser_steps_generic">Öffne die Browsereinstellungen und suche den Abschnitt „Automatisches Ausfüllen“ oder „Passwörter“. Wähle entweder Proton Pass als Dienst zum automatischen Ausfüllen aus oder deaktiviere die integrierte Funktion zum automatischen Ausfüllen des Browsers, damit Proton Pass diese Aufgabe übernehmen kann.</string>
+  <string name="autofill_troubleshooting_browser_steps_confirm">Then do your first autofill in this browser to confirm the setup.</string>
   <string name="autofill_troubleshooting_browser_steps_chrome">1. Öffne das Browser-Menü, gehe zu „Einstellungen“ und dann zu „Automatisches Ausfüllen“.\n2. Aktiviere „Anderen Dienst verwenden“ und wähle „Proton Pass“ aus.</string>
-  <string name="autofill_troubleshooting_browser_steps_firefox">1. Öffne das Browser-Menü, gehe zu „Einstellungen“ und dann zu „Automatisches Ausfüllen“.\n2. Wähle „Proton Pass“ als Dienst zum automatischen Ausfüllen aus.</string>
+  <string name="autofill_troubleshooting_browser_steps_edge">1. Open the browser menu and go to Settings, then Microsoft password manager.\n2. Open Password settings and turn off \"Offer to save passwords and passkeys\" so that Proton Pass can fill your credentials instead.</string>
+  <string name="autofill_troubleshooting_browser_steps_firefox">1. Öffne im Browser das Menü „Einstellungen“ und dann „Passwörter“ (in älteren Versionen „Anmeldedaten und Passwörter“ genannt).\n2. Deaktiviere das „Automatische Ausfüllen in Firefox“, damit Proton Pass diese Aufgabe übernehmen kann.</string>
   <string name="autofill_troubleshooting_browser_steps_samsung">1. Öffne „Einstellungen“ und anschließend den Dienst „Automatisches Ausfüllen“.\n2. Wähle „Proton Pass“ aus.</string>
   <string name="autofill_troubleshooting_inline_info">Inline-Vorschläge werden auf deiner Tastatur angezeigt. Dazu sind Android 11 oder höher sowie eine kompatible Tastatur wie beispielsweise Gboard erforderlich.</string>
   <string name="autofill_troubleshooting_share_diagnostics">Diagnosen teilen</string>

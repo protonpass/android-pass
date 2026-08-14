@@ -115,6 +115,7 @@ internal fun LoginItemForm(
     isUsernameGeneratorEnabled: Boolean,
     popularServiceSuggestions: ImmutableList<PopularService> = persistentListOf(),
     canLoadExternalImages: Boolean = false,
+    canShowPopularServices: Boolean = true,
     onEvent: (LoginContentEvent) -> Unit
 ) {
     Box(modifier = modifier) {
@@ -350,7 +351,7 @@ internal fun LoginItemForm(
             }
         }
 
-        if (!isUpdate && focusedField == LoginField.Title) {
+        if (!isUpdate && canShowPopularServices && focusedField == LoginField.Title) {
             PopularServiceSuggestionsPopup(
                 services = popularServiceSuggestions,
                 anchorPosition = titlePosition.value,

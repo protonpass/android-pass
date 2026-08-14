@@ -56,6 +56,7 @@ internal fun LoginContent(
     canUseAttachments: Boolean,
     isUpdate: Boolean,
     popularServiceSuggestions: ImmutableList<PopularService> = persistentListOf(),
+    canShowPopularServices: Boolean = true,
     onEvent: (LoginContentEvent) -> Unit
 ) {
     BackHandler { onEvent(LoginContentEvent.Up) }
@@ -118,6 +119,7 @@ internal fun LoginContent(
             isUsernameGeneratorEnabled = uiState.isUsernameGeneratorEnabled,
             popularServiceSuggestions = popularServiceSuggestions,
             canLoadExternalImages = uiState.canLoadExternalImages,
+            canShowPopularServices = canShowPopularServices,
             onEvent = onEvent
         )
     }

@@ -122,10 +122,12 @@ fun CreateLoginScreen(
     }
 
     var showConfirmDialog by rememberSaveable { mutableStateOf(false) }
+    var isClosing by remember { mutableStateOf(false) }
     val onExit = {
         if (uiState.baseLoginUiState.hasUserEditedContent) {
             showConfirmDialog = !showConfirmDialog
         } else {
+            isClosing = true
             viewModel.clearDraftData()
             actionAfterKeyboardHide = { onNavigate(BaseLoginNavigation.CloseScreen) }
         }
@@ -142,6 +144,7 @@ fun CreateLoginScreen(
             if (shares.shareError == EmptyShareList || shares.shareError == SharesNotAvailable) {
                 viewModel.onEmitSnackbarMessage(LoginSnackbarMessages.InitError)
                 LaunchedEffect(Unit) {
+                    isClosing = true
                     actionAfterKeyboardHide = { onNavigate(BaseLoginNavigation.CloseScreen) }
                 }
             }
@@ -173,6 +176,7 @@ fun CreateLoginScreen(
             canUseAttachments = canUseAttachments,
             isUpdate = false,
             popularServiceSuggestions = uiState.popularServiceSuggestions,
+            canShowPopularServices = !showConfirmDialog && !isClosing,
             onEvent = {
                 when (it) {
                     LoginContentEvent.Up -> onExit()
@@ -369,6 +373,7 @@ fun CreateLoginScreen(
             },
             onConfirm = {
                 showConfirmDialog = false
+                isClosing = true
                 viewModel.clearDraftData()
                 actionAfterKeyboardHide = { onNavigate(BaseLoginNavigation.CloseScreen) }
             }
@@ -390,11 +395,13 @@ fun CreateLoginScreen(
         isItemSaved = uiState.baseLoginUiState.isItemSaved,
         selectedShareId = selectedVault?.vault?.shareId,
         onSuccess = { _, _, model ->
+            isClosing = true
             viewModel.clearDraftData()
             val event = CreateLoginNavigation.LoginCreated(model)
             actionAfterKeyboardHide = { onNavigate(OnCreateLoginEvent(event)) }
         },
         onPasskeyResponse = { response ->
+            isClosing = true
             viewModel.clearDraftData()
             val event = CreateLoginNavigation.LoginCreatedWithPasskey(response)
             actionAfterKeyboardHide = { onNavigate(OnCreateLoginEvent(event)) }

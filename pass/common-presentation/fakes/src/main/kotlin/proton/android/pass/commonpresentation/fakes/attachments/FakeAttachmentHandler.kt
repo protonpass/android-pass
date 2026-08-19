@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2025-2026 Proton AG
+ * Copyright (c) 2026 Proton AG
  * This file is part of Proton AG and Proton Pass.
  *
  * Proton Pass is free software: you can redistribute it and/or modify
@@ -19,8 +19,11 @@
 package proton.android.pass.commonpresentation.fakes.attachments
 
 import android.content.Context
+import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.onEach
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.commonpresentation.api.attachments.AttachmentsHandler
@@ -31,10 +34,13 @@ import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.attachments.Attachment
 import proton.android.pass.domain.attachments.DraftAttachment
 import proton.android.pass.domain.attachments.FileMetadata
-import proton.android.pass.domain.attachments.PendingAttachmentId
 import java.net.URI
 
+@Suppress("TooManyFunctions")
 class FakeAttachmentHandler : AttachmentsHandler {
+
+    private val newAttachmentsFlow = MutableSharedFlow<DraftAttachment>(extraBufferCapacity = BUFFER_CAPACITY)
+    private var uploadGate: CompletableDeferred<Unit>? = null
 
     override val attachmentState: Flow<AttachmentsState>
         get() = flowOf(AttachmentsState.Initial)
@@ -43,44 +49,45 @@ class FakeAttachmentHandler : AttachmentsHandler {
         contextHolder: ClassHolder<Context>,
         uri: URI,
         mimetype: String
-    ) {
-        // no-op
-    }
+    ) = Unit
 
-    override fun onClearAttachments() {
-        // no-op
-    }
+    override fun onClearAttachments() = Unit
 
-    override fun observeNewAttachments(onNewAttachment: (DraftAttachment) -> Unit): Flow<DraftAttachment> = flowOf(
-        DraftAttachment.Success(
-            metadata = FileMetadata.unknown(URI("")),
-            pendingAttachmentId = PendingAttachmentId("attachmentId")
-        )
-    )
+    override fun observeNewAttachments(onNewAttachment: (DraftAttachment) -> Unit): Flow<DraftAttachment> =
+        newAttachmentsFlow.onEach(onNewAttachment)
 
     override fun observeHasDeletedAttachments(onAttachmentDeleted: () -> Unit): Flow<Unit> = flowOf(Unit)
 
     override fun observeHasRenamedAttachments(onAttachmentRenamed: () -> Unit): Flow<Unit> = flowOf(Unit)
 
-    override suspend fun getAttachmentsForItem(shareId: ShareId, itemId: ItemId) {
-        // no-op
-    }
+    override suspend fun getAttachmentsForItem(shareId: ShareId, itemId: ItemId) = Unit
 
-    override suspend fun copyAttachmentsAsDraft(shareId: ShareId, itemId: ItemId) {
-        // no-op
-    }
+    override suspend fun copyAttachmentsAsDraft(shareId: ShareId, itemId: ItemId) = Unit
 
-    override suspend fun openAttachment(contextHolder: ClassHolder<Context>, attachment: Attachment) {
-        // no-op
-    }
+    override suspend fun openAttachment(contextHolder: ClassHolder<Context>, attachment: Attachment) = Unit
 
     override suspend fun preloadAttachment(attachment: Attachment): Option<URI> = None
 
-    override suspend fun shareAttachment(contextHolder: ClassHolder<Context>, attachment: Attachment) {
-        // no-op
-    }
+    override suspend fun shareAttachment(contextHolder: ClassHolder<Context>, attachment: Attachment) = Unit
 
     override suspend fun uploadNewAttachment(fileMetadata: FileMetadata) {
-        // no-op
+        uploadGate?.await()
+    }
+
+    fun emitNewAttachment(draftAttachment: DraftAttachment) {
+        newAttachmentsFlow.tryEmit(draftAttachment)
+    }
+
+    fun blockUploads() {
+        uploadGate = CompletableDeferred()
+    }
+
+    fun releaseUploads() {
+        uploadGate?.complete(Unit)
+        uploadGate = null
+    }
+
+    private companion object {
+        private const val BUFFER_CAPACITY = 10
     }
 }

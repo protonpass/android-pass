@@ -910,9 +910,7 @@ class IdentityActionsProviderImpl @Inject constructor(
         attachmentsHandler.observeNewAttachments {
             onUserEditedContent()
             coroutineScope.launch {
-                isLoadingState.update { IsLoadingState.Loading }
                 attachmentsHandler.uploadNewAttachment(it.metadata)
-                isLoadingState.update { IsLoadingState.NotLoading }
             }
         }.launchIn(coroutineScope)
     }
@@ -930,9 +928,7 @@ class IdentityActionsProviderImpl @Inject constructor(
     }
 
     override suspend fun retryUploadDraftAttachment(metadata: FileMetadata) {
-        isLoadingState.update { IsLoadingState.Loading }
         attachmentsHandler.uploadNewAttachment(metadata)
-        isLoadingState.update { IsLoadingState.NotLoading }
     }
 
     override suspend fun dismissFileAttachmentsOnboardingBanner() {

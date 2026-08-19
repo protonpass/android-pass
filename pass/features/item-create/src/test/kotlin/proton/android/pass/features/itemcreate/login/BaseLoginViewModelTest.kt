@@ -18,7 +18,9 @@
 
 package proton.android.pass.features.itemcreate.login
 
+import app.cash.turbine.test
 import com.google.common.truth.Truth.assertThat
+import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Rule
@@ -31,6 +33,7 @@ import proton.android.pass.commonrust.fakes.FakeEmailValidator
 import proton.android.pass.commonrust.fakes.FakePasswordScorer
 import proton.android.pass.commonrust.fakes.passwords.strengths.FakePasswordStrengthCalculator
 import proton.android.pass.commonui.fakes.FakeSavedStateHandleProvider
+import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.crypto.fakes.context.FakeEncryptionContext
 import proton.android.pass.crypto.fakes.context.FakeEncryptionContextProvider
@@ -43,6 +46,8 @@ import proton.android.pass.data.fakes.usecases.FakeObserveCurrentUser
 import proton.android.pass.data.fakes.usecases.FakeObserveUpgradeInfo
 import proton.android.pass.data.fakes.usecases.tooltips.FakeDisableTooltip
 import proton.android.pass.data.fakes.usecases.tooltips.FakeObserveTooltipEnabled
+import proton.android.pass.domain.attachments.DraftAttachment
+import proton.android.pass.domain.attachments.FileMetadata
 import proton.android.pass.features.itemcreate.common.CustomFieldDraftRepositoryImpl
 import proton.android.pass.features.itemcreate.common.UIHiddenState
 import proton.android.pass.features.itemcreate.common.customfields.CustomFieldHandlerImpl
@@ -54,6 +59,7 @@ import proton.android.pass.test.MainDispatcherRule
 import proton.android.pass.test.StringTestFactory
 import proton.android.pass.test.domain.UserTestFactory
 import proton.android.pass.totp.fakes.FakeTotpManager
+import java.net.URI
 
 internal class BaseLoginViewModelTest {
 
@@ -68,6 +74,7 @@ internal class BaseLoginViewModelTest {
     private lateinit var draftRepository: DraftRepository
     private lateinit var passwordStrengthCalculator: FakePasswordStrengthCalculator
     private lateinit var emailValidator: FakeEmailValidator
+    private lateinit var attachmentsHandler: FakeAttachmentHandler
 
     @Before
     fun setUp() {
@@ -78,6 +85,7 @@ internal class BaseLoginViewModelTest {
         encryptionContextProvider = FakeEncryptionContextProvider()
         passwordStrengthCalculator = FakePasswordStrengthCalculator()
         emailValidator = FakeEmailValidator()
+        attachmentsHandler = FakeAttachmentHandler()
         baseLoginViewModel = object : BaseLoginViewModel(
             accountManager = FakeAccountManager(),
             snackbarDispatcher = FakeSnackbarDispatcher(),
@@ -94,12 +102,30 @@ internal class BaseLoginViewModelTest {
             disableTooltip = FakeDisableTooltip(),
             userPreferencesRepository = FakePreferenceRepository(),
             featureFlagsPreferencesRepository = FakeFeatureFlagsPreferenceRepository(),
-            attachmentsHandler = FakeAttachmentHandler(),
+            attachmentsHandler = attachmentsHandler,
             customFieldDraftRepository = CustomFieldDraftRepositoryImpl(),
             customFieldHandler = CustomFieldHandlerImpl(totpManager, encryptionContextProvider),
             loginItemFormProcessor = FakeLoginItemFormProcessor(),
             canCreateAlias = FakeCanCreateAlias()
         ) {}
+    }
+
+    @Test
+    internal fun `GIVEN an attachment is uploading WHEN observing the state THEN the form stays editable`() = runTest {
+        attachmentsHandler.blockUploads()
+
+        baseLoginViewModel.baseLoginUiState.test {
+            attachmentsHandler.emitNewAttachment(
+                DraftAttachment.Loading(FileMetadata.unknown(URI("file://attachment")))
+            )
+            advanceUntilIdle()
+
+            assertThat(expectMostRecentItem().isLoadingState)
+                .isEqualTo(IsLoadingState.NotLoading)
+            cancelAndIgnoreRemainingEvents()
+        }
+
+        attachmentsHandler.releaseUploads()
     }
 
     @Test

@@ -18,8 +18,6 @@
 
 package proton.android.pass.autofill.autofillhealth.troubleshooting.presentation
 
-import proton.android.pass.autofill.autofillhealth.troubleshooting.data.BrowserAutofillCoverage
-
 enum class AutofillHealthVerdict {
     Loading,
     AllGood,
@@ -39,7 +37,7 @@ object AutofillHealthVerdictResolver {
         state.serviceStatus != AutofillServiceStatus.EnabledByOurService ->
             AutofillHealthVerdict.NeedsAttention
 
-        state.installedBrowsers.any { it.coverage == BrowserAutofillCoverage.NeedsSetup } ->
+        state.installedBrowsers.any { it.needsAutofillSetup } ->
             AutofillHealthVerdict.NeedsAttention
 
         else -> AutofillHealthVerdict.AllGood

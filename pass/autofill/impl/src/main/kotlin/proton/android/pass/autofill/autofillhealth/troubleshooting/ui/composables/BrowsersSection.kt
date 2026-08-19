@@ -18,12 +18,15 @@
 
 package proton.android.pass.autofill.autofillhealth.troubleshooting.ui.composables
 
+import androidx.annotation.DrawableRes
+import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import proton.android.pass.autofill.autofillhealth.troubleshooting.data.BrowserAutofillCoverage
@@ -34,6 +37,7 @@ import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.composecomponents.impl.container.roundedContainerNorm
 import proton.android.pass.composecomponents.impl.form.PassDivider
 import proton.android.pass.composecomponents.impl.text.Text
+import me.proton.core.presentation.R as CoreR
 
 @Composable
 internal fun BrowsersSection(
@@ -41,19 +45,66 @@ internal fun BrowsersSection(
     onOpenBrowser: (BrowserInfo) -> Unit,
     modifier: Modifier = Modifier
 ) {
+    val (inactiveBrowsers, compatibleBrowsers) = browsers.partition { browser ->
+        browser.needsAutofillSetup
+    }
+    Column(
+        modifier = modifier,
+        verticalArrangement = Arrangement.spacedBy(Spacing.medium)
+    ) {
+        if (inactiveBrowsers.isNotEmpty()) {
+            BrowsersGroup(
+                iconRes = CoreR.drawable.ic_proton_exclamation_circle_filled,
+                tint = PassTheme.colors.signalWarning,
+                titleResId = R.string.autofill_troubleshooting_browsers_inactive_header,
+                bodyResId = R.string.autofill_troubleshooting_browsers_inactive_body,
+                browsers = inactiveBrowsers
+            ) { browser ->
+                InactiveBrowserRow(
+                    browser = browser,
+                    onOpenClick = { onOpenBrowser(browser) }
+                )
+            }
+        }
+
+        if (compatibleBrowsers.isNotEmpty()) {
+            BrowsersGroup(
+                iconRes = CoreR.drawable.ic_proton_checkmark_circle,
+                tint = PassTheme.colors.signalSuccess,
+                titleResId = R.string.autofill_troubleshooting_browsers_compatible_header,
+                bodyResId = R.string.autofill_troubleshooting_browsers_compatible_body,
+                browsers = compatibleBrowsers
+            ) { browser ->
+                BrowserRow(browser = browser)
+            }
+        }
+    }
+}
+
+@Composable
+private fun BrowsersGroup(
+    @DrawableRes iconRes: Int,
+    tint: Color,
+    @StringRes titleResId: Int,
+    @StringRes bodyResId: Int,
+    browsers: List<BrowserInfo>,
+    modifier: Modifier = Modifier,
+    row: @Composable (BrowserInfo) -> Unit
+) {
     Column(
         modifier = modifier,
         verticalArrangement = Arrangement.spacedBy(Spacing.small)
     ) {
-        Text.Body2Medium(stringResource(R.string.autofill_troubleshooting_browsers_header))
-        Text.Body3Weak(stringResource(R.string.autofill_troubleshooting_browsers_body))
+        AutofillStatusRow(
+            iconRes = iconRes,
+            tint = tint,
+            title = stringResource(titleResId)
+        )
+        Text.Body3Weak(stringResource(bodyResId))
         Column(modifier = Modifier.fillMaxWidth().roundedContainerNorm()) {
             browsers.forEachIndexed { index, browser ->
                 if (index > 0) PassDivider()
-                BrowserRow(
-                    browser = browser,
-                    onOpenClick = { onOpenBrowser(browser) }
-                )
+                row(browser)
             }
         }
     }
@@ -68,14 +119,28 @@ internal fun BrowsersSectionPreview() {
                 BrowsersSection(
                     browsers = listOf(
                         BrowserInfo(
-                            packageName = "org.mozilla.firefox",
-                            label = "Firefox",
+                            packageName = "com.android.chrome",
+                            label = "Chrome",
+                            coverage = BrowserAutofillCoverage.NeedsSetup,
+                            canOpenAutofillSettings = true,
+                            canDetectAutofillState = true
+                        ),
+                        BrowserInfo(
+                            packageName = "com.brave.browser",
+                            label = "Brave",
+                            coverage = BrowserAutofillCoverage.Working,
+                            canOpenAutofillSettings = true,
+                            canDetectAutofillState = true
+                        ),
+                        BrowserInfo(
+                            packageName = "com.microsoft.emmx",
+                            label = "Edge",
                             coverage = BrowserAutofillCoverage.NeedsSetup
                         ),
                         BrowserInfo(
-                            packageName = "com.android.chrome",
-                            label = "Chrome",
-                            coverage = BrowserAutofillCoverage.Ready
+                            packageName = "org.mozilla.firefox",
+                            label = "Firefox",
+                            coverage = BrowserAutofillCoverage.NeedsSetup
                         )
                     ),
                     onOpenBrowser = {}

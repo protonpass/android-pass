@@ -71,7 +71,7 @@ class InstalledBrowsersProviderImpl @Inject constructor(
             // Browsers that need setup first, then alphabetical.
             .sortedWith(
                 compareBy(
-                    { browser -> browser.coverage != BrowserAutofillCoverage.NeedsSetup },
+                    { browser -> !browser.needsAutofillSetup },
                     { browser -> browser.label.lowercase() }
                 )
             )

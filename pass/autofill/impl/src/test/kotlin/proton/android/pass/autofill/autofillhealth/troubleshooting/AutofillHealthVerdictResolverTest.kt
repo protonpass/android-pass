@@ -55,11 +55,29 @@ class AutofillHealthVerdictResolverTest {
         val state = AutofillTroubleshootingState(
             serviceStatus = AutofillServiceStatus.EnabledByOurService,
             installedBrowsers = listOf(
-                BrowserInfo("org.mozilla.firefox", "Firefox", BrowserAutofillCoverage.NeedsSetup)
+                BrowserInfo(
+                    packageName = "com.android.chrome",
+                    label = "Chrome",
+                    coverage = BrowserAutofillCoverage.NeedsSetup,
+                    canOpenAutofillSettings = true,
+                    canDetectAutofillState = true
+                )
             )
         )
         assertThat(AutofillHealthVerdictResolver.resolve(state))
             .isEqualTo(AutofillHealthVerdict.NeedsAttention)
+    }
+
+    @Test
+    fun `all good when the browser needing setup cannot be set up from here`() {
+        val state = AutofillTroubleshootingState(
+            serviceStatus = AutofillServiceStatus.EnabledByOurService,
+            installedBrowsers = listOf(
+                BrowserInfo("org.mozilla.firefox", "Firefox", BrowserAutofillCoverage.NeedsSetup)
+            )
+        )
+        assertThat(AutofillHealthVerdictResolver.resolve(state))
+            .isEqualTo(AutofillHealthVerdict.AllGood)
     }
 
     @Test

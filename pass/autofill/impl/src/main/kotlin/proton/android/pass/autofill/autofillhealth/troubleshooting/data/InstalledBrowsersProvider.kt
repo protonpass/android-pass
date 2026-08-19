@@ -43,7 +43,19 @@ data class BrowserInfo(
     val coverage: BrowserAutofillCoverage,
     val canOpenAutofillSettings: Boolean = false,
     val canDetectAutofillState: Boolean = false
-)
+) {
+    /**
+     * Whether we can either read or drive the browser's autofill setting.
+     *
+     * Only those browsers get a status: the others are listed by name alone, because we would have
+     * no way of telling the user their setup is done.
+     */
+    val hasAutofillSetupControl: Boolean
+        get() = canOpenAutofillSettings || canDetectAutofillState
+
+    val needsAutofillSetup: Boolean
+        get() = hasAutofillSetupControl && coverage == BrowserAutofillCoverage.NeedsSetup
+}
 
 interface InstalledBrowsersProvider {
     suspend fun getInstalledBrowsers(): List<BrowserInfo>

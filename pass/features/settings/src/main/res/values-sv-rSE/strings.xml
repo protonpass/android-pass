@@ -24,8 +24,6 @@
   <string name="settings_privacy_section_title">Integritet</string>
   <string name="settings_use_favicons_preference_title">Använd webbikoner</string>
   <string name="settings_use_favicons_preference_subtitle">Bestäm om du vill se webbplatsikonerna på dina objekt.</string>
-  <string name="settings_allow_screenshots_preference_title">Tillåt skärmdumpar</string>
-  <string name="settings_allow_screenshots_preference_subtitle">Om det är aktiverat kommer du att kunna ta skärmdumpar av appen.</string>
   <string name="settings_clear_icon_cache_success">Ikonens cache rensad</string>
   <string name="settings_clear_icon_cache_error">Kunde inte rensa ikonens cache</string>
   <string name="settings_share_telemetry">Dela anonym användning</string>

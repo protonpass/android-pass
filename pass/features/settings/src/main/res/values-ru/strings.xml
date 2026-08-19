@@ -24,8 +24,6 @@
   <string name="settings_privacy_section_title">Конфиденциальность</string>
   <string name="settings_use_favicons_preference_title">Использовать веб-иконки</string>
   <string name="settings_use_favicons_preference_subtitle">Решите, нужно ли отображать иконки веб-сайтов на элементах.</string>
-  <string name="settings_allow_screenshots_preference_title">Разрешить скриншоты</string>
-  <string name="settings_allow_screenshots_preference_subtitle">При включении можно будет делать снимки экрана приложения.</string>
   <string name="settings_clear_icon_cache_success">Кэш иконок очищен</string>
   <string name="settings_clear_icon_cache_error">Не могу очистить кэш иконок</string>
   <string name="settings_share_telemetry">Анонимно делиться данными об использовании</string>

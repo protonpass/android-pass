@@ -24,8 +24,6 @@
   <string name="settings_privacy_section_title">Privacy</string>
   <string name="settings_use_favicons_preference_title">Gebruik webiconen</string>
   <string name="settings_use_favicons_preference_subtitle">Bepaal of u de websitepictogrammen op uw items wilt zien.</string>
-  <string name="settings_allow_screenshots_preference_title">Schermafbeeldingen toestaan</string>
-  <string name="settings_allow_screenshots_preference_subtitle">Het is mogelijk om screenshots te nemen van de app wanneer ingeschakeld.</string>
   <string name="settings_clear_icon_cache_success">Pictogramcache gewist</string>
   <string name="settings_clear_icon_cache_error">Kan pictogramcache niet wissen</string>
   <string name="settings_share_telemetry">Deel anoniem gebruik</string>

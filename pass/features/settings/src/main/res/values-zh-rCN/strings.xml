@@ -24,8 +24,6 @@
   <string name="settings_privacy_section_title">隐私</string>
   <string name="settings_use_favicons_preference_title">使用网页图标</string>
   <string name="settings_use_favicons_preference_subtitle">决定是否要查看您项目上的网站图标。</string>
-  <string name="settings_allow_screenshots_preference_title">允许截图</string>
-  <string name="settings_allow_screenshots_preference_subtitle">如果启用，您就可以对应用程序进行截图。</string>
   <string name="settings_clear_icon_cache_success">图标缓存已清除</string>
   <string name="settings_clear_icon_cache_error">无法清除图标缓存</string>
   <string name="settings_share_telemetry">分享匿名使用情况</string>

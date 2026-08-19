@@ -24,8 +24,6 @@
   <string name="settings_privacy_section_title">Riêng tư</string>
   <string name="settings_use_favicons_preference_title">Sử dụng biểu tượng trang web</string>
   <string name="settings_use_favicons_preference_subtitle">Quyết định xem bạn có muốn xem các biểu tượng trang web trên các nội dung của mình không.</string>
-  <string name="settings_allow_screenshots_preference_title">Cho phép chụp màn hình</string>
-  <string name="settings_allow_screenshots_preference_subtitle">Nếu bật, bạn sẽ có thể chụp màn hình ứng dụng này.</string>
   <string name="settings_clear_icon_cache_success">Đã xóa bộ nhớ đệm biểu tượng</string>
   <string name="settings_clear_icon_cache_error">Không thể xóa bộ nhớ đệm biểu tượng</string>
   <string name="settings_share_telemetry">Chia sẻ dữ liệu sử dụng ẩn danh</string>

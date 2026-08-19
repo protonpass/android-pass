@@ -24,8 +24,6 @@
   <string name="settings_privacy_section_title">Soukromí</string>
   <string name="settings_use_favicons_preference_title">Použití webových ikon</string>
   <string name="settings_use_favicons_preference_subtitle">Rozhodněte se, zda chcete u svých položek zobrazovat ikony webových stránek.</string>
-  <string name="settings_allow_screenshots_preference_title">Povolit snímky obrazovky</string>
-  <string name="settings_allow_screenshots_preference_subtitle">Pokud je tato možnost povolena, budete moci pořizovat snímky obrazovky aplikace.</string>
   <string name="settings_clear_icon_cache_success">Mezipaměť ikon smazána</string>
   <string name="settings_clear_icon_cache_error">Nelze smazat mezipaměť ikon</string>
   <string name="settings_share_telemetry">Sdílet anonymní údaje o využití</string>

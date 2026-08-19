@@ -334,20 +334,60 @@ internal class CompromisedPasswordRepositoryImplTest {
     }
 
     @Test
-    fun `item with SkipCompromisedPasswordCheck flag is not queried`() = runTest {
+    fun `item with SkipCompromisedPasswordCheck flag is still queried`() = runTest {
         val item = ItemTestFactory.createLogin(
             shareId = ShareId("s1"),
             itemId = ItemId("i1"),
             password = "hunter2",
             flags = ItemFlag.SkipCompromisedPasswordCheck.value
         )
+        val prefix = sha1Upper("hunter2").substring(0, 6)
 
         remote.lastChangeValue = 1_000L
+        remote.suffixResultByKey[prefix to null] =
+            PrefixQueryResult.Ok(etag = "a", suffixes = emptySet())
 
         instance.refresh(userId, listOf(item))
 
-        assertThat(remote.suffixCalls).isEmpty()
-        assertThat(local.snapshot()).isEmpty()
+        assertThat(remote.suffixCalls).containsExactly(
+            FakeRemoteCompromisedPasswordDataSource.SuffixCall(prefix, null)
+        )
+        assertThat(local.snapshot().single().isCompromised).isFalse()
+    }
+
+    @Test
+    fun `excluded item with an ignored compromised check follows its new password`() = runTest {
+        val item = ItemTestFactory.createLogin(
+            shareId = ShareId("s1"),
+            itemId = ItemId("i1"),
+            password = "new-password",
+            flags = ItemFlag.SkipHealthCheck.value or
+                ItemFlag.SkipWeakPasswordCheck.value or
+                ItemFlag.SkipCompromisedPasswordCheck.value
+        )
+        val newPrefix = sha1Upper("new-password").substring(0, 6)
+
+        local.seed(
+            listOf(
+                CompromisedPasswordEntity(
+                    userId = FakeAccountManager.USER_ID,
+                    shareId = "s1",
+                    itemId = "i1",
+                    isCompromised = true,
+                    passwordHash = "ABCDEF",
+                    checkedAt = 9_000_000L,
+                    lastEtag = "old-etag"
+                )
+            )
+        )
+        remote.suffixResultByKey[newPrefix to null] =
+            PrefixQueryResult.Ok(etag = "new-etag", suffixes = emptySet())
+
+        instance.checkNow(userId, listOf(item))
+
+        val row = local.snapshot().single()
+        assertThat(row.passwordHash).isEqualTo(newPrefix)
+        assertThat(row.isCompromised).isFalse()
     }
 
     @Test

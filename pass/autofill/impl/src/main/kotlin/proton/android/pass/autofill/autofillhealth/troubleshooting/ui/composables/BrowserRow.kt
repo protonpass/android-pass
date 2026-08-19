@@ -18,28 +18,17 @@
 
 package proton.android.pass.autofill.autofillhealth.troubleshooting.ui.composables
 
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.rotate
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import proton.android.pass.autofill.autofillhealth.troubleshooting.data.BrowserAutofillCoverage
-import proton.android.pass.autofill.autofillhealth.troubleshooting.data.BrowserAutofillInstructions
 import proton.android.pass.autofill.autofillhealth.troubleshooting.data.BrowserInfo
-import proton.android.pass.autofill.service.R
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.composecomponents.impl.icon.Icon
@@ -47,104 +36,44 @@ import proton.android.pass.composecomponents.impl.text.Text
 import me.proton.core.presentation.R as CoreR
 
 @Composable
-internal fun BrowserRow(
+internal fun BrowserRow(browser: BrowserInfo, modifier: Modifier = Modifier) {
+    Row(
+        modifier = modifier.padding(Spacing.medium),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(Spacing.small)
+    ) {
+        Text.Body1Regular(modifier = Modifier.weight(1f), text = browser.label)
+        if (browser.hasAutofillSetupControl) {
+            BrowserActiveTag()
+        }
+    }
+}
+
+@Composable
+internal fun InactiveBrowserRow(
     browser: BrowserInfo,
     onOpenClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    var expanded by remember { mutableStateOf(false) }
-    val chevronRotation by animateFloatAsState(
-        targetValue = if (expanded) 180f else 0f,
-        label = "BrowserRowChevronRotation"
-    )
-    Column(
+    Row(
         modifier = modifier
-            .clickable { expanded = !expanded }
-            .padding(Spacing.medium)
+            .clickable(onClick = onOpenClick)
+            .padding(Spacing.medium),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(Spacing.small)
     ) {
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(Spacing.small)
-        ) {
-            val (statusIconRes, statusTint) = when {
-                browser.coverage == BrowserAutofillCoverage.NeedsSetup ->
-                    CoreR.drawable.ic_proton_exclamation_circle_filled to PassTheme.colors.signalWarning
-
-                else ->
-                    CoreR.drawable.ic_proton_checkmark_circle to PassTheme.colors.signalSuccess
-            }
-            Icon.Default(id = statusIconRes, contentDescription = null, tint = statusTint)
-            Text.Body1Regular(modifier = Modifier.weight(1f), text = browser.label)
-            Icon.Default(
-                modifier = Modifier.rotate(chevronRotation),
-                id = CoreR.drawable.ic_proton_chevron_down,
-                contentDescription = null,
-                tint = PassTheme.colors.textWeak
-            )
-        }
-        AnimatedVisibility(visible = expanded) {
-            Column(
-                modifier = Modifier.padding(top = Spacing.small),
-                verticalArrangement = Arrangement.spacedBy(Spacing.small)
-            ) {
-                when {
-                    browser.coverage == BrowserAutofillCoverage.Working -> Text.Body3Weak(
-                        stringResource(R.string.autofill_troubleshooting_browser_working)
-                    )
-
-                    browser.coverage == BrowserAutofillCoverage.Ready -> Text.Body3Weak(
-                        stringResource(R.string.autofill_troubleshooting_browser_ready)
-                    )
-
-                    else -> {
-                        Text.Body3Weak(
-                            stringResource(
-                                if (browser.canOpenAutofillSettings) {
-                                    R.string.autofill_troubleshooting_browser_steps_direct
-                                } else {
-                                    BrowserAutofillInstructions.stepsResIdFor(browser.packageName)
-                                }
-                            )
-                        )
-                        if (!browser.canDetectAutofillState) {
-                            Text.Body3Weak(
-                                stringResource(
-                                    R.string.autofill_troubleshooting_browser_steps_confirm
-                                )
-                            )
-                        }
-                        Text.Body3Medium(
-                            modifier = Modifier.clickable(onClick = onOpenClick),
-                            text = stringResource(R.string.autofill_troubleshooting_browser_open_action),
-                            color = PassTheme.colors.interactionNormMajor2
-                        )
-                    }
-                }
-            }
-        }
+        Text.Body1Regular(modifier = Modifier.weight(1f), text = browser.label)
+        Icon.Default(
+            id = CoreR.drawable.ic_proton_chevron_right,
+            contentDescription = null,
+            tint = PassTheme.colors.textWeak
+        )
     }
 }
 
 @Preview
 @Composable
-internal fun BrowserRowReadyPreview() {
-    PassTheme {
-        Surface {
-            BrowserRow(
-                browser = BrowserInfo(
-                    packageName = "com.android.chrome",
-                    label = "Chrome",
-                    coverage = BrowserAutofillCoverage.Ready
-                ),
-                onOpenClick = {}
-            )
-        }
-    }
-}
-
-@Preview
-@Composable
-internal fun BrowserRowNeedsSetupPreview() {
+internal fun BrowserRowNameOnlyPreview() {
     PassTheme {
         Surface {
             BrowserRow(
@@ -152,8 +81,7 @@ internal fun BrowserRowNeedsSetupPreview() {
                     packageName = "org.mozilla.firefox",
                     label = "Firefox",
                     coverage = BrowserAutofillCoverage.NeedsSetup
-                ),
-                onOpenClick = {}
+                )
             )
         }
     }
@@ -161,14 +89,34 @@ internal fun BrowserRowNeedsSetupPreview() {
 
 @Preview
 @Composable
-internal fun BrowserRowWorkingPreview() {
+internal fun BrowserRowActivePreview() {
     PassTheme {
         Surface {
             BrowserRow(
                 browser = BrowserInfo(
                     packageName = "com.android.chrome",
                     label = "Chrome",
-                    coverage = BrowserAutofillCoverage.Working
+                    coverage = BrowserAutofillCoverage.Working,
+                    canOpenAutofillSettings = true,
+                    canDetectAutofillState = true
+                )
+            )
+        }
+    }
+}
+
+@Preview
+@Composable
+internal fun InactiveBrowserRowPreview() {
+    PassTheme {
+        Surface {
+            InactiveBrowserRow(
+                browser = BrowserInfo(
+                    packageName = "com.android.chrome",
+                    label = "Chrome",
+                    coverage = BrowserAutofillCoverage.NeedsSetup,
+                    canOpenAutofillSettings = true,
+                    canDetectAutofillState = true
                 ),
                 onOpenClick = {}
             )

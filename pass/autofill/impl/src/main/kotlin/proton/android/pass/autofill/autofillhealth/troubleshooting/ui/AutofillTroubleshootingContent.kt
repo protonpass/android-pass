@@ -153,14 +153,23 @@ internal fun AutofillTroubleshootingContent(
 
 private val previewBrowsers = listOf(
     BrowserInfo(
+        packageName = "com.android.chrome",
+        label = "Chrome",
+        coverage = BrowserAutofillCoverage.NeedsSetup,
+        canOpenAutofillSettings = true,
+        canDetectAutofillState = true
+    ),
+    BrowserInfo(
+        packageName = "com.brave.browser",
+        label = "Brave",
+        coverage = BrowserAutofillCoverage.Ready,
+        canOpenAutofillSettings = true,
+        canDetectAutofillState = true
+    ),
+    BrowserInfo(
         packageName = "org.mozilla.firefox",
         label = "Firefox",
         coverage = BrowserAutofillCoverage.NeedsSetup
-    ),
-    BrowserInfo(
-        packageName = "com.android.chrome",
-        label = "Chrome",
-        coverage = BrowserAutofillCoverage.Ready
     )
 )
 

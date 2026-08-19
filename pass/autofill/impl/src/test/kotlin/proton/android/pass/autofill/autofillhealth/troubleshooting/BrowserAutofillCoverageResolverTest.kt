@@ -67,15 +67,23 @@ class BrowserAutofillCoverageResolverTest {
     }
 
     @Test
-    fun `disabled third party mode does not demote a browser covered by compat mode`() {
+    fun `disabled third party mode demotes a browser still under its compat cap`() {
         assertThat(
             BrowserAutofillCoverageResolver.resolve(
-                browserVersionCode = 500,
-                compatMaxVersionCode = 1000,
+                browserVersionCode = 540_990_100,
+                compatMaxVersionCode = 10_000_000_000,
                 hasBeenSeenWorking = false,
                 thirdPartyMode = ThirdPartyMode.Disabled
             )
-        ).isEqualTo(BrowserAutofillCoverage.Ready)
+        ).isEqualTo(BrowserAutofillCoverage.NeedsSetup)
+        assertThat(
+            BrowserAutofillCoverageResolver.resolve(
+                browserVersionCode = 540_990_100,
+                compatMaxVersionCode = 10_000_000_000,
+                hasBeenSeenWorking = true,
+                thirdPartyMode = ThirdPartyMode.Disabled
+            )
+        ).isEqualTo(BrowserAutofillCoverage.NeedsSetup)
     }
 
     @Test

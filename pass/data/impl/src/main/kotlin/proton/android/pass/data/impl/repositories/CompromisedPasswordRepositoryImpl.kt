@@ -34,9 +34,8 @@ import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ItemType
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.isFullyExcludedFromMonitoring
 import proton.android.pass.log.api.PassLogger
-import proton.android.pass.securitycenter.api.SecurityCheck
-import proton.android.pass.securitycenter.api.isCheckExcluded
 import java.security.MessageDigest
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -120,7 +119,7 @@ class CompromisedPasswordRepositoryImpl @Inject constructor(
         val hashToItems = mutableMapOf<String, MutableList<Item>>()
         encryptionContextProvider.withEncryptionContext {
             items.forEach { item ->
-                if (item.isCheckExcluded(SecurityCheck.CompromisedPassword)) return@forEach
+                if (item.isFullyExcludedFromMonitoring) return@forEach
                 when (val itemType = item.itemType) {
                     is ItemType.Login -> {
                         val password = decrypt(itemType.password)

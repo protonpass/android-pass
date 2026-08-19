@@ -36,6 +36,7 @@ import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.combineN
 import proton.android.pass.commonpresentation.api.items.details.domain.ItemDetailsFieldType
 import proton.android.pass.commonpresentation.api.items.details.handlers.ItemDetailsHandlerObserver
+import proton.android.pass.commonpresentation.api.items.details.handlers.ItemDetailsSource
 import proton.android.pass.commonrust.api.passwords.strengths.PasswordStrengthCalculator
 import proton.android.pass.commonui.api.toUiModel
 import proton.android.pass.commonuimodels.api.UIPasskeyContent
@@ -162,7 +163,10 @@ class LoginItemDetailsHandlerObserverImpl @Inject constructor(
                 ?.let { it as? ItemDetailNavScope }
                 ?: ItemDetailNavScope.Default,
             canEdit = share.canBeUpdated,
-            userId = share.userId
+            userId = share.userId,
+            source = savedStateEntries[ItemDetailsSource.KEY]
+                ?.let { it as? ItemDetailsSource }
+                ?: ItemDetailsSource.DETAIL
         ),
         observeLinkedAlias(item),
         userPreferencesRepository.getUseFaviconsPreference(),
@@ -205,69 +209,74 @@ class LoginItemDetailsHandlerObserverImpl @Inject constructor(
         item: Item,
         scope: ItemDetailNavScope,
         canEdit: Boolean,
-        userId: UserId
-    ) = combineN(
-        observeCompromisedPasswords(userId, item.shareId, item.id),
-        getUserPlan(),
-        pendingMonitorChecksFlow,
-        observeItemFlags(userId = userId, item = item),
-        compromisedPasswordsEnabledFlow,
-        perCheckExclusionEnabledFlow
-    ) { isItemCompromised, userPlan, pendingChecks, itemFlags, isCompromisedPasswordsEnabled,
-        isPerCheckExclusionEnabled ->
-        sendTelemetry(scope)
-        val isFullyExcluded = itemFlags.hasSkippedHealthCheck() && !itemFlags.hasSkippedMonitorChecks()
-        fun isCheckExcluded(hasSkippedCheck: Boolean): Boolean = if (isPerCheckExclusionEnabled) {
-            hasSkippedCheck || isFullyExcluded
-        } else {
-            itemFlags.hasSkippedHealthCheck()
-        }
+        userId: UserId,
+        source: ItemDetailsSource
+    ): Flow<LoginMonitorState> {
+        if (source == ItemDetailsSource.REVISION) return flowOf(LoginMonitorState.Hidden)
 
-        fun isCheckRestorable(hasSkippedCheck: Boolean, isCheckTriggered: Boolean): Boolean =
-            isPerCheckExclusionEnabled && hasSkippedCheck && isCheckTriggered
-
-        val exclusionMask = ItemExclusionCheckFlags.sumOf { flag -> flag.value }
-        val monitoredItem = item.copy(itemFlags = ItemFlags(value = itemFlags.value and exclusionMask.inv()))
-        val insecurePasswordsReport = insecurePasswordChecker(listOf(monitoredItem))
-        val duplicatedPasswordsReport = duplicatedPasswordChecker(monitoredItem)
-        val missing2faReport = missingTfaChecker(listOf(monitoredItem))
-        val isWeakTriggered = insecurePasswordsReport.hasInsecurePasswords
-        val isReusedTriggered = duplicatedPasswordsReport.hasDuplications
-        val isMissing2faTriggered = missing2faReport.isMissingTwoFa
-        val isWeakSkipped = itemFlags.hasSkippedWeakPasswordCheck()
-        val isCompromisedSkipped = itemFlags.hasSkippedCompromisedPasswordCheck()
-        val isReusedSkipped = itemFlags.hasSkippedReusedPasswordCheck()
-        val isMissing2faSkipped = itemFlags.hasSkipped2FACheck()
-        val hasExceededDuplicationThreshold =
-            duplicatedPasswordsReport.duplicationCount > REUSED_PASSWORD_DISPLAY_MODE_THRESHOLD
-        LoginMonitorState(
-            isExcludedFromMonitor = itemFlags.hasSkippedHealthCheck(),
-            navigationScope = scope,
-            isPasswordCompromised = isItemCompromised && !isCheckExcluded(isCompromisedSkipped),
-            isPasswordInsecure = isWeakTriggered && !isCheckExcluded(isWeakSkipped),
-            isPasswordReused = isReusedTriggered && !isCheckExcluded(isReusedSkipped),
-            isMissingTwoFa = isMissing2faTriggered && !isCheckExcluded(isMissing2faSkipped),
-            reusedPasswordDisplayMode = if (hasExceededDuplicationThreshold) {
-                ReusedPasswordDisplayMode.Compact
+        return combineN(
+            observeCompromisedPasswords(userId, item.shareId, item.id),
+            getUserPlan(),
+            pendingMonitorChecksFlow,
+            observeItemFlags(userId = userId, item = item),
+            compromisedPasswordsEnabledFlow,
+            perCheckExclusionEnabledFlow
+        ) { isItemCompromised, userPlan, pendingChecks, itemFlags, isCompromisedPasswordsEnabled,
+            isPerCheckExclusionEnabled ->
+            sendTelemetry(scope)
+            val isFullyExcluded = itemFlags.hasSkippedHealthCheck() && !itemFlags.hasSkippedMonitorChecks()
+            fun isCheckExcluded(hasSkippedCheck: Boolean): Boolean = if (isPerCheckExclusionEnabled) {
+                hasSkippedCheck || isFullyExcluded
             } else {
-                ReusedPasswordDisplayMode.Expanded
-            },
-            reusedPasswordCount = duplicatedPasswordsReport.duplicationCount,
-            reusedPasswordItems = duplicatedPasswordsReport.duplications
-                .map { item ->
-                    encryptionContextProvider.withEncryptionContext {
-                        item.toUiModel(this@withEncryptionContext)
+                itemFlags.hasSkippedHealthCheck()
+            }
+
+            fun isCheckRestorable(hasSkippedCheck: Boolean, isCheckTriggered: Boolean): Boolean =
+                isPerCheckExclusionEnabled && hasSkippedCheck && isCheckTriggered
+
+            val exclusionMask = ItemExclusionCheckFlags.sumOf { flag -> flag.value }
+            val monitoredItem = item.copy(itemFlags = ItemFlags(value = itemFlags.value and exclusionMask.inv()))
+            val insecurePasswordsReport = insecurePasswordChecker(listOf(monitoredItem))
+            val duplicatedPasswordsReport = duplicatedPasswordChecker(monitoredItem)
+            val missing2faReport = missingTfaChecker(listOf(monitoredItem))
+            val isWeakTriggered = insecurePasswordsReport.hasInsecurePasswords
+            val isReusedTriggered = duplicatedPasswordsReport.hasDuplications
+            val isMissing2faTriggered = missing2faReport.isMissingTwoFa
+            val isWeakSkipped = itemFlags.hasSkippedWeakPasswordCheck()
+            val isCompromisedSkipped = itemFlags.hasSkippedCompromisedPasswordCheck()
+            val isReusedSkipped = itemFlags.hasSkippedReusedPasswordCheck()
+            val isMissing2faSkipped = itemFlags.hasSkipped2FACheck()
+            val hasExceededDuplicationThreshold =
+                duplicatedPasswordsReport.duplicationCount > REUSED_PASSWORD_DISPLAY_MODE_THRESHOLD
+            LoginMonitorState(
+                isExcludedFromMonitor = itemFlags.hasSkippedHealthCheck(),
+                navigationScope = scope,
+                isPasswordCompromised = isItemCompromised && !isCheckExcluded(isCompromisedSkipped),
+                isPasswordInsecure = isWeakTriggered && !isCheckExcluded(isWeakSkipped),
+                isPasswordReused = isReusedTriggered && !isCheckExcluded(isReusedSkipped),
+                isMissingTwoFa = isMissing2faTriggered && !isCheckExcluded(isMissing2faSkipped),
+                reusedPasswordDisplayMode = if (hasExceededDuplicationThreshold) {
+                    ReusedPasswordDisplayMode.Compact
+                } else {
+                    ReusedPasswordDisplayMode.Expanded
+                },
+                reusedPasswordCount = duplicatedPasswordsReport.duplicationCount,
+                reusedPasswordItems = duplicatedPasswordsReport.duplications
+                    .map { item ->
+                        encryptionContextProvider.withEncryptionContext {
+                            item.toUiModel(this@withEncryptionContext)
+                        }
                     }
-                }
-                .toPersistentList(),
-            isWeakPasswordCheckSkipped = isCheckRestorable(isWeakSkipped, isWeakTriggered),
-            isCompromisedPasswordCheckSkipped = isCheckRestorable(isCompromisedSkipped, isItemCompromised),
-            isReusedPasswordCheckSkipped = isPerCheckExclusionEnabled && isReusedSkipped,
-            isMissing2faCheckSkipped = isCheckRestorable(isMissing2faSkipped, isMissing2faTriggered),
-            canEdit = canEdit,
-            pendingChecks = pendingChecks,
-            isPerCheckExclusionEnabled = isPerCheckExclusionEnabled
-        ).applyCompromisedPasswordGating(userPlan.isPaidPlan && isCompromisedPasswordsEnabled)
+                    .toPersistentList(),
+                isWeakPasswordCheckSkipped = isCheckRestorable(isWeakSkipped, isWeakTriggered),
+                isCompromisedPasswordCheckSkipped = isCheckRestorable(isCompromisedSkipped, isItemCompromised),
+                isReusedPasswordCheckSkipped = isPerCheckExclusionEnabled && isReusedSkipped,
+                isMissing2faCheckSkipped = isCheckRestorable(isMissing2faSkipped, isMissing2faTriggered),
+                canEdit = canEdit,
+                pendingChecks = pendingChecks,
+                isPerCheckExclusionEnabled = isPerCheckExclusionEnabled
+            ).applyCompromisedPasswordGating(userPlan.isPaidPlan && isCompromisedPasswordsEnabled)
+        }
     }
 
     private fun LoginMonitorState.applyCompromisedPasswordGating(isCompromisedPasswordAllowed: Boolean) =

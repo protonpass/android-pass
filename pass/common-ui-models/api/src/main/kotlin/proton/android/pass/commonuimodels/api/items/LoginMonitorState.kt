@@ -20,6 +20,7 @@ package proton.android.pass.commonuimodels.api.items
 
 import androidx.compose.runtime.Stable
 import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.persistentListOf
 import proton.android.pass.commonuimodels.api.ItemUiModel
 
 @Stable
@@ -62,4 +63,21 @@ data class LoginMonitorState(
                 isMissingTwoFa ||
                 isRestoreMode && anyCheckSkipped
             )
+
+    companion object {
+
+        val Hidden: LoginMonitorState = LoginMonitorState(
+            isExcludedFromMonitor = false,
+            navigationScope = ItemDetailNavScope.Default,
+            isPasswordCompromised = false,
+            isPasswordInsecure = false,
+            isPasswordReused = false,
+            isMissingTwoFa = false,
+            reusedPasswordDisplayMode = ReusedPasswordDisplayMode.Expanded,
+            reusedPasswordCount = 0,
+            reusedPasswordItems = persistentListOf(),
+            canEdit = false
+        )
+
+    }
 }

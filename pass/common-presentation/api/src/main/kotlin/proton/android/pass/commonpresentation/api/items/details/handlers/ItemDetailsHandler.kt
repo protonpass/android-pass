@@ -75,5 +75,11 @@ interface ItemDetailsHandler {
 
 enum class ItemDetailsSource {
     DETAIL,
-    REVISION
+    REVISION;
+
+    companion object {
+
+        const val KEY = "item_details_source"
+
+    }
 }

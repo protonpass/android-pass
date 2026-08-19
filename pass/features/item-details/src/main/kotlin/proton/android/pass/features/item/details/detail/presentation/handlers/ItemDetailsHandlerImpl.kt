@@ -88,7 +88,7 @@ class ItemDetailsHandlerImpl @Inject constructor(
                 share = share,
                 item = item,
                 attachmentsState = attachments,
-                savedStateEntries = savedStateEntries,
+                savedStateEntries = savedStateEntries.plus(ItemDetailsSource.KEY to source),
                 detailEvent = detailEvent
             )
         }

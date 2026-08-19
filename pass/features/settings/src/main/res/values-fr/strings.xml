@@ -24,8 +24,6 @@
   <string name="settings_privacy_section_title">Vie privée et confidentialité</string>
   <string name="settings_use_favicons_preference_title">Utiliser des icônes web</string>
   <string name="settings_use_favicons_preference_subtitle">Choisissez si vous voulez voir les icônes des sites internet sur vos éléments.</string>
-  <string name="settings_allow_screenshots_preference_title">Autoriser les captures d\'écran</string>
-  <string name="settings_allow_screenshots_preference_subtitle">Quand cette option est activée, vous pouvez faire des captures d\'écran de l\'application.</string>
   <string name="settings_clear_icon_cache_success">Le cache de l\'icône a été effacé.</string>
   <string name="settings_clear_icon_cache_error">Impossible d\'effacer le cache de l\'icône</string>
   <string name="settings_share_telemetry">Partager l\'utilisation de façon anonyme</string>

@@ -24,8 +24,6 @@
   <string name="settings_privacy_section_title">Yksityisyys</string>
   <string name="settings_use_favicons_preference_title">Käytä sivustokuvakkeita</string>
   <string name="settings_use_favicons_preference_subtitle">Valitse näytetäänkö kohteille verkkosivustojen kuvakkeet.</string>
-  <string name="settings_allow_screenshots_preference_title">Salli kuvakaappaukset</string>
-  <string name="settings_allow_screenshots_preference_subtitle">Mahdollistaa kuvakaappauksen sovelluksesta.</string>
   <string name="settings_clear_icon_cache_success">Kuvakevälimuisti tyhjennettiin</string>
   <string name="settings_clear_icon_cache_error">Kuvakevälimuistia ei voitu tyhjentää</string>
   <string name="settings_share_telemetry">Jaa anonyymejä käyttötietoja</string>

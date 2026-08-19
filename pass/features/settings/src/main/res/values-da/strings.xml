@@ -24,8 +24,6 @@
   <string name="settings_privacy_section_title">Privatliv</string>
   <string name="settings_use_favicons_preference_title">Brug web-ikoner</string>
   <string name="settings_use_favicons_preference_subtitle">Beslut dig for, om du vil se webstedets ikoner på dine elementer.</string>
-  <string name="settings_allow_screenshots_preference_title">Tillad skærmbilleder</string>
-  <string name="settings_allow_screenshots_preference_subtitle">Hvis aktiveret, vil du kunne tage skærmbilleder af appen.</string>
   <string name="settings_clear_icon_cache_success">Ikon-cache ryddet</string>
   <string name="settings_clear_icon_cache_error">Kunne ikke rydde ikon-cachen</string>
   <string name="settings_share_telemetry">Del anonyme brugsdata</string>

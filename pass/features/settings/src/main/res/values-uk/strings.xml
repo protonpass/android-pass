@@ -24,8 +24,6 @@
   <string name="settings_privacy_section_title">Приватність</string>
   <string name="settings_use_favicons_preference_title">Використовувати вебпіктограми</string>
   <string name="settings_use_favicons_preference_subtitle">Вирішіть, чи хочете ви переглянути піктограми вебсайту на ваших елементах.</string>
-  <string name="settings_allow_screenshots_preference_title">Дозволити знімки екрана</string>
-  <string name="settings_allow_screenshots_preference_subtitle">Якщо ввімкнено, ви зможете робити знімки екрана програми.</string>
   <string name="settings_clear_icon_cache_success">Кеш піктограм очищено</string>
   <string name="settings_clear_icon_cache_error">Не вдалося очистити кеш піктограм</string>
   <string name="settings_share_telemetry">Надсилати анонімні дані про використання</string>

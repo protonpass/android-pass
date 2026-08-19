@@ -24,8 +24,6 @@
   <string name="settings_privacy_section_title">Datenschutz</string>
   <string name="settings_use_favicons_preference_title">Website-Symbole verwenden</string>
   <string name="settings_use_favicons_preference_subtitle">Entscheide, ob du die Website-Symbole auf deinen Einträgen anzeigen lassen möchtest.</string>
-  <string name="settings_allow_screenshots_preference_title">Screenshots zulassen</string>
-  <string name="settings_allow_screenshots_preference_subtitle">Wenn diese Option aktiviert ist, kannst du Screenshots von der App machen.</string>
   <string name="settings_clear_icon_cache_success">Symbolcache geleert</string>
   <string name="settings_clear_icon_cache_error">Fehler beim Löschen des Symbolcaches.</string>
   <string name="settings_share_telemetry">Anonyme Nutzungsdaten teilen</string>

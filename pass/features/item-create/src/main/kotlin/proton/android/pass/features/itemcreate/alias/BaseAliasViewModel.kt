@@ -111,9 +111,7 @@ abstract class BaseAliasViewModel(
         attachmentsHandler.observeNewAttachments {
             onUserEditedContent()
             viewModelScope.launch {
-                isLoadingState.update { IsLoadingState.Loading }
                 attachmentsHandler.uploadNewAttachment(it.metadata)
-                isLoadingState.update { IsLoadingState.NotLoading }
             }
         }.launchIn(viewModelScope)
         attachmentsHandler.observeHasDeletedAttachments {
@@ -263,9 +261,7 @@ abstract class BaseAliasViewModel(
 
     fun retryUploadDraftAttachment(metadata: FileMetadata) {
         viewModelScope.launch {
-            isLoadingState.update { IsLoadingState.Loading }
             attachmentsHandler.uploadNewAttachment(metadata)
-            isLoadingState.update { IsLoadingState.NotLoading }
         }
     }
 

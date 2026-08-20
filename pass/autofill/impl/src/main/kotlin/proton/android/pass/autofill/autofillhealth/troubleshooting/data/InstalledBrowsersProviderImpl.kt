@@ -28,7 +28,6 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.xmlpull.v1.XmlPullParser
-import proton.android.pass.autofill.ThirdPartyMode
 import proton.android.pass.autofill.ThirdPartyModeProvider
 import proton.android.pass.autofill.service.R
 import javax.inject.Inject
@@ -64,7 +63,7 @@ class InstalledBrowsersProviderImpl @Inject constructor(
                     ),
                     canOpenAutofillSettings = BrowserAutofillSettingsLauncher
                         .canOpenAutofillSettings(context, packageName),
-                    canDetectAutofillState = thirdPartyMode != ThirdPartyMode.Unknown
+                    thirdPartyMode = thirdPartyMode
                 )
             }
             .distinctBy { browser -> browser.packageName }

@@ -43,7 +43,7 @@ internal fun BrowserRow(browser: BrowserInfo, modifier: Modifier = Modifier) {
         horizontalArrangement = Arrangement.spacedBy(Spacing.small)
     ) {
         Text.Body1Regular(modifier = Modifier.weight(1f), text = browser.label)
-        if (browser.hasAutofillSetupControl) {
+        if (browser.canOpenAutofillSettings) {
             BrowserActiveTag()
         }
     }
@@ -97,8 +97,7 @@ internal fun BrowserRowActivePreview() {
                     packageName = "com.android.chrome",
                     label = "Chrome",
                     coverage = BrowserAutofillCoverage.Working,
-                    canOpenAutofillSettings = true,
-                    canDetectAutofillState = true
+                    canOpenAutofillSettings = true
                 )
             )
         }
@@ -115,8 +114,7 @@ internal fun InactiveBrowserRowPreview() {
                     packageName = "com.android.chrome",
                     label = "Chrome",
                     coverage = BrowserAutofillCoverage.NeedsSetup,
-                    canOpenAutofillSettings = true,
-                    canDetectAutofillState = true
+                    canOpenAutofillSettings = true
                 ),
                 onOpenClick = {}
             )

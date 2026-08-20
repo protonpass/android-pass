@@ -117,15 +117,13 @@ internal fun BrowsersSectionPreview() {
                         packageName = "com.android.chrome",
                         label = "Chrome",
                         coverage = BrowserAutofillCoverage.NeedsSetup,
-                        canOpenAutofillSettings = true,
-                        canDetectAutofillState = true
+                        canOpenAutofillSettings = true
                     ),
                     BrowserInfo(
                         packageName = "com.brave.browser",
                         label = "Brave",
                         coverage = BrowserAutofillCoverage.Working,
-                        canOpenAutofillSettings = true,
-                        canDetectAutofillState = true
+                        canOpenAutofillSettings = true
                     ),
                     BrowserInfo(
                         packageName = "com.microsoft.emmx",

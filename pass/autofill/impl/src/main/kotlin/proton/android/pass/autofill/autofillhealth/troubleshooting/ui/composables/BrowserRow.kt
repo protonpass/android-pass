@@ -38,7 +38,7 @@ import me.proton.core.presentation.R as CoreR
 @Composable
 internal fun BrowserRow(browser: BrowserInfo, modifier: Modifier = Modifier) {
     Row(
-        modifier = modifier.padding(Spacing.medium),
+        modifier = modifier.padding(vertical = Spacing.medium),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(Spacing.small)
     ) {
@@ -58,7 +58,7 @@ internal fun InactiveBrowserRow(
     Row(
         modifier = modifier
             .clickable(onClick = onOpenClick)
-            .padding(Spacing.medium),
+            .padding(vertical = Spacing.medium),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(Spacing.small)
     ) {

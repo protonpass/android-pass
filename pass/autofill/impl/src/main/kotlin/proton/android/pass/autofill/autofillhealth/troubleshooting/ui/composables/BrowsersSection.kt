@@ -34,7 +34,6 @@ import proton.android.pass.autofill.autofillhealth.troubleshooting.data.BrowserI
 import proton.android.pass.autofill.service.R
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
-import proton.android.pass.composecomponents.impl.container.roundedContainerNorm
 import proton.android.pass.composecomponents.impl.form.PassDivider
 import proton.android.pass.composecomponents.impl.text.Text
 import me.proton.core.presentation.R as CoreR
@@ -91,17 +90,14 @@ private fun BrowsersGroup(
     modifier: Modifier = Modifier,
     row: @Composable (BrowserInfo) -> Unit
 ) {
-    Column(
-        modifier = modifier,
-        verticalArrangement = Arrangement.spacedBy(Spacing.small)
-    ) {
+    TroubleshootingCard(modifier = modifier) {
         AutofillStatusRow(
             iconRes = iconRes,
             tint = tint,
             title = stringResource(titleResId)
         )
         Text.Body3Weak(stringResource(bodyResId))
-        Column(modifier = Modifier.fillMaxWidth().roundedContainerNorm()) {
+        Column(modifier = Modifier.fillMaxWidth()) {
             browsers.forEachIndexed { index, browser ->
                 if (index > 0) PassDivider()
                 row(browser)
@@ -115,37 +111,35 @@ private fun BrowsersGroup(
 internal fun BrowsersSectionPreview() {
     PassTheme {
         Surface {
-            TroubleshootingCard {
-                BrowsersSection(
-                    browsers = listOf(
-                        BrowserInfo(
-                            packageName = "com.android.chrome",
-                            label = "Chrome",
-                            coverage = BrowserAutofillCoverage.NeedsSetup,
-                            canOpenAutofillSettings = true,
-                            canDetectAutofillState = true
-                        ),
-                        BrowserInfo(
-                            packageName = "com.brave.browser",
-                            label = "Brave",
-                            coverage = BrowserAutofillCoverage.Working,
-                            canOpenAutofillSettings = true,
-                            canDetectAutofillState = true
-                        ),
-                        BrowserInfo(
-                            packageName = "com.microsoft.emmx",
-                            label = "Edge",
-                            coverage = BrowserAutofillCoverage.NeedsSetup
-                        ),
-                        BrowserInfo(
-                            packageName = "org.mozilla.firefox",
-                            label = "Firefox",
-                            coverage = BrowserAutofillCoverage.NeedsSetup
-                        )
+            BrowsersSection(
+                browsers = listOf(
+                    BrowserInfo(
+                        packageName = "com.android.chrome",
+                        label = "Chrome",
+                        coverage = BrowserAutofillCoverage.NeedsSetup,
+                        canOpenAutofillSettings = true,
+                        canDetectAutofillState = true
                     ),
-                    onOpenBrowser = {}
-                )
-            }
+                    BrowserInfo(
+                        packageName = "com.brave.browser",
+                        label = "Brave",
+                        coverage = BrowserAutofillCoverage.Working,
+                        canOpenAutofillSettings = true,
+                        canDetectAutofillState = true
+                    ),
+                    BrowserInfo(
+                        packageName = "com.microsoft.emmx",
+                        label = "Edge",
+                        coverage = BrowserAutofillCoverage.NeedsSetup
+                    ),
+                    BrowserInfo(
+                        packageName = "org.mozilla.firefox",
+                        label = "Firefox",
+                        coverage = BrowserAutofillCoverage.NeedsSetup
+                    )
+                ),
+                onOpenBrowser = {}
+            )
         }
     }
 }

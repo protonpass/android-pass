@@ -62,7 +62,7 @@ object BrowserAutofillSettingsLauncher {
     fun openAutofillSettings(context: Context, packageName: String): Boolean {
         if (!canOpenAutofillSettings(context, packageName)) return false
         return runCatching {
-            context.startActivity(intentFor(packageName).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
+            context.startActivity(intentFor(packageName))
             true
         }.getOrElse { throwable ->
             PassLogger.w(TAG, throwable)
@@ -71,6 +71,9 @@ object BrowserAutofillSettingsLauncher {
         }
     }
 
-    private fun intentFor(packageName: String): Intent =
-        Intent(Intent.ACTION_APPLICATION_PREFERENCES).setPackage(packageName)
+    private fun intentFor(packageName: String): Intent = Intent(Intent.ACTION_APPLICATION_PREFERENCES)
+        .setPackage(packageName)
+        .addCategory(Intent.CATEGORY_PREFERENCE)
+        .addCategory(Intent.CATEGORY_APP_BROWSER)
+        .addCategory(Intent.CATEGORY_DEFAULT)
 }

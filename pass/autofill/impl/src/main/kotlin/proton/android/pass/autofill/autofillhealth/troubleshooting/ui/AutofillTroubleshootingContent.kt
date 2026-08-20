@@ -49,7 +49,6 @@ import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.ThemePairPreviewProvider
 import proton.android.pass.composecomponents.impl.buttons.PassCircleButton
-import proton.android.pass.composecomponents.impl.form.PassDivider
 import proton.android.pass.composecomponents.impl.text.Text
 import proton.android.pass.composecomponents.impl.topbar.PassExtendedTopBar
 
@@ -94,32 +93,33 @@ internal fun AutofillTroubleshootingContent(
                     state.supportsInlineSuggestions &&
                     !state.isInlineSuggestionsEnabled
 
-                TroubleshootingCard {
-                    if (showVerdict) {
+                if (showVerdict) {
+                    TroubleshootingCard {
                         HealthVerdictRow(verdict = verdict)
                     }
+                }
 
-                    if (showService) {
-                        if (showVerdict) PassDivider()
+                if (showService) {
+                    TroubleshootingCard {
                         AutofillServiceSection(
                             status = state.serviceStatus,
                             onEnableClick = { onEvent(AutofillTroubleshootingUiEvent.OnEnableAutofill) },
                             conflictingServiceLabel = state.conflictingServiceLabel
                         )
                     }
+                }
 
-                    if (showBrowsers) {
-                        if (showVerdict || showService) PassDivider()
-                        BrowsersSection(
-                            browsers = state.installedBrowsers,
-                            onOpenBrowser = { browser ->
-                                onEvent(AutofillTroubleshootingUiEvent.OnOpenBrowser(browser))
-                            }
-                        )
-                    }
+                if (showBrowsers) {
+                    BrowsersSection(
+                        browsers = state.installedBrowsers,
+                        onOpenBrowser = { browser ->
+                            onEvent(AutofillTroubleshootingUiEvent.OnOpenBrowser(browser))
+                        }
+                    )
+                }
 
-                    if (showInlineInfo) {
-                        if (showVerdict || showService || showBrowsers) PassDivider()
+                if (showInlineInfo) {
+                    TroubleshootingCard {
                         InlineSuggestionsRow()
                     }
                 }

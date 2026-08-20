@@ -59,8 +59,7 @@ class AutofillHealthVerdictResolverTest {
                     packageName = "com.android.chrome",
                     label = "Chrome",
                     coverage = BrowserAutofillCoverage.NeedsSetup,
-                    canOpenAutofillSettings = true,
-                    canDetectAutofillState = true
+                    canOpenAutofillSettings = true
                 )
             )
         )

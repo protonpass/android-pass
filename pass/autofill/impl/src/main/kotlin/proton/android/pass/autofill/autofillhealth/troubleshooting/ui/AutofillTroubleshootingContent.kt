@@ -156,15 +156,13 @@ private val previewBrowsers = listOf(
         packageName = "com.android.chrome",
         label = "Chrome",
         coverage = BrowserAutofillCoverage.NeedsSetup,
-        canOpenAutofillSettings = true,
-        canDetectAutofillState = true
+        canOpenAutofillSettings = true
     ),
     BrowserInfo(
         packageName = "com.brave.browser",
         label = "Brave",
         coverage = BrowserAutofillCoverage.Ready,
-        canOpenAutofillSettings = true,
-        canDetectAutofillState = true
+        canOpenAutofillSettings = true
     ),
     BrowserInfo(
         packageName = "org.mozilla.firefox",

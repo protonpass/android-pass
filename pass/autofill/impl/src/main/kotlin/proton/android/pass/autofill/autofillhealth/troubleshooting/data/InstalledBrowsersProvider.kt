@@ -18,6 +18,8 @@
 
 package proton.android.pass.autofill.autofillhealth.troubleshooting.data
 
+import proton.android.pass.autofill.ThirdPartyMode
+
 /**
  * Best-effort coverage status for autofill in a given browser.
  *
@@ -42,19 +44,17 @@ data class BrowserInfo(
     val label: String,
     val coverage: BrowserAutofillCoverage,
     val canOpenAutofillSettings: Boolean = false,
-    val canDetectAutofillState: Boolean = false
+    val thirdPartyMode: ThirdPartyMode = ThirdPartyMode.Unknown
 ) {
-    /**
-     * Whether we can either read or drive the browser's autofill setting.
-     *
-     * Only those browsers get a status: the others are listed by name alone, because we would have
-     * no way of telling the user their setup is done.
-     */
-    val hasAutofillSetupControl: Boolean
-        get() = canOpenAutofillSettings || canDetectAutofillState
 
+    /**
+     * Whether we should list the browser as inactive, and whether it gets a status at all.
+     *
+     * Knowing that autofill is off is not enough: without a way of taking the user to the toggle
+     * the row would be a dead end. Browsers we cannot drive are listed by name alone.
+     */
     val needsAutofillSetup: Boolean
-        get() = hasAutofillSetupControl && coverage == BrowserAutofillCoverage.NeedsSetup
+        get() = canOpenAutofillSettings && coverage == BrowserAutofillCoverage.NeedsSetup
 }
 
 interface InstalledBrowsersProvider {

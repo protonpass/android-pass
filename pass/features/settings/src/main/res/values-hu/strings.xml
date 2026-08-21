@@ -24,6 +24,8 @@
   <string name="settings_privacy_section_title">Adatvédelem</string>
   <string name="settings_use_favicons_preference_title">Web ikonok használata</string>
   <string name="settings_use_favicons_preference_subtitle">Azt határozza meg, hogy megjelenjenek-e a weboldalak ikonjai az elemeknél.</string>
+  <string name="settings_allow_screenshots_preference_title">Allow screenshots and app preview</string>
+  <string name="settings_allow_screenshots_preference_subtitle">If enabled, you will be able to take screenshots of the app and see its preview in the recent apps list.</string>
   <string name="settings_clear_icon_cache_success">Ikon gyorsítótár ürítve</string>
   <string name="settings_clear_icon_cache_error">Nem sikerült az ikon gyorsítótár ürítése</string>
   <string name="settings_share_telemetry">Névtelen használati adatok megosztása</string>

@@ -24,6 +24,8 @@
   <string name="settings_privacy_section_title">Integritet</string>
   <string name="settings_use_favicons_preference_title">Använd webbikoner</string>
   <string name="settings_use_favicons_preference_subtitle">Bestäm om du vill se webbplatsikonerna på dina objekt.</string>
+  <string name="settings_allow_screenshots_preference_title">Allow screenshots and app preview</string>
+  <string name="settings_allow_screenshots_preference_subtitle">If enabled, you will be able to take screenshots of the app and see its preview in the recent apps list.</string>
   <string name="settings_clear_icon_cache_success">Ikonens cache rensad</string>
   <string name="settings_clear_icon_cache_error">Kunde inte rensa ikonens cache</string>
   <string name="settings_share_telemetry">Dela anonym användning</string>

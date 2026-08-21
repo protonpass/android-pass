@@ -24,6 +24,8 @@
   <string name="settings_privacy_section_title">Απόρρητο</string>
   <string name="settings_use_favicons_preference_title">Χρήση εικονιδίων διαδικτύου</string>
   <string name="settings_use_favicons_preference_subtitle">Αποφασίστε εάν θέλετε να προβάλετε τα εικονίδια ιστότοπου στα στοιχεία σας.</string>
+  <string name="settings_allow_screenshots_preference_title">Να επιτρέπονται στιγμιότυπα οθόνης και προεπισκόπηση εφαρμογής</string>
+  <string name="settings_allow_screenshots_preference_subtitle">Εάν είναι ενεργοποιημένη, θα μπορείτε να τραβήξετε στιγμιότυπα οθόνης της εφαρμογής και να δείτε την προεπισκόπησή της στη λίστα πρόσφατων εφαρμογών.</string>
   <string name="settings_clear_icon_cache_success">Η προσωρινή μνήμη εικονιδίων εκκαθαρίστηκε</string>
   <string name="settings_clear_icon_cache_error">Ανεπιτυχής εκκαθάριση προσωρινής μνήμης εικονιδίων</string>
   <string name="settings_share_telemetry">Διαμοιρασμός ανώνυμης χρήσης</string>

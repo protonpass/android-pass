@@ -24,6 +24,8 @@
   <string name="settings_privacy_section_title">Privacitat</string>
   <string name="settings_use_favicons_preference_title">Utilitza icones web</string>
   <string name="settings_use_favicons_preference_subtitle">Decidiu si voleu veure les icones dels llocs web als vostres elements.</string>
+  <string name="settings_allow_screenshots_preference_title">Permetre captures de pantalla i vista prèvia de les aplicacions</string>
+  <string name="settings_allow_screenshots_preference_subtitle">Si està habilitat, podreu fer captures de pantalla de l\'aplicació i veure\'n la vista prèvia a la llista d\'aplicacions recents.</string>
   <string name="settings_clear_icon_cache_success">S\'ha netejat la memòria cau de les icones</string>
   <string name="settings_clear_icon_cache_error">No s\'ha pogut netejar la memòria cau de les icones</string>
   <string name="settings_share_telemetry">Comparteix l\'ús de manera anònima</string>

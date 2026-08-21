@@ -26,18 +26,12 @@
   <string name="autofill_troubleshooting_service_not_default_body">Establiu-lo per defecte per l\'emplenament automàtic a totes les vostres aplicacions.</string>
   <string name="autofill_troubleshooting_service_enable_action">Habilitar l\'emplenament automàtic</string>
   <string name="autofill_troubleshooting_service_unsupported_title">Aquest dispositiu no admet l\'emplenament automàtic</string>
-  <string name="autofill_troubleshooting_browsers_header">Emplenament automàtic als navegadors</string>
-  <string name="autofill_troubleshooting_browsers_body">Els navegadors necessiten que l\'emplenament automàtic s\'activi per separat.</string>
-  <string name="autofill_troubleshooting_browser_open_action">Obrir-ho</string>
-  <string name="autofill_troubleshooting_browser_ready">L\'emplenament automàtic funciona directament aquí.</string>
-  <string name="autofill_troubleshooting_browser_working">L\'emplenament automàtic funciona en aquest navegador.</string>
-  <string name="autofill_troubleshooting_browser_steps_direct">Activeu l\'emplenament automàtic al vostre navegador</string>
-  <string name="autofill_troubleshooting_browser_steps_generic">Obriu la configuració del navegador i trobeu la secció d\'emplenament automàtic o contrasenyes. Trieu Proton Pass com a servei d\'emplenament automàtic, o desactiveu l\'emplenament automàtic integrat del navegador perquè Proton Pass en pugui prendre el relleu.</string>
-  <string name="autofill_troubleshooting_browser_steps_confirm">Tot seguit feu el primer emplenament automàtic en aquest navegador per confirmar la configuració.</string>
-  <string name="autofill_troubleshooting_browser_steps_chrome">1. Obriu el menú del navegador i aneu a les Preferències, després a Serveis d\'emplenament automàtic.\n2. Activeu «Utilitzar un altre servei» i seleccioneu Proton Pass.</string>
-  <string name="autofill_troubleshooting_browser_steps_edge">1. Obriu el menú del navegador, aneu a Preferències i després al gestor de contrasenyes de Microsoft.\n2. Obriu la configuració de les contrasenyes i desactiveu «Oferir desar contrasenyes i claus de pas» perquè Proton Pass pugui emplenar les vostres credencials.</string>
-  <string name="autofill_troubleshooting_browser_steps_firefox">1. Obriu el menú del navegador i aneu a Preferències i després a Contrasenyes (anomenat Inicis de sessió i contrasenyes en versions anteriors).\n2. Desactiveu \"Emplenament automàtic a Firefox\" perquè sigui Proton Pass qui empleni les vostres credencials.</string>
-  <string name="autofill_troubleshooting_browser_steps_samsung">Obriu la Configuració i després el servei d\'Emplenament automàtic.\n2. Seleccioneu Proton Pass.</string>
+  <string name="autofill_troubleshooting_browsers_inactive_header">S\'han detectat navegadors inactius</string>
+  <string name="autofill_troubleshooting_browsers_inactive_body">Activeu l\'emplenament automàtic perquè Proton Pass pugui emplenar les vostres credencials.
+Toqueu a un navegador per obrir-ne les preferències.</string>
+  <string name="autofill_troubleshooting_browsers_compatible_header">Els navegadors són compatibles</string>
+  <string name="autofill_troubleshooting_browsers_compatible_body">Els vostres navegadors estan connectats i preparats per a l\'emplenament automàtic.</string>
+  <string name="autofill_troubleshooting_browser_active">Actiu</string>
   <string name="autofill_troubleshooting_inline_info">Els suggeriments en línia apareixen al teclat. Requereixen Android 11 o posterior i un teclat compatible com ara Gboard.</string>
   <string name="autofill_troubleshooting_share_diagnostics">Compartir el diagnòstic</string>
   <string name="autofill_troubleshooting_open_diagnostics">Diagnòstic avançat</string>

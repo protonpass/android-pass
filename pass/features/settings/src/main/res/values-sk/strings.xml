@@ -24,6 +24,8 @@
   <string name="settings_privacy_section_title">Súkromie</string>
   <string name="settings_use_favicons_preference_title">Používať webové ikony</string>
   <string name="settings_use_favicons_preference_subtitle">Rozhodnite sa, či chcete pre položky zobraziť ikony webových stránok.</string>
+  <string name="settings_allow_screenshots_preference_title">Allow screenshots and app preview</string>
+  <string name="settings_allow_screenshots_preference_subtitle">If enabled, you will be able to take screenshots of the app and see its preview in the recent apps list.</string>
   <string name="settings_clear_icon_cache_success">Vyrovnávacia pamäť ikon vymazaná</string>
   <string name="settings_clear_icon_cache_error">Nepodarilo sa vymazať vyrovnávaciu pamäť ikon</string>
   <string name="settings_share_telemetry">Anonymné zdieľanie údajov o používaní</string>

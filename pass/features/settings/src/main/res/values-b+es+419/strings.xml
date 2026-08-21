@@ -24,6 +24,8 @@
   <string name="settings_privacy_section_title">Privacidad</string>
   <string name="settings_use_favicons_preference_title">Usar íconos web</string>
   <string name="settings_use_favicons_preference_subtitle">Decida si quiere ver los íconos de sitio web en sus elementos.</string>
+  <string name="settings_allow_screenshots_preference_title">Allow screenshots and app preview</string>
+  <string name="settings_allow_screenshots_preference_subtitle">If enabled, you will be able to take screenshots of the app and see its preview in the recent apps list.</string>
   <string name="settings_clear_icon_cache_success">Caché de íconos vaciada</string>
   <string name="settings_clear_icon_cache_error">No se pudo vaciar la caché de íconos</string>
   <string name="settings_share_telemetry">Compartir uso anónimo</string>

@@ -24,6 +24,8 @@
   <string name="settings_privacy_section_title">プライバシー</string>
   <string name="settings_use_favicons_preference_title">ウェブアイコンを使う</string>
   <string name="settings_use_favicons_preference_subtitle">アイテムにウェブサイトのアイコンを表示するかどうかを決める。</string>
+  <string name="settings_allow_screenshots_preference_title">Allow screenshots and app preview</string>
+  <string name="settings_allow_screenshots_preference_subtitle">If enabled, you will be able to take screenshots of the app and see its preview in the recent apps list.</string>
   <string name="settings_clear_icon_cache_success">アイコンキャッシュクリア</string>
   <string name="settings_clear_icon_cache_error">アイコンのキャッシュをクリアできませんでした</string>
   <string name="settings_share_telemetry">匿名の利用状況を共有する</string>

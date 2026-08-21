@@ -24,6 +24,8 @@
   <string name="settings_privacy_section_title">Personvern</string>
   <string name="settings_use_favicons_preference_title">Bruk nettikoner</string>
   <string name="settings_use_favicons_preference_subtitle">Bestem om du vil vise nettstedsikonene på elementene dine.</string>
+  <string name="settings_allow_screenshots_preference_title">Allow screenshots and app preview</string>
+  <string name="settings_allow_screenshots_preference_subtitle">If enabled, you will be able to take screenshots of the app and see its preview in the recent apps list.</string>
   <string name="settings_clear_icon_cache_success">Ikonbuffer tømt</string>
   <string name="settings_clear_icon_cache_error">Kunne ikke tømme ikonbufferen</string>
   <string name="settings_share_telemetry">Del anonym bruk</string>

@@ -24,6 +24,8 @@
   <string name="settings_privacy_section_title">Privacy</string>
   <string name="settings_use_favicons_preference_title">Mostra le icone web</string>
   <string name="settings_use_favicons_preference_subtitle">Mostra le icone dei siti web accanto agli elementi.</string>
+  <string name="settings_allow_screenshots_preference_title">Consenti schermate e anteprima dell\'app</string>
+  <string name="settings_allow_screenshots_preference_subtitle">Se abilitata, potrai acquisire screenshot dell\'app e visualizzarne l\'anteprima nell\'elenco delle app recenti.</string>
   <string name="settings_clear_icon_cache_success">Cache delle icone cancellata</string>
   <string name="settings_clear_icon_cache_error">Cancellazione della cache delle icone non riuscita</string>
   <string name="settings_share_telemetry">Telemetria anonima</string>

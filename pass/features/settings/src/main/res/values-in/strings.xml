@@ -24,6 +24,8 @@
   <string name="settings_privacy_section_title">Privasi</string>
   <string name="settings_use_favicons_preference_title">Gunakan ikon web</string>
   <string name="settings_use_favicons_preference_subtitle">Tentukan apakah Anda ingin melihat ikon situs web pada item Anda.</string>
+  <string name="settings_allow_screenshots_preference_title">Allow screenshots and app preview</string>
+  <string name="settings_allow_screenshots_preference_subtitle">If enabled, you will be able to take screenshots of the app and see its preview in the recent apps list.</string>
   <string name="settings_clear_icon_cache_success">Cache ikon dihapus</string>
   <string name="settings_clear_icon_cache_error">Cache ikon tidak dapat dibersihkan</string>
   <string name="settings_share_telemetry">Bagikan statistik pemakaian anonim</string>

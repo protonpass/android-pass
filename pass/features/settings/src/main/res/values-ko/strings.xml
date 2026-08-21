@@ -24,6 +24,8 @@
   <string name="settings_privacy_section_title">개인정보 보호</string>
   <string name="settings_use_favicons_preference_title">웹 아이콘 사용</string>
   <string name="settings_use_favicons_preference_subtitle">항목에서 웹사이트 아이콘을 볼지 결정하세요.</string>
+  <string name="settings_allow_screenshots_preference_title">Allow screenshots and app preview</string>
+  <string name="settings_allow_screenshots_preference_subtitle">If enabled, you will be able to take screenshots of the app and see its preview in the recent apps list.</string>
   <string name="settings_clear_icon_cache_success">아이콘 캐시 삭제됨</string>
   <string name="settings_clear_icon_cache_error">아이콘 캐시를 삭제할 수 없음</string>
   <string name="settings_share_telemetry">익명 사용 데이터 공유</string>

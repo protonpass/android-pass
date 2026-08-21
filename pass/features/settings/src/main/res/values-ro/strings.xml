@@ -24,6 +24,8 @@
   <string name="settings_privacy_section_title">Confidențialitate</string>
   <string name="settings_use_favicons_preference_title">Folosire pictograme web</string>
   <string name="settings_use_favicons_preference_subtitle">Stabiliți dacă pictogramele paginii web sunt afișate în articole.</string>
+  <string name="settings_allow_screenshots_preference_title">Permitere capturi de ecran și previzualizare aplicație</string>
+  <string name="settings_allow_screenshots_preference_subtitle">Dacă este activată, veți putea face capturi de ecran ale aplicației și veți putea vedea previzualizarea acesteia în lista de aplicații recente.</string>
   <string name="settings_clear_icon_cache_success">Bufferul cu pictograme s-a golit.</string>
   <string name="settings_clear_icon_cache_error">Nu s-a putut șterge bufferul cu pictograme.</string>
   <string name="settings_share_telemetry">Partajare anonimă utilizare</string>

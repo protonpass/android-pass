@@ -24,6 +24,8 @@
   <string name="settings_privacy_section_title">Zasebnost</string>
   <string name="settings_use_favicons_preference_title">Uporabite spletne ikone</string>
   <string name="settings_use_favicons_preference_subtitle">Odločite se, ali želite videti ikone spletnega mesta na svojih predmetih.</string>
+  <string name="settings_allow_screenshots_preference_title">Allow screenshots and app preview</string>
+  <string name="settings_allow_screenshots_preference_subtitle">If enabled, you will be able to take screenshots of the app and see its preview in the recent apps list.</string>
   <string name="settings_clear_icon_cache_success">Predpomnilnik za ikone je počiščen</string>
   <string name="settings_clear_icon_cache_error">Predpomnilnika za ikone ni bilo mogoče počistiti</string>
   <string name="settings_share_telemetry">Delite anonimno uporabo</string>

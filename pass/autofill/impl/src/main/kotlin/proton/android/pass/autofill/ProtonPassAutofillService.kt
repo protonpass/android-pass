@@ -124,7 +124,12 @@ class ProtonPassAutofillService : AutofillService() {
         request.fillContexts.lastOrNull()?.structure?.activityComponent?.packageName
             ?.let { packageName -> workingBrowsersStore.recordWorkingBrowser(packageName) }
 
-        if (isDebugMode) {
+        val isDebugModeEnabled = runBlocking {
+            ffRepo.get<Boolean>(FeatureFlag.AUTOFILL_DEBUG_MODE).first()
+        }
+        isDebugMode = isDebugModeEnabled
+
+        if (isDebugModeEnabled) {
             runBlocking {
                 AutofillDebugSaver.save(this@ProtonPassAutofillService, request)
             }
@@ -147,7 +152,7 @@ class ProtonPassAutofillService : AutofillService() {
             telemetryManager = telemetryManager,
             accountManager = accountManager,
             thirdPartyModeProvider = thirdPartyModeProvider,
-            healthMonitor = if (isDebugMode) healthMonitor else null,
+            healthMonitor = if (isDebugModeEnabled) healthMonitor else null,
             autofillDisplayPreference = autofillDisplayPreference,
             isAutosaveEnabled = isAutosaveEnabled
         )

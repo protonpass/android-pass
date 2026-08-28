@@ -357,7 +357,7 @@
   <string name="login_item_monitor_widget_weak_pass_title">Slabé heslo</string>
   <string name="login_item_monitor_widget_weak_pass_subtitle">Tento účet je zranitelný, navštivte službu a změňte si heslo.</string>
   <string name="login_item_monitor_widget_compromised_pass_title">Kompromitované heslo</string>
-  <string name="login_item_monitor_widget_compromised_pass_subtitle">Toto přihlašovací heslo se objevilo v souvislosti s únikem dat. Navštivte prosím danou službu a změňte si heslo.</string>
+  <string name="login_item_monitor_widget_compromised_pass_subtitle">Toto přihlašovací heslo se objevilo v souvislosti s únikem informací. Navštivte prosím danou službu a změňte si heslo.</string>
   <plurals name="login_item_monitor_widget_reused_pass_title">
     <item quantity="one">%d jiné přihlášení používá stejné heslo</item>
     <item quantity="few">%d jiná přihlášení používají stejné heslo</item>

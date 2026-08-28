@@ -40,7 +40,7 @@
   <string name="upsell_button_upgrade">Получить Pass Plus</string>
   <string name="upsell_button_upgrade_unlimited">Get Proton Unlimited</string>
   <string name="upsell_button_upgrade_essentials">Получить Pass Business</string>
-  <string name="price_per_month_type1">%s/month</string>
+  <string name="price_per_month_type1">%s/месяц</string>
   <string name="upsell_skip">Not now</string>
   <string name="upsell_no_plan">No plan available</string>
   <string name="upsell_plan_title">Unlock premium features.</string>
@@ -70,7 +70,7 @@
   <string name="upsell_pass_plus_first_year">First year</string>
   <string name="upsell_get_the_best_of_pass">Get the best of Pass with this limited time offer.</string>
   <string name="upsell_get_one_month">Get 1 month for %s</string>
-  <string name="upsell_get_the_deal">Get the deal</string>
+  <string name="upsell_get_the_deal">Воспользоваться предложением</string>
   <string name="upsell_whats_included">What\'s included</string>
   <string name="upsell_error_google_prices">Problem retrieving Google Play Store prices at the moment.</string>
   <string name="upsell_error_general">An error occurred.</string>

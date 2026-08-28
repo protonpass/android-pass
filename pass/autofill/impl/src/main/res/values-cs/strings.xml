@@ -45,6 +45,6 @@
   <string name="autofill_diagnostics_outcome_nothing">V %1$s se spustila funkce automatického vyplňování, ale nebyl nabídnut žádný odpovídající přihlašovací údaj. Stránka možná neobsahuje žádná rozpoznatelná přihlašovací pole, nebo pro tento web nemáte uloženou žádnou položku.</string>
   <string name="autofill_diagnostics_outcome_error">Při automatickém vyplňování došlo k chybě v %1$s.</string>
   <string name="autofill_diagnostics_recent_title">Nedávné pokusy</string>
-  <string name="autofill_diagnostics_clear">Smazat</string>
+  <string name="autofill_diagnostics_clear">Vyčistit</string>
   <string name="autofill_diagnostics_share">Sdílet s podporou</string>
 </resources>

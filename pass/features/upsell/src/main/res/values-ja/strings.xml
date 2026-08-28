@@ -70,7 +70,7 @@
   <string name="upsell_pass_plus_first_year">初年度</string>
   <string name="upsell_get_the_best_of_pass">この期間限定オファーで、Proton Passの最高の機能をご利用ください。</string>
   <string name="upsell_get_one_month">%s で１一ケ月分を獲得</string>
-  <string name="upsell_get_the_deal">お得な情報を入手</string>
+  <string name="upsell_get_the_deal">お得な割引をゲット</string>
   <string name="upsell_whats_included">含まれるもの</string>
   <string name="upsell_error_google_prices">Problem retrieving Google Play Store prices at the moment.</string>
   <string name="upsell_error_general">An error occurred.</string>

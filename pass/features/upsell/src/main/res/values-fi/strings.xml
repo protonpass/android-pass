@@ -40,7 +40,7 @@
   <string name="upsell_button_upgrade">Hanki Pass Plus</string>
   <string name="upsell_button_upgrade_unlimited">Hanki Proton Unlimited</string>
   <string name="upsell_button_upgrade_essentials">Hanki Pass Business</string>
-  <string name="price_per_month_type1">%s/kuukausi</string>
+  <string name="price_per_month_type1">%s/kk</string>
   <string name="upsell_skip">Ei nyt</string>
   <string name="upsell_no_plan">Tilausta ei ole saatavilla</string>
   <string name="upsell_plan_title">Avaa premium-ominaisuudet.</string>
@@ -70,7 +70,7 @@
   <string name="upsell_pass_plus_first_year">Ensimmäinen vuosi</string>
   <string name="upsell_get_the_best_of_pass">Hyödynnä Passin parhaat puolet tällä rajoitetun ajan tarjouksella.</string>
   <string name="upsell_get_one_month">Hanki yksi kuukausi %s hintaan</string>
-  <string name="upsell_get_the_deal">Hyödynnä tarjous</string>
+  <string name="upsell_get_the_deal">Hanki tarjous</string>
   <string name="upsell_whats_included">Sisältää</string>
   <string name="upsell_error_google_prices">Ongelma Google Play Storen hintojen noutamisessa.</string>
   <string name="upsell_error_general">Tapahtui virhe.</string>

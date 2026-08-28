@@ -26,10 +26,10 @@
   <string name="autofill_troubleshooting_service_not_default_body">Sæt den som standard for at autofylde på tværs af dine apps.</string>
   <string name="autofill_troubleshooting_service_enable_action">Aktivér autofyld</string>
   <string name="autofill_troubleshooting_service_unsupported_title">Denne enhed understøtter ikke autofyld</string>
-  <string name="autofill_troubleshooting_browsers_inactive_header">Passive browsere opdaget</string>
-  <string name="autofill_troubleshooting_browsers_inactive_body">Slå automatisk udfyldning til, så Proton Pass kan udfylde dine loginoplysninger. Klik på en browser for at åbne dens indstillinger.</string>
+  <string name="autofill_troubleshooting_browsers_inactive_header">Passive browsere registreret</string>
+  <string name="autofill_troubleshooting_browsers_inactive_body">Slå autofyld til, så Proton Pass kan udfylde dine legitimationsoplysninger. Klik på en browser for at åbne dens indstillinger.</string>
   <string name="autofill_troubleshooting_browsers_compatible_header">Browsere er kompatible</string>
-  <string name="autofill_troubleshooting_browsers_compatible_body">Dine browsere er forbundet og klar til autofill</string>
+  <string name="autofill_troubleshooting_browsers_compatible_body">Dine browsere er forbundet og klar til autofyld.</string>
   <string name="autofill_troubleshooting_browser_active">Aktiv</string>
   <string name="autofill_troubleshooting_inline_info">Inline-forslag vises på dit tastatur. De skal bruge Android 11 eller senere, og et kompatibelt tastatur såsom Gboard.</string>
   <string name="autofill_troubleshooting_share_diagnostics">Del diagnostik</string>

@@ -26,11 +26,11 @@
   <string name="autofill_troubleshooting_service_not_default_body">Impostalo come predefinito per il riempimento automatico in tutte le tue app.</string>
   <string name="autofill_troubleshooting_service_enable_action">Abilita la compilazione automatica</string>
   <string name="autofill_troubleshooting_service_unsupported_title">Questo dispositivo non supporta il riempimento automatico</string>
-  <string name="autofill_troubleshooting_browsers_inactive_header">Inactive browsers detected</string>
-  <string name="autofill_troubleshooting_browsers_inactive_body">Turn on autofill so that Proton Pass can fill your credentials. Tap a browser to open its settings.</string>
-  <string name="autofill_troubleshooting_browsers_compatible_header">Browsers are compatible</string>
-  <string name="autofill_troubleshooting_browsers_compatible_body">Your browsers are connected and ready to autofill.</string>
-  <string name="autofill_troubleshooting_browser_active">Active</string>
+  <string name="autofill_troubleshooting_browsers_inactive_header">Rilevati browser inattivi</string>
+  <string name="autofill_troubleshooting_browsers_inactive_body">Attiva il riempimento automatico affinché Proton Pass possa inserire le tue credenziali. Tocca un browser per aprirne le impostazioni.</string>
+  <string name="autofill_troubleshooting_browsers_compatible_header">I browser sono compatibili</string>
+  <string name="autofill_troubleshooting_browsers_compatible_body">I tuoi browser sono connessi e pronti per il completamento automatico.</string>
+  <string name="autofill_troubleshooting_browser_active">Attivo</string>
   <string name="autofill_troubleshooting_inline_info">I suggerimenti in linea vengono visualizzati nella tastiera. Richiedono Android 11 o versioni successive e una tastiera compatibile come Gboard.</string>
   <string name="autofill_troubleshooting_share_diagnostics">Condividere la diagnostica</string>
   <string name="autofill_troubleshooting_open_diagnostics">Diagnosi avanzata</string>

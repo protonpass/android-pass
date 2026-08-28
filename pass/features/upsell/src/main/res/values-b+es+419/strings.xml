@@ -70,7 +70,7 @@
   <string name="upsell_pass_plus_first_year">Primer año</string>
   <string name="upsell_get_the_best_of_pass">Obtenga lo mejor de Pass con esta oferta por tiempo limitado.</string>
   <string name="upsell_get_one_month">Obtenga 1 mes por %s</string>
-  <string name="upsell_get_the_deal">Obtener la oferta</string>
+  <string name="upsell_get_the_deal">Aproveche la oferta</string>
   <string name="upsell_whats_included">¿Qué incluye?</string>
   <string name="upsell_error_google_prices">No se pueden recuperar los precios de Google Play Store en este momento.</string>
   <string name="upsell_error_general">Ocurrió un error.</string>

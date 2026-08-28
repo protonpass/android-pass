@@ -70,7 +70,7 @@
   <string name="upsell_pass_plus_first_year">첫 해</string>
   <string name="upsell_get_the_best_of_pass">기간 한정 할인 가격으로 패스의 최고급 기능들을 사용해보세요.</string>
   <string name="upsell_get_one_month">%s으로 1개월 사용하기</string>
-  <string name="upsell_get_the_deal">할인 받기</string>
+  <string name="upsell_get_the_deal">특가로 구매</string>
   <string name="upsell_whats_included">포함된 항목</string>
   <string name="upsell_error_google_prices">Problem retrieving Google Play Store prices at the moment.</string>
   <string name="upsell_error_general">An error occurred.</string>

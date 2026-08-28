@@ -26,11 +26,11 @@
   <string name="autofill_troubleshooting_service_not_default_body">Задайце яго прадвызначаным для аўтазапаўнення паміж вашымі праграмамі.</string>
   <string name="autofill_troubleshooting_service_enable_action">Уключыць аўтазапаўненне</string>
   <string name="autofill_troubleshooting_service_unsupported_title">Гэта прылада не падтрымлівае аўтазапаўненне</string>
-  <string name="autofill_troubleshooting_browsers_inactive_header">Inactive browsers detected</string>
-  <string name="autofill_troubleshooting_browsers_inactive_body">Turn on autofill so that Proton Pass can fill your credentials. Tap a browser to open its settings.</string>
-  <string name="autofill_troubleshooting_browsers_compatible_header">Browsers are compatible</string>
-  <string name="autofill_troubleshooting_browsers_compatible_body">Your browsers are connected and ready to autofill.</string>
-  <string name="autofill_troubleshooting_browser_active">Active</string>
+  <string name="autofill_troubleshooting_browsers_inactive_header">Выяўлены неактыўныя браўзеры</string>
+  <string name="autofill_troubleshooting_browsers_inactive_body">Уключыце аўтазапаўненне і тады Proton Pass зможа запаўняць вашы ўліковыя даныя. Націсніце на браўзер, каб адкрыць яго налады.</string>
+  <string name="autofill_troubleshooting_browsers_compatible_header">Браўзеры сумяшчальныя з праграмай</string>
+  <string name="autofill_troubleshooting_browsers_compatible_body">Вашы браўзеры падключаны і гатовы да аўтазапаўнення.</string>
+  <string name="autofill_troubleshooting_browser_active">Актыўна</string>
   <string name="autofill_troubleshooting_inline_info">Убудаваныя прапановы з\'явяцца ў вашай клавіятуры. Для гэтага неабходны Android 11 або больш позняя версія, а таксама сумяшчальная клавіятура (напрыклад, Gboard).</string>
   <string name="autofill_troubleshooting_share_diagnostics">Абагуліць дыягностыку</string>
   <string name="autofill_troubleshooting_open_diagnostics">Пашыраная дыягностыка</string>

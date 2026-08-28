@@ -26,11 +26,11 @@
   <string name="autofill_troubleshooting_service_not_default_body">Configúrelo como predeterminado para todas sus aplicaciones.</string>
   <string name="autofill_troubleshooting_service_enable_action">Activar el completado automático</string>
   <string name="autofill_troubleshooting_service_unsupported_title">Este dispositivo no soporta el completado automático</string>
-  <string name="autofill_troubleshooting_browsers_inactive_header">Inactive browsers detected</string>
-  <string name="autofill_troubleshooting_browsers_inactive_body">Turn on autofill so that Proton Pass can fill your credentials. Tap a browser to open its settings.</string>
-  <string name="autofill_troubleshooting_browsers_compatible_header">Browsers are compatible</string>
-  <string name="autofill_troubleshooting_browsers_compatible_body">Your browsers are connected and ready to autofill.</string>
-  <string name="autofill_troubleshooting_browser_active">Active</string>
+  <string name="autofill_troubleshooting_browsers_inactive_header">Se detectaron navegadores inactivos</string>
+  <string name="autofill_troubleshooting_browsers_inactive_body">Active el completado automático para que Proton Pass pueda completar sus credenciales. Pulse un navegador para abrir sus ajustes.</string>
+  <string name="autofill_troubleshooting_browsers_compatible_header">Los navegadores son compatibles</string>
+  <string name="autofill_troubleshooting_browsers_compatible_body">Sus navegadores están conectados y listos para el completado automático.</string>
+  <string name="autofill_troubleshooting_browser_active">Activo</string>
   <string name="autofill_troubleshooting_inline_info">Las sugerencias en línea aparecen en su teclado. Necesitan Android 11 o posterior y un teclado compatible como Gboard.</string>
   <string name="autofill_troubleshooting_share_diagnostics">Compartir diagnósticos</string>
   <string name="autofill_troubleshooting_open_diagnostics">Diagnósticos avanzados</string>

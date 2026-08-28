@@ -390,7 +390,7 @@
   </plurals>
   <!-- Password checks (Login create/edit + Generate Password BS) -->
   <string name="password_strength_prefix">პაროლის სიძლიერე</string>
-  <string name="password_check_min_length">Password is too short</string>
+  <string name="password_check_min_length">პაროლი ძალიან მოკლეა</string>
   <string name="password_check_lowercase">მხედრული ასოები</string>
   <string name="password_check_uppercase">მთავრული ასოები</string>
   <string name="password_check_no_consecutive">გამეორებული სიმბოლოების გარეშე</string>

@@ -26,11 +26,11 @@
   <string name="autofill_troubleshooting_service_not_default_body">დააყენეთ ის, როგორც ნაგულისხმევი აპი თქვენს აპებში ავტოშევსებისთვის.</string>
   <string name="autofill_troubleshooting_service_enable_action">ავტოშევსების ჩართვა</string>
   <string name="autofill_troubleshooting_service_unsupported_title">ამ მოწყობილობას ავტოშევსების მხარდაჭერა არ აქვს</string>
-  <string name="autofill_troubleshooting_browsers_inactive_header">Inactive browsers detected</string>
-  <string name="autofill_troubleshooting_browsers_inactive_body">Turn on autofill so that Proton Pass can fill your credentials. Tap a browser to open its settings.</string>
-  <string name="autofill_troubleshooting_browsers_compatible_header">Browsers are compatible</string>
-  <string name="autofill_troubleshooting_browsers_compatible_body">Your browsers are connected and ready to autofill.</string>
-  <string name="autofill_troubleshooting_browser_active">Active</string>
+  <string name="autofill_troubleshooting_browsers_inactive_header">აღმოჩენილია არააქტიური ბრაუზერები</string>
+  <string name="autofill_troubleshooting_browsers_inactive_body">ჩართეთ ავტოშევსება, რომ Proton Pass-მა თქვენი ავტორიზაციის დეტალები ავტომატურად შეავსოთ. დაატყაპუნეთ ბრაუზერზე მისი პარამეტრების გასახსნელად.</string>
+  <string name="autofill_troubleshooting_browsers_compatible_header">ბრაუზერები თავსებადია</string>
+  <string name="autofill_troubleshooting_browsers_compatible_body">თქვენი ბრაუზერები დაკავშირებულია და მზადაა ავტოშევსებისთვის.</string>
+  <string name="autofill_troubleshooting_browser_active">აქტიური</string>
   <string name="autofill_troubleshooting_inline_info">ხაზშივე რჩევები კლავიატურაზე გამოჩნდება. ამას Android 11, ან უფრო ახალი და Gboard-ის მსგავსი, თავსებადი კლავიატურა სჭირდება.</string>
   <string name="autofill_troubleshooting_share_diagnostics">დიაგნოსტიკის გაზიარება</string>
   <string name="autofill_troubleshooting_open_diagnostics">დამატებითი დიაგნოსტიკა</string>

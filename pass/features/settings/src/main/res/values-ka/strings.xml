@@ -24,8 +24,8 @@
   <string name="settings_privacy_section_title">კონფიდენციალობა</string>
   <string name="settings_use_favicons_preference_title">ვების ხატულების გამოყენება</string>
   <string name="settings_use_favicons_preference_subtitle">გადაწყვიტეთ, გნებავთ, დაინახოთ თქვენს ელემენტებზე ვებგვერდის ხატულები, თუ არა.</string>
-  <string name="settings_allow_screenshots_preference_title">Allow screenshots and app preview</string>
-  <string name="settings_allow_screenshots_preference_subtitle">If enabled, you will be able to take screenshots of the app and see its preview in the recent apps list.</string>
+  <string name="settings_allow_screenshots_preference_title">ეკრანის ანაბეჭდებისა და აპის მიმოხილვის ჩართვა</string>
+  <string name="settings_allow_screenshots_preference_subtitle">თუ ჩართულია, თქვენ საშუალება გექნებათ, გადაიღოთ აპის ეკრანის ანაბეჭდი და ნახოთ მისი მიმოხილვა უახლესი აპების სიაში.</string>
   <string name="settings_clear_icon_cache_success">ხატულების კეში გაწმენდლია</string>
   <string name="settings_clear_icon_cache_error">ხატულების კეშის გასუფთავების შეცდომა</string>
   <string name="settings_share_telemetry">ანონიმური გამოყენების გაზიარება</string>

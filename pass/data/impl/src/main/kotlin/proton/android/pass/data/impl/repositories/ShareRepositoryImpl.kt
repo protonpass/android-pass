@@ -18,7 +18,6 @@
 
 package proton.android.pass.data.impl.repositories
 
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
@@ -36,6 +35,7 @@ import me.proton.core.user.domain.entity.UserAddress
 import me.proton.core.user.domain.extension.primary
 import me.proton.core.user.domain.repository.UserAddressRepository
 import me.proton.core.user.domain.repository.UserRepository
+import proton.android.pass.common.api.AppDispatchers
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.safeRunCatching
@@ -96,7 +96,8 @@ class ShareRepositoryImpl @Inject constructor(
     private val shareKeyRepository: ShareKeyRepository,
     private val userAccessDataRepository: UserAccessDataRepository,
     private val groupRepository: GroupRepository,
-    private val searchIndexRepository: SearchIndexRepository
+    private val searchIndexRepository: SearchIndexRepository,
+    private val appDispatchers: AppDispatchers
 ) : ShareRepository {
 
     override suspend fun createVault(userId: UserId, vault: NewVault): Share {
@@ -433,7 +434,7 @@ class ShareRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun deleteLocalSharesForUser(userId: UserId) = withContext(Dispatchers.IO) {
+    override suspend fun deleteLocalSharesForUser(userId: UserId) = withContext(appDispatchers.io) {
         localShareDataSource.deleteSharesForUser(userId)
     }
 

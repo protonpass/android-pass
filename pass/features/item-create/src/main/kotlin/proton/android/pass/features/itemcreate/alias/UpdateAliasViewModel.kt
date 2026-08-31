@@ -38,6 +38,7 @@ import kotlinx.coroutines.launch
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.util.kotlin.takeIfNotBlank
 import proton.android.pass.clipboard.api.ClipboardManager
+import proton.android.pass.common.api.AppDispatchers
 import proton.android.pass.common.api.FlowUtils.oneShot
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
@@ -120,7 +121,8 @@ class UpdateAliasViewModel @Inject constructor(
     savedStateHandleProvider: SavedStateHandleProvider,
     observeShare: ObserveShare,
     observeItemById: ObserveItemById,
-    private val settingsRepository: InternalSettingsRepository
+    private val settingsRepository: InternalSettingsRepository,
+    appDispatchers: AppDispatchers
 ) : BaseAliasViewModel(
     mailboxDraftRepository = mailboxDraftRepository,
     suffixDraftRepository = suffixDraftRepository,
@@ -133,6 +135,7 @@ class UpdateAliasViewModel @Inject constructor(
     aliasItemFormProcessor = aliasItemFormProcessor,
     clipboardManager = clipboardManager,
     encryptionContextProvider = encryptionContextProvider,
+    appDispatchers = appDispatchers,
     savedStateHandleProvider = savedStateHandleProvider
 ) {
 

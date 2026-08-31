@@ -19,7 +19,6 @@
 package proton.android.pass.data.impl.repositories
 
 import android.webkit.MimeTypeMap
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.withContext
 import me.proton.core.accountmanager.domain.AccountManager
@@ -28,6 +27,7 @@ import me.proton.core.report.domain.entity.BugReportMeta
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
+import proton.android.pass.common.api.AppDispatchers
 import proton.android.pass.data.api.repositories.ReportRepository
 import proton.android.pass.data.api.usecases.report.Report
 import proton.android.pass.data.impl.core.api.CoreApi
@@ -43,7 +43,8 @@ class ReportRepositoryImpl @Inject constructor(
     private val apiProvider: ApiProvider,
     private val bugReportMetaProvider: Provider<BugReportMeta>,
     private val logFileManager: LogFileManager,
-    private val accountManager: AccountManager
+    private val accountManager: AccountManager,
+    private val appDispatchers: AppDispatchers
 ) : ReportRepository {
 
     private val File.mimeType: String?
@@ -117,7 +118,7 @@ class ReportRepositoryImpl @Inject constructor(
                 }
         }
 
-    private suspend fun File.validateFile(): File? = withContext(Dispatchers.IO) {
+    private suspend fun File.validateFile(): File? = withContext(appDispatchers.io) {
         if (exists() && length() > 0) this@validateFile else null
     }
 

@@ -32,11 +32,11 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.launch
+import proton.android.pass.common.api.AppDispatchers
 import proton.android.pass.log.api.PassLogger
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -44,7 +44,8 @@ import javax.inject.Singleton
 @Singleton
 class AutofillHealthOverlay @Inject constructor(
     @ApplicationContext private val context: Context,
-    private val monitor: AutofillHealthMonitor
+    private val monitor: AutofillHealthMonitor,
+    private val appDispatchers: AppDispatchers
 ) {
 
     private var overlayView: View? = null
@@ -120,7 +121,7 @@ class AutofillHealthOverlay @Inject constructor(
             return
         }
 
-        overlayScope = CoroutineScope(Dispatchers.Main + SupervisorJob())
+        overlayScope = CoroutineScope(appDispatchers.main + SupervisorJob())
         overlayScope?.launch {
             combine(
                 monitor.isConnected,

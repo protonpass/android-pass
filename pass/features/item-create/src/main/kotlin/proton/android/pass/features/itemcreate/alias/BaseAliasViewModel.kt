@@ -26,7 +26,6 @@ import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.compose.SavedStateHandleSaveableApi
 import androidx.lifecycle.viewmodel.compose.saveable
 import kotlinx.collections.immutable.toPersistentList
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -38,6 +37,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import proton.android.pass.clipboard.api.ClipboardManager
+import proton.android.pass.common.api.AppDispatchers
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.combineN
@@ -86,6 +86,7 @@ abstract class BaseAliasViewModel(
     private val encryptionContextProvider: EncryptionContextProvider,
     private val aliasItemFormProcessor: AliasItemFormProcessorType,
     private val clipboardManager: ClipboardManager,
+    private val appDispatchers: AppDispatchers,
     canPerformPaidAction: CanPerformPaidAction,
     customFieldDraftRepository: CustomFieldDraftRepository,
     savedStateHandleProvider: SavedStateHandleProvider
@@ -373,11 +374,11 @@ abstract class BaseAliasViewModel(
     }
 
     fun onPasteTotp() {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch(appDispatchers.io) {
             onUserEditedContent()
             clipboardManager.getClipboardContent()
                 .onSuccess { clipboardContent ->
-                    withContext(Dispatchers.Main) {
+                    withContext(appDispatchers.main) {
                         when (val field = focusedFieldState.value.value()) {
                             is AliasField.CustomField -> {
                                 val sanitisedContent = clipboardContent

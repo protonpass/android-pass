@@ -26,7 +26,6 @@ import androidx.biometric.BiometricPrompt.PromptInfo
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentActivity
 import kotlinx.coroutines.channels.awaitClose
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.channelFlow
 import kotlinx.coroutines.flow.first
@@ -36,6 +35,7 @@ import proton.android.pass.appconfig.api.AppConfig
 import proton.android.pass.appconfig.api.BuildFlavor.Companion.isQuest
 import proton.android.pass.biometry.extensions.from
 import proton.android.pass.biometry.implementation.R
+import proton.android.pass.common.api.AppDispatchers
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Some
 import proton.android.pass.commonui.api.ClassHolder
@@ -52,7 +52,8 @@ class BiometryManagerImpl @Inject constructor(
     private val userPreferencesRepository: UserPreferencesRepository,
     private val storeAuthSuccessful: StoreAuthSuccessful,
     private val biometricEnrollmentGuard: BiometricEnrollmentGuard,
-    private val appConfig: AppConfig
+    private val appConfig: AppConfig,
+    private val appDispatchers: AppDispatchers
 ) : BiometryManager {
 
     override fun getBiometryStatus(): BiometryStatus = if (appConfig.flavor.isQuest()) {
@@ -82,7 +83,7 @@ class BiometryManagerImpl @Inject constructor(
                 return@channelFlow
             }
             if (biometryType == BiometryType.AUTHENTICATE &&
-                withContext(Dispatchers.IO) { biometricEnrollmentGuard.hasEnrollmentChanged() }
+                withContext(appDispatchers.io) { biometricEnrollmentGuard.hasEnrollmentChanged() }
             ) {
                 trySend(BiometryResult.Error(BiometryAuthError.EnrollmentChanged))
                 close()

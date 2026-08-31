@@ -28,6 +28,7 @@ import org.junit.Test
 import proton.android.pass.account.fakes.FakeAccountManager
 import proton.android.pass.clipboard.fakes.FakeClipboardManager
 import proton.android.pass.common.api.some
+import proton.android.pass.common.fakes.FakeAppDispatchers
 import proton.android.pass.commonpresentation.fakes.attachments.FakeAttachmentHandler
 import proton.android.pass.commonrust.fakes.FakeEmailValidator
 import proton.android.pass.commonrust.fakes.FakePasswordScorer
@@ -146,7 +147,8 @@ class UpdateLoginViewModelTest {
         settingsRepository = settingsRepository,
         observeItemById = observeItemById,
         initialUpdateLoginUiState = null,
-        canCreateAlias = FakeCanCreateAlias()
+        canCreateAlias = FakeCanCreateAlias(),
+        appDispatchers = FakeAppDispatchers()
     )
 
     @Test

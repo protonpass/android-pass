@@ -25,6 +25,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import me.proton.core.accountmanager.domain.AccountManager
 import proton.android.pass.clipboard.api.ClipboardManager
+import proton.android.pass.common.api.AppDispatchers
 import proton.android.pass.common.api.Some
 import proton.android.pass.commonpresentation.api.attachments.AttachmentsHandler
 import proton.android.pass.commonui.api.SavedStateHandleProvider
@@ -86,7 +87,8 @@ class CreateAliasBottomSheetViewModel @Inject constructor(
     userPreferencesRepository: UserPreferencesRepository,
     observeShare: ObserveShare,
     setDefaultVault: SetDefaultVault,
-    private val settingsRepository: InternalSettingsRepository
+    private val settingsRepository: InternalSettingsRepository,
+    appDispatchers: AppDispatchers
 ) : CreateAliasViewModel(
     accountManager = accountManager,
     observeFolder = observeFolder,
@@ -114,7 +116,8 @@ class CreateAliasBottomSheetViewModel @Inject constructor(
     clipboardManager = clipboardManager,
     observeShare = observeShare,
     setDefaultVault = setDefaultVault,
-    settingsRepository = settingsRepository
+    settingsRepository = settingsRepository,
+    appDispatchers = appDispatchers
 ) {
 
     private val isEditMode: Boolean = savedStateHandleProvider.get()

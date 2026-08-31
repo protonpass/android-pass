@@ -42,6 +42,7 @@ dependencies {
     implementation(libs.kotlinx.coroutines.core)
     implementation(libs.kotlinx.datetime)
     implementation(libs.kotlinx.serialization.json)
+    implementation(projects.pass.common.api)
     implementation(projects.pass.crypto.api)
     implementation(libs.okhttp)
     implementation(projects.pass.data.api)
@@ -62,4 +63,5 @@ dependencies {
     testImplementation(libs.coroutines.test)
     testImplementation(libs.okhttp.mockwebserver)
     testImplementation(libs.okhttp.tls)
+    testImplementation(projects.pass.common.fakes)
 }

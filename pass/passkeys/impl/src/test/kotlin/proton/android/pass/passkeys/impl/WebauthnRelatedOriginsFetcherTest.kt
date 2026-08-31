@@ -29,6 +29,7 @@ import okhttp3.tls.HeldCertificate
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
+import proton.android.pass.common.fakes.FakeAppDispatchers
 import proton.android.pass.commonrust.MobileFetchException
 import java.net.InetAddress
 
@@ -57,7 +58,7 @@ class WebauthnRelatedOriginsFetcherTest {
         val okHttpClient = OkHttpClient.Builder()
             .sslSocketFactory(clientCerts.sslSocketFactory(), clientCerts.trustManager)
             .build()
-        fetcher = WebauthnRelatedOriginsFetcher(okHttpClient)
+        fetcher = WebauthnRelatedOriginsFetcher(okHttpClient, FakeAppDispatchers())
     }
 
     @After

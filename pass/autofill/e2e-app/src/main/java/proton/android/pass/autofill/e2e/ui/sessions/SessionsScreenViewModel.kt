@@ -30,7 +30,6 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toImmutableList
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -49,6 +48,7 @@ import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
 import proton.android.pass.autofill.debug.DebugUtils
 import proton.android.pass.autofill.e2e.BuildConfig
+import proton.android.pass.common.api.AppDispatchers
 import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.asLoadingResult
 import proton.android.pass.commonui.api.ClassHolder
@@ -58,7 +58,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SessionsScreenViewModel @Inject constructor(
-    @param:ApplicationContext private val context: Context
+    @param:ApplicationContext private val context: Context,
+    private val appDispatchers: AppDispatchers
 ) : ViewModel() {
 
     private val isLoadingFlow: MutableStateFlow<IsLoadingState> =
@@ -125,7 +126,7 @@ class SessionsScreenViewModel @Inject constructor(
     }
 
     fun onClearSessions(contextHolder: ClassHolder<Context>) = viewModelScope.launch {
-        withContext(Dispatchers.IO) {
+        withContext(appDispatchers.io) {
             isLoadingFlow.update { IsLoadingState.Loading }
             contextHolder.get().map {
                 DebugUtils.autofillDumpDir(it).deleteRecursively()
@@ -135,7 +136,7 @@ class SessionsScreenViewModel @Inject constructor(
         }
     }
 
-    private suspend fun getSessions(context: Context): ImmutableList<AutofillSession> = withContext(Dispatchers.IO) {
+    private suspend fun getSessions(context: Context): ImmutableList<AutofillSession> = withContext(appDispatchers.io) {
         val dir = DebugUtils.autofillDumpDir(context)
         dir.mkdirs()
 
@@ -168,7 +169,7 @@ class SessionsScreenViewModel @Inject constructor(
     }
 
     fun startShareIntent(session: AutofillSession, contextHolder: ClassHolder<Context>) =
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch(appDispatchers.io) {
             contextHolder.get().map { ctx ->
                 val intent = Intent(Intent.ACTION_SEND)
                 intent.type = "*/*"

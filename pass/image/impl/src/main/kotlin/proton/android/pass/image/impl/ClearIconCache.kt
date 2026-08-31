@@ -20,16 +20,17 @@ package proton.android.pass.image.impl
 
 import android.content.Context
 import dagger.hilt.android.qualifiers.ApplicationContext
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import proton.android.pass.common.api.AppDispatchers
 import proton.android.pass.image.api.ClearIconCache
 import proton.android.pass.log.api.PassLogger
 import javax.inject.Inject
 
 class ClearIconCacheImpl @Inject constructor(
-    @param:ApplicationContext private val context: Context
+    @param:ApplicationContext private val context: Context,
+    private val appDispatchers: AppDispatchers
 ) : ClearIconCache {
-    override suspend fun invoke() = withContext(Dispatchers.IO) {
+    override suspend fun invoke() = withContext(appDispatchers.io) {
         PassLogger.i(TAG, "Removing icon cache")
         val cacheDir = CacheUtils.cacheDir(context)
         if (cacheDir.deleteRecursively()) {

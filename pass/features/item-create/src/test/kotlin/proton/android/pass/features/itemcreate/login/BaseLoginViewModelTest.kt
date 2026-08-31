@@ -28,6 +28,7 @@ import org.junit.Test
 import proton.android.pass.account.fakes.FakeAccountManager
 import proton.android.pass.clipboard.fakes.FakeClipboardManager
 import proton.android.pass.common.api.PasswordStrength
+import proton.android.pass.common.fakes.FakeAppDispatchers
 import proton.android.pass.commonpresentation.fakes.attachments.FakeAttachmentHandler
 import proton.android.pass.commonrust.fakes.FakeEmailValidator
 import proton.android.pass.commonrust.fakes.FakePasswordScorer
@@ -106,6 +107,7 @@ internal class BaseLoginViewModelTest {
             customFieldDraftRepository = CustomFieldDraftRepositoryImpl(),
             customFieldHandler = CustomFieldHandlerImpl(totpManager, encryptionContextProvider),
             loginItemFormProcessor = FakeLoginItemFormProcessor(),
+            appDispatchers = FakeAppDispatchers(),
             canCreateAlias = FakeCanCreateAlias()
         ) {}
     }

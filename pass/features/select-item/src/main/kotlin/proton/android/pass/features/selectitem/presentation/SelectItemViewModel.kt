@@ -31,7 +31,6 @@ import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.collections.immutable.toPersistentList
 import kotlinx.collections.immutable.toPersistentMap
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -65,6 +64,7 @@ import me.proton.core.accountmanager.domain.getAccounts
 import me.proton.core.domain.entity.UserId
 import me.proton.core.user.domain.UserManager
 import me.proton.core.user.domain.entity.User
+import proton.android.pass.common.api.AppDispatchers
 import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
@@ -163,7 +163,8 @@ class SelectItemViewModel @Inject constructor(
     private val observePagedItems: ObservePagedItems,
     private val observeItemTypeCounts: ObserveItemTypeCounts,
     private val observeIndexingStatus: ObserveIndexingStatus,
-    featureFlagsPreferencesRepository: FeatureFlagsPreferencesRepository
+    featureFlagsPreferencesRepository: FeatureFlagsPreferencesRepository,
+    private val appDispatchers: AppDispatchers
 ) : ViewModel() {
 
     private val selectItemStateFlow: MutableStateFlow<Option<SelectItemState>> =
@@ -394,7 +395,7 @@ class SelectItemViewModel @Inject constructor(
         } else {
             result
         }
-    }.flowOn(Dispatchers.Default)
+    }.flowOn(appDispatchers.default)
 
     private val pinnedItemsFlow: Flow<LoadingResult<List<Item>>> = combine(
         selectedAccountFlow,
@@ -506,7 +507,7 @@ class SelectItemViewModel @Inject constructor(
                 )
             }
         }
-    }.flowOn(Dispatchers.Default)
+    }.flowOn(appDispatchers.default)
 
     private val isRefreshing: MutableStateFlow<IsRefreshingState> =
         MutableStateFlow(IsRefreshingState.NotRefreshing)

@@ -30,6 +30,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import me.proton.core.accountmanager.domain.AccountManager
 import proton.android.pass.clipboard.api.ClipboardManager
+import proton.android.pass.common.api.AppDispatchers
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.safeRunCatching
@@ -99,7 +100,8 @@ class UpdateCreditCardViewModel @Inject constructor(
     savedStateHandleProvider: SavedStateHandleProvider,
     observeShare: ObserveShare,
     observeItemById: ObserveItemById,
-    private val settingsRepository: InternalSettingsRepository
+    private val settingsRepository: InternalSettingsRepository,
+    appDispatchers: AppDispatchers
 ) : BaseCreditCardViewModel(
     userPreferencesRepository = userPreferencesRepository,
     attachmentsHandler = attachmentsHandler,
@@ -109,6 +111,7 @@ class UpdateCreditCardViewModel @Inject constructor(
     customFieldDraftRepository = customFieldDraftRepository,
     creditCardItemFormProcessor = creditCardItemFormProcessor,
     clipboardManager = clipboardManager,
+    appDispatchers = appDispatchers,
     savedStateHandleProvider = savedStateHandleProvider
 ) {
     private val navShareId: ShareId =

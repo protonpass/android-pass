@@ -20,7 +20,6 @@ package proton.android.pass.preferences
 
 import androidx.datastore.core.DataStore
 import com.google.protobuf.Timestamp
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.FlowCollector
 import kotlinx.coroutines.flow.catch
@@ -32,6 +31,7 @@ import kotlinx.datetime.Instant
 import me.proton.android.pass.preferences.AppUsage
 import me.proton.android.pass.preferences.LastItemAutofill
 import me.proton.core.domain.entity.UserId
+import proton.android.pass.common.api.AppDispatchers
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.some
@@ -46,7 +46,8 @@ import javax.inject.Singleton
 @Singleton
 class InternalSettingsRepositoryImpl @Inject constructor(
     private val dataStore: DataStore<InternalSettings>,
-    private val inMemoryPreferences: InMemoryPreferences
+    private val inMemoryPreferences: InMemoryPreferences,
+    private val appDispatchers: AppDispatchers
 ) : InternalSettingsRepository {
 
     override fun setLastUnlockedTime(time: Long): Result<Unit> = setPreference {
@@ -336,7 +337,7 @@ class InternalSettingsRepositoryImpl @Inject constructor(
 
     private fun setPreference(mapper: (InternalSettings.Builder) -> InternalSettings.Builder): Result<Unit> =
         runCatching {
-            runBlocking(Dispatchers.IO) {
+            runBlocking(appDispatchers.io) {
                 dataStore.updateData {
                     mapper(it.toBuilder()).build()
                 }

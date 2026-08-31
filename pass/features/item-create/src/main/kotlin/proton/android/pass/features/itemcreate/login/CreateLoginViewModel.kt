@@ -52,6 +52,7 @@ import kotlinx.coroutines.launch
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.clipboard.api.ClipboardManager
+import proton.android.pass.common.api.AppDispatchers
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
@@ -185,7 +186,8 @@ class CreateLoginViewModel @Inject constructor(
     getPopularServices: GetPopularServices,
     private val canCreateAlias: CanCreateAlias,
     private val canCreateItemsInFolder: CanCreateItemsInFolder,
-    private val settingsRepository: InternalSettingsRepository
+    private val settingsRepository: InternalSettingsRepository,
+    appDispatchers: AppDispatchers
 ) : BaseLoginViewModel(
     accountManager = accountManager,
     snackbarDispatcher = snackbarDispatcher,
@@ -205,6 +207,7 @@ class CreateLoginViewModel @Inject constructor(
     customFieldHandler = customFieldHandler,
     customFieldDraftRepository = customFieldDraftRepository,
     loginItemFormProcessor = loginItemFormProcessor,
+    appDispatchers = appDispatchers,
     canCreateAlias = canCreateAlias,
     savedStateHandleProvider = savedStateHandleProvider
 ) {

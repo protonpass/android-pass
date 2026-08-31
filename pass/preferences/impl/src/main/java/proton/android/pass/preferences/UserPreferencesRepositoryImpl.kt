@@ -19,7 +19,6 @@
 package proton.android.pass.preferences
 
 import androidx.datastore.core.DataStore
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.FlowCollector
 import kotlinx.coroutines.flow.catch
@@ -30,6 +29,7 @@ import kotlinx.coroutines.withContext
 import me.proton.android.pass.preferences.BooleanPrefProto
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.appconfig.api.AppConfig
+import proton.android.pass.common.api.AppDispatchers
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.safeRunCatching
@@ -54,7 +54,8 @@ import javax.inject.Singleton
 class UserPreferencesRepositoryImpl @Inject constructor(
     private val dataStore: DataStore<UserPreferences>,
     private val inMemoryPreferences: InMemoryPreferences,
-    private val appConfig: AppConfig
+    private val appConfig: AppConfig,
+    private val appDispatchers: AppDispatchers
 ) : UserPreferencesRepository {
 
     override fun setAppLockState(state: AppLockState): Result<Unit> = setPreference {
@@ -400,7 +401,7 @@ class UserPreferencesRepositoryImpl @Inject constructor(
     private suspend fun setPreferenceSuspend(
         mapper: suspend (UserPreferences.Builder) -> UserPreferences.Builder
     ): Result<Unit> = safeRunCatching {
-        withContext(Dispatchers.IO) {
+        withContext(appDispatchers.io) {
             dataStore.updateData {
                 mapper(it.toBuilder()).build()
             }

@@ -18,8 +18,8 @@
 
 package proton.android.pass.data.impl.db
 
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import proton.android.pass.common.api.AppDispatchers
 import proton.android.pass.common.api.safeRunCatching
 import proton.android.pass.log.api.PassLogger
 import javax.inject.Inject
@@ -27,10 +27,11 @@ import javax.inject.Singleton
 
 @Singleton
 class DatabaseCleanupHelper @Inject constructor(
-    private val database: AppDatabase
+    private val database: AppDatabase,
+    private val appDispatchers: AppDispatchers
 ) {
 
-    suspend fun cleanupUserData() = withContext(Dispatchers.IO) {
+    suspend fun cleanupUserData() = withContext(appDispatchers.io) {
         PassLogger.i(TAG, "Starting per-user cleanup")
 
         safeRunCatching {
@@ -46,7 +47,7 @@ class DatabaseCleanupHelper @Inject constructor(
         }
     }
 
-    suspend fun cleanupLastUser() = withContext(Dispatchers.IO) {
+    suspend fun cleanupLastUser() = withContext(appDispatchers.io) {
         PassLogger.i(TAG, "Starting last-user cleanup")
 
         safeRunCatching {

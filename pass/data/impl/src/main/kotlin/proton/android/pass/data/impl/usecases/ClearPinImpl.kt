@@ -20,8 +20,8 @@ package proton.android.pass.data.impl.usecases
 
 import android.content.Context
 import dagger.hilt.android.qualifiers.ApplicationContext
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import proton.android.pass.common.api.AppDispatchers
 import proton.android.pass.common.api.safeRunCatching
 import proton.android.pass.data.api.usecases.ClearPin
 import proton.android.pass.data.impl.util.PinFileConfig
@@ -32,10 +32,11 @@ import javax.inject.Singleton
 
 @Singleton
 class ClearPinImpl @Inject constructor(
-    @param:ApplicationContext private val context: Context
+    @param:ApplicationContext private val context: Context,
+    private val appDispatchers: AppDispatchers
 ) : ClearPin {
     override suspend fun invoke() {
-        withContext(Dispatchers.IO) {
+        withContext(appDispatchers.io) {
             safeRunCatching { performPinClear() }
                 .onFailure {
                     PassLogger.w(TAG, "Error deleting pin file")

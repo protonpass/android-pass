@@ -20,8 +20,8 @@ package proton.android.pass.data.impl.usecases
 
 import android.content.Context
 import dagger.hilt.android.qualifiers.ApplicationContext
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import proton.android.pass.common.api.AppDispatchers
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.usecases.CreatePin
 import proton.android.pass.data.impl.util.PinFileConfig
@@ -32,11 +32,12 @@ import javax.inject.Singleton
 @Singleton
 class CreatePinImpl @Inject constructor(
     @param:ApplicationContext private val context: Context,
-    private val encryptionContextProvider: EncryptionContextProvider
+    private val encryptionContextProvider: EncryptionContextProvider,
+    private val appDispatchers: AppDispatchers
 ) : CreatePin {
 
     override suspend fun invoke(pin: ByteArray) {
-        withContext(Dispatchers.IO) {
+        withContext(appDispatchers.io) {
             val file = File(context.dataDir, PinFileConfig.FILE_NAME)
             val encrypted = encryptionContextProvider.withEncryptionContext { encrypt(pin) }
             file.writeBytes(encrypted.array)

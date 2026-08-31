@@ -30,6 +30,8 @@ import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import dagger.hilt.android.testing.UninstallModules
 import dagger.hilt.components.SingletonComponent
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
 import kotlinx.datetime.Clock
 import me.proton.core.domain.entity.UserId
 import org.junit.Before
@@ -37,6 +39,8 @@ import org.junit.Rule
 import org.junit.Test
 import proton.android.pass.account.fakes.FakeUserManager
 import proton.android.pass.account.fakes.FakeAccountManager
+import proton.android.pass.common.api.AppDispatchers
+import proton.android.pass.common.fakes.CommonFakesModule
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.crypto.fakes.context.FakeEncryptionContext
 import proton.android.pass.data.api.usecases.ItemData
@@ -73,7 +77,7 @@ import proton.android.pass.test.waitUntilExists
 import javax.inject.Inject
 
 @HiltAndroidTest
-@UninstallModules(SearchOptionsModule::class)
+@UninstallModules(SearchOptionsModule::class, CommonFakesModule::class)
 class SelectItemScreenTest {
 
     @get:Rule(order = 0)
@@ -446,6 +450,15 @@ class SelectItemScreenTest {
     object TestModule {
         @Provides
         fun provideClock(): Clock = Clock.System
+
+        // Debounced search flows rely on real delays firing; a TestDispatcher's virtual
+        // clock is never advanced in this instrumented test, so it would hang forever.
+        @Provides
+        fun provideAppDispatchers(): AppDispatchers = object : AppDispatchers {
+            override val main: CoroutineDispatcher = Dispatchers.Main
+            override val default: CoroutineDispatcher = Dispatchers.Default
+            override val io: CoroutineDispatcher = Dispatchers.IO
+        }
     }
 
     private companion object {

@@ -25,6 +25,7 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import proton.android.pass.clipboard.fakes.FakeClipboardManager
+import proton.android.pass.common.fakes.FakeAppDispatchers
 import proton.android.pass.commonpresentation.fakes.attachments.FakeAttachmentHandler
 import proton.android.pass.commonui.fakes.FakeSavedStateHandleProvider
 import proton.android.pass.crypto.fakes.context.FakeEncryptionContextProvider
@@ -63,7 +64,8 @@ internal class BaseNoteViewModelTest {
             canPerformPaidAction = canPerformPaidAction,
             clipboardManager = FakeClipboardManager(),
             encryptionContextProvider = FakeEncryptionContextProvider(),
-            noteItemFormProcessor = FakeNoteItemFormProcessor()
+            noteItemFormProcessor = FakeNoteItemFormProcessor(),
+            appDispatchers = FakeAppDispatchers()
         ) {}
     }
 

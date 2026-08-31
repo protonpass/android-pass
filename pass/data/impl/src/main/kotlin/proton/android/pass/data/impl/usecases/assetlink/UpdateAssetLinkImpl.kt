@@ -18,10 +18,10 @@
 
 package proton.android.pass.data.impl.usecases.assetlink
 
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runInterruptible
 import kotlinx.coroutines.withContext
 import kotlinx.coroutines.withTimeoutOrNull
+import proton.android.pass.common.api.AppDispatchers
 import proton.android.pass.common.api.safeRunCatching
 import proton.android.pass.commonrust.api.DomainManager
 import proton.android.pass.data.api.errors.ResponseSizeExceededError
@@ -31,10 +31,11 @@ import javax.inject.Inject
 
 class UpdateAssetLinkImpl @Inject constructor(
     private val assetLinkRepository: AssetLinkRepository,
-    private val domainManager: DomainManager
+    private val domainManager: DomainManager,
+    private val appDispatchers: AppDispatchers
 ) : UpdateAssetLink {
     override suspend fun invoke(websites: Set<String>) {
-        val cleanWebsites = withContext(Dispatchers.IO) {
+        val cleanWebsites = withContext(appDispatchers.io) {
             withTimeoutOrNull(FFI_TIMEOUT_MS) {
                 websites.filter(String::isNotBlank)
                     .mapNotNull { runInterruptible { domainManager.getRoot(it) } }

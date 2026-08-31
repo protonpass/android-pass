@@ -20,7 +20,6 @@ package proton.android.pass.autofill.debug
 
 import android.content.Context
 import android.service.autofill.FillRequest
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
@@ -29,6 +28,7 @@ import proton.android.pass.autofill.debug.DebugUtils.autofillDumpDir
 import proton.android.pass.autofill.entities.AutofillNode
 import proton.android.pass.autofill.entities.InputTypeValue
 import proton.android.pass.autofill.heuristics.toAutofillNode
+import proton.android.pass.common.api.AppDispatchers
 import proton.android.pass.common.api.safeRunCatching
 import proton.android.pass.log.api.PassLogger
 import java.io.File
@@ -65,7 +65,11 @@ object AutofillDebugSaver {
         val value: String
     )
 
-    suspend fun save(context: Context, request: FillRequest) {
+    suspend fun save(
+        context: Context,
+        request: FillRequest,
+        appDispatchers: AppDispatchers
+    ) {
         val windowNode = Utils.getWindowNodes(request.fillContexts).lastOrNull()
         val rootViewNode = windowNode?.rootViewNode ?: return
         val packageName = Utils.getApplicationPackageName(request.fillContexts)
@@ -79,7 +83,8 @@ object AutofillDebugSaver {
             storeFile(
                 context = context,
                 packageName = packageName,
-                content = asString
+                content = asString,
+                appDispatchers = appDispatchers
             )
         }.onSuccess {
             PassLogger.i(TAG, "Debug autofill stored")
@@ -105,8 +110,9 @@ object AutofillDebugSaver {
     private suspend fun storeFile(
         context: Context,
         packageName: String,
-        content: String
-    ) = withContext(Dispatchers.IO) {
+        content: String,
+        appDispatchers: AppDispatchers
+    ) = withContext(appDispatchers.io) {
         val dir = autofillDumpDir(context)
         val now = System.currentTimeMillis().toString()
         val file = File(dir, "$packageName-$now.json")

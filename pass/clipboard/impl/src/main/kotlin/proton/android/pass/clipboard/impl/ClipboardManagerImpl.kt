@@ -25,13 +25,13 @@ import android.content.Context
 import android.os.Build
 import android.os.PersistableBundle
 import dagger.hilt.android.qualifiers.ApplicationContext
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
 import proton.android.pass.clipboard.api.ClipboardManager
 import proton.android.pass.clipboard.api.CouldNotAccessClipboard
 import proton.android.pass.clipboard.api.CouldNotGetClipboardContent
 import proton.android.pass.clipboard.api.EmptyClipboardContent
+import proton.android.pass.common.api.AppDispatchers
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.preferences.ClearClipboardPreference
 import proton.android.pass.preferences.UserPreferencesRepository
@@ -42,7 +42,8 @@ import android.content.ClipboardManager as AndroidClipboardManager
 class ClipboardManagerImpl @Inject constructor(
     @param:ApplicationContext private val context: Context,
     preferencesRepository: UserPreferencesRepository,
-    private val scheduler: ClearClipboardScheduler
+    private val scheduler: ClearClipboardScheduler,
+    private val appDispatchers: AppDispatchers
 ) : ClipboardManager {
 
     private val clearClipboardPreferenceFlow = preferencesRepository.getClearClipboardPreference()
@@ -60,7 +61,7 @@ class ClipboardManagerImpl @Inject constructor(
             applySecureFlag(clipData)
         }
         val copied = runCatching {
-            runBlocking(Dispatchers.IO) {
+            runBlocking(appDispatchers.io) {
                 androidClipboard.setPrimaryClip(clipData)
             }
         }.onFailure {
@@ -82,7 +83,7 @@ class ClipboardManagerImpl @Inject constructor(
         }
 
         runCatching {
-            runBlocking(Dispatchers.IO) {
+            runBlocking(appDispatchers.io) {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
                     androidClipboard.clearPrimaryClip()
                 } else {

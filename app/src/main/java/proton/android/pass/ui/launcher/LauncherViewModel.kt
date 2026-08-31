@@ -44,7 +44,6 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -78,6 +77,7 @@ import me.proton.core.usersettings.presentation.UserSettingsOrchestrator
 import proton.android.pass.appconfig.api.AppConfig
 import proton.android.pass.appconfig.api.BuildFlavor.Companion.supportPayment
 import proton.android.pass.biometry.ResetAuthPreferences
+import proton.android.pass.common.api.AppDispatchers
 import proton.android.pass.common.api.safeRunCatching
 import proton.android.pass.commonrust.api.CommonLibraryVersionChecker
 import proton.android.pass.data.api.usecases.GetUserPlan
@@ -115,12 +115,13 @@ class LauncherViewModel @Inject constructor(
     userPreferencesRepository: UserPreferencesRepository,
     commonLibraryVersionChecker: CommonLibraryVersionChecker,
     private val appConfig: AppConfig,
-    private val telemetryManager: TelemetryManager
+    private val telemetryManager: TelemetryManager,
+    private val appDispatchers: AppDispatchers
 ) : ViewModel() {
 
     init {
         viewModelScope.launch {
-            withContext(Dispatchers.IO) {
+            withContext(appDispatchers.io) {
                 val version = runCatching { commonLibraryVersionChecker.getVersion() }
                     .getOrElse { "Unknown" }
                 PassLogger.i(TAG, "Common library version: $version")

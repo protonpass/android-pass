@@ -24,7 +24,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -34,6 +33,7 @@ import kotlinx.coroutines.withContext
 import kotlinx.serialization.json.Json
 import proton.android.pass.autofill.debug.AutofillDebugSaver
 import proton.android.pass.autofill.debug.DebugUtils
+import proton.android.pass.common.api.AppDispatchers
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
 import java.io.File
@@ -42,7 +42,8 @@ import javax.inject.Inject
 @HiltViewModel
 class SessionDetailViewModel @Inject constructor(
     @ApplicationContext context: Context,
-    savedStateHandleProvider: SavedStateHandleProvider
+    savedStateHandleProvider: SavedStateHandleProvider,
+    private val appDispatchers: AppDispatchers
 ) : ViewModel() {
 
     private val sessionName = savedStateHandleProvider.get()
@@ -56,7 +57,7 @@ class SessionDetailViewModel @Inject constructor(
         )
 
     private fun getEntry(context: Context): Flow<DetailContent.Success> = flow {
-        val entry = withContext(Dispatchers.IO) {
+        val entry = withContext(appDispatchers.io) {
             val dir = DebugUtils.autofillDumpDir(context)
             val file = File(dir, sessionName)
             val fileContent = file.readText()

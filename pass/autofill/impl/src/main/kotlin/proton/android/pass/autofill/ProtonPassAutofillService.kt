@@ -26,16 +26,16 @@ import android.service.autofill.SaveCallback
 import android.service.autofill.SaveRequest
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import me.proton.core.accountmanager.domain.AccountManager
-import proton.android.pass.autofill.debug.AutofillDebugSaver
 import proton.android.pass.autofill.autofillhealth.service.AutofillHealthMonitor
 import proton.android.pass.autofill.autofillhealth.troubleshooting.data.AutofillWorkingBrowsersStore
+import proton.android.pass.autofill.debug.AutofillDebugSaver
+import proton.android.pass.common.api.AppDispatchers
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.preferences.FeatureFlag
 import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
@@ -71,7 +71,10 @@ class ProtonPassAutofillService : AutofillService() {
     @Inject
     lateinit var workingBrowsersStore: AutofillWorkingBrowsersStore
 
-    private val serviceScope = CoroutineScope(Dispatchers.Main + SupervisorJob())
+    @Inject
+    lateinit var appDispatchers: AppDispatchers
+
+    private val serviceScope by lazy { CoroutineScope(appDispatchers.main + SupervisorJob()) }
 
     @Volatile
     private var isDebugMode: Boolean = false
@@ -131,7 +134,7 @@ class ProtonPassAutofillService : AutofillService() {
 
         if (isDebugModeEnabled) {
             runBlocking {
-                AutofillDebugSaver.save(this@ProtonPassAutofillService, request)
+                AutofillDebugSaver.save(this@ProtonPassAutofillService, request, appDispatchers)
             }
         }
 
@@ -154,7 +157,8 @@ class ProtonPassAutofillService : AutofillService() {
             thirdPartyModeProvider = thirdPartyModeProvider,
             healthMonitor = if (isDebugModeEnabled) healthMonitor else null,
             autofillDisplayPreference = autofillDisplayPreference,
-            isAutosaveEnabled = isAutosaveEnabled
+            isAutosaveEnabled = isAutosaveEnabled,
+            appDispatchers = appDispatchers
         )
     }
 

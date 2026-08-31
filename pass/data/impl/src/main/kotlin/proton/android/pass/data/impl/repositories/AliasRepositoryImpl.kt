@@ -18,7 +18,6 @@
 
 package proton.android.pass.data.impl.repositories
 
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
@@ -26,6 +25,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import me.proton.core.domain.entity.UserId
+import proton.android.pass.common.api.AppDispatchers
 import proton.android.pass.common.api.FlowUtils.oneShot
 import proton.android.pass.common.api.firstError
 import proton.android.pass.common.api.safeRunCatching
@@ -56,13 +56,14 @@ class AliasRepositoryImpl @Inject constructor(
     private val remoteDataSource: RemoteAliasDataSource,
     private val localItemDataSource: LocalItemDataSource,
     private val searchIndexRepository: SearchIndexRepository,
-    private val encryptionContextProvider: EncryptionContextProvider
+    private val encryptionContextProvider: EncryptionContextProvider,
+    private val appDispatchers: AppDispatchers
 ) : AliasRepository {
 
     override fun getAliasOptions(userId: UserId, shareId: ShareId): Flow<AliasOptions> =
         remoteDataSource.getAliasOptions(userId, shareId)
             .map { it.toDomain() }
-            .flowOn(Dispatchers.IO)
+            .flowOn(appDispatchers.io)
 
     override fun observeAliasDetails(
         userId: UserId,
@@ -98,7 +99,7 @@ class AliasRepositoryImpl @Inject constructor(
         )
         return remoteDataSource.updateAliasMailboxes(userId, shareId, itemId, request)
             .map { }
-            .flowOn(Dispatchers.IO)
+            .flowOn(appDispatchers.io)
     }
 
     override suspend fun changeAliasStatus(

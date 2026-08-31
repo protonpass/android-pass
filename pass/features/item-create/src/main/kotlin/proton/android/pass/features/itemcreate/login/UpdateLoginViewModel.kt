@@ -37,6 +37,7 @@ import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.crypto.common.keystore.EncryptedString
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.clipboard.api.ClipboardManager
+import proton.android.pass.common.api.AppDispatchers
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
@@ -147,6 +148,7 @@ class UpdateLoginViewModel @AssistedInject constructor(
     observeItemById: ObserveItemById,
     canCreateAlias: CanCreateAlias,
     private val settingsRepository: InternalSettingsRepository,
+    appDispatchers: AppDispatchers,
     @Assisted private val initialUpdateLoginUiState: InitialUpdateLoginUiState?
 ) : BaseLoginViewModel(
     accountManager = accountManager,
@@ -167,6 +169,7 @@ class UpdateLoginViewModel @AssistedInject constructor(
     featureFlagsPreferencesRepository = featureFlagsPreferencesRepository,
     customFieldDraftRepository = customFieldDraftRepository,
     loginItemFormProcessor = loginItemFormProcessor,
+    appDispatchers = appDispatchers,
     canCreateAlias = canCreateAlias,
     savedStateHandleProvider = savedStateHandleProvider
 ) {

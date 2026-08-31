@@ -20,6 +20,7 @@ package proton.android.pass.data.impl.usecases
 
 import kotlinx.coroutines.test.runTest
 import org.junit.Test
+import proton.android.pass.common.fakes.FakeAppDispatchers
 import proton.android.pass.data.api.usecases.ClearPin
 import proton.android.pass.data.api.usecases.SetAppLockType
 import proton.android.pass.data.fakes.repositories.FakeAssetLinkRepository
@@ -57,7 +58,8 @@ class ResetAppToDefaultsImplTest {
         setAppLockType = setAppLockType,
         localAppLockTypeDataSource = localAppLockTypeDataSource,
         clearPin = clearPin,
-        assetLinkRepository = FakeAssetLinkRepository()
+        assetLinkRepository = FakeAssetLinkRepository(),
+        appDispatchers = FakeAppDispatchers()
     )
 
     @Test

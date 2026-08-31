@@ -24,7 +24,6 @@ import androidx.paging.PagingData
 import androidx.room.InvalidationTracker
 import androidx.sqlite.db.SimpleSQLiteQuery
 import kotlinx.coroutines.CancellationException
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -32,6 +31,7 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 import me.proton.core.domain.entity.UserId
+import proton.android.pass.common.api.AppDispatchers
 import proton.android.pass.crypto.api.context.EncryptionContext
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.repositories.IndexingStatus
@@ -64,7 +64,8 @@ class SearchIndexRepositoryImpl @Inject constructor(
     private val localItemDataSource: LocalItemDataSource,
     private val localShareDataSource: LocalShareDataSource,
     private val encryptionContextProvider: EncryptionContextProvider,
-    private val internalSettingsRepository: InternalSettingsRepository
+    private val internalSettingsRepository: InternalSettingsRepository,
+    private val appDispatchers: AppDispatchers
 ) : SearchIndexRepository {
 
     private val _indexingStatus = MutableStateFlow<IndexingStatus>(IndexingStatus.Idle)
@@ -168,7 +169,7 @@ class SearchIndexRepositoryImpl @Inject constructor(
     }
 
     override suspend fun rebuildIndex(userId: UserId) {
-        withContext(Dispatchers.IO) {
+        withContext(appDispatchers.io) {
             PassLogger.i(TAG, "Starting index rebuild")
             _indexingStatus.value = IndexingStatus.Indexing
 
@@ -270,7 +271,7 @@ class SearchIndexRepositoryImpl @Inject constructor(
     }
 
     override suspend fun indexShare(userId: UserId, shareId: ShareId) {
-        withContext(Dispatchers.IO) {
+        withContext(appDispatchers.io) {
             searchDao.clearForShare(shareId.id)
             val flags = shareIndexFlags(userId)
             indexItemsForShares(userId, listOf(shareId), flags)

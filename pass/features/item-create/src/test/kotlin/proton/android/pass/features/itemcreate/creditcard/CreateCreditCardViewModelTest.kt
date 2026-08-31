@@ -30,6 +30,7 @@ import org.junit.Rule
 import org.junit.Test
 import proton.android.pass.account.fakes.FakeAccountManager
 import proton.android.pass.clipboard.fakes.FakeClipboardManager
+import proton.android.pass.common.fakes.FakeAppDispatchers
 import proton.android.pass.commonpresentation.fakes.attachments.FakeAttachmentHandler
 import proton.android.pass.commonui.fakes.FakeSavedStateHandleProvider
 import proton.android.pass.commonuimodels.api.ItemUiModel
@@ -137,7 +138,8 @@ class CreateCreditCardViewModelTest {
             canCreateItemsInFolder = fakeCanCreateItemsInFolder,
             settingsRepository = settingsRepository,
             observeFolder = FakeObserveFolder(),
-            observeFoldersByParentId = FakeObserveFoldersByParentId()
+            observeFoldersByParentId = FakeObserveFoldersByParentId(),
+            appDispatchers = FakeAppDispatchers()
         )
     }
 

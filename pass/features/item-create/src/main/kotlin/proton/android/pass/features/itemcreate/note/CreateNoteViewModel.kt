@@ -40,6 +40,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import me.proton.core.accountmanager.domain.AccountManager
 import proton.android.pass.clipboard.api.ClipboardManager
+import proton.android.pass.common.api.AppDispatchers
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
@@ -123,7 +124,8 @@ class CreateNoteViewModel @Inject constructor(
     savedStateHandleProvider: SavedStateHandleProvider,
     observeShare: ObserveShare,
     private val canCreateItemsInFolder: CanCreateItemsInFolder,
-    private val settingsRepository: InternalSettingsRepository
+    private val settingsRepository: InternalSettingsRepository,
+    appDispatchers: AppDispatchers
 ) : BaseNoteViewModel(
     clipboardManager = clipboardManager,
     canPerformPaidAction = canPerformPaidAction,
@@ -134,6 +136,7 @@ class CreateNoteViewModel @Inject constructor(
     customFieldDraftRepository = customFieldDraftRepository,
     noteItemFormProcessor = noteItemFormProcessor,
     encryptionContextProvider = encryptionContextProvider,
+    appDispatchers = appDispatchers,
     savedStateHandleProvider = savedStateHandleProvider
 ) {
 

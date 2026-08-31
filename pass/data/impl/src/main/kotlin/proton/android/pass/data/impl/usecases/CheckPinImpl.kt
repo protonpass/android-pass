@@ -20,9 +20,9 @@ package proton.android.pass.data.impl.usecases
 
 import android.content.Context
 import dagger.hilt.android.qualifiers.ApplicationContext
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import me.proton.core.crypto.common.keystore.EncryptedByteArray
+import proton.android.pass.common.api.AppDispatchers
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.usecases.CheckPin
 import proton.android.pass.data.impl.util.PinFileConfig
@@ -34,9 +34,10 @@ import javax.inject.Singleton
 @Singleton
 class CheckPinImpl @Inject constructor(
     @param:ApplicationContext private val context: Context,
-    private val encryptionContextProvider: EncryptionContextProvider
+    private val encryptionContextProvider: EncryptionContextProvider,
+    private val appDispatchers: AppDispatchers
 ) : CheckPin {
-    override suspend fun invoke(pin: ByteArray): Boolean = withContext(Dispatchers.IO) {
+    override suspend fun invoke(pin: ByteArray): Boolean = withContext(appDispatchers.io) {
         val file = File(context.dataDir, PinFileConfig.FILE_NAME)
         if (!file.exists() || file.isDirectory) {
             PassLogger.w(TAG, "Pin file does not exist")

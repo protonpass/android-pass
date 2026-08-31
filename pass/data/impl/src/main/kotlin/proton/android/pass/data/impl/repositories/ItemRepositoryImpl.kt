@@ -20,7 +20,6 @@ package proton.android.pass.data.impl.repositories
 
 import androidx.paging.PagingData
 import androidx.paging.map
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
@@ -1711,7 +1710,7 @@ class ItemRepositoryImpl @Inject constructor(
         destinationKey: ShareKey,
         items: List<ItemEntity>,
         destinationFolderId: FolderId? = null
-    ): List<ItemEntity> = withContext(Dispatchers.Default) {
+    ): List<ItemEntity> = withContext(appDispatchers.default) {
         val userAddress = shareRepository.getAddressForShareId(userId, source)
         items.chunked(MAX_BATCH_ITEMS_PER_REQUEST).map { chunk ->
             async {

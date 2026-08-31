@@ -20,8 +20,10 @@ package proton.android.pass.data.impl.usecases.assetlink
 
 import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.runTest
 import org.junit.Test
+import proton.android.pass.common.fakes.FakeAppDispatchers
 import proton.android.pass.commonrust.api.DomainManager
 import proton.android.pass.data.fakes.repositories.FakeAssetLinkRepository
 import proton.android.pass.domain.assetlink.AssetLink
@@ -36,7 +38,8 @@ class UpdateAssetLinkImplTest {
             assetLinkRepository = repository,
             domainManager = object : DomainManager {
                 override fun getRoot(url: String): String = url.removePrefix("https://")
-            }
+            },
+            appDispatchers = FakeAppDispatchers.withTestDispatcher(StandardTestDispatcher(testScheduler))
         )
 
         instance((1..21).map { "https://website-$it.test" }.toSet())
@@ -62,7 +65,8 @@ class UpdateAssetLinkImplTest {
             assetLinkRepository = repository,
             domainManager = object : DomainManager {
                 override fun getRoot(url: String): String = url.removePrefix("https://")
-            }
+            },
+            appDispatchers = FakeAppDispatchers.withTestDispatcher(StandardTestDispatcher(testScheduler))
         )
 
         instance((1..10).map { "https://website-$it.test" }.toSet())

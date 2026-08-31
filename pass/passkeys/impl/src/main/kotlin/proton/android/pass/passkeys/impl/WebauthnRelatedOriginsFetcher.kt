@@ -18,13 +18,13 @@
 
 package proton.android.pass.passkeys.impl
 
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.SerializationException
 import kotlinx.serialization.json.Json
 import okhttp3.OkHttpClient
 import okhttp3.Request
+import proton.android.pass.common.api.AppDispatchers
 import proton.android.pass.commonrust.MobileFetchException
 import proton.android.pass.commonrust.MobileWebauthnClientFetcher
 import proton.android.pass.commonrust.MobileWebauthnDomainsResponse
@@ -35,10 +35,11 @@ import javax.inject.Singleton
 
 @Singleton
 internal class WebauthnRelatedOriginsFetcher @Inject constructor(
-    @param:PublicOkhttpClient private val okHttpClient: OkHttpClient
+    @param:PublicOkhttpClient private val okHttpClient: OkHttpClient,
+    private val appDispatchers: AppDispatchers
 ) : MobileWebauthnClientFetcher {
 
-    override suspend fun fetch(url: String): MobileWebauthnDomainsResponse = withContext(Dispatchers.IO) {
+    override suspend fun fetch(url: String): MobileWebauthnDomainsResponse = withContext(appDispatchers.io) {
         runCatching {
             if (!url.startsWith("https://")) throw MobileFetchException.CannotFetch("Only HTTPS URLs are allowed")
             val request = Request.Builder().url(url).build()

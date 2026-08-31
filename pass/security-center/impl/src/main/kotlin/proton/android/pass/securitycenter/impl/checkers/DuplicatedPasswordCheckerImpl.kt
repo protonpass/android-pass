@@ -18,9 +18,9 @@
 
 package proton.android.pass.securitycenter.impl.checkers
 
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.withContext
+import proton.android.pass.common.api.AppDispatchers
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.usecases.ItemTypeFilter
 import proton.android.pass.data.api.usecases.ObserveItems
@@ -36,7 +36,8 @@ import javax.inject.Inject
 
 class DuplicatedPasswordCheckerImpl @Inject constructor(
     private val observeItems: ObserveItems,
-    private val encryptionContextProvider: EncryptionContextProvider
+    private val encryptionContextProvider: EncryptionContextProvider,
+    private val appDispatchers: AppDispatchers
 ) : DuplicatedPasswordChecker {
 
     override suspend fun invoke(item: Item): DuplicatedPasswordReport {
@@ -61,7 +62,7 @@ class DuplicatedPasswordCheckerImpl @Inject constructor(
             loginItem.id != item.id && !loginItem.isCheckExcluded(SecurityCheck.ReusedPassword)
         }
 
-        return withContext(Dispatchers.Default) {
+        return withContext(appDispatchers.default) {
             val duplicatedPasswordItems = mutableSetOf<Item>()
             encryptionContextProvider.withEncryptionContext {
                 items.forEach { loginItem ->

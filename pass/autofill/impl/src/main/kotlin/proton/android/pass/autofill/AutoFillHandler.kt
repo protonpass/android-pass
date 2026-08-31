@@ -30,7 +30,6 @@ import android.view.Display
 import androidx.annotation.ChecksSdkIntAtLeast
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.currentCoroutineContext
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.isActive
@@ -49,6 +48,7 @@ import proton.android.pass.autofill.heuristics.NodeExtractor
 import proton.android.pass.autofill.heuristics.focused
 import proton.android.pass.autofill.autofillhealth.model.AutofillHealthEventType
 import proton.android.pass.autofill.autofillhealth.service.AutofillHealthMonitor
+import proton.android.pass.common.api.AppDispatchers
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.some
@@ -78,7 +78,8 @@ object AutoFillHandler {
         thirdPartyModeProvider: ThirdPartyModeProvider,
         autofillDisplayPreference: AutofillDisplayPreference,
         isAutosaveEnabled: Boolean,
-        healthMonitor: AutofillHealthMonitor? = null
+        healthMonitor: AutofillHealthMonitor? = null,
+        appDispatchers: AppDispatchers
     ) {
         val windowNode = getWindowNodes(request.fillContexts).lastOrNull()
         if (windowNode?.rootViewNode == null) {
@@ -96,7 +97,7 @@ object AutoFillHandler {
             )
             callback.onSuccess(null)
         }
-        val job = CoroutineScope(Dispatchers.IO).launch(handler) {
+        val job = CoroutineScope(appDispatchers.io).launch(handler) {
             val response = searchAndFill(
                 context = context,
                 windowNode = windowNode,

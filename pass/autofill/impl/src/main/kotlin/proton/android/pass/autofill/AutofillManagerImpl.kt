@@ -24,7 +24,6 @@ import android.content.Intent
 import android.net.Uri
 import android.provider.Settings
 import dagger.hilt.android.qualifiers.ApplicationContext
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.currentCoroutineContext
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
@@ -40,6 +39,7 @@ import proton.android.pass.autofill.api.AutofillStatus
 import proton.android.pass.autofill.api.AutofillSupportedStatus
 import proton.android.pass.autofill.api.AutofillSupportedStatus.Supported
 import proton.android.pass.autofill.api.AutofillSupportedStatus.Unsupported
+import proton.android.pass.common.api.AppDispatchers
 import proton.android.pass.log.api.PassLogger
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -48,7 +48,8 @@ import android.view.autofill.AutofillManager as AndroidAutofillManager
 
 @Singleton
 class AutofillManagerImpl @Inject constructor(
-    @param:ApplicationContext private val context: Context
+    @param:ApplicationContext private val context: Context,
+    private val appDispatchers: AppDispatchers
 ) : AutofillManager {
 
     private val autofillManager: AndroidAutofillManager? =
@@ -86,7 +87,7 @@ class AutofillManagerImpl @Inject constructor(
         }
     }
         .distinctUntilChanged()
-        .flowOn(Dispatchers.Default)
+        .flowOn(appDispatchers.default)
 
     private suspend fun getHasEnabledAutofillServices(): Boolean =
         runInterruptible { autofillManager?.hasEnabledAutofillServices() ?: false }

@@ -25,6 +25,7 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import proton.android.pass.clipboard.fakes.FakeClipboardManager
+import proton.android.pass.common.fakes.FakeAppDispatchers
 import proton.android.pass.commonpresentation.fakes.attachments.FakeAttachmentHandler
 import proton.android.pass.commonui.fakes.FakeSavedStateHandleProvider
 import proton.android.pass.crypto.fakes.context.FakeEncryptionContext
@@ -60,7 +61,8 @@ class BaseCreditCardViewModelTest {
             customFieldHandler = CustomFieldHandlerImpl(FakeTotpManager(), FakeEncryptionContextProvider()),
             customFieldDraftRepository = CustomFieldDraftRepositoryImpl(),
             creditCardItemFormProcessor = FakeCreditCardItemFormProcessor(),
-            clipboardManager = FakeClipboardManager()
+            clipboardManager = FakeClipboardManager(),
+            appDispatchers = FakeAppDispatchers()
         ) {}
     }
 

@@ -23,13 +23,13 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.coroutineScope
 import androidx.work.ExistingPeriodicWorkPolicy
 import androidx.work.WorkManager
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.launch
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.presentation.app.AppLifecycleProvider
+import proton.android.pass.common.api.AppDispatchers
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.preferences.InternalSettingsRepository
 import proton.android.pass.telemetry.api.InstallReferrerProvider
@@ -53,7 +53,8 @@ class TelemetryStartupManagerImpl @Inject constructor(
     private val accountManager: AccountManager,
     private val telemetryManager: TelemetryManager,
     private val internalSettingsRepository: InternalSettingsRepository,
-    private val installReferrerProvider: InstallReferrerProvider
+    private val installReferrerProvider: InstallReferrerProvider,
+    private val appDispatchers: AppDispatchers
 ) : TelemetryStartupManager {
 
     private var isFirstForeground = true
@@ -69,7 +70,7 @@ class TelemetryStartupManagerImpl @Inject constructor(
 
     private suspend fun startWorker() {
         accountManager.getPrimaryUserId()
-            .flowOn(Dispatchers.IO)
+            .flowOn(appDispatchers.io)
             .collectLatest {
                 if (it == null) {
                     cancelWorker()

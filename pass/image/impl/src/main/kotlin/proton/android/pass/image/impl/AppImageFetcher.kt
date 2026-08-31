@@ -31,10 +31,10 @@ import coil.fetch.Fetcher
 import coil.fetch.SourceResult
 import coil.request.Options
 import dagger.hilt.android.qualifiers.ApplicationContext
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
+import proton.android.pass.common.api.AppDispatchers
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Some
 import proton.android.pass.commonui.api.AndroidUtils
@@ -50,22 +50,24 @@ import kotlin.random.Random
 @Singleton
 class AppImageFetcherFactory @Inject constructor(
     @param:ApplicationContext private val context: Context,
-    private val clock: Clock
+    private val clock: Clock,
+    private val appDispatchers: AppDispatchers
 ) : Fetcher.Factory<PackageName> {
     override fun create(
         data: PackageName,
         options: Options,
         imageLoader: ImageLoader
-    ): Fetcher = AppImageFetcher(context, clock, data)
+    ): Fetcher = AppImageFetcher(context, clock, data, appDispatchers)
 }
 
 class AppImageFetcher(
     private val context: Context,
     private val clock: Clock,
-    private val packageName: PackageName
+    private val packageName: PackageName,
+    private val appDispatchers: AppDispatchers
 ) : Fetcher {
 
-    override suspend fun fetch(): FetchResult? = withContext(Dispatchers.IO) {
+    override suspend fun fetch(): FetchResult? = withContext(appDispatchers.io) {
         performFetch()
     }
 

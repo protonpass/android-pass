@@ -30,6 +30,7 @@ import org.junit.Rule
 import org.junit.Test
 import proton.android.pass.account.fakes.FakeAccountManager
 import proton.android.pass.clipboard.fakes.FakeClipboardManager
+import proton.android.pass.common.fakes.FakeAppDispatchers
 import proton.android.pass.commonpresentation.fakes.attachments.FakeAttachmentHandler
 import proton.android.pass.commonrust.fakes.FakeEmailValidator
 import proton.android.pass.commonrust.fakes.FakePasswordScorer
@@ -170,7 +171,8 @@ internal class CreateLoginNavItemViewModelTest {
             observeFoldersByParentId = FakeObserveFoldersByParentId(),
             getPopularServices = FakeGetPopularServices(),
             canCreateAlias = FakeCanCreateAlias(),
-            canCreateItemsInFolder = FakeCanCreateItemsInFolder()
+            canCreateItemsInFolder = FakeCanCreateItemsInFolder(),
+            appDispatchers = FakeAppDispatchers()
         )
     }
 

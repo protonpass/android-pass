@@ -24,12 +24,12 @@ import android.content.Context
 import android.content.pm.PackageManager
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
+import proton.android.pass.common.api.AppDispatchers
 import proton.android.pass.log.api.PassLogger
 import java.io.BufferedReader
 import java.io.IOException
@@ -38,7 +38,8 @@ import javax.inject.Singleton
 
 @Singleton
 class AutofillLogcatReader @Inject constructor(
-    @ApplicationContext private val context: Context
+    @ApplicationContext private val context: Context,
+    private val appDispatchers: AppDispatchers
 ) {
 
     private val _entries = MutableStateFlow<List<LogcatEntry>>(emptyList())
@@ -52,7 +53,7 @@ class AutofillLogcatReader @Inject constructor(
 
     private var process: Process? = null
     private var readJob: Job? = null
-    private val scope = CoroutineScope(Dispatchers.IO)
+    private val scope = CoroutineScope(appDispatchers.io)
 
     private val autofillTagFilter = Regex("autofill", RegexOption.IGNORE_CASE)
 

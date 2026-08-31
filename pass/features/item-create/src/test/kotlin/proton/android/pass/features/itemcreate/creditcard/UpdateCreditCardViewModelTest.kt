@@ -29,6 +29,7 @@ import org.junit.Rule
 import org.junit.Test
 import proton.android.pass.account.fakes.FakeAccountManager
 import proton.android.pass.clipboard.fakes.FakeClipboardManager
+import proton.android.pass.common.fakes.FakeAppDispatchers
 import proton.android.pass.commonpresentation.fakes.attachments.FakeAttachmentHandler
 import proton.android.pass.commonui.fakes.FakeSavedStateHandleProvider
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
@@ -120,7 +121,8 @@ class UpdateCreditCardViewModelTest {
         clipboardManager = FakeClipboardManager(),
         observeShare = observeShare,
         observeItemById = observeItemById,
-        settingsRepository = settingsRepository
+        settingsRepository = settingsRepository,
+        appDispatchers = FakeAppDispatchers()
     )
 
     @Test

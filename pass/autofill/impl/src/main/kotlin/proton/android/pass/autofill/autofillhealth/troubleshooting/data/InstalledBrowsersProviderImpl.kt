@@ -25,20 +25,21 @@ import android.content.pm.ResolveInfo
 import android.net.Uri
 import android.os.Build
 import dagger.hilt.android.qualifiers.ApplicationContext
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.xmlpull.v1.XmlPullParser
 import proton.android.pass.autofill.ThirdPartyModeProvider
 import proton.android.pass.autofill.service.R
+import proton.android.pass.common.api.AppDispatchers
 import javax.inject.Inject
 
 class InstalledBrowsersProviderImpl @Inject constructor(
     @param:ApplicationContext private val context: Context,
     private val workingBrowsersStore: AutofillWorkingBrowsersStore,
-    private val thirdPartyModeProvider: ThirdPartyModeProvider
+    private val thirdPartyModeProvider: ThirdPartyModeProvider,
+    private val appDispatchers: AppDispatchers
 ) : InstalledBrowsersProvider {
 
-    override suspend fun getInstalledBrowsers(): List<BrowserInfo> = withContext(Dispatchers.IO) {
+    override suspend fun getInstalledBrowsers(): List<BrowserInfo> = withContext(appDispatchers.io) {
         val packageManager = context.packageManager
         val compatVersionCaps = readCompatVersionCaps()
         val workingBrowsers = workingBrowsersStore.getWorkingBrowsers()

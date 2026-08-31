@@ -43,6 +43,7 @@ dependencies {
     implementation(libs.core.utilKotlin)
     implementation(libs.kotlinx.datetime)
 
+    implementation(projects.pass.common.api)
     implementation(projects.pass.commonUi.api)
     implementation(projects.pass.crypto.api)
     implementation(projects.pass.data.api)

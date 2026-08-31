@@ -23,6 +23,7 @@ import kotlinx.coroutines.test.runTest
 import me.proton.core.domain.entity.UserId
 import org.junit.Before
 import org.junit.Test
+import proton.android.pass.common.fakes.FakeAppDispatchers
 import proton.android.pass.crypto.fakes.context.FakeEncryptionContextProvider
 import proton.android.pass.data.fakes.repositories.FakeSearchIndexRepository
 import proton.android.pass.data.impl.fakes.FakeLocalItemDataSource
@@ -53,7 +54,8 @@ class AliasRepositoryImplTest {
             remoteDataSource = remoteDataSource,
             localItemDataSource = localItemDataSource,
             searchIndexRepository = searchIndexRepository,
-            encryptionContextProvider = encryptionContextProvider
+            encryptionContextProvider = encryptionContextProvider,
+            appDispatchers = FakeAppDispatchers()
         )
     }
 

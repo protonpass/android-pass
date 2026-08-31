@@ -18,8 +18,8 @@
 
 package proton.android.pass.data.impl.usecases
 
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import proton.android.pass.common.api.AppDispatchers
 import proton.android.pass.data.api.repositories.AssetLinkRepository
 import proton.android.pass.data.api.usecases.ClearPin
 import proton.android.pass.data.api.usecases.ResetAppToDefaults
@@ -38,7 +38,8 @@ class ResetAppToDefaultsImpl @Inject constructor(
     private val setAppLockType: SetAppLockType,
     private val localAppLockTypeDataSource: LocalAppLockTypeDataSource,
     private val clearPin: ClearPin,
-    private val assetLinkRepository: AssetLinkRepository
+    private val assetLinkRepository: AssetLinkRepository,
+    private val appDispatchers: AppDispatchers
 ) : ResetAppToDefaults {
     override suspend fun invoke() {
         PassLogger.i(TAG, "Clearing preferences")
@@ -77,7 +78,7 @@ class ResetAppToDefaultsImpl @Inject constructor(
                 clearPin()
             }
 
-        runCatching { withContext(Dispatchers.IO) { assetLinkRepository.purgeAll() } }
+        runCatching { withContext(appDispatchers.io) { assetLinkRepository.purgeAll() } }
             .onSuccess { PassLogger.d(TAG, "Asset links purged") }
             .onFailure {
                 PassLogger.w(TAG, "Error purging asset links")

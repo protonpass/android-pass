@@ -25,8 +25,8 @@ import coil.ImageLoader
 import coil.ImageLoaderFactory
 import dagger.hilt.android.HiltAndroidApp
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import proton.android.pass.common.api.AppDispatchers
 import proton.android.pass.inappreview.api.InAppReviewTriggerMetrics
 import proton.android.pass.initializer.MainInitializer
 import proton.android.pass.log.api.PassLogger
@@ -46,6 +46,9 @@ class App : Application(), ImageLoaderFactory {
     @Inject
     lateinit var inAppReviewTriggerMetrics: InAppReviewTriggerMetrics
 
+    @Inject
+    lateinit var appDispatchers: AppDispatchers
+
     override fun newImageLoader(): ImageLoader = imageLoader.get()
 
     override fun onCreate() {
@@ -59,7 +62,7 @@ class App : Application(), ImageLoaderFactory {
         registerActivityLifecycleCallbacks(
             activityLifecycleCallbacks(
                 onActivityCreated = { activity, _ ->
-                    CoroutineScope(Dispatchers.IO).launch {
+                    CoroutineScope(appDispatchers.io).launch {
                         inAppReviewTriggerMetrics.incrementAppLaunchStreakCount()
                     }
                     PassLogger.i(TAG, "Created activity ${activity::class.java.simpleName}")

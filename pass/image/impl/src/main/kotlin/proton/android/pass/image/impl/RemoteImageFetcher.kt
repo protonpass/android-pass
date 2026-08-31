@@ -27,11 +27,11 @@ import coil.fetch.Fetcher
 import coil.fetch.SourceResult
 import coil.request.Options
 import dagger.hilt.android.qualifiers.ApplicationContext
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.withContext
 import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
+import proton.android.pass.common.api.AppDispatchers
 import proton.android.pass.crypto.api.HashUtils
 import proton.android.pass.data.api.url.UrlSanitizer
 import proton.android.pass.data.api.usecases.ImageResponseResult
@@ -48,23 +48,25 @@ import kotlin.random.Random
 class RemoteImageFetcherFactory @Inject constructor(
     private val requestImage: RequestImage,
     @param:ApplicationContext private val context: Context,
-    private val clock: Clock
+    private val clock: Clock,
+    private val appDispatchers: AppDispatchers
 ) : Fetcher.Factory<WebsiteUrl> {
     override fun create(
         data: WebsiteUrl,
         options: Options,
         imageLoader: ImageLoader
-    ): Fetcher = RemoteImageFetcher(requestImage, context, clock, data)
+    ): Fetcher = RemoteImageFetcher(requestImage, context, clock, data, appDispatchers)
 }
 
 class RemoteImageFetcher(
     private val requestImage: RequestImage,
     private val context: Context,
     private val clock: Clock,
-    private val webs: WebsiteUrl
+    private val webs: WebsiteUrl,
+    private val appDispatchers: AppDispatchers
 ) : Fetcher {
 
-    override suspend fun fetch(): FetchResult? = withContext(Dispatchers.IO) {
+    override suspend fun fetch(): FetchResult? = withContext(appDispatchers.io) {
         performFetch()
     }
 

@@ -30,7 +30,6 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toPersistentList
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.combine
@@ -42,6 +41,7 @@ import kotlinx.coroutines.withContext
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.user.domain.UserManager
 import proton.android.pass.autofill.api.AutofillManager
+import proton.android.pass.common.api.AppDispatchers
 import proton.android.pass.common.api.FlowUtils.oneShot
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
@@ -73,7 +73,8 @@ class ReportViewModel @Inject constructor(
     private val sendReport: SendReport,
     private val snackbarDispatcher: SnackbarDispatcher,
     private val canDeviceSupportPasskeys: CanDeviceSupportPasskeys,
-    private val emailValidator: EmailValidator
+    private val emailValidator: EmailValidator,
+    private val appDispatchers: AppDispatchers
 ) : ViewModel() {
 
     @OptIn(SavedStateHandleSaveableApi::class)
@@ -156,7 +157,7 @@ class ReportViewModel @Inject constructor(
         context: Context,
         index: Int,
         uri: Uri
-    ): File = withContext(Dispatchers.IO) {
+    ): File = withContext(appDispatchers.io) {
         val fileType = context.contentResolver.getType(uri)
         val fileExtension = MimeTypeMap.getSingleton().getExtensionFromMimeType(fileType)
         val fileName = "extra_report_file_$index${fileExtension?.let { ".$it" } ?: ""}"

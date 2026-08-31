@@ -22,8 +22,8 @@ import android.content.Context
 import android.system.Os
 import android.system.OsConstants
 import dagger.hilt.android.qualifiers.ApplicationContext
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import proton.android.pass.common.api.AppDispatchers
 import proton.android.pass.common.api.safeRunCatching
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.preferences.AppLockTimePreference
@@ -36,14 +36,15 @@ import javax.inject.Singleton
 
 @Singleton
 class LocalAppLockTypeDataSourceImpl @Inject constructor(
-    @param:ApplicationContext private val context: Context
+    @param:ApplicationContext private val context: Context,
+    private val appDispatchers: AppDispatchers
 ) : LocalAppLockTypeDataSource {
 
     private val storeDir: File
         get() = context.noBackupFilesDir
 
     override suspend fun store(type: AppLockTypePreference, time: AppLockTimePreference): Result<Unit> =
-        withContext(Dispatchers.IO) {
+        withContext(appDispatchers.io) {
             val file = File(storeDir, FILE_NAME)
             val tmp = File(storeDir, TMP_FILE_NAME)
             when (type) {
@@ -62,7 +63,7 @@ class LocalAppLockTypeDataSourceImpl @Inject constructor(
                 .onFailure { PassLogger.w(TAG, it, "Failed to store app lock state: type=$type") }
         }
 
-    override suspend fun read(): AppLockTypeRecord = withContext(Dispatchers.IO) {
+    override suspend fun read(): AppLockTypeRecord = withContext(appDispatchers.io) {
         val file = File(storeDir, FILE_NAME)
         if (!file.exists() || file.isDirectory) {
             PassLogger.i(TAG, "App lock state file missing (isDirectory=${file.isDirectory})")

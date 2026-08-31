@@ -26,6 +26,7 @@ import org.junit.Before
 import org.junit.Test
 import proton.android.pass.account.fakes.FakeUserAddressRepository
 import proton.android.pass.account.fakes.FakeUserRepository
+import proton.android.pass.common.fakes.FakeAppDispatchers
 import proton.android.pass.crypto.fakes.context.FakeEncryptionContext
 import proton.android.pass.crypto.fakes.context.FakeEncryptionContextProvider
 import proton.android.pass.crypto.fakes.usecases.FakeCreateVault
@@ -80,7 +81,8 @@ class ShareRepositoryTest {
                 sendValue(null)
             },
             groupRepository = FakeGroupRepository(),
-            searchIndexRepository = FakeSearchIndexRepository()
+            searchIndexRepository = FakeSearchIndexRepository(),
+            appDispatchers = FakeAppDispatchers()
         )
     }
 

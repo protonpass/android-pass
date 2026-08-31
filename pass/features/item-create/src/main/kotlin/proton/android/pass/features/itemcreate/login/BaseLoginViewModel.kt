@@ -27,7 +27,6 @@ import androidx.lifecycle.viewmodel.compose.SavedStateHandleSaveableApi
 import androidx.lifecycle.viewmodel.compose.saveable
 import kotlinx.collections.immutable.toPersistentList
 import kotlinx.collections.immutable.toPersistentSet
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -44,6 +43,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import me.proton.core.accountmanager.domain.AccountManager
 import proton.android.pass.clipboard.api.ClipboardManager
+import proton.android.pass.common.api.AppDispatchers
 import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
@@ -124,6 +124,7 @@ abstract class BaseLoginViewModel(
     protected val customFieldHandler: CustomFieldHandler,
     private val customFieldDraftRepository: CustomFieldDraftRepository,
     private val loginItemFormProcessor: LoginItemFormProcessorType,
+    private val appDispatchers: AppDispatchers,
     canCreateAlias: CanCreateAlias,
     observeCurrentUser: ObserveCurrentUser,
     observeUpgradeInfo: ObserveUpgradeInfo,
@@ -520,7 +521,7 @@ abstract class BaseLoginViewModel(
         )
     }
 
-    fun onPasteTotp() = viewModelScope.launch(Dispatchers.IO) {
+    fun onPasteTotp() = viewModelScope.launch(appDispatchers.io) {
         onUserEditedContent()
         clipboardManager.getClipboardContent()
             .onSuccess { clipboardContent ->
@@ -530,7 +531,7 @@ abstract class BaseLoginViewModel(
                 val encryptedContent = encryptionContextProvider.withEncryptionContext {
                     encrypt(sanitisedContent)
                 }
-                withContext(Dispatchers.Main) {
+                withContext(appDispatchers.main) {
                     when (val field = focusedFieldFlow.value.value()) {
                         is LoginField.CustomField -> {
                             val customFieldTOTP =

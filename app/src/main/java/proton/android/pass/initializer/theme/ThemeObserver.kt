@@ -20,7 +20,6 @@ package proton.android.pass.initializer.theme
 
 import androidx.appcompat.app.AppCompatDelegate
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -47,15 +46,15 @@ class ThemeObserver @Inject constructor(
         ThemePreference.System -> setNightModeFollowSystem()
     }
 
-    private suspend fun setNightModeFollowSystem() = withContext(Dispatchers.Main) {
+    private suspend fun setNightModeFollowSystem() = withContext(appDispatchers.main) {
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
     }
 
-    private suspend fun setNightModeEnabled() = withContext(Dispatchers.Main) {
+    private suspend fun setNightModeEnabled() = withContext(appDispatchers.main) {
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
     }
 
-    private suspend fun setNightModeDisabled() = withContext(Dispatchers.Main) {
+    private suspend fun setNightModeDisabled() = withContext(appDispatchers.main) {
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
     }
 }

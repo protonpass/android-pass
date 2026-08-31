@@ -45,6 +45,7 @@ dependencies {
     implementation(libs.core.cryptoCommon)
     implementation(libs.core.utilKotlin)
 
+    implementation(projects.pass.common.api)
     implementation(projects.pass.crypto.api)
     implementation(projects.pass.preferences.api)
     implementation(projects.pass.log.api)

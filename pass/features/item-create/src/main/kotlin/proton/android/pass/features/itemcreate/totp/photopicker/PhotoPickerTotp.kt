@@ -33,8 +33,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.LocalContext
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.google.zxing.RGBLuminanceSource
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import proton.android.pass.features.itemcreate.totp.imageprocessing.ZxingWrapper
@@ -47,8 +47,11 @@ import java.io.IOException
 fun PhotoPickerTotpScreen(
     onQrReceived: (String) -> Unit,
     onQrNotDetected: () -> Unit,
-    onPhotoPickerDismissed: () -> Unit
+    onPhotoPickerDismissed: () -> Unit,
+    viewModel: PhotoPickerTotpViewModel = hiltViewModel()
 ) {
+    val defaultDispatcher = viewModel.appDispatchers.default
+    val mainDispatcher = viewModel.appDispatchers.main
     val context = LocalContext.current
     var totpUriResult by remember { mutableStateOf<TotpUriResult>(TotpUriResult.NotStarted) }
     val pickMedia = rememberLauncherForActivityResult(PickVisualMedia()) {
@@ -64,7 +67,7 @@ fun PhotoPickerTotpScreen(
             TotpUriResult.Cancelled -> onPhotoPickerDismissed()
             TotpUriResult.NotStarted -> {}
             is TotpUriResult.Success -> {
-                scope.launch(Dispatchers.Default) {
+                scope.launch(defaultDispatcher) {
                     try {
                         val bitmap = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
                             ImageDecoder.decodeBitmap(
@@ -77,16 +80,16 @@ fun PhotoPickerTotpScreen(
                         bitmap.getPixels(pixels, 0, bitmap.width, 0, 0, bitmap.width, bitmap.height)
                         val source = RGBLuminanceSource(bitmap.width, bitmap.height, pixels)
                         ZxingWrapper.tryReadingQrCode(source)
-                            .onSuccess { withContext(Dispatchers.Main) { onQrReceived(it) } }
-                            .onFailure { withContext(Dispatchers.Main) { onQrNotDetected() } }
+                            .onSuccess { withContext(mainDispatcher) { onQrReceived(it) } }
+                            .onFailure { withContext(mainDispatcher) { onQrNotDetected() } }
                     } catch (e: IOException) {
                         PassLogger.w(TAG, "Error decoding bitmap")
                         PassLogger.w(TAG, e)
-                        withContext(Dispatchers.Main) { onQrNotDetected() }
+                        withContext(mainDispatcher) { onQrNotDetected() }
                     } catch (e: FileNotFoundException) {
                         PassLogger.w(TAG, "File not found")
                         PassLogger.w(TAG, e)
-                        withContext(Dispatchers.Main) { onQrNotDetected() }
+                        withContext(mainDispatcher) { onQrNotDetected() }
                     }
                 }
             }

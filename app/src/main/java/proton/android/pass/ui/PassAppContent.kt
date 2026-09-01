@@ -143,6 +143,7 @@ fun PassAppContent(
     onLocalInAppMessageClick: (InAppMessage.Local) -> Unit,
     onLocalInAppMessageEventConsumed: () -> Unit,
     onNotificationPermissionChanged: (Boolean) -> Unit,
+    onNotificationPermissionDenied: () -> Unit,
     needsAuth: Boolean,
     forceReauth: Boolean,
     supportPayment: Boolean
@@ -231,7 +232,8 @@ fun PassAppContent(
             shouldRequestNotificationPermission = false
             onLocalInAppMessageEventConsumed()
         },
-        onPermissionChanged = onNotificationPermissionChanged
+        onPermissionChanged = onNotificationPermissionChanged,
+        onPermissionDenied = onNotificationPermissionDenied
     )
 
     LaunchedEffect(localInAppMessageEvent) {

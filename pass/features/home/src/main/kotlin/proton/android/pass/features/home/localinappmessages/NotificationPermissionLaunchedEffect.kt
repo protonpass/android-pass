@@ -38,11 +38,14 @@ import proton.android.pass.log.api.PassLogger
 fun NotificationPermissionLaunchedEffect(
     shouldRequestPermissions: Boolean,
     onPermissionRequested: () -> Unit,
-    onPermissionChanged: (Boolean) -> Unit
+    onPermissionChanged: (Boolean) -> Unit,
+    onPermissionDenied: () -> Unit
 ) {
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-        val permissionState =
-            rememberPermissionState(permission = Manifest.permission.POST_NOTIFICATIONS)
+        val permissionState = rememberPermissionState(
+            permission = Manifest.permission.POST_NOTIFICATIONS,
+            onPermissionResult = { isGranted -> if (!isGranted) onPermissionDenied() }
+        )
         val status = permissionState.status
         val activity = LocalActivity.current
 

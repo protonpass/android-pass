@@ -247,8 +247,8 @@ fladle {
     testTimeout.set("15m")
     runTimeout.set("30m")
     recordVideo.set(false)
-    providers.gradleProperty("flank.numUniformShards").orNull?.toIntOrNull()?.let { shards ->
-        numUniformShards.set(shards)
+    providers.gradleProperty("flank.maxTestShards").orNull?.toIntOrNull()?.let { shards ->
+        maxTestShards.set(shards)
     }
 }
 

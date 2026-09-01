@@ -79,6 +79,7 @@ fun PassApp(
         onLocalInAppMessageClick = appViewModel::onLocalInAppMessageClick,
         onLocalInAppMessageEventConsumed = appViewModel::clearLocalInAppMessageEvent,
         onNotificationPermissionChanged = appViewModel::onNotificationPermissionChanged,
+        onNotificationPermissionDenied = appViewModel::onNotificationPermissionDenied,
         supportPayment = supportPayment
     )
 }

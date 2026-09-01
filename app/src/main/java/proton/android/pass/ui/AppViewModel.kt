@@ -295,6 +295,12 @@ class AppViewModel @Inject constructor(
         }
     }
 
+    fun onNotificationPermissionDenied() {
+        viewModelScope.launch {
+            preferencesRepository.setHasDismissedNotificationBanner(HasDismissedNotificationBanner.Dismissed)
+        }
+    }
+
     fun clearLocalInAppMessageEvent() {
         localInAppMessageEventFlow.update { LocalInAppMessagesEvent.Unknown }
     }

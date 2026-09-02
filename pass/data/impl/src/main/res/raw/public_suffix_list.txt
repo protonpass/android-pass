@@ -6962,7 +6962,6 @@ ltd.ua
 a2hosted.com
 cpserver.com
 activetrail.biz
-adaptable.app
 myaddr.dev
 myaddr.io
 dyn.addr.tools
@@ -6982,7 +6981,7 @@ africa.com
 *.auiusercontent.com
 beep.pl
 aiven.app
-aivencloud.com
+*.aivencloud.com
 akadns.net
 akamai.net
 akamai-staging.net
@@ -7857,6 +7856,9 @@ eero-stage.online
 opentunnel.xyz
 antagonist.cloud
 claude.app
+claudeusercontent.com
+frame.claudeusercontent.com
+*.cursorusercontent.com
 apigee.io
 panel.dev
 siiites.com
@@ -7951,6 +7953,7 @@ bubbleapps.io
 *.bwcloud-os-instance.de
 cafjs.com
 canva-apps.cn
+canva-code.cn
 my.canvasite.cn
 khsj.cn
 canva-apps.com
@@ -8069,6 +8072,8 @@ sch.ac
 dev.cv
 store.cv
 codeberg.page
+codepen.app
+codepen.dev
 csb.app
 preview.csb.app
 co.nl
@@ -8948,6 +8953,7 @@ hepforge.org
 onhercules.app
 hercules-app.com
 hercules-dev.com
+here.now
 herokuapp.com
 heyflow.page
 heyflow.site
@@ -9043,6 +9049,7 @@ botdash.gg
 botdash.net
 botda.sh
 botdash.xyz
+online-server.cloud
 apps-1and1.com
 live-website.com
 webspace-host.com
@@ -9104,8 +9111,6 @@ ryd.wafaicloud.com
 j.scaleforce.com.cy
 jelastic.dogado.eu
 fi.cloudplatform.fi
-demo.datacenter.fi
-paas.datacenter.fi
 jele.host
 mircloud.host
 paas.beebyte.io
@@ -9187,6 +9192,8 @@ shiptoday.build
 laravel.cloud
 on-forge.com
 on-vapor.com
+*.eth.limo
+*.eth.link
 git-repos.de
 lcube-server.de
 svn-repos.de
@@ -9741,6 +9748,8 @@ nz.basketball
 subsc-pay.com
 subsc-pay.net
 git-pages.rit.edu
+*.builtwithrocket.new
+rocketpreview.app
 rocky.page
 rub.de
 ruhr-uni-bochum.de
@@ -9882,6 +9891,9 @@ scbl.pl-waw.scw.cloud
 scalebook.scw.cloud
 smartlabeling.scw.cloud
 dedibox.fr
+scw.site
+ams.scw.site
+waw.scw.site
 schokokeks.net
 gov.scot
 service.gov.scot
@@ -10141,6 +10153,7 @@ vercel.app
 v0.build
 vercel.dev
 vusercontent.net
+tmp.now
 vercel.run
 now.sh
 2038.io
@@ -10175,9 +10188,9 @@ toolforge.org
 wmcloud.org
 beta.wmcloud.org
 wmflabs.org
-vps.hrsn.au
 hrsn.dev
 is-a.dev
+vps.hrsn.net
 localcert.net
 windsurf.app
 windsurf.build
@@ -10207,9 +10220,6 @@ js.wpenginepowered.com
 grok.me
 *.xenonconnect.de
 half.host
-xnbay.com
-u2.xnbay.com
-u2-local.xnbay.com
 cistron.nl
 demon.nl
 xs4all.space

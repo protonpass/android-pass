@@ -23,6 +23,8 @@ import androidx.work.WorkManager
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
+import proton.android.pass.appconfig.api.AppConfig
+import proton.android.pass.appconfig.api.BuildEnv
 import proton.android.pass.common.api.AppDispatchers
 import proton.android.pass.data.api.usecases.InitialWorkerLauncher
 import proton.android.pass.data.api.usecases.WorkerFeature
@@ -42,8 +44,11 @@ import javax.inject.Inject
 class InitialWorkerLauncherImpl @Inject constructor(
     private val workManager: WorkManager,
     private val userPreferencesRepository: UserPreferencesRepository,
+    private val appConfig: AppConfig,
     private val appDispatchers: AppDispatchers
 ) : InitialWorkerLauncher {
+
+    private val isBlackEnv: Boolean = appConfig.flavor.env == BuildEnv.BLACK
 
     private val featureLaunchActions: Map<WorkerFeature, () -> Unit> = mapOf(
         WorkerFeature.CLEANUP to ::launchCleanupWorker,
@@ -117,11 +122,14 @@ class InitialWorkerLauncherImpl @Inject constructor(
         )
     }
 
+    // Black runs the B2B monitor report on a fast cadence so QA does not have to wait a full day.
+    // UPDATE rather than KEEP so an already installed black build picks the new interval up without
+    // a reinstall; prod keeps its daily schedule untouched.
     private fun launchReportWorker() {
         workManager.enqueueUniquePeriodicWork(
             PeriodicReportWorker.WORKER_UNIQUE_NAME,
-            ExistingPeriodicWorkPolicy.KEEP,
-            PeriodicReportWorker.getRequestFor()
+            if (isBlackEnv) ExistingPeriodicWorkPolicy.UPDATE else ExistingPeriodicWorkPolicy.KEEP,
+            PeriodicReportWorker.getRequestFor(useFastCadence = isBlackEnv)
         )
     }
 

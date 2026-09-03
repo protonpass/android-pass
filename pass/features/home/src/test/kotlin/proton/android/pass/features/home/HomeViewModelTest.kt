@@ -21,6 +21,7 @@ package proton.android.pass.features.home
 import app.cash.turbine.test
 import com.google.common.truth.Truth.assertThat
 import kotlinx.collections.immutable.persistentListOf
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
 import kotlinx.datetime.Clock
@@ -37,6 +38,7 @@ import proton.android.pass.commonui.api.GroupedItemList
 import proton.android.pass.commonui.api.GroupingKeys
 import proton.android.pass.commonui.api.toUiModel
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
+import proton.android.pass.composecomponents.impl.uievents.IsRefreshingState
 import proton.android.pass.crypto.fakes.context.FakeEncryptionContextProvider
 import proton.android.pass.data.api.SearchEntry
 import proton.android.pass.data.fakes.repositories.FakeBulkMoveToVaultRepository
@@ -692,6 +694,33 @@ internal class HomeViewModelTest {
         instance.onSharedWithMeItemSelected()
 
         assertThat(toastManager.stringResourceMessage).isEqualTo(R.string.home_toast_items_selected_shared_with_me)
+    }
+
+    @Test
+    fun `onRefresh shows RefreshError and stops refreshing when the sync fails`() = runTest {
+        performSync.setResult(Result.failure(IllegalStateException("sync failed")))
+
+        instance.homeUiState.test {
+            instance.onRefresh().join()
+
+            assertThat(expectMostRecentItem().homeListUiState.isRefreshing)
+                .isEqualTo(IsRefreshingState.NotRefreshing)
+        }
+        assertThat(snackbarDispatcher.snackbarMessage.first().value())
+            .isEqualTo(HomeSnackbarMessage.RefreshError)
+    }
+
+    @Test
+    fun `onRefresh stops refreshing without an error when the sync is cancelled`() = runTest {
+        performSync.setResult(Result.failure(CancellationException("refresh cancelled")))
+
+        instance.homeUiState.test {
+            instance.onRefresh().join()
+
+            assertThat(expectMostRecentItem().homeListUiState.isRefreshing)
+                .isEqualTo(IsRefreshingState.NotRefreshing)
+        }
+        assertThat(snackbarDispatcher.invocationCount).isEqualTo(0)
     }
 
     private fun createViewModel() {

@@ -21,6 +21,8 @@ package proton.android.pass.data.impl.repositories
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.currentCoroutineContext
+import kotlinx.coroutines.ensureActive
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
@@ -190,6 +192,7 @@ class AliasRepositoryImpl @Inject constructor(
         shareIds.forEach { shareId ->
             var afterRowId = 0L
             while (true) {
+                currentCoroutineContext().ensureActive()
                 val page = localItemDataSource.getActiveAliasItemsPage(
                     userId = userId,
                     shareId = shareId,

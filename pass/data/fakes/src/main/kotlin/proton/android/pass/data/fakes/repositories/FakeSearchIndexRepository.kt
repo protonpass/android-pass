@@ -45,6 +45,7 @@ class FakeSearchIndexRepository @Inject constructor() : SearchIndexRepository {
     private val items = mutableMapOf<String, Item>()
     private var needsRebuild = false
     private var rebuildCalled = false
+    private var rebuildError: Throwable? = null
     private val _indexingStatus = MutableStateFlow<IndexingStatus>(IndexingStatus.Ready)
 
     override fun observeIndexingStatus(): Flow<IndexingStatus> = _indexingStatus.asStateFlow()
@@ -109,7 +110,12 @@ class FakeSearchIndexRepository @Inject constructor() : SearchIndexRepository {
             .forEach { indexItem(userId, shareId, it.id) }
     }
 
+    fun setRebuildError(error: Throwable) {
+        rebuildError = error
+    }
+
     override suspend fun rebuildIndex(userId: UserId) {
+        rebuildError?.let { throw it }
         rebuildCalled = true
         needsRebuild = false
     }

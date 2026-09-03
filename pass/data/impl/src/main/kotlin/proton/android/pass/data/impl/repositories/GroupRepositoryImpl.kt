@@ -18,6 +18,8 @@
 
 package proton.android.pass.data.impl.repositories
 
+import kotlinx.coroutines.currentCoroutineContext
+import kotlinx.coroutines.ensureActive
 import kotlinx.coroutines.flow.MutableStateFlow
 import me.proton.core.domain.entity.UserId
 import me.proton.core.key.domain.entity.key.PrivateAddressKey
@@ -109,6 +111,7 @@ class GroupRepositoryImpl @Inject constructor(
         var page = 0
 
         while (true) {
+            currentCoroutineContext().ensureActive()
             val apiModels = remoteGroupsDataSource.retrieveGroupMembers(
                 userId = userId,
                 groupId = groupId,

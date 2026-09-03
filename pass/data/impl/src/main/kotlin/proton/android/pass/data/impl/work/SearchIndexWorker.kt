@@ -32,6 +32,7 @@ import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
 import kotlinx.coroutines.withContext
 import me.proton.core.domain.entity.UserId
+import proton.android.pass.common.api.safeRunCatching
 import proton.android.pass.data.api.repositories.SearchIndexRepository
 import proton.android.pass.log.api.LogAccountContext
 import proton.android.pass.log.api.PassLogger
@@ -54,7 +55,7 @@ class SearchIndexWorker @AssistedInject constructor(
         }
 
         return withContext(LogAccountContext(userId)) {
-            runCatching {
+            safeRunCatching {
                 PassLogger.i(TAG, "Rebuilding search index")
                 searchIndexRepository.rebuildIndex(userId)
                 PassLogger.i(TAG, "Search index rebuild completed successfully")

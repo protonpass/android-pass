@@ -18,7 +18,7 @@
 
 package proton.android.pass.data.impl.usecases
 
-import kotlinx.coroutines.withTimeout
+import kotlinx.coroutines.withTimeoutOrNull
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.safeRunCatching
 import proton.android.pass.data.api.usecases.PerformSync
@@ -80,11 +80,13 @@ class PerformSyncImpl @Inject constructor(
         trigger: String,
         syncReason: SyncReason,
         syncMode: SyncMode
-    ): Result<Unit> = runCatching {
-        withTimeout(2.minutes) {
+    ): Result<Unit> = safeRunCatching {
+        val synced = withTimeoutOrNull(2.minutes) {
             syncUserEvents(userId, forceSync, trigger, syncReason, syncMode)
             PassLogger.i(TAG, "User events sync for $userId finished")
+            true
         }
+        check(synced != null) { "User events sync for $userId timed out" }
     }.onFailure { error ->
         PassLogger.w(TAG, "User events sync for $userId error: ${error.message}")
     }

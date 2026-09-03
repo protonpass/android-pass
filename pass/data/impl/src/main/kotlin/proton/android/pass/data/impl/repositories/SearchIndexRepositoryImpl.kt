@@ -24,6 +24,8 @@ import androidx.paging.PagingData
 import androidx.room.InvalidationTracker
 import androidx.sqlite.db.SimpleSQLiteQuery
 import kotlinx.coroutines.CancellationException
+import kotlinx.coroutines.currentCoroutineContext
+import kotlinx.coroutines.ensureActive
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -245,6 +247,7 @@ class SearchIndexRepositoryImpl @Inject constructor(
         for (state in ItemState.entries) {
             var afterRowId = 0L
             while (true) {
+                currentCoroutineContext().ensureActive()
                 val page = localItemDataSource.getItemsPageForIndex(
                     userId = userId,
                     shareIds = shareIds,

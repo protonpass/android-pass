@@ -18,6 +18,8 @@
 
 package proton.android.pass.data.impl.remote
 
+import kotlinx.coroutines.currentCoroutineContext
+import kotlinx.coroutines.ensureActive
 import me.proton.core.domain.entity.UserId
 import me.proton.core.network.data.ApiProvider
 import me.proton.core.network.domain.ApiResult
@@ -155,6 +157,7 @@ class RemoteItemDataSourceImpl @Inject constructor(
                 var sinceToken: String? = null
                 val items = mutableListOf<ItemRevision>()
                 while (true) {
+                    currentCoroutineContext().ensureActive()
                     val response = getItems(
                         shareId = shareId.id,
                         sinceToken = sinceToken,

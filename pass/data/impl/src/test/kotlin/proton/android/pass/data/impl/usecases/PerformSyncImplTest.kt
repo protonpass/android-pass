@@ -19,6 +19,10 @@
 package proton.android.pass.data.impl.usecases
 
 import com.google.common.truth.Truth.assertThat
+import kotlinx.coroutines.awaitCancellation
+import kotlinx.coroutines.cancelAndJoin
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.test.runCurrent
 import kotlinx.coroutines.test.runTest
 import me.proton.core.domain.entity.UserId
 import org.junit.Test
@@ -56,6 +60,36 @@ class PerformSyncImplTest {
         assertThat(checkFolderForceSync.detailedInvocations).isEmpty()
     }
 
+    @Test
+    fun `carries on with the sync when user events time out`() = runTest {
+        val checkFolderForceSync = FakeCheckFolderForceSync()
+        val instance = PerformSyncImpl(
+            syncUserEvents = NeverEndingSyncUserEvents,
+            checkFolderForceSync = Provider { checkFolderForceSync }
+        )
+
+        instance.invoke(USER_ID, forceSync = false, syncMode = SyncMode.Background)
+
+        assertThat(checkFolderForceSync.detailedInvocations)
+            .containsExactly(FakeCheckFolderForceSync.Invocation(USER_ID, SyncMode.Background))
+    }
+
+    @Test
+    fun `stops the sync when the caller is cancelled during user events`() = runTest {
+        val checkFolderForceSync = FakeCheckFolderForceSync()
+        val instance = PerformSyncImpl(
+            syncUserEvents = NeverEndingSyncUserEvents,
+            checkFolderForceSync = Provider { checkFolderForceSync }
+        )
+
+        val job = launch { instance.invoke(USER_ID, forceSync = false, syncMode = SyncMode.Background) }
+        runCurrent()
+        job.cancelAndJoin()
+
+        assertThat(job.isCancelled).isTrue()
+        assertThat(checkFolderForceSync.detailedInvocations).isEmpty()
+    }
+
     private fun createInstance(checkFolderForceSync: FakeCheckFolderForceSync = FakeCheckFolderForceSync()) =
         PerformSyncImpl(
             syncUserEvents = NoOpSyncUserEvents,
@@ -70,6 +104,16 @@ class PerformSyncImplTest {
             syncReason: SyncReason,
             syncMode: SyncMode
         ) = Unit
+    }
+
+    private object NeverEndingSyncUserEvents : SyncUserEvents {
+        override suspend fun invoke(
+            userId: UserId,
+            forceSync: Boolean,
+            trigger: String,
+            syncReason: SyncReason,
+            syncMode: SyncMode
+        ) = awaitCancellation()
     }
 
     private companion object {

@@ -18,6 +18,8 @@
 
 package proton.android.pass.data.impl.remote
 
+import kotlinx.coroutines.currentCoroutineContext
+import kotlinx.coroutines.ensureActive
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import me.proton.core.domain.entity.UserId
@@ -39,6 +41,7 @@ class RemoteShareKeyDataSourceImpl @Inject constructor(
                 val shareKeys = mutableListOf<ShareKeyResponse>()
 
                 while (true) {
+                    currentCoroutineContext().ensureActive()
                     val pageKeys = getShareKeys(shareId.id, page, PAGE_SIZE)
                     shareKeys.addAll(pageKeys.keys.keys)
 

@@ -19,6 +19,9 @@
 package proton.android.pass.data.impl.repository
 
 import com.google.common.truth.Truth.assertThat
+import kotlinx.coroutines.cancel
+import kotlinx.coroutines.currentCoroutineContext
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.test.runTest
 import me.proton.core.domain.entity.UserId
 import org.junit.Before
@@ -340,6 +343,29 @@ class AliasRepositoryImplTest {
         assertThat(remoteDataSource.getFetchBulkAliasDetailsMemory()).containsExactly(
             ShareId(SHARE_ID) to listOf(ItemId(ALIAS_ITEM_ID))
         )
+    }
+
+    @Test
+    fun `refreshBulkAliasSlNotes stops paging once cancelled`() = runTest {
+        val shareId = ShareId(SHARE_ID)
+        val aliases = (0 until 150).map { index ->
+            localItemDataSource.upsertItem(
+                ItemEntityTestFactory.create(
+                    id = "paged-alias-$index",
+                    shareId = shareId.id,
+                    aliasEmail = "paged-alias-$index@example.test"
+                )
+            )
+            ItemId("paged-alias-$index") to aliasResponse("paged-alias-$index@example.test", "note-$index")
+        }
+        remoteDataSource.setBulkAliasDetailsByItemId(aliases.toMap())
+        localItemDataSource.setOnActiveAliasItemsPageRequested { currentCoroutineContext().cancel() }
+
+        val job = launch { instance.refreshBulkAliasSlNotes(USER_ID, listOf(shareId)) }
+        job.join()
+
+        assertThat(job.isCancelled).isTrue()
+        assertThat(localItemDataSource.getActiveAliasItemsPageRequests()).hasSize(1)
     }
 
     private fun aliasResponse(email: String, note: String?) = AliasResponse(

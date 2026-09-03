@@ -20,6 +20,7 @@ package proton.android.pass.data.impl.usecases.sync
 
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.safeRunCatching
+import proton.android.pass.common.api.safeRunCatchingWithCleanup
 import proton.android.pass.data.api.repositories.ItemRepository
 import proton.android.pass.data.api.repositories.ItemRevision
 import proton.android.pass.data.api.repositories.ItemSyncStatus
@@ -116,8 +117,17 @@ class ForceSyncItemsImpl @Inject constructor(
 
         val result = when {
             failedShareIds.isEmpty() -> {
+                val syncSuccess = ItemSyncStatus.SyncSuccess(
+                    hasInactiveShares = hasInactiveShares,
+                    hasInvalidGroupShares = hasInvalidGroupShares
+                )
                 // Rebuild search index after successful insertion
-                runCatching {
+                safeRunCatchingWithCleanup(
+                    onCancellation = {
+                        itemSyncStatusRepository.emit(status = syncSuccess)
+                        itemSyncStatusRepository.setMode(SyncMode.Background)
+                    }
+                ) {
                     PassLogger.i(TAG, "Starting search index rebuild")
                     searchIndexRepository.rebuildIndex(userId)
                     PassLogger.i(TAG, "Search index rebuild completed")
@@ -127,12 +137,7 @@ class ForceSyncItemsImpl @Inject constructor(
                         "Search index rebuild failed: ${error::class.simpleName}"
                     )
                 }
-                itemSyncStatusRepository.emit(
-                    status = ItemSyncStatus.SyncSuccess(
-                        hasInactiveShares = hasInactiveShares,
-                        hasInvalidGroupShares = hasInvalidGroupShares
-                    )
-                )
+                itemSyncStatusRepository.emit(status = syncSuccess)
                 ForceSyncResult.Success
             }
 

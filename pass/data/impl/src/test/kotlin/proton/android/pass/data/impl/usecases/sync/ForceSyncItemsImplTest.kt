@@ -19,6 +19,7 @@
 package proton.android.pass.data.impl.usecases.sync
 
 import com.google.common.truth.Truth.assertThat
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
 import me.proton.core.domain.entity.UserId
@@ -33,6 +34,7 @@ import proton.android.pass.data.fakes.repositories.FakeSearchIndexRepository
 import proton.android.pass.data.fakes.usecases.FakeItemSyncStatusRepository
 import proton.android.pass.data.fakes.usecases.folders.FakeRefreshFolders
 import proton.android.pass.domain.ShareId
+import kotlin.test.assertFailsWith
 
 class ForceSyncItemsImplTest {
 
@@ -189,6 +191,32 @@ class ForceSyncItemsImplTest {
 
         assertThat(result).isEqualTo(ForceSyncResult.Success)
         assertThat(itemSyncStatusRepository.emittedStatuses).isEmpty()
+    }
+
+    @Test
+    fun `search index rebuild error still reports a successful sync`() = runTest {
+        val shareId = ShareId("share-1")
+        itemRepository.setDownloadItemsResult(shareId, List(3) { ItemRevisionTestFactory.create(itemId = "item-$it") })
+        searchIndexRepository.setRebuildError(IllegalStateException("index rebuild failed"))
+
+        val result = invoke(shareIds = setOf(shareId))
+
+        assertThat(result).isEqualTo(ForceSyncResult.Success)
+        assertThat(itemSyncStatusRepository.emittedStatuses.last())
+            .isInstanceOf(ItemSyncStatus.SyncSuccess::class.java)
+    }
+
+    @Test
+    fun `search index rebuild cancellation settles the sync and is propagated`() = runTest {
+        val shareId = ShareId("share-1")
+        itemRepository.setDownloadItemsResult(shareId, List(3) { ItemRevisionTestFactory.create(itemId = "item-$it") })
+        searchIndexRepository.setRebuildError(CancellationException("worker stopped"))
+
+        assertFailsWith<CancellationException> { invoke(shareIds = setOf(shareId)) }
+
+        assertThat(itemSyncStatusRepository.emittedStatuses.last())
+            .isInstanceOf(ItemSyncStatus.SyncSuccess::class.java)
+        assertThat(itemSyncStatusRepository.emittedModes.last()).isEqualTo(SyncMode.Background)
     }
 
     private suspend fun invoke(

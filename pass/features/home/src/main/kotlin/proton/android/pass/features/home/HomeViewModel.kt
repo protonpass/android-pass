@@ -78,6 +78,7 @@ import proton.android.pass.common.api.asResultWithoutLoading
 import proton.android.pass.common.api.combineN
 import proton.android.pass.common.api.getOrNull
 import proton.android.pass.common.api.map
+import proton.android.pass.common.api.safeRunCatching
 import proton.android.pass.common.api.toOption
 import proton.android.pass.commonui.api.BrowserUtils
 import proton.android.pass.commonui.api.ClassHolder
@@ -889,16 +890,18 @@ class HomeViewModel @Inject constructor(
     fun onRefresh() = viewModelScope.launch(coroutineExceptionHandler) {
         isRefreshing.update { IsRefreshingState.Refreshing }
 
-        runCatching {
-            val userId = observeCurrentUser().firstOrNull()?.userId
-                ?: throw IllegalStateException("User not found")
-            performSync(userId, trigger = "home_pull_to_refresh")
-        }.onFailure {
-            PassLogger.e(TAG, it, "Apply pending events failed")
-            snackbarDispatcher(RefreshError)
+        try {
+            safeRunCatching {
+                val userId = observeCurrentUser().firstOrNull()?.userId
+                    ?: throw IllegalStateException("User not found")
+                performSync(userId, trigger = "home_pull_to_refresh")
+            }.onFailure {
+                PassLogger.e(TAG, it, "Apply pending events failed")
+                snackbarDispatcher(RefreshError)
+            }
+        } finally {
+            isRefreshing.update { IsRefreshingState.NotRefreshing }
         }
-
-        isRefreshing.update { IsRefreshingState.NotRefreshing }
     }
 
     internal fun sendItemsToTrash(items: List<ItemUiModel>) {

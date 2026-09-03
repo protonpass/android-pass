@@ -71,6 +71,7 @@ class FakeLocalItemDataSource : LocalItemDataSource {
     private val observeItemsShareIdsMemory = mutableListOf<List<ShareId>>()
     private val activeAliasItemsPageRequests = mutableListOf<AliasItemsPageRequest>()
     private var committedSlNoteUpdateIds: List<Pair<ShareId, ItemId>>? = null
+    private var onActiveAliasItemsPageRequested: suspend () -> Unit = {}
     private val observeItemCountSummaryCallMemory = mutableListOf<ObserveItemCountSummaryCall>()
     private val getByShareItemPairsCallMemory = mutableListOf<Pair<UserId, List<Pair<ShareId, ItemId>>>>()
 
@@ -90,6 +91,10 @@ class FakeLocalItemDataSource : LocalItemDataSource {
     fun getObserveItemsShareIdsMemory(): List<List<ShareId>> = observeItemsShareIdsMemory
 
     fun getActiveAliasItemsPageRequests(): List<AliasItemsPageRequest> = activeAliasItemsPageRequests
+
+    fun setOnActiveAliasItemsPageRequested(block: suspend () -> Unit) {
+        onActiveAliasItemsPageRequested = block
+    }
 
     fun setCommittedSlNoteUpdateIds(ids: List<Pair<ShareId, ItemId>>) {
         committedSlNoteUpdateIds = ids
@@ -155,6 +160,7 @@ class FakeLocalItemDataSource : LocalItemDataSource {
         limit: Int
     ): List<ItemEntityWithRowId> {
         activeAliasItemsPageRequests.add(AliasItemsPageRequest(shareId, afterRowId, limit))
+        onActiveAliasItemsPageRequested()
         return memory.mapIndexed { index, item ->
             ItemEntityWithRowId(item = item, rowId = index + 1L)
         }.asSequence()

@@ -38,6 +38,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import proton.android.pass.autofill.api.AutofillManager
+import proton.android.pass.biometry.AuthOverrideState
 import proton.android.pass.common.api.AppDispatchers
 import proton.android.pass.common.api.FlowUtils.oneShot
 import proton.android.pass.data.api.usecases.GetPrimaryUserId
@@ -73,7 +74,8 @@ class ReportViewModel @Inject constructor(
     private val snackbarDispatcher: SnackbarDispatcher,
     private val canDeviceSupportPasskeys: CanDeviceSupportPasskeys,
     private val emailValidator: EmailValidator,
-    private val appDispatchers: AppDispatchers
+    private val appDispatchers: AppDispatchers,
+    private val authOverrideState: AuthOverrideState
 ) : ViewModel() {
 
     @OptIn(SavedStateHandleSaveableApi::class)
@@ -111,6 +113,14 @@ class ReportViewModel @Inject constructor(
 
     fun openAutofillSettings() {
         autofillManager.openAutofillSelector()
+    }
+
+    fun onImagePickerOpened() {
+        authOverrideState.setAuthOverride(enabled = true)
+    }
+
+    fun onImagePickerClosed() {
+        authOverrideState.setAuthOverride(enabled = false)
     }
 
     fun trySendingBugReport() {

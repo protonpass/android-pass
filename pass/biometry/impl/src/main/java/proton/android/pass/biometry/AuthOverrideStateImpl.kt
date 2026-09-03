@@ -18,17 +18,30 @@
 
 package proton.android.pass.biometry
 
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class AuthOverrideStateImpl @Inject constructor() : AuthOverrideState {
-    private val _isAuthOverrideEnabled = MutableStateFlow(false)
-    override val isAuthOverrideEnabled: StateFlow<Boolean> by ::_isAuthOverrideEnabled
+class AuthOverrideStateImpl @Inject constructor(
+    private val elapsedTimeProvider: ElapsedTimeProvider
+) : AuthOverrideState {
 
+    private var armedAtMillis: Long? = null
+
+    @Synchronized
     override fun setAuthOverride(enabled: Boolean) {
-        _isAuthOverrideEnabled.value = enabled
+        armedAtMillis = if (enabled) elapsedTimeProvider.getElapsedTime() else null
+    }
+
+    @Synchronized
+    override fun consumeAuthOverride(): Boolean {
+        val armedAt = armedAtMillis ?: return false
+        armedAtMillis = null
+
+        return elapsedTimeProvider.getElapsedTime() - armedAt <= OVERRIDE_TTL_MILLIS
+    }
+
+    private companion object {
+        private const val OVERRIDE_TTL_MILLIS = 60_000L
     }
 }

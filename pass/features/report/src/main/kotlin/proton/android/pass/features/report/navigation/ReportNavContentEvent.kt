@@ -28,6 +28,8 @@ sealed interface ReportNavContentEvent {
     data object SubmitReport : ReportNavContentEvent
     data object CancelReason : ReportNavContentEvent
     data object OpenTestPage : ReportNavContentEvent
+    data object OnImagePickerOpened : ReportNavContentEvent
+    data object OnImagePickerClosed : ReportNavContentEvent
 
     @JvmInline
     value class OnReasonChange(val value: ReportReason) : ReportNavContentEvent

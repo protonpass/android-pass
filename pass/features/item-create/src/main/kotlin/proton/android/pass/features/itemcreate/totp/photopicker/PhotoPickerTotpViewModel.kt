@@ -20,10 +20,22 @@ package proton.android.pass.features.itemcreate.totp.photopicker
 
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
+import proton.android.pass.biometry.AuthOverrideState
 import proton.android.pass.common.api.AppDispatchers
 import javax.inject.Inject
 
 @HiltViewModel
 class PhotoPickerTotpViewModel @Inject constructor(
-    val appDispatchers: AppDispatchers
-) : ViewModel()
+    val appDispatchers: AppDispatchers,
+    private val authOverrideState: AuthOverrideState
+) : ViewModel() {
+
+    fun onOpenPhotoPicker() {
+        authOverrideState.setAuthOverride(enabled = true)
+    }
+
+    fun onClosePhotoPicker() {
+        authOverrideState.setAuthOverride(enabled = false)
+    }
+
+}

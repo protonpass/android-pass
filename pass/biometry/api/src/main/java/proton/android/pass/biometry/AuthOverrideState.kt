@@ -18,9 +18,7 @@
 
 package proton.android.pass.biometry
 
-import kotlinx.coroutines.flow.StateFlow
-
 interface AuthOverrideState {
-    val isAuthOverrideEnabled: StateFlow<Boolean>
     fun setAuthOverride(enabled: Boolean)
+    fun consumeAuthOverride(): Boolean
 }

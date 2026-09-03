@@ -29,6 +29,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import proton.android.pass.common.api.None
 import proton.android.pass.common.api.toOption
 import proton.android.pass.commonui.api.bottomSheet
 import proton.android.pass.commonui.api.toClassHolder
@@ -58,9 +59,13 @@ fun AttachmentOptionsOnDetailBottomsheet(
                 onNavigate(AttachmentOptionsOnDetailNavigation.CloseBottomsheet)
 
             is AttachmentOptionsOnDetailEvent.SaveToLocation -> {
+                viewmodel.onSaveLocationPickerLaunching()
+
                 try {
                     launcher.launch(createIntent(event.fileName))
                 } catch (e: ActivityNotFoundException) {
+                    viewmodel.copyFile(context.toClassHolder(), None)
+
                     PassLogger.w(TAG, e)
                 }
             }

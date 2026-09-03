@@ -18,17 +18,20 @@
 
 package proton.android.pass.biometry
 
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
 class FakeAuthOverrideState @Inject constructor() : AuthOverrideState {
-    private val _isAuthOverrideEnabled = MutableStateFlow(false)
-    override val isAuthOverrideEnabled: StateFlow<Boolean> by ::_isAuthOverrideEnabled
+    private var isEnabled = false
 
     override fun setAuthOverride(enabled: Boolean) {
-        _isAuthOverrideEnabled.value = enabled
+        isEnabled = enabled
+    }
+
+    override fun consumeAuthOverride(): Boolean {
+        val wasEnabled = isEnabled
+        isEnabled = false
+        return wasEnabled
     }
 }

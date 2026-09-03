@@ -33,6 +33,7 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import proton.android.pass.biometry.AuthOverrideState
 import proton.android.pass.common.api.AppDispatchers
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
@@ -61,6 +62,7 @@ class AttachmentOptionsOnDetailViewModel @Inject constructor(
     private val attachmentsHandler: AttachmentsHandler,
     private val appDispatchers: AppDispatchers,
     private val snackbarDispatcher: SnackbarDispatcher,
+    private val authOverrideState: AuthOverrideState,
     savedStateHandleProvider: SavedStateHandleProvider
 ) : ViewModel() {
 
@@ -130,8 +132,14 @@ class AttachmentOptionsOnDetailViewModel @Inject constructor(
         }
     }
 
+    fun onSaveLocationPickerLaunching() {
+        authOverrideState.setAuthOverride(enabled = true)
+    }
+
     @Suppress("ThrowsCount")
     fun copyFile(classHolder: ClassHolder<Context>, toUri: Option<Uri>) {
+        authOverrideState.setAuthOverride(enabled = false)
+
         viewModelScope.launch {
             runCatching {
                 val fromUri = cachedFileUriFlow.value.map { uri -> uri.toString().toUri() }

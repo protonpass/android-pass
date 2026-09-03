@@ -55,6 +55,8 @@ internal fun ImageAttach(
             0 -> null
             1 -> {
                 rememberLauncherForActivityResult(ActivityResultContracts.PickVisualMedia()) { result ->
+                    onEvent(ReportNavContentEvent.OnImagePickerClosed)
+
                     result?.let { uri ->
                         onEvent(ReportNavContentEvent.OnImagesSelected(setOf(uri)))
                     }
@@ -64,7 +66,11 @@ internal fun ImageAttach(
             else -> {
                 rememberLauncherForActivityResult(
                     ActivityResultContracts.PickMultipleVisualMedia(remainingImages)
-                ) { onEvent(ReportNavContentEvent.OnImagesSelected(it.toSet())) }
+                ) { result ->
+                    onEvent(ReportNavContentEvent.OnImagePickerClosed)
+
+                    onEvent(ReportNavContentEvent.OnImagesSelected(result.toSet()))
+                }
             }
         }
     } else {
@@ -77,8 +83,15 @@ internal fun ImageAttach(
                     text = stringResource(R.string.attach_image_button),
                     prefixIcon = CoreR.drawable.ic_proton_plus,
                     onClick = {
+                        val launcher = pickMedia
+                        if (launcher == null) return@TransparentTextButton
+
+                        onEvent(ReportNavContentEvent.OnImagePickerOpened)
+
                         runCatching {
-                            pickMedia?.launch(PickVisualMediaRequest(ImageOnly))
+                            launcher.launch(PickVisualMediaRequest(ImageOnly))
+                        }.onFailure {
+                            onEvent(ReportNavContentEvent.OnImagePickerClosed)
                         }
                     }
                 )

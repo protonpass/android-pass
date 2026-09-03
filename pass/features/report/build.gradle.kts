@@ -55,6 +55,7 @@ android {
 
 dependencies {
     implementation(projects.pass.autofill.api)
+    implementation(projects.pass.biometry.api)
     implementation(projects.pass.commonPresentation.api)
     implementation(projects.pass.common.api)
     implementation(projects.pass.commonRust.api)

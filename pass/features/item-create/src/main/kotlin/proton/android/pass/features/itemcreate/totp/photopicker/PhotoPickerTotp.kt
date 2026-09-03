@@ -55,6 +55,8 @@ fun PhotoPickerTotpScreen(
     val context = LocalContext.current
     var totpUriResult by remember { mutableStateOf<TotpUriResult>(TotpUriResult.NotStarted) }
     val pickMedia = rememberLauncherForActivityResult(PickVisualMedia()) {
+        viewModel.onClosePhotoPicker()
+
         totpUriResult = if (it != null) {
             TotpUriResult.Success(it)
         } else {
@@ -97,9 +99,13 @@ fun PhotoPickerTotpScreen(
     }
 
     LaunchedEffect(Unit) {
+        viewModel.onOpenPhotoPicker()
+
         runCatching {
             pickMedia.launch(PickVisualMediaRequest(PickVisualMedia.ImageOnly))
         }.onFailure {
+            viewModel.onClosePhotoPicker()
+
             PassLogger.w(TAG, it)
             PassLogger.w(TAG, "Error launching photo picker")
             onPhotoPickerDismissed()

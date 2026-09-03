@@ -63,6 +63,8 @@ fun ReportScreen(
                 ReportNavContentEvent.CancelReason -> viewModel.clearReason()
                 is ReportNavContentEvent.OnImagesSelected -> viewModel.onImagesSelected(event.value)
                 is ReportNavContentEvent.OnImageRemoved -> viewModel.onImageRemoved(event.value)
+                ReportNavContentEvent.OnImagePickerOpened -> viewModel.onImagePickerOpened()
+                ReportNavContentEvent.OnImagePickerClosed -> viewModel.onImagePickerClosed()
             }
         },
         formState = viewModel.formState,

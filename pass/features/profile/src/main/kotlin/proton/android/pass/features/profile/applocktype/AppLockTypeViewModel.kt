@@ -38,6 +38,8 @@ import proton.android.pass.biometry.BiometryManager
 import proton.android.pass.biometry.BiometryResult
 import proton.android.pass.biometry.BiometryStatus
 import proton.android.pass.biometry.BiometryType
+import proton.android.pass.biometry.StoreAuthSuccessful
+import proton.android.pass.biometry.UnlockMethod
 import proton.android.pass.common.api.Some
 import proton.android.pass.commonui.api.ClassHolder
 import proton.android.pass.data.api.usecases.SetAppLockType
@@ -65,6 +67,7 @@ class AppLockTypeViewModel @Inject constructor(
     private val snackbarDispatcher: SnackbarDispatcher,
     private val setAppLockType: SetAppLockType,
     private val setPasswordOnlyLock: SetPasswordOnlyLock,
+    private val storeAuthSuccessful: StoreAuthSuccessful,
     observeAnyAccountHasEnforcedLock: ObserveAnyAccountHasEnforcedLock,
     private val appConfig: AppConfig
 ) : ViewModel() {
@@ -212,7 +215,7 @@ class AppLockTypeViewModel @Inject constructor(
 
     private fun onBiometryAuthSet() {
         viewModelScope.launch {
-            userPreferencesRepository.setHasAuthenticated(HasAuthenticated.Authenticated)
+            storeAuthSuccessful(UnlockMethod.PinOrBiometrics)
             setAppLockType(Biometrics)
                 .onSuccess { onLockUpdated(FingerprintLockEnabled) }
                 .onFailure { onLockUpdateFailed(it) }

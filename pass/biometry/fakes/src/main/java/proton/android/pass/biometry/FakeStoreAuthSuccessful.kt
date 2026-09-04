@@ -21,5 +21,11 @@ package proton.android.pass.biometry
 import javax.inject.Inject
 
 class FakeStoreAuthSuccessful @Inject constructor() : StoreAuthSuccessful {
-    override fun invoke(unlockMethod: UnlockMethod) {}
+
+    var invokedWith: UnlockMethod? = null
+        private set
+
+    override fun invoke(unlockMethod: UnlockMethod) {
+        invokedWith = unlockMethod
+    }
 }

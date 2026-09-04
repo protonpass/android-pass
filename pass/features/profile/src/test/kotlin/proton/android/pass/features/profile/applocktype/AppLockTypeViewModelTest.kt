@@ -30,6 +30,8 @@ import proton.android.pass.appconfig.fakes.FakeAppConfig
 import proton.android.pass.biometry.BiometryResult
 import proton.android.pass.biometry.BiometryStatus
 import proton.android.pass.biometry.FakeBiometryManager
+import proton.android.pass.biometry.FakeStoreAuthSuccessful
+import proton.android.pass.biometry.UnlockMethod
 import proton.android.pass.common.api.None
 import proton.android.pass.commonui.api.ClassHolder
 import proton.android.pass.data.api.usecases.SetAppLockType
@@ -61,6 +63,7 @@ class AppLockTypeViewModelTest {
     private lateinit var observeEnforcedLock: FakeObserveAnyAccountHasEnforcedLock
     private lateinit var appConfig: FakeAppConfig
     private lateinit var setAppLockType: TestSetAppLockType
+    private lateinit var storeAuthSuccessful: FakeStoreAuthSuccessful
 
     @Before
     fun setup() {
@@ -71,6 +74,7 @@ class AppLockTypeViewModelTest {
         observeEnforcedLock = FakeObserveAnyAccountHasEnforcedLock()
         appConfig = FakeAppConfig()
         setAppLockType = TestSetAppLockType(preferenceRepository)
+        storeAuthSuccessful = FakeStoreAuthSuccessful()
 
         biometryManager.setBiometryStatus(BiometryStatus.CanAuthenticate)
     }
@@ -82,6 +86,7 @@ class AppLockTypeViewModelTest {
             snackbarDispatcher = snackbarDispatcher,
             setAppLockType = setAppLockType,
             setPasswordOnlyLock = setPasswordOnlyLock,
+            storeAuthSuccessful = storeAuthSuccessful,
             observeAnyAccountHasEnforcedLock = observeEnforcedLock,
             appConfig = appConfig
         )
@@ -197,6 +202,9 @@ class AppLockTypeViewModelTest {
             val finalState = awaitItem()
             assertThat(finalState.selected).isEqualTo(Biometrics)
             assertThat(finalState.event).isEqualTo(AppLockTypeEvent.Dismiss)
+
+            // Verify storeAuthSuccessful was invoked with correct unlock method
+            assertThat(storeAuthSuccessful.invokedWith).isEqualTo(UnlockMethod.PinOrBiometrics)
         }
     }
 

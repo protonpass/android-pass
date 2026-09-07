@@ -28,14 +28,14 @@ import proton.android.pass.common.api.AppDispatchers
 import proton.android.pass.commonrust.MobileFetchException
 import proton.android.pass.commonrust.MobileWebauthnClientFetcher
 import proton.android.pass.commonrust.MobileWebauthnDomainsResponse
-import proton.android.pass.data.api.PublicOkhttpClient
+import proton.android.pass.data.api.WebauthnFetchOkHttpClient
 import java.net.HttpURLConnection.HTTP_NOT_FOUND
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
 internal class WebauthnRelatedOriginsFetcher @Inject constructor(
-    @param:PublicOkhttpClient private val okHttpClient: OkHttpClient,
+    @param:WebauthnFetchOkHttpClient private val okHttpClient: OkHttpClient,
     private val appDispatchers: AppDispatchers
 ) : MobileWebauthnClientFetcher {
 
@@ -56,7 +56,7 @@ internal class WebauthnRelatedOriginsFetcher @Inject constructor(
                         if (source.buffer.size > MAX_BODY_SIZE) {
                             throw MobileFetchException.CannotFetch("Response too large")
                         }
-                        parseBody(source.buffer.readUtf8())
+                        parseBody(source.buffer.readUtf8(), response.request.url.toString())
                     }
                 }
             }
@@ -69,10 +69,10 @@ internal class WebauthnRelatedOriginsFetcher @Inject constructor(
     }
 
     @Suppress("SwallowedException")
-    private fun parseBody(body: String): MobileWebauthnDomainsResponse {
+    private fun parseBody(body: String, finalUrl: String): MobileWebauthnDomainsResponse {
         return try {
             val parsed = lenientJson.decodeFromString(WebauthnDocument.serializer(), body)
-            MobileWebauthnDomainsResponse(parsed.origins)
+            MobileWebauthnDomainsResponse(parsed.origins, finalUrl)
         } catch (e: SerializationException) {
             throw MobileFetchException.CannotFetch(e.message ?: "parse error")
         } catch (e: IllegalArgumentException) {

@@ -36,7 +36,8 @@ class AutosaveLoginMatcherTest {
             packageInfoSet = packageInfoSet,
             primaryTotp = "",
             customFields = emptyList(),
-            passkeys = emptyList()
+            passkeys = emptyList(),
+            autofillUrls = emptyList()
         )
 
     // --- Website matching ---

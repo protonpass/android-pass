@@ -40,7 +40,9 @@ import proton.android.pass.appconfig.api.AppConfig
 import proton.android.pass.appconfig.api.BuildFlavor
 import proton.android.pass.autofill.AppIcon
 import proton.android.pass.commonui.api.PassTheme
+import proton.android.pass.data.api.AssetLinkOkHttpClient
 import proton.android.pass.data.api.PublicOkhttpClient
+import proton.android.pass.data.api.WebauthnFetchOkHttpClient
 import proton.android.pass.notifications.api.MainActivityAnnotation
 import proton.android.pass.ui.MainActivity
 import javax.inject.Singleton
@@ -106,6 +108,26 @@ object ApplicationModule {
         .readTimeout(READ_WRITE_TIMEOUT, TimeUnit.SECONDS)
         .writeTimeout(READ_WRITE_TIMEOUT, TimeUnit.SECONDS)
         .callTimeout(CALL_TIMEOUT, TimeUnit.SECONDS)
+        .build()
+
+    // Digital Asset Links spec requires the statement to be fetched from the exact declared
+    // URL; a redirect invalidates it, so this client fails closed on any 3xx.
+    @AssetLinkOkHttpClient
+    @Provides
+    @Singleton
+    fun provideAssetLinkOkHttpClient(@PublicOkhttpClient base: OkHttpClient): OkHttpClient = base.newBuilder()
+        .followRedirects(false)
+        .followSslRedirects(false)
+        .build()
+
+    // The webauthn related-origins fetcher is designed to follow redirects: the passkey
+    // library validates the redirect target's domain via `final_url`. What it can't validate
+    // is scheme, so this client only blocks an https -> http downgrade, not the redirect itself.
+    @WebauthnFetchOkHttpClient
+    @Provides
+    @Singleton
+    fun provideWebauthnFetchOkHttpClient(@PublicOkhttpClient base: OkHttpClient): OkHttpClient = base.newBuilder()
+        .followSslRedirects(false)
         .build()
 
     @[Provides Singleton]

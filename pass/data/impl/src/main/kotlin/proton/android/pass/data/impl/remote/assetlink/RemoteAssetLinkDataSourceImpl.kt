@@ -29,7 +29,7 @@ import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.Response
 import okio.IOException
-import proton.android.pass.data.api.PublicOkhttpClient
+import proton.android.pass.data.api.AssetLinkOkHttpClient
 import proton.android.pass.data.api.errors.ResponseSizeExceededError
 import proton.android.pass.data.impl.responses.AssetLinkResponse
 import proton.android.pass.data.impl.responses.IgnoredAssetLinkResponse
@@ -40,7 +40,7 @@ import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
 
 class RemoteAssetLinkDataSourceImpl @Inject constructor(
-    @param:PublicOkhttpClient private val okHttpClient: OkHttpClient
+    @param:AssetLinkOkHttpClient private val okHttpClient: OkHttpClient
 ) : RemoteAssetLinkDataSource {
 
     override suspend fun fetch(website: String): List<AssetLinkResponse> {

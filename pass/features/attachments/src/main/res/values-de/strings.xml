@@ -39,4 +39,14 @@
   <string name="storage_full_amount" comment="This will show 20MB of 100MB">%1$s von %2$s</string>
   <string name="attachments_saved_to_location_success">Anhang gespeichert</string>
   <string name="attachments_saved_to_location_error">Anhang konnte nicht gespeichert werden</string>
+  <string name="attachment_sync_dialog_title_waiting">Auf Verbindung wird gewartet</string>
+  <string name="attachment_sync_dialog_title_downloading">Anhänge werden heruntergeladen</string>
+  <string name="attachment_sync_dialog_title_done">Herunterladen abgeschlossen</string>
+  <string name="attachment_sync_dialog_title_partial_failure">Herunterladen fehlgeschlagen</string>
+  <string name="attachment_sync_dialog_subtitle_waiting">Auf Netzwerkverbindung wird gewartet, um Anhänge herunterzuladen.</string>
+  <string name="attachment_sync_dialog_subtitle_downloading">%1$d/%2$d Anhänge werden heruntergeladen</string>
+  <string name="attachment_sync_dialog_subtitle_done">Alle Anhänge wurden erfolgreich heruntergeladen.</string>
+  <string name="attachment_sync_dialog_subtitle_partial_failure">Einige Anhänge konnten nicht heruntergeladen werden. Die fehlgeschlagenen Anhänge können unten erneut heruntergeladen werden.</string>
+  <string name="attachment_sync_dialog_retry_content_description">Erneut herunterladen</string>
+  <string name="attachment_sync_vault_files_count">%1$d/%2$d Dateien</string>
 </resources>

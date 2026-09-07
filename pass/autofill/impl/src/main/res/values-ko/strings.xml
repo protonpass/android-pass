@@ -42,9 +42,9 @@
   <string name="autofill_diagnostics_no_attempts">No autofill attempt recorded yet.</string>
   <string name="autofill_diagnostics_reason_not_default">Proton Pass isn\'t your autofill service, so it can\'t fill anywhere yet.</string>
   <string name="autofill_diagnostics_outcome_offered">Proton Pass offered suggestions in %1$s.</string>
-  <string name="autofill_diagnostics_outcome_nothing">Autofill was triggered in %1$s, but no matching login was offered. The page may have no detectable login fields, or you have no item for this site.</string>
+  <string name="autofill_diagnostics_outcome_nothing">자동 완성이 %1$s(에)서 사용되었으나 일치하는 로그인 항목이 없습니다. 감지된 로그인 입력란이 없거나, 해당 사이트에 대해 일치하는 로그인 항목이 없습니다.</string>
   <string name="autofill_diagnostics_outcome_error">Autofill ran into an error in %1$s.</string>
-  <string name="autofill_diagnostics_recent_title">Recent attempts</string>
-  <string name="autofill_diagnostics_clear">Clear</string>
-  <string name="autofill_diagnostics_share">Share with support</string>
+  <string name="autofill_diagnostics_recent_title">최근 시도</string>
+  <string name="autofill_diagnostics_clear">삭제</string>
+  <string name="autofill_diagnostics_share">지원 팀과 공유</string>
 </resources>

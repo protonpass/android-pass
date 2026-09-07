@@ -39,4 +39,14 @@
   <string name="storage_full_amount" comment="This will show 20MB of 100MB">%1$s af %2$s</string>
   <string name="attachments_saved_to_location_success">Vedhæftning gemt på placering</string>
   <string name="attachments_saved_to_location_error">Kunne ikke gemme vedhæftning på placering</string>
+  <string name="attachment_sync_dialog_title_waiting">Venter på forbindelse</string>
+  <string name="attachment_sync_dialog_title_downloading">Downloader vedhæftninger</string>
+  <string name="attachment_sync_dialog_title_done">Download fuldført</string>
+  <string name="attachment_sync_dialog_title_partial_failure">Download mislykkedes</string>
+  <string name="attachment_sync_dialog_subtitle_waiting">Venter på netværksforbindelse for at downloade vedhæftninger.</string>
+  <string name="attachment_sync_dialog_subtitle_downloading">Downloader %1$d/%2$d vedhæftninger</string>
+  <string name="attachment_sync_dialog_subtitle_done">Alle vedhæftninger er blevet downloadet.</string>
+  <string name="attachment_sync_dialog_subtitle_partial_failure">Nogle vedhæftninger kunne ikke downloades. Du kan prøve at downloade de mislykkede igen nedenfor.</string>
+  <string name="attachment_sync_dialog_retry_content_description">Prøv download igen</string>
+  <string name="attachment_sync_vault_files_count">%1$d / %2$d filer</string>
 </resources>

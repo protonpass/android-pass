@@ -39,4 +39,14 @@
   <string name="storage_full_amount" comment="This will show 20MB of 100MB">%1$s van %2$s</string>
   <string name="attachments_saved_to_location_success">Bijlage opgeslagen op locatie</string>
   <string name="attachments_saved_to_location_error">Kon bijlage niet opslaan op locatie</string>
+  <string name="attachment_sync_dialog_title_waiting">Controleren op verbinding</string>
+  <string name="attachment_sync_dialog_title_downloading">Bijlages aan het downloaden</string>
+  <string name="attachment_sync_dialog_title_done">Download voltooid</string>
+  <string name="attachment_sync_dialog_title_partial_failure">Download mislukt</string>
+  <string name="attachment_sync_dialog_subtitle_waiting">Wachten op netwerkverbinding om bijlagen te downloaden.</string>
+  <string name="attachment_sync_dialog_subtitle_downloading">%1$d/%2$d bijlagen downloaden</string>
+  <string name="attachment_sync_dialog_subtitle_done">Alle bijlagen zijn succesvol gedownload.</string>
+  <string name="attachment_sync_dialog_subtitle_partial_failure">Sommige bijlagen konden niet worden gedownload. Hieronder kunt u de mislukte pogingen opnieuw proberen.</string>
+  <string name="attachment_sync_dialog_retry_content_description">Probeer het downloaden opnieuw</string>
+  <string name="attachment_sync_vault_files_count">%1$d /%2$d bestanden</string>
 </resources>

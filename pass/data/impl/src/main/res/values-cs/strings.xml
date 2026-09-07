@@ -21,8 +21,12 @@
   <string name="sync_channel_description">Kanál upozornění pro synchronizaci položek</string>
   <string name="syncing_vaults">Synchronizace trezorů a položek</string>
   <string name="logging_out_free_users">Odhlášení dalších bezplatných uživatelů</string>
-  <string name="plan_subscription_auto_renews_monthly">Subscription auto renews at %1$s/month</string>
-  <string name="plan_subscription_auto_renews_annual">Subscription auto renews at %1$s/year</string>
-  <string name="plan_welcome_offer_auto_renews_monthly">Welcome offer. Auto renews at %1$s/month</string>
-  <string name="plan_welcome_offer_auto_renews_annual">Welcome offer. Auto renews at %1$s/year</string>
+  <string name="attachment_download_channel">Přílohy ke stažení</string>
+  <string name="attachment_download_channel_description">Kanál oznámení pro stahování příloh</string>
+  <string name="downloading_attachments">Stahování příloh</string>
+  <string name="downloading_attachments_progress" comment="%1$s is the download progress counter, e.g. 3 / 10">%1$s souborů</string>
+  <string name="plan_subscription_auto_renews_monthly">Předplatné se automaticky obnovuje za %1$s/měsíc</string>
+  <string name="plan_subscription_auto_renews_annual">Předplatné se automaticky obnovuje za %1$s/rok</string>
+  <string name="plan_welcome_offer_auto_renews_monthly">Uvítací nabídka. Obnovuje se automaticky za %1$s/měsíc</string>
+  <string name="plan_welcome_offer_auto_renews_annual">Uvítací nabídka. Obnovuje se automaticky za %1$s/rok</string>
 </resources>

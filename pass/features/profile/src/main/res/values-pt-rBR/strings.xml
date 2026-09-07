@@ -5,7 +5,7 @@
   <string name="profile_option_account">Conta</string>
   <string name="profile_help_center">Central de ajuda</string>
   <string name="profile_security">Segurança</string>
-  <string name="profile_option_autofill_troubleshooting">Autofill troubleshooting</string>
+  <string name="profile_option_autofill_troubleshooting">Solução de problemas de preenchimento automático</string>
   <string name="profile_option_feedback">Comentários</string>
   <string name="profile_option_import_export">Importar/exportar</string>
   <string name="profile_option_tutorial">Como usar o Proton Pass</string>
@@ -20,6 +20,7 @@
   <string name="profile_option_generated_passwords">Senhas geradas</string>
   <string name="profile_error_biometry_failed_to_start">Não foi possível iniciar a autenticação biométrica</string>
   <string name="profile_error_biometry_failed_to_authenticate">Erro na autenticação</string>
+  <string name="profile_error_app_lock_update_failed">Could not update the app lock. Please try again.</string>
   <string name="profile_fingerprint_lock_enabled">Bloqueio por impressão digital ativado</string>
   <string name="profile_fingerprint_lock_disabled">Bloqueio por impressão digital desativado</string>
   <string name="profile_app_version_copied_to_clipboard">Versão do aplicativo copiado</string>

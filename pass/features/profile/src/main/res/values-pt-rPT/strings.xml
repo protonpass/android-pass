@@ -20,6 +20,7 @@
   <string name="profile_option_generated_passwords">Generated passwords</string>
   <string name="profile_error_biometry_failed_to_start">Não foi possível iniciar a autenticação biométrica.</string>
   <string name="profile_error_biometry_failed_to_authenticate">Erro ao autenticar</string>
+  <string name="profile_error_app_lock_update_failed">Could not update the app lock. Please try again.</string>
   <string name="profile_fingerprint_lock_enabled">O bloqueio por impressão digital foi ativado.</string>
   <string name="profile_fingerprint_lock_disabled">O desbloqueio de impressão digital foi desativado.</string>
   <string name="profile_app_version_copied_to_clipboard">A versão da aplicação foi copiada.</string>

@@ -21,8 +21,12 @@
   <string name="sync_channel_description">Canal de notificações para sincronização de itens</string>
   <string name="syncing_vaults">Sincronizando cofres e itens</string>
   <string name="logging_out_free_users">Encerando sessão de usuários gratuitos adicionais</string>
-  <string name="plan_subscription_auto_renews_monthly">Subscription auto renews at %1$s/month</string>
-  <string name="plan_subscription_auto_renews_annual">Subscription auto renews at %1$s/year</string>
-  <string name="plan_welcome_offer_auto_renews_monthly">Welcome offer. Auto renews at %1$s/month</string>
-  <string name="plan_welcome_offer_auto_renews_annual">Welcome offer. Auto renews at %1$s/year</string>
+  <string name="attachment_download_channel">Attachment downloads</string>
+  <string name="attachment_download_channel_description">Notifications channel for attachment downloads</string>
+  <string name="downloading_attachments">Baixando anexos</string>
+  <string name="downloading_attachments_progress" comment="%1$s is the download progress counter, e.g. 3 / 10">%1$s arquivos</string>
+  <string name="plan_subscription_auto_renews_monthly">A assinatura é renovada automaticamente por %1$s/mês</string>
+  <string name="plan_subscription_auto_renews_annual">A assinatura é renovada automaticamente por %1$s/ano</string>
+  <string name="plan_welcome_offer_auto_renews_monthly">Oferta de boas-vindas. Renovação automática por %1$s/mês</string>
+  <string name="plan_welcome_offer_auto_renews_annual">Oferta de boas-vindas. Renovação automática por %1$s/ano</string>
 </resources>

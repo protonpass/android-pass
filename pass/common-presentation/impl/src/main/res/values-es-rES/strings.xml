@@ -21,6 +21,9 @@
   <string name="download_attachments_error">No se pudo descargar el archivo adjunto</string>
   <string name="share_attachments_error">No se pudo compartir el archivo adjunto</string>
   <string name="upload_attachments_error">Error al cargar el archivo adjunto del mensaje</string>
+  <string name="attachment_not_available_offline">Attachment not available offline</string>
+  <string name="attachment_download_timeout">Attachment download timed out</string>
+  <string name="attachment_storage_full">Not enough storage to download attachments</string>
   <string name="attachment_size_exceeded_error">El archivo seleccionado excede el límite de tamaño. Por favor, elija un archivo menor de 100MB.</string>
   <string name="attachment_too_many_files_error">Se han creado demasiados archivos recientemente</string>
   <string name="open_with">Abrir con:</string>

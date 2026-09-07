@@ -39,4 +39,14 @@
   <string name="storage_full_amount" comment="This will show 20MB of 100MB">已使用 %1$s ，共 %2$s</string>
   <string name="attachments_saved_to_location_success">附件已保存到指定位置</string>
   <string name="attachments_saved_to_location_error">无法将附件保存到指定位置</string>
+  <string name="attachment_sync_dialog_title_waiting">等待连接</string>
+  <string name="attachment_sync_dialog_title_downloading">正在下载附件</string>
+  <string name="attachment_sync_dialog_title_done">下载完成</string>
+  <string name="attachment_sync_dialog_title_partial_failure">下载失败</string>
+  <string name="attachment_sync_dialog_subtitle_waiting">等待网络连接以下载附件中</string>
+  <string name="attachment_sync_dialog_subtitle_downloading">Downloading %1$d/%2$d attachments</string>
+  <string name="attachment_sync_dialog_subtitle_done">All attachments have been downloaded successfully.</string>
+  <string name="attachment_sync_dialog_subtitle_partial_failure">Some attachments could not be downloaded. You can retry the failed ones below.</string>
+  <string name="attachment_sync_dialog_retry_content_description">Retry download</string>
+  <string name="attachment_sync_vault_files_count">%1$d / %2$d files</string>
 </resources>

@@ -21,6 +21,10 @@
   <string name="sync_channel_description">Canal de notificacions per a sincronitzar els elements</string>
   <string name="syncing_vaults">S\'estan sincronitzant les caixes fortes i els elements</string>
   <string name="logging_out_free_users">S\'estan desconnectant els usuaris addicionals gratuïts</string>
+  <string name="attachment_download_channel">Descàrregues de fitxers adjunts</string>
+  <string name="attachment_download_channel_description">Canal de notificacions per descàrregues de fitxers adjunts</string>
+  <string name="downloading_attachments">S\'estan descarregant els fitxers adjunts</string>
+  <string name="downloading_attachments_progress" comment="%1$s is the download progress counter, e.g. 3 / 10">%1$s fitxers</string>
   <string name="plan_subscription_auto_renews_monthly">La subscripció es renovarà automàticament a %1$s/mes</string>
   <string name="plan_subscription_auto_renews_annual">La subscripció es renovarà automàticament a %1$s/any</string>
   <string name="plan_welcome_offer_auto_renews_monthly">Oferta de benvinguda. Es renovarà automàticament a %1$s/mes</string>

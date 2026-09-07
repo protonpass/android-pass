@@ -36,7 +36,7 @@
   <string name="sync_dialog_title_partial_error">Сінхранізацыя завершана часткова</string>
   <string name="sync_dialog_title_success">Сінхранізацыя завершана</string>
   <string name="sync_dialog_subtitle">Мы спампоўваем і расшыфроўваем вашы элементы. Гэта можа заняць некалькі хвілін.</string>
-  <string name="sync_dialog_subtitle_error">Адбылася памылка падчас спампоўвання і расшыфроўкі вашых элементаў. Паспрабуйце яшчэ раз.</string>
+  <string name="sync_dialog_subtitle_error">Адбылася памылка падчас спампоўвання і расшыфроўкі вашых элементаў. Паўтарыце спробу.</string>
   <string name="sync_dialog_subtitle_partial_error">Некаторыя элементы не ўдалося расшыфраваць, і яны былі прапушчаны. Астатнія вашы элементы даступны для выкарыстання.</string>
   <string name="sync_dialog_subtitle_success">Вашы элементы былі паспяхова спампаваны і расшыфраваны.</string>
   <string name="sync_item_not_started">Не запушчана</string>

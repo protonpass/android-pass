@@ -57,4 +57,19 @@
   <string name="settings_autofill_display_subtitle">El mode en línia requereix un teclat compatible (p. ex., Gboard). Si no s\'admet, s\'utilitzarà automàticament el mode emergent.</string>
   <string name="settings_autosave_prompt_title">Demana el desament automàtic</string>
   <string name="settings_autosave_prompt_subtitle">Proton Pass us demanarà que deseu o actualitzeu els inicis de sessió</string>
+  <string name="settings_offline_attachments_section_title">Fitxers adjunts fora de línia</string>
+  <string name="settings_offline_attachments_download_all">Fer que els fitxers adjunts estiguin disponibles fora de línia</string>
+  <string name="settings_offline_attachments_cellular">Descarregar també amb dades mòbils</string>
+  <string name="settings_offline_attachments_download_status">Estat de la descàrrega</string>
+  <string name="notification_permission_dialog_title">Cal permís de notificacions</string>
+  <string name="notification_permission_dialog_message">Per poder mostrar les notificacions de progrés de la descàrrega, heu d\'habilitar les notificacions per a aquesta aplicació en els paràmetres del sistema.</string>
+  <string name="notification_permission_dialog_open_settings">Obrir les preferències</string>
+  <string name="notification_permission_dialog_cancel">Cancel·lar-ho</string>
+  <string name="attachment_config_dialog_title">Opcions de descàrrega</string>
+  <string name="attachment_config_dialog_all_vaults">Totes les caixes fortes</string>
+  <string name="attachment_config_dialog_select_vaults">Seleccioneu les caixes fortes per a descarregar</string>
+  <string name="attachment_config_dialog_shared_items">Compartit amb mi</string>
+  <string name="attachment_config_dialog_start">Descarregar-ho</string>
+  <string name="attachment_config_dialog_cancel">Cancel·lar-ho</string>
+  <string name="settings_offline_attachments_shared_items">Compartit amb mi</string>
 </resources>

@@ -159,13 +159,13 @@
   <string name="item_details_login_section_password_title">Senha</string>
   <string name="item_details_login_section_primary_totp_title">Token A2F (TOTP)</string>
   <string name="item_details_login_section_websites_title">Sites</string>
-  <string name="autofill_mode_label_default">Parent domain and subdomains</string>
+  <string name="autofill_mode_label_default">Domínio principal e subdomínios</string>
   <string name="autofill_mode_label_exact">(Sub)domínio exato</string>
   <string name="autofill_mode_label_never">Nunca preencher neste site</string>
   <string name="autofill_mode_label_start_with">Iniciar com</string>
   <string name="autofill_mode_label_regular_expression">Expressão regular</string>
   <string name="autofill_mode_label_exact_path">Correspondência exata de URL</string>
-  <string name="autofill_mode_label_unsupported">This url will be skipped for autofill</string>
+  <string name="autofill_mode_label_unsupported">Esta URL será ignorada pelo preenchimento automático</string>
   <string name="login_item_view_alias_button">Visualizar alias</string>
   <string name="item_details_identity_section_personal_title">Detalhes pessoais</string>
   <string name="item_details_identity_section_personal_first_name_title">Primeiro nome</string>
@@ -390,7 +390,7 @@
   </plurals>
   <!-- Password checks (Login create/edit + Generate Password BS) -->
   <string name="password_strength_prefix">Força da senha</string>
-  <string name="password_check_min_length">Password is too short</string>
+  <string name="password_check_min_length">Senha curta demais</string>
   <string name="password_check_lowercase">Letras minúsculas</string>
   <string name="password_check_uppercase">Letras maiúsculas</string>
   <string name="password_check_no_consecutive">Nenhum caractere repetido</string>

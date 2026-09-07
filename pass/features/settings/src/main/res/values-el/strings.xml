@@ -57,4 +57,19 @@
   <string name="settings_autofill_display_subtitle">Η λειτουργία εντός γραμμής απαιτεί συμβατό πληκτρολόγιο (π.χ. Gboard). Εάν δεν υποστηρίζεται, η λειτουργία αναδυόμενου παραθύρου θα χρησιμοποιηθεί αυτόματα.</string>
   <string name="settings_autosave_prompt_title">Ερώτηση για αυτόματη αποθήκευση</string>
   <string name="settings_autosave_prompt_subtitle">Το Proton Pass θα σας ζητήσει να αποθηκεύσετε ή να ενημερώσετε τα στοιχεία σύνδεσης</string>
+  <string name="settings_offline_attachments_section_title">Συνημμένα εκτός σύνδεσης</string>
+  <string name="settings_offline_attachments_download_all">Κάντε τα συνημμένα διαθέσιμα εκτός σύνδεσης</string>
+  <string name="settings_offline_attachments_cellular">Λήψη και μέσω δεδομένων κινητής τηλεφωνίας</string>
+  <string name="settings_offline_attachments_download_status">Κατάσταση λήψης</string>
+  <string name="notification_permission_dialog_title">Απαιτείται άδεια ειδοποίησης</string>
+  <string name="notification_permission_dialog_message">Για να εμφανίσετε ειδοποιήσεις προόδου λήψης, πρέπει να ενεργοποιήσετε τις ειδοποιήσεις για αυτήν την εφαρμογή στις ρυθμίσεις συστήματος.</string>
+  <string name="notification_permission_dialog_open_settings">Άνοιγμα ρυθμίσεων</string>
+  <string name="notification_permission_dialog_cancel">Ακύρωση</string>
+  <string name="attachment_config_dialog_title">Επιλογές λήψης</string>
+  <string name="attachment_config_dialog_all_vaults">Όλες οι κρύπτες</string>
+  <string name="attachment_config_dialog_select_vaults">Επιλέξτε κρύπτες για λήψη</string>
+  <string name="attachment_config_dialog_shared_items">Κοινοποιημένα σε εμένα</string>
+  <string name="attachment_config_dialog_start">Λήψη</string>
+  <string name="attachment_config_dialog_cancel">Ακύρωση</string>
+  <string name="settings_offline_attachments_shared_items">Κοινοποιημένα σε εμένα</string>
 </resources>

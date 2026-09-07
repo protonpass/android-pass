@@ -21,6 +21,10 @@
   <string name="sync_channel_description">Sincronizzazione degli elementi</string>
   <string name="syncing_vaults">Sincronizzazione di casseforti ed elementi in corso</string>
   <string name="logging_out_free_users">Rimozione degli account gratuiti eccessivi in corso</string>
+  <string name="attachment_download_channel">Download degli allegati</string>
+  <string name="attachment_download_channel_description">Canale di notifica per il download degli allegati</string>
+  <string name="downloading_attachments">Download degli allegati</string>
+  <string name="downloading_attachments_progress" comment="%1$s is the download progress counter, e.g. 3 / 10">%1$s file</string>
   <string name="plan_subscription_auto_renews_monthly">L\'abbonamento si rinnova automaticamente a %1$s/mese</string>
   <string name="plan_subscription_auto_renews_annual">L\'abbonamento si rinnova automaticamente a %1$s/anno</string>
   <string name="plan_welcome_offer_auto_renews_monthly">Offerta di benvenuto. Si rinnova automaticamente a %1$s/mese</string>

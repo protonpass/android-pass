@@ -24,8 +24,8 @@
   <string name="settings_privacy_section_title">개인정보 보호</string>
   <string name="settings_use_favicons_preference_title">웹 아이콘 사용</string>
   <string name="settings_use_favicons_preference_subtitle">항목에서 웹사이트 아이콘을 볼지 결정하세요.</string>
-  <string name="settings_allow_screenshots_preference_title">Allow screenshots and app preview</string>
-  <string name="settings_allow_screenshots_preference_subtitle">If enabled, you will be able to take screenshots of the app and see its preview in the recent apps list.</string>
+  <string name="settings_allow_screenshots_preference_title">스크린샷 및 앱 리뷰 허용</string>
+  <string name="settings_allow_screenshots_preference_subtitle">활성화하면, 앱에서 스크린샷을 촬영하고 최근 앱 목록에서 항목을 미리 볼 수 있습니다.</string>
   <string name="settings_clear_icon_cache_success">아이콘 캐시 삭제됨</string>
   <string name="settings_clear_icon_cache_error">아이콘 캐시를 삭제할 수 없음</string>
   <string name="settings_share_telemetry">익명 사용 데이터 공유</string>
@@ -52,9 +52,24 @@
   <string name="settings_use_digital_asset_link_preference_title">디지털 자산 링크 활성화</string>
   <string name="settings_use_digital_asset_link_preference_subtitle">Android 앱과 웹사이트 사이에 웹사이트 소유권 확인을 설정합니다.</string>
   <string name="settings_autofill_display_title">자동 완성 표시</string>
-  <string name="settings_autofill_display_inline">Inline (above keyboard)</string>
-  <string name="settings_autofill_display_popup">Popup (over input field)</string>
+  <string name="settings_autofill_display_inline">인라인 (키보드 위)</string>
+  <string name="settings_autofill_display_popup">파법 (입력란 위)</string>
   <string name="settings_autofill_display_subtitle">인랴인 모드는 호환 가능한 키보드(예: Gboard)가 필요합니다. 만약 지원되지 않는 경우 팝업 모드로 대신 사용됩니다.</string>
   <string name="settings_autosave_prompt_title">자동 저장할 때 묻기</string>
   <string name="settings_autosave_prompt_subtitle">Proton Pass가 로그인 항목을 저장하거나 업데이트할 때 묻습니다.</string>
+  <string name="settings_offline_attachments_section_title">Offline attachments</string>
+  <string name="settings_offline_attachments_download_all">Make attachments available offline</string>
+  <string name="settings_offline_attachments_cellular">Download also on cellular data</string>
+  <string name="settings_offline_attachments_download_status">Download status</string>
+  <string name="notification_permission_dialog_title">Notification permission required</string>
+  <string name="notification_permission_dialog_message">To show download progress notifications, you need to enable notifications for this app in system settings.</string>
+  <string name="notification_permission_dialog_open_settings">Open settings</string>
+  <string name="notification_permission_dialog_cancel">Cancel</string>
+  <string name="attachment_config_dialog_title">Download options</string>
+  <string name="attachment_config_dialog_all_vaults">All vaults</string>
+  <string name="attachment_config_dialog_select_vaults">Select vaults to download</string>
+  <string name="attachment_config_dialog_shared_items">Shared with me</string>
+  <string name="attachment_config_dialog_start">Download</string>
+  <string name="attachment_config_dialog_cancel">Cancel</string>
+  <string name="settings_offline_attachments_shared_items">Shared with me</string>
 </resources>

@@ -57,4 +57,19 @@
   <string name="settings_autofill_display_subtitle">Modul integrat necesită o tastatură compatibilă (de ex. Gboard). Dacă nu este acceptat, modul flotant va fi utilizat automat.</string>
   <string name="settings_autosave_prompt_title">Solicitare autosalvare</string>
   <string name="settings_autosave_prompt_subtitle">Proton Pass vă va solicita să salvați sau să actualizați datele.</string>
+  <string name="settings_offline_attachments_section_title">Atașamente locale</string>
+  <string name="settings_offline_attachments_download_all">Atașamente disponibile fără conexiune</string>
+  <string name="settings_offline_attachments_cellular">Descărcare și prin datele mobile</string>
+  <string name="settings_offline_attachments_download_status">Stare descărcare</string>
+  <string name="notification_permission_dialog_title">Este necesară permisiunea de notificare</string>
+  <string name="notification_permission_dialog_message">Pentru a afișa notificări privind progresul descărcării, trebuie să activați notificările pentru această aplicație în setările de sistem.</string>
+  <string name="notification_permission_dialog_open_settings">Deschidere setări</string>
+  <string name="notification_permission_dialog_cancel">Anulare</string>
+  <string name="attachment_config_dialog_title">Opțiuni de descărcare</string>
+  <string name="attachment_config_dialog_all_vaults">Toate seifurile</string>
+  <string name="attachment_config_dialog_select_vaults">Selectați seifurile de descărcat</string>
+  <string name="attachment_config_dialog_shared_items">Partajate cu mine</string>
+  <string name="attachment_config_dialog_start">Descărcare</string>
+  <string name="attachment_config_dialog_cancel">Anulare</string>
+  <string name="settings_offline_attachments_shared_items">Partajate cu mine</string>
 </resources>

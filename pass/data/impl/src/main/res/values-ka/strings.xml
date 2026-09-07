@@ -21,6 +21,10 @@
   <string name="sync_channel_description">შეტყობინებების არხი ელემენტების სინქრონიზაციისთვის</string>
   <string name="syncing_vaults">საცავებისა და ელემენტების სინქრონიზაცია</string>
   <string name="logging_out_free_users">დამატებითი უფასო მომხმარებლების გაყვანა</string>
+  <string name="attachment_download_channel">Attachment downloads</string>
+  <string name="attachment_download_channel_description">Notifications channel for attachment downloads</string>
+  <string name="downloading_attachments">Downloading attachments</string>
+  <string name="downloading_attachments_progress" comment="%1$s is the download progress counter, e.g. 3 / 10">%1$s files</string>
   <string name="plan_subscription_auto_renews_monthly">გამოწერა ავტომატურად განახლდება ტარიფით %1$s/თვეში</string>
   <string name="plan_subscription_auto_renews_annual">გამოწერა ავტომატურად განახლდება ტარიფით %1$s/წელიწადში</string>
   <string name="plan_welcome_offer_auto_renews_monthly">შეთავაზება ახალი მომხამრებლებისთვის. ავტომატური განახლება ფასით %1$s/თვეში</string>

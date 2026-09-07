@@ -50,6 +50,9 @@
   <string name="bottomsheet_leave_vault">Tresor verlassen</string>
   <string name="bottomsheet_view_members">Mitglieder anzeigen</string>
   <string name="bottomsheet_manage_access">Zugriff verwalten</string>
+  <string name="bottomsheet_offline_attachments">Offline-Anhänge</string>
+  <string name="bottomsheet_offline_attachments_enabled">Aktiviert</string>
+  <string name="bottomsheet_offline_attachments_disabled">Deaktiviert</string>
   <string name="bottomsheet_select_vault_read_only">Du hast nur Leseberechtigungen</string>
   <string name="bottomsheet_select_vault_only_oldest_vaults">Du kannst Einträge nur in deinem ältesten Tresor erstellen.</string>
   <string name="vault_title">Tresor</string>

@@ -21,6 +21,10 @@
   <string name="sync_channel_description">Ilmoituskanava kohteiden synkronointia varten</string>
   <string name="syncing_vaults">Holveja ja kohteita synkronoidaan</string>
   <string name="logging_out_free_users">Ylimääräisiä ilmaiskäyttäjiä kirjataan ulos</string>
+  <string name="attachment_download_channel">Attachment downloads</string>
+  <string name="attachment_download_channel_description">Notifications channel for attachment downloads</string>
+  <string name="downloading_attachments">Downloading attachments</string>
+  <string name="downloading_attachments_progress" comment="%1$s is the download progress counter, e.g. 3 / 10">%1$s files</string>
   <string name="plan_subscription_auto_renews_monthly">Tilaus uudistuu automaattisesti hintaan %1$s/kuukausi</string>
   <string name="plan_subscription_auto_renews_annual">Tilaus uudistuu automaattisesti hintaan %1$s/vuosi</string>
   <string name="plan_welcome_offer_auto_renews_monthly">Tervetuliaistarjous. Uudistuu automaattisesti hintaan %1$s/kuukausi.</string>

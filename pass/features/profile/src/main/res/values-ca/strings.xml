@@ -20,6 +20,7 @@
   <string name="profile_option_generated_passwords">Contrasenyes generades</string>
   <string name="profile_error_biometry_failed_to_start">No s\'ha pogut iniciar l\'autenticació biomètrica</string>
   <string name="profile_error_biometry_failed_to_authenticate">No s’ha pogut autenticar</string>
+  <string name="profile_error_app_lock_update_failed">No s\'ha pogut actualitzar el bloqueig de l\'aplicació. Torneu-ho a provar.</string>
   <string name="profile_fingerprint_lock_enabled">S\'ha activat el bloqueig per empremta digital.</string>
   <string name="profile_fingerprint_lock_disabled">S\'ha desactivat el bloqueig per empremta digital.</string>
   <string name="profile_app_version_copied_to_clipboard">S\'ha copiat la versió de l\'aplicació</string>

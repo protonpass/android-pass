@@ -24,8 +24,8 @@
   <string name="settings_privacy_section_title">Súkromie</string>
   <string name="settings_use_favicons_preference_title">Používať webové ikony</string>
   <string name="settings_use_favicons_preference_subtitle">Rozhodnite sa, či chcete pre položky zobraziť ikony webových stránok.</string>
-  <string name="settings_allow_screenshots_preference_title">Allow screenshots and app preview</string>
-  <string name="settings_allow_screenshots_preference_subtitle">If enabled, you will be able to take screenshots of the app and see its preview in the recent apps list.</string>
+  <string name="settings_allow_screenshots_preference_title">Povoliť snímky obrazovky a náhľady aplikácií</string>
+  <string name="settings_allow_screenshots_preference_subtitle">Ak bude táto funkcia zapnutá, budete môcť vytvárať snímky obrazovky aplikácie a zobraziť si ich náhľad v zozname nedávno používaných aplikácií.</string>
   <string name="settings_clear_icon_cache_success">Vyrovnávacia pamäť ikon vymazaná</string>
   <string name="settings_clear_icon_cache_error">Nepodarilo sa vymazať vyrovnávaciu pamäť ikon</string>
   <string name="settings_share_telemetry">Anonymné zdieľanie údajov o používaní</string>
@@ -57,4 +57,19 @@
   <string name="settings_autofill_display_subtitle">Režim v texte vyžaduje kompatibilnú klávesnicu (napr. Gboard). Ak nie je podporovaný, automaticky sa použije režim vyskakovacieho okna.</string>
   <string name="settings_autosave_prompt_title">Výzva na automatické ukladanie</string>
   <string name="settings_autosave_prompt_subtitle">Proton Pass vás požiada o uloženie alebo aktualizáciu prihlásení</string>
+  <string name="settings_offline_attachments_section_title">Ofline príloha</string>
+  <string name="settings_offline_attachments_download_all">Sprístupniť prílohy v režime offline</string>
+  <string name="settings_offline_attachments_cellular">Stiahnuť aj cez mobilné dáta</string>
+  <string name="settings_offline_attachments_download_status">Stav sťahovania</string>
+  <string name="notification_permission_dialog_title">Vyžaduje sa povolenie na zasielanie notifikácií</string>
+  <string name="notification_permission_dialog_message">Ak chcete, aby sa zobrazovali upozornenia o priebehu sťahovania, musíte v systémových nastaveniach povoliť notifikácie pre túto aplikáciu.</string>
+  <string name="notification_permission_dialog_open_settings">Otvoriť nastavenia</string>
+  <string name="notification_permission_dialog_cancel">Zrušiť</string>
+  <string name="attachment_config_dialog_title">Možnosti sťahovania</string>
+  <string name="attachment_config_dialog_all_vaults">Všetky trezory</string>
+  <string name="attachment_config_dialog_select_vaults">Vyberte trezory na stiahnutie</string>
+  <string name="attachment_config_dialog_shared_items">Zdieľané so mnou</string>
+  <string name="attachment_config_dialog_start">Stiahnuť</string>
+  <string name="attachment_config_dialog_cancel">Zrušiť</string>
+  <string name="settings_offline_attachments_shared_items">Zdieľané so mnou</string>
 </resources>

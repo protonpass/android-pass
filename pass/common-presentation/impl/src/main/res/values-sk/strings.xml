@@ -21,6 +21,9 @@
   <string name="download_attachments_error">Prílohu sa nepodarilo stiahnuť</string>
   <string name="share_attachments_error">Prílohu sa nepodarilo zdieľať</string>
   <string name="upload_attachments_error">Prílohu sa nepodarilo nahrať</string>
+  <string name="attachment_not_available_offline">Príloha nie je dostupná v režime offline</string>
+  <string name="attachment_download_timeout">Časový limit na stiahnutie prílohy vypršal</string>
+  <string name="attachment_storage_full">Nedostatočná kapacita úložiska na stiahnutie príloh</string>
   <string name="attachment_size_exceeded_error">Vybraný súbor prekračuje limit veľkosti. Vyberte, prosím, súbor menší ako 100MB.</string>
   <string name="attachment_too_many_files_error">V poslednej dobe bolo vytvorených príliš veľa súborov</string>
   <string name="open_with">Otvoriť pomocou:</string>

@@ -20,6 +20,7 @@
   <string name="profile_option_generated_passwords">Létrehozott jelszavak</string>
   <string name="profile_error_biometry_failed_to_start">Biometrikus hitelesítés indítása nem sikerült</string>
   <string name="profile_error_biometry_failed_to_authenticate">Hitelesítés sikertelen</string>
+  <string name="profile_error_app_lock_update_failed">Could not update the app lock. Please try again.</string>
   <string name="profile_fingerprint_lock_enabled">Ujjlenyomatos feloldás bekapcsolva</string>
   <string name="profile_fingerprint_lock_disabled">Ujjlenyomatos feloldás kikapcsolva</string>
   <string name="profile_app_version_copied_to_clipboard">Verziószám másolva</string>

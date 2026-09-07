@@ -21,6 +21,10 @@
   <string name="sync_channel_description">Κανάλι ειδοποιήσεων για συγχρονισμό στοιχείων</string>
   <string name="syncing_vaults">Συγχρονισμός κρυπτών και στοιχείων</string>
   <string name="logging_out_free_users">Αποσύνδεση επιπλέον δωρεάν χρηστών</string>
+  <string name="attachment_download_channel">Λήψεις συνημμένων</string>
+  <string name="attachment_download_channel_description">Κανάλι ειδοποιήσεων για λήψεις συνημμένων</string>
+  <string name="downloading_attachments">Λήψη συνημμένων</string>
+  <string name="downloading_attachments_progress" comment="%1$s is the download progress counter, e.g. 3 / 10">%1$s αρχεία</string>
   <string name="plan_subscription_auto_renews_monthly">Η συνδρομή ανανεώνεται αυτόματα στα %1$s/μήνα</string>
   <string name="plan_subscription_auto_renews_annual">Η συνδρομή ανανεώνεται αυτόματα στα %1$s/χρόνο</string>
   <string name="plan_welcome_offer_auto_renews_monthly">Προσφορά καλωσορίσματος. Αυτόματη ανανέωση στα %1$s/μήνα</string>

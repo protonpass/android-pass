@@ -21,6 +21,10 @@
   <string name="sync_channel_description">Notifikationskanal for elementsynkronisering</string>
   <string name="syncing_vaults">Synkroniserer bokse og elementer</string>
   <string name="logging_out_free_users">Ekstra gratis brugere logges ud</string>
+  <string name="attachment_download_channel">Downloads af vedhæftninger</string>
+  <string name="attachment_download_channel_description">Notifikationskanal til download af vedhæftninger</string>
+  <string name="downloading_attachments">Downloader vedhæftninger</string>
+  <string name="downloading_attachments_progress" comment="%1$s is the download progress counter, e.g. 3 / 10">%1$s filer</string>
   <string name="plan_subscription_auto_renews_monthly">Abonnement fornyes automatisk til %1$s/måned</string>
   <string name="plan_subscription_auto_renews_annual">Abonnementet fornyes automatisk til %1$s/år</string>
   <string name="plan_welcome_offer_auto_renews_monthly">Velkomsttilbud. Fornyes automatisk til %1$s/måned</string>

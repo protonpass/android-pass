@@ -57,4 +57,19 @@
   <string name="settings_autofill_display_subtitle">La modalità in linea richiede una tastiera compatibile (ad esempio Gboard). In caso di tastiera non supportata, verrà utilizzata automaticamente la modalità popup.</string>
   <string name="settings_autosave_prompt_title">Richiedi il salvataggio automatico</string>
   <string name="settings_autosave_prompt_subtitle">Proton Pass ti chiederà di salvare o aggiornare le credenziali di accesso.</string>
+  <string name="settings_offline_attachments_section_title">Allegati offline</string>
+  <string name="settings_offline_attachments_download_all">Rendi gli allegati disponibili offline</string>
+  <string name="settings_offline_attachments_cellular">Scaricabile anche tramite connessione dati cellulare</string>
+  <string name="settings_offline_attachments_download_status">Stato del download</string>
+  <string name="notification_permission_dialog_title">È necessaria l\'autorizzazione per le notifiche.</string>
+  <string name="notification_permission_dialog_message">Per visualizzare le notifiche relative all\'avanzamento del download, è necessario abilitare le notifiche per questa app nelle impostazioni di sistema.</string>
+  <string name="notification_permission_dialog_open_settings">Apri le impostazioni</string>
+  <string name="notification_permission_dialog_cancel">Annulla</string>
+  <string name="attachment_config_dialog_title">Opzioni di download</string>
+  <string name="attachment_config_dialog_all_vaults">Tutte le casseforti</string>
+  <string name="attachment_config_dialog_select_vaults">Seleziona la cassaforte da scaricare</string>
+  <string name="attachment_config_dialog_shared_items">Condiviso con me</string>
+  <string name="attachment_config_dialog_start">Scarica</string>
+  <string name="attachment_config_dialog_cancel">Annulla</string>
+  <string name="settings_offline_attachments_shared_items">Condiviso con me</string>
 </resources>

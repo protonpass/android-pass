@@ -57,4 +57,19 @@
   <string name="settings_autofill_display_subtitle">Inline mode requires a compatible keyboard (e.g. Gboard). If unsupported, popup mode will be used automatically.</string>
   <string name="settings_autosave_prompt_title">Uppmana för spara automatiskt</string>
   <string name="settings_autosave_prompt_subtitle">Proton Pass kommer uppmana dig att spara eller uppdatera inloggningar</string>
+  <string name="settings_offline_attachments_section_title">Offline attachments</string>
+  <string name="settings_offline_attachments_download_all">Gör bilagor tillgängliga offline</string>
+  <string name="settings_offline_attachments_cellular">Download also on cellular data</string>
+  <string name="settings_offline_attachments_download_status">Download status</string>
+  <string name="notification_permission_dialog_title">Notification permission required</string>
+  <string name="notification_permission_dialog_message">To show download progress notifications, you need to enable notifications for this app in system settings.</string>
+  <string name="notification_permission_dialog_open_settings">Öppna inställningar</string>
+  <string name="notification_permission_dialog_cancel">Avbryt</string>
+  <string name="attachment_config_dialog_title">Download options</string>
+  <string name="attachment_config_dialog_all_vaults">Alla valv</string>
+  <string name="attachment_config_dialog_select_vaults">Välj valv att ladda ner</string>
+  <string name="attachment_config_dialog_shared_items">Delat med mig</string>
+  <string name="attachment_config_dialog_start">Ladda ner</string>
+  <string name="attachment_config_dialog_cancel">Avbryt</string>
+  <string name="settings_offline_attachments_shared_items">Delat med mig</string>
 </resources>

@@ -57,4 +57,19 @@
   <string name="settings_autofill_display_subtitle">内嵌模式需要兼容的键盘（如 Gboard）。若不支持，将自动使用弹窗模式。</string>
   <string name="settings_autosave_prompt_title">提示自动保存</string>
   <string name="settings_autosave_prompt_subtitle">Proton Pass 将提示您保存或更新登录信息</string>
+  <string name="settings_offline_attachments_section_title">离线附件</string>
+  <string name="settings_offline_attachments_download_all">使附件离线可用</string>
+  <string name="settings_offline_attachments_cellular">在移动数据下也下载</string>
+  <string name="settings_offline_attachments_download_status">下载状态</string>
+  <string name="notification_permission_dialog_title">请求通知权限</string>
+  <string name="notification_permission_dialog_message">为了在通知中显示下载进度，您需要在系统设置中开启当前应用的通知权限。</string>
+  <string name="notification_permission_dialog_open_settings">打开设置</string>
+  <string name="notification_permission_dialog_cancel">取消</string>
+  <string name="attachment_config_dialog_title">下载选项</string>
+  <string name="attachment_config_dialog_all_vaults">所有保险库</string>
+  <string name="attachment_config_dialog_select_vaults">Select vaults to download</string>
+  <string name="attachment_config_dialog_shared_items">与我共享</string>
+  <string name="attachment_config_dialog_start">下载</string>
+  <string name="attachment_config_dialog_cancel">取消</string>
+  <string name="settings_offline_attachments_shared_items">与我共享</string>
 </resources>

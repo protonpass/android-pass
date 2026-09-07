@@ -26,11 +26,11 @@
   <string name="autofill_troubleshooting_service_not_default_body">Nastavte ho ako predvolené, aby sa údaje automaticky vypĺňali vo všetkých vašich aplikáciách.</string>
   <string name="autofill_troubleshooting_service_enable_action">Povoliť automatické vypĺňanie</string>
   <string name="autofill_troubleshooting_service_unsupported_title">Toto zariadenie nepodporuje automatické vypĺňanie</string>
-  <string name="autofill_troubleshooting_browsers_inactive_header">Inactive browsers detected</string>
-  <string name="autofill_troubleshooting_browsers_inactive_body">Turn on autofill so that Proton Pass can fill your credentials. Tap a browser to open its settings.</string>
-  <string name="autofill_troubleshooting_browsers_compatible_header">Browsers are compatible</string>
-  <string name="autofill_troubleshooting_browsers_compatible_body">Your browsers are connected and ready to autofill.</string>
-  <string name="autofill_troubleshooting_browser_active">Active</string>
+  <string name="autofill_troubleshooting_browsers_inactive_header">Boli zistené neaktívne prehliadače</string>
+  <string name="autofill_troubleshooting_browsers_inactive_body">Zapnite automatické vypĺňanie, aby aplikácia Proton Pass mohla vyplniť vaše prihlasovacie údaje. Ťuknite na prehliadač, aby ste otvorili jeho nastavenia.</string>
+  <string name="autofill_troubleshooting_browsers_compatible_header">Prehliadače sú kompatibilné</string>
+  <string name="autofill_troubleshooting_browsers_compatible_body">Vaše prehliadače sú pripojené a pripravené na automatické vypĺňanie.</string>
+  <string name="autofill_troubleshooting_browser_active">Aktívne</string>
   <string name="autofill_troubleshooting_inline_info">Návrhy priamo v texte sa zobrazujú na klávesnici. Na ich fungovanie je potrebný systém Android 11 alebo novší a kompatibilná klávesnica, napríklad Gboard.</string>
   <string name="autofill_troubleshooting_share_diagnostics">Zdieľať diagnostiku</string>
   <string name="autofill_troubleshooting_open_diagnostics">Pokročilá diagnostika</string>

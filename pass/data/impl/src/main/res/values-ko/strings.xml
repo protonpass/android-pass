@@ -21,8 +21,12 @@
   <string name="sync_channel_description">항목 동기화를 위한 알림 채널</string>
   <string name="syncing_vaults">금고와 항목을 동기화하는 중</string>
   <string name="logging_out_free_users">추가 무료 사용자 로그아웃</string>
-  <string name="plan_subscription_auto_renews_monthly">Subscription auto renews at %1$s/month</string>
-  <string name="plan_subscription_auto_renews_annual">Subscription auto renews at %1$s/year</string>
-  <string name="plan_welcome_offer_auto_renews_monthly">Welcome offer. Auto renews at %1$s/month</string>
-  <string name="plan_welcome_offer_auto_renews_annual">Welcome offer. Auto renews at %1$s/year</string>
+  <string name="attachment_download_channel">Attachment downloads</string>
+  <string name="attachment_download_channel_description">Notifications channel for attachment downloads</string>
+  <string name="downloading_attachments">Downloading attachments</string>
+  <string name="downloading_attachments_progress" comment="%1$s is the download progress counter, e.g. 3 / 10">%1$s files</string>
+  <string name="plan_subscription_auto_renews_monthly">구독이 매월 %1$s(으)로 자동 갱신됩니다.</string>
+  <string name="plan_subscription_auto_renews_annual">구독이 매년 %1$s(으)로 자동 갱신됩니다</string>
+  <string name="plan_welcome_offer_auto_renews_monthly">환영 할인. 매월 %1$s(으)로 갱신됩니다.</string>
+  <string name="plan_welcome_offer_auto_renews_annual">환영 할인. 매년 %1$s(으)로 갱신됩니다.</string>
 </resources>

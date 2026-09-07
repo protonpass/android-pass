@@ -348,13 +348,13 @@
   <string name="autofill_suggestions_description">Adjust autofill behaviors to change where logins are suggested and filled for %s.</string>
   <string name="autofill_suggestions_tab_basic">기본</string>
   <string name="autofill_suggestions_tab_advanced">고급</string>
-  <string name="autofill_suggestions_mode_default">Parent domain and subdomains</string>
+  <string name="autofill_suggestions_mode_default">상위 도메인 및 서브도메인</string>
   <string name="autofill_suggestions_mode_exact">Exact (sub)domain</string>
-  <string name="autofill_suggestions_mode_never">Never fill on this website</string>
-  <string name="autofill_suggestions_mode_start_with">Starts with</string>
+  <string name="autofill_suggestions_mode_never">이 웹사이트에서 자동 완성 안 함</string>
+  <string name="autofill_suggestions_mode_start_with">시작:</string>
   <string name="autofill_suggestions_mode_regular_expression">Regular expression</string>
   <string name="autofill_suggestions_mode_exact_path">Exact URL matching</string>
-  <string name="autofill_suggestions_android_limitation">Advanced rules are not available on Android due to limitations in the operating system APIs.</string>
+  <string name="autofill_suggestions_android_limitation">운영 채제 API 제약으로 인하여 향상된 규칙은 Android에서 사용할 수 없습니다.</string>
   <string name="autofill_suggestions_mode_default_badge">기본</string>
   <string name="autofill_suggestions_url_column">URL</string>
   <string name="autofill_suggestions_suggested_column">제안됨</string>

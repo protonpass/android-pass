@@ -39,4 +39,14 @@
   <string name="storage_full_amount" comment="This will show 20MB of 100MB">%1$s / %2$s</string>
   <string name="attachments_saved_to_location_success">Allegato salvato</string>
   <string name="attachments_saved_to_location_error">Salvataggio dell\'allegato non riuscito</string>
+  <string name="attachment_sync_dialog_title_waiting">In attesa di connessione</string>
+  <string name="attachment_sync_dialog_title_downloading">Download degli allegati</string>
+  <string name="attachment_sync_dialog_title_done">Download completato</string>
+  <string name="attachment_sync_dialog_title_partial_failure">Download non riuscito</string>
+  <string name="attachment_sync_dialog_subtitle_waiting">In attesa di connessione di rete per scaricare gli allegati.</string>
+  <string name="attachment_sync_dialog_subtitle_downloading">Download degli allegati %1$d/%2$d in corso</string>
+  <string name="attachment_sync_dialog_subtitle_done">Tutti gli allegati sono stati scaricati correttamente.</string>
+  <string name="attachment_sync_dialog_subtitle_partial_failure">Alcuni allegati non sono stati scaricati. Puoi riprovare a scaricarli qui sotto.</string>
+  <string name="attachment_sync_dialog_retry_content_description">Riavvia il download</string>
+  <string name="attachment_sync_vault_files_count">%1$d / %2$d file</string>
 </resources>

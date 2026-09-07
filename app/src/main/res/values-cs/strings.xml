@@ -6,8 +6,8 @@
   <string name="restart_to_complete_the_update">Restartováním dokončíte aktualizaci</string>
   <string name="action_restart">Restartovat</string>
   <string name="shortcut_share_logs_title">Sdílet logy</string>
-  <string name="shortcut_share_logs_confirmation_title">Share diagnostic logs?</string>
-  <string name="shortcut_share_logs_confirmation_message">This opens your email app to send Proton Pass diagnostic logs. No vault data is included.</string>
+  <string name="shortcut_share_logs_confirmation_title">Sdílet diagnostické logy?</string>
+  <string name="shortcut_share_logs_confirmation_message">Tím se otevře vaše e-mailová aplikace, abyste mohli odeslat diagnostické logy Proton Pass. Data z trezoru nejsou zahrnuta.</string>
   <string name="no_account_found">Žádný účet nenalezen</string>
   <string name="no_session_found">Žádná relace nebyla nalezena</string>
   <string name="auth_with_extra_password_failed">Autentizace pomocí dodatečného hesla selhala</string>

@@ -21,6 +21,10 @@
   <string name="sync_channel_description">Canal de notificare pentru sincronizarea articolelor.</string>
   <string name="syncing_vaults">Sincronizare seifuri și articole</string>
   <string name="logging_out_free_users">Deconectare utilizatori gratuiți suplimentari</string>
+  <string name="attachment_download_channel">Descărcări atașamente</string>
+  <string name="attachment_download_channel_description">Canal de notificări pentru descărcări atașamente</string>
+  <string name="downloading_attachments">Se descarcă atașamentele</string>
+  <string name="downloading_attachments_progress" comment="%1$s is the download progress counter, e.g. 3 / 10">Fișiere: %1$s</string>
   <string name="plan_subscription_auto_renews_monthly">Abonamentul se autoreînnoiește cu %1$s/lună.</string>
   <string name="plan_subscription_auto_renews_annual">Abonamentul se autoreînnoiește cu %1$s/an.</string>
   <string name="plan_welcome_offer_auto_renews_monthly">Ofertă de bun venit. Autoreînnoire cu %1$s/lună.</string>

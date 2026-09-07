@@ -57,4 +57,19 @@
   <string name="settings_autofill_display_subtitle">Satır içi kip için uyumlu bir klavye (Gboard gibi) gereklidir. Bu kip desteklenmiyorsa otomatik olarak açılır pencere kipi kullanılır.</string>
   <string name="settings_autosave_prompt_title">Otomatik kaydetme uyarısı</string>
   <string name="settings_autosave_prompt_subtitle">Proton Pass oturum açma bilgilerini kaydetmeniz ya da güncellemeniz için sizi uyaracak</string>
+  <string name="settings_offline_attachments_section_title">Çevrim dışı ek dosyalar</string>
+  <string name="settings_offline_attachments_download_all">Ek dosyalar çevrim dışı olarak kullanılabilsin</string>
+  <string name="settings_offline_attachments_cellular">Mobil veri üzerinden de indirilsin</string>
+  <string name="settings_offline_attachments_download_status">İndirme durumu</string>
+  <string name="notification_permission_dialog_title">Bildirim izinleri gerekli</string>
+  <string name="notification_permission_dialog_message">İndirme ilerleme bildirimlerinin görüntülenmesi için sistem ayarlarından bu uygulama için bildirimleri açmanız gerekir.</string>
+  <string name="notification_permission_dialog_open_settings">Ayarları aç</string>
+  <string name="notification_permission_dialog_cancel">İptal</string>
+  <string name="attachment_config_dialog_title">İndirme seçenekleri</string>
+  <string name="attachment_config_dialog_all_vaults">Tüm kasalar</string>
+  <string name="attachment_config_dialog_select_vaults">İndirilecek kasaları seçin</string>
+  <string name="attachment_config_dialog_shared_items">Benimle paylaşılan</string>
+  <string name="attachment_config_dialog_start">İndir</string>
+  <string name="attachment_config_dialog_cancel">İptal</string>
+  <string name="settings_offline_attachments_shared_items">Benimle paylaşılan</string>
 </resources>

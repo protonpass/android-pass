@@ -39,4 +39,14 @@
   <string name="storage_full_amount" comment="This will show 20MB of 100MB">%1$s από %2$s</string>
   <string name="attachments_saved_to_location_success">Το συνημμένο αποθηκεύτηκε στην τοποθεσία</string>
   <string name="attachments_saved_to_location_error">Δεν ήταν δυνατή η αποθήκευση συνημμένου στην τοποθεσία</string>
+  <string name="attachment_sync_dialog_title_waiting">Αναμονή για σύνδεση</string>
+  <string name="attachment_sync_dialog_title_downloading">Λήψη συνημμένων</string>
+  <string name="attachment_sync_dialog_title_done">Η λήψη ολοκληρώθηκε</string>
+  <string name="attachment_sync_dialog_title_partial_failure">Η λήψη απέτυχε</string>
+  <string name="attachment_sync_dialog_subtitle_waiting">Αναμονή για σύνδεση δικτύου για λήψη συνημμένων.</string>
+  <string name="attachment_sync_dialog_subtitle_downloading">Λήψη συνημμένων %1$d/%2$d</string>
+  <string name="attachment_sync_dialog_subtitle_done">Όλα τα συνημμένα έχουν ληφθεί με επιτυχία.</string>
+  <string name="attachment_sync_dialog_subtitle_partial_failure">Δεν ήταν δυνατή η λήψη ορισμένων συνημμένων. Μπορείτε να δοκιμάσετε ξανά τα αποτυχημένα παρακάτω.</string>
+  <string name="attachment_sync_dialog_retry_content_description">Επανάληψη λήψης</string>
+  <string name="attachment_sync_vault_files_count">%1$d / %2$d αρχεία</string>
 </resources>

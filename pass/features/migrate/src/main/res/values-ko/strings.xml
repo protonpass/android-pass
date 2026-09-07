@@ -4,7 +4,7 @@
     <item quantity="other">다음 금고로 %d개 항목을 이동할까요?</item>
   </plurals>
   <plurals name="migrate_item_to_folder_confirm_title_bottom_sheet">
-    <item quantity="other">Move %d items to the following folder?</item>
+    <item quantity="other">다음 폴더로 %d개 항목을 이동할까요?</item>
   </plurals>
   <string name="migrate_item_confirm_confirm_button">이동</string>
   <string name="migrate_item_success_snackbar">항목을 이동했습니다.</string>
@@ -15,20 +15,20 @@
   <string name="migrate_all_items_success_snackbar">모든 항목이 삭제되었습니다</string>
   <string name="migrate_all_items_error_snackbar">모든 금고 항목 이동 중 오류</string>
   <string name="migrate_init_error_snackbar">마이그레이션 창을 준비할 수 없습니다.</string>
-  <string name="migrate_folder_confirm_title_bottom_sheet">Move folder to the following vault?</string>
-  <string name="migrate_folder_to_folder_confirm_title_bottom_sheet">Move folder to the following folder?</string>
-  <string name="migrate_folder_success_snackbar">Folder moved</string>
-  <string name="migrate_folder_error_snackbar">Error moving the folder</string>
-  <string name="migrate_folder_already_same_parent_snackbar">Folder is already in this location</string>
-  <string name="migrate_dissolve_folder_dialog_title">Move folder contents</string>
-  <string name="migrate_dissolve_folder_dialog_message">This folder is already at the vault root. Its items and subfolders will be moved to the vault root.</string>
-  <string name="migrate_dissolve_folder_dialog_confirm">Move</string>
+  <string name="migrate_folder_confirm_title_bottom_sheet">다음 금고로 폴더를 이동할까요?</string>
+  <string name="migrate_folder_to_folder_confirm_title_bottom_sheet">다음 폴더로 폴더를 이동할까요?</string>
+  <string name="migrate_folder_success_snackbar">폴더가 삭제되었습니다.</string>
+  <string name="migrate_folder_error_snackbar">폴더 이동 오류</string>
+  <string name="migrate_folder_already_same_parent_snackbar">폴더가 이미 해당 위치에 존재합니다.</string>
+  <string name="migrate_dissolve_folder_dialog_title">폴더 콘텐츠 이동</string>
+  <string name="migrate_dissolve_folder_dialog_message">폴더가 이미 상위 금고에 존재합니다. 항목 및 하위 폴더를 상위 금고에서 이동됩니다.</string>
+  <string name="migrate_dissolve_folder_dialog_confirm">이동</string>
   <plurals name="migrate_disabled_folder_reason_same_folder">
-    <item quantity="other">%d items are already in this folder</item>
+    <item quantity="other">이미 폴더 내에 %d개 항목이 중복됩니다.</item>
   </plurals>
-  <string name="migrate_disabled_folder_reason_same_location">This folder is already in this location</string>
-  <string name="migrate_disabled_folder_reason_being_moved">This folder is being moved</string>
-  <string name="migrate_disabled_folder_reason_descendant">This folder is inside the folder being moved</string>
+  <string name="migrate_disabled_folder_reason_same_location">해당 폴더가 이미 해당 위치에 존재합니다.</string>
+  <string name="migrate_disabled_folder_reason_being_moved">해당 폴더가 이동됩니다.</string>
+  <string name="migrate_disabled_folder_reason_descendant">해당 폴더는 이동되는 폴더 내에 존재합니다.</string>
   <string name="migrate_disabled_vault_reason_no_permission">이 금고 내에서 항목 생성이 불가합니다.</string>
   <string name="migrate_disabled_vault_reason_same_vault">같은 금고 내에서는 항목 이동이 불가합니다.</string>
   <plurals name="migrate_items_shared_warning_title">
@@ -38,8 +38,8 @@
   <plurals name="migrate_items_shared_warning_message">
     <item quantity="other">%d개 항목이 현재 공유 중입니다. 다른 금고로 이동하면 다른 사용자들과의 접근 권한도 상실됩니다.</item>
   </plurals>
-  <string name="migrate_select_vault_title">Select a vault</string>
-  <string name="migrate_select_destination_for_source_title">Select the destination to move all items from %s</string>
-  <string name="migrate_folder_items_moved_success_snackbar">Items moved</string>
-  <string name="migrate_folder_items_moved_error_snackbar">Error moving the items</string>
+  <string name="migrate_select_vault_title">금고 선택</string>
+  <string name="migrate_select_destination_for_source_title">%s(에)서 전체 항목을 이동할 대상 위치를 선택하세요</string>
+  <string name="migrate_folder_items_moved_success_snackbar">항목을 이동했습니다.</string>
+  <string name="migrate_folder_items_moved_error_snackbar">항목 이동 오류</string>
 </resources>

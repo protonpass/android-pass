@@ -57,4 +57,19 @@
   <string name="settings_autofill_display_subtitle">Für den Modus „Eingebettet“ ist eine kompatible Tastatur erforderlich (z. B. Gboard). Falls dieser nicht unterstützt wird, wird automatisch der Popup-Modus verwendet.</string>
   <string name="settings_autosave_prompt_title">Automatischens Speichern anfordern</string>
   <string name="settings_autosave_prompt_subtitle">Proton Pass wird dich auffordern, deine Anmeldedaten zu speichern oder zu aktualisieren</string>
+  <string name="settings_offline_attachments_section_title">Offline-Anhänge</string>
+  <string name="settings_offline_attachments_download_all">Anhänge offline verfügbar machen</string>
+  <string name="settings_offline_attachments_cellular">Auch über Mobilfunkdaten herunterladen</string>
+  <string name="settings_offline_attachments_download_status">Download-Status</string>
+  <string name="notification_permission_dialog_title">Benachrichtigungsberechtigung erforderlich</string>
+  <string name="notification_permission_dialog_message">Um Benachrichtigungen zum Download-Fortschritt anzeigen zu lassen, müssen die Benachrichtigungen für diese App in den Systemeinstellungen aktiviert werden.</string>
+  <string name="notification_permission_dialog_open_settings">Einstellungen öffnen</string>
+  <string name="notification_permission_dialog_cancel">Abbrechen</string>
+  <string name="attachment_config_dialog_title">Download-Optionen</string>
+  <string name="attachment_config_dialog_all_vaults">Alle Tresore</string>
+  <string name="attachment_config_dialog_select_vaults">Tresore zum Herunterladen auswählen</string>
+  <string name="attachment_config_dialog_shared_items">Mit mir geteilt</string>
+  <string name="attachment_config_dialog_start">Herunterladen</string>
+  <string name="attachment_config_dialog_cancel">Abbrechen</string>
+  <string name="settings_offline_attachments_shared_items">Mit mir geteilt</string>
 </resources>

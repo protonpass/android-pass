@@ -21,6 +21,9 @@
   <string name="download_attachments_error">无法下载附件</string>
   <string name="share_attachments_error">无法分享附件</string>
   <string name="upload_attachments_error">无法上传附件</string>
+  <string name="attachment_not_available_offline">Attachment not available offline</string>
+  <string name="attachment_download_timeout">Attachment download timed out</string>
+  <string name="attachment_storage_full">Not enough storage to download attachments</string>
   <string name="attachment_size_exceeded_error">您选择的文件超出大小限制，请使用小于100MB的文件。</string>
   <string name="attachment_too_many_files_error">最近创建的文件过多</string>
   <string name="open_with">打开方式：</string>

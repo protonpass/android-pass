@@ -39,4 +39,14 @@
   <string name="storage_full_amount" comment="This will show 20MB of 100MB">%1$s sur %2$s</string>
   <string name="attachments_saved_to_location_success">Pièce jointe enregistrée à l\'emplacement</string>
   <string name="attachments_saved_to_location_error">L\'enregistrement de la pièce jointe à l\'emplacement n\'a pas abouti.</string>
+  <string name="attachment_sync_dialog_title_waiting">En attente de connexion</string>
+  <string name="attachment_sync_dialog_title_downloading">Téléchargement des pièces jointes en cours</string>
+  <string name="attachment_sync_dialog_title_done">Le téléchargement est terminé.</string>
+  <string name="attachment_sync_dialog_title_partial_failure">Le téléchargement n\'a pas abouti.</string>
+  <string name="attachment_sync_dialog_subtitle_waiting">En attente d\'une connexion réseau pour télécharger les pièces jointes.</string>
+  <string name="attachment_sync_dialog_subtitle_downloading">Téléchargement en cours des pièces jointes %1$d/%2$d</string>
+  <string name="attachment_sync_dialog_subtitle_done">Toutes les pièces jointes ont été téléchargées avec succès.</string>
+  <string name="attachment_sync_dialog_subtitle_partial_failure">Certaines pièces jointes n\'ont pas pu être téléchargées. Vous pouvez réessayer de télécharger celles qui ont échoué ci-dessous.</string>
+  <string name="attachment_sync_dialog_retry_content_description">Réessayer le téléchargement</string>
+  <string name="attachment_sync_vault_files_count">%1$d / %2$d fichiers</string>
 </resources>

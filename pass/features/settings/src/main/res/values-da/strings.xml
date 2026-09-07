@@ -57,4 +57,19 @@
   <string name="settings_autofill_display_subtitle">Inline-tilstand kræver et kompatibelt tastatur (f.eks. Gboard). Hvis det ikke understøttes, anvendes popup-tilstand automatisk.</string>
   <string name="settings_autosave_prompt_title">Spørg om auto-gem</string>
   <string name="settings_autosave_prompt_subtitle">Proton Pass vil opfordre dig til at gemme eller opdatere logins</string>
+  <string name="settings_offline_attachments_section_title">Offline vedhæftninger</string>
+  <string name="settings_offline_attachments_download_all">Gør vedhæftninger tilgængelige offline</string>
+  <string name="settings_offline_attachments_cellular">Download også på mobilnetværk</string>
+  <string name="settings_offline_attachments_download_status">Download-status</string>
+  <string name="notification_permission_dialog_title">Tilladelse til notifikationer er påkrævet</string>
+  <string name="notification_permission_dialog_message">For at vise notifikationer om download-status skal du aktivere notifikationer for denne app i systemindstillinger.</string>
+  <string name="notification_permission_dialog_open_settings">Åbn indstillinger</string>
+  <string name="notification_permission_dialog_cancel">Annuller</string>
+  <string name="attachment_config_dialog_title">Muligheder for download</string>
+  <string name="attachment_config_dialog_all_vaults">Alle bokse</string>
+  <string name="attachment_config_dialog_select_vaults">Vælg bokse at downloade</string>
+  <string name="attachment_config_dialog_shared_items">Delt med mig</string>
+  <string name="attachment_config_dialog_start">Download</string>
+  <string name="attachment_config_dialog_cancel">Annuller</string>
+  <string name="settings_offline_attachments_shared_items">Delt med mig</string>
 </resources>

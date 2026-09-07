@@ -20,6 +20,7 @@
   <string name="profile_option_generated_passwords">Kata sandi yang dihasilkan</string>
   <string name="profile_error_biometry_failed_to_start">Autentikasi biometrik tidak dapat dimulai</string>
   <string name="profile_error_biometry_failed_to_authenticate">Gagal mengautentikasi</string>
+  <string name="profile_error_app_lock_update_failed">Could not update the app lock. Please try again.</string>
   <string name="profile_fingerprint_lock_enabled">Kunci sidik jari diaktifkan</string>
   <string name="profile_fingerprint_lock_disabled">Kunci sidik jari dinonaktifkan</string>
   <string name="profile_app_version_copied_to_clipboard">Versi aplikasi disalin</string>

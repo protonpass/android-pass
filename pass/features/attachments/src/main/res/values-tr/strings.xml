@@ -39,4 +39,14 @@
   <string name="storage_full_amount" comment="This will show 20MB of 100MB">%1$s / %2$s</string>
   <string name="attachments_saved_to_location_success">Ek dosya konuma kaydedildi</string>
   <string name="attachments_saved_to_location_error">Ek dosya konuma kaydedilemedi</string>
+  <string name="attachment_sync_dialog_title_waiting">Bağlantı kurulması bekleniyor</string>
+  <string name="attachment_sync_dialog_title_downloading">Ek dosyalar indirliyor</string>
+  <string name="attachment_sync_dialog_title_done">İndirme tamamlandı</string>
+  <string name="attachment_sync_dialog_title_partial_failure">İndirme tamamlanamadı</string>
+  <string name="attachment_sync_dialog_subtitle_waiting">Ek dosyaları indirmek için ağ bağlantısı bekleniyor.</string>
+  <string name="attachment_sync_dialog_subtitle_downloading">%1$d/%2$d ek dosya indiriliyor</string>
+  <string name="attachment_sync_dialog_subtitle_done">Tüm ek dosyaları indirildi.</string>
+  <string name="attachment_sync_dialog_subtitle_partial_failure">Bazı ek dosyalar indirilemedi. Aşağıdaki başarısız olanları yeniden deneyebilirsiniz.</string>
+  <string name="attachment_sync_dialog_retry_content_description">Yeniden indir</string>
+  <string name="attachment_sync_vault_files_count">%1$d / %2$d dosya</string>
 </resources>

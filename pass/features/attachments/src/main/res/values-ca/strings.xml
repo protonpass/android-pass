@@ -39,4 +39,14 @@
   <string name="storage_full_amount" comment="This will show 20MB of 100MB">%1$s de %2$s</string>
   <string name="attachments_saved_to_location_success">S\'ha desat el fitxer adjunt a la ubicació.</string>
   <string name="attachments_saved_to_location_error">No s\'ha pogut desar el fitxer adjunt a la ubicació.</string>
+  <string name="attachment_sync_dialog_title_waiting">S\'està esperant la connexió</string>
+  <string name="attachment_sync_dialog_title_downloading">S\'estan descarregant els fitxers adjunts</string>
+  <string name="attachment_sync_dialog_title_done">S\'ha completat la descàrrega</string>
+  <string name="attachment_sync_dialog_title_partial_failure">Ha fallat la descàrrega</string>
+  <string name="attachment_sync_dialog_subtitle_waiting">S\'està esperant la connexió a la xarxa per descarregar els fitxers adjunts.</string>
+  <string name="attachment_sync_dialog_subtitle_downloading">S\'estan descarregant els fitxers adjunts %1$d/%2$d</string>
+  <string name="attachment_sync_dialog_subtitle_done">Tots els fitxers adjunts s\'han descarregat correctament.</string>
+  <string name="attachment_sync_dialog_subtitle_partial_failure">Alguns fitxers adjunts no s\'han pogut descarregar. Ho podeu tornar a intentar a continuació amb els que han fallat.</string>
+  <string name="attachment_sync_dialog_retry_content_description">Tornar a intentar la descàrrega</string>
+  <string name="attachment_sync_vault_files_count">%1$d / %2$d fitxers</string>
 </resources>

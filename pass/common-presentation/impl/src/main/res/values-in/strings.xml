@@ -21,6 +21,9 @@
   <string name="download_attachments_error">Lampiran tidak dapat diunduh</string>
   <string name="share_attachments_error">Lampiran tidak dapat dibagikan</string>
   <string name="upload_attachments_error">Gagal mengunggah lampiran</string>
+  <string name="attachment_not_available_offline">Attachment not available offline</string>
+  <string name="attachment_download_timeout">Attachment download timed out</string>
+  <string name="attachment_storage_full">Not enough storage to download attachments</string>
   <string name="attachment_size_exceeded_error">Berkas yang dipilih melebihi batas ukuran berkas. Silakan pilih berkas yang lebih kecil dari 100 MB.</string>
   <string name="attachment_too_many_files_error">Too many files created recently</string>
   <string name="open_with">Buka dengan:</string>

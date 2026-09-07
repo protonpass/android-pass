@@ -39,4 +39,14 @@
   <string name="storage_full_amount" comment="This will show 20MB of 100MB">%1$s din %2$s</string>
   <string name="attachments_saved_to_location_success">Atașamentul a fost salvat.</string>
   <string name="attachments_saved_to_location_error">Atașamentul nu s-a putut salva.</string>
+  <string name="attachment_sync_dialog_title_waiting">Se așteaptă conexiunea</string>
+  <string name="attachment_sync_dialog_title_downloading">Se descarcă atașamentele</string>
+  <string name="attachment_sync_dialog_title_done">Descărcare finalizată</string>
+  <string name="attachment_sync_dialog_title_partial_failure">Descărcare eșuată</string>
+  <string name="attachment_sync_dialog_subtitle_waiting">Se așteaptă conexiunea la rețea pentru descărcarea atașamentelor.</string>
+  <string name="attachment_sync_dialog_subtitle_downloading">Se descarcă atașamentele: %1$d/%2$d</string>
+  <string name="attachment_sync_dialog_subtitle_done">S-au descărcat toate atașamentele.</string>
+  <string name="attachment_sync_dialog_subtitle_partial_failure">Unele atașamente nu au putut fi descărcate. Puteți reîncerca descărcarea celor nereușite mai jos.</string>
+  <string name="attachment_sync_dialog_retry_content_description">Reîncercare descărcare</string>
+  <string name="attachment_sync_vault_files_count">Fișiere: %1$d/%2$d</string>
 </resources>

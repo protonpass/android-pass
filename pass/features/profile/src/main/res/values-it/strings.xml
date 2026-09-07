@@ -20,6 +20,7 @@
   <string name="profile_option_generated_passwords">Password generate</string>
   <string name="profile_error_biometry_failed_to_start">Avvio dell\'autenticazione biometrica non riuscito</string>
   <string name="profile_error_biometry_failed_to_authenticate">Autenticazione non riuscita</string>
+  <string name="profile_error_app_lock_update_failed">Impossibile aggiornare il blocco dell\'app. Riprova.</string>
   <string name="profile_fingerprint_lock_enabled">Blocco con impronta abilitato</string>
   <string name="profile_fingerprint_lock_disabled">Blocco con impronta disabilitato</string>
   <string name="profile_app_version_copied_to_clipboard">Versione dell\'applicazione copiata</string>

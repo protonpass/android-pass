@@ -57,4 +57,19 @@
   <string name="settings_autofill_display_subtitle">De inline-modus vereist een compatibel toetsenbord (bijv. Gboard). Indien niet ondersteund, wordt automatisch de pop-upmodus gebruikt.</string>
   <string name="settings_autosave_prompt_title">Vragen om automatisch opslaan</string>
   <string name="settings_autosave_prompt_subtitle">Proton Pass zal u vragen om inloggegevens op te slaan of te updaten</string>
+  <string name="settings_offline_attachments_section_title">Offline bijlagen</string>
+  <string name="settings_offline_attachments_download_all">Maak bijlagen offline beschikbaar</string>
+  <string name="settings_offline_attachments_cellular">Download ook met mobiele data</string>
+  <string name="settings_offline_attachments_download_status">Downloadstatus</string>
+  <string name="notification_permission_dialog_title">Toestemming voor melding vereist</string>
+  <string name="notification_permission_dialog_message">Om meldingen over de downloadvoortgang te tonen, moet u meldingen voor deze app inschakelen in de systeeminstellingen.</string>
+  <string name="notification_permission_dialog_open_settings">Instellingen openen</string>
+  <string name="notification_permission_dialog_cancel">Annuleer</string>
+  <string name="attachment_config_dialog_title">Downloadopties</string>
+  <string name="attachment_config_dialog_all_vaults">Alle kluizen</string>
+  <string name="attachment_config_dialog_select_vaults">Selecteer kluizen om te downloaden</string>
+  <string name="attachment_config_dialog_shared_items">Gedeeld met mij</string>
+  <string name="attachment_config_dialog_start">Downloaden</string>
+  <string name="attachment_config_dialog_cancel">Annuleer</string>
+  <string name="settings_offline_attachments_shared_items">Gedeeld met mij</string>
 </resources>

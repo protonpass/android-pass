@@ -39,4 +39,14 @@
   <string name="storage_full_amount" comment="This will show 20MB of 100MB">%1$s de %2$s</string>
   <string name="attachments_saved_to_location_success">Archivo adjunto guardado en la ubicación</string>
   <string name="attachments_saved_to_location_error">No se pudo guardar el archivo adjunto en la ubicación</string>
+  <string name="attachment_sync_dialog_title_waiting">Esperando la conexión</string>
+  <string name="attachment_sync_dialog_title_downloading">Descargando adjuntos</string>
+  <string name="attachment_sync_dialog_title_done">Descarga completada</string>
+  <string name="attachment_sync_dialog_title_partial_failure">Error de descarga</string>
+  <string name="attachment_sync_dialog_subtitle_waiting">Esperando conexión de red para descargar los adjuntos.</string>
+  <string name="attachment_sync_dialog_subtitle_downloading">Descargando %1$d/%2$d adjuntos</string>
+  <string name="attachment_sync_dialog_subtitle_done">Todos los archivos adjuntos se descargaron con éxito.</string>
+  <string name="attachment_sync_dialog_subtitle_partial_failure">Algunos adjuntos no se pudieron descargar. Puede reintentar con los fallidos a continuación.</string>
+  <string name="attachment_sync_dialog_retry_content_description">Reintentar descarga</string>
+  <string name="attachment_sync_vault_files_count">%1$d / %2$d archivos</string>
 </resources>

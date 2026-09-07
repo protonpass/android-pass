@@ -39,4 +39,14 @@
   <string name="storage_full_amount" comment="This will show 20MB of 100MB">%1$s av %2$s</string>
   <string name="attachments_saved_to_location_success">Bilaga sparad till plats</string>
   <string name="attachments_saved_to_location_error">Kunde inte spara bilaga till plats</string>
+  <string name="attachment_sync_dialog_title_waiting">Väntar på anslutning</string>
+  <string name="attachment_sync_dialog_title_downloading">Laddar ner bilagor</string>
+  <string name="attachment_sync_dialog_title_done">Nedladdning slutförd</string>
+  <string name="attachment_sync_dialog_title_partial_failure">Nedladdning misslyckades</string>
+  <string name="attachment_sync_dialog_subtitle_waiting">Waiting for network connection to download attachments.</string>
+  <string name="attachment_sync_dialog_subtitle_downloading">Downloading %1$d/%2$d attachments</string>
+  <string name="attachment_sync_dialog_subtitle_done">All attachments have been downloaded successfully.</string>
+  <string name="attachment_sync_dialog_subtitle_partial_failure">Some attachments could not be downloaded. You can retry the failed ones below.</string>
+  <string name="attachment_sync_dialog_retry_content_description">Retry download</string>
+  <string name="attachment_sync_vault_files_count">%1$d/%2$d filer</string>
 </resources>

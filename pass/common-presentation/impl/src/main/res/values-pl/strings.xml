@@ -21,6 +21,9 @@
   <string name="download_attachments_error">Nie można pobrać załącznika</string>
   <string name="share_attachments_error">Nie można udostępnić załącznika</string>
   <string name="upload_attachments_error">Nie można przesłać załącznika</string>
+  <string name="attachment_not_available_offline">Attachment not available offline</string>
+  <string name="attachment_download_timeout">Attachment download timed out</string>
+  <string name="attachment_storage_full">Not enough storage to download attachments</string>
   <string name="attachment_size_exceeded_error">Przekroczono maksymalny rozmiar pliku. Wybierz plik mniejszy niż 100 MB.</string>
   <string name="attachment_too_many_files_error">Ostatnio utworzono zbyt wiele plików</string>
   <string name="open_with">Otwórz w:</string>

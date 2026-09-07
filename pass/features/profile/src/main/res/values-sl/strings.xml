@@ -20,6 +20,7 @@
   <string name="profile_option_generated_passwords">Generirana gesla</string>
   <string name="profile_error_biometry_failed_to_start">Biometrične avtentikacije ni bilo mogoče začeti</string>
   <string name="profile_error_biometry_failed_to_authenticate">Preverjanje pristnosti ni uspelo</string>
+  <string name="profile_error_app_lock_update_failed">Could not update the app lock. Please try again.</string>
   <string name="profile_fingerprint_lock_enabled">Omogočeno zaklepanje s prstnim odtisom</string>
   <string name="profile_fingerprint_lock_disabled">Zaklepanje s prstnim odtisom onemogočeno</string>
   <string name="profile_app_version_copied_to_clipboard">Različica aplikacije je kopirana</string>

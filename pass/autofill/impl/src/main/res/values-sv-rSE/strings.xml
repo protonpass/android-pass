@@ -30,7 +30,7 @@
   <string name="autofill_troubleshooting_browsers_inactive_body">Turn on autofill so that Proton Pass can fill your credentials. Tap a browser to open its settings.</string>
   <string name="autofill_troubleshooting_browsers_compatible_header">Browsers are compatible</string>
   <string name="autofill_troubleshooting_browsers_compatible_body">Your browsers are connected and ready to autofill.</string>
-  <string name="autofill_troubleshooting_browser_active">Active</string>
+  <string name="autofill_troubleshooting_browser_active">Aktiv</string>
   <string name="autofill_troubleshooting_inline_info">Inline suggestions appear in your keyboard. They need Android 11 or later and a compatible keyboard such as Gboard.</string>
   <string name="autofill_troubleshooting_share_diagnostics">Dela diagnostik</string>
   <string name="autofill_troubleshooting_open_diagnostics">Avancerad diagnostik</string>

@@ -46,9 +46,9 @@
   <string name="security_center_sentinel_button_enable">Уключыць Proton Sentinel</string>
   <string name="security_center_sentinel_button_disable">Адключыць Proton Sentinel</string>
   <string name="security_center_sentinel_snackbar_message_enable_canceled">Актывацыя абароны Proton Sentinel была скасавана</string>
-  <string name="security_center_sentinel_snackbar_message_enable_error">Адбылася памылка падчас уключэння абароны Proton Sentinel. Паспрабуйце яшчэ раз.</string>
+  <string name="security_center_sentinel_snackbar_message_enable_error">Адбылася памылка падчас уключэння абароны Proton Sentinel. Паўтарыце спробу.</string>
   <string name="security_center_sentinel_snackbar_message_disable_canceled">Дэактывацыя абароны Proton Sentinel была скасавана</string>
-  <string name="security_center_sentinel_snackbar_message_disable_error">Адбылася памылка падчас адключэння абароны Proton Sentinel. Паспрабуйце яшчэ раз.</string>
+  <string name="security_center_sentinel_snackbar_message_disable_error">Адбылася памылка падчас адключэння абароны Proton Sentinel. Паўтарыце спробу.</string>
   <!-- Weak passwords screen -->
   <string name="security_center_weak_pass_top_bar_title">Ненадзейныя паролі</string>
   <string name="security_center_weak_pass_top_bar_subtitle">Ненадзейныя паролі лёгка падабраць. Згенерыруйце надзейны пароль, каб абараніць свой уліковы запіс.</string>
@@ -102,8 +102,8 @@
   <string name="security_center_dark_web_monitor_see_all">Праглядзець усе</string>
   <string name="security_center_dark_web_monitor_no_proton_addresses">Няма адрасоў Proton</string>
   <string name="security_center_dark_web_monitor_no_aliases">Няма псеўданімаў</string>
-  <string name="security_center_custom_email_bottomsheet_snackbar_message_resend_code_error">Адбылася памылка падчас адпраўкі праверачнага кода. Паспрабуйце яшчэ раз пазней.</string>
-  <string name="security_center_custom_email_bottomsheet_snackbar_message_remove_email_error">Адбылася памылка выдалення электроннай пошты. Паспрабуйце яшчэ раз пазней.</string>
+  <string name="security_center_custom_email_bottomsheet_snackbar_message_resend_code_error">Адбылася памылка падчас адпраўкі праверачнага кода. Паўтарыце спробу.</string>
+  <string name="security_center_custom_email_bottomsheet_snackbar_message_remove_email_error">Адбылася памылка выдалення электроннай пошты. Паўтарыце спробу пазней.</string>
   <!-- Add custom email monitoring -->
   <string name="security_center_custom_email_top_bar_title">Карыстальніцкае назіранне за электроннай поштай</string>
   <string name="security_center_custom_email_email_address_placeholder">Адрас электроннай пошты</string>
@@ -115,10 +115,10 @@
   <string name="security_center_verify_email_title">Пацвердзіце сваю электронную пошту</string>
   <string name="security_center_verify_email_subtitle">Мы адправілі вам праверачны код на %s. Увядзіце яго ніжэй:</string>
   <string name="security_center_verify_email_snackbar_message_resend_code_success">Адпраўлены новы праверачны код. Праверце сваю паштовую скрыню.</string>
-  <string name="security_center_verify_email_snackbar_message_resend_code_error">Адбылася памылка падчас адпраўкі праверачнага кода. Паспрабуйце яшчэ раз пазней.</string>
+  <string name="security_center_verify_email_snackbar_message_resend_code_error">Адбылася памылка падчас адпраўкі праверачнага кода. Паўтарыце спробу пазней.</string>
   <string name="security_center_verify_email_snackbar_message_too_many_verifications_error">Занадта шмат памылковых праверак. Выдаленне карыстальніцкай электроннай пошты.</string>
   <string name="security_center_verify_email_snackbar_message_invalid_verification_error">Памылковы праверачны код</string>
-  <string name="security_center_verify_email_snackbar_message_verification_error">Адбылася памылка праверкі электроннай пошты. Паспрабуйце яшчэ раз пазней.</string>
+  <string name="security_center_verify_email_snackbar_message_verification_error">Адбылася памылка праверкі электроннай пошты. Паўтарыце спробу пазней.</string>
   <!-- Verify email monitoring -->
   <string name="security_center_verify_report_title_detected">Выяўлены парушэнні для</string>
   <string name="security_center_verify_report_title_none">Не выяўлена парушэнняў для</string>

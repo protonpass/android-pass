@@ -50,6 +50,9 @@
   <string name="bottomsheet_leave_vault">Rời khỏi két sắt</string>
   <string name="bottomsheet_view_members">Xem thành viên</string>
   <string name="bottomsheet_manage_access">Quản lý truy cập</string>
+  <string name="bottomsheet_offline_attachments">Offline attachments</string>
+  <string name="bottomsheet_offline_attachments_enabled">Enabled</string>
+  <string name="bottomsheet_offline_attachments_disabled">Disabled</string>
   <string name="bottomsheet_select_vault_read_only">You can only view</string>
   <string name="bottomsheet_select_vault_only_oldest_vaults">Bạn chỉ có thể tạo mục trong két sắt cũ nhất của mình</string>
   <string name="vault_title">Két sắt</string>

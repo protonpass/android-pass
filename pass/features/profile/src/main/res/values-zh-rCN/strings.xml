@@ -20,6 +20,7 @@
   <string name="profile_option_generated_passwords">生成的密码</string>
   <string name="profile_error_biometry_failed_to_start">无法启动生物识别身份验证</string>
   <string name="profile_error_biometry_failed_to_authenticate">身份验证失败</string>
+  <string name="profile_error_app_lock_update_failed">Could not update the app lock. Please try again.</string>
   <string name="profile_fingerprint_lock_enabled">启用指纹锁</string>
   <string name="profile_fingerprint_lock_disabled">禁用指纹锁</string>
   <string name="profile_app_version_copied_to_clipboard">应用版本已复制</string>

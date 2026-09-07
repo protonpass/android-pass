@@ -21,7 +21,7 @@
   <string name="upsell_dark_web_monitoring_subtitle">다크 웹 모니터링은 유료 요금제에서 이용할 수 있습니다. 업그레이드하는 즉시 접근할 수 있습니다.</string>
   <string name="upsell_missing_2fa_subtitle">온라인 신원 보호를 위해 2단계 인증 요소를 추가할 수 있는 사이트 목록을 확인하세요. 즉각적인 접근을 위해 업그레이드하세요.</string>
   <string name="upsell_sentinel_subtitle">고급 보안 기능과 상세한 로그를 잠금 해제하여 온라인 신원을 보호하세요.</string>
-  <string name="upsell_compromised_passwords_subtitle">Check if your passwords have been exposed in data breaches. Upgrade for immediate access.</string>
+  <string name="upsell_compromised_passwords_subtitle">비밀번호가 데이터 보안 사고에서 유출되었는지 여부를 확인하세요. 업그레이드하여 지금 즉시 확인하세요.</string>
   <string name="upsell_paid_feature_file_attachments">첨부 파일</string>
   <string name="upsell_paid_feature_dark_web_monitoring">다크 웹 모니터링</string>
   <string name="upsell_paid_feature_sentinel">Proton Sentinel</string>
@@ -38,7 +38,7 @@
   <string name="upsell_paid_feature_item_sharing_subtitle">지금 바로 업그레이드해서 다른 Pass 유저와 항목을 공유하세요. 다른 프리미엄 기능도 있습니다:</string>
   <string name="upsell_paid_feature_file_attachments_title">첨부 파일</string>
   <string name="upsell_button_upgrade">Pass Plus 구매하기</string>
-  <string name="upsell_button_upgrade_unlimited">Get Proton Unlimited</string>
+  <string name="upsell_button_upgrade_unlimited">Proton Unlimited로 업그레이드</string>
   <string name="upsell_button_upgrade_essentials">Pass Business 구매</string>
   <string name="price_per_month_type1">%s/월</string>
   <string name="upsell_skip">다음에</string>
@@ -49,7 +49,7 @@
   <string name="upsell_plan_plus_1">Hide-my-email 별칭</string>
   <string name="upsell_plan_plus_2">내장된 2단계 인증</string>
   <string name="upsell_plan_plus_3">금고, 항목 &amp;링크 공유</string>
-  <string name="upsell_plan_plus_4">Folders</string>
+  <string name="upsell_plan_plus_4">폴더</string>
   <string name="upsell_plan_plus_5">다크 웹 모니터링</string>
   <string name="upsell_plan_plus_6">첨부 파일</string>
   <string name="upsell_plan_unlimited_1">저장 공간</string>
@@ -61,17 +61,17 @@
   <string name="upsell_plan_plus_welcome_1">무제한 hide-my-email 별칭</string>
   <string name="upsell_plan_plus_welcome_2">통합된 2단계 인증기</string>
   <string name="upsell_plan_plus_welcome_3">안전한 금고, 항목 및 링크 공유</string>
-  <string name="upsell_plan_plus_welcome_4">Folders</string>
+  <string name="upsell_plan_plus_welcome_4">폴더</string>
   <string name="upsell_plan_plus_welcome_5">다크 웹 모니터링</string>
   <string name="upsell_plan_plus_welcome_6">첨부 파일</string>
   <string name="upsell_limited_time_offer">기간 한정 세일</string>
-  <string name="upsell_try_pass_plus">Try Pass Plus for just</string>
-  <string name="upsell_pass_plus_welcome_offer">Pass Plus welcome offer</string>
+  <string name="upsell_try_pass_plus">Pass Plus를 더 저렴하게 만나보기:</string>
+  <string name="upsell_pass_plus_welcome_offer">Pass Plus 환영 할인</string>
   <string name="upsell_pass_plus_first_year">첫 해</string>
   <string name="upsell_get_the_best_of_pass">기간 한정 할인 가격으로 패스의 최고급 기능들을 사용해보세요.</string>
   <string name="upsell_get_one_month">%s으로 1개월 사용하기</string>
   <string name="upsell_get_the_deal">특가로 구매</string>
   <string name="upsell_whats_included">포함된 항목</string>
-  <string name="upsell_error_google_prices">Problem retrieving Google Play Store prices at the moment.</string>
-  <string name="upsell_error_general">An error occurred.</string>
+  <string name="upsell_error_google_prices">Google Play Store상의 가격을 수신하는데 문제가 발생했습니다.</string>
+  <string name="upsell_error_general">오류가 발생했습니다.</string>
 </resources>

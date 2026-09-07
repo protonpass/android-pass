@@ -57,4 +57,19 @@
   <string name="settings_autofill_display_subtitle">Inline mode requires a compatible keyboard (e.g. Gboard). If unsupported, popup mode will be used automatically.</string>
   <string name="settings_autosave_prompt_title">Aviso de salvamento automático</string>
   <string name="settings_autosave_prompt_subtitle">O Proton Pass solicitará que você salve ou atualize seus dados de início de sessão</string>
+  <string name="settings_offline_attachments_section_title">Anexos off-line</string>
+  <string name="settings_offline_attachments_download_all">Make attachments available offline</string>
+  <string name="settings_offline_attachments_cellular">Download also on cellular data</string>
+  <string name="settings_offline_attachments_download_status">Status do download</string>
+  <string name="notification_permission_dialog_title">Notification permission required</string>
+  <string name="notification_permission_dialog_message">To show download progress notifications, you need to enable notifications for this app in system settings.</string>
+  <string name="notification_permission_dialog_open_settings">Abrir configurações</string>
+  <string name="notification_permission_dialog_cancel">Cancelar</string>
+  <string name="attachment_config_dialog_title">Opções de download</string>
+  <string name="attachment_config_dialog_all_vaults">Todos os cofres</string>
+  <string name="attachment_config_dialog_select_vaults">Select vaults to download</string>
+  <string name="attachment_config_dialog_shared_items">Compartilhado comigo</string>
+  <string name="attachment_config_dialog_start">Download</string>
+  <string name="attachment_config_dialog_cancel">Cancelar</string>
+  <string name="settings_offline_attachments_shared_items">Compartilhado comigo</string>
 </resources>

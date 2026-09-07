@@ -33,14 +33,14 @@ import proton.android.pass.common.api.toLogToken
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import proton.android.pass.data.api.usecases.VerifyDigitalAssetLinksForCredentialSharing
-import proton.android.pass.data.api.PublicOkhttpClient
+import proton.android.pass.data.api.AssetLinkOkHttpClient
 import proton.android.pass.data.impl.AppCertificate
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.network.api.NetworkRestrictionDiagnostics
 import javax.inject.Inject
 
 class VerifyDigitalAssetLinksForCredentialSharingImpl @Inject constructor(
-    @param:PublicOkhttpClient private val okHttpClient: OkHttpClient,
+    @param:AssetLinkOkHttpClient private val okHttpClient: OkHttpClient,
     private val networkRestrictionDiagnostics: NetworkRestrictionDiagnostics,
     private val appDispatchers: AppDispatchers
 ) : VerifyDigitalAssetLinksForCredentialSharing {

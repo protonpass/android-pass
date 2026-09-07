@@ -20,21 +20,15 @@ package proton.android.pass.ui
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.EnterTransition
-import androidx.compose.animation.ExitTransition
 import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.tween
-import androidx.compose.animation.expandVertically
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
-import androidx.compose.animation.shrinkVertically
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
@@ -51,7 +45,6 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.key
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -65,7 +58,6 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.google.accompanist.navigation.material.ExperimentalMaterialNavigationApi
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.R
@@ -85,15 +77,12 @@ import proton.android.pass.domain.inappmessages.InAppMessage
 import proton.android.pass.domain.inappmessages.InAppMessageId
 import proton.android.pass.domain.inappmessages.InAppMessageKey
 import proton.android.pass.features.auth.AuthOrigin
-import proton.android.pass.features.home.localinappmessages.LocalInAppMessageBanner
-import proton.android.pass.features.home.localinappmessages.LocalInAppMessagesEvent
-import proton.android.pass.features.home.localinappmessages.NotificationPermissionLaunchedEffect
-import proton.android.pass.features.sl.sync.settings.navigation.SimpleLoginSyncSettingsNavItem
 import proton.android.pass.features.explore.navigation.ExploreNavItem
 import proton.android.pass.features.featureflags.FeatureFlagRoute
 import proton.android.pass.features.home.HomeNavItem
 import proton.android.pass.features.home.HomeSnackbarMessageWithAction
-import proton.android.pass.features.inappmessages.banner.ui.InAppMessageBanner
+import proton.android.pass.features.home.localinappmessages.LocalInAppMessagesEvent
+import proton.android.pass.features.home.localinappmessages.NotificationPermissionLaunchedEffect
 import proton.android.pass.features.itemcreate.bottomsheets.createitem.CreateItemBottomSheetMode
 import proton.android.pass.features.itemcreate.bottomsheets.createitem.CreateItemBottomsheetNavItem
 import proton.android.pass.features.profile.ProfileNavItem
@@ -101,6 +90,7 @@ import proton.android.pass.features.searchoptions.FilterBottomsheetNavItem
 import proton.android.pass.features.searchoptions.SearchOptionsBottomsheetNavItem
 import proton.android.pass.features.searchoptions.SortingBottomsheetNavItem
 import proton.android.pass.features.security.center.home.navigation.SecurityCenterHomeNavItem
+import proton.android.pass.features.sl.sync.settings.navigation.SimpleLoginSyncSettingsNavItem
 import proton.android.pass.features.upsell.v2.navigation.UpsellV2NavItem
 import proton.android.pass.inappupdates.api.InAppUpdateState
 import proton.android.pass.log.api.PassLogger
@@ -118,15 +108,6 @@ import proton.android.pass.ui.navigation.appGraph
 import proton.android.pass.ui.navigation.unAuthGraph
 
 private const val PROTON_RECOVER_URL = "https://proton.me/support/recover-encrypted-messages-files"
-private const val BANNER_ANIM_DURATION_MS = 300
-
-private fun InAppMessage.Banner.stableId(): String = when (this) {
-    is InAppMessage.Local.Autofill -> "local:autofill"
-    is InAppMessage.Local.NotificationPermission -> "local:notification"
-    is InAppMessage.Local.SLSync -> "local:slsync"
-    is InAppMessage.Remote.Banner -> id.value
-}
-
 
 @OptIn(ExperimentalMaterialNavigationApi::class)
 @Composable
@@ -362,139 +343,61 @@ fun PassAppContent(
                         } else {
                             BackHandler { appNavigator.navigateBack() }
 
-                            PassModalBottomSheetLayout(appNavigator.passBottomSheetNavigator) {
-                                PassNavHost(
-                                    modifier = Modifier.weight(1f),
-                                    appNavigator = appNavigator,
-                                    graph = {
-                                        appGraph(
-                                            appNavigator = appNavigator,
-                                            onNavigate = {
-                                                when (it) {
-                                                    is AppNavigation.Upgrade -> {
-                                                        if (supportPayment) {
-                                                            appNavigator.navigate(
-                                                                destination = UpsellV2NavItem,
-                                                                force = true,
-                                                                route = UpsellV2NavItem.createRoute(
-                                                                    manualDisplay = true
+                            Box(modifier = Modifier.weight(1f)) {
+                                PassModalBottomSheetLayout(appNavigator.passBottomSheetNavigator) {
+                                    PassNavHost(
+                                        modifier = Modifier.fillMaxSize(),
+                                        appNavigator = appNavigator,
+                                        graph = {
+                                            appGraph(
+                                                appNavigator = appNavigator,
+                                                onNavigate = {
+                                                    when (it) {
+                                                        is AppNavigation.Upgrade -> {
+                                                            if (supportPayment) {
+                                                                appNavigator.navigate(
+                                                                    destination = UpsellV2NavItem,
+                                                                    force = true,
+                                                                    route = UpsellV2NavItem.createRoute(
+                                                                        manualDisplay = true
+                                                                    )
                                                                 )
-                                                            )
-                                                        } else {
+                                                            } else {
+                                                                onNavigate(it)
+                                                            }
+                                                        }
+
+                                                        else -> {
                                                             onNavigate(it)
                                                         }
                                                     }
-
-                                                    else -> {
-                                                        onNavigate(it)
-                                                    }
+                                                },
+                                                dismissBottomSheet = { block ->
+                                                    onBottomSheetDismissed(
+                                                        coroutineScope = coroutineScope,
+                                                        modalBottomSheetState = bottomSheetState,
+                                                        dismissJob = bottomSheetJob,
+                                                        block = block
+                                                    )
                                                 }
-                                            },
-                                            dismissBottomSheet = { block ->
-                                                onBottomSheetDismissed(
-                                                    coroutineScope = coroutineScope,
-                                                    modalBottomSheetState = bottomSheetState,
-                                                    dismissJob = bottomSheetJob,
-                                                    block = block
-                                                )
-                                            }
-                                        )
-                                    }
-                                )
-                            }
-                        }
-                    }
-
-                    // Local display list: mirrors ViewModel but keeps items alive during exit animation
-                    var displayMessages by remember { mutableStateOf(emptyList<InAppMessage.Banner>()) }
-                    var dismissingIds by remember { mutableStateOf(emptySet<String>()) }
-
-                    LaunchedEffect(appUiState.inAppMessages) {
-                        val incomingIds = appUiState.inAppMessages.map { it.stableId() }.toSet()
-                        val kept = displayMessages.filter { msg ->
-                            msg.stableId() in incomingIds || msg.stableId() in dismissingIds
-                        }
-                        val arrivals = appUiState.inAppMessages.filterNot { msg ->
-                            kept.any { it.stableId() == msg.stableId() }
-                        }
-                        displayMessages = kept + arrivals
-                    }
-
-                    val animateDismiss: (String, () -> Unit) -> Unit = remember(coroutineScope) {
-                        { id, realDismiss ->
-                            dismissingIds = dismissingIds + id
-                            coroutineScope.launch {
-                                delay(BANNER_ANIM_DURATION_MS.toLong())
-                                displayMessages = displayMessages.filterNot { it.stableId() == id }
-                                realDismiss()
-                                dismissingIds = dismissingIds - id
-                            }
-                        }
-                    }
-
-                    AnimatedVisibility(
-                        modifier = Modifier.align(Alignment.BottomCenter),
-                        visible = displayMessages.isNotEmpty() &&
-                            appNavigator.currentRoute == HomeNavItem.route,
-                        enter = EnterTransition.None,
-                        exit = ExitTransition.None
-                    ) {
-                        Column(
-                            modifier = Modifier.padding(bottom = bannerBottomPadding),
-                            verticalArrangement = Arrangement.spacedBy(Spacing.small)
-                        ) {
-                            displayMessages.forEach { message ->
-                                val msgId = message.stableId()
-
-                                key(msgId) {
-                                    var entered by remember { mutableStateOf(false) }
-                                    LaunchedEffect(Unit) { entered = true }
-
-                                    AnimatedVisibility(
-                                        visible = entered && msgId !in dismissingIds,
-                                        enter = fadeIn(tween(BANNER_ANIM_DURATION_MS)) +
-                                            expandVertically(tween(BANNER_ANIM_DURATION_MS)) +
-                                            slideInVertically(tween(BANNER_ANIM_DURATION_MS)) { it / 2 },
-                                        exit = fadeOut(tween(BANNER_ANIM_DURATION_MS)) +
-                                            shrinkVertically(tween(BANNER_ANIM_DURATION_MS)) +
-                                            slideOutVertically(tween(BANNER_ANIM_DURATION_MS)) { it / 2 }
-                                    ) {
-                                        when (message) {
-                                            is InAppMessage.Local -> LocalInAppMessageBanner(
-                                                message = message,
-                                                onClick = { onLocalInAppMessageClick(message) },
-                                                onDismiss = {
-                                                    animateDismiss(msgId) {
-                                                        onLocalInAppMessageDismiss(message)
-                                                    }
-                                                }
-                                            )
-                                            is InAppMessage.Remote.Banner -> InAppMessageBanner(
-                                                inAppMessage = message,
-                                                onDismiss = { userId, id, key ->
-                                                    animateDismiss(msgId) {
-                                                        onInAppMessageBannerRead(userId, id, key)
-                                                    }
-                                                },
-                                                onInternalCTAClick = { userId, id, key, value ->
-                                                    animateDismiss(msgId) {
-                                                        onInAppMessageBannerRead(userId, id, key)
-                                                    }
-                                                    onInAppMessageBannerCTAClicked(key)
-                                                    appNavigator.navigateToDeeplink(value)
-                                                },
-                                                onExternalCTAClick = { userId, id, key, value ->
-                                                    animateDismiss(msgId) {
-                                                        onInAppMessageBannerRead(userId, id, key)
-                                                    }
-                                                    onInAppMessageBannerCTAClicked(key)
-                                                    BrowserUtils.openWebsite(context, value)
-                                                },
-                                                onDisplay = { key -> onInAppMessageBannerDisplayed(key) }
                                             )
                                         }
-                                    }
+                                    )
                                 }
+
+                                InAppMessageBannerContainer(
+                                    modifier = Modifier.align(Alignment.BottomCenter),
+                                    inAppMessages = appUiState.inAppMessages,
+                                    currentRoute = appNavigator.currentRoute,
+                                    bannerBottomPadding = bannerBottomPadding,
+                                    onLocalInAppMessageClick = onLocalInAppMessageClick,
+                                    onLocalInAppMessageDismiss = onLocalInAppMessageDismiss,
+                                    onInAppMessageBannerRead = onInAppMessageBannerRead,
+                                    onInAppMessageBannerCTAClicked = onInAppMessageBannerCTAClicked,
+                                    onInAppMessageBannerDisplayed = onInAppMessageBannerDisplayed,
+                                    onNavigateToDeeplink = { appNavigator.navigateToDeeplink(it) },
+                                    onOpenExternalUrl = { BrowserUtils.openWebsite(context, it) }
+                                )
                             }
                         }
                     }

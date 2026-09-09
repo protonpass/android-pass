@@ -20,6 +20,8 @@ package proton.android.pass.domain
 
 import kotlinx.serialization.Serializable
 
+const val ITEM_CFV_URL_MATCHING = 8
+
 @Serializable
 enum class AutofillUrlMode {
     Default,

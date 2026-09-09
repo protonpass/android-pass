@@ -21,6 +21,7 @@ package proton.android.pass.data.impl.extensions
 import proton.android.pass.domain.entity.PackageInfo
 import proton.android.pass.domain.entity.PackageName
 import proton_pass_item_v1.ItemV1
+import proton_pass_item_v1.ItemV1.AutofillUrl
 
 fun ItemV1.Item.hasPackageName(packageName: PackageName): Boolean =
     platformSpecific.android.allowedAppsList.any { it.packageName == packageName.value }
@@ -60,18 +61,28 @@ fun ItemV1.Item.with(packageInfo: PackageInfo): ItemV1.Item {
         .build()
 }
 
-fun ItemV1.Item.withUrl(url: String): ItemV1.Item {
-    val websites = content.login.urlsList.toMutableList()
-    websites.add(url)
-    return this.toBuilder()
-        .setContent(
-            content.toBuilder()
-                .setLogin(
-                    content.login.toBuilder()
-                        .addUrls(url)
-                        .build()
-                )
+fun ItemV1.Item.withUrl(url: String, isAutofillUrlAdvancedModesEnabled: Boolean): ItemV1.Item {
+    val loginBuilder = content.login.toBuilder()
+
+    if (isAutofillUrlAdvancedModesEnabled && loginBuilder.autofillUrlsCount == 0) {
+        loginBuilder.addAllAutofillUrls(
+            loginBuilder.urlsList.filter { it.isNotBlank() }.map {
+                AutofillUrl.newBuilder().setUrl(it).setMode(AutofillUrl.Mode.Default).build()
+            }
+        )
+    }
+
+    loginBuilder.addUrls(url)
+    if (isAutofillUrlAdvancedModesEnabled) {
+        loginBuilder.addAutofillUrls(
+            AutofillUrl.newBuilder()
+                .setUrl(url)
+                .setMode(AutofillUrl.Mode.Default)
                 .build()
         )
+    }
+
+    return this.toBuilder()
+        .setContent(content.toBuilder().setLogin(loginBuilder.build()).build())
         .build()
 }

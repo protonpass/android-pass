@@ -32,5 +32,5 @@ data class SendUserMonitorCredentialsRequest(
     @SerialName("WeakPasswords")
     val weakPasswords: Int,
     @SerialName("CompromisedPasswords")
-    val compromisedPasswords: Int
+    val compromisedPasswords: Int? = null
 )

@@ -63,6 +63,7 @@ import proton.android.pass.commonuimodels.api.UIAutofillUrl
 import proton.android.pass.composecomponents.impl.item.toPasswordChecksUiState
 import proton.android.pass.domain.AutofillUrl
 import proton.android.pass.domain.AutofillUrlMode
+import proton.android.pass.domain.ITEM_CFV_URL_MATCHING
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.crypto.api.toEncryptedByteArray
@@ -843,9 +844,6 @@ abstract class BaseLoginViewModel(
     private companion object {
 
         private const val TAG = "BaseLoginViewModel"
-
-        // CFV 8 introduced autofill_urls with URL match modes (see Constants.ITEM_CFV)
-        private const val ITEM_CFV_URL_MATCHING = 8
 
     }
 

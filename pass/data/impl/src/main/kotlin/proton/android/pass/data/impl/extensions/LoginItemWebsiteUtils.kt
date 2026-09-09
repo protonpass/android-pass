@@ -31,7 +31,8 @@ fun ItemType.Login.hasWebsite(website: String): Boolean {
         is Some -> parsed.value
     }
 
-    for (w in websites) {
+    val allWebsites = websites + autofillUrls.map { it.url }
+    for (w in allWebsites) {
         val parsed = when (val parsed = parseUrl(w)) {
             None -> continue
             is Some -> parsed.value

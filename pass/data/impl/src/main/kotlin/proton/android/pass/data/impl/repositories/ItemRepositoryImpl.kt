@@ -96,6 +96,7 @@ import proton.android.pass.data.impl.responses.TrashItemsResponse
 import proton.android.pass.data.impl.util.TimeUtil
 import proton.android.pass.datamodels.api.serializeToProto
 import proton.android.pass.domain.FolderId
+import proton.android.pass.domain.ITEM_CFV_URL_MATCHING
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.ItemEncrypted
@@ -1076,11 +1077,16 @@ class ItemRepositoryImpl @Inject constructor(
             item to ItemV1.Item.parseFrom(itemContents)
         }
 
+        val isAutofillUrlAdvancedModesEnabled = item.contentFormatVersion >=
+            ITEM_CFV_URL_MATCHING ||
+            isDomainMatchingEnabled(userId)
+
         val (needsToUpdate, updatedContents) = updateItemContents(
             item,
             itemProto,
             packageInfo,
-            url
+            url,
+            isAutofillUrlAdvancedModesEnabled
         )
 
         if (!needsToUpdate) {
@@ -1094,7 +1100,7 @@ class ItemRepositoryImpl @Inject constructor(
             share,
             item,
             updatedContents,
-            isDomainMatchingEnabled(userId)
+            isAutofillUrlAdvancedModesEnabled
         )
     }
 
@@ -1886,7 +1892,8 @@ class ItemRepositoryImpl @Inject constructor(
         item: Item,
         itemProto: ItemV1.Item,
         packageInfoOption: Option<PackageInfo>,
-        url: Option<String>
+        url: Option<String>,
+        isAutofillUrlAdvancedModesEnabled: Boolean
     ): Pair<Boolean, ItemV1.Item> {
         var needsToUpdate = false
 
@@ -1922,7 +1929,10 @@ class ItemRepositoryImpl @Inject constructor(
                     } else {
                         // Item does not have the URL, adding it
                         needsToUpdate = true
-                        itemContentsWithPackageName.withUrl(url.value)
+                        itemContentsWithPackageName.withUrl(
+                            url = url.value,
+                            isAutofillUrlAdvancedModesEnabled = isAutofillUrlAdvancedModesEnabled
+                        )
                     }
                 }
 

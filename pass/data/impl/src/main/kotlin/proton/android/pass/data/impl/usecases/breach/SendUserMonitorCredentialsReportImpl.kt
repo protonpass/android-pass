@@ -25,6 +25,7 @@ import kotlinx.coroutines.withContext
 import me.proton.core.account.domain.entity.AccountState
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.accountmanager.domain.getAccounts
+import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.AppDispatchers
 import proton.android.pass.data.api.usecases.GetUserPlan
 import proton.android.pass.data.api.usecases.ItemTypeFilter
@@ -36,10 +37,13 @@ import proton.android.pass.data.api.usecases.compromisedpassword.RefreshCompromi
 import proton.android.pass.data.impl.remote.RemoteOrganizationReportDataSource
 import proton.android.pass.data.impl.requests.SendUserMonitorCredentialsRequest
 import proton.android.pass.data.impl.util.runConcurrently
+import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemFlag
 import proton.android.pass.domain.ItemState
 import proton.android.pass.domain.Share
 import proton.android.pass.domain.ShareSelection
+import proton.android.pass.preferences.FeatureFlag
+import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import proton.android.pass.securitycenter.api.SecurityCheck
 import proton.android.pass.securitycenter.api.isCheckExcluded
 import proton.android.pass.securitycenter.api.passwords.InsecurePasswordChecker
@@ -58,6 +62,7 @@ class SendUserMonitorCredentialsReportImpl @Inject constructor(
     private val observeCompromisedPasswords: ObserveCompromisedPasswords,
     private val observeItems: ObserveItems,
     private val observeAllShares: ObserveAllShares,
+    private val featureFlagsPreferencesRepository: FeatureFlagsPreferencesRepository,
     private val dispatchers: AppDispatchers
 ) : SendUserMonitorCredentialsReport {
     override suspend fun invoke() {
@@ -89,17 +94,14 @@ class SendUserMonitorCredentialsReportImpl @Inject constructor(
                     includeHidden = false
                 ).first()
                 refreshCompromisedPasswords(userId, monitoredItems)
-                val compromisedItems = observeCompromisedPasswords(userId).first()
+                val compromisedPasswords = countCompromisedPasswords(userId, monitoredItems)
                 val report = withContext(dispatchers.default) {
-                    val monitoredKeys = monitoredItems
-                        .filterNot { it.isCheckExcluded(SecurityCheck.CompromisedPassword) }
-                        .mapTo(mutableSetOf()) { it.shareId to it.id }
                     SendUserMonitorCredentialsRequest(
                         reusedPasswords = repeatedPasswordChecker(monitoredItems).repeatedPasswordsCount,
                         inactive2FA = missing2faChecker(monitoredItems).missing2faCount,
                         excludedItems = excludedItems.count(),
                         weakPasswords = insecurePasswordChecker(monitoredItems).insecurePasswordsCount,
-                        compromisedPasswords = compromisedItems.count { it.shareId to it.itemId in monitoredKeys }
+                        compromisedPasswords = compromisedPasswords
                     )
                 }
                 userId to report
@@ -110,5 +112,22 @@ class SendUserMonitorCredentialsReportImpl @Inject constructor(
                 remoteOrganizationReportDataSource.request(userId = userId, report = report)
             }
         )
+    }
+
+    private suspend fun countCompromisedPasswords(userId: UserId, monitoredItems: List<Item>): Int? {
+        val isCompromisedReportEnabled = featureFlagsPreferencesRepository.awaitResolved(
+            featureFlag = FeatureFlag.PASS_COMPROMISED_PASSWORDS,
+            userId = userId
+        )
+        if (!isCompromisedReportEnabled) return null
+
+        val compromisedItems = observeCompromisedPasswords(userId).first()
+
+        return withContext(dispatchers.default) {
+            val monitoredKeys = monitoredItems
+                .filterNot { it.isCheckExcluded(SecurityCheck.CompromisedPassword) }
+                .mapTo(mutableSetOf()) { it.shareId to it.id }
+            compromisedItems.count { it.shareId to it.itemId in monitoredKeys }
+        }
     }
 }

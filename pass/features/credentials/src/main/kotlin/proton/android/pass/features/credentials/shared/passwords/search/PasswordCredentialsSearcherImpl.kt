@@ -38,6 +38,7 @@ import proton.android.pass.features.credentials.R
 import proton.android.pass.signingcertificates.SigningCertificateFingerprints
 import proton.android.pass.features.credentials.passwords.selection.ui.PasswordCredentialSelectionActivity
 import proton.android.pass.features.credentials.passwords.usage.ui.PasswordCredentialUsageActivity
+import proton.android.pass.features.credentials.shared.CredentialRequestCodeAllocator
 import proton.android.pass.features.credentials.shared.passwords.events.PasswordCredentialsTelemetryEvent
 import proton.android.pass.telemetry.api.TelemetryManager
 import javax.inject.Inject
@@ -51,20 +52,12 @@ internal class PasswordCredentialsSearcherImpl @Inject constructor(
     private val telemetryManager: TelemetryManager,
     private val cachedWebsiteResolver: CachedWebsiteResolver,
     private val passwordCallerContextResolver: PasswordCallerContextResolver,
-    private val passwordDirectSuggestionResolver: PasswordDirectSuggestionResolver
+    private val passwordDirectSuggestionResolver: PasswordDirectSuggestionResolver,
+    private val credentialRequestCodeAllocator: CredentialRequestCodeAllocator
 ) : PasswordCredentialsSearcher {
 
-    private val requestCodes = mutableSetOf<Int>()
-
     private val requestCode: Int
-        get() {
-            var newRequestCode: Int
-            do {
-                newRequestCode = (REQUEST_CODE_RANGE_START..REQUEST_CODE_RANGE_END).random()
-            } while (newRequestCode in requestCodes)
-            requestCodes.add(newRequestCode)
-            return newRequestCode
-        }
+        get() = credentialRequestCodeAllocator.next()
 
     override suspend fun search(
         context: Context,
@@ -186,10 +179,6 @@ internal class PasswordCredentialsSearcherImpl @Inject constructor(
             }
 
     private companion object {
-
-        private const val REQUEST_CODE_RANGE_START = 1
-
-        private const val REQUEST_CODE_RANGE_END = 9999
 
         private const val PENDING_INTENT_FLAGS = PendingIntent.FLAG_MUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
 

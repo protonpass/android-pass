@@ -22,7 +22,10 @@ import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.credentials.provider.CallingAppInfo
 import proton.android.pass.browserallowlist.api.PrivilegedBrowserAllowlistProvider
+import proton.android.pass.data.api.url.HostInfo
+import proton.android.pass.data.api.url.HostParser
 import proton.android.pass.data.api.usecases.VerifyDigitalAssetLinksForCredentialSharing
+import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.toLogToken
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.signingcertificates.SigningCertificateFingerprints
@@ -31,7 +34,8 @@ import javax.inject.Inject
 @RequiresApi(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
 internal class PasskeyOriginVerifier @Inject constructor(
     private val verifyDigitalAssetLinksForCredentialSharing: VerifyDigitalAssetLinksForCredentialSharing,
-    private val privilegedBrowserAllowlistProvider: PrivilegedBrowserAllowlistProvider
+    private val privilegedBrowserAllowlistProvider: PrivilegedBrowserAllowlistProvider,
+    private val hostParser: HostParser
 ) {
 
     internal suspend fun verifyOrigin(callingAppInfo: CallingAppInfo?, requestedRpId: String): String? {
@@ -48,8 +52,7 @@ internal class PasskeyOriginVerifier @Inject constructor(
         requestedRpId: String
     ): Triple<CallingAppInfo, String, String>? {
         val rpToken = requestedRpId.toLogToken()
-        if (!isValidRpId(requestedRpId)) {
-            PassLogger.w(TAG, "Rejecting passkey request: rpId=$rpToken is not a valid hostname")
+        if (!isAcceptableRpId(requestedRpId, rpToken)) {
             return null
         }
         if (callingAppInfo == null) {
@@ -57,6 +60,18 @@ internal class PasskeyOriginVerifier @Inject constructor(
             return null
         }
         return Triple(callingAppInfo, rpToken, callingAppInfo.packageName.toLogToken())
+    }
+
+    private fun isAcceptableRpId(requestedRpId: String, rpToken: String): Boolean {
+        if (!isValidRpId(requestedRpId)) {
+            PassLogger.w(TAG, "Rejecting passkey request: rpId=$rpToken is not a valid hostname")
+            return false
+        }
+        if (!isRegistrableDomain(hostParser, requestedRpId)) {
+            PassLogger.w(TAG, "Rejecting passkey request: rpId=$rpToken is a public suffix, not a registrable domain")
+            return false
+        }
+        return true
     }
 
     private fun getBrowserOrigin(callingAppInfo: CallingAppInfo): String? = runCatching {
@@ -132,6 +147,11 @@ internal class PasskeyOriginVerifier @Inject constructor(
         internal fun isDomainMatch(host: String, rpId: String): Boolean {
             if (host.equals(rpId, ignoreCase = true)) return true
             return host.endsWith(".$rpId", ignoreCase = true)
+        }
+
+        internal fun isRegistrableDomain(hostParser: HostParser, rpId: String): Boolean {
+            val hostInfo = hostParser.parse("https://$rpId").getOrNull() ?: return false
+            return hostInfo is HostInfo.Host && hostInfo.tld is Some
         }
 
     }

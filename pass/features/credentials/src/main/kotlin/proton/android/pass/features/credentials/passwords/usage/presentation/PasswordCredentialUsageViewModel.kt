@@ -22,18 +22,14 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.mapLatest
-import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
-import proton.android.pass.common.api.None
-import proton.android.pass.common.api.Option
-import proton.android.pass.common.api.Some
-import proton.android.pass.common.api.some
+import kotlinx.coroutines.launch
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.usecases.HasActiveAccount
+import proton.android.pass.features.credentials.R
 import proton.android.pass.log.api.PassLogger
+import proton.android.pass.notifications.api.ToastManager
 import proton.android.pass.preferences.HasAuthenticated
 import proton.android.pass.preferences.UserPreferencesRepository
 import javax.inject.Inject
@@ -42,45 +38,49 @@ import javax.inject.Inject
 internal class PasswordCredentialUsageViewModel @Inject constructor(
     private val encryptionContextProvider: EncryptionContextProvider,
     private val hasActiveAccount: HasActiveAccount,
-    private val userPreferenceRepository: UserPreferencesRepository
+    private val userPreferenceRepository: UserPreferencesRepository,
+    private val toastManager: ToastManager
 ) : ViewModel() {
 
-    private val requestOptionFlow = MutableStateFlow<Option<PasswordCredentialUsageRequest?>>(
-        value = None
-    )
+    private val mutableStateFlow =
+        MutableStateFlow<PasswordCredentialUsageState>(PasswordCredentialUsageState.NotReady)
 
-    internal val stateFlow: StateFlow<PasswordCredentialUsageState> = requestOptionFlow
-        .mapLatest { requestOption ->
-            when (requestOption) {
-                None -> PasswordCredentialUsageState.NotReady
-                is Some -> requestOption.value?.let { request ->
-                    if (!hasActiveAccount(request.userId)) {
-                        PassLogger.w(
-                            TAG,
-                            "Denying stale password credential usage request: no active account for userId"
-                        )
-                        return@let PasswordCredentialUsageState.Cancel
-                    }
-
-                    encryptionContextProvider.withEncryptionContextSuspendable {
-                        decrypt(request.encryptedPassword)
-                    }.let { password ->
-                        PasswordCredentialUsageState.Ready(
-                            id = request.username,
-                            password = password
-                        )
-                    }
-                } ?: PasswordCredentialUsageState.Cancel
-            }
-        }
-        .stateIn(
-            scope = viewModelScope,
-            started = SharingStarted.WhileSubscribed(5_000),
-            initialValue = PasswordCredentialUsageState.NotReady
-        )
+    internal val stateFlow: StateFlow<PasswordCredentialUsageState> = mutableStateFlow
 
     internal fun onUpdateRequest(newRequest: PasswordCredentialUsageRequest?) {
-        requestOptionFlow.update { newRequest.some() }
+        if (newRequest == null) {
+            PassLogger.w(TAG, "Password credential usage request is null, cancelling")
+            mutableStateFlow.update { PasswordCredentialUsageState.Cancel }
+            return
+        }
+
+        viewModelScope.launch {
+            if (!hasActiveAccount(newRequest.userId)) {
+                PassLogger.w(
+                    TAG,
+                    "Denying stale password credential usage request: no active account for userId"
+                )
+                mutableStateFlow.update { PasswordCredentialUsageState.Cancel }
+                return@launch
+            }
+
+            val password = encryptionContextProvider.withEncryptionContextSuspendable {
+                decrypt(newRequest.encryptedPassword)
+            }
+            if (password.isEmpty()) {
+                PassLogger.w(TAG, "Decrypted password is empty, cannot create PasswordCredential")
+                toastManager.showToast(R.string.password_credential_selection_empty_password_error)
+                mutableStateFlow.update { PasswordCredentialUsageState.Cancel }
+                return@launch
+            }
+
+            mutableStateFlow.update {
+                PasswordCredentialUsageState.Ready(
+                    id = newRequest.username,
+                    password = password
+                )
+            }
+        }
     }
 
     internal fun onStop() {

@@ -46,7 +46,8 @@ fun ManageVaultContent(
     onNavigateEvent: (SharingNavigation) -> Unit,
     onConfirmInviteClick: (VaultMember.NewUserInvitePending) -> Unit,
     onPendingInvitesClick: () -> Unit,
-    onViewGroupMembersClick: (GroupId) -> Unit
+    onViewGroupMembersClick: (GroupId) -> Unit,
+    onRetry: () -> Unit
 ) {
     Scaffold(
         modifier = modifier.systemBarsPadding(),
@@ -103,7 +104,8 @@ fun ManageVaultContent(
                     }
                 },
                 onConfirmInviteClick = onConfirmInviteClick,
-                onViewGroupMembersClick = onViewGroupMembersClick
+                onViewGroupMembersClick = onViewGroupMembersClick,
+                onRetry = onRetry
             )
 
             if (state.shareOptions is ShareOptions.Show) {

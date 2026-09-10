@@ -67,6 +67,7 @@ fun ManageVaultScreen(
         onPendingInvitesClick = viewModel::onPendingInvitesClick,
         onViewGroupMembersClick = { groupId ->
             onNavigateEvent(SharingNavigation.GroupMembers(groupId))
-        }
+        },
+        onRetry = viewModel::refresh
     )
 }

@@ -133,7 +133,7 @@ class ManageVaultViewModel @Inject constructor(
         userPlan,
         isRenameAdminToManagerEnabled ->
         val content = when (vaultMembers) {
-            is LoadingResult.Error -> ManageVaultUiContent.Loading
+            is LoadingResult.Error -> ManageVaultUiContent.Error
             LoadingResult.Loading -> ManageVaultUiContent.Loading
             is LoadingResult.Success -> {
                 val partitioned = partitionMembers(vaultMembers.data)

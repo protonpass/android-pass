@@ -27,10 +27,13 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import proton.android.pass.commonui.api.PassTheme
+import proton.android.pass.commonui.api.Spacing
+import proton.android.pass.composecomponents.impl.buttons.CircleButton
 import proton.android.pass.composecomponents.impl.container.roundedContainerNorm
 import proton.android.pass.composecomponents.impl.form.PassDivider
 import proton.android.pass.data.api.usecases.VaultMember
@@ -45,7 +48,8 @@ fun ManageVaultMembersList(
     vault: VaultWithItemCount?,
     onMemberOptionsClick: (VaultMember) -> Unit,
     onConfirmInviteClick: (VaultMember.NewUserInvitePending) -> Unit,
-    onViewGroupMembersClick: (GroupId) -> Unit
+    onViewGroupMembersClick: (GroupId) -> Unit,
+    onRetry: () -> Unit
 ) {
     Column(
         modifier = modifier.verticalScroll(rememberScrollState()),
@@ -63,6 +67,28 @@ fun ManageVaultMembersList(
                             canShowActions = false
                         )
                         PassDivider()
+                    }
+                }
+            }
+
+            ManageVaultUiContent.Error -> {
+                Column(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.spacedBy(Spacing.small)
+                ) {
+                    Text(
+                        text = stringResource(R.string.share_manage_vault_members_error),
+                        color = PassTheme.colors.textWeak
+                    )
+                    CircleButton(
+                        color = PassTheme.colors.interactionNormMajor2,
+                        onClick = onRetry
+                    ) {
+                        Text(
+                            text = stringResource(R.string.share_manage_vault_members_error_retry),
+                            color = PassTheme.colors.interactionNormContrast
+                        )
                     }
                 }
             }

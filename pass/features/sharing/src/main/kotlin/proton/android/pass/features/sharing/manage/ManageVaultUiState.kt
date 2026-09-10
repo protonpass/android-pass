@@ -85,6 +85,9 @@ sealed interface ManageVaultUiContent {
     data object Loading : ManageVaultUiContent
 
     @Stable
+    data object Error : ManageVaultUiContent
+
+    @Stable
     data class Content(
         val vaultMembers: ImmutableList<VaultMember.Member>,
         val invites: ImmutableList<VaultMember>,

@@ -20,7 +20,11 @@ package proton.android.pass.features.credentials.shared.passkeys.search
 
 import kotlinx.coroutines.test.runTest
 import proton.android.pass.browserallowlist.api.PrivilegedBrowserAllowlistProvider
+import proton.android.pass.common.api.None
+import proton.android.pass.common.api.Some
+import proton.android.pass.data.api.url.HostInfo
 import proton.android.pass.data.api.usecases.VerifyDigitalAssetLinksForCredentialSharing
+import proton.android.pass.data.fakes.url.FakeHostParser
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
@@ -63,6 +67,8 @@ class PasskeyOriginVerifierTest {
                 """.trimIndent()
         }
     }
+
+    private fun fakeHostParser(result: Result<HostInfo>): FakeHostParser = FakeHostParser().apply { setResult(result) }
 
     // --- extractHost ---
 
@@ -137,9 +143,11 @@ class PasskeyOriginVerifierTest {
 
     @Test
     fun `verifyOrigin returns null when callingAppInfo is null`() = runTest {
+        val hostInfo = HostInfo.Host(protocol = "https", subdomain = None, domain = "example", tld = Some("com"))
         val verifier = PasskeyOriginVerifier(
             verifyDigitalAssetLinksForCredentialSharing = fakeDigitalAssetLinksVerifier(),
-            privilegedBrowserAllowlistProvider = fakeAllowlistProvider()
+            privilegedBrowserAllowlistProvider = fakeAllowlistProvider(),
+            hostParser = fakeHostParser(Result.success(hostInfo))
         )
         val result = verifier.verifyOrigin(
             callingAppInfo = null,
@@ -202,17 +210,33 @@ class PasskeyOriginVerifierTest {
         assertFalse(PasskeyOriginVerifier.isValidRpId("example.com#section"))
     }
 
-    // Note: verifyOrigin browser path (isOriginPopulated=true) and native-app path require
-    // constructing CallingAppInfo with SigningInfo, which is a final Android platform class
-    // with no public constructor. These paths cannot be tested in JVM unit tests without
-    // Robolectric. The security properties of these paths are enforced by:
-    // 1. isDomainMatch / extractHost contract — tested exhaustively above
-    // 2. SigningCertificateFingerprints.hasSingleSigner rejecting empty/multi-signer — tested in
-    //    pass/signing-certificates SigningCertificateFingerprintsTest
-    // 3. Live DAL check returning false for unauthorized callers — tested in
-    //    VerifyDigitalAssetLinksForCredentialSharingImplTest
-    // Integration coverage is provided by manual QA with the credential manager flow.
+    @Test
+    fun `isRegistrableDomain accepts a host with subdomain and tld`() {
+        val hostInfo = HostInfo.Host(protocol = "https", subdomain = None, domain = "example", tld = Some("com"))
+        assertTrue(PasskeyOriginVerifier.isRegistrableDomain(fakeHostParser(Result.success(hostInfo)), "example.com"))
+    }
 
-    // Allowlist resource content is now tested where the resource lives:
-    // pass/browser-allowlist/impl/.../PrivilegedBrowserAllowlistContentTest.kt
+    @Test
+    fun `isRegistrableDomain rejects a bare public suffix`() {
+        val parser = fakeHostParser(Result.failure(IllegalArgumentException("host is a TLD")))
+        assertFalse(PasskeyOriginVerifier.isRegistrableDomain(parser, "co.uk"))
+    }
+
+    @Test
+    fun `isRegistrableDomain rejects a single-label host with no tld`() {
+        val hostInfo = HostInfo.Host(protocol = "https", subdomain = None, domain = "localhost", tld = None)
+        assertFalse(PasskeyOriginVerifier.isRegistrableDomain(fakeHostParser(Result.success(hostInfo)), "localhost"))
+    }
+
+    @Test
+    fun `isRegistrableDomain rejects an IP address`() {
+        val parser = fakeHostParser(Result.success(HostInfo.Ip("1.2.3.4")))
+        assertFalse(PasskeyOriginVerifier.isRegistrableDomain(parser, "1.2.3.4"))
+    }
+
+    @Test
+    fun `isRegistrableDomain rejects an unparseable host`() {
+        val parser = fakeHostParser(Result.success(HostInfo.Unparseable(protocol = "https", rawHost = "%")))
+        assertFalse(PasskeyOriginVerifier.isRegistrableDomain(parser, "%"))
+    }
 }

@@ -99,9 +99,12 @@ dependencies {
     testImplementation(projects.pass.commonTest)
     testImplementation(projects.pass.commonPresentation.fakes)
     testImplementation(projects.pass.commonUi.fakes)
+    testImplementation(projects.pass.crypto.fakes)
     testImplementation(projects.pass.data.fakes)
     testImplementation(projects.pass.notifications.fakes)
+    testImplementation(projects.pass.preferences.fakes)
     testImplementation(projects.pass.telemetry.fakes)
+    testImplementation(projects.pass.totp.fakes)
 
     kspAndroidTest(libs.dagger.hilt.android.compiler)
     androidTestImplementation(libs.androidx.lifecycle.viewmodel.savedstate)

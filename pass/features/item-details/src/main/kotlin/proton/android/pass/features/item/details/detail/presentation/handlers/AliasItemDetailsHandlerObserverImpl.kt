@@ -21,6 +21,9 @@ package proton.android.pass.features.item.details.detail.presentation.handlers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.emitAll
+import kotlinx.coroutines.flow.filterNotNull
+import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.onStart
 import proton.android.pass.common.api.combineN
 import proton.android.pass.common.api.safeRunCatching
@@ -36,6 +39,7 @@ import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.usecases.CanDisplayTotp
 import proton.android.pass.data.api.usecases.ChangeAliasStatus
 import proton.android.pass.data.api.usecases.ObserveAliasDetails
+import proton.android.pass.data.api.usecases.ObserveItemById
 import proton.android.pass.data.api.usecases.folders.GetFolderHierarchy
 import proton.android.pass.data.api.usecases.aliascontact.ObserveAliasContacts
 import proton.android.pass.domain.AliasDetails
@@ -59,6 +63,7 @@ class AliasItemDetailsHandlerObserverImpl @Inject constructor(
     override val observeTotpFromUri: ObserveTotpFromUri,
     override val getFolderHierarchy: GetFolderHierarchy,
     override val canDisplayTotp: CanDisplayTotp,
+    private val observeItemById: ObserveItemById,
     private val observeAliasDetails: ObserveAliasDetails,
     private val observeAliasContacts: ObserveAliasContacts,
     private val userPreferencesRepository: UserPreferencesRepository,
@@ -80,7 +85,7 @@ class AliasItemDetailsHandlerObserverImpl @Inject constructor(
         savedStateEntries: Map<String, Any?>,
         detailEvent: DetailEvent
     ): Flow<ItemDetailState> = combineN(
-        observeItemContents(item),
+        observeAliasContents(item),
         observeAliasDetails(item.shareId, item.id).onStart { emit(AliasDetails.EMPTY) },
         observeAliasContacts(item.shareId, item.id).catch { emit(AliasContacts(emptyList(), 0)) },
         observeCustomFieldTotps(item),
@@ -112,6 +117,12 @@ class AliasItemDetailsHandlerObserverImpl @Inject constructor(
             detailEvent = detailEvent
         )
     }
+
+    private fun observeAliasContents(item: Item): Flow<ItemContents.Alias> =
+        observeItemById(shareId = item.shareId, itemId = item.id)
+            .filterNotNull()
+            .flatMapLatest(::observeItemContents)
+            .onStart { emitAll(observeItemContents(item)) }
 
     override fun updateHiddenFieldsContents(
         itemContents: ItemContents.Alias,

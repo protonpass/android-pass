@@ -82,6 +82,7 @@ abstract class ItemsDao : BaseDao<ItemEntity>() {
           AND (:isPinned IS NULL OR ${ItemEntity.Columns.IS_PINNED} = :isPinned)
           AND (:hasTotp IS NULL OR ${ItemEntity.Columns.HAS_TOTP} = :hasTotp)
           AND (:hasPasskeys IS NULL OR ${ItemEntity.Columns.HAS_PASSKEYS} = :hasPasskeys)
+          AND (NOT :onlyDirectItems OR ${ItemEntity.Columns.FOLDER_ID} IS NULL)
         ORDER BY ${ItemEntity.Columns.CREATE_TIME} DESC
         """
     )
@@ -98,7 +99,8 @@ abstract class ItemsDao : BaseDao<ItemEntity>() {
         hasPasskeys: Boolean?,
         setFlags: Int?,
         clearFlags: Int?,
-        anyFlags: Int?
+        anyFlags: Int?,
+        onlyDirectItems: Boolean = false
     ): Flow<List<ItemEntity>>
 
     @Query(
@@ -418,20 +420,7 @@ abstract class ItemsDao : BaseDao<ItemEntity>() {
     @Suppress("LongParameterList")
     @Query(
         """
-        WITH RECURSIVE folder_tree(id) AS (
-            SELECT ${FolderEntity.Columns.ID}
-            FROM ${FolderEntity.TABLE}
-            WHERE ${FolderEntity.Columns.USER_ID} = :userId
-              AND ${FolderEntity.Columns.SHARE_ID} = :shareId
-              AND ${FolderEntity.Columns.ID} = :rootFolderId
-            UNION
-            SELECT child.${FolderEntity.Columns.ID}
-            FROM ${FolderEntity.TABLE} child
-            JOIN folder_tree parent
-              ON child.${FolderEntity.Columns.PARENT_FOLDER_ID} = parent.id
-            WHERE child.${FolderEntity.Columns.USER_ID} = :userId
-              AND child.${FolderEntity.Columns.SHARE_ID} = :shareId
-        )
+        ${FolderEntity.DESCENDANT_FOLDER_TREE_CTE}
         SELECT item.*
         FROM ${ItemEntity.TABLE} item
         JOIN folder_tree ON item.${ItemEntity.Columns.FOLDER_ID} = folder_tree.id

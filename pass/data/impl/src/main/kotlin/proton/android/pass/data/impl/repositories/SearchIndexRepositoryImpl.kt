@@ -27,7 +27,9 @@ import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.emitAll
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 import me.proton.core.domain.entity.UserId
@@ -40,8 +42,10 @@ import proton.android.pass.data.api.repositories.SearchIndexRepository
 import proton.android.pass.data.api.repositories.SearchSortBy
 import proton.android.pass.data.api.usecases.ItemTypeFilter
 import proton.android.pass.data.impl.db.entities.ItemEntity
+import proton.android.pass.data.impl.local.LocalFolderDataSource
 import proton.android.pass.data.impl.local.LocalItemDataSource
 import proton.android.pass.data.impl.local.LocalShareDataSource
+import proton.android.pass.data.impl.local.search.ItemTypeCountRow
 import proton.android.pass.data.impl.local.search.SearchDao
 import proton.android.pass.data.impl.local.search.SearchItemEntity
 import proton.android.pass.data.impl.local.search.SearchItemsPagingSource
@@ -65,7 +69,8 @@ class SearchIndexRepositoryImpl @Inject constructor(
     private val localShareDataSource: LocalShareDataSource,
     private val encryptionContextProvider: EncryptionContextProvider,
     private val internalSettingsRepository: InternalSettingsRepository,
-    private val appDispatchers: AppDispatchers
+    private val appDispatchers: AppDispatchers,
+    private val localFolderDataSource: LocalFolderDataSource
 ) : SearchIndexRepository {
 
     private val _indexingStatus = MutableStateFlow<IndexingStatus>(IndexingStatus.Idle)
@@ -77,7 +82,10 @@ class SearchIndexRepositoryImpl @Inject constructor(
         shareId: ShareId,
         itemId: ItemId
     ) {
-        val item = localItemDataSource.getById(userId, shareId, itemId) ?: return
+        val item = localItemDataSource.getById(userId, shareId, itemId) ?: run {
+            PassLogger.w(TAG, "Cannot index item, not found locally")
+            return
+        }
 
         val flags = shareIndexFlags(userId)
         val entity = encryptionContextProvider.withEncryptionContext {
@@ -233,8 +241,6 @@ class SearchIndexRepositoryImpl @Inject constructor(
         onPageIndexed: (Int) -> Unit = {}
     ): Int {
         var indexed = 0
-        // Page through the items with a keyset cursor (rowid) so the full corpus is never
-        // held in memory at once — only one page of decrypted entities at a time.
         for (state in ItemState.entries) {
             var afterRowId = 0L
             while (true) {
@@ -426,6 +432,19 @@ class SearchIndexRepositoryImpl @Inject constructor(
         internalSettingsRepository.setSearchIndexRebuildTime(userId, 0L)
     }
 
+    // Failing open on a folder scope is worse than failing to find synced folder rows,
+    // so keep the requested folder itself if it has no resolved descendants.
+    private suspend fun resolveFolderIdsForSearch(
+        userId: UserId,
+        shareIds: List<ShareId>?,
+        folderId: FolderId?
+    ): List<FolderId>? = if (folderId != null && !shareIds.isNullOrEmpty()) {
+        localFolderDataSource.getDescendantFolderIds(userId, shareIds.first(), folderId)
+            .ifEmpty { listOf(folderId) }
+    } else {
+        null
+    }
+
     @SuppressWarnings("LongMethod", "LongParameterList")
     override fun getItems(
         userId: UserId,
@@ -438,62 +457,87 @@ class SearchIndexRepositoryImpl @Inject constructor(
         itemTypeFilter: ItemTypeFilter,
         includeHidden: Boolean
     ): Flow<PagingData<Item>> {
-        val useFts = !query.isNullOrBlank()
+        val trimmedQuery = query?.trim().orEmpty()
+        val hasQuery = trimmedQuery.isNotBlank()
+        // The trigram tokenizer can't match tokens shorter than 3 chars; fall back to a LIKE scan for those.
+        val useFts = hasQuery && FtsQueryBuilder.hasMatchableToken(trimmedQuery)
         // bm25 relevance only makes sense with an FTS match; fall back otherwise.
         val effectiveSortBy = if (sortBy == SearchSortBy.RELEVANCE && !useFts) {
             SearchSortBy.MOST_RECENT
         } else {
             sortBy
         }
-        val queryParts = if (useFts) {
-            val ftsQuery = FtsQueryBuilder.build(query)
-            buildPagingSearchQueryParts(
-                userId = userId,
-                ftsQuery = ftsQuery,
-                sortBy = effectiveSortBy,
-                shareIds = shareIds,
-                folderId = folderId,
-                itemState = itemState,
-                itemSharedType = itemSharedType,
-                itemTypeFilter = itemTypeFilter,
-                includeHidden = includeHidden
-            )
-        } else {
-            buildPagingGetAllQueryParts(
-                userId = userId,
-                sortBy = effectiveSortBy,
-                shareIds = shareIds,
-                folderId = folderId,
-                itemState = itemState,
-                itemSharedType = itemSharedType,
-                itemTypeFilter = itemTypeFilter,
-                includeHidden = includeHidden
-            )
-        }
 
-        return Pager(
-            config = PagingConfig(
-                pageSize = PAGE_SIZE,
-                prefetchDistance = PREFETCH_DISTANCE,
-                enablePlaceholders = false,
-                initialLoadSize = INITIAL_LOAD_SIZE
-            ),
-            pagingSourceFactory = {
-                SearchItemsPagingSource(
-                    searchDbInvalidationTracker = searchInvalidationTracker,
-                    searchDao = searchDao,
-                    localItemDataSource = localItemDataSource,
-                    encryptionContextProvider = encryptionContextProvider,
+        val pagingConfig = PagingConfig(
+            pageSize = PAGE_SIZE,
+            prefetchDistance = PREFETCH_DISTANCE,
+            enablePlaceholders = false,
+            initialLoadSize = INITIAL_LOAD_SIZE
+        )
+
+        return flow {
+            val queryParts = when {
+                useFts -> buildPagingSearchQueryParts(
                     userId = userId,
-                    baseQuery = queryParts.queryString,
-                    queryArgs = queryParts.args,
-                    useFts = useFts,
-                    pageSize = PAGE_SIZE,
-                    initialLoadSize = INITIAL_LOAD_SIZE
+                    ftsQuery = FtsQueryBuilder.build(trimmedQuery),
+                    sortBy = effectiveSortBy,
+                    shareIds = shareIds,
+                    folderIds = resolveFolderIdsForSearch(userId, shareIds, folderId),
+                    itemState = itemState,
+                    itemSharedType = itemSharedType,
+                    itemTypeFilter = itemTypeFilter,
+                    includeHidden = includeHidden
+                )
+
+                hasQuery -> buildPagingLikeQueryParts(
+                    userId = userId,
+                    likeQuery = trimmedQuery,
+                    sortBy = effectiveSortBy,
+                    shareIds = shareIds,
+                    folderIds = resolveFolderIdsForSearch(userId, shareIds, folderId),
+                    itemState = itemState,
+                    itemSharedType = itemSharedType,
+                    itemTypeFilter = itemTypeFilter,
+                    includeHidden = includeHidden
+                )
+
+                else -> buildPagingGetAllQueryParts(
+                    userId = userId,
+                    sortBy = effectiveSortBy,
+                    shareIds = shareIds,
+                    folderId = folderId,
+                    itemState = itemState,
+                    itemSharedType = itemSharedType,
+                    itemTypeFilter = itemTypeFilter,
+                    includeHidden = includeHidden
                 )
             }
-        ).flow
+            emitAll(buildPager(userId, queryParts, useFts, pagingConfig))
+        }
     }
+
+    private fun buildPager(
+        userId: UserId,
+        queryParts: QueryParts,
+        useFts: Boolean,
+        pagingConfig: PagingConfig
+    ): Flow<PagingData<Item>> = Pager(
+        config = pagingConfig,
+        pagingSourceFactory = {
+            SearchItemsPagingSource(
+                searchDbInvalidationTracker = searchInvalidationTracker,
+                searchDao = searchDao,
+                localItemDataSource = localItemDataSource,
+                encryptionContextProvider = encryptionContextProvider,
+                userId = userId,
+                baseQuery = queryParts.queryString,
+                queryArgs = queryParts.args,
+                useFts = useFts,
+                pageSize = PAGE_SIZE,
+                initialLoadSize = INITIAL_LOAD_SIZE
+            )
+        }
+    ).flow
 
     override fun observeItemTypeCounts(
         userId: UserId,
@@ -504,32 +548,60 @@ class SearchIndexRepositoryImpl @Inject constructor(
         query: String?,
         includeHidden: Boolean
     ): Flow<ItemTypeCounts> {
-        val ftsQuery = if (!query.isNullOrBlank()) FtsQueryBuilder.build(query) else null
-        val sqlQuery =
-            buildItemTypeCountQuery(userId, shareIds, folderId, itemState, itemSharedType, ftsQuery, includeHidden)
-        return searchDao.countByItemType(sqlQuery).map { rows ->
-            val countMap = rows.associate { it.itemType to it.count }
-            ItemTypeCounts(
-                loginCount = countMap[ITEM_TYPE_LOGIN] ?: 0,
-                aliasCount = countMap[ITEM_TYPE_ALIAS] ?: 0,
-                noteCount = countMap[ITEM_TYPE_NOTE] ?: 0,
-                creditCardCount = countMap[ITEM_TYPE_CREDIT_CARD] ?: 0,
-                identityCount = countMap[ITEM_TYPE_IDENTITY] ?: 0,
-                customCount = (countMap[ITEM_TYPE_CUSTOM] ?: 0) +
-                    (countMap[ITEM_TYPE_WIFI_NETWORK] ?: 0) +
-                    (countMap[ITEM_TYPE_SSH_KEY] ?: 0)
+        val trimmedQuery = query?.trim().orEmpty()
+        val hasQuery = trimmedQuery.isNotBlank()
+        val useFts = hasQuery && FtsQueryBuilder.hasMatchableToken(trimmedQuery)
+        val ftsQuery = if (useFts) FtsQueryBuilder.build(trimmedQuery) else null
+        val likeQuery = if (hasQuery && !useFts) trimmedQuery else null
+
+        return flow {
+            // Failing open on a folder scope is worse than failing to find synced folder rows,
+            // so keep the requested folder itself if it has no resolved descendants.
+            val folderIds = folderId?.let { fid ->
+                if (hasQuery && !shareIds.isNullOrEmpty()) {
+                    localFolderDataSource.getDescendantFolderIds(userId, shareIds.first(), fid)
+                        .ifEmpty { listOf(fid) }
+                } else {
+                    listOf(fid)
+                }
+            }
+            val sqlQuery = buildItemTypeCountQuery(
+                userId = userId,
+                shareIds = shareIds,
+                folderIds = folderIds,
+                itemState = itemState,
+                itemSharedType = itemSharedType,
+                ftsQuery = ftsQuery,
+                likeQuery = likeQuery,
+                includeHidden = includeHidden
             )
+            emitAll(searchDao.countByItemType(sqlQuery).map { rows -> mapItemTypeCounts(rows) })
         }
+    }
+
+    private fun mapItemTypeCounts(rows: List<ItemTypeCountRow>): ItemTypeCounts {
+        val countMap = rows.associate { it.itemType to it.count }
+        return ItemTypeCounts(
+            loginCount = countMap[ITEM_TYPE_LOGIN] ?: 0,
+            aliasCount = countMap[ITEM_TYPE_ALIAS] ?: 0,
+            noteCount = countMap[ITEM_TYPE_NOTE] ?: 0,
+            creditCardCount = countMap[ITEM_TYPE_CREDIT_CARD] ?: 0,
+            identityCount = countMap[ITEM_TYPE_IDENTITY] ?: 0,
+            customCount = (countMap[ITEM_TYPE_CUSTOM] ?: 0) +
+                (countMap[ITEM_TYPE_WIFI_NETWORK] ?: 0) +
+                (countMap[ITEM_TYPE_SSH_KEY] ?: 0)
+        )
     }
 
     @SuppressWarnings("LongParameterList")
     private fun buildItemTypeCountQuery(
         userId: UserId,
         shareIds: List<ShareId>?,
-        folderId: FolderId?,
+        folderIds: List<FolderId>?,
         itemState: ItemState?,
         itemSharedType: ItemSharedType?,
         ftsQuery: String?,
+        likeQuery: String?,
         includeHidden: Boolean
     ): SimpleSQLiteQuery {
         val args = mutableListOf<Any>()
@@ -548,10 +620,16 @@ class SearchIndexRepositoryImpl @Inject constructor(
             sb.append(" AND is_hidden = 0")
         }
 
-        // Filter by FTS query if provided
+        // Filter by FTS query if provided, otherwise fall back to a LIKE scan for short queries
+        // the trigram tokenizer can't match.
         if (!ftsQuery.isNullOrBlank()) {
             sb.append(" AND rowid IN (SELECT rowid FROM search_items_fts WHERE search_items_fts MATCH ?)")
             args.add(ftsQuery)
+        } else if (!likeQuery.isNullOrBlank()) {
+            val likePattern = "%${likeQuery.escapeLikePattern()}%"
+            sb.append(" AND (title LIKE ? ESCAPE '\\' OR subtitle LIKE ? ESCAPE '\\')")
+            args.add(likePattern)
+            args.add(likePattern)
         }
 
         // Filter by itemState
@@ -566,10 +644,12 @@ class SearchIndexRepositoryImpl @Inject constructor(
             args.addAll(shareIds.map { it.id })
         }
 
-        // Filter by folderId
-        if (folderId != null) {
-            sb.append(" AND folder_id = ?")
-            args.add(folderId.id)
+        if (folderIds != null && folderIds.isNotEmpty()) {
+            val placeholders = folderIds.joinToString(",") { "?" }
+            sb.append(" AND folder_id IN ($placeholders)")
+            args.addAll(folderIds.map { it.id })
+        } else if (ftsQuery == null && likeQuery == null && !shareIds.isNullOrEmpty()) {
+            sb.append(" AND folder_id IS NULL")
         }
 
         // Filter by shared type
@@ -592,7 +672,7 @@ class SearchIndexRepositoryImpl @Inject constructor(
         ftsQuery: String,
         sortBy: SearchSortBy,
         shareIds: List<ShareId>?,
-        folderId: FolderId?,
+        folderIds: List<FolderId>?,
         itemState: ItemState?,
         itemSharedType: ItemSharedType?,
         itemTypeFilter: ItemTypeFilter,
@@ -638,16 +718,16 @@ class SearchIndexRepositoryImpl @Inject constructor(
         args.add(stateValue)
 
         // Filter by shareIds
-        if (shareIds != null && shareIds.isNotEmpty()) {
+        if (!shareIds.isNullOrEmpty()) {
             val placeholders = shareIds.joinToString(",") { "?" }
             sb.append(" AND si.share_id IN ($placeholders)")
             args.addAll(shareIds.map { it.id })
         }
 
-        // Filter by folderId
-        if (folderId != null) {
-            sb.append(" AND si.folder_id = ?")
-            args.add(folderId.id)
+        if (!folderIds.isNullOrEmpty()) {
+            val placeholders = folderIds.joinToString(",") { "?" }
+            sb.append(" AND si.folder_id IN ($placeholders)")
+            args.addAll(folderIds.map { it.id })
         }
 
         // Filter by shared type
@@ -703,16 +783,17 @@ class SearchIndexRepositoryImpl @Inject constructor(
         args.add(stateValue)
 
         // Filter by shareIds
-        if (shareIds != null && shareIds.isNotEmpty()) {
+        if (!shareIds.isNullOrEmpty()) {
             val placeholders = shareIds.joinToString(",") { "?" }
             sb.append(" AND share_id IN ($placeholders)")
             args.addAll(shareIds.map { it.id })
         }
 
-        // Filter by folderId
         if (folderId != null) {
             sb.append(" AND folder_id = ?")
             args.add(folderId.id)
+        } else if (!shareIds.isNullOrEmpty()) {
+            sb.append(" AND folder_id IS NULL")
         }
 
         // Filter by shared type
@@ -730,6 +811,81 @@ class SearchIndexRepositoryImpl @Inject constructor(
 
         return QueryParts(sb.toString(), args.toTypedArray())
     }
+
+    /**
+     * LIKE-based fallback for queries the trigram FTS tokenizer can't match (tokens shorter
+     * than 3 chars), scanning title/subtitle directly instead of the FTS index.
+     */
+    @SuppressWarnings("LongMethod", "LongParameterList")
+    private fun buildPagingLikeQueryParts(
+        userId: UserId,
+        likeQuery: String,
+        sortBy: SearchSortBy,
+        shareIds: List<ShareId>?,
+        folderIds: List<FolderId>?,
+        itemState: ItemState?,
+        itemSharedType: ItemSharedType?,
+        itemTypeFilter: ItemTypeFilter,
+        includeHidden: Boolean
+    ): QueryParts {
+        val args = mutableListOf<Any>()
+        val likePattern = "%${likeQuery.escapeLikePattern()}%"
+
+        val sb = StringBuilder()
+        sb.append(
+            """
+                SELECT user_id AS userId, share_id AS shareId, item_id AS itemId
+                FROM search_items
+                WHERE user_id = ?
+                  AND (title LIKE ? ESCAPE '\' OR subtitle LIKE ? ESCAPE '\')
+            """.trimIndent()
+        )
+        args.add(userId.id)
+        args.add(likePattern)
+        args.add(likePattern)
+
+        if (!includeHidden) {
+            sb.append(" AND is_hidden = 0")
+        }
+
+        // Filter by itemState
+        val stateValue = itemState?.toInt() ?: ItemState.Active.toInt()
+        sb.append(" AND item_state = ?")
+        args.add(stateValue)
+
+        // Filter by shareIds
+        if (!shareIds.isNullOrEmpty()) {
+            val placeholders = shareIds.joinToString(",") { "?" }
+            sb.append(" AND share_id IN ($placeholders)")
+            args.addAll(shareIds.map { it.id })
+        }
+
+        if (!folderIds.isNullOrEmpty()) {
+            val placeholders = folderIds.joinToString(",") { "?" }
+            sb.append(" AND folder_id IN ($placeholders)")
+            args.addAll(folderIds.map { it.id })
+        }
+
+        // Filter by shared type
+        when (itemSharedType) {
+            ItemSharedType.SharedByMe -> sb.append(" AND is_shared_by_me = 1")
+            ItemSharedType.SharedWithMe -> sb.append(" AND is_shared_with_me = 1")
+            null -> { /* No filter */ }
+        }
+
+        // Filter by item type
+        appendItemTypeFilter(sb, args, itemTypeFilter, "")
+
+        // Add sorting (no bm25 relevance available for a plain LIKE scan)
+        sb.append(getSortClause(sortBy))
+
+        return QueryParts(sb.toString(), args.toTypedArray())
+    }
+
+    private fun String.escapeLikePattern(): String = this
+        .replace("\\", "\\\\")
+        .replace("%", "\\%")
+        .replace("_", "\\_")
 
     private data class QueryParts(
         val queryString: String,

@@ -33,6 +33,7 @@ internal class AddFolderToVaultDialogPreviewProvider : PreviewParameterProvider<
                             folderName = text,
                             event = AddFolderToVaultEvent.Unknown,
                             isButtonEnabled = button,
+                            isTitleRequiredError = text.isBlank(),
                             isLoadingState = IsLoadingState.NotLoading,
                             isEditMode = isEditMode
                         )

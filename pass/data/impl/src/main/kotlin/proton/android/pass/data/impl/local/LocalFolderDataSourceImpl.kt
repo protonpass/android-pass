@@ -93,4 +93,14 @@ class LocalFolderDataSourceImpl @Inject constructor(
         )
         return deleted > 0
     }
+
+    override suspend fun getDescendantFolderIds(
+        userId: UserId,
+        shareId: ShareId,
+        rootFolderId: FolderId
+    ): List<FolderId> = database.foldersDao().getDescendantFolderIds(
+        userId = userId.id,
+        shareId = shareId.id,
+        rootFolderId = rootFolderId.id
+    ).map { FolderId(it) }
 }

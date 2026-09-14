@@ -269,6 +269,7 @@ internal class HomeViewModelTest {
             itemId = ItemId("item-in-folder"),
             title = "Folder Item"
         ).copy(
+            folderId = folderId,
             createTime = clock.now(),
             modificationTime = clock.now()
         )
@@ -318,6 +319,144 @@ internal class HomeViewModelTest {
 
         assertThat(observePagedItems.lastFolderId).isEqualTo(folderId)
         assertThat(observePagedItems.lastShareIds).isEqualTo(listOf(shareId))
+    }
+
+    @Test
+    fun `vault browse shows only root items (folderId == null)`() = runTest {
+        val shareId = ShareId("share-vault-browse")
+        val rootItem = FakeObserveEncryptedItems.createLogin(
+            shareId = shareId,
+            itemId = ItemId("root-item"),
+            title = "Root Item"
+        ).copy(createTime = clock.now(), modificationTime = clock.now())
+        val folderItem = FakeObserveEncryptedItems.createLogin(
+            shareId = shareId,
+            itemId = ItemId("folder-item"),
+            title = "Folder Item"
+        ).copy(
+            folderId = FolderId("some-folder"),
+            createTime = clock.now(),
+            modificationTime = clock.now()
+        )
+
+        val vaultParams = FakeObserveEncryptedItems.Params(
+            selection = ShareSelection.Share(shareId),
+            itemState = ItemState.Active
+        )
+        observeEncryptedItems.emit(vaultParams, listOf(rootItem, folderItem))
+
+        featureFlags.set(FeatureFlag.PASS_FOLDERS, true)
+        preferencesRepository.setUseFaviconsPreference(UseFaviconsPreference.Disabled)
+        observeAllShares.sendResult(Result.success(emptyList()))
+        observeCanCreateItems.emit(canCreateItems = true)
+        observeHasShares.emit(hasShares = true)
+
+        instance.setVaultSelection(VaultSelectionOption.Vault(shareId))
+
+        instance.homeUiState.test {
+            val state = awaitItem()
+            assertThat(state.homeListUiState.isLoading).isInstanceOf(IsLoadingState.NotLoading::class.java)
+            val allItems = state.homeListUiState.items.flatMap { it.items }
+            assertThat(allItems).hasSize(1)
+            assertThat(allItems.first().id).isEqualTo(rootItem.id)
+        }
+    }
+
+    @Test
+    fun `folder browse shows only direct items with matching folderId`() = runTest {
+        val shareId = ShareId("share-folder-browse")
+        val folderId = FolderId("folder-browse-id")
+        val directItem = FakeObserveEncryptedItems.createLogin(
+            shareId = shareId,
+            itemId = ItemId("direct-item"),
+            title = "Direct Item"
+        ).copy(
+            folderId = folderId,
+            createTime = clock.now(),
+            modificationTime = clock.now()
+        )
+        val subFolderItem = FakeObserveEncryptedItems.createLogin(
+            shareId = shareId,
+            itemId = ItemId("subfolder-item"),
+            title = "Sub-folder Item"
+        ).copy(
+            folderId = FolderId("nested-folder"),
+            createTime = clock.now(),
+            modificationTime = clock.now()
+        )
+
+        val folderParams = FakeObserveEncryptedItems.Params(
+            selection = ShareSelection.Folder(shareId, folderId),
+            itemState = ItemState.Active
+        )
+        observeEncryptedItems.emit(folderParams, listOf(directItem, subFolderItem))
+
+        featureFlags.set(FeatureFlag.PASS_FOLDERS, true)
+        preferencesRepository.setUseFaviconsPreference(UseFaviconsPreference.Disabled)
+        observeAllShares.sendResult(Result.success(emptyList()))
+        observeCanCreateItems.emit(canCreateItems = true)
+        observeHasShares.emit(hasShares = true)
+
+        instance.setVaultSelection(VaultSelectionOption.Folder(shareId, folderId))
+
+        instance.homeUiState.test {
+            val state = awaitItem()
+            assertThat(state.homeListUiState.isLoading).isInstanceOf(IsLoadingState.NotLoading::class.java)
+            val allItems = state.homeListUiState.items.flatMap { it.items }
+            assertThat(allItems).hasSize(1)
+            assertThat(allItems.first().id).isEqualTo(directItem.id)
+        }
+    }
+
+    @Test
+    fun `folder search includes descendant items (no folderId filter in search mode)`() = runTest {
+        val shareId = ShareId("share-folder-search")
+        val folderId = FolderId("folder-search-id")
+        val directItem = FakeObserveEncryptedItems.createLogin(
+            shareId = shareId,
+            itemId = ItemId("direct-search-item"),
+            title = "Matching Direct"
+        ).copy(
+            folderId = folderId,
+            createTime = clock.now(),
+            modificationTime = clock.now()
+        )
+        val descendantItem = FakeObserveEncryptedItems.createLogin(
+            shareId = shareId,
+            itemId = ItemId("descendant-search-item"),
+            title = "Matching Descendant"
+        ).copy(
+            folderId = FolderId("nested-folder"),
+            createTime = clock.now(),
+            modificationTime = clock.now()
+        )
+
+        val folderParams = FakeObserveEncryptedItems.Params(
+            selection = ShareSelection.Folder(shareId, folderId),
+            itemState = ItemState.Active
+        )
+        observeEncryptedItems.emit(folderParams, listOf(directItem, descendantItem))
+
+        preferencesRepository.setUseFaviconsPreference(UseFaviconsPreference.Disabled)
+        observeAllShares.sendResult(Result.success(emptyList()))
+        observeCanCreateItems.emit(canCreateItems = true)
+        observeHasShares.emit(hasShares = true)
+
+        instance.setVaultSelection(VaultSelectionOption.Folder(shareId, folderId))
+        instance.onEnterSearch()
+        instance.onSearchQueryChange("Matching")
+
+        instance.homeUiState.test {
+            // Advance past debounce
+            val state = awaitItem()
+            assertThat(state.homeListUiState.isLoading).isInstanceOf(IsLoadingState.NotLoading::class.java)
+            val allItems = state.homeListUiState.items.flatMap { it.items }
+            // Both the direct item and the descendant must appear in search results
+            assertThat(allItems).hasSize(2)
+            val ids = allItems.map { it.id }
+            assertThat(ids).contains(directItem.id)
+            assertThat(ids).contains(descendantItem.id)
+        }
     }
 
     @Test

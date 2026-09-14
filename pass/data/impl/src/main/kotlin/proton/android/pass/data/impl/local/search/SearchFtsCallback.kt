@@ -21,25 +21,32 @@ package proton.android.pass.data.impl.local.search
 import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
 
-/**
- * The FTS table is FTS5, which Room cannot generate (it only supports @Fts3/@Fts4).
- * We create the external-content virtual table and its sync triggers manually, both on
- * fresh creation and after a destructive migration.
- *
- * Both [onCreate] and [onDestructiveMigration] funnel through the same [createFts] so the
- * two code paths can never drift apart. It is exposed (internal) so instrumented tests can
- * build a [SearchDatabase] backed by the exact same FTS DDL that ships in production.
- */
 internal object SearchFtsCallback : RoomDatabase.Callback() {
 
-    override fun onCreate(db: SupportSQLiteDatabase) {
-        super.onCreate(db)
-        createFts(db)
+    private const val TRIGGER_COUNT = 3
+
+    override fun onOpen(db: SupportSQLiteDatabase) {
+        super.onOpen(db)
+        if (!ftsIsCurrentVersion(db) || !triggersExist(db)) {
+            createFts(db)
+        }
     }
 
-    override fun onDestructiveMigration(db: SupportSQLiteDatabase) {
-        super.onDestructiveMigration(db)
-        createFts(db)
+    private fun ftsIsCurrentVersion(db: SupportSQLiteDatabase): Boolean {
+        val cursor = db.query(
+            "SELECT sql FROM sqlite_master WHERE type = 'table' AND name = 'search_items_fts'"
+        )
+        return cursor.use { c ->
+            c.moveToFirst() && c.getString(0).contains("trigram", ignoreCase = true)
+        }
+    }
+
+    private fun triggersExist(db: SupportSQLiteDatabase): Boolean {
+        val cursor = db.query(
+            "SELECT COUNT(*) FROM sqlite_master WHERE type = 'trigger' AND name IN " +
+                "('search_items_fts_ai', 'search_items_fts_ad', 'search_items_fts_au')"
+        )
+        return cursor.use { c -> c.moveToFirst() && c.getInt(0) == TRIGGER_COUNT }
     }
 
     fun createFts(db: SupportSQLiteDatabase) {
@@ -51,8 +58,14 @@ internal object SearchFtsCallback : RoomDatabase.Callback() {
         db.execSQL(
             "CREATE VIRTUAL TABLE search_items_fts USING fts5(" +
                 "title, subtitle, content='search_items', content_rowid='rowId', " +
-                "tokenize='unicode61')"
+                "tokenize='trigram')"
         )
+
+        db.execSQL(
+            "INSERT INTO search_items_fts(rowid, title, subtitle) " +
+                "SELECT rowId, title, subtitle FROM search_items"
+        )
+
         db.execSQL(
             "CREATE TRIGGER search_items_fts_ai AFTER INSERT ON search_items BEGIN " +
                 "INSERT INTO search_items_fts(rowid, title, subtitle) " +

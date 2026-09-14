@@ -110,6 +110,8 @@ interface SearchIndexRepository {
      * @param scope CoroutineScope for observing data changes
      * @param query Search query, or null/blank to get all items
      * @param shareIds Optional list of share IDs to filter by. If null, searches all shares.
+     * @param folderId Optional folder to scope the search to. When set, [shareIds] must contain
+     * exactly the single share that owns this folder, since a folder belongs to one share only.
      * @param itemState Optional item state to filter by (Active or Trashed). If null, returns Active items.
      * @param itemSharedType Optional shared type to filter by (SharedByMe or SharedWithMe). If null, no filter.
      * @param itemTypeFilter Optional item type to filter by. If All, no type filter is applied.
@@ -130,6 +132,8 @@ interface SearchIndexRepository {
     /**
      * Observe item counts by type for filter chips display.
      * Returns counts for each item category (Login, Alias, Note, etc.)
+     * @param folderId Optional folder to scope the counts to. When set, [shareIds] must contain
+     * exactly the single share that owns this folder, since a folder belongs to one share only.
      */
     fun observeItemTypeCounts(
         userId: UserId,

@@ -132,10 +132,23 @@ class SearchDatabaseFtsTest {
             .containsExactly("visible", "hidden")
     }
 
+    @Test
+    fun substringMatchWorksWithTrigramTokenizer() = runTest {
+        dao.upsert(entity(itemId = "item-1", title = "GitHub login"))
+
+        // "itHub" is a substring, not a prefix — only the trigram tokenizer finds this.
+        val bySubstring = ftsSearch(USER_A, "itHub")
+        assertThat(bySubstring.map { it.itemId }).containsExactly("item-1")
+    }
+
     /**
      * Mirrors the FTS query shape built by `SearchIndexRepositoryImpl` (user scoping +
      * optional hidden exclusion + the `search_items_fts MATCH` rowid subquery). Kept here so a
      * future repository query that drops `user_id` or `is_hidden` is contradicted by a test.
+     *
+     * The trigram tokenizer performs substring matching when each term is wrapped in double quotes
+     * as a quoted FTS5 phrase. Tokens shorter than 3 characters produce no trigrams and will not
+     * match anything.
      */
     private suspend fun ftsSearch(
         userId: String,
@@ -149,9 +162,13 @@ class SearchDatabaseFtsTest {
             if (!includeHidden) append("AND is_hidden = 0 ")
             append("AND rowId IN (SELECT rowid FROM search_items_fts WHERE search_items_fts MATCH ?)")
         }
-        val args = arrayOf<Any>(userId, "$query*")
+        val args = arrayOf<Any>(userId, "\"$query\"")
         return dao.searchFtsPage(SimpleSQLiteQuery(sql, args))
     }
+
+    // -----------------------------------------------------------------------
+    // Helpers
+    // -----------------------------------------------------------------------
 
     private fun entity(
         userId: String = USER_A,

@@ -29,18 +29,15 @@ import proton.android.pass.data.api.usecases.ItemTypeFilter
 import proton.android.pass.data.fakes.usecases.FakeMigrateItems
 import proton.android.pass.data.fakes.usecases.FakeObserveItems
 import proton.android.pass.data.fakes.usecases.folders.FakeMoveItemsInsideShare
-import proton.android.pass.data.fakes.usecases.folders.FakeObserveFoldersByParentId
 import proton.android.pass.domain.FolderId
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ItemState
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.ShareSelection
-import proton.android.pass.test.domain.FolderTestFactory
 import proton.android.pass.test.domain.ItemTestFactory
 
 internal class MoveAllItemsInFolderImplTest {
 
-    private lateinit var observeFolders: FakeObserveFoldersByParentId
     private lateinit var observeItems: FakeObserveItems
     private lateinit var moveItemsInsideShare: FakeMoveItemsInsideShare
     private lateinit var migrateItems: FakeMigrateItems
@@ -48,12 +45,10 @@ internal class MoveAllItemsInFolderImplTest {
 
     @Before
     fun setup() {
-        observeFolders = FakeObserveFoldersByParentId()
         observeItems = FakeObserveItems()
         moveItemsInsideShare = FakeMoveItemsInsideShare()
         migrateItems = FakeMigrateItems()
         instance = MoveAllItemsInFolderImpl(
-            observeFoldersByParentId = observeFolders,
             observeItems = observeItems,
             moveItemsInsideShare = moveItemsInsideShare,
             migrateItems = migrateItems
@@ -62,8 +57,7 @@ internal class MoveAllItemsInFolderImplTest {
 
     @Test
     fun `empty folder with no children does not call move or migrate`() = runTest {
-        observeFolders.sendResult(SHARE_ID, ROOT_FOLDER_ID, Result.success(emptyList()))
-        observeItems.emit(itemParams(ROOT_FOLDER_ID), emptyList())
+        observeItems.emit(rootFolderParams(), emptyList())
 
         instance(SHARE_ID, ROOT_FOLDER_ID, SHARE_ID, null)
 
@@ -73,10 +67,9 @@ internal class MoveAllItemsInFolderImplTest {
 
     @Test
     fun `flat folder with items same vault calls moveItemsInsideShare`() = runTest {
-        val item1 = ItemTestFactory.create(shareId = SHARE_ID, itemId = ItemId("item-1"))
-        val item2 = ItemTestFactory.create(shareId = SHARE_ID, itemId = ItemId("item-2"))
-        observeFolders.sendResult(SHARE_ID, ROOT_FOLDER_ID, Result.success(emptyList()))
-        observeItems.emit(itemParams(ROOT_FOLDER_ID), listOf(item1, item2))
+        val item1 = ItemTestFactory.create(shareId = SHARE_ID, itemId = ItemId("item-1"), folderId = ROOT_FOLDER_ID)
+        val item2 = ItemTestFactory.create(shareId = SHARE_ID, itemId = ItemId("item-2"), folderId = ROOT_FOLDER_ID)
+        observeItems.emit(rootFolderParams(), listOf(item1, item2))
 
         instance(SHARE_ID, ROOT_FOLDER_ID, SHARE_ID, DEST_FOLDER_ID)
 
@@ -90,9 +83,8 @@ internal class MoveAllItemsInFolderImplTest {
 
     @Test
     fun `flat folder with items cross-vault calls migrateItems`() = runTest {
-        val item1 = ItemTestFactory.create(shareId = SHARE_ID, itemId = ItemId("item-1"))
-        observeFolders.sendResult(SHARE_ID, ROOT_FOLDER_ID, Result.success(emptyList()))
-        observeItems.emit(itemParams(ROOT_FOLDER_ID), listOf(item1))
+        val item1 = ItemTestFactory.create(shareId = SHARE_ID, itemId = ItemId("item-1"), folderId = ROOT_FOLDER_ID)
+        observeItems.emit(rootFolderParams(), listOf(item1))
         migrateItems.setResult(Result.success(MigrateItemsResult.AllMigrated(listOf(item1))))
 
         instance(SHARE_ID, ROOT_FOLDER_ID, DEST_SHARE_ID, DEST_FOLDER_ID)
@@ -106,82 +98,73 @@ internal class MoveAllItemsInFolderImplTest {
     }
 
     @Test
-    fun `nested folder root + child both with items collects all item ids`() = runTest {
-        val child = FolderTestFactory.create(
+    fun `only items directly in the folder are moved, not items from child subfolders`() = runTest {
+        val rootItem = ItemTestFactory.create(
             shareId = SHARE_ID,
-            folderId = CHILD_FOLDER_ID,
-            parentFolderId = ROOT_FOLDER_ID
+            itemId = ItemId("root-item"),
+            folderId = ROOT_FOLDER_ID
         )
-        val rootItem = ItemTestFactory.create(shareId = SHARE_ID, itemId = ItemId("root-item"))
-        val childItem = ItemTestFactory.create(shareId = SHARE_ID, itemId = ItemId("child-item"))
-
-        observeFolders.sendResult(SHARE_ID, ROOT_FOLDER_ID, Result.success(listOf(child)))
-        observeFolders.sendResult(SHARE_ID, CHILD_FOLDER_ID, Result.success(emptyList()))
-        observeItems.emit(itemParams(ROOT_FOLDER_ID), listOf(rootItem))
-        observeItems.emit(itemParams(CHILD_FOLDER_ID), listOf(childItem))
+        val childItem = ItemTestFactory.create(
+            shareId = SHARE_ID,
+            itemId = ItemId("child-item"),
+            folderId = CHILD_FOLDER_ID
+        )
+        observeItems.emit(rootFolderParams(), listOf(rootItem, childItem))
 
         instance(SHARE_ID, ROOT_FOLDER_ID, SHARE_ID, DEST_FOLDER_ID)
 
         assertThat(moveItemsInsideShare.invocations).hasSize(1)
         assertThat(moveItemsInsideShare.invocations[0].itemIds)
-            .containsExactly(rootItem.id, childItem.id)
+            .containsExactly(rootItem.id)
+        assertThat(moveItemsInsideShare.invocations[0].itemIds)
+            .doesNotContain(childItem.id)
     }
 
     @Test
-    fun `deep nesting three levels all items collected`() = runTest {
-        val grandchild = FolderTestFactory.create(
+    fun `when root folder has no direct items but child does, nothing is moved`() = runTest {
+        val childItem = ItemTestFactory.create(
             shareId = SHARE_ID,
-            folderId = GRANDCHILD_FOLDER_ID,
-            parentFolderId = CHILD_FOLDER_ID
+            itemId = ItemId("child-item"),
+            folderId = CHILD_FOLDER_ID
         )
-        val child = FolderTestFactory.create(
-            shareId = SHARE_ID,
-            folderId = CHILD_FOLDER_ID,
-            parentFolderId = ROOT_FOLDER_ID
-        )
-        val rootItem = ItemTestFactory.create(shareId = SHARE_ID, itemId = ItemId("root-item"))
-        val childItem = ItemTestFactory.create(shareId = SHARE_ID, itemId = ItemId("child-item"))
-        val grandchildItem = ItemTestFactory.create(shareId = SHARE_ID, itemId = ItemId("grandchild-item"))
+        observeItems.emit(rootFolderParams(), listOf(childItem))
 
-        observeFolders.sendResult(SHARE_ID, ROOT_FOLDER_ID, Result.success(listOf(child)))
-        observeFolders.sendResult(SHARE_ID, CHILD_FOLDER_ID, Result.success(listOf(grandchild)))
-        observeFolders.sendResult(SHARE_ID, GRANDCHILD_FOLDER_ID, Result.success(emptyList()))
-        observeItems.emit(itemParams(ROOT_FOLDER_ID), listOf(rootItem))
-        observeItems.emit(itemParams(CHILD_FOLDER_ID), listOf(childItem))
-        observeItems.emit(itemParams(GRANDCHILD_FOLDER_ID), listOf(grandchildItem))
+        instance(SHARE_ID, ROOT_FOLDER_ID, SHARE_ID, DEST_FOLDER_ID)
+
+        assertThat(moveItemsInsideShare.invocations).isEmpty()
+        assertThat(migrateItems.memory()).isEmpty()
+    }
+
+    @Test
+    fun `deeply nested items from grandchild folder are not moved`() = runTest {
+        val rootItem = ItemTestFactory.create(
+            shareId = SHARE_ID,
+            itemId = ItemId("root-item"),
+            folderId = ROOT_FOLDER_ID
+        )
+        val childItem = ItemTestFactory.create(
+            shareId = SHARE_ID,
+            itemId = ItemId("child-item"),
+            folderId = CHILD_FOLDER_ID
+        )
+        val grandchildItem = ItemTestFactory.create(
+            shareId = SHARE_ID,
+            itemId = ItemId("grandchild-item"),
+            folderId = GRANDCHILD_FOLDER_ID
+        )
+        observeItems.emit(rootFolderParams(), listOf(rootItem, childItem, grandchildItem))
 
         instance(SHARE_ID, ROOT_FOLDER_ID, SHARE_ID, DEST_FOLDER_ID)
 
         assertThat(moveItemsInsideShare.invocations).hasSize(1)
         assertThat(moveItemsInsideShare.invocations[0].itemIds)
-            .containsExactly(rootItem.id, childItem.id, grandchildItem.id)
-    }
-
-    @Test
-    fun `empty root but child has items still collects child items`() = runTest {
-        val child = FolderTestFactory.create(
-            shareId = SHARE_ID,
-            folderId = CHILD_FOLDER_ID,
-            parentFolderId = ROOT_FOLDER_ID
-        )
-        val childItem = ItemTestFactory.create(shareId = SHARE_ID, itemId = ItemId("child-item"))
-
-        observeFolders.sendResult(SHARE_ID, ROOT_FOLDER_ID, Result.success(listOf(child)))
-        observeFolders.sendResult(SHARE_ID, CHILD_FOLDER_ID, Result.success(emptyList()))
-        observeItems.emit(itemParams(ROOT_FOLDER_ID), emptyList())
-        observeItems.emit(itemParams(CHILD_FOLDER_ID), listOf(childItem))
-
-        instance(SHARE_ID, ROOT_FOLDER_ID, SHARE_ID, DEST_FOLDER_ID)
-
-        assertThat(moveItemsInsideShare.invocations).hasSize(1)
-        assertThat(moveItemsInsideShare.invocations[0].itemIds).containsExactly(childItem.id)
+            .containsExactly(rootItem.id)
     }
 
     @Test
     fun `cross-vault with null destFolderId passes None to migrateItems`() = runTest {
-        val item = ItemTestFactory.create(shareId = SHARE_ID, itemId = ItemId("item-1"))
-        observeFolders.sendResult(SHARE_ID, ROOT_FOLDER_ID, Result.success(emptyList()))
-        observeItems.emit(itemParams(ROOT_FOLDER_ID), listOf(item))
+        val item = ItemTestFactory.create(shareId = SHARE_ID, itemId = ItemId("item-1"), folderId = ROOT_FOLDER_ID)
+        observeItems.emit(rootFolderParams(), listOf(item))
         migrateItems.setResult(Result.success(MigrateItemsResult.AllMigrated(listOf(item))))
 
         instance(SHARE_ID, ROOT_FOLDER_ID, DEST_SHARE_ID, null)
@@ -191,9 +174,8 @@ internal class MoveAllItemsInFolderImplTest {
 
     @Test
     fun `same vault with null destFolderId passes null to moveItemsInsideShare`() = runTest {
-        val item = ItemTestFactory.create(shareId = SHARE_ID, itemId = ItemId("item-1"))
-        observeFolders.sendResult(SHARE_ID, ROOT_FOLDER_ID, Result.success(emptyList()))
-        observeItems.emit(itemParams(ROOT_FOLDER_ID), listOf(item))
+        val item = ItemTestFactory.create(shareId = SHARE_ID, itemId = ItemId("item-1"), folderId = ROOT_FOLDER_ID)
+        observeItems.emit(rootFolderParams(), listOf(item))
 
         instance(SHARE_ID, ROOT_FOLDER_ID, SHARE_ID, null)
 
@@ -202,10 +184,9 @@ internal class MoveAllItemsInFolderImplTest {
 
     @Test
     fun `cross-vault NoneMigrated throws the contained exception`() = runTest {
-        val item = ItemTestFactory.create(shareId = SHARE_ID, itemId = ItemId("item-1"))
+        val item = ItemTestFactory.create(shareId = SHARE_ID, itemId = ItemId("item-1"), folderId = ROOT_FOLDER_ID)
         val cause = RuntimeException("migration failed")
-        observeFolders.sendResult(SHARE_ID, ROOT_FOLDER_ID, Result.success(emptyList()))
-        observeItems.emit(itemParams(ROOT_FOLDER_ID), listOf(item))
+        observeItems.emit(rootFolderParams(), listOf(item))
         migrateItems.setResult(Result.success(MigrateItemsResult.NoneMigrated(cause)))
 
         val thrown = runCatching {
@@ -217,9 +198,8 @@ internal class MoveAllItemsInFolderImplTest {
 
     @Test
     fun `cross-vault SomeMigrated does not throw`() = runTest {
-        val item = ItemTestFactory.create(shareId = SHARE_ID, itemId = ItemId("item-1"))
-        observeFolders.sendResult(SHARE_ID, ROOT_FOLDER_ID, Result.success(emptyList()))
-        observeItems.emit(itemParams(ROOT_FOLDER_ID), listOf(item))
+        val item = ItemTestFactory.create(shareId = SHARE_ID, itemId = ItemId("item-1"), folderId = ROOT_FOLDER_ID)
+        observeItems.emit(rootFolderParams(), listOf(item))
         migrateItems.setResult(Result.success(MigrateItemsResult.SomeMigrated(listOf(item))))
 
         instance(SHARE_ID, ROOT_FOLDER_ID, DEST_SHARE_ID, null)
@@ -227,8 +207,8 @@ internal class MoveAllItemsInFolderImplTest {
         assertThat(migrateItems.memory()).hasSize(1)
     }
 
-    private fun itemParams(folderId: FolderId) = FakeObserveItems.Params(
-        selection = ShareSelection.Folder(SHARE_ID, folderId),
+    private fun rootFolderParams() = FakeObserveItems.Params(
+        selection = ShareSelection.Folder(SHARE_ID, ROOT_FOLDER_ID),
         itemState = ItemState.Active,
         filter = ItemTypeFilter.All
     )

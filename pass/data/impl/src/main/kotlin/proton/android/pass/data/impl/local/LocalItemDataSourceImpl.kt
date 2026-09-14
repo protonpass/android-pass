@@ -114,7 +114,8 @@ class LocalItemDataSourceImpl @Inject constructor(
         itemState: ItemState?,
         filter: ItemTypeFilter,
         itemFlags: Map<ItemFlag, Boolean>,
-        anyFlags: List<ItemFlag>
+        anyFlags: List<ItemFlag>,
+        onlyDirectItems: Boolean
     ): Flow<List<ItemEntity>> {
         val (setFlags, clearFlags) = foldFlags(itemFlags)
         val itemTypes = filter.value()
@@ -131,7 +132,8 @@ class LocalItemDataSourceImpl @Inject constructor(
             hasPasskeys = null,
             setFlags = setFlags,
             clearFlags = clearFlags,
-            anyFlags = anyFlags.sumOf { it.value }.takeIf { it != 0 }
+            anyFlags = anyFlags.sumOf { it.value }.takeIf { it != 0 },
+            onlyDirectItems = onlyDirectItems
         )
     }
 

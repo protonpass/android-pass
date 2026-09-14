@@ -76,17 +76,20 @@ class AddFolderToVaultViewModel @Inject constructor(
     private val eventFlow: MutableStateFlow<AddFolderToVaultEvent> =
         MutableStateFlow(AddFolderToVaultEvent.Unknown)
     private val formFlow: MutableStateFlow<FormState> = MutableStateFlow(FormState.Initial)
+    private val hasEditedTitleFlow: MutableStateFlow<Boolean> = MutableStateFlow(false)
     private val isLoadingState: MutableStateFlow<IsLoadingState> =
         MutableStateFlow(IsLoadingState.NotLoading)
 
     internal val state: StateFlow<AddFolderToVaultUiState> = combine(
         eventFlow,
         formFlow,
+        hasEditedTitleFlow,
         isLoadingState
-    ) { event, form, isLoadingState ->
+    ) { event, form, hasEdited, isLoadingState ->
         AddFolderToVaultUiState(
             folderName = form.text,
-            isButtonEnabled = form.isButtonEnabled,
+            isButtonEnabled = IsButtonEnabled.from(form.text.isNotBlank()),
+            isTitleRequiredError = hasEdited && form.text.isBlank(),
             isLoadingState = isLoadingState,
             event = event,
             isEditMode = isEditMode
@@ -104,12 +107,7 @@ class AddFolderToVaultViewModel @Inject constructor(
                 safeRunCatching {
                     getFolder(shareId, editFolderId)
                 }.onSuccess { folder ->
-                    formFlow.update {
-                        FormState(
-                            text = folder.name,
-                            isButtonEnabled = IsButtonEnabled.Enabled
-                        )
-                    }
+                    formFlow.update { FormState(text = folder.name) }
                     isLoadingState.update { IsLoadingState.NotLoading }
                 }.onFailure { error ->
                     PassLogger.w(TAG, "Error getting folder")
@@ -122,12 +120,8 @@ class AddFolderToVaultViewModel @Inject constructor(
     }
 
     internal fun onTextChange(text: String) {
-        formFlow.update {
-            FormState(
-                text = text,
-                isButtonEnabled = IsButtonEnabled.from(text.isNotEmpty())
-            )
-        }
+        formFlow.update { FormState(text = text) }
+        hasEditedTitleFlow.update { true }
     }
 
     internal fun onAddFolder() {
@@ -164,15 +158,9 @@ class AddFolderToVaultViewModel @Inject constructor(
     }
 
 
-    private data class FormState(
-        val text: String,
-        val isButtonEnabled: IsButtonEnabled
-    ) {
+    private data class FormState(val text: String) {
         companion object {
-            val Initial = FormState(
-                text = "",
-                isButtonEnabled = IsButtonEnabled.Disabled
-            )
+            val Initial = FormState(text = "")
         }
     }
 

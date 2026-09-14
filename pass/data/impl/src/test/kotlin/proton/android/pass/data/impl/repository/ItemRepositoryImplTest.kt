@@ -389,6 +389,53 @@ class ItemRepositoryImplTest {
     }
 
     @Test
+    fun `migrateAllVaultItems only migrates items outside any folder, not items inside folders`() = runTest {
+        val rootItemId = ItemId("vault-root-item")
+        val folderItemId = ItemId("vault-folder-item")
+        val itemKey = ItemKey(
+            rotation = 1L,
+            key = EncryptedByteArray(byteArrayOf(1, 2, 3)),
+            responseKey = "item-key"
+        )
+
+        localItemDataSource.upsertItem(
+            ItemEntityTestFactory.create(
+                id = rootItemId.id,
+                userId = userId.id,
+                addressId = userAddress.addressId.id,
+                shareId = share.id.id,
+                folderId = null
+            )
+        )
+        localItemDataSource.upsertItem(
+            ItemEntityTestFactory.create(
+                id = folderItemId.id,
+                userId = userId.id,
+                addressId = userAddress.addressId.id,
+                shareId = share.id.id,
+                folderId = FolderId("folder-1").id
+            )
+        )
+        getShareAndItemKey.setItemKeys(ShareKeyTestFactory.createPrivate() to itemKey)
+        migrateItem.setOutput(
+            listOf(ItemKeyWithRotation(EncryptedByteArray(byteArrayOf(9, 9, 9)), 1L))
+        )
+        shareKeyRepository.emitGetLatestKeyForShare(ShareKeyTestFactory.createPrivate())
+
+        repository.migrateAllVaultItems(
+            userId = userId,
+            source = share.id,
+            destination = share.id,
+            destinationFolderId = null
+        )
+
+        val movedItemIds = remoteItemDataSource.getMoveItemsToFolderMemory()
+            .flatMap { it.items }
+            .map { it.itemId }
+        assertThat(movedItemIds).containsExactly(rootItemId.id)
+    }
+
+    @Test
     fun `applyPendingEvent upserts synced items without indexing them`() = runTest {
         val itemId = ItemId("synced-not-indexed")
         val protoItem = TestProtoItemGenerator.generate(name = "title", note = "note")

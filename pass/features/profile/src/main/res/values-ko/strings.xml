@@ -10,7 +10,7 @@
   <string name="profile_option_import_export">가져오기 및 내보내기</string>
   <string name="profile_option_tutorial">Proton Pass 사용 안내</string>
   <string name="profile_option_rating">앱 평가하기</string>
-  <string name="profile_spread_the_word">Spread the word</string>
+  <string name="profile_spread_the_word">전세계</string>
   <string name="profile_option_tell_a_friend">친구에게 전달하기</string>
   <string name="profile_spread_the_word_share_message">Proton Pass로 너의 비밀번호를 안전하게 보관하고 있어. 너도 한 번 해볼래?: https://proton.me/pass/download</string>
   <string name="profile_option_autofill">자동 완성</string>
@@ -20,7 +20,7 @@
   <string name="profile_option_generated_passwords">생성된 비밀번호</string>
   <string name="profile_error_biometry_failed_to_start">생체 인증을 시작할 수 없습니다</string>
   <string name="profile_error_biometry_failed_to_authenticate">인증 실패</string>
-  <string name="profile_error_app_lock_update_failed">Could not update the app lock. Please try again.</string>
+  <string name="profile_error_app_lock_update_failed">앱 잠금을 업데이트할 수 없습니다. 나중에 다시 시도하세요.</string>
   <string name="profile_fingerprint_lock_enabled">지문 잠금 활성화됨</string>
   <string name="profile_fingerprint_lock_disabled">지문 잠금 비활성화됨</string>
   <string name="profile_app_version_copied_to_clipboard">앱 버전 복사됨</string>

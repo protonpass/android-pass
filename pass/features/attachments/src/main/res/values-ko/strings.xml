@@ -39,14 +39,14 @@
   <string name="storage_full_amount" comment="This will show 20MB of 100MB">%2$s 중 %1$s</string>
   <string name="attachments_saved_to_location_success">첨부 파일이 위치에 저장되었습니다</string>
   <string name="attachments_saved_to_location_error">첨부 파일을 위치에 저장하지 못했습니다</string>
-  <string name="attachment_sync_dialog_title_waiting">Waiting for connection</string>
-  <string name="attachment_sync_dialog_title_downloading">Downloading attachments</string>
-  <string name="attachment_sync_dialog_title_done">Download complete</string>
-  <string name="attachment_sync_dialog_title_partial_failure">Download failed</string>
-  <string name="attachment_sync_dialog_subtitle_waiting">Waiting for network connection to download attachments.</string>
-  <string name="attachment_sync_dialog_subtitle_downloading">Downloading %1$d/%2$d attachments</string>
-  <string name="attachment_sync_dialog_subtitle_done">All attachments have been downloaded successfully.</string>
-  <string name="attachment_sync_dialog_subtitle_partial_failure">Some attachments could not be downloaded. You can retry the failed ones below.</string>
-  <string name="attachment_sync_dialog_retry_content_description">Retry download</string>
-  <string name="attachment_sync_vault_files_count">%1$d / %2$d files</string>
+  <string name="attachment_sync_dialog_title_waiting">연결 대기 중</string>
+  <string name="attachment_sync_dialog_title_downloading">첨부 파일 다운로드 중</string>
+  <string name="attachment_sync_dialog_title_done">다운로드 완료</string>
+  <string name="attachment_sync_dialog_title_partial_failure">다운로드 실패</string>
+  <string name="attachment_sync_dialog_subtitle_waiting">첨부 파일을 다운로드하기 위해 네트워크 연결을 대기하고 있습니다.</string>
+  <string name="attachment_sync_dialog_subtitle_downloading">%1$d개/%2$d개 첨부 파일 다운로드 중</string>
+  <string name="attachment_sync_dialog_subtitle_done">모든 첨부 파일이 성공적으로 다운로드되었습니다.</string>
+  <string name="attachment_sync_dialog_subtitle_partial_failure">일부 첨부 파일을 다운로드할 수 없습니다. 실패한 항목을 아래에서 다시 시도할 수도 있습니다.</string>
+  <string name="attachment_sync_dialog_retry_content_description">다운로드 다시 시도</string>
+  <string name="attachment_sync_vault_files_count">%1$d개 / %2$d개 파일</string>
 </resources>

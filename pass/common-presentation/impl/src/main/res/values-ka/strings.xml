@@ -21,9 +21,9 @@
   <string name="download_attachments_error">მიმაგრებული ფაილის გადმოწერა შეუძლებელია</string>
   <string name="share_attachments_error">მიმაგრებული ფაილის გაზიარება შეუძლებელია</string>
   <string name="upload_attachments_error">მიმაგრებული ფაილის ატვირთვა შეუძლებელია</string>
-  <string name="attachment_not_available_offline">Attachment not available offline</string>
-  <string name="attachment_download_timeout">Attachment download timed out</string>
-  <string name="attachment_storage_full">Not enough storage to download attachments</string>
+  <string name="attachment_not_available_offline">მიმაგრებული ფაილი ხაზგარეშე ხელმისაწვდომი არაა</string>
+  <string name="attachment_download_timeout">მიმაგრებული ფაილის გადმოწერის მოლოდინის ვადა ამოიწურა</string>
+  <string name="attachment_storage_full">არასაკმარისი ადგილი მიმაგრებული ფაილების გადმოსაწერად</string>
   <string name="attachment_size_exceeded_error">მონიშნული ფაილი ზომის ზღვარს სცდება. აირჩიეთ ფაილი, რომელიც 100 მბ-ზე პატარაა.</string>
   <string name="attachment_too_many_files_error">ახლახან, მეტად ბევრი ფაილი შექმენით</string>
   <string name="open_with">გახსნა პროგრამით:</string>

@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <string name="generate_username_title">Generate username</string>
-  <string name="generate_username_button_regenerate">Regenerate</string>
-  <string name="generate_username_button_copy">Copy</string>
-  <string name="generate_username_label_include_numbers">Include numbers</string>
+  <string name="generate_username_title">사용자 이름 생성</string>
+  <string name="generate_username_button_regenerate">다시 생성</string>
+  <string name="generate_username_button_copy">복사</string>
+  <string name="generate_username_label_include_numbers">숫자 포함</string>
   <string name="generate_username_label_leetspeak">Leetspeak</string>
-  <string name="generate_username_label_word_types">Word types</string>
+  <string name="generate_username_label_word_types">문자 유형</string>
   <string name="generate_username_label_adjectives">Adjectives</string>
   <string name="generate_username_label_nouns">Nouns</string>
   <string name="generate_username_label_verbs">Verbs</string>
-  <string name="generate_username_snackbar_copied">Username copied to clipboard</string>
-  <string name="generate_username_snackbar_error">Could not generate username</string>
+  <string name="generate_username_snackbar_copied">사용자 이름을 클립보드에 복사했습니다</string>
+  <string name="generate_username_snackbar_error">사용자 이름을 생성할 수 없음</string>
 </resources>

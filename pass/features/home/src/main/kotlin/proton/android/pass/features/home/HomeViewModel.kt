@@ -520,8 +520,30 @@ class HomeViewModel @Inject constructor(
             }
         }
 
-    private val sortedListItemFlow = combine(
+    private val browseModeFilteredItemUiModelFlow = combine(
         itemUiModelFlow,
+        searchOptionsFlow.map { it.vaultSelectionOption }.distinctUntilChanged(),
+        isInSearchModeState,
+        searchQueryState,
+        foldersEnabledFlow
+    ) { itemResult, vaultSelectionOption, isInSearchMode, searchQuery, foldersEnabled ->
+        if (isInSearchMode && searchQuery.isNotBlank() || !foldersEnabled) {
+            itemResult
+        } else {
+            when (vaultSelectionOption) {
+                is VaultSelectionOption.Vault -> itemResult.map { list ->
+                    list.filter { item -> item.folderId == null }
+                }
+                is VaultSelectionOption.Folder -> itemResult.map { list ->
+                    list.filter { item -> item.folderId == vaultSelectionOption.folderId }
+                }
+                else -> itemResult
+            }
+        }
+    }.flowOn(appDispatchers.default)
+
+    private val sortedListItemFlow = combine(
+        browseModeFilteredItemUiModelFlow,
         searchOptionsFlow.map { it.sortingOption }
     ) { result, sortingOption ->
         result.map { it.groupedItemLists(sortingOption, clock.now()) }

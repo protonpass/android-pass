@@ -115,7 +115,7 @@ class HomeDrawerViewModel @Inject constructor(
         folderLimitsFlow
     ) { isFoldersEnabled, shareKeys, folderLimits ->
         FolderFlowInput(isFoldersEnabled, shareKeys, folderLimits)
-    }
+    }.distinctUntilChanged()
 
     private val vaultFoldersFlow: Flow<Pair<Map<ShareId, PersistentList<FolderUiModel>>, Set<ShareId>>> =
         folderFlowInput.flatMapLatest(::observeVaultFolders)

@@ -18,16 +18,18 @@
 
 package proton.android.pass.data.impl.repositories
 
-/**
- * Turns a user's free-text search box input into an FTS5 MATCH expression. The output is bound
- * as a query argument (never concatenated into SQL), but it still must be a *valid* FTS5
- * expression or the MATCH throws at runtime — so special FTS5 syntax characters are stripped
- * and each remaining token gets a prefix wildcard. Behaviour is pinned by FtsQueryBuilderTest.
- */
 internal object FtsQueryBuilder {
 
+    // The trigram tokenizer indexes overlapping 3-character sequences, so a query token shorter
+    // than this can never match anything, even though the term is present in the indexed text.
+    private const val MIN_MATCHABLE_TOKEN_LENGTH = 3
+
+    fun hasMatchableToken(query: String): Boolean = query
+        .trim()
+        .split("\\s+".toRegex())
+        .any { it.length >= MIN_MATCHABLE_TOKEN_LENGTH }
+
     fun build(query: String): String {
-        // Escape special FTS5 characters and add prefix matching
         val escaped = query
             .trim()
             .replace("\"", "\"\"")
@@ -45,9 +47,8 @@ internal object FtsQueryBuilder {
             .replace("~", "")
             .replace("NOT ", " ")
 
-        // Split into words and add prefix matching to each
         return escaped.split("\\s+".toRegex())
             .filter { it.isNotBlank() }
-            .joinToString(" ") { "$it*" }
+            .joinToString(" ") { "\"$it\"" }
     }
 }

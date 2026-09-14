@@ -91,5 +91,22 @@ data class FolderEntity(
 
     companion object {
         const val TABLE = "FolderEntity"
+
+        const val DESCENDANT_FOLDER_TREE_CTE = """
+            WITH RECURSIVE folder_tree(id) AS (
+                SELECT ${Columns.ID}
+                FROM $TABLE
+                WHERE ${Columns.USER_ID} = :userId
+                  AND ${Columns.SHARE_ID} = :shareId
+                  AND ${Columns.ID} = :rootFolderId
+                UNION
+                SELECT child.${Columns.ID}
+                FROM $TABLE child
+                JOIN folder_tree parent
+                  ON child.${Columns.PARENT_FOLDER_ID} = parent.id
+                WHERE child.${Columns.USER_ID} = :userId
+                  AND child.${Columns.SHARE_ID} = :shareId
+            )
+        """
     }
 }

@@ -43,6 +43,7 @@ import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.RequestFocusLaunchedEffect
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.ThemePairPreviewProvider
+import proton.android.pass.composecomponents.impl.R as CompR
 import proton.android.pass.composecomponents.impl.container.roundedContainerNorm
 import proton.android.pass.composecomponents.impl.dialogs.ConfirmWithLoadingDialog
 import proton.android.pass.composecomponents.impl.form.ProtonTextField
@@ -109,7 +110,9 @@ internal fun AddFolderToVaultDialogContent(
                             )
                         },
                         keyboardOptions = KeyboardOptions(capitalization = KeyboardCapitalization.Sentences),
-                        textStyle = ProtonTheme.typography.defaultNorm
+                        textStyle = ProtonTheme.typography.defaultNorm,
+                        isError = state.isTitleRequiredError,
+                        errorMessage = stringResource(CompR.string.field_title_required)
                     )
                 }
             }

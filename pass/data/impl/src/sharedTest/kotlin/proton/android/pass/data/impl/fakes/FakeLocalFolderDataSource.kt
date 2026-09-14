@@ -101,6 +101,31 @@ class FakeLocalFolderDataSource : LocalFolderDataSource {
         return true
     }
 
+    override suspend fun getDescendantFolderIds(
+        userId: UserId,
+        shareId: ShareId,
+        rootFolderId: FolderId
+    ): List<FolderId> {
+        val all = state.value.filter { it.userId == userId.id && it.shareId == shareId.id }
+        val byParent = all.groupBy { it.parentFolderId }
+        val result = mutableListOf(rootFolderId)
+        val queue = ArrayDeque<FolderId>()
+        queue.add(rootFolderId)
+        val visited = mutableSetOf(rootFolderId)
+        while (queue.isNotEmpty()) {
+            val current = queue.removeFirst()
+            val children = byParent[current.id].orEmpty()
+            for (child in children) {
+                val childId = FolderId(child.id)
+                if (visited.add(childId)) {
+                    result.add(childId)
+                    queue.add(childId)
+                }
+            }
+        }
+        return result
+    }
+
     private fun publish() {
         state.value = folderByShareAndId.values.toList()
     }

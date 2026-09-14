@@ -57,6 +57,7 @@ class FakeRemoteItemDataSource : RemoteItemDataSource {
     private var migrateItemsResponse: () -> List<ItemRevision> = { emptyList() }
     private var moveItemsToFolderCallCount = 0
     private var moveItemsToFolderResponse: () -> List<MoveItemRevisionApiModel> = { emptyList() }
+    private val moveItemsToFolderMemory: MutableList<MoveItemsToFolderRequest> = mutableListOf()
 
     fun getCreateItemMemory(): List<CreateItemParams> = createItemMemory
 
@@ -185,6 +186,7 @@ class FakeRemoteItemDataSource : RemoteItemDataSource {
     }
 
     fun getMoveItemsToFolderCallCount(): Int = moveItemsToFolderCallCount
+    fun getMoveItemsToFolderMemory(): List<MoveItemsToFolderRequest> = moveItemsToFolderMemory
     fun setMoveItemsToFolderResponse(delegate: () -> List<MoveItemRevisionApiModel>) {
         moveItemsToFolderResponse = delegate
     }
@@ -201,6 +203,7 @@ class FakeRemoteItemDataSource : RemoteItemDataSource {
         body: MoveItemsToFolderRequest
     ): List<MoveItemRevisionApiModel> {
         moveItemsToFolderCallCount++
+        moveItemsToFolderMemory.add(body)
         return moveItemsToFolderResponse()
     }
 

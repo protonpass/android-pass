@@ -114,10 +114,15 @@ class FakeLocalItemDataSource : LocalItemDataSource {
         itemState: ItemState?,
         filter: ItemTypeFilter,
         itemFlags: Map<ItemFlag, Boolean>,
-        anyFlags: List<ItemFlag>
+        anyFlags: List<ItemFlag>,
+        onlyDirectItems: Boolean
     ): Flow<List<ItemEntity>> {
         observeItemsShareIdsMemory.add(shareIds)
-        return flowOf(memory.filter { entity -> ShareId(entity.shareId) in shareIds })
+        return flowOf(
+            memory.filter { entity ->
+                ShareId(entity.shareId) in shareIds && (!onlyDirectItems || entity.folderId == null)
+            }
+        )
     }
 
     override suspend fun getItemsPageForIndex(

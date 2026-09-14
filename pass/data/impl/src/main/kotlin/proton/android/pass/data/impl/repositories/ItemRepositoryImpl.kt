@@ -1380,7 +1380,8 @@ class ItemRepositoryImpl @Inject constructor(
             shareIds = listOf(source),
             itemState = ItemState.Active,
             filter = ItemTypeFilter.All,
-            itemFlags = emptyMap()
+            itemFlags = emptyMap(),
+            onlyDirectItems = true
         ).first()
 
         if (source == destination) {

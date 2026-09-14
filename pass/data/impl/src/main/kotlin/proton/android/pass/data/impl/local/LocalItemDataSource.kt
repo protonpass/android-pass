@@ -59,7 +59,8 @@ interface LocalItemDataSource {
         itemState: ItemState?,
         filter: ItemTypeFilter,
         itemFlags: Map<ItemFlag, Boolean>,
-        anyFlags: List<ItemFlag> = emptyList()
+        anyFlags: List<ItemFlag> = emptyList(),
+        onlyDirectItems: Boolean = false
     ): Flow<List<ItemEntity>>
 
     suspend fun getItemsPageForIndex(

@@ -25,27 +25,30 @@ import org.junit.Test
  * Pins the contract for turning search-box text into an FTS5 MATCH expression. The output is
  * bound as a query argument, but it must still be valid FTS5 syntax or the MATCH throws — so
  * these cases guard against regressions that would crash search or change matching semantics.
+ *
+ * The trigram tokenizer is used; each token is wrapped in double quotes so FTS5 treats it as a
+ * phrase and the trigram index performs contiguous substring matching (not prefix-only matching).
  */
 class FtsQueryBuilderTest {
 
     @Test
-    fun `single term gets a prefix wildcard`() {
-        assertThat(FtsQueryBuilder.build("github")).isEqualTo("github*")
+    fun `single term is wrapped in double quotes for substring matching`() {
+        assertThat(FtsQueryBuilder.build("github")).isEqualTo("\"github\"")
     }
 
     @Test
-    fun `multiple terms each get a prefix wildcard`() {
-        assertThat(FtsQueryBuilder.build("git hub")).isEqualTo("git* hub*")
+    fun `multiple terms are each wrapped in double quotes`() {
+        assertThat(FtsQueryBuilder.build("git hub")).isEqualTo("\"git\" \"hub\"")
     }
 
     @Test
     fun `leading and trailing whitespace is trimmed and collapsed`() {
-        assertThat(FtsQueryBuilder.build("  git   hub  ")).isEqualTo("git* hub*")
+        assertThat(FtsQueryBuilder.build("  git   hub  ")).isEqualTo("\"git\" \"hub\"")
     }
 
     @Test
     fun `hyphen is treated as a separator`() {
-        assertThat(FtsQueryBuilder.build("foo-bar")).isEqualTo("foo* bar*")
+        assertThat(FtsQueryBuilder.build("foo-bar")).isEqualTo("\"foo\" \"bar\"")
     }
 
     @Test
@@ -57,24 +60,39 @@ class FtsQueryBuilderTest {
 
     @Test
     fun `input made entirely of special characters produces an empty expression`() {
-        // Must not yield a lone wildcard like "*" which is an invalid FTS5 MATCH.
+        // Must not produce a lone quoted empty string like '""' which is an invalid FTS5 MATCH.
         assertThat(FtsQueryBuilder.build("*()[]+^:{}~")).isEmpty()
     }
 
     @Test
     fun `fts5 syntax characters are stripped`() {
         // Parentheses, brackets, column filter ':' and the boost '^' must not survive into MATCH.
-        assertThat(FtsQueryBuilder.build("(title:foo)^2")).isEqualTo("titlefoo2*")
+        assertThat(FtsQueryBuilder.build("(title:foo)^2")).isEqualTo("\"titlefoo2\"")
     }
 
     @Test
-    fun `embedded quotes are escaped by doubling`() {
-        // A bare double-quote would open an unterminated FTS5 phrase; it is doubled to stay literal.
-        assertThat(FtsQueryBuilder.build("a\"b")).isEqualTo("a\"\"b*")
+    fun `embedded quotes are escaped by doubling inside the phrase`() {
+        // A bare double-quote inside a phrase is doubled per FTS5 phrase escaping rules.
+        assertThat(FtsQueryBuilder.build("a\"b")).isEqualTo("\"a\"\"b\"")
     }
 
     @Test
     fun `standalone NOT operator is removed`() {
-        assertThat(FtsQueryBuilder.build("NOT secret")).isEqualTo("secret*")
+        assertThat(FtsQueryBuilder.build("NOT secret")).isEqualTo("\"secret\"")
+    }
+
+    @Test
+    fun `query with a token of 3 or more chars is matchable`() {
+        assertThat(FtsQueryBuilder.hasMatchableToken("git")).isTrue()
+        assertThat(FtsQueryBuilder.hasMatchableToken("gi hub")).isTrue()
+    }
+
+    @Test
+    fun `query made only of shorter tokens is not matchable`() {
+        // The trigram tokenizer produces no trigrams for tokens under 3 chars.
+        assertThat(FtsQueryBuilder.hasMatchableToken("g")).isFalse()
+        assertThat(FtsQueryBuilder.hasMatchableToken("gi")).isFalse()
+        assertThat(FtsQueryBuilder.hasMatchableToken("a b")).isFalse()
+        assertThat(FtsQueryBuilder.hasMatchableToken("")).isFalse()
     }
 }

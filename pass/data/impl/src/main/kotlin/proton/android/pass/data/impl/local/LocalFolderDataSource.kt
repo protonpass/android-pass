@@ -60,4 +60,10 @@ interface LocalFolderDataSource {
         shareId: ShareId,
         folderIds: List<FolderId>
     ): Boolean
+
+    suspend fun getDescendantFolderIds(
+        userId: UserId,
+        shareId: ShareId,
+        rootFolderId: FolderId
+    ): List<FolderId>
 }

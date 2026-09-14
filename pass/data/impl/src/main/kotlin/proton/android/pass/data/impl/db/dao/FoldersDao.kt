@@ -112,4 +112,16 @@ abstract class FoldersDao : BaseDao<FolderEntity>() {
         shareId: String,
         folderIds: List<String>
     ): Int
+
+    @Query(
+        """
+        ${FolderEntity.DESCENDANT_FOLDER_TREE_CTE}
+        SELECT id FROM folder_tree
+        """
+    )
+    abstract suspend fun getDescendantFolderIds(
+        userId: String,
+        shareId: String,
+        rootFolderId: String
+    ): List<String>
 }

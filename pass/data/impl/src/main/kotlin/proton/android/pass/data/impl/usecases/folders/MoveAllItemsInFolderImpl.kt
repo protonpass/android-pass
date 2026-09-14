@@ -26,7 +26,6 @@ import proton.android.pass.data.api.usecases.MigrateItems
 import proton.android.pass.data.api.usecases.ObserveItems
 import proton.android.pass.data.api.usecases.folders.MoveAllItemsInFolder
 import proton.android.pass.data.api.usecases.folders.MoveItemsInsideShare
-import proton.android.pass.data.api.usecases.folders.ObserveFoldersByParentId
 import proton.android.pass.domain.FolderId
 import proton.android.pass.domain.ItemState
 import proton.android.pass.domain.ShareId
@@ -36,7 +35,6 @@ import javax.inject.Singleton
 
 @Singleton
 class MoveAllItemsInFolderImpl @Inject constructor(
-    private val observeFoldersByParentId: ObserveFoldersByParentId,
     private val observeItems: ObserveItems,
     private val moveItemsInsideShare: MoveItemsInsideShare,
     private val migrateItems: MigrateItems
@@ -48,15 +46,14 @@ class MoveAllItemsInFolderImpl @Inject constructor(
         destShareId: ShareId,
         destFolderId: FolderId?
     ) {
-        val descendantFolderIds = collectDescendantFolderIds(shareId, folderId)
-        val allItemIds = (listOf(folderId) + descendantFolderIds).flatMap { currentFolderId ->
-            observeItems(
-                selection = ShareSelection.Folder(shareId, currentFolderId),
-                itemState = ItemState.Active,
-                filter = ItemTypeFilter.All,
-                includeHidden = true
-            ).first().map { it.id }
-        }
+        val allItemIds = observeItems(
+            selection = ShareSelection.Folder(shareId, folderId),
+            itemState = ItemState.Active,
+            filter = ItemTypeFilter.All,
+            includeHidden = true
+        ).first()
+            .filter { it.folderId == folderId }
+            .map { it.id }
 
         if (allItemIds.isEmpty()) return
 
@@ -79,23 +76,5 @@ class MoveAllItemsInFolderImpl @Inject constructor(
                 is MigrateItemsResult.NoneMigrated -> throw result.exception
             }
         }
-    }
-
-    private suspend fun collectDescendantFolderIds(shareId: ShareId, parentFolderId: FolderId): List<FolderId> {
-        val result = mutableListOf<FolderId>()
-        val queue = ArrayDeque<FolderId>()
-        val visited = mutableSetOf(parentFolderId)
-        queue.add(parentFolderId)
-        while (queue.isNotEmpty()) {
-            val currentId = queue.removeFirst()
-            val children = observeFoldersByParentId(shareId, currentId).first()
-            for (child in children) {
-                if (visited.add(child.folderId)) {
-                    result.add(child.folderId)
-                    queue.add(child.folderId)
-                }
-            }
-        }
-        return result
     }
 }

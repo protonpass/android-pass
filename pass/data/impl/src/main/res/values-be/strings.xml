@@ -21,10 +21,10 @@
   <string name="sync_channel_description">Канал апавяшчэнняў для сінхранізацыі элементаў</string>
   <string name="syncing_vaults">Сінхранізацыя сховішчаў і элементаў</string>
   <string name="logging_out_free_users">Адбываецца выхад з сістэмы дадатковых бясплатных карыстальнікаў</string>
-  <string name="attachment_download_channel">Attachment downloads</string>
-  <string name="attachment_download_channel_description">Notifications channel for attachment downloads</string>
-  <string name="downloading_attachments">Downloading attachments</string>
-  <string name="downloading_attachments_progress" comment="%1$s is the download progress counter, e.g. 3 / 10">%1$s files</string>
+  <string name="attachment_download_channel">Укладанні для спампоўвання</string>
+  <string name="attachment_download_channel_description">Канал апавяшчэнняў для спампоўвання далучэнняў</string>
+  <string name="downloading_attachments">Спампоўванне далучэнняў</string>
+  <string name="downloading_attachments_progress" comment="%1$s is the download progress counter, e.g. 3 / 10">Файлаў %1$s</string>
   <string name="plan_subscription_auto_renews_monthly">Падпіска будзе аўтаматычна падаўжацца за %1$s/месяц</string>
   <string name="plan_subscription_auto_renews_annual">Падпіска будзе аўтаматычна падаўжацца за %1$s/год</string>
   <string name="plan_welcome_offer_auto_renews_monthly">Вітальная прапанова. Аўтаматычнае падаўжэнне за %1$s/месяц</string>

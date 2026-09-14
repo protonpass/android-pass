@@ -158,7 +158,7 @@
   <string name="item_details_login_section_primary_totp_title">2단계 인증 토큰 (TOTP)</string>
   <string name="item_details_login_section_websites_title">웹사이트</string>
   <string name="autofill_mode_label_default">상위 도메인 및 서브도메인</string>
-  <string name="autofill_mode_label_exact">Exact (sub)domain</string>
+  <string name="autofill_mode_label_exact">정확한 (서브)도메인</string>
   <string name="autofill_mode_label_never">이 웹사이트에서 자동 완성 안 함</string>
   <string name="autofill_mode_label_start_with">시작:</string>
   <string name="autofill_mode_label_regular_expression">Regular expression</string>
@@ -321,10 +321,10 @@
   <string name="login_item_monitor_action_ignore">Ignore</string>
   <string name="login_item_monitor_action_restore">Restore alert</string>
   <string name="login_item_monitor_header">Pass Monitor</string>
-  <string name="login_item_monitor_label_weak">Weak password</string>
-  <string name="login_item_monitor_label_compromised">Compromised password</string>
-  <string name="login_item_monitor_label_reused">Reused password</string>
-  <string name="login_item_monitor_label_missing_2fa">Missing 2FA</string>
+  <string name="login_item_monitor_label_weak">약한 비밀번호</string>
+  <string name="login_item_monitor_label_compromised">유출된 비밀번호</string>
+  <string name="login_item_monitor_label_reused">재사용한 비밀번호</string>
+  <string name="login_item_monitor_label_missing_2fa">2단계 인증 없음</string>
   <string name="login_item_reused_passwords_subtitle">이 비밀번호를 사용하는 금고 내 항목의 목록입니다.</string>
   <string name="mfa_limit_reached">2단계 인증 제한 도달</string>
   <string name="activity_in_last_two_weeks">지난 14일간 활동</string>
@@ -369,10 +369,10 @@
     <item quantity="other">%s 단어</item>
   </plurals>
   <!-- Password checks (Login create/edit + Generate Password BS) -->
-  <string name="password_strength_prefix">Password strength</string>
-  <string name="password_check_min_length">Password is too short</string>
+  <string name="password_strength_prefix">비밀번호 보안 강도</string>
+  <string name="password_check_min_length">비밀번호가 너무 짧습니다</string>
   <string name="password_check_lowercase">Lowercase letters</string>
   <string name="password_check_uppercase">Uppercase letters</string>
-  <string name="password_check_no_consecutive">No repeated characters</string>
-  <string name="password_check_no_common">No common password</string>
+  <string name="password_check_no_consecutive">반복되는 문자 없음</string>
+  <string name="password_check_no_common">보편적인 비밀번호 없음</string>
 </resources>

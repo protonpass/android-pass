@@ -92,6 +92,7 @@ class SearchDatabaseKeyProviderTest {
         val dbFile = testContext.getDatabasePath(SearchDatabase.DB_NAME)
         val walFile = File(dbFile.path + "-wal")
         val shmFile = File(dbFile.path + "-shm")
+        val journalFile = File(dbFile.path + "-journal")
 
         // Create a valid key first
         val originalKey = provider.getOrCreateKey()
@@ -105,10 +106,12 @@ class SearchDatabaseKeyProviderTest {
         dbFile.writeText("stale db content")
         walFile.writeText("stale wal content")
         shmFile.writeText("stale shm content")
+        journalFile.writeText("stale journal content")
 
         assertThat(dbFile.exists()).isTrue()
         assertThat(walFile.exists()).isTrue()
         assertThat(shmFile.exists()).isTrue()
+        assertThat(journalFile.exists()).isTrue()
 
         // Call getOrCreateKey - should detect corrupt key, regenerate, and clean up DB files
         val newKey = provider.getOrCreateKey()
@@ -122,6 +125,7 @@ class SearchDatabaseKeyProviderTest {
         assertThat(dbFile.exists()).isFalse()
         assertThat(walFile.exists()).isFalse()
         assertThat(shmFile.exists()).isFalse()
+        assertThat(journalFile.exists()).isFalse()
     }
 
     @Test

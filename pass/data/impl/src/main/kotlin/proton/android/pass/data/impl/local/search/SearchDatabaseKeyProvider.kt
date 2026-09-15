@@ -71,7 +71,8 @@ class SearchDatabaseKeyProviderImpl @Inject constructor(
         listOf(
             databaseFile,
             File(databaseFile.path + "-wal"),
-            File(databaseFile.path + "-shm")
+            File(databaseFile.path + "-shm"),
+            File(databaseFile.path + "-journal")
         ).forEach { file ->
             runCatching {
                 if (file.exists() && !file.delete()) {

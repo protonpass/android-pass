@@ -50,6 +50,7 @@ class SearchDatabaseKeyProviderImpl @Inject constructor(
                 onFailure = {
                     PassLogger.w(TAG, "Failed to decrypt key, generating new one")
                     PassLogger.w(TAG, it)
+                    deleteStaleDatabase()
                     generateAndStoreKey(file)
                 }
             )
@@ -63,6 +64,24 @@ class SearchDatabaseKeyProviderImpl @Inject constructor(
         val encrypted = encryptionContextProvider.withEncryptionContext { encrypt(databaseKey) }
         file.writeBytes(encrypted.array)
         return databaseKey
+    }
+
+    private fun deleteStaleDatabase() {
+        val databaseFile = context.getDatabasePath(SearchDatabase.DB_NAME)
+        listOf(
+            databaseFile,
+            File(databaseFile.path + "-wal"),
+            File(databaseFile.path + "-shm")
+        ).forEach { file ->
+            runCatching {
+                if (file.exists() && !file.delete()) {
+                    PassLogger.w(TAG, "Failed to delete stale search database file: ${file.name}")
+                }
+            }.onFailure {
+                PassLogger.w(TAG, "Error deleting stale search database file: ${file.name}")
+                PassLogger.w(TAG, it)
+            }
+        }
     }
 
     private fun generateRandomKey(): ByteArray {

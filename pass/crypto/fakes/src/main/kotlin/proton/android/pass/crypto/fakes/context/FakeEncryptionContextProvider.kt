@@ -18,16 +18,22 @@
 
 package proton.android.pass.crypto.fakes.context
 
+import me.proton.core.crypto.common.keystore.EncryptedByteArray
+import me.proton.core.crypto.common.keystore.EncryptedString
 import proton.android.pass.crypto.api.EncryptionKey
 import proton.android.pass.crypto.api.context.EncryptionContext
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
+import proton.android.pass.crypto.api.context.EncryptionTag
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
 class FakeEncryptionContextProvider @Inject constructor() : EncryptionContextProvider {
 
-    private val context: EncryptionContext = FakeEncryptionContext
+    var shouldFailDecryption: Boolean = false
+
+    private val context: EncryptionContext
+        get() = if (shouldFailDecryption) FailingDecryptionEncryptionContext else FakeEncryptionContext
 
     override fun <R> withEncryptionContext(block: EncryptionContext.() -> R): R = block(
         context
@@ -42,5 +48,12 @@ class FakeEncryptionContextProvider @Inject constructor() : EncryptionContextPro
         key: EncryptionKey,
         block: suspend EncryptionContext.() -> R
     ): R = block(context)
+}
+
+private object FailingDecryptionEncryptionContext : EncryptionContext by FakeEncryptionContext {
+    override fun decrypt(content: EncryptedString): String = throw FakeException("Simulated decryption failure")
+
+    override fun decrypt(content: EncryptedByteArray, tag: EncryptionTag?): ByteArray =
+        throw FakeException("Simulated decryption failure")
 }
 

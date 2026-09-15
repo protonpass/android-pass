@@ -34,6 +34,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.core.view.WindowCompat
 import androidx.credentials.CreatePublicKeyCredentialRequest
 import androidx.credentials.CreatePublicKeyCredentialResponse
+import androidx.credentials.provider.CallingAppInfo
 import androidx.credentials.provider.PendingIntentHandler
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.Lifecycle
@@ -49,14 +50,16 @@ import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.enableEdgeToEdgeProtonPass
 import proton.android.pass.composecomponents.impl.dialogs.WarningReloadAppDialog
 import proton.android.pass.composecomponents.impl.theme.isDark
-import proton.android.pass.crypto.api.Base64
+import proton.android.pass.features.credentials.R
 import proton.android.pass.features.credentials.passkeys.creation.navigation.PasskeyCredentialCreationNavEvent
 import proton.android.pass.features.credentials.passkeys.creation.presentation.PasskeyCredentialCreationEvent
 import proton.android.pass.features.credentials.passkeys.creation.presentation.PasskeyCredentialCreationRequest
 import proton.android.pass.features.credentials.passkeys.creation.presentation.PasskeyCredentialCreationState
 import proton.android.pass.features.credentials.passkeys.creation.presentation.PasskeyCredentialCreationViewModel
+import proton.android.pass.features.credentials.shared.passkeys.search.PasskeyActivityOriginResolver
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.SnackbarDispatcher
+import proton.android.pass.notifications.api.ToastManager
 import proton.android.pass.passkeys.api.ParseCreatePasskeyRequest
 import javax.inject.Inject
 
@@ -67,7 +70,13 @@ internal class PasskeyCredentialCreationActivity : FragmentActivity() {
     internal lateinit var parseCreatePasskeyRequest: ParseCreatePasskeyRequest
 
     @Inject
+    internal lateinit var passkeyActivityOriginResolver: PasskeyActivityOriginResolver
+
+    @Inject
     internal lateinit var snackbarDispatcher: SnackbarDispatcher
+
+    @Inject
+    internal lateinit var toastManager: ToastManager
 
     @Inject
     internal lateinit var appConfig: AppConfig
@@ -77,7 +86,9 @@ internal class PasskeyCredentialCreationActivity : FragmentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        viewModel.onUpdateRequest(getPasskeyCredentialCreationRequest())
+        lifecycleScope.launch {
+            viewModel.onUpdateRequest(getPasskeyCredentialCreationRequest())
+        }
 
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
@@ -192,30 +203,56 @@ internal class PasskeyCredentialCreationActivity : FragmentActivity() {
         )
     }
 
-    private fun getPasskeyCredentialCreationRequest(): PasskeyCredentialCreationRequest? =
-        PendingIntentHandler.retrieveProviderCreateCredentialRequest(intent)
-            ?.let { providerCreateCredentialRequest ->
-                providerCreateCredentialRequest.callingRequest as? CreatePublicKeyCredentialRequest
+    private fun extractCreationCallerContext(): CreationCallerContext? {
+        val providerCreateCredentialRequest =
+            PendingIntentHandler.retrieveProviderCreateCredentialRequest(intent) ?: run {
+                PassLogger.w(TAG, "Passkey creation request does not contain ProviderCreateCredentialRequest")
+                return null
             }
-            ?.requestJson
-            ?.let { requestJson ->
-                runCatching { parseCreatePasskeyRequest(request = requestJson) }
-                    .fold(
-                        onSuccess = { createPasskeyRequestData ->
-                            PasskeyCredentialCreationRequest(
-                                data = createPasskeyRequestData,
-                                requestJson = requestJson
-                            )
-                        },
-                        onFailure = { error ->
-                            PassLogger.w(TAG, "Error parsing Passkey credential creation request")
-                            PassLogger.w(TAG, Base64.encodeBase64String(requestJson.toByteArray()))
-                            PassLogger.w(TAG, error)
 
-                            null
-                        }
-                    )
+        val createPublicKeyCredentialRequest =
+            providerCreateCredentialRequest.callingRequest as? CreatePublicKeyCredentialRequest ?: run {
+                PassLogger.w(TAG, "Passkey creation request is not a CreatePublicKeyCredentialRequest")
+                return null
             }
+
+        return CreationCallerContext(
+            callingAppInfo = providerCreateCredentialRequest.callingAppInfo,
+            requestJson = createPublicKeyCredentialRequest.requestJson
+        )
+    }
+
+    private suspend fun getPasskeyCredentialCreationRequest(): PasskeyCredentialCreationRequest? {
+        val (callingAppInfo, requestJson) = extractCreationCallerContext() ?: return null
+
+        val requestOrigin = passkeyActivityOriginResolver.resolve(
+            callingAppInfo = callingAppInfo,
+            requestJson = requestJson,
+            isCreateRequest = true
+        ) ?: run {
+            PassLogger.w(TAG, "Passkey creation request: origin validation failed")
+            toastManager.showToast(R.string.passkey_credential_creation_toast_origin_validation_failed)
+            return null
+        }
+
+        return runCatching { parseCreatePasskeyRequest(request = requestJson) }
+            .fold(
+                onSuccess = { createPasskeyRequestData ->
+                    PasskeyCredentialCreationRequest(
+                        data = createPasskeyRequestData,
+                        requestJson = requestJson,
+                        requestOrigin = requestOrigin
+                    )
+                },
+                onFailure = { error ->
+                    PassLogger.w(TAG, "Error parsing Passkey credential creation request")
+                    PassLogger.w(TAG, error)
+                    null
+                }
+            )
+    }
+
+    private data class CreationCallerContext(val callingAppInfo: CallingAppInfo, val requestJson: String)
 
     private fun onCancelCreationRequest() {
         setResult(RESULT_CANCELED)

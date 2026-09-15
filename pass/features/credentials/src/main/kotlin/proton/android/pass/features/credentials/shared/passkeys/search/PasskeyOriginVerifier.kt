@@ -47,6 +47,14 @@ internal class PasskeyOriginVerifier @Inject constructor(
         }
     }
 
+    // Per WebAuthn spec, rp.id is optional on registration: when omitted, it defaults to the
+    // effective domain of the caller's origin. Only meaningful for privileged browsers, since
+    // native callers have no origin to derive a domain from.
+    internal fun deriveRpIdFromBrowserOrigin(callingAppInfo: CallingAppInfo): String? {
+        if (!callingAppInfo.isOriginPopulated()) return null
+        return getBrowserOrigin(callingAppInfo)?.let(::extractHost)
+    }
+
     private fun validateRequest(
         callingAppInfo: CallingAppInfo?,
         requestedRpId: String

@@ -56,6 +56,7 @@ import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.PasskeyId
 import proton.android.pass.domain.PasskeyItem
 import proton.android.pass.domain.ShareId
+import proton.android.pass.features.credentials.R
 import proton.android.pass.features.credentials.passkeys.selection.navigation.PasskeyCredentialSelectionNavEvent
 import proton.android.pass.features.credentials.passkeys.selection.presentation.PasskeyCredentialSelectionEvent
 import proton.android.pass.features.credentials.passkeys.selection.presentation.PasskeyCredentialSelectionRequest
@@ -65,6 +66,7 @@ import proton.android.pass.features.credentials.shared.passkeys.domain.PasskeyRe
 import proton.android.pass.features.credentials.shared.passkeys.search.PasskeyActivityOriginResolver
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.SnackbarDispatcher
+import proton.android.pass.notifications.api.ToastManager
 import javax.inject.Inject
 
 @[AndroidEntryPoint RequiresApi(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)]
@@ -75,6 +77,9 @@ internal class PasskeyCredentialSelectionActivity : FragmentActivity() {
 
     @Inject
     internal lateinit var passkeyActivityOriginResolver: PasskeyActivityOriginResolver
+
+    @Inject
+    internal lateinit var toastManager: ToastManager
 
     @Inject
     internal lateinit var appConfig: AppConfig
@@ -255,6 +260,7 @@ internal class PasskeyCredentialSelectionActivity : FragmentActivity() {
             requestJson = options.requestJson
         ) ?: run {
             PassLogger.w(TAG, "Passkey selection request: origin validation failed")
+            toastManager.showToast(R.string.passkey_credential_selection_toast_origin_validation_failed)
             return null
         }
 
@@ -290,6 +296,7 @@ internal class PasskeyCredentialSelectionActivity : FragmentActivity() {
             requestJson = options.requestJson
         ) ?: run {
             PassLogger.w(TAG, "Passkey usage request: origin validation failed")
+            toastManager.showToast(R.string.passkey_credential_usage_toast_origin_validation_failed)
             return null
         }
 

@@ -33,8 +33,22 @@ internal class PasskeyActivityOriginResolver @Inject constructor(
     private val passkeyOriginVerifier: PasskeyOriginVerifier
 ) {
 
-    internal suspend fun resolve(callingAppInfo: CallingAppInfo, requestJson: String): String? {
-        val rpId = extractRpIdFromJson(requestJson) ?: run {
+    internal suspend fun resolve(
+        callingAppInfo: CallingAppInfo,
+        requestJson: String,
+        isCreateRequest: Boolean = false
+    ): String? {
+        val extractedRpId = if (isCreateRequest) {
+            extractRpIdFromCreateJson(requestJson)
+        } else {
+            extractRpIdFromJson(requestJson)
+        }
+        val fallbackRpId = if (extractedRpId == null && isCreateRequest) {
+            passkeyOriginVerifier.deriveRpIdFromBrowserOrigin(callingAppInfo)
+        } else {
+            null
+        }
+        val rpId = extractedRpId ?: fallbackRpId ?: run {
             PassLogger.w(TAG, "Rejecting: unable to extract rpId from requestJson")
             return null
         }
@@ -47,12 +61,21 @@ internal class PasskeyActivityOriginResolver @Inject constructor(
         )
     }
 
-    private companion object {
+    internal companion object {
 
         private const val TAG = "PasskeyActivityOriginResolver"
 
-        private fun extractRpIdFromJson(requestJson: String): String? = runCatching {
+        internal fun extractRpIdFromJson(requestJson: String): String? = runCatching {
             Json.parseToJsonElement(requestJson).jsonObject["rpId"]?.jsonPrimitive?.content
+                ?.takeIf { it.isNotEmpty() }
+        }.getOrNull()
+
+        internal fun extractRpIdFromCreateJson(requestJson: String): String? = runCatching {
+            Json.parseToJsonElement(requestJson).jsonObject["rp"]
+                ?.jsonObject
+                ?.get("id")
+                ?.jsonPrimitive
+                ?.content
                 ?.takeIf { it.isNotEmpty() }
         }.getOrNull()
 

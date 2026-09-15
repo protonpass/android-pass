@@ -41,11 +41,13 @@ import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.PasskeyId
 import proton.android.pass.domain.PasskeyItem
 import proton.android.pass.domain.ShareId
+import proton.android.pass.features.credentials.R
 import proton.android.pass.features.credentials.passkeys.usage.presentation.PasskeyCredentialUsageRequest
 import proton.android.pass.features.credentials.passkeys.usage.presentation.PasskeyCredentialUsageState
 import proton.android.pass.features.credentials.passkeys.usage.presentation.PasskeyCredentialUsageViewModel
 import proton.android.pass.features.credentials.shared.passkeys.search.PasskeyActivityOriginResolver
 import proton.android.pass.log.api.PassLogger
+import proton.android.pass.notifications.api.ToastManager
 import javax.inject.Inject
 
 @[AndroidEntryPoint RequiresApi(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)]
@@ -53,6 +55,9 @@ internal class PasskeyCredentialUsageActivity : FragmentActivity() {
 
     @Inject
     internal lateinit var passkeyActivityOriginResolver: PasskeyActivityOriginResolver
+
+    @Inject
+    internal lateinit var toastManager: ToastManager
 
     private val viewModel: PasskeyCredentialUsageViewModel by viewModels()
 
@@ -134,6 +139,7 @@ internal class PasskeyCredentialUsageActivity : FragmentActivity() {
             requestJson = requestJson
         ) ?: run {
             PassLogger.w(TAG, "Passkey usage request: origin validation failed")
+            toastManager.showToast(R.string.passkey_credential_usage_toast_origin_validation_failed)
             return null
         }
 

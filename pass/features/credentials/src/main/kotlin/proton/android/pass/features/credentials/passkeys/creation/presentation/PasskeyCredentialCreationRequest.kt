@@ -23,10 +23,9 @@ import proton.android.pass.passkeys.api.CreatePasskeyRequestData
 
 internal data class PasskeyCredentialCreationRequest(
     private val data: CreatePasskeyRequestData,
-    internal val requestJson: String
+    internal val requestJson: String,
+    internal val requestOrigin: String
 ) {
-
-    internal val requestOrigin: String = data.rpId.orEmpty()
 
     internal val rpName: String = data.rpName
 

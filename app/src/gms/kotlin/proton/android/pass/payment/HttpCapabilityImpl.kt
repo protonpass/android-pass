@@ -18,13 +18,11 @@
 
 package proton.android.pass.payment
 
-import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.jsonObject
 import me.proton.android.payment.capability.HttpCapability
 import me.proton.android.payment.capability.model.HttpResponse
-import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.network.data.ApiProvider
 import me.proton.core.network.domain.ApiException
 import me.proton.core.network.domain.ApiResult
@@ -32,6 +30,7 @@ import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.RequestBody.Companion.toRequestBody
 import okhttp3.ResponseBody
 import proton.android.pass.common.api.safeRunCatching
+import proton.android.pass.data.api.usecases.GetPrimaryUserId
 import proton.android.pass.data.impl.core.api.ProtonDynamicApi
 import retrofit2.Response
 import javax.inject.Inject
@@ -39,7 +38,7 @@ import javax.inject.Singleton
 
 @Singleton
 class HttpCapabilityImpl @Inject constructor(
-    private val accountManager: AccountManager,
+    private val getPrimaryUserId: GetPrimaryUserId,
     private val apiProvider: ApiProvider,
 ) : HttpCapability {
 
@@ -50,7 +49,7 @@ class HttpCapabilityImpl @Inject constructor(
         execute { post(endpoint.requireRelative(), (body ?: ByteArray(0)).toRequestBody(JSON_MEDIA_TYPE)) }
 
     private suspend fun execute(block: suspend ProtonDynamicApi.() -> Response<ResponseBody>): HttpResponse {
-        val userId = accountManager.getPrimaryUserId().firstOrNull()
+        val userId = getPrimaryUserId()
             ?: error("No primary user for HTTP capability")
         return apiProvider.get<ProtonDynamicApi>(userId)
             .invoke { block() }

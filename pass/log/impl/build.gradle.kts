@@ -62,6 +62,7 @@ fun DependencyHandlerScope.addSpecialLib(
 dependencies {
     api(projects.pass.log.api)
 
+    implementation(projects.pass.data.api)
     implementation(projects.pass.common.api)
     implementation(projects.pass.commonUi.api)
     implementation(projects.pass.biometry.api)
@@ -92,5 +93,6 @@ dependencies {
     testImplementation(projects.pass.common.fakes)
     testImplementation(projects.pass.commonTest)
     testImplementation(projects.pass.account.fakes)
+    testImplementation(projects.pass.data.fakes)
     testImplementation(projects.pass.log.fakes)
 }

@@ -31,14 +31,10 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.safeRunCatching
-import proton.android.pass.telemetry.api.TelemetryGrowthFeatureUsageAction
-import proton.android.pass.telemetry.api.TelemetryManager
-import proton.android.pass.telemetry.api.TelemetryGrowthFeatureUsageEvent
-import proton.android.pass.telemetry.api.TelemetryGrowthSubEvent
 import proton.android.pass.commonui.api.SavedStateHandleProvider
+import proton.android.pass.data.api.usecases.GetPrimaryUserId
 import proton.android.pass.data.api.usecases.GetUserPlan
 import proton.android.pass.data.api.usecases.RefreshUserAccess
 import proton.android.pass.data.api.usecases.plan.ObservePlansWithPrice
@@ -56,12 +52,16 @@ import proton.android.pass.features.upsell.v2.models.toYearlyUpsellUiModel
 import proton.android.pass.features.upsell.v2.navigation.UpsellV2DisplayOnBoardingArg
 import proton.android.pass.features.upsell.v2.navigation.UpsellV2ManualDisplayArg
 import proton.android.pass.log.api.PassLogger
+import proton.android.pass.notifications.api.ToastManager
 import proton.android.pass.payments.api.PaymentSessionState
 import proton.android.pass.payments.api.Payments
 import proton.android.pass.payments.api.ReconciledPayment
-import proton.android.pass.notifications.api.ToastManager
 import proton.android.pass.preferences.FeatureFlag
 import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
+import proton.android.pass.telemetry.api.TelemetryGrowthFeatureUsageAction
+import proton.android.pass.telemetry.api.TelemetryGrowthFeatureUsageEvent
+import proton.android.pass.telemetry.api.TelemetryGrowthSubEvent
+import proton.android.pass.telemetry.api.TelemetryManager
 import javax.inject.Inject
 import kotlin.time.Duration.Companion.seconds
 
@@ -70,7 +70,7 @@ class UpsellV2ViewModel @Inject constructor(
     @param:ApplicationContext private val context: Context,
     savedStateHandleProvider: SavedStateHandleProvider,
     private val observePlansWithPrice: ObservePlansWithPrice,
-    private val accountManager: AccountManager,
+    private val getPrimaryUserId: GetPrimaryUserId,
     private val getUserPlan: GetUserPlan,
     private val refreshUserAccess: RefreshUserAccess,
     private val toastManager: ToastManager,
@@ -143,7 +143,7 @@ class UpsellV2ViewModel @Inject constructor(
         }
     }
 
-    private suspend fun getPrimaryUserIdOrNull() = accountManager.getPrimaryUserId().firstOrNull()
+    private suspend fun getPrimaryUserIdOrNull() = getPrimaryUserId()
 
     fun onPurchaseClicked(productId: String, offerToken: String) = viewModelScope.launch {
         _upsellV2UiState.update { it.copy(displayLoaderDuringPurchase = true) }

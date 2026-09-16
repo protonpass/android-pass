@@ -28,6 +28,7 @@ import me.proton.core.account.domain.entity.AccountState
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.accountmanager.domain.getAccounts
 import me.proton.core.domain.entity.UserId
+import proton.android.pass.data.api.usecases.DisableAccount
 import proton.android.pass.data.api.usecases.RefreshUserAccess
 import proton.android.pass.data.impl.R
 import proton.android.pass.data.impl.repositories.PlanRepository
@@ -41,6 +42,7 @@ import javax.inject.Inject
 class RefreshUserAccessImpl @Inject constructor(
     private val planRepository: PlanRepository,
     private val accountManager: AccountManager,
+    private val disableAccount: DisableAccount,
     private val toastManager: ToastManager
 ) : RefreshUserAccess {
 
@@ -79,7 +81,7 @@ class RefreshUserAccessImpl @Inject constructor(
             freePlansToDisable.map { (userId, _) ->
                 PassLogger.i(TAG, "Disabling free account: $userId")
                 LogoutLogger.record(LogoutReason.PlanPolicy)
-                accountManager.disableAccount(userId)
+                disableAccount(userId)
             }
         }
     }

@@ -25,7 +25,7 @@ import me.proton.core.domain.entity.UserId
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import proton.android.pass.account.fakes.FakeAccountManager
+import proton.android.pass.data.fakes.usecases.FakeGetPrimaryUserId
 import proton.android.pass.appconfig.fakes.FakeAppConfig
 import proton.android.pass.data.fakes.usecases.FakeGetUserPlan
 import proton.android.pass.data.impl.db.entities.TelemetryEntity
@@ -57,7 +57,7 @@ class TelemetryRepositoryTest {
     val dispatcher = MainDispatcherRule()
 
     private lateinit var instance: TelemetryRepositoryImpl
-    private lateinit var accountManager: FakeAccountManager
+    private lateinit var getPrimaryUserId: FakeGetPrimaryUserId
     private lateinit var getUserPlan: FakeGetUserPlan
     private lateinit var localDataSource: FakeLocalTelemetryDataSource
     private lateinit var localTelemetryGrowthDataSource: FakeLocalTelemetryGrowthDataSource
@@ -70,7 +70,7 @@ class TelemetryRepositoryTest {
 
     @Before
     fun setup() {
-        accountManager = FakeAccountManager()
+        getPrimaryUserId = FakeGetPrimaryUserId()
         getUserPlan = FakeGetUserPlan()
         localDataSource = FakeLocalTelemetryDataSource()
         localTelemetryGrowthDataSource = FakeLocalTelemetryGrowthDataSource()
@@ -87,7 +87,7 @@ class TelemetryRepositoryTest {
             remoteDataSource = remoteDataSource,
             remoteTelemetryGrowthDataSource = remoteTelemetryGrowthDataSource,
             telemetryGrowthDeviceInfoProvider = telemetryGrowthDeviceInfoProvider,
-            accountManager = accountManager,
+            getPrimaryUserId = getPrimaryUserId,
             getUserPlan = getUserPlan,
             clock = clock,
             isTelemetryEnabled = telemetryEnabled,
@@ -103,7 +103,7 @@ class TelemetryRepositoryTest {
             dims = mapOf("some" to "dimension", "other" to "value")
         )
         val userId = "123"
-        accountManager.sendPrimaryUserId(UserId(userId))
+        getPrimaryUserId.setResult(UserId(userId))
 
         // WHEN
         instance.storeEntry(event)
@@ -128,7 +128,7 @@ class TelemetryRepositoryTest {
     fun `sendEvents can work with empty results`() = runTest {
         val plan = PlanType.Paid.Plus("plan", "plan")
         val userId = UserId("123")
-        accountManager.sendPrimaryUserId(userId)
+        getPrimaryUserId.setResult(userId)
         getUserPlan.setResult(userId = userId, value = Result.success(planWithType(plan)))
 
         instance.sendEvents()
@@ -228,7 +228,7 @@ class TelemetryRepositoryTest {
         plan: String,
         event: String
     ) {
-        accountManager.sendPrimaryUserId(UserId(userId))
+        getPrimaryUserId.setResult(UserId(userId))
         getUserPlan.setResult(
             userId = UserId(userId),
             value = Result.success(planWithType(PlanType.Paid.Plus(plan, plan)))

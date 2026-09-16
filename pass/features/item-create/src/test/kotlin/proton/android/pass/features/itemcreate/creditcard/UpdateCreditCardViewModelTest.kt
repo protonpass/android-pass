@@ -27,7 +27,7 @@ import me.proton.core.domain.entity.UserId
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import proton.android.pass.account.fakes.FakeAccountManager
+import proton.android.pass.data.fakes.usecases.FakeObservePrimaryUserId
 import proton.android.pass.clipboard.fakes.FakeClipboardManager
 import proton.android.pass.common.fakes.FakeAppDispatchers
 import proton.android.pass.commonpresentation.fakes.attachments.FakeAttachmentHandler
@@ -73,7 +73,7 @@ class UpdateCreditCardViewModelTest {
     private lateinit var snackbarDispatcher: FakeSnackbarDispatcher
     private lateinit var getItemById: FakeGetItemById
     private lateinit var updateItem: FakeUpdateItem
-    private lateinit var accountManager: FakeAccountManager
+    private lateinit var observePrimaryUserId: FakeObservePrimaryUserId
     private lateinit var pendingAttachmentLinkRepository: PendingAttachmentLinkRepository
     private lateinit var creditCardItemFormProcessor: FakeCreditCardItemFormProcessor
     private lateinit var observeShare: FakeObserveShare
@@ -88,15 +88,16 @@ class UpdateCreditCardViewModelTest {
         updateItem = FakeUpdateItem()
         pendingAttachmentLinkRepository = FakePendingAttachmentLinkRepository()
         creditCardItemFormProcessor = FakeCreditCardItemFormProcessor()
-        accountManager = FakeAccountManager()
-        accountManager.sendPrimaryUserId(UserId("user-id"))
+        observePrimaryUserId = FakeObservePrimaryUserId().apply {
+            emitUserId(UserId("user-id"))
+        }
         observeShare = FakeObserveShare()
         observeItemById = FakeObserveItemById()
         settingsRepository = FakeInternalSettingsRepository()
     }
 
     private fun createInstance(): UpdateCreditCardViewModel = UpdateCreditCardViewModel(
-        accountManager = accountManager,
+        observePrimaryUserId = observePrimaryUserId,
         snackbarDispatcher = snackbarDispatcher,
         savedStateHandleProvider = FakeSavedStateHandleProvider().apply {
             get()[CommonOptionalNavArgId.ShareId.key] = SHARE_ID

@@ -18,21 +18,20 @@
 
 package proton.android.pass.data.impl.usecases.extrapassword
 
-import kotlinx.coroutines.flow.first
-import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.crypto.common.keystore.EncryptedString
 import me.proton.core.domain.entity.UserId
+import proton.android.pass.data.api.usecases.GetPrimaryUserId
 import proton.android.pass.data.api.usecases.extrapassword.CheckLocalExtraPassword
 import proton.android.pass.data.impl.repositories.ExtraPasswordRepository
 import javax.inject.Inject
 
 class CheckLocalExtraPasswordImpl @Inject constructor(
-    private val accountManager: AccountManager,
+    private val getPrimaryUserId: GetPrimaryUserId,
     private val repository: ExtraPasswordRepository
 ) : CheckLocalExtraPassword {
 
     override suspend fun invoke(userId: UserId?, password: EncryptedString): Boolean {
-        val actualUserID = userId ?: accountManager.getPrimaryUserId().first()
+        val actualUserID = userId ?: getPrimaryUserId()
             ?: throw IllegalStateException("No user id found")
         return repository.checkAccessKeyForUser(actualUserID, password)
     }

@@ -20,19 +20,19 @@ package proton.android.pass.data.impl.usecases
 
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.first
-import me.proton.core.accountmanager.domain.AccountManager
 import proton.android.pass.data.api.repositories.ShareRepository
 import proton.android.pass.data.api.usecases.LeaveShare
+import proton.android.pass.data.api.usecases.ObservePrimaryUserId
 import proton.android.pass.domain.ShareId
 import javax.inject.Inject
 
 class LeaveShareImpl @Inject constructor(
-    private val accountManager: AccountManager,
+    private val observePrimaryUserId: ObservePrimaryUserId,
     private val shareRepository: ShareRepository
 ) : LeaveShare {
 
     override suspend fun invoke(shareId: ShareId) {
-        val userId = accountManager.getPrimaryUserId().filterNotNull().first()
+        val userId = observePrimaryUserId().filterNotNull().first()
         shareRepository.leaveVault(userId, shareId)
     }
 

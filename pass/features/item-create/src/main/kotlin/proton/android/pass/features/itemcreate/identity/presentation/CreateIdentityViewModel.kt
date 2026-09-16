@@ -36,7 +36,6 @@ import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
-import me.proton.core.accountmanager.domain.AccountManager
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
@@ -47,6 +46,7 @@ import proton.android.pass.commonui.api.ClassHolder
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
+import proton.android.pass.data.api.usecases.ObservePrimaryUserId
 import proton.android.pass.data.api.usecases.CreateItem
 import proton.android.pass.data.api.usecases.GetItemById
 import proton.android.pass.data.api.usecases.capabilities.CanCreateItemsInFolder
@@ -84,7 +84,7 @@ import javax.inject.Inject
 @Suppress("LongParameterList")
 @HiltViewModel
 class CreateIdentityViewModel @Inject constructor(
-    private val accountManager: AccountManager,
+    private val observePrimaryUserId: ObservePrimaryUserId,
     private val encryptionContextProvider: EncryptionContextProvider,
     private val createItem: CreateItem,
     private val identityActionsProvider: IdentityActionsProvider,
@@ -151,7 +151,7 @@ class CreateIdentityViewModel @Inject constructor(
     private val defaultVaultFlow = observeDefaultVault()
 
     private val selectedFolderNameFlow = getFolderNameFlow(
-        accountManager = accountManager,
+        observePrimaryUserId = observePrimaryUserId,
         observeFolder = observeFolder,
         selectedShareIdState = selectedShareIdState,
         selectedFolderIdFlow = selectedFolderIdState,

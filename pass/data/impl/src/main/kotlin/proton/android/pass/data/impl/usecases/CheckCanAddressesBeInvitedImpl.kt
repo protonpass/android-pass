@@ -24,7 +24,6 @@ import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.firstOrNull
-import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.domain.entity.UserId
 import me.proton.core.network.data.ApiProvider
 import me.proton.core.network.domain.ApiResult
@@ -33,6 +32,7 @@ import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.transpose
 import proton.android.pass.data.api.usecases.CanAddressesBeInvitedResult
 import proton.android.pass.data.api.usecases.CheckCanAddressesBeInvited
+import proton.android.pass.data.api.usecases.ObservePrimaryUserId
 import proton.android.pass.data.api.usecases.organization.ObserveOrganizationSettings
 import proton.android.pass.data.impl.api.PasswordManagerApi
 import proton.android.pass.data.impl.requests.CheckAddressesCanBeInvitedRequest
@@ -45,7 +45,7 @@ import javax.inject.Inject
 class CheckCanAddressesBeInvitedImpl @Inject constructor(
     private val observeOrganizationSettings: ObserveOrganizationSettings,
     private val api: ApiProvider,
-    private val accountManager: AccountManager
+    private val observePrimaryUserId: ObservePrimaryUserId
 ) : CheckCanAddressesBeInvited {
 
     override suspend fun invoke(shareId: ShareId, addresses: List<String>): CanAddressesBeInvitedResult {
@@ -84,7 +84,7 @@ class CheckCanAddressesBeInvitedImpl @Inject constructor(
         shareId: ShareId,
         addresses: List<String>
     ): CanAddressesBeInvitedResult {
-        val userId = accountManager.getPrimaryUserId().filterNotNull().first()
+        val userId = observePrimaryUserId().filterNotNull().first()
         val results = coroutineScope {
             val chunks = addresses.chunked(MAX_ADDRESSES_PER_CHUNK)
             chunks.map { chunk ->

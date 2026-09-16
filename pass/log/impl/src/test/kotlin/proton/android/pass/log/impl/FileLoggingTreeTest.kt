@@ -30,7 +30,7 @@ import kotlinx.coroutines.test.runTest
 import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
 import me.proton.core.domain.entity.UserId
-import proton.android.pass.account.fakes.FakeAccountManager
+import proton.android.pass.data.fakes.usecases.FakeGetPrimaryUserId
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
@@ -55,7 +55,7 @@ class FileLoggingTreeTest {
     private lateinit var logFileManager: LogFileManagerImpl
     private lateinit var privacySanitizer: PrivacySanitizerImpl
     private lateinit var appDispatchers: FakeAppDispatchers
-    private lateinit var accountManager: FakeAccountManager
+    private lateinit var getPrimaryUserId: FakeGetPrimaryUserId
     private lateinit var fileLoggingTree: FileLoggingTree
 
     @Before
@@ -65,11 +65,11 @@ class FileLoggingTreeTest {
         appDispatchers = FakeAppDispatchers()
         logFileManager = LogFileManagerImpl(context, appDispatchers)
         privacySanitizer = PrivacySanitizerImpl()
-        accountManager = FakeAccountManager()
+        getPrimaryUserId = FakeGetPrimaryUserId()
         fileLoggingTree = FileLoggingTree(
             logFileManager = logFileManager,
             privacySanitizer = privacySanitizer,
-            accountManager = accountManager,
+            getPrimaryUserId = getPrimaryUserId,
             appDispatchers = appDispatchers,
             maxFileSize = 50_000,
             rotationLines = 500,
@@ -87,7 +87,7 @@ class FileLoggingTreeTest {
     @Test
     fun `log messages are sanitized before writing`() = runTest {
         val userId = UserId("test-user")
-        accountManager.sendPrimaryUserId(userId)
+        getPrimaryUserId.setResult(userId)
         val file = logFileManager.getLogFile(userId)
         logFileManager.ensureLogFileExists(file)
 
@@ -102,7 +102,7 @@ class FileLoggingTreeTest {
     @Test
     fun `log writes to correct user-specific file`() = runTest {
         val userId = UserId("specific-user")
-        accountManager.sendPrimaryUserId(userId)
+        getPrimaryUserId.setResult(userId)
         val file = logFileManager.getLogFile(userId)
         logFileManager.ensureLogFileExists(file)
 
@@ -116,7 +116,7 @@ class FileLoggingTreeTest {
     @Test
     fun `log does not write messages below INFO priority`() = runTest {
         val userId = UserId("test-user")
-        accountManager.sendPrimaryUserId(userId)
+        getPrimaryUserId.setResult(userId)
         val file = logFileManager.getLogFile(userId)
         logFileManager.ensureLogFileExists(file)
 
@@ -131,7 +131,7 @@ class FileLoggingTreeTest {
     @Test
     fun `log writes INFO and above priority messages`() = runTest {
         val userId = UserId("test-user")
-        accountManager.sendPrimaryUserId(userId)
+        getPrimaryUserId.setResult(userId)
         val file = logFileManager.getLogFile(userId)
         logFileManager.ensureLogFileExists(file)
 
@@ -149,7 +149,7 @@ class FileLoggingTreeTest {
     @Test
     fun `log includes priority character in output`() = runTest {
         val userId = UserId("test-user")
-        accountManager.sendPrimaryUserId(userId)
+        getPrimaryUserId.setResult(userId)
         val file = logFileManager.getLogFile(userId)
         logFileManager.ensureLogFileExists(file)
 
@@ -163,7 +163,7 @@ class FileLoggingTreeTest {
     @Test
     fun `log includes tag in output`() = runTest {
         val userId = UserId("test-user")
-        accountManager.sendPrimaryUserId(userId)
+        getPrimaryUserId.setResult(userId)
         val file = logFileManager.getLogFile(userId)
         logFileManager.ensureLogFileExists(file)
 
@@ -177,7 +177,7 @@ class FileLoggingTreeTest {
     @Test
     fun `log uses EmptyTag when tag is null`() = runTest {
         val userId = UserId("test-user")
-        accountManager.sendPrimaryUserId(userId)
+        getPrimaryUserId.setResult(userId)
         val file = logFileManager.getLogFile(userId)
         logFileManager.ensureLogFileExists(file)
 
@@ -191,7 +191,7 @@ class FileLoggingTreeTest {
     @Test
     fun `log rotates file when size exceeded`() = runTest {
         val userId = UserId("test-user")
-        accountManager.sendPrimaryUserId(userId)
+        getPrimaryUserId.setResult(userId)
         val file = logFileManager.getLogFile(userId)
         logFileManager.ensureLogFileExists(file)
 
@@ -213,7 +213,7 @@ class FileLoggingTreeTest {
     @Test
     fun `log rotation keeps last 500 lines`() = runTest {
         val userId = UserId("test-user")
-        accountManager.sendPrimaryUserId(userId)
+        getPrimaryUserId.setResult(userId)
         val file = logFileManager.getLogFile(userId)
         logFileManager.ensureLogFileExists(file)
 
@@ -236,7 +236,7 @@ class FileLoggingTreeTest {
     @Test
     fun `concurrent writes are safe`() = runTest {
         val userId = UserId("test-user")
-        accountManager.sendPrimaryUserId(userId)
+        getPrimaryUserId.setResult(userId)
         val file = logFileManager.getLogFile(userId)
         logFileManager.ensureLogFileExists(file)
 
@@ -251,7 +251,7 @@ class FileLoggingTreeTest {
 
     @Test
     fun `log writes to unlogged file when userId is null`() = runTest {
-        accountManager.sendPrimaryUserId(null)
+        getPrimaryUserId.setResult(null)
         val file = logFileManager.getLogFile(null)
         logFileManager.ensureLogFileExists(file)
 
@@ -265,7 +265,7 @@ class FileLoggingTreeTest {
     @Test
     fun `rotation preserves newest logs on success`() = runTest {
         val userId = UserId("test-user")
-        accountManager.sendPrimaryUserId(userId)
+        getPrimaryUserId.setResult(userId)
         val file = logFileManager.getLogFile(userId)
         logFileManager.ensureLogFileExists(file)
 
@@ -298,7 +298,7 @@ class FileLoggingTreeTest {
     @Test
     fun `rotation handles extremely large log files without OOM`() = runTest {
         val userId = UserId("test-user")
-        accountManager.sendPrimaryUserId(userId)
+        getPrimaryUserId.setResult(userId)
         val file = logFileManager.getLogFile(userId)
         logFileManager.ensureLogFileExists(file)
 
@@ -321,7 +321,7 @@ class FileLoggingTreeTest {
     @Test
     fun `rotation is thread-safe with concurrent logging`() = runTest {
         val userId = UserId("test-user")
-        accountManager.sendPrimaryUserId(userId)
+        getPrimaryUserId.setResult(userId)
         val file = logFileManager.getLogFile(userId)
         logFileManager.ensureLogFileExists(file)
 
@@ -454,12 +454,12 @@ class FileLoggingTreeTest {
             clock = FixedClock(Instant.parse("2026-07-27T10:00:00Z")),
             logFileManager = logFileManager
         )
-        accountManager.sendPrimaryUserId(authenticatedUserId)
+        getPrimaryUserId.setResult(authenticatedUserId)
 
         tree.log(Log.INFO, "authenticated entry")
         dispatcher.scheduler.advanceUntilIdle()
 
-        accountManager.sendPrimaryUserId(null)
+        getPrimaryUserId.setResult(null)
         tree.log(Log.INFO, "anonymous entry")
         dispatcher.scheduler.advanceUntilIdle()
 
@@ -473,7 +473,7 @@ class FileLoggingTreeTest {
         val userId = UserId("active-user")
         val authenticatedFile = logFileManager.getLogFile(userId)
         val notAuthenticatedFile = logFileManager.getLogFile(null)
-        accountManager.sendPrimaryUserId(userId)
+        getPrimaryUserId.setResult(userId)
 
         Timber.tag(LogoutLogger.TAG).i("logout reason=${LogoutReason.UserInitiatedSignOut.value}")
         appDispatchers.testDispatcher.scheduler.advanceUntilIdle()
@@ -536,7 +536,7 @@ class FileLoggingTreeTest {
                 resumeSecondEntryResolution = resumeSecondEntryResolution
             )
         )
-        accountManager.sendPrimaryUserId(authenticatedUserId)
+        getPrimaryUserId.setResult(authenticatedUserId)
 
         tree.log(Log.INFO, "first ready-batch entry")
         tree.log(Log.INFO, "second ready-batch entry")
@@ -545,7 +545,7 @@ class FileLoggingTreeTest {
             dispatcher.scheduler.runCurrent()
             assertThat(secondEntryStartedResolving.isCompleted).isTrue()
 
-            accountManager.sendPrimaryUserId(null)
+            getPrimaryUserId.setResult(null)
             assertThat(authenticatedFile.delete()).isTrue()
         } finally {
             resumeSecondEntryResolution.complete(Unit)
@@ -576,7 +576,7 @@ class FileLoggingTreeTest {
                 resumeWriter = resumeWriter
             )
         )
-        accountManager.sendPrimaryUserId(authenticatedUserId)
+        getPrimaryUserId.setResult(authenticatedUserId)
 
         tree.log(Log.INFO, "queued entry after logout")
 
@@ -584,7 +584,7 @@ class FileLoggingTreeTest {
             dispatcher.scheduler.runCurrent()
             assertThat(authenticatedFileEnsured.isCompleted).isTrue()
 
-            accountManager.sendPrimaryUserId(null)
+            getPrimaryUserId.setResult(null)
             assertThat(authenticatedFile.delete()).isTrue()
         } finally {
             resumeWriter.complete(Unit)
@@ -615,7 +615,7 @@ class FileLoggingTreeTest {
             clock = FixedClock(Instant.parse("2026-07-27T10:00:00Z")),
             logFileManager = logFileManager
         )
-        accountManager.sendPrimaryUserId(authenticatedUserId)
+        getPrimaryUserId.setResult(authenticatedUserId)
 
         tree.log(Log.INFO, "entry written before logout cleanup")
 
@@ -623,7 +623,7 @@ class FileLoggingTreeTest {
             dispatcher.scheduler.runCurrent()
             assertThat(authenticatedFileReadyForWriter.isCompleted).isTrue()
 
-            accountManager.sendPrimaryUserId(null)
+            getPrimaryUserId.setResult(null)
             val deleteJob = launch(dispatcher) {
                 logFileManager.deleteLogFile(authenticatedFile)
             }
@@ -656,7 +656,7 @@ class FileLoggingTreeTest {
                 releaseInitialDestination = releaseInitialDestination
             )
         )
-        accountManager.sendPrimaryUserId(authenticatedUserId)
+        getPrimaryUserId.setResult(authenticatedUserId)
         assertThat(authenticatedFile.createNewFile()).isTrue()
 
         tree.log(Log.INFO, "queued entry after logout")
@@ -665,7 +665,7 @@ class FileLoggingTreeTest {
             dispatcher.scheduler.runCurrent()
             assertThat(initialDestinationResolved.isCompleted).isTrue()
 
-            accountManager.sendPrimaryUserId(null)
+            getPrimaryUserId.setResult(null)
             assertThat(authenticatedFile.delete()).isTrue()
         } finally {
             releaseInitialDestination.complete(Unit)
@@ -686,7 +686,7 @@ class FileLoggingTreeTest {
     ): FileLoggingTree = FileLoggingTree(
         logFileManager = logFileManager,
         privacySanitizer = privacySanitizer,
-        accountManager = accountManager,
+        getPrimaryUserId = getPrimaryUserId,
         appDispatchers = FakeAppDispatchers.withTestDispatcher(dispatcher),
         maxFileSize = maxFileSize,
         rotationLines = rotationLines,

@@ -18,11 +18,10 @@
 
 package proton.android.pass.data.impl.usecases.attachments
 
-import kotlinx.coroutines.flow.firstOrNull
-import me.proton.core.accountmanager.domain.AccountManager
 import proton.android.pass.data.api.errors.UserIdNotAvailableError
 import proton.android.pass.data.api.repositories.AttachmentRepository
 import proton.android.pass.data.api.repositories.ItemRepository
+import proton.android.pass.data.api.usecases.GetPrimaryUserId
 import proton.android.pass.data.api.usecases.attachments.RestoreAttachments
 import proton.android.pass.data.impl.util.runConcurrently
 import proton.android.pass.domain.ItemFlag
@@ -34,7 +33,7 @@ import javax.inject.Singleton
 
 @Singleton
 class RestoreAttachmentsImpl @Inject constructor(
-    private val accountManager: AccountManager,
+    private val getPrimaryUserId: GetPrimaryUserId,
     private val attachmentRepository: AttachmentRepository,
     private val itemRepository: ItemRepository
 ) : RestoreAttachments {
@@ -44,7 +43,7 @@ class RestoreAttachmentsImpl @Inject constructor(
         toRestore: Set<AttachmentId>
     ) {
         if (toRestore.isEmpty()) return
-        val userId = accountManager.getPrimaryUserId().firstOrNull()
+        val userId = getPrimaryUserId()
             ?: throw UserIdNotAvailableError()
         runConcurrently(
             items = toRestore,

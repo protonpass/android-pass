@@ -18,9 +18,8 @@
 
 package proton.android.pass.data.impl.usecases.attachments
 
-import kotlinx.coroutines.flow.firstOrNull
-import me.proton.core.accountmanager.domain.AccountManager
 import proton.android.pass.data.api.repositories.AttachmentRepository
+import proton.android.pass.data.api.usecases.GetPrimaryUserId
 import proton.android.pass.data.api.usecases.attachments.GetAttachment
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
@@ -31,7 +30,7 @@ import javax.inject.Singleton
 
 @Singleton
 class GetAttachmentImpl @Inject constructor(
-    private val accountManager: AccountManager,
+    private val getPrimaryUserId: GetPrimaryUserId,
     private val attachmentRepository: AttachmentRepository
 ) : GetAttachment {
 
@@ -40,7 +39,7 @@ class GetAttachmentImpl @Inject constructor(
         itemId: ItemId,
         attachmentId: AttachmentId
     ): Attachment {
-        val userId = accountManager.getPrimaryUserId().firstOrNull()
+        val userId = getPrimaryUserId()
             ?: throw IllegalStateException("No primary user id found")
         return attachmentRepository.getAttachmentById(
             userId = userId,

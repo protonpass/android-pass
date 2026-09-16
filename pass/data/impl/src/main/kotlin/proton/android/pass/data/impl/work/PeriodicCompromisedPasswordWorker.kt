@@ -29,10 +29,8 @@ import androidx.work.WorkerParameters
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
 import kotlinx.coroutines.flow.firstOrNull
-import me.proton.core.account.domain.entity.AccountState
-import me.proton.core.accountmanager.domain.AccountManager
-import me.proton.core.accountmanager.domain.getAccounts
 import proton.android.pass.common.api.safeRunCatching
+import proton.android.pass.data.api.usecases.GetReadyAccounts
 import proton.android.pass.data.api.usecases.compromisedpassword.RefreshCompromisedPasswords
 import proton.android.pass.data.api.usecases.items.ObserveMonitoredItems
 import proton.android.pass.log.api.PassLogger
@@ -42,14 +40,14 @@ import java.util.concurrent.TimeUnit
 class PeriodicCompromisedPasswordWorker @AssistedInject constructor(
     @Assisted appContext: Context,
     @Assisted workerParameters: WorkerParameters,
-    private val accountManager: AccountManager,
+    private val getReadyAccounts: GetReadyAccounts,
     private val observeMonitoredItems: ObserveMonitoredItems,
     private val refreshCompromisedPasswords: RefreshCompromisedPasswords
 ) : CoroutineWorker(appContext, workerParameters) {
 
     override suspend fun doWork(): Result = safeRunCatching {
         PassLogger.i(TAG, "Starting $TAG attempt $runAttemptCount")
-        accountManager.getAccounts(AccountState.Ready).firstOrNull().orEmpty()
+        getReadyAccounts()
             .forEach { account ->
                 val items = observeMonitoredItems(account.userId, includeHiddenVaults = false)
                     .firstOrNull()

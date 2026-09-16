@@ -21,8 +21,6 @@ package proton.android.pass.data.impl.usecases
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
-import kotlinx.coroutines.flow.firstOrNull
-import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.safeRunCatching
 import proton.android.pass.common.api.transpose
@@ -30,6 +28,7 @@ import proton.android.pass.data.api.repositories.InviteTarget
 import proton.android.pass.data.api.repositories.ShareRepository
 import proton.android.pass.data.api.repositories.UserInviteRepository
 import proton.android.pass.data.api.usecases.GetInviteUserMode
+import proton.android.pass.data.api.usecases.GetPrimaryUserId
 import proton.android.pass.data.api.usecases.InviteToVault
 import proton.android.pass.data.api.usecases.InviteUserMode
 import proton.android.pass.domain.ShareId
@@ -37,7 +36,7 @@ import proton.android.pass.log.api.PassLogger
 import javax.inject.Inject
 
 class InviteToVaultImpl @Inject constructor(
-    private val accountManager: AccountManager,
+    private val getPrimaryUserId: GetPrimaryUserId,
     private val userInviteRepository: UserInviteRepository,
     private val shareRepository: ShareRepository,
     private val getInviteUserMode: GetInviteUserMode
@@ -50,7 +49,7 @@ class InviteToVaultImpl @Inject constructor(
         inviteTargets: List<InviteTarget>
     ): Result<Unit> = coroutineScope {
         val id = userId ?: run {
-            val primaryUserId = accountManager.getPrimaryUserId().firstOrNull()
+            val primaryUserId = getPrimaryUserId()
             if (primaryUserId == null) {
                 PassLogger.w(TAG, "No primary user")
                 return@coroutineScope Result.failure(IllegalStateException("No primary user"))

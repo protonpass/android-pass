@@ -25,12 +25,11 @@ import dagger.hilt.EntryPoint
 import dagger.hilt.InstallIn
 import dagger.hilt.android.EntryPointAccessors
 import dagger.hilt.components.SingletonComponent
-import kotlinx.coroutines.flow.firstOrNull
 import me.proton.android.payment.Payments
 import me.proton.android.payment.capability.HttpCapability
 import me.proton.android.payment.capability.StoreCapability
-import me.proton.core.accountmanager.domain.AccountManager
 import proton.android.pass.commonui.api.PassAppLifecycleProvider
+import proton.android.pass.data.api.usecases.GetPrimaryUserId
 import proton.android.pass.data.api.usecases.RefreshUserAccess
 import proton.android.pass.initializer.WorkManagerInitializer
 import proton.android.pass.payments.api.Payments as PassPayments
@@ -42,14 +41,14 @@ class PaymentsInitializer : Initializer<Unit> {
             context.applicationContext,
             PaymentsInitializerEntryPoint::class.java
         )
-        val accountManager = entryPoint.accountManager()
+        val getPrimaryUserId = entryPoint.getPrimaryUserId()
         val refreshUserAccess = entryPoint.refreshUserAccess()
         PaymentsInitializerDelegate(
             startPaymentReconciliationHandler = {
                 PaymentReconciliationHandler(
                     scope = entryPoint.passAppLifecycleProvider().lifecycle.coroutineScope,
                     payments = entryPoint.payments(),
-                    getPrimaryUserId = { accountManager.getPrimaryUserId().firstOrNull() },
+                    getPrimaryUserId = { getPrimaryUserId() },
                     refreshUserAccess = { userId -> refreshUserAccess(userId) }
                 ).start()
             }
@@ -65,7 +64,7 @@ class PaymentsInitializer : Initializer<Unit> {
     @EntryPoint
     @InstallIn(SingletonComponent::class)
     interface PaymentsInitializerEntryPoint {
-        fun accountManager(): AccountManager
+        fun getPrimaryUserId(): GetPrimaryUserId
 
         fun httpCapability(): HttpCapabilityImpl
 

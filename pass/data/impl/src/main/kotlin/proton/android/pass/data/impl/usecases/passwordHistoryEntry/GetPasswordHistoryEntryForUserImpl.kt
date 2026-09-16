@@ -18,19 +18,18 @@
 
 package proton.android.pass.data.impl.usecases.passwordHistoryEntry
 
-import kotlinx.coroutines.flow.firstOrNull
-import me.proton.core.accountmanager.domain.AccountManager
 import proton.android.pass.data.api.repositories.PasswordHistoryEntryRepository
+import proton.android.pass.data.api.usecases.GetPrimaryUserId
 import proton.android.pass.data.api.usecases.passwordHistoryEntry.GetPasswordHistoryEntryForUser
 import proton.android.pass.domain.PasswordHistoryEntry
 import javax.inject.Inject
 
 class GetPasswordHistoryEntryForUserImpl @Inject constructor(
     private val repository: PasswordHistoryEntryRepository,
-    private val accountManager: AccountManager
+    private val getPrimaryUserId: GetPrimaryUserId
 ) : GetPasswordHistoryEntryForUser {
     override suspend fun invoke(): List<PasswordHistoryEntry> {
-        return accountManager.getPrimaryUserId().firstOrNull()?.let {
+        return getPrimaryUserId()?.let {
             repository.getPasswordHistoryEntryForUser(userId = it)
         } ?: emptyList()
     }

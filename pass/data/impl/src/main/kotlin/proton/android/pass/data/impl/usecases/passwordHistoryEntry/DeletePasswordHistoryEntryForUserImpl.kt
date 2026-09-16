@@ -18,19 +18,18 @@
 
 package proton.android.pass.data.impl.usecases.passwordHistoryEntry
 
-import kotlinx.coroutines.flow.firstOrNull
-import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.api.repositories.PasswordHistoryEntryRepository
+import proton.android.pass.data.api.usecases.GetPrimaryUserId
 import proton.android.pass.data.api.usecases.passwordHistoryEntry.DeletePasswordHistoryEntryForUser
 import javax.inject.Inject
 
 class DeletePasswordHistoryEntryForUserImpl @Inject constructor(
     private val repository: PasswordHistoryEntryRepository,
-    private val accountManager: AccountManager
+    private val getPrimaryUserId: GetPrimaryUserId
 ) : DeletePasswordHistoryEntryForUser {
     override suspend fun invoke(userId: UserId?) {
-        val resolvedUserId = userId ?: accountManager.getPrimaryUserId().firstOrNull()
+        val resolvedUserId = userId ?: getPrimaryUserId()
         resolvedUserId?.let { repository.deletePasswordHistoryEntryForUser(it) }
     }
 }

@@ -23,7 +23,7 @@ import kotlinx.coroutines.test.runTest
 import me.proton.core.domain.entity.UserId
 import org.junit.Before
 import org.junit.Test
-import proton.android.pass.account.fakes.FakeAccountManager
+import proton.android.pass.data.fakes.usecases.FakeGetPrimaryUserId
 import proton.android.pass.data.api.repositories.SyncReason
 import proton.android.pass.data.api.usecases.RefreshSharesAndEnqueueSync
 import proton.android.pass.data.fakes.usecases.FakeItemSyncStatusRepository
@@ -31,18 +31,16 @@ import proton.android.pass.data.fakes.usecases.FakeRefreshSharesAndEnqueueSync
 
 internal class RefreshContentImplTest {
 
-    private lateinit var accountManager: FakeAccountManager
     private lateinit var itemSyncStatusRepository: FakeItemSyncStatusRepository
     private lateinit var refreshSharesAndEnqueueSync: FakeRefreshSharesAndEnqueueSync
     private lateinit var instance: RefreshContentImpl
 
     @Before
     fun setup() {
-        accountManager = FakeAccountManager().apply { sendPrimaryUserId(USER_ID) }
         itemSyncStatusRepository = FakeItemSyncStatusRepository()
         refreshSharesAndEnqueueSync = FakeRefreshSharesAndEnqueueSync()
         instance = RefreshContentImpl(
-            accountManager = accountManager,
+            getPrimaryUserId = FakeGetPrimaryUserId().apply { setResult(USER_ID) },
             itemSyncStatusRepository = itemSyncStatusRepository,
             refreshSharesAndEnqueueSync = refreshSharesAndEnqueueSync
         )

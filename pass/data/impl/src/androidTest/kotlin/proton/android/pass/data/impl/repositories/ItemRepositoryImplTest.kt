@@ -40,8 +40,9 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-import proton.android.pass.account.fakes.FakeAccountManager
 import proton.android.pass.account.fakes.FakeUserAddressRepository
+import proton.android.pass.data.fakes.usecases.FakeGetPrimaryUserId
+import proton.android.pass.data.fakes.usecases.FakeGetReadyAccounts
 import proton.android.pass.common.fakes.FakeAppDispatchers
 import proton.android.pass.crypto.api.usecases.OpenItemOutput
 import proton.android.pass.crypto.fakes.context.FakeEncryptionContextProvider
@@ -110,7 +111,10 @@ class ItemRepositoryImplTest {
 
         instance = ItemRepositoryImpl(
             database = database,
-            accountManager = FakeAccountManager(),
+            getPrimaryUserId = FakeGetPrimaryUserId().apply {
+                setResult(USER_ID)
+            },
+            getReadyAccounts = FakeGetReadyAccounts(),
             userAddressRepository = userAddressRepository.apply {
                 setAddress(userAddress)
             },

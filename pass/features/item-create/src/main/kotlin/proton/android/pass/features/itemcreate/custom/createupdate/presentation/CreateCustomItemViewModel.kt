@@ -36,7 +36,6 @@ import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
-import me.proton.core.accountmanager.domain.AccountManager
 import proton.android.pass.clipboard.api.ClipboardManager
 import proton.android.pass.common.api.AppDispatchers
 import proton.android.pass.common.api.None
@@ -55,6 +54,7 @@ import proton.android.pass.commonuimodels.api.passwords.PasswordChecksUiState
 import proton.android.pass.composecomponents.impl.item.toPasswordChecksUiState
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
+import proton.android.pass.data.api.usecases.ObservePrimaryUserId
 import proton.android.pass.data.api.usecases.CanPerformPaidAction
 import proton.android.pass.data.api.usecases.CreateItem
 import proton.android.pass.data.api.usecases.GetItemById
@@ -108,7 +108,7 @@ import javax.inject.Inject
 @HiltViewModel
 class CreateCustomItemViewModel @Inject constructor(
     @param:ApplicationContext private val context: Context,
-    private val accountManager: AccountManager,
+    private val observePrimaryUserId: ObservePrimaryUserId,
     private val createItem: CreateItem,
     private val telemetryManager: TelemetryManager,
     private val inAppReviewTriggerMetrics: InAppReviewTriggerMetrics,
@@ -204,7 +204,7 @@ class CreateCustomItemViewModel @Inject constructor(
     private val defaultVaultFlow = observeDefaultVault()
 
     private val selectedFolderNameFlow = getFolderNameFlow(
-        accountManager = accountManager,
+        observePrimaryUserId = observePrimaryUserId,
         observeFolder = observeFolder,
         selectedShareIdState = selectedShareIdState,
         selectedFolderIdFlow = selectedFolderIdState,

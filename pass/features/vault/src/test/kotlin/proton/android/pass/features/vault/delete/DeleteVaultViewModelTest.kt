@@ -25,10 +25,10 @@ import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import proton.android.pass.account.fakes.FakeAccountManager
 import proton.android.pass.composecomponents.impl.uievents.IsButtonEnabled
 import proton.android.pass.data.fakes.usecases.FakeObserveEncryptedItems
 import proton.android.pass.data.fakes.usecases.FakeDeleteVault
+import proton.android.pass.data.fakes.usecases.FakeGetPrimaryUserId
 import proton.android.pass.data.fakes.usecases.FakeGetVaultByShareId
 import proton.android.pass.features.vault.VaultSnackbarMessage
 import proton.android.pass.navigation.api.CommonNavArgId
@@ -67,7 +67,7 @@ class DeleteVaultViewModelTest {
             snackbarDispatcher = snackbarDispatcher,
             observeEncryptedItems = observeEncryptedItems,
             internalSettingsRepository = FakeInternalSettingsRepository(),
-            accountManager = FakeAccountManager()
+            getPrimaryUserId = FakeGetPrimaryUserId()
         )
     }
 

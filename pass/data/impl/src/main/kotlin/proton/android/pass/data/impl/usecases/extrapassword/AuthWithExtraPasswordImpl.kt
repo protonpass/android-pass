@@ -18,8 +18,6 @@
 
 package proton.android.pass.data.impl.usecases.extrapassword
 
-import kotlinx.coroutines.flow.first
-import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.accountmanager.domain.SessionManager
 import me.proton.core.crypto.common.keystore.EncryptedString
 import me.proton.core.crypto.common.srp.SrpCrypto
@@ -27,6 +25,7 @@ import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.safeRunCatching
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.errors.TooManyExtraPasswordAttemptsException
+import proton.android.pass.data.api.usecases.GetPrimaryUserId
 import proton.android.pass.data.api.usecases.extrapassword.AuthWithExtraPassword
 import proton.android.pass.data.api.usecases.extrapassword.AuthWithExtraPasswordResult
 import proton.android.pass.data.impl.remote.RemoteExtraPasswordDataSource
@@ -41,11 +40,11 @@ class AuthWithExtraPasswordImpl @Inject constructor(
     private val remoteExtraPasswordDataSource: RemoteExtraPasswordDataSource,
     private val sessionManager: SessionManager,
     private val authWithExtraPasswordListener: AuthWithExtraPasswordListenerImpl,
-    private val accountManager: AccountManager,
+    private val getPrimaryUserId: GetPrimaryUserId,
     private val extraPasswordRepository: ExtraPasswordRepository
 ) : AuthWithExtraPassword {
     override suspend fun invoke(userId: UserId?, password: EncryptedString) {
-        val actualUserId = userId ?: accountManager.getPrimaryUserId().first()
+        val actualUserId = userId ?: getPrimaryUserId()
             ?: throw IllegalStateException("No user id provided and no primary user found")
         val decryptedPassword = encryptionContextProvider.withEncryptionContext {
             decrypt(password).encodeToByteArray()

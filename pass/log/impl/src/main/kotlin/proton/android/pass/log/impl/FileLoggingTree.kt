@@ -25,14 +25,13 @@ import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.NonCancellable
 import kotlinx.coroutines.channels.Channel
-import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
 import kotlinx.datetime.toJavaInstant
-import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.domain.entity.UserId
+import proton.android.pass.data.api.usecases.GetPrimaryUserId
 import proton.android.pass.common.api.AppDispatchers
 import proton.android.pass.log.api.LogAccountContext
 import proton.android.pass.log.api.LogFileManager
@@ -55,7 +54,7 @@ import javax.inject.Singleton
 class FileLoggingTree @Inject constructor(
     private val logFileManager: LogFileManager,
     private val privacySanitizer: PrivacySanitizer,
-    private val accountManager: AccountManager,
+    private val getPrimaryUserId: GetPrimaryUserId,
     appDispatchers: AppDispatchers,
     @param:LogFileMaxSize private val maxFileSize: Long,
     @param:LogRotationLines private val rotationLines: Int,
@@ -257,11 +256,11 @@ class FileLoggingTree @Inject constructor(
         if (target is LogTarget.SpecificUser) {
             return logFileManager.getLogFile(target.userId).also { logFileManager.ensureLogFileExists(it) }
         }
-        val initialUserId = accountManager.getPrimaryUserId().firstOrNull()
+        val initialUserId = getPrimaryUserId()
         val initialFile = logFileManager.getLogFile(initialUserId)
         val (fileUserId, initialEnsuredFile) = ensureCurrentLogFile(initialUserId, initialFile)
         var file = initialEnsuredFile
-        val currentUserId = accountManager.getPrimaryUserId().firstOrNull()
+        val currentUserId = getPrimaryUserId()
         if (currentUserId != fileUserId) {
             file = logFileManager.getLogFile(currentUserId)
         }
@@ -270,7 +269,7 @@ class FileLoggingTree @Inject constructor(
     }
 
     private suspend fun ensureCurrentLogFile(selectedUserId: UserId?, selectedFile: File): Pair<UserId?, File> {
-        val currentUserId = accountManager.getPrimaryUserId().firstOrNull()
+        val currentUserId = getPrimaryUserId()
         val currentFile = if (currentUserId == selectedUserId) {
             selectedFile
         } else {

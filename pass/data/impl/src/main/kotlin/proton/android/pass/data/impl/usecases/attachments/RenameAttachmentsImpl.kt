@@ -18,11 +18,10 @@
 
 package proton.android.pass.data.impl.usecases.attachments
 
-import kotlinx.coroutines.flow.firstOrNull
-import me.proton.core.accountmanager.domain.AccountManager
 import proton.android.pass.data.api.errors.UserIdNotAvailableError
 import proton.android.pass.data.api.repositories.AttachmentRepository
 import proton.android.pass.data.api.repositories.PendingAttachmentUpdaterRepository
+import proton.android.pass.data.api.usecases.GetPrimaryUserId
 import proton.android.pass.data.api.usecases.attachments.RenameAttachments
 import proton.android.pass.data.impl.util.runConcurrently
 import proton.android.pass.domain.ItemId
@@ -34,7 +33,7 @@ import javax.inject.Singleton
 
 @Singleton
 class RenameAttachmentsImpl @Inject constructor(
-    private val accountManager: AccountManager,
+    private val getPrimaryUserId: GetPrimaryUserId,
     private val pendingAttachmentUpdaterRepository: PendingAttachmentUpdaterRepository,
     private val attachmentRepository: AttachmentRepository
 ) : RenameAttachments {
@@ -44,7 +43,7 @@ class RenameAttachmentsImpl @Inject constructor(
             pendingAttachmentUpdaterRepository.getAllPendingRenames()
         if (pendingRenames.isEmpty()) return
         PassLogger.i(TAG, "Renaming ${pendingRenames.size} attachments")
-        val userId = accountManager.getPrimaryUserId().firstOrNull()
+        val userId = getPrimaryUserId()
             ?: throw UserIdNotAvailableError()
         val results: List<Result<Unit>> = runConcurrently(
             items = pendingRenames.entries,

@@ -25,10 +25,11 @@ import me.proton.core.domain.entity.UserId
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import proton.android.pass.account.fakes.FakeAccountManager
 import proton.android.pass.appconfig.fakes.FakeAppConfig
 import proton.android.pass.biometry.FakeNeedsBiometricAuth
+import proton.android.pass.data.fakes.usecases.FakeDisableAccount
 import proton.android.pass.data.fakes.usecases.FakeGetPasskeyById
+import proton.android.pass.data.fakes.usecases.FakeGetReadyAccounts
 import proton.android.pass.data.fakes.usecases.FakeHasActiveAccount
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.PasskeyId
@@ -58,7 +59,8 @@ internal class PasskeyCredentialSelectionViewModelTest {
             userPreferenceRepository = FakePreferenceRepository(),
             needsBiometricAuth = FakeNeedsBiometricAuth(),
             appConfig = FakeAppConfig(),
-            accountManager = FakeAccountManager(),
+            getReadyAccounts = FakeGetReadyAccounts(),
+            disableAccount = FakeDisableAccount(),
             toastManager = FakeToastManager(),
             internalSettingsRepository = FakeInternalSettingsRepository(),
             authenticateWithPasskey = authenticateWithPasskey,
@@ -77,7 +79,8 @@ internal class PasskeyCredentialSelectionViewModelTest {
             userPreferenceRepository = FakePreferenceRepository(),
             needsBiometricAuth = FakeNeedsBiometricAuth(),
             appConfig = FakeAppConfig(),
-            accountManager = FakeAccountManager(),
+            getReadyAccounts = FakeGetReadyAccounts(),
+            disableAccount = FakeDisableAccount(),
             toastManager = FakeToastManager(),
             internalSettingsRepository = FakeInternalSettingsRepository(),
             authenticateWithPasskey = authenticateWithPasskey,

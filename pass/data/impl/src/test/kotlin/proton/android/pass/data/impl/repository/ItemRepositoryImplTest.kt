@@ -28,6 +28,8 @@ import org.junit.Rule
 import org.junit.Test
 import proton.android.pass.account.fakes.FakeAccountManager
 import proton.android.pass.account.fakes.FakeKeyStoreCrypto
+import proton.android.pass.data.fakes.usecases.FakeGetPrimaryUserId
+import proton.android.pass.data.fakes.usecases.FakeGetReadyAccounts
 import proton.android.pass.account.fakes.FakeUserAddressRepository
 import proton.android.pass.crypto.api.usecases.EncryptedUpdateItemRequest
 import proton.android.pass.crypto.api.usecases.OpenItemOutput
@@ -125,7 +127,7 @@ class ItemRepositoryImplTest {
 
         repository = ItemRepositoryImpl(
             database = FakePassDatabase(),
-            accountManager = FakeAccountManager(),
+            getPrimaryUserId = FakeGetPrimaryUserId(),
             userAddressRepository = userAddressRepository.apply {
                 setAddresses(listOf(userAddress))
             },
@@ -142,7 +144,10 @@ class ItemRepositoryImplTest {
             folderKeyRepository = folderKeyRepository,
             appDispatchers = FakeAppDispatchers(),
             featureFlagsRepository = FakeFeatureFlagsPreferenceRepository(),
-            searchIndexRepository = searchIndexRepository
+            searchIndexRepository = searchIndexRepository,
+            getReadyAccounts = FakeGetReadyAccounts().apply {
+                setResult(listOf(FakeAccountManager.DEFAULT_ACCOUNT))
+            }
         )
     }
 

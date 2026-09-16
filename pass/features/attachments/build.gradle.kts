@@ -73,8 +73,6 @@ dependencies {
     ksp(libs.dagger.hilt.android.compiler)
     ksp(libs.androidx.hilt.compiler)
 
-    implementation(libs.core.accountManager.domain)
-
     implementation(projects.pass.biometry.api)
     implementation(projects.pass.common.api)
     implementation(projects.pass.commonUi.api)

@@ -75,7 +75,17 @@ import proton.android.pass.data.api.usecases.GetItemActions
 import proton.android.pass.data.api.usecases.GetItemByAliasEmail
 import proton.android.pass.data.api.usecases.GetItemById
 import proton.android.pass.data.api.usecases.GetItemsBySearchResult
+import proton.android.pass.data.api.usecases.DisableAccount
+import proton.android.pass.data.api.usecases.GetPrimaryAccount
+import proton.android.pass.data.api.usecases.GetPrimaryUserId
+import proton.android.pass.data.api.usecases.GetReadyAccounts
+import proton.android.pass.data.api.usecases.GetUser
 import proton.android.pass.data.api.usecases.HasActiveAccount
+import proton.android.pass.data.api.usecases.ObserveAccounts
+import proton.android.pass.data.api.usecases.ObservePrimaryAccount
+import proton.android.pass.data.api.usecases.ObservePrimaryUserId
+import proton.android.pass.data.api.usecases.ObserveUser
+import proton.android.pass.data.api.usecases.SetAsPrimary
 import proton.android.pass.data.api.usecases.popularservices.GetPopularServices
 import proton.android.pass.data.api.usecases.GetShareById
 import proton.android.pass.data.api.usecases.GetSuggestedAutofillItems
@@ -359,7 +369,17 @@ import proton.android.pass.data.fakes.usecases.FakeGetItemActions
 import proton.android.pass.data.fakes.usecases.FakeGetItemByAliasEmail
 import proton.android.pass.data.fakes.usecases.FakeGetItemById
 import proton.android.pass.data.fakes.usecases.FakeGetItemsBySearchResult
+import proton.android.pass.data.fakes.usecases.FakeDisableAccount
+import proton.android.pass.data.fakes.usecases.FakeGetPrimaryAccount
+import proton.android.pass.data.fakes.usecases.FakeGetPrimaryUserId
+import proton.android.pass.data.fakes.usecases.FakeGetReadyAccounts
+import proton.android.pass.data.fakes.usecases.FakeGetUser
 import proton.android.pass.data.fakes.usecases.FakeHasActiveAccount
+import proton.android.pass.data.fakes.usecases.FakeObserveAccounts
+import proton.android.pass.data.fakes.usecases.FakeObservePrimaryAccount
+import proton.android.pass.data.fakes.usecases.FakeObservePrimaryUserId
+import proton.android.pass.data.fakes.usecases.FakeObserveUser
+import proton.android.pass.data.fakes.usecases.FakeSetAsPrimary
 import proton.android.pass.data.fakes.usecases.popularservices.FakeGetPopularServices
 import proton.android.pass.data.fakes.usecases.FakeGetPasskeyById
 import proton.android.pass.data.fakes.usecases.FakeGetShareById
@@ -1365,6 +1385,36 @@ abstract class FakesDataModule {
 
     @Binds
     abstract fun bindHasActiveAccount(impl: FakeHasActiveAccount): HasActiveAccount
+
+    @Binds
+    abstract fun bindGetPrimaryUserId(impl: FakeGetPrimaryUserId): GetPrimaryUserId
+
+    @Binds
+    abstract fun bindGetReadyAccounts(impl: FakeGetReadyAccounts): GetReadyAccounts
+
+    @Binds
+    abstract fun bindGetPrimaryAccount(impl: FakeGetPrimaryAccount): GetPrimaryAccount
+
+    @Binds
+    abstract fun bindObserveAccounts(impl: FakeObserveAccounts): ObserveAccounts
+
+    @Binds
+    abstract fun bindDisableAccount(impl: FakeDisableAccount): DisableAccount
+
+    @Binds
+    abstract fun bindSetAsPrimary(impl: FakeSetAsPrimary): SetAsPrimary
+
+    @Binds
+    abstract fun bindGetUser(impl: FakeGetUser): GetUser
+
+    @Binds
+    abstract fun bindObservePrimaryUserId(impl: FakeObservePrimaryUserId): ObservePrimaryUserId
+
+    @Binds
+    abstract fun bindObservePrimaryAccount(impl: FakeObservePrimaryAccount): ObservePrimaryAccount
+
+    @Binds
+    abstract fun bindObserveUser(impl: FakeObserveUser): ObserveUser
 
     @Binds
     abstract fun bindObserveMinimizedPromoInAppMessages(

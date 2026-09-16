@@ -29,7 +29,7 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.rules.TemporaryFolder
-import proton.android.pass.account.fakes.FakeAccountManager
+import proton.android.pass.data.fakes.usecases.FakeGetPrimaryUserId
 import proton.android.pass.appconfig.api.AppConfig
 import proton.android.pass.appconfig.api.BuildEnv
 import proton.android.pass.appconfig.api.BuildFlavor
@@ -56,7 +56,7 @@ class LogViewViewModelTest {
     val temporaryFolder = TemporaryFolder()
 
     private lateinit var logFileManager: LogFileManager
-    private lateinit var accountManager: FakeAccountManager
+    private lateinit var getPrimaryUserId: FakeGetPrimaryUserId
     private lateinit var shareLogsUseCase: ShareLogsUseCase
     private lateinit var fileHandler: TestFileHandler
     private lateinit var appDispatchers: FakeAppDispatchers
@@ -71,7 +71,7 @@ class LogViewViewModelTest {
         context = TestContext(tempDir)
         appDispatchers = FakeAppDispatchers()
         logFileManager = LogFileManagerImpl(context, appDispatchers)
-        accountManager = FakeAccountManager()
+        getPrimaryUserId = FakeGetPrimaryUserId()
         needsBiometricAuth = FakeNeedsBiometricAuth()
 
         fileHandler = TestFileHandler()
@@ -79,7 +79,7 @@ class LogViewViewModelTest {
         shareLogsUseCase = ShareLogsUseCaseImpl(
             appConfig = appConfig,
             logFileManager = logFileManager,
-            accountManager = accountManager,
+            getPrimaryUserId = getPrimaryUserId,
             fileHandler = fileHandler,
             appDispatchers = appDispatchers,
             needsBiometricAuth = needsBiometricAuth
@@ -93,14 +93,14 @@ class LogViewViewModelTest {
 
     @Test
     fun `showClearLogsDialog is false by default`() = runTest {
-        accountManager.sendPrimaryUserId(null)
+        getPrimaryUserId.setResult(null)
         viewModel = createViewModel()
         assertThat(viewModel.state.value.showClearLogsDialog).isFalse()
     }
 
     @Test
     fun `showClearLogsDialog becomes true after showClearLogsDialog is called`() = runTest {
-        accountManager.sendPrimaryUserId(null)
+        getPrimaryUserId.setResult(null)
         viewModel = createViewModel()
         viewModel.showClearLogsDialog()
         assertThat(viewModel.state.value.showClearLogsDialog).isTrue()
@@ -108,7 +108,7 @@ class LogViewViewModelTest {
 
     @Test
     fun `showClearLogsDialog becomes false after dismissClearLogsDialog is called`() = runTest {
-        accountManager.sendPrimaryUserId(null)
+        getPrimaryUserId.setResult(null)
         viewModel = createViewModel()
         viewModel.showClearLogsDialog()
         viewModel.dismissClearLogsDialog()
@@ -117,7 +117,7 @@ class LogViewViewModelTest {
 
     @Test
     fun `clearLogs resets showClearLogsDialog to false`() = runTest {
-        accountManager.sendPrimaryUserId(null)
+        getPrimaryUserId.setResult(null)
         viewModel = createViewModel()
         viewModel.showClearLogsDialog()
         assertThat(viewModel.state.value.showClearLogsDialog).isTrue()
@@ -129,7 +129,7 @@ class LogViewViewModelTest {
     @Test
     fun `loads current user log file when user is logged in`() = runTest {
         val userId = UserId("test-user-123")
-        accountManager.sendPrimaryUserId(userId)
+        getPrimaryUserId.setResult(userId)
         viewModel = createViewModel()
 
         val logFile = logFileManager.getLogFile(userId)
@@ -152,7 +152,7 @@ class LogViewViewModelTest {
 
     @Test
     fun `loads unlogged file when no user is logged in`() = runTest {
-        accountManager.sendPrimaryUserId(null)
+        getPrimaryUserId.setResult(null)
         viewModel = createViewModel()
 
         val unloggedFile = logFileManager.getLogFile(null)
@@ -175,7 +175,7 @@ class LogViewViewModelTest {
     @Test
     fun `loads last 100 lines reversed`() = runTest {
         val userId = UserId("test-user")
-        accountManager.sendPrimaryUserId(userId)
+        getPrimaryUserId.setResult(userId)
         viewModel = createViewModel()
 
         val logFile = logFileManager.getLogFile(userId)
@@ -197,7 +197,7 @@ class LogViewViewModelTest {
     @Test
     fun `loads older logs when requested`() = runTest {
         val userId = UserId("older-user")
-        accountManager.sendPrimaryUserId(userId)
+        getPrimaryUserId.setResult(userId)
         viewModel = createViewModel()
 
         val logFile = logFileManager.getLogFile(userId)
@@ -220,7 +220,7 @@ class LogViewViewModelTest {
     @Test
     fun `each loaded line has a unique stable id`() = runTest {
         val userId = UserId("ids-user")
-        accountManager.sendPrimaryUserId(userId)
+        getPrimaryUserId.setResult(userId)
         viewModel = createViewModel()
 
         val logFile = logFileManager.getLogFile(userId)
@@ -246,7 +246,7 @@ class LogViewViewModelTest {
     @Test
     fun `refresh loads newly appended logs without dropping loaded history`() = runTest {
         val userId = UserId("refresh-user")
-        accountManager.sendPrimaryUserId(userId)
+        getPrimaryUserId.setResult(userId)
         viewModel = createViewModel()
 
         val logFile = logFileManager.getLogFile(userId)
@@ -282,7 +282,7 @@ class LogViewViewModelTest {
     @Test
     fun `refresh does not show partial trailing line until it is completed`() = runTest {
         val userId = UserId("partial-refresh-user")
-        accountManager.sendPrimaryUserId(userId)
+        getPrimaryUserId.setResult(userId)
         viewModel = createViewModel()
 
         val logFile = logFileManager.getLogFile(userId)
@@ -310,7 +310,7 @@ class LogViewViewModelTest {
     @Test
     fun `initial load hides partial trailing line`() = runTest {
         val userId = UserId("partial-initial-user")
-        accountManager.sendPrimaryUserId(userId)
+        getPrimaryUserId.setResult(userId)
         viewModel = createViewModel()
 
         val logFile = logFileManager.getLogFile(userId)
@@ -326,7 +326,7 @@ class LogViewViewModelTest {
     @Test
     fun `handles missing log file gracefully`() = runTest {
         val userId = UserId("missing-user")
-        accountManager.sendPrimaryUserId(userId)
+        getPrimaryUserId.setResult(userId)
         viewModel = createViewModel()
 
         viewModel.loadLogFile()
@@ -340,7 +340,7 @@ class LogViewViewModelTest {
     @Test
     fun `clears current user log file and empties state`() = runTest {
         val userId = UserId("clear-user")
-        accountManager.sendPrimaryUserId(userId)
+        getPrimaryUserId.setResult(userId)
         viewModel = createViewModel()
 
         val logFile = logFileManager.getLogFile(userId)
@@ -366,7 +366,7 @@ class LogViewViewModelTest {
     @Test
     fun `shares tagged log files and collapses consecutive duplicate lines`() = runTest {
         val userId = UserId("share-user")
-        accountManager.sendPrimaryUserId(userId)
+        getPrimaryUserId.setResult(userId)
         viewModel = createViewModel()
 
         val logFile = logFileManager.getLogFile(userId)
@@ -416,7 +416,7 @@ class LogViewViewModelTest {
 
     @Test
     fun `shares unlogged file when no user with device info`() = runTest {
-        accountManager.sendPrimaryUserId(null)
+        getPrimaryUserId.setResult(null)
         viewModel = createViewModel()
 
         val unloggedFile = logFileManager.getLogFile(null)
@@ -440,7 +440,7 @@ class LogViewViewModelTest {
     @Test
     fun `shares only anonymous logs when app is locked even with a logged in user`() = runTest {
         val userId = UserId("locked-user")
-        accountManager.sendPrimaryUserId(userId)
+        getPrimaryUserId.setResult(userId)
         needsBiometricAuth.sendValue(true)
         viewModel = createViewModel()
 
@@ -468,7 +468,7 @@ class LogViewViewModelTest {
     @Test
     fun `lines have unique ids that are stable across reload`() = runTest {
         val userId = UserId("stable-ids-user")
-        accountManager.sendPrimaryUserId(userId)
+        getPrimaryUserId.setResult(userId)
         viewModel = createViewModel()
 
         val logFile = logFileManager.getLogFile(userId)
@@ -493,7 +493,7 @@ class LogViewViewModelTest {
 
     private fun createViewModel() = LogViewViewModel(
         logFileManager = logFileManager,
-        accountManager = accountManager,
+        getPrimaryUserId = getPrimaryUserId,
         shareLogsUseCase = shareLogsUseCase,
         appDispatchers = appDispatchers
     )

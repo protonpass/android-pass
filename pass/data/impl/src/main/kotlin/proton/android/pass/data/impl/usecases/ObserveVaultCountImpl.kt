@@ -19,22 +19,22 @@
 package proton.android.pass.data.impl.usecases
 
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flow
-import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.domain.entity.UserId
+import proton.android.pass.data.api.errors.UserIdNotAvailableError
 import proton.android.pass.data.api.repositories.ShareRepository
+import proton.android.pass.data.api.usecases.GetPrimaryUserId
 import proton.android.pass.data.api.usecases.ObserveVaultCount
 import javax.inject.Inject
 
 class ObserveVaultCountImpl @Inject constructor(
-    private val accountManager: AccountManager,
+    private val getPrimaryUserId: GetPrimaryUserId,
     private val shareRepository: ShareRepository
 ) : ObserveVaultCount {
 
     override fun invoke(userId: UserId?, includeHidden: Boolean): Flow<Int> = flow {
-        val id = userId ?: requireNotNull(accountManager.getPrimaryUserId().first())
+        val id = userId ?: getPrimaryUserId() ?: throw UserIdNotAvailableError()
         emit(id)
     }.flatMapLatest {
         shareRepository.observeVaultCount(it, includeHidden)

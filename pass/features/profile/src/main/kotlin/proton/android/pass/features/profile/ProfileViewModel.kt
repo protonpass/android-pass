@@ -39,10 +39,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import me.proton.core.account.domain.entity.Account
 import me.proton.core.account.domain.entity.AccountState
-import me.proton.core.accountmanager.domain.AccountManager
-import me.proton.core.accountmanager.domain.getPrimaryAccount
 import me.proton.core.domain.entity.UserId
-import me.proton.core.user.domain.UserManager
 import me.proton.core.user.domain.entity.User
 import me.proton.core.user.domain.extension.getDisplayName
 import me.proton.core.user.domain.extension.getEmail
@@ -63,9 +60,12 @@ import proton.android.pass.common.api.combineN
 import proton.android.pass.common.api.getOrNull
 import proton.android.pass.common.api.safeRunCatching
 import proton.android.pass.composecomponents.impl.bottombar.AccountType
+import proton.android.pass.data.api.usecases.ObserveAccounts
 import proton.android.pass.data.api.usecases.ObserveItemCount
 import proton.android.pass.data.api.usecases.ObserveMFACount
+import proton.android.pass.data.api.usecases.ObservePrimaryAccount
 import proton.android.pass.data.api.usecases.ObserveUpgradeInfo
+import proton.android.pass.data.api.usecases.ObserveUser
 import proton.android.pass.data.api.usecases.ObserveUserAccessData
 import proton.android.pass.data.api.usecases.PerformSync
 import proton.android.pass.data.api.usecases.UpgradeInfo
@@ -109,11 +109,12 @@ class ProfileViewModel @Inject constructor(
     private val snackbarDispatcher: SnackbarDispatcher,
     private val appConfig: AppConfig,
     private val canDeviceSupportPasskeys: CanDeviceSupportPasskeys,
-    private val userManager: UserManager,
+    private val observeUser: ObserveUser,
     private val performSync: PerformSync,
     private val searchOptionsRepository: HomeSearchOptionsRepository,
     private val featureFlagsPreferencesRepository: FeatureFlagsPreferencesRepository,
-    accountManager: AccountManager,
+    observeAccounts: ObserveAccounts,
+    observePrimaryAccount: ObservePrimaryAccount,
     observeItemCount: ObserveItemCount,
     observeMFACount: ObserveMFACount,
     observeUpgradeInfo: ObserveUpgradeInfo,
@@ -227,13 +228,13 @@ class ProfileViewModel @Inject constructor(
             emit(ProfilePasskeySupportSection.Hide)
         }.distinctUntilChanged()
 
-    private val accountItemsFlow = accountManager.getAccounts()
+    private val accountItemsFlow = observeAccounts()
         .flatMapLatest { accounts ->
             combine(
                 accounts.map { account ->
                     combine(
                         observeUpgradeInfo(account.userId).asLoadingResult(),
-                        userManager.observeUser(account.userId)
+                        observeUser(account.userId)
                     ) { upgradeInfo, user ->
                         val (planInfo, _) = processUpgradeInfo(upgradeInfo)
                         account.getAccountItem(user, planInfo)
@@ -242,7 +243,7 @@ class ProfileViewModel @Inject constructor(
             ) { it.toList() }
         }
 
-    private val primaryAccountFlow = accountManager.getPrimaryAccount()
+    private val primaryAccountFlow = observePrimaryAccount()
 
     private val accountsFlow =
         primaryAccountFlow.combine(accountItemsFlow) { primary, accounts -> primary to accounts }
@@ -257,7 +258,7 @@ class ProfileViewModel @Inject constructor(
                 }.toPersistentList()
             }
 
-    internal val onAccountReadyFlow = accountManager.getAccounts()
+    internal val onAccountReadyFlow = observeAccounts()
         .scan(emptyMap<UserId, AccountState>() to emptySet<UserId>()) { (previousStates, _), accounts ->
             val currentStates = accounts.associate { it.userId to it.state }
             val newReadyUserIds = currentStates.filter { (userId, currentState) ->

@@ -18,9 +18,9 @@
 
 package proton.android.pass.data.impl.usecases.folders
 
-import kotlinx.coroutines.flow.first
-import me.proton.core.accountmanager.domain.AccountManager
+import proton.android.pass.data.api.errors.UserIdNotAvailableError
 import proton.android.pass.data.api.repositories.FolderRepository
+import proton.android.pass.data.api.usecases.GetPrimaryUserId
 import proton.android.pass.data.api.usecases.folders.MoveFolder
 import proton.android.pass.domain.Folder
 import proton.android.pass.domain.FolderId
@@ -28,7 +28,7 @@ import proton.android.pass.domain.ShareId
 import javax.inject.Inject
 
 class MoveFolderImpl @Inject constructor(
-    private val accountManager: AccountManager,
+    private val getPrimaryUserId: GetPrimaryUserId,
     private val folderRepository: FolderRepository
 ) : MoveFolder {
 
@@ -37,7 +37,7 @@ class MoveFolderImpl @Inject constructor(
         folderId: FolderId,
         newParentFolderId: FolderId?
     ): Folder {
-        val userId = requireNotNull(accountManager.getPrimaryUserId().first())
+        val userId = getPrimaryUserId() ?: throw UserIdNotAvailableError()
         return folderRepository.moveFolder(userId, shareId, folderId, newParentFolderId)
     }
 }

@@ -28,7 +28,6 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.EntryPointAccessors
 import dagger.hilt.components.SingletonComponent
 import kotlinx.coroutines.flow.distinctUntilChanged
-import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.scan
@@ -37,7 +36,6 @@ import kotlinx.coroutines.withContext
 import me.proton.core.account.domain.entity.Account
 import me.proton.core.account.domain.entity.AccountState
 import me.proton.core.accountmanager.domain.AccountManager
-import me.proton.core.accountmanager.domain.getAccounts
 import me.proton.core.accountmanager.presentation.observe
 import me.proton.core.accountmanager.presentation.onAccountDisabled
 import me.proton.core.accountmanager.presentation.onAccountReady
@@ -49,6 +47,7 @@ import proton.android.pass.commonui.api.PassAppLifecycleProvider
 import proton.android.pass.data.api.repositories.ItemSyncStatusRepository
 import proton.android.pass.data.api.repositories.SyncMode
 import proton.android.pass.data.api.usecases.ClearUserData
+import proton.android.pass.data.api.usecases.GetReadyAccounts
 import proton.android.pass.data.api.usecases.ResetAppToDefaults
 import proton.android.pass.data.impl.db.DatabaseCleanupHelper
 import proton.android.pass.log.api.LogAccountContext
@@ -100,7 +99,8 @@ class AccountListenerInitializer : Initializer<Unit> {
         }
 
         accountManager.onAccountStateChanged(initialState = false)
-            .scan(emptyMap<UserId, AccountState>() to false) { (stateMap, _), currentAccount ->
+            .scan(emptyMap<UserId, AccountState>() to false) { accumulator, currentAccount ->
+                val (stateMap, _) = accumulator
                 val updatedMap = stateMap + (currentAccount.userId to currentAccount.state)
                 val justBecameReady = stateMap[currentAccount.userId] != AccountState.Ready &&
                     currentAccount.state == AccountState.Ready
@@ -134,7 +134,7 @@ class AccountListenerInitializer : Initializer<Unit> {
     private suspend fun performCleanup(account: Account, entryPoint: AccountListenerInitializerEntryPoint) {
         val clearUserData = entryPoint.clearUserData()
         val resetApp = entryPoint.resetAppToDefaults()
-        val accountManager = entryPoint.accountManager()
+        val getReadyAccounts = entryPoint.getReadyAccounts()
         val databaseCleanupHelper = entryPoint.databaseCleanupHelper()
 
         entryPoint.itemSyncStatusRepository().clear()
@@ -143,7 +143,7 @@ class AccountListenerInitializer : Initializer<Unit> {
             .onSuccess { PassLogger.i(TAG, "Cleared user data") }
             .onFailure { PassLogger.i(TAG, it, "Error clearing user data") }
 
-        val activeAccounts = accountManager.getAccounts(AccountState.Ready).firstOrNull().orEmpty()
+        val activeAccounts = getReadyAccounts()
         PassLogger.i(TAG, "Active accounts remaining: ${activeAccounts.size}")
 
         if (activeAccounts.isEmpty()) {
@@ -170,6 +170,7 @@ class AccountListenerInitializer : Initializer<Unit> {
         fun clearUserData(): ClearUserData
         fun snackbarDispatcher(): SnackbarDispatcher
         fun databaseCleanupHelper(): DatabaseCleanupHelper
+        fun getReadyAccounts(): GetReadyAccounts
     }
 
     companion object {

@@ -27,13 +27,12 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import me.proton.core.accountmanager.domain.AccountManager
 import proton.android.pass.common.api.LoadingResult
+import proton.android.pass.data.api.usecases.GetPrimaryUserId
 import proton.android.pass.common.api.asLoadingResult
 import proton.android.pass.commonui.api.require
 import proton.android.pass.composecomponents.impl.uievents.IsButtonEnabled
@@ -61,7 +60,7 @@ class DeleteVaultViewModel @Inject constructor(
     private val deleteVault: DeleteVault,
     private val snackbarDispatcher: SnackbarDispatcher,
     private val internalSettingsRepository: InternalSettingsRepository,
-    accountManager: AccountManager
+    private val getPrimaryUserId: GetPrimaryUserId
 ) : ViewModel() {
 
     private val shareId: ShareId = savedStateHandle
@@ -70,8 +69,6 @@ class DeleteVaultViewModel @Inject constructor(
 
     private val isLastVault: Boolean = savedStateHandle
         .require(IsLastVault.key)
-
-    private val primaryUserId = accountManager.getPrimaryUserId()
 
     private val coroutineExceptionHandler = CoroutineExceptionHandler { _, throwable ->
         PassLogger.e(TAG, throwable)
@@ -159,9 +156,9 @@ class DeleteVaultViewModel @Inject constructor(
                     // 1) Set this to true because a shares refresh may run right
                     // after deleting the last vault, and we don’t want to recreate a default vault.
                     // 2) No need to check PASS_ALLOW_NO_VAULT, since deleting the last vault
-                    // is only possible when it's enabled.
+                    // is only possible when it’s enabled.
                     if (isLastVault) {
-                        primaryUserId.firstOrNull()?.let {
+                        getPrimaryUserId()?.let {
                             internalSettingsRepository.setDefaultVaultHasBeenCreated(it)
                         }
                     }

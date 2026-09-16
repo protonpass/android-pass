@@ -35,7 +35,7 @@ import me.proton.core.domain.entity.UserId
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import proton.android.pass.account.fakes.FakeAccountManager
+import proton.android.pass.data.fakes.usecases.FakeObservePrimaryUserId
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.fakes.FakeSavedStateHandleProvider
 import proton.android.pass.crypto.fakes.context.FakeEncryptionContext
@@ -72,7 +72,7 @@ class UpdateCreditCardScreenTest {
     lateinit var updateItem: FakeUpdateItem
 
     @Inject
-    lateinit var accountManager: FakeAccountManager
+    lateinit var observePrimaryUserId: FakeObservePrimaryUserId
 
     @Inject
     lateinit var savedStateHandle: FakeSavedStateHandleProvider
@@ -88,7 +88,7 @@ class UpdateCreditCardScreenTest {
     @Before
     fun setup() {
         hiltRule.inject()
-        accountManager.sendPrimaryUserId(USER_ID)
+        observePrimaryUserId.emitUserId(USER_ID)
         savedStateHandle.get().apply {
             set(CommonNavArgId.ShareId.key, SHARE_ID)
             set(CommonNavArgId.ItemId.key, ITEM_ID)

@@ -25,7 +25,7 @@ import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import proton.android.pass.account.fakes.FakeAccountManager
+import proton.android.pass.data.fakes.usecases.FakeObservePrimaryUserId
 import proton.android.pass.clipboard.fakes.FakeClipboardManager
 import proton.android.pass.common.api.PasswordStrength
 import proton.android.pass.common.fakes.FakeAppDispatchers
@@ -88,7 +88,7 @@ internal class BaseLoginViewModelTest {
         emailValidator = FakeEmailValidator()
         attachmentsHandler = FakeAttachmentHandler()
         baseLoginViewModel = object : BaseLoginViewModel(
-            accountManager = FakeAccountManager(),
+            observePrimaryUserId = FakeObservePrimaryUserId(),
             snackbarDispatcher = FakeSnackbarDispatcher(),
             clipboardManager = clipboardManager,
             totpManager = totpManager,

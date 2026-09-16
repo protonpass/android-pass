@@ -18,21 +18,20 @@
 
 package proton.android.pass.data.impl.usecases
 
-import kotlinx.coroutines.flow.first
-import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.crypto.common.keystore.PlainByteArray
 import me.proton.core.domain.entity.UserId
 import me.proton.core.user.domain.UserManager
 import proton.android.pass.data.api.usecases.CheckMasterPassword
+import proton.android.pass.data.api.usecases.GetPrimaryUserId
 import javax.inject.Inject
 
 class CheckMasterPasswordImpl @Inject constructor(
     private val userManager: UserManager,
-    private val accountManager: AccountManager
+    private val getPrimaryUserId: GetPrimaryUserId
 ) : CheckMasterPassword {
     override suspend fun invoke(userId: UserId?, password: ByteArray): Boolean {
         val id = if (userId == null) {
-            val primaryUserId = accountManager.getPrimaryUserId().first() ?: return false
+            val primaryUserId = getPrimaryUserId() ?: return false
             primaryUserId
         } else {
             userId

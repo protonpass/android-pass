@@ -24,7 +24,7 @@ plugins {
 dependencies {
     implementation(libs.kotlinx.coroutines.core)
     implementation(libs.kotlinx.datetime)
-    implementation(libs.core.account.domain)
+    api(libs.core.account.domain)
     implementation(libs.core.cryptoCommon)
     implementation(libs.core.domain)
     implementation(libs.core.report.domain)

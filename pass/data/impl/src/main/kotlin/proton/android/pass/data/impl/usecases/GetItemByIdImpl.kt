@@ -18,18 +18,18 @@
 
 package proton.android.pass.data.impl.usecases
 
-import kotlinx.coroutines.flow.first
-import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.domain.entity.UserId
+import proton.android.pass.data.api.errors.UserIdNotAvailableError
 import proton.android.pass.data.api.repositories.ItemRepository
 import proton.android.pass.data.api.usecases.GetItemById
+import proton.android.pass.data.api.usecases.GetPrimaryUserId
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import javax.inject.Inject
 
 class GetItemByIdImpl @Inject constructor(
-    private val accountManager: AccountManager,
+    private val getPrimaryUserId: GetPrimaryUserId,
     private val itemRepository: ItemRepository
 ) : GetItemById {
 
@@ -38,7 +38,7 @@ class GetItemByIdImpl @Inject constructor(
         shareId: ShareId,
         itemId: ItemId
     ): Item {
-        val userIdLocal = userId ?: requireNotNull(accountManager.getPrimaryUserId().first())
+        val userIdLocal = userId ?: getPrimaryUserId() ?: throw UserIdNotAvailableError()
         return itemRepository.getById(userId = userIdLocal, shareId = shareId, itemId = itemId)
     }
 }

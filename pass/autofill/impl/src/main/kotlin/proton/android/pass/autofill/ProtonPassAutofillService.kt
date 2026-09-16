@@ -31,11 +31,11 @@ import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
-import me.proton.core.accountmanager.domain.AccountManager
 import proton.android.pass.autofill.autofillhealth.service.AutofillHealthMonitor
 import proton.android.pass.autofill.autofillhealth.troubleshooting.data.AutofillWorkingBrowsersStore
 import proton.android.pass.autofill.debug.AutofillDebugSaver
 import proton.android.pass.common.api.AppDispatchers
+import proton.android.pass.data.api.usecases.GetPrimaryUserId
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.preferences.FeatureFlag
 import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
@@ -54,7 +54,7 @@ class ProtonPassAutofillService : AutofillService() {
     lateinit var telemetryManager: TelemetryManager
 
     @Inject
-    lateinit var accountManager: AccountManager
+    lateinit var getPrimaryUserId: GetPrimaryUserId
 
     @Inject
     lateinit var thirdPartyModeProvider: ThirdPartyModeProvider
@@ -153,7 +153,7 @@ class ProtonPassAutofillService : AutofillService() {
             cancellationSignal = cancellationSignal,
             autofillServiceManager = autofillServiceManager,
             telemetryManager = telemetryManager,
-            accountManager = accountManager,
+            getPrimaryUserId = getPrimaryUserId,
             thirdPartyModeProvider = thirdPartyModeProvider,
             healthMonitor = if (isDebugModeEnabled) healthMonitor else null,
             autofillDisplayPreference = autofillDisplayPreference,

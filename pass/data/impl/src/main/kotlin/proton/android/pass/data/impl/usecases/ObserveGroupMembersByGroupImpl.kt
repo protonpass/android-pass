@@ -22,23 +22,22 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.flow
-import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.api.errors.UserIdNotAvailableError
 import proton.android.pass.data.api.repositories.GroupRepository
+import proton.android.pass.data.api.usecases.GetPrimaryUserId
 import proton.android.pass.data.api.usecases.GroupMembers
 import proton.android.pass.data.api.usecases.ObserveGroupMembersByGroup
 import javax.inject.Inject
 
 class ObserveGroupMembersByGroupImpl @Inject constructor(
-    private val accountManager: AccountManager,
+    private val getPrimaryUserId: GetPrimaryUserId,
     private val groupRepository: GroupRepository
 ) : ObserveGroupMembersByGroup {
 
     override fun invoke(userId: UserId?, forceRefresh: Boolean): Flow<List<GroupMembers>> = flow {
-        val currentUserId = userId ?: accountManager.getPrimaryUserId().firstOrNull()
+        val currentUserId = userId ?: getPrimaryUserId()
             ?: throw UserIdNotAvailableError()
         emit(retrieveGroupMembersByGroup(currentUserId, forceRefresh))
     }

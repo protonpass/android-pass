@@ -30,12 +30,12 @@ import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
-import me.proton.core.accountmanager.domain.AccountManager
 import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
 import proton.android.pass.commonuimodels.api.FolderUiModel
+import proton.android.pass.data.api.usecases.ObservePrimaryUserId
 import proton.android.pass.data.api.usecases.defaultvault.VaultWithFolder
 import proton.android.pass.data.api.usecases.folders.ObserveFolder
 import proton.android.pass.data.api.usecases.folders.ObserveFoldersByParentId
@@ -47,7 +47,7 @@ import proton.android.pass.domain.toPermissions
 import proton.android.pass.log.api.PassLogger
 
 fun getFolderNameFlow(
-    accountManager: AccountManager,
+    observePrimaryUserId: ObservePrimaryUserId,
     observeFolder: ObserveFolder,
     selectedShareIdState: Flow<Option<ShareId>>,
     selectedFolderIdFlow: Flow<Option<FolderId>>,
@@ -55,7 +55,7 @@ fun getFolderNameFlow(
     defaultVaultShareIdFlow: Flow<Option<ShareId>> = flowOf(None),
     defaultVaultFolderIdFlow: Flow<Option<FolderId>> = flowOf(None)
 ): Flow<String?> = combine(
-    accountManager.getPrimaryUserId().distinctUntilChanged(),
+    observePrimaryUserId().distinctUntilChanged(),
     selectedShareIdState,
     navShareIdState,
     defaultVaultShareIdFlow,

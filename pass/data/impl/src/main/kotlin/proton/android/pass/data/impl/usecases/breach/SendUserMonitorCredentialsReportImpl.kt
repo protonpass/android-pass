@@ -22,11 +22,9 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
-import me.proton.core.account.domain.entity.AccountState
-import me.proton.core.accountmanager.domain.AccountManager
-import me.proton.core.accountmanager.domain.getAccounts
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.AppDispatchers
+import proton.android.pass.data.api.usecases.GetReadyAccounts
 import proton.android.pass.data.api.usecases.GetUserPlan
 import proton.android.pass.data.api.usecases.ItemTypeFilter
 import proton.android.pass.data.api.usecases.ObserveAllShares
@@ -52,7 +50,7 @@ import proton.android.pass.securitycenter.api.passwords.RepeatedPasswordChecker
 import javax.inject.Inject
 
 class SendUserMonitorCredentialsReportImpl @Inject constructor(
-    private val accountManager: AccountManager,
+    private val getReadyAccounts: GetReadyAccounts,
     private val getUserPlan: GetUserPlan,
     private val remoteOrganizationReportDataSource: RemoteOrganizationReportDataSource,
     private val repeatedPasswordChecker: RepeatedPasswordChecker,
@@ -66,7 +64,7 @@ class SendUserMonitorCredentialsReportImpl @Inject constructor(
     private val dispatchers: AppDispatchers
 ) : SendUserMonitorCredentialsReport {
     override suspend fun invoke() {
-        val accounts = accountManager.getAccounts(AccountState.Ready).firstOrNull().orEmpty()
+        val accounts = getReadyAccounts()
         val reports = accounts
             .map { account ->
                 account.userId to getUserPlan(account.userId).first()

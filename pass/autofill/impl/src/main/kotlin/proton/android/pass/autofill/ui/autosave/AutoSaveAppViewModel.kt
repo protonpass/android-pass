@@ -30,7 +30,6 @@ import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import me.proton.core.account.domain.entity.AccountState
-import me.proton.core.accountmanager.domain.AccountManager
 import proton.android.pass.autofill.AutosaveDisplay
 import proton.android.pass.autofill.AutosaveDone
 import proton.android.pass.autofill.entities.SaveInformation
@@ -45,6 +44,7 @@ import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.autosave.AutosaveLoginMatcher
 import proton.android.pass.data.api.url.UrlSanitizer
 import proton.android.pass.data.api.usecases.ItemTypeFilter
+import proton.android.pass.data.api.usecases.ObserveAccounts
 import proton.android.pass.data.api.usecases.ObserveAllShares
 import proton.android.pass.data.api.usecases.ObserveItems
 import proton.android.pass.domain.Item
@@ -72,7 +72,7 @@ class AutoSaveAppViewModel @Inject constructor(
     savedStateHandleProvider: SavedStateHandleProvider,
     observeItems: ObserveItems,
     observeAllShares: ObserveAllShares,
-    accountManager: AccountManager,
+    observeAccounts: ObserveAccounts,
     private val encryptionContextProvider: EncryptionContextProvider
 ) : ViewModel() {
 
@@ -99,7 +99,7 @@ class AutoSaveAppViewModel @Inject constructor(
 
     private val usernamePasswordArgs = saveInformationArgs?.usernamePassword()
 
-    private val accounts = accountManager.getAccounts().map { accountList ->
+    private val accounts = observeAccounts().map { accountList ->
         accountList.filter { it.state == AccountState.Ready }
     }
 

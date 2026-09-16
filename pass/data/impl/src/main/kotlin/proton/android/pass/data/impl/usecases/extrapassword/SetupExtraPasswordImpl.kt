@@ -18,14 +18,12 @@
 
 package proton.android.pass.data.impl.usecases.extrapassword
 
-import kotlinx.coroutines.flow.firstOrNull
-import me.proton.core.accountmanager.domain.AccountManager
-import me.proton.core.accountmanager.domain.getPrimaryAccount
 import me.proton.core.auth.domain.repository.AuthRepository
 import me.proton.core.crypto.common.keystore.EncryptedString
 import me.proton.core.crypto.common.srp.Auth
 import me.proton.core.crypto.common.srp.SrpCrypto
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
+import proton.android.pass.data.api.usecases.GetPrimaryAccount
 import proton.android.pass.data.api.usecases.extrapassword.SetupExtraPassword
 import proton.android.pass.data.impl.remote.RemoteExtraPasswordDataSource
 import proton.android.pass.data.impl.repositories.ExtraPasswordRepository
@@ -36,7 +34,7 @@ class SetupExtraPasswordImpl @Inject constructor(
     private val srpCrypto: SrpCrypto,
     private val encryptionContextProvider: EncryptionContextProvider,
     private val authRepository: AuthRepository,
-    private val accountManager: AccountManager,
+    private val getPrimaryAccount: GetPrimaryAccount,
     private val remoteExtraPasswordDataSource: RemoteExtraPasswordDataSource,
     private val extraPasswordRepository: ExtraPasswordRepository
 ) : SetupExtraPassword {
@@ -45,7 +43,7 @@ class SetupExtraPasswordImpl @Inject constructor(
             decrypt(password).encodeToByteArray()
         }
 
-        val account = accountManager.getPrimaryAccount().firstOrNull()
+        val account = getPrimaryAccount()
             ?: throw IllegalStateException("No primary account found")
         val modulus = authRepository.randomModulus(account.sessionId)
         val verifier = srpCrypto.calculatePasswordVerifier(

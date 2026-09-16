@@ -26,10 +26,9 @@ import android.os.Environment
 import android.os.LocaleList
 import android.os.StatFs
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.withContext
-import me.proton.core.accountmanager.domain.AccountManager
 import proton.android.pass.appconfig.api.AppConfig
+import proton.android.pass.data.api.usecases.GetPrimaryUserId
 import proton.android.pass.biometry.NeedsBiometricAuth
 import proton.android.pass.common.api.AppDispatchers
 import proton.android.pass.common.api.FileSizeUtil.toHumanReadableSize
@@ -51,7 +50,7 @@ import javax.inject.Inject
 class ShareLogsUseCaseImpl @Inject constructor(
     private val appConfig: AppConfig,
     private val logFileManager: LogFileManager,
-    private val accountManager: AccountManager,
+    private val getPrimaryUserId: GetPrimaryUserId,
     private val fileHandler: FileHandler,
     private val appDispatchers: AppDispatchers,
     private val needsBiometricAuth: NeedsBiometricAuth
@@ -61,7 +60,7 @@ class ShareLogsUseCaseImpl @Inject constructor(
     override suspend fun invoke(context: Context): Result<File> = runCatching {
         // Prepare file and URI on IO dispatcher
         val (tempFile, tempFileUri) = withContext(appDispatchers.io) {
-            var userId = accountManager.getPrimaryUserId().firstOrNull()
+            var userId = getPrimaryUserId()
             if (userId != null && needsBiometricAuth().first()) {
                 userId = null // do not share private logs in that case
             }

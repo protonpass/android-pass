@@ -49,7 +49,6 @@ import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.clipboard.api.ClipboardManager
 import proton.android.pass.common.api.AppDispatchers
@@ -75,6 +74,7 @@ import proton.android.pass.data.api.errors.AliasRateLimitError
 import proton.android.pass.data.api.errors.CannotCreateMoreAliasesError
 import proton.android.pass.data.api.errors.EmailNotValidatedError
 import proton.android.pass.data.api.repositories.DraftRepository
+import proton.android.pass.data.api.usecases.ObservePrimaryUserId
 import proton.android.pass.data.api.usecases.CreateItem
 import proton.android.pass.data.api.usecases.CreateLoginAndAlias
 import proton.android.pass.data.api.usecases.GetItemById
@@ -165,7 +165,7 @@ class CreateLoginViewModel @Inject constructor(
     private val getItemById: GetItemById,
     private val setDefaultVault: SetDefaultVault,
     passwordScorer: PasswordScorer,
-    accountManager: AccountManager,
+    observePrimaryUserId: ObservePrimaryUserId,
     clipboardManager: ClipboardManager,
     totpManager: TotpManager,
     observeCurrentUser: ObserveCurrentUser,
@@ -189,7 +189,7 @@ class CreateLoginViewModel @Inject constructor(
     private val settingsRepository: InternalSettingsRepository,
     appDispatchers: AppDispatchers
 ) : BaseLoginViewModel(
-    accountManager = accountManager,
+    observePrimaryUserId = observePrimaryUserId,
     snackbarDispatcher = snackbarDispatcher,
     clipboardManager = clipboardManager,
     totpManager = totpManager,
@@ -270,7 +270,7 @@ class CreateLoginViewModel @Inject constructor(
     private val defaultVaultFlow = observeDefaultVault()
 
     private val selectedFolderNameFlow = getFolderNameFlow(
-        accountManager = accountManager,
+        observePrimaryUserId = observePrimaryUserId,
         observeFolder = observeFolder,
         selectedShareIdState = selectedShareIdState,
         selectedFolderIdFlow = selectedFolderIdState,
@@ -521,7 +521,7 @@ class CreateLoginViewModel @Inject constructor(
             ShareUiState.NotInitialised -> null
             is ShareUiState.Success -> state.currentVault
         }
-        val userId = accountManager.getPrimaryUserId()
+        val userId = observePrimaryUserId()
             .firstOrNull { userId -> userId != null }
 
         val generatedPasskey = when (val data = generatePasskeyData) {

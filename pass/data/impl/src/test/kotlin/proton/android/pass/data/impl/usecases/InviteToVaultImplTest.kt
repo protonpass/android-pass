@@ -28,7 +28,7 @@ import me.proton.core.user.domain.entity.UserAddress
 import me.proton.core.user.domain.entity.UserAddressKey
 import org.junit.Before
 import org.junit.Test
-import proton.android.pass.account.fakes.FakeAccountManager
+import proton.android.pass.data.fakes.usecases.FakeGetPrimaryUserId
 import proton.android.pass.data.api.repositories.UserTarget
 import proton.android.pass.data.api.usecases.InviteUserMode
 import proton.android.pass.data.fakes.repositories.FakeUserInviteRepository
@@ -42,14 +42,14 @@ class InviteToVaultImplTest {
 
     private lateinit var instance: InviteToVaultImpl
 
-    private lateinit var accountManager: FakeAccountManager
+    private lateinit var getPrimaryUserId: FakeGetPrimaryUserId
     private lateinit var shareRepository: FakeShareRepository
     private lateinit var userInviteRepository: FakeUserInviteRepository
     private lateinit var getInviteUserMode: FakeGetInviteUserMode
 
     @Before
     fun setup() {
-        accountManager = FakeAccountManager()
+        getPrimaryUserId = FakeGetPrimaryUserId()
         getInviteUserMode = FakeGetInviteUserMode()
         shareRepository = FakeShareRepository().apply {
             val share = ShareTestFactory.Vault.create(
@@ -62,7 +62,7 @@ class InviteToVaultImplTest {
         userInviteRepository = FakeUserInviteRepository()
 
         instance = InviteToVaultImpl(
-            accountManager = accountManager,
+            getPrimaryUserId = getPrimaryUserId,
             userInviteRepository = userInviteRepository,
             shareRepository = shareRepository,
             getInviteUserMode = getInviteUserMode
@@ -179,7 +179,7 @@ class InviteToVaultImplTest {
     }
 
     private fun setupAccountManager(userId: UserId? = UserId(USER_ID)) {
-        accountManager.sendPrimaryUserId(userId)
+        getPrimaryUserId.setResult(userId)
     }
 
 

@@ -29,8 +29,8 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
-import me.proton.core.accountmanager.domain.AccountManager
 import proton.android.pass.common.api.AppDispatchers
+import proton.android.pass.data.api.usecases.GetPrimaryUserId
 import proton.android.pass.commonui.api.ClassHolder
 import proton.android.pass.log.api.LogFileManager
 import proton.android.pass.log.api.PassLogger
@@ -44,7 +44,7 @@ import javax.inject.Inject
 @HiltViewModel
 class LogViewViewModel @Inject constructor(
     private val logFileManager: LogFileManager,
-    private val accountManager: AccountManager,
+    private val getPrimaryUserId: GetPrimaryUserId,
     private val shareLogsUseCase: ShareLogsUseCase,
     private val appDispatchers: AppDispatchers
 ) : ViewModel() {
@@ -233,7 +233,7 @@ class LogViewViewModel @Inject constructor(
     }
 
     private suspend fun resolveLogFile(): File {
-        val userId = accountManager.getPrimaryUserId().firstOrNull()
+        val userId = getPrimaryUserId()
         return logFileManager.getLogFile(userId)
     }
 

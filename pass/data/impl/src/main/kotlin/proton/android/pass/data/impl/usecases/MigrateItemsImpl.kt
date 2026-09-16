@@ -18,12 +18,12 @@
 
 package proton.android.pass.data.impl.usecases
 
-import kotlinx.coroutines.flow.first
-import me.proton.core.accountmanager.domain.AccountManager
 import proton.android.pass.common.api.Option
+import proton.android.pass.data.api.errors.UserIdNotAvailableError
 import proton.android.pass.data.api.repositories.ItemRepository
 import proton.android.pass.data.api.repositories.MigrateItemsResult
 import proton.android.pass.data.api.repositories.ShareRepository
+import proton.android.pass.data.api.usecases.GetPrimaryUserId
 import proton.android.pass.data.api.usecases.MigrateItems
 import proton.android.pass.domain.FolderId
 import proton.android.pass.domain.ItemId
@@ -31,7 +31,7 @@ import proton.android.pass.domain.ShareId
 import javax.inject.Inject
 
 class MigrateItemsImpl @Inject constructor(
-    private val accountManager: AccountManager,
+    private val getPrimaryUserId: GetPrimaryUserId,
     private val shareRepository: ShareRepository,
     private val itemRepository: ItemRepository
 ) : MigrateItems {
@@ -41,7 +41,7 @@ class MigrateItemsImpl @Inject constructor(
         destinationShare: ShareId,
         destinationFolderId: Option<FolderId>
     ): MigrateItemsResult {
-        val userId = requireNotNull(accountManager.getPrimaryUserId().first())
+        val userId = getPrimaryUserId() ?: throw UserIdNotAvailableError()
         val destination = shareRepository.getById(userId, destinationShare)
 
         return itemRepository.migrateItems(

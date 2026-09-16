@@ -35,7 +35,6 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.take
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.util.kotlin.takeIfNotBlank
 import proton.android.pass.clipboard.api.ClipboardManager
 import proton.android.pass.common.api.AppDispatchers
@@ -55,6 +54,7 @@ import proton.android.pass.composecomponents.impl.uievents.IsButtonEnabled
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.errors.InvalidContentFormatVersionError
+import proton.android.pass.data.api.usecases.ObservePrimaryUserId
 import proton.android.pass.data.api.usecases.CanPerformPaidAction
 import proton.android.pass.data.api.usecases.GetItemById
 import proton.android.pass.data.api.usecases.ObserveAliasDetails
@@ -100,7 +100,7 @@ import javax.inject.Inject
 @Suppress("LongParameterList")
 @HiltViewModel
 class UpdateAliasViewModel @Inject constructor(
-    private val accountManager: AccountManager,
+    private val observePrimaryUserId: ObservePrimaryUserId,
     private val snackbarDispatcher: SnackbarDispatcher,
     private val updateAliasUseCase: UpdateAlias,
     private val encryptionContextProvider: EncryptionContextProvider,
@@ -342,7 +342,7 @@ class UpdateAliasViewModel @Inject constructor(
             val body = createUpdateAliasBody()
             isLoadingState.update { IsLoadingState.Loading }
 
-            val userId = accountManager.getPrimaryUserId().first { userId -> userId != null }
+            val userId = observePrimaryUserId().first { userId -> userId != null }
             val initialItem = itemOption
             if (userId != null && initialItem is Some) {
                 safeRunCatching {

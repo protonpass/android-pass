@@ -31,10 +31,8 @@ import androidx.annotation.ChecksSdkIntAtLeast
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.currentCoroutineContext
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
-import me.proton.core.accountmanager.domain.AccountManager
 import proton.android.pass.autofill.Utils.getWindowNodes
 import proton.android.pass.autofill.entities.AssistInfo
 import proton.android.pass.autofill.entities.AutofillData
@@ -54,6 +52,7 @@ import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.some
 import proton.android.pass.common.api.toOption
 import proton.android.pass.commonui.api.AndroidUtils
+import proton.android.pass.data.api.usecases.GetPrimaryUserId
 import proton.android.pass.domain.entity.AppName
 import proton.android.pass.domain.entity.PackageInfo
 import proton.android.pass.domain.entity.PackageName
@@ -74,7 +73,7 @@ object AutoFillHandler {
         cancellationSignal: CancellationSignal,
         autofillServiceManager: AutofillServiceManager,
         telemetryManager: TelemetryManager,
-        accountManager: AccountManager,
+        getPrimaryUserId: GetPrimaryUserId,
         thirdPartyModeProvider: ThirdPartyModeProvider,
         autofillDisplayPreference: AutofillDisplayPreference,
         isAutosaveEnabled: Boolean,
@@ -104,7 +103,7 @@ object AutoFillHandler {
                 request = request,
                 autofillServiceManager = autofillServiceManager,
                 telemetryManager = telemetryManager,
-                accountManager = accountManager,
+                getPrimaryUserId = getPrimaryUserId,
                 thirdPartyModeProvider = thirdPartyModeProvider,
                 healthMonitor = healthMonitor,
                 autofillDisplayPreference = autofillDisplayPreference,
@@ -126,7 +125,7 @@ object AutoFillHandler {
         request: FillRequest,
         autofillServiceManager: AutofillServiceManager,
         telemetryManager: TelemetryManager,
-        accountManager: AccountManager,
+        getPrimaryUserId: GetPrimaryUserId,
         thirdPartyModeProvider: ThirdPartyModeProvider,
         autofillDisplayPreference: AutofillDisplayPreference,
         isAutosaveEnabled: Boolean,
@@ -135,7 +134,7 @@ object AutoFillHandler {
         val applicationPackageName = PackageName(Utils.getApplicationPackageName(request.fillContexts))
         val shouldAutofill = shouldAutofill(
             context = context,
-            accountManager = accountManager,
+            getPrimaryUserId = getPrimaryUserId,
             request = request,
             windowNode = windowNode,
             packageName = applicationPackageName.value,
@@ -267,7 +266,7 @@ object AutoFillHandler {
     @Suppress("ReturnCount", "LongParameterList")
     private suspend fun shouldAutofill(
         context: Context,
-        accountManager: AccountManager,
+        getPrimaryUserId: GetPrimaryUserId,
         request: FillRequest,
         windowNode: WindowNode,
         packageName: String,
@@ -277,7 +276,7 @@ object AutoFillHandler {
             return ShouldAutofillResult.No("Do not self autofill")
         }
 
-        if (accountManager.getPrimaryUserId().first() == null) {
+        if (getPrimaryUserId() == null) {
             return ShouldAutofillResult.No("No user found")
         }
 

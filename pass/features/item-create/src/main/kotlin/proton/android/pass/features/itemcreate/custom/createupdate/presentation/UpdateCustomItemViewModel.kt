@@ -23,10 +23,8 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
-import me.proton.core.accountmanager.domain.AccountManager
 import proton.android.pass.clipboard.api.ClipboardManager
 import proton.android.pass.common.api.AppDispatchers
 import proton.android.pass.common.api.None
@@ -45,6 +43,7 @@ import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.repositories.PendingAttachmentLinkRepository
 import proton.android.pass.data.api.usecases.CanPerformPaidAction
 import proton.android.pass.data.api.usecases.GetItemById
+import proton.android.pass.data.api.usecases.GetPrimaryUserId
 import proton.android.pass.data.api.usecases.ObserveItemById
 import proton.android.pass.data.api.usecases.UpdateItem
 import proton.android.pass.data.api.usecases.attachments.LinkAttachmentsToItem
@@ -82,7 +81,7 @@ class UpdateCustomItemViewModel @Inject constructor(
     private val getItemById: GetItemById,
     private val updateItem: UpdateItem,
     private val telemetryManager: TelemetryManager,
-    private val accountManager: AccountManager,
+    private val getPrimaryUserId: GetPrimaryUserId,
     private val snackbarDispatcher: SnackbarDispatcher,
     private val encryptionContextProvider: EncryptionContextProvider,
     attachmentsHandler: AttachmentsHandler,
@@ -194,7 +193,7 @@ class UpdateCustomItemViewModel @Inject constructor(
             if (!isFormStateValid(originalCustomFields, originalSections)) return@launch
             updateLoadingState(IsLoadingState.Loading)
             runCatching {
-                val userId = accountManager.getPrimaryUserId().first()
+                val userId = getPrimaryUserId()
                     ?: throw IllegalStateException("User id is null")
                 val item = receivedItem.value()
                     ?: throw IllegalStateException("Item is null")

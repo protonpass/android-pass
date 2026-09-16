@@ -18,16 +18,16 @@
 
 package proton.android.pass.data.impl.usecases
 
-import kotlinx.coroutines.flow.firstOrNull
-import me.proton.core.accountmanager.domain.AccountManager
+import proton.android.pass.data.api.errors.UserIdNotAvailableError
 import proton.android.pass.data.api.repositories.ItemRepository
+import proton.android.pass.data.api.usecases.GetPrimaryUserId
 import proton.android.pass.data.api.usecases.MigrateVault
 import proton.android.pass.domain.FolderId
 import proton.android.pass.domain.ShareId
 import javax.inject.Inject
 
 class MigrateVaultImpl @Inject constructor(
-    private val accountManager: AccountManager,
+    private val getPrimaryUserId: GetPrimaryUserId,
     private val itemRepository: ItemRepository
 ) : MigrateVault {
 
@@ -36,7 +36,7 @@ class MigrateVaultImpl @Inject constructor(
         dest: ShareId,
         destFolderId: FolderId?
     ) {
-        val userId = requireNotNull(accountManager.getPrimaryUserId().firstOrNull())
+        val userId = getPrimaryUserId() ?: throw UserIdNotAvailableError()
         itemRepository.migrateAllVaultItems(
             userId = userId,
             source = origin,

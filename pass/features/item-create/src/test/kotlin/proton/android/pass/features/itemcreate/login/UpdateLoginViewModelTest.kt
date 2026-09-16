@@ -25,7 +25,7 @@ import me.proton.core.domain.entity.UserId
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import proton.android.pass.account.fakes.FakeAccountManager
+import proton.android.pass.data.fakes.usecases.FakeObservePrimaryUserId
 import proton.android.pass.clipboard.fakes.FakeClipboardManager
 import proton.android.pass.common.api.some
 import proton.android.pass.common.fakes.FakeAppDispatchers
@@ -111,8 +111,8 @@ class UpdateLoginViewModelTest {
 
     private fun createInstance(): UpdateLoginViewModel = UpdateLoginViewModel(
         getItemById = getItemById,
-        accountManager = FakeAccountManager().apply {
-            sendPrimaryUserId(UserId("UserId"))
+        observePrimaryUserId = FakeObservePrimaryUserId().apply {
+            emitUserId(UserId("UserId"))
         },
         clipboardManager = FakeClipboardManager(),
         totpManager = totpManager,

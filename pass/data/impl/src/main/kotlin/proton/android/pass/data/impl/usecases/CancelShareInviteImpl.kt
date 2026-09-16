@@ -18,25 +18,23 @@
 
 package proton.android.pass.data.impl.usecases
 
-import kotlinx.coroutines.flow.firstOrNull
-import me.proton.core.accountmanager.domain.AccountManager
 import proton.android.pass.data.api.errors.UserIdNotAvailableError
 import proton.android.pass.data.api.repositories.ShareInvitesRepository
 import proton.android.pass.data.api.repositories.ShareRepository
 import proton.android.pass.data.api.usecases.CancelShareInvite
+import proton.android.pass.data.api.usecases.GetPrimaryUserId
 import proton.android.pass.domain.InviteId
 import proton.android.pass.domain.ShareId
 import javax.inject.Inject
 
 class CancelShareInviteImpl @Inject constructor(
-    private val accountManager: AccountManager,
+    private val getPrimaryUserId: GetPrimaryUserId,
     private val shareInvitesRepository: ShareInvitesRepository,
     private val shareRepository: ShareRepository
 ) : CancelShareInvite {
 
     override suspend fun invoke(shareId: ShareId, inviteId: InviteId) {
-        accountManager.getPrimaryUserId()
-            .firstOrNull()
+        getPrimaryUserId()
             ?.also { userId ->
                 shareInvitesRepository.deleteSharePendingInvite(userId, shareId, inviteId)
                 shareRepository.refreshShare(userId, shareId)

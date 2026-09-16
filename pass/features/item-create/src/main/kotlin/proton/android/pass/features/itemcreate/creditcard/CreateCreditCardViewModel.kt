@@ -38,7 +38,6 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import me.proton.core.accountmanager.domain.AccountManager
 import proton.android.pass.clipboard.api.ClipboardManager
 import proton.android.pass.common.api.AppDispatchers
 import proton.android.pass.common.api.None
@@ -53,6 +52,7 @@ import proton.android.pass.commonui.api.toUiModel
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState.NotLoading
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
+import proton.android.pass.data.api.usecases.ObservePrimaryUserId
 import proton.android.pass.data.api.usecases.CanPerformPaidAction
 import proton.android.pass.data.api.usecases.CreateItem
 import proton.android.pass.data.api.usecases.GetItemById
@@ -103,7 +103,7 @@ class CreateCreditCardViewModel @Inject constructor(
     private val encryptionContextProvider: EncryptionContextProvider,
     private val snackbarDispatcher: SnackbarDispatcher,
     private val createItem: CreateItem,
-    private val accountManager: AccountManager,
+    private val observePrimaryUserId: ObservePrimaryUserId,
     private val observeFolder: ObserveFolder,
     private val observeFoldersByParentId: ObserveFoldersByParentId,
     private val telemetryManager: TelemetryManager,
@@ -179,7 +179,7 @@ class CreateCreditCardViewModel @Inject constructor(
     private val defaultVaultFlow = observeDefaultVault()
 
     private val selectedFolderNameFlow = getFolderNameFlow(
-        accountManager = accountManager,
+        observePrimaryUserId = observePrimaryUserId,
         observeFolder = observeFolder,
         selectedShareIdState = selectedShareIdState,
         selectedFolderIdFlow = selectedFolderIdState,
@@ -273,8 +273,7 @@ class CreateCreditCardViewModel @Inject constructor(
             ShareUiState.NotInitialised -> null
             is ShareUiState.Success -> state.currentVault
         }
-        val userId = accountManager.getPrimaryUserId()
-            .firstOrNull { userId -> userId != null }
+        val userId = observePrimaryUserId().firstOrNull { it != null }
         if (userId != null && vault != null) {
             safeRunCatching {
                 val sanitisedItemFormState = creditCardItemFormState.sanitise()

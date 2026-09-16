@@ -18,12 +18,11 @@
 
 package proton.android.pass.data.impl.usecases.attachments
 
-import kotlinx.coroutines.flow.firstOrNull
-import me.proton.core.accountmanager.domain.AccountManager
 import proton.android.pass.common.api.safeRunCatching
 import proton.android.pass.data.api.errors.UserIdNotAvailableError
 import proton.android.pass.data.api.repositories.AttachmentRepository
 import proton.android.pass.data.api.repositories.DraftAttachmentRepository
+import proton.android.pass.data.api.usecases.GetPrimaryUserId
 import proton.android.pass.data.api.usecases.attachments.RenameDraftAttachment
 import proton.android.pass.domain.attachments.DraftAttachment
 import java.net.URI
@@ -32,7 +31,7 @@ import javax.inject.Singleton
 
 @Singleton
 class RenameDraftAttachmentImpl @Inject constructor(
-    private val accountManager: AccountManager,
+    private val getPrimaryUserId: GetPrimaryUserId,
     private val draftAttachmentRepository: DraftAttachmentRepository,
     private val attachmentRepository: AttachmentRepository
 ) : RenameDraftAttachment {
@@ -40,7 +39,7 @@ class RenameDraftAttachmentImpl @Inject constructor(
     override suspend fun invoke(uri: URI, newName: String) {
         when (val draftAttachment = draftAttachmentRepository.get(uri)) {
             is DraftAttachment.Success -> {
-                val userId = accountManager.getPrimaryUserId().firstOrNull()
+                val userId = getPrimaryUserId()
                     ?: throw UserIdNotAvailableError()
                 val attachmentId = draftAttachment.pendingAttachmentId
                 val newMetadata = draftAttachment.metadata.copy(name = newName)

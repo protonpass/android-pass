@@ -26,10 +26,9 @@ plugins {
 android {
     namespace = "proton.android.pass.appconfig"
     compileSdk = libs.versions.compileSdk.get().toInt()
-    
+
     defaultConfig {
         minSdk = libs.versions.minSdk.get().toInt()
-        
     }
 }
 
@@ -39,4 +38,7 @@ dependencies {
     implementation(libs.dagger.hilt.android)
     ksp(libs.dagger.hilt.android.compiler)
     ksp(libs.androidx.hilt.compiler)
+
+    testImplementation(libs.junit)
+    testImplementation(libs.truth)
 }

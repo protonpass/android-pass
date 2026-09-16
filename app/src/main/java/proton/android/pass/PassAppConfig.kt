@@ -18,7 +18,9 @@
 
 package proton.android.pass
 
+import android.content.Context
 import android.os.Build
+import dagger.hilt.android.qualifiers.ApplicationContext
 import me.proton.core.configuration.EnvironmentConfiguration
 import me.proton.core.util.kotlin.takeIfNotBlank
 import proton.android.pass.appconfig.api.AppConfig
@@ -26,6 +28,7 @@ import proton.android.pass.appconfig.api.BuildFlavor
 import javax.inject.Inject
 
 class PassAppConfig @Inject constructor(
+    @ApplicationContext private val context: Context,
     environmentConfiguration: EnvironmentConfiguration
 ) : AppConfig {
     override val isDebug: Boolean = BuildConfig.DEBUG
@@ -43,4 +46,10 @@ class PassAppConfig @Inject constructor(
     override val androidVersion: Int = Build.VERSION.SDK_INT
     override val allowScreenshotsDefaultValue: Boolean =
         BuildConfig.ALLOW_SCREENSHOTS_DEFAULT_VALUE
+
+    private val packageInfo by lazy {
+        runCatching { context.packageManager.getPackageInfo(context.packageName, 0) }
+    }
+    override val firstInstallTime: Result<Long> get() = packageInfo.map { it.firstInstallTime }
+    override val lastUpdateTime: Result<Long> get() = packageInfo.map { it.lastUpdateTime }
 }

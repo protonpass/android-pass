@@ -80,7 +80,8 @@ object ApplicationModule {
 
     @Provides
     @Singleton
-    fun provideAppConfig(environmentConfig: EnvironmentConfiguration): AppConfig = PassAppConfig(environmentConfig)
+    fun provideAppConfig(@ApplicationContext context: Context, environmentConfig: EnvironmentConfiguration): AppConfig =
+        PassAppConfig(context, environmentConfig)
 
     @Provides
     @Singleton

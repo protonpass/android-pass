@@ -30,6 +30,8 @@ class FakeAppConfig @Inject constructor() : AppConfig {
 
     private var androidVersionValue = Build.VERSION_CODES.TIRAMISU
     private var flavorValue: BuildFlavor = BuildFlavor.Play(BuildEnv.PROD)
+    private var firstInstallTimeValue: Result<Long> = Result.success(0L)
+    private var lastUpdateTimeValue: Result<Long> = Result.success(0L)
 
     override val isDebug: Boolean
         get() = false
@@ -57,6 +59,10 @@ class FakeAppConfig @Inject constructor() : AppConfig {
         get() = androidVersionValue
     override val allowScreenshotsDefaultValue: Boolean
         get() = true
+    override val firstInstallTime: Result<Long>
+        get() = firstInstallTimeValue
+    override val lastUpdateTime: Result<Long>
+        get() = lastUpdateTimeValue
 
     fun setAndroidVersion(value: Int) {
         androidVersionValue = value
@@ -64,5 +70,13 @@ class FakeAppConfig @Inject constructor() : AppConfig {
 
     fun setFlavor(value: BuildFlavor) {
         flavorValue = value
+    }
+
+    fun setFirstInstallTime(value: Result<Long>) {
+        firstInstallTimeValue = value
+    }
+
+    fun setLastUpdateTime(value: Result<Long>) {
+        lastUpdateTimeValue = value
     }
 }

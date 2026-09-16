@@ -35,9 +35,8 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.flow.firstOrNull
-import me.proton.core.accountmanager.domain.AccountManager
 import proton.android.pass.common.api.safeRunCatching
+import proton.android.pass.data.api.usecases.GetPrimaryUserId
 import proton.android.pass.data.api.usecases.ObserveVaults
 import proton.android.pass.data.api.usecases.attachments.AttachmentDownloadScheduler
 import proton.android.pass.data.api.usecases.attachments.GetVaultUsage
@@ -53,7 +52,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class AttachmentConfigViewModel @Inject constructor(
-    private val accountManager: AccountManager,
+    private val getPrimaryUserId: GetPrimaryUserId,
     observeVaults: ObserveVaults,
     private val setVaultOfflineAttachments: SetVaultOfflineAttachments,
     private val setSharedItemsOfflineAttachments: SetSharedItemsOfflineAttachments,
@@ -126,7 +125,7 @@ class AttachmentConfigViewModel @Inject constructor(
     private suspend fun loadVaultSizes(shareIds: List<ShareId>) {
         val missing = shareIds.filter { shareId -> shareId !in fetchedShareIds }
         if (missing.isEmpty()) return
-        val userId = accountManager.getPrimaryUserId().firstOrNull() ?: return
+        val userId = getPrimaryUserId() ?: return
         fetchedShareIds.addAll(missing)
         coroutineScope {
             val results = missing.map { shareId ->
@@ -179,7 +178,7 @@ class AttachmentConfigViewModel @Inject constructor(
     internal fun onStartClick() {
         viewModelScope.launch {
             val currentState = state.value
-            val userId = accountManager.getPrimaryUserId().firstOrNull()
+            val userId = getPrimaryUserId()
             if (userId == null) {
                 PassLogger.w(TAG, "Cannot start: userId not available")
                 return@launch

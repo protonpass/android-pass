@@ -18,10 +18,9 @@
 
 package proton.android.pass.data.impl.usecases
 
-import kotlinx.coroutines.flow.firstOrNull
-import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.api.repositories.BreachRepository
+import proton.android.pass.data.api.usecases.GetPrimaryUserId
 import proton.android.pass.data.api.usecases.RefreshBreaches
 import proton.android.pass.common.api.safeRunCatching
 import proton.android.pass.data.api.errors.UserIdNotAvailableError
@@ -29,7 +28,7 @@ import proton.android.pass.log.api.PassLogger
 import javax.inject.Inject
 
 class RefreshBreachesImpl @Inject constructor(
-    private val accountManager: AccountManager,
+    private val getPrimaryUserId: GetPrimaryUserId,
     private val breachRepository: BreachRepository
 ) : RefreshBreaches {
 
@@ -37,7 +36,7 @@ class RefreshBreachesImpl @Inject constructor(
         PassLogger.i(TAG, "Refreshing breaches for $userId")
         safeRunCatching {
             val resolvedUserId = userId
-                ?: accountManager.getPrimaryUserId().firstOrNull()
+                ?: getPrimaryUserId()
                 ?: throw UserIdNotAvailableError()
             breachRepository.refreshBreaches(resolvedUserId)
         }.onFailure { error ->

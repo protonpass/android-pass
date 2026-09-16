@@ -18,10 +18,8 @@
 
 package proton.android.pass.data.impl.usecases.extrapassword
 
-import kotlinx.coroutines.flow.firstOrNull
-import me.proton.core.accountmanager.domain.AccountManager
-import me.proton.core.accountmanager.domain.getPrimaryAccount
 import me.proton.core.domain.entity.UserId
+import proton.android.pass.data.api.usecases.GetPrimaryUserId
 import proton.android.pass.data.api.usecases.extrapassword.RemoveExtraPassword
 import proton.android.pass.data.impl.remote.RemoteExtraPasswordDataSource
 import proton.android.pass.data.impl.repositories.ExtraPasswordRepository
@@ -30,11 +28,11 @@ import javax.inject.Inject
 class RemoveExtraPasswordImpl @Inject constructor(
     private val remoteExtraPasswordDataSource: RemoteExtraPasswordDataSource,
     private val extraPasswordRepository: ExtraPasswordRepository,
-    private val accountManager: AccountManager
+    private val getPrimaryUserId: GetPrimaryUserId
 ) : RemoveExtraPassword {
 
     override suspend operator fun invoke(userId: UserId?) {
-        val actualUserId = userId ?: accountManager.getPrimaryAccount().firstOrNull()?.userId
+        val actualUserId = userId ?: getPrimaryUserId()
             ?: throw IllegalStateException("No primary account found")
 
         remoteExtraPasswordDataSource.removeExtraPassword(actualUserId)

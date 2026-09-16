@@ -27,16 +27,14 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
-import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import me.proton.core.account.domain.entity.AccountState
-import me.proton.core.accountmanager.domain.AccountManager
-import me.proton.core.accountmanager.domain.getAccounts
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.appconfig.api.AppConfig
+import proton.android.pass.data.api.usecases.DisableAccount
+import proton.android.pass.data.api.usecases.GetReadyAccounts
 import proton.android.pass.appconfig.api.BuildFlavor.Companion.supportPayment
 import proton.android.pass.biometry.NeedsBiometricAuth
 import proton.android.pass.common.api.combineN
@@ -66,7 +64,8 @@ internal class PasskeyCredentialSelectionViewModel @Inject constructor(
     userPreferenceRepository: UserPreferencesRepository,
     needsBiometricAuth: NeedsBiometricAuth,
     appConfig: AppConfig,
-    private val accountManager: AccountManager,
+    private val getReadyAccounts: GetReadyAccounts,
+    private val disableAccount: DisableAccount,
     private val toastManager: ToastManager,
     private val internalSettingsRepository: InternalSettingsRepository,
     private val authenticateWithPasskey: AuthenticateWithPasskey,
@@ -239,14 +238,13 @@ internal class PasskeyCredentialSelectionViewModel @Inject constructor(
     internal fun onSignOut(userId: UserId) {
         viewModelScope.launch {
             internalSettingsRepository.setMasterPasswordAttemptsCount(userId, 0)
-            accountManager.disableAccount(userId)
+            disableAccount(userId)
             toastManager.showToast(R.string.passkey_credential_selection_logged_out)
 
-            accountManager.getAccounts(AccountState.Ready)
-                .firstOrNull()
-                ?.filterNot { it.userId == userId }
-                ?.isNotEmpty()
-                ?.also { hasAccountsLeft ->
+            getReadyAccounts()
+                .filterNot { it.userId == userId }
+                .isNotEmpty()
+                .also { hasAccountsLeft ->
                     if (!hasAccountsLeft) {
                         closeScreenFlow.update { true }
                     }

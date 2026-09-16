@@ -24,9 +24,7 @@ import android.content.Intent
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.credentials.provider.CreateEntry
-import kotlinx.coroutines.flow.first
-import me.proton.core.accountmanager.domain.AccountManager
-import me.proton.core.accountmanager.domain.getPrimaryAccount
+import proton.android.pass.data.api.usecases.GetPrimaryAccount
 import proton.android.pass.features.credentials.passkeys.creation.ui.PasskeyCredentialCreationActivity
 import proton.android.pass.features.credentials.shared.passkeys.events.PasskeyCredentialsTelemetryEvent
 import proton.android.pass.telemetry.api.TelemetryManager
@@ -34,12 +32,11 @@ import javax.inject.Inject
 
 @RequiresApi(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
 internal class PasskeyCredentialsCreatorImpl @Inject constructor(
-    private val accountManager: AccountManager,
+    private val getPrimaryAccount: GetPrimaryAccount,
     private val telemetryManager: TelemetryManager
 ) : PasskeyCredentialsCreator {
 
-    override suspend fun create(context: Context): List<CreateEntry> = accountManager.getPrimaryAccount()
-        .first()
+    override suspend fun create(context: Context): List<CreateEntry> = getPrimaryAccount()
         ?.let { account ->
             CreateEntry(
                 accountName = account.username.orEmpty(),

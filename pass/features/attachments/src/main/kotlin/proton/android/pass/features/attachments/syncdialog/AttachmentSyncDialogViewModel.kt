@@ -36,13 +36,14 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.onError
 import proton.android.pass.common.api.onSuccess
 import proton.android.pass.common.api.runCatching
 import proton.android.pass.common.api.safeRunCatching
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
+import proton.android.pass.data.api.usecases.GetPrimaryUserId
+import proton.android.pass.data.api.usecases.ObservePrimaryUserId
 import proton.android.pass.data.api.usecases.attachments.ObserveActiveAttachments
 import proton.android.pass.data.api.usecases.attachments.ObserveOfflineEnabledShareIds
 import proton.android.pass.data.api.usecases.attachments.RefreshAttachmentsForItems
@@ -78,7 +79,8 @@ import proton.android.pass.composecomponents.impl.R as ComposeR
 @HiltViewModel
 class AttachmentSyncDialogViewModel @Inject constructor(
     @ApplicationContext private val context: Context,
-    private val accountManager: AccountManager,
+    private val observePrimaryUserId: ObservePrimaryUserId,
+    private val getPrimaryUserId: GetPrimaryUserId,
     private val observeOfflineEnabledShareIds: ObserveOfflineEnabledShareIds,
     private val observeVaults: ObserveVaults,
     private val observeItems: ObserveItems,
@@ -97,8 +99,7 @@ class AttachmentSyncDialogViewModel @Inject constructor(
     private val vaultSizesState = MutableStateFlow<Map<ShareId, Long>>(emptyMap())
     private val inFlightShareIds = mutableSetOf<ShareId>()
 
-    internal val state: StateFlow<AttachmentSyncDialogState> = accountManager
-        .getPrimaryUserId()
+    internal val state: StateFlow<AttachmentSyncDialogState> = observePrimaryUserId()
         .flatMapLatest { userId ->
             userId?.let(::observeSyncState) ?: flowOf(AttachmentSyncDialogState.Empty)
         }
@@ -116,7 +117,7 @@ class AttachmentSyncDialogViewModel @Inject constructor(
 
     internal fun onRetryAttachment(attachment: Attachment) {
         viewModelScope.launch {
-            val userId = accountManager.getPrimaryUserId().firstOrNull() ?: return@launch
+            val userId = getPrimaryUserId() ?: return@launch
             runCatching {
                 updateAttachmentDownloadStatus(userId, attachment, AttachmentDownloadStatus.Downloading)
             }.onError { error ->
@@ -140,7 +141,7 @@ class AttachmentSyncDialogViewModel @Inject constructor(
 
     internal fun onRetryAll() {
         viewModelScope.launch {
-            val userId = accountManager.getPrimaryUserId().firstOrNull() ?: return@launch
+            val userId = getPrimaryUserId() ?: return@launch
             refreshFailedItemsState.update { emptySet() }
             safeRunCatching { downloadScheduler.scheduleAll(userId, force = true) }
                 .onFailure { error ->
@@ -391,7 +392,7 @@ class AttachmentSyncDialogViewModel @Inject constructor(
     }
 
     private suspend fun refreshAttachmentsForItemsWithFlag() {
-        val userId = accountManager.getPrimaryUserId().firstOrNull() ?: return
+        val userId = getPrimaryUserId() ?: return
         val shareIds = observeOfflineEnabledShareIds(userId).firstOrNull()
             ?: return
         if (shareIds.isEmpty()) return

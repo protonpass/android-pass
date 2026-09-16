@@ -29,7 +29,6 @@ import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import me.proton.core.accountmanager.domain.AccountManager
 import proton.android.pass.clipboard.api.ClipboardManager
 import proton.android.pass.common.api.AppDispatchers
 import proton.android.pass.common.api.None
@@ -45,6 +44,7 @@ import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.errors.InvalidContentFormatVersionError
 import proton.android.pass.data.api.repositories.PendingAttachmentLinkRepository
+import proton.android.pass.data.api.usecases.ObservePrimaryUserId
 import proton.android.pass.data.api.usecases.CanPerformPaidAction
 import proton.android.pass.data.api.usecases.GetItemById
 import proton.android.pass.data.api.usecases.ObserveItemById
@@ -84,7 +84,7 @@ import javax.inject.Inject
 @Suppress("LongParameterList")
 @HiltViewModel
 class UpdateNoteViewModel @Inject constructor(
-    private val accountManager: AccountManager,
+    private val observePrimaryUserId: ObservePrimaryUserId,
     private val getItemById: GetItemById,
     private val updateItem: UpdateItem,
     private val snackbarDispatcher: SnackbarDispatcher,
@@ -215,7 +215,7 @@ class UpdateNoteViewModel @Inject constructor(
         if (!isFormStateValid(originalCustomFields)) return@launch
 
         isLoadingState.update { IsLoadingState.Loading }
-        val userId = accountManager.getPrimaryUserId()
+        val userId = observePrimaryUserId()
             .first { userId -> userId != null }
         if (userId != null && initialItem is Some) {
             val contents = noteItemFormMutableState.toItemContents()

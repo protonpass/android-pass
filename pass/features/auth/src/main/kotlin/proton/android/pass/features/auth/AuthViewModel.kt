@@ -45,11 +45,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import me.proton.core.account.domain.entity.Account
 import me.proton.core.account.domain.entity.AccountState
-import me.proton.core.accountmanager.domain.AccountManager
-import me.proton.core.accountmanager.domain.getAccounts
-import me.proton.core.accountmanager.domain.getPrimaryAccount
 import me.proton.core.domain.entity.UserId
-import me.proton.core.user.domain.UserManager
 import proton.android.pass.biometry.BiometryAuthError
 import proton.android.pass.biometry.BiometryManager
 import proton.android.pass.biometry.BiometryResult
@@ -74,7 +70,11 @@ import proton.android.pass.data.api.errors.TooManyExtraPasswordAttemptsException
 import proton.android.pass.data.api.errors.UserIdNotAvailableError
 import proton.android.pass.data.api.errors.WrongExtraPasswordException
 import proton.android.pass.data.api.usecases.CheckMasterPassword
+import proton.android.pass.data.api.usecases.GetUser
+import proton.android.pass.data.api.usecases.ObserveAccounts
+import proton.android.pass.data.api.usecases.ObservePrimaryAccount
 import proton.android.pass.data.api.usecases.ObserveUserEmail
+import proton.android.pass.data.api.usecases.SetAsPrimary
 import proton.android.pass.data.api.usecases.SetPasswordOnlyLock
 import proton.android.pass.data.api.usecases.extrapassword.AuthWithExtraPassword
 import proton.android.pass.data.api.usecases.extrapassword.CheckLocalExtraPassword
@@ -108,8 +108,10 @@ class AuthViewModel @Inject constructor(
     private val checkLocalExtraPassword: CheckLocalExtraPassword,
     private val removeExtraPassword: RemoveExtraPassword,
     private val snackbarDispatcher: SnackbarDispatcher,
-    private val accountManager: AccountManager,
-    private val userManager: UserManager,
+    private val observeAccounts: ObserveAccounts,
+    private val observePrimaryAccount: ObservePrimaryAccount,
+    private val getUser: GetUser,
+    private val setAsPrimary: SetAsPrimary,
     private val appDispatchers: AppDispatchers,
     private val setPasswordOnlyLock: SetPasswordOnlyLock,
     hasExtraPassword: HasExtraPassword,
@@ -149,8 +151,8 @@ class AuthViewModel @Inject constructor(
     private val accountSwitcherFlow: Flow<AccountSwitcherState> =
         if (origin == AuthOrigin.AUTO_LOCK) {
             combine(
-                accountManager.getAccounts(AccountState.Ready),
-                accountManager.getPrimaryAccount()
+                observeAccounts().map { accounts -> accounts.filter { it.state == AccountState.Ready } },
+                observePrimaryAccount()
             ) { accounts: List<Account>, primaryAccount: Account? ->
                 val orderedAccounts = orderAccountsByPrimary(accounts, primaryAccount)
                 AccountSwitcherState(orderedAccounts.toPersistentMap())
@@ -161,7 +163,7 @@ class AuthViewModel @Inject constructor(
 
     private val currentUserId = combine(
         flowOf(userId.value()),
-        accountManager.getPrimaryAccount().map { it?.userId }
+        observePrimaryAccount().map { it?.userId }
     ) { userId, primaryAccountUserId ->
         userId ?: primaryAccountUserId
     }.filterNotNull()
@@ -242,7 +244,7 @@ class AuthViewModel @Inject constructor(
         account: Account,
         primaryAccount: Account?
     ): proton.android.pass.features.auth.AccountItem {
-        val email = userManager.getUser(account.userId).email.orEmpty()
+        val email = getUser(account.userId).email.orEmpty()
         val isPrimary = primaryAccount?.userId == account.userId
         return proton.android.pass.features.auth.AccountItem(
             email = email,
@@ -251,7 +253,7 @@ class AuthViewModel @Inject constructor(
     }
 
     fun onAccountSwitch(userId: UserId) = viewModelScope.launch {
-        accountManager.setAsPrimary(userId)
+        setAsPrimary(userId)
     }
 
     private fun shouldShowExtraPassword(hasExtraPassword: LoadingResult<Boolean>) = when (hasExtraPassword) {

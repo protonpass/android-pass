@@ -21,9 +21,9 @@ package proton.android.pass.data.impl.repositories
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import me.proton.core.domain.entity.UserId
-import me.proton.core.user.domain.UserManager
 import me.proton.core.user.domain.extension.isNotOrganizationUser
 import proton.android.pass.data.api.repositories.OrganizationSettingsRepository
+import proton.android.pass.data.api.usecases.GetUser
 import proton.android.pass.data.impl.db.entities.PassOrganizationSettingsEntity
 import proton.android.pass.data.impl.local.LocalOrganizationSettingsDataSource
 import proton.android.pass.data.impl.remote.RemoteOrganizationSettingsDataSource
@@ -43,13 +43,13 @@ import javax.inject.Inject
 class OrganizationSettingsRepositoryImpl @Inject constructor(
     private val local: LocalOrganizationSettingsDataSource,
     private val remote: RemoteOrganizationSettingsDataSource,
-    private val userManager: UserManager
+    private val getUser: GetUser
 ) : OrganizationSettingsRepository {
 
     override fun observe(userId: UserId): Flow<OrganizationSettings?> = local.observe(userId).map { it?.toDomain() }
 
     override suspend fun refresh(userId: UserId) {
-        val hasOrganization = !userManager.getUser(userId)
+        val hasOrganization = !getUser(userId)
             .isNotOrganizationUser()
         val response = remote.request(userId)
         val entity = response.toEntity(userId, hasOrganization)

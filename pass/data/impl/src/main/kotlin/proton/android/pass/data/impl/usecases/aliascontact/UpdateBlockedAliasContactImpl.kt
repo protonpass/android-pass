@@ -18,10 +18,9 @@
 
 package proton.android.pass.data.impl.usecases.aliascontact
 
-import kotlinx.coroutines.flow.first
-import me.proton.core.accountmanager.domain.AccountManager
 import proton.android.pass.data.api.errors.UserIdNotAvailableError
 import proton.android.pass.data.api.repositories.AliasContactsRepository
+import proton.android.pass.data.api.usecases.GetPrimaryUserId
 import proton.android.pass.data.api.usecases.aliascontact.UpdateBlockedAliasContact
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
@@ -30,7 +29,7 @@ import proton.android.pass.domain.aliascontacts.ContactId
 import javax.inject.Inject
 
 class UpdateBlockedAliasContactImpl @Inject constructor(
-    private val accountManager: AccountManager,
+    private val getPrimaryUserId: GetPrimaryUserId,
     private val aliasContactsRepository: AliasContactsRepository
 ) : UpdateBlockedAliasContact {
 
@@ -40,7 +39,7 @@ class UpdateBlockedAliasContactImpl @Inject constructor(
         contactId: ContactId,
         blocked: Boolean
     ): Contact {
-        val userId = accountManager.getPrimaryUserId().first()
+        val userId = getPrimaryUserId()
             ?: throw UserIdNotAvailableError()
         return aliasContactsRepository.updateBlockedAliasContact(
             userId,

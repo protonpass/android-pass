@@ -45,7 +45,11 @@ import proton.android.pass.commonui.fakes.FakeSavedStateHandleProvider
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.crypto.fakes.context.FakeEncryptionContextProvider
 import proton.android.pass.data.fakes.usecases.FakeCheckMasterPassword
+import proton.android.pass.data.fakes.usecases.FakeGetUser
+import proton.android.pass.data.fakes.usecases.FakeObserveAccounts
+import proton.android.pass.data.fakes.usecases.FakeObservePrimaryAccount
 import proton.android.pass.data.fakes.usecases.FakeObserveUserEmail
+import proton.android.pass.data.fakes.usecases.FakeSetAsPrimary
 import proton.android.pass.data.fakes.usecases.FakeSetPasswordOnlyLock
 import proton.android.pass.data.fakes.usecases.accesskey.FakeAuthWithExtraPassword
 import proton.android.pass.data.fakes.usecases.accesskey.FakeCheckLocalExtraPassword
@@ -66,8 +70,7 @@ internal class AuthViewModelTest {
     private lateinit var preferenceRepository: FakePreferenceRepository
     private lateinit var biometryManager: FakeBiometryManager
     private lateinit var checkMasterPassword: FakeCheckMasterPassword
-    private lateinit var userManager: FakeUserManager
-    private lateinit var accountManager: FakeAccountManager
+    private lateinit var getUser: FakeGetUser
     private lateinit var internalSettingsRepository: FakeInternalSettingsRepository
     private lateinit var setPasswordOnlyLock: FakeSetPasswordOnlyLock
 
@@ -79,10 +82,17 @@ internal class AuthViewModelTest {
         preferenceRepository = FakePreferenceRepository()
         biometryManager = FakeBiometryManager()
         checkMasterPassword = FakeCheckMasterPassword()
-        userManager = FakeUserManager()
-        accountManager = FakeAccountManager()
+        getUser = FakeGetUser().apply {
+            setResult(UserId(FakeAccountManager.USER_ID), FakeUserManager.DEFAULT_USER)
+        }
         internalSettingsRepository = FakeInternalSettingsRepository()
         setPasswordOnlyLock = FakeSetPasswordOnlyLock()
+        val observeAccounts = FakeObserveAccounts().apply {
+            emitAccounts(listOf(FakeAccountManager.DEFAULT_ACCOUNT))
+        }
+        val observePrimaryAccount = FakeObservePrimaryAccount().apply {
+            emitAccount(FakeAccountManager.DEFAULT_ACCOUNT)
+        }
         viewModel = AuthViewModel(
             preferenceRepository = preferenceRepository,
             biometryManager = biometryManager,
@@ -99,8 +109,10 @@ internal class AuthViewModelTest {
             snackbarDispatcher = FakeSnackbarDispatcher(),
             hasExtraPassword = FakeHasExtraPassword(),
             checkLocalExtraPassword = FakeCheckLocalExtraPassword(),
-            userManager = userManager,
-            accountManager = accountManager,
+            getUser = getUser,
+            setAsPrimary = FakeSetAsPrimary(),
+            observeAccounts = observeAccounts,
+            observePrimaryAccount = observePrimaryAccount,
             appDispatchers = FakeAppDispatchers(),
             setPasswordOnlyLock = setPasswordOnlyLock
         )

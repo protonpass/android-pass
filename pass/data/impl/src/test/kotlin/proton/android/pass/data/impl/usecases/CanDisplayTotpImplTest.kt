@@ -25,7 +25,7 @@ import kotlinx.datetime.Clock
 import me.proton.core.domain.entity.UserId
 import org.junit.Before
 import org.junit.Test
-import proton.android.pass.account.fakes.FakeAccountManager
+import proton.android.pass.data.fakes.usecases.FakeGetPrimaryUserId
 import proton.android.pass.data.fakes.usecases.FakeGetUserPlan
 import proton.android.pass.data.impl.fakes.FakeLocalItemDataSource
 import proton.android.pass.data.impl.fakes.FakeShareRepository
@@ -56,7 +56,7 @@ internal class CanDisplayTotpImplTest {
             getUserPlan = getUserPlan,
             localItemDataSource = dataSource,
             shareRepository = shareRepository,
-            accountManager = FakeAccountManager().apply { sendPrimaryUserId(USER_ID) }
+            getPrimaryUserId = FakeGetPrimaryUserId().apply { setResult(USER_ID) }
         )
     }
 

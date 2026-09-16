@@ -27,17 +27,17 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
+import proton.android.pass.data.api.usecases.SetAsPrimary
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.navigation.api.NavParamEncoder
 import javax.inject.Inject
 
 @HiltViewModel
 class ManageAccountConfirmationViewModel @Inject constructor(
-    private val accountManager: AccountManager,
+    private val setAsPrimary: SetAsPrimary,
     savedStateHandleProvider: SavedStateHandleProvider
 ) : ViewModel() {
 
@@ -62,7 +62,7 @@ class ManageAccountConfirmationViewModel @Inject constructor(
 
     fun switchAccount() {
         viewModelScope.launch {
-            accountManager.setAsPrimary(userId)
+            setAsPrimary(userId)
             eventFlow.update { ManageAccountConfirmationEvent.ToAccount }
         }
     }

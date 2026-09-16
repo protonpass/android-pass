@@ -61,7 +61,16 @@ import proton.android.pass.data.api.usecases.GetItemActions
 import proton.android.pass.data.api.usecases.GetItemByAliasEmail
 import proton.android.pass.data.api.usecases.GetItemById
 import proton.android.pass.data.api.usecases.GetItemsBySearchResult
+import proton.android.pass.data.api.usecases.DisableAccount
+import proton.android.pass.data.api.usecases.GetPrimaryAccount
+import proton.android.pass.data.api.usecases.ObservePrimaryAccount
+import proton.android.pass.data.api.usecases.ObservePrimaryUserId
+import proton.android.pass.data.api.usecases.ObserveUser
+import proton.android.pass.data.api.usecases.GetPrimaryUserId
+import proton.android.pass.data.api.usecases.GetReadyAccounts
+import proton.android.pass.data.api.usecases.GetUser
 import proton.android.pass.data.api.usecases.HasActiveAccount
+import proton.android.pass.data.api.usecases.SetAsPrimary
 import proton.android.pass.data.api.usecases.popularservices.GetPopularServices
 import proton.android.pass.data.api.usecases.GetPublicSuffixList
 import proton.android.pass.data.api.usecases.GetShareById
@@ -359,7 +368,16 @@ import proton.android.pass.data.impl.usecases.GetItemActionsImpl
 import proton.android.pass.data.impl.usecases.GetItemByAliasEmailImpl
 import proton.android.pass.data.impl.usecases.GetItemByIdImpl
 import proton.android.pass.data.impl.usecases.GetItemsBySearchResultImpl
+import proton.android.pass.data.impl.usecases.DisableAccountImpl
+import proton.android.pass.data.impl.usecases.GetPrimaryAccountImpl
+import proton.android.pass.data.impl.usecases.ObservePrimaryAccountImpl
+import proton.android.pass.data.impl.usecases.ObservePrimaryUserIdImpl
+import proton.android.pass.data.impl.usecases.ObserveUserImpl
+import proton.android.pass.data.impl.usecases.GetPrimaryUserIdImpl
+import proton.android.pass.data.impl.usecases.GetReadyAccountsImpl
+import proton.android.pass.data.impl.usecases.GetUserImpl
 import proton.android.pass.data.impl.usecases.HasActiveAccountImpl
+import proton.android.pass.data.impl.usecases.SetAsPrimaryImpl
 import proton.android.pass.data.impl.usecases.popularservices.GetPopularServicesImpl
 import proton.android.pass.data.impl.usecases.GetPublicSuffixListImpl
 import proton.android.pass.data.impl.usecases.GetShareByIdImpl
@@ -1561,6 +1579,33 @@ abstract class DataUseCaseModule {
 
     @[Binds Singleton]
     abstract fun bindHasActiveAccount(impl: HasActiveAccountImpl): HasActiveAccount
+
+    @[Binds Singleton]
+    abstract fun bindGetPrimaryUserId(impl: GetPrimaryUserIdImpl): GetPrimaryUserId
+
+    @[Binds Singleton]
+    abstract fun bindGetReadyAccounts(impl: GetReadyAccountsImpl): GetReadyAccounts
+
+    @[Binds Singleton]
+    abstract fun bindGetPrimaryAccount(impl: GetPrimaryAccountImpl): GetPrimaryAccount
+
+    @[Binds Singleton]
+    abstract fun bindDisableAccount(impl: DisableAccountImpl): DisableAccount
+
+    @[Binds Singleton]
+    abstract fun bindSetAsPrimary(impl: SetAsPrimaryImpl): SetAsPrimary
+
+    @[Binds Singleton]
+    abstract fun bindGetUser(impl: GetUserImpl): GetUser
+
+    @[Binds Singleton]
+    abstract fun bindObservePrimaryUserId(impl: ObservePrimaryUserIdImpl): ObservePrimaryUserId
+
+    @[Binds Singleton]
+    abstract fun bindObservePrimaryAccount(impl: ObservePrimaryAccountImpl): ObservePrimaryAccount
+
+    @[Binds Singleton]
+    abstract fun bindObserveUser(impl: ObserveUserImpl): ObserveUser
 
     @[Binds Singleton]
     abstract fun bindAddOnePasswordHistoryEntryToUser(

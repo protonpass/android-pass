@@ -18,10 +18,9 @@
 
 package proton.android.pass.data.impl.usecases.aliascontact
 
-import kotlinx.coroutines.flow.first
-import me.proton.core.accountmanager.domain.AccountManager
 import proton.android.pass.data.api.errors.UserIdNotAvailableError
 import proton.android.pass.data.api.repositories.AliasContactsRepository
+import proton.android.pass.data.api.usecases.GetPrimaryUserId
 import proton.android.pass.data.api.usecases.aliascontact.DeleteAliasContact
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
@@ -29,7 +28,7 @@ import proton.android.pass.domain.aliascontacts.ContactId
 import javax.inject.Inject
 
 class DeleteAliasContactImpl @Inject constructor(
-    private val accountManager: AccountManager,
+    private val getPrimaryUserId: GetPrimaryUserId,
     private val aliasContactsRepository: AliasContactsRepository
 ) : DeleteAliasContact {
 
@@ -38,7 +37,7 @@ class DeleteAliasContactImpl @Inject constructor(
         itemId: ItemId,
         contactId: ContactId
     ) {
-        val userId = accountManager.getPrimaryUserId().first() ?: throw UserIdNotAvailableError()
+        val userId = getPrimaryUserId() ?: throw UserIdNotAvailableError()
         aliasContactsRepository.deleteAliasContact(userId, shareId, itemId, contactId)
     }
 }

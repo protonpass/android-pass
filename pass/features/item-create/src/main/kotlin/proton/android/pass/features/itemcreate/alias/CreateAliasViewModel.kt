@@ -39,7 +39,6 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import me.proton.core.accountmanager.domain.AccountManager
 import proton.android.pass.clipboard.api.ClipboardManager
 import proton.android.pass.common.api.AppDispatchers
 import proton.android.pass.common.api.LoadingResult
@@ -61,6 +60,7 @@ import proton.android.pass.data.api.errors.AliasRateLimitError
 import proton.android.pass.data.api.errors.CannotCreateMoreAliasesError
 import proton.android.pass.data.api.errors.EmailNotValidatedError
 import proton.android.pass.data.api.repositories.DraftRepository
+import proton.android.pass.data.api.usecases.ObservePrimaryUserId
 import proton.android.pass.data.api.usecases.CanPerformPaidAction
 import proton.android.pass.data.api.usecases.CreateAlias
 import proton.android.pass.data.api.usecases.ObserveAliasOptions
@@ -111,7 +111,7 @@ import javax.inject.Inject
 @Suppress("LongParameterList")
 @HiltViewModel
 open class CreateAliasViewModel @Inject constructor(
-    private val accountManager: AccountManager,
+    private val observePrimaryUserId: ObservePrimaryUserId,
     private val observeFolder: ObserveFolder,
     private val observeFoldersByParentId: ObserveFoldersByParentId,
     private val createAlias: CreateAlias,
@@ -196,7 +196,7 @@ open class CreateAliasViewModel @Inject constructor(
     private val defaultVaultFlow = observeDefaultVault()
 
     private val selectedFolderNameFlow = getFolderNameFlow(
-        accountManager = accountManager,
+        observePrimaryUserId = observePrimaryUserId,
         observeFolder = observeFolder,
         selectedShareIdState = selectedShareIdState,
         selectedFolderIdFlow = selectedFolderIdState,
@@ -417,7 +417,7 @@ open class CreateAliasViewModel @Inject constructor(
         aliasSuffix: AliasSuffixUiModel,
         mailboxes: Set<AliasMailboxUiModel>
     ) {
-        val userId = accountManager.getPrimaryUserId().first { userId -> userId != null }
+        val userId = observePrimaryUserId().first { userId -> userId != null }
         if (userId != null) {
             safeRunCatching {
                 createAlias(

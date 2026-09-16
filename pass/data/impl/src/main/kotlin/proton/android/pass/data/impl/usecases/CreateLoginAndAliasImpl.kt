@@ -18,11 +18,11 @@
 
 package proton.android.pass.data.impl.usecases
 
-import kotlinx.coroutines.flow.first
-import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.domain.entity.UserId
+import proton.android.pass.data.api.errors.UserIdNotAvailableError
 import proton.android.pass.data.api.repositories.ItemRepository
 import proton.android.pass.data.api.usecases.CreateLoginAndAlias
+import proton.android.pass.data.api.usecases.GetPrimaryUserId
 import proton.android.pass.domain.FolderId
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemContents
@@ -31,7 +31,7 @@ import proton.android.pass.domain.entity.NewAlias
 import javax.inject.Inject
 
 class CreateLoginAndAliasImpl @Inject constructor(
-    private val accountManager: AccountManager,
+    private val getPrimaryUserId: GetPrimaryUserId,
     private val itemRepository: ItemRepository
 ) : CreateLoginAndAlias {
 
@@ -42,7 +42,7 @@ class CreateLoginAndAliasImpl @Inject constructor(
         itemContents: ItemContents.Login,
         newAlias: NewAlias
     ): Item {
-        val id = userId ?: requireNotNull(accountManager.getPrimaryUserId().first())
+        val id = userId ?: getPrimaryUserId() ?: throw UserIdNotAvailableError()
         return createItemAndAlias(id, shareId, folderId, itemContents, newAlias)
     }
 

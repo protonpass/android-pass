@@ -18,25 +18,24 @@
 
 package proton.android.pass.data.impl.usecases
 
-import kotlinx.coroutines.flow.first
-import me.proton.core.accountmanager.domain.AccountManager
 import proton.android.pass.common.api.safeRunCatching
 import proton.android.pass.data.api.errors.UserIdNotAvailableError
 import proton.android.pass.data.api.repositories.ShareMembersRepository
 import proton.android.pass.data.api.repositories.ShareRepository
+import proton.android.pass.data.api.usecases.GetPrimaryUserId
 import proton.android.pass.data.api.usecases.RemoveShareMember
 import proton.android.pass.domain.ShareId
 import proton.android.pass.log.api.PassLogger
 import javax.inject.Inject
 
 class RemoveShareMemberImpl @Inject constructor(
-    private val accountManager: AccountManager,
+    private val getPrimaryUserId: GetPrimaryUserId,
     private val shareMemberRepository: ShareMembersRepository,
     private val shareRepository: ShareRepository
 ) : RemoveShareMember {
 
     override suspend fun invoke(shareId: ShareId, memberShareId: ShareId) {
-        val userId = accountManager.getPrimaryUserId().first()
+        val userId = getPrimaryUserId()
             ?: throw UserIdNotAvailableError()
         shareMemberRepository.deleteShareMember(userId, shareId, memberShareId)
         safeRunCatching {

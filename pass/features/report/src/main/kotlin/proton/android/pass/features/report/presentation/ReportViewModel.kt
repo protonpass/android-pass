@@ -33,16 +33,15 @@ import kotlinx.collections.immutable.toPersistentList
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import me.proton.core.accountmanager.domain.AccountManager
-import me.proton.core.user.domain.UserManager
 import proton.android.pass.autofill.api.AutofillManager
 import proton.android.pass.common.api.AppDispatchers
 import proton.android.pass.common.api.FlowUtils.oneShot
+import proton.android.pass.data.api.usecases.GetPrimaryUserId
+import proton.android.pass.data.api.usecases.GetUser
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.onError
@@ -67,8 +66,8 @@ import javax.inject.Inject
 class ReportViewModel @Inject constructor(
     @param:ApplicationContext private val context: Context,
     savedStateHandleProvider: SavedStateHandleProvider,
-    accountManager: AccountManager,
-    userManager: UserManager,
+    private val getPrimaryUserId: GetPrimaryUserId,
+    private val getUser: GetUser,
     private val autofillManager: AutofillManager,
     private val sendReport: SendReport,
     private val snackbarDispatcher: SnackbarDispatcher,
@@ -82,8 +81,8 @@ class ReportViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
-            val userId = accountManager.getPrimaryUserId().firstOrNull()
-            val user = userId?.let { userManager.getUser(it) }
+            val userId = getPrimaryUserId()
+            val user = userId?.let { getUser(it) }
             val email = user?.email ?: "unknown"
             val username = user?.name ?: userId?.id ?: "unknown"
             formState = ReportFormData(email = email, username = username)

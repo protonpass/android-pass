@@ -31,14 +31,14 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.biometry.StoreAuthSuccessful
 import proton.android.pass.biometry.UnlockMethod
+import proton.android.pass.data.api.usecases.GetPrimaryUserId
+import proton.android.pass.data.api.usecases.ObservePrimaryUserId
 import proton.android.pass.common.api.CommonRegex
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
@@ -62,11 +62,12 @@ import kotlin.time.Duration.Companion.seconds
 
 @HiltViewModel
 class EnterPinViewModel @Inject constructor(
-    private val accountManager: AccountManager,
+    private val observePrimaryUserId: ObservePrimaryUserId,
     private val checkPin: CheckPin,
     private val storeAuthSuccessful: StoreAuthSuccessful,
     private val internalSettingsRepository: InternalSettingsRepository,
     private val snackbarDispatcher: SnackbarDispatcher,
+    private val getPrimaryUserId: GetPrimaryUserId,
     savedStateHandleProvider: SavedStateHandleProvider
 ) : ViewModel() {
 
@@ -91,7 +92,7 @@ class EnterPinViewModel @Inject constructor(
         eventState,
         pinErrorState,
         isLoading,
-        accountManager.getPrimaryUserId().filterNotNull(),
+        observePrimaryUserId().filterNotNull(),
         EnterPinUiState::Data
     ).stateIn(
         scope = viewModelScope,
@@ -127,7 +128,7 @@ class EnterPinViewModel @Inject constructor(
                     val remainingAttempts = MAX_PIN_ATTEMPTS - attemptsCount
                     if (remainingAttempts <= 0) {
                         PassLogger.w(TAG, "Too many wrong attempts, logging user out")
-                        val userId = accountManager.getPrimaryUserId().firstOrNull()
+                        val userId = getPrimaryUserId()
                             ?: throw UserIdNotAvailableError()
                         when (origin) {
                             AuthOrigin.CONFIGURE_PIN_OR_BIOMETRY -> {

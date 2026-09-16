@@ -28,7 +28,7 @@ import me.proton.core.domain.entity.UserId
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import proton.android.pass.account.fakes.FakeAccountManager
+import proton.android.pass.data.fakes.usecases.FakeObservePrimaryUserId
 import proton.android.pass.clipboard.fakes.FakeClipboardManager
 import proton.android.pass.common.fakes.FakeAppDispatchers
 import proton.android.pass.commonpresentation.fakes.attachments.FakeAttachmentHandler
@@ -110,8 +110,8 @@ class CreateCreditCardViewModelTest {
         getItemById = FakeGetItemById()
         fakeCanCreateItemsInFolder = FakeCanCreateItemsInFolder()
         instance = CreateCreditCardViewModel(
-            accountManager = FakeAccountManager().apply {
-                sendPrimaryUserId(UserId("user-id"))
+            observePrimaryUserId = FakeObservePrimaryUserId().apply {
+                emitUserId(UserId("user-id"))
             },
             createItem = createItem,
             snackbarDispatcher = snackbarDispatcher,

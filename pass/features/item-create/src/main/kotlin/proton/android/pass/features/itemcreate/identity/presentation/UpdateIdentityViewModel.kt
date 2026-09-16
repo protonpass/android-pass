@@ -25,12 +25,11 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
-import me.proton.core.accountmanager.domain.AccountManager
 import proton.android.pass.common.api.Some
+import proton.android.pass.data.api.usecases.GetPrimaryUserId
 import proton.android.pass.common.api.safeRunCatching
 import proton.android.pass.commonui.api.ClassHolder
 import proton.android.pass.commonui.api.SavedStateHandleProvider
@@ -73,7 +72,7 @@ class UpdateIdentityViewModel @Inject constructor(
     private val identityActionsProvider: IdentityActionsProvider,
     private val telemetryManager: TelemetryManager,
     private val snackbarDispatcher: SnackbarDispatcher,
-    private val accountManager: AccountManager,
+    private val getPrimaryUserId: GetPrimaryUserId,
     private val encryptionContextProvider: EncryptionContextProvider,
     private val pendingAttachmentLinkRepository: PendingAttachmentLinkRepository,
     savedStateHandleProvider: SavedStateHandleProvider,
@@ -168,7 +167,7 @@ class UpdateIdentityViewModel @Inject constructor(
         runCatching {
             val item = identityActionsProvider.getReceivedItem()
             val contents = identityActionsProvider.getFormState().toItemContents()
-            val userId = accountManager.getPrimaryUserId().first()
+            val userId = getPrimaryUserId()
                 ?: throw IllegalStateException("User id is null")
             val hasContentsChanged = encryptionContextProvider.withEncryptionContextSuspendable {
                 !areItemContentsEqual(

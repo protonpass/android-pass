@@ -18,21 +18,20 @@
 
 package proton.android.pass.data.impl.usecases
 
-import kotlinx.coroutines.flow.firstOrNull
-import me.proton.core.accountmanager.domain.AccountManager
 import proton.android.pass.data.api.errors.UserIdNotAvailableError
 import proton.android.pass.data.api.repositories.ShareRepository
 import proton.android.pass.data.api.usecases.BatchChangeShareVisibility
+import proton.android.pass.data.api.usecases.GetPrimaryUserId
 import proton.android.pass.domain.ShareId
 import javax.inject.Inject
 
 class BatchChangeShareVisibilityImpl @Inject constructor(
-    private val accountManager: AccountManager,
+    private val getPrimaryUserId: GetPrimaryUserId,
     private val shareRepository: ShareRepository
 ) : BatchChangeShareVisibility {
 
     override suspend fun invoke(shareVisibilityChanges: Map<ShareId, Boolean>) {
-        val primaryUserId = accountManager.getPrimaryUserId().firstOrNull()
+        val primaryUserId = getPrimaryUserId()
         if (primaryUserId != null) {
             shareRepository.batchChangeShareVisibility(primaryUserId, shareVisibilityChanges)
         } else {

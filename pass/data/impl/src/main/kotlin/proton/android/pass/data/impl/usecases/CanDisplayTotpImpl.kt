@@ -19,15 +19,14 @@
 package proton.android.pass.data.impl.usecases
 
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
-import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.api.repositories.ShareRepository
 import proton.android.pass.data.api.usecases.CanDisplayTotp
+import proton.android.pass.data.api.usecases.GetPrimaryUserId
 import proton.android.pass.data.api.usecases.GetUserPlan
 import proton.android.pass.data.impl.local.LocalItemDataSource
 import proton.android.pass.domain.ItemId
@@ -40,7 +39,7 @@ import javax.inject.Singleton
 @Singleton
 class CanDisplayTotpImpl @Inject constructor(
     private val getUserPlan: GetUserPlan,
-    private val accountManager: AccountManager,
+    private val getPrimaryUserId: GetPrimaryUserId,
     private val localItemDataSource: LocalItemDataSource,
     private val shareRepository: ShareRepository
 ) : CanDisplayTotp {
@@ -86,6 +85,6 @@ class CanDisplayTotpImpl @Inject constructor(
         }
 
     private suspend fun getUserId(userId: UserId?): UserId = userId
-        ?: accountManager.getPrimaryUserId().first()
+        ?: getPrimaryUserId()
         ?: throw IllegalStateException("UserId cannot be null")
 }

@@ -48,7 +48,6 @@ dependencies {
     implementation(libs.core.presentation)
     implementation(libs.core.presentation.compose)
     implementation(libs.core.account.domain)
-    implementation(libs.core.accountManager.domain)
     implementation(libs.core.deviceMigrationPresentation)
     implementation(libs.core.user.domain)
     implementation(libs.kotlinx.collections)

@@ -23,7 +23,7 @@ import kotlinx.coroutines.test.runTest
 import me.proton.core.domain.entity.UserId
 import org.junit.Before
 import org.junit.Test
-import proton.android.pass.account.fakes.FakeAccountManager
+import proton.android.pass.data.fakes.usecases.FakeGetPrimaryUserId
 import proton.android.pass.data.api.errors.UserIdNotAvailableError
 import proton.android.pass.data.fakes.repositories.FakeShareMembersRepository
 import proton.android.pass.data.impl.fakes.FakeShareRepository
@@ -34,19 +34,19 @@ import proton.android.pass.domain.shares.ShareMember
 
 class RemoveShareMemberImplTest {
 
-    private lateinit var accountManager: FakeAccountManager
+    private lateinit var getPrimaryUserId: FakeGetPrimaryUserId
     private lateinit var shareMembersRepository: FakeShareMembersRepository
     private lateinit var shareRepository: FakeShareRepository
     private lateinit var instance: RemoveShareMemberImpl
 
     @Before
     fun setUp() {
-        accountManager = FakeAccountManager()
+        getPrimaryUserId = FakeGetPrimaryUserId()
         shareMembersRepository = FakeShareMembersRepository()
         shareRepository = FakeShareRepository()
 
         instance = RemoveShareMemberImpl(
-            accountManager = accountManager,
+            getPrimaryUserId = getPrimaryUserId,
             shareMemberRepository = shareMembersRepository,
             shareRepository = shareRepository
         )
@@ -54,7 +54,7 @@ class RemoveShareMemberImplTest {
 
     @Test
     fun `removes member and updates member count`() = runTest {
-        accountManager.sendPrimaryUserId(USER_ID)
+        getPrimaryUserId.setResult(USER_ID)
         shareMembersRepository.setMembers(
             listOf(
                 ShareMember(
@@ -91,7 +91,7 @@ class RemoveShareMemberImplTest {
 
     @Test
     fun `throws when no primary user`() = runTest {
-        accountManager.sendPrimaryUserId(null)
+        getPrimaryUserId.setResult(null)
 
         runCatching { instance(shareId = SHARE_ID, memberShareId = MEMBER_SHARE_ID) }
             .also { assertThat(it.isFailure).isTrue() }
@@ -102,7 +102,7 @@ class RemoveShareMemberImplTest {
 
     @Test
     fun `member count update failure does not propagate — deletion succeeds`() = runTest {
-        accountManager.sendPrimaryUserId(USER_ID)
+        getPrimaryUserId.setResult(USER_ID)
         shareMembersRepository.setGetMembersTotalError(RuntimeException("network error"))
 
         // Should not throw even though the count refresh failed

@@ -18,12 +18,12 @@
 
 package proton.android.pass.data.impl.usecases
 
-import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.first
-import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.safeRunCatching
+import proton.android.pass.data.api.errors.UserIdNotAvailableError
 import proton.android.pass.data.api.repositories.UserInviteRepository
+import proton.android.pass.data.api.usecases.GetPrimaryUserId
 import proton.android.pass.data.api.usecases.RefreshUserInvites
 import proton.android.pass.domain.PendingGroupInvite
 import proton.android.pass.domain.PendingInvite
@@ -34,7 +34,7 @@ import proton.android.pass.notifications.api.NotificationManager
 import javax.inject.Inject
 
 class RefreshUserInvitesImpl @Inject constructor(
-    private val accountManager: AccountManager,
+    private val getPrimaryUserId: GetPrimaryUserId,
     private val userInviteRepository: UserInviteRepository,
     private val notificationManager: NotificationManager
 ) : RefreshUserInvites {
@@ -43,9 +43,7 @@ class RefreshUserInvitesImpl @Inject constructor(
         PassLogger.i(TAG, "Refreshing user invites started")
 
         safeRunCatching {
-            val currentUserId = userId ?: accountManager.getPrimaryUserId()
-                .filterNotNull()
-                .first()
+            val currentUserId = userId ?: getPrimaryUserId() ?: throw UserIdNotAvailableError()
 
             if (userInviteRepository.refreshInvites(currentUserId, eventToken)) {
                 userInviteRepository.observeInvites(currentUserId)

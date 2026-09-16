@@ -28,7 +28,7 @@ import me.proton.core.domain.entity.UserId
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import proton.android.pass.account.fakes.FakeAccountManager
+import proton.android.pass.data.fakes.usecases.FakeObservePrimaryUserId
 import proton.android.pass.clipboard.fakes.FakeClipboardManager
 import proton.android.pass.common.fakes.FakeAppDispatchers
 import proton.android.pass.commonpresentation.fakes.attachments.FakeAttachmentHandler
@@ -105,7 +105,7 @@ internal class CreateLoginNavItemViewModelTest {
     private lateinit var instance: CreateLoginViewModel
     private lateinit var totpManager: FakeTotpManager
     private lateinit var clipboardManager: FakeClipboardManager
-    private lateinit var accountManager: FakeAccountManager
+    private lateinit var observePrimaryUserId: FakeObservePrimaryUserId
     private lateinit var createItem: FakeCreateItem
     private lateinit var createItemAndAlias: FakeCreateLoginAndAlias
     private lateinit var observeVaults: FakeObserveVaultsWithItemCount
@@ -122,7 +122,7 @@ internal class CreateLoginNavItemViewModelTest {
     fun setUp() {
         totpManager = FakeTotpManager()
         clipboardManager = FakeClipboardManager()
-        accountManager = FakeAccountManager()
+        observePrimaryUserId = FakeObservePrimaryUserId().apply { emitUserId(UserId("user-id")) }
         createItem = FakeCreateItem()
         createItemAndAlias = FakeCreateLoginAndAlias()
         observeVaults = FakeObserveVaultsWithItemCount()
@@ -135,7 +135,7 @@ internal class CreateLoginNavItemViewModelTest {
         settingsRepository = FakeInternalSettingsRepository()
         setDefaultVault = FakeSetDefaultVault()
         instance = CreateLoginViewModel(
-            accountManager = accountManager,
+            observePrimaryUserId = observePrimaryUserId,
             createItem = createItem,
             clipboardManager = clipboardManager,
             totpManager = totpManager,
@@ -212,7 +212,7 @@ internal class CreateLoginNavItemViewModelTest {
 
         val titleInput = "Title input"
         instance.onTitleChange(titleInput)
-        accountManager.sendPrimaryUserId(UserId("user-id"))
+        observePrimaryUserId.emitUserId(UserId("user-id"))
         createItem.sendItem(Result.success(item))
 
         instance.createLoginUiState.test {
@@ -393,7 +393,7 @@ internal class CreateLoginNavItemViewModelTest {
             url = StringTestFactory.randomString()
         )
         instance.setInitialContents(initialContents)
-        accountManager.sendPrimaryUserId(UserId("UserId"))
+        observePrimaryUserId.emitUserId(UserId("UserId"))
         return initialContents
     }
 

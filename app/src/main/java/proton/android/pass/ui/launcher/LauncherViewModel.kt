@@ -56,7 +56,6 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
 import me.proton.core.account.domain.entity.Account
-import me.proton.core.account.domain.entity.AccountState.Ready
 import me.proton.core.account.domain.entity.isDisabled
 import me.proton.core.account.domain.entity.isReady
 import me.proton.core.account.domain.entity.isStepNeeded
@@ -80,9 +79,13 @@ import proton.android.pass.biometry.ResetAuthPreferences
 import proton.android.pass.common.api.AppDispatchers
 import proton.android.pass.common.api.safeRunCatching
 import proton.android.pass.commonrust.api.CommonLibraryVersionChecker
+import proton.android.pass.data.api.usecases.DisableAccount
+import proton.android.pass.data.api.usecases.GetPrimaryUserId
+import proton.android.pass.data.api.usecases.GetReadyAccounts
 import proton.android.pass.data.api.usecases.GetUserPlan
 import proton.android.pass.data.api.usecases.InitialWorkerLauncher
 import proton.android.pass.data.api.usecases.RefreshUserAccess
+import proton.android.pass.data.api.usecases.SetAsPrimary
 import proton.android.pass.data.api.usecases.passwordHistoryEntry.DeletePasswordHistoryEntryForUser
 import proton.android.pass.domain.Plan
 import proton.android.pass.inappupdates.api.InAppUpdatesManager
@@ -102,6 +105,9 @@ import kotlin.time.Duration.Companion.seconds
 @SuppressWarnings("LongParameterList", "TooManyFunctions")
 class LauncherViewModel @Inject constructor(
     private val accountManager: AccountManager,
+    private val getReadyAccounts: GetReadyAccounts,
+    private val disableAccount: DisableAccount,
+    private val setAsPrimaryAccount: SetAsPrimary,
     private val authOrchestrator: AuthOrchestrator,
     private val userSettingsOrchestrator: UserSettingsOrchestrator,
     private val initialWorkerLauncher: InitialWorkerLauncher,
@@ -116,7 +122,8 @@ class LauncherViewModel @Inject constructor(
     commonLibraryVersionChecker: CommonLibraryVersionChecker,
     private val appConfig: AppConfig,
     private val telemetryManager: TelemetryManager,
-    private val appDispatchers: AppDispatchers
+    private val appDispatchers: AppDispatchers,
+    private val getPrimaryUserId: GetPrimaryUserId
 ) : ViewModel() {
 
     init {
@@ -177,11 +184,11 @@ class LauncherViewModel @Inject constructor(
         accountManager.observe(context.lifecycle, Lifecycle.State.CREATED)
             .onAccountTwoPassModeFailed {
                 LogoutLogger.record(LogoutReason.AccountSetupTwoPassFailed)
-                accountManager.disableAccount(it.userId)
+                disableAccount(it.userId)
             }
             .onAccountCreateAddressFailed {
                 LogoutLogger.record(LogoutReason.AccountSetupCreateAddressFailed)
-                accountManager.disableAccount(it.userId)
+                disableAccount(it.userId)
             }
             .onSessionSecondFactorNeeded { authOrchestrator.startSecondFactorWorkflow(it) }
             .onAccountTwoPassModeNeeded { authOrchestrator.startTwoPassModeWorkflow(it) }
@@ -224,15 +231,14 @@ class LauncherViewModel @Inject constructor(
     internal fun disable(userId: UserId) = viewModelScope.launch {
         PassLogger.i(TAG, "Disabling account: $userId")
         snackbarDispatcher.reset()
-        accountManager.disableAccount(userId)
+        disableAccount(userId)
     }
 
     internal fun disableAll() = viewModelScope.launch {
         PassLogger.i(TAG, "Disabling all accounts")
         snackbarDispatcher.reset()
 
-        accountManager.getAccounts(Ready).firstOrNull()
-            ?.forEach { accountManager.disableAccount(it.userId) }
+        getReadyAccounts().forEach { disableAccount(it.userId) }
     }
 
     internal fun remove(userId: UserId) = viewModelScope.launch {
@@ -253,7 +259,7 @@ class LauncherViewModel @Inject constructor(
 
     private suspend fun setAsPrimary(userId: UserId) {
         PassLogger.i(TAG, "Setting account as primary: $userId")
-        accountManager.setAsPrimary(userId)
+        setAsPrimaryAccount(userId)
     }
 
     fun tryUpgrade(id: UserId? = null) {
@@ -347,7 +353,7 @@ class LauncherViewModel @Inject constructor(
 
     private suspend fun getAccountOrNull(it: UserId) = accountManager.getAccount(it).firstOrNull()
 
-    private suspend fun getPrimaryUserIdOrNull() = accountManager.getPrimaryUserId().firstOrNull()
+    private suspend fun getPrimaryUserIdOrNull() = getPrimaryUserId()
 
     internal fun cancelUpdateListener() {
         inAppUpdatesManager.tearDown()

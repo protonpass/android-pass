@@ -85,7 +85,6 @@ dependencies {
     implementation(libs.androidx.hilt.work)
     implementation(libs.androidx.lifecycle.runtime.compose)
     implementation(libs.androidx.work.runtime.ktx)
-    implementation(libs.core.accountManager.domain)
     implementation(libs.core.presentation)
     implementation(libs.core.presentation.compose)
     implementation(libs.core.utilKotlin)

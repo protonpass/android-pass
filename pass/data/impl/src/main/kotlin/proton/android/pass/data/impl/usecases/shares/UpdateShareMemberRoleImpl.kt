@@ -18,17 +18,16 @@
 
 package proton.android.pass.data.impl.usecases.shares
 
-import kotlinx.coroutines.flow.firstOrNull
-import me.proton.core.accountmanager.domain.AccountManager
 import proton.android.pass.data.api.errors.UserIdNotAvailableError
 import proton.android.pass.data.api.repositories.ShareMembersRepository
+import proton.android.pass.data.api.usecases.GetPrimaryUserId
 import proton.android.pass.data.api.usecases.shares.UpdateShareMemberRole
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.ShareRole
 import javax.inject.Inject
 
 class UpdateShareMemberRoleImpl @Inject constructor(
-    private val accountManager: AccountManager,
+    private val getPrimaryUserId: GetPrimaryUserId,
     private val shareMemberRepository: ShareMembersRepository
 ) : UpdateShareMemberRole {
 
@@ -37,8 +36,7 @@ class UpdateShareMemberRoleImpl @Inject constructor(
         memberShareId: ShareId,
         memberShareRole: ShareRole
     ) {
-        accountManager.getPrimaryUserId()
-            .firstOrNull()
+        getPrimaryUserId()
             ?.also { userId ->
                 shareMemberRepository.updateShareMember(
                     userId = userId,

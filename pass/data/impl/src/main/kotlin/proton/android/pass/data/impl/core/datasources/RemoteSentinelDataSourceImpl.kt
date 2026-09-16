@@ -18,17 +18,16 @@
 
 package proton.android.pass.data.impl.core.datasources
 
-import kotlinx.coroutines.flow.first
-import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.network.data.ApiProvider
 import me.proton.core.util.kotlin.toBoolean
 import proton.android.pass.data.api.core.datasources.RemoteSentinelDataSource
+import proton.android.pass.data.api.usecases.GetPrimaryUserId
 import proton.android.pass.data.impl.core.api.CoreApi
 import javax.inject.Inject
 
 class RemoteSentinelDataSourceImpl @Inject constructor(
     private val api: ApiProvider,
-    private val accountManager: AccountManager
+    private val getPrimaryUserId: GetPrimaryUserId
 ) : RemoteSentinelDataSource {
 
     override suspend fun disableSentinel() {
@@ -59,8 +58,7 @@ class RemoteSentinelDataSourceImpl @Inject constructor(
         .value
         .toBoolean()
 
-    private suspend fun getCoreApi() = accountManager.getPrimaryUserId()
-        .first()
+    private suspend fun getCoreApi() = getPrimaryUserId()
         .let { userId -> api.get<CoreApi>(userId) }
 
 }

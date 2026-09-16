@@ -18,17 +18,17 @@
 
 package proton.android.pass.data.impl.repositories
 
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.datetime.Clock
 import kotlinx.serialization.json.JsonPrimitive
-import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.domain.entity.UserId
 import me.proton.core.telemetry.domain.usecase.IsTelemetryEnabled
 import proton.android.pass.appconfig.api.AppConfig
 import proton.android.pass.appconfig.api.BuildFlavor.Companion.supportTelemetryGrowth
 import proton.android.pass.common.api.safeRunCatching
+import proton.android.pass.data.api.errors.UserIdNotAvailableError
 import proton.android.pass.data.api.repositories.TelemetryRepository
+import proton.android.pass.data.api.usecases.GetPrimaryUserId
 import proton.android.pass.data.api.usecases.GetUserPlan
 import proton.android.pass.data.impl.db.entities.TelemetryEntity
 import proton.android.pass.data.impl.db.entities.TelemetryGrowthEntity
@@ -55,7 +55,7 @@ class TelemetryRepositoryImpl @Inject constructor(
     private val remoteDataSource: RemoteTelemetryDataSource,
     private val remoteTelemetryGrowthDataSource: RemoteTelemetryGrowthDataSource,
     private val telemetryGrowthDeviceInfoProvider: TelemetryGrowthDeviceInfoProvider,
-    private val accountManager: AccountManager,
+    private val getPrimaryUserId: GetPrimaryUserId,
     private val getUserPlan: GetUserPlan,
     private val clock: Clock,
     private val isTelemetryEnabled: IsTelemetryEnabled,
@@ -75,7 +75,7 @@ class TelemetryRepositoryImpl @Inject constructor(
             }
 
             else -> {
-                val userId = requireNotNull(accountManager.getPrimaryUserId().first())
+                val userId = getPrimaryUserId() ?: throw UserIdNotAvailableError()
                 val entity = TelemetryEntity(
                     id = 0,
                     userId = userId.id,
@@ -120,7 +120,7 @@ class TelemetryRepositoryImpl @Inject constructor(
 
             else -> {
                 // userID is here just to be able to send the event with correct bearer
-                val userId = accountManager.getPrimaryUserId().first()
+                val userId = getPrimaryUserId()
                 if (userId != null) {
                     sendTelemetryGrowthEvents(userId, telemetryGrowthEvents)
                 } else {

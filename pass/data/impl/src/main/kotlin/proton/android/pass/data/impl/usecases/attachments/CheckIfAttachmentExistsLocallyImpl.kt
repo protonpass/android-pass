@@ -20,11 +20,10 @@ package proton.android.pass.data.impl.usecases.attachments
 
 import android.content.Context
 import dagger.hilt.android.qualifiers.ApplicationContext
-import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.withContext
-import me.proton.core.accountmanager.domain.AccountManager
 import proton.android.pass.common.api.AppDispatchers
 import proton.android.pass.data.api.repositories.AttachmentRepository
+import proton.android.pass.data.api.usecases.GetPrimaryUserId
 import proton.android.pass.data.api.usecases.attachments.CheckIfAttachmentExistsLocally
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
@@ -37,7 +36,7 @@ import javax.inject.Singleton
 @Singleton
 class CheckIfAttachmentExistsLocallyImpl @Inject constructor(
     @param:ApplicationContext private val context: Context,
-    private val accountManager: AccountManager,
+    private val getPrimaryUserId: GetPrimaryUserId,
     private val attachmentRepository: AttachmentRepository,
     private val appDispatchers: AppDispatchers
 ) : CheckIfAttachmentExistsLocally {
@@ -47,7 +46,7 @@ class CheckIfAttachmentExistsLocallyImpl @Inject constructor(
         itemId: ItemId,
         attachmentId: AttachmentId
     ): Boolean {
-        val userId = accountManager.getPrimaryUserId().firstOrNull() ?: return false
+        val userId = getPrimaryUserId() ?: return false
         val attachment =
             attachmentRepository.getAttachmentById(userId, shareId, itemId, attachmentId)
         return withContext(appDispatchers.io) {

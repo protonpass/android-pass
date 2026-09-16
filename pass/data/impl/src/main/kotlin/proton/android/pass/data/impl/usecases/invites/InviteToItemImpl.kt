@@ -22,8 +22,6 @@ import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
-import kotlinx.coroutines.flow.firstOrNull
-import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.domain.entity.UserId
 import me.proton.core.user.domain.entity.UserAddress
 import proton.android.pass.common.api.transpose
@@ -32,6 +30,7 @@ import proton.android.pass.data.api.errors.UserIdNotAvailableError
 import proton.android.pass.data.api.repositories.InviteTarget
 import proton.android.pass.data.api.repositories.ShareRepository
 import proton.android.pass.data.api.usecases.GetInviteUserMode
+import proton.android.pass.data.api.usecases.GetPrimaryUserId
 import proton.android.pass.data.api.usecases.InviteUserMode
 import proton.android.pass.data.api.usecases.invites.InviteToItem
 import proton.android.pass.data.impl.crypto.EncryptItemsKeysForUser
@@ -48,7 +47,7 @@ import proton.android.pass.domain.ShareType
 import javax.inject.Inject
 
 class InviteToItemImpl @Inject constructor(
-    private val accountManager: AccountManager,
+    private val getPrimaryUserId: GetPrimaryUserId,
     private val shareRepository: ShareRepository,
     private val getInviteUserMode: GetInviteUserMode,
     private val encryptItemsKeysForUser: EncryptItemsKeysForUser,
@@ -61,8 +60,7 @@ class InviteToItemImpl @Inject constructor(
         folderId: FolderId?,
         inviteTargets: List<InviteTarget>
     ) {
-        val userId = accountManager.getPrimaryUserId()
-            .firstOrNull()
+        val userId = getPrimaryUserId()
             ?: throw UserIdNotAvailableError()
 
         val existingUserInvitesAddresses = getUserInviteAddresses(userId, inviteTargets)

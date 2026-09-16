@@ -33,9 +33,6 @@ import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.withContext
-import me.proton.core.account.domain.entity.AccountState
-import me.proton.core.accountmanager.domain.AccountManager
-import me.proton.core.accountmanager.domain.getAccounts
 import me.proton.core.domain.entity.UserId
 import me.proton.core.user.domain.entity.AddressId
 import me.proton.core.user.domain.entity.UserAddress
@@ -58,6 +55,7 @@ import proton.android.pass.data.api.ItemCountSummary
 import proton.android.pass.data.api.ItemPendingEvent
 import proton.android.pass.data.api.crypto.GetShareAndItemKey
 import proton.android.pass.data.api.errors.ItemNotFoundError
+import proton.android.pass.data.api.errors.UserIdNotAvailableError
 import proton.android.pass.data.api.repositories.ItemRepository
 import proton.android.pass.data.api.repositories.ItemRevision
 import proton.android.pass.data.api.repositories.MigrateItemsResult
@@ -68,6 +66,8 @@ import proton.android.pass.data.api.repositories.SetShareItemsResult
 import proton.android.pass.data.api.repositories.ShareItemCount
 import proton.android.pass.data.api.repositories.ShareRepository
 import proton.android.pass.data.api.repositories.VaultProgress
+import proton.android.pass.data.api.usecases.GetPrimaryUserId
+import proton.android.pass.data.api.usecases.GetReadyAccounts
 import proton.android.pass.data.api.usecases.ItemTypeFilter
 import proton.android.pass.data.impl.db.PassDatabase
 import proton.android.pass.data.impl.db.entities.ItemEntity
@@ -125,7 +125,6 @@ import javax.inject.Inject
 @Suppress("LongParameterList", "TooManyFunctions", "LargeClass")
 class ItemRepositoryImpl @Inject constructor(
     private val database: PassDatabase,
-    private val accountManager: AccountManager,
     override val userAddressRepository: UserAddressRepository,
     private val shareRepository: ShareRepository,
     private val createItem: CreateItem,
@@ -140,7 +139,9 @@ class ItemRepositoryImpl @Inject constructor(
     private val folderKeyRepository: FolderKeyRepository,
     private val appDispatchers: AppDispatchers,
     private val featureFlagsRepository: FeatureFlagsPreferencesRepository,
-    private val searchIndexRepository: SearchIndexRepository
+    private val searchIndexRepository: SearchIndexRepository,
+    private val getPrimaryUserId: GetPrimaryUserId,
+    private val getReadyAccounts: GetReadyAccounts
 ) : BaseRepository(userAddressRepository), ItemRepository {
 
     private suspend fun isDomainMatchingEnabled(userId: UserId) = featureFlagsRepository.isDomainMatchingEnabled(userId)
@@ -1270,7 +1271,7 @@ class ItemRepositoryImpl @Inject constructor(
         localItemDataSource.observeItemCountSummary(request)
 
     override suspend fun updateItemLastUsed(vaultId: VaultId, itemId: ItemId) {
-        val readyUsers = accountManager.getAccounts(AccountState.Ready).firstOrNull() ?: emptyList()
+        val readyUsers = getReadyAccounts()
         PassLogger.i(TAG, "Updating last used time [vaultId=$vaultId][itemId=$itemId]")
 
         val now = TimeUtil.getNowUtc()
@@ -1590,7 +1591,7 @@ class ItemRepositoryImpl @Inject constructor(
         items: List<Pair<ShareId, ItemId>>,
         block: suspend (userId: UserId, shareId: ShareId, itemId: ItemId) -> ItemRevision
     ): PinItemsResult = coroutineScope {
-        val userId = requireNotNull(accountManager.getPrimaryUserId().first())
+        val userId = getPrimaryUserId() ?: throw UserIdNotAvailableError()
 
         val pinResults: List<Result<Pair<ShareId, ItemRevision>>> = items.map { (shareId, itemId) ->
             async { safeRunCatching { shareId to block(userId, shareId, itemId) } }

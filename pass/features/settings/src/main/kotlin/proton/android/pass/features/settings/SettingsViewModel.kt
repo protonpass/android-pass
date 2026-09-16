@@ -27,7 +27,6 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.distinctUntilChanged
-import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
@@ -43,6 +42,7 @@ import proton.android.pass.common.api.asLoadingResult
 import proton.android.pass.common.api.combineN
 import proton.android.pass.common.api.safeRunCatching
 import proton.android.pass.data.api.repositories.AssetLinkRepository
+import proton.android.pass.data.api.usecases.GetPrimaryUserId
 import proton.android.pass.data.api.repositories.ItemSyncStatusRepository
 import proton.android.pass.data.api.usecases.InitialWorkerLauncher
 import proton.android.pass.data.api.usecases.attachments.AttachmentDownloadScheduler
@@ -82,6 +82,7 @@ class SettingsViewModel @Inject constructor(
     private val snackbarDispatcher: SnackbarDispatcher,
     private val performSync: PerformSync,
     private val accountManager: AccountManager,
+    private val getPrimaryUserId: GetPrimaryUserId,
     private val clearIconCache: ClearIconCache,
     private val deviceSettingsRepository: DeviceSettingsRepository,
     private val canConfigureTelemetry: CanConfigureTelemetry,
@@ -318,7 +319,7 @@ class SettingsViewModel @Inject constructor(
     }
 
     internal fun onForceSync() = viewModelScope.launch {
-        val userId = accountManager.getPrimaryUserId().firstOrNull()
+        val userId = getPrimaryUserId()
         if (userId != null) {
             safeRunCatching { performSync(userId, forceSync = true, trigger = "settings_manual") }
                 .onFailure { error ->
@@ -347,7 +348,7 @@ class SettingsViewModel @Inject constructor(
 
     internal fun onDownloadAllAttachmentsToggled(isEnabled: Boolean) {
         viewModelScope.launch {
-            val userId = accountManager.getPrimaryUserId().firstOrNull()
+            val userId = getPrimaryUserId()
             if (userId == null) {
                 PassLogger.w(TAG, "Cannot toggle download attachments: userId not available")
                 return@launch
@@ -376,7 +377,7 @@ class SettingsViewModel @Inject constructor(
 
     internal fun onSharedItemsToggled(isEnabled: Boolean) {
         viewModelScope.launch {
-            val userId = accountManager.getPrimaryUserId().firstOrNull() ?: return@launch
+            val userId = getPrimaryUserId() ?: return@launch
             preferencesRepository.setSharedItemsDownloadPref(
                 userId,
                 proton.android.pass.preferences.DownloadSharedItemsAttachmentsPreference.from(isEnabled)
@@ -405,7 +406,7 @@ class SettingsViewModel @Inject constructor(
 
     internal fun onAllowCellularDownloadToggled(isEnabled: Boolean) {
         viewModelScope.launch {
-            val userId = accountManager.getPrimaryUserId().firstOrNull() ?: return@launch
+            val userId = getPrimaryUserId() ?: return@launch
             preferencesRepository.setAllowCellularDownloadPref(
                 userId,
                 AllowCellularDownloadPreference.from(isEnabled)

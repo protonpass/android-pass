@@ -73,7 +73,6 @@ dependencies {
     implementation(libs.kotlinx.datetime)
     implementation(libs.kotlinx.serialization.json)
     implementation(projects.pass.appConfig.api)
-    implementation(libs.core.accountManager)
     implementation(projects.pass.log.api)
     ksp(libs.dagger.hilt.android.compiler)
     ksp(libs.androidx.hilt.compiler)

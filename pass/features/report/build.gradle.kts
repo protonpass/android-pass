@@ -73,7 +73,6 @@ dependencies {
     implementation(libs.androidx.lifecycle.runtime.compose)
     implementation(libs.androidx.hilt.navigation.compose)
     implementation(libs.coil.compose)
-    implementation(libs.core.accountManager.domain)
     implementation(libs.core.user.domain)
     implementation(libs.core.report.domain)
     implementation(libs.core.presentation)

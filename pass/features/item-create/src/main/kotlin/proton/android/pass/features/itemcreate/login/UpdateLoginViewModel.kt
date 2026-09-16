@@ -33,7 +33,6 @@ import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.crypto.common.keystore.EncryptedString
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.clipboard.api.ClipboardManager
@@ -59,6 +58,7 @@ import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.errors.InvalidContentFormatVersionError
 import proton.android.pass.data.api.repositories.DraftRepository
 import proton.android.pass.data.api.repositories.PendingAttachmentLinkRepository
+import proton.android.pass.data.api.usecases.ObservePrimaryUserId
 import proton.android.pass.data.api.usecases.CreateAlias
 import proton.android.pass.data.api.usecases.GetItemById
 import proton.android.pass.data.api.usecases.ObserveCurrentUser
@@ -129,7 +129,7 @@ class UpdateLoginViewModel @AssistedInject constructor(
     private val renameAttachments: RenameAttachments,
     private val pendingAttachmentLinkRepository: PendingAttachmentLinkRepository,
     passwordScorer: PasswordScorer,
-    accountManager: AccountManager,
+    observePrimaryUserId: ObservePrimaryUserId,
     clipboardManager: ClipboardManager,
     observeCurrentUser: ObserveCurrentUser,
     observeUpgradeInfo: ObserveUpgradeInfo,
@@ -151,7 +151,7 @@ class UpdateLoginViewModel @AssistedInject constructor(
     appDispatchers: AppDispatchers,
     @Assisted private val initialUpdateLoginUiState: InitialUpdateLoginUiState?
 ) : BaseLoginViewModel(
-    accountManager = accountManager,
+    observePrimaryUserId = observePrimaryUserId,
     snackbarDispatcher = snackbarDispatcher,
     clipboardManager = clipboardManager,
     totpManager = totpManager,
@@ -283,7 +283,7 @@ class UpdateLoginViewModel @AssistedInject constructor(
         if (!isFormStateValid(originalPrimaryTotp, originalTotpCustomFields)) return@launch
         isLoadingState.update { IsLoadingState.Loading }
         val loginItem = loginItemFormState.toItemContents(emailValidator = emailValidator)
-        val userId = initialUserId ?: accountManager.getPrimaryUserId()
+        val userId = initialUserId ?: observePrimaryUserId()
             .first { userId -> userId != null }
         if (userId != null) {
             val aliasItemOption = aliasLocalItemState.value

@@ -19,7 +19,6 @@
 package proton.android.pass.data.impl.usecases.attachments
 
 import kotlinx.coroutines.flow.firstOrNull
-import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.safeRunCatching
 import proton.android.pass.data.api.errors.UserIdNotAvailableError
@@ -27,6 +26,7 @@ import proton.android.pass.data.api.repositories.AttachmentRepository
 import proton.android.pass.data.api.repositories.ItemRepository
 import proton.android.pass.data.api.repositories.PendingAttachmentLinkRepository
 import proton.android.pass.data.api.repositories.ShareRepository
+import proton.android.pass.data.api.usecases.GetPrimaryUserId
 import proton.android.pass.data.api.usecases.attachments.AttachmentDownloadScheduler
 import proton.android.pass.data.api.usecases.attachments.LinkAttachmentsToItem
 import proton.android.pass.domain.ItemFlag
@@ -40,7 +40,7 @@ import javax.inject.Singleton
 
 @Singleton
 class LinkAttachmentsToItemImpl @Inject constructor(
-    private val accountManager: AccountManager,
+    private val getPrimaryUserId: GetPrimaryUserId,
     private val attachmentRepository: AttachmentRepository,
     private val itemRepository: ItemRepository,
     private val pendingAttachmentLinkRepository: PendingAttachmentLinkRepository,
@@ -65,7 +65,7 @@ class LinkAttachmentsToItemImpl @Inject constructor(
             PassLogger.i(TAG, "Unlinking ${toUnlink.size} attachments to item $itemId")
         }
 
-        val userId = accountManager.getPrimaryUserId().firstOrNull()
+        val userId = getPrimaryUserId()
             ?: throw UserIdNotAvailableError()
         attachmentRepository.linkPendingAttachments(
             userId = userId,

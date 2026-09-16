@@ -18,14 +18,13 @@
 
 package proton.android.pass.data.impl.usecases
 
-import kotlinx.coroutines.flow.firstOrNull
-import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.key.domain.entity.key.PublicAddressKey
 import me.proton.core.key.domain.repository.PublicAddressRepository
 import me.proton.core.key.domain.repository.getPublicAddressOrNull
 import me.proton.core.network.data.ApiProvider
 import proton.android.pass.common.api.safeRunCatching
 import proton.android.pass.data.api.usecases.GetAllKeysByAddress
+import proton.android.pass.data.api.usecases.GetPrimaryUserId
 import proton.android.pass.data.impl.api.PasswordManagerApi
 import proton.android.pass.log.api.PassLogger
 import javax.inject.Inject
@@ -33,14 +32,14 @@ import javax.inject.Singleton
 
 @Singleton
 class GetAllKeysByAddressImpl @Inject constructor(
-    private val accountManager: AccountManager,
+    private val getPrimaryUserId: GetPrimaryUserId,
     private val publicAddressRepository: PublicAddressRepository,
     private val apiProvider: ApiProvider
 ) : GetAllKeysByAddress {
 
     @Suppress("ReturnCount")
     override suspend fun invoke(email: String): Result<List<PublicAddressKey>> {
-        val userId = accountManager.getPrimaryUserId().firstOrNull()
+        val userId = getPrimaryUserId()
             ?: return Result.failure(IllegalStateException("Could not find Primary User Id"))
 
         // Primary lookup via proton-libs. Guarded because it can throw (e.g. 422) instead of

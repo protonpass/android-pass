@@ -18,11 +18,10 @@
 
 package proton.android.pass.data.impl.usecases
 
-import kotlinx.coroutines.flow.firstOrNull
-import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.domain.entity.SessionUserId
 import proton.android.pass.data.api.errors.UserIdNotAvailableError
 import proton.android.pass.data.api.repositories.ShareRepository
+import proton.android.pass.data.api.usecases.GetPrimaryUserId
 import proton.android.pass.data.api.usecases.UpdateVault
 import proton.android.pass.domain.Share
 import proton.android.pass.domain.ShareId
@@ -30,7 +29,7 @@ import proton.android.pass.domain.entity.NewVault
 import javax.inject.Inject
 
 class UpdateVaultImpl @Inject constructor(
-    private val accountManager: AccountManager,
+    private val getPrimaryUserId: GetPrimaryUserId,
     private val shareRepository: ShareRepository
 ) : UpdateVault {
     override suspend fun invoke(
@@ -38,7 +37,7 @@ class UpdateVaultImpl @Inject constructor(
         shareId: ShareId,
         vault: NewVault
     ): Share = if (userId == null) {
-        val primaryUserId = accountManager.getPrimaryUserId().firstOrNull()
+        val primaryUserId = getPrimaryUserId()
         if (primaryUserId != null) {
             performUpdate(primaryUserId, shareId, vault)
         } else {

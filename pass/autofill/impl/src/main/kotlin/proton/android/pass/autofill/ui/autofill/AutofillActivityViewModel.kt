@@ -28,14 +28,10 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.distinctUntilChanged
-import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import me.proton.core.account.domain.entity.AccountState
-import me.proton.core.accountmanager.domain.AccountManager
-import me.proton.core.accountmanager.domain.getAccounts
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.appconfig.api.AppConfig
 import proton.android.pass.appconfig.api.BuildFlavor.Companion.supportPayment
@@ -47,6 +43,8 @@ import proton.android.pass.autofill.ui.autofill.AutofillUiState.NotValidAutofill
 import proton.android.pass.autofill.ui.autofill.AutofillUiState.UninitialisedAutofillUiState
 import proton.android.pass.biometry.NeedsBiometricAuth
 import proton.android.pass.common.api.combineN
+import proton.android.pass.data.api.usecases.DisableAccount
+import proton.android.pass.data.api.usecases.GetReadyAccounts
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.ToastManager
 import proton.android.pass.preferences.InternalSettingsRepository
@@ -57,7 +55,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class AutofillActivityViewModel @Inject constructor(
-    private val accountManager: AccountManager,
+    private val getReadyAccounts: GetReadyAccounts,
+    private val disableAccount: DisableAccount,
     private val toastManager: ToastManager,
     private val internalSettingsRepository: InternalSettingsRepository,
     private val packageNameUrlSuggestionAdapter: PackageNameUrlSuggestionAdapter,
@@ -131,11 +130,11 @@ class AutofillActivityViewModel @Inject constructor(
 
     internal fun signOut(userId: UserId) {
         viewModelScope.launch {
-            val accounts = accountManager.getAccounts(AccountState.Ready).firstOrNull().orEmpty()
+            val accounts = getReadyAccounts()
             val hasAccountsLeft = accounts.filterNot { it.userId == userId }.isNotEmpty()
             internalSettingsRepository.setMasterPasswordAttemptsCount(userId, 0)
 
-            accountManager.disableAccount(userId)
+            disableAccount(userId)
             toastManager.showToast(R.string.autofill_user_logged_out)
 
             if (hasAccountsLeft.not()) {

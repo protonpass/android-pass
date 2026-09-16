@@ -19,12 +19,11 @@
 package proton.android.pass.data.impl.usecases
 
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.firstOrNull
-import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.safeRunCatching
 import proton.android.pass.data.api.errors.UserIdNotAvailableError
 import proton.android.pass.data.api.repositories.ItemSyncStatusRepository
+import proton.android.pass.data.api.usecases.GetPrimaryUserId
 import proton.android.pass.data.api.usecases.RefreshContent
 import proton.android.pass.data.api.usecases.RefreshSharesAndEnqueueSync
 import proton.android.pass.data.api.usecases.RefreshSharesResult
@@ -32,7 +31,7 @@ import proton.android.pass.log.api.PassLogger
 import javax.inject.Inject
 
 class RefreshContentImpl @Inject constructor(
-    private val accountManager: AccountManager,
+    private val getPrimaryUserId: GetPrimaryUserId,
     private val itemSyncStatusRepository: ItemSyncStatusRepository,
     private val refreshSharesAndEnqueueSync: RefreshSharesAndEnqueueSync
 ) : RefreshContent {
@@ -40,7 +39,7 @@ class RefreshContentImpl @Inject constructor(
     override suspend fun invoke(userId: UserId?): RefreshSharesResult {
         PassLogger.i(TAG, "Refreshing shares")
 
-        val actualUserId = userId ?: accountManager.getPrimaryUserId().firstOrNull()
+        val actualUserId = userId ?: getPrimaryUserId()
             ?: throw UserIdNotAvailableError()
 
         // Read before the FULL sync clears it, so a retry keeps the original reason

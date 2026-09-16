@@ -19,15 +19,14 @@
 package proton.android.pass.data.impl.usecases
 
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.withContext
-import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.domain.entity.UserId
 import me.proton.core.network.data.ApiProvider
 import me.proton.core.user.domain.repository.UserAddressRepository
 import proton.android.pass.common.api.AppDispatchers
 import proton.android.pass.common.api.safeRunCatching
 import proton.android.pass.data.api.usecases.ConfirmNewUserInvite
+import proton.android.pass.data.api.usecases.GetPrimaryUserId
 import proton.android.pass.data.api.usecases.VaultMember
 import proton.android.pass.data.impl.api.PasswordManagerApi
 import proton.android.pass.data.impl.crypto.EncryptShareKeysForUser
@@ -44,7 +43,7 @@ import javax.inject.Singleton
 @Singleton
 class ConfirmNewUserInviteImpl @Inject constructor(
     private val apiProvider: ApiProvider,
-    private val accountManager: AccountManager,
+    private val getPrimaryUserId: GetPrimaryUserId,
     private val shareKeyRepository: ShareKeyRepository,
     private val encryptShareKeysForUser: EncryptShareKeysForUser,
     private val signatureManager: NewUserInviteSignatureManager,
@@ -58,7 +57,7 @@ class ConfirmNewUserInviteImpl @Inject constructor(
         }
 
     private suspend fun performConfirmation(shareId: ShareId, invite: VaultMember.NewUserInvitePending): Result<Unit> {
-        val userId = accountManager.getPrimaryUserId().firstOrNull()
+        val userId = getPrimaryUserId()
         if (userId == null) {
             PassLogger.w(TAG, "No primary user")
             return Result.failure(IllegalStateException("No primary user"))

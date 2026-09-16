@@ -19,9 +19,7 @@
 package proton.android.pass.data.impl.repositories
 
 import android.webkit.MimeTypeMap
-import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.withContext
-import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.network.data.ApiProvider
 import me.proton.core.report.domain.entity.BugReportMeta
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
@@ -29,6 +27,7 @@ import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
 import proton.android.pass.common.api.AppDispatchers
 import proton.android.pass.data.api.repositories.ReportRepository
+import proton.android.pass.data.api.usecases.GetPrimaryUserId
 import proton.android.pass.data.api.usecases.report.Report
 import proton.android.pass.data.impl.core.api.CoreApi
 import proton.android.pass.log.api.LogFileManager
@@ -43,7 +42,7 @@ class ReportRepositoryImpl @Inject constructor(
     private val apiProvider: ApiProvider,
     private val bugReportMetaProvider: Provider<BugReportMeta>,
     private val logFileManager: LogFileManager,
-    private val accountManager: AccountManager,
+    private val getPrimaryUserId: GetPrimaryUserId,
     private val appDispatchers: AppDispatchers
 ) : ReportRepository {
 
@@ -58,7 +57,7 @@ class ReportRepositoryImpl @Inject constructor(
         apiProvider.get<CoreApi>()
             .invoke {
                 val logFile = if (report.shouldAttachLog) {
-                    val userId = accountManager.getPrimaryUserId().firstOrNull()
+                    val userId = getPrimaryUserId()
                     logFileManager.getLogFile(userId)
                 } else {
                     null

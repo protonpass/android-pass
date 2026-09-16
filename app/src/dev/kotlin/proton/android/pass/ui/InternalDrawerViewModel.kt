@@ -23,16 +23,15 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
-import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import me.proton.core.accountmanager.domain.AccountManager
 import proton.android.pass.common.api.AppDispatchers
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.flatMap
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.repositories.InAppMessagesRepository
+import proton.android.pass.data.api.usecases.GetPrimaryUserId
 import proton.android.pass.data.api.usecases.extrapassword.AuthWithExtraPassword
 import proton.android.pass.data.api.usecases.extrapassword.RemoveExtraPassword
 import proton.android.pass.data.api.usecases.extrapassword.SetupExtraPassword
@@ -77,7 +76,7 @@ class InternalDrawerViewModel @Inject constructor(
     private val authWithExtraPassword: AuthWithExtraPassword,
     private val removeExtraPassword: RemoveExtraPassword,
     private val encryptionContextProvider: EncryptionContextProvider,
-    private val accountManager: AccountManager,
+    private val getPrimaryUserId: GetPrimaryUserId,
     private val toastManager: ToastManager,
     private val inAppMessagesRepository: InAppMessagesRepository
 ) : ViewModel() {
@@ -136,7 +135,7 @@ class InternalDrawerViewModel @Inject constructor(
     internal fun performSrp() {
         viewModelScope.launch {
             val encrypted = encryptionContextProvider.withEncryptionContext { encrypt("MyPassword") }
-            val userId = accountManager.getPrimaryUserId().firstOrNull() ?: run {
+            val userId = getPrimaryUserId() ?: run {
                 PassLogger.w(TAG, "No primary user id")
                 return@launch
             }
@@ -197,7 +196,7 @@ class InternalDrawerViewModel @Inject constructor(
 
     internal fun clearIAMLastSeen() {
         viewModelScope.launch {
-            val userId = accountManager.getPrimaryUserId().firstOrNull() ?: run {
+            val userId = getPrimaryUserId() ?: run {
                 PassLogger.w(TAG, "No primary user id")
                 return@launch
             }
@@ -214,7 +213,7 @@ class InternalDrawerViewModel @Inject constructor(
 
     internal fun insertMessages(type: RemoteInAppMessageType, count: Int) {
         viewModelScope.launch {
-            val userId = accountManager.getPrimaryUserId().firstOrNull() ?: run {
+            val userId = getPrimaryUserId() ?: run {
                 PassLogger.w(TAG, "No primary user id")
                 return@launch
             }

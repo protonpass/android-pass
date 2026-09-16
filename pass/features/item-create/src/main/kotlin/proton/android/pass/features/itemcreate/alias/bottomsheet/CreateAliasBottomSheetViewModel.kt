@@ -23,7 +23,6 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import me.proton.core.accountmanager.domain.AccountManager
 import proton.android.pass.clipboard.api.ClipboardManager
 import proton.android.pass.common.api.AppDispatchers
 import proton.android.pass.common.api.Some
@@ -31,6 +30,7 @@ import proton.android.pass.commonpresentation.api.attachments.AttachmentsHandler
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.repositories.DraftRepository
+import proton.android.pass.data.api.usecases.ObservePrimaryUserId
 import proton.android.pass.data.api.usecases.CanPerformPaidAction
 import proton.android.pass.data.api.usecases.CreateAlias
 import proton.android.pass.data.api.usecases.ObserveAliasOptions
@@ -61,7 +61,7 @@ import javax.inject.Inject
 @Suppress("LongParameterList")
 @HiltViewModel
 class CreateAliasBottomSheetViewModel @Inject constructor(
-    accountManager: AccountManager,
+    observePrimaryUserId: ObservePrimaryUserId,
     observeFolder: ObserveFolder,
     observeFoldersByParentId: ObserveFoldersByParentId,
     createAlias: CreateAlias,
@@ -90,7 +90,7 @@ class CreateAliasBottomSheetViewModel @Inject constructor(
     private val settingsRepository: InternalSettingsRepository,
     appDispatchers: AppDispatchers
 ) : CreateAliasViewModel(
-    accountManager = accountManager,
+    observePrimaryUserId = observePrimaryUserId,
     observeFolder = observeFolder,
     observeFoldersByParentId = observeFoldersByParentId,
     createAlias = createAlias,

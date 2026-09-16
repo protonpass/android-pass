@@ -41,7 +41,6 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import me.proton.core.accountmanager.domain.AccountManager
 import proton.android.pass.clipboard.api.ClipboardManager
 import proton.android.pass.common.api.AppDispatchers
 import proton.android.pass.common.api.LoadingResult
@@ -71,6 +70,7 @@ import proton.android.pass.data.api.repositories.DRAFT_PASSWORD_KEY
 import proton.android.pass.data.api.repositories.DRAFT_USERNAME_KEY
 import proton.android.pass.data.api.repositories.DraftRepository
 import proton.android.pass.data.api.url.UrlSanitizer
+import proton.android.pass.data.api.usecases.ObservePrimaryUserId
 import proton.android.pass.data.api.usecases.ObserveCurrentUser
 import proton.android.pass.data.api.usecases.ObserveUpgradeInfo
 import proton.android.pass.data.api.usecases.capabilities.CanCreateAlias
@@ -110,7 +110,7 @@ import java.net.URI
 
 @Suppress("TooManyFunctions", "LargeClass", "LongParameterList")
 abstract class BaseLoginViewModel(
-    protected val accountManager: AccountManager,
+    protected val observePrimaryUserId: ObservePrimaryUserId,
     private val snackbarDispatcher: SnackbarDispatcher,
     private val clipboardManager: ClipboardManager,
     private val totpManager: TotpManager,

@@ -18,10 +18,10 @@
 
 package proton.android.pass.data.impl.usecases.items
 
-import kotlinx.coroutines.flow.first
-import me.proton.core.accountmanager.domain.AccountManager
+import proton.android.pass.data.api.errors.UserIdNotAvailableError
 import proton.android.pass.data.api.repositories.ItemRepository
 import proton.android.pass.data.api.repositories.ShareRepository
+import proton.android.pass.data.api.usecases.GetPrimaryUserId
 import proton.android.pass.data.api.usecases.items.UpdateItemFlag
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemFlag
@@ -30,7 +30,7 @@ import proton.android.pass.domain.ShareId
 import javax.inject.Inject
 
 class UpdateItemFlagImpl @Inject constructor(
-    private val accountManager: AccountManager,
+    private val getPrimaryUserId: GetPrimaryUserId,
     private val shareRepository: ShareRepository,
     private val itemRepository: ItemRepository
 ) : UpdateItemFlag {
@@ -40,7 +40,7 @@ class UpdateItemFlagImpl @Inject constructor(
         itemId: ItemId,
         flags: Map<ItemFlag, Boolean>
     ): Item {
-        val userId = requireNotNull(accountManager.getPrimaryUserId().first())
+        val userId = getPrimaryUserId() ?: throw UserIdNotAvailableError()
         val share = shareRepository.getById(userId, shareId)
 
         return itemRepository.updateItemFlags(

@@ -23,6 +23,7 @@ import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.safeRunCatching
 import proton.android.pass.common.api.toOption
+import proton.android.pass.data.api.errors.DisplayableApiError
 import proton.android.pass.data.api.repositories.BulkMoveToVaultEvent
 import proton.android.pass.data.api.repositories.BulkMoveToVaultRepository
 import proton.android.pass.data.api.repositories.MigrateItemsResult
@@ -38,6 +39,8 @@ import proton.android.pass.domain.ShareId
 import proton.android.pass.features.migrate.MigrateSnackbarMessage
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.SnackbarDispatcher
+import proton.android.pass.notifications.api.SnackbarMessage
+import proton.android.pass.notifications.api.SnackbarType
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -92,7 +95,13 @@ class MigrateConfirmVaultMigrator @Inject constructor(
         .onFailure {
             PassLogger.w(TAG, "Error migrating all items")
             PassLogger.w(TAG, it)
-            snackbarDispatcher(MigrateSnackbarMessage.VaultItemsNotMigrated)
+            val apiErrorMessage = (it as? DisplayableApiError)?.message?.takeUnless(String::isBlank)
+            val message = if (apiErrorMessage != null) {
+                SnackbarMessage.SimpleMessage(apiErrorMessage, SnackbarType.ERROR)
+            } else {
+                MigrateSnackbarMessage.VaultItemsNotMigrated
+            }
+            snackbarDispatcher(message)
         }
         .map { ConfirmMigrateEvent.AllItemsMigrated }
         .getOrNull()

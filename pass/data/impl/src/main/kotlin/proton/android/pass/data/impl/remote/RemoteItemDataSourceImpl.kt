@@ -23,6 +23,7 @@ import me.proton.core.network.data.ApiProvider
 import me.proton.core.network.domain.ApiResult
 import proton.android.pass.data.api.errors.AliasRateLimitError
 import proton.android.pass.data.api.errors.CannotCreateMoreAliasesError
+import proton.android.pass.data.api.errors.DisplayableApiError
 import proton.android.pass.data.api.errors.EmailNotValidatedError
 import proton.android.pass.data.api.errors.InvalidContentFormatVersionError
 import proton.android.pass.data.api.errors.ItemNewerRevisionAvailable
@@ -244,10 +245,20 @@ class RemoteItemDataSourceImpl @Inject constructor(
         userId: UserId,
         shareId: ShareId,
         body: MigrateItemsRequest
-    ): List<ItemRevision> = api.get<PasswordManagerApi>(userId)
-        .invoke { migrateItems(shareId.id, body).items }
-        .valueOrThrow
-        .toDomain()
+    ): List<ItemRevision> {
+        val res = api.get<PasswordManagerApi>(userId)
+            .invoke { migrateItems(shareId.id, body) }
+        when (res) {
+            is ApiResult.Success -> return res.value.items.toDomain()
+            is ApiResult.Error -> {
+                val protonError = (res as? ApiResult.Error.Http)?.proton
+                if (protonError != null) {
+                    throw DisplayableApiError(protonError.error, res.cause)
+                }
+                throw res.cause ?: Exception("Migrate items failed")
+            }
+        }
+    }
 
     override suspend fun moveItemsToFolder(
         userId: UserId,

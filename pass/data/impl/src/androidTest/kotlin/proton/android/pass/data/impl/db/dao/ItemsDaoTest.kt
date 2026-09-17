@@ -368,6 +368,108 @@ class ItemsDaoTest {
         assertEquals(allowedUser, result.first().userId)
     }
 
+    @Test
+    fun countSharedItems_scopesToFolderWhenFolderIdProvided() = runTest {
+        val userId = "user-1"
+        val shareId = "share-1"
+        val folderId = "folder-1"
+
+        insertFolder(userId, shareId, folderId, parentFolderId = null)
+        insertItem(userId, shareId, itemId = "shared-in-folder", folderId = folderId, shareCount = 1)
+        insertItem(userId, shareId, itemId = "shared-no-folder", folderId = null, shareCount = 1)
+
+        val scopedCount = itemsDao.countSharedItems(
+            userId = userId,
+            shareIds = listOf(shareId),
+            itemState = null,
+            folderId = folderId
+        ).first()
+
+        assertEquals(1, scopedCount)
+    }
+
+    @Test
+    fun countSharedItems_countsAllSharesWhenFolderIdNull() = runTest {
+        val userId = "user-1"
+        val shareId = "share-1"
+        val folderId = "folder-1"
+
+        insertFolder(userId, shareId, folderId, parentFolderId = null)
+        insertItem(userId, shareId, itemId = "shared-in-folder", folderId = folderId, shareCount = 1)
+        insertItem(userId, shareId, itemId = "shared-no-folder", folderId = null, shareCount = 1)
+
+        val unscopedCount = itemsDao.countSharedItems(
+            userId = userId,
+            shareIds = listOf(shareId),
+            itemState = null,
+            folderId = null
+        ).first()
+
+        assertEquals(2, unscopedCount)
+    }
+
+    @Test
+    fun countTrashedItems_scopesToFolderWhenFolderIdProvided() = runTest {
+        val userId = "user-1"
+        val shareId = "share-1"
+        val folderId = "folder-1"
+
+        insertFolder(userId, shareId, folderId, parentFolderId = null)
+        insertItem(
+            userId,
+            shareId,
+            itemId = "trashed-in-folder",
+            folderId = folderId,
+            state = ItemStateValues.TRASHED
+        )
+        insertItem(
+            userId,
+            shareId,
+            itemId = "trashed-no-folder",
+            folderId = null,
+            state = ItemStateValues.TRASHED
+        )
+
+        val scopedResult = itemsDao.countTrashedItems(
+            userId = userId,
+            shareIds = listOf(shareId),
+            folderId = folderId
+        ).first()
+
+        assertEquals(1, scopedResult.sumOf { it.itemCount })
+    }
+
+    @Test
+    fun countTrashedItems_countsAllSharesWhenFolderIdNull() = runTest {
+        val userId = "user-1"
+        val shareId = "share-1"
+        val folderId = "folder-1"
+
+        insertFolder(userId, shareId, folderId, parentFolderId = null)
+        insertItem(
+            userId,
+            shareId,
+            itemId = "trashed-in-folder",
+            folderId = folderId,
+            state = ItemStateValues.TRASHED
+        )
+        insertItem(
+            userId,
+            shareId,
+            itemId = "trashed-no-folder",
+            folderId = null,
+            state = ItemStateValues.TRASHED
+        )
+
+        val unscopedResult = itemsDao.countTrashedItems(
+            userId = userId,
+            shareIds = listOf(shareId),
+            folderId = null
+        ).first()
+
+        assertEquals(2, unscopedResult.sumOf { it.itemCount })
+    }
+
     private suspend fun insertFolder(
         userId: String,
         shareId: String,
@@ -413,7 +515,8 @@ class ItemsDaoTest {
         folderId: String?,
         state: Int = ItemStateValues.ACTIVE,
         itemType: Int = 1,
-        flags: Int = 0
+        flags: Int = 0,
+        shareCount: Int = 0
     ) {
         itemsDao.insertOrUpdate(
             ItemEntityTestFactory.create(
@@ -437,7 +540,7 @@ class ItemsDaoTest {
                 isPinned = false,
                 pinTime = null,
                 flags = flags,
-                shareCount = 0,
+                shareCount = shareCount,
                 hasTotp = false,
                 hasPasskeys = false
             )

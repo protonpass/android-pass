@@ -23,6 +23,8 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.firstOrNull
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 import proton.android.pass.data.api.usecases.ObserveCurrentUser
@@ -48,6 +50,8 @@ class HomeSearchOptionsRepositoryImpl @Inject constructor(
                 .map { selectedVault -> user.userId to selectedVault }
         }
         .distinctUntilChanged()
+
+    private val isInSeeAllPinsModeFlow = MutableStateFlow(false)
 
     override fun observeSearchOptions(): Flow<SearchOptions> = combine(
         internalSettingsRepository.getHomeFilterOption(),
@@ -87,6 +91,13 @@ class HomeSearchOptionsRepositoryImpl @Inject constructor(
                 selectedVault = vaultSelectionOption.toPreference()
             )
         }
+        isInSeeAllPinsModeFlow.value = false
+    }
+
+    override fun observeIsInSeeAllPinsMode(): Flow<Boolean> = isInSeeAllPinsModeFlow.asStateFlow()
+
+    override fun setIsInSeeAllPinsMode(isInSeeAllPinsMode: Boolean) {
+        isInSeeAllPinsModeFlow.value = isInSeeAllPinsMode
     }
 
 }

@@ -59,10 +59,6 @@ fun SearchOptionsBottomSheetContents(
         items.add(resetSearchOptions(onResetSearchOptions))
     }
 
-    if (state.vaultSelectionOption is VaultSelectionOption.Folder) {
-        items.add(manageFolderOptions(state.vaultSelectionOption, onNavigateEvent))
-    }
-
     BottomSheetItemList(
         modifier = modifier.bottomSheet(shouldApplyNavPadding = false),
         items = items.withDividers().toPersistentList()
@@ -156,29 +152,6 @@ private fun resetSearchOptions(onResetSearchOptions: () -> Unit): BottomSheetIte
         get() = null
     override val onClick: () -> Unit
         get() = { onResetSearchOptions() }
-    override val isDivider = false
-}
-
-private fun manageFolderOptions(
-    vaultSelectionOption: VaultSelectionOption.Folder,
-    onNavigateEvent: (SearchOptionsNavigation) -> Unit
-): BottomSheetItem = object : BottomSheetItem {
-    override val title: @Composable () -> Unit
-        get() = { BottomSheetItemTitle(text = stringResource(R.string.manage_folder)) }
-    override val subtitle: (@Composable () -> Unit)? = null
-    override val leftIcon: (@Composable () -> Unit)
-        get() = { BottomSheetItemIcon(iconId = CoreR.drawable.ic_proton_folder) }
-    override val endIcon: (@Composable () -> Unit)?
-        get() = null
-    override val onClick: () -> Unit
-        get() = {
-            onNavigateEvent(
-                SearchOptionsNavigation.ManageFolder(
-                    vaultSelectionOption.shareId,
-                    vaultSelectionOption.folderId
-                )
-            )
-        }
     override val isDivider = false
 }
 

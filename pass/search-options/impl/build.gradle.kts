@@ -48,4 +48,13 @@ dependencies {
     implementation(projects.pass.domain)
     implementation(projects.pass.preferences.api)
     implementation(projects.pass.data.api)
+
+    testImplementation(libs.junit)
+    testImplementation(libs.truth)
+    testImplementation(libs.turbine)
+    testImplementation(libs.coroutines.test)
+
+    testImplementation(projects.pass.data.fakes)
+    testImplementation(projects.pass.preferences.fakes)
+    testImplementation(projects.pass.commonTest)
 }

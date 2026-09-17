@@ -34,6 +34,7 @@ import kotlinx.coroutines.flow.zip
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
 import proton.android.pass.data.api.usecases.ObserveItemCount
+import proton.android.pass.data.api.usecases.ObservePinnedItemCount
 import proton.android.pass.data.api.usecases.items.ObserveSharedItemCountSummary
 import proton.android.pass.domain.ItemState
 import proton.android.pass.domain.ShareSelection
@@ -50,6 +51,7 @@ import javax.inject.Inject
 class SearchOptionsBottomSheetViewModel @Inject constructor(
     private val homeSearchOptionsRepository: HomeSearchOptionsRepository,
     observeItemCount: ObserveItemCount,
+    observePinnedItemCount: ObservePinnedItemCount,
     observeSharedItemCountSummary: ObserveSharedItemCountSummary,
     savedStateHandleProvider: SavedStateHandleProvider
 ) : ViewModel() {
@@ -61,40 +63,48 @@ class SearchOptionsBottomSheetViewModel @Inject constructor(
         MutableStateFlow(SearchOptionsEvent.Idle)
 
     @OptIn(ExperimentalCoroutinesApi::class)
-    private val itemCountAndSearchOptionsFlow = homeSearchOptionsRepository.observeSearchOptions()
-        .flatMapLatest {
-            when (val vault = it.vaultSelectionOption) {
-                VaultSelectionOption.AllVaults -> observeItemCount(
-                    shareSelection = ShareSelection.AllShares,
-                    includeHiddenVault = false
-                )
+    private val itemCountAndSearchOptionsFlow = combine(
+        homeSearchOptionsRepository.observeSearchOptions(),
+        homeSearchOptionsRepository.observeIsInSeeAllPinsMode()
+    ) { searchOptions, isInSeeAllPinsMode -> searchOptions to isInSeeAllPinsMode }
+        .flatMapLatest { (searchOptions, isInSeeAllPinsMode) ->
+            val countFlow = if (isInSeeAllPinsMode) {
+                observePinnedItemCount()
+            } else {
+                when (val vault = searchOptions.vaultSelectionOption) {
+                    VaultSelectionOption.AllVaults -> observeItemCount(
+                        shareSelection = ShareSelection.AllShares,
+                        includeHiddenVault = false
+                    )
 
-                VaultSelectionOption.SharedByMe -> observeSharedItemCountSummary(
-                    itemSharedType = ItemSharedType.SharedByMe,
-                    includeHiddenVault = false
-                )
+                    VaultSelectionOption.SharedByMe -> observeSharedItemCountSummary(
+                        itemSharedType = ItemSharedType.SharedByMe,
+                        includeHiddenVault = false
+                    )
 
-                VaultSelectionOption.SharedWithMe -> observeSharedItemCountSummary(
-                    itemSharedType = ItemSharedType.SharedWithMe,
-                    includeHiddenVault = false
-                )
+                    VaultSelectionOption.SharedWithMe -> observeSharedItemCountSummary(
+                        itemSharedType = ItemSharedType.SharedWithMe,
+                        includeHiddenVault = false
+                    )
 
-                VaultSelectionOption.Trash -> observeItemCount(
-                    itemState = ItemState.Trashed,
-                    shareSelection = ShareSelection.AllShares,
-                    includeHiddenVault = false
-                )
+                    VaultSelectionOption.Trash -> observeItemCount(
+                        itemState = ItemState.Trashed,
+                        shareSelection = ShareSelection.AllShares,
+                        includeHiddenVault = false
+                    )
 
-                is VaultSelectionOption.Vault -> observeItemCount(
-                    shareSelection = ShareSelection.Share(vault.shareId),
-                    includeHiddenVault = false
-                )
-                is VaultSelectionOption.Folder -> observeItemCount(
-                    shareSelection = ShareSelection.Folder(vault.shareId, vault.folderId),
-                    includeHiddenVault = false
-                )
-            }.zip(flowOf(it)) { itemCount, searchOptions ->
-                itemCount to searchOptions
+                    is VaultSelectionOption.Vault -> observeItemCount(
+                        shareSelection = ShareSelection.Share(vault.shareId),
+                        includeHiddenVault = false
+                    )
+                    is VaultSelectionOption.Folder -> observeItemCount(
+                        shareSelection = ShareSelection.Folder(vault.shareId, vault.folderId),
+                        includeHiddenVault = false
+                    )
+                }
+            }
+            countFlow.zip(flowOf(searchOptions)) { itemCount, options ->
+                itemCount to options
             }
         }
 

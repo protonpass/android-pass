@@ -33,6 +33,7 @@ import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.combineN
 import proton.android.pass.common.api.toOption
 import proton.android.pass.data.api.ItemCountSummary
+import proton.android.pass.data.api.repositories.ObserveItemCountSummaryRequest
 import proton.android.pass.data.api.repositories.ShareItemCount
 import proton.android.pass.data.api.usecases.ItemTypeFilter
 import proton.android.pass.data.impl.db.PassDatabase
@@ -69,7 +70,7 @@ internal fun mergeStoredSlNotes(
     }
 }
 
-@Suppress("TooManyFunctions")
+@Suppress("TooManyFunctions", "LargeClass")
 class LocalItemDataSourceImpl @Inject constructor(
     private val database: PassDatabase,
     private val localShareDataSource: LocalShareDataSource,
@@ -300,7 +301,8 @@ class LocalItemDataSourceImpl @Inject constructor(
     ): Boolean {
         if (itemIds.isEmpty()) return true
         PassLogger.i(
-            TAG, "Deleting items [shareId=${shareId.id}] [itemIds=${itemIds.map { it.id }}]"
+            TAG,
+            "Deleting items [shareId=${shareId.id}] [itemIds=${itemIds.map { it.id }}]"
         )
         return database.itemsDao().delete(
             userId = userId.id,
@@ -312,80 +314,98 @@ class LocalItemDataSourceImpl @Inject constructor(
     override suspend fun hasItemsForShare(userId: UserId, shareId: ShareId): Boolean =
         database.itemsDao().countItems(userId.id, listOf(shareId.id)) > 0
 
-    override fun observeItemCountSummary(
-        userId: UserId,
-        shareIds: List<ShareId>,
-        itemState: ItemState?,
-        onlyShared: Boolean,
-        applyItemStateToSharedItems: Boolean,
-        includeHiddenVault: Boolean
-    ): Flow<ItemCountSummary> = combineN(
-        observeItemSummary(
-            userId = userId,
-            itemState = itemState,
-            shareIds = shareIds,
-            onlyShared = onlyShared
-        ),
-        observeItemsWithTotpCount(
-            userId = userId,
-            itemState = itemState,
-            shareIds = shareIds
-        ),
-        observeSharedWithMeItemCount(
-            userId = userId,
-            shareIds = shareIds,
-            itemState = itemState,
-            applyItemStateToSharedItems = applyItemStateToSharedItems,
-            includeHiddenVault = includeHiddenVault
-        ),
-        observeSharedByMeItemCount(
-            userId = userId,
-            shareIds = shareIds,
-            itemState = itemState,
-            applyItemStateToSharedItems = applyItemStateToSharedItems,
-            includeHiddenVault = includeHiddenVault
-        ),
-        observeTrashedItemsCount(
-            userId = userId,
-            shareIds = shareIds
-        ),
-        observeSharedWithMeTrashedItemCount(
-            userId = userId,
-            shareIds = shareIds,
-            includeHiddenVault = includeHiddenVault
-        )
-    ) { values: List<SummaryRow>,
-        totpCount,
-        sharedWithMeItemCount,
-        sharedByMeItemCount,
-        trashedItemsCount,
-        sharedWithMeTrashedItemsCount ->
+    override fun observeItemCountSummary(request: ObserveItemCountSummaryRequest): Flow<ItemCountSummary> =
+        with(request) {
+            combineN(
+                observeItemSummary(
+                    userId = userId,
+                    itemState = itemState,
+                    shareIds = shareIds,
+                    onlyShared = onlyShared,
+                    folderId = folderId
+                ),
+                observeItemsWithTotpCount(
+                    userId = userId,
+                    itemState = itemState,
+                    shareIds = shareIds,
+                    folderId = folderId
+                ),
+                observeSharedWithMeItemCount(
+                    userId = userId,
+                    shareIds = shareIds,
+                    itemState = itemState,
+                    applyItemStateToSharedItems = applyItemStateToSharedItems,
+                    includeHiddenVault = includeHiddenVault,
+                    folderId = folderId
+                ),
+                observeSharedByMeItemCount(
+                    userId = userId,
+                    shareIds = shareIds,
+                    itemState = itemState,
+                    applyItemStateToSharedItems = applyItemStateToSharedItems,
+                    includeHiddenVault = includeHiddenVault,
+                    folderId = folderId
+                ),
+                observeTrashedItemsCount(userId = userId, shareIds = shareIds, folderId = folderId),
+                observeSharedWithMeTrashedItemCount(
+                    userId = userId,
+                    shareIds = shareIds,
+                    includeHiddenVault = includeHiddenVault,
+                    folderId = folderId
+                )
+            ) { values: List<SummaryRow>,
+                totpCount,
+                sharedWithMeItemCount,
+                sharedByMeItemCount,
+                trashedItemsCount,
+                sharedWithMeTrashedItemsCount ->
+                values.toItemCountSummary(
+                    totpCount = totpCount,
+                    sharedWithMeItemCount = sharedWithMeItemCount,
+                    sharedByMeItemCount = sharedByMeItemCount,
+                    trashedItemsCount = trashedItemsCount,
+                    sharedWithMeTrashedItemsCount = sharedWithMeTrashedItemsCount
+                )
+            }
+        }
 
-        ItemCountSummary(
-            login = values.getCount(ItemCategory.Login),
-            loginWithMFA = totpCount.toLong(),
-            note = values.getCount(ItemCategory.Note),
-            alias = values.getCount(ItemCategory.Alias),
-            creditCard = values.getCount(ItemCategory.CreditCard),
-            identities = values.getCount(ItemCategory.Identity),
-            custom = values.getCount(ItemCategory.Custom) +
-                values.getCount(ItemCategory.WifiNetwork) +
-                values.getCount(ItemCategory.SSHKey),
-            sharedWithMe = sharedWithMeItemCount.toLong(),
-            sharedByMe = sharedByMeItemCount.toLong(),
-            trashed = trashedItemsCount.toLong(),
-            sharedWithMeTrashed = sharedWithMeTrashedItemsCount.toLong()
-        )
-    }
+    private fun List<SummaryRow>.toItemCountSummary(
+        totpCount: Int,
+        sharedWithMeItemCount: Int,
+        sharedByMeItemCount: Int,
+        trashedItemsCount: Int,
+        sharedWithMeTrashedItemsCount: Int
+    ): ItemCountSummary = ItemCountSummary(
+        login = getCount(ItemCategory.Login),
+        loginWithMFA = totpCount.toLong(),
+        note = getCount(ItemCategory.Note),
+        alias = getCount(ItemCategory.Alias),
+        creditCard = getCount(ItemCategory.CreditCard),
+        identities = getCount(ItemCategory.Identity),
+        custom = getCount(ItemCategory.Custom) +
+            getCount(ItemCategory.WifiNetwork) +
+            getCount(ItemCategory.SSHKey),
+        sharedWithMe = sharedWithMeItemCount.toLong(),
+        sharedByMe = sharedByMeItemCount.toLong(),
+        trashed = trashedItemsCount.toLong(),
+        sharedWithMeTrashed = sharedWithMeTrashedItemsCount.toLong()
+    )
 
     private fun observeItemSummary(
         userId: UserId,
         shareIds: List<ShareId>,
         itemState: ItemState?,
-        onlyShared: Boolean
-    ): Flow<List<SummaryRow>> = database.itemsDao()
-        .itemSummary(userId.id, shareIds.map { it.id }, itemState?.value, onlyShared)
-
+        onlyShared: Boolean,
+        folderId: FolderId? = null
+    ): Flow<List<SummaryRow>> = folderId?.let { nonNullFolderId ->
+        database.itemsDao().itemSummaryForFolder(
+            userId.id,
+            shareIds.map { it.id },
+            nonNullFolderId.id,
+            itemState?.value,
+            onlyShared
+        )
+    } ?: database.itemsDao().itemSummary(userId.id, shareIds.map { it.id }, itemState?.value, onlyShared)
 
     private fun List<SummaryRow>.getCount(itemCategory: ItemCategory): Long = filter {
         it.itemKind == itemCategory.value
@@ -394,8 +414,16 @@ class LocalItemDataSourceImpl @Inject constructor(
     private fun observeItemsWithTotpCount(
         userId: UserId,
         shareIds: List<ShareId>,
-        itemState: ItemState?
-    ) = database.itemsDao().countItemsWithTotp(userId.id, shareIds.map { it.id }, itemState?.value)
+        itemState: ItemState?,
+        folderId: FolderId? = null
+    ): Flow<Int> = folderId?.let { nonNullFolderId ->
+        database.itemsDao().countItemsWithTotpForFolder(
+            userId.id,
+            shareIds.map { it.id },
+            nonNullFolderId.id,
+            itemState?.value
+        ).map { rows -> rows.sumOf { it.itemCount } }
+    } ?: database.itemsDao().countItemsWithTotp(userId.id, shareIds.map { it.id }, itemState?.value)
         .map { rows -> rows.sumOf { it.itemCount } }
 
     private fun observeSharedWithMeItemCount(
@@ -403,7 +431,8 @@ class LocalItemDataSourceImpl @Inject constructor(
         shareIds: List<ShareId>,
         itemState: ItemState?,
         applyItemStateToSharedItems: Boolean,
-        includeHiddenVault: Boolean
+        includeHiddenVault: Boolean,
+        folderId: FolderId? = null
     ) = localShareDataSource.observeSharedWithMeIds(userId, includeHiddenVault)
         .map { sharedWithMeShareIds ->
             sharedWithMeShareIds.filter { sharedWithMeShareId ->
@@ -414,7 +443,8 @@ class LocalItemDataSourceImpl @Inject constructor(
             database.itemsDao().countSharedItems(
                 userId = userId.id,
                 shareIds = sharedWithMeShareIds.map(ShareId::id),
-                itemState = itemState?.value.takeIf { applyItemStateToSharedItems }
+                itemState = itemState?.value.takeIf { applyItemStateToSharedItems },
+                folderId = folderId?.id
             )
         }
 
@@ -423,7 +453,8 @@ class LocalItemDataSourceImpl @Inject constructor(
         shareIds: List<ShareId>,
         itemState: ItemState?,
         applyItemStateToSharedItems: Boolean,
-        includeHiddenVault: Boolean
+        includeHiddenVault: Boolean,
+        folderId: FolderId? = null
     ) = localShareDataSource.observeSharedByMeIds(userId, includeHiddenVault)
         .mapLatest { sharedByMeShareIds ->
             sharedByMeShareIds.filter { sharedByMeShareId ->
@@ -434,14 +465,16 @@ class LocalItemDataSourceImpl @Inject constructor(
             database.itemsDao().countSharedItems(
                 userId = userId.id,
                 shareIds = sharedByMeShareIds.map(ShareId::id),
-                itemState = itemState?.value.takeIf { applyItemStateToSharedItems }
+                itemState = itemState?.value.takeIf { applyItemStateToSharedItems },
+                folderId = folderId?.id
             )
         }
 
     private fun observeSharedWithMeTrashedItemCount(
         userId: UserId,
         shareIds: List<ShareId>,
-        includeHiddenVault: Boolean
+        includeHiddenVault: Boolean,
+        folderId: FolderId? = null
     ) = localShareDataSource.observeSharedWithMeIds(userId, includeHiddenVault)
         .mapLatest { sharedByMeShareIds ->
             sharedByMeShareIds.filter { sharedByMeShareId ->
@@ -449,11 +482,15 @@ class LocalItemDataSourceImpl @Inject constructor(
             }
         }
         .flatMapLatest { sharedWithMeShareIds ->
-            observeTrashedItemsCount(userId, sharedWithMeShareIds)
+            observeTrashedItemsCount(userId, sharedWithMeShareIds, folderId)
         }
 
-    private fun observeTrashedItemsCount(userId: UserId, shareIds: List<ShareId>) = database.itemsDao()
-        .countTrashedItems(userId.id, shareIds.map { it.id })
+    private fun observeTrashedItemsCount(
+        userId: UserId,
+        shareIds: List<ShareId>,
+        folderId: FolderId? = null
+    ): Flow<Int> = database.itemsDao()
+        .countTrashedItems(userId.id, shareIds.map { it.id }, folderId?.id)
         .map { rows -> rows.sumOf { it.itemCount } }
 
     override suspend fun updateLastUsedTime(
@@ -623,7 +660,5 @@ class LocalItemDataSourceImpl @Inject constructor(
     private companion object {
 
         private const val TAG = "LocalItemDataSourceImpl"
-
     }
-
 }

@@ -294,6 +294,29 @@ abstract class ItemsDao : BaseDao<ItemEntity>() {
 
     @Query(
         """
+        SELECT
+            ${ItemEntity.Columns.SHARE_ID} as shareId,
+            ${ItemEntity.Columns.ITEM_TYPE} as itemKind,
+            COUNT(${ItemEntity.Columns.ITEM_TYPE}) as itemCount
+        FROM ${ItemEntity.TABLE}
+        WHERE ${ItemEntity.Columns.USER_ID} = :userId
+          AND ${ItemEntity.Columns.SHARE_ID} IN (:shareIds)
+          AND ${ItemEntity.Columns.FOLDER_ID} = :folderId
+          AND (:itemState IS NULL OR ${ItemEntity.Columns.STATE} = :itemState)
+          AND (:onlyShared = 0 OR ${ItemEntity.Columns.SHARE_COUNT} > 0)
+        GROUP BY ${ItemEntity.Columns.SHARE_ID}, ${ItemEntity.Columns.ITEM_TYPE}
+        """
+    )
+    abstract fun itemSummaryForFolder(
+        userId: String,
+        shareIds: List<String>,
+        folderId: String,
+        itemState: Int?,
+        onlyShared: Boolean
+    ): Flow<List<SummaryRow>>
+
+    @Query(
+        """
         SELECT ${ItemEntity.Columns.SHARE_ID} as shareId,
         SUM(CASE WHEN ${ItemEntity.Columns.STATE} = ${ItemStateValues.ACTIVE} THEN 1 ELSE 0 END) as activeItemCount,
         SUM(CASE WHEN ${ItemEntity.Columns.STATE} = ${ItemStateValues.TRASHED} THEN 1 ELSE 0 END) as trashedItemCount
@@ -379,6 +402,27 @@ abstract class ItemsDao : BaseDao<ItemEntity>() {
 
     @Query(
         """
+        SELECT
+          ${ItemEntity.Columns.SHARE_ID} as shareId,
+          COUNT(${ItemEntity.Columns.ITEM_TYPE}) as itemCount
+        FROM ${ItemEntity.TABLE}
+        WHERE ${ItemEntity.Columns.USER_ID} = :userId
+          AND ${ItemEntity.Columns.SHARE_ID} IN (:shareIds)
+          AND ${ItemEntity.Columns.FOLDER_ID} = :folderId
+          AND ${ItemEntity.Columns.HAS_TOTP} = 1
+          AND (:itemState IS NULL OR ${ItemEntity.Columns.STATE} = :itemState)
+        GROUP BY ${ItemEntity.Columns.SHARE_ID}
+        """
+    )
+    abstract fun countItemsWithTotpForFolder(
+        userId: String,
+        shareIds: List<String>,
+        folderId: String,
+        itemState: Int?
+    ): Flow<List<ShareIdCountRow>>
+
+    @Query(
+        """
         UPDATE ${ItemEntity.TABLE}
         SET ${ItemEntity.Columns.FLAGS} = :flags
         WHERE ${ItemEntity.Columns.SHARE_ID} = :shareId
@@ -449,6 +493,7 @@ abstract class ItemsDao : BaseDao<ItemEntity>() {
         SELECT COUNT(*) FROM ${ItemEntity.TABLE}
         WHERE ${ItemEntity.Columns.USER_ID} = :userId
           AND ${ItemEntity.Columns.SHARE_ID} IN (:shareIds)
+          AND (:folderId IS NULL OR ${ItemEntity.Columns.FOLDER_ID} = :folderId)
           AND ${ItemEntity.Columns.SHARE_COUNT} > 0
           AND (:itemState IS NULL OR ${ItemEntity.Columns.STATE} = :itemState)
         """
@@ -456,7 +501,8 @@ abstract class ItemsDao : BaseDao<ItemEntity>() {
     abstract fun countSharedItems(
         userId: String,
         shareIds: List<String>,
-        itemState: Int?
+        itemState: Int?,
+        folderId: String?
     ): Flow<Int>
 
     @Query(
@@ -507,11 +553,16 @@ abstract class ItemsDao : BaseDao<ItemEntity>() {
         FROM ${ItemEntity.TABLE}
         WHERE ${ItemEntity.Columns.USER_ID} = :userId
           AND ${ItemEntity.Columns.SHARE_ID} IN (:shareIds)
+          AND (:folderId IS NULL OR ${ItemEntity.Columns.FOLDER_ID} = :folderId)
           AND ${ItemEntity.Columns.STATE} = ${ItemStateValues.TRASHED}
         GROUP BY ${ItemEntity.Columns.SHARE_ID}
         """
     )
-    abstract fun countTrashedItems(userId: String, shareIds: List<String>): Flow<List<ShareIdCountRow>>
+    abstract fun countTrashedItems(
+        userId: String,
+        shareIds: List<String>,
+        folderId: String?
+    ): Flow<List<ShareIdCountRow>>
 
     @Query(
         """
@@ -526,5 +577,4 @@ abstract class ItemsDao : BaseDao<ItemEntity>() {
         """
     )
     abstract fun observeRecentSearchItems(userId: String, shareId: String?): Flow<List<ItemEntity>>
-
 }

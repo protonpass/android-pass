@@ -79,6 +79,7 @@ internal fun HomeEmptyContent(
             canCreateItems = canCreateItems,
             canCreateAlias = canCreateAlias,
             filterType = filterType,
+            isFolder = vaultSelectionOption is VaultSelectionOption.Folder,
             onCreateLoginClick = {
                 onEvent(HomeUiEvent.AddItemClick(shareId, ItemTypeUiState.Login, folderId))
             },

@@ -61,6 +61,7 @@ import proton.android.pass.data.api.errors.ItemNotFoundError
 import proton.android.pass.data.api.repositories.ItemRepository
 import proton.android.pass.data.api.repositories.ItemRevision
 import proton.android.pass.data.api.repositories.MigrateItemsResult
+import proton.android.pass.data.api.repositories.ObserveItemCountSummaryRequest
 import proton.android.pass.data.api.repositories.PinItemsResult
 import proton.android.pass.data.api.repositories.SearchIndexRepository
 import proton.android.pass.data.api.repositories.SetShareItemsResult
@@ -1265,21 +1266,8 @@ class ItemRepositoryImpl @Inject constructor(
         deleted
     }
 
-    override fun observeItemCountSummary(
-        userId: UserId,
-        shareIds: List<ShareId>,
-        itemState: ItemState?,
-        onlyShared: Boolean,
-        applyItemStateToSharedItems: Boolean,
-        includeHiddenVault: Boolean
-    ): Flow<ItemCountSummary> = localItemDataSource.observeItemCountSummary(
-        userId = userId,
-        shareIds = shareIds,
-        itemState = itemState,
-        onlyShared = onlyShared,
-        applyItemStateToSharedItems = applyItemStateToSharedItems,
-        includeHiddenVault = includeHiddenVault
-    )
+    override fun observeItemCountSummary(request: ObserveItemCountSummaryRequest): Flow<ItemCountSummary> =
+        localItemDataSource.observeItemCountSummary(request)
 
     override suspend fun updateItemLastUsed(vaultId: VaultId, itemId: ItemId) {
         val readyUsers = accountManager.getAccounts(AccountState.Ready).firstOrNull() ?: emptyList()

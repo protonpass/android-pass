@@ -116,6 +116,7 @@ import proton.android.pass.data.api.usecases.ObserveItemsPaging
 import proton.android.pass.data.api.usecases.ObserveLoginTotpEntries
 import proton.android.pass.data.api.usecases.ObserveMFACount
 import proton.android.pass.data.api.usecases.ObservePagedItems
+import proton.android.pass.data.api.usecases.ObservePinnedItemCount
 import proton.android.pass.data.api.usecases.ObservePinnedItems
 import proton.android.pass.data.api.usecases.ObserveUpgradeInfo
 import proton.android.pass.data.api.usecases.ObserveUserAccessData
@@ -412,6 +413,7 @@ import proton.android.pass.data.impl.usecases.ObserveItemsPagingImpl
 import proton.android.pass.data.impl.usecases.ObserveLoginTotpEntriesImpl
 import proton.android.pass.data.impl.usecases.ObserveMFACountImpl
 import proton.android.pass.data.impl.usecases.ObservePagedItemsImpl
+import proton.android.pass.data.impl.usecases.ObservePinnedItemCountImpl
 import proton.android.pass.data.impl.usecases.ObservePinnedItemsImpl
 import proton.android.pass.data.impl.usecases.ObserveUpgradeInfoImpl
 import proton.android.pass.data.impl.usecases.ObserveUserAccessDataImpl
@@ -689,6 +691,9 @@ abstract class DataUseCaseModule {
 
     @Binds
     abstract fun bindObservePinnedItems(impl: ObservePinnedItemsImpl): ObservePinnedItems
+
+    @Binds
+    abstract fun bindObservePinnedItemCount(impl: ObservePinnedItemCountImpl): ObservePinnedItemCount
 
     @Binds
     abstract fun bindObservePagedItems(impl: ObservePagedItemsImpl): ObservePagedItems

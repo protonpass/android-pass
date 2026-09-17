@@ -30,6 +30,7 @@ import proton.android.pass.data.api.ItemPendingEvent
 import proton.android.pass.data.api.repositories.ItemRepository
 import proton.android.pass.data.api.repositories.ItemRevision
 import proton.android.pass.data.api.repositories.MigrateItemsResult
+import proton.android.pass.data.api.repositories.ObserveItemCountSummaryRequest
 import proton.android.pass.data.api.repositories.PinItemsResult
 import proton.android.pass.data.api.repositories.ShareItemCount
 import proton.android.pass.data.api.repositories.SetShareItemsResult
@@ -84,12 +85,16 @@ class FakeItemRepository @Inject constructor() : ItemRepository {
 
     private val migrateItemMemory = mutableListOf<MigrateItemPayload>()
     private val addPackageAndUrlToItemMemory = mutableListOf<AddPackageAndUrlToItemPayload>()
+    private val observeItemCountSummaryMemory = mutableListOf<ObserveItemCountSummaryRequest>()
 
     fun setItem(newItem: Item) {
         item = newItem
     }
 
     fun getAddPackageAndUrlToItemMemory(): List<AddPackageAndUrlToItemPayload> = addPackageAndUrlToItemMemory.toList()
+
+    fun getObserveItemCountSummaryMemory(): List<ObserveItemCountSummaryRequest> =
+        observeItemCountSummaryMemory.toList()
 
     fun setItemRevisions(newItemRevisions: List<ItemRevision>) {
         itemRevisions = newItemRevisions
@@ -423,14 +428,12 @@ class FakeItemRepository @Inject constructor() : ItemRepository {
         onIndexPendingEvent?.invoke(event)
     }
 
-    override fun observeItemCountSummary(
-        userId: UserId,
-        shareIds: List<ShareId>,
-        itemState: ItemState?,
-        onlyShared: Boolean,
-        applyItemStateToSharedItems: Boolean,
-        includeHiddenVault: Boolean
-    ): Flow<ItemCountSummary> = testFlow()
+    override fun observeItemCountSummary(request: ObserveItemCountSummaryRequest): Flow<ItemCountSummary> {
+        observeItemCountSummaryMemory.add(request)
+        return testFlow<ItemCountSummary>().apply {
+            tryEmit(ItemCountSummary.Initial)
+        }
+    }
 
     override fun observeItemCount(shareIds: List<ShareId>): Flow<Map<ShareId, ShareItemCount>> {
         TODO("Not yet implemented")

@@ -23,6 +23,7 @@ import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.mapLatest
 import proton.android.pass.data.api.ItemCountSummary
 import proton.android.pass.data.api.repositories.ItemRepository
+import proton.android.pass.data.api.repositories.ObserveItemCountSummaryRequest
 import proton.android.pass.data.api.repositories.ShareRepository
 import proton.android.pass.data.api.usecases.ObserveCurrentUser
 import proton.android.pass.data.api.usecases.items.ObserveSharedItemCountSummary
@@ -53,12 +54,14 @@ class ObserveSharedItemCountSummaryImpl @Inject constructor(
                     )
                 }.flatMapLatest { sharedShareIds ->
                     itemRepository.observeItemCountSummary(
-                        userId = user.userId,
-                        shareIds = sharedShareIds,
-                        itemState = null,
-                        onlyShared = true,
-                        applyItemStateToSharedItems = false,
-                        includeHiddenVault = includeHiddenVault
+                        ObserveItemCountSummaryRequest(
+                            userId = user.userId,
+                            shareIds = sharedShareIds,
+                            itemState = null,
+                            onlyShared = true,
+                            applyItemStateToSharedItems = false,
+                            includeHiddenVault = includeHiddenVault
+                        )
                     )
                 }
             }

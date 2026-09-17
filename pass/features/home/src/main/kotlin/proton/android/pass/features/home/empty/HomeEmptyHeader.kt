@@ -43,12 +43,13 @@ import proton.android.pass.searchoptions.api.SearchFilterType
 internal fun HomeEmptyHeader(
     modifier: Modifier = Modifier,
     filterType: SearchFilterType,
-    canCreateItems: Boolean
+    canCreateItems: Boolean,
+    isFolder: Boolean = false
 ) {
-    val (title, desc) = remember(filterType) {
+    val (title, desc) = remember(filterType, isFolder) {
         when (filterType) {
             SearchFilterType.All ->
-                R.string.home_empty_vault_title to
+                (if (isFolder) R.string.home_empty_folder_title else R.string.home_empty_vault_title) to
                     R.string.home_empty_vault_subtitle
 
             SearchFilterType.Login ->

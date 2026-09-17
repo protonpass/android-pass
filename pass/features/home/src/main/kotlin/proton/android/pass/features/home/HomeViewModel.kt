@@ -272,8 +272,6 @@ class HomeViewModel @Inject constructor(
         MutableStateFlow(IsProcessingSearchState.NotLoading)
     private val selectionState: MutableStateFlow<SelectionState> =
         MutableStateFlow(SelectionState.Initial)
-    private val isInSeeAllPinsModeState: MutableStateFlow<Boolean> = MutableStateFlow(false)
-
     private val navEventState: MutableStateFlow<HomeNavEvent> =
         MutableStateFlow(HomeNavEvent.Unknown)
 
@@ -591,7 +589,7 @@ class HomeViewModel @Inject constructor(
     private val pinningUiStateFlow = combine(
         observePinnedItems(includeHidden = false).asLoadingResult(),
         searchOptionsFlow,
-        isInSeeAllPinsModeState,
+        homeSearchOptionsRepository.observeIsInSeeAllPinsMode(),
         debouncedSearchQueryState
     ) { pinnedItemsResult, searchOptions, isInSeeAllPinsMode, searchQuery ->
         val pinnedItems = pinnedItemsResult.getOrNull()?.let { list ->
@@ -866,7 +864,7 @@ class HomeViewModel @Inject constructor(
     }
 
     fun onStopSeeAllPinned() {
-        isInSeeAllPinsModeState.update { false }
+        homeSearchOptionsRepository.setIsInSeeAllPinsMode(false)
     }
 
     fun onEnterSearch() {
@@ -1310,7 +1308,7 @@ class HomeViewModel @Inject constructor(
     }
 
     fun onSeeAllPinned() {
-        isInSeeAllPinsModeState.update { true }
+        homeSearchOptionsRepository.setIsInSeeAllPinsMode(true)
     }
 
     fun openUpdateApp(contextHolder: ClassHolder<Context>) {

@@ -28,6 +28,7 @@ import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.FlowUtils.testFlow
 import proton.android.pass.common.api.Option
 import proton.android.pass.data.api.ItemCountSummary
+import proton.android.pass.data.api.repositories.ObserveItemCountSummaryRequest
 import proton.android.pass.data.api.repositories.ShareItemCount
 import proton.android.pass.data.api.usecases.ItemTypeFilter
 import proton.android.pass.data.impl.db.dao.ItemEntityWithRowId
@@ -48,6 +49,12 @@ data class AliasItemsPageRequest(
     val limit: Int
 )
 
+data class ObserveItemCountSummaryCall(
+    val userId: String,
+    val shareIds: List<String>,
+    val folderId: String?
+)
+
 class FakeLocalItemDataSource : LocalItemDataSource {
 
     private val memory: MutableList<ItemEntity> = mutableListOf()
@@ -64,9 +71,13 @@ class FakeLocalItemDataSource : LocalItemDataSource {
     private val observeItemsShareIdsMemory = mutableListOf<List<ShareId>>()
     private val activeAliasItemsPageRequests = mutableListOf<AliasItemsPageRequest>()
     private var committedSlNoteUpdateIds: List<Pair<ShareId, ItemId>>? = null
+    private val observeItemCountSummaryCallMemory = mutableListOf<ObserveItemCountSummaryCall>()
 
 
     fun getMemory(): List<ItemEntity> = memory
+
+    fun getObserveItemCountSummaryCalls(): List<ObserveItemCountSummaryCall> =
+        observeItemCountSummaryCallMemory.toList()
 
     fun getSlNoteUpdates(): List<Triple<ShareId, ItemId, EncryptedString?>> = slNoteUpdates
 
@@ -318,13 +329,15 @@ class FakeLocalItemDataSource : LocalItemDataSource {
         return committedSlNoteUpdateIds ?: updates.map { it.shareId to it.itemId }
     }
 
-    override fun observeItemCountSummary(
-        userId: UserId,
-        shareIds: List<ShareId>,
-        itemState: ItemState?,
-        onlyShared: Boolean,
-        applyItemStateToSharedItems: Boolean,
-        includeHiddenVault: Boolean
-    ): Flow<ItemCountSummary> = summary
+    override fun observeItemCountSummary(request: ObserveItemCountSummaryRequest): Flow<ItemCountSummary> {
+        observeItemCountSummaryCallMemory.add(
+            ObserveItemCountSummaryCall(
+                userId = request.userId.id,
+                shareIds = request.shareIds.map { it.id },
+                folderId = request.folderId?.id
+            )
+        )
+        return summary
+    }
 
 }

@@ -53,6 +53,16 @@ data class ShareItemCount(
 
 }
 
+data class ObserveItemCountSummaryRequest(
+    val userId: UserId,
+    val shareIds: List<ShareId>,
+    val itemState: ItemState?,
+    val onlyShared: Boolean,
+    val applyItemStateToSharedItems: Boolean,
+    val includeHiddenVault: Boolean,
+    val folderId: FolderId? = null
+)
+
 @Suppress("ComplexInterface", "TooManyFunctions")
 interface ItemRepository {
     suspend fun createItem(
@@ -210,15 +220,7 @@ interface ItemRepository {
 
     suspend fun indexPendingEvent(event: ItemPendingEvent)
 
-    @Suppress("LongParameterList")
-    fun observeItemCountSummary(
-        userId: UserId,
-        shareIds: List<ShareId>,
-        itemState: ItemState?,
-        onlyShared: Boolean,
-        applyItemStateToSharedItems: Boolean,
-        includeHiddenVault: Boolean
-    ): Flow<ItemCountSummary>
+    fun observeItemCountSummary(request: ObserveItemCountSummaryRequest): Flow<ItemCountSummary>
 
     fun observeItemCount(shareIds: List<ShareId>): Flow<Map<ShareId, ShareItemCount>>
 

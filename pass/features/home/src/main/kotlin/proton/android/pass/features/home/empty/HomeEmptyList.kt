@@ -47,6 +47,7 @@ internal fun HomeEmptyList(
     canCreateItems: Boolean,
     canCreateAlias: Boolean,
     filterType: SearchFilterType,
+    isFolder: Boolean = false,
     onCreateLoginClick: () -> Unit,
     onCreateAliasClick: () -> Unit,
     onCreateNoteClick: () -> Unit,
@@ -63,7 +64,8 @@ internal fun HomeEmptyList(
         HomeEmptyHeader(
             modifier = Modifier.padding(bottom = Spacing.large),
             filterType = filterType,
-            canCreateItems = canCreateItems
+            canCreateItems = canCreateItems,
+            isFolder = isFolder
         )
 
         Column(

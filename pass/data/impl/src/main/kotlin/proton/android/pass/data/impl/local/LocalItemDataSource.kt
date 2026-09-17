@@ -24,6 +24,7 @@ import kotlinx.datetime.Instant
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.Option
 import proton.android.pass.data.api.ItemCountSummary
+import proton.android.pass.data.api.repositories.ObserveItemCountSummaryRequest
 import proton.android.pass.data.api.repositories.ShareItemCount
 import proton.android.pass.data.api.usecases.ItemTypeFilter
 import me.proton.core.crypto.common.keystore.EncryptedString
@@ -138,15 +139,7 @@ interface LocalItemDataSource {
 
     suspend fun hasItemsForShare(userId: UserId, shareId: ShareId): Boolean
 
-    @Suppress("LongParameterList")
-    fun observeItemCountSummary(
-        userId: UserId,
-        shareIds: List<ShareId>,
-        itemState: ItemState?,
-        onlyShared: Boolean,
-        applyItemStateToSharedItems: Boolean,
-        includeHiddenVault: Boolean
-    ): Flow<ItemCountSummary>
+    fun observeItemCountSummary(request: ObserveItemCountSummaryRequest): Flow<ItemCountSummary>
 
     suspend fun updateLastUsedTime(
         shareId: ShareId,

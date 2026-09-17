@@ -38,6 +38,7 @@ class FakeHomeSearchOptionsRepository @Inject constructor() : HomeSearchOptionsR
     private val filterOptionFlow = MutableStateFlow(SearchOptions.Initial.filterOption)
     private val vaultSelectionOptionFlow: MutableStateFlow<VaultSelectionOption> =
         MutableStateFlow(VaultSelectionOption.AllVaults)
+    private val isInSeeAllPinsModeFlow = MutableStateFlow(false)
 
     override fun observeSearchOptions(): Flow<SearchOptions> = searchOptionsFlow
 
@@ -59,5 +60,13 @@ class FakeHomeSearchOptionsRepository @Inject constructor() : HomeSearchOptionsR
         vaultSelectionOptionFlow.update { vaultSelectionOption }
         searchOptionsFlow.update { it.copy(vaultSelectionOption = vaultSelectionOption) }
     }
+
+    override fun observeIsInSeeAllPinsMode(): Flow<Boolean> = isInSeeAllPinsModeFlow
+
+    override fun setIsInSeeAllPinsMode(isInSeeAllPinsMode: Boolean) {
+        isInSeeAllPinsModeFlow.update { isInSeeAllPinsMode }
+    }
+
+    fun getIsInSeeAllPinsMode(): Boolean = isInSeeAllPinsModeFlow.value
 
 }

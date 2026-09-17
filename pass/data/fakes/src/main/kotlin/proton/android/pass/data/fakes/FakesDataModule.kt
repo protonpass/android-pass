@@ -111,6 +111,7 @@ import proton.android.pass.data.api.usecases.ObserveItemCount
 import proton.android.pass.data.api.usecases.ObserveItems
 import proton.android.pass.data.api.usecases.ObserveMFACount
 import proton.android.pass.data.api.usecases.ObserveLoginTotpEntries
+import proton.android.pass.data.api.usecases.ObservePinnedItemCount
 import proton.android.pass.data.api.usecases.ObservePinnedItems
 import proton.android.pass.data.api.usecases.ObserveUpgradeInfo
 import proton.android.pass.data.api.usecases.ObserveUserAccessData
@@ -400,6 +401,7 @@ import proton.android.pass.data.fakes.usecases.FakeObserveItemsWithPasskeys
 import proton.android.pass.data.fakes.usecases.FakeObserveMFACount
 import proton.android.pass.data.fakes.usecases.FakeObserveOrganizationSettings
 import proton.android.pass.data.fakes.usecases.FakeObserveLoginTotpEntries
+import proton.android.pass.data.fakes.usecases.FakeObservePinnedItemCount
 import proton.android.pass.data.fakes.usecases.FakeObservePinnedItems
 import proton.android.pass.data.fakes.usecases.FakeObserveRecentSearchItems
 import proton.android.pass.data.fakes.usecases.FakeObserveSearchEntry
@@ -743,6 +745,9 @@ abstract class FakesDataModule {
 
     @Binds
     abstract fun bindObservePinnedItems(impl: FakeObservePinnedItems): ObservePinnedItems
+
+    @Binds
+    abstract fun bindObservePinnedItemCount(impl: FakeObservePinnedItemCount): ObservePinnedItemCount
 
     @Binds
     abstract fun bindObservePagedItems(impl: FakeObservePagedItems): ObservePagedItems

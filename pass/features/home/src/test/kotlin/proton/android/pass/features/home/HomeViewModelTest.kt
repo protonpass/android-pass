@@ -460,6 +460,47 @@ internal class HomeViewModelTest {
     }
 
     @Test
+    fun `onSeeAllPinned sets pinning mode on the search options repository`() = runTest {
+        setupItems()
+        instance.onSeeAllPinned()
+        observePinnedItems.emitDefault()
+
+        instance.homeUiState.test {
+            val state = awaitItem()
+            assertThat(state.pinningUiState.inPinningMode).isTrue()
+        }
+        assertThat(searchOptionsRepository.getIsInSeeAllPinsMode()).isTrue()
+    }
+
+    @Test
+    fun `onStopSeeAllPinned clears pinning mode on the search options repository`() = runTest {
+        setupItems()
+        instance.onSeeAllPinned()
+        instance.onStopSeeAllPinned()
+        observePinnedItems.emitDefault()
+
+        instance.homeUiState.test {
+            val state = awaitItem()
+            assertThat(state.pinningUiState.inPinningMode).isFalse()
+        }
+        assertThat(searchOptionsRepository.getIsInSeeAllPinsMode()).isFalse()
+    }
+
+    @Test
+    fun `pinning mode reflects the repository as single source of truth`() = runTest {
+        setupItems()
+        // Simulate the repository flag being set externally (e.g. by another surface
+        // reading from the same singleton) rather than through the ViewModel's own methods.
+        searchOptionsRepository.setIsInSeeAllPinsMode(true)
+        observePinnedItems.emitDefault()
+
+        instance.homeUiState.test {
+            val state = awaitItem()
+            assertThat(state.pinningUiState.inPinningMode).isTrue()
+        }
+    }
+
+    @Test
     internal fun `WHEN read only item is selected THEN show toast message`() {
         instance.onReadOnlyItemSelected()
 

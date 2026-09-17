@@ -5,6 +5,7 @@
     <string name="home_indexing_banner_progress">Building search index… (%1$d/%2$d)</string>
     <string name="home_empty_vault_title">Your vault is empty</string>
     <string name="home_empty_vault_subtitle">Get started by creating your first item.</string>
+    <string name="home_empty_folder_title">Your folder is empty</string>
     <string name="home_empty_vault_login_title">No logins found</string>
     <string name="home_empty_vault_login_subtitle">Get started by creating your first login item.</string>
     <string name="home_empty_vault_aliases_title">No aliases found</string>

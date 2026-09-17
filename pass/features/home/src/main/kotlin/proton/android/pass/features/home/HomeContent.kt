@@ -378,7 +378,7 @@ internal fun HomeContent(
                 IndexingBanner(indexingStatus = indexingStatus)
             }
 
-            if (uiState.isPaginationEnabled) {
+            if (uiState.isPaginationEnabled && !uiState.pinningUiState.inPinningMode) {
                 // Pagination mode - everything goes through pagingItems
                 ItemsListPaging(
                     modifier = Modifier.testTag(HOME_ITEM_LIST_TAG),
@@ -435,7 +435,7 @@ internal fun HomeContent(
                     isRefreshing = uiState.homeListUiState.isRefreshing
                 )
             } else {
-                // Non-pagination mode (legacy)
+                // Non-pagination mode, or "see all pinned items" mode (always unpaged and unscoped by vault/folder)
                 val items = if (!uiState.pinningUiState.inPinningMode) {
                     uiState.homeListUiState.items
                 } else {

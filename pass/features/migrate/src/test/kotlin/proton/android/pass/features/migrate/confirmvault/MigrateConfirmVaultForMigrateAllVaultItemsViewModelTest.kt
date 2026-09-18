@@ -246,7 +246,7 @@ internal class MigrateConfirmVaultForMigrateAllVaultItemsViewModelTest {
     }
 
     @Test
-    fun `source vault with items in folders is enabled as destination`() = runTest {
+    fun `source vault with items in folders is still disabled as destination`() = runTest {
         val fakeGetMigration = FakeGetMigrationItemsSelection().apply {
             setMigrationItemsSelection(
                 MigrationItemsSelection(
@@ -290,7 +290,7 @@ internal class MigrateConfirmVaultForMigrateAllVaultItemsViewModelTest {
             val state = awaitItem()
             val sourceState = state.vaultList.find { it.vaultWithItemCount.vault.shareId == SHARE_ID }
             assertThat(sourceState).isNotNull()
-            assertThat(sourceState!!.status).isEqualTo(VaultStatus.Enabled)
+            assertThat(sourceState!!.status).isEqualTo(VaultStatus.Disabled(VaultStatus.DisabledReason.SameVault))
             assertThat(sourceState.folderTree).isNotEmpty()
             cancelAndConsumeRemainingEvents()
         }

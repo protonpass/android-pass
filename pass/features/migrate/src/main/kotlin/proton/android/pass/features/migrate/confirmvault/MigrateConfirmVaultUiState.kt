@@ -84,7 +84,6 @@ internal data class MigrateConfirmVaultUiState(
     val isSameVaultMove: Boolean,
     val showDissolveFolderDialog: Boolean,
     val hasItemsWithHighRevisionCount: Boolean,
-    val sourceHasChildFolders: Boolean,
     val sourceName: String
 ) {
     val showHistoryWarning: Boolean
@@ -112,7 +111,6 @@ internal data class MigrateConfirmVaultUiState(
             isSameVaultMove = false,
             showDissolveFolderDialog = false,
             hasItemsWithHighRevisionCount = false,
-            sourceHasChildFolders = false,
             sourceName = ""
         )
     }

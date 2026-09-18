@@ -18,7 +18,6 @@
 
 package proton.android.pass.domain.items
 
-import proton.android.pass.domain.FolderId
 import proton.android.pass.domain.Item
 
 data class MigrationItemsSelection(
@@ -32,11 +31,6 @@ data class MigrationItemsSelection(
     val sharedItemsCount: Int = sharedItems.size
 
     val hasItemsExceedingRevisionLimit: Boolean = items.any { it.revision > REVISION_LIMIT }
-
-    val hasItemsInFolders: Boolean = items.any { it.folderId != null }
-
-    fun hasItemsInDescendantFolders(folderId: FolderId): Boolean =
-        items.any { it.folderId != null && it.folderId != folderId }
 
     companion object {
         const val REVISION_LIMIT = 50L

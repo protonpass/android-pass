@@ -105,6 +105,8 @@
   <string name="share_manage_vault_invitations_title" comment="Text that will be used as the title of the list containing the invites for a vault">Pozvánky</string>
   <string name="share_manage_vault_members_title" comment="Text that will be used as the title of the list containing the members of a vault">Členovia</string>
   <string name="share_manage_vault_current_user_indicator">Vy</string>
+  <string name="share_manage_vault_members_error" comment="Shown when the vault member list fails to load">Nepodarilo sa načítať členov</string>
+  <string name="share_manage_vault_members_error_retry" comment="Button to retry loading the vault members">Skúsiť znova</string>
   <string name="share_role_viewer">Čitateľ</string>
   <string name="share_role_editor">Redaktor</string>
   <string name="share_role_admin">Admin</string>

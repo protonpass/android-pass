@@ -95,6 +95,8 @@
   <string name="share_manage_vault_invitations_title" comment="Text that will be used as the title of the list containing the invites for a vault">Invitacions</string>
   <string name="share_manage_vault_members_title" comment="Text that will be used as the title of the list containing the members of a vault">Membres</string>
   <string name="share_manage_vault_current_user_indicator">Vós</string>
+  <string name="share_manage_vault_members_error" comment="Shown when the vault member list fails to load">No s\'han pogut carregar els membres</string>
+  <string name="share_manage_vault_members_error_retry" comment="Button to retry loading the vault members">Tornar-ho a provar</string>
   <string name="share_role_viewer">Lector</string>
   <string name="share_role_editor">Editor</string>
   <string name="share_role_admin">Administrador</string>

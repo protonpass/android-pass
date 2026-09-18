@@ -119,10 +119,6 @@ internal fun NavGraphBuilder.passwordCredentialSelectionNavGraph(
                 SearchOptionsNavigation.ResetFilters -> {
                     throw IllegalStateException("Cannot reset filters on PasswordCredentialSelection")
                 }
-
-                is SearchOptionsNavigation.ManageFolder -> {
-                    throw IllegalStateException("Cannot perform manage folder on PasswordCredentialSelection")
-                }
             }
         }
     )

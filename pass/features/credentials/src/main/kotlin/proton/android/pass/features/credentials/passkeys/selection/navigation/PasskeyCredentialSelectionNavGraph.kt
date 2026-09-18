@@ -67,10 +67,6 @@ internal fun NavGraphBuilder.passkeyCredentialSelectionNavGraph(
                 SearchOptionsNavigation.ResetFilters -> {
                     throw IllegalStateException("Cannot reset filters on PasskeyCredentialSelection")
                 }
-
-                is SearchOptionsNavigation.ManageFolder -> {
-                    throw IllegalStateException("Cannot perform manage folder on PasskeyCredentialSelection")
-                }
             }
         }
     )

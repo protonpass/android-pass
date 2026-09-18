@@ -221,8 +221,7 @@ internal fun NavGraphBuilder.autofillActivityGraph(
                 SearchOptionsNavigation.ResetFilters,
                 SearchOptionsNavigation.Filter,
                 SearchOptionsNavigation.Sorting,
-                SearchOptionsNavigation.BulkActions,
-                is SearchOptionsNavigation.ManageFolder -> throw IllegalStateException("Action not supported")
+                SearchOptionsNavigation.BulkActions -> throw IllegalStateException("Action not supported")
             }
         }
     )

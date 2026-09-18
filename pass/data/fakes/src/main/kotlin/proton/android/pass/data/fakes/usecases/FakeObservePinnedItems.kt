@@ -19,6 +19,7 @@
 package proton.android.pass.data.fakes.usecases
 
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import kotlinx.datetime.Clock
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.FlowUtils.testFlow
@@ -46,14 +47,18 @@ import javax.inject.Singleton
 @Singleton
 class FakeObservePinnedItems @Inject constructor() : ObservePinnedItems {
 
-    private val flow = testFlow<List<Item>>()
+    private val flow = testFlow<Result<List<Item>>>()
 
     fun emitValue(value: List<Item>) {
-        flow.tryEmit(value)
+        flow.tryEmit(Result.success(value))
     }
 
     fun emitDefault() {
-        flow.tryEmit(defaultValues.asList())
+        flow.tryEmit(Result.success(defaultValues.asList()))
+    }
+
+    fun emitError(error: Throwable) {
+        flow.tryEmit(Result.failure(error))
     }
 
     override fun invoke(
@@ -61,7 +66,7 @@ class FakeObservePinnedItems @Inject constructor() : ObservePinnedItems {
         filter: ItemTypeFilter,
         shareSelection: ShareSelection,
         includeHidden: Boolean
-    ): Flow<List<Item>> = flow
+    ): Flow<List<Item>> = flow.map { it.getOrThrow() }
 
     data class DefaultValues(
         val login: Item,

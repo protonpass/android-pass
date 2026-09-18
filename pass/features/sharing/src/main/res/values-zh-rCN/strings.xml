@@ -90,6 +90,8 @@
   <string name="share_manage_vault_invitations_title" comment="Text that will be used as the title of the list containing the invites for a vault">邀请</string>
   <string name="share_manage_vault_members_title" comment="Text that will be used as the title of the list containing the members of a vault">成员</string>
   <string name="share_manage_vault_current_user_indicator">你</string>
+  <string name="share_manage_vault_members_error" comment="Shown when the vault member list fails to load">Couldn\'t load members</string>
+  <string name="share_manage_vault_members_error_retry" comment="Button to retry loading the vault members">Retry</string>
   <string name="share_role_viewer">查看者</string>
   <string name="share_role_editor">编辑者</string>
   <string name="share_role_admin">管理员</string>

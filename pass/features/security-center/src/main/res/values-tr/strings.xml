@@ -34,7 +34,7 @@
   <string name="security_center_home_row_reused_passwords_subtitle">Benzersiz parolalar oluşturun</string>
   <string name="security_center_home_row_compromised_passwords_title">Ele geçirilmiş parolalar</string>
   <string name="security_center_home_row_compromised_passwords_subtitle">Veri sızıntılarında sıklıkla rastlanan parolalar</string>
-  <string name="security_center_home_row_missing_tfa_title">İki adımlı doğrulama etkin olmayan</string>
+  <string name="security_center_home_row_missing_tfa_title">İki adımlı doğrulama kapalı olan</string>
   <string name="security_center_home_row_missing_tfa_subtitle">Güvenliği artırmak için iki adımlı doğrulamayı açın</string>
   <string name="security_center_home_row_excludes_items_title">İzlemeye katılmayan</string>
   <string name="security_center_home_row_excludes_items_subtitle">Bu ögeler risk altında</string>
@@ -45,7 +45,7 @@
   <string name="security_center_sentinel_subtitle">Proton Sentinel, sizi kötü niyetli kişilerden ve güvenlik tehditlerinden korumak için günün her saati çalışan, karmaşık yapay zeka sistemleri ile uzmanlar tarafından desteklenen gelişmiş bir hesap koruma programıdır.</string>
   <string name="security_center_sentinel_button_enable">Proton Sentinel kullanılsın</string>
   <string name="security_center_sentinel_button_disable">Proton Sentinel kullanılmasın</string>
-  <string name="security_center_sentinel_snackbar_message_enable_canceled">Proton Sentinel korumasını etkinleştirme işlemi iptal edildi</string>
+  <string name="security_center_sentinel_snackbar_message_enable_canceled">Proton Sentinel korumasını açma işlemi iptal edildi</string>
   <string name="security_center_sentinel_snackbar_message_enable_error">Proton Sentinel koruması kullanıma alınırken bir sorun çıktı. Lütfen yeniden deneyin.</string>
   <string name="security_center_sentinel_snackbar_message_disable_canceled">Proton Sentinel korumasını kapatma işlemi iptal edildi</string>
   <string name="security_center_sentinel_snackbar_message_disable_error">Proton Sentinel koruması kullanımdan kaldırılırken bir sorun çıktı. Lütfen yeniden deneyin.</string>
@@ -60,7 +60,7 @@
   <string name="security_center_compromised_pass_top_bar_title">Bilinen parolalar</string>
   <string name="security_center_compromised_pass_top_bar_subtitle">Bilinen parolalar veri sızıntılarında açığa çıkmış parolalardır. Bir veri sızıntısı ortaya çıktığında bunun etkisini sınırlamak için aynı parolayı asla başka yerlerde kullanmayın.</string>
   <!-- Missing 2FA -->
-  <string name="security_center_missing_tfa_top_bar_title">İki adımlı doğrulama etkin olmayan</string>
+  <string name="security_center_missing_tfa_top_bar_title">İki adımlı doğrulama açık olmayan</string>
   <string name="security_center_missing_tfa_top_bar_subtitle">Daha fazla güvenlik sağlamak için şu hesaplarda iki adımlı doğrulamayı ayarlayın.</string>
   <!-- Excluded items screen -->
   <string name="security_center_excluded_items_top_bar_title">Katılmayan ögeler</string>

@@ -26,7 +26,6 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import proton.android.pass.common.api.None
-import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.toOption
 import proton.android.pass.data.fakes.repositories.FakeBulkMoveToVaultRepository
 import proton.android.pass.data.fakes.usecases.FakeMigrateItems
@@ -85,7 +84,7 @@ internal class MigrateConfirmVaultForMoveAllItemsInFolderViewModelTest {
     }
 
     @Test
-    fun `source folder with items in descendant folders is not disabled`() = runTest {
+    fun `source folder with items in descendant folders is still disabled`() = runTest {
         val testInstance = buildInstance(
             FakeGetMigrationItemsSelection().apply {
                 setMigrationItemsSelection(
@@ -99,13 +98,13 @@ internal class MigrateConfirmVaultForMoveAllItemsInFolderViewModelTest {
 
         testInstance.state.test {
             val state = awaitItem()
-            assertThat(state.disabledFolderId).isEqualTo(None)
+            assertThat(state.disabledFolderId).isEqualTo(SOURCE_FOLDER_ID.toOption())
             cancelAndConsumeRemainingEvents()
         }
     }
 
     @Test
-    fun `source folder with items in descendant folders can be selected as destination`() = runTest {
+    fun `source folder with items in descendant folders cannot be selected as destination`() = runTest {
         val testInstance = buildInstance(
             FakeGetMigrationItemsSelection().apply {
                 setMigrationItemsSelection(
@@ -118,10 +117,10 @@ internal class MigrateConfirmVaultForMoveAllItemsInFolderViewModelTest {
         observeVaults.sendResult(Result.success(listOf(sourceVault())))
 
         testInstance.state.test {
-            awaitItem() // activate state so sourceHasChildFolders is computed
+            awaitItem()
             testInstance.onFolderSelected(SHARE_ID, SOURCE_FOLDER_ID)
-            val state = awaitItem()
-            assertThat(state.selectedFolderId).isEqualTo(Some(SOURCE_FOLDER_ID))
+            expectNoEvents()
+            assertThat(testInstance.state.value.selectedFolderId).isEqualTo(None)
             cancelAndConsumeRemainingEvents()
         }
     }
@@ -132,7 +131,7 @@ internal class MigrateConfirmVaultForMoveAllItemsInFolderViewModelTest {
         observeVaults.sendResult(Result.success(listOf(sourceVault())))
 
         instance.state.test {
-            awaitItem() // activate state so sourceHasChildFolders = false is known
+            awaitItem()
             instance.onFolderSelected(SHARE_ID, SOURCE_FOLDER_ID)
             expectNoEvents()
             assertThat(instance.state.value.selectedFolderId).isEqualTo(None)

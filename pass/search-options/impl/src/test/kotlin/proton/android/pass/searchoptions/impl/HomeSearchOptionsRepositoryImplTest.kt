@@ -21,6 +21,7 @@ package proton.android.pass.searchoptions.impl
 import app.cash.turbine.test
 import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.test.runTest
+import me.proton.core.domain.entity.UserId
 import org.junit.Before
 import org.junit.Test
 import proton.android.pass.data.fakes.usecases.FakeObserveCurrentUser
@@ -91,6 +92,24 @@ class HomeSearchOptionsRepositoryImplTest {
             instance.setVaultSelectionOption(VaultSelectionOption.Trash)
             val afterVaultChange = awaitItem()
             assertThat(afterVaultChange).isFalse()
+        }
+    }
+
+    @Test
+    fun `isInSeeAllPinsMode resets to false when current user switches`() = runTest {
+        val userA = UserTestFactory.create(userId = UserId("userA"))
+        val userB = UserTestFactory.create(userId = UserId("userB"))
+
+        observeCurrentUser.sendUser(userA)
+        instance.setIsInSeeAllPinsMode(true)
+
+        instance.observeIsInSeeAllPinsMode().test {
+            val afterSet = awaitItem()
+            assertThat(afterSet).isTrue()
+
+            observeCurrentUser.sendUser(userB)
+            val afterSwitch = awaitItem()
+            assertThat(afterSwitch).isFalse()
         }
     }
 }

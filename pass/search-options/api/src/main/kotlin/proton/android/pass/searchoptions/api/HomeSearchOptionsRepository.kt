@@ -33,7 +33,7 @@ interface HomeSearchOptionsRepository {
     fun setFilterOption(filterOption: FilterOption)
     suspend fun setVaultSelectionOption(vaultSelectionOption: VaultSelectionOption)
     fun observeIsInSeeAllPinsMode(): Flow<Boolean>
-    fun setIsInSeeAllPinsMode(isInSeeAllPinsMode: Boolean)
+    suspend fun setIsInSeeAllPinsMode(isInSeeAllPinsMode: Boolean)
 }
 
 data class SearchOptions(

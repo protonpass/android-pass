@@ -864,7 +864,9 @@ class HomeViewModel @Inject constructor(
     }
 
     fun onStopSeeAllPinned() {
-        homeSearchOptionsRepository.setIsInSeeAllPinsMode(false)
+        viewModelScope.launch {
+            homeSearchOptionsRepository.setIsInSeeAllPinsMode(false)
+        }
     }
 
     fun onEnterSearch() {
@@ -1308,7 +1310,9 @@ class HomeViewModel @Inject constructor(
     }
 
     fun onSeeAllPinned() {
-        homeSearchOptionsRepository.setIsInSeeAllPinsMode(true)
+        viewModelScope.launch {
+            homeSearchOptionsRepository.setIsInSeeAllPinsMode(true)
+        }
     }
 
     fun openUpdateApp(contextHolder: ClassHolder<Context>) {

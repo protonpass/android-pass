@@ -24,6 +24,7 @@ import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Test
 import proton.android.pass.crypto.fakes.context.FakeEncryptionContextProvider
+import proton.android.pass.data.api.ItemCountSummary
 import proton.android.pass.data.fakes.usecases.FakeObservePinnedItems
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
@@ -94,6 +95,17 @@ class ObservePinnedItemCountImplTest {
         instance().test {
             val summary = awaitItem()
             assertThat(summary.total).isEqualTo(0)
+        }
+    }
+
+    @Test
+    fun `emits Initial summary when observePinnedItems errors`() = runTest {
+        observePinnedItems.emitError(RuntimeException("network error"))
+
+        instance().test {
+            val summary = awaitItem()
+            assertThat(summary).isEqualTo(ItemCountSummary.Initial)
+            awaitComplete()
         }
     }
 }

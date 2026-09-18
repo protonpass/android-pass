@@ -646,13 +646,6 @@ fun NavGraphBuilder.appGraph(
                         mapOf(HOME_ENABLE_BULK_ACTIONS_KEY to true)
                     )
                 }
-
-                is SearchOptionsNavigation.ManageFolder -> dismissBottomSheet {
-                    appNavigator.navigate(
-                        FolderOptionsBottomSheet,
-                        FolderOptionsBottomSheet.createNavRoute(it.shareId, it.folderId)
-                    )
-                }
             }
         }
     )

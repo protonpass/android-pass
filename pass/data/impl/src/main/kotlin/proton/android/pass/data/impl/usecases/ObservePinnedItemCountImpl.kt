@@ -19,15 +19,17 @@
 package proton.android.pass.data.impl.usecases
 
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
 import proton.android.pass.crypto.api.context.EncryptionContext
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.ItemCountSummary
 import proton.android.pass.data.api.usecases.ObservePinnedItemCount
 import proton.android.pass.data.api.usecases.ObservePinnedItems
+import proton.android.pass.data.impl.extensions.hasTotp
 import proton.android.pass.domain.Item
-import proton.android.pass.domain.ItemType
 import proton.android.pass.domain.items.ItemCategory
+import proton.android.pass.log.api.PassLogger
 import javax.inject.Inject
 
 class ObservePinnedItemCountImpl @Inject constructor(
@@ -37,9 +39,14 @@ class ObservePinnedItemCountImpl @Inject constructor(
 
     override fun invoke(): Flow<ItemCountSummary> = observePinnedItems(includeHidden = false)
         .map { items ->
-            encryptionContextProvider.withEncryptionContext {
+            encryptionContextProvider.withEncryptionContextSuspendable {
                 items.toItemCountSummary(this)
             }
+        }
+        .catch { error ->
+            PassLogger.w(TAG, "Error observing pinned item count")
+            PassLogger.w(TAG, error)
+            emit(ItemCountSummary.Initial)
         }
 
     private fun List<Item>.toItemCountSummary(context: EncryptionContext): ItemCountSummary {
@@ -55,7 +62,7 @@ class ObservePinnedItemCountImpl @Inject constructor(
             when (item.itemType.category) {
                 ItemCategory.Login -> {
                     login++
-                    if (item.hasPrimaryTotp(context)) {
+                    if (item.hasTotp(context)) {
                         loginWithMFA++
                     }
                 }
@@ -88,8 +95,9 @@ class ObservePinnedItemCountImpl @Inject constructor(
         )
     }
 
-    private fun Item.hasPrimaryTotp(context: EncryptionContext): Boolean {
-        val login = itemType as? ItemType.Login ?: return false
-        return login.primaryTotp.isNotEmpty() && context.decrypt(login.primaryTotp).isNotBlank()
+    private companion object {
+
+        private const val TAG = "ObservePinnedItemCountImpl"
+
     }
 }

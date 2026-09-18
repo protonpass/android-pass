@@ -63,7 +63,7 @@ class FakeHomeSearchOptionsRepository @Inject constructor() : HomeSearchOptionsR
 
     override fun observeIsInSeeAllPinsMode(): Flow<Boolean> = isInSeeAllPinsModeFlow
 
-    override fun setIsInSeeAllPinsMode(isInSeeAllPinsMode: Boolean) {
+    override suspend fun setIsInSeeAllPinsMode(isInSeeAllPinsMode: Boolean) {
         isInSeeAllPinsModeFlow.update { isInSeeAllPinsMode }
     }
 

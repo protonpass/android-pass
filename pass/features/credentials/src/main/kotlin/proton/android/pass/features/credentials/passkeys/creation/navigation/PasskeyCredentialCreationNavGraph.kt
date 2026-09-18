@@ -426,10 +426,6 @@ internal fun NavGraphBuilder.passkeyCredentialCreationNavGraph(
                 SearchOptionsNavigation.BulkActions -> {
                     throw IllegalStateException("Cannot perform bulk actions on PasskeyCredentialCreation")
                 }
-
-                is SearchOptionsNavigation.ManageFolder -> {
-                    throw IllegalStateException("Cannot perform manage folder on PasskeyCredentialSelection")
-                }
             }
         }
     )

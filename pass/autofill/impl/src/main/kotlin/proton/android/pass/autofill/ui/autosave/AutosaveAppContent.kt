@@ -268,8 +268,7 @@ fun AutosaveAppContent(
                                         SearchOptionsNavigation.ResetFilters,
                                         SearchOptionsNavigation.Filter,
                                         SearchOptionsNavigation.Sorting,
-                                        SearchOptionsNavigation.BulkActions,
-                                        is SearchOptionsNavigation.ManageFolder ->
+                                        SearchOptionsNavigation.BulkActions ->
                                             throw IllegalStateException("Action not supported")
                                     }
                                 }

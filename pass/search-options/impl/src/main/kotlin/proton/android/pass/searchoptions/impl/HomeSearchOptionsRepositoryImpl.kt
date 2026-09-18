@@ -20,13 +20,13 @@ package proton.android.pass.searchoptions.impl
 
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.firstOrNull
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
+import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.api.usecases.ObserveCurrentUser
 import proton.android.pass.preferences.InternalSettingsRepository
 import proton.android.pass.searchoptions.api.FilterOption
@@ -36,6 +36,8 @@ import proton.android.pass.searchoptions.api.SortingOption
 import proton.android.pass.searchoptions.api.VaultSelectionOption
 import javax.inject.Inject
 import javax.inject.Singleton
+
+private data class PinsModeState(val userId: UserId, val isEnabled: Boolean)
 
 @Singleton
 class HomeSearchOptionsRepositoryImpl @Inject constructor(
@@ -51,7 +53,11 @@ class HomeSearchOptionsRepositoryImpl @Inject constructor(
         }
         .distinctUntilChanged()
 
-    private val isInSeeAllPinsModeFlow = MutableStateFlow(false)
+    private val currentUserIdFlow: Flow<UserId> = observeCurrentUser()
+        .map { it.userId }
+        .distinctUntilChanged()
+
+    private val pinsModeStateFlow = MutableStateFlow<PinsModeState?>(null)
 
     override fun observeSearchOptions(): Flow<SearchOptions> = combine(
         internalSettingsRepository.getHomeFilterOption(),
@@ -90,14 +96,20 @@ class HomeSearchOptionsRepositoryImpl @Inject constructor(
                 userId = user.userId,
                 selectedVault = vaultSelectionOption.toPreference()
             )
+            pinsModeStateFlow.value = PinsModeState(userId = user.userId, isEnabled = false)
         }
-        isInSeeAllPinsModeFlow.value = false
     }
 
-    override fun observeIsInSeeAllPinsMode(): Flow<Boolean> = isInSeeAllPinsModeFlow.asStateFlow()
-
-    override fun setIsInSeeAllPinsMode(isInSeeAllPinsMode: Boolean) {
-        isInSeeAllPinsModeFlow.value = isInSeeAllPinsMode
+    override fun observeIsInSeeAllPinsMode(): Flow<Boolean> = combine(
+        currentUserIdFlow,
+        pinsModeStateFlow
+    ) { currentUserId, pinsState ->
+        pinsState != null && pinsState.userId == currentUserId && pinsState.isEnabled
     }
 
+    override suspend fun setIsInSeeAllPinsMode(isInSeeAllPinsMode: Boolean) {
+        observeCurrentUser().firstOrNull()?.also { user ->
+            pinsModeStateFlow.value = PinsModeState(userId = user.userId, isEnabled = isInSeeAllPinsMode)
+        }
+    }
 }

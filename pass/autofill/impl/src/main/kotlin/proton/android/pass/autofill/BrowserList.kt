@@ -21,6 +21,7 @@ package proton.android.pass.autofill
 val BROWSERS = setOf(
     "alook.browser",
     "alook.browser.google",
+    "app.newsdiary",
     "app.vanadium.browser",
     "app.vanadium.webview",
     "com.aloha.browser",

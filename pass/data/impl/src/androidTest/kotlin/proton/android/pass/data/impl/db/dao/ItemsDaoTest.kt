@@ -382,7 +382,8 @@ class ItemsDaoTest {
             userId = userId,
             shareIds = listOf(shareId),
             itemState = null,
-            folderId = folderId
+            folderId = folderId,
+            restrictToRootFolder = false
         ).first()
 
         assertEquals(1, scopedCount)
@@ -402,10 +403,32 @@ class ItemsDaoTest {
             userId = userId,
             shareIds = listOf(shareId),
             itemState = null,
-            folderId = null
+            folderId = null,
+            restrictToRootFolder = false
         ).first()
 
         assertEquals(2, unscopedCount)
+    }
+
+    @Test
+    fun countSharedItems_restrictToRootFolderExcludesItemsInSubfolders() = runTest {
+        val userId = "user-1"
+        val shareId = "share-1"
+        val folderId = "folder-1"
+
+        insertFolder(userId, shareId, folderId, parentFolderId = null)
+        insertItem(userId, shareId, itemId = "shared-in-folder", folderId = folderId, shareCount = 1)
+        insertItem(userId, shareId, itemId = "shared-at-root", folderId = null, shareCount = 1)
+
+        val rootOnlyCount = itemsDao.countSharedItems(
+            userId = userId,
+            shareIds = listOf(shareId),
+            itemState = null,
+            folderId = null,
+            restrictToRootFolder = true
+        ).first()
+
+        assertEquals(1, rootOnlyCount)
     }
 
     @Test
@@ -433,7 +456,8 @@ class ItemsDaoTest {
         val scopedResult = itemsDao.countTrashedItems(
             userId = userId,
             shareIds = listOf(shareId),
-            folderId = folderId
+            folderId = folderId,
+            restrictToRootFolder = false
         ).first()
 
         assertEquals(1, scopedResult.sumOf { it.itemCount })
@@ -464,10 +488,125 @@ class ItemsDaoTest {
         val unscopedResult = itemsDao.countTrashedItems(
             userId = userId,
             shareIds = listOf(shareId),
-            folderId = null
+            folderId = null,
+            restrictToRootFolder = false
         ).first()
 
         assertEquals(2, unscopedResult.sumOf { it.itemCount })
+    }
+
+    @Test
+    fun countTrashedItems_restrictToRootFolderExcludesItemsInSubfolders() = runTest {
+        val userId = "user-1"
+        val shareId = "share-1"
+        val folderId = "folder-1"
+
+        insertFolder(userId, shareId, folderId, parentFolderId = null)
+        insertItem(
+            userId,
+            shareId,
+            itemId = "trashed-in-folder",
+            folderId = folderId,
+            state = ItemStateValues.TRASHED
+        )
+        insertItem(
+            userId,
+            shareId,
+            itemId = "trashed-at-root",
+            folderId = null,
+            state = ItemStateValues.TRASHED
+        )
+
+        val rootOnlyResult = itemsDao.countTrashedItems(
+            userId = userId,
+            shareIds = listOf(shareId),
+            folderId = null,
+            restrictToRootFolder = true
+        ).first()
+
+        assertEquals(1, rootOnlyResult.sumOf { it.itemCount })
+    }
+
+    @Test
+    fun itemSummary_restrictToRootFolderExcludesItemsInSubfolders() = runTest {
+        val userId = "user-1"
+        val shareId = "share-1"
+        val folderId = "folder-1"
+
+        insertFolder(userId, shareId, folderId, parentFolderId = null)
+        insertItem(userId, shareId, itemId = "item-in-folder", folderId = folderId)
+        insertItem(userId, shareId, itemId = "item-at-root", folderId = null)
+
+        val rootOnlyRows = itemsDao.itemSummary(
+            userId = userId,
+            shareIds = listOf(shareId),
+            itemState = null,
+            onlyShared = false,
+            restrictToRootFolder = true
+        ).first()
+
+        assertEquals(1, rootOnlyRows.sumOf { it.itemCount })
+    }
+
+    @Test
+    fun itemSummary_allItemsReturnedWhenRestrictToRootFolderFalse() = runTest {
+        val userId = "user-1"
+        val shareId = "share-1"
+        val folderId = "folder-1"
+
+        insertFolder(userId, shareId, folderId, parentFolderId = null)
+        insertItem(userId, shareId, itemId = "item-in-folder", folderId = folderId)
+        insertItem(userId, shareId, itemId = "item-at-root", folderId = null)
+
+        val allRows = itemsDao.itemSummary(
+            userId = userId,
+            shareIds = listOf(shareId),
+            itemState = null,
+            onlyShared = false,
+            restrictToRootFolder = false
+        ).first()
+
+        assertEquals(2, allRows.sumOf { it.itemCount })
+    }
+
+    @Test
+    fun countItemsWithTotp_restrictToRootFolderExcludesItemsInSubfolders() = runTest {
+        val userId = "user-1"
+        val shareId = "share-1"
+        val folderId = "folder-1"
+
+        insertFolder(userId, shareId, folderId, parentFolderId = null)
+        insertItem(userId, shareId, itemId = "totp-in-folder", folderId = folderId, hasTotp = true)
+        insertItem(userId, shareId, itemId = "totp-at-root", folderId = null, hasTotp = true)
+
+        val rootOnlyRows = itemsDao.countItemsWithTotp(
+            userId = userId,
+            shareIds = listOf(shareId),
+            itemState = null,
+            restrictToRootFolder = true
+        ).first()
+
+        assertEquals(1, rootOnlyRows.sumOf { it.itemCount })
+    }
+
+    @Test
+    fun countItemsWithTotp_allItemsReturnedWhenRestrictToRootFolderFalse() = runTest {
+        val userId = "user-1"
+        val shareId = "share-1"
+        val folderId = "folder-1"
+
+        insertFolder(userId, shareId, folderId, parentFolderId = null)
+        insertItem(userId, shareId, itemId = "totp-in-folder", folderId = folderId, hasTotp = true)
+        insertItem(userId, shareId, itemId = "totp-at-root", folderId = null, hasTotp = true)
+
+        val allRows = itemsDao.countItemsWithTotp(
+            userId = userId,
+            shareIds = listOf(shareId),
+            itemState = null,
+            restrictToRootFolder = false
+        ).first()
+
+        assertEquals(2, allRows.sumOf { it.itemCount })
     }
 
     private suspend fun insertFolder(
@@ -516,7 +655,8 @@ class ItemsDaoTest {
         state: Int = ItemStateValues.ACTIVE,
         itemType: Int = 1,
         flags: Int = 0,
-        shareCount: Int = 0
+        shareCount: Int = 0,
+        hasTotp: Boolean = false
     ) {
         itemsDao.insertOrUpdate(
             ItemEntityTestFactory.create(
@@ -541,7 +681,7 @@ class ItemsDaoTest {
                 pinTime = null,
                 flags = flags,
                 shareCount = shareCount,
-                hasTotp = false,
+                hasTotp = hasTotp,
                 hasPasskeys = false
             )
         )

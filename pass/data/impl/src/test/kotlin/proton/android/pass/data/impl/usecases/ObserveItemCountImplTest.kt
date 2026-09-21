@@ -92,6 +92,66 @@ class ObserveItemCountImplTest {
     }
 
     @Test
+    fun `forwards restrictToRootFolder when ShareSelection is Share`() = runTest {
+        val user = UserTestFactory.create()
+        val shareId = ShareId("share-1")
+        val selection = ShareSelection.Share(shareId)
+
+        observeCurrentUser.sendUser(user)
+        instance(
+            itemState = null,
+            shareSelection = selection,
+            applyItemStateToSharedItems = false,
+            includeHiddenVault = false,
+            restrictToRootFolder = true
+        ).first()
+
+        val calls = itemRepository.getObserveItemCountSummaryMemory()
+        assertThat(calls).hasSize(1)
+        assertThat(calls[0].restrictToRootFolder).isTrue()
+    }
+
+    @Test
+    fun `does not set restrictToRootFolder by default for ShareSelection Share`() = runTest {
+        val user = UserTestFactory.create()
+        val shareId = ShareId("share-1")
+        val selection = ShareSelection.Share(shareId)
+
+        observeCurrentUser.sendUser(user)
+        instance(
+            itemState = null,
+            shareSelection = selection,
+            applyItemStateToSharedItems = false,
+            includeHiddenVault = false
+        ).first()
+
+        val calls = itemRepository.getObserveItemCountSummaryMemory()
+        assertThat(calls).hasSize(1)
+        assertThat(calls[0].restrictToRootFolder).isFalse()
+    }
+
+    @Test
+    fun `does not set restrictToRootFolder for ShareSelection Folder even when requested`() = runTest {
+        val user = UserTestFactory.create()
+        val shareId = ShareId("share-1")
+        val folder = FolderTestFactory.create(shareId = shareId)
+        val selection = ShareSelection.Folder(shareId, folder.folderId)
+
+        observeCurrentUser.sendUser(user)
+        instance(
+            itemState = null,
+            shareSelection = selection,
+            applyItemStateToSharedItems = false,
+            includeHiddenVault = false,
+            restrictToRootFolder = true
+        ).first()
+
+        val calls = itemRepository.getObserveItemCountSummaryMemory()
+        assertThat(calls).hasSize(1)
+        assertThat(calls[0].restrictToRootFolder).isFalse()
+    }
+
+    @Test
     fun `does not forward folderId when ShareSelection is AllShares`() = runTest {
         val user = UserTestFactory.create()
         val selection = ShareSelection.AllShares

@@ -273,7 +273,7 @@ abstract class ItemsDao : BaseDao<ItemEntity>() {
 
     @Query(
         """
-        SELECT 
+        SELECT
             ${ItemEntity.Columns.SHARE_ID} as shareId,
             ${ItemEntity.Columns.ITEM_TYPE} as itemKind,
             COUNT(${ItemEntity.Columns.ITEM_TYPE}) as itemCount
@@ -281,7 +281,8 @@ abstract class ItemsDao : BaseDao<ItemEntity>() {
         WHERE ${ItemEntity.Columns.USER_ID} = :userId
           AND ${ItemEntity.Columns.SHARE_ID} IN (:shareIds)
           AND (:itemState IS NULL OR ${ItemEntity.Columns.STATE} = :itemState)
-          AND (:onlyShared = 0 OR ${ItemEntity.Columns.SHARE_COUNT} > 0) 
+          AND (:onlyShared = 0 OR ${ItemEntity.Columns.SHARE_COUNT} > 0)
+          AND (:restrictToRootFolder = 0 OR ${ItemEntity.Columns.FOLDER_ID} IS NULL)
         GROUP BY ${ItemEntity.Columns.SHARE_ID}, ${ItemEntity.Columns.ITEM_TYPE}
         """
     )
@@ -289,7 +290,8 @@ abstract class ItemsDao : BaseDao<ItemEntity>() {
         userId: String,
         shareIds: List<String>,
         itemState: Int?,
-        onlyShared: Boolean
+        onlyShared: Boolean,
+        restrictToRootFolder: Boolean
     ): Flow<List<SummaryRow>>
 
     @Query(
@@ -383,7 +385,7 @@ abstract class ItemsDao : BaseDao<ItemEntity>() {
 
     @Query(
         """
-        SELECT 
+        SELECT
           ${ItemEntity.Columns.SHARE_ID} as shareId,
           COUNT(${ItemEntity.Columns.ITEM_TYPE}) as itemCount
         FROM ${ItemEntity.TABLE}
@@ -391,13 +393,15 @@ abstract class ItemsDao : BaseDao<ItemEntity>() {
           AND ${ItemEntity.Columns.SHARE_ID} IN (:shareIds)
           AND ${ItemEntity.Columns.HAS_TOTP} = 1
           AND (:itemState IS NULL OR ${ItemEntity.Columns.STATE} = :itemState)
+          AND (:restrictToRootFolder = 0 OR ${ItemEntity.Columns.FOLDER_ID} IS NULL)
         GROUP BY ${ItemEntity.Columns.SHARE_ID}
         """
     )
     abstract fun countItemsWithTotp(
         userId: String,
         shareIds: List<String>,
-        itemState: Int?
+        itemState: Int?,
+        restrictToRootFolder: Boolean
     ): Flow<List<ShareIdCountRow>>
 
     @Query(
@@ -496,13 +500,15 @@ abstract class ItemsDao : BaseDao<ItemEntity>() {
           AND (:folderId IS NULL OR ${ItemEntity.Columns.FOLDER_ID} = :folderId)
           AND ${ItemEntity.Columns.SHARE_COUNT} > 0
           AND (:itemState IS NULL OR ${ItemEntity.Columns.STATE} = :itemState)
+          AND (:restrictToRootFolder = 0 OR ${ItemEntity.Columns.FOLDER_ID} IS NULL)
         """
     )
     abstract fun countSharedItems(
         userId: String,
         shareIds: List<String>,
         itemState: Int?,
-        folderId: String?
+        folderId: String?,
+        restrictToRootFolder: Boolean
     ): Flow<Int>
 
     @Query(
@@ -555,13 +561,15 @@ abstract class ItemsDao : BaseDao<ItemEntity>() {
           AND ${ItemEntity.Columns.SHARE_ID} IN (:shareIds)
           AND (:folderId IS NULL OR ${ItemEntity.Columns.FOLDER_ID} = :folderId)
           AND ${ItemEntity.Columns.STATE} = ${ItemStateValues.TRASHED}
+          AND (:restrictToRootFolder = 0 OR ${ItemEntity.Columns.FOLDER_ID} IS NULL)
         GROUP BY ${ItemEntity.Columns.SHARE_ID}
         """
     )
     abstract fun countTrashedItems(
         userId: String,
         shareIds: List<String>,
-        folderId: String?
+        folderId: String?,
+        restrictToRootFolder: Boolean
     ): Flow<List<ShareIdCountRow>>
 
     @Query(

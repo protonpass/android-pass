@@ -33,15 +33,25 @@ class FakeObserveItemCount @Inject constructor() : ObserveItemCount {
 
     private val observeVaultsFlow = testFlow<Result<ItemCountSummary>>()
 
+    var lastRestrictToRootFolder: Boolean? = null
+        private set
+    var lastShareSelection: ShareSelection? = null
+        private set
+
     fun sendResult(result: Result<ItemCountSummary>) = observeVaultsFlow.tryEmit(result)
 
     override fun invoke(
         itemState: ItemState?,
         shareSelection: ShareSelection,
         applyItemStateToSharedItems: Boolean,
-        includeHiddenVault: Boolean
-    ): Flow<ItemCountSummary> = observeVaultsFlow.map {
-        it.getOrThrow()
+        includeHiddenVault: Boolean,
+        restrictToRootFolder: Boolean
+    ): Flow<ItemCountSummary> {
+        lastRestrictToRootFolder = restrictToRootFolder
+        lastShareSelection = shareSelection
+        return observeVaultsFlow.map {
+            it.getOrThrow()
+        }
     }
 
 }

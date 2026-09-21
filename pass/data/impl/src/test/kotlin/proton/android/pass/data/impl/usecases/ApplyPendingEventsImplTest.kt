@@ -24,6 +24,9 @@ import me.proton.core.domain.entity.UserId
 import org.junit.Rule
 import org.junit.Test
 import proton.android.pass.account.fakes.FakeUserAddressRepository
+import proton.android.pass.data.api.repositories.SyncMode
+import proton.android.pass.data.api.repositories.SyncReason
+import proton.android.pass.data.api.usecases.RefreshSharesAndEnqueueSync
 import proton.android.pass.data.api.usecases.RefreshSharesResult
 import proton.android.pass.data.fakes.repositories.FakeItemRepository
 import proton.android.pass.data.fakes.usecases.FakeItemSyncStatusRepository
@@ -98,4 +101,62 @@ class ApplyPendingEventsImplTest {
         assertThat(itemRepository.getIndexPendingEventMemory()).hasSize(1)
         assertThat(wasInTransactionWhenIndexing).containsExactly(false)
     }
+
+    @Test
+    fun `a forced background sync stays off the user-visible path`() = runTest {
+        val refreshShares = FakeRefreshSharesAndEnqueueSync()
+        val instance = instanceWith(refreshShares)
+
+        instance(
+            userId = userId,
+            forceSync = true,
+            syncReason = SyncReason.FolderRepair,
+            syncMode = SyncMode.Background
+        )
+
+        assertThat(refreshShares.invocations.map { invocation -> invocation.syncType })
+            .containsExactly(RefreshSharesAndEnqueueSync.SyncType.FULL_BACKGROUND)
+    }
+
+    @Test
+    fun `a forced user-visible sync takes the full path`() = runTest {
+        val refreshShares = FakeRefreshSharesAndEnqueueSync()
+        val instance = instanceWith(refreshShares)
+
+        instance(
+            userId = userId,
+            forceSync = true,
+            syncReason = SyncReason.FolderRepair,
+            syncMode = SyncMode.ShownToUser
+        )
+
+        assertThat(refreshShares.invocations.map { invocation -> invocation.syncType })
+            .containsExactly(RefreshSharesAndEnqueueSync.SyncType.FULL)
+    }
+
+    @Test
+    fun `the sync reason reaches the shares refresh`() = runTest {
+        val refreshShares = FakeRefreshSharesAndEnqueueSync()
+        val instance = instanceWith(refreshShares)
+
+        instance(
+            userId = userId,
+            forceSync = true,
+            syncReason = SyncReason.FolderRepair,
+            syncMode = SyncMode.ShownToUser
+        )
+
+        assertThat(refreshShares.invocations.map { invocation -> invocation.syncReason })
+            .containsExactly(SyncReason.FolderRepair)
+    }
+
+    private fun instanceWith(refreshShares: FakeRefreshSharesAndEnqueueSync) = ApplyPendingEventsImpl(
+        database = FakePassDatabase(),
+        eventRepository = FakeEventRepository(),
+        addressRepository = FakeUserAddressRepository(),
+        itemRepository = FakeItemRepository(),
+        shareRepository = FakeShareRepository(),
+        itemSyncStatusRepository = FakeItemSyncStatusRepository(),
+        refreshSharesAndEnqueueSync = refreshShares
+    )
 }

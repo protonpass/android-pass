@@ -19,6 +19,8 @@
 package proton.android.pass.data.fakes.usecases
 
 import me.proton.core.domain.entity.UserId
+import proton.android.pass.data.api.repositories.SyncMode
+import proton.android.pass.data.api.repositories.SyncReason
 import proton.android.pass.data.api.usecases.ApplyPendingEvents
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -26,13 +28,28 @@ import javax.inject.Singleton
 @Singleton
 class FakeApplyPendingEvents @Inject constructor() : ApplyPendingEvents {
 
+    data class Invocation(
+        val userId: UserId,
+        val forceSync: Boolean,
+        val syncReason: SyncReason,
+        val syncMode: SyncMode
+    )
+
+    val invocations = mutableListOf<Invocation>()
+
     private var result: Result<Unit> = Result.success(Unit)
 
     fun setResult(value: Result<Unit>) {
         result = value
     }
 
-    override suspend fun invoke(userId: UserId, forceSync: Boolean) {
+    override suspend fun invoke(
+        userId: UserId,
+        forceSync: Boolean,
+        syncReason: SyncReason,
+        syncMode: SyncMode
+    ) {
+        invocations += Invocation(userId, forceSync, syncReason, syncMode)
         result.getOrThrow()
     }
 }

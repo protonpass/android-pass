@@ -19,7 +19,14 @@
 package proton.android.pass.data.api.usecases
 
 import me.proton.core.domain.entity.UserId
+import proton.android.pass.data.api.repositories.SyncMode
+import proton.android.pass.data.api.repositories.SyncReason
 
 interface ApplyPendingEvents {
-    suspend operator fun invoke(userId: UserId, forceSync: Boolean = false)
+    suspend operator fun invoke(
+        userId: UserId,
+        forceSync: Boolean = false,
+        syncReason: SyncReason = SyncReason.Default,
+        syncMode: SyncMode = SyncMode.ShownToUser
+    )
 }

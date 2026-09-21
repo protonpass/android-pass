@@ -19,12 +19,13 @@
 package proton.android.pass.data.impl.usecases.sync
 
 import com.google.common.truth.Truth.assertThat
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
 import me.proton.core.domain.entity.UserId
 import org.junit.Before
 import org.junit.Test
-import kotlin.test.assertFailsWith
 import proton.android.pass.data.api.repositories.ItemSyncStatus
+import proton.android.pass.data.api.repositories.SyncMode
 import proton.android.pass.data.api.usecases.sync.ForceSyncResult
 import proton.android.pass.data.fakes.repositories.FakeItemRepository
 import proton.android.pass.data.fakes.repositories.ItemRevisionTestFactory
@@ -78,18 +79,36 @@ class ForceSyncItemsImplTest {
         val shareId = ShareId("share-1")
         refreshFolders.result = Result.failure(IllegalStateException("folder refresh failed"))
 
-        val error = assertFailsWith<IllegalStateException> {
-            instance.invoke(
-                userId = USER_ID,
-                shareIds = setOf(shareId),
-                hasInactiveShares = false,
-                hasInvalidGroupShares = false
-            )
-        }
+        val result = instance.invoke(
+            userId = USER_ID,
+            shareIds = setOf(shareId),
+            hasInactiveShares = false,
+            hasInvalidGroupShares = false
+        )
 
-        assertThat(error.message).isEqualTo("folder refresh failed")
+        assertThat(result).isEqualTo(ForceSyncResult.Error)
         assertThat(itemRepository.getDownloadItemsMemory()).isEmpty()
         assertThat(itemRepository.getSetShareItemsMemory()).isEmpty()
+    }
+
+    @Test
+    fun `refresh folders failure leaves the sync status in a terminal state`() = runTest {
+        val shareId = ShareId("share-1")
+        refreshFolders.result = Result.failure(IllegalStateException("folder refresh failed"))
+
+        instance.invoke(
+            userId = USER_ID,
+            shareIds = setOf(shareId),
+            hasInactiveShares = false,
+            hasInvalidGroupShares = false
+        )
+
+        val lastStatus = itemSyncStatusRepository.emittedStatuses.last()
+        assertThat(lastStatus).isInstanceOf(ItemSyncStatus.SyncError.DownloadError::class.java)
+        assertThat(lastStatus.isSyncing()).isFalse()
+        assertThat((lastStatus as ItemSyncStatus.SyncError.DownloadError).failedShareIds)
+            .containsExactly(shareId)
+        assertThat(itemSyncStatusRepository.observeMode().first()).isEqualTo(SyncMode.Background)
     }
 
     @Test

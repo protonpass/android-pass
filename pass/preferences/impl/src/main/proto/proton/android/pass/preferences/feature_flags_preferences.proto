@@ -35,4 +35,5 @@ message FeatureFlagsPreferences {
   BoolFlagPrefProto pass_popular_services_enabled = 42;
   BoolFlagPrefProto pass_autofill_health_enabled = 43;
   BoolFlagPrefProto pass_offline_attachments_enabled = 44;
+  BoolFlagPrefProto pass_force_sync_folders_enabled = 45;
 }

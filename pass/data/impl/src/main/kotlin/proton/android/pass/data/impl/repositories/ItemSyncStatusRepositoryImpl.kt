@@ -34,6 +34,7 @@ import proton.android.pass.data.api.repositories.ItemSyncStatus
 import proton.android.pass.data.api.repositories.ItemSyncStatusPayload
 import proton.android.pass.data.api.repositories.ItemSyncStatusRepository
 import proton.android.pass.data.api.repositories.SyncMode
+import proton.android.pass.data.api.repositories.SyncReason
 import proton.android.pass.data.api.repositories.SyncState
 import proton.android.pass.domain.ShareId
 import javax.inject.Inject
@@ -56,6 +57,10 @@ class ItemSyncStatusRepositoryImpl @Inject constructor(
     private val modeFlow: MutableSharedFlow<SyncMode> = MutableSharedFlow<SyncMode>(
         replay = 1, extraBufferCapacity = 1
     ).apply { tryEmit(SyncMode.Background) }
+
+    private val reasonFlow: MutableSharedFlow<SyncReason> = MutableSharedFlow<SyncReason>(
+        replay = 1, extraBufferCapacity = 1
+    ).apply { tryEmit(SyncReason.Default) }
 
     private val mutex: Mutex = Mutex()
 
@@ -106,10 +111,17 @@ class ItemSyncStatusRepositoryImpl @Inject constructor(
 
     override fun observeMode(): Flow<SyncMode> = modeFlow
 
+    override suspend fun setReason(reason: SyncReason) {
+        reasonFlow.emit(reason)
+    }
+
+    override fun observeReason(): Flow<SyncReason> = reasonFlow
+
     override suspend fun clear() {
         downloadedItemsMutableMap.clear()
         downloadedItemsState.emit(emptyMap())
         insertedItemsState.emit(None)
+        reasonFlow.emit(SyncReason.Default)
         syncStatus.emit(ItemSyncStatus.SyncNotStarted)
     }
 

@@ -38,8 +38,13 @@ import dagger.assisted.AssistedInject
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.withContext
 import me.proton.core.domain.entity.UserId
+import proton.android.pass.common.api.safeRunCatching
+import proton.android.pass.data.api.repositories.ItemSyncStatus
+import proton.android.pass.data.api.repositories.ItemSyncStatusRepository
 import proton.android.pass.data.api.repositories.ShareRepository
+import proton.android.pass.data.api.repositories.SyncMode
 import proton.android.pass.data.api.usecases.sync.ForceSyncItems
+import proton.android.pass.data.api.usecases.sync.MarkFolderForceSyncCompleted
 import proton.android.pass.data.api.usecases.sync.ForceSyncResult
 import proton.android.pass.data.impl.R
 import proton.android.pass.domain.ShareId
@@ -52,7 +57,9 @@ open class FetchItemsWorker @AssistedInject constructor(
     @Assisted private val context: Context,
     @Assisted workerParameters: WorkerParameters,
     private val forceSyncItems: ForceSyncItems,
-    private val shareRepository: ShareRepository
+    private val shareRepository: ShareRepository,
+    private val itemSyncStatusRepository: ItemSyncStatusRepository,
+    private val markFolderForceSyncCompleted: MarkFolderForceSyncCompleted
 ) : CoroutineWorker(context, workerParameters) {
 
     override suspend fun doWork(): Result {
@@ -83,12 +90,22 @@ open class FetchItemsWorker @AssistedInject constructor(
                     "(origin=$origin)"
             )
 
-            val res = forceSyncItems(
-                userId = userId,
-                shareIds = shareIds,
-                hasInactiveShares = hasInactiveShares,
-                hasInvalidGroupShares = hasInvalidGroupShares
-            )
+            val res = safeRunCatching {
+                forceSyncItems(
+                    userId = userId,
+                    shareIds = shareIds,
+                    hasInactiveShares = hasInactiveShares,
+                    hasInvalidGroupShares = hasInvalidGroupShares
+                )
+            }.getOrElse { error ->
+                // Without this the worker fails outright and the status stays at SyncStarted
+                PassLogger.w(TAG, "$TAG threw before reporting a result")
+                PassLogger.w(TAG, error)
+                itemSyncStatusRepository.emit(ItemSyncStatus.SyncError.DownloadError())
+                itemSyncStatusRepository.setMode(SyncMode.Background)
+                return@withContext Result.retry()
+            }
+
             when (res) {
                 ForceSyncResult.Error -> {
                     PassLogger.i(TAG, "$TAG finished with errors")
@@ -97,14 +114,33 @@ open class FetchItemsWorker @AssistedInject constructor(
 
                 ForceSyncResult.PartialSuccess -> {
                     PassLogger.w(TAG, "$TAG finished with partial success")
+                    // Partial success comes from non-retriable crypto failures, so stop here
+                    settleFolderForceSync(userId, fetchSource)
                     Result.success()
                 }
 
                 ForceSyncResult.Success -> {
                     PassLogger.i(TAG, "$TAG finished successfully")
+                    settleFolderForceSync(userId, fetchSource)
                     Result.success()
                 }
             }
+        }
+    }
+
+    /**
+     * Any full download leaves nothing for the folders repair to recover, whoever asked for it.
+     */
+    private suspend fun settleFolderForceSync(userId: UserId, fetchSource: FetchSource) {
+        when (fetchSource) {
+            is FetchSource.ForceSync,
+            is FetchSource.FirstSync -> safeRunCatching { markFolderForceSyncCompleted(userId) }
+                .onFailure { error ->
+                    PassLogger.w(TAG, "Failed to settle the folders force sync")
+                    PassLogger.w(TAG, error)
+                }
+
+            is FetchSource.NewShare -> Unit
         }
     }
 

@@ -18,6 +18,8 @@
 
 package proton.android.pass.common.api
 
+import kotlinx.coroutines.NonCancellable
+import kotlinx.coroutines.withContext
 import kotlin.coroutines.cancellation.CancellationException
 
 @Suppress("TooGenericExceptionCaught")
@@ -27,5 +29,21 @@ suspend inline fun <R> safeRunCatching(block: suspend () -> R): Result<R> = try 
     throw e // Re-throw cancellation to allow proper coroutine cancellation
 } catch (e: Throwable) {
     Result.failure(e)
+}
+
+/**
+ * Like [safeRunCatching], but runs [onCancellation] before rethrowing when [block] is cancelled,
+ * so callers can settle state (e.g. reset a "in progress" flag) without swallowing cancellation.
+ * [onCancellation] runs under [NonCancellable], since the coroutine is already cancelled at that
+ * point and any unguarded suspending call inside it would throw immediately.
+ */
+suspend inline fun <R> safeRunCatchingWithCleanup(
+    crossinline onCancellation: suspend () -> Unit,
+    block: suspend () -> R
+): Result<R> = try {
+    safeRunCatching(block)
+} catch (e: CancellationException) {
+    withContext(NonCancellable) { onCancellation() }
+    throw e
 }
 

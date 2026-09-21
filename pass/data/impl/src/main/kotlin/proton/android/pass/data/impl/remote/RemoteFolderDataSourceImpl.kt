@@ -49,6 +49,12 @@ class RemoteFolderDataSourceImpl @Inject constructor(
         )
     }
 
+    override suspend fun countFolders(userId: UserId, shareId: ShareId): Long = api.get<PasswordManagerApi>(userId)
+        .invoke { getFolders(shareId.id, null, COUNT_ONLY_PAGE_SIZE) }
+        .valueOrThrow
+        .folders
+        .let { page -> maxOf(page.total, page.folders.size.toLong()) }
+
     override suspend fun retrieveFolder(
         userId: UserId,
         shareId: ShareId,
@@ -95,5 +101,12 @@ class RemoteFolderDataSourceImpl @Inject constructor(
         api.get<PasswordManagerApi>(userId)
             .invoke { deleteFolders(shareId.id, request) }
             .valueOrThrow
+    }
+
+    private companion object {
+
+        // The response carries Total alongside the page, so a page of one is enough
+        private const val COUNT_ONLY_PAGE_SIZE = 1
+
     }
 }

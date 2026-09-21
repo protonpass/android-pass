@@ -113,5 +113,11 @@ enum class FeatureFlag(
         description = "Enable offline attachment downloads",
         key = "PassOfflineAttachments",
         isEnabledDefault = false
+    ),
+    PASS_FORCE_SYNC_FOLDERS(
+        title = "Force sync folders",
+        description = "Force a one-off full sync for users whose folders were lost by a pre-folders build",
+        key = "PassForceSyncFolders",
+        isEnabledDefault = false
     )
 }

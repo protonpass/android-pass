@@ -29,6 +29,7 @@ import proton.android.pass.common.api.toOption
 import proton.android.pass.data.api.repositories.IndexingStatus
 import proton.android.pass.data.api.repositories.ItemSyncStatus
 import proton.android.pass.data.api.repositories.ItemSyncStatusPayload
+import proton.android.pass.data.api.repositories.SyncReason
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.Vault
 
@@ -38,8 +39,11 @@ internal data class SyncDialogState(
     private val downloadedItemsMap: Map<ShareId, ItemSyncStatusPayload>,
     private val insertedItems: Option<ItemSyncStatusPayload>,
     private val vaultsLoadingResult: LoadingResult<List<Vault>>,
-    internal val indexingStatus: IndexingStatus = IndexingStatus.Idle
+    internal val indexingStatus: IndexingStatus = IndexingStatus.Idle,
+    private val syncReason: SyncReason = SyncReason.Default
 ) {
+
+    internal val isFolderRepair: Boolean = syncReason == SyncReason.FolderRepair
 
     internal val hasSyncFailed: Boolean = itemSyncStatus is ItemSyncStatus.SyncError
 
@@ -99,7 +103,8 @@ internal data class SyncDialogState(
             downloadedItemsMap = emptyMap(),
             insertedItems = None,
             vaultsLoadingResult = LoadingResult.Loading,
-            indexingStatus = IndexingStatus.Idle
+            indexingStatus = IndexingStatus.Idle,
+            syncReason = SyncReason.Default
         )
 
     }

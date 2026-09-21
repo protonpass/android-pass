@@ -106,6 +106,17 @@ interface InternalSettingsRepository {
     suspend fun setSearchIndexRebuildTime(userId: UserId, time: Long)
     suspend fun getSearchIndexRebuildTime(userId: UserId): Long
 
+    /**
+     * Atomically reads, transforms and writes the folders repair state for [userId]. Several
+     * callers write it, so a read-modify-write over a snapshot would clobber a concurrent `done`.
+     */
+    suspend fun updateForceSyncFolderPreference(
+        userId: UserId,
+        transform: (ForceSyncFolderPreference) -> ForceSyncFolderPreference
+    )
+
+    suspend fun getForceSyncFolderPreference(userId: UserId): ForceSyncFolderPreference
+
     fun addTrustedAutofillPackage(packageName: String, fingerprints: Set<String>): Result<Unit>
     fun removeTrustedAutofillPackage(packageName: String): Result<Unit>
     fun getTrustedAutofillPackages(): Flow<Map<String, Set<String>>>

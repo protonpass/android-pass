@@ -38,6 +38,7 @@ import proton.android.pass.preferences.FeatureFlag.PASS_COMPROMISED_PASSWORDS
 import proton.android.pass.preferences.FeatureFlag.PASS_MONITOR_PER_CHECK_EXCLUSION
 import proton.android.pass.preferences.FeatureFlag.PASS_POPULAR_SERVICES
 import proton.android.pass.preferences.FeatureFlag.PASS_AUTOFILL_HEALTH
+import proton.android.pass.preferences.FeatureFlag.PASS_FORCE_SYNC_FOLDERS
 import proton.android.pass.preferences.FeatureFlag.PASS_OFFLINE_ATTACHMENTS
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -48,6 +49,8 @@ class FakeFeatureFlagsPreferenceRepository @Inject constructor() :
 
     private val state: MutableStateFlow<MutableMap<FeatureFlag, Any?>> =
         MutableStateFlow(mutableMapOf())
+
+    val awaitResolvedInvocations: MutableList<FeatureFlag> = mutableListOf()
 
     @Suppress("UNCHECKED_CAST")
     override fun <T> get(featureFlag: FeatureFlag): Flow<T> = state.map {
@@ -68,13 +71,16 @@ class FakeFeatureFlagsPreferenceRepository @Inject constructor() :
             PASS_POPULAR_SERVICES -> it.getOrDefault(PASS_POPULAR_SERVICES, false) as T
             PASS_AUTOFILL_HEALTH -> it.getOrDefault(PASS_AUTOFILL_HEALTH, false) as T
             PASS_OFFLINE_ATTACHMENTS -> it.getOrDefault(PASS_OFFLINE_ATTACHMENTS, false) as T
+            PASS_FORCE_SYNC_FOLDERS -> it.getOrDefault(PASS_FORCE_SYNC_FOLDERS, false) as T
         }
     }
 
     override fun <T> get(featureFlag: FeatureFlag, userId: UserId): Flow<T> = get(featureFlag)
 
-    override suspend fun awaitResolved(featureFlag: FeatureFlag, userId: UserId): Boolean =
-        state.value[featureFlag] as? Boolean ?: featureFlag.isEnabledDefault
+    override suspend fun awaitResolved(featureFlag: FeatureFlag, userId: UserId): Boolean {
+        awaitResolvedInvocations.add(featureFlag)
+        return state.value[featureFlag] as? Boolean ?: featureFlag.isEnabledDefault
+    }
 
     override fun <T> set(featureFlag: FeatureFlag, value: T?): Result<Unit> {
         state.update {

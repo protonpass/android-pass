@@ -66,6 +66,11 @@ enum class SyncMode {
     Background
 }
 
+enum class SyncReason {
+    Default,
+    FolderRepair
+}
+
 fun ItemSyncStatus.toSyncMode(): SyncMode = when (this) {
     is ItemSyncStatus.SyncError,
     ItemSyncStatus.SyncStarted,
@@ -98,6 +103,10 @@ interface ItemSyncStatusRepository {
     suspend fun clear()
 
     fun observeMode(): Flow<SyncMode>
+
+    suspend fun setReason(reason: SyncReason)
+
+    fun observeReason(): Flow<SyncReason>
 
     fun observeSyncStatus(): Flow<ItemSyncStatus>
 

@@ -40,6 +40,8 @@ import proton.android.pass.data.api.usecases.RefreshSharesResult
 import proton.android.pass.data.impl.db.PassDatabase
 import proton.android.pass.data.impl.extensions.toDomain
 import proton.android.pass.data.impl.extensions.toPendingEvent
+import proton.android.pass.data.api.repositories.SyncMode
+import proton.android.pass.data.api.repositories.SyncReason
 import proton.android.pass.data.impl.repositories.EventRepository
 import proton.android.pass.data.impl.responses.EventList
 import proton.android.pass.domain.ShareId
@@ -58,21 +60,29 @@ class ApplyPendingEventsImpl @Inject constructor(
     private val refreshSharesAndEnqueueSync: RefreshSharesAndEnqueueSync
 ) : ApplyPendingEvents {
 
-    override suspend fun invoke(userId: UserId, forceSync: Boolean) {
+    override suspend fun invoke(
+        userId: UserId,
+        forceSync: Boolean,
+        syncReason: SyncReason,
+        syncMode: SyncMode
+    ) {
         PassLogger.i(TAG, "Applying pending events started (forceSync=$forceSync)")
         if (!forceSync && itemSyncStatusRepository.observeSyncState().first().isSyncing) {
             PassLogger.i(TAG, "Sync in progress, skipping")
             return
         }
-        val syncType = if (forceSync) {
-            RefreshSharesAndEnqueueSync.SyncType.FULL
-        } else {
-            RefreshSharesAndEnqueueSync.SyncType.INCREMENTAL
+        val syncType = when {
+            forceSync && syncMode == SyncMode.ShownToUser ->
+                RefreshSharesAndEnqueueSync.SyncType.FULL
+
+            forceSync -> RefreshSharesAndEnqueueSync.SyncType.FULL_BACKGROUND
+            else -> RefreshSharesAndEnqueueSync.SyncType.INCREMENTAL
         }
         val result = refreshSharesAndEnqueueSync(
             userId = userId,
             syncType = syncType,
-            workerOrigin = "apply_pending_events forceSync=$forceSync"
+            workerOrigin = "apply_pending_events forceSync=$forceSync",
+            syncReason = syncReason
         )
         when (result) {
             RefreshSharesResult.NoSharesVaultCreated,

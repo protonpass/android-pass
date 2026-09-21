@@ -2,6 +2,7 @@ syntax = "proto3";
 
 import "proton/android/pass/preferences/app_usage.proto";
 import "proton/android/pass/preferences/last_item_autofill.proto";
+import "proton/android/pass/preferences/force_sync_folder_state.proto";
 import "google/protobuf/timestamp.proto";
 
 option java_package = "proton.android.pass.preferences";
@@ -36,4 +37,5 @@ message InternalSettings {
   repeated string telemetry_growth_sent_feature_usage_actions = 26;
   map<string, int64> search_index_rebuild_time = 27;
   map<string, string> trusted_autofill_package_fingerprints = 28;
+  map<string, ForceSyncFolderState> force_sync_folder_state = 29;
 }

@@ -19,6 +19,7 @@
 package proton.android.pass.data.fakes.usecases
 
 import me.proton.core.domain.entity.UserId
+import proton.android.pass.data.api.repositories.SyncReason
 import proton.android.pass.data.api.usecases.RefreshSharesAndEnqueueSync
 import proton.android.pass.data.api.usecases.RefreshSharesResult
 import javax.inject.Inject
@@ -26,6 +27,15 @@ import javax.inject.Singleton
 
 @Singleton
 class FakeRefreshSharesAndEnqueueSync @Inject constructor() : RefreshSharesAndEnqueueSync {
+
+    data class Invocation(
+        val userId: UserId,
+        val syncType: RefreshSharesAndEnqueueSync.SyncType,
+        val workerOrigin: String,
+        val syncReason: SyncReason
+    )
+
+    val invocations = mutableListOf<Invocation>()
 
     private var result: RefreshSharesResult = RefreshSharesResult.NoSharesSkipped
 
@@ -36,6 +46,10 @@ class FakeRefreshSharesAndEnqueueSync @Inject constructor() : RefreshSharesAndEn
     override suspend fun invoke(
         userId: UserId,
         syncType: RefreshSharesAndEnqueueSync.SyncType,
-        workerOrigin: String
-    ): RefreshSharesResult = result
+        workerOrigin: String,
+        syncReason: SyncReason
+    ): RefreshSharesResult {
+        invocations += Invocation(userId, syncType, workerOrigin, syncReason)
+        return result
+    }
 }

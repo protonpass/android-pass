@@ -22,6 +22,8 @@ import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import proton.android.pass.preferences.debug.FakePreferencesDebugRepository
+import proton.android.pass.preferences.debug.PreferencesDebugRepository
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -37,4 +39,7 @@ abstract class FakesPreferenceModule {
 
     @Binds
     abstract fun bindInternalSettingsRepository(impl: FakeInternalSettingsRepository): InternalSettingsRepository
+
+    @Binds
+    abstract fun bindPreferencesDebugRepository(impl: FakePreferencesDebugRepository): PreferencesDebugRepository
 }

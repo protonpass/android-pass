@@ -18,11 +18,13 @@
 
 package proton.android.pass.data.impl.usecases
 
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.firstOrNull
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.safeRunCatching
 import proton.android.pass.data.api.errors.UserIdNotAvailableError
+import proton.android.pass.data.api.repositories.ItemSyncStatusRepository
 import proton.android.pass.data.api.usecases.RefreshContent
 import proton.android.pass.data.api.usecases.RefreshSharesAndEnqueueSync
 import proton.android.pass.data.api.usecases.RefreshSharesResult
@@ -31,6 +33,7 @@ import javax.inject.Inject
 
 class RefreshContentImpl @Inject constructor(
     private val accountManager: AccountManager,
+    private val itemSyncStatusRepository: ItemSyncStatusRepository,
     private val refreshSharesAndEnqueueSync: RefreshSharesAndEnqueueSync
 ) : RefreshContent {
 
@@ -40,11 +43,15 @@ class RefreshContentImpl @Inject constructor(
         val actualUserId = userId ?: accountManager.getPrimaryUserId().firstOrNull()
             ?: throw UserIdNotAvailableError()
 
+        // Read before the FULL sync clears it, so a retry keeps the original reason
+        val syncReason = itemSyncStatusRepository.observeReason().first()
+
         return safeRunCatching {
             refreshSharesAndEnqueueSync(
                 userId = actualUserId,
                 syncType = RefreshSharesAndEnqueueSync.SyncType.FULL,
-                workerOrigin = "sync_dialog_retry"
+                workerOrigin = "sync_dialog_retry",
+                syncReason = syncReason
             )
         }.onFailure { error ->
             PassLogger.w(TAG, "Error in RefreshSharesAndEnqueueSync")

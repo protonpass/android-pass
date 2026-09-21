@@ -52,7 +52,9 @@ class SyncDialogViewModel @Inject constructor(
         observeVaults(includeHidden = true).asLoadingResult(),
         observeIndexingStatus(),
         ::SyncDialogState
-    ).stateIn(
+    ).combine(syncStatusRepository.observeReason()) { syncDialogState, syncReason ->
+        syncDialogState.copy(syncReason = syncReason)
+    }.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5_000),
         initialValue = SyncDialogState.Initial

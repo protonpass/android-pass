@@ -19,13 +19,20 @@
 package proton.android.pass.features.featureflags
 
 import androidx.navigation.NavGraphBuilder
+import proton.android.pass.features.featureflags.internalsettings.InternalSettingsDebugScreen
 import proton.android.pass.navigation.api.NavItem
 import proton.android.pass.navigation.api.composable
 
 object FeatureFlagRoute : NavItem(baseRoute = "feature-flags")
 
+object InternalSettingsDebugRoute : NavItem(baseRoute = "internal-settings-debug")
+
 fun NavGraphBuilder.featureFlagsGraph(onNavigateToAutofillDebug: () -> Unit = {}) {
     composable(FeatureFlagRoute) {
         FeatureFlagsScreen(onNavigateToAutofillDebug = onNavigateToAutofillDebug)
+    }
+
+    composable(InternalSettingsDebugRoute) {
+        InternalSettingsDebugScreen()
     }
 }

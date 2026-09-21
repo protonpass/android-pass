@@ -25,7 +25,7 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.firstOrNull
 import me.proton.core.domain.entity.UserId
-import proton.android.pass.common.api.safeRunCatching
+import proton.android.pass.common.api.safeRunCatchingWithCleanup
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.repositories.ItemSyncStatus
 import proton.android.pass.data.api.repositories.ItemSyncStatusRepository
@@ -40,6 +40,7 @@ import proton.android.pass.data.impl.work.FetchItemsWorker
 import proton.android.pass.domain.ShareColor
 import proton.android.pass.domain.ShareIcon
 import proton.android.pass.domain.entity.NewVault
+import proton.android.pass.data.api.repositories.SyncReason
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.preferences.FeatureFlag
 import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
@@ -62,7 +63,8 @@ class RefreshSharesAndEnqueueSyncImpl @Inject constructor(
     override suspend fun invoke(
         userId: UserId,
         syncType: RefreshSharesAndEnqueueSync.SyncType,
-        workerOrigin: String
+        workerOrigin: String,
+        syncReason: SyncReason
     ): RefreshSharesResult {
         PassLogger.i(
             TAG,
@@ -73,10 +75,20 @@ class RefreshSharesAndEnqueueSyncImpl @Inject constructor(
             PassLogger.i(TAG, "FULL sync requested, setting up sync status")
             itemSyncStatusRepository.clear()
             itemSyncStatusRepository.setMode(SyncMode.ShownToUser)
+            itemSyncStatusRepository.setReason(syncReason)
             itemSyncStatusRepository.emit(ItemSyncStatus.SyncStarted)
         }
 
-        return safeRunCatching {
+        val isFullSync = syncType == RefreshSharesAndEnqueueSync.SyncType.FULL
+
+        return safeRunCatchingWithCleanup(
+            onCancellation = {
+                if (isFullSync) {
+                    PassLogger.i(TAG, "FULL sync cancelled before the item worker was enqueued")
+                    resetVisibleSync()
+                }
+            }
+        ) {
             val repositoryResult = shareRepository.refreshShares(userId)
             PassLogger.i(TAG, "Shares for user: $userId refreshed")
             if (repositoryResult.allShareIds.isEmpty()) {
@@ -89,17 +101,32 @@ class RefreshSharesAndEnqueueSyncImpl @Inject constructor(
                 handleNonEmptyShares(userId, repositoryResult, syncType, workerOrigin)
             }
         }.onFailure {
-            if (syncType == RefreshSharesAndEnqueueSync.SyncType.FULL) {
+            if (isFullSync) {
                 PassLogger.w(TAG, "Error during FULL sync")
                 PassLogger.w(TAG, it)
-                itemSyncStatusRepository.emit(ItemSyncStatus.SyncError.DownloadError())
+                failVisibleSync()
             } else {
                 PassLogger.w(
                     TAG,
-                    "refreshShares for $userId (syncType=$syncType) failed: ${it::class.simpleName}: ${it.message}"
+                    "refreshShares for $userId (syncType=$syncType) failed: " +
+                        "${it::class.simpleName}: ${it.message}"
                 )
             }
         }.getOrThrow()
+    }
+
+    /**
+     * Settles the status set before the network work started. Without this, `isSyncing` stays true
+     * whenever the worker never runs, and every later sync skips itself.
+     */
+    private suspend fun failVisibleSync() {
+        itemSyncStatusRepository.setMode(SyncMode.Background)
+        itemSyncStatusRepository.emit(ItemSyncStatus.SyncError.DownloadError())
+    }
+
+    private suspend fun resetVisibleSync() {
+        itemSyncStatusRepository.setMode(SyncMode.Background)
+        itemSyncStatusRepository.emit(ItemSyncStatus.SyncNotStarted)
     }
 
     private fun handleNonEmptyShares(

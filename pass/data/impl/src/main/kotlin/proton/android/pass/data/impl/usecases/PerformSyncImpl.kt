@@ -31,10 +31,14 @@ import proton.android.pass.data.api.usecases.RefreshGroupInvites
 import proton.android.pass.data.api.usecases.RefreshUserInvites
 import proton.android.pass.data.api.usecases.SyncUserEvents
 import proton.android.pass.data.api.usecases.simplelogin.SyncSimpleLoginPendingAliases
+import proton.android.pass.data.api.usecases.sync.CheckFolderForceSync
+import proton.android.pass.data.api.repositories.SyncMode
+import proton.android.pass.data.api.repositories.SyncReason
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.preferences.FeatureFlag
 import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import javax.inject.Inject
+import javax.inject.Provider
 import kotlin.time.Duration.Companion.minutes
 
 class PerformSyncImpl @Inject constructor(
@@ -44,17 +48,32 @@ class PerformSyncImpl @Inject constructor(
     private val refreshAliasSlNotes: RefreshAliasSlNotes,
     private val syncPendingAliases: SyncSimpleLoginPendingAliases,
     private val syncUserEvents: SyncUserEvents,
-    private val featureFlagsPreferencesRepository: FeatureFlagsPreferencesRepository
+    private val featureFlagsPreferencesRepository: FeatureFlagsPreferencesRepository,
+    private val checkFolderForceSync: Provider<CheckFolderForceSync>
 ) : PerformSync {
 
     override suspend fun invoke(
         userId: UserId,
         forceSync: Boolean,
-        trigger: String
+        trigger: String,
+        syncReason: SyncReason,
+        syncMode: SyncMode
     ) {
-        PassLogger.i(TAG, "Performing sync for $userId started (forceSync=$forceSync)")
+        PassLogger.i(
+            TAG,
+            "Performing sync for $userId started (forceSync=$forceSync, trigger=$trigger, " +
+                "syncMode=$syncMode)"
+        )
 
-        performSyncWithPendingEvents(userId, forceSync, trigger)
+        performSyncWithPendingEvents(userId, forceSync, trigger, syncReason, syncMode)
+
+        if (syncReason != SyncReason.FolderRepair) {
+            safeRunCatching { checkFolderForceSync.get().invoke(userId, syncMode) }
+                .onFailure { error ->
+                    PassLogger.w(TAG, "Error checking whether a folders force sync is owed")
+                    PassLogger.w(TAG, error)
+                }
+        }
 
         PassLogger.i(TAG, "Performing sync for $userId finished")
     }
@@ -62,7 +81,9 @@ class PerformSyncImpl @Inject constructor(
     private suspend fun performSyncWithPendingEvents(
         userId: UserId,
         forceSync: Boolean,
-        trigger: String
+        trigger: String,
+        syncReason: SyncReason,
+        syncMode: SyncMode
     ) = coroutineScope {
         val isUserEventsEnabled = featureFlagsPreferencesRepository.awaitResolved(
             featureFlag = FeatureFlag.PASS_USER_EVENTS_V1,
@@ -70,9 +91,9 @@ class PerformSyncImpl @Inject constructor(
         )
 
         val results = if (isUserEventsEnabled) {
-            listOf(performSyncUserEvents(userId, forceSync, trigger))
+            listOf(performSyncUserEvents(userId, forceSync, trigger, syncReason, syncMode))
         } else {
-            performPendingEvents(userId, forceSync)
+            performPendingEvents(userId, forceSync, syncReason, syncMode)
             val tasks = buildList {
                 add(async { performRefreshAliasSlNotes(userId) })
                 add(async { performUserRefreshInvites(userId) })
@@ -89,9 +110,14 @@ class PerformSyncImpl @Inject constructor(
         }
     }
 
-    private suspend fun performPendingEvents(userId: UserId, forceSync: Boolean): Result<Unit> = safeRunCatching {
+    private suspend fun performPendingEvents(
+        userId: UserId,
+        forceSync: Boolean,
+        syncReason: SyncReason,
+        syncMode: SyncMode
+    ): Result<Unit> = safeRunCatching {
         withTimeout(2.minutes) {
-            applyPendingEvents(userId, forceSync)
+            applyPendingEvents(userId, forceSync, syncReason, syncMode)
             PassLogger.i(TAG, "Pending events for $userId finished")
         }
     }.onFailure { error ->
@@ -137,10 +163,12 @@ class PerformSyncImpl @Inject constructor(
     private suspend fun performSyncUserEvents(
         userId: UserId,
         forceSync: Boolean,
-        trigger: String
+        trigger: String,
+        syncReason: SyncReason,
+        syncMode: SyncMode
     ): Result<Unit> = runCatching {
         withTimeout(2.minutes) {
-            syncUserEvents(userId, forceSync, trigger)
+            syncUserEvents(userId, forceSync, trigger, syncReason, syncMode)
             PassLogger.i(TAG, "User events sync for $userId finished")
         }
     }.onFailure { error ->

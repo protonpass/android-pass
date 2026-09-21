@@ -435,7 +435,6 @@ internal fun HomeContent(
                     isRefreshing = uiState.homeListUiState.isRefreshing
                 )
             } else {
-                // Non-pagination mode, or "see all pinned items" mode (always unpaged and unscoped by vault/folder)
                 val items = if (!uiState.pinningUiState.inPinningMode) {
                     uiState.homeListUiState.items
                 } else {

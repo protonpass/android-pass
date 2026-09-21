@@ -22,14 +22,18 @@ import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.test.runTest
 import me.proton.core.domain.entity.UserId
 import org.junit.Test
+import proton.android.pass.data.api.repositories.SyncMode
+import proton.android.pass.data.api.repositories.SyncReason
 import proton.android.pass.data.api.usecases.SyncUserEvents
 import proton.android.pass.data.fakes.usecases.FakeApplyPendingEvents
 import proton.android.pass.data.fakes.usecases.FakeRefreshAliasSlNotes
 import proton.android.pass.data.fakes.usecases.FakeRefreshGroupInvites
 import proton.android.pass.data.fakes.usecases.FakeRefreshUserInvites
 import proton.android.pass.data.fakes.usecases.simplelogin.FakeSyncSimpleLoginPendingAliases
+import proton.android.pass.data.fakes.usecases.sync.FakeCheckFolderForceSync
 import proton.android.pass.preferences.FakeFeatureFlagsPreferenceRepository
 import proton.android.pass.preferences.FeatureFlag
+import javax.inject.Provider
 
 class PerformSyncImplTest {
 
@@ -59,9 +63,36 @@ class PerformSyncImplTest {
         assertThat(refreshAliasSlNotes.getInvocationMemory()).isEmpty()
     }
 
+    @Test
+    fun `asks whether a folders repair is owed once the sync has finished`() = runTest {
+        val checkFolderForceSync = FakeCheckFolderForceSync()
+        val instance = createInstance(checkFolderForceSync = checkFolderForceSync)
+
+        instance.invoke(USER_ID, forceSync = false, syncMode = SyncMode.Background)
+
+        assertThat(checkFolderForceSync.detailedInvocations)
+            .containsExactly(FakeCheckFolderForceSync.Invocation(USER_ID, SyncMode.Background))
+    }
+
+    @Test
+    fun `does not re-enter the check for the repair's own sync`() = runTest {
+        val checkFolderForceSync = FakeCheckFolderForceSync()
+        val instance = createInstance(checkFolderForceSync = checkFolderForceSync)
+
+        instance.invoke(
+            userId = USER_ID,
+            forceSync = true,
+            syncReason = SyncReason.FolderRepair,
+            syncMode = SyncMode.Background
+        )
+
+        assertThat(checkFolderForceSync.detailedInvocations).isEmpty()
+    }
+
     private fun createInstance(
-        refreshAliasSlNotes: FakeRefreshAliasSlNotes,
-        featureFlags: FakeFeatureFlagsPreferenceRepository
+        refreshAliasSlNotes: FakeRefreshAliasSlNotes = FakeRefreshAliasSlNotes(),
+        featureFlags: FakeFeatureFlagsPreferenceRepository = FakeFeatureFlagsPreferenceRepository(),
+        checkFolderForceSync: FakeCheckFolderForceSync = FakeCheckFolderForceSync()
     ) = PerformSyncImpl(
         applyPendingEvents = FakeApplyPendingEvents(),
         refreshUserInvites = FakeRefreshUserInvites(),
@@ -69,14 +100,17 @@ class PerformSyncImplTest {
         refreshAliasSlNotes = refreshAliasSlNotes,
         syncPendingAliases = FakeSyncSimpleLoginPendingAliases(),
         syncUserEvents = NoOpSyncUserEvents,
-        featureFlagsPreferencesRepository = featureFlags
+        featureFlagsPreferencesRepository = featureFlags,
+        checkFolderForceSync = Provider { checkFolderForceSync }
     )
 
     private object NoOpSyncUserEvents : SyncUserEvents {
         override suspend fun invoke(
             userId: UserId,
             forceSync: Boolean,
-            trigger: String
+            trigger: String,
+            syncReason: SyncReason,
+            syncMode: SyncMode
         ) = Unit
     }
 

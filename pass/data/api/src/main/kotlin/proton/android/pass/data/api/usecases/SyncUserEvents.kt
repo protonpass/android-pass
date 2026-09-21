@@ -19,11 +19,15 @@
 package proton.android.pass.data.api.usecases
 
 import me.proton.core.domain.entity.UserId
+import proton.android.pass.data.api.repositories.SyncMode
+import proton.android.pass.data.api.repositories.SyncReason
 
 interface SyncUserEvents {
     suspend operator fun invoke(
         userId: UserId,
         forceSync: Boolean = false,
-        trigger: String = "unknown"
+        trigger: String = "unknown",
+        syncReason: SyncReason = SyncReason.Default,
+        syncMode: SyncMode = SyncMode.ShownToUser
     )
 }

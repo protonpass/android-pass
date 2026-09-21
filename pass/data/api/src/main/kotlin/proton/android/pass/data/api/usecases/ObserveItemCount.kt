@@ -29,7 +29,8 @@ interface ObserveItemCount {
         itemState: ItemState? = ItemState.Active,
         shareSelection: ShareSelection,
         applyItemStateToSharedItems: Boolean = true,
-        includeHiddenVault: Boolean
+        includeHiddenVault: Boolean,
+        restrictToRootFolder: Boolean = false
     ): Flow<ItemCountSummary>
 
 }

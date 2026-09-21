@@ -40,7 +40,8 @@ class ObserveItemCountImpl @Inject constructor(
         itemState: ItemState?,
         shareSelection: ShareSelection,
         applyItemStateToSharedItems: Boolean,
-        includeHiddenVault: Boolean
+        includeHiddenVault: Boolean,
+        restrictToRootFolder: Boolean
     ): Flow<ItemCountSummary> = observeCurrentUser()
         .flatMapLatest { user ->
             when (shareSelection) {
@@ -67,7 +68,8 @@ class ObserveItemCountImpl @Inject constructor(
                         itemState = itemState,
                         onlyShared = false,
                         applyItemStateToSharedItems = applyItemStateToSharedItems,
-                        includeHiddenVault = includeHiddenVault
+                        includeHiddenVault = includeHiddenVault,
+                        restrictToRootFolder = restrictToRootFolder
                     )
                 )
 

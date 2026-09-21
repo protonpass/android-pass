@@ -68,4 +68,13 @@ dependencies {
     implementation(projects.pass.navigation.api)
     implementation(projects.pass.preferences.api)
     implementation(projects.pass.data.api)
+
+    testImplementation(libs.turbine)
+    testImplementation(libs.truth)
+    testImplementation(libs.coroutines.test)
+
+    testImplementation(projects.pass.commonTest)
+    testImplementation(projects.pass.data.fakes)
+    testImplementation(projects.pass.preferences.fakes)
+    testImplementation(projects.pass.searchOptions.fakes)
 }

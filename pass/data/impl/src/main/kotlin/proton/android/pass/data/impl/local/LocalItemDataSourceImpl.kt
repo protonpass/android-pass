@@ -322,13 +322,15 @@ class LocalItemDataSourceImpl @Inject constructor(
                     itemState = itemState,
                     shareIds = shareIds,
                     onlyShared = onlyShared,
-                    folderId = folderId
+                    folderId = folderId,
+                    restrictToRootFolder = restrictToRootFolder
                 ),
                 observeItemsWithTotpCount(
                     userId = userId,
                     itemState = itemState,
                     shareIds = shareIds,
-                    folderId = folderId
+                    folderId = folderId,
+                    restrictToRootFolder = restrictToRootFolder
                 ),
                 observeSharedWithMeItemCount(
                     userId = userId,
@@ -336,7 +338,8 @@ class LocalItemDataSourceImpl @Inject constructor(
                     itemState = itemState,
                     applyItemStateToSharedItems = applyItemStateToSharedItems,
                     includeHiddenVault = includeHiddenVault,
-                    folderId = folderId
+                    folderId = folderId,
+                    restrictToRootFolder = restrictToRootFolder
                 ),
                 observeSharedByMeItemCount(
                     userId = userId,
@@ -344,28 +347,24 @@ class LocalItemDataSourceImpl @Inject constructor(
                     itemState = itemState,
                     applyItemStateToSharedItems = applyItemStateToSharedItems,
                     includeHiddenVault = includeHiddenVault,
-                    folderId = folderId
+                    folderId = folderId,
+                    restrictToRootFolder = restrictToRootFolder
                 ),
-                observeTrashedItemsCount(userId = userId, shareIds = shareIds, folderId = folderId),
+                observeTrashedItemsCount(
+                    userId = userId,
+                    shareIds = shareIds,
+                    folderId = folderId,
+                    restrictToRootFolder = restrictToRootFolder
+                ),
                 observeSharedWithMeTrashedItemCount(
                     userId = userId,
                     shareIds = shareIds,
                     includeHiddenVault = includeHiddenVault,
-                    folderId = folderId
+                    folderId = folderId,
+                    restrictToRootFolder = restrictToRootFolder
                 )
-            ) { values: List<SummaryRow>,
-                totpCount,
-                sharedWithMeItemCount,
-                sharedByMeItemCount,
-                trashedItemsCount,
-                sharedWithMeTrashedItemsCount ->
-                values.toItemCountSummary(
-                    totpCount = totpCount,
-                    sharedWithMeItemCount = sharedWithMeItemCount,
-                    sharedByMeItemCount = sharedByMeItemCount,
-                    trashedItemsCount = trashedItemsCount,
-                    sharedWithMeTrashedItemsCount = sharedWithMeTrashedItemsCount
-                )
+            ) { rows: List<SummaryRow>, totp, sharedWithMe, sharedByMe, trashed, sharedWithMeTrashed ->
+                rows.toItemCountSummary(totp, sharedWithMe, sharedByMe, trashed, sharedWithMeTrashed)
             }
         }
 
@@ -396,7 +395,8 @@ class LocalItemDataSourceImpl @Inject constructor(
         shareIds: List<ShareId>,
         itemState: ItemState?,
         onlyShared: Boolean,
-        folderId: FolderId? = null
+        folderId: FolderId? = null,
+        restrictToRootFolder: Boolean = false
     ): Flow<List<SummaryRow>> = folderId?.let { nonNullFolderId ->
         database.itemsDao().itemSummaryForFolder(
             userId.id,
@@ -405,7 +405,13 @@ class LocalItemDataSourceImpl @Inject constructor(
             itemState?.value,
             onlyShared
         )
-    } ?: database.itemsDao().itemSummary(userId.id, shareIds.map { it.id }, itemState?.value, onlyShared)
+    } ?: database.itemsDao().itemSummary(
+        userId.id,
+        shareIds.map { it.id },
+        itemState?.value,
+        onlyShared,
+        restrictToRootFolder
+    )
 
     private fun List<SummaryRow>.getCount(itemCategory: ItemCategory): Long = filter {
         it.itemKind == itemCategory.value
@@ -415,7 +421,8 @@ class LocalItemDataSourceImpl @Inject constructor(
         userId: UserId,
         shareIds: List<ShareId>,
         itemState: ItemState?,
-        folderId: FolderId? = null
+        folderId: FolderId? = null,
+        restrictToRootFolder: Boolean = false
     ): Flow<Int> = folderId?.let { nonNullFolderId ->
         database.itemsDao().countItemsWithTotpForFolder(
             userId.id,
@@ -423,7 +430,12 @@ class LocalItemDataSourceImpl @Inject constructor(
             nonNullFolderId.id,
             itemState?.value
         ).map { rows -> rows.sumOf { it.itemCount } }
-    } ?: database.itemsDao().countItemsWithTotp(userId.id, shareIds.map { it.id }, itemState?.value)
+    } ?: database.itemsDao().countItemsWithTotp(
+        userId = userId.id,
+        shareIds = shareIds.map { it.id },
+        itemState = itemState?.value,
+        restrictToRootFolder = restrictToRootFolder
+    )
         .map { rows -> rows.sumOf { it.itemCount } }
 
     private fun observeSharedWithMeItemCount(
@@ -432,7 +444,8 @@ class LocalItemDataSourceImpl @Inject constructor(
         itemState: ItemState?,
         applyItemStateToSharedItems: Boolean,
         includeHiddenVault: Boolean,
-        folderId: FolderId? = null
+        folderId: FolderId? = null,
+        restrictToRootFolder: Boolean = false
     ) = localShareDataSource.observeSharedWithMeIds(userId, includeHiddenVault)
         .map { sharedWithMeShareIds ->
             sharedWithMeShareIds.filter { sharedWithMeShareId ->
@@ -444,7 +457,8 @@ class LocalItemDataSourceImpl @Inject constructor(
                 userId = userId.id,
                 shareIds = sharedWithMeShareIds.map(ShareId::id),
                 itemState = itemState?.value.takeIf { applyItemStateToSharedItems },
-                folderId = folderId?.id
+                folderId = folderId?.id,
+                restrictToRootFolder = restrictToRootFolder
             )
         }
 
@@ -454,7 +468,8 @@ class LocalItemDataSourceImpl @Inject constructor(
         itemState: ItemState?,
         applyItemStateToSharedItems: Boolean,
         includeHiddenVault: Boolean,
-        folderId: FolderId? = null
+        folderId: FolderId? = null,
+        restrictToRootFolder: Boolean = false
     ) = localShareDataSource.observeSharedByMeIds(userId, includeHiddenVault)
         .mapLatest { sharedByMeShareIds ->
             sharedByMeShareIds.filter { sharedByMeShareId ->
@@ -466,7 +481,8 @@ class LocalItemDataSourceImpl @Inject constructor(
                 userId = userId.id,
                 shareIds = sharedByMeShareIds.map(ShareId::id),
                 itemState = itemState?.value.takeIf { applyItemStateToSharedItems },
-                folderId = folderId?.id
+                folderId = folderId?.id,
+                restrictToRootFolder = restrictToRootFolder
             )
         }
 
@@ -474,7 +490,8 @@ class LocalItemDataSourceImpl @Inject constructor(
         userId: UserId,
         shareIds: List<ShareId>,
         includeHiddenVault: Boolean,
-        folderId: FolderId? = null
+        folderId: FolderId? = null,
+        restrictToRootFolder: Boolean = false
     ) = localShareDataSource.observeSharedWithMeIds(userId, includeHiddenVault)
         .mapLatest { sharedByMeShareIds ->
             sharedByMeShareIds.filter { sharedByMeShareId ->
@@ -482,15 +499,16 @@ class LocalItemDataSourceImpl @Inject constructor(
             }
         }
         .flatMapLatest { sharedWithMeShareIds ->
-            observeTrashedItemsCount(userId, sharedWithMeShareIds, folderId)
+            observeTrashedItemsCount(userId, sharedWithMeShareIds, folderId, restrictToRootFolder)
         }
 
     private fun observeTrashedItemsCount(
         userId: UserId,
         shareIds: List<ShareId>,
-        folderId: FolderId? = null
+        folderId: FolderId? = null,
+        restrictToRootFolder: Boolean = false
     ): Flow<Int> = database.itemsDao()
-        .countTrashedItems(userId.id, shareIds.map { it.id }, folderId?.id)
+        .countTrashedItems(userId.id, shareIds.map { it.id }, folderId?.id, restrictToRootFolder)
         .map { rows -> rows.sumOf { it.itemCount } }
 
     override suspend fun updateLastUsedTime(

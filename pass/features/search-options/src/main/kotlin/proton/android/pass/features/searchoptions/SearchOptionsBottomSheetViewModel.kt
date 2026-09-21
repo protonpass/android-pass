@@ -22,6 +22,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -39,6 +40,8 @@ import proton.android.pass.data.api.usecases.items.ObserveSharedItemCountSummary
 import proton.android.pass.domain.ItemState
 import proton.android.pass.domain.ShareSelection
 import proton.android.pass.domain.items.ItemSharedType
+import proton.android.pass.preferences.FeatureFlag
+import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import proton.android.pass.searchoptions.api.FilterOption
 import proton.android.pass.searchoptions.api.HomeSearchOptionsRepository
 import proton.android.pass.searchoptions.api.SearchFilterType
@@ -53,6 +56,7 @@ class SearchOptionsBottomSheetViewModel @Inject constructor(
     observeItemCount: ObserveItemCount,
     observePinnedItemCount: ObservePinnedItemCount,
     observeSharedItemCountSummary: ObserveSharedItemCountSummary,
+    featureFlagsPreferencesRepository: FeatureFlagsPreferencesRepository,
     savedStateHandleProvider: SavedStateHandleProvider
 ) : ViewModel() {
 
@@ -62,12 +66,17 @@ class SearchOptionsBottomSheetViewModel @Inject constructor(
     private val searchOptionsEventFlow: MutableStateFlow<SearchOptionsEvent> =
         MutableStateFlow(SearchOptionsEvent.Idle)
 
+    private val foldersEnabledFlow: Flow<Boolean> = featureFlagsPreferencesRepository[FeatureFlag.PASS_FOLDERS]
+
     @OptIn(ExperimentalCoroutinesApi::class)
     private val itemCountAndSearchOptionsFlow = combine(
         homeSearchOptionsRepository.observeSearchOptions(),
-        homeSearchOptionsRepository.observeIsInSeeAllPinsMode()
-    ) { searchOptions, isInSeeAllPinsMode -> searchOptions to isInSeeAllPinsMode }
-        .flatMapLatest { (searchOptions, isInSeeAllPinsMode) ->
+        homeSearchOptionsRepository.observeIsInSeeAllPinsMode(),
+        foldersEnabledFlow
+    ) { searchOptions, isInSeeAllPinsMode, foldersEnabled ->
+        Triple(searchOptions, isInSeeAllPinsMode, foldersEnabled)
+    }
+        .flatMapLatest { (searchOptions, isInSeeAllPinsMode, foldersEnabled) ->
             val countFlow = if (isInSeeAllPinsMode) {
                 observePinnedItemCount()
             } else {
@@ -95,7 +104,8 @@ class SearchOptionsBottomSheetViewModel @Inject constructor(
 
                     is VaultSelectionOption.Vault -> observeItemCount(
                         shareSelection = ShareSelection.Share(vault.shareId),
-                        includeHiddenVault = false
+                        includeHiddenVault = false,
+                        restrictToRootFolder = foldersEnabled
                     )
                     is VaultSelectionOption.Folder -> observeItemCount(
                         shareSelection = ShareSelection.Folder(vault.shareId, vault.folderId),

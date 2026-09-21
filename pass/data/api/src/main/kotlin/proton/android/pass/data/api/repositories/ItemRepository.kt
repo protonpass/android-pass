@@ -60,7 +60,8 @@ data class ObserveItemCountSummaryRequest(
     val onlyShared: Boolean,
     val applyItemStateToSharedItems: Boolean,
     val includeHiddenVault: Boolean,
-    val folderId: FolderId? = null
+    val folderId: FolderId? = null,
+    val restrictToRootFolder: Boolean = false
 )
 
 @Suppress("ComplexInterface", "TooManyFunctions")

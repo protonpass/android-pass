@@ -29,6 +29,7 @@ import proton.android.pass.data.api.repositories.ItemSyncStatus
 import proton.android.pass.data.api.repositories.ItemSyncStatusPayload
 import proton.android.pass.data.api.repositories.ItemSyncStatusRepository
 import proton.android.pass.data.api.repositories.SyncMode
+import proton.android.pass.data.api.repositories.SyncReason
 import proton.android.pass.data.api.repositories.SyncState
 import proton.android.pass.domain.ShareId
 import javax.inject.Inject
@@ -46,6 +47,8 @@ class FakeItemSyncStatusRepository @Inject constructor() : ItemSyncStatusReposit
 
     private val syncModeFlow: MutableSharedFlow<SyncMode> = testFlow<SyncMode>()
         .apply { tryEmit(SyncMode.Background) }
+    private val syncReasonFlow: MutableSharedFlow<SyncReason> = testFlow<SyncReason>()
+        .apply { tryEmit(SyncReason.Default) }
 
     val emittedStatuses: MutableList<ItemSyncStatus> = mutableListOf()
 
@@ -75,6 +78,12 @@ class FakeItemSyncStatusRepository @Inject constructor() : ItemSyncStatusReposit
     }
 
     override fun observeMode(): Flow<SyncMode> = syncModeFlow
+
+    override suspend fun setReason(reason: SyncReason) {
+        syncReasonFlow.emit(reason)
+    }
+
+    override fun observeReason(): Flow<SyncReason> = syncReasonFlow
 
     override fun observeSyncStatus(): Flow<ItemSyncStatus> = syncStatusFlow
 

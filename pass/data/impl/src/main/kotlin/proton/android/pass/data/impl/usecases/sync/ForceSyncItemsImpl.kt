@@ -19,6 +19,7 @@
 package proton.android.pass.data.impl.usecases.sync
 
 import me.proton.core.domain.entity.UserId
+import proton.android.pass.common.api.safeRunCatching
 import proton.android.pass.data.api.repositories.ItemRepository
 import proton.android.pass.data.api.repositories.ItemRevision
 import proton.android.pass.data.api.repositories.ItemSyncStatus
@@ -52,7 +53,17 @@ class ForceSyncItemsImpl @Inject constructor(
     ): ForceSyncResult {
         if (shareIds.isEmpty()) return ForceSyncResult.Success
 
-        refreshFolders(userId, shareIds)
+        // Reported as a download error rather than thrown, or the status stays at SyncStarted
+        val foldersRefreshed = safeRunCatching { refreshFolders(userId, shareIds) }
+        if (foldersRefreshed.isFailure) {
+            foldersRefreshed.exceptionOrNull()?.let { error ->
+                PassLogger.w(TAG, "Could not refresh folders, aborting the force sync")
+                PassLogger.w(TAG, error)
+            }
+            itemSyncStatusRepository.emit(DownloadError(failedShareIds = shareIds))
+            itemSyncStatusRepository.setMode(SyncMode.Background)
+            return ForceSyncResult.Error
+        }
 
         val results: List<Result<Pair<ShareId, List<ItemRevision>>>> = runConcurrently(
             items = shareIds,

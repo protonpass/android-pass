@@ -489,8 +489,7 @@ internal class HomeViewModelTest {
     @Test
     fun `pinning mode reflects the repository as single source of truth`() = runTest {
         setupItems()
-        // Simulate the repository flag being set externally (e.g. by another surface
-        // reading from the same singleton) rather than through the ViewModel's own methods.
+        // Set externally rather than through the ViewModel
         searchOptionsRepository.setIsInSeeAllPinsMode(true)
         observePinnedItems.emitDefault()
 

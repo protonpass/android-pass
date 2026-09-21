@@ -23,6 +23,7 @@ import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.None
 import proton.android.pass.data.api.repositories.ItemSyncStatus
+import proton.android.pass.data.api.repositories.SyncReason
 import proton.android.pass.domain.ShareColor
 import proton.android.pass.domain.ShareFlags
 import proton.android.pass.domain.ShareIcon
@@ -48,6 +49,20 @@ internal class SyncDialogContentPreviewProvider : PreviewParameterProvider<SyncD
                 )
             )
         }
+
+        yield(
+            SyncDialogState(
+                itemSyncStatus = ItemSyncStatus.SyncDownloading(
+                    shareId = ShareId("share-1"),
+                    current = 12,
+                    total = 40
+                ),
+                downloadedItemsMap = emptyMap(),
+                insertedItems = None,
+                vaultsLoadingResult = LoadingResult.Success(vaults),
+                syncReason = SyncReason.FolderRepair
+            )
+        )
 
         yield(
             SyncDialogState(

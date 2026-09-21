@@ -52,6 +52,8 @@ import proton.android.pass.domain.events.SyncEventShare
 import proton.android.pass.domain.events.SyncEventShareFolder
 import proton.android.pass.domain.events.SyncEventShareItem
 import proton.android.pass.domain.events.UserEventList
+import proton.android.pass.data.api.repositories.SyncMode
+import proton.android.pass.data.api.repositories.SyncReason
 import proton.android.pass.log.api.PassLogger
 import javax.inject.Inject
 
@@ -80,7 +82,9 @@ class SyncUserEventsImpl @Inject constructor(
     override suspend fun invoke(
         userId: UserId,
         forceSync: Boolean,
-        trigger: String
+        trigger: String,
+        syncReason: SyncReason,
+        syncMode: SyncMode
     ) {
         if (!forceSync && itemSyncStatusRepository.observeSyncState().first().isSyncing) {
             PassLogger.i(TAG, "Sync in progress, skipping")
@@ -92,7 +96,7 @@ class SyncUserEventsImpl @Inject constructor(
             eventRepository.deleteAllLatestEventIds(userId)
         }
 
-        val localEventId = getLocalEventId(userId, forceSync, trigger)
+        val localEventId = getLocalEventId(userId, forceSync, trigger, syncReason, syncMode)
         val remoteLatestEventId = userEventRepository.fetchLatestEventId(userId)
 
         if (localEventId == remoteLatestEventId && !forceSync) {
@@ -106,7 +110,9 @@ class SyncUserEventsImpl @Inject constructor(
     private suspend fun getLocalEventId(
         userId: UserId,
         forceSync: Boolean,
-        trigger: String
+        trigger: String,
+        syncReason: SyncReason,
+        syncMode: SyncMode
     ): UserEventId? {
         val localEventId = userEventRepository.getLatestEventId(userId).first()
         if (localEventId != null) return localEventId
@@ -116,7 +122,7 @@ class SyncUserEventsImpl @Inject constructor(
             FullRefreshReason.MissingLocalEventCursor
         }
         PassLogger.i(TAG, "Starting full refresh (reason=$reason, trigger=$trigger)")
-        fullRefresh(userId, forceSync, reason, trigger)
+        fullRefresh(userId, forceSync, reason, trigger, syncReason, syncMode)
         return null
     }
 
@@ -135,7 +141,7 @@ class SyncUserEventsImpl @Inject constructor(
                 // sync dialog here would be unexpected during a routine background sync.
                 val reason = FullRefreshReason.ServerRequested
                 PassLogger.i(TAG, "Starting full refresh (reason=$reason, trigger=$trigger)")
-                fullRefresh(userId, forceSync = false, reason, trigger)
+                fullRefresh(userId, forceSync = false, reason, trigger, SyncReason.Default, SyncMode.Background)
             } else {
                 processIncrementalEvents(userId, eventList)
             }
@@ -260,13 +266,15 @@ class SyncUserEventsImpl @Inject constructor(
         userId: UserId,
         forceSync: Boolean,
         reason: FullRefreshReason,
-        trigger: String
+        trigger: String,
+        syncReason: SyncReason,
+        syncMode: SyncMode
     ) = coroutineScope {
         PassLogger.i(TAG, "start full refresh (forceSync=$forceSync)")
 
         refreshUserAccess(userId)
 
-        val syncType = if (forceSync) {
+        val syncType = if (forceSync && syncMode == SyncMode.ShownToUser) {
             RefreshSharesAndEnqueueSync.SyncType.FULL
         } else {
             RefreshSharesAndEnqueueSync.SyncType.FULL_BACKGROUND
@@ -274,7 +282,8 @@ class SyncUserEventsImpl @Inject constructor(
         val refreshShares = refreshSharesAndEnqueueSync(
             userId = userId,
             syncType = syncType,
-            workerOrigin = "trigger=$trigger reason=$reason"
+            workerOrigin = "trigger=$trigger reason=$reason",
+            syncReason = syncReason
         )
 
         val didCompleteItemWorker =

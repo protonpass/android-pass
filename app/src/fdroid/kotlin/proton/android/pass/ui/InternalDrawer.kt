@@ -31,6 +31,7 @@ fun InternalDrawer(
     bottomPadding: Dp = 0.dp,
     drawerState: InternalDrawerState,
     onOpenFeatureFlag: () -> Unit,
+    onOpenInternalSettings: () -> Unit,
     onAppNavigation: (AppNavigation) -> Unit,
     content: @Composable () -> Unit
 ) {

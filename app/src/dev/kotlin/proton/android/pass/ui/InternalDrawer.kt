@@ -58,6 +58,7 @@ fun InternalDrawer(
     bottomPadding: Dp = 0.dp,
     drawerState: InternalDrawerState,
     onOpenFeatureFlag: () -> Unit,
+    onOpenInternalSettings: () -> Unit,
     onAppNavigation: (AppNavigation) -> Unit,
     content: @Composable () -> Unit
 ) {
@@ -117,6 +118,7 @@ fun InternalDrawer(
                 InternalDrawerContents(
                     modifier = Modifier.statusBarsPadding(),
                     onOpenFeatureFlag = onOpenFeatureFlag,
+                    onOpenInternalSettings = onOpenInternalSettings,
                     onAppNavigation = onAppNavigation
                 )
             }

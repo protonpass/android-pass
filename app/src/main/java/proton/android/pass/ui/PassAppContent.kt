@@ -79,6 +79,7 @@ import proton.android.pass.domain.inappmessages.InAppMessageKey
 import proton.android.pass.features.auth.AuthOrigin
 import proton.android.pass.features.explore.navigation.ExploreNavItem
 import proton.android.pass.features.featureflags.FeatureFlagRoute
+import proton.android.pass.features.featureflags.InternalSettingsDebugRoute
 import proton.android.pass.features.home.HomeNavItem
 import proton.android.pass.features.home.HomeSnackbarMessageWithAction
 import proton.android.pass.features.home.localinappmessages.LocalInAppMessagesEvent
@@ -275,6 +276,10 @@ fun PassAppContent(
             drawerState = internalDrawerState,
             onOpenFeatureFlag = {
                 appNavigator.navigate(FeatureFlagRoute)
+                coroutineScope.launch { internalDrawerState.close() }
+            },
+            onOpenInternalSettings = {
+                appNavigator.navigate(InternalSettingsDebugRoute)
                 coroutineScope.launch { internalDrawerState.close() }
             },
             onAppNavigation = onNavigate,

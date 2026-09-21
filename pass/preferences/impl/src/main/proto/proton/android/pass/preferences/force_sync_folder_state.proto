@@ -1,0 +1,13 @@
+syntax = "proto3";
+
+option java_package = "me.proton.android.pass.preferences";
+option java_multiple_files = true;
+
+// Whether the one-off folders repair force sync is still owed for a single user.
+message ForceSyncFolderState {
+  // Settled: it succeeded, was not needed, or is escalated. Never retried again once set.
+  bool done = 1;
+  int32 attempts = 2;
+  // Epoch millis, 0 when no attempt has been made
+  int64 last_attempt_at = 3;
+}

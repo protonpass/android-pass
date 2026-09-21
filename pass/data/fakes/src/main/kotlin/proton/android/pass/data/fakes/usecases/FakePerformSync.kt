@@ -19,6 +19,8 @@
 package proton.android.pass.data.fakes.usecases
 
 import me.proton.core.domain.entity.UserId
+import proton.android.pass.data.api.repositories.SyncMode
+import proton.android.pass.data.api.repositories.SyncReason
 import proton.android.pass.data.api.usecases.PerformSync
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -26,7 +28,16 @@ import javax.inject.Singleton
 @Singleton
 class FakePerformSync @Inject constructor() : PerformSync {
 
+    data class Invocation(
+        val userId: UserId,
+        val forceSync: Boolean,
+        val trigger: String,
+        val syncReason: SyncReason,
+        val syncMode: SyncMode
+    )
+
     val invokedUserIds = mutableListOf<UserId>()
+    val invocations = mutableListOf<Invocation>()
     private var result: Result<Unit> = Result.success(Unit)
 
     fun setResult(value: Result<Unit>) {
@@ -36,9 +47,12 @@ class FakePerformSync @Inject constructor() : PerformSync {
     override suspend fun invoke(
         userId: UserId,
         forceSync: Boolean,
-        trigger: String
+        trigger: String,
+        syncReason: SyncReason,
+        syncMode: SyncMode
     ) {
         invokedUserIds += userId
+        invocations += Invocation(userId, forceSync, trigger, syncReason, syncMode)
         result.getOrThrow()
     }
 }

@@ -23,6 +23,8 @@ import kotlinx.coroutines.test.runTest
 import me.proton.core.domain.entity.UserId
 import org.junit.Before
 import org.junit.Test
+import proton.android.pass.data.api.repositories.SyncMode
+import proton.android.pass.data.api.usecases.RefreshSharesAndEnqueueSync
 import proton.android.pass.data.api.usecases.RefreshSharesResult
 import proton.android.pass.data.fakes.repositories.FakeAliasRepository
 import proton.android.pass.data.fakes.repositories.FakeItemRepository
@@ -151,6 +153,36 @@ internal class SyncUserEventsImplTest {
         instance.invoke(USER_ID)
 
         assertThat(userEventRepository.getStoreLatestEventIdMemory()).isNotEmpty()
+    }
+
+    @Test
+    fun `force sync requests the sync dialog by default`() = runTest {
+        givenNoLocalEventId()
+
+        instance.invoke(USER_ID, forceSync = true)
+
+        assertThat(refreshSharesAndEnqueueSync.invocations.first().syncType)
+            .isEqualTo(RefreshSharesAndEnqueueSync.SyncType.FULL)
+    }
+
+    @Test
+    fun `force sync in background mode does not request the sync dialog`() = runTest {
+        givenNoLocalEventId()
+
+        instance.invoke(USER_ID, forceSync = true, syncMode = SyncMode.Background)
+
+        assertThat(refreshSharesAndEnqueueSync.invocations.first().syncType)
+            .isEqualTo(RefreshSharesAndEnqueueSync.SyncType.FULL_BACKGROUND)
+    }
+
+    private suspend fun givenNoLocalEventId() {
+        val remoteEventId = UserEventId(EVENT_ID_1)
+        userEventRepository.setGetLatestEventIdFlow(null)
+        userEventRepository.setFetchLatestEventIdResult(remoteEventId)
+        userEventRepository.setGetUserEventsResult(
+            createUserEventList(lastEventId = remoteEventId, fullRefresh = false)
+        )
+        refreshSharesAndEnqueueSync.setResult(RefreshSharesResult.NoSharesSkipped)
     }
 
     @Test

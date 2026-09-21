@@ -21,6 +21,8 @@ package proton.android.pass.preferences
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
 import kotlinx.datetime.Clock
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.None
@@ -68,6 +70,8 @@ class FakeInternalSettingsRepository @Inject constructor() : InternalSettingsRep
     private val lastBackgroundTimestampFlow = MutableStateFlow(0L)
 
     private val searchIndexRebuildTimes = mutableMapOf<String, Long>()
+    private val forceSyncFolderPreferences = mutableMapOf<String, ForceSyncFolderPreference>()
+    private val forceSyncFolderPreferencesMutex = Mutex()
     private val trustedAutofillPackagesFlow = MutableStateFlow(emptyMap<String, Set<String>>())
 
     override fun setLastUnlockedTime(time: Long): Result<Unit> {
@@ -249,6 +253,17 @@ class FakeInternalSettingsRepository @Inject constructor() : InternalSettingsRep
     }
 
     override suspend fun getSearchIndexRebuildTime(userId: UserId): Long = searchIndexRebuildTimes[userId.id] ?: 0L
+
+    override suspend fun updateForceSyncFolderPreference(
+        userId: UserId,
+        transform: (ForceSyncFolderPreference) -> ForceSyncFolderPreference
+    ) = forceSyncFolderPreferencesMutex.withLock {
+        val current = forceSyncFolderPreferences[userId.id] ?: ForceSyncFolderPreference.Initial
+        forceSyncFolderPreferences[userId.id] = transform(current)
+    }
+
+    override suspend fun getForceSyncFolderPreference(userId: UserId): ForceSyncFolderPreference =
+        forceSyncFolderPreferences[userId.id] ?: ForceSyncFolderPreference.Initial
 
     override fun addTrustedAutofillPackage(packageName: String, fingerprints: Set<String>): Result<Unit> = runCatching {
         trustedAutofillPackagesFlow.update { it + (packageName to fingerprints) }

@@ -29,6 +29,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.runBlocking
 import kotlinx.datetime.Instant
 import me.proton.android.pass.preferences.AppUsage
+import me.proton.android.pass.preferences.ForceSyncFolderState
 import me.proton.android.pass.preferences.LastItemAutofill
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.AppDispatchers
@@ -319,6 +320,41 @@ class InternalSettingsRepositoryImpl @Inject constructor(
         dataStore.data.map { it.searchIndexRebuildTimeMap[userId.id] ?: 0L }
             .catch { emit(0L) }
             .first()
+
+    override suspend fun updateForceSyncFolderPreference(
+        userId: UserId,
+        transform: (ForceSyncFolderPreference) -> ForceSyncFolderPreference
+    ) {
+        dataStore.updateData { settings ->
+            val preference = transform(settings.forceSyncFolderStateMap[userId.id].toPreference())
+
+            settings.toBuilder()
+                .putForceSyncFolderState(
+                    userId.id,
+                    ForceSyncFolderState.newBuilder()
+                        .setDone(preference.done)
+                        .setAttempts(preference.attempts)
+                        .setLastAttemptAt(preference.lastAttemptAtMs)
+                        .build()
+                )
+                .build()
+        }
+    }
+
+    override suspend fun getForceSyncFolderPreference(userId: UserId): ForceSyncFolderPreference = dataStore.data
+        .map { settings -> settings.forceSyncFolderStateMap[userId.id].toPreference() }
+        .catch { emit(ForceSyncFolderPreference.Initial) }
+        .first()
+
+    private fun ForceSyncFolderState?.toPreference(): ForceSyncFolderPreference = this
+        ?.let { state ->
+            ForceSyncFolderPreference(
+                done = state.done,
+                attempts = state.attempts,
+                lastAttemptAtMs = state.lastAttemptAt
+            )
+        }
+        ?: ForceSyncFolderPreference.Initial
 
     override fun addTrustedAutofillPackage(packageName: String, fingerprints: Set<String>): Result<Unit> =
         setPreference {

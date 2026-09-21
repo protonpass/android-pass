@@ -48,6 +48,7 @@ import proton.android.pass.preferences.FeatureFlag.PASS_COMPROMISED_PASSWORDS
 import proton.android.pass.preferences.FeatureFlag.PASS_MONITOR_PER_CHECK_EXCLUSION
 import proton.android.pass.preferences.FeatureFlag.PASS_POPULAR_SERVICES
 import proton.android.pass.preferences.FeatureFlag.PASS_AUTOFILL_HEALTH
+import proton.android.pass.preferences.FeatureFlag.PASS_FORCE_SYNC_FOLDERS
 import proton.android.pass.preferences.FeatureFlag.PASS_OFFLINE_ATTACHMENTS
 import java.io.IOException
 import javax.inject.Inject
@@ -137,6 +138,11 @@ class FeatureFlagsPreferencesRepositoryImpl @Inject constructor(
             key = featureFlag.key,
             defaultValue = featureFlag.isEnabledDefault
         ) { passOfflineAttachmentsEnabled.value }
+
+        PASS_FORCE_SYNC_FOLDERS -> getFeatureFlag(
+            key = featureFlag.key,
+            defaultValue = featureFlag.isEnabledDefault
+        ) { passForceSyncFoldersEnabled.value }
     }
 
     @Suppress("UNCHECKED_CAST")
@@ -219,6 +225,10 @@ class FeatureFlagsPreferencesRepositoryImpl @Inject constructor(
 
         PASS_OFFLINE_ATTACHMENTS -> setFeatureFlag {
             passOfflineAttachmentsEnabled = boolFlagPrefProto(value)
+        }
+
+        PASS_FORCE_SYNC_FOLDERS -> setFeatureFlag {
+            passForceSyncFoldersEnabled = boolFlagPrefProto(value)
         }
     }
 
@@ -325,6 +335,7 @@ class FeatureFlagsPreferencesRepositoryImpl @Inject constructor(
             PASS_POPULAR_SERVICES -> passPopularServicesEnabled
             PASS_AUTOFILL_HEALTH -> passAutofillHealthEnabled
             PASS_OFFLINE_ATTACHMENTS -> passOfflineAttachmentsEnabled
+            PASS_FORCE_SYNC_FOLDERS -> passForceSyncFoldersEnabled
         }.value
     }
 

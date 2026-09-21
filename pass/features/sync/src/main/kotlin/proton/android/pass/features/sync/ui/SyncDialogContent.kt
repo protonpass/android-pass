@@ -98,6 +98,15 @@ internal fun SyncDialogContent(
                     style = ProtonTheme.typography.defaultNorm
                 )
 
+                AnimatedVisibility(visible = isFolderRepair && !hasSyncFinished) {
+                    Text(
+                        modifier = Modifier.fillMaxWidth(),
+                        text = stringResource(R.string.sync_dialog_folder_repair_message),
+                        style = ProtonTheme.typography.defaultNorm,
+                        color = ProtonTheme.colors.notificationWarning
+                    )
+                }
+
                 when {
                     isInserting -> {
                         Spacer(modifier = Modifier.height(Spacing.small))

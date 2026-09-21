@@ -22,6 +22,8 @@ import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import proton.android.pass.preferences.debug.PreferencesDebugRepository
+import proton.android.pass.preferences.debug.PreferencesDebugRepositoryImpl
 import proton.android.pass.preferences.tooltips.TooltipPreferencesRepository
 import proton.android.pass.preferences.tooltips.TooltipPreferencesRepositoryImpl
 import javax.inject.Singleton
@@ -46,5 +48,8 @@ internal abstract class PreferencesBinderModule {
 
     @[Binds Singleton]
     abstract fun bindTooltipPreferencesRepository(impl: TooltipPreferencesRepositoryImpl): TooltipPreferencesRepository
+
+    @Binds
+    abstract fun bindPreferencesDebugRepository(impl: PreferencesDebugRepositoryImpl): PreferencesDebugRepository
 
 }

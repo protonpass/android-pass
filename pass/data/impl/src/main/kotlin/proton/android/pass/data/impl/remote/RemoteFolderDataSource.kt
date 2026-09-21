@@ -40,6 +40,11 @@ interface RemoteFolderDataSource {
         val lastToken: String?
     )
 
+    /**
+     * Number of folders the server holds for [shareId], without downloading or persisting any.
+     */
+    suspend fun countFolders(userId: UserId, shareId: ShareId): Long
+
     suspend fun retrieveFolder(
         userId: UserId,
         shareId: ShareId,

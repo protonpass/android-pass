@@ -58,6 +58,8 @@ class FakeRemoteFolderDataSource : RemoteFolderDataSource {
     )
 
     val retrieveFoldersResponses = ArrayDeque<RemoteFolderDataSource.FoldersPage>()
+    val countFoldersCalls = mutableListOf<ShareId>()
+    val countFoldersResults = mutableMapOf<ShareId, Result<Long>>()
     val createFolderCalls = mutableListOf<CreateFolderCall>()
     val updateFolderCalls = mutableListOf<UpdateFolderCall>()
     val moveFolderCalls = mutableListOf<MoveFolderCall>()
@@ -93,6 +95,12 @@ class FakeRemoteFolderDataSource : RemoteFolderDataSource {
         } else {
             retrieveFoldersResponses.removeFirst()
         }
+    }
+
+    override suspend fun countFolders(userId: UserId, shareId: ShareId): Long {
+        countFoldersCalls.add(shareId)
+        val result = countFoldersResults[shareId] ?: Result.success(0L)
+        return result.getOrThrow()
     }
 
     override suspend fun retrieveFolder(userId: UserId, shareId: ShareId, folderId: FolderId): FolderApiModel {

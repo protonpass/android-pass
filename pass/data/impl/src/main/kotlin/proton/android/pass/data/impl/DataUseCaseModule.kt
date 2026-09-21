@@ -100,6 +100,7 @@ import proton.android.pass.data.api.usecases.folders.ObserveFolder
 import proton.android.pass.data.api.usecases.folders.ObserveFolderItemCounts
 import proton.android.pass.data.api.usecases.folders.ObserveFolderLimits
 import proton.android.pass.data.api.usecases.folders.ObserveFoldersByParentId
+import proton.android.pass.data.api.usecases.folders.HasAnyFolders
 import proton.android.pass.data.api.usecases.folders.RefreshFolders
 import proton.android.pass.data.api.usecases.folders.UpdateFolder
 import proton.android.pass.data.api.usecases.ObserveGlobalMonitorState
@@ -312,7 +313,9 @@ import proton.android.pass.data.api.usecases.simplelogin.SyncSimpleLoginPendingA
 import proton.android.pass.data.api.usecases.simplelogin.UpdateSimpleLoginAliasDomain
 import proton.android.pass.data.api.usecases.simplelogin.UpdateSimpleLoginAliasMailbox
 import proton.android.pass.data.api.usecases.simplelogin.VerifySimpleLoginAliasMailbox
+import proton.android.pass.data.api.usecases.sync.CheckFolderForceSync
 import proton.android.pass.data.api.usecases.sync.ForceSyncItems
+import proton.android.pass.data.api.usecases.sync.MarkFolderForceSyncCompleted
 import proton.android.pass.data.api.usecases.tooltips.DisableTooltip
 import proton.android.pass.data.api.usecases.tooltips.ObserveTooltipEnabled
 import proton.android.pass.data.api.usecases.VerifyDigitalAssetLinksForCredentialSharing
@@ -397,6 +400,7 @@ import proton.android.pass.data.impl.usecases.folders.ObserveFolderImpl
 import proton.android.pass.data.impl.usecases.folders.ObserveFolderItemCountsImpl
 import proton.android.pass.data.impl.usecases.folders.ObserveFolderLimitsImpl
 import proton.android.pass.data.impl.usecases.folders.ObserveFoldersByParentIdImpl
+import proton.android.pass.data.impl.usecases.folders.HasAnyFoldersImpl
 import proton.android.pass.data.impl.usecases.folders.RefreshFoldersImpl
 import proton.android.pass.data.impl.usecases.folders.UpdateFolderImpl
 import proton.android.pass.data.impl.usecases.ObserveGlobalMonitorStateImpl
@@ -610,7 +614,9 @@ import proton.android.pass.data.impl.usecases.simplelogin.SyncSimpleLoginPending
 import proton.android.pass.data.impl.usecases.simplelogin.UpdateSimpleLoginAliasDomainImpl
 import proton.android.pass.data.impl.usecases.simplelogin.UpdateSimpleLoginAliasMailboxImpl
 import proton.android.pass.data.impl.usecases.simplelogin.VerifySimpleLoginAliasMailboxImpl
+import proton.android.pass.data.impl.usecases.sync.CheckFolderForceSyncImpl
 import proton.android.pass.data.impl.usecases.sync.ForceSyncItemsImpl
+import proton.android.pass.data.impl.usecases.sync.MarkFolderForceSyncCompletedImpl
 import proton.android.pass.data.impl.usecases.tooltips.DisableTooltipImpl
 import proton.android.pass.data.impl.usecases.tooltips.ObserveTooltipEnabledImpl
 import proton.android.pass.data.impl.usecases.VerifyDigitalAssetLinksForCredentialSharingImpl
@@ -748,6 +754,9 @@ abstract class DataUseCaseModule {
 
     @Binds
     abstract fun bindRefreshFolders(impl: RefreshFoldersImpl): RefreshFolders
+
+    @Binds
+    abstract fun bindHasAnyFolders(impl: HasAnyFoldersImpl): HasAnyFolders
 
     @Binds
     abstract fun bindObserveFoldersByParentId(impl: ObserveFoldersByParentIdImpl): ObserveFoldersByParentId
@@ -1030,6 +1039,12 @@ abstract class DataUseCaseModule {
 
     @Binds
     abstract fun bindForceSyncItems(impl: ForceSyncItemsImpl): ForceSyncItems
+
+    @Binds
+    abstract fun bindCheckFolderForceSync(impl: CheckFolderForceSyncImpl): CheckFolderForceSync
+
+    @Binds
+    abstract fun bindMarkFolderForceSyncCompleted(impl: MarkFolderForceSyncCompletedImpl): MarkFolderForceSyncCompleted
 
     @Binds
     abstract fun bindObserveAppNeedsUpdate(impl: ObserveAppNeedsUpdateImpl): ObserveAppNeedsUpdate

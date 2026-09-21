@@ -19,13 +19,15 @@
 package proton.android.pass.data.api.usecases
 
 import me.proton.core.domain.entity.UserId
+import proton.android.pass.data.api.repositories.SyncReason
 import proton.android.pass.domain.ShareId
 
 interface RefreshSharesAndEnqueueSync {
     suspend operator fun invoke(
         userId: UserId,
         syncType: SyncType,
-        workerOrigin: String = "unknown"
+        workerOrigin: String = "unknown",
+        syncReason: SyncReason = SyncReason.Default
     ): RefreshSharesResult
 
     enum class SyncType {

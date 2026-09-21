@@ -49,6 +49,7 @@ import proton.android.pass.log.api.PassLogger
 fun InternalDrawerContents(
     modifier: Modifier = Modifier,
     onOpenFeatureFlag: () -> Unit,
+    onOpenInternalSettings: () -> Unit,
     onAppNavigation: (AppNavigation) -> Unit,
     viewModel: InternalDrawerViewModel = hiltViewModel()
 ) {
@@ -93,6 +94,12 @@ fun InternalDrawerContents(
                 modifier = Modifier.fillMaxWidth(),
                 onClick = onOpenFeatureFlag
             ) { Text(text = "Feature flags preferences") }
+        }
+        item {
+            Button(
+                modifier = Modifier.fillMaxWidth(),
+                onClick = onOpenInternalSettings
+            ) { Text(text = "Internal settings") }
         }
         item {
             Button(

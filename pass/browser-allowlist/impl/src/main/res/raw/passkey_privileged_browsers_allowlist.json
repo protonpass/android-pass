@@ -955,6 +955,18 @@
           }
         ]
       }
+    },
+    {
+      "type": "android",
+      "info": {
+        "package_name": "com.netskope.browser",
+        "signatures": [
+          {
+            "build": "release",
+            "cert_fingerprint_sha256": "B8:BB:F5:9C:BD:84:EB:21:7B:F4:3D:1C:50:E8:5C:53:43:E7:93:69:03:93:90:06:9D:C0:0B:A8:A8:8F:BA:DE"
+          }
+        ]
+      }
     }
   ]
 }

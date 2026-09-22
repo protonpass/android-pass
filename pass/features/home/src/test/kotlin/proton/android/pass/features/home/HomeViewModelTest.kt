@@ -21,6 +21,7 @@ package proton.android.pass.features.home
 import app.cash.turbine.test
 import com.google.common.truth.Truth.assertThat
 import kotlinx.collections.immutable.persistentListOf
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
 import kotlinx.datetime.Clock
 import kotlinx.datetime.toJavaInstant
@@ -90,6 +91,7 @@ import proton.android.pass.searchoptions.fakes.FakeHomeSearchOptionsRepository
 import proton.android.pass.telemetry.fakes.FakeTelemetryManager
 import proton.android.pass.test.FixedClock
 import proton.android.pass.test.MainDispatcherRule
+import proton.android.pass.test.domain.FolderTestFactory
 import proton.android.pass.test.domain.ShareTestFactory
 import proton.android.pass.test.domain.UserTestFactory
 
@@ -319,6 +321,185 @@ internal class HomeViewModelTest {
 
         assertThat(observePagedItems.lastFolderId).isEqualTo(folderId)
         assertThat(observePagedItems.lastShareIds).isEqualTo(listOf(shareId))
+    }
+
+    @Test
+    fun `redirects to parent folder when currently selected folder is deleted`() = runTest {
+        val userId = UserId("12345")
+        val shareId = ShareId("share-folder-deleted")
+        val parentFolderId = FolderId("parent-folder")
+        val deletedFolderId = FolderId("deleted-folder")
+
+        observeAllShares.sendResult(Result.success(emptyList()))
+        observeCanCreateItems.emit(canCreateItems = true)
+        observeHasShares.emit(hasShares = true)
+
+        searchOptionsRepository.setUserId(userId)
+        observeFolder.sendResult(
+            userId = userId,
+            shareId = shareId,
+            folderId = deletedFolderId,
+            result = Result.success(
+                FolderTestFactory.create(
+                    userId = userId,
+                    shareId = shareId,
+                    folderId = deletedFolderId,
+                    parentFolderId = parentFolderId
+                )
+            )
+        )
+        observeFolder.sendResult(
+            userId = userId,
+            shareId = shareId,
+            folderId = parentFolderId,
+            result = Result.success(
+                FolderTestFactory.create(
+                    userId = userId,
+                    shareId = shareId,
+                    folderId = parentFolderId,
+                    parentFolderId = null
+                )
+            )
+        )
+
+        instance.setVaultSelection(VaultSelectionOption.Folder(shareId, deletedFolderId))
+        instance.homeUiState.test {
+            awaitItem()
+        }
+
+        observeFolder.sendResult(
+            userId = userId,
+            shareId = shareId,
+            folderId = deletedFolderId,
+            result = Result.success(null)
+        )
+
+        instance.homeUiState.test {
+            awaitItem()
+        }
+
+        assertThat(searchOptionsRepository.observeVaultSelectionOption().first())
+            .isEqualTo(VaultSelectionOption.Folder(shareId, parentFolderId))
+    }
+
+    @Test
+    fun `redirects to vault root when currently selected top-level folder is deleted`() = runTest {
+        val userId = UserId("12345")
+        val shareId = ShareId("share-folder-deleted-root")
+        val deletedFolderId = FolderId("deleted-root-folder")
+
+        observeAllShares.sendResult(Result.success(emptyList()))
+        observeCanCreateItems.emit(canCreateItems = true)
+        observeHasShares.emit(hasShares = true)
+
+        searchOptionsRepository.setUserId(userId)
+        observeFolder.sendResult(
+            userId = userId,
+            shareId = shareId,
+            folderId = deletedFolderId,
+            result = Result.success(
+                FolderTestFactory.create(
+                    userId = userId,
+                    shareId = shareId,
+                    folderId = deletedFolderId,
+                    parentFolderId = null
+                )
+            )
+        )
+
+        instance.setVaultSelection(VaultSelectionOption.Folder(shareId, deletedFolderId))
+        instance.homeUiState.test {
+            awaitItem()
+        }
+
+        observeFolder.sendResult(
+            userId = userId,
+            shareId = shareId,
+            folderId = deletedFolderId,
+            result = Result.success(null)
+        )
+
+        instance.homeUiState.test {
+            awaitItem()
+        }
+
+        assertThat(searchOptionsRepository.observeVaultSelectionOption().first())
+            .isEqualTo(VaultSelectionOption.Vault(shareId))
+    }
+
+    @Test
+    fun `redirects to vault root when the parent folder was cascade-deleted too`() = runTest {
+        val userId = UserId("12345")
+        val shareId = ShareId("share-folder-cascade-deleted")
+        val parentFolderId = FolderId("cascade-deleted-parent")
+        val childFolderId = FolderId("cascade-deleted-child")
+
+        observeAllShares.sendResult(Result.success(emptyList()))
+        observeCanCreateItems.emit(canCreateItems = true)
+        observeHasShares.emit(hasShares = true)
+
+        searchOptionsRepository.setUserId(userId)
+        observeFolder.sendResult(
+            userId = userId,
+            shareId = shareId,
+            folderId = childFolderId,
+            result = Result.success(
+                FolderTestFactory.create(
+                    userId = userId,
+                    shareId = shareId,
+                    folderId = childFolderId,
+                    parentFolderId = parentFolderId
+                )
+            )
+        )
+
+        instance.setVaultSelection(VaultSelectionOption.Folder(shareId, childFolderId))
+        instance.homeUiState.test {
+            awaitItem()
+        }
+
+        observeFolder.sendResult(
+            userId = userId,
+            shareId = shareId,
+            folderId = childFolderId,
+            result = Result.success(null)
+        )
+        instance.homeUiState.test {
+            awaitItem()
+        }
+        observeFolder.sendResult(
+            userId = userId,
+            shareId = shareId,
+            folderId = parentFolderId,
+            result = Result.success(null)
+        )
+        instance.homeUiState.test {
+            awaitItem()
+        }
+
+        assertThat(searchOptionsRepository.observeVaultSelectionOption().first())
+            .isEqualTo(VaultSelectionOption.Vault(shareId))
+    }
+
+    @Test
+    fun `does not redirect out of a persisted folder selection that has not synced yet`() = runTest {
+        val userId = UserId("12345")
+        val shareId = ShareId("share-folder-not-synced")
+        val folderId = FolderId("not-synced-folder")
+
+        observeAllShares.sendResult(Result.success(emptyList()))
+        observeCanCreateItems.emit(canCreateItems = true)
+        observeHasShares.emit(hasShares = true)
+
+        searchOptionsRepository.setUserId(userId)
+        searchOptionsRepository.setVaultSelectionOption(VaultSelectionOption.Folder(shareId, folderId))
+
+        instance.homeUiState.test {
+            awaitItem()
+        }
+
+        assertThat(searchOptionsRepository.observeVaultSelectionOption().first())
+            .isEqualTo(VaultSelectionOption.Folder(shareId, folderId))
     }
 
     @Test
@@ -563,5 +744,50 @@ internal class HomeViewModelTest {
             observeItemTypeCounts = FakeObserveItemTypeCounts(),
             observeRecentSearchItems = observeRecentSearchItems
         )
+    }
+}
+
+internal class FolderDeletionFallbackTest {
+
+    private val shareId = ShareId("share-id")
+    private val folderId = FolderId("folder-id")
+
+    @Test
+    fun `falls back to the vault root when the last known folder is not the currently selected one`() {
+        val lastKnownFolder = FolderTestFactory.create(folderId = FolderId("other-folder"))
+        val selection = VaultSelectionOption.Folder(shareId, folderId)
+
+        assertThat(folderDeletionFallback(lastKnownFolder, selection))
+            .isEqualTo(VaultSelectionOption.Vault(shareId))
+    }
+
+    @Test
+    fun `falls back to the vault root when there is no last known folder`() {
+        val selection = VaultSelectionOption.Folder(shareId, folderId)
+
+        assertThat(folderDeletionFallback(null, selection))
+            .isEqualTo(VaultSelectionOption.Vault(shareId))
+    }
+
+    @Test
+    fun `falls back to the parent folder when the deleted folder had one`() {
+        val parentFolderId = FolderId("parent-folder")
+        val lastKnownFolder = FolderTestFactory.create(
+            folderId = folderId,
+            parentFolderId = parentFolderId
+        )
+        val selection = VaultSelectionOption.Folder(shareId, folderId)
+
+        assertThat(folderDeletionFallback(lastKnownFolder, selection))
+            .isEqualTo(VaultSelectionOption.Folder(shareId, parentFolderId))
+    }
+
+    @Test
+    fun `falls back to the vault root when the deleted folder was top-level`() {
+        val lastKnownFolder = FolderTestFactory.create(folderId = folderId, parentFolderId = null)
+        val selection = VaultSelectionOption.Folder(shareId, folderId)
+
+        assertThat(folderDeletionFallback(lastKnownFolder, selection))
+            .isEqualTo(VaultSelectionOption.Vault(shareId))
     }
 }

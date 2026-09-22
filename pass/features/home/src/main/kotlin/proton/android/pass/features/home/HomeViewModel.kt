@@ -147,6 +147,7 @@ import proton.android.pass.data.api.usecases.searchentry.ObserveRecentSearchItem
 import proton.android.pass.data.api.usecases.searchentry.ObserveSearchEntry
 import proton.android.pass.data.api.usecases.searchentry.ObserveSearchEntry.SearchEntrySelection
 import proton.android.pass.data.api.usecases.shares.ObserveHasShares
+import proton.android.pass.domain.Folder
 import proton.android.pass.domain.FolderId
 import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.ItemId
@@ -314,27 +315,31 @@ class HomeViewModel @Inject constructor(
     private val foldersEnabledFlow: Flow<Boolean> =
         featureFlagsPreferencesRepository[FeatureFlag.PASS_FOLDERS]
 
+    private data class FolderObservation(
+        val selection: VaultSelectionOption.Folder,
+        val folder: Folder?
+    )
+
+    private var lastKnownSelectedFolder: Folder? = null
+    private var isRedirectingAfterFolderDeletion: Boolean = false
+
     private val selectedFolderFlow: Flow<Option<SelectedFolder>> = searchOptionsFlow
         .flatMapLatest { searchOptions ->
-            val userId = searchOptions.userId ?: return@flatMapLatest flowOf(None)
-            when (val selection = searchOptions.vaultSelectionOption) {
-                is VaultSelectionOption.Folder -> observeFolder(
-                    userId = userId,
-                    shareId = selection.shareId,
-                    folderId = selection.folderId
-                ).map { folder ->
-                    Some(
-                        SelectedFolder(
-                            shareId = selection.shareId,
-                            folderId = selection.folderId,
-                            name = folder?.name.orEmpty()
-                        )
-                    )
-                }
-                else -> flowOf(None)
+            val userId = searchOptions.userId
+            val selection = searchOptions.vaultSelectionOption
+            if (userId == null || selection !is VaultSelectionOption.Folder) {
+                lastKnownSelectedFolder = null
+                isRedirectingAfterFolderDeletion = false
+                return@flatMapLatest flowOf<FolderObservation?>(null)
             }
+
+            observeFolder(userId = userId, shareId = selection.shareId, folderId = selection.folderId)
+                .map { folder -> FolderObservation(selection, folder) }
         }
+        .onEach { observation -> redirectIfSelectedFolderWasDeleted(observation) }
+        .map { observation -> observation.toSelectedFolderOption() }
         .distinctUntilChanged()
+        .shareIn(viewModelScope, SharingStarted.Lazily, replay = 1)
 
     private val folderCapabilitiesFlow: Flow<FolderCapabilities> = combine(
         foldersEnabledFlow,
@@ -1875,9 +1880,51 @@ class HomeViewModel @Inject constructor(
     }
     // ========== Pagination Support ==========
 
+    private suspend fun redirectIfSelectedFolderWasDeleted(observation: FolderObservation?) {
+        val (selection, folder) = observation ?: return
+        if (folder != null) {
+            lastKnownSelectedFolder = folder
+            isRedirectingAfterFolderDeletion = false
+            return
+        }
+
+        val isKnownDeleted = lastKnownSelectedFolder?.folderId == selection.folderId
+        if (!isKnownDeleted && !isRedirectingAfterFolderDeletion) return
+
+        val fallback = folderDeletionFallback(lastKnownSelectedFolder, selection)
+        lastKnownSelectedFolder = null
+        isRedirectingAfterFolderDeletion = true
+        homeSearchOptionsRepository.setVaultSelectionOption(fallback)
+    }
+
+    private fun FolderObservation?.toSelectedFolderOption(): Option<SelectedFolder> {
+        val (selection, folder) = this ?: return None
+        return Some(
+            SelectedFolder(
+                shareId = selection.shareId,
+                folderId = selection.folderId,
+                name = folder?.name.orEmpty()
+            )
+        )
+    }
+
     companion object {
         private const val DEBOUNCE_TIMEOUT = 300L
         private const val TAG = "HomeViewModel"
         private const val MAX_CLIPBOARD_LENGTH = 2500
+    }
+}
+
+internal fun folderDeletionFallback(
+    lastKnownFolder: Folder?,
+    selection: VaultSelectionOption.Folder
+): VaultSelectionOption {
+    val parentFolderId = lastKnownFolder
+        ?.takeIf { it.folderId == selection.folderId }
+        ?.parentFolderId
+    return if (parentFolderId != null) {
+        VaultSelectionOption.Folder(selection.shareId, parentFolderId)
+    } else {
+        VaultSelectionOption.Vault(selection.shareId)
     }
 }

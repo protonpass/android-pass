@@ -49,6 +49,9 @@ class FakeRemoteItemDataSource : RemoteItemDataSource {
     private var updateItemResponse: () -> ItemRevision =
         { throw IllegalStateException("response not set") }
     private var updateItemMemory: MutableList<UpdateItemParams> = mutableListOf()
+    private var createItemAndAliasResponse: () -> CreateItemAliasBundle =
+        { throw IllegalStateException("response not set") }
+    private var createItemAndAliasMemory: MutableList<CreateItemAndAliasParams> = mutableListOf()
 
     private val getItemResponses: MutableList<() -> ItemRevision> = mutableListOf()
     private var getItemCallCount = 0
@@ -69,6 +72,12 @@ class FakeRemoteItemDataSource : RemoteItemDataSource {
 
     fun setUpdateItemResponse(delegate: () -> ItemRevision) {
         updateItemResponse = delegate
+    }
+
+    fun getCreateItemAndAliasMemory(): List<CreateItemAndAliasParams> = createItemAndAliasMemory
+
+    fun setCreateItemAndAliasResponse(delegate: () -> CreateItemAliasBundle) {
+        createItemAndAliasResponse = delegate
     }
 
     override suspend fun createItem(
@@ -93,7 +102,8 @@ class FakeRemoteItemDataSource : RemoteItemDataSource {
         shareId: ShareId,
         body: CreateItemAliasRequest
     ): CreateItemAliasBundle {
-        throw IllegalStateException("Not yet implemented")
+        createItemAndAliasMemory.add(CreateItemAndAliasParams(userId, shareId, body))
+        return createItemAndAliasResponse()
     }
 
     override suspend fun updateItem(
@@ -258,6 +268,12 @@ class FakeRemoteItemDataSource : RemoteItemDataSource {
         val shareId: ShareId,
         val itemId: ItemId,
         val body: UpdateItemRequest
+    )
+
+    data class CreateItemAndAliasParams(
+        val userId: UserId,
+        val shareId: ShareId,
+        val body: CreateItemAliasRequest
     )
 
     companion object {

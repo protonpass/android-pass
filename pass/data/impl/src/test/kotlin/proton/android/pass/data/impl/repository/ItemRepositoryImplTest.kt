@@ -27,6 +27,7 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import proton.android.pass.account.fakes.FakeAccountManager
+import proton.android.pass.account.fakes.FakeKeyStoreCrypto
 import proton.android.pass.account.fakes.FakeUserAddressRepository
 import proton.android.pass.crypto.api.usecases.EncryptedUpdateItemRequest
 import proton.android.pass.crypto.api.usecases.OpenItemOutput
@@ -54,10 +55,18 @@ import proton.android.pass.data.api.ItemPendingEvent
 import proton.android.pass.data.api.PendingEventItemRevision
 import proton.android.pass.data.api.PendingEventList
 import proton.android.pass.data.api.repositories.VaultProgress
+import proton.android.pass.data.impl.responses.CreateItemAliasBundle
+import proton.android.pass.data.impl.responses.ItemRevisionApiModel
+import proton.android.pass.data.impl.util.TimeUtil
+import proton.android.pass.domain.AliasMailbox
+import proton.android.pass.domain.AliasSuffix
 import proton.android.pass.domain.FolderId
+import proton.android.pass.domain.HiddenState
 import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.ItemId
+import proton.android.pass.domain.ItemStateValues
 import proton.android.pass.domain.Share
+import proton.android.pass.domain.entity.NewAlias
 import proton.android.pass.domain.key.FolderKey
 import proton.android.pass.domain.key.ItemKey
 import proton.android.pass.test.MainDispatcherRule
@@ -170,6 +179,90 @@ class ItemRepositoryImplTest {
         val localItem = localMemory.first()
         assertEquals(localItem.userId, userId.id)
         assertEquals(localItem.aliasEmail, null)
+    }
+
+    @Test
+    fun `createLoginAndAlias creates both items inside the selected folder`() = runTest {
+        val folderId = FolderId("folder-1")
+        val folderKey = FolderKey(
+            rotation = 1L,
+            key = EncryptedByteArray(byteArrayOf(1, 2, 3)),
+            responseKey = "folder-key"
+        )
+        folderKeyRepository.setGetFolderKeyResult(Result.success(folderKey))
+        shareKeyRepository.emitGetLatestKeyForShare(ShareKeyTestFactory.createPrivate())
+        createItem.setPayload(FakeCreateItem.createPayload())
+
+        val protoItem = TestProtoItemGenerator.generate("title", "note")
+        val item = ItemTestFactory.random(content = protoItem.toByteArray())
+        openItem.setOutput(OpenItemOutput(item = item, itemKey = null))
+
+        remoteItemDataSource.setCreateItemAndAliasResponse {
+            CreateItemAliasBundle(
+                alias = createItemRevisionApiModel(item),
+                item = createItemRevisionApiModel(item)
+            )
+        }
+
+        val loginContents = ItemContents.Login.create(
+            password = HiddenState.Empty(""),
+            primaryTotp = HiddenState.Empty("")
+        )
+        val newAlias = NewAlias(
+            contents = ItemContents.Alias(
+                title = "alias",
+                note = "",
+                customFields = emptyList(),
+                aliasEmail = ""
+            ),
+            prefix = "prefix",
+            aliasName = null,
+            suffix = AliasSuffix(
+                suffix = ".suffix@proton.me",
+                signedSuffix = "signed-suffix",
+                isCustom = false,
+                isPremium = false,
+                domain = "proton.me"
+            ),
+            mailboxes = listOf(AliasMailbox(id = 1, email = "mailbox@proton.me"))
+        )
+
+        repository.createLoginAndAlias(
+            userId = userId,
+            shareId = share.id,
+            folderId = folderId,
+            contents = loginContents,
+            newAlias = newAlias
+        )
+
+        val memory = remoteItemDataSource.getCreateItemAndAliasMemory()
+        assertEquals(1, memory.size)
+
+        val request = memory.first().body
+        assertEquals(folderId.id, request.item.folderId)
+        assertEquals(folderId.id, request.alias.item.folderId)
+    }
+
+    private fun createItemRevisionApiModel(item: proton.android.pass.domain.Item): ItemRevisionApiModel {
+        val now = TimeUtil.getNowUtc()
+        return ItemRevisionApiModel(
+            itemId = item.id.id,
+            revision = item.revision,
+            contentFormatVersion = 1,
+            keyRotation = 1,
+            content = FakeKeyStoreCrypto.encrypt("content"),
+            itemKey = null,
+            state = ItemStateValues.ACTIVE,
+            aliasEmail = null,
+            createTime = now,
+            modifyTime = now,
+            lastUseTime = now,
+            revisionTime = now,
+            isPinned = false,
+            pinTime = now,
+            flags = 0,
+            shareCount = 0
+        )
     }
 
     @Test

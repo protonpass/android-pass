@@ -21,6 +21,7 @@ package proton.android.pass.searchoptions.fakes
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
+import me.proton.core.domain.entity.UserId
 import proton.android.pass.searchoptions.api.FilterOption
 import proton.android.pass.searchoptions.api.HomeSearchOptionsRepository
 import proton.android.pass.searchoptions.api.SearchOptions
@@ -59,6 +60,10 @@ class FakeHomeSearchOptionsRepository @Inject constructor() : HomeSearchOptionsR
     override suspend fun setVaultSelectionOption(vaultSelectionOption: VaultSelectionOption) {
         vaultSelectionOptionFlow.update { vaultSelectionOption }
         searchOptionsFlow.update { it.copy(vaultSelectionOption = vaultSelectionOption) }
+    }
+
+    fun setUserId(userId: UserId) {
+        searchOptionsFlow.update { it.copy(userId = userId) }
     }
 
     override fun observeIsInSeeAllPinsMode(): Flow<Boolean> = isInSeeAllPinsModeFlow

@@ -254,7 +254,7 @@ class ItemRepositoryImpl @Inject constructor(
                 customFields = newAlias.contents.customFields,
                 aliasEmail = "" // Not used when creating the payload
             )
-            val aliasBody = createItem.create(shareKey, aliasContents, domainMatchingEnabled)
+            val aliasBody = createItem.create(parentKey, aliasContents, domainMatchingEnabled)
 
             CreateItemAliasRequest(
                 alias = CreateAliasRequest(
@@ -262,7 +262,7 @@ class ItemRepositoryImpl @Inject constructor(
                     signedSuffix = newAlias.suffix.signedSuffix,
                     aliasName = newAlias.aliasName,
                     mailboxes = newAlias.mailboxes.map { it.id },
-                    item = aliasBody.toRequest()
+                    item = aliasBody.toRequest(folderId)
                 ),
                 item = itemBody.toRequest(folderId)
             )

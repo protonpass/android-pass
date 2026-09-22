@@ -6,6 +6,14 @@
 
 ### Other
 
+## 1.41.0 (2026-09-22)
+
+### Fixes :bug:
+
+- Improved security around autofill and passkeys.
+- Fixed several sync and search issues.
+- General bug fixes and improvements.
+
 ## 1.40.3 (2026-07-28)
 
 ### Fixes :bug:

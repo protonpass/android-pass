@@ -930,6 +930,210 @@ internal class FolderRepositoryImplTest {
         assertThat(localFolderDataSource.deleteCalls).isEmpty()
     }
 
+    @Test
+    fun `deleteFolders cascades to direct children`() = runTest {
+        val parentId = "parent-folder"
+        val child1Id = "child-1"
+        val child2Id = "child-2"
+
+        localFolderDataSource.upsertFolder(
+            folderEntity(folderId = parentId, name = "Parent", parentFolderId = null)
+        )
+        localFolderDataSource.upsertFolder(
+            folderEntity(folderId = child1Id, name = "Child 1", parentFolderId = parentId)
+        )
+        localFolderDataSource.upsertFolder(
+            folderEntity(folderId = child2Id, name = "Child 2", parentFolderId = parentId)
+        )
+
+        repository.deleteFolders(
+            userId = userId,
+            shareId = shareId,
+            folderIds = listOf(FolderId(parentId))
+        )
+
+        assertThat(localFolderDataSource.memory).isEmpty()
+        assertThat(remoteFolderDataSource.deleteFolderCalls.single().request.folderIds)
+            .containsExactly(parentId, child1Id, child2Id)
+    }
+
+    @Test
+    fun `deleteFolders cascades to multiple nesting levels`() = runTest {
+        val rootId = "root"
+        val child1Id = "child-1"
+        val grandchild1Id = "grandchild-1"
+        val greatGrandchildId = "great-grandchild-1"
+
+        localFolderDataSource.upsertFolder(
+            folderEntity(folderId = rootId, name = "Root", parentFolderId = null)
+        )
+        localFolderDataSource.upsertFolder(
+            folderEntity(folderId = child1Id, name = "Child 1", parentFolderId = rootId)
+        )
+        localFolderDataSource.upsertFolder(
+            folderEntity(folderId = grandchild1Id, name = "Grandchild 1", parentFolderId = child1Id)
+        )
+        localFolderDataSource.upsertFolder(
+            folderEntity(folderId = greatGrandchildId, name = "Great-grandchild", parentFolderId = grandchild1Id)
+        )
+
+        repository.deleteFolders(
+            userId = userId,
+            shareId = shareId,
+            folderIds = listOf(FolderId(rootId))
+        )
+
+        assertThat(localFolderDataSource.memory).isEmpty()
+        assertThat(remoteFolderDataSource.deleteFolderCalls.single().request.folderIds)
+            .containsExactly(rootId, child1Id, grandchild1Id, greatGrandchildId)
+    }
+
+    @Test
+    fun `deleteFolders sends expanded IDs to remote including all descendants`() = runTest {
+        val parentId = "parent"
+        val child1Id = "child-1"
+        val child2Id = "child-2"
+        val grandchildId = "grandchild-1"
+
+        localFolderDataSource.upsertFolder(
+            folderEntity(folderId = parentId, name = "Parent", parentFolderId = null)
+        )
+        localFolderDataSource.upsertFolder(
+            folderEntity(folderId = child1Id, name = "Child 1", parentFolderId = parentId)
+        )
+        localFolderDataSource.upsertFolder(
+            folderEntity(folderId = child2Id, name = "Child 2", parentFolderId = parentId)
+        )
+        localFolderDataSource.upsertFolder(
+            folderEntity(folderId = grandchildId, name = "Grandchild", parentFolderId = child1Id)
+        )
+
+        repository.deleteFolders(
+            userId = userId,
+            shareId = shareId,
+            folderIds = listOf(FolderId(parentId))
+        )
+
+        val sentIds = remoteFolderDataSource.deleteFolderCalls.single().request.folderIds
+        assertThat(sentIds).hasSize(4)
+        assertThat(sentIds).containsExactly(parentId, child1Id, child2Id, grandchildId)
+    }
+
+    @Test
+    fun `deleteFolders deduplicates overlapping subtrees when deleting multiple IDs`() = runTest {
+        val parentId = "parent"
+        val child1Id = "child-1"
+        val child2Id = "child-2"
+        val grandchildId = "grandchild-1"
+
+        localFolderDataSource.upsertFolder(
+            folderEntity(folderId = parentId, name = "Parent", parentFolderId = null)
+        )
+        localFolderDataSource.upsertFolder(
+            folderEntity(folderId = child1Id, name = "Child 1", parentFolderId = parentId)
+        )
+        localFolderDataSource.upsertFolder(
+            folderEntity(folderId = child2Id, name = "Child 2", parentFolderId = parentId)
+        )
+        localFolderDataSource.upsertFolder(
+            folderEntity(folderId = grandchildId, name = "Grandchild", parentFolderId = child1Id)
+        )
+
+        repository.deleteFolders(
+            userId = userId,
+            shareId = shareId,
+            folderIds = listOf(FolderId(parentId), FolderId(child1Id), FolderId(grandchildId))
+        )
+
+        val sentIds = remoteFolderDataSource.deleteFolderCalls.single().request.folderIds
+        assertThat(sentIds).containsExactly(parentId, child1Id, child2Id, grandchildId)
+        assertThat(sentIds.distinct()).hasSize(sentIds.size)
+    }
+
+    @Test
+    fun `deleteFoldersLocally cascades to descendants via sync event`() = runTest {
+        val parentId = "parent-sync"
+        val child1Id = "child-sync-1"
+        val child2Id = "child-sync-2"
+        val grandchildId = "grandchild-sync-1"
+
+        localFolderDataSource.upsertFolder(
+            folderEntity(folderId = parentId, name = "Parent", parentFolderId = null)
+        )
+        localFolderDataSource.upsertFolder(
+            folderEntity(folderId = child1Id, name = "Child 1", parentFolderId = parentId)
+        )
+        localFolderDataSource.upsertFolder(
+            folderEntity(folderId = child2Id, name = "Child 2", parentFolderId = parentId)
+        )
+        localFolderDataSource.upsertFolder(
+            folderEntity(folderId = grandchildId, name = "Grandchild", parentFolderId = child1Id)
+        )
+
+        repository.deleteFoldersLocally(
+            userId = userId,
+            shareId = shareId,
+            folderIds = listOf(FolderId(parentId))
+        )
+
+        assertThat(localFolderDataSource.memory).isEmpty()
+        val deleteCall = localFolderDataSource.deleteCalls.single()
+        assertThat(deleteCall.folderIds.map { it.id })
+            .containsExactly(parentId, child1Id, child2Id, grandchildId)
+    }
+
+    @Test
+    fun `deleteFolders with single child folder removes entire subtree locally`() = runTest {
+        val parentId = "parent-single"
+        val childId = "child-single"
+
+        localFolderDataSource.upsertFolder(
+            folderEntity(folderId = parentId, name = "Parent", parentFolderId = null)
+        )
+        localFolderDataSource.upsertFolder(
+            folderEntity(folderId = childId, name = "Child", parentFolderId = parentId)
+        )
+
+        repository.deleteFolders(
+            userId = userId,
+            shareId = shareId,
+            folderIds = listOf(FolderId(parentId))
+        )
+
+        assertThat(localFolderDataSource.memory).isEmpty()
+    }
+
+    @Test
+    fun `deleteFolders with multiple independent subtrees removes all folders`() = runTest {
+        val root1Id = "root-1"
+        val root2Id = "root-2"
+        val child1Id = "child-1-subtree1"
+        val child2Id = "child-1-subtree2"
+
+        localFolderDataSource.upsertFolder(
+            folderEntity(folderId = root1Id, name = "Root 1", parentFolderId = null)
+        )
+        localFolderDataSource.upsertFolder(
+            folderEntity(folderId = child1Id, name = "Child 1", parentFolderId = root1Id)
+        )
+        localFolderDataSource.upsertFolder(
+            folderEntity(folderId = root2Id, name = "Root 2", parentFolderId = null)
+        )
+        localFolderDataSource.upsertFolder(
+            folderEntity(folderId = child2Id, name = "Child 2", parentFolderId = root2Id)
+        )
+
+        repository.deleteFolders(
+            userId = userId,
+            shareId = shareId,
+            folderIds = listOf(FolderId(root1Id), FolderId(root2Id))
+        )
+
+        assertThat(localFolderDataSource.memory).isEmpty()
+        val sentIds = remoteFolderDataSource.deleteFolderCalls.single().request.folderIds
+        assertThat(sentIds).containsExactly(root1Id, child1Id, root2Id, child2Id)
+    }
+
     private fun folderEntity(
         folderId: String,
         name: String,

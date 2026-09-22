@@ -22,7 +22,6 @@ import android.content.Context
 import androidx.hilt.work.HiltWorker
 import androidx.work.Constraints
 import androidx.work.CoroutineWorker
-import androidx.work.ExistingWorkPolicy
 import androidx.work.NetworkType
 import androidx.work.OneTimeWorkRequest
 import androidx.work.OneTimeWorkRequestBuilder
@@ -82,10 +81,6 @@ open class FolderRepairWorker @AssistedInject constructor(
     companion object {
 
         private const val TAG = "FolderRepairWorker"
-
-        const val WORKER_UNIQUE_NAME = "folder_repair_worker"
-
-        val EXISTING_WORK_POLICY = ExistingWorkPolicy.KEEP
 
         fun getRequest(): OneTimeWorkRequest = OneTimeWorkRequestBuilder<FolderRepairWorker>()
             .setConstraints(

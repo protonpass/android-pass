@@ -20,14 +20,13 @@ package proton.android.pass.preferences
 
 import app.cash.turbine.test
 import com.google.common.truth.Truth.assertThat
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.runTest
 import me.proton.core.domain.entity.UserId
 import me.proton.core.featureflag.domain.entity.FeatureId
 import org.junit.Test
 import proton.android.pass.account.fakes.FakeAccountManager
 import proton.android.pass.account.fakes.FakeFeatureFlagRepository
+import proton.android.pass.common.fakes.FakeAppDispatchers
 import me.proton.core.featureflag.domain.entity.FeatureFlag as CoreFeatureFlag
 
 class FeatureFlagsPreferencesRepositoryImplTest {
@@ -93,48 +92,76 @@ class FeatureFlagsPreferencesRepositoryImplTest {
     }
 
     @Test
-    fun `awaitResolved forces a refresh and waits for it, instead of defaulting on a cache miss`() = runTest {
-        val pendingFeatureFlagRepository = FakePendingFeatureFlagRepository(loadingValue = null)
+    fun `awaitResolved refreshes once on a cold cache and returns the freshly fetched value`() = runTest {
+        val featureFlagRepository = FakeColdCacheFeatureFlagRepository(
+            remoteFlag = CoreFeatureFlag.default(remoteFlagKey, defaultValue = false).copy(value = true)
+        )
         val repository = FeatureFlagsPreferencesRepositoryImpl(
             accountManager = FakeAccountManager(),
-            featureFlagManager = pendingFeatureFlagRepository,
-            dataStore = FakeFeatureFlagsPreferencesDataStore()
+            featureFlagManager = featureFlagRepository,
+            dataStore = FakeFeatureFlagsPreferencesDataStore(),
+            appDispatchers = FakeAppDispatchers()
         )
 
-        var resolved: Boolean? = null
-        val job = launch { resolved = repository.awaitResolved(remoteFlag, userId) }
-        advanceUntilIdle()
-
-        assertThat(resolved).isNull()
-
-        pendingFeatureFlagRepository.resolve(
-            CoreFeatureFlag.default(remoteFlagKey, defaultValue = false).copy(value = true)
-        )
-        advanceUntilIdle()
-        job.join()
+        val resolved = repository.awaitResolved(remoteFlag, userId)
 
         assertThat(resolved).isTrue()
+        assertThat(featureFlagRepository.getAllInvocations).isEqualTo(1)
     }
 
     @Test
-    fun `awaitResolved ignores the stale value exposed by observe and waits for get instead`() = runTest {
-        val staleValue = CoreFeatureFlag.default(remoteFlagKey, defaultValue = false).copy(value = false)
-        val pendingFeatureFlagRepository = FakePendingFeatureFlagRepository(loadingValue = staleValue)
+    fun `awaitResolved does not retry a successful fetch for a flag that is genuinely absent`() = runTest {
+        val featureFlagRepository = FakeColdCacheFeatureFlagRepository(remoteFlag = null)
         val repository = FeatureFlagsPreferencesRepositoryImpl(
             accountManager = FakeAccountManager(),
-            featureFlagManager = pendingFeatureFlagRepository,
-            dataStore = FakeFeatureFlagsPreferencesDataStore()
+            featureFlagManager = featureFlagRepository,
+            dataStore = FakeFeatureFlagsPreferencesDataStore(),
+            appDispatchers = FakeAppDispatchers()
         )
 
-        val job = launch {
-            pendingFeatureFlagRepository.resolve(
-                CoreFeatureFlag.default(remoteFlagKey, defaultValue = false).copy(value = true)
-            )
-        }
+        val firstResolved = repository.awaitResolved(remoteFlag, userId)
+        val secondResolved = repository.awaitResolved(remoteFlag, userId)
+
+        assertThat(firstResolved).isEqualTo(remoteFlag.isEnabledDefault)
+        assertThat(secondResolved).isEqualTo(remoteFlag.isEnabledDefault)
+        assertThat(featureFlagRepository.getAllInvocations).isEqualTo(1)
+    }
+
+    @Test
+    fun `awaitResolved falls back to the static default, without throwing, when the refresh fails`() = runTest {
+        val featureFlagRepository = FakeColdCacheFeatureFlagRepository(
+            remoteFlag = CoreFeatureFlag.default(remoteFlagKey, defaultValue = false).copy(value = true),
+            getAllError = IllegalStateException("network error")
+        )
+        val repository = FeatureFlagsPreferencesRepositoryImpl(
+            accountManager = FakeAccountManager(),
+            featureFlagManager = featureFlagRepository,
+            dataStore = FakeFeatureFlagsPreferencesDataStore(),
+            appDispatchers = FakeAppDispatchers()
+        )
+
         val resolved = repository.awaitResolved(remoteFlag, userId)
-        job.join()
+
+        assertThat(resolved).isEqualTo(remoteFlag.isEnabledDefault)
+    }
+
+    @Test
+    fun `awaitResolved does not refresh when the value is already cached`() = runTest {
+        val featureFlagRepository = FakeColdCacheFeatureFlagRepository(
+            remoteFlag = CoreFeatureFlag.default(remoteFlagKey, defaultValue = false).copy(value = true),
+            startFetched = true
+        )
+        val repository = FeatureFlagsPreferencesRepositoryImpl(
+            accountManager = FakeAccountManager(),
+            featureFlagManager = featureFlagRepository,
+            dataStore = FakeFeatureFlagsPreferencesDataStore(),
+            appDispatchers = FakeAppDispatchers()
+        )
+
+        val resolved = repository.awaitResolved(remoteFlag, userId)
 
         assertThat(resolved).isTrue()
+        assertThat(featureFlagRepository.getAllInvocations).isEqualTo(0)
     }
 
     private fun buildRepository(): Pair<FeatureFlagsPreferencesRepositoryImpl, FakeFeatureFlagRepository> {
@@ -142,7 +169,8 @@ class FeatureFlagsPreferencesRepositoryImplTest {
         val repository = FeatureFlagsPreferencesRepositoryImpl(
             accountManager = FakeAccountManager(),
             featureFlagManager = featureFlagRepository,
-            dataStore = FakeFeatureFlagsPreferencesDataStore()
+            dataStore = FakeFeatureFlagsPreferencesDataStore(),
+            appDispatchers = FakeAppDispatchers()
         )
         return repository to featureFlagRepository
     }

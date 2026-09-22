@@ -33,6 +33,8 @@ interface FeatureFlagsPreferencesRepository {
      */
     suspend fun awaitResolved(featureFlag: FeatureFlag, userId: UserId): Boolean
 
+    suspend fun refreshRemote(userId: UserId)
+
     fun <T> set(featureFlag: FeatureFlag, value: T? = null): Result<Unit>
 
     fun observeForAllUsers(featureFlag: FeatureFlag): Flow<Boolean>

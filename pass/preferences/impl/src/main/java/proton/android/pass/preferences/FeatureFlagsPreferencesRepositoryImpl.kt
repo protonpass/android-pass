@@ -19,6 +19,8 @@
 package proton.android.pass.preferences
 
 import androidx.datastore.core.DataStore
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.FlowCollector
 import kotlinx.coroutines.flow.catch
@@ -26,13 +28,20 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
 import me.proton.android.pass.preferences.BoolFlagPrefProto
 import me.proton.android.pass.preferences.BooleanPrefProto
+import me.proton.core.account.domain.entity.AccountState
 import me.proton.core.accountmanager.domain.AccountManager
+import me.proton.core.accountmanager.domain.getAccounts
 import me.proton.core.domain.entity.UserId
 import me.proton.core.featureflag.domain.entity.FeatureId
 import me.proton.core.featureflag.domain.repository.FeatureFlagRepository
+import proton.android.pass.common.api.AppDispatchers
+import proton.android.pass.common.api.safeRunCatching
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.preferences.FeatureFlag.AUTOFILL_DEBUG_MODE
 import proton.android.pass.preferences.FeatureFlag.PASS_ALLOW_NO_VAULT
@@ -51,6 +60,7 @@ import proton.android.pass.preferences.FeatureFlag.PASS_AUTOFILL_HEALTH
 import proton.android.pass.preferences.FeatureFlag.PASS_FORCE_SYNC_FOLDERS
 import proton.android.pass.preferences.FeatureFlag.PASS_OFFLINE_ATTACHMENTS
 import java.io.IOException
+import java.util.concurrent.ConcurrentHashMap
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -59,8 +69,23 @@ import javax.inject.Singleton
 class FeatureFlagsPreferencesRepositoryImpl @Inject constructor(
     private val accountManager: AccountManager,
     private val featureFlagManager: FeatureFlagRepository,
-    private val dataStore: DataStore<FeatureFlagsPreferences>
+    private val dataStore: DataStore<FeatureFlagsPreferences>,
+    appDispatchers: AppDispatchers
 ) : FeatureFlagsPreferencesRepository {
+
+    private val scope = CoroutineScope(SupervisorJob() + appDispatchers.io)
+    private val hasFetchedOnce = ConcurrentHashMap<UserId, Boolean>()
+    private val fetchMutexes = ConcurrentHashMap<UserId, Mutex>()
+
+    init {
+        scope.launch {
+            accountManager.getAccounts(AccountState.Removed).collect { accounts ->
+                val removedUserIds = accounts.map { it.userId }.toSet()
+                hasFetchedOnce.keys.retainAll { it !in removedUserIds }
+                fetchMutexes.keys.retainAll { it !in removedUserIds }
+            }
+        }
+    }
 
     @Suppress("LongMethod")
     override fun <T> get(featureFlag: FeatureFlag): Flow<T> = when (featureFlag) {
@@ -158,12 +183,24 @@ class FeatureFlagsPreferencesRepositoryImpl @Inject constructor(
 
         val remoteValue = featureFlag.key?.let { key ->
             val featureId = FeatureId(id = key)
-            featureFlagManager.get(userId = userId, featureId = featureId)
-                ?: runCatching {
-                    featureFlagManager.get(userId = userId, featureId = featureId, refresh = true)
-                }.getOrNull()
-        }?.value
+            featureFlagManager.getValue(userId = userId, featureId = featureId)
+                ?: run {
+                    if (hasFetchedOnce[userId] != true) {
+                        fetchMutexes.computeIfAbsent(userId) { Mutex() }.withLock {
+                            if (hasFetchedOnce[userId] != true) {
+                                val result = safeRunCatching { refreshRemote(userId) }
+                                if (result.isSuccess) hasFetchedOnce[userId] = true
+                            }
+                        }
+                    }
+                    featureFlagManager.getValue(userId = userId, featureId = featureId)
+                }
+        }
         return remoteValue ?: featureFlag.isEnabledDefault
+    }
+
+    override suspend fun refreshRemote(userId: UserId) {
+        featureFlagManager.getAll(userId = userId)
     }
 
     override fun <T> set(featureFlag: FeatureFlag, value: T?): Result<Unit> = when (featureFlag) {

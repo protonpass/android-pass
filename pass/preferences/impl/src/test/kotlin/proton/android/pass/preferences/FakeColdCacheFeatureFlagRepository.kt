@@ -18,34 +18,29 @@
 
 package proton.android.pass.preferences
 
-import kotlinx.coroutines.CompletableDeferred
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flowOf
 import me.proton.core.domain.entity.UserId
 import me.proton.core.featureflag.domain.entity.FeatureId
 import me.proton.core.featureflag.domain.repository.FeatureFlagRepository
 import proton.android.pass.account.fakes.FakeFeatureFlagRepository
 import me.proton.core.featureflag.domain.entity.FeatureFlag as CoreFeatureFlag
 
-internal class FakePendingFeatureFlagRepository(
-    private val loadingValue: CoreFeatureFlag?
+internal class FakeColdCacheFeatureFlagRepository(
+    private val remoteFlag: CoreFeatureFlag?,
+    startFetched: Boolean = false,
+    private val getAllError: Throwable? = null
 ) : FeatureFlagRepository by FakeFeatureFlagRepository() {
 
-    private val pendingGet = CompletableDeferred<CoreFeatureFlag?>()
+    var getAllInvocations = 0
+        private set
 
-    suspend fun resolve(featureFlag: CoreFeatureFlag?) {
-        pendingGet.complete(featureFlag)
+    private var isFetched = startFetched
+
+    override fun getValue(userId: UserId?, featureId: FeatureId): Boolean? = if (isFetched) remoteFlag?.value else null
+
+    override suspend fun getAll(userId: UserId?): List<CoreFeatureFlag> {
+        getAllInvocations++
+        getAllError?.let { throw it }
+        isFetched = true
+        return listOfNotNull(remoteFlag)
     }
-
-    override fun observe(
-        userId: UserId?,
-        featureId: FeatureId,
-        refresh: Boolean
-    ): Flow<CoreFeatureFlag?> = flowOf(loadingValue)
-
-    override suspend fun get(
-        userId: UserId?,
-        featureId: FeatureId,
-        refresh: Boolean
-    ): CoreFeatureFlag? = if (refresh) pendingGet.await() else null
 }

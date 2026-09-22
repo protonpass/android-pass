@@ -51,6 +51,7 @@ class FakeFeatureFlagsPreferenceRepository @Inject constructor() :
         MutableStateFlow(mutableMapOf())
 
     val awaitResolvedInvocations: MutableList<FeatureFlag> = mutableListOf()
+    val refreshRemoteInvocations: MutableList<UserId> = mutableListOf()
 
     @Suppress("UNCHECKED_CAST")
     override fun <T> get(featureFlag: FeatureFlag): Flow<T> = state.map {
@@ -80,6 +81,10 @@ class FakeFeatureFlagsPreferenceRepository @Inject constructor() :
     override suspend fun awaitResolved(featureFlag: FeatureFlag, userId: UserId): Boolean {
         awaitResolvedInvocations.add(featureFlag)
         return state.value[featureFlag] as? Boolean ?: featureFlag.isEnabledDefault
+    }
+
+    override suspend fun refreshRemote(userId: UserId) {
+        refreshRemoteInvocations.add(userId)
     }
 
     override fun <T> set(featureFlag: FeatureFlag, value: T?): Result<Unit> {

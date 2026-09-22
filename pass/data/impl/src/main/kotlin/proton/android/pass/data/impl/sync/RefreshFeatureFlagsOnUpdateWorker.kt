@@ -22,6 +22,7 @@ import android.content.Context
 import androidx.hilt.work.HiltWorker
 import androidx.work.Constraints
 import androidx.work.CoroutineWorker
+import androidx.work.ExistingWorkPolicy
 import androidx.work.NetworkType
 import androidx.work.OneTimeWorkRequest
 import androidx.work.OneTimeWorkRequestBuilder
@@ -35,20 +36,15 @@ import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.accountmanager.domain.getAccounts
 import proton.android.pass.common.api.safeRunCatching
 import proton.android.pass.common.api.transpose
-import proton.android.pass.data.api.repositories.SyncMode
-import proton.android.pass.data.api.usecases.sync.CheckFolderForceSync
 import proton.android.pass.log.api.LogAccountContext
 import proton.android.pass.log.api.PassLogger
+import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 
-/**
- * Runs the folders repair right after an app update, so autofill and autosave do not read stale
- * folders while waiting for the next [SyncWorker] tick.
- */
 @HiltWorker
-open class FolderRepairWorker @AssistedInject constructor(
+open class RefreshFeatureFlagsOnUpdateWorker @AssistedInject constructor(
     @Assisted context: Context,
     @Assisted workerParameters: WorkerParameters,
-    private val checkFolderForceSync: CheckFolderForceSync,
+    private val featureFlagsRepository: FeatureFlagsPreferencesRepository,
     private val accountManager: AccountManager
 ) : CoroutineWorker(context, workerParameters) {
 
@@ -60,11 +56,11 @@ open class FolderRepairWorker @AssistedInject constructor(
             .map { account ->
                 withContext(LogAccountContext(account.userId)) {
                     safeRunCatching {
-                        checkFolderForceSync(account.userId, SyncMode.Background)
+                        featureFlagsRepository.refreshRemote(account.userId)
                     }
-                        .onSuccess { PassLogger.i(TAG, "Folder repair check finished") }
+                        .onSuccess { PassLogger.i(TAG, "Feature flags refreshed") }
                         .onFailure { error ->
-                            PassLogger.w(TAG, "Folder repair check finished with error")
+                            PassLogger.w(TAG, "Feature flags refresh finished with error")
                             PassLogger.w(TAG, error)
                         }
                 }
@@ -73,16 +69,25 @@ open class FolderRepairWorker @AssistedInject constructor(
 
         return if (result.isSuccess) {
             Result.success()
-        } else {
+        } else if (runAttemptCount < MAX_RETRIES - 1) {
             Result.retry()
+        } else {
+            // Do not block the chained FolderRepairWorker on a persistent flag refresh failure
+            Result.success()
         }
     }
 
     companion object {
 
-        private const val TAG = "FolderRepairWorker"
+        private const val TAG = "RefreshFeatureFlagsOnUpdateWorker"
 
-        fun getRequest(): OneTimeWorkRequest = OneTimeWorkRequestBuilder<FolderRepairWorker>()
+        private const val MAX_RETRIES = 3
+
+        const val WORKER_UNIQUE_NAME = "refresh_feature_flags_on_update_worker"
+
+        val EXISTING_WORK_POLICY = ExistingWorkPolicy.KEEP
+
+        fun getRequest(): OneTimeWorkRequest = OneTimeWorkRequestBuilder<RefreshFeatureFlagsOnUpdateWorker>()
             .setConstraints(
                 Constraints.Builder().setRequiredNetworkType(NetworkType.CONNECTED).build()
             )

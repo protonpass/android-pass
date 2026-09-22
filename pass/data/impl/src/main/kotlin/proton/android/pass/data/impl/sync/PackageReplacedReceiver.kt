@@ -39,12 +39,15 @@ class PackageReplacedReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context?, intent: Intent?) {
         if (intent?.action != Intent.ACTION_MY_PACKAGE_REPLACED) return
 
-        PassLogger.i(TAG, "Package replaced, enqueueing folder repair")
-        workManager.enqueueUniqueWork(
-            FolderRepairWorker.WORKER_UNIQUE_NAME,
-            FolderRepairWorker.EXISTING_WORK_POLICY,
-            FolderRepairWorker.getRequest()
-        )
+        PassLogger.i(TAG, "Package replaced, refreshing feature flags and enqueueing folder repair")
+        workManager
+            .beginUniqueWork(
+                RefreshFeatureFlagsOnUpdateWorker.WORKER_UNIQUE_NAME,
+                RefreshFeatureFlagsOnUpdateWorker.EXISTING_WORK_POLICY,
+                RefreshFeatureFlagsOnUpdateWorker.getRequest()
+            )
+            .then(FolderRepairWorker.getRequest())
+            .enqueue()
     }
 
     private companion object {

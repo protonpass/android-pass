@@ -93,4 +93,5 @@ dependencies {
     testImplementation(libs.coroutines.test)
 
     testImplementation(projects.pass.account.fakes)
+    testImplementation(projects.pass.common.fakes)
 }

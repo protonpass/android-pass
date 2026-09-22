@@ -468,14 +468,18 @@ class FolderRepositoryImpl @Inject constructor(
     ) = safeRunCatching {
         PassLogger.d(TAG, "Deleting ${folderIds.size} folders from shareId=${shareId.id}")
 
-        val request = DeleteFoldersRequest(folderIds.map { it.id })
+        val expandedFolderIds = folderIds
+            .flatMap { localFolderDataSource.getDescendantFolderIds(userId, shareId, it) }
+            .distinctBy { it.id }
+
+        val request = DeleteFoldersRequest(expandedFolderIds.map { it.id })
         remoteFolderDataSource.deleteFolders(userId, shareId, request)
 
-        val deleted = localFolderDataSource.deleteFolders(userId, shareId, folderIds)
+        val deleted = localFolderDataSource.deleteFolders(userId, shareId, expandedFolderIds)
         if (!deleted) {
-            PassLogger.w(TAG, "Failed to delete folders locally: ${folderIds.map { it.id }}")
+            PassLogger.w(TAG, "Failed to delete folders locally: ${expandedFolderIds.map { it.id }}")
         } else {
-            PassLogger.i(TAG, "Successfully deleted ${folderIds.size} folders")
+            PassLogger.i(TAG, "Successfully deleted ${expandedFolderIds.size} folders")
         }
     }.onFailure { e ->
         PassLogger.w(TAG, "Failed to delete folders from shareId=${shareId.id}")
@@ -488,11 +492,16 @@ class FolderRepositoryImpl @Inject constructor(
         folderIds: List<FolderId>
     ) = safeRunCatching {
         if (folderIds.isEmpty()) return@safeRunCatching
-        val deleted = localFolderDataSource.deleteFolders(userId, shareId, folderIds)
+
+        val expandedFolderIds = folderIds
+            .flatMap { localFolderDataSource.getDescendantFolderIds(userId, shareId, it) }
+            .distinctBy { it.id }
+
+        val deleted = localFolderDataSource.deleteFolders(userId, shareId, expandedFolderIds)
         if (!deleted) {
-            PassLogger.w(TAG, "Failed to delete folders locally: ${folderIds.map { it.id }}")
+            PassLogger.w(TAG, "Failed to delete folders locally: ${expandedFolderIds.map { it.id }}")
         } else {
-            PassLogger.i(TAG, "Successfully deleted ${folderIds.size} folders locally")
+            PassLogger.i(TAG, "Successfully deleted ${expandedFolderIds.size} folders locally")
         }
     }.onFailure { e ->
         PassLogger.w(TAG, "Failed to delete folders locally from shareId=${shareId.id}")

@@ -468,9 +468,11 @@ class FolderRepositoryImpl @Inject constructor(
     ) = safeRunCatching {
         PassLogger.d(TAG, "Deleting ${folderIds.size} folders from shareId=${shareId.id}")
 
-        val expandedFolderIds = folderIds
-            .flatMap { localFolderDataSource.getDescendantFolderIds(userId, shareId, it) }
-            .distinctBy { it.id }
+        val expandedFolderIds = (
+            folderIds + folderIds.flatMap {
+                localFolderDataSource.getDescendantFolderIds(userId, shareId, it)
+            }
+            ).distinctBy { it.id }
 
         val request = DeleteFoldersRequest(expandedFolderIds.map { it.id })
         remoteFolderDataSource.deleteFolders(userId, shareId, request)
@@ -493,9 +495,13 @@ class FolderRepositoryImpl @Inject constructor(
     ) = safeRunCatching {
         if (folderIds.isEmpty()) return@safeRunCatching
 
-        val expandedFolderIds = folderIds
-            .flatMap { localFolderDataSource.getDescendantFolderIds(userId, shareId, it) }
-            .distinctBy { it.id }
+        val expandedFolderIds = (
+            folderIds + folderIds.flatMap {
+                localFolderDataSource.getDescendantFolderIds(userId, shareId, it)
+            }
+            ).distinctBy { it.id }
+
+        if (expandedFolderIds.isEmpty()) return@safeRunCatching
 
         val deleted = localFolderDataSource.deleteFolders(userId, shareId, expandedFolderIds)
         if (!deleted) {

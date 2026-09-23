@@ -5,6 +5,7 @@
   <string name="home_indexing_banner_progress">正在生成搜索索引… (%1$d/%2$d)</string>
   <string name="home_empty_vault_title">您的保险库是空的</string>
   <string name="home_empty_vault_subtitle">开始创建你的第一个项目</string>
+  <string name="home_empty_folder_title">Your folder is empty</string>
   <string name="home_empty_vault_login_title">未找到任何登录项</string>
   <string name="home_empty_vault_login_subtitle">通过创建您的第一个登录项来开始。</string>
   <string name="home_empty_vault_aliases_title">未找到任何别名</string>

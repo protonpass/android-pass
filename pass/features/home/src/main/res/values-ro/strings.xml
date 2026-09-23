@@ -5,6 +5,7 @@
   <string name="home_indexing_banner_progress">Se creează indexul de căutare… (%1$d/%2$d)</string>
   <string name="home_empty_vault_title">Seiful este gol</string>
   <string name="home_empty_vault_subtitle">Începeți prin crearea primului articol.</string>
+  <string name="home_empty_folder_title">Folderul este gol</string>
   <string name="home_empty_vault_login_title">Nu există date de conectare</string>
   <string name="home_empty_vault_login_subtitle">Începeți prin crearea primelor date de conectare.</string>
   <string name="home_empty_vault_aliases_title">Nu există aliasuri</string>

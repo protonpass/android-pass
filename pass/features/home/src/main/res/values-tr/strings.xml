@@ -5,6 +5,7 @@
   <string name="home_indexing_banner_progress">Arama dizini oluşturuluyor… (%1$d/%2$d)</string>
   <string name="home_empty_vault_title">Kasanız boş</string>
   <string name="home_empty_vault_subtitle">İlk ögenizi ekleyerek başlayın.</string>
+  <string name="home_empty_folder_title">Klasörünüz boş</string>
   <string name="home_empty_vault_login_title">Herhangi bir oturum açma kaydı bulunamadı</string>
   <string name="home_empty_vault_login_subtitle">İlk oturum açma kaydınızı ekleyerek başlayın.</string>
   <string name="home_empty_vault_aliases_title">Herhangi bir takma ad bulunamadı</string>

@@ -5,6 +5,7 @@
   <string name="home_indexing_banner_progress">Пабудова пошукавага індэксу… (%1$d/%2$d)</string>
   <string name="home_empty_vault_title">Ваша сховішча нічога не змяшчае</string>
   <string name="home_empty_vault_subtitle">Пачаць стварэнне свайго першага элемента.</string>
+  <string name="home_empty_folder_title">Ваша папка пустая</string>
   <string name="home_empty_vault_login_title">Запісы ўваходу не знойдзены</string>
   <string name="home_empty_vault_login_subtitle">Пачаць стварэнне свайго першага элемента запісу ўвахода.</string>
   <string name="home_empty_vault_aliases_title">Псеўданімы не знойдзены</string>

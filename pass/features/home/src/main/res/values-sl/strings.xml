@@ -5,6 +5,7 @@
   <string name="home_indexing_banner_progress">Building search index… (%1$d/%2$d)</string>
   <string name="home_empty_vault_title">Vaš trezor je prazen</string>
   <string name="home_empty_vault_subtitle">Začnite tako, da ustvarite svoj prvi predmet.</string>
+  <string name="home_empty_folder_title">Your folder is empty</string>
   <string name="home_empty_vault_login_title">Ni najdenih prijav</string>
   <string name="home_empty_vault_login_subtitle">Začnite z ustvarjanjem prvega prijavnega predmeta.</string>
   <string name="home_empty_vault_aliases_title">Ni najdenih vzdevkov</string>

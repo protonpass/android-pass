@@ -5,6 +5,7 @@
   <string name="home_indexing_banner_progress">검색 색인 구축 중... (%1$d/%2$d)</string>
   <string name="home_empty_vault_title">사용자의 금고가 비어있음</string>
   <string name="home_empty_vault_subtitle">첫 항목 생성을 시작해 보세요.</string>
+  <string name="home_empty_folder_title">이 폴더는 비어 있어요</string>
   <string name="home_empty_vault_login_title">발견된 로그인이 없습니다.</string>
   <string name="home_empty_vault_login_subtitle">첫 항목 생성을 시작해 보세요.</string>
   <string name="home_empty_vault_aliases_title">발견된 별칭 없음</string>

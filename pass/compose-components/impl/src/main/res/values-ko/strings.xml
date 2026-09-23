@@ -161,9 +161,9 @@
   <string name="autofill_mode_label_exact">정확한 (서브)도메인</string>
   <string name="autofill_mode_label_never">이 웹사이트에서 자동 완성 안 함</string>
   <string name="autofill_mode_label_start_with">시작:</string>
-  <string name="autofill_mode_label_regular_expression">Regular expression</string>
-  <string name="autofill_mode_label_exact_path">Exact URL matching</string>
-  <string name="autofill_mode_label_unsupported">This url will be skipped for autofill</string>
+  <string name="autofill_mode_label_regular_expression">정규 표현식</string>
+  <string name="autofill_mode_label_exact_path">정확한 URL 일치</string>
+  <string name="autofill_mode_label_unsupported">자동 완성이 이 URL에서 생략됩니다.</string>
   <string name="login_item_view_alias_button">별칭 보기</string>
   <string name="item_details_identity_section_personal_title">개인 정보</string>
   <string name="item_details_identity_section_personal_first_name_title">이름</string>
@@ -311,15 +311,15 @@
   <string name="collapse_expanded_text">덜 보기</string>
   <string name="login_item_monitor_widget_weak_pass_title">약한 비밀번호</string>
   <string name="login_item_monitor_widget_weak_pass_subtitle">이 계정은 취약합니다. 서비스를 방문하여 비밀번호를 변경하십시오.</string>
-  <string name="login_item_monitor_widget_compromised_pass_title">Compromised password</string>
-  <string name="login_item_monitor_widget_compromised_pass_subtitle">This login password appears in a data breach. Please visit the service and change the password.</string>
+  <string name="login_item_monitor_widget_compromised_pass_title">유출된 비밀번호</string>
+  <string name="login_item_monitor_widget_compromised_pass_subtitle">로그인 비밀번호가 데이터 보안 사고에서 나타납니다. 해당 서비스에 방문하여 비밀번호를 변경하시기 바랍니다.</string>
   <plurals name="login_item_monitor_widget_reused_pass_title">
     <item quantity="other">%d개의 다른 로그인이 같은 비밀번호를 사용하고 있습니다</item>
   </plurals>
   <string name="login_item_monitor_widget_missing_two_fa_title">더 나은 보안을 위해 2단계 인증 설정</string>
   <string name="login_item_monitor_widget_missing_two_fa_subtitle">이 서비스는 2단계 인증을 지원합니다. 향상된 계정 보안을 위해 활성화 해주세요.</string>
-  <string name="login_item_monitor_action_ignore">Ignore</string>
-  <string name="login_item_monitor_action_restore">Restore alert</string>
+  <string name="login_item_monitor_action_ignore">무시</string>
+  <string name="login_item_monitor_action_restore">경고 복원</string>
   <string name="login_item_monitor_header">Pass Monitor</string>
   <string name="login_item_monitor_label_weak">약한 비밀번호</string>
   <string name="login_item_monitor_label_compromised">유출된 비밀번호</string>
@@ -371,8 +371,8 @@
   <!-- Password checks (Login create/edit + Generate Password BS) -->
   <string name="password_strength_prefix">비밀번호 보안 강도</string>
   <string name="password_check_min_length">비밀번호가 너무 짧습니다</string>
-  <string name="password_check_lowercase">Lowercase letters</string>
-  <string name="password_check_uppercase">Uppercase letters</string>
+  <string name="password_check_lowercase">소문자</string>
+  <string name="password_check_uppercase">대문자</string>
   <string name="password_check_no_consecutive">반복되는 문자 없음</string>
   <string name="password_check_no_common">보편적인 비밀번호 없음</string>
 </resources>

@@ -5,6 +5,7 @@
   <string name="home_indexing_banner_progress">Suchindex wird erstellt … (%1$d/%2$d)</string>
   <string name="home_empty_vault_title">Dein Tresor ist leer.</string>
   <string name="home_empty_vault_subtitle">Erstelle deinen ersten Eintrag</string>
+  <string name="home_empty_folder_title">Dein Ordner ist leer</string>
   <string name="home_empty_vault_login_title">Keine Zugangsdaten gefunden</string>
   <string name="home_empty_vault_login_subtitle">Erstelle deine ersten Zugangsdaten.</string>
   <string name="home_empty_vault_aliases_title">Keine Aliasse gefunden</string>

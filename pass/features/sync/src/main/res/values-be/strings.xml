@@ -46,4 +46,5 @@
   <string name="sync_dialog_invalid_group_shares_warning">Некаторыя сховішчы не ўдалося сінхранізаваць, бо звязаная група не знойдзена ў гэтым уліковым запісе.</string>
   <string name="sync_dialog_title_indexing">Індэксаванне…</string>
   <string name="sync_dialog_subtitle_indexing">Пабудова пошукавага індэксу. Амаль гатова.</string>
+  <string name="sync_dialog_folder_repair_message">Поўная сінхранізацыя даных, каб палепшыць прадукцыйнасць праграмы. Дзякуй за цярпенне.</string>
 </resources>

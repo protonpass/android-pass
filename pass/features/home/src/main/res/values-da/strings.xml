@@ -5,6 +5,7 @@
   <string name="home_indexing_banner_progress">Opbygger søgeindeks... (%1$d/%2$d)</string>
   <string name="home_empty_vault_title">Din boks er tom</string>
   <string name="home_empty_vault_subtitle">Kom i gang ved at oprette dit første element.</string>
+  <string name="home_empty_folder_title">Din mappe er tom</string>
   <string name="home_empty_vault_login_title">Ingen logins fundet</string>
   <string name="home_empty_vault_login_subtitle">Kom i gang ved at oprette dit første login-element.</string>
   <string name="home_empty_vault_aliases_title">Ingen aliasser fundet</string>

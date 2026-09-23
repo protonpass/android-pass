@@ -64,6 +64,8 @@ internal fun MigrateVaultSelectorContents(
     disabledFolderReasonOverride: String? = null,
     disabledDescendantFolderIds: Set<FolderId> = emptySet(),
     disabledDescendantFolderReason: String? = null,
+    limitExceededFolderIds: Set<FolderId> = emptySet(),
+    limitExceededFolderReason: String? = null,
     movingFolderId: Option<FolderId> = None,
     movingFolderReason: String? = null,
     startWithVaultExpanded: Boolean = false,
@@ -83,9 +85,13 @@ internal fun MigrateVaultSelectorContents(
     val disabledFolders = remember(
         disabledFolderId, primaryDisabledReason,
         movingFolderId, movingFolderReason,
-        disabledDescendantFolderIds, disabledDescendantFolderReason
+        disabledDescendantFolderIds, disabledDescendantFolderReason,
+        limitExceededFolderIds, limitExceededFolderReason
     ) {
         buildMap {
+            if (limitExceededFolderReason != null) {
+                limitExceededFolderIds.forEach { put(it, limitExceededFolderReason) }
+            }
             if (disabledFolderId is Some && primaryDisabledReason != null) {
                 put(disabledFolderId.value, primaryDisabledReason)
             }
@@ -157,6 +163,9 @@ internal fun MigrateVaultSelectorContents(
                             )
                             VaultStatus.DisabledReason.SameVault -> stringResource(
                                 R.string.migrate_disabled_vault_reason_same_vault
+                            )
+                            VaultStatus.DisabledReason.FolderLimitReached -> stringResource(
+                                R.string.migrate_disabled_folder_reason_limit_reached
                             )
                         }
                     }
@@ -240,6 +249,9 @@ internal fun MigrateVaultSelectorContents(
                             )
                             VaultStatus.DisabledReason.SameVault -> stringResource(
                                 R.string.migrate_disabled_vault_reason_same_vault
+                            )
+                            VaultStatus.DisabledReason.FolderLimitReached -> stringResource(
+                                R.string.migrate_disabled_folder_reason_limit_reached
                             )
                         }
                     },

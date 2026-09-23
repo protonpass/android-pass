@@ -60,6 +60,8 @@ import proton.android.pass.data.api.repositories.BulkMoveToVaultSelection
 import proton.android.pass.data.api.repositories.flattenByShare
 import proton.android.pass.data.api.usecases.ObserveVaultsWithItemCount
 import proton.android.pass.data.api.usecases.capabilities.CanCreateItemsInFolder
+import proton.android.pass.data.api.usecases.folders.FolderLimitsData
+import proton.android.pass.data.api.usecases.folders.ObserveFolderLimits
 import proton.android.pass.data.api.usecases.folders.ObserveFoldersByParentId
 import proton.android.pass.data.api.usecases.items.GetMigrationItemsSelection
 import proton.android.pass.domain.items.MigrationItemsSelection
@@ -96,11 +98,21 @@ class MigrateConfirmVaultViewModel @Inject constructor(
     private val settingsRepository: InternalSettingsRepository,
     private val getMigrationItemsSelection: GetMigrationItemsSelection,
     private val canCreateItemsInFolder: CanCreateItemsInFolder,
+    observeFolderLimits: ObserveFolderLimits,
     bulkMoveToVaultRepository: BulkMoveToVaultRepository,
     observeVaults: ObserveVaultsWithItemCount
 ) : ViewModel() {
 
     private data class VaultShareKey(val userId: UserId, val shareId: ShareId)
+    private data class FolderMoveLimits(
+        val limitExceededFolderIds: Set<FolderId>,
+        val isRootLimitExceeded: Boolean
+    ) {
+        companion object {
+            val None = FolderMoveLimits(limitExceededFolderIds = emptySet(), isRootLimitExceeded = false)
+        }
+    }
+
     private data class VaultsWithFolders(
         val vaultShares: List<VaultWithItemCount>,
         val vaultFolders: Map<ShareId, PersistentList<FolderUiModel>?>,
@@ -201,6 +213,25 @@ class MigrateConfirmVaultViewModel @Inject constructor(
             initialValue = emptySet()
         )
 
+    private val folderMoveLimitsFlow: StateFlow<FolderMoveLimits> = when (val m = mode) {
+        is Mode.MoveFolder ->
+            combine(sourceFoldersFlow, observeFolderLimits()) { folders, limits ->
+                findFolderMoveLimits(folders, m.folderId, limits)
+            }
+                .catch { e ->
+                    PassLogger.w(TAG, "Error observing folder limits")
+                    PassLogger.w(TAG, e)
+                    emit(FolderMoveLimits.None)
+                }
+                .stateIn(
+                    scope = viewModelScope,
+                    started = SharingStarted.WhileSubscribed(5_000L),
+                    initialValue = FolderMoveLimits.None
+                )
+
+        else -> MutableStateFlow(FolderMoveLimits.None)
+    }
+
     private val vaultFoldersFlow: Flow<Map<ShareId, PersistentList<FolderUiModel>?>> =
         vaultShareKeysFlow.flatMapLatest { shareKeys ->
             if (shareKeys.isEmpty()) return@flatMapLatest flowOf(emptyMap())
@@ -283,10 +314,12 @@ class MigrateConfirmVaultViewModel @Inject constructor(
         showDissolveFolderDialogFlow,
         hasItemsWithHighRevisionCountFlow,
         currentParentFolderIdFlow,
-        descendantFolderIdsFlow
+        descendantFolderIdsFlow,
+        folderMoveLimitsFlow
     ) { isLoading, event, selectedItems, selectedItemsAnalysis, vaultsResult,
         hasSecureLinks, canDisplayWarning, selectedDest, showDissolveDialog,
-        hasItemsWithHighRevisionCount, currentParentFolderId, descendantFolderIds ->
+        hasItemsWithHighRevisionCount, currentParentFolderId, descendantFolderIds,
+        folderMoveLimits ->
 
         val (vaultList, isLoadingVaults) = when (vaultsResult) {
             LoadingResult.Loading -> persistentListOf<MigrateVaultState>() to true
@@ -302,7 +335,8 @@ class MigrateConfirmVaultViewModel @Inject constructor(
                         data.vaultFolders.mapValues { it.value ?: persistentListOf() },
                         selectedItems,
                         selectedItemsAnalysis,
-                        canCreateInFolder
+                        canCreateInFolder,
+                        folderMoveLimits.isRootLimitExceeded
                     ) to false
                 }
             }
@@ -350,6 +384,7 @@ class MigrateConfirmVaultViewModel @Inject constructor(
             },
             disabledFolderItemCount = selectedItemsAnalysis.disabledFolderItemCount,
             disabledDescendantFolderIds = descendantFolderIds,
+            limitExceededFolderIds = folderMoveLimits.limitExceededFolderIds,
             movingFolderId = if (mode is Mode.MoveFolder) mode.folderId.toOption() else None,
             selectedShareId = selectedDest.map { it.shareId },
             selectedFolderId = selectedDest.flatMap { it.folderId },
@@ -374,6 +409,7 @@ class MigrateConfirmVaultViewModel @Inject constructor(
                     showDissolveFolderDialogFlow.update { true }
                     return
                 }
+                if (folderMoveLimitsFlow.value.isRootLimitExceeded) return
                 selectedDestinationFlow.update {
                     SelectedDestination(shareId = currentMode.sourceShareId).toOption()
                 }
@@ -410,7 +446,10 @@ class MigrateConfirmVaultViewModel @Inject constructor(
             }
 
             is Mode.MoveFolder -> {
-                if (folderId == currentMode.folderId || folderId in descendantFolderIdsFlow.value) return
+                val isForbidden = folderId == currentMode.folderId ||
+                    folderId in descendantFolderIdsFlow.value ||
+                    folderId in folderMoveLimitsFlow.value.limitExceededFolderIds
+                if (isForbidden) return
                 val currentParent = currentParentFolderIdFlow.value
                 if (currentParent is Some && currentParent.value == folderId) {
                     viewModelScope.launch {
@@ -497,7 +536,8 @@ class MigrateConfirmVaultViewModel @Inject constructor(
         vaultFolders: Map<ShareId, PersistentList<FolderUiModel>>,
         selectedItems: Option<Map<ShareId, List<ItemId>>>,
         selectedItemsAnalysis: SelectedItemsAnalysis,
-        canCreateItemsInFolderPlan: Boolean = true
+        canCreateItemsInFolderPlan: Boolean = true,
+        isRootFolderLimitExceeded: Boolean = false
     ): ImmutableList<MigrateVaultState> = vaults
         .filter {
             when (mode) {
@@ -515,7 +555,8 @@ class MigrateConfirmVaultViewModel @Inject constructor(
                 vaultFolders,
                 selectedItems,
                 selectedItemsAnalysis,
-                canCreateItemsInFolderPlan
+                canCreateItemsInFolderPlan,
+                isRootFolderLimitExceeded
             )
         }
         .toImmutableList()
@@ -526,7 +567,8 @@ class MigrateConfirmVaultViewModel @Inject constructor(
         vaultFolders: Map<ShareId, PersistentList<FolderUiModel>>,
         selectedItems: Option<Map<ShareId, List<ItemId>>>,
         selectedItemsAnalysis: SelectedItemsAnalysis,
-        canCreateItemsInFolderPlan: Boolean = true
+        canCreateItemsInFolderPlan: Boolean = true,
+        isRootFolderLimitExceeded: Boolean = false
     ): MigrateVaultState {
         val canCreate = vault.vault.role.toPermissions().canCreate()
         val folderTree = vaultFolders[vault.vault.shareId] ?: persistentListOf()
@@ -580,7 +622,11 @@ class MigrateConfirmVaultViewModel @Inject constructor(
 
             is Mode.MoveFolder -> MigrateVaultState(
                 vaultWithItemCount = vault,
-                status = VaultStatus.Enabled,
+                status = if (isRootFolderLimitExceeded) {
+                    VaultStatus.Disabled(VaultStatus.DisabledReason.FolderLimitReached)
+                } else {
+                    VaultStatus.Enabled
+                },
                 folderTree = folderTree
             )
 
@@ -627,6 +673,58 @@ class MigrateConfirmVaultViewModel @Inject constructor(
             }
         }
         return result
+    }
+
+    private fun findFolderMoveLimits(
+        folders: List<Folder>,
+        movingFolderId: FolderId,
+        limits: FolderLimitsData
+    ): FolderMoveLimits {
+        val parentById = folders.associate { it.folderId to it.parentFolderId }
+        val childrenByParent = folders.groupBy { it.parentFolderId }
+        val movingSubtreeLevels = subtreeLevels(childrenByParent, movingFolderId)
+        val movingSubtreeIds = movingSubtreeLevels.flatten().toSet()
+        val movingSubtreeHeight = movingSubtreeLevels.size
+        val limitExceededFolderIds = folders.asSequence()
+            .map { it.folderId }
+            .filterNot { it in movingSubtreeIds }
+            .filter { folderId ->
+                val exceedsDepth = depthOf(parentById, folderId) + movingSubtreeHeight > limits.maxDepth
+                val exceedsWidth = childrenByParent[folderId].orEmpty().size >= limits.maxChildren
+                exceedsDepth || exceedsWidth
+            }
+            .toSet()
+        val isRootLimitExceeded = parentById[movingFolderId] != null &&
+            childrenByParent[null].orEmpty().size >= limits.maxChildren
+        return FolderMoveLimits(
+            limitExceededFolderIds = limitExceededFolderIds,
+            isRootLimitExceeded = isRootLimitExceeded
+        )
+    }
+
+    private fun depthOf(parentById: Map<FolderId, FolderId?>, folderId: FolderId): Int {
+        var depth = 1
+        val visited = mutableSetOf(folderId)
+        var current = parentById[folderId]
+        while (current != null && visited.add(current)) {
+            depth++
+            current = parentById[current]
+        }
+        return depth
+    }
+
+    private fun subtreeLevels(childrenByParent: Map<FolderId?, List<Folder>>, rootId: FolderId): List<List<FolderId>> {
+        val levels = mutableListOf<List<FolderId>>()
+        val visited = mutableSetOf(rootId)
+        var level = listOf(rootId)
+        while (level.isNotEmpty()) {
+            levels.add(level)
+            level = level
+                .flatMap { childrenByParent[it].orEmpty() }
+                .map { it.folderId }
+                .filter(visited::add)
+        }
+        return levels
     }
 
     private fun getMode(): Mode = when (MigrateModeValue.valueOf(savedStateHandle.require(MigrateModeArg.key))) {

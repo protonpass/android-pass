@@ -75,6 +75,7 @@ internal data class MigrateConfirmVaultUiState(
     val disabledFolderId: Option<FolderId>,
     val disabledFolderItemCount: Int,
     val disabledDescendantFolderIds: Set<FolderId>,
+    val limitExceededFolderIds: Set<FolderId>,
     val movingFolderId: Option<FolderId>,
     val selectedShareId: Option<ShareId>,
     val selectedFolderId: Option<FolderId>,
@@ -102,6 +103,7 @@ internal data class MigrateConfirmVaultUiState(
             disabledFolderId = None,
             disabledFolderItemCount = 0,
             disabledDescendantFolderIds = emptySet(),
+            limitExceededFolderIds = emptySet(),
             movingFolderId = None,
             selectedShareId = None,
             selectedFolderId = None,
@@ -132,6 +134,8 @@ sealed interface VaultStatus {
         @Stable data object NoPermission : DisabledReason
 
         @Stable data object SameVault : DisabledReason
+
+        @Stable data object FolderLimitReached : DisabledReason
     }
 }
 

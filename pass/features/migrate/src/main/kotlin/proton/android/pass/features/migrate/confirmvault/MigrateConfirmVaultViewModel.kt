@@ -531,6 +531,10 @@ class MigrateConfirmVaultViewModel @Inject constructor(
         eventFlow.update { ConfirmMigrateEvent.Close.toOption() }
     }
 
+    internal fun onEventConsumed(event: ConfirmMigrateEvent) {
+        eventFlow.compareAndSet(event.toOption(), None)
+    }
+
     private fun prepareVaults(
         vaults: List<VaultWithItemCount>,
         vaultFolders: Map<ShareId, PersistentList<FolderUiModel>>,

@@ -68,6 +68,7 @@ fun MigrateConfirmVaultScreen(
                 ConfirmMigrateEvent.FolderMoved ->
                     navigation(MigrateNavigation.FolderMoved)
             }
+            viewModel.onEventConsumed(event.value)
         }
     }
 

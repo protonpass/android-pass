@@ -26,6 +26,7 @@ import org.junit.Rule
 import org.junit.Test
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Some
+import proton.android.pass.common.api.toOption
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.data.fakes.repositories.FakeBulkMoveToVaultRepository
 import proton.android.pass.data.fakes.usecases.FakeMigrateItems
@@ -112,6 +113,24 @@ internal class MigrateConfirmVaultViewModelTest {
             val state = awaitItem()
             val eventCasted = state.event as Some<ConfirmMigrateEvent>
             assertThat(eventCasted.value).isInstanceOf(ConfirmMigrateEvent.Close::class.java)
+
+            cancelAndConsumeRemainingEvents()
+        }
+    }
+
+    @Test
+    fun `emits close again if cancel is clicked after event is consumed`() = runTest {
+        observeVaults.sendResult(Result.success(listOf(sourceVault())))
+        instance.state.test {
+            skipItems(1)
+            instance.onCancel()
+            assertThat(expectMostRecentItem().event).isEqualTo(ConfirmMigrateEvent.Close.toOption())
+
+            instance.onEventConsumed(ConfirmMigrateEvent.Close)
+            assertThat(expectMostRecentItem().event).isEqualTo(None)
+
+            instance.onCancel()
+            assertThat(expectMostRecentItem().event).isEqualTo(ConfirmMigrateEvent.Close.toOption())
 
             cancelAndConsumeRemainingEvents()
         }

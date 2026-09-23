@@ -19,14 +19,27 @@
 package proton.android.pass.data.impl.usecases.capabilities
 
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.combine
+import proton.android.pass.data.api.errors.ShareNotAvailableError
 import proton.android.pass.data.api.usecases.capabilities.CanCreateFolder
 import proton.android.pass.data.api.usecases.capabilities.CanCreateItemsInFolder
+import proton.android.pass.data.api.usecases.shares.ObserveShare
+import proton.android.pass.domain.Share
 import proton.android.pass.domain.ShareId
 import javax.inject.Inject
 
 class CanCreateItemsInFolderImpl @Inject constructor(
-    private val canCreateFolder: CanCreateFolder
+    private val canCreateFolder: CanCreateFolder,
+    private val observeShare: ObserveShare
 ) : CanCreateItemsInFolder {
-    override fun invoke(shareId: ShareId): Flow<Boolean> = canCreateFolder(shareId).map { it.planAllows }
+
+    override fun invoke(shareId: ShareId): Flow<Boolean> = combine(
+        canCreateFolder(shareId),
+        observeShare(shareId = shareId)
+    ) { canCreateFolderResult, share ->
+        share is Share.Vault && canCreateFolderResult.planAllows
+    }.catch { error ->
+        if (error is ShareNotAvailableError) emit(false) else throw error
+    }
 }

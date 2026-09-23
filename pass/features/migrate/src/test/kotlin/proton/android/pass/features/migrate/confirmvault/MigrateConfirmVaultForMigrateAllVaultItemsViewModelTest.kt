@@ -36,6 +36,7 @@ import proton.android.pass.data.fakes.usecases.FakeCanCreateItemsInFolder
 import proton.android.pass.data.fakes.usecases.folders.FakeDissolveFolder
 import proton.android.pass.data.fakes.usecases.folders.FakeMoveAllItemsInFolder
 import proton.android.pass.data.fakes.usecases.folders.FakeMoveFolder
+import proton.android.pass.data.fakes.usecases.folders.FakeObserveFolderLimits
 import proton.android.pass.data.fakes.usecases.folders.FakeMoveItemsInsideShare
 import proton.android.pass.data.fakes.usecases.folders.FakeObserveFoldersByParentId
 import proton.android.pass.data.fakes.usecases.items.FakeGetMigrationItemsSelection
@@ -108,7 +109,8 @@ internal class MigrateConfirmVaultForMigrateAllVaultItemsViewModelTest {
             settingsRepository = settingsRepository,
             observeFolders = observeFolders,
             getMigrationItemsSelection = FakeGetMigrationItemsSelection(),
-            canCreateItemsInFolder = FakeCanCreateItemsInFolder()
+            canCreateItemsInFolder = FakeCanCreateItemsInFolder(),
+            observeFolderLimits = FakeObserveFolderLimits()
         )
     }
 
@@ -152,7 +154,8 @@ internal class MigrateConfirmVaultForMigrateAllVaultItemsViewModelTest {
             settingsRepository = settingsRepository,
             observeFolders = observeFolders,
             getMigrationItemsSelection = fakeGetMigration,
-            canCreateItemsInFolder = FakeCanCreateItemsInFolder()
+            canCreateItemsInFolder = FakeCanCreateItemsInFolder(),
+            observeFolderLimits = FakeObserveFolderLimits()
         )
 
         testInstance.state.test {
@@ -277,7 +280,8 @@ internal class MigrateConfirmVaultForMigrateAllVaultItemsViewModelTest {
             settingsRepository = settingsRepository,
             observeFolders = observeFolders,
             getMigrationItemsSelection = fakeGetMigration,
-            canCreateItemsInFolder = FakeCanCreateItemsInFolder()
+            canCreateItemsInFolder = FakeCanCreateItemsInFolder(),
+            observeFolderLimits = FakeObserveFolderLimits()
         )
 
         observeFolders.sendResult(

@@ -199,6 +199,12 @@ internal fun MigrateConfirmVaultContents(
                     } else {
                         null
                     },
+                    limitExceededFolderIds = state.limitExceededFolderIds,
+                    limitExceededFolderReason = if (state.mode is MigrateMode.MoveFolder) {
+                        stringResource(id = R.string.migrate_disabled_folder_reason_limit_reached)
+                    } else {
+                        null
+                    },
                     movingFolderId = state.movingFolderId,
                     movingFolderReason = stringResource(id = R.string.migrate_disabled_folder_reason_being_moved),
                     startWithVaultExpanded = state.mode is MigrateMode.MoveFolder,

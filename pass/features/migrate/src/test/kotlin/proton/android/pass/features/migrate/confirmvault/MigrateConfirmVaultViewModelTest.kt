@@ -35,6 +35,7 @@ import proton.android.pass.data.fakes.usecases.FakeCanCreateItemsInFolder
 import proton.android.pass.data.fakes.usecases.folders.FakeDissolveFolder
 import proton.android.pass.data.fakes.usecases.folders.FakeMoveAllItemsInFolder
 import proton.android.pass.data.fakes.usecases.folders.FakeMoveFolder
+import proton.android.pass.data.fakes.usecases.folders.FakeObserveFolderLimits
 import proton.android.pass.data.fakes.usecases.folders.FakeMoveItemsInsideShare
 import proton.android.pass.data.fakes.usecases.folders.FakeObserveFoldersByParentId
 import proton.android.pass.data.fakes.usecases.items.FakeGetMigrationItemsSelection
@@ -517,7 +518,8 @@ internal class MigrateConfirmVaultViewModelTest {
         settingsRepository = settingsRepository,
         observeFolders = observeFoldersByParentId,
         getMigrationItemsSelection = FakeGetMigrationItemsSelection(),
-        canCreateItemsInFolder = fakeCanCreateItemsInFolder
+        canCreateItemsInFolder = fakeCanCreateItemsInFolder,
+        observeFolderLimits = FakeObserveFolderLimits()
     )
 
     private fun sourceVault(): VaultWithItemCount = VaultWithItemCount(

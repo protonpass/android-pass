@@ -106,7 +106,8 @@ internal fun HomeDrawerList(
                 (vaultSelectionOption as? VaultSelectionOption.Folder)
                     ?.takeIf { it.shareId == shareId }
                     ?.folderId
-            val folders = vaultFolders[shareId] ?: emptyList()
+            val loadedFolders = vaultFolders[shareId]
+            val folders = loadedFolders ?: emptyList()
             val effectiveCanCreate = canCreateFolderShareIds.contains(shareId) && !vaultFolderAtLimit.contains(shareId)
             val vaultNeedsUpgrade = canCreateFolderNeedsUpgradeShareIds.contains(shareId)
             val shouldShowFolderContent = foldersEnabled &&
@@ -115,12 +116,14 @@ internal fun HomeDrawerList(
             val vaultFolderExpandedMap = NamespacedExpandedState(folderExpandedMap, shareIdStr)
 
             item(key = shareIdStr) {
-                LaunchedEffect(folders) {
+                LaunchedEffect(loadedFolders) {
+                    if (loadedFolders == null) return@LaunchedEffect
+                    val previousIds = knownFolderIdsMap[shareIdStr]
                     val currentIds = allFolderIds(folders)
-                    val toExpand = foldersToExpand(knownFolderIdsMap[shareIdStr], currentIds, folders)
-                    if (toExpand.isNotEmpty()) {
+                    if (previousIds != null && !previousIds.containsAll(currentIds)) {
                         vaultShowFoldersMap[shareIdStr] = true
-                        toExpand.forEach { id -> vaultFolderExpandedMap[id] = true }
+                        foldersToExpand(previousIds, currentIds, folders)
+                            .forEach { id -> vaultFolderExpandedMap[id] = true }
                     }
                     knownFolderIdsMap[shareIdStr] = currentIds
                     folders.forEach { folder ->

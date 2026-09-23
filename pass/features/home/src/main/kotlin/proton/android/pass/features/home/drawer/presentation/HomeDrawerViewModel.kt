@@ -251,7 +251,9 @@ class HomeDrawerViewModel @Inject constructor(
 
         val folderFlows = input.shareKeys.map { observeFolderTreeForShare(it, input.folderLimits) }
         return combine(folderFlows) { entries ->
-            val folders = entries.associate { (shareId, tree, _) -> shareId to tree }
+            val folders = entries
+                .mapNotNull { (shareId, tree, _) -> tree?.let { shareId to it } }
+                .toMap()
             val atLimit = entries
                 .filter { (_, _, count) -> count >= input.folderLimits.maxCount }
                 .mapTo(mutableSetOf()) { (shareId, _, _) -> shareId }
@@ -262,13 +264,17 @@ class HomeDrawerViewModel @Inject constructor(
     private fun observeFolderTreeForShare(
         shareKey: VaultShareKey,
         limits: FolderLimitsData
-    ): Flow<Triple<ShareId, PersistentList<FolderUiModel>, Int>> = observeFolders(shareKey.userId, shareKey.shareId)
+    ): Flow<Triple<ShareId, PersistentList<FolderUiModel>?, Int>> = observeFolders(shareKey.userId, shareKey.shareId)
         .distinctUntilChanged()
         .map { folderList ->
-            Triple(shareKey.shareId, FolderTreeBuilder.build(folderList), folderList.size)
+            Triple<ShareId, PersistentList<FolderUiModel>?, Int>(
+                shareKey.shareId,
+                FolderTreeBuilder.build(folderList),
+                folderList.size
+            )
         }
         .onStart {
-            emit(Triple(shareKey.shareId, FolderTreeBuilder.build(emptyList()), limits.maxCount))
+            emit(Triple(shareKey.shareId, null, limits.maxCount))
         }
 
 }

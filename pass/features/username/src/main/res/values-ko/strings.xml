@@ -4,11 +4,11 @@
   <string name="generate_username_button_regenerate">다시 생성</string>
   <string name="generate_username_button_copy">복사</string>
   <string name="generate_username_label_include_numbers">숫자 포함</string>
-  <string name="generate_username_label_leetspeak">Leetspeak</string>
+  <string name="generate_username_label_leetspeak">리트스피크</string>
   <string name="generate_username_label_word_types">문자 유형</string>
-  <string name="generate_username_label_adjectives">Adjectives</string>
-  <string name="generate_username_label_nouns">Nouns</string>
-  <string name="generate_username_label_verbs">Verbs</string>
+  <string name="generate_username_label_adjectives">형용사</string>
+  <string name="generate_username_label_nouns">명사</string>
+  <string name="generate_username_label_verbs">동사</string>
   <string name="generate_username_snackbar_copied">사용자 이름을 클립보드에 복사했습니다</string>
   <string name="generate_username_snackbar_error">사용자 이름을 생성할 수 없음</string>
 </resources>

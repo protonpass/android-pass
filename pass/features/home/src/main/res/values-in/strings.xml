@@ -5,6 +5,7 @@
   <string name="home_indexing_banner_progress">Building search index… (%1$d/%2$d)</string>
   <string name="home_empty_vault_title">Brankas Anda kosong</string>
   <string name="home_empty_vault_subtitle">Mulailah dengan membuat item pertama Anda.</string>
+  <string name="home_empty_folder_title">Your folder is empty</string>
   <string name="home_empty_vault_login_title">Tidak ada entri masuk yang ditemukan</string>
   <string name="home_empty_vault_login_subtitle">Mulailah dengan membuat item entri masuk pertama Anda.</string>
   <string name="home_empty_vault_aliases_title">Tidak ada alias yang ditemukan</string>

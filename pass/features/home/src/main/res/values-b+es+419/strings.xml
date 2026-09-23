@@ -5,6 +5,7 @@
   <string name="home_indexing_banner_progress">Creando índice de búsqueda… (%1$d/%2$d)</string>
   <string name="home_empty_vault_title">La bóveda está vacía</string>
   <string name="home_empty_vault_subtitle">Comience creando el primer elemento.</string>
+  <string name="home_empty_folder_title">Su carpeta está vacía</string>
   <string name="home_empty_vault_login_title">No se encontraron inicios de sesión.</string>
   <string name="home_empty_vault_login_subtitle">Comience creando su primer inicio de sesión.</string>
   <string name="home_empty_vault_aliases_title">No se encontraron alias.</string>

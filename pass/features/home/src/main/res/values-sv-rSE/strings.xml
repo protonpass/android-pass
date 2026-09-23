@@ -5,6 +5,7 @@
   <string name="home_indexing_banner_progress">Bygger sökindex … (%1$d/%2$d)</string>
   <string name="home_empty_vault_title">Ditt valv är tomt</string>
   <string name="home_empty_vault_subtitle">Kom igång genom att skapa ditt första objekt.</string>
+  <string name="home_empty_folder_title">Your folder is empty</string>
   <string name="home_empty_vault_login_title">Inga inloggningar hittades</string>
   <string name="home_empty_vault_login_subtitle">Kom igång genom att skapa ditt första inloggningsobjekt.</string>
   <string name="home_empty_vault_aliases_title">Inga alias hittades</string>

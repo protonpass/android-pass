@@ -5,6 +5,7 @@
   <string name="home_indexing_banner_progress">Building search index… (%1$d/%2$d)</string>
   <string name="home_empty_vault_title">Két sắt của bạn trống</string>
   <string name="home_empty_vault_subtitle">Bắt đầu bằng việc tạo nội dung đầu tiên của bạn.</string>
+  <string name="home_empty_folder_title">Your folder is empty</string>
   <string name="home_empty_vault_login_title">Không tìm thấy đăng nhập nào</string>
   <string name="home_empty_vault_login_subtitle">Bắt đầu bằng cách tạo mục đăng nhập đầu tiên của bạn.</string>
   <string name="home_empty_vault_aliases_title">Không tìm thấy bí danh nào</string>

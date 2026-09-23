@@ -13,8 +13,8 @@
   <string name="autofill_confirm_dangerous_title" comment="Title for the dialog that will appear when the user clicks on Autofill but we think it may be a dangerous action">허용</string>
   <string name="autofill_confirm_dangerous_body" comment="Body for the dialog that will appear when the user clicks on Autofill but we think it may be a dangerous action">현재 앱에 의해 열린 웹사이트에 사용자의 자격 증명을 자동완성하려고 합니다. 자동완성 이후에 앱이 자격 증명에 접근할 수 있게 될 수 있으므로 앱을 신뢰하는 경우에만 계속하십시오.</string>
   <string name="autofill_confirm_button" comment="Confirmation button for actually performing the autofill action">자동 완성</string>
-  <string name="autofill_confirm_unverified_browser_title">This app claims to be a trusted browser</string>
-  <string name="autofill_confirm_unverified_browser_body">This app identifies itself as a known browser, but Pass could not verify it. Its signing certificate does not match what we expect, which can happen if the browser is unusually configured, or if another app is impersonating it to intercept your credentials. Only continue if you are certain this app is legitimate.</string>
+  <string name="autofill_confirm_unverified_browser_title">이 앱은 신뢰할 수 있는 브라우저가 아닐 가능성이 있습니다</string>
+  <string name="autofill_confirm_unverified_browser_body">이 앱은 알려진 브라우저로 식별되었으나, Pass에서 검증할 수 없었습니다. 서명 인증서가 예상된 값과 일치하지 않습니다. 이는 브라우저 설정이 비정상적이거나, 다른 앱이 사용자의 자격 증명을 가로채기 위해 해당 브라우저를 사칭할 때 발생할 수 있습니다. 이 앱이 신뢰할 수 있는 앱인지 확실한 경우에만 계속 진행하세요.</string>
   <string name="autofill_confirm_dont_ask_again">이 앱에서 다시 묻지 않기</string>
   <string name="autofill_troubleshooting_title">자동 완성 문제 해결</string>
   <string name="autofill_troubleshooting_subtitle">자동 완성이 기기에 올바르게 설정되었는지 확인하세요.</string>

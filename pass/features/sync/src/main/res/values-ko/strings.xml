@@ -40,4 +40,5 @@
   <string name="sync_dialog_invalid_group_shares_warning">현재 계정과 연결된 그룹이 없어 일부 금고를 동기화할 수 없습니다.</string>
   <string name="sync_dialog_title_indexing">색인 중...</string>
   <string name="sync_dialog_subtitle_indexing">검색 색인 중입니다. 색인이 거의 완료되었습니다.</string>
+  <string name="sync_dialog_folder_repair_message">Full data sync to improve app performance. Thank you for your patience.</string>
 </resources>

@@ -42,4 +42,5 @@
   <string name="sync_dialog_invalid_group_shares_warning">Enkelte hvelv kunne ikke synkroniseres fordi den tilknyttede gruppen ble ikke funnet på denne kontoen.</string>
   <string name="sync_dialog_title_indexing">Indekserer…</string>
   <string name="sync_dialog_subtitle_indexing">Bygge søkeindeks, nesten fullført.</string>
+  <string name="sync_dialog_folder_repair_message">Full data sync to improve app performance. Thank you for your patience.</string>
 </resources>

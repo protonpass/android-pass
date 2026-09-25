@@ -29,6 +29,7 @@ import proton.android.pass.data.impl.db.entities.CompromisedPasswordEntity
 import proton.android.pass.data.impl.fakes.FakeLocalCompromisedPasswordDataSource
 import proton.android.pass.data.impl.fakes.FakeRemoteCompromisedPasswordDataSource
 import proton.android.pass.data.impl.remote.PrefixQueryResult
+import proton.android.pass.data.impl.util.sha1Hex
 import proton.android.pass.domain.ItemFlag
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
@@ -60,7 +61,7 @@ internal class CompromisedPasswordRepositoryImplTest {
             itemId = ItemId("i1"),
             password = "hunter2"
         )
-        val hash = sha1Upper("hunter2")
+        val hash = sha1Hex("hunter2")
         val prefix = hash.substring(0, 6)
         val suffix = hash.substring(6)
 
@@ -87,7 +88,7 @@ internal class CompromisedPasswordRepositoryImplTest {
             itemId = ItemId("i1"),
             password = "hunter2"
         )
-        val hash = sha1Upper("hunter2")
+        val hash = sha1Hex("hunter2")
         val prefix = hash.substring(0, 6)
 
         remote.lastChangeValue = null
@@ -109,7 +110,7 @@ internal class CompromisedPasswordRepositoryImplTest {
             password = "new-password"
         )
         val oldPrefix = "ABCDEF"
-        val newHash = sha1Upper("new-password")
+        val newHash = sha1Hex("new-password")
         val newPrefix = newHash.substring(0, 6)
 
         local.seed(
@@ -148,7 +149,7 @@ internal class CompromisedPasswordRepositoryImplTest {
             itemId = ItemId("i1"),
             password = "hunter2"
         )
-        val hash = sha1Upper("hunter2")
+        val hash = sha1Hex("hunter2")
         val prefix = hash.substring(0, 6)
 
         local.seed(
@@ -179,7 +180,7 @@ internal class CompromisedPasswordRepositoryImplTest {
             itemId = ItemId("i1"),
             password = "hunter2"
         )
-        val hash = sha1Upper("hunter2")
+        val hash = sha1Hex("hunter2")
         val prefix = hash.substring(0, 6)
 
         local.seed(
@@ -216,7 +217,7 @@ internal class CompromisedPasswordRepositoryImplTest {
             itemId = ItemId("i1"),
             password = "hunter2"
         )
-        val hash = sha1Upper("hunter2")
+        val hash = sha1Hex("hunter2")
         val prefix = hash.substring(0, 6)
         val suffix = hash.substring(6)
 
@@ -262,9 +263,9 @@ internal class CompromisedPasswordRepositoryImplTest {
             password = "alpha" // same prefix as newItem
         )
 
-        val alphaHash = sha1Upper("alpha")
+        val alphaHash = sha1Hex("alpha")
         val alphaPrefix = alphaHash.substring(0, 6)
-        val betaHash = sha1Upper("beta")
+        val betaHash = sha1Hex("beta")
         val betaPrefix = betaHash.substring(0, 6)
 
         local.seed(
@@ -315,9 +316,9 @@ internal class CompromisedPasswordRepositoryImplTest {
             itemId = ItemId("err"),
             password = "beta"
         )
-        val alphaHash = sha1Upper("alpha")
+        val alphaHash = sha1Hex("alpha")
         val alphaPrefix = alphaHash.substring(0, 6)
-        val betaHash = sha1Upper("beta")
+        val betaHash = sha1Hex("beta")
         val betaPrefix = betaHash.substring(0, 6)
 
         remote.lastChangeValue = 0L
@@ -341,7 +342,7 @@ internal class CompromisedPasswordRepositoryImplTest {
             password = "hunter2",
             flags = ItemFlag.SkipCompromisedPasswordCheck.value
         )
-        val prefix = sha1Upper("hunter2").substring(0, 6)
+        val prefix = sha1Hex("hunter2").substring(0, 6)
 
         remote.lastChangeValue = 1_000L
         remote.suffixResultByKey[prefix to null] =
@@ -365,7 +366,7 @@ internal class CompromisedPasswordRepositoryImplTest {
                 ItemFlag.SkipWeakPasswordCheck.value or
                 ItemFlag.SkipCompromisedPasswordCheck.value
         )
-        val newPrefix = sha1Upper("new-password").substring(0, 6)
+        val newPrefix = sha1Hex("new-password").substring(0, 6)
 
         local.seed(
             listOf(
@@ -416,7 +417,7 @@ internal class CompromisedPasswordRepositoryImplTest {
         )
 
         remote.lastChangeValue = 1_000L
-        remote.suffixResultByKey[sha1Upper("hunter2").substring(0, 6) to null] =
+        remote.suffixResultByKey[sha1Hex("hunter2").substring(0, 6) to null] =
             PrefixQueryResult.Ok(etag = "a", suffixes = emptySet())
 
         instance.refresh(userId, listOf(item))
@@ -433,8 +434,8 @@ internal class CompromisedPasswordRepositoryImplTest {
                 password = "hunter2"
             )
         }
-        val prefix = sha1Upper("hunter2").substring(0, 6)
-        val suffix = sha1Upper("hunter2").substring(6)
+        val prefix = sha1Hex("hunter2").substring(0, 6)
+        val suffix = sha1Hex("hunter2").substring(6)
 
         remote.lastChangeValue = 1_000L
         remote.suffixResultByKey[prefix to null] =
@@ -463,7 +464,7 @@ internal class CompromisedPasswordRepositoryImplTest {
             itemId = ItemId("conditional"),
             password = "hunter2"
         )
-        val prefix = sha1Upper("hunter2").substring(0, 6)
+        val prefix = sha1Hex("hunter2").substring(0, 6)
 
         local.seed(
             listOf(
@@ -499,7 +500,7 @@ internal class CompromisedPasswordRepositoryImplTest {
             itemId = ItemId("i1"),
             password = "hunter2"
         )
-        val prefix = sha1Upper("hunter2").substring(0, 6)
+        val prefix = sha1Hex("hunter2").substring(0, 6)
         remote.suffixResultByKey[prefix to null] =
             PrefixQueryResult.Ok(etag = "abc", suffixes = emptySet())
 
@@ -518,7 +519,7 @@ internal class CompromisedPasswordRepositoryImplTest {
             itemId = ItemId("i1"),
             password = "hunter2"
         )
-        val prefix = sha1Upper("hunter2").substring(0, 6)
+        val prefix = sha1Hex("hunter2").substring(0, 6)
 
         local.seed(
             listOf(
@@ -548,7 +549,7 @@ internal class CompromisedPasswordRepositoryImplTest {
             itemId = ItemId("i1"),
             password = "new-password"
         )
-        val newPrefix = sha1Upper("new-password").substring(0, 6)
+        val newPrefix = sha1Hex("new-password").substring(0, 6)
 
         local.seed(
             listOf(
@@ -575,11 +576,5 @@ internal class CompromisedPasswordRepositoryImplTest {
         val row = local.snapshot().single()
         assertThat(row.passwordHash).isEqualTo(newPrefix)
         assertThat(row.isCompromised).isFalse()
-    }
-
-    private fun sha1Upper(s: String): String {
-        val md = java.security.MessageDigest.getInstance("SHA-1")
-        return md.digest(s.toByteArray(Charsets.UTF_8))
-            .joinToString("") { "%02X".format(it) }
     }
 }

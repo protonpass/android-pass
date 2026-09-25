@@ -32,6 +32,7 @@
   <string name="migrate_disabled_folder_reason_same_location">Der Ordner befindet sich bereits in diesem Speicherort</string>
   <string name="migrate_disabled_folder_reason_being_moved">Dieser Ordner wird verschoben</string>
   <string name="migrate_disabled_folder_reason_descendant">Dieser Ordner befindet sich in dem Ordner, der verschoben wird</string>
+  <string name="migrate_disabled_folder_reason_limit_reached">Ein Umzug hierhin würde die Ordnerbeschränkungen überschreiten</string>
   <string name="migrate_disabled_vault_reason_no_permission">Du kannst in diesem Tresor keine Einträge erstellen.</string>
   <string name="migrate_disabled_vault_reason_same_vault">Du kannst einen Eintrag nicht in denselben Tresor verschieben.</string>
   <plurals name="migrate_items_shared_warning_title">

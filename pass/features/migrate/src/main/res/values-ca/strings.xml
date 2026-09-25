@@ -32,6 +32,7 @@
   <string name="migrate_disabled_folder_reason_same_location">Aquesta carpeta ja és en aquesta ubicació</string>
   <string name="migrate_disabled_folder_reason_being_moved">Aquesta carpeta s\'està movent</string>
   <string name="migrate_disabled_folder_reason_descendant">Aquesta carpeta és dins de la carpeta que s\'està movent</string>
+  <string name="migrate_disabled_folder_reason_limit_reached">Moure-ho aquí superaria els límits de la carpeta</string>
   <string name="migrate_disabled_vault_reason_no_permission">No podeu crear elements en aquesta caixa forta</string>
   <string name="migrate_disabled_vault_reason_same_vault">No podeu moure un element a la mateixa caixa forta</string>
   <plurals name="migrate_items_shared_warning_title">

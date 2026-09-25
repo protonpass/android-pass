@@ -35,6 +35,7 @@
   <string name="migrate_disabled_folder_reason_same_location">Acest folder există deja în acest loc.</string>
   <string name="migrate_disabled_folder_reason_being_moved">Acest folder este mutat.</string>
   <string name="migrate_disabled_folder_reason_descendant">Acest folder se află în folderul care este mutat.</string>
+  <string name="migrate_disabled_folder_reason_limit_reached">Mutarea aici va depăși limita folderului.</string>
   <string name="migrate_disabled_vault_reason_no_permission">Nu puteți crea articole în acest seif.</string>
   <string name="migrate_disabled_vault_reason_same_vault">Nu puteți muta un articol în același seif.</string>
   <plurals name="migrate_items_shared_warning_title">

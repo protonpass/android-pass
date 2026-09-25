@@ -32,6 +32,7 @@
   <string name="migrate_disabled_folder_reason_same_location">Denne mappe er allerede på denne placering</string>
   <string name="migrate_disabled_folder_reason_being_moved">Denne mappe flyttes</string>
   <string name="migrate_disabled_folder_reason_descendant">Denne mappe er inde i den mappe, der flyttes</string>
+  <string name="migrate_disabled_folder_reason_limit_reached">Ved at flytte hertil ville mappegrænsen overskrides</string>
   <string name="migrate_disabled_vault_reason_no_permission">Du kan ikke oprette elementer i denne boks</string>
   <string name="migrate_disabled_vault_reason_same_vault">Du kan ikke flytte et element til den samme boks</string>
   <plurals name="migrate_items_shared_warning_title">

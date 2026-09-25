@@ -29,6 +29,7 @@
   <string name="migrate_disabled_folder_reason_same_location">This folder is already in this location</string>
   <string name="migrate_disabled_folder_reason_being_moved">This folder is being moved</string>
   <string name="migrate_disabled_folder_reason_descendant">This folder is inside the folder being moved</string>
+  <string name="migrate_disabled_folder_reason_limit_reached">Moving here would exceed the folder limits</string>
   <string name="migrate_disabled_vault_reason_no_permission">この保管庫にはアイテムを作成できません</string>
   <string name="migrate_disabled_vault_reason_same_vault">同じ保管庫にアイテムを移動することはできません</string>
   <plurals name="migrate_items_shared_warning_title">

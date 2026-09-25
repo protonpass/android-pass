@@ -38,6 +38,7 @@
   <string name="migrate_disabled_folder_reason_same_location">Tento priečinok sa už na tejto lokalite nachádza</string>
   <string name="migrate_disabled_folder_reason_being_moved">Tento priečinok sa presúva</string>
   <string name="migrate_disabled_folder_reason_descendant">Tento priečinok sa nachádza v priečinku, ktorý sa presúva</string>
+  <string name="migrate_disabled_folder_reason_limit_reached">Presun sem by prekročil limity priečinkov</string>
   <string name="migrate_disabled_vault_reason_no_permission">V tomto trezore nemôžete vytvárať položky</string>
   <string name="migrate_disabled_vault_reason_same_vault">Nemôžete presunúť položku do rovnakého trezora</string>
   <plurals name="migrate_items_shared_warning_title">

@@ -32,6 +32,7 @@
   <string name="migrate_disabled_folder_reason_same_location">ეს საქაღალდე უკვე ამ ადგილასაა</string>
   <string name="migrate_disabled_folder_reason_being_moved">მიმდინარეობს ამ საქაღალდის გადატანა</string>
   <string name="migrate_disabled_folder_reason_descendant">ეს საქაღალდე იმ საქაღალდეშია, რომელშიც გადატანასაც ცდილობთ</string>
+  <string name="migrate_disabled_folder_reason_limit_reached">Moving here would exceed the folder limits</string>
   <string name="migrate_disabled_vault_reason_no_permission">ამ საცავში ელემენტების შექმნა არ შეგიძლიათ</string>
   <string name="migrate_disabled_vault_reason_same_vault">ელემენტს იგივე საცავში ვერ გადაიტანთ</string>
   <plurals name="migrate_items_shared_warning_title">

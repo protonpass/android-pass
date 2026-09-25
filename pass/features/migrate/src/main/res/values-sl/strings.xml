@@ -38,6 +38,7 @@
   <string name="migrate_disabled_folder_reason_same_location">Mapa je že na tej lokaciji</string>
   <string name="migrate_disabled_folder_reason_being_moved">Ta mapa je bila premaknjena</string>
   <string name="migrate_disabled_folder_reason_descendant">This folder is inside the folder being moved</string>
+  <string name="migrate_disabled_folder_reason_limit_reached">Moving here would exceed the folder limits</string>
   <string name="migrate_disabled_vault_reason_no_permission">V tem trezorju ne morete ustvarjati predmetov</string>
   <string name="migrate_disabled_vault_reason_same_vault">Predmeta ne morete premakniti v isti trezor</string>
   <plurals name="migrate_items_shared_warning_title">

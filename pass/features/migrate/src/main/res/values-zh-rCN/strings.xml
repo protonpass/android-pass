@@ -29,6 +29,7 @@
   <string name="migrate_disabled_folder_reason_same_location">此文件夹已位于该位置</string>
   <string name="migrate_disabled_folder_reason_being_moved">此文件夹正在移动中</string>
   <string name="migrate_disabled_folder_reason_descendant">此文件夹位于正在移动的文件夹内</string>
+  <string name="migrate_disabled_folder_reason_limit_reached">Moving here would exceed the folder limits</string>
   <string name="migrate_disabled_vault_reason_no_permission">您不能在此保险库中创建项目</string>
   <string name="migrate_disabled_vault_reason_same_vault">不能将项目移动到同一保险库</string>
   <plurals name="migrate_items_shared_warning_title">

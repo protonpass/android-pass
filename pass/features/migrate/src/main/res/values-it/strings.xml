@@ -32,6 +32,7 @@
   <string name="migrate_disabled_folder_reason_same_location">Questa cartella è già in questa posizione</string>
   <string name="migrate_disabled_folder_reason_being_moved">Questa cartella è stata spostata</string>
   <string name="migrate_disabled_folder_reason_descendant">Questa cartella si trova all\'interno della cartella spostata</string>
+  <string name="migrate_disabled_folder_reason_limit_reached">Moving here would exceed the folder limits</string>
   <string name="migrate_disabled_vault_reason_no_permission">Non puoi creare elementi in questa cassaforte</string>
   <string name="migrate_disabled_vault_reason_same_vault">Cassaforte attuale</string>
   <plurals name="migrate_items_shared_warning_title">

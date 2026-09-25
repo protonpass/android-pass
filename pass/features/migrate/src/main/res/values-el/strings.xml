@@ -32,6 +32,7 @@
   <string name="migrate_disabled_folder_reason_same_location">Αυτός ο φάκελος βρίσκεται ήδη σε αυτήν την τοποθεσία</string>
   <string name="migrate_disabled_folder_reason_being_moved">Αυτός ο φάκελος μετακινείται</string>
   <string name="migrate_disabled_folder_reason_descendant">Αυτός ο φάκελος βρίσκεται μέσα στον φάκελο που μετακινείται</string>
+  <string name="migrate_disabled_folder_reason_limit_reached">Η μετακίνηση εδώ θα υπερέβαινε τα όρια φακέλων</string>
   <string name="migrate_disabled_vault_reason_no_permission">Δεν μπορείτε να δημιουργήσετε στοιχεία σε αυτήν την κρύπτη</string>
   <string name="migrate_disabled_vault_reason_same_vault">Δεν μπορείτε να μετακινήσετε ένα στοιχείο στην ίδια κρύπτη</string>
   <plurals name="migrate_items_shared_warning_title">

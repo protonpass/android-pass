@@ -1,0 +1,5 @@
+## 1.41.1 (2026-09-25)
+
+### Fixes :bug:
+
+- Bug fixes and improvements.

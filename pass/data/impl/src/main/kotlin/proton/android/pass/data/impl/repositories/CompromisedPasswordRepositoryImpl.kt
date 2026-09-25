@@ -30,13 +30,13 @@ import proton.android.pass.data.impl.db.entities.CompromisedPasswordEntity
 import proton.android.pass.data.impl.local.LocalCompromisedPasswordDataSource
 import proton.android.pass.data.impl.remote.PrefixQueryResult
 import proton.android.pass.data.impl.remote.RemoteCompromisedPasswordDataSource
+import proton.android.pass.data.impl.util.sha1Hex
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ItemType
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.isFullyExcludedFromMonitoring
 import proton.android.pass.log.api.PassLogger
-import java.security.MessageDigest
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -197,12 +197,6 @@ class CompromisedPasswordRepositoryImpl @Inject constructor(
             PassLogger.w(TAG, "Failed to check compromised passwords for a prefix")
             emptyList()
         }
-    }
-
-    private fun sha1Hex(input: String): String {
-        val digest = MessageDigest.getInstance("SHA-1")
-        val hashBytes = digest.digest(input.toByteArray(Charsets.UTF_8))
-        return hashBytes.joinToString("") { "%02X".format(it) }
     }
 
     companion object {

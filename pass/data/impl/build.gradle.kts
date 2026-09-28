@@ -132,6 +132,7 @@ dependencies {
     testImplementation(projects.pass.appConfig.fakes)
     testImplementation(projects.pass.commonTest)
     testImplementation(projects.pass.crypto.fakes)
+    testImplementation(projects.pass.crypto.impl)
     testImplementation(projects.pass.data.fakes)
     testImplementation(projects.pass.network.fakes)
     testImplementation(projects.pass.notifications.fakes)

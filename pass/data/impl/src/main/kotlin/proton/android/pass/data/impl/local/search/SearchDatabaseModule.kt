@@ -48,17 +48,28 @@ object SearchDatabaseModule {
         @ApplicationContext context: Context,
         keyProvider: SearchDatabaseKeyProvider
     ): SearchDatabase {
-        val passphrase = runBlocking { keyProvider.getOrCreateKey() }
-        val factory = SupportOpenHelperFactory(passphrase)
+        val key = runCatching { runBlocking { keyProvider.getOrCreateKey() } }
+            .getOrElse { error ->
+                PassLogger.w(TAG, "Error resolving search database key")
+                PassLogger.w(TAG, error)
+                SearchDatabaseKey.Unavailable
+            }
 
-        PassLogger.i(TAG, "Creating SearchDatabase with SQLCipher encryption")
+        val builder = when (key) {
+            is SearchDatabaseKey.Persistent -> {
+                PassLogger.i(TAG, "Creating SearchDatabase with SQLCipher encryption")
+                Room.databaseBuilder(context, SearchDatabase::class.java, SearchDatabase.DB_NAME)
+                    .openHelperFactory(SupportOpenHelperFactory(key.passphrase))
+            }
 
-        return Room.databaseBuilder(
-            context,
-            SearchDatabase::class.java,
-            SearchDatabase.DB_NAME
-        )
-            .openHelperFactory(factory)
+            SearchDatabaseKey.Unavailable -> {
+                PassLogger.w(TAG, "Search database key unavailable, using in-memory SearchDatabase")
+                Room.inMemoryDatabaseBuilder(context, SearchDatabase::class.java)
+                    .openHelperFactory(SupportOpenHelperFactory(ByteArray(0)))
+            }
+        }
+
+        return builder
             .fallbackToDestructiveMigration()
             .addCallback(SearchFtsCallback)
             .build()

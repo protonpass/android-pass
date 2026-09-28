@@ -24,6 +24,7 @@ import proton.android.pass.crypto.api.EncryptionKey
 import proton.android.pass.crypto.api.context.EncryptionContext
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.crypto.api.context.EncryptionTag
+import proton.android.pass.crypto.api.error.LocalEncryptionKeyUnavailableException
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -32,8 +33,14 @@ class FakeEncryptionContextProvider @Inject constructor() : EncryptionContextPro
 
     var shouldFailDecryption: Boolean = false
 
+    var isKeyUnavailable: Boolean = false
+
     private val context: EncryptionContext
-        get() = if (shouldFailDecryption) FailingDecryptionEncryptionContext else FakeEncryptionContext
+        get() = when {
+            isKeyUnavailable -> UnavailableKeyEncryptionContext
+            shouldFailDecryption -> FailingDecryptionEncryptionContext
+            else -> FakeEncryptionContext
+        }
 
     override fun <R> withEncryptionContext(block: EncryptionContext.() -> R): R = block(
         context
@@ -57,3 +64,15 @@ private object FailingDecryptionEncryptionContext : EncryptionContext by FakeEnc
         throw FakeException("Simulated decryption failure")
 }
 
+
+private object UnavailableKeyEncryptionContext : EncryptionContext {
+    override fun encrypt(content: String): EncryptedString = throw unavailable()
+
+    override fun encrypt(content: ByteArray, tag: EncryptionTag?): EncryptedByteArray = throw unavailable()
+
+    override fun decrypt(content: EncryptedString): String = throw unavailable()
+
+    override fun decrypt(content: EncryptedByteArray, tag: EncryptionTag?): ByteArray = throw unavailable()
+
+    private fun unavailable() = LocalEncryptionKeyUnavailableException("Simulated local encryption key unavailable")
+}

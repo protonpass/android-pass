@@ -60,7 +60,7 @@ class SearchDatabaseKeyProviderTest {
         val keyFile = File(tempDir, "search_db_key.enc")
         assertThat(keyFile.exists()).isFalse()
 
-        val key = provider.getOrCreateKey()
+        val key = provider.persistentKey()
 
         assertThat(key).isNotEmpty()
         assertThat(keyFile.exists()).isTrue()
@@ -72,14 +72,14 @@ class SearchDatabaseKeyProviderTest {
         val keyFile = File(tempDir, "search_db_key.enc")
 
         // First call creates the key
-        val firstKey = provider.getOrCreateKey()
+        val firstKey = provider.persistentKey()
         val firstModTime = keyFile.lastModified()
 
         // Wait a tiny bit to ensure time difference would be visible
         Thread.sleep(10)
 
         // Second call should return the same key
-        val secondKey = provider.getOrCreateKey()
+        val secondKey = provider.persistentKey()
 
         assertThat(firstKey).isEqualTo(secondKey)
         // Verify the file wasn't modified (same timestamp)
@@ -95,7 +95,7 @@ class SearchDatabaseKeyProviderTest {
         val journalFile = File(dbFile.path + "-journal")
 
         // Create a valid key first
-        val originalKey = provider.getOrCreateKey()
+        val originalKey = provider.persistentKey()
         assertThat(keyFile.exists()).isTrue()
 
         // Simulate a Keystore-backed decryption failure (e.g. key invalidation)
@@ -114,7 +114,7 @@ class SearchDatabaseKeyProviderTest {
         assertThat(journalFile.exists()).isTrue()
 
         // Call getOrCreateKey - should detect corrupt key, regenerate, and clean up DB files
-        val newKey = provider.getOrCreateKey()
+        val newKey = provider.persistentKey()
 
         // New key should be different from the original
         assertThat(newKey).isNotEqualTo(originalKey)
@@ -134,7 +134,7 @@ class SearchDatabaseKeyProviderTest {
         val dbFile = testContext.getDatabasePath(SearchDatabase.DB_NAME)
 
         // Create a valid key first
-        val originalKey = provider.getOrCreateKey()
+        val originalKey = provider.persistentKey()
 
         // Simulate a Keystore-backed decryption failure (e.g. key invalidation)
         encryptionContextProvider.shouldFailDecryption = true
@@ -143,10 +143,69 @@ class SearchDatabaseKeyProviderTest {
         assertThat(dbFile.exists()).isFalse()
 
         // Should still succeed
-        val newKey = provider.getOrCreateKey()
+        val newKey = provider.persistentKey()
 
         assertThat(newKey).isNotEqualTo(originalKey)
         assertThat(keyFile.exists()).isTrue()
+    }
+
+    @Test
+    fun `unavailable local key with existing key file keeps key file and database`() = runTest {
+        val keyFile = File(tempDir, "search_db_key.enc")
+        val dbFile = testContext.getDatabasePath(SearchDatabase.DB_NAME)
+        provider.persistentKey()
+        val originalKeyFileContent = keyFile.readBytes()
+        dbFile.parentFile?.mkdirs()
+        dbFile.writeText("db content")
+
+        encryptionContextProvider.isKeyUnavailable = true
+        val result = provider.getOrCreateKey()
+
+        assertThat(result).isEqualTo(SearchDatabaseKey.Unavailable)
+        assertThat(keyFile.readBytes()).isEqualTo(originalKeyFileContent)
+        assertThat(dbFile.exists()).isTrue()
+    }
+
+    @Test
+    fun `unavailable local key without key file does not persist a key`() = runTest {
+        val keyFile = File(tempDir, "search_db_key.enc")
+        encryptionContextProvider.isKeyUnavailable = true
+
+        val result = provider.getOrCreateKey()
+
+        assertThat(result).isEqualTo(SearchDatabaseKey.Unavailable)
+        assertThat(keyFile.exists()).isFalse()
+    }
+
+    @Test
+    fun `unavailable local key recovers once the key becomes available`() = runTest {
+        val originalKey = provider.persistentKey()
+        encryptionContextProvider.isKeyUnavailable = true
+        assertThat(provider.getOrCreateKey()).isEqualTo(SearchDatabaseKey.Unavailable)
+
+        encryptionContextProvider.isKeyUnavailable = false
+        val recoveredKey = provider.persistentKey()
+
+        assertThat(recoveredKey).isEqualTo(originalKey)
+    }
+
+    @Test
+    fun `missing key file deletes stale database before persisting a new key`() = runTest {
+        val keyFile = File(tempDir, "search_db_key.enc")
+        val dbFile = testContext.getDatabasePath(SearchDatabase.DB_NAME)
+        dbFile.parentFile?.mkdirs()
+        dbFile.writeText("stale db content")
+
+        provider.persistentKey()
+
+        assertThat(keyFile.exists()).isTrue()
+        assertThat(dbFile.exists()).isFalse()
+    }
+
+    private suspend fun SearchDatabaseKeyProvider.persistentKey(): ByteArray {
+        val key = getOrCreateKey()
+        assertThat(key).isInstanceOf(SearchDatabaseKey.Persistent::class.java)
+        return (key as SearchDatabaseKey.Persistent).passphrase
     }
 
     /**

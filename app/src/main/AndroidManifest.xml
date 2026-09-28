@@ -162,6 +162,11 @@
             tools:replace="theme" />
         <!-- /Core-Auth activities -->
 
+        <activity
+            android:name="me.proton.core.crypto.validator.presentation.ui.CryptoValidatorErrorDialogActivity"
+            android:exported="false"
+            android:theme="@style/ProtonTheme.Transparent" />
+
         <meta-data
             android:name="asset_statements"
             android:resource="@string/asset_statements" />

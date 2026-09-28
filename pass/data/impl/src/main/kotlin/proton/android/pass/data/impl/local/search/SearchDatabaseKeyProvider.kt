@@ -22,14 +22,21 @@ import android.content.Context
 import dagger.hilt.android.qualifiers.ApplicationContext
 import me.proton.core.crypto.common.keystore.EncryptedByteArray
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
+import proton.android.pass.crypto.api.error.LocalEncryptionKeyUnavailableException
 import proton.android.pass.log.api.PassLogger
 import java.io.File
 import javax.crypto.KeyGenerator
 import javax.inject.Inject
 import javax.inject.Singleton
 
+sealed interface SearchDatabaseKey {
+    @JvmInline
+    value class Persistent(val passphrase: ByteArray) : SearchDatabaseKey
+    data object Unavailable : SearchDatabaseKey
+}
+
 interface SearchDatabaseKeyProvider {
-    suspend fun getOrCreateKey(): ByteArray
+    suspend fun getOrCreateKey(): SearchDatabaseKey
 }
 
 @Singleton
@@ -38,33 +45,48 @@ class SearchDatabaseKeyProviderImpl @Inject constructor(
     private val encryptionContextProvider: EncryptionContextProvider
 ) : SearchDatabaseKeyProvider {
 
-    override suspend fun getOrCreateKey(): ByteArray {
+    override suspend fun getOrCreateKey(): SearchDatabaseKey {
         val file = File(context.dataDir, KEY_FILE_NAME)
 
         return if (file.exists()) {
-            runCatching {
-                val encrypted = EncryptedByteArray(file.readBytes())
-                encryptionContextProvider.withEncryptionContext { decrypt(encrypted) }
-            }.fold(
-                onSuccess = { it },
-                onFailure = {
-                    PassLogger.w(TAG, "Failed to decrypt key, generating new one")
-                    PassLogger.w(TAG, it)
-                    deleteStaleDatabase()
-                    generateAndStoreKey(file)
-                }
-            )
+            readKey(file)
         } else {
             generateAndStoreKey(file)
         }
     }
 
-    private fun generateAndStoreKey(file: File): ByteArray {
+    private fun readKey(file: File): SearchDatabaseKey = runCatching {
+        val encrypted = EncryptedByteArray(file.readBytes())
+        encryptionContextProvider.withEncryptionContext { decrypt(encrypted) }
+    }.fold(
+        onSuccess = { SearchDatabaseKey.Persistent(it) },
+        onFailure = { error ->
+            if (error is LocalEncryptionKeyUnavailableException) {
+                PassLogger.w(TAG, "Local encryption key unavailable, search database key not accessible")
+                PassLogger.w(TAG, error)
+                SearchDatabaseKey.Unavailable
+            } else {
+                PassLogger.w(TAG, "Failed to decrypt key, generating new one")
+                PassLogger.w(TAG, error)
+                generateAndStoreKey(file)
+            }
+        }
+    )
+
+    private fun generateAndStoreKey(file: File): SearchDatabaseKey = runCatching {
         val databaseKey = generateRandomKey()
         val encrypted = encryptionContextProvider.withEncryptionContext { encrypt(databaseKey) }
+        deleteStaleDatabase()
         file.writeBytes(encrypted.array)
-        return databaseKey
-    }
+        databaseKey
+    }.fold(
+        onSuccess = { SearchDatabaseKey.Persistent(it) },
+        onFailure = { error ->
+            PassLogger.w(TAG, "Failed to generate search database key")
+            PassLogger.w(TAG, error)
+            SearchDatabaseKey.Unavailable
+        }
+    )
 
     private fun deleteStaleDatabase() {
         val databaseFile = context.getDatabasePath(SearchDatabase.DB_NAME)

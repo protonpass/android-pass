@@ -31,6 +31,7 @@ import androidx.navigation.compose.ComposeNavigator
 import androidx.navigation.compose.DialogNavigator
 import me.proton.core.crypto.android.keystore.AndroidKeyStoreCrypto
 import me.proton.core.crypto.common.keystore.KeyStoreCrypto
+import proton.android.pass.log.api.PassLogger
 
 @Composable
 fun rememberNavController(vararg navigators: Navigator<out NavDestination>): NavHostController {
@@ -55,8 +56,22 @@ fun createNavController(context: Context) = NavHostController(context).apply {
  * Saver to save and restore the NavController across config change and process death.
  */
 private fun NavControllerSaver(context: Context, keyStoreCrypto: KeyStoreCrypto): Saver<NavHostController, *> = Saver(
-    save = { keyStoreCrypto.encrypt(it.saveState()) },
-    restore = { createNavController(context).apply { restoreState(keyStoreCrypto.decrypt(it)) } }
+    save = { navController ->
+        runCatching { keyStoreCrypto.encrypt(navController.saveState()) }
+            .onFailure {
+                PassLogger.w(TAG, "Could not encrypt navigation state")
+                PassLogger.w(TAG, it)
+            }
+            .getOrElse { Bundle() }
+    },
+    restore = { bundle ->
+        runCatching { createNavController(context).apply { restoreState(keyStoreCrypto.decrypt(bundle)) } }
+            .onFailure {
+                PassLogger.w(TAG, "Could not restore navigation state")
+                PassLogger.w(TAG, it)
+            }
+            .getOrElse { createNavController(context) }
+    }
 )
 
 internal fun KeyStoreCrypto.encrypt(bundle: Bundle?) = Bundle().apply {
@@ -65,22 +80,28 @@ internal fun KeyStoreCrypto.encrypt(bundle: Bundle?) = Bundle().apply {
     }
 
     val parcel = android.os.Parcel.obtain()
-    bundle.writeToParcel(parcel, 0)
-    val base64 = String(android.util.Base64.encode(parcel.marshall(), android.util.Base64.NO_WRAP))
+    val base64 = try {
+        bundle.writeToParcel(parcel, 0)
+        String(android.util.Base64.encode(parcel.marshall(), android.util.Base64.NO_WRAP))
+    } finally {
+        parcel.recycle()
+    }
     putString(PROTON_NAV_KEY, encrypt(base64))
-    parcel.recycle()
 }
 
 internal fun KeyStoreCrypto.decrypt(bundle: Bundle): Bundle {
     val encrypted = bundle.getString(PROTON_NAV_KEY) ?: return Bundle()
     val bytes = android.util.Base64.decode(decrypt(encrypted), android.util.Base64.NO_WRAP)
     val parcel = android.os.Parcel.obtain()
-    parcel.unmarshall(bytes, 0, bytes.size)
-    parcel.setDataPosition(0)
-    val decrypted = Bundle.CREATOR.createFromParcel(parcel)
-    parcel.recycle()
-    return decrypted
+    return try {
+        parcel.unmarshall(bytes, 0, bytes.size)
+        parcel.setDataPosition(0)
+        Bundle.CREATOR.createFromParcel(parcel)
+    } finally {
+        parcel.recycle()
+    }
 }
 
 private const val PROTON_NAV_KEY = "proton.nav.bundle"
+private const val TAG = "NavHostController"
 

@@ -48,11 +48,11 @@ data class EncryptionKey(private val key: ByteArray) {
     private fun isEmpty(): Boolean = key.all { it == 0x00.toByte() }
 
     companion object {
-        private const val keySize = 32
+        const val KEY_SIZE = 32
 
         fun generate(): EncryptionKey {
             val random = SecureRandom()
-            val buff = ByteArray(keySize)
+            val buff = ByteArray(KEY_SIZE)
             random.nextBytes(buff)
             return EncryptionKey(buff)
         }

@@ -23,12 +23,16 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
 import me.proton.core.crypto.common.keystore.EncryptedByteArray
+import me.proton.core.crypto.common.keystore.EncryptedString
 import me.proton.core.crypto.common.keystore.KeyStoreCrypto
 import me.proton.core.crypto.common.keystore.PlainByteArray
 import proton.android.pass.common.api.AppDispatchers
 import proton.android.pass.crypto.api.EncryptionKey
 import proton.android.pass.crypto.api.context.EncryptionContext
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
+import proton.android.pass.crypto.api.context.EncryptionTag
+import proton.android.pass.crypto.api.error.LocalEncryptionKeyUnavailableException
+import proton.android.pass.log.api.PassLogger
 import java.io.File
 import java.util.concurrent.locks.ReentrantReadWriteLock
 import javax.inject.Inject
@@ -45,9 +49,10 @@ class EncryptionContextProviderImpl @Inject constructor(
 
     private val lock = ReentrantReadWriteLock()
     private var storedKey: ByteArray? = null
+    private var hasLoggedKeyUnavailable = false
 
     override fun <R> withEncryptionContext(block: EncryptionContext.() -> R): R {
-        val key = runBlocking { getKey() }
+        val key = runBlocking { getKey() } ?: return block(UnavailableEncryptionContext)
         return withEncryptionContext(key, block)
     }
 
@@ -65,7 +70,7 @@ class EncryptionContextProviderImpl @Inject constructor(
     }
 
     override suspend fun <R> withEncryptionContextSuspendable(block: suspend EncryptionContext.() -> R): R {
-        val key = getKey()
+        val key = getKey() ?: return withContext(appDispatchers.default) { block(UnavailableEncryptionContext) }
         return withEncryptionContextSuspendable(key, block)
     }
 
@@ -85,7 +90,7 @@ class EncryptionContextProviderImpl @Inject constructor(
         }
     }
 
-    private suspend fun getKey(): EncryptionKey = withContext(appDispatchers.io) {
+    private suspend fun getKey(): EncryptionKey? = withContext(appDispatchers.io) {
         // Try to get it from the stored value
         val readLock = lock.readLock()
         readLock.withLock {
@@ -107,12 +112,10 @@ class EncryptionContextProviderImpl @Inject constructor(
             // Guaranteed it's not stored. Read it or generate it
             val file = File(context.dataDir, KEY_FILE_NAME)
             val key = if (file.exists()) {
-                val encryptedKey = file.readBytes()
-                val decryptedKey = keyStoreCrypto.decrypt(EncryptedByteArray(encryptedKey))
-                EncryptionKey(decryptedKey.array)
+                readKey(file)
             } else {
                 generateKey(file)
-            }
+            } ?: return@withLock null
 
             // Store the key obfuscated in memory. We can do it as we are in the writeLock context
             storedKey = obfuscateKey(key.value())
@@ -120,6 +123,17 @@ class EncryptionContextProviderImpl @Inject constructor(
             // Return the key to be used
             key
         }
+    }
+
+    private fun readKey(file: File): EncryptionKey? {
+        val encryptedKey = file.readBytes()
+        val decryptedKey = keyStoreCrypto.decrypt(EncryptedByteArray(encryptedKey))
+        if (decryptedKey.array.size != EncryptionKey.KEY_SIZE) {
+            decryptedKey.array.fill(0)
+            logKeyUnavailable("Local encryption key has unexpected size")
+            return null
+        }
+        return EncryptionKey(decryptedKey.array)
     }
 
     private fun generateKey(file: File): EncryptionKey {
@@ -130,7 +144,26 @@ class EncryptionContextProviderImpl @Inject constructor(
         return key
     }
 
+    private fun logKeyUnavailable(message: String) {
+        if (hasLoggedKeyUnavailable) return
+        hasLoggedKeyUnavailable = true
+        PassLogger.w(TAG, "$message [usingKeyStore=${keyStoreCrypto.isUsingKeyStore()}]")
+    }
+
+    private object UnavailableEncryptionContext : EncryptionContext {
+        override fun encrypt(content: String): EncryptedString = throw unavailable()
+
+        override fun encrypt(content: ByteArray, tag: EncryptionTag?): EncryptedByteArray = throw unavailable()
+
+        override fun decrypt(content: EncryptedString): String = throw unavailable()
+
+        override fun decrypt(content: EncryptedByteArray, tag: EncryptionTag?): ByteArray = throw unavailable()
+
+        private fun unavailable() = LocalEncryptionKeyUnavailableException("Local encryption key is not available")
+    }
+
     companion object {
+        private const val TAG = "EncryptionContextProviderImpl"
         private const val KEY_FILE_NAME = "pass.key"
         private const val XOR_KEY = 0xDE.toByte()
 

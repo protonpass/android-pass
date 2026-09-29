@@ -45,6 +45,12 @@ import proton_pass_item_v1.creationDataOrNull
 private const val MILLIS_IN_SECOND = 1_000L
 private const val NANOS_IN_MILLI = 1_000_000L
 
+/**
+ * Returns the custom icon stored in the item metadata, or null if it is not set.
+ * The value is untrusted and must be validated before rendering.
+ */
+fun ItemV1.Item.metadataIconOrNull(): String? = if (metadata.hasIcon()) metadata.icon else null
+
 fun ItemType.Companion.fromParsed(
     context: EncryptionContext,
     parsed: ItemV1.Item,

@@ -775,7 +775,8 @@ class IdentityActionsProviderImpl @Inject constructor(
                 copy(customFields = customFieldHandler.sanitiseForEditingCustomFields(this.customFields))
             },
             uiExtraSections = itemContents.extraSectionContentList.map(::UIExtraSection)
-                .map { it.copy(customFields = customFieldHandler.sanitiseForEditingCustomFields(it.customFields)) }
+                .map { it.copy(customFields = customFieldHandler.sanitiseForEditingCustomFields(it.customFields)) },
+            icon = itemContents.icon
         )
     }
 

@@ -62,7 +62,8 @@ data class ItemFormState(
     val itemStaticFields: ItemStaticFields,
     val customFieldList: List<UICustomFieldContent>,
     val sectionList: List<UIExtraSection>,
-    val note: String
+    val note: String,
+    val icon: String? = null
 ) : Parcelable {
 
     constructor(itemContents: ItemContents.Custom) : this(
@@ -70,7 +71,8 @@ data class ItemFormState(
         itemStaticFields = ItemStaticFields.Custom,
         customFieldList = itemContents.customFields.map(UICustomFieldContent.Companion::from),
         sectionList = itemContents.sectionContentList.map(::UIExtraSection),
-        note = itemContents.note
+        note = itemContents.note,
+        icon = itemContents.icon
     )
 
     constructor(itemContents: ItemContents.WifiNetwork) : this(
@@ -84,7 +86,8 @@ data class ItemFormState(
         ),
         customFieldList = itemContents.customFields.map(UICustomFieldContent.Companion::from),
         sectionList = itemContents.sectionContentList.map(::UIExtraSection),
-        note = itemContents.note
+        note = itemContents.note,
+        icon = itemContents.icon
     )
 
     constructor(itemContents: ItemContents.SSHKey) : this(
@@ -95,7 +98,8 @@ data class ItemFormState(
         ),
         customFieldList = itemContents.customFields.map(UICustomFieldContent.Companion::from),
         sectionList = itemContents.sectionContentList.map(::UIExtraSection),
-        note = itemContents.note
+        note = itemContents.note,
+        icon = itemContents.icon
     )
 
     fun toItemContents(): ItemContents = when (itemStaticFields) {
@@ -108,7 +112,8 @@ data class ItemFormState(
                     title = it.title,
                     customFieldList = it.customFields.map(UICustomFieldContent::toCustomFieldContent)
                 )
-            }
+            },
+            icon = icon
         )
 
         is ItemStaticFields.SSHKey -> ItemContents.SSHKey(
@@ -122,7 +127,8 @@ data class ItemFormState(
                     title = it.title,
                     customFieldList = it.customFields.map(UICustomFieldContent::toCustomFieldContent)
                 )
-            }
+            },
+            icon = icon
         )
 
         is ItemStaticFields.WifiNetwork -> ItemContents.WifiNetwork(
@@ -137,7 +143,8 @@ data class ItemFormState(
                     title = it.title,
                     customFieldList = it.customFields.map(UICustomFieldContent::toCustomFieldContent)
                 )
-            }
+            },
+            icon = icon
         )
     }
 

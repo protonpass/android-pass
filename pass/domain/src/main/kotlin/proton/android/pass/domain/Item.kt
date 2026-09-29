@@ -64,7 +64,9 @@ data class Item(
     val shareCount: Int,
     val contentFormatVersion: Int,
     val shareType: ShareType,
-    val slNote: EncryptedString? = null
+    val slNote: EncryptedString? = null,
+    /** Custom icon from the item metadata (untrusted base64 data URI) */
+    val icon: String? = null
 ) {
     val hasPasskeys: Boolean = when (val type = itemType) {
         is ItemType.Login -> type.passkeys.isNotEmpty()

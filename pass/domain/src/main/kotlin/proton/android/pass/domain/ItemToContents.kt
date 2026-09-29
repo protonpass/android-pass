@@ -26,7 +26,8 @@ fun toItemContents(
     title: String,
     note: String,
     itemFlags: ItemFlags,
-    slNote: EncryptedString? = null
+    slNote: EncryptedString? = null,
+    icon: String? = null
 ): ItemContents = when (itemType) {
     is ItemType.Alias -> createAlias(
         decrypt,
@@ -49,7 +50,7 @@ fun toItemContents(
         note = decrypt(note),
         customFields = emptyList()
     )
-}
+}.withIcon(icon)
 
 @Suppress("UNCHECKED_CAST")
 fun <T : ItemContents> Item.toItemContents(decrypt: (String) -> String): T = when (val type = this.itemType) {
@@ -74,7 +75,22 @@ fun <T : ItemContents> Item.toItemContents(decrypt: (String) -> String): T = whe
         note = decrypt(note),
         customFields = emptyList()
     )
-} as T
+}.withIcon(icon) as T
+
+/**
+ * Returns a copy of these contents with the given custom [icon], preserving the concrete type.
+ */
+fun ItemContents.withIcon(icon: String?): ItemContents = when (this) {
+    is ItemContents.Login -> copy(icon = icon)
+    is ItemContents.Note -> copy(icon = icon)
+    is ItemContents.Alias -> copy(icon = icon)
+    is ItemContents.CreditCard -> copy(icon = icon)
+    is ItemContents.Identity -> copy(icon = icon)
+    is ItemContents.Custom -> copy(icon = icon)
+    is ItemContents.WifiNetwork -> copy(icon = icon)
+    is ItemContents.SSHKey -> copy(icon = icon)
+    is ItemContents.Unknown -> copy(icon = icon)
+}
 
 private fun createAlias(
     decrypt: (String) -> String,

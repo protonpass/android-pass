@@ -73,7 +73,7 @@ fun areItemContentsEqual(
     a: ItemContents,
     b: ItemContents,
     decrypt: (EncryptedString) -> String
-): Boolean = when {
+): Boolean = a.icon == b.icon && when {
     a is ItemContents.Login && b is ItemContents.Login ->
         areLoginItemsEqual(a, b, decrypt)
 

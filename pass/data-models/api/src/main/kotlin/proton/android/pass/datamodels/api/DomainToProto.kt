@@ -42,13 +42,15 @@ fun ItemContents.serializeToProto(
     builder: ItemV1.Item.Builder = ItemV1.Item.newBuilder(),
     encryptionContext: EncryptionContext
 ): ItemV1.Item {
-    builder.setMetadata(
-        builder.metadata.toBuilder()
-            .setName(title)
-            .setNote(note)
-            .setItemUuid(itemUuid)
-            .build()
-    )
+    val metadataBuilder = builder.metadata.toBuilder()
+        .setName(title)
+        .setNote(note)
+        .setItemUuid(itemUuid)
+    when (val itemIcon = icon) {
+        null -> metadataBuilder.clearIcon()
+        else -> metadataBuilder.setIcon(itemIcon)
+    }
+    builder.setMetadata(metadataBuilder.build())
 
     builder.clearExtraFields()
         .addAllExtraFields(customFields.mapToExtraFields(encryptionContext))

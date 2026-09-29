@@ -33,6 +33,7 @@ import proton.android.pass.crypto.api.usecases.OpenItem
 import proton.android.pass.crypto.api.usecases.OpenItemOutput
 import proton.android.pass.crypto.impl.Constants.ITEM_CFV
 import proton.android.pass.datamodels.api.fromParsed
+import proton.android.pass.datamodels.api.metadataIconOrNull
 import proton.android.pass.domain.FolderId
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemFlags
@@ -213,7 +214,8 @@ class OpenItemImpl @Inject constructor(
             itemFlags = ItemFlags(response.flags),
             shareCount = response.shareCount,
             contentFormatVersion = response.contentFormatVersion,
-            shareType = if (response.key != null) ShareType.Vault else ShareType.Item
+            shareType = if (response.key != null) ShareType.Vault else ShareType.Item,
+            icon = decoded.metadataIconOrNull()
         )
     }
 

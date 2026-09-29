@@ -29,19 +29,22 @@ import proton.android.pass.features.itemcreate.common.UICustomFieldContent
 data class NoteItemFormState(
     val title: String,
     val note: String,
-    val customFields: List<UICustomFieldContent>
+    val customFields: List<UICustomFieldContent>,
+    val icon: String? = null
 ) : Parcelable {
 
     constructor(itemContents: ItemContents.Note) : this(
         title = itemContents.title,
         note = itemContents.note,
-        customFields = itemContents.customFields.map(UICustomFieldContent.Companion::from)
+        customFields = itemContents.customFields.map(UICustomFieldContent.Companion::from),
+        icon = itemContents.icon
     )
 
     fun toItemContents(): ItemContents = ItemContents.Note(
         title = title,
         note = note,
-        customFields = customFields.map(UICustomFieldContent::toCustomFieldContent)
+        customFields = customFields.map(UICustomFieldContent::toCustomFieldContent),
+        icon = icon
     )
 
     companion object {

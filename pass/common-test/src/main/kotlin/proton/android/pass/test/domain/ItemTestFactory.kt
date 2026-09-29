@@ -122,7 +122,8 @@ object ItemTestFactory {
             itemFlags = ItemFlags(flags),
             shareCount = 0,
             contentFormatVersion = 0,
-            shareType = ShareType.Vault
+            shareType = ShareType.Vault,
+            icon = itemContents.icon
         )
     }
 

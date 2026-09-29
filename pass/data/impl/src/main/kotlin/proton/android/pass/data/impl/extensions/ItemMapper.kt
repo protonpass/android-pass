@@ -26,6 +26,7 @@ import proton.android.pass.common.api.toOption
 import proton.android.pass.crypto.api.context.EncryptionContext
 import proton.android.pass.data.impl.db.entities.ItemEntity
 import proton.android.pass.datamodels.api.fromParsed
+import proton.android.pass.datamodels.api.metadataIconOrNull
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemEncrypted
 import proton.android.pass.domain.ItemFlags
@@ -79,7 +80,8 @@ fun ItemEntity.toDomain(context: EncryptionContext): Item {
         shareCount = shareCount,
         contentFormatVersion = contentFormatVersion,
         shareType = if (encryptedKey != null) ShareType.Vault else ShareType.Item,
-        slNote = slNote
+        slNote = slNote,
+        icon = parsed.metadataIconOrNull()
     )
 }
 

@@ -310,7 +310,8 @@ class UpdateAliasViewModel @Inject constructor(
         slNote = details.slNote.takeIfNotBlank(),
         senderName = details.name?.takeIfNotBlank(),
         customFields = contents.customFields.map(UICustomFieldContent.Companion::from)
-            .let { customFieldHandler.sanitiseForEditingCustomFields(it) }
+            .let { customFieldHandler.sanitiseForEditingCustomFields(it) },
+        icon = contents.icon
     )
 
     private suspend fun showError(

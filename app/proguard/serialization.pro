@@ -64,3 +64,11 @@
  # kept. Suspend functions are wrapped in continuations where the type argument
  # is used.
  -keep,allowobfuscation,allowshrinking class kotlin.coroutines.Continuation
+
+ # Keep inherited services (Retrofit >=2.10 rules; core API interfaces extend base interfaces).
+ -if interface * { @retrofit2.http.* <methods>; }
+ -keep,allowobfuscation interface * extends <1>
+
+ # R8 full mode strips generic signatures from return types if not kept.
+ -if interface * { @retrofit2.http.* public *** *(...); }
+ -keep,allowoptimization,allowshrinking,allowobfuscation class <3>

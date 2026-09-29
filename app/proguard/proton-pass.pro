@@ -4,10 +4,10 @@
   <fields>;
 }
 
-# Material bottomsheet invoked through reflection
--keepclassmembernames class androidx.compose.material.ModalBottomSheetState {
-    <methods>;
-}
+# Material bottomsheet invoked through reflection (SheetContentHost)
+-keep class kotlin.Metadata { *; }
+-keep class androidx.compose.material.ModalBottomSheetState { <methods>; }
+-keep class androidx.compose.material.ModalBottomSheetValue { *; }
 
 # Generated kotlin bindings for Rust library
 -keep class proton.android.pass.commonrust.** { *; }

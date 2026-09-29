@@ -142,7 +142,7 @@ android {
             enableUnitTestCoverage = false
             enableAndroidTestCoverage = false
             postprocessing {
-                isObfuscate = false
+                isObfuscate = true
                 isOptimizeCode = true
                 isRemoveUnusedCode = true
                 isRemoveUnusedResources = true
@@ -182,6 +182,7 @@ android {
             dimension = "version"
             applicationIdSuffix = ".fdroid"
             buildConfigField("Boolean", "ALLOW_SCREENSHOTS_DEFAULT_VALUE", "false")
+            proguardFiles.add(file("fdroid-no-obfuscate.pro"))
         }
         create("quest") {
             dimension = "version"
@@ -588,7 +589,9 @@ fun EnvironmentConfigSettings.printInfo(name: String) {
 sentry {
     autoInstallation.enabled.set(false)
     ignoredBuildTypes.set(setOf("debug"))
-    ignoredFlavors.set(setOf("fdroid"))
+    // Multi-dimensional flavors: the plugin matches the combined flavor name
+    // ("fdroidProd"/"fdroidBlack"), not the dimension value "fdroid".
+    ignoredFlavors.set(setOf("fdroidProd", "fdroidBlack"))
     autoUploadProguardMapping.set(!disableSentryUpload)
 }
 

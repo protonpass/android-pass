@@ -111,6 +111,7 @@ class CreditCardItemDetailsHandlerObserverImpl @Inject constructor(
         otherAttachments: List<Attachment>
     ): ItemDiffs = encryptionContextProvider.withEncryptionContext {
         ItemDiffs.CreditCard(
+            icon = calculateItemIconDiffType(baseItemContents, otherItemContents),
             title = calculateItemDiffType(
                 baseItemFieldValue = baseItemContents.title,
                 otherItemFieldValue = otherItemContents.title

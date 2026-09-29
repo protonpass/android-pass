@@ -20,7 +20,9 @@ package proton.android.pass.composecomponents.impl.item.details.rows
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.expandHorizontally
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
@@ -28,8 +30,11 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.composed
+import androidx.compose.ui.unit.dp
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
+import proton.android.pass.commonui.api.applyIf
 import proton.android.pass.commonuimodels.api.items.ItemDetailState
 import proton.android.pass.composecomponents.impl.badge.CircledBadge
 import proton.android.pass.composecomponents.impl.badge.OverlayBadge
@@ -41,6 +46,7 @@ import proton.android.pass.composecomponents.impl.item.icon.CreditCardIcon
 import proton.android.pass.composecomponents.impl.item.icon.CustomItemIcon
 import proton.android.pass.composecomponents.impl.item.icon.IdentityIcon
 import proton.android.pass.composecomponents.impl.item.icon.LoginIcon
+import proton.android.pass.composecomponents.impl.item.icon.NoteIcon
 import proton.android.pass.composecomponents.impl.utils.PassItemColors
 import proton.android.pass.domain.ItemDiffType
 import proton.android.pass.domain.Share
@@ -62,6 +68,7 @@ internal fun PassItemDetailTitleRow(
                 itemColors = itemColors,
                 share = itemShare,
                 itemDiffType = itemDetailState.itemDiffs.title,
+                iconDiffType = itemDetailState.itemDiffs.icon,
                 onSharedVaultClick = { sharedVaultId ->
                     PassItemDetailsUiEvent.OnSharedVaultClick(
                         sharedVaultId = sharedVaultId
@@ -85,6 +92,7 @@ internal fun PassItemDetailTitleRow(
                 itemColors = itemColors,
                 share = itemShare,
                 itemDiffType = itemDetailState.itemDiffs.title,
+                iconDiffType = itemDetailState.itemDiffs.icon,
                 onSharedVaultClick = { sharedVaultId ->
                     PassItemDetailsUiEvent.OnSharedVaultClick(
                         sharedVaultId = sharedVaultId
@@ -107,6 +115,7 @@ internal fun PassItemDetailTitleRow(
                 itemColors = itemColors,
                 share = itemShare,
                 itemDiffType = itemDetailState.itemDiffs.title,
+                iconDiffType = itemDetailState.itemDiffs.icon,
                 onSharedVaultClick = { sharedVaultId ->
                     PassItemDetailsUiEvent.OnSharedVaultClick(
                         sharedVaultId = sharedVaultId
@@ -129,6 +138,7 @@ internal fun PassItemDetailTitleRow(
                 itemColors = itemColors,
                 share = itemShare,
                 itemDiffType = itemDetailState.itemDiffs.title,
+                iconDiffType = itemDetailState.itemDiffs.icon,
                 onSharedVaultClick = { sharedVaultId ->
                     PassItemDetailsUiEvent.OnSharedVaultClick(
                         sharedVaultId = sharedVaultId
@@ -148,40 +158,64 @@ internal fun PassItemDetailTitleRow(
         }
 
         is ItemDetailState.Note -> {
-            Column(
-                modifier = modifier,
-                verticalArrangement = Arrangement.spacedBy(Spacing.large)
-            ) {
-                Column(verticalArrangement = Arrangement.spacedBy(Spacing.small)) {
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.spacedBy(Spacing.small)
-                    ) {
-                        AnimatedVisibility(
-                            visible = isItemPinned,
-                            enter = expandHorizontally()
+            // Notes have no icon in their title unless they have a custom icon, or it changed
+            if (!itemContents.icon.isNullOrBlank() || itemDiffs.icon != ItemDiffType.None) {
+                ItemDetailTitleRow(
+                    modifier = modifier,
+                    title = itemContents.title,
+                    isPinned = isItemPinned,
+                    itemColors = itemColors,
+                    share = itemShare,
+                    itemDiffType = itemDiffs.title,
+                    iconDiffType = itemDiffs.icon,
+                    onSharedVaultClick = { sharedVaultId ->
+                        PassItemDetailsUiEvent.OnSharedVaultClick(
+                            sharedVaultId = sharedVaultId
+                        ).also(onEvent)
+                    }
+                ) {
+                    NoteIcon(
+                        size = 60,
+                        shape = PassTheme.shapes.squircleMediumLargeShape,
+                        customIcon = itemContents.icon
+                    )
+                }
+            } else {
+                Column(
+                    modifier = modifier,
+                    verticalArrangement = Arrangement.spacedBy(Spacing.large)
+                ) {
+                    Column(verticalArrangement = Arrangement.spacedBy(Spacing.small)) {
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.spacedBy(Spacing.small)
                         ) {
-                            CircledBadge(
-                                ratio = 1f,
-                                backgroundColor = itemColors.majorPrimary
+                            AnimatedVisibility(
+                                visible = isItemPinned,
+                                enter = expandHorizontally()
+                            ) {
+                                CircledBadge(
+                                    ratio = 1f,
+                                    backgroundColor = itemColors.majorPrimary
+                                )
+                            }
+
+                            PassItemDetailTitle(
+                                text = itemContents.title,
+                                maxLines = Int.MAX_VALUE,
+                                itemDiffType = itemDiffs.title
                             )
                         }
 
-                        PassItemDetailTitle(
-                            text = itemContents.title,
-                            maxLines = Int.MAX_VALUE,
-                            itemDiffType = itemDiffs.title
+                        PassItemDetailSubtitle(
+                            share = itemShare,
+                            onClick = {
+                                PassItemDetailsUiEvent.OnSharedVaultClick(
+                                    sharedVaultId = itemShare.id
+                                ).also(onEvent)
+                            }
                         )
                     }
-
-                    PassItemDetailSubtitle(
-                        share = itemShare,
-                        onClick = {
-                            PassItemDetailsUiEvent.OnSharedVaultClick(
-                                sharedVaultId = itemShare.id
-                            ).also(onEvent)
-                        }
-                    )
                 }
             }
         }
@@ -196,6 +230,7 @@ internal fun PassItemDetailTitleRow(
                 itemColors = itemColors,
                 share = itemShare,
                 itemDiffType = itemDetailState.itemDiffs.title,
+                iconDiffType = itemDetailState.itemDiffs.icon,
                 onSharedVaultClick = { sharedVaultId ->
                     PassItemDetailsUiEvent.OnSharedVaultClick(
                         sharedVaultId = sharedVaultId
@@ -218,6 +253,7 @@ internal fun PassItemDetailTitleRow(
                 itemColors = itemColors,
                 share = itemShare,
                 itemDiffType = itemDetailState.itemDiffs.title,
+                iconDiffType = itemDetailState.itemDiffs.icon,
                 onSharedVaultClick = {},
                 iconContent = {}
             )
@@ -233,6 +269,7 @@ private fun ItemDetailTitleRow(
     itemColors: PassItemColors,
     share: Share,
     itemDiffType: ItemDiffType,
+    iconDiffType: ItemDiffType,
     onSharedVaultClick: (ShareId) -> Unit,
     iconContent: @Composable RowScope.() -> Unit
 ) {
@@ -248,7 +285,9 @@ private fun ItemDetailTitleRow(
                     backgroundColor = itemColors.majorPrimary
                 )
             },
-            content = { iconContent() }
+            content = {
+                Box(modifier = Modifier.iconDiff(iconDiffType)) { iconContent(this@Row) }
+            }
         )
 
         Column(
@@ -266,4 +305,18 @@ private fun ItemDetailTitleRow(
             )
         }
     }
+}
+
+/** Highlights the icon when a custom icon was added, removed or changed */
+private fun Modifier.iconDiff(iconDiffType: ItemDiffType): Modifier = composed {
+    applyIf(
+        condition = iconDiffType != ItemDiffType.None,
+        ifTrue = {
+            border(
+                width = 1.dp,
+                color = PassTheme.colors.signalWarning,
+                shape = PassTheme.shapes.squircleMediumLargeShape
+            )
+        }
+    )
 }

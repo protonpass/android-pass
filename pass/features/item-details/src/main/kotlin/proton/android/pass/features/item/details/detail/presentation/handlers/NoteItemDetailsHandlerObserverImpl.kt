@@ -98,6 +98,7 @@ class NoteItemDetailsHandlerObserverImpl @Inject constructor(
         otherAttachments: List<Attachment>
     ): ItemDiffs = encryptionContextProvider.withEncryptionContext {
         ItemDiffs.Note(
+            icon = calculateItemIconDiffType(baseItemContents, otherItemContents),
             title = calculateItemDiffType(
                 baseItemFieldValue = baseItemContents.title,
                 otherItemFieldValue = otherItemContents.title

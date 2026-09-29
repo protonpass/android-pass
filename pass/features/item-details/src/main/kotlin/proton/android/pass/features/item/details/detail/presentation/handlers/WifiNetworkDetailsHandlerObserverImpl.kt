@@ -187,6 +187,7 @@ class WifiNetworkDetailsHandlerObserverImpl @Inject constructor(
         otherAttachments: List<Attachment>
     ): ItemDiffs = encryptionContextProvider.withEncryptionContext {
         ItemDiffs.WifiNetwork(
+            icon = calculateItemIconDiffType(baseItemContents, otherItemContents),
             title = calculateItemDiffType(
                 baseItemFieldValue = baseItemContents.title,
                 otherItemFieldValue = otherItemContents.title

@@ -166,6 +166,7 @@ class CustomItemDetailsHandlerObserverImpl @Inject constructor(
         otherAttachments: List<Attachment>
     ): ItemDiffs = encryptionContextProvider.withEncryptionContext {
         ItemDiffs.Custom(
+            icon = calculateItemIconDiffType(baseItemContents, otherItemContents),
             title = calculateItemDiffType(
                 baseItemFieldValue = baseItemContents.title,
                 otherItemFieldValue = otherItemContents.title

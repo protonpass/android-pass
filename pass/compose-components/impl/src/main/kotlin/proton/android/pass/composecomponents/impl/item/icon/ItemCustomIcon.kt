@@ -32,9 +32,16 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
+import coil.ImageLoader
 import coil.compose.SubcomposeAsyncImage
 import coil.compose.SubcomposeAsyncImageContent
+import coil.decode.BitmapFactoryDecoder
+import coil.decode.Decoder
+import coil.decode.SvgDecoder
+import coil.fetch.SourceResult
+import coil.request.CachePolicy
 import coil.request.ImageRequest
+import coil.request.Options
 import proton.android.pass.common.api.DecodedItemIcon
 import proton.android.pass.common.api.ItemIcon
 import proton.android.pass.commonui.api.PassTheme
@@ -43,7 +50,8 @@ import java.nio.ByteBuffer
 /**
  * Renders a custom item icon (see [ItemIcon]). The icon is validated and decoded locally, so no
  * network request is ever made for it. Renders [fallback] if the icon is invalid or cannot be
- * decoded as an image.
+ * decoded as an image. [modifier] is applied to the icon and to the fallback, so the fallback
+ * must not apply it again.
  */
 @Composable
 fun ItemCustomIcon(
@@ -57,9 +65,40 @@ fun ItemCustomIcon(
     val decodedIcon = remember(icon) { ItemIcon.decode(icon) }
 
     if (decodedIcon == null) {
-        fallback()
+        Box(modifier = modifier) { fallback() }
     } else {
-        ItemCustomIcon(
+        DecodedItemCustomIcon(
+            modifier = modifier,
+            decodedIcon = decodedIcon,
+            size = size,
+            shape = shape,
+            enabled = enabled,
+            fallback = fallback
+        )
+    }
+}
+
+/**
+ * Renders the item's custom icon if it has a valid one, otherwise [defaultIcon]. [defaultIcon]
+ * receives the modifier it must apply: [modifier] when it is rendered on its own, or a plain
+ * [Modifier] when it is the [fallback] of a custom icon that cannot be rendered.
+ */
+@Composable
+internal fun ItemCustomIconOrDefault(
+    modifier: Modifier = Modifier,
+    customIcon: String?,
+    size: Int = 40,
+    shape: Shape = PassTheme.shapes.squircleMediumShape,
+    enabled: Boolean = true,
+    defaultIcon: @Composable (Modifier) -> Unit,
+    fallback: @Composable () -> Unit = { defaultIcon(Modifier) }
+) {
+    val decodedIcon = remember(customIcon) { ItemIcon.decode(customIcon) }
+
+    if (decodedIcon == null) {
+        defaultIcon(modifier)
+    } else {
+        DecodedItemCustomIcon(
             modifier = modifier,
             decodedIcon = decodedIcon,
             size = size,
@@ -71,12 +110,12 @@ fun ItemCustomIcon(
 }
 
 @Composable
-private fun ItemCustomIcon(
+private fun DecodedItemCustomIcon(
     modifier: Modifier = Modifier,
     decodedIcon: DecodedItemIcon,
-    size: Int = 40,
-    shape: Shape = PassTheme.shapes.squircleMediumShape,
-    enabled: Boolean = true,
+    size: Int,
+    shape: Shape,
+    enabled: Boolean,
     fallback: @Composable () -> Unit
 ) {
     val context = LocalContext.current
@@ -85,7 +124,11 @@ private fun ItemCustomIcon(
         ImageRequest.Builder(context)
             // A fresh read-only buffer per request: never a URL, so nothing is fetched remotely
             .data(ByteBuffer.wrap(decodedIcon.bytes).asReadOnlyBuffer())
+            // The decoder follows the declared type, the loader must not sniff the content
+            .decoderFactory(if (decodedIcon.isSvg) SvgIconDecoderFactory else RasterIconDecoderFactory)
             .size(sizePx)
+            .memoryCacheKey("${decodedIcon.cacheKey}:$sizePx")
+            .diskCachePolicy(CachePolicy.DISABLED)
             .build()
     }
 
@@ -130,4 +173,25 @@ private fun ItemCustomIcon(
             )
         }
     }
+}
+
+/**
+ * Always decodes as SVG. Only used for icons declared as SVG, which [ItemIcon.decode] has
+ * already screened: the factory in the image loader would sniff the content instead.
+ */
+private object SvgIconDecoderFactory : Decoder.Factory {
+    override fun create(
+        result: SourceResult,
+        options: Options,
+        imageLoader: ImageLoader
+    ): Decoder = SvgDecoder(result.source, options)
+}
+
+/** Always decodes as a (sampled) bitmap, so content declared as raster is never parsed as SVG */
+private object RasterIconDecoderFactory : Decoder.Factory {
+    override fun create(
+        result: SourceResult,
+        options: Options,
+        imageLoader: ImageLoader
+    ): Decoder = BitmapFactoryDecoder(result.source, options)
 }

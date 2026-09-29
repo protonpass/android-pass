@@ -46,7 +46,6 @@ import androidx.compose.ui.unit.dp
 import coil.compose.SubcomposeAsyncImage
 import coil.compose.SubcomposeAsyncImageContent
 import coil.request.ImageRequest
-import proton.android.pass.common.api.ItemIcon
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.ThemedBooleanPreviewProvider
@@ -107,32 +106,60 @@ fun LoginIcon(
         PassTheme.colors.textHint
     }
 ) {
+    ItemCustomIconOrDefault(
+        modifier = modifier,
+        customIcon = customIcon,
+        size = size,
+        shape = shape,
+        enabled = enabled,
+        // A custom icon replaces the website image: no favicon request is made
+        fallback = {
+            FallbackLoginIcon(
+                text = text,
+                packageName = packageName,
+                size = size,
+                shape = shape,
+                enabled = enabled,
+                backgroundColor = backgroundColor,
+                foregroundColor = foregroundColor
+            )
+        },
+        defaultIcon = { iconModifier ->
+            WebsiteLoginIcon(
+                modifier = iconModifier,
+                text = text,
+                websites = websites,
+                packageName = packageName,
+                size = size,
+                favIconPadding = favIconPadding,
+                shape = shape,
+                canLoadExternalImages = canLoadExternalImages,
+                enabled = enabled,
+                backgroundColor = backgroundColor,
+                foregroundColor = foregroundColor
+            )
+        }
+    )
+}
+
+@Composable
+private fun WebsiteLoginIcon(
+    modifier: Modifier,
+    text: String,
+    websites: List<String>,
+    packageName: String?,
+    size: Int,
+    favIconPadding: Dp,
+    shape: Shape,
+    canLoadExternalImages: Boolean,
+    enabled: Boolean,
+    backgroundColor: Color,
+    foregroundColor: Color
+) {
     var urlIndex by remember(websites) { mutableIntStateOf(0) }
     val currentWebsite = websites.getOrNull(urlIndex)
-    val hasCustomIcon = remember(customIcon) { ItemIcon.isValid(customIcon) }
 
-    if (hasCustomIcon) {
-        // A custom icon replaces the website image: no favicon request is made
-        ItemCustomIcon(
-            modifier = modifier,
-            icon = customIcon,
-            size = size,
-            shape = shape,
-            enabled = enabled,
-            fallback = {
-                FallbackLoginIcon(
-                    modifier = modifier,
-                    text = text,
-                    packageName = packageName,
-                    size = size,
-                    shape = shape,
-                    enabled = enabled,
-                    backgroundColor = backgroundColor,
-                    foregroundColor = foregroundColor
-                )
-            }
-        )
-    } else if (currentWebsite == null || !canLoadExternalImages) {
+    if (currentWebsite == null || !canLoadExternalImages) {
         FallbackLoginIcon(
             modifier = modifier,
             text = text,

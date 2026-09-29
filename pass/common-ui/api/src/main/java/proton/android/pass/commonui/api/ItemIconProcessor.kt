@@ -27,10 +27,14 @@ import android.graphics.Paint
 import android.graphics.Rect
 import android.net.Uri
 import android.os.Build
+import android.provider.OpenableColumns
+import android.webkit.MimeTypeMap
+import com.caverock.androidsvg.SVG
 import proton.android.pass.common.api.ItemIcon
 import proton.android.pass.common.api.ItemIconError
 import proton.android.pass.common.api.ItemIconResult
 import proton.android.pass.log.api.PassLogger
+import java.io.ByteArrayInputStream
 import java.io.ByteArrayOutputStream
 import java.io.IOException
 import java.io.InputStream
@@ -45,13 +49,48 @@ object ItemIconProcessor {
     private const val TAG = "ItemIconProcessor"
     private const val PNG_QUALITY = 100
 
-    fun process(contentResolver: ContentResolver, uri: Uri): ItemIconResult {
-        val mimeType = contentResolver.getType(uri)
+    fun process(
+        contentResolver: ContentResolver,
+        uri: Uri,
+        mimeType: String? = resolveMimeType(contentResolver, uri)
+    ): ItemIconResult {
         if (!ItemIcon.isAcceptedMimeType(mimeType)) return ItemIconResult.Error(ItemIconError.Type)
 
         val bytes = readBytes(contentResolver, uri) ?: return ItemIconResult.Error(ItemIconError.Decode)
 
-        return ItemIcon.process(mimeType, bytes, ::rasterize)
+        return ItemIcon.process(mimeType, bytes, ::isRenderableSvg, ::rasterize)
+    }
+
+    /**
+     * The provider's type can be missing, generic (`application/octet-stream`) or non-standard
+     * (`image/jpg`): fall back to the extension of the file's display name.
+     */
+    fun resolveMimeType(contentResolver: ContentResolver, uri: Uri): String? {
+        val providerType = ItemIcon.normalizeMimeType(safeCall { contentResolver.getType(uri) })
+        if (ItemIcon.isAcceptedMimeType(providerType)) return providerType
+
+        val extension = (displayName(contentResolver, uri) ?: uri.lastPathSegment)
+            ?.substringAfterLast('.', missingDelimiterValue = "")
+            ?.lowercase()
+            ?.takeIf { it.isNotEmpty() }
+            ?: return providerType
+        val extensionType = ItemIcon.normalizeMimeType(
+            MimeTypeMap.getSingleton().getMimeTypeFromExtension(extension)
+        )
+        return if (ItemIcon.isAcceptedMimeType(extensionType)) extensionType else providerType
+    }
+
+    /**
+     * Structural check: the SVG renderer must be able to parse the document. Reading the
+     * document size throws if the document has no root `<svg>` element.
+     */
+    @Suppress("TooGenericExceptionCaught")
+    fun isRenderableSvg(bytes: ByteArray): Boolean = try {
+        SVG.getFromInputStream(ByteArrayInputStream(bytes)).documentWidth
+        true
+    } catch (e: Exception) {
+        PassLogger.w(TAG, e)
+        false
     }
 
     /** Center-crops and scales the image to [ItemIcon.SIZE_PX] and exports it as PNG */
@@ -88,6 +127,21 @@ object ItemIconProcessor {
         PassLogger.w(TAG, e)
         null
     } catch (e: SecurityException) {
+        PassLogger.w(TAG, e)
+        null
+    }
+
+    private fun displayName(contentResolver: ContentResolver, uri: Uri): String? = safeCall {
+        contentResolver.query(uri, arrayOf(OpenableColumns.DISPLAY_NAME), null, null, null)?.use { cursor ->
+            val index = cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME)
+            if (index >= 0 && cursor.moveToFirst()) cursor.getString(index) else null
+        }
+    }
+
+    @Suppress("TooGenericExceptionCaught")
+    private fun <T> safeCall(block: () -> T?): T? = try {
+        block()
+    } catch (e: Exception) {
         PassLogger.w(TAG, e)
         null
     }

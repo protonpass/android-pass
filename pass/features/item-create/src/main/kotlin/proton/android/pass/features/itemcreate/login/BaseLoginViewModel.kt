@@ -524,7 +524,8 @@ abstract class BaseLoginViewModel(
             isLoadingState.update { IsLoadingState.Loading }
             val (mimeType, result) = withContext(Dispatchers.IO) {
                 safeRunCatching {
-                    contentResolver.getType(uri) to ItemIconProcessor.process(contentResolver, uri)
+                    val mimeType = ItemIconProcessor.resolveMimeType(contentResolver, uri)
+                    mimeType to ItemIconProcessor.process(contentResolver, uri, mimeType)
                 }.getOrElse {
                     PassLogger.w(TAG, it)
                     null to ItemIconResult.Error(ItemIconError.Decode)

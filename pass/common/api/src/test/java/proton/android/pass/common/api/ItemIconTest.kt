@@ -181,7 +181,7 @@ class ItemIconTest {
 
     @Test
     fun `process rejects svg files that are not svg documents`() {
-        listOf("", "hello", "<html></html>", " <svg></svg>").forEach { content ->
+        listOf("", "hello", "<html></html>", "<svgx></svgx>", "<!-- <svg> -->", "<?xml version=\"1.0\"?>").forEach { content ->
             val result = ItemIcon.process(ItemIcon.SVG_MIME_TYPE, content.toByteArray()) { PNG_BYTES }
             assertThat(result).isEqualTo(ItemIconResult.Error(ItemIconError.Decode))
         }
@@ -216,6 +216,200 @@ class ItemIconTest {
     }
 
     @Test
+    fun `process rejects svg that fails the structural parse`() {
+        var parsed: ByteArray? = null
+        val result = ItemIcon.process(
+            mimeType = ItemIcon.SVG_MIME_TYPE,
+            bytes = SVG.toByteArray(),
+            isRenderableSvg = {
+                parsed = it
+                false
+            }
+        ) { PNG_BYTES }
+
+        assertThat(parsed).isEqualTo(SVG.toByteArray())
+        assertThat(result).isEqualTo(ItemIconResult.Error(ItemIconError.Decode))
+    }
+
+    @Test
+    fun `process rejects unsafe svg without parsing it`() {
+        val result = ItemIcon.process(
+            mimeType = ItemIcon.SVG_MIME_TYPE,
+            bytes = svg("<image href=\"data:image/png;base64,QUJD\"/>").toByteArray(),
+            isRenderableSvg = { error("must not parse unsafe svg") }
+        ) { PNG_BYTES }
+
+        assertThat(result).isEqualTo(ItemIconResult.Error(ItemIconError.Decode))
+    }
+
+    @Test
+    fun `svg accepts a leading BOM, whitespace, XML declaration and comments`() {
+        listOf(
+            "\uFEFF$SVG",
+            "  \n\t$SVG",
+            "\uFEFF \r\n$SVG",
+            "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>\n$SVG",
+            "\uFEFF<?xml version=\"1.0\" encoding=\"utf-8\"?>$SVG",
+            "<?xml version=\"1.0\"?>\n<!-- Generator: some editor -->\n$SVG",
+            "<!-- a --><!-- b -->$SVG",
+            "<svg\nxmlns=\"http://www.w3.org/2000/svg\"/>",
+            "<svg/>"
+        ).forEach { content ->
+            assertThat(ItemIcon.isSafeSvg(content.toByteArray())).isTrue()
+            val result = ItemIcon.process(ItemIcon.SVG_MIME_TYPE, content.toByteArray()) { null }
+            assertThat(result).isEqualTo(ItemIconResult.Success(svgIcon(content)))
+        }
+    }
+
+    @Test
+    fun `decode strips the BOM and leading whitespace of svg icons`() {
+        val decoded = ItemIcon.decode(svgIcon("\uFEFF \n$SVG"))
+
+        assertThat(decoded).isNotNull()
+        assertThat(String(decoded!!.bytes)).isEqualTo(SVG)
+    }
+
+    @Test
+    fun `svg rejects forbidden constructs in any case`() {
+        listOf(
+            svg("<image href=\"data:image/png;base64,QUJD\"/>"),
+            svg("<IMAGE href=\"#a\"/>"),
+            svg("<image\nhref=\"#a\"/>"),
+            svg("<svg:image href=\"#a\"/>"),
+            svg("<foreignObject><div/></foreignObject>"),
+            svg("<FOREIGNOBJECT/>"),
+            svg("<style>@import url(https://example.com/a.css);</style>"),
+            svg("<style>@IMPORT 'a.css';</style>"),
+            svg("<use href=\"http://example.com/a.svg#a\"/>"),
+            svg("<use xlink:href=\"https://example.com/a.svg#a\"/>"),
+            svg("<use href='HTTP://example.com/a.svg#a'/>"),
+            svg("<use href=\"data:image/svg+xml;base64,QUJD\"/>"),
+            svg("<use href = \"&#104;ttp://example.com\"/>"),
+            "<!DOCTYPE svg [<!ENTITY a \"b\">]>$SVG",
+            "<!doctype svg PUBLIC \"-//W3C//DTD SVG 1.1//EN\" \"svg11.dtd\">$SVG",
+            svg("<!ENTITY a \"b\">"),
+            svg("<!entity a \"b\">")
+        ).forEach { content ->
+            assertThat(ItemIcon.isSafeSvg(content.toByteArray())).isFalse()
+            assertThat(ItemIcon.decode(svgIcon(content))).isNull()
+            val result = ItemIcon.process(ItemIcon.SVG_MIME_TYPE, content.toByteArray()) { PNG_BYTES }
+            assertThat(result).isEqualTo(ItemIconResult.Error(ItemIconError.Decode))
+        }
+    }
+
+    @Test
+    fun `svg allows same document references`() {
+        val content = svg("<defs><rect id=\"r\"/></defs><use href=\"#r\"/><use xlink:href=\"#r\"/>")
+        assertThat(ItemIcon.isSafeSvg(content.toByteArray())).isTrue()
+    }
+
+    @Test
+    fun `svg rejects more than 50 use elements`() {
+        val fifty = svg("<rect id=\"r\"/>" + "<use href=\"#r\"/>".repeat(50))
+        val fiftyOne = svg("<rect id=\"r\"/>" + "<use href=\"#r\"/>".repeat(50) + "<svg:USE href=\"#r\"/>")
+
+        assertThat(ItemIcon.isSafeSvg(fifty.toByteArray())).isTrue()
+        assertThat(ItemIcon.isSafeSvg(fiftyOne.toByteArray())).isFalse()
+    }
+
+    @Test
+    fun `svg rejects encodings other than UTF-8`() {
+        listOf(
+            SVG.toByteArray(Charsets.UTF_16),
+            SVG.toByteArray(Charsets.UTF_16LE),
+            SVG.toByteArray(Charsets.UTF_16BE),
+            "<?xml version=\"1.0\" encoding=\"UTF-16\"?>$SVG".toByteArray(),
+            "<?xml version=\"1.0\" encoding=\"IBM037\"?>$SVG".toByteArray(),
+            "$SVG\u0000".toByteArray()
+        ).forEach { bytes ->
+            assertThat(ItemIcon.isSafeSvg(bytes)).isFalse()
+        }
+    }
+
+    @Test
+    fun `svg rejects a prolog that never ends`() {
+        listOf("<?xml version=\"1.0\"", "<!-- $SVG", "<?pi $SVG").forEach { content ->
+            assertThat(ItemIcon.isSafeSvg(content.toByteArray())).isFalse()
+        }
+    }
+
+    @Test
+    fun `svg handles a long prolog without overflowing`() {
+        val content = "<!--" + "-".repeat(ItemIcon.maxInputSize(ItemIcon.SVG_MIME_TYPE)) + "-->" + SVG
+        assertThat(ItemIcon.isSafeSvg(content.toByteArray())).isTrue()
+    }
+
+    @Test
+    fun `decode accepts raster icons whose content matches the declared type`() {
+        listOf(
+            "image/png" to PNG_BYTES,
+            "image/jpeg" to JPEG_BYTES,
+            "image/webp" to WEBP_BYTES
+        ).forEach { (mimeType, bytes) ->
+            val decoded = ItemIcon.decode(ItemIcon.encode(mimeType, bytes))
+            assertThat(decoded).isEqualTo(DecodedItemIcon(mimeType, bytes))
+        }
+    }
+
+    @Test
+    fun `decode rejects raster icons whose magic bytes do not match the declared type`() {
+        listOf(
+            "image/png" to SVG.toByteArray(),
+            "image/png" to JPEG_BYTES,
+            "image/png" to PNG_BYTES.copyOf(4),
+            "image/jpeg" to PNG_BYTES,
+            "image/jpeg" to byteArrayOf(0xFF.toByte(), 0xD8.toByte()),
+            "image/webp" to PNG_BYTES,
+            "image/webp" to "RIFF\u0000\u0000\u0000\u0000WAVE".toByteArray(),
+            "image/webp" to "RIFF".toByteArray()
+        ).forEach { (mimeType, bytes) ->
+            assertThat(ItemIcon.hasMagicBytes(mimeType, bytes)).isFalse()
+            assertThat(ItemIcon.decode(ItemIcon.encode(mimeType, bytes))).isNull()
+        }
+    }
+
+    @Test
+    fun `blank icons are treated as no icon`() {
+        listOf(null, "", " ", "\n").forEach { icon ->
+            assertThat(ItemIcon.normalize(icon)).isNull()
+            assertThat(ItemIcon.validate(icon)).isNull()
+            assertThat(ItemIcon.decode(icon)).isNull()
+        }
+        assertThat(ItemIcon.normalize(PNG_ICON)).isEqualTo(PNG_ICON)
+    }
+
+    @Test
+    fun `validate reports too large before invalid`() {
+        val tooLong = "https://" + "a".repeat(ItemIcon.MAX_LENGTH)
+        assertThat(ItemIcon.validate(tooLong)).isEqualTo(ItemIconError.Size)
+        assertThat(ItemIcon.validate("https://example.com/icon.png")).isEqualTo(ItemIconError.Decode)
+        assertThat(ItemIcon.validate(svgIcon(svg("<image href=\"#a\"/>")))).isEqualTo(ItemIconError.Decode)
+        assertThat(ItemIcon.validate(JPEG_ICON)).isEqualTo(ItemIconError.Decode)
+        assertThat(ItemIcon.validate(PNG_ICON)).isNull()
+        assertThat(ItemIcon.validate(SVG_ICON)).isNull()
+    }
+
+    @Test
+    fun `cache key is stable and depends on type and content`() {
+        val png = ItemIcon.decode(PNG_ICON)!!
+        assertThat(png.cacheKey).isEqualTo(ItemIcon.decode(PNG_ICON)!!.cacheKey)
+        assertThat(png.cacheKey).startsWith("item-icon:")
+        assertThat(png.cacheKey).isNotEqualTo(ItemIcon.decode(SVG_ICON)!!.cacheKey)
+        assertThat(png.cacheKey).isNotEqualTo(DecodedItemIcon("image/webp", png.bytes).cacheKey)
+    }
+
+    @Test
+    fun `normalizeMimeType maps image jpg and drops parameters`() {
+        assertThat(ItemIcon.normalizeMimeType("image/jpg")).isEqualTo("image/jpeg")
+        assertThat(ItemIcon.normalizeMimeType("IMAGE/JPG")).isEqualTo("image/jpeg")
+        assertThat(ItemIcon.normalizeMimeType("image/svg+xml; charset=utf-8")).isEqualTo("image/svg+xml")
+        assertThat(ItemIcon.normalizeMimeType("image/png")).isEqualTo("image/png")
+        assertThat(ItemIcon.normalizeMimeType("application/octet-stream")).isEqualTo("application/octet-stream")
+        assertThat(ItemIcon.normalizeMimeType(" ")).isNull()
+        assertThat(ItemIcon.normalizeMimeType(null)).isNull()
+    }
+
+    @Test
     fun `dataUriLength matches the encoded length`() {
         listOf(0, 1, 2, 3, 4, 100, 1_000).forEach { size ->
             val bytes = ByteArray(size) { 1 }
@@ -236,7 +430,15 @@ class ItemIconTest {
         const val JPEG_ICON = "data:image/jpeg;base64,$PNG_B64"
         const val WEBP_ICON = "data:image/webp;base64,$PNG_B64"
 
+        val JPEG_BYTES: ByteArray = byteArrayOf(0xFF.toByte(), 0xD8.toByte(), 0xFF.toByte(), 0xE0.toByte(), 0, 0x10)
+        val WEBP_BYTES: ByteArray = "RIFF\u0000\u0000\u0000\u0000WEBPVP8 ".toByteArray()
+
         fun b64(value: String): String = Base64.getEncoder().encodeToString(value.toByteArray())
+
+        fun svg(content: String): String = "<svg xmlns=\"http://www.w3.org/2000/svg\" " +
+            "xmlns:xlink=\"http://www.w3.org/1999/xlink\">$content</svg>"
+
+        fun svgIcon(content: String): String = "data:image/svg+xml;base64,${b64(content)}"
 
         fun svgOfSize(size: Int): ByteArray {
             val body = "<svg></svg>"

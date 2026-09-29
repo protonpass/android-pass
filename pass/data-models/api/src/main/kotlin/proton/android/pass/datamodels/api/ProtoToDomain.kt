@@ -46,10 +46,10 @@ private const val MILLIS_IN_SECOND = 1_000L
 private const val NANOS_IN_MILLI = 1_000_000L
 
 /**
- * Returns the custom icon stored in the item metadata, or null if it is not set.
+ * Returns the custom icon stored in the item metadata, or null if it is not set or blank.
  * The value is untrusted and must be validated before rendering.
  */
-fun ItemV1.Item.metadataIconOrNull(): String? = if (metadata.hasIcon()) metadata.icon else null
+fun ItemV1.Item.metadataIconOrNull(): String? = metadata.icon.takeIf { metadata.hasIcon() && it.isNotBlank() }
 
 fun ItemType.Companion.fromParsed(
     context: EncryptionContext,

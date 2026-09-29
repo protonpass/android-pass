@@ -46,7 +46,8 @@ fun ItemContents.serializeToProto(
         .setName(title)
         .setNote(note)
         .setItemUuid(itemUuid)
-    when (val itemIcon = icon) {
+    // A blank icon is the same as no icon: clear the field instead of storing an empty string
+    when (val itemIcon = icon?.takeIf { it.isNotBlank() }) {
         null -> metadataBuilder.clearIcon()
         else -> metadataBuilder.setIcon(itemIcon)
     }

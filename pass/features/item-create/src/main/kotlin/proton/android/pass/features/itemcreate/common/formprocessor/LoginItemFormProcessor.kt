@@ -19,9 +19,12 @@
 package proton.android.pass.features.itemcreate.common.formprocessor
 
 import me.proton.core.crypto.common.keystore.EncryptedString
+import proton.android.pass.common.api.ItemIcon
+import proton.android.pass.common.api.ItemIconError
 import proton.android.pass.common.api.Option
 import proton.android.pass.data.api.url.UrlSanitizer
 import proton.android.pass.features.itemcreate.common.CommonFieldValidationError
+import proton.android.pass.features.itemcreate.common.ItemIconValidationError
 import proton.android.pass.features.itemcreate.common.LoginItemValidationError
 import proton.android.pass.features.itemcreate.common.UICustomFieldContent
 import proton.android.pass.features.itemcreate.common.UIHiddenState
@@ -54,6 +57,12 @@ class LoginItemFormProcessor @Inject constructor(
 
         if (input.formState.title.isBlank()) {
             errors += CommonFieldValidationError.BlankTitle
+        }
+        // An icon that is set but cannot be rendered (ie: set by another client) must be removed first
+        when (ItemIcon.validate(input.formState.icon)) {
+            ItemIconError.Size -> errors += ItemIconValidationError.TooLarge
+            ItemIconError.Type, ItemIconError.Decode -> errors += ItemIconValidationError.Invalid
+            null -> Unit
         }
         val sanitisedUrls = input.formState.urls.mapIndexed { idx, url ->
             if (url.isNotBlank()) {
@@ -102,7 +111,8 @@ class LoginItemFormProcessor @Inject constructor(
                 input.formState.copy(
                     primaryTotp = primaryTotpResult.sanitized,
                     urls = sanitisedUrls,
-                    customFields = customFieldResult.sanitized
+                    customFields = customFieldResult.sanitized,
+                    icon = ItemIcon.normalize(input.formState.icon)
                 )
             )
         } else {

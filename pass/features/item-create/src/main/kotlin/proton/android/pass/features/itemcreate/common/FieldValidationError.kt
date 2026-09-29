@@ -27,6 +27,11 @@ sealed interface CommonFieldValidationError : ValidationError {
     data object BlankTitle : CommonFieldValidationError
 }
 
+sealed interface ItemIconValidationError : ValidationError {
+    data object TooLarge : ItemIconValidationError
+    data object Invalid : ItemIconValidationError
+}
+
 sealed interface CustomFieldValidationError : ValidationError {
 
     data class InvalidTotp(val sectionIndex: Option<Int> = None, val index: Int) :

@@ -94,6 +94,7 @@ import proton.android.pass.features.itemcreate.common.CommonFieldValidationError
 import proton.android.pass.features.itemcreate.common.CustomFieldDraftRepository
 import proton.android.pass.features.itemcreate.common.CustomFieldValidationError
 import proton.android.pass.features.itemcreate.common.DraftFormFieldEvent
+import proton.android.pass.features.itemcreate.common.ItemIconValidationError
 import proton.android.pass.features.itemcreate.common.LoginItemValidationError
 import proton.android.pass.features.itemcreate.common.UICustomFieldContent
 import proton.android.pass.features.itemcreate.common.UIHiddenState
@@ -535,6 +536,7 @@ abstract class BaseLoginViewModel(
                 is ItemIconResult.Success -> {
                     onUserEditedContent()
                     loginItemFormMutableState = loginItemFormState.copy(icon = result.icon)
+                    removeValidationErrors(ItemIconValidationError.TooLarge, ItemIconValidationError.Invalid)
                 }
 
                 is ItemIconResult.Error -> {
@@ -559,6 +561,7 @@ abstract class BaseLoginViewModel(
     internal fun onIconRemoved() {
         onUserEditedContent()
         loginItemFormMutableState = loginItemFormState.copy(icon = null)
+        removeValidationErrors(ItemIconValidationError.TooLarge, ItemIconValidationError.Invalid)
     }
 
     fun onDeleteLinkedApp(packageInfo: PackageInfoUi) {

@@ -116,6 +116,34 @@ class ItemIconProtoMappingTest {
     }
 
     @Test
+    fun `clears the icon instead of storing a blank one`() {
+        val existing = note(icon = ICON).serializeToProto(encryptionContext = FakeEncryptionContext)
+
+        listOf("", " ").forEach { blank ->
+            val created = note(icon = blank).serializeToProto(encryptionContext = FakeEncryptionContext)
+            val updated = note(icon = blank).serializeToProto(
+                builder = existing.toBuilder(),
+                encryptionContext = FakeEncryptionContext
+            )
+
+            assertThat(created.metadata.hasIcon()).isFalse()
+            assertThat(updated.metadata.hasIcon()).isFalse()
+        }
+    }
+
+    @Test
+    fun `reads a blank stored icon as no icon`() {
+        val proto = note(icon = null).serializeToProto(encryptionContext = FakeEncryptionContext)
+        val withBlankIcon = proto.toBuilder()
+            .setMetadata(proto.metadata.toBuilder().setIcon(""))
+            .build()
+
+        assertThat(withBlankIcon.metadata.hasIcon()).isTrue()
+        assertThat(withBlankIcon.metadataIconOrNull()).isNull()
+        assertThat(decode(withBlankIcon).icon).isNull()
+    }
+
+    @Test
     fun `serializes items without icon to identical bytes`() {
         val withoutIcon = note(icon = null).serializeToProto(itemUuid = UUID, encryptionContext = FakeEncryptionContext)
         val withIconRemoved = note(icon = ICON).withIcon(null)

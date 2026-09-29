@@ -22,6 +22,7 @@ import android.content.pm.PackageManager
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -60,6 +61,8 @@ import proton.android.pass.domain.items.ItemCategory
 import proton.android.pass.features.itemcreate.attachments.banner.AttachmentBanner
 import proton.android.pass.features.itemcreate.common.CustomFieldValidationError
 import proton.android.pass.features.itemcreate.common.ItemIconPicker
+import proton.android.pass.features.itemcreate.common.ItemIconValidationError
+import proton.android.pass.features.itemcreate.common.ItemIconValidationErrorText
 import proton.android.pass.features.itemcreate.common.StickyTotpOptions
 import proton.android.pass.features.itemcreate.common.customfields.customFieldsList
 import proton.android.pass.features.itemcreate.login.LoginContentEvent.OnAttachmentEvent
@@ -98,6 +101,7 @@ internal fun LoginItemForm(
     primaryEmail: String?,
     isUpdate: Boolean,
     isTitleError: Boolean,
+    iconValidationError: ItemIconValidationError?,
     isTotpError: Boolean,
     focusLastWebsite: Boolean,
     canUpdateUsername: Boolean,
@@ -147,7 +151,7 @@ internal fun LoginItemForm(
                 }
             }
             item {
-                Row(
+                Column(
                     modifier = Modifier
                         .padding(vertical = Spacing.small)
                         .roundedContainerNorm()
@@ -157,26 +161,34 @@ internal fun LoginItemForm(
                             end = Spacing.extraSmall,
                             bottom = Spacing.medium
                         ),
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.spacedBy(Spacing.medium)
+                    verticalArrangement = Arrangement.spacedBy(Spacing.small)
                 ) {
-                    ItemIconPicker(
-                        icon = loginItemFormState.icon,
-                        enabled = isEditAllowed,
-                        onIconSelected = { onEvent(OnIconSelected(it)) },
-                        onIconRemoved = { onEvent(OnIconRemoved) },
-                        defaultIcon = { LoginIcon() }
-                    )
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.spacedBy(Spacing.medium)
+                    ) {
+                        ItemIconPicker(
+                            icon = loginItemFormState.icon,
+                            enabled = isEditAllowed,
+                            onIconSelected = { onEvent(OnIconSelected(it)) },
+                            onIconRemoved = { onEvent(OnIconRemoved) },
+                            defaultIcon = { LoginIcon() }
+                        )
 
-                    TitleSection(
-                        modifier = Modifier.weight(1f),
-                        value = loginItemFormState.title,
-                        requestFocus = true,
-                        onTitleRequiredError = isTitleError,
-                        enabled = isEditAllowed,
-                        isRounded = true,
-                        onChange = { onEvent(OnTitleChange(it)) }
-                    )
+                        TitleSection(
+                            modifier = Modifier.weight(1f),
+                            value = loginItemFormState.title,
+                            requestFocus = true,
+                            onTitleRequiredError = isTitleError,
+                            enabled = isEditAllowed,
+                            isRounded = true,
+                            onChange = { onEvent(OnTitleChange(it)) }
+                        )
+                    }
+
+                    if (iconValidationError != null) {
+                        ItemIconValidationErrorText(error = iconValidationError)
+                    }
                 }
             }
 

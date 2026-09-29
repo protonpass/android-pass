@@ -35,6 +35,7 @@ import proton.android.pass.domain.Vault
 import proton.android.pass.features.itemcreate.common.CommonFieldValidationError
 import proton.android.pass.features.itemcreate.common.CreateUpdateTopBar
 import proton.android.pass.features.itemcreate.common.CustomFieldValidationError
+import proton.android.pass.features.itemcreate.common.ItemIconValidationError
 import proton.android.pass.features.itemcreate.common.LoginItemValidationError
 
 @OptIn(ExperimentalComposeUiApi::class)
@@ -98,6 +99,9 @@ internal fun LoginContent(
             isEditAllowed = uiState.isLoadingState == IsLoadingState.NotLoading,
             isTotpError = uiState.validationErrors.contains(LoginItemValidationError.InvalidPrimaryTotp),
             isTitleError = uiState.validationErrors.contains(CommonFieldValidationError.BlankTitle),
+            iconValidationError = uiState.validationErrors
+                .filterIsInstance<ItemIconValidationError>()
+                .firstOrNull(),
             focusLastWebsite = uiState.focusLastWebsite,
             websitesWithErrors = uiState.validationErrors
                 .filterIsInstance<LoginItemValidationError.InvalidUrl>()

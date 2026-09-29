@@ -51,6 +51,8 @@
     <string name="item_icon_error_size">Image is too large. Maximum size is 512 KB.</string>
     <string name="item_icon_error_size_svg">Image is too large. Maximum size is 24 KB for SVG images.</string>
     <string name="item_icon_error_decode">Could not read this image.</string>
+    <string name="item_icon_validation_invalid">Icon image is invalid</string>
+    <string name="item_icon_validation_too_large">Icon image is too large</string>
     <string name="login_created">Login created</string>
     <string name="bottomsheet_modify_alias_title">Modify alias</string>
     <string name="bottomsheet_custom_field_type_text">Text</string>

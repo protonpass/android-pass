@@ -28,6 +28,7 @@ import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.Icon
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -39,6 +40,8 @@ import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
+import me.proton.core.compose.theme.ProtonTheme
+import me.proton.core.compose.theme.captionNorm
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.composecomponents.impl.container.BoxedIcon
 import proton.android.pass.composecomponents.impl.item.icon.ItemCustomIcon
@@ -85,7 +88,7 @@ internal fun ItemIconPicker(
                 size = ICON_SIZE,
                 shape = shape,
                 fallback = {
-                    if (icon == null) {
+                    if (icon.isNullOrBlank()) {
                         defaultIcon()
                     } else {
                         // Set but not renderable (ie: coming from another client): allow removing it
@@ -95,7 +98,7 @@ internal fun ItemIconPicker(
             )
         }
 
-        if (icon != null && enabled) {
+        if (!icon.isNullOrBlank() && enabled) {
             Box(
                 modifier = Modifier
                     .align(Alignment.TopEnd)
@@ -116,6 +119,21 @@ internal fun ItemIconPicker(
             }
         }
     }
+}
+
+@Composable
+internal fun ItemIconValidationErrorText(modifier: Modifier = Modifier, error: ItemIconValidationError) {
+    Text(
+        modifier = modifier,
+        text = stringResource(
+            id = when (error) {
+                ItemIconValidationError.TooLarge -> R.string.item_icon_validation_too_large
+                ItemIconValidationError.Invalid -> R.string.item_icon_validation_invalid
+            }
+        ),
+        style = ProtonTheme.typography.captionNorm,
+        color = PassTheme.colors.signalDanger
+    )
 }
 
 @Composable

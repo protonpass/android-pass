@@ -55,7 +55,8 @@ data class LoginItemFormState(
     val passkeyToBeGenerated: UIPasskeyContent?,
     private val isExpandedByContent: Boolean,
     private val isExpandedByUser: Boolean,
-    private val isExpandedByPreference: Boolean
+    private val isExpandedByPreference: Boolean,
+    val icon: String? = null
 ) : Parcelable {
 
     @IgnoredOnParcel
@@ -101,7 +102,8 @@ data class LoginItemFormState(
             } else {
                 passkeys.map(UIPasskeyContent::toDomain)
             },
-            autofillUrls = syncedAutofillUrls
+            autofillUrls = syncedAutofillUrls,
+            icon = icon
         )
     }
 
@@ -116,6 +118,7 @@ data class LoginItemFormState(
             packageInfoSet == other.packageInfoSet &&
             encryptionContext.decrypt(primaryTotp.encrypted.toEncryptedByteArray())
                 .contentEquals(encryptionContext.decrypt(other.primaryTotp.encrypted.toEncryptedByteArray())) &&
+            icon == other.icon &&
             customFields.size == other.customFields.size &&
             customFields.zip(other.customFields)
                 .all { (a, b) -> a.compare(b, encryptionContext) }

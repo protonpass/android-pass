@@ -340,6 +340,11 @@ internal fun UpdateLogin(
 
                     LoginContentEvent.DismissAttachmentBanner ->
                         viewModel.dismissFileAttachmentsOnboardingBanner()
+
+                    is LoginContentEvent.OnIconSelected ->
+                        viewModel.onIconSelected(context.toClassHolder(), it.uri)
+
+                    LoginContentEvent.OnIconRemoved -> viewModel.onIconRemoved()
                 }
             }
         )

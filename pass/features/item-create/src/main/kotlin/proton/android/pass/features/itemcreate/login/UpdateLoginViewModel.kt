@@ -376,7 +376,8 @@ class UpdateLoginViewModel @AssistedInject constructor(
                     customFields = customFieldHandler.sanitiseForEditingCustomFields(customFields),
                     passkeys = itemContents.passkeys.map { UIPasskeyContent.from(it) },
                     autofillUrls = mergedAutofillUrls.map { UIAutofillUrl.from(it) },
-                    isExpandedByContent = itemContents.itemEmail.isNotBlank() && itemContents.itemUsername.isNotBlank()
+                    isExpandedByContent = itemContents.itemEmail.isNotBlank() && itemContents.itemUsername.isNotBlank(),
+                    icon = itemContents.icon
                 )
             }
         }

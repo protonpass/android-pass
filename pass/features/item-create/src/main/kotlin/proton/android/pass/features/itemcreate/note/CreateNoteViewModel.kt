@@ -240,7 +240,8 @@ class CreateNoteViewModel @Inject constructor(
             noteItemFormMutableState = currentValue.copy(
                 title = context.getString(R.string.title_duplicate, decrypt(item.title)),
                 note = decrypt(item.note),
-                customFields = customFieldHandler.sanitiseForEditingCustomFields(customFields)
+                customFields = customFieldHandler.sanitiseForEditingCustomFields(customFields),
+                icon = itemContents.icon
             )
         }
     }

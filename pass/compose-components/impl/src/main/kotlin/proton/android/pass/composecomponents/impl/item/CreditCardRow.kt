@@ -89,7 +89,7 @@ fun CreditCardRow(
                             backgroundColor = PassTheme.colors.cardInteractionNormMajor1
                         )
                     },
-                    content = { CreditCardIcon() }
+                    content = { CreditCardIcon(customIcon = content.icon) }
                 )
 
                 is ItemSelectionModeState.InSelectionMode -> {
@@ -106,7 +106,7 @@ fun CreditCardRow(
                                     backgroundColor = PassTheme.colors.cardInteractionNormMajor1
                                 )
                             },
-                            content = { CreditCardIcon(enabled = isEnabled) }
+                            content = { CreditCardIcon(enabled = isEnabled, customIcon = content.icon) }
                         )
                     }
                 }

@@ -87,7 +87,7 @@ internal fun IdentityOptionsBottomSheetContents(
                     BottomSheetItemSubtitle(text = contents.personalDetailsContent.fullName)
                 }
             },
-            leftIcon = { IdentityIcon() }
+            leftIcon = { IdentityIcon(customIcon = contents.icon) }
         )
 
         buildList {

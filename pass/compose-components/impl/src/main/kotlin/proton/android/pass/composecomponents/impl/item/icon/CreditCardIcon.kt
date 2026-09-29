@@ -48,20 +48,29 @@ fun CreditCardIcon(
         PassTheme.colors.cardInteractionNormMajor2
     } else {
         PassTheme.colors.cardInteractionNormMinor1
-    }
+    },
+    customIcon: String? = null
 ) {
-    BoxedIcon(
+    ItemCustomIconOrDefault(
         modifier = modifier,
-        backgroundColor = backgroundColor,
+        customIcon = customIcon,
         size = size,
-        shape = shape
-    ) {
-        Icon(
-            modifier = Modifier.padding(Spacing.extraSmall),
-            painter = painterResource(me.proton.core.presentation.R.drawable.ic_proton_credit_card),
-            contentDescription = null,
-            tint = foregroundColor
-        )
+        shape = shape,
+        enabled = enabled
+    ) { iconModifier ->
+        BoxedIcon(
+            modifier = iconModifier,
+            backgroundColor = backgroundColor,
+            size = size,
+            shape = shape
+        ) {
+            Icon(
+                modifier = Modifier.padding(Spacing.extraSmall),
+                painter = painterResource(me.proton.core.presentation.R.drawable.ic_proton_credit_card),
+                contentDescription = null,
+                tint = foregroundColor
+            )
+        }
     }
 }
 

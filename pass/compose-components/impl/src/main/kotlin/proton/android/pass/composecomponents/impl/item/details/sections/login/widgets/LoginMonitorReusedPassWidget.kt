@@ -186,6 +186,7 @@ private fun ReusedPasswordCarouselItem(
             favIconPadding = 2.dp,
             websites = urls,
             packageName = packageInfoSet.firstOrNull()?.packageName?.value,
+            customIcon = icon,
             backgroundColor = PassTheme.colors.loginInteractionNormMinor2
         )
 

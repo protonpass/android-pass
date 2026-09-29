@@ -73,7 +73,7 @@ fun NoteRow(
                             backgroundColor = PassTheme.colors.noteInteractionNormMajor1
                         )
                     },
-                    content = { NoteIcon() }
+                    content = { NoteIcon(customIcon = content.icon) }
                 )
 
                 is ItemSelectionModeState.InSelectionMode -> {
@@ -90,7 +90,7 @@ fun NoteRow(
                                     backgroundColor = PassTheme.colors.noteInteractionNormMajor1
                                 )
                             },
-                            content = { NoteIcon(enabled = isEnabled) }
+                            content = { NoteIcon(enabled = isEnabled, customIcon = content.icon) }
                         )
                     }
                 }

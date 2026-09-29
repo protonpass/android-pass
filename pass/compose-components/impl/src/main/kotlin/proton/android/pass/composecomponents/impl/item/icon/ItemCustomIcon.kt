@@ -81,7 +81,7 @@ fun ItemCustomIcon(
 /**
  * Renders the item's custom icon if it has a valid one, otherwise [defaultIcon]. [defaultIcon]
  * receives the modifier it must apply: [modifier] when it is rendered on its own, or a plain
- * [Modifier] when it is the [fallback] of a custom icon that cannot be rendered.
+ * [Modifier] when it replaces a custom icon that cannot be rendered and no [fallback] is given.
  */
 @Composable
 internal fun ItemCustomIconOrDefault(
@@ -90,8 +90,8 @@ internal fun ItemCustomIconOrDefault(
     size: Int = 40,
     shape: Shape = PassTheme.shapes.squircleMediumShape,
     enabled: Boolean = true,
-    defaultIcon: @Composable (Modifier) -> Unit,
-    fallback: @Composable () -> Unit = { defaultIcon(Modifier) }
+    fallback: (@Composable () -> Unit)? = null,
+    defaultIcon: @Composable (Modifier) -> Unit
 ) {
     val decodedIcon = remember(customIcon) { ItemIcon.decode(customIcon) }
 
@@ -104,7 +104,7 @@ internal fun ItemCustomIconOrDefault(
             size = size,
             shape = shape,
             enabled = enabled,
-            fallback = fallback
+            fallback = fallback ?: { defaultIcon(Modifier) }
         )
     }
 }

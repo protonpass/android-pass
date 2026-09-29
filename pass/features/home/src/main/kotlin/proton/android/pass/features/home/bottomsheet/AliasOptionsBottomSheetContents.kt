@@ -83,7 +83,8 @@ internal fun AliasOptionsBottomSheetContents(
             },
             leftIcon = {
                 AliasIcon(
-                    activeAlias = contents.isEnabled
+                    activeAlias = contents.isEnabled,
+                    customIcon = contents.icon
                 )
             }
         )

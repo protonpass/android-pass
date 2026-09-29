@@ -51,20 +51,29 @@ fun CustomItemIcon(
         ProtonTheme.colors.textNorm
     } else {
         ProtonTheme.colors.textDisabled
-    }
+    },
+    customIcon: String? = null
 ) {
-    BoxedIcon(
+    ItemCustomIconOrDefault(
         modifier = modifier,
-        backgroundColor = backgroundColor,
+        customIcon = customIcon,
         size = size,
-        shape = shape
-    ) {
-        Icon(
-            modifier = Modifier.padding(Spacing.extraSmall),
-            painter = painterResource(R.drawable.ic_proton_wrench),
-            contentDescription = null,
-            tint = foregroundColor
-        )
+        shape = shape,
+        enabled = enabled
+    ) { iconModifier ->
+        BoxedIcon(
+            modifier = iconModifier,
+            backgroundColor = backgroundColor,
+            size = size,
+            shape = shape
+        ) {
+            Icon(
+                modifier = Modifier.padding(Spacing.extraSmall),
+                painter = painterResource(R.drawable.ic_proton_wrench),
+                contentDescription = null,
+                tint = foregroundColor
+            )
+        }
     }
 }
 

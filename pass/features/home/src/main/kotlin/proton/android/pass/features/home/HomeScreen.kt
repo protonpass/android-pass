@@ -710,15 +710,16 @@ fun HomeScreen(
                                 }
 
                                 is ItemContents.Alias -> AliasIcon(
-                                    activeAlias = contents.isEnabled
+                                    activeAlias = contents.isEnabled,
+                                    customIcon = contents.icon
                                 )
 
-                                is ItemContents.Note -> NoteIcon()
-                                is ItemContents.CreditCard -> CreditCardIcon()
-                                is ItemContents.Identity -> IdentityIcon()
+                                is ItemContents.Note -> NoteIcon(customIcon = contents.icon)
+                                is ItemContents.CreditCard -> CreditCardIcon(customIcon = contents.icon)
+                                is ItemContents.Identity -> IdentityIcon(customIcon = contents.icon)
                                 is ItemContents.WifiNetwork,
                                 is ItemContents.SSHKey,
-                                is ItemContents.Custom -> CustomItemIcon()
+                                is ItemContents.Custom -> CustomItemIcon(customIcon = contents.icon)
 
                                 is ItemContents.Unknown -> {}
                             }

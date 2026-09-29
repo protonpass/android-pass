@@ -67,7 +67,8 @@ class ObserveLoginTotpEntriesImpl @Inject constructor(
                     websites = login.websites,
                     packageName = packageName,
                     totpUri = uri,
-                    source = LoginTotpEntry.Source.Primary
+                    source = LoginTotpEntry.Source.Primary,
+                    icon = icon
                 )
             }
         }
@@ -83,7 +84,8 @@ class ObserveLoginTotpEntriesImpl @Inject constructor(
                         websites = login.websites,
                         packageName = packageName,
                         totpUri = uri,
-                        source = LoginTotpEntry.Source.CustomField
+                        source = LoginTotpEntry.Source.CustomField,
+                        icon = icon
                     )
                 }
             }

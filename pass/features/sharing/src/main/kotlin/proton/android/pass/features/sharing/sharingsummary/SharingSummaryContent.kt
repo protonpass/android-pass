@@ -123,7 +123,8 @@ internal fun SharingSummaryContent(
                                         text = state.itemTitle,
                                         website = state.itemWebsite,
                                         packageName = state.itemPackageName,
-                                        canLoadExternalImages = state.canItemLoadExternalImages
+                                        canLoadExternalImages = state.canItemLoadExternalImages,
+                                        customIcon = state.itemIcon
                                     )
                                 }
                             )

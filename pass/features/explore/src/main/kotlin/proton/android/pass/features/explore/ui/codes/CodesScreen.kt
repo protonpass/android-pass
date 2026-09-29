@@ -172,7 +172,8 @@ private fun CodeRowItem(
             text = row.title,
             websites = row.websites,
             packageName = row.packageName,
-            canLoadExternalImages = false
+            canLoadExternalImages = false,
+            customIcon = row.icon
         )
         Spacer(modifier = Modifier.width(Spacing.medium))
         Column(modifier = Modifier.weight(1f)) {

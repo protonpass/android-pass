@@ -66,6 +66,7 @@ internal fun SecureLinksListGridCell(
     modifier: Modifier = Modifier,
     itemCategory: ItemCategory,
     title: String,
+    icon: String?,
     website: String?,
     packageName: String?,
     canLoadExternalImages: Boolean,
@@ -105,6 +106,7 @@ internal fun SecureLinksListGridCell(
             SecureLinksListGridCellIcon(
                 itemCategory = itemCategory,
                 itemTitle = title,
+                itemIcon = icon,
                 itemWebsite = website,
                 itemPackageName = packageName,
                 canLoadExternalImages = canLoadExternalImages
@@ -129,23 +131,25 @@ private fun SecureLinksListGridCellIcon(
     modifier: Modifier = Modifier,
     itemCategory: ItemCategory,
     itemTitle: String,
+    itemIcon: String?,
     itemWebsite: String?,
     itemPackageName: String?,
     canLoadExternalImages: Boolean
 ) = when (itemCategory) {
-    ItemCategory.CreditCard -> CreditCardIcon(modifier = modifier)
-    ItemCategory.Identity -> IdentityIcon(modifier = modifier)
-    ItemCategory.Note -> NoteIcon(modifier = modifier)
+    ItemCategory.CreditCard -> CreditCardIcon(modifier = modifier, customIcon = itemIcon)
+    ItemCategory.Identity -> IdentityIcon(modifier = modifier, customIcon = itemIcon)
+    ItemCategory.Note -> NoteIcon(modifier = modifier, customIcon = itemIcon)
     ItemCategory.Login -> LoginIcon(
         modifier = modifier,
         text = itemTitle,
         canLoadExternalImages = canLoadExternalImages,
         websites = listOfNotNull(itemWebsite),
-        packageName = itemPackageName
+        packageName = itemPackageName,
+        customIcon = itemIcon
     )
     ItemCategory.SSHKey,
     ItemCategory.WifiNetwork,
-    ItemCategory.Custom -> CustomItemIcon(modifier = modifier)
+    ItemCategory.Custom -> CustomItemIcon(modifier = modifier, customIcon = itemIcon)
     ItemCategory.Alias,
     ItemCategory.Password,
     ItemCategory.Unknown -> {
@@ -225,6 +229,7 @@ internal fun SecureLinksListGridCellPreview(
                 itemCategory = ItemCategory.Login,
                 canLoadExternalImages = false,
                 title = "Link title",
+                icon = null,
                 website = null,
                 packageName = null,
                 remainingTime = RemainingTime(

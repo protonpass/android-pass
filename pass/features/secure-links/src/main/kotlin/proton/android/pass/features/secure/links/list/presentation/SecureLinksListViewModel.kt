@@ -85,6 +85,7 @@ class SecureLinksListViewModel @Inject constructor(
             ).let { item ->
                 SecureLinkModel(
                     itemTitle = decrypt(item.title),
+                    itemIcon = item.icon,
                     itemType = item.itemType,
                     secureLink = secureLink
                 )

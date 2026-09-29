@@ -71,7 +71,8 @@ internal fun PassItemDetailTitleRow(
                 AliasIcon(
                     size = 60,
                     shape = PassTheme.shapes.squircleMediumLargeShape,
-                    activeAlias = itemContents.isEnabled
+                    activeAlias = itemContents.isEnabled,
+                    customIcon = itemContents.icon
                 )
             }
         }
@@ -92,7 +93,8 @@ internal fun PassItemDetailTitleRow(
             ) {
                 CreditCardIcon(
                     size = 60,
-                    shape = PassTheme.shapes.squircleMediumLargeShape
+                    shape = PassTheme.shapes.squircleMediumLargeShape,
+                    customIcon = itemContents.icon
                 )
             }
         }
@@ -113,7 +115,8 @@ internal fun PassItemDetailTitleRow(
             ) {
                 IdentityIcon(
                     size = 60,
-                    shape = PassTheme.shapes.squircleMediumLargeShape
+                    shape = PassTheme.shapes.squircleMediumLargeShape,
+                    customIcon = itemContents.icon
                 )
             }
         }
@@ -201,7 +204,8 @@ internal fun PassItemDetailTitleRow(
             ) {
                 CustomItemIcon(
                     size = 60,
-                    shape = PassTheme.shapes.squircleMediumLargeShape
+                    shape = PassTheme.shapes.squircleMediumLargeShape,
+                    customIcon = itemContents.icon
                 )
             }
         }

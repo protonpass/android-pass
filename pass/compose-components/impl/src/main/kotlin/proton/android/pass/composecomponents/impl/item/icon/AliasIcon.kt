@@ -59,7 +59,8 @@ fun AliasIcon(
         !activeAlias && enabled -> PassTheme.colors.aliasInteractionNormMinor1
         !activeAlias && !enabled -> PassTheme.colors.aliasInteractionNormMinor2
         else -> null
-    }
+    },
+    customIcon: String? = null
 ) {
     val iconResourceId = remember(activeAlias) {
         if (activeAlias) {
@@ -69,19 +70,27 @@ fun AliasIcon(
         }
     }
 
-    BoxedIcon(
+    ItemCustomIconOrDefault(
         modifier = modifier,
-        backgroundColor = backgroundColor,
-        borderColor = borderColor,
+        customIcon = customIcon,
         size = size,
-        shape = shape
-    ) {
-        Icon(
-            modifier = Modifier.padding(Spacing.extraSmall),
-            painter = painterResource(id = iconResourceId),
-            contentDescription = null,
-            tint = foregroundColor
-        )
+        shape = shape,
+        enabled = enabled
+    ) { iconModifier ->
+        BoxedIcon(
+            modifier = iconModifier,
+            backgroundColor = backgroundColor,
+            borderColor = borderColor,
+            size = size,
+            shape = shape
+        ) {
+            Icon(
+                modifier = Modifier.padding(Spacing.extraSmall),
+                painter = painterResource(id = iconResourceId),
+                contentDescription = null,
+                tint = foregroundColor
+            )
+        }
     }
 }
 

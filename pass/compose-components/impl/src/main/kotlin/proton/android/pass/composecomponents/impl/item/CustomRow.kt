@@ -75,7 +75,7 @@ fun CustomRow(
                             backgroundColor = PassTheme.colors.interactionNormMajor1
                         )
                     },
-                    content = { CustomItemIcon() }
+                    content = { CustomItemIcon(customIcon = content.icon) }
                 )
 
                 is ItemSelectionModeState.InSelectionMode -> {
@@ -92,7 +92,7 @@ fun CustomRow(
                                     backgroundColor = PassTheme.colors.interactionNormMajor1
                                 )
                             },
-                            content = { CustomItemIcon(enabled = isEnabled) }
+                            content = { CustomItemIcon(enabled = isEnabled, customIcon = content.icon) }
                         )
                     }
                 }

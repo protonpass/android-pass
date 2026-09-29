@@ -54,7 +54,8 @@ internal fun ItemTrashMenuContent(
                     text = itemTitle,
                     website = itemWebsite,
                     packageName = itemPackageName,
-                    canLoadExternalImages = canLoadExternalImages
+                    canLoadExternalImages = canLoadExternalImages,
+                    customIcon = itemIcon
                 )
             }
         )

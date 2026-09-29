@@ -57,5 +57,6 @@ data class CodeRow(
     val packageName: String?,
     val code: String,
     val totalSeconds: Int,
-    val remainingSeconds: Int
+    val remainingSeconds: Int,
+    val icon: String? = null
 )

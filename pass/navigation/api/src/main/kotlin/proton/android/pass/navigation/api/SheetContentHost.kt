@@ -201,8 +201,15 @@ private suspend fun ModalBottomSheetState.internalHide() {
 private val ModalBottomSheetState.willBeVisible: Boolean
     get() = targetValue == ModalBottomSheetValue.HalfExpanded || targetValue == ModalBottomSheetValue.Expanded
 
-suspend inline fun <reified T> T.callPrivateSuspendFunc(name: String, vararg args: Any?): Any? = T::class
-    .declaredMemberFunctions
-    .firstOrNull { it.name == name }
-    ?.apply { isAccessible = true }
-    ?.callSuspend(this, *args)
+suspend inline fun <reified T> T.callPrivateSuspendFunc(name: String, vararg args: Any?): Any? {
+    val fn = T::class.declaredMemberFunctions.firstOrNull { it.name == name }
+    if (fn == null) {
+        PassLogger.w(
+            "SheetContentHost",
+            "Reflection lookup failed: no member function '$name' on ${T::class.qualifiedName}"
+        )
+        return null
+    }
+    fn.isAccessible = true
+    return fn.callSuspend(this, *args)
+}

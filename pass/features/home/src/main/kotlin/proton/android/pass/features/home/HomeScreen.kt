@@ -704,7 +704,8 @@ fun HomeScreen(
                                         text = item.contents.title,
                                         canLoadExternalImages = homeUiState.homeListUiState.canLoadExternalImages,
                                         websites = contents.urls,
-                                        packageName = packageName
+                                        packageName = packageName,
+                                        customIcon = contents.icon
                                     )
                                 }
 

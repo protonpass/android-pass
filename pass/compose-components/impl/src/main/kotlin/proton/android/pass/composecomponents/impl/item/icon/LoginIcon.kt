@@ -46,6 +46,7 @@ import androidx.compose.ui.unit.dp
 import coil.compose.SubcomposeAsyncImage
 import coil.compose.SubcomposeAsyncImageContent
 import coil.request.ImageRequest
+import proton.android.pass.common.api.ItemIcon
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.ThemedBooleanPreviewProvider
@@ -94,6 +95,7 @@ fun LoginIcon(
     shape: Shape = PassTheme.shapes.squircleMediumShape,
     canLoadExternalImages: Boolean,
     enabled: Boolean = true,
+    customIcon: String? = null,
     backgroundColor: Color = if (enabled) {
         PassTheme.colors.loginInteractionNormMinor1
     } else {
@@ -107,8 +109,30 @@ fun LoginIcon(
 ) {
     var urlIndex by remember(websites) { mutableIntStateOf(0) }
     val currentWebsite = websites.getOrNull(urlIndex)
+    val hasCustomIcon = remember(customIcon) { ItemIcon.isValid(customIcon) }
 
-    if (currentWebsite == null || !canLoadExternalImages) {
+    if (hasCustomIcon) {
+        // A custom icon replaces the website image: no favicon request is made
+        ItemCustomIcon(
+            modifier = modifier,
+            icon = customIcon,
+            size = size,
+            shape = shape,
+            enabled = enabled,
+            fallback = {
+                FallbackLoginIcon(
+                    modifier = modifier,
+                    text = text,
+                    packageName = packageName,
+                    size = size,
+                    shape = shape,
+                    enabled = enabled,
+                    backgroundColor = backgroundColor,
+                    foregroundColor = foregroundColor
+                )
+            }
+        )
+    } else if (currentWebsite == null || !canLoadExternalImages) {
         FallbackLoginIcon(
             modifier = modifier,
             text = text,

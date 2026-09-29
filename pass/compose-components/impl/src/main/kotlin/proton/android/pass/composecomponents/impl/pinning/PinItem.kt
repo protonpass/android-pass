@@ -96,6 +96,7 @@ fun PinItem(
                 favIconPadding = 2.dp,
                 websites = contents.urls,
                 packageName = contents.packageInfoSet.firstOrNull()?.packageName?.value,
+                customIcon = contents.icon,
                 backgroundColor = PassTheme.colors.loginInteractionNormMinor2
             )
 

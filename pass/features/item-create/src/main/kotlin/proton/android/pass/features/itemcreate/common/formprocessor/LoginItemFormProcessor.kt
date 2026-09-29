@@ -53,17 +53,9 @@ class LoginItemFormProcessor @Inject constructor(
         decrypt: (EncryptedString) -> String,
         encrypt: (String) -> EncryptedString
     ): FormProcessingResult<LoginItemFormState> {
-        val errors = mutableSetOf<ValidationError>()
+        val errors: MutableSet<ValidationError> = listOfNotNull(validateIcon(input.formState.icon)).toMutableSet()
 
-        if (input.formState.title.isBlank()) {
-            errors += CommonFieldValidationError.BlankTitle
-        }
-        // An icon that is set but cannot be rendered (ie: set by another client) must be removed first
-        when (ItemIcon.validate(input.formState.icon)) {
-            ItemIconError.Size -> errors += ItemIconValidationError.TooLarge
-            ItemIconError.Type, ItemIconError.Decode -> errors += ItemIconValidationError.Invalid
-            null -> Unit
-        }
+        if (input.formState.title.isBlank()) errors += CommonFieldValidationError.BlankTitle
         val sanitisedUrls = input.formState.urls.mapIndexed { idx, url ->
             if (url.isNotBlank()) {
                 UrlSanitizer.sanitize(url)
@@ -118,5 +110,12 @@ class LoginItemFormProcessor @Inject constructor(
         } else {
             FormProcessingResult.Error(errors)
         }
+    }
+
+    /** An icon that is set but cannot be rendered (ie: set by another client) must be removed first */
+    private fun validateIcon(icon: String?): ItemIconValidationError? = when (ItemIcon.validate(icon)) {
+        ItemIconError.Size -> ItemIconValidationError.TooLarge
+        ItemIconError.Type, ItemIconError.Decode -> ItemIconValidationError.Invalid
+        null -> null
     }
 }

@@ -360,7 +360,6 @@ class CreateCustomItemViewModel @Inject constructor(
         encryptionContextProvider.withEncryptionContextSuspendable {
             val staticFields: ItemStaticFields
             val itemContents: ItemContents
-            val customFields: List<UICustomFieldContent>
             val extraSections: List<UIExtraSection>
 
             val type = item.itemType
@@ -376,8 +375,6 @@ class CreateCustomItemViewModel @Inject constructor(
                     )
                     val contents = item.toItemContents<ItemContents.WifiNetwork> { decrypt(it) }
                     itemContents = contents
-                    customFields =
-                        contents.customFields.map(UICustomFieldContent.Companion::from)
                     extraSections = contents.sectionContentList.map { UIExtraSection(it) }
                 }
 
@@ -388,8 +385,6 @@ class CreateCustomItemViewModel @Inject constructor(
                     )
                     val contents = item.toItemContents<ItemContents.SSHKey> { decrypt(it) }
                     itemContents = contents
-                    customFields =
-                        contents.customFields.map(UICustomFieldContent.Companion::from)
                     extraSections = contents.sectionContentList.map { UIExtraSection(it) }
                 }
 
@@ -397,8 +392,6 @@ class CreateCustomItemViewModel @Inject constructor(
                     staticFields = ItemStaticFields.Custom
                     val contents = item.toItemContents<ItemContents.Custom> { decrypt(it) }
                     itemContents = contents
-                    customFields =
-                        contents.customFields.map(UICustomFieldContent.Companion::from)
                     extraSections = contents.sectionContentList.map { UIExtraSection(it) }
                 }
 
@@ -407,7 +400,7 @@ class CreateCustomItemViewModel @Inject constructor(
             itemFormState = itemFormState.copy(
                 title = context.getString(R.string.title_duplicate, decrypt(item.title)),
                 itemStaticFields = staticFields,
-                customFieldList = customFields,
+                customFieldList = itemContents.customFields.map(UICustomFieldContent.Companion::from),
                 sectionList = extraSections,
                 icon = itemContents.icon
             )

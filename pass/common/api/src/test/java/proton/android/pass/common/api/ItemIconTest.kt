@@ -181,7 +181,14 @@ class ItemIconTest {
 
     @Test
     fun `process rejects svg files that are not svg documents`() {
-        listOf("", "hello", "<html></html>", "<svgx></svgx>", "<!-- <svg> -->", "<?xml version=\"1.0\"?>").forEach { content ->
+        listOf(
+            "",
+            "hello",
+            "<html></html>",
+            "<svgx></svgx>",
+            "<!-- <svg> -->",
+            "<?xml version=\"1.0\"?>"
+        ).forEach { content ->
             val result = ItemIcon.process(ItemIcon.SVG_MIME_TYPE, content.toByteArray()) { PNG_BYTES }
             assertThat(result).isEqualTo(ItemIconResult.Error(ItemIconError.Decode))
         }

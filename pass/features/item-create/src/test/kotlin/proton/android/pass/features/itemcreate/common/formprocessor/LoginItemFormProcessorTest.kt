@@ -71,7 +71,8 @@ class LoginItemFormProcessorTest {
         ).forEach { icon ->
             val result = process(icon = icon)
 
-            assertThat(result).isEqualTo(FormProcessingResult.Error<LoginItemFormState>(setOf(ItemIconValidationError.Invalid)))
+            assertThat(result)
+                .isEqualTo(FormProcessingResult.Error<LoginItemFormState>(setOf(ItemIconValidationError.Invalid)))
         }
     }
 
@@ -81,7 +82,8 @@ class LoginItemFormProcessorTest {
 
         val result = process(icon = icon)
 
-        assertThat(result).isEqualTo(FormProcessingResult.Error<LoginItemFormState>(setOf(ItemIconValidationError.TooLarge)))
+        assertThat(result)
+            .isEqualTo(FormProcessingResult.Error<LoginItemFormState>(setOf(ItemIconValidationError.TooLarge)))
     }
 
     private suspend fun process(icon: String?) = instance.process(

@@ -27,10 +27,6 @@ import dagger.hilt.EntryPoint
 import dagger.hilt.InstallIn
 import dagger.hilt.android.EntryPointAccessors
 import dagger.hilt.components.SingletonComponent
-import kotlinx.coroutines.async
-import kotlinx.coroutines.awaitAll
-import kotlinx.coroutines.coroutineScope
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.launchIn
@@ -53,19 +49,13 @@ import proton.android.pass.commonui.api.PassAppLifecycleProvider
 import proton.android.pass.data.api.repositories.ItemSyncStatusRepository
 import proton.android.pass.data.api.repositories.SyncMode
 import proton.android.pass.data.api.usecases.ClearUserData
-import proton.android.pass.data.api.usecases.RefreshBreaches
-import proton.android.pass.data.api.usecases.RefreshUserAccess
 import proton.android.pass.data.api.usecases.ResetAppToDefaults
-import proton.android.pass.data.api.usecases.organization.RefreshOrganizationSettings
 import proton.android.pass.data.impl.db.DatabaseCleanupHelper
 import proton.android.pass.log.api.LogAccountContext
 import proton.android.pass.log.api.LogoutLogger
 import proton.android.pass.log.api.LogoutReason
 import proton.android.pass.log.api.PassLogger
-import proton.android.pass.preferences.FeatureFlag
 import proton.android.pass.notifications.api.SnackbarDispatcher
-import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
-import kotlin.time.Duration.Companion.milliseconds
 
 class AccountListenerInitializer : Initializer<Unit> {
 
@@ -80,10 +70,6 @@ class AccountListenerInitializer : Initializer<Unit> {
         val lifecycleProvider = entryPoint.passAppLifecycleProvider()
         val accountManager = entryPoint.accountManager()
         val itemSyncStatusRepository = entryPoint.itemSyncStatusRepository()
-        val refreshOrganizationSettings = entryPoint.refreshOrganizationSettings()
-        val refreshUserAccess = entryPoint.refreshUserAccess()
-        val refreshBreaches = entryPoint.refreshBreaches()
-        val featureFlagsPreferencesRepository = entryPoint.featureFlagsPreferencesRepository()
         val snackbarDispatcher = entryPoint.snackbarDispatcher()
 
         accountManager.observe(
@@ -108,13 +94,7 @@ class AccountListenerInitializer : Initializer<Unit> {
         }.onAccountReady { account ->
             launchInAppLifecycleScope(lifecycleProvider) {
                 withContext(LogAccountContext(account.userId)) {
-                    onAccountReady(
-                        account = account,
-                        featureFlagsPreferencesRepository = featureFlagsPreferencesRepository,
-                        refreshOrganizationSettings = refreshOrganizationSettings,
-                        refreshUserAccess = refreshUserAccess,
-                        refreshBreaches = refreshBreaches
-                    )
+                    PassLogger.i(TAG, "Account ready : ${account.userId}")
                 }
             }
         }
@@ -146,71 +126,6 @@ class AccountListenerInitializer : Initializer<Unit> {
     private fun launchInAppLifecycleScope(lifecycleProvider: PassAppLifecycleProvider, block: suspend () -> Unit) {
         lifecycleProvider.lifecycle.coroutineScope.launch {
             block()
-        }
-    }
-
-    private suspend fun onAccountReady(
-        account: Account,
-        featureFlagsPreferencesRepository: FeatureFlagsPreferencesRepository,
-        refreshOrganizationSettings: RefreshOrganizationSettings,
-        refreshUserAccess: RefreshUserAccess,
-        refreshBreaches: RefreshBreaches
-    ) {
-        val isUserEventsEnabled = featureFlagsPreferencesRepository.awaitResolved(
-            FeatureFlag.PASS_USER_EVENTS_V1,
-            account.userId
-        )
-        PassLogger.i(TAG, "Account ready : ${account.userId}")
-
-        if (!isUserEventsEnabled) {
-            refreshAccountData(
-                userId = account.userId,
-                refreshOrganizationSettings = refreshOrganizationSettings,
-                refreshUserAccess = refreshUserAccess,
-                refreshBreaches = refreshBreaches
-            )
-        }
-    }
-
-    private suspend fun refreshAccountData(
-        userId: UserId,
-        refreshOrganizationSettings: RefreshOrganizationSettings,
-        refreshUserAccess: RefreshUserAccess,
-        refreshBreaches: RefreshBreaches
-    ) {
-        val retryDelaysMs = listOf(0L, 3_000L, 5_000L, 10_000L, 20_000L)
-
-        for ((index, delayMs) in retryDelaysMs.withIndex()) {
-            if (delayMs > 0) {
-                PassLogger.i(TAG, "Retrying account data refresh for $userId (attempt ${index + 1})")
-                delay(delayMs.milliseconds)
-            }
-
-            val results = coroutineScope {
-                listOf(
-                    async {
-                        safeRunCatching { refreshOrganizationSettings(userId) }
-                            .onFailure { PassLogger.w(TAG, "Could not refresh organization settings for $userId") }
-                    },
-                    async {
-                        safeRunCatching { refreshBreaches(userId) }
-                            .onFailure { PassLogger.w(TAG, "Could not refresh breaches for $userId") }
-                    },
-                    async {
-                        safeRunCatching { refreshUserAccess(userId) }
-                            .onFailure { PassLogger.w(TAG, "Could not refresh user access for $userId") }
-                    }
-                ).awaitAll()
-            }
-
-            if (results.all { it.isSuccess }) {
-                PassLogger.i(TAG, "Account data refresh succeeded for $userId")
-                return
-            }
-
-            if (index == retryDelaysMs.lastIndex) {
-                PassLogger.w(TAG, "Account data refresh failed for $userId after all retries")
-            }
         }
     }
 
@@ -249,14 +164,10 @@ class AccountListenerInitializer : Initializer<Unit> {
     @InstallIn(SingletonComponent::class)
     interface AccountListenerInitializerEntryPoint {
         fun itemSyncStatusRepository(): ItemSyncStatusRepository
-        fun refreshOrganizationSettings(): RefreshOrganizationSettings
-        fun refreshUserAccess(): RefreshUserAccess
-        fun refreshBreaches(): RefreshBreaches
         fun passAppLifecycleProvider(): PassAppLifecycleProvider
         fun accountManager(): AccountManager
         fun resetAppToDefaults(): ResetAppToDefaults
         fun clearUserData(): ClearUserData
-        fun featureFlagsPreferencesRepository(): FeatureFlagsPreferencesRepository
         fun snackbarDispatcher(): SnackbarDispatcher
         fun databaseCleanupHelper(): DatabaseCleanupHelper
     }

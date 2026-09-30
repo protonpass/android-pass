@@ -24,7 +24,6 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import proton.android.pass.data.api.url.HostParser
 import proton.android.pass.data.api.usecases.AcceptInvite
-import proton.android.pass.data.api.usecases.ApplyPendingEvents
 import proton.android.pass.data.api.usecases.BatchChangeShareVisibility
 import proton.android.pass.data.api.usecases.compromisedpassword.ObserveCompromisedPasswords
 import proton.android.pass.data.api.usecases.compromisedpassword.RefreshCompromisedPasswords
@@ -327,7 +326,6 @@ import proton.android.pass.data.impl.autofill.SuggestionSorter
 import proton.android.pass.data.impl.autofill.SuggestionSorterImpl
 import proton.android.pass.data.impl.url.HostParserImpl
 import proton.android.pass.data.impl.usecases.AcceptInviteImpl
-import proton.android.pass.data.impl.usecases.ApplyPendingEventsImpl
 import proton.android.pass.data.impl.usecases.BatchChangeShareVisibilityImpl
 import proton.android.pass.data.impl.usecases.CanDisplayTotpImpl
 import proton.android.pass.data.impl.usecases.CanPerformPaidActionImpl
@@ -772,9 +770,6 @@ abstract class DataUseCaseModule {
 
     @Binds
     abstract fun bindUpdateAutofillItem(impl: UpdateAutofillItemImpl): UpdateAutofillItem
-
-    @Binds
-    abstract fun bindApplyPendingEvents(impl: ApplyPendingEventsImpl): ApplyPendingEvents
 
     @Binds
     abstract fun bindRefreshSharesAndEnqueueSync(impl: RefreshSharesAndEnqueueSyncImpl): RefreshSharesAndEnqueueSync

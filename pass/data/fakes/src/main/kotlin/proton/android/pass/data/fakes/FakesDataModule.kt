@@ -49,7 +49,6 @@ import proton.android.pass.data.api.repositories.SearchIndexRepository
 import proton.android.pass.data.api.repositories.UserAccessDataRepository
 import proton.android.pass.data.api.repositories.UserInviteRepository
 import proton.android.pass.data.api.usecases.AcceptInvite
-import proton.android.pass.data.api.usecases.ApplyPendingEvents
 import proton.android.pass.data.api.usecases.BatchChangeShareVisibility
 import proton.android.pass.data.api.usecases.CanDisplayTotp
 import proton.android.pass.data.api.usecases.CanPerformPaidAction
@@ -323,7 +322,6 @@ import proton.android.pass.data.fakes.repositories.FakeUserAccessDataRepository
 import proton.android.pass.data.fakes.repositories.FakeUserInviteRepository
 import proton.android.pass.data.fakes.usecases.FakeAcceptInvite
 import proton.android.pass.data.fakes.usecases.FakeAddSearchEntry
-import proton.android.pass.data.fakes.usecases.FakeApplyPendingEvents
 import proton.android.pass.data.fakes.usecases.FakeCanCreateItemInVault
 import proton.android.pass.data.fakes.usecases.FakeCanCreateFolder
 import proton.android.pass.data.fakes.usecases.FakeCanCreateItemsInFolder
@@ -712,9 +710,6 @@ abstract class FakesDataModule {
 
     @Binds
     abstract fun bindRefreshContent(impl: FakeRefreshContent): RefreshContent
-
-    @Binds
-    abstract fun bindApplyPendingEvents(impl: FakeApplyPendingEvents): ApplyPendingEvents
 
     @Binds
     abstract fun bindRestoreItems(impl: FakeRestoreAllItems): RestoreAllItems

@@ -156,7 +156,7 @@ class DeleteVaultViewModel @Inject constructor(
 
             runCatching { deleteVault.invoke(shareId) }
                 .onSuccess {
-                    // 1) Set this to true because ApplyPendingEventsImpl::invoke may run right
+                    // 1) Set this to true because a shares refresh may run right
                     // after deleting the last vault, and we don’t want to recreate a default vault.
                     // 2) No need to check PASS_ALLOW_NO_VAULT, since deleting the last vault
                     // is only possible when it's enabled.

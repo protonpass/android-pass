@@ -23,6 +23,7 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Canvas
 import android.graphics.ImageDecoder
+import android.graphics.Matrix
 import android.graphics.Paint
 import android.graphics.Rect
 import android.net.Uri
@@ -160,10 +161,25 @@ object ItemIconProcessor {
                 inSampleSize = sampleSize(bounds.outWidth, bounds.outHeight)
             }
             BitmapFactory.decodeByteArray(bytes, 0, bytes.size, options)
+                ?.let { bitmap -> applyExifOrientation(bitmap, ExifOrientation.read(bytes)) }
         }
     } catch (e: Exception) {
         PassLogger.w(TAG, e)
         null
+    }
+
+    /** `BitmapFactory` ignores EXIF orientation (`ImageDecoder` applies it), so camera photos need rotating */
+    private fun applyExifOrientation(source: Bitmap, orientation: Int): Bitmap {
+        val transform = ExifOrientation.transformFor(orientation)
+        if (transform.isIdentity) return source
+
+        val matrix = Matrix().apply {
+            setRotate(transform.rotationDegrees.toFloat())
+            if (transform.mirrorHorizontally) postScale(-1f, 1f)
+        }
+        val oriented = Bitmap.createBitmap(source, 0, 0, source.width, source.height, matrix, true)
+        if (oriented !== source) source.recycle()
+        return oriented
     }
 
     /** Largest power of two that keeps the shortest side at or above [ItemIcon.SIZE_PX] */

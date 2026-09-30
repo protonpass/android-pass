@@ -26,9 +26,11 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
+import androidx.compose.material3.minimumInteractiveComponentSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -99,23 +101,35 @@ internal fun ItemIconPicker(
         }
 
         if (!icon.isNullOrBlank() && enabled) {
+            // The badge keeps its 20dp footprint so the layout does not change, and reserves a 48dp
+            // slot centered on it. The clickable stays on the visible circle: Compose routes touches
+            // within the 48dp minimum touch target around it to the badge, but a direct hit on the
+            // icon below still wins, so the larger target never takes taps from the picker.
             Box(
                 modifier = Modifier
                     .align(Alignment.TopEnd)
                     .offset(x = REMOVE_BADGE_OFFSET.dp, y = -REMOVE_BADGE_OFFSET.dp)
                     .size(REMOVE_BADGE_SIZE.dp)
-                    .clip(CircleShape)
-                    .background(PassTheme.colors.signalDanger)
-                    .clickable(role = Role.Button, onClick = onIconRemoved)
-                    .semantics { contentDescription = removeIconDescription },
+                    .wrapContentSize(unbounded = true)
+                    .minimumInteractiveComponentSize(),
                 contentAlignment = Alignment.Center
             ) {
-                Icon(
-                    modifier = Modifier.size(REMOVE_BADGE_ICON_SIZE.dp),
-                    painter = painterResource(CoreR.drawable.ic_proton_cross_small),
-                    contentDescription = null,
-                    tint = PassTheme.colors.textInvert
-                )
+                Box(
+                    modifier = Modifier
+                        .size(REMOVE_BADGE_SIZE.dp)
+                        .clip(CircleShape)
+                        .background(PassTheme.colors.signalDanger)
+                        .clickable(role = Role.Button, onClick = onIconRemoved)
+                        .semantics { contentDescription = removeIconDescription },
+                    contentAlignment = Alignment.Center
+                ) {
+                    Icon(
+                        modifier = Modifier.size(REMOVE_BADGE_ICON_SIZE.dp),
+                        painter = painterResource(CoreR.drawable.ic_proton_cross_small),
+                        contentDescription = null,
+                        tint = PassTheme.colors.textInvert
+                    )
+                }
             }
         }
     }

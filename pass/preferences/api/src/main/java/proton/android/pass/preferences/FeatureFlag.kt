@@ -42,12 +42,6 @@ enum class FeatureFlag(
         key = "PassAllowNoVault",
         isEnabledDefault = false
     ),
-    PASS_USER_EVENTS_V1(
-        title = "User Events V1",
-        description = "Enable user events",
-        key = "PassUserEventsV1",
-        isEnabledDefault = true
-    ),
     PASS_FOLDERS(
         title = "folders",
         description = "allow user to create folders",

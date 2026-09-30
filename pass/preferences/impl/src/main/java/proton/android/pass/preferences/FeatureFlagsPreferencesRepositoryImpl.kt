@@ -45,7 +45,6 @@ import proton.android.pass.common.api.safeRunCatching
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.preferences.FeatureFlag.AUTOFILL_DEBUG_MODE
 import proton.android.pass.preferences.FeatureFlag.PASS_ALLOW_NO_VAULT
-import proton.android.pass.preferences.FeatureFlag.PASS_USER_EVENTS_V1
 import proton.android.pass.preferences.FeatureFlag.RENAME_ADMIN_TO_MANAGER
 import proton.android.pass.preferences.FeatureFlag.PASS_FOLDERS
 import proton.android.pass.preferences.FeatureFlag.PASS_AUTOFILL_URL_ADVANCED_MODES
@@ -103,11 +102,6 @@ class FeatureFlagsPreferencesRepositoryImpl @Inject constructor(
             key = featureFlag.key,
             defaultValue = featureFlag.isEnabledDefault
         ) { passAllowNoVault.value }
-
-        PASS_USER_EVENTS_V1 -> getFeatureFlag(
-            key = featureFlag.key,
-            defaultValue = featureFlag.isEnabledDefault
-        ) { passUserEventsV1Enabled.value }
 
         PASS_FOLDERS -> getFeatureFlag(
             key = featureFlag.key,
@@ -214,10 +208,6 @@ class FeatureFlagsPreferencesRepositoryImpl @Inject constructor(
 
         PASS_ALLOW_NO_VAULT -> setFeatureFlag {
             passAllowNoVault = boolFlagPrefProto(value)
-        }
-
-        PASS_USER_EVENTS_V1 -> setFeatureFlag {
-            passUserEventsV1Enabled = boolFlagPrefProto(value)
         }
 
         PASS_FOLDERS -> setFeatureFlag {
@@ -360,7 +350,6 @@ class FeatureFlagsPreferencesRepositoryImpl @Inject constructor(
             AUTOFILL_DEBUG_MODE -> autofillDebugModeEnabled
             RENAME_ADMIN_TO_MANAGER -> renameAdminToManagerEnabled
             PASS_ALLOW_NO_VAULT -> passAllowNoVault
-            PASS_USER_EVENTS_V1 -> passUserEventsV1Enabled
             PASS_FOLDERS -> passFoldersEnabled
             PASS_AUTOFILL_URL_ADVANCED_MODES -> passAutofillUrlRegexEnabled
             ENABLE_PAGINATION -> enablePagination

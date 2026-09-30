@@ -25,43 +25,10 @@ import org.junit.Test
 import proton.android.pass.data.api.repositories.SyncMode
 import proton.android.pass.data.api.repositories.SyncReason
 import proton.android.pass.data.api.usecases.SyncUserEvents
-import proton.android.pass.data.fakes.usecases.FakeApplyPendingEvents
-import proton.android.pass.data.fakes.usecases.FakeRefreshAliasSlNotes
-import proton.android.pass.data.fakes.usecases.FakeRefreshGroupInvites
-import proton.android.pass.data.fakes.usecases.FakeRefreshUserInvites
-import proton.android.pass.data.fakes.usecases.simplelogin.FakeSyncSimpleLoginPendingAliases
 import proton.android.pass.data.fakes.usecases.sync.FakeCheckFolderForceSync
-import proton.android.pass.preferences.FakeFeatureFlagsPreferenceRepository
-import proton.android.pass.preferences.FeatureFlag
 import javax.inject.Provider
 
 class PerformSyncImplTest {
-
-    @Test
-    fun `refreshes alias notes when user events are disabled`() = runTest {
-        val refreshAliasSlNotes = FakeRefreshAliasSlNotes()
-        val featureFlags = FakeFeatureFlagsPreferenceRepository().apply {
-            set(FeatureFlag.PASS_USER_EVENTS_V1, false)
-        }
-        val instance = createInstance(refreshAliasSlNotes, featureFlags)
-
-        instance.invoke(USER_ID, forceSync = false)
-
-        assertThat(refreshAliasSlNotes.getInvocationMemory()).containsExactly(USER_ID)
-    }
-
-    @Test
-    fun `does not refresh alias notes when user events are enabled`() = runTest {
-        val refreshAliasSlNotes = FakeRefreshAliasSlNotes()
-        val featureFlags = FakeFeatureFlagsPreferenceRepository().apply {
-            set(FeatureFlag.PASS_USER_EVENTS_V1, true)
-        }
-        val instance = createInstance(refreshAliasSlNotes, featureFlags)
-
-        instance.invoke(USER_ID, forceSync = false)
-
-        assertThat(refreshAliasSlNotes.getInvocationMemory()).isEmpty()
-    }
 
     @Test
     fun `asks whether a folders repair is owed once the sync has finished`() = runTest {
@@ -89,20 +56,11 @@ class PerformSyncImplTest {
         assertThat(checkFolderForceSync.detailedInvocations).isEmpty()
     }
 
-    private fun createInstance(
-        refreshAliasSlNotes: FakeRefreshAliasSlNotes = FakeRefreshAliasSlNotes(),
-        featureFlags: FakeFeatureFlagsPreferenceRepository = FakeFeatureFlagsPreferenceRepository(),
-        checkFolderForceSync: FakeCheckFolderForceSync = FakeCheckFolderForceSync()
-    ) = PerformSyncImpl(
-        applyPendingEvents = FakeApplyPendingEvents(),
-        refreshUserInvites = FakeRefreshUserInvites(),
-        refreshGroupInvites = FakeRefreshGroupInvites(),
-        refreshAliasSlNotes = refreshAliasSlNotes,
-        syncPendingAliases = FakeSyncSimpleLoginPendingAliases(),
-        syncUserEvents = NoOpSyncUserEvents,
-        featureFlagsPreferencesRepository = featureFlags,
-        checkFolderForceSync = Provider { checkFolderForceSync }
-    )
+    private fun createInstance(checkFolderForceSync: FakeCheckFolderForceSync = FakeCheckFolderForceSync()) =
+        PerformSyncImpl(
+            syncUserEvents = NoOpSyncUserEvents,
+            checkFolderForceSync = Provider { checkFolderForceSync }
+        )
 
     private object NoOpSyncUserEvents : SyncUserEvents {
         override suspend fun invoke(

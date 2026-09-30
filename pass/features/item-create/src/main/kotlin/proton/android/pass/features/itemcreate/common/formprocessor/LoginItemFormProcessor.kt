@@ -19,9 +19,12 @@
 package proton.android.pass.features.itemcreate.common.formprocessor
 
 import me.proton.core.crypto.common.keystore.EncryptedString
+import proton.android.pass.common.api.ItemIcon
+import proton.android.pass.common.api.ItemIconError
 import proton.android.pass.common.api.Option
 import proton.android.pass.data.api.url.UrlSanitizer
 import proton.android.pass.features.itemcreate.common.CommonFieldValidationError
+import proton.android.pass.features.itemcreate.common.ItemIconValidationError
 import proton.android.pass.features.itemcreate.common.LoginItemValidationError
 import proton.android.pass.features.itemcreate.common.UICustomFieldContent
 import proton.android.pass.features.itemcreate.common.UIHiddenState
@@ -50,11 +53,9 @@ class LoginItemFormProcessor @Inject constructor(
         decrypt: (EncryptedString) -> String,
         encrypt: (String) -> EncryptedString
     ): FormProcessingResult<LoginItemFormState> {
-        val errors = mutableSetOf<ValidationError>()
+        val errors: MutableSet<ValidationError> = listOfNotNull(validateIcon(input.formState.icon)).toMutableSet()
 
-        if (input.formState.title.isBlank()) {
-            errors += CommonFieldValidationError.BlankTitle
-        }
+        if (input.formState.title.isBlank()) errors += CommonFieldValidationError.BlankTitle
         val sanitisedUrls = input.formState.urls.mapIndexed { idx, url ->
             if (url.isNotBlank()) {
                 UrlSanitizer.sanitize(url)
@@ -102,11 +103,19 @@ class LoginItemFormProcessor @Inject constructor(
                 input.formState.copy(
                     primaryTotp = primaryTotpResult.sanitized,
                     urls = sanitisedUrls,
-                    customFields = customFieldResult.sanitized
+                    customFields = customFieldResult.sanitized,
+                    icon = ItemIcon.normalize(input.formState.icon)
                 )
             )
         } else {
             FormProcessingResult.Error(errors)
         }
+    }
+
+    /** An icon that is set but cannot be rendered (ie: set by another client) must be removed first */
+    private fun validateIcon(icon: String?): ItemIconValidationError? = when (ItemIcon.validate(icon)) {
+        ItemIconError.Size -> ItemIconValidationError.TooLarge
+        ItemIconError.Type, ItemIconError.Decode -> ItemIconValidationError.Invalid
+        null -> null
     }
 }

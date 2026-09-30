@@ -108,6 +108,8 @@ internal sealed class SharingSummaryState {
 
         internal val itemTitle: String = itemUiModel.contents.title
 
+        internal val itemIcon: String? = itemUiModel.contents.icon
+
         internal val itemSubtitle: String? = when (itemCategory) {
             ItemCategory.CreditCard -> TextMask.CardNumber(itemUiModel.contents.displayValue).masked
             else -> itemUiModel.contents.displayValue

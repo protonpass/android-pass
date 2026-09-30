@@ -87,7 +87,7 @@ internal fun NoteOptionsBottomSheetContents(
                     }
                 }
             },
-            leftIcon = { NoteIcon() }
+            leftIcon = { NoteIcon(customIcon = contents.icon) }
         )
 
         buildList {

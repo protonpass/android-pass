@@ -87,7 +87,7 @@ internal fun CreditCardOptionsBottomSheetContents(
             } else {
                 { BottomSheetItemSubtitle(text = contents.cardHolder) }
             },
-            leftIcon = { CreditCardIcon() }
+            leftIcon = { CreditCardIcon(customIcon = contents.icon) }
         )
 
         buildList {

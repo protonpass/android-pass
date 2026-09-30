@@ -41,7 +41,8 @@ data class IdentityItemFormState(
     val uiAddressDetails: UIAddressDetails,
     val uiContactDetails: UIContactDetails,
     val uiWorkDetails: UIWorkDetails,
-    val uiExtraSections: List<UIExtraSection>
+    val uiExtraSections: List<UIExtraSection>,
+    val icon: String? = null
 ) : Parcelable {
 
     fun toItemContents(): ItemContents = ItemContents.Identity(
@@ -97,7 +98,8 @@ data class IdentityItemFormState(
                 customFieldList = it.customFields.map(UICustomFieldContent::toCustomFieldContent)
             )
         },
-        customFields = emptyList()
+        customFields = emptyList(),
+        icon = icon
     )
 
     fun containsContactDetails(): Boolean {

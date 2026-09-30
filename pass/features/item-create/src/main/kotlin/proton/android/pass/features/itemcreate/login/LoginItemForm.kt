@@ -20,7 +20,10 @@ package proton.android.pass.features.itemcreate.login
 
 import android.content.pm.PackageManager
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -50,12 +53,16 @@ import proton.android.pass.composecomponents.impl.container.roundedContainerNorm
 import proton.android.pass.composecomponents.impl.form.SimpleNoteSection
 import proton.android.pass.composecomponents.impl.form.TitleSection
 import proton.android.pass.composecomponents.impl.item.LinkedAppsListSection
+import proton.android.pass.composecomponents.impl.item.icon.LoginIcon
 import proton.android.pass.composecomponents.impl.utils.passItemColors
 import proton.android.pass.domain.CustomFieldType
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.items.ItemCategory
 import proton.android.pass.features.itemcreate.attachments.banner.AttachmentBanner
 import proton.android.pass.features.itemcreate.common.CustomFieldValidationError
+import proton.android.pass.features.itemcreate.common.ItemIconPicker
+import proton.android.pass.features.itemcreate.common.ItemIconValidationError
+import proton.android.pass.features.itemcreate.common.ItemIconValidationErrorText
 import proton.android.pass.features.itemcreate.common.StickyTotpOptions
 import proton.android.pass.features.itemcreate.common.customfields.customFieldsList
 import proton.android.pass.features.itemcreate.login.LoginContentEvent.OnAttachmentEvent
@@ -64,6 +71,8 @@ import proton.android.pass.features.itemcreate.login.LoginContentEvent.OnCreateP
 import proton.android.pass.features.itemcreate.login.LoginContentEvent.OnCustomFieldEvent
 import proton.android.pass.features.itemcreate.login.LoginContentEvent.OnEmailChanged
 import proton.android.pass.features.itemcreate.login.LoginContentEvent.OnFocusChange
+import proton.android.pass.features.itemcreate.login.LoginContentEvent.OnIconRemoved
+import proton.android.pass.features.itemcreate.login.LoginContentEvent.OnIconSelected
 import proton.android.pass.features.itemcreate.login.LoginContentEvent.OnLinkedAppDelete
 import proton.android.pass.features.itemcreate.login.LoginContentEvent.OnNoteChange
 import proton.android.pass.features.itemcreate.login.LoginContentEvent.OnScanTotp
@@ -92,6 +101,7 @@ internal fun LoginItemForm(
     primaryEmail: String?,
     isUpdate: Boolean,
     isTitleError: Boolean,
+    iconValidationError: ItemIconValidationError?,
     isTotpError: Boolean,
     focusLastWebsite: Boolean,
     canUpdateUsername: Boolean,
@@ -141,7 +151,7 @@ internal fun LoginItemForm(
                 }
             }
             item {
-                TitleSection(
+                Column(
                     modifier = Modifier
                         .padding(vertical = Spacing.small)
                         .roundedContainerNorm()
@@ -151,13 +161,35 @@ internal fun LoginItemForm(
                             end = Spacing.extraSmall,
                             bottom = Spacing.medium
                         ),
-                    value = loginItemFormState.title,
-                    requestFocus = true,
-                    onTitleRequiredError = isTitleError,
-                    enabled = isEditAllowed,
-                    isRounded = true,
-                    onChange = { onEvent(OnTitleChange(it)) }
-                )
+                    verticalArrangement = Arrangement.spacedBy(Spacing.small)
+                ) {
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.spacedBy(Spacing.medium)
+                    ) {
+                        ItemIconPicker(
+                            icon = loginItemFormState.icon,
+                            enabled = isEditAllowed,
+                            onIconSelected = { onEvent(OnIconSelected(it)) },
+                            onIconRemoved = { onEvent(OnIconRemoved) },
+                            defaultIcon = { LoginIcon() }
+                        )
+
+                        TitleSection(
+                            modifier = Modifier.weight(1f),
+                            value = loginItemFormState.title,
+                            requestFocus = true,
+                            onTitleRequiredError = isTitleError,
+                            enabled = isEditAllowed,
+                            isRounded = true,
+                            onChange = { onEvent(OnTitleChange(it)) }
+                        )
+                    }
+
+                    if (iconValidationError != null) {
+                        ItemIconValidationErrorText(error = iconValidationError)
+                    }
+                }
             }
 
             if (passkeyState is Some) {

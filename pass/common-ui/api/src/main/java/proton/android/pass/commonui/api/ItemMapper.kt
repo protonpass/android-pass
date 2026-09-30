@@ -21,6 +21,7 @@ package proton.android.pass.commonui.api
 import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.crypto.api.context.EncryptionContext
 import proton.android.pass.datamodels.api.fromParsed
+import proton.android.pass.datamodels.api.metadataIconOrNull
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemEncrypted
 import proton.android.pass.domain.ItemType
@@ -59,7 +60,8 @@ fun ItemEncrypted.toUiModel(context: EncryptionContext): ItemUiModel {
             title = title,
             note = note,
             itemFlags = itemFlags,
-            slNote = slNote
+            slNote = slNote,
+            icon = parsed.metadataIconOrNull()
         ),
         state = state,
         createTime = createTime,

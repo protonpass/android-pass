@@ -103,7 +103,8 @@ class ItemHistoryRestoreViewModel @Inject constructor(
                 itemType = revisionItem.itemType,
                 title = revisionItem.title,
                 note = revisionItem.note,
-                itemFlags = revisionItem.itemFlags
+                itemFlags = revisionItem.itemFlags,
+                icon = revisionItem.icon
             )
         }
     }
@@ -119,7 +120,8 @@ class ItemHistoryRestoreViewModel @Inject constructor(
                 itemType = currentItem.itemType,
                 title = currentItem.title,
                 note = currentItem.note,
-                itemFlags = currentItem.itemFlags
+                itemFlags = currentItem.itemFlags,
+                icon = currentItem.icon
             )
         }
     }

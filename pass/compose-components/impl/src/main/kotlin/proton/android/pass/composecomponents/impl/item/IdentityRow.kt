@@ -83,7 +83,7 @@ fun IdentityRow(
                             backgroundColor = PassTheme.colors.interactionNormMajor1
                         )
                     },
-                    content = { IdentityIcon() }
+                    content = { IdentityIcon(customIcon = content.icon) }
                 )
 
                 is ItemSelectionModeState.InSelectionMode -> {
@@ -100,7 +100,7 @@ fun IdentityRow(
                                     backgroundColor = PassTheme.colors.interactionNormMajor1
                                 )
                             },
-                            content = { IdentityIcon(enabled = isEnabled) }
+                            content = { IdentityIcon(enabled = isEnabled, customIcon = content.icon) }
                         )
                     }
                 }

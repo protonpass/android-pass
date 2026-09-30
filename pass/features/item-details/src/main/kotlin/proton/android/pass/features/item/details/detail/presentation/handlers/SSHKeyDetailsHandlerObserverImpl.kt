@@ -175,6 +175,7 @@ class SSHKeyDetailsHandlerObserverImpl @Inject constructor(
         otherAttachments: List<Attachment>
     ): ItemDiffs = encryptionContextProvider.withEncryptionContext {
         ItemDiffs.SSHKey(
+            icon = calculateItemIconDiffType(baseItemContents, otherItemContents),
             title = calculateItemDiffType(
                 baseItemFieldValue = baseItemContents.title,
                 otherItemFieldValue = otherItemContents.title

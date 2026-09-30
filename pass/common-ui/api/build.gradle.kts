@@ -44,6 +44,7 @@ dependencies {
     implementation(libs.bundles.core.compose)
     debugImplementation(libs.androidx.compose.uiTooling)
 
+    implementation(libs.androidsvg)
     implementation(libs.core.presentation.compose)
     implementation(libs.core.utilKotlin)
     implementation(libs.kotlinx.datetime)

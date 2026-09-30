@@ -94,7 +94,8 @@ internal fun LoginOptionsBottomSheetContents(
                     text = contents.title,
                     canLoadExternalImages = canLoadExternalImages,
                     websites = contents.urls,
-                    packageName = packageName
+                    packageName = packageName,
+                    customIcon = contents.icon
                 )
             }
         )

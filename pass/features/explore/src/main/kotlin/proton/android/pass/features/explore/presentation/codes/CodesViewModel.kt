@@ -126,7 +126,8 @@ class CodesViewModel @Inject constructor(
                 packageName = entry.packageName,
                 code = wrapper?.code.orEmpty(),
                 totalSeconds = wrapper?.totalSeconds ?: CodesUiState.DEFAULT_TOTAL_SECONDS,
-                remainingSeconds = wrapper?.remainingSeconds ?: CodesUiState.DEFAULT_TOTAL_SECONDS
+                remainingSeconds = wrapper?.remainingSeconds ?: CodesUiState.DEFAULT_TOTAL_SECONDS,
+                icon = entry.icon
             )
         }
 

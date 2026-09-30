@@ -49,20 +49,29 @@ fun IdentityIcon(
         PassTheme.colors.interactionNormMajor2
     } else {
         PassTheme.colors.interactionNormMinor1
-    }
+    },
+    customIcon: String? = null
 ) {
-    BoxedIcon(
+    ItemCustomIconOrDefault(
         modifier = modifier,
-        backgroundColor = backgroundColor,
+        customIcon = customIcon,
         size = size,
-        shape = shape
-    ) {
-        Icon(
-            modifier = Modifier.padding(Spacing.extraSmall),
-            painter = painterResource(CoreR.drawable.ic_proton_card_identity),
-            contentDescription = null,
-            tint = foregroundColor
-        )
+        shape = shape,
+        enabled = enabled
+    ) { iconModifier ->
+        BoxedIcon(
+            modifier = iconModifier,
+            backgroundColor = backgroundColor,
+            size = size,
+            shape = shape
+        ) {
+            Icon(
+                modifier = Modifier.padding(Spacing.extraSmall),
+                painter = painterResource(CoreR.drawable.ic_proton_card_identity),
+                contentDescription = null,
+                tint = foregroundColor
+            )
+        }
     }
 }
 

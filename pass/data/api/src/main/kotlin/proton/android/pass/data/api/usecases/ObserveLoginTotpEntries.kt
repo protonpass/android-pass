@@ -34,7 +34,9 @@ data class LoginTotpEntry(
     val websites: List<String>,
     val packageName: String?,
     val totpUri: String,
-    val source: Source
+    val source: Source,
+    /** Custom icon from the item metadata (untrusted base64 data URI) */
+    val icon: String? = null
 ) {
     enum class Source { Primary, CustomField }
 }

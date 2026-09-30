@@ -112,7 +112,8 @@ fun LoginRow(
                             canLoadExternalImages = canLoadExternalImages,
                             websites = content.urls,
                             packageName = packageName,
-                            enabled = enabled
+                            enabled = enabled,
+                            customIcon = content.icon
                         )
                     }
                 )

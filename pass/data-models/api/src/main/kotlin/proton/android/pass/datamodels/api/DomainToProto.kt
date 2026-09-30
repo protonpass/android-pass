@@ -42,13 +42,16 @@ fun ItemContents.serializeToProto(
     builder: ItemV1.Item.Builder = ItemV1.Item.newBuilder(),
     encryptionContext: EncryptionContext
 ): ItemV1.Item {
-    builder.setMetadata(
-        builder.metadata.toBuilder()
-            .setName(title)
-            .setNote(note)
-            .setItemUuid(itemUuid)
-            .build()
-    )
+    val metadataBuilder = builder.metadata.toBuilder()
+        .setName(title)
+        .setNote(note)
+        .setItemUuid(itemUuid)
+    // A blank icon is the same as no icon: clear the field instead of storing an empty string
+    when (val itemIcon = icon?.takeIf { it.isNotBlank() }) {
+        null -> metadataBuilder.clearIcon()
+        else -> metadataBuilder.setIcon(itemIcon)
+    }
+    builder.setMetadata(metadataBuilder.build())
 
     builder.clearExtraFields()
         .addAllExtraFields(customFields.mapToExtraFields(encryptionContext))

@@ -42,14 +42,16 @@ data class AliasItemFormState(
     val aliasToBeCreated: String? = null,
     val slNote: String? = null,
     val senderName: String? = null,
-    val customFields: List<UICustomFieldContent>
+    val customFields: List<UICustomFieldContent>,
+    val icon: String? = null
 ) : Parcelable {
 
     internal fun toItemContents(): ItemContents.Alias = ItemContents.Alias(
         title = title,
         note = note,
         aliasEmail = aliasToBeCreated.orEmpty(),
-        customFields = customFields.map(UICustomFieldContent::toCustomFieldContent)
+        customFields = customFields.map(UICustomFieldContent::toCustomFieldContent),
+        icon = icon
     )
 
     companion object {

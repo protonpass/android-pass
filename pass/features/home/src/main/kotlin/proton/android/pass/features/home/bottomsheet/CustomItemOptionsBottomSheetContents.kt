@@ -70,7 +70,7 @@ internal fun CustomItemOptionsBottomSheetContents(
     Column(modifier.bottomSheet(shouldApplyNavPadding = false)) {
         BottomSheetItemRow(
             title = { BottomSheetItemTitle(text = itemUiModel.contents.title) },
-            leftIcon = { CustomItemIcon() }
+            leftIcon = { CustomItemIcon(customIcon = itemUiModel.contents.icon) }
         )
 
         buildList {

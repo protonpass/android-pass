@@ -147,6 +147,7 @@ private fun LazyGridScope.secureLinksListGridCellItems(
             modifier = modifier,
             itemCategory = secureLinksModel.itemCategory,
             title = secureLinksModel.itemTitle,
+            icon = secureLinksModel.itemIcon,
             website = secureLinksModel.itemWebsite,
             packageName = secureLinksModel.itemPackageName,
             remainingTime = secureLinksModel.remainingTime,

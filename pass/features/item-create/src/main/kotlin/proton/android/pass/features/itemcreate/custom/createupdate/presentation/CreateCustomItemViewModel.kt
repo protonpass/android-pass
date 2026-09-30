@@ -359,7 +359,7 @@ class CreateCustomItemViewModel @Inject constructor(
         }
         encryptionContextProvider.withEncryptionContextSuspendable {
             val staticFields: ItemStaticFields
-            val customFields: List<UICustomFieldContent>
+            val itemContents: ItemContents
             val extraSections: List<UIExtraSection>
 
             val type = item.itemType
@@ -373,10 +373,9 @@ class CreateCustomItemViewModel @Inject constructor(
                         passwordChecks = evaluation.penalties.toPasswordChecksUiState(),
                         wifiSecurityType = type.wifiSecurityType
                     )
-                    val itemContents = item.toItemContents<ItemContents.WifiNetwork> { decrypt(it) }
-                    customFields =
-                        itemContents.customFields.map(UICustomFieldContent.Companion::from)
-                    extraSections = itemContents.sectionContentList.map { UIExtraSection(it) }
+                    val contents = item.toItemContents<ItemContents.WifiNetwork> { decrypt(it) }
+                    itemContents = contents
+                    extraSections = contents.sectionContentList.map { UIExtraSection(it) }
                 }
 
                 is ItemType.SSHKey -> {
@@ -384,18 +383,16 @@ class CreateCustomItemViewModel @Inject constructor(
                         publicKey = type.publicKey,
                         privateKey = UIHiddenState.Concealed(type.privateKey)
                     )
-                    val itemContents = item.toItemContents<ItemContents.SSHKey> { decrypt(it) }
-                    customFields =
-                        itemContents.customFields.map(UICustomFieldContent.Companion::from)
-                    extraSections = itemContents.sectionContentList.map { UIExtraSection(it) }
+                    val contents = item.toItemContents<ItemContents.SSHKey> { decrypt(it) }
+                    itemContents = contents
+                    extraSections = contents.sectionContentList.map { UIExtraSection(it) }
                 }
 
                 is ItemType.Custom -> {
                     staticFields = ItemStaticFields.Custom
-                    val itemContents = item.toItemContents<ItemContents.Custom> { decrypt(it) }
-                    customFields =
-                        itemContents.customFields.map(UICustomFieldContent.Companion::from)
-                    extraSections = itemContents.sectionContentList.map { UIExtraSection(it) }
+                    val contents = item.toItemContents<ItemContents.Custom> { decrypt(it) }
+                    itemContents = contents
+                    extraSections = contents.sectionContentList.map { UIExtraSection(it) }
                 }
 
                 else -> throw IllegalStateException("Not a custom item type")
@@ -403,8 +400,9 @@ class CreateCustomItemViewModel @Inject constructor(
             itemFormState = itemFormState.copy(
                 title = context.getString(R.string.title_duplicate, decrypt(item.title)),
                 itemStaticFields = staticFields,
-                customFieldList = customFields,
-                sectionList = extraSections
+                customFieldList = itemContents.customFields.map(UICustomFieldContent.Companion::from),
+                sectionList = extraSections,
+                icon = itemContents.icon
             )
         }
     }

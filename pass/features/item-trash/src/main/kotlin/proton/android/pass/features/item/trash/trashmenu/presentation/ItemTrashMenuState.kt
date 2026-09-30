@@ -62,6 +62,11 @@ internal data class ItemTrashMenuState(
         is Some -> itemUiModelOption.value.category
     }
 
+    internal val itemIcon: String? = when (itemUiModelOption) {
+        None -> null
+        is Some -> itemUiModelOption.value.contents.icon
+    }
+
     internal val itemWebsite: String = when (itemUiModelOption) {
         None -> ""
         is Some -> when (val itemContents = itemUiModelOption.value.contents) {

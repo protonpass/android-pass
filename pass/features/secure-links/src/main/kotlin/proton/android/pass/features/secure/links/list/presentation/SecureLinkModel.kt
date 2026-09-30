@@ -27,6 +27,7 @@ import proton.android.pass.domain.time.RemainingTime
 
 internal data class SecureLinkModel(
     internal val itemTitle: String,
+    internal val itemIcon: String?,
     private val itemType: ItemType,
     private val secureLink: SecureLink
 ) {

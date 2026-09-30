@@ -35,23 +35,28 @@ fun PassItemIcon(
     text: String = "",
     website: String = "",
     packageName: String = "",
-    canLoadExternalImages: Boolean = false
+    canLoadExternalImages: Boolean = false,
+    customIcon: String? = null
 ) {
     when (itemCategory) {
         ItemCategory.Alias -> AliasIcon(
-            modifier = modifier
+            modifier = modifier,
+            customIcon = customIcon
         )
 
         ItemCategory.CreditCard -> CreditCardIcon(
-            modifier = modifier
+            modifier = modifier,
+            customIcon = customIcon
         )
 
         ItemCategory.Note -> NoteIcon(
-            modifier = modifier
+            modifier = modifier,
+            customIcon = customIcon
         )
 
         ItemCategory.Identity -> IdentityIcon(
-            modifier = modifier
+            modifier = modifier,
+            customIcon = customIcon
         )
 
         ItemCategory.Login -> LoginIcon(
@@ -59,13 +64,15 @@ fun PassItemIcon(
             text = text,
             websites = listOfNotNull(website.takeIf { it.isNotEmpty() }),
             packageName = packageName,
-            canLoadExternalImages = canLoadExternalImages
+            canLoadExternalImages = canLoadExternalImages,
+            customIcon = customIcon
         )
 
         ItemCategory.WifiNetwork,
         ItemCategory.SSHKey,
         ItemCategory.Custom -> CustomItemIcon(
-            modifier = modifier
+            modifier = modifier,
+            customIcon = customIcon
         )
 
         ItemCategory.Password,

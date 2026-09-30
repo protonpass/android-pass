@@ -19,6 +19,7 @@
 package proton.android.pass.features.itemcreate.login
 
 import android.content.Context
+import android.net.Uri
 import androidx.annotation.VisibleForTesting
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
@@ -44,6 +45,9 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import me.proton.core.accountmanager.domain.AccountManager
 import proton.android.pass.clipboard.api.ClipboardManager
+import proton.android.pass.common.api.ItemIcon
+import proton.android.pass.common.api.ItemIconError
+import proton.android.pass.common.api.ItemIconResult
 import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
@@ -51,12 +55,14 @@ import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.asLoadingResult
 import proton.android.pass.common.api.combineN
 import proton.android.pass.common.api.getOrNull
+import proton.android.pass.common.api.safeRunCatching
 import proton.android.pass.common.api.some
 import proton.android.pass.common.api.toOption
 import proton.android.pass.commonpresentation.api.attachments.AttachmentsHandler
 import proton.android.pass.commonrust.api.EmailValidator
 import proton.android.pass.commonrust.api.PasswordScorer
 import proton.android.pass.commonui.api.ClassHolder
+import proton.android.pass.commonui.api.ItemIconProcessor
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonuimodels.api.PackageInfoUi
 import proton.android.pass.commonuimodels.api.UIAutofillUrl
@@ -88,6 +94,7 @@ import proton.android.pass.features.itemcreate.common.CommonFieldValidationError
 import proton.android.pass.features.itemcreate.common.CustomFieldDraftRepository
 import proton.android.pass.features.itemcreate.common.CustomFieldValidationError
 import proton.android.pass.features.itemcreate.common.DraftFormFieldEvent
+import proton.android.pass.features.itemcreate.common.ItemIconValidationError
 import proton.android.pass.features.itemcreate.common.LoginItemValidationError
 import proton.android.pass.features.itemcreate.common.UICustomFieldContent
 import proton.android.pass.features.itemcreate.common.UIHiddenState
@@ -510,6 +517,51 @@ abstract class BaseLoginViewModel(
                 onFailure = { url }
             )
         }
+    }
+
+    internal fun onIconSelected(contextHolder: ClassHolder<Context>, uri: Uri) {
+        val contentResolver = contextHolder.get().value()?.contentResolver ?: return
+        viewModelScope.launch {
+            isLoadingState.update { IsLoadingState.Loading }
+            val (mimeType, result) = withContext(Dispatchers.IO) {
+                safeRunCatching {
+                    val mimeType = ItemIconProcessor.resolveMimeType(contentResolver, uri)
+                    mimeType to ItemIconProcessor.process(contentResolver, uri, mimeType)
+                }.getOrElse {
+                    PassLogger.w(TAG, it)
+                    null to ItemIconResult.Error(ItemIconError.Decode)
+                }
+            }
+            when (result) {
+                is ItemIconResult.Success -> {
+                    onUserEditedContent()
+                    loginItemFormMutableState = loginItemFormState.copy(icon = result.icon)
+                    removeValidationErrors(ItemIconValidationError.TooLarge, ItemIconValidationError.Invalid)
+                }
+
+                is ItemIconResult.Error -> {
+                    PassLogger.i(TAG, "Could not set item icon: ${result.reason}")
+                    val message = when (result.reason) {
+                        ItemIconError.Type -> LoginSnackbarMessages.IconTypeError
+                        ItemIconError.Size -> if (mimeType == ItemIcon.SVG_MIME_TYPE) {
+                            LoginSnackbarMessages.IconSvgSizeError
+                        } else {
+                            LoginSnackbarMessages.IconSizeError
+                        }
+
+                        ItemIconError.Decode -> LoginSnackbarMessages.IconDecodeError
+                    }
+                    snackbarDispatcher(message)
+                }
+            }
+            isLoadingState.update { IsLoadingState.NotLoading }
+        }
+    }
+
+    internal fun onIconRemoved() {
+        onUserEditedContent()
+        loginItemFormMutableState = loginItemFormState.copy(icon = null)
+        removeValidationErrors(ItemIconValidationError.TooLarge, ItemIconValidationError.Invalid)
     }
 
     fun onDeleteLinkedApp(packageInfo: PackageInfoUi) {

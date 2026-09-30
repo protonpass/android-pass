@@ -32,6 +32,9 @@ sealed interface ItemDiffs {
 
     val note: ItemDiffType
 
+    /** Custom item icon added, removed or changed */
+    val icon: ItemDiffType
+
     val customFields: List<ItemDiffType>
 
     val attachments: Map<AttachmentId, ItemDiffType>
@@ -41,6 +44,7 @@ sealed interface ItemDiffs {
     data object None : ItemDiffs {
         override val title: ItemDiffType = ItemDiffType.None
         override val note: ItemDiffType = ItemDiffType.None
+        override val icon: ItemDiffType = ItemDiffType.None
         override val customFields: List<ItemDiffType> = emptyList()
         override val attachments: Map<AttachmentId, ItemDiffType> = emptyMap()
     }
@@ -48,6 +52,7 @@ sealed interface ItemDiffs {
     data class Alias(
         override val title: ItemDiffType = ItemDiffType.None,
         override val note: ItemDiffType = ItemDiffType.None,
+        override val icon: ItemDiffType = ItemDiffType.None,
         override val customFields: List<ItemDiffType> = emptyList(),
         override val attachments: Map<AttachmentId, ItemDiffType> = emptyMap(),
         val aliasEmail: ItemDiffType = ItemDiffType.None
@@ -56,6 +61,7 @@ sealed interface ItemDiffs {
     data class CreditCard(
         override val title: ItemDiffType = ItemDiffType.None,
         override val note: ItemDiffType = ItemDiffType.None,
+        override val icon: ItemDiffType = ItemDiffType.None,
         override val customFields: List<ItemDiffType> = emptyList(),
         override val attachments: Map<AttachmentId, ItemDiffType> = emptyMap(),
         val cardHolder: ItemDiffType = ItemDiffType.None,
@@ -68,6 +74,7 @@ sealed interface ItemDiffs {
     data class Identity(
         override val title: ItemDiffType = ItemDiffType.None,
         override val note: ItemDiffType = ItemDiffType.None,
+        override val icon: ItemDiffType = ItemDiffType.None,
         override val customFields: List<ItemDiffType> = emptyList(),
         override val attachments: Map<AttachmentId, ItemDiffType> = emptyMap(),
         val organization: ItemDiffType = ItemDiffType.None,
@@ -125,6 +132,7 @@ sealed interface ItemDiffs {
     data class Login(
         override val title: ItemDiffType = ItemDiffType.None,
         override val note: ItemDiffType = ItemDiffType.None,
+        override val icon: ItemDiffType = ItemDiffType.None,
         override val attachments: Map<AttachmentId, ItemDiffType> = emptyMap(),
         override val customFields: List<ItemDiffType> = emptyList(),
         val email: ItemDiffType = ItemDiffType.None,
@@ -145,6 +153,7 @@ sealed interface ItemDiffs {
     data class Custom(
         override val title: ItemDiffType = ItemDiffType.None,
         override val note: ItemDiffType = ItemDiffType.None,
+        override val icon: ItemDiffType = ItemDiffType.None,
         override val customFields: List<ItemDiffType> = emptyList(),
         override val attachments: Map<AttachmentId, ItemDiffType> = emptyMap(),
         private val extraCustomFields: List<List<ItemDiffType>> = emptyList()
@@ -162,6 +171,7 @@ sealed interface ItemDiffs {
     data class WifiNetwork(
         override val title: ItemDiffType = ItemDiffType.None,
         override val note: ItemDiffType = ItemDiffType.None,
+        override val icon: ItemDiffType = ItemDiffType.None,
         val ssid: ItemDiffType = ItemDiffType.None,
         val password: ItemDiffType = ItemDiffType.None,
         val wifiSecurity: ItemDiffType = ItemDiffType.None,
@@ -182,6 +192,7 @@ sealed interface ItemDiffs {
     data class SSHKey(
         override val title: ItemDiffType = ItemDiffType.None,
         override val note: ItemDiffType = ItemDiffType.None,
+        override val icon: ItemDiffType = ItemDiffType.None,
         val publicKey: ItemDiffType = ItemDiffType.None,
         val privateKey: ItemDiffType = ItemDiffType.None,
         override val customFields: List<ItemDiffType> = emptyList(),
@@ -202,6 +213,7 @@ sealed interface ItemDiffs {
     data class Note(
         override val title: ItemDiffType = ItemDiffType.None,
         override val note: ItemDiffType = ItemDiffType.None,
+        override val icon: ItemDiffType = ItemDiffType.None,
         override val customFields: List<ItemDiffType> = emptyList(),
         override val attachments: Map<AttachmentId, ItemDiffType> = emptyMap()
     ) : ItemDiffs
@@ -209,6 +221,7 @@ sealed interface ItemDiffs {
     data class Unknown(
         override val title: ItemDiffType = ItemDiffType.None,
         override val note: ItemDiffType = ItemDiffType.None,
+        override val icon: ItemDiffType = ItemDiffType.None,
         override val customFields: List<ItemDiffType> = emptyList(),
         override val attachments: Map<AttachmentId, ItemDiffType> = emptyMap()
     ) : ItemDiffs

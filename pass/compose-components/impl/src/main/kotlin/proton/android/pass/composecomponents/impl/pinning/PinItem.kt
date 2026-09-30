@@ -84,6 +84,8 @@ fun PinItem(
             is ItemContents.Note -> NoteIcon(
                 modifier = Modifier.size(ICON_SIZE.dp),
                 shape = PassTheme.shapes.squircleSmallShape,
+                size = ICON_SIZE,
+                customIcon = contents.icon,
                 backgroundColor = PassTheme.colors.noteInteractionNormMinor2
             )
 
@@ -96,23 +98,30 @@ fun PinItem(
                 favIconPadding = 2.dp,
                 websites = contents.urls,
                 packageName = contents.packageInfoSet.firstOrNull()?.packageName?.value,
+                customIcon = contents.icon,
                 backgroundColor = PassTheme.colors.loginInteractionNormMinor2
             )
 
             is ItemContents.Alias -> AliasIcon(
                 modifier = Modifier.size(ICON_SIZE.dp),
                 shape = PassTheme.shapes.squircleSmallShape,
+                size = ICON_SIZE,
+                customIcon = contents.icon,
                 backgroundColor = PassTheme.colors.aliasInteractionNormMinor2
             )
 
             is ItemContents.CreditCard -> CreditCardIcon(
                 modifier = Modifier.size(ICON_SIZE.dp),
                 shape = PassTheme.shapes.squircleSmallShape,
+                size = ICON_SIZE,
+                customIcon = contents.icon,
                 backgroundColor = PassTheme.colors.cardInteractionNormMinor2
             )
             is ItemContents.Identity -> IdentityIcon(
                 modifier = Modifier.size(ICON_SIZE.dp),
                 shape = PassTheme.shapes.squircleSmallShape,
+                size = ICON_SIZE,
+                customIcon = contents.icon,
                 backgroundColor = PassTheme.colors.interactionNormMinor2
             )
             is ItemContents.WifiNetwork,
@@ -120,6 +129,8 @@ fun PinItem(
             is ItemContents.Custom -> CustomItemIcon(
                 modifier = Modifier.size(ICON_SIZE.dp),
                 shape = PassTheme.shapes.squircleSmallShape,
+                size = ICON_SIZE,
+                customIcon = contents.icon,
                 backgroundColor = PassTheme.colors.interactionNormMinor2
             )
 

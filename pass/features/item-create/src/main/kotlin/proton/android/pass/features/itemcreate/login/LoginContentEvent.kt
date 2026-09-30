@@ -18,6 +18,7 @@
 
 package proton.android.pass.features.itemcreate.login
 
+import android.net.Uri
 import proton.android.pass.common.api.Option
 import proton.android.pass.commonuimodels.api.PackageInfoUi
 import proton.android.pass.commonuimodels.api.UIPasskeyContent
@@ -98,4 +99,9 @@ internal sealed interface LoginContentEvent {
 
     @JvmInline
     value class OnAttachmentEvent(val event: AttachmentContentEvent) : LoginContentEvent
+
+    @JvmInline
+    value class OnIconSelected(val uri: Uri) : LoginContentEvent
+
+    data object OnIconRemoved : LoginContentEvent
 }

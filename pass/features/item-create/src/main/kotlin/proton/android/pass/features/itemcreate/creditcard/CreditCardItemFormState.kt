@@ -40,7 +40,8 @@ data class CreditCardItemFormState(
     val cvv: UIHiddenState,
     val pin: UIHiddenState,
     val expirationDate: String,
-    val customFields: List<UICustomFieldContent>
+    val customFields: List<UICustomFieldContent>,
+    val icon: String? = null
 ) : Parcelable {
 
     constructor(itemContents: ItemContents.CreditCard) : this(
@@ -52,7 +53,8 @@ data class CreditCardItemFormState(
         cvv = from(itemContents.cvv),
         pin = from(itemContents.pin),
         expirationDate = itemContents.expirationDate,
-        customFields = itemContents.customFields.map(UICustomFieldContent.Companion::from)
+        customFields = itemContents.customFields.map(UICustomFieldContent.Companion::from),
+        icon = itemContents.icon
     )
 
     fun toItemContents(): ItemContents = ItemContents.CreditCard(
@@ -64,7 +66,8 @@ data class CreditCardItemFormState(
         expirationDate = expirationDate,
         pin = pin.toHiddenState(),
         type = type,
-        customFields = customFields.map(UICustomFieldContent::toCustomFieldContent)
+        customFields = customFields.map(UICustomFieldContent::toCustomFieldContent),
+        icon = icon
     )
 
     fun compare(other: CreditCardItemFormState, encryptionContext: EncryptionContext): Boolean = title == other.title &&

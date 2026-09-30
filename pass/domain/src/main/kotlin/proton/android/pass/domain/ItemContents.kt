@@ -120,6 +120,12 @@ sealed class ItemContents {
 
     abstract val customFields: List<CustomFieldContent>
 
+    /**
+     * Optional custom icon stored in the item metadata as a base64 image data URI.
+     * This value is untrusted (items can be shared) and must be validated before rendering.
+     */
+    abstract val icon: String?
+
     @Stable
     @Serializable
     data class Login(
@@ -133,7 +139,8 @@ sealed class ItemContents {
         val packageInfoSet: Set<PackageInfo>,
         val primaryTotp: HiddenState,
         val passkeys: List<Passkey>,
-        val autofillUrls: List<AutofillUrl>
+        val autofillUrls: List<AutofillUrl>,
+        override val icon: String? = null
     ) : ItemContents() {
 
         override val displayValue: String = itemUsername.ifEmpty { itemEmail }
@@ -171,7 +178,8 @@ sealed class ItemContents {
     data class Note(
         override val title: String,
         override val note: String,
-        override val customFields: List<CustomFieldContent>
+        override val customFields: List<CustomFieldContent>,
+        override val icon: String? = null
     ) : ItemContents() {
 
         override val displayValue: String = note
@@ -186,7 +194,8 @@ sealed class ItemContents {
         override val customFields: List<CustomFieldContent>,
         val aliasEmail: String,
         private val isDisabled: Boolean? = null,
-        val slNote: String? = null
+        val slNote: String? = null,
+        override val icon: String? = null
     ) : ItemContents() {
 
         override val displayValue: String = aliasEmail
@@ -207,7 +216,8 @@ sealed class ItemContents {
         val number: String,
         val cvv: HiddenState,
         val pin: HiddenState,
-        val expirationDate: String
+        val expirationDate: String,
+        override val icon: String? = null
     ) : ItemContents() {
 
         override val displayValue: String = number
@@ -239,7 +249,8 @@ sealed class ItemContents {
         val addressDetailsContent: AddressDetailsContent,
         val contactDetailsContent: ContactDetailsContent,
         val workDetailsContent: WorkDetailsContent,
-        val extraSectionContentList: List<ExtraSectionContent>
+        val extraSectionContentList: List<ExtraSectionContent>,
+        override val icon: String? = null
     ) : ItemContents() {
 
         override val displayValue: String = listOf(
@@ -257,7 +268,8 @@ sealed class ItemContents {
         override val title: String,
         override val note: String,
         override val customFields: List<CustomFieldContent>,
-        val sectionContentList: List<ExtraSectionContent>
+        val sectionContentList: List<ExtraSectionContent>,
+        override val icon: String? = null
     ) : ItemContents() {
 
         override val displayValue: String = title
@@ -273,7 +285,8 @@ sealed class ItemContents {
         val ssid: String,
         val password: HiddenState,
         val wifiSecurityType: WifiSecurityType,
-        val sectionContentList: List<ExtraSectionContent>
+        val sectionContentList: List<ExtraSectionContent>,
+        override val icon: String? = null
     ) : ItemContents() {
 
         override val displayValue: String = title
@@ -288,7 +301,8 @@ sealed class ItemContents {
         override val customFields: List<CustomFieldContent>,
         val publicKey: String,
         val privateKey: HiddenState,
-        val sectionContentList: List<ExtraSectionContent>
+        val sectionContentList: List<ExtraSectionContent>,
+        override val icon: String? = null
     ) : ItemContents() {
 
         override val displayValue: String = title
@@ -299,7 +313,8 @@ sealed class ItemContents {
     data class Unknown(
         override val title: String,
         override val note: String,
-        override val customFields: List<CustomFieldContent>
+        override val customFields: List<CustomFieldContent>,
+        override val icon: String? = null
     ) : ItemContents() {
 
         override val displayValue: String = ""

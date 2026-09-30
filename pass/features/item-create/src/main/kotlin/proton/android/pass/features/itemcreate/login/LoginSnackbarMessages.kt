@@ -40,5 +40,9 @@ enum class LoginSnackbarMessages(
     UpdateAppToUpdateItemError(R.string.snackbar_update_app_to_update_item, SnackbarType.ERROR),
     AttachmentsInitError(R.string.update_login_attachments_init_error, SnackbarType.ERROR),
     ItemLinkAttachmentsError(R.string.login_link_attachments_error, SnackbarType.ERROR),
-    ItemRenameAttachmentsError(R.string.login_rename_attachments_error, SnackbarType.ERROR)
+    ItemRenameAttachmentsError(R.string.login_rename_attachments_error, SnackbarType.ERROR),
+    IconTypeError(R.string.item_icon_error_type, SnackbarType.ERROR),
+    IconSizeError(R.string.item_icon_error_size, SnackbarType.ERROR),
+    IconSvgSizeError(R.string.item_icon_error_size_svg, SnackbarType.ERROR),
+    IconDecodeError(R.string.item_icon_error_decode, SnackbarType.ERROR)
 }

@@ -39,13 +39,15 @@ class ObserveItemTypeCountsImpl @Inject constructor(
         folderId: FolderId?,
         itemState: ItemState?,
         itemSharedType: ItemSharedType?,
-        query: String?
+        query: String?,
+        restrictToRootFolder: Boolean
     ): Flow<ItemTypeCounts> = searchIndexRepository.observeItemTypeCounts(
         userIds = userIds,
         shareIds = shareIds,
         folderId = folderId,
         itemState = itemState,
         itemSharedType = itemSharedType,
-        query = query
+        query = query,
+        restrictToRootFolder = restrictToRootFolder
     )
 }

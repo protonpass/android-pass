@@ -142,7 +142,8 @@ class FakeSearchIndexRepository @Inject constructor() : SearchIndexRepository {
         itemState: ItemState?,
         itemSharedType: ItemSharedType?,
         itemTypeFilter: ItemTypeFilter,
-        includeHidden: Boolean
+        includeHidden: Boolean,
+        restrictToRootFolder: Boolean
     ): Flow<PagingData<Item>> {
         val filtered = items.values
             .filter { it.userId in userIds }
@@ -176,7 +177,8 @@ class FakeSearchIndexRepository @Inject constructor() : SearchIndexRepository {
         itemState: ItemState?,
         itemSharedType: ItemSharedType?,
         query: String?,
-        includeHidden: Boolean
+        includeHidden: Boolean,
+        restrictToRootFolder: Boolean
     ): Flow<ItemTypeCounts> = flowOf(ItemTypeCounts.EMPTY)
 }
 

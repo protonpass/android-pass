@@ -34,6 +34,7 @@ interface ObserveItemTypeCounts {
         folderId: FolderId? = null,
         itemState: ItemState? = null,
         itemSharedType: ItemSharedType? = null,
-        query: String? = null
+        query: String? = null,
+        restrictToRootFolder: Boolean = false
     ): Flow<ItemTypeCounts>
 }

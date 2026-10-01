@@ -45,6 +45,7 @@ import proton.android.pass.data.impl.local.search.SearchFtsCallback
 import proton.android.pass.data.impl.local.search.SearchIdRow
 import proton.android.pass.data.impl.local.search.SearchItemEntity
 import proton.android.pass.domain.ItemState
+import proton.android.pass.domain.ShareId
 import proton.android.pass.preferences.FakeInternalSettingsRepository
 import javax.crypto.KeyGenerator
 
@@ -142,6 +143,43 @@ class SearchIndexRepositoryMultiUserTest {
         assertThat(counts).isEqualTo(ItemTypeCounts.EMPTY)
     }
 
+    @Test
+    fun unrestrictedQueryIncludesFolderItemsInListAndCount() = runTest {
+        insertRootAndFolderItems()
+        val userIds = listOf(USER_A)
+
+        val rows = getAll(userIds, shareIds = listOf(SHARE_A), restrictToRootFolder = false)
+        val counts = repository.observeItemTypeCounts(
+            userIds = userIds,
+            shareIds = listOf(ShareId(SHARE_A)),
+            restrictToRootFolder = false
+        ).first()
+
+        assertThat(rows.map { it.itemId }).containsExactly(ITEM_A, ITEM_IN_FOLDER)
+        assertThat(counts.total()).isEqualTo(2)
+    }
+
+    @Test
+    fun rootRestrictedQueryExcludesFolderItemsInListAndCount() = runTest {
+        insertRootAndFolderItems()
+        val userIds = listOf(USER_A)
+
+        val rows = getAll(userIds, shareIds = listOf(SHARE_A), restrictToRootFolder = true)
+        val counts = repository.observeItemTypeCounts(
+            userIds = userIds,
+            shareIds = listOf(ShareId(SHARE_A)),
+            restrictToRootFolder = true
+        ).first()
+
+        assertThat(rows.map { it.itemId }).containsExactly(ITEM_A)
+        assertThat(counts.total()).isEqualTo(1)
+    }
+
+    private suspend fun insertRootAndFolderItems() {
+        dao.upsert(entity(USER_A, SHARE_A, ITEM_A, ITEM_TYPE_LOGIN))
+        dao.upsert(entity(USER_A, SHARE_A, ITEM_IN_FOLDER, ITEM_TYPE_LOGIN, folderId = FOLDER_ID))
+    }
+
     private suspend fun insertTwoAccounts() {
         dao.upsert(
             entity(USER_B, SHARE_B, ITEM_SHARED, ITEM_TYPE_LOGIN, isSharedWithMe = true)
@@ -153,16 +191,21 @@ class SearchIndexRepositoryMultiUserTest {
         dao.upsert(entity(USER_B, SHARE_B, ITEM_B, ITEM_TYPE_ALIAS))
     }
 
-    private suspend fun getAll(userIds: List<UserId>): List<SearchIdRow> {
+    private suspend fun getAll(
+        userIds: List<UserId>,
+        shareIds: List<String>? = null,
+        restrictToRootFolder: Boolean = false
+    ): List<SearchIdRow> {
         val parts = repository.buildPagingGetAllQueryParts(
             userIds = userIds,
             sortBy = SearchSortBy.TITLE_ASC,
-            shareIds = null,
+            shareIds = shareIds?.map(::ShareId),
             folderId = null,
             itemState = ItemState.Active,
             itemSharedType = null,
             itemTypeFilter = ItemTypeFilter.All,
-            includeHidden = false
+            includeHidden = false,
+            restrictToRootFolder = restrictToRootFolder
         )
         return dao.searchPage(SimpleSQLiteQuery(parts.queryString, parts.args))
     }
@@ -191,7 +234,8 @@ class SearchIndexRepositoryMultiUserTest {
         itemId: String,
         itemType: Int,
         isSharedByMe: Boolean = false,
-        isSharedWithMe: Boolean = false
+        isSharedWithMe: Boolean = false,
+        folderId: String? = null
     ) = SearchItemEntity(
         userId = userId.id,
         shareId = shareId,
@@ -202,7 +246,8 @@ class SearchIndexRepositoryMultiUserTest {
         createTime = 0L,
         modifyTime = 0L,
         isSharedByMe = isSharedByMe,
-        isSharedWithMe = isSharedWithMe
+        isSharedWithMe = isSharedWithMe,
+        folderId = folderId
     )
 
     private companion object {
@@ -213,6 +258,8 @@ class SearchIndexRepositoryMultiUserTest {
         const val ITEM_A = "item-a"
         const val ITEM_B = "item-b"
         const val ITEM_SHARED = "item-shared"
+        const val ITEM_IN_FOLDER = "item-in-folder"
+        const val FOLDER_ID = "folder-a"
         const val COMMON_TERM = "vaultitem"
         const val ITEM_TYPE_LOGIN = 0
         const val ITEM_TYPE_ALIAS = 1

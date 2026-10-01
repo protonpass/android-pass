@@ -1649,7 +1649,8 @@ class HomeViewModel @Inject constructor(
                 folderId = params.folderId,
                 itemState = params.itemState,
                 itemSharedType = params.itemSharedType,
-                itemTypeFilter = params.filterType.toItemTypeFilter()
+                itemTypeFilter = params.filterType.toItemTypeFilter(),
+                restrictToRootFolder = params.vaultSelectionOption is VaultSelectionOption.Vault
             ).map { pagingData ->
                 // Convert Item to HomeListItem.Item
                 encryptionContextProvider.withEncryptionContext {
@@ -1869,7 +1870,8 @@ class HomeViewModel @Inject constructor(
             folderId = folderId,
             itemState = itemState,
             itemSharedType = itemSharedType,
-            query = searchQuery.takeIf { it.isNotBlank() }
+            query = searchQuery.takeIf { it.isNotBlank() },
+            restrictToRootFolder = vaultSelectionOption is VaultSelectionOption.Vault
         ).map { counts ->
             ItemTypeCount(
                 loginCount = counts.loginCount,

@@ -44,7 +44,8 @@ class ObservePagedItemsImpl @Inject constructor(
         folderId: FolderId?,
         itemState: ItemState?,
         itemSharedType: ItemSharedType?,
-        itemTypeFilter: ItemTypeFilter
+        itemTypeFilter: ItemTypeFilter,
+        restrictToRootFolder: Boolean
     ): Flow<PagingData<Item>> = searchIndexRepository.getItems(
         userIds = userIds,
         query = query,
@@ -53,6 +54,7 @@ class ObservePagedItemsImpl @Inject constructor(
         folderId = folderId,
         itemState = itemState,
         itemSharedType = itemSharedType,
-        itemTypeFilter = itemTypeFilter
+        itemTypeFilter = itemTypeFilter,
+        restrictToRootFolder = restrictToRootFolder
     )
 }

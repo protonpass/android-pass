@@ -117,6 +117,8 @@ interface SearchIndexRepository {
      * @param itemSharedType Optional shared type to filter by (SharedByMe or SharedWithMe). If null, no filter.
      * @param itemTypeFilter Optional item type to filter by. If All, no type filter is applied.
      * @param includeHidden If false (default), items belonging to hidden vaults are excluded.
+     * @param restrictToRootFolder If true and neither [folderId] nor a query is given, only items
+     * outside any folder are returned.
      */
     fun getItems(
         userIds: List<UserId>,
@@ -127,7 +129,8 @@ interface SearchIndexRepository {
         itemState: ItemState? = null,
         itemSharedType: ItemSharedType? = null,
         itemTypeFilter: ItemTypeFilter = ItemTypeFilter.All,
-        includeHidden: Boolean = false
+        includeHidden: Boolean = false,
+        restrictToRootFolder: Boolean = false
     ): Flow<PagingData<Item>>
 
     /**
@@ -143,7 +146,8 @@ interface SearchIndexRepository {
         itemState: ItemState? = null,
         itemSharedType: ItemSharedType? = null,
         query: String? = null,
-        includeHidden: Boolean = false
+        includeHidden: Boolean = false,
+        restrictToRootFolder: Boolean = false
     ): Flow<ItemTypeCounts>
 }
 

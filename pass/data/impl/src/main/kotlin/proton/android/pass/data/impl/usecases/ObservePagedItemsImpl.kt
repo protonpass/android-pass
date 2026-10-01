@@ -37,7 +37,7 @@ class ObservePagedItemsImpl @Inject constructor(
 ) : ObservePagedItems {
 
     override fun invoke(
-        userId: UserId,
+        userIds: List<UserId>,
         query: String?,
         sortBy: SearchSortBy,
         shareIds: List<ShareId>?,
@@ -46,7 +46,7 @@ class ObservePagedItemsImpl @Inject constructor(
         itemSharedType: ItemSharedType?,
         itemTypeFilter: ItemTypeFilter
     ): Flow<PagingData<Item>> = searchIndexRepository.getItems(
-        userId = userId,
+        userIds = userIds,
         query = query,
         sortBy = sortBy,
         shareIds = shareIds,

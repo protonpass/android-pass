@@ -1639,7 +1639,7 @@ class HomeViewModel @Inject constructor(
             val sortBy = params.sortingType.toSearchSortBy()
 
             observePagedItems(
-                userId = userId,
+                userIds = listOf(userId),
                 query = params.query,
                 sortBy = sortBy,
                 shareIds = params.shareIds,
@@ -1861,7 +1861,7 @@ class HomeViewModel @Inject constructor(
         val folderId = (vaultSelectionOption as? VaultSelectionOption.Folder)?.folderId
 
         observeItemTypeCounts(
-            userId = userId,
+            userIds = listOf(userId),
             shareIds = shareIds,
             folderId = folderId,
             itemState = itemState,

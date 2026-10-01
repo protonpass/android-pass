@@ -35,6 +35,11 @@ class FakeObserveItemTypeCounts @Inject constructor() : ObserveItemTypeCounts {
 
     private val flow = testFlow<ItemTypeCounts>()
 
+    var lastUserIds: List<UserId>? = null
+        private set
+    var lastShareIds: List<ShareId>? = null
+        private set
+
     fun emitValue(value: ItemTypeCounts) {
         flow.tryEmit(value)
     }
@@ -44,11 +49,15 @@ class FakeObserveItemTypeCounts @Inject constructor() : ObserveItemTypeCounts {
     }
 
     override fun invoke(
-        userId: UserId,
+        userIds: List<UserId>,
         shareIds: List<ShareId>?,
         folderId: FolderId?,
         itemState: ItemState?,
         itemSharedType: ItemSharedType?,
         query: String?
-    ): Flow<ItemTypeCounts> = flow
+    ): Flow<ItemTypeCounts> {
+        lastUserIds = userIds
+        lastShareIds = shareIds
+        return flow
+    }
 }

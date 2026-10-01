@@ -567,27 +567,20 @@ class SelectItemViewModel @Inject constructor(
                 .flatten()
                 .map { it.id }
                 .ifEmpty { null }
-            val userId = if (selectedAccount is Some) {
-                selectedAccount.value
-            } else {
-                usersAutofillShares.keys.firstOrNull()
-            }
-            userId?.let {
-                ItemCountQuery(
-                    userId = it,
-                    shareIds = shareIds,
-                    query = if (isInSearchMode) query.takeIf { q -> q.isNotBlank() } else null
-                )
-            }
+            ItemCountQuery(
+                userIds = usersAutofillShares.selectedUserIds(selectedAccount),
+                shareIds = shareIds,
+                query = if (isInSearchMode) query.takeIf { q -> q.isNotBlank() } else null
+            )
         }
     }
         .distinctUntilChanged()
         .flatMapLatest { params ->
-            if (params == null) {
+            if (params == null || params.userIds.isEmpty()) {
                 flowOf(0)
             } else {
                 observeItemTypeCounts(
-                    userId = params.userId,
+                    userIds = params.userIds,
                     shareIds = params.shareIds,
                     itemState = ItemState.Active,
                     query = params.query
@@ -842,6 +835,9 @@ class SelectItemViewModel @Inject constructor(
             true
         }
 
+    private fun <V> Map<UserId, V>.selectedUserIds(selectedAccount: Option<UserId>): List<UserId> =
+        if (selectedAccount is Some) listOf(selectedAccount.value) else keys.toList()
+
     // ========== Pagination Support ==========
     @SuppressWarnings("ClassOrdering")
     internal val selectItemPagingFlow: Flow<PagingData<HomeListItem>> = combineN(
@@ -882,14 +878,8 @@ class SelectItemViewModel @Inject constructor(
         }
 
         val itemTypeFilter = state?.itemTypeFilter ?: ItemTypeFilter.All
-        val userId = if (selectedAccount is Some) {
-            selectedAccount.value
-        } else {
-            usersAutofillShares.keys.firstOrNull()
-        }
-
         PagingParams(
-            userId = userId,
+            userIds = usersAutofillShares.selectedUserIds(selectedAccount),
             query = if (isInSearchMode) query else null,
             sortingType = sortingOption.searchSortingType,
             shareIds = shareIds,
@@ -905,11 +895,13 @@ class SelectItemViewModel @Inject constructor(
             if (params.isIndexing) {
                 return@flatMapLatest flowOf(PagingData.empty())
             }
-            val userId = params.userId ?: return@flatMapLatest flowOf(PagingData.empty())
+            if (params.userIds.isEmpty()) {
+                return@flatMapLatest flowOf(PagingData.empty())
+            }
             val sortBy = params.sortingType.toSearchSortBy()
 
             observePagedItems(
-                userId = userId,
+                userIds = params.userIds,
                 query = params.query,
                 sortBy = sortBy,
                 shareIds = params.shareIds,
@@ -1036,7 +1028,7 @@ class SelectItemViewModel @Inject constructor(
     )
 
     private data class PagingParams(
-        val userId: UserId?,
+        val userIds: List<UserId>,
         val query: String?,
         val sortingType: SearchSortingType,
         val shareIds: List<ShareId>?,
@@ -1048,7 +1040,7 @@ class SelectItemViewModel @Inject constructor(
     )
 
     private data class ItemCountQuery(
-        val userId: UserId,
+        val userIds: List<UserId>,
         val shareIds: List<ShareId>?,
         val query: String?
     )

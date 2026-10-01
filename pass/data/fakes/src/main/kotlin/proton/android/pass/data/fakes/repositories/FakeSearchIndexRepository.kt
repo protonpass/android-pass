@@ -128,7 +128,7 @@ class FakeSearchIndexRepository @Inject constructor() : SearchIndexRepository {
     }
 
     override fun getItems(
-        userId: UserId,
+        userIds: List<UserId>,
         query: String?,
         sortBy: SearchSortBy,
         shareIds: List<ShareId>?,
@@ -139,12 +139,13 @@ class FakeSearchIndexRepository @Inject constructor() : SearchIndexRepository {
         includeHidden: Boolean
     ): Flow<PagingData<Item>> {
         val filtered = items.values
-            .filter { it.userId == userId }
+            .filter { it.userId in userIds }
             .filter { shareIds == null || shareIds.isEmpty() || it.shareId in shareIds }
             .filter { item ->
                 val expectedState = itemState ?: ItemState.Active
                 item.state == expectedState.value
             }
+            .let { candidates -> if (userIds.size > 1) candidates.distinctBy { it.id } else candidates }
 
         val sorted = when (sortBy) {
             SearchSortBy.TITLE_ASC -> filtered.sortedBy { it.title.lowercase() }
@@ -163,7 +164,7 @@ class FakeSearchIndexRepository @Inject constructor() : SearchIndexRepository {
     }
 
     override fun observeItemTypeCounts(
-        userId: UserId,
+        userIds: List<UserId>,
         shareIds: List<ShareId>?,
         folderId: FolderId?,
         itemState: ItemState?,

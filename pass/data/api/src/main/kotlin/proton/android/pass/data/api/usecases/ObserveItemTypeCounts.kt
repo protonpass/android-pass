@@ -29,7 +29,7 @@ import proton.android.pass.domain.items.ItemSharedType
 interface ObserveItemTypeCounts {
 
     operator fun invoke(
-        userId: UserId,
+        userIds: List<UserId>,
         shareIds: List<ShareId>? = null,
         folderId: FolderId? = null,
         itemState: ItemState? = null,

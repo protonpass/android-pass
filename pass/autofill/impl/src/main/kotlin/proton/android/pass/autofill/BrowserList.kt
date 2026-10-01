@@ -100,3 +100,19 @@ val BROWSERS = setOf(
     "org.ungoogled.chromium.stable",
     "us.spotco.fennec_dos"
 )
+
+/**
+ * Gecko-based browsers that use Android's native autofill framework instead of
+ * exposing a third-party-mode ContentProvider. Consumed by autofill health
+ * coverage resolution to report them as ready.
+ */
+val NATIVE_AUTOFILL_BROWSERS = setOf(
+    "org.ironfoxoss.ironfox",
+    "org.mozilla.fenix",
+    "org.mozilla.fennec_fdroid",
+    "org.mozilla.firefox",
+    "org.mozilla.firefox_beta",
+    "org.mozilla.focus",
+    "org.torproject.torbrowser",
+    "org.torproject.torbrowser_alpha"
+)

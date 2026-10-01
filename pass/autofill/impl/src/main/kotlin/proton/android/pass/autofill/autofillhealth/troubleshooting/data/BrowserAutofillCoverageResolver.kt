@@ -33,6 +33,9 @@ import proton.android.pass.autofill.ThirdPartyMode
  * not evidence of anything for these browsers. Versions predating the provider report
  * [ThirdPartyMode.Unknown] and still fall back to the compatibility list.
  *
+ * Gecko-based browsers talk to the Android autofill framework natively, so they are
+ * [BrowserAutofillCoverage.Ready] even once their version outgrows the compatibility list.
+ *
  * Failing that the user likely needs to turn autofill on in the browser, so it is
  * [BrowserAutofillCoverage.NeedsSetup].
  */
@@ -42,7 +45,8 @@ object BrowserAutofillCoverageResolver {
         browserVersionCode: Long,
         compatMaxVersionCode: Long?,
         hasBeenSeenWorking: Boolean,
-        thirdPartyMode: ThirdPartyMode = ThirdPartyMode.Unknown
+        thirdPartyMode: ThirdPartyMode = ThirdPartyMode.Unknown,
+        supportsNativeAutofill: Boolean = false
     ): BrowserAutofillCoverage {
         val compatModeApplies =
             compatMaxVersionCode != null && browserVersionCode <= compatMaxVersionCode
@@ -51,6 +55,7 @@ object BrowserAutofillCoverageResolver {
                 BrowserAutofillCoverage.NeedsSetup
             hasBeenSeenWorking -> BrowserAutofillCoverage.Working
             thirdPartyMode == ThirdPartyMode.Enabled -> BrowserAutofillCoverage.Ready
+            supportsNativeAutofill -> BrowserAutofillCoverage.Ready
             compatModeApplies -> BrowserAutofillCoverage.Ready
             else -> BrowserAutofillCoverage.NeedsSetup
         }

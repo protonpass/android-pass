@@ -72,7 +72,19 @@ class AutofillHealthVerdictResolverTest {
         val state = AutofillTroubleshootingState(
             serviceStatus = AutofillServiceStatus.EnabledByOurService,
             installedBrowsers = listOf(
-                BrowserInfo("org.mozilla.firefox", "Firefox", BrowserAutofillCoverage.NeedsSetup)
+                BrowserInfo("com.microsoft.emmx", "Edge", BrowserAutofillCoverage.NeedsSetup)
+            )
+        )
+        assertThat(AutofillHealthVerdictResolver.resolve(state))
+            .isEqualTo(AutofillHealthVerdict.AllGood)
+    }
+
+    @Test
+    fun `all good when firefox is ready through native autofill`() {
+        val state = AutofillTroubleshootingState(
+            serviceStatus = AutofillServiceStatus.EnabledByOurService,
+            installedBrowsers = listOf(
+                BrowserInfo("org.mozilla.firefox", "Firefox", BrowserAutofillCoverage.Ready)
             )
         )
         assertThat(AutofillHealthVerdictResolver.resolve(state))

@@ -136,6 +136,7 @@ internal fun CodesContent(
                     row = row,
                     searchQuery = state.searchQuery,
                     showProgress = state.showPerRowProgress,
+                    canLoadExternalImages = state.canLoadExternalImages,
                     onClick = { onEvent(CodesUiEvent.CodeClicked(row.code)) }
                 )
             }
@@ -148,6 +149,7 @@ private fun CodeRowItem(
     row: CodeRow,
     searchQuery: String,
     showProgress: Boolean,
+    canLoadExternalImages: Boolean,
     onClick: () -> Unit
 ) {
     val highlightColor = PassTheme.colors.interactionNorm
@@ -172,7 +174,7 @@ private fun CodeRowItem(
             text = row.title,
             websites = row.websites,
             packageName = row.packageName,
-            canLoadExternalImages = false
+            canLoadExternalImages = canLoadExternalImages
         )
         Spacer(modifier = Modifier.width(Spacing.medium))
         Column(modifier = Modifier.weight(1f)) {

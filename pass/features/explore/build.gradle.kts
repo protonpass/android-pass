@@ -78,8 +78,12 @@ dependencies {
     testImplementation(libs.coroutines.test)
     testImplementation(libs.junit)
     testImplementation(projects.pass.account.fakes)
+    testImplementation(projects.pass.clipboard.fakes)
     testImplementation(projects.pass.commonTest)
     testImplementation(projects.pass.data.fakes)
+    testImplementation(projects.pass.notifications.fakes)
+    testImplementation(projects.pass.preferences.fakes)
     testImplementation(projects.pass.protonApps.fakes)
     testImplementation(projects.pass.telemetry.fakes)
+    testImplementation(projects.pass.totp.fakes)
 }

@@ -59,7 +59,8 @@ internal class CodesContentPreviewProvider : PreviewParameterProvider<CodesUiSta
             remainingSeconds = 23,
             showPerRowProgress = false,
             searchQuery = "",
-            inSearchMode = false
+            inSearchMode = false,
+            canLoadExternalImages = false
         ),
         CodesUiState(
             isLoading = false,
@@ -93,7 +94,8 @@ internal class CodesContentPreviewProvider : PreviewParameterProvider<CodesUiSta
             remainingSeconds = 23,
             showPerRowProgress = true,
             searchQuery = "",
-            inSearchMode = false
+            inSearchMode = false,
+            canLoadExternalImages = false
         )
     )
 }

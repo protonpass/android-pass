@@ -38,6 +38,7 @@ interface ObservePagedItems {
         folderId: FolderId? = null,
         itemState: ItemState? = null,
         itemSharedType: ItemSharedType? = null,
-        itemTypeFilter: ItemTypeFilter = ItemTypeFilter.All
+        itemTypeFilter: ItemTypeFilter = ItemTypeFilter.All,
+        restrictToRootFolder: Boolean = false
     ): Flow<PagingData<Item>>
 }

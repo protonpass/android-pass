@@ -323,6 +323,36 @@ internal class HomeViewModelTest {
 
         assertThat(observePagedItems.lastFolderId).isEqualTo(folderId)
         assertThat(observePagedItems.lastShareIds).isEqualTo(listOf(shareId))
+        assertThat(observePagedItems.lastRestrictToRootFolder).isFalse()
+    }
+
+    @Test
+    fun `paginated vault selection restricts paged items to the root folder`() = runTest {
+        assertThat(pagedRestrictToRootFolderFor(VaultSelectionOption.Vault(ShareId("share-vault-paged"))))
+            .isTrue()
+    }
+
+    @Test
+    fun `paginated all vaults selection does not restrict paged items to the root folder`() = runTest {
+        assertThat(pagedRestrictToRootFolderFor(VaultSelectionOption.AllVaults)).isFalse()
+    }
+
+    private suspend fun pagedRestrictToRootFolderFor(selection: VaultSelectionOption): Boolean? {
+        featureFlags.set(FeatureFlag.ENABLE_PAGINATION, true)
+        createViewModel()
+
+        observeAllShares.sendResult(Result.success(emptyList()))
+        observeIndexingStatus.emitReady()
+        observePagedItems.emitEmpty()
+
+        instance.setVaultSelection(selection)
+
+        instance.homeListItemPagingFlow.test {
+            awaitItem()
+            cancelAndIgnoreRemainingEvents()
+        }
+
+        return observePagedItems.lastRestrictToRootFolder
     }
 
     @Test

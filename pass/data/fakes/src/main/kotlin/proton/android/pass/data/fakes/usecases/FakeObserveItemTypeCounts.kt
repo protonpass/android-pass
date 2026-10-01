@@ -39,6 +39,8 @@ class FakeObserveItemTypeCounts @Inject constructor() : ObserveItemTypeCounts {
         private set
     var lastShareIds: List<ShareId>? = null
         private set
+    var lastRestrictToRootFolder: Boolean? = null
+        private set
 
     fun emitValue(value: ItemTypeCounts) {
         flow.tryEmit(value)
@@ -54,10 +56,12 @@ class FakeObserveItemTypeCounts @Inject constructor() : ObserveItemTypeCounts {
         folderId: FolderId?,
         itemState: ItemState?,
         itemSharedType: ItemSharedType?,
-        query: String?
+        query: String?,
+        restrictToRootFolder: Boolean
     ): Flow<ItemTypeCounts> {
         lastUserIds = userIds
         lastShareIds = shareIds
+        lastRestrictToRootFolder = restrictToRootFolder
         return flow
     }
 }

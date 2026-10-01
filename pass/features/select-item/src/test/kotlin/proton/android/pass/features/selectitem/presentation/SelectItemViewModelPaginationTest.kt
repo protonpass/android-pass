@@ -145,6 +145,17 @@ internal class SelectItemViewModelPaginationTest {
         assertThat(observeItemTypeCounts.lastUserIds).containsExactly(USER_A, USER_B)
     }
 
+    @Test
+    fun `paged items and counts include folder items of the queried shares`() = runTest {
+        awaitPagingAndCount()
+
+        assertThat(observePagedItems.lastShareIds).isNotEmpty()
+        assertThat(observePagedItems.lastFolderId).isNull()
+        assertThat(observePagedItems.lastRestrictToRootFolder).isFalse()
+        assertThat(observeItemTypeCounts.lastShareIds).isNotEmpty()
+        assertThat(observeItemTypeCounts.lastRestrictToRootFolder).isFalse()
+    }
+
     private suspend fun awaitPagingAndCount() {
         instance.selectItemPagingFlow.test {
             awaitItem()

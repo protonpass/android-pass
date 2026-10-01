@@ -459,7 +459,8 @@ class SearchIndexRepositoryImpl @Inject constructor(
         itemState: ItemState?,
         itemSharedType: ItemSharedType?,
         itemTypeFilter: ItemTypeFilter,
-        includeHidden: Boolean
+        includeHidden: Boolean,
+        restrictToRootFolder: Boolean
     ): Flow<PagingData<Item>> {
         val folderOwnerUserId = userIds.firstOrNull() ?: return flowOf(PagingData.empty())
         val trimmedQuery = query?.trim().orEmpty()
@@ -514,7 +515,8 @@ class SearchIndexRepositoryImpl @Inject constructor(
                     itemState = itemState,
                     itemSharedType = itemSharedType,
                     itemTypeFilter = itemTypeFilter,
-                    includeHidden = includeHidden
+                    includeHidden = includeHidden,
+                    restrictToRootFolder = restrictToRootFolder
                 )
             }
             emitAll(buildPager(queryParts, useFts, pagingConfig))
@@ -549,7 +551,8 @@ class SearchIndexRepositoryImpl @Inject constructor(
         itemState: ItemState?,
         itemSharedType: ItemSharedType?,
         query: String?,
-        includeHidden: Boolean
+        includeHidden: Boolean,
+        restrictToRootFolder: Boolean
     ): Flow<ItemTypeCounts> {
         val folderOwnerUserId = userIds.firstOrNull() ?: return flowOf(ItemTypeCounts.EMPTY)
         val trimmedQuery = query?.trim().orEmpty()
@@ -577,7 +580,8 @@ class SearchIndexRepositoryImpl @Inject constructor(
                 itemSharedType = itemSharedType,
                 ftsQuery = ftsQuery,
                 likeQuery = likeQuery,
-                includeHidden = includeHidden
+                includeHidden = includeHidden,
+                restrictToRootFolder = restrictToRootFolder
             )
             emitAll(searchDao.countByItemType(sqlQuery).map { rows -> mapItemTypeCounts(rows) })
         }
@@ -606,7 +610,8 @@ class SearchIndexRepositoryImpl @Inject constructor(
         itemSharedType: ItemSharedType?,
         ftsQuery: String?,
         likeQuery: String?,
-        includeHidden: Boolean
+        includeHidden: Boolean,
+        restrictToRootFolder: Boolean
     ): SimpleSQLiteQuery {
         val args = mutableListOf<Any>()
 
@@ -647,7 +652,7 @@ class SearchIndexRepositoryImpl @Inject constructor(
             args.addAll(shareIds.map { it.id })
         }
 
-        val rootOnly = ftsQuery == null && likeQuery == null && !shareIds.isNullOrEmpty()
+        val rootOnly = ftsQuery == null && likeQuery == null && restrictToRootFolder
         if (folderIds != null && folderIds.isNotEmpty()) {
             sb.append(" AND folder_id IN (${folderIds.placeholders()})")
             args.addAll(folderIds.map { it.id })
@@ -790,7 +795,8 @@ class SearchIndexRepositoryImpl @Inject constructor(
         itemState: ItemState?,
         itemSharedType: ItemSharedType?,
         itemTypeFilter: ItemTypeFilter,
-        includeHidden: Boolean
+        includeHidden: Boolean,
+        restrictToRootFolder: Boolean
     ): QueryParts {
         val args = mutableListOf<Any>()
 
@@ -823,7 +829,7 @@ class SearchIndexRepositoryImpl @Inject constructor(
         if (folderId != null) {
             sb.append(" AND folder_id = ?")
             args.add(folderId.id)
-        } else if (!shareIds.isNullOrEmpty()) {
+        } else if (restrictToRootFolder) {
             sb.append(" AND folder_id IS NULL")
         }
 
@@ -845,7 +851,7 @@ class SearchIndexRepositoryImpl @Inject constructor(
                 userIds = userIds,
                 shareIds = shareIds,
                 folderIds = folderId?.let(::listOf),
-                rootOnly = folderId == null && !shareIds.isNullOrEmpty(),
+                rootOnly = folderId == null && restrictToRootFolder,
                 stateValue = stateValue,
                 itemSharedType = itemSharedType,
                 includeHidden = includeHidden

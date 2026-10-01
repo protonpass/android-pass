@@ -44,6 +44,8 @@ class FakeObservePagedItems @Inject constructor() : ObservePagedItems {
         private set
     var lastFolderId: FolderId? = null
         private set
+    var lastRestrictToRootFolder: Boolean? = null
+        private set
 
     fun emitValue(value: PagingData<Item>) {
         flow.tryEmit(value)
@@ -61,11 +63,13 @@ class FakeObservePagedItems @Inject constructor() : ObservePagedItems {
         folderId: FolderId?,
         itemState: ItemState?,
         itemSharedType: ItemSharedType?,
-        itemTypeFilter: ItemTypeFilter
+        itemTypeFilter: ItemTypeFilter,
+        restrictToRootFolder: Boolean
     ): Flow<PagingData<Item>> {
         lastUserIds = userIds
         lastShareIds = shareIds
         lastFolderId = folderId
+        lastRestrictToRootFolder = restrictToRootFolder
         return flow
     }
 }

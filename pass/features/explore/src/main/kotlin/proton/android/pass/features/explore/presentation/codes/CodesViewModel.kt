@@ -35,6 +35,8 @@ import proton.android.pass.clipboard.api.ClipboardManager
 import proton.android.pass.data.api.usecases.LoginTotpEntry
 import proton.android.pass.data.api.usecases.ObserveLoginTotpEntries
 import proton.android.pass.notifications.api.SnackbarDispatcher
+import proton.android.pass.preferences.UserPreferencesRepository
+import proton.android.pass.preferences.value
 import proton.android.pass.totp.api.TotpManager
 import javax.inject.Inject
 
@@ -43,7 +45,8 @@ class CodesViewModel @Inject constructor(
     observeLoginTotpEntries: ObserveLoginTotpEntries,
     private val totpManager: TotpManager,
     private val clipboardManager: ClipboardManager,
-    private val snackbarDispatcher: SnackbarDispatcher
+    private val snackbarDispatcher: SnackbarDispatcher,
+    private val userPreferencesRepository: UserPreferencesRepository
 ) : ViewModel() {
 
     private val searchQueryFlow = MutableStateFlow("")
@@ -57,7 +60,12 @@ class CodesViewModel @Inject constructor(
             } else {
                 combineCodeFlows(entries)
             }
-            combine(codesFlow, searchQueryFlow, inSearchModeFlow) { wrappers, query, inSearch ->
+            combine(
+                codesFlow,
+                searchQueryFlow,
+                inSearchModeFlow,
+                userPreferencesRepository.getUseFaviconsPreference()
+            ) { wrappers, query, inSearch, useFavicons ->
                 val effectiveQuery = if (inSearch) query else ""
                 val rows = entries.toRows(wrappers).filter { it.matches(effectiveQuery) }
                 val showPerRowProgress = wrappers.any {
@@ -72,7 +80,8 @@ class CodesViewModel @Inject constructor(
                         ?: CodesUiState.DEFAULT_TOTAL_SECONDS,
                     showPerRowProgress = showPerRowProgress,
                     searchQuery = effectiveQuery,
-                    inSearchMode = inSearch
+                    inSearchMode = inSearch,
+                    canLoadExternalImages = useFavicons.value()
                 )
             }
         }

@@ -30,7 +30,8 @@ data class CodesUiState(
     val remainingSeconds: Int,
     val showPerRowProgress: Boolean,
     val searchQuery: String,
-    val inSearchMode: Boolean
+    val inSearchMode: Boolean,
+    val canLoadExternalImages: Boolean
 ) {
     companion object {
         val Initial = CodesUiState(
@@ -40,7 +41,8 @@ data class CodesUiState(
             remainingSeconds = DEFAULT_TOTAL_SECONDS,
             showPerRowProgress = false,
             searchQuery = "",
-            inSearchMode = false
+            inSearchMode = false,
+            canLoadExternalImages = false
         )
 
         const val DEFAULT_TOTAL_SECONDS = 30

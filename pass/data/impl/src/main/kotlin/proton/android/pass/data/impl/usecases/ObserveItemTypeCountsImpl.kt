@@ -34,14 +34,14 @@ class ObserveItemTypeCountsImpl @Inject constructor(
 ) : ObserveItemTypeCounts {
 
     override fun invoke(
-        userId: UserId,
+        userIds: List<UserId>,
         shareIds: List<ShareId>?,
         folderId: FolderId?,
         itemState: ItemState?,
         itemSharedType: ItemSharedType?,
         query: String?
     ): Flow<ItemTypeCounts> = searchIndexRepository.observeItemTypeCounts(
-        userId = userId,
+        userIds = userIds,
         shareIds = shareIds,
         folderId = folderId,
         itemState = itemState,

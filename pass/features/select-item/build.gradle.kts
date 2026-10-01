@@ -92,6 +92,19 @@ dependencies {
     implementation(projects.pass.notifications.api)
     implementation(projects.pass.preferences.api)
 
+    testImplementation(libs.turbine)
+    testImplementation(libs.truth)
+    testImplementation(libs.coroutines.test)
+
+    testImplementation(projects.pass.account.fakes)
+    testImplementation(projects.pass.common.fakes)
+    testImplementation(projects.pass.commonTest)
+    testImplementation(projects.pass.crypto.fakes)
+    testImplementation(projects.pass.data.fakes)
+    testImplementation(projects.pass.preferences.fakes)
+    testImplementation(projects.pass.searchOptions.fakes)
+    testImplementation(projects.pass.notifications.fakes)
+
     kspAndroidTest(libs.dagger.hilt.android.compiler)
     androidTestImplementation(libs.androidx.test.espresso.core)
     androidTestImplementation(projects.pass.account.fakes)

@@ -38,6 +38,8 @@ class FakeObservePagedItems @Inject constructor() : ObservePagedItems {
 
     private val flow = MutableSharedFlow<PagingData<Item>>(replay = 1)
 
+    var lastUserIds: List<UserId>? = null
+        private set
     var lastShareIds: List<ShareId>? = null
         private set
     var lastFolderId: FolderId? = null
@@ -52,7 +54,7 @@ class FakeObservePagedItems @Inject constructor() : ObservePagedItems {
     }
 
     override fun invoke(
-        userId: UserId,
+        userIds: List<UserId>,
         query: String?,
         sortBy: SearchSortBy,
         shareIds: List<ShareId>?,
@@ -61,6 +63,7 @@ class FakeObservePagedItems @Inject constructor() : ObservePagedItems {
         itemSharedType: ItemSharedType?,
         itemTypeFilter: ItemTypeFilter
     ): Flow<PagingData<Item>> {
+        lastUserIds = userIds
         lastShareIds = shareIds
         lastFolderId = folderId
         return flow

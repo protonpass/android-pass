@@ -30,6 +30,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.emitAll
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 import me.proton.core.domain.entity.UserId
@@ -447,7 +448,7 @@ class SearchIndexRepositoryImpl @Inject constructor(
 
     @SuppressWarnings("LongMethod", "LongParameterList")
     override fun getItems(
-        userId: UserId,
+        userIds: List<UserId>,
         query: String?,
         sortBy: SearchSortBy,
         shareIds: List<ShareId>?,
@@ -457,6 +458,7 @@ class SearchIndexRepositoryImpl @Inject constructor(
         itemTypeFilter: ItemTypeFilter,
         includeHidden: Boolean
     ): Flow<PagingData<Item>> {
+        val folderOwnerUserId = userIds.firstOrNull() ?: return flowOf(PagingData.empty())
         val trimmedQuery = query?.trim().orEmpty()
         val hasQuery = trimmedQuery.isNotBlank()
         // The trigram tokenizer can't match tokens shorter than 3 chars; fall back to a LIKE scan for those.
@@ -478,11 +480,11 @@ class SearchIndexRepositoryImpl @Inject constructor(
         return flow {
             val queryParts = when {
                 useFts -> buildPagingSearchQueryParts(
-                    userId = userId,
+                    userIds = userIds,
                     ftsQuery = FtsQueryBuilder.build(trimmedQuery),
                     sortBy = effectiveSortBy,
                     shareIds = shareIds,
-                    folderIds = resolveFolderIdsForSearch(userId, shareIds, folderId),
+                    folderIds = resolveFolderIdsForSearch(folderOwnerUserId, shareIds, folderId),
                     itemState = itemState,
                     itemSharedType = itemSharedType,
                     itemTypeFilter = itemTypeFilter,
@@ -490,11 +492,11 @@ class SearchIndexRepositoryImpl @Inject constructor(
                 )
 
                 hasQuery -> buildPagingLikeQueryParts(
-                    userId = userId,
+                    userIds = userIds,
                     likeQuery = trimmedQuery,
                     sortBy = effectiveSortBy,
                     shareIds = shareIds,
-                    folderIds = resolveFolderIdsForSearch(userId, shareIds, folderId),
+                    folderIds = resolveFolderIdsForSearch(folderOwnerUserId, shareIds, folderId),
                     itemState = itemState,
                     itemSharedType = itemSharedType,
                     itemTypeFilter = itemTypeFilter,
@@ -502,7 +504,7 @@ class SearchIndexRepositoryImpl @Inject constructor(
                 )
 
                 else -> buildPagingGetAllQueryParts(
-                    userId = userId,
+                    userIds = userIds,
                     sortBy = effectiveSortBy,
                     shareIds = shareIds,
                     folderId = folderId,
@@ -512,12 +514,11 @@ class SearchIndexRepositoryImpl @Inject constructor(
                     includeHidden = includeHidden
                 )
             }
-            emitAll(buildPager(userId, queryParts, useFts, pagingConfig))
+            emitAll(buildPager(queryParts, useFts, pagingConfig))
         }
     }
 
     private fun buildPager(
-        userId: UserId,
         queryParts: QueryParts,
         useFts: Boolean,
         pagingConfig: PagingConfig
@@ -529,7 +530,6 @@ class SearchIndexRepositoryImpl @Inject constructor(
                 searchDao = searchDao,
                 localItemDataSource = localItemDataSource,
                 encryptionContextProvider = encryptionContextProvider,
-                userId = userId,
                 baseQuery = queryParts.queryString,
                 queryArgs = queryParts.args,
                 useFts = useFts,
@@ -540,7 +540,7 @@ class SearchIndexRepositoryImpl @Inject constructor(
     ).flow
 
     override fun observeItemTypeCounts(
-        userId: UserId,
+        userIds: List<UserId>,
         shareIds: List<ShareId>?,
         folderId: FolderId?,
         itemState: ItemState?,
@@ -548,6 +548,7 @@ class SearchIndexRepositoryImpl @Inject constructor(
         query: String?,
         includeHidden: Boolean
     ): Flow<ItemTypeCounts> {
+        val folderOwnerUserId = userIds.firstOrNull() ?: return flowOf(ItemTypeCounts.EMPTY)
         val trimmedQuery = query?.trim().orEmpty()
         val hasQuery = trimmedQuery.isNotBlank()
         val useFts = hasQuery && FtsQueryBuilder.hasMatchableToken(trimmedQuery)
@@ -559,14 +560,14 @@ class SearchIndexRepositoryImpl @Inject constructor(
             // so keep the requested folder itself if it has no resolved descendants.
             val folderIds = folderId?.let { fid ->
                 if (hasQuery && !shareIds.isNullOrEmpty()) {
-                    localFolderDataSource.getDescendantFolderIds(userId, shareIds.first(), fid)
+                    localFolderDataSource.getDescendantFolderIds(folderOwnerUserId, shareIds.first(), fid)
                         .ifEmpty { listOf(fid) }
                 } else {
                     listOf(fid)
                 }
             }
             val sqlQuery = buildItemTypeCountQuery(
-                userId = userId,
+                userIds = userIds,
                 shareIds = shareIds,
                 folderIds = folderIds,
                 itemState = itemState,
@@ -595,7 +596,7 @@ class SearchIndexRepositoryImpl @Inject constructor(
 
     @SuppressWarnings("LongParameterList")
     private fun buildItemTypeCountQuery(
-        userId: UserId,
+        userIds: List<UserId>,
         shareIds: List<ShareId>?,
         folderIds: List<FolderId>?,
         itemState: ItemState?,
@@ -611,10 +612,10 @@ class SearchIndexRepositoryImpl @Inject constructor(
             """
                 SELECT item_type AS itemType, COUNT(*) AS count
                 FROM search_items
-                WHERE user_id = ?
+                WHERE user_id IN (${userIds.placeholders()})
             """.trimIndent()
         )
-        args.add(userId.id)
+        args.addAll(userIds.map { it.id })
 
         if (!includeHidden) {
             sb.append(" AND is_hidden = 0")
@@ -639,16 +640,15 @@ class SearchIndexRepositoryImpl @Inject constructor(
 
         // Filter by shareIds
         if (shareIds != null && shareIds.isNotEmpty()) {
-            val placeholders = shareIds.joinToString(",") { "?" }
-            sb.append(" AND share_id IN ($placeholders)")
+            sb.append(" AND share_id IN (${shareIds.placeholders()})")
             args.addAll(shareIds.map { it.id })
         }
 
+        val rootOnly = ftsQuery == null && likeQuery == null && !shareIds.isNullOrEmpty()
         if (folderIds != null && folderIds.isNotEmpty()) {
-            val placeholders = folderIds.joinToString(",") { "?" }
-            sb.append(" AND folder_id IN ($placeholders)")
+            sb.append(" AND folder_id IN (${folderIds.placeholders()})")
             args.addAll(folderIds.map { it.id })
-        } else if (ftsQuery == null && likeQuery == null && !shareIds.isNullOrEmpty()) {
+        } else if (rootOnly) {
             sb.append(" AND folder_id IS NULL")
         }
 
@@ -656,10 +656,23 @@ class SearchIndexRepositoryImpl @Inject constructor(
         when (itemSharedType) {
             ItemSharedType.SharedByMe -> sb.append(" AND is_shared_by_me = 1")
             ItemSharedType.SharedWithMe -> sb.append(" AND is_shared_with_me = 1")
-            null -> {
-                /* No filter */
-            }
+            null -> { /* No filter */ }
         }
+
+        appendCrossShareDedupe(
+            sb = sb,
+            args = args,
+            outerTable = SearchItemEntity.TABLE,
+            scope = DedupeScope(
+                userIds = userIds,
+                shareIds = shareIds,
+                folderIds = folderIds,
+                rootOnly = rootOnly,
+                stateValue = stateValue,
+                itemSharedType = itemSharedType,
+                includeHidden = includeHidden
+            )
+        )
 
         sb.append(" GROUP BY item_type")
 
@@ -667,8 +680,8 @@ class SearchIndexRepositoryImpl @Inject constructor(
     }
 
     @SuppressWarnings("LongMethod", "LongParameterList")
-    private fun buildPagingSearchQueryParts(
-        userId: UserId,
+    internal fun buildPagingSearchQueryParts(
+        userIds: List<UserId>,
         ftsQuery: String,
         sortBy: SearchSortBy,
         shareIds: List<ShareId>?,
@@ -690,7 +703,7 @@ class SearchIndexRepositoryImpl @Inject constructor(
                     FROM search_items si
                     JOIN search_items_fts ON search_items_fts.rowid = si.rowId
                     WHERE search_items_fts MATCH ?
-                    AND si.user_id = ?
+                    AND si.user_id IN (${userIds.placeholders()})
                 """.trimIndent()
             )
         } else {
@@ -701,12 +714,12 @@ class SearchIndexRepositoryImpl @Inject constructor(
                     WHERE si.rowId IN (
                         SELECT rowid FROM search_items_fts WHERE search_items_fts MATCH ?
                     )
-                    AND si.user_id = ?
+                    AND si.user_id IN (${userIds.placeholders()})
                 """.trimIndent()
             )
         }
         args.add(ftsQuery)
-        args.add(userId.id)
+        args.addAll(userIds.map { it.id })
 
         if (!includeHidden) {
             sb.append(" AND si.is_hidden = 0")
@@ -740,6 +753,21 @@ class SearchIndexRepositoryImpl @Inject constructor(
         // Filter by item type
         appendItemTypeFilter(sb, args, itemTypeFilter, "si.")
 
+        appendCrossShareDedupe(
+            sb = sb,
+            args = args,
+            outerTable = "si",
+            scope = DedupeScope(
+                userIds = userIds,
+                shareIds = shareIds,
+                folderIds = folderIds,
+                rootOnly = false,
+                stateValue = stateValue,
+                itemSharedType = itemSharedType,
+                includeHidden = includeHidden
+            )
+        )
+
         // Add sorting (bm25 ascending = most relevant first)
         if (useRelevance) {
             sb.append(" ORDER BY bm25(search_items_fts)")
@@ -751,8 +779,8 @@ class SearchIndexRepositoryImpl @Inject constructor(
     }
 
     @SuppressWarnings("LongMethod", "LongParameterList")
-    private fun buildPagingGetAllQueryParts(
-        userId: UserId,
+    internal fun buildPagingGetAllQueryParts(
+        userIds: List<UserId>,
         sortBy: SearchSortBy,
         shareIds: List<ShareId>?,
         folderId: FolderId?,
@@ -768,10 +796,10 @@ class SearchIndexRepositoryImpl @Inject constructor(
             """
                 SELECT user_id AS userId, share_id AS shareId, item_id AS itemId
                 FROM search_items
-                WHERE user_id = ?
+                WHERE user_id IN (${userIds.placeholders()})
             """.trimIndent()
         )
-        args.add(userId.id)
+        args.addAll(userIds.map { it.id })
 
         if (!includeHidden) {
             sb.append(" AND is_hidden = 0")
@@ -806,6 +834,21 @@ class SearchIndexRepositoryImpl @Inject constructor(
         // Filter by item type
         appendItemTypeFilter(sb, args, itemTypeFilter, "")
 
+        appendCrossShareDedupe(
+            sb = sb,
+            args = args,
+            outerTable = SearchItemEntity.TABLE,
+            scope = DedupeScope(
+                userIds = userIds,
+                shareIds = shareIds,
+                folderIds = folderId?.let(::listOf),
+                rootOnly = folderId == null && !shareIds.isNullOrEmpty(),
+                stateValue = stateValue,
+                itemSharedType = itemSharedType,
+                includeHidden = includeHidden
+            )
+        )
+
         // Add sorting
         sb.append(getSortClause(sortBy))
 
@@ -818,7 +861,7 @@ class SearchIndexRepositoryImpl @Inject constructor(
      */
     @SuppressWarnings("LongMethod", "LongParameterList")
     private fun buildPagingLikeQueryParts(
-        userId: UserId,
+        userIds: List<UserId>,
         likeQuery: String,
         sortBy: SearchSortBy,
         shareIds: List<ShareId>?,
@@ -836,11 +879,11 @@ class SearchIndexRepositoryImpl @Inject constructor(
             """
                 SELECT user_id AS userId, share_id AS shareId, item_id AS itemId
                 FROM search_items
-                WHERE user_id = ?
+                WHERE user_id IN (${userIds.placeholders()})
                   AND (title LIKE ? ESCAPE '\' OR subtitle LIKE ? ESCAPE '\')
             """.trimIndent()
         )
-        args.add(userId.id)
+        args.addAll(userIds.map { it.id })
         args.add(likePattern)
         args.add(likePattern)
 
@@ -876,10 +919,65 @@ class SearchIndexRepositoryImpl @Inject constructor(
         // Filter by item type
         appendItemTypeFilter(sb, args, itemTypeFilter, "")
 
+        appendCrossShareDedupe(
+            sb = sb,
+            args = args,
+            outerTable = SearchItemEntity.TABLE,
+            scope = DedupeScope(
+                userIds = userIds,
+                shareIds = shareIds,
+                folderIds = folderIds,
+                rootOnly = false,
+                stateValue = stateValue,
+                itemSharedType = itemSharedType,
+                includeHidden = includeHidden
+            )
+        )
+
         // Add sorting (no bm25 relevance available for a plain LIKE scan)
         sb.append(getSortClause(sortBy))
 
         return QueryParts(sb.toString(), args.toTypedArray())
+    }
+
+    private fun List<*>.placeholders(): String = joinToString(",") { "?" }
+
+    private fun appendCrossShareDedupe(
+        sb: StringBuilder,
+        args: MutableList<Any>,
+        outerTable: String,
+        scope: DedupeScope
+    ) {
+        val userIds = scope.userIds
+        if (userIds.size < 2) return
+
+        sb.append(" AND NOT EXISTS (SELECT 1 FROM search_items dup")
+        sb.append(" WHERE dup.item_id = $outerTable.item_id")
+        sb.append(" AND dup.user_id IN (${userIds.placeholders()})")
+        args.addAll(userIds.map { it.id })
+        sb.append(" AND dup.item_state = ?")
+        args.add(scope.stateValue)
+        if (!scope.includeHidden) {
+            sb.append(" AND dup.is_hidden = 0")
+        }
+        scope.shareIds?.takeIf { it.isNotEmpty() }?.let { shareIds ->
+            sb.append(" AND dup.share_id IN (${shareIds.placeholders()})")
+            args.addAll(shareIds.map { it.id })
+        }
+        val folderIds = scope.folderIds
+        if (!folderIds.isNullOrEmpty()) {
+            sb.append(" AND dup.folder_id IN (${folderIds.placeholders()})")
+            args.addAll(folderIds.map { it.id })
+        } else if (scope.rootOnly) {
+            sb.append(" AND dup.folder_id IS NULL")
+        }
+        when (scope.itemSharedType) {
+            ItemSharedType.SharedByMe -> sb.append(" AND dup.is_shared_by_me = 1")
+            ItemSharedType.SharedWithMe -> sb.append(" AND dup.is_shared_with_me = 1")
+            null -> { /* No filter */ }
+        }
+        sb.append(" AND (dup.is_shared_with_me < $outerTable.is_shared_with_me")
+        sb.append(" OR (dup.is_shared_with_me = $outerTable.is_shared_with_me AND dup.rowId < $outerTable.rowId)))")
     }
 
     private fun String.escapeLikePattern(): String = this
@@ -887,7 +985,17 @@ class SearchIndexRepositoryImpl @Inject constructor(
         .replace("%", "\\%")
         .replace("_", "\\_")
 
-    private data class QueryParts(
+    private data class DedupeScope(
+        val userIds: List<UserId>,
+        val shareIds: List<ShareId>?,
+        val folderIds: List<FolderId>?,
+        val rootOnly: Boolean,
+        val stateValue: Int,
+        val itemSharedType: ItemSharedType?,
+        val includeHidden: Boolean
+    )
+
+    internal data class QueryParts(
         val queryString: String,
         val args: Array<Any>
     )

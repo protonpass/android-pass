@@ -31,7 +31,7 @@ import proton.android.pass.domain.items.ItemSharedType
 interface ObservePagedItems {
 
     operator fun invoke(
-        userId: UserId,
+        userIds: List<UserId>,
         query: String? = null,
         sortBy: SearchSortBy = SearchSortBy.MOST_RECENT,
         shareIds: List<ShareId>? = null,

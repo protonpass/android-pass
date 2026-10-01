@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023-2026 Proton AG
+ * Copyright (c) 2026 Proton AG
  * This file is part of Proton AG and Proton Pass.
  *
  * Proton Pass is free software: you can redistribute it and/or modify
@@ -72,9 +72,13 @@ class FakeLocalItemDataSource : LocalItemDataSource {
     private val activeAliasItemsPageRequests = mutableListOf<AliasItemsPageRequest>()
     private var committedSlNoteUpdateIds: List<Pair<ShareId, ItemId>>? = null
     private val observeItemCountSummaryCallMemory = mutableListOf<ObserveItemCountSummaryCall>()
+    private val getByShareItemPairsCallMemory = mutableListOf<Pair<UserId, List<Pair<ShareId, ItemId>>>>()
 
 
     fun getMemory(): List<ItemEntity> = memory
+
+    fun getByShareItemPairsCalls(): List<Pair<UserId, List<Pair<ShareId, ItemId>>>> =
+        getByShareItemPairsCallMemory.toList()
 
     fun getObserveItemCountSummaryCalls(): List<ObserveItemCountSummaryCall> =
         observeItemCountSummaryCallMemory.toList()
@@ -208,10 +212,13 @@ class FakeLocalItemDataSource : LocalItemDataSource {
         }
     }
 
-    override suspend fun getByShareItemPairs(userId: UserId, pairs: List<Pair<ShareId, ItemId>>): List<ItemEntity> =
-        memory.filter { entity ->
-            pairs.any { (shareId, itemId) -> entity.shareId == shareId.id && entity.id == itemId.id }
+    override suspend fun getByShareItemPairs(userId: UserId, pairs: List<Pair<ShareId, ItemId>>): List<ItemEntity> {
+        getByShareItemPairsCallMemory.add(userId to pairs)
+        return memory.filter { entity ->
+            entity.userId == userId.id &&
+                pairs.any { (shareId, itemId) -> entity.shareId == shareId.id && entity.id == itemId.id }
         }
+    }
 
     override suspend fun setItemStates(
         userId: UserId,

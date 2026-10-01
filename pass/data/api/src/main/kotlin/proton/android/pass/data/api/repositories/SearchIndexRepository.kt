@@ -107,7 +107,8 @@ interface SearchIndexRepository {
     /**
      * Get a PagingSource that auto-invalidates when data changes in Room.
      * Use this for proper pagination with automatic refresh on data changes.
-     * @param scope CoroutineScope for observing data changes
+     * @param userIds Users whose indexed items are included. When more than one user is given,
+     * an item reachable through several shares is returned once.
      * @param query Search query, or null/blank to get all items
      * @param shareIds Optional list of share IDs to filter by. If null, searches all shares.
      * @param folderId Optional folder to scope the search to. When set, [shareIds] must contain
@@ -118,7 +119,7 @@ interface SearchIndexRepository {
      * @param includeHidden If false (default), items belonging to hidden vaults are excluded.
      */
     fun getItems(
-        userId: UserId,
+        userIds: List<UserId>,
         query: String?,
         sortBy: SearchSortBy,
         shareIds: List<ShareId>? = null,
@@ -136,7 +137,7 @@ interface SearchIndexRepository {
      * exactly the single share that owns this folder, since a folder belongs to one share only.
      */
     fun observeItemTypeCounts(
-        userId: UserId,
+        userIds: List<UserId>,
         shareIds: List<ShareId>? = null,
         folderId: FolderId? = null,
         itemState: ItemState? = null,

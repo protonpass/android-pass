@@ -129,4 +129,46 @@ class BrowserAutofillCoverageResolverTest {
             )
         ).isEqualTo(BrowserAutofillCoverage.NeedsSetup)
     }
+
+    @Test
+    fun `ready when the browser supports native autofill beyond its compat cap`() {
+        assertThat(
+            BrowserAutofillCoverageResolver.resolve(
+                browserVersionCode = 2_016_178_695,
+                compatMaxVersionCode = 2_015_836_711,
+                hasBeenSeenWorking = false,
+                thirdPartyMode = ThirdPartyMode.Unknown,
+                supportsNativeAutofill = true
+            )
+        ).isEqualTo(BrowserAutofillCoverage.Ready)
+        assertThat(
+            BrowserAutofillCoverageResolver.resolve(
+                browserVersionCode = 2_016_178_695,
+                compatMaxVersionCode = null,
+                hasBeenSeenWorking = false,
+                supportsNativeAutofill = true
+            )
+        ).isEqualTo(BrowserAutofillCoverage.Ready)
+    }
+
+    @Test
+    fun `native autofill keeps disabled and seen working precedence`() {
+        assertThat(
+            BrowserAutofillCoverageResolver.resolve(
+                browserVersionCode = 2_016_178_695,
+                compatMaxVersionCode = 2_015_836_711,
+                hasBeenSeenWorking = true,
+                thirdPartyMode = ThirdPartyMode.Disabled,
+                supportsNativeAutofill = true
+            )
+        ).isEqualTo(BrowserAutofillCoverage.NeedsSetup)
+        assertThat(
+            BrowserAutofillCoverageResolver.resolve(
+                browserVersionCode = 2_016_178_695,
+                compatMaxVersionCode = 2_015_836_711,
+                hasBeenSeenWorking = true,
+                supportsNativeAutofill = true
+            )
+        ).isEqualTo(BrowserAutofillCoverage.Working)
+    }
 }

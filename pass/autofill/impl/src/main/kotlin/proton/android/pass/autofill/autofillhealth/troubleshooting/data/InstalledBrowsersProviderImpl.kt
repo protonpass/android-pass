@@ -27,6 +27,7 @@ import android.os.Build
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.withContext
 import org.xmlpull.v1.XmlPullParser
+import proton.android.pass.autofill.NATIVE_AUTOFILL_BROWSERS
 import proton.android.pass.autofill.ThirdPartyModeProvider
 import proton.android.pass.autofill.service.R
 import proton.android.pass.common.api.AppDispatchers
@@ -60,7 +61,8 @@ class InstalledBrowsersProviderImpl @Inject constructor(
                         browserVersionCode = versionCodeOf(packageManager, packageName),
                         compatMaxVersionCode = compatVersionCaps[packageName],
                         hasBeenSeenWorking = packageName in workingBrowsers,
-                        thirdPartyMode = thirdPartyMode
+                        thirdPartyMode = thirdPartyMode,
+                        supportsNativeAutofill = packageName in NATIVE_AUTOFILL_BROWSERS
                     ),
                     canOpenAutofillSettings = BrowserAutofillSettingsLauncher
                         .canOpenAutofillSettings(context, packageName),

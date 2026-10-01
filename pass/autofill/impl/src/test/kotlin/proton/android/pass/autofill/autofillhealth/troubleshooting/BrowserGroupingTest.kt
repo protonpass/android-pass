@@ -20,6 +20,7 @@ package proton.android.pass.autofill.autofillhealth.troubleshooting
 
 import com.google.common.truth.Truth.assertThat
 import org.junit.Test
+import proton.android.pass.autofill.NATIVE_AUTOFILL_BROWSERS
 import proton.android.pass.autofill.ThirdPartyMode
 import proton.android.pass.autofill.autofillhealth.troubleshooting.data.BrowserAutofillCoverage
 import proton.android.pass.autofill.autofillhealth.troubleshooting.data.BrowserAutofillCoverageResolver
@@ -51,9 +52,9 @@ class BrowserGroupingTest {
     }
 
     @Test
-    fun `firefox is compatible because we cannot open its autofill settings`() {
+    fun `firefox is ready because it supports native autofill`() {
         val firefox = firefox()
-        assertThat(firefox.coverage).isEqualTo(BrowserAutofillCoverage.NeedsSetup)
+        assertThat(firefox.coverage).isEqualTo(BrowserAutofillCoverage.Ready)
         assertThat(firefox.canOpenAutofillSettings).isFalse()
         assertThat(firefox.needsAutofillSetup).isFalse()
     }
@@ -145,7 +146,8 @@ class BrowserGroupingTest {
         compatMaxVersionCode = 2_015_836_711,
         thirdPartyMode = ThirdPartyMode.Unknown,
         canOpenAutofillSettings = false,
-        hasBeenSeenWorking = hasBeenSeenWorking
+        hasBeenSeenWorking = hasBeenSeenWorking,
+        supportsNativeAutofill = "org.mozilla.firefox" in NATIVE_AUTOFILL_BROWSERS
     )
 
     private fun opera() = browser(
@@ -165,7 +167,8 @@ class BrowserGroupingTest {
         compatMaxVersionCode: Long?,
         thirdPartyMode: ThirdPartyMode,
         canOpenAutofillSettings: Boolean,
-        hasBeenSeenWorking: Boolean = false
+        hasBeenSeenWorking: Boolean = false,
+        supportsNativeAutofill: Boolean = false
     ) = BrowserInfo(
         packageName = packageName,
         label = label,
@@ -173,7 +176,8 @@ class BrowserGroupingTest {
             browserVersionCode = versionCode,
             compatMaxVersionCode = compatMaxVersionCode,
             hasBeenSeenWorking = hasBeenSeenWorking,
-            thirdPartyMode = thirdPartyMode
+            thirdPartyMode = thirdPartyMode,
+            supportsNativeAutofill = supportsNativeAutofill
         ),
         canOpenAutofillSettings = canOpenAutofillSettings
     )

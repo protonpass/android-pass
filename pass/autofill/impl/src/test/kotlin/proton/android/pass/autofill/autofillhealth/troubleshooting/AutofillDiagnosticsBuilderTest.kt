@@ -37,7 +37,8 @@ class AutofillDiagnosticsBuilderTest {
                 appVersion = "1.40.0",
                 installedBrowsers = listOf(
                     BrowserInfo("com.android.chrome", "Chrome", BrowserAutofillCoverage.Ready),
-                    BrowserInfo("org.mozilla.firefox", "Firefox", BrowserAutofillCoverage.NeedsSetup)
+                    BrowserInfo("org.mozilla.firefox", "Firefox", BrowserAutofillCoverage.Ready),
+                    BrowserInfo("com.microsoft.emmx", "Edge", BrowserAutofillCoverage.NeedsSetup)
                 ),
                 supportsInlineSuggestions = true
             )
@@ -48,7 +49,8 @@ class AutofillDiagnosticsBuilderTest {
         assertThat(text).contains("Device: Pixel 8")
         assertThat(text).contains("App: 1.40.0")
         assertThat(text).contains("com.android.chrome (ready)")
-        assertThat(text).contains("org.mozilla.firefox (needs setup)")
+        assertThat(text).contains("org.mozilla.firefox (ready)")
+        assertThat(text).contains("com.microsoft.emmx (needs setup)")
         assertThat(text).contains("Inline suggestions supported: yes")
     }
 

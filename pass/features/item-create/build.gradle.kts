@@ -39,6 +39,7 @@ android {
     }
 
     testOptions {
+        targetSdk = libs.versions.targetSdk.get().toInt()
         managedDevices {
             allDevices {
                 maybeCreate<com.android.build.api.dsl.ManagedVirtualDevice>("pixel2api30").apply {

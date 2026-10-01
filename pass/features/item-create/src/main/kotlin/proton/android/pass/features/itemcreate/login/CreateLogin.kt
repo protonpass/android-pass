@@ -32,7 +32,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.compose.currentStateAsState
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
@@ -161,6 +164,8 @@ fun CreateLoginScreen(
 
 
     var showWarningVaultSharedDialog by rememberSaveable { mutableStateOf(false) }
+    val lifecycleState by LocalLifecycleOwner.current.lifecycle.currentStateAsState()
+    val isResumed = lifecycleState.isAtLeast(Lifecycle.State.RESUMED)
 
     Box(modifier = modifier.fillMaxSize()) {
         LoginContent(
@@ -176,7 +181,7 @@ fun CreateLoginScreen(
             canUseAttachments = canUseAttachments,
             isUpdate = false,
             popularServiceSuggestions = uiState.popularServiceSuggestions,
-            canShowPopularServices = !showConfirmDialog && !isClosing,
+            canShowPopularServices = isResumed && !showConfirmDialog && !isClosing,
             onEvent = {
                 when (it) {
                     LoginContentEvent.Up -> onExit()

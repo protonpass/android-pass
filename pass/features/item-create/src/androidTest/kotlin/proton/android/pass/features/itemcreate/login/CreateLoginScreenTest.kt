@@ -18,6 +18,10 @@
 
 package proton.android.pass.features.itemcreate.login
 
+import android.os.Build
+import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.ui.test.assertIsFocused
+import androidx.compose.ui.test.assertIsNotFocused
 import androidx.compose.ui.test.hasContentDescription
 import androidx.compose.ui.test.hasTestTag
 import androidx.compose.ui.test.hasText
@@ -29,12 +33,17 @@ import androidx.compose.ui.test.performScrollTo
 import androidx.compose.ui.test.performScrollToIndex
 import androidx.compose.ui.test.performScrollToKey
 import androidx.compose.ui.test.performTextReplacement
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.LifecycleRegistry
+import androidx.lifecycle.compose.LocalLifecycleOwner
 import com.google.common.truth.Truth.assertThat
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.coroutines.runBlocking
 import me.proton.core.domain.entity.UserId
+import org.junit.Assume.assumeTrue
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -53,6 +62,8 @@ import proton.android.pass.data.fakes.usecases.FakeObserveCurrentUser
 import proton.android.pass.data.fakes.usecases.FakeObserveUpgradeInfo
 import proton.android.pass.data.fakes.usecases.FakeObserveUserAccessData
 import proton.android.pass.data.fakes.usecases.FakeObserveVaultsWithItemCount
+import proton.android.pass.data.fakes.usecases.popularservices.FakeGetPopularServices
+import proton.android.pass.data.api.usecases.popularservices.PopularService
 import proton.android.pass.domain.AliasSuffix
 import proton.android.pass.domain.CustomFieldContent
 import proton.android.pass.domain.CustomFieldType
@@ -76,6 +87,8 @@ import proton.android.pass.features.itemcreate.common.CustomFieldDraftRepository
 import proton.android.pass.features.itemcreate.common.DraftFormFieldEvent
 import proton.android.pass.features.itemcreate.common.PASSWORD_INPUT_TAG
 import proton.android.pass.navigation.api.CommonNavArgId
+import proton.android.pass.preferences.FakeFeatureFlagsPreferenceRepository
+import proton.android.pass.preferences.FeatureFlag
 import proton.android.pass.test.CallChecker
 import proton.android.pass.test.HiltComponentActivity
 import proton.android.pass.test.TestConstants
@@ -134,6 +147,12 @@ class CreateLoginScreenTest {
     @Inject
     lateinit var totpManager: FakeTotpManager
 
+    @Inject
+    lateinit var getPopularServices: FakeGetPopularServices
+
+    @Inject
+    lateinit var featureFlagsRepository: FakeFeatureFlagsPreferenceRepository
+
     @Before
     fun setup() {
         hiltRule.inject()
@@ -144,24 +163,12 @@ class CreateLoginScreenTest {
         }
         setupPlan(PlanType.Paid.Plus("", ""))
 
-        val vault = VaultWithItemCount(
-            vault = Vault(
-                userId = USER_ID,
-                shareId = ShareId(SHARE_ID),
-                vaultId = VaultId("vault-id"),
-                name = "Test vault",
-                createTime = Date(),
-                shareFlags = ShareFlags(0)
-            ),
-            activeItemCount = 0,
-            trashedItemCount = 0
-        )
         val totpSpec = TotpSpec(
             secret = "SECRET",
             label = "LABEL".some(),
         )
         totpManager.setParseResult(Result.success(totpSpec))
-        observeVaults.sendResult(Result.success(listOf(vault)))
+        observeVaults.sendResult(Result.success(listOf(TEST_VAULT)))
         observeUserAccessData.sendValue(null)
     }
 
@@ -493,6 +500,99 @@ class CreateLoginScreenTest {
     }
 
     @Test
+    fun popularServiceSuggestionsHideWhileScreenIsNotResumed() {
+        featureFlagsRepository.set(FeatureFlag.PASS_POPULAR_SERVICES, true)
+        getPopularServices.setResult(
+            Result.success(listOf(PopularService(title = "Facebook", urls = listOf("https://facebook.com"))))
+        )
+        val lifecycleOwner = object : LifecycleOwner {
+            val registry = LifecycleRegistry.createUnsafe(this).apply {
+                currentState = Lifecycle.State.RESUMED
+            }
+            override val lifecycle: Lifecycle = registry
+        }
+
+        composeTestRule.apply {
+            setContent {
+                CompositionLocalProvider(LocalLifecycleOwner provides lifecycleOwner) {
+                    PassTheme(isDark = true) {
+                        CreateLoginScreen(
+                            clearAlias = false,
+                            selectVault = null,
+                            canUseAttachments = true,
+                            onNavigate = {}
+                        )
+                    }
+                }
+            }
+
+            val titleText = activity.getString(CompR.string.field_title_title)
+            waitUntilExists(hasText(titleText))
+            onNode(hasText(titleText)).performClick()
+            writeTextAndWait(hasText(titleText), "Face")
+            waitUntilExists(hasText("Facebook"))
+
+            runOnIdle { lifecycleOwner.registry.currentState = Lifecycle.State.STARTED }
+            onNode(hasText("Facebook")).assertDoesNotExist()
+
+            runOnIdle { lifecycleOwner.registry.currentState = Lifecycle.State.RESUMED }
+            waitUntilExists(hasText("Facebook"))
+        }
+    }
+
+    @Test
+    fun focusedFieldLosesFocusWhenOpeningVaultPicker() {
+        // Below API 28 the framework re-assigns focus to the root view after clearFocus(),
+        // regardless of the APK's targetSdk, so the cleared state cannot be observed there.
+        assumeTrue(Build.VERSION.SDK_INT >= Build.VERSION_CODES.P)
+
+        val otherVault = VaultWithItemCount(
+            vault = Vault(
+                userId = USER_ID,
+                shareId = ShareId("other-share-id"),
+                vaultId = VaultId("other-vault-id"),
+                name = "Other vault",
+                createTime = Date(),
+                shareFlags = ShareFlags(0)
+            ),
+            activeItemCount = 0,
+            trashedItemCount = 0
+        )
+        observeVaults.sendResult(Result.success(listOf(TEST_VAULT, otherVault)))
+        val checker = CallChecker<Unit>()
+
+        composeTestRule.apply {
+            setContent {
+                PassTheme(isDark = true) {
+                    CreateLoginScreen(
+                        clearAlias = false,
+                        selectVault = null,
+                        canUseAttachments = true,
+                        onNavigate = {
+                            if (it is BaseLoginNavigation.OnCreateLoginEvent &&
+                                it.event is CreateLoginNavigation.SelectVault
+                            ) {
+                                checker.call()
+                            }
+                        }
+                    )
+                }
+            }
+
+            val titleText = activity.getString(CompR.string.field_title_title)
+            waitUntilExists(hasText(titleText))
+            onNode(hasText(titleText)).performClick()
+            onNode(hasText(titleText)).assertIsFocused()
+
+            waitUntilExists(hasText(TEST_VAULT.vault.name))
+            onNodeWithText(TEST_VAULT.vault.name).performClick()
+
+            waitUntil { checker.isCalled }
+            onNode(hasText(titleText)).assertIsNotFocused()
+        }
+    }
+
+    @Test
     fun cannotCreateLoginWithoutTitle() {
         composeTestRule.apply {
             setContent {
@@ -686,6 +786,18 @@ class CreateLoginScreenTest {
         private const val SHARE_ID = "shareId-123"
         private val USER_ID = UserId("user-id-123")
         private const val USER_EMAIL = "a@b.c"
+        private val TEST_VAULT = VaultWithItemCount(
+            vault = Vault(
+                userId = USER_ID,
+                shareId = ShareId(SHARE_ID),
+                vaultId = VaultId("vault-id"),
+                name = "Test vault",
+                createTime = Date(),
+                shareFlags = ShareFlags(0)
+            ),
+            activeItemCount = 0,
+            trashedItemCount = 0
+        )
     }
 
 }

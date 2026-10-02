@@ -95,8 +95,8 @@
   <string name="share_manage_vault_invitations_title" comment="Text that will be used as the title of the list containing the invites for a vault">Invitasjoner</string>
   <string name="share_manage_vault_members_title" comment="Text that will be used as the title of the list containing the members of a vault">Medlemmer</string>
   <string name="share_manage_vault_current_user_indicator">Deg</string>
-  <string name="share_manage_vault_members_error" comment="Shown when the vault member list fails to load">Couldn\'t load members</string>
-  <string name="share_manage_vault_members_error_retry" comment="Button to retry loading the vault members">Retry</string>
+  <string name="share_manage_vault_members_error" comment="Shown when the vault member list fails to load">Kunne ikke laste inn medlemmer</string>
+  <string name="share_manage_vault_members_error_retry" comment="Button to retry loading the vault members">Prøv igjen</string>
   <string name="share_role_viewer">Leser</string>
   <string name="share_role_editor">Redaktør</string>
   <string name="share_role_admin">Administrator</string>

@@ -29,7 +29,7 @@
   <string name="migrate_disabled_folder_reason_same_location">해당 폴더가 이미 해당 위치에 존재합니다.</string>
   <string name="migrate_disabled_folder_reason_being_moved">해당 폴더가 이동됩니다.</string>
   <string name="migrate_disabled_folder_reason_descendant">해당 폴더는 이동되는 폴더 내에 존재합니다.</string>
-  <string name="migrate_disabled_folder_reason_limit_reached">Moving here would exceed the folder limits</string>
+  <string name="migrate_disabled_folder_reason_limit_reached">여기로 항목을 이동하면 파일 개수 제한을 초과합니다.</string>
   <string name="migrate_disabled_vault_reason_no_permission">이 금고 내에서 항목 생성이 불가합니다.</string>
   <string name="migrate_disabled_vault_reason_same_vault">같은 금고 내에서는 항목 이동이 불가합니다.</string>
   <plurals name="migrate_items_shared_warning_title">

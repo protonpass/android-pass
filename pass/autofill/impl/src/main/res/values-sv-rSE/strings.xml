@@ -28,7 +28,7 @@
   <string name="autofill_troubleshooting_service_unsupported_title">Denna enhet stöder inte automatisk ifyllning</string>
   <string name="autofill_troubleshooting_browsers_inactive_header">Inactive browsers detected</string>
   <string name="autofill_troubleshooting_browsers_inactive_body">Turn on autofill so that Proton Pass can fill your credentials. Tap a browser to open its settings.</string>
-  <string name="autofill_troubleshooting_browsers_compatible_header">Browsers are compatible</string>
+  <string name="autofill_troubleshooting_browsers_compatible_header">Webbläsare är kompatibla</string>
   <string name="autofill_troubleshooting_browsers_compatible_body">Your browsers are connected and ready to autofill.</string>
   <string name="autofill_troubleshooting_browser_active">Aktiv</string>
   <string name="autofill_troubleshooting_inline_info">Inline suggestions appear in your keyboard. They need Android 11 or later and a compatible keyboard such as Gboard.</string>
@@ -41,7 +41,7 @@
   <string name="autofill_diagnostics_last_attempt_title">Last autofill attempt</string>
   <string name="autofill_diagnostics_no_attempts">No autofill attempt recorded yet.</string>
   <string name="autofill_diagnostics_reason_not_default">Proton Pass isn\'t your autofill service, so it can\'t fill anywhere yet.</string>
-  <string name="autofill_diagnostics_outcome_offered">Proton Pass offered suggestions in %1$s.</string>
+  <string name="autofill_diagnostics_outcome_offered">Proton Pass erbjöd förslag i %1$s.</string>
   <string name="autofill_diagnostics_outcome_nothing">Autofill was triggered in %1$s, but no matching login was offered. The page may have no detectable login fields, or you have no item for this site.</string>
   <string name="autofill_diagnostics_outcome_error">Autofill ran into an error in %1$s.</string>
   <string name="autofill_diagnostics_recent_title">Senaste försöken</string>

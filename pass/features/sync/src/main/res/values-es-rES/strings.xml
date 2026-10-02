@@ -42,5 +42,5 @@
   <string name="sync_dialog_invalid_group_shares_warning">Algunas cajas fuertes no se pudieron sincronizar porque no se encontró el grupo asociado en esta cuenta.</string>
   <string name="sync_dialog_title_indexing">Indexando…</string>
   <string name="sync_dialog_subtitle_indexing">Crear índice de búsqueda, casi terminado.</string>
-  <string name="sync_dialog_folder_repair_message">Full data sync to improve app performance. Thank you for your patience.</string>
+  <string name="sync_dialog_folder_repair_message">Sincronización completa de datos para mejorar el rendimiento de la aplicación. Gracias por tu paciencia.</string>
 </resources>

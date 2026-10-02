@@ -21,9 +21,9 @@
   <string name="download_attachments_error">Não foi possível baixar o anexo.</string>
   <string name="share_attachments_error">Não foi possível compartilhar o anexo.</string>
   <string name="upload_attachments_error">Erro ao anexar o arquivo à mensagem</string>
-  <string name="attachment_not_available_offline">Attachment not available offline</string>
-  <string name="attachment_download_timeout">Attachment download timed out</string>
-  <string name="attachment_storage_full">Not enough storage to download attachments</string>
+  <string name="attachment_not_available_offline">O anexo não está disponível off-line</string>
+  <string name="attachment_download_timeout">O tempo limite para o download do anexo expirou</string>
+  <string name="attachment_storage_full">Não há espaço de armazenamento suficiente para baixar anexos</string>
   <string name="attachment_size_exceeded_error">O arquivo selecionado excede o limite de tamanho. Escolha um arquivo menor que 100MB.</string>
   <string name="attachment_too_many_files_error">Muitos arquivos criados recentemente.</string>
   <string name="open_with">Abrir com:</string>

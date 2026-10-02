@@ -44,8 +44,8 @@
   <string name="attachment_sync_dialog_title_done">Nedladdning slutförd</string>
   <string name="attachment_sync_dialog_title_partial_failure">Nedladdning misslyckades</string>
   <string name="attachment_sync_dialog_subtitle_waiting">Waiting for network connection to download attachments.</string>
-  <string name="attachment_sync_dialog_subtitle_downloading">Downloading %1$d/%2$d attachments</string>
-  <string name="attachment_sync_dialog_subtitle_done">All attachments have been downloaded successfully.</string>
+  <string name="attachment_sync_dialog_subtitle_downloading">Laddar ner %1$d/%2$d bilagor</string>
+  <string name="attachment_sync_dialog_subtitle_done">Alla bilagor har laddats ner.</string>
   <string name="attachment_sync_dialog_subtitle_partial_failure">Some attachments could not be downloaded. You can retry the failed ones below.</string>
   <string name="attachment_sync_dialog_retry_content_description">Retry download</string>
   <string name="attachment_sync_vault_files_count">%1$d/%2$d filer</string>

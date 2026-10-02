@@ -13,20 +13,20 @@
   <string name="autofill_confirm_dangerous_title" comment="Title for the dialog that will appear when the user clicks on Autofill but we think it may be a dangerous action">Confirmar sua ação</string>
   <string name="autofill_confirm_dangerous_body" comment="Body for the dialog that will appear when the user clicks on Autofill but we think it may be a dangerous action">Você está prestes a preencher automaticamente suas credenciais em um site aberto pelo seu aplicativo atual. O aplicativo pode ter acesso às credenciais após o preenchimento automático - somente faça isto se você confiar no aplicativo.</string>
   <string name="autofill_confirm_button" comment="Confirmation button for actually performing the autofill action">Preenchimento automático</string>
-  <string name="autofill_confirm_unverified_browser_title">This app claims to be a trusted browser</string>
+  <string name="autofill_confirm_unverified_browser_title">Este aplicativo afirma ser um navegador confiável</string>
   <string name="autofill_confirm_unverified_browser_body">This app identifies itself as a known browser, but Pass could not verify it. Its signing certificate does not match what we expect, which can happen if the browser is unusually configured, or if another app is impersonating it to intercept your credentials. Only continue if you are certain this app is legitimate.</string>
   <string name="autofill_confirm_dont_ask_again">Não voltar a perguntar para este aplicativo de novo</string>
   <string name="autofill_troubleshooting_title">Solução de problemas de preenchimento automático</string>
-  <string name="autofill_troubleshooting_subtitle">Check your device is set up correctly for autofill.</string>
+  <string name="autofill_troubleshooting_subtitle">Verifique se seu dispositivo está configurado corretamente para o preenchimento automático.</string>
   <string name="autofill_troubleshooting_verdict_all_good">O preenchimento automático está totalmente configurado</string>
-  <string name="autofill_troubleshooting_verdict_attention">A few things need your attention</string>
-  <string name="autofill_troubleshooting_service_ok">Proton Pass is your autofill service</string>
-  <string name="autofill_troubleshooting_service_current_other">Currently set to %1$s.</string>
-  <string name="autofill_troubleshooting_service_not_default_title">Proton Pass isn\'t your autofill service</string>
-  <string name="autofill_troubleshooting_service_not_default_body">Set it as the default to autofill across your apps.</string>
+  <string name="autofill_troubleshooting_verdict_attention">Algumas coisas precisam da sua atenção</string>
+  <string name="autofill_troubleshooting_service_ok">O Proton Pass é o seu serviço de preenchimento automático</string>
+  <string name="autofill_troubleshooting_service_current_other">Atualmente definido como %1$s.</string>
+  <string name="autofill_troubleshooting_service_not_default_title">O Proton Pass não é um serviço de preenchimento automático</string>
+  <string name="autofill_troubleshooting_service_not_default_body">Defina-o como padrão para preenchimento automático em todos os seus aplicativos.</string>
   <string name="autofill_troubleshooting_service_enable_action">Ativar preenchimento automático</string>
-  <string name="autofill_troubleshooting_service_unsupported_title">This device doesn\'t support autofill</string>
-  <string name="autofill_troubleshooting_browsers_inactive_header">Inactive browsers detected</string>
+  <string name="autofill_troubleshooting_service_unsupported_title">Este dispositivo não suporta o preenchimento automático</string>
+  <string name="autofill_troubleshooting_browsers_inactive_header">Foram detetados navegadores inativos</string>
   <string name="autofill_troubleshooting_browsers_inactive_body">Turn on autofill so that Proton Pass can fill your credentials. Tap a browser to open its settings.</string>
   <string name="autofill_troubleshooting_browsers_compatible_header">Browsers are compatible</string>
   <string name="autofill_troubleshooting_browsers_compatible_body">Your browsers are connected and ready to autofill.</string>
@@ -46,5 +46,5 @@
   <string name="autofill_diagnostics_outcome_error">Autofill ran into an error in %1$s.</string>
   <string name="autofill_diagnostics_recent_title">Recent attempts</string>
   <string name="autofill_diagnostics_clear">Limpar</string>
-  <string name="autofill_diagnostics_share">Share with support</string>
+  <string name="autofill_diagnostics_share">Compartilhar com suporte</string>
 </resources>

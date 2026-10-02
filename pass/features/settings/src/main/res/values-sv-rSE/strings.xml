@@ -61,7 +61,7 @@
   <string name="settings_offline_attachments_download_all">Gör bilagor tillgängliga offline</string>
   <string name="settings_offline_attachments_cellular">Download also on cellular data</string>
   <string name="settings_offline_attachments_download_status">Download status</string>
-  <string name="notification_permission_dialog_title">Notification permission required</string>
+  <string name="notification_permission_dialog_title">Aviseringsbehörighet krävs</string>
   <string name="notification_permission_dialog_message">To show download progress notifications, you need to enable notifications for this app in system settings.</string>
   <string name="notification_permission_dialog_open_settings">Öppna inställningar</string>
   <string name="notification_permission_dialog_cancel">Avbryt</string>

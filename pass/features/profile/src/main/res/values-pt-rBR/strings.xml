@@ -10,9 +10,9 @@
   <string name="profile_option_import_export">Importar/exportar</string>
   <string name="profile_option_tutorial">Como usar o Proton Pass</string>
   <string name="profile_option_rating">Avaliar o aplicativo</string>
-  <string name="profile_spread_the_word">Spread the word</string>
+  <string name="profile_spread_the_word">Espalhe a palavra</string>
   <string name="profile_option_tell_a_friend">Indique a um amigo</string>
-  <string name="profile_spread_the_word_share_message">I\'m using Proton Pass to keep my passwords secure. Try it: https://proton.me/pass/download</string>
+  <string name="profile_spread_the_word_share_message">Estou usando o Proton Pass para manter minhas senhas seguras. Experimente: https://proton.me/pass/download</string>
   <string name="profile_option_autofill">Preenchimento automático</string>
   <string name="profile_option_autofill_subtitle">Preencha automaticamente seus nomes de usuário e senhas.</string>
   <string name="profile_option_secure_links">Links seguros</string>
@@ -20,7 +20,7 @@
   <string name="profile_option_generated_passwords">Senhas geradas</string>
   <string name="profile_error_biometry_failed_to_start">Não foi possível iniciar a autenticação biométrica</string>
   <string name="profile_error_biometry_failed_to_authenticate">Erro na autenticação</string>
-  <string name="profile_error_app_lock_update_failed">Could not update the app lock. Please try again.</string>
+  <string name="profile_error_app_lock_update_failed">Não foi possível atualizar o bloqueio do aplicativo. Tente novamente.</string>
   <string name="profile_fingerprint_lock_enabled">Bloqueio por impressão digital ativado</string>
   <string name="profile_fingerprint_lock_disabled">Bloqueio por impressão digital desativado</string>
   <string name="profile_app_version_copied_to_clipboard">Versão do aplicativo copiado</string>

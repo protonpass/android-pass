@@ -39,12 +39,12 @@
   <string name="storage_full_amount" comment="This will show 20MB of 100MB">%1$s de %2$s</string>
   <string name="attachments_saved_to_location_success">O anexo foi salvo na localização.</string>
   <string name="attachments_saved_to_location_error">Não foi possível salvar o anexo na localização.</string>
-  <string name="attachment_sync_dialog_title_waiting">Waiting for connection</string>
+  <string name="attachment_sync_dialog_title_waiting">Agurdando pela conexão</string>
   <string name="attachment_sync_dialog_title_downloading">Baixando anexos</string>
   <string name="attachment_sync_dialog_title_done">Download concluído</string>
   <string name="attachment_sync_dialog_title_partial_failure">Erro no download</string>
   <string name="attachment_sync_dialog_subtitle_waiting">Waiting for network connection to download attachments.</string>
-  <string name="attachment_sync_dialog_subtitle_downloading">Downloading %1$d/%2$d attachments</string>
+  <string name="attachment_sync_dialog_subtitle_downloading">Baixando %1$d/%2$d anexos</string>
   <string name="attachment_sync_dialog_subtitle_done">All attachments have been downloaded successfully.</string>
   <string name="attachment_sync_dialog_subtitle_partial_failure">Some attachments could not be downloaded. You can retry the failed ones below.</string>
   <string name="attachment_sync_dialog_retry_content_description">Tentar novamente download</string>

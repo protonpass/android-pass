@@ -69,7 +69,7 @@
   <string name="attachment_config_dialog_all_vaults">Todos os cofres</string>
   <string name="attachment_config_dialog_select_vaults">Select vaults to download</string>
   <string name="attachment_config_dialog_shared_items">Compartilhado comigo</string>
-  <string name="attachment_config_dialog_start">Download</string>
+  <string name="attachment_config_dialog_start">Baixar</string>
   <string name="attachment_config_dialog_cancel">Cancelar</string>
   <string name="settings_offline_attachments_shared_items">Compartilhado comigo</string>
 </resources>

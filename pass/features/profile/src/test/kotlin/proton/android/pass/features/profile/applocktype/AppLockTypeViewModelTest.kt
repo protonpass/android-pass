@@ -29,6 +29,7 @@ import android.content.Context
 import proton.android.pass.appconfig.fakes.FakeAppConfig
 import proton.android.pass.biometry.BiometryResult
 import proton.android.pass.biometry.BiometryStatus
+import proton.android.pass.biometry.EnrollmentGuardSetupResult
 import proton.android.pass.biometry.FakeBiometryManager
 import proton.android.pass.biometry.FakeStoreAuthSuccessful
 import proton.android.pass.biometry.UnlockMethod
@@ -206,6 +207,74 @@ class AppLockTypeViewModelTest {
             // Verify storeAuthSuccessful was invoked with correct unlock method
             assertThat(storeAuthSuccessful.invokedWith).isEqualTo(UnlockMethod.PinOrBiometrics)
         }
+    }
+
+    @Test
+    fun `enabling biometrics resets the enrollment guard before storing the lock`() = runTest {
+        preferenceRepository.setAppLockTypePreference(NonePreference)
+        preferenceRepository.setAppLockState(AppLockState.Disabled)
+        observeEnforcedLock.emitValue(OrganizationSettings.NotAnOrganization)
+
+        createViewModel()
+
+        viewModel.state.test {
+            awaitItem()
+
+            viewModel.onChanged(Biometrics, ClassHolder<Context>(None))
+            biometryManager.emitResult(BiometryResult.Success)
+
+            val finalState = awaitItem()
+            assertThat(finalState.selected).isEqualTo(Biometrics)
+            assertThat(finalState.event).isEqualTo(AppLockTypeEvent.Dismiss)
+        }
+        assertThat(biometryManager.enrollmentGuardResetCount).isEqualTo(1)
+    }
+
+    @Test
+    fun `enabling biometrics without enrolled biometric still enables the lock`() = runTest {
+        preferenceRepository.setAppLockTypePreference(NonePreference)
+        preferenceRepository.setAppLockState(AppLockState.Disabled)
+        observeEnforcedLock.emitValue(OrganizationSettings.NotAnOrganization)
+        biometryManager.setEnrollmentGuardSetupResult(EnrollmentGuardSetupResult.NoBiometricEnrolled)
+
+        createViewModel()
+
+        viewModel.state.test {
+            awaitItem()
+
+            viewModel.onChanged(Biometrics, ClassHolder<Context>(None))
+            biometryManager.emitResult(BiometryResult.Success)
+
+            val finalState = awaitItem()
+            assertThat(finalState.selected).isEqualTo(Biometrics)
+            assertThat(finalState.event).isEqualTo(AppLockTypeEvent.Dismiss)
+        }
+        assertThat(preferenceRepository.getAppLockState().first()).isEqualTo(AppLockState.Enabled)
+    }
+
+    @Test
+    fun `enabling biometrics when enrollment guard fails keeps the previous lock`() = runTest {
+        preferenceRepository.setAppLockTypePreference(NonePreference)
+        preferenceRepository.setAppLockState(AppLockState.Disabled)
+        observeEnforcedLock.emitValue(OrganizationSettings.NotAnOrganization)
+        biometryManager.setEnrollmentGuardSetupResult(EnrollmentGuardSetupResult.Failed)
+
+        createViewModel()
+
+        viewModel.state.test {
+            awaitItem()
+
+            viewModel.onChanged(Biometrics, ClassHolder<Context>(None))
+            biometryManager.emitResult(BiometryResult.Success)
+
+            expectNoEvents()
+        }
+
+        assertThat(snackbarDispatcher.snackbarMessage.first())
+            .isEqualTo(ProfileSnackbarMessage.BiometryFailedToStartError.some())
+        assertThat(preferenceRepository.getAppLockTypePreference().first()).isEqualTo(NonePreference)
+        assertThat(preferenceRepository.getAppLockState().first()).isEqualTo(AppLockState.Disabled)
+        assertThat(storeAuthSuccessful.invokedWith).isNull()
     }
 
     @Test

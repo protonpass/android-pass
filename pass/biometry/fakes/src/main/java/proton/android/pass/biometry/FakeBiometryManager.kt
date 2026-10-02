@@ -35,11 +35,25 @@ class FakeBiometryManager @Inject constructor() : BiometryManager {
         replay = 1, onBufferOverflow = BufferOverflow.DROP_OLDEST
     )
 
+    private var enrollmentGuardSetupResult: EnrollmentGuardSetupResult = EnrollmentGuardSetupResult.Armed
+
     var hasBeenCalled = false
+        private set
+
+    var enrollmentGuardResetCount = 0
         private set
 
     fun setBiometryStatus(status: BiometryStatus) {
         biometryStatus = status
+    }
+
+    fun setEnrollmentGuardSetupResult(result: EnrollmentGuardSetupResult) {
+        enrollmentGuardSetupResult = result
+    }
+
+    override suspend fun resetEnrollmentGuard(): EnrollmentGuardSetupResult {
+        enrollmentGuardResetCount++
+        return enrollmentGuardSetupResult
     }
 
     fun emitResult(result: BiometryResult) {

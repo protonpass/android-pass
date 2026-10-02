@@ -53,4 +53,7 @@ abstract class BiometryBinderModule {
 
     @Binds
     abstract fun bindAuthOverrideState(impl: AuthOverrideStateImpl): AuthOverrideState
+
+    @Binds
+    abstract fun bindEnrollmentGuardKey(impl: AndroidKeyStoreEnrollmentGuardKey): EnrollmentGuardKey
 }

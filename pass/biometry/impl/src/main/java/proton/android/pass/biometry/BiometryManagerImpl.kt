@@ -141,6 +141,9 @@ class BiometryManagerImpl @Inject constructor(
             awaitClose()
         }
 
+    override suspend fun resetEnrollmentGuard(): EnrollmentGuardSetupResult =
+        withContext(appDispatchers.io) { biometricEnrollmentGuard.reset() }
+
     private fun canAuthenticate(): BiometryResult {
         val biometricSystemLock = runBlocking {
             userPreferencesRepository.getBiometricSystemLockPreference().first()

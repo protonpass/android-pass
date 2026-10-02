@@ -25,6 +25,7 @@ import proton.android.pass.commonui.api.ClassHolder
 interface BiometryManager {
     fun getBiometryStatus(): BiometryStatus
     fun launch(contextHolder: ClassHolder<Context>, biometryType: BiometryType): Flow<BiometryResult>
+    suspend fun resetEnrollmentGuard(): EnrollmentGuardSetupResult
 }
 
 enum class BiometryType {

@@ -29,7 +29,11 @@ android {
 
     defaultConfig {
         minSdk = libs.versions.minSdk.get().toInt()
-        
+
+    }
+
+    testOptions {
+        unitTests.isReturnDefaultValues = true
     }
 }
 

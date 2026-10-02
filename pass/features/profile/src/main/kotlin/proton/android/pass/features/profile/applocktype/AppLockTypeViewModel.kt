@@ -215,6 +215,10 @@ class AppLockTypeViewModel @Inject constructor(
 
     private fun onBiometryAuthSet() {
         viewModelScope.launch {
+            if (!biometryManager.resetEnrollmentGuard().canEnableBiometricLock()) {
+                onBiometryFailedToStart()
+                return@launch
+            }
             storeAuthSuccessful(UnlockMethod.PinOrBiometrics)
             setAppLockType(Biometrics)
                 .onSuccess { onLockUpdated(FingerprintLockEnabled) }

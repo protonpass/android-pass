@@ -214,6 +214,10 @@ class OnBoardingViewModel @Inject constructor(
 
     private fun onBiometrySuccess() {
         viewModelScope.launch {
+            if (!biometryManager.resetEnrollmentGuard().canEnableBiometricLock()) {
+                onBiometryFailedToStart()
+                return@launch
+            }
             storeAuthSuccessful(UnlockMethod.PinOrBiometrics)
             setAppLockType(AppLockTypePreference.Biometrics)
             snackbarDispatcher(FingerprintLockEnabled)

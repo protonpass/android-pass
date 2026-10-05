@@ -48,7 +48,6 @@ import me.proton.core.auth.domain.usecase.PostLoginAccountSetup
 import me.proton.core.auth.presentation.DefaultHelpOptionHandler
 import me.proton.core.auth.presentation.HelpOptionHandler
 import me.proton.core.user.domain.UserManager
-import proton.android.pass.PassActivityOrchestrator
 import proton.android.pass.data.api.usecases.extrapassword.AuthWithExtraPasswordListener
 import javax.inject.Singleton
 
@@ -58,26 +57,19 @@ object AuthModule {
 
     @Provides
     @Singleton
-    @Suppress("LongParameterList")
     fun provideUserCheck(
         @ApplicationContext context: Context,
         accountManager: AccountManager,
         userManager: UserManager,
         sessionManager: SessionManager,
-        authWithExtraPasswordListener: AuthWithExtraPasswordListener,
-        passActivityOrchestrator: PassActivityOrchestrator
+        authWithExtraPasswordListener: AuthWithExtraPasswordListener
     ): PostLoginAccountSetup.UserCheck = PassScopeUserCheck(
         context = context,
         accountManager = accountManager,
         userManager = userManager,
         sessionManager = sessionManager,
-        authWithExtraPasswordListener = authWithExtraPasswordListener,
-        passActivityOrchestrator = passActivityOrchestrator
+        authWithExtraPasswordListener = authWithExtraPasswordListener
     )
-
-    @Provides
-    @Singleton
-    fun providePassActivityOrchestrator(): PassActivityOrchestrator = PassActivityOrchestrator()
 
     @Provides
     @Singleton

@@ -54,7 +54,6 @@ import me.proton.core.telemetry.domain.TelemetryManager
 import me.proton.core.telemetry.presentation.ProductMetricsDelegate
 import me.proton.core.telemetry.presentation.ProductMetricsDelegateOwner
 import me.proton.core.telemetry.presentation.compose.LocalProductMetricsDelegateOwner
-import proton.android.pass.PassActivityOrchestrator
 import proton.android.pass.appconfig.api.AppConfig
 import proton.android.pass.appconfig.api.BuildFlavor.Companion.upgradeUrl
 import proton.android.pass.autofill.di.UserPreferenceEntryPoint
@@ -86,9 +85,6 @@ class MainActivity : FragmentActivity(), ProductMetricsDelegateOwner {
     lateinit var deeplinkManager: DeeplinkManager
 
     @Inject
-    lateinit var passActivityOrchestrator: PassActivityOrchestrator
-
-    @Inject
     lateinit var telemetryManager: TelemetryManager
 
     private val launcherViewModel: LauncherViewModel by viewModels()
@@ -118,7 +114,6 @@ class MainActivity : FragmentActivity(), ProductMetricsDelegateOwner {
 
         // Register activities for result.
         launcherViewModel.register(this)
-        passActivityOrchestrator.register(this)
 
         setContent {
             val context = LocalContext.current

@@ -33,6 +33,7 @@ import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.enableEdgeToEdgeProtonPass
 import proton.android.pass.commonui.api.setSecureMode
 import proton.android.pass.composecomponents.impl.theme.isDark
+import proton.android.pass.data.api.usecases.extrapassword.AuthWithExtraPasswordListener
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.android.pass.preferences.AllowScreenshotsPreference
@@ -50,6 +51,11 @@ class EnterExtraPasswordActivity : FragmentActivity() {
     @Inject
     lateinit var snackbarDispatcher: SnackbarDispatcher
 
+    @Inject
+    lateinit var authWithExtraPasswordListener: AuthWithExtraPasswordListener
+
+    private var extraPasswordUserId: UserId? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         setSecureMode()
         super.onCreate(savedInstanceState)
@@ -62,6 +68,7 @@ class EnterExtraPasswordActivity : FragmentActivity() {
             finish()
             return
         }
+        extraPasswordUserId = userId
 
         setContent {
             val themePreference by userPreferencesRepository.getThemePreference()
@@ -84,6 +91,13 @@ class EnterExtraPasswordActivity : FragmentActivity() {
                 )
             }
         }
+    }
+
+    override fun onDestroy() {
+        if (isFinishing) {
+            extraPasswordUserId?.let(authWithExtraPasswordListener::onAuthWithExtraPasswordCancelled)
+        }
+        super.onDestroy()
     }
 
     private fun setResultAndFinish(success: Boolean) {

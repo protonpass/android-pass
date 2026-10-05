@@ -6,6 +6,12 @@
 
 ### Other
 
+## 1.41.3 (2026-10-05)
+
+### Fixes :bug:
+
+- Fixed biometric unlock reporting an enrollment change when no biometric was enrolled.
+
 ## 1.41.2 (2026-09-28)
 
 ### Fixes :bug:

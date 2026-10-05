@@ -26,6 +26,16 @@ import javax.inject.Inject
 
 @Suppress("NotImplementedDeclaration")
 class FakeSessionManager @Inject constructor() : SessionManager {
+
+    private val sessionIds = mutableMapOf<UserId, SessionId>()
+
+    private val mutableRefreshedScopes = mutableListOf<SessionId>()
+    val refreshedScopes: List<SessionId> = mutableRefreshedScopes
+
+    fun setSessionId(userId: UserId, sessionId: SessionId) {
+        sessionIds[userId] = sessionId
+    }
+
     override suspend fun <T> withLock(sessionId: SessionId?, action: suspend () -> T): T {
         TODO("Not yet implemented")
     }
@@ -39,7 +49,7 @@ class FakeSessionManager @Inject constructor() : SessionManager {
     }
 
     override suspend fun refreshScopes(sessionId: SessionId) {
-        TODO("Not yet implemented")
+        mutableRefreshedScopes.add(sessionId)
     }
 
     override suspend fun getSession(sessionId: SessionId?): Session? {
@@ -50,9 +60,7 @@ class FakeSessionManager @Inject constructor() : SessionManager {
         TODO("Not yet implemented")
     }
 
-    override suspend fun getSessionId(userId: UserId?): SessionId? {
-        TODO("Not yet implemented")
-    }
+    override suspend fun getSessionId(userId: UserId?): SessionId? = sessionIds[userId]
 
     override suspend fun getUserId(sessionId: SessionId): UserId? {
         TODO("Not yet implemented")

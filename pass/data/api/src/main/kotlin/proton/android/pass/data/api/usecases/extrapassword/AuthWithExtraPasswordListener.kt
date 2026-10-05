@@ -28,4 +28,5 @@ sealed interface AuthWithExtraPasswordResult {
 interface AuthWithExtraPasswordListener {
     suspend fun clearUserId(userId: UserId)
     suspend fun onAuthWithExtraPassword(userId: UserId): AuthWithExtraPasswordResult
+    fun onAuthWithExtraPasswordCancelled(userId: UserId)
 }

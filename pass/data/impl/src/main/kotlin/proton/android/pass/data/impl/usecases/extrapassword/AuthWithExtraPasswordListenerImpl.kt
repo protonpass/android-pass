@@ -47,6 +47,12 @@ class AuthWithExtraPasswordListenerImpl @Inject constructor() : AuthWithExtraPas
         }
     }
 
+    override fun onAuthWithExtraPasswordCancelled(userId: UserId) {
+        state.update {
+            if (userId in it) it else it + (userId to AuthWithExtraPasswordResult.Failure)
+        }
+    }
+
     override suspend fun onAuthWithExtraPassword(userId: UserId): AuthWithExtraPasswordResult =
         state.mapLatest { it[userId] }.filterNotNull().first()
 }

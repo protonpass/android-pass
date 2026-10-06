@@ -36,19 +36,13 @@
 
 package proton.android.pass.di
 
-import android.content.Context
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
-import me.proton.core.accountmanager.domain.AccountManager
-import me.proton.core.accountmanager.domain.SessionManager
 import me.proton.core.auth.domain.usecase.PostLoginAccountSetup
 import me.proton.core.auth.presentation.DefaultHelpOptionHandler
 import me.proton.core.auth.presentation.HelpOptionHandler
-import me.proton.core.user.domain.UserManager
-import proton.android.pass.data.api.usecases.extrapassword.AuthWithExtraPasswordListener
 import javax.inject.Singleton
 
 @Module
@@ -57,19 +51,7 @@ object AuthModule {
 
     @Provides
     @Singleton
-    fun provideUserCheck(
-        @ApplicationContext context: Context,
-        accountManager: AccountManager,
-        userManager: UserManager,
-        sessionManager: SessionManager,
-        authWithExtraPasswordListener: AuthWithExtraPasswordListener
-    ): PostLoginAccountSetup.UserCheck = PassScopeUserCheck(
-        context = context,
-        accountManager = accountManager,
-        userManager = userManager,
-        sessionManager = sessionManager,
-        authWithExtraPasswordListener = authWithExtraPasswordListener
-    )
+    fun provideUserCheck(passScopeUserCheck: PassScopeUserCheck): PostLoginAccountSetup.UserCheck = passScopeUserCheck
 
     @Provides
     @Singleton

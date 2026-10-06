@@ -18,11 +18,12 @@
 
 package proton.android.pass.features.selectitem.ui
 
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.platform.SoftwareKeyboardController
 import androidx.compose.ui.test.hasText
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performTextInput
-import androidx.test.espresso.Espresso
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -305,8 +306,10 @@ class SelectItemScreenTest {
 
     private fun searchTest(query: String, itemText: String) {
         val checker = CallChecker<Unit>()
+        var keyboardController: SoftwareKeyboardController? = null
         composeTestRule.apply {
             setContent {
+                keyboardController = LocalSoftwareKeyboardController.current
                 PassTheme(isDark = true) {
                     SelectItemScreen(
                         state = fakeAutofillState(),
@@ -329,7 +332,7 @@ class SelectItemScreenTest {
             onNode(hasText(text)).performClick()
             onNode(hasText(text)).performTextInput(query)
 
-            Espresso.closeSoftKeyboard()
+            runOnIdle { keyboardController?.hide() }
 
             waitUntilExists(hasText(itemText))
             onNode(hasText(itemText)).performClick()

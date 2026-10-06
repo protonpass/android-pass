@@ -26,7 +26,7 @@ object DomainUtils {
         val sanitizedNeedle = needle.trimEnd('/').trimEnd()
         val sanitizedHaystack = haystack.trimEnd('/').trimEnd()
 
-        if (sanitizedNeedle.contains(sanitizedHaystack)) return true
+        if (sanitizedNeedle == sanitizedHaystack || sanitizedNeedle.endsWith(".$sanitizedHaystack")) return true
 
         val parts = sanitizedHaystack.split(".")
         for (i in 0..parts.size) {

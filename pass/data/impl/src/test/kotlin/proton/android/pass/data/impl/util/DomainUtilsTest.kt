@@ -54,9 +54,27 @@ class DomainUtilsTest {
     }
 
     @Test
-    fun `isDomainPartOf needle contains haystack`() {
+    fun `isDomainPartOf needle is subdomain of haystack`() {
         val res = DomainUtils.isDomainPartOf("some.example.test", "example.test")
         assertThat(res).isTrue()
+    }
+
+    @Test
+    fun `isDomainPartOf needle has stored domain as prefix without label boundary`() {
+        val res = DomainUtils.isDomainPartOf("xexample.test", "example.test")
+        assertThat(res).isFalse()
+    }
+
+    @Test
+    fun `isDomainPartOf needle extends stored domain as suffix text`() {
+        val res = DomainUtils.isDomainPartOf("example.teste", "example.test")
+        assertThat(res).isFalse()
+    }
+
+    @Test
+    fun `isDomainPartOf needle embeds stored domain mid-label`() {
+        val res = DomainUtils.isDomainPartOf("evil-example.test.attacker.example", "example.test")
+        assertThat(res).isFalse()
     }
 
     @Test

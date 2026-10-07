@@ -103,4 +103,9 @@ class PasskeyActivityOriginResolverTest {
         val json = """{"rpId":"should-not-be-read.com","challenge":"abc123"}"""
         assertNull(PasskeyActivityOriginResolver.extractRpIdFromCreateJson(json))
     }
+
+    @Test
+    fun `activity resolver requires a live DAL verification`() {
+        assertEquals(NativeAppDalPolicy.Strict, PasskeyActivityOriginResolver.DAL_POLICY)
+    }
 }

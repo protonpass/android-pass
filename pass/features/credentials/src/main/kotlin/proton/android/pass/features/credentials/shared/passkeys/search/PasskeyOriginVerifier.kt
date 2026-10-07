@@ -24,6 +24,7 @@ import androidx.credentials.provider.CallingAppInfo
 import proton.android.pass.browserallowlist.api.PrivilegedBrowserAllowlistProvider
 import proton.android.pass.data.api.url.HostInfo
 import proton.android.pass.data.api.url.HostParser
+import proton.android.pass.data.api.usecases.DigitalAssetLinksResult
 import proton.android.pass.data.api.usecases.VerifyDigitalAssetLinksForCredentialSharing
 import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.toLogToken
@@ -38,12 +39,22 @@ internal class PasskeyOriginVerifier @Inject constructor(
     private val hostParser: HostParser
 ) {
 
-    internal suspend fun verifyOrigin(callingAppInfo: CallingAppInfo?, requestedRpId: String): String? {
+    internal suspend fun verifyOrigin(
+        callingAppInfo: CallingAppInfo?,
+        requestedRpId: String,
+        dalPolicy: NativeAppDalPolicy
+    ): String? = verify(callingAppInfo, requestedRpId, dalPolicy)?.origin
+
+    internal suspend fun verify(
+        callingAppInfo: CallingAppInfo?,
+        requestedRpId: String,
+        dalPolicy: NativeAppDalPolicy
+    ): OriginVerification? {
         val (caller, rpToken, callerToken) = validateRequest(callingAppInfo, requestedRpId) ?: return null
         return if (caller.isOriginPopulated()) {
-            verifyBrowserOrigin(caller, requestedRpId, rpToken, callerToken)
+            verifyBrowserOrigin(caller, requestedRpId, rpToken, callerToken)?.let(OriginVerification::Verified)
         } else {
-            verifyNativeAppOrigin(caller, requestedRpId, rpToken, callerToken)
+            verifyNativeAppOrigin(caller, requestedRpId, rpToken, callerToken, dalPolicy)
         }
     }
 
@@ -115,8 +126,9 @@ internal class PasskeyOriginVerifier @Inject constructor(
         callingAppInfo: CallingAppInfo,
         requestedRpId: String,
         rpToken: String,
-        callerToken: String
-    ): String? {
+        callerToken: String,
+        dalPolicy: NativeAppDalPolicy
+    ): OriginVerification? {
         val packageName = callingAppInfo.packageName
 
         if (!SigningCertificateFingerprints.hasSingleSigner(callingAppInfo.signingInfo)) {
@@ -125,17 +137,25 @@ internal class PasskeyOriginVerifier @Inject constructor(
         }
 
         val certificateFingerprints = SigningCertificateFingerprints.of(callingAppInfo.signingInfo)
-        val isAuthorized = verifyDigitalAssetLinksForCredentialSharing(
+        val dalResult = verifyDigitalAssetLinksForCredentialSharing.verify(
             website = "https://$requestedRpId",
             packageName = packageName,
             certificateFingerprints = certificateFingerprints
         )
-        if (!isAuthorized) {
+        if (!isDalAuthorized(dalResult, dalPolicy)) {
             PassLogger.w(TAG, "Rejecting passkey request: caller=$callerToken not authorized via DAL for rpId=$rpToken")
             return null
         }
-
-        return "https://$requestedRpId"
+        val origin = "https://$requestedRpId"
+        return if (dalResult is DigitalAssetLinksResult.Unreachable) {
+            PassLogger.w(
+                TAG,
+                "DAL unreachable, deferring verification to activity caller=$callerToken rpId=$rpToken"
+            )
+            OriginVerification.Deferred(origin)
+        } else {
+            OriginVerification.Verified(origin)
+        }
     }
 
     companion object {
@@ -147,6 +167,13 @@ internal class PasskeyOriginVerifier @Inject constructor(
         private val rpIdRegex = Regex("^[a-zA-Z0-9]([a-zA-Z0-9._-]*[a-zA-Z0-9])?$")
 
         internal fun isValidRpId(rpId: String): Boolean = rpIdRegex.matches(rpId)
+
+        internal fun isDalAuthorized(result: DigitalAssetLinksResult, policy: NativeAppDalPolicy): Boolean =
+            when (result) {
+                DigitalAssetLinksResult.Verified -> true
+                DigitalAssetLinksResult.NotVerified -> false
+                DigitalAssetLinksResult.Unreachable -> policy == NativeAppDalPolicy.DeferUnreachableToActivity
+            }
 
         internal fun extractHost(origin: String): String? = runCatching {
             java.net.URI(origin).host

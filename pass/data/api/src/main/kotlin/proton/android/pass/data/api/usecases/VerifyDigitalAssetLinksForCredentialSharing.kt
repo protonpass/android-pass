@@ -24,5 +24,11 @@ interface VerifyDigitalAssetLinksForCredentialSharing {
         website: String,
         packageName: String,
         certificateFingerprints: Set<String>
-    ): Boolean
+    ): Boolean = verify(website, packageName, certificateFingerprints) is DigitalAssetLinksResult.Verified
+
+    suspend fun verify(
+        website: String,
+        packageName: String,
+        certificateFingerprints: Set<String>
+    ): DigitalAssetLinksResult
 }

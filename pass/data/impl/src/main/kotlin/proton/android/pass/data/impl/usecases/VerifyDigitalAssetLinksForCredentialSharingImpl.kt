@@ -19,6 +19,8 @@
 package proton.android.pass.data.impl.usecases
 
 import java.io.IOException
+import java.net.ConnectException
+import java.net.UnknownHostException
 import kotlinx.coroutines.withContext
 import kotlinx.serialization.json.Json
 import javax.net.ssl.SSLHandshakeException
@@ -32,6 +34,7 @@ import proton.android.pass.common.api.safeRunCatching
 import proton.android.pass.common.api.toLogToken
 import okhttp3.OkHttpClient
 import okhttp3.Request
+import proton.android.pass.data.api.usecases.DigitalAssetLinksResult
 import proton.android.pass.data.api.usecases.VerifyDigitalAssetLinksForCredentialSharing
 import proton.android.pass.data.api.AssetLinkOkHttpClient
 import proton.android.pass.data.impl.AppCertificate
@@ -45,17 +48,29 @@ class VerifyDigitalAssetLinksForCredentialSharingImpl @Inject constructor(
     private val appDispatchers: AppDispatchers
 ) : VerifyDigitalAssetLinksForCredentialSharing {
 
-    override suspend fun invoke(
+    override suspend fun verify(
         website: String,
         packageName: String,
         certificateFingerprints: Set<String>
-    ): Boolean = withContext(appDispatchers.io) {
+    ): DigitalAssetLinksResult = withContext(appDispatchers.io) {
         safeRunCatching {
             checkDigitalAssetLinks(website, packageName, certificateFingerprints)
-        }.getOrElse { error ->
-            logFailure(error)
-            false
-        }
+        }.fold(
+            onSuccess = { matched ->
+                if (matched) DigitalAssetLinksResult.Verified else DigitalAssetLinksResult.NotVerified
+            },
+            onFailure = { error ->
+                logFailure(error)
+                error.toDigitalAssetLinksResult()
+            }
+        )
+    }
+
+    private fun Throwable.toDigitalAssetLinksResult(): DigitalAssetLinksResult = when (this) {
+        is UnknownHostException,
+        is ConnectException -> DigitalAssetLinksResult.Unreachable
+
+        else -> DigitalAssetLinksResult.NotVerified
     }
 
     private fun checkDigitalAssetLinks(
@@ -132,13 +147,13 @@ class VerifyDigitalAssetLinksForCredentialSharingImpl @Inject constructor(
 
             else -> PassLogger.w(TAG, "Failed to validate Digital Asset Links")
         }
-        PassLogger.w(TAG, error)
+        PassLogger.w(TAG, "DAL verification error type=${error::class.java.simpleName}")
     }
 
     private fun logNetworkFailure() {
         val snapshot = networkRestrictionDiagnostics.snapshot()
         val likelyCause = if (snapshot.isActiveNetworkMetered && snapshot.isBackgroundDataRestricted) {
-            " (likely cause: Data Saver is blocking background network" +
+            " (likely cause: Data Saver / per-app background data is blocking background network" +
                 " access for this app on the current metered connection)"
         } else {
             ""

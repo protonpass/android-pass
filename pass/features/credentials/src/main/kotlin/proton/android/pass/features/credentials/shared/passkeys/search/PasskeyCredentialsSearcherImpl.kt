@@ -70,9 +70,10 @@ internal class PasskeyCredentialsSearcherImpl @Inject constructor(
         val rpToken = passkeyCredential.domain.toLogToken()
         PassLogger.i(TAG, "search: rpId=$rpToken allowedCreds=${passkeyCredential.allowedCredentials?.size}")
 
-        passkeyOriginVerifier.verifyOrigin(
+        val originVerification = passkeyOriginVerifier.verify(
             callingAppInfo = callingAppInfo,
-            requestedRpId = passkeyCredential.domain
+            requestedRpId = passkeyCredential.domain,
+            dalPolicy = NativeAppDalPolicy.DeferUnreachableToActivity
         ) ?: run {
             PassLogger.w(TAG, "search: aborting — origin verification rejected rpId=$rpToken caller=$callerToken")
             return null
@@ -89,7 +90,11 @@ internal class PasskeyCredentialsSearcherImpl @Inject constructor(
             context = context
         )
 
-        PassLogger.i(TAG, "search: origin verified, returning ${passkeyCredentialEntries.size} entries rpId=$rpToken")
+        PassLogger.i(
+            TAG,
+            "search: origin ${originVerification::class.simpleName}, " +
+                "returning ${passkeyCredentialEntries.size} entries rpId=$rpToken"
+        )
         return Pair(passkeyCredentialEntries, passkeyCredentialAction)
             .also { telemetryManager.sendEvent(PasskeyCredentialsTelemetryEvent.DisplaySuggestions) }
     }

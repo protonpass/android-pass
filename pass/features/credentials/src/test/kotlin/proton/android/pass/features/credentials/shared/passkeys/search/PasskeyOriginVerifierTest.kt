@@ -23,6 +23,7 @@ import proton.android.pass.browserallowlist.api.PrivilegedBrowserAllowlistProvid
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Some
 import proton.android.pass.data.api.url.HostInfo
+import proton.android.pass.data.api.usecases.DigitalAssetLinksResult
 import proton.android.pass.data.api.usecases.VerifyDigitalAssetLinksForCredentialSharing
 import proton.android.pass.data.fakes.url.FakeHostParser
 import kotlin.test.Test
@@ -37,11 +38,11 @@ class PasskeyOriginVerifierTest {
 
     private fun fakeDigitalAssetLinksVerifier(): VerifyDigitalAssetLinksForCredentialSharing {
         return object : VerifyDigitalAssetLinksForCredentialSharing {
-            override suspend fun invoke(
+            override suspend fun verify(
                 website: String,
                 packageName: String,
                 certificateFingerprints: Set<String>
-            ): Boolean = true
+            ): DigitalAssetLinksResult = DigitalAssetLinksResult.Verified
         }
     }
 
@@ -151,9 +152,43 @@ class PasskeyOriginVerifierTest {
         )
         val result = verifier.verifyOrigin(
             callingAppInfo = null,
-            requestedRpId = "example.com"
+            requestedRpId = "example.com",
+            dalPolicy = NativeAppDalPolicy.DeferUnreachableToActivity
         )
         assertNull(result)
+    }
+
+    // --- isDalAuthorized ---
+
+    @Test
+    fun `isDalAuthorized accepts verified DAL under both policies`() {
+        NativeAppDalPolicy.entries.forEach { policy ->
+            assertTrue(PasskeyOriginVerifier.isDalAuthorized(DigitalAssetLinksResult.Verified, policy))
+        }
+    }
+
+    @Test
+    fun `isDalAuthorized rejects not verified DAL under both policies`() {
+        NativeAppDalPolicy.entries.forEach { policy ->
+            assertFalse(PasskeyOriginVerifier.isDalAuthorized(DigitalAssetLinksResult.NotVerified, policy))
+        }
+    }
+
+    @Test
+    fun `isDalAuthorized rejects unreachable DAL under strict policy`() {
+        assertFalse(
+            PasskeyOriginVerifier.isDalAuthorized(DigitalAssetLinksResult.Unreachable, NativeAppDalPolicy.Strict)
+        )
+    }
+
+    @Test
+    fun `isDalAuthorized defers unreachable DAL under deferring policy`() {
+        assertTrue(
+            PasskeyOriginVerifier.isDalAuthorized(
+                DigitalAssetLinksResult.Unreachable,
+                NativeAppDalPolicy.DeferUnreachableToActivity
+            )
+        )
     }
 
     // ------------------------------------------------------------------

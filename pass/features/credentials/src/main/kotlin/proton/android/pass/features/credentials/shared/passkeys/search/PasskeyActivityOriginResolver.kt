@@ -57,11 +57,14 @@ internal class PasskeyActivityOriginResolver @Inject constructor(
         PassLogger.i(TAG, "Resolving origin for rpId=$rpToken caller=$callerToken")
         return passkeyOriginVerifier.verifyOrigin(
             callingAppInfo = callingAppInfo,
-            requestedRpId = rpId
+            requestedRpId = rpId,
+            dalPolicy = DAL_POLICY
         )
     }
 
     internal companion object {
+
+        internal val DAL_POLICY = NativeAppDalPolicy.Strict
 
         private const val TAG = "PasskeyActivityOriginResolver"
 

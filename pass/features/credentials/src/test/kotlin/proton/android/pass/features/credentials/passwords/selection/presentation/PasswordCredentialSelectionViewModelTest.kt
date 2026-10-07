@@ -39,6 +39,7 @@ import proton.android.pass.data.fakes.repositories.FakeItemRepository
 import proton.android.pass.data.fakes.usecases.FakeGetItemById
 import proton.android.pass.data.fakes.usecases.FakeHasActiveAccount
 import proton.android.pass.data.api.usecases.Suggestion
+import proton.android.pass.data.api.usecases.DigitalAssetLinksResult
 import proton.android.pass.data.api.usecases.VerifyDigitalAssetLinksForCredentialSharing
 import proton.android.pass.data.fakes.usecases.FakeSignOutAccount
 import proton.android.pass.domain.HiddenState
@@ -522,13 +523,13 @@ internal class PasswordCredentialSelectionViewModelTest {
 
         val invocations = mutableListOf<DalVerificationInvocation>()
 
-        override suspend fun invoke(
+        override suspend fun verify(
             website: String,
             packageName: String,
             certificateFingerprints: Set<String>
-        ): Boolean {
+        ): DigitalAssetLinksResult {
             invocations += DalVerificationInvocation(website, packageName, certificateFingerprints)
-            return result
+            return if (result) DigitalAssetLinksResult.Verified else DigitalAssetLinksResult.NotVerified
         }
     }
 

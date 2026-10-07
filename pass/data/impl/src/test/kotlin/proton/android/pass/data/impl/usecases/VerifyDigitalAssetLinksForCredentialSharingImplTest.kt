@@ -20,13 +20,19 @@ package proton.android.pass.data.impl.usecases
 
 import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.test.runTest
+import okhttp3.Dns
 import okhttp3.OkHttpClient
 import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.MockWebServer
+import okhttp3.mockwebserver.SocketPolicy
 import org.junit.After
+import java.net.InetAddress
+import java.net.UnknownHostException
+import java.util.concurrent.TimeUnit
 import org.junit.Before
 import org.junit.Test
 import proton.android.pass.common.fakes.FakeAppDispatchers
+import proton.android.pass.data.api.usecases.DigitalAssetLinksResult
 import proton.android.pass.network.fakes.FakeNetworkRestrictionDiagnostics
 
 class VerifyDigitalAssetLinksForCredentialSharingImplTest {
@@ -251,5 +257,107 @@ class VerifyDigitalAssetLinksForCredentialSharingImplTest {
         )
 
         assertThat(result).isFalse()
+    }
+
+    @Test
+    fun `verify reports unreachable when host cannot be resolved`() = runTest {
+        val client = OkHttpClient.Builder()
+            .retryOnConnectionFailure(false)
+            .dns(
+                object : Dns {
+                    override fun lookup(hostname: String): List<InetAddress> = throw UnknownHostException(hostname)
+                }
+            )
+            .build()
+        val unresolvableVerifier = VerifyDigitalAssetLinksForCredentialSharingImpl(
+            client,
+            FakeNetworkRestrictionDiagnostics(),
+            FakeAppDispatchers()
+        )
+
+        val result = unresolvableVerifier.verify(
+            website = "https://example.com",
+            packageName = testPackage,
+            certificateFingerprints = setOf(fingerprintColonHex)
+        )
+
+        assertThat(result).isEqualTo(DigitalAssetLinksResult.Unreachable)
+    }
+
+    @Test
+    fun `verify reports unreachable when connection is refused`() = runTest {
+        val unreachableServer = MockWebServer()
+        unreachableServer.start()
+        val baseUrl = unreachableServer.url("/").toString().trimEnd('/')
+        unreachableServer.shutdown()
+
+        val result = verifier.verify(
+            website = baseUrl,
+            packageName = testPackage,
+            certificateFingerprints = setOf(fingerprintColonHex)
+        )
+
+        assertThat(result).isEqualTo(DigitalAssetLinksResult.Unreachable)
+    }
+
+    @Test
+    fun `verify reports not verified when the server does not respond before the timeout`() = runTest {
+        server.enqueue(MockResponse().setSocketPolicy(SocketPolicy.NO_RESPONSE))
+        val client = OkHttpClient.Builder()
+            .retryOnConnectionFailure(false)
+            .readTimeout(200, TimeUnit.MILLISECONDS)
+            .build()
+        val timeoutVerifier = VerifyDigitalAssetLinksForCredentialSharingImpl(
+            client,
+            FakeNetworkRestrictionDiagnostics(),
+            FakeAppDispatchers()
+        )
+
+        val result = timeoutVerifier.verify(
+            website = serverBaseUrl(),
+            packageName = testPackage,
+            certificateFingerprints = setOf(fingerprintColonHex)
+        )
+
+        assertThat(result).isEqualTo(DigitalAssetLinksResult.NotVerified)
+    }
+
+    @Test
+    fun `verify reports not verified when fingerprint differs`() = runTest {
+        server.enqueue(MockResponse().setBody(assetLinksJson(fingerprints = listOf("00:11"))))
+
+        val result = verifier.verify(
+            website = serverBaseUrl(),
+            packageName = testPackage,
+            certificateFingerprints = setOf(fingerprintColonHex)
+        )
+
+        assertThat(result).isEqualTo(DigitalAssetLinksResult.NotVerified)
+    }
+
+    @Test
+    fun `verify reports not verified on non-200 response`() = runTest {
+        server.enqueue(MockResponse().setResponseCode(503))
+
+        val result = verifier.verify(
+            website = serverBaseUrl(),
+            packageName = testPackage,
+            certificateFingerprints = setOf(fingerprintColonHex)
+        )
+
+        assertThat(result).isEqualTo(DigitalAssetLinksResult.NotVerified)
+    }
+
+    @Test
+    fun `verify reports not verified when TLS handshake fails`() = runTest {
+        server.enqueue(MockResponse().setBody(assetLinksJson()))
+
+        val result = verifier.verify(
+            website = "https://${server.hostName}:${server.port}",
+            packageName = testPackage,
+            certificateFingerprints = setOf(fingerprintColonHex)
+        )
+
+        assertThat(result).isEqualTo(DigitalAssetLinksResult.NotVerified)
     }
 }

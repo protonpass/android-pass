@@ -647,6 +647,18 @@ class LocalItemDataSourceImpl @Inject constructor(
         )
     }
 
+    override fun observeItemCountByFolder(
+        userId: UserId,
+        shareId: ShareId,
+        folderId: FolderId,
+        itemState: ItemState?
+    ): Flow<Int> = database.foldersDao().observeItemCountByFolder(
+        userId = userId.id,
+        shareId = shareId.id,
+        rootFolderId = folderId.id,
+        itemState = itemState?.value
+    )
+
     override fun observeRecentSearchItems(userId: UserId, shareId: ShareId?): Flow<List<ItemEntity>> =
         database.itemsDao().observeRecentSearchItems(
             userId = userId.id,

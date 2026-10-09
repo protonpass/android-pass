@@ -26,6 +26,7 @@ internal class DeleteFolderDialogPreviewProvider : PreviewParameterProvider<Dele
     override val values: Sequence<DeleteFolderUiState> = sequenceOf(
         DeleteFolderUiState(
             folderName = "Work Documents",
+            itemCount = 3,
             folderText = "",
             event = DeleteFolderEvent.Unknown,
             isButtonEnabled = IsButtonEnabled.Disabled,
@@ -33,6 +34,7 @@ internal class DeleteFolderDialogPreviewProvider : PreviewParameterProvider<Dele
         ),
         DeleteFolderUiState(
             folderName = "Personal Files",
+            itemCount = 1,
             folderText = "Personal Files",
             event = DeleteFolderEvent.Unknown,
             isButtonEnabled = IsButtonEnabled.Enabled,
@@ -40,6 +42,7 @@ internal class DeleteFolderDialogPreviewProvider : PreviewParameterProvider<Dele
         ),
         DeleteFolderUiState(
             folderName = "Projects",
+            itemCount = null,
             folderText = "Projects",
             event = DeleteFolderEvent.Unknown,
             isButtonEnabled = IsButtonEnabled.Enabled,

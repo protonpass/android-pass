@@ -23,10 +23,14 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineExceptionHandler
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -36,6 +40,7 @@ import proton.android.pass.composecomponents.impl.uievents.IsButtonEnabled
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.data.api.usecases.folders.DeleteFolders
 import proton.android.pass.data.api.usecases.folders.GetFolder
+import proton.android.pass.data.api.usecases.folders.ObserveFolderItemCount
 import proton.android.pass.domain.FolderId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.features.vault.VaultSnackbarMessage
@@ -50,6 +55,7 @@ class DeleteFolderViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     private val getFolder: GetFolder,
     private val deleteFolders: DeleteFolders,
+    private val observeFolderItemCount: ObserveFolderItemCount,
     private val snackbarDispatcher: SnackbarDispatcher
 ) : ViewModel() {
 
@@ -72,6 +78,15 @@ class DeleteFolderViewModel @Inject constructor(
     private val isLoadingState: MutableStateFlow<IsLoadingState> =
         MutableStateFlow(IsLoadingState.NotLoading)
 
+    private val itemCountFlow: Flow<Int?> = observeFolderItemCount(shareId, folderId)
+        .map<Int, Int?> { count -> count }
+        .catch { error ->
+            PassLogger.w(TAG, "Error observing folder item count")
+            PassLogger.w(TAG, error)
+            emit(null)
+        }
+        .onStart { emit(null) }
+
     init {
         viewModelScope.launch(coroutineExceptionHandler) {
             isLoadingState.update { IsLoadingState.Loading }
@@ -93,12 +108,14 @@ class DeleteFolderViewModel @Inject constructor(
         folderNameFlow,
         eventFlow,
         formFlow,
-        isLoadingState
-    ) { folderName, event, form, isLoadingState ->
+        isLoadingState,
+        itemCountFlow
+    ) { folderName, event, form, isLoadingState, itemCount ->
         DeleteFolderUiState(
             event = event,
             isLoadingState = isLoadingState,
             folderName = folderName,
+            itemCount = itemCount,
             folderText = form.text,
             isButtonEnabled = form.isButtonEnabled
         )

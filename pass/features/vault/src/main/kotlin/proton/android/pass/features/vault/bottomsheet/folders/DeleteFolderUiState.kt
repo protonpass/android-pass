@@ -33,6 +33,7 @@ sealed interface DeleteFolderEvent {
 @Stable
 data class DeleteFolderUiState(
     internal val folderName: String,
+    internal val itemCount: Int?,
     internal val folderText: String,
     internal val event: DeleteFolderEvent,
     internal val isButtonEnabled: IsButtonEnabled,
@@ -45,6 +46,7 @@ data class DeleteFolderUiState(
 
         internal val Initial = DeleteFolderUiState(
             folderName = "",
+            itemCount = null,
             folderText = "",
             event = DeleteFolderEvent.Unknown,
             isButtonEnabled = IsButtonEnabled.Disabled,

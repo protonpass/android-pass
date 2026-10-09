@@ -105,6 +105,7 @@ import proton.android.pass.data.api.usecases.folders.MoveAllItemsInFolder
 import proton.android.pass.data.api.usecases.folders.MoveFolder
 import proton.android.pass.data.api.usecases.folders.MoveItemsInsideShare
 import proton.android.pass.data.api.usecases.folders.ObserveFolder
+import proton.android.pass.data.api.usecases.folders.ObserveFolderItemCount
 import proton.android.pass.data.api.usecases.folders.ObserveFolderItemCounts
 import proton.android.pass.data.api.usecases.folders.ObserveFolderLimits
 import proton.android.pass.data.api.usecases.folders.ObserveFoldersByParentId
@@ -413,6 +414,7 @@ import proton.android.pass.data.impl.usecases.folders.GetFolderHierarchyImpl
 import proton.android.pass.data.impl.usecases.folders.MoveFolderImpl
 import proton.android.pass.data.impl.usecases.folders.MoveItemsInsideShareImpl
 import proton.android.pass.data.impl.usecases.folders.ObserveFolderImpl
+import proton.android.pass.data.impl.usecases.folders.ObserveFolderItemCountImpl
 import proton.android.pass.data.impl.usecases.folders.ObserveFolderItemCountsImpl
 import proton.android.pass.data.impl.usecases.folders.ObserveFolderLimitsImpl
 import proton.android.pass.data.impl.usecases.folders.ObserveFoldersByParentIdImpl
@@ -1645,6 +1647,9 @@ abstract class DataUseCaseModule {
 
     @[Binds Singleton]
     abstract fun bindGetPlanWithPrices(impl: ObservePlansWithPriceImpl): ObservePlansWithPrice
+
+    @[Binds Singleton]
+    abstract fun bindObserveFolderItemCount(impl: ObserveFolderItemCountImpl): ObserveFolderItemCount
 
     @[Binds Singleton]
     abstract fun bindObserveFolderItemCounts(impl: ObserveFolderItemCountsImpl): ObserveFolderItemCounts

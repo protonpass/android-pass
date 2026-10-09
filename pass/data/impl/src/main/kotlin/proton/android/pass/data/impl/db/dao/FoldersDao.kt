@@ -23,6 +23,7 @@ import androidx.room.Query
 import kotlinx.coroutines.flow.Flow
 import me.proton.core.data.room.db.BaseDao
 import proton.android.pass.data.impl.db.entities.FolderEntity
+import proton.android.pass.data.impl.db.entities.ItemEntity
 
 @Dao
 abstract class FoldersDao : BaseDao<FolderEntity>() {
@@ -124,4 +125,22 @@ abstract class FoldersDao : BaseDao<FolderEntity>() {
         shareId: String,
         rootFolderId: String
     ): List<String>
+
+    @Query(
+        """
+        ${FolderEntity.DESCENDANT_FOLDER_TREE_CTE}
+        SELECT COUNT(*)
+        FROM ${ItemEntity.TABLE} item
+        JOIN folder_tree ON item.${ItemEntity.Columns.FOLDER_ID} = folder_tree.id
+        WHERE item.${ItemEntity.Columns.USER_ID} = :userId
+          AND item.${ItemEntity.Columns.SHARE_ID} = :shareId
+          AND (:itemState IS NULL OR item.${ItemEntity.Columns.STATE} = :itemState)
+        """
+    )
+    abstract fun observeItemCountByFolder(
+        userId: String,
+        shareId: String,
+        rootFolderId: String,
+        itemState: Int?
+    ): Flow<Int>
 }

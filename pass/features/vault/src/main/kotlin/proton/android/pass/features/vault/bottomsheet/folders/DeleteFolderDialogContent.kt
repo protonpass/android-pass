@@ -25,6 +25,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.SpanStyle
@@ -56,7 +57,16 @@ internal fun DeleteFolderDialogContent(
     onCancel: () -> Unit,
     onDismiss: () -> Unit
 ) {
-    val bodyTextResource = stringResource(R.string.folder_delete_dialog_body)
+    val bodyTextResource = if (state.itemCount == null || state.itemCount <= 0) {
+        stringResource(R.string.folder_delete_dialog_body)
+    } else {
+        pluralStringResource(
+            R.plurals.folder_delete_dialog_body_with_items,
+            state.itemCount,
+            state.itemCount,
+            TAG_FOLDER_NAME
+        )
+    }
     val bodyText = buildAnnotatedString {
         val textParts = bodyTextResource.split(TAG_FOLDER_NAME)
         if (textParts.size == 2) {

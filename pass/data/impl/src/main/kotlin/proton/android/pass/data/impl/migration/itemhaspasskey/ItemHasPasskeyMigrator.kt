@@ -19,6 +19,7 @@
 package proton.android.pass.data.impl.migration.itemhaspasskey
 
 import proton.android.pass.common.api.safeRunCatching
+import proton.android.pass.commonrust.api.ItemContentSerializer
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.impl.db.entities.ItemEntity
 import proton.android.pass.data.impl.extensions.toDomain
@@ -35,6 +36,7 @@ interface ItemHasPasskeyMigrator : Migrator {
 
 @Singleton
 class ItemHasPasskeyMigratorImpl @Inject constructor(
+    private val itemContentSerializer: ItemContentSerializer,
     private val localItemDataSource: LocalItemDataSource,
     private val encryptionContextProvider: EncryptionContextProvider
 ) : ItemHasPasskeyMigrator {
@@ -54,7 +56,7 @@ class ItemHasPasskeyMigratorImpl @Inject constructor(
     private suspend fun migrateItems(items: List<ItemEntity>) {
         val updated = encryptionContextProvider.withEncryptionContext {
             items.map { entity ->
-                val asItem = entity.toDomain(this@withEncryptionContext)
+                val asItem = entity.toDomain(this@withEncryptionContext, itemContentSerializer)
                 entity.copy(hasPasskeys = asItem.hasPasskeys)
             }
         }

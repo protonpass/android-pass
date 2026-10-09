@@ -37,5 +37,6 @@ data class EncryptedFolderData(
 
 data class OpenFolderOutput(
     val folderName: String,
+    val originalContent: ByteArray,
     val reencryptedFolderKey: EncryptedByteArray
 )

@@ -79,7 +79,7 @@ coroutines = "1.10.2"
 datetime = "0.4.0"
 serializationJson = "1.9.0"
 # Pass
-passCommon = "2.2.1"
+passCommon = "2.2.2"
 # Showkase
 showkase = "1.0.5"
 # Squareup
@@ -90,6 +90,7 @@ retrofit = "2.9.0"
 androidsvg = "1.4"
 # Test
 junit = "4.13.2"
+kotest = "6.1.1"
 testParameterInjector = "1.16"
 truth = "1.4.4"
 fusion = "0.9.52"
@@ -363,6 +364,7 @@ androidx-test-uiautomator = { module = "androidx.test.uiautomator:uiautomator", 
 coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "coroutines" }
 junit = { module = "junit:junit", version.ref = "junit" }
 kotlinTest = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
+kotest-property = { module = "io.kotest:kotest-property", version.ref = "kotest" }
 testParameterInjector = { module = "com.google.testparameterinjector:test-parameter-injector", version.ref = "testParameterInjector" }
 truth = { module = "com.google.truth:truth", version.ref = "truth" }
 fusion = { module = "me.proton.test:fusion", version.ref = "fusion" }

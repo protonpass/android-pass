@@ -27,52 +27,7 @@ val localProperties = java.util.Properties().apply {
     }
 }
 
-interface BranchOrTag {
-    data class Branch(val name: String) : BranchOrTag
-    data class Tag(val name: String) : BranchOrTag
-}
-
-data class ProtosConfig(
-    val url: String,
-    val branchTag: BranchOrTag
-)
-
-val PROTOBUF_TAG = "1.7.0"
-
 val isCI = System.getenv("GITLAB_CI").toBoolean()
-
-fun getProtosConfig(): ProtosConfig {
-    val customProtosUrl = localProperties.getProperty("protos.url", "")
-    return if (isCI) {
-        val username = "gitlab-ci-token"
-        val token = System.getenv("CI_JOB_TOKEN")
-        val server = System.getenv("CI_SERVER_HOST")
-        ProtosConfig(
-            url = "https://${username}:${token}@${server}/proton/clients/pass/contents-proto-definition.git",
-            branchTag = BranchOrTag.Tag(PROTOBUF_TAG)
-        )
-    } else if (customProtosUrl.isNotBlank()) {
-
-        val customProtosBranch = localProperties.getProperty("protos.branch", "")
-        val customProtosTag = localProperties.getProperty("protos.tag", "")
-
-        val branchTag = when {
-            customProtosBranch.isNotBlank() -> BranchOrTag.Branch(customProtosBranch)
-            customProtosTag.isNotBlank() -> BranchOrTag.Tag(customProtosTag)
-            else -> throw RuntimeException("Either protos.branch or protos.tag must be set")
-        }
-
-        ProtosConfig(
-            url = customProtosUrl,
-            branchTag = branchTag
-        )
-    } else {
-        ProtosConfig(
-            url = "https://github.com/protonpass/pass-contents-proto-definition.git",
-            branchTag = BranchOrTag.Tag(PROTOBUF_TAG)
-        )
-    }
-}
 
 pluginManagement {
     includeBuild("build-logic")
@@ -93,27 +48,15 @@ plugins {
     id("me.proton.core.gradle-plugins.include-core-build") version "1.3.1"
 }
 
+includeCoreBuild {
+    // branch.set("main")
+}
+
 develocity {
     buildScan {
         publishing.onlyIf { System.getenv("BUILD_SCAN_PUBLISH") == "true" }
         termsOfUseUrl = "https://gradle.com/terms-of-service"
         termsOfUseAgree = "yes"
-    }
-}
-
-includeCoreBuild {
-    // branch.set("main")
-
-    includeRepo("contents-proto-definition") {
-        val config = getProtosConfig()
-        uri.set(config.url)
-
-        when (val value = config.branchTag) {
-            is BranchOrTag.Branch -> branch.set(value.name)
-            is BranchOrTag.Tag -> tag.set(value.name)
-        }
-
-        checkoutDirectory.set(file("./pass/protos/contents-proto-definition"))
     }
 }
 
@@ -189,7 +132,6 @@ include(":pass:compose-components:impl")
 include(":pass:crypto:api")
 include(":pass:crypto:fakes")
 include(":pass:crypto:impl")
-include(":pass:data-models:api")
 include(":pass:data:api")
 include(":pass:data:fakes")
 include(":pass:data:impl")
@@ -269,7 +211,6 @@ include(":pass:preferences:impl")
 include(":pass:proton-apps:api")
 include(":pass:proton-apps:impl")
 include(":pass:proton-apps:fakes")
-include(":pass:protos")
 include(":pass:screenshot-tests")
 include(":pass:search-options:api")
 include(":pass:search-options:fakes")

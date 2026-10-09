@@ -27,6 +27,7 @@ import org.junit.Test
 import proton.android.pass.account.fakes.FakeUserAddressRepository
 import proton.android.pass.account.fakes.FakeUserRepository
 import proton.android.pass.common.fakes.FakeAppDispatchers
+import proton.android.pass.commonrust.fakes.FakeItemContentSerializer
 import proton.android.pass.crypto.fakes.context.FakeEncryptionContext
 import proton.android.pass.crypto.fakes.context.FakeEncryptionContextProvider
 import proton.android.pass.crypto.fakes.usecases.FakeCreateVault
@@ -42,8 +43,10 @@ import proton.android.pass.data.impl.fakes.mother.ShareEntityTestFactory
 import proton.android.pass.data.impl.repositories.ShareRepositoryImpl
 import proton.android.pass.data.impl.responses.ShareResponse
 import proton.android.pass.domain.Share
+import proton.android.pass.domain.ShareColor
+import proton.android.pass.domain.ShareIcon
+import proton.android.pass.domain.VaultProperties
 import proton.android.pass.test.domain.ShareTestFactory
-import proton_pass_vault_v1.VaultV1
 
 class ShareRepositoryTest {
 
@@ -59,6 +62,7 @@ class ShareRepositoryTest {
         local = FakeLocalShareDataSource()
 
         instance = ShareRepositoryImpl(
+            itemContentSerializer = FakeItemContentSerializer(),
             database = FakePassDatabase(),
             userRepository = FakeUserRepository(),
             userAddressRepository = FakeUserAddressRepository().apply {
@@ -167,14 +171,22 @@ class ShareRepositoryTest {
         assertThat(shares).isEmpty()
     }
 
-    private fun vaultEntityWithValidProto(id: String) = ShareEntityTestFactory.Vault.create(
-        id = id,
-        userId = USER_ID,
-        addressId = "addressid-123",
-        encryptedContent = FakeEncryptionContext.encrypt(
-            VaultV1.Vault.newBuilder().setName("Test Vault").build().toByteArray()
+    private fun vaultEntityWithValidProto(id: String): proton.android.pass.data.impl.db.entities.ShareEntity {
+        val serializer = FakeItemContentSerializer()
+        val vaultData = VaultProperties(
+            name = "Test Vault",
+            description = "",
+            icon = ShareIcon.Icon1,
+            color = ShareColor.Color1
         )
-    )
+        val bytes = serializer.serializeVault(vaultData)
+        return ShareEntityTestFactory.Vault.create(
+            id = id,
+            userId = USER_ID,
+            addressId = "addressid-123",
+            encryptedContent = FakeEncryptionContext.encrypt(bytes)
+        )
+    }
 
     private fun vaultEntityWithInvalidProto(id: String) = ShareEntityTestFactory.Vault.create(
         id = id,

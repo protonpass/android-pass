@@ -25,7 +25,7 @@ import proton.android.pass.crypto.api.EncryptionKey
 import proton.android.pass.crypto.api.usecases.CreateVault
 import proton.android.pass.crypto.api.usecases.CreateVaultOutput
 import proton.android.pass.crypto.api.usecases.EncryptedCreateVault
-import proton_pass_vault_v1.VaultV1
+import proton.android.pass.domain.VaultProperties
 
 class FakeCreateVault : CreateVault {
 
@@ -38,7 +38,7 @@ class FakeCreateVault : CreateVault {
     override fun createVaultRequest(
         user: User,
         userAddress: UserAddress,
-        vaultMetadata: VaultV1.Vault
+        vaultMetadata: VaultProperties
     ): CreateVaultOutput = result.getOrThrow()
 
     companion object {

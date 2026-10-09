@@ -26,13 +26,14 @@ import proton.android.pass.crypto.api.context.EncryptionTag
 import proton.android.pass.crypto.api.usecases.folders.EncryptedFolderData
 import proton.android.pass.crypto.api.usecases.folders.OpenFolder
 import proton.android.pass.crypto.api.usecases.folders.OpenFolderOutput
+import proton.android.pass.commonrust.api.ItemContentSerializer
 import proton.android.pass.crypto.impl.Constants.FOLDER_CONTENT_FORMAT_VERSION
 import proton.android.pass.log.api.PassLogger
-import proton_pass_folder_v1.FolderV1
 import javax.inject.Inject
 
 class OpenFolderImpl @Inject constructor(
-    private val encryptionContextProvider: EncryptionContextProvider
+    private val encryptionContextProvider: EncryptionContextProvider,
+    private val itemContentSerializer: ItemContentSerializer
 ) : OpenFolder {
 
     override suspend fun open(encryptedFolder: EncryptedFolderData, parentKey: EncryptionKey): OpenFolderOutput =
@@ -57,9 +58,10 @@ class OpenFolderImpl @Inject constructor(
                         " ${encryptedFolder.contentFormatVersion}"
                 )
             }
-            val parsed = FolderV1.Folder.parseFrom(decryptedContent)
+            val folderName = itemContentSerializer.deserializeFolder(decryptedContent)
             OpenFolderOutput(
-                folderName = parsed.name,
+                folderName = folderName,
+                originalContent = decryptedContent,
                 reencryptedFolderKey = encryptedFolderKeyForStorage
             )
         }

@@ -35,7 +35,6 @@ import proton.android.pass.data.impl.crypto.EncryptGroupInviteKeys
 import proton.android.pass.data.impl.crypto.ReencryptGroupInviteContents
 import proton.android.pass.data.impl.db.entities.GroupInviteEntity
 import proton.android.pass.data.impl.db.entities.GroupInviteKeyEntity
-import proton.android.pass.data.impl.extensions.toDomain
 import proton.android.pass.data.impl.local.GroupInviteAndKeysEntity
 import proton.android.pass.data.impl.local.LocalGroupInviteDataSource
 import proton.android.pass.data.impl.remote.groups.RemoteGroupInviteDataSource
@@ -48,10 +47,11 @@ import proton.android.pass.domain.PendingInvite
 import proton.android.pass.domain.ShareType
 import proton.android.pass.domain.events.EventToken
 import proton.android.pass.log.api.PassLogger
-import proton_pass_vault_v1.VaultV1
+import proton.android.pass.commonrust.api.ItemContentSerializer
 import javax.inject.Inject
 
 class GroupInviteRepositoryImpl @Inject constructor(
+    private val itemContentSerializer: ItemContentSerializer,
     private val remoteGroupInviteDataSource: RemoteGroupInviteDataSource,
     private val localGroupInviteDataSource: LocalGroupInviteDataSource,
     private val reencryptGroupInviteContents: ReencryptGroupInviteContents,
@@ -208,7 +208,7 @@ class GroupInviteRepositoryImpl @Inject constructor(
 
             ShareType.Vault -> {
                 val content = encryptionContext.decrypt(encryptedContent)
-                val decoded = VaultV1.Vault.parseFrom(content)
+                val decoded = itemContentSerializer.deserializeVault(content)
 
                 PendingInvite.GroupVault(
                     inviteId = InviteId(inviteId),
@@ -218,8 +218,8 @@ class GroupInviteRepositoryImpl @Inject constructor(
                     memberCount = memberCount,
                     itemCount = itemCount,
                     name = decoded.name,
-                    icon = decoded.display.icon.toDomain(),
-                    color = decoded.display.color.toDomain(),
+                    icon = decoded.icon,
+                    color = decoded.color,
                     invitedGroupId = invitedGroupId,
                     invitedEmail = invitedEmail,
                     inviterUserId = inviterUserId,

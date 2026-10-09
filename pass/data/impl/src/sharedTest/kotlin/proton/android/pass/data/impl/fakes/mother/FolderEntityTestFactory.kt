@@ -21,7 +21,7 @@ package proton.android.pass.data.impl.fakes.mother
 import me.proton.core.crypto.common.keystore.EncryptedByteArray
 import proton.android.pass.crypto.fakes.context.FakeEncryptionContext
 import proton.android.pass.data.impl.db.entities.FolderEntity
-import proton_pass_folder_v1.FolderV1
+import proton.android.pass.commonrust.fakes.FakeItemContentSerializer
 
 object FolderEntityTestFactory {
 
@@ -51,7 +51,8 @@ object FolderEntityTestFactory {
     )
 
     private fun encryptFolderName(name: String): EncryptedByteArray {
-        val proto = FolderV1.Folder.newBuilder().setName(name).build()
-        return FakeEncryptionContext.encrypt(proto.toByteArray())
+        val serializer = FakeItemContentSerializer()
+        val bytes = serializer.serializeFolder(name)
+        return FakeEncryptionContext.encrypt(bytes)
     }
 }

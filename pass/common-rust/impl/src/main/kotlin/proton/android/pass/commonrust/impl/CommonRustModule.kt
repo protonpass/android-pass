@@ -32,6 +32,7 @@ import proton.android.pass.commonrust.api.CommonLibraryVersionChecker
 import proton.android.pass.commonrust.api.DomainManager
 import proton.android.pass.commonrust.api.EmailValidator
 import proton.android.pass.commonrust.api.FileTypeDetector
+import proton.android.pass.commonrust.api.ItemContentSerializer
 import proton.android.pass.commonrust.api.NewUserInviteSignatureBodyCreator
 import proton.android.pass.commonrust.api.PasswordScorer
 import proton.android.pass.commonrust.api.SshKeyGenerator
@@ -89,6 +90,9 @@ abstract class CommonRustModule {
 
     @[Binds Singleton]
     abstract fun bindSshKeyGenerator(impl: SshKeyGeneratorImpl): SshKeyGenerator
+
+    @[Binds Singleton]
+    abstract fun bindItemContentSerializer(impl: ItemContentSerializerImpl): ItemContentSerializer
 
     companion object {
 

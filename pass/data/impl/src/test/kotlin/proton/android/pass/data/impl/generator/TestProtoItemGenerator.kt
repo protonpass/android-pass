@@ -18,20 +18,12 @@
 
 package proton.android.pass.data.impl.generator
 
-import proton_pass_item_v1.ItemV1
+import proton.android.pass.domain.ItemContents
 
 object TestProtoItemGenerator {
-    fun generate(name: String = "name", note: String = "note"): ItemV1.Item = ItemV1.Item.newBuilder()
-        .setMetadata(
-            ItemV1.Metadata.newBuilder()
-                .setName(name)
-                .setNote(note)
-                .build()
-        )
-        .setContent(
-            ItemV1.Content.newBuilder()
-                .setNote(ItemV1.ItemNote.newBuilder().build())
-                .build()
-        )
-        .build()
+    fun generate(name: String = "name", note: String = "note"): ItemContents = ItemContents.Note(
+        title = name,
+        note = note,
+        customFields = emptyList()
+    )
 }

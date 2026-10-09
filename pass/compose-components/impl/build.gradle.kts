@@ -67,7 +67,6 @@ dependencies {
     implementation(projects.pass.navigation.api)
     implementation(projects.pass.notifications.api)
     implementation(projects.pass.preferences.api)
-    implementation(projects.pass.protos)
 
     debugImplementation(libs.showkase)
     kspDebug(libs.showkaseProcessor)

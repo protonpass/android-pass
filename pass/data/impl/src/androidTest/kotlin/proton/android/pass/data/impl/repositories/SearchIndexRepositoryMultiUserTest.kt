@@ -32,6 +32,7 @@ import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import proton.android.pass.common.fakes.FakeAppDispatchers
+import proton.android.pass.commonrust.fakes.FakeItemContentSerializer
 import proton.android.pass.crypto.fakes.context.FakeEncryptionContextProvider
 import proton.android.pass.data.api.repositories.ItemTypeCounts
 import proton.android.pass.data.api.repositories.SearchSortBy
@@ -77,7 +78,8 @@ class SearchIndexRepositoryMultiUserTest {
             encryptionContextProvider = FakeEncryptionContextProvider(),
             internalSettingsRepository = FakeInternalSettingsRepository(),
             appDispatchers = FakeAppDispatchers(),
-            localFolderDataSource = FakeLocalFolderDataSource()
+            localFolderDataSource = FakeLocalFolderDataSource(),
+            itemContentSerializer = FakeItemContentSerializer()
         )
     }
 

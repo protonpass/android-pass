@@ -22,6 +22,7 @@ import com.google.common.truth.Truth.assertThat
 import me.proton.core.crypto.common.keystore.EncryptedByteArray
 import org.junit.Before
 import org.junit.Test
+import proton.android.pass.commonrust.fakes.FakeItemContentSerializer
 import proton.android.pass.crypto.api.Base64
 import proton.android.pass.crypto.api.EncryptionKey
 import proton.android.pass.crypto.api.context.EncryptionTag
@@ -35,7 +36,8 @@ import proton.android.pass.test.domain.ShareKeyTestFactory
 internal class MigrateItemsImplTest {
 
     private val encryptionContextProvider = FakeEncryptionContextProvider()
-    private val createItem = CreateItemImpl(encryptionContextProvider)
+    private val itemContentSerializer = FakeItemContentSerializer()
+    private val createItem = CreateItemImpl(encryptionContextProvider, itemContentSerializer)
 
     private lateinit var migrateItem: MigrateItem
 

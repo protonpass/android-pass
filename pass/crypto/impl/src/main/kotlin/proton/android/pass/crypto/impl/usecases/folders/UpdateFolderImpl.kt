@@ -18,29 +18,40 @@
 
 package proton.android.pass.crypto.impl.usecases.folders
 
+import me.proton.core.crypto.common.keystore.EncryptedByteArray
 import proton.android.pass.crypto.api.Base64
 import proton.android.pass.crypto.api.EncryptionKey
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.crypto.api.context.EncryptionTag
 import proton.android.pass.crypto.api.usecases.folders.EncryptedUpdateFolder
 import proton.android.pass.crypto.api.usecases.folders.UpdateFolder
+import proton.android.pass.commonrust.api.ItemContentSerializer
 import proton.android.pass.crypto.impl.Constants.FOLDER_CONTENT_FORMAT_VERSION
-import proton_pass_folder_v1.FolderV1
 import javax.inject.Inject
 
 class UpdateFolderImpl @Inject constructor(
-    private val encryptionContextProvider: EncryptionContextProvider
+    private val encryptionContextProvider: EncryptionContextProvider,
+    private val itemContentSerializer: ItemContentSerializer
 ) : UpdateFolder {
 
     override fun update(
         folderKey: EncryptionKey,
         keyRotation: Long,
+        originalEncryptedContent: String?,
         folderName: String
     ): EncryptedUpdateFolder {
-        val folder = FolderV1.Folder.newBuilder()
-            .setName(folderName)
-            .build()
-        val serializedFolder = folder.toByteArray()
+        val originalContent = originalEncryptedContent?.let { encryptedContent ->
+            encryptionContextProvider.withEncryptionContext(folderKey.clone()) {
+                decrypt(EncryptedByteArray(Base64.decodeBase64(encryptedContent)), EncryptionTag.FolderContent)
+            }
+        }
+        val serializedFolder = try {
+            originalContent
+                ?.let { itemContentSerializer.performFolderUpdate(it, folderName) }
+                ?: itemContentSerializer.serializeFolder(folderName)
+        } finally {
+            originalContent?.fill(0)
+        }
 
         val encryptedContents = encryptionContextProvider.withEncryptionContext(folderKey.clone()) {
             encrypt(serializedFolder, EncryptionTag.FolderContent)

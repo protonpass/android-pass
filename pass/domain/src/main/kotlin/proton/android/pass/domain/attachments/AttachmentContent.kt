@@ -16,22 +16,9 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+package proton.android.pass.domain.attachments
 
-plugins {
-    id("org.jetbrains.kotlin.jvm")
-}
-
-tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach {
-    compilerOptions {
-        jvmTarget.set(JvmTarget.JVM_17)
-    }
-}
-
-dependencies {
-    implementation(libs.kotlinx.datetime)
-
-    implementation(projects.pass.crypto.api)
-    implementation(projects.pass.domain)
-    implementation(projects.pass.protos)
-}
+data class AttachmentContent(
+    val name: String,
+    val mimeType: String
+)

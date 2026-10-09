@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2025-2026 Proton AG
+ * Copyright (c) 2026 Proton AG
  * This file is part of Proton AG and Proton Pass.
  *
  * Proton Pass is free software: you can redistribute it and/or modify
@@ -24,23 +24,24 @@ import org.junit.Before
 import org.junit.Test
 import proton.android.pass.crypto.api.Base64
 import proton.android.pass.crypto.api.EncryptionKey
+import proton.android.pass.commonrust.impl.ItemContentSerializerImpl
 import proton.android.pass.crypto.fakes.context.FakeEncryptionContextProvider
 import proton.android.pass.test.domain.ShareKeyTestFactory
-import proton_pass_folder_v1.FolderV1
 
 class CreateFolderImplTest {
 
     private lateinit var encryptionContextProvider: FakeEncryptionContextProvider
     private lateinit var createFolder: CreateFolderImpl
+    private val itemContentSerializer = ItemContentSerializerImpl()
 
     @Before
     fun setup() {
         encryptionContextProvider = FakeEncryptionContextProvider()
-        createFolder = CreateFolderImpl(encryptionContextProvider)
+        createFolder = CreateFolderImpl(encryptionContextProvider, itemContentSerializer)
     }
 
     @Test
-    fun `create folder returns encrypted folder data`() {
+    fun createFolderReturnsEncryptedFolderData() {
         val (shareKey, _) = ShareKeyTestFactory.create()
         val folderName = "My Folder"
 
@@ -60,7 +61,7 @@ class CreateFolderImplTest {
     }
 
     @Test
-    fun `create folder encrypts folder name correctly`() {
+    fun createFolderEncryptsFolderNameCorrectly() {
         val (shareKey, _) = ShareKeyTestFactory.create()
         val folderName = "Test Folder"
 
@@ -76,14 +77,14 @@ class CreateFolderImplTest {
             decrypt(EncryptedByteArray(encryptedBytes))
         }
 
-        val folder = FolderV1.Folder.parseFrom(decryptedContent)
-        assertThat(folder.name).isEqualTo(folderName)
+        val folder = itemContentSerializer.deserializeFolder(decryptedContent)
+        assertThat(folder).isEqualTo(folderName)
 
         parentKey.clear()
     }
 
     @Test
-    fun `create folder generates unique folder key`() {
+    fun createFolderGeneratesUniqueFolderKey() {
         val (shareKey, _) = ShareKeyTestFactory.create()
         val folderName = "Folder"
 
@@ -101,7 +102,7 @@ class CreateFolderImplTest {
     }
 
     @Test
-    fun `create folder encrypts folder key with parent key`() {
+    fun createFolderEncryptsFolderKeyWithParentKey() {
         val (shareKey, _) = ShareKeyTestFactory.create()
         val folderName = "Encrypted Folder"
 
@@ -123,7 +124,7 @@ class CreateFolderImplTest {
     }
 
     @Test
-    fun `create folder handles special characters in name`() {
+    fun createFolderHandlesSpecialCharactersInName() {
         val (shareKey, _) = ShareKeyTestFactory.create()
         val folderName = "Folder with émojis 🎉 and spëcial characters"
 
@@ -139,8 +140,8 @@ class CreateFolderImplTest {
             decrypt(EncryptedByteArray(encryptedBytes))
         }
 
-        val folder = FolderV1.Folder.parseFrom(decryptedContent)
-        assertThat(folder.name).isEqualTo(folderName)
+        val folder = itemContentSerializer.deserializeFolder(decryptedContent)
+        assertThat(folder).isEqualTo(folderName)
 
         parentKey.clear()
     }

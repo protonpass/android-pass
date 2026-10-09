@@ -26,11 +26,10 @@ import me.proton.core.crypto.common.keystore.PlainByteArray
 import me.proton.core.crypto.common.keystore.encrypt
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.account.fakes.FakeKeyStoreCrypto
+import proton.android.pass.commonrust.fakes.FakeItemContentSerializer
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.toOption
 import proton.android.pass.crypto.fakes.context.FakeEncryptionContext
-import proton.android.pass.datamodels.api.fromParsed
-import proton.android.pass.datamodels.api.serializeToProto
 import proton.android.pass.domain.AddressDetailsContent
 import proton.android.pass.domain.ContactDetailsContent
 import proton.android.pass.domain.CreditCardType
@@ -52,6 +51,8 @@ import java.util.UUID
 import kotlin.random.Random
 
 object ItemTestFactory {
+
+    private val itemContentSerializer = FakeItemContentSerializer()
 
     fun create(
         itemType: ItemType = ItemType.Password,
@@ -98,20 +99,22 @@ object ItemTestFactory {
         itemContents: ItemContents
     ): Item {
         val now = Clock.System.now()
-        val asProto = itemContents.serializeToProto(
-            itemUuid = "123",
-            encryptionContext = FakeEncryptionContext
+        val serialized = itemContentSerializer.serializeItem(
+            contents = itemContents,
+            encryptionContext = FakeEncryptionContext,
+            itemUuid = "123"
         )
+        val parsed = itemContentSerializer.deserializeItem(serialized, FakeEncryptionContext, aliasEmail)
         return Item(
             id = itemId,
             userId = UserId("user-id"),
             itemUuid = "",
             revision = 1,
             shareId = shareId,
-            itemType = ItemType.fromParsed(FakeEncryptionContext, asProto, aliasEmail),
+            itemType = parsed.itemType,
             title = FakeKeyStoreCrypto.encrypt(itemContents.title),
             note = FakeKeyStoreCrypto.encrypt(itemContents.note),
-            content = FakeKeyStoreCrypto.encrypt(PlainByteArray(asProto.toByteArray())),
+            content = FakeKeyStoreCrypto.encrypt(PlainByteArray(serialized)),
             packageInfoSet = emptySet(),
             state = ItemState.Active.value,
             modificationTime = now,

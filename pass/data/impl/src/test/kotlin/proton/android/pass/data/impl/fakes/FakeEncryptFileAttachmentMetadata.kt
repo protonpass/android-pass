@@ -18,14 +18,17 @@
 
 package proton.android.pass.data.impl.fakes
 
-import FileV1
+import proton.android.pass.commonrust.fakes.FakeItemContentSerializer
 import proton.android.pass.crypto.api.EncryptionKey
 import proton.android.pass.data.impl.crypto.attachment.EncryptFileAttachmentMetadata
 import proton.android.pass.data.impl.crypto.attachment.EncryptedFileAttachmentMetadata
+import proton.android.pass.domain.attachments.AttachmentContent
 
 class FakeEncryptFileAttachmentMetadata : EncryptFileAttachmentMetadata {
 
-    override suspend fun encrypt(metadata: FileV1.FileMetadata): EncryptedFileAttachmentMetadata =
+    private val itemContentSerializer = FakeItemContentSerializer()
+
+    override suspend fun encrypt(metadata: AttachmentContent): EncryptedFileAttachmentMetadata =
         EncryptedFileAttachmentMetadata(
             encryptedMetadata = "",
             fileKey = EncryptionKey(ByteArray(32)),
@@ -34,11 +37,25 @@ class FakeEncryptFileAttachmentMetadata : EncryptFileAttachmentMetadata {
 
     override suspend fun update(
         fileKey: EncryptionKey,
-        metadata: FileV1.FileMetadata,
+        metadata: AttachmentContent,
         encryptionVersion: Int
     ): EncryptedFileAttachmentMetadata = EncryptedFileAttachmentMetadata(
         encryptedMetadata = "",
         fileKey = fileKey,
         encryptionVersion = encryptionVersion
     )
+
+    override suspend fun rename(
+        fileKey: EncryptionKey,
+        decryptedMetadata: ByteArray,
+        name: String,
+        encryptionVersion: Int
+    ): EncryptedFileAttachmentMetadata = EncryptedFileAttachmentMetadata(
+        encryptedMetadata = "",
+        fileKey = fileKey,
+        encryptionVersion = encryptionVersion
+    )
+
+    override fun deserialize(decryptedMetadata: ByteArray): AttachmentContent =
+        itemContentSerializer.deserializeAttachmentContent(decryptedMetadata)
 }

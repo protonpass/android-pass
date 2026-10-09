@@ -21,6 +21,8 @@ plugins {
 }   
 
 dependencies {
+    api(projects.pass.crypto.api)
+
     implementation(projects.pass.common.api)
-    implementation(projects.pass.domain)
+    api(projects.pass.domain)
 }

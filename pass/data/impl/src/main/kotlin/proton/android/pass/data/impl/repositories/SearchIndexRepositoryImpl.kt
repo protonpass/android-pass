@@ -37,6 +37,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.AppDispatchers
+import proton.android.pass.commonrust.api.ItemContentSerializer
 import proton.android.pass.crypto.api.context.EncryptionContext
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.repositories.IndexingStatus
@@ -66,6 +67,7 @@ import javax.inject.Singleton
 @Suppress("LargeClass", "TooManyFunctions")
 @Singleton
 class SearchIndexRepositoryImpl @Inject constructor(
+    private val itemContentSerializer: ItemContentSerializer,
     private val searchInvalidationTracker: InvalidationTracker,
     private val searchDao: SearchDao,
     private val localItemDataSource: LocalItemDataSource,
@@ -324,7 +326,7 @@ class SearchIndexRepositoryImpl @Inject constructor(
         val (title, subtitle) = with(encryptionContext) {
             val decryptedTitle = decrypt(item.encryptedTitle)
             val decryptedNote = decrypt(item.encryptedNote)
-            val searchableContent = SearchableContentExtractor.extract(item, this)
+            val searchableContent = SearchableContentExtractor.extract(item, this, itemContentSerializer)
             val fullSubtitle = listOfNotNull(
                 decryptedNote.takeIf { it.isNotBlank() },
                 searchableContent.takeIf { it.isNotBlank() }
@@ -531,6 +533,7 @@ class SearchIndexRepositoryImpl @Inject constructor(
         config = pagingConfig,
         pagingSourceFactory = {
             SearchItemsPagingSource(
+                itemContentSerializer = itemContentSerializer,
                 searchDbInvalidationTracker = searchInvalidationTracker,
                 searchDao = searchDao,
                 localItemDataSource = localItemDataSource,

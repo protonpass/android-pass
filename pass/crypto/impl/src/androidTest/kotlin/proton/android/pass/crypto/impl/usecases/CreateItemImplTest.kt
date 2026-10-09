@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023-2026 Proton AG
+ * Copyright (c) 2026 Proton AG
  * This file is part of Proton AG and Proton Pass.
  *
  * Proton Pass is free software: you can redistribute it and/or modify
@@ -20,18 +20,19 @@ package proton.android.pass.crypto.impl.usecases
 
 import me.proton.core.crypto.common.keystore.EncryptedByteArray
 import org.junit.Test
+import proton.android.pass.commonrust.impl.ItemContentSerializerImpl
 import proton.android.pass.crypto.api.Base64
 import proton.android.pass.crypto.fakes.context.FakeEncryptionContextProvider
 import proton.android.pass.crypto.impl.Constants
 import proton.android.pass.domain.ItemContents
 import proton.android.pass.test.StringTestFactory
 import proton.android.pass.test.domain.ShareKeyTestFactory
-import proton_pass_item_v1.ItemV1
 import kotlin.test.assertEquals
 
 class CreateItemImplTest {
 
     private val encryptionContextProvider = FakeEncryptionContextProvider()
+    private val itemContentSerializer = ItemContentSerializerImpl()
 
     @Test
     fun testCanCreateItem() {
@@ -42,7 +43,7 @@ class CreateItemImplTest {
         )
         val (shareKey, decryptedShareKey) = ShareKeyTestFactory.create()
 
-        val instance = CreateItemImpl(encryptionContextProvider)
+        val instance = CreateItemImpl(encryptionContextProvider, itemContentSerializer)
         val request = instance.create(shareKey, contents, isDomainMatchingEnabled = false)
 
         assertEquals(request.contentFormatVersion, Constants.ITEM_CFV_WITHOUT_URL_MATCHING)
@@ -51,9 +52,11 @@ class CreateItemImplTest {
         val decryptedContent = encryptionContextProvider.withEncryptionContext(decryptedShareKey) {
             decrypt(EncryptedByteArray(Base64.decodeBase64(request.content)))
         }
-        val parsed = ItemV1.Item.parseFrom(decryptedContent)
-        assertEquals(parsed.metadata.name, contents.title)
-        assertEquals(parsed.metadata.note, contents.note)
+        val parsed = encryptionContextProvider.withEncryptionContext {
+            itemContentSerializer.deserializeItem(decryptedContent, this)
+        }
+        assertEquals(parsed.title, contents.title)
+        assertEquals(parsed.note, contents.note)
     }
 
     @Test
@@ -64,7 +67,7 @@ class CreateItemImplTest {
             customFields = emptyList()
         )
         val (shareKey, _) = ShareKeyTestFactory.create()
-        val instance = CreateItemImpl(encryptionContextProvider)
+        val instance = CreateItemImpl(encryptionContextProvider, itemContentSerializer)
 
         val v7Request = instance.create(
             parentKey = shareKey,

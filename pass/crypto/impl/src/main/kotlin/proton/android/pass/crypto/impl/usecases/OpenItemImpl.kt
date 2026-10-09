@@ -21,6 +21,7 @@ package proton.android.pass.crypto.impl.usecases
 import kotlinx.datetime.Instant
 import me.proton.core.crypto.common.keystore.EncryptedByteArray
 import me.proton.core.domain.entity.UserId
+import proton.android.pass.commonrust.api.ItemContentSerializer
 import proton.android.pass.common.api.toOption
 import proton.android.pass.crypto.api.Base64
 import proton.android.pass.crypto.api.EncryptionKey
@@ -32,26 +33,21 @@ import proton.android.pass.crypto.api.usecases.EncryptedItemRevision
 import proton.android.pass.crypto.api.usecases.OpenItem
 import proton.android.pass.crypto.api.usecases.OpenItemOutput
 import proton.android.pass.crypto.impl.Constants.ITEM_CFV
-import proton.android.pass.datamodels.api.fromParsed
 import proton.android.pass.domain.FolderId
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemFlags
 import proton.android.pass.domain.ItemId
-import proton.android.pass.domain.ItemType
 import proton.android.pass.domain.Share
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.ShareType
-import proton.android.pass.domain.entity.AppName
-import proton.android.pass.domain.entity.PackageInfo
-import proton.android.pass.domain.entity.PackageName
 import proton.android.pass.domain.key.FolderKey
 import proton.android.pass.domain.key.ShareKey
 import proton.android.pass.log.api.PassLogger
-import proton_pass_item_v1.ItemV1
 import javax.inject.Inject
 
 class OpenItemImpl @Inject constructor(
-    private val encryptionContextProvider: EncryptionContextProvider
+    private val encryptionContextProvider: EncryptionContextProvider,
+    private val itemContentSerializer: ItemContentSerializer
 ) : OpenItem {
 
     override fun open(
@@ -133,12 +129,10 @@ class OpenItemImpl @Inject constructor(
             PassLogger.w(TAG, "Unknown Item ContentFormatVersion: ${response.contentFormatVersion}")
         }
 
-        val decoded = ItemV1.Item.parseFrom(decryptedContents)
         return OpenItemOutput(
             item = createDomainObject(
                 response = response,
                 shareId = shareId,
-                decoded = decoded,
                 decryptedContents = decryptedContents,
                 encryptionContext = encryptionContext,
                 userId = share.userId
@@ -172,7 +166,6 @@ class OpenItemImpl @Inject constructor(
             item = createDomainObject(
                 response = response,
                 shareId = shareId,
-                decoded = ItemV1.Item.parseFrom(decryptedContents),
                 decryptedContents = decryptedContents,
                 encryptionContext = encryptionContext,
                 userId = userId
@@ -181,29 +174,30 @@ class OpenItemImpl @Inject constructor(
         )
     }
 
-    @Suppress("LongParameterList")
     private fun createDomainObject(
         response: EncryptedItemRevision,
         shareId: ShareId,
         userId: UserId,
-        decoded: ItemV1.Item,
         decryptedContents: ByteArray,
         encryptionContext: EncryptionContext
     ): Item = with(encryptionContext) {
+        val parsed = itemContentSerializer.deserializeItem(
+            bytes = decryptedContents,
+            encryptionContext = this,
+            aliasEmail = response.aliasEmail
+        )
         Item(
             id = ItemId(response.itemId),
             userId = userId,
-            itemUuid = decoded.metadata.itemUuid,
+            itemUuid = parsed.itemUuid,
             revision = response.revision,
             shareId = shareId,
             folderId = response.folderId?.let(::FolderId),
-            title = encrypt(decoded.metadata.name),
-            note = encrypt(decoded.metadata.note),
+            title = encrypt(parsed.title),
+            note = encrypt(parsed.note),
             content = encrypt(decryptedContents),
-            itemType = ItemType.fromParsed(this, decoded, aliasEmail = response.aliasEmail),
-            packageInfoSet = decoded.platformSpecific.android.allowedAppsList
-                .map { PackageInfo(PackageName(it.packageName), AppName(it.appName)) }
-                .toSet(),
+            itemType = parsed.itemType,
+            packageInfoSet = parsed.packageInfoSet,
             state = response.state,
             createTime = Instant.fromEpochSeconds(response.createTime),
             modificationTime = Instant.fromEpochSeconds(response.modifyTime),

@@ -19,6 +19,7 @@
 package proton.android.pass.data.impl.migration.itemhastotp
 
 import proton.android.pass.common.api.safeRunCatching
+import proton.android.pass.commonrust.api.ItemContentSerializer
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.impl.db.entities.ItemEntity
 import proton.android.pass.data.impl.extensions.hasTotp
@@ -36,6 +37,7 @@ interface ItemHasTotpMigrator : Migrator {
 
 @Singleton
 class ItemHasTotpMigratorImpl @Inject constructor(
+    private val itemContentSerializer: ItemContentSerializer,
     private val localItemDataSource: LocalItemDataSource,
     private val encryptionContextProvider: EncryptionContextProvider
 ) : ItemHasTotpMigrator {
@@ -55,7 +57,7 @@ class ItemHasTotpMigratorImpl @Inject constructor(
     private suspend fun migrateItems(items: List<ItemEntity>) {
         val updated = encryptionContextProvider.withEncryptionContext {
             items.map { entity ->
-                val asItem = entity.toDomain(this@withEncryptionContext)
+                val asItem = entity.toDomain(this@withEncryptionContext, itemContentSerializer)
                 val hasTotp = asItem.hasTotp(this@withEncryptionContext)
                 entity.copy(hasTotp = hasTotp)
             }

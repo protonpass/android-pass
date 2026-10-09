@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2025-2026 Proton AG
+ * Copyright (c) 2026 Proton AG
  * This file is part of Proton AG and Proton Pass.
  *
  * Proton Pass is free software: you can redistribute it and/or modify
@@ -26,32 +26,31 @@ import proton.android.pass.crypto.api.Base64
 import proton.android.pass.crypto.api.EncryptionKey
 import proton.android.pass.crypto.api.usecases.folders.EncryptedFolderData
 import proton.android.pass.crypto.fakes.context.FakeEncryptionContextProvider
+import proton.android.pass.crypto.impl.usecases.UnknownProtobufField
 import proton.android.pass.domain.FolderId
-import proton_pass_folder_v1.FolderV1
+import proton.android.pass.commonrust.impl.ItemContentSerializerImpl
 
 class OpenFolderImplTest {
 
     private lateinit var encryptionContextProvider: FakeEncryptionContextProvider
     private lateinit var openFolder: OpenFolderImpl
+    private val itemContentSerializer = ItemContentSerializerImpl()
 
     @Before
     fun setup() {
         encryptionContextProvider = FakeEncryptionContextProvider()
-        openFolder = OpenFolderImpl(encryptionContextProvider)
+        openFolder = OpenFolderImpl(encryptionContextProvider, itemContentSerializer)
     }
 
     @Test
-    fun `open folder decrypts folder name correctly`() = runTest {
+    fun openFolderDecryptsFolderNameCorrectly() = runTest {
         val folderName = "Test Folder"
         val folderKey = EncryptionKey.generate()
         val parentKey = EncryptionKey.generate()
 
         // Encrypt folder content
-        val folder = FolderV1.Folder.newBuilder()
-            .setName(folderName)
-            .build()
         val encryptedContent = encryptionContextProvider.withEncryptionContext(folderKey.clone()) {
-            encrypt(folder.toByteArray())
+            encrypt(itemContentSerializer.serializeFolder(folderName))
         }
 
         // Encrypt folder key with parent key
@@ -74,16 +73,13 @@ class OpenFolderImplTest {
     }
 
     @Test
-    fun `open folder returns re-encrypted folder key`() = runTest {
+    fun openFolderReturnsReEncryptedFolderKey() = runTest {
         val folderName = "Folder"
         val folderKey = EncryptionKey.generate()
         val parentKey = EncryptionKey.generate()
 
-        val folder = FolderV1.Folder.newBuilder()
-            .setName(folderName)
-            .build()
         val encryptedContent = encryptionContextProvider.withEncryptionContext(folderKey.clone()) {
-            encrypt(folder.toByteArray())
+            encrypt(itemContentSerializer.serializeFolder(folderName))
         }
 
         val encryptedFolderKey = encryptionContextProvider.withEncryptionContext(parentKey.clone()) {
@@ -107,16 +103,13 @@ class OpenFolderImplTest {
     }
 
     @Test
-    fun `open folder handles special characters in name`() = runTest {
+    fun openFolderHandlesSpecialCharactersInName() = runTest {
         val folderName = "Folder with 特殊字符 and émojis 🎉"
         val folderKey = EncryptionKey.generate()
         val parentKey = EncryptionKey.generate()
 
-        val folder = FolderV1.Folder.newBuilder()
-            .setName(folderName)
-            .build()
         val encryptedContent = encryptionContextProvider.withEncryptionContext(folderKey.clone()) {
-            encrypt(folder.toByteArray())
+            encrypt(itemContentSerializer.serializeFolder(folderName))
         }
 
         val encryptedFolderKey = encryptionContextProvider.withEncryptionContext(parentKey.clone()) {
@@ -138,16 +131,13 @@ class OpenFolderImplTest {
     }
 
     @Test
-    fun `open folder with nested parent folder`() = runTest {
+    fun openFolderWithNestedParentFolder() = runTest {
         val folderName = "Nested Folder"
         val folderKey = EncryptionKey.generate()
         val parentKey = EncryptionKey.generate()
 
-        val folder = FolderV1.Folder.newBuilder()
-            .setName(folderName)
-            .build()
         val encryptedContent = encryptionContextProvider.withEncryptionContext(folderKey.clone()) {
-            encrypt(folder.toByteArray())
+            encrypt(itemContentSerializer.serializeFolder(folderName))
         }
 
         val encryptedFolderKey = encryptionContextProvider.withEncryptionContext(parentKey.clone()) {
@@ -170,16 +160,13 @@ class OpenFolderImplTest {
     }
 
     @Test
-    fun `open folder decrypts empty folder name`() = runTest {
+    fun openFolderDecryptsEmptyFolderName() = runTest {
         val folderName = ""
         val folderKey = EncryptionKey.generate()
         val parentKey = EncryptionKey.generate()
 
-        val folder = FolderV1.Folder.newBuilder()
-            .setName(folderName)
-            .build()
         val encryptedContent = encryptionContextProvider.withEncryptionContext(folderKey.clone()) {
-            encrypt(folder.toByteArray())
+            encrypt(itemContentSerializer.serializeFolder(folderName))
         }
 
         val encryptedFolderKey = encryptionContextProvider.withEncryptionContext(parentKey.clone()) {
@@ -198,5 +185,36 @@ class OpenFolderImplTest {
         val result = openFolder.open(encryptedFolderData, parentKey)
 
         assertThat(result.folderName).isEmpty()
+    }
+
+    @Test
+    fun openFolderReturnsOriginalContentIntactWithUnknownFields() = runTest {
+        val folderName = "Test Folder"
+        val folderKey = EncryptionKey.generate()
+        val parentKey = EncryptionKey.generate()
+
+        val serializedFolder = itemContentSerializer.serializeFolder(folderName) + UnknownProtobufField.bytes
+        val encryptedContent = encryptionContextProvider.withEncryptionContext(folderKey.clone()) {
+            encrypt(serializedFolder)
+        }
+
+        val encryptedFolderKey = encryptionContextProvider.withEncryptionContext(parentKey.clone()) {
+            encrypt(folderKey.value())
+        }
+
+        val encryptedFolderData = EncryptedFolderData(
+            folderId = FolderId("folder-id"),
+            parentFolderId = null,
+            keyRotation = 1L,
+            contentFormatVersion = 1,
+            content = Base64.encodeBase64String(encryptedContent.array),
+            folderKey = Base64.encodeBase64String(encryptedFolderKey.array)
+        )
+
+        val result = openFolder.open(encryptedFolderData, parentKey)
+
+        assertThat(result.folderName).isEqualTo(folderName)
+        assertThat(result.originalContent).isEqualTo(serializedFolder)
+        assertThat(UnknownProtobufField.isContainedIn(result.originalContent)).isTrue()
     }
 }

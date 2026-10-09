@@ -57,10 +57,9 @@ dependencies {
     implementation(libs.core.user)
     implementation(libs.kotlinx.serialization.json)
 
-    implementation(projects.pass.dataModels.api)
+    implementation(projects.pass.commonRust.api)
     implementation(projects.pass.domain)
     implementation(projects.pass.log.api)
-    implementation(projects.pass.protos)
 
     implementation(libs.dagger.hilt.android)
     ksp(libs.dagger.hilt.android.compiler)
@@ -71,15 +70,18 @@ dependencies {
     testImplementation(libs.truth)
     testImplementation(libs.coroutines.test)
     testImplementation(projects.pass.common.fakes)
+    testImplementation(projects.pass.commonRust.fakes)
     testImplementation(projects.pass.commonTest)
     testImplementation(projects.pass.crypto.fakes)
     testImplementation(projects.pass.data.fakes)
 
+    androidTestImplementation(projects.pass.commonRust.impl)
     androidTestImplementation(projects.pass.commonTest)
     androidTestImplementation(projects.pass.crypto.fakes)
     androidTestImplementation(projects.pass.data.fakes)
     androidTestImplementation(projects.pass.account.fakes)
     androidTestImplementation(libs.core.crypto)
+    androidTestImplementation(libs.truth)
 
     androidTestImplementation(libs.androidx.compose.ui.test.junit)
     androidTestImplementation(libs.androidx.test.core)

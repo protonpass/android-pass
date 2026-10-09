@@ -26,7 +26,6 @@ import proton.android.pass.crypto.api.context.EncryptionTag
 import proton.android.pass.crypto.api.usecases.EncryptedUpdateItemRequest
 import proton.android.pass.crypto.api.usecases.UpdateItem
 import proton.android.pass.domain.key.ItemKey
-import proton_pass_item_v1.ItemV1
 import javax.inject.Inject
 
 class UpdateItemImpl @Inject constructor(
@@ -35,7 +34,7 @@ class UpdateItemImpl @Inject constructor(
 
     override fun createRequest(
         itemKey: ItemKey,
-        itemContent: ItemV1.Item,
+        itemContent: ByteArray,
         lastRevision: Long,
         isDomainMatchingEnabled: Boolean
     ): EncryptedUpdateItemRequest {
@@ -44,13 +43,12 @@ class UpdateItemImpl @Inject constructor(
         } else {
             Constants.ITEM_CFV_WITHOUT_URL_MATCHING
         }
-        val serializedItem = itemContent.toByteArray()
         val decryptedItemKey = encryptionContextProvider.withEncryptionContext {
             EncryptionKey(decrypt(itemKey.key))
         }
 
         val encryptedContents = encryptionContextProvider.withEncryptionContext(decryptedItemKey) {
-            encrypt(serializedItem, EncryptionTag.ItemContent)
+            encrypt(itemContent, EncryptionTag.ItemContent)
         }
 
         return EncryptedUpdateItemRequest(

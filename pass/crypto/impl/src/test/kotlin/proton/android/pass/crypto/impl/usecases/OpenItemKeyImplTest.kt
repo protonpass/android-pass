@@ -93,7 +93,7 @@ class OpenItemKeyImplTest {
         return ShareKey(
             rotation = rotation,
             key = encryptionContextProvider.withEncryptionContext { encrypt(decodedShareKey) },
-            responseKey = OpenItemImplTest.shareKeyBase64,
+            responseKey = shareKeyBase64,
             createTime = 1664195804,
             isActive = true,
             userKeyId = "userKeyId"
@@ -105,7 +105,7 @@ class OpenItemKeyImplTest {
         return FolderKey(
             rotation = rotation,
             key = encryptionContextProvider.withEncryptionContext { encrypt(decodedShareKey) },
-            responseKey = OpenItemImplTest.shareKeyBase64
+            responseKey = shareKeyBase64
         )
     }
 

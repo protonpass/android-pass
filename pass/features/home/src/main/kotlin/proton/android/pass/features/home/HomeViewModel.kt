@@ -80,6 +80,7 @@ import proton.android.pass.common.api.getOrNull
 import proton.android.pass.common.api.map
 import proton.android.pass.common.api.safeRunCatching
 import proton.android.pass.common.api.toOption
+import proton.android.pass.commonrust.api.ItemContentSerializer
 import proton.android.pass.commonui.api.BrowserUtils
 import proton.android.pass.commonui.api.ClassHolder
 import proton.android.pass.commonui.api.DateFormatUtils
@@ -209,6 +210,7 @@ import javax.inject.Inject
 @Suppress("LongParameterList", "LargeClass", "TooManyFunctions")
 @HiltViewModel
 class HomeViewModel @Inject constructor(
+    private val itemContentSerializer: ItemContentSerializer,
     private val trashItems: TrashItems,
     private val snackbarDispatcher: SnackbarDispatcher,
     private val clipboardManager: ClipboardManager,
@@ -486,7 +488,9 @@ class HomeViewModel @Inject constructor(
                             itemResult.map { list ->
                                 encryptionContextProvider.withEncryptionContextSuspendable {
                                     list.asSequence()
-                                        .map { item -> item.toUiModel(this@withEncryptionContextSuspendable) }
+                                        .map { item ->
+                                            item.toUiModel(this@withEncryptionContextSuspendable, itemContentSerializer)
+                                        }
                                         .toList()
                                 }
                             }
@@ -1772,7 +1776,7 @@ class HomeViewModel @Inject constructor(
                 observeRecentSearchItems(shareId)
                     .map { encryptedItems ->
                         val items = encryptionContextProvider.withEncryptionContext {
-                            encryptedItems.map { it.toUiModel(this) }
+                            encryptedItems.map { it.toUiModel(this, itemContentSerializer) }
                         }
                         if (items.isNotEmpty()) {
                             persistentListOf(GroupedItemList(NoGrouping, items))

@@ -19,7 +19,6 @@
 package proton.android.pass.crypto.api.usecases
 
 import proton.android.pass.domain.key.ItemKey
-import proton_pass_item_v1.ItemV1
 
 data class EncryptedUpdateItemRequest(
     val keyRotation: Long,
@@ -31,7 +30,7 @@ data class EncryptedUpdateItemRequest(
 interface UpdateItem {
     fun createRequest(
         itemKey: ItemKey,
-        itemContent: ItemV1.Item,
+        itemContent: ByteArray,
         lastRevision: Long,
         isDomainMatchingEnabled: Boolean
     ): EncryptedUpdateItemRequest

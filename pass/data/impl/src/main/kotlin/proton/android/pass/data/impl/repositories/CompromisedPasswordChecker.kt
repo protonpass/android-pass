@@ -24,6 +24,7 @@ import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.launch
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.AppDispatchers
+import proton.android.pass.commonrust.api.ItemContentSerializer
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.repositories.CompromisedPasswordRepository
 import proton.android.pass.data.impl.db.entities.ItemEntity
@@ -42,6 +43,7 @@ interface CompromisedPasswordChecker {
 
 @Singleton
 class CompromisedPasswordCheckerImpl @Inject constructor(
+    private val itemContentSerializer: ItemContentSerializer,
     private val encryptionContextProvider: EncryptionContextProvider,
     private val repository: CompromisedPasswordRepository,
     appDispatchers: AppDispatchers
@@ -74,7 +76,7 @@ class CompromisedPasswordCheckerImpl @Inject constructor(
             runCatching {
                 val items = encryptionContextProvider.withEncryptionContextSuspendable {
                     val context = this
-                    userEntities.map { entity -> entity.toDomain(context) }
+                    userEntities.map { entity -> entity.toDomain(context, itemContentSerializer) }
                 }
                 repository.checkNow(UserId(userId), items)
             }.onFailure { error ->

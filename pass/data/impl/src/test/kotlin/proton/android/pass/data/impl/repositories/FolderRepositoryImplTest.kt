@@ -27,6 +27,7 @@ import org.junit.Before
 import org.junit.Test
 import proton.android.pass.common.fakes.FakeAppDispatchers
 import kotlin.test.assertFailsWith
+import proton.android.pass.commonrust.fakes.FakeItemContentSerializer
 import proton.android.pass.crypto.api.Base64
 import proton.android.pass.crypto.fakes.context.FakeEncryptionContext
 import proton.android.pass.crypto.fakes.context.FakeEncryptionContextProvider
@@ -47,7 +48,6 @@ import proton.android.pass.data.impl.remote.RemoteFolderDataSource
 import proton.android.pass.domain.FolderId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.test.domain.ShareKeyTestFactory
-import proton_pass_folder_v1.FolderV1
 
 internal class FolderRepositoryImplTest {
 
@@ -78,6 +78,7 @@ internal class FolderRepositoryImplTest {
         shareKeyRepository = FakeShareKeyRepository()
 
         repository = FolderRepositoryImpl(
+            itemContentSerializer = FakeItemContentSerializer(),
             appDispatchers = FakeAppDispatchers(),
             localFolderDataSource = localFolderDataSource,
             localFolderKeyDataSource = localFolderKeyDataSource,
@@ -1147,13 +1148,15 @@ internal class FolderRepositoryImplTest {
     )
 
     private fun encryptFolderName(name: String): EncryptedByteArray {
-        val proto = FolderV1.Folder.newBuilder().setName(name).build()
-        return FakeEncryptionContext.encrypt(proto.toByteArray())
+        val serializer = FakeItemContentSerializer()
+        val bytes = serializer.serializeFolder(name)
+        return FakeEncryptionContext.encrypt(bytes)
     }
 
     private fun decryptFolderName(content: EncryptedByteArray): String {
+        val serializer = FakeItemContentSerializer()
         val decrypted = FakeEncryptionContext.decrypt(content)
-        return FolderV1.Folder.parseFrom(decrypted).name
+        return serializer.deserializeFolder(decrypted)
     }
 
     private fun encryptedBytes(value: Int): EncryptedByteArray =

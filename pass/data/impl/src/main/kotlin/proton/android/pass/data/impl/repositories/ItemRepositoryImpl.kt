@@ -43,6 +43,7 @@ import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.safeRunCatching
 import proton.android.pass.common.api.transpose
+import proton.android.pass.commonrust.api.ItemContentSerializer
 import proton.android.pass.crypto.api.Base64
 import proton.android.pass.crypto.api.context.EncryptionContext
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
@@ -79,9 +80,6 @@ import proton.android.pass.data.impl.extensions.toDomain
 import proton.android.pass.data.impl.extensions.toEncryptedDomain
 import proton.android.pass.data.impl.extensions.toItemRevision
 import proton.android.pass.data.impl.extensions.toRequest
-import proton.android.pass.data.impl.extensions.with
-import proton.android.pass.data.impl.extensions.withPasskey
-import proton.android.pass.data.impl.extensions.withUrl
 import proton.android.pass.data.impl.local.LocalItemDataSource
 import proton.android.pass.data.impl.remote.RemoteItemDataSource
 import proton.android.pass.data.impl.requests.CreateAliasRequest
@@ -95,7 +93,6 @@ import proton.android.pass.data.impl.requests.TrashItemsRequest
 import proton.android.pass.data.impl.requests.UpdateItemFlagsRequest
 import proton.android.pass.data.impl.responses.TrashItemsResponse
 import proton.android.pass.data.impl.util.TimeUtil
-import proton.android.pass.datamodels.api.serializeToProto
 import proton.android.pass.domain.FolderId
 import proton.android.pass.domain.ITEM_CFV_URL_MATCHING
 import proton.android.pass.domain.Item
@@ -119,11 +116,12 @@ import proton.android.pass.domain.key.InviteKey
 import proton.android.pass.domain.key.ShareKey
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
-import proton_pass_item_v1.ItemV1
+
 import javax.inject.Inject
 
 @Suppress("LongParameterList", "TooManyFunctions", "LargeClass")
 class ItemRepositoryImpl @Inject constructor(
+    private val itemContentSerializer: ItemContentSerializer,
     private val database: PassDatabase,
     override val userAddressRepository: UserAddressRepository,
     private val shareRepository: ShareRepository,
@@ -182,7 +180,7 @@ class ItemRepositoryImpl @Inject constructor(
         searchIndexRepository.indexItem(userId, share.id, ItemId(entity.id))
 
         encryptionContextProvider.withEncryptionContextSuspendable {
-            entity.toDomain(this)
+            entity.toDomain(this, itemContentSerializer)
         }
     }
 
@@ -228,7 +226,7 @@ class ItemRepositoryImpl @Inject constructor(
         searchIndexRepository.indexItem(userId, share.id, ItemId(entity.id))
 
         encryptionContextProvider.withEncryptionContextSuspendable {
-            entity.toDomain(this)
+            entity.toDomain(this, itemContentSerializer)
         }
     }
 
@@ -308,7 +306,7 @@ class ItemRepositoryImpl @Inject constructor(
         )
 
         encryptionContextProvider.withEncryptionContextSuspendable {
-            itemEntity.toDomain(this)
+            itemEntity.toDomain(this, itemContentSerializer)
         }
     }
 
@@ -325,13 +323,8 @@ class ItemRepositoryImpl @Inject constructor(
             decrypt(localEntity.encryptedContent)
         }
 
-        val decodedProto = ItemV1.Item.parseFrom(decryptedProto)
         val itemContents = encryptionContextProvider.withEncryptionContextSuspendable {
-            contents.serializeToProto(
-                itemUuid = item.itemUuid,
-                builder = decodedProto.toBuilder(),
-                encryptionContext = this
-            )
+            itemContentSerializer.performItemUpdate(decryptedProto, contents, this)
         }
 
         return performUpdate(
@@ -381,7 +374,7 @@ class ItemRepositoryImpl @Inject constructor(
         localItemDataSource.upsertItem(itemEntity)
 
         encryptionContextProvider.withEncryptionContextSuspendable {
-            itemEntity.toDomain(this)
+            itemEntity.toDomain(this, itemContentSerializer)
         }
     }
 
@@ -527,7 +520,7 @@ class ItemRepositoryImpl @Inject constructor(
         includeHidden
     ).conflate().map { items ->
         encryptionContextProvider.withEncryptionContextSuspendable {
-            items.map { item -> item.toDomain(this) }
+            items.toDomain(this, itemContentSerializer)
         }
     }
 
@@ -548,7 +541,7 @@ class ItemRepositoryImpl @Inject constructor(
     ).map { pagingData ->
         pagingData.map { itemEntity ->
             encryptionContextProvider.withEncryptionContext {
-                itemEntity.toDomain(this)
+                itemEntity.toDomain(this, itemContentSerializer)
             }
         }
     }
@@ -809,7 +802,7 @@ class ItemRepositoryImpl @Inject constructor(
         is ShareSelection.Folder -> emptyFlow() // observePinnedItems for folders
     }.map { items ->
         encryptionContextProvider.withEncryptionContextSuspendable {
-            items.map { item -> item.toDomain(this) }
+            items.toDomain(this, itemContentSerializer)
         }
     }
 
@@ -820,7 +813,7 @@ class ItemRepositoryImpl @Inject constructor(
     ): Flow<Item?> = localItemDataSource.observeItem(userId, shareId, itemId).map { itemEntity ->
         itemEntity?.let {
             encryptionContextProvider.withEncryptionContextSuspendable {
-                it.toDomain(this)
+                it.toDomain(this, itemContentSerializer)
             }
         }
     }
@@ -834,7 +827,7 @@ class ItemRepositoryImpl @Inject constructor(
             ?: throw IllegalStateException("Item not found [shareId=${shareId.id}] [itemId=${itemId.id}]")
 
         return encryptionContextProvider.withEncryptionContextSuspendable {
-            localItem.toDomain(this)
+            localItem.toDomain(this, itemContentSerializer)
         }
     }
 
@@ -845,7 +838,7 @@ class ItemRepositoryImpl @Inject constructor(
     ): List<Item> = localItemDataSource.getByIdList(userId, shareId, itemIds)
         .let { itemEntities ->
             encryptionContextProvider.withEncryptionContextSuspendable {
-                itemEntities.map { itemEntity -> itemEntity.toDomain(this) }
+                itemEntities.toDomain(this, itemContentSerializer)
             }
         }
 
@@ -1073,10 +1066,9 @@ class ItemRepositoryImpl @Inject constructor(
         val itemEntity = localItemDataSource.getById(userId, shareId, itemId)
             ?: throw ItemNotFoundError(itemId, shareId)
 
-        val (item, itemProto) = encryptionContextProvider.withEncryptionContextSuspendable {
-            val item = itemEntity.toDomain(this)
-            val itemContents = decrypt(item.content)
-            item to ItemV1.Item.parseFrom(itemContents)
+        val (item, originalContent) = encryptionContextProvider.withEncryptionContextSuspendable {
+            val item = itemEntity.toDomain(this, itemContentSerializer)
+            item to decrypt(item.content)
         }
 
         val isAutofillUrlAdvancedModesEnabled = item.contentFormatVersion >=
@@ -1085,7 +1077,7 @@ class ItemRepositoryImpl @Inject constructor(
 
         val (needsToUpdate, updatedContents) = updateItemContents(
             item,
-            itemProto,
+            originalContent,
             packageInfo,
             url,
             isAutofillUrlAdvancedModesEnabled
@@ -1322,7 +1314,7 @@ class ItemRepositoryImpl @Inject constructor(
                 val migrated = successes.mapNotNull { it.getOrNull() }.flatten()
                 val migratedItemsMapped =
                     encryptionContextProvider.withEncryptionContextSuspendable {
-                        migrated.map { it.toDomain(this) }
+                        migrated.toDomain(this, itemContentSerializer)
                     }
 
                 MigrateItemsResult.AllMigrated(migratedItemsMapped)
@@ -1338,7 +1330,7 @@ class ItemRepositoryImpl @Inject constructor(
                 val migrated = successes.mapNotNull { it.getOrNull() }.flatten()
                 val migratedItemsMapped =
                     encryptionContextProvider.withEncryptionContextSuspendable {
-                        migrated.map { it.toDomain(this) }
+                        migrated.toDomain(this, itemContentSerializer)
                     }
                 MigrateItemsResult.SomeMigrated(migratedItemsMapped)
             }
@@ -1482,7 +1474,7 @@ class ItemRepositoryImpl @Inject constructor(
         val item = localItemDataSource.getItemByAliasEmail(userId, aliasEmail) ?: return null
 
         return encryptionContextProvider.withEncryptionContextSuspendable {
-            item.toDomain(this)
+            item.toDomain(this, itemContentSerializer)
         }
     }
 
@@ -1503,11 +1495,10 @@ class ItemRepositoryImpl @Inject constructor(
             ?: throw ItemNotFoundError(itemId, shareId)
 
         val (itemContents, item) = encryptionContextProvider.withEncryptionContextSuspendable {
-            decrypt(itemEntity.encryptedContent) to itemEntity.toDomain(this)
+            decrypt(itemEntity.encryptedContent) to itemEntity.toDomain(this, itemContentSerializer)
         }
 
-        val parsed = ItemV1.Item.parseFrom(itemContents)
-        val updatedContents = parsed.withPasskey(passkey)
+        val updatedContents = itemContentSerializer.addPasskeyToItem(itemContents, passkey)
 
         performUpdate(
             userId = userId,
@@ -1634,7 +1625,7 @@ class ItemRepositoryImpl @Inject constructor(
                 localItemDataSource.upsertItems(pinned)
 
                 val pinnedItemsMapped = encryptionContextProvider.withEncryptionContextSuspendable {
-                    pinned.map { it.toDomain(this) }
+                    pinned.toDomain(this, itemContentSerializer)
                 }
 
                 PinItemsResult.AllPinned(pinnedItemsMapped)
@@ -1659,7 +1650,7 @@ class ItemRepositoryImpl @Inject constructor(
                 localItemDataSource.upsertItems(pinned)
 
                 val pinnedItemsMapped = encryptionContextProvider.withEncryptionContextSuspendable {
-                    pinned.map { it.toDomain(this) }
+                    pinned.toDomain(this, itemContentSerializer)
                 }
 
                 PinItemsResult.SomePinned(pinnedItemsMapped)
@@ -1880,24 +1871,24 @@ class ItemRepositoryImpl @Inject constructor(
 
     private fun updateItemContents(
         item: Item,
-        itemProto: ItemV1.Item,
+        originalContent: ByteArray,
         packageInfoOption: Option<PackageInfo>,
         url: Option<String>,
         isAutofillUrlAdvancedModesEnabled: Boolean
-    ): Pair<Boolean, ItemV1.Item> {
+    ): Pair<Boolean, ByteArray> {
         var needsToUpdate = false
 
         val itemContentsWithPackageName = when (packageInfoOption) {
-            None -> itemProto
+            None -> originalContent
             is Some -> {
-                val updatedItem = itemProto.with(packageInfoOption.value)
-                if (updatedItem == itemProto) {
+                val updatedItem = itemContentSerializer.addPackageInfoToItem(originalContent, packageInfoOption.value)
+                if (updatedItem == null) {
                     PassLogger.i(
                         TAG,
                         "Item already has this package association " +
                             "[shareId=${item.shareId}] [itemId=${item.id}]"
                     )
-                    itemProto
+                    originalContent
                 } else {
                     needsToUpdate = true
                     updatedItem
@@ -1919,7 +1910,8 @@ class ItemRepositoryImpl @Inject constructor(
                     } else {
                         // Item does not have the URL, adding it
                         needsToUpdate = true
-                        itemContentsWithPackageName.withUrl(
+                        itemContentSerializer.addUrlToItem(
+                            original = itemContentsWithPackageName,
                             url = url.value,
                             isAutofillUrlAdvancedModesEnabled = isAutofillUrlAdvancedModesEnabled
                         )
@@ -1943,7 +1935,7 @@ class ItemRepositoryImpl @Inject constructor(
         userId: UserId,
         share: Share,
         item: Item,
-        itemContents: ItemV1.Item,
+        itemContents: ByteArray,
         isDomainMatchingEnabled: Boolean
     ): Item = withUserAddress(userId) { userAddress ->
         val folderKeyOverride = item.folderId?.let { folderId ->
@@ -1984,7 +1976,7 @@ class ItemRepositoryImpl @Inject constructor(
         searchIndexRepository.indexItem(userId, share.id, ItemId(entity.id))
 
         encryptionContextProvider.withEncryptionContextSuspendable {
-            entity.toDomain(this)
+            entity.toDomain(this, itemContentSerializer)
         }
     }
 

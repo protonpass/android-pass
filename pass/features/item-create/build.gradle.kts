@@ -88,7 +88,6 @@ dependencies {
     implementation(projects.pass.composeComponents.impl)
     implementation(projects.pass.crypto.api)
     implementation(projects.pass.data.api)
-    implementation(projects.pass.dataModels.api)
     implementation(projects.pass.domain)
     implementation(projects.pass.searchOptions.api)
     implementation(projects.pass.log.api)

@@ -20,6 +20,7 @@ package proton.android.pass.data.impl.extensions
 
 import me.proton.core.crypto.common.keystore.EncryptedByteArray
 import me.proton.core.domain.entity.UserId
+import proton.android.pass.commonrust.api.ItemContentSerializer
 import proton.android.pass.crypto.api.context.EncryptionContext
 import proton.android.pass.data.impl.db.entities.FolderEntity
 import proton.android.pass.data.impl.responses.FolderApiModel
@@ -27,7 +28,7 @@ import proton.android.pass.domain.Folder
 import proton.android.pass.domain.FolderId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.VaultId
-import proton_pass_folder_v1.FolderV1
+import proton.android.pass.log.api.PassLogger
 
 fun FolderApiModel.toEntity(
     userId: UserId,
@@ -46,16 +47,37 @@ fun FolderApiModel.toEntity(
     encryptedContent = encryptedContent
 )
 
-fun FolderEntity.toDomain(encryptionContext: EncryptionContext): Folder {
+fun FolderEntity.toDomain(encryptionContext: EncryptionContext, itemContentSerializer: ItemContentSerializer): Folder {
     val decrypted = encryptionContext.decrypt(encryptedContent)
-    val parsed = FolderV1.Folder.parseFrom(decrypted)
-    return Folder(
-        userId = UserId(userId),
-        shareId = ShareId(shareId),
-        vaultId = VaultId(vaultId),
-        folderId = FolderId(id),
-        parentFolderId = parentFolderId?.let(::FolderId),
-        folderKey = folderKey,
-        name = parsed.name
-    )
+    return toDomain(itemContentSerializer.deserializeFolder(decrypted))
 }
+
+fun List<FolderEntity>.toDomain(
+    encryptionContext: EncryptionContext,
+    itemContentSerializer: ItemContentSerializer
+): List<Folder> {
+    if (isEmpty()) return emptyList()
+    val decrypted = map { encryptionContext.decrypt(it.encryptedContent) }
+    try {
+        val names = itemContentSerializer.deserializeFolders(decrypted)
+        val failures = names.count { it == null }
+        if (failures > 0) {
+            PassLogger.w(TAG, "Skipped $failures of $size folders that could not be loaded")
+        }
+        return zip(names) { entity, name -> name?.let(entity::toDomain) }.filterNotNull()
+    } finally {
+        decrypted.forEach { it.fill(0) }
+    }
+}
+
+private fun FolderEntity.toDomain(name: String): Folder = Folder(
+    userId = UserId(userId),
+    shareId = ShareId(shareId),
+    vaultId = VaultId(vaultId),
+    folderId = FolderId(id),
+    parentFolderId = parentFolderId?.let(::FolderId),
+    folderKey = folderKey,
+    name = name
+)
+
+private const val TAG = "FolderEntityMapper"

@@ -34,5 +34,4 @@ dependencies {
     implementation(libs.core.user.domain)
 
     implementation(projects.pass.domain)
-    implementation(projects.pass.protos)
 }

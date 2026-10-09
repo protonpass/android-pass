@@ -19,6 +19,7 @@
 package proton.android.pass.crypto.fakes.usecases.folders
 
 import me.proton.core.crypto.common.keystore.EncryptedByteArray
+import proton.android.pass.commonrust.fakes.FakeItemContentSerializer
 import proton.android.pass.crypto.api.EncryptionKey
 import proton.android.pass.crypto.api.usecases.folders.EncryptedFolderData
 import proton.android.pass.crypto.api.usecases.folders.OpenFolder
@@ -37,10 +38,12 @@ class FakeOpenFolder : OpenFolder {
     fun setOutput(
         folderId: String,
         folderName: String,
-        reencryptedFolderKey: EncryptedByteArray
+        reencryptedFolderKey: EncryptedByteArray,
+        originalContent: ByteArray = FakeItemContentSerializer().serializeFolder(folderName)
     ) {
         outputByFolderId[folderId] = OpenFolderOutput(
             folderName = folderName,
+            originalContent = originalContent,
             reencryptedFolderKey = reencryptedFolderKey
         )
     }

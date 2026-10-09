@@ -20,9 +20,15 @@ package proton.android.pass.data.impl.repositories
 
 import com.google.common.truth.Truth.assertThat
 import org.junit.Test
+import proton.android.pass.commonrust.fakes.FakeItemContentSerializer
 import proton.android.pass.crypto.fakes.context.FakeEncryptionContext
 import proton.android.pass.data.impl.db.entities.ItemEntity
-import proton_pass_item_v1.ItemV1
+import proton.android.pass.domain.CreditCardType
+import proton.android.pass.domain.CustomFieldContent
+import proton.android.pass.domain.ExtraSectionContent
+import proton.android.pass.domain.HiddenState
+import proton.android.pass.domain.ItemContents
+import proton.android.pass.domain.WifiSecurityType
 
 /**
  * Security regression guard for what plaintext lands in the search index.
@@ -37,13 +43,12 @@ class SearchableContentExtractorTest {
     @Test
     fun `login indexes identifiers but never password or totp`() {
         val item = item(
-            content = ItemV1.Content.newBuilder().setLogin(
-                ItemV1.ItemLogin.newBuilder()
-                    .setItemEmail("user@example.com")
-                    .setItemUsername("johndoe")
-                    .addUrls("https://example.com")
-                    .setPassword(SECRET_PASSWORD)
-                    .setTotpUri("otpauth://totp/Example?secret=$SECRET_TOTP_SEED")
+            contents = login(
+                email = "user@example.com",
+                username = "johndoe",
+                password = SECRET_PASSWORD,
+                urls = listOf("https://example.com"),
+                totpUri = "otpauth://totp/Example?secret=$SECRET_TOTP_SEED"
             )
         )
 
@@ -59,7 +64,12 @@ class SearchableContentExtractorTest {
     @Test
     fun `alias indexes email and SimpleLogin note`() {
         val item = item(
-            content = ItemV1.Content.newBuilder().setAlias(ItemV1.ItemAlias.newBuilder())
+            contents = ItemContents.Alias(
+                title = "",
+                note = "",
+                customFields = emptyList(),
+                aliasEmail = "alias@passmail.com"
+            )
         )
 
         val result = extract(
@@ -75,20 +85,15 @@ class SearchableContentExtractorTest {
     @Test
     fun `custom fields index name and TEXT value but not HIDDEN or TOTP values`() {
         val item = item(
-            content = ItemV1.Content.newBuilder().setLogin(ItemV1.ItemLogin.newBuilder()),
-            extraFields = listOf(
-                ItemV1.ExtraField.newBuilder()
-                    .setFieldName("Recovery code label")
-                    .setText(ItemV1.ExtraTextField.newBuilder().setContent("visible text value"))
-                    .build(),
-                ItemV1.ExtraField.newBuilder()
-                    .setFieldName("Backup PIN")
-                    .setHidden(ItemV1.ExtraHiddenField.newBuilder().setContent(SECRET_HIDDEN_VALUE))
-                    .build(),
-                ItemV1.ExtraField.newBuilder()
-                    .setFieldName("Authenticator")
-                    .setTotp(ItemV1.ExtraTotp.newBuilder().setTotpUri("otpauth://totp/x?secret=$SECRET_TOTP_SEED"))
-                    .build()
+            contents = login(
+                customFields = listOf(
+                    CustomFieldContent.Text(label = "Recovery code label", value = "visible text value"),
+                    CustomFieldContent.Hidden(label = "Backup PIN", value = concealed(SECRET_HIDDEN_VALUE)),
+                    CustomFieldContent.Totp(
+                        label = "Authenticator",
+                        value = concealed("otpauth://totp/x?secret=$SECRET_TOTP_SEED")
+                    )
+                )
             )
         )
 
@@ -107,11 +112,16 @@ class SearchableContentExtractorTest {
     @Test
     fun `credit card indexes cardholder name but never number or cvv`() {
         val item = item(
-            content = ItemV1.Content.newBuilder().setCreditCard(
-                ItemV1.ItemCreditCard.newBuilder()
-                    .setCardholderName("Jane Cardholder")
-                    .setNumber(SECRET_CARD_NUMBER)
-                    .setVerificationNumber(SECRET_CVV)
+            contents = ItemContents.CreditCard(
+                title = "",
+                note = "",
+                customFields = emptyList(),
+                cardHolder = "Jane Cardholder",
+                type = CreditCardType.Other,
+                number = SECRET_CARD_NUMBER,
+                cvv = concealed(SECRET_CVV),
+                pin = HiddenState.Empty(FakeEncryptionContext.encrypt("")),
+                expirationDate = ""
             )
         )
 
@@ -125,10 +135,14 @@ class SearchableContentExtractorTest {
     @Test
     fun `wifi indexes ssid but never password`() {
         val item = item(
-            content = ItemV1.Content.newBuilder().setWifi(
-                ItemV1.ItemWifi.newBuilder()
-                    .setSsid("MyHomeNetwork")
-                    .setPassword(SECRET_WIFI_PASSWORD)
+            contents = ItemContents.WifiNetwork(
+                title = "",
+                note = "",
+                customFields = emptyList(),
+                ssid = "MyHomeNetwork",
+                password = concealed(SECRET_WIFI_PASSWORD),
+                wifiSecurityType = WifiSecurityType.Unknown,
+                sectionContentList = emptyList()
             )
         )
 
@@ -141,18 +155,20 @@ class SearchableContentExtractorTest {
     @Test
     fun `ssh key indexes custom section fields but never the private key`() {
         val item = item(
-            content = ItemV1.Content.newBuilder().setSshKey(
-                ItemV1.ItemSSHKey.newBuilder()
-                    .setPrivateKey(SECRET_SSH_PRIVATE_KEY)
-                    .setPublicKey("ssh-ed25519 AAAA-public")
-                    .addSections(
-                        ItemV1.CustomSection.newBuilder()
-                            .addSectionFields(
-                                ItemV1.ExtraField.newBuilder()
-                                    .setFieldName("Host label")
-                                    .setText(ItemV1.ExtraTextField.newBuilder().setContent("prod-server"))
-                            )
+            contents = ItemContents.SSHKey(
+                title = "",
+                note = "",
+                customFields = emptyList(),
+                publicKey = "ssh-ed25519 AAAA-public",
+                privateKey = concealed(SECRET_SSH_PRIVATE_KEY),
+                sectionContentList = listOf(
+                    ExtraSectionContent(
+                        title = "",
+                        customFieldList = listOf(
+                            CustomFieldContent.Text(label = "Host label", value = "prod-server")
+                        )
                     )
+                )
             )
         )
 
@@ -164,53 +180,80 @@ class SearchableContentExtractorTest {
     }
 
     private fun extract(
-        item: ItemV1.Item,
+        item: ItemContents,
         aliasEmail: String? = null,
         slNote: String? = null
-    ): String = SearchableContentExtractor.extract(
-        itemEntity(item, aliasEmail, slNote),
-        FakeEncryptionContext
-    )
+    ): String {
+        val serializer = FakeItemContentSerializer()
+        return SearchableContentExtractor.extract(
+            itemEntity(item, serializer, aliasEmail, slNote),
+            FakeEncryptionContext,
+            serializer
+        )
+    }
 
-    private fun item(content: ItemV1.Content.Builder, extraFields: List<ItemV1.ExtraField> = emptyList()): ItemV1.Item =
-        ItemV1.Item.newBuilder()
-            .setContent(content)
-            .addAllExtraFields(extraFields)
-            .build()
+    private fun item(contents: ItemContents): ItemContents = contents
+
+    private fun concealed(value: String): HiddenState = HiddenState.Concealed(FakeEncryptionContext.encrypt(value))
+
+    private fun login(
+        email: String = "",
+        username: String = "",
+        password: String = "",
+        urls: List<String> = emptyList(),
+        totpUri: String = "",
+        customFields: List<CustomFieldContent> = emptyList()
+    ): ItemContents.Login = ItemContents.Login(
+        title = "",
+        note = "",
+        customFields = customFields,
+        itemEmail = email,
+        itemUsername = username,
+        password = concealed(password),
+        urls = urls,
+        packageInfoSet = emptySet(),
+        primaryTotp = concealed(totpUri),
+        passkeys = emptyList(),
+        autofillUrls = emptyList()
+    )
 
     private fun itemEntity(
-        item: ItemV1.Item,
+        item: ItemContents,
+        serializer: FakeItemContentSerializer,
         aliasEmail: String?,
         slNote: String? = null
-    ): ItemEntity = ItemEntity(
-        id = "item-id",
-        userId = "user-id",
-        addressId = "address-id",
-        shareId = "share-id",
-        folderId = null,
-        revision = 1L,
-        contentFormatVersion = 1,
-        keyRotation = 1L,
-        content = "",
-        key = null,
-        state = 0,
-        itemType = 0,
-        aliasEmail = aliasEmail,
-        slNote = slNote?.let(FakeEncryptionContext::encrypt),
-        createTime = 0L,
-        modifyTime = 0L,
-        lastUsedTime = null,
-        hasTotp = null,
-        isPinned = false,
-        pinTime = null,
-        hasPasskeys = null,
-        flags = 0,
-        shareCount = 0,
-        encryptedTitle = FakeEncryptionContext.encrypt(""),
-        encryptedNote = FakeEncryptionContext.encrypt(""),
-        encryptedContent = FakeEncryptionContext.encrypt(item.toByteArray()),
-        encryptedKey = null
-    )
+    ): ItemEntity {
+        val itemBytes = serializer.serializeItem(item, FakeEncryptionContext, "test-uuid")
+        return ItemEntity(
+            id = "item-id",
+            userId = "user-id",
+            addressId = "address-id",
+            shareId = "share-id",
+            folderId = null,
+            revision = 1L,
+            contentFormatVersion = 1,
+            keyRotation = 1L,
+            content = "",
+            key = null,
+            state = 0,
+            itemType = 0,
+            aliasEmail = aliasEmail,
+            slNote = slNote?.let(FakeEncryptionContext::encrypt),
+            createTime = 0L,
+            modifyTime = 0L,
+            lastUsedTime = null,
+            hasTotp = null,
+            isPinned = false,
+            pinTime = null,
+            hasPasskeys = null,
+            flags = 0,
+            shareCount = 0,
+            encryptedTitle = FakeEncryptionContext.encrypt(""),
+            encryptedNote = FakeEncryptionContext.encrypt(""),
+            encryptedContent = FakeEncryptionContext.encrypt(itemBytes),
+            encryptedKey = null
+        )
+    }
 
     private companion object {
         const val SECRET_PASSWORD = "p4ssw0rd-do-not-index"

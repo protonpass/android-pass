@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023-2026 Proton AG
+ * Copyright (c) 2026 Proton AG
  * This file is part of Proton AG and Proton Pass.
  *
  * Proton Pass is free software: you can redistribute it and/or modify
@@ -20,20 +20,20 @@ package proton.android.pass.crypto.impl.usecases
 
 import me.proton.core.crypto.common.keystore.EncryptedByteArray
 import org.junit.Test
+import proton.android.pass.commonrust.impl.ItemContentSerializerImpl
 import proton.android.pass.crypto.api.Base64
 import proton.android.pass.crypto.api.context.EncryptionTag
-import proton.android.pass.crypto.fakes.context.FakeEncryptionContext
 import proton.android.pass.crypto.fakes.context.FakeEncryptionContextProvider
-import proton.android.pass.datamodels.api.serializeToProto
 import proton.android.pass.domain.ItemContents
 import proton.android.pass.test.StringTestFactory
 import proton.android.pass.test.domain.ItemKeyTestFactory
-import proton_pass_item_v1.ItemV1
 import kotlin.random.Random
 import kotlin.test.assertEquals
+import kotlin.test.assertTrue
 
 class UpdateItemImplTest {
     private val encryptionContextProvider = FakeEncryptionContextProvider()
+    private val itemContentSerializer = ItemContentSerializerImpl()
 
     @Test
     fun canUpdateItem() {
@@ -47,9 +47,12 @@ class UpdateItemImplTest {
             note = StringTestFactory.randomString(),
             customFields = emptyList()
         )
+        val serialized = encryptionContextProvider.withEncryptionContext {
+            itemContentSerializer.serializeItem(contents, this)
+        }
         val body = instance.createRequest(
             itemKey,
-            contents.serializeToProto(encryptionContext = FakeEncryptionContext),
+            serialized,
             lastRevision,
             isDomainMatchingEnabled = false
         )
@@ -62,8 +65,45 @@ class UpdateItemImplTest {
             decrypt(EncryptedByteArray(decodedContents), EncryptionTag.ItemContent)
         }
 
-        val asItemContents = ItemV1.Item.parseFrom(decryptedContent)
-        assertEquals(contents.title, asItemContents.metadata.name)
-        assertEquals(contents.note, asItemContents.metadata.note)
+        val asItemContents = encryptionContextProvider.withEncryptionContext {
+            itemContentSerializer.deserializeItem(decryptedContent, this)
+        }
+        assertEquals(contents.title, asItemContents.title)
+        assertEquals(contents.note, asItemContents.note)
+    }
+
+    @Test
+    fun updateKeepsUnknownFieldsFromOriginalContent() {
+        val instance = UpdateItemImpl(encryptionContextProvider)
+        val (itemKey, decryptedItemKey) = ItemKeyTestFactory.create()
+        val original = ItemContents.Note(
+            title = StringTestFactory.randomString(),
+            note = StringTestFactory.randomString(),
+            customFields = emptyList()
+        )
+        val originalContent = encryptionContextProvider.withEncryptionContext {
+            itemContentSerializer.serializeItem(original, this)
+        } + UnknownProtobufField.bytes
+        val updated = original.copy(note = "")
+
+        val updatedContent = encryptionContextProvider.withEncryptionContext {
+            itemContentSerializer.performItemUpdate(originalContent, updated, this)
+        }
+        val body = instance.createRequest(
+            itemKey,
+            updatedContent,
+            Random.nextLong(),
+            isDomainMatchingEnabled = false
+        )
+
+        val decryptedContent = encryptionContextProvider.withEncryptionContext(decryptedItemKey) {
+            decrypt(EncryptedByteArray(Base64.decodeBase64(body.content)), EncryptionTag.ItemContent)
+        }
+        val asItemContents = encryptionContextProvider.withEncryptionContext {
+            itemContentSerializer.deserializeItem(decryptedContent, this)
+        }
+        assertEquals(original.title, asItemContents.title)
+        assertEquals("", asItemContents.note)
+        assertTrue(UnknownProtobufField.isContainedIn(decryptedContent))
     }
 }

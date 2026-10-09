@@ -30,6 +30,7 @@ interface UpdateFolder {
     fun update(
         folderKey: EncryptionKey,
         keyRotation: Long,
+        originalEncryptedContent: String?,
         folderName: String
     ): EncryptedUpdateFolder
 }

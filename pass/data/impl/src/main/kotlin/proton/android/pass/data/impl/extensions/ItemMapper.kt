@@ -23,69 +23,59 @@ import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.toOption
+import proton.android.pass.commonrust.api.ItemContentSerializer
 import proton.android.pass.crypto.api.context.EncryptionContext
 import proton.android.pass.data.impl.db.entities.ItemEntity
-import proton.android.pass.datamodels.api.fromParsed
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemEncrypted
 import proton.android.pass.domain.ItemFlags
 import proton.android.pass.domain.ItemId
-import proton.android.pass.domain.ItemType
+import proton.android.pass.domain.ParsedItem
 import proton.android.pass.domain.FolderId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.ShareType
-import proton.android.pass.domain.entity.AppName
-import proton.android.pass.domain.entity.PackageInfo
-import proton.android.pass.domain.entity.PackageName
-import proton_pass_item_v1.ItemV1
 
-fun ItemEntity.itemType(context: EncryptionContext): ItemType {
+fun ItemEntity.toDomain(context: EncryptionContext, itemContentSerializer: ItemContentSerializer): Item {
     val decrypted = context.decrypt(encryptedContent)
-    val parsed = ItemV1.Item.parseFrom(decrypted)
-    return ItemType.fromParsed(context, parsed = parsed, aliasEmail = this.aliasEmail)
+    val parsed = itemContentSerializer.deserializeItem(decrypted, context, aliasEmail)
+    return toDomain(parsed)
 }
 
-fun ItemEntity.allowedApps(context: EncryptionContext): Set<PackageInfo> {
-    val decrypted = context.decrypt(encryptedContent)
-    val parsed = ItemV1.Item.parseFrom(decrypted)
-    return parsed.platformSpecific.android.allowedAppsList.map {
-        PackageInfo(
-            packageName = PackageName(it.packageName),
-            appName = AppName(it.appName),
-            hashes = it.hashesList.toSet()
-        )
-    }.toSet()
+fun List<ItemEntity>.toDomain(context: EncryptionContext, itemContentSerializer: ItemContentSerializer): List<Item> {
+    if (isEmpty()) return emptyList()
+    val decrypted = map { context.decrypt(it.encryptedContent) }
+    try {
+        val parsed = itemContentSerializer.deserializeItems(decrypted, context, map { it.aliasEmail })
+        return zip(parsed) { entity, item -> entity.toDomain(item) }
+    } finally {
+        decrypted.forEach { it.fill(0) }
+    }
 }
 
-fun ItemEntity.toDomain(context: EncryptionContext): Item {
-    val decrypted = context.decrypt(encryptedContent)
-    val parsed = ItemV1.Item.parseFrom(decrypted)
-
-    return Item(
-        id = ItemId(id),
-        userId = UserId(userId),
-        itemUuid = parsed.metadata.itemUuid,
-        revision = revision,
-        shareId = ShareId(shareId),
-        folderId = folderId?.let(::FolderId),
-        itemType = ItemType.fromParsed(context, parsed, aliasEmail),
-        title = encryptedTitle,
-        note = encryptedNote,
-        content = encryptedContent,
-        state = state,
-        packageInfoSet = allowedApps(context),
-        modificationTime = Instant.fromEpochSeconds(modifyTime),
-        createTime = Instant.fromEpochSeconds(createTime),
-        lastAutofillTime = lastUsedTime.toOption().map(Instant::fromEpochSeconds),
-        isPinned = isPinned,
-        pinTime = pinTime.toOption().map(Instant::fromEpochSeconds),
-        itemFlags = ItemFlags(flags),
-        shareCount = shareCount,
-        contentFormatVersion = contentFormatVersion,
-        shareType = if (encryptedKey != null) ShareType.Vault else ShareType.Item,
-        slNote = slNote
-    )
-}
+private fun ItemEntity.toDomain(parsed: ParsedItem): Item = Item(
+    id = ItemId(id),
+    userId = UserId(userId),
+    itemUuid = parsed.itemUuid,
+    revision = revision,
+    shareId = ShareId(shareId),
+    folderId = folderId?.let(::FolderId),
+    itemType = parsed.itemType,
+    title = encryptedTitle,
+    note = encryptedNote,
+    content = encryptedContent,
+    state = state,
+    packageInfoSet = parsed.packageInfoSet,
+    modificationTime = Instant.fromEpochSeconds(modifyTime),
+    createTime = Instant.fromEpochSeconds(createTime),
+    lastAutofillTime = lastUsedTime.toOption().map(Instant::fromEpochSeconds),
+    isPinned = isPinned,
+    pinTime = pinTime.toOption().map(Instant::fromEpochSeconds),
+    itemFlags = ItemFlags(flags),
+    shareCount = shareCount,
+    contentFormatVersion = contentFormatVersion,
+    shareType = if (encryptedKey != null) ShareType.Vault else ShareType.Item,
+    slNote = slNote
+)
 
 fun ItemEntity.toEncryptedDomain(): ItemEncrypted = ItemEncrypted(
     id = ItemId(id),

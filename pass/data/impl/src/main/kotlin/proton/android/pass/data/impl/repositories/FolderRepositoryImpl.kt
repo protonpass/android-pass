@@ -56,10 +56,11 @@ import proton.android.pass.domain.FolderId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.key.ShareKey
 import proton.android.pass.log.api.PassLogger
-import proton_pass_folder_v1.FolderV1
+import proton.android.pass.commonrust.api.ItemContentSerializer
 import javax.inject.Inject
 
 class FolderRepositoryImpl @Inject constructor(
+    private val itemContentSerializer: ItemContentSerializer,
     private val appDispatchers: AppDispatchers,
     private val localFolderDataSource: LocalFolderDataSource,
     private val localFolderKeyDataSource: LocalFolderKeyDataSource,
@@ -137,11 +138,12 @@ class FolderRepositoryImpl @Inject constructor(
             openFolderKey.clear()
         }
 
-        val folderProto = FolderV1.Folder.newBuilder()
-            .setName(openedFolder.folderName)
-            .build()
-        val folderContentProto = encryptionContextProvider.withEncryptionContextSuspendable {
-            encrypt(folderProto.toByteArray())
+        val folderContentProto = try {
+            encryptionContextProvider.withEncryptionContextSuspendable {
+                encrypt(openedFolder.originalContent)
+            }
+        } finally {
+            openedFolder.originalContent.fill(0)
         }
         val folderEntity = apiModel.toEntity(userId, shareId.id, folderContentProto)
         localFolderDataSource.upsertFolder(folderEntity)
@@ -157,7 +159,7 @@ class FolderRepositoryImpl @Inject constructor(
 
         try {
             encryptionContextProvider.withEncryptionContextSuspendable {
-                folderEntity.toDomain(this)
+                folderEntity.toDomain(this, itemContentSerializer)
             }
         } finally {
             parentKey.clear()
@@ -204,7 +206,7 @@ class FolderRepositoryImpl @Inject constructor(
             shareId = shareId
         ).map { folderEntities ->
             encryptionContextProvider.withEncryptionContextSuspendable {
-                folderEntities.map { it.toDomain(this) }
+                folderEntities.toDomain(this, itemContentSerializer)
             }
         }
 
@@ -218,7 +220,7 @@ class FolderRepositoryImpl @Inject constructor(
         parentFolderId = parentFolderId
     ).map { folderEntities ->
         encryptionContextProvider.withEncryptionContextSuspendable {
-            folderEntities.map { it.toDomain(this) }
+            folderEntities.toDomain(this, itemContentSerializer)
         }
     }
 
@@ -240,7 +242,7 @@ class FolderRepositoryImpl @Inject constructor(
         return encryptionContextProvider.withEncryptionContextSuspendable {
             folderEntities
                 .asReversed()
-                .map { it.toDomain(this) }
+                .toDomain(this, itemContentSerializer)
         }
     }
 
@@ -308,7 +310,7 @@ class FolderRepositoryImpl @Inject constructor(
     ).map { folderEntity ->
         folderEntity?.let {
             encryptionContextProvider.withEncryptionContextSuspendable {
-                it.toDomain(this)
+                it.toDomain(this, itemContentSerializer)
             }
         }
     }
@@ -378,6 +380,7 @@ class FolderRepositoryImpl @Inject constructor(
         PassLogger.d(TAG, "Updating folder ${folderId.id} in shareId=${shareId.id}")
         val folderKeyEntity = localFolderKeyDataSource.getByFolderId(userId, shareId, folderId)
             ?: throw IllegalStateException("No folder key found for folderId=${folderId.id}")
+        val existingFolderEntity = localFolderDataSource.getById(userId, shareId, folderId)
 
         val decryptedFolderKey = encryptionContextProvider.withEncryptionContextSuspendable {
             EncryptionKey(decrypt(folderKeyEntity.encryptedKey))
@@ -385,6 +388,7 @@ class FolderRepositoryImpl @Inject constructor(
         val payload = updateFolder.update(
             folderKey = decryptedFolderKey,
             keyRotation = folderKeyEntity.keyRotation,
+            originalEncryptedContent = existingFolderEntity?.content,
             folderName = folderName
         )
 

@@ -21,7 +21,6 @@ package proton.android.pass.crypto.fakes.usecases
 import proton.android.pass.crypto.api.usecases.EncryptedUpdateItemRequest
 import proton.android.pass.crypto.api.usecases.UpdateItem
 import proton.android.pass.domain.key.ItemKey
-import proton_pass_item_v1.ItemV1
 
 class FakeUpdateItem : UpdateItem {
 
@@ -33,7 +32,7 @@ class FakeUpdateItem : UpdateItem {
 
     override fun createRequest(
         itemKey: ItemKey,
-        itemContent: ItemV1.Item,
+        itemContent: ByteArray,
         lastRevision: Long,
         isDomainMatchingEnabled: Boolean
     ): EncryptedUpdateItemRequest = request ?: throw IllegalStateException("request is not set")

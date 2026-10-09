@@ -24,6 +24,7 @@ import proton.android.pass.data.api.repositories.SyncReason
 import proton.android.pass.data.api.usecases.PerformSync
 import javax.inject.Inject
 import javax.inject.Singleton
+import kotlin.coroutines.cancellation.CancellationException
 
 @Singleton
 class FakePerformSync @Inject constructor() : PerformSync {
@@ -50,9 +51,10 @@ class FakePerformSync @Inject constructor() : PerformSync {
         trigger: String,
         syncReason: SyncReason,
         syncMode: SyncMode
-    ) {
+    ): Result<Unit> {
         invokedUserIds += userId
         invocations += Invocation(userId, forceSync, trigger, syncReason, syncMode)
-        result.getOrThrow()
+        result.exceptionOrNull()?.let { if (it is CancellationException) throw it }
+        return result
     }
 }

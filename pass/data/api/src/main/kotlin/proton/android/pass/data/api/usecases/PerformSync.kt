@@ -29,5 +29,5 @@ interface PerformSync {
         trigger: String = "unknown",
         syncReason: SyncReason = SyncReason.Default,
         syncMode: SyncMode = SyncMode.ShownToUser
-    )
+    ): Result<Unit>
 }

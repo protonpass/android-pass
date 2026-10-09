@@ -94,6 +94,7 @@ android {
         versionCode = appVersionCode
         versionName = appVersionName
         testInstrumentationRunner = "me.proton.core.test.android.ProtonHiltTestRunner"
+        testInstrumentationRunnerArguments["clearPackageData"] = "true"
 
         buildConfigField("String", "SENTRY_DSN", sentryDSN.toBuildConfigValue())
         buildConfigField("String", "ACCOUNT_SENTRY_DSN", accountSentryDSN.toBuildConfigValue())
@@ -205,6 +206,7 @@ android {
             val protonHost = customEnvUrl ?: "proton.black"
             protonEnvironment {
                 host = protonHost
+                proxyToken = atlasProxyToken
 
                 printInfo(name)
             }
@@ -219,6 +221,7 @@ android {
                 // do not use the default pins
                 useDefaultPins = !isCustomBuild
                 apiPrefix = customEnvUrl?.let { "api" } ?: "pass-api"
+                proxyToken = atlasProxyToken
 
                 printInfo(name)
             }
@@ -228,8 +231,7 @@ android {
     sourceSets {
         getByName("main").java.srcDirs("src/main/kotlin")
         getByName("test").java.srcDirs("src/test/kotlin")
-        getByName("androidTest").java.srcDirs("src/androidTest/kotlin", "src/uiTest/kotlin")
-        getByName("androidTest").assets.srcDirs("src/uiTest/assets")
+        getByName("androidTest").java.srcDirs("src/androidTest/kotlin")
         getByName("dev").res.srcDirs("src/dev/res")
         getByName("alpha").res.srcDirs("src/alpha/res")
         // Shared source set for GMS-only (Play/dev/alpha) code
@@ -565,9 +567,14 @@ dependencies {
     }
     androidTestImplementation(libs.bundles.core.test) {
         exclude(module = "protobuf-lite")
+        exclude(group = "me.proton.core", module = "payment-iap-data")
+        exclude(group = "me.proton.core", module = "payment-iap-presentation")
     }
-    androidTestImplementation(libs.core.test.android.test.rule)
+    androidTestImplementation(libs.core.test.android.test.rule) {
+        exclude(module = "protobuf-lite")
+    }
     androidTestImplementation(projects.pass.payments.fakes)
+    androidTestImplementation(libs.androidx.work.testing)
     androidTestUtil(libs.androidx.test.orchestrator)
     baselineProfile(projects.appmacrobenchmark)
 
@@ -595,6 +602,10 @@ sentry {
     // ("fdroidProd"/"fdroidBlack"), not the dimension value "fdroid".
     ignoredFlavors.set(setOf("fdroidProd", "fdroidBlack"))
     autoUploadProguardMapping.set(!disableSentryUpload)
+}
+
+fulladleModuleConfig {
+    enabled.set(false)
 }
 
 fun VariantDimension.setAssetLinksResValue(host: String) {

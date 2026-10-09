@@ -49,9 +49,6 @@ class App : Application(), ImageLoaderFactory {
     @Inject
     lateinit var appDispatchers: AppDispatchers
 
-    @Inject
-    lateinit var foregroundActivityTracker: ForegroundActivityTracker
-
     override fun newImageLoader(): ImageLoader = imageLoader.get()
 
     override fun onCreate() {
@@ -71,14 +68,10 @@ class App : Application(), ImageLoaderFactory {
                     PassLogger.i(TAG, "Created activity ${activity::class.java.simpleName}")
                 },
                 onActivityResumed = { activity ->
-                    foregroundActivityTracker.onActivityResumed(activity)
                     PassLogger.i(TAG, "Resumed activity ${activity::class.java.simpleName}")
                 },
                 onActivityPaused = { activity ->
                     PassLogger.i(TAG, "Paused activity ${activity::class.java.simpleName}")
-                },
-                onActivityDestroyed = { activity ->
-                    foregroundActivityTracker.onActivityDestroyed(activity)
                 }
             )
         )

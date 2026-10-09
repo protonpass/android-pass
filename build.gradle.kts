@@ -235,6 +235,7 @@ allprojects {
 
 fladle {
     debugApk.set("$rootDir/app/build/outputs/apk/devBlack/debug/app-dev-black-debug.apk")
+    instrumentationApk.set("$rootDir/app/build/outputs/apk/androidTest/devBlack/debug/app-dev-black-debug-androidTest.apk")
     serviceAccountCredentials.set(File("/tmp/service-account.json"))
     devices.set(
         listOf(

@@ -20,7 +20,6 @@ package proton.android.pass.di
 
 import android.content.Context
 import androidx.core.app.NotificationManagerCompat
-import androidx.work.WorkManager
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -73,10 +72,6 @@ object ApplicationModule {
     @Provides
     @Singleton
     fun provideRequiredAccountType(): AccountType = AccountType.External
-
-    @Provides
-    @Singleton
-    fun provideWorkManager(@ApplicationContext context: Context): WorkManager = WorkManager.getInstance(context)
 
     @Provides
     @Singleton

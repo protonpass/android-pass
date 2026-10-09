@@ -19,7 +19,6 @@
 package proton.android.pass.di
 
 import android.content.Context
-import android.content.Intent
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.firstOrNull
@@ -29,15 +28,13 @@ import me.proton.core.accountmanager.domain.SessionManager
 import me.proton.core.accountmanager.domain.getAccounts
 import me.proton.core.auth.domain.usecase.PostLoginAccountSetup
 import me.proton.core.auth.presentation.DefaultUserCheck
-import me.proton.core.domain.entity.UserId
 import me.proton.core.user.domain.UserManager
 import me.proton.core.user.domain.entity.User
 import me.proton.core.user.domain.extension.hasSubscription
-import proton.android.pass.ForegroundActivityTracker
 import proton.android.pass.R
 import proton.android.pass.data.api.usecases.extrapassword.AuthWithExtraPasswordListener
 import proton.android.pass.data.api.usecases.extrapassword.AuthWithExtraPasswordResult
-import proton.android.pass.enterextrapassword.EnterExtraPasswordActivity
+import proton.android.pass.enterextrapassword.EnterExtraPasswordLauncher
 import proton.android.pass.log.api.PassLogger
 import javax.inject.Inject
 
@@ -45,7 +42,7 @@ class PassScopeUserCheck @Inject constructor(
     private val accountManager: AccountManager,
     private val sessionManager: SessionManager,
     private val authWithExtraPasswordListener: AuthWithExtraPasswordListener,
-    private val foregroundActivityTracker: ForegroundActivityTracker,
+    private val enterExtraPasswordLauncher: EnterExtraPasswordLauncher,
     @ApplicationContext private val context: Context,
     private val userManager: UserManager
 ) : DefaultUserCheck(context, accountManager, userManager) {
@@ -80,7 +77,7 @@ class PassScopeUserCheck @Inject constructor(
             PassLogger.i(TAG, "Waiting for extra password to be ready")
 
             authWithExtraPasswordListener.clearUserId(user.userId)
-            startEnterExtraPassword(user.userId)
+            enterExtraPasswordLauncher.start(user.userId)
 
             val res = authWithExtraPasswordListener.onAuthWithExtraPassword(user.userId)
             authWithExtraPasswordListener.clearUserId(user.userId)
@@ -96,21 +93,6 @@ class PassScopeUserCheck @Inject constructor(
                     PostLoginAccountSetup.UserCheckResult.Success
                 }
             }
-        }
-    }
-
-    private fun startEnterExtraPassword(userId: UserId) {
-        val intent = Intent(context, EnterExtraPasswordActivity::class.java).apply {
-            addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-            putExtra(EnterExtraPasswordActivity.EXTRA_USER_ID, userId.id)
-        }
-        val activity = foregroundActivityTracker.launchSourceActivity
-        if (activity != null) {
-            activity.startActivity(intent)
-        } else {
-            PassLogger.i(TAG, "No activity to launch from, starting extra password in a new task")
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-            context.startActivity(intent)
         }
     }
 

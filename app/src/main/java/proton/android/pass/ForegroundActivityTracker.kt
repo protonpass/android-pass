@@ -19,7 +19,10 @@
 package proton.android.pass
 
 import android.app.Activity
+import android.content.ComponentName
 import android.content.pm.ActivityInfo
+import android.content.pm.PackageManager
+import proton.android.pass.log.api.PassLogger
 import java.lang.ref.WeakReference
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -53,7 +56,19 @@ class ForegroundActivityTracker internal constructor(
     }
 }
 
-private fun isSingleInstanceActivity(activity: Activity): Boolean = runCatching {
-    activity.packageManager.getActivityInfo(activity.componentName, 0).launchMode ==
-        ActivityInfo.LAUNCH_SINGLE_INSTANCE
-}.getOrDefault(false)
+private fun isSingleInstanceActivity(activity: Activity): Boolean =
+    activity.packageManager.isSingleInstance(activity.componentName)
+
+internal fun PackageManager.launchModeOf(component: ComponentName): Result<Int> = runCatching {
+    getActivityInfo(component, PackageManager.MATCH_DISABLED_COMPONENTS).launchMode
+}
+
+internal fun PackageManager.isSingleInstance(component: ComponentName): Boolean = launchModeOf(component)
+    .onFailure {
+        PassLogger.e(TAG, "Unable to read launch mode of ${component.flattenToShortString()}")
+        PassLogger.e(TAG, it)
+    }
+    .map { it == ActivityInfo.LAUNCH_SINGLE_INSTANCE }
+    .getOrDefault(false)
+
+private const val TAG = "ForegroundActivityTracker"

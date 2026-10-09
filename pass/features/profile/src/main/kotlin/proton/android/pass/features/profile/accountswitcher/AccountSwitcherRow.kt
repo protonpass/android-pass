@@ -37,6 +37,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
@@ -131,6 +132,7 @@ fun AccountSwitcherRow(
             }
             Box {
                 IconButton(
+                    modifier = Modifier.testTag(AccountSwitcherTestTag.ROW_OPTIONS),
                     onClick = { expanded = true }
                 ) {
                     Icon.Default(
@@ -243,4 +245,11 @@ fun AccountSwitcherRowPreview(@PreviewParameter(ThemePreviewProvider::class) isD
             )
         }
     }
+}
+
+object AccountSwitcherTestTag {
+
+    const val COLLAPSED_ROW = "accountSwitcherCollapsedRow"
+    const val ROW_OPTIONS = "accountSwitcherRowOptions"
+
 }

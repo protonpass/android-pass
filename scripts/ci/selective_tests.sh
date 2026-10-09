@@ -13,6 +13,7 @@ SMOKE_FALLBACK_FILE="${TMPDIR:-/tmp}/ci_smoke_fallback${CI_JOB_ID:+_${CI_JOB_ID}
 FLAVOUR="${FLAVOUR:-dev}"
 DRY_RUN="${DRY_RUN:-0}"
 SMOKE_TEST_MODULE="${SMOKE_TEST_MODULE:-:app}"
+FLANK_SHARDS_ARG="-Pflank.maxTestShards=${FLANK_MAX_TEST_SHARDS:-4}"
 
 log() { echo "[selective_tests] $*" >&2; }
 die() { echo "[selective_tests] ERROR: $*" >&2; exit 1; }
@@ -26,8 +27,10 @@ run_gradle() {
 
 run_full_suite() {
   log "Running full instrumented test suite."
-  run_gradle assembleDebugAndroidTest "assemble$(capitalize "$FLAVOUR")DebugAndroidTest"
-  run_gradle runFlank
+  run_gradle assembleDebugAndroidTest "assemble$(capitalize "$FLAVOUR")DebugAndroidTest" \
+             ":app:assemble$(capitalize "$FLAVOUR")BlackDebug" \
+             ":app:assemble$(capitalize "$FLAVOUR")BlackDebugAndroidTest"
+  run_gradle runFlank "$FLANK_SHARDS_ARG"
 }
 
 # -- Step 1: Detect changed modules ----------------------------------------
@@ -74,13 +77,15 @@ hardening_out=$("${BASH:-bash}" "$SCRIPT_DIR/apply_hardening_rules.sh" "${AFFECT
 }
 
 TESTABLE_MODULES=()
-[ -n "$hardening_out" ] && mapfile -t TESTABLE_MODULES <<< "$hardening_out"
+[ -n "$hardening_out" ] && mapfile -t TESTABLE_MODULES < <(grep -vxF ":app" <<< "$hardening_out" || true)
 
 if [ -f "$SMOKE_FALLBACK_FILE" ] && source "$SMOKE_FALLBACK_FILE" && [ "${SMOKE_FALLBACK:-0}" = "1" ]; then
   log "Smoke fallback — running app-level smoke test only."
   run_gradle "${SMOKE_TEST_MODULE}:assemble$(capitalize "$FLAVOUR")BlackDebug" \
              "${SMOKE_TEST_MODULE}:assemble$(capitalize "$FLAVOUR")BlackDebugAndroidTest"
-  run_gradle runFlank; exit 0
+  smoke_dir="$REPO_ROOT/$(echo "$SMOKE_TEST_MODULE" | sed 's/^://' | tr ':' '/')"
+  smoke_apks=$(find "$smoke_dir/build/outputs/apk/androidTest" -name "*-androidTest.apk" 2>/dev/null | sort | paste -sd, -)
+  run_gradle runFlank "$FLANK_SHARDS_ARG" "-Pselective.test.apks=$smoke_apks"; exit 0
 fi
 
 [ ${#TESTABLE_MODULES[@]} -eq 0 ] && { log "No testable modules — skipping."; exit 0; }
@@ -102,7 +107,9 @@ declare -a GRADLE_TASKS=( ":app:assemble${FLAVOR_CAP}BlackDebug" )
 
 for module in "${TESTABLE_MODULES[@]}"; do
   module_dir="$REPO_ROOT/$(echo "$module" | sed 's/^://' | tr ':' '/')"
-  if module_has_flavor "$module_dir" "$FLAVOUR"; then
+  if module_has_flavor "$module_dir" "black"; then
+    GRADLE_TASKS+=( "${module}:assemble${FLAVOR_CAP}BlackDebugAndroidTest" )
+  elif module_has_flavor "$module_dir" "$FLAVOUR"; then
     # Module has multiple product flavors — qualify to avoid "ambiguous task" error
     GRADLE_TASKS+=( "${module}:assemble${FLAVOR_CAP}DebugAndroidTest" )
   else
@@ -129,5 +136,5 @@ done
 [ ${#BUILT_APKS[@]} -eq 0 ] && die "No test APKs found after build — assembleDebugAndroidTest may have failed silently."
 log "Test APKs (${#BUILT_APKS[@]}): ${BUILT_APKS[*]}"
 APKS_COMMA=$(IFS=','; echo "${BUILT_APKS[*]}")
-run_gradle runFlank "-Pselective.test.apks=$APKS_COMMA"
+run_gradle runFlank "$FLANK_SHARDS_ARG" "-Pselective.test.apks=$APKS_COMMA"
 log "=== Done ==="

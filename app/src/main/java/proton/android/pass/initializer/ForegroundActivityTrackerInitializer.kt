@@ -1,0 +1,71 @@
+/*
+ * Copyright (c) 2026 Proton AG
+ * This file is part of Proton AG and Proton Pass.
+ *
+ * Proton Pass is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * Proton Pass is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
+package proton.android.pass.initializer
+
+import android.app.Activity
+import android.app.Application
+import android.content.Context
+import android.os.Bundle
+import androidx.startup.Initializer
+import dagger.hilt.EntryPoint
+import dagger.hilt.InstallIn
+import dagger.hilt.android.EntryPointAccessors
+import dagger.hilt.components.SingletonComponent
+import proton.android.pass.ForegroundActivityTracker
+
+class ForegroundActivityTrackerInitializer : Initializer<Unit> {
+
+    override fun create(context: Context) {
+        val application = context.applicationContext as? Application ?: return
+        val tracker = EntryPointAccessors.fromApplication(
+            application,
+            ForegroundActivityTrackerInitializerEntryPoint::class.java
+        ).foregroundActivityTracker()
+
+        application.registerActivityLifecycleCallbacks(
+            object : Application.ActivityLifecycleCallbacks {
+                override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) = Unit
+
+                override fun onActivityStarted(activity: Activity) = Unit
+
+                override fun onActivityResumed(activity: Activity) {
+                    tracker.onActivityResumed(activity)
+                }
+
+                override fun onActivityPaused(activity: Activity) = Unit
+
+                override fun onActivityStopped(activity: Activity) = Unit
+
+                override fun onActivitySaveInstanceState(activity: Activity, outState: Bundle) = Unit
+
+                override fun onActivityDestroyed(activity: Activity) {
+                    tracker.onActivityDestroyed(activity)
+                }
+            }
+        )
+    }
+
+    override fun dependencies(): List<Class<out Initializer<*>?>> = emptyList()
+
+    @EntryPoint
+    @InstallIn(SingletonComponent::class)
+    interface ForegroundActivityTrackerInitializerEntryPoint {
+        fun foregroundActivityTracker(): ForegroundActivityTracker
+    }
+}

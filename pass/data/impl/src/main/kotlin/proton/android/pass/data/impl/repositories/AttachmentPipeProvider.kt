@@ -53,14 +53,15 @@ class AttachmentPipeProvider : ContentProvider(), ContentProvider.PipeDataWriter
     }
 
     private lateinit var appContext: Context
-    private lateinit var encryptionContextProvider: EncryptionContextProvider
-
-    override fun onCreate(): Boolean {
-        appContext = checkNotNull(context) { "ContentProvider context is null" }
-        encryptionContextProvider = EntryPointAccessors.fromApplication(
+    private val encryptionContextProvider: EncryptionContextProvider by lazy {
+        EntryPointAccessors.fromApplication(
             appContext,
             AttachmentPipeProviderEntryPoint::class.java
         ).encryptionContextProvider()
+    }
+
+    override fun onCreate(): Boolean {
+        appContext = checkNotNull(context) { "ContentProvider context is null" }
         return true
     }
 

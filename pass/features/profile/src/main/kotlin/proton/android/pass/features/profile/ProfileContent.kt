@@ -69,7 +69,7 @@ internal fun ProfileContent(
         modifier = modifier.fillMaxSize()
     ) {
         Scaffold(
-            modifier = modifier.statusBarsPadding(),
+            modifier = Modifier.statusBarsPadding(),
             topBar = {
                 PassExtendedTopBar(
                     modifier = Modifier.padding(top = Spacing.medium),

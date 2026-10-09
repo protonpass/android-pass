@@ -33,6 +33,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.toSize
@@ -63,6 +64,7 @@ fun AccountSwitcherList(
         if (primary.isNotEmpty()) {
             AccountSwitcherRow(
                 modifier = Modifier
+                    .testTag(AccountSwitcherTestTag.COLLAPSED_ROW)
                     .clickable { onExpandedChange(true) }
                     .onGloballyPositioned { coordinates ->
                         rowSize = coordinates.size.toSize()

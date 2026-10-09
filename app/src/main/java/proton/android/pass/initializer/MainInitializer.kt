@@ -59,6 +59,7 @@ class MainInitializer : Initializer<Unit> {
 
     override fun dependencies() = listOf(
         FeatureFlagInitializer::class.java,
+        ForegroundActivityTrackerInitializer::class.java,
         AccountStateHandlerInitializer::class.java,
         CryptoValidatorInitializer::class.java,
         EventManagerInitializer::class.java,
@@ -85,6 +86,7 @@ class MainInitializer : Initializer<Unit> {
                 // WorkManager need to be initialized before any other dependant initializer.
                 initializeComponent(WorkManagerInitializer::class.java)
                 initializeComponent(MainInitializer::class.java)
+                flavorInitializers.forEach(::initializeComponent)
             }
         }
     }

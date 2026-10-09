@@ -196,6 +196,13 @@ interface LocalItemDataSource {
         itemFlags: Map<ItemFlag, Boolean>
     ): Flow<List<ItemEntity>>
 
+    fun observeItemCountByFolder(
+        userId: UserId,
+        shareId: ShareId,
+        folderId: FolderId,
+        itemState: ItemState?
+    ): Flow<Int>
+
     fun observeRecentSearchItems(userId: UserId, shareId: ShareId?): Flow<List<ItemEntity>>
 
 }

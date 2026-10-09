@@ -319,6 +319,15 @@ class FakeLocalItemDataSource : LocalItemDataSource {
         memory.filter { it.shareId == shareId.id && it.folderId == folderId.id }
     )
 
+    override fun observeItemCountByFolder(
+        userId: UserId,
+        shareId: ShareId,
+        folderId: FolderId,
+        itemState: ItemState?
+    ): Flow<Int> = flowOf(
+        memory.count { it.shareId == shareId.id && it.folderId == folderId.id }
+    )
+
     override fun observeRecentSearchItems(userId: UserId, shareId: ShareId?): Flow<List<ItemEntity>> {
         throw IllegalStateException("Not yet implemented")
     }

@@ -206,6 +206,70 @@ class ItemsDaoTest {
     }
 
     @Test
+    fun observeItemCountByFolder_countsRootAndDescendantFolderItems() = runTest {
+        val userId = "user-1"
+        val shareId = "share-1"
+        val rootId = "folder-root"
+        val childId = "folder-child"
+        val grandchildId = "folder-grandchild"
+        val siblingId = "folder-sibling"
+
+        insertFolder(userId, shareId, rootId, parentFolderId = null)
+        insertFolder(userId, shareId, childId, parentFolderId = rootId)
+        insertFolder(userId, shareId, grandchildId, parentFolderId = childId)
+        insertFolder(userId, shareId, siblingId, parentFolderId = null)
+
+        insertItem(userId, shareId, itemId = "item-root", folderId = rootId)
+        insertItem(userId, shareId, itemId = "item-child", folderId = childId)
+        insertItem(userId, shareId, itemId = "item-grandchild", folderId = grandchildId)
+        insertItem(userId, shareId, itemId = "item-sibling", folderId = siblingId)
+        insertItem(userId, shareId, itemId = "item-no-folder", folderId = null)
+
+        val result = foldersDao.observeItemCountByFolder(
+            userId = userId,
+            shareId = shareId,
+            rootFolderId = rootId,
+            itemState = null
+        ).first()
+
+        assertEquals(3, result)
+    }
+
+    @Test
+    fun observeItemCountByFolder_itemStateFilterApplies() = runTest {
+        val userId = "user-1"
+        val shareId = "share-1"
+        val folderId = "folder-1"
+
+        insertFolder(userId, shareId, folderId, parentFolderId = null)
+        insertItem(userId, shareId, itemId = "active-item", folderId = folderId, state = ItemStateValues.ACTIVE)
+        insertItem(userId, shareId, itemId = "trashed-item", folderId = folderId, state = ItemStateValues.TRASHED)
+
+        val all = foldersDao.observeItemCountByFolder(userId, shareId, folderId, itemState = null).first()
+        val active = foldersDao.observeItemCountByFolder(
+            userId,
+            shareId,
+            folderId,
+            itemState = ItemStateValues.ACTIVE
+        ).first()
+
+        assertEquals(2, all)
+        assertEquals(1, active)
+    }
+
+    @Test
+    fun observeItemCountByFolder_missingRootFolderReturnsZero() = runTest {
+        val result = foldersDao.observeItemCountByFolder(
+            userId = "user-1",
+            shareId = "share-1",
+            rootFolderId = "missing",
+            itemState = null
+        ).first()
+
+        assertEquals(0, result)
+    }
+
+    @Test
     fun observeItemsByFolder_excludesSiblingFolderItems() = runTest {
         val userId = "user-1"
         val shareId = "share-1"

@@ -28,13 +28,16 @@ import me.proton.core.key.domain.useKeys
 import me.proton.core.user.domain.entity.User
 import org.junit.Test
 import proton.android.pass.account.fakes.FakeKeyStoreCrypto
+import proton.android.pass.commonrust.impl.ItemContentSerializerImpl
 import proton.android.pass.crypto.api.EncryptionKey
 import proton.android.pass.crypto.api.context.EncryptionTag
 import proton.android.pass.crypto.api.usecases.EncryptedCreateVault
 import proton.android.pass.crypto.fakes.context.FakeEncryptionContextProvider
+import proton.android.pass.domain.ShareColor
+import proton.android.pass.domain.ShareIcon
+import proton.android.pass.domain.VaultProperties
 import proton.android.pass.test.UserAddressTestFactory
 import proton.android.pass.test.domain.UserTestFactory
-import proton_pass_vault_v1.VaultV1
 import kotlin.test.assertContentEquals
 import kotlin.test.assertEquals
 
@@ -45,6 +48,7 @@ class CreateVaultImplTest {
     )
 
     private val encryptionContextProvider = FakeEncryptionContextProvider()
+    private val itemContentSerializer = ItemContentSerializerImpl()
 
     @Test
     fun canCreateVault() {
@@ -52,12 +56,14 @@ class CreateVaultImplTest {
         val vaultName = Utils.generatePassphrase()
         val vaultDescription = Utils.generatePassphrase()
         val user = UserTestFactory.createWithKeys()
-        val vaultMetadata = VaultV1.Vault.newBuilder()
-            .setName(vaultName)
-            .setDescription(vaultDescription)
-            .build()
+        val vaultMetadata = VaultProperties(
+            name = vaultName,
+            description = vaultDescription,
+            icon = ShareIcon.Icon1,
+            color = ShareColor.Color1
+        )
 
-        val instance = CreateVaultImpl(cryptoContext, encryptionContextProvider)
+        val instance = CreateVaultImpl(cryptoContext, encryptionContextProvider, itemContentSerializer)
         val (request, vaultKey) = instance.createVaultRequest(user, userAddress, vaultMetadata)
 
         validateVaultKey(user, request, vaultKey)
@@ -80,7 +86,7 @@ class CreateVaultImplTest {
     }
 
     private fun validateVaultMetadata(
-        metadata: VaultV1.Vault,
+        metadata: VaultProperties,
         request: EncryptedCreateVault,
         vaultKey: EncryptionKey
     ) {
@@ -89,7 +95,7 @@ class CreateVaultImplTest {
             decrypt(EncryptedByteArray(decodedRequestContent), EncryptionTag.VaultContent)
         }
 
-        val parsed = VaultV1.Vault.parseFrom(decrypted)
+        val parsed = itemContentSerializer.deserializeVault(decrypted)
         assertEquals(metadata.name, parsed.name)
         assertEquals(metadata.description, parsed.description)
     }

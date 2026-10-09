@@ -22,24 +22,36 @@ import proton.android.pass.crypto.api.Base64
 import proton.android.pass.crypto.api.EncryptionKey
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.crypto.api.context.EncryptionTag
+import proton.android.pass.commonrust.api.ItemContentSerializer
 import proton.android.pass.crypto.api.usecases.EncryptedUpdateVaultRequest
 import proton.android.pass.crypto.api.usecases.UpdateVault
+import proton.android.pass.domain.VaultProperties
 import proton.android.pass.domain.key.ShareKey
-import proton_pass_vault_v1.VaultV1
 import javax.inject.Inject
 
 class UpdateVaultImpl @Inject constructor(
-    private val encryptionContextProvider: EncryptionContextProvider
+    private val encryptionContextProvider: EncryptionContextProvider,
+    private val itemContentSerializer: ItemContentSerializer
 ) : UpdateVault {
 
-    override fun createUpdateVaultRequest(shareKey: ShareKey, body: VaultV1.Vault): EncryptedUpdateVaultRequest {
+    override fun createUpdateVaultRequest(
+        shareKey: ShareKey,
+        originalContent: ByteArray?,
+        body: VaultProperties
+    ): EncryptedUpdateVaultRequest {
 
         val decryptedKey = encryptionContextProvider.withEncryptionContext {
             EncryptionKey(decrypt(shareKey.key))
         }
 
+        val serializedVault = if (originalContent != null) {
+            itemContentSerializer.performVaultUpdate(originalContent, body)
+        } else {
+            itemContentSerializer.serializeVault(body)
+        }
+
         val encryptedContent = encryptionContextProvider.withEncryptionContext(decryptedKey) {
-            encrypt(body.toByteArray(), EncryptionTag.VaultContent)
+            encrypt(serializedVault, EncryptionTag.VaultContent)
         }
 
         return EncryptedUpdateVaultRequest(

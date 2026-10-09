@@ -40,7 +40,6 @@ import proton.android.pass.domain.FolderId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.key.ShareKey
 import proton.android.pass.log.api.PassLogger
-import proton_pass_folder_v1.FolderV1
 
 internal class FolderSyncDecryptor(
     private val appDispatchers: AppDispatchers,
@@ -280,9 +279,12 @@ internal class FolderSyncDecryptor(
             openFolderKey.clear()
         }
 
-        val folderProto = FolderV1.Folder.newBuilder().setName(openedFolder.folderName).build()
-        val folderContentProto = encryptionContextProvider.withEncryptionContextSuspendable {
-            encrypt(folderProto.toByteArray())
+        val folderContentProto = try {
+            encryptionContextProvider.withEncryptionContextSuspendable {
+                encrypt(openedFolder.originalContent)
+            }
+        } finally {
+            openedFolder.originalContent.fill(0)
         }
 
         val folderEntity = apiModel.toEntity(context.userId, context.shareId.id, folderContentProto)

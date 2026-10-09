@@ -18,14 +18,12 @@
 
 package proton.android.pass.data.impl.repositories
 
-import FileV1
 import android.content.ContentResolver
 import android.net.Uri
 import androidx.core.net.toUri
-import fileMetadata
 import java.util.concurrent.ConcurrentHashMap
-import kotlinx.coroutines.currentCoroutineContext
 import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.currentCoroutineContext
 import kotlinx.coroutines.ensureActive
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
@@ -43,6 +41,7 @@ import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.AppDispatchers
 import proton.android.pass.files.api.FilesDirectories
 import proton.android.pass.common.api.safeRunCatching
+import proton.android.pass.commonrust.api.FileType as DetectedFileType
 import proton.android.pass.commonrust.api.FileTypeDetector
 import proton.android.pass.commonrust.api.MimeType
 import proton.android.pass.crypto.api.Base64
@@ -79,6 +78,7 @@ import proton.android.pass.data.impl.util.isCompleteEncryptedFile
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.attachments.Attachment
+import proton.android.pass.domain.attachments.AttachmentContent
 import proton.android.pass.domain.attachments.AttachmentDownloadStatus
 import proton.android.pass.domain.attachments.AttachmentId
 import proton.android.pass.domain.attachments.Chunk
@@ -135,10 +135,7 @@ class AttachmentRepositoryImpl @Inject constructor(
         if (metadata.size >= userAccessData.storageMaxFileSize) {
             throw FileSizeExceededError()
         }
-        val fileMetadata = fileMetadata {
-            this.name = metadata.name
-            this.mimeType = metadata.mimeType
-        }
+        val fileMetadata = AttachmentContent(name = metadata.name, mimeType = metadata.mimeType)
         val encryptedMetadata = encryptFileAttachmentMetadata.encrypt(fileMetadata)
         val chunks = ceil(metadata.size.toDouble() / CHUNK_SIZE).toInt()
         val pendingFileResponse = remote.createPendingFile(
@@ -170,10 +167,7 @@ class AttachmentRepositoryImpl @Inject constructor(
 
         val encryptedMetadata = encryptFileAttachmentMetadata.update(
             fileKey = linkData.linkKey,
-            metadata = fileMetadata {
-                this.name = metadata.name
-                this.mimeType = metadata.mimeType
-            },
+            metadata = AttachmentContent(name = metadata.name, mimeType = metadata.mimeType),
             encryptionVersion = linkData.encryptionVersion
         )
         remote.updatePendingFile(
@@ -294,11 +288,10 @@ class AttachmentRepositoryImpl @Inject constructor(
                 encryptionContextProvider.withEncryptionContextSuspendable {
                     decrypt(attachment.reencryptedKey) to decrypt(attachment.reencryptedMetadata)
                 }
-            val metadata = FileV1.FileMetadata.parseFrom(decryptedMetadata)
-            val updatedMetadata = metadata.toBuilder().setName(title).build()
-            val encryptedMetadata = encryptFileAttachmentMetadata.update(
+            val encryptedMetadata = encryptFileAttachmentMetadata.rename(
                 fileKey = EncryptionKey(decryptedFileKey),
-                metadata = updatedMetadata,
+                decryptedMetadata = decryptedMetadata,
+                name = title,
                 encryptionVersion = attachment.encryptionVersion
             )
             val encodedMetadata = encryptedMetadata.encryptedMetadata
@@ -418,14 +411,34 @@ class AttachmentRepositoryImpl @Inject constructor(
             ?: throw IllegalStateException("Attachment not found")
         val chunks = local.getChunksForAttachment(shareId, itemId, attachmentId)
         encryptionContextProvider.withEncryptionContextSuspendable {
-            attachment.toDomain(
-                encryptionContext = this,
-                fileTypeDetector = fileTypeDetector,
+            decryptToDomain(
+                entity = attachment,
                 shareId = shareId,
                 itemId = itemId,
-                chunks = chunks.map(ChunkEntity::toDomain)
+                chunks = chunks
             )
         }
+    }
+
+    private fun EncryptionContext.decryptToDomain(
+        entity: AttachmentEntity,
+        shareId: ShareId,
+        itemId: ItemId,
+        chunks: List<ChunkEntity>
+    ): Attachment {
+        val decryptedMetadata = decrypt(entity.reencryptedMetadata)
+        val metadata = try {
+            encryptFileAttachmentMetadata.deserialize(decryptedMetadata)
+        } finally {
+            decryptedMetadata.fill(0)
+        }
+        return entity.toDomain(
+            metadata = metadata,
+            fileType = fileTypeDetector.getFileTypeFromMimeType(MimeType(metadata.mimeType)),
+            shareId = shareId,
+            itemId = itemId,
+            chunks = chunks.map(ChunkEntity::toDomain)
+        )
     }
 
     private suspend fun mapAttachmentsWithChunksToDomain(
@@ -434,12 +447,11 @@ class AttachmentRepositoryImpl @Inject constructor(
         itemId: ItemId
     ) = encryptionContextProvider.withEncryptionContextSuspendable {
         attachmentsWithChunks.map {
-            it.attachment.toDomain(
-                encryptionContext = this,
-                fileTypeDetector = fileTypeDetector,
+            decryptToDomain(
+                entity = it.attachment,
                 shareId = shareId,
                 itemId = itemId,
-                chunks = it.chunks.map(ChunkEntity::toDomain)
+                chunks = it.chunks
             )
         }
     }
@@ -694,12 +706,11 @@ class AttachmentRepositoryImpl @Inject constructor(
                     attachmentsWithChunks.map { awc ->
                         val shareId = ShareId(awc.attachment.shareId)
                         val itemId = ItemId(awc.attachment.itemId)
-                        awc.attachment.toDomain(
-                            encryptionContext = this,
-                            fileTypeDetector = fileTypeDetector,
+                        decryptToDomain(
+                            entity = awc.attachment,
                             shareId = shareId,
                             itemId = itemId,
-                            chunks = awc.chunks.map(ChunkEntity::toDomain)
+                            chunks = awc.chunks
                         )
                     }
                 }
@@ -715,12 +726,11 @@ class AttachmentRepositoryImpl @Inject constructor(
                 attachmentsWithChunks.map { awc ->
                     val shareId = ShareId(awc.attachment.shareId)
                     val itemId = ItemId(awc.attachment.itemId)
-                    awc.attachment.toDomain(
-                        encryptionContext = this,
-                        fileTypeDetector = fileTypeDetector,
+                    decryptToDomain(
+                        entity = awc.attachment,
                         shareId = shareId,
                         itemId = itemId,
-                        chunks = awc.chunks.map(ChunkEntity::toDomain)
+                        chunks = awc.chunks
                     )
                 }
             }
@@ -742,12 +752,11 @@ class AttachmentRepositoryImpl @Inject constructor(
         .map { awc ->
             awc?.let {
                 encryptionContextProvider.withEncryptionContextSuspendable {
-                    it.attachment.toDomain(
-                        encryptionContext = this,
-                        fileTypeDetector = fileTypeDetector,
+                    decryptToDomain(
+                        entity = it.attachment,
                         shareId = shareId,
                         itemId = itemId,
-                        chunks = it.chunks.map(ChunkEntity::toDomain)
+                        chunks = it.chunks
                     )
                 }
             }
@@ -820,15 +829,12 @@ fun ChunkApiModel.toChunkEntity(
 )
 
 fun AttachmentEntity.toDomain(
-    encryptionContext: EncryptionContext,
-    fileTypeDetector: FileTypeDetector,
+    metadata: AttachmentContent,
+    fileType: DetectedFileType,
     shareId: ShareId,
     itemId: ItemId,
     chunks: List<Chunk>
 ): Attachment {
-    val decryptedMetadata = encryptionContext.decrypt(this.reencryptedMetadata)
-    val metadata = FileV1.FileMetadata.parseFrom(decryptedMetadata)
-    val fileType = fileTypeDetector.getFileTypeFromMimeType(MimeType(metadata.mimeType))
     return Attachment(
         id = AttachmentId(this.id),
         persistentId = PersistentAttachmentId(this.persistentId),

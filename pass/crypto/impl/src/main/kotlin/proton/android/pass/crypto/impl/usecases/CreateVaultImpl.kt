@@ -29,22 +29,24 @@ import proton.android.pass.crypto.api.context.EncryptionTag
 import proton.android.pass.crypto.api.usecases.CreateVault
 import proton.android.pass.crypto.api.usecases.CreateVaultOutput
 import proton.android.pass.crypto.api.usecases.EncryptedCreateVault
+import proton.android.pass.commonrust.api.ItemContentSerializer
 import proton.android.pass.crypto.impl.extensions.tryUseKeys
-import proton_pass_vault_v1.VaultV1
+import proton.android.pass.domain.VaultProperties
 import javax.inject.Inject
 
 class CreateVaultImpl @Inject constructor(
     private val cryptoContext: CryptoContext,
-    private val encryptionContextProvider: EncryptionContextProvider
+    private val encryptionContextProvider: EncryptionContextProvider,
+    private val itemContentSerializer: ItemContentSerializer
 ) : CreateVault {
 
     override fun createVaultRequest(
         user: User,
         userAddress: UserAddress,
-        vaultMetadata: VaultV1.Vault
+        vaultMetadata: VaultProperties
     ): CreateVaultOutput {
         val vaultKey = EncryptionKey.generate()
-        val vaultContents = vaultMetadata.toByteArray()
+        val vaultContents = itemContentSerializer.serializeVault(vaultMetadata)
 
         val encryptedVaultKey = user.tryUseKeys("create vault request", cryptoContext) {
             encryptAndSignData(vaultKey.value())

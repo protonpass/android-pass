@@ -62,6 +62,7 @@ class UserInviteRepositoryImplTest {
         remoteDataSource = FakeRemoteUserInviteDataSource()
 
         repository = UserInviteRepositoryImpl(
+            itemContentSerializer = proton.android.pass.commonrust.fakes.FakeItemContentSerializer(),
             remoteDataSource = remoteDataSource,
             localDatasource = StubLocalUserInviteDataSource,
             encryptionContextProvider = FakeEncryptionContextProvider(),

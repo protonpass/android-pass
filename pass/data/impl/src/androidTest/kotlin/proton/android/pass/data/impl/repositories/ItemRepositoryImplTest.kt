@@ -110,6 +110,7 @@ class ItemRepositoryImplTest {
         )
 
         instance = ItemRepositoryImpl(
+            itemContentSerializer = proton.android.pass.commonrust.impl.ItemContentSerializerImpl(),
             database = database,
             getPrimaryUserId = FakeGetPrimaryUserId().apply {
                 setResult(USER_ID)

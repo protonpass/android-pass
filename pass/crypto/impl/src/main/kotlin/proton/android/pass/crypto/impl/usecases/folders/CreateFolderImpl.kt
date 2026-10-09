@@ -25,12 +25,13 @@ import proton.android.pass.crypto.api.context.EncryptionTag
 import proton.android.pass.crypto.api.usecases.folders.CreateFolder
 import proton.android.pass.crypto.api.usecases.folders.CreateFolderPayload
 import proton.android.pass.crypto.api.usecases.folders.EncryptedCreateFolder
+import proton.android.pass.commonrust.api.ItemContentSerializer
 import proton.android.pass.crypto.impl.Constants.FOLDER_CONTENT_FORMAT_VERSION
-import proton_pass_folder_v1.FolderV1
 import javax.inject.Inject
 
 class CreateFolderImpl @Inject constructor(
-    private val encryptionContextProvider: EncryptionContextProvider
+    private val encryptionContextProvider: EncryptionContextProvider,
+    private val itemContentSerializer: ItemContentSerializer
 ) : CreateFolder {
 
     override fun create(
@@ -38,10 +39,7 @@ class CreateFolderImpl @Inject constructor(
         keyRotation: Long,
         folderName: String
     ): CreateFolderPayload {
-        val folder = FolderV1.Folder.newBuilder()
-            .setName(folderName)
-            .build()
-        val serializedFolder = folder.toByteArray()
+        val serializedFolder = itemContentSerializer.serializeFolder(folderName)
 
         val folderKey = EncryptionKey.generate()
 

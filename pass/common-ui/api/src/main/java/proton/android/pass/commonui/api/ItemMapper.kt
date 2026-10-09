@@ -18,14 +18,12 @@
 
 package proton.android.pass.commonui.api
 
+import proton.android.pass.commonrust.api.ItemContentSerializer
 import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.crypto.api.context.EncryptionContext
-import proton.android.pass.datamodels.api.fromParsed
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemEncrypted
-import proton.android.pass.domain.ItemType
 import proton.android.pass.domain.toItemContents
-import proton_pass_item_v1.ItemV1
 
 fun Item.toUiModel(context: EncryptionContext): ItemUiModel = ItemUiModel(
     id = id,
@@ -45,10 +43,9 @@ fun Item.toUiModel(context: EncryptionContext): ItemUiModel = ItemUiModel(
     shareType = shareType
 )
 
-fun ItemEncrypted.toUiModel(context: EncryptionContext): ItemUiModel {
+fun ItemEncrypted.toUiModel(context: EncryptionContext, itemContentSerializer: ItemContentSerializer): ItemUiModel {
     val decryptedContent = context.decrypt(content)
-    val parsed = ItemV1.Item.parseFrom(decryptedContent)
-    val itemType = ItemType.fromParsed(context, parsed, aliasEmail)
+    val itemType = itemContentSerializer.deserializeItem(decryptedContent, context, aliasEmail).itemType
     return ItemUiModel(
         id = id,
         shareId = shareId,

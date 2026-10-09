@@ -48,9 +48,10 @@ class FakeUpdateFolder @Inject constructor() : UpdateFolder {
     override fun update(
         folderKey: EncryptionKey,
         keyRotation: Long,
+        originalEncryptedContent: String?,
         folderName: String
     ): EncryptedUpdateFolder {
-        memory.add(Payload(folderKey, keyRotation, folderName))
+        memory.add(Payload(folderKey, keyRotation, originalEncryptedContent, folderName))
 
         return mockResult ?: EncryptedUpdateFolder(
             keyRotation = keyRotation,
@@ -62,6 +63,7 @@ class FakeUpdateFolder @Inject constructor() : UpdateFolder {
     data class Payload(
         val folderKey: EncryptionKey,
         val keyRotation: Long,
+        val originalEncryptedContent: String?,
         val folderName: String
     )
 }

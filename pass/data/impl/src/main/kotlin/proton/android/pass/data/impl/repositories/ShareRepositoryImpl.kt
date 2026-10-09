@@ -56,9 +56,7 @@ import proton.android.pass.data.impl.crypto.ReencryptShareContents
 import proton.android.pass.data.impl.db.PassDatabase
 import proton.android.pass.data.impl.db.entities.ShareEntity
 import proton.android.pass.data.impl.db.entities.ShareKeyEntity
-import proton.android.pass.data.impl.extensions.toDomain
 import proton.android.pass.data.impl.extensions.toEntity
-import proton.android.pass.data.impl.extensions.toProto
 import proton.android.pass.data.impl.extensions.toRequest
 import proton.android.pass.data.impl.extensions.toResponse
 import proton.android.pass.data.impl.local.LocalShareDataSource
@@ -74,16 +72,18 @@ import proton.android.pass.domain.SharePermission
 import proton.android.pass.domain.ShareRole
 import proton.android.pass.domain.ShareType
 import proton.android.pass.domain.VaultId
+import proton.android.pass.domain.VaultProperties
 import proton.android.pass.domain.entity.NewVault
 import proton.android.pass.domain.events.EventToken
 import proton.android.pass.domain.key.ShareKey
 import proton.android.pass.log.api.PassLogger
-import proton_pass_vault_v1.VaultV1
+import proton.android.pass.commonrust.api.ItemContentSerializer
 import java.sql.Date
 import javax.inject.Inject
 
 @Suppress("TooManyFunctions", "LargeClass")
 class ShareRepositoryImpl @Inject constructor(
+    private val itemContentSerializer: ItemContentSerializer,
     private val database: PassDatabase,
     private val userRepository: UserRepository,
     private val userAddressRepository: UserAddressRepository,
@@ -387,8 +387,17 @@ class ShareRepositoryImpl @Inject constructor(
         val userAddress = requireNotNull(userAddressRepository.getAddresses(userId).primary())
         val shareKey = shareKeyRepository.getLatestKeyForShare(shareId).first()
         val body = newVaultToBody(vault)
-        val request = updateVault.createUpdateVaultRequest(shareKey, body).toRequest()
         val share = localShareDataSource.getById(userId, shareId)
+        val originalContent = share?.encryptedContent?.let { encryptedContent ->
+            encryptionContextProvider.withEncryptionContextSuspendable {
+                decrypt(encryptedContent)
+            }
+        }
+        val request = try {
+            updateVault.createUpdateVaultRequest(shareKey, originalContent, body).toRequest()
+        } finally {
+            originalContent?.fill(0)
+        }
         val response = safeRunCatching {
             remoteShareDataSource.updateVault(userId, shareId, request)
         }.fold(
@@ -724,7 +733,7 @@ class ShareRepositoryImpl @Inject constructor(
             ?: throw IllegalStateException("Vault share without encrypted content")
         val vault = runCatching {
             encryptionContext.decrypt(vaultEncryptedContent)
-                .let(VaultV1.Vault::parseFrom)
+                .let(itemContentSerializer::deserializeVault)
         }.getOrElse { e ->
             PassLogger.w(TAG, "Failed to parse vault proto for share $id, skipping")
             PassLogger.w(TAG, e)
@@ -750,8 +759,8 @@ class ShareRepositoryImpl @Inject constructor(
             maxMembers = targetMaxMembers,
             canAutofill = canAutofill,
             name = vault.name,
-            color = vault.display.color.toDomain(),
-            icon = vault.display.icon.toDomain(),
+            color = vault.color,
+            icon = vault.icon,
             shareFlags = ShareFlags(flags),
             offlineAttachments = offlineAttachments
         )
@@ -767,20 +776,17 @@ class ShareRepositoryImpl @Inject constructor(
         return request.toRequest() to shareKey
     }
 
-    private suspend fun newVaultToBody(vault: NewVault): VaultV1.Vault {
+    private suspend fun newVaultToBody(vault: NewVault): VaultProperties {
         val (name, description) = encryptionContextProvider.withEncryptionContextSuspendable {
             decrypt(vault.name) to decrypt(vault.description)
         }
 
-        val display = VaultV1.VaultDisplayPreferences.newBuilder()
-            .setColor(vault.color.toProto())
-            .setIcon(vault.icon.toProto())
-            .build()
-        return VaultV1.Vault.newBuilder()
-            .setName(name)
-            .setDescription(description)
-            .setDisplay(display)
-            .build()
+        return VaultProperties(
+            name = name,
+            description = description,
+            icon = vault.icon,
+            color = vault.color
+        )
     }
 
     private fun localShareNeedsUpdate(localShare: ShareEntity, remoteShare: ShareResponse): Boolean = when {

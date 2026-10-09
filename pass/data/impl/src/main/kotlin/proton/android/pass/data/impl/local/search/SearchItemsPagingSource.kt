@@ -23,6 +23,7 @@ import androidx.paging.PagingState
 import androidx.room.InvalidationTracker
 import androidx.sqlite.db.SimpleSQLiteQuery
 import me.proton.core.domain.entity.UserId
+import proton.android.pass.commonrust.api.ItemContentSerializer
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.impl.extensions.toDomain
 import proton.android.pass.data.impl.db.entities.ItemEntity
@@ -33,6 +34,7 @@ import proton.android.pass.domain.ShareId
 import proton.android.pass.log.api.PassLogger
 
 class SearchItemsPagingSource(
+    private val itemContentSerializer: ItemContentSerializer,
     private val searchDbInvalidationTracker: InvalidationTracker,
     private val searchDao: SearchDao,
     private val localItemDataSource: LocalItemDataSource,
@@ -91,7 +93,7 @@ class SearchItemsPagingSource(
 
             // 3. Order guaranteed
             val domainItems = encryptionContextProvider.withEncryptionContext {
-                entities.map { it.toDomain(this) }
+                entities.toDomain(this, itemContentSerializer)
             }
 
             PassLogger.d(TAG, "Loaded ${domainItems.size} items for page $page")

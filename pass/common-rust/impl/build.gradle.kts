@@ -29,24 +29,49 @@ android {
     
     defaultConfig {
         minSdk = libs.versions.minSdk.get().toInt()
-        
+
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
-    
+
+    testOptions {
+        managedDevices {
+            allDevices {
+                maybeCreate<com.android.build.api.dsl.ManagedVirtualDevice>("pixel2api30").apply {
+                    device = "Pixel 2"
+                    apiLevel = 30
+                    systemImageSource = "aosp-atd"
+                }
+            }
+        }
+    }
 }
 
 dependencies {
     api(projects.pass.commonRust.api)
     implementation(projects.pass.common.api)
+    implementation(projects.pass.crypto.api)
     implementation(projects.pass.domain)
+    implementation(projects.pass.log.api)
 
     implementation(libs.kotlinx.coroutines.core)
+    implementation(libs.kotlinx.datetime)
     implementation(libs.pass.common)
 
     implementation(libs.dagger.hilt.android)
     ksp(libs.dagger.hilt.android.compiler)
     ksp(libs.androidx.hilt.compiler)
 
+    testImplementation(libs.coroutines.test)
     testImplementation(libs.junit)
+    testImplementation(libs.kotest.property)
     testImplementation(libs.testParameterInjector)
     testImplementation(libs.truth)
+    testImplementation(projects.pass.crypto.fakes)
+
+    androidTestImplementation(projects.pass.crypto.fakes)
+    androidTestImplementation(libs.truth)
+    androidTestImplementation(libs.junit)
+    androidTestImplementation(libs.androidx.test.core)
+    androidTestImplementation(libs.androidx.test.runner)
+    androidTestImplementation(libs.core.test.android.instrumented)
 }

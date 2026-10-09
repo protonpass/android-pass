@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2025-2026 Proton AG
+ * Copyright (c) 2026 Proton AG
  * This file is part of Proton AG and Proton Pass.
  *
  * Proton Pass is free software: you can redistribute it and/or modify
@@ -24,27 +24,30 @@ import org.junit.Before
 import org.junit.Test
 import proton.android.pass.crypto.api.Base64
 import proton.android.pass.crypto.api.EncryptionKey
+import proton.android.pass.crypto.api.context.EncryptionTag
 import proton.android.pass.crypto.fakes.context.FakeEncryptionContextProvider
-import proton_pass_folder_v1.FolderV1
+import proton.android.pass.crypto.impl.usecases.UnknownProtobufField
+import proton.android.pass.commonrust.impl.ItemContentSerializerImpl
 
 class UpdateFolderImplTest {
 
     private lateinit var encryptionContextProvider: FakeEncryptionContextProvider
     private lateinit var updateFolder: UpdateFolderImpl
+    private val itemContentSerializer = ItemContentSerializerImpl()
 
     @Before
     fun setup() {
         encryptionContextProvider = FakeEncryptionContextProvider()
-        updateFolder = UpdateFolderImpl(encryptionContextProvider)
+        updateFolder = UpdateFolderImpl(encryptionContextProvider, itemContentSerializer)
     }
 
     @Test
-    fun `update folder returns encrypted folder data`() {
+    fun updateFolderReturnsEncryptedFolderData() {
         val folderKey = EncryptionKey.generate()
         val keyRotation = 1L
         val folderName = "Updated Folder"
 
-        val result = updateFolder.update(folderKey, keyRotation, folderName)
+        val result = updateFolder.update(folderKey, keyRotation, null, folderName)
 
         assertThat(result.keyRotation).isEqualTo(keyRotation)
         assertThat(result.contentFormatVersion).isEqualTo(1)
@@ -52,12 +55,12 @@ class UpdateFolderImplTest {
     }
 
     @Test
-    fun `update folder encrypts new folder name correctly`() {
+    fun updateFolderEncryptsNewFolderNameCorrectly() {
         val folderKey = EncryptionKey.generate()
         val keyRotation = 1L
         val newFolderName = "Renamed Folder"
 
-        val result = updateFolder.update(folderKey, keyRotation, newFolderName)
+        val result = updateFolder.update(folderKey, keyRotation, null, newFolderName)
 
         // Decrypt the content to verify it contains the new folder name
         val decryptedContent = encryptionContextProvider.withEncryptionContext(folderKey.clone()) {
@@ -65,30 +68,30 @@ class UpdateFolderImplTest {
             decrypt(encryptedBytes)
         }
 
-        val folder = FolderV1.Folder.parseFrom(decryptedContent)
-        assertThat(folder.name).isEqualTo(newFolderName)
+        val folder = itemContentSerializer.deserializeFolder(decryptedContent)
+        assertThat(folder).isEqualTo(newFolderName)
     }
 
     @Test
-    fun `update folder preserves key rotation`() {
+    fun updateFolderPreservesKeyRotation() {
         val folderKey = EncryptionKey.generate()
         val keyRotation = 42L
         val folderName = "Folder"
 
-        val result = updateFolder.update(folderKey, keyRotation, folderName)
+        val result = updateFolder.update(folderKey, keyRotation, null, folderName)
 
         assertThat(result.keyRotation).isEqualTo(keyRotation)
     }
 
     @Test
-    fun `update folder uses existing folder key`() {
+    fun updateFolderUsesExistingFolderKey() {
         val folderKey = EncryptionKey.generate()
         val keyRotation = 1L
         val folderName1 = "First Name"
         val folderName2 = "Second Name"
 
-        val result1 = updateFolder.update(folderKey.clone(), keyRotation, folderName1)
-        val result2 = updateFolder.update(folderKey.clone(), keyRotation, folderName2)
+        val result1 = updateFolder.update(folderKey.clone(), keyRotation, null, folderName1)
+        val result2 = updateFolder.update(folderKey.clone(), keyRotation, null, folderName2)
 
         // Both results should be decryptable with the same folder key
         val decryptedContent1 = encryptionContextProvider.withEncryptionContext(folderKey.clone()) {
@@ -101,20 +104,20 @@ class UpdateFolderImplTest {
             decrypt(encryptedBytes)
         }
 
-        val folder1 = FolderV1.Folder.parseFrom(decryptedContent1)
-        val folder2 = FolderV1.Folder.parseFrom(decryptedContent2)
+        val folder1 = itemContentSerializer.deserializeFolder(decryptedContent1)
+        val folder2 = itemContentSerializer.deserializeFolder(decryptedContent2)
 
-        assertThat(folder1.name).isEqualTo(folderName1)
-        assertThat(folder2.name).isEqualTo(folderName2)
+        assertThat(folder1).isEqualTo(folderName1)
+        assertThat(folder2).isEqualTo(folderName2)
     }
 
     @Test
-    fun `update folder handles special characters in name`() {
+    fun updateFolderHandlesSpecialCharactersInName() {
         val folderKey = EncryptionKey.generate()
         val keyRotation = 1L
         val folderName = "Folder 🚀 with special chars & symbols"
 
-        val result = updateFolder.update(folderKey, keyRotation, folderName)
+        val result = updateFolder.update(folderKey, keyRotation, null, folderName)
 
         // Decrypt and verify the name is preserved
         val decryptedContent = encryptionContextProvider.withEncryptionContext(folderKey.clone()) {
@@ -122,7 +125,28 @@ class UpdateFolderImplTest {
             decrypt(encryptedBytes)
         }
 
-        val folder = FolderV1.Folder.parseFrom(decryptedContent)
-        assertThat(folder.name).isEqualTo(folderName)
+        val folder = itemContentSerializer.deserializeFolder(decryptedContent)
+        assertThat(folder).isEqualTo(folderName)
+    }
+
+    @Test
+    fun updateKeepsUnknownFieldsFromOriginalContent() {
+        val folderKey = EncryptionKey.generate()
+        val keyRotation = 1L
+        val originalContent = itemContentSerializer.serializeFolder("Old Name") + UnknownProtobufField.bytes
+        val originalEncryptedContent = encryptionContextProvider.withEncryptionContext(folderKey.clone()) {
+            Base64.encodeBase64String(encrypt(originalContent, EncryptionTag.FolderContent).array)
+        }
+
+        val result = updateFolder.update(folderKey, keyRotation, originalEncryptedContent, "New Name")
+
+        val decryptedContent = encryptionContextProvider.withEncryptionContext(folderKey.clone()) {
+            val encryptedBytes = EncryptedByteArray(Base64.decodeBase64(result.content))
+            decrypt(encryptedBytes)
+        }
+
+        val folder = itemContentSerializer.deserializeFolder(decryptedContent)
+        assertThat(folder).isEqualTo("New Name")
+        assertThat(UnknownProtobufField.isContainedIn(decryptedContent)).isTrue()
     }
 }

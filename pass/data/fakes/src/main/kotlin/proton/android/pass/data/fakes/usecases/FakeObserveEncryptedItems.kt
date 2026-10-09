@@ -25,11 +25,11 @@ import kotlinx.datetime.Clock
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.FlowUtils.testFlow
 import proton.android.pass.common.api.None
+import proton.android.pass.commonrust.fakes.FakeItemContentSerializer
 import proton.android.pass.crypto.fakes.context.FakeEncryptionContext
 import proton.android.pass.crypto.fakes.context.FakeEncryptionContextProvider
 import proton.android.pass.data.api.usecases.ItemTypeFilter
 import proton.android.pass.data.api.usecases.ObserveEncryptedItems
-import proton.android.pass.datamodels.api.serializeToProto
 import proton.android.pass.domain.AddressDetailsContent
 import proton.android.pass.domain.ContactDetailsContent
 import proton.android.pass.domain.CreditCardType
@@ -97,6 +97,8 @@ class FakeObserveEncryptedItems @Inject constructor() : ObserveEncryptedItems {
 
     companion object {
 
+        private val itemContentSerializer = FakeItemContentSerializer()
+
         val defaultValues: DefaultValues = DefaultValues(
             createLogin(itemId = ItemId("login")),
             createAlias(itemId = ItemId("alias")),
@@ -112,10 +114,12 @@ class FakeObserveEncryptedItems @Inject constructor() : ObserveEncryptedItems {
             itemContents: ItemContents
         ): ItemEncrypted {
             val now = Clock.System.now()
-            val asProto = itemContents.serializeToProto(
-                itemUuid = "123",
-                encryptionContext = FakeEncryptionContext
+            val serialized = itemContentSerializer.serializeItem(
+                contents = itemContents,
+                encryptionContext = FakeEncryptionContext,
+                itemUuid = "123"
             )
+            val parsed = itemContentSerializer.deserializeItem(serialized, FakeEncryptionContext, aliasEmail)
             return FakeEncryptionContextProvider().withEncryptionContext {
                 ItemEncrypted(
                     id = itemId,
@@ -125,7 +129,7 @@ class FakeObserveEncryptedItems @Inject constructor() : ObserveEncryptedItems {
                     folderId = folderId,
                     title = encrypt(itemContents.title),
                     note = encrypt(itemContents.note),
-                    content = encrypt(asProto.toByteArray()),
+                    content = encrypt(serialized),
                     aliasEmail = aliasEmail,
                     state = ItemState.Active.value,
                     modificationTime = now,

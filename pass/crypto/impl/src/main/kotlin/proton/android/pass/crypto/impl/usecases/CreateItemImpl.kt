@@ -18,6 +18,7 @@
 
 package proton.android.pass.crypto.impl.usecases
 
+import proton.android.pass.commonrust.api.ItemContentSerializer
 import proton.android.pass.crypto.api.Base64
 import proton.android.pass.crypto.impl.Constants
 import proton.android.pass.crypto.api.EncryptionKey
@@ -25,13 +26,13 @@ import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.crypto.api.context.EncryptionTag
 import proton.android.pass.crypto.api.usecases.CreateItem
 import proton.android.pass.crypto.api.usecases.EncryptedCreateItem
-import proton.android.pass.datamodels.api.serializeToProto
 import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.key.InviteKey
 import javax.inject.Inject
 
 class CreateItemImpl @Inject constructor(
-    private val encryptionContextProvider: EncryptionContextProvider
+    private val encryptionContextProvider: EncryptionContextProvider,
+    private val itemContentSerializer: ItemContentSerializer
 ) : CreateItem {
 
     override fun create(
@@ -45,7 +46,7 @@ class CreateItemImpl @Inject constructor(
             Constants.ITEM_CFV_WITHOUT_URL_MATCHING
         }
         val serializedItem = encryptionContextProvider.withEncryptionContext {
-            itemContents.serializeToProto(encryptionContext = this).toByteArray()
+            itemContentSerializer.serializeItem(itemContents, this)
         }
         val itemKey = EncryptionKey.generate()
 

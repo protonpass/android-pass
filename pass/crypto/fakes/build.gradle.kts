@@ -45,7 +45,7 @@ dependencies {
     ksp(libs.dagger.hilt.android.compiler)
     ksp(libs.androidx.hilt.compiler)
 
+    implementation(projects.pass.commonRust.fakes)
     implementation(projects.pass.domain)
-    implementation(projects.pass.protos)
     implementation(projects.pass.account.fakes)
 }

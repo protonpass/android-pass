@@ -88,6 +88,7 @@ class ItemRepositoryImplRefreshItemsTest {
         shareKeyRepository.emitGetShareKeys(listOf(ShareKeyTestFactory.createPrivate()))
 
         repository = ItemRepositoryImpl(
+            itemContentSerializer = proton.android.pass.commonrust.fakes.FakeItemContentSerializer(),
             database = FakePassDatabase(),
             getPrimaryUserId = FakeGetPrimaryUserId(),
             userAddressRepository = userAddressRepository.apply { setAddresses(listOf(userAddress)) },

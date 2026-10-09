@@ -26,6 +26,7 @@ import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.mapLatest
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.domain.entity.UserId
+import proton.android.pass.commonrust.api.ItemContentSerializer
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.repositories.ShareRepository
 import proton.android.pass.data.api.usecases.passkeys.ObserveItemsWithPasskeys
@@ -39,6 +40,7 @@ import javax.inject.Singleton
 
 @Singleton
 class ObserveItemsWithPasskeysImpl @Inject constructor(
+    private val itemContentSerializer: ItemContentSerializer,
     private val accountManager: AccountManager,
     private val localItemDataSource: LocalItemDataSource,
     private val shareRepository: ShareRepository,
@@ -82,7 +84,7 @@ class ObserveItemsWithPasskeysImpl @Inject constructor(
                             true
                         }
                     }
-                    .map { it.toDomain(this@withEncryptionContext) }
+                    .map { it.toDomain(this@withEncryptionContext, itemContentSerializer) }
             }
         }
 }

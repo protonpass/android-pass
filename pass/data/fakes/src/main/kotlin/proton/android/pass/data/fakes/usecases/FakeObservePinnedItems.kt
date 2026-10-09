@@ -24,12 +24,11 @@ import kotlinx.datetime.Clock
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.FlowUtils.testFlow
 import proton.android.pass.common.api.None
+import proton.android.pass.commonrust.fakes.FakeItemContentSerializer
 import proton.android.pass.crypto.fakes.context.FakeEncryptionContext
 import proton.android.pass.crypto.fakes.context.FakeEncryptionContextProvider
 import proton.android.pass.data.api.usecases.ItemTypeFilter
 import proton.android.pass.data.api.usecases.ObservePinnedItems
-import proton.android.pass.datamodels.api.fromParsed
-import proton.android.pass.datamodels.api.serializeToProto
 import proton.android.pass.domain.CreditCardType
 import proton.android.pass.domain.HiddenState
 import proton.android.pass.domain.Item
@@ -37,7 +36,6 @@ import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.ItemFlags
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ItemState
-import proton.android.pass.domain.ItemType
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.ShareSelection
 import proton.android.pass.domain.ShareType
@@ -77,6 +75,7 @@ class FakeObservePinnedItems @Inject constructor() : ObservePinnedItems {
     }
 
     companion object {
+        private val itemContentSerializer = FakeItemContentSerializer()
 
         val defaultValues = DefaultValues(
             createLogin(itemId = ItemId("login")),
@@ -91,10 +90,12 @@ class FakeObservePinnedItems @Inject constructor() : ObservePinnedItems {
             itemContents: ItemContents
         ): Item {
             val now = Clock.System.now()
-            val asProto = itemContents.serializeToProto(
-                itemUuid = "123",
-                encryptionContext = FakeEncryptionContext
+            val serialized = itemContentSerializer.serializeItem(
+                contents = itemContents,
+                encryptionContext = FakeEncryptionContext,
+                itemUuid = "123"
             )
+            val parsed = itemContentSerializer.deserializeItem(serialized, FakeEncryptionContext, aliasEmail)
             return FakeEncryptionContextProvider().withEncryptionContext {
                 Item(
                     id = itemId,
@@ -102,10 +103,10 @@ class FakeObservePinnedItems @Inject constructor() : ObservePinnedItems {
                     itemUuid = "",
                     revision = 1,
                     shareId = shareId,
-                    itemType = ItemType.fromParsed(this, asProto, aliasEmail),
+                    itemType = parsed.itemType,
                     title = encrypt(itemContents.title),
                     note = encrypt(itemContents.note),
-                    content = encrypt(asProto.toByteArray()),
+                    content = encrypt(serialized),
                     packageInfoSet = emptySet(),
                     state = ItemState.Active.value,
                     modificationTime = now,

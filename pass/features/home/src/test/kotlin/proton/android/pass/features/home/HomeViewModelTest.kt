@@ -36,6 +36,7 @@ import proton.android.pass.common.fakes.FakeAppDispatchers
 import proton.android.pass.commonui.api.DateFormatUtils
 import proton.android.pass.commonui.api.GroupedItemList
 import proton.android.pass.commonui.api.GroupingKeys
+import proton.android.pass.commonrust.fakes.FakeItemContentSerializer
 import proton.android.pass.commonui.api.toUiModel
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.composecomponents.impl.uievents.IsRefreshingState
@@ -103,6 +104,8 @@ internal class HomeViewModelTest {
     internal val dispatcher = MainDispatcherRule()
 
     private lateinit var instance: HomeViewModel
+
+    private val itemContentSerializer = FakeItemContentSerializer()
 
     private lateinit var trashItems: FakeTrashItems
     private lateinit var snackbarDispatcher: FakeSnackbarDispatcher
@@ -200,7 +203,7 @@ internal class HomeViewModelTest {
                     ),
                     items = items.map {
                         encryptionContextProvider.withEncryptionContext {
-                            it.toUiModel(this@withEncryptionContext)
+                            it.toUiModel(this@withEncryptionContext, itemContentSerializer)
                         }
                     }
                 )
@@ -755,6 +758,7 @@ internal class HomeViewModelTest {
 
     private fun createViewModel() {
         instance = HomeViewModel(
+            itemContentSerializer = itemContentSerializer,
             trashItems = trashItems,
             snackbarDispatcher = snackbarDispatcher,
             clipboardManager = clipboardManager,

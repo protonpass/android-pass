@@ -24,6 +24,7 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import proton.android.pass.commonrust.api.AliasPrefixValidator
 import proton.android.pass.commonrust.api.EmailValidator
+import proton.android.pass.commonrust.api.ItemContentSerializer
 import proton.android.pass.commonrust.api.NewUserInviteSignatureBodyCreator
 import proton.android.pass.commonrust.api.PasswordScorer
 import proton.android.pass.commonrust.api.SshKeyGenerator
@@ -66,5 +67,8 @@ abstract class FakesCommonRustModule {
 
     @[Binds Singleton]
     abstract fun bindSshKeyGenerator(impl: FakeSshKeyGenerator): SshKeyGenerator
+
+    @[Binds Singleton]
+    abstract fun bindItemContentSerializer(impl: FakeItemContentSerializer): ItemContentSerializer
 
 }

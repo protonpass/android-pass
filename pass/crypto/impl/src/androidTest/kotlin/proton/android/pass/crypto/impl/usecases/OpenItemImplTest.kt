@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023-2026 Proton AG
+ * Copyright (c) 2026 Proton AG
  * This file is part of Proton AG and Proton Pass.
  *
  * Proton Pass is free software: you can redistribute it and/or modify
@@ -20,6 +20,7 @@ package proton.android.pass.crypto.impl.usecases
 
 import org.junit.Before
 import org.junit.Test
+import proton.android.pass.commonrust.impl.ItemContentSerializerImpl
 import proton.android.pass.crypto.api.Base64
 import proton.android.pass.crypto.api.EncryptionKey
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
@@ -41,7 +42,7 @@ class OpenItemImplTest {
     @Before
     fun setUp() {
         encryptionContextProvider = FakeEncryptionContextProvider(EncryptionKey.generate())
-        instance = OpenItemImpl(encryptionContextProvider)
+        instance = OpenItemImpl(encryptionContextProvider, ItemContentSerializerImpl())
     }
 
     @Test

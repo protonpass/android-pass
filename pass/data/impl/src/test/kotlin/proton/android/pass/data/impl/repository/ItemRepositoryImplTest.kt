@@ -33,6 +33,7 @@ import proton.android.pass.data.fakes.usecases.FakeGetReadyAccounts
 import proton.android.pass.account.fakes.FakeUserAddressRepository
 import proton.android.pass.crypto.api.usecases.EncryptedUpdateItemRequest
 import proton.android.pass.crypto.api.usecases.OpenItemOutput
+import proton.android.pass.crypto.fakes.context.FakeEncryptionContext
 import proton.android.pass.crypto.fakes.context.FakeEncryptionContextProvider
 import proton.android.pass.crypto.fakes.usecases.FakeCreateItem
 import proton.android.pass.crypto.api.usecases.ItemKeyWithRotation
@@ -126,6 +127,7 @@ class ItemRepositoryImplTest {
         shareKeyRepository.emitGetShareKeys(listOf(ShareKeyTestFactory.createPrivate()))
 
         repository = ItemRepositoryImpl(
+            itemContentSerializer = proton.android.pass.commonrust.fakes.FakeItemContentSerializer(),
             database = FakePassDatabase(),
             getPrimaryUserId = FakeGetPrimaryUserId(),
             userAddressRepository = userAddressRepository.apply {
@@ -158,8 +160,9 @@ class ItemRepositoryImplTest {
 
         val name = "title"
         val note = "note"
-        val protoItem = TestProtoItemGenerator.generate(name, note)
-        val item = ItemTestFactory.random(content = protoItem.toByteArray())
+        val itemContents = TestProtoItemGenerator.generate(name, note)
+        val serializer = proton.android.pass.commonrust.fakes.FakeItemContentSerializer()
+        val item = ItemTestFactory.random(content = serializer.serializeItem(itemContents, FakeEncryptionContext))
         remoteItemDataSource.setCreateItemResponse {
             FakeRemoteItemDataSource.createItemRevision(item)
         }
@@ -198,8 +201,9 @@ class ItemRepositoryImplTest {
         shareKeyRepository.emitGetLatestKeyForShare(ShareKeyTestFactory.createPrivate())
         createItem.setPayload(FakeCreateItem.createPayload())
 
-        val protoItem = TestProtoItemGenerator.generate("title", "note")
-        val item = ItemTestFactory.random(content = protoItem.toByteArray())
+        val itemContents = TestProtoItemGenerator.generate("title", "note")
+        val serializer = proton.android.pass.commonrust.fakes.FakeItemContentSerializer()
+        val item = ItemTestFactory.random(content = serializer.serializeItem(itemContents, FakeEncryptionContext))
         openItem.setOutput(OpenItemOutput(item = item, itemKey = null))
 
         remoteItemDataSource.setCreateItemAndAliasResponse {
@@ -275,8 +279,11 @@ class ItemRepositoryImplTest {
         val goodItemId = ItemId("good-item-id")
         val badItemId = ItemId("bad-item-id")
 
-        val protoItem = TestProtoItemGenerator.generate(name = "title", note = "note")
-        val openOutputItem = ItemTestFactory.random(content = protoItem.toByteArray())
+        val itemContents = TestProtoItemGenerator.generate(name = "title", note = "note")
+        val serializer = proton.android.pass.commonrust.fakes.FakeItemContentSerializer()
+        val openOutputItem = ItemTestFactory.random(
+            content = serializer.serializeItem(itemContents, FakeEncryptionContext)
+        )
         openItem.setOpenBlock { encryptedRevision ->
             if (encryptedRevision.itemId == badItemId.id) {
                 throw IllegalStateException("Bad decrypt")
@@ -536,8 +543,11 @@ class ItemRepositoryImplTest {
     @Test
     fun `applyPendingEvent upserts synced items without indexing them`() = runTest {
         val itemId = ItemId("synced-not-indexed")
-        val protoItem = TestProtoItemGenerator.generate(name = "title", note = "note")
-        val openOutputItem = ItemTestFactory.random(content = protoItem.toByteArray())
+        val itemContents = TestProtoItemGenerator.generate(name = "title", note = "note")
+        val serializer = proton.android.pass.commonrust.fakes.FakeItemContentSerializer()
+        val openOutputItem = ItemTestFactory.random(
+            content = serializer.serializeItem(itemContents, FakeEncryptionContext)
+        )
         openItem.setOpenBlock { OpenItemOutput(item = openOutputItem, itemKey = null) }
 
         val event = itemPendingEvent(

@@ -18,11 +18,12 @@
 
 package proton.android.pass.data.impl.crypto.attachment
 
-import FileV1
+import proton.android.pass.commonrust.api.ItemContentSerializer
 import proton.android.pass.crypto.api.Base64
 import proton.android.pass.crypto.api.EncryptionKey
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.crypto.api.context.EncryptionTag
+import proton.android.pass.domain.attachments.AttachmentContent
 import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import javax.inject.Inject
 
@@ -33,73 +34,89 @@ data class EncryptedFileAttachmentMetadata(
 )
 
 interface EncryptFileAttachmentMetadata {
-    suspend fun encrypt(metadata: FileV1.FileMetadata): EncryptedFileAttachmentMetadata
+    suspend fun encrypt(metadata: AttachmentContent): EncryptedFileAttachmentMetadata
     suspend fun update(
         fileKey: EncryptionKey,
-        metadata: FileV1.FileMetadata,
+        metadata: AttachmentContent,
         encryptionVersion: Int
     ): EncryptedFileAttachmentMetadata
+
+    suspend fun rename(
+        fileKey: EncryptionKey,
+        decryptedMetadata: ByteArray,
+        name: String,
+        encryptionVersion: Int
+    ): EncryptedFileAttachmentMetadata
+
+    fun deserialize(decryptedMetadata: ByteArray): AttachmentContent
 }
 
 class EncryptFileAttachmentMetadataImpl @Inject constructor(
     private val ffRepo: FeatureFlagsPreferencesRepository,
-    private val encryptionContextProvider: EncryptionContextProvider
+    private val encryptionContextProvider: EncryptionContextProvider,
+    private val itemContentSerializer: ItemContentSerializer
 ) : EncryptFileAttachmentMetadata {
 
-    override suspend fun encrypt(metadata: FileV1.FileMetadata): EncryptedFileAttachmentMetadata {
+    override suspend fun encrypt(metadata: AttachmentContent): EncryptedFileAttachmentMetadata {
         val fileKey = EncryptionKey.generate()
         return encrypt(metadata, fileKey, 2)
     }
 
     override suspend fun update(
         fileKey: EncryptionKey,
-        metadata: FileV1.FileMetadata,
+        metadata: AttachmentContent,
         encryptionVersion: Int
     ) = encrypt(metadata, fileKey, encryptionVersion)
 
+    override fun deserialize(decryptedMetadata: ByteArray): AttachmentContent =
+        itemContentSerializer.deserializeAttachmentContent(decryptedMetadata)
+
+    override suspend fun rename(
+        fileKey: EncryptionKey,
+        decryptedMetadata: ByteArray,
+        name: String,
+        encryptionVersion: Int
+    ): EncryptedFileAttachmentMetadata = encryptBytes(
+        serialized = itemContentSerializer.updateAttachmentName(decryptedMetadata, name),
+        key = fileKey,
+        encryptionVersion = encryptionVersion
+    )
+
     private suspend fun encrypt(
-        metadata: FileV1.FileMetadata,
+        metadata: AttachmentContent,
         key: EncryptionKey,
         encryptionVersion: Int
-    ): EncryptedFileAttachmentMetadata {
-        return when (encryptionVersion) {
-            1 -> encryptV1(metadata, key)
-            2 -> encryptV2(metadata, key)
-            else -> throw IllegalStateException("Unknown encryptionVersion $encryptionVersion")
-        }
+    ): EncryptedFileAttachmentMetadata = encryptBytes(
+        serialized = itemContentSerializer.serializeAttachmentContent(metadata),
+        key = key,
+        encryptionVersion = encryptionVersion
+    )
+
+    private suspend fun encryptBytes(
+        serialized: ByteArray,
+        key: EncryptionKey,
+        encryptionVersion: Int
+    ): EncryptedFileAttachmentMetadata = when (encryptionVersion) {
+        1 -> encryptWithTag(serialized, key, EncryptionTag.FileData, 1)
+        2 -> encryptWithTag(serialized, key, EncryptionTag.FileMetadata, 2)
+        else -> throw IllegalStateException("Unknown encryptionVersion $encryptionVersion")
     }
 
-
-    private suspend fun encryptV1(
-        fileMetadata: FileV1.FileMetadata,
-        fileKey: EncryptionKey
+    private suspend fun encryptWithTag(
+        serialized: ByteArray,
+        fileKey: EncryptionKey,
+        tag: EncryptionTag,
+        encryptionVersion: Int
     ): EncryptedFileAttachmentMetadata {
         val encryptedMetadata =
             encryptionContextProvider.withEncryptionContextSuspendable(fileKey.clone()) {
-                encrypt(fileMetadata.toByteArray(), EncryptionTag.FileData)
+                encrypt(serialized, tag)
             }
 
         return EncryptedFileAttachmentMetadata(
             encryptedMetadata = Base64.encodeBase64String(encryptedMetadata.array),
-            encryptionVersion = 1,
+            encryptionVersion = encryptionVersion,
             fileKey = fileKey
         )
     }
-
-    private suspend fun encryptV2(
-        fileMetadata: FileV1.FileMetadata,
-        fileKey: EncryptionKey
-    ): EncryptedFileAttachmentMetadata {
-        val encryptedMetadata =
-            encryptionContextProvider.withEncryptionContextSuspendable(fileKey.clone()) {
-                encrypt(fileMetadata.toByteArray(), EncryptionTag.FileMetadata)
-            }
-
-        return EncryptedFileAttachmentMetadata(
-            encryptedMetadata = Base64.encodeBase64String(encryptedMetadata.array),
-            encryptionVersion = 2,
-            fileKey = fileKey
-        )
-    }
-
 }

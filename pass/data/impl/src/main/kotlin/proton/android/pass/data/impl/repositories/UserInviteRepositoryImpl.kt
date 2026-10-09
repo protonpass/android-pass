@@ -47,7 +47,6 @@ import proton.android.pass.data.impl.crypto.NewUserInviteSignatureManager
 import proton.android.pass.data.impl.crypto.ReencryptUserInviteContents
 import proton.android.pass.data.impl.db.entities.UserInviteEntity
 import proton.android.pass.data.impl.db.entities.UserInviteKeyEntity
-import proton.android.pass.data.impl.extensions.toDomain
 import proton.android.pass.data.impl.local.LocalUserInviteDataSource
 import proton.android.pass.data.impl.local.UserInviteAndKeysEntity
 import proton.android.pass.data.impl.remote.RemoteUserInviteDataSource
@@ -74,11 +73,12 @@ import proton.android.pass.domain.ShareInvite
 import proton.android.pass.domain.ShareRole
 import proton.android.pass.domain.ShareType
 import proton.android.pass.domain.events.EventToken
+import proton.android.pass.commonrust.api.ItemContentSerializer
 import proton.android.pass.log.api.PassLogger
-import proton_pass_vault_v1.VaultV1
 import javax.inject.Inject
 
 class UserInviteRepositoryImpl @Inject constructor(
+    private val itemContentSerializer: ItemContentSerializer,
     private val remoteDataSource: RemoteUserInviteDataSource,
     private val localDatasource: LocalUserInviteDataSource,
     private val encryptionContextProvider: EncryptionContextProvider,
@@ -536,7 +536,7 @@ class UserInviteRepositoryImpl @Inject constructor(
 
             ShareType.Vault -> {
                 val content = encryptionContext.decrypt(encryptedContent)
-                val decoded = VaultV1.Vault.parseFrom(content)
+                val decoded = itemContentSerializer.deserializeVault(content)
 
                 PendingInvite.UserVault(
                     inviteToken = InviteToken(token),
@@ -545,8 +545,8 @@ class UserInviteRepositoryImpl @Inject constructor(
                     memberCount = memberCount,
                     itemCount = itemCount,
                     name = decoded.name,
-                    icon = decoded.display.icon.toDomain(),
-                    color = decoded.display.color.toDomain(),
+                    icon = decoded.icon,
+                    color = decoded.color,
                     isFromNewUser = fromNewUser
                 )
             }

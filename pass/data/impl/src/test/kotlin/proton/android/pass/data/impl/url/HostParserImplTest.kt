@@ -383,4 +383,21 @@ class HostParserImplTest {
         assertEquals("plain", hostInfo.domain)
         assertEquals("shared-hosting.example".some(), hostInfo.tld)
     }
+
+    @Test
+    fun `protocol and host are lowercased`() {
+        publicSuffixList.setTlds(setOf("me"))
+
+        val res = instance.parse("HTTPS://Account.Proton.ME/Login")
+
+        assertEquals(
+            HostInfo.Host(
+                protocol = "https",
+                subdomain = "account".some(),
+                domain = "proton",
+                tld = "me".some()
+            ),
+            res.getOrNull()
+        )
+    }
 }

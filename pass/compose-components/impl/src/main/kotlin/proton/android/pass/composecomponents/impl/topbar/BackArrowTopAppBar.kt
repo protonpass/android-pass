@@ -63,7 +63,7 @@ fun BackArrowTopAppBar(
 @Preview
 @Composable
 fun BackArrowTopAppBarPreview(@PreviewParameter(ThemedBooleanPreviewProvider::class) input: Pair<Boolean, Boolean>) {
-    val title = if (input.first) "Title" else null
+    val title = if (input.second) "Title" else null
     PassTheme(isDark = input.first) {
         Surface {
             BackArrowTopAppBar(

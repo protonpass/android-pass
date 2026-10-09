@@ -61,7 +61,7 @@ fun CrossTopAppBar(
 @Preview
 @Composable
 fun CrossTopAppBarPreview(@PreviewParameter(ThemedBooleanPreviewProvider::class) input: Pair<Boolean, Boolean>) {
-    val title = if (input.first) "Title" else null
+    val title = if (input.second) "Title" else null
     PassTheme(isDark = input.first) {
         Surface {
             CrossTopAppBar(

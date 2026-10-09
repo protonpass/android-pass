@@ -25,6 +25,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -49,7 +50,7 @@ import proton.android.pass.commonui.api.LocalDark
 import proton.android.pass.commonui.api.PassPalette
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
-import proton.android.pass.commonui.api.ThemedBooleanPreviewProvider
+import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.commonui.api.applyIf
 import proton.android.pass.commonui.api.body3Norm
 import proton.android.pass.composecomponents.impl.extension.toColor
@@ -110,6 +111,7 @@ fun FolderPathComposable(
                 tint = vaultColor.toColor()
             )
             Text(
+                modifier = Modifier.weight(weight = 1f, fill = false),
                 text = vaultName,
                 style = PassTheme.typography.body3Norm(),
                 color = PassTheme.colors.textWeak,
@@ -175,7 +177,7 @@ private fun ChevronIcon() {
 }
 
 @Composable
-private fun FolderItem(
+private fun RowScope.FolderItem(
     name: String,
     isLast: Boolean,
     textColor: Color
@@ -192,17 +194,17 @@ private fun FolderItem(
     )
     Spacer(modifier = Modifier.width(6.dp))
     Text(
+        modifier = Modifier.weight(weight = 1f, fill = false),
         text = name,
         style = PassTheme.typography.body3Norm(),
-        color = textColor
+        color = textColor,
+        maxLines = 1,
+        overflow = TextOverflow.Ellipsis
     )
 }
 
 @[Preview Composable]
-internal fun FolderPathComposableSinglePreview(
-    @PreviewParameter(ThemedBooleanPreviewProvider::class) input: Pair<Boolean, Boolean>
-) {
-    val (isDark, _) = input
+internal fun FolderPathComposableSinglePreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
 
     PassTheme(isDark = isDark) {
         Surface {
@@ -217,10 +219,8 @@ internal fun FolderPathComposableSinglePreview(
 }
 
 @[Preview Composable]
-internal fun FolderPathComposableCollapsedPreview(
-    @PreviewParameter(ThemedBooleanPreviewProvider::class) input: Pair<Boolean, Boolean>
-) {
-    PassTheme(isDark = input.first) {
+internal fun FolderPathComposableCollapsedPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
+    PassTheme(isDark = isDark) {
         Surface {
             FolderPathComposable(
                 vaultName = "Work",
@@ -233,10 +233,8 @@ internal fun FolderPathComposableCollapsedPreview(
 }
 
 @[Preview Composable]
-internal fun FolderPathComposableExpandedPreview(
-    @PreviewParameter(ThemedBooleanPreviewProvider::class) input: Pair<Boolean, Boolean>
-) {
-    PassTheme(isDark = input.first) {
+internal fun FolderPathComposableExpandedPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
+    PassTheme(isDark = isDark) {
         Surface {
             FolderPathComposable(
                 vaultName = "Work",
@@ -244,6 +242,25 @@ internal fun FolderPathComposableExpandedPreview(
                 vaultColor = ShareColor.Color2,
                 forceExpand = true,
                 folderPath = listOf("Folder1", "Folder2", "Folder3")
+            )
+        }
+    }
+}
+
+@[Preview Composable]
+internal fun FolderPathComposableLongNamesPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
+    PassTheme(isDark = isDark) {
+        Surface {
+            FolderPathComposable(
+                vaultName = "A very long vault name that should be truncated with an ellipsis",
+                vaultIcon = ShareIcon.Icon2,
+                vaultColor = ShareColor.Color2,
+                forceExpand = true,
+                folderPath = listOf(
+                    "A very long folder name that should be truncated with an ellipsis",
+                    "Another extremely long folder name that must not push other segments away",
+                    "The last folder name is also very long and must stay on a single line"
+                )
             )
         }
     }

@@ -104,7 +104,7 @@ internal fun ApplicationSection(
 internal fun ApplicationSectionPreview(
     @PreviewParameter(ThemedBooleanPreviewProvider::class) input: Pair<Boolean, Boolean>
 ) {
-    val telemetry = if (input.first) {
+    val telemetry = if (input.second) {
         TelemetryStatus.Show(shareTelemetry = true, shareCrashes = false)
     } else {
         TelemetryStatus.Hide

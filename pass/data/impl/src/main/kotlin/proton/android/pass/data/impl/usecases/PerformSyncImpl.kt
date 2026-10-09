@@ -42,14 +42,14 @@ class PerformSyncImpl @Inject constructor(
         trigger: String,
         syncReason: SyncReason,
         syncMode: SyncMode
-    ) {
+    ): Result<Unit> {
         PassLogger.i(
             TAG,
             "Performing sync for $userId started (forceSync=$forceSync, trigger=$trigger, " +
                 "syncMode=$syncMode)"
         )
 
-        performSyncWithPendingEvents(userId, forceSync, trigger, syncReason, syncMode)
+        val result = performSyncWithPendingEvents(userId, forceSync, trigger, syncReason, syncMode)
 
         if (syncReason != SyncReason.FolderRepair) {
             safeRunCatching { checkFolderForceSync.get().invoke(userId, syncMode) }
@@ -60,6 +60,7 @@ class PerformSyncImpl @Inject constructor(
         }
 
         PassLogger.i(TAG, "Performing sync for $userId finished")
+        return result
     }
 
     private suspend fun performSyncWithPendingEvents(
@@ -68,11 +69,8 @@ class PerformSyncImpl @Inject constructor(
         trigger: String,
         syncReason: SyncReason,
         syncMode: SyncMode
-    ) {
-        performSyncUserEvents(userId, forceSync, trigger, syncReason, syncMode)
-            .exceptionOrNull()
-            ?.let { error -> PassLogger.w(TAG, "Performing sync error: ${error.message}") }
-    }
+    ): Result<Unit> = performSyncUserEvents(userId, forceSync, trigger, syncReason, syncMode)
+        .onFailure { error -> PassLogger.w(TAG, "Performing sync error: ${error.message}") }
 
     private suspend fun performSyncUserEvents(
         userId: UserId,

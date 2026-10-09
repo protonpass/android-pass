@@ -68,10 +68,30 @@ class PerformSyncImplTest {
             checkFolderForceSync = Provider { checkFolderForceSync }
         )
 
-        instance.invoke(USER_ID, forceSync = false, syncMode = SyncMode.Background)
+        val result = instance.invoke(USER_ID, forceSync = false, syncMode = SyncMode.Background)
 
+        assertThat(result.isFailure).isTrue()
         assertThat(checkFolderForceSync.detailedInvocations)
             .containsExactly(FakeCheckFolderForceSync.Invocation(USER_ID, SyncMode.Background))
+    }
+
+    @Test
+    fun `reports failure when user events sync throws`() = runTest {
+        val instance = PerformSyncImpl(
+            syncUserEvents = FailingSyncUserEvents,
+            checkFolderForceSync = Provider { FakeCheckFolderForceSync() }
+        )
+
+        val result = instance.invoke(USER_ID, forceSync = false, syncMode = SyncMode.Background)
+
+        assertThat(result.exceptionOrNull()).isInstanceOf(IllegalStateException::class.java)
+    }
+
+    @Test
+    fun `reports success when user events sync completes`() = runTest {
+        val result = createInstance().invoke(USER_ID, forceSync = false, syncMode = SyncMode.Background)
+
+        assertThat(result.isSuccess).isTrue()
     }
 
     @Test
@@ -104,6 +124,18 @@ class PerformSyncImplTest {
             syncReason: SyncReason,
             syncMode: SyncMode
         ) = Unit
+    }
+
+    private object FailingSyncUserEvents : SyncUserEvents {
+        override suspend fun invoke(
+            userId: UserId,
+            forceSync: Boolean,
+            trigger: String,
+            syncReason: SyncReason,
+            syncMode: SyncMode
+        ) {
+            throw IllegalStateException("sync failed")
+        }
     }
 
     private object NeverEndingSyncUserEvents : SyncUserEvents {

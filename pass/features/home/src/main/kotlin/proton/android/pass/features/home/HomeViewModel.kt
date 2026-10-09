@@ -898,7 +898,7 @@ class HomeViewModel @Inject constructor(
             safeRunCatching {
                 val userId = observeCurrentUser().firstOrNull()?.userId
                     ?: throw IllegalStateException("User not found")
-                performSync(userId, trigger = "home_pull_to_refresh")
+                performSync(userId, trigger = "home_pull_to_refresh").getOrThrow()
             }.onFailure {
                 PassLogger.e(TAG, it, "Apply pending events failed")
                 snackbarDispatcher(RefreshError)

@@ -93,21 +93,27 @@ class SyncManagerImpl @Inject constructor(
                     }
                 }
 
+                val backoff = SyncBackoff()
                 while (currentCoroutineContext().isActive) {
+                    var anyFailed = false
                     accounts.forEach { account ->
                         withContext(LogAccountContext(account.userId)) {
                             safeRunCatching {
                                 performSync(userId = account.userId, trigger = "foreground_manager")
+                                    .getOrThrow()
                             }
                                 .onSuccess { PassLogger.i(TAG, "Sync finished") }
                                 .onFailure { error ->
+                                    anyFailed = true
                                     PassLogger.w(TAG, "Error in performSync")
                                     PassLogger.w(TAG, error)
                                 }
                         }
                     }
 
-                    delay(eventWorkerManager.getRepeatIntervalForeground())
+                    if (anyFailed) backoff.onFailure() else backoff.onSuccess()
+
+                    delay(backoff.nextDelay(eventWorkerManager.getRepeatIntervalForeground()))
                 }
             }
         }

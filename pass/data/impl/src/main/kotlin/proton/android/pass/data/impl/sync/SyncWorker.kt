@@ -65,7 +65,7 @@ open class SyncWorker @AssistedInject constructor(
                                 userId = account.userId,
                                 trigger = "background_worker",
                                 syncMode = SyncMode.Background
-                            )
+                            ).getOrThrow()
                         }
                             .onSuccess {
                                 PassLogger.i(TAG, "Sync for ${account.userId} finished successfully")

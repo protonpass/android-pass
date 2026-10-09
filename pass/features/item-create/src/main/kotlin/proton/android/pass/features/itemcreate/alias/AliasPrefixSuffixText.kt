@@ -31,7 +31,7 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.sp
 import proton.android.pass.commonui.api.PassTheme
-import proton.android.pass.commonui.api.ThemedBooleanPreviewProvider
+import proton.android.pass.commonui.api.ThemePreviewProvider
 
 @Composable
 fun AliasPrefixSuffixText(
@@ -56,8 +56,8 @@ fun AliasPrefixSuffixText(
 
 @Preview
 @Composable
-fun AliasPrefixSuffixTextPreview(@PreviewParameter(ThemedBooleanPreviewProvider::class) input: Pair<Boolean, Boolean>) {
-    PassTheme(isDark = input.first) {
+fun AliasPrefixSuffixTextPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
+    PassTheme(isDark = isDark) {
         Surface {
             AliasPrefixSuffixText(
                 prefix = "some.prefix",

@@ -63,6 +63,6 @@
   <string name="alias_contacts_bottomsheet_subtitle">Pitääksesi henkilökohtaisen sähköpostiosoitteesi piilossa voit luoda aliasyhteystiedon, joka naamioi osoitteesi.</string>
   <string name="alias_contacts_explanation">Näin se toimii:</string>
   <string name="alias_contacts_bottomsheet_section_1">Syötä osoite, johon haluat ohjata viestit.</string>
-  <string name="alias_contacts_bottomsheet_section_2">Proton Pass luo välitysosoitteen (jota kutsutaan myös käänteisaliakseksi).</string>
+  <string name="alias_contacts_bottomsheet_section_2">Proton Pass luo ohjausosoitteen (jota kutsutaan myös käänteisaliakseksi).</string>
   <string name="alias_contacts_bottomsheet_section_3" comment="an email will follow this sentence">Lähetä viesti tähän osoitteeseen, niin se näyttää saapuneen osoitteesta</string>
 </resources>

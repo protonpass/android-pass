@@ -23,6 +23,7 @@ import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import proton.android.pass.telemetry.api.InstallReferrerProvider
+import proton.android.pass.telemetry.api.MetaInstallReferrerProvider
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -30,4 +31,7 @@ abstract class InstallReferrerModule {
 
     @Binds
     abstract fun bindInstallReferrerProvider(impl: InstallReferrerProviderImpl): InstallReferrerProvider
+
+    @Binds
+    abstract fun bindMetaInstallReferrerProvider(impl: MetaInstallReferrerProviderImpl): MetaInstallReferrerProvider
 }

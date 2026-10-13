@@ -23,18 +23,38 @@ import proton.android.pass.telemetry.api.TelemetryEvent.LiveTelemetryGrowthEvent
 data class TelemetryGrowthInstallEvent(
     val isReinstall: Boolean = false,
     val installRef: String? = null,
-    val installReceipt: String? = null
+    val installReceipt: String? = null,
+    val googleClickTimestampSeconds: Long? = null,
+    val googleInstallBeginTimestampSeconds: Long? = null,
+    val googleCurrentDeviceTimeMs: Long? = null,
+    val metaEncryptedInstallReferrer: String? = null,
+    val metaAttributionTimestampSeconds: Long? = null,
+    val metaIsClickThrough: Boolean? = null
 ) : LiveTelemetryGrowthEvent(TelemetryGrowthEventNames.Install.eventName) {
     override fun dimensions(): Map<String, String> = buildMap {
         put(KEY_IS_REINSTALL, isReinstall.toString())
         installRef?.let { put(KEY_INSTALL_REF, it) }
         installReceipt?.let { put(KEY_INSTALL_RECEIPT, it) }
+        googleClickTimestampSeconds?.let { put(KEY_GOOGLE_CLICK_TIMESTAMP_SECONDS, it.toString()) }
+        googleInstallBeginTimestampSeconds?.let { put(KEY_GOOGLE_INSTALL_BEGIN_SECONDS, it.toString()) }
+        googleCurrentDeviceTimeMs?.let { put(KEY_GOOGLE_CURRENT_DEVICE_TIME_MS, it.toString()) }
+        metaEncryptedInstallReferrer?.let { put(KEY_META_INSTALL_REFERRER, it) }
+        metaAttributionTimestampSeconds?.let { put(KEY_META_ACTUAL_TIMESTAMP, it.toString()) }
+        metaIsClickThrough?.let { put(KEY_META_IS_CT, if (it) META_IS_CT_CLICK else META_IS_CT_IMPRESSION) }
     }
 
     companion object {
         const val KEY_IS_REINSTALL = "is_reinstall"
         const val KEY_INSTALL_REF = "install_ref"
         const val KEY_INSTALL_RECEIPT = "install_receipt"
+        const val KEY_GOOGLE_CLICK_TIMESTAMP_SECONDS = "go_click_timestamp_seconds"
+        const val KEY_GOOGLE_INSTALL_BEGIN_SECONDS = "go_install_begin_timestamp_seconds"
+        const val KEY_GOOGLE_CURRENT_DEVICE_TIME_MS = "go_current_device_time"
+        const val KEY_META_INSTALL_REFERRER = "me_install_referrer"
+        const val KEY_META_ACTUAL_TIMESTAMP = "me_actual_timestamp"
+        const val KEY_META_IS_CT = "me_is_ct"
+        const val META_IS_CT_CLICK = "1"
+        const val META_IS_CT_IMPRESSION = "0"
     }
 }
 

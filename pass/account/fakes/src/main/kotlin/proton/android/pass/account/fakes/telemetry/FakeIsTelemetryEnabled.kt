@@ -25,5 +25,12 @@ import javax.inject.Singleton
 
 @Singleton
 class FakeIsTelemetryEnabled @Inject constructor() : IsTelemetryEnabled {
-    override suspend fun invoke(userId: UserId?): Boolean = false
+
+    private var isEnabled: Boolean = false
+
+    fun setEnabled(value: Boolean) {
+        isEnabled = value
+    }
+
+    override suspend fun invoke(userId: UserId?): Boolean = isEnabled
 }

@@ -32,6 +32,7 @@ interface AppConfig {
     val accountSentryDSN: String?
     val androidVersion: Int
     val allowScreenshotsDefaultValue: Boolean
+    val metaAppId: String?
     val firstInstallTime: Result<Long> get() = Result.failure(NotImplementedError("firstInstallTime not provided"))
     val lastUpdateTime: Result<Long> get() = Result.failure(NotImplementedError("lastUpdateTime not provided"))
 

@@ -19,6 +19,7 @@
 package proton.android.pass.data.impl.util
 
 import kotlinx.serialization.json.JsonPrimitive
+import proton.android.pass.data.impl.requests.InstallRefParameters
 import proton.android.pass.data.impl.requests.TelemetryGrowthEventRequest
 import proton.android.pass.data.impl.requests.TelemetryGrowthFeatureUsageEventRequest
 import proton.android.pass.data.impl.requests.TelemetryGrowthInstallEventRequest
@@ -62,7 +63,8 @@ fun buildTelemetryGrowthEventRequest(
             installRef = dimensions[TelemetryGrowthInstallEvent.KEY_INSTALL_REF]
                 ?.content,
             installReceipt = dimensions[TelemetryGrowthInstallEvent.KEY_INSTALL_RECEIPT]
-                ?.content
+                ?.content,
+            installRefParameters = buildInstallRefParameters(dimensions)
         )
 
         TelemetryGrowthEventNames.Signup -> TelemetryGrowthSignupEventRequest(
@@ -179,4 +181,27 @@ fun buildTelemetryGrowthEventRequest(
             appIdentifier = info.appIdentifier
         )
     }
+}
+
+private fun buildInstallRefParameters(dimensions: Map<String, JsonPrimitive>): InstallRefParameters? {
+    val parameters = InstallRefParameters(
+        goClickTimestampSeconds = dimensions[TelemetryGrowthInstallEvent.KEY_GOOGLE_CLICK_TIMESTAMP_SECONDS]
+            ?.content
+            ?.toLongOrNull(),
+        goInstallBeginTimestampSeconds =
+        dimensions[TelemetryGrowthInstallEvent.KEY_GOOGLE_INSTALL_BEGIN_SECONDS]
+            ?.content
+            ?.toLongOrNull(),
+        goCurrentDeviceTime = dimensions[TelemetryGrowthInstallEvent.KEY_GOOGLE_CURRENT_DEVICE_TIME_MS]
+            ?.content
+            ?.toLongOrNull(),
+        meInstallReferrer = dimensions[TelemetryGrowthInstallEvent.KEY_META_INSTALL_REFERRER]?.content,
+        meActualTimestamp = dimensions[TelemetryGrowthInstallEvent.KEY_META_ACTUAL_TIMESTAMP]
+            ?.content
+            ?.toLongOrNull(),
+        meIsCt = dimensions[TelemetryGrowthInstallEvent.KEY_META_IS_CT]
+            ?.content
+            ?.toIntOrNull()
+    )
+    return parameters.takeUnless { it.isEmpty() }
 }

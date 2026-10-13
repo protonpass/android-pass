@@ -18,9 +18,10 @@
 
 package proton.android.pass.installreferrer.impl
 
+import proton.android.pass.telemetry.api.GooglePlayInstallReferrer
 import proton.android.pass.telemetry.api.InstallReferrerProvider
 import javax.inject.Inject
 
 class NoOpInstallReferrerProvider @Inject constructor() : InstallReferrerProvider {
-    override suspend fun getInstallReferrer(): String? = null
+    override suspend fun getInstallReferrer(): GooglePlayInstallReferrer = GooglePlayInstallReferrer()
 }

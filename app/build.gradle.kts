@@ -47,6 +47,7 @@ val privateProperties = Properties().apply {
 val sentryDSN: String? = privateProperties.getProperty("SENTRY_DSN")
 val accountSentryDSN: String? = System.getenv("ACCOUNT_SENTRY_DSN")
 val atlasProxyToken: String? = privateProperties.getProperty("PROXY_TOKEN")
+val metaAppId: String? = privateProperties.getProperty("META_APP_ID")
 val customEnvUrl: String? = System.getenv("PROD_ENV_URL")
 val isCustomBuild: Boolean = !customEnvUrl.isNullOrBlank()
 val isApkBuild: Boolean = project.findProperty("apkBuild") == "true"
@@ -96,6 +97,7 @@ android {
 
         buildConfigField("String", "SENTRY_DSN", sentryDSN.toBuildConfigValue())
         buildConfigField("String", "ACCOUNT_SENTRY_DSN", accountSentryDSN.toBuildConfigValue())
+        buildConfigField("String", "META_APP_ID", metaAppId.toBuildConfigValue())
 
         setAssetLinksResValue("proton.me")
 

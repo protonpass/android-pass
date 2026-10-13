@@ -512,6 +512,7 @@ class LogViewViewModelTest {
         override val accountSentryDSN: String? = null
         override val androidVersion: Int = 33
         override val allowScreenshotsDefaultValue: Boolean = true
+        override val metaAppId: String? = null
     }
 
     private class TestFileHandler : FileHandler {

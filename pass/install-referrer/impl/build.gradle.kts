@@ -39,6 +39,8 @@ dependencies {
     implementation(libs.core.utilKotlin)
     implementation(libs.kotlinx.coroutines.core)
 
+    implementation(projects.pass.appConfig.api)
+    implementation(projects.pass.common.api)
     implementation(projects.pass.log.api)
 
     implementation(libs.dagger.hilt.android)

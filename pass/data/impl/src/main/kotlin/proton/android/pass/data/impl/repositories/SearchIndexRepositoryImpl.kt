@@ -591,16 +591,16 @@ class SearchIndexRepositoryImpl @Inject constructor(
     }
 
     private fun mapItemTypeCounts(rows: List<ItemTypeCountRow>): ItemTypeCounts {
-        val countMap = rows.associate { it.itemType to it.count }
+        fun totalOf(vararg types: Int): Int = rows.filter { it.itemType in types }.sumOf { it.count }
+        val loginRows = rows.filter { it.itemType == ITEM_TYPE_LOGIN }
         return ItemTypeCounts(
-            loginCount = countMap[ITEM_TYPE_LOGIN] ?: 0,
-            aliasCount = countMap[ITEM_TYPE_ALIAS] ?: 0,
-            noteCount = countMap[ITEM_TYPE_NOTE] ?: 0,
-            creditCardCount = countMap[ITEM_TYPE_CREDIT_CARD] ?: 0,
-            identityCount = countMap[ITEM_TYPE_IDENTITY] ?: 0,
-            customCount = (countMap[ITEM_TYPE_CUSTOM] ?: 0) +
-                (countMap[ITEM_TYPE_WIFI_NETWORK] ?: 0) +
-                (countMap[ITEM_TYPE_SSH_KEY] ?: 0)
+            loginCount = totalOf(ITEM_TYPE_LOGIN),
+            loginWithTotpCount = loginRows.firstOrNull { it.hasTotp }?.count ?: 0,
+            aliasCount = totalOf(ITEM_TYPE_ALIAS),
+            noteCount = totalOf(ITEM_TYPE_NOTE),
+            creditCardCount = totalOf(ITEM_TYPE_CREDIT_CARD),
+            identityCount = totalOf(ITEM_TYPE_IDENTITY),
+            customCount = totalOf(ITEM_TYPE_CUSTOM, ITEM_TYPE_WIFI_NETWORK, ITEM_TYPE_SSH_KEY)
         )
     }
 
@@ -621,7 +621,7 @@ class SearchIndexRepositoryImpl @Inject constructor(
         val sb = StringBuilder()
         sb.append(
             """
-                SELECT item_type AS itemType, COUNT(*) AS count
+                SELECT item_type AS itemType, has_totp AS hasTotp, COUNT(*) AS count
                 FROM search_items
                 WHERE user_id IN (${userIds.placeholders()})
             """.trimIndent()
@@ -685,7 +685,7 @@ class SearchIndexRepositoryImpl @Inject constructor(
             )
         )
 
-        sb.append(" GROUP BY item_type")
+        sb.append(" GROUP BY item_type, has_totp")
 
         return SimpleSQLiteQuery(sb.toString(), args.toTypedArray())
     }

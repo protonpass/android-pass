@@ -37,6 +37,7 @@ import proton.android.pass.crypto.fakes.context.FakeEncryptionContextProvider
 import proton.android.pass.data.api.repositories.ItemTypeCounts
 import proton.android.pass.data.api.repositories.SearchSortBy
 import proton.android.pass.data.api.usecases.ItemTypeFilter
+import proton.android.pass.data.api.usecases.totalFor
 import proton.android.pass.data.impl.fakes.FakeLocalFolderDataSource
 import proton.android.pass.data.impl.fakes.FakeLocalItemDataSource
 import proton.android.pass.data.impl.fakes.FakeLocalShareDataSource
@@ -137,6 +138,21 @@ class SearchIndexRepositoryMultiUserTest {
     }
 
     @Test
+    fun loginWithTotpCountMatchesTotpFilteredQuery() = runTest {
+        dao.upsert(entity(USER_A, SHARE_A, "totp-1", ITEM_TYPE_LOGIN, hasTotp = true))
+        dao.upsert(entity(USER_A, SHARE_A, "totp-2", ITEM_TYPE_LOGIN, hasTotp = true))
+        dao.upsert(entity(USER_A, SHARE_A, "no-totp", ITEM_TYPE_LOGIN))
+        dao.upsert(entity(USER_A, SHARE_A, "alias", ITEM_TYPE_ALIAS))
+
+        val counts = repository.observeItemTypeCounts(userIds = listOf(USER_A)).first()
+
+        assertThat(counts.loginCount).isEqualTo(3)
+        assertThat(counts.loginWithTotpCount).isEqualTo(2)
+        assertThat(counts.totalFor(ItemTypeFilter.LoginWithTotp))
+            .isEqualTo(getAll(listOf(USER_A), itemTypeFilter = ItemTypeFilter.LoginWithTotp).size)
+    }
+
+    @Test
     fun emptyUserIdsReturnEmptyCounts() = runTest {
         insertTwoAccounts()
 
@@ -196,7 +212,8 @@ class SearchIndexRepositoryMultiUserTest {
     private suspend fun getAll(
         userIds: List<UserId>,
         shareIds: List<String>? = null,
-        restrictToRootFolder: Boolean = false
+        restrictToRootFolder: Boolean = false,
+        itemTypeFilter: ItemTypeFilter = ItemTypeFilter.All
     ): List<SearchIdRow> {
         val parts = repository.buildPagingGetAllQueryParts(
             userIds = userIds,
@@ -205,7 +222,7 @@ class SearchIndexRepositoryMultiUserTest {
             folderId = null,
             itemState = ItemState.Active,
             itemSharedType = null,
-            itemTypeFilter = ItemTypeFilter.All,
+            itemTypeFilter = itemTypeFilter,
             includeHidden = false,
             restrictToRootFolder = restrictToRootFolder
         )
@@ -237,7 +254,8 @@ class SearchIndexRepositoryMultiUserTest {
         itemType: Int,
         isSharedByMe: Boolean = false,
         isSharedWithMe: Boolean = false,
-        folderId: String? = null
+        folderId: String? = null,
+        hasTotp: Boolean = false
     ) = SearchItemEntity(
         userId = userId.id,
         shareId = shareId,
@@ -249,7 +267,8 @@ class SearchIndexRepositoryMultiUserTest {
         modifyTime = 0L,
         isSharedByMe = isSharedByMe,
         isSharedWithMe = isSharedWithMe,
-        folderId = folderId
+        folderId = folderId,
+        hasTotp = hasTotp
     )
 
     private companion object {

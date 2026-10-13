@@ -110,6 +110,7 @@ import proton.android.pass.data.api.usecases.ObserveUpgradeInfo
 import proton.android.pass.data.api.usecases.SuggestedAutofillItemsResult
 import proton.android.pass.data.api.usecases.passkeys.ObserveItemsWithPasskeys
 import proton.android.pass.data.api.usecases.shares.ObserveAutofillShares
+import proton.android.pass.data.api.usecases.totalFor
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ItemState
@@ -570,6 +571,7 @@ class SelectItemViewModel @Inject constructor(
             ItemCountQuery(
                 userIds = usersAutofillShares.selectedUserIds(selectedAccount),
                 shareIds = shareIds,
+                itemTypeFilter = state.itemTypeFilter,
                 query = if (isInSearchMode) query.takeIf { q -> q.isNotBlank() } else null
             )
         }
@@ -585,8 +587,7 @@ class SelectItemViewModel @Inject constructor(
                     itemState = ItemState.Active,
                     query = params.query
                 ).map { counts ->
-                    counts.loginCount + counts.aliasCount + counts.noteCount +
-                        counts.creditCardCount + counts.identityCount + counts.customCount
+                    counts.totalFor(params.itemTypeFilter)
                 }
             }
         }
@@ -1042,6 +1043,7 @@ class SelectItemViewModel @Inject constructor(
     private data class ItemCountQuery(
         val userIds: List<UserId>,
         val shareIds: List<ShareId>?,
+        val itemTypeFilter: ItemTypeFilter,
         val query: String?
     )
     // ========== Pagination Support ==========

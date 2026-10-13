@@ -32,8 +32,6 @@ import me.proton.core.presentation.app.AppLifecycleProvider
 import proton.android.pass.common.api.AppDispatchers
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.preferences.InternalSettingsRepository
-import proton.android.pass.telemetry.api.InstallReferrerProvider
-import proton.android.pass.telemetry.api.TelemetryGrowthInstallEvent
 import proton.android.pass.telemetry.api.TelemetryGrowthOpenEvent
 import proton.android.pass.telemetry.api.TelemetryManager
 import proton.android.pass.telemetry.impl.work.LiveTelemetrySenderWorker
@@ -53,7 +51,7 @@ class TelemetryStartupManagerImpl @Inject constructor(
     private val accountManager: AccountManager,
     private val telemetryManager: TelemetryManager,
     private val internalSettingsRepository: InternalSettingsRepository,
-    private val installReferrerProvider: InstallReferrerProvider,
+    private val installEventSender: TelemetryGrowthInstallEventSender,
     private val appDispatchers: AppDispatchers
 ) : TelemetryStartupManager {
 
@@ -64,6 +62,7 @@ class TelemetryStartupManagerImpl @Inject constructor(
         appLifecycleProvider.lifecycle.coroutineScope.launch {
             launch { startListener() }
             launch { observeAppLifecycle() }
+            launch { installEventSender.start() }
             startWorker()
         }
     }
@@ -143,7 +142,6 @@ class TelemetryStartupManagerImpl @Inject constructor(
     private suspend fun handleForegroundTransition() {
         if (isFirstForeground) {
             isFirstForeground = false
-            sendInstallEventIfNeeded()
             sendOpenEvent()
         } else {
             val lastBackground = internalSettingsRepository.getLastBackgroundTimestamp().first()
@@ -158,16 +156,6 @@ class TelemetryStartupManagerImpl @Inject constructor(
 
     private fun sendOpenEvent() {
         telemetryManager.sendEvent(TelemetryGrowthOpenEvent)
-    }
-
-    private suspend fun sendInstallEventIfNeeded() {
-        val alreadySent = internalSettingsRepository.hasTelemetryGrowthInstallEventBeenSent().first()
-        if (!alreadySent) {
-            val installRef = installReferrerProvider.getInstallReferrer()
-            PassLogger.i(TAG, "Sending TelemetryGrowth install event (installRef=${installRef != null})")
-            telemetryManager.sendEvent(TelemetryGrowthInstallEvent(installRef = installRef))
-            internalSettingsRepository.setTelemetryGrowthInstallEventSent(true)
-        }
     }
 
     companion object {

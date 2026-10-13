@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2026 Proton AG
- * This file is part of Proton AG and Proton Pass.
+ * This file is part of Proton Pass.
  *
  * Proton Pass is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,16 +18,25 @@
 
 package proton.android.pass.telemetry.fakes
 
+import proton.android.pass.telemetry.api.GooglePlayInstallReferrer
 import proton.android.pass.telemetry.api.InstallReferrerProvider
 import javax.inject.Inject
 
 class FakeInstallReferrerProvider @Inject constructor() : InstallReferrerProvider {
 
-    private var referrer: String? = null
+    private var referrer: GooglePlayInstallReferrer = GooglePlayInstallReferrer()
+    private var exception: Throwable? = null
 
-    fun setReferrer(value: String?) {
+    fun setReferrer(value: GooglePlayInstallReferrer) {
         referrer = value
     }
 
-    override suspend fun getInstallReferrer(): String? = referrer
+    fun setException(value: Throwable?) {
+        exception = value
+    }
+
+    override suspend fun getInstallReferrer(): GooglePlayInstallReferrer {
+        exception?.let { throw it }
+        return referrer
+    }
 }

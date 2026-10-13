@@ -91,5 +91,6 @@ class ObserveShouldShowExploreTabImplTest {
         override val accountSentryDSN: String? = null
         override val androidVersion: Int = 0
         override val allowScreenshotsDefaultValue: Boolean = true
+        override val metaAppId: String? = null
     }
 }

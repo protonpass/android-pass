@@ -24,6 +24,7 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import proton.android.pass.telemetry.api.CanConfigureTelemetry
 import proton.android.pass.telemetry.api.InstallReferrerProvider
+import proton.android.pass.telemetry.api.MetaInstallReferrerProvider
 import proton.android.pass.telemetry.api.TelemetryGrowthDeviceInfoProvider
 import proton.android.pass.telemetry.api.TelemetryManager
 
@@ -44,5 +45,8 @@ abstract class FakesTelemetryModule {
 
     @Binds
     abstract fun bindInstallReferrerProvider(impl: FakeInstallReferrerProvider): InstallReferrerProvider
+
+    @Binds
+    abstract fun bindMetaInstallReferrerProvider(impl: FakeMetaInstallReferrerProvider): MetaInstallReferrerProvider
 }
 

@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2026 Proton AG
- * This file is part of Proton AG and Proton Pass.
+ * This file is part of Proton Pass.
  *
  * Proton Pass is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,6 +18,12 @@
 
 package proton.android.pass.telemetry.api
 
+data class GooglePlayInstallReferrer(
+    val referrer: String? = null,
+    val clickTimestampSeconds: Long? = null,
+    val installBeginTimestampSeconds: Long? = null
+)
+
 interface InstallReferrerProvider {
-    suspend fun getInstallReferrer(): String?
+    suspend fun getInstallReferrer(): GooglePlayInstallReferrer
 }

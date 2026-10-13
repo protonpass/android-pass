@@ -39,7 +39,9 @@ dependencies {
     implementation(libs.androidx.hilt.work)
     implementation(libs.androidx.work.runtime.ktx)
     implementation(libs.kotlinx.coroutines.core)
+    implementation(libs.kotlinx.datetime)
 
+    implementation(libs.core.telemetry.domain)
     implementation(libs.core.userSettings)
     implementation(libs.core.utilKotlin)
 
@@ -60,7 +62,10 @@ dependencies {
     testImplementation(libs.turbine)
 
     testImplementation(projects.pass.commonTest)
+    testImplementation(projects.pass.account.fakes)
     testImplementation(projects.pass.data.fakes)
+    testImplementation(projects.pass.preferences.fakes)
+    testImplementation(projects.pass.telemetry.fakes)
 
     androidTestImplementation(projects.pass.commonTest)
     androidTestImplementation(projects.pass.data.fakes)

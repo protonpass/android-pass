@@ -59,6 +59,8 @@ class FakeAppConfig @Inject constructor() : AppConfig {
         get() = androidVersionValue
     override val allowScreenshotsDefaultValue: Boolean
         get() = true
+    override val metaAppId: String
+        get() = ""
     override val firstInstallTime: Result<Long>
         get() = firstInstallTimeValue
     override val lastUpdateTime: Result<Long>

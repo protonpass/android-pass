@@ -25,6 +25,7 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.suspendCancellableCoroutine
 import kotlinx.coroutines.withTimeoutOrNull
 import proton.android.pass.log.api.PassLogger
+import proton.android.pass.telemetry.api.GooglePlayInstallReferrer
 import proton.android.pass.telemetry.api.InstallReferrerProvider
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -36,16 +37,16 @@ class InstallReferrerProviderImpl @Inject constructor(
     @ApplicationContext private val context: Context
 ) : InstallReferrerProvider {
 
-    private var cachedReferrer: String? = null
+    private var cachedReferrer: GooglePlayInstallReferrer? = null
 
-    override suspend fun getInstallReferrer(): String? {
+    override suspend fun getInstallReferrer(): GooglePlayInstallReferrer {
         cachedReferrer?.let { return it }
         return withTimeoutOrNull(TIMEOUT) {
             fetchReferrer()
-        }.also { cachedReferrer = it }
+        }.also { cachedReferrer = it } ?: GooglePlayInstallReferrer()
     }
 
-    private suspend fun fetchReferrer(): String? = suspendCancellableCoroutine { continuation ->
+    private suspend fun fetchReferrer(): GooglePlayInstallReferrer = suspendCancellableCoroutine { continuation ->
         val client = InstallReferrerClient.newBuilder(context).build()
 
         continuation.invokeOnCancellation {
@@ -54,10 +55,18 @@ class InstallReferrerProviderImpl @Inject constructor(
 
         client.startConnection(object : InstallReferrerStateListener {
             override fun onInstallReferrerSetupFinished(responseCode: Int) {
-                val referrer = when (responseCode) {
+                val referrerDetails = when (responseCode) {
                     InstallReferrerClient.InstallReferrerResponse.OK -> {
                         runCatching {
-                            client.installReferrer.installReferrer
+                            client.installReferrer.let { details ->
+                                GooglePlayInstallReferrer(
+                                    referrer = details.installReferrer,
+                                    clickTimestampSeconds = details.referrerClickTimestampSeconds
+                                        .takeIf { it > 0 },
+                                    installBeginTimestampSeconds = details.installBeginTimestampSeconds
+                                        .takeIf { it > 0 }
+                                )
+                            }
                         }.onFailure {
                             PassLogger.w(TAG, "Error reading install referrer")
                             PassLogger.w(TAG, it)
@@ -75,17 +84,17 @@ class InstallReferrerProviderImpl @Inject constructor(
                         PassLogger.w(TAG, "Install referrer unknown response: $responseCode")
                         null
                     }
-                }
+                } ?: GooglePlayInstallReferrer()
                 runCatching { client.endConnection() }
                 if (continuation.isActive) {
-                    continuation.resume(referrer)
+                    continuation.resume(referrerDetails)
                 }
             }
 
             override fun onInstallReferrerServiceDisconnected() {
                 PassLogger.w(TAG, "Install referrer service disconnected")
                 if (continuation.isActive) {
-                    continuation.resume(null)
+                    continuation.resume(GooglePlayInstallReferrer())
                 }
             }
         })

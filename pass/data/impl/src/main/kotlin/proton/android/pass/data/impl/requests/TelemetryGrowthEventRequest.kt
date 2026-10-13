@@ -76,8 +76,29 @@ data class TelemetryGrowthInstallEventRequest(
     @SerialName("install_ref")
     val installRef: String? = null,
     @SerialName("install_receipt")
-    val installReceipt: String? = null
+    val installReceipt: String? = null,
+    @SerialName("install_ref_parameters")
+    val installRefParameters: InstallRefParameters? = null
 ) : TelemetryGrowthEventRequest
+
+@Serializable
+data class InstallRefParameters(
+    @SerialName("go_click_timestamp_seconds")
+    val goClickTimestampSeconds: Long? = null,
+    @SerialName("go_install_begin_timestamp_seconds")
+    val goInstallBeginTimestampSeconds: Long? = null,
+    @SerialName("go_current_device_time")
+    val goCurrentDeviceTime: Long? = null,
+    @SerialName("me_install_referrer")
+    val meInstallReferrer: String? = null,
+    @SerialName("me_actual_timestamp")
+    val meActualTimestamp: Long? = null,
+    @SerialName("me_is_ct")
+    val meIsCt: Int? = null
+) {
+    fun isEmpty(): Boolean = goClickTimestampSeconds == null && goInstallBeginTimestampSeconds == null &&
+        goCurrentDeviceTime == null && meInstallReferrer == null && meActualTimestamp == null && meIsCt == null
+}
 
 @Serializable
 @SerialName("signup")

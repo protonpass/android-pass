@@ -132,5 +132,6 @@ data class SearchIdRow(
 
 data class ItemTypeCountRow(
     val itemType: Int,
+    val hasTotp: Boolean,
     val count: Int
 )

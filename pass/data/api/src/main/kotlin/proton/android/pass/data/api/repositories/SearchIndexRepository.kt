@@ -153,6 +153,7 @@ interface SearchIndexRepository {
 
 data class ItemTypeCounts(
     val loginCount: Int = 0,
+    val loginWithTotpCount: Int = 0,
     val aliasCount: Int = 0,
     val noteCount: Int = 0,
     val creditCardCount: Int = 0,

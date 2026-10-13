@@ -20,7 +20,9 @@ package proton.android.pass.features.selectitem.presentation
 
 import app.cash.turbine.test
 import com.google.common.truth.Truth.assertThat
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
+import kotlinx.coroutines.withTimeout
 import me.proton.core.domain.entity.UserId
 import org.junit.Before
 import org.junit.Rule
@@ -31,6 +33,8 @@ import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Some
 import proton.android.pass.common.fakes.FakeAppDispatchers
 import proton.android.pass.crypto.fakes.context.FakeEncryptionContextProvider
+import proton.android.pass.data.api.repositories.ItemTypeCounts
+import proton.android.pass.data.api.usecases.Suggestion
 import proton.android.pass.data.fakes.usecases.FakeGetSuggestedAutofillItems
 import proton.android.pass.data.fakes.usecases.FakeGetUserPlan
 import proton.android.pass.data.fakes.usecases.FakeObserveIndexingStatus
@@ -156,6 +160,42 @@ internal class SelectItemViewModelPaginationTest {
         assertThat(observeItemTypeCounts.lastRestrictToRootFolder).isFalse()
     }
 
+    @Test
+    fun `item count only includes the item types of the current autofill mode`() = runTest {
+        observeItemTypeCounts.emitValue(
+            ItemTypeCounts(
+                loginCount = 5,
+                aliasCount = 4,
+                noteCount = 3,
+                creditCardCount = 2,
+                identityCount = 6,
+                customCount = 1
+            )
+        )
+
+        instance.setInitialState(
+            SelectItemState.Autofill.Login(
+                title = "title",
+                suggestion = Suggestion.Url(value = "example.com")
+            )
+        )
+
+        assertDisplayedItemCount(expected = 5)
+
+        instance.setInitialState(SelectItemState.Autofill.CreditCard(title = "title"))
+        assertDisplayedItemCount(expected = 2)
+
+        instance.setInitialState(SelectItemState.Autofill.Identity(title = "title"))
+        assertDisplayedItemCount(expected = 6)
+    }
+
+    private suspend fun assertDisplayedItemCount(expected: Int) {
+        val state = withTimeout(TIMEOUT_MILLIS) {
+            instance.uiState.first { it.listUiState.paginatedItemCount == expected }
+        }
+        assertThat(state.listUiState.paginatedItemCount).isEqualTo(expected)
+    }
+
     private suspend fun awaitPagingAndCount() {
         instance.selectItemPagingFlow.test {
             awaitItem()
@@ -168,6 +208,8 @@ internal class SelectItemViewModelPaginationTest {
     }
 
     private companion object {
+        private const val TIMEOUT_MILLIS = 5_000L
+
         private val USER_A = UserId("user-a")
         private val USER_B = UserId("user-b")
         private val SHARE_A = ShareId("share-a")

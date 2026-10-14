@@ -157,8 +157,8 @@ private fun AutofillUrlMode.detailLabel(): String = when (this) {
     AutofillUrlMode.Exact -> stringResource(R.string.autofill_mode_label_exact)
     AutofillUrlMode.Never -> stringResource(R.string.autofill_mode_label_never)
     AutofillUrlMode.StartWith -> stringResource(R.string.autofill_mode_label_start_with)
-    AutofillUrlMode.RegularExpression,
-    AutofillUrlMode.Pattern -> stringResource(R.string.autofill_mode_label_regular_expression)
+    AutofillUrlMode.Pattern -> stringResource(R.string.autofill_mode_label_pattern)
+    AutofillUrlMode.RegularExpression -> stringResource(R.string.autofill_mode_label_regular_expression)
     AutofillUrlMode.ExactPath -> stringResource(R.string.autofill_mode_label_exact_path)
 }
 

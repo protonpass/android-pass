@@ -24,6 +24,7 @@ import dagger.Provides
 import dagger.hilt.components.SingletonComponent
 import dagger.hilt.testing.TestInstallIn
 import kotlinx.datetime.Clock
+import proton.android.pass.log.api.LogExporter
 import proton.android.pass.log.api.LogFileManager
 import proton.android.pass.log.api.PrivacySanitizer
 import proton.android.pass.log.api.ShareLogsUseCase
@@ -43,6 +44,10 @@ abstract class FakesLogModule {
     @Binds
     @Singleton
     abstract fun bindLogFileManager(impl: FakeLogFileManager): LogFileManager
+
+    @Binds
+    @Singleton
+    abstract fun bindLogExporter(impl: FakeLogExporter): LogExporter
 
     @Binds
     @Singleton

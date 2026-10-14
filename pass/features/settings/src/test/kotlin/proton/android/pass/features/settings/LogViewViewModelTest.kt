@@ -40,6 +40,7 @@ import proton.android.pass.commonui.api.ClassHolder
 import proton.android.pass.commonui.api.FileHandler
 import proton.android.pass.log.api.LogFileManager
 import proton.android.pass.log.api.ShareLogsUseCase
+import proton.android.pass.log.impl.LogExporterImpl
 import proton.android.pass.log.impl.LogFileManagerImpl
 import proton.android.pass.log.impl.ShareLogsUseCaseImpl
 import proton.android.pass.test.MainDispatcherRule
@@ -77,8 +78,12 @@ class LogViewViewModelTest {
         fileHandler = TestFileHandler()
         val appConfig = TestAppConfig()
         shareLogsUseCase = ShareLogsUseCaseImpl(
-            appConfig = appConfig,
-            logFileManager = logFileManager,
+            logExporter = LogExporterImpl(
+                context = context,
+                appConfig = appConfig,
+                logFileManager = logFileManager,
+                appDispatchers = appDispatchers
+            ),
             getPrimaryUserId = getPrimaryUserId,
             fileHandler = fileHandler,
             appDispatchers = appDispatchers,

@@ -6,6 +6,12 @@
 
 ### Other
 
+## 1.41.4 (2026-10-14)
+
+### Fixes :bug:
+
+- Bug fixes and improvements.
+
 ## 1.41.3 (2026-10-05)
 
 ### Fixes :bug:

@@ -53,8 +53,11 @@ import proton.android.pass.data.fakes.usecases.shares.FakeObserveShare
 import proton.android.pass.data.fakes.usecases.tooltips.FakeDisableTooltip
 import proton.android.pass.data.fakes.usecases.tooltips.FakeObserveTooltipEnabled
 import proton.android.pass.data.fakes.work.FakeWorkerLauncher
+import proton.android.pass.domain.AutofillUrl
+import proton.android.pass.domain.AutofillUrlMode
 import proton.android.pass.domain.FolderId
 import proton.android.pass.domain.HiddenState
+import proton.android.pass.domain.ITEM_CFV_URL_MATCHING
 import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.ShareId
 import proton.android.pass.features.itemcreate.alias.AliasItemFormState
@@ -275,6 +278,42 @@ class UpdateLoginViewModelTest {
 
         assertThat(fakeCreateAlias.getMemory()).hasSize(1)
         assertThat(fakeCreateAlias.getMemory().first().folderId).isNull()
+    }
+
+    @Test
+    fun `removing a website keeps autofill url modes aligned with the remaining urls`() = runTest {
+        val shareId = ShareId(SHARE_ID)
+        val item = ItemTestFactory.create(
+            shareId = shareId,
+            itemContents = ItemContents.Login(
+                title = "Test Login",
+                note = "",
+                itemEmail = "user@email.com",
+                itemUsername = "username",
+                password = HiddenState.Empty(FakeEncryptionContext.encrypt("password")),
+                urls = listOf("https://a.com"),
+                packageInfoSet = emptySet(),
+                primaryTotp = HiddenState.Empty(FakeEncryptionContext.encrypt("")),
+                customFields = emptyList(),
+                passkeys = emptyList(),
+                autofillUrls = listOf(
+                    AutofillUrl(url = "https://a.com", mode = AutofillUrlMode.Default),
+                    AutofillUrl(url = "https://*.example.com", mode = AutofillUrlMode.Pattern),
+                    AutofillUrl(url = "https://b.com", mode = AutofillUrlMode.Never)
+                )
+            )
+        ).copy(contentFormatVersion = ITEM_CFV_URL_MATCHING)
+        getItemById.emit(Result.success(item))
+        instance = createInstance()
+
+        instance.onRemoveWebsite(0)
+
+        assertThat(instance.loginItemFormState.urls)
+            .containsExactly("https://*.example.com", "https://b.com")
+            .inOrder()
+        assertThat(instance.loginItemFormState.autofillUrls.map { it.mode })
+            .containsExactly(AutofillUrlMode.Pattern, AutofillUrlMode.Never)
+            .inOrder()
     }
 
     private fun testAliasFormState() = AliasItemFormState(

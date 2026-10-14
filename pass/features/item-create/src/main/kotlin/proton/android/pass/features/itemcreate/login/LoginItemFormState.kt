@@ -78,8 +78,8 @@ data class LoginItemFormState(
             else -> if (emailValidator.isValid(email)) "" else email
         }
 
-        val nonBlankUrls = urls.filter(String::isNotBlank)
-        val syncedAutofillUrls: List<AutofillUrl> = nonBlankUrls.mapIndexed { idx, url ->
+        val syncedAutofillUrls: List<AutofillUrl> = urls.mapIndexedNotNull { idx, url ->
+            if (url.isBlank()) return@mapIndexedNotNull null
             val mode = autofillUrls.getOrNull(idx)?.mode ?: AutofillUrlMode.Default
             AutofillUrl(url = url, mode = mode)
         }

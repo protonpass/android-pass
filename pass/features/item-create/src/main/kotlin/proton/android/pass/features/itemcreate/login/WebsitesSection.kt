@@ -81,7 +81,7 @@ internal fun AutofillUrlMode.label(): String = when (this) {
     AutofillUrlMode.StartWith -> stringResource(R.string.autofill_suggestions_mode_start_with)
     AutofillUrlMode.RegularExpression -> stringResource(R.string.autofill_suggestions_mode_regular_expression)
     AutofillUrlMode.ExactPath -> stringResource(R.string.autofill_suggestions_mode_exact_path)
-    AutofillUrlMode.Pattern -> stringResource(R.string.autofill_suggestions_mode_regular_expression)
+    AutofillUrlMode.Pattern -> stringResource(R.string.autofill_suggestions_mode_pattern)
 }
 
 @Suppress("ComplexMethod")

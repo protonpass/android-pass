@@ -406,7 +406,9 @@ abstract class BaseLoginViewModel(
         if (index < loginItemFormState.urls.size) {
             loginItemFormMutableState = loginItemFormState.copy(
                 urls = loginItemFormState.urls.toMutableList()
-                    .apply { removeAt(index) }
+                    .apply { removeAt(index) },
+                autofillUrls = loginItemFormState.autofillUrls.toMutableList()
+                    .apply { if (index < size) removeAt(index) }
             )
             removeValidationErrors(LoginItemValidationError.InvalidUrl(index))
         }

@@ -350,6 +350,12 @@ private fun AdvancedModeOptions(modifier: Modifier = Modifier, selectedMode: Aut
             onSelect = {}
         )
         AutofillModeRadioRow(
+            label = stringResource(R.string.autofill_suggestions_mode_pattern),
+            selected = selectedMode == AutofillUrlMode.Pattern,
+            enabled = false,
+            onSelect = {}
+        )
+        AutofillModeRadioRow(
             label = stringResource(R.string.autofill_suggestions_mode_regular_expression),
             selected = selectedMode == AutofillUrlMode.RegularExpression,
             enabled = false,

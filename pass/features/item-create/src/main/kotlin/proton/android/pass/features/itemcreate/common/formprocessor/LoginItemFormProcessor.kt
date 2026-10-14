@@ -21,6 +21,7 @@ package proton.android.pass.features.itemcreate.common.formprocessor
 import me.proton.core.crypto.common.keystore.EncryptedString
 import proton.android.pass.common.api.Option
 import proton.android.pass.data.api.url.UrlSanitizer
+import proton.android.pass.domain.AutofillUrlMode
 import proton.android.pass.features.itemcreate.common.CommonFieldValidationError
 import proton.android.pass.features.itemcreate.common.LoginItemValidationError
 import proton.android.pass.features.itemcreate.common.UICustomFieldContent
@@ -32,6 +33,8 @@ import javax.inject.Singleton
 
 private typealias PrimaryTotpFormProcessorType =
     FormProcessor<PrimaryTotpFormProcessor.Input, UIHiddenState>
+
+private val RAW_PATTERN_MODES = setOf(AutofillUrlMode.Pattern, AutofillUrlMode.RegularExpression)
 
 @Singleton
 class LoginItemFormProcessor @Inject constructor(
@@ -56,8 +59,10 @@ class LoginItemFormProcessor @Inject constructor(
             errors += CommonFieldValidationError.BlankTitle
         }
         val sanitisedUrls = input.formState.urls.mapIndexed { idx, url ->
-            if (url.isNotBlank()) {
-                UrlSanitizer.sanitize(url)
+            when {
+                url.isBlank() -> ""
+                input.formState.autofillUrls.getOrNull(idx)?.mode in RAW_PATTERN_MODES -> url
+                else -> UrlSanitizer.sanitize(url)
                     .fold(
                         onFailure = {
                             errors += LoginItemValidationError.InvalidUrl(idx)
@@ -67,8 +72,6 @@ class LoginItemFormProcessor @Inject constructor(
                             it
                         }
                     )
-            } else {
-                ""
             }
         }
         val primaryTotpResult = primaryTotpFormProcessor.process(

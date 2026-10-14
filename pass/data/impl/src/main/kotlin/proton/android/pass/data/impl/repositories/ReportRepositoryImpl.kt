@@ -20,28 +20,27 @@ package proton.android.pass.data.impl.repositories
 
 import android.webkit.MimeTypeMap
 import kotlinx.coroutines.withContext
-import me.proton.core.network.data.ApiProvider
 import me.proton.core.report.domain.entity.BugReportMeta
+import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
 import proton.android.pass.common.api.AppDispatchers
+import proton.android.pass.common.api.safeRunCatching
 import proton.android.pass.data.api.repositories.ReportRepository
 import proton.android.pass.data.api.usecases.GetPrimaryUserId
 import proton.android.pass.data.api.usecases.report.Report
-import proton.android.pass.data.impl.core.api.CoreApi
-import proton.android.pass.log.api.LogFileManager
+import proton.android.pass.data.impl.remote.RemoteReportDataSource
+import proton.android.pass.log.api.LogExporter
 import proton.android.pass.log.api.PassLogger
 import java.io.File
-import java.nio.file.Files
-import java.nio.file.StandardCopyOption
 import javax.inject.Inject
 import javax.inject.Provider
 
 class ReportRepositoryImpl @Inject constructor(
-    private val apiProvider: ApiProvider,
+    private val remoteReportDataSource: RemoteReportDataSource,
     private val bugReportMetaProvider: Provider<BugReportMeta>,
-    private val logFileManager: LogFileManager,
+    private val logExporter: LogExporter,
     private val getPrimaryUserId: GetPrimaryUserId,
     private val appDispatchers: AppDispatchers
 ) : ReportRepository {
@@ -54,30 +53,25 @@ class ReportRepositoryImpl @Inject constructor(
             }
 
     override suspend fun sendReport(report: Report) {
-        apiProvider.get<CoreApi>()
-            .invoke {
-                val logFile = if (report.shouldAttachLog) {
-                    val userId = getPrimaryUserId()
-                    logFileManager.getLogFile(userId)
-                } else {
-                    null
-                }
-                val logFileSize = logFile?.length() ?: 0
-                val extraFilesSize = report.extraFiles.sumOf { it.length() }
-                PassLogger.i(TAG, "Log file size: $logFileSize bytes")
-                PassLogger.i(TAG, "Total extra files size: $extraFilesSize bytes")
-                val body = getMultipartBodyBuilder(
-                    report = report,
-                    meta = bugReportMetaProvider.get(),
-                    logFile = logFile,
-                    extraFiles = report.extraFiles
-                ).build()
-                PassLogger.i(TAG, "Bug report size: ${body.size} bytes")
-                val total = logFileSize + extraFilesSize + body.size
-                PassLogger.i(TAG, "Total size: $total bytes")
-                sendBugReport(body)
-            }
-            .valueOrThrow
+        val logFile = if (report.shouldAttachLog) exportLogs() else null
+        try {
+            val logFileSize = logFile?.length() ?: 0
+            val extraFilesSize = report.extraFiles.sumOf { it.length() }
+            PassLogger.i(TAG, "Log file size: $logFileSize bytes")
+            PassLogger.i(TAG, "Total extra files size: $extraFilesSize bytes")
+            val body = getMultipartBodyBuilder(
+                report = report,
+                meta = bugReportMetaProvider.get(),
+                logFile = logFile,
+                extraFiles = report.extraFiles
+            ).build()
+            PassLogger.i(TAG, "Bug report size: ${body.size} bytes")
+            val total = logFileSize + extraFilesSize + body.size
+            PassLogger.i(TAG, "Total size: $total bytes")
+            remoteReportDataSource.sendBugReport(body)
+        } finally {
+            logFile?.let { withContext(appDispatchers.io) { it.delete() } }
+        }
     }
 
     private suspend fun getMultipartBodyBuilder(
@@ -98,12 +92,10 @@ class ReportRepositoryImpl @Inject constructor(
         .addFormDataPart(name = "Email", value = report.email)
         .apply {
             logFile?.validateFile()?.let { file ->
-                val tempFile = File.createTempFile(file.nameWithoutExtension, ".${file.extension}")
-                Files.copy(file.toPath(), tempFile.toPath(), StandardCopyOption.REPLACE_EXISTING)
                 addFormDataPart(
                     name = "Logs",
-                    filename = tempFile.name,
-                    body = tempFile.asRequestBody(tempFile.mimeType?.toMediaTypeOrNull())
+                    filename = file.name,
+                    body = file.asRequestBody(LOG_FILE_MEDIA_TYPE.toMediaType())
                 )
             }
             extraFiles
@@ -117,11 +109,29 @@ class ReportRepositoryImpl @Inject constructor(
                 }
         }
 
+    private suspend fun exportLogs(): File? {
+        var logFile: File? = null
+        return safeRunCatching {
+            val file = withContext(appDispatchers.io) {
+                File.createTempFile(REPORT_LOG_FILE_PREFIX, REPORT_LOG_FILE_SUFFIX)
+            }.also { logFile = it }
+            logExporter.export(destination = file, userId = getPrimaryUserId())
+            file
+        }.onFailure { error ->
+            PassLogger.w(TAG, "Could not export logs for bug report")
+            PassLogger.w(TAG, error)
+            logFile?.let { withContext(appDispatchers.io) { it.delete() } }
+        }.getOrNull()
+    }
+
     private suspend fun File.validateFile(): File? = withContext(appDispatchers.io) {
         if (exists() && length() > 0) this@validateFile else null
     }
 
     companion object {
         private const val TAG = "ReportRepositoryImpl"
+        private const val REPORT_LOG_FILE_PREFIX = "pass_logs_"
+        private const val REPORT_LOG_FILE_SUFFIX = ".log"
+        private const val LOG_FILE_MEDIA_TYPE = "text/plain"
     }
 }

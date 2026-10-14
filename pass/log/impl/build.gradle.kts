@@ -93,6 +93,7 @@ dependencies {
     testImplementation(projects.pass.common.fakes)
     testImplementation(projects.pass.commonTest)
     testImplementation(projects.pass.account.fakes)
+    testImplementation(projects.pass.appConfig.fakes)
     testImplementation(projects.pass.data.fakes)
     testImplementation(projects.pass.log.fakes)
 }

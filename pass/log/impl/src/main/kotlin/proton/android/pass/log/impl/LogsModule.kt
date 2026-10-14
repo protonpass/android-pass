@@ -23,6 +23,7 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import proton.android.pass.log.api.LogExporter
 import proton.android.pass.log.api.LogFileManager
 import proton.android.pass.log.api.PrivacySanitizer
 import proton.android.pass.log.api.ShareLogsUseCase
@@ -35,6 +36,10 @@ abstract class LogsModule {
     @Binds
     @Singleton
     abstract fun bindLogFileManager(impl: LogFileManagerImpl): LogFileManager
+
+    @Binds
+    @Singleton
+    abstract fun bindLogExporter(impl: LogExporterImpl): LogExporter
 
     @Binds
     @Singleton

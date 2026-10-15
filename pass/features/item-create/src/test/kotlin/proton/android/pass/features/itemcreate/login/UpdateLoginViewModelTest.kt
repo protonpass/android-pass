@@ -316,6 +316,41 @@ class UpdateLoginViewModelTest {
             .inOrder()
     }
 
+    @Test
+    fun `removing an advanced rule website calls update item`() = runTest {
+        val shareId = ShareId(SHARE_ID)
+        val item = ItemTestFactory.create(
+            shareId = shareId,
+            itemContents = ItemContents.Login(
+                title = "Test Login",
+                note = "",
+                itemEmail = "user@email.com",
+                itemUsername = "username",
+                password = HiddenState.Empty(FakeEncryptionContext.encrypt("password")),
+                urls = listOf("https://a.com"),
+                packageInfoSet = emptySet(),
+                primaryTotp = HiddenState.Empty(FakeEncryptionContext.encrypt("")),
+                customFields = emptyList(),
+                passkeys = emptyList(),
+                autofillUrls = listOf(
+                    AutofillUrl(url = "https://a.com", mode = AutofillUrlMode.Default),
+                    AutofillUrl(url = "https://*.example.com", mode = AutofillUrlMode.Pattern)
+                )
+            )
+        ).copy(contentFormatVersion = ITEM_CFV_URL_MATCHING)
+        getItemById.emit(Result.success(item))
+        updateItem.setResult(Result.success(item))
+        instance = createInstance()
+
+        instance.onRemoveWebsite(1)
+        instance.updateItem(shareId)
+
+        assertThat(updateItem.getMemory()).hasSize(1)
+        val contents = updateItem.getMemory().first().contents as ItemContents.Login
+        assertThat(contents.autofillUrls)
+            .containsExactly(AutofillUrl(url = "https://a.com", mode = AutofillUrlMode.Default))
+    }
+
     private fun testAliasFormState() = AliasItemFormState(
         prefix = "alias",
         selectedSuffix = AliasSuffixUiModel(

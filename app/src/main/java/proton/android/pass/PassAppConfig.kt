@@ -46,7 +46,7 @@ class PassAppConfig @Inject constructor(
     override val androidVersion: Int = Build.VERSION.SDK_INT
     override val allowScreenshotsDefaultValue: Boolean =
         BuildConfig.ALLOW_SCREENSHOTS_DEFAULT_VALUE
-    override val metaAppId: String? = BuildConfig.META_APP_ID.takeIfNotBlank()
+    override val metaAppId: String? = BuildConfig.META_APP_ID?.takeIfNotBlank()
 
     private val packageInfo by lazy {
         runCatching { context.packageManager.getPackageInfo(context.packageName, 0) }

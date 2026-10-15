@@ -61,7 +61,7 @@ class PrivilegedBrowserAllowlistContentTest {
     }
 
     @Test
-    fun `allowlist resource contains no publicly-known Android test-key signers`() {
+    fun `allowlist resources contain no publicly-known Android test-key signers`() {
         // Public AOSP test keys have publicly-distributed private keys, so any app could forge
         // them to claim a privileged web origin. They must never be trusted signers. Each value
         // is the SHA-256 of a checked-in AOSP test cert (build/target/product/security/*.x509.pem):
@@ -73,18 +73,22 @@ class PrivilegedBrowserAllowlistContentTest {
             "28:BB:FE:4A:7B:97:E7:46:81:DC:55:C2:FB:B6:CC:B8:D6:C7:49:63:73:3F:6A:F6:AE:74:D8:C3:A6:E8:79:FD"
         )
 
-        val json = allowlistFile().readText().uppercase()
+        // Both shipped snapshots must be scanned: the fdroid override is what fdroid builds
+        // actually package and what feeds PasskeyOriginVerifier there.
+        listOf(allowlistFile(), fdroidOverrideFile()).forEach { file ->
+            val json = file.readText().uppercase()
 
-        val offenders = publicTestKeyFingerprints.filter { fingerprint ->
-            json.contains(fingerprint.uppercase())
+            val offenders = publicTestKeyFingerprints.filter { fingerprint ->
+                json.contains(fingerprint.uppercase())
+            }
+
+            assertTrue(
+                offenders.isEmpty(),
+                "Privileged allowlist ${file.name} contains public AOSP test key(s): $offenders. " +
+                    "These have publicly-distributed private keys and must be stripped from the " +
+                    "vendored snapshot (see ResourcePrivilegedBrowserAllowlistProvider)."
+            )
         }
-
-        assertTrue(
-            offenders.isEmpty(),
-            "Privileged allowlist contains public AOSP test key(s): $offenders. " +
-                "These have publicly-distributed private keys and must be stripped from the " +
-                "vendored snapshot (see ResourcePrivilegedBrowserAllowlistProvider)."
-        )
     }
 
     @Test
@@ -96,17 +100,37 @@ class PrivilegedBrowserAllowlistContentTest {
         assertTrue(packages.containsKey("com.duckduckgo.mobile.android"))
         assertTrue(packages.containsKey("org.mozilla.fennec_fdroid"))
 
-        // The fdroid override must be a superset of the base snapshot.
+        // The fdroid override must be a superset of the base snapshot, compared by
+        // (package, fingerprint) pairs so an added signature is detected, not just an
+        // added package.
         val baseJson = allowlistFile().readText()
         val base = Json { ignoreUnknownKeys = true }.decodeFromString<Allowlist>(baseJson)
-        val basePackages = base.apps.map { it.info.packageName }.toSet()
-        assertTrue(packages.keys.containsAll(basePackages))
+        val basePairs = base.apps.flatMap { app ->
+            app.info.signatures.map { app.info.packageName to it.certFingerprintSha256.uppercase() }
+        }.toSet()
+        val fdroidPairs = allowlist.apps.flatMap { app ->
+            app.info.signatures.map { app.info.packageName to it.certFingerprintSha256.uppercase() }
+        }.toSet()
+        assertTrue(
+            fdroidPairs.containsAll(basePairs),
+            "fdroid override is missing base signatures"
+        )
 
-        // F-Droid re-signing keys must NOT leak into the base snapshot used by other flavours.
+        // F-Droid re-signing keys must NOT leak into the base snapshot used by other
+        // flavours. The authoritative list of fdroid-only keys is the extras source file:
+        // comparing snapshots against each other cannot detect a key that leaked into the
+        // base, because it would then exist in both.
         val baseText = baseJson.uppercase()
-        val fdroidOnlyPackages = packages.keys - basePackages
-        fdroidOnlyPackages.forEach { pkg ->
-            assertTrue(!baseText.contains(pkg.uppercase()), "$pkg leaked into base allowlist")
+        val fdroidExtrasJson = fdroidExtrasFile().readText()
+        val fdroidExtras = Json { ignoreUnknownKeys = true }.decodeFromString<Allowlist>(fdroidExtrasJson)
+        fdroidExtras.apps.forEach { app ->
+            app.info.signatures.forEach { signature ->
+                val fingerprint = signature.certFingerprintSha256.uppercase()
+                assertTrue(
+                    !baseText.contains(fingerprint),
+                    "F-Droid-only key $fingerprint (${app.info.packageName}) leaked into base allowlist"
+                )
+            }
         }
     }
 
@@ -122,6 +146,14 @@ class PrivilegedBrowserAllowlistContentTest {
         val resourceFiles = listOf(
             "app/src/fdroid/res/raw/passkey_privileged_browsers_allowlist.json",
             "../../../app/src/fdroid/res/raw/passkey_privileged_browsers_allowlist.json"
+        )
+        return resourceFiles.map(::File).first(File::exists)
+    }
+
+    private fun fdroidExtrasFile(): File {
+        val resourceFiles = listOf(
+            "scripts/ci/browser_cert_extras_fdroid.json",
+            "../../../scripts/ci/browser_cert_extras_fdroid.json"
         )
         return resourceFiles.map(::File).first(File::exists)
     }

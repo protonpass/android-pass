@@ -28,23 +28,23 @@ import kotlin.test.assertTrue
 
 class PrivilegedBrowserAllowlistContentTest {
 
+    @Serializable
+    private data class Signature(@SerialName("cert_fingerprint_sha256") val certFingerprintSha256: String)
+
+    @Serializable
+    private data class AppInfo(
+        @SerialName("package_name") val packageName: String,
+        val signatures: List<Signature>
+    )
+
+    @Serializable
+    private data class App(val type: String, val info: AppInfo)
+
+    @Serializable
+    private data class Allowlist(val apps: List<App>)
+
     @Test
     fun `allowlist resource JSON is valid and contains expected AndroidX structure`() {
-        @Serializable
-        data class Signature(@SerialName("cert_fingerprint_sha256") val certFingerprintSha256: String)
-
-        @Serializable
-        data class AppInfo(
-            @SerialName("package_name") val packageName: String,
-            val signatures: List<Signature>
-        )
-
-        @Serializable
-        data class App(val type: String, val info: AppInfo)
-
-        @Serializable
-        data class Allowlist(val apps: List<App>)
-
         val json = allowlistFile().readText()
         val allowlist = Json { ignoreUnknownKeys = true }.decodeFromString<Allowlist>(json)
 
@@ -87,10 +87,41 @@ class PrivilegedBrowserAllowlistContentTest {
         )
     }
 
+    @Test
+    fun `fdroid flavour override is valid and additionally trusts fdroid re-signing keys`() {
+        val json = fdroidOverrideFile().readText()
+        val allowlist = Json { ignoreUnknownKeys = true }.decodeFromString<Allowlist>(json)
+
+        val packages = allowlist.apps.associateBy({ it.info.packageName })
+        assertTrue(packages.containsKey("com.duckduckgo.mobile.android"))
+        assertTrue(packages.containsKey("org.mozilla.fennec_fdroid"))
+
+        // The fdroid override must be a superset of the base snapshot.
+        val baseJson = allowlistFile().readText()
+        val base = Json { ignoreUnknownKeys = true }.decodeFromString<Allowlist>(baseJson)
+        val basePackages = base.apps.map { it.info.packageName }.toSet()
+        assertTrue(packages.keys.containsAll(basePackages))
+
+        // F-Droid re-signing keys must NOT leak into the base snapshot used by other flavours.
+        val baseText = baseJson.uppercase()
+        val fdroidOnlyPackages = packages.keys - basePackages
+        fdroidOnlyPackages.forEach { pkg ->
+            assertTrue(!baseText.contains(pkg.uppercase()), "$pkg leaked into base allowlist")
+        }
+    }
+
     private fun allowlistFile(): File {
         val resourceFiles = listOf(
             "pass/browser-allowlist/impl/src/main/res/raw/passkey_privileged_browsers_allowlist.json",
             "src/main/res/raw/passkey_privileged_browsers_allowlist.json"
+        )
+        return resourceFiles.map(::File).first(File::exists)
+    }
+
+    private fun fdroidOverrideFile(): File {
+        val resourceFiles = listOf(
+            "app/src/fdroid/res/raw/passkey_privileged_browsers_allowlist.json",
+            "../../../app/src/fdroid/res/raw/passkey_privileged_browsers_allowlist.json"
         )
         return resourceFiles.map(::File).first(File::exists)
     }

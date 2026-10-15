@@ -967,6 +967,54 @@
           }
         ]
       }
+    },
+    {
+      "type": "android",
+      "info": {
+        "package_name": "org.cromite.cromite",
+        "signatures": [
+          {
+            "build": "release",
+            "cert_fingerprint_sha256": "63:3F:A4:1D:82:11:D6:D0:91:6A:81:9B:89:66:8C:6D:E9:2E:64:23:2D:A6:7F:9D:16:FD:81:C3:B7:E9:23:FF"
+          }
+        ]
+      }
+    },
+    {
+      "type": "android",
+      "info": {
+        "package_name": "org.ironfoxoss.ironfox",
+        "signatures": [
+          {
+            "build": "release",
+            "cert_fingerprint_sha256": "C5:E2:91:B5:A5:71:F9:C8:CD:9A:97:99:C2:C9:4E:02:EC:97:03:94:88:93:F2:CA:75:6D:67:B9:42:04:F9:04"
+          }
+        ]
+      }
+    },
+    {
+      "type": "android",
+      "info": {
+        "package_name": "org.torproject.torbrowser",
+        "signatures": [
+          {
+            "build": "release",
+            "cert_fingerprint_sha256": "20:06:1F:04:5E:73:7C:67:37:5C:17:79:4C:FE:DB:43:6A:03:CE:C6:BA:CB:7C:B9:F9:66:42:20:5C:A2:CE:C8"
+          }
+        ]
+      }
+    },
+    {
+      "type": "android",
+      "info": {
+        "package_name": "org.torproject.torbrowser_alpha",
+        "signatures": [
+          {
+            "build": "release",
+            "cert_fingerprint_sha256": "15:F7:60:B4:1A:CB:E4:78:3E:66:71:02:C9:F6:71:19:BE:2A:F6:2F:AB:07:76:3F:9D:57:F0:1E:5E:10:74:E1"
+          }
+        ]
+      }
     }
   ]
 }

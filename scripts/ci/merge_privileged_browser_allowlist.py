@@ -44,7 +44,10 @@ def sanitize(apps, deny):
 
 def merge_extras(apps, extras_path, deny):
     if not os.path.exists(extras_path):
-        return
+        # Paths are passed explicitly by the caller; a missing file means a rename or a
+        # wrong cwd. Failing loudly is safer than silently shipping snapshots without
+        # the extras (or without the F-Droid keys).
+        raise SystemExit(f"Extras file not found: {extras_path}")
     with open(extras_path, "r", encoding="utf-8") as file:
         extras_root = json.load(file)
     extras = [

@@ -202,5 +202,6 @@ private fun areLoginItemsEqual(
     a.primaryTotp.compareDecrypted(b.primaryTotp, decrypt) == 0 &&
     a.customFields.compareDecrypted(b.customFields, decrypt) == 0 &&
     compareLists(a.urls, b.urls) { urlA, urlB -> urlA.compareTo(urlB) } == 0 &&
+    a.autofillUrls == b.autofillUrls &&
     a.packageInfoSet == b.packageInfoSet &&
     a.passkeys == b.passkeys

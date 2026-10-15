@@ -1,0 +1,71 @@
+{
+  "_comment": [
+    "Supplemental browser signing certificates absent from Google's upstream",
+    "privileged-apps allowlist (https://www.gstatic.com/gpm-passkeys-privileged-apps/apps.json).",
+    "Merged into pass/browser-allowlist/impl/src/main/res/raw/passkey_privileged_browsers_allowlist.json",
+    "by scripts/ci/checkPasskeyPrivilegedBrowserAllowlist.sh on every sync; entries here survive updates.",
+    "",
+    "Policy for adding an entry:",
+    "- Fingerprint must be SHA-256 of the X.509 signing cert of an APK downloaded from the",
+    "  vendor's OFFICIAL release channel (never a third-party re-signing repo such as the",
+    "  F-Droid main repo, which signs with its own per-app keys).",
+    "- Record acquisition provenance in '_source' (URL of the exact artifact verified).",
+    "- Only 'release' build entries are trusted at runtime; userdebug/test keys are ignored.",
+    "- Never add AOSP public test keys (see PasskeyOriginVerifierTest).",
+    "- Never add apps whose official artifacts are signed with Android Debug keys."
+  ],
+  "apps": [
+    {
+      "type": "android",
+      "info": {
+        "package_name": "org.cromite.cromite",
+        "_source": "https://github.com/uazo/cromite/releases/download/v153.0.8010.37-11507ac1061b5ea227806f5e84db5a57df6ccf6a/arm64_ChromePublic.apk verified with apksigner 36.1.0 on 2026-10-15 (DN: CN=CromiteOrg)",
+        "signatures": [
+          {
+            "build": "release",
+            "cert_fingerprint_sha256": "63:3F:A4:1D:82:11:D6:D0:91:6A:81:9B:89:66:8C:6D:E9:2E:64:23:2D:A6:7F:9D:16:FD:81:C3:B7:E9:23:FF"
+          }
+        ]
+      }
+    },
+    {
+      "type": "android",
+      "info": {
+        "package_name": "org.ironfoxoss.ironfox",
+        "_source": "https://releases.ironfoxoss.org/ironfox/releases/157.0.1/arm64-v8a/ironfox-157.0.1-arm64-v8a.apk verified with apksigner 36.1.0 on 2026-10-15 (DN: CN=Akash Yadav, OU=IronFox)",
+        "signatures": [
+          {
+            "build": "release",
+            "cert_fingerprint_sha256": "C5:E2:91:B5:A5:71:F9:C8:CD:9A:97:99:C2:C9:4E:02:EC:97:03:94:88:93:F2:CA:75:6D:67:B9:42:04:F9:04"
+          }
+        ]
+      }
+    },
+    {
+      "type": "android",
+      "info": {
+        "package_name": "org.torproject.torbrowser",
+        "_source": "https://dist.torproject.org/torbrowser/15.0.25/tor-browser-android-aarch64-15.0.25.apk verified with apksigner 36.1.0 on 2026-10-15 (DN: O=The Tor Project, CN=Tor Browser)",
+        "signatures": [
+          {
+            "build": "release",
+            "cert_fingerprint_sha256": "20:06:1F:04:5E:73:7C:67:37:5C:17:79:4C:FE:DB:43:6A:03:CE:C6:BA:CB:7C:B9:F9:66:42:20:5C:A2:CE:C8"
+          }
+        ]
+      }
+    },
+    {
+      "type": "android",
+      "info": {
+        "package_name": "org.torproject.torbrowser_alpha",
+        "_source": "https://dist.torproject.org/torbrowser/16.0a13/tor-browser-android-aarch64-16.0a13.apk verified with apksigner 36.1.0 on 2026-10-15 (DN: CN=Tor Browser, OU=Applications Team). NOTE: alpha uses a distinct signing key from stable.",
+        "signatures": [
+          {
+            "build": "release",
+            "cert_fingerprint_sha256": "15:F7:60:B4:1A:CB:E4:78:3E:66:71:02:C9:F6:71:19:BE:2A:F6:2F:AB:07:76:3F:9D:57:F0:1E:5E:10:74:E1"
+          }
+        ]
+      }
+    }
+  ]
+}

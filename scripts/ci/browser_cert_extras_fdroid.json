@@ -1,0 +1,45 @@
+{
+  "_comment": [
+    "F-Droid per-app signing keys for browsers that the F-Droid main repo rebuilds and",
+    "re-signs (Anti-Repaint deterministic per-app keys). Merged ONLY into the fdroid",
+    "flavor snapshot (app/src/fdroid/res/raw/passkey_privileged_browsers_allowlist.json)",
+    "by scripts/ci/checkPasskeyPrivilegedBrowserAllowlist.sh; never into the play/quest/",
+    "nogms builds, where a re-signed browser must keep warning.",
+    "",
+    "Rationale: an fdroid-flavor Pass install is itself distributed through the F-Droid",
+    "ecosystem, so its users' trust root is F-Droid's build pipeline. Trusting F-Droid's",
+    "per-app keys there is consistent; elsewhere it is not.",
+    "",
+    "Policy: add an entry only after verifying the fingerprint with apksigner against the",
+    "APK served by https://f-droid.org/repo/, and record the exact artifact in _source.",
+    "Vendor-signed upstream entries still apply (merges are additive per package)."
+  ],
+  "apps": [
+    {
+      "type": "android",
+      "info": {
+        "package_name": "com.duckduckgo.mobile.android",
+        "_source": "https://f-droid.org/repo/com.duckduckgo.mobile.android_52960000.apk verified with apksigner 36.1.0 on 2026-10-15 (DN: CN=FDroid, O=fdroid.org)",
+        "signatures": [
+          {
+            "build": "release",
+            "cert_fingerprint_sha256": "F0:70:7D:02:1C:0B:F3:E6:F8:DC:C1:1B:A3:F5:70:04:25:D5:97:DC:A3:01:A3:1E:21:05:56:93:4E:BB:1B:0A"
+          }
+        ]
+      }
+    },
+    {
+      "type": "android",
+      "info": {
+        "package_name": "org.mozilla.fennec_fdroid",
+        "_source": "https://f-droid.org/repo/org.mozilla.fennec_fdroid_1570020.apk verified with apksigner 36.1.0 on 2026-10-15 (DN: CN=FDroid, O=fdroid.org)",
+        "signatures": [
+          {
+            "build": "release",
+            "cert_fingerprint_sha256": "06:66:53:58:EF:D8:BA:05:BE:23:6A:47:A1:2C:B0:95:8D:7D:75:DD:93:9D:77:C2:B3:1F:53:98:53:7E:BD:C5"
+          }
+        ]
+      }
+    }
+  ]
+}

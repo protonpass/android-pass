@@ -24,6 +24,10 @@
   <string name="vault_edit_folder_dialog_title">Rinomina cartella</string>
   <string name="folder_delete_dialog_title">Elimina la cartella</string>
   <string name="folder_delete_dialog_body">Questo eliminerà definitivamente la cartella __FOLDER_NAME__ e tutti i suoi contenuti. Inserisci il nome della cartella per confermare l\'eliminazione.</string>
+  <plurals name="folder_delete_dialog_body_with_items" comment="%1$d is the number of items in the folder and all its subfolders. %2$s is the folder name">
+    <item quantity="one">Questa operazione eliminerà definitivamente la cartella %2$s e tutto il suo contenuto (%1$d elemento). Inserisci il nome della cartella per confermare l\'eliminazione.</item>
+    <item quantity="other">Questa operazione eliminerà definitivamente la cartella %2$s e tutto il suo contenuto (%1$d elementi). Inserisci il nome della cartella per confermare l\'eliminazione.</item>
+  </plurals>
   <string name="folder_delete_dialog_placeholder">Nome cartella</string>
   <string name="folder_delete_dialog_delete_action">Elimina</string>
   <string name="vault_delete_dialog_body">Questo eliminerà definitivamente la cassaforte __VAULT_NAME__ e tutti i suoi contenuti. Inserisci il nome della cassaforte per confermare l\'eliminazione.</string>

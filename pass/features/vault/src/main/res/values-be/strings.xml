@@ -24,6 +24,12 @@
   <string name="vault_edit_folder_dialog_title">Перайменаваць папку</string>
   <string name="folder_delete_dialog_title">Выдаліць папку</string>
   <string name="folder_delete_dialog_body">Дзеянне прывядзе да незваротнага выдалення папкі з назвай __FOLDER_NAME__ і ўсяго яе змесціва. Увядзіце назву папкі, каб пацвердзіць выдаленне.</string>
+  <plurals name="folder_delete_dialog_body_with_items" comment="%1$d is the number of items in the folder and all its subfolders. %2$s is the folder name">
+    <item quantity="one">This will permanently delete the folder %2$s and all its contents (%1$d item). Enter the folder name to confirm deletion.</item>
+    <item quantity="few">This will permanently delete the folder %2$s and all its contents (%1$d items). Enter the folder name to confirm deletion.</item>
+    <item quantity="many">This will permanently delete the folder %2$s and all its contents (%1$d items). Enter the folder name to confirm deletion.</item>
+    <item quantity="other">This will permanently delete the folder %2$s and all its contents (%1$d items). Enter the folder name to confirm deletion.</item>
+  </plurals>
   <string name="folder_delete_dialog_placeholder">Назва папкі</string>
   <string name="folder_delete_dialog_delete_action">Выдаліць</string>
   <string name="vault_delete_dialog_body">Дзеянне прывядзе да выдалення сховішча з назвай __VAULT_NAME__ і ўсяго яго змесціва. Увядзіце назву сховішча, каб пацвердзіць выдаленне.</string>

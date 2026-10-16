@@ -24,6 +24,10 @@
   <string name="vault_edit_folder_dialog_title">Canvieu el nom de la carpeta</string>
   <string name="folder_delete_dialog_title">Elimineu la carpeta</string>
   <string name="folder_delete_dialog_body">Això eliminarà permanentment la carpeta __FOLDER_NAME__ i tot el seu contingut. Introduïu el nom de la carpeta per confirmar-ne l\'eliminació.</string>
+  <plurals name="folder_delete_dialog_body_with_items" comment="%1$d is the number of items in the folder and all its subfolders. %2$s is the folder name">
+    <item quantity="one">Això eliminarà permanentment la carpeta %2$s i tot el seu contingut (%1$d element). Introduïu el nom de la carpeta per confirmar-ne l\'eliminació.</item>
+    <item quantity="other">Això eliminarà permanentment la carpeta %2$s i tot el seu contingut (%1$d elements). Introduïu el nom de la carpeta per confirmar-ne l\'eliminació.</item>
+  </plurals>
   <string name="folder_delete_dialog_placeholder">Nom de la carpeta</string>
   <string name="folder_delete_dialog_delete_action">Elimina</string>
   <string name="vault_delete_dialog_body">Això suprimirà permanentment la caixa forta __VAULT_NAME__ i tot el seu contingut. Introduïu el nom de la caixa forta per confirmar-ne l\'eliminació.</string>
@@ -52,7 +56,7 @@
   <string name="bottomsheet_manage_access">Gestiona l\'accés</string>
   <string name="bottomsheet_offline_attachments">Fitxers adjunts fora de línia</string>
   <string name="bottomsheet_offline_attachments_enabled">Habilitat</string>
-  <string name="bottomsheet_offline_attachments_disabled">Deshabilitat</string>
+  <string name="bottomsheet_offline_attachments_disabled">Desactivat</string>
   <string name="bottomsheet_select_vault_read_only">Només podeu llegir</string>
   <string name="bottomsheet_select_vault_only_oldest_vaults">Només podeu crear elements a les vostres caixes fortes més antigues.</string>
   <string name="vault_title">Caixa forta</string>

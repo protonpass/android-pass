@@ -352,6 +352,7 @@
   <string name="autofill_suggestions_mode_exact">精确匹配 (子) 域名</string>
   <string name="autofill_suggestions_mode_never">永不填充此网站</string>
   <string name="autofill_suggestions_mode_start_with">开头为</string>
+  <string name="autofill_suggestions_mode_pattern">Wildcard pattern</string>
   <string name="autofill_suggestions_mode_regular_expression">正则表达式</string>
   <string name="autofill_suggestions_mode_exact_path">精确 URL 匹配</string>
   <string name="autofill_suggestions_android_limitation">由于操作系统 API 的限制，高级规则在 Android 上不可用！</string>

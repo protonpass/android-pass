@@ -24,6 +24,12 @@
   <string name="vault_edit_folder_dialog_title">Premenovať priečinok</string>
   <string name="folder_delete_dialog_title">Vymazať priečinok</string>
   <string name="folder_delete_dialog_body">Týmto sa natrvalo odstráni priečinok __FOLDER_NAME__ a celý jeho obsah. Zadaním názvu priečinka potvrdíte vymazanie.</string>
+  <plurals name="folder_delete_dialog_body_with_items" comment="%1$d is the number of items in the folder and all its subfolders. %2$s is the folder name">
+    <item quantity="one">Týmto sa natrvalo odstráni priečinok %2$s a celý jeho obsah (%1$d položka). Zadaním názvu priečinka potvrdíte vymazanie.</item>
+    <item quantity="few">Týmto sa natrvalo odstráni priečinok %2$s a celý jeho obsah (%1$d položky). Zadaním názvu priečinka potvrdíte vymazanie.</item>
+    <item quantity="many">Týmto sa natrvalo odstráni priečinok %2$s a celý jeho obsah (%1$d položiek). Zadaním názvu priečinka potvrdíte vymazanie.</item>
+    <item quantity="other">Týmto sa natrvalo odstráni priečinok %2$s a celý jeho obsah (%1$d položiek). Zadaním názvu priečinka potvrdíte vymazanie.</item>
+  </plurals>
   <string name="folder_delete_dialog_placeholder">Názov priečinka</string>
   <string name="folder_delete_dialog_delete_action">Vymazať</string>
   <string name="vault_delete_dialog_body">Týmto sa natrvalo odstráni trezor __VAULT_NAME__ a celý jeho obsah. Zadaním názvu trezoru potvrdíte vymazanie.</string>

@@ -25,8 +25,8 @@
   <string name="attachment_download_channel_description">Canal de notificacions per descàrregues de fitxers adjunts</string>
   <string name="downloading_attachments">S\'estan descarregant els fitxers adjunts</string>
   <string name="downloading_attachments_progress" comment="%1$s is the download progress counter, e.g. 3 / 10">%1$s fitxers</string>
-  <string name="plan_subscription_auto_renews_monthly">La subscripció es renovarà automàticament a %1$s/mes</string>
-  <string name="plan_subscription_auto_renews_annual">La subscripció es renovarà automàticament a %1$s/any</string>
+  <string name="plan_subscription_auto_renews_monthly">La subscripció es renova automàticament per %1$s/mes</string>
+  <string name="plan_subscription_auto_renews_annual">La subscripció es renova automàticament per %1$s/any</string>
   <string name="plan_welcome_offer_auto_renews_monthly">Oferta de benvinguda. Es renovarà automàticament a %1$s/mes</string>
   <string name="plan_welcome_offer_auto_renews_annual">Oferta de benvinguda. Es renovarà automàticament a %1$s/any</string>
 </resources>

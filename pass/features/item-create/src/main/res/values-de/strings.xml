@@ -352,6 +352,7 @@
   <string name="autofill_suggestions_mode_exact">Genaue (Sub-)Domain</string>
   <string name="autofill_suggestions_mode_never">Niemals auf dieser Website ausfüllen</string>
   <string name="autofill_suggestions_mode_start_with">Beginnt mit</string>
+  <string name="autofill_suggestions_mode_pattern">Platzhaltermuster</string>
   <string name="autofill_suggestions_mode_regular_expression">Regulärer Ausdruck</string>
   <string name="autofill_suggestions_mode_exact_path">Exakte URL-Übereinstimmung</string>
   <string name="autofill_suggestions_android_limitation">Erweiterte Regeln sind auf Android aufgrund von Einschränkungen in den APIs des Betriebssystems nicht verfügbar.</string>

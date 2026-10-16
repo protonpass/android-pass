@@ -163,6 +163,7 @@
   <string name="autofill_mode_label_exact">Ακριβής (υπο)τομέας</string>
   <string name="autofill_mode_label_never">Ποτέ μην συμπληρώνετε αυτόν τον ιστότοπο</string>
   <string name="autofill_mode_label_start_with">Ξεκινά με</string>
+  <string name="autofill_mode_label_pattern">Πατέντα μπαλαντέρ</string>
   <string name="autofill_mode_label_regular_expression">Κανονική έκφραση</string>
   <string name="autofill_mode_label_exact_path">Ακριβής αντιστοίχιση URL</string>
   <string name="autofill_mode_label_unsupported">Αυτή η διεύθυνση URL θα παραλειφθεί για αυτόματη συμπλήρωση</string>

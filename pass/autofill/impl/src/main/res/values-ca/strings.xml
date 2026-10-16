@@ -15,7 +15,7 @@
   <string name="autofill_confirm_button" comment="Confirmation button for actually performing the autofill action">Emplenament automàtic</string>
   <string name="autofill_confirm_unverified_browser_title">Aquesta aplicació afirma ser un navegador de confiança</string>
   <string name="autofill_confirm_unverified_browser_body">Aquesta aplicació s\'identifica com un navegador conegut, però Pass no l\'ha pogut verificar. El seu certificat de signatura no coincideix amb el que esperàvem, cosa que pot passar si el navegador està configurat de manera inusual o si una altra aplicació s\'hi fa passar per interceptar les vostres credencials. Continueu només si esteu segur que aquesta aplicació és legítima.</string>
-  <string name="autofill_confirm_dont_ask_again">No m\'ho torneu a preguntar per aquesta aplicació</string>
+  <string name="autofill_confirm_dont_ask_again">No m\'ho tornis a preguntar per aquesta aplicació</string>
   <string name="autofill_troubleshooting_title">Resolució de problemes d\'emplenament automàtic</string>
   <string name="autofill_troubleshooting_subtitle">Comproveu que el vostre dispositiu estigui configurat correctament per a l\'emplenament automàtic.</string>
   <string name="autofill_troubleshooting_verdict_all_good">L\'emplenament automàtic està totalment configurat</string>
@@ -33,7 +33,7 @@ Toqueu a un navegador per obrir-ne les preferències.</string>
   <string name="autofill_troubleshooting_browsers_compatible_body">Els vostres navegadors estan connectats i preparats per a l\'emplenament automàtic.</string>
   <string name="autofill_troubleshooting_browser_active">Actiu</string>
   <string name="autofill_troubleshooting_inline_info">Els suggeriments en línia apareixen al teclat. Requereixen Android 11 o posterior i un teclat compatible com ara Gboard.</string>
-  <string name="autofill_troubleshooting_share_diagnostics">Compartir el diagnòstic</string>
+  <string name="autofill_troubleshooting_share_diagnostics">Comparteix el diagnòstic</string>
   <string name="autofill_troubleshooting_open_diagnostics">Diagnòstic avançat</string>
   <string name="autofill_diagnostics_title">Diagnòstic avançat</string>
   <string name="autofill_diagnostics_enable">Habilitar el diagnòstic d\'emplenament automàtic</string>
@@ -46,6 +46,6 @@ Toqueu a un navegador per obrir-ne les preferències.</string>
   <string name="autofill_diagnostics_outcome_nothing">S\'ha activat l\'emplenament automàtic a %1$s, però no s\'ha proporcionat cap inici de sessió coincident. La pàgina pot no tenir camps d\'inici de sessió detectables o no teniu cap element per a aquest lloc web.</string>
   <string name="autofill_diagnostics_outcome_error">L\'emplenament automàtic ha trobat un error a %1$s.</string>
   <string name="autofill_diagnostics_recent_title">Intents recents</string>
-  <string name="autofill_diagnostics_clear">Netejar-ho</string>
-  <string name="autofill_diagnostics_share">Compartir-ho amb el suport</string>
+  <string name="autofill_diagnostics_clear">Neteja</string>
+  <string name="autofill_diagnostics_share">Comparteix amb el suport</string>
 </resources>

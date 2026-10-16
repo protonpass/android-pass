@@ -163,6 +163,7 @@
   <string name="autofill_mode_label_exact">ზუსტი (ქვე)დომენი</string>
   <string name="autofill_mode_label_never">არასდროს შეავსო ამ ვებსაიტზე</string>
   <string name="autofill_mode_label_start_with">იწყება რით</string>
+  <string name="autofill_mode_label_pattern">Wildcard pattern</string>
   <string name="autofill_mode_label_regular_expression">რეგულარული გამოსახულება</string>
   <string name="autofill_mode_label_exact_path">ზუსტი URL-ის დამთხვევა</string>
   <string name="autofill_mode_label_unsupported">ეს url ავტოშევსებისთვის გამოტოვებული იქნება</string>

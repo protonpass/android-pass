@@ -23,7 +23,7 @@
   <string name="migrate_folder_error_snackbar">Erro ao mover a pasta</string>
   <string name="migrate_folder_already_same_parent_snackbar">A pasta já está nessa localização</string>
   <string name="migrate_dissolve_folder_dialog_title">Mover conteúdo da pasta</string>
-  <string name="migrate_dissolve_folder_dialog_message">This folder is already at the vault root. Its items and subfolders will be moved to the vault root.</string>
+  <string name="migrate_dissolve_folder_dialog_message">Esta pasta já está na raiz do cofre. Seus itens e subpastas serão movidos para a raiz do cofre.</string>
   <string name="migrate_dissolve_folder_dialog_confirm">Mover</string>
   <plurals name="migrate_disabled_folder_reason_same_folder">
     <item quantity="one">O item já está nesta pasta</item>
@@ -31,8 +31,8 @@
   </plurals>
   <string name="migrate_disabled_folder_reason_same_location">Essa pasta já está nessa localização</string>
   <string name="migrate_disabled_folder_reason_being_moved">Essa pasta está sendo movida</string>
-  <string name="migrate_disabled_folder_reason_descendant">This folder is inside the folder being moved</string>
-  <string name="migrate_disabled_folder_reason_limit_reached">Moving here would exceed the folder limits</string>
+  <string name="migrate_disabled_folder_reason_descendant">Esta pasta está na pasta que está sendo movida</string>
+  <string name="migrate_disabled_folder_reason_limit_reached">Mover-se para cá excederia os limites de pasta</string>
   <string name="migrate_disabled_vault_reason_no_permission">Você não pode criar itens neste cofre</string>
   <string name="migrate_disabled_vault_reason_same_vault">Você não pode mover um item para o mesmo cofre</string>
   <plurals name="migrate_items_shared_warning_title">
@@ -45,7 +45,7 @@
     <item quantity="other">%d itens são atualmente compartilhados. Movê-los para outro cofre removerá o acesso de todos os outros usuários.</item>
   </plurals>
   <string name="migrate_select_vault_title">Selecionar um cofre</string>
-  <string name="migrate_select_destination_for_source_title">Select the destination to move all items from %s</string>
+  <string name="migrate_select_destination_for_source_title">Selecione o destino para mover todos os itens de %s</string>
   <string name="migrate_folder_items_moved_success_snackbar">Itens movidos</string>
   <string name="migrate_folder_items_moved_error_snackbar">Erro ao mover os itens</string>
 </resources>

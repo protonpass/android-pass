@@ -163,9 +163,10 @@
   <string name="autofill_mode_label_exact">(Sub)domini exacte</string>
   <string name="autofill_mode_label_never">No ompliu mai res en aquest lloc web</string>
   <string name="autofill_mode_label_start_with">Comença per</string>
+  <string name="autofill_mode_label_pattern">Patró comodí</string>
   <string name="autofill_mode_label_regular_expression">Expressió regular</string>
   <string name="autofill_mode_label_exact_path">Coincidència exacta d\'URL</string>
-  <string name="autofill_mode_label_unsupported">Aquest URL s\'exclourà de l\'emplenament automàtic</string>
+  <string name="autofill_mode_label_unsupported">Aquest URL s\'ometrà de l\'emplenament automàtic</string>
   <string name="login_item_view_alias_button">Mostra l\'àlies</string>
   <string name="item_details_identity_section_personal_title">Detalls personals</string>
   <string name="item_details_identity_section_personal_first_name_title">Nom</string>
@@ -335,7 +336,7 @@
   <string name="login_item_monitor_widget_missing_two_fa_title">Configureu A2F per a més seguretat</string>
   <string name="login_item_monitor_widget_missing_two_fa_subtitle">Aquest servei ofereix A2F. Habiliteu-lo per a augmentar la seguretat del compte.</string>
   <string name="login_item_monitor_action_ignore">Ignora</string>
-  <string name="login_item_monitor_action_restore">Restablir l\'alerta</string>
+  <string name="login_item_monitor_action_restore">Restableix l\'alerta</string>
   <string name="login_item_monitor_header">Pass Monitor</string>
   <string name="login_item_monitor_label_weak">Contrasenya feble</string>
   <string name="login_item_monitor_label_compromised">Contrasenya compromesa</string>
@@ -393,6 +394,6 @@
   <string name="password_check_min_length">La contrasenya és massa curta</string>
   <string name="password_check_lowercase">Lletres minúscules</string>
   <string name="password_check_uppercase">Lletres majúscules</string>
-  <string name="password_check_no_consecutive">No hi ha caràcters repetits</string>
+  <string name="password_check_no_consecutive">Sense caràcters repetits</string>
   <string name="password_check_no_common">No és una contrasenya habitual</string>
 </resources>

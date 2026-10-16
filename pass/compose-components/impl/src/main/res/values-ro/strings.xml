@@ -165,6 +165,7 @@
   <string name="autofill_mode_label_exact">(Sub)domeniu exact</string>
   <string name="autofill_mode_label_never">Niciodată pe acest site</string>
   <string name="autofill_mode_label_start_with">Începe cu</string>
+  <string name="autofill_mode_label_pattern">Model general de căutare</string>
   <string name="autofill_mode_label_regular_expression">Expresie regulată</string>
   <string name="autofill_mode_label_exact_path">Potrivire exactă URL</string>
   <string name="autofill_mode_label_unsupported">Acest URL va fi ignorat la autocompletare</string>

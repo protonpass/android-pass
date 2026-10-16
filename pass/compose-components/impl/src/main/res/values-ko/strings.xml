@@ -161,6 +161,7 @@
   <string name="autofill_mode_label_exact">정확한 (서브)도메인</string>
   <string name="autofill_mode_label_never">이 웹사이트에서 자동 완성 안 함</string>
   <string name="autofill_mode_label_start_with">시작:</string>
+  <string name="autofill_mode_label_pattern">Wildcard pattern</string>
   <string name="autofill_mode_label_regular_expression">정규 표현식</string>
   <string name="autofill_mode_label_exact_path">정확한 URL 일치</string>
   <string name="autofill_mode_label_unsupported">자동 완성이 이 URL에서 생략됩니다.</string>

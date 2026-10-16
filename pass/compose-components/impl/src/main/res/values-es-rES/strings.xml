@@ -163,6 +163,7 @@
   <string name="autofill_mode_label_exact">Dominio o subdominio exacto</string>
   <string name="autofill_mode_label_never">No rellenar nunca en este sitio web</string>
   <string name="autofill_mode_label_start_with">Empieza por</string>
+  <string name="autofill_mode_label_pattern">Wildcard pattern</string>
   <string name="autofill_mode_label_regular_expression">Expresión regular</string>
   <string name="autofill_mode_label_exact_path">Coincidencia exacta de URL</string>
   <string name="autofill_mode_label_unsupported">Esta URL se omite para el autorrelleno</string>

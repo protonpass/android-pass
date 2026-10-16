@@ -24,6 +24,10 @@
   <string name="vault_edit_folder_dialog_title">Modifier le nom d\'un dossier</string>
   <string name="folder_delete_dialog_title">Supprimer le dossier</string>
   <string name="folder_delete_dialog_body">Ceci supprimera définitivement le dossier __FOLDER_NAME__ et tout son contenu. Saisissez le nom du dossier pour confirmer la suppression.</string>
+  <plurals name="folder_delete_dialog_body_with_items" comment="%1$d is the number of items in the folder and all its subfolders. %2$s is the folder name">
+    <item quantity="one">Ceci supprimera définitivement le dossier %2$s et tout son contenu (%1$d élément). Saisissez le nom du dossier pour confirmer la suppression.</item>
+    <item quantity="other">Ceci supprimera définitivement le dossier %2$s et tout son contenu (%1$d éléments). Saisissez le nom du dossier pour confirmer la suppression.</item>
+  </plurals>
   <string name="folder_delete_dialog_placeholder">Nom du dossier</string>
   <string name="folder_delete_dialog_delete_action">Supprimer</string>
   <string name="vault_delete_dialog_body">Ceci supprimera définitivement le coffre-fort « __VAULT_NAME__ » et tout son contenu. Saisissez le nom du coffre-fort pour confirmer la suppression.</string>

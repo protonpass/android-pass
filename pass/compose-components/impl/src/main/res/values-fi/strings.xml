@@ -163,6 +163,7 @@
   <string name="autofill_mode_label_exact">Tarkka (ala)verkkotunnus</string>
   <string name="autofill_mode_label_never">Älä koskaan täytä tällä verkkosivustolla</string>
   <string name="autofill_mode_label_start_with">Alkaa</string>
+  <string name="autofill_mode_label_pattern">Wildcard pattern</string>
   <string name="autofill_mode_label_regular_expression">Säännöllinen lauseke</string>
   <string name="autofill_mode_label_exact_path">Tarkka URL-vastaavuus</string>
   <string name="autofill_mode_label_unsupported">Tätä URL-osoitetta ei oteta huomioon automaattisen täytön yhteydessä</string>

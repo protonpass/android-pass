@@ -24,6 +24,10 @@
   <string name="vault_edit_folder_dialog_title">Nimeä kansio uudelleen</string>
   <string name="folder_delete_dialog_title">Poista kansio</string>
   <string name="folder_delete_dialog_body">This will permanently delete the folder __FOLDER_NAME__ and all its contents. Enter the folder name to confirm deletion.</string>
+  <plurals name="folder_delete_dialog_body_with_items" comment="%1$d is the number of items in the folder and all its subfolders. %2$s is the folder name">
+    <item quantity="one">This will permanently delete the folder %2$s and all its contents (%1$d item). Enter the folder name to confirm deletion.</item>
+    <item quantity="other">This will permanently delete the folder %2$s and all its contents (%1$d items). Enter the folder name to confirm deletion.</item>
+  </plurals>
   <string name="folder_delete_dialog_placeholder">Kansion nimi</string>
   <string name="folder_delete_dialog_delete_action">Poista</string>
   <string name="vault_delete_dialog_body">Tämä poistaa holvin __VAULT_NAME__ ja kaiken sen sisällön pysyvästi. Vahvista poisto syöttämällä holvin nimi.</string>

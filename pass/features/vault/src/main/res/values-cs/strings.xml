@@ -24,6 +24,12 @@
   <string name="vault_edit_folder_dialog_title">Přejmenovat složku</string>
   <string name="folder_delete_dialog_title">Smazat složku</string>
   <string name="folder_delete_dialog_body">Toto trvale smaže složku __FOLDER_NAME__ a veškerý její obsah. Zadejte název složky pro potvrzení smazání.</string>
+  <plurals name="folder_delete_dialog_body_with_items" comment="%1$d is the number of items in the folder and all its subfolders. %2$s is the folder name">
+    <item quantity="one">Tímto trvale smažete složku %2$s a veškerý její obsah (%1$d položku). Pro potvrzení opište název složky.</item>
+    <item quantity="few">Tímto trvale smažete složku %2$s a veškerý její obsah (%1$d položky). Pro potvrzení opište název složky.</item>
+    <item quantity="many">Tímto trvale smažete složku %2$s a veškerý její obsah (%1$d položek). Pro potvrzení opište název složky.</item>
+    <item quantity="other">Tímto trvale smažete složku %2$s a veškerý její obsah (%1$d položek). Pro potvrzení opište název složky.</item>
+  </plurals>
   <string name="folder_delete_dialog_placeholder">Název složky</string>
   <string name="folder_delete_dialog_delete_action">Smazat</string>
   <string name="vault_delete_dialog_body">Toto trvale smaže trezor __VAULT_NAME__ a veškerý jeho obsah. Zadejte název trezoru pro potvrzení smazání.</string>

@@ -14,7 +14,7 @@
   <string name="autofill_confirm_dangerous_body" comment="Body for the dialog that will appear when the user clicks on Autofill but we think it may be a dangerous action">Você está prestes a preencher automaticamente suas credenciais em um site aberto pelo seu aplicativo atual. O aplicativo pode ter acesso às credenciais após o preenchimento automático - somente faça isto se você confiar no aplicativo.</string>
   <string name="autofill_confirm_button" comment="Confirmation button for actually performing the autofill action">Preenchimento automático</string>
   <string name="autofill_confirm_unverified_browser_title">Este aplicativo afirma ser um navegador confiável</string>
-  <string name="autofill_confirm_unverified_browser_body">This app identifies itself as a known browser, but Pass could not verify it. Its signing certificate does not match what we expect, which can happen if the browser is unusually configured, or if another app is impersonating it to intercept your credentials. Only continue if you are certain this app is legitimate.</string>
+  <string name="autofill_confirm_unverified_browser_body">Este aplicativo identifica-se como um navegador conhecido, mas o Pass não pôde verificá-lo. Seu certificado de assinatura não corresponde ao que esperamos, o que pode acontecer se o navegador estiver invulgarmente configurado, ou se outro aplicativo estiver se passando por ele para interceptar suas credenciais. Só continue se você tiver certeza de que este aplicativo é legítimo.</string>
   <string name="autofill_confirm_dont_ask_again">Não voltar a perguntar para este aplicativo de novo</string>
   <string name="autofill_troubleshooting_title">Solução de problemas de preenchimento automático</string>
   <string name="autofill_troubleshooting_subtitle">Verifique se seu dispositivo está configurado corretamente para o preenchimento automático.</string>
@@ -27,24 +27,24 @@
   <string name="autofill_troubleshooting_service_enable_action">Ativar preenchimento automático</string>
   <string name="autofill_troubleshooting_service_unsupported_title">Este dispositivo não suporta o preenchimento automático</string>
   <string name="autofill_troubleshooting_browsers_inactive_header">Foram detetados navegadores inativos</string>
-  <string name="autofill_troubleshooting_browsers_inactive_body">Turn on autofill so that Proton Pass can fill your credentials. Tap a browser to open its settings.</string>
-  <string name="autofill_troubleshooting_browsers_compatible_header">Browsers are compatible</string>
-  <string name="autofill_troubleshooting_browsers_compatible_body">Your browsers are connected and ready to autofill.</string>
+  <string name="autofill_troubleshooting_browsers_inactive_body">Ative o preenchimento automático para que o Proton Pass possa preencher suas credenciais. Toque em um navegador para abrir suas configurações.</string>
+  <string name="autofill_troubleshooting_browsers_compatible_header">Os navegadores são compatíveis</string>
+  <string name="autofill_troubleshooting_browsers_compatible_body">Seus navegadores estão conectados e prontos para preenchimento automático.</string>
   <string name="autofill_troubleshooting_browser_active">Ativo</string>
-  <string name="autofill_troubleshooting_inline_info">Inline suggestions appear in your keyboard. They need Android 11 or later and a compatible keyboard such as Gboard.</string>
+  <string name="autofill_troubleshooting_inline_info">Sugestões inline aparecem no seu teclado. Eles precisam do Android 11 ou posterior e um teclado compatível, como o Gboard.</string>
   <string name="autofill_troubleshooting_share_diagnostics">Compartilhar diagnóstico</string>
   <string name="autofill_troubleshooting_open_diagnostics">Diagnósticos avançados</string>
   <string name="autofill_diagnostics_title">Diagnósticos avançados</string>
-  <string name="autofill_diagnostics_enable">Enable autofill diagnostics</string>
-  <string name="autofill_diagnostics_enable_description">When on, Proton Pass records what happens during autofill so you can see why it didn\'t fill. Turn it off when you\'re done.</string>
-  <string name="autofill_diagnostics_instructions">Reproduce the autofill problem in the app or browser, then come back to this screen.</string>
-  <string name="autofill_diagnostics_last_attempt_title">Last autofill attempt</string>
-  <string name="autofill_diagnostics_no_attempts">No autofill attempt recorded yet.</string>
-  <string name="autofill_diagnostics_reason_not_default">Proton Pass isn\'t your autofill service, so it can\'t fill anywhere yet.</string>
-  <string name="autofill_diagnostics_outcome_offered">Proton Pass offered suggestions in %1$s.</string>
-  <string name="autofill_diagnostics_outcome_nothing">Autofill was triggered in %1$s, but no matching login was offered. The page may have no detectable login fields, or you have no item for this site.</string>
-  <string name="autofill_diagnostics_outcome_error">Autofill ran into an error in %1$s.</string>
-  <string name="autofill_diagnostics_recent_title">Recent attempts</string>
+  <string name="autofill_diagnostics_enable">Ativar diagnósticos de preenchimento automático</string>
+  <string name="autofill_diagnostics_enable_description">Quando ligado, o Proton Pass registra o que acontece durante o preenchimento automático para ver por que ele não preencheu. Desliga quando acabares.</string>
+  <string name="autofill_diagnostics_instructions">Reproduzir o problema de preenchimento automático no aplicativo ou navegador e, em seguida, voltar para esta tela.</string>
+  <string name="autofill_diagnostics_last_attempt_title">Última tentativa de preenchimento automático</string>
+  <string name="autofill_diagnostics_no_attempts">Nenhuma tentativa de preenchimento automático registrada ainda.</string>
+  <string name="autofill_diagnostics_reason_not_default">O Proton Pass não é o seu serviço de preenchimento automático, por isso ainda não pode preencher em nenhum lugar.</string>
+  <string name="autofill_diagnostics_outcome_offered">Proton Pass ofereceu sugestões em %1$s.</string>
+  <string name="autofill_diagnostics_outcome_nothing">O preenchimento automático foi acionado em %1$s, mas nenhuma entrada correspondente foi oferecido. A página pode não ter campos de entrada detectáveis, ou você não tem nenhum item para este site.</string>
+  <string name="autofill_diagnostics_outcome_error">O preenchimento automático teve um erro em %1$s.</string>
+  <string name="autofill_diagnostics_recent_title">Tentativas recentes</string>
   <string name="autofill_diagnostics_clear">Limpar</string>
   <string name="autofill_diagnostics_share">Compartilhar com suporte</string>
 </resources>

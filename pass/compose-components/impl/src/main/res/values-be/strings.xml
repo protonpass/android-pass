@@ -167,6 +167,7 @@
   <string name="autofill_mode_label_exact">Дакладны (пад)дамен</string>
   <string name="autofill_mode_label_never">Ніколі не запаўняць на гэтым вэб-сайце</string>
   <string name="autofill_mode_label_start_with">Пачаць з</string>
+  <string name="autofill_mode_label_pattern">Wildcard pattern</string>
   <string name="autofill_mode_label_regular_expression">Рэгулярны выраз</string>
   <string name="autofill_mode_label_exact_path">Дакладнае супадзенне URL-адраса</string>
   <string name="autofill_mode_label_unsupported">Гэты URL-адрас будзе прапушчаны для аўтазапаўнення</string>

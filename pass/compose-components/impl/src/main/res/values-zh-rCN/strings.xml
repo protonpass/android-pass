@@ -161,6 +161,7 @@
   <string name="autofill_mode_label_exact">精确匹配 (子) 域名</string>
   <string name="autofill_mode_label_never">永不填充此网站</string>
   <string name="autofill_mode_label_start_with">开头为</string>
+  <string name="autofill_mode_label_pattern">Wildcard pattern</string>
   <string name="autofill_mode_label_regular_expression">正则表达式</string>
   <string name="autofill_mode_label_exact_path">精确 URL 匹配</string>
   <string name="autofill_mode_label_unsupported">此 URL 将被跳过自动填充</string>

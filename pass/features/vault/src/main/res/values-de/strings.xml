@@ -24,6 +24,10 @@
   <string name="vault_edit_folder_dialog_title">Ordner umbenennen</string>
   <string name="folder_delete_dialog_title">Ordner löschen</string>
   <string name="folder_delete_dialog_body">Dadurch werden der Ordner __FOLDER_NAME__ und sein gesamter Inhalt dauerhaft gelöscht. Geben Sie den Namen des Ordners ein, um den Löschvorgang zu bestätigen.</string>
+  <plurals name="folder_delete_dialog_body_with_items" comment="%1$d is the number of items in the folder and all its subfolders. %2$s is the folder name">
+    <item quantity="one">Dadurch wird der Ordner %2$s samt dessen gesamter Inhalt (%1$d Element) dauerhaft gelöscht. Bitte gib den Ordnernamen ein, um den Löschvorgang zu bestätigen.</item>
+    <item quantity="other">Dadurch wird der Ordner %2$s samt dessen gesamter Inhalt (%1$d Elemente) dauerhaft gelöscht. Bitte gib den Ordnernamen ein, um den Löschvorgang zu bestätigen.</item>
+  </plurals>
   <string name="folder_delete_dialog_placeholder">Namen des Ordners</string>
   <string name="folder_delete_dialog_delete_action">Löschen</string>
   <string name="vault_delete_dialog_body">Dadurch wird der Tresor __VAULT_NAME__ und alle seine Inhalte dauerhaft gelöscht. Bitte gib den Tresornamen ein, um die Löschung zu bestätigen.</string>

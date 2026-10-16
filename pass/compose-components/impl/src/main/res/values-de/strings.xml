@@ -163,6 +163,7 @@
   <string name="autofill_mode_label_exact">Genaue (Sub-)Domain</string>
   <string name="autofill_mode_label_never">Niemals auf dieser Website ausfüllen</string>
   <string name="autofill_mode_label_start_with">Beginnt mit</string>
+  <string name="autofill_mode_label_pattern">Platzhaltermuster</string>
   <string name="autofill_mode_label_regular_expression">Regulärer Ausdruck</string>
   <string name="autofill_mode_label_exact_path">Exakte URL-Übereinstimmung</string>
   <string name="autofill_mode_label_unsupported">Diese URL wird beim automatischen Ausfüllen übersprungen</string>

@@ -352,6 +352,7 @@
   <string name="autofill_suggestions_mode_exact">Presná (pod)doména</string>
   <string name="autofill_suggestions_mode_never">Nikdy nevypĺňať formuláre na tejto webovej stránke</string>
   <string name="autofill_suggestions_mode_start_with">Začína s</string>
+  <string name="autofill_suggestions_mode_pattern">Vzor so zástupnými znakmi</string>
   <string name="autofill_suggestions_mode_regular_expression">Regulárny výraz</string>
   <string name="autofill_suggestions_mode_exact_path">Presná zhoda URL</string>
   <string name="autofill_suggestions_android_limitation">Pokročilé pravidlá nie sú v systéme Android k dispozícii kvôli obmedzeniam v rozhraniach API operačného systému.</string>

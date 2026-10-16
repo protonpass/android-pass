@@ -73,5 +73,5 @@
   <string name="upsell_get_the_deal">Aconseguiu l\'oferta</string>
   <string name="upsell_whats_included">Què s\'hi inclou</string>
   <string name="upsell_error_google_prices">Hi ha hagut un problema en recuperar els preus de Google Play Store en aquest moment.</string>
-  <string name="upsell_error_general">Hi ha hagut un error.</string>
+  <string name="upsell_error_general">S\'ha produït un error.</string>
 </resources>

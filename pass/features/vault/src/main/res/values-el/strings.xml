@@ -24,6 +24,10 @@
   <string name="vault_edit_folder_dialog_title">Μετονομασία φακέλου</string>
   <string name="folder_delete_dialog_title">Διαγραφή φακέλου</string>
   <string name="folder_delete_dialog_body">Αυτό θα διαγράψει οριστικά τον φάκελο __FOLDER_NAME__ και όλα τα περιεχόμενά του. Εισαγάγετε το όνομα του φακέλου για να επιβεβαιώσετε τη διαγραφή.</string>
+  <plurals name="folder_delete_dialog_body_with_items" comment="%1$d is the number of items in the folder and all its subfolders. %2$s is the folder name">
+    <item quantity="one">Αυτό θα διαγράψει οριστικά τον φάκελο %2$s και όλα τα περιεχόμενά του (%1$d στοιχείο). Εισαγάγετε το όνομα του φακέλου για να επιβεβαιώσετε τη διαγραφή.</item>
+    <item quantity="other">Αυτό θα διαγράψει οριστικά τον φάκελο %2$s και όλα τα περιεχόμενά του (%1$d στοιχεία). Εισαγάγετε το όνομα του φακέλου για να επιβεβαιώσετε τη διαγραφή.</item>
+  </plurals>
   <string name="folder_delete_dialog_placeholder">Όνομα φακέλου</string>
   <string name="folder_delete_dialog_delete_action">Διαγραφή</string>
   <string name="vault_delete_dialog_body">Αυτό θα διαγράψει οριστικά την κρύπτη __VAULT_NAME__ και όλα τα περιεχόμενά της. Εισαγάγετε το όνομα της κρύπτης για να επιβεβαιώσετε τη διαγραφή.</string>

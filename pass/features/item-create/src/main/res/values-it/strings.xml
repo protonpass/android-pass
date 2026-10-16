@@ -352,6 +352,7 @@
   <string name="autofill_suggestions_mode_exact">(sotto)dominio esatto</string>
   <string name="autofill_suggestions_mode_never">Non compilare mai questo sito web</string>
   <string name="autofill_suggestions_mode_start_with">Inizia con</string>
+  <string name="autofill_suggestions_mode_pattern">Wildcard pattern</string>
   <string name="autofill_suggestions_mode_regular_expression">Espressione regolare</string>
   <string name="autofill_suggestions_mode_exact_path">Corrispondenza URL esatta</string>
   <string name="autofill_suggestions_android_limitation">Le regole avanzate non sono disponibili su Android a causa delle limitazioni delle API del sistema operativo.</string>

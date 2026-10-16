@@ -163,6 +163,7 @@
   <string name="autofill_mode_label_exact">(Sub)domínio exato</string>
   <string name="autofill_mode_label_never">Nunca preencher neste site</string>
   <string name="autofill_mode_label_start_with">Iniciar com</string>
+  <string name="autofill_mode_label_pattern">Wildcard pattern</string>
   <string name="autofill_mode_label_regular_expression">Expressão regular</string>
   <string name="autofill_mode_label_exact_path">Correspondência exata de URL</string>
   <string name="autofill_mode_label_unsupported">Esta URL será ignorada pelo preenchimento automático</string>
@@ -327,7 +328,7 @@
   <string name="login_item_monitor_widget_weak_pass_title">Senha fraca</string>
   <string name="login_item_monitor_widget_weak_pass_subtitle">Esta conta está vulnerável, visite o serviço e altere sua senha.</string>
   <string name="login_item_monitor_widget_compromised_pass_title">Senha comprometida</string>
-  <string name="login_item_monitor_widget_compromised_pass_subtitle">This login password appears in a data breach. Please visit the service and change the password.</string>
+  <string name="login_item_monitor_widget_compromised_pass_subtitle">Esta senha de acesso aparece em uma violação de dados. Por favor, visite o serviço e altere a senha.</string>
   <plurals name="login_item_monitor_widget_reused_pass_title">
     <item quantity="one">%d outro início de sessão usa a mesma senha</item>
     <item quantity="other">%d outros inícios de sessão usam a mesma senha</item>

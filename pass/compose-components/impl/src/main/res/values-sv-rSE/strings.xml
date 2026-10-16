@@ -163,6 +163,7 @@
   <string name="autofill_mode_label_exact">Exact (sub)domain</string>
   <string name="autofill_mode_label_never">Fyll aldrig på denna webbplats</string>
   <string name="autofill_mode_label_start_with">Börjar med</string>
+  <string name="autofill_mode_label_pattern">Wildcard pattern</string>
   <string name="autofill_mode_label_regular_expression">Vanligt uttryck</string>
   <string name="autofill_mode_label_exact_path">Exakt URL-matchning</string>
   <string name="autofill_mode_label_unsupported">Denna URL kommer att hoppas över för automatisk ifyllning</string>

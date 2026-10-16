@@ -352,6 +352,7 @@
   <string name="autofill_suggestions_mode_exact">Дакладны (пад)дамен</string>
   <string name="autofill_suggestions_mode_never">Ніколі не запаўняць на гэтым вэб-сайце</string>
   <string name="autofill_suggestions_mode_start_with">Пачаць з</string>
+  <string name="autofill_suggestions_mode_pattern">Wildcard pattern</string>
   <string name="autofill_suggestions_mode_regular_expression">Рэгулярны выраз</string>
   <string name="autofill_suggestions_mode_exact_path">Дакладнае супадзенне URL-адраса</string>
   <string name="autofill_suggestions_android_limitation">Дадатковыя правілы недаступны на Android з прычыны абмежаванняў API аперацыйнай сістэмы.</string>

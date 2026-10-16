@@ -163,6 +163,7 @@
   <string name="autofill_mode_label_exact">Tam (alt) etki alanı</string>
   <string name="autofill_mode_label_never">Bu sitede asla doldurulmasın</string>
   <string name="autofill_mode_label_start_with">Şöyle başlayan:</string>
+  <string name="autofill_mode_label_pattern">Genel arama modeli</string>
   <string name="autofill_mode_label_regular_expression">Kurallı ifade</string>
   <string name="autofill_mode_label_exact_path">Tam adres eşleşmesi</string>
   <string name="autofill_mode_label_unsupported">Bu adres otomatik doldurma sırasında atlanır</string>

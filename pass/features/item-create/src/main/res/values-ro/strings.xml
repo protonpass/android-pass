@@ -352,6 +352,7 @@
   <string name="autofill_suggestions_mode_exact">(Sub)domeniu exact</string>
   <string name="autofill_suggestions_mode_never">Niciodată pe acest site</string>
   <string name="autofill_suggestions_mode_start_with">Începe cu</string>
+  <string name="autofill_suggestions_mode_pattern">Model general de căutare</string>
   <string name="autofill_suggestions_mode_regular_expression">Expresie regulată</string>
   <string name="autofill_suggestions_mode_exact_path">Potrivire exactă URL</string>
   <string name="autofill_suggestions_android_limitation">Regulile avansate nu sunt disponibile pe Android din cauza limitărilor API-urilor sistemului de operare.</string>

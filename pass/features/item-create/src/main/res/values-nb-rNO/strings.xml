@@ -352,6 +352,7 @@
   <string name="autofill_suggestions_mode_exact">Eksakt (under)domene</string>
   <string name="autofill_suggestions_mode_never">Aldri fyll ut på dette nettstedet</string>
   <string name="autofill_suggestions_mode_start_with">Begynner med</string>
+  <string name="autofill_suggestions_mode_pattern">Wildcard pattern</string>
   <string name="autofill_suggestions_mode_regular_expression">Regulært uttrykk</string>
   <string name="autofill_suggestions_mode_exact_path">Nøyaktig URL-samsvar</string>
   <string name="autofill_suggestions_android_limitation">Avanserte regler er ikke tilgjengelige på Android på grunn av begrensninger i operativsystemets API-er.</string>

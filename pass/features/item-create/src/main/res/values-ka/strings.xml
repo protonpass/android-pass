@@ -352,6 +352,7 @@
   <string name="autofill_suggestions_mode_exact">ზუსტი (ქვე)დომენი</string>
   <string name="autofill_suggestions_mode_never">არასდროს შეავსო ამ ვებსაიტზე</string>
   <string name="autofill_suggestions_mode_start_with">იწყება რით</string>
+  <string name="autofill_suggestions_mode_pattern">Wildcard pattern</string>
   <string name="autofill_suggestions_mode_regular_expression">რეგულარული გამოსახულება</string>
   <string name="autofill_suggestions_mode_exact_path">ზუსტი URL-ის დამთხვევა</string>
   <string name="autofill_suggestions_android_limitation">დამატებითი წესები Android-ზე ხელმისაწვდომი არაა ოპერაციული სისტემის API-ების შეზღუდვების გამო.</string>

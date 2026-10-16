@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <string name="generate_username_title">Generar un nom d\'usuari</string>
-  <string name="generate_username_button_regenerate">Regenerar-ho</string>
+  <string name="generate_username_title">Genera un nom d\'usuari</string>
+  <string name="generate_username_button_regenerate">Regenera</string>
   <string name="generate_username_button_copy">Copia</string>
   <string name="generate_username_label_include_numbers">Inclou números</string>
   <string name="generate_username_label_leetspeak">Leetspeak</string>

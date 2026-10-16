@@ -352,6 +352,7 @@
   <string name="autofill_suggestions_mode_exact">Tarkka (ala)verkkotunnus</string>
   <string name="autofill_suggestions_mode_never">Älä koskaan täytä tällä verkkosivustolla</string>
   <string name="autofill_suggestions_mode_start_with">Alkaa</string>
+  <string name="autofill_suggestions_mode_pattern">Wildcard pattern</string>
   <string name="autofill_suggestions_mode_regular_expression">Säännöllinen lauseke</string>
   <string name="autofill_suggestions_mode_exact_path">Tarkka URL-vastaavuus</string>
   <string name="autofill_suggestions_android_limitation">Android-laitteilla ei ole käytettävissä lisäasetuksia käyttöjärjestelmän sovellusliittymien (API) rajoitusten vuoksi.</string>

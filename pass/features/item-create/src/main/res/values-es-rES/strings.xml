@@ -352,6 +352,7 @@
   <string name="autofill_suggestions_mode_exact">Dominio o subdominio exacto</string>
   <string name="autofill_suggestions_mode_never">No rellenar nunca en este sitio web</string>
   <string name="autofill_suggestions_mode_start_with">Empieza por</string>
+  <string name="autofill_suggestions_mode_pattern">Wildcard pattern</string>
   <string name="autofill_suggestions_mode_regular_expression">Expresión regular</string>
   <string name="autofill_suggestions_mode_exact_path">Coincidencia exacta de URL</string>
   <string name="autofill_suggestions_android_limitation">Las reglas avanzadas no están disponibles en Android debido a limitaciones en las API del sistema operativo.</string>

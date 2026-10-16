@@ -24,6 +24,10 @@
   <string name="vault_edit_folder_dialog_title">Omdøb mappe</string>
   <string name="folder_delete_dialog_title">Slet mappe</string>
   <string name="folder_delete_dialog_body">Dette vil permanent slette mappen __FOLDER_NAME__ og alt dens indhold. Indtast mappenavnet for at bekræfte sletningen.</string>
+  <plurals name="folder_delete_dialog_body_with_items" comment="%1$d is the number of items in the folder and all its subfolders. %2$s is the folder name">
+    <item quantity="one">Dette vil permanent slette mappen %2$s og alt dens indhold (%1$d element). Indtast mappenavnet for at bekræfte sletningen.</item>
+    <item quantity="other">Dette vil permanent slette mappen %2$s og alt dens indhold (%1$d elementer). Indtast mappenavnet for at bekræfte sletningen.</item>
+  </plurals>
   <string name="folder_delete_dialog_placeholder">Mappenavn</string>
   <string name="folder_delete_dialog_delete_action">Slet</string>
   <string name="vault_delete_dialog_body">Dette vil permanent slette boksen __VAULT_NAME__ og alt dens indhold. Indtast boksens navn for at bekræfte sletningen.</string>

@@ -24,6 +24,9 @@
   <string name="vault_edit_folder_dialog_title">폴더 이름 변경</string>
   <string name="folder_delete_dialog_title">폴더 삭제</string>
   <string name="folder_delete_dialog_body">폴더 __FOLDER_NAME__와(과) 이 폴더의 내용물을 모두 지우게 됩니다. 삭제를 계속하려면 해당 폴더 이름을 입력하십시오.</string>
+  <plurals name="folder_delete_dialog_body_with_items" comment="%1$d is the number of items in the folder and all its subfolders. %2$s is the folder name">
+    <item quantity="other">This will permanently delete the folder %2$s and all its contents (%1$d items). Enter the folder name to confirm deletion.</item>
+  </plurals>
   <string name="folder_delete_dialog_placeholder">폴더 이름</string>
   <string name="folder_delete_dialog_delete_action">삭제</string>
   <string name="vault_delete_dialog_body">이는 금고 __VAULT_NAME__ 와(과) 이 금고의 내용물을 모두 지우게 됩니다. 이 삭제를 계속하려면 금고 이름을 입력하십시오.</string>

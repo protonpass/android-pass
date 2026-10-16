@@ -167,6 +167,7 @@
   <string name="autofill_mode_label_exact">Exact (sub)domain</string>
   <string name="autofill_mode_label_never">Never fill on this website</string>
   <string name="autofill_mode_label_start_with">Starts with</string>
+  <string name="autofill_mode_label_pattern">Wildcard pattern</string>
   <string name="autofill_mode_label_regular_expression">Regular expression</string>
   <string name="autofill_mode_label_exact_path">Exact URL matching</string>
   <string name="autofill_mode_label_unsupported">This url will be skipped for autofill</string>

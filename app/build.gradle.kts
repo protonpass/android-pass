@@ -52,6 +52,7 @@ val customEnvUrl: String? = System.getenv("PROD_ENV_URL")
 val isCustomBuild: Boolean = !customEnvUrl.isNullOrBlank()
 val isApkBuild: Boolean = project.findProperty("apkBuild") == "true"
 val disableSentryUpload: Boolean = project.findProperty("disableSentryUpload") == "true"
+val isCucumberRun: Boolean = project.findProperty("cucumber") == "true"
 
 println(
     """
@@ -93,8 +94,15 @@ android {
         targetSdk = libs.versions.targetSdk.get().toInt()
         versionCode = appVersionCode
         versionName = appVersionName
-        testInstrumentationRunner = "me.proton.core.test.android.ProtonHiltTestRunner"
-        testInstrumentationRunnerArguments["clearPackageData"] = "true"
+        testInstrumentationRunner = if (isCucumberRun) {
+            "proton.android.pass.uitest.cucumber.PassCucumberTestRunner"
+        } else {
+            "me.proton.core.test.android.ProtonHiltTestRunner"
+        }
+        testInstrumentationRunnerArguments["clearPackageData"] = if (isCucumberRun) "false" else "true"
+        if (isCucumberRun) {
+            testInstrumentationRunnerArguments["optionsAnnotationPackage"] = "proton.android.pass.uitest.cucumber"
+        }
 
         buildConfigField("String", "SENTRY_DSN", sentryDSN.toBuildConfigValue())
         buildConfigField("String", "ACCOUNT_SENTRY_DSN", accountSentryDSN.toBuildConfigValue())
@@ -120,6 +128,7 @@ android {
 
     testOptions {
         execution = "ANDROIDX_TEST_ORCHESTRATOR"
+        animationsDisabled = true
     }
 
     buildFeatures {
@@ -582,6 +591,8 @@ dependencies {
     }
     androidTestImplementation(projects.pass.payments.fakes)
     androidTestImplementation(libs.androidx.work.testing)
+    androidTestImplementation(libs.cucumber.android)
+    androidTestImplementation(libs.cucumber.android.hilt)
     androidTestUtil(libs.androidx.test.orchestrator)
     baselineProfile(projects.appmacrobenchmark)
 

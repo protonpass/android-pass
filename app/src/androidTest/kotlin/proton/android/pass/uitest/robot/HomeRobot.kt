@@ -18,8 +18,11 @@
 
 package proton.android.pass.uitest.robot
 
+import androidx.compose.ui.test.hasTestTag
+import androidx.compose.ui.test.performClick
 import me.proton.test.fusion.Fusion.node
 import proton.android.pass.composecomponents.impl.bottombar.BottomBarTestTag
+import proton.android.pass.features.home.HomeContentTestTag
 import proton.android.pass.features.home.HomeScreenTestTag
 
 object HomeRobot : Robot {
@@ -30,6 +33,13 @@ object HomeRobot : Robot {
 
     fun homeScreenDisplayed(): HomeRobot = apply {
         homeScreen.await { assertIsDisplayed() }
+    }
+
+    fun openDrawer(timeoutMillis: Long = TIMEOUT_MILLIS): DrawerRobot {
+        val drawerIcon = hasTestTag(HomeContentTestTag.DRAWER_ICON_TEST_TAG)
+        composeRule.waitUntil(timeoutMillis) { runCatching { exists(drawerIcon) }.getOrDefault(false) }
+        composeRule.onNode(drawerIcon, useUnmergedTree = true).performClick()
+        return DrawerRobot
     }
 
     fun clickProfile(): ProfileRobot {

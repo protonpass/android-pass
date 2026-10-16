@@ -39,6 +39,8 @@ object TestUsers {
 
     val free: User by lazy { user(scenario = "free") }
     val plus: User by lazy { user(scenario = "plus", plan = Plan.PassPlus) }
+    val vaultOwner: User by lazy { user(scenario = "vaultowner", plan = Plan.PassPlus) }
+    val folderLimit: User by lazy { user(scenario = "folderlimit", plan = Plan.PassPlus) }
     val unlimited: User by lazy { user(scenario = "unlimited", plan = Plan.Unlimited) }
     val twoPassword: User by lazy { user(scenario = "twopassword", passphrase = password) }
     val totp: User by lazy { user(scenario = "totp", twoFa = totpSecret) }

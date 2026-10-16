@@ -26,6 +26,7 @@ import proton.android.pass.data.api.url.HostInfo
 import proton.android.pass.data.fakes.usecases.FakeGetPublicSuffixList
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
+import kotlin.test.assertNotEquals
 import kotlin.test.assertNotNull
 import kotlin.test.assertTrue
 
@@ -399,5 +400,44 @@ class HostParserImplTest {
             ),
             res.getOrNull()
         )
+    }
+
+    @Test
+    fun `punycode host is matched against the ascii form of an IDN public suffix`() {
+        publicSuffixList.setTlds(setOf("no", "ålesund.no", "xn--lesund-hua.no"))
+
+        val res = instance.parse("https://shop.xn--lesund-hua.no/login")
+
+        assertEquals(
+            HostInfo.Host(
+                protocol = "https",
+                subdomain = None,
+                domain = "shop",
+                tld = "xn--lesund-hua.no".some()
+            ),
+            res.getOrNull()
+        )
+    }
+
+    @Test
+    fun `hosts under different registrants of the same IDN public suffix get different domains`() {
+        publicSuffixList.setTlds(setOf("no", "ålesund.no", "xn--lesund-hua.no"))
+
+        val first = instance.parse("https://bank.xn--lesund-hua.no").getOrThrow()
+        val second = instance.parse("https://other.xn--lesund-hua.no").getOrThrow()
+
+        assertTrue(first is HostInfo.Host && second is HostInfo.Host)
+        assertEquals("xn--lesund-hua.no".some(), (first as HostInfo.Host).tld)
+        assertEquals("xn--lesund-hua.no".some(), (second as HostInfo.Host).tld)
+        assertEquals("bank", first.domain)
+        assertEquals("other", second.domain)
+        assertNotEquals(first.domain, second.domain)
+    }
+
+    @Test
+    fun `IdnNormalizer converts unicode rules and hosts to the same punycode form`() {
+        assertEquals("xn--gmqw5a.hk", IdnNormalizer.toAscii("個人.hk"))
+        assertEquals("xn--gmqw5a.hk", IdnNormalizer.toAscii("xn--gmqw5a.hk"))
+        assertEquals("co.uk", IdnNormalizer.toAscii("CO.UK"))
     }
 }

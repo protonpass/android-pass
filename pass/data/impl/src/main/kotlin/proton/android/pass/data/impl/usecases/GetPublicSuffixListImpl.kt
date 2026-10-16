@@ -24,6 +24,7 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import proton.android.pass.data.api.usecases.GetPublicSuffixList
 import proton.android.pass.data.api.usecases.PublicSuffixRules
 import proton.android.pass.data.impl.R
+import proton.android.pass.data.impl.url.IdnNormalizer
 import proton.android.pass.log.api.PassLogger
 import java.io.IOException
 import javax.inject.Inject
@@ -50,9 +51,9 @@ class GetPublicSuffixListImpl @Inject constructor(
         val exceptions = mutableSetOf<String>()
         contents.lineSequence().filter { it.isNotBlank() }.forEach { line ->
             when {
-                line.startsWith("*.") -> wildcardBases.add(line.removePrefix("*."))
-                line.startsWith("!") -> exceptions.add(line.removePrefix("!"))
-                else -> exact.add(line)
+                line.startsWith("*.") -> wildcardBases.addAsciiRule(line.removePrefix("*."))
+                line.startsWith("!") -> exceptions.addAsciiRule(line.removePrefix("!"))
+                else -> exact.addAsciiRule(line)
             }
         }
         Result.success(PublicSuffixRules(exact, wildcardBases, exceptions))
@@ -62,6 +63,13 @@ class GetPublicSuffixListImpl @Inject constructor(
     } catch (e: Resources.NotFoundException) {
         PassLogger.e(TAG, e, "Error reading public_suffix_list")
         Result.failure(e)
+    }
+
+    // IDN rules are stored in Unicode while browsers serialize hosts as Punycode,
+    // so both representations are kept to match either form.
+    private fun MutableSet<String>.addAsciiRule(rule: String) {
+        add(rule)
+        add(IdnNormalizer.toAscii(rule))
     }
 
     companion object {

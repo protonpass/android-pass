@@ -46,17 +46,7 @@ class GetPublicSuffixListImpl @Inject constructor(
             .bufferedReader()
             .use { it.readText() }
 
-        val exact = mutableSetOf<String>()
-        val wildcardBases = mutableSetOf<String>()
-        val exceptions = mutableSetOf<String>()
-        contents.lineSequence().filter { it.isNotBlank() }.forEach { line ->
-            when {
-                line.startsWith("*.") -> wildcardBases.addAsciiRule(line.removePrefix("*."))
-                line.startsWith("!") -> exceptions.addAsciiRule(line.removePrefix("!"))
-                else -> exact.addAsciiRule(line)
-            }
-        }
-        Result.success(PublicSuffixRules(exact, wildcardBases, exceptions))
+        Result.success(parsePublicSuffixRules(contents.lineSequence()))
     } catch (e: IOException) {
         PassLogger.e(TAG, e, "Error reading public_suffix_list")
         Result.failure(e)
@@ -65,16 +55,31 @@ class GetPublicSuffixListImpl @Inject constructor(
         Result.failure(e)
     }
 
-    // IDN rules are stored in Unicode while browsers serialize hosts as Punycode,
-    // so both representations are kept to match either form.
-    private fun MutableSet<String>.addAsciiRule(rule: String) {
+    companion object {
+        private const val TAG = "GetPublicSuffixListImpl"
+    }
+}
+
+// IDN rules are stored in Unicode while browsers serialize hosts as Punycode,
+// so both representations are kept to match either form.
+internal fun parsePublicSuffixRules(lines: Sequence<String>): PublicSuffixRules {
+    val exact = mutableSetOf<String>()
+    val wildcardBases = mutableSetOf<String>()
+    val exceptions = mutableSetOf<String>()
+
+    fun MutableSet<String>.addRule(rule: String) {
         add(rule)
         add(IdnNormalizer.toAscii(rule))
     }
 
-    companion object {
-        private const val TAG = "GetPublicSuffixListImpl"
+    lines.filter { it.isNotBlank() }.forEach { line ->
+        when {
+            line.startsWith("*.") -> wildcardBases.addRule(line.removePrefix("*."))
+            line.startsWith("!") -> exceptions.addRule(line.removePrefix("!"))
+            else -> exact.addRule(line)
+        }
     }
+    return PublicSuffixRules(exact, wildcardBases, exceptions)
 }
 
 

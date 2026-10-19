@@ -24,9 +24,11 @@ import kotlinx.coroutines.test.runTest
 import me.proton.core.domain.entity.UserId
 import me.proton.core.featureflag.domain.entity.FeatureId
 import org.junit.Test
-import proton.android.pass.account.fakes.FakeAccountManager
 import proton.android.pass.account.fakes.FakeFeatureFlagRepository
 import proton.android.pass.common.fakes.FakeAppDispatchers
+import proton.android.pass.data.fakes.usecases.FakeObserveAccounts
+import proton.android.pass.data.fakes.usecases.FakeObservePrimaryUserId
+import proton.android.pass.data.fakes.usecases.FakeObserveRemovedAccounts
 import me.proton.core.featureflag.domain.entity.FeatureFlag as CoreFeatureFlag
 
 class FeatureFlagsPreferencesRepositoryImplTest {
@@ -97,7 +99,9 @@ class FeatureFlagsPreferencesRepositoryImplTest {
             remoteFlag = CoreFeatureFlag.default(remoteFlagKey, defaultValue = false).copy(value = true)
         )
         val repository = FeatureFlagsPreferencesRepositoryImpl(
-            accountManager = FakeAccountManager(),
+            observeRemovedAccounts = FakeObserveRemovedAccounts(),
+            observeAccounts = FakeObserveAccounts(),
+            observePrimaryUserId = FakeObservePrimaryUserId(),
             featureFlagManager = featureFlagRepository,
             dataStore = FakeFeatureFlagsPreferencesDataStore(),
             appDispatchers = FakeAppDispatchers()
@@ -113,7 +117,9 @@ class FeatureFlagsPreferencesRepositoryImplTest {
     fun `awaitResolved does not retry a successful fetch for a flag that is genuinely absent`() = runTest {
         val featureFlagRepository = FakeColdCacheFeatureFlagRepository(remoteFlag = null)
         val repository = FeatureFlagsPreferencesRepositoryImpl(
-            accountManager = FakeAccountManager(),
+            observeRemovedAccounts = FakeObserveRemovedAccounts(),
+            observeAccounts = FakeObserveAccounts(),
+            observePrimaryUserId = FakeObservePrimaryUserId(),
             featureFlagManager = featureFlagRepository,
             dataStore = FakeFeatureFlagsPreferencesDataStore(),
             appDispatchers = FakeAppDispatchers()
@@ -134,7 +140,9 @@ class FeatureFlagsPreferencesRepositoryImplTest {
             getAllError = IllegalStateException("network error")
         )
         val repository = FeatureFlagsPreferencesRepositoryImpl(
-            accountManager = FakeAccountManager(),
+            observeRemovedAccounts = FakeObserveRemovedAccounts(),
+            observeAccounts = FakeObserveAccounts(),
+            observePrimaryUserId = FakeObservePrimaryUserId(),
             featureFlagManager = featureFlagRepository,
             dataStore = FakeFeatureFlagsPreferencesDataStore(),
             appDispatchers = FakeAppDispatchers()
@@ -152,7 +160,9 @@ class FeatureFlagsPreferencesRepositoryImplTest {
             startFetched = true
         )
         val repository = FeatureFlagsPreferencesRepositoryImpl(
-            accountManager = FakeAccountManager(),
+            observeRemovedAccounts = FakeObserveRemovedAccounts(),
+            observeAccounts = FakeObserveAccounts(),
+            observePrimaryUserId = FakeObservePrimaryUserId(),
             featureFlagManager = featureFlagRepository,
             dataStore = FakeFeatureFlagsPreferencesDataStore(),
             appDispatchers = FakeAppDispatchers()
@@ -167,7 +177,9 @@ class FeatureFlagsPreferencesRepositoryImplTest {
     private fun buildRepository(): Pair<FeatureFlagsPreferencesRepositoryImpl, FakeFeatureFlagRepository> {
         val featureFlagRepository = FakeFeatureFlagRepository()
         val repository = FeatureFlagsPreferencesRepositoryImpl(
-            accountManager = FakeAccountManager(),
+            observeRemovedAccounts = FakeObserveRemovedAccounts(),
+            observeAccounts = FakeObserveAccounts(),
+            observePrimaryUserId = FakeObservePrimaryUserId(),
             featureFlagManager = featureFlagRepository,
             dataStore = FakeFeatureFlagsPreferencesDataStore(),
             appDispatchers = FakeAppDispatchers()

@@ -58,11 +58,7 @@ import kotlinx.datetime.Instant
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toJavaLocalDateTime
 import kotlinx.datetime.toLocalDateTime
-import me.proton.core.account.domain.entity.AccountState
-import me.proton.core.accountmanager.domain.AccountManager
-import me.proton.core.accountmanager.domain.getAccounts
 import me.proton.core.domain.entity.UserId
-import me.proton.core.user.domain.UserManager
 import me.proton.core.user.domain.entity.User
 import proton.android.pass.common.api.AppDispatchers
 import proton.android.pass.common.api.LoadingResult
@@ -106,7 +102,9 @@ import proton.android.pass.data.api.usecases.ObserveItemTypeCounts
 import proton.android.pass.data.api.usecases.ObserveItems
 import proton.android.pass.data.api.usecases.ObservePagedItems
 import proton.android.pass.data.api.usecases.ObservePinnedItems
+import proton.android.pass.data.api.usecases.ObserveReadyAccounts
 import proton.android.pass.data.api.usecases.ObserveUpgradeInfo
+import proton.android.pass.data.api.usecases.ObserveUser
 import proton.android.pass.data.api.usecases.SuggestedAutofillItemsResult
 import proton.android.pass.data.api.usecases.passkeys.ObserveItemsWithPasskeys
 import proton.android.pass.data.api.usecases.shares.ObserveAutofillShares
@@ -152,8 +150,8 @@ class SelectItemViewModel @Inject constructor(
     private val getSuggestedAutofillItems: GetSuggestedAutofillItems,
     private val observeItemsWithPasskeys: ObserveItemsWithPasskeys,
     private val clock: Clock,
-    accountManager: AccountManager,
-    userManager: UserManager,
+    observeReadyAccounts: ObserveReadyAccounts,
+    observeUser: ObserveUser,
     preferenceRepository: UserPreferencesRepository,
     observeItems: ObserveItems,
     observePinnedItems: ObservePinnedItems,
@@ -222,7 +220,7 @@ class SelectItemViewModel @Inject constructor(
     )
 
     private val usersAutofillSharesMapFlow: Flow<Map<UserId, List<Share>>> =
-        accountManager.getAccounts(AccountState.Ready)
+        observeReadyAccounts()
             .flatMapLatest { accounts ->
                 val flows = accounts.map { account ->
                     observeAutofillShares(account.userId).map { account.userId to it }
@@ -240,11 +238,11 @@ class SelectItemViewModel @Inject constructor(
         }
         .distinctUntilChanged()
 
-    private val usersAndPlansFlow = accountManager.getAccounts(AccountState.Ready)
+    private val usersAndPlansFlow = observeReadyAccounts()
         .flatMapLatest { accountList ->
             val flows = accountList.map { account ->
                 combine(
-                    userManager.observeUser(account.userId).filterNotNull(),
+                    observeUser(account.userId).filterNotNull(),
                     getUserPlan(account.userId),
                     ::Pair
                 )

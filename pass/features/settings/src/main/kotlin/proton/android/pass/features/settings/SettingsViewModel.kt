@@ -34,7 +34,6 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import proton.android.pass.common.api.AppDispatchers
-import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.usersettings.domain.repository.DeviceSettingsRepository
 import proton.android.pass.autofill.api.AutofillManager
 import proton.android.pass.autofill.api.AutofillSupportedStatus
@@ -45,6 +44,7 @@ import proton.android.pass.data.api.repositories.AssetLinkRepository
 import proton.android.pass.data.api.usecases.GetPrimaryUserId
 import proton.android.pass.data.api.repositories.ItemSyncStatusRepository
 import proton.android.pass.data.api.usecases.InitialWorkerLauncher
+import proton.android.pass.data.api.usecases.ObservePrimaryUserId
 import proton.android.pass.data.api.usecases.attachments.AttachmentDownloadScheduler
 import proton.android.pass.data.api.usecases.PerformSync
 import proton.android.pass.data.api.usecases.WorkerFeature
@@ -81,7 +81,7 @@ class SettingsViewModel @Inject constructor(
     private val preferencesRepository: UserPreferencesRepository,
     private val snackbarDispatcher: SnackbarDispatcher,
     private val performSync: PerformSync,
-    private val accountManager: AccountManager,
+    private val observePrimaryUserId: ObservePrimaryUserId,
     private val getPrimaryUserId: GetPrimaryUserId,
     private val clearIconCache: ClearIconCache,
     private val deviceSettingsRepository: DeviceSettingsRepository,
@@ -168,13 +168,13 @@ class SettingsViewModel @Inject constructor(
             .distinctUntilChanged()
 
     private val downloadAllAttachmentsFlow: Flow<DownloadAllAttachmentsPreference> =
-        accountManager.getPrimaryUserId().flatMapLatest { userId ->
+        observePrimaryUserId().flatMapLatest { userId ->
             if (userId == null) flowOf(DownloadAllAttachmentsPreference.Disabled)
             else preferencesRepository.observeDownloadAllAttachmentsPref(userId)
         }.distinctUntilChanged()
 
     private val allowCellularDownloadFlow: Flow<AllowCellularDownloadPreference> =
-        accountManager.getPrimaryUserId().flatMapLatest { userId ->
+        observePrimaryUserId().flatMapLatest { userId ->
             if (userId == null) flowOf(AllowCellularDownloadPreference.Disabled)
             else preferencesRepository.observeAllowCellularDownloadPref(userId)
         }.distinctUntilChanged()
@@ -209,7 +209,7 @@ class SettingsViewModel @Inject constructor(
         ::PreferencesState
     )
 
-    private val sharedItemsEnabledFlow = accountManager.getPrimaryUserId()
+    private val sharedItemsEnabledFlow = observePrimaryUserId()
         .flatMapLatest { userId ->
             if (userId == null) flowOf(false)
             else preferencesRepository.observeSharedItemsDownloadPref(userId).map { it.value() }

@@ -35,6 +35,7 @@ import proton.android.pass.data.api.usecases.capabilities.VaultAccessData
 import proton.android.pass.data.fakes.usecases.FakeObserveEncryptedItems
 import proton.android.pass.data.fakes.usecases.FakeCanManageVaultAccess
 import proton.android.pass.data.fakes.usecases.FakeCanMigrateVault
+import proton.android.pass.data.fakes.usecases.FakeObservePrimaryUserId
 import proton.android.pass.data.fakes.usecases.FakeObserveVaults
 import proton.android.pass.domain.ShareFlags
 import proton.android.pass.domain.ShareId
@@ -72,9 +73,13 @@ class VaultOptionsBottomSheetTest {
     @Inject
     lateinit var observeEncryptedItems: FakeObserveEncryptedItems
 
+    @Inject
+    lateinit var observePrimaryUserId: FakeObservePrimaryUserId
+
     @Before
     fun setup() {
         hiltRule.inject()
+        observePrimaryUserId.emitUserId(UserId(USER_ID))
         savedStateHandle.get()[CommonNavArgId.ShareId.key] = SHARE_ID
     }
 
@@ -216,5 +221,6 @@ class VaultOptionsBottomSheetTest {
 
     companion object {
         private const val SHARE_ID = "VaultOptionsBottomSheetTest-ShareID"
+        private const val USER_ID = "VaultOptionsBottomSheetTest-UserID"
     }
 }

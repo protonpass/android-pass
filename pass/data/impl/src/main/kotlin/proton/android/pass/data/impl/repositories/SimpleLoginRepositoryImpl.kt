@@ -30,7 +30,6 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.onStart
-import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
@@ -48,6 +47,7 @@ import proton.android.pass.data.api.errors.getProtonErrorCode
 import proton.android.pass.data.api.repositories.SimpleLoginRepository
 import proton.android.pass.data.api.repositories.UserAccessDataRepository
 import proton.android.pass.data.api.usecases.GetVaultByShareId
+import proton.android.pass.data.api.usecases.ObservePrimaryUserId
 import proton.android.pass.data.api.usecases.ObserveVaults
 import proton.android.pass.data.impl.extensions.toRequest
 import proton.android.pass.data.impl.local.simplelogin.LocalSimpleLoginDataSource
@@ -80,7 +80,7 @@ import javax.inject.Inject
 
 @Suppress("TooManyFunctions")
 class SimpleLoginRepositoryImpl @Inject constructor(
-    private val accountManager: AccountManager,
+    private val observePrimaryUserId: ObservePrimaryUserId,
     private val userAccessDataRepository: UserAccessDataRepository,
     private val observeVaultById: GetVaultByShareId,
     private val observeVaults: ObserveVaults,
@@ -88,7 +88,7 @@ class SimpleLoginRepositoryImpl @Inject constructor(
     private val remoteSimpleLoginDataSource: RemoteSimpleLoginDataSource
 ) : SimpleLoginRepository {
 
-    private val userIdFlow = accountManager.getPrimaryUserId()
+    private val userIdFlow = observePrimaryUserId()
         .filterNotNull()
         .distinctUntilChanged()
 
@@ -352,8 +352,7 @@ class SimpleLoginRepositoryImpl @Inject constructor(
         )
     }
 
-    private suspend fun <T> withUserId(block: suspend (UserId) -> T): T = accountManager
-        .getPrimaryUserId()
+    private suspend fun <T> withUserId(block: suspend (UserId) -> T): T = observePrimaryUserId()
         .firstOrNull()
         ?.let { userId -> block(userId) }
         ?: throw UserIdNotAvailableError()

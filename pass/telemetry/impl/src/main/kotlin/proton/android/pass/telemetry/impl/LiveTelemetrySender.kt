@@ -19,8 +19,8 @@
 package proton.android.pass.telemetry.impl
 
 import kotlinx.coroutines.flow.firstOrNull
-import me.proton.core.accountmanager.domain.AccountManager
 import proton.android.pass.data.api.repositories.LiveTelemetryRepository
+import proton.android.pass.data.api.usecases.ObserveAccounts
 import javax.inject.Inject
 
 interface LiveTelemetrySender {
@@ -29,11 +29,11 @@ interface LiveTelemetrySender {
 
 class LiveTelemetrySenderImpl @Inject constructor(
     private val repository: LiveTelemetryRepository,
-    private val accountManager: AccountManager
+    private val observeAccounts: ObserveAccounts
 ) : LiveTelemetrySender {
 
     override suspend fun sendEvents() {
-        val accounts = accountManager.getAccounts().firstOrNull().orEmpty()
+        val accounts = observeAccounts().firstOrNull().orEmpty()
         accounts.forEach { account ->
             val userId = account.userId
             repository.flushPendingEvents(userId)

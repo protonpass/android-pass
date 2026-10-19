@@ -32,27 +32,28 @@ import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import me.proton.core.account.domain.entity.AccountState
-import me.proton.core.accountmanager.domain.AccountManager
-import me.proton.core.accountmanager.domain.getAccounts
-import me.proton.core.accountmanager.domain.getPrimaryAccount
 import me.proton.core.domain.entity.UserId
-import me.proton.core.user.domain.UserManager
+import proton.android.pass.data.api.usecases.ObservePrimaryAccount
+import proton.android.pass.data.api.usecases.ObserveReadyAccounts
+import proton.android.pass.data.api.usecases.ObserveUser
+import proton.android.pass.data.api.usecases.SetAsPrimary
 import proton.android.pass.data.api.usecases.items.ObserveCanCreateItems
 import javax.inject.Inject
 
 @HiltViewModel
 class AccountSwitchViewModel @Inject constructor(
-    userManager: UserManager,
-    private val accountManager: AccountManager,
+    observeUser: ObserveUser,
+    private val observeReadyAccounts: ObserveReadyAccounts,
+    private val observePrimaryAccount: ObservePrimaryAccount,
+    private val setAsPrimary: SetAsPrimary,
     private val observeCanCreateItems: ObserveCanCreateItems
 ) : ViewModel() {
 
     @OptIn(ExperimentalCoroutinesApi::class)
-    private val userReadyFlow = accountManager.getAccounts(AccountState.Ready)
+    private val userReadyFlow = observeReadyAccounts()
         .flatMapLatest { accounts ->
             val flows = accounts.map { account ->
-                userManager.observeUser(account.userId).filterNotNull()
+                observeUser(account.userId).filterNotNull()
             }
             combine(flows) { it }
         }
@@ -61,7 +62,7 @@ class AccountSwitchViewModel @Inject constructor(
         MutableStateFlow(AccountSwitchEvent.Idle)
 
     internal val stateFlow = combine(
-        accountManager.getPrimaryAccount(),
+        observePrimaryAccount(),
         userReadyFlow,
         accountSwitchEventFlow
     ) { primary, users, event ->
@@ -86,7 +87,7 @@ class AccountSwitchViewModel @Inject constructor(
     internal fun onAccountSelected(userId: UserId) {
         viewModelScope.launch {
             if (observeCanCreateItems(userId).first()) {
-                accountManager.setAsPrimary(userId)
+                setAsPrimary(userId)
                 AccountSwitchEvent.CreateItem
             } else {
                 AccountSwitchEvent.CannotCreateItem

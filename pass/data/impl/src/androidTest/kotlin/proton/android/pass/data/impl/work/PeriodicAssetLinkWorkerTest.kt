@@ -31,7 +31,7 @@ import kotlinx.datetime.Clock
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
-import proton.android.pass.account.fakes.FakeAccountManager
+import proton.android.pass.data.fakes.usecases.FakeObserveReadyAccounts
 import proton.android.pass.crypto.fakes.context.FakeEncryptionContext
 import proton.android.pass.data.fakes.repositories.FakeAssetLinkRepository
 import proton.android.pass.data.fakes.usecases.FakeObserveItems
@@ -47,14 +47,14 @@ class PeriodicAssetLinkWorkerTest {
 
     private val context = InstrumentationRegistry.getInstrumentation().targetContext
 
-    private lateinit var fakeAccountManager: FakeAccountManager
+    private lateinit var fakeObserveReadyAccounts: FakeObserveReadyAccounts
     private lateinit var fakeObserveItems: FakeObserveItems
     private lateinit var fakeAssetLinkRepository: FakeAssetLinkRepository
     private lateinit var fakeUpdateAssetLink: FakeUpdateAssetLink
 
     @Before
     fun setup() {
-        fakeAccountManager = FakeAccountManager()
+        fakeObserveReadyAccounts = FakeObserveReadyAccounts()
         fakeObserveItems = FakeObserveItems()
         fakeAssetLinkRepository = FakeAssetLinkRepository()
         fakeUpdateAssetLink = FakeUpdateAssetLink()
@@ -135,7 +135,7 @@ class PeriodicAssetLinkWorkerTest {
                 ): ListenableWorker = PeriodicAssetLinkWorker(
                     appContext = appContext,
                     workerParameters = workerParameters,
-                    accountManager = fakeAccountManager,
+                    observeReadyAccounts = fakeObserveReadyAccounts,
                     observeItems = fakeObserveItems,
                     assetLinkRepository = fakeAssetLinkRepository,
                     updateAssetLink = fakeUpdateAssetLink,

@@ -25,9 +25,11 @@ import dagger.hilt.components.SingletonComponent
 import proton.android.pass.data.api.url.HostParser
 import proton.android.pass.data.api.usecases.AcceptInvite
 import proton.android.pass.data.api.usecases.BatchChangeShareVisibility
+import proton.android.pass.data.api.usecases.SignOutAccount
 import proton.android.pass.data.api.usecases.compromisedpassword.ObserveCompromisedPasswords
 import proton.android.pass.data.api.usecases.compromisedpassword.RefreshCompromisedPasswords
 import proton.android.pass.data.api.usecases.CanDisplayTotp
+import proton.android.pass.data.impl.usecases.SignOutAccountImpl
 import proton.android.pass.data.impl.usecases.compromisedpassword.ObserveCompromisedPasswordsImpl
 import proton.android.pass.data.impl.usecases.compromisedpassword.RefreshCompromisedPasswordsImpl
 import proton.android.pass.data.api.usecases.CanPerformPaidAction
@@ -85,6 +87,8 @@ import proton.android.pass.data.api.usecases.LeaveShare
 import proton.android.pass.data.api.usecases.MigrateItems
 import proton.android.pass.data.api.usecases.MigrateVault
 import proton.android.pass.data.api.usecases.ObserveAccounts
+import proton.android.pass.data.api.usecases.ObserveReadyAccounts
+import proton.android.pass.data.api.usecases.ObserveRemovedAccounts
 import proton.android.pass.data.api.usecases.ObserveAddressesByUserId
 import proton.android.pass.data.api.usecases.ObserveAliasDetails
 import proton.android.pass.data.api.usecases.ObserveAliasOptions
@@ -393,6 +397,8 @@ import proton.android.pass.data.impl.usecases.LeaveShareImpl
 import proton.android.pass.data.impl.usecases.MigrateItemsImpl
 import proton.android.pass.data.impl.usecases.MigrateVaultImpl
 import proton.android.pass.data.impl.usecases.ObserveAccountsImpl
+import proton.android.pass.data.impl.usecases.ObserveReadyAccountsImpl
+import proton.android.pass.data.impl.usecases.ObserveRemovedAccountsImpl
 import proton.android.pass.data.impl.usecases.ObserveAddressesByUserIdImpl
 import proton.android.pass.data.impl.usecases.ObserveAliasDetailsImpl
 import proton.android.pass.data.impl.usecases.ObserveAliasOptionsImpl
@@ -697,6 +703,12 @@ abstract class DataUseCaseModule {
 
     @Binds
     abstract fun bindObserveAccounts(impl: ObserveAccountsImpl): ObserveAccounts
+
+    @Binds
+    abstract fun bindObserveReadyAccounts(impl: ObserveReadyAccountsImpl): ObserveReadyAccounts
+
+    @Binds
+    abstract fun bindObserveRemovedAccounts(impl: ObserveRemovedAccountsImpl): ObserveRemovedAccounts
 
     @Binds
     abstract fun bindObserveCurrentUser(impl: ObserveCurrentUserImpl): ObserveCurrentUser
@@ -1593,6 +1605,9 @@ abstract class DataUseCaseModule {
 
     @[Binds Singleton]
     abstract fun bindDisableAccount(impl: DisableAccountImpl): DisableAccount
+
+    @Binds
+    abstract fun bindSignOutAccount(impl: SignOutAccountImpl): SignOutAccount
 
     @[Binds Singleton]
     abstract fun bindSetAsPrimary(impl: SetAsPrimaryImpl): SetAsPrimary

@@ -28,7 +28,6 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import proton.android.pass.account.fakes.FakeAccountManager
-import proton.android.pass.account.fakes.FakeUserManager
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Some
 import proton.android.pass.common.fakes.FakeAppDispatchers
@@ -38,6 +37,8 @@ import proton.android.pass.data.api.usecases.Suggestion
 import proton.android.pass.data.fakes.usecases.FakeGetSuggestedAutofillItems
 import proton.android.pass.data.fakes.usecases.FakeGetUserPlan
 import proton.android.pass.data.fakes.usecases.FakeObserveIndexingStatus
+import proton.android.pass.data.fakes.usecases.FakeObserveReadyAccounts
+import proton.android.pass.data.fakes.usecases.FakeObserveUser
 import proton.android.pass.data.fakes.usecases.FakeObserveItemTypeCounts
 import proton.android.pass.data.fakes.usecases.FakeObserveItems
 import proton.android.pass.data.fakes.usecases.FakeObserveItemsWithPasskeys
@@ -62,7 +63,7 @@ internal class SelectItemViewModelPaginationTest {
     internal val dispatcher = MainDispatcherRule()
 
     private lateinit var instance: SelectItemViewModel
-    private lateinit var accountManager: FakeAccountManager
+    private lateinit var observeReadyAccounts: FakeObserveReadyAccounts
     private lateinit var observeAutofillShares: FakeObserveAutofillShares
     private lateinit var observePagedItems: FakeObservePagedItems
     private lateinit var observeItemTypeCounts: FakeObserveItemTypeCounts
@@ -71,7 +72,7 @@ internal class SelectItemViewModelPaginationTest {
 
     @Before
     fun setup() {
-        accountManager = FakeAccountManager()
+        observeReadyAccounts = FakeObserveReadyAccounts()
         observeAutofillShares = FakeObserveAutofillShares()
         observePagedItems = FakeObservePagedItems()
         observeItemTypeCounts = FakeObserveItemTypeCounts()
@@ -79,7 +80,7 @@ internal class SelectItemViewModelPaginationTest {
         featureFlags = FakeFeatureFlagsPreferenceRepository()
 
         featureFlags.set(FeatureFlag.ENABLE_PAGINATION, true)
-        accountManager.setAccounts(
+        observeReadyAccounts.emitAccounts(
             listOf(FakeAccountManager.createAccount(USER_A), FakeAccountManager.createAccount(USER_B))
         )
         observeAutofillShares.setValues(
@@ -98,8 +99,8 @@ internal class SelectItemViewModelPaginationTest {
             getSuggestedAutofillItems = FakeGetSuggestedAutofillItems(),
             observeItemsWithPasskeys = FakeObserveItemsWithPasskeys(),
             clock = FixedClock(),
-            accountManager = accountManager,
-            userManager = FakeUserManager(),
+            observeReadyAccounts = observeReadyAccounts,
+            observeUser = FakeObserveUser(),
             preferenceRepository = FakePreferenceRepository(),
             observeItems = FakeObserveItems(),
             observePinnedItems = FakeObservePinnedItems(),

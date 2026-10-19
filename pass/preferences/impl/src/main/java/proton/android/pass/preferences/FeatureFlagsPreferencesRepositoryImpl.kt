@@ -34,14 +34,14 @@ import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import me.proton.android.pass.preferences.BoolFlagPrefProto
 import me.proton.android.pass.preferences.BooleanPrefProto
-import me.proton.core.account.domain.entity.AccountState
-import me.proton.core.accountmanager.domain.AccountManager
-import me.proton.core.accountmanager.domain.getAccounts
 import me.proton.core.domain.entity.UserId
 import me.proton.core.featureflag.domain.entity.FeatureId
 import me.proton.core.featureflag.domain.repository.FeatureFlagRepository
 import proton.android.pass.common.api.AppDispatchers
 import proton.android.pass.common.api.safeRunCatching
+import proton.android.pass.data.api.usecases.ObserveAccounts
+import proton.android.pass.data.api.usecases.ObservePrimaryUserId
+import proton.android.pass.data.api.usecases.ObserveRemovedAccounts
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.preferences.FeatureFlag.AUTOFILL_DEBUG_MODE
 import proton.android.pass.preferences.FeatureFlag.PASS_ALLOW_NO_VAULT
@@ -66,7 +66,9 @@ import javax.inject.Singleton
 @Suppress("UNCHECKED_CAST")
 @Singleton
 class FeatureFlagsPreferencesRepositoryImpl @Inject constructor(
-    private val accountManager: AccountManager,
+    private val observeRemovedAccounts: ObserveRemovedAccounts,
+    private val observeAccounts: ObserveAccounts,
+    private val observePrimaryUserId: ObservePrimaryUserId,
     private val featureFlagManager: FeatureFlagRepository,
     private val dataStore: DataStore<FeatureFlagsPreferences>,
     appDispatchers: AppDispatchers
@@ -78,7 +80,7 @@ class FeatureFlagsPreferencesRepositoryImpl @Inject constructor(
 
     init {
         scope.launch {
-            accountManager.getAccounts(AccountState.Removed).collect { accounts ->
+            observeRemovedAccounts().collect { accounts ->
                 val removedUserIds = accounts.map { it.userId }.toSet()
                 hasFetchedOnce.keys.retainAll { it !in removedUserIds }
                 fetchMutexes.keys.retainAll { it !in removedUserIds }
@@ -264,7 +266,7 @@ class FeatureFlagsPreferencesRepositoryImpl @Inject constructor(
         defaultValue: Boolean,
         prefGetter: FeatureFlagsPreferences.() -> BooleanPrefProto
     ): Flow<T> = if (key != null) {
-        accountManager.getPrimaryUserId()
+        observePrimaryUserId()
             .flatMapLatest { userId ->
                 featureFlagManager.observe(
                     userId = userId,
@@ -315,7 +317,7 @@ class FeatureFlagsPreferencesRepositoryImpl @Inject constructor(
         }
     }
 
-    override fun observeForAllUsers(featureFlag: FeatureFlag): Flow<Boolean> = accountManager.getAccounts()
+    override fun observeForAllUsers(featureFlag: FeatureFlag): Flow<Boolean> = observeAccounts()
         .flatMapLatest { accounts ->
             combine(
                 accounts.map { account ->

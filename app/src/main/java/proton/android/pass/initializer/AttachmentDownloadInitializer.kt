@@ -36,9 +36,6 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
-import me.proton.core.account.domain.entity.AccountState
-import me.proton.core.accountmanager.domain.AccountManager
-import me.proton.core.accountmanager.domain.getAccounts
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.safeRunCatching
 import proton.android.pass.commonui.api.PassAppLifecycleProvider
@@ -46,6 +43,7 @@ import proton.android.pass.data.api.repositories.AttachmentRepository
 import proton.android.pass.data.api.repositories.ItemSyncStatus
 import proton.android.pass.data.api.repositories.ItemSyncStatusRepository
 import proton.android.pass.data.api.repositories.ShareRepository
+import proton.android.pass.data.api.usecases.ObserveReadyAccounts
 import proton.android.pass.data.api.usecases.attachments.AttachmentDownloadScheduler
 import proton.android.pass.domain.attachments.AttachmentDownloadStatus
 import proton.android.pass.log.api.PassLogger
@@ -64,14 +62,14 @@ class AttachmentDownloadInitializer : Initializer<Unit> {
 
         val lifecycleProvider = entryPoint.passAppLifecycleProvider()
         val preferencesRepository = entryPoint.userPreferencesRepository()
-        val accountManager = entryPoint.accountManager()
+        val observeReadyAccounts = entryPoint.observeReadyAccounts()
         val shareRepository = entryPoint.shareRepository()
         val attachmentRepository = entryPoint.attachmentRepository()
         val downloadScheduler = entryPoint.attachmentDownloadScheduler()
         val syncStatusRepository = entryPoint.itemSyncStatusRepository()
 
         // Observe: when toggle is ON and there are pending downloads, schedule the workers
-        accountManager.getAccounts(AccountState.Ready)
+        observeReadyAccounts()
             .flatMapLatest { accounts ->
                 if (accounts.isEmpty()) return@flatMapLatest flowOf(emptySet<UserId>())
                 val flows = accounts.map { account ->
@@ -116,7 +114,7 @@ class AttachmentDownloadInitializer : Initializer<Unit> {
         lifecycleProvider.lifecycle.coroutineScope.launch {
             syncStatusRepository.observeSyncStatus().collectLatest { status ->
                 if (status is ItemSyncStatus.SyncSuccess) {
-                    accountManager.getAccounts(AccountState.Ready)
+                    observeReadyAccounts()
                         .first()
                         .forEach { account ->
                             val isEnabled = preferencesRepository
@@ -142,7 +140,7 @@ class AttachmentDownloadInitializer : Initializer<Unit> {
     interface AttachmentDownloadInitializerEntryPoint {
         fun passAppLifecycleProvider(): PassAppLifecycleProvider
         fun userPreferencesRepository(): UserPreferencesRepository
-        fun accountManager(): AccountManager
+        fun observeReadyAccounts(): ObserveReadyAccounts
         fun shareRepository(): ShareRepository
         fun attachmentRepository(): AttachmentRepository
         fun attachmentDownloadScheduler(): AttachmentDownloadScheduler

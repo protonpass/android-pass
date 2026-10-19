@@ -37,13 +37,11 @@ import kotlinx.datetime.DateTimeUnit.Companion.DAY
 import kotlinx.datetime.Instant
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.minus
-import me.proton.core.account.domain.entity.AccountState
-import me.proton.core.accountmanager.domain.AccountManager
-import me.proton.core.accountmanager.domain.getAccounts
 import proton.android.pass.common.api.safeRunCatching
 import proton.android.pass.data.api.repositories.AssetLinkRepository
 import proton.android.pass.data.api.usecases.ItemTypeFilter
 import proton.android.pass.data.api.usecases.ObserveItems
+import proton.android.pass.data.api.usecases.ObserveReadyAccounts
 import proton.android.pass.data.impl.usecases.assetlink.UpdateAssetLink
 import proton.android.pass.domain.ItemState
 import proton.android.pass.domain.ItemType
@@ -55,7 +53,7 @@ import java.util.concurrent.TimeUnit
 class PeriodicAssetLinkWorker @AssistedInject constructor(
     @Assisted appContext: Context,
     @Assisted private val workerParameters: WorkerParameters,
-    private val accountManager: AccountManager,
+    private val observeReadyAccounts: ObserveReadyAccounts,
     private val observeItems: ObserveItems,
     private val assetLinkRepository: AssetLinkRepository,
     private val updateAssetLink: UpdateAssetLink,
@@ -76,7 +74,7 @@ class PeriodicAssetLinkWorker @AssistedInject constructor(
         PassLogger.w(TAG, it)
     }.toWorkerResult()
 
-    private suspend fun getAllWebsites() = accountManager.getAccounts(AccountState.Ready)
+    private suspend fun getAllWebsites() = observeReadyAccounts()
         .flatMapLatest { list ->
             val flows = list.map { user ->
                 observeItems(

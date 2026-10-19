@@ -28,7 +28,6 @@ import proton.android.pass.common.api.some
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import proton.android.pass.account.fakes.FakeAccountManager
 import proton.android.pass.appconfig.fakes.FakeAppConfig
 import proton.android.pass.biometry.FakeNeedsBiometricAuth
 import proton.android.pass.commonuimodels.api.ItemUiModel
@@ -42,6 +41,7 @@ import proton.android.pass.data.fakes.usecases.FakeGetItemById
 import proton.android.pass.data.fakes.usecases.FakeHasActiveAccount
 import proton.android.pass.data.api.usecases.Suggestion
 import proton.android.pass.data.api.usecases.VerifyDigitalAssetLinksForCredentialSharing
+import proton.android.pass.data.fakes.usecases.FakeSignOutAccount
 import proton.android.pass.domain.HiddenState
 import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.ItemId
@@ -88,7 +88,7 @@ internal class PasswordCredentialSelectionViewModelTest {
             userPreferenceRepository = FakePreferenceRepository(),
             needsBiometricAuth = FakeNeedsBiometricAuth(),
             appConfig = FakeAppConfig(),
-            accountManager = FakeAccountManager(),
+            signOutAccount = FakeSignOutAccount(),
             encryptionContextProvider = encryptionContextProvider,
             toastManager = toastManager,
             internalSettingsRepository = FakeInternalSettingsRepository(),
@@ -429,7 +429,7 @@ internal class PasswordCredentialSelectionViewModelTest {
             userPreferenceRepository = FakePreferenceRepository(),
             needsBiometricAuth = FakeNeedsBiometricAuth(),
             appConfig = FakeAppConfig(),
-            accountManager = FakeAccountManager(),
+            signOutAccount = FakeSignOutAccount(),
             encryptionContextProvider = encryptionContextProvider,
             toastManager = toastManager,
             internalSettingsRepository = FakeInternalSettingsRepository(),

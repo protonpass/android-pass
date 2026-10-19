@@ -30,6 +30,7 @@ import proton.android.pass.data.api.repositories.AttachmentRepository
 import proton.android.pass.data.api.repositories.AssetLinkRepository
 import proton.android.pass.data.api.repositories.BulkInviteRepository
 import proton.android.pass.data.api.repositories.CompromisedPasswordRepository
+import proton.android.pass.data.api.usecases.SignOutAccount
 import proton.android.pass.data.api.usecases.compromisedpassword.ObserveCompromisedPasswords
 import proton.android.pass.data.api.usecases.compromisedpassword.RefreshCompromisedPasswords
 import proton.android.pass.data.fakes.usecases.compromisedpassword.FakeObserveCompromisedPasswords
@@ -82,6 +83,8 @@ import proton.android.pass.data.api.usecases.GetReadyAccounts
 import proton.android.pass.data.api.usecases.GetUser
 import proton.android.pass.data.api.usecases.HasActiveAccount
 import proton.android.pass.data.api.usecases.ObserveAccounts
+import proton.android.pass.data.api.usecases.ObserveReadyAccounts
+import proton.android.pass.data.api.usecases.ObserveRemovedAccounts
 import proton.android.pass.data.api.usecases.ObservePrimaryAccount
 import proton.android.pass.data.api.usecases.ObservePrimaryUserId
 import proton.android.pass.data.api.usecases.ObserveUser
@@ -377,6 +380,8 @@ import proton.android.pass.data.fakes.usecases.FakeGetReadyAccounts
 import proton.android.pass.data.fakes.usecases.FakeGetUser
 import proton.android.pass.data.fakes.usecases.FakeHasActiveAccount
 import proton.android.pass.data.fakes.usecases.FakeObserveAccounts
+import proton.android.pass.data.fakes.usecases.FakeObserveReadyAccounts
+import proton.android.pass.data.fakes.usecases.FakeObserveRemovedAccounts
 import proton.android.pass.data.fakes.usecases.FakeObservePrimaryAccount
 import proton.android.pass.data.fakes.usecases.FakeObservePrimaryUserId
 import proton.android.pass.data.fakes.usecases.FakeObserveUser
@@ -455,6 +460,7 @@ import proton.android.pass.data.fakes.usecases.FakeSetAppLockTime
 import proton.android.pass.data.fakes.usecases.FakeSetAppLockType
 import proton.android.pass.data.fakes.usecases.FakeSetPasswordOnlyLock
 import proton.android.pass.data.fakes.usecases.FakeSetDefaultVault
+import proton.android.pass.data.fakes.usecases.FakeSignOutAccount
 import proton.android.pass.data.fakes.usecases.FakeTransferVaultOwnership
 import proton.android.pass.data.fakes.usecases.FakeTrashItems
 import proton.android.pass.data.fakes.usecases.FakeUnpinItem
@@ -1404,7 +1410,16 @@ abstract class FakesDataModule {
     abstract fun bindObserveAccounts(impl: FakeObserveAccounts): ObserveAccounts
 
     @Binds
+    abstract fun bindObserveReadyAccounts(impl: FakeObserveReadyAccounts): ObserveReadyAccounts
+
+    @Binds
+    abstract fun bindObserveRemovedAccounts(impl: FakeObserveRemovedAccounts): ObserveRemovedAccounts
+
+    @Binds
     abstract fun bindDisableAccount(impl: FakeDisableAccount): DisableAccount
+
+    @Binds
+    abstract fun bindSignOutAccount(impl: FakeSignOutAccount): SignOutAccount
 
     @Binds
     abstract fun bindSetAsPrimary(impl: FakeSetAsPrimary): SetAsPrimary

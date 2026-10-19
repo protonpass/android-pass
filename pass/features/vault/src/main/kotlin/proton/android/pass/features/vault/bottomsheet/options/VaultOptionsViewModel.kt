@@ -36,7 +36,6 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import me.proton.core.accountmanager.domain.AccountManager
 import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.asLoadingResult
 import proton.android.pass.common.api.combineN
@@ -46,6 +45,7 @@ import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
 import proton.android.pass.data.api.usecases.ItemTypeFilter
 import proton.android.pass.data.api.usecases.ObserveEncryptedItems
+import proton.android.pass.data.api.usecases.ObservePrimaryUserId
 import proton.android.pass.data.api.usecases.ObserveUpgradeInfo
 import proton.android.pass.data.api.usecases.ObserveVaults
 import proton.android.pass.data.api.usecases.attachments.SetVaultOfflineAttachments
@@ -88,7 +88,7 @@ class VaultOptionsViewModel @Inject constructor(
     observeFolderLimits: ObserveFolderLimits,
     userPreferencesRepository: UserPreferencesRepository,
     private val setVaultOfflineAttachments: SetVaultOfflineAttachments,
-    private val accountManager: AccountManager
+    private val observePrimaryUserId: ObservePrimaryUserId
 ) : ViewModel() {
 
     private val navShareId: ShareId = savedStateHandle.get()
@@ -123,7 +123,7 @@ class VaultOptionsViewModel @Inject constructor(
         observeUpgradeInfo().asLoadingResult(),
         folderCountsFlow,
         folderLimitsFlow,
-        accountManager.getPrimaryUserId().flatMapLatest { userId ->
+        observePrimaryUserId().flatMapLatest { userId ->
             if (userId == null) flowOf(DownloadAllAttachmentsPreference.Disabled)
             else userPreferencesRepository.observeDownloadAllAttachmentsPref(userId)
         },
@@ -204,7 +204,7 @@ class VaultOptionsViewModel @Inject constructor(
 
     internal fun onToggleOfflineAttachments(enabled: Boolean) {
         viewModelScope.launch {
-            val userId = accountManager.getPrimaryUserId().firstOrNull() ?: return@launch
+            val userId = observePrimaryUserId().firstOrNull() ?: return@launch
             safeRunCatching { setVaultOfflineAttachments(userId, navShareId, enabled) }
                 .onFailure { error ->
                     PassLogger.w(TAG, "Failed to toggle offline attachments")

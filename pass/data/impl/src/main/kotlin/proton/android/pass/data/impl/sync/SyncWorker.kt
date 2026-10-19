@@ -32,13 +32,11 @@ import dagger.assisted.AssistedInject
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.withContext
-import me.proton.core.account.domain.entity.AccountState
-import me.proton.core.accountmanager.domain.AccountManager
-import me.proton.core.accountmanager.domain.getAccounts
 import me.proton.core.eventmanager.domain.work.EventWorkerManager
 import proton.android.pass.common.api.safeRunCatching
 import proton.android.pass.common.api.transpose
 import proton.android.pass.data.api.repositories.SyncMode
+import proton.android.pass.data.api.usecases.ObserveReadyAccounts
 import proton.android.pass.data.api.usecases.PerformSync
 import proton.android.pass.log.api.LogAccountContext
 import proton.android.pass.log.api.PassLogger
@@ -50,13 +48,13 @@ open class SyncWorker @AssistedInject constructor(
     @Assisted context: Context,
     @Assisted workerParameters: WorkerParameters,
     private val performSync: PerformSync,
-    private val accountManager: AccountManager
+    private val observeReadyAccounts: ObserveReadyAccounts
 ) : CoroutineWorker(context, workerParameters) {
 
     override suspend fun doWork(): Result {
         PassLogger.i(TAG, "Starting $TAG attempt $runAttemptCount")
 
-        val result = accountManager.getAccounts(AccountState.Ready)
+        val result = observeReadyAccounts()
             .mapLatest { accounts ->
                 accounts.map { account ->
                     withContext(LogAccountContext(account.userId)) {

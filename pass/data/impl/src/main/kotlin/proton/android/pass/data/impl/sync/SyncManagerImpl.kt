@@ -32,13 +32,11 @@ import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import me.proton.core.account.domain.entity.Account
-import me.proton.core.account.domain.entity.AccountState
-import me.proton.core.accountmanager.domain.AccountManager
-import me.proton.core.accountmanager.domain.getAccounts
 import me.proton.core.eventmanager.domain.work.EventWorkerManager
 import me.proton.core.presentation.app.AppLifecycleProvider
 import proton.android.pass.common.api.safeRunCatching
 import proton.android.pass.data.api.repositories.SearchIndexRepository
+import proton.android.pass.data.api.usecases.ObserveReadyAccounts
 import proton.android.pass.data.api.usecases.PerformSync
 import proton.android.pass.data.impl.sync.SyncWorker.Companion.WORKER_UNIQUE_NAME
 import proton.android.pass.log.api.LogAccountContext
@@ -53,7 +51,7 @@ class SyncManagerImpl @Inject constructor(
     private val eventWorkerManager: EventWorkerManager,
     private val performSync: PerformSync,
     private val appLifecycleProvider: AppLifecycleProvider,
-    private val accountManager: AccountManager,
+    private val observeReadyAccounts: ObserveReadyAccounts,
     private val searchIndexRepository: SearchIndexRepository
 ) : SyncManager {
 
@@ -62,7 +60,7 @@ class SyncManagerImpl @Inject constructor(
     override fun start() {
         PassLogger.i(TAG, "SyncManager start")
 
-        accountManager.getAccounts(AccountState.Ready)
+        observeReadyAccounts()
             .combine(appLifecycleProvider.state, ::Pair)
             .mapLatest { (accounts, state) -> onAccountsIsReady(accounts, state) }
             .flowWithLifecycle(appLifecycleProvider.lifecycle)

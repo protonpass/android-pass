@@ -28,9 +28,9 @@ import kotlinx.datetime.Instant
 import me.proton.core.domain.entity.UserId
 import org.junit.Before
 import org.junit.Test
-import proton.android.pass.account.fakes.FakeAccountManager
 import proton.android.pass.account.fakes.FakeDeviceSettingsRepository
 import proton.android.pass.account.fakes.telemetry.FakeIsTelemetryEnabled
+import proton.android.pass.data.fakes.usecases.FakeObservePrimaryUserId
 import proton.android.pass.preferences.FakeInternalSettingsRepository
 import proton.android.pass.telemetry.api.GooglePlayInstallReferrer
 import proton.android.pass.telemetry.api.MetaInstallReferrer
@@ -42,7 +42,7 @@ import proton.android.pass.test.FixedClock
 
 class TelemetryGrowthInstallEventSenderTest {
 
-    private lateinit var accountManager: FakeAccountManager
+    private lateinit var observePrimaryUserId: FakeObservePrimaryUserId
     private lateinit var deviceSettingsRepository: FakeDeviceSettingsRepository
     private lateinit var isTelemetryEnabled: FakeIsTelemetryEnabled
     private lateinit var internalSettingsRepository: FakeInternalSettingsRepository
@@ -53,7 +53,7 @@ class TelemetryGrowthInstallEventSenderTest {
 
     @Before
     fun setup() {
-        accountManager = FakeAccountManager()
+        observePrimaryUserId = FakeObservePrimaryUserId().apply { emitUserId(UserId(USER_ID)) }
         deviceSettingsRepository = FakeDeviceSettingsRepository()
         isTelemetryEnabled = FakeIsTelemetryEnabled().apply { setEnabled(true) }
         internalSettingsRepository = FakeInternalSettingsRepository()
@@ -61,7 +61,7 @@ class TelemetryGrowthInstallEventSenderTest {
         metaInstallReferrerProvider = FakeMetaInstallReferrerProvider().apply { setReferrer(META_REFERRER) }
         telemetryManager = FakeTelemetryManager()
         instance = TelemetryGrowthInstallEventSender(
-            accountManager = accountManager,
+            observePrimaryUserId = observePrimaryUserId,
             deviceSettingsRepository = deviceSettingsRepository,
             isTelemetryEnabled = isTelemetryEnabled,
             internalSettingsRepository = internalSettingsRepository,
@@ -88,7 +88,7 @@ class TelemetryGrowthInstallEventSenderTest {
 
     @Test
     fun `does not query meta nor send install event without a primary user`() = runTest {
-        accountManager.sendPrimaryUserId(null)
+        observePrimaryUserId.emitUserId(null)
 
         startSender()
 
@@ -125,10 +125,10 @@ class TelemetryGrowthInstallEventSenderTest {
 
     @Test
     fun `sends install event once user logs in`() = runTest {
-        accountManager.sendPrimaryUserId(null)
+        observePrimaryUserId.emitUserId(null)
         startSender()
 
-        accountManager.sendPrimaryUserId(UserId(USER_ID))
+        observePrimaryUserId.emitUserId(UserId(USER_ID))
         runCurrent()
 
         assertThat(telemetryManager.getMemory()).hasSize(1)

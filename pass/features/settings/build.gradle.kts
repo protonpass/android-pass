@@ -57,7 +57,6 @@ dependencies {
     implementation(libs.androidx.compose.foundation)
     implementation(libs.androidx.compose.ui)
     implementation(libs.androidx.compose.runtime)
-    implementation(libs.core.user.domain)
     implementation(libs.core.userSettings.domain)
 
     implementation(libs.dagger.hilt.android)

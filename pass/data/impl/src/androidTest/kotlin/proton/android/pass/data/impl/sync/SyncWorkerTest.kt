@@ -32,6 +32,8 @@ import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import proton.android.pass.account.fakes.FakeAccountManager
+import proton.android.pass.data.fakes.usecases.FakeObserveAccounts
+import proton.android.pass.data.fakes.usecases.FakeObserveReadyAccounts
 import proton.android.pass.data.fakes.usecases.FakePerformSync
 
 @RunWith(AndroidJUnit4::class)
@@ -39,12 +41,12 @@ class SyncWorkerTest {
 
     private val context = InstrumentationRegistry.getInstrumentation().targetContext
 
-    private lateinit var fakeAccountManager: FakeAccountManager
+    private lateinit var fakeObserveReadyAccounts: FakeObserveReadyAccounts
     private lateinit var fakePerformSync: FakePerformSync
 
     @Before
     fun setup() {
-        fakeAccountManager = FakeAccountManager()
+        fakeObserveReadyAccounts = FakeObserveReadyAccounts()
         fakePerformSync = FakePerformSync()
     }
 
@@ -68,7 +70,7 @@ class SyncWorkerTest {
     fun syncsEachReadyAccount() = runTest {
         val userId1 = UserId("user-1")
         val userId2 = UserId("user-2")
-        fakeAccountManager.setAccounts(
+        fakeObserveReadyAccounts.emitAccounts(
             listOf(
                 FakeAccountManager.createAccount(userId1),
                 FakeAccountManager.createAccount(userId2)
@@ -82,7 +84,7 @@ class SyncWorkerTest {
 
     @Test
     fun returnsSuccessWhenNoAccountsAreReady() = runTest {
-        fakeAccountManager.setAccounts(emptyList())
+        fakeObserveReadyAccounts.emitAccounts(emptyList())
 
         val result = buildWorker().doWork()
 
@@ -95,7 +97,7 @@ class SyncWorkerTest {
         buildWorker().doWork()
 
         assertThat(fakePerformSync.invokedUserIds)
-            .containsExactly(UserId(FakeAccountManager.USER_ID))
+            .containsExactly(UserId(FakeObserveAccounts.USER_ID))
     }
 
     private fun buildWorker(): SyncWorker =
@@ -109,7 +111,7 @@ class SyncWorkerTest {
                     context = appContext,
                     workerParameters = workerParameters,
                     performSync = fakePerformSync,
-                    accountManager = fakeAccountManager
+                    observeReadyAccounts = fakeObserveReadyAccounts
                 )
             })
             .build()

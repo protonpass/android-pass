@@ -23,11 +23,11 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import kotlinx.datetime.Clock
-import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.domain.entity.UserId
 import me.proton.core.telemetry.domain.usecase.IsTelemetryEnabled
 import me.proton.core.usersettings.domain.repository.DeviceSettingsRepository
 import proton.android.pass.common.api.safeRunCatching
+import proton.android.pass.data.api.usecases.ObservePrimaryUserId
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.preferences.InternalSettingsRepository
 import proton.android.pass.telemetry.api.GooglePlayInstallReferrer
@@ -39,7 +39,7 @@ import proton.android.pass.telemetry.api.TelemetryManager
 import javax.inject.Inject
 
 class TelemetryGrowthInstallEventSender @Inject constructor(
-    private val accountManager: AccountManager,
+    private val observePrimaryUserId: ObservePrimaryUserId,
     private val deviceSettingsRepository: DeviceSettingsRepository,
     private val isTelemetryEnabled: IsTelemetryEnabled,
     private val internalSettingsRepository: InternalSettingsRepository,
@@ -51,7 +51,7 @@ class TelemetryGrowthInstallEventSender @Inject constructor(
 
     suspend fun start() {
         combine(
-            accountManager.getPrimaryUserId(),
+            observePrimaryUserId(),
             deviceSettingsRepository.observeDeviceSettings().map { it.isTelemetryEnabled }
         ) { userId, isDeviceTelemetryEnabled -> userId to isDeviceTelemetryEnabled }
             .distinctUntilChanged()

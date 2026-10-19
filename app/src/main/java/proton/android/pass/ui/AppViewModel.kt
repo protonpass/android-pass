@@ -34,9 +34,6 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
-import me.proton.core.account.domain.entity.AccountState.Ready
-import me.proton.core.accountmanager.domain.AccountManager
-import me.proton.core.accountmanager.domain.getAccounts
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.appconfig.api.AppConfig
 import proton.android.pass.appconfig.api.BuildFlavor.Companion.isQuest
@@ -49,6 +46,7 @@ import proton.android.pass.common.api.getOrNull
 import proton.android.pass.common.api.onError
 import proton.android.pass.common.api.onSuccess
 import proton.android.pass.common.api.runCatching
+import proton.android.pass.data.api.usecases.ObserveReadyAccounts
 import proton.android.pass.data.api.usecases.ObserveShouldShowExploreTab
 import proton.android.pass.data.api.usecases.ReconcileAppLock
 import proton.android.pass.data.api.usecases.ReconcileAppLockResult
@@ -91,7 +89,7 @@ class AppViewModel @Inject constructor(
     private val autofillManager: AutofillManager,
     private val preferencesRepository: UserPreferencesRepository,
     private val appConfig: AppConfig,
-    private val accountManager: AccountManager,
+    private val observeReadyAccounts: ObserveReadyAccounts,
     networkMonitor: NetworkMonitor,
     notificationManager: NotificationManager,
     observeDeliverableBannerInAppMessages: ObserveDeliverableBannerInAppMessages,
@@ -215,7 +213,7 @@ class AppViewModel @Inject constructor(
     )
 
     fun onForceSignOutDispatched() = viewModelScope.launch {
-        accountManager.getAccounts(Ready).first { readyAccounts -> readyAccounts.isEmpty() }
+        observeReadyAccounts().first { readyAccounts -> readyAccounts.isEmpty() }
         PassLogger.i(TAG, "Forced sign out completed, releasing re-auth lock")
         forceReauthFlow.value = false
     }

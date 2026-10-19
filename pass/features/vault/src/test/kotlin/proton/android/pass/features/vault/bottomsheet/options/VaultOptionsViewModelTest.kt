@@ -21,6 +21,7 @@ package proton.android.pass.features.vault.bottomsheet.options
 import app.cash.turbine.test
 import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.test.runTest
+import me.proton.core.domain.entity.UserId
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -33,6 +34,7 @@ import proton.android.pass.data.fakes.usecases.FakeCanManageVaultAccess
 import proton.android.pass.data.fakes.usecases.FakeCanMigrateVault
 import proton.android.pass.data.fakes.usecases.FakeCanShareShare
 import proton.android.pass.data.fakes.usecases.FakeObserveEncryptedItems
+import proton.android.pass.data.fakes.usecases.FakeObservePrimaryUserId
 import proton.android.pass.data.fakes.usecases.FakeObserveUpgradeInfo
 import proton.android.pass.data.fakes.usecases.FakeObserveVaults
 import proton.android.pass.data.fakes.usecases.folders.FakeObserveFolderLimits
@@ -47,7 +49,6 @@ import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.Vault
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.notifications.fakes.FakeSnackbarDispatcher
-import proton.android.pass.account.fakes.FakeAccountManager
 import proton.android.pass.data.fakes.usecases.attachments.FakeSetVaultOfflineAttachments
 import proton.android.pass.preferences.FakeFeatureFlagsPreferenceRepository
 import proton.android.pass.preferences.FakePreferenceRepository
@@ -658,11 +659,12 @@ class VaultOptionsViewModelTest {
             observeFolderLimits = FakeObserveFolderLimits(),
             userPreferencesRepository = FakePreferenceRepository(),
             setVaultOfflineAttachments = FakeSetVaultOfflineAttachments(),
-            accountManager = FakeAccountManager()
+            observePrimaryUserId = FakeObservePrimaryUserId().apply { emitUserId(UserId(USER_ID)) }
         )
     }
 
     companion object {
         private const val SHARE_ID = "VaultOptionsViewModelTest-ShareId"
+        private const val USER_ID = "VaultOptionsViewModelTest-UserId"
     }
 }

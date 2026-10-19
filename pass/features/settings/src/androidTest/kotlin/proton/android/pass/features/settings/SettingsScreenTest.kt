@@ -31,6 +31,7 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import proton.android.pass.commonui.api.PassTheme
+import proton.android.pass.data.fakes.usecases.FakeObservePrimaryUserId
 import proton.android.pass.data.fakes.usecases.FakeObserveVaults
 import proton.android.pass.domain.ShareFlags
 import proton.android.pass.domain.ShareId
@@ -65,9 +66,13 @@ class SettingsScreenTest {
     @Inject
     lateinit var observeVaults: FakeObserveVaults
 
+    @Inject
+    lateinit var observePrimaryUserId: FakeObservePrimaryUserId
+
     @Before
     fun setup() {
         hiltRule.inject()
+        observePrimaryUserId.emitUserId(UserId(""))
         observeVaults.sendResult(
             Result.success(
                 listOf(

@@ -38,8 +38,6 @@ import me.proton.core.domain.entity.UserId
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import proton.android.pass.account.fakes.FakeUserManager
-import proton.android.pass.account.fakes.FakeAccountManager
 import proton.android.pass.common.api.AppDispatchers
 import proton.android.pass.common.fakes.CommonFakesModule
 import proton.android.pass.commonui.api.PassTheme
@@ -51,7 +49,10 @@ import proton.android.pass.data.api.usecases.Suggestion
 import proton.android.pass.data.api.usecases.UpgradeInfo
 import proton.android.pass.data.fakes.usecases.FakeGetSuggestedAutofillItems
 import proton.android.pass.data.fakes.usecases.FakeGetUserPlan
+import proton.android.pass.data.fakes.usecases.FakeObserveAccounts
 import proton.android.pass.data.fakes.usecases.FakeObserveItems
+import proton.android.pass.data.fakes.usecases.FakeObserveReadyAccounts
+import proton.android.pass.data.fakes.usecases.FakeObserveUser
 import proton.android.pass.data.fakes.usecases.FakeObserveUpgradeInfo
 import proton.android.pass.data.fakes.usecases.shares.FakeObserveAutofillShares
 import proton.android.pass.domain.HiddenState
@@ -103,10 +104,10 @@ class SelectItemScreenTest {
     lateinit var observeItems: FakeObserveItems
 
     @Inject
-    lateinit var accountManager: FakeAccountManager
+    lateinit var observeReadyAccounts: FakeObserveReadyAccounts
 
     @Inject
-    lateinit var userManager: FakeUserManager
+    lateinit var observeUser: FakeObserveUser
 
     @Before
     fun setup() {
@@ -348,8 +349,8 @@ class SelectItemScreenTest {
         planType: PlanType
     ): SetupData {
         val userId = UserId("test-user-id")
-        accountManager.setAccounts(listOf(FakeAccountManager.DEFAULT_ACCOUNT.copy(userId = userId)))
-        userManager.setUser(FakeUserManager.DEFAULT_USER.copy(userId = userId))
+        observeReadyAccounts.emitAccounts(listOf(FakeObserveAccounts.DEFAULT_ACCOUNT.copy(userId = userId)))
+        observeUser.emitUser(userId, FakeObserveUser.createDefaultUser(userId))
         val vaultShares = (0 until sharesCount).map {
             ShareTestFactory.Vault.create(
                 userId = userId.id,

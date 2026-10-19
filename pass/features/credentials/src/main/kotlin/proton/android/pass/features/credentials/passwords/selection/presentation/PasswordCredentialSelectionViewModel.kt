@@ -28,14 +28,10 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import me.proton.core.account.domain.entity.AccountState
-import me.proton.core.accountmanager.domain.AccountManager
-import me.proton.core.accountmanager.domain.getAccounts
 import me.proton.core.crypto.common.keystore.EncryptedString
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.appconfig.api.AppConfig
@@ -51,6 +47,7 @@ import proton.android.pass.data.api.repositories.AssetLinkRepository
 import proton.android.pass.data.api.repositories.ItemRepository
 import proton.android.pass.data.api.usecases.GetItemById
 import proton.android.pass.data.api.usecases.HasActiveAccount
+import proton.android.pass.data.api.usecases.SignOutAccount
 import proton.android.pass.data.api.usecases.VerifyDigitalAssetLinksForCredentialSharing
 import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.entity.AppName
@@ -74,7 +71,7 @@ internal class PasswordCredentialSelectionViewModel @Inject constructor(
     userPreferenceRepository: UserPreferencesRepository,
     needsBiometricAuth: NeedsBiometricAuth,
     appConfig: AppConfig,
-    private val accountManager: AccountManager,
+    private val signOutAccount: SignOutAccount,
     private val encryptionContextProvider: EncryptionContextProvider,
     private val toastManager: ToastManager,
     private val internalSettingsRepository: InternalSettingsRepository,
@@ -354,18 +351,12 @@ internal class PasswordCredentialSelectionViewModel @Inject constructor(
     internal fun onSignOut(userId: UserId) {
         viewModelScope.launch {
             internalSettingsRepository.setMasterPasswordAttemptsCount(userId, 0)
-            accountManager.disableAccount(userId)
+            val hasAccountsLeft = signOutAccount(userId)
             toastManager.showToast(R.string.passkey_credential_selection_logged_out)
 
-            accountManager.getAccounts(AccountState.Ready)
-                .firstOrNull()
-                ?.filterNot { it.userId == userId }
-                ?.isNotEmpty()
-                ?.also { hasAccountsLeft ->
-                    if (!hasAccountsLeft) {
-                        closeScreenFlow.update { true }
-                    }
-                }
+            if (!hasAccountsLeft) {
+                closeScreenFlow.update { true }
+            }
         }
     }
 

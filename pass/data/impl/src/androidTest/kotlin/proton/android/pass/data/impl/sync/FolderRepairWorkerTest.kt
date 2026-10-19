@@ -27,13 +27,13 @@ import androidx.work.WorkerParameters
 import androidx.work.testing.TestListenableWorkerBuilder
 import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.test.runTest
-import me.proton.core.account.domain.entity.AccountState
 import me.proton.core.domain.entity.UserId
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import proton.android.pass.account.fakes.FakeAccountManager
 import proton.android.pass.data.api.repositories.SyncMode
+import proton.android.pass.data.fakes.usecases.FakeObserveReadyAccounts
 import proton.android.pass.data.fakes.usecases.sync.FakeCheckFolderForceSync
 
 @RunWith(AndroidJUnit4::class)
@@ -42,19 +42,19 @@ class FolderRepairWorkerTest {
     private val context = InstrumentationRegistry.getInstrumentation().targetContext
 
     private lateinit var checkFolderForceSync: FakeCheckFolderForceSync
-    private lateinit var accountManager: FakeAccountManager
+    private lateinit var observeReadyAccounts: FakeObserveReadyAccounts
 
     @Before
     fun setup() {
         checkFolderForceSync = FakeCheckFolderForceSync()
-        accountManager = FakeAccountManager()
+        observeReadyAccounts = FakeObserveReadyAccounts()
     }
 
     @Test
     fun checksEveryReadyAccountInBackgroundMode() = runTest {
         val first = UserId("first")
         val second = UserId("second")
-        accountManager.setAccounts(
+        observeReadyAccounts.emitAccounts(
             listOf(
                 FakeAccountManager.createAccount(first),
                 FakeAccountManager.createAccount(second)
@@ -71,24 +71,8 @@ class FolderRepairWorkerTest {
     }
 
     @Test
-    fun skipsAccountsThatAreNotReady() = runTest {
-        val ready = UserId("ready")
-        accountManager.setAccounts(
-            listOf(
-                FakeAccountManager.createAccount(ready),
-                FakeAccountManager.createAccount(UserId("disabled"))
-                    .copy(state = AccountState.Disabled)
-            )
-        )
-
-        buildWorker().doWork()
-
-        assertThat(checkFolderForceSync.invocations).containsExactly(ready)
-    }
-
-    @Test
     fun succeedsWhenThereAreNoAccounts() = runTest {
-        accountManager.setAccounts(emptyList())
+        observeReadyAccounts.emitAccounts(emptyList())
 
         val result = buildWorker().doWork()
 
@@ -107,7 +91,7 @@ class FolderRepairWorkerTest {
                     context = appContext,
                     workerParameters = workerParameters,
                     checkFolderForceSync = checkFolderForceSync,
-                    accountManager = accountManager
+                    observeReadyAccounts = observeReadyAccounts
                 )
             })
             .build()

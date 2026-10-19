@@ -31,11 +31,9 @@ import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.withContext
-import me.proton.core.account.domain.entity.AccountState
-import me.proton.core.accountmanager.domain.AccountManager
-import me.proton.core.accountmanager.domain.getAccounts
 import proton.android.pass.common.api.safeRunCatching
 import proton.android.pass.common.api.transpose
+import proton.android.pass.data.api.usecases.ObserveReadyAccounts
 import proton.android.pass.log.api.LogAccountContext
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
@@ -45,13 +43,13 @@ open class RefreshFeatureFlagsOnUpdateWorker @AssistedInject constructor(
     @Assisted context: Context,
     @Assisted workerParameters: WorkerParameters,
     private val featureFlagsRepository: FeatureFlagsPreferencesRepository,
-    private val accountManager: AccountManager
+    private val observeReadyAccounts: ObserveReadyAccounts
 ) : CoroutineWorker(context, workerParameters) {
 
     override suspend fun doWork(): Result {
         PassLogger.i(TAG, "Starting $TAG attempt $runAttemptCount")
 
-        val result = accountManager.getAccounts(AccountState.Ready)
+        val result = observeReadyAccounts()
             .first()
             .map { account ->
                 withContext(LogAccountContext(account.userId)) {

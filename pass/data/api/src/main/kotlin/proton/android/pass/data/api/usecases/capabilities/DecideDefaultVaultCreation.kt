@@ -27,5 +27,5 @@ enum class DefaultVaultDecision {
 }
 
 interface DecideDefaultVaultCreation {
-    suspend operator fun invoke(userId: UserId): DefaultVaultDecision
+    suspend operator fun invoke(userId: UserId, isForceSync: Boolean): DefaultVaultDecision
 }

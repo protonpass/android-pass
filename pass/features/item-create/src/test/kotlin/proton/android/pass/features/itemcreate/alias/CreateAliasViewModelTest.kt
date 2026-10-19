@@ -54,6 +54,7 @@ import proton.android.pass.features.itemcreate.ItemSavedState
 import proton.android.pass.features.itemcreate.alias.draftrepositories.MailboxDraftRepositoryImpl
 import proton.android.pass.features.itemcreate.alias.draftrepositories.SuffixDraftRepositoryImpl
 import proton.android.pass.features.itemcreate.common.CustomFieldDraftRepositoryImpl
+import proton.android.pass.features.itemcreate.common.ShareUiState
 import proton.android.pass.features.itemcreate.common.customfields.CustomFieldHandlerImpl
 import proton.android.pass.features.itemcreate.common.formprocessor.AliasItemFormProcessorType
 import proton.android.pass.features.itemcreate.common.formprocessor.FakeAliasItemFormProcessor
@@ -282,6 +283,26 @@ class CreateAliasViewModelTest {
         val titleInput = "$firstPrefix😀"
         viewModel.onPrefixChange(titleInput)
         assertThat(viewModel.aliasItemFormState.prefix).isEqualTo(firstPrefix)
+    }
+
+    @Test
+    fun `closes the screen with a snackbar when there are no vaults`() = runTest {
+        viewModel = createAliasViewModel()
+        observeVaults.sendResult(Result.success(emptyList()))
+
+        viewModel.createAliasUiState.test {
+            var state = awaitItem()
+            while (state.baseAliasUiState.closeScreenEvent != CloseScreenEvent.Close) {
+                state = awaitItem()
+            }
+            assertThat(state.shareUiState).isInstanceOf(ShareUiState.Error::class.java)
+            cancelAndIgnoreRemainingEvents()
+        }
+
+        snackbarRepository.snackbarMessage.test {
+            val message = awaitItem()
+            assertThat(message.value()).isEqualTo(AliasSnackbarMessage.CannotRetrieveAliasOptions)
+        }
     }
 
     private fun createAliasViewModel(

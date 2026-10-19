@@ -368,6 +368,8 @@ import proton.android.pass.data.impl.usecases.CreateLoginAndAliasImpl
 import proton.android.pass.data.impl.usecases.CreatePinImpl
 import proton.android.pass.data.impl.usecases.CreateVaultImpl
 import proton.android.pass.data.impl.usecases.DeleteItemsImpl
+import proton.android.pass.data.impl.usecases.DefaultVaultContentProvider
+import proton.android.pass.data.impl.usecases.DefaultVaultContentProviderImpl
 import proton.android.pass.data.impl.usecases.DeleteVaultImpl
 import proton.android.pass.data.impl.usecases.GetAllKeysByAddressImpl
 import proton.android.pass.data.impl.usecases.GetDefaultBrowserImpl
@@ -811,6 +813,9 @@ abstract class DataUseCaseModule {
 
     @Binds
     abstract fun bindUpdateAutofillItem(impl: UpdateAutofillItemImpl): UpdateAutofillItem
+
+    @Binds
+    abstract fun bindDefaultVaultContentProvider(impl: DefaultVaultContentProviderImpl): DefaultVaultContentProvider
 
     @Binds
     abstract fun bindRefreshSharesAndEnqueueSync(impl: RefreshSharesAndEnqueueSyncImpl): RefreshSharesAndEnqueueSync

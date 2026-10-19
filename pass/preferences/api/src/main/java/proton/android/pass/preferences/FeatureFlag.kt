@@ -36,12 +36,6 @@ enum class FeatureFlag(
         key = "PassRenameAdminToManager",
         isEnabledDefault = false
     ),
-    PASS_ALLOW_NO_VAULT(
-        title = "Allow No Vault",
-        description = "Allow a user to remove his last vault",
-        key = "PassAllowNoVault",
-        isEnabledDefault = false
-    ),
     PASS_FOLDERS(
         title = "folders",
         description = "allow user to create folders",

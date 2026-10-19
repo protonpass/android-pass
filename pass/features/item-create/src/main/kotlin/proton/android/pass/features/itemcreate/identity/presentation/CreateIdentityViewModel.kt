@@ -186,7 +186,7 @@ class CreateIdentityViewModel @Inject constructor(
         canDisplayWarningVaultSharedDialogFlow
     ) { shareUiState, sharedState, canDisplayWarningVaultSharedDialog ->
         when (shareUiState) {
-            is ShareUiState.Error -> IdentityUiState.Error
+            is ShareUiState.Error -> IdentityUiState.Error(shareUiState.shareError)
             is ShareUiState.Loading -> IdentityUiState.Loading
             is ShareUiState.Success -> IdentityUiState.CreateIdentity(
                 shareUiState = shareUiState,
@@ -202,6 +202,10 @@ class CreateIdentityViewModel @Inject constructor(
         started = SharingStarted.WhileSubscribed(5_000),
         initialValue = IdentityUiState.NotInitialised
     )
+
+    fun onShareInitError() {
+        viewModelScope.launch { snackbarDispatcher(IdentitySnackbarMessage.InitError) }
+    }
 
     fun onVaultSelect(shareId: ShareId) {
         selectedShareIdMutableState = Some(shareId)

@@ -31,6 +31,7 @@ import proton.android.pass.domain.FolderId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.Vault
 import proton.android.pass.features.itemcreate.ItemSavedState
+import proton.android.pass.features.itemcreate.common.ShareError
 import proton.android.pass.features.itemcreate.common.ShareUiState
 import proton.android.pass.features.itemcreate.common.ValidationError
 
@@ -83,7 +84,7 @@ sealed interface IdentityUiState : IdentitySharedStateAccessor {
     }
 
     @Immutable
-    data object Error : IdentityUiState {
+    data class Error(val shareError: ShareError) : IdentityUiState {
         override fun getItemSavedState() = ItemSavedState.Unknown
         override fun getSubmitLoadingState() = IsLoadingState.NotLoading
         override fun getValidationErrors(): PersistentSet<ValidationError> = persistentSetOf()

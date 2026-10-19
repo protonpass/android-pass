@@ -239,7 +239,7 @@ class CreateCustomItemViewModel @Inject constructor(
         canDisplayWarningVaultSharedDialogFlow
     ) { shareUiState, sharedState, canDisplayWarningVaultSharedDialog ->
         when (shareUiState) {
-            is ShareUiState.Error -> CustomItemState.Error
+            is ShareUiState.Error -> CustomItemState.Error(shareUiState.shareError)
             is ShareUiState.Loading -> CustomItemState.Loading
             is ShareUiState.Success ->
                 CustomItemState.CreateCustomItemState(
@@ -335,6 +335,10 @@ class CreateCustomItemViewModel @Inject constructor(
                 }
             updateLoadingState(IsLoadingState.NotLoading)
         }
+    }
+
+    fun onShareInitError() {
+        viewModelScope.launch { snackbarDispatcher(CustomItemSnackbarMessage.InitError) }
     }
 
     private fun onVaultSelected(shareId: ShareId) {

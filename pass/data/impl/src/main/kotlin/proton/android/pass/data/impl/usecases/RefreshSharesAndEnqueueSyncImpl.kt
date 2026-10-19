@@ -18,10 +18,8 @@
 
 package proton.android.pass.data.impl.usecases
 
-import android.content.Context
 import androidx.work.ExistingWorkPolicy
 import androidx.work.WorkManager
-import dagger.hilt.android.qualifiers.ApplicationContext
 import proton.android.pass.common.api.safeRunCatchingWithCleanup
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.repositories.ItemSyncStatus
@@ -33,7 +31,6 @@ import proton.android.pass.data.api.usecases.RefreshSharesAndEnqueueSync
 import proton.android.pass.data.api.usecases.RefreshSharesResult
 import proton.android.pass.data.api.usecases.capabilities.DecideDefaultVaultCreation
 import proton.android.pass.data.api.usecases.capabilities.DefaultVaultDecision
-import proton.android.pass.data.impl.R
 import proton.android.pass.data.impl.work.FetchItemsWorker
 import proton.android.pass.domain.ShareColor
 import proton.android.pass.domain.ShareIcon
@@ -46,7 +43,7 @@ import javax.inject.Inject
 import proton.android.pass.data.api.repositories.RefreshSharesResult as RepositoryRefreshSharesResult
 
 class RefreshSharesAndEnqueueSyncImpl @Inject constructor(
-    @param:ApplicationContext private val context: Context,
+    private val defaultVaultContentProvider: DefaultVaultContentProvider,
     private val shareRepository: ShareRepository,
     private val itemSyncStatusRepository: ItemSyncStatusRepository,
     private val encryptionContextProvider: EncryptionContextProvider,
@@ -91,7 +88,8 @@ class RefreshSharesAndEnqueueSyncImpl @Inject constructor(
                 handleEmptyShares(
                     userId,
                     repositoryResult.hasInactiveShares,
-                    repositoryResult.hasInvalidGroupShares
+                    repositoryResult.hasInvalidGroupShares,
+                    isForceSync = isFullSync
                 )
             } else {
                 handleNonEmptyShares(userId, repositoryResult, syncType, workerOrigin)
@@ -208,9 +206,10 @@ class RefreshSharesAndEnqueueSyncImpl @Inject constructor(
     private suspend fun handleEmptyShares(
         userId: UserId,
         hasUndecryptableShares: Boolean,
-        hasUndecryptableSharesDueToGroup: Boolean
+        hasUndecryptableSharesDueToGroup: Boolean,
+        isForceSync: Boolean
     ): RefreshSharesResult {
-        return when (decideDefaultVaultCreation(userId)) {
+        return when (decideDefaultVaultCreation(userId, isForceSync)) {
             DefaultVaultDecision.SkipAlreadyCreated -> {
                 PassLogger.i(TAG, "Default vault already created")
                 setSyncSuccess(hasUndecryptableShares, hasUndecryptableSharesDueToGroup)
@@ -236,8 +235,8 @@ class RefreshSharesAndEnqueueSyncImpl @Inject constructor(
     private suspend fun createDefaultVault(userId: UserId) {
         val vault = encryptionContextProvider.withEncryptionContextSuspendable {
             NewVault(
-                name = encrypt(context.getString(R.string.vault_name)),
-                description = encrypt(context.getString(R.string.vault_description)),
+                name = encrypt(defaultVaultContentProvider.name()),
+                description = encrypt(defaultVaultContentProvider.description()),
                 icon = ShareIcon.Icon1,
                 color = ShareColor.Color1
             )

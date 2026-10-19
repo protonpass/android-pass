@@ -18,6 +18,7 @@
 
 package proton.android.pass.data.fakes.usecases
 
+import kotlinx.coroutines.CompletableDeferred
 import proton.android.pass.data.api.repositories.SyncMode
 import proton.android.pass.data.api.repositories.SyncReason
 import proton.android.pass.data.api.usecases.PerformSync
@@ -40,6 +41,7 @@ class FakePerformSync @Inject constructor() : PerformSync {
     val invokedUserIds = mutableListOf<UserId>()
     val invocations = mutableListOf<Invocation>()
     private var result: Result<Unit> = Result.success(Unit)
+    var gate: CompletableDeferred<Unit>? = null
 
     fun setResult(value: Result<Unit>) {
         result = value
@@ -54,6 +56,7 @@ class FakePerformSync @Inject constructor() : PerformSync {
     ): Result<Unit> {
         invokedUserIds += userId
         invocations += Invocation(userId, forceSync, trigger, syncReason, syncMode)
+        gate?.await()
         result.exceptionOrNull()?.let { if (it is CancellationException) throw it }
         return result
     }

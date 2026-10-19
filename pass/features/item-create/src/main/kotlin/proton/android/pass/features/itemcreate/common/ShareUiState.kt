@@ -37,5 +37,8 @@ enum class ShareError {
     EmptyShareList,
     UpgradeInfoNotAvailable,
     SharesNotAvailable,
-    NoPrimaryVault
+    NoPrimaryVault;
+
+    val closesCreateScreen: Boolean
+        get() = this == EmptyShareList || this == SharesNotAvailable
 }

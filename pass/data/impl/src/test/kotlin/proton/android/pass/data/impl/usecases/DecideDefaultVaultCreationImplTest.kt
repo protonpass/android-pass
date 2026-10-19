@@ -26,26 +26,21 @@ import proton.android.pass.data.api.usecases.capabilities.DefaultVaultDecision
 import proton.android.pass.data.fakes.usecases.FakeCanCreateDefaultVault
 import proton.android.pass.data.impl.usecases.capabilities.DecideDefaultVaultCreationImpl
 import proton.android.pass.domain.UserId
-import proton.android.pass.preferences.FakeFeatureFlagsPreferenceRepository
 import proton.android.pass.preferences.FakeInternalSettingsRepository
-import proton.android.pass.preferences.FeatureFlag
 
 internal class DecideDefaultVaultCreationImplTest {
 
     private lateinit var canCreateDefaultVault: FakeCanCreateDefaultVault
     private lateinit var internalSettings: FakeInternalSettingsRepository
-    private lateinit var featureFlags: FakeFeatureFlagsPreferenceRepository
     private lateinit var instance: DecideDefaultVaultCreationImpl
 
     @Before
     fun setup() {
         canCreateDefaultVault = FakeCanCreateDefaultVault()
         internalSettings = FakeInternalSettingsRepository()
-        featureFlags = FakeFeatureFlagsPreferenceRepository()
         instance = DecideDefaultVaultCreationImpl(
             canCreateDefaultVault = canCreateDefaultVault,
-            internalSettingsRepository = internalSettings,
-            preferencesRepository = featureFlags
+            internalSettingsRepository = internalSettings
         )
     }
 
@@ -53,38 +48,42 @@ internal class DecideDefaultVaultCreationImplTest {
     fun `skips when the default vault cannot be created`() = runTest {
         canCreateDefaultVault.setResult(false)
 
-        assertThat(instance(USER_ID)).isEqualTo(DefaultVaultDecision.SkipNotAllowed)
+        assertThat(instance(USER_ID, isForceSync = false)).isEqualTo(DefaultVaultDecision.SkipNotAllowed)
     }
 
     @Test
-    fun `skips when no vault is allowed and the default one was already created`() = runTest {
-        featureFlags.set(FeatureFlag.PASS_ALLOW_NO_VAULT, true)
+    fun `skips when the default vault was already created and the sync is not forced`() = runTest {
         internalSettings.setDefaultVaultHasBeenCreated(USER_ID)
 
-        assertThat(instance(USER_ID)).isEqualTo(DefaultVaultDecision.SkipAlreadyCreated)
+        assertThat(instance(USER_ID, isForceSync = false)).isEqualTo(DefaultVaultDecision.SkipAlreadyCreated)
     }
 
     @Test
     fun `creates when the user can create a vault and none was created before`() = runTest {
-        featureFlags.set(FeatureFlag.PASS_ALLOW_NO_VAULT, true)
-
-        assertThat(instance(USER_ID)).isEqualTo(DefaultVaultDecision.Create)
+        assertThat(instance(USER_ID, isForceSync = false)).isEqualTo(DefaultVaultDecision.Create)
     }
 
     @Test
-    fun `creates again when the allow-no-vault flag is off even if one was created before`() = runTest {
+    fun `creates again on a forced sync even if one was created before`() = runTest {
         internalSettings.setDefaultVaultHasBeenCreated(USER_ID)
 
-        assertThat(instance(USER_ID)).isEqualTo(DefaultVaultDecision.Create)
+        assertThat(instance(USER_ID, isForceSync = true)).isEqualTo(DefaultVaultDecision.Create)
+    }
+
+    @Test
+    fun `skips on a forced sync when the default vault cannot be created`() = runTest {
+        canCreateDefaultVault.setResult(false)
+        internalSettings.setDefaultVaultHasBeenCreated(USER_ID)
+
+        assertThat(instance(USER_ID, isForceSync = true)).isEqualTo(DefaultVaultDecision.SkipNotAllowed)
     }
 
     @Test
     fun `does not ask whether a vault can be created when it was already created`() = runTest {
         canCreateDefaultVault.setResult(false)
-        featureFlags.set(FeatureFlag.PASS_ALLOW_NO_VAULT, true)
         internalSettings.setDefaultVaultHasBeenCreated(USER_ID)
 
-        assertThat(instance(USER_ID)).isEqualTo(DefaultVaultDecision.SkipAlreadyCreated)
+        assertThat(instance(USER_ID, isForceSync = false)).isEqualTo(DefaultVaultDecision.SkipAlreadyCreated)
     }
 
     private companion object {

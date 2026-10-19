@@ -80,6 +80,7 @@ import proton.android.pass.domain.FolderId
 import proton.android.pass.domain.ItemEncrypted
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ItemState
+import proton.android.pass.domain.Share
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.ShareSelection
 import proton.android.pass.domain.UserId
@@ -227,6 +228,43 @@ internal class HomeViewModelTest {
             assertThat(state.homeListUiState.isLoading).isInstanceOf(IsLoadingState.NotLoading::class.java)
             assertThat(state.homeListUiState.items).isEmpty()
         }
+    }
+
+    @Test
+    fun `resets to all vaults when the selected vault was deleted and another vault remains`() = runTest {
+        val userId = UserId("12345")
+        assertThat(selectionAfterStaleVaultSelection(userId, listOf(ShareTestFactory.Vault.create(userId = userId.id))))
+            .isEqualTo(VaultSelectionOption.AllVaults)
+    }
+
+    @Test
+    fun `resets to all vaults when the selected vault was deleted and only item shares remain`() = runTest {
+        val userId = UserId("12345")
+        assertThat(selectionAfterStaleVaultSelection(userId, listOf(ShareTestFactory.Item.create(userId = userId.id))))
+            .isEqualTo(VaultSelectionOption.AllVaults)
+    }
+
+    @Test
+    fun `keeps the stale vault selection while no shares are available`() = runTest {
+        val staleSelection = VaultSelectionOption.Vault(ShareId("deleted-vault"))
+        assertThat(selectionAfterStaleVaultSelection(UserId("12345"), emptyList()))
+            .isEqualTo(staleSelection)
+    }
+
+    private suspend fun selectionAfterStaleVaultSelection(userId: UserId, shares: List<Share>): VaultSelectionOption {
+        observeAllShares.sendResult(Result.success(shares))
+        observeCanCreateItems.emit(canCreateItems = true)
+        observeHasShares.emit(hasShares = shares.isNotEmpty())
+
+        searchOptionsRepository.setUserId(userId)
+        searchOptionsRepository.setVaultSelectionOption(VaultSelectionOption.Vault(ShareId("deleted-vault")))
+
+        instance.homeUiState.test {
+            awaitItem()
+            cancelAndIgnoreRemainingEvents()
+        }
+
+        return searchOptionsRepository.observeVaultSelectionOption().first()
     }
 
     private fun setupItems(): List<ItemEncrypted> {

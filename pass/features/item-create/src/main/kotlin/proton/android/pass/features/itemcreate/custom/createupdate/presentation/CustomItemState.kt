@@ -30,6 +30,7 @@ import proton.android.pass.domain.FolderId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.Vault
 import proton.android.pass.features.itemcreate.ItemSavedState
+import proton.android.pass.features.itemcreate.common.ShareError
 import proton.android.pass.features.itemcreate.common.ShareUiState
 import proton.android.pass.features.itemcreate.common.ValidationError
 import proton.android.pass.features.itemcreate.common.customfields.CustomFieldIdentifier
@@ -46,7 +47,7 @@ sealed interface CustomItemState : ItemSharedProperties {
     }
 
     @Immutable
-    data object Error : CustomItemState {
+    data class Error(val shareError: ShareError) : CustomItemState {
         override val sharedState: ItemSharedUiState = EMPTY_SHARED_STATE
     }
 

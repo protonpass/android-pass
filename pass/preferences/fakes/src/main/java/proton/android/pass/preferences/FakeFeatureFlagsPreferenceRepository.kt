@@ -25,7 +25,6 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.update
 import proton.android.pass.domain.UserId
 import proton.android.pass.preferences.FeatureFlag.AUTOFILL_DEBUG_MODE
-import proton.android.pass.preferences.FeatureFlag.PASS_ALLOW_NO_VAULT
 import proton.android.pass.preferences.FeatureFlag.RENAME_ADMIN_TO_MANAGER
 import proton.android.pass.preferences.FeatureFlag.PASS_FOLDERS
 import proton.android.pass.preferences.FeatureFlag.PASS_AUTOFILL_URL_ADVANCED_MODES
@@ -58,7 +57,6 @@ class FakeFeatureFlagsPreferenceRepository @Inject constructor() :
         when (featureFlag) {
             AUTOFILL_DEBUG_MODE -> it.getOrDefault(AUTOFILL_DEBUG_MODE, false) as T
             RENAME_ADMIN_TO_MANAGER -> it.getOrDefault(RENAME_ADMIN_TO_MANAGER, false) as T
-            PASS_ALLOW_NO_VAULT -> it.getOrDefault(PASS_ALLOW_NO_VAULT, false) as T
             PASS_FOLDERS -> it.getOrDefault(FeatureFlag.PASS_FOLDERS, false) as T
             PASS_AUTOFILL_URL_ADVANCED_MODES -> it.getOrDefault(PASS_AUTOFILL_URL_ADVANCED_MODES, false) as T
             ENABLE_PAGINATION -> it.getOrDefault(ENABLE_PAGINATION, false) as T

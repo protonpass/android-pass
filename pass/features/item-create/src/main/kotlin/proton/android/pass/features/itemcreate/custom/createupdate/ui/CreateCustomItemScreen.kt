@@ -72,6 +72,7 @@ import proton.android.pass.features.itemcreate.custom.createupdate.presentation.
 import proton.android.pass.features.itemcreate.custom.createupdate.presentation.CreateCustomItemViewModel
 import proton.android.pass.features.itemcreate.custom.createupdate.presentation.CreateSpecificIntent
 import proton.android.pass.features.itemcreate.custom.createupdate.presentation.CreateSpecificIntent.OnVaultSelected
+import proton.android.pass.features.itemcreate.custom.createupdate.presentation.CustomItemState
 import proton.android.pass.features.itemcreate.launchedeffects.InAppReviewTriggerLaunchedEffect
 import proton.android.pass.features.itemcreate.login.PerformActionAfterKeyboardHide
 import proton.android.pass.composecomponents.impl.R as CompR
@@ -129,6 +130,13 @@ fun CreateCustomItemScreen(
         clearAction = { actionAfterKeyboardHide = null }
     )
     val state by viewModel.state.collectAsStateWithLifecycle()
+
+    (state as? CustomItemState.Error)?.takeIf { it.shareError.closesCreateScreen }?.let {
+        LaunchedEffect(it) {
+            viewModel.onShareInitError()
+            onNavigate(BaseCustomItemNavigation.CloseScreen)
+        }
+    }
 
     var showConfirmDialog by rememberSaveable { mutableStateOf(false) }
     var showDatePickerForField: Option<CustomFieldIdentifier> by remember { mutableStateOf(None) }

@@ -311,14 +311,14 @@ class VaultOptionsViewModelTest {
     }
 
     @Test
-    fun `cannot delete primary vault`() = runTest {
+    fun `can delete last owned primary vault`() = runTest {
         emitDefaultVault()
         instance.state.test {
             val item = awaitItem()
             assertThat(item).isInstanceOf(VaultOptionsUiState.Success::class.java)
 
             val casted = item as VaultOptionsUiState.Success
-            assertThat(casted.showDelete).isFalse()
+            assertThat(casted.showDelete).isTrue()
         }
     }
 
@@ -370,9 +370,9 @@ class VaultOptionsViewModelTest {
         }
     }
 
-    // RemovePrimaryVault tests
+    // Last owned vault deletion tests
     @Test
-    fun `if RemovePrimaryVault enabled cannot remove last owned vault if primary`() = runTest {
+    fun `can remove last owned vault if primary`() = runTest {
         val ownedVault = vaultWith(owned = true)
         val vaults = listOf(
             vaultWith(owned = false),
@@ -387,12 +387,12 @@ class VaultOptionsViewModelTest {
             assertThat(item).isInstanceOf(VaultOptionsUiState.Success::class.java)
 
             val casted = item as VaultOptionsUiState.Success
-            assertThat(casted.showDelete).isFalse()
+            assertThat(casted.showDelete).isTrue()
         }
     }
 
     @Test
-    fun `if RemovePrimaryVault enabled cannot remove last owned vault if not primary`() = runTest {
+    fun `can remove last owned vault if not primary`() = runTest {
         val ownedVault = vaultWith(owned = true)
         val vaults = listOf(
             vaultWith(owned = false),
@@ -407,7 +407,7 @@ class VaultOptionsViewModelTest {
             assertThat(item).isInstanceOf(VaultOptionsUiState.Success::class.java)
 
             val casted = item as VaultOptionsUiState.Success
-            assertThat(casted.showDelete).isFalse()
+            assertThat(casted.showDelete).isTrue()
         }
     }
 

@@ -23,28 +23,21 @@ import proton.android.pass.data.api.usecases.capabilities.CanCreateDefaultVault
 import proton.android.pass.data.api.usecases.capabilities.DecideDefaultVaultCreation
 import proton.android.pass.data.api.usecases.capabilities.DefaultVaultDecision
 import proton.android.pass.domain.UserId
-import proton.android.pass.preferences.FeatureFlag
-import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import proton.android.pass.preferences.InternalSettingsRepository
 import javax.inject.Inject
 
 class DecideDefaultVaultCreationImpl @Inject constructor(
     private val canCreateDefaultVault: CanCreateDefaultVault,
-    private val internalSettingsRepository: InternalSettingsRepository,
-    private val preferencesRepository: FeatureFlagsPreferencesRepository
+    private val internalSettingsRepository: InternalSettingsRepository
 ) : DecideDefaultVaultCreation {
 
-    override suspend fun invoke(userId: UserId): DefaultVaultDecision {
-        val allowNoVault = preferencesRepository
-            .get<Boolean>(FeatureFlag.PASS_ALLOW_NO_VAULT)
-            .firstOrNull()
-            ?: false
+    override suspend fun invoke(userId: UserId, isForceSync: Boolean): DefaultVaultDecision {
         val hasDefaultVaultBeenCreated = internalSettingsRepository
             .hasDefaultVaultBeenCreated(userId)
             .firstOrNull()
             ?: false
 
-        if (allowNoVault && hasDefaultVaultBeenCreated) return DefaultVaultDecision.SkipAlreadyCreated
+        if (!isForceSync && hasDefaultVaultBeenCreated) return DefaultVaultDecision.SkipAlreadyCreated
 
         return if (canCreateDefaultVault(userId)) {
             DefaultVaultDecision.Create

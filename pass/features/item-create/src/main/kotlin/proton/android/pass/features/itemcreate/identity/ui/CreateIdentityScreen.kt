@@ -64,6 +64,7 @@ import proton.android.pass.features.itemcreate.identity.navigation.IdentityConte
 import proton.android.pass.features.itemcreate.identity.navigation.bottomsheets.AddIdentityFieldType
 import proton.android.pass.features.itemcreate.identity.presentation.CreateIdentityViewModel
 import proton.android.pass.features.itemcreate.identity.presentation.IdentityField
+import proton.android.pass.features.itemcreate.identity.presentation.IdentityUiState
 import proton.android.pass.features.itemcreate.launchedeffects.InAppReviewTriggerLaunchedEffect
 import proton.android.pass.features.itemcreate.login.PerformActionAfterKeyboardHide
 import proton.android.pass.composecomponents.impl.R as CompR
@@ -109,6 +110,13 @@ fun CreateIdentityScreen(
         clearAction = { actionAfterKeyboardHide = null }
     )
     val state by viewModel.state.collectAsStateWithLifecycle()
+
+    (state as? IdentityUiState.Error)?.takeIf { it.shareError.closesCreateScreen }?.let {
+        LaunchedEffect(it) {
+            viewModel.onShareInitError()
+            onNavigate(BaseIdentityNavigation.CloseScreen)
+        }
+    }
 
     var showConfirmDialog by rememberSaveable { mutableStateOf(false) }
     val onExit = {

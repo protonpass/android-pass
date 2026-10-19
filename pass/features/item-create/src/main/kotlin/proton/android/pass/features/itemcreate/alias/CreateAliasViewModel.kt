@@ -227,7 +227,7 @@ open class CreateAliasViewModel @Inject constructor(
                 else -> null to state
             }
         }
-        .distinctUntilChangedBy { it.first }
+        .distinctUntilChangedBy { it.first to (it.second is ShareUiState.Error) }
         .flatMapLatest { (shareId, state) ->
             when (state) {
                 is ShareUiState.Error -> flowOf(LoadingResult.Error(RuntimeException()))

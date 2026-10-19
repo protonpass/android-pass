@@ -73,6 +73,7 @@ import proton.android.pass.data.api.usecases.attachments.EnableAllOfflineAttachm
 import proton.android.pass.data.api.usecases.attachments.SetSharedItemsOfflineAttachments
 import proton.android.pass.telemetry.api.TelemetryGrowthOptOutEvent
 import proton.android.pass.telemetry.api.TelemetryManager
+import java.util.concurrent.atomic.AtomicBoolean
 import javax.inject.Inject
 
 @HiltViewModel
@@ -178,6 +179,8 @@ class SettingsViewModel @Inject constructor(
             if (userId == null) flowOf(AllowCellularDownloadPreference.Disabled)
             else preferencesRepository.observeAllowCellularDownloadPref(userId)
         }.distinctUntilChanged()
+
+    private val isForceSyncInFlight = AtomicBoolean(false)
 
     private val eventState: MutableStateFlow<SettingsEvent> =
         MutableStateFlow(SettingsEvent.Unknown)
@@ -318,16 +321,24 @@ class SettingsViewModel @Inject constructor(
         snackbarDispatcher(SettingsSnackbarMessage.PreferenceUpdated)
     }
 
-    internal fun onForceSync() = viewModelScope.launch {
-        val userId = getPrimaryUserId()
-        if (userId != null) {
-            safeRunCatching { performSync(userId, forceSync = true, trigger = "settings_manual").getOrThrow() }
-                .onFailure { error ->
-                    PassLogger.w(TAG, "Error performing sync")
-                    PassLogger.w(TAG, error)
+    internal fun onForceSync() {
+        if (!isForceSyncInFlight.compareAndSet(false, true)) return
+        viewModelScope.launch {
+            try {
+                val userId = getPrimaryUserId()
+                if (userId != null) {
+                    safeRunCatching {
+                        performSync(userId, forceSync = true, trigger = "settings_manual").getOrThrow()
+                    }.onFailure { error ->
+                        PassLogger.w(TAG, "Error performing sync")
+                        PassLogger.w(TAG, error)
+                    }
+                } else {
+                    PassLogger.w(TAG, "Cannot perform sync: userId not available")
                 }
-        } else {
-            PassLogger.w(TAG, "Cannot perform sync: userId not available")
+            } finally {
+                isForceSyncInFlight.set(false)
+            }
         }
     }
 

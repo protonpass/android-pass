@@ -117,7 +117,6 @@ class VaultOptionsViewModel @Inject constructor(
         observeVaults(includeHidden = true).asLoadingResult(),
         canShare,
         eventFlow,
-        preferencesRepository.get<Boolean>(FeatureFlag.PASS_ALLOW_NO_VAULT),
         preferencesRepository.get<Boolean>(FeatureFlag.PASS_FOLDERS),
         canCreateFolder(navShareId),
         observeUpgradeInfo().asLoadingResult(),
@@ -128,11 +127,11 @@ class VaultOptionsViewModel @Inject constructor(
             else userPreferencesRepository.observeDownloadAllAttachmentsPref(userId)
         },
         preferencesRepository.get<Boolean>(FeatureFlag.PASS_OFFLINE_ATTACHMENTS)
-    ) { vaultResult, canShare, event, allowNoVault, foldersEnabled, canCreateFolder,
+    ) { vaultResult, canShare, event, foldersEnabled, canCreateFolder,
         upgradeResult, folderCounts, folderLimits, downloadAllPref, offlineAttachmentsFF ->
         val rootFolderCount = folderCounts.rootCount
         val totalFolderCount = folderCounts.totalCount
-        val (allVaults, selectedVault) = when (vaultResult) {
+        val selectedVault = when (vaultResult) {
             is LoadingResult.Error -> {
                 snackbarDispatcher(CannotGetVaultListError)
                 PassLogger.w(TAG, "Cannot get vault")
@@ -148,12 +147,12 @@ class VaultOptionsViewModel @Inject constructor(
                     PassLogger.w(TAG, "Cannot find vault with shareId $navShareId")
                     return@combineN VaultOptionsUiState.Error
                 }
-                vaultResult.data to selectedVault
+                selectedVault
             }
         }
 
         val isUpgradeAvailable = upgradeResult.getOrNull()?.isUpgradeAvailable ?: false
-        val canDelete = canDeleteVault(allVaults, selectedVault, allowNoVault)
+        val canDelete = canDeleteVault(selectedVault)
 
         val canEdit = selectedVault.canBeUpdated
         val canMigrate = canMigrateVault(navShareId)
@@ -239,19 +238,7 @@ class VaultOptionsViewModel @Inject constructor(
         }
     }
 
-    private fun canDeleteVault(
-        allVaults: List<Vault>,
-        selectedVault: Vault,
-        allowNoVault: Boolean
-    ): Boolean {
-        val ownedVaultsCount = allVaults.count { it.isOwned }
-        return when {
-            !selectedVault.isOwned -> false // Cannot remove vault if is not owned
-            // Cannot remove vault if is the last owned one, except if FF is enabled
-            ownedVaultsCount == 1 -> allowNoVault
-            else -> true
-        }
-    }
+    private fun canDeleteVault(selectedVault: Vault): Boolean = selectedVault.isOwned
 
     private companion object {
         private const val TAG = "VaultOptionsViewModel"

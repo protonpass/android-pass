@@ -1412,16 +1412,10 @@ class HomeViewModel @Inject constructor(
         when {
             userId == null -> return
             selectedShare is Some -> return
-            else ->
-                shares
-                    .filterIsInstance<Share.Vault>()
-                    .also { vaultShares ->
-                        if (vaultShares.isNotEmpty() && vaultShares.all { it.userId == userId }) {
-                            homeSearchOptionsRepository.setVaultSelectionOption(
-                                vaultSelectionOption = VaultSelectionOption.AllVaults
-                            )
-                        }
-                    }
+            shares.isNotEmpty() && shares.all { it.userId == userId } ->
+                homeSearchOptionsRepository.setVaultSelectionOption(
+                    vaultSelectionOption = VaultSelectionOption.AllVaults
+                )
         }
     }
 

@@ -24,7 +24,6 @@ import me.proton.core.domain.entity.UserId
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import proton.android.pass.account.fakes.FakeAccountManager
 import proton.android.pass.data.fakes.usecases.FakeGetPrimaryUserId
 import proton.android.pass.data.fakes.usecases.FakeGetReadyAccounts
 import proton.android.pass.account.fakes.FakeUserAddressRepository
@@ -50,6 +49,7 @@ import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.events.EventToken
 import proton.android.pass.domain.events.SyncEventShareItem
 import proton.android.pass.test.MainDispatcherRule
+import proton.android.pass.test.domain.AccountTestFactory
 import proton.android.pass.test.domain.ItemTestFactory
 import proton.android.pass.test.domain.ShareKeyTestFactory
 import proton.android.pass.test.domain.ShareTestFactory
@@ -107,7 +107,7 @@ class ItemRepositoryImplRefreshItemsTest {
             featureFlagsRepository = FakeFeatureFlagsPreferenceRepository(),
             searchIndexRepository = searchIndexRepository,
             getReadyAccounts = FakeGetReadyAccounts().apply {
-                setResult(listOf(FakeAccountManager.DEFAULT_ACCOUNT))
+                setResult(listOf(AccountTestFactory.DEFAULT_ACCOUNT))
             }
         )
     }

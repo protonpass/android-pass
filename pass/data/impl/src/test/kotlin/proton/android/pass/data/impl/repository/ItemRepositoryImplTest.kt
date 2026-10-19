@@ -26,7 +26,6 @@ import org.junit.Assert.assertThrows
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import proton.android.pass.account.fakes.FakeAccountManager
 import proton.android.pass.account.fakes.FakeKeyStoreCrypto
 import proton.android.pass.data.fakes.usecases.FakeGetPrimaryUserId
 import proton.android.pass.data.fakes.usecases.FakeGetReadyAccounts
@@ -73,6 +72,7 @@ import proton.android.pass.domain.entity.NewAlias
 import proton.android.pass.domain.key.FolderKey
 import proton.android.pass.domain.key.ItemKey
 import proton.android.pass.test.MainDispatcherRule
+import proton.android.pass.test.domain.AccountTestFactory
 import proton.android.pass.test.domain.ItemTestFactory
 import proton.android.pass.test.domain.ShareKeyTestFactory
 import proton.android.pass.test.domain.ShareTestFactory
@@ -148,7 +148,7 @@ class ItemRepositoryImplTest {
             featureFlagsRepository = FakeFeatureFlagsPreferenceRepository(),
             searchIndexRepository = searchIndexRepository,
             getReadyAccounts = FakeGetReadyAccounts().apply {
-                setResult(listOf(FakeAccountManager.DEFAULT_ACCOUNT))
+                setResult(listOf(AccountTestFactory.DEFAULT_ACCOUNT))
             }
         )
     }

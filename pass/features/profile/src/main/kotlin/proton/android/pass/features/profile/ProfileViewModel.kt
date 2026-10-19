@@ -37,13 +37,7 @@ import kotlinx.coroutines.flow.scan
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import me.proton.core.account.domain.entity.Account
-import me.proton.core.account.domain.entity.AccountState
 import me.proton.core.domain.entity.UserId
-import me.proton.core.user.domain.entity.User
-import me.proton.core.user.domain.extension.getDisplayName
-import me.proton.core.user.domain.extension.getEmail
-import me.proton.core.user.domain.extension.getInitials
 import me.proton.core.util.kotlin.takeIfNotBlank
 import proton.android.pass.appconfig.api.AppConfig
 import proton.android.pass.appconfig.api.BuildFlavor
@@ -74,6 +68,9 @@ import proton.android.pass.data.api.usecases.organization.ObserveAnyAccountHasEn
 import proton.android.pass.data.api.usecases.securelink.ObserveSecureLinksCount
 import proton.android.pass.domain.PlanType
 import proton.android.pass.domain.ShareSelection
+import proton.android.pass.domain.account.Account
+import proton.android.pass.domain.account.AccountState
+import proton.android.pass.domain.account.User
 import proton.android.pass.features.profile.ProfileSnackbarMessage.AppVersionCopied
 import proton.android.pass.features.profile.ProfileSnackbarMessage.FilteredByAliases
 import proton.android.pass.features.profile.ProfileSnackbarMessage.FilteredByCreditCards
@@ -406,8 +403,8 @@ class ProfileViewModel @Inject constructor(
     private fun Account.getAccountItem(user: User?, planInfo: PlanInfo): AccountItem = AccountItem(
         userId = userId,
         initials = user?.getInitials(count = 1) ?: "?",
-        name = user?.getDisplayName() ?: this.username?.takeIfNotBlank() ?: "Unknown",
-        email = user?.getEmail(),
+        name = user?.displayName ?: this.username?.takeIfNotBlank() ?: "Unknown",
+        email = user?.email?.takeIfNotBlank(),
         planInfo = planInfo,
         state = state
     )

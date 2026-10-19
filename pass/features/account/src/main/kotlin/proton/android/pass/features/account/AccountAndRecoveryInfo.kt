@@ -33,7 +33,6 @@ import me.proton.core.auth.fido.domain.entity.Fido2RegisteredKey
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.defaultSmallWeak
 import me.proton.core.domain.entity.UserId
-import me.proton.core.user.domain.entity.UserRecovery
 import me.proton.core.util.kotlin.orEmpty
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
@@ -42,6 +41,7 @@ import proton.android.pass.composecomponents.impl.container.roundedContainerNorm
 import proton.android.pass.composecomponents.impl.form.PassDivider
 import proton.android.pass.composecomponents.impl.setting.SettingOption
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
+import proton.android.pass.domain.account.UserRecoveryState
 
 @Composable
 internal fun AccountAndRecoveryInfo(
@@ -92,11 +92,11 @@ internal fun AccountPasswordAndRecoveryInfo(state: AccountUiState, onEvent: (Acc
 
     val passwordHint = when (state.recoveryState) {
         null -> null
-        UserRecovery.State.None -> null
-        UserRecovery.State.Cancelled -> null
-        UserRecovery.State.Expired -> null
-        UserRecovery.State.Grace -> stringResource(R.string.account_settings_list_item_password_hint_grace)
-        UserRecovery.State.Insecure -> stringResource(R.string.account_settings_list_item_password_hint_insecure)
+        UserRecoveryState.None -> null
+        UserRecoveryState.Cancelled -> null
+        UserRecoveryState.Expired -> null
+        UserRecoveryState.Grace -> stringResource(R.string.account_settings_list_item_password_hint_grace)
+        UserRecoveryState.Insecure -> stringResource(R.string.account_settings_list_item_password_hint_insecure)
     }
 
     if (state.showChangePassword) {
@@ -155,7 +155,7 @@ fun AccountInfoPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Bo
                     userId = UserId(""),
                     email = "myemail@proton.me",
                     recoveryEmail = "myrecoveryemail@proton.me",
-                    recoveryState = UserRecovery.State.Grace,
+                    recoveryState = UserRecoveryState.Grace,
                     plan = PlanSection.Data("Free"),
                     isLoadingState = IsLoadingState.NotLoading,
                     showChangePassword = true,

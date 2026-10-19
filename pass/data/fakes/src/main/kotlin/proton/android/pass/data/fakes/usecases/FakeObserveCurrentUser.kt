@@ -20,9 +20,9 @@ package proton.android.pass.data.fakes.usecases
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
-import me.proton.core.user.domain.entity.User
 import proton.android.pass.common.api.FlowUtils.testFlow
 import proton.android.pass.data.api.usecases.ObserveCurrentUser
+import proton.android.pass.domain.account.User
 import javax.inject.Inject
 import javax.inject.Singleton
 

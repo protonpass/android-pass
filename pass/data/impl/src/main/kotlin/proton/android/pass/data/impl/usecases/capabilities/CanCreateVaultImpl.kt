@@ -21,8 +21,6 @@ package proton.android.pass.data.impl.usecases.capabilities
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flatMapLatest
-import me.proton.core.user.domain.entity.User
-import me.proton.core.user.domain.extension.isOrganizationAdmin
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
@@ -34,6 +32,7 @@ import proton.android.pass.data.impl.repositories.PlanRepository
 import proton.android.pass.domain.Plan
 import proton.android.pass.domain.PlanLimit
 import proton.android.pass.domain.Vault
+import proton.android.pass.domain.account.User
 import proton.android.pass.domain.organizations.OrganizationVaultCreateMode
 import proton.android.pass.domain.organizations.OrganizationVaultsPolicy
 import javax.inject.Inject
@@ -77,11 +76,11 @@ class CanCreateVaultImpl @Inject constructor(
                     }
 
                     OrganizationVaultCreateMode.OnlyOrganizationAdmin -> {
-                        currentUser.isOrganizationAdmin()
+                        currentUser.isOrganizationAdmin
                     }
 
                     OrganizationVaultCreateMode.OnlyOrgAdminsAndPersonalVault -> {
-                        if (currentUser.isOrganizationAdmin()) {
+                        if (currentUser.isOrganizationAdmin) {
                             true
                         } else {
                             vaults.none { it.isOwned }

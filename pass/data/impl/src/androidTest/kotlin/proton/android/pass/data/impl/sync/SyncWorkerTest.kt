@@ -31,10 +31,10 @@ import me.proton.core.domain.entity.UserId
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
-import proton.android.pass.account.fakes.FakeAccountManager
 import proton.android.pass.data.fakes.usecases.FakeObserveAccounts
 import proton.android.pass.data.fakes.usecases.FakeObserveReadyAccounts
 import proton.android.pass.data.fakes.usecases.FakePerformSync
+import proton.android.pass.test.domain.AccountTestFactory
 
 @RunWith(AndroidJUnit4::class)
 class SyncWorkerTest {
@@ -72,8 +72,8 @@ class SyncWorkerTest {
         val userId2 = UserId("user-2")
         fakeObserveReadyAccounts.emitAccounts(
             listOf(
-                FakeAccountManager.createAccount(userId1),
-                FakeAccountManager.createAccount(userId2)
+                AccountTestFactory.create(userId1),
+                AccountTestFactory.create(userId2)
             )
         )
 

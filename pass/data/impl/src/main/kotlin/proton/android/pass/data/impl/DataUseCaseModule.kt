@@ -65,6 +65,7 @@ import proton.android.pass.data.api.usecases.GetItemById
 import proton.android.pass.data.api.usecases.GetItemsBySearchResult
 import proton.android.pass.data.api.usecases.DisableAccount
 import proton.android.pass.data.api.usecases.GetPrimaryAccount
+import proton.android.pass.data.api.usecases.GetSessionId
 import proton.android.pass.data.api.usecases.ObservePrimaryAccount
 import proton.android.pass.data.api.usecases.ObservePrimaryUserId
 import proton.android.pass.data.api.usecases.ObserveUser
@@ -375,6 +376,7 @@ import proton.android.pass.data.impl.usecases.GetItemByIdImpl
 import proton.android.pass.data.impl.usecases.GetItemsBySearchResultImpl
 import proton.android.pass.data.impl.usecases.DisableAccountImpl
 import proton.android.pass.data.impl.usecases.GetPrimaryAccountImpl
+import proton.android.pass.data.impl.usecases.GetSessionIdImpl
 import proton.android.pass.data.impl.usecases.ObservePrimaryAccountImpl
 import proton.android.pass.data.impl.usecases.ObservePrimaryUserIdImpl
 import proton.android.pass.data.impl.usecases.ObserveUserImpl
@@ -1602,6 +1604,9 @@ abstract class DataUseCaseModule {
 
     @[Binds Singleton]
     abstract fun bindGetPrimaryAccount(impl: GetPrimaryAccountImpl): GetPrimaryAccount
+
+    @[Binds Singleton]
+    abstract fun bindGetSessionId(impl: GetSessionIdImpl): GetSessionId
 
     @[Binds Singleton]
     abstract fun bindDisableAccount(impl: DisableAccountImpl): DisableAccount

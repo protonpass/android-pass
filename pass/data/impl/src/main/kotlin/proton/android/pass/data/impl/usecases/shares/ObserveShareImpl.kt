@@ -22,9 +22,9 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.flatMapLatest
 import me.proton.core.domain.entity.UserId
-import me.proton.core.user.domain.usecase.ObserveUser
 import proton.android.pass.data.api.repositories.ShareRepository
 import proton.android.pass.data.api.usecases.ObserveCurrentUser
+import proton.android.pass.data.api.usecases.ObserveUser
 import proton.android.pass.data.api.usecases.shares.ObserveShare
 import proton.android.pass.domain.Share
 import proton.android.pass.domain.ShareId

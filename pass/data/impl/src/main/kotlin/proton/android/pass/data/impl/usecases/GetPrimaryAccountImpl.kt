@@ -19,16 +19,17 @@
 package proton.android.pass.data.impl.usecases
 
 import kotlinx.coroutines.flow.firstOrNull
-import me.proton.core.account.domain.entity.Account
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.accountmanager.domain.getPrimaryAccount
+import proton.android.pass.data.impl.account.toDomain
 import proton.android.pass.data.api.usecases.GetPrimaryAccount
+import proton.android.pass.domain.account.Account
 import javax.inject.Inject
 
 class GetPrimaryAccountImpl @Inject constructor(
     private val accountManager: AccountManager
 ) : GetPrimaryAccount {
 
-    override suspend fun invoke(): Account? = accountManager.getPrimaryAccount().firstOrNull()
+    override suspend fun invoke(): Account? = accountManager.getPrimaryAccount().firstOrNull()?.toDomain()
 
 }

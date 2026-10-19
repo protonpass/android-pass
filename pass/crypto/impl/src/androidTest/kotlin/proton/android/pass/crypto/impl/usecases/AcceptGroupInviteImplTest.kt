@@ -79,7 +79,7 @@ class AcceptGroupInviteImplTest {
         )
 
         val res = instance.invoke(
-            user = UserTestFactory.create(),
+            user = UserTestFactory.createCore(),
             groupPrivateKeys = listOf(groupAddressKey),
             unlockedOrganizationKey = unlockedOrgKey,
             inviterAddressKeys = listOf(inviterAddressKey.privateKey.publicKey(cryptoContext)),
@@ -128,7 +128,7 @@ class AcceptGroupInviteImplTest {
 
         val error = assertFailsWith<IllegalStateException> {
             instance.invoke(
-                user = UserTestFactory.create(),
+                user = UserTestFactory.createCore(),
                 groupPrivateKeys = listOf(groupAddressKey),
                 unlockedOrganizationKey = unlockedOrgKey,
                 inviterAddressKeys = listOf(wrongInviterKey.privateKey.publicKey(cryptoContext)),
@@ -165,7 +165,7 @@ class AcceptGroupInviteImplTest {
         )
 
         val res = instance.invoke(
-            user = UserTestFactory.create(),
+            user = UserTestFactory.createCore(),
             groupPrivateKeys = listOf(firstGroupKey, targetGroupKey),
             unlockedOrganizationKey = unlockedOrgKey,
             inviterAddressKeys = listOf(inviterAddressKey.privateKey.publicKey(cryptoContext)),
@@ -208,7 +208,7 @@ class AcceptGroupInviteImplTest {
 
         val error = assertFailsWith<IllegalStateException> {
             instance.invoke(
-                user = UserTestFactory.create(),
+                user = UserTestFactory.createCore(),
                 groupPrivateKeys = listOf(groupKeyWithNoToken),
                 unlockedOrganizationKey = unlockedOrgKey,
                 inviterAddressKeys = listOf(inviterAddressKey.privateKey.publicKey(cryptoContext)),
@@ -240,7 +240,7 @@ class AcceptGroupInviteImplTest {
         val instance = AcceptGroupInviteImpl(cryptoContext, FakeEncryptionContextProvider())
 
         // Group owner test: pass null for unlockedOrganizationKey, user keys will be used via KeyHolderContext
-        val ownerUser = UserTestFactory.create().copy(
+        val ownerUser = UserTestFactory.createCore().copy(
             keys = listOf(
                 me.proton.core.user.domain.entity.UserKey(
                     userId = UserId("OwnerUser"),
@@ -299,7 +299,7 @@ class AcceptGroupInviteImplTest {
         // With wrong opener key, decryption should fail with CryptoException
         val error = assertFails {
             instance.invoke(
-                user = UserTestFactory.create(),
+                user = UserTestFactory.createCore(),
                 groupPrivateKeys = listOf(groupAddressKey),
                 unlockedOrganizationKey = unlockedWrongOpener,
                 inviterAddressKeys = listOf(inviterAddressKey.privateKey.publicKey(cryptoContext)),
@@ -332,7 +332,7 @@ class AcceptGroupInviteImplTest {
 
         val error = assertFailsWith<IllegalStateException> {
             instance.invoke(
-                user = UserTestFactory.create(),
+                user = UserTestFactory.createCore(),
                 groupPrivateKeys = listOf(groupAddressKey),
                 unlockedOrganizationKey = null,
                 inviterAddressKeys = listOf(inviterAddressKey.privateKey.publicKey(cryptoContext)),
@@ -384,7 +384,7 @@ class AcceptGroupInviteImplTest {
         // The re-encryption target is the single primary key from keys/all.
         val targetPublicKey = groupAddressKey1.privateKey.publicKey(cryptoContext)
         val res1 = instance.invoke(
-            user = UserTestFactory.create(),
+            user = UserTestFactory.createCore(),
             groupPrivateKeys = listOf(groupAddressKey1, groupAddressKey2),
             unlockedOrganizationKey = unlockedOrgKey,
             inviterAddressKeys = listOf(inviterAddressKey.privateKey.publicKey(cryptoContext)),
@@ -393,7 +393,7 @@ class AcceptGroupInviteImplTest {
             isGroupOwner = false
         )
         val res2 = instance.invoke(
-            user = UserTestFactory.create(),
+            user = UserTestFactory.createCore(),
             groupPrivateKeys = listOf(groupAddressKey1, groupAddressKey2),
             unlockedOrganizationKey = unlockedOrgKey,
             inviterAddressKeys = listOf(inviterAddressKey.privateKey.publicKey(cryptoContext)),

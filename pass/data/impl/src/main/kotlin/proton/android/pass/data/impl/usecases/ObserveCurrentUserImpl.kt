@@ -23,11 +23,13 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.user.domain.UserManager
-import me.proton.core.user.domain.entity.User
+import proton.android.pass.data.impl.account.toDomain
 import proton.android.pass.data.api.usecases.ObserveCurrentUser
+import proton.android.pass.domain.account.User
 import proton.android.pass.log.api.PassLogger
 import javax.inject.Inject
 
@@ -41,6 +43,7 @@ class ObserveCurrentUserImpl @Inject constructor(
         .distinctUntilChanged()
         .onEach { if (it == null) PassLogger.i(TAG, "Current user is null") }
         .filterNotNull()
+        .map { it.toDomain() }
 
     companion object {
         private const val TAG = "ObserveCurrentUserImpl"

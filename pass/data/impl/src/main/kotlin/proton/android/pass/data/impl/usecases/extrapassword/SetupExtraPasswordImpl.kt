@@ -24,6 +24,7 @@ import me.proton.core.crypto.common.srp.Auth
 import me.proton.core.crypto.common.srp.SrpCrypto
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.usecases.GetPrimaryAccount
+import proton.android.pass.data.api.usecases.GetSessionId
 import proton.android.pass.data.api.usecases.extrapassword.SetupExtraPassword
 import proton.android.pass.data.impl.remote.RemoteExtraPasswordDataSource
 import proton.android.pass.data.impl.repositories.ExtraPasswordRepository
@@ -35,6 +36,7 @@ class SetupExtraPasswordImpl @Inject constructor(
     private val encryptionContextProvider: EncryptionContextProvider,
     private val authRepository: AuthRepository,
     private val getPrimaryAccount: GetPrimaryAccount,
+    private val getSessionId: GetSessionId,
     private val remoteExtraPasswordDataSource: RemoteExtraPasswordDataSource,
     private val extraPasswordRepository: ExtraPasswordRepository
 ) : SetupExtraPassword {
@@ -45,7 +47,7 @@ class SetupExtraPasswordImpl @Inject constructor(
 
         val account = getPrimaryAccount()
             ?: throw IllegalStateException("No primary account found")
-        val modulus = authRepository.randomModulus(account.sessionId)
+        val modulus = authRepository.randomModulus(getSessionId(account.userId))
         val verifier = srpCrypto.calculatePasswordVerifier(
             username = "", // unused
             password = decryptedPassword,

@@ -20,11 +20,10 @@ package proton.android.pass.data.fakes.usecases
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
-import me.proton.core.account.domain.entity.Account
-import me.proton.core.account.domain.entity.AccountDetails
-import me.proton.core.account.domain.entity.AccountState
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.api.usecases.ObserveAccounts
+import proton.android.pass.domain.account.Account
+import proton.android.pass.domain.account.AccountState
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -40,12 +39,8 @@ class FakeObserveAccounts @Inject constructor() : ObserveAccounts {
         const val USER_ID = "FakeObserveAccounts-DefaultUserId"
         val DEFAULT_ACCOUNT = Account(
             userId = UserId(USER_ID),
-            state = AccountState.Ready,
-            details = AccountDetails(null, null),
             username = null,
-            email = null,
-            sessionId = null,
-            sessionState = null
+            state = AccountState.Ready
         )
     }
 

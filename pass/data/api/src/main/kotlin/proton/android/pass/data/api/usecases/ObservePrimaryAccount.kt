@@ -19,7 +19,7 @@
 package proton.android.pass.data.api.usecases
 
 import kotlinx.coroutines.flow.Flow
-import me.proton.core.account.domain.entity.Account
+import proton.android.pass.domain.account.Account
 
 interface ObservePrimaryAccount {
 

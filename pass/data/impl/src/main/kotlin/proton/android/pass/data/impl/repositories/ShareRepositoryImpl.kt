@@ -34,7 +34,6 @@ import me.proton.core.user.domain.entity.User
 import me.proton.core.user.domain.entity.UserAddress
 import me.proton.core.user.domain.extension.primary
 import me.proton.core.user.domain.repository.UserAddressRepository
-import me.proton.core.user.domain.repository.UserRepository
 import proton.android.pass.common.api.AppDispatchers
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
@@ -44,6 +43,7 @@ import proton.android.pass.crypto.api.EncryptionKey
 import proton.android.pass.crypto.api.context.EncryptionContext
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.crypto.api.usecases.CreateVault
+import proton.android.pass.crypto.api.usecases.GetUserWithKeys
 import proton.android.pass.crypto.api.usecases.UpdateVault
 import proton.android.pass.data.api.errors.ShareNotAvailableError
 import proton.android.pass.data.api.repositories.GroupRepository
@@ -85,7 +85,7 @@ import javax.inject.Inject
 class ShareRepositoryImpl @Inject constructor(
     private val itemContentSerializer: ItemContentSerializer,
     private val database: PassDatabase,
-    private val userRepository: UserRepository,
+    private val getUserWithKeys: GetUserWithKeys,
     private val userAddressRepository: UserAddressRepository,
     private val remoteShareDataSource: RemoteShareDataSource,
     private val localShareDataSource: LocalShareDataSource,
@@ -102,7 +102,7 @@ class ShareRepositoryImpl @Inject constructor(
 
     override suspend fun createVault(userId: UserId, vault: NewVault): Share {
         val userAddress = requireNotNull(userAddressRepository.getAddresses(userId).primary())
-        val user = requireNotNull(userRepository.getUser(userId))
+        val user = requireNotNull(getUserWithKeys(userId))
         val userPrimaryKey = requireNotNull(user.keys.primary()?.keyId?.id)
 
         val (request, shareKey) = safeRunCatching {

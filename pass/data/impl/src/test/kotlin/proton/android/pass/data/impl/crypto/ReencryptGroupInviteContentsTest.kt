@@ -44,7 +44,7 @@ import kotlin.test.assertEquals
 
 class ReencryptGroupInviteContentsTest {
 
-    private val user = UserTestFactory.create(userId = USER_ID)
+    private val user = UserTestFactory.createCore(userId = USER_ID)
     private val group = GroupTestFactory.create(id = GROUP_ID, email = GROUP_EMAIL)
 
     @Test

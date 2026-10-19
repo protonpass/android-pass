@@ -21,8 +21,8 @@ package proton.android.pass.features.account
 import androidx.compose.runtime.Stable
 import me.proton.core.auth.fido.domain.entity.Fido2RegisteredKey
 import me.proton.core.domain.entity.UserId
-import me.proton.core.user.domain.entity.UserRecovery
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
+import proton.android.pass.domain.account.UserRecoveryState
 
 sealed interface PlanSection {
 
@@ -48,7 +48,7 @@ data class AccountUiState(
     val userId: UserId?,
     val email: String?,
     val recoveryEmail: String?,
-    val recoveryState: UserRecovery.State?,
+    val recoveryState: UserRecoveryState?,
     val plan: PlanSection,
     val isLoadingState: IsLoadingState,
     val showChangePassword: Boolean,

@@ -40,10 +40,10 @@ import androidx.compose.ui.unit.toSize
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toPersistentList
-import me.proton.core.account.domain.entity.AccountState
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemePreviewProvider
+import proton.android.pass.domain.account.AccountState
 import proton.android.pass.features.profile.AccountSwitchEvent
 import proton.android.pass.features.profile.PlanInfo
 

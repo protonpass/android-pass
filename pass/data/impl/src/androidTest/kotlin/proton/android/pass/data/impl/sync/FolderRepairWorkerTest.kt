@@ -31,10 +31,10 @@ import me.proton.core.domain.entity.UserId
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
-import proton.android.pass.account.fakes.FakeAccountManager
 import proton.android.pass.data.api.repositories.SyncMode
 import proton.android.pass.data.fakes.usecases.FakeObserveReadyAccounts
 import proton.android.pass.data.fakes.usecases.sync.FakeCheckFolderForceSync
+import proton.android.pass.test.domain.AccountTestFactory
 
 @RunWith(AndroidJUnit4::class)
 class FolderRepairWorkerTest {
@@ -56,8 +56,8 @@ class FolderRepairWorkerTest {
         val second = UserId("second")
         observeReadyAccounts.emitAccounts(
             listOf(
-                FakeAccountManager.createAccount(first),
-                FakeAccountManager.createAccount(second)
+                AccountTestFactory.create(first),
+                AccountTestFactory.create(second)
             )
         )
 

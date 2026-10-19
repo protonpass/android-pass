@@ -213,7 +213,7 @@ class E2EApp : Application() {
     private fun setupAccount() {
         accountManager.sendPrimaryUserId(PRIMARY_USER_ID)
         accountManager.setAccounts(listOf(FakeAccountManager.createAccount(PRIMARY_USER_ID)))
-        userManager.setUser(UserTestFactory.create(userId = PRIMARY_USER_ID))
+        userManager.setUser(UserTestFactory.createCore(userId = PRIMARY_USER_ID))
 
         val plan = Plan(
             planType = PlanType.Paid.Plus(name = "plus", displayName = "plus"),

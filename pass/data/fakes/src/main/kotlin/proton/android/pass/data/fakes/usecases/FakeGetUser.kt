@@ -19,8 +19,8 @@
 package proton.android.pass.data.fakes.usecases
 
 import me.proton.core.domain.entity.UserId
-import me.proton.core.user.domain.entity.User
 import proton.android.pass.data.api.usecases.GetUser
+import proton.android.pass.domain.account.User
 import proton.android.pass.test.domain.UserTestFactory
 import javax.inject.Inject
 import javax.inject.Singleton

@@ -18,7 +18,7 @@
 
 package proton.android.pass.data.api.usecases
 
-import me.proton.core.account.domain.entity.Account
+import proton.android.pass.domain.account.Account
 
 interface GetReadyAccounts {
 

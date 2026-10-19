@@ -27,8 +27,8 @@ import me.proton.core.domain.entity.UserId
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import proton.android.pass.account.fakes.FakeUserManager
 import proton.android.pass.account.fakes.FakeAccountManager
+import proton.android.pass.account.fakes.FakeUserManager
 import proton.android.pass.biometry.BiometryAuthError
 import proton.android.pass.biometry.BiometryResult
 import proton.android.pass.biometry.BiometryStartupError
@@ -63,6 +63,8 @@ import proton.android.pass.preferences.FakeInternalSettingsRepository
 import proton.android.pass.preferences.FakePreferenceRepository
 import proton.android.pass.preferences.HasAuthenticated
 import proton.android.pass.test.MainDispatcherRule
+import proton.android.pass.test.domain.AccountTestFactory
+import proton.android.pass.test.domain.UserTestFactory
 
 internal class AuthViewModelTest {
 
@@ -83,15 +85,16 @@ internal class AuthViewModelTest {
         biometryManager = FakeBiometryManager()
         checkMasterPassword = FakeCheckMasterPassword()
         getUser = FakeGetUser().apply {
-            setResult(UserId(FakeAccountManager.USER_ID), FakeUserManager.DEFAULT_USER)
+            val userId = UserId(FakeAccountManager.USER_ID)
+            setResult(userId, UserTestFactory.create(email = FakeUserManager.EMAIL, userId = userId))
         }
         internalSettingsRepository = FakeInternalSettingsRepository()
         setPasswordOnlyLock = FakeSetPasswordOnlyLock()
         val observeAccounts = FakeObserveAccounts().apply {
-            emitAccounts(listOf(FakeAccountManager.DEFAULT_ACCOUNT))
+            emitAccounts(listOf(AccountTestFactory.DEFAULT_ACCOUNT))
         }
         val observePrimaryAccount = FakeObservePrimaryAccount().apply {
-            emitAccount(FakeAccountManager.DEFAULT_ACCOUNT)
+            emitAccount(AccountTestFactory.DEFAULT_ACCOUNT)
         }
         viewModel = AuthViewModel(
             preferenceRepository = preferenceRepository,

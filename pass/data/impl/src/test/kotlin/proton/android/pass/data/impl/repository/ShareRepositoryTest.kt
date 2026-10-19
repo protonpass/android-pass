@@ -25,12 +25,12 @@ import me.proton.core.domain.entity.UserId
 import org.junit.Before
 import org.junit.Test
 import proton.android.pass.account.fakes.FakeUserAddressRepository
-import proton.android.pass.account.fakes.FakeUserRepository
 import proton.android.pass.common.fakes.FakeAppDispatchers
 import proton.android.pass.commonrust.fakes.FakeItemContentSerializer
 import proton.android.pass.crypto.fakes.context.FakeEncryptionContext
 import proton.android.pass.crypto.fakes.context.FakeEncryptionContextProvider
 import proton.android.pass.crypto.fakes.usecases.FakeCreateVault
+import proton.android.pass.crypto.fakes.usecases.FakeGetUserWithKeys
 import proton.android.pass.data.fakes.repositories.FakeGroupRepository
 import proton.android.pass.data.fakes.repositories.FakeSearchIndexRepository
 import proton.android.pass.data.fakes.repositories.FakeUserAccessDataRepository
@@ -64,7 +64,7 @@ class ShareRepositoryTest {
         instance = ShareRepositoryImpl(
             itemContentSerializer = FakeItemContentSerializer(),
             database = FakePassDatabase(),
-            userRepository = FakeUserRepository(),
+            getUserWithKeys = FakeGetUserWithKeys(),
             userAddressRepository = FakeUserAddressRepository().apply {
                 setAddresses(listOf(generateAddress("address1", UserId(USER_ID))))
             },

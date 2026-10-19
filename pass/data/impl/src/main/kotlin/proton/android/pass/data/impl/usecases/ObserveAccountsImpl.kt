@@ -19,14 +19,17 @@
 package proton.android.pass.data.impl.usecases
 
 import kotlinx.coroutines.flow.Flow
-import me.proton.core.account.domain.entity.Account
+import kotlinx.coroutines.flow.map
 import me.proton.core.accountmanager.domain.AccountManager
+import proton.android.pass.data.impl.account.toDomain
 import proton.android.pass.data.api.usecases.ObserveAccounts
+import proton.android.pass.domain.account.Account
 import javax.inject.Inject
 
 class ObserveAccountsImpl @Inject constructor(
     private val accountManager: AccountManager
 ) : ObserveAccounts {
 
-    override fun invoke(): Flow<List<Account>> = accountManager.getAccounts()
+    override fun invoke(): Flow<List<Account>> =
+        accountManager.getAccounts().map { accounts -> accounts.map { it.toDomain() } }
 }

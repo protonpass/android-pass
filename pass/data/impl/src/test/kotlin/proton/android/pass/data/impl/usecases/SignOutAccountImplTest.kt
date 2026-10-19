@@ -21,9 +21,9 @@ import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.test.runTest
 import me.proton.core.domain.entity.UserId
 import org.junit.Test
-import proton.android.pass.account.fakes.FakeAccountManager
 import proton.android.pass.data.fakes.usecases.FakeDisableAccount
 import proton.android.pass.data.fakes.usecases.FakeObserveReadyAccounts
+import proton.android.pass.test.domain.AccountTestFactory
 
 class SignOutAccountImplTest {
 
@@ -44,7 +44,7 @@ class SignOutAccountImplTest {
     @Test
     fun `returns true when another ready account remains`() = runTest {
         observeReadyAccounts.emitAccounts(
-            listOf(FakeAccountManager.createAccount(signedOut), FakeAccountManager.createAccount(other))
+            listOf(AccountTestFactory.create(signedOut), AccountTestFactory.create(other))
         )
 
         assertThat(instance(signedOut)).isTrue()
@@ -52,7 +52,7 @@ class SignOutAccountImplTest {
 
     @Test
     fun `returns false when the signed out account was the only ready one`() = runTest {
-        observeReadyAccounts.emitAccounts(listOf(FakeAccountManager.createAccount(signedOut)))
+        observeReadyAccounts.emitAccounts(listOf(AccountTestFactory.create(signedOut)))
 
         assertThat(instance(signedOut)).isFalse()
     }

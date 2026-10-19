@@ -31,7 +31,6 @@ import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import me.proton.core.account.domain.entity.Account
 import me.proton.core.eventmanager.domain.work.EventWorkerManager
 import me.proton.core.presentation.app.AppLifecycleProvider
 import proton.android.pass.common.api.safeRunCatching
@@ -39,6 +38,7 @@ import proton.android.pass.data.api.repositories.SearchIndexRepository
 import proton.android.pass.data.api.usecases.ObserveReadyAccounts
 import proton.android.pass.data.api.usecases.PerformSync
 import proton.android.pass.data.impl.sync.SyncWorker.Companion.WORKER_UNIQUE_NAME
+import proton.android.pass.domain.account.Account
 import proton.android.pass.log.api.LogAccountContext
 import proton.android.pass.log.api.PassLogger
 import javax.inject.Inject

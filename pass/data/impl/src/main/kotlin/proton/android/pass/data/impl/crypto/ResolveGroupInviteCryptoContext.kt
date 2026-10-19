@@ -25,7 +25,7 @@ import me.proton.core.key.domain.entity.key.PrivateAddressKey
 import me.proton.core.key.domain.entity.key.PrivateKey
 import me.proton.core.key.domain.entity.key.PublicKey
 import me.proton.core.user.domain.entity.User
-import me.proton.core.user.domain.repository.UserRepository
+import proton.android.pass.crypto.api.usecases.GetUserWithKeys
 import proton.android.pass.crypto.api.usecases.invites.OpenOrganizationKey
 import proton.android.pass.data.api.repositories.GroupRepository
 import proton.android.pass.data.api.usecases.GetAllKeysByAddress
@@ -54,7 +54,7 @@ interface ResolveGroupInviteCryptoContext {
 
 class ResolveGroupInviteCryptoContextImpl @Inject constructor(
     private val cryptoContext: CryptoContext,
-    private val userRepository: UserRepository,
+    private val getUserWithKeys: GetUserWithKeys,
     private val groupRepository: GroupRepository,
     private val organizationKeyRepository: OrganizationKeyRepository,
     private val openOrganizationKey: OpenOrganizationKey,
@@ -67,7 +67,7 @@ class ResolveGroupInviteCryptoContextImpl @Inject constructor(
         inviterEmail: String,
         isGroupOwner: Boolean
     ): GroupInviteCryptoContext {
-        val user = userRepository.getUser(userId)
+        val user = getUserWithKeys(userId)
         val unlockedOrganizationKey: UnlockedKey? = if (!isGroupOwner) {
             val orgPrivateKey = fetchOrganizationPrivateKey(userId, user)
             cryptoContext.pgpCrypto.unlock(

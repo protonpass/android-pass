@@ -20,7 +20,7 @@ package proton.android.pass.data.api.usecases
 
 import kotlinx.coroutines.flow.Flow
 import me.proton.core.domain.entity.UserId
-import me.proton.core.user.domain.entity.User
+import proton.android.pass.domain.account.User
 
 interface ObserveUser {
 

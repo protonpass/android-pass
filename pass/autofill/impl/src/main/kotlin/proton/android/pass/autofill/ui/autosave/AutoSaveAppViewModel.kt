@@ -29,7 +29,6 @@ import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
-import me.proton.core.account.domain.entity.AccountState
 import proton.android.pass.autofill.AutosaveDisplay
 import proton.android.pass.autofill.AutosaveDone
 import proton.android.pass.autofill.entities.SaveInformation
@@ -57,6 +56,7 @@ import proton.android.pass.domain.ItemState
 import proton.android.pass.domain.ItemType
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.ShareSelection
+import proton.android.pass.domain.account.AccountState
 import proton.android.pass.features.itemcreate.login.InitialUpdateLoginUiState
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.preferences.InternalSettingsRepository

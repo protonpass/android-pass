@@ -20,14 +20,15 @@ package proton.android.pass.data.impl.usecases
 
 import me.proton.core.domain.entity.UserId
 import me.proton.core.user.domain.UserManager
-import me.proton.core.user.domain.entity.User
+import proton.android.pass.data.impl.account.toDomain
 import proton.android.pass.data.api.usecases.GetUser
+import proton.android.pass.domain.account.User
 import javax.inject.Inject
 
 class GetUserImpl @Inject constructor(
     private val userManager: UserManager
 ) : GetUser {
 
-    override suspend fun invoke(userId: UserId): User = userManager.getUser(userId)
+    override suspend fun invoke(userId: UserId): User = userManager.getUser(userId).toDomain()
 
 }

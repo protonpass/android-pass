@@ -30,7 +30,9 @@ import me.proton.core.user.domain.entity.Type
 import me.proton.core.user.domain.entity.User
 import me.proton.core.user.domain.entity.UserKey
 import proton.android.pass.account.fakes.FakeKeyStoreCrypto
+import proton.android.pass.domain.account.UserRole
 import proton.android.pass.test.StringTestFactory
+import proton.android.pass.domain.account.User as DomainUser
 
 object UserTestFactory {
 
@@ -40,6 +42,20 @@ object UserTestFactory {
     )
 
     fun create(
+        email: String? = null,
+        name: String? = null,
+        userId: UserId = UserId("12345")
+    ): DomainUser = DomainUser(
+        userId = userId,
+        email = email,
+        name = name,
+        displayName = null,
+        role = UserRole.NoOrganization,
+        isSso = false,
+        recoveryState = null
+    )
+
+    fun createCore(
         email: String? = null,
         name: String? = null,
         userId: UserId = UserId("12345")

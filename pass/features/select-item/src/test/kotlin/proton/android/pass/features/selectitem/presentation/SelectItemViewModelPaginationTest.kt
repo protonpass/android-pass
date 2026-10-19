@@ -27,7 +27,6 @@ import me.proton.core.domain.entity.UserId
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import proton.android.pass.account.fakes.FakeAccountManager
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Some
 import proton.android.pass.common.fakes.FakeAppDispatchers
@@ -55,6 +54,7 @@ import proton.android.pass.preferences.FeatureFlag
 import proton.android.pass.searchoptions.fakes.FakeAutofillSearchOptionsRepository
 import proton.android.pass.test.FixedClock
 import proton.android.pass.test.MainDispatcherRule
+import proton.android.pass.test.domain.AccountTestFactory
 import proton.android.pass.test.domain.ShareTestFactory
 
 internal class SelectItemViewModelPaginationTest {
@@ -81,7 +81,7 @@ internal class SelectItemViewModelPaginationTest {
 
         featureFlags.set(FeatureFlag.ENABLE_PAGINATION, true)
         observeReadyAccounts.emitAccounts(
-            listOf(FakeAccountManager.createAccount(USER_A), FakeAccountManager.createAccount(USER_B))
+            listOf(AccountTestFactory.create(USER_A), AccountTestFactory.create(USER_B))
         )
         observeAutofillShares.setValues(
             mapOf(

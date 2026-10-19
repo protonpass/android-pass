@@ -21,8 +21,8 @@ package proton.android.pass.data.fakes.usecases
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import me.proton.core.domain.entity.UserId
-import me.proton.core.user.domain.entity.User
 import proton.android.pass.data.api.usecases.ObserveUser
+import proton.android.pass.domain.account.User
 import proton.android.pass.test.domain.UserTestFactory
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -46,8 +46,11 @@ class FakeObserveUser @Inject constructor() : ObserveUser {
         const val USER_ID = "FakeObserveUser-DefaultUserId"
         const val EMAIL = "DefaultEmail"
 
-        fun createDefaultUser(userId: UserId): User =
-            UserTestFactory.create(email = EMAIL, name = "name", userId = userId)
+        fun createDefaultUser(userId: UserId): User = UserTestFactory.create(
+            email = EMAIL,
+            name = "name",
+            userId = userId
+        )
     }
 
 }

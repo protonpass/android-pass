@@ -34,7 +34,6 @@ import me.proton.core.account.domain.entity.AccountState
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.accountmanager.domain.onAccountState
 import me.proton.core.auth.domain.feature.IsFido2Enabled
-import me.proton.core.user.domain.extension.isSso
 import me.proton.core.usersettings.domain.usecase.ObserveRegisteredSecurityKeys
 import proton.android.pass.common.api.FlowUtils.oneShot
 import proton.android.pass.common.api.LoadingResult
@@ -131,15 +130,15 @@ class AccountViewModel @Inject constructor(
                 AccountUiState(
                     email = userResult.data.email,
                     recoveryEmail = currentUserSettingsSuccess?.email?.value,
-                    recoveryState = userResult.data.recovery?.state?.enum,
+                    recoveryState = userResult.data.recoveryState,
                     plan = plan,
                     isLoadingState = IsLoadingState.NotLoading,
-                    showChangePassword = !userResult.data.isSso(),
-                    showRecoveryEmail = !userResult.data.isSso(),
-                    showSecurityKeys = !userResult.data.isSso() && isFido2Enabled(userResult.data.userId),
-                    showUpgradeButton = !userResult.data.isSso() && isUpgradeAvailable,
+                    showChangePassword = !userResult.data.isSso,
+                    showRecoveryEmail = !userResult.data.isSso,
+                    showSecurityKeys = !userResult.data.isSso && isFido2Enabled(userResult.data.userId),
+                    showUpgradeButton = !userResult.data.isSso && isUpgradeAvailable,
                     showSubscriptionButton = isSubscriptionAvailable,
-                    showExtraPasswordButton = !userResult.data.isSso(),
+                    showExtraPasswordButton = !userResult.data.isSso,
                     isExtraPasswordEnabled = hasExtraPassword.getOrNull() ?: false,
                     userId = userResult.data.userId,
                     registeredSecurityKeys = securityKeys.firstOrNull() ?: emptyList()

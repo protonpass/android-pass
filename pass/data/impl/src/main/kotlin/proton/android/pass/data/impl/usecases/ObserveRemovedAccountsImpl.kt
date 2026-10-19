@@ -18,17 +18,20 @@
 package proton.android.pass.data.impl.usecases
 
 import kotlinx.coroutines.flow.Flow
-import me.proton.core.account.domain.entity.Account
+import kotlinx.coroutines.flow.map
 import me.proton.core.account.domain.entity.AccountState
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.accountmanager.domain.getAccounts
+import proton.android.pass.data.impl.account.toDomain
 import proton.android.pass.data.api.usecases.ObserveRemovedAccounts
+import proton.android.pass.domain.account.Account
 import javax.inject.Inject
 
 class ObserveRemovedAccountsImpl @Inject constructor(
     private val accountManager: AccountManager
 ) : ObserveRemovedAccounts {
 
-    override fun invoke(): Flow<List<Account>> = accountManager.getAccounts(AccountState.Removed)
+    override fun invoke(): Flow<List<Account>> =
+        accountManager.getAccounts(AccountState.Removed).map { accounts -> accounts.map { it.toDomain() } }
 
 }

@@ -23,11 +23,11 @@ import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 import me.proton.core.domain.entity.UserId
-import me.proton.core.user.domain.usecase.ObserveUser
 import proton.android.pass.data.api.errors.ItemNotFoundError
 import proton.android.pass.data.api.repositories.ItemRepository
 import proton.android.pass.data.api.usecases.ObserveCurrentUser
 import proton.android.pass.data.api.usecases.ObserveItemById
+import proton.android.pass.data.api.usecases.ObserveUser
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId

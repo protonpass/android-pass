@@ -32,7 +32,6 @@ import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import me.proton.core.account.domain.entity.AccountState
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.appconfig.api.AppConfig
 import proton.android.pass.data.api.usecases.DisableAccount
@@ -45,6 +44,7 @@ import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.combineN
 import proton.android.pass.common.api.toOption
+import proton.android.pass.domain.account.AccountState
 import proton.android.pass.features.credentials.R
 import proton.android.pass.features.credentials.shared.passwords.events.PasswordCredentialsTelemetryEvent
 import proton.android.pass.notifications.api.ToastManager

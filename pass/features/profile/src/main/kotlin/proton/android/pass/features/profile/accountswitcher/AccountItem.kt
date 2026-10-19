@@ -18,8 +18,8 @@
 
 package proton.android.pass.features.profile.accountswitcher
 
-import me.proton.core.account.domain.entity.AccountState
 import me.proton.core.domain.entity.UserId
+import proton.android.pass.domain.account.AccountState
 import proton.android.pass.features.profile.PlanInfo
 
 internal data class AccountItem(

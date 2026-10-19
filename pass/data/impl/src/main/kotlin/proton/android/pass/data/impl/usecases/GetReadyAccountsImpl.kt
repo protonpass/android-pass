@@ -19,11 +19,12 @@
 package proton.android.pass.data.impl.usecases
 
 import kotlinx.coroutines.flow.firstOrNull
-import me.proton.core.account.domain.entity.Account
 import me.proton.core.account.domain.entity.AccountState
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.accountmanager.domain.getAccounts
+import proton.android.pass.data.impl.account.toDomain
 import proton.android.pass.data.api.usecases.GetReadyAccounts
+import proton.android.pass.domain.account.Account
 import javax.inject.Inject
 
 class GetReadyAccountsImpl @Inject constructor(
@@ -31,6 +32,6 @@ class GetReadyAccountsImpl @Inject constructor(
 ) : GetReadyAccounts {
 
     override suspend fun invoke(): List<Account> =
-        accountManager.getAccounts(AccountState.Ready).firstOrNull().orEmpty()
+        accountManager.getAccounts(AccountState.Ready).firstOrNull().orEmpty().map { it.toDomain() }
 
 }

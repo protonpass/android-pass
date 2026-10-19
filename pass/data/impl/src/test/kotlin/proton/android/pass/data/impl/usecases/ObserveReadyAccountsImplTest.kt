@@ -25,6 +25,7 @@ import me.proton.core.account.domain.entity.AccountState
 import me.proton.core.domain.entity.UserId
 import org.junit.Test
 import proton.android.pass.account.fakes.FakeAccountManager
+import proton.android.pass.test.domain.AccountTestFactory
 
 class ObserveReadyAccountsImplTest {
 
@@ -35,7 +36,7 @@ class ObserveReadyAccountsImplTest {
         val accountManager = FakeAccountManager().apply { setAccounts(listOf(ready, disabled)) }
 
         ObserveReadyAccountsImpl(accountManager)().test {
-            assertThat(awaitItem()).containsExactly(ready)
+            assertThat(awaitItem()).containsExactly(AccountTestFactory.create(UserId("ready")))
             cancelAndIgnoreRemainingEvents()
         }
     }

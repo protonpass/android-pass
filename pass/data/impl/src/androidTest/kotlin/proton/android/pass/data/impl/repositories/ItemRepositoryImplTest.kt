@@ -31,7 +31,6 @@ import me.proton.core.account.data.entity.SessionEntity
 import me.proton.core.account.domain.entity.AccountState
 import me.proton.core.account.domain.entity.SessionState
 import me.proton.core.domain.entity.Product
-import me.proton.core.domain.entity.UserId
 import me.proton.core.network.domain.session.SessionId
 import me.proton.core.user.data.entity.AddressEntity
 import me.proton.core.user.data.entity.UserEntity
@@ -64,6 +63,7 @@ import proton.android.pass.data.impl.local.LocalItemDataSourceImpl
 import proton.android.pass.data.impl.local.LocalShareDataSource
 import proton.android.pass.data.impl.local.LocalShareDataSourceImpl
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.UserId
 import proton.android.pass.preferences.FakeFeatureFlagsPreferenceRepository
 import proton.android.pass.test.domain.ItemTestFactory
 import proton.android.pass.data.fakes.repositories.FakeSearchIndexRepository

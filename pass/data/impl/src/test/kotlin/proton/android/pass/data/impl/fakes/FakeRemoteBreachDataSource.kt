@@ -18,7 +18,6 @@
 
 package proton.android.pass.data.impl.fakes
 
-import me.proton.core.domain.entity.UserId
 import me.proton.core.user.domain.entity.AddressId
 import proton.android.pass.data.impl.remote.RemoteBreachDataSource
 import proton.android.pass.data.impl.responses.BreachCustomEmailResponse
@@ -28,6 +27,7 @@ import proton.android.pass.data.impl.responses.BreachesResponse
 import proton.android.pass.data.impl.responses.UpdateGlobalMonitorStateResponse
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.UserId
 import proton.android.pass.domain.breach.CustomEmailId
 
 class FakeRemoteBreachDataSource : RemoteBreachDataSource {

@@ -24,7 +24,6 @@ import androidx.work.WorkManager
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.firstOrNull
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.safeRunCatchingWithCleanup
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.repositories.ItemSyncStatus
@@ -39,6 +38,7 @@ import proton.android.pass.data.impl.R
 import proton.android.pass.data.impl.work.FetchItemsWorker
 import proton.android.pass.domain.ShareColor
 import proton.android.pass.domain.ShareIcon
+import proton.android.pass.domain.UserId
 import proton.android.pass.domain.entity.NewVault
 import proton.android.pass.data.api.repositories.SyncReason
 import proton.android.pass.log.api.PassLogger

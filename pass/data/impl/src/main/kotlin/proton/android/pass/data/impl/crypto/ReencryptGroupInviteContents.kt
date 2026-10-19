@@ -18,10 +18,10 @@
 
 package proton.android.pass.data.impl.crypto
 
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.crypto.api.usecases.invites.AcceptGroupInvite
 import proton.android.pass.data.impl.responses.invites.GroupInviteApiModel
 import proton.android.pass.domain.GroupId
+import proton.android.pass.domain.UserId
 import javax.inject.Inject
 
 interface ReencryptGroupInviteContents {

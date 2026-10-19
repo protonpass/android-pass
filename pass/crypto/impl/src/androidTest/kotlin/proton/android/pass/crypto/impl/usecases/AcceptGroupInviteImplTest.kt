@@ -25,7 +25,6 @@ import me.proton.core.crypto.common.keystore.PlainByteArray
 import me.proton.core.crypto.common.keystore.decrypt
 import me.proton.core.crypto.common.keystore.encrypt
 import me.proton.core.crypto.common.pgp.PGPHeader
-import me.proton.core.domain.entity.UserId
 import me.proton.core.key.domain.entity.key.KeyId
 import me.proton.core.key.domain.entity.key.PrivateAddressKey
 import me.proton.core.key.domain.entity.key.PrivateKey
@@ -39,6 +38,7 @@ import proton.android.pass.crypto.api.usecases.invites.EncryptedGroupInviteAccep
 import proton.android.pass.crypto.api.usecases.invites.EncryptedInviteKey
 import proton.android.pass.crypto.fakes.context.FakeEncryptionContext
 import proton.android.pass.crypto.fakes.context.FakeEncryptionContextProvider
+import proton.android.pass.domain.UserId
 import proton.android.pass.domain.key.ShareKey
 import proton.android.pass.test.UserAddressKeyTestFactory
 import proton.android.pass.test.domain.ShareKeyTestFactory

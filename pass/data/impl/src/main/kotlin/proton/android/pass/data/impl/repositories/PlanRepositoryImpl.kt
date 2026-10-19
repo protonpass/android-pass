@@ -20,13 +20,13 @@ package proton.android.pass.data.impl.repositories
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.api.repositories.UserAccessDataRepository
 import proton.android.pass.data.impl.db.entities.PlanEntity
 import proton.android.pass.data.impl.local.LocalPlanDataSource
 import proton.android.pass.domain.Plan
 import proton.android.pass.domain.PlanLimit
 import proton.android.pass.domain.PlanType
+import proton.android.pass.domain.UserId
 import javax.inject.Inject
 
 class PlanRepositoryImpl @Inject constructor(

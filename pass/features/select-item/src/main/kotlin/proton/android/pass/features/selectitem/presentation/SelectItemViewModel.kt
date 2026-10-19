@@ -58,7 +58,6 @@ import kotlinx.datetime.Instant
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toJavaLocalDateTime
 import kotlinx.datetime.toLocalDateTime
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.AppDispatchers
 import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.None
@@ -118,6 +117,7 @@ import proton.android.pass.domain.PlanType
 import proton.android.pass.domain.Share
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.ShareSelection
+import proton.android.pass.domain.UserId
 import proton.android.pass.domain.account.User
 import proton.android.pass.features.selectitem.navigation.SelectItemState
 import proton.android.pass.features.selectitem.ui.AccountRowUIState

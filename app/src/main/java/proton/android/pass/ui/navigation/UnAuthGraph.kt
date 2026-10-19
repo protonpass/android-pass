@@ -21,7 +21,7 @@ package proton.android.pass.ui.navigation
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.navigation
-import me.proton.core.domain.entity.UserId
+import proton.android.pass.domain.UserId
 import proton.android.pass.features.auth.Auth
 import proton.android.pass.features.auth.AuthNavigation
 import proton.android.pass.features.auth.AuthOrigin

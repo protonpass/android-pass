@@ -32,7 +32,6 @@ import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.appconfig.api.AppConfig
 import proton.android.pass.appconfig.api.BuildFlavor.Companion.supportPayment
 import proton.android.pass.autofill.api.suggestions.PackageNameUrlSuggestionAdapter
@@ -45,6 +44,7 @@ import proton.android.pass.biometry.NeedsBiometricAuth
 import proton.android.pass.common.api.combineN
 import proton.android.pass.data.api.usecases.DisableAccount
 import proton.android.pass.data.api.usecases.GetReadyAccounts
+import proton.android.pass.domain.UserId
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.ToastManager
 import proton.android.pass.preferences.InternalSettingsRepository

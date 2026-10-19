@@ -43,7 +43,6 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.take
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
@@ -64,6 +63,7 @@ import proton.android.pass.data.api.usecases.folders.FolderLimitsData
 import proton.android.pass.data.api.usecases.folders.ObserveFolderLimits
 import proton.android.pass.data.api.usecases.folders.ObserveFoldersByParentId
 import proton.android.pass.data.api.usecases.items.GetMigrationItemsSelection
+import proton.android.pass.domain.UserId
 import proton.android.pass.domain.items.MigrationItemsSelection
 import proton.android.pass.data.api.usecases.securelink.ObserveHasAssociatedSecureLinks
 import proton.android.pass.data.api.usecases.shares.ObserveShare

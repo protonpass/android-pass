@@ -18,9 +18,9 @@
 
 package proton.android.pass.data.fakes.usecases.breach
 
-import me.proton.core.domain.entity.UserId
 import me.proton.core.user.domain.entity.AddressId
 import proton.android.pass.data.api.usecases.breach.UpdateProtonAddressMonitorState
+import proton.android.pass.domain.UserId
 import javax.inject.Inject
 import javax.inject.Singleton
 

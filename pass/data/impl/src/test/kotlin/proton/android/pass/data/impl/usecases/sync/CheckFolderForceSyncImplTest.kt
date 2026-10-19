@@ -24,7 +24,6 @@ import kotlinx.coroutines.test.TestCoroutineScheduler
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.runTest
 import kotlinx.datetime.Instant
-import me.proton.core.domain.entity.UserId
 import org.junit.Before
 import org.junit.Test
 import proton.android.pass.common.fakes.FakeAppDispatchers
@@ -36,6 +35,7 @@ import proton.android.pass.data.fakes.usecases.FakePerformSync
 import proton.android.pass.data.fakes.usecases.folders.FakeHasAnyFolders
 import proton.android.pass.data.fakes.usecases.FakeItemSyncStatusRepository
 import proton.android.pass.data.impl.fakes.FakeShareRepository
+import proton.android.pass.domain.UserId
 import proton.android.pass.preferences.FakeFeatureFlagsPreferenceRepository
 import proton.android.pass.preferences.FakeInternalSettingsRepository
 import proton.android.pass.preferences.FeatureFlag

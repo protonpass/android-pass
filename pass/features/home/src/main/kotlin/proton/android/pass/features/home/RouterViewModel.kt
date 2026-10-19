@@ -31,7 +31,6 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.appconfig.api.AppConfig
 import proton.android.pass.appconfig.api.BuildFlavor.Companion.supportPayment
 import proton.android.pass.common.api.Option
@@ -47,6 +46,7 @@ import proton.android.pass.data.api.usecases.ObserveConfirmedInviteToken
 import proton.android.pass.data.api.usecases.inappmessages.ObserveDeliverableModalInAppMessages
 import proton.android.pass.data.api.usecases.inappmessages.ObserveDeliverablePromoInAppMessages
 import proton.android.pass.domain.InviteToken
+import proton.android.pass.domain.UserId
 import proton.android.pass.domain.inappmessages.InAppMessage
 import proton.android.pass.domain.inappmessages.InAppMessageId
 import proton.android.pass.preferences.FeatureFlag

@@ -19,10 +19,10 @@
 package proton.android.pass.data.impl.usecases
 
 import kotlinx.coroutines.flow.first
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.api.repositories.AliasRepository
 import proton.android.pass.data.api.repositories.ShareRepository
 import proton.android.pass.data.api.usecases.RefreshAliasSlNotes
+import proton.android.pass.domain.UserId
 import javax.inject.Inject
 
 class RefreshAliasSlNotesImpl @Inject constructor(

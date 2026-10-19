@@ -19,10 +19,10 @@
 package proton.android.pass.data.impl.fakes
 
 import kotlinx.coroutines.flow.Flow
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.FlowUtils.testFlow
 import proton.android.pass.data.impl.db.entities.PlanEntity
 import proton.android.pass.data.impl.local.LocalPlanDataSource
+import proton.android.pass.domain.UserId
 
 class FakeLocalPlanDataSource : LocalPlanDataSource {
 

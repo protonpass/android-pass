@@ -21,7 +21,6 @@ package proton.android.pass.features.credentials.passkeys.selection.presentation
 import app.cash.turbine.test
 import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.test.runTest
-import me.proton.core.domain.entity.UserId
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -34,6 +33,7 @@ import proton.android.pass.data.fakes.usecases.FakeHasActiveAccount
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.PasskeyId
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.UserId
 import proton.android.pass.notifications.fakes.FakeToastManager
 import proton.android.pass.passkeys.fakes.FakeAuthenticateWithPasskey
 import proton.android.pass.preferences.FakeInternalSettingsRepository

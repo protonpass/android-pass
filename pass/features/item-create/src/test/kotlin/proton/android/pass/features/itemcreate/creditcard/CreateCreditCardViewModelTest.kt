@@ -24,7 +24,6 @@ import com.google.common.truth.Truth.assertThat
 import kotlinx.collections.immutable.persistentSetOf
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
-import me.proton.core.domain.entity.UserId
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -51,6 +50,7 @@ import proton.android.pass.data.fakes.usecases.shares.FakeObserveShare
 import proton.android.pass.domain.ItemState
 import proton.android.pass.domain.FolderId
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.UserId
 import proton.android.pass.domain.VaultWithItemCount
 import proton.android.pass.domain.items.ItemCategory
 import proton.android.pass.domain.toItemContents

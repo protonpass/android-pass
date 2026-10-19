@@ -20,7 +20,6 @@ package proton.android.pass.data.impl.repositories
 
 import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.test.runTest
-import me.proton.core.domain.entity.UserId
 import org.junit.Before
 import org.junit.Test
 import proton.android.pass.account.fakes.FakeAccountManager
@@ -33,6 +32,7 @@ import proton.android.pass.data.impl.util.sha1Hex
 import proton.android.pass.domain.ItemFlag
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.UserId
 import proton.android.pass.test.domain.ItemTestFactory
 
 internal class CompromisedPasswordRepositoryImplTest {

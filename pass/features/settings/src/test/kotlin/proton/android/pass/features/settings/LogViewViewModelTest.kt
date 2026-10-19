@@ -23,7 +23,6 @@ import android.content.ContextWrapper
 import app.cash.turbine.test
 import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.test.runTest
-import me.proton.core.domain.entity.UserId
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
@@ -38,6 +37,7 @@ import proton.android.pass.common.api.Some
 import proton.android.pass.common.fakes.FakeAppDispatchers
 import proton.android.pass.commonui.api.ClassHolder
 import proton.android.pass.commonui.api.FileHandler
+import proton.android.pass.domain.UserId
 import proton.android.pass.log.api.LogFileManager
 import proton.android.pass.log.api.ShareLogsUseCase
 import proton.android.pass.log.impl.LogExporterImpl

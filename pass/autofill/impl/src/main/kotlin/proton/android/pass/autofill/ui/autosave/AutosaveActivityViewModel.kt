@@ -29,13 +29,13 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.autofill.service.R
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.some
 import proton.android.pass.data.api.usecases.DisableAccount
 import proton.android.pass.data.api.usecases.GetReadyAccounts
+import proton.android.pass.domain.UserId
 import proton.android.pass.notifications.api.ToastManager
 import proton.android.pass.preferences.InternalSettingsRepository
 import proton.android.pass.preferences.ThemePreference

@@ -18,13 +18,13 @@
 
 package proton.android.pass.data.impl.usecases
 
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.api.errors.UserIdNotAvailableError
 import proton.android.pass.data.api.repositories.ShareRepository
 import proton.android.pass.data.api.usecases.GetPrimaryUserId
 import proton.android.pass.data.api.usecases.GetShareById
 import proton.android.pass.domain.Share
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.UserId
 import javax.inject.Inject
 
 class GetShareByIdImpl @Inject constructor(

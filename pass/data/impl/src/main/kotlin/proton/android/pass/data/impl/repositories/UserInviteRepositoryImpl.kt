@@ -27,7 +27,6 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
-import me.proton.core.domain.entity.UserId
 import me.proton.core.user.domain.entity.UserAddress
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
@@ -72,6 +71,7 @@ import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.ShareInvite
 import proton.android.pass.domain.ShareRole
 import proton.android.pass.domain.ShareType
+import proton.android.pass.domain.UserId
 import proton.android.pass.domain.events.EventToken
 import proton.android.pass.commonrust.api.ItemContentSerializer
 import proton.android.pass.log.api.PassLogger

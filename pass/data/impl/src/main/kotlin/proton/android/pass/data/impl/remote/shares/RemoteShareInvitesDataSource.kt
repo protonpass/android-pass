@@ -18,11 +18,11 @@
 
 package proton.android.pass.data.impl.remote.shares
 
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.impl.responses.CodeOnlyResponse
 import proton.android.pass.data.impl.responses.GetSharePendingInvitesResponse
 import proton.android.pass.domain.InviteId
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.UserId
 
 interface RemoteShareInvitesDataSource {
 

@@ -25,12 +25,12 @@ import kotlinx.coroutines.test.TestScope
 import kotlinx.coroutines.test.runCurrent
 import kotlinx.coroutines.test.runTest
 import kotlinx.datetime.Instant
-import me.proton.core.domain.entity.UserId
 import org.junit.Before
 import org.junit.Test
 import proton.android.pass.account.fakes.FakeDeviceSettingsRepository
 import proton.android.pass.account.fakes.telemetry.FakeIsTelemetryEnabled
 import proton.android.pass.data.fakes.usecases.FakeObservePrimaryUserId
+import proton.android.pass.domain.UserId
 import proton.android.pass.preferences.FakeInternalSettingsRepository
 import proton.android.pass.telemetry.api.GooglePlayInstallReferrer
 import proton.android.pass.telemetry.api.MetaInstallReferrer

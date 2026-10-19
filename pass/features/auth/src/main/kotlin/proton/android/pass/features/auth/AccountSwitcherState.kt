@@ -18,8 +18,8 @@
 
 package proton.android.pass.features.auth
 
+import proton.android.pass.domain.UserId
 import kotlinx.collections.immutable.ImmutableMap
-import me.proton.core.domain.entity.UserId
 
 data class AccountItem(
     val email: String,

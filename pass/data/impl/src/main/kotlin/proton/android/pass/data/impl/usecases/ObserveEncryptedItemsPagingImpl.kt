@@ -22,7 +22,6 @@ import androidx.paging.PagingData
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.flatMapLatest
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.api.repositories.ItemRepository
 import proton.android.pass.data.api.repositories.ItemSyncStatusRepository
 import proton.android.pass.data.api.usecases.ItemTypeFilter
@@ -32,6 +31,7 @@ import proton.android.pass.domain.ItemEncrypted
 import proton.android.pass.domain.ItemFlag
 import proton.android.pass.domain.ItemState
 import proton.android.pass.domain.ShareSelection
+import proton.android.pass.domain.UserId
 import javax.inject.Inject
 
 class ObserveEncryptedItemsPagingImpl @Inject constructor(

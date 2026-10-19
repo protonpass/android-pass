@@ -22,7 +22,6 @@ import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.persistentMapOf
 import kotlinx.datetime.Clock
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.None
 import proton.android.pass.commonui.api.GroupedItemList
 import proton.android.pass.commonui.api.GroupingKeys
@@ -34,6 +33,7 @@ import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.ShareType
+import proton.android.pass.domain.UserId
 import proton.android.pass.features.selectitem.ui.AccountSwitchUIState
 import proton.android.pass.features.selectitem.ui.AutofillItemClickedEvent
 import proton.android.pass.features.selectitem.ui.PinningUiState

@@ -19,7 +19,6 @@
 package proton.android.pass.data.impl.extensions
 
 import kotlinx.datetime.Instant
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
@@ -28,6 +27,7 @@ import proton.android.pass.common.api.toOption
 import proton.android.pass.data.impl.responses.CtaResponse
 import proton.android.pass.data.impl.responses.NotificationPromoContentsResponse
 import proton.android.pass.data.impl.responses.NotificationResponse
+import proton.android.pass.domain.UserId
 import proton.android.pass.domain.inappmessages.InAppMessage
 import proton.android.pass.domain.inappmessages.InAppMessageCTA
 import proton.android.pass.domain.inappmessages.InAppMessageCTAType

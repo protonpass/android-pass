@@ -18,8 +18,8 @@
 
 package proton.android.pass.account.fakes.telemetry
 
-import me.proton.core.domain.entity.UserId
 import me.proton.core.telemetry.domain.TelemetryWorkerManager
+import proton.android.pass.domain.UserId
 import javax.inject.Inject
 import javax.inject.Singleton
 import kotlin.time.Duration

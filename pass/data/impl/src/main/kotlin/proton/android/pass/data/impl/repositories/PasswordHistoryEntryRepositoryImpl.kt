@@ -20,12 +20,12 @@ package proton.android.pass.data.impl.repositories
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.api.repositories.PasswordHistoryEntryRepository
 import proton.android.pass.data.impl.db.entities.PasswordHistoryEntity
 import proton.android.pass.data.impl.local.LocalPasswordHistoryEntryDataSource
 import proton.android.pass.domain.PasswordHistoryEntry
 import proton.android.pass.domain.PasswordHistoryEntryId
+import proton.android.pass.domain.UserId
 import javax.inject.Inject
 
 class PasswordHistoryEntryRepositoryImpl @Inject constructor(

@@ -18,7 +18,6 @@
 
 package proton.android.pass.data.impl.remote
 
-import me.proton.core.domain.entity.UserId
 import me.proton.core.network.data.ApiProvider
 import proton.android.pass.data.impl.api.PasswordManagerApi
 import proton.android.pass.data.impl.requests.CreateFolderRequest
@@ -28,6 +27,7 @@ import proton.android.pass.data.impl.requests.UpdateFolderRequest
 import proton.android.pass.data.impl.responses.FolderApiModel
 import proton.android.pass.domain.FolderId
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.UserId
 import javax.inject.Inject
 
 class RemoteFolderDataSourceImpl @Inject constructor(

@@ -47,7 +47,6 @@ import proton.android.pass.data.api.usecases.ObserveAccounts
 import proton.android.pass.data.api.usecases.ObserveAllShares
 import proton.android.pass.data.api.usecases.ObserveItems
 import proton.android.pass.domain.Item
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.appconfig.api.AppConfig
 import proton.android.pass.appconfig.api.BuildFlavor.Companion.isQuest
 import proton.android.pass.appconfig.api.BuildFlavor.Companion.supportPayment
@@ -56,6 +55,7 @@ import proton.android.pass.domain.ItemState
 import proton.android.pass.domain.ItemType
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.ShareSelection
+import proton.android.pass.domain.UserId
 import proton.android.pass.domain.account.AccountState
 import proton.android.pass.features.itemcreate.login.InitialUpdateLoginUiState
 import proton.android.pass.log.api.PassLogger

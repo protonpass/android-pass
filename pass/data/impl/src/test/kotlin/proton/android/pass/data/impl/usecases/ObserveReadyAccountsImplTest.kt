@@ -22,9 +22,9 @@ import app.cash.turbine.test
 import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.test.runTest
 import me.proton.core.account.domain.entity.AccountState
-import me.proton.core.domain.entity.UserId
 import org.junit.Test
 import proton.android.pass.account.fakes.FakeAccountManager
+import proton.android.pass.domain.UserId
 import proton.android.pass.test.domain.AccountTestFactory
 
 class ObserveReadyAccountsImplTest {

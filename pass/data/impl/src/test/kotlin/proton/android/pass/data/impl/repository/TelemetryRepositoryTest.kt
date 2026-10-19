@@ -21,7 +21,6 @@ package proton.android.pass.data.impl.repository
 import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.test.runTest
 import kotlinx.datetime.Clock
-import me.proton.core.domain.entity.UserId
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -32,6 +31,7 @@ import proton.android.pass.data.impl.db.entities.TelemetryEntity
 import proton.android.pass.data.impl.fakes.FakeIsTelemetryEnabled
 import proton.android.pass.data.impl.fakes.FakeLocalTelemetryGrowthDataSource
 import proton.android.pass.data.impl.fakes.FakeLocalTelemetryDataSource
+import proton.android.pass.domain.UserId
 import proton.android.pass.telemetry.fakes.FakeTelemetryGrowthDeviceInfoProvider
 import proton.android.pass.data.impl.fakes.FakeRemoteTelemetryGrowthDataSource
 import proton.android.pass.data.impl.fakes.FakeRemoteTelemetryDataSource

@@ -22,8 +22,8 @@ import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import me.proton.core.domain.entity.UserId
 import me.proton.core.telemetry.domain.usecase.IsTelemetryEnabled
+import proton.android.pass.domain.UserId
 import proton.android.pass.telemetry.api.CanConfigureTelemetry
 import javax.inject.Inject
 

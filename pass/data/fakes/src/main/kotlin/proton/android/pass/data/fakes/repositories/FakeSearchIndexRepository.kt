@@ -23,7 +23,6 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.flowOf
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.api.repositories.IndexingStatus
 import proton.android.pass.data.api.repositories.ItemTypeCounts
 import proton.android.pass.data.api.repositories.SearchIndexRepository
@@ -34,6 +33,7 @@ import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ItemState
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.UserId
 import proton.android.pass.domain.items.ItemSharedType
 import javax.inject.Inject
 import javax.inject.Singleton

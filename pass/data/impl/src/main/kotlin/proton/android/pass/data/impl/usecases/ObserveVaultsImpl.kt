@@ -20,11 +20,11 @@ package proton.android.pass.data.impl.usecases
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.mapLatest
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.crypto.api.extensions.toVault
 import proton.android.pass.data.api.usecases.ObserveVaults
 import proton.android.pass.data.api.usecases.shares.ObserveSharesByType
 import proton.android.pass.domain.ShareType
+import proton.android.pass.domain.UserId
 import proton.android.pass.domain.Vault
 import proton.android.pass.domain.sorted
 import javax.inject.Inject

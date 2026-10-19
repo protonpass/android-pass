@@ -20,11 +20,11 @@ package proton.android.pass.data.impl.usecases
 
 import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.test.runTest
-import me.proton.core.domain.entity.UserId
 import org.junit.Test
 import proton.android.pass.data.fakes.repositories.FakeAliasRepository
 import proton.android.pass.data.impl.fakes.FakeShareRepository
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.UserId
 import proton.android.pass.test.domain.ShareTestFactory
 
 internal class RefreshAliasSlNotesImplTest {

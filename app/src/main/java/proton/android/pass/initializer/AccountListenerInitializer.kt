@@ -41,7 +41,6 @@ import me.proton.core.accountmanager.presentation.onAccountDisabled
 import me.proton.core.accountmanager.presentation.onAccountReady
 import me.proton.core.accountmanager.presentation.onAccountRemoved
 import me.proton.core.accountmanager.presentation.onSessionForceLogout
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.safeRunCatching
 import proton.android.pass.commonui.api.PassAppLifecycleProvider
 import proton.android.pass.data.api.repositories.ItemSyncStatusRepository
@@ -50,6 +49,7 @@ import proton.android.pass.data.api.usecases.ClearUserData
 import proton.android.pass.data.api.usecases.GetReadyAccounts
 import proton.android.pass.data.api.usecases.ResetAppToDefaults
 import proton.android.pass.data.impl.db.DatabaseCleanupHelper
+import proton.android.pass.domain.UserId
 import proton.android.pass.log.api.LogAccountContext
 import proton.android.pass.log.api.LogoutLogger
 import proton.android.pass.log.api.LogoutReason

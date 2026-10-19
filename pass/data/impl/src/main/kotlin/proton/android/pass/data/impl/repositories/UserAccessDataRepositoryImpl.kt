@@ -22,7 +22,6 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import kotlinx.datetime.Clock
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.api.repositories.UserAccessDataRepository
 import proton.android.pass.data.impl.db.entities.PlanEntity
 import proton.android.pass.data.impl.db.entities.UserAccessDataEntity
@@ -33,6 +32,7 @@ import proton.android.pass.data.impl.responses.PlanResponse
 import proton.android.pass.data.impl.responses.UserAccessResponse
 import proton.android.pass.domain.FolderLimits
 import proton.android.pass.domain.UserAccessData
+import proton.android.pass.domain.UserId
 import javax.inject.Inject
 
 class UserAccessDataRepositoryImpl @Inject constructor(

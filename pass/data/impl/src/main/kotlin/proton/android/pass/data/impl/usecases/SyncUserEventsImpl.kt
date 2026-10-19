@@ -22,7 +22,6 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.first
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.api.repositories.AliasRepository
 import proton.android.pass.data.api.repositories.ItemRepository
 import proton.android.pass.data.api.repositories.ItemSyncStatusRepository
@@ -47,6 +46,7 @@ import proton.android.pass.data.impl.work.FetchItemsWorker
 import proton.android.pass.data.impl.repositories.EventRepository
 import proton.android.pass.data.impl.repositories.UserEventRepository
 import proton.android.pass.domain.UserEventId
+import proton.android.pass.domain.UserId
 import proton.android.pass.domain.events.SyncEventInvitesChanged
 import proton.android.pass.domain.events.SyncEventShare
 import proton.android.pass.domain.events.SyncEventShareFolder

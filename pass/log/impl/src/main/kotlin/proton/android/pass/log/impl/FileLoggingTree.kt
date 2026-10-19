@@ -30,9 +30,9 @@ import kotlinx.coroutines.withContext
 import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
 import kotlinx.datetime.toJavaInstant
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.api.usecases.GetPrimaryUserId
 import proton.android.pass.common.api.AppDispatchers
+import proton.android.pass.domain.UserId
 import proton.android.pass.log.api.LogAccountContext
 import proton.android.pass.log.api.LogFileManager
 import proton.android.pass.log.api.LogoutLogger

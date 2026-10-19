@@ -31,7 +31,6 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.safeRunCatching
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.data.api.usecases.GetPrimaryUserId
@@ -39,6 +38,7 @@ import proton.android.pass.data.api.usecases.GetUserPlan
 import proton.android.pass.data.api.usecases.RefreshUserAccess
 import proton.android.pass.data.api.usecases.plan.ObservePlansWithPrice
 import proton.android.pass.domain.Plan
+import proton.android.pass.domain.UserId
 import proton.android.pass.domain.plan.OnePlanWithPrice
 import proton.android.pass.domain.plan.PlanWithPriceState
 import proton.android.pass.features.upsell.v1.R

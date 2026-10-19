@@ -55,7 +55,6 @@ import kotlinx.collections.immutable.ImmutableSet
 import kotlinx.collections.immutable.persistentSetOf
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.captionWeak
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.SpecialCharacters.AT_SIGN
 import proton.android.pass.common.api.isInstrumentedTest
@@ -85,6 +84,7 @@ import proton.android.pass.composecomponents.impl.uievents.IsRefreshingState
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.Share
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.UserId
 
 private const val PLACEHOLDER_ELEMENTS = 40
 

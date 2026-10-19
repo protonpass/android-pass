@@ -24,7 +24,6 @@ import me.proton.core.crypto.common.keystore.EncryptedByteArray
 import me.proton.core.crypto.common.keystore.KeyStoreCrypto
 import me.proton.core.crypto.common.keystore.PlainByteArray
 import me.proton.core.crypto.common.keystore.encrypt
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.account.fakes.FakeKeyStoreCrypto
 import proton.android.pass.commonrust.fakes.FakeItemContentSerializer
 import proton.android.pass.common.api.None
@@ -44,6 +43,7 @@ import proton.android.pass.domain.ItemType
 import proton.android.pass.domain.PersonalDetailsContent
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.ShareType
+import proton.android.pass.domain.UserId
 import proton.android.pass.domain.WorkDetailsContent
 import proton.android.pass.domain.entity.PackageInfo
 import proton.android.pass.test.StringTestFactory.randomString

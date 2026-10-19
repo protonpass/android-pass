@@ -21,7 +21,6 @@ package proton.android.pass.data.impl.usecases
 import app.cash.turbine.test
 import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.test.runTest
-import me.proton.core.domain.entity.UserId
 import org.junit.Before
 import org.junit.Test
 import proton.android.pass.data.api.usecases.AcceptInviteStatus
@@ -39,6 +38,7 @@ import proton.android.pass.domain.InviteToken
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.ShareInvite
+import proton.android.pass.domain.UserId
 import proton.android.pass.notifications.fakes.FakeNotificationManager
 import proton.android.pass.test.domain.ItemTestFactory
 import proton.android.pass.test.domain.PendingInviteTestFactory

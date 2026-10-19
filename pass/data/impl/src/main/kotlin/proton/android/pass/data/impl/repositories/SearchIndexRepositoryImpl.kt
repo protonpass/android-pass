@@ -35,7 +35,6 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.AppDispatchers
 import proton.android.pass.commonrust.api.ItemContentSerializer
 import proton.android.pass.crypto.api.context.EncryptionContext
@@ -58,6 +57,7 @@ import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ItemState
 import proton.android.pass.domain.FolderId
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.UserId
 import proton.android.pass.domain.items.ItemSharedType
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.preferences.InternalSettingsRepository

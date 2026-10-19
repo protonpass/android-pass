@@ -24,8 +24,8 @@ import androidx.compose.ui.platform.testTag
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.navigation
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.UserId
 import proton.android.pass.domain.features.PaidFeature
 import proton.android.pass.features.profile.applocktime.AppLockTimeBottomsheet
 import proton.android.pass.features.profile.applocktype.AppLockTypeBottomsheet

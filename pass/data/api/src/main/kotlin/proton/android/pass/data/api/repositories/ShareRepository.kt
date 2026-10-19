@@ -19,11 +19,11 @@
 package proton.android.pass.data.api.repositories
 
 import kotlinx.coroutines.flow.Flow
-import me.proton.core.domain.entity.UserId
 import me.proton.core.user.domain.entity.UserAddress
 import proton.android.pass.domain.Share
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.ShareType
+import proton.android.pass.domain.UserId
 import proton.android.pass.domain.entity.NewVault
 import proton.android.pass.domain.events.EventToken
 

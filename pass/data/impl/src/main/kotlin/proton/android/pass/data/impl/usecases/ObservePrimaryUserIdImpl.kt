@@ -20,8 +20,8 @@ package proton.android.pass.data.impl.usecases
 
 import kotlinx.coroutines.flow.Flow
 import me.proton.core.accountmanager.domain.AccountManager
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.api.usecases.ObservePrimaryUserId
+import proton.android.pass.domain.UserId
 import javax.inject.Inject
 
 class ObservePrimaryUserIdImpl @Inject constructor(

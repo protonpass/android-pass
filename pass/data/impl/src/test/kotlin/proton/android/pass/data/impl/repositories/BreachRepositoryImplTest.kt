@@ -21,7 +21,6 @@ package proton.android.pass.data.impl.repositories
 import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
-import me.proton.core.domain.entity.UserId
 import me.proton.core.user.domain.entity.AddressId
 import org.junit.Before
 import org.junit.Test
@@ -48,6 +47,7 @@ import proton.android.pass.data.impl.responses.Source
 import proton.android.pass.data.impl.responses.UpdateGlobalMonitorStateResponse
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.UserId
 import proton.android.pass.domain.breach.AliasEmailId
 import proton.android.pass.domain.breach.BreachEmail
 import proton.android.pass.domain.breach.BreachEmailId

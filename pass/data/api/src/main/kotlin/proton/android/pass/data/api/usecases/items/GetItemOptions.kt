@@ -18,10 +18,10 @@
 
 package proton.android.pass.data.api.usecases.items
 
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.Option
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.UserId
 import proton.android.pass.domain.items.ItemOption
 
 interface GetItemOptions {

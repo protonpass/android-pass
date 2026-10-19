@@ -18,8 +18,8 @@
 
 package proton.android.pass.data.api.usecases.folders
 
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.UserId
 
 /**
  * Whether a user has any folders server-side. [Unknown] means a share could not be asked, which is

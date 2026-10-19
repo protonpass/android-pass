@@ -71,7 +71,6 @@ import me.proton.core.accountmanager.presentation.onSessionSecondFactorNeeded
 import me.proton.core.auth.presentation.AuthOrchestrator
 import me.proton.core.auth.presentation.entity.AddAccountWorkflow
 import me.proton.core.auth.presentation.onAddAccountResult
-import me.proton.core.domain.entity.UserId
 import me.proton.core.usersettings.presentation.UserSettingsOrchestrator
 import proton.android.pass.appconfig.api.AppConfig
 import proton.android.pass.appconfig.api.BuildFlavor.Companion.supportPayment
@@ -88,6 +87,7 @@ import proton.android.pass.data.api.usecases.RefreshUserAccess
 import proton.android.pass.data.api.usecases.SetAsPrimary
 import proton.android.pass.data.api.usecases.passwordHistoryEntry.DeletePasswordHistoryEntryForUser
 import proton.android.pass.domain.Plan
+import proton.android.pass.domain.UserId
 import proton.android.pass.inappupdates.api.InAppUpdatesManager
 import proton.android.pass.log.api.LogoutLogger
 import proton.android.pass.log.api.LogoutReason

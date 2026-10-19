@@ -20,11 +20,11 @@ package proton.android.pass.data.fakes.repositories
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.api.repositories.AttachmentRepository
 import proton.android.pass.data.api.repositories.PendingAttachmentLinkData
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.UserId
 import proton.android.pass.domain.attachments.Attachment
 import proton.android.pass.domain.attachments.AttachmentDownloadStatus
 import proton.android.pass.domain.attachments.AttachmentId

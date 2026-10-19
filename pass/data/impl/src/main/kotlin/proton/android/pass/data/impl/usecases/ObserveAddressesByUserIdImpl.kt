@@ -20,11 +20,11 @@ package proton.android.pass.data.impl.usecases
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flatMapLatest
-import me.proton.core.domain.entity.UserId
 import me.proton.core.user.domain.entity.UserAddress
 import me.proton.core.user.domain.repository.UserAddressRepository
 import proton.android.pass.data.api.usecases.ObserveAddressesByUserId
 import proton.android.pass.data.api.usecases.ObserveCurrentUser
+import proton.android.pass.domain.UserId
 import javax.inject.Inject
 
 class ObserveAddressesByUserIdImpl @Inject constructor(

@@ -37,8 +37,8 @@ import kotlinx.coroutines.sync.withLock
 import kotlinx.coroutines.withContext
 import kotlinx.datetime.Instant
 import me.proton.core.crypto.common.keystore.EncryptedByteArray
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.AppDispatchers
+import proton.android.pass.domain.UserId
 import proton.android.pass.files.api.FilesDirectories
 import proton.android.pass.common.api.safeRunCatching
 import proton.android.pass.commonrust.api.FileType as DetectedFileType

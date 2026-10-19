@@ -18,9 +18,9 @@
 
 package proton.android.pass.data.api.usecases.attachments
 
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.UserId
 
 interface RefreshAttachmentsForItems {
     suspend operator fun invoke(userId: UserId, items: List<Pair<ShareId, ItemId>>): List<Pair<ShareId, ItemId>>

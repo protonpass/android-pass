@@ -18,7 +18,7 @@
 
 package proton.android.pass.features.auth
 
-import me.proton.core.domain.entity.UserId
+import proton.android.pass.domain.UserId
 
 sealed interface AuthUiEvent {
     data object OnNavigateBack : AuthUiEvent

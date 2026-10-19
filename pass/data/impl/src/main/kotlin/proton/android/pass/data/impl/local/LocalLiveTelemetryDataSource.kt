@@ -18,9 +18,9 @@
 
 package proton.android.pass.data.impl.local
 
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.impl.db.PassDatabase
 import proton.android.pass.data.impl.db.entities.LiveTelemetryEntity
+import proton.android.pass.domain.UserId
 import javax.inject.Inject
 
 interface LocalLiveTelemetryDataSource {

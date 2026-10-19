@@ -18,10 +18,10 @@
 
 package proton.android.pass.features.credentials.passkeys.usage.presentation
 
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.PasskeyId
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.UserId
 
 internal data class PasskeyCredentialUsageRequest(
     internal val requestJson: String,

@@ -27,12 +27,12 @@ import kotlinx.coroutines.flow.map
 import me.proton.core.account.domain.entity.AccountState
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.accountmanager.domain.getAccounts
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.api.usecases.DisableAccount
 import proton.android.pass.data.api.usecases.RefreshUserAccess
 import proton.android.pass.data.impl.R
 import proton.android.pass.data.impl.repositories.PlanRepository
 import proton.android.pass.domain.Plan
+import proton.android.pass.domain.UserId
 import proton.android.pass.log.api.LogoutLogger
 import proton.android.pass.log.api.LogoutReason
 import proton.android.pass.log.api.PassLogger

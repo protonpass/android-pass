@@ -18,10 +18,10 @@
 package proton.android.pass.data.impl.usecases
 
 import kotlinx.coroutines.flow.firstOrNull
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.api.usecases.DisableAccount
 import proton.android.pass.data.api.usecases.ObserveReadyAccounts
 import proton.android.pass.data.api.usecases.SignOutAccount
+import proton.android.pass.domain.UserId
 import javax.inject.Inject
 
 class SignOutAccountImpl @Inject constructor(

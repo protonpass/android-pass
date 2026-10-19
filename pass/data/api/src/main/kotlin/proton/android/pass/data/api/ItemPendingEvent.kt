@@ -18,11 +18,11 @@
 
 package proton.android.pass.data.api
 
-import me.proton.core.domain.entity.UserId
 import me.proton.core.user.domain.entity.AddressId
 import proton.android.pass.data.api.repositories.UpdateShareEvent
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.UserId
 
 data class ItemPendingEvent(
     val userId: UserId,

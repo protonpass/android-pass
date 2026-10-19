@@ -18,8 +18,8 @@
 
 package proton.android.pass.data.impl.remote.accessdata
 
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.impl.responses.UserAccessResponse
+import proton.android.pass.domain.UserId
 
 interface RemoteUserAccessDataDataSource {
 

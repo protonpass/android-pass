@@ -20,12 +20,12 @@ package proton.android.pass.composecomponents.impl.item
 
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import kotlinx.datetime.Clock
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.ShareType
+import proton.android.pass.domain.UserId
 
 class ItemUiModelPreviewProvider : PreviewParameterProvider<ItemUiModel> {
     override val values: Sequence<ItemUiModel>

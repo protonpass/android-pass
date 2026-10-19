@@ -50,6 +50,8 @@ dependencies {
     ksp(libs.dagger.hilt.android.compiler)
     ksp(libs.androidx.hilt.compiler)
 
+    implementation(projects.pass.domain)
+
     implementation(projects.pass.crypto.api)
 
     implementation(libs.core.country.domain)

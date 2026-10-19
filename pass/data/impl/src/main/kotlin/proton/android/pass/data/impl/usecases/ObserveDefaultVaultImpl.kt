@@ -23,7 +23,6 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
@@ -37,6 +36,7 @@ import proton.android.pass.data.api.usecases.defaultvault.VaultWithFolder
 import proton.android.pass.data.api.usecases.folders.ObserveFolder
 import proton.android.pass.domain.FolderId
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.UserId
 import proton.android.pass.domain.Vault
 import proton.android.pass.domain.canCreate
 import proton.android.pass.domain.toPermissions

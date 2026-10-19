@@ -18,9 +18,9 @@
 
 package proton.android.pass.data.fakes.usecases.compromisedpassword
 
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.api.usecases.compromisedpassword.RefreshCompromisedPasswords
 import proton.android.pass.domain.Item
+import proton.android.pass.domain.UserId
 import javax.inject.Inject
 import javax.inject.Singleton
 

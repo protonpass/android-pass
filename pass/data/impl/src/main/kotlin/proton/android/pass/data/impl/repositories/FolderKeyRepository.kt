@@ -18,9 +18,9 @@
 
 package proton.android.pass.data.impl.repositories
 
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.domain.FolderId
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.UserId
 import proton.android.pass.domain.key.FolderKey
 
 interface FolderKeyRepository {

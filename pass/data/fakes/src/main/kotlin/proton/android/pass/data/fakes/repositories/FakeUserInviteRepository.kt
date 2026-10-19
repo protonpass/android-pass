@@ -22,7 +22,6 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.flowOf
 import proton.android.pass.common.api.Some
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.data.api.repositories.InviteTarget
@@ -33,6 +32,7 @@ import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.PendingInvite
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.ShareInvite
+import proton.android.pass.domain.UserId
 import proton.android.pass.domain.events.EventToken
 import javax.inject.Inject
 import javax.inject.Singleton

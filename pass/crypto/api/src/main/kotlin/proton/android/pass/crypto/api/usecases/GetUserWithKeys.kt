@@ -18,8 +18,8 @@
 
 package proton.android.pass.crypto.api.usecases
 
-import me.proton.core.domain.entity.UserId
 import me.proton.core.user.domain.entity.User
+import proton.android.pass.domain.UserId
 
 interface GetUserWithKeys {
 

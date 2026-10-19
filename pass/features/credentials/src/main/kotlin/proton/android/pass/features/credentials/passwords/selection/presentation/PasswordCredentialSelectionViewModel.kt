@@ -33,7 +33,6 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import me.proton.core.crypto.common.keystore.EncryptedString
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.appconfig.api.AppConfig
 import proton.android.pass.appconfig.api.BuildFlavor.Companion.supportPayment
 import proton.android.pass.biometry.NeedsBiometricAuth
@@ -50,6 +49,7 @@ import proton.android.pass.data.api.usecases.HasActiveAccount
 import proton.android.pass.data.api.usecases.SignOutAccount
 import proton.android.pass.data.api.usecases.VerifyDigitalAssetLinksForCredentialSharing
 import proton.android.pass.domain.ItemContents
+import proton.android.pass.domain.UserId
 import proton.android.pass.domain.entity.AppName
 import proton.android.pass.domain.entity.PackageInfo
 import proton.android.pass.domain.entity.PackageName

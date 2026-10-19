@@ -18,12 +18,12 @@
 
 package proton.android.pass.data.impl.usecases
 
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.api.repositories.BreachRepository
 import proton.android.pass.data.api.usecases.GetPrimaryUserId
 import proton.android.pass.data.api.usecases.RefreshBreaches
 import proton.android.pass.common.api.safeRunCatching
 import proton.android.pass.data.api.errors.UserIdNotAvailableError
+import proton.android.pass.domain.UserId
 import proton.android.pass.log.api.PassLogger
 import javax.inject.Inject
 

@@ -19,12 +19,12 @@
 package proton.android.pass.data.impl.repositories
 
 import kotlinx.coroutines.flow.first
-import me.proton.core.domain.entity.UserId
 import me.proton.core.user.domain.entity.AddressId
 import proton.android.pass.data.impl.local.LocalEventDataSource
 import proton.android.pass.data.impl.remote.RemoteEventDataSource
 import proton.android.pass.data.impl.responses.EventList
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.UserId
 import javax.inject.Inject
 
 class EventRepositoryImpl @Inject constructor(

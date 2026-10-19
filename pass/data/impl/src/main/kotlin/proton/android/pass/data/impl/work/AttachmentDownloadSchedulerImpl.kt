@@ -21,13 +21,13 @@ package proton.android.pass.data.impl.work
 import androidx.work.ExistingWorkPolicy
 import androidx.work.WorkManager
 import kotlinx.coroutines.flow.first
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.api.repositories.AttachmentRepository
 import proton.android.pass.data.api.repositories.ShareRepository
 import proton.android.pass.data.api.usecases.attachments.AttachmentDownloadScheduler
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.ShareType
+import proton.android.pass.domain.UserId
 import proton.android.pass.domain.attachments.AttachmentId
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.preferences.UserPreferencesRepository

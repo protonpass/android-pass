@@ -21,10 +21,10 @@ package proton.android.pass.data.fakes.repositories
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.flow.flow
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.crypto.api.usecases.EncryptedCreateItem
 import proton.android.pass.data.api.repositories.SimpleLoginRepository
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.UserId
 import proton.android.pass.domain.simplelogin.SimpleLoginAliasDomain
 import proton.android.pass.domain.simplelogin.SimpleLoginAliasMailbox
 import proton.android.pass.domain.simplelogin.SimpleLoginAliasSettings

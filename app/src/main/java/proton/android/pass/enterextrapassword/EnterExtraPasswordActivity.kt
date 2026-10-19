@@ -27,13 +27,13 @@ import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.EntryPointAccessors
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.runBlocking
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.autofill.di.UserPreferenceEntryPoint
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.enableEdgeToEdgeProtonPass
 import proton.android.pass.commonui.api.setSecureMode
 import proton.android.pass.composecomponents.impl.theme.isDark
 import proton.android.pass.data.api.usecases.extrapassword.AuthWithExtraPasswordListener
+import proton.android.pass.domain.UserId
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.android.pass.preferences.AllowScreenshotsPreference

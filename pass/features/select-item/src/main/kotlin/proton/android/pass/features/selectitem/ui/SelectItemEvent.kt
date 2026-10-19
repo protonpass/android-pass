@@ -18,9 +18,9 @@
 
 package proton.android.pass.features.selectitem.ui
 
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.Option
 import proton.android.pass.commonuimodels.api.ItemUiModel
+import proton.android.pass.domain.UserId
 
 sealed interface SelectItemEvent {
     data class ItemClicked(val item: ItemUiModel, val isSuggestion: Boolean) : SelectItemEvent

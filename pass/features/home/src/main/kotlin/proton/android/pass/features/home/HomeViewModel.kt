@@ -63,7 +63,6 @@ import kotlinx.datetime.Instant
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toJavaLocalDateTime
 import kotlinx.datetime.toLocalDateTime
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.appconfig.api.AppConfig
 import proton.android.pass.appconfig.api.BuildFlavor.Companion.isQuest
 import proton.android.pass.appconfig.api.BuildFlavor.Companion.passStoreUrl
@@ -157,6 +156,7 @@ import proton.android.pass.domain.ItemState
 import proton.android.pass.domain.Share
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.ShareSelection
+import proton.android.pass.domain.UserId
 import proton.android.pass.domain.items.ItemSharedType
 import proton.android.pass.features.home.HomeSnackbarMessage.AliasItemsDisabledError
 import proton.android.pass.features.home.HomeSnackbarMessage.AliasItemsEnabledError

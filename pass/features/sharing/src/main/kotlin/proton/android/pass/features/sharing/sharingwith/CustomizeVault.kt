@@ -36,7 +36,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.defaultSmallNorm
-import me.proton.core.domain.entity.UserId
 import me.proton.core.user.domain.entity.AddressId
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
@@ -54,6 +53,7 @@ import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.SharePermission
 import proton.android.pass.domain.SharePermissionFlag
 import proton.android.pass.domain.ShareRole
+import proton.android.pass.domain.UserId
 import proton.android.pass.domain.VaultId
 import java.util.Date
 import me.proton.core.presentation.R as CoreR

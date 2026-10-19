@@ -20,10 +20,10 @@ package proton.android.pass.data.fakes.repositories
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.api.repositories.PasswordHistoryEntryRepository
 import proton.android.pass.domain.PasswordHistoryEntry
 import proton.android.pass.domain.PasswordHistoryEntryId
+import proton.android.pass.domain.UserId
 import javax.inject.Inject
 
 @Suppress("NotImplementedDeclaration")

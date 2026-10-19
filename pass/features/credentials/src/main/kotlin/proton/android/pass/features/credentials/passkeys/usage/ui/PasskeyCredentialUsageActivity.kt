@@ -36,11 +36,11 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.PasskeyId
 import proton.android.pass.domain.PasskeyItem
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.UserId
 import proton.android.pass.features.credentials.R
 import proton.android.pass.features.credentials.passkeys.usage.presentation.PasskeyCredentialUsageRequest
 import proton.android.pass.features.credentials.passkeys.usage.presentation.PasskeyCredentialUsageState

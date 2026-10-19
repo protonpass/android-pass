@@ -18,8 +18,8 @@
 
 package proton.android.pass.autofill.ui.autofill
 
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.autofill.entities.AutofillMappings
+import proton.android.pass.domain.UserId
 
 sealed interface AutofillNavigation {
     data object Upgrade : AutofillNavigation

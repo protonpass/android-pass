@@ -21,7 +21,6 @@ package proton.android.pass.data.fakes.usecases
 import androidx.paging.PagingData
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.api.repositories.SearchSortBy
 import proton.android.pass.data.api.usecases.ItemTypeFilter
 import proton.android.pass.data.api.usecases.ObservePagedItems
@@ -29,6 +28,7 @@ import proton.android.pass.domain.FolderId
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemState
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.UserId
 import proton.android.pass.domain.items.ItemSharedType
 import javax.inject.Inject
 import javax.inject.Singleton

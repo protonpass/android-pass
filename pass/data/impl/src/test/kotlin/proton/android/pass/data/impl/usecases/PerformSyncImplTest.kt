@@ -24,12 +24,12 @@ import kotlinx.coroutines.cancelAndJoin
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.test.runCurrent
 import kotlinx.coroutines.test.runTest
-import me.proton.core.domain.entity.UserId
 import org.junit.Test
 import proton.android.pass.data.api.repositories.SyncMode
 import proton.android.pass.data.api.repositories.SyncReason
 import proton.android.pass.data.api.usecases.SyncUserEvents
 import proton.android.pass.data.fakes.usecases.sync.FakeCheckFolderForceSync
+import proton.android.pass.domain.UserId
 import javax.inject.Provider
 
 class PerformSyncImplTest {

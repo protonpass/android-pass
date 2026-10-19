@@ -21,10 +21,10 @@ package proton.android.pass.data.impl.local
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.datetime.Clock
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.impl.db.PassDatabase
 import proton.android.pass.data.impl.db.entities.UserEventEntity
 import proton.android.pass.domain.UserEventId
+import proton.android.pass.domain.UserId
 import javax.inject.Inject
 
 class LocalUserEventDataSourceImpl @Inject constructor(

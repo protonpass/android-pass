@@ -23,11 +23,11 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.update
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.some
 import proton.android.pass.data.api.core.datasources.LocalSentinelDataSource
+import proton.android.pass.domain.UserId
 import proton.android.pass.preferences.UserPreferencesRepository
 import proton.android.pass.preferences.sentinel.SentinelStatusPreference
 import javax.inject.Inject

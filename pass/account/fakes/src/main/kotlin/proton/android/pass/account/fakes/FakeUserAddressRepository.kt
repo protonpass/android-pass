@@ -21,10 +21,10 @@ package proton.android.pass.account.fakes
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
 import me.proton.core.domain.entity.SessionUserId
-import me.proton.core.domain.entity.UserId
 import me.proton.core.user.domain.entity.AddressId
 import me.proton.core.user.domain.entity.UserAddress
 import me.proton.core.user.domain.repository.UserAddressRepository
+import proton.android.pass.domain.UserId
 import javax.inject.Inject
 
 class FakeUserAddressRepository @Inject constructor() : UserAddressRepository {

@@ -18,9 +18,9 @@
 
 package proton.android.pass.data.impl.usecases.attachments
 
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.api.repositories.AttachmentRepository
 import proton.android.pass.data.api.usecases.attachments.UpdateAttachmentDownloadStatus
+import proton.android.pass.domain.UserId
 import proton.android.pass.domain.attachments.Attachment
 import proton.android.pass.domain.attachments.AttachmentDownloadStatus
 import javax.inject.Inject

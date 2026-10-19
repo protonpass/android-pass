@@ -20,7 +20,6 @@ package proton.android.pass.data.impl.usecases
 
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.withContext
-import me.proton.core.domain.entity.UserId
 import me.proton.core.network.data.ApiProvider
 import me.proton.core.user.domain.repository.UserAddressRepository
 import proton.android.pass.common.api.AppDispatchers
@@ -36,6 +35,7 @@ import proton.android.pass.data.impl.repositories.ShareKeyRepository
 import proton.android.pass.data.impl.requests.invites.ConfirmInviteRequest
 import proton.android.pass.data.impl.requests.invites.InviteKeyRotation
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.UserId
 import proton.android.pass.log.api.PassLogger
 import javax.inject.Inject
 import javax.inject.Singleton

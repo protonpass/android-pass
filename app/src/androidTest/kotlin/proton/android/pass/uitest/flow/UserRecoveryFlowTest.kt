@@ -39,7 +39,6 @@ import me.proton.core.account.domain.entity.Account
 import me.proton.core.auth.test.flow.SignInFlow
 import me.proton.core.auth.test.robot.AddAccountRobot
 import me.proton.core.auth.test.usecase.WaitForPrimaryAccount
-import me.proton.core.domain.entity.UserId
 import me.proton.core.user.domain.repository.UserRepository
 import me.proton.core.test.rule.ProtonRule
 import me.proton.core.test.rule.extension.protonAndroidComposeRule
@@ -53,6 +52,7 @@ import me.proton.test.fusion.Fusion.node
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
+import proton.android.pass.domain.UserId
 import proton.android.pass.features.onboarding.OnBoardingPageName
 import proton.android.pass.initializer.MainInitializer
 import proton.android.pass.ui.MainActivity

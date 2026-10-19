@@ -21,7 +21,6 @@ package proton.android.pass.data.impl.repositories
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.datetime.Clock
 import kotlinx.serialization.json.JsonPrimitive
-import me.proton.core.domain.entity.UserId
 import me.proton.core.telemetry.domain.usecase.IsTelemetryEnabled
 import proton.android.pass.appconfig.api.AppConfig
 import proton.android.pass.appconfig.api.BuildFlavor.Companion.supportTelemetryGrowth
@@ -42,6 +41,7 @@ import proton.android.pass.data.impl.requests.TelemetryRequest
 import proton.android.pass.data.impl.util.DimensionsSerializer
 import proton.android.pass.data.impl.util.buildTelemetryGrowthEventRequest
 import proton.android.pass.data.impl.util.runConcurrently
+import proton.android.pass.domain.UserId
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.telemetry.api.TelemetryEvent
 import proton.android.pass.telemetry.api.TelemetryEvent.DeferredTelemetryGrowthEvent

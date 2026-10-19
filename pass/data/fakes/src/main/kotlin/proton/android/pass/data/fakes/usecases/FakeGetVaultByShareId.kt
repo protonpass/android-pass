@@ -21,7 +21,6 @@ package proton.android.pass.data.fakes.usecases
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.onSubscription
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.FlowUtils
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
@@ -29,6 +28,7 @@ import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.toOption
 import proton.android.pass.data.api.usecases.GetVaultByShareId
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.UserId
 import proton.android.pass.domain.Vault
 import javax.inject.Inject
 import javax.inject.Singleton

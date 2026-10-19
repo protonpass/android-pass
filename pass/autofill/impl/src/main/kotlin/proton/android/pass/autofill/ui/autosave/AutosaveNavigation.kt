@@ -18,7 +18,7 @@
 
 package proton.android.pass.autofill.ui.autosave
 
-import me.proton.core.domain.entity.UserId
+import proton.android.pass.domain.UserId
 
 sealed interface AutosaveNavigation {
     data object Success : AutosaveNavigation

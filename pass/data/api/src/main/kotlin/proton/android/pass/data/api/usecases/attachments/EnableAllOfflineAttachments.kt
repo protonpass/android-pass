@@ -18,7 +18,7 @@
 
 package proton.android.pass.data.api.usecases.attachments
 
-import me.proton.core.domain.entity.UserId
+import proton.android.pass.domain.UserId
 
 interface EnableAllOfflineAttachments {
     suspend operator fun invoke(userId: UserId)

@@ -19,7 +19,7 @@
 package proton.android.pass.data.api.repositories
 
 import kotlinx.coroutines.flow.Flow
-import me.proton.core.domain.entity.UserId
+import proton.android.pass.domain.UserId
 import proton.android.pass.domain.inappmessages.InAppMessage
 import proton.android.pass.domain.inappmessages.InAppMessageId
 import proton.android.pass.domain.inappmessages.InAppMessageStatus

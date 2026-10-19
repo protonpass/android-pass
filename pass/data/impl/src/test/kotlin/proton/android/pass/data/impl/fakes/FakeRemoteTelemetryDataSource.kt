@@ -18,9 +18,9 @@
 
 package proton.android.pass.data.impl.fakes
 
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.impl.remote.RemoteTelemetryDataSource
 import proton.android.pass.data.impl.requests.TelemetryRequest
+import proton.android.pass.domain.UserId
 
 class FakeRemoteTelemetryDataSource : RemoteTelemetryDataSource {
 

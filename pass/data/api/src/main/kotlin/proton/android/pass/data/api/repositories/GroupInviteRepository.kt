@@ -19,10 +19,10 @@
 package proton.android.pass.data.api.repositories
 
 import kotlinx.coroutines.flow.Flow
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.domain.InviteId
 import proton.android.pass.domain.InviteToken
 import proton.android.pass.domain.PendingInvite
+import proton.android.pass.domain.UserId
 import proton.android.pass.domain.events.EventToken
 
 interface GroupInviteRepository {

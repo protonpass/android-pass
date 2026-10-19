@@ -18,7 +18,6 @@
 
 package proton.android.pass.data.impl.remote
 
-import me.proton.core.domain.entity.UserId
 import me.proton.core.network.data.ApiProvider
 import me.proton.core.network.domain.ApiResult
 import proton.android.pass.data.api.errors.TooManyExtraPasswordAttemptsException
@@ -27,6 +26,7 @@ import proton.android.pass.data.impl.api.PasswordManagerApi
 import proton.android.pass.data.impl.requests.ExtraPasswordSendSrpDataRequest
 import proton.android.pass.data.impl.requests.SetupExtraPasswordRequest
 import proton.android.pass.data.impl.responses.ExtraPasswordGetSrpData
+import proton.android.pass.domain.UserId
 import javax.inject.Inject
 
 interface RemoteExtraPasswordDataSource {

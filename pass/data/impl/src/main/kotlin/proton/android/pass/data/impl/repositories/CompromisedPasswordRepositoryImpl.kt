@@ -22,7 +22,6 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.repositories.CompromisedPasswordItem
 import proton.android.pass.data.api.repositories.CompromisedPasswordRepository
@@ -35,6 +34,7 @@ import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ItemType
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.UserId
 import proton.android.pass.domain.isFullyExcludedFromMonitoring
 import proton.android.pass.log.api.PassLogger
 import javax.inject.Inject

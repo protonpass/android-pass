@@ -26,10 +26,10 @@ import android.os.LocaleList
 import android.os.StatFs
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.withContext
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.appconfig.api.AppConfig
 import proton.android.pass.common.api.AppDispatchers
 import proton.android.pass.common.api.FileSizeUtil.toHumanReadableSize
+import proton.android.pass.domain.UserId
 import proton.android.pass.log.api.LogExporter
 import proton.android.pass.log.api.LogFileManager
 import proton.android.pass.log.api.PassLogger

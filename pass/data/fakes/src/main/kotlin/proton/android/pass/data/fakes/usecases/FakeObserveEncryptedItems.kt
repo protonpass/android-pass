@@ -22,7 +22,6 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.datetime.Clock
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.FlowUtils.testFlow
 import proton.android.pass.common.api.None
 import proton.android.pass.commonrust.fakes.FakeItemContentSerializer
@@ -45,6 +44,7 @@ import proton.android.pass.domain.PersonalDetailsContent
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.ShareSelection
 import proton.android.pass.domain.ShareType
+import proton.android.pass.domain.UserId
 import proton.android.pass.domain.WorkDetailsContent
 import javax.inject.Inject
 import javax.inject.Singleton

@@ -19,8 +19,8 @@
 package proton.android.pass.data.impl.usecases
 
 import me.proton.core.accountmanager.domain.AccountManager
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.api.usecases.SetAsPrimary
+import proton.android.pass.domain.UserId
 import javax.inject.Inject
 
 class SetAsPrimaryImpl @Inject constructor(

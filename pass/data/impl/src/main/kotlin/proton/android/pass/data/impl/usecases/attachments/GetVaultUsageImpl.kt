@@ -18,10 +18,10 @@
 
 package proton.android.pass.data.impl.usecases.attachments
 
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.api.usecases.attachments.GetVaultUsage
 import proton.android.pass.data.impl.remote.RemoteShareDataSource
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.UserId
 import javax.inject.Inject
 import javax.inject.Singleton
 

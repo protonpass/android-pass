@@ -31,11 +31,11 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.NavHost
 import com.google.accompanist.navigation.material.ExperimentalMaterialNavigationApi
 import kotlinx.coroutines.Job
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.commonui.api.onBottomSheetDismissed
 import proton.android.pass.composecomponents.impl.bottomsheet.PassModalBottomSheetLayout
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.UserId
 import proton.android.pass.features.auth.AUTH_GRAPH
 import proton.android.pass.features.auth.AuthNavigation
 import proton.android.pass.features.upsell.v2.navigation.UpsellV2NavItem

@@ -37,7 +37,6 @@ import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.withContext
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.safeRunCatching
 import proton.android.pass.data.api.repositories.ItemSyncStatus
 import proton.android.pass.data.api.repositories.ItemSyncStatusRepository
@@ -48,6 +47,7 @@ import proton.android.pass.data.api.usecases.sync.MarkFolderForceSyncCompleted
 import proton.android.pass.data.api.usecases.sync.ForceSyncResult
 import proton.android.pass.data.impl.R
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.UserId
 import proton.android.pass.log.api.LogAccountContext
 import proton.android.pass.log.api.PassLogger
 import me.proton.core.notification.R as CoreR

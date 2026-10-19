@@ -22,9 +22,9 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.update
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.api.usecases.shares.ObserveAutofillShares
 import proton.android.pass.domain.Share
+import proton.android.pass.domain.UserId
 import javax.inject.Inject
 import javax.inject.Singleton
 

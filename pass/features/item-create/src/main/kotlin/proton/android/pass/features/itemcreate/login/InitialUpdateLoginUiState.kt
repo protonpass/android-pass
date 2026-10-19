@@ -19,9 +19,9 @@
 package proton.android.pass.features.itemcreate.login
 
 import me.proton.core.crypto.common.keystore.EncryptedString
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.UserId
 
 data class InitialUpdateLoginUiState(
     val sharedId: ShareId,

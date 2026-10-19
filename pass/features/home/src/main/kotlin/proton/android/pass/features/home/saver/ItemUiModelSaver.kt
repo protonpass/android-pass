@@ -23,11 +23,11 @@ import androidx.compose.runtime.saveable.mapSaver
 import kotlinx.datetime.Instant
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.ShareType
+import proton.android.pass.domain.UserId
 
 val ItemUiModelSaver: Saver<ItemUiModel?, Any> = run {
     val itemId = "item_id"

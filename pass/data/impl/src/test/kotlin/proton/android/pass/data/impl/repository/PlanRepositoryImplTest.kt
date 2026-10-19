@@ -23,7 +23,6 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
 import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
-import me.proton.core.domain.entity.UserId
 import org.junit.Before
 import org.junit.Test
 import proton.android.pass.data.fakes.repositories.FakeUserAccessDataRepository
@@ -36,6 +35,7 @@ import proton.android.pass.data.impl.responses.PlanResponse
 import proton.android.pass.data.impl.responses.UserAccessResponse
 import proton.android.pass.data.impl.responses.UserDataResponse
 import proton.android.pass.domain.PlanType
+import proton.android.pass.domain.UserId
 import proton.android.pass.test.FixedClock
 import proton.android.pass.test.domain.UserAccessDataTestFactory
 

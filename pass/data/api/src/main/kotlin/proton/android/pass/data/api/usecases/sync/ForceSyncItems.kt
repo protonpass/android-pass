@@ -18,8 +18,8 @@
 
 package proton.android.pass.data.api.usecases.sync
 
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.UserId
 
 enum class ForceSyncResult {
     Success,

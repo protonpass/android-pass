@@ -10,8 +10,8 @@
 
 package proton.android.pass.account.fakes.payment
 
-import me.proton.core.domain.entity.UserId
 import me.proton.core.payment.domain.features.IsMobileUpgradesEnabled
+import proton.android.pass.domain.UserId
 import javax.inject.Inject
 import javax.inject.Singleton
 

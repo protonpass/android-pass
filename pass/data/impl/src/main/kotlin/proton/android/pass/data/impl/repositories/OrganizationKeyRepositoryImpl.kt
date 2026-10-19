@@ -19,10 +19,10 @@
 package proton.android.pass.data.impl.repositories
 
 import kotlinx.coroutines.flow.MutableStateFlow
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.impl.remote.RemoteOrganizationKeyDataSource
 import proton.android.pass.data.impl.responses.OrganizationKeyApiModel
 import proton.android.pass.domain.OrganizationKey
+import proton.android.pass.domain.UserId
 import proton.android.pass.domain.repositories.OrganizationKeyRepository
 import proton.android.pass.log.api.PassLogger
 import javax.inject.Inject

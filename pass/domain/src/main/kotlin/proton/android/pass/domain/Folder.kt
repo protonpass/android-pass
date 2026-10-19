@@ -18,7 +18,6 @@
 
 package proton.android.pass.domain
 
-import me.proton.core.domain.entity.UserId
 
 data class Folder(
     val userId: UserId,

@@ -22,7 +22,6 @@ import app.cash.turbine.test
 import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.test.runTest
 import kotlinx.datetime.Instant
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.some
 import org.junit.Before
@@ -47,6 +46,7 @@ import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.ShareType
+import proton.android.pass.domain.UserId
 import proton.android.pass.domain.items.ItemCategory
 import proton.android.pass.domain.assetlink.AssetLink
 import proton.android.pass.domain.entity.AppName

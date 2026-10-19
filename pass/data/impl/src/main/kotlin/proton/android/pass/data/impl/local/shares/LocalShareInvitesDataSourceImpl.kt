@@ -22,9 +22,9 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.flow.update
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.domain.InviteId
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.UserId
 import proton.android.pass.domain.shares.SharePendingInvite
 import javax.inject.Inject
 

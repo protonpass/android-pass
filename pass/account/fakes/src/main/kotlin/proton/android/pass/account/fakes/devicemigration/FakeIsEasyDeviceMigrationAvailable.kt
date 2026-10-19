@@ -19,7 +19,7 @@
 package proton.android.pass.account.fakes.devicemigration
 
 import me.proton.core.devicemigration.domain.usecase.IsEasyDeviceMigrationAvailable
-import me.proton.core.domain.entity.UserId
+import proton.android.pass.domain.UserId
 import javax.inject.Inject
 import javax.inject.Singleton
 

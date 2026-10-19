@@ -37,8 +37,8 @@ import me.proton.core.auth.test.fake.FakeIsFido2Enabled
 import me.proton.core.auth.test.fake.FakeIsLoginTwoStepEnabled
 import me.proton.core.auth.test.fake.FakeIsSsoCustomTabEnabled
 import me.proton.core.auth.test.fake.FakeIsSsoEnabled
-import me.proton.core.domain.entity.UserId
 import org.junit.Test
+import proton.android.pass.domain.UserId
 import proton.android.pass.uitest.robot.ActivityStackRobot
 import proton.android.pass.uitest.robot.ExtraPasswordRobot
 

@@ -18,11 +18,11 @@
 
 package proton.android.pass.data.impl.fakes
 
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.impl.remote.RemoteExtraPasswordDataSource
 import proton.android.pass.data.impl.requests.ExtraPasswordSendSrpDataRequest
 import proton.android.pass.data.impl.requests.SetupExtraPasswordRequest
 import proton.android.pass.data.impl.responses.ExtraPasswordGetSrpData
+import proton.android.pass.domain.UserId
 
 class FakeRemoteExtraPasswordDataSource : RemoteExtraPasswordDataSource {
 

@@ -21,11 +21,11 @@ package proton.android.pass.data.impl.fakes
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.map
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.impl.db.entities.FolderEntity
 import proton.android.pass.data.impl.local.LocalFolderDataSource
 import proton.android.pass.domain.FolderId
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.UserId
 
 class FakeLocalFolderDataSource : LocalFolderDataSource {
     data class DeleteCall(

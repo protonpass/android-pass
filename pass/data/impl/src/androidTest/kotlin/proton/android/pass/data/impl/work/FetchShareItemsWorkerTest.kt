@@ -29,7 +29,6 @@ import androidx.work.workDataOf
 import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
-import me.proton.core.domain.entity.UserId
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -40,6 +39,7 @@ import proton.android.pass.data.fakes.usecases.folders.FakeRefreshFolders
 import proton.android.pass.data.impl.repositories.FetchShareItemsStatus
 import proton.android.pass.data.impl.repositories.FetchShareItemsStatusRepositoryImpl
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.UserId
 
 @RunWith(AndroidJUnit4::class)
 class FetchShareItemsWorkerTest {

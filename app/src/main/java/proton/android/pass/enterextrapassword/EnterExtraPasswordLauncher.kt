@@ -21,8 +21,8 @@ package proton.android.pass.enterextrapassword
 import android.content.Context
 import android.content.Intent
 import dagger.hilt.android.qualifiers.ApplicationContext
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.ForegroundActivityTracker
+import proton.android.pass.domain.UserId
 import proton.android.pass.log.api.PassLogger
 import javax.inject.Inject
 

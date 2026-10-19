@@ -62,6 +62,8 @@ fun DependencyHandlerScope.addSpecialLib(
 dependencies {
     api(projects.pass.log.api)
 
+    implementation(projects.pass.domain)
+
     implementation(projects.pass.data.api)
     implementation(projects.pass.common.api)
     implementation(projects.pass.commonUi.api)

@@ -19,9 +19,9 @@
 package proton.android.pass.data.api.usecases
 
 import kotlinx.coroutines.flow.Flow
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.domain.Plan
 import proton.android.pass.domain.PlanLimit
+import proton.android.pass.domain.UserId
 
 interface ObserveUpgradeInfo {
     operator fun invoke(userId: UserId? = null): Flow<UpgradeInfo>

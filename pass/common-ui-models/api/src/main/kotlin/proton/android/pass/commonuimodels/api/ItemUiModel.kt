@@ -20,13 +20,13 @@ package proton.android.pass.commonuimodels.api
 
 import androidx.compose.runtime.Stable
 import kotlinx.datetime.Instant
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.FolderId
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ItemState
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.ShareType
+import proton.android.pass.domain.UserId
 import proton.android.pass.domain.items.ItemCategory
 
 @Stable

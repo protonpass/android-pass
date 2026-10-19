@@ -18,7 +18,6 @@
 
 package proton.android.pass.test.domain
 
-import me.proton.core.domain.entity.UserId
 import me.proton.core.user.domain.entity.AddressId
 import proton.android.pass.domain.Share
 import proton.android.pass.domain.ShareColor
@@ -28,6 +27,7 @@ import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.SharePermission
 import proton.android.pass.domain.SharePermissionFlag
 import proton.android.pass.domain.ShareRole
+import proton.android.pass.domain.UserId
 import proton.android.pass.domain.VaultId
 import proton.android.pass.test.StringTestFactory
 import java.util.Date

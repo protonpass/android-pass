@@ -18,11 +18,11 @@
 
 package proton.android.pass.data.impl.usecases
 
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.api.repositories.ItemRepository
 import proton.android.pass.data.api.repositories.SearchResultItem
 import proton.android.pass.data.api.usecases.GetItemsBySearchResult
 import proton.android.pass.domain.Item
+import proton.android.pass.domain.UserId
 import proton.android.pass.log.api.PassLogger
 import javax.inject.Inject
 import javax.inject.Singleton

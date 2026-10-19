@@ -18,9 +18,9 @@
 
 package proton.android.pass.data.api.usecases
 
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.api.repositories.SyncMode
 import proton.android.pass.data.api.repositories.SyncReason
+import proton.android.pass.domain.UserId
 
 interface SyncUserEvents {
     suspend operator fun invoke(

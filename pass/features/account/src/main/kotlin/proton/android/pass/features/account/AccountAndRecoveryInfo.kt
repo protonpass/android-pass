@@ -32,7 +32,6 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import me.proton.core.auth.fido.domain.entity.Fido2RegisteredKey
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.defaultSmallWeak
-import me.proton.core.domain.entity.UserId
 import me.proton.core.util.kotlin.orEmpty
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
@@ -41,6 +40,7 @@ import proton.android.pass.composecomponents.impl.container.roundedContainerNorm
 import proton.android.pass.composecomponents.impl.form.PassDivider
 import proton.android.pass.composecomponents.impl.setting.SettingOption
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
+import proton.android.pass.domain.UserId
 import proton.android.pass.domain.account.UserRecoveryState
 
 @Composable

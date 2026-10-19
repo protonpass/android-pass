@@ -18,12 +18,12 @@
 
 package proton.android.pass.data.fakes.usecases
 
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.api.usecases.CreateLoginAndAlias
 import proton.android.pass.domain.FolderId
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.UserId
 import proton.android.pass.domain.entity.NewAlias
 import javax.inject.Inject
 import javax.inject.Singleton

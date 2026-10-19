@@ -21,7 +21,6 @@ package proton.android.pass.autofill.e2e
 import android.app.Application
 import dagger.hilt.android.HiltAndroidApp
 import kotlinx.datetime.Clock
-import me.proton.core.domain.entity.UserId
 import me.proton.core.util.android.sentry.TimberLogger
 import me.proton.core.util.kotlin.CoreLogger
 import proton.android.pass.account.fakes.FakeUserManager
@@ -34,6 +33,7 @@ import proton.android.pass.data.fakes.usecases.FakeGetItemById
 import proton.android.pass.data.fakes.usecases.FakeGetSuggestedAutofillItems
 import proton.android.pass.data.fakes.usecases.FakeGetUserPlan
 import proton.android.pass.data.fakes.usecases.FakeObserveItems
+import proton.android.pass.domain.UserId
 import proton.android.pass.totp.fakes.FakeGetTotpCodeFromUri
 import proton.android.pass.data.fakes.usecases.shares.FakeObserveAutofillShares
 import proton.android.pass.domain.ItemId

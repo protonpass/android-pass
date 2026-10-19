@@ -19,9 +19,9 @@
 package proton.android.pass.data.fakes.usecases.items
 
 import kotlinx.coroutines.flow.Flow
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.FlowUtils.testFlow
 import proton.android.pass.data.api.usecases.items.ObserveCanCreateItems
+import proton.android.pass.domain.UserId
 import javax.inject.Inject
 import javax.inject.Singleton
 

@@ -18,9 +18,9 @@
 
 package proton.android.pass.data.api.usecases
 
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.UserId
 
 interface TrashItems {
     suspend operator fun invoke(userId: UserId? = null, items: Map<ShareId, List<ItemId>>)

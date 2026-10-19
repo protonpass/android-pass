@@ -20,7 +20,6 @@ package proton.android.pass.data.impl.repositories
 
 import kotlinx.coroutines.withContext
 import me.proton.core.crypto.common.keystore.EncryptedByteArray
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.AppDispatchers
 import proton.android.pass.common.api.safeRunCatching
 import proton.android.pass.crypto.api.Base64
@@ -38,6 +37,7 @@ import proton.android.pass.data.impl.local.LocalFolderKeyDataSource
 import proton.android.pass.data.impl.responses.FolderApiModel
 import proton.android.pass.domain.FolderId
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.UserId
 import proton.android.pass.domain.key.ShareKey
 import proton.android.pass.log.api.PassLogger
 

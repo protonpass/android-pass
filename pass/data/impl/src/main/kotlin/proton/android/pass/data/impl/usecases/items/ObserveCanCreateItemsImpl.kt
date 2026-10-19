@@ -23,11 +23,11 @@ import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.mapLatest
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.api.repositories.ShareRepository
 import proton.android.pass.data.api.usecases.ObserveCurrentUser
 import proton.android.pass.data.api.usecases.items.ObserveCanCreateItems
 import proton.android.pass.domain.ShareType
+import proton.android.pass.domain.UserId
 import javax.inject.Inject
 
 class ObserveCanCreateItemsImpl @Inject constructor(

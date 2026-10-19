@@ -21,7 +21,6 @@ package proton.android.pass.features.vault.bottomsheet.options
 import app.cash.turbine.test
 import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.test.runTest
-import me.proton.core.domain.entity.UserId
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -46,6 +45,7 @@ import proton.android.pass.domain.Plan
 import proton.android.pass.domain.ShareRole
 import proton.android.pass.domain.PlanLimit
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.UserId
 import proton.android.pass.domain.Vault
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.notifications.fakes.FakeSnackbarDispatcher

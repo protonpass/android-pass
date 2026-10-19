@@ -20,9 +20,9 @@ package proton.android.pass.data.impl.usecases.sync
 
 import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.test.runTest
-import me.proton.core.domain.entity.UserId
 import org.junit.Before
 import org.junit.Test
+import proton.android.pass.domain.UserId
 import proton.android.pass.preferences.FakeInternalSettingsRepository
 import proton.android.pass.preferences.ForceSyncFolderPreference
 

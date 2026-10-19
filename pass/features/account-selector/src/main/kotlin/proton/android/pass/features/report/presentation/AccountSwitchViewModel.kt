@@ -32,12 +32,12 @@ import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.api.usecases.ObservePrimaryAccount
 import proton.android.pass.data.api.usecases.ObserveReadyAccounts
 import proton.android.pass.data.api.usecases.ObserveUser
 import proton.android.pass.data.api.usecases.SetAsPrimary
 import proton.android.pass.data.api.usecases.items.ObserveCanCreateItems
+import proton.android.pass.domain.UserId
 import javax.inject.Inject
 
 @HiltViewModel

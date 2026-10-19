@@ -33,7 +33,6 @@ import dagger.hilt.components.SingletonComponent
 import junit.framework.TestCase.assertEquals
 import kotlinx.datetime.Clock
 import kotlinx.datetime.toJavaInstant
-import me.proton.core.domain.entity.UserId
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -62,6 +61,7 @@ import proton.android.pass.domain.ShareColor
 import proton.android.pass.domain.ShareFlags
 import proton.android.pass.domain.ShareIcon
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.UserId
 import proton.android.pass.domain.Vault
 import proton.android.pass.domain.VaultId
 import proton.android.pass.domain.VaultWithItemCount

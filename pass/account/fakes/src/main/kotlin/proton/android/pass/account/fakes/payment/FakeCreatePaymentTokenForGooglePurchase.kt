@@ -18,10 +18,10 @@
 
 package proton.android.pass.account.fakes.payment
 
-import me.proton.core.domain.entity.UserId
 import me.proton.core.payment.domain.entity.GooglePurchase
 import me.proton.core.payment.domain.entity.ProductId
 import me.proton.core.payment.domain.usecase.CreatePaymentTokenForGooglePurchase
+import proton.android.pass.domain.UserId
 import javax.inject.Inject
 
 @Suppress("NotImplementedDeclaration")

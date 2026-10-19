@@ -22,10 +22,10 @@ import app.cash.turbine.test
 import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.test.runTest
 import kotlinx.datetime.Clock
-import me.proton.core.domain.entity.UserId
 import org.junit.Before
 import proton.android.pass.data.fakes.repositories.FakeInAppMessagesRepository
 import proton.android.pass.data.fakes.usecases.FakeObserveCurrentUser
+import proton.android.pass.domain.UserId
 import proton.android.pass.domain.inappmessages.InAppMessageStatus
 import proton.android.pass.test.domain.InAppMessageTestFactory
 import proton.android.pass.test.domain.UserTestFactory

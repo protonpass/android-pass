@@ -31,6 +31,7 @@ android {
     }}
 
 dependencies {
+    implementation(projects.pass.domain)
     implementation(libs.core.network.domain)
     implementation(libs.core.userSettings.domain)
     implementation(libs.core.utilKotlin)

@@ -20,10 +20,10 @@ package proton.android.pass.data.fakes.repositories
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.FlowUtils.testFlow
 import proton.android.pass.data.api.repositories.UserAccessDataRepository
 import proton.android.pass.domain.UserAccessData
+import proton.android.pass.domain.UserId
 import javax.inject.Inject
 import javax.inject.Singleton
 

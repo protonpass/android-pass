@@ -20,7 +20,6 @@ package proton.android.pass.data.impl.repository
 
 import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.test.runTest
-import me.proton.core.domain.entity.UserId
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -43,6 +42,7 @@ import proton.android.pass.data.impl.fakes.FakeRemoteItemDataSource
 import proton.android.pass.data.impl.fakes.FakeShareKeyRepository
 import proton.android.pass.data.impl.fakes.FakeShareRepository
 import proton.android.pass.data.impl.repositories.ItemRepositoryImpl
+import proton.android.pass.domain.UserId
 import proton.android.pass.preferences.FakeFeatureFlagsPreferenceRepository
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId

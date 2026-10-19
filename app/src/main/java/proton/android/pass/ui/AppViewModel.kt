@@ -34,7 +34,6 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.appconfig.api.AppConfig
 import proton.android.pass.appconfig.api.BuildFlavor.Companion.isQuest
 import proton.android.pass.autofill.api.AutofillManager
@@ -54,6 +53,7 @@ import proton.android.pass.data.api.usecases.SeedAppLockStore
 import proton.android.pass.data.api.usecases.inappmessages.ChangeInAppMessageStatus
 import proton.android.pass.data.api.usecases.inappmessages.ObserveDeliverableBannerInAppMessages
 import proton.android.pass.data.api.usecases.simplelogin.ObserveSimpleLoginSyncStatus
+import proton.android.pass.domain.UserId
 import proton.android.pass.domain.inappmessages.InAppMessage
 import proton.android.pass.domain.inappmessages.InAppMessageId
 import proton.android.pass.domain.inappmessages.InAppMessageKey

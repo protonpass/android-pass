@@ -18,7 +18,6 @@
 
 package proton.android.pass.data.impl.remote
 
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.impl.requests.aliascontacts.CreateAliasContactRequest
 import proton.android.pass.data.impl.requests.aliascontacts.UpdateBlockedAliasContactRequest
 import proton.android.pass.data.impl.responses.aliascontacts.CreateAliasContactResponse
@@ -27,6 +26,7 @@ import proton.android.pass.data.impl.responses.aliascontacts.GetAliasContactsRes
 import proton.android.pass.data.impl.responses.aliascontacts.UpdateBlockedAliasContactResponse
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.UserId
 import proton.android.pass.domain.aliascontacts.ContactId
 
 interface RemoteAliasContactsDataSource {

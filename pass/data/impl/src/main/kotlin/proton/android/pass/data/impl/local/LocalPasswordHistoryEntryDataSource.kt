@@ -19,9 +19,9 @@
 package proton.android.pass.data.impl.local
 
 import kotlinx.coroutines.flow.Flow
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.impl.db.entities.PasswordHistoryEntity
 import proton.android.pass.domain.PasswordHistoryEntryId
+import proton.android.pass.domain.UserId
 
 interface LocalPasswordHistoryEntryDataSource {
     suspend fun addOnePasswordHistoryEntryForUser(passwordHistoryEntity: PasswordHistoryEntity)

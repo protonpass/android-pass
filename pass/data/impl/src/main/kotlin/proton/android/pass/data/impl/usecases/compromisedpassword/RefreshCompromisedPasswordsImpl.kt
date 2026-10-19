@@ -19,11 +19,11 @@
 package proton.android.pass.data.impl.usecases.compromisedpassword
 
 import kotlinx.coroutines.flow.firstOrNull
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.api.repositories.CompromisedPasswordRepository
 import proton.android.pass.data.api.usecases.ObserveCurrentUser
 import proton.android.pass.data.api.usecases.compromisedpassword.RefreshCompromisedPasswords
 import proton.android.pass.domain.Item
+import proton.android.pass.domain.UserId
 import javax.inject.Inject
 
 class RefreshCompromisedPasswordsImpl @Inject constructor(

@@ -19,7 +19,6 @@
 package proton.android.pass.data.impl.usecases.simplelogin
 
 import kotlinx.coroutines.flow.first
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.crypto.api.usecases.CreateItem
 import proton.android.pass.crypto.api.usecases.EncryptedCreateItem
 import proton.android.pass.data.api.errors.ShareContentNotAvailableError
@@ -30,6 +29,7 @@ import proton.android.pass.data.api.usecases.ObserveVaults
 import proton.android.pass.data.api.usecases.simplelogin.SyncSimpleLoginPendingAliases
 import proton.android.pass.data.impl.repositories.ShareKeyRepository
 import proton.android.pass.domain.ItemContents
+import proton.android.pass.domain.UserId
 import proton.android.pass.domain.Vault
 import proton.android.pass.domain.key.ShareKey
 import proton.android.pass.domain.selectSimpleLoginFallbackVault

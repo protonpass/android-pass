@@ -18,9 +18,9 @@
 
 package proton.android.pass.data.api.usecases
 
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.api.repositories.SearchResultItem
 import proton.android.pass.domain.Item
+import proton.android.pass.domain.UserId
 
 interface GetItemsBySearchResult {
     suspend operator fun invoke(userId: UserId, searchResults: List<SearchResultItem>): List<Item>

@@ -48,7 +48,6 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import kotlinx.datetime.Instant
 import me.proton.core.compose.theme.ProtonTheme
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Some
 import proton.android.pass.commonui.api.PassTheme
@@ -58,6 +57,7 @@ import proton.android.pass.commonui.api.applyIf
 import proton.android.pass.composecomponents.impl.container.roundedContainer
 import proton.android.pass.composecomponents.impl.icon.Icon
 import proton.android.pass.composecomponents.impl.text.Text
+import proton.android.pass.domain.UserId
 import proton.android.pass.domain.inappmessages.InAppMessage
 import proton.android.pass.domain.inappmessages.InAppMessageCTAType
 import proton.android.pass.domain.inappmessages.InAppMessageId

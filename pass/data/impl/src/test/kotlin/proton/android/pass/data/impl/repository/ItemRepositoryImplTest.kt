@@ -21,7 +21,6 @@ package proton.android.pass.data.impl.repository
 import kotlinx.coroutines.test.runTest
 import com.google.common.truth.Truth.assertThat
 import me.proton.core.crypto.common.keystore.EncryptedByteArray
-import me.proton.core.domain.entity.UserId
 import org.junit.Assert.assertThrows
 import org.junit.Before
 import org.junit.Rule
@@ -52,6 +51,7 @@ import proton.android.pass.data.impl.fakes.FakeShareRepository
 import proton.android.pass.data.impl.fakes.mother.ItemEntityTestFactory
 import proton.android.pass.data.impl.generator.TestProtoItemGenerator
 import proton.android.pass.data.impl.repositories.ItemRepositoryImpl
+import proton.android.pass.domain.UserId
 import proton.android.pass.preferences.FakeFeatureFlagsPreferenceRepository
 import proton.android.pass.data.api.ItemPendingEvent
 import proton.android.pass.data.api.PendingEventItemRevision

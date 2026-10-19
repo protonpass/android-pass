@@ -21,7 +21,6 @@ package proton.android.pass.domain
 import kotlinx.datetime.Instant
 import me.proton.core.crypto.common.keystore.EncryptedByteArray
 import me.proton.core.crypto.common.keystore.EncryptedString
-import me.proton.core.domain.entity.UserId
 import me.proton.core.util.kotlin.hasFlag
 import proton.android.pass.common.api.Option
 import proton.android.pass.domain.entity.PackageInfo

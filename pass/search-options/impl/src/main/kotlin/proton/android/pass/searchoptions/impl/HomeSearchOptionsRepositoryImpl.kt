@@ -26,8 +26,8 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.api.usecases.ObserveCurrentUser
+import proton.android.pass.domain.UserId
 import proton.android.pass.preferences.InternalSettingsRepository
 import proton.android.pass.searchoptions.api.FilterOption
 import proton.android.pass.searchoptions.api.HomeSearchOptionsRepository

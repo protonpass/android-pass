@@ -18,11 +18,11 @@
 
 package proton.android.pass.data.fakes.usecases.securelink
 
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.api.usecases.securelink.GenerateSecureLink
 import proton.android.pass.data.api.usecases.securelink.SecureLinkOptions
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.UserId
 import proton.android.pass.domain.securelinks.SecureLinkId
 import javax.inject.Inject
 import javax.inject.Singleton

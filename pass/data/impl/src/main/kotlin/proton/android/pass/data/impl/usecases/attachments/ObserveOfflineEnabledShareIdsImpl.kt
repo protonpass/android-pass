@@ -19,10 +19,10 @@
 package proton.android.pass.data.impl.usecases.attachments
 
 import kotlinx.coroutines.flow.Flow
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.api.repositories.ShareRepository
 import proton.android.pass.data.api.usecases.attachments.ObserveOfflineEnabledShareIds
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.UserId
 import javax.inject.Inject
 import javax.inject.Singleton
 

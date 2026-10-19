@@ -18,10 +18,10 @@
 
 package proton.android.pass.data.fakes.usecases.attachments
 
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.api.usecases.attachments.AttachmentDownloadScheduler
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.UserId
 import proton.android.pass.domain.attachments.AttachmentId
 import javax.inject.Inject
 import javax.inject.Singleton

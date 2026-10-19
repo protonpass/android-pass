@@ -26,7 +26,6 @@ import kotlinx.coroutines.ensureActive
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.AppDispatchers
 import proton.android.pass.common.api.FlowUtils.oneShot
 import proton.android.pass.common.api.firstError
@@ -51,6 +50,7 @@ import proton.android.pass.domain.AliasOptions
 import proton.android.pass.domain.AliasStats
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.UserId
 import proton.android.pass.domain.events.EventToken
 import javax.inject.Inject
 

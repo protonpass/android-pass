@@ -19,10 +19,10 @@
 package proton.android.pass.data.impl.usecases
 
 import me.proton.core.crypto.common.keystore.PlainByteArray
-import me.proton.core.domain.entity.UserId
 import me.proton.core.user.domain.UserManager
 import proton.android.pass.data.api.usecases.CheckMasterPassword
 import proton.android.pass.data.api.usecases.GetPrimaryUserId
+import proton.android.pass.domain.UserId
 import javax.inject.Inject
 
 class CheckMasterPasswordImpl @Inject constructor(

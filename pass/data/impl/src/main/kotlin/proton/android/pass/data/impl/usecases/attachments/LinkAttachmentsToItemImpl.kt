@@ -19,7 +19,6 @@
 package proton.android.pass.data.impl.usecases.attachments
 
 import kotlinx.coroutines.flow.firstOrNull
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.safeRunCatching
 import proton.android.pass.data.api.errors.UserIdNotAvailableError
 import proton.android.pass.data.api.repositories.AttachmentRepository
@@ -32,6 +31,7 @@ import proton.android.pass.data.api.usecases.attachments.LinkAttachmentsToItem
 import proton.android.pass.domain.ItemFlag
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.UserId
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.preferences.UserPreferencesRepository
 import proton.android.pass.preferences.value

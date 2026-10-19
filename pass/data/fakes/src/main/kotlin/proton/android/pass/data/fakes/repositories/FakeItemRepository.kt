@@ -22,7 +22,6 @@ import androidx.paging.PagingData
 import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.FlowUtils.testFlow
 import proton.android.pass.common.api.Option
 import proton.android.pass.data.api.ItemCountSummary
@@ -47,6 +46,7 @@ import proton.android.pass.domain.Passkey
 import proton.android.pass.domain.Share
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.ShareSelection
+import proton.android.pass.domain.UserId
 import proton.android.pass.domain.VaultId
 import proton.android.pass.domain.entity.NewAlias
 import proton.android.pass.domain.entity.PackageInfo

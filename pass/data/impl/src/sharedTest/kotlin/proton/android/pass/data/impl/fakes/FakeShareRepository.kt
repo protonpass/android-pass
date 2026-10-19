@@ -21,7 +21,6 @@ package proton.android.pass.data.impl.fakes
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import me.proton.core.domain.entity.SessionUserId
-import me.proton.core.domain.entity.UserId
 import me.proton.core.user.domain.entity.UserAddress
 import proton.android.pass.common.api.FlowUtils.testFlow
 import proton.android.pass.data.api.repositories.RefreshSharesResult
@@ -30,6 +29,7 @@ import proton.android.pass.data.api.repositories.UpdateShareEvent
 import proton.android.pass.domain.Share
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.ShareType
+import proton.android.pass.domain.UserId
 import proton.android.pass.domain.entity.NewVault
 import proton.android.pass.domain.events.EventToken
 

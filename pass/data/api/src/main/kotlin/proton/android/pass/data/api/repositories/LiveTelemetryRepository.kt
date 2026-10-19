@@ -18,7 +18,7 @@
 
 package proton.android.pass.data.api.repositories
 
-import me.proton.core.domain.entity.UserId
+import proton.android.pass.domain.UserId
 import proton.android.pass.telemetry.api.TelemetryEvent
 
 interface LiveTelemetryRepository {

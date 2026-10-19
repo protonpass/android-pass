@@ -18,10 +18,10 @@
 
 package proton.android.pass.data.fakes.usecases
 
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.api.usecases.UpdateAlias
 import proton.android.pass.data.api.usecases.UpdateAliasContent
 import proton.android.pass.domain.Item
+import proton.android.pass.domain.UserId
 import javax.inject.Inject
 
 class FakeUpdateAlias @Inject constructor() : UpdateAlias {

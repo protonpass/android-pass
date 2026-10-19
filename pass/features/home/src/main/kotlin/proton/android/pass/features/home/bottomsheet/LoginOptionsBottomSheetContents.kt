@@ -29,7 +29,6 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import kotlinx.collections.immutable.toPersistentList
 import kotlinx.datetime.Clock
 import me.proton.core.crypto.common.keystore.EncryptedString
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemedBooleanPreviewProvider
 import proton.android.pass.commonui.api.bottomSheet
@@ -53,6 +52,7 @@ import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.ShareType
+import proton.android.pass.domain.UserId
 import proton.android.pass.features.home.R
 
 @ExperimentalMaterialApi

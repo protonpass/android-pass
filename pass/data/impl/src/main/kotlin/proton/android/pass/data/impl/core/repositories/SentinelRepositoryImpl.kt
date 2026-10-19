@@ -23,13 +23,13 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onStart
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.safeRunCatching
 import proton.android.pass.data.api.core.datasources.LocalSentinelDataSource
 import proton.android.pass.data.api.core.datasources.RemoteSentinelDataSource
 import proton.android.pass.data.api.core.repositories.SentinelRepository
+import proton.android.pass.domain.UserId
 import proton.android.pass.log.api.PassLogger
 import javax.inject.Inject
 

@@ -22,12 +22,12 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.update
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.toOption
 import proton.android.pass.domain.FolderId
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.UserId
 import proton.android.pass.preferences.featurediscovery.FeatureDiscoveryBannerPreference
 import proton.android.pass.preferences.featurediscovery.FeatureDiscoveryFeature
 import proton.android.pass.preferences.monitor.MonitorStatusPreference

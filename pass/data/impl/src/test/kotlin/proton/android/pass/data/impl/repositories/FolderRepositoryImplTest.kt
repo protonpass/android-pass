@@ -22,7 +22,6 @@ import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
 import me.proton.core.crypto.common.keystore.EncryptedByteArray
-import me.proton.core.domain.entity.UserId
 import org.junit.Before
 import org.junit.Test
 import proton.android.pass.common.fakes.FakeAppDispatchers
@@ -47,6 +46,7 @@ import proton.android.pass.data.impl.fakes.mother.FolderKeyEntityTestFactory
 import proton.android.pass.data.impl.remote.RemoteFolderDataSource
 import proton.android.pass.domain.FolderId
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.UserId
 import proton.android.pass.test.domain.ShareKeyTestFactory
 
 internal class FolderRepositoryImplTest {

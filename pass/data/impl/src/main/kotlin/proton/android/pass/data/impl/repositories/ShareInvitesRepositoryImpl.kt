@@ -21,7 +21,6 @@ package proton.android.pass.data.impl.repositories
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emitAll
 import kotlinx.coroutines.flow.flow
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.safeRunCatching
 import proton.android.pass.data.api.errors.CannotSendMoreInvitesError
 import proton.android.pass.data.api.errors.ErrorCodes
@@ -32,6 +31,7 @@ import proton.android.pass.data.impl.remote.shares.RemoteShareInvitesDataSource
 import proton.android.pass.domain.InviteId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.ShareRole
+import proton.android.pass.domain.UserId
 import proton.android.pass.domain.shares.SharePendingInvite
 import proton.android.pass.log.api.PassLogger
 import javax.inject.Inject

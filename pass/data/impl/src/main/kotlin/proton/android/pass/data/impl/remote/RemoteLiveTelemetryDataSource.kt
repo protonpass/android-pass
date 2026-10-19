@@ -18,11 +18,11 @@
 
 package proton.android.pass.data.impl.remote
 
-import me.proton.core.domain.entity.UserId
 import me.proton.core.network.data.ApiProvider
 import proton.android.pass.data.impl.api.PasswordManagerApi
 import proton.android.pass.data.impl.requests.ItemReadRequest
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.UserId
 import javax.inject.Inject
 
 interface RemoteLiveTelemetryDataSource {

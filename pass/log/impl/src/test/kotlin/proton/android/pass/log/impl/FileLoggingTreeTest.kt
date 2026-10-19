@@ -29,12 +29,12 @@ import kotlinx.coroutines.test.TestDispatcher
 import kotlinx.coroutines.test.runTest
 import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.fakes.usecases.FakeGetPrimaryUserId
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
 import proton.android.pass.common.fakes.FakeAppDispatchers
+import proton.android.pass.domain.UserId
 import proton.android.pass.log.api.LogFileManager
 import proton.android.pass.log.fakes.FakeBatchedLogoutInterleavingLogFileManager
 import proton.android.pass.log.fakes.FakeFinalValidationLogoutInterleavingLogFileManager

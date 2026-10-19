@@ -23,11 +23,11 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import kotlinx.datetime.Clock
-import me.proton.core.domain.entity.UserId
 import me.proton.core.telemetry.domain.usecase.IsTelemetryEnabled
 import me.proton.core.usersettings.domain.repository.DeviceSettingsRepository
 import proton.android.pass.common.api.safeRunCatching
 import proton.android.pass.data.api.usecases.ObservePrimaryUserId
+import proton.android.pass.domain.UserId
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.preferences.InternalSettingsRepository
 import proton.android.pass.telemetry.api.GooglePlayInstallReferrer

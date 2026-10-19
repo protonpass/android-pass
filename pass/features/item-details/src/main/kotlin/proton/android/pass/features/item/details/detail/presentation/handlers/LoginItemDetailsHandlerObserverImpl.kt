@@ -29,7 +29,6 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.update
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
@@ -73,6 +72,7 @@ import proton.android.pass.domain.Passkey
 import proton.android.pass.domain.Share
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.TotpState
+import proton.android.pass.domain.UserId
 import proton.android.pass.domain.attachments.Attachment
 import proton.android.pass.domain.entity.PackageInfo
 import proton.android.pass.domain.hasSkippedMonitorChecks

@@ -40,7 +40,6 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import kotlinx.collections.immutable.ImmutableMap
 import kotlinx.collections.immutable.persistentMapOf
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.SpecialCharacters.AT_SIGN
 import proton.android.pass.common.api.toOption
@@ -51,6 +50,7 @@ import proton.android.pass.commonui.api.body3Bold
 import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.composecomponents.impl.container.InfoBanner
 import proton.android.pass.composecomponents.impl.item.ActionableItemRow
+import proton.android.pass.domain.UserId
 import proton.android.pass.features.selectitem.R
 import proton.android.pass.features.selectitem.previewproviders.SuggestionsInput
 import proton.android.pass.features.selectitem.previewproviders.SuggestionsPreviewProvider

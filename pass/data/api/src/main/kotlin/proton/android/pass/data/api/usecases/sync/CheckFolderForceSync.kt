@@ -18,8 +18,8 @@
 
 package proton.android.pass.data.api.usecases.sync
 
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.api.repositories.SyncMode
+import proton.android.pass.domain.UserId
 
 /**
  * Runs the folders repair force sync for [userId] if it is still owed. Safe to call on every sync

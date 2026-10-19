@@ -18,9 +18,9 @@
 
 package proton.android.pass.files.fakes
 
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.UserId
 import proton.android.pass.domain.attachments.PersistentAttachmentId
 import proton.android.pass.files.api.FileType
 import proton.android.pass.files.api.FileUriGenerator

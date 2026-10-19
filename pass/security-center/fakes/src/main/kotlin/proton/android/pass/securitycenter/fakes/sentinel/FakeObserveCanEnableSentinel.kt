@@ -19,8 +19,8 @@
 package proton.android.pass.securitycenter.fakes.sentinel
 
 import kotlinx.coroutines.flow.Flow
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.api.core.repositories.SentinelRepository
+import proton.android.pass.domain.UserId
 import proton.android.pass.securitycenter.api.sentinel.ObserveCanEnableSentinel
 import javax.inject.Inject
 import javax.inject.Singleton

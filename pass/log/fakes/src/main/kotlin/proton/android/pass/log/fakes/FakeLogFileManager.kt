@@ -19,7 +19,7 @@
 package proton.android.pass.log.fakes
 
 import kotlinx.coroutines.CompletableDeferred
-import me.proton.core.domain.entity.UserId
+import proton.android.pass.domain.UserId
 import proton.android.pass.log.api.LogFileManager
 import java.io.File
 import javax.inject.Inject

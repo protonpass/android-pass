@@ -21,7 +21,6 @@ package proton.android.pass.data.impl.local.inappmessages
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.datetime.Instant
-import me.proton.core.domain.entity.UserId
 import me.proton.core.util.kotlin.takeIfNotBlank
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
@@ -30,6 +29,7 @@ import proton.android.pass.common.api.getOrElse
 import proton.android.pass.common.api.toOption
 import proton.android.pass.data.impl.db.PassDatabase
 import proton.android.pass.data.impl.db.entities.InAppMessageEntity
+import proton.android.pass.domain.UserId
 import proton.android.pass.domain.inappmessages.InAppMessage
 import proton.android.pass.domain.inappmessages.InAppMessageCTA
 import proton.android.pass.domain.inappmessages.InAppMessageCTAType

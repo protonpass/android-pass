@@ -21,8 +21,8 @@ package proton.android.pass.payment
 import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.test.runCurrent
 import kotlinx.coroutines.test.runTest
-import me.proton.core.domain.entity.UserId
 import org.junit.Test
+import proton.android.pass.domain.UserId
 import proton.android.pass.payments.api.PaymentSessionState
 import proton.android.pass.payments.api.ReconciledPayment
 import proton.android.pass.payments.fakes.FakePayments

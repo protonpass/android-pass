@@ -21,6 +21,7 @@ package proton.android.pass.test
 import me.proton.core.crypto.common.context.CryptoContext
 import me.proton.core.crypto.common.pgp.Armored
 import me.proton.core.user.domain.entity.UserAddress
+import proton.android.pass.domain.UserId
 
 object UserAddressTestFactory {
 
@@ -31,7 +32,7 @@ object UserAddressTestFactory {
     ): UserAddress {
         val addressId = me.proton.core.user.domain.entity.AddressId("abc")
         return UserAddress(
-            me.proton.core.domain.entity.UserId("123"),
+            UserId("123"),
             addressId,
             "test@test",
             canSend = true,

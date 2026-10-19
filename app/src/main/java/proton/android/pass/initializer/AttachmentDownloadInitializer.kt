@@ -36,7 +36,6 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.safeRunCatching
 import proton.android.pass.commonui.api.PassAppLifecycleProvider
 import proton.android.pass.data.api.repositories.AttachmentRepository
@@ -45,6 +44,7 @@ import proton.android.pass.data.api.repositories.ItemSyncStatusRepository
 import proton.android.pass.data.api.repositories.ShareRepository
 import proton.android.pass.data.api.usecases.ObserveReadyAccounts
 import proton.android.pass.data.api.usecases.attachments.AttachmentDownloadScheduler
+import proton.android.pass.domain.UserId
 import proton.android.pass.domain.attachments.AttachmentDownloadStatus
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.preferences.UserPreferencesRepository

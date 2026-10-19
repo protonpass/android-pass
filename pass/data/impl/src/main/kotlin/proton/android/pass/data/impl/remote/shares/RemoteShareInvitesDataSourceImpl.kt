@@ -18,13 +18,13 @@
 
 package proton.android.pass.data.impl.remote.shares
 
-import me.proton.core.domain.entity.UserId
 import me.proton.core.network.data.ApiProvider
 import proton.android.pass.data.impl.api.PasswordManagerApi
 import proton.android.pass.data.impl.responses.CodeOnlyResponse
 import proton.android.pass.data.impl.responses.GetSharePendingInvitesResponse
 import proton.android.pass.domain.InviteId
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.UserId
 import javax.inject.Inject
 
 class RemoteShareInvitesDataSourceImpl @Inject constructor(

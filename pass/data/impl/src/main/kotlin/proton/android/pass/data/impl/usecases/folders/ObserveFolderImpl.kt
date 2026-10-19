@@ -19,12 +19,12 @@
 package proton.android.pass.data.impl.usecases.folders
 
 import kotlinx.coroutines.flow.Flow
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.api.repositories.FolderRepository
 import proton.android.pass.data.api.usecases.folders.ObserveFolder
 import proton.android.pass.domain.Folder
 import proton.android.pass.domain.FolderId
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.UserId
 import javax.inject.Inject
 
 class ObserveFolderImpl @Inject constructor(

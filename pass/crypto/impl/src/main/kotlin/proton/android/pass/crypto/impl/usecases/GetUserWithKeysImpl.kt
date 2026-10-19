@@ -18,10 +18,10 @@
 
 package proton.android.pass.crypto.impl.usecases
 
-import me.proton.core.domain.entity.UserId
 import me.proton.core.user.domain.UserManager
 import me.proton.core.user.domain.entity.User
 import proton.android.pass.crypto.api.usecases.GetUserWithKeys
+import proton.android.pass.domain.UserId
 import javax.inject.Inject
 
 class GetUserWithKeysImpl @Inject constructor(

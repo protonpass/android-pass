@@ -18,10 +18,10 @@
 
 package proton.android.pass.data.impl.remote.groups
 
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.impl.responses.invites.GroupApiModel
 import proton.android.pass.data.impl.responses.invites.GroupMemberApiModel
 import proton.android.pass.domain.GroupId
+import proton.android.pass.domain.UserId
 
 interface RemoteGroupsDataSource {
 

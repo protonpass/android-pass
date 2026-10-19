@@ -18,7 +18,7 @@
 
 package proton.android.pass.biometry
 
-import me.proton.core.domain.entity.UserId
+import proton.android.pass.domain.UserId
 
 sealed interface UnlockMethod {
     @JvmInline

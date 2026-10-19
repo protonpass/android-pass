@@ -18,12 +18,12 @@
 
 package proton.android.pass.data.fakes.usecases.folders
 
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.api.usecases.folders.GetFolderHierarchy
 import proton.android.pass.domain.Folder
 import proton.android.pass.domain.FolderId
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.UserId
 import proton.android.pass.domain.VaultId
 import proton.android.pass.test.domain.FolderTestFactory
 import javax.inject.Inject

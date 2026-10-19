@@ -21,7 +21,6 @@ package proton.android.pass.features.itemcreate.login
 import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
-import me.proton.core.domain.entity.UserId
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -60,6 +59,7 @@ import proton.android.pass.domain.HiddenState
 import proton.android.pass.domain.ITEM_CFV_URL_MATCHING
 import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.UserId
 import proton.android.pass.features.itemcreate.alias.AliasItemFormState
 import proton.android.pass.features.itemcreate.alias.AliasMailboxUiModel
 import proton.android.pass.features.itemcreate.alias.AliasSuffixUiModel

@@ -18,7 +18,6 @@
 
 package proton.android.pass.data.impl.usecases
 
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.api.errors.UserIdNotAvailableError
 import proton.android.pass.data.api.repositories.ItemRepository
 import proton.android.pass.data.api.usecases.CreateLoginAndAlias
@@ -27,6 +26,7 @@ import proton.android.pass.domain.FolderId
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.UserId
 import proton.android.pass.domain.entity.NewAlias
 import javax.inject.Inject
 

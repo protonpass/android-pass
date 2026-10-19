@@ -43,7 +43,6 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.core.graphics.toColorInt
 import coil.compose.AsyncImage
 import kotlinx.datetime.Instant
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.some
@@ -55,6 +54,7 @@ import proton.android.pass.commonui.api.defaultTint
 import proton.android.pass.composecomponents.impl.buttons.TransparentTextButton
 import proton.android.pass.composecomponents.impl.icon.Icon
 import proton.android.pass.composecomponents.impl.theme.isDark
+import proton.android.pass.domain.UserId
 import proton.android.pass.domain.inappmessages.InAppMessage
 import proton.android.pass.domain.inappmessages.InAppMessageCTA
 import proton.android.pass.domain.inappmessages.InAppMessageCTAType

@@ -18,11 +18,11 @@
 
 package proton.android.pass.data.impl.usecases.folders
 
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.api.repositories.FolderRepository
 import proton.android.pass.data.api.usecases.folders.DeleteFoldersLocally
 import proton.android.pass.domain.FolderId
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.UserId
 import javax.inject.Inject
 
 class DeleteFoldersLocallyImpl @Inject constructor(

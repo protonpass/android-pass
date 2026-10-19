@@ -20,13 +20,13 @@ package proton.android.pass.data.impl.remote
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
-import me.proton.core.domain.entity.UserId
 import me.proton.core.network.data.ApiProvider
 import me.proton.core.network.domain.ApiResult
 import proton.android.pass.data.api.errors.ShareNotAvailableError
 import proton.android.pass.data.impl.api.PasswordManagerApi
 import proton.android.pass.data.impl.responses.EventList
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.UserId
 import proton.android.pass.log.api.PassLogger
 import javax.inject.Inject
 

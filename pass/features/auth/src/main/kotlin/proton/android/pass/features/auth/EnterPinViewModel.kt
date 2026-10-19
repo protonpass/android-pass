@@ -34,7 +34,6 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.biometry.StoreAuthSuccessful
 import proton.android.pass.biometry.UnlockMethod
 import proton.android.pass.data.api.usecases.GetPrimaryUserId
@@ -47,6 +46,7 @@ import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.data.api.errors.UserIdNotAvailableError
 import proton.android.pass.data.api.usecases.CheckPin
+import proton.android.pass.domain.UserId
 import proton.android.pass.features.auth.EnterPinSnackbarMessage.PinTooManyAttemptsDismissError
 import proton.android.pass.features.auth.EnterPinSnackbarMessage.PinTooManyAttemptsError
 import proton.android.pass.features.auth.EnterPinUiState.NotInitialised

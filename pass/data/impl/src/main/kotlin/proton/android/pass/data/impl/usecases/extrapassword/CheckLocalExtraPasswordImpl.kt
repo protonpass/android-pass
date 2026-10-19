@@ -19,10 +19,10 @@
 package proton.android.pass.data.impl.usecases.extrapassword
 
 import me.proton.core.crypto.common.keystore.EncryptedString
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.api.usecases.GetPrimaryUserId
 import proton.android.pass.data.api.usecases.extrapassword.CheckLocalExtraPassword
 import proton.android.pass.data.impl.repositories.ExtraPasswordRepository
+import proton.android.pass.domain.UserId
 import javax.inject.Inject
 
 class CheckLocalExtraPasswordImpl @Inject constructor(

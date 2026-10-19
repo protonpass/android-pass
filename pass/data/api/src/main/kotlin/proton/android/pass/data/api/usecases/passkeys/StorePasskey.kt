@@ -18,10 +18,10 @@
 
 package proton.android.pass.data.api.usecases.passkeys
 
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.Passkey
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.UserId
 
 interface StorePasskey {
     suspend operator fun invoke(

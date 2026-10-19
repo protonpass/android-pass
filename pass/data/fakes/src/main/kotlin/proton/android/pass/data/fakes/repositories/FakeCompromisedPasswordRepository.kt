@@ -21,12 +21,12 @@ package proton.android.pass.data.fakes.repositories
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.map
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.api.repositories.CompromisedPasswordItem
 import proton.android.pass.data.api.repositories.CompromisedPasswordRepository
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.UserId
 import javax.inject.Inject
 
 class FakeCompromisedPasswordRepository @Inject constructor() : CompromisedPasswordRepository {

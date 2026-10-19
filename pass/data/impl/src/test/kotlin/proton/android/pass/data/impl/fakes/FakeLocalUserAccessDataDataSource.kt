@@ -20,9 +20,9 @@ package proton.android.pass.data.impl.fakes
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.impl.db.entities.UserAccessDataEntity
 import proton.android.pass.data.impl.local.LocalUserAccessDataDataSource
+import proton.android.pass.domain.UserId
 
 class FakeLocalUserAccessDataDataSource : LocalUserAccessDataDataSource {
 

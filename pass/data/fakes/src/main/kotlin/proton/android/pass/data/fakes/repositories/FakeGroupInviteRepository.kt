@@ -20,11 +20,11 @@ package proton.android.pass.data.fakes.repositories
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.api.repositories.GroupInviteRepository
 import proton.android.pass.domain.InviteId
 import proton.android.pass.domain.InviteToken
 import proton.android.pass.domain.PendingInvite
+import proton.android.pass.domain.UserId
 import proton.android.pass.domain.events.EventToken
 import javax.inject.Inject
 

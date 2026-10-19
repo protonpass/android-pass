@@ -20,10 +20,10 @@ package proton.android.pass.features.migrate.confirmvault
 
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import kotlinx.collections.immutable.persistentListOf
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.commonui.api.ThemePairPreviewProvider
 import proton.android.pass.domain.ShareFlags
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.UserId
 import proton.android.pass.domain.Vault
 import proton.android.pass.domain.VaultId
 import proton.android.pass.domain.VaultWithItemCount

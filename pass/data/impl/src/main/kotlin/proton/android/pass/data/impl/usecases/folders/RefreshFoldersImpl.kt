@@ -18,13 +18,13 @@
 
 package proton.android.pass.data.impl.usecases.folders
 
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.api.repositories.FolderRepository
 import proton.android.pass.data.api.repositories.ShareRepository
 import proton.android.pass.data.api.usecases.folders.RefreshFolders
 import proton.android.pass.data.impl.util.runConcurrently
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.ShareType
+import proton.android.pass.domain.UserId
 import proton.android.pass.log.api.PassLogger
 import javax.inject.Inject
 

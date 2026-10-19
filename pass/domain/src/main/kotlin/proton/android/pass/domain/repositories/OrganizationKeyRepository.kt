@@ -18,8 +18,8 @@
 
 package proton.android.pass.domain.repositories
 
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.domain.OrganizationKey
+import proton.android.pass.domain.UserId
 
 interface OrganizationKeyRepository {
     suspend fun getOrganizationKey(userId: UserId, forceRefresh: Boolean = false): OrganizationKey?

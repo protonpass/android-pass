@@ -19,8 +19,8 @@
 package proton.android.pass.data.impl.usecases.credentials.shared
 
 import me.proton.core.account.domain.entity.Account
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.SpecialCharacters
+import proton.android.pass.domain.UserId
 
 internal fun Map<UserId, Account>.getDisplayName(userId: UserId, title: String): String {
     if (this.size <= 1) {

@@ -19,10 +19,10 @@
 package proton.android.pass.data.api.usecases
 
 import kotlinx.coroutines.flow.Flow
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.domain.Item
+import proton.android.pass.domain.UserId
 
 interface GetSuggestedAutofillItems {
     operator fun invoke(

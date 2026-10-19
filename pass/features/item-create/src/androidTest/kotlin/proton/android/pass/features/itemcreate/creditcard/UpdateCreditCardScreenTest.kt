@@ -31,7 +31,6 @@ import androidx.compose.ui.test.performTextClearance
 import androidx.test.espresso.Espresso
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
-import me.proton.core.domain.entity.UserId
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -47,6 +46,7 @@ import proton.android.pass.domain.HiddenState
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.UserId
 import proton.android.pass.features.itemcreate.R
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.test.CallChecker

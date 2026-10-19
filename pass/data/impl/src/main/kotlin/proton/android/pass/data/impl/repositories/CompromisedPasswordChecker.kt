@@ -22,7 +22,6 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.launch
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.AppDispatchers
 import proton.android.pass.commonrust.api.ItemContentSerializer
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
@@ -31,6 +30,7 @@ import proton.android.pass.data.impl.db.entities.ItemEntity
 import proton.android.pass.data.impl.extensions.toDomain
 import proton.android.pass.domain.ItemFlags
 import proton.android.pass.domain.ItemState
+import proton.android.pass.domain.UserId
 import proton.android.pass.domain.isFullyExcludedFromMonitoring
 import proton.android.pass.domain.items.ItemCategory
 import proton.android.pass.log.api.PassLogger

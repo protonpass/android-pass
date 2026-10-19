@@ -18,13 +18,13 @@
 
 package proton.android.pass.data.impl.crypto
 
-import me.proton.core.domain.entity.UserId
 import me.proton.core.user.domain.entity.AddressId
 import me.proton.core.user.domain.repository.UserAddressRepository
 import proton.android.pass.crypto.api.usecases.GetUserWithKeys
 import proton.android.pass.crypto.api.usecases.invites.AcceptUserInvite
 import proton.android.pass.data.api.usecases.GetAllKeysByAddress
 import proton.android.pass.data.impl.responses.PendingUserInviteResponse
+import proton.android.pass.domain.UserId
 import proton.android.pass.log.api.PassLogger
 import javax.inject.Inject
 

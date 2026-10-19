@@ -19,7 +19,7 @@
 package proton.android.pass.domain.credentials
 
 import me.proton.core.crypto.common.keystore.EncryptedString
-import me.proton.core.domain.entity.UserId
+import proton.android.pass.domain.UserId
 
 data class PasswordCredentialItem(
     val userId: UserId,

@@ -23,7 +23,6 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.commonrust.api.UsableShareFilter
 import proton.android.pass.commonrust.api.UsableShareKey
 import proton.android.pass.data.impl.db.PassDatabase
@@ -33,6 +32,7 @@ import proton.android.pass.data.impl.util.sqliteChunks
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.ShareRole
 import proton.android.pass.domain.ShareType
+import proton.android.pass.domain.UserId
 import javax.inject.Inject
 
 class LocalShareDataSourceImpl @Inject constructor(

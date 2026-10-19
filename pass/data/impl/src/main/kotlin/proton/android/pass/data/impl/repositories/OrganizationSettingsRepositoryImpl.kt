@@ -20,7 +20,6 @@ package proton.android.pass.data.impl.repositories
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.api.repositories.OrganizationSettingsRepository
 import proton.android.pass.data.api.usecases.GetUser
 import proton.android.pass.data.impl.db.entities.PassOrganizationSettingsEntity
@@ -30,6 +29,7 @@ import proton.android.pass.data.impl.responses.OrganizationGetOrganization
 import proton.android.pass.domain.ForceLockSeconds
 import proton.android.pass.domain.OrganizationSettings
 import proton.android.pass.domain.OrganizationShareMode
+import proton.android.pass.domain.UserId
 import proton.android.pass.domain.organizations.OrganizationItemShareMode
 import proton.android.pass.domain.organizations.OrganizationPasswordPolicy
 import proton.android.pass.domain.organizations.OrganizationAliasMode

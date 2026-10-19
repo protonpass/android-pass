@@ -19,7 +19,7 @@
 
 package proton.android.pass.log.api
 
-import me.proton.core.domain.entity.UserId
+import proton.android.pass.domain.UserId
 import java.io.File
 
 interface LogExporter {

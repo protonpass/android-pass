@@ -18,12 +18,12 @@
 
 package proton.android.pass.data.impl.usecases
 
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.api.errors.UserIdNotAvailableError
 import proton.android.pass.data.api.repositories.ItemRepository
 import proton.android.pass.data.api.usecases.GetItemByAliasEmail
 import proton.android.pass.data.api.usecases.GetPrimaryUserId
 import proton.android.pass.domain.Item
+import proton.android.pass.domain.UserId
 import javax.inject.Inject
 
 class GetItemByAliasEmailImpl @Inject constructor(

@@ -19,9 +19,9 @@
 package proton.android.pass.data.api.usecases
 
 import kotlinx.coroutines.flow.Flow
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.domain.Group
 import proton.android.pass.domain.GroupMember
+import proton.android.pass.domain.UserId
 
 interface ObserveGroupMembersByGroup {
     operator fun invoke(userId: UserId? = null, forceRefresh: Boolean = false): Flow<List<GroupMembers>>

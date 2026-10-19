@@ -18,10 +18,10 @@
 
 package proton.android.pass.crypto.fakes.usecases
 
-import me.proton.core.domain.entity.UserId
 import me.proton.core.user.domain.entity.User
 import proton.android.pass.account.fakes.FakeUserManager
 import proton.android.pass.crypto.api.usecases.GetUserWithKeys
+import proton.android.pass.domain.UserId
 import javax.inject.Inject
 import javax.inject.Singleton
 

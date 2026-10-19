@@ -19,11 +19,11 @@
 package proton.android.pass.data.impl.local
 
 import kotlinx.coroutines.flow.Flow
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.Option
 import proton.android.pass.data.impl.db.entities.UserInviteEntity
 import proton.android.pass.data.impl.db.entities.UserInviteKeyEntity
 import proton.android.pass.domain.InviteToken
+import proton.android.pass.domain.UserId
 
 data class UserInviteAndKeysEntity(
     val userInviteEntity: UserInviteEntity,

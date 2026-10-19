@@ -27,8 +27,8 @@ import me.proton.core.account.domain.entity.AccountDetails
 import me.proton.core.account.domain.entity.AccountState
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.domain.entity.Product
-import me.proton.core.domain.entity.UserId
 import me.proton.core.network.domain.session.Session
+import proton.android.pass.domain.UserId
 import javax.inject.Inject
 import javax.inject.Singleton
 

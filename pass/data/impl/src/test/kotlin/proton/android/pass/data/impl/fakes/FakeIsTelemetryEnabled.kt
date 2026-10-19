@@ -18,8 +18,8 @@
 
 package proton.android.pass.data.impl.fakes
 
-import me.proton.core.domain.entity.UserId
 import me.proton.core.telemetry.domain.usecase.IsTelemetryEnabled
+import proton.android.pass.domain.UserId
 import javax.inject.Inject
 
 class FakeIsTelemetryEnabled @Inject constructor() : IsTelemetryEnabled {

@@ -18,11 +18,11 @@
 
 package proton.android.pass.data.impl.crypto
 
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.crypto.api.usecases.invites.AcceptGroupInvite
 import proton.android.pass.data.impl.local.GroupInviteAndKeysEntity
 import proton.android.pass.data.impl.requests.invites.InviteKeyRotation
 import proton.android.pass.domain.GroupId
+import proton.android.pass.domain.UserId
 import javax.inject.Inject
 
 interface EncryptGroupInviteKeys {

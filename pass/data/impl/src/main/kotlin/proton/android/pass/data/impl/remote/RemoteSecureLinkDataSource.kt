@@ -18,7 +18,6 @@
 
 package proton.android.pass.data.impl.remote
 
-import me.proton.core.domain.entity.UserId
 import me.proton.core.network.data.ApiProvider
 import proton.android.pass.data.impl.api.PasswordManagerApi
 import proton.android.pass.data.impl.requests.CreateSecureLinkRequest
@@ -26,6 +25,7 @@ import proton.android.pass.data.impl.responses.CreatedSecureLink
 import proton.android.pass.data.impl.responses.GetSecureLinkResponse
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.UserId
 import proton.android.pass.domain.securelinks.SecureLinkId
 import javax.inject.Inject
 

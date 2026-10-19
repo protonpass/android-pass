@@ -18,11 +18,11 @@
 
 package proton.android.pass.preferences
 
-import me.proton.core.domain.entity.UserId
 import me.proton.core.featureflag.domain.entity.FeatureId
 import me.proton.core.featureflag.domain.repository.FeatureFlagRepository
 import proton.android.pass.account.fakes.FakeFeatureFlagRepository
 import me.proton.core.featureflag.domain.entity.FeatureFlag as CoreFeatureFlag
+import proton.android.pass.domain.UserId
 
 internal class FakeColdCacheFeatureFlagRepository(
     private val remoteFlag: CoreFeatureFlag?,

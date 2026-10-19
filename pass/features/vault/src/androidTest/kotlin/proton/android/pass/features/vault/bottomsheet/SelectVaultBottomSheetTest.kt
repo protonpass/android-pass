@@ -26,7 +26,6 @@ import androidx.compose.ui.test.performClick
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import kotlinx.collections.immutable.persistentListOf
-import me.proton.core.domain.entity.UserId
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -46,6 +45,7 @@ import proton.android.pass.domain.FolderId
 import proton.android.pass.domain.ShareFlags
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.ShareRole
+import proton.android.pass.domain.UserId
 import proton.android.pass.domain.Vault
 import proton.android.pass.domain.VaultId
 import proton.android.pass.domain.VaultWithItemCount

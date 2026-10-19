@@ -20,11 +20,11 @@ package proton.android.pass.features.auth
 
 import androidx.compose.runtime.Stable
 import kotlinx.collections.immutable.persistentMapOf
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
+import proton.android.pass.domain.UserId
 
 sealed interface AuthEvent {
 

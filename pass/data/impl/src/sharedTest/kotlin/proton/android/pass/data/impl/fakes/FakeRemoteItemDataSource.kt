@@ -18,7 +18,6 @@
 
 package proton.android.pass.data.impl.fakes
 
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.account.fakes.FakeKeyStoreCrypto
 import proton.android.pass.data.api.repositories.ItemRevision
 import proton.android.pass.data.impl.remote.ItemsPage
@@ -39,6 +38,7 @@ import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ItemStateValues
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.UserId
 import proton.android.pass.test.domain.ItemTestFactory
 
 class FakeRemoteItemDataSource : RemoteItemDataSource {

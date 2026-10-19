@@ -20,7 +20,6 @@ package proton.android.pass.composecomponents.impl.item
 
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import kotlinx.datetime.Clock
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.domain.AddressDetailsContent
 import proton.android.pass.domain.ContactDetailsContent
@@ -29,6 +28,7 @@ import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.PersonalDetailsContent
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.ShareType
+import proton.android.pass.domain.UserId
 import proton.android.pass.domain.WorkDetailsContent
 
 class IdentityRowPreviewProvider : PreviewParameterProvider<IdentityRowParameter> {

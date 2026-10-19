@@ -21,7 +21,6 @@ package proton.android.pass.data.impl.repository
 import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
-import me.proton.core.domain.entity.UserId
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -41,6 +40,7 @@ import proton.android.pass.domain.Plan
 import proton.android.pass.domain.PlanLimit
 import proton.android.pass.domain.PlanType
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.UserId
 import proton.android.pass.network.api.NetworkStatus
 import proton.android.pass.network.fakes.FakeNetworkMonitor
 import proton.android.pass.preferences.FakeInternalSettingsRepository

@@ -18,7 +18,7 @@
 
 package proton.android.pass.data.api.usecases.sync
 
-import me.proton.core.domain.entity.UserId
+import proton.android.pass.domain.UserId
 
 /**
  * Settles the folders repair for [userId]. Called by whatever performed a full download, since any

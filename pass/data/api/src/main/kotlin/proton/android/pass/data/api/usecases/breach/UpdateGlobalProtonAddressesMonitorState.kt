@@ -18,7 +18,7 @@
 
 package proton.android.pass.data.api.usecases.breach
 
-import me.proton.core.domain.entity.UserId
+import proton.android.pass.domain.UserId
 
 interface UpdateGlobalProtonAddressesMonitorState {
     suspend operator fun invoke(userId: UserId? = null, enabled: Boolean)

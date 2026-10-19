@@ -18,8 +18,8 @@
 
 package proton.android.pass.log.api
 
+import proton.android.pass.domain.UserId
 import kotlinx.coroutines.ThreadContextElement
-import me.proton.core.domain.entity.UserId
 import kotlin.coroutines.AbstractCoroutineContextElement
 import kotlin.coroutines.CoroutineContext
 

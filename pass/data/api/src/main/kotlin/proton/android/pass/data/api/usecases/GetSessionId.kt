@@ -18,8 +18,8 @@
 
 package proton.android.pass.data.api.usecases
 
-import me.proton.core.domain.entity.UserId
 import me.proton.core.network.domain.session.SessionId
+import proton.android.pass.domain.UserId
 
 interface GetSessionId {
 

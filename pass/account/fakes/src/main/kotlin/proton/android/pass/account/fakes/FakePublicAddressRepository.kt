@@ -19,7 +19,6 @@
 package proton.android.pass.account.fakes
 
 import me.proton.core.domain.entity.SessionUserId
-import me.proton.core.domain.entity.UserId
 import me.proton.core.key.domain.entity.key.PublicAddress
 import me.proton.core.key.domain.entity.key.PublicAddressInfo
 import me.proton.core.key.domain.entity.key.PublicAddressKey
@@ -28,6 +27,7 @@ import me.proton.core.key.domain.entity.key.PublicSignedKeyList
 import me.proton.core.key.domain.entity.key.Recipient
 import me.proton.core.key.domain.repository.PublicAddressRepository
 import me.proton.core.key.domain.repository.Source
+import proton.android.pass.domain.UserId
 import javax.inject.Inject
 import javax.inject.Singleton
 

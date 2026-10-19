@@ -22,12 +22,12 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
-import me.proton.core.domain.entity.UserId
 import me.proton.core.user.domain.entity.AddressId
 import proton.android.pass.data.impl.db.PassDatabase
 import proton.android.pass.data.impl.db.entities.BreachEmailEntity
 import proton.android.pass.data.impl.db.mappers.toDomain
 import proton.android.pass.data.impl.db.mappers.toEntity
+import proton.android.pass.domain.UserId
 import proton.android.pass.domain.breach.AliasEmailId
 import proton.android.pass.domain.breach.BreachCustomEmail
 import proton.android.pass.domain.breach.BreachDomainPeek

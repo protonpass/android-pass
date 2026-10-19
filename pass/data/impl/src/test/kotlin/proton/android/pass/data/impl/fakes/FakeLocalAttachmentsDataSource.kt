@@ -21,13 +21,13 @@ package proton.android.pass.data.impl.fakes
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.flow.flowOf
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.impl.db.entities.attachments.AttachmentEntity
 import proton.android.pass.data.impl.db.entities.attachments.AttachmentWithChunks
 import proton.android.pass.data.impl.db.entities.attachments.ChunkEntity
 import proton.android.pass.data.impl.local.attachments.LocalAttachmentsDataSource
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.UserId
 import proton.android.pass.domain.attachments.AttachmentDownloadStatus
 import proton.android.pass.domain.attachments.AttachmentId
 

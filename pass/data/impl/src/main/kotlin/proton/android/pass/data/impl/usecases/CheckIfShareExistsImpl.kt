@@ -18,10 +18,10 @@
 
 package proton.android.pass.data.impl.usecases
 
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.api.usecases.CheckIfShareExists
 import proton.android.pass.data.impl.db.PassDatabase
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.UserId
 import javax.inject.Inject
 
 class CheckIfShareExistsImpl @Inject constructor(

@@ -23,12 +23,12 @@ import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.api.errors.UserIdNotAvailableError
 import proton.android.pass.data.api.repositories.GroupRepository
 import proton.android.pass.data.api.usecases.GetPrimaryUserId
 import proton.android.pass.data.api.usecases.GroupMembers
 import proton.android.pass.data.api.usecases.ObserveGroupMembersByGroup
+import proton.android.pass.domain.UserId
 import javax.inject.Inject
 
 class ObserveGroupMembersByGroupImpl @Inject constructor(

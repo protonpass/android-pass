@@ -18,11 +18,11 @@
 
 package proton.android.pass.data.impl.fakes
 
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.impl.remote.RemoteItemKeyDataSource
 import proton.android.pass.data.impl.responses.ItemLatestKeyResponse
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.UserId
 
 class FakeRemoteItemKeyDataSource : RemoteItemKeyDataSource {
 

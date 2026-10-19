@@ -19,7 +19,7 @@
 package proton.android.pass.account.fakes
 
 import me.proton.core.auth.domain.feature.IsFido2Enabled
-import me.proton.core.domain.entity.UserId
+import proton.android.pass.domain.UserId
 import javax.inject.Inject
 import javax.inject.Singleton
 

@@ -19,8 +19,8 @@
 package proton.android.pass.data.impl.fakes
 
 import me.proton.core.crypto.common.keystore.EncryptedString
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.impl.repositories.ExtraPasswordRepository
+import proton.android.pass.domain.UserId
 
 class FakeExtraPasswordRepository : ExtraPasswordRepository {
 

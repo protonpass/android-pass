@@ -18,8 +18,8 @@
 
 package proton.android.pass.data.api.usecases.compromisedpassword
 
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.domain.Item
+import proton.android.pass.domain.UserId
 
 interface RefreshCompromisedPasswords {
     suspend operator fun invoke(items: List<Item>)

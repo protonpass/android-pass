@@ -20,12 +20,12 @@ package proton.android.pass.features.selectitem.navigation
 
 import androidx.activity.compose.BackHandler
 import androidx.navigation.NavGraphBuilder
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.data.api.usecases.ItemTypeFilter
 import proton.android.pass.data.api.usecases.Suggestion
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.UserId
 import proton.android.pass.features.selectitem.ui.SelectItemScreen
 import proton.android.pass.navigation.api.NavItem
 import proton.android.pass.navigation.api.composable

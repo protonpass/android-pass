@@ -33,7 +33,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
-import me.proton.core.domain.entity.UserId
+import proton.android.pass.domain.UserId
 import proton.android.pass.domain.credentials.PasswordCredentialItem
 import proton.android.pass.features.credentials.passwords.usage.presentation.PasswordCredentialUsageRequest
 import proton.android.pass.features.credentials.passwords.usage.presentation.PasswordCredentialUsageState

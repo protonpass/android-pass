@@ -23,7 +23,6 @@ import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import kotlinx.coroutines.withContext
 import kotlinx.datetime.Clock
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.AppDispatchers
 import proton.android.pass.common.api.safeRunCatching
 import proton.android.pass.data.api.repositories.ItemSyncStatusRepository
@@ -35,6 +34,7 @@ import proton.android.pass.data.api.usecases.folders.FolderPresence
 import proton.android.pass.data.api.usecases.folders.HasAnyFolders
 import proton.android.pass.data.api.usecases.sync.CheckFolderForceSync
 import proton.android.pass.data.impl.extensions.isForceSyncFoldersEnabled
+import proton.android.pass.domain.UserId
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import proton.android.pass.preferences.ForceSyncFolderPreference

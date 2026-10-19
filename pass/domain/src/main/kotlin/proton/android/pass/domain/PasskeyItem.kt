@@ -18,7 +18,6 @@
 
 package proton.android.pass.domain
 
-import me.proton.core.domain.entity.UserId
 
 data class PasskeyItem(
     val userId: UserId,

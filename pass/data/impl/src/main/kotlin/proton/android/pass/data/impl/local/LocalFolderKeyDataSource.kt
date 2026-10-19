@@ -19,10 +19,10 @@
 package proton.android.pass.data.impl.local
 
 import kotlinx.coroutines.flow.Flow
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.impl.db.entities.FolderKeyEntity
 import proton.android.pass.domain.FolderId
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.UserId
 
 interface LocalFolderKeyDataSource {
     suspend fun upsertKey(entity: FolderKeyEntity)

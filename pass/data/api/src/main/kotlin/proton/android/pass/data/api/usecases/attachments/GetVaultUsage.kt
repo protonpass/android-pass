@@ -18,8 +18,8 @@
 
 package proton.android.pass.data.api.usecases.attachments
 
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.UserId
 
 interface GetVaultUsage {
     suspend operator fun invoke(userId: UserId, shareId: ShareId): Long

@@ -31,7 +31,6 @@ import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.appconfig.api.AppConfig
 import proton.android.pass.data.api.usecases.DisableAccount
 import proton.android.pass.data.api.usecases.GetReadyAccounts
@@ -48,6 +47,7 @@ import proton.android.pass.data.api.usecases.HasActiveAccount
 import proton.android.pass.data.api.usecases.passkeys.GetPasskeyById
 import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.Passkey
+import proton.android.pass.domain.UserId
 import proton.android.pass.features.credentials.R
 import proton.android.pass.features.credentials.shared.passkeys.events.PasskeyCredentialsTelemetryEvent
 import proton.android.pass.log.api.PassLogger

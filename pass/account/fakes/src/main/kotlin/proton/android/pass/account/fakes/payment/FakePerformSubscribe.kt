@@ -18,11 +18,11 @@
 
 package proton.android.pass.account.fakes.payment
 
-import me.proton.core.domain.entity.UserId
 import me.proton.core.payment.domain.entity.ProtonPaymentToken
 import me.proton.core.payment.domain.entity.SubscriptionCycle
 import me.proton.core.plan.domain.entity.Subscription
 import me.proton.core.plan.domain.usecase.PerformSubscribe
+import proton.android.pass.domain.UserId
 import javax.inject.Inject
 
 class FakePerformSubscribe @Inject constructor() : PerformSubscribe {

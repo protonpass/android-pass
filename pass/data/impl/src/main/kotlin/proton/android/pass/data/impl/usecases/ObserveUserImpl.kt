@@ -19,11 +19,11 @@
 package proton.android.pass.data.impl.usecases
 
 import kotlinx.coroutines.flow.Flow
-import me.proton.core.domain.entity.UserId
 import me.proton.core.user.domain.UserManager
 import kotlinx.coroutines.flow.map
 import proton.android.pass.data.impl.account.toDomain
 import proton.android.pass.data.api.usecases.ObserveUser
+import proton.android.pass.domain.UserId
 import proton.android.pass.domain.account.User
 import javax.inject.Inject
 

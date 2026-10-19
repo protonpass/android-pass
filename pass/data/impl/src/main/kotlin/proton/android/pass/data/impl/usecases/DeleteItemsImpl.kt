@@ -19,12 +19,12 @@
 package proton.android.pass.data.impl.usecases
 
 import kotlinx.coroutines.flow.first
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.api.repositories.ItemRepository
 import proton.android.pass.data.api.usecases.DeleteItems
 import proton.android.pass.data.api.usecases.ObserveCurrentUser
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.UserId
 import javax.inject.Inject
 
 class DeleteItemsImpl @Inject constructor(

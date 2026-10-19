@@ -23,7 +23,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import kotlinx.collections.immutable.toPersistentList
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.bottomSheet
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItem
@@ -32,6 +31,7 @@ import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemLis
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemTitle
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetTitle
 import proton.android.pass.composecomponents.impl.bottomsheet.withDividers
+import proton.android.pass.domain.UserId
 import proton.android.pass.features.account.selector.R
 import proton.android.pass.features.report.presentation.AccountRowUIState
 import proton.android.pass.features.report.presentation.AccountSelectorUIState

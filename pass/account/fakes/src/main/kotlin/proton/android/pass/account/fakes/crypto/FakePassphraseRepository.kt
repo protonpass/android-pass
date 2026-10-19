@@ -19,8 +19,8 @@
 package proton.android.pass.account.fakes.crypto
 
 import me.proton.core.crypto.common.keystore.EncryptedByteArray
-import me.proton.core.domain.entity.UserId
 import me.proton.core.user.domain.repository.PassphraseRepository
+import proton.android.pass.domain.UserId
 import javax.inject.Inject
 import javax.inject.Singleton
 

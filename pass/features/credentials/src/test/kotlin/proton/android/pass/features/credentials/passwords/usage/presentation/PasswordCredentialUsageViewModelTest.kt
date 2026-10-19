@@ -21,13 +21,13 @@ package proton.android.pass.features.credentials.passwords.usage.presentation
 import app.cash.turbine.test
 import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.test.runTest
-import me.proton.core.domain.entity.UserId
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import proton.android.pass.crypto.fakes.context.FakeEncryptionContext
 import proton.android.pass.crypto.fakes.context.FakeEncryptionContextProvider
 import proton.android.pass.data.fakes.usecases.FakeHasActiveAccount
+import proton.android.pass.domain.UserId
 import proton.android.pass.notifications.fakes.FakeToastManager
 import proton.android.pass.preferences.FakePreferenceRepository
 import proton.android.pass.test.MainDispatcherRule

@@ -20,7 +20,6 @@ package proton.android.pass.data.impl.fakes
 
 import me.proton.core.crypto.common.keystore.EncryptedByteArray
 import me.proton.core.crypto.common.keystore.EncryptedString
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.impl.remote.attachments.RemoteAttachmentsDataSource
 import proton.android.pass.data.impl.responses.attachments.FileApiModel
 import proton.android.pass.data.impl.responses.attachments.FileIdApiModel
@@ -29,6 +28,7 @@ import proton.android.pass.data.impl.responses.attachments.FilesApiModel
 import proton.android.pass.data.impl.responses.attachments.PendingFileResponse
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.UserId
 import proton.android.pass.domain.attachments.AttachmentId
 import proton.android.pass.domain.attachments.ChunkId
 import proton.android.pass.domain.attachments.PendingAttachmentId

@@ -20,7 +20,6 @@ package proton.android.pass.data.impl.usecases.passkeys
 
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flatMapLatest
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.url.UrlSanitizer
 import proton.android.pass.data.api.usecases.passkeys.GetPasskeysForDomain
@@ -34,6 +33,7 @@ import proton.android.pass.domain.PasskeyItem
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.ShareSelection
 import proton.android.pass.common.api.toLogToken
+import proton.android.pass.domain.UserId
 import proton.android.pass.log.api.PassLogger
 import javax.inject.Inject
 import javax.inject.Singleton

@@ -18,8 +18,8 @@
 
 package proton.android.pass.data.api.core.repositories
 
+import proton.android.pass.domain.UserId
 import kotlinx.coroutines.flow.Flow
-import me.proton.core.domain.entity.UserId
 
 interface SentinelRepository {
 

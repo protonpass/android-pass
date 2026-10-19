@@ -31,12 +31,12 @@ import kotlinx.datetime.Instant
 import me.proton.android.pass.preferences.AppUsage
 import me.proton.android.pass.preferences.ForceSyncFolderState
 import me.proton.android.pass.preferences.LastItemAutofill
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.AppDispatchers
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.some
 import proton.android.pass.common.api.toOption
+import proton.android.pass.domain.UserId
 import proton.android.pass.log.api.PassLogger
 import java.io.IOException
 import java.util.UUID

@@ -45,6 +45,7 @@ android {
 }
 
 dependencies {
+    implementation(projects.pass.domain)
     api(projects.pass.log.api)
     api(projects.pass.log.impl)
 

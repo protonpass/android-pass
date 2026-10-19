@@ -18,10 +18,10 @@
 
 package proton.android.pass.data.impl.usecases
 
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.api.repositories.ShareRepository
 import proton.android.pass.data.api.usecases.ClearUserSyncState
 import proton.android.pass.data.impl.repositories.UserEventRepository
+import proton.android.pass.domain.UserId
 import javax.inject.Inject
 
 class ClearUserSyncStateImpl @Inject constructor(

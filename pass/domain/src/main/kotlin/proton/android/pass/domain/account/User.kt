@@ -17,7 +17,7 @@
  */
 package proton.android.pass.domain.account
 
-import me.proton.core.domain.entity.UserId
+import proton.android.pass.domain.UserId
 import java.util.Locale
 
 data class User(

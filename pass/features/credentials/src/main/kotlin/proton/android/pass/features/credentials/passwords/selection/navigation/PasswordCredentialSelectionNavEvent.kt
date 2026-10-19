@@ -18,7 +18,7 @@
 
 package proton.android.pass.features.credentials.passwords.selection.navigation
 
-import me.proton.core.domain.entity.UserId
+import proton.android.pass.domain.UserId
 
 internal sealed interface PasswordCredentialSelectionNavEvent {
 

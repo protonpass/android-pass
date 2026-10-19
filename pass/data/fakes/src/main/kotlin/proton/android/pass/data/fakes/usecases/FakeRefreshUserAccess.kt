@@ -18,8 +18,8 @@
 
 package proton.android.pass.data.fakes.usecases
 
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.api.usecases.RefreshUserAccess
+import proton.android.pass.domain.UserId
 import javax.inject.Inject
 
 class FakeRefreshUserAccess @Inject constructor() : RefreshUserAccess {

@@ -44,7 +44,6 @@ import androidx.lifecycle.repeatOnLifecycle
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.appconfig.api.AppConfig
 import proton.android.pass.appconfig.api.BuildFlavor.Companion.upgradeUrl
 import proton.android.pass.commonui.api.BrowserUtils
@@ -56,6 +55,7 @@ import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.PasskeyId
 import proton.android.pass.domain.PasskeyItem
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.UserId
 import proton.android.pass.features.credentials.R
 import proton.android.pass.features.credentials.passkeys.selection.navigation.PasskeyCredentialSelectionNavEvent
 import proton.android.pass.features.credentials.passkeys.selection.presentation.PasskeyCredentialSelectionEvent

@@ -20,8 +20,8 @@ package proton.android.pass.data.fakes.usecases.breach
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.api.usecases.breach.ObserveBreachesForCustomEmail
+import proton.android.pass.domain.UserId
 import proton.android.pass.domain.breach.BreachEmail
 import proton.android.pass.domain.breach.CustomEmailId
 import javax.inject.Inject

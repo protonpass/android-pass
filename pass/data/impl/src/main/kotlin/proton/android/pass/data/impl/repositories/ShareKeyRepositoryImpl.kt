@@ -23,7 +23,6 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 import me.proton.core.crypto.common.keystore.EncryptedByteArray
-import me.proton.core.domain.entity.UserId
 import me.proton.core.key.domain.entity.key.PublicKeyRing
 import me.proton.core.key.domain.repository.PublicAddressRepository
 import me.proton.core.user.domain.entity.AddressId
@@ -44,6 +43,7 @@ import proton.android.pass.data.impl.extensions.toDomain
 import proton.android.pass.data.impl.local.LocalShareKeyDataSource
 import proton.android.pass.data.impl.remote.RemoteShareKeyDataSource
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.UserId
 import proton.android.pass.domain.key.ShareKey
 import proton.android.pass.log.api.PassLogger
 import javax.inject.Inject

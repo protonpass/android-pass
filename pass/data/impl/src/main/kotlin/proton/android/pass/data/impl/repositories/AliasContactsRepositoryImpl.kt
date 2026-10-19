@@ -23,7 +23,6 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.mapNotNull
 import kotlinx.coroutines.flow.onStart
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.safeRunCatching
 import proton.android.pass.data.api.repositories.AliasContactsRepository
 import proton.android.pass.data.impl.remote.RemoteAliasContactsDataSource
@@ -33,6 +32,7 @@ import proton.android.pass.data.impl.responses.aliascontacts.ContactResponse
 import proton.android.pass.data.impl.responses.aliascontacts.toDomain
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.UserId
 import proton.android.pass.domain.aliascontacts.AliasContacts
 import proton.android.pass.domain.aliascontacts.Contact
 import proton.android.pass.domain.aliascontacts.ContactId

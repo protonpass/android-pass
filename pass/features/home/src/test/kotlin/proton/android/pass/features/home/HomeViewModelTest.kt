@@ -26,7 +26,6 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
 import kotlinx.datetime.Clock
 import kotlinx.datetime.toJavaInstant
-import me.proton.core.domain.entity.UserId
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -83,6 +82,7 @@ import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ItemState
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.ShareSelection
+import proton.android.pass.domain.UserId
 import proton.android.pass.notifications.fakes.FakeSnackbarDispatcher
 import proton.android.pass.notifications.fakes.FakeToastManager
 import proton.android.pass.preferences.FakeFeatureFlagsPreferenceRepository

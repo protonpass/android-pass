@@ -22,7 +22,6 @@ import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.test.runTest
 import kotlinx.datetime.Instant
 import me.proton.core.crypto.common.keystore.EncryptedByteArray
-import me.proton.core.domain.entity.UserId
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -44,6 +43,7 @@ import proton.android.pass.data.impl.fakes.FakeReencryptAttachment
 import proton.android.pass.data.impl.fakes.FakeRemoteAttachmentsDataSource
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.UserId
 import proton.android.pass.domain.attachments.Attachment
 import proton.android.pass.domain.attachments.AttachmentDownloadStatus
 import proton.android.pass.domain.attachments.AttachmentId

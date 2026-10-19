@@ -19,7 +19,6 @@
 package proton.android.pass.data.impl.extensions
 
 import kotlinx.datetime.Instant
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.toOption
@@ -34,6 +33,7 @@ import proton.android.pass.domain.ParsedItem
 import proton.android.pass.domain.FolderId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.ShareType
+import proton.android.pass.domain.UserId
 
 fun ItemEntity.toDomain(context: EncryptionContext, itemContentSerializer: ItemContentSerializer): Item {
     val decrypted = context.decrypt(encryptedContent)

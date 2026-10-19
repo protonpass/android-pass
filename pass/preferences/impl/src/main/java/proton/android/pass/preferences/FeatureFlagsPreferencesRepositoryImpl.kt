@@ -34,7 +34,6 @@ import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import me.proton.android.pass.preferences.BoolFlagPrefProto
 import me.proton.android.pass.preferences.BooleanPrefProto
-import me.proton.core.domain.entity.UserId
 import me.proton.core.featureflag.domain.entity.FeatureId
 import me.proton.core.featureflag.domain.repository.FeatureFlagRepository
 import proton.android.pass.common.api.AppDispatchers
@@ -42,6 +41,7 @@ import proton.android.pass.common.api.safeRunCatching
 import proton.android.pass.data.api.usecases.ObserveAccounts
 import proton.android.pass.data.api.usecases.ObservePrimaryUserId
 import proton.android.pass.data.api.usecases.ObserveRemovedAccounts
+import proton.android.pass.domain.UserId
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.preferences.FeatureFlag.AUTOFILL_DEBUG_MODE
 import proton.android.pass.preferences.FeatureFlag.PASS_ALLOW_NO_VAULT

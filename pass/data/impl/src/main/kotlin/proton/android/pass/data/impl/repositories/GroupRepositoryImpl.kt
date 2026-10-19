@@ -21,7 +21,6 @@ package proton.android.pass.data.impl.repositories
 import kotlinx.coroutines.currentCoroutineContext
 import kotlinx.coroutines.ensureActive
 import kotlinx.coroutines.flow.MutableStateFlow
-import me.proton.core.domain.entity.UserId
 import me.proton.core.key.domain.entity.key.PrivateAddressKey
 import me.proton.core.key.domain.entity.key.PrivateKey
 import me.proton.core.key.domain.entity.key.canEncrypt
@@ -37,6 +36,7 @@ import proton.android.pass.domain.GroupAddress
 import proton.android.pass.domain.GroupId
 import proton.android.pass.domain.GroupMember
 import proton.android.pass.domain.GroupMemberState
+import proton.android.pass.domain.UserId
 import javax.inject.Inject
 
 class GroupRepositoryImpl @Inject constructor(

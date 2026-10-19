@@ -18,9 +18,9 @@
 
 package proton.android.pass.data.api.usecases.passkeys
 
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.domain.PasskeyId
 import proton.android.pass.domain.PasskeyItem
+import proton.android.pass.domain.UserId
 
 sealed interface PasskeySelection {
     data object All : PasskeySelection

@@ -19,9 +19,9 @@
 package proton.android.pass.data.impl.usecases.inappmessages
 
 import kotlinx.datetime.Clock
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.api.repositories.InAppMessagesRepository
 import proton.android.pass.data.api.usecases.inappmessages.ChangeInAppMessageStatus
+import proton.android.pass.domain.UserId
 import proton.android.pass.domain.inappmessages.InAppMessageId
 import proton.android.pass.domain.inappmessages.InAppMessageStatus
 import proton.android.pass.preferences.InternalSettingsRepository

@@ -18,13 +18,13 @@
 
 package proton.android.pass.data.impl.fakes
 
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.impl.remote.RemoteShareDataSource
 import proton.android.pass.data.impl.requests.CreateVaultRequest
 import proton.android.pass.data.impl.requests.UpdateVaultRequest
 import proton.android.pass.data.impl.responses.ShareResponse
 import proton.android.pass.data.impl.responses.VaultUsageResponse
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.UserId
 
 class FakeRemoteShareDataSource : RemoteShareDataSource {
 

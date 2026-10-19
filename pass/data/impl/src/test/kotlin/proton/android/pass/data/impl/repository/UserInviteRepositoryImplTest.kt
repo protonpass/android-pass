@@ -22,7 +22,6 @@ import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
-import me.proton.core.domain.entity.UserId
 import org.junit.Before
 import org.junit.Test
 import proton.android.pass.common.api.None
@@ -49,6 +48,7 @@ import proton.android.pass.domain.GroupId
 import proton.android.pass.domain.InviteToken
 import proton.android.pass.domain.RecommendedGroup
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.UserId
 
 class UserInviteRepositoryImplTest {
 

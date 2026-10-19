@@ -22,7 +22,6 @@ import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
-import me.proton.core.domain.entity.UserId
 import me.proton.core.user.domain.entity.UserAddress
 import proton.android.pass.common.api.transpose
 import proton.android.pass.data.api.errors.NewUsersInviteError
@@ -44,6 +43,7 @@ import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.ShareRole
 import proton.android.pass.domain.ShareType
+import proton.android.pass.domain.UserId
 import javax.inject.Inject
 
 class InviteToItemImpl @Inject constructor(

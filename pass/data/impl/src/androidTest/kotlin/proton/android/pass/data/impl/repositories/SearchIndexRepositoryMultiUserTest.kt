@@ -25,7 +25,6 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
-import me.proton.core.domain.entity.UserId
 import net.zetetic.database.sqlcipher.SupportOpenHelperFactory
 import org.junit.After
 import org.junit.Before
@@ -48,6 +47,7 @@ import proton.android.pass.data.impl.local.search.SearchIdRow
 import proton.android.pass.data.impl.local.search.SearchItemEntity
 import proton.android.pass.domain.ItemState
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.UserId
 import proton.android.pass.preferences.FakeInternalSettingsRepository
 import javax.crypto.KeyGenerator
 

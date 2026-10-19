@@ -21,11 +21,11 @@ package proton.android.pass.data.impl.local
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.withContext
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.AppDispatchers
 import proton.android.pass.data.impl.db.PassDatabase
 import proton.android.pass.data.impl.db.entities.GroupInviteEntity
 import proton.android.pass.domain.InviteId
+import proton.android.pass.domain.UserId
 import javax.inject.Inject
 
 class LocalGroupInviteDataSourceImpl @Inject constructor(

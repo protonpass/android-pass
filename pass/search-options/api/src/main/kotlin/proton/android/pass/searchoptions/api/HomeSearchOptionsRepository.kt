@@ -20,9 +20,9 @@ package proton.android.pass.searchoptions.api
 
 import androidx.compose.runtime.Stable
 import kotlinx.coroutines.flow.Flow
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.domain.FolderId
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.UserId
 
 interface HomeSearchOptionsRepository {
     fun observeSearchOptions(): Flow<SearchOptions>

@@ -21,7 +21,6 @@ package proton.android.pass.preferences
 import app.cash.turbine.test
 import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.test.runTest
-import me.proton.core.domain.entity.UserId
 import me.proton.core.featureflag.domain.entity.FeatureId
 import org.junit.Test
 import proton.android.pass.account.fakes.FakeFeatureFlagRepository
@@ -30,6 +29,7 @@ import proton.android.pass.data.fakes.usecases.FakeObserveAccounts
 import proton.android.pass.data.fakes.usecases.FakeObservePrimaryUserId
 import proton.android.pass.data.fakes.usecases.FakeObserveRemovedAccounts
 import me.proton.core.featureflag.domain.entity.FeatureFlag as CoreFeatureFlag
+import proton.android.pass.domain.UserId
 
 class FeatureFlagsPreferencesRepositoryImplTest {
 

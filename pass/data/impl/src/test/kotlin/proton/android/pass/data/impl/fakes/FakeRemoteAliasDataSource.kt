@@ -19,7 +19,6 @@
 package proton.android.pass.data.impl.fakes
 
 import kotlinx.coroutines.flow.Flow
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.impl.remote.RemoteAliasDataSource
 import proton.android.pass.data.impl.requests.ChangeAliasStatusRequest
 import proton.android.pass.data.impl.requests.UpdateAliasMailboxesRequest
@@ -29,6 +28,7 @@ import proton.android.pass.data.impl.responses.AliasOptionsResponse
 import proton.android.pass.data.impl.responses.AliasResponse
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.UserId
 
 class FakeRemoteAliasDataSource : RemoteAliasDataSource {
 

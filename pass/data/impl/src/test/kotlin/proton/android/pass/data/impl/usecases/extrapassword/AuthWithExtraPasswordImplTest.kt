@@ -23,7 +23,6 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.test.runCurrent
 import kotlinx.coroutines.test.runTest
 import me.proton.core.crypto.common.srp.SrpProofs
-import me.proton.core.domain.entity.UserId
 import me.proton.core.network.domain.session.SessionId
 import org.junit.Before
 import org.junit.Test
@@ -38,6 +37,7 @@ import proton.android.pass.data.impl.fakes.FakeRemoteExtraPasswordDataSource
 import proton.android.pass.data.impl.fakes.FakeSrpCrypto
 import proton.android.pass.data.impl.requests.ExtraPasswordSendSrpDataRequest
 import proton.android.pass.data.impl.responses.ExtraPasswordGetSrpData
+import proton.android.pass.domain.UserId
 import kotlin.test.assertFailsWith
 
 class AuthWithExtraPasswordImplTest {

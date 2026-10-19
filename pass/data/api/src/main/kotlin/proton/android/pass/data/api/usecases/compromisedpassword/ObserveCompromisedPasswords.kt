@@ -19,10 +19,10 @@
 package proton.android.pass.data.api.usecases.compromisedpassword
 
 import kotlinx.coroutines.flow.Flow
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.api.repositories.CompromisedPasswordItem
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.UserId
 
 interface ObserveCompromisedPasswords {
     operator fun invoke(): Flow<List<CompromisedPasswordItem>>

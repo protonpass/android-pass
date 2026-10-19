@@ -19,8 +19,8 @@
 package proton.android.pass.data.api.core.datasources
 
 import kotlinx.coroutines.flow.Flow
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.Option
+import proton.android.pass.domain.UserId
 
 interface LocalSentinelDataSource {
 

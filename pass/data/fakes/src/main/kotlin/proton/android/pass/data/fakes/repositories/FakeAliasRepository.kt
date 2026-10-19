@@ -19,7 +19,6 @@
 package proton.android.pass.data.fakes.repositories
 
 import kotlinx.coroutines.flow.Flow
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.api.repositories.AliasItemsChangeStatusResult
 import proton.android.pass.data.api.repositories.AliasRepository
 import proton.android.pass.domain.AliasDetails
@@ -27,6 +26,7 @@ import proton.android.pass.domain.AliasMailbox
 import proton.android.pass.domain.AliasOptions
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.UserId
 import proton.android.pass.domain.events.EventToken
 import javax.inject.Inject
 

@@ -24,7 +24,6 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.runTest
-import me.proton.core.domain.entity.UserId
 import org.junit.Test
 import proton.android.pass.data.api.ItemCountSummary
 import proton.android.pass.data.api.usecases.UpgradeInfo
@@ -36,6 +35,7 @@ import proton.android.pass.data.impl.fakes.FakePlanRepository
 import proton.android.pass.domain.Plan
 import proton.android.pass.domain.PlanLimit
 import proton.android.pass.domain.PlanType
+import proton.android.pass.domain.UserId
 import proton.android.pass.payments.fakes.FakePayments
 import proton.android.pass.test.domain.UserTestFactory
 import proton.android.pass.test.domain.plans.PlanTestFactory

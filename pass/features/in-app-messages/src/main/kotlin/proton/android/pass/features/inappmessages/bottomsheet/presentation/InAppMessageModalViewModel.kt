@@ -24,7 +24,6 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.asResultWithoutLoading
 import proton.android.pass.common.api.getOrNull
@@ -33,6 +32,7 @@ import proton.android.pass.commonui.api.require
 import proton.android.pass.data.api.usecases.inappmessages.ObserveInAppMessage
 import proton.android.pass.data.api.work.WorkerItem
 import proton.android.pass.data.api.work.WorkerLauncher
+import proton.android.pass.domain.UserId
 import proton.android.pass.domain.inappmessages.InAppMessage
 import proton.android.pass.domain.inappmessages.InAppMessageId
 import proton.android.pass.domain.inappmessages.InAppMessageKey

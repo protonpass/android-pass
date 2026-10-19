@@ -27,7 +27,6 @@ import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 import kotlinx.datetime.Instant
-import me.proton.core.domain.entity.UserId
 import me.proton.core.user.domain.entity.AddressId
 import proton.android.pass.common.api.safeRunCatching
 import proton.android.pass.data.api.errors.CustomEmailDoesNotExistException
@@ -50,6 +49,7 @@ import proton.android.pass.domain.ItemFlag
 import proton.android.pass.domain.ItemState
 import proton.android.pass.domain.ItemType
 import proton.android.pass.domain.ShareSelection
+import proton.android.pass.domain.UserId
 import proton.android.pass.domain.breach.AliasEmailId
 import proton.android.pass.domain.breach.Breach
 import proton.android.pass.domain.breach.BreachAlias

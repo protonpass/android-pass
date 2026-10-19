@@ -20,9 +20,9 @@ package proton.android.pass.data.fakes.usecases
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.api.usecases.GroupMembers
 import proton.android.pass.data.api.usecases.ObserveGroupMembersByGroup
+import proton.android.pass.domain.UserId
 import javax.inject.Inject
 
 class FakeObserveGroupMembersByGroup @Inject constructor() : ObserveGroupMembersByGroup {

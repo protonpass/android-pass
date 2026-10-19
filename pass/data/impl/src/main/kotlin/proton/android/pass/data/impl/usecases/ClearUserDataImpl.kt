@@ -20,7 +20,6 @@ package proton.android.pass.data.impl.usecases
 
 import androidx.work.WorkManager
 import kotlinx.coroutines.withContext
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.AppDispatchers
 import proton.android.pass.data.api.repositories.PasswordHistoryEntryRepository
 import proton.android.pass.data.api.repositories.SearchIndexRepository
@@ -31,6 +30,7 @@ import proton.android.pass.data.impl.local.LocalTelemetryGrowthDataSource
 import proton.android.pass.data.impl.repositories.ExtraPasswordRepository
 import proton.android.pass.data.impl.work.FetchItemsWorker
 import proton.android.pass.data.impl.work.SearchIndexWorker
+import proton.android.pass.domain.UserId
 import proton.android.pass.log.api.LogFileManager
 import javax.inject.Inject
 

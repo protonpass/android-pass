@@ -20,13 +20,13 @@ package proton.android.pass.data.impl.local.search
 
 import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.test.runTest
-import me.proton.core.domain.entity.UserId
 import org.junit.Before
 import org.junit.Test
 import proton.android.pass.data.impl.fakes.FakeLocalItemDataSource
 import proton.android.pass.data.impl.fakes.mother.ItemEntityTestFactory
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.UserId
 
 internal class SearchItemsPagingSourceOrderedEntitiesTest {
 

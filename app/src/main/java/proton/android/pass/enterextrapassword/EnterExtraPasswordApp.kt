@@ -39,7 +39,6 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.google.accompanist.navigation.material.ExperimentalMaterialNavigationApi
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.onBottomSheetDismissed
 import proton.android.pass.composecomponents.impl.bottomsheet.PassModalBottomSheetLayout
@@ -47,6 +46,7 @@ import proton.android.pass.composecomponents.impl.messages.OfflineIndicator
 import proton.android.pass.composecomponents.impl.messages.PassSnackbarHost
 import proton.android.pass.composecomponents.impl.messages.rememberPassSnackbarHostState
 import proton.android.pass.composecomponents.impl.snackbar.SnackBarLaunchedEffect
+import proton.android.pass.domain.UserId
 import proton.android.pass.features.auth.AuthOrigin
 import proton.android.pass.features.auth.AuthWithDefault
 import proton.android.pass.navigation.api.rememberAppNavigator

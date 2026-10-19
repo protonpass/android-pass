@@ -18,7 +18,7 @@
 
 package proton.android.pass.data.api.usecases.passwordHistoryEntry
 
-import me.proton.core.domain.entity.UserId
+import proton.android.pass.domain.UserId
 
 interface DeletePasswordHistoryEntryForUser {
     suspend operator fun invoke(userId: UserId? = null)

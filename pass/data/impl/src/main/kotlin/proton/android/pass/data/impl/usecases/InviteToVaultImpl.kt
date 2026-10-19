@@ -21,7 +21,6 @@ package proton.android.pass.data.impl.usecases
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.safeRunCatching
 import proton.android.pass.common.api.transpose
 import proton.android.pass.data.api.repositories.InviteTarget
@@ -32,6 +31,7 @@ import proton.android.pass.data.api.usecases.GetPrimaryUserId
 import proton.android.pass.data.api.usecases.InviteToVault
 import proton.android.pass.data.api.usecases.InviteUserMode
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.UserId
 import proton.android.pass.log.api.PassLogger
 import javax.inject.Inject
 

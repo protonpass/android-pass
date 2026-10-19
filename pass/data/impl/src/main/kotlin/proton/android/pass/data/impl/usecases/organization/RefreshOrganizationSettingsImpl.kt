@@ -18,9 +18,9 @@
 
 package proton.android.pass.data.impl.usecases.organization
 
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.api.repositories.OrganizationSettingsRepository
 import proton.android.pass.data.api.usecases.organization.RefreshOrganizationSettings
+import proton.android.pass.domain.UserId
 import javax.inject.Inject
 
 class RefreshOrganizationSettingsImpl @Inject constructor(

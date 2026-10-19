@@ -18,9 +18,9 @@
 
 package proton.android.pass.account.fakes
 
-import me.proton.core.domain.entity.UserId
 import me.proton.core.payment.domain.PaymentManager
 import me.proton.core.payment.domain.usecase.PaymentProvider
+import proton.android.pass.domain.UserId
 import javax.inject.Inject
 
 class FakePaymentManager @Inject constructor() : PaymentManager {

@@ -20,11 +20,11 @@ package proton.android.pass.data.impl.usecases.attachments
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.api.repositories.AttachmentRepository
 import proton.android.pass.data.api.usecases.attachments.AttachmentDownloadProgress
 import proton.android.pass.data.api.usecases.attachments.ObserveAttachmentDownloadProgress
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.UserId
 import proton.android.pass.domain.attachments.AttachmentDownloadStatus
 import javax.inject.Inject
 import javax.inject.Singleton

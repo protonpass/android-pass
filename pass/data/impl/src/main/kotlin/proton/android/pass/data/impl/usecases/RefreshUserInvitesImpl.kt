@@ -19,7 +19,6 @@
 package proton.android.pass.data.impl.usecases
 
 import kotlinx.coroutines.flow.first
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.safeRunCatching
 import proton.android.pass.data.api.errors.UserIdNotAvailableError
 import proton.android.pass.data.api.repositories.UserInviteRepository
@@ -27,6 +26,7 @@ import proton.android.pass.data.api.usecases.GetPrimaryUserId
 import proton.android.pass.data.api.usecases.RefreshUserInvites
 import proton.android.pass.domain.PendingGroupInvite
 import proton.android.pass.domain.PendingInvite
+import proton.android.pass.domain.UserId
 import proton.android.pass.domain.events.EventToken
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.InviteNotificationModel

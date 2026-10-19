@@ -43,7 +43,6 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.biometry.BiometryAuthError
 import proton.android.pass.biometry.BiometryManager
 import proton.android.pass.biometry.BiometryResult
@@ -78,6 +77,7 @@ import proton.android.pass.data.api.usecases.extrapassword.AuthWithExtraPassword
 import proton.android.pass.data.api.usecases.extrapassword.CheckLocalExtraPassword
 import proton.android.pass.data.api.usecases.extrapassword.HasExtraPassword
 import proton.android.pass.data.api.usecases.extrapassword.RemoveExtraPassword
+import proton.android.pass.domain.UserId
 import proton.android.pass.domain.account.Account
 import proton.android.pass.domain.account.AccountState
 import proton.android.pass.features.auth.AuthSnackbarMessage.AuthExtraPasswordError

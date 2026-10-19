@@ -22,7 +22,6 @@ import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
-import me.proton.core.domain.entity.UserId
 import org.junit.Before
 import org.junit.Test
 import proton.android.pass.data.api.repositories.ItemSyncStatus
@@ -34,6 +33,7 @@ import proton.android.pass.data.fakes.repositories.FakeSearchIndexRepository
 import proton.android.pass.data.fakes.usecases.FakeItemSyncStatusRepository
 import proton.android.pass.data.fakes.usecases.folders.FakeRefreshFolders
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.UserId
 import kotlin.test.assertFailsWith
 
 class ForceSyncItemsImplTest {

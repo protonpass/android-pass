@@ -18,8 +18,8 @@
 
 package proton.android.pass.data.api.work
 
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.UserId
 import proton.android.pass.domain.inappmessages.InAppMessageId
 import proton.android.pass.domain.inappmessages.InAppMessageStatus
 

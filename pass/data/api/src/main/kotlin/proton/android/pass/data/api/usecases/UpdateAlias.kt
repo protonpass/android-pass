@@ -18,13 +18,13 @@
 
 package proton.android.pass.data.api.usecases
 
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
 import proton.android.pass.domain.AliasMailbox
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemContents
+import proton.android.pass.domain.UserId
 
 data class UpdateAliasContent(
     val mailboxes: Option<List<AliasMailbox>>,

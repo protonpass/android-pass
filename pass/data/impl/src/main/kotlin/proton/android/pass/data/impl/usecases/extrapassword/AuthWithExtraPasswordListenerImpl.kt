@@ -23,9 +23,9 @@ import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.flow.update
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.api.usecases.extrapassword.AuthWithExtraPasswordListener
 import proton.android.pass.data.api.usecases.extrapassword.AuthWithExtraPasswordResult
+import proton.android.pass.domain.UserId
 import javax.inject.Inject
 import javax.inject.Singleton
 

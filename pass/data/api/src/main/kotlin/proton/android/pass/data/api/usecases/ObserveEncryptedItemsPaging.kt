@@ -20,11 +20,11 @@ package proton.android.pass.data.api.usecases
 
 import androidx.paging.PagingData
 import kotlinx.coroutines.flow.Flow
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.domain.ItemEncrypted
 import proton.android.pass.domain.ItemFlag
 import proton.android.pass.domain.ItemState
 import proton.android.pass.domain.ShareSelection
+import proton.android.pass.domain.UserId
 
 interface ObserveEncryptedItemsPaging {
 

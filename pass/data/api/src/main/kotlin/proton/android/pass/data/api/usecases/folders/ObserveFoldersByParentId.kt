@@ -19,10 +19,10 @@
 package proton.android.pass.data.api.usecases.folders
 
 import kotlinx.coroutines.flow.Flow
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.domain.Folder
 import proton.android.pass.domain.FolderId
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.UserId
 
 interface ObserveFoldersByParentId {
     operator fun invoke(

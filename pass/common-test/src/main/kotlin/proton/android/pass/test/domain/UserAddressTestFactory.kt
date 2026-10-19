@@ -18,9 +18,9 @@
 
 package proton.android.pass.test.domain
 
-import me.proton.core.domain.entity.UserId
 import me.proton.core.user.domain.entity.AddressId
 import me.proton.core.user.domain.entity.UserAddress
+import proton.android.pass.domain.UserId
 
 object UserAddressTestFactory {
 

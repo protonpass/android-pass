@@ -17,8 +17,8 @@
  */
 package proton.android.pass.test.domain
 
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.account.fakes.FakeAccountManager
+import proton.android.pass.domain.UserId
 import proton.android.pass.domain.account.Account
 import proton.android.pass.domain.account.AccountState
 

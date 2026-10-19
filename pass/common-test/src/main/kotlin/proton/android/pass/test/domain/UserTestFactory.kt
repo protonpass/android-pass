@@ -23,13 +23,13 @@ import me.proton.core.crypto.android.pgp.GOpenPGPCrypto
 import me.proton.core.crypto.common.context.CryptoContext
 import me.proton.core.crypto.common.keystore.PlainByteArray
 import me.proton.core.crypto.common.keystore.encrypt
-import me.proton.core.domain.entity.UserId
 import me.proton.core.key.domain.entity.key.KeyId
 import me.proton.core.key.domain.entity.key.PrivateKey
 import me.proton.core.user.domain.entity.Type
 import me.proton.core.user.domain.entity.User
 import me.proton.core.user.domain.entity.UserKey
 import proton.android.pass.account.fakes.FakeKeyStoreCrypto
+import proton.android.pass.domain.UserId
 import proton.android.pass.domain.account.UserRole
 import proton.android.pass.test.StringTestFactory
 import proton.android.pass.domain.account.User as DomainUser

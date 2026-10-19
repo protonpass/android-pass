@@ -19,7 +19,6 @@
 package proton.android.pass.data.impl.usecases
 
 import kotlinx.coroutines.flow.first
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.asResultWithoutLoading
 import proton.android.pass.common.api.safeRunCatching
@@ -31,6 +30,7 @@ import proton.android.pass.data.api.usecases.UpdateAliasContent
 import proton.android.pass.data.api.usecases.UpdateItem
 import proton.android.pass.domain.AliasMailbox
 import proton.android.pass.domain.Item
+import proton.android.pass.domain.UserId
 import proton.android.pass.domain.areItemContentsEqual
 import proton.android.pass.domain.toItemContents
 import proton.android.pass.log.api.PassLogger

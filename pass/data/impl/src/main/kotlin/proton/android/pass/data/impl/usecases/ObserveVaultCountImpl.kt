@@ -21,11 +21,11 @@ package proton.android.pass.data.impl.usecases
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flow
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.api.errors.UserIdNotAvailableError
 import proton.android.pass.data.api.repositories.ShareRepository
 import proton.android.pass.data.api.usecases.GetPrimaryUserId
 import proton.android.pass.data.api.usecases.ObserveVaultCount
+import proton.android.pass.domain.UserId
 import javax.inject.Inject
 
 class ObserveVaultCountImpl @Inject constructor(

@@ -25,7 +25,6 @@ import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onStart
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.safeRunCatching
 import proton.android.pass.data.api.repositories.GroupInviteRepository
 import proton.android.pass.data.api.repositories.ItemRepository
@@ -45,6 +44,7 @@ import proton.android.pass.domain.InviteToken
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.PendingInvite
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.UserId
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.InviteNotificationModel
 import proton.android.pass.notifications.api.NotificationManager

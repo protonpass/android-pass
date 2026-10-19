@@ -19,13 +19,13 @@
 package proton.android.pass.data.impl.usecases.attachments
 
 import kotlinx.coroutines.flow.first
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.safeRunCatching
 import proton.android.pass.data.api.repositories.AttachmentRepository
 import proton.android.pass.data.api.usecases.attachments.DownloadAttachment
 import proton.android.pass.data.api.usecases.attachments.DownloadSingleAttachment
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.UserId
 import proton.android.pass.domain.attachments.AttachmentDownloadStatus
 import proton.android.pass.domain.attachments.AttachmentId
 import proton.android.pass.log.api.PassLogger

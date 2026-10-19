@@ -20,12 +20,12 @@ package proton.android.pass.data.impl.fakes
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.crypto.fakes.context.FakeEncryptionContext
 import proton.android.pass.data.impl.db.entities.ShareKeyEntity
 import proton.android.pass.data.impl.fakes.mother.ShareKeyEntityTestFactory
 import proton.android.pass.data.impl.local.LocalShareKeyDataSource
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.UserId
 
 class FakeLocalShareKeyDataSource : LocalShareKeyDataSource {
     private val shareKeyByCompositeKey = mutableMapOf<Triple<String, String, Long>, ShareKeyEntity>()

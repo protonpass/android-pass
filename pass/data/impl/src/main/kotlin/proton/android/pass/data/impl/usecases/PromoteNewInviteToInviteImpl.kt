@@ -22,7 +22,6 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.first
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.transpose
 import proton.android.pass.data.api.repositories.InviteTarget
 import proton.android.pass.data.api.repositories.ShareInvitesRepository
@@ -32,6 +31,7 @@ import proton.android.pass.data.api.usecases.GetInviteUserMode
 import proton.android.pass.data.api.usecases.InviteUserMode
 import proton.android.pass.data.api.usecases.PromoteNewInviteToInvite
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.UserId
 import proton.android.pass.domain.shares.SharePendingInvite
 import proton.android.pass.log.api.PassLogger
 import javax.inject.Inject

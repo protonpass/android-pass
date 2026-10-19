@@ -21,11 +21,11 @@ package proton.android.pass.data.impl.fakes
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.emptyFlow
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.api.repositories.FolderRepository
 import proton.android.pass.domain.Folder
 import proton.android.pass.domain.FolderId
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.UserId
 
 class FakeFolderRepository : FolderRepository {
     data class ObserveFolderCall(

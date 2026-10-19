@@ -42,7 +42,6 @@ import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.sample
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.safeRunCatching
 import proton.android.pass.data.api.repositories.AttachmentRepository
 import proton.android.pass.data.api.repositories.ShareRepository
@@ -52,6 +51,7 @@ import proton.android.pass.data.api.usecases.attachments.DownloadSingleAttachmen
 import proton.android.pass.data.impl.R
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.UserId
 import proton.android.pass.domain.attachments.AttachmentId
 import proton.android.pass.log.api.PassLogger
 

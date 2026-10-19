@@ -20,7 +20,6 @@ package proton.android.pass.data.impl.usecases
 
 import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.test.runTest
-import me.proton.core.domain.entity.UserId
 import org.junit.Before
 import org.junit.Test
 import proton.android.pass.data.api.repositories.SyncMode
@@ -50,6 +49,7 @@ import proton.android.pass.data.impl.work.FetchItemsWorker
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.UserEventId
+import proton.android.pass.domain.UserId
 import proton.android.pass.domain.events.EventToken
 import proton.android.pass.domain.events.SyncEventInvitesChanged
 import proton.android.pass.domain.events.SyncEventShare

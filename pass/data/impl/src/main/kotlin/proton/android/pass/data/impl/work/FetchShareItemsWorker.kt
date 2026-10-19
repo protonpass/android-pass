@@ -36,7 +36,6 @@ import androidx.work.WorkerParameters
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
 import kotlinx.coroutines.withContext
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.safeRunCatching
 import proton.android.pass.data.api.repositories.ItemRepository
 import proton.android.pass.data.api.repositories.SearchIndexRepository
@@ -46,6 +45,7 @@ import proton.android.pass.data.impl.R
 import proton.android.pass.data.impl.repositories.FetchShareItemsStatus
 import proton.android.pass.data.impl.repositories.FetchShareItemsStatusRepository
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.UserId
 import proton.android.pass.log.api.LogAccountContext
 import proton.android.pass.log.api.PassLogger
 

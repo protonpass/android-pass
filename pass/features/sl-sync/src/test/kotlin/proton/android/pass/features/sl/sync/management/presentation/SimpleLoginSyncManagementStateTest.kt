@@ -25,13 +25,13 @@ import proton.android.pass.common.api.some
 import proton.android.pass.domain.ShareFlags
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.ShareRole
+import proton.android.pass.domain.UserId
 import proton.android.pass.domain.Vault
 import proton.android.pass.domain.VaultId
 import proton.android.pass.domain.hasUsableSimpleLoginVaults
 import proton.android.pass.domain.simplelogin.SimpleLoginAliasDomain
 import proton.android.pass.domain.simplelogin.SimpleLoginAliasMailbox
 import proton.android.pass.domain.simplelogin.SimpleLoginAliasSettings
-import me.proton.core.domain.entity.UserId
 import java.util.Date
 
 class SimpleLoginSyncManagementStateTest {

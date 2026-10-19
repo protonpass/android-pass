@@ -23,7 +23,6 @@ import com.google.common.truth.Truth.assertThat
 import kotlinx.collections.immutable.persistentMapOf
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
-import me.proton.core.domain.entity.UserId
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -55,6 +54,7 @@ import proton.android.pass.data.fakes.usecases.accesskey.FakeAuthWithExtraPasswo
 import proton.android.pass.data.fakes.usecases.accesskey.FakeCheckLocalExtraPassword
 import proton.android.pass.data.fakes.usecases.accesskey.FakeHasExtraPassword
 import proton.android.pass.data.fakes.usecases.accesskey.FakeRemoveExtraPassword
+import proton.android.pass.domain.UserId
 import proton.android.pass.features.auth.AuthViewModel.Companion.MAX_WRONG_PASSWORD_ATTEMPTS
 import proton.android.pass.notifications.fakes.FakeSnackbarDispatcher
 import proton.android.pass.preferences.AppLockState

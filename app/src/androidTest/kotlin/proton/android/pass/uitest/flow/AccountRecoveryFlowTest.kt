@@ -28,7 +28,6 @@ import me.proton.core.accountrecovery.domain.IsAccountRecoveryEnabled
 import me.proton.core.accountrecovery.domain.IsAccountRecoveryResetEnabled
 import me.proton.core.accountrecovery.test.MinimalAccountRecoveryNotificationTest
 import me.proton.core.auth.test.usecase.WaitForPrimaryAccount
-import me.proton.core.domain.entity.UserId
 import me.proton.core.eventmanager.domain.EventManagerProvider
 import me.proton.core.eventmanager.domain.repository.EventMetadataRepository
 import me.proton.core.network.data.ApiProvider
@@ -40,6 +39,7 @@ import me.proton.core.test.rule.annotation.PrepareUser
 import me.proton.core.test.rule.extension.protonAndroidComposeRule
 import org.junit.Rule
 import org.junit.Test
+import proton.android.pass.domain.UserId
 import proton.android.pass.initializer.MainInitializer
 import proton.android.pass.ui.MainActivity
 import proton.android.pass.uitest.robot.OnBoardingRobot

@@ -18,11 +18,11 @@
 
 package proton.android.pass.data.impl.fakes
 
-import me.proton.core.domain.entity.UserId
 import me.proton.core.user.domain.entity.AddressId
 import proton.android.pass.data.impl.repositories.EventRepository
 import proton.android.pass.data.impl.responses.EventList
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.UserId
 
 class FakeEventRepository : EventRepository {
 

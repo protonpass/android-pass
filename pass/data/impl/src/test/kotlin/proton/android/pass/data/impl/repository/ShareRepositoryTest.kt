@@ -21,7 +21,6 @@ package proton.android.pass.data.impl.repository
 import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
-import me.proton.core.domain.entity.UserId
 import org.junit.Before
 import org.junit.Test
 import proton.android.pass.account.fakes.FakeUserAddressRepository
@@ -45,6 +44,7 @@ import proton.android.pass.data.impl.responses.ShareResponse
 import proton.android.pass.domain.Share
 import proton.android.pass.domain.ShareColor
 import proton.android.pass.domain.ShareIcon
+import proton.android.pass.domain.UserId
 import proton.android.pass.domain.VaultProperties
 import proton.android.pass.test.domain.ShareTestFactory
 

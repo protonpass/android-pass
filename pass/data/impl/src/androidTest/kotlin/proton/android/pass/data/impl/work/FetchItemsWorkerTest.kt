@@ -28,7 +28,6 @@ import androidx.work.WorkerParameters
 import androidx.work.testing.TestListenableWorkerBuilder
 import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.test.runTest
-import me.proton.core.domain.entity.UserId
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -38,6 +37,7 @@ import proton.android.pass.data.fakes.usecases.sync.FakeForceSyncItems
 import proton.android.pass.data.fakes.usecases.sync.FakeMarkFolderForceSyncCompleted
 import proton.android.pass.data.impl.fakes.FakeShareRepository
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.UserId
 
 @RunWith(AndroidJUnit4::class)
 class FetchItemsWorkerTest {

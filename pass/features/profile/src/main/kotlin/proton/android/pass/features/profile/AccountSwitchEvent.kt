@@ -18,7 +18,7 @@
 
 package proton.android.pass.features.profile
 
-import me.proton.core.domain.entity.UserId
+import proton.android.pass.domain.UserId
 
 sealed interface AccountSwitchEvent : ProfileUiEvent {
 

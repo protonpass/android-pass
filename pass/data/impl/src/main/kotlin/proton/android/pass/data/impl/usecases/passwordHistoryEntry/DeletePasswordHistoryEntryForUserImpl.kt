@@ -18,10 +18,10 @@
 
 package proton.android.pass.data.impl.usecases.passwordHistoryEntry
 
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.api.repositories.PasswordHistoryEntryRepository
 import proton.android.pass.data.api.usecases.GetPrimaryUserId
 import proton.android.pass.data.api.usecases.passwordHistoryEntry.DeletePasswordHistoryEntryForUser
+import proton.android.pass.domain.UserId
 import javax.inject.Inject
 
 class DeletePasswordHistoryEntryForUserImpl @Inject constructor(

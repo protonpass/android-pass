@@ -33,7 +33,6 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.FlowUtils.oneShot
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
@@ -55,6 +54,7 @@ import proton.android.pass.domain.InviteToken
 import proton.android.pass.domain.PendingGroupInvite
 import proton.android.pass.domain.PendingInvite
 import proton.android.pass.domain.ShareType
+import proton.android.pass.domain.UserId
 import proton.android.pass.features.sharing.InviteAccept
 import proton.android.pass.features.sharing.InviteReject
 import proton.android.pass.features.sharing.SharingSnackbarMessage

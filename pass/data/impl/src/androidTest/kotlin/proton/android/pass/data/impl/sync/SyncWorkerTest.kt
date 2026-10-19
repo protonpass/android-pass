@@ -27,13 +27,13 @@ import androidx.work.WorkerParameters
 import androidx.work.testing.TestListenableWorkerBuilder
 import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.test.runTest
-import me.proton.core.domain.entity.UserId
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import proton.android.pass.data.fakes.usecases.FakeObserveAccounts
 import proton.android.pass.data.fakes.usecases.FakeObserveReadyAccounts
 import proton.android.pass.data.fakes.usecases.FakePerformSync
+import proton.android.pass.domain.UserId
 import proton.android.pass.test.domain.AccountTestFactory
 
 @RunWith(AndroidJUnit4::class)

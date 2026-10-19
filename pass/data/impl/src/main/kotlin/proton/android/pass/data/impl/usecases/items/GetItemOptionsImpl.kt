@@ -21,7 +21,6 @@ package proton.android.pass.data.impl.usecases.items
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.first
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.FlowUtils.oneShot
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
@@ -33,6 +32,7 @@ import proton.android.pass.data.api.usecases.items.GetItemOptions
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ItemType
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.UserId
 import proton.android.pass.domain.Vault
 import proton.android.pass.domain.items.ItemOption
 import proton.android.pass.log.api.PassLogger

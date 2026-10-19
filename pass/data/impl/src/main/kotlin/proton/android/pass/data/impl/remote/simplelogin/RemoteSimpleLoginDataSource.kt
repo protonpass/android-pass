@@ -18,7 +18,6 @@
 
 package proton.android.pass.data.impl.remote.simplelogin
 
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.impl.requests.SimpleLoginChangeMailboxRequest
 import proton.android.pass.data.impl.requests.SimpleLoginCreateAliasMailboxRequest
 import proton.android.pass.data.impl.requests.SimpleLoginCreatePendingAliasesRequest
@@ -36,6 +35,7 @@ import proton.android.pass.data.impl.responses.SimpleLoginAliasSettingsResponse
 import proton.android.pass.data.impl.responses.SimpleLoginPendingAliasesResponse
 import proton.android.pass.data.impl.responses.SimpleLoginSyncStatusResponse
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.UserId
 
 interface RemoteSimpleLoginDataSource {
 

@@ -18,11 +18,11 @@
 
 package proton.android.pass.data.impl.usecases.extrapassword
 
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.api.errors.UserIdNotAvailableError
 import proton.android.pass.data.api.usecases.GetPrimaryUserId
 import proton.android.pass.data.api.usecases.extrapassword.HasExtraPassword
 import proton.android.pass.data.impl.repositories.ExtraPasswordRepository
+import proton.android.pass.domain.UserId
 import javax.inject.Inject
 
 class HasExtraPasswordImpl @Inject constructor(

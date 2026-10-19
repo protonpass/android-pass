@@ -18,9 +18,9 @@
 
 package proton.android.pass.data.api.usecases
 
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.domain.Share
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.UserId
 
 interface GetShareById {
     suspend operator fun invoke(userId: UserId? = null, shareId: ShareId): Share

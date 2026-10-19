@@ -18,7 +18,6 @@
 
 package proton.android.pass.data.impl.fakes
 
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.impl.remote.RemoteUserInviteDataSource
 import proton.android.pass.data.impl.requests.CreateInvitesRequest
 import proton.android.pass.data.impl.requests.CreateNewUserInvitesRequest
@@ -31,6 +30,7 @@ import proton.android.pass.data.impl.responses.ShareResponse
 import proton.android.pass.domain.InviteToken
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.ShareRole
+import proton.android.pass.domain.UserId
 import javax.inject.Inject
 
 class FakeRemoteUserInviteDataSource @Inject constructor() : RemoteUserInviteDataSource {

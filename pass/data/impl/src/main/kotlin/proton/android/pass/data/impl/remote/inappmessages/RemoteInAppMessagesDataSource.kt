@@ -18,8 +18,8 @@
 
 package proton.android.pass.data.impl.remote.inappmessages
 
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.impl.responses.NotificationsResponse
+import proton.android.pass.domain.UserId
 import proton.android.pass.domain.inappmessages.InAppMessageId
 import proton.android.pass.domain.inappmessages.InAppMessageStatus
 

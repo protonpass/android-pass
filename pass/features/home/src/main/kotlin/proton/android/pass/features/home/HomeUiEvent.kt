@@ -18,13 +18,13 @@
 
 package proton.android.pass.features.home
 
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.commonuimodels.api.ItemTypeUiState
 import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.domain.FolderId
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.UserId
 import proton.android.pass.domain.inappmessages.InAppMessageId
 import proton.android.pass.searchoptions.api.SearchFilterType
 

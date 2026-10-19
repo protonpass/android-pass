@@ -20,12 +20,12 @@ package proton.android.pass.data.impl.fakes
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.FlowUtils.testFlow
 import proton.android.pass.data.impl.db.entities.ShareEntity
 import proton.android.pass.data.impl.local.LocalShareDataSource
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.ShareType
+import proton.android.pass.domain.UserId
 
 class FakeLocalShareDataSource : LocalShareDataSource {
 

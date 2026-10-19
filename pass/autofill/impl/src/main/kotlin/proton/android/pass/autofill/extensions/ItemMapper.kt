@@ -18,12 +18,12 @@
 
 package proton.android.pass.autofill.extensions
 
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.autofill.entities.AutofillItem
 import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.UserId
 
 fun ItemUiModel.toAutoFillItem(shouldLinkPackageName: Boolean = false): AutofillItem = when (val content = contents) {
     is ItemContents.Login -> AutofillItem.Login(

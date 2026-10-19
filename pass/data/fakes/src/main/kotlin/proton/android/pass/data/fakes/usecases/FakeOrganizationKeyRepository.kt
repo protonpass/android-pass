@@ -18,8 +18,8 @@
 
 package proton.android.pass.data.fakes.usecases
 
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.domain.OrganizationKey
+import proton.android.pass.domain.UserId
 import proton.android.pass.domain.repositories.OrganizationKeyRepository
 
 class FakeOrganizationKeyRepository : OrganizationKeyRepository {

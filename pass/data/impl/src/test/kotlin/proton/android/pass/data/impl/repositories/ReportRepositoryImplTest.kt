@@ -22,7 +22,6 @@ package proton.android.pass.data.impl.repositories
 import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.test.runTest
 import me.proton.core.domain.entity.Product
-import me.proton.core.domain.entity.UserId
 import me.proton.core.report.domain.entity.BugReportMeta
 import org.junit.Before
 import org.junit.Test
@@ -31,6 +30,7 @@ import proton.android.pass.data.api.usecases.report.Report
 import proton.android.pass.data.fakes.usecases.FakeGetPrimaryUserId
 import proton.android.pass.data.impl.fakes.FakeLogExporter
 import proton.android.pass.data.impl.fakes.FakeRemoteReportDataSource
+import proton.android.pass.domain.UserId
 import java.io.IOException
 import kotlin.test.assertFailsWith
 

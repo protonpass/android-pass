@@ -19,7 +19,7 @@
 package proton.android.pass.data.api.usecases.extrapassword
 
 import me.proton.core.crypto.common.keystore.EncryptedString
-import me.proton.core.domain.entity.UserId
+import proton.android.pass.domain.UserId
 
 interface AuthWithExtraPassword {
     suspend operator fun invoke(userId: UserId? = null, password: EncryptedString)

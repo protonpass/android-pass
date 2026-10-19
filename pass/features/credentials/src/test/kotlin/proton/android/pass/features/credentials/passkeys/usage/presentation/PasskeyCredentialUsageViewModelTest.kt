@@ -25,7 +25,6 @@ import kotlinx.datetime.Instant
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.Some
 import proton.android.pass.data.fakes.usecases.FakeGetPasskeyById
 import proton.android.pass.data.fakes.usecases.FakeHasActiveAccount
@@ -34,6 +33,7 @@ import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.Passkey
 import proton.android.pass.domain.PasskeyId
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.UserId
 import proton.android.pass.passkeys.api.PasskeyAuthenticationResponse
 import proton.android.pass.passkeys.fakes.FakeAuthenticateWithPasskey
 import proton.android.pass.preferences.FakePreferenceRepository

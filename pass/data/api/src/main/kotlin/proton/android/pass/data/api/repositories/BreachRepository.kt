@@ -19,8 +19,8 @@
 package proton.android.pass.data.api.repositories
 
 import kotlinx.coroutines.flow.Flow
-import me.proton.core.domain.entity.UserId
 import me.proton.core.user.domain.entity.AddressId
+import proton.android.pass.domain.UserId
 import proton.android.pass.domain.breach.AliasEmailId
 import proton.android.pass.domain.breach.Breach
 import proton.android.pass.domain.breach.BreachCustomEmail

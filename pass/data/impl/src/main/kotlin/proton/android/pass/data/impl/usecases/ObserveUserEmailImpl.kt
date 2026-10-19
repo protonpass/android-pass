@@ -25,9 +25,9 @@ import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onStart
 import me.proton.core.accountmanager.domain.AccountManager
-import me.proton.core.domain.entity.UserId
 import me.proton.core.user.domain.UserManager
 import proton.android.pass.data.api.usecases.ObserveUserEmail
+import proton.android.pass.domain.UserId
 import javax.inject.Inject
 
 class ObserveUserEmailImpl @Inject constructor(

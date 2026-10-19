@@ -18,8 +18,8 @@
 
 package proton.android.pass.data.impl.usecases.sync
 
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.api.usecases.sync.MarkFolderForceSyncCompleted
+import proton.android.pass.domain.UserId
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.preferences.InternalSettingsRepository
 import javax.inject.Inject

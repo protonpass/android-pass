@@ -20,7 +20,6 @@ package proton.android.pass.crypto.impl.usecases
 
 import kotlinx.datetime.Instant
 import me.proton.core.crypto.common.keystore.EncryptedByteArray
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.commonrust.api.ItemContentSerializer
 import proton.android.pass.common.api.toOption
 import proton.android.pass.crypto.api.Base64
@@ -40,6 +39,7 @@ import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.Share
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.ShareType
+import proton.android.pass.domain.UserId
 import proton.android.pass.domain.key.FolderKey
 import proton.android.pass.domain.key.ShareKey
 import proton.android.pass.log.api.PassLogger

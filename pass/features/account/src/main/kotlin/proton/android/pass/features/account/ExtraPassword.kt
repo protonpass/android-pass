@@ -33,7 +33,6 @@ import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import me.proton.core.compose.theme.ProtonTheme
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.ThemedBooleanPreviewProvider
@@ -42,6 +41,7 @@ import proton.android.pass.commonui.api.body3Weak
 import proton.android.pass.composecomponents.impl.container.roundedContainerNorm
 import proton.android.pass.composecomponents.impl.setting.ColorSettingOption
 import proton.android.pass.composecomponents.impl.R as CompR
+import proton.android.pass.domain.UserId
 
 @Composable
 internal fun ExtraPassword(

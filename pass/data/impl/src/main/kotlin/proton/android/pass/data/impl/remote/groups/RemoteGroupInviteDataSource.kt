@@ -18,10 +18,10 @@
 
 package proton.android.pass.data.impl.remote.groups
 
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.impl.requests.invites.InviteKeyRotation
 import proton.android.pass.data.impl.responses.invites.GroupInvitesApiModel
 import proton.android.pass.domain.InviteToken
+import proton.android.pass.domain.UserId
 
 interface RemoteGroupInviteDataSource {
 

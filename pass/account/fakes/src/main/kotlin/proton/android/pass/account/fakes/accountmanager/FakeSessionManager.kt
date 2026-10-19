@@ -19,9 +19,9 @@
 package proton.android.pass.account.fakes.accountmanager
 
 import me.proton.core.accountmanager.domain.SessionManager
-import me.proton.core.domain.entity.UserId
 import me.proton.core.network.domain.session.Session
 import me.proton.core.network.domain.session.SessionId
+import proton.android.pass.domain.UserId
 import javax.inject.Inject
 
 @Suppress("NotImplementedDeclaration")

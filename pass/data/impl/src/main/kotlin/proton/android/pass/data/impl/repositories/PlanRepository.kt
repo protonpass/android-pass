@@ -19,8 +19,8 @@
 package proton.android.pass.data.impl.repositories
 
 import kotlinx.coroutines.flow.Flow
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.domain.Plan
+import proton.android.pass.domain.UserId
 
 interface PlanRepository {
     fun observePlan(userId: UserId): Flow<Plan?>

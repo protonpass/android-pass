@@ -19,7 +19,6 @@
 package proton.android.pass.data.impl.crypto
 
 import kotlinx.coroutines.flow.first
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.api.crypto.GetItemKey
 import proton.android.pass.data.api.errors.ItemKeyNotAvailableError
 import proton.android.pass.data.api.repositories.ShareRepository
@@ -28,6 +27,7 @@ import proton.android.pass.data.impl.repositories.ShareKeyRepository
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.Share
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.UserId
 import proton.android.pass.domain.key.ItemKey
 import javax.inject.Inject
 

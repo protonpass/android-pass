@@ -18,12 +18,12 @@
 
 package proton.android.pass.data.fakes.usecases.items
 
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.data.api.usecases.items.GetItemOptions
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.UserId
 import proton.android.pass.domain.items.ItemOption
 import javax.inject.Inject
 import javax.inject.Singleton

@@ -18,10 +18,10 @@
 
 package proton.android.pass.data.fakes.usecases
 
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.api.repositories.SyncReason
 import proton.android.pass.data.api.usecases.RefreshSharesAndEnqueueSync
 import proton.android.pass.data.api.usecases.RefreshSharesResult
+import proton.android.pass.domain.UserId
 import javax.inject.Inject
 import javax.inject.Singleton
 

@@ -19,9 +19,9 @@
 package proton.android.pass.domain.inappmessages
 
 import kotlinx.datetime.Instant
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.Option
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.UserId
 
 @JvmInline
 value class InAppMessageId(val value: String)

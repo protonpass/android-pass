@@ -20,11 +20,11 @@ package proton.android.pass.data.impl.usecases
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flatMapLatest
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.api.repositories.ShareRepository
 import proton.android.pass.data.api.usecases.ObserveAllShares
 import proton.android.pass.data.api.usecases.ObserveCurrentUser
 import proton.android.pass.domain.Share
+import proton.android.pass.domain.UserId
 import javax.inject.Inject
 
 class ObserveAllSharesImpl @Inject constructor(

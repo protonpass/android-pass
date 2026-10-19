@@ -25,13 +25,13 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flow
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.safeRunCatching
 import proton.android.pass.data.api.repositories.InAppMessagesRepository
 import proton.android.pass.data.impl.extensions.toDomain
 import proton.android.pass.data.impl.local.inappmessages.LocalInAppMessagesDataSource
 import proton.android.pass.data.impl.remote.inappmessages.RemoteInAppMessagesDataSource
 import proton.android.pass.data.impl.utils.ImagePreloader
+import proton.android.pass.domain.UserId
 import proton.android.pass.domain.inappmessages.InAppMessage
 import proton.android.pass.domain.inappmessages.InAppMessageId
 import proton.android.pass.domain.inappmessages.InAppMessageStatus

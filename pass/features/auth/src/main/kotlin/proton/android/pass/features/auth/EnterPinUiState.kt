@@ -19,9 +19,9 @@
 package proton.android.pass.features.auth
 
 import androidx.compose.runtime.Stable
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.Option
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
+import proton.android.pass.domain.UserId
 
 @Stable
 internal sealed interface EnterPinUiState {

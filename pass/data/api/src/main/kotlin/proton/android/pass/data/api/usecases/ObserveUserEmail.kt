@@ -18,8 +18,8 @@
 
 package proton.android.pass.data.api.usecases
 
+import proton.android.pass.domain.UserId
 import kotlinx.coroutines.flow.Flow
-import me.proton.core.domain.entity.UserId
 
 interface ObserveUserEmail {
     operator fun invoke(userId: UserId? = null): Flow<String>

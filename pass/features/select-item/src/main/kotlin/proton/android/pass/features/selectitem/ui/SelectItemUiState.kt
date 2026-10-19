@@ -24,7 +24,6 @@ import kotlinx.collections.immutable.PersistentList
 import kotlinx.collections.immutable.PersistentMap
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.persistentMapOf
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.commonui.api.GroupedItemList
@@ -34,6 +33,7 @@ import proton.android.pass.composecomponents.impl.uievents.IsProcessingSearchSta
 import proton.android.pass.composecomponents.impl.uievents.IsRefreshingState
 import proton.android.pass.domain.Share
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.UserId
 import proton.android.pass.searchoptions.api.SearchSortingType
 
 internal sealed interface SearchInMode {

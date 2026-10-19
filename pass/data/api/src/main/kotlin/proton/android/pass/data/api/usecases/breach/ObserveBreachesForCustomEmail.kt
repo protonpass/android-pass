@@ -19,7 +19,7 @@
 package proton.android.pass.data.api.usecases.breach
 
 import kotlinx.coroutines.flow.Flow
-import me.proton.core.domain.entity.UserId
+import proton.android.pass.domain.UserId
 import proton.android.pass.domain.breach.BreachEmail
 import proton.android.pass.domain.breach.CustomEmailId
 

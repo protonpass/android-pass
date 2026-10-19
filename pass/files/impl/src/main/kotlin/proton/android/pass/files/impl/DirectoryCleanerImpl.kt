@@ -24,7 +24,6 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.withContext
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.AppDispatchers
 import proton.android.pass.common.api.safeRunCatching
 import proton.android.pass.data.api.usecases.CheckIfAttachmentExists
@@ -33,6 +32,7 @@ import proton.android.pass.data.api.usecases.CheckIfShareExists
 import proton.android.pass.data.api.usecases.CheckIfUserExists
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.UserId
 import proton.android.pass.domain.attachments.PersistentAttachmentId
 import proton.android.pass.files.api.CacheDirectories.Camera
 import proton.android.pass.files.api.CacheDirectories.Share

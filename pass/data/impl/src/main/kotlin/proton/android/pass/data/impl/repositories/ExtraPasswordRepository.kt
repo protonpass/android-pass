@@ -23,10 +23,10 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.withContext
 import me.proton.core.crypto.common.keystore.EncryptedByteArray
 import me.proton.core.crypto.common.keystore.EncryptedString
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.AppDispatchers
 import proton.android.pass.crypto.api.HashUtils
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
+import proton.android.pass.domain.UserId
 import java.io.File
 import javax.inject.Inject
 

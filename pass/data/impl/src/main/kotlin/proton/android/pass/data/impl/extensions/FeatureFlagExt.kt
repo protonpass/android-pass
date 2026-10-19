@@ -18,7 +18,7 @@
 
 package proton.android.pass.data.impl.extensions
 
-import me.proton.core.domain.entity.UserId
+import proton.android.pass.domain.UserId
 import proton.android.pass.preferences.FeatureFlag
 import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 

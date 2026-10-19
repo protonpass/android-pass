@@ -19,13 +19,13 @@
 package proton.android.pass.data.impl.usecases
 
 import kotlinx.coroutines.withTimeoutOrNull
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.safeRunCatching
 import proton.android.pass.data.api.usecases.PerformSync
 import proton.android.pass.data.api.usecases.SyncUserEvents
 import proton.android.pass.data.api.usecases.sync.CheckFolderForceSync
 import proton.android.pass.data.api.repositories.SyncMode
 import proton.android.pass.data.api.repositories.SyncReason
+import proton.android.pass.domain.UserId
 import proton.android.pass.log.api.PassLogger
 import javax.inject.Inject
 import javax.inject.Provider

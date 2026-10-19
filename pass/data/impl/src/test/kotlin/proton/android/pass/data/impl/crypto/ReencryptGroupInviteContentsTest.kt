@@ -20,7 +20,6 @@ package proton.android.pass.data.impl.crypto
 
 import kotlinx.coroutines.test.runTest
 import me.proton.core.crypto.common.pgp.UnlockedKey
-import me.proton.core.domain.entity.UserId
 import me.proton.core.key.domain.entity.key.KeyFlags
 import me.proton.core.key.domain.entity.key.PublicAddressKey
 import me.proton.core.key.domain.entity.key.PublicKey
@@ -36,6 +35,7 @@ import proton.android.pass.data.impl.responses.invites.GroupInviteApiModel
 import proton.android.pass.data.impl.responses.invites.KeyApiModel
 import proton.android.pass.data.impl.responses.invites.VaultDataApiModel
 import proton.android.pass.domain.GroupId
+import proton.android.pass.domain.UserId
 import proton.android.pass.test.domain.GroupTestFactory
 import proton.android.pass.test.domain.UserTestFactory
 import kotlin.test.Test

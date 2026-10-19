@@ -19,9 +19,9 @@
 package proton.android.pass.data.api.usecases.passkeys
 
 import kotlinx.coroutines.flow.Flow
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ShareSelection
+import proton.android.pass.domain.UserId
 
 interface ObserveItemsWithPasskeys {
     operator fun invoke(

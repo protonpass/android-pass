@@ -18,10 +18,10 @@
 
 package proton.android.pass.data.api.repositories
 
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.domain.Group
 import proton.android.pass.domain.GroupId
 import proton.android.pass.domain.GroupMember
+import proton.android.pass.domain.UserId
 
 interface GroupRepository {
 

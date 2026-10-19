@@ -20,11 +20,11 @@ package proton.android.pass.data.impl.fakes
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.impl.db.entities.FolderKeyEntity
 import proton.android.pass.data.impl.local.LocalFolderKeyDataSource
 import proton.android.pass.domain.FolderId
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.UserId
 
 class FakeLocalFolderKeyDataSource : LocalFolderKeyDataSource {
     private val keyByShareAndFolderId = mutableMapOf<Pair<String, String>, FolderKeyEntity>()
@@ -43,8 +43,13 @@ class FakeLocalFolderKeyDataSource : LocalFolderKeyDataSource {
     override suspend fun getByFolderId(userId: UserId, shareId: ShareId, folderId: FolderId): FolderKeyEntity? =
         keyByShareAndFolderId[shareId.id to folderId.id]?.takeIf { it.userId == userId.id }
 
-    override suspend fun getByFolderIds(userId: UserId, shareId: ShareId, folderIds: List<FolderId>): List<FolderKeyEntity> =
-        folderIds.mapNotNull { keyByShareAndFolderId[shareId.id to it.id]?.takeIf { entity -> entity.userId == userId.id } }
+    override suspend fun getByFolderIds(
+        userId: UserId,
+        shareId: ShareId,
+        folderIds: List<FolderId>
+    ): List<FolderKeyEntity> = folderIds.mapNotNull {
+        keyByShareAndFolderId[shareId.id to it.id]?.takeIf { entity -> entity.userId == userId.id }
+    }
 
     override suspend fun getAllByShareId(userId: UserId, shareId: ShareId): List<FolderKeyEntity> =
         keyByShareAndFolderId.values.filter { it.userId == userId.id && it.shareId == shareId.id }

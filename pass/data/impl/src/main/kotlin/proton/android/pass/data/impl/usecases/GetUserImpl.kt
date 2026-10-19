@@ -18,10 +18,10 @@
 
 package proton.android.pass.data.impl.usecases
 
-import me.proton.core.domain.entity.UserId
 import me.proton.core.user.domain.UserManager
 import proton.android.pass.data.impl.account.toDomain
 import proton.android.pass.data.api.usecases.GetUser
+import proton.android.pass.domain.UserId
 import proton.android.pass.domain.account.User
 import javax.inject.Inject
 

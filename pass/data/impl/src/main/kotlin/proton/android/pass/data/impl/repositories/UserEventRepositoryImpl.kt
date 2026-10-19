@@ -20,11 +20,11 @@ package proton.android.pass.data.impl.repositories
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.impl.extensions.toDomain
 import proton.android.pass.data.impl.local.LocalUserEventDataSource
 import proton.android.pass.data.impl.remote.RemoteUserEventDataSource
 import proton.android.pass.domain.UserEventId
+import proton.android.pass.domain.UserId
 import proton.android.pass.domain.events.UserEventList
 import javax.inject.Inject
 

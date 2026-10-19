@@ -22,7 +22,6 @@ import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.flow.drop
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
-import me.proton.core.domain.entity.UserId
 import org.junit.Before
 import org.junit.Test
 import proton.android.pass.data.api.usecases.GroupMembers
@@ -34,6 +33,7 @@ import proton.android.pass.domain.GroupId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.ShareRole
 import proton.android.pass.domain.ShareType
+import proton.android.pass.domain.UserId
 import proton.android.pass.domain.shares.ShareMember
 import proton.android.pass.test.domain.GroupTestFactory
 import proton.android.pass.test.domain.UserTestFactory

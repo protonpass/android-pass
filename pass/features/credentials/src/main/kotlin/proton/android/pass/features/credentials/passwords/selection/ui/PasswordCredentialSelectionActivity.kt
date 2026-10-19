@@ -43,7 +43,6 @@ import androidx.lifecycle.repeatOnLifecycle
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.appconfig.api.AppConfig
 import proton.android.pass.appconfig.api.BuildFlavor.Companion.upgradeUrl
 import proton.android.pass.autofill.api.suggestions.PackageNameUrlSuggestionAdapter
@@ -54,6 +53,7 @@ import proton.android.pass.commonui.api.enableEdgeToEdgeProtonPass
 import proton.android.pass.composecomponents.impl.dialogs.WarningReloadAppDialog
 import proton.android.pass.composecomponents.impl.theme.isDark
 import proton.android.pass.data.api.usecases.Suggestion
+import proton.android.pass.domain.UserId
 import proton.android.pass.domain.credentials.PasswordCredentialItem
 import proton.android.pass.domain.entity.PackageName
 import proton.android.pass.features.credentials.passwords.selection.navigation.PasswordCredentialSelectionNavEvent

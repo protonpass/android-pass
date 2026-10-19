@@ -30,7 +30,6 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.onStart
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.safeRunCatching
@@ -67,6 +66,7 @@ import proton.android.pass.data.impl.responses.SimpleLoginAliasSettingsData
 import proton.android.pass.data.impl.responses.SimpleLoginPendingAliasesData
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.UserAccessData
+import proton.android.pass.domain.UserId
 import proton.android.pass.domain.Vault
 import proton.android.pass.domain.selectSimpleLoginFallbackVault
 import proton.android.pass.domain.simplelogin.SimpleLoginAlias

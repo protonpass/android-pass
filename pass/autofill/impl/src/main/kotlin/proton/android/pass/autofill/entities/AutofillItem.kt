@@ -21,9 +21,9 @@ package proton.android.pass.autofill.entities
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 import me.proton.core.crypto.common.keystore.EncryptedString
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.UserId
 
 @Parcelize
 sealed interface AutofillItem : Parcelable {

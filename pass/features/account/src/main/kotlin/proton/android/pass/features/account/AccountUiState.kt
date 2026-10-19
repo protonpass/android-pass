@@ -20,8 +20,8 @@ package proton.android.pass.features.account
 
 import androidx.compose.runtime.Stable
 import me.proton.core.auth.fido.domain.entity.Fido2RegisteredKey
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
+import proton.android.pass.domain.UserId
 import proton.android.pass.domain.account.UserRecoveryState
 
 sealed interface PlanSection {

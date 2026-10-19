@@ -19,8 +19,8 @@
 package proton.android.pass.data.impl.local.shares
 
 import kotlinx.coroutines.flow.Flow
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.UserId
 import proton.android.pass.domain.shares.ShareMember
 
 interface LocalShareMembersDataSource {

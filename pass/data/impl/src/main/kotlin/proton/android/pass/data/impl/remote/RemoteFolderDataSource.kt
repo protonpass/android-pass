@@ -18,7 +18,6 @@
 
 package proton.android.pass.data.impl.remote
 
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.impl.requests.CreateFolderRequest
 import proton.android.pass.data.impl.requests.DeleteFoldersRequest
 import proton.android.pass.data.impl.requests.MoveFolderRequest
@@ -26,6 +25,7 @@ import proton.android.pass.data.impl.requests.UpdateFolderRequest
 import proton.android.pass.data.impl.responses.FolderApiModel
 import proton.android.pass.domain.FolderId
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.UserId
 
 interface RemoteFolderDataSource {
     suspend fun retrieveFolders(

@@ -18,7 +18,6 @@
 
 package proton.android.pass.data.impl.remote.simplelogin
 
-import me.proton.core.domain.entity.UserId
 import me.proton.core.network.data.ApiProvider
 import proton.android.pass.data.impl.api.PasswordManagerApi
 import proton.android.pass.data.impl.requests.SimpleLoginChangeMailboxRequest
@@ -38,6 +37,7 @@ import proton.android.pass.data.impl.responses.SimpleLoginAliasSettingsResponse
 import proton.android.pass.data.impl.responses.SimpleLoginPendingAliasesResponse
 import proton.android.pass.data.impl.responses.SimpleLoginSyncStatusResponse
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.UserId
 import javax.inject.Inject
 
 class RemoteSimpleLoginDataSourceImpl @Inject constructor(

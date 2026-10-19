@@ -18,7 +18,7 @@
 
 package proton.android.pass.preferences
 
-import me.proton.core.domain.entity.UserId
+import proton.android.pass.domain.UserId
 
 data class LastTimeUserHasSeenIAMPreference(
     val userId: UserId,

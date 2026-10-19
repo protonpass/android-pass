@@ -20,7 +20,6 @@ package proton.android.pass.data.impl.usecases.simplelogin
 
 import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.test.runTest
-import me.proton.core.domain.entity.UserId
 import org.junit.Before
 import org.junit.Test
 import proton.android.pass.crypto.fakes.usecases.FakeCreateItem
@@ -29,6 +28,7 @@ import proton.android.pass.data.fakes.repositories.FakeSimpleLoginRepository
 import proton.android.pass.data.fakes.repositories.FakeUserAccessDataRepository
 import proton.android.pass.data.fakes.usecases.FakeObserveVaults
 import proton.android.pass.data.impl.fakes.FakeShareKeyRepository
+import proton.android.pass.domain.UserId
 import proton.android.pass.preferences.FakeFeatureFlagsPreferenceRepository
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.ShareRole

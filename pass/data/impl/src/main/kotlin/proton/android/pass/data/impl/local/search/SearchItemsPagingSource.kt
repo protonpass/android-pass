@@ -22,7 +22,6 @@ import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import androidx.room.InvalidationTracker
 import androidx.sqlite.db.SimpleSQLiteQuery
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.commonrust.api.ItemContentSerializer
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.impl.extensions.toDomain
@@ -31,6 +30,7 @@ import proton.android.pass.data.impl.local.LocalItemDataSource
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.UserId
 import proton.android.pass.log.api.PassLogger
 
 class SearchItemsPagingSource(

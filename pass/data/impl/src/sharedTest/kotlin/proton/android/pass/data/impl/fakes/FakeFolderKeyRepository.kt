@@ -18,10 +18,10 @@
 
 package proton.android.pass.data.impl.fakes
 
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.impl.repositories.FolderKeyRepository
 import proton.android.pass.domain.FolderId
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.UserId
 import proton.android.pass.domain.key.FolderKey
 
 class FakeFolderKeyRepository : FolderKeyRepository {

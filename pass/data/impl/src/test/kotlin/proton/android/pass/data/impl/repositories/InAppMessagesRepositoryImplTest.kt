@@ -22,7 +22,6 @@ import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
 import kotlinx.datetime.Clock
-import me.proton.core.domain.entity.UserId
 import org.junit.Before
 import org.junit.Test
 import proton.android.pass.common.api.None
@@ -35,6 +34,7 @@ import proton.android.pass.data.impl.responses.NotificationPromoContentsResponse
 import proton.android.pass.data.impl.responses.NotificationPromoThemedContentsResponse
 import proton.android.pass.data.impl.responses.NotificationResponse
 import proton.android.pass.data.impl.responses.NotificationsResponse
+import proton.android.pass.domain.UserId
 import proton.android.pass.domain.inappmessages.InAppMessage
 import proton.android.pass.domain.inappmessages.InAppMessageId
 import proton.android.pass.domain.inappmessages.InAppMessagePromoContents

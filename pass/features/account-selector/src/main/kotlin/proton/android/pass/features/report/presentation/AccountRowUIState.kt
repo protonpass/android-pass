@@ -18,7 +18,7 @@
 
 package proton.android.pass.features.report.presentation
 
-import me.proton.core.domain.entity.UserId
+import proton.android.pass.domain.UserId
 
 data class AccountRowUIState(
     val userId: UserId,

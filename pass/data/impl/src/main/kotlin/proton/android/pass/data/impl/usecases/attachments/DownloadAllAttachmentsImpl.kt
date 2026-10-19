@@ -24,7 +24,6 @@ import java.util.concurrent.atomic.AtomicBoolean
 import kotlinx.coroutines.flow.first
 import proton.android.pass.common.api.safeRunCatching
 import proton.android.pass.data.impl.util.runConcurrently
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.api.repositories.AttachmentRepository
 import proton.android.pass.data.api.usecases.ItemTypeFilter
 import proton.android.pass.data.api.usecases.attachments.DownloadAllAttachments
@@ -34,6 +33,7 @@ import proton.android.pass.data.impl.local.LocalItemDataSource
 import proton.android.pass.domain.ItemFlag
 import proton.android.pass.domain.ItemState
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.UserId
 import proton.android.pass.domain.attachments.AttachmentDownloadStatus
 import proton.android.pass.log.api.PassLogger
 import javax.inject.Inject

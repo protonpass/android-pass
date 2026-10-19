@@ -19,9 +19,9 @@
 package proton.android.pass.data.impl.remote
 
 import kotlinx.coroutines.flow.Flow
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.impl.responses.EventList
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.UserId
 
 interface RemoteEventDataSource {
 

@@ -22,11 +22,11 @@ package proton.android.pass.log.impl
 import android.content.ContextWrapper
 import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.test.runTest
-import me.proton.core.domain.entity.UserId
 import org.junit.Before
 import org.junit.Test
 import proton.android.pass.appconfig.fakes.FakeAppConfig
 import proton.android.pass.common.fakes.FakeAppDispatchers
+import proton.android.pass.domain.UserId
 import java.io.File
 import kotlin.io.path.createTempDirectory
 

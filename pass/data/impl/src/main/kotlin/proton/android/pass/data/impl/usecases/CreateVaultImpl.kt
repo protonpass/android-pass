@@ -19,12 +19,12 @@
 package proton.android.pass.data.impl.usecases
 
 import me.proton.core.domain.entity.SessionUserId
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.api.errors.UserIdNotAvailableError
 import proton.android.pass.data.api.repositories.ShareRepository
 import proton.android.pass.data.api.usecases.CreateVault
 import proton.android.pass.data.api.usecases.GetPrimaryUserId
 import proton.android.pass.domain.Share
+import proton.android.pass.domain.UserId
 import proton.android.pass.domain.entity.NewVault
 import javax.inject.Inject
 

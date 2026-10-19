@@ -27,7 +27,6 @@ import kotlinx.coroutines.flow.emitAll
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.flow
 import me.proton.core.crypto.common.keystore.EncryptedByteArray
-import me.proton.core.domain.entity.UserId
 import me.proton.core.network.domain.ApiException
 import me.proton.core.network.domain.ApiResult
 import proton.android.pass.common.api.safeRunCatching
@@ -45,6 +44,7 @@ import proton.android.pass.data.impl.requests.CreateSecureLinkRequest
 import proton.android.pass.data.impl.responses.GetSecureLinkResponse
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.UserId
 import proton.android.pass.domain.key.ItemKey
 import proton.android.pass.domain.securelinks.SecureLink
 import proton.android.pass.domain.securelinks.SecureLinkId

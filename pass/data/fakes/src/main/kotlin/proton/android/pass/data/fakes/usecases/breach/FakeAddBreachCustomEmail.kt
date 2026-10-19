@@ -18,8 +18,8 @@
 
 package proton.android.pass.data.fakes.usecases.breach
 
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.api.usecases.breach.AddBreachCustomEmail
+import proton.android.pass.domain.UserId
 import proton.android.pass.domain.breach.BreachCustomEmail
 import javax.inject.Inject
 import javax.inject.Singleton

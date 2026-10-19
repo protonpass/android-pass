@@ -18,8 +18,8 @@
 
 package proton.android.pass.data.fakes.usecases.passwordHistoryEntry
 
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.api.usecases.passwordHistoryEntry.DeletePasswordHistoryEntryForUser
+import proton.android.pass.domain.UserId
 import javax.inject.Inject
 import javax.inject.Singleton
 

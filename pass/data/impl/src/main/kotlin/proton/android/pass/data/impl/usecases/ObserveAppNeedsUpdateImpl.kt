@@ -22,18 +22,18 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
-import me.proton.core.accountmanager.domain.AccountManager
 import proton.android.pass.data.api.repositories.UserAccessDataRepository
 import proton.android.pass.data.api.usecases.ObserveAppNeedsUpdate
+import proton.android.pass.data.api.usecases.ObservePrimaryUserId
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
 class ObserveAppNeedsUpdateImpl @Inject constructor(
-    private val accountManager: AccountManager,
+    private val observePrimaryUserId: ObservePrimaryUserId,
     private val userAccessDataRepository: UserAccessDataRepository
 ) : ObserveAppNeedsUpdate {
-    override fun invoke(): Flow<Boolean> = accountManager.getPrimaryUserId()
+    override fun invoke(): Flow<Boolean> = observePrimaryUserId()
         .flatMapLatest { userId ->
             if (userId == null) {
                 flowOf(false)

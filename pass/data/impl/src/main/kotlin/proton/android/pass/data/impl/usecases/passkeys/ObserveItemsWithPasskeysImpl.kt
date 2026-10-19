@@ -24,10 +24,10 @@ import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.mapLatest
-import me.proton.core.accountmanager.domain.AccountManager
 import proton.android.pass.commonrust.api.ItemContentSerializer
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.repositories.ShareRepository
+import proton.android.pass.data.api.usecases.ObservePrimaryUserId
 import proton.android.pass.data.api.usecases.passkeys.ObserveItemsWithPasskeys
 import proton.android.pass.data.impl.extensions.toDomain
 import proton.android.pass.data.impl.local.LocalItemDataSource
@@ -41,7 +41,7 @@ import javax.inject.Singleton
 @Singleton
 class ObserveItemsWithPasskeysImpl @Inject constructor(
     private val itemContentSerializer: ItemContentSerializer,
-    private val accountManager: AccountManager,
+    private val observePrimaryUserId: ObservePrimaryUserId,
     private val localItemDataSource: LocalItemDataSource,
     private val shareRepository: ShareRepository,
     private val encryptionContextProvider: EncryptionContextProvider
@@ -51,7 +51,7 @@ class ObserveItemsWithPasskeysImpl @Inject constructor(
         shareSelection: ShareSelection,
         includeHiddenVault: Boolean,
         onlyActiveItems: Boolean
-    ): Flow<List<Item>> = (userId?.let(::flowOf) ?: accountManager.getPrimaryUserId())
+    ): Flow<List<Item>> = (userId?.let(::flowOf) ?: observePrimaryUserId())
         .filterNotNull()
         .flatMapLatest { resolvedUserId ->
             when (shareSelection) {

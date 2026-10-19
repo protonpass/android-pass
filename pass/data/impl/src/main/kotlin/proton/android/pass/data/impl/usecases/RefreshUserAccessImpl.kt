@@ -24,10 +24,8 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
-import me.proton.core.account.domain.entity.AccountState
-import me.proton.core.accountmanager.domain.AccountManager
-import me.proton.core.accountmanager.domain.getAccounts
 import proton.android.pass.data.api.usecases.DisableAccount
+import proton.android.pass.data.api.usecases.ObserveReadyAccounts
 import proton.android.pass.data.api.usecases.RefreshUserAccess
 import proton.android.pass.data.impl.R
 import proton.android.pass.data.impl.repositories.PlanRepository
@@ -41,7 +39,7 @@ import javax.inject.Inject
 
 class RefreshUserAccessImpl @Inject constructor(
     private val planRepository: PlanRepository,
-    private val accountManager: AccountManager,
+    private val observeReadyAccounts: ObserveReadyAccounts,
     private val disableAccount: DisableAccount,
     private val toastManager: ToastManager
 ) : RefreshUserAccess {
@@ -58,7 +56,7 @@ class RefreshUserAccessImpl @Inject constructor(
         }
     }
 
-    private suspend fun getAllActivePlans(): List<Pair<UserId, Plan>> = accountManager.getAccounts(AccountState.Ready)
+    private suspend fun getAllActivePlans(): List<Pair<UserId, Plan>> = observeReadyAccounts()
         .flatMapLatest { list ->
             val planFlows = list.map { account ->
                 planRepository.observePlan(account.userId)

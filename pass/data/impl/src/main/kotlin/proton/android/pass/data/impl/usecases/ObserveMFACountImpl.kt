@@ -21,19 +21,19 @@ package proton.android.pass.data.impl.usecases
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.flatMapLatest
-import me.proton.core.accountmanager.domain.AccountManager
 import proton.android.pass.data.api.repositories.ShareRepository
 import proton.android.pass.data.api.usecases.ObserveMFACount
+import proton.android.pass.data.api.usecases.ObservePrimaryUserId
 import proton.android.pass.data.impl.local.LocalItemDataSource
 import javax.inject.Inject
 
 class ObserveMFACountImpl @Inject constructor(
-    private val accountManager: AccountManager,
+    private val observePrimaryUserId: ObservePrimaryUserId,
     private val shareRepository: ShareRepository,
     private val localItemDataSource: LocalItemDataSource
 ) : ObserveMFACount {
 
-    override fun invoke(includeHiddenVault: Boolean): Flow<Int> = accountManager.getPrimaryUserId()
+    override fun invoke(includeHiddenVault: Boolean): Flow<Int> = observePrimaryUserId()
         .filterNotNull()
         .flatMapLatest { userId ->
             shareRepository.observeAllUsableShareIds(userId, includeHiddenVault)

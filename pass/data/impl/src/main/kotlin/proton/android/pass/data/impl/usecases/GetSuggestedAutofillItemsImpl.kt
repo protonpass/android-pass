@@ -24,10 +24,6 @@ import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
-import me.proton.core.account.domain.entity.Account
-import me.proton.core.account.domain.entity.AccountState
-import me.proton.core.accountmanager.domain.AccountManager
-import me.proton.core.accountmanager.domain.getAccounts
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.toOption
@@ -38,6 +34,7 @@ import proton.android.pass.data.api.usecases.GetUserPlan
 import proton.android.pass.data.api.usecases.ItemData
 import proton.android.pass.data.api.usecases.ItemTypeFilter
 import proton.android.pass.data.api.usecases.ObserveItems
+import proton.android.pass.data.api.usecases.ObserveReadyAccounts
 import proton.android.pass.data.api.usecases.SuggestedAutofillItemsResult
 import proton.android.pass.data.api.usecases.Suggestion
 import proton.android.pass.data.api.usecases.shares.ObserveAutofillShares
@@ -59,7 +56,7 @@ import proton.android.pass.preferences.value
 import javax.inject.Inject
 
 class GetSuggestedAutofillItemsImpl @Inject constructor(
-    private val accountManager: AccountManager,
+    private val observeReadyAccounts: ObserveReadyAccounts,
     private val observeItems: ObserveItems,
     private val suggestionItemFilter: SuggestionItemFilterer,
     private val suggestionSorter: SuggestionSorter,
@@ -96,8 +93,8 @@ class GetSuggestedAutofillItemsImpl @Inject constructor(
     private fun getUserIds(userId: Option<UserId>): Flow<List<UserId>> = if (userId is Some) {
         flowOf(listOf(userId.value))
     } else {
-        accountManager.getAccounts(AccountState.Ready)
-            .map { accounts -> accounts.map(Account::userId) }
+        observeReadyAccounts()
+            .map { accounts -> accounts.map { it.userId } }
     }
 
     private fun handleAllowedItems(

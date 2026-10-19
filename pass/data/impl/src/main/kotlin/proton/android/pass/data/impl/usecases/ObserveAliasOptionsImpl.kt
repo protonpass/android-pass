@@ -21,20 +21,20 @@ package proton.android.pass.data.impl.usecases
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.flatMapLatest
-import me.proton.core.accountmanager.domain.AccountManager
 import proton.android.pass.data.api.repositories.AliasRepository
 import proton.android.pass.data.api.usecases.ObserveAliasOptions
+import proton.android.pass.data.api.usecases.ObservePrimaryUserId
 import proton.android.pass.domain.AliasOptions
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.UserId
 import javax.inject.Inject
 
 class ObserveAliasOptionsImpl @Inject constructor(
-    private val accountManager: AccountManager,
+    private val observePrimaryUserId: ObservePrimaryUserId,
     private val aliasRepository: AliasRepository
 ) : ObserveAliasOptions {
 
-    override operator fun invoke(shareId: ShareId): Flow<AliasOptions> = accountManager.getPrimaryUserId()
+    override operator fun invoke(shareId: ShareId): Flow<AliasOptions> = observePrimaryUserId()
         .filterNotNull()
         .flatMapLatest { getAliasOptions(it, shareId) }
 

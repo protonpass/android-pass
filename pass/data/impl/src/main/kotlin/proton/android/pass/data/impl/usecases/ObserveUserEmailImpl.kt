@@ -24,14 +24,14 @@ import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onStart
-import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.user.domain.UserManager
+import proton.android.pass.data.api.usecases.ObservePrimaryUserId
 import proton.android.pass.data.api.usecases.ObserveUserEmail
 import proton.android.pass.domain.UserId
 import javax.inject.Inject
 
 class ObserveUserEmailImpl @Inject constructor(
-    private val accountManager: AccountManager,
+    private val observePrimaryUserId: ObservePrimaryUserId,
     private val userManager: UserManager
 ) : ObserveUserEmail {
 
@@ -44,7 +44,7 @@ class ObserveUserEmailImpl @Inject constructor(
         .onStart { emit("") }
 
     private fun getUserId(userId: UserId?) = if (userId == null) {
-        accountManager.getPrimaryUserId()
+        observePrimaryUserId()
     } else {
         flowOf(userId)
     }

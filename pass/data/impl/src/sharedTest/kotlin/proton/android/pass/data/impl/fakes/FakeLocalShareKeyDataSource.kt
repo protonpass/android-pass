@@ -30,25 +30,36 @@ import proton.android.pass.domain.UserId
 class FakeLocalShareKeyDataSource : LocalShareKeyDataSource {
     private val shareKeyByCompositeKey = mutableMapOf<Triple<String, String, Long>, ShareKeyEntity>()
 
-    fun setShareKey(userId: UserId, shareId: ShareId, rotation: Long, keyBytes: ByteArray) {
+    fun setShareKey(
+        userId: UserId,
+        shareId: ShareId,
+        rotation: Long,
+        keyBytes: ByteArray
+    ) {
         shareKeyByCompositeKey[Triple(userId.id, shareId.id, rotation)] = ShareKeyEntityTestFactory.create(
             rotation = rotation,
             userId = userId.id,
             shareId = shareId.id,
-            symmetricallyEncryptedKey = FakeEncryptionContext.encrypt(keyBytes),
+            symmetricallyEncryptedKey = FakeEncryptionContext.encrypt(keyBytes)
         )
     }
 
-    override fun getAllShareKeysForShare(userId: UserId, shareId: ShareId): Flow<List<ShareKeyEntity>> =
-        flowOf(
-            shareKeyByCompositeKey
-                .filter { it.key.first == userId.id && it.key.second == shareId.id }
-                .values
-                .toList()
-        )
+    fun setEntity(entity: ShareKeyEntity) {
+        shareKeyByCompositeKey[Triple(entity.userId, entity.shareId, entity.rotation)] = entity
+    }
 
-    override fun getForShareAndRotation(userId: UserId, shareId: ShareId, rotation: Long): Flow<ShareKeyEntity?> =
-        flowOf(shareKeyByCompositeKey[Triple(userId.id, shareId.id, rotation)])
+    override fun getAllShareKeysForShare(userId: UserId, shareId: ShareId): Flow<List<ShareKeyEntity>> = flowOf(
+        shareKeyByCompositeKey
+            .filter { it.key.first == userId.id && it.key.second == shareId.id }
+            .values
+            .toList()
+    )
+
+    override fun getForShareAndRotation(
+        userId: UserId,
+        shareId: ShareId,
+        rotation: Long
+    ): Flow<ShareKeyEntity?> = flowOf(shareKeyByCompositeKey[Triple(userId.id, shareId.id, rotation)])
 
     override fun getLatestKeyForShare(shareId: ShareId): Flow<ShareKeyEntity> {
         error("Not needed in tests")

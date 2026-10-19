@@ -22,8 +22,8 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
-import me.proton.core.accountmanager.domain.AccountManager
 import proton.android.pass.data.api.repositories.UserAccessDataRepository
+import proton.android.pass.data.api.usecases.ObservePrimaryUserId
 import proton.android.pass.data.api.usecases.folders.FolderLimitsData
 import proton.android.pass.data.api.usecases.folders.ObserveFolderLimits
 import proton.android.pass.domain.FolderLimits
@@ -32,11 +32,11 @@ import javax.inject.Singleton
 
 @Singleton
 class ObserveFolderLimitsImpl @Inject constructor(
-    private val accountManager: AccountManager,
+    private val observePrimaryUserId: ObservePrimaryUserId,
     private val userAccessDataRepository: UserAccessDataRepository
 ) : ObserveFolderLimits {
 
-    override fun invoke(): Flow<FolderLimitsData> = accountManager.getPrimaryUserId()
+    override fun invoke(): Flow<FolderLimitsData> = observePrimaryUserId()
         .filterNotNull()
         .flatMapLatest { userId ->
             userAccessDataRepository.observe(userId).map { userAccessData ->

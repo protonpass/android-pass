@@ -21,8 +21,8 @@ package proton.android.pass.data.impl.usecases.aliascontact
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.flatMapLatest
-import me.proton.core.accountmanager.domain.AccountManager
 import proton.android.pass.data.api.repositories.AliasContactsRepository
+import proton.android.pass.data.api.usecases.ObservePrimaryUserId
 import proton.android.pass.data.api.usecases.aliascontact.ObserveAliasContacts
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
@@ -30,7 +30,7 @@ import proton.android.pass.domain.aliascontacts.AliasContacts
 import javax.inject.Inject
 
 class ObserveAliasContactsImpl @Inject constructor(
-    private val accountManager: AccountManager,
+    private val observePrimaryUserId: ObservePrimaryUserId,
     private val aliasContactsRepository: AliasContactsRepository
 ) : ObserveAliasContacts {
 
@@ -38,7 +38,7 @@ class ObserveAliasContactsImpl @Inject constructor(
         shareId: ShareId,
         itemId: ItemId,
         fullList: Boolean
-    ): Flow<AliasContacts> = accountManager.getPrimaryUserId()
+    ): Flow<AliasContacts> = observePrimaryUserId()
         .filterNotNull()
         .flatMapLatest {
             aliasContactsRepository.observeAliasContacts(

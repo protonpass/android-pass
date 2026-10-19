@@ -42,6 +42,8 @@ import proton.android.pass.data.impl.crypto.ReencryptGroupInviteContents
 import proton.android.pass.data.impl.crypto.ReencryptGroupInviteContentsImpl
 import proton.android.pass.data.impl.crypto.ReencryptShareContents
 import proton.android.pass.data.impl.crypto.ReencryptShareContentsImpl
+import proton.android.pass.data.impl.crypto.GetUserKeys
+import proton.android.pass.data.impl.crypto.GetUserKeysImpl
 import proton.android.pass.data.impl.crypto.ReencryptShareKey
 import proton.android.pass.data.impl.crypto.ReencryptShareKeyImpl
 import proton.android.pass.data.impl.crypto.ReencryptUserInviteContents
@@ -62,6 +64,9 @@ abstract class DataCryptoModule {
 
     @Binds
     abstract fun bindReencryptShareContents(impl: ReencryptShareContentsImpl): ReencryptShareContents
+
+    @Binds
+    abstract fun bindGetUserKeys(impl: GetUserKeysImpl): GetUserKeys
 
     @Binds
     abstract fun bindReencryptShareKey(impl: ReencryptShareKeyImpl): ReencryptShareKey

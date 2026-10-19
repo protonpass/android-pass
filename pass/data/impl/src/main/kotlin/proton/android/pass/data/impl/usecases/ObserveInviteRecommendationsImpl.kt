@@ -21,21 +21,21 @@ package proton.android.pass.data.impl.usecases
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.flatMapLatest
-import me.proton.core.accountmanager.domain.AccountManager
 import proton.android.pass.common.api.Option
 import proton.android.pass.data.api.repositories.UserInviteRepository
 import proton.android.pass.data.api.usecases.ObserveInviteRecommendations
+import proton.android.pass.data.api.usecases.ObservePrimaryUserId
 import proton.android.pass.domain.InviteRecommendations
 import proton.android.pass.domain.ShareId
 import javax.inject.Inject
 
 class ObserveInviteRecommendationsImpl @Inject constructor(
-    private val accountManager: AccountManager,
+    private val observePrimaryUserId: ObservePrimaryUserId,
     private val userInviteRepository: UserInviteRepository
 ) : ObserveInviteRecommendations {
 
     override fun invoke(shareId: ShareId, startsWith: Option<String>): Flow<InviteRecommendations> =
-        accountManager.getPrimaryUserId()
+        observePrimaryUserId()
             .filterNotNull()
             .flatMapLatest {
                 userInviteRepository.observeInviteRecommendations(

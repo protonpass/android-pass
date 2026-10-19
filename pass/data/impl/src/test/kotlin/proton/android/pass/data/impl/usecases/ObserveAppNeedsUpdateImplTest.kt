@@ -23,8 +23,8 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Test
-import proton.android.pass.account.fakes.FakeAccountManager
 import proton.android.pass.data.fakes.repositories.FakeUserAccessDataRepository
+import proton.android.pass.data.fakes.usecases.FakeObservePrimaryUserId
 import proton.android.pass.domain.UserId
 import proton.android.pass.test.domain.UserAccessDataTestFactory
 
@@ -32,15 +32,15 @@ class ObserveAppNeedsUpdateImplTest {
 
     private lateinit var instance: ObserveAppNeedsUpdateImpl
 
-    private lateinit var accountManager: FakeAccountManager
+    private lateinit var observePrimaryUserId: FakeObservePrimaryUserId
     private lateinit var userAccessDataRepository: FakeUserAccessDataRepository
 
     @Before
     fun setup() {
-        accountManager = FakeAccountManager()
+        observePrimaryUserId = FakeObservePrimaryUserId()
         userAccessDataRepository = FakeUserAccessDataRepository()
         instance = ObserveAppNeedsUpdateImpl(
-            accountManager = accountManager,
+            observePrimaryUserId = observePrimaryUserId,
             userAccessDataRepository = userAccessDataRepository
         )
     }
@@ -82,7 +82,7 @@ class ObserveAppNeedsUpdateImplTest {
 
     private fun sendUserId(sendValue: Boolean) {
         val value = if (sendValue) UserId("user-id") else null
-        accountManager.sendPrimaryUserId(value)
+        observePrimaryUserId.emitUserId(value)
     }
 
     private fun sendUserAccessData(needsUpdate: Boolean?) {

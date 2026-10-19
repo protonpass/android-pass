@@ -23,26 +23,27 @@ import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Test
-import proton.android.pass.account.fakes.FakeAccountManager
 import proton.android.pass.data.api.repositories.ItemRevision
 import proton.android.pass.data.fakes.repositories.FakeItemRepository
+import proton.android.pass.data.fakes.usecases.FakeObservePrimaryUserId
+import proton.android.pass.domain.UserId
 import proton.android.pass.test.domain.items.ItemIdTestFactory
 import proton.android.pass.test.domain.shares.ShareIdTestFactory
 
 internal class ObserveItemRevisionsImplTestApiModel {
 
-    private lateinit var accountManager: FakeAccountManager
+    private lateinit var observePrimaryUserId: FakeObservePrimaryUserId
     private lateinit var itemRepository: FakeItemRepository
 
     private lateinit var observeItemRevisionsImpl: ObserveItemRevisionsImpl
 
     @Before
     internal fun setUp() {
-        accountManager = FakeAccountManager()
+        observePrimaryUserId = FakeObservePrimaryUserId().apply { emitUserId(UserId(USER_ID)) }
         itemRepository = FakeItemRepository()
 
         observeItemRevisionsImpl = ObserveItemRevisionsImpl(
-            accountManager = accountManager,
+            observePrimaryUserId = observePrimaryUserId,
             itemRepository = itemRepository
         )
     }
@@ -59,6 +60,10 @@ internal class ObserveItemRevisionsImplTestApiModel {
 
             assertThat(itemRevisions).isEqualTo(expectedItemRevisions)
         }
+    }
+
+    private companion object {
+        const val USER_ID = "user-id"
     }
 
 }

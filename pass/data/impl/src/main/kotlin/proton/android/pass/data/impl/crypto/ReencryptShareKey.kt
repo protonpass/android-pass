@@ -25,13 +25,11 @@ import me.proton.core.key.domain.decryptAndVerifyData
 import me.proton.core.key.domain.entity.key.PublicKeyRing
 import me.proton.core.key.domain.getArmored
 import me.proton.core.key.domain.useKeys
-import me.proton.core.user.domain.entity.User
 import me.proton.core.user.domain.entity.UserAddress
 import proton.android.pass.crypto.api.Base64
 import proton.android.pass.crypto.api.context.EncryptionContext
 import proton.android.pass.crypto.api.error.InvalidSignature
 import proton.android.pass.data.impl.exception.UserKeyNotActive
-import proton.android.pass.data.impl.extensions.tryUseKeys
 import proton.android.pass.log.api.PassLogger
 import javax.inject.Inject
 
@@ -42,7 +40,8 @@ sealed interface ReencryptKeyInput
 data class ReencryptShareKeyInput(
     val key: String,
     val userKeyId: String,
-    val addressId: String
+    val addressId: String,
+    val userKeys: UserKeys
 ) : ReencryptKeyInput
 
 data class ReencryptGroupKeyInput(
@@ -52,50 +51,30 @@ data class ReencryptGroupKeyInput(
 ) : ReencryptKeyInput
 
 interface ReencryptShareKey {
-    operator fun invoke(
-        encryptionContext: EncryptionContext,
-        user: User,
-        input: ReencryptKeyInput
-    ): EncryptedByteArray
+    operator fun invoke(encryptionContext: EncryptionContext, input: ReencryptKeyInput): EncryptedByteArray
 }
 
 class ReencryptShareKeyImpl @Inject constructor(
     private val cryptoContext: CryptoContext
 ) : ReencryptShareKey {
-    override fun invoke(
-        encryptionContext: EncryptionContext,
-        user: User,
-        input: ReencryptKeyInput
-    ): EncryptedByteArray = when (input) {
-        is ReencryptGroupKeyInput -> reencryptGroupKey(encryptionContext, input)
-        is ReencryptShareKeyInput -> reencryptShareKey(encryptionContext, user, input)
-    }
+    override fun invoke(encryptionContext: EncryptionContext, input: ReencryptKeyInput): EncryptedByteArray =
+        when (input) {
+            is ReencryptGroupKeyInput -> reencryptGroupKey(encryptionContext, input)
+            is ReencryptShareKeyInput -> reencryptShareKey(encryptionContext, input)
+        }
 
     private fun reencryptShareKey(
         encryptionContext: EncryptionContext,
-        user: User,
         input: ReencryptShareKeyInput
     ): EncryptedByteArray {
-        val hasUserKey = user.keys.any {
-            it.active == true && input.userKeyId == it.keyId.id
-        }
-
-        if (!hasUserKey) {
+        if (!input.userKeys.hasActiveKey(input.userKeyId)) {
             PassLogger.w(TAG, "reencryptShareKey: userKeyId did not match any locally active key")
             throw UserKeyNotActive()
         }
 
-        val decodedKey = Base64.decodeBase64(input.key)
+        val decrypted = input.userKeys.decryptAndVerify(Base64.decodeBase64(input.key))
 
-        val decrypted = user.tryUseKeys("reencrypt share key", cryptoContext) {
-            decryptAndVerifyData(getArmored(decodedKey))
-        }
-
-        if (decrypted.status != VerificationStatus.Success) {
-            throw InvalidSignature("ShareKey signature did not match")
-        }
-
-        return encryptionContext.encrypt(decrypted.data)
+        return encryptionContext.encrypt(decrypted)
     }
 
     private fun reencryptGroupKey(

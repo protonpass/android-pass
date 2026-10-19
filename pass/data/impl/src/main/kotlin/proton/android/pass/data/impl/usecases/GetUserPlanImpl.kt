@@ -21,22 +21,22 @@ package proton.android.pass.data.impl.usecases
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.flatMapLatest
-import me.proton.core.accountmanager.domain.AccountManager
 import proton.android.pass.data.api.usecases.GetUserPlan
+import proton.android.pass.data.api.usecases.ObservePrimaryUserId
 import proton.android.pass.data.impl.repositories.PlanRepository
 import proton.android.pass.domain.Plan
 import proton.android.pass.domain.UserId
 import javax.inject.Inject
 
 class GetUserPlanImpl @Inject constructor(
-    private val accountManager: AccountManager,
+    private val observePrimaryUserId: ObservePrimaryUserId,
     private val planRepository: PlanRepository
 ) : GetUserPlan {
 
     override fun invoke(userId: UserId?): Flow<Plan> = if (userId != null) {
         planRepository.observePlan(userId).filterNotNull()
     } else {
-        accountManager.getPrimaryUserId()
+        observePrimaryUserId()
             .filterNotNull()
             .flatMapLatest { planRepository.observePlan(it).filterNotNull() }
     }

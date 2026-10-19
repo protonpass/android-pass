@@ -21,18 +21,18 @@ package proton.android.pass.data.impl.usecases.passwordHistoryEntry
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.flatMapLatest
-import me.proton.core.accountmanager.domain.AccountManager
 import proton.android.pass.data.api.repositories.PasswordHistoryEntryRepository
+import proton.android.pass.data.api.usecases.ObservePrimaryUserId
 import proton.android.pass.data.api.usecases.passwordHistoryEntry.ObservePasswordHistoryEntryForUser
 import proton.android.pass.domain.PasswordHistoryEntry
 import javax.inject.Inject
 
 class ObservePasswordHistoryEntryForUserImpl @Inject constructor(
     private val repository: PasswordHistoryEntryRepository,
-    private val accountManager: AccountManager
+    private val observePrimaryUserId: ObservePrimaryUserId
 ) : ObservePasswordHistoryEntryForUser {
     override suspend fun invoke(): Flow<List<PasswordHistoryEntry>> {
-        return accountManager.getPrimaryUserId()
+        return observePrimaryUserId()
             .filterNotNull()
             .flatMapLatest { userId ->
                 repository.observePasswordHistoryEntryForUser(userId = userId)

@@ -39,6 +39,7 @@ import proton.android.pass.preferences.FeatureFlag.PASS_POPULAR_SERVICES
 import proton.android.pass.preferences.FeatureFlag.PASS_AUTOFILL_HEALTH
 import proton.android.pass.preferences.FeatureFlag.PASS_FORCE_SYNC_FOLDERS
 import proton.android.pass.preferences.FeatureFlag.PASS_OFFLINE_ATTACHMENTS
+import proton.android.pass.preferences.FeatureFlag.PASS_FOLDER_NAVIGATION
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -71,6 +72,7 @@ class FakeFeatureFlagsPreferenceRepository @Inject constructor() :
             PASS_AUTOFILL_HEALTH -> it.getOrDefault(PASS_AUTOFILL_HEALTH, false) as T
             PASS_OFFLINE_ATTACHMENTS -> it.getOrDefault(PASS_OFFLINE_ATTACHMENTS, false) as T
             PASS_FORCE_SYNC_FOLDERS -> it.getOrDefault(PASS_FORCE_SYNC_FOLDERS, false) as T
+            PASS_FOLDER_NAVIGATION -> it.getOrDefault(PASS_FOLDER_NAVIGATION, false) as T
         }
     }
 

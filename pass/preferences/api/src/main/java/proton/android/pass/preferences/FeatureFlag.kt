@@ -113,5 +113,11 @@ enum class FeatureFlag(
         description = "Force a one-off full sync for users whose folders were lost by a pre-folders build",
         key = "PassForceSyncFolders",
         isEnabledDefault = false
+    ),
+    PASS_FOLDER_NAVIGATION(
+        title = "Folder navigation",
+        description = "Show the new folder navigation in vault and folder item lists",
+        key = "PassFolderNavigation",
+        isEnabledDefault = false
     )
 }

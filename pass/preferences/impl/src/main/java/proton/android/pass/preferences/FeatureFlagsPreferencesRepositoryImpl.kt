@@ -58,6 +58,7 @@ import proton.android.pass.preferences.FeatureFlag.PASS_POPULAR_SERVICES
 import proton.android.pass.preferences.FeatureFlag.PASS_AUTOFILL_HEALTH
 import proton.android.pass.preferences.FeatureFlag.PASS_FORCE_SYNC_FOLDERS
 import proton.android.pass.preferences.FeatureFlag.PASS_OFFLINE_ATTACHMENTS
+import proton.android.pass.preferences.FeatureFlag.PASS_FOLDER_NAVIGATION
 import java.io.IOException
 import java.util.concurrent.ConcurrentHashMap
 import javax.inject.Inject
@@ -164,6 +165,11 @@ class FeatureFlagsPreferencesRepositoryImpl @Inject constructor(
             key = featureFlag.key,
             defaultValue = featureFlag.isEnabledDefault
         ) { passForceSyncFoldersEnabled.value }
+
+        PASS_FOLDER_NAVIGATION -> getFeatureFlag(
+            key = featureFlag.key,
+            defaultValue = featureFlag.isEnabledDefault
+        ) { passFolderNavigationEnabled.value }
     }
 
     @Suppress("UNCHECKED_CAST")
@@ -258,6 +264,10 @@ class FeatureFlagsPreferencesRepositoryImpl @Inject constructor(
 
         PASS_FORCE_SYNC_FOLDERS -> setFeatureFlag {
             passForceSyncFoldersEnabled = boolFlagPrefProto(value)
+        }
+
+        PASS_FOLDER_NAVIGATION -> setFeatureFlag {
+            passFolderNavigationEnabled = boolFlagPrefProto(value)
         }
     }
 
@@ -364,6 +374,7 @@ class FeatureFlagsPreferencesRepositoryImpl @Inject constructor(
             PASS_AUTOFILL_HEALTH -> passAutofillHealthEnabled
             PASS_OFFLINE_ATTACHMENTS -> passOfflineAttachmentsEnabled
             PASS_FORCE_SYNC_FOLDERS -> passForceSyncFoldersEnabled
+            PASS_FOLDER_NAVIGATION -> passFolderNavigationEnabled
         }.value
     }
 

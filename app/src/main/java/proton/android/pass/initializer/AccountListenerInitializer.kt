@@ -33,8 +33,6 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.scan
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import me.proton.core.account.domain.entity.Account
-import me.proton.core.account.domain.entity.AccountState
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.accountmanager.presentation.observe
 import me.proton.core.accountmanager.presentation.onAccountDisabled
@@ -47,9 +45,11 @@ import proton.android.pass.data.api.repositories.ItemSyncStatusRepository
 import proton.android.pass.data.api.repositories.SyncMode
 import proton.android.pass.data.api.usecases.ClearUserData
 import proton.android.pass.data.api.usecases.GetReadyAccounts
+import proton.android.pass.data.api.usecases.ObserveAccountStateChanges
 import proton.android.pass.data.api.usecases.ResetAppToDefaults
 import proton.android.pass.data.impl.db.DatabaseCleanupHelper
 import proton.android.pass.domain.UserId
+import proton.android.pass.domain.account.AccountState
 import proton.android.pass.log.api.LogAccountContext
 import proton.android.pass.log.api.LogoutLogger
 import proton.android.pass.log.api.LogoutReason
@@ -78,14 +78,14 @@ class AccountListenerInitializer : Initializer<Unit> {
             launchInAppLifecycleScope(lifecycleProvider) {
                 withContext(LogAccountContext(account.userId)) {
                     PassLogger.i(TAG, "Account disabled : ${account.userId}")
-                    performCleanup(account, entryPoint)
+                    performCleanup(account.userId, entryPoint)
                 }
             }
         }.onAccountRemoved { account ->
             launchInAppLifecycleScope(lifecycleProvider) {
                 withContext(LogAccountContext(account.userId)) {
                     PassLogger.i(TAG, "Account removed : ${account.userId}")
-                    performCleanup(account, entryPoint)
+                    performCleanup(account.userId, entryPoint)
                 }
             }
         }.onSessionForceLogout {
@@ -98,7 +98,7 @@ class AccountListenerInitializer : Initializer<Unit> {
             }
         }
 
-        accountManager.onAccountStateChanged(initialState = false)
+        entryPoint.observeAccountStateChanges()()
             .scan(emptyMap<UserId, AccountState>() to false) { accumulator, currentAccount ->
                 val (stateMap, _) = accumulator
                 val updatedMap = stateMap + (currentAccount.userId to currentAccount.state)
@@ -131,7 +131,7 @@ class AccountListenerInitializer : Initializer<Unit> {
 
     override fun dependencies(): List<Class<out Initializer<*>?>> = emptyList()
 
-    private suspend fun performCleanup(account: Account, entryPoint: AccountListenerInitializerEntryPoint) {
+    private suspend fun performCleanup(userId: UserId, entryPoint: AccountListenerInitializerEntryPoint) {
         val clearUserData = entryPoint.clearUserData()
         val resetApp = entryPoint.resetAppToDefaults()
         val getReadyAccounts = entryPoint.getReadyAccounts()
@@ -139,7 +139,7 @@ class AccountListenerInitializer : Initializer<Unit> {
 
         entryPoint.itemSyncStatusRepository().clear()
 
-        safeRunCatching { clearUserData(account.userId) }
+        safeRunCatching { clearUserData(userId) }
             .onSuccess { PassLogger.i(TAG, "Cleared user data") }
             .onFailure { PassLogger.i(TAG, it, "Error clearing user data") }
 
@@ -171,6 +171,7 @@ class AccountListenerInitializer : Initializer<Unit> {
         fun snackbarDispatcher(): SnackbarDispatcher
         fun databaseCleanupHelper(): DatabaseCleanupHelper
         fun getReadyAccounts(): GetReadyAccounts
+        fun observeAccountStateChanges(): ObserveAccountStateChanges
     }
 
     companion object {

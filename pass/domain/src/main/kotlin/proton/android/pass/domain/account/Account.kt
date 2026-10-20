@@ -22,5 +22,6 @@ import proton.android.pass.domain.UserId
 data class Account(
     val userId: UserId,
     val username: String?,
-    val state: AccountState
+    val state: AccountState,
+    val isStepNeeded: Boolean
 )

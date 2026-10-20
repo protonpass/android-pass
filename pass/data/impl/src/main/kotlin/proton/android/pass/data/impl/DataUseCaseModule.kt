@@ -91,6 +91,7 @@ import proton.android.pass.data.api.usecases.InviteToVault
 import proton.android.pass.data.api.usecases.LeaveShare
 import proton.android.pass.data.api.usecases.MigrateItems
 import proton.android.pass.data.api.usecases.MigrateVault
+import proton.android.pass.data.api.usecases.ObserveAccountStateChanges
 import proton.android.pass.data.api.usecases.ObserveAccounts
 import proton.android.pass.data.api.usecases.ObserveReadyAccounts
 import proton.android.pass.data.api.usecases.ObserveRemovedAccounts
@@ -402,6 +403,7 @@ import proton.android.pass.data.impl.usecases.InviteToVaultImpl
 import proton.android.pass.data.impl.usecases.LeaveShareImpl
 import proton.android.pass.data.impl.usecases.MigrateItemsImpl
 import proton.android.pass.data.impl.usecases.MigrateVaultImpl
+import proton.android.pass.data.impl.usecases.ObserveAccountStateChangesImpl
 import proton.android.pass.data.impl.usecases.ObserveAccountsImpl
 import proton.android.pass.data.impl.usecases.ObserveReadyAccountsImpl
 import proton.android.pass.data.impl.usecases.ObserveRemovedAccountsImpl
@@ -709,6 +711,9 @@ abstract class DataUseCaseModule {
 
     @Binds
     abstract fun bindObserveAccounts(impl: ObserveAccountsImpl): ObserveAccounts
+
+    @Binds
+    abstract fun bindObserveAccountStateChanges(impl: ObserveAccountStateChangesImpl): ObserveAccountStateChanges
 
     @Binds
     abstract fun bindObserveReadyAccounts(impl: ObserveReadyAccountsImpl): ObserveReadyAccounts

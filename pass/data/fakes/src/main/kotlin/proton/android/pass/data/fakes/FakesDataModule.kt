@@ -86,6 +86,7 @@ import proton.android.pass.data.api.usecases.GetPrimaryUserId
 import proton.android.pass.data.api.usecases.GetReadyAccounts
 import proton.android.pass.data.api.usecases.GetUser
 import proton.android.pass.data.api.usecases.HasActiveAccount
+import proton.android.pass.data.api.usecases.ObserveAccountStateChanges
 import proton.android.pass.data.api.usecases.ObserveAccounts
 import proton.android.pass.data.api.usecases.ObserveReadyAccounts
 import proton.android.pass.data.api.usecases.ObserveRemovedAccounts
@@ -383,6 +384,7 @@ import proton.android.pass.data.fakes.usecases.FakeGetPrimaryUserId
 import proton.android.pass.data.fakes.usecases.FakeGetReadyAccounts
 import proton.android.pass.data.fakes.usecases.FakeGetUser
 import proton.android.pass.data.fakes.usecases.FakeHasActiveAccount
+import proton.android.pass.data.fakes.usecases.FakeObserveAccountStateChanges
 import proton.android.pass.data.fakes.usecases.FakeObserveAccounts
 import proton.android.pass.data.fakes.usecases.FakeObserveReadyAccounts
 import proton.android.pass.data.fakes.usecases.FakeObserveRemovedAccounts
@@ -1412,6 +1414,9 @@ abstract class FakesDataModule {
 
     @Binds
     abstract fun bindObserveAccounts(impl: FakeObserveAccounts): ObserveAccounts
+
+    @Binds
+    abstract fun bindObserveAccountStateChanges(impl: FakeObserveAccountStateChanges): ObserveAccountStateChanges
 
     @Binds
     abstract fun bindObserveReadyAccounts(impl: FakeObserveReadyAccounts): ObserveReadyAccounts

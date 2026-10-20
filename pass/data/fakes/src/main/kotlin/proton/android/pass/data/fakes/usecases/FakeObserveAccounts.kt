@@ -40,7 +40,8 @@ class FakeObserveAccounts @Inject constructor() : ObserveAccounts {
         val DEFAULT_ACCOUNT = Account(
             userId = UserId(USER_ID),
             username = null,
-            state = AccountState.Ready
+            state = AccountState.Ready,
+            isStepNeeded = false
         )
     }
 

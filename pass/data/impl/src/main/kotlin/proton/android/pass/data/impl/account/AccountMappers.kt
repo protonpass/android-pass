@@ -19,6 +19,7 @@ package proton.android.pass.data.impl.account
 
 import me.proton.core.account.domain.entity.Account as CoreAccount
 import me.proton.core.account.domain.entity.AccountState as CoreAccountState
+import me.proton.core.account.domain.entity.isStepNeeded
 import me.proton.core.user.domain.entity.Role as CoreRole
 import me.proton.core.user.domain.entity.User as CoreUser
 import me.proton.core.user.domain.entity.UserRecovery as CoreUserRecovery
@@ -41,7 +42,8 @@ internal fun CoreAccountState.toDomain(): AccountState = when (this) {
 internal fun CoreAccount.toDomain(): Account = Account(
     userId = userId,
     username = username,
-    state = state.toDomain()
+    state = state.toDomain(),
+    isStepNeeded = isStepNeeded()
 )
 
 internal fun CoreRole?.toDomain(): UserRole = when (this) {

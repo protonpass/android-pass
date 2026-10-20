@@ -77,7 +77,7 @@ class GetFreeUserCountImplTest {
     ) {
         val userId = UserId(id)
         userManager.setUser(userId, UserTestFactory.createCore(userId = userId, subscribed = subscribed, flags = flags))
-        accounts.add(Account(userId = userId, username = id, state = AccountState.Ready))
+        accounts.add(Account(userId = userId, username = id, state = AccountState.Ready, isStepNeeded = false))
         observeReadyAccounts.emitAccounts(accounts.toList())
     }
 }

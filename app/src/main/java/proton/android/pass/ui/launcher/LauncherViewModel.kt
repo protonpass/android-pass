@@ -48,6 +48,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
@@ -55,12 +56,7 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
-import me.proton.core.account.domain.entity.Account
-import me.proton.core.account.domain.entity.isDisabled
-import me.proton.core.account.domain.entity.isReady
-import me.proton.core.account.domain.entity.isStepNeeded
 import me.proton.core.accountmanager.domain.AccountManager
-import me.proton.core.accountmanager.domain.getAccounts
 import me.proton.core.accountmanager.presentation.observe
 import me.proton.core.accountmanager.presentation.onAccountCreateAddressFailed
 import me.proton.core.accountmanager.presentation.onAccountCreateAddressNeeded
@@ -83,11 +79,14 @@ import proton.android.pass.data.api.usecases.GetPrimaryUserId
 import proton.android.pass.data.api.usecases.GetReadyAccounts
 import proton.android.pass.data.api.usecases.GetUserPlan
 import proton.android.pass.data.api.usecases.InitialWorkerLauncher
+import proton.android.pass.data.api.usecases.ObserveAccounts
 import proton.android.pass.data.api.usecases.RefreshUserAccess
 import proton.android.pass.data.api.usecases.SetAsPrimary
 import proton.android.pass.data.api.usecases.passwordHistoryEntry.DeletePasswordHistoryEntryForUser
 import proton.android.pass.domain.Plan
 import proton.android.pass.domain.UserId
+import proton.android.pass.domain.account.Account
+import proton.android.pass.domain.account.AccountState as PassAccountState
 import proton.android.pass.inappupdates.api.InAppUpdatesManager
 import proton.android.pass.log.api.LogoutLogger
 import proton.android.pass.log.api.LogoutReason
@@ -105,6 +104,7 @@ import kotlin.time.Duration.Companion.seconds
 @SuppressWarnings("LongParameterList", "TooManyFunctions")
 class LauncherViewModel @Inject constructor(
     private val accountManager: AccountManager,
+    private val observeAccounts: ObserveAccounts,
     private val getReadyAccounts: GetReadyAccounts,
     private val disableAccount: DisableAccount,
     private val setAsPrimaryAccount: SetAsPrimary,
@@ -137,7 +137,7 @@ class LauncherViewModel @Inject constructor(
     }
 
     internal val state: StateFlow<LauncherState> = combine(
-        accountManager.getAccounts().map { accounts -> getState(accounts) },
+        observeAccounts().map { accounts -> getState(accounts) },
         userPreferencesRepository.getThemePreference(),
         flowOf(appConfig.flavor.supportPayment()),
         settingsRepository.hasShownReloadAppWarning()
@@ -252,8 +252,8 @@ class LauncherViewModel @Inject constructor(
         deletePasswordHistoryEntryForUser(userId)
 
         when {
-            account.isDisabled() -> signIn(userId)
-            account.isReady() -> setAsPrimary(userId)
+            account.state == PassAccountState.Disabled -> signIn(userId)
+            account.state == PassAccountState.Ready -> setAsPrimary(userId)
         }
     }
 
@@ -317,41 +317,32 @@ class LauncherViewModel @Inject constructor(
         settingsRepository.setHasShownReloadAppWarning(true)
     }
 
-    private fun getState(accounts: List<Account>): AccountState = when {
-        accounts.isEmpty() -> {
-            PassLogger.i(TAG, "Account needed: no accounts found")
-            AccountState.AccountNeeded
-        }
+    private fun getState(accounts: List<Account>): AccountState {
+        val accountState = accounts.toLauncherAccountState()
+        when (accountState) {
+            AccountState.AccountNeeded -> PassLogger.i(
+                TAG,
+                if (accounts.isEmpty()) "Account needed: no accounts found" else "Account needed: all disabled"
+            )
 
-        accounts.all { it.isDisabled() } -> {
-            PassLogger.i(TAG, "Account needed: all disabled")
-            AccountState.AccountNeeded
-        }
-
-        accounts.any { it.isReady() } -> {
-            accounts.firstOrNull { it.isReady() }?.let {
+            AccountState.PrimaryExist -> accounts.firstOrNull { it.state == PassAccountState.Ready }?.let {
                 PassLogger.i(TAG, "Primary exists: ${it.toLogString()}")
             }
-            AccountState.PrimaryExist
-        }
 
-        accounts.any { it.isStepNeeded() } -> {
-            PassLogger.i(TAG, "Step needed: ${accounts.toLogString()}")
-            AccountState.StepNeeded
-        }
+            AccountState.StepNeeded -> PassLogger.i(TAG, "Step needed: ${accounts.toLogString()}")
 
-        else -> {
-            PassLogger.i(TAG, "Processing accounts: ${accounts.toLogString()}")
-            AccountState.Processing
+            AccountState.Processing -> PassLogger.i(TAG, "Processing accounts: ${accounts.toLogString()}")
         }
+        return accountState
     }
 
-    private fun Account.toLogString(): String = "UserId=$userId, SessionId=${sessionId?.id ?: "null"}, State=$state"
+    private fun Account.toLogString(): String = "UserId=$userId, State=$state"
 
     private fun List<Account>.toLogString(): String =
         groupBy { it.state }.entries.joinToString { (state, group) -> "$state=${group.size}" }
 
-    private suspend fun getAccountOrNull(it: UserId) = accountManager.getAccount(it).firstOrNull()
+    private suspend fun getAccountOrNull(userId: UserId): Account? =
+        observeAccounts().first().firstOrNull { it.userId == userId }
 
     private suspend fun getPrimaryUserIdOrNull() = getPrimaryUserId()
 

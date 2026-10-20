@@ -19,7 +19,11 @@
 package proton.android.pass.data.impl.account
 
 import com.google.common.truth.Truth.assertThat
+import me.proton.core.account.domain.entity.AccountState
+import me.proton.core.account.domain.entity.SessionState
 import org.junit.Test
+import proton.android.pass.account.fakes.FakeAccountManager
+import proton.android.pass.domain.UserId
 import proton.android.pass.test.domain.UserTestFactory
 
 class AccountMappersTest {
@@ -54,4 +58,27 @@ class AccountMappersTest {
 
         assertThat(user.toDomain().isFree).isTrue()
     }
+
+    @Test
+    fun `account in a step-needed state is step needed`() {
+        val account = coreAccount().copy(state = AccountState.TwoPassModeNeeded)
+
+        assertThat(account.toDomain().isStepNeeded).isTrue()
+    }
+
+    @Test
+    fun `account waiting for second factor is step needed`() {
+        val account = coreAccount().copy(sessionState = SessionState.SecondFactorNeeded)
+
+        assertThat(account.toDomain().isStepNeeded).isTrue()
+    }
+
+    @Test
+    fun `ready authenticated account is not step needed`() {
+        val account = coreAccount().copy(sessionState = SessionState.Authenticated)
+
+        assertThat(account.toDomain().isStepNeeded).isFalse()
+    }
+
+    private fun coreAccount() = FakeAccountManager.createAccount(UserId("user"))
 }

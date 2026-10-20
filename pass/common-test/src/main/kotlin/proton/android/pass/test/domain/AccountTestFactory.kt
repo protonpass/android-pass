@@ -26,9 +26,14 @@ object AccountTestFactory {
 
     val DEFAULT_ACCOUNT = create(UserId(FakeAccountManager.USER_ID))
 
-    fun create(userId: UserId) = Account(
+    fun create(
+        userId: UserId,
+        state: AccountState = AccountState.Ready,
+        isStepNeeded: Boolean = false
+    ) = Account(
         userId = userId,
         username = null,
-        state = AccountState.Ready
+        state = state,
+        isStepNeeded = isStepNeeded
     )
 }

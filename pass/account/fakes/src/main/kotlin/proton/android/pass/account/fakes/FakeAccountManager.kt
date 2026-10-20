@@ -19,6 +19,7 @@
 package proton.android.pass.account.fakes
 
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.flow.update
@@ -40,6 +41,7 @@ class FakeAccountManager @Inject constructor() : AccountManager(Product.Pass) {
 
     private val accountFlow: MutableStateFlow<Account> = MutableStateFlow(DEFAULT_ACCOUNT)
     private val accountsFlow = MutableStateFlow(listOf(DEFAULT_ACCOUNT))
+    private val accountStateChangesFlow = MutableSharedFlow<Account>(extraBufferCapacity = 16)
 
     override suspend fun addAccount(account: Account, session: Session) {
         // no-op
@@ -61,7 +63,9 @@ class FakeAccountManager @Inject constructor() : AccountManager(Product.Pass) {
 
     override fun getSessions(): Flow<List<Session>> = emptyFlow()
 
-    override fun onAccountStateChanged(initialState: Boolean): Flow<Account> = emptyFlow()
+    fun emitAccountStateChange(account: Account) = accountStateChangesFlow.tryEmit(account)
+
+    override fun onAccountStateChanged(initialState: Boolean): Flow<Account> = accountStateChangesFlow
 
     override fun onSessionStateChanged(initialState: Boolean): Flow<Account> = emptyFlow()
 

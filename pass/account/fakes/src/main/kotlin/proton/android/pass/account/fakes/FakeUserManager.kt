@@ -43,6 +43,7 @@ import javax.inject.Singleton
 class FakeUserManager @Inject constructor() : UserManager {
 
     private val state: MutableStateFlow<User> = MutableStateFlow(DEFAULT_USER)
+    private val usersById: MutableMap<SessionUserId, User> = mutableMapOf()
 
     override suspend fun addUser(user: User, addresses: List<UserAddress>) {
         state.emit(user)
@@ -52,7 +53,8 @@ class FakeUserManager @Inject constructor() : UserManager {
         throw IllegalStateException("Not implemented")
     }
 
-    override suspend fun getUser(sessionUserId: SessionUserId, refresh: Boolean): User = state.value
+    override suspend fun getUser(sessionUserId: SessionUserId, refresh: Boolean): User =
+        usersById[sessionUserId] ?: state.value
 
     override suspend fun lock(userId: UserId) {
         throw IllegalStateException("Not implemented")
@@ -78,6 +80,10 @@ class FakeUserManager @Inject constructor() : UserManager {
 
     fun setUser(user: User) {
         state.update { user }
+    }
+
+    fun setUser(userId: UserId, user: User) {
+        usersById[userId] = user
     }
 
     override suspend fun reactivateKey(userKey: UserKey): User {

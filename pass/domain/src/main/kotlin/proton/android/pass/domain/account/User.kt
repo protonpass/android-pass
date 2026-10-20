@@ -27,6 +27,7 @@ data class User(
     val displayName: String?,
     val role: UserRole,
     val isSso: Boolean,
+    val isFree: Boolean,
     val recoveryState: UserRecoveryState?
 ) {
     val isOrganizationAdmin: Boolean get() = role == UserRole.OrganizationAdmin

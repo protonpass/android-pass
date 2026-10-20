@@ -30,9 +30,13 @@ import proton.android.pass.data.api.repositories.AttachmentRepository
 import proton.android.pass.data.api.repositories.AssetLinkRepository
 import proton.android.pass.data.api.repositories.BulkInviteRepository
 import proton.android.pass.data.api.repositories.CompromisedPasswordRepository
+import proton.android.pass.data.api.usecases.CheckFreeUserLimit
+import proton.android.pass.data.api.usecases.GetFreeUserCount
 import proton.android.pass.data.api.usecases.SignOutAccount
 import proton.android.pass.data.api.usecases.compromisedpassword.ObserveCompromisedPasswords
 import proton.android.pass.data.api.usecases.compromisedpassword.RefreshCompromisedPasswords
+import proton.android.pass.data.fakes.usecases.FakeCheckFreeUserLimit
+import proton.android.pass.data.fakes.usecases.FakeGetFreeUserCount
 import proton.android.pass.data.fakes.usecases.compromisedpassword.FakeObserveCompromisedPasswords
 import proton.android.pass.data.fakes.usecases.compromisedpassword.FakeRefreshCompromisedPasswords
 import proton.android.pass.data.api.repositories.BulkMoveToVaultRepository
@@ -1411,6 +1415,12 @@ abstract class FakesDataModule {
 
     @Binds
     abstract fun bindObserveReadyAccounts(impl: FakeObserveReadyAccounts): ObserveReadyAccounts
+
+    @Binds
+    abstract fun bindGetFreeUserCount(impl: FakeGetFreeUserCount): GetFreeUserCount
+
+    @Binds
+    abstract fun bindCheckFreeUserLimit(impl: FakeCheckFreeUserLimit): CheckFreeUserLimit
 
     @Binds
     abstract fun bindObserveRemovedAccounts(impl: FakeObserveRemovedAccounts): ObserveRemovedAccounts

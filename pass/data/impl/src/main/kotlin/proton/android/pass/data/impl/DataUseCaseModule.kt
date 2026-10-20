@@ -25,10 +25,14 @@ import dagger.hilt.components.SingletonComponent
 import proton.android.pass.data.api.url.HostParser
 import proton.android.pass.data.api.usecases.AcceptInvite
 import proton.android.pass.data.api.usecases.BatchChangeShareVisibility
+import proton.android.pass.data.api.usecases.CheckFreeUserLimit
+import proton.android.pass.data.api.usecases.GetFreeUserCount
 import proton.android.pass.data.api.usecases.SignOutAccount
 import proton.android.pass.data.api.usecases.compromisedpassword.ObserveCompromisedPasswords
 import proton.android.pass.data.api.usecases.compromisedpassword.RefreshCompromisedPasswords
 import proton.android.pass.data.api.usecases.CanDisplayTotp
+import proton.android.pass.data.impl.usecases.CheckFreeUserLimitImpl
+import proton.android.pass.data.impl.usecases.GetFreeUserCountImpl
 import proton.android.pass.data.impl.usecases.SignOutAccountImpl
 import proton.android.pass.data.impl.usecases.compromisedpassword.ObserveCompromisedPasswordsImpl
 import proton.android.pass.data.impl.usecases.compromisedpassword.RefreshCompromisedPasswordsImpl
@@ -708,6 +712,12 @@ abstract class DataUseCaseModule {
 
     @Binds
     abstract fun bindObserveReadyAccounts(impl: ObserveReadyAccountsImpl): ObserveReadyAccounts
+
+    @Binds
+    abstract fun bindGetFreeUserCount(impl: GetFreeUserCountImpl): GetFreeUserCount
+
+    @Binds
+    abstract fun bindCheckFreeUserLimit(impl: CheckFreeUserLimitImpl): CheckFreeUserLimit
 
     @Binds
     abstract fun bindObserveRemovedAccounts(impl: ObserveRemovedAccountsImpl): ObserveRemovedAccounts

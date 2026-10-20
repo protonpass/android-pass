@@ -23,6 +23,7 @@ import me.proton.core.user.domain.entity.Role as CoreRole
 import me.proton.core.user.domain.entity.User as CoreUser
 import me.proton.core.user.domain.entity.UserRecovery as CoreUserRecovery
 import me.proton.core.user.domain.extension.getDisplayName
+import me.proton.core.user.domain.extension.hasSubscription
 import me.proton.core.user.domain.extension.isSso
 import proton.android.pass.domain.account.Account
 import proton.android.pass.domain.account.AccountState
@@ -58,12 +59,22 @@ internal fun CoreUserRecovery.State.toDomain(): UserRecoveryState = when (this) 
     CoreUserRecovery.State.Expired -> UserRecoveryState.Expired
 }
 
-internal fun CoreUser.toDomain(): User = User(
+fun CoreUser.toDomain(): User = User(
     userId = userId,
     email = email,
     name = name,
     displayName = getDisplayName(),
     role = role.toDomain(),
     isSso = isSso(),
+    isFree = isFree(),
     recoveryState = recovery?.state?.enum?.toDomain()
 )
+
+private const val FLAG_PASS_LIFETIME = "pass-lifetime"
+private const val FLAG_PASS_FROM_SL = "pass-from-sl"
+
+private fun CoreUser.isFree(): Boolean {
+    val hasPassLifetime = flags[FLAG_PASS_LIFETIME] ?: false
+    val isPassFromSL = flags[FLAG_PASS_FROM_SL] ?: false
+    return !hasSubscription() && !hasPassLifetime && !isPassFromSL
+}

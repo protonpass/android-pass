@@ -44,7 +44,8 @@ object UserTestFactory {
     fun create(
         email: String? = null,
         name: String? = null,
-        userId: UserId = UserId("12345")
+        userId: UserId = UserId("12345"),
+        isFree: Boolean = true
     ): DomainUser = DomainUser(
         userId = userId,
         email = email,
@@ -52,13 +53,16 @@ object UserTestFactory {
         displayName = null,
         role = UserRole.NoOrganization,
         isSso = false,
+        isFree = isFree,
         recoveryState = null
     )
 
     fun createCore(
         email: String? = null,
         name: String? = null,
-        userId: UserId = UserId("12345")
+        userId: UserId = UserId("12345"),
+        subscribed: Int = 0,
+        flags: Map<String, Boolean> = emptyMap()
     ): User = User(
         userId = userId,
         email = email,
@@ -74,10 +78,10 @@ object UserTestFactory {
         role = null,
         private = false,
         services = 0,
-        subscribed = 0,
+        subscribed = subscribed,
         delinquent = null,
         keys = listOf(),
-        flags = emptyMap(),
+        flags = flags,
         recovery = null
     )
 

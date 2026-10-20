@@ -20,20 +20,18 @@ package proton.android.pass.di
 
 import android.content.Context
 import dagger.hilt.android.qualifiers.ApplicationContext
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.firstOrNull
-import me.proton.core.account.domain.entity.AccountState
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.accountmanager.domain.SessionManager
-import me.proton.core.accountmanager.domain.getAccounts
 import me.proton.core.auth.domain.usecase.PostLoginAccountSetup
 import me.proton.core.auth.presentation.DefaultUserCheck
 import me.proton.core.user.domain.UserManager
 import me.proton.core.user.domain.entity.User
-import me.proton.core.user.domain.extension.hasSubscription
 import proton.android.pass.R
+import proton.android.pass.data.api.usecases.CheckFreeUserLimit
 import proton.android.pass.data.api.usecases.extrapassword.AuthWithExtraPasswordListener
 import proton.android.pass.data.api.usecases.extrapassword.AuthWithExtraPasswordResult
+import proton.android.pass.data.impl.account.toDomain
 import proton.android.pass.enterextrapassword.EnterExtraPasswordLauncher
 import proton.android.pass.log.api.PassLogger
 import javax.inject.Inject
@@ -44,7 +42,8 @@ class PassScopeUserCheck @Inject constructor(
     private val authWithExtraPasswordListener: AuthWithExtraPasswordListener,
     private val enterExtraPasswordLauncher: EnterExtraPasswordLauncher,
     @ApplicationContext private val context: Context,
-    private val userManager: UserManager
+    private val userManager: UserManager,
+    private val checkFreeUserLimit: CheckFreeUserLimit
 ) : DefaultUserCheck(context, accountManager, userManager) {
     override suspend fun invoke(user: User): PostLoginAccountSetup.UserCheckResult =
         when (val superResult = super.invoke(user)) {
@@ -97,33 +96,10 @@ class PassScopeUserCheck @Inject constructor(
     }
 
     private suspend fun performAdditionalChecks(user: User): PostLoginAccountSetup.UserCheckResult = when {
-        currentFreeUserCount() >= 1 && user.isFreeUser() -> PostLoginAccountSetup.UserCheckResult.Error(
+        checkFreeUserLimit(user.toDomain()) -> PostLoginAccountSetup.UserCheckResult.Error(
             context.getString(R.string.auth_only_1_proton_account_failed)
         )
         else -> PostLoginAccountSetup.UserCheckResult.Success
-    }
-
-    private suspend fun currentFreeUserCount(): Int = accountManager.getAccounts(AccountState.Ready).first()
-        .map { userManager.getUser(it.userId) }
-        .fold(0) { acc, user ->
-            if (user.isFreeUser()) {
-                acc + 1
-            } else {
-                acc
-            }
-        }
-
-    private fun User.isFreeUser(): Boolean {
-        val hasPassLifetime = this.flags.hasFlag(UserFlag.PASS_LIFETIME)
-        val isPassFromSL = this.flags.hasFlag(UserFlag.PASS_FROM_SL)
-        return !this.hasSubscription() && !hasPassLifetime && !isPassFromSL
-    }
-
-    private fun Map<String, Boolean>.hasFlag(flag: UserFlag): Boolean = this[flag.key] ?: false
-
-    private enum class UserFlag(val key: String) {
-        PASS_LIFETIME("pass-lifetime"),
-        PASS_FROM_SL("pass-from-sl")
     }
 
     companion object {

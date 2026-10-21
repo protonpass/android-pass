@@ -21,3 +21,9 @@
 # Stage A: allow shrinking and optimisation over core, but pin names until the
 # mapping is also uploaded to the Account Sentry project (ACCOUNT_SENTRY_DSN).
 -keep,allowshrinking,allowoptimization,allowaccessmodification class me.proton.core.** { *; }
+
+# Retrofit reads these only through the generic signature of core's API interfaces
+# (e.g. Continuation<? super SetupInitialKeysResponse>). R8 does not count that as a use,
+# removes the class and the signature degrades to Object, so the call fails at runtime.
+-keep class me.proton.core.**.response.** { *; }
+-keep class me.proton.core.**.request.** { *; }

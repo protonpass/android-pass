@@ -239,7 +239,6 @@ fladle {
     serviceAccountCredentials.set(File("/tmp/service-account.json"))
     devices.set(
         listOf(
-            mapOf("model" to "SmallPhone.arm", "version" to "\"27\""),
             mapOf("model" to "Pixel2.arm", "version" to "\"33\""),
         )
     )
@@ -250,6 +249,27 @@ fladle {
     recordVideo.set(false)
     providers.gradleProperty("flank.maxTestShards").orNull?.toIntOrNull()?.let { shards ->
         maxTestShards.set(shards)
+    }
+    configs {
+        create("apiLevelSmoke") {
+            debugApk.set("$rootDir/app/build/outputs/apk/devBlack/debug/app-dev-black-debug.apk")
+            instrumentationApk.set("$rootDir/app/build/outputs/apk/androidTest/devBlack/debug/app-dev-black-debug-androidTest.apk")
+            devices.set(
+                listOf(
+                    mapOf("model" to "MediumPhone.arm", "version" to "\"27\""),
+                    mapOf("model" to "MediumPhone.arm", "version" to "\"30\""),
+                    mapOf("model" to "MediumPhone.arm", "version" to "\"34\""),
+                    mapOf("model" to "MediumPhone.arm", "version" to "\"36\""),
+                )
+            )
+            testTargets.set(listOf("class proton.android.pass.uitest.smoke.AppLaunchSmokeTest"))
+            useOrchestrator.set(true)
+            flakyTestAttempts.set(1)
+            testTimeout.set("5m")
+            runTimeout.set("10m")
+            recordVideo.set(false)
+            maxTestShards.set(1)
+        }
     }
 }
 
@@ -298,6 +318,20 @@ val filterFlankConfig = tasks.register("filterFlankConfigForSelectiveTests") {
 
 tasks.matching { it.name == "execFlank" }.configureEach {
     dependsOn(filterFlankConfig)
+}
+
+val filterApiLevelSmokeConfig = tasks.register("filterFlankConfigForApiLevelSmoke") {
+    dependsOn("writeConfigPropsApiLevelSmoke")
+    doLast {
+        val flankYml = layout.buildDirectory.file("fladle/apilevelsmoke/flank.yml").get().asFile
+        if (!flankYml.exists()) return@doLast
+        val filtered = flankYml.readLines().filterNot { it.isBlank() || it.trim().startsWith("- test: /") || it.trim() == "additional-app-test-apks:" }
+        flankYml.writeText(filtered.joinToString("\n") + "\n")
+    }
+}
+
+tasks.matching { it.name == "execFlankApiLevelSmoke" }.configureEach {
+    dependsOn(filterApiLevelSmokeConfig)
 }
 
 tasks.register("resolveDependencies") {

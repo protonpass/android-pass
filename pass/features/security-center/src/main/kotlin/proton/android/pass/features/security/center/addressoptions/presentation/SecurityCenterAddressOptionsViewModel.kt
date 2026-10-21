@@ -29,7 +29,6 @@ import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import me.proton.core.user.domain.entity.AddressId
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
@@ -38,6 +37,7 @@ import proton.android.pass.data.api.usecases.breach.UpdateGlobalAliasAddressesMo
 import proton.android.pass.data.api.usecases.breach.UpdateGlobalProtonAddressesMonitorState
 import proton.android.pass.data.api.usecases.breach.UpdateProtonAddressMonitorState
 import proton.android.pass.data.api.usecases.items.UpdateItemFlag
+import proton.android.pass.domain.AddressId
 import proton.android.pass.domain.ItemFlag
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId

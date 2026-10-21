@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023-2026 Proton AG
+ * Copyright (c) 2026 Proton AG
  * This file is part of Proton AG and Proton Pass.
  *
  * Proton Pass is free software: you can redistribute it and/or modify
@@ -16,13 +16,6 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.data.api.usecases
+package proton.android.pass.domain
 
-import kotlinx.coroutines.flow.Flow
-import me.proton.core.user.domain.entity.UserAddress
-import proton.android.pass.domain.UserId
-
-interface ObserveAddressesByUserId {
-
-    operator fun invoke(userId: UserId? = null): Flow<List<UserAddress>>
-}
+typealias AddressId = me.proton.core.user.domain.entity.AddressId

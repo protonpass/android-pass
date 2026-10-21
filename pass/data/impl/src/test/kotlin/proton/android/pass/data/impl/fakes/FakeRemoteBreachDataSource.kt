@@ -18,13 +18,13 @@
 
 package proton.android.pass.data.impl.fakes
 
-import me.proton.core.user.domain.entity.AddressId
 import proton.android.pass.data.impl.remote.RemoteBreachDataSource
 import proton.android.pass.data.impl.responses.BreachCustomEmailResponse
 import proton.android.pass.data.impl.responses.BreachCustomEmailsResponse
 import proton.android.pass.data.impl.responses.BreachEmailsResponse
 import proton.android.pass.data.impl.responses.BreachesResponse
 import proton.android.pass.data.impl.responses.UpdateGlobalMonitorStateResponse
+import proton.android.pass.domain.AddressId
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.UserId

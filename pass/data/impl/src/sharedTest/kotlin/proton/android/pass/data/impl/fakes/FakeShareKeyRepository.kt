@@ -19,10 +19,10 @@
 package proton.android.pass.data.impl.fakes
 
 import kotlinx.coroutines.flow.Flow
-import me.proton.core.user.domain.entity.AddressId
 import proton.android.pass.common.api.FlowUtils.testFlow
 import proton.android.pass.data.impl.db.entities.ShareKeyEntity
 import proton.android.pass.data.impl.repositories.ShareKeyRepository
+import proton.android.pass.domain.AddressId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.UserId
 import proton.android.pass.domain.key.ShareKey

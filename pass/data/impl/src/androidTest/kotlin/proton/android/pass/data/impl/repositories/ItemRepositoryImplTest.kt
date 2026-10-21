@@ -34,7 +34,6 @@ import me.proton.core.domain.entity.Product
 import me.proton.core.network.domain.session.SessionId
 import me.proton.core.user.data.entity.AddressEntity
 import me.proton.core.user.data.entity.UserEntity
-import me.proton.core.user.domain.entity.AddressId
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -62,6 +61,7 @@ import proton.android.pass.data.impl.fakes.FakeCompromisedPasswordChecker
 import proton.android.pass.data.impl.local.LocalItemDataSourceImpl
 import proton.android.pass.data.impl.local.LocalShareDataSource
 import proton.android.pass.data.impl.local.LocalShareDataSourceImpl
+import proton.android.pass.domain.AddressId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.UserId
 import proton.android.pass.preferences.FakeFeatureFlagsPreferenceRepository
@@ -160,7 +160,7 @@ class ItemRepositoryImplTest {
             shareItems("share4", 400, database),
             shareItems("share5", 500, database),
             shareItems("share6", 1000, database),
-            shareItems("share7", 2000, database),
+            shareItems("share7", 2000, database)
         ).toMap()
 
         instance.setShareItems(USER_ID, contents) {}
@@ -260,7 +260,7 @@ class ItemRepositoryImplTest {
                 enabled = true,
                 type = null,
                 order = 1,
-                signedKeyList = null,
+                signedKeyList = null
             )
         )
 

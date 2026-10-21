@@ -21,12 +21,12 @@ package proton.android.pass.data.impl.db.mappers
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import me.proton.core.data.room.db.CommonConverters
-import me.proton.core.user.domain.entity.AddressId
 import proton.android.pass.data.impl.db.BreachTypeConverters
 import proton.android.pass.data.impl.db.entities.BreachCustomEmailEntity
 import proton.android.pass.data.impl.db.entities.BreachDomainPeekEntity
 import proton.android.pass.data.impl.db.entities.BreachEmailEntity
 import proton.android.pass.data.impl.db.entities.BreachProtonEmailEntity
+import proton.android.pass.domain.AddressId
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.breach.BreachCustomEmail

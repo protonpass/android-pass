@@ -22,7 +22,6 @@ import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.test.runTest
 import me.proton.core.key.domain.entity.key.KeyId
 import me.proton.core.key.domain.entity.key.PrivateKey
-import me.proton.core.user.domain.entity.AddressId
 import me.proton.core.user.domain.entity.UserAddress
 import me.proton.core.user.domain.entity.UserAddressKey
 import org.junit.Before
@@ -33,6 +32,7 @@ import proton.android.pass.data.api.usecases.InviteUserMode
 import proton.android.pass.data.fakes.repositories.FakeUserInviteRepository
 import proton.android.pass.data.fakes.usecases.FakeGetInviteUserMode
 import proton.android.pass.data.impl.fakes.FakeShareRepository
+import proton.android.pass.domain.AddressId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.ShareRole
 import proton.android.pass.domain.UserId

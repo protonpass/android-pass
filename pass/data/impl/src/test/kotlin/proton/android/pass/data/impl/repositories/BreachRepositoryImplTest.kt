@@ -21,7 +21,6 @@ package proton.android.pass.data.impl.repositories
 import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
-import me.proton.core.user.domain.entity.AddressId
 import org.junit.Before
 import org.junit.Test
 import proton.android.pass.data.api.errors.CustomEmailDoesNotExistException
@@ -45,6 +44,7 @@ import proton.android.pass.data.impl.responses.BreachesResponse
 import proton.android.pass.data.impl.responses.MonitorStateResponse
 import proton.android.pass.data.impl.responses.Source
 import proton.android.pass.data.impl.responses.UpdateGlobalMonitorStateResponse
+import proton.android.pass.domain.AddressId
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.UserId

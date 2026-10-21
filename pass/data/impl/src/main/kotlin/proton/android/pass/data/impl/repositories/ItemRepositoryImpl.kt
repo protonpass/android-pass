@@ -33,7 +33,6 @@ import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.withContext
-import me.proton.core.user.domain.entity.AddressId
 import me.proton.core.user.domain.entity.UserAddress
 import me.proton.core.user.domain.repository.UserAddressRepository
 import proton.android.pass.common.api.AppDispatchers
@@ -92,6 +91,7 @@ import proton.android.pass.data.impl.requests.TrashItemsRequest
 import proton.android.pass.data.impl.requests.UpdateItemFlagsRequest
 import proton.android.pass.data.impl.responses.TrashItemsResponse
 import proton.android.pass.data.impl.util.TimeUtil
+import proton.android.pass.domain.AddressId
 import proton.android.pass.domain.FolderId
 import proton.android.pass.domain.ITEM_CFV_URL_MATCHING
 import proton.android.pass.domain.Item

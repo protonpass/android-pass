@@ -20,10 +20,10 @@ package proton.android.pass.data.api
 
 import kotlinx.datetime.Clock
 import me.proton.core.crypto.common.keystore.EncryptedByteArray
-import me.proton.core.user.domain.entity.AddressId
 import org.junit.Test
 import proton.android.pass.common.api.None
 import proton.android.pass.data.api.usecases.ItemData
+import proton.android.pass.domain.AddressId
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemFlags
 import proton.android.pass.domain.ItemId

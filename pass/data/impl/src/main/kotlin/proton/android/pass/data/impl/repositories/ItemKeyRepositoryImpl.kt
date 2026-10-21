@@ -21,11 +21,11 @@ package proton.android.pass.data.impl.repositories
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
-import me.proton.core.user.domain.entity.AddressId
 import proton.android.pass.crypto.api.error.KeyNotFound
 import proton.android.pass.crypto.api.usecases.OpenItemKey
 import proton.android.pass.data.impl.extensions.toCrypto
 import proton.android.pass.data.impl.remote.RemoteItemKeyDataSource
+import proton.android.pass.domain.AddressId
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.UserId

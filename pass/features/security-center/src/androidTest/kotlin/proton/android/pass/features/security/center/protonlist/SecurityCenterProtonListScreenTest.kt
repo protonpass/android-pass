@@ -24,12 +24,12 @@ import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
-import me.proton.core.user.domain.entity.AddressId
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.data.fakes.usecases.breach.FakeObserveBreachProtonEmails
+import proton.android.pass.domain.AddressId
 import proton.android.pass.domain.breach.BreachProtonEmail
 import proton.android.pass.features.security.center.R
 import proton.android.pass.features.security.center.protonlist.navigation.SecurityCenterProtonListNavDestination

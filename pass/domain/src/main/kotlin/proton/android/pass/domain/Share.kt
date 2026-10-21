@@ -18,7 +18,6 @@
 
 package proton.android.pass.domain
 
-import me.proton.core.user.domain.entity.AddressId
 import me.proton.core.util.kotlin.hasFlag
 import java.util.Date
 

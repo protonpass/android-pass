@@ -20,10 +20,10 @@ package proton.android.pass.data.impl.local
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
-import me.proton.core.user.domain.entity.AddressId
 import proton.android.pass.data.impl.db.PassDatabase
 import proton.android.pass.data.impl.db.entities.PassEventEntity
 import proton.android.pass.data.impl.util.TimeUtil
+import proton.android.pass.domain.AddressId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.UserId
 import javax.inject.Inject

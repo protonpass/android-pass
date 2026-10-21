@@ -18,7 +18,7 @@
 
 package proton.android.pass.data.api.usecases.breach
 
-import me.proton.core.user.domain.entity.AddressId
+import proton.android.pass.domain.AddressId
 import proton.android.pass.domain.UserId
 
 interface UpdateProtonAddressMonitorState {

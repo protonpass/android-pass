@@ -23,7 +23,6 @@ import com.google.common.truth.Truth.assertThat
 import kotlinx.collections.immutable.toPersistentList
 import kotlinx.coroutines.test.runTest
 import kotlinx.datetime.Clock
-import me.proton.core.user.domain.entity.AddressId
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -36,6 +35,7 @@ import proton.android.pass.data.fakes.usecases.breach.FakeObserveBreachCustomEma
 import proton.android.pass.data.fakes.usecases.breach.FakeObserveBreachProtonEmails
 import proton.android.pass.data.fakes.usecases.breach.FakeObserveCustomEmailSuggestions
 import proton.android.pass.data.fakes.usecases.breach.FakeObserveGlobalMonitorState
+import proton.android.pass.domain.AddressId
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.breach.AliasData

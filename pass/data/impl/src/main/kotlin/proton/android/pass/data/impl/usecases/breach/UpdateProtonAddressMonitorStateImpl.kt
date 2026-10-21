@@ -20,10 +20,10 @@ package proton.android.pass.data.impl.usecases.breach
 
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.first
-import me.proton.core.user.domain.entity.AddressId
 import proton.android.pass.data.api.repositories.BreachRepository
 import proton.android.pass.data.api.usecases.ObserveCurrentUser
 import proton.android.pass.data.api.usecases.breach.UpdateProtonAddressMonitorState
+import proton.android.pass.domain.AddressId
 import proton.android.pass.domain.UserId
 import javax.inject.Inject
 import javax.inject.Singleton

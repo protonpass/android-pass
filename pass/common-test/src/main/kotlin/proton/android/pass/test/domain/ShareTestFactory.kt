@@ -18,7 +18,7 @@
 
 package proton.android.pass.test.domain
 
-import me.proton.core.user.domain.entity.AddressId
+import proton.android.pass.domain.AddressId
 import proton.android.pass.domain.Share
 import proton.android.pass.domain.ShareColor
 import proton.android.pass.domain.ShareFlags

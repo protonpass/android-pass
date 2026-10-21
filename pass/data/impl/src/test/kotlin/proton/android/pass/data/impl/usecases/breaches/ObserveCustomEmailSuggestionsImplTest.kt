@@ -21,7 +21,6 @@ package proton.android.pass.data.impl.usecases.breaches
 import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
-import me.proton.core.user.domain.entity.AddressId
 import org.junit.Before
 import org.junit.Test
 import proton.android.pass.data.api.usecases.breach.CustomEmailSuggestion
@@ -29,6 +28,7 @@ import proton.android.pass.data.fakes.usecases.FakeObserveCurrentUser
 import proton.android.pass.data.fakes.usecases.FakeObserveItems
 import proton.android.pass.data.fakes.usecases.breach.FakeObserveBreachProtonEmails
 import proton.android.pass.data.impl.usecases.breach.ObserveCustomEmailSuggestionsImpl
+import proton.android.pass.domain.AddressId
 import proton.android.pass.domain.UserId
 import proton.android.pass.domain.breach.BreachProtonEmail
 import proton.android.pass.test.domain.ItemTestFactory

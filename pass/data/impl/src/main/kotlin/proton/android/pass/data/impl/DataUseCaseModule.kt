@@ -58,8 +58,6 @@ import proton.android.pass.data.api.usecases.CreatePin
 import proton.android.pass.data.api.usecases.CreateVault
 import proton.android.pass.data.api.usecases.DeleteItems
 import proton.android.pass.data.api.usecases.DeleteVault
-import proton.android.pass.data.api.usecases.GetAddressById
-import proton.android.pass.data.api.usecases.GetAddressesForUserId
 import proton.android.pass.data.api.usecases.GetAllKeysByAddress
 import proton.android.pass.data.api.usecases.GetDefaultBrowser
 import proton.android.pass.data.api.usecases.GetInviteUserMode
@@ -95,7 +93,6 @@ import proton.android.pass.data.api.usecases.ObserveAccountStateChanges
 import proton.android.pass.data.api.usecases.ObserveAccounts
 import proton.android.pass.data.api.usecases.ObserveReadyAccounts
 import proton.android.pass.data.api.usecases.ObserveRemovedAccounts
-import proton.android.pass.data.api.usecases.ObserveAddressesByUserId
 import proton.android.pass.data.api.usecases.ObserveAliasDetails
 import proton.android.pass.data.api.usecases.ObserveAliasOptions
 import proton.android.pass.data.api.usecases.ObserveAllShares
@@ -370,8 +367,6 @@ import proton.android.pass.data.impl.usecases.CreatePinImpl
 import proton.android.pass.data.impl.usecases.CreateVaultImpl
 import proton.android.pass.data.impl.usecases.DeleteItemsImpl
 import proton.android.pass.data.impl.usecases.DeleteVaultImpl
-import proton.android.pass.data.impl.usecases.GetAddressByIdImpl
-import proton.android.pass.data.impl.usecases.GetAddressesForUserIdImpl
 import proton.android.pass.data.impl.usecases.GetAllKeysByAddressImpl
 import proton.android.pass.data.impl.usecases.GetDefaultBrowserImpl
 import proton.android.pass.data.impl.usecases.GetInviteUserModeImpl
@@ -407,7 +402,6 @@ import proton.android.pass.data.impl.usecases.ObserveAccountStateChangesImpl
 import proton.android.pass.data.impl.usecases.ObserveAccountsImpl
 import proton.android.pass.data.impl.usecases.ObserveReadyAccountsImpl
 import proton.android.pass.data.impl.usecases.ObserveRemovedAccountsImpl
-import proton.android.pass.data.impl.usecases.ObserveAddressesByUserIdImpl
 import proton.android.pass.data.impl.usecases.ObserveAliasDetailsImpl
 import proton.android.pass.data.impl.usecases.ObserveAliasOptionsImpl
 import proton.android.pass.data.impl.usecases.ObserveAllSharesImpl
@@ -681,12 +675,6 @@ abstract class DataUseCaseModule {
 
     @Binds
     abstract fun bindMigrateVault(impl: MigrateVaultImpl): MigrateVault
-
-    @Binds
-    abstract fun bindGetAddressById(impl: GetAddressByIdImpl): GetAddressById
-
-    @Binds
-    abstract fun bindGetAddressesForUserId(impl: GetAddressesForUserIdImpl): GetAddressesForUserId
 
     @Binds
     abstract fun bindObserveAliasOptions(impl: ObserveAliasOptionsImpl): ObserveAliasOptions
@@ -1174,9 +1162,6 @@ abstract class DataUseCaseModule {
 
     @Binds
     abstract fun bindObserveBreachesForAlias(impl: ObserveBreachesForAliasEmailImpl): ObserveBreachesForAliasEmail
-
-    @Binds
-    abstract fun bindObserveAddressesByUserId(impl: ObserveAddressesByUserIdImpl): ObserveAddressesByUserId
 
     @Binds
     abstract fun bindMarkEmailBreachAsResolved(impl: MarkEmailBreachAsResolvedImpl): MarkEmailBreachAsResolved

@@ -28,7 +28,6 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 import me.proton.core.crypto.common.keystore.EncryptedByteArray
 import me.proton.core.key.domain.extension.primary
-import me.proton.core.user.domain.entity.AddressId
 import me.proton.core.user.domain.entity.User
 import me.proton.core.user.domain.entity.UserAddress
 import me.proton.core.user.domain.extension.primary
@@ -63,6 +62,7 @@ import proton.android.pass.data.impl.remote.RemoteShareDataSource
 import proton.android.pass.data.impl.requests.CreateVaultRequest
 import proton.android.pass.data.impl.responses.ShareResponse
 import proton.android.pass.data.impl.util.TimeUtil.toDate
+import proton.android.pass.domain.AddressId
 import proton.android.pass.domain.GroupId
 import proton.android.pass.domain.Share
 import proton.android.pass.domain.ShareFlags

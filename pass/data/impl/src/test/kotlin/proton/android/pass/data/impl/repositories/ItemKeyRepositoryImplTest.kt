@@ -21,13 +21,13 @@ package proton.android.pass.data.impl.repositories
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
 import me.proton.core.crypto.common.keystore.EncryptedByteArray
-import me.proton.core.user.domain.entity.AddressId
 import org.junit.Test
 import proton.android.pass.crypto.api.error.KeyNotFound
 import proton.android.pass.crypto.fakes.usecases.FakeOpenItemKey
 import proton.android.pass.data.impl.fakes.FakeRemoteItemKeyDataSource
 import proton.android.pass.data.impl.fakes.FakeShareKeyRepository
 import proton.android.pass.data.impl.responses.ItemLatestKeyResponse
+import proton.android.pass.domain.AddressId
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.UserId

@@ -106,7 +106,6 @@ import proton.android.pass.data.api.usecases.InviteToVault
 import proton.android.pass.data.api.usecases.LeaveShare
 import proton.android.pass.data.api.usecases.MigrateItems
 import proton.android.pass.data.api.usecases.MigrateVault
-import proton.android.pass.data.api.usecases.ObserveAddressesByUserId
 import proton.android.pass.data.api.usecases.ObserveAliasDetails
 import proton.android.pass.data.api.usecases.ObserveAliasOptions
 import proton.android.pass.data.api.usecases.ObserveAllShares
@@ -406,7 +405,6 @@ import proton.android.pass.data.fakes.usecases.FakeItemSyncStatusRepository
 import proton.android.pass.data.fakes.usecases.FakeLeaveShare
 import proton.android.pass.data.fakes.usecases.FakeMigrateItems
 import proton.android.pass.data.fakes.usecases.FakeMigrateVault
-import proton.android.pass.data.fakes.usecases.FakeObserveAddressesByUserId
 import proton.android.pass.data.fakes.usecases.FakeObserveAliasDetails
 import proton.android.pass.data.fakes.usecases.FakeObserveAliasOptions
 import proton.android.pass.data.fakes.usecases.FakeObserveAllShares
@@ -1075,9 +1073,6 @@ abstract class FakesDataModule {
     abstract fun bindObserveCustomEmailSuggestions(
         impl: FakeObserveCustomEmailSuggestions
     ): ObserveCustomEmailSuggestions
-
-    @Binds
-    abstract fun bindObserveAddressesByUserId(impl: FakeObserveAddressesByUserId): ObserveAddressesByUserId
 
     @Binds
     abstract fun bindMarkEmailBreachAsResolved(impl: FakeMarkEmailBreachAsResolved): MarkEmailBreachAsResolved

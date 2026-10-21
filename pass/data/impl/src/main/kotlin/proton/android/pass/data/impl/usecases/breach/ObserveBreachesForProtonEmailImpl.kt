@@ -20,10 +20,10 @@ package proton.android.pass.data.impl.usecases.breach
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flatMapLatest
-import me.proton.core.user.domain.entity.AddressId
 import proton.android.pass.data.api.repositories.BreachRepository
 import proton.android.pass.data.api.usecases.ObserveCurrentUser
 import proton.android.pass.data.api.usecases.breach.ObserveBreachesForProtonEmail
+import proton.android.pass.domain.AddressId
 import proton.android.pass.domain.UserId
 import proton.android.pass.domain.breach.BreachEmail
 import javax.inject.Inject

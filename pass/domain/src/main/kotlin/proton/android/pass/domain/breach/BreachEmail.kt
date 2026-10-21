@@ -20,7 +20,7 @@ package proton.android.pass.domain.breach
 
 import androidx.compose.runtime.Stable
 import kotlinx.serialization.Serializable
-import me.proton.core.user.domain.entity.AddressId
+import proton.android.pass.domain.AddressId
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 

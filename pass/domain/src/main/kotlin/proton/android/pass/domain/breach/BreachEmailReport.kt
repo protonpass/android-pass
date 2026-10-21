@@ -18,8 +18,8 @@
 
 package proton.android.pass.domain.breach
 
-import me.proton.core.user.domain.entity.AddressId
 import me.proton.core.util.kotlin.hasFlag
+import proton.android.pass.domain.AddressId
 
 sealed interface BreachEmailReport {
 

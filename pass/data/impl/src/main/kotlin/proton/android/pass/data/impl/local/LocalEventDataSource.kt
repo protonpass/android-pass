@@ -19,7 +19,7 @@
 package proton.android.pass.data.impl.local
 
 import kotlinx.coroutines.flow.Flow
-import me.proton.core.user.domain.entity.AddressId
+import proton.android.pass.domain.AddressId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.UserId
 

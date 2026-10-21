@@ -20,11 +20,11 @@ package proton.android.pass.data.impl.crypto
 
 import kotlinx.coroutines.test.runTest
 import me.proton.core.crypto.common.keystore.EncryptedByteArray
-import me.proton.core.user.domain.entity.AddressId
 import org.junit.Test
 import proton.android.pass.data.impl.fakes.FakeItemKeyRepository
 import proton.android.pass.data.impl.fakes.FakeShareRepository
 import proton.android.pass.data.impl.repositories.ItemKeyRepository
+import proton.android.pass.domain.AddressId
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.UserId

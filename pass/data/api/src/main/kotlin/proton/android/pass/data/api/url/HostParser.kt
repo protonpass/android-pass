@@ -28,7 +28,10 @@ sealed interface HostInfo {
         val tld: Option<String>
     ) : HostInfo
 
-    data class Ip(val ip: String) : HostInfo
+    data class Ip(
+        val ip: String,
+        val protocol: String? = null
+    ) : HostInfo
 
     data class Unparseable(val protocol: String, val rawHost: String) : HostInfo
 }

@@ -28,6 +28,7 @@ import kotlin.test.assertEquals
 import kotlin.test.assertFalse
 import kotlin.test.assertNotEquals
 import kotlin.test.assertNotNull
+import kotlin.test.assertNull
 import kotlin.test.assertTrue
 
 class HostParserImplTest {
@@ -77,6 +78,19 @@ class HostParserImplTest {
         assertNotNull(hostInfo)
         assertTrue(hostInfo is HostInfo.Ip)
         assertEquals(ip, hostInfo.ip)
+        assertNull(hostInfo.protocol)
+    }
+
+    @Test
+    fun `ipv4 with explicit protocol keeps it`() {
+        val res = instance.parse("http://127.0.0.1")
+
+        assertTrue(res.isSuccess)
+        val hostInfo = res.getOrNull()
+        assertNotNull(hostInfo)
+        assertTrue(hostInfo is HostInfo.Ip)
+        assertEquals("127.0.0.1", hostInfo.ip)
+        assertEquals("http", hostInfo.protocol)
     }
 
     @Test

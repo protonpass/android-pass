@@ -261,6 +261,39 @@ class SuggestionItemFiltererImplTest {
         assertThat(res).isEqualTo(listOf(item2))
     }
 
+    @Test
+    fun `check items with different protocols are not returned for IPs`() {
+        val ip = "192.168.1.1"
+        val httpsIp = "https://$ip"
+
+        val item1 = ItemTestFactory.create(ItemTypeTestFactory.login(websites = listOf("http://$ip")))
+        val item2 = ItemTestFactory.create(ItemTypeTestFactory.login(websites = listOf(httpsIp)))
+
+        val items = listOf(item1, item2)
+        val res = instance.filter(items, Suggestion.Url(httpsIp))
+        assertThat(res).isEqualTo(listOf(item2))
+    }
+
+    @Test
+    fun `check items saved with an explicit https IP are not suggested on http`() {
+        val ip = "192.168.1.1"
+
+        val item = ItemTestFactory.create(ItemTypeTestFactory.login(websites = listOf("https://$ip")))
+
+        val res = instance.filter(listOf(item), Suggestion.Url("http://$ip"))
+        assertThat(res).isEqualTo(emptyList<Item>())
+    }
+
+    @Test
+    fun `check items saved with a bare IP are suggested on both http and https`() {
+        val ip = "192.168.1.1"
+
+        val item = ItemTestFactory.create(ItemTypeTestFactory.login(websites = listOf(ip)))
+
+        assertThat(instance.filter(listOf(item), Suggestion.Url("http://$ip"))).isEqualTo(listOf(item))
+        assertThat(instance.filter(listOf(item), Suggestion.Url("https://$ip"))).isEqualTo(listOf(item))
+    }
+
     // --- Feature flag ON tests ---
 
     @Test

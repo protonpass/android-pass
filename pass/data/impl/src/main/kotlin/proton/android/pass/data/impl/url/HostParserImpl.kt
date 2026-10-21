@@ -35,11 +35,15 @@ class HostParserImpl @Inject constructor(
     override fun parse(url: String): Result<HostInfo> = UrlSanitizer.getDomain(url)
         .flatMap { domain ->
             val protocol = UrlSanitizer.getProtocol(url).getOrDefault("https").lowercase()
-            getHostInfoFromDomain(protocol, IdnNormalizer.toAscii(domain))
+            getHostInfoFromDomain(protocol, IdnNormalizer.toAscii(domain), hasExplicitProtocol = url.contains("://"))
         }
 
-    private fun getHostInfoFromDomain(protocol: String, domain: String): Result<HostInfo> = if (isIp(domain)) {
-        Result.success(HostInfo.Ip(domain))
+    private fun getHostInfoFromDomain(
+        protocol: String,
+        domain: String,
+        hasExplicitProtocol: Boolean
+    ): Result<HostInfo> = if (isIp(domain)) {
+        Result.success(HostInfo.Ip(domain, protocol.takeIf { hasExplicitProtocol }))
     } else {
         getPublicSuffixList().fold(
             onSuccess = { publicSuffixes -> parseHostInfo(protocol, domain, publicSuffixes) },

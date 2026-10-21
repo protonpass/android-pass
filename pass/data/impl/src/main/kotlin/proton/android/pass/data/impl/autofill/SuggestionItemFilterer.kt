@@ -106,7 +106,8 @@ class SuggestionItemFiltererImpl @Inject constructor(
         stored: HostInfo,
         exactSubdomain: Boolean
     ): Boolean = when {
-        request is HostInfo.Ip && stored is HostInfo.Ip -> request.ip == stored.ip
+        request is HostInfo.Ip && stored is HostInfo.Ip ->
+            request.ip == stored.ip && (stored.protocol == null || request.protocol == stored.protocol)
         request is HostInfo.Unparseable && stored is HostInfo.Unparseable ->
             request.protocol == stored.protocol && request.rawHost == stored.rawHost
         request is HostInfo.Host && stored is HostInfo.Host ->

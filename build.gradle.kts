@@ -178,7 +178,8 @@ for (project in subprojects) {
             freeCompilerArgs.addAll(listOf(
                 "-opt-in=kotlin.RequiresOptIn",
                 // Enables experimental Time (Turbine).
-                "-opt-in=kotlin.time.ExperimentalTime"
+                "-opt-in=kotlin.time.ExperimentalTime",
+                "-Xannotation-default-target=param-property"
             ))
             val hasCoroutines = project.configurations.findByName("implementation")
                 ?.dependencies

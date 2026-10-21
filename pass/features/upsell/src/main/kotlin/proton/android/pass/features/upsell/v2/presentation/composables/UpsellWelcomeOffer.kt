@@ -138,10 +138,6 @@ fun UpsellWelcomeOffer(
                         when (stepToDisplay) {
                             StepToDisplay.WelcomeOfferMonthly -> R.string.upsell_try_pass_plus
                             StepToDisplay.WelcomeOfferYearly -> R.string.upsell_pass_plus_welcome_offer
-                            else -> {
-                                // impossible
-                                R.string.upsell_try_pass_plus
-                            }
                         }
                     )
                 )

@@ -34,7 +34,6 @@ import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import proton.android.pass.common.api.None
-import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.some
 import proton.android.pass.data.api.usecases.GetUserPlan
 import proton.android.pass.data.api.usecases.ObserveVaults
@@ -102,7 +101,7 @@ class SimpleLoginSyncManagementViewModel @Inject constructor(
             }
 
             observeSimpleLoginSyncStatus(forceRefresh = true)
-                .map { syncStatus: SimpleLoginSyncStatus -> syncStatus.some() as Option<SimpleLoginSyncStatus> }
+                .map { syncStatus: SimpleLoginSyncStatus -> syncStatus.some() }
                 .onStart { emit(None) }
                 .catch { error ->
                     PassLogger.w(TAG, "There was an error while observing SL sync status")

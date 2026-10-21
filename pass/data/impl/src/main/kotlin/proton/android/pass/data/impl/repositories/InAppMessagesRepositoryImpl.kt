@@ -109,7 +109,6 @@ class InAppMessagesRepositoryImpl @Inject constructor(
                         is InAppMessage.Remote.Banner -> message.imageUrl.value()
                         is InAppMessage.Modal -> message.imageUrl.value()
                         is InAppMessage.Promo -> message.imageUrl.value()
-                        else -> null
                     }
                 }
                 imagePreloader.preloadImages((promoImages + regularImages).toSet())

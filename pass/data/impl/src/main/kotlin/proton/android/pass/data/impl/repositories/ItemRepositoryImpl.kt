@@ -1196,7 +1196,7 @@ class ItemRepositoryImpl @Inject constructor(
     }
 
     override suspend fun applyPendingEvent(event: ItemPendingEvent) = with(event) {
-        if (!hasPendingItemRevisions) return
+        if (!hasPendingItemRevisions) return@with
 
         val share = shareRepository.getById(userId, shareId)
         val shareKeys = shareKeyRepository.getShareKeys(
@@ -1252,7 +1252,7 @@ class ItemRepositoryImpl @Inject constructor(
         }.onFailure { PassLogger.w(TAG, "Failed to remove synced items from index: ${it.message}") }
     }
 
-    override suspend fun purgePendingEvent(event: ItemPendingEvent) = with(event) {
+    override suspend fun purgePendingEvent(event: ItemPendingEvent): Boolean = with(event) {
         if (!hasDeletedItemIds) return false
 
         val deleted = localItemDataSource.delete(userId, shareId, deletedItemIds)

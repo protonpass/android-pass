@@ -284,11 +284,6 @@ class UpsellV2ViewModel @Inject constructor(
                                     is PlanWithPriceState.NoPlan -> {
                                         StepToDisplay.NoPlans
                                     }
-
-                                    else -> {
-                                        // impossible
-                                        StepToDisplay.Idle
-                                    }
                                 }
                             )
                         }

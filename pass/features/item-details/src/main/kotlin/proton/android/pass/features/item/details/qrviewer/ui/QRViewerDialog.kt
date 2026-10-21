@@ -66,8 +66,8 @@ fun QRViewerDialog(onNavigated: (ItemDetailsNavDestination) -> Unit, viewModel: 
                     .aspectRatio(aspectRatio, matchHeightConstraintsFirst = true)
             ) {
                 drawIntoCanvas { canvas ->
-                    val svgWidth = parsedSvg.documentWidth.toFloat()
-                    val svgHeight = parsedSvg.documentHeight.toFloat()
+                    val svgWidth = parsedSvg.documentWidth
+                    val svgHeight = parsedSvg.documentHeight
 
                     val scaleX = size.width / svgWidth
                     val scaleY = size.height / svgHeight

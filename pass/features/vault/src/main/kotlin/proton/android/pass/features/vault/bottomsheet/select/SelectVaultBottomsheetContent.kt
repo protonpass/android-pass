@@ -170,7 +170,7 @@ fun SelectVaultBottomsheetContent(
                         }
                     }
                     if (hasSelectedFolder) {
-                        expandAncestors(folders, (state.selectedFolderId as Some).value, expandedState)
+                        expandAncestors(folders, state.selectedFolderId.value, expandedState)
                     }
                 }
 

@@ -41,6 +41,8 @@ internal object BrowserSigningCertificateAllowlist {
 
     private const val RELEASE_BUILD = "release"
 
+    private val jsonFormat = Json { ignoreUnknownKeys = true }
+
     @Volatile
     private var cached: Map<String, Set<String>>? = null
 
@@ -56,7 +58,7 @@ internal object BrowserSigningCertificateAllowlist {
     }
 
     internal fun parse(json: String): Map<String, Set<String>> = runCatching {
-        Json { ignoreUnknownKeys = true }
+        jsonFormat
             .decodeFromString<AllowlistRoot>(json)
             .apps
             .groupBy(

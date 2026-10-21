@@ -24,9 +24,11 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.shareIn
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -94,7 +96,15 @@ class ItemHistoryRestoreViewModel @Inject constructor(
         encryptionContextProvider.withEncryptionContextSuspendable {
             openItemRevision(shareId, itemRevision, this@withEncryptionContextSuspendable)
         }
-    }
+    }.catch { error ->
+        PassLogger.w(TAG, "Error opening item revision")
+        PassLogger.w(TAG, error)
+        snackbarDispatcher(ItemHistoryRestoreSnackbarMessage.OpenItemRevisionError)
+    }.shareIn(
+        scope = viewModelScope,
+        started = SharingStarted.Eagerly,
+        replay = 1
+    )
 
     private val revisionItemContentsFlow = revisionItemFlow.map { revisionItem ->
         encryptionContextProvider.withEncryptionContextSuspendable {
@@ -110,7 +120,15 @@ class ItemHistoryRestoreViewModel @Inject constructor(
 
     private val currentItemFlow = oneShot {
         getItemById(shareId = shareId, itemId = itemId)
-    }
+    }.catch { error ->
+        PassLogger.w(TAG, "Error getting current item")
+        PassLogger.w(TAG, error)
+        snackbarDispatcher(ItemHistoryRestoreSnackbarMessage.OpenItemRevisionError)
+    }.shareIn(
+        scope = viewModelScope,
+        started = SharingStarted.Eagerly,
+        replay = 1
+    )
 
     private val currentItemContentsFlow = currentItemFlow.map { currentItem ->
         encryptionContextProvider.withEncryptionContextSuspendable {

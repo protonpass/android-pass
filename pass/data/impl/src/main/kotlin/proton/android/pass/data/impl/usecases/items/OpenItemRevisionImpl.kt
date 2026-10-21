@@ -26,7 +26,9 @@ import proton.android.pass.data.api.repositories.ItemRevision
 import proton.android.pass.data.api.repositories.ShareRepository
 import proton.android.pass.data.api.usecases.items.OpenItemRevision
 import proton.android.pass.data.impl.extensions.toCrypto
+import proton.android.pass.data.impl.repositories.FolderKeyRepository
 import proton.android.pass.data.impl.repositories.ShareKeyRepository
+import proton.android.pass.domain.FolderId
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ShareId
 import javax.inject.Inject
@@ -35,6 +37,7 @@ class OpenItemRevisionImpl @Inject constructor(
     private val accountManager: AccountManager,
     private val shareRepository: ShareRepository,
     private val shareKeyRepository: ShareKeyRepository,
+    private val folderKeyRepository: FolderKeyRepository,
     private val openItem: OpenItem
 ) : OpenItemRevision {
 
@@ -53,10 +56,19 @@ class OpenItemRevisionImpl @Inject constructor(
             groupEmail = share.groupEmail
         ).first()
 
+        val folderKey = itemRevision.folderId?.let { folderId ->
+            folderKeyRepository.getFolderKey(
+                userId = userId,
+                shareId = shareId,
+                folderId = FolderId(folderId)
+            )
+        }
+
         return openItem.open(
             response = itemRevision.toCrypto(),
             share = share,
             shareKeys = shareKeys,
+            folderKey = folderKey,
             encryptionContext = encryptionContext
         ).item
     }

@@ -31,6 +31,9 @@ class FakeOpenItem : OpenItem {
 
     private var output: OpenItemOutput? = null
     private var openBlock: ((EncryptedItemRevision) -> OpenItemOutput)? = null
+    private val folderKeyMemory: MutableList<FolderKey?> = mutableListOf()
+
+    fun folderKeyMemory(): List<FolderKey?> = folderKeyMemory
 
     fun setOutput(value: OpenItemOutput) {
         output = value
@@ -59,6 +62,9 @@ class FakeOpenItem : OpenItem {
         shareKeys: List<ShareKey>,
         folderKey: FolderKey?,
         encryptionContext: EncryptionContext
-    ): OpenItemOutput = openBlock?.invoke(response) ?: output
-        ?: throw IllegalStateException("output not set")
+    ): OpenItemOutput {
+        folderKeyMemory.add(folderKey)
+        return openBlock?.invoke(response) ?: output
+            ?: throw IllegalStateException("output not set")
+    }
 }

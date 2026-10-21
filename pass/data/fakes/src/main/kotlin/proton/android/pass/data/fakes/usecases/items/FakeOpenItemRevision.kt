@@ -28,18 +28,30 @@ import javax.inject.Inject
 class FakeOpenItemRevision @Inject constructor() : OpenItemRevision {
 
     private var item: Item? = null
+    private var error: Throwable? = null
+
+    var invocationCount = 0
+        private set
 
     fun setItem(newItem: Item) {
         item = newItem
+        error = null
+    }
+
+    fun setError(throwable: Throwable) {
+        error = throwable
     }
 
     override suspend fun invoke(
         shareId: ShareId,
         itemRevision: ItemRevision,
         encryptionContext: EncryptionContext
-    ): Item = item
-        ?: throw IllegalStateException(
-            "Item cannot be null, did you forget to call setItem() before executing the use case?"
-        )
+    ): Item {
+        invocationCount++
+        return error?.let { throw it } ?: item
+            ?: throw IllegalStateException(
+                "Item cannot be null, did you forget to call setItem() before executing the use case?"
+            )
+    }
 
 }

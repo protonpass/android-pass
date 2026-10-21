@@ -21,6 +21,7 @@ package proton.android.pass.commonpresentation.fakes
 import android.content.Context
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
+import kotlinx.coroutines.flow.flowOf
 import proton.android.pass.commonpresentation.api.items.details.domain.ItemDetailsFieldType
 import proton.android.pass.commonpresentation.api.items.details.handlers.ItemDetailsHandler
 import proton.android.pass.commonpresentation.api.items.details.handlers.ItemDetailsSource
@@ -39,11 +40,17 @@ import proton.android.pass.domain.items.ItemCategory
 
 class FakeItemDetailsHandler : ItemDetailsHandler {
 
+    private var itemDetailState: ItemDetailState? = null
+
+    fun setItemDetailState(state: ItemDetailState) {
+        itemDetailState = state
+    }
+
     override fun observeItemDetails(
         item: Item,
         source: ItemDetailsSource,
         savedStateEntries: Map<String, Any?>
-    ): Flow<ItemDetailState> = emptyFlow()
+    ): Flow<ItemDetailState> = itemDetailState?.let(::flowOf) ?: emptyFlow()
 
     override suspend fun onAttachmentOpen(contextHolder: ClassHolder<Context>, attachment: Attachment) = Unit
 

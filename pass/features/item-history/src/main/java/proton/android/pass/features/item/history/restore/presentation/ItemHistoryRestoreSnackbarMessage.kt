@@ -29,6 +29,11 @@ internal enum class ItemHistoryRestoreSnackbarMessage(
     override val isClipboard: Boolean = false
 ) : SnackbarMessage.StructuredMessage {
 
+    OpenItemRevisionError(
+        id = R.string.item_history_restore_snackbar_message_open_error,
+        type = SnackbarType.ERROR
+    ),
+
     RestoreItemRevisionError(
         id = R.string.item_history_restore_snackbar_message_error,
         type = SnackbarType.ERROR

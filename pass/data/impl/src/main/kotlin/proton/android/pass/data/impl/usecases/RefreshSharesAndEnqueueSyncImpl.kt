@@ -22,7 +22,6 @@ import android.content.Context
 import androidx.work.ExistingWorkPolicy
 import androidx.work.WorkManager
 import dagger.hilt.android.qualifiers.ApplicationContext
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.firstOrNull
 import proton.android.pass.common.api.safeRunCatchingWithCleanup
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
@@ -33,7 +32,7 @@ import proton.android.pass.data.api.repositories.SyncMode
 import proton.android.pass.data.api.usecases.CreateVault
 import proton.android.pass.data.api.usecases.RefreshSharesAndEnqueueSync
 import proton.android.pass.data.api.usecases.RefreshSharesResult
-import proton.android.pass.data.api.usecases.capabilities.CanCreateVault
+import proton.android.pass.data.api.usecases.capabilities.CanCreateDefaultVault
 import proton.android.pass.data.impl.R
 import proton.android.pass.data.impl.work.FetchItemsWorker
 import proton.android.pass.domain.ShareColor
@@ -54,7 +53,7 @@ class RefreshSharesAndEnqueueSyncImpl @Inject constructor(
     private val itemSyncStatusRepository: ItemSyncStatusRepository,
     private val encryptionContextProvider: EncryptionContextProvider,
     private val createVault: CreateVault,
-    private val canCreateVault: CanCreateVault,
+    private val canCreateDefaultVault: CanCreateDefaultVault,
     private val internalSettingsRepository: InternalSettingsRepository,
     private val preferencesRepository: FeatureFlagsPreferencesRepository,
     private val workManager: WorkManager
@@ -214,12 +213,6 @@ class RefreshSharesAndEnqueueSyncImpl @Inject constructor(
         hasUndecryptableShares: Boolean,
         hasUndecryptableSharesDueToGroup: Boolean
     ): RefreshSharesResult {
-        if (!canCreateVault().first()) {
-            PassLogger.i(TAG, "Skipping default vault creation")
-            setSyncSuccess(hasUndecryptableShares, hasUndecryptableSharesDueToGroup)
-            return RefreshSharesResult.NoSharesSkipped
-        }
-
         val allowNoVault = preferencesRepository
             .get<Boolean>(FeatureFlag.PASS_ALLOW_NO_VAULT)
             .firstOrNull()
@@ -229,17 +222,23 @@ class RefreshSharesAndEnqueueSyncImpl @Inject constructor(
             .firstOrNull()
             ?: false
 
-        return if (shouldCreateDefaultVault(allowNoVault, hasDefaultVaultBeenCreated)) {
-            PassLogger.i(TAG, "Creating default vault")
-            createDefaultVault(userId)
-            internalSettingsRepository.setDefaultVaultHasBeenCreated(userId)
-            setSyncSuccess(hasUndecryptableShares, hasUndecryptableSharesDueToGroup)
-            RefreshSharesResult.NoSharesVaultCreated
-        } else {
+        if (!shouldCreateDefaultVault(allowNoVault, hasDefaultVaultBeenCreated)) {
             PassLogger.i(TAG, "Default vault already created")
             setSyncSuccess(hasUndecryptableShares, hasUndecryptableSharesDueToGroup)
-            RefreshSharesResult.NoSharesSkipped
+            return RefreshSharesResult.NoSharesSkipped
         }
+
+        if (!canCreateDefaultVault(userId)) {
+            PassLogger.i(TAG, "Skipping default vault creation")
+            setSyncSuccess(hasUndecryptableShares, hasUndecryptableSharesDueToGroup)
+            return RefreshSharesResult.NoSharesSkipped
+        }
+
+        PassLogger.i(TAG, "Creating default vault")
+        createDefaultVault(userId)
+        internalSettingsRepository.setDefaultVaultHasBeenCreated(userId)
+        setSyncSuccess(hasUndecryptableShares, hasUndecryptableSharesDueToGroup)
+        return RefreshSharesResult.NoSharesVaultCreated
     }
 
     private fun shouldCreateDefaultVault(allowNoVault: Boolean, hasBeenCreated: Boolean): Boolean =

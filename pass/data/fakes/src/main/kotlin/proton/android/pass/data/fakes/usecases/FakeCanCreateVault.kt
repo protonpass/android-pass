@@ -21,6 +21,7 @@ package proton.android.pass.data.fakes.usecases
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import proton.android.pass.data.api.usecases.capabilities.CanCreateVault
+import proton.android.pass.domain.UserId
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -33,5 +34,5 @@ class FakeCanCreateVault @Inject constructor() : CanCreateVault {
         resultFlow.tryEmit(value)
     }
 
-    override fun invoke(): Flow<Boolean> = resultFlow
+    override fun invoke(userId: UserId): Flow<Boolean> = resultFlow
 }

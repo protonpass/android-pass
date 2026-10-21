@@ -47,6 +47,7 @@ import proton.android.pass.data.api.repositories.ItemSyncStatus
 import proton.android.pass.data.fakes.usecases.FakeObserveEncryptedItems
 import proton.android.pass.data.fakes.usecases.FakeItemSyncStatusRepository
 import proton.android.pass.data.fakes.usecases.FakeObserveAllShares
+import proton.android.pass.data.fakes.usecases.FakeObserveCurrentUser
 import proton.android.pass.data.fakes.usecases.FakeObserveItemCount
 import proton.android.pass.data.fakes.usecases.FakeObserveSearchEntry
 import proton.android.pass.data.fakes.usecases.FakeObserveVaultsWithItemCount
@@ -73,6 +74,7 @@ import proton.android.pass.preferences.UseFaviconsPreference
 import proton.android.pass.test.CallChecker
 import proton.android.pass.test.HiltComponentActivity
 import proton.android.pass.test.domain.ShareTestFactory
+import proton.android.pass.test.domain.UserTestFactory
 import proton.android.pass.test.waitUntilExists
 import java.util.Date
 import javax.inject.Inject
@@ -94,6 +96,9 @@ class HomeScreenTest {
 
     @Inject
     lateinit var observeAllShares: FakeObserveAllShares
+
+    @Inject
+    lateinit var observeCurrentUser: FakeObserveCurrentUser
 
     @Inject
     lateinit var observeVaultsWithItemCount: FakeObserveVaultsWithItemCount
@@ -128,6 +133,7 @@ class HomeScreenTest {
     @Before
     fun setup() {
         hiltRule.inject()
+        observeCurrentUser.sendUser(UserTestFactory.create())
     }
 
     @Test
@@ -138,7 +144,7 @@ class HomeScreenTest {
         val items = listOf(
             FakeObserveEncryptedItems.createLogin(shareId, loginItemId, loginItemTitle),
             FakeObserveEncryptedItems.createAlias(shareId, ItemId("alias"), "alias-item"),
-            FakeObserveEncryptedItems.createNote(shareId, ItemId("note"), "note-item"),
+            FakeObserveEncryptedItems.createNote(shareId, ItemId("note"), "note-item")
         )
         setupWithItems(items)
 
@@ -219,10 +225,7 @@ class HomeScreenTest {
         testEmptyScreenCreateItem(R.string.home_empty_vault_create_note, ItemTypeUiState.Note)
     }
 
-    private fun testEmptyScreenCreateItem(
-        @StringRes text: Int,
-        itemTypeUiState: ItemTypeUiState
-    ) {
+    private fun testEmptyScreenCreateItem(@StringRes text: Int, itemTypeUiState: ItemTypeUiState) {
         setupWithItems(emptyList())
 
         val checker = CallChecker<ItemTypeUiState>()
@@ -278,10 +281,12 @@ class HomeScreenTest {
             )
         }
 
-        itemSyncStatusRepository.tryEmit(ItemSyncStatus.SyncSuccess(
-            hasInactiveShares = false,
-            hasInvalidGroupShares = false
-        ))
+        itemSyncStatusRepository.tryEmit(
+            ItemSyncStatus.SyncSuccess(
+                hasInactiveShares = false,
+                hasInvalidGroupShares = false
+            )
+        )
         observeAllShares.sendResult(Result.success(vaultShares))
         observeEncryptedItems.emitValue(items)
         observeSearchEntry.emit(searchEntries)

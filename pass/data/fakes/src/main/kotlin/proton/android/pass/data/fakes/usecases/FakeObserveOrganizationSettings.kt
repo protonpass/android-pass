@@ -25,6 +25,7 @@ import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
 import proton.android.pass.data.api.usecases.organization.ObserveOrganizationSettings
 import proton.android.pass.domain.OrganizationSettings
+import proton.android.pass.domain.UserId
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -38,5 +39,5 @@ class FakeObserveOrganizationSettings @Inject constructor() : ObserveOrganizatio
         flow.update { Some(value) }
     }
 
-    override fun invoke(): Flow<Option<OrganizationSettings>> = flow
+    override fun invoke(userId: UserId?): Flow<Option<OrganizationSettings>> = flow
 }

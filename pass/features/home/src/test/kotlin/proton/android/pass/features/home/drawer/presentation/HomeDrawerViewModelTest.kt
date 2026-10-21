@@ -31,6 +31,7 @@ import proton.android.pass.data.api.usecases.capabilities.CanCreateFolderResult
 import proton.android.pass.data.fakes.usecases.FakeCanCreateFolder
 import proton.android.pass.data.fakes.usecases.FakeCanCreateVault
 import proton.android.pass.data.fakes.usecases.FakeCanOrganiseVaults
+import proton.android.pass.data.fakes.usecases.FakeObserveCurrentUser
 import proton.android.pass.data.fakes.usecases.FakeObserveItemCount
 import proton.android.pass.data.fakes.usecases.FakeObserveUpgradeInfo
 import proton.android.pass.data.fakes.usecases.FakeObserveVaultsWithItemCount
@@ -48,6 +49,7 @@ import proton.android.pass.searchoptions.fakes.FakeHomeSearchOptionsRepository
 import proton.android.pass.test.MainDispatcherRule
 import proton.android.pass.test.TestConstants
 import proton.android.pass.test.domain.FolderTestFactory
+import proton.android.pass.test.domain.UserTestFactory
 import proton.android.pass.test.domain.VaultTestFactory
 
 internal class HomeDrawerViewModelTest {
@@ -59,6 +61,7 @@ internal class HomeDrawerViewModelTest {
     private lateinit var observeItemCount: FakeObserveItemCount
     private lateinit var canCreateFolder: FakeCanCreateFolder
     private lateinit var canCreateVault: FakeCanCreateVault
+    private lateinit var observeCurrentUser: FakeObserveCurrentUser
     private lateinit var canOrganiseVaults: FakeCanOrganiseVaults
     private lateinit var observeUpgradeInfo: FakeObserveUpgradeInfo
     private lateinit var featureFlags: FakeFeatureFlagsPreferenceRepository
@@ -73,6 +76,9 @@ internal class HomeDrawerViewModelTest {
         observeItemCount = FakeObserveItemCount()
         canCreateFolder = FakeCanCreateFolder()
         canCreateVault = FakeCanCreateVault()
+        observeCurrentUser = FakeObserveCurrentUser().apply {
+            sendUser(UserTestFactory.create(userId = UserId("current-user")))
+        }
         canOrganiseVaults = FakeCanOrganiseVaults()
         observeUpgradeInfo = FakeObserveUpgradeInfo()
         featureFlags = FakeFeatureFlagsPreferenceRepository()
@@ -88,6 +94,7 @@ internal class HomeDrawerViewModelTest {
         viewModel = HomeDrawerViewModel(
             canCreateFolder = canCreateFolder,
             canCreateVault = canCreateVault,
+            observeCurrentUser = observeCurrentUser,
             canOrganiseVaults = canOrganiseVaults,
             observeVaultsWithItemCount = observeVaultsWithItemCount,
             observeItemCount = observeItemCount,
@@ -421,6 +428,7 @@ internal class HomeDrawerViewModelTest {
         val vm = HomeDrawerViewModel(
             canCreateFolder = canCreateFolder,
             canCreateVault = canCreateVault,
+            observeCurrentUser = observeCurrentUser,
             canOrganiseVaults = canOrganiseVaults,
             observeVaultsWithItemCount = observeVaultsWithItemCount,
             observeItemCount = observeItemCount,

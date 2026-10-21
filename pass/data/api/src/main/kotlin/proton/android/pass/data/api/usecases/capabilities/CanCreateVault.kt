@@ -19,7 +19,8 @@
 package proton.android.pass.data.api.usecases.capabilities
 
 import kotlinx.coroutines.flow.Flow
+import proton.android.pass.domain.UserId
 
 interface CanCreateVault {
-    operator fun invoke(): Flow<Boolean>
+    operator fun invoke(userId: UserId): Flow<Boolean>
 }

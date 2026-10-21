@@ -41,6 +41,7 @@ import proton.android.pass.common.api.getOrNull
 import proton.android.pass.commonpresentation.api.folders.FolderTreeBuilder
 import proton.android.pass.commonuimodels.api.FolderUiModel
 import proton.android.pass.data.api.ItemCountSummary
+import proton.android.pass.data.api.usecases.ObserveCurrentUser
 import proton.android.pass.data.api.usecases.ObserveItemCount
 import proton.android.pass.data.api.usecases.ObserveUpgradeInfo
 import proton.android.pass.data.api.usecases.ObserveVaultsWithItemCount
@@ -64,6 +65,7 @@ import javax.inject.Inject
 class HomeDrawerViewModel @Inject constructor(
     canCreateFolder: CanCreateFolder,
     canCreateVault: CanCreateVault,
+    observeCurrentUser: ObserveCurrentUser,
     canOrganiseVaults: CanOrganiseVaults,
     observeVaultsWithItemCount: ObserveVaultsWithItemCount,
     observeItemCount: ObserveItemCount,
@@ -163,7 +165,7 @@ class HomeDrawerViewModel @Inject constructor(
         foldersEnabledFlow,
         vaultsWithFoldersFlow,
         folderCapabilitiesFlow,
-        canCreateVault(),
+        observeCurrentUser().flatMapLatest { user -> canCreateVault(user.userId) },
         canOrganiseVaults(),
         homeSearchOptionsRepository.observeVaultSelectionOption(),
         itemCountSummaryOptionFlow,

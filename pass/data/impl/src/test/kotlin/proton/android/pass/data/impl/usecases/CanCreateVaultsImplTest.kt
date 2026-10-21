@@ -24,7 +24,7 @@ import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Test
 import proton.android.pass.common.api.Some
-import proton.android.pass.data.fakes.usecases.FakeObserveCurrentUser
+import proton.android.pass.data.fakes.usecases.FakeObserveUser
 import proton.android.pass.data.fakes.usecases.FakeObserveVaults
 import proton.android.pass.data.fakes.usecases.organizations.FakeObserveOrganizationVaultsPolicy
 import proton.android.pass.data.impl.fakes.FakePlanRepository
@@ -40,7 +40,6 @@ import proton.android.pass.domain.VaultId
 import proton.android.pass.domain.organizations.OrganizationVaultCreateMode
 import proton.android.pass.domain.organizations.OrganizationVaultsPolicy
 import proton.android.pass.test.FixedClock
-import proton.android.pass.test.domain.UserTestFactory
 import java.util.Date
 
 internal class CanCreateVaultsImplTest {
@@ -50,7 +49,6 @@ internal class CanCreateVaultsImplTest {
     private lateinit var observeOrganizationVaultsPolicy: FakeObserveOrganizationVaultsPolicy
     private lateinit var observeVaults: FakeObserveVaults
     private lateinit var planRepository: FakePlanRepository
-    private lateinit var observeCurrentUser: FakeObserveCurrentUser
     private lateinit var clock: FixedClock
 
     @Before
@@ -58,22 +56,13 @@ internal class CanCreateVaultsImplTest {
         observeOrganizationVaultsPolicy = FakeObserveOrganizationVaultsPolicy()
         observeVaults = FakeObserveVaults()
         planRepository = FakePlanRepository()
-        observeCurrentUser = FakeObserveCurrentUser()
         clock = FixedClock()
-
-        observeCurrentUser.sendUser(
-            UserTestFactory.create(
-                email = "test@test.test",
-                name = "test user",
-                userId = USER_ID
-            )
-        )
 
         instance = CanCreateVaultImpl(
             observeOrganizationVaultsPolicy = observeOrganizationVaultsPolicy,
             observeVaults = observeVaults,
             planRepository = planRepository,
-            observeCurrentUser = observeCurrentUser
+            observeUser = FakeObserveUser()
         )
     }
 
@@ -89,7 +78,7 @@ internal class CanCreateVaultsImplTest {
         observeVaults.sendResult(Result.success(emptyList()))
         setupPlan(planType = freePlan)
 
-        val result = instance().first()
+        val result = instance(USER_ID).first()
         assertThat(result).isTrue()
     }
 
@@ -103,7 +92,7 @@ internal class CanCreateVaultsImplTest {
         observeVaults.sendResult(Result.success(List(size = 1) { fakeVault }))
         setupPlan(planType = freePlan)
 
-        val result = instance().first()
+        val result = instance(USER_ID).first()
         assertThat(result).isTrue()
     }
 
@@ -117,7 +106,7 @@ internal class CanCreateVaultsImplTest {
         observeVaults.sendResult(Result.success(List(size = 2) { fakeVault }))
         setupPlan(planType = freePlan)
 
-        val result = instance().first()
+        val result = instance(USER_ID).first()
         assertThat(result).isFalse()
     }
 
@@ -131,7 +120,7 @@ internal class CanCreateVaultsImplTest {
         observeVaults.sendResult(Result.success(List(size = 100) { fakeVault }))
         setupPlan(planType = plusPlan)
 
-        val result = instance().first()
+        val result = instance(USER_ID).first()
         assertThat(result).isTrue()
     }
 
@@ -147,7 +136,7 @@ internal class CanCreateVaultsImplTest {
         observeVaults.sendResult(Result.success(emptyList()))
         setupPlan(planType = businessPlan)
 
-        val result = instance().first()
+        val result = instance(USER_ID).first()
         assertThat(result).isFalse()
     }
 
@@ -163,7 +152,7 @@ internal class CanCreateVaultsImplTest {
         observeVaults.sendResult(Result.success(emptyList()))
         setupPlan(planType = businessPlan)
 
-        val result = instance().first()
+        val result = instance(USER_ID).first()
         assertThat(result).isTrue()
     }
 
@@ -179,7 +168,7 @@ internal class CanCreateVaultsImplTest {
         observeVaults.sendResult(Result.success(List(1) { fakeVault }))
         setupPlan(planType = businessPlan)
 
-        val result = instance().first()
+        val result = instance(USER_ID).first()
         assertThat(result).isFalse()
     }
 
@@ -196,7 +185,7 @@ internal class CanCreateVaultsImplTest {
         observeVaults.sendResult(Result.success(List(10) { fakeNotOwnedVault }))
         setupPlan(planType = businessPlan)
 
-        val result = instance().first()
+        val result = instance(USER_ID).first()
         assertThat(result).isTrue()
     }
 
@@ -222,7 +211,7 @@ internal class CanCreateVaultsImplTest {
             )
             setupPlan(planType = businessPlan)
 
-            val result = instance().first()
+            val result = instance(USER_ID).first()
             assertThat(result).isFalse()
         }
 

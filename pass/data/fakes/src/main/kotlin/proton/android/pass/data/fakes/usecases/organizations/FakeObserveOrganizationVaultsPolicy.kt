@@ -22,6 +22,7 @@ import kotlinx.coroutines.flow.Flow
 import proton.android.pass.common.api.FlowUtils.testFlow
 import proton.android.pass.common.api.Option
 import proton.android.pass.data.api.usecases.organization.ObserveOrganizationVaultsPolicy
+import proton.android.pass.domain.UserId
 import proton.android.pass.domain.organizations.OrganizationVaultsPolicy
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -35,6 +36,6 @@ class FakeObserveOrganizationVaultsPolicy @Inject constructor() : ObserveOrganiz
         organizationVaultsPolicyFlow.tryEmit(organizationVaultsPolicy)
     }
 
-    override fun invoke(): Flow<Option<OrganizationVaultsPolicy>> = organizationVaultsPolicyFlow
+    override fun invoke(userId: UserId): Flow<Option<OrganizationVaultsPolicy>> = organizationVaultsPolicyFlow
 
 }

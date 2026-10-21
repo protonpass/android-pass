@@ -27,6 +27,7 @@ import proton.android.pass.common.api.some
 import proton.android.pass.data.api.usecases.organization.ObserveOrganizationSettings
 import proton.android.pass.data.api.usecases.organization.ObserveOrganizationVaultsPolicy
 import proton.android.pass.domain.OrganizationSettings
+import proton.android.pass.domain.UserId
 import proton.android.pass.domain.organizations.OrganizationVaultCreateMode
 import proton.android.pass.domain.organizations.OrganizationVaultsPolicy
 import javax.inject.Inject
@@ -35,7 +36,7 @@ class ObserveOrganizationVaultsPolicyImpl @Inject constructor(
     private val observeOrganizationSettings: ObserveOrganizationSettings
 ) : ObserveOrganizationVaultsPolicy {
 
-    override fun invoke(): Flow<Option<OrganizationVaultsPolicy>> = observeOrganizationSettings()
+    override fun invoke(userId: UserId): Flow<Option<OrganizationVaultsPolicy>> = observeOrganizationSettings(userId)
         .mapLatest { organizationSettingsOption ->
             when (organizationSettingsOption) {
                 is None -> None

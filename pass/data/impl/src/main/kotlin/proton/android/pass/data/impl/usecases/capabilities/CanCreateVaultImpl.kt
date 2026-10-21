@@ -20,17 +20,18 @@ package proton.android.pass.data.impl.usecases.capabilities
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.filterNotNull
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
-import proton.android.pass.data.api.usecases.ObserveCurrentUser
+import proton.android.pass.data.api.usecases.ObserveUser
 import proton.android.pass.data.api.usecases.ObserveVaults
 import proton.android.pass.data.api.usecases.capabilities.CanCreateVault
 import proton.android.pass.data.api.usecases.organization.ObserveOrganizationVaultsPolicy
 import proton.android.pass.data.impl.repositories.PlanRepository
 import proton.android.pass.domain.Plan
 import proton.android.pass.domain.PlanLimit
+import proton.android.pass.domain.UserId
 import proton.android.pass.domain.Vault
 import proton.android.pass.domain.account.User
 import proton.android.pass.domain.organizations.OrganizationVaultCreateMode
@@ -43,19 +44,17 @@ class CanCreateVaultImpl @Inject constructor(
     private val observeOrganizationVaultsPolicy: ObserveOrganizationVaultsPolicy,
     private val observeVaults: ObserveVaults,
     private val planRepository: PlanRepository,
-    private val observeCurrentUser: ObserveCurrentUser
+    private val observeUser: ObserveUser
 ) : CanCreateVault {
 
-    override fun invoke(): Flow<Boolean> = observeCurrentUser()
-        .flatMapLatest { user ->
-            combine(
-                observeOrganizationVaultsPolicy(),
-                observeVaults(includeHidden = true),
-                planRepository.observePlan(user.userId)
-            ) { orgPolicyOption, vaults, plan ->
-                transformVaultCheck(orgPolicyOption, vaults, plan, user)
-            }
-        }
+    override fun invoke(userId: UserId): Flow<Boolean> = combine(
+        observeUser(userId).filterNotNull(),
+        observeOrganizationVaultsPolicy(userId),
+        observeVaults(userId = userId, includeHidden = true),
+        planRepository.observePlan(userId)
+    ) { user, orgPolicyOption, vaults, plan ->
+        transformVaultCheck(orgPolicyOption, vaults, plan, user)
+    }
 
     private fun transformVaultCheck(
         organizationVaultsPolicyOption: Option<OrganizationVaultsPolicy>,

@@ -214,6 +214,7 @@ import proton.android.pass.data.api.usecases.capabilities.CanCreateFolder
 import proton.android.pass.data.api.usecases.capabilities.CanCreateItemsInFolder
 import proton.android.pass.data.api.usecases.capabilities.CanCreateAlias
 import proton.android.pass.data.api.usecases.capabilities.CanCreateSecureLink
+import proton.android.pass.data.api.usecases.capabilities.CanCreateDefaultVault
 import proton.android.pass.data.api.usecases.capabilities.CanCreateVault
 import proton.android.pass.data.api.usecases.capabilities.CanManageVaultAccess
 import proton.android.pass.data.api.usecases.capabilities.CanMigrateVault
@@ -345,6 +346,7 @@ import proton.android.pass.data.fakes.usecases.FakeCanCreateFolder
 import proton.android.pass.data.fakes.usecases.FakeCanCreateItemsInFolder
 import proton.android.pass.data.fakes.usecases.FakeCanCreateAlias
 import proton.android.pass.data.fakes.usecases.FakeCanCreateSecureLink
+import proton.android.pass.data.fakes.usecases.FakeCanCreateDefaultVault
 import proton.android.pass.data.fakes.usecases.FakeCanCreateVault
 import proton.android.pass.data.fakes.usecases.FakeCanDisplayTotp
 import proton.android.pass.data.fakes.usecases.FakeCanManageVaultAccess
@@ -946,6 +948,9 @@ abstract class FakesDataModule {
 
     @Binds
     abstract fun bindCanCreateSecureLink(impl: FakeCanCreateSecureLink): CanCreateSecureLink
+
+    @Binds
+    abstract fun bindCanCreateDefaultVault(impl: FakeCanCreateDefaultVault): CanCreateDefaultVault
 
     @Binds
     abstract fun bindCanCreateVault(impl: FakeCanCreateVault): CanCreateVault

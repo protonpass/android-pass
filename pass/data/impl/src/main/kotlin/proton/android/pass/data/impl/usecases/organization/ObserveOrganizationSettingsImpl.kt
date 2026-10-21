@@ -20,6 +20,7 @@ package proton.android.pass.data.impl.usecases.organization
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
 import proton.android.pass.common.api.Option
@@ -28,6 +29,7 @@ import proton.android.pass.data.api.repositories.OrganizationSettingsRepository
 import proton.android.pass.data.api.usecases.ObserveCurrentUser
 import proton.android.pass.data.api.usecases.organization.ObserveOrganizationSettings
 import proton.android.pass.domain.OrganizationSettings
+import proton.android.pass.domain.UserId
 import javax.inject.Inject
 
 class ObserveOrganizationSettingsImpl @Inject constructor(
@@ -35,11 +37,12 @@ class ObserveOrganizationSettingsImpl @Inject constructor(
     private val repository: OrganizationSettingsRepository
 ) : ObserveOrganizationSettings {
 
-    override fun invoke(): Flow<Option<OrganizationSettings>> = observeCurrentUser()
-        .flatMapLatest { user ->
-            repository.observe(user.userId)
-                .onEach { if (it == null) runCatching { repository.refresh(user.userId) } }
-                .map(OrganizationSettings?::toOption)
-        }
+    override fun invoke(userId: UserId?): Flow<Option<OrganizationSettings>> =
+        (userId?.let(::flowOf) ?: observeCurrentUser().map { it.userId })
+            .flatMapLatest { resolvedUserId ->
+                repository.observe(resolvedUserId)
+                    .onEach { if (it == null) runCatching { repository.refresh(resolvedUserId) } }
+                    .map(OrganizationSettings?::toOption)
+            }
 
 }

@@ -234,6 +234,7 @@ import proton.android.pass.data.api.usecases.capabilities.CanCreateAlias
 import proton.android.pass.data.api.usecases.capabilities.CanCreateSecureLink
 import proton.android.pass.data.api.usecases.capabilities.CanCreateDefaultVault
 import proton.android.pass.data.api.usecases.capabilities.CanCreateVault
+import proton.android.pass.data.api.usecases.capabilities.DecideDefaultVaultCreation
 import proton.android.pass.data.api.usecases.capabilities.CanManageVaultAccess
 import proton.android.pass.data.api.usecases.capabilities.CanMigrateVault
 import proton.android.pass.data.api.usecases.capabilities.CanOrganiseVaults
@@ -547,6 +548,7 @@ import proton.android.pass.data.impl.usecases.capabilities.CanCreateAliasImpl
 import proton.android.pass.data.impl.usecases.capabilities.CanCreateSecureLinkImpl
 import proton.android.pass.data.impl.usecases.capabilities.CanCreateDefaultVaultImpl
 import proton.android.pass.data.impl.usecases.capabilities.CanCreateVaultImpl
+import proton.android.pass.data.impl.usecases.capabilities.DecideDefaultVaultCreationImpl
 import proton.android.pass.data.impl.usecases.capabilities.CanManageVaultAccessImpl
 import proton.android.pass.data.impl.usecases.capabilities.CanMigrateVaultImpl
 import proton.android.pass.data.impl.usecases.capabilities.CanOrganiseVaultsImpl
@@ -1028,6 +1030,9 @@ abstract class DataUseCaseModule {
 
     @Binds
     abstract fun bindCanCreateVault(impl: CanCreateVaultImpl): CanCreateVault
+
+    @Binds
+    abstract fun bindDecideDefaultVaultCreation(impl: DecideDefaultVaultCreationImpl): DecideDefaultVaultCreation
 
     @Binds
     abstract fun bindCanOrganiseVaults(impl: CanOrganiseVaultsImpl): CanOrganiseVaults

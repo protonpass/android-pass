@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2024-2026 Proton AG
+ * Copyright (c) 2026 Proton AG
  * This file is part of Proton AG and Proton Pass.
  *
  * Proton Pass is free software: you can redistribute it and/or modify
@@ -16,11 +16,13 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.data.api.errors
+package proton.android.pass.data.impl.network
 
 import me.proton.core.network.domain.ApiException
 import me.proton.core.network.domain.ApiResult
 
-fun Throwable.getProtonErrorCode(): Int? = if (this is ApiException) {
-    (error as? ApiResult.Error.Http)?.proton?.code
-} else null
+fun Throwable.getProtonErrorCode(): Int? = when (this) {
+    is RemoteApiException -> (error as? RemoteResult.Error.Http)?.protonCode
+    is ApiException -> (error as? ApiResult.Error.Http)?.proton?.code
+    else -> null
+}

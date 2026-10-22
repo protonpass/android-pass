@@ -42,7 +42,7 @@ import proton.android.pass.data.api.errors.InvalidVerificationCodeLimitError
 import proton.android.pass.data.api.errors.ShareContentNotAvailableError
 import proton.android.pass.data.api.errors.ShareNotAvailableError
 import proton.android.pass.data.api.errors.UserIdNotAvailableError
-import proton.android.pass.data.api.errors.getProtonErrorCode
+import proton.android.pass.data.impl.network.getProtonErrorCode
 import proton.android.pass.data.api.repositories.SimpleLoginRepository
 import proton.android.pass.data.api.repositories.UserAccessDataRepository
 import proton.android.pass.data.api.usecases.GetVaultByShareId

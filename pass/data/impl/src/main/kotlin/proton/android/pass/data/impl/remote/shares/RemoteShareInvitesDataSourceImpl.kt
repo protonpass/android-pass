@@ -18,8 +18,10 @@
 
 package proton.android.pass.data.impl.remote.shares
 
-import me.proton.core.network.data.ApiProvider
 import proton.android.pass.data.impl.api.PasswordManagerApi
+import proton.android.pass.data.impl.network.RemoteApiGateway
+import proton.android.pass.data.impl.network.get
+import proton.android.pass.data.impl.network.valueOrThrow
 import proton.android.pass.data.impl.responses.CodeOnlyResponse
 import proton.android.pass.data.impl.responses.GetSharePendingInvitesResponse
 import proton.android.pass.domain.InviteId
@@ -28,11 +30,11 @@ import proton.android.pass.domain.UserId
 import javax.inject.Inject
 
 class RemoteShareInvitesDataSourceImpl @Inject constructor(
-    private val apiProvider: ApiProvider
+    private val api: RemoteApiGateway
 ) : RemoteShareInvitesDataSource {
 
     override suspend fun getSharePendingInvites(userId: UserId, shareId: ShareId): GetSharePendingInvitesResponse =
-        apiProvider.get<PasswordManagerApi>(userId)
+        api.get<PasswordManagerApi>(userId)
             .invoke { getPendingInvitesForShare(shareId.id) }
             .valueOrThrow
 
@@ -41,7 +43,7 @@ class RemoteShareInvitesDataSourceImpl @Inject constructor(
         shareId: ShareId,
         inviteId: InviteId,
         isForNewUser: Boolean
-    ): CodeOnlyResponse = apiProvider.get<PasswordManagerApi>(userId)
+    ): CodeOnlyResponse = api.get<PasswordManagerApi>(userId)
         .invoke {
             if (isForNewUser) deleteNewUserInvite(shareId.id, inviteId.value)
             else deleteInvite(shareId.id, inviteId.value)
@@ -52,7 +54,7 @@ class RemoteShareInvitesDataSourceImpl @Inject constructor(
         userId: UserId,
         shareId: ShareId,
         inviteId: InviteId
-    ): CodeOnlyResponse = apiProvider.get<PasswordManagerApi>(userId)
+    ): CodeOnlyResponse = api.get<PasswordManagerApi>(userId)
         .invoke { sendInviteReminder(shareId.id, inviteId.value) }
         .valueOrThrow
 

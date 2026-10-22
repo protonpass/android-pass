@@ -20,8 +20,6 @@ package proton.android.pass.data.impl.remote
 
 import kotlinx.coroutines.currentCoroutineContext
 import kotlinx.coroutines.ensureActive
-import me.proton.core.network.data.ApiProvider
-import me.proton.core.network.domain.ApiResult
 import proton.android.pass.data.api.errors.AliasRateLimitError
 import proton.android.pass.data.api.errors.CannotCreateMoreAliasesError
 import proton.android.pass.data.api.errors.DisplayableApiError
@@ -31,6 +29,10 @@ import proton.android.pass.data.api.errors.ItemNewerRevisionAvailable
 import proton.android.pass.data.api.repositories.ItemRevision
 import proton.android.pass.data.impl.api.PasswordManagerApi
 import proton.android.pass.data.impl.extensions.toDomain
+import proton.android.pass.data.impl.network.RemoteApiGateway
+import proton.android.pass.data.impl.network.RemoteResult
+import proton.android.pass.data.impl.network.get
+import proton.android.pass.data.impl.network.valueOrThrow
 import proton.android.pass.data.impl.remote.RemoteDataSourceConstants.PAGE_SIZE
 import proton.android.pass.data.impl.requests.CreateAliasRequest
 import proton.android.pass.data.impl.requests.CreateItemAliasRequest
@@ -56,7 +58,7 @@ const val ALIAS_RATE_LIMIT = 2028
 const val CODE_NOT_LATEST_REVISION = 300_002
 
 class RemoteItemDataSourceImpl @Inject constructor(
-    private val api: ApiProvider
+    private val api: RemoteApiGateway
 ) : RemoteItemDataSource {
 
     override suspend fun createItem(
@@ -77,10 +79,10 @@ class RemoteItemDataSourceImpl @Inject constructor(
         val res = api.get<PasswordManagerApi>(userId)
             .invoke { createAlias(shareId.id, body) }
         when (res) {
-            is ApiResult.Success -> return res.value.item.toDomain()
-            is ApiResult.Error -> {
-                if (res is ApiResult.Error.Http) {
-                    when (res.proton?.code) {
+            is RemoteResult.Success -> return res.value.item.toDomain()
+            is RemoteResult.Error -> {
+                if (res is RemoteResult.Error.Http) {
+                    when (res.protonCode) {
                         CODE_CANNOT_CREATE_MORE_ALIASES -> throw CannotCreateMoreAliasesError()
                         CODE_USER_EMAIL_NOT_VALIDATED -> throw EmailNotValidatedError()
                         ALIAS_RATE_LIMIT -> throw AliasRateLimitError()
@@ -100,10 +102,10 @@ class RemoteItemDataSourceImpl @Inject constructor(
         val res = api.get<PasswordManagerApi>(userId)
             .invoke { createItemAndAlias(shareId.id, body) }
         when (res) {
-            is ApiResult.Success -> return res.value.bundle
-            is ApiResult.Error -> {
-                if (res is ApiResult.Error.Http) {
-                    when (res.proton?.code) {
+            is RemoteResult.Success -> return res.value.bundle
+            is RemoteResult.Error -> {
+                if (res is RemoteResult.Error.Http) {
+                    when (res.protonCode) {
                         CODE_CANNOT_CREATE_MORE_ALIASES -> throw CannotCreateMoreAliasesError()
                         CODE_USER_EMAIL_NOT_VALIDATED -> throw EmailNotValidatedError()
                         else -> {}
@@ -123,10 +125,10 @@ class RemoteItemDataSourceImpl @Inject constructor(
         val res = api.get<PasswordManagerApi>(userId)
             .invoke { updateItem(shareId.id, itemId.id, body) }
         when (res) {
-            is ApiResult.Success -> return res.value.item.toDomain()
-            is ApiResult.Error -> {
-                if (res is ApiResult.Error.Http) {
-                    when (res.proton?.code) {
+            is RemoteResult.Success -> return res.value.item.toDomain()
+            is RemoteResult.Error -> {
+                if (res is RemoteResult.Error.Http) {
+                    when (res.protonCode) {
                         CODE_INVALID_CONTENT -> throw InvalidContentFormatVersionError()
                         CODE_NOT_LATEST_REVISION -> throw ItemNewerRevisionAvailable()
                         else -> {}
@@ -146,8 +148,8 @@ class RemoteItemDataSourceImpl @Inject constructor(
         .invoke { updateItemFlags(shareId.id, itemId.id, body) }
         .let { apiResult ->
             when (apiResult) {
-                is ApiResult.Error -> throw apiResult.cause ?: Exception("Update item flags failed")
-                is ApiResult.Success -> apiResult.value.item.toDomain()
+                is RemoteResult.Error -> throw apiResult.cause ?: Exception("Update item flags failed")
+                is RemoteResult.Success -> apiResult.value.item.toDomain()
             }
         }
 
@@ -252,11 +254,10 @@ class RemoteItemDataSourceImpl @Inject constructor(
         val res = api.get<PasswordManagerApi>(userId)
             .invoke { migrateItems(shareId.id, body) }
         when (res) {
-            is ApiResult.Success -> return res.value.items.toDomain()
-            is ApiResult.Error -> {
-                val protonError = (res as? ApiResult.Error.Http)?.proton
-                if (protonError != null) {
-                    throw DisplayableApiError(protonError.error, res.cause)
+            is RemoteResult.Success -> return res.value.items.toDomain()
+            is RemoteResult.Error -> {
+                if (res is RemoteResult.Error.Http && res.protonCode != null) {
+                    throw DisplayableApiError(res.message, res.cause)
                 }
                 throw res.cause ?: Exception("Migrate items failed")
             }

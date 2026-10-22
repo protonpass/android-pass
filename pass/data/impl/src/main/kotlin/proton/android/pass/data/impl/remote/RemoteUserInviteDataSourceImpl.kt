@@ -27,7 +27,7 @@ import proton.android.pass.data.api.errors.CannotCreateMoreVaultsError
 import proton.android.pass.data.api.errors.ErrorCodes
 import proton.android.pass.data.api.errors.FreeUserInviteError
 import proton.android.pass.data.api.errors.CannotCreateInviteError
-import proton.android.pass.data.api.errors.getProtonErrorCode
+import proton.android.pass.data.impl.network.getProtonErrorCode
 import proton.android.pass.data.impl.api.PasswordManagerApi
 import proton.android.pass.data.impl.requests.CreateInvitesRequest
 import proton.android.pass.data.impl.requests.CreateNewUserInvitesRequest

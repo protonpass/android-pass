@@ -24,7 +24,7 @@ import kotlinx.coroutines.flow.flow
 import proton.android.pass.common.api.safeRunCatching
 import proton.android.pass.data.api.errors.CannotSendMoreInvitesError
 import proton.android.pass.data.api.errors.ErrorCodes
-import proton.android.pass.data.api.errors.getProtonErrorCode
+import proton.android.pass.data.impl.network.getProtonErrorCode
 import proton.android.pass.data.api.repositories.ShareInvitesRepository
 import proton.android.pass.data.impl.local.shares.LocalShareInvitesDataSource
 import proton.android.pass.data.impl.remote.shares.RemoteShareInvitesDataSource

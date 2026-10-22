@@ -24,6 +24,8 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import proton.android.pass.data.api.core.datasources.RemoteSentinelDataSource
 import proton.android.pass.data.impl.core.datasources.RemoteSentinelDataSourceImpl
+import proton.android.pass.data.impl.network.CoreRemoteApiGateway
+import proton.android.pass.data.impl.network.RemoteApiGateway
 import proton.android.pass.data.impl.remote.RemoteAliasContactsDataSource
 import proton.android.pass.data.impl.remote.RemoteAliasContactsDataSourceImpl
 import proton.android.pass.data.impl.remote.RemoteAliasDataSource
@@ -94,6 +96,9 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 abstract class DataRemoteDataSourceModule {
+
+    @Binds
+    abstract fun bindRemoteApiGateway(impl: CoreRemoteApiGateway): RemoteApiGateway
 
     @Binds
     abstract fun bindRemoteAliasDataSource(impl: RemoteAliasDataSourceImpl): RemoteAliasDataSource

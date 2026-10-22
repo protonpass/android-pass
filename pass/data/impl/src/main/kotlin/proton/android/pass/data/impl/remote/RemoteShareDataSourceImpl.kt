@@ -18,10 +18,12 @@
 
 package proton.android.pass.data.impl.remote
 
-import me.proton.core.network.data.ApiProvider
-import me.proton.core.network.domain.ApiResult
 import proton.android.pass.data.api.errors.CannotCreateMoreVaultsError
 import proton.android.pass.data.impl.api.PasswordManagerApi
+import proton.android.pass.data.impl.network.RemoteApiGateway
+import proton.android.pass.data.impl.network.RemoteResult
+import proton.android.pass.data.impl.network.get
+import proton.android.pass.data.impl.network.valueOrThrow
 import proton.android.pass.data.impl.requests.BatchHideUnhideShareRequest
 import proton.android.pass.data.impl.requests.CreateVaultRequest
 import proton.android.pass.data.impl.requests.UpdateVaultRequest
@@ -32,17 +34,17 @@ import proton.android.pass.domain.UserId
 import javax.inject.Inject
 
 class RemoteShareDataSourceImpl @Inject constructor(
-    private val api: ApiProvider
+    private val api: RemoteApiGateway
 ) : RemoteShareDataSource {
 
     override suspend fun createVault(userId: UserId, body: CreateVaultRequest): ShareResponse {
         val res = api.get<PasswordManagerApi>(userId)
             .invoke { createVault(body) }
         when (res) {
-            is ApiResult.Success -> return res.value.share
-            is ApiResult.Error -> {
-                if (res is ApiResult.Error.Http) {
-                    if (res.proton?.code == CODE_CANNOT_CREATE_MORE_VAULTS) {
+            is RemoteResult.Success -> return res.value.share
+            is RemoteResult.Error -> {
+                if (res is RemoteResult.Error.Http) {
+                    if (res.protonCode == CODE_CANNOT_CREATE_MORE_VAULTS) {
                         throw CannotCreateMoreVaultsError()
                     }
                 }

@@ -57,6 +57,7 @@ dependencies {
     implementation(libs.core.user)
     implementation(libs.kotlinx.serialization.json)
 
+    implementation(projects.pass.common.api)
     implementation(projects.pass.commonRust.api)
     implementation(projects.pass.domain)
     implementation(projects.pass.log.api)
@@ -69,6 +70,7 @@ dependencies {
     testImplementation(libs.kotlinTest)
     testImplementation(libs.truth)
     testImplementation(libs.coroutines.test)
+    testImplementation(projects.pass.account.fakes)
     testImplementation(projects.pass.common.fakes)
     testImplementation(projects.pass.commonRust.fakes)
     testImplementation(projects.pass.commonTest)

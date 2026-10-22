@@ -33,6 +33,7 @@ import proton.android.pass.crypto.api.EncryptionKey
 import proton.android.pass.crypto.api.context.EncryptionTag
 import proton.android.pass.crypto.api.usecases.EncryptedCreateVault
 import proton.android.pass.crypto.fakes.context.FakeEncryptionContextProvider
+import proton.android.pass.crypto.impl.CoreUserKeys
 import proton.android.pass.domain.ShareColor
 import proton.android.pass.domain.ShareIcon
 import proton.android.pass.domain.VaultProperties
@@ -64,7 +65,11 @@ class CreateVaultImplTest {
         )
 
         val instance = CreateVaultImpl(cryptoContext, encryptionContextProvider, itemContentSerializer)
-        val (request, vaultKey) = instance.createVaultRequest(user, userAddress.addressId, vaultMetadata)
+        val (request, vaultKey) = instance.createVaultRequest(
+            CoreUserKeys(user, cryptoContext),
+            userAddress.addressId,
+            vaultMetadata
+        )
 
         validateVaultKey(user, request, vaultKey)
         validateVaultMetadata(vaultMetadata, request, vaultKey)

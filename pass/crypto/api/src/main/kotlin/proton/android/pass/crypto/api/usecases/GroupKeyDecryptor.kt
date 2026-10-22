@@ -16,28 +16,8 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.data.impl.fakes
+package proton.android.pass.crypto.api.usecases
 
-import proton.android.pass.data.impl.crypto.UserKeys
-
-class FakeUserKeys(
-    private val activeKeyIds: Set<String> = emptySet()
-) : UserKeys {
-
-    private val recordedMessages = mutableListOf<ByteArray>()
-
-    var decryptBehavior: (ByteArray) -> ByteArray = { DEFAULT_DECRYPTED }
-
-    val decryptedMessages: List<ByteArray> get() = recordedMessages
-
-    override fun hasActiveKey(keyId: String): Boolean = keyId in activeKeyIds
-
-    override fun decryptAndVerify(message: ByteArray): ByteArray {
-        recordedMessages.add(message)
-        return decryptBehavior(message)
-    }
-
-    companion object {
-        val DEFAULT_DECRYPTED: ByteArray = byteArrayOf(7, 8)
-    }
+interface GroupKeyDecryptor {
+    fun decryptAndVerify(message: ByteArray): ByteArray
 }

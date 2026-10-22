@@ -25,7 +25,8 @@ import dagger.hilt.components.SingletonComponent
 import proton.android.pass.crypto.api.usecases.folders.CreateFolder
 import proton.android.pass.crypto.api.usecases.CreateItem
 import proton.android.pass.crypto.api.usecases.CreateVault
-import proton.android.pass.crypto.api.usecases.GetUserWithKeys
+import proton.android.pass.crypto.api.usecases.GetGroupKeyDecryptor
+import proton.android.pass.crypto.api.usecases.GetUserKeys
 import proton.android.pass.crypto.api.usecases.MigrateItem
 import proton.android.pass.crypto.api.usecases.folders.MoveFolder
 import proton.android.pass.crypto.api.usecases.folders.OpenFolder
@@ -44,7 +45,8 @@ import proton.android.pass.crypto.impl.usecases.folders.CreateFolderImpl
 import proton.android.pass.crypto.impl.usecases.CreateItemImpl
 import proton.android.pass.crypto.impl.usecases.CreateVaultImpl
 import proton.android.pass.crypto.impl.usecases.EncryptInviteKeysImpl
-import proton.android.pass.crypto.impl.usecases.GetUserWithKeysImpl
+import proton.android.pass.crypto.impl.usecases.GetGroupKeyDecryptorImpl
+import proton.android.pass.crypto.impl.usecases.GetUserKeysImpl
 import proton.android.pass.crypto.impl.usecases.MigrateItemImpl
 import proton.android.pass.crypto.impl.usecases.folders.MoveFolderImpl
 import proton.android.pass.crypto.impl.usecases.folders.OpenFolderImpl
@@ -66,7 +68,10 @@ abstract class UseCaseModule {
     abstract fun bindCreateVault(impl: CreateVaultImpl): CreateVault
 
     @Binds
-    abstract fun bindGetUserWithKeys(impl: GetUserWithKeysImpl): GetUserWithKeys
+    abstract fun bindGetUserKeys(impl: GetUserKeysImpl): GetUserKeys
+
+    @Binds
+    abstract fun bindGetGroupKeyDecryptor(impl: GetGroupKeyDecryptorImpl): GetGroupKeyDecryptor
 
     @Binds
     abstract fun bindOpenItem(impl: OpenItemImpl): OpenItem

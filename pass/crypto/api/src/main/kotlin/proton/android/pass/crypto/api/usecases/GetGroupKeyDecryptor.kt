@@ -16,9 +16,15 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.data.impl.crypto
+package proton.android.pass.crypto.api.usecases
 
-interface UserKeys {
-    fun hasActiveKey(keyId: String): Boolean
-    fun decryptAndVerify(message: ByteArray): ByteArray
+import proton.android.pass.domain.AddressId
+import proton.android.pass.domain.UserId
+
+interface GetGroupKeyDecryptor {
+    suspend operator fun invoke(
+        userId: UserId,
+        addressId: AddressId,
+        groupEmail: String
+    ): GroupKeyDecryptor
 }

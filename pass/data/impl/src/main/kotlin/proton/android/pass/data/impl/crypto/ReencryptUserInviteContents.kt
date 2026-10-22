@@ -19,7 +19,7 @@
 package proton.android.pass.data.impl.crypto
 
 import me.proton.core.user.domain.repository.UserAddressRepository
-import proton.android.pass.crypto.api.usecases.GetUserWithKeys
+import proton.android.pass.crypto.api.usecases.GetUserKeys
 import proton.android.pass.crypto.api.usecases.invites.AcceptUserInvite
 import proton.android.pass.data.api.usecases.GetAllKeysByAddress
 import proton.android.pass.data.impl.responses.PendingUserInviteResponse
@@ -34,14 +34,14 @@ interface ReencryptUserInviteContents {
 
 class ReencryptUserInviteContentsImpl @Inject constructor(
     private val acceptUserInvite: AcceptUserInvite,
-    private val getUserWithKeys: GetUserWithKeys,
+    private val getUserKeys: GetUserKeys,
     private val userAddressRepository: UserAddressRepository,
     private val getAllKeysByAddress: GetAllKeysByAddress,
     private val inviteContentReencrypter: InviteContentReencrypter
 ) : ReencryptUserInviteContents {
 
     override suspend fun invoke(userId: UserId, invite: PendingUserInviteResponse): ReencryptedInviteContent {
-        val user = getUserWithKeys(userId)
+        val invitedUserKeys = getUserKeys(userId)
 
         val addressId = AddressId(invite.invitedAddressId)
         val address = fetchWithForceRefresh(
@@ -62,7 +62,7 @@ class ReencryptUserInviteContentsImpl @Inject constructor(
             .map { it.publicKey }
 
         val openKeys = acceptUserInvite(
-            invitedUser = user,
+            invitedUserKeys = invitedUserKeys,
             invitedUserAddressKeys = addressPrivateKeys,
             inviterAddressKeys = inviterAddressKeys,
             keys = inviteKeys

@@ -46,7 +46,7 @@ class EncryptGroupInviteKeysImpl @Inject constructor(
 
         return try {
             val encryptedKeys = acceptGroupInvite(
-                user = cryptoContext.user,
+                userKeys = cryptoContext.userKeys,
                 groupPrivateKeys = cryptoContext.groupPrivateKeys,
                 unlockedOrganizationKey = cryptoContext.unlockedOrganizationKey,
                 inviterAddressKeys = cryptoContext.inviterPublicKeys,

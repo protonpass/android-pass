@@ -24,16 +24,14 @@ import me.proton.core.crypto.common.pgp.VerificationContext
 import me.proton.core.crypto.common.pgp.VerificationStatus
 import me.proton.core.key.domain.entity.key.PrivateAddressKey
 import me.proton.core.key.domain.entity.key.PublicKey
-import me.proton.core.key.domain.decryptData
-import me.proton.core.user.domain.entity.User
 import proton.android.pass.crypto.api.Base64
 import proton.android.pass.crypto.api.Constants
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.crypto.api.error.InvalidSignature
+import proton.android.pass.crypto.api.usecases.UserKeys
 import proton.android.pass.crypto.api.usecases.invites.AcceptGroupInvite
 import proton.android.pass.crypto.api.usecases.invites.EncryptedGroupInviteAcceptKey
 import proton.android.pass.crypto.api.usecases.invites.EncryptedInviteKey
-import proton.android.pass.crypto.impl.extensions.tryUseKeys
 import javax.inject.Inject
 
 class AcceptGroupInviteImpl @Inject constructor(
@@ -42,7 +40,7 @@ class AcceptGroupInviteImpl @Inject constructor(
 ) : AcceptGroupInvite {
 
     override fun invoke(
-        user: User,
+        userKeys: UserKeys,
         groupPrivateKeys: List<PrivateAddressKey>,
         unlockedOrganizationKey: UnlockedKey?,
         inviterAddressKeys: List<PublicKey>,
@@ -53,7 +51,7 @@ class AcceptGroupInviteImpl @Inject constructor(
         val encryptionTarget = groupPublicKeys.firstOrNull { it.isPrimary }
             ?: error("No primary key found in group public keys from keys/all")
         val unlockedGroupKeys = unlockGroupKeys(
-            user = user,
+            userKeys = userKeys,
             groupPrivateKeys = groupPrivateKeys,
             unlockedOrganizationKey = unlockedOrganizationKey,
             isGroupOwner = isGroupOwner
@@ -104,7 +102,7 @@ class AcceptGroupInviteImpl @Inject constructor(
     }
 
     private fun unlockGroupKeys(
-        user: User,
+        userKeys: UserKeys,
         groupPrivateKeys: List<PrivateAddressKey>,
         unlockedOrganizationKey: UnlockedKey?,
         isGroupOwner: Boolean
@@ -115,12 +113,10 @@ class AcceptGroupInviteImpl @Inject constructor(
                 val token = privateAddressKey.token ?: error("Missing group address key token")
 
                 val decryptedToken = if (isGroupOwner) {
-                    user.tryUseKeys(
-                        message = "AcceptGroupInviteImpl: Decrypt group address key token",
-                        cryptoContext = cryptoContext
-                    ) {
-                        decryptData(token)
-                    }
+                    userKeys.decrypt(
+                        token = token,
+                        label = "AcceptGroupInviteImpl: Decrypt group address key token"
+                    )
                 } else {
                     val orgKey = unlockedOrganizationKey
                         ?: error("Admin requires organization key")

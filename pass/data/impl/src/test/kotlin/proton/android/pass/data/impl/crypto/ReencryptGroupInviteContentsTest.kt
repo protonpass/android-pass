@@ -26,6 +26,7 @@ import me.proton.core.key.domain.entity.key.PublicKey
 import proton.android.pass.crypto.api.usecases.invites.EncryptedGroupInviteAcceptKey
 import proton.android.pass.crypto.fakes.context.FakeEncryptionContext
 import proton.android.pass.crypto.fakes.context.FakeEncryptionContextProvider
+import proton.android.pass.crypto.fakes.usecases.FakeUserKeys
 import proton.android.pass.data.fakes.usecases.FakeAcceptGroupInvite
 import proton.android.pass.data.impl.db.entities.GroupInviteEntity
 import proton.android.pass.data.impl.db.entities.GroupInviteKeyEntity
@@ -37,14 +38,13 @@ import proton.android.pass.data.impl.responses.invites.VaultDataApiModel
 import proton.android.pass.domain.GroupId
 import proton.android.pass.domain.UserId
 import proton.android.pass.test.domain.GroupTestFactory
-import proton.android.pass.test.domain.UserTestFactory
 import kotlin.test.Test
 import kotlin.test.assertContentEquals
 import kotlin.test.assertEquals
 
 class ReencryptGroupInviteContentsTest {
 
-    private val user = UserTestFactory.createCore(userId = USER_ID)
+    private val userKeys = FakeUserKeys()
     private val group = GroupTestFactory.create(id = GROUP_ID, email = GROUP_EMAIL)
 
     @Test
@@ -164,7 +164,7 @@ class ReencryptGroupInviteContentsTest {
         }
 
         return GroupInviteCryptoContext(
-            user = user,
+            userKeys = userKeys,
             groupPrivateKeys = group.address!!.keys!!,
             unlockedOrganizationKey = fakeUnlockedKey,
             inviterPublicKeys = inviterKeys().map { it.publicKey },

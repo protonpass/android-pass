@@ -27,8 +27,6 @@ import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 import me.proton.core.crypto.common.keystore.EncryptedByteArray
-import me.proton.core.key.domain.extension.primary
-import me.proton.core.user.domain.entity.User
 import me.proton.core.user.domain.extension.primary
 import me.proton.core.user.domain.repository.UserAddressRepository
 import proton.android.pass.common.api.AppDispatchers
@@ -40,7 +38,8 @@ import proton.android.pass.crypto.api.EncryptionKey
 import proton.android.pass.crypto.api.context.EncryptionContext
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.crypto.api.usecases.CreateVault
-import proton.android.pass.crypto.api.usecases.GetUserWithKeys
+import proton.android.pass.crypto.api.usecases.GetUserKeys
+import proton.android.pass.crypto.api.usecases.UserKeys
 import proton.android.pass.crypto.api.usecases.UpdateVault
 import proton.android.pass.data.api.errors.ShareNotAvailableError
 import proton.android.pass.data.api.repositories.GroupRepository
@@ -84,7 +83,7 @@ import javax.inject.Inject
 class ShareRepositoryImpl @Inject constructor(
     private val itemContentSerializer: ItemContentSerializer,
     private val database: PassDatabase,
-    private val getUserWithKeys: GetUserWithKeys,
+    private val getUserKeys: GetUserKeys,
     private val userAddressRepository: UserAddressRepository,
     private val remoteShareDataSource: RemoteShareDataSource,
     private val localShareDataSource: LocalShareDataSource,
@@ -101,11 +100,11 @@ class ShareRepositoryImpl @Inject constructor(
 
     override suspend fun createVault(userId: UserId, vault: NewVault): Share {
         val userAddress = requireNotNull(userAddressRepository.getAddresses(userId).primary())
-        val user = requireNotNull(getUserWithKeys(userId))
-        val userPrimaryKey = requireNotNull(user.keys.primary()?.keyId?.id)
+        val userKeys = getUserKeys(userId)
+        val userPrimaryKey = requireNotNull(userKeys.primaryKeyId())
 
         val (request, shareKey) = safeRunCatching {
-            createVaultRequest(user, vault, userAddress.addressId)
+            createVaultRequest(userKeys, vault, userAddress.addressId)
         }.fold(
             onSuccess = { it },
             onFailure = {
@@ -762,12 +761,12 @@ class ShareRepositoryImpl @Inject constructor(
     }
 
     private suspend fun createVaultRequest(
-        user: User,
+        userKeys: UserKeys,
         vault: NewVault,
         addressId: AddressId
     ): Pair<CreateVaultRequest, EncryptionKey> {
         val body = newVaultToBody(vault)
-        val (request, shareKey) = createVault.createVaultRequest(user, addressId, body)
+        val (request, shareKey) = createVault.createVaultRequest(userKeys, addressId, body)
         return request.toRequest() to shareKey
     }
 

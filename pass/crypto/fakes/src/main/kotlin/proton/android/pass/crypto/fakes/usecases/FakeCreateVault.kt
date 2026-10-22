@@ -18,12 +18,12 @@
 
 package proton.android.pass.crypto.fakes.usecases
 
-import me.proton.core.user.domain.entity.User
 import me.proton.core.util.kotlin.random
 import proton.android.pass.crypto.api.EncryptionKey
 import proton.android.pass.crypto.api.usecases.CreateVault
 import proton.android.pass.crypto.api.usecases.CreateVaultOutput
 import proton.android.pass.crypto.api.usecases.EncryptedCreateVault
+import proton.android.pass.crypto.api.usecases.UserKeys
 import proton.android.pass.domain.AddressId
 import proton.android.pass.domain.VaultProperties
 
@@ -36,7 +36,7 @@ class FakeCreateVault : CreateVault {
     }
 
     override fun createVaultRequest(
-        user: User,
+        userKeys: UserKeys,
         addressId: AddressId,
         vaultMetadata: VaultProperties
     ): CreateVaultOutput = result.getOrThrow()

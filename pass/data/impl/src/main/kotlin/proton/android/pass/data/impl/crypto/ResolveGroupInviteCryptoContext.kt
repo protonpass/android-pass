@@ -23,8 +23,8 @@ import me.proton.core.crypto.common.pgp.UnlockedKey
 import me.proton.core.key.domain.entity.key.PrivateAddressKey
 import me.proton.core.key.domain.entity.key.PrivateKey
 import me.proton.core.key.domain.entity.key.PublicKey
-import me.proton.core.user.domain.entity.User
-import proton.android.pass.crypto.api.usecases.GetUserWithKeys
+import proton.android.pass.crypto.api.usecases.GetUserKeys
+import proton.android.pass.crypto.api.usecases.UserKeys
 import proton.android.pass.crypto.api.usecases.invites.OpenOrganizationKey
 import proton.android.pass.data.api.repositories.GroupRepository
 import proton.android.pass.data.api.usecases.GetAllKeysByAddress
@@ -35,7 +35,7 @@ import proton.android.pass.log.api.PassLogger
 import javax.inject.Inject
 
 data class GroupInviteCryptoContext(
-    val user: User,
+    val userKeys: UserKeys,
     val groupPrivateKeys: List<PrivateAddressKey>,
     val unlockedOrganizationKey: UnlockedKey?,
     val inviterPublicKeys: List<PublicKey>,
@@ -54,7 +54,7 @@ interface ResolveGroupInviteCryptoContext {
 
 class ResolveGroupInviteCryptoContextImpl @Inject constructor(
     private val cryptoContext: CryptoContext,
-    private val getUserWithKeys: GetUserWithKeys,
+    private val getUserKeys: GetUserKeys,
     private val groupRepository: GroupRepository,
     private val organizationKeyRepository: OrganizationKeyRepository,
     private val openOrganizationKey: OpenOrganizationKey,
@@ -67,9 +67,9 @@ class ResolveGroupInviteCryptoContextImpl @Inject constructor(
         inviterEmail: String,
         isGroupOwner: Boolean
     ): GroupInviteCryptoContext {
-        val user = getUserWithKeys(userId)
+        val userKeys = getUserKeys(userId)
         val unlockedOrganizationKey: UnlockedKey? = if (!isGroupOwner) {
-            val orgPrivateKey = fetchOrganizationPrivateKey(userId, user)
+            val orgPrivateKey = fetchOrganizationPrivateKey(userId, userKeys)
             cryptoContext.pgpCrypto.unlock(
                 privateKey = orgPrivateKey.key,
                 passphrase = ByteArray(0)
@@ -101,7 +101,7 @@ class ResolveGroupInviteCryptoContextImpl @Inject constructor(
             .map { it.publicKey }
 
         return GroupInviteCryptoContext(
-            user = user,
+            userKeys = userKeys,
             groupPrivateKeys = groupPrivateKeys,
             unlockedOrganizationKey = unlockedOrganizationKey,
             inviterPublicKeys = inviterPublicKeys,
@@ -110,7 +110,7 @@ class ResolveGroupInviteCryptoContextImpl @Inject constructor(
         )
     }
 
-    private suspend fun fetchOrganizationPrivateKey(userId: UserId, user: User): PrivateKey {
+    private suspend fun fetchOrganizationPrivateKey(userId: UserId, userKeys: UserKeys): PrivateKey {
         val organizationKey = fetchWithForceRefresh(
             tag = TAG,
             initial = { organizationKeyRepository.getOrganizationKey(userId) },
@@ -122,7 +122,7 @@ class ResolveGroupInviteCryptoContextImpl @Inject constructor(
             error("Organization key not found. This user may not have organization access. Please sync and try again.")
         }
 
-        return openOrganizationKey(user, organizationKey)
+        return openOrganizationKey(userKeys, organizationKey)
             .onFailure { error ->
                 PassLogger.e(TAG, error, "Failed to unlock organization key for user ${userId.id}")
                 throw IllegalStateException(

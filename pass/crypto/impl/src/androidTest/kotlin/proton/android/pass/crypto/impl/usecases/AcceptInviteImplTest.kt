@@ -37,6 +37,7 @@ import proton.android.pass.crypto.api.usecases.invites.EncryptedInviteKey
 import proton.android.pass.crypto.api.error.InvalidSignature
 import proton.android.pass.crypto.fakes.context.FakeEncryptionContext
 import proton.android.pass.crypto.fakes.context.FakeEncryptionContextProvider
+import proton.android.pass.crypto.impl.CoreUserKeys
 import proton.android.pass.domain.key.ShareKey
 import proton.android.pass.test.UserAddressKeyTestFactory
 import proton.android.pass.test.domain.ShareKeyTestFactory
@@ -48,7 +49,7 @@ import kotlin.test.assertFailsWith
 class AcceptInviteImplTest {
     private val cryptoContext: CryptoContext = AndroidCryptoContext(
         keyStoreCrypto = FakeKeyStoreCrypto,
-        pgpCrypto = GOpenPGPCrypto(),
+        pgpCrypto = GOpenPGPCrypto()
     )
 
     @Test
@@ -68,7 +69,7 @@ class AcceptInviteImplTest {
         )
 
         val res = instance.invoke(
-            invitedUser = invited,
+            invitedUserKeys = CoreUserKeys(invited, cryptoContext),
             invitedUserAddressKeys = listOf(invitedUserAddressKey.privateKey),
             inviterAddressKeys = listOf(inviterAddressKey.privateKey.publicKey(cryptoContext)),
             keys = input
@@ -79,7 +80,7 @@ class AcceptInviteImplTest {
             validateKey(
                 original = shareKeys[idx],
                 reencrypted = reencryptedShareKey,
-                invitedUser = invited,
+                invitedUser = invited
             )
         }
     }
@@ -102,7 +103,7 @@ class AcceptInviteImplTest {
 
         assertFailsWith<InvalidSignature> {
             instance.invoke(
-                invitedUser = invited,
+                invitedUserKeys = CoreUserKeys(invited, cryptoContext),
                 invitedUserAddressKeys = listOf(invitedUserAddressKey.privateKey),
                 inviterAddressKeys = listOf(wrongInviterKey.privateKey.publicKey(cryptoContext)),
                 keys = input
@@ -130,7 +131,7 @@ class AcceptInviteImplTest {
         inviterAddressKey: UserAddressKey,
         invitedUserAddressKey: UserAddressKey,
         shareKeys: List<ShareKey>
-    ) : List<EncryptedInviteKey> {
+    ): List<EncryptedInviteKey> {
         val instance = EncryptInviteKeysImpl(cryptoContext, FakeEncryptionContextProvider())
         val res = instance.invoke(
             inviterAddressKey = inviterAddressKey.privateKey,

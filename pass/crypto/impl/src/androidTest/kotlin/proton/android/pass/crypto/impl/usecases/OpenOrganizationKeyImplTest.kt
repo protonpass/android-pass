@@ -27,6 +27,7 @@ import me.proton.core.key.domain.signData
 import org.junit.Test
 import proton.android.pass.account.fakes.FakeKeyStoreCrypto
 import proton.android.pass.crypto.api.Constants
+import proton.android.pass.crypto.impl.CoreUserKeys
 import proton.android.pass.crypto.impl.extensions.tryUseKeys
 import proton.android.pass.domain.OrganizationKey
 import proton.android.pass.test.domain.UserTestFactory
@@ -64,7 +65,7 @@ class OpenOrganizationKeyImplTest {
 
         val instance = OpenOrganizationKeyImpl(cryptoContext)
         val (privateKey, _) = instance.invoke(
-            user = user,
+            userKeys = CoreUserKeys(user, cryptoContext),
             organizationKey = OrganizationKey(
                 privateKey = lockedOrganizationKey,
                 token = token,

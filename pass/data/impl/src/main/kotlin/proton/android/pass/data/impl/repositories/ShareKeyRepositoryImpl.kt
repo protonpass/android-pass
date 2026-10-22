@@ -23,14 +23,11 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 import me.proton.core.crypto.common.keystore.EncryptedByteArray
-import me.proton.core.key.domain.entity.key.PublicKeyRing
-import me.proton.core.key.domain.repository.PublicAddressRepository
-import me.proton.core.user.domain.entity.UserAddress
-import me.proton.core.user.domain.repository.UserAddressRepository
 import proton.android.pass.common.api.safeRunCatching
 import proton.android.pass.crypto.api.context.EncryptionContext
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
-import proton.android.pass.data.impl.crypto.GetUserKeys
+import proton.android.pass.crypto.api.usecases.GetGroupKeyDecryptor
+import proton.android.pass.crypto.api.usecases.GetUserKeys
 import proton.android.pass.data.impl.crypto.ReencryptGroupKeyInput
 import proton.android.pass.data.impl.crypto.ReencryptKeyInput
 import proton.android.pass.data.impl.crypto.ReencryptShareKey
@@ -50,11 +47,10 @@ import javax.inject.Inject
 class ShareKeyRepositoryImpl @Inject constructor(
     private val reencryptShareKey: ReencryptShareKey,
     private val getUserKeys: GetUserKeys,
+    private val getGroupKeyDecryptor: GetGroupKeyDecryptor,
     private val encryptionContextProvider: EncryptionContextProvider,
     private val localDataSource: LocalShareKeyDataSource,
-    private val remoteDataSource: RemoteShareKeyDataSource,
-    private val userAddressRepository: UserAddressRepository,
-    private val publicAddressRepository: PublicAddressRepository
+    private val remoteDataSource: RemoteShareKeyDataSource
 ) : ShareKeyRepository {
 
     override fun getShareKeys(
@@ -250,30 +246,10 @@ class ShareKeyRepositoryImpl @Inject constructor(
         key: String,
         addressId: AddressId,
         groupEmail: String
-    ): ReencryptGroupKeyInput {
-        val invitedAddress: UserAddress = userAddressRepository.getAddress(userId, addressId)
-            ?: run {
-                PassLogger.w(TAG, "Invited address ${addressId.id} not found locally for user ${userId.id}")
-                throw IllegalStateException("Invited address not found")
-            }
-        val groupPublicKeys = safeRunCatching {
-            publicAddressRepository.getPublicAddressInfo(
-                sessionUserId = userId,
-                email = groupEmail,
-                internalOnly = false
-            )
-        }.onFailure { e ->
-            PassLogger.w(TAG, "Failed to fetch public keys for group")
-            PassLogger.w(TAG, e)
-        }.getOrThrow()
-        return ReencryptGroupKeyInput(
-            key = key,
-            invitedAddress = invitedAddress,
-            publicKeyRing = PublicKeyRing(
-                keys = groupPublicKeys.address.keys.map { it.publicKey }
-            )
-        )
-    }
+    ): ReencryptGroupKeyInput = ReencryptGroupKeyInput(
+        key = key,
+        decryptor = getGroupKeyDecryptor(userId, addressId, groupEmail)
+    )
 
     private fun reencryptKey(context: EncryptionContext, input: ReencryptKeyInput): ReencryptedKeyData = runCatching {
         reencryptShareKey(

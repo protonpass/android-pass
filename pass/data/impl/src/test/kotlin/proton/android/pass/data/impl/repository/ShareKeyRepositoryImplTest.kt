@@ -23,11 +23,12 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Test
-import proton.android.pass.account.fakes.FakePublicAddressRepository
-import proton.android.pass.account.fakes.FakeUserAddressRepository
+import proton.android.pass.crypto.api.error.InvalidSignature
 import proton.android.pass.crypto.fakes.context.FakeEncryptionContextProvider
+import proton.android.pass.crypto.fakes.usecases.FakeGetGroupKeyDecryptor
+import proton.android.pass.crypto.fakes.usecases.FakeGetUserKeys
+import proton.android.pass.data.impl.crypto.ReencryptGroupKeyInput
 import proton.android.pass.data.impl.exception.UserKeyNotActive
-import proton.android.pass.data.impl.fakes.FakeGetUserKeys
 import proton.android.pass.data.impl.fakes.FakeLocalShareKeyDataSource
 import proton.android.pass.data.impl.fakes.FakeReencryptShareKey
 import proton.android.pass.data.impl.fakes.FakeRemoteShareKeyDataSource
@@ -42,26 +43,25 @@ class ShareKeyRepositoryImplTest {
 
     private lateinit var reencryptShareKey: FakeReencryptShareKey
     private lateinit var getUserKeys: FakeGetUserKeys
+    private lateinit var getGroupKeyDecryptor: FakeGetGroupKeyDecryptor
     private lateinit var local: FakeLocalShareKeyDataSource
     private lateinit var remote: FakeRemoteShareKeyDataSource
-    private lateinit var userAddressRepository: FakeUserAddressRepository
     private lateinit var instance: ShareKeyRepositoryImpl
 
     @Before
     fun setup() {
         reencryptShareKey = FakeReencryptShareKey()
         getUserKeys = FakeGetUserKeys()
+        getGroupKeyDecryptor = FakeGetGroupKeyDecryptor()
         local = FakeLocalShareKeyDataSource()
         remote = FakeRemoteShareKeyDataSource()
-        userAddressRepository = FakeUserAddressRepository()
         instance = ShareKeyRepositoryImpl(
             reencryptShareKey = reencryptShareKey,
             getUserKeys = getUserKeys,
+            getGroupKeyDecryptor = getGroupKeyDecryptor,
             encryptionContextProvider = FakeEncryptionContextProvider(),
             localDataSource = local,
-            remoteDataSource = remote,
-            userAddressRepository = userAddressRepository,
-            publicAddressRepository = FakePublicAddressRepository()
+            remoteDataSource = remote
         )
     }
 
@@ -142,15 +142,57 @@ class ShareKeyRepositoryImplTest {
     }
 
     @Test
-    fun `group key fails when the invited address is not stored locally`() = runTest {
+    fun `group key from remote is reencrypted with the group decryptor`() = runTest {
         remote.setKeys(listOf(remoteKey(rotation = ROTATION, key = "remote-key")))
-        userAddressRepository.setAddress(null)
 
-        val result = runCatching { getShareKeys(forceRefresh = true, groupEmail = "group@example.com") }
+        val result = getShareKeys(forceRefresh = true, groupEmail = GROUP_EMAIL)
+
+        assertThat(result).hasSize(1)
+        assertThat(getGroupKeyDecryptor.requests)
+            .containsExactly(FakeGetGroupKeyDecryptor.Request(USER_ID, AddressId(ADDRESS_ID), GROUP_EMAIL))
+        val input = reencryptShareKey.calls.single() as ReencryptGroupKeyInput
+        assertThat(input.key).isEqualTo("remote-key")
+        assertThat(input.decryptor).isSameInstanceAs(getGroupKeyDecryptor.decryptor)
+        assertThat(getUserKeys.requestedUserIds).isEmpty()
+        assertThat(storedEntities().single().isActive).isTrue()
+    }
+
+    @Test
+    fun `group key from local inactive keys is reencrypted with the group decryptor and stored as active`() = runTest {
+        local.setEntity(localEntity(isActive = false))
+
+        val result = getShareKeys(forceRefresh = false, groupEmail = GROUP_EMAIL)
+
+        assertThat(result).hasSize(1)
+        assertThat(reencryptShareKey.calls.single()).isInstanceOf(ReencryptGroupKeyInput::class.java)
+        assertThat(getGroupKeyDecryptor.requests).hasSize(1)
+        assertThat(getUserKeys.requestedUserIds).isEmpty()
+        assertThat(remote.requestCount).isEqualTo(0)
+        assertThat(storedEntities().single().isActive).isTrue()
+    }
+
+    @Test
+    fun `group key rethrows a failure to get the decryptor`() = runTest {
+        remote.setKeys(listOf(remoteKey(rotation = ROTATION, key = "remote-key")))
+        getGroupKeyDecryptor.failure = IllegalStateException("Invited address not found")
+
+        val result = runCatching { getShareKeys(forceRefresh = true, groupEmail = GROUP_EMAIL) }
 
         assertThat(result.exceptionOrNull()).isInstanceOf(IllegalStateException::class.java)
+        assertThat(result.exceptionOrNull()?.message).isEqualTo("Invited address not found")
         assertThat(reencryptShareKey.calls).isEmpty()
-        assertThat(getUserKeys.requestedUserIds).isEmpty()
+        assertThat(storedEntities()).isEmpty()
+    }
+
+    @Test
+    fun `group key propagates InvalidSignature from the reencryption`() = runTest {
+        remote.setKeys(listOf(remoteKey(rotation = ROTATION, key = "remote-key")))
+        reencryptShareKey.behavior = { throw InvalidSignature("ShareKey signature did not match") }
+
+        val result = runCatching { getShareKeys(forceRefresh = true, groupEmail = GROUP_EMAIL) }
+
+        assertThat(result.exceptionOrNull()).isInstanceOf(InvalidSignature::class.java)
+        assertThat(storedEntities()).isEmpty()
     }
 
     @Test
@@ -202,5 +244,6 @@ class ShareKeyRepositoryImplTest {
         val SHARE_ID = ShareId("share-id")
         const val ADDRESS_ID = "address-id"
         const val ROTATION = 1L
+        const val GROUP_EMAIL = "group@example.com"
     }
 }

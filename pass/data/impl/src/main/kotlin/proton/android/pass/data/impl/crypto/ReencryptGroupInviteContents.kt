@@ -45,7 +45,7 @@ class ReencryptGroupInviteContentsImpl @Inject constructor(
         return try {
             val inviteKeys = invite.keys.map { it.toEncryptedInviteKey() }
             val openKeys = acceptGroupInvite(
-                user = cryptoContext.user,
+                userKeys = cryptoContext.userKeys,
                 groupPrivateKeys = cryptoContext.groupPrivateKeys,
                 unlockedOrganizationKey = cryptoContext.unlockedOrganizationKey,
                 inviterAddressKeys = cryptoContext.inviterPublicKeys,

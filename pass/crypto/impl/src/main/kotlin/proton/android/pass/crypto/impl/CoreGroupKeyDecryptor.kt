@@ -16,52 +16,38 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.data.impl.crypto
+package proton.android.pass.crypto.impl
 
 import me.proton.core.crypto.common.context.CryptoContext
 import me.proton.core.crypto.common.pgp.VerificationStatus
 import me.proton.core.key.domain.decryptAndVerifyData
+import me.proton.core.key.domain.entity.key.PublicKeyRing
 import me.proton.core.key.domain.getArmored
-import me.proton.core.user.domain.entity.User
+import me.proton.core.key.domain.useKeys
+import me.proton.core.user.domain.entity.UserAddress
 import proton.android.pass.crypto.api.error.InvalidSignature
-import proton.android.pass.crypto.api.usecases.GetUserWithKeys
-import proton.android.pass.data.impl.extensions.tryUseKeys
-import proton.android.pass.domain.UserId
-import javax.inject.Inject
+import proton.android.pass.crypto.api.usecases.GroupKeyDecryptor
+import proton.android.pass.log.api.PassLogger
 
-interface GetUserKeys {
-    suspend operator fun invoke(userId: UserId): UserKeys
-}
+private const val TAG = "CoreGroupKeyDecryptor"
 
-class GetUserKeysImpl @Inject constructor(
-    private val cryptoContext: CryptoContext,
-    private val getUserWithKeys: GetUserWithKeys
-) : GetUserKeys {
-
-    override suspend fun invoke(userId: UserId): UserKeys = CoreUserKeys(
-        user = getUserWithKeys(userId),
-        cryptoContext = cryptoContext
-    )
-}
-
-internal class CoreUserKeys(
-    private val user: User,
+internal class CoreGroupKeyDecryptor(
+    private val invitedAddress: UserAddress,
+    private val groupPublicKeys: PublicKeyRing,
     private val cryptoContext: CryptoContext
-) : UserKeys {
-
-    override fun hasActiveKey(keyId: String): Boolean = user.keys.any {
-        it.active == true && keyId == it.keyId.id
-    }
+) : GroupKeyDecryptor {
 
     override fun decryptAndVerify(message: ByteArray): ByteArray {
-        val decrypted = user.tryUseKeys("reencrypt share key", cryptoContext) {
-            decryptAndVerifyData(getArmored(message))
+        val decrypted = invitedAddress.useKeys(cryptoContext) {
+            decryptAndVerifyData(
+                message = getArmored(message),
+                verifyKeyRing = groupPublicKeys
+            )
         }
-
         if (decrypted.status != VerificationStatus.Success) {
+            PassLogger.w(TAG, "decryptAndVerify: signature verification failed")
             throw InvalidSignature("ShareKey signature did not match")
         }
-
         return decrypted.data
     }
 }

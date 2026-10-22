@@ -38,6 +38,7 @@ import proton.android.pass.crypto.api.usecases.invites.EncryptedGroupInviteAccep
 import proton.android.pass.crypto.api.usecases.invites.EncryptedInviteKey
 import proton.android.pass.crypto.fakes.context.FakeEncryptionContext
 import proton.android.pass.crypto.fakes.context.FakeEncryptionContextProvider
+import proton.android.pass.crypto.impl.CoreUserKeys
 import proton.android.pass.domain.UserId
 import proton.android.pass.domain.key.ShareKey
 import proton.android.pass.test.UserAddressKeyTestFactory
@@ -51,7 +52,7 @@ import kotlin.test.assertFails
 class AcceptGroupInviteImplTest {
     private val cryptoContext: CryptoContext = AndroidCryptoContext(
         keyStoreCrypto = FakeKeyStoreCrypto,
-        pgpCrypto = GOpenPGPCrypto(),
+        pgpCrypto = GOpenPGPCrypto()
     )
 
     @Test
@@ -79,7 +80,7 @@ class AcceptGroupInviteImplTest {
         )
 
         val res = instance.invoke(
-            user = UserTestFactory.createCore(),
+            userKeys = CoreUserKeys(UserTestFactory.createCore(), cryptoContext),
             groupPrivateKeys = listOf(groupAddressKey),
             unlockedOrganizationKey = unlockedOrgKey,
             inviterAddressKeys = listOf(inviterAddressKey.privateKey.publicKey(cryptoContext)),
@@ -128,7 +129,7 @@ class AcceptGroupInviteImplTest {
 
         val error = assertFailsWith<IllegalStateException> {
             instance.invoke(
-                user = UserTestFactory.createCore(),
+                userKeys = CoreUserKeys(UserTestFactory.createCore(), cryptoContext),
                 groupPrivateKeys = listOf(groupAddressKey),
                 unlockedOrganizationKey = unlockedOrgKey,
                 inviterAddressKeys = listOf(wrongInviterKey.privateKey.publicKey(cryptoContext)),
@@ -165,7 +166,7 @@ class AcceptGroupInviteImplTest {
         )
 
         val res = instance.invoke(
-            user = UserTestFactory.createCore(),
+            userKeys = CoreUserKeys(UserTestFactory.createCore(), cryptoContext),
             groupPrivateKeys = listOf(firstGroupKey, targetGroupKey),
             unlockedOrganizationKey = unlockedOrgKey,
             inviterAddressKeys = listOf(inviterAddressKey.privateKey.publicKey(cryptoContext)),
@@ -208,7 +209,7 @@ class AcceptGroupInviteImplTest {
 
         val error = assertFailsWith<IllegalStateException> {
             instance.invoke(
-                user = UserTestFactory.createCore(),
+                userKeys = CoreUserKeys(UserTestFactory.createCore(), cryptoContext),
                 groupPrivateKeys = listOf(groupKeyWithNoToken),
                 unlockedOrganizationKey = unlockedOrgKey,
                 inviterAddressKeys = listOf(inviterAddressKey.privateKey.publicKey(cryptoContext)),
@@ -254,7 +255,7 @@ class AcceptGroupInviteImplTest {
         )
 
         val res = instance.invoke(
-            user = ownerUser,
+            userKeys = CoreUserKeys(ownerUser, cryptoContext),
             groupPrivateKeys = listOf(groupAddressKey),
             unlockedOrganizationKey = null,
             inviterAddressKeys = listOf(inviterAddressKey.privateKey.publicKey(cryptoContext)),
@@ -299,7 +300,7 @@ class AcceptGroupInviteImplTest {
         // With wrong opener key, decryption should fail with CryptoException
         val error = assertFails {
             instance.invoke(
-                user = UserTestFactory.createCore(),
+                userKeys = CoreUserKeys(UserTestFactory.createCore(), cryptoContext),
                 groupPrivateKeys = listOf(groupAddressKey),
                 unlockedOrganizationKey = unlockedWrongOpener,
                 inviterAddressKeys = listOf(inviterAddressKey.privateKey.publicKey(cryptoContext)),
@@ -332,7 +333,7 @@ class AcceptGroupInviteImplTest {
 
         val error = assertFailsWith<IllegalStateException> {
             instance.invoke(
-                user = UserTestFactory.createCore(),
+                userKeys = CoreUserKeys(UserTestFactory.createCore(), cryptoContext),
                 groupPrivateKeys = listOf(groupAddressKey),
                 unlockedOrganizationKey = null,
                 inviterAddressKeys = listOf(inviterAddressKey.privateKey.publicKey(cryptoContext)),
@@ -384,7 +385,7 @@ class AcceptGroupInviteImplTest {
         // The re-encryption target is the single primary key from keys/all.
         val targetPublicKey = groupAddressKey1.privateKey.publicKey(cryptoContext)
         val res1 = instance.invoke(
-            user = UserTestFactory.createCore(),
+            userKeys = CoreUserKeys(UserTestFactory.createCore(), cryptoContext),
             groupPrivateKeys = listOf(groupAddressKey1, groupAddressKey2),
             unlockedOrganizationKey = unlockedOrgKey,
             inviterAddressKeys = listOf(inviterAddressKey.privateKey.publicKey(cryptoContext)),
@@ -393,7 +394,7 @@ class AcceptGroupInviteImplTest {
             isGroupOwner = false
         )
         val res2 = instance.invoke(
-            user = UserTestFactory.createCore(),
+            userKeys = CoreUserKeys(UserTestFactory.createCore(), cryptoContext),
             groupPrivateKeys = listOf(groupAddressKey1, groupAddressKey2),
             unlockedOrganizationKey = unlockedOrgKey,
             inviterAddressKeys = listOf(inviterAddressKey.privateKey.publicKey(cryptoContext)),

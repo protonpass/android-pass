@@ -24,9 +24,9 @@ import org.junit.Test
 import proton.android.pass.crypto.api.Base64
 import proton.android.pass.crypto.api.error.InvalidSignature
 import proton.android.pass.crypto.fakes.context.FakeEncryptionContext
+import proton.android.pass.crypto.fakes.usecases.FakeGroupKeyDecryptor
+import proton.android.pass.crypto.fakes.usecases.FakeUserKeys
 import proton.android.pass.data.impl.exception.UserKeyNotActive
-import proton.android.pass.data.impl.fakes.FakeCryptoContext
-import proton.android.pass.data.impl.fakes.FakeUserKeys
 
 class ReencryptShareKeyImplTest {
 
@@ -34,7 +34,7 @@ class ReencryptShareKeyImplTest {
 
     @Before
     fun setup() {
-        instance = ReencryptShareKeyImpl(cryptoContext = FakeCryptoContext())
+        instance = ReencryptShareKeyImpl()
     }
 
     @Test
@@ -64,15 +64,44 @@ class ReencryptShareKeyImplTest {
         val result = reencrypt(userKeys)
 
         assertThat(userKeys.decryptedMessages.single()).isEqualTo(Base64.decodeBase64(ENCODED_KEY))
+        assertThat(userKeys.labels).containsExactly("reencrypt share key")
         assertThat(result.array).isEqualTo(FakeEncryptionContext.encrypt(FakeUserKeys.DEFAULT_DECRYPTED).array)
     }
 
     @Test
     fun `propagates InvalidSignature from the user keys`() {
         val userKeys = FakeUserKeys(activeKeyIds = setOf(USER_KEY_ID))
-        userKeys.decryptBehavior = { throw InvalidSignature("bad signature") }
+        userKeys.decryptAndVerifyBehavior = { throw InvalidSignature("bad signature") }
 
         val result = runCatching { reencrypt(userKeys) }
+
+        assertThat(result.exceptionOrNull()).isInstanceOf(InvalidSignature::class.java)
+    }
+
+    @Test
+    fun `group key decrypts the decoded key with the decryptor and reencrypts it`() {
+        val decryptor = FakeGroupKeyDecryptor()
+
+        val result = instance(
+            encryptionContext = FakeEncryptionContext,
+            input = ReencryptGroupKeyInput(key = ENCODED_KEY, decryptor = decryptor)
+        )
+
+        assertThat(decryptor.decryptedMessages.single()).isEqualTo(Base64.decodeBase64(ENCODED_KEY))
+        assertThat(result.array).isEqualTo(FakeEncryptionContext.encrypt(FakeGroupKeyDecryptor.DEFAULT_DECRYPTED).array)
+    }
+
+    @Test
+    fun `group key propagates InvalidSignature from the decryptor`() {
+        val decryptor = FakeGroupKeyDecryptor()
+        decryptor.decryptAndVerifyBehavior = { throw InvalidSignature("bad signature") }
+
+        val result = runCatching {
+            instance(
+                encryptionContext = FakeEncryptionContext,
+                input = ReencryptGroupKeyInput(key = ENCODED_KEY, decryptor = decryptor)
+            )
+        }
 
         assertThat(result.exceptionOrNull()).isInstanceOf(InvalidSignature::class.java)
     }

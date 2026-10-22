@@ -16,7 +16,7 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.data.impl.fakes
+package proton.android.pass.crypto.fakes.context
 
 import me.proton.core.crypto.common.aead.AeadCryptoFactory
 import me.proton.core.crypto.common.context.CryptoContext

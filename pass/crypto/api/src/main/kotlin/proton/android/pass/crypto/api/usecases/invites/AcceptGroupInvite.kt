@@ -22,7 +22,7 @@ import me.proton.core.crypto.common.keystore.EncryptedByteArray
 import me.proton.core.crypto.common.pgp.UnlockedKey
 import me.proton.core.key.domain.entity.key.PrivateAddressKey
 import me.proton.core.key.domain.entity.key.PublicKey
-import me.proton.core.user.domain.entity.User
+import proton.android.pass.crypto.api.usecases.UserKeys
 
 data class EncryptedGroupInviteAcceptKey(
     val keyRotation: Long,
@@ -34,7 +34,7 @@ interface AcceptGroupInvite {
 
     @Suppress("LongParameterList")
     operator fun invoke(
-        user: User,
+        userKeys: UserKeys,
         groupPrivateKeys: List<PrivateAddressKey>,
         unlockedOrganizationKey: UnlockedKey?,
         inviterAddressKeys: List<PublicKey>,

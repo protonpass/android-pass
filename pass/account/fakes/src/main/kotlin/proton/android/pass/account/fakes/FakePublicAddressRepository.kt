@@ -21,6 +21,7 @@ package proton.android.pass.account.fakes
 import me.proton.core.domain.entity.SessionUserId
 import me.proton.core.key.domain.entity.key.PublicAddress
 import me.proton.core.key.domain.entity.key.PublicAddressInfo
+import me.proton.core.key.domain.entity.key.PublicAddressKeyData
 import me.proton.core.key.domain.entity.key.PublicAddressKey
 import me.proton.core.key.domain.entity.key.PublicKey
 import me.proton.core.key.domain.entity.key.PublicSignedKeyList
@@ -35,6 +36,12 @@ import javax.inject.Singleton
 class FakePublicAddressRepository @Inject constructor() : PublicAddressRepository {
 
     private val addressList: MutableMap<String, PublicAddress> = mutableMapOf()
+    private val addressInfoList: MutableMap<String, PublicAddressInfo> = mutableMapOf()
+    private val recordedInfoRequests = mutableListOf<String>()
+
+    var addressInfoFailure: Throwable? = null
+
+    val infoRequestedEmails: List<String> get() = recordedInfoRequests
 
     fun setAddress(
         address: String,
@@ -48,6 +55,16 @@ class FakePublicAddressRepository @Inject constructor() : PublicAddressRepositor
             keys = keys,
             signedKeyList = null,
             ignoreKT = null
+        )
+    }
+
+    fun setAddressInfo(email: String, keys: List<PublicAddressKey>) {
+        addressInfoList[email] = PublicAddressInfo(
+            email = email,
+            address = PublicAddressKeyData(keys = keys),
+            warnings = emptyList(),
+            protonMx = false,
+            isProton = 1
         )
     }
 
@@ -83,7 +100,9 @@ class FakePublicAddressRepository @Inject constructor() : PublicAddressRepositor
         internalOnly: Boolean,
         source: Source
     ): PublicAddressInfo {
-        throw IllegalStateException("This method should not be called")
+        recordedInfoRequests.add(email)
+        addressInfoFailure?.let { throw it }
+        return addressInfoList[email] ?: throw IllegalStateException("Address info not set")
     }
 
 

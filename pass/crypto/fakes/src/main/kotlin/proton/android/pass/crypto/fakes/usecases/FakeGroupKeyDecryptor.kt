@@ -18,22 +18,22 @@
 
 package proton.android.pass.crypto.fakes.usecases
 
-import me.proton.core.user.domain.entity.User
-import proton.android.pass.account.fakes.FakeUserManager
-import proton.android.pass.crypto.api.usecases.GetUserWithKeys
-import proton.android.pass.domain.UserId
-import javax.inject.Inject
-import javax.inject.Singleton
+import proton.android.pass.crypto.api.usecases.GroupKeyDecryptor
 
-@Singleton
-class FakeGetUserWithKeys @Inject constructor() : GetUserWithKeys {
+class FakeGroupKeyDecryptor : GroupKeyDecryptor {
 
-    private var user: User = FakeUserManager.DEFAULT_USER
+    private val recordedMessages = mutableListOf<ByteArray>()
 
-    fun setUser(value: User) {
-        user = value
+    var decryptAndVerifyBehavior: (ByteArray) -> ByteArray = { DEFAULT_DECRYPTED }
+
+    val decryptedMessages: List<ByteArray> get() = recordedMessages
+
+    override fun decryptAndVerify(message: ByteArray): ByteArray {
+        recordedMessages.add(message)
+        return decryptAndVerifyBehavior(message)
     }
 
-    override suspend fun invoke(userId: UserId): User = user
-
+    companion object {
+        val DEFAULT_DECRYPTED: ByteArray = byteArrayOf(5, 6)
+    }
 }

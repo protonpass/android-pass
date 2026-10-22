@@ -19,7 +19,7 @@
 package proton.android.pass.data.impl.crypto
 
 import me.proton.core.user.domain.repository.UserAddressRepository
-import proton.android.pass.crypto.api.usecases.GetUserWithKeys
+import proton.android.pass.crypto.api.usecases.GetUserKeys
 import proton.android.pass.crypto.api.usecases.invites.AcceptUserInvite
 import proton.android.pass.data.api.usecases.GetAllKeysByAddress
 import proton.android.pass.data.impl.local.UserInviteAndKeysEntity
@@ -35,13 +35,13 @@ interface EncryptUserInviteKeys {
 
 class EncryptUserInviteKeysImpl @Inject constructor(
     private val acceptUserInvite: AcceptUserInvite,
-    private val getUserWithKeys: GetUserWithKeys,
+    private val getUserKeys: GetUserKeys,
     private val userAddressRepository: UserAddressRepository,
     private val getAllKeysByAddress: GetAllKeysByAddress
 ) : EncryptUserInviteKeys {
     override suspend fun invoke(userId: UserId, invite: UserInviteAndKeysEntity): List<InviteKeyRotation> {
         val (userInvite, userKeys) = invite
-        val user = getUserWithKeys(userId)
+        val invitedUserKeys = getUserKeys(userId)
 
         val addressId = AddressId(userInvite.invitedAddressId)
         val address = fetchWithForceRefresh(
@@ -59,7 +59,7 @@ class EncryptUserInviteKeysImpl @Inject constructor(
             .map { it.publicKey }
 
         val encryptedKeys = acceptUserInvite(
-            invitedUser = user,
+            invitedUserKeys = invitedUserKeys,
             invitedUserAddressKeys = address.keys.map { it.privateKey },
             inviterAddressKeys = inviterAddressKeys,
             keys = userKeys.map { it.toEncryptedInviteKey() }

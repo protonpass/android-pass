@@ -22,24 +22,21 @@ import me.proton.core.crypto.common.context.CryptoContext
 import me.proton.core.crypto.common.pgp.VerificationContext
 import me.proton.core.crypto.common.pgp.VerificationStatus
 import me.proton.core.key.domain.decryptAndVerifyData
-import me.proton.core.key.domain.encryptAndSignData
 import me.proton.core.key.domain.entity.key.PrivateKey
 import me.proton.core.key.domain.entity.key.PrivateKeyRing
 import me.proton.core.key.domain.entity.key.PublicKey
 import me.proton.core.key.domain.entity.key.PublicKeyRing
 import me.proton.core.key.domain.entity.keyholder.KeyHolderContext
-import me.proton.core.key.domain.getUnarmored
 import me.proton.core.key.domain.publicKey
-import me.proton.core.user.domain.entity.User
 import proton.android.pass.crypto.api.Base64
 import proton.android.pass.crypto.api.Constants
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.crypto.api.error.InvalidSignature
+import proton.android.pass.crypto.api.usecases.UserKeys
 import proton.android.pass.crypto.api.usecases.invites.AcceptUserInvite
 import proton.android.pass.crypto.api.usecases.invites.EncryptedInviteAcceptKey
 import proton.android.pass.crypto.api.usecases.invites.EncryptedInviteAcceptKeyList
 import proton.android.pass.crypto.api.usecases.invites.EncryptedInviteKey
-import proton.android.pass.crypto.impl.extensions.tryUseKeys
 import javax.inject.Inject
 
 class AcceptUserInviteImpl @Inject constructor(
@@ -47,7 +44,7 @@ class AcceptUserInviteImpl @Inject constructor(
     private val encryptionContextProvider: EncryptionContextProvider
 ) : AcceptUserInvite {
     override fun invoke(
-        invitedUser: User,
+        invitedUserKeys: UserKeys,
         invitedUserAddressKeys: List<PrivateKey>,
         inviterAddressKeys: List<PublicKey>,
         keys: List<EncryptedInviteKey>
@@ -90,7 +87,7 @@ class AcceptUserInviteImpl @Inject constructor(
                 // Signature matches. Reencrypt key and sign with user key
                 val reencryptedKey = reencryptKey(
                     key = decryptedKey.data,
-                    user = invitedUser
+                    userKeys = invitedUserKeys
                 )
 
                 EncryptedInviteAcceptKey(
@@ -106,15 +103,8 @@ class AcceptUserInviteImpl @Inject constructor(
         return EncryptedInviteAcceptKeyList(reencryptedKeys)
     }
 
-    private fun reencryptKey(key: ByteArray, user: User): ByteArray = user.tryUseKeys(
-        message = "AcceptInviteImpl: Reencrypt key",
-        cryptoContext = cryptoContext
-    ) {
-        val res = encryptAndSignData(
-            data = key,
-            encryptKeyRing = publicKeyRing,
-            signatureContext = null
-        )
-        getUnarmored(res)
+    private fun reencryptKey(key: ByteArray, userKeys: UserKeys): ByteArray {
+        val encrypted = userKeys.encryptAndSign(key, "AcceptInviteImpl: Reencrypt key")
+        return cryptoContext.pgpCrypto.getUnarmored(encrypted)
     }
 }

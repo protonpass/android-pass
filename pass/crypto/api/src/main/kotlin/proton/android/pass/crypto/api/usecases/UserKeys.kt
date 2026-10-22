@@ -16,22 +16,19 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.data.impl.fakes
 
-import proton.android.pass.data.impl.crypto.GetUserKeys
-import proton.android.pass.data.impl.crypto.UserKeys
-import proton.android.pass.domain.UserId
+package proton.android.pass.crypto.api.usecases
 
-class FakeGetUserKeys : GetUserKeys {
-
-    private val recordedUserIds = mutableListOf<UserId>()
-
-    var userKeys: UserKeys = FakeUserKeys()
-
-    val requestedUserIds: List<UserId> get() = recordedUserIds
-
-    override suspend fun invoke(userId: UserId): UserKeys {
-        recordedUserIds.add(userId)
-        return userKeys
-    }
+interface UserKeys {
+    fun hasActiveKey(keyId: String): Boolean
+    fun primaryKeyId(): String?
+    fun decryptAndVerify(message: ByteArray, label: String): ByteArray
+    fun decrypt(token: String, label: String): ByteArray
+    fun decryptAndVerifyDetached(
+        token: String,
+        signature: String,
+        signatureContext: String,
+        label: String
+    ): ByteArray
+    fun encryptAndSign(data: ByteArray, label: String): String
 }

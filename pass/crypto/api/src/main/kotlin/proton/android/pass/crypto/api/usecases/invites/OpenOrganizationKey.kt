@@ -20,9 +20,9 @@ package proton.android.pass.crypto.api.usecases.invites
 
 import me.proton.core.key.domain.entity.key.PrivateKey
 import me.proton.core.key.domain.entity.key.PublicKey
-import me.proton.core.user.domain.entity.User
+import proton.android.pass.crypto.api.usecases.UserKeys
 import proton.android.pass.domain.OrganizationKey
 
 interface OpenOrganizationKey {
-    operator fun invoke(user: User, organizationKey: OrganizationKey): Result<Pair<PrivateKey, PublicKey>>
+    operator fun invoke(userKeys: UserKeys, organizationKey: OrganizationKey): Result<Pair<PrivateKey, PublicKey>>
 }

@@ -21,7 +21,7 @@ package proton.android.pass.crypto.api.usecases.invites
 import me.proton.core.crypto.common.keystore.EncryptedByteArray
 import me.proton.core.key.domain.entity.key.PrivateKey
 import me.proton.core.key.domain.entity.key.PublicKey
-import me.proton.core.user.domain.entity.User
+import proton.android.pass.crypto.api.usecases.UserKeys
 
 @JvmInline
 value class EncryptedInviteAcceptKeyList(val keys: List<EncryptedInviteAcceptKey>)
@@ -34,7 +34,7 @@ data class EncryptedInviteAcceptKey(
 
 interface AcceptUserInvite {
     operator fun invoke(
-        invitedUser: User,
+        invitedUserKeys: UserKeys,
         invitedUserAddressKeys: List<PrivateKey>,
         inviterAddressKeys: List<PublicKey>,
         keys: List<EncryptedInviteKey>

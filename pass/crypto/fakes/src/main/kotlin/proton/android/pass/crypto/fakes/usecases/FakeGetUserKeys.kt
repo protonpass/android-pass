@@ -16,13 +16,26 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.crypto.api.usecases
 
-import me.proton.core.user.domain.entity.User
+package proton.android.pass.crypto.fakes.usecases
+
+import proton.android.pass.crypto.api.usecases.GetUserKeys
+import proton.android.pass.crypto.api.usecases.UserKeys
 import proton.android.pass.domain.UserId
+import javax.inject.Inject
+import javax.inject.Singleton
 
-interface GetUserWithKeys {
+@Singleton
+class FakeGetUserKeys @Inject constructor() : GetUserKeys {
 
-    suspend operator fun invoke(userId: UserId): User
+    private val recordedUserIds = mutableListOf<UserId>()
 
+    var userKeys: UserKeys = FakeUserKeys()
+
+    val requestedUserIds: List<UserId> get() = recordedUserIds
+
+    override suspend fun invoke(userId: UserId): UserKeys {
+        recordedUserIds.add(userId)
+        return userKeys
+    }
 }

@@ -18,7 +18,6 @@
 
 package proton.android.pass.crypto.api.usecases
 
-import me.proton.core.user.domain.entity.User
 import proton.android.pass.crypto.api.EncryptionKey
 import proton.android.pass.domain.AddressId
 import proton.android.pass.domain.VaultProperties
@@ -37,7 +36,7 @@ data class CreateVaultOutput(
 
 interface CreateVault {
     fun createVaultRequest(
-        user: User,
+        userKeys: UserKeys,
         addressId: AddressId,
         vaultMetadata: VaultProperties
     ): CreateVaultOutput

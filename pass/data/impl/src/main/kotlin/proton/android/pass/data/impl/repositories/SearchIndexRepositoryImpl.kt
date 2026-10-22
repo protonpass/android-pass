@@ -542,7 +542,8 @@ class SearchIndexRepositoryImpl @Inject constructor(
                 queryArgs = queryParts.args,
                 useFts = useFts,
                 pageSize = PAGE_SIZE,
-                initialLoadSize = INITIAL_LOAD_SIZE
+                initialLoadSize = INITIAL_LOAD_SIZE,
+                appDispatchers = appDispatchers
             )
         }
     ).flow

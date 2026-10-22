@@ -22,6 +22,8 @@ import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import androidx.room.InvalidationTracker
 import androidx.sqlite.db.SimpleSQLiteQuery
+import kotlinx.coroutines.withContext
+import proton.android.pass.common.api.AppDispatchers
 import proton.android.pass.commonrust.api.ItemContentSerializer
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.impl.extensions.toDomain
@@ -32,6 +34,7 @@ import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.UserId
 import proton.android.pass.log.api.PassLogger
+import java.util.concurrent.atomic.AtomicBoolean
 
 class SearchItemsPagingSource(
     private val itemContentSerializer: ItemContentSerializer,
@@ -43,7 +46,8 @@ class SearchItemsPagingSource(
     private val queryArgs: Array<Any>,
     private val useFts: Boolean,
     private val pageSize: Int,
-    private val initialLoadSize: Int
+    private val initialLoadSize: Int,
+    private val appDispatchers: AppDispatchers
 ) : PagingSource<Int, Item>() {
 
     private val observer = object : InvalidationTracker.Observer(OBSERVED_TABLES) {
@@ -53,15 +57,28 @@ class SearchItemsPagingSource(
         }
     }
 
-    init {
-        searchDbInvalidationTracker.addObserver(observer)
+    private val observerRegistered = AtomicBoolean(false)
 
+    init {
         registerInvalidatedCallback {
             searchDbInvalidationTracker.removeObserver(observer)
         }
     }
 
+    private suspend fun registerObserverOnce() {
+        if (observerRegistered.get()) return
+        withContext(appDispatchers.io) {
+            if (observerRegistered.compareAndSet(false, true)) {
+                searchDbInvalidationTracker.addObserver(observer)
+                if (invalid) {
+                    searchDbInvalidationTracker.removeObserver(observer)
+                }
+            }
+        }
+    }
+
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Item> {
+        registerObserverOnce()
         val page = params.key ?: 0
         // Calculate offset based on page number and consistent page sizes
         val offset = if (page == 0) 0 else initialLoadSize + (page - 1) * pageSize

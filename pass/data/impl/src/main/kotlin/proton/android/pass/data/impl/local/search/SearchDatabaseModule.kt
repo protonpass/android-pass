@@ -27,16 +27,12 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
-import kotlinx.coroutines.runBlocking
-import net.zetetic.database.sqlcipher.SupportOpenHelperFactory
-import proton.android.pass.log.api.PassLogger
+import proton.android.pass.common.api.AppDispatchers
 import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
 object SearchDatabaseModule {
-
-    private const val TAG = "SearchDatabaseModule"
 
     init {
         System.loadLibrary("sqlcipher")
@@ -46,34 +42,9 @@ object SearchDatabaseModule {
     @Singleton
     fun provideSearchDatabase(
         @ApplicationContext context: Context,
-        keyProvider: SearchDatabaseKeyProvider
-    ): SearchDatabase {
-        val key = runCatching { runBlocking { keyProvider.getOrCreateKey() } }
-            .getOrElse { error ->
-                PassLogger.w(TAG, "Error resolving search database key")
-                PassLogger.w(TAG, error)
-                SearchDatabaseKey.Unavailable
-            }
-
-        val builder = when (key) {
-            is SearchDatabaseKey.Persistent -> {
-                PassLogger.i(TAG, "Creating SearchDatabase with SQLCipher encryption")
-                Room.databaseBuilder(context, SearchDatabase::class.java, SearchDatabase.DB_NAME)
-                    .openHelperFactory(SupportOpenHelperFactory(key.passphrase))
-            }
-
-            SearchDatabaseKey.Unavailable -> {
-                PassLogger.w(TAG, "Search database key unavailable, using in-memory SearchDatabase")
-                Room.inMemoryDatabaseBuilder(context, SearchDatabase::class.java)
-                    .openHelperFactory(SupportOpenHelperFactory(ByteArray(0)))
-            }
-        }
-
-        return builder
-            .fallbackToDestructiveMigration()
-            .addCallback(SearchFtsCallback)
-            .build()
-    }
+        keyProvider: SearchDatabaseKeyProvider,
+        appDispatchers: AppDispatchers
+    ): SearchDatabase = buildSearchDatabase(context, keyProvider, appDispatchers)
 
     @Provides
     fun provideSearchDao(database: SearchDatabase): SearchDao = database.searchDao()
@@ -91,3 +62,14 @@ abstract class SearchDatabaseBindsModule {
     @Singleton
     abstract fun bindSearchDatabaseKeyProvider(impl: SearchDatabaseKeyProviderImpl): SearchDatabaseKeyProvider
 }
+
+internal fun buildSearchDatabase(
+    context: Context,
+    keyProvider: SearchDatabaseKeyProvider,
+    appDispatchers: AppDispatchers,
+    name: String = SearchDatabase.DB_NAME
+): SearchDatabase = Room.databaseBuilder(context, SearchDatabase::class.java, name)
+    .openHelperFactory(LazyKeySupportSQLiteOpenHelperFactory(keyProvider, appDispatchers))
+    .fallbackToDestructiveMigration()
+    .addCallback(SearchFtsCallback)
+    .build()

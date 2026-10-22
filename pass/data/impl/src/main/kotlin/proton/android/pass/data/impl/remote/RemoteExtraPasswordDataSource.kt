@@ -18,11 +18,13 @@
 
 package proton.android.pass.data.impl.remote
 
-import me.proton.core.network.data.ApiProvider
-import me.proton.core.network.domain.ApiResult
 import proton.android.pass.data.api.errors.TooManyExtraPasswordAttemptsException
 import proton.android.pass.data.api.errors.WrongExtraPasswordException
 import proton.android.pass.data.impl.api.PasswordManagerApi
+import proton.android.pass.data.impl.network.RemoteApiGateway
+import proton.android.pass.data.impl.network.RemoteResult
+import proton.android.pass.data.impl.network.get
+import proton.android.pass.data.impl.network.valueOrThrow
 import proton.android.pass.data.impl.requests.ExtraPasswordSendSrpDataRequest
 import proton.android.pass.data.impl.requests.SetupExtraPasswordRequest
 import proton.android.pass.data.impl.responses.ExtraPasswordGetSrpData
@@ -37,7 +39,7 @@ interface RemoteExtraPasswordDataSource {
 }
 
 class RemoteExtraPasswordDataSourceImpl @Inject constructor(
-    private val apiProvider: ApiProvider
+    private val apiProvider: RemoteApiGateway
 ) : RemoteExtraPasswordDataSource {
     override suspend fun setupExtraPassword(userId: UserId, request: SetupExtraPasswordRequest) {
         apiProvider.get<PasswordManagerApi>(userId).invoke {
@@ -61,7 +63,7 @@ class RemoteExtraPasswordDataSourceImpl @Inject constructor(
         }
 
         when (res) {
-            is ApiResult.Error.Http -> when (res.proton?.code) {
+            is RemoteResult.Error.Http -> when (res.protonCode) {
                 WRONG_PASSWORD -> throw WrongExtraPasswordException()
                 TOO_MANY_WRONG_ATTEMPTS -> throw TooManyExtraPasswordAttemptsException()
                 else -> res.valueOrThrow

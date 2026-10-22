@@ -30,6 +30,7 @@ import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
+import proton.android.pass.data.api.errors.RetryableException
 import proton.android.pass.telemetry.impl.LiveTelemetrySender
 
 @RunWith(AndroidJUnit4::class)
@@ -66,6 +67,26 @@ class LiveTelemetrySenderWorkerTest {
 
         assertThat(result).isEqualTo(ListenableWorker.Result.failure())
     }
+
+    @Test
+    fun returnsRetryWhenSendEventsThrowsRetryableException() = runTest {
+        fakeLiveTelemetrySender.setResult(Result.failure(TestRetryableException(isRetryable = true)))
+
+        val result = buildWorker().doWork()
+
+        assertThat(result).isEqualTo(ListenableWorker.Result.retry())
+    }
+
+    @Test
+    fun returnsFailureWhenSendEventsThrowsExceptionMarkedAsNotRetryable() = runTest {
+        fakeLiveTelemetrySender.setResult(Result.failure(TestRetryableException(isRetryable = false)))
+
+        val result = buildWorker().doWork()
+
+        assertThat(result).isEqualTo(ListenableWorker.Result.failure())
+    }
+
+    private class TestRetryableException(override val isRetryable: Boolean) : Exception("error"), RetryableException
 
     private fun buildWorker(): LiveTelemetrySenderWorker =
         TestListenableWorkerBuilder<LiveTelemetrySenderWorker>(context)

@@ -30,6 +30,7 @@ import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
+import proton.android.pass.data.api.errors.RetryableException
 import proton.android.pass.data.fakes.repositories.FakeTelemetryRepository
 
 @RunWith(AndroidJUnit4::class)
@@ -67,18 +68,37 @@ class TelemetrySenderWorkerTest {
         assertThat(result).isEqualTo(ListenableWorker.Result.failure())
     }
 
-    private fun buildWorker(): TelemetrySenderWorker =
-        TestListenableWorkerBuilder<TelemetrySenderWorker>(context)
-            .setWorkerFactory(object : WorkerFactory() {
-                override fun createWorker(
-                    appContext: Context,
-                    workerClassName: String,
-                    workerParameters: WorkerParameters
-                ): ListenableWorker = TelemetrySenderWorker(
-                    context = appContext,
-                    workerParameters = workerParameters,
-                    telemetryRepository = fakeTelemetryRepository
-                )
-            })
-            .build()
+    @Test
+    fun returnsRetryWhenSendEventsThrowsRetryableException() = runTest {
+        fakeTelemetryRepository.setSendResult(Result.failure(TestRetryableException(isRetryable = true)))
+
+        val result = buildWorker().doWork()
+
+        assertThat(result).isEqualTo(ListenableWorker.Result.retry())
+    }
+
+    @Test
+    fun returnsFailureWhenSendEventsThrowsExceptionMarkedAsNotRetryable() = runTest {
+        fakeTelemetryRepository.setSendResult(Result.failure(TestRetryableException(isRetryable = false)))
+
+        val result = buildWorker().doWork()
+
+        assertThat(result).isEqualTo(ListenableWorker.Result.failure())
+    }
+
+    private class TestRetryableException(override val isRetryable: Boolean) : Exception("error"), RetryableException
+
+    private fun buildWorker(): TelemetrySenderWorker = TestListenableWorkerBuilder<TelemetrySenderWorker>(context)
+        .setWorkerFactory(object : WorkerFactory() {
+            override fun createWorker(
+                appContext: Context,
+                workerClassName: String,
+                workerParameters: WorkerParameters
+            ): ListenableWorker = TelemetrySenderWorker(
+                context = appContext,
+                workerParameters = workerParameters,
+                telemetryRepository = fakeTelemetryRepository
+            )
+        })
+        .build()
 }

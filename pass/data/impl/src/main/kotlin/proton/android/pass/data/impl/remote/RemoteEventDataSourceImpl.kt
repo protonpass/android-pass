@@ -20,10 +20,12 @@ package proton.android.pass.data.impl.remote
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
-import me.proton.core.network.data.ApiProvider
-import me.proton.core.network.domain.ApiResult
 import proton.android.pass.data.api.errors.ShareNotAvailableError
 import proton.android.pass.data.impl.api.PasswordManagerApi
+import proton.android.pass.data.impl.network.RemoteApiGateway
+import proton.android.pass.data.impl.network.RemoteResult
+import proton.android.pass.data.impl.network.get
+import proton.android.pass.data.impl.network.valueOrThrow
 import proton.android.pass.data.impl.responses.EventList
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.UserId
@@ -31,7 +33,7 @@ import proton.android.pass.log.api.PassLogger
 import javax.inject.Inject
 
 class RemoteEventDataSourceImpl @Inject constructor(
-    private val api: ApiProvider
+    private val api: RemoteApiGateway
 ) : RemoteEventDataSource {
     override fun getLatestEventId(userId: UserId, shareId: ShareId): Flow<String> = flow {
         val eventId = api.get<PasswordManagerApi>(userId).invoke {
@@ -48,7 +50,7 @@ class RemoteEventDataSourceImpl @Inject constructor(
         val apiResult = api.get<PasswordManagerApi>(userId).invoke {
             getEvents(shareId.id, since)
         }
-        if (apiResult is ApiResult.Error.Http && apiResult.proton?.code == DELETED_SHARE_CODE) {
+        if (apiResult is RemoteResult.Error.Http && apiResult.protonCode == DELETED_SHARE_CODE) {
             PassLogger.w(TAG, "Received DELETED_SHARE_CODE for ShareId: ${shareId.id}")
             throw ShareNotAvailableError()
         }

@@ -19,9 +19,11 @@
 
 package proton.android.pass.data.impl.remote
 
-import me.proton.core.network.data.ApiProvider
 import okhttp3.RequestBody
 import proton.android.pass.data.impl.core.api.CoreApi
+import proton.android.pass.data.impl.network.RemoteApiGateway
+import proton.android.pass.data.impl.network.get
+import proton.android.pass.data.impl.network.valueOrThrow
 import javax.inject.Inject
 
 interface RemoteReportDataSource {
@@ -29,7 +31,7 @@ interface RemoteReportDataSource {
 }
 
 class RemoteReportDataSourceImpl @Inject constructor(
-    private val apiProvider: ApiProvider
+    private val apiProvider: RemoteApiGateway
 ) : RemoteReportDataSource {
     override suspend fun sendBugReport(body: RequestBody) {
         apiProvider.get<CoreApi>().invoke {

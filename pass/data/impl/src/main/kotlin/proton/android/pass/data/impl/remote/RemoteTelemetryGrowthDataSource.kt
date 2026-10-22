@@ -18,8 +18,10 @@
 
 package proton.android.pass.data.impl.remote
 
-import me.proton.core.network.data.ApiProvider
 import proton.android.pass.data.impl.api.PasswordManagerApi
+import proton.android.pass.data.impl.network.RemoteApiGateway
+import proton.android.pass.data.impl.network.get
+import proton.android.pass.data.impl.network.valueOrThrow
 import proton.android.pass.data.impl.requests.TelemetryGrowthEventRequest
 import javax.inject.Inject
 
@@ -28,7 +30,7 @@ interface RemoteTelemetryGrowthDataSource {
 }
 
 class RemoteTelemetryGrowthDataSourceImpl @Inject constructor(
-    private val api: ApiProvider
+    private val api: RemoteApiGateway
 ) : RemoteTelemetryGrowthDataSource {
     override suspend fun send(events: List<TelemetryGrowthEventRequest>) {
         api.get<PasswordManagerApi>(userId = null)

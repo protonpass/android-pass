@@ -80,7 +80,8 @@ class RemoteApiGatewayTest {
                 status = HTTP_SERVER_ERROR,
                 protonCode = null,
                 message = "http message",
-                cause = null
+                cause = null,
+                isRetryable = true
             )
         )
     }
@@ -99,9 +100,28 @@ class RemoteApiGatewayTest {
         val cause = IllegalStateException("parse")
 
         assertThat(ApiResult.Error.Parse(cause).toRemoteResult())
-            .isEqualTo(RemoteResult.Error.Failure(cause))
+            .isEqualTo(RemoteResult.Error.Failure(cause, isRetryable = false))
         assertThat(ApiResult.Error.Timeout(true, cause).toRemoteResult())
-            .isEqualTo(RemoteResult.Error.Failure(cause))
+            .isEqualTo(RemoteResult.Error.Failure(cause, isRetryable = true))
+    }
+
+    @Test
+    fun `retryable flag follows core rules for http errors`() {
+        val retryable = listOf(408, 421, 429, 500, 503).map {
+            ApiResult.Error.Http(httpCode = it, message = "m").toRemoteResult()
+        }
+        val notRetryable = listOf(400, 401, 422).map {
+            ApiResult.Error.Http(httpCode = it, message = "m").toRemoteResult()
+        }
+
+        assertThat(retryable.map { (it as RemoteResult.Error).isRetryable }).doesNotContain(false)
+        assertThat(notRetryable.map { (it as RemoteResult.Error).isRetryable }).doesNotContain(true)
+    }
+
+    @Test
+    fun `exception exposes the retryable flag of its error`() {
+        assertThat(RemoteApiException(RemoteResult.Error.NoInternet()).isRetryable).isTrue()
+        assertThat(RemoteApiException(RemoteResult.Error.Failure()).isRetryable).isFalse()
     }
 
     @Test

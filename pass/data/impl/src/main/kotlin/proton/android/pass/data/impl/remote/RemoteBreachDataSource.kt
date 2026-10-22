@@ -18,11 +18,14 @@
 
 package proton.android.pass.data.impl.remote
 
-import me.proton.core.network.data.ApiProvider
-import me.proton.core.network.domain.ApiResult
 import proton.android.pass.data.api.errors.CustomEmailDoesNotExistException
 import proton.android.pass.data.api.errors.InvalidVerificationCodeError
 import proton.android.pass.data.impl.api.PasswordManagerApi
+import proton.android.pass.data.impl.network.RemoteApiGateway
+import proton.android.pass.data.impl.network.RemoteResult
+import proton.android.pass.data.impl.network.get
+import proton.android.pass.data.impl.network.throwIfError
+import proton.android.pass.data.impl.network.valueOrThrow
 import proton.android.pass.data.impl.requests.BreachAddEmailRequest
 import proton.android.pass.data.impl.requests.BreachVerifyEmailRequest
 import proton.android.pass.data.impl.responses.BreachCustomEmailResponse
@@ -91,7 +94,7 @@ interface RemoteBreachDataSource {
 }
 
 class RemoteBreachDataSourceImpl @Inject constructor(
-    private val apiProvider: ApiProvider
+    private val apiProvider: RemoteApiGateway
 ) : RemoteBreachDataSource {
 
     override suspend fun getAllBreaches(userId: UserId): BreachesResponse = apiProvider
@@ -125,8 +128,8 @@ class RemoteBreachDataSourceImpl @Inject constructor(
             }
 
         when (response) {
-            is ApiResult.Error.Http -> {
-                val protonCode = response.proton?.code
+            is RemoteResult.Error.Http -> {
+                val protonCode = response.protonCode
 
                 when (protonCode) {
                     INVALID_VALUE -> throw InvalidVerificationCodeError
@@ -135,7 +138,7 @@ class RemoteBreachDataSourceImpl @Inject constructor(
                 }
 
             }
-            is ApiResult.Success -> {} // All good
+            is RemoteResult.Success -> {} // All good
             else -> { response.throwIfError() }
         }
     }

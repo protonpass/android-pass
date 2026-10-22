@@ -18,8 +18,10 @@
 
 package proton.android.pass.data.impl.remote
 
-import me.proton.core.network.data.ApiProvider
 import proton.android.pass.data.impl.api.PasswordManagerApi
+import proton.android.pass.data.impl.network.RemoteApiGateway
+import proton.android.pass.data.impl.network.get
+import proton.android.pass.data.impl.network.valueOrThrow
 import proton.android.pass.data.impl.requests.SendUserMonitorCredentialsRequest
 import proton.android.pass.domain.UserId
 import javax.inject.Inject
@@ -29,7 +31,7 @@ interface RemoteOrganizationReportDataSource {
 }
 
 class RemoteOrganizationReportDataSourceImpl @Inject constructor(
-    private val api: ApiProvider
+    private val api: RemoteApiGateway
 ) : RemoteOrganizationReportDataSource {
 
     override suspend fun request(userId: UserId, report: SendUserMonitorCredentialsRequest) {

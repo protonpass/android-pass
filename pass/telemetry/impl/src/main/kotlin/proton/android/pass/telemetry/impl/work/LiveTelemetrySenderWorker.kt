@@ -29,9 +29,8 @@ import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkerParameters
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
-import me.proton.core.network.domain.ApiException
-import me.proton.core.network.domain.isRetryable
 import proton.android.pass.common.api.safeRunCatching
+import proton.android.pass.data.api.errors.RetryableException
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.telemetry.impl.LiveTelemetrySender
 import java.util.concurrent.TimeUnit
@@ -56,7 +55,7 @@ open class LiveTelemetrySenderWorker @AssistedInject constructor(
                 onFailure = {
                     PassLogger.w(TAG, "Error sending live telemetry")
                     PassLogger.w(TAG, it)
-                    if (it is ApiException && it.isRetryable()) {
+                    if (it is RetryableException && it.isRetryable) {
                         Result.retry()
                     } else {
                         Result.failure()

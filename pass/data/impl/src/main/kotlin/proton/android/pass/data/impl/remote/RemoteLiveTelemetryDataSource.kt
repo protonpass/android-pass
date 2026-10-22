@@ -18,8 +18,10 @@
 
 package proton.android.pass.data.impl.remote
 
-import me.proton.core.network.data.ApiProvider
 import proton.android.pass.data.impl.api.PasswordManagerApi
+import proton.android.pass.data.impl.network.RemoteApiGateway
+import proton.android.pass.data.impl.network.get
+import proton.android.pass.data.impl.network.valueOrThrow
 import proton.android.pass.data.impl.requests.ItemReadRequest
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.UserId
@@ -34,7 +36,7 @@ interface RemoteLiveTelemetryDataSource {
 }
 
 class RemoteLiveTelemetryDataSourceImpl @Inject constructor(
-    private val apiProvider: ApiProvider
+    private val apiProvider: RemoteApiGateway
 ) : RemoteLiveTelemetryDataSource {
     override suspend fun sendEvent(
         userId: UserId,

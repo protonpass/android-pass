@@ -18,6 +18,8 @@
 
 package proton.android.pass.data.impl.network
 
+import proton.android.pass.data.api.errors.RetryableException
+
 sealed interface RemoteResult<out T> {
 
     data class Success<T>(val value: T) : RemoteResult<T>
@@ -26,26 +28,46 @@ sealed interface RemoteResult<out T> {
 
         val cause: Throwable?
 
+        val isRetryable: Boolean
+
         data class Http(
             val status: Int,
             val protonCode: Int?,
             val message: String,
-            override val cause: Throwable? = null
+            override val cause: Throwable? = null,
+            override val isRetryable: Boolean = false
         ) : Error
 
-        data class NoInternet(override val cause: Throwable? = null) : Error
+        data class NoInternet(
+            override val cause: Throwable? = null,
+            override val isRetryable: Boolean = true
+        ) : Error
 
-        data class Failure(override val cause: Throwable? = null) : Error
+        data class Failure(
+            override val cause: Throwable? = null,
+            override val isRetryable: Boolean = false
+        ) : Error
     }
 }
 
-class RemoteApiException(val error: RemoteResult.Error) : Exception(
+class RemoteApiException(
+    val error: RemoteResult.Error
+) : Exception(
     (error as? RemoteResult.Error.Http)?.message ?: error.cause?.message,
     error.cause
-)
+),
+    RetryableException {
+
+    override val isRetryable: Boolean
+        get() = error.isRetryable
+}
 
 val <T> RemoteResult<T>.valueOrThrow: T
     get() = when (this) {
         is RemoteResult.Success -> value
         is RemoteResult.Error -> throw RemoteApiException(this)
     }
+
+fun RemoteResult<*>.throwIfError() {
+    if (this is RemoteResult.Error) throw RemoteApiException(this)
+}

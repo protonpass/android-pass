@@ -22,6 +22,7 @@ import me.proton.core.network.data.ApiProvider
 import me.proton.core.network.data.protonApi.BaseRetrofitApi
 import me.proton.core.network.domain.ApiManager
 import me.proton.core.network.domain.ApiResult
+import me.proton.core.network.domain.isRetryable
 import proton.android.pass.domain.UserId
 import javax.inject.Inject
 import kotlin.reflect.KClass
@@ -50,8 +51,9 @@ internal fun <T> ApiResult<T>.toRemoteResult(): RemoteResult<T> = when (this) {
         status = httpCode,
         protonCode = proton?.code,
         message = proton?.error ?: message,
-        cause = cause
+        cause = cause,
+        isRetryable = isRetryable()
     )
-    is ApiResult.Error.NoInternet -> RemoteResult.Error.NoInternet(cause)
-    is ApiResult.Error -> RemoteResult.Error.Failure(cause)
+    is ApiResult.Error.NoInternet -> RemoteResult.Error.NoInternet(cause, isRetryable())
+    is ApiResult.Error -> RemoteResult.Error.Failure(cause, isRetryable())
 }

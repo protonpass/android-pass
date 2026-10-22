@@ -18,15 +18,17 @@
 
 package proton.android.pass.data.impl.core.datasources
 
-import me.proton.core.network.data.ApiProvider
 import me.proton.core.util.kotlin.toBoolean
 import proton.android.pass.data.api.core.datasources.RemoteSentinelDataSource
 import proton.android.pass.data.api.usecases.GetPrimaryUserId
 import proton.android.pass.data.impl.core.api.CoreApi
+import proton.android.pass.data.impl.network.RemoteApiGateway
+import proton.android.pass.data.impl.network.get
+import proton.android.pass.data.impl.network.valueOrThrow
 import javax.inject.Inject
 
 class RemoteSentinelDataSourceImpl @Inject constructor(
-    private val api: ApiProvider,
+    private val api: RemoteApiGateway,
     private val getPrimaryUserId: GetPrimaryUserId
 ) : RemoteSentinelDataSource {
 

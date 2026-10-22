@@ -18,11 +18,7 @@
 
 package proton.android.pass.data.impl.network
 
-import me.proton.core.network.domain.ApiException
-import me.proton.core.network.domain.ApiResult
-
 fun Throwable.getProtonErrorCode(): Int? = when (this) {
     is RemoteApiException -> protonCode
-    is ApiException -> (error as? ApiResult.Error.Http)?.proton?.code
     else -> null
 }

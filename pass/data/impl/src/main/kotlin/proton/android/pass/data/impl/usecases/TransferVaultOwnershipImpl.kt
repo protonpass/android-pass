@@ -18,19 +18,21 @@
 
 package proton.android.pass.data.impl.usecases
 
-import me.proton.core.network.data.ApiProvider
 import proton.android.pass.data.api.errors.UserIdNotAvailableError
 import proton.android.pass.data.api.usecases.GetPrimaryUserId
 import proton.android.pass.data.api.usecases.TransferVaultOwnership
 import proton.android.pass.data.impl.api.PasswordManagerApi
 import proton.android.pass.data.impl.local.LocalShareDataSource
+import proton.android.pass.data.impl.network.RemoteApiGateway
+import proton.android.pass.data.impl.network.get
+import proton.android.pass.data.impl.network.valueOrThrow
 import proton.android.pass.data.impl.requests.TransferVaultOwnershipRequest
 import proton.android.pass.domain.ShareId
 import javax.inject.Inject
 
 class TransferVaultOwnershipImpl @Inject constructor(
     private val getPrimaryUserId: GetPrimaryUserId,
-    private val apiProvider: ApiProvider,
+    private val apiProvider: RemoteApiGateway,
     private val localShareDataSource: LocalShareDataSource
 ) : TransferVaultOwnership {
     override suspend fun invoke(shareId: ShareId, memberShareId: ShareId) {

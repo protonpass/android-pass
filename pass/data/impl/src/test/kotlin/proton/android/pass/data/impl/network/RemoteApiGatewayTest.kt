@@ -21,7 +21,6 @@ package proton.android.pass.data.impl.network
 import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.test.runTest
 import me.proton.core.network.data.protonApi.BaseRetrofitApi
-import me.proton.core.network.domain.ApiException
 import me.proton.core.network.domain.ApiResult
 import me.proton.core.network.domain.TimeoutOverride
 import org.junit.Assert.assertThrows
@@ -148,22 +147,8 @@ class RemoteApiGatewayTest {
     }
 
     @Test
-    fun `proton error code is read from core api exception`() {
-        val exception = ApiException(
-            ApiResult.Error.Http(
-                httpCode = HTTP_UNPROCESSABLE,
-                message = "message",
-                proton = ApiResult.Error.ProtonData(code = PROTON_CODE, error = "error")
-            )
-        )
-
-        assertThat(exception.getProtonErrorCode()).isEqualTo(PROTON_CODE)
-    }
-
-    @Test
     fun `proton error code is null for non http errors`() {
         assertThat(RemoteApiException(RemoteResult.Error.NoInternet()).getProtonErrorCode()).isNull()
-        assertThat(ApiException(ApiResult.Error.NoInternet()).getProtonErrorCode()).isNull()
         assertThat(IllegalStateException().getProtonErrorCode()).isNull()
     }
 

@@ -20,7 +20,6 @@ package proton.android.pass.data.impl.usecases
 
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.withContext
-import me.proton.core.network.data.ApiProvider
 import me.proton.core.user.domain.repository.UserAddressRepository
 import proton.android.pass.common.api.AppDispatchers
 import proton.android.pass.common.api.safeRunCatching
@@ -31,6 +30,10 @@ import proton.android.pass.data.impl.api.PasswordManagerApi
 import proton.android.pass.data.impl.crypto.EncryptShareKeysForUser
 import proton.android.pass.data.impl.crypto.NewUserInviteSignatureManager
 import proton.android.pass.data.impl.local.LocalShareDataSource
+import proton.android.pass.data.impl.network.RemoteApiException
+import proton.android.pass.data.impl.network.RemoteApiGateway
+import proton.android.pass.data.impl.network.RemoteResult
+import proton.android.pass.data.impl.network.get
 import proton.android.pass.data.impl.repositories.ShareKeyRepository
 import proton.android.pass.data.impl.requests.invites.ConfirmInviteRequest
 import proton.android.pass.data.impl.requests.invites.InviteKeyRotation
@@ -42,7 +45,7 @@ import javax.inject.Singleton
 
 @Singleton
 class ConfirmNewUserInviteImpl @Inject constructor(
-    private val apiProvider: ApiProvider,
+    private val apiProvider: RemoteApiGateway,
     private val getPrimaryUserId: GetPrimaryUserId,
     private val shareKeyRepository: ShareKeyRepository,
     private val encryptShareKeysForUser: EncryptShareKeysForUser,
@@ -69,13 +72,14 @@ class ConfirmNewUserInviteImpl @Inject constructor(
             return Result.failure(it)
         }
 
-        val error = apiProvider.get<PasswordManagerApi>(userId).invoke {
+        val result = apiProvider.get<PasswordManagerApi>(userId).invoke {
             confirmInvite(
                 shareId = shareId.id,
                 inviteId = invite.newUserInviteId.value,
                 request = body
             )
-        }.exceptionOrNull
+        }
+        val error = (result as? RemoteResult.Error)?.let { RemoteApiException(it) }
 
         return if (error != null) {
             PassLogger.w(TAG, "Error confirming invite")

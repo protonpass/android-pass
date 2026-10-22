@@ -24,8 +24,6 @@ import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.firstOrNull
-import me.proton.core.network.data.ApiProvider
-import me.proton.core.network.domain.ApiResult
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.transpose
@@ -34,6 +32,10 @@ import proton.android.pass.data.api.usecases.CheckCanAddressesBeInvited
 import proton.android.pass.data.api.usecases.ObservePrimaryUserId
 import proton.android.pass.data.api.usecases.organization.ObserveOrganizationSettings
 import proton.android.pass.data.impl.api.PasswordManagerApi
+import proton.android.pass.data.impl.network.RemoteApiException
+import proton.android.pass.data.impl.network.RemoteApiGateway
+import proton.android.pass.data.impl.network.RemoteResult
+import proton.android.pass.data.impl.network.get
 import proton.android.pass.data.impl.requests.CheckAddressesCanBeInvitedRequest
 import proton.android.pass.domain.OrganizationSettings
 import proton.android.pass.domain.OrganizationShareMode
@@ -44,7 +46,7 @@ import javax.inject.Inject
 
 class CheckCanAddressesBeInvitedImpl @Inject constructor(
     private val observeOrganizationSettings: ObserveOrganizationSettings,
-    private val api: ApiProvider,
+    private val api: RemoteApiGateway,
     private val observePrimaryUserId: ObservePrimaryUserId
 ) : CheckCanAddressesBeInvited {
 
@@ -138,7 +140,7 @@ class CheckCanAddressesBeInvitedImpl @Inject constructor(
         }
 
         return when (response) {
-            is ApiResult.Success -> {
+            is RemoteResult.Success -> {
                 val result = ProcessResult(
                     can = response.value.emails,
                     cannot = addresses - response.value.emails.toSet()
@@ -147,10 +149,8 @@ class CheckCanAddressesBeInvitedImpl @Inject constructor(
                 Result.success(result)
             }
 
-            is ApiResult.Error -> {
-                Result.failure(
-                    response.cause ?: RuntimeException("Error checking if addresses can be invited")
-                )
+            is RemoteResult.Error -> {
+                Result.failure(RemoteApiException(response))
             }
         }
     }

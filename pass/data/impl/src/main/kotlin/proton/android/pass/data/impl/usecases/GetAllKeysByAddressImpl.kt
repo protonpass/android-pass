@@ -21,11 +21,13 @@ package proton.android.pass.data.impl.usecases
 import me.proton.core.key.domain.entity.key.PublicAddressKey
 import me.proton.core.key.domain.repository.PublicAddressRepository
 import me.proton.core.key.domain.repository.getPublicAddressOrNull
-import me.proton.core.network.data.ApiProvider
 import proton.android.pass.common.api.safeRunCatching
 import proton.android.pass.data.api.usecases.GetAllKeysByAddress
 import proton.android.pass.data.api.usecases.GetPrimaryUserId
 import proton.android.pass.data.impl.api.PasswordManagerApi
+import proton.android.pass.data.impl.network.RemoteApiGateway
+import proton.android.pass.data.impl.network.get
+import proton.android.pass.data.impl.network.valueOrThrow
 import proton.android.pass.log.api.PassLogger
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -34,7 +36,7 @@ import javax.inject.Singleton
 class GetAllKeysByAddressImpl @Inject constructor(
     private val getPrimaryUserId: GetPrimaryUserId,
     private val publicAddressRepository: PublicAddressRepository,
-    private val apiProvider: ApiProvider
+    private val apiProvider: RemoteApiGateway
 ) : GetAllKeysByAddress {
 
     @Suppress("ReturnCount")

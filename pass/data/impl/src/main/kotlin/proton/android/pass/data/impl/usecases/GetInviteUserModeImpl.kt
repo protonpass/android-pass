@@ -18,11 +18,10 @@
 
 package proton.android.pass.data.impl.usecases
 
-import me.proton.core.network.domain.ApiException
-import me.proton.core.network.domain.ApiResult
 import proton.android.pass.data.api.usecases.GetAllKeysByAddress
 import proton.android.pass.data.api.usecases.GetInviteUserMode
 import proton.android.pass.data.api.usecases.InviteUserMode
+import proton.android.pass.data.impl.network.getProtonErrorCode
 import proton.android.pass.domain.UserId
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -50,23 +49,8 @@ class GetInviteUserModeImpl @Inject constructor(
                 }
             )
 
-    private fun Throwable.isAddressNotExistsError(): Boolean {
-        if (this is ApiException) {
-            val exceptionError = this.error
-            if (exceptionError is ApiResult.Error.Http) {
-                val protonData = exceptionError.proton
-                if (protonData != null) {
-                    if (protonData.code in
-                        setOf(ERROR_CODE_ADDRESS_NOT_EXIST, ERROR_CODE_ADDRESS_EXTERNAL)
-                    ) {
-                        return true
-                    }
-                }
-            }
-        }
-
-        return false
-    }
+    private fun Throwable.isAddressNotExistsError(): Boolean =
+        getProtonErrorCode() in setOf(ERROR_CODE_ADDRESS_NOT_EXIST, ERROR_CODE_ADDRESS_EXTERNAL)
 
     companion object {
         private const val ERROR_CODE_ADDRESS_NOT_EXIST = 33_102

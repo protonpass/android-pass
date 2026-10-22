@@ -27,8 +27,6 @@ import kotlinx.coroutines.flow.emitAll
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.flow
 import me.proton.core.crypto.common.keystore.EncryptedByteArray
-import me.proton.core.network.domain.ApiException
-import me.proton.core.network.domain.ApiResult
 import proton.android.pass.common.api.safeRunCatching
 import proton.android.pass.crypto.api.Base64
 import proton.android.pass.crypto.api.EncryptionKey
@@ -39,6 +37,7 @@ import proton.android.pass.data.api.usecases.securelink.SecureLinkOptions
 import proton.android.pass.data.impl.local.LocalItemDataSource
 import proton.android.pass.data.impl.local.LocalShareKeyDataSource
 import proton.android.pass.data.impl.local.securelinks.SecureLinksLocalDataSource
+import proton.android.pass.data.impl.network.getProtonErrorCode
 import proton.android.pass.data.impl.remote.RemoteSecureLinkDataSource
 import proton.android.pass.data.impl.requests.CreateSecureLinkRequest
 import proton.android.pass.data.impl.responses.GetSecureLinkResponse
@@ -157,14 +156,7 @@ class SecureLinkRepositoryImpl @Inject constructor(
     override suspend fun deleteSecureLink(userId: UserId, secureLinkId: SecureLinkId) {
         safeRunCatching { remoteSecureLinkDataSource.deleteSecureLink(userId, secureLinkId) }
             .onFailure { exception ->
-                if (exception is ApiException) {
-                    val error = exception.error
-                    if (
-                        !(error is ApiResult.Error.Http && error.proton?.code == SECURE_LINK_DOES_NOT_EXITS_ERROR_CODE)
-                    ) {
-                        throw exception
-                    }
-                } else {
+                if (exception.getProtonErrorCode() != SECURE_LINK_DOES_NOT_EXITS_ERROR_CODE) {
                     throw exception
                 }
             }

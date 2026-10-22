@@ -18,8 +18,10 @@
 
 package proton.android.pass.data.impl.remote
 
-import me.proton.core.network.data.ApiProvider
 import proton.android.pass.data.impl.api.PasswordManagerApi
+import proton.android.pass.data.impl.network.RemoteApiGateway
+import proton.android.pass.data.impl.network.get
+import proton.android.pass.data.impl.network.valueOrThrow
 import proton.android.pass.data.impl.requests.CreateSecureLinkRequest
 import proton.android.pass.data.impl.responses.CreatedSecureLink
 import proton.android.pass.data.impl.responses.GetSecureLinkResponse
@@ -47,7 +49,7 @@ interface RemoteSecureLinkDataSource {
 }
 
 class RemoteSecureLinkDataSourceImpl @Inject constructor(
-    private val apiProvider: ApiProvider
+    private val apiProvider: RemoteApiGateway
 ) : RemoteSecureLinkDataSource {
 
     override suspend fun createSecureLink(

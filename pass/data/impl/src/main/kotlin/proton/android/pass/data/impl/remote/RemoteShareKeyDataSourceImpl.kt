@@ -22,8 +22,10 @@ import kotlinx.coroutines.currentCoroutineContext
 import kotlinx.coroutines.ensureActive
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
-import me.proton.core.network.data.ApiProvider
 import proton.android.pass.data.impl.api.PasswordManagerApi
+import proton.android.pass.data.impl.network.RemoteApiGateway
+import proton.android.pass.data.impl.network.get
+import proton.android.pass.data.impl.network.valueOrThrow
 import proton.android.pass.data.impl.remote.RemoteDataSourceConstants.PAGE_SIZE
 import proton.android.pass.data.impl.responses.ShareKeyResponse
 import proton.android.pass.domain.ShareId
@@ -31,7 +33,7 @@ import proton.android.pass.domain.UserId
 import javax.inject.Inject
 
 class RemoteShareKeyDataSourceImpl @Inject constructor(
-    private val api: ApiProvider
+    private val api: RemoteApiGateway
 ) : RemoteShareKeyDataSource {
 
     override fun getShareKeys(userId: UserId, shareId: ShareId): Flow<List<ShareKeyResponse>> = flow {

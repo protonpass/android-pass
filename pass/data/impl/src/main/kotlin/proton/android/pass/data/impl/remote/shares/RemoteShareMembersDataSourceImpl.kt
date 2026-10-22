@@ -18,8 +18,10 @@
 
 package proton.android.pass.data.impl.remote.shares
 
-import me.proton.core.network.data.ApiProvider
 import proton.android.pass.data.impl.api.PasswordManagerApi
+import proton.android.pass.data.impl.network.RemoteApiGateway
+import proton.android.pass.data.impl.network.get
+import proton.android.pass.data.impl.network.valueOrThrow
 import proton.android.pass.data.impl.requests.UpdateMemberShareRequest
 import proton.android.pass.data.impl.responses.CodeOnlyResponse
 import proton.android.pass.data.impl.responses.ShareMemberResponse
@@ -30,7 +32,7 @@ import proton.android.pass.domain.UserId
 import javax.inject.Inject
 
 class RemoteShareMembersDataSourceImpl @Inject constructor(
-    private val apiProvider: ApiProvider
+    private val apiProvider: RemoteApiGateway
 ) : RemoteShareMembersDataSource {
 
     override suspend fun getShareMembers(userId: UserId, shareId: ShareId): List<ShareMemberResponse> =

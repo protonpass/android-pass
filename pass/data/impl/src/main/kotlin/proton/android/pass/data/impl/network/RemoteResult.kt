@@ -18,6 +18,7 @@
 
 package proton.android.pass.data.impl.network
 
+import proton.android.pass.data.api.errors.ProtonCodeException
 import proton.android.pass.data.api.errors.RetryableException
 
 sealed interface RemoteResult<out T> {
@@ -56,7 +57,11 @@ class RemoteApiException(
     (error as? RemoteResult.Error.Http)?.message ?: error.cause?.message,
     error.cause
 ),
-    RetryableException {
+    RetryableException,
+    ProtonCodeException {
+
+    override val protonCode: Int?
+        get() = (error as? RemoteResult.Error.Http)?.protonCode
 
     override val isRetryable: Boolean
         get() = error.isRetryable

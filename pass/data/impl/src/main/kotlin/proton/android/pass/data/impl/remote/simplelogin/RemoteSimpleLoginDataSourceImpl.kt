@@ -18,8 +18,10 @@
 
 package proton.android.pass.data.impl.remote.simplelogin
 
-import me.proton.core.network.data.ApiProvider
 import proton.android.pass.data.impl.api.PasswordManagerApi
+import proton.android.pass.data.impl.network.RemoteApiGateway
+import proton.android.pass.data.impl.network.get
+import proton.android.pass.data.impl.network.valueOrThrow
 import proton.android.pass.data.impl.requests.SimpleLoginChangeMailboxRequest
 import proton.android.pass.data.impl.requests.SimpleLoginCreateAliasMailboxRequest
 import proton.android.pass.data.impl.requests.SimpleLoginCreatePendingAliasesRequest
@@ -41,7 +43,7 @@ import proton.android.pass.domain.UserId
 import javax.inject.Inject
 
 class RemoteSimpleLoginDataSourceImpl @Inject constructor(
-    private val apiProvider: ApiProvider
+    private val apiProvider: RemoteApiGateway
 ) : RemoteSimpleLoginDataSource {
 
     override suspend fun getSimpleLoginSyncStatus(userId: UserId): SimpleLoginSyncStatusResponse = apiProvider

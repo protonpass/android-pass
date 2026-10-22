@@ -25,7 +25,13 @@ import javax.inject.Singleton
 
 @Singleton
 class FakeUploadAttachment @Inject constructor() : UploadAttachment {
+    private var result: Result<Unit> = Result.success(Unit)
+
+    fun setResult(value: Result<Unit>) {
+        result = value
+    }
+
     override suspend fun invoke(metadata: FileMetadata) {
-        // no-op
+        result.getOrThrow()
     }
 }

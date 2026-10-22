@@ -18,8 +18,10 @@
 
 package proton.android.pass.data.impl.remote.groups
 
-import me.proton.core.network.data.ApiProvider
 import proton.android.pass.data.impl.api.PasswordManagerApi
+import proton.android.pass.data.impl.network.RemoteApiGateway
+import proton.android.pass.data.impl.network.get
+import proton.android.pass.data.impl.network.valueOrThrow
 import proton.android.pass.data.impl.requests.invites.AcceptInviteRequest
 import proton.android.pass.data.impl.requests.invites.InviteKeyRotation
 import proton.android.pass.domain.InviteToken
@@ -27,7 +29,7 @@ import proton.android.pass.domain.UserId
 import javax.inject.Inject
 
 class RemoteGroupInviteDataSourceImpl @Inject constructor(
-    private val api: ApiProvider
+    private val api: RemoteApiGateway
 ) : RemoteGroupInviteDataSource {
 
     override suspend fun retrievePendingGroupInvites(userId: UserId, lastToken: String?) =

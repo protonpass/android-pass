@@ -20,11 +20,13 @@ package proton.android.pass.data.impl.remote.attachments
 
 import me.proton.core.crypto.common.keystore.EncryptedByteArray
 import me.proton.core.crypto.common.keystore.EncryptedString
-import me.proton.core.network.data.ApiProvider
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.toRequestBody
 import proton.android.pass.data.impl.api.PasswordManagerApi
+import proton.android.pass.data.impl.network.RemoteApiGateway
+import proton.android.pass.data.impl.network.get
+import proton.android.pass.data.impl.network.valueOrThrow
 import proton.android.pass.data.impl.requests.attachments.CreatePendingFileRequest
 import proton.android.pass.data.impl.requests.attachments.LinkPendingFileRequest
 import proton.android.pass.data.impl.requests.attachments.LinkPendingFilesRequest
@@ -44,7 +46,7 @@ import proton.android.pass.domain.attachments.PendingAttachmentId
 import javax.inject.Inject
 
 class RemoteAttachmentsDataSourceImpl @Inject constructor(
-    private val api: ApiProvider
+    private val api: RemoteApiGateway
 ) : RemoteAttachmentsDataSource {
 
     override suspend fun createPendingFile(

@@ -62,4 +62,16 @@ dependencies {
     implementation(projects.pass.preferences.api)
     implementation(projects.pass.securityCenter.api)
     implementation(projects.pass.totp.api)
+
+    testImplementation(libs.core.test.kotlin)
+    testImplementation(libs.junit)
+    testImplementation(libs.kotlinTest)
+    testImplementation(libs.truth)
+
+    testImplementation(projects.pass.biometry.fakes)
+    testImplementation(projects.pass.commonTest)
+    testImplementation(projects.pass.commonUi.fakes)
+    testImplementation(projects.pass.data.fakes)
+    testImplementation(projects.pass.network.fakes)
+    testImplementation(projects.pass.notifications.fakes)
 }

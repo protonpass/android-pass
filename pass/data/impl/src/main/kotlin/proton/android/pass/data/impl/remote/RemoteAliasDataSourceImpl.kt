@@ -20,8 +20,10 @@ package proton.android.pass.data.impl.remote
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
-import me.proton.core.network.data.ApiProvider
 import proton.android.pass.data.impl.api.PasswordManagerApi
+import proton.android.pass.data.impl.network.RemoteApiGateway
+import proton.android.pass.data.impl.network.get
+import proton.android.pass.data.impl.network.valueOrThrow
 import proton.android.pass.data.impl.requests.ChangeAliasStatusRequest
 import proton.android.pass.data.impl.requests.UpdateAliasMailboxesRequest
 import proton.android.pass.data.impl.requests.alias.GetBulkAliasRequest
@@ -35,7 +37,7 @@ import proton.android.pass.domain.UserId
 import javax.inject.Inject
 
 class RemoteAliasDataSourceImpl @Inject constructor(
-    private val api: ApiProvider
+    private val api: RemoteApiGateway
 ) : RemoteAliasDataSource {
 
     override fun getAliasOptions(userId: UserId, shareId: ShareId): Flow<AliasOptionsResponse> = flow {

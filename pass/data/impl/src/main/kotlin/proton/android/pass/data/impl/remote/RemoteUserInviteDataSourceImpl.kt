@@ -21,14 +21,18 @@ package proton.android.pass.data.impl.remote
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
-import me.proton.core.network.data.ApiProvider
-import me.proton.core.network.domain.ApiResult
+import proton.android.pass.data.api.errors.CannotCreateInviteError
 import proton.android.pass.data.api.errors.CannotCreateMoreVaultsError
 import proton.android.pass.data.api.errors.ErrorCodes
 import proton.android.pass.data.api.errors.FreeUserInviteError
-import proton.android.pass.data.api.errors.CannotCreateInviteError
-import proton.android.pass.data.impl.network.getProtonErrorCode
 import proton.android.pass.data.impl.api.PasswordManagerApi
+import proton.android.pass.data.impl.network.RemoteApiException
+import proton.android.pass.data.impl.network.RemoteApiGateway
+import proton.android.pass.data.impl.network.RemoteResult
+import proton.android.pass.data.impl.network.get
+import proton.android.pass.data.impl.network.getProtonErrorCode
+import proton.android.pass.data.impl.network.throwIfError
+import proton.android.pass.data.impl.network.valueOrThrow
 import proton.android.pass.data.impl.requests.CreateInvitesRequest
 import proton.android.pass.data.impl.requests.CreateNewUserInvitesRequest
 import proton.android.pass.data.impl.requests.invites.AcceptInviteRequest
@@ -43,7 +47,7 @@ import proton.android.pass.log.api.PassLogger
 import javax.inject.Inject
 
 class RemoteUserInviteDataSourceImpl @Inject constructor(
-    private val apiProvider: ApiProvider
+    private val apiProvider: RemoteApiGateway
 ) : RemoteUserInviteDataSource {
 
     @Suppress("TooGenericExceptionCaught")
@@ -103,8 +107,7 @@ class RemoteUserInviteDataSourceImpl @Inject constructor(
     ) {
         if (newUserRequests.invites.isNotEmpty()) {
             val api = apiProvider.get<PasswordManagerApi>(userId)
-            val res = api.invoke { inviteNewUsers(shareId.id, newUserRequests) }
-            res.exceptionOrNull?.let { throw it }
+            api.invoke { inviteNewUsers(shareId.id, newUserRequests) }.throwIfError()
         }
     }
 
@@ -128,14 +131,12 @@ class RemoteUserInviteDataSourceImpl @Inject constructor(
             }
 
         when (res) {
-            is ApiResult.Success -> return res.value.share
-            is ApiResult.Error -> {
-                if (res is ApiResult.Error.Http) {
-                    if (res.proton?.code == CODE_CANNOT_CREATE_MORE_VAULTS) {
-                        throw CannotCreateMoreVaultsError()
-                    }
+            is RemoteResult.Success -> return res.value.share
+            is RemoteResult.Error -> {
+                if (res is RemoteResult.Error.Http && res.protonCode == CODE_CANNOT_CREATE_MORE_VAULTS) {
+                    throw CannotCreateMoreVaultsError()
                 }
-                throw res.cause ?: Exception("Create vault failed")
+                throw RemoteApiException(res)
             }
         }
 

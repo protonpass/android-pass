@@ -20,6 +20,8 @@ package proton.android.pass.data.impl.network
 
 import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.test.runTest
+import kotlinx.serialization.json.JsonObject
+import kotlinx.serialization.json.JsonPrimitive
 import me.proton.core.network.data.protonApi.BaseRetrofitApi
 import me.proton.core.network.domain.ApiResult
 import me.proton.core.network.domain.TimeoutOverride
@@ -66,6 +68,20 @@ class RemoteApiGatewayTest {
                 cause = cause
             )
         )
+    }
+
+    @Test
+    fun `http error keeps proton details`() {
+        val details = JsonObject(mapOf("RetryAfter" to JsonPrimitive(RETRY_AFTER)))
+        val core = ApiResult.Error.Http(
+            httpCode = HTTP_TOO_MANY_REQUESTS,
+            message = "http message",
+            proton = ApiResult.Error.ProtonData(code = 0, error = "", details = details)
+        )
+
+        val result = core.toRemoteResult() as RemoteResult.Error.Http
+
+        assertThat(result.details).isEqualTo(details)
     }
 
     @Test
@@ -182,5 +198,7 @@ class RemoteApiGatewayTest {
         private const val PROTON_CODE = 2_011
         private const val HTTP_UNPROCESSABLE = 422
         private const val HTTP_SERVER_ERROR = 500
+        private const val HTTP_TOO_MANY_REQUESTS = 429
+        private const val RETRY_AFTER = 10
     }
 }

@@ -31,10 +31,18 @@ class FakeRemoteApiGateway : RemoteApiGateway {
 
     private val apis = mutableMapOf<KClass<*>, BaseRetrofitApi>()
     private val recordedRequests = mutableListOf<Request>()
+    private val queuedErrors = ArrayDeque<RemoteResult.Error>()
 
     var error: RemoteResult.Error? = null
 
+    var invokeCount = 0
+        private set
+
     val requests: List<Request> get() = recordedRequests
+
+    fun enqueueError(error: RemoteResult.Error) {
+        queuedErrors.addLast(error)
+    }
 
     fun <Api : BaseRetrofitApi> setApi(apiClass: KClass<Api>, api: Api) {
         apis[apiClass] = api
@@ -50,6 +58,8 @@ class FakeRemoteApiGateway : RemoteApiGateway {
     ) : RemoteApiCaller<Api> {
 
         override suspend fun <T> invoke(block: suspend Api.() -> T): RemoteResult<T> {
+            invokeCount++
+            queuedErrors.removeFirstOrNull()?.let { return it }
             error?.let { return it }
             val api = checkNotNull(apiClass.java.cast(apis[apiClass])) {
                 "No fake api set for ${apiClass.simpleName}"

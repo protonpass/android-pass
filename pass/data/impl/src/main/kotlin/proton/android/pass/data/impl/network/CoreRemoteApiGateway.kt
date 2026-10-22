@@ -51,6 +51,7 @@ internal fun <T> ApiResult<T>.toRemoteResult(): RemoteResult<T> = when (this) {
         status = httpCode,
         protonCode = proton?.code,
         message = proton?.error ?: message,
+        details = proton?.details,
         cause = cause,
         isRetryable = isRetryable()
     )

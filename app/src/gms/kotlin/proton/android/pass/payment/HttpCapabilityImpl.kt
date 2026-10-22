@@ -23,15 +23,16 @@ import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.jsonObject
 import me.proton.android.payment.capability.HttpCapability
 import me.proton.android.payment.capability.model.HttpResponse
-import me.proton.core.network.data.ApiProvider
-import me.proton.core.network.domain.ApiException
-import me.proton.core.network.domain.ApiResult
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.RequestBody.Companion.toRequestBody
 import okhttp3.ResponseBody
 import proton.android.pass.common.api.safeRunCatching
 import proton.android.pass.data.api.usecases.GetPrimaryUserId
 import proton.android.pass.data.impl.core.api.ProtonDynamicApi
+import proton.android.pass.data.impl.network.RemoteApiException
+import proton.android.pass.data.impl.network.RemoteApiGateway
+import proton.android.pass.data.impl.network.RemoteResult
+import proton.android.pass.data.impl.network.get
 import retrofit2.Response
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -39,11 +40,10 @@ import javax.inject.Singleton
 @Singleton
 class HttpCapabilityImpl @Inject constructor(
     private val getPrimaryUserId: GetPrimaryUserId,
-    private val apiProvider: ApiProvider,
+    private val apiGateway: RemoteApiGateway
 ) : HttpCapability {
 
-    override suspend fun get(endpoint: String): HttpResponse =
-        execute { get(endpoint.requireRelative()) }
+    override suspend fun get(endpoint: String): HttpResponse = execute { get(endpoint.requireRelative()) }
 
     override suspend fun post(endpoint: String, body: ByteArray?): HttpResponse =
         execute { post(endpoint.requireRelative(), (body ?: ByteArray(0)).toRequestBody(JSON_MEDIA_TYPE)) }
@@ -51,7 +51,7 @@ class HttpCapabilityImpl @Inject constructor(
     private suspend fun execute(block: suspend ProtonDynamicApi.() -> Response<ResponseBody>): HttpResponse {
         val userId = getPrimaryUserId()
             ?: error("No primary user for HTTP capability")
-        return apiProvider.get<ProtonDynamicApi>(userId)
+        return apiGateway.get<ProtonDynamicApi>(userId)
             .invoke { block() }
             .toHttpResponse()
     }
@@ -61,16 +61,16 @@ class HttpCapabilityImpl @Inject constructor(
     }
 }
 
-internal suspend fun ApiResult<Response<ResponseBody>>.toHttpResponse(): HttpResponse = when (this) {
-    is ApiResult.Success -> {
+internal suspend fun RemoteResult<Response<ResponseBody>>.toHttpResponse(): HttpResponse = when (this) {
+    is RemoteResult.Success -> {
         val response = value
         val bodyString = response.body()?.string() ?: response.errorBody()?.string().orEmpty()
         val body = safeRunCatching { Json.parseToJsonElement(bodyString).jsonObject }
             .getOrDefault(JsonObject(emptyMap()))
         HttpResponse(status = response.code(), body = body)
     }
-    is ApiResult.Error.Http -> HttpResponse(status = httpCode, body = proton?.details ?: JsonObject(emptyMap()))
-    is ApiResult.Error -> throw ApiException(this)
+    is RemoteResult.Error.Http -> HttpResponse(status = status, body = details ?: JsonObject(emptyMap()))
+    is RemoteResult.Error -> throw RemoteApiException(this)
 }
 
 private fun String.requireRelative(): String {

@@ -22,11 +22,11 @@ import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.runBlocking
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.jsonObject
-import me.proton.core.network.domain.ApiException
-import me.proton.core.network.domain.ApiResult
 import okhttp3.ResponseBody
 import okhttp3.ResponseBody.Companion.toResponseBody
 import org.junit.Test
+import proton.android.pass.data.impl.network.RemoteApiException
+import proton.android.pass.data.impl.network.RemoteResult
 import retrofit2.Response
 
 class HttpCapabilityImplTest {
@@ -35,7 +35,7 @@ class HttpCapabilityImplTest {
     fun `maps successful response status and parsed body`() = runBlocking {
         val response = Response.success(201, "{\"payment\":\"accepted\"}".toResponseBody())
 
-        val result = ApiResult.Success(response).toHttpResponse()
+        val result = RemoteResult.Success(response).toHttpResponse()
 
         assertThat(result.status).isEqualTo(201)
         assertThat(result.body).isEqualTo(Json.parseToJsonElement("{\"payment\":\"accepted\"}").jsonObject)
@@ -44,26 +44,27 @@ class HttpCapabilityImplTest {
     @Test
     fun `maps HTTP error status and Proton details`() = runBlocking {
         val details = Json.parseToJsonElement("{\"RetryAfter\":10}").jsonObject
-        val error = ApiResult.Error.Http(
-            httpCode = 429,
+        val error = RemoteResult.Error.Http(
+            status = 429,
+            protonCode = 0,
             message = "Too many requests",
-            proton = ApiResult.Error.ProtonData(code = 0, error = "", details = details),
+            details = details
         )
 
-        val result = (error as ApiResult<Response<ResponseBody>>).toHttpResponse()
+        val result = (error as RemoteResult<Response<ResponseBody>>).toHttpResponse()
 
         assertThat(result.status).isEqualTo(429)
         assertThat(result.body).isEqualTo(details)
     }
 
     @Test
-    fun `throws ApiException for non HTTP error`() = runBlocking {
-        val apiError = ApiResult.Error.NoInternet()
+    fun `throws RemoteApiException for non HTTP error`() = runBlocking {
+        val apiError = RemoteResult.Error.NoInternet()
 
         val exception = try {
-            (apiError as ApiResult<Response<ResponseBody>>).toHttpResponse()
-            error("Expected ApiException")
-        } catch (exception: ApiException) {
+            (apiError as RemoteResult<Response<ResponseBody>>).toHttpResponse()
+            error("Expected RemoteApiException")
+        } catch (exception: RemoteApiException) {
             exception
         }
 

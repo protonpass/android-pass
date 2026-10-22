@@ -18,6 +18,7 @@
 
 package proton.android.pass.data.impl.network
 
+import kotlinx.serialization.json.JsonObject
 import proton.android.pass.data.api.errors.ProtonCodeException
 import proton.android.pass.data.api.errors.RetryableException
 
@@ -36,7 +37,8 @@ sealed interface RemoteResult<out T> {
             val protonCode: Int?,
             val message: String,
             override val cause: Throwable? = null,
-            override val isRetryable: Boolean = false
+            override val isRetryable: Boolean = false,
+            val details: JsonObject? = null
         ) : Error
 
         data class NoInternet(

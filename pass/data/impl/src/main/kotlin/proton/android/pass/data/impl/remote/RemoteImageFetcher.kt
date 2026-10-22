@@ -20,10 +20,12 @@ package proton.android.pass.data.impl.remote
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
-import me.proton.core.network.data.ApiProvider
-import me.proton.core.network.data.ProtonErrorException
 import proton.android.pass.data.api.usecases.ImageResponse
 import proton.android.pass.data.impl.api.PasswordManagerApi
+import proton.android.pass.data.impl.network.RemoteApiException
+import proton.android.pass.data.impl.network.RemoteApiGateway
+import proton.android.pass.data.impl.network.RemoteResult
+import proton.android.pass.data.impl.network.get
 import proton.android.pass.domain.UserId
 import proton.android.pass.log.api.PassLogger
 import javax.inject.Inject
@@ -33,64 +35,61 @@ interface RemoteImageFetcher {
 }
 
 class RemoteImageFetcherImpl @Inject constructor(
-    private val api: ApiProvider
+    private val api: RemoteApiGateway
 ) : RemoteImageFetcher {
 
-    @Suppress("MagicNumber")
     override fun fetchFavicon(userId: UserId, domain: String): Flow<ImageResponse?> = flow {
-        api.get<PasswordManagerApi>(userId).invoke {
-            for (size in listOf(64, 32)) {
-                try {
-                    val res = getFavicon(domain = domain, size = size)
-                    if (res.code() == HTTP_NO_CONTENT) {
-                        emit(null)
-                        return@invoke
-                    }
-
+        for (size in SIZES) {
+            val result = api.get<PasswordManagerApi>(userId).invoke {
+                val res = getFavicon(domain = domain, size = size)
+                if (res.code() == HTTP_NO_CONTENT) {
+                    null
+                } else {
                     val body = checkNotNull(res.body()?.bytes())
-                    val mimeType = res.headers()["Content-Type"]
-                    emit(ImageResponse(content = body, mimeType = mimeType))
-                    return@invoke
-                } catch (e: ProtonErrorException) {
-                    when (handleError(e, domain, size)) {
-                        ExceptionHandleResult.EmitNull -> {
-                            emit(null)
-                            return@invoke
-                        }
-                        ExceptionHandleResult.Continue -> {
-                            continue
-                        }
-                    }
+                    ImageResponse(content = body, mimeType = res.headers()["Content-Type"])
                 }
             }
-
-            // Could not find any image
-            emit(null)
+            when (result) {
+                is RemoteResult.Success -> {
+                    emit(result.value)
+                    return@flow
+                }
+                is RemoteResult.Error -> when (handleError(result, domain, size)) {
+                    ExceptionHandleResult.EmitNull -> {
+                        emit(null)
+                        return@flow
+                    }
+                    ExceptionHandleResult.Continue -> Unit
+                }
+            }
         }
+
+        emit(null)
     }
 
     private fun handleError(
-        e: ProtonErrorException,
+        error: RemoteResult.Error,
         domain: String,
         size: Int
     ): ExceptionHandleResult {
-        if (e.response.code != HTTP_UNPROCESSABLE_CONTENT) throw e
+        if (error !is RemoteResult.Error.Http || error.status != HTTP_UNPROCESSABLE_CONTENT) {
+            throw RemoteApiException(error)
+        }
 
-        val knownError = FetchImageError.entries
-            .firstOrNull { it.code == e.protonData.code }
+        val knownError = FetchImageError.entries.firstOrNull { it.code == error.protonCode }
 
-        when (knownError) {
+        return when (knownError) {
             FetchImageError.FailedToFindForAppropriateSize -> {
                 PassLogger.d(TAG, "Received ${knownError.name} for domain $domain with size $size")
-                return ExceptionHandleResult.Continue
+                ExceptionHandleResult.Continue
             }
             null -> {
-                PassLogger.d(TAG, "Received unknown ProtonErrorCode: ${e.protonData.code}")
-                throw e
+                PassLogger.d(TAG, "Received unknown ProtonErrorCode: ${error.protonCode}")
+                throw RemoteApiException(error)
             }
             else -> {
                 PassLogger.d(TAG, "Received ${knownError.name} for domain $domain")
-                return ExceptionHandleResult.EmitNull
+                ExceptionHandleResult.EmitNull
             }
         }
     }
@@ -110,6 +109,7 @@ class RemoteImageFetcherImpl @Inject constructor(
     companion object {
         private const val HTTP_UNPROCESSABLE_CONTENT = 422
         private const val HTTP_NO_CONTENT = 204
+        private val SIZES = listOf(64, 32)
 
         private const val TAG = "RemoteImageFetcherImpl"
     }
